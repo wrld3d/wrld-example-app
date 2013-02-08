@@ -1,0 +1,191 @@
+
+CityStreamModel	sf_chunks.str
+
+StreetSigns	sf_streetsigns.dat
+
+CityModel	sf_chunk_00
+CityModel	sf_chunk_01
+CityModel	sf_chunk_02
+CityModel	sf_chunk_03
+CityModel	sf_chunk_04
+CityModel	sf_chunk_05
+CityModel	sf_chunk_06
+CityModel	sf_chunk_07
+
+Shadow		Shadow.shdpp
+ShadowSource	sanfran_shadows.shd
+
+Cars		SanFrancisco_Vehicles
+Boats		SF_Boats
+
+RoadSpline	SF_Roads_01.txt 512
+RoadSpline	SF_Roads_02.txt 512
+RoadSpline	SF_Roads_03.txt 512
+RoadSpline	SF_Roads_04.txt 512
+RoadSpline	SF_Roads_05.txt 512
+RoadSpline	SF_Roads_06.txt 512
+RoadSpline	SF_Roads_07.txt 512
+RoadSpline	SF_Roads_08.txt 512
+
+BoatSpline	SF_Ferry_01.txt 16
+
+DefaultLocation -122.400926 37.7907
+CameraRotation	180.0f
+
+Mercator	-13634854.931046 4529551.1790989004
+
+Extents		-35.338f -229.033f
+Extents		920.967f 67.338f
+Extents		1213.338f -888.967f
+Extents		257.033f -1181.338f
+
+LandmarkName 	Golden Gate Bridge
+LandmarkPos		71.29 13.57 264.68
+LandmarkMenu	true
+LandmarkCamDist	140.0f
+LandmarkLabel	13.57 13.57
+
+LandmarkName 	Palace Of Fine Arts
+LandmarkPos		393.91 3.47 412.88
+LandmarkMenu	true
+LandmarkCamDist	124.0f
+LandmarkLabel	0.1 6.6
+
+LandmarkName 	Alcatraz
+LandmarkPos		678.19 5.67 77.69
+LandmarkMenu	true
+LandmarkCamDist	118.0f
+LandmarkLabel	4.1 7.0
+
+LandmarkName 	Lombard Street
+LandmarkPos		725.52 6.98 423.43
+LandmarkMenu	true
+LandmarkCamDist	118.0f
+LandmarkLabel	7.3 7.3
+
+LandmarkName 	Coit Tower
+LandmarkPos		869.73 12.22 418.82
+LandmarkMenu	true
+LandmarkCamDist	118.0f
+LandmarkLabel	8.4 16.0
+
+LandmarkName 	Transamerica Pyramid
+LandmarkPos		903.95 18.45 520.95
+LandmarkMenu	true
+LandmarkCamDist	152.0f
+LandmarkLabel	0.6 36.9
+
+LandmarkName 	Union Square
+LandmarkPos		851.12 3.59 622.41
+LandmarkMenu	true
+LandmarkCamDist	118.0f
+LandmarkLabel	3.0 8.4
+
+LandmarkName 	Bay Bridge
+LandmarkPos		1081.35 7.95 595.25
+LandmarkMenu	true
+LandmarkCamDist	118.0f
+LandmarkLabel	7.95 7.95
+
+LandmarkName 	AT&T Park
+LandmarkPos		1051.93 4.76 753.76
+LandmarkMenu	true
+LandmarkCamDist	118.0f
+LandmarkLabel	0.2 0.2
+
+LandmarkName 	Sutro Tower
+LandmarkPos		346.84 41.02 1083.33
+LandmarkMenu	true
+LandmarkCamDist	140.0f
+LandmarkLabel	25.9 50.5
+
+
+LandmarkName 	Ferry Building
+LandmarkPos		1006 0.1 517.1
+LandmarkMenu	false
+LandmarkLabel	0.1 11.6
+
+LandmarkName 	Fisherman's Wharf
+LandmarkPos		810.4 0.1 331.3
+LandmarkMenu	false
+LandmarkLabel	0.1 0.1
+
+LandmarkName 	Marina
+LandmarkPos		523.3, 0.6, 397.3
+LandmarkMenu	false
+LandmarkLabel	0.6 0.6
+
+LandmarkName 	Nob Hill
+LandmarkPos		773.5 10.4 548
+LandmarkMenu	false
+LandmarkLabel	10.4 10.4
+
+LandmarkName 	Buena Vista Park
+LandmarkPos		474.4 17.5 904.4
+LandmarkMenu	false
+LandmarkLabel	17.5 17.5
+
+LandmarkName 	Golden Gate Park
+LandmarkPos		288.3 7.7 875.2
+LandmarkMenu	false
+LandmarkLabel	7.7 7.7
+
+LandmarkName 	Alamo Square Park
+LandmarkPos		549.2 10.3 784.4
+LandmarkMenu	false
+LandmarkLabel	10.3 10.3
+
+LandmarkName 	Pacific Heights
+LandmarkPos		495.4 9.1 567.2
+LandmarkMenu	false
+LandmarkLabel	9.1 9.1
+
+LandmarkName 	Cathedral Hill
+LandmarkPos		650.1 6.5 659.7
+LandmarkMenu	false
+LandmarkLabel	6.5 6.5
+
+LandmarkName 	The Presidio
+LandmarkPos		105.2 9.3 488.6
+LandmarkMenu	false
+LandmarkLabel	9.3 9.3
+
+LandmarkName 	Richmond
+LandmarkPos		129.8 5.2 724.5
+LandmarkMenu	false
+LandmarkLabel	5.2 5.2
+
+LandmarkName 	Lone Mountain Campus
+LandmarkPos		355.6 12.6 746.8
+LandmarkMenu	false
+LandmarkLabel	12.6 12.6
+
+LandmarkName 	Presidio Heights
+LandmarkPos		354.4 9 615.1
+LandmarkMenu	false
+LandmarkLabel	9.0 9.0
+
+LandmarkName 	Design District
+LandmarkPos		948.3 0.0 866.2
+LandmarkMenu	false
+LandmarkLabel	0.0 0.0
+
+LandmarkName 	South Beach
+LandmarkPos		1015.2 1.5 626.7
+LandmarkMenu	false
+LandmarkLabel	1.5 1.5
+
+LandmarkName 	Civic Center
+LandmarkPos		738.9 1.8 741.2
+LandmarkMenu	false
+LandmarkLabel	1.5 1.5
+
+LandmarkName 	Moscone Center
+LandmarkPos		926 0.7 685.6
+LandmarkMenu	false
+LandmarkLabel	0.7 0.7
+
+LandmarkName 	Mission
+LandmarkPos		694.6 1.3 990.3
+LandmarkMenu	false
+LandmarkLabel	1.3 1.3

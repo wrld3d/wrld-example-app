@@ -1,0 +1,1016 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		7E75EE1E16848B8A00BCA283 /* libapps-on-maps-sim.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E75EE1D16848B8A00BCA283 /* libapps-on-maps-sim.a */; };
+		7E75EE1F16848D1D00BCA283 /* libapps-on-maps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE48223168373E20006E99B /* libapps-on-maps.a */; };
+		7EA3084616C3FF0600602274 /* Themes in Resources */ = {isa = PBXBuildFile; fileRef = 7EA3084516C3FF0600602274 /* Themes */; };
+		7EE481EB16836F370006E99B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE481EA16836F370006E99B /* UIKit.framework */; };
+		7EE481ED16836F370006E99B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE481EC16836F370006E99B /* Foundation.framework */; };
+		7EE481EF16836F370006E99B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE481EE16836F370006E99B /* CoreGraphics.framework */; };
+		7EE481F116836F370006E99B /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE481F016836F370006E99B /* CoreData.framework */; };
+		7EE481F716836F370006E99B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7EE481F516836F370006E99B /* InfoPlist.strings */; };
+		7EE4820E1683713B0006E99B /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4820C1683713B0006E99B /* MainStoryboard_iPhone.storyboard */; };
+		7EE48211168371460006E99B /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4820F168371460006E99B /* MainStoryboard_iPad.storyboard */; };
+		7EE482151683715D0006E99B /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7EE482141683715D0006E99B /* ViewController.mm */; };
+		7EE48226168373E20006E99B /* libturbojpeg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE48224168373E20006E99B /* libturbojpeg.a */; };
+		7EE4824D168476BA0006E99B /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE4824B168476BA0006E99B /* GLKit.framework */; };
+		7EE4824E168476BA0006E99B /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE4824C168476BA0006E99B /* OpenGLES.framework */; };
+		7EE48251168476EC0006E99B /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE48250168476EC0006E99B /* CFNetwork.framework */; };
+		7EE48254168477600006E99B /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE48252168477510006E99B /* SystemConfiguration.framework */; };
+		7EE48256168477A80006E99B /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE48255168477A80006E99B /* MobileCoreServices.framework */; };
+		7EE48258168477CB0006E99B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE48257168477CB0006E99B /* libz.dylib */; };
+		7EE482F616847E7C0006E99B /* FrankBold_50@ipho2x.fnt in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4825E16847E7C0006E99B /* FrankBold_50@ipho2x.fnt */; };
+		7EE482F716847E7C0006E99B /* FrankBold_50@ipho2x_0.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4825F16847E7C0006E99B /* FrankBold_50@ipho2x_0.png */; };
+		7EE482F816847E7C0006E99B /* Boats_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4826216847E7C0006E99B /* Boats_01.pvr */; };
+		7EE482F916847E7C0006E99B /* Buildings_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4826316847E7C0006E99B /* Buildings_01.pvr */; };
+		7EE482FA16847E7C0006E99B /* Buildings_02.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4826416847E7C0006E99B /* Buildings_02.pvr */; };
+		7EE482FB16847E7C0006E99B /* City_Background.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4826516847E7C0006E99B /* City_Background.png */; };
+		7EE482FC16847E7C0006E99B /* gen_buildings_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4826616847E7C0006E99B /* gen_buildings_01.pvr */; };
+		7EE482FD16847E7C0006E99B /* gen_flowers_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4826716847E7C0006E99B /* gen_flowers_01.pvr */; };
+		7EE482FE16847E7C0006E99B /* gen_forest_side_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4826816847E7C0006E99B /* gen_forest_side_01.pvr */; };
+		7EE482FF16847E7C0006E99B /* gen_forest_top_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4826916847E7C0006E99B /* gen_forest_top_01.pvr */; };
+		7EE4830016847E7C0006E99B /* gen_grass_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4826A16847E7C0006E99B /* gen_grass_01.pvr */; };
+		7EE4830116847E7C0006E99B /* gen_grass_02.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4826B16847E7C0006E99B /* gen_grass_02.pvr */; };
+		7EE4830216847E7C0006E99B /* gen_grass_03.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4826C16847E7C0006E99B /* gen_grass_03.pvr */; };
+		7EE4830316847E7C0006E99B /* gen_objects_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4826D16847E7C0006E99B /* gen_objects_01.pvr */; };
+		7EE4830416847E7C0006E99B /* gen_pavement_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4826E16847E7C0006E99B /* gen_pavement_01.pvr */; };
+		7EE4830516847E7C0006E99B /* gen_pavement_02.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4826F16847E7C0006E99B /* gen_pavement_02.pvr */; };
+		7EE4830616847E7C0006E99B /* gen_pavement_03.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4827016847E7C0006E99B /* gen_pavement_03.pvr */; };
+		7EE4830716847E7C0006E99B /* gen_residential_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4827116847E7C0006E99B /* gen_residential_01.pvr */; };
+		7EE4830816847E7C0006E99B /* gen_roads_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4827216847E7C0006E99B /* gen_roads_01.pvr */; };
+		7EE4830916847E7C0006E99B /* gen_rock_wall_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4827316847E7C0006E99B /* gen_rock_wall_01.pvr */; };
+		7EE4830A16847E7C0006E99B /* gen_sand_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4827416847E7C0006E99B /* gen_sand_01.pvr */; };
+		7EE4830B16847E7C0006E99B /* gen_tarmac_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4827516847E7C0006E99B /* gen_tarmac_01.pvr */; };
+		7EE4830C16847E7C0006E99B /* gen_water_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4827616847E7C0006E99B /* gen_water_01.pvr */; };
+		7EE4830D16847E7C0006E99B /* gen_water_02.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4827716847E7C0006E99B /* gen_water_02.pvr */; };
+		7EE4830E16847E7C0006E99B /* SanFrancisco_Vehicles.pod in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4827816847E7C0006E99B /* SanFrancisco_Vehicles.pod */; };
+		7EE4830F16847E7C0006E99B /* SF_POI_White.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4827916847E7C0006E99B /* SF_POI_White.pvr */; };
+		7EE4831016847E7C0006E99B /* SF_POI_You.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4827A16847E7C0006E99B /* SF_POI_You.pvr */; };
+		7EE4831116847E7C0006E99B /* TerrainTexture0.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4827B16847E7C0006E99B /* TerrainTexture0.pvr */; };
+		7EE4831216847E7C0006E99B /* TerrainTexture1.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4827C16847E7C0006E99B /* TerrainTexture1.pvr */; };
+		7EE4831316847E7C0006E99B /* TerrainTexture10.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4827D16847E7C0006E99B /* TerrainTexture10.pvr */; };
+		7EE4831416847E7C0006E99B /* TerrainTexture11.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4827E16847E7C0006E99B /* TerrainTexture11.pvr */; };
+		7EE4831516847E7C0006E99B /* TerrainTexture12.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4827F16847E7C0006E99B /* TerrainTexture12.pvr */; };
+		7EE4831616847E7C0006E99B /* TerrainTexture13.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4828016847E7C0006E99B /* TerrainTexture13.pvr */; };
+		7EE4831716847E7C0006E99B /* TerrainTexture14.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4828116847E7C0006E99B /* TerrainTexture14.pvr */; };
+		7EE4831816847E7C0006E99B /* TerrainTexture15.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4828216847E7C0006E99B /* TerrainTexture15.pvr */; };
+		7EE4831916847E7C0006E99B /* TerrainTexture2.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4828316847E7C0006E99B /* TerrainTexture2.pvr */; };
+		7EE4831A16847E7C0006E99B /* TerrainTexture3.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4828416847E7C0006E99B /* TerrainTexture3.pvr */; };
+		7EE4831B16847E7C0006E99B /* TerrainTexture4.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4828516847E7C0006E99B /* TerrainTexture4.pvr */; };
+		7EE4831C16847E7C0006E99B /* TerrainTexture5.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4828616847E7C0006E99B /* TerrainTexture5.pvr */; };
+		7EE4831D16847E7C0006E99B /* TerrainTexture6.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4828716847E7C0006E99B /* TerrainTexture6.pvr */; };
+		7EE4831E16847E7C0006E99B /* TerrainTexture7.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4828816847E7C0006E99B /* TerrainTexture7.pvr */; };
+		7EE4831F16847E7C0006E99B /* TerrainTexture8.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4828916847E7C0006E99B /* TerrainTexture8.pvr */; };
+		7EE4832016847E7C0006E99B /* TerrainTexture9.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4828A16847E7C0006E99B /* TerrainTexture9.pvr */; };
+		7EE4832116847E7C0006E99B /* Vehicles_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4828B16847E7C0006E99B /* Vehicles_01.pvr */; };
+		7EE4832216847E7C0006E99B /* Wake_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4828C16847E7C0006E99B /* Wake_01.pvr */; };
+		7EE4832316847E7C0006E99B /* Water_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4828D16847E7C0006E99B /* Water_01.pvr */; };
+		7EE4832416847E7C0006E99B /* Water_02.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4828E16847E7C0006E99B /* Water_02.pvr */; };
+		7EE4832516847E7C0006E99B /* Water_03.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4828F16847E7C0006E99B /* Water_03.pvr */; };
+		7EE4832616847E7C0006E99B /* WaterEdge_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4829016847E7C0006E99B /* WaterEdge_01.pvr */; };
+		7EE4832716847E7C0006E99B /* AppIcone_iPad_72X72.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4829216847E7C0006E99B /* AppIcone_iPad_72X72.png */; };
+		7EE4832816847E7C0006E99B /* AppIcone_iPad_Retina_144X144.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4829316847E7C0006E99B /* AppIcone_iPad_Retina_144X144.png */; };
+		7EE4832916847E7C0006E99B /* AppIcone_iPhone_57X57.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4829416847E7C0006E99B /* AppIcone_iPhone_57X57.png */; };
+		7EE4832A16847E7C0006E99B /* AppIcone_iPhone_Retina_114X114.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4829516847E7C0006E99B /* AppIcone_iPhone_Retina_114X114.png */; };
+		7EE4832B16847E7C0006E99B /* Default-Landscape@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4829616847E7C0006E99B /* Default-Landscape@2x~ipad.png */; };
+		7EE4832C16847E7C0006E99B /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4829716847E7C0006E99B /* Default-Landscape~ipad.png */; };
+		7EE4832D16847E7C0006E99B /* Default-Portrait@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4829816847E7C0006E99B /* Default-Portrait@2x~ipad.png */; };
+		7EE4832E16847E7C0006E99B /* Default-Portrait~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4829916847E7C0006E99B /* Default-Portrait~ipad.png */; };
+		7EE4832F16847E7C0006E99B /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4829A16847E7C0006E99B /* Default.png */; };
+		7EE4833016847E7C0006E99B /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4829B16847E7C0006E99B /* Default@2x.png */; };
+		7EE4833116847E7C0006E99B /* occupied_cells.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4829C16847E7C0006E99B /* occupied_cells.txt */; };
+		7EE4833216847E7C0006E99B /* Boats_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4829E16847E7C0006E99B /* Boats_01.pvr */; };
+		7EE4833316847E7C0006E99B /* Buildings_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4829F16847E7C0006E99B /* Buildings_01.pvr */; };
+		7EE4833416847E7C0006E99B /* Buildings_02.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482A016847E7C0006E99B /* Buildings_02.pvr */; };
+		7EE4833516847E7C0006E99B /* camerapositions.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482A116847E7C0006E99B /* camerapositions.txt */; };
+		7EE4833616847E7C0006E99B /* Flowers_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482A216847E7C0006E99B /* Flowers_01.pvr */; };
+		7EE4833716847E7C0006E99B /* Forest_Side_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482A316847E7C0006E99B /* Forest_Side_01.pvr */; };
+		7EE4833816847E7C0006E99B /* Forest_Top_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482A416847E7C0006E99B /* Forest_Top_01.pvr */; };
+		7EE4833916847E7C0006E99B /* Grass_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482A516847E7C0006E99B /* Grass_01.pvr */; };
+		7EE4833A16847E7C0006E99B /* Grass_02.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482A616847E7C0006E99B /* Grass_02.pvr */; };
+		7EE4833B16847E7C0006E99B /* Grass_03.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482A716847E7C0006E99B /* Grass_03.pvr */; };
+		7EE4833C16847E7C0006E99B /* Key_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482A816847E7C0006E99B /* Key_01.pvr */; };
+		7EE4833D16847E7C0006E99B /* Key_02.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482A916847E7C0006E99B /* Key_02.pvr */; };
+		7EE4833E16847E7C0006E99B /* Key_03.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482AA16847E7C0006E99B /* Key_03.pvr */; };
+		7EE4833F16847E7C0006E99B /* Objects_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482AB16847E7C0006E99B /* Objects_01.pvr */; };
+		7EE4834016847E7C0006E99B /* Parking_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482AC16847E7C0006E99B /* Parking_01.pvr */; };
+		7EE4834116847E7C0006E99B /* Pavement_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482AD16847E7C0006E99B /* Pavement_01.pvr */; };
+		7EE4834216847E7C0006E99B /* Pavement_02.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482AE16847E7C0006E99B /* Pavement_02.pvr */; };
+		7EE4834316847E7C0006E99B /* Pavement_03.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482AF16847E7C0006E99B /* Pavement_03.pvr */; };
+		7EE4834416847E7C0006E99B /* Planes_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482B016847E7C0006E99B /* Planes_01.pvr */; };
+		7EE4834516847E7C0006E99B /* Plinth_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482B116847E7C0006E99B /* Plinth_01.pvr */; };
+		7EE4834616847E7C0006E99B /* Roads_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482B216847E7C0006E99B /* Roads_01.pvr */; };
+		7EE4834716847E7C0006E99B /* Roads_02.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482B316847E7C0006E99B /* Roads_02.pvr */; };
+		7EE4834816847E7C0006E99B /* Rock_Wall_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482B416847E7C0006E99B /* Rock_Wall_01.pvr */; };
+		7EE4834916847E7C0006E99B /* Rocks_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482B516847E7C0006E99B /* Rocks_01.pvr */; };
+		7EE4834A16847E7C0006E99B /* Rocks_02.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482B616847E7C0006E99B /* Rocks_02.pvr */; };
+		7EE4834B16847E7C0006E99B /* Sand_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482B716847E7C0006E99B /* Sand_01.pvr */; };
+		7EE4834C16847E7C0006E99B /* SanFran_POI.dat in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482B816847E7C0006E99B /* SanFran_POI.dat */; };
+		7EE4834D16847E7C0006E99B /* SanFrancisco_Vehicles.pod in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482B916847E7C0006E99B /* SanFrancisco_Vehicles.pod */; };
+		7EE4834E16847E7C0006E99B /* sf_att_park.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482BA16847E7C0006E99B /* sf_att_park.pvr */; };
+		7EE4834F16847E7C0006E99B /* SF_Boats.pod in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482BB16847E7C0006E99B /* SF_Boats.pod */; };
+		7EE4835016847E7C0006E99B /* sf_boats_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482BC16847E7C0006E99B /* sf_boats_01.pvr */; };
+		7EE4835116847E7C0006E99B /* sf_boats_02.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482BD16847E7C0006E99B /* sf_boats_02.pvr */; };
+		7EE4835216847E7C0006E99B /* sf_candlestick_park.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482BE16847E7C0006E99B /* sf_candlestick_park.pvr */; };
+		7EE4835316847E7C0006E99B /* sf_city_hall.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482BF16847E7C0006E99B /* sf_city_hall.pvr */; };
+		7EE4835416847E7C0006E99B /* sf_cranes.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482C016847E7C0006E99B /* sf_cranes.pvr */; };
+		7EE4835516847E7C0006E99B /* sf_crates.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482C116847E7C0006E99B /* sf_crates.pvr */; };
+		7EE4835616847E7C0006E99B /* sf_cupids_bow.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482C216847E7C0006E99B /* sf_cupids_bow.pvr */; };
+		7EE4835716847E7C0006E99B /* sf_de_young.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482C316847E7C0006E99B /* sf_de_young.pvr */; };
+		7EE4835816847E7C0006E99B /* sf_embarcadero.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482C416847E7C0006E99B /* sf_embarcadero.pvr */; };
+		7EE4835916847E7C0006E99B /* SF_Ferry_01.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482C516847E7C0006E99B /* SF_Ferry_01.txt */; };
+		7EE4835A16847E7C0006E99B /* sf_ghiradelli_sq_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482C616847E7C0006E99B /* sf_ghiradelli_sq_01.pvr */; };
+		7EE4835B16847E7C0006E99B /* sf_ghiradelli_sq_02.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482C716847E7C0006E99B /* sf_ghiradelli_sq_02.pvr */; };
+		7EE4835C16847E7C0006E99B /* sf_grace_cathedral.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482C816847E7C0006E99B /* sf_grace_cathedral.pvr */; };
+		7EE4835D16847E7C0006E99B /* sf_height.ht in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482C916847E7C0006E99B /* sf_height.ht */; };
+		7EE4835E16847E7C0006E99B /* SF_Key_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482CA16847E7C0006E99B /* SF_Key_01.pvr */; };
+		7EE4835F16847E7C0006E99B /* SF_Key_02.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482CB16847E7C0006E99B /* SF_Key_02.pvr */; };
+		7EE4836016847E7C0006E99B /* SF_Key_03.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482CC16847E7C0006E99B /* SF_Key_03.pvr */; };
+		7EE4836116847E7C0006E99B /* SF_Key_04.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482CD16847E7C0006E99B /* SF_Key_04.pvr */; };
+		7EE4836216847E7C0006E99B /* SF_Key_05.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482CE16847E7C0006E99B /* SF_Key_05.pvr */; };
+		7EE4836316847E7C0006E99B /* SF_Key_06.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482CF16847E7C0006E99B /* SF_Key_06.pvr */; };
+		7EE4836416847E7C0006E99B /* SF_Key_07.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482D016847E7C0006E99B /* SF_Key_07.pvr */; };
+		7EE4836516847E7C0006E99B /* SF_Key_08.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482D116847E7C0006E99B /* SF_Key_08.pvr */; };
+		7EE4836616847E7C0006E99B /* SF_Key_13.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482D216847E7C0006E99B /* SF_Key_13.pvr */; };
+		7EE4836716847E7C0006E99B /* SF_Key_14.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482D316847E7C0006E99B /* SF_Key_14.pvr */; };
+		7EE4836816847E7C0006E99B /* SF_Key_15.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482D416847E7C0006E99B /* SF_Key_15.pvr */; };
+		7EE4836916847E7C0006E99B /* sf_north_point_towers.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482D516847E7C0006E99B /* sf_north_point_towers.pvr */; };
+		7EE4836A16847E7C0006E99B /* sf_pier_39_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482D616847E7C0006E99B /* sf_pier_39_01.pvr */; };
+		7EE4836B16847E7C0006E99B /* sf_pier_39_02.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482D716847E7C0006E99B /* sf_pier_39_02.pvr */; };
+		7EE4836C16847E7C0006E99B /* sf_pier_39_03.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482D816847E7C0006E99B /* sf_pier_39_03.pvr */; };
+		7EE4836D16847E7C0006E99B /* sf_rincon_hill.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482D916847E7C0006E99B /* sf_rincon_hill.pvr */; };
+		7EE4836E16847E7C0006E99B /* SF_Roads_01.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482DA16847E7C0006E99B /* SF_Roads_01.txt */; };
+		7EE4836F16847E7C0006E99B /* SF_Roads_02.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482DB16847E7C0006E99B /* SF_Roads_02.txt */; };
+		7EE4837016847E7C0006E99B /* SF_Roads_03.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482DC16847E7C0006E99B /* SF_Roads_03.txt */; };
+		7EE4837116847E7C0006E99B /* SF_Roads_04.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482DD16847E7C0006E99B /* SF_Roads_04.txt */; };
+		7EE4837216847E7C0006E99B /* SF_Roads_05.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482DE16847E7C0006E99B /* SF_Roads_05.txt */; };
+		7EE4837316847E7C0006E99B /* SF_Roads_06.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482DF16847E7C0006E99B /* SF_Roads_06.txt */; };
+		7EE4837416847E7C0006E99B /* SF_Roads_07.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482E016847E7C0006E99B /* SF_Roads_07.txt */; };
+		7EE4837516847E7C0006E99B /* SF_Roads_08.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482E116847E7C0006E99B /* SF_Roads_08.txt */; };
+		7EE4837616847E7C0006E99B /* sf_secrets.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482E216847E7C0006E99B /* sf_secrets.pvr */; };
+		7EE4837716847E7C0006E99B /* sf_senior_centre.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482E316847E7C0006E99B /* sf_senior_centre.pvr */; };
+		7EE4837816847E7C0006E99B /* sf_ships_balclutha.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482E416847E7C0006E99B /* sf_ships_balclutha.pvr */; };
+		7EE4837916847E7C0006E99B /* sf_ships_eppleton_hall.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482E516847E7C0006E99B /* sf_ships_eppleton_hall.pvr */; };
+		7EE4837A16847E7C0006E99B /* sf_ships_eureka.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482E616847E7C0006E99B /* sf_ships_eureka.pvr */; };
+		7EE4837B16847E7C0006E99B /* sf_ships_hercules.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482E716847E7C0006E99B /* sf_ships_hercules.pvr */; };
+		7EE4837C16847E7C0006E99B /* sf_st_ignatius_church.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482E816847E7C0006E99B /* sf_st_ignatius_church.pvr */; };
+		7EE4837D16847E7C0006E99B /* sf_st_mary_cathedral.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482E916847E7C0006E99B /* sf_st_mary_cathedral.pvr */; };
+		7EE4837E16847E7C0006E99B /* sf_st_peter_and_paul_church.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482EA16847E7C0006E99B /* sf_st_peter_and_paul_church.pvr */; };
+		7EE4837F16847E7C0006E99B /* sf_streetsigns.dat in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482EB16847E7C0006E99B /* sf_streetsigns.dat */; };
+		7EE4838016847E7C0006E99B /* sf_tram.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482EC16847E7C0006E99B /* sf_tram.pvr */; };
+		7EE4838116847E7C0006E99B /* sf_tram_routes.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482ED16847E7C0006E99B /* sf_tram_routes.pvr */; };
+		7EE4838216847E7C0006E99B /* sf_yachts.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482EE16847E7C0006E99B /* sf_yachts.pvr */; };
+		7EE4838316847E7C0006E99B /* SFCityData.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482EF16847E7C0006E99B /* SFCityData.txt */; };
+		7EE4838416847E7C0006E99B /* Vehicles_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482F016847E7C0006E99B /* Vehicles_01.pvr */; };
+		7EE4838516847E7C0006E99B /* Wake_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482F116847E7C0006E99B /* Wake_01.pvr */; };
+		7EE4838616847E7C0006E99B /* Water_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482F216847E7C0006E99B /* Water_01.pvr */; };
+		7EE4838716847E7C0006E99B /* Water_02.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482F316847E7C0006E99B /* Water_02.pvr */; };
+		7EE4838816847E7C0006E99B /* Water_03.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482F416847E7C0006E99B /* Water_03.pvr */; };
+		7EE4838916847E7C0006E99B /* WaterEdge_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482F516847E7C0006E99B /* WaterEdge_01.pvr */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		7E75EE1D16848B8A00BCA283 /* libapps-on-maps-sim.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libapps-on-maps-sim.a"; path = "Include/libapps-on-maps-sim.a"; sourceTree = "<group>"; };
+		7EA3084516C3FF0600602274 /* Themes */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Themes; sourceTree = "<group>"; };
+		7EE481E616836F370006E99B /* ExampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7EE481EA16836F370006E99B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		7EE481EC16836F370006E99B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		7EE481EE16836F370006E99B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		7EE481F016836F370006E99B /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		7EE481F416836F370006E99B /* ExampleApp-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ExampleApp-Info.plist"; sourceTree = "<group>"; };
+		7EE481F616836F370006E99B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		7EE481FA16836F370006E99B /* ExampleApp-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ExampleApp-Prefix.pch"; sourceTree = "<group>"; };
+		7EE4820D1683713B0006E99B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
+		7EE48210168371460006E99B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
+		7EE482121683715D0006E99B /* AppOnMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppOnMap.h; sourceTree = SOURCE_ROOT; };
+		7EE482131683715D0006E99B /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = SOURCE_ROOT; };
+		7EE482141683715D0006E99B /* ViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewController.mm; sourceTree = SOURCE_ROOT; };
+		7EE48223168373E20006E99B /* libapps-on-maps.a */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.objfile"; name = "libapps-on-maps.a"; path = "Include/libapps-on-maps.a"; sourceTree = "<group>"; };
+		7EE48224168373E20006E99B /* libturbojpeg.a */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.objfile"; name = libturbojpeg.a; path = Include/libturbojpeg.a; sourceTree = "<group>"; };
+		7EE4824B168476BA0006E99B /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
+		7EE4824C168476BA0006E99B /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		7EE48250168476EC0006E99B /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		7EE48252168477510006E99B /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		7EE48255168477A80006E99B /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		7EE48257168477CB0006E99B /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		7EE4825E16847E7C0006E99B /* FrankBold_50@ipho2x.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "FrankBold_50@ipho2x.fnt"; sourceTree = "<group>"; };
+		7EE4825F16847E7C0006E99B /* FrankBold_50@ipho2x_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FrankBold_50@ipho2x_0.png"; sourceTree = "<group>"; };
+		7EE4826216847E7C0006E99B /* Boats_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Boats_01.pvr; sourceTree = "<group>"; };
+		7EE4826316847E7C0006E99B /* Buildings_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Buildings_01.pvr; sourceTree = "<group>"; };
+		7EE4826416847E7C0006E99B /* Buildings_02.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Buildings_02.pvr; sourceTree = "<group>"; };
+		7EE4826516847E7C0006E99B /* City_Background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = City_Background.png; sourceTree = "<group>"; };
+		7EE4826616847E7C0006E99B /* gen_buildings_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = gen_buildings_01.pvr; sourceTree = "<group>"; };
+		7EE4826716847E7C0006E99B /* gen_flowers_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = gen_flowers_01.pvr; sourceTree = "<group>"; };
+		7EE4826816847E7C0006E99B /* gen_forest_side_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = gen_forest_side_01.pvr; sourceTree = "<group>"; };
+		7EE4826916847E7C0006E99B /* gen_forest_top_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = gen_forest_top_01.pvr; sourceTree = "<group>"; };
+		7EE4826A16847E7C0006E99B /* gen_grass_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = gen_grass_01.pvr; sourceTree = "<group>"; };
+		7EE4826B16847E7C0006E99B /* gen_grass_02.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = gen_grass_02.pvr; sourceTree = "<group>"; };
+		7EE4826C16847E7C0006E99B /* gen_grass_03.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = gen_grass_03.pvr; sourceTree = "<group>"; };
+		7EE4826D16847E7C0006E99B /* gen_objects_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = gen_objects_01.pvr; sourceTree = "<group>"; };
+		7EE4826E16847E7C0006E99B /* gen_pavement_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = gen_pavement_01.pvr; sourceTree = "<group>"; };
+		7EE4826F16847E7C0006E99B /* gen_pavement_02.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = gen_pavement_02.pvr; sourceTree = "<group>"; };
+		7EE4827016847E7C0006E99B /* gen_pavement_03.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = gen_pavement_03.pvr; sourceTree = "<group>"; };
+		7EE4827116847E7C0006E99B /* gen_residential_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = gen_residential_01.pvr; sourceTree = "<group>"; };
+		7EE4827216847E7C0006E99B /* gen_roads_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = gen_roads_01.pvr; sourceTree = "<group>"; };
+		7EE4827316847E7C0006E99B /* gen_rock_wall_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = gen_rock_wall_01.pvr; sourceTree = "<group>"; };
+		7EE4827416847E7C0006E99B /* gen_sand_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = gen_sand_01.pvr; sourceTree = "<group>"; };
+		7EE4827516847E7C0006E99B /* gen_tarmac_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = gen_tarmac_01.pvr; sourceTree = "<group>"; };
+		7EE4827616847E7C0006E99B /* gen_water_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = gen_water_01.pvr; sourceTree = "<group>"; };
+		7EE4827716847E7C0006E99B /* gen_water_02.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = gen_water_02.pvr; sourceTree = "<group>"; };
+		7EE4827816847E7C0006E99B /* SanFrancisco_Vehicles.pod */ = {isa = PBXFileReference; lastKnownFileType = file; path = SanFrancisco_Vehicles.pod; sourceTree = "<group>"; };
+		7EE4827916847E7C0006E99B /* SF_POI_White.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = SF_POI_White.pvr; sourceTree = "<group>"; };
+		7EE4827A16847E7C0006E99B /* SF_POI_You.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = SF_POI_You.pvr; sourceTree = "<group>"; };
+		7EE4827B16847E7C0006E99B /* TerrainTexture0.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = TerrainTexture0.pvr; sourceTree = "<group>"; };
+		7EE4827C16847E7C0006E99B /* TerrainTexture1.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = TerrainTexture1.pvr; sourceTree = "<group>"; };
+		7EE4827D16847E7C0006E99B /* TerrainTexture10.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = TerrainTexture10.pvr; sourceTree = "<group>"; };
+		7EE4827E16847E7C0006E99B /* TerrainTexture11.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = TerrainTexture11.pvr; sourceTree = "<group>"; };
+		7EE4827F16847E7C0006E99B /* TerrainTexture12.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = TerrainTexture12.pvr; sourceTree = "<group>"; };
+		7EE4828016847E7C0006E99B /* TerrainTexture13.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = TerrainTexture13.pvr; sourceTree = "<group>"; };
+		7EE4828116847E7C0006E99B /* TerrainTexture14.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = TerrainTexture14.pvr; sourceTree = "<group>"; };
+		7EE4828216847E7C0006E99B /* TerrainTexture15.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = TerrainTexture15.pvr; sourceTree = "<group>"; };
+		7EE4828316847E7C0006E99B /* TerrainTexture2.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = TerrainTexture2.pvr; sourceTree = "<group>"; };
+		7EE4828416847E7C0006E99B /* TerrainTexture3.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = TerrainTexture3.pvr; sourceTree = "<group>"; };
+		7EE4828516847E7C0006E99B /* TerrainTexture4.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = TerrainTexture4.pvr; sourceTree = "<group>"; };
+		7EE4828616847E7C0006E99B /* TerrainTexture5.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = TerrainTexture5.pvr; sourceTree = "<group>"; };
+		7EE4828716847E7C0006E99B /* TerrainTexture6.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = TerrainTexture6.pvr; sourceTree = "<group>"; };
+		7EE4828816847E7C0006E99B /* TerrainTexture7.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = TerrainTexture7.pvr; sourceTree = "<group>"; };
+		7EE4828916847E7C0006E99B /* TerrainTexture8.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = TerrainTexture8.pvr; sourceTree = "<group>"; };
+		7EE4828A16847E7C0006E99B /* TerrainTexture9.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = TerrainTexture9.pvr; sourceTree = "<group>"; };
+		7EE4828B16847E7C0006E99B /* Vehicles_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Vehicles_01.pvr; sourceTree = "<group>"; };
+		7EE4828C16847E7C0006E99B /* Wake_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Wake_01.pvr; sourceTree = "<group>"; };
+		7EE4828D16847E7C0006E99B /* Water_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Water_01.pvr; sourceTree = "<group>"; };
+		7EE4828E16847E7C0006E99B /* Water_02.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Water_02.pvr; sourceTree = "<group>"; };
+		7EE4828F16847E7C0006E99B /* Water_03.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Water_03.pvr; sourceTree = "<group>"; };
+		7EE4829016847E7C0006E99B /* WaterEdge_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = WaterEdge_01.pvr; sourceTree = "<group>"; };
+		7EE4829216847E7C0006E99B /* AppIcone_iPad_72X72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AppIcone_iPad_72X72.png; sourceTree = "<group>"; };
+		7EE4829316847E7C0006E99B /* AppIcone_iPad_Retina_144X144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AppIcone_iPad_Retina_144X144.png; sourceTree = "<group>"; };
+		7EE4829416847E7C0006E99B /* AppIcone_iPhone_57X57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AppIcone_iPhone_57X57.png; sourceTree = "<group>"; };
+		7EE4829516847E7C0006E99B /* AppIcone_iPhone_Retina_114X114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AppIcone_iPhone_Retina_114X114.png; sourceTree = "<group>"; };
+		7EE4829616847E7C0006E99B /* Default-Landscape@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape@2x~ipad.png"; sourceTree = "<group>"; };
+		7EE4829716847E7C0006E99B /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape~ipad.png"; sourceTree = "<group>"; };
+		7EE4829816847E7C0006E99B /* Default-Portrait@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait@2x~ipad.png"; sourceTree = "<group>"; };
+		7EE4829916847E7C0006E99B /* Default-Portrait~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait~ipad.png"; sourceTree = "<group>"; };
+		7EE4829A16847E7C0006E99B /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		7EE4829B16847E7C0006E99B /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		7EE4829C16847E7C0006E99B /* occupied_cells.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = occupied_cells.txt; sourceTree = "<group>"; };
+		7EE4829E16847E7C0006E99B /* Boats_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Boats_01.pvr; sourceTree = "<group>"; };
+		7EE4829F16847E7C0006E99B /* Buildings_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Buildings_01.pvr; sourceTree = "<group>"; };
+		7EE482A016847E7C0006E99B /* Buildings_02.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Buildings_02.pvr; sourceTree = "<group>"; };
+		7EE482A116847E7C0006E99B /* camerapositions.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = camerapositions.txt; sourceTree = "<group>"; };
+		7EE482A216847E7C0006E99B /* Flowers_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Flowers_01.pvr; sourceTree = "<group>"; };
+		7EE482A316847E7C0006E99B /* Forest_Side_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Forest_Side_01.pvr; sourceTree = "<group>"; };
+		7EE482A416847E7C0006E99B /* Forest_Top_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Forest_Top_01.pvr; sourceTree = "<group>"; };
+		7EE482A516847E7C0006E99B /* Grass_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Grass_01.pvr; sourceTree = "<group>"; };
+		7EE482A616847E7C0006E99B /* Grass_02.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Grass_02.pvr; sourceTree = "<group>"; };
+		7EE482A716847E7C0006E99B /* Grass_03.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Grass_03.pvr; sourceTree = "<group>"; };
+		7EE482A816847E7C0006E99B /* Key_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Key_01.pvr; sourceTree = "<group>"; };
+		7EE482A916847E7C0006E99B /* Key_02.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Key_02.pvr; sourceTree = "<group>"; };
+		7EE482AA16847E7C0006E99B /* Key_03.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Key_03.pvr; sourceTree = "<group>"; };
+		7EE482AB16847E7C0006E99B /* Objects_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Objects_01.pvr; sourceTree = "<group>"; };
+		7EE482AC16847E7C0006E99B /* Parking_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Parking_01.pvr; sourceTree = "<group>"; };
+		7EE482AD16847E7C0006E99B /* Pavement_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Pavement_01.pvr; sourceTree = "<group>"; };
+		7EE482AE16847E7C0006E99B /* Pavement_02.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Pavement_02.pvr; sourceTree = "<group>"; };
+		7EE482AF16847E7C0006E99B /* Pavement_03.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Pavement_03.pvr; sourceTree = "<group>"; };
+		7EE482B016847E7C0006E99B /* Planes_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Planes_01.pvr; sourceTree = "<group>"; };
+		7EE482B116847E7C0006E99B /* Plinth_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Plinth_01.pvr; sourceTree = "<group>"; };
+		7EE482B216847E7C0006E99B /* Roads_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Roads_01.pvr; sourceTree = "<group>"; };
+		7EE482B316847E7C0006E99B /* Roads_02.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Roads_02.pvr; sourceTree = "<group>"; };
+		7EE482B416847E7C0006E99B /* Rock_Wall_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Rock_Wall_01.pvr; sourceTree = "<group>"; };
+		7EE482B516847E7C0006E99B /* Rocks_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Rocks_01.pvr; sourceTree = "<group>"; };
+		7EE482B616847E7C0006E99B /* Rocks_02.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Rocks_02.pvr; sourceTree = "<group>"; };
+		7EE482B716847E7C0006E99B /* Sand_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Sand_01.pvr; sourceTree = "<group>"; };
+		7EE482B816847E7C0006E99B /* SanFran_POI.dat */ = {isa = PBXFileReference; lastKnownFileType = file; path = SanFran_POI.dat; sourceTree = "<group>"; };
+		7EE482B916847E7C0006E99B /* SanFrancisco_Vehicles.pod */ = {isa = PBXFileReference; lastKnownFileType = file; path = SanFrancisco_Vehicles.pod; sourceTree = "<group>"; };
+		7EE482BA16847E7C0006E99B /* sf_att_park.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = sf_att_park.pvr; sourceTree = "<group>"; };
+		7EE482BB16847E7C0006E99B /* SF_Boats.pod */ = {isa = PBXFileReference; lastKnownFileType = file; path = SF_Boats.pod; sourceTree = "<group>"; };
+		7EE482BC16847E7C0006E99B /* sf_boats_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = sf_boats_01.pvr; sourceTree = "<group>"; };
+		7EE482BD16847E7C0006E99B /* sf_boats_02.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = sf_boats_02.pvr; sourceTree = "<group>"; };
+		7EE482BE16847E7C0006E99B /* sf_candlestick_park.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = sf_candlestick_park.pvr; sourceTree = "<group>"; };
+		7EE482BF16847E7C0006E99B /* sf_city_hall.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = sf_city_hall.pvr; sourceTree = "<group>"; };
+		7EE482C016847E7C0006E99B /* sf_cranes.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = sf_cranes.pvr; sourceTree = "<group>"; };
+		7EE482C116847E7C0006E99B /* sf_crates.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = sf_crates.pvr; sourceTree = "<group>"; };
+		7EE482C216847E7C0006E99B /* sf_cupids_bow.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = sf_cupids_bow.pvr; sourceTree = "<group>"; };
+		7EE482C316847E7C0006E99B /* sf_de_young.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = sf_de_young.pvr; sourceTree = "<group>"; };
+		7EE482C416847E7C0006E99B /* sf_embarcadero.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = sf_embarcadero.pvr; sourceTree = "<group>"; };
+		7EE482C516847E7C0006E99B /* SF_Ferry_01.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SF_Ferry_01.txt; sourceTree = "<group>"; };
+		7EE482C616847E7C0006E99B /* sf_ghiradelli_sq_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = sf_ghiradelli_sq_01.pvr; sourceTree = "<group>"; };
+		7EE482C716847E7C0006E99B /* sf_ghiradelli_sq_02.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = sf_ghiradelli_sq_02.pvr; sourceTree = "<group>"; };
+		7EE482C816847E7C0006E99B /* sf_grace_cathedral.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = sf_grace_cathedral.pvr; sourceTree = "<group>"; };
+		7EE482C916847E7C0006E99B /* sf_height.ht */ = {isa = PBXFileReference; lastKnownFileType = file; path = sf_height.ht; sourceTree = "<group>"; };
+		7EE482CA16847E7C0006E99B /* SF_Key_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = SF_Key_01.pvr; sourceTree = "<group>"; };
+		7EE482CB16847E7C0006E99B /* SF_Key_02.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = SF_Key_02.pvr; sourceTree = "<group>"; };
+		7EE482CC16847E7C0006E99B /* SF_Key_03.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = SF_Key_03.pvr; sourceTree = "<group>"; };
+		7EE482CD16847E7C0006E99B /* SF_Key_04.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = SF_Key_04.pvr; sourceTree = "<group>"; };
+		7EE482CE16847E7C0006E99B /* SF_Key_05.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = SF_Key_05.pvr; sourceTree = "<group>"; };
+		7EE482CF16847E7C0006E99B /* SF_Key_06.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = SF_Key_06.pvr; sourceTree = "<group>"; };
+		7EE482D016847E7C0006E99B /* SF_Key_07.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = SF_Key_07.pvr; sourceTree = "<group>"; };
+		7EE482D116847E7C0006E99B /* SF_Key_08.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = SF_Key_08.pvr; sourceTree = "<group>"; };
+		7EE482D216847E7C0006E99B /* SF_Key_13.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = SF_Key_13.pvr; sourceTree = "<group>"; };
+		7EE482D316847E7C0006E99B /* SF_Key_14.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = SF_Key_14.pvr; sourceTree = "<group>"; };
+		7EE482D416847E7C0006E99B /* SF_Key_15.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = SF_Key_15.pvr; sourceTree = "<group>"; };
+		7EE482D516847E7C0006E99B /* sf_north_point_towers.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = sf_north_point_towers.pvr; sourceTree = "<group>"; };
+		7EE482D616847E7C0006E99B /* sf_pier_39_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = sf_pier_39_01.pvr; sourceTree = "<group>"; };
+		7EE482D716847E7C0006E99B /* sf_pier_39_02.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = sf_pier_39_02.pvr; sourceTree = "<group>"; };
+		7EE482D816847E7C0006E99B /* sf_pier_39_03.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = sf_pier_39_03.pvr; sourceTree = "<group>"; };
+		7EE482D916847E7C0006E99B /* sf_rincon_hill.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = sf_rincon_hill.pvr; sourceTree = "<group>"; };
+		7EE482DA16847E7C0006E99B /* SF_Roads_01.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SF_Roads_01.txt; sourceTree = "<group>"; };
+		7EE482DB16847E7C0006E99B /* SF_Roads_02.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SF_Roads_02.txt; sourceTree = "<group>"; };
+		7EE482DC16847E7C0006E99B /* SF_Roads_03.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SF_Roads_03.txt; sourceTree = "<group>"; };
+		7EE482DD16847E7C0006E99B /* SF_Roads_04.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SF_Roads_04.txt; sourceTree = "<group>"; };
+		7EE482DE16847E7C0006E99B /* SF_Roads_05.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SF_Roads_05.txt; sourceTree = "<group>"; };
+		7EE482DF16847E7C0006E99B /* SF_Roads_06.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SF_Roads_06.txt; sourceTree = "<group>"; };
+		7EE482E016847E7C0006E99B /* SF_Roads_07.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SF_Roads_07.txt; sourceTree = "<group>"; };
+		7EE482E116847E7C0006E99B /* SF_Roads_08.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SF_Roads_08.txt; sourceTree = "<group>"; };
+		7EE482E216847E7C0006E99B /* sf_secrets.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = sf_secrets.pvr; sourceTree = "<group>"; };
+		7EE482E316847E7C0006E99B /* sf_senior_centre.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = sf_senior_centre.pvr; sourceTree = "<group>"; };
+		7EE482E416847E7C0006E99B /* sf_ships_balclutha.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = sf_ships_balclutha.pvr; sourceTree = "<group>"; };
+		7EE482E516847E7C0006E99B /* sf_ships_eppleton_hall.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = sf_ships_eppleton_hall.pvr; sourceTree = "<group>"; };
+		7EE482E616847E7C0006E99B /* sf_ships_eureka.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = sf_ships_eureka.pvr; sourceTree = "<group>"; };
+		7EE482E716847E7C0006E99B /* sf_ships_hercules.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = sf_ships_hercules.pvr; sourceTree = "<group>"; };
+		7EE482E816847E7C0006E99B /* sf_st_ignatius_church.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = sf_st_ignatius_church.pvr; sourceTree = "<group>"; };
+		7EE482E916847E7C0006E99B /* sf_st_mary_cathedral.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = sf_st_mary_cathedral.pvr; sourceTree = "<group>"; };
+		7EE482EA16847E7C0006E99B /* sf_st_peter_and_paul_church.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = sf_st_peter_and_paul_church.pvr; sourceTree = "<group>"; };
+		7EE482EB16847E7C0006E99B /* sf_streetsigns.dat */ = {isa = PBXFileReference; lastKnownFileType = file; path = sf_streetsigns.dat; sourceTree = "<group>"; };
+		7EE482EC16847E7C0006E99B /* sf_tram.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = sf_tram.pvr; sourceTree = "<group>"; };
+		7EE482ED16847E7C0006E99B /* sf_tram_routes.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = sf_tram_routes.pvr; sourceTree = "<group>"; };
+		7EE482EE16847E7C0006E99B /* sf_yachts.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = sf_yachts.pvr; sourceTree = "<group>"; };
+		7EE482EF16847E7C0006E99B /* SFCityData.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SFCityData.txt; sourceTree = "<group>"; };
+		7EE482F016847E7C0006E99B /* Vehicles_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Vehicles_01.pvr; sourceTree = "<group>"; };
+		7EE482F116847E7C0006E99B /* Wake_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Wake_01.pvr; sourceTree = "<group>"; };
+		7EE482F216847E7C0006E99B /* Water_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Water_01.pvr; sourceTree = "<group>"; };
+		7EE482F316847E7C0006E99B /* Water_02.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Water_02.pvr; sourceTree = "<group>"; };
+		7EE482F416847E7C0006E99B /* Water_03.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Water_03.pvr; sourceTree = "<group>"; };
+		7EE482F516847E7C0006E99B /* WaterEdge_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = WaterEdge_01.pvr; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		7EE481E316836F370006E99B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7E75EE1F16848D1D00BCA283 /* libapps-on-maps.a in Frameworks */,
+				7E75EE1E16848B8A00BCA283 /* libapps-on-maps-sim.a in Frameworks */,
+				7EE48258168477CB0006E99B /* libz.dylib in Frameworks */,
+				7EE48256168477A80006E99B /* MobileCoreServices.framework in Frameworks */,
+				7EE48254168477600006E99B /* SystemConfiguration.framework in Frameworks */,
+				7EE48251168476EC0006E99B /* CFNetwork.framework in Frameworks */,
+				7EE4824D168476BA0006E99B /* GLKit.framework in Frameworks */,
+				7EE4824E168476BA0006E99B /* OpenGLES.framework in Frameworks */,
+				7EE481EB16836F370006E99B /* UIKit.framework in Frameworks */,
+				7EE481ED16836F370006E99B /* Foundation.framework in Frameworks */,
+				7EE481EF16836F370006E99B /* CoreGraphics.framework in Frameworks */,
+				7EE481F116836F370006E99B /* CoreData.framework in Frameworks */,
+				7EE48226168373E20006E99B /* libturbojpeg.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		7EE481DB16836F360006E99B = {
+			isa = PBXGroup;
+			children = (
+				7EE4825B16847E7C0006E99B /* Resources */,
+				7EE481F216836F370006E99B /* ExampleApp */,
+				7EE481E916836F370006E99B /* Frameworks */,
+				7EE481E716836F370006E99B /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		7EE481E716836F370006E99B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7EE481E616836F370006E99B /* ExampleApp.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7EE481E916836F370006E99B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7EE48257168477CB0006E99B /* libz.dylib */,
+				7EE48255168477A80006E99B /* MobileCoreServices.framework */,
+				7EE48252168477510006E99B /* SystemConfiguration.framework */,
+				7EE48250168476EC0006E99B /* CFNetwork.framework */,
+				7EE4824B168476BA0006E99B /* GLKit.framework */,
+				7EE4824C168476BA0006E99B /* OpenGLES.framework */,
+				7EE48223168373E20006E99B /* libapps-on-maps.a */,
+				7E75EE1D16848B8A00BCA283 /* libapps-on-maps-sim.a */,
+				7EE48224168373E20006E99B /* libturbojpeg.a */,
+				7EE481EA16836F370006E99B /* UIKit.framework */,
+				7EE481EC16836F370006E99B /* Foundation.framework */,
+				7EE481EE16836F370006E99B /* CoreGraphics.framework */,
+				7EE481F016836F370006E99B /* CoreData.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7EE481F216836F370006E99B /* ExampleApp */ = {
+			isa = PBXGroup;
+			children = (
+				7EE482121683715D0006E99B /* AppOnMap.h */,
+				7EE482131683715D0006E99B /* ViewController.h */,
+				7EE482141683715D0006E99B /* ViewController.mm */,
+				7EE481F316836F370006E99B /* Supporting Files */,
+			);
+			path = ExampleApp;
+			sourceTree = "<group>";
+		};
+		7EE481F316836F370006E99B /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				7EE4820F168371460006E99B /* MainStoryboard_iPad.storyboard */,
+				7EE4820C1683713B0006E99B /* MainStoryboard_iPhone.storyboard */,
+				7EE481F416836F370006E99B /* ExampleApp-Info.plist */,
+				7EE481F516836F370006E99B /* InfoPlist.strings */,
+				7EE481FA16836F370006E99B /* ExampleApp-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		7EE4825B16847E7C0006E99B /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				7EA3084516C3FF0600602274 /* Themes */,
+				7EE4825C16847E7C0006E99B /* Common */,
+				7EE4829116847E7C0006E99B /* Icons */,
+				7EE4829C16847E7C0006E99B /* occupied_cells.txt */,
+				7EE4829D16847E7C0006E99B /* San Fran */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		7EE4825C16847E7C0006E99B /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				7EE4825D16847E7C0006E99B /* Fonts */,
+				7EE4826116847E7C0006E99B /* Textures */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		7EE4825D16847E7C0006E99B /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				7EE4825E16847E7C0006E99B /* FrankBold_50@ipho2x.fnt */,
+				7EE4825F16847E7C0006E99B /* FrankBold_50@ipho2x_0.png */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		7EE4826116847E7C0006E99B /* Textures */ = {
+			isa = PBXGroup;
+			children = (
+				7EE4826216847E7C0006E99B /* Boats_01.pvr */,
+				7EE4826316847E7C0006E99B /* Buildings_01.pvr */,
+				7EE4826416847E7C0006E99B /* Buildings_02.pvr */,
+				7EE4826516847E7C0006E99B /* City_Background.png */,
+				7EE4826616847E7C0006E99B /* gen_buildings_01.pvr */,
+				7EE4826716847E7C0006E99B /* gen_flowers_01.pvr */,
+				7EE4826816847E7C0006E99B /* gen_forest_side_01.pvr */,
+				7EE4826916847E7C0006E99B /* gen_forest_top_01.pvr */,
+				7EE4826A16847E7C0006E99B /* gen_grass_01.pvr */,
+				7EE4826B16847E7C0006E99B /* gen_grass_02.pvr */,
+				7EE4826C16847E7C0006E99B /* gen_grass_03.pvr */,
+				7EE4826D16847E7C0006E99B /* gen_objects_01.pvr */,
+				7EE4826E16847E7C0006E99B /* gen_pavement_01.pvr */,
+				7EE4826F16847E7C0006E99B /* gen_pavement_02.pvr */,
+				7EE4827016847E7C0006E99B /* gen_pavement_03.pvr */,
+				7EE4827116847E7C0006E99B /* gen_residential_01.pvr */,
+				7EE4827216847E7C0006E99B /* gen_roads_01.pvr */,
+				7EE4827316847E7C0006E99B /* gen_rock_wall_01.pvr */,
+				7EE4827416847E7C0006E99B /* gen_sand_01.pvr */,
+				7EE4827516847E7C0006E99B /* gen_tarmac_01.pvr */,
+				7EE4827616847E7C0006E99B /* gen_water_01.pvr */,
+				7EE4827716847E7C0006E99B /* gen_water_02.pvr */,
+				7EE4827816847E7C0006E99B /* SanFrancisco_Vehicles.pod */,
+				7EE4827916847E7C0006E99B /* SF_POI_White.pvr */,
+				7EE4827A16847E7C0006E99B /* SF_POI_You.pvr */,
+				7EE4827B16847E7C0006E99B /* TerrainTexture0.pvr */,
+				7EE4827C16847E7C0006E99B /* TerrainTexture1.pvr */,
+				7EE4827D16847E7C0006E99B /* TerrainTexture10.pvr */,
+				7EE4827E16847E7C0006E99B /* TerrainTexture11.pvr */,
+				7EE4827F16847E7C0006E99B /* TerrainTexture12.pvr */,
+				7EE4828016847E7C0006E99B /* TerrainTexture13.pvr */,
+				7EE4828116847E7C0006E99B /* TerrainTexture14.pvr */,
+				7EE4828216847E7C0006E99B /* TerrainTexture15.pvr */,
+				7EE4828316847E7C0006E99B /* TerrainTexture2.pvr */,
+				7EE4828416847E7C0006E99B /* TerrainTexture3.pvr */,
+				7EE4828516847E7C0006E99B /* TerrainTexture4.pvr */,
+				7EE4828616847E7C0006E99B /* TerrainTexture5.pvr */,
+				7EE4828716847E7C0006E99B /* TerrainTexture6.pvr */,
+				7EE4828816847E7C0006E99B /* TerrainTexture7.pvr */,
+				7EE4828916847E7C0006E99B /* TerrainTexture8.pvr */,
+				7EE4828A16847E7C0006E99B /* TerrainTexture9.pvr */,
+				7EE4828B16847E7C0006E99B /* Vehicles_01.pvr */,
+				7EE4828C16847E7C0006E99B /* Wake_01.pvr */,
+				7EE4828D16847E7C0006E99B /* Water_01.pvr */,
+				7EE4828E16847E7C0006E99B /* Water_02.pvr */,
+				7EE4828F16847E7C0006E99B /* Water_03.pvr */,
+				7EE4829016847E7C0006E99B /* WaterEdge_01.pvr */,
+			);
+			path = Textures;
+			sourceTree = "<group>";
+		};
+		7EE4829116847E7C0006E99B /* Icons */ = {
+			isa = PBXGroup;
+			children = (
+				7EE4829216847E7C0006E99B /* AppIcone_iPad_72X72.png */,
+				7EE4829316847E7C0006E99B /* AppIcone_iPad_Retina_144X144.png */,
+				7EE4829416847E7C0006E99B /* AppIcone_iPhone_57X57.png */,
+				7EE4829516847E7C0006E99B /* AppIcone_iPhone_Retina_114X114.png */,
+				7EE4829616847E7C0006E99B /* Default-Landscape@2x~ipad.png */,
+				7EE4829716847E7C0006E99B /* Default-Landscape~ipad.png */,
+				7EE4829816847E7C0006E99B /* Default-Portrait@2x~ipad.png */,
+				7EE4829916847E7C0006E99B /* Default-Portrait~ipad.png */,
+				7EE4829A16847E7C0006E99B /* Default.png */,
+				7EE4829B16847E7C0006E99B /* Default@2x.png */,
+			);
+			path = Icons;
+			sourceTree = "<group>";
+		};
+		7EE4829D16847E7C0006E99B /* San Fran */ = {
+			isa = PBXGroup;
+			children = (
+				7EE4829E16847E7C0006E99B /* Boats_01.pvr */,
+				7EE4829F16847E7C0006E99B /* Buildings_01.pvr */,
+				7EE482A016847E7C0006E99B /* Buildings_02.pvr */,
+				7EE482A116847E7C0006E99B /* camerapositions.txt */,
+				7EE482A216847E7C0006E99B /* Flowers_01.pvr */,
+				7EE482A316847E7C0006E99B /* Forest_Side_01.pvr */,
+				7EE482A416847E7C0006E99B /* Forest_Top_01.pvr */,
+				7EE482A516847E7C0006E99B /* Grass_01.pvr */,
+				7EE482A616847E7C0006E99B /* Grass_02.pvr */,
+				7EE482A716847E7C0006E99B /* Grass_03.pvr */,
+				7EE482A816847E7C0006E99B /* Key_01.pvr */,
+				7EE482A916847E7C0006E99B /* Key_02.pvr */,
+				7EE482AA16847E7C0006E99B /* Key_03.pvr */,
+				7EE482AB16847E7C0006E99B /* Objects_01.pvr */,
+				7EE482AC16847E7C0006E99B /* Parking_01.pvr */,
+				7EE482AD16847E7C0006E99B /* Pavement_01.pvr */,
+				7EE482AE16847E7C0006E99B /* Pavement_02.pvr */,
+				7EE482AF16847E7C0006E99B /* Pavement_03.pvr */,
+				7EE482B016847E7C0006E99B /* Planes_01.pvr */,
+				7EE482B116847E7C0006E99B /* Plinth_01.pvr */,
+				7EE482B216847E7C0006E99B /* Roads_01.pvr */,
+				7EE482B316847E7C0006E99B /* Roads_02.pvr */,
+				7EE482B416847E7C0006E99B /* Rock_Wall_01.pvr */,
+				7EE482B516847E7C0006E99B /* Rocks_01.pvr */,
+				7EE482B616847E7C0006E99B /* Rocks_02.pvr */,
+				7EE482B716847E7C0006E99B /* Sand_01.pvr */,
+				7EE482B816847E7C0006E99B /* SanFran_POI.dat */,
+				7EE482B916847E7C0006E99B /* SanFrancisco_Vehicles.pod */,
+				7EE482BA16847E7C0006E99B /* sf_att_park.pvr */,
+				7EE482BB16847E7C0006E99B /* SF_Boats.pod */,
+				7EE482BC16847E7C0006E99B /* sf_boats_01.pvr */,
+				7EE482BD16847E7C0006E99B /* sf_boats_02.pvr */,
+				7EE482BE16847E7C0006E99B /* sf_candlestick_park.pvr */,
+				7EE482BF16847E7C0006E99B /* sf_city_hall.pvr */,
+				7EE482C016847E7C0006E99B /* sf_cranes.pvr */,
+				7EE482C116847E7C0006E99B /* sf_crates.pvr */,
+				7EE482C216847E7C0006E99B /* sf_cupids_bow.pvr */,
+				7EE482C316847E7C0006E99B /* sf_de_young.pvr */,
+				7EE482C416847E7C0006E99B /* sf_embarcadero.pvr */,
+				7EE482C516847E7C0006E99B /* SF_Ferry_01.txt */,
+				7EE482C616847E7C0006E99B /* sf_ghiradelli_sq_01.pvr */,
+				7EE482C716847E7C0006E99B /* sf_ghiradelli_sq_02.pvr */,
+				7EE482C816847E7C0006E99B /* sf_grace_cathedral.pvr */,
+				7EE482C916847E7C0006E99B /* sf_height.ht */,
+				7EE482CA16847E7C0006E99B /* SF_Key_01.pvr */,
+				7EE482CB16847E7C0006E99B /* SF_Key_02.pvr */,
+				7EE482CC16847E7C0006E99B /* SF_Key_03.pvr */,
+				7EE482CD16847E7C0006E99B /* SF_Key_04.pvr */,
+				7EE482CE16847E7C0006E99B /* SF_Key_05.pvr */,
+				7EE482CF16847E7C0006E99B /* SF_Key_06.pvr */,
+				7EE482D016847E7C0006E99B /* SF_Key_07.pvr */,
+				7EE482D116847E7C0006E99B /* SF_Key_08.pvr */,
+				7EE482D216847E7C0006E99B /* SF_Key_13.pvr */,
+				7EE482D316847E7C0006E99B /* SF_Key_14.pvr */,
+				7EE482D416847E7C0006E99B /* SF_Key_15.pvr */,
+				7EE482D516847E7C0006E99B /* sf_north_point_towers.pvr */,
+				7EE482D616847E7C0006E99B /* sf_pier_39_01.pvr */,
+				7EE482D716847E7C0006E99B /* sf_pier_39_02.pvr */,
+				7EE482D816847E7C0006E99B /* sf_pier_39_03.pvr */,
+				7EE482D916847E7C0006E99B /* sf_rincon_hill.pvr */,
+				7EE482DA16847E7C0006E99B /* SF_Roads_01.txt */,
+				7EE482DB16847E7C0006E99B /* SF_Roads_02.txt */,
+				7EE482DC16847E7C0006E99B /* SF_Roads_03.txt */,
+				7EE482DD16847E7C0006E99B /* SF_Roads_04.txt */,
+				7EE482DE16847E7C0006E99B /* SF_Roads_05.txt */,
+				7EE482DF16847E7C0006E99B /* SF_Roads_06.txt */,
+				7EE482E016847E7C0006E99B /* SF_Roads_07.txt */,
+				7EE482E116847E7C0006E99B /* SF_Roads_08.txt */,
+				7EE482E216847E7C0006E99B /* sf_secrets.pvr */,
+				7EE482E316847E7C0006E99B /* sf_senior_centre.pvr */,
+				7EE482E416847E7C0006E99B /* sf_ships_balclutha.pvr */,
+				7EE482E516847E7C0006E99B /* sf_ships_eppleton_hall.pvr */,
+				7EE482E616847E7C0006E99B /* sf_ships_eureka.pvr */,
+				7EE482E716847E7C0006E99B /* sf_ships_hercules.pvr */,
+				7EE482E816847E7C0006E99B /* sf_st_ignatius_church.pvr */,
+				7EE482E916847E7C0006E99B /* sf_st_mary_cathedral.pvr */,
+				7EE482EA16847E7C0006E99B /* sf_st_peter_and_paul_church.pvr */,
+				7EE482EB16847E7C0006E99B /* sf_streetsigns.dat */,
+				7EE482EC16847E7C0006E99B /* sf_tram.pvr */,
+				7EE482ED16847E7C0006E99B /* sf_tram_routes.pvr */,
+				7EE482EE16847E7C0006E99B /* sf_yachts.pvr */,
+				7EE482EF16847E7C0006E99B /* SFCityData.txt */,
+				7EE482F016847E7C0006E99B /* Vehicles_01.pvr */,
+				7EE482F116847E7C0006E99B /* Wake_01.pvr */,
+				7EE482F216847E7C0006E99B /* Water_01.pvr */,
+				7EE482F316847E7C0006E99B /* Water_02.pvr */,
+				7EE482F416847E7C0006E99B /* Water_03.pvr */,
+				7EE482F516847E7C0006E99B /* WaterEdge_01.pvr */,
+			);
+			path = "San Fran";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		7EE481E516836F370006E99B /* ExampleApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7EE4820916836F370006E99B /* Build configuration list for PBXNativeTarget "ExampleApp" */;
+			buildPhases = (
+				7EE481E216836F370006E99B /* Sources */,
+				7EE481E316836F370006E99B /* Frameworks */,
+				7EE481E416836F370006E99B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ExampleApp;
+			productName = ExampleApp;
+			productReference = 7EE481E616836F370006E99B /* ExampleApp.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		7EE481DD16836F360006E99B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0450;
+				ORGANIZATIONNAME = eeGeo;
+			};
+			buildConfigurationList = 7EE481E016836F360006E99B /* Build configuration list for PBXProject "ExampleApp" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 7EE481DB16836F360006E99B;
+			productRefGroup = 7EE481E716836F370006E99B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				7EE481E516836F370006E99B /* ExampleApp */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		7EE481E416836F370006E99B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7EE481F716836F370006E99B /* InfoPlist.strings in Resources */,
+				7EE4820E1683713B0006E99B /* MainStoryboard_iPhone.storyboard in Resources */,
+				7EE48211168371460006E99B /* MainStoryboard_iPad.storyboard in Resources */,
+				7EE482F616847E7C0006E99B /* FrankBold_50@ipho2x.fnt in Resources */,
+				7EE482F716847E7C0006E99B /* FrankBold_50@ipho2x_0.png in Resources */,
+				7EE482F816847E7C0006E99B /* Boats_01.pvr in Resources */,
+				7EE482F916847E7C0006E99B /* Buildings_01.pvr in Resources */,
+				7EE482FA16847E7C0006E99B /* Buildings_02.pvr in Resources */,
+				7EE482FB16847E7C0006E99B /* City_Background.png in Resources */,
+				7EE482FC16847E7C0006E99B /* gen_buildings_01.pvr in Resources */,
+				7EE482FD16847E7C0006E99B /* gen_flowers_01.pvr in Resources */,
+				7EE482FE16847E7C0006E99B /* gen_forest_side_01.pvr in Resources */,
+				7EE482FF16847E7C0006E99B /* gen_forest_top_01.pvr in Resources */,
+				7EE4830016847E7C0006E99B /* gen_grass_01.pvr in Resources */,
+				7EE4830116847E7C0006E99B /* gen_grass_02.pvr in Resources */,
+				7EE4830216847E7C0006E99B /* gen_grass_03.pvr in Resources */,
+				7EE4830316847E7C0006E99B /* gen_objects_01.pvr in Resources */,
+				7EE4830416847E7C0006E99B /* gen_pavement_01.pvr in Resources */,
+				7EE4830516847E7C0006E99B /* gen_pavement_02.pvr in Resources */,
+				7EE4830616847E7C0006E99B /* gen_pavement_03.pvr in Resources */,
+				7EE4830716847E7C0006E99B /* gen_residential_01.pvr in Resources */,
+				7EE4830816847E7C0006E99B /* gen_roads_01.pvr in Resources */,
+				7EE4830916847E7C0006E99B /* gen_rock_wall_01.pvr in Resources */,
+				7EE4830A16847E7C0006E99B /* gen_sand_01.pvr in Resources */,
+				7EE4830B16847E7C0006E99B /* gen_tarmac_01.pvr in Resources */,
+				7EE4830C16847E7C0006E99B /* gen_water_01.pvr in Resources */,
+				7EE4830D16847E7C0006E99B /* gen_water_02.pvr in Resources */,
+				7EE4830E16847E7C0006E99B /* SanFrancisco_Vehicles.pod in Resources */,
+				7EE4830F16847E7C0006E99B /* SF_POI_White.pvr in Resources */,
+				7EE4831016847E7C0006E99B /* SF_POI_You.pvr in Resources */,
+				7EE4831116847E7C0006E99B /* TerrainTexture0.pvr in Resources */,
+				7EE4831216847E7C0006E99B /* TerrainTexture1.pvr in Resources */,
+				7EE4831316847E7C0006E99B /* TerrainTexture10.pvr in Resources */,
+				7EE4831416847E7C0006E99B /* TerrainTexture11.pvr in Resources */,
+				7EE4831516847E7C0006E99B /* TerrainTexture12.pvr in Resources */,
+				7EE4831616847E7C0006E99B /* TerrainTexture13.pvr in Resources */,
+				7EE4831716847E7C0006E99B /* TerrainTexture14.pvr in Resources */,
+				7EE4831816847E7C0006E99B /* TerrainTexture15.pvr in Resources */,
+				7EE4831916847E7C0006E99B /* TerrainTexture2.pvr in Resources */,
+				7EE4831A16847E7C0006E99B /* TerrainTexture3.pvr in Resources */,
+				7EE4831B16847E7C0006E99B /* TerrainTexture4.pvr in Resources */,
+				7EE4831C16847E7C0006E99B /* TerrainTexture5.pvr in Resources */,
+				7EE4831D16847E7C0006E99B /* TerrainTexture6.pvr in Resources */,
+				7EE4831E16847E7C0006E99B /* TerrainTexture7.pvr in Resources */,
+				7EE4831F16847E7C0006E99B /* TerrainTexture8.pvr in Resources */,
+				7EE4832016847E7C0006E99B /* TerrainTexture9.pvr in Resources */,
+				7EE4832116847E7C0006E99B /* Vehicles_01.pvr in Resources */,
+				7EE4832216847E7C0006E99B /* Wake_01.pvr in Resources */,
+				7EE4832316847E7C0006E99B /* Water_01.pvr in Resources */,
+				7EE4832416847E7C0006E99B /* Water_02.pvr in Resources */,
+				7EE4832516847E7C0006E99B /* Water_03.pvr in Resources */,
+				7EE4832616847E7C0006E99B /* WaterEdge_01.pvr in Resources */,
+				7EE4832716847E7C0006E99B /* AppIcone_iPad_72X72.png in Resources */,
+				7EE4832816847E7C0006E99B /* AppIcone_iPad_Retina_144X144.png in Resources */,
+				7EE4832916847E7C0006E99B /* AppIcone_iPhone_57X57.png in Resources */,
+				7EE4832A16847E7C0006E99B /* AppIcone_iPhone_Retina_114X114.png in Resources */,
+				7EE4832B16847E7C0006E99B /* Default-Landscape@2x~ipad.png in Resources */,
+				7EE4832C16847E7C0006E99B /* Default-Landscape~ipad.png in Resources */,
+				7EE4832D16847E7C0006E99B /* Default-Portrait@2x~ipad.png in Resources */,
+				7EE4832E16847E7C0006E99B /* Default-Portrait~ipad.png in Resources */,
+				7EE4832F16847E7C0006E99B /* Default.png in Resources */,
+				7EE4833016847E7C0006E99B /* Default@2x.png in Resources */,
+				7EE4833116847E7C0006E99B /* occupied_cells.txt in Resources */,
+				7EE4833216847E7C0006E99B /* Boats_01.pvr in Resources */,
+				7EE4833316847E7C0006E99B /* Buildings_01.pvr in Resources */,
+				7EE4833416847E7C0006E99B /* Buildings_02.pvr in Resources */,
+				7EE4833516847E7C0006E99B /* camerapositions.txt in Resources */,
+				7EE4833616847E7C0006E99B /* Flowers_01.pvr in Resources */,
+				7EE4833716847E7C0006E99B /* Forest_Side_01.pvr in Resources */,
+				7EE4833816847E7C0006E99B /* Forest_Top_01.pvr in Resources */,
+				7EE4833916847E7C0006E99B /* Grass_01.pvr in Resources */,
+				7EE4833A16847E7C0006E99B /* Grass_02.pvr in Resources */,
+				7EE4833B16847E7C0006E99B /* Grass_03.pvr in Resources */,
+				7EE4833C16847E7C0006E99B /* Key_01.pvr in Resources */,
+				7EE4833D16847E7C0006E99B /* Key_02.pvr in Resources */,
+				7EE4833E16847E7C0006E99B /* Key_03.pvr in Resources */,
+				7EE4833F16847E7C0006E99B /* Objects_01.pvr in Resources */,
+				7EE4834016847E7C0006E99B /* Parking_01.pvr in Resources */,
+				7EE4834116847E7C0006E99B /* Pavement_01.pvr in Resources */,
+				7EE4834216847E7C0006E99B /* Pavement_02.pvr in Resources */,
+				7EE4834316847E7C0006E99B /* Pavement_03.pvr in Resources */,
+				7EE4834416847E7C0006E99B /* Planes_01.pvr in Resources */,
+				7EE4834516847E7C0006E99B /* Plinth_01.pvr in Resources */,
+				7EE4834616847E7C0006E99B /* Roads_01.pvr in Resources */,
+				7EE4834716847E7C0006E99B /* Roads_02.pvr in Resources */,
+				7EE4834816847E7C0006E99B /* Rock_Wall_01.pvr in Resources */,
+				7EE4834916847E7C0006E99B /* Rocks_01.pvr in Resources */,
+				7EE4834A16847E7C0006E99B /* Rocks_02.pvr in Resources */,
+				7EE4834B16847E7C0006E99B /* Sand_01.pvr in Resources */,
+				7EE4834C16847E7C0006E99B /* SanFran_POI.dat in Resources */,
+				7EE4834D16847E7C0006E99B /* SanFrancisco_Vehicles.pod in Resources */,
+				7EE4834E16847E7C0006E99B /* sf_att_park.pvr in Resources */,
+				7EE4834F16847E7C0006E99B /* SF_Boats.pod in Resources */,
+				7EE4835016847E7C0006E99B /* sf_boats_01.pvr in Resources */,
+				7EE4835116847E7C0006E99B /* sf_boats_02.pvr in Resources */,
+				7EE4835216847E7C0006E99B /* sf_candlestick_park.pvr in Resources */,
+				7EE4835316847E7C0006E99B /* sf_city_hall.pvr in Resources */,
+				7EE4835416847E7C0006E99B /* sf_cranes.pvr in Resources */,
+				7EE4835516847E7C0006E99B /* sf_crates.pvr in Resources */,
+				7EE4835616847E7C0006E99B /* sf_cupids_bow.pvr in Resources */,
+				7EE4835716847E7C0006E99B /* sf_de_young.pvr in Resources */,
+				7EE4835816847E7C0006E99B /* sf_embarcadero.pvr in Resources */,
+				7EE4835916847E7C0006E99B /* SF_Ferry_01.txt in Resources */,
+				7EE4835A16847E7C0006E99B /* sf_ghiradelli_sq_01.pvr in Resources */,
+				7EE4835B16847E7C0006E99B /* sf_ghiradelli_sq_02.pvr in Resources */,
+				7EE4835C16847E7C0006E99B /* sf_grace_cathedral.pvr in Resources */,
+				7EE4835D16847E7C0006E99B /* sf_height.ht in Resources */,
+				7EE4835E16847E7C0006E99B /* SF_Key_01.pvr in Resources */,
+				7EE4835F16847E7C0006E99B /* SF_Key_02.pvr in Resources */,
+				7EE4836016847E7C0006E99B /* SF_Key_03.pvr in Resources */,
+				7EE4836116847E7C0006E99B /* SF_Key_04.pvr in Resources */,
+				7EE4836216847E7C0006E99B /* SF_Key_05.pvr in Resources */,
+				7EE4836316847E7C0006E99B /* SF_Key_06.pvr in Resources */,
+				7EE4836416847E7C0006E99B /* SF_Key_07.pvr in Resources */,
+				7EE4836516847E7C0006E99B /* SF_Key_08.pvr in Resources */,
+				7EE4836616847E7C0006E99B /* SF_Key_13.pvr in Resources */,
+				7EE4836716847E7C0006E99B /* SF_Key_14.pvr in Resources */,
+				7EE4836816847E7C0006E99B /* SF_Key_15.pvr in Resources */,
+				7EE4836916847E7C0006E99B /* sf_north_point_towers.pvr in Resources */,
+				7EE4836A16847E7C0006E99B /* sf_pier_39_01.pvr in Resources */,
+				7EE4836B16847E7C0006E99B /* sf_pier_39_02.pvr in Resources */,
+				7EE4836C16847E7C0006E99B /* sf_pier_39_03.pvr in Resources */,
+				7EE4836D16847E7C0006E99B /* sf_rincon_hill.pvr in Resources */,
+				7EE4836E16847E7C0006E99B /* SF_Roads_01.txt in Resources */,
+				7EE4836F16847E7C0006E99B /* SF_Roads_02.txt in Resources */,
+				7EE4837016847E7C0006E99B /* SF_Roads_03.txt in Resources */,
+				7EE4837116847E7C0006E99B /* SF_Roads_04.txt in Resources */,
+				7EE4837216847E7C0006E99B /* SF_Roads_05.txt in Resources */,
+				7EE4837316847E7C0006E99B /* SF_Roads_06.txt in Resources */,
+				7EE4837416847E7C0006E99B /* SF_Roads_07.txt in Resources */,
+				7EE4837516847E7C0006E99B /* SF_Roads_08.txt in Resources */,
+				7EE4837616847E7C0006E99B /* sf_secrets.pvr in Resources */,
+				7EE4837716847E7C0006E99B /* sf_senior_centre.pvr in Resources */,
+				7EE4837816847E7C0006E99B /* sf_ships_balclutha.pvr in Resources */,
+				7EE4837916847E7C0006E99B /* sf_ships_eppleton_hall.pvr in Resources */,
+				7EE4837A16847E7C0006E99B /* sf_ships_eureka.pvr in Resources */,
+				7EE4837B16847E7C0006E99B /* sf_ships_hercules.pvr in Resources */,
+				7EE4837C16847E7C0006E99B /* sf_st_ignatius_church.pvr in Resources */,
+				7EE4837D16847E7C0006E99B /* sf_st_mary_cathedral.pvr in Resources */,
+				7EE4837E16847E7C0006E99B /* sf_st_peter_and_paul_church.pvr in Resources */,
+				7EE4837F16847E7C0006E99B /* sf_streetsigns.dat in Resources */,
+				7EE4838016847E7C0006E99B /* sf_tram.pvr in Resources */,
+				7EE4838116847E7C0006E99B /* sf_tram_routes.pvr in Resources */,
+				7EE4838216847E7C0006E99B /* sf_yachts.pvr in Resources */,
+				7EE4838316847E7C0006E99B /* SFCityData.txt in Resources */,
+				7EE4838416847E7C0006E99B /* Vehicles_01.pvr in Resources */,
+				7EE4838516847E7C0006E99B /* Wake_01.pvr in Resources */,
+				7EE4838616847E7C0006E99B /* Water_01.pvr in Resources */,
+				7EE4838716847E7C0006E99B /* Water_02.pvr in Resources */,
+				7EE4838816847E7C0006E99B /* Water_03.pvr in Resources */,
+				7EE4838916847E7C0006E99B /* WaterEdge_01.pvr in Resources */,
+				7EA3084616C3FF0600602274 /* Themes in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7EE481E216836F370006E99B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7EE482151683715D0006E99B /* ViewController.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		7EE481F516836F370006E99B /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7EE481F616836F370006E99B /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		7EE4820C1683713B0006E99B /* MainStoryboard_iPhone.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7EE4820D1683713B0006E99B /* en */,
+			);
+			name = MainStoryboard_iPhone.storyboard;
+			sourceTree = "<group>";
+		};
+		7EE4820F168371460006E99B /* MainStoryboard_iPad.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7EE48210168371460006E99B /* en */,
+			);
+			name = MainStoryboard_iPad.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		7EE4820716836F370006E99B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = (
+					armv7,
+					i386,
+				);
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LIBRARY = "compiler-default";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = "armv7 i386";
+			};
+			name = Debug;
+		};
+		7EE4820816836F370006E99B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = (
+					armv7,
+					i386,
+				);
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LIBRARY = "compiler-default";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "armv7 i386";
+			};
+			name = Release;
+		};
+		7EE4820A16836F370006E99B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				ARCHS = (
+					armv7,
+					i386,
+				);
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				FRAMEWORK_SEARCH_PATHS = "";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ExampleApp/ExampleApp-Prefix.pch";
+				HEADER_SEARCH_PATHS = "Include/**";
+				INFOPLIST_FILE = "ExampleApp/ExampleApp-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Include\"",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALID_ARCHS = "armv7 i386";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		7EE4820B16836F370006E99B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				ARCHS = (
+					armv7,
+					i386,
+				);
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				FRAMEWORK_SEARCH_PATHS = "";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ExampleApp/ExampleApp-Prefix.pch";
+				HEADER_SEARCH_PATHS = "Include/**";
+				INFOPLIST_FILE = "ExampleApp/ExampleApp-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Include\"",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALID_ARCHS = "armv7 i386";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		7EE481E016836F360006E99B /* Build configuration list for PBXProject "ExampleApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7EE4820716836F370006E99B /* Debug */,
+				7EE4820816836F370006E99B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7EE4820916836F370006E99B /* Build configuration list for PBXNativeTarget "ExampleApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7EE4820A16836F370006E99B /* Debug */,
+				7EE4820B16836F370006E99B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 7EE481DD16836F360006E99B /* Project object */;
+}
