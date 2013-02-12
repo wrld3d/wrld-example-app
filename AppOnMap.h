@@ -1,18 +1,43 @@
-#ifndef __Mapply__AppOnMap__
-#define __Mapply__AppOnMap__
+#ifndef __ExampleApp__AppOnMap__
+#define __ExampleApp__AppOnMap__
 
 #include "IAppOnMap.h"
 #include "EegeoWorld.h"
 #include "RenderContext.h"
 #include "NewGlobeCamera.h"
+#include "IExample.h"
+#include "TerrainHeightProvider.h"
+#include "DebugSphereExample.h"
+#include "ScreenUnprojectExample.h"
+#include "LoadModelExample.h"
+
+namespace ExampleTypes
+{
+    enum Examples
+    {
+        DebugSphere=0,
+        ScreenUnproject,
+        TerrainHeightQuery,
+        LoadModel
+    };
+}
+
+ExampleTypes::Examples selectedExample = ExampleTypes::DebugSphere;
 
 class MyApp : public Eegeo::IAppOnMap
 {
+private:
+    Examples::IExample *pExample;
+    
 public:
     Eegeo::Camera::NewGlobeCamera* pGlobeCamera;
     
     MyApp(Eegeo::Camera::NewGlobeCamera* pGlobeCamera):pGlobeCamera(pGlobeCamera) { }
-    ~MyApp() { }
+    ~MyApp()
+    {
+        pExample->Suspend();
+        delete pExample;
+    }
     
     void OnStart ()
     {
@@ -33,11 +58,21 @@ public:
         pGlobeCamera->SetInterestHeadingDistance(location,
                                                  cameraControllerOrientationDegrees,
                                                  cameraControllerDistanceFromInterestPointMeters);
+        
+        pExample = CreateExample(selectedExample,
+                                 World().GetRenderContext(),
+                                 location,
+                                 World().GetCameraModel(),
+                                 *pGlobeCamera,
+                                 *pGlobeCamera->GetCamera(),
+                                 World().GetTerrainHeightProvider());
+        pExample->Start();
     }
     
     void Update (float dt)
     {
         World().Update(dt);
+        pExample->Update();
     }
     
     void Draw (float dt)
@@ -45,6 +80,36 @@ public:
         Eegeo::Rendering::GLState& glState = World().GetRenderContext().GLState();
         glState.ClearColor(0.8f, 0.8f, 0.8f, 1.f);
         World().Draw(dt);
+        pExample->Draw();
+    }
+    
+    Examples::IExample* CreateExample(ExampleTypes::Examples example,
+                                      Eegeo::Rendering::RenderContext& renderContext,
+                                      Eegeo::Space::LatLongAltitude interestLocation,
+                                      Eegeo::Camera::CameraModel& cameraModel,
+                                      Eegeo::Camera::NewGlobeCamera& globeCamera,
+                                      Eegeo::RenderCamera& renderCamera,
+                                      Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider)
+    {
+        switch(example)
+        {
+            case ExampleTypes::LoadModel:
+                return new Examples::LoadModelExample(renderContext,
+                                                      interestLocation,
+                                                      cameraModel,
+                                                      renderCamera);
+            case ExampleTypes::ScreenUnproject:
+            case ExampleTypes::TerrainHeightQuery:
+                return new Examples::ScreenUnprojectExample(renderContext,
+                                                            cameraModel,
+                                                            renderCamera,
+                                                            terrainHeightProvider);
+            case ExampleTypes::DebugSphere:
+                return new Examples::DebugSphereExample(renderContext,
+                                                        interestLocation,
+                                                        cameraModel,
+                                                        renderCamera);
+        }
     }
     
     void Event_TouchRotate 			(const AppInterface::RotateData& data) { World().GetCameraController().Event_TouchRotate(data); }
@@ -67,4 +132,4 @@ public:
     void Event_TouchUp 				(const AppInterface::TouchData& data) { World().GetCameraController().Event_TouchUp(data); }
 };
 
-#endif /* defined(__Mapply__AppOnMap__) */
+#endif /* defined(__ExampleApp__AppOnMap__) */

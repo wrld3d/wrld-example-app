@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		1860B65C16CA65D90004A39D /* placeholder.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 1860B65B16CA65D90004A39D /* placeholder.pvr */; };
+		7E5928B116CA7FA20005E64D /* DebugSphereExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E5928AA16CA7FA20005E64D /* DebugSphereExample.cpp */; };
+		7E5928B216CA7FA20005E64D /* LoadModelExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E5928AD16CA7FA20005E64D /* LoadModelExample.cpp */; };
+		7E5928B316CA7FA20005E64D /* ScreenUnprojectExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E5928AF16CA7FA20005E64D /* ScreenUnprojectExample.cpp */; };
 		7E75EE1E16848B8A00BCA283 /* libapps-on-maps-sim.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E75EE1D16848B8A00BCA283 /* libapps-on-maps-sim.a */; };
 		7E75EE1F16848D1D00BCA283 /* libapps-on-maps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE48223168373E20006E99B /* libapps-on-maps.a */; };
 		7EA3084616C3FF0600602274 /* Themes in Resources */ = {isa = PBXBuildFile; fileRef = 7EA3084516C3FF0600602274 /* Themes */; };
@@ -178,6 +181,13 @@
 
 /* Begin PBXFileReference section */
 		1860B65B16CA65D90004A39D /* placeholder.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = placeholder.pvr; sourceTree = "<group>"; };
+		7E5928AA16CA7FA20005E64D /* DebugSphereExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DebugSphereExample.cpp; sourceTree = "<group>"; };
+		7E5928AB16CA7FA20005E64D /* DebugSphereExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebugSphereExample.h; sourceTree = "<group>"; };
+		7E5928AC16CA7FA20005E64D /* IExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IExample.h; sourceTree = "<group>"; };
+		7E5928AD16CA7FA20005E64D /* LoadModelExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LoadModelExample.cpp; sourceTree = "<group>"; };
+		7E5928AE16CA7FA20005E64D /* LoadModelExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadModelExample.h; sourceTree = "<group>"; };
+		7E5928AF16CA7FA20005E64D /* ScreenUnprojectExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ScreenUnprojectExample.cpp; sourceTree = "<group>"; };
+		7E5928B016CA7FA20005E64D /* ScreenUnprojectExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScreenUnprojectExample.h; sourceTree = "<group>"; };
 		7E75EE1D16848B8A00BCA283 /* libapps-on-maps-sim.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libapps-on-maps-sim.a"; path = "Include/libapps-on-maps-sim.a"; sourceTree = "<group>"; };
 		7EA3084516C3FF0600602274 /* Themes */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Themes; sourceTree = "<group>"; };
 		7EE481E616836F370006E99B /* ExampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -375,6 +385,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7E5928A916CA7FA20005E64D /* Examples */ = {
+			isa = PBXGroup;
+			children = (
+				7E5928AA16CA7FA20005E64D /* DebugSphereExample.cpp */,
+				7E5928AB16CA7FA20005E64D /* DebugSphereExample.h */,
+				7E5928AC16CA7FA20005E64D /* IExample.h */,
+				7E5928AD16CA7FA20005E64D /* LoadModelExample.cpp */,
+				7E5928AE16CA7FA20005E64D /* LoadModelExample.h */,
+				7E5928AF16CA7FA20005E64D /* ScreenUnprojectExample.cpp */,
+				7E5928B016CA7FA20005E64D /* ScreenUnprojectExample.h */,
+			);
+			path = Examples;
+			sourceTree = SOURCE_ROOT;
+		};
 		7EE481DB16836F360006E99B = {
 			isa = PBXGroup;
 			children = (
@@ -416,6 +440,7 @@
 		7EE481F216836F370006E99B /* ExampleApp */ = {
 			isa = PBXGroup;
 			children = (
+				7E5928A916CA7FA20005E64D /* Examples */,
 				7EE482121683715D0006E99B /* AppOnMap.h */,
 				7EE482131683715D0006E99B /* ViewController.h */,
 				7EE482141683715D0006E99B /* ViewController.mm */,
@@ -848,6 +873,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				7EE482151683715D0006E99B /* ViewController.mm in Sources */,
+				7E5928B116CA7FA20005E64D /* DebugSphereExample.cpp in Sources */,
+				7E5928B216CA7FA20005E64D /* LoadModelExample.cpp in Sources */,
+				7E5928B316CA7FA20005E64D /* ScreenUnprojectExample.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
