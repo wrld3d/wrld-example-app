@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1860B65C16CA65D90004A39D /* placeholder.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 1860B65B16CA65D90004A39D /* placeholder.pvr */; };
 		7E75EE1E16848B8A00BCA283 /* libapps-on-maps-sim.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E75EE1D16848B8A00BCA283 /* libapps-on-maps-sim.a */; };
 		7E75EE1F16848D1D00BCA283 /* libapps-on-maps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE48223168373E20006E99B /* libapps-on-maps.a */; };
 		7EA3084616C3FF0600602274 /* Themes in Resources */ = {isa = PBXBuildFile; fileRef = 7EA3084516C3FF0600602274 /* Themes */; };
@@ -176,6 +177,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1860B65B16CA65D90004A39D /* placeholder.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = placeholder.pvr; sourceTree = "<group>"; };
 		7E75EE1D16848B8A00BCA283 /* libapps-on-maps-sim.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libapps-on-maps-sim.a"; path = "Include/libapps-on-maps-sim.a"; sourceTree = "<group>"; };
 		7EA3084516C3FF0600602274 /* Themes */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Themes; sourceTree = "<group>"; };
 		7EE481E616836F370006E99B /* ExampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -467,6 +469,7 @@
 		7EE4826116847E7C0006E99B /* Textures */ = {
 			isa = PBXGroup;
 			children = (
+				1860B65B16CA65D90004A39D /* placeholder.pvr */,
 				7EE4826216847E7C0006E99B /* Boats_01.pvr */,
 				7EE4826316847E7C0006E99B /* Buildings_01.pvr */,
 				7EE4826416847E7C0006E99B /* Buildings_02.pvr */,
@@ -833,6 +836,7 @@
 				7EE4838816847E7C0006E99B /* Water_03.pvr in Resources */,
 				7EE4838916847E7C0006E99B /* WaterEdge_01.pvr in Resources */,
 				7EA3084616C3FF0600602274 /* Themes in Resources */,
+				1860B65C16CA65D90004A39D /* placeholder.pvr in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
