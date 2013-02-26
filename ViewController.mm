@@ -248,7 +248,7 @@ CFTimeInterval debugStatsUpdateExpiry = 0;
     
     if(precaching)
     {
-        const Eegeo::Streaming::PrecachingService& precachingService = myApp->World().GetPrecachingService();
+        const Eegeo::Web::PrecachingService& precachingService = myApp->World().GetPrecachingService();
         [precacheVolumeProgress setProgress: (precachingService.UrlsLoaded()/(float)precachingService.TotalUrlsToLoad())];
         if(!precachingService.CurrentlyPrecaching())
         {
