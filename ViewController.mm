@@ -19,7 +19,7 @@
 #include "EegeoEnvironmentRendering.h"
 #include "MaterialRepository.h"
 #include "StencilShadowMaterial.h"
-#include "DefaultPlatformMaterialFactory.h"
+#include "DefaultMaterialFactory.h"
 
 #include "AppOnMap.h"
 #include "IOSHelper.h"
@@ -184,7 +184,7 @@ CFTimeInterval debugStatsUpdateExpiry = 0;
     Eegeo::RenderCamera* pMdkCamera = new Eegeo::RenderCamera();
     Eegeo::Camera::CameraModel*  pCameraModel = new Eegeo::Camera::CameraModel(pMdkCamera);
     Eegeo::Camera::NewGlobeCamera* gc = new Eegeo::Camera::NewGlobeCamera(pCameraModel, pMdkCamera);
-    Eegeo::Rendering::IPlatformMaterialFactory* materialFactory = new Eegeo::Rendering::DefaultPlatformMaterialFactory();
+    Eegeo::Rendering::IMaterialFactory* materialFactory = new Eegeo::Rendering::DefaultMaterialFactory();
     
     // Setup the Game
     myApp = new ::MyApp(gc);
