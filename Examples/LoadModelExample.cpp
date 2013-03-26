@@ -6,19 +6,21 @@ namespace Examples
     LoadModelExample::LoadModelExample(Eegeo::Rendering::RenderContext& renderContext,
                                        Eegeo::Space::LatLongAltitude interestLocation,
                                        Eegeo::Camera::CameraModel& cameraModel,
-                                       Eegeo::RenderCamera& renderCamera)
+                                       Eegeo::RenderCamera& renderCamera,
+                                       Eegeo::Helpers::ITextureFileLoader& textureLoader)
     :renderContext(renderContext)
     ,interestLocation(interestLocation)
     ,cameraModel(cameraModel)
-    ,renderCamera(renderCamera),
-    pModel(NULL)
+    ,renderCamera(renderCamera)
+    ,textureLoader(textureLoader)
+    ,pModel(NULL)
     {
         
     }
     
     void LoadModelExample::Start()
     {
-        pModel = new Eegeo::Model(renderContext.GLState());
+        pModel = new Eegeo::Model(renderContext.GetGLState(), textureLoader);
         
         //this is a .pod resource file included in the build
         pModel->Load("SanFrancisco_Vehicles");

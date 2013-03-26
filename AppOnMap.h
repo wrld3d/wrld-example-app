@@ -22,7 +22,7 @@ namespace ExampleTypes
     };
 }
 
-ExampleTypes::Examples selectedExample = ExampleTypes::DebugSphere;
+ExampleTypes::Examples selectedExample = ExampleTypes::TerrainHeightQuery;
 
 class MyApp : public Eegeo::IAppOnMap
 {
@@ -65,7 +65,8 @@ public:
                                  World().GetCameraModel(),
                                  *pGlobeCamera,
                                  *pGlobeCamera->GetCamera(),
-                                 World().GetTerrainHeightProvider());
+                                 World().GetTerrainHeightProvider(),
+                                 World().GetTextureLoader());
         pExample->Start();
     }
     
@@ -77,7 +78,7 @@ public:
     
     void Draw (float dt)
     {
-        Eegeo::Rendering::GLState& glState = World().GetRenderContext().GLState();
+        Eegeo::Rendering::GLState& glState = World().GetRenderContext().GetGLState();
         glState.ClearColor(0.8f, 0.8f, 0.8f, 1.f);
         World().Draw(dt);
         pExample->Draw();
@@ -89,7 +90,8 @@ public:
                                       Eegeo::Camera::CameraModel& cameraModel,
                                       Eegeo::Camera::NewGlobeCamera& globeCamera,
                                       Eegeo::RenderCamera& renderCamera,
-                                      Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider)
+                                      Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider,
+                                      Eegeo::Helpers::ITextureFileLoader& textureLoader)
     {
         switch(example)
         {
@@ -97,7 +99,8 @@ public:
                 return new Examples::LoadModelExample(renderContext,
                                                       interestLocation,
                                                       cameraModel,
-                                                      renderCamera);
+                                                      renderCamera,
+                                                      textureLoader);
             case ExampleTypes::ScreenUnproject:
             case ExampleTypes::TerrainHeightQuery:
                 return new Examples::ScreenUnprojectExample(renderContext,
