@@ -92,10 +92,6 @@ CFTimeInterval debugStatsUpdateExpiry = 0;
     streaming.SetEnabled(!streaming.Enabled());
 }
 
--(void)midokiModelsToggleButtonPressedHandler {
-    myApp->World().ToggleHandBuiltModelsEnabled();
-}
-
 -(void)debugControlsToggleButtonPressedHandler {
     
 	[fps setHidden:!fps.hidden];
@@ -195,7 +191,8 @@ CFTimeInterval debugStatsUpdateExpiry = 0;
                     pMdkCamera,
                     pCameraModel,
                     gc,
-                    materialFactory);
+                    materialFactory,
+                    true);
     
     precaching = false;
     [precacheVolumeProgress setProgress:0.0f];
@@ -212,9 +209,6 @@ CFTimeInterval debugStatsUpdateExpiry = 0;
     
     [streamingEnabled setTitle:@"Toggle Streaming" forState:UIControlStateNormal];
     [streamingEnabled addTarget:self action:@selector(streamingToggleButtonPressedHandler) forControlEvents:UIControlEventTouchUpInside];
-    
-    [toggleMidokiModels setTitle:@"Toggle Handbuilt Models" forState:UIControlStateNormal];
-    [toggleMidokiModels addTarget:self action:@selector(midokiModelsToggleButtonPressedHandler) forControlEvents:UIControlEventTouchUpInside];
     
     [debug setTitle:@"Debug!" forState:UIControlStateNormal];
     [debug addTarget:self action:@selector(debugControlsToggleButtonPressedHandler) forControlEvents:UIControlEventTouchUpInside];
