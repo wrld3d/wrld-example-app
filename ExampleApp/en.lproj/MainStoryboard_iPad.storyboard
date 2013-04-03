@@ -93,19 +93,6 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="SmZ-d9-AHv">
-                                <rect key="frame" x="21" y="395" width="203" height="33"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <accessibility key="accessibilityConfiguration" label=""/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" title="Toggle Handbuilt Models">
-                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <state key="highlighted">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Yqe-0d-e8d">
                                 <rect key="frame" x="20" y="20" width="120" height="37"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -209,7 +196,6 @@
                         <outlet property="smoothedFrameTime" destination="S8l-Xt-qiA" id="9np-Mu-alO"/>
                         <outlet property="streamingEnabled" destination="IRv-lj-CzA" id="gJQ-UC-Azi"/>
                         <outlet property="terrains" destination="uOW-Tl-caY" id="yXC-77-CvY"/>
-                        <outlet property="toggleMidokiModels" destination="SmZ-d9-AHv" id="bZz-aC-Ah2"/>
                         <outlet property="view" destination="5" id="gTN-du-S6k"/>
                         <outlet property="wireframeBuildings" destination="Cht-Qq-kKN" id="vPJ-wG-HWO"/>
                     </connections>
@@ -218,6 +204,60 @@
             </objects>
         </scene>
     </scenes>
+    <classes>
+        <class className="ViewController" superclassName="GLKViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="avgfps" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="barcelona" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buildings" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="cambridge" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="camera" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="chic" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="clearCache" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="debug" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="edin" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="fps" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="glasgow" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="kyoto" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="la" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="ldn" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="mem" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="models" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="ny" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="oban" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="payloads" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="places" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="precacheVolume" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="precacheVolumeProgress" candidateClass="UIProgressView"/>
+                <relationship kind="outlet" name="reinflateBuildings" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="renderData" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="resBtnBuildings" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="resBtnLandmarks" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="resBtnLcm" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="resBtnModels" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="resBtnPlacenames" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="resBtnRoads" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="resBtnShadows" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="resTxtAvgBuild" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="resTxtAvgBytesPerSuccessLoad" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="resTxtAvgLoadTimes" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="resTxtBytesLoadedFromCacheAndWeb" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="resTxtNumResourcesRequested" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="resTxtTotalByRequestOutcome" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="resTxtTotalBytesLoaded" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="resTxtTotalsForAllRes" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="resetCounters" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="sandiego" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="sf" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="smoothedFrameTime" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="streamingEnabled" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="terrains" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="toggleCollapse" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="wireframeBuildings" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <nil key="statusBar"/>
         <simulatedOrientationMetrics key="orientation" orientation="landscapeRight"/>
