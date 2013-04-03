@@ -192,7 +192,7 @@ CFTimeInterval debugStatsUpdateExpiry = 0;
                     pCameraModel,
                     gc,
                     materialFactory,
-                    true);
+                    false);
     
     precaching = false;
     [precacheVolumeProgress setProgress:0.0f];

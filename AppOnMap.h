@@ -10,6 +10,7 @@
 #include "DebugSphereExample.h"
 #include "ScreenUnprojectExample.h"
 #include "LoadModelExample.h"
+#include "EnvironmentNotifierExample.h"
 
 namespace ExampleTypes
 {
@@ -18,11 +19,12 @@ namespace ExampleTypes
         DebugSphere=0,
         ScreenUnproject,
         TerrainHeightQuery,
-        LoadModel
+        LoadModel,
+        EnvironmentNotifier
     };
 }
 
-ExampleTypes::Examples selectedExample = ExampleTypes::TerrainHeightQuery;
+ExampleTypes::Examples selectedExample = ExampleTypes::EnvironmentNotifier;
 
 class MyApp : public Eegeo::IAppOnMap
 {
@@ -66,7 +68,8 @@ public:
                                  *pGlobeCamera,
                                  *pGlobeCamera->GetCamera(),
                                  World().GetTerrainHeightProvider(),
-                                 World().GetTextureLoader());
+                                 World().GetTextureLoader(),
+                                 World().GetTerrainStreaming());
         pExample->Start();
     }
     
@@ -91,7 +94,8 @@ public:
                                       Eegeo::Camera::NewGlobeCamera& globeCamera,
                                       Eegeo::RenderCamera& renderCamera,
                                       Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider,
-                                      Eegeo::Helpers::ITextureFileLoader& textureLoader)
+                                      Eegeo::Helpers::ITextureFileLoader& textureLoader,
+                                      Eegeo::Resources::Terrain::TerrainStreaming& terrainStreaming)
     {
         switch(example)
         {
@@ -112,6 +116,12 @@ public:
                                                         interestLocation,
                                                         cameraModel,
                                                         renderCamera);
+            case ExampleTypes::EnvironmentNotifier:
+                return new Examples::EnvironmentNotifierExample(renderContext,
+                                                                cameraModel,
+                                                                renderCamera,
+                                                                terrainStreaming);
+                
         }
     }
     
