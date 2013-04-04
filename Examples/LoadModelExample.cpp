@@ -7,11 +7,13 @@ namespace Examples
                                        Eegeo::Space::LatLongAltitude interestLocation,
                                        Eegeo::Camera::CameraModel& cameraModel,
                                        Eegeo::RenderCamera& renderCamera,
+                                       Eegeo::Helpers::IFileIO& fileIO,
                                        Eegeo::Helpers::ITextureFileLoader& textureLoader)
     :renderContext(renderContext)
     ,interestLocation(interestLocation)
     ,cameraModel(cameraModel)
     ,renderCamera(renderCamera)
+    ,fileIO(fileIO)
     ,textureLoader(textureLoader)
     ,pModel(NULL)
     {
@@ -20,10 +22,10 @@ namespace Examples
     
     void LoadModelExample::Start()
     {
-        pModel = new Eegeo::Model(renderContext.GetGLState(), textureLoader);
+        pModel = new Eegeo::Model(renderContext.GetGLState(), textureLoader, fileIO);
         
         //this is a .pod resource file included in the build
-        pModel->Load("SanFrancisco_Vehicles");
+        pModel->Load("SanFrancisco_Vehicles.pod");
         
         //the layout of this resource is assumed - a "Vehicles" node should exist
         Eegeo::Node* parentNode = pModel->FindNode("Vehicles");

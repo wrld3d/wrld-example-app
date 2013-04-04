@@ -25,6 +25,7 @@ namespace Examples
         Eegeo::Rendering::RenderContext& renderContext;
         Eegeo::Camera::CameraModel& cameraModel;
         Eegeo::RenderCamera& renderCamera;
+        Eegeo::Helpers::IFileIO& fileIO;
         Eegeo::Helpers::ITextureFileLoader& textureLoader;
         Eegeo::Space::LatLongAltitude interestLocation;
    
@@ -36,6 +37,7 @@ namespace Examples
                          Eegeo::Space::LatLongAltitude interestLocation,
                          Eegeo::Camera::CameraModel& cameraModel,
                          Eegeo::RenderCamera& renderCamera,
+                         Eegeo::Helpers::IFileIO& fileIO,
                          Eegeo::Helpers::ITextureFileLoader& textureLoader);
         
         void Start();

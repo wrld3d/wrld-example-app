@@ -69,6 +69,7 @@ public:
                                  *pGlobeCamera->GetCamera(),
                                  World().GetTerrainHeightProvider(),
                                  World().GetTextureLoader(),
+                                 World().GetFileIO(),
                                  World().GetTerrainStreaming());
         pExample->Start();
     }
@@ -95,6 +96,7 @@ public:
                                       Eegeo::RenderCamera& renderCamera,
                                       Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider,
                                       Eegeo::Helpers::ITextureFileLoader& textureLoader,
+                                      Eegeo::Helpers::IFileIO& fileIO,
                                       Eegeo::Resources::Terrain::TerrainStreaming& terrainStreaming)
     {
         switch(example)
@@ -104,6 +106,7 @@ public:
                                                       interestLocation,
                                                       cameraModel,
                                                       renderCamera,
+                                                      fileIO,
                                                       textureLoader);
             case ExampleTypes::ScreenUnproject:
             case ExampleTypes::TerrainHeightQuery:

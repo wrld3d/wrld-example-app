@@ -45,7 +45,6 @@
 #include "Camera.h"
 #include "EffectHandler.h"
 #include "EffectHandler.h"
-#include "FileSystem.h"
 #include "LatLongAltitude.h"
 #include "CameraModel.h"
 #include "IAppOnMap.h"
@@ -60,7 +59,7 @@
 #include "iOSFileIO.h"
 #include "iOSTextureFileLoader.h"
 #include "iOSPayloadLoadRequestItemFactory.h"
-#include "iOSVehicleModelLoader.h"
+#include "VehicleModelLoader.h"
 #include "VehicleModelRepository.h"
 
 @interface ViewController()
@@ -454,7 +453,6 @@ NSTimer*    touchTimer;
     self.preferredFramesPerSecond = uTargetFPS;
     
 	App::Initialise();
-	Eegeo::FileSystem::Initialise();
     
     GLKViewDrawableMultisample multiSample;
     
@@ -539,10 +537,13 @@ NSTimer*    touchTimer;
     pMaterialFactory->Initialise(m_renderContext, pLighting, m_pBlitter, pFileIO, pTextureFileLoader);
     
     Eegeo::Traffic::VehicleModelRepository* pVehicleModelRepository = new Eegeo::Traffic::VehicleModelRepository;
-    iOSVehicleModelLoader* pVehicleModelLoader = new iOSVehicleModelLoader(m_renderContext->GetGLState(), *pTextureFileLoader);
-    std::vector<iOSVehicleModel*> vehicleModels;
+    Eegeo::Traffic::VehicleModelLoader* pVehicleModelLoader = new Eegeo::Traffic::VehicleModelLoader(m_renderContext->GetGLState(),
+                                                                                                     *pTextureFileLoader,
+                                                                                                     *pFileIO);
+   
+    std::vector<Eegeo::Traffic::VehicleModel*> vehicleModels;
     pVehicleModelLoader->LoadModels(vehicleModels);
-    for(std::vector<iOSVehicleModel*>::iterator it = vehicleModels.begin(); it != vehicleModels.end(); ++ it)
+    for(std::vector<Eegeo::Traffic::VehicleModel*>::iterator it = vehicleModels.begin(); it != vehicleModels.end(); ++ it)
     {
         Eegeo::Traffic::IVehicleModel* pVehicle = (Eegeo::Traffic::IVehicleModel*)(*it);
         pVehicleModelRepository->Add(pVehicle);
