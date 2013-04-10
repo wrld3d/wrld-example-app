@@ -136,7 +136,6 @@ namespace DebuggedResource
     enum ResourceType
     {
         Buildings=0,
-        Landmarks,
         Terrain,
         Placenames,
         Roads,
@@ -356,7 +355,6 @@ NSTimer*    touchTimer;
 
 -(void)resetCountersButtonPressedHandler {
     myApp->World().GetBuildingBuilder().ResetCounters();
-    myApp->World().GetLandmarksBuilder().ResetCounters();
     myApp->World().GetLcmTerrainBuilder().ResetCounters();
     myApp->World().GetModelBuilder().ResetCounters();
     myApp->World().GetPlaceNamesBuilder().ResetCounters();
@@ -622,7 +620,6 @@ NSTimer*    touchTimer;
     
     streams.resize(DebuggedResource::NumResources);
     streams[DebuggedResource::Buildings] = (&myApp->World().GetBuildingStreaming());
-    streams[DebuggedResource::Landmarks] = (&myApp->World().GetLandmarksStreaming());
     streams[DebuggedResource::Terrain] = (&myApp->World().GetTerrainStreaming());
     streams[DebuggedResource::Placenames] = (&myApp->World().GetPlaceNamesStreaming());
     streams[DebuggedResource::Roads] = (&myApp->World().GetRoadStreaming());
@@ -1062,7 +1059,6 @@ NSTimer*    touchTimer;
 }
 
 -(void)toggleLandmarkResourceDebugInfo {
-    [self toggleResourceDebug : resBtnLandmarks :DebuggedResource::Landmarks];
 }
 
 -(void)toggleLcmResourceDebugInfo {
@@ -1307,11 +1303,6 @@ NSTimer*    touchTimer;
         {
             ss << myApp->World().GetBuildingBuilder().AvgTimeTakenMs()
             << " ms for " << myApp->World().GetBuildingBuilder().NumBuilds() << " builds";
-        }break;
-        case DebuggedResource::Landmarks:
-        {
-            ss << myApp->World().GetLandmarksBuilder().AvgTimeTakenMs()
-            << " ms for " << myApp->World().GetLandmarksBuilder().NumBuilds() << " builds";
         }break;
         case DebuggedResource::Terrain:
             ss << "LCM: " << myApp->World().GetLcmTerrainBuilder().AvgTimeTakenMs()
