@@ -62,6 +62,8 @@
 #include "VehicleModelLoader.h"
 #include "VehicleModelRepository.h"
 
+using namespace Eegeo::iOS;
+
 @interface ViewController()
 {
     
