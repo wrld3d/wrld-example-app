@@ -22,23 +22,14 @@
 #include "App.h"
 #include "AppOnMap.h"
 #include "IOSHelper.h"
-#include "BuildingBuilder.h"
-#include "LandmarksBuilder.h"
 #include "LcmTerrainBuilder.h"
-#include "ModelBuilder.h"
 #include "PlaceNamesBuilder.h"
-#include "RoadBuilder.h"
-#include "ShadowBuilder.h"
 #include "PayloadPool.h"
 #include "SummaryStats.h"
 #include "BuildingStreaming.h"
-#include "LandmarksStreaming.h"
 #include "TerrainStreaming.h"
-#include "GroundModelStreaming.h"
-#include "AboveGroundModelStreaming.h"
 #include "PlaceNamesStreaming.h"
 #include "RoadStreaming.h"
-#include "ShadowStreaming.h"
 #include "DefaultMaterialFactory.h"
 #include "EnvironmentFlatteningService.h"
 #include "Graphics.h"
@@ -58,9 +49,9 @@
 #include "ResourceCache.h"
 #include "iOSFileIO.h"
 #include "iOSTextureFileLoader.h"
-#include "iOSPayloadLoadRequestItemFactory.h"
 #include "VehicleModelLoader.h"
 #include "VehicleModelRepository.h"
+#include "iOSWebLoadRequestFactory.h"
 
 using namespace Eegeo::iOS;
 
@@ -141,7 +132,6 @@ namespace DebuggedResource
         Terrain,
         Placenames,
         Roads,
-        Shadows,
         NumResources,
         //this ordering is deliberate as "models" is an aggregate stream so must be treated differently
         Models,
@@ -282,12 +272,6 @@ NSTimer*    touchTimer;
     ss_buildings << "Buildings:: " << buildingPool.GetCount() << "/" <<  buildingPool.GetCapacity();
     buildings.text = [NSString stringWithUTF8String:ss_buildings.str().c_str()];
     
-    std::stringstream ss_models;
-    Eegeo::Resources::MeshPool<Eegeo::Rendering::RenderableItem*>& modelPool = myApp->World().GetModelMeshPool();
-    ss_models << "Models:: " << modelPool.GetCount() << "/" <<  modelPool.GetCapacity();
-    models.text = [NSString stringWithUTF8String:ss_models.str().c_str()];
-    
-    
     float meanTimeWaitingToBeQueuedHttp = myApp->World().GetPayloadPool().stateTimeStats(Eegeo::PayloadState::TO_BE_LOADED, false)->mean();
     float meanTimeQueuedForLoadingHttp = myApp->World().GetPayloadPool().stateTimeStats(Eegeo::PayloadState::QUEUED_FOR_LOADING, false)->mean();
     float meanTimeToLoadHttp = myApp->World().GetPayloadPool().stateTimeStats(Eegeo::PayloadState::LOADING, false)->mean();
@@ -358,18 +342,13 @@ NSTimer*    touchTimer;
 -(void)resetCountersButtonPressedHandler {
     myApp->World().GetBuildingBuilder().ResetCounters();
     myApp->World().GetLcmTerrainBuilder().ResetCounters();
-    myApp->World().GetModelBuilder().ResetCounters();
     myApp->World().GetPlaceNamesBuilder().ResetCounters();
     myApp->World().GetRoadBuilder().ResetCounters();
-    myApp->World().GetShadowBuilder().ResetCounters();
     
     for(std::vector<Eegeo::Streaming::LoggingResourceStream*>::iterator it = streams.begin(); it != streams.end(); ++ it)
     {
         (*it)->ResetCounters();
     }
-    
-    myApp->World().GetAboveGroundModelStream().ResetCounters();
-    myApp->World().GetGroundModelStreaming().ResetCounters();
     
     myApp->World().GetPayloadPool().ResetStats();
     framesForAvgFps = 0;
@@ -530,7 +509,7 @@ NSTimer*    touchTimer;
     Eegeo::Helpers::IFileIO* pFileIO = p_iOSFileIO;
     Eegeo::Helpers::ITextureFileLoader* pTextureFileLoader = new iOSTextureFileLoader(p_iOSFileIO, m_renderContext->GetGLState());
     Eegeo::Helpers::IHttpCache* pHttpCache = new iOSHttpCache;
-    Eegeo::Helpers::IPayloadLoadRequestItemFactory* pPayloadRequestFactory = new iOSPayloadLoadRequestItemFactory();
+    Eegeo::Web::IWebLoadRequestFactory* pPayloadRequestFactory = new Eegeo::Web::iOSWebLoadRequestFactory();
     Eegeo::Helpers::ITaskQueue* pTaskQueue = new iOSTaskQueue(10);
     
     Eegeo::Rendering::IMaterialFactory* pMaterialFactory = new Eegeo::Rendering::DefaultMaterialFactory();
@@ -625,7 +604,6 @@ NSTimer*    touchTimer;
     streams[DebuggedResource::Terrain] = (&myApp->World().GetTerrainStreaming());
     streams[DebuggedResource::Placenames] = (&myApp->World().GetPlaceNamesStreaming());
     streams[DebuggedResource::Roads] = (&myApp->World().GetRoadStreaming());
-    streams[DebuggedResource::Shadows] = (&myApp->World().GetShadowStreaming());
 }
 
 -(void)debugControlsToggleButtonPressedHandler {
@@ -1080,7 +1058,6 @@ NSTimer*    touchTimer;
 }
 
 -(void)toggleShadowsResourceDebugInfo {
-    [self toggleResourceDebug : resBtnShadows :DebuggedResource::Shadows];
 }
 
 -(void)printResourceStats {
@@ -1144,12 +1121,7 @@ NSTimer*    touchTimer;
 -(void)getTotalNumResourcesRequested:(std::stringstream&)ss{
     ss << "Total Requests :: ";
     
-    if(currentDebuggedResource == DebuggedResource::Models)
-    {
-        ss << myApp->World().GetAboveGroundModelStream().TotalNumRequests()
-        + myApp->World().GetGroundModelStreaming().TotalNumRequests();
-    }
-    else if (currentDebuggedResource != DebuggedResource::None)
+    if (currentDebuggedResource != DebuggedResource::None)
     {
         ss << streams[currentDebuggedResource]->TotalNumRequests();
     }
@@ -1158,12 +1130,7 @@ NSTimer*    touchTimer;
 -(void)getTotalBytesLoaded:(std::stringstream&)ss{
     ss << "Total Bytes Loaded :: ";
     
-    if(currentDebuggedResource == DebuggedResource::Models)
-    {
-        ss << myApp->World().GetAboveGroundModelStream().TotalBytesSuccessRequests() / 1024
-        + myApp->World().GetGroundModelStreaming().TotalBytesSuccessRequests() / 1024;
-    }
-    else if (currentDebuggedResource != DebuggedResource::None)
+    if (currentDebuggedResource != DebuggedResource::None)
     {
         ss << streams[currentDebuggedResource]->TotalBytesSuccessRequests() / 1024;
     }
@@ -1173,24 +1140,14 @@ NSTimer*    touchTimer;
 
 -(void)getBytesFromCacheOrWeb:(std::stringstream&)ss{
     
-    if(currentDebuggedResource == DebuggedResource::Models)
-    {
-        ss << myApp->World().GetAboveGroundModelStream().TotalBytesSuccessRequestsFromWeb() / 1024
-        + myApp->World().GetGroundModelStreaming().TotalBytesSuccessRequestsFromWeb() / 1024;
-    }
-    else if (currentDebuggedResource != DebuggedResource::None)
+    if (currentDebuggedResource != DebuggedResource::None)
     {
         ss << streams[currentDebuggedResource]->TotalBytesSuccessRequestsFromWeb() / 1024;
     }
     
     ss << " KB load from web, ";
     
-    if(currentDebuggedResource == DebuggedResource::Models)
-    {
-        ss << myApp->World().GetAboveGroundModelStream().TotalBytesSuccessRequestsFromCache() / 1024
-        + myApp->World().GetGroundModelStreaming().TotalBytesSuccessRequestsFromCache() / 1024;
-    }
-    else if (currentDebuggedResource != DebuggedResource::None)
+    if (currentDebuggedResource != DebuggedResource::None)
     {
         ss << streams[currentDebuggedResource]->TotalBytesSuccessRequestsFromCache() / 1024;
     }
@@ -1201,17 +1158,7 @@ NSTimer*    touchTimer;
 -(void)getAvgBytesPerSuccessLoad:(std::stringstream&)ss{
     ss << "Avg Bytes Per Successful Load :: ";
     
-    if(currentDebuggedResource == DebuggedResource::Models)
-    {
-        int bytes = myApp->World().GetAboveGroundModelStream().AvgBytesPerSuccessRequests()
-        + myApp->World().GetGroundModelStreaming().AvgBytesPerSuccessRequests();
-        
-        int requests = myApp->World().GetAboveGroundModelStream().TotalSuccessRequests()
-        + myApp->World().GetGroundModelStreaming().TotalSuccessRequests();
-        
-        ss << bytes / 1024 << " KB" << " for " << requests << " requests";
-    }
-    else if (currentDebuggedResource != DebuggedResource::None)
+    if (currentDebuggedResource != DebuggedResource::None)
     {
         ss << streams[currentDebuggedResource]->AvgBytesPerSuccessRequests() / 1024 << " KB"
         << " for " << streams[currentDebuggedResource]->TotalSuccessRequests() << " requests";
@@ -1220,36 +1167,21 @@ NSTimer*    touchTimer;
 
 -(void)getTotalsByRequestOutcomes:(std::stringstream&)ss{
     
-    if(currentDebuggedResource == DebuggedResource::Models)
-    {
-        ss << myApp->World().GetAboveGroundModelStream().TotalSuccessRequestsFromWeb()
-        + myApp->World().GetGroundModelStreaming().TotalSuccessRequestsFromWeb();
-    }
-    else if (currentDebuggedResource != DebuggedResource::None)
+    if (currentDebuggedResource != DebuggedResource::None)
     {
         ss << streams[currentDebuggedResource]->TotalSuccessRequestsFromWeb();
     }
     
     ss << " web loads, ";
     
-    if(currentDebuggedResource == DebuggedResource::Models)
-    {
-        ss << myApp->World().GetAboveGroundModelStream().TotalSuccessRequestsFromCache()
-        + myApp->World().GetGroundModelStreaming().TotalSuccessRequestsFromCache();
-    }
-    else if (currentDebuggedResource != DebuggedResource::None)
+    if (currentDebuggedResource != DebuggedResource::None)
     {
         ss << streams[currentDebuggedResource]->TotalSuccessRequestsFromCache();
     }
     
     ss << " cache loads, ";
     
-    if(currentDebuggedResource == DebuggedResource::Models)
-    {
-        ss << myApp->World().GetAboveGroundModelStream().TotalFailedRequests()
-        + myApp->World().GetGroundModelStreaming().TotalFailedRequests();
-    }
-    else if (currentDebuggedResource != DebuggedResource::None)
+    if (currentDebuggedResource != DebuggedResource::None)
     {
         ss << streams[currentDebuggedResource]->TotalFailedRequests();
     }
@@ -1259,36 +1191,21 @@ NSTimer*    touchTimer;
 
 -(void)getAvgLoadTimes:(std::stringstream&)ss{
     ss << "Avg full load times :: ";
-    if(currentDebuggedResource == DebuggedResource::Models)
-    {
-        ss << myApp->World().GetAboveGroundModelStream().AvgTimeSuccessWebLoadMs()
-        + myApp->World().GetGroundModelStreaming().AvgTimeSuccessWebLoadMs();
-    }
-    else if (currentDebuggedResource != DebuggedResource::None)
+    if (currentDebuggedResource != DebuggedResource::None)
     {
         ss << streams[currentDebuggedResource]->AvgTimeSuccessWebLoadMs();
     }
     
     ss << " ms web, ";
     
-    if(currentDebuggedResource == DebuggedResource::Models)
-    {
-        ss << myApp->World().GetAboveGroundModelStream().AvgTimeSuccessCacheLoadMs()
-        + myApp->World().GetGroundModelStreaming().AvgTimeSuccessCacheLoadMs();
-    }
-    else if (currentDebuggedResource != DebuggedResource::None)
+    if (currentDebuggedResource != DebuggedResource::None)
     {
         ss << streams[currentDebuggedResource]->AvgTimeSuccessCacheLoadMs();
     }
     
     ss << " ms cache, ";
     
-    if(currentDebuggedResource == DebuggedResource::Models)
-    {
-        ss << myApp->World().GetAboveGroundModelStream().AvgTimeFailWebLoadMs()
-        + myApp->World().GetGroundModelStreaming().AvgTimeFailWebLoadMs();
-    }
-    else if (currentDebuggedResource != DebuggedResource::None)
+    if (currentDebuggedResource != DebuggedResource::None)
     {
         ss << streams[currentDebuggedResource]->AvgTimeFailWebLoadMs();
     }
@@ -1311,11 +1228,7 @@ NSTimer*    touchTimer;
             << " ms for " << myApp->World().GetLcmTerrainBuilder().NumBuilds() << " builds";
         {
         }break;
-        case DebuggedResource::Models:
-            ss << myApp->World().GetModelBuilder().AvgTimeTakenMs()
-            << " ms for " << myApp->World().GetModelBuilder().NumBuilds() << " builds";
-        {
-        }break;
+       
         case DebuggedResource::Placenames:
             ss << myApp->World().GetPlaceNamesBuilder().AvgTimeTakenMs()
             << " ms for " << myApp->World().GetPlaceNamesBuilder().NumBuilds() << " builds";
@@ -1324,11 +1237,6 @@ NSTimer*    touchTimer;
         case DebuggedResource::Roads:
             ss << myApp->World().GetRoadBuilder().AvgTimeTakenMs()
             << " ms for " << myApp->World().GetRoadBuilder().NumBuilds() << " builds";
-        {
-        }break;
-        case DebuggedResource::Shadows:
-            ss << myApp->World().GetShadowBuilder().AvgTimeTakenMs()
-            << " ms for " << myApp->World().GetShadowBuilder().NumBuilds() << " builds";
         {
         }break;
         default: break;
