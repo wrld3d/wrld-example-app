@@ -22,7 +22,7 @@
 #include "App.h"
 #include "AppOnMap.h"
 #include "IOSHelper.h"
-#include "LcmTerrainBuilder.h"
+#include "ChunkedLcmTerrainBuilder.h"
 #include "PlaceNamesBuilder.h"
 #include "PayloadPool.h"
 #include "SummaryStats.h"
