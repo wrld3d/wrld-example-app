@@ -140,7 +140,7 @@ namespace DebuggedResource
     };
 }
 
-bool pixelScale = 1.0f;
+float pixelScale = 1.0f;
 bool menuHidden = false;
 std::vector<Eegeo::Streaming::LoggingResourceStream*> streams;
 DebuggedResource::ResourceType currentDebuggedResource = DebuggedResource::None;

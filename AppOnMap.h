@@ -24,7 +24,7 @@ namespace ExampleTypes
     };
 }
 
-ExampleTypes::Examples selectedExample = ExampleTypes::EnvironmentNotifier;
+ExampleTypes::Examples selectedExample = ExampleTypes::LoadModel;
 
 class MyApp : public Eegeo::IAppOnMap
 {
@@ -128,24 +128,24 @@ public:
         }
     }
     
-    void Event_TouchRotate 			(const AppInterface::RotateData& data) { World().GetCameraController().Event_TouchRotate(data); }
-    void Event_TouchRotate_Start	(const AppInterface::RotateData& data) { World().GetCameraController().Event_TouchRotate_Start(data); }
-    void Event_TouchRotate_End 		(const AppInterface::RotateData& data) { World().GetCameraController().Event_TouchRotate_End(data); }
+    void Event_TouchRotate 			(const AppInterface::RotateData& data) { pGlobeCamera->Event_TouchRotate(data); }
+    void Event_TouchRotate_Start	(const AppInterface::RotateData& data) { pGlobeCamera->Event_TouchRotate_Start(data); }
+    void Event_TouchRotate_End 		(const AppInterface::RotateData& data) { pGlobeCamera->Event_TouchRotate_End(data); }
     
-    void Event_TouchPinch 			(const AppInterface::PinchData& data) { World().GetCameraController().Event_TouchPinch(data); }
-    void Event_TouchPinch_Start 	(const AppInterface::PinchData& data) { World().GetCameraController().Event_TouchPinch_Start(data); }
-    void Event_TouchPinch_End 		(const AppInterface::PinchData& data) { World().GetCameraController().Event_TouchPinch_End(data); }
+    void Event_TouchPinch 			(const AppInterface::PinchData& data) { pGlobeCamera->Event_TouchPinch(data); }
+    void Event_TouchPinch_Start 	(const AppInterface::PinchData& data) { pGlobeCamera->Event_TouchPinch_Start(data); }
+    void Event_TouchPinch_End 		(const AppInterface::PinchData& data) { pGlobeCamera->Event_TouchPinch_End(data); }
     
-    void Event_TouchPan				(const AppInterface::PanData& data) { World().GetCameraController().Event_TouchPan(data); }
-    void Event_TouchPan_Start		(const AppInterface::PanData& data) { World().GetCameraController().Event_TouchPan_Start(data); }
-    void Event_TouchPan_End 		(const AppInterface::PanData& data) { World().GetCameraController().Event_TouchPan_End(data); }
+    void Event_TouchPan				(const AppInterface::PanData& data) { pGlobeCamera->Event_TouchPan(data); }
+    void Event_TouchPan_Start		(const AppInterface::PanData& data) { pGlobeCamera->Event_TouchPan_Start(data); }
+    void Event_TouchPan_End 		(const AppInterface::PanData& data) { pGlobeCamera->Event_TouchPan_End(data); }
     
-    void Event_TouchTap 			(const AppInterface::TapData& data) { World().GetCameraController().Event_TouchTap(data); }
-    void Event_TouchDoubleTap		(const AppInterface::TapData& data) { World().GetCameraController().Event_TouchDoubleTap(data); }
+    void Event_TouchTap 			(const AppInterface::TapData& data) { pGlobeCamera->Event_TouchTap(data); }
+    void Event_TouchDoubleTap		(const AppInterface::TapData& data) { pGlobeCamera->Event_TouchDoubleTap(data); }
     
-    void Event_TouchDown 			(const AppInterface::TouchData& data) { World().GetCameraController().Event_TouchDown(data); }
-    void Event_TouchMove 			(const AppInterface::TouchData& data) { World().GetCameraController().Event_TouchMove(data); }
-    void Event_TouchUp 				(const AppInterface::TouchData& data) { World().GetCameraController().Event_TouchUp(data); }
+    void Event_TouchDown 			(const AppInterface::TouchData& data) { pGlobeCamera->Event_TouchDown(data); }
+    void Event_TouchMove 			(const AppInterface::TouchData& data) { pGlobeCamera->Event_TouchMove(data); }
+    void Event_TouchUp 				(const AppInterface::TouchData& data) { pGlobeCamera->Event_TouchUp(data); }
 };
 
 #endif /* defined(__ExampleApp__AppOnMap__) */
