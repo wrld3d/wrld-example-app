@@ -53,6 +53,8 @@
 #include "VehicleModelRepository.h"
 #include "iOSWebLoadRequestFactory.h"
 
+#define API_KEY "OBTAIN API KEY FROM https://appstore.eegeo.com AND INSERT IT HERE"
+
 using namespace Eegeo::iOS;
 
 @interface ViewController()
@@ -183,18 +185,8 @@ NSTimer*    touchTimer;
 // ---------------------------------------------------------------------------------------------------------------------------
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect
 {
-    Eegeo::Camera::ICamera& cameraSelector = myApp->World().GetCameraController();
-    Eegeo::RenderCamera* currentCamera = cameraSelector.GetCamera();
-    
-    Eegeo::EffectHandler::Reset();
-    
-    m_renderContext->UpdateTransformsFromCamera(*currentCamera);
-    currentCamera->ClearDirty();
-    
-    Eegeo::EffectHandler::Temp_UpdateFromRenderContext(*m_renderContext);
-    
     Eegeo_GL(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT));
-    m_pBlitter->Reset();
+    
     myApp->Draw(1.0f/60.0f);
     
     const GLenum discards[]  = {GL_DEPTH_ATTACHMENT, GL_STENCIL_ATTACHMENT};
@@ -528,7 +520,8 @@ NSTimer*    touchTimer;
         pVehicleModelRepository->Add(pVehicle);
     }
     
-    myApp->Start(new Eegeo::EegeoWorld(pHttpCache,
+    myApp->Start(new Eegeo::EegeoWorld(API_KEY,
+                                       pHttpCache,
                                        pFileIO,
                                        pTextureFileLoader,
                                        pPayloadRequestFactory,
