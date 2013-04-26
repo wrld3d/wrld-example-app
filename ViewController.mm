@@ -186,7 +186,6 @@ NSTimer*    touchTimer;
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect
 {
     Eegeo_GL(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT));
-    
     myApp->Draw(1.0f/60.0f);
     
     const GLenum discards[]  = {GL_DEPTH_ATTACHMENT, GL_STENCIL_ATTACHMENT};
