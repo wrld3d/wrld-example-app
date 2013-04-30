@@ -102,7 +102,7 @@ namespace Examples
         Eegeo::v4 far(nx, ny, 1.0f, 1.0);
         
         Eegeo::m44 invVP;
-        Eegeo::m44::Inverse(invVP, renderContext.GetViewProjectionMatrix());
+        Eegeo::m44::Inverse(invVP, cameraModel.GetViewProjectionTransform());
        
         //unproject the points
         Eegeo::v4 unprojectedNear = Eegeo::v4::Mul(near, invVP);
