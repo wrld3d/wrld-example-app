@@ -196,16 +196,17 @@ NSTimer*    touchTimer;
 // ---------------------------------------------------------------------------------------------------------------------------
 - (void)update
 {
+    CFTimeInterval timeNow = CFAbsoluteTimeGetCurrent();
+    CFTimeInterval frameDuration = timeNow - previousTimestamp;
+    
     // Update the game.
-    myApp->Update(1.0f/60.0f);
+    myApp->Update(frameDuration);
     
     self.preferredFramesPerSecond = 60.0f;
     //////////
     
     ++framesForAvgFps;
     
-    CFTimeInterval timeNow = CFAbsoluteTimeGetCurrent();
-    CFTimeInterval frameDuration = timeNow - previousTimestamp;
     smoothedFrameDuration += (frameDuration - smoothedFrameDuration)*0.03;
     previousTimestamp = timeNow;
     
@@ -706,9 +707,9 @@ NSTimer*    touchTimer;
     }
     else if (recognizer.state == UIGestureRecognizerStateChanged)
     {
-        float delta = (_previousDist-dist)*0.005f;
-        
-		data.scale	= delta;
+        float delta = (_previousDist-dist);
+        float majorScreenDimension = fmaxf(m_renderContext->GetScreenHeight(), m_renderContext->GetScreenWidth());
+		data.scale = delta/majorScreenDimension;
         myApp->Event_TouchPinch (data);
         _previousDist = dist;
     }
@@ -735,6 +736,8 @@ NSTimer*    touchTimer;
 	AppInterface::PanData data;
 	
 	data.pointRelative	= *(Eegeo::v2*)&position;
+    float majorScreenDimension = fmaxf(m_renderContext->GetScreenHeight(), m_renderContext->GetScreenWidth());
+    data.pointRelativeNormalized = (data.pointRelative)/majorScreenDimension;
 	data.pointAbsolute	= *(Eegeo::v2*)&positionAbs;
 	data.velocity	= *(Eegeo::v2*)&velocity;
 	
