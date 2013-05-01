@@ -7,10 +7,15 @@
 #include "NewGlobeCamera.h"
 #include "IExample.h"
 #include "TerrainHeightProvider.h"
+#include "IWebLoadRequestFactory.h"
+#include "IFileIO.h"
+
 #include "DebugSphereExample.h"
 #include "ScreenUnprojectExample.h"
 #include "LoadModelExample.h"
 #include "EnvironmentNotifierExample.h"
+#include "WebRequestExample.h"
+#include "FileIOExample.h"
 
 namespace ExampleTypes
 {
@@ -20,11 +25,13 @@ namespace ExampleTypes
         ScreenUnproject,
         TerrainHeightQuery,
         LoadModel,
-        EnvironmentNotifier
+        EnvironmentNotifier,
+        WebRequest,
+        FileIO
     };
 }
 
-ExampleTypes::Examples selectedExample = ExampleTypes::LoadModel;
+ExampleTypes::Examples selectedExample = ExampleTypes::FileIO;
 
 class MyApp : public Eegeo::IAppOnMap
 {
@@ -70,7 +77,8 @@ public:
                                  World().GetTerrainHeightProvider(),
                                  World().GetTextureLoader(),
                                  World().GetFileIO(),
-                                 World().GetTerrainStreaming());
+                                 World().GetTerrainStreaming(),
+                                 World().GetWebRequestFactory());
         pExample->Start();
     }
     
@@ -97,7 +105,8 @@ public:
                                       Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider,
                                       Eegeo::Helpers::ITextureFileLoader& textureLoader,
                                       Eegeo::Helpers::IFileIO& fileIO,
-                                      Eegeo::Resources::Terrain::TerrainStreaming& terrainStreaming)
+                                      Eegeo::Resources::Terrain::TerrainStreaming& terrainStreaming,
+                                      Eegeo::Web::IWebLoadRequestFactory& webRequestFactory)
     {
         switch(example)
         {
@@ -124,7 +133,11 @@ public:
                                                                 cameraModel,
                                                                 renderCamera,
                                                                 terrainStreaming);
+            case ExampleTypes::WebRequest:
+                return new Examples::WebRequestExample(webRequestFactory);
                 
+            case ExampleTypes::FileIO:
+                return new Examples::FileIOExample(fileIO);
         }
     }
     
