@@ -16,6 +16,7 @@
 #include "EnvironmentNotifierExample.h"
 #include "WebRequestExample.h"
 #include "FileIOExample.h"
+#include "NavigationGraphExample.h"
 
 namespace ExampleTypes
 {
@@ -27,11 +28,12 @@ namespace ExampleTypes
         LoadModel,
         EnvironmentNotifier,
         WebRequest,
-        FileIO
+        FileIO,
+        NavigationGraph
     };
 }
 
-ExampleTypes::Examples selectedExample = ExampleTypes::FileIO;
+ExampleTypes::Examples selectedExample = ExampleTypes::NavigationGraph;
 
 class MyApp : public Eegeo::IAppOnMap
 {
@@ -78,7 +80,8 @@ public:
                                  World().GetTextureLoader(),
                                  World().GetFileIO(),
                                  World().GetTerrainStreaming(),
-                                 World().GetWebRequestFactory());
+                                 World().GetWebRequestFactory(),
+                                 World().GetNavigationGraphRepository());
         pExample->Start();
     }
     
@@ -106,7 +109,8 @@ public:
                                       Eegeo::Helpers::ITextureFileLoader& textureLoader,
                                       Eegeo::Helpers::IFileIO& fileIO,
                                       Eegeo::Resources::Terrain::TerrainStreaming& terrainStreaming,
-                                      Eegeo::Web::IWebLoadRequestFactory& webRequestFactory)
+                                      Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
+                                      Eegeo::Resources::Roads::Navigation::NavigationGraphRepository& navigationGraphs)
     {
         switch(example)
         {
@@ -138,6 +142,12 @@ public:
                 
             case ExampleTypes::FileIO:
                 return new Examples::FileIOExample(fileIO);
+                
+            case ExampleTypes::NavigationGraph:
+                return new Examples::NavigationGraphExample(renderContext,
+                                                            renderCamera,
+                                                            cameraModel,
+                                                            navigationGraphs);
         }
     }
     
