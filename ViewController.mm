@@ -52,6 +52,7 @@
 #include "VehicleModelLoader.h"
 #include "VehicleModelRepository.h"
 #include "iOSWebLoadRequestFactory.h"
+#include "iOSLocationService.h"
 
 #define API_KEY "OBTAIN API KEY FROM https://appstore.eegeo.com AND INSERT IT HERE"
 
@@ -69,6 +70,7 @@ using namespace Eegeo::iOS;
 
 @implementation ViewController
 
+CLLocationManager *locationManager;
 CFTimeInterval previousTimestamp = CFAbsoluteTimeGetCurrent();
 CFTimeInterval smoothedFrameDuration = 0.1;
 CFTimeInterval debugStatsUpdateExpiry = 0;
@@ -148,6 +150,7 @@ std::vector<Eegeo::Streaming::LoggingResourceStream*> streams;
 DebuggedResource::ResourceType currentDebuggedResource = DebuggedResource::None;
 UIButton* currentDebuggedResourceButton = NULL;
 NSTimer*    touchTimer;
+iOSLocationService* piOSLocationService = NULL;
 
 // ---------------------------------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------------
@@ -173,6 +176,11 @@ NSTimer*    touchTimer;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    locationManager = [[CLLocationManager alloc] init];
+    locationManager.delegate = self;
+    locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    [locationManager startUpdatingLocation];
     
     [self initInputs];
     [self initGraphics];
@@ -488,6 +496,8 @@ NSTimer*    touchTimer;
     Eegeo::Camera::CameraModel*  pCameraModel = new Eegeo::Camera::CameraModel(pRenderCamera);
     Eegeo::Camera::NewGlobeCamera* cameraController = new Eegeo::Camera::NewGlobeCamera(pCameraModel, pRenderCamera);
     
+    piOSLocationService = new iOSLocationService;
+
     myApp = new ::MyApp(cameraController);
     
     pRenderCamera->SetViewport(0.f, 0.f, m_renderContext->GetScreenWidth(), m_renderContext->GetScreenHeight());
@@ -532,8 +542,8 @@ NSTimer*    touchTimer;
                                        cameraController,
                                        pLighting,
                                        pMaterialFactory,
-                                       m_pBlitter,
-                                       false
+                                       piOSLocationService,
+                                       m_pBlitter
                                        ));
     
     m_renderContext->GetGLState().InvalidateAll();
@@ -1251,6 +1261,28 @@ NSTimer*    touchTimer;
 	{
 		return (interfaceOrientation == UIInterfaceOrientationLandscapeLeft || interfaceOrientation == UIInterfaceOrientationLandscapeRight);
 	}
+}
+
+
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
+{
+    piOSLocationService->FailedToGetLocation();
+}
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
+{
+    CLLocation *currentLocation = newLocation;
+    
+    if (currentLocation != nil)
+    {
+        double latDegrees = currentLocation.coordinate.latitude;
+        double lonDegrees = currentLocation.coordinate.longitude;
+        piOSLocationService->UpdateLocation(latDegrees, lonDegrees);
+    }
+    else
+    {
+        piOSLocationService->FailedToGetLocation();
+    }
 }
 
 @end

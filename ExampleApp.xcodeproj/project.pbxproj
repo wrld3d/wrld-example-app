@@ -184,6 +184,7 @@
 		7EE4838716847E7C0006E99B /* Water_02.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482F316847E7C0006E99B /* Water_02.pvr */; };
 		7EE4838816847E7C0006E99B /* Water_03.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482F416847E7C0006E99B /* Water_03.pvr */; };
 		7EE4838916847E7C0006E99B /* WaterEdge_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482F516847E7C0006E99B /* WaterEdge_01.pvr */; };
+		7EF5D8651737F9A40049D787 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EF5D8641737F9A40049D787 /* CoreLocation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -378,6 +379,7 @@
 		7EE482F316847E7C0006E99B /* Water_02.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Water_02.pvr; sourceTree = "<group>"; };
 		7EE482F416847E7C0006E99B /* Water_03.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Water_03.pvr; sourceTree = "<group>"; };
 		7EE482F516847E7C0006E99B /* WaterEdge_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = WaterEdge_01.pvr; sourceTree = "<group>"; };
+		7EF5D8641737F9A40049D787 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -385,6 +387,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7EF5D8651737F9A40049D787 /* CoreLocation.framework in Frameworks */,
 				7EC9D1FA1701B9E600F30D39 /* libapps-on-maps-sim.a in Frameworks */,
 				7EC9D1FB1701B9E600F30D39 /* libapps-on-maps.a in Frameworks */,
 				7EE48258168477CB0006E99B /* libz.dylib in Frameworks */,
@@ -431,6 +434,7 @@
 		7EE481DB16836F360006E99B = {
 			isa = PBXGroup;
 			children = (
+				7EF5D8641737F9A40049D787 /* CoreLocation.framework */,
 				7EE4825B16847E7C0006E99B /* Resources */,
 				7EE481F216836F370006E99B /* ExampleApp */,
 				7EE481E916836F370006E99B /* Frameworks */,

@@ -3,8 +3,9 @@
 #import "AppInterface.h"
 #import "AppOnMap.h"
 #import "External/Reachability/Reachability.h"
+#import <CoreLocation/CoreLocation.h>
 
-@interface ViewController : GLKViewController <UIGestureRecognizerDelegate>{
+@interface ViewController : GLKViewController <UIGestureRecognizerDelegate, CLLocationManagerDelegate>{
 
     MyApp * myApp;
     bool precaching;
