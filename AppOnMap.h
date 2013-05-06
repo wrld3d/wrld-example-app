@@ -9,6 +9,8 @@
 #include "TerrainHeightProvider.h"
 #include "IWebLoadRequestFactory.h"
 #include "IFileIO.h"
+#include "IStreamingVolume.h"
+#include "GlobalLighting.h"
 
 #include "DebugSphereExample.h"
 #include "ScreenUnprojectExample.h"
@@ -17,6 +19,7 @@
 #include "WebRequestExample.h"
 #include "FileIOExample.h"
 #include "NavigationGraphExample.h"
+#include "ModifiedRenderingExample.h"
 
 namespace ExampleTypes
 {
@@ -29,11 +32,12 @@ namespace ExampleTypes
         EnvironmentNotifier,
         WebRequest,
         FileIO,
-        NavigationGraph
+        NavigationGraph,
+        ModifiedRendering
     };
 }
 
-ExampleTypes::Examples selectedExample = ExampleTypes::NavigationGraph;
+ExampleTypes::Examples selectedExample = ExampleTypes::ModifiedRendering;
 
 class MyApp : public Eegeo::IAppOnMap
 {
@@ -81,7 +85,12 @@ public:
                                  World().GetFileIO(),
                                  World().GetTerrainStreaming(),
                                  World().GetWebRequestFactory(),
-                                 World().GetNavigationGraphRepository());
+                                 World().GetNavigationGraphRepository(),
+                                 World().GetBuildingMeshPool(),
+                                 World().GetShadowMeshPool(),
+                                 World().GetStreamingVolume(),
+                                 World().GetGlobalLighting());
+        
         pExample->Start();
     }
     
@@ -110,7 +119,11 @@ public:
                                       Eegeo::Helpers::IFileIO& fileIO,
                                       Eegeo::Resources::Terrain::TerrainStreaming& terrainStreaming,
                                       Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
-                                      Eegeo::Resources::Roads::Navigation::NavigationGraphRepository& navigationGraphs)
+                                      Eegeo::Resources::Roads::Navigation::NavigationGraphRepository& navigationGraphs,
+                                      Eegeo::Resources::MeshPool<Eegeo::Rendering::RenderableItem*>& buildingPool,
+                                      Eegeo::Resources::MeshPool<Eegeo::Rendering::RenderableItem*>& shadowPool,
+                                      Eegeo::Streaming::IStreamingVolume& visibleVolume,
+                                      Eegeo::Lighting::GlobalLighting& lighting)
     {
         switch(example)
         {
@@ -148,6 +161,16 @@ public:
                                                             renderCamera,
                                                             cameraModel,
                                                             navigationGraphs);
+                
+            case ExampleTypes::ModifiedRendering:
+                return new Examples::ModifiedRenderingExample(renderContext,
+                                                              renderCamera,
+                                                              cameraModel,
+                                                              globeCamera,
+                                                              visibleVolume,
+                                                              lighting,
+                                                              buildingPool,
+                                                              shadowPool);
         }
     }
     

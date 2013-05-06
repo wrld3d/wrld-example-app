@@ -14,6 +14,7 @@
 		7E7DF519172FD8F7005911AC /* WebRequestExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E7DF517172FD8F7005911AC /* WebRequestExample.cpp */; };
 		7E7DF51C17300A4E005911AC /* FileIOExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E7DF51A17300A4D005911AC /* FileIOExample.cpp */; };
 		7E7DF5271732AB27005911AC /* NavigationGraphExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E7DF5251732AB27005911AC /* NavigationGraphExample.cpp */; };
+		7E7DF52C1733B844005911AC /* ModifiedRenderingExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E7DF52A1733B844005911AC /* ModifiedRenderingExample.cpp */; };
 		7EA3084616C3FF0600602274 /* Themes in Resources */ = {isa = PBXBuildFile; fileRef = 7EA3084516C3FF0600602274 /* Themes */; };
 		7EC9D1FA1701B9E600F30D39 /* libapps-on-maps-sim.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E75EE1D16848B8A00BCA283 /* libapps-on-maps-sim.a */; };
 		7EC9D1FB1701B9E600F30D39 /* libapps-on-maps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE48223168373E20006E99B /* libapps-on-maps.a */; };
@@ -201,6 +202,8 @@
 		7E7DF51B17300A4D005911AC /* FileIOExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileIOExample.h; sourceTree = "<group>"; };
 		7E7DF5251732AB27005911AC /* NavigationGraphExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NavigationGraphExample.cpp; sourceTree = "<group>"; };
 		7E7DF5261732AB27005911AC /* NavigationGraphExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavigationGraphExample.h; sourceTree = "<group>"; };
+		7E7DF52A1733B844005911AC /* ModifiedRenderingExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ModifiedRenderingExample.cpp; sourceTree = "<group>"; };
+		7E7DF52B1733B844005911AC /* ModifiedRenderingExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModifiedRenderingExample.h; sourceTree = "<group>"; };
 		7EA3084516C3FF0600602274 /* Themes */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Themes; sourceTree = "<group>"; };
 		7EC9D1FD1701BA8F00F30D39 /* FrankBold50.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = FrankBold50.fnt; sourceTree = "<group>"; };
 		7ED3D7F916E0DB0B0050652B /* water_normalmap.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = water_normalmap.pvr; sourceTree = "<group>"; };
@@ -419,6 +422,8 @@
 				7E7DF51B17300A4D005911AC /* FileIOExample.h */,
 				7E7DF5251732AB27005911AC /* NavigationGraphExample.cpp */,
 				7E7DF5261732AB27005911AC /* NavigationGraphExample.h */,
+				7E7DF52A1733B844005911AC /* ModifiedRenderingExample.cpp */,
+				7E7DF52B1733B844005911AC /* ModifiedRenderingExample.h */,
 			);
 			path = Examples;
 			sourceTree = SOURCE_ROOT;
@@ -908,6 +913,7 @@
 				7E7DF519172FD8F7005911AC /* WebRequestExample.cpp in Sources */,
 				7E7DF51C17300A4E005911AC /* FileIOExample.cpp in Sources */,
 				7E7DF5271732AB27005911AC /* NavigationGraphExample.cpp in Sources */,
+				7E7DF52C1733B844005911AC /* ModifiedRenderingExample.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
