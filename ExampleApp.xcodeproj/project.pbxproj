@@ -16,6 +16,9 @@
 		7E7DF5271732AB27005911AC /* NavigationGraphExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E7DF5251732AB27005911AC /* NavigationGraphExample.cpp */; };
 		7E7DF52C1733B844005911AC /* ModifiedRenderingExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E7DF52A1733B844005911AC /* ModifiedRenderingExample.cpp */; };
 		7EA3084616C3FF0600602274 /* Themes in Resources */ = {isa = PBXBuildFile; fileRef = 7EA3084516C3FF0600602274 /* Themes */; };
+		7EB6F65A173A62F7004AE181 /* FrankBold50_Outline.fnt in Resources */ = {isa = PBXBuildFile; fileRef = 7EB6F657173A62F7004AE181 /* FrankBold50_Outline.fnt */; };
+		7EB6F65B173A62F7004AE181 /* FrankBold50_Outline.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EB6F658173A62F7004AE181 /* FrankBold50_Outline.png */; };
+		7EB6F65C173A62F7004AE181 /* FrankBold50.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EB6F659173A62F7004AE181 /* FrankBold50.png */; };
 		7EC9D1FA1701B9E600F30D39 /* libapps-on-maps-sim.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E75EE1D16848B8A00BCA283 /* libapps-on-maps-sim.a */; };
 		7EC9D1FB1701B9E600F30D39 /* libapps-on-maps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE48223168373E20006E99B /* libapps-on-maps.a */; };
 		7EC9D1FE1701BA8F00F30D39 /* FrankBold50.fnt in Resources */ = {isa = PBXBuildFile; fileRef = 7EC9D1FD1701BA8F00F30D39 /* FrankBold50.fnt */; };
@@ -37,7 +40,6 @@
 		7EE48254168477600006E99B /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE48252168477510006E99B /* SystemConfiguration.framework */; };
 		7EE48256168477A80006E99B /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE48255168477A80006E99B /* MobileCoreServices.framework */; };
 		7EE48258168477CB0006E99B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE48257168477CB0006E99B /* libz.dylib */; };
-		7EE482F716847E7C0006E99B /* FrankBold_50@ipho2x_0.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4825F16847E7C0006E99B /* FrankBold_50@ipho2x_0.png */; };
 		7EE482F816847E7C0006E99B /* Boats_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4826216847E7C0006E99B /* Boats_01.pvr */; };
 		7EE482F916847E7C0006E99B /* Buildings_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4826316847E7C0006E99B /* Buildings_01.pvr */; };
 		7EE482FA16847E7C0006E99B /* Buildings_02.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4826416847E7C0006E99B /* Buildings_02.pvr */; };
@@ -206,6 +208,9 @@
 		7E7DF52A1733B844005911AC /* ModifiedRenderingExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ModifiedRenderingExample.cpp; sourceTree = "<group>"; };
 		7E7DF52B1733B844005911AC /* ModifiedRenderingExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModifiedRenderingExample.h; sourceTree = "<group>"; };
 		7EA3084516C3FF0600602274 /* Themes */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Themes; sourceTree = "<group>"; };
+		7EB6F657173A62F7004AE181 /* FrankBold50_Outline.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = FrankBold50_Outline.fnt; sourceTree = "<group>"; };
+		7EB6F658173A62F7004AE181 /* FrankBold50_Outline.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FrankBold50_Outline.png; sourceTree = "<group>"; };
+		7EB6F659173A62F7004AE181 /* FrankBold50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FrankBold50.png; sourceTree = "<group>"; };
 		7EC9D1FD1701BA8F00F30D39 /* FrankBold50.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = FrankBold50.fnt; sourceTree = "<group>"; };
 		7ED3D7F916E0DB0B0050652B /* water_normalmap.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = water_normalmap.pvr; sourceTree = "<group>"; };
 		7ED3D7FA16E0DB0B0050652B /* water_reflectionmap.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = water_reflectionmap.pvr; sourceTree = "<group>"; };
@@ -232,7 +237,6 @@
 		7EE48252168477510006E99B /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		7EE48255168477A80006E99B /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		7EE48257168477CB0006E99B /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		7EE4825F16847E7C0006E99B /* FrankBold_50@ipho2x_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FrankBold_50@ipho2x_0.png"; sourceTree = "<group>"; };
 		7EE4826216847E7C0006E99B /* Boats_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Boats_01.pvr; sourceTree = "<group>"; };
 		7EE4826316847E7C0006E99B /* Buildings_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Buildings_01.pvr; sourceTree = "<group>"; };
 		7EE4826416847E7C0006E99B /* Buildings_02.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Buildings_02.pvr; sourceTree = "<group>"; };
@@ -518,8 +522,10 @@
 		7EE4825D16847E7C0006E99B /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				7EB6F657173A62F7004AE181 /* FrankBold50_Outline.fnt */,
+				7EB6F658173A62F7004AE181 /* FrankBold50_Outline.png */,
+				7EB6F659173A62F7004AE181 /* FrankBold50.png */,
 				7EC9D1FD1701BA8F00F30D39 /* FrankBold50.fnt */,
-				7EE4825F16847E7C0006E99B /* FrankBold_50@ipho2x_0.png */,
 			);
 			path = Fonts;
 			sourceTree = "<group>";
@@ -747,7 +753,6 @@
 				7EE481F716836F370006E99B /* InfoPlist.strings in Resources */,
 				7EE4820E1683713B0006E99B /* MainStoryboard_iPhone.storyboard in Resources */,
 				7EE48211168371460006E99B /* MainStoryboard_iPad.storyboard in Resources */,
-				7EE482F716847E7C0006E99B /* FrankBold_50@ipho2x_0.png in Resources */,
 				7EE482F816847E7C0006E99B /* Boats_01.pvr in Resources */,
 				7EE482F916847E7C0006E99B /* Buildings_01.pvr in Resources */,
 				7EE482FA16847E7C0006E99B /* Buildings_02.pvr in Resources */,
@@ -899,6 +904,9 @@
 				7ED3D7FB16E0DB0B0050652B /* water_normalmap.pvr in Resources */,
 				7ED3D7FC16E0DB0B0050652B /* water_reflectionmap.pvr in Resources */,
 				7EC9D1FE1701BA8F00F30D39 /* FrankBold50.fnt in Resources */,
+				7EB6F65A173A62F7004AE181 /* FrankBold50_Outline.fnt in Resources */,
+				7EB6F65B173A62F7004AE181 /* FrankBold50_Outline.png in Resources */,
+				7EB6F65C173A62F7004AE181 /* FrankBold50.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
