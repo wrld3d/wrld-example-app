@@ -21,7 +21,7 @@ namespace {
             const std::string& url = webLoadRequest.GetUrl();
             size_t responseBodySize = webLoadRequest.GetResourceData().size();
             
-            Eegeo_TTY("Finished Https POST of %s in a non member function of calling type, with user data %d - resource size of %ld\n",
+            Eegeo_TTY("\nFinished Https POST of %s in a non member function of calling type, with user data %d - resource size of %ld\n",
                       url.c_str(), *userData, responseBodySize);
             
             delete userData;
@@ -44,8 +44,9 @@ namespace Examples
     {
         Eegeo_TTY("Making 3 Http GETs with integer labels as user data using a member as the handler...\n");
         webRequestFactory.CreateGet("http://appstore.eegeo.com", *this, new int(1))->Load();
-        webRequestFactory.CreateGet("http://appstore.eegeo.com", *this, new int(2))->Load();
+        webRequestFactory.CreateGet("http://non-existent-example-host-1234.com", *this, new int(2))->Load();
         webRequestFactory.CreateGet("http://wikipedia.org", *this, new int(3))->Load();
+        webRequestFactory.CreateGet("http://d2xvsc8j92rfya.cloudfront.net/non_existent_resource.hcff", *this, new int(4))->Load();
         
         std::map<std::string, std::string> postData;
         postData["token"] = "123456789";
@@ -58,9 +59,10 @@ namespace Examples
         int* userData = (int*)webLoadRequest.GetUserData();
         const std::string& url = webLoadRequest.GetUrl();
         size_t responseBodySize = webLoadRequest.GetResourceData().size();
+        int result = webLoadRequest.HttpStatusCode();
         
-        Eegeo_TTY("Finished Http GET of %s in a member function of calling type, with user data %d - resource size of %ld\n",
-                  url.c_str(), *userData, responseBodySize);
+        Eegeo_TTY("\nFinished Http GET of %s in a member function of calling type, result was %d, with user data %d - resource size of %ld\n",
+                  url.c_str(), result, *userData, responseBodySize);
         
         delete userData;
     }
