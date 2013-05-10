@@ -30,7 +30,7 @@ namespace Examples
         void Draw() {}
         void Suspend() {}
         
-        void RequestComplete(const Eegeo::Web::IWebLoadRequest& webLoadRequest);
+        void RequestComplete(Eegeo::Web::IWebLoadRequest& webLoadRequest);
     };
 }
 

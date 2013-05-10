@@ -15,7 +15,7 @@ using namespace Eegeo::Web;
 namespace {
     class ExternalHandlerType_NotPartOfPublicAPI : public IWebLoadRequestCompletionCallback
     {
-        void operator()(const IWebLoadRequest& webLoadRequest)
+        void operator()(IWebLoadRequest& webLoadRequest)
         {
             int* userData = (int*)webLoadRequest.GetUserData();
             const std::string& url = webLoadRequest.GetUrl();
@@ -53,7 +53,7 @@ namespace Examples
         webRequestFactory.CreatePost("https://appstore.eegeo.com/validate", externalHandler, new int(5678), postData)->Load();
     }
 
-    void WebRequestExample::RequestComplete(const IWebLoadRequest& webLoadRequest)
+    void WebRequestExample::RequestComplete(IWebLoadRequest& webLoadRequest)
     {
         int* userData = (int*)webLoadRequest.GetUserData();
         const std::string& url = webLoadRequest.GetUrl();
