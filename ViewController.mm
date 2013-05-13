@@ -510,8 +510,9 @@ iOSLocationService* piOSLocationService = NULL;
     iOSFileIO* p_iOSFileIO = new iOSFileIO();
     Eegeo::Helpers::IFileIO* pFileIO = p_iOSFileIO;
     Eegeo::Helpers::ITextureFileLoader* pTextureFileLoader = new iOSTextureFileLoader(p_iOSFileIO, m_renderContext->GetGLState());
-    Eegeo::Helpers::IHttpCache* pHttpCache = new iOSHttpCache;
-    Eegeo::Web::IWebLoadRequestFactory* pPayloadRequestFactory = new Eegeo::Web::iOSWebLoadRequestFactory();
+    iOSHttpCache* p_iOSHttpCache = new iOSHttpCache(*p_iOSFileIO);
+    Eegeo::Helpers::IHttpCache* pHttpCache = p_iOSHttpCache;
+    Eegeo::Web::IWebLoadRequestFactory* pPayloadRequestFactory = new Eegeo::Web::iOSWebLoadRequestFactory(*p_iOSHttpCache);
     Eegeo::Helpers::ITaskQueue* pTaskQueue = new iOSTaskQueue(10);
     
     Eegeo::Rendering::IMaterialFactory* pMaterialFactory = new Eegeo::Rendering::DefaultMaterialFactory();
