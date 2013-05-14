@@ -20,6 +20,7 @@
 #include "FileIOExample.h"
 #include "NavigationGraphExample.h"
 #include "ModifiedRenderingExample.h"
+#include "ToggleTrafficExample.h"
 
 namespace ExampleTypes
 {
@@ -33,11 +34,12 @@ namespace ExampleTypes
         WebRequest,
         FileIO,
         NavigationGraph,
-        ModifiedRendering
+        ModifiedRendering,
+        ToggleTraffic
     };
 }
 
-ExampleTypes::Examples selectedExample = ExampleTypes::ModifiedRendering;
+ExampleTypes::Examples selectedExample = ExampleTypes::ToggleTraffic;
 
 class MyApp : public Eegeo::IAppOnMap
 {
@@ -89,7 +91,8 @@ public:
                                  World().GetBuildingMeshPool(),
                                  World().GetShadowMeshPool(),
                                  World().GetStreamingVolume(),
-                                 World().GetGlobalLighting());
+                                 World().GetGlobalLighting(),
+                                 World().GetTrafficSimulation());
         
         pExample->Start();
     }
@@ -123,7 +126,8 @@ public:
                                       Eegeo::Resources::MeshPool<Eegeo::Rendering::RenderableItem*>& buildingPool,
                                       Eegeo::Resources::MeshPool<Eegeo::Rendering::RenderableItem*>& shadowPool,
                                       Eegeo::Streaming::IStreamingVolume& visibleVolume,
-                                      Eegeo::Lighting::GlobalLighting& lighting)
+                                      Eegeo::Lighting::GlobalLighting& lighting,
+                                      Eegeo::Traffic::TrafficSimulation& trafficSimulation)
     {
         switch(example)
         {
@@ -171,6 +175,9 @@ public:
                                                               lighting,
                                                               buildingPool,
                                                               shadowPool);
+                
+            case ExampleTypes::ToggleTraffic:
+                return new Examples::ToggleTrafficExample(trafficSimulation);
         }
     }
     
