@@ -7,7 +7,7 @@
 //
 
 #include "ModifiedRenderingExample.h"
-#include "PooledResource.h"
+#include "PooledMesh.h"
 #include "IStreamingVolume.h"
 #include "DiffuseTexturedVertex.h"
 #include "MathsHelpers.h"
