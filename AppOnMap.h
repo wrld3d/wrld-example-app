@@ -21,6 +21,7 @@
 #include "NavigationGraphExample.h"
 #include "ModifiedRenderingExample.h"
 #include "ToggleTrafficExample.h"
+#include "ResourceSpatialQueryExample.h"
 
 namespace ExampleTypes
 {
@@ -35,11 +36,12 @@ namespace ExampleTypes
         FileIO,
         NavigationGraph,
         ModifiedRendering,
-        ToggleTraffic
+        ToggleTraffic,
+        ResourceSpatialQuery
     };
 }
 
-ExampleTypes::Examples selectedExample = ExampleTypes::ToggleTraffic;
+ExampleTypes::Examples selectedExample = ExampleTypes::ResourceSpatialQuery;
 
 class MyApp : public Eegeo::IAppOnMap
 {
@@ -92,7 +94,8 @@ public:
                                  World().GetShadowMeshPool(),
                                  World().GetStreamingVolume(),
                                  World().GetGlobalLighting(),
-                                 World().GetTrafficSimulation());
+                                 World().GetTrafficSimulation(),
+                                 World().GetResourceSpatialQueryService());
         
         pExample->Start();
     }
@@ -127,7 +130,8 @@ public:
                                       Eegeo::Resources::MeshPool<Eegeo::Rendering::RenderableItem*>& shadowPool,
                                       Eegeo::Streaming::IStreamingVolume& visibleVolume,
                                       Eegeo::Lighting::GlobalLighting& lighting,
-                                      Eegeo::Traffic::TrafficSimulation& trafficSimulation)
+                                      Eegeo::Traffic::TrafficSimulation& trafficSimulation,
+                                      Eegeo::Resources::ResourceSpatialQueryService& resourceSpatialQueryService)
     {
         switch(example)
         {
@@ -178,6 +182,10 @@ public:
                 
             case ExampleTypes::ToggleTraffic:
                 return new Examples::ToggleTrafficExample(trafficSimulation);
+                
+            case ExampleTypes::ResourceSpatialQuery:
+                return new Examples::ResourceSpatialQueryExample(resourceSpatialQueryService,
+                                                                 globeCamera);
         }
     }
     

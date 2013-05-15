@@ -25,6 +25,7 @@
 		7ED3D7FB16E0DB0B0050652B /* water_normalmap.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7ED3D7F916E0DB0B0050652B /* water_normalmap.pvr */; };
 		7ED3D7FC16E0DB0B0050652B /* water_reflectionmap.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7ED3D7FA16E0DB0B0050652B /* water_reflectionmap.pvr */; };
 		7ED4CF9317424CF400739A3D /* ToggleTrafficExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7ED4CF9117424CF400739A3D /* ToggleTrafficExample.cpp */; };
+		7ED4CF9B1742A85200739A3D /* ResourceSpatialQueryExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7ED4CF991742A85200739A3D /* ResourceSpatialQueryExample.cpp */; };
 		7EE1BC5E170C352200A4ED45 /* EnvironmentNotifierExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7EE1BC5C170C352200A4ED45 /* EnvironmentNotifierExample.cpp */; };
 		7EE481EB16836F370006E99B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE481EA16836F370006E99B /* UIKit.framework */; };
 		7EE481ED16836F370006E99B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE481EC16836F370006E99B /* Foundation.framework */; };
@@ -217,6 +218,8 @@
 		7ED3D7FA16E0DB0B0050652B /* water_reflectionmap.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = water_reflectionmap.pvr; sourceTree = "<group>"; };
 		7ED4CF9117424CF400739A3D /* ToggleTrafficExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ToggleTrafficExample.cpp; sourceTree = "<group>"; };
 		7ED4CF9217424CF400739A3D /* ToggleTrafficExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ToggleTrafficExample.h; sourceTree = "<group>"; };
+		7ED4CF991742A85200739A3D /* ResourceSpatialQueryExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ResourceSpatialQueryExample.cpp; sourceTree = "<group>"; };
+		7ED4CF9A1742A85200739A3D /* ResourceSpatialQueryExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceSpatialQueryExample.h; sourceTree = "<group>"; };
 		7EE1BC5C170C352200A4ED45 /* EnvironmentNotifierExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EnvironmentNotifierExample.cpp; sourceTree = "<group>"; };
 		7EE1BC5D170C352200A4ED45 /* EnvironmentNotifierExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnvironmentNotifierExample.h; sourceTree = "<group>"; };
 		7EE481E616836F370006E99B /* ExampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -436,6 +439,8 @@
 				7E7DF52B1733B844005911AC /* ModifiedRenderingExample.h */,
 				7ED4CF9117424CF400739A3D /* ToggleTrafficExample.cpp */,
 				7ED4CF9217424CF400739A3D /* ToggleTrafficExample.h */,
+				7ED4CF991742A85200739A3D /* ResourceSpatialQueryExample.cpp */,
+				7ED4CF9A1742A85200739A3D /* ResourceSpatialQueryExample.h */,
 			);
 			path = Examples;
 			sourceTree = SOURCE_ROOT;
@@ -932,6 +937,7 @@
 				7E7DF5271732AB27005911AC /* NavigationGraphExample.cpp in Sources */,
 				7E7DF52C1733B844005911AC /* ModifiedRenderingExample.cpp in Sources */,
 				7ED4CF9317424CF400739A3D /* ToggleTrafficExample.cpp in Sources */,
+				7ED4CF9B1742A85200739A3D /* ResourceSpatialQueryExample.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
