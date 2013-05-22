@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1860B65C16CA65D90004A39D /* placeholder.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 1860B65B16CA65D90004A39D /* placeholder.pvr */; };
+		59EA5B38174D144900C104D7 /* CoverageTrees in Resources */ = {isa = PBXBuildFile; fileRef = 59EA5B37174D144900C104D7 /* CoverageTrees */; };
 		7E5928B116CA7FA20005E64D /* DebugSphereExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E5928AA16CA7FA20005E64D /* DebugSphereExample.cpp */; };
 		7E5928B216CA7FA20005E64D /* LoadModelExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E5928AD16CA7FA20005E64D /* LoadModelExample.cpp */; };
 		7E5928B316CA7FA20005E64D /* ScreenUnprojectExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E5928AF16CA7FA20005E64D /* ScreenUnprojectExample.cpp */; };
@@ -193,6 +194,7 @@
 
 /* Begin PBXFileReference section */
 		1860B65B16CA65D90004A39D /* placeholder.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = placeholder.pvr; sourceTree = "<group>"; };
+		59EA5B37174D144900C104D7 /* CoverageTrees */ = {isa = PBXFileReference; lastKnownFileType = folder; path = CoverageTrees; sourceTree = "<group>"; };
 		7E5928AA16CA7FA20005E64D /* DebugSphereExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DebugSphereExample.cpp; sourceTree = "<group>"; };
 		7E5928AB16CA7FA20005E64D /* DebugSphereExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebugSphereExample.h; sourceTree = "<group>"; };
 		7E5928AC16CA7FA20005E64D /* IExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IExample.h; sourceTree = "<group>"; };
@@ -511,6 +513,7 @@
 		7EE4825B16847E7C0006E99B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				59EA5B37174D144900C104D7 /* CoverageTrees */,
 				7EA3084516C3FF0600602274 /* Themes */,
 				7EE4825C16847E7C0006E99B /* Common */,
 				7EE4829116847E7C0006E99B /* Icons */,
@@ -917,6 +920,7 @@
 				7EB6F65A173A62F7004AE181 /* FrankBold50_Outline.fnt in Resources */,
 				7EB6F65B173A62F7004AE181 /* FrankBold50_Outline.png in Resources */,
 				7EB6F65C173A62F7004AE181 /* FrankBold50.png in Resources */,
+				59EA5B38174D144900C104D7 /* CoverageTrees in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
