@@ -55,7 +55,7 @@
 #include "iOSWebLoadRequestFactory.h"
 #include "iOSLocationService.h"
 
-#define API_KEY "OBTAIN API KEY FROM https://appstore.eegeo.com AND INSERT IT HERE"
+#define API_KEY "92cee6f1372c2a92c02b751505b0ad6c"
 
 using namespace Eegeo::iOS;
 
@@ -526,7 +526,8 @@ iOSLocationService* piOSLocationService = NULL;
                                                                                                      *pFileIO);
    
     std::vector<Eegeo::Traffic::VehicleModel*> vehicleModels;
-    pVehicleModelLoader->LoadModels(vehicleModels);
+    std::string root = "Vehicles";
+    pVehicleModelLoader->LoadModels("SanFrancisco_Vehicles.pod", &root, vehicleModels);
     for(std::vector<Eegeo::Traffic::VehicleModel*>::iterator it = vehicleModels.begin(); it != vehicleModels.end(); ++ it)
     {
         Eegeo::Traffic::IVehicleModel* pVehicle = (Eegeo::Traffic::IVehicleModel*)(*it);
