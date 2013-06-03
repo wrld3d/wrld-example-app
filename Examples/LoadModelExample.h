@@ -62,6 +62,7 @@ namespace Examples
         Eegeo::Helpers::IFileIO& fileIO;
         Eegeo::Helpers::ITextureFileLoader& textureLoader;
         Eegeo::Space::LatLongAltitude interestLocation;
+        Eegeo::Lighting::GlobalFogging& globalFogging;
    
         Eegeo::Model* pModel;
         BoundsVisualiser boundsVisualiser;
@@ -73,7 +74,8 @@ namespace Examples
                          Eegeo::Camera::CameraModel& cameraModel,
                          Eegeo::RenderCamera& renderCamera,
                          Eegeo::Helpers::IFileIO& fileIO,
-                         Eegeo::Helpers::ITextureFileLoader& textureLoader);
+                         Eegeo::Helpers::ITextureFileLoader& textureLoader,
+                         Eegeo::Lighting::GlobalFogging& fogging);
         
         void Start();
         void Update();

@@ -189,6 +189,8 @@
 		7EE4838716847E7C0006E99B /* Water_02.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482F316847E7C0006E99B /* Water_02.pvr */; };
 		7EE4838816847E7C0006E99B /* Water_03.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482F416847E7C0006E99B /* Water_03.pvr */; };
 		7EE4838916847E7C0006E99B /* WaterEdge_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482F516847E7C0006E99B /* WaterEdge_01.pvr */; };
+		7EE9888E175CEC3900D3CE09 /* Rain_01.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EE9888C175CEC3900D3CE09 /* Rain_01.png */; };
+		7EE9888F175CEC3900D3CE09 /* Snow_01.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EE9888D175CEC3900D3CE09 /* Snow_01.png */; };
 		7EF5D8651737F9A40049D787 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EF5D8641737F9A40049D787 /* CoreLocation.framework */; };
 /* End PBXBuildFile section */
 
@@ -391,6 +393,8 @@
 		7EE482F316847E7C0006E99B /* Water_02.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Water_02.pvr; sourceTree = "<group>"; };
 		7EE482F416847E7C0006E99B /* Water_03.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Water_03.pvr; sourceTree = "<group>"; };
 		7EE482F516847E7C0006E99B /* WaterEdge_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = WaterEdge_01.pvr; sourceTree = "<group>"; };
+		7EE9888C175CEC3900D3CE09 /* Rain_01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Rain_01.png; sourceTree = "<group>"; };
+		7EE9888D175CEC3900D3CE09 /* Snow_01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Snow_01.png; sourceTree = "<group>"; };
 		7EF5D8641737F9A40049D787 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -546,6 +550,8 @@
 		7EE4826116847E7C0006E99B /* Textures */ = {
 			isa = PBXGroup;
 			children = (
+				7EE9888C175CEC3900D3CE09 /* Rain_01.png */,
+				7EE9888D175CEC3900D3CE09 /* Snow_01.png */,
 				7ED3D7F916E0DB0B0050652B /* water_normalmap.pvr */,
 				7ED3D7FA16E0DB0B0050652B /* water_reflectionmap.pvr */,
 				1860B65B16CA65D90004A39D /* placeholder.pvr */,
@@ -921,6 +927,8 @@
 				7EB6F65B173A62F7004AE181 /* FrankBold50_Outline.png in Resources */,
 				7EB6F65C173A62F7004AE181 /* FrankBold50.png in Resources */,
 				59EA5B38174D144900C104D7 /* CoverageTrees in Resources */,
+				7EE9888E175CEC3900D3CE09 /* Rain_01.png in Resources */,
+				7EE9888F175CEC3900D3CE09 /* Snow_01.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

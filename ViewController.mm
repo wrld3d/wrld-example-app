@@ -44,6 +44,7 @@
 #include "GLState.h"
 #include "RenderContext.h"
 #include "GlobalLighting.h"
+#include "GlobalFogging.h"
 #include "DefaultMaterialFactory.h"
 #include "iOSTaskQueue.h"
 #include "ResourceCache.h"
@@ -506,6 +507,7 @@ iOSLocationService* piOSLocationService = NULL;
     m_pBlitter->Initialise();
     
     Eegeo::Lighting::GlobalLighting* pLighting = new Eegeo::Lighting::GlobalLighting();
+    Eegeo::Lighting::GlobalFogging* pFogging = new Eegeo::Lighting::GlobalFogging();
     
     iOSFileIO* p_iOSFileIO = new iOSFileIO();
     Eegeo::Helpers::IFileIO* pFileIO = p_iOSFileIO;
@@ -516,7 +518,7 @@ iOSLocationService* piOSLocationService = NULL;
     Eegeo::Helpers::ITaskQueue* pTaskQueue = new iOSTaskQueue(10);
     
     Eegeo::Rendering::IMaterialFactory* pMaterialFactory = new Eegeo::Rendering::DefaultMaterialFactory();
-    pMaterialFactory->Initialise(m_renderContext, pLighting, m_pBlitter, pFileIO, pTextureFileLoader);
+    pMaterialFactory->Initialise(m_renderContext, pLighting, pFogging, m_pBlitter, pFileIO, pTextureFileLoader);
     
     Eegeo::Traffic::VehicleModelRepository* pVehicleModelRepository = new Eegeo::Traffic::VehicleModelRepository;
     Eegeo::Traffic::VehicleModelLoader* pVehicleModelLoader = new Eegeo::Traffic::VehicleModelLoader(m_renderContext->GetGLState(),
@@ -542,6 +544,7 @@ iOSLocationService* piOSLocationService = NULL;
                                        pCameraModel,
                                        cameraController,
                                        pLighting,
+                                       pFogging,
                                        pMaterialFactory,
                                        piOSLocationService,
                                        m_pBlitter

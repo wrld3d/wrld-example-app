@@ -9,7 +9,8 @@ namespace Examples
                                        Eegeo::Camera::CameraModel& cameraModel,
                                        Eegeo::RenderCamera& renderCamera,
                                        Eegeo::Helpers::IFileIO& fileIO,
-                                       Eegeo::Helpers::ITextureFileLoader& textureLoader)
+                                       Eegeo::Helpers::ITextureFileLoader& textureLoader,
+                                       Eegeo::Lighting::GlobalFogging& fogging)
     :renderContext(renderContext)
     ,interestLocation(interestLocation)
     ,cameraModel(cameraModel)
@@ -18,6 +19,7 @@ namespace Examples
     ,textureLoader(textureLoader)
     ,pModel(NULL)
     ,boundsVisualiser(renderContext)
+    ,globalFogging(fogging)
     {
         
     }
@@ -100,7 +102,7 @@ namespace Examples
         mesh.node->UpdateBBRecursive();
         
         //draw the mesh
-        mesh.node->Draw(renderContext);
+        mesh.node->Draw(renderContext, globalFogging);
         
         Eegeo::v3 min, max;
         mesh.node->GetMinExtent(min);

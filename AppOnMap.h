@@ -11,6 +11,7 @@
 #include "IFileIO.h"
 #include "IStreamingVolume.h"
 #include "GlobalLighting.h"
+#include "WeatherController.h"
 
 #include "DebugSphereExample.h"
 #include "ScreenUnprojectExample.h"
@@ -78,6 +79,8 @@ public:
                                                  cameraControllerOrientationDegrees,
                                                  cameraControllerDistanceFromInterestPointMeters);
         
+        World().GetWeatherController().SetWeather(Eegeo::Weather::Sunny, 1.0f);
+        
         pExample = CreateExample(selectedExample,
                                  World().GetRenderContext(),
                                  location,
@@ -94,6 +97,7 @@ public:
                                  World().GetShadowMeshPool(),
                                  World().GetStreamingVolume(),
                                  World().GetGlobalLighting(),
+                                 World().GetGlobalFogging(),
                                  World().GetTrafficSimulation(),
                                  World().GetResourceSpatialQueryService());
         
@@ -130,6 +134,7 @@ public:
                                       Eegeo::Resources::MeshPool<Eegeo::Rendering::RenderableItem*>& shadowPool,
                                       Eegeo::Streaming::IStreamingVolume& visibleVolume,
                                       Eegeo::Lighting::GlobalLighting& lighting,
+                                      Eegeo::Lighting::GlobalFogging& fogging,
                                       Eegeo::Traffic::TrafficSimulation& trafficSimulation,
                                       Eegeo::Resources::ResourceSpatialQueryService& resourceSpatialQueryService)
     {
@@ -141,7 +146,8 @@ public:
                                                       cameraModel,
                                                       renderCamera,
                                                       fileIO,
-                                                      textureLoader);
+                                                      textureLoader,
+                                                      fogging);
             case ExampleTypes::ScreenUnproject:
             case ExampleTypes::TerrainHeightQuery:
                 return new Examples::ScreenUnprojectExample(renderContext,
