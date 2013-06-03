@@ -55,7 +55,7 @@
 #include "iOSWebLoadRequestFactory.h"
 #include "iOSLocationService.h"
 
-#define API_KEY "92cee6f1372c2a92c02b751505b0ad6c"
+#define API_KEY "OBTAIN API KEY FROM https://appstore.eegeo.com AND INSERT IT HERE"
 
 using namespace Eegeo::iOS;
 
