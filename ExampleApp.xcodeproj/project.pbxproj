@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1860B65C16CA65D90004A39D /* placeholder.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 1860B65B16CA65D90004A39D /* placeholder.pvr */; };
+		187C5C72175DD69500146D06 /* EnvironmentFlatteningExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 187C5C70175DD69400146D06 /* EnvironmentFlatteningExample.cpp */; };
 		59EA5B38174D144900C104D7 /* CoverageTrees in Resources */ = {isa = PBXBuildFile; fileRef = 59EA5B37174D144900C104D7 /* CoverageTrees */; };
 		7E5928B116CA7FA20005E64D /* DebugSphereExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E5928AA16CA7FA20005E64D /* DebugSphereExample.cpp */; };
 		7E5928B216CA7FA20005E64D /* LoadModelExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E5928AD16CA7FA20005E64D /* LoadModelExample.cpp */; };
@@ -196,6 +197,8 @@
 
 /* Begin PBXFileReference section */
 		1860B65B16CA65D90004A39D /* placeholder.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = placeholder.pvr; sourceTree = "<group>"; };
+		187C5C70175DD69400146D06 /* EnvironmentFlatteningExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EnvironmentFlatteningExample.cpp; sourceTree = "<group>"; };
+		187C5C71175DD69500146D06 /* EnvironmentFlatteningExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnvironmentFlatteningExample.h; sourceTree = "<group>"; };
 		59EA5B37174D144900C104D7 /* CoverageTrees */ = {isa = PBXFileReference; lastKnownFileType = folder; path = CoverageTrees; sourceTree = "<group>"; };
 		7E5928AA16CA7FA20005E64D /* DebugSphereExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DebugSphereExample.cpp; sourceTree = "<group>"; };
 		7E5928AB16CA7FA20005E64D /* DebugSphereExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebugSphereExample.h; sourceTree = "<group>"; };
@@ -447,6 +450,8 @@
 				7ED4CF9217424CF400739A3D /* ToggleTrafficExample.h */,
 				7ED4CF991742A85200739A3D /* ResourceSpatialQueryExample.cpp */,
 				7ED4CF9A1742A85200739A3D /* ResourceSpatialQueryExample.h */,
+				187C5C70175DD69400146D06 /* EnvironmentFlatteningExample.cpp */,
+				187C5C71175DD69500146D06 /* EnvironmentFlatteningExample.h */,
 			);
 			path = Examples;
 			sourceTree = SOURCE_ROOT;
@@ -950,6 +955,7 @@
 				7E7DF52C1733B844005911AC /* ModifiedRenderingExample.cpp in Sources */,
 				7ED4CF9317424CF400739A3D /* ToggleTrafficExample.cpp in Sources */,
 				7ED4CF9B1742A85200739A3D /* ResourceSpatialQueryExample.cpp in Sources */,
+				187C5C72175DD69500146D06 /* EnvironmentFlatteningExample.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

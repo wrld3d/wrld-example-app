@@ -12,6 +12,7 @@
 #include "IStreamingVolume.h"
 #include "GlobalLighting.h"
 #include "WeatherController.h"
+#include "EnvironmentFlatteningService.h"
 
 #include "DebugSphereExample.h"
 #include "ScreenUnprojectExample.h"
@@ -23,6 +24,7 @@
 #include "ModifiedRenderingExample.h"
 #include "ToggleTrafficExample.h"
 #include "ResourceSpatialQueryExample.h"
+#include "EnvironmentFlatteningExample.h"
 
 namespace ExampleTypes
 {
@@ -38,11 +40,12 @@ namespace ExampleTypes
         NavigationGraph,
         ModifiedRendering,
         ToggleTraffic,
-        ResourceSpatialQuery
+        ResourceSpatialQuery,
+        EnvironmentFlattening
     };
 }
 
-ExampleTypes::Examples selectedExample = ExampleTypes::ResourceSpatialQuery;
+ExampleTypes::Examples selectedExample = ExampleTypes::EnvironmentFlattening;
 
 class MyApp : public Eegeo::IAppOnMap
 {
@@ -99,7 +102,8 @@ public:
                                  World().GetGlobalLighting(),
                                  World().GetGlobalFogging(),
                                  World().GetTrafficSimulation(),
-                                 World().GetResourceSpatialQueryService());
+                                 World().GetResourceSpatialQueryService(),
+                                 World().GetEnvironmentFlatteningService());
         
         pExample->Start();
     }
@@ -136,7 +140,8 @@ public:
                                       Eegeo::Lighting::GlobalLighting& lighting,
                                       Eegeo::Lighting::GlobalFogging& fogging,
                                       Eegeo::Traffic::TrafficSimulation& trafficSimulation,
-                                      Eegeo::Resources::ResourceSpatialQueryService& resourceSpatialQueryService)
+                                      Eegeo::Resources::ResourceSpatialQueryService& resourceSpatialQueryService,
+                                      Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService)
     {
         switch(example)
         {
@@ -192,6 +197,9 @@ public:
             case ExampleTypes::ResourceSpatialQuery:
                 return new Examples::ResourceSpatialQueryExample(resourceSpatialQueryService,
                                                                  globeCamera);
+            
+            case ExampleTypes::EnvironmentFlattening:
+                return new Examples::EnvironmentFlatteningExample(environmentFlatteningService);
         }
     }
     
