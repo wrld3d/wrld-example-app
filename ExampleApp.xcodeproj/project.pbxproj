@@ -9,6 +9,23 @@
 /* Begin PBXBuildFile section */
 		1860B65C16CA65D90004A39D /* placeholder.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 1860B65B16CA65D90004A39D /* placeholder.pvr */; };
 		187C5C72175DD69500146D06 /* EnvironmentFlatteningExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 187C5C70175DD69400146D06 /* EnvironmentFlatteningExample.cpp */; };
+		59D60FE4175E49950044449F /* TerrainTexture0_LOD.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 59D60FD3175E49950044449F /* TerrainTexture0_LOD.pvr */; };
+		59D60FE5175E49950044449F /* TerrainTexture1_LOD.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 59D60FD4175E49950044449F /* TerrainTexture1_LOD.pvr */; };
+		59D60FE6175E49950044449F /* TerrainTexture2_LOD.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 59D60FD5175E49950044449F /* TerrainTexture2_LOD.pvr */; };
+		59D60FE7175E49950044449F /* TerrainTexture3_LOD.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 59D60FD6175E49950044449F /* TerrainTexture3_LOD.pvr */; };
+		59D60FE8175E49950044449F /* TerrainTexture4_LOD.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 59D60FD7175E49950044449F /* TerrainTexture4_LOD.pvr */; };
+		59D60FE9175E49950044449F /* TerrainTexture5_LOD.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 59D60FD8175E49950044449F /* TerrainTexture5_LOD.pvr */; };
+		59D60FEA175E49950044449F /* TerrainTexture6_LOD.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 59D60FD9175E49950044449F /* TerrainTexture6_LOD.pvr */; };
+		59D60FEB175E49950044449F /* TerrainTexture7_LOD.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 59D60FDA175E49950044449F /* TerrainTexture7_LOD.pvr */; };
+		59D60FEC175E49950044449F /* TerrainTexture8_LOD.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 59D60FDB175E49950044449F /* TerrainTexture8_LOD.pvr */; };
+		59D60FED175E49950044449F /* TerrainTexture9_LOD.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 59D60FDC175E49950044449F /* TerrainTexture9_LOD.pvr */; };
+		59D60FEE175E49950044449F /* TerrainTexture10_LOD.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 59D60FDD175E49950044449F /* TerrainTexture10_LOD.pvr */; };
+		59D60FEF175E49950044449F /* TerrainTexture11_LOD.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 59D60FDE175E49950044449F /* TerrainTexture11_LOD.pvr */; };
+		59D60FF0175E49950044449F /* TerrainTexture12_LOD.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 59D60FDF175E49950044449F /* TerrainTexture12_LOD.pvr */; };
+		59D60FF1175E49950044449F /* TerrainTexture13_LOD.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 59D60FE0175E49950044449F /* TerrainTexture13_LOD.pvr */; };
+		59D60FF2175E49950044449F /* TerrainTexture14_LOD.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 59D60FE1175E49950044449F /* TerrainTexture14_LOD.pvr */; };
+		59D60FF3175E49950044449F /* TerrainTexture15_LOD.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 59D60FE2175E49950044449F /* TerrainTexture15_LOD.pvr */; };
+		59D60FF4175E49950044449F /* Water_01_LOD.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 59D60FE3175E49950044449F /* Water_01_LOD.pvr */; };
 		59EA5B38174D144900C104D7 /* CoverageTrees in Resources */ = {isa = PBXBuildFile; fileRef = 59EA5B37174D144900C104D7 /* CoverageTrees */; };
 		7E5928B116CA7FA20005E64D /* DebugSphereExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E5928AA16CA7FA20005E64D /* DebugSphereExample.cpp */; };
 		7E5928B216CA7FA20005E64D /* LoadModelExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E5928AD16CA7FA20005E64D /* LoadModelExample.cpp */; };
@@ -199,6 +216,23 @@
 		1860B65B16CA65D90004A39D /* placeholder.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = placeholder.pvr; sourceTree = "<group>"; };
 		187C5C70175DD69400146D06 /* EnvironmentFlatteningExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EnvironmentFlatteningExample.cpp; sourceTree = "<group>"; };
 		187C5C71175DD69500146D06 /* EnvironmentFlatteningExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnvironmentFlatteningExample.h; sourceTree = "<group>"; };
+		59D60FD3175E49950044449F /* TerrainTexture0_LOD.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = TerrainTexture0_LOD.pvr; sourceTree = "<group>"; };
+		59D60FD4175E49950044449F /* TerrainTexture1_LOD.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = TerrainTexture1_LOD.pvr; sourceTree = "<group>"; };
+		59D60FD5175E49950044449F /* TerrainTexture2_LOD.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = TerrainTexture2_LOD.pvr; sourceTree = "<group>"; };
+		59D60FD6175E49950044449F /* TerrainTexture3_LOD.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = TerrainTexture3_LOD.pvr; sourceTree = "<group>"; };
+		59D60FD7175E49950044449F /* TerrainTexture4_LOD.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = TerrainTexture4_LOD.pvr; sourceTree = "<group>"; };
+		59D60FD8175E49950044449F /* TerrainTexture5_LOD.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = TerrainTexture5_LOD.pvr; sourceTree = "<group>"; };
+		59D60FD9175E49950044449F /* TerrainTexture6_LOD.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = TerrainTexture6_LOD.pvr; sourceTree = "<group>"; };
+		59D60FDA175E49950044449F /* TerrainTexture7_LOD.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = TerrainTexture7_LOD.pvr; sourceTree = "<group>"; };
+		59D60FDB175E49950044449F /* TerrainTexture8_LOD.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = TerrainTexture8_LOD.pvr; sourceTree = "<group>"; };
+		59D60FDC175E49950044449F /* TerrainTexture9_LOD.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = TerrainTexture9_LOD.pvr; sourceTree = "<group>"; };
+		59D60FDD175E49950044449F /* TerrainTexture10_LOD.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = TerrainTexture10_LOD.pvr; sourceTree = "<group>"; };
+		59D60FDE175E49950044449F /* TerrainTexture11_LOD.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = TerrainTexture11_LOD.pvr; sourceTree = "<group>"; };
+		59D60FDF175E49950044449F /* TerrainTexture12_LOD.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = TerrainTexture12_LOD.pvr; sourceTree = "<group>"; };
+		59D60FE0175E49950044449F /* TerrainTexture13_LOD.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = TerrainTexture13_LOD.pvr; sourceTree = "<group>"; };
+		59D60FE1175E49950044449F /* TerrainTexture14_LOD.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = TerrainTexture14_LOD.pvr; sourceTree = "<group>"; };
+		59D60FE2175E49950044449F /* TerrainTexture15_LOD.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = TerrainTexture15_LOD.pvr; sourceTree = "<group>"; };
+		59D60FE3175E49950044449F /* Water_01_LOD.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Water_01_LOD.pvr; sourceTree = "<group>"; };
 		59EA5B37174D144900C104D7 /* CoverageTrees */ = {isa = PBXFileReference; lastKnownFileType = folder; path = CoverageTrees; sourceTree = "<group>"; };
 		7E5928AA16CA7FA20005E64D /* DebugSphereExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DebugSphereExample.cpp; sourceTree = "<group>"; };
 		7E5928AB16CA7FA20005E64D /* DebugSphereExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebugSphereExample.h; sourceTree = "<group>"; };
@@ -555,6 +589,23 @@
 		7EE4826116847E7C0006E99B /* Textures */ = {
 			isa = PBXGroup;
 			children = (
+				59D60FD3175E49950044449F /* TerrainTexture0_LOD.pvr */,
+				59D60FD4175E49950044449F /* TerrainTexture1_LOD.pvr */,
+				59D60FD5175E49950044449F /* TerrainTexture2_LOD.pvr */,
+				59D60FD6175E49950044449F /* TerrainTexture3_LOD.pvr */,
+				59D60FD7175E49950044449F /* TerrainTexture4_LOD.pvr */,
+				59D60FD8175E49950044449F /* TerrainTexture5_LOD.pvr */,
+				59D60FD9175E49950044449F /* TerrainTexture6_LOD.pvr */,
+				59D60FDA175E49950044449F /* TerrainTexture7_LOD.pvr */,
+				59D60FDB175E49950044449F /* TerrainTexture8_LOD.pvr */,
+				59D60FDC175E49950044449F /* TerrainTexture9_LOD.pvr */,
+				59D60FDD175E49950044449F /* TerrainTexture10_LOD.pvr */,
+				59D60FDE175E49950044449F /* TerrainTexture11_LOD.pvr */,
+				59D60FDF175E49950044449F /* TerrainTexture12_LOD.pvr */,
+				59D60FE0175E49950044449F /* TerrainTexture13_LOD.pvr */,
+				59D60FE1175E49950044449F /* TerrainTexture14_LOD.pvr */,
+				59D60FE2175E49950044449F /* TerrainTexture15_LOD.pvr */,
+				59D60FE3175E49950044449F /* Water_01_LOD.pvr */,
 				7EE9888C175CEC3900D3CE09 /* Rain_01.png */,
 				7EE9888D175CEC3900D3CE09 /* Snow_01.png */,
 				7ED3D7F916E0DB0B0050652B /* water_normalmap.pvr */,
@@ -934,6 +985,23 @@
 				59EA5B38174D144900C104D7 /* CoverageTrees in Resources */,
 				7EE9888E175CEC3900D3CE09 /* Rain_01.png in Resources */,
 				7EE9888F175CEC3900D3CE09 /* Snow_01.png in Resources */,
+				59D60FE4175E49950044449F /* TerrainTexture0_LOD.pvr in Resources */,
+				59D60FE5175E49950044449F /* TerrainTexture1_LOD.pvr in Resources */,
+				59D60FE6175E49950044449F /* TerrainTexture2_LOD.pvr in Resources */,
+				59D60FE7175E49950044449F /* TerrainTexture3_LOD.pvr in Resources */,
+				59D60FE8175E49950044449F /* TerrainTexture4_LOD.pvr in Resources */,
+				59D60FE9175E49950044449F /* TerrainTexture5_LOD.pvr in Resources */,
+				59D60FEA175E49950044449F /* TerrainTexture6_LOD.pvr in Resources */,
+				59D60FEB175E49950044449F /* TerrainTexture7_LOD.pvr in Resources */,
+				59D60FEC175E49950044449F /* TerrainTexture8_LOD.pvr in Resources */,
+				59D60FED175E49950044449F /* TerrainTexture9_LOD.pvr in Resources */,
+				59D60FEE175E49950044449F /* TerrainTexture10_LOD.pvr in Resources */,
+				59D60FEF175E49950044449F /* TerrainTexture11_LOD.pvr in Resources */,
+				59D60FF0175E49950044449F /* TerrainTexture12_LOD.pvr in Resources */,
+				59D60FF1175E49950044449F /* TerrainTexture13_LOD.pvr in Resources */,
+				59D60FF2175E49950044449F /* TerrainTexture14_LOD.pvr in Resources */,
+				59D60FF3175E49950044449F /* TerrainTexture15_LOD.pvr in Resources */,
+				59D60FF4175E49950044449F /* Water_01_LOD.pvr in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
