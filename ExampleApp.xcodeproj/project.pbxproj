@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		1860B65C16CA65D90004A39D /* placeholder.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 1860B65B16CA65D90004A39D /* placeholder.pvr */; };
 		187C5C72175DD69500146D06 /* EnvironmentFlatteningExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 187C5C70175DD69400146D06 /* EnvironmentFlatteningExample.cpp */; };
+		18D91728175F4B0D00DF96E0 /* trees_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 18D91726175F4B0D00DF96E0 /* trees_01.pvr */; };
+		18D91729175F4B0D00DF96E0 /* trees_top_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 18D91727175F4B0D00DF96E0 /* trees_top_01.pvr */; };
 		59D60FE8175E49950044449F /* TerrainTexture4_LOD.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 59D60FD7175E49950044449F /* TerrainTexture4_LOD.pvr */; };
 		59D60FE9175E49950044449F /* TerrainTexture5_LOD.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 59D60FD8175E49950044449F /* TerrainTexture5_LOD.pvr */; };
 		59D60FEA175E49950044449F /* TerrainTexture6_LOD.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 59D60FD9175E49950044449F /* TerrainTexture6_LOD.pvr */; };
@@ -216,6 +218,8 @@
 		1860B65B16CA65D90004A39D /* placeholder.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = placeholder.pvr; sourceTree = "<group>"; };
 		187C5C70175DD69400146D06 /* EnvironmentFlatteningExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EnvironmentFlatteningExample.cpp; sourceTree = "<group>"; };
 		187C5C71175DD69500146D06 /* EnvironmentFlatteningExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnvironmentFlatteningExample.h; sourceTree = "<group>"; };
+		18D91726175F4B0D00DF96E0 /* trees_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = trees_01.pvr; sourceTree = "<group>"; };
+		18D91727175F4B0D00DF96E0 /* trees_top_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = trees_top_01.pvr; sourceTree = "<group>"; };
 		59D60FD7175E49950044449F /* TerrainTexture4_LOD.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = TerrainTexture4_LOD.pvr; sourceTree = "<group>"; };
 		59D60FD8175E49950044449F /* TerrainTexture5_LOD.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = TerrainTexture5_LOD.pvr; sourceTree = "<group>"; };
 		59D60FD9175E49950044449F /* TerrainTexture6_LOD.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = TerrainTexture6_LOD.pvr; sourceTree = "<group>"; };
@@ -589,6 +593,8 @@
 		7EE4826116847E7C0006E99B /* Textures */ = {
 			isa = PBXGroup;
 			children = (
+				18D91726175F4B0D00DF96E0 /* trees_01.pvr */,
+				18D91727175F4B0D00DF96E0 /* trees_top_01.pvr */,
 				59D61016175F442B0044449F /* TerrainTexture0.pvr */,
 				59D61017175F442B0044449F /* TerrainTexture1.pvr */,
 				59D61018175F442B0044449F /* TerrainTexture2.pvr */,
@@ -1002,6 +1008,8 @@
 				59D6101D175F442B0044449F /* TerrainTexture2.pvr in Resources */,
 				59D6101E175F442B0044449F /* TerrainTexture3.pvr in Resources */,
 				59D6101F175F442B0044449F /* TerrainTexture15.pvr in Resources */,
+				18D91728175F4B0D00DF96E0 /* trees_01.pvr in Resources */,
+				18D91729175F4B0D00DF96E0 /* trees_top_01.pvr in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
