@@ -33,7 +33,7 @@
 		59D6101D175F442B0044449F /* TerrainTexture2.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 59D61018175F442B0044449F /* TerrainTexture2.pvr */; };
 		59D6101E175F442B0044449F /* TerrainTexture3.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 59D61019175F442B0044449F /* TerrainTexture3.pvr */; };
 		59D6101F175F442B0044449F /* TerrainTexture15.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 59D6101A175F442B0044449F /* TerrainTexture15.pvr */; };
-		59EA5B38174D144900C104D7 /* CoverageTrees in Resources */ = {isa = PBXBuildFile; fileRef = 59EA5B37174D144900C104D7 /* CoverageTrees */; };
+		59D6102E17661F420044449F /* CoverageTrees in Resources */ = {isa = PBXBuildFile; fileRef = 59D6102D17661F420044449F /* CoverageTrees */; };
 		7E5928B116CA7FA20005E64D /* DebugSphereExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E5928AA16CA7FA20005E64D /* DebugSphereExample.cpp */; };
 		7E5928B216CA7FA20005E64D /* LoadModelExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E5928AD16CA7FA20005E64D /* LoadModelExample.cpp */; };
 		7E5928B316CA7FA20005E64D /* ScreenUnprojectExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E5928AF16CA7FA20005E64D /* ScreenUnprojectExample.cpp */; };
@@ -242,7 +242,7 @@
 		59D61018175F442B0044449F /* TerrainTexture2.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = TerrainTexture2.pvr; sourceTree = "<group>"; };
 		59D61019175F442B0044449F /* TerrainTexture3.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = TerrainTexture3.pvr; sourceTree = "<group>"; };
 		59D6101A175F442B0044449F /* TerrainTexture15.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = TerrainTexture15.pvr; sourceTree = "<group>"; };
-		59EA5B37174D144900C104D7 /* CoverageTrees */ = {isa = PBXFileReference; lastKnownFileType = folder; path = CoverageTrees; sourceTree = "<group>"; };
+		59D6102D17661F420044449F /* CoverageTrees */ = {isa = PBXFileReference; lastKnownFileType = folder; path = CoverageTrees; sourceTree = "<group>"; };
 		7E5928AA16CA7FA20005E64D /* DebugSphereExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DebugSphereExample.cpp; sourceTree = "<group>"; };
 		7E5928AB16CA7FA20005E64D /* DebugSphereExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebugSphereExample.h; sourceTree = "<group>"; };
 		7E5928AC16CA7FA20005E64D /* IExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IExample.h; sourceTree = "<group>"; };
@@ -560,7 +560,7 @@
 		7EE4825B16847E7C0006E99B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				59EA5B37174D144900C104D7 /* CoverageTrees */,
+				59D6102D17661F420044449F /* CoverageTrees */,
 				7EA3084516C3FF0600602274 /* Themes */,
 				7EE4825C16847E7C0006E99B /* Common */,
 				7EE4829116847E7C0006E99B /* Icons */,
@@ -983,7 +983,6 @@
 				7EB6F65A173A62F7004AE181 /* FrankBold50_Outline.fnt in Resources */,
 				7EB6F65B173A62F7004AE181 /* FrankBold50_Outline.png in Resources */,
 				7EB6F65C173A62F7004AE181 /* FrankBold50.png in Resources */,
-				59EA5B38174D144900C104D7 /* CoverageTrees in Resources */,
 				7EE9888E175CEC3900D3CE09 /* Rain_01.png in Resources */,
 				7EE9888F175CEC3900D3CE09 /* Snow_01.png in Resources */,
 				59D60FE8175E49950044449F /* TerrainTexture4_LOD.pvr in Resources */,
@@ -1010,6 +1009,7 @@
 				59D6101F175F442B0044449F /* TerrainTexture15.pvr in Resources */,
 				18D91728175F4B0D00DF96E0 /* trees_01.pvr in Resources */,
 				18D91729175F4B0D00DF96E0 /* trees_top_01.pvr in Resources */,
+				59D6102E17661F420044449F /* CoverageTrees in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1137,7 +1137,7 @@
 					armv7,
 					i386,
 				);
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Phil  Wilson (G48G44L2FR)";
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ExampleApp/ExampleApp-Prefix.pch";
@@ -1148,6 +1148,7 @@
 					"\"$(SRCROOT)/Include\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "DA6DE151-2EB0-49E5-B642-51DABBC5F117";
 				VALID_ARCHS = "armv7 i386";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1161,7 +1162,7 @@
 					armv7,
 					i386,
 				);
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Phil  Wilson (G48G44L2FR)";
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ExampleApp/ExampleApp-Prefix.pch";
@@ -1172,6 +1173,7 @@
 					"\"$(SRCROOT)/Include\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "DA6DE151-2EB0-49E5-B642-51DABBC5F117";
 				VALID_ARCHS = "armv7 i386";
 				WRAPPER_EXTENSION = app;
 			};
