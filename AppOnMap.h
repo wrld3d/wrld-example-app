@@ -13,6 +13,8 @@
 #include "GlobalLighting.h"
 #include "WeatherController.h"
 #include "EnvironmentFlatteningService.h"
+#include "SearchService.h"
+#include "iOSUrlEncoder.h"
 
 #include "DebugSphereExample.h"
 #include "ScreenUnprojectExample.h"
@@ -25,6 +27,7 @@
 #include "ToggleTrafficExample.h"
 #include "ResourceSpatialQueryExample.h"
 #include "EnvironmentFlatteningExample.h"
+#include "SearchExample.h"
 
 namespace ExampleTypes
 {
@@ -41,11 +44,12 @@ namespace ExampleTypes
         ModifiedRendering,
         ToggleTraffic,
         ResourceSpatialQuery,
-        EnvironmentFlattening
+        EnvironmentFlattening,
+        Search
     };
 }
 
-ExampleTypes::Examples selectedExample = ExampleTypes::EnvironmentFlattening;
+ExampleTypes::Examples selectedExample = ExampleTypes::Search;
 
 class MyApp : public Eegeo::IAppOnMap
 {
@@ -103,7 +107,8 @@ public:
                                  World().GetGlobalFogging(),
                                  World().GetTrafficSimulation(),
                                  World().GetResourceSpatialQueryService(),
-                                 World().GetEnvironmentFlatteningService());
+                                 World().GetEnvironmentFlatteningService(),
+                                 World().GetSearchService());
         
         pExample->Start();
     }
@@ -141,7 +146,8 @@ public:
                                       Eegeo::Lighting::GlobalFogging& fogging,
                                       Eegeo::Traffic::TrafficSimulation& trafficSimulation,
                                       Eegeo::Resources::ResourceSpatialQueryService& resourceSpatialQueryService,
-                                      Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService)
+                                      Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
+                                      Eegeo::Search::Service::SearchService& searchService)
     {
         switch(example)
         {
@@ -200,6 +206,9 @@ public:
             
             case ExampleTypes::EnvironmentFlattening:
                 return new Examples::EnvironmentFlatteningExample(environmentFlatteningService);
+                
+            case ExampleTypes::Search:
+                return new Examples::SearchExample(searchService, globeCamera);
         }
     }
     

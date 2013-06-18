@@ -54,10 +54,13 @@
 #include "VehicleModelRepository.h"
 #include "iOSWebLoadRequestFactory.h"
 #include "iOSLocationService.h"
+#include "iOSUrlEncoder.h"
 
 #define API_KEY "OBTAIN API KEY FROM https://appstore.eegeo.com AND INSERT IT HERE"
 
 using namespace Eegeo::iOS;
+
+iOSUrlEncoder iOSUrlEncoder;
 
 @interface ViewController()
 {
@@ -548,7 +551,8 @@ iOSLocationService* piOSLocationService = NULL;
                                        pFogging,
                                        pMaterialFactory,
                                        piOSLocationService,
-                                       m_pBlitter
+                                       m_pBlitter,
+                                       &iOSUrlEncoder
                                        ));
     
     m_renderContext->GetGLState().InvalidateAll();
