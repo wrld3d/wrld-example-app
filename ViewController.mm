@@ -55,8 +55,23 @@
 #include "iOSWebLoadRequestFactory.h"
 #include "iOSLocationService.h"
 #include "iOSUrlEncoder.h"
+#include "SearchServiceCredentials.h"
 
 #define API_KEY "OBTAIN API KEY FROM https://appstore.eegeo.com AND INSERT IT HERE"
+
+//#define USING_SEARCH_EXAMPLE
+
+#if defined(USING_SEARCH_EXAMPLE)
+//If you intend to use the SearchService, you must provide SearchServiceCredentials for the
+//here.com provider, obtainable at http://developer.here.com/plans
+#define HERE_DOT_COM_DEVELOPER_APP_ID ""
+#define HERE_DOT_COM_DEVELOPER_APP_CODE ""
+Eegeo::Search::Service::SearchServiceCredentials credentials(HERE_DOT_COM_DEVELOPER_APP_ID, HERE_DOT_COM_DEVELOPER_APP_CODE);
+Eegeo::Search::Service::SearchServiceCredentials* pCredentials = &credentials;
+#else
+Eegeo::Search::Service::SearchServiceCredentials* pCredentials = NULL;
+#endif
+
 
 using namespace Eegeo::iOS;
 
@@ -552,7 +567,8 @@ iOSLocationService* piOSLocationService = NULL;
                                        pMaterialFactory,
                                        piOSLocationService,
                                        m_pBlitter,
-                                       &iOSUrlEncoder
+                                       &iOSUrlEncoder,
+                                       pCredentials
                                        ));
     
     m_renderContext->GetGLState().InvalidateAll();

@@ -16,6 +16,7 @@
 
 namespace Examples
 {
+    //To use the search example, you should #define USING_SEARCH_EXAMPLE in ViewController.mm and input your credentials
     class SearchExample : public IExample, public Eegeo::Search::Service::IPoiSearchCallback
     {
     private:
