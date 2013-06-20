@@ -940,7 +940,7 @@ iOSLocationService* piOSLocationService = NULL;
 
 -(void)beginPrecacheVolume {
     Eegeo::Streaming::IStreamingVolume& volume = myApp->World().GetStreamingVolume();
-    myApp->World().GetPrecachingService().Precache(&volume);
+    myApp->World().GetPrecachingService().Precache(volume);
     precaching = true;
     [precacheVolume setEnabled: false];
     [precacheVolume setAlpha: 0.6f];
