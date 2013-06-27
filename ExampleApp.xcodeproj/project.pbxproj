@@ -10,6 +10,7 @@
 		1839B31C1768881C0059469B /* gen_water_03.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 1839B31B1768881C0059469B /* gen_water_03.pvr */; };
 		1839B323176888460059469B /* Water_02_LOD.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 1839B321176888460059469B /* Water_02_LOD.pvr */; };
 		1839B324176888460059469B /* Water_03_LOD.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 1839B322176888460059469B /* Water_03_LOD.pvr */; };
+		181749771770515400E4611F /* SearchExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 181749751770515400E4611F /* SearchExample.cpp */; };
 		1860B65C16CA65D90004A39D /* placeholder.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 1860B65B16CA65D90004A39D /* placeholder.pvr */; };
 		187C5C72175DD69500146D06 /* EnvironmentFlatteningExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 187C5C70175DD69400146D06 /* EnvironmentFlatteningExample.cpp */; };
 		18D91728175F4B0D00DF96E0 /* trees_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 18D91726175F4B0D00DF96E0 /* trees_01.pvr */; };
@@ -220,7 +221,8 @@
 /* Begin PBXFileReference section */
 		1839B31B1768881C0059469B /* gen_water_03.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = gen_water_03.pvr; sourceTree = "<group>"; };
 		1839B321176888460059469B /* Water_02_LOD.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Water_02_LOD.pvr; sourceTree = "<group>"; };
-		1839B322176888460059469B /* Water_03_LOD.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Water_03_LOD.pvr; sourceTree = "<group>"; };
+		1839B322176888460059469B /* Water_03_LOD.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Water_03_LOD.pvr; sourceTree = "<group>"; };		181749751770515400E4611F /* SearchExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchExample.cpp; sourceTree = "<group>"; };
+		181749761770515400E4611F /* SearchExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchExample.h; sourceTree = "<group>"; };
 		1860B65B16CA65D90004A39D /* placeholder.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = placeholder.pvr; sourceTree = "<group>"; };
 		187C5C70175DD69400146D06 /* EnvironmentFlatteningExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EnvironmentFlatteningExample.cpp; sourceTree = "<group>"; };
 		187C5C71175DD69500146D06 /* EnvironmentFlatteningExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnvironmentFlatteningExample.h; sourceTree = "<group>"; };
@@ -496,6 +498,8 @@
 				7ED4CF9A1742A85200739A3D /* ResourceSpatialQueryExample.h */,
 				187C5C70175DD69400146D06 /* EnvironmentFlatteningExample.cpp */,
 				187C5C71175DD69500146D06 /* EnvironmentFlatteningExample.h */,
+				181749751770515400E4611F /* SearchExample.cpp */,
+				181749761770515400E4611F /* SearchExample.h */,
 			);
 			path = Examples;
 			sourceTree = SOURCE_ROOT;
@@ -1044,6 +1048,7 @@
 				7ED4CF9317424CF400739A3D /* ToggleTrafficExample.cpp in Sources */,
 				7ED4CF9B1742A85200739A3D /* ResourceSpatialQueryExample.cpp in Sources */,
 				187C5C72175DD69500146D06 /* EnvironmentFlatteningExample.cpp in Sources */,
+				181749771770515400E4611F /* SearchExample.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
