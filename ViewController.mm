@@ -12,7 +12,7 @@
 #include "External/Reachability/Reachability.h"
 #include "DebugValues.h"
 #include "CameraModel.h"
-#include "PrecachingService.h"
+#include "PrecacheService.h"
 #include "NewGlobeCamera.h"
 #include "MeshPool.h"
 #include "StreamingController.h"
@@ -239,7 +239,7 @@ iOSLocationService* piOSLocationService = NULL;
     
     if(precaching)
     {
-        const Eegeo::Web::PrecachingService& precachingService = myApp->World().GetPrecachingService();
+        const Eegeo::Web::PrecacheService& precachingService = myApp->World().GetPrecachingService();
         [precacheVolumeProgress setProgress: (precachingService.UrlsLoaded()/(float)precachingService.TotalUrlsToLoad())];
         if(!precachingService.CurrentlyPrecaching())
         {
