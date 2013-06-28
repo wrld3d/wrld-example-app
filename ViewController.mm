@@ -543,13 +543,22 @@ iOSLocationService* piOSLocationService = NULL;
                                                                                                      *pTextureFileLoader,
                                                                                                      *pFileIO);
    
-    std::vector<Eegeo::Traffic::VehicleModel*> vehicleModels;
-    std::string root = "Vehicles";
-    pVehicleModelLoader->LoadModels("SanFrancisco_Vehicles.pod", &root, vehicleModels);
-    for(std::vector<Eegeo::Traffic::VehicleModel*>::iterator it = vehicleModels.begin(); it != vehicleModels.end(); ++ it)
+    std::vector<Eegeo::Traffic::VehicleModel*> carModels;
+    std::string carRoot = "Vehicles";
+    pVehicleModelLoader->LoadModels("SanFrancisco_Vehicles.pod", &carRoot, carModels);
+    for(std::vector<Eegeo::Traffic::VehicleModel*>::iterator it = carModels.begin(); it != carModels.end(); ++ it)
     {
         Eegeo::Traffic::IVehicleModel* pVehicle = (Eegeo::Traffic::IVehicleModel*)(*it);
-        pVehicleModelRepository->Add(pVehicle);
+        pVehicleModelRepository->AddCar(pVehicle);
+    }
+    
+    std::vector<Eegeo::Traffic::VehicleModel*> trainModels;
+    std::string trainRoot = "train_group";
+    pVehicleModelLoader->LoadModels("ldn_trains_01.pod", &trainRoot, trainModels);
+    for(std::vector<Eegeo::Traffic::VehicleModel*>::iterator it = trainModels.begin(); it != trainModels.end(); ++ it)
+    {
+        Eegeo::Traffic::IVehicleModel* pVehicle = (Eegeo::Traffic::IVehicleModel*)(*it);
+        pVehicleModelRepository->AddTrain(pVehicle);
     }
     
     myApp->Start(new Eegeo::EegeoWorld(API_KEY,
