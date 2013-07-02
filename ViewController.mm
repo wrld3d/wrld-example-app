@@ -56,6 +56,7 @@
 #include "iOSLocationService.h"
 #include "iOSUrlEncoder.h"
 #include "SearchServiceCredentials.h"
+#include "GlobeCameraInterestPointProvider.h"
 
 #define API_KEY "OBTAIN API KEY FROM https://appstore.eegeo.com AND INSERT IT HERE"
 
@@ -169,6 +170,7 @@ std::vector<Eegeo::Streaming::LoggingResourceStream*> streams;
 DebuggedResource::ResourceType currentDebuggedResource = DebuggedResource::None;
 UIButton* currentDebuggedResourceButton = NULL;
 NSTimer*    touchTimer;
+Eegeo::Location::GlobeCameraInterestPointProvider* m_pInterestPointProvider;
 iOSLocationService* piOSLocationService = NULL;
 
 // ---------------------------------------------------------------------------------------------------------------------------
@@ -561,6 +563,8 @@ iOSLocationService* piOSLocationService = NULL;
         pVehicleModelRepository->AddTrain(pVehicle);
     }
     
+    m_pInterestPointProvider = Eegeo_NEW(Eegeo::Location::GlobeCameraInterestPointProvider(*cameraController));
+    
     myApp->Start(new Eegeo::EegeoWorld(API_KEY,
                                        pHttpCache,
                                        pFileIO,
@@ -577,6 +581,7 @@ iOSLocationService* piOSLocationService = NULL;
                                        piOSLocationService,
                                        m_pBlitter,
                                        &iOSUrlEncoder,
+                                       *m_pInterestPointProvider,
                                        pCredentials
                                        ));
     
