@@ -58,6 +58,10 @@
 #include "SearchServiceCredentials.h"
 #include "GlobeCameraInterestPointProvider.h"
 
+#include "iOSInputBoxFactory.h"
+#include "iOSAlertBoxFactory.h"
+#include "NativeUIFactories.h"
+
 #define API_KEY "OBTAIN API KEY FROM https://appstore.eegeo.com AND INSERT IT HERE"
 
 //#define USING_SEARCH_EXAMPLE
@@ -172,6 +176,10 @@ UIButton* currentDebuggedResourceButton = NULL;
 NSTimer*    touchTimer;
 Eegeo::Location::GlobeCameraInterestPointProvider* m_pInterestPointProvider;
 iOSLocationService* piOSLocationService = NULL;
+
+Eegeo::UI::NativeInput::iOS::iOSInputBoxFactory inputBoxFactory;
+Eegeo::UI::NativeAlerts::iOS::iOSAlertBoxFactory alertBoxFactory;
+Eegeo::UI::NativeUIFactories nativeUIFactories(alertBoxFactory, inputBoxFactory);
 
 // ---------------------------------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------------
@@ -582,6 +590,7 @@ iOSLocationService* piOSLocationService = NULL;
                                        m_pBlitter,
                                        &iOSUrlEncoder,
                                        *m_pInterestPointProvider,
+                                       nativeUIFactories,
                                        pCredentials
                                        ));
     
