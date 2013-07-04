@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		0924E86517857D4200C238AD /* water_reflectionmap_night.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 0924E86417857D4200C238AD /* water_reflectionmap_night.pvr */; };
 		181749771770515400E4611F /* SearchExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 181749751770515400E4611F /* SearchExample.cpp */; };
+		181E404E1785D5B5007B6678 /* sf_planes_01.pod in Resources */ = {isa = PBXBuildFile; fileRef = 18D779621785D49100743C49 /* sf_planes_01.pod */; };
+		181E404F1785D5B8007B6678 /* sf_planes_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 18D779631785D49900743C49 /* sf_planes_01.pvr */; };
+		181E40501785D5BB007B6678 /* sf_planes_02.pod in Resources */ = {isa = PBXBuildFile; fileRef = 18D779641785D4A300743C49 /* sf_planes_02.pod */; };
 		1839B31C1768881C0059469B /* gen_water_03.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 1839B31B1768881C0059469B /* gen_water_03.pvr */; };
 		1839B323176888460059469B /* Water_02_LOD.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 1839B321176888460059469B /* Water_02_LOD.pvr */; };
 		1839B324176888460059469B /* Water_03_LOD.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 1839B322176888460059469B /* Water_03_LOD.pvr */; };
@@ -231,6 +234,9 @@
 		1860B65B16CA65D90004A39D /* placeholder.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = placeholder.pvr; sourceTree = "<group>"; };
 		187C5C70175DD69400146D06 /* EnvironmentFlatteningExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EnvironmentFlatteningExample.cpp; sourceTree = "<group>"; };
 		187C5C71175DD69500146D06 /* EnvironmentFlatteningExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnvironmentFlatteningExample.h; sourceTree = "<group>"; };
+		18D779621785D49100743C49 /* sf_planes_01.pod */ = {isa = PBXFileReference; lastKnownFileType = file; name = sf_planes_01.pod; path = "../../../recce-stream/Mapply/Resources/San Fran/sf_planes_01.pod"; sourceTree = "<group>"; };
+		18D779631785D49900743C49 /* sf_planes_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; name = sf_planes_01.pvr; path = "../../../recce-stream/Mapply/Resources/San Fran/sf_planes_01.pvr"; sourceTree = "<group>"; };
+		18D779641785D4A300743C49 /* sf_planes_02.pod */ = {isa = PBXFileReference; lastKnownFileType = file; name = sf_planes_02.pod; path = "../../../recce-stream/Mapply/Resources/San Fran/sf_planes_02.pod"; sourceTree = "<group>"; };
 		18D91726175F4B0D00DF96E0 /* trees_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = trees_01.pvr; sourceTree = "<group>"; };
 		18D91727175F4B0D00DF96E0 /* trees_top_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = trees_top_01.pvr; sourceTree = "<group>"; };
 		2264D692177DA5870016C3ED /* ldn_trains_01.pod */ = {isa = PBXFileReference; lastKnownFileType = file; path = ldn_trains_01.pod; sourceTree = "<group>"; };
@@ -711,6 +717,9 @@
 		7EE4829D16847E7C0006E99B /* San Fran */ = {
 			isa = PBXGroup;
 			children = (
+				18D779641785D4A300743C49 /* sf_planes_02.pod */,
+				18D779631785D49900743C49 /* sf_planes_01.pvr */,
+				18D779621785D49100743C49 /* sf_planes_01.pod */,
 				7EE4829E16847E7C0006E99B /* Boats_01.pvr */,
 				7EE4829F16847E7C0006E99B /* Buildings_01.pvr */,
 				7EE482A016847E7C0006E99B /* Buildings_02.pvr */,
@@ -1039,6 +1048,9 @@
 				2264D694177DA5870016C3ED /* ldn_trains_01.pod in Resources */,
 				2264D695177DA5870016C3ED /* ldn_trains_01.pvr in Resources */,
 				0924E86517857D4200C238AD /* water_reflectionmap_night.pvr in Resources */,
+				181E404E1785D5B5007B6678 /* sf_planes_01.pod in Resources */,
+				181E404F1785D5B8007B6678 /* sf_planes_01.pvr in Resources */,
+				181E40501785D5BB007B6678 /* sf_planes_02.pod in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
