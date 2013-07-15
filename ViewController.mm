@@ -518,51 +518,6 @@ Eegeo::UI::NativeUIFactories nativeUIFactories(alertBoxFactory, inputBoxFactory)
     m_renderContext->SetScreenDimensions(width, height, pixelScale);
 }
 
-void addCarModelsToRepository(Eegeo::Traffic::VehicleModelRepository* pVehicleModelRepository,
-                              Eegeo::Traffic::VehicleModelLoader* pVehicleModelLoader)
-{
-    std::vector<Eegeo::Traffic::VehicleModel*> carModels;
-    std::string carRoot = "Vehicles";
-    pVehicleModelLoader->LoadModels("SanFrancisco_Vehicles.pod", &carRoot, carModels);
-    for(std::vector<Eegeo::Traffic::VehicleModel*>::iterator it = carModels.begin(); it != carModels.end(); ++ it)
-    {
-        Eegeo::Traffic::IVehicleModel* pVehicle = (Eegeo::Traffic::IVehicleModel*)(*it);
-        pVehicleModelRepository->AddCar(pVehicle);
-    }
-}
-
-void addTrainModelsToRepository(Eegeo::Traffic::VehicleModelRepository* pVehicleModelRepository,
-                                Eegeo::Traffic::VehicleModelLoader* pVehicleModelLoader)
-{
-    std::vector<Eegeo::Traffic::VehicleModel*> trainModels;
-    std::string trainRoot = "train_group";
-    pVehicleModelLoader->LoadModels("ldn_trains_01.pod", &trainRoot, trainModels);
-    for(std::vector<Eegeo::Traffic::VehicleModel*>::iterator it = trainModels.begin(); it != trainModels.end(); ++ it)
-    {
-        Eegeo::Traffic::IVehicleModel* pVehicle = (Eegeo::Traffic::IVehicleModel*)(*it);
-        pVehicleModelRepository->AddTrain(pVehicle);
-    }
-}
-
-void addPlaneModelsToRepository(Eegeo::Traffic::VehicleModelRepository* pVehicleModelRepository,
-                                Eegeo::Traffic::VehicleModelLoader* pVehicleModelLoader)
-{
-    std::vector<Eegeo::Traffic::VehicleModel*> planeModels;
-    std::string planeRoot = "Planes";
-    pVehicleModelLoader->LoadModels("sf_planes_01.pod", &planeRoot, planeModels);
-    for(std::vector<Eegeo::Traffic::VehicleModel*>::iterator it = planeModels.begin(); it != planeModels.end(); ++ it)
-    {
-        Eegeo::Traffic::IVehicleModel* pVehicle = (Eegeo::Traffic::IVehicleModel*)(*it);
-        pVehicleModelRepository->AddPlane(pVehicle);
-    }
-    pVehicleModelLoader->LoadModels("sf_planes_02.pod", &planeRoot, planeModels);
-    for(std::vector<Eegeo::Traffic::VehicleModel*>::iterator it = planeModels.begin(); it != planeModels.end(); ++ it)
-    {
-        Eegeo::Traffic::IVehicleModel* pVehicle = (Eegeo::Traffic::IVehicleModel*)(*it);
-        pVehicleModelRepository->AddPlane(pVehicle);
-    }
-}
-
 - (void) initWorld
 {
     Eegeo::EffectHandler::Initialise();
@@ -598,9 +553,7 @@ void addPlaneModelsToRepository(Eegeo::Traffic::VehicleModelRepository* pVehicle
                                                                                                      *pTextureFileLoader,
                                                                                                      *pFileIO);
    
-    addCarModelsToRepository(pVehicleModelRepository, pVehicleModelLoader);
-	addTrainModelsToRepository(pVehicleModelRepository, pVehicleModelLoader);
-	addPlaneModelsToRepository(pVehicleModelRepository, pVehicleModelLoader);
+    Eegeo::Traffic::VehicleModelLoaderHelper::LoadAllVehicleResourcesIntoRepository(*pVehicleModelLoader, *pVehicleModelRepository);
     
     m_pInterestPointProvider = Eegeo_NEW(Eegeo::Location::GlobeCameraInterestPointProvider(*cameraController));
     

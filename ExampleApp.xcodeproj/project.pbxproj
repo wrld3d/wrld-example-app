@@ -44,6 +44,16 @@
 		59D6101E175F442B0044449F /* TerrainTexture3.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 59D61019175F442B0044449F /* TerrainTexture3.pvr */; };
 		59D6101F175F442B0044449F /* TerrainTexture15.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 59D6101A175F442B0044449F /* TerrainTexture15.pvr */; };
 		59D6102E17661F420044449F /* CoverageTrees in Resources */ = {isa = PBXBuildFile; fileRef = 59D6102D17661F420044449F /* CoverageTrees */; };
+		7E43D7E3179434D400101629 /* ldn_trains_night_01.pod in Resources */ = {isa = PBXBuildFile; fileRef = 7E43D7D9179434D400101629 /* ldn_trains_night_01.pod */; };
+		7E43D7E4179434D400101629 /* ldn_trains_Night_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7E43D7DA179434D400101629 /* ldn_trains_Night_01.pvr */; };
+		7E43D7E5179434D400101629 /* sf_planes_01.pod in Resources */ = {isa = PBXBuildFile; fileRef = 7E43D7DB179434D400101629 /* sf_planes_01.pod */; };
+		7E43D7E6179434D400101629 /* sf_planes_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7E43D7DC179434D400101629 /* sf_planes_01.pvr */; };
+		7E43D7E7179434D400101629 /* sf_planes_night_01.pod in Resources */ = {isa = PBXBuildFile; fileRef = 7E43D7DD179434D400101629 /* sf_planes_night_01.pod */; };
+		7E43D7E8179434D400101629 /* sf_planes_night_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7E43D7DE179434D400101629 /* sf_planes_night_01.pvr */; };
+		7E43D7E9179434D400101629 /* sf_vehicles_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7E43D7DF179434D400101629 /* sf_vehicles_01.pvr */; };
+		7E43D7EA179434D400101629 /* sf_vehicles_Night_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7E43D7E0179434D400101629 /* sf_vehicles_Night_01.pvr */; };
+		7E43D7EB179434D400101629 /* Vehicles_SF_Day.pod in Resources */ = {isa = PBXBuildFile; fileRef = 7E43D7E1179434D400101629 /* Vehicles_SF_Day.pod */; };
+		7E43D7EC179434D400101629 /* Vehicles_SF_Night.pod in Resources */ = {isa = PBXBuildFile; fileRef = 7E43D7E2179434D400101629 /* Vehicles_SF_Night.pod */; };
 		7E5928B116CA7FA20005E64D /* DebugSphereExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E5928AA16CA7FA20005E64D /* DebugSphereExample.cpp */; };
 		7E5928B216CA7FA20005E64D /* LoadModelExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E5928AD16CA7FA20005E64D /* LoadModelExample.cpp */; };
 		7E5928B316CA7FA20005E64D /* ScreenUnprojectExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E5928AF16CA7FA20005E64D /* ScreenUnprojectExample.cpp */; };
@@ -114,7 +124,6 @@
 		7EE4831E16847E7C0006E99B /* TerrainTexture7.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4828816847E7C0006E99B /* TerrainTexture7.pvr */; };
 		7EE4831F16847E7C0006E99B /* TerrainTexture8.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4828916847E7C0006E99B /* TerrainTexture8.pvr */; };
 		7EE4832016847E7C0006E99B /* TerrainTexture9.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4828A16847E7C0006E99B /* TerrainTexture9.pvr */; };
-		7EE4832116847E7C0006E99B /* Vehicles_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4828B16847E7C0006E99B /* Vehicles_01.pvr */; };
 		7EE4832216847E7C0006E99B /* Wake_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4828C16847E7C0006E99B /* Wake_01.pvr */; };
 		7EE4832316847E7C0006E99B /* Water_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4828D16847E7C0006E99B /* Water_01.pvr */; };
 		7EE4832416847E7C0006E99B /* Water_02.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4828E16847E7C0006E99B /* Water_02.pvr */; };
@@ -264,6 +273,16 @@
 		59D61019175F442B0044449F /* TerrainTexture3.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = TerrainTexture3.pvr; sourceTree = "<group>"; };
 		59D6101A175F442B0044449F /* TerrainTexture15.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = TerrainTexture15.pvr; sourceTree = "<group>"; };
 		59D6102D17661F420044449F /* CoverageTrees */ = {isa = PBXFileReference; lastKnownFileType = folder; path = CoverageTrees; sourceTree = "<group>"; };
+		7E43D7D9179434D400101629 /* ldn_trains_night_01.pod */ = {isa = PBXFileReference; lastKnownFileType = file; path = ldn_trains_night_01.pod; sourceTree = "<group>"; };
+		7E43D7DA179434D400101629 /* ldn_trains_Night_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = ldn_trains_Night_01.pvr; sourceTree = "<group>"; };
+		7E43D7DB179434D400101629 /* sf_planes_01.pod */ = {isa = PBXFileReference; lastKnownFileType = file; path = sf_planes_01.pod; sourceTree = "<group>"; };
+		7E43D7DC179434D400101629 /* sf_planes_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = sf_planes_01.pvr; sourceTree = "<group>"; };
+		7E43D7DD179434D400101629 /* sf_planes_night_01.pod */ = {isa = PBXFileReference; lastKnownFileType = file; path = sf_planes_night_01.pod; sourceTree = "<group>"; };
+		7E43D7DE179434D400101629 /* sf_planes_night_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = sf_planes_night_01.pvr; sourceTree = "<group>"; };
+		7E43D7DF179434D400101629 /* sf_vehicles_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = sf_vehicles_01.pvr; sourceTree = "<group>"; };
+		7E43D7E0179434D400101629 /* sf_vehicles_Night_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = sf_vehicles_Night_01.pvr; sourceTree = "<group>"; };
+		7E43D7E1179434D400101629 /* Vehicles_SF_Day.pod */ = {isa = PBXFileReference; lastKnownFileType = file; path = Vehicles_SF_Day.pod; sourceTree = "<group>"; };
+		7E43D7E2179434D400101629 /* Vehicles_SF_Night.pod */ = {isa = PBXFileReference; lastKnownFileType = file; path = Vehicles_SF_Night.pod; sourceTree = "<group>"; };
 		7E5928AA16CA7FA20005E64D /* DebugSphereExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DebugSphereExample.cpp; sourceTree = "<group>"; };
 		7E5928AB16CA7FA20005E64D /* DebugSphereExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebugSphereExample.h; sourceTree = "<group>"; };
 		7E5928AC16CA7FA20005E64D /* IExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IExample.h; sourceTree = "<group>"; };
@@ -350,7 +369,6 @@
 		7EE4828816847E7C0006E99B /* TerrainTexture7.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = TerrainTexture7.pvr; sourceTree = "<group>"; };
 		7EE4828916847E7C0006E99B /* TerrainTexture8.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = TerrainTexture8.pvr; sourceTree = "<group>"; };
 		7EE4828A16847E7C0006E99B /* TerrainTexture9.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = TerrainTexture9.pvr; sourceTree = "<group>"; };
-		7EE4828B16847E7C0006E99B /* Vehicles_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Vehicles_01.pvr; sourceTree = "<group>"; };
 		7EE4828C16847E7C0006E99B /* Wake_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Wake_01.pvr; sourceTree = "<group>"; };
 		7EE4828D16847E7C0006E99B /* Water_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Water_01.pvr; sourceTree = "<group>"; };
 		7EE4828E16847E7C0006E99B /* Water_02.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Water_02.pvr; sourceTree = "<group>"; };
@@ -616,6 +634,16 @@
 		7EE4826116847E7C0006E99B /* Textures */ = {
 			isa = PBXGroup;
 			children = (
+				7E43D7D9179434D400101629 /* ldn_trains_night_01.pod */,
+				7E43D7DA179434D400101629 /* ldn_trains_Night_01.pvr */,
+				7E43D7DB179434D400101629 /* sf_planes_01.pod */,
+				7E43D7DC179434D400101629 /* sf_planes_01.pvr */,
+				7E43D7DD179434D400101629 /* sf_planes_night_01.pod */,
+				7E43D7DE179434D400101629 /* sf_planes_night_01.pvr */,
+				7E43D7DF179434D400101629 /* sf_vehicles_01.pvr */,
+				7E43D7E0179434D400101629 /* sf_vehicles_Night_01.pvr */,
+				7E43D7E1179434D400101629 /* Vehicles_SF_Day.pod */,
+				7E43D7E2179434D400101629 /* Vehicles_SF_Night.pod */,
 				0924E86417857D4200C238AD /* water_reflectionmap_night.pvr */,
 				2264D692177DA5870016C3ED /* ldn_trains_01.pod */,
 				2264D693177DA5870016C3ED /* ldn_trains_01.pvr */,
@@ -687,7 +715,6 @@
 				7EE4828816847E7C0006E99B /* TerrainTexture7.pvr */,
 				7EE4828916847E7C0006E99B /* TerrainTexture8.pvr */,
 				7EE4828A16847E7C0006E99B /* TerrainTexture9.pvr */,
-				7EE4828B16847E7C0006E99B /* Vehicles_01.pvr */,
 				7EE4828C16847E7C0006E99B /* Wake_01.pvr */,
 				7EE4828D16847E7C0006E99B /* Water_01.pvr */,
 				7EE4828E16847E7C0006E99B /* Water_02.pvr */,
@@ -902,7 +929,6 @@
 				7EE4831E16847E7C0006E99B /* TerrainTexture7.pvr in Resources */,
 				7EE4831F16847E7C0006E99B /* TerrainTexture8.pvr in Resources */,
 				7EE4832016847E7C0006E99B /* TerrainTexture9.pvr in Resources */,
-				7EE4832116847E7C0006E99B /* Vehicles_01.pvr in Resources */,
 				7EE4832216847E7C0006E99B /* Wake_01.pvr in Resources */,
 				7EE4832316847E7C0006E99B /* Water_01.pvr in Resources */,
 				7EE4832416847E7C0006E99B /* Water_02.pvr in Resources */,
@@ -1051,6 +1077,16 @@
 				18C95F011786C259007F2CA2 /* sf_planes_01.pod in Resources */,
 				18C95F021786C259007F2CA2 /* sf_planes_01.pvr in Resources */,
 				18C95F031786C259007F2CA2 /* sf_planes_02.pod in Resources */,
+				7E43D7E3179434D400101629 /* ldn_trains_night_01.pod in Resources */,
+				7E43D7E4179434D400101629 /* ldn_trains_Night_01.pvr in Resources */,
+				7E43D7E5179434D400101629 /* sf_planes_01.pod in Resources */,
+				7E43D7E6179434D400101629 /* sf_planes_01.pvr in Resources */,
+				7E43D7E7179434D400101629 /* sf_planes_night_01.pod in Resources */,
+				7E43D7E8179434D400101629 /* sf_planes_night_01.pvr in Resources */,
+				7E43D7E9179434D400101629 /* sf_vehicles_01.pvr in Resources */,
+				7E43D7EA179434D400101629 /* sf_vehicles_Night_01.pvr in Resources */,
+				7E43D7EB179434D400101629 /* Vehicles_SF_Day.pod in Resources */,
+				7E43D7EC179434D400101629 /* Vehicles_SF_Night.pod in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
