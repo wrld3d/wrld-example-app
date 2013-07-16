@@ -14,9 +14,6 @@
 		1839B324176888460059469B /* Water_03_LOD.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 1839B322176888460059469B /* Water_03_LOD.pvr */; };
 		1860B65C16CA65D90004A39D /* placeholder.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 1860B65B16CA65D90004A39D /* placeholder.pvr */; };
 		187C5C72175DD69500146D06 /* EnvironmentFlatteningExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 187C5C70175DD69400146D06 /* EnvironmentFlatteningExample.cpp */; };
-		18C95F011786C259007F2CA2 /* sf_planes_01.pod in Resources */ = {isa = PBXBuildFile; fileRef = 18C95EFE1786C259007F2CA2 /* sf_planes_01.pod */; };
-		18C95F021786C259007F2CA2 /* sf_planes_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 18C95EFF1786C259007F2CA2 /* sf_planes_01.pvr */; };
-		18C95F031786C259007F2CA2 /* sf_planes_02.pod in Resources */ = {isa = PBXBuildFile; fileRef = 18C95F001786C259007F2CA2 /* sf_planes_02.pod */; };
 		18D91728175F4B0D00DF96E0 /* trees_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 18D91726175F4B0D00DF96E0 /* trees_01.pvr */; };
 		18D91729175F4B0D00DF96E0 /* trees_top_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 18D91727175F4B0D00DF96E0 /* trees_top_01.pvr */; };
 		2264D694177DA5870016C3ED /* ldn_trains_01.pod in Resources */ = {isa = PBXBuildFile; fileRef = 2264D692177DA5870016C3ED /* ldn_trains_01.pod */; };
@@ -243,9 +240,6 @@
 		1860B65B16CA65D90004A39D /* placeholder.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = placeholder.pvr; sourceTree = "<group>"; };
 		187C5C70175DD69400146D06 /* EnvironmentFlatteningExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EnvironmentFlatteningExample.cpp; sourceTree = "<group>"; };
 		187C5C71175DD69500146D06 /* EnvironmentFlatteningExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnvironmentFlatteningExample.h; sourceTree = "<group>"; };
-		18C95EFE1786C259007F2CA2 /* sf_planes_01.pod */ = {isa = PBXFileReference; lastKnownFileType = file; path = sf_planes_01.pod; sourceTree = "<group>"; };
-		18C95EFF1786C259007F2CA2 /* sf_planes_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = sf_planes_01.pvr; sourceTree = "<group>"; };
-		18C95F001786C259007F2CA2 /* sf_planes_02.pod */ = {isa = PBXFileReference; lastKnownFileType = file; path = sf_planes_02.pod; sourceTree = "<group>"; };
 		18D91726175F4B0D00DF96E0 /* trees_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = trees_01.pvr; sourceTree = "<group>"; };
 		18D91727175F4B0D00DF96E0 /* trees_top_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = trees_top_01.pvr; sourceTree = "<group>"; };
 		2264D692177DA5870016C3ED /* ldn_trains_01.pod */ = {isa = PBXFileReference; lastKnownFileType = file; path = ldn_trains_01.pod; sourceTree = "<group>"; };
@@ -744,9 +738,6 @@
 		7EE4829D16847E7C0006E99B /* San Fran */ = {
 			isa = PBXGroup;
 			children = (
-				18C95EFE1786C259007F2CA2 /* sf_planes_01.pod */,
-				18C95EFF1786C259007F2CA2 /* sf_planes_01.pvr */,
-				18C95F001786C259007F2CA2 /* sf_planes_02.pod */,
 				7EE4829E16847E7C0006E99B /* Boats_01.pvr */,
 				7EE4829F16847E7C0006E99B /* Buildings_01.pvr */,
 				7EE482A016847E7C0006E99B /* Buildings_02.pvr */,
@@ -1074,9 +1065,6 @@
 				2264D694177DA5870016C3ED /* ldn_trains_01.pod in Resources */,
 				2264D695177DA5870016C3ED /* ldn_trains_01.pvr in Resources */,
 				0924E86517857D4200C238AD /* water_reflectionmap_night.pvr in Resources */,
-				18C95F011786C259007F2CA2 /* sf_planes_01.pod in Resources */,
-				18C95F021786C259007F2CA2 /* sf_planes_01.pvr in Resources */,
-				18C95F031786C259007F2CA2 /* sf_planes_02.pod in Resources */,
 				7E43D7E3179434D400101629 /* ldn_trains_night_01.pod in Resources */,
 				7E43D7E4179434D400101629 /* ldn_trains_Night_01.pvr in Resources */,
 				7E43D7E5179434D400101629 /* sf_planes_01.pod in Resources */,
