@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0924E86517857D4200C238AD /* water_reflectionmap_night.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 0924E86417857D4200C238AD /* water_reflectionmap_night.pvr */; };
+		11764FCE179848B800633459 /* KeyboardInputExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 11764FCC179848B700633459 /* KeyboardInputExample.cpp */; };
 		181749771770515400E4611F /* SearchExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 181749751770515400E4611F /* SearchExample.cpp */; };
 		1839B31C1768881C0059469B /* gen_water_03.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 1839B31B1768881C0059469B /* gen_water_03.pvr */; };
 		1839B323176888460059469B /* Water_02_LOD.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 1839B321176888460059469B /* Water_02_LOD.pvr */; };
@@ -232,6 +233,8 @@
 
 /* Begin PBXFileReference section */
 		0924E86417857D4200C238AD /* water_reflectionmap_night.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = water_reflectionmap_night.pvr; sourceTree = "<group>"; };
+		11764FCC179848B700633459 /* KeyboardInputExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KeyboardInputExample.cpp; sourceTree = "<group>"; };
+		11764FCD179848B800633459 /* KeyboardInputExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyboardInputExample.h; sourceTree = "<group>"; };
 		181749751770515400E4611F /* SearchExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchExample.cpp; sourceTree = "<group>"; };
 		181749761770515400E4611F /* SearchExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchExample.h; sourceTree = "<group>"; };
 		1839B31B1768881C0059469B /* gen_water_03.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = gen_water_03.pvr; sourceTree = "<group>"; };
@@ -525,6 +528,8 @@
 				187C5C71175DD69500146D06 /* EnvironmentFlatteningExample.h */,
 				181749751770515400E4611F /* SearchExample.cpp */,
 				181749761770515400E4611F /* SearchExample.h */,
+				11764FCC179848B700633459 /* KeyboardInputExample.cpp */,
+				11764FCD179848B800633459 /* KeyboardInputExample.h */,
 			);
 			path = Examples;
 			sourceTree = SOURCE_ROOT;
@@ -1098,6 +1103,7 @@
 				7ED4CF9B1742A85200739A3D /* ResourceSpatialQueryExample.cpp in Sources */,
 				187C5C72175DD69500146D06 /* EnvironmentFlatteningExample.cpp in Sources */,
 				181749771770515400E4611F /* SearchExample.cpp in Sources */,
+				11764FCE179848B800633459 /* KeyboardInputExample.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1143,7 +1149,6 @@
 				CLANG_CXX_LIBRARY = "compiler-default";
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1178,7 +1183,6 @@
 				CLANG_CXX_LIBRARY = "compiler-default";
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -1203,7 +1207,6 @@
 					armv7,
 					i386,
 				);
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ExampleApp/ExampleApp-Prefix.pch";
@@ -1227,7 +1230,6 @@
 					armv7,
 					i386,
 				);
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ExampleApp/ExampleApp-Prefix.pch";

@@ -14,6 +14,7 @@
 #include "WeatherController.h"
 #include "EnvironmentFlatteningService.h"
 #include "SearchService.h"
+#include "NativeUIFactories.h"
 #include "iOSUrlEncoder.h"
 
 #include "DebugSphereExample.h"
@@ -28,6 +29,7 @@
 #include "ResourceSpatialQueryExample.h"
 #include "EnvironmentFlatteningExample.h"
 #include "SearchExample.h"
+#include "KeyboardInputExample.h"
 
 namespace ExampleTypes
 {
@@ -45,7 +47,8 @@ namespace ExampleTypes
         ToggleTraffic,
         ResourceSpatialQuery,
         EnvironmentFlattening,
-        Search
+        Search,
+        KeyboardInput
     };
 }
 
@@ -115,7 +118,8 @@ public:
                                  World().GetTrafficSimulation(),
                                  World().GetResourceSpatialQueryService(),
                                  World().GetEnvironmentFlatteningService(),
-                                 searchService);
+                                 searchService,
+                                 World().GetNativeUIFactories());
         
         pExample->Start();
     }
@@ -154,7 +158,8 @@ public:
                                       Eegeo::Traffic::TrafficSimulation& trafficSimulation,
                                       Eegeo::Resources::ResourceSpatialQueryService& resourceSpatialQueryService,
                                       Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
-                                      Eegeo::Search::Service::SearchService* searchService)
+                                      Eegeo::Search::Service::SearchService* searchService,
+                                      Eegeo::UI::NativeUIFactories& nativeInputFactories)
     {
         switch(example)
         {
@@ -217,6 +222,9 @@ public:
             case ExampleTypes::Search:
                 Eegeo_ASSERT(searchService != NULL, "Cannot run Search example, you must set up here.com Credentials in ViewController.mm");
                 return new Examples::SearchExample(*searchService, globeCamera);
+                
+            case ExampleTypes::KeyboardInput:
+                return new Examples::KeyboardInputExample(nativeInputFactories.IKeyboardInputFactory());
         }
     }
     
