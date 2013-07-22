@@ -52,6 +52,10 @@ namespace Examples
         postData["token"] = "123456789";
         Eegeo_TTY("Making Https POST to Eegeo appstore with invalid key (123456789), with integer labels as user data using a non-member as the handler...\n");
         webRequestFactory.CreatePost("https://appstore.eegeo.com/validate", externalHandler, new int(5678), postData)->Load();
+        
+        std::map<std::string, std::string> httpHeaders;
+        httpHeaders["X-MyCustom-Header"] = "Hello World";
+        webRequestFactory.CreateGet("http://wikipedia.org", *this, new int(4), httpHeaders)->Load();
     }
 
     void WebRequestExample::RequestComplete(IWebLoadRequest& webLoadRequest)
