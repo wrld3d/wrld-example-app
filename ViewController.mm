@@ -62,7 +62,7 @@
 #include "iOSAlertBoxFactory.h"
 #include "NativeUIFactories.h"
 
-#define API_KEY "OBTAIN API KEY FROM https://appstore.eegeo.com AND INSERT IT HERE"
+#define API_KEY "16a270e48e2c97e81aedd85110f05dcc"
 
 //#define USING_SEARCH_EXAMPLE
 
@@ -1309,7 +1309,10 @@ Eegeo::UI::NativeUIFactories nativeUIFactories(alertBoxFactory, inputBoxFactory)
     {
         double latDegrees = currentLocation.coordinate.latitude;
         double lonDegrees = currentLocation.coordinate.longitude;
-        piOSLocationService->UpdateLocation(latDegrees, lonDegrees);
+        double altitudeMeters = currentLocation.altitude;
+        double accuracyMeters = currentLocation.horizontalAccuracy;
+        piOSLocationService->UpdateLocation(latDegrees, lonDegrees, altitudeMeters);
+        piOSLocationService->UpdateHorizontalAccuracy(accuracyMeters);
     }
     else
     {
