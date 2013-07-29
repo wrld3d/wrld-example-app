@@ -57,6 +57,7 @@
 #include "iOSUrlEncoder.h"
 #include "SearchServiceCredentials.h"
 #include "GlobeCameraInterestPointProvider.h"
+#include "TerrainHeightProvider.h"
 
 #include "iOSInputBoxFactory.h"
 #include "iOSAlertBoxFactory.h"
@@ -176,6 +177,8 @@ UIButton* currentDebuggedResourceButton = NULL;
 NSTimer*    touchTimer;
 Eegeo::Location::GlobeCameraInterestPointProvider* m_pInterestPointProvider;
 iOSLocationService* piOSLocationService = NULL;
+Eegeo::Resources::Terrain::Heights::TerrainHeightRepository m_terrainHeightRepository;
+Eegeo::Resources::Terrain::Heights::TerrainHeightProvider m_terrainHeightProvider(&m_terrainHeightRepository);
 
 Eegeo::UI::NativeInput::iOS::iOSInputBoxFactory inputBoxFactory;
 Eegeo::UI::NativeAlerts::iOS::iOSAlertBoxFactory alertBoxFactory;
@@ -523,7 +526,7 @@ Eegeo::UI::NativeUIFactories nativeUIFactories(alertBoxFactory, inputBoxFactory)
     Eegeo::EffectHandler::Initialise();
     Eegeo::RenderCamera* pRenderCamera = new Eegeo::RenderCamera();
     Eegeo::Camera::CameraModel*  pCameraModel = new Eegeo::Camera::CameraModel(pRenderCamera);
-    Eegeo::Camera::NewGlobeCamera* cameraController = new Eegeo::Camera::NewGlobeCamera(pCameraModel, pRenderCamera);
+    Eegeo::Camera::NewGlobeCamera* cameraController = new Eegeo::Camera::NewGlobeCamera(pCameraModel, pRenderCamera, m_terrainHeightProvider);
     
     piOSLocationService = new iOSLocationService;
 
@@ -575,6 +578,8 @@ Eegeo::UI::NativeUIFactories nativeUIFactories(alertBoxFactory, inputBoxFactory)
                                        &iOSUrlEncoder,
                                        *m_pInterestPointProvider,
                                        nativeUIFactories,
+                                       &m_terrainHeightRepository,
+                                       &m_terrainHeightProvider,
                                        pCredentials
                                        ));
     
