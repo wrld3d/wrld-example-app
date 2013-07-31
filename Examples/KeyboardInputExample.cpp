@@ -22,17 +22,20 @@ void KeyboardInputExample::Start()
     m_pKeyboardInput = keyboardInputFactory.CreateKeyboardInput(*this, *this, KeyboardTypeDefault, ReturnKeySearch);
 }
 
-void KeyboardInputExample::HandleKeyboardInputDismissed(const std::string& input)
+void KeyboardInputExample::HandleKeyboardInputDismissed()
 {
     Eegeo_TTY("%s", "\nDismissed the keyboard.");
 }
 
-void KeyboardInputExample::HandleKeyboardInputKeyPressed(const std::string& input)
+void KeyboardInputExample::HandleKeyboardInputKeyPressed(const AppInterface::KeyboardData& data)
 {
-    Eegeo_TTY("%s", input.c_str());
+    if (data.printable)
+    {
+        Eegeo_TTY("%c", data.keyCode);
+    }
     
     //Optionally dismiss the keyboard on pressing Return key
-    if (input == "\n")
+    if (data.keyCode == '\n')
     {
         m_pKeyboardInput->Dismiss();
     }
