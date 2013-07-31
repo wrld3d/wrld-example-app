@@ -63,7 +63,7 @@
 #include "iOSAlertBoxFactory.h"
 #include "NativeUIFactories.h"
 
-#define API_KEY "16a270e48e2c97e81aedd85110f05dcc"
+#define API_KEY "OBTAIN API KEY FROM https://appstore.eegeo.com AND INSERT IT HERE"
 
 //#define USING_SEARCH_EXAMPLE
 

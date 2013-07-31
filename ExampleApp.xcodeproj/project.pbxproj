@@ -70,6 +70,10 @@
 		7ED4CF9317424CF400739A3D /* ToggleTrafficExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7ED4CF9117424CF400739A3D /* ToggleTrafficExample.cpp */; };
 		7ED4CF9B1742A85200739A3D /* ResourceSpatialQueryExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7ED4CF991742A85200739A3D /* ResourceSpatialQueryExample.cpp */; };
 		7EE1BC5E170C352200A4ED45 /* EnvironmentNotifierExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7EE1BC5C170C352200A4ED45 /* EnvironmentNotifierExample.cpp */; };
+		7EE3392417A95C3400B22E64 /* TerrainTexture16_LOD.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE3392017A95C3400B22E64 /* TerrainTexture16_LOD.pvr */; };
+		7EE3392517A95C3400B22E64 /* TerrainTexture16.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE3392117A95C3400B22E64 /* TerrainTexture16.pvr */; };
+		7EE3392617A95C3400B22E64 /* TerrainTexture17_LOD.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE3392217A95C3400B22E64 /* TerrainTexture17_LOD.pvr */; };
+		7EE3392717A95C3400B22E64 /* TerrainTexture17.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE3392317A95C3400B22E64 /* TerrainTexture17.pvr */; };
 		7EE481EB16836F370006E99B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE481EA16836F370006E99B /* UIKit.framework */; };
 		7EE481ED16836F370006E99B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE481EC16836F370006E99B /* Foundation.framework */; };
 		7EE481EF16836F370006E99B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE481EE16836F370006E99B /* CoreGraphics.framework */; };
@@ -306,6 +310,10 @@
 		7ED4CF9A1742A85200739A3D /* ResourceSpatialQueryExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceSpatialQueryExample.h; sourceTree = "<group>"; };
 		7EE1BC5C170C352200A4ED45 /* EnvironmentNotifierExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EnvironmentNotifierExample.cpp; sourceTree = "<group>"; };
 		7EE1BC5D170C352200A4ED45 /* EnvironmentNotifierExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnvironmentNotifierExample.h; sourceTree = "<group>"; };
+		7EE3392017A95C3400B22E64 /* TerrainTexture16_LOD.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = TerrainTexture16_LOD.pvr; sourceTree = "<group>"; };
+		7EE3392117A95C3400B22E64 /* TerrainTexture16.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = TerrainTexture16.pvr; sourceTree = "<group>"; };
+		7EE3392217A95C3400B22E64 /* TerrainTexture17_LOD.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = TerrainTexture17_LOD.pvr; sourceTree = "<group>"; };
+		7EE3392317A95C3400B22E64 /* TerrainTexture17.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = TerrainTexture17.pvr; sourceTree = "<group>"; };
 		7EE481E616836F370006E99B /* ExampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7EE481EA16836F370006E99B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		7EE481EC16836F370006E99B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -667,6 +675,10 @@
 				59D60FDF175E49950044449F /* TerrainTexture12_LOD.pvr */,
 				59D60FE0175E49950044449F /* TerrainTexture13_LOD.pvr */,
 				59D60FE1175E49950044449F /* TerrainTexture14_LOD.pvr */,
+				7EE3392017A95C3400B22E64 /* TerrainTexture16_LOD.pvr */,
+				7EE3392117A95C3400B22E64 /* TerrainTexture16.pvr */,
+				7EE3392217A95C3400B22E64 /* TerrainTexture17_LOD.pvr */,
+				7EE3392317A95C3400B22E64 /* TerrainTexture17.pvr */,
 				59D60FE3175E49950044449F /* Water_01_LOD.pvr */,
 				7EE9888C175CEC3900D3CE09 /* Rain_01.png */,
 				7EE9888D175CEC3900D3CE09 /* Snow_01.png */,
@@ -1075,6 +1087,10 @@
 				7E43D7EA179434D400101629 /* sf_vehicles_Night_01.pvr in Resources */,
 				7E43D7EB179434D400101629 /* Vehicles_SF_Day.pod in Resources */,
 				7E43D7EC179434D400101629 /* Vehicles_SF_Night.pod in Resources */,
+				7EE3392417A95C3400B22E64 /* TerrainTexture16_LOD.pvr in Resources */,
+				7EE3392517A95C3400B22E64 /* TerrainTexture16.pvr in Resources */,
+				7EE3392617A95C3400B22E64 /* TerrainTexture17_LOD.pvr in Resources */,
+				7EE3392717A95C3400B22E64 /* TerrainTexture17.pvr in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
