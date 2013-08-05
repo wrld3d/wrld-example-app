@@ -30,6 +30,7 @@
 #include "EnvironmentFlatteningExample.h"
 #include "SearchExample.h"
 #include "KeyboardInputExample.h"
+#include "PODAnimationExample.h"
 
 namespace ExampleTypes
 {
@@ -48,11 +49,12 @@ namespace ExampleTypes
         ResourceSpatialQuery,
         EnvironmentFlattening,
         Search,
-        KeyboardInput
+        KeyboardInput,
+        PODAnimation
     };
 }
 
-ExampleTypes::Examples selectedExample = ExampleTypes::DebugSphere;
+ExampleTypes::Examples selectedExample = ExampleTypes::PODAnimation;
 
 class MyApp : public Eegeo::IAppOnMap
 {
@@ -225,6 +227,14 @@ public:
                 
             case ExampleTypes::KeyboardInput:
                 return new Examples::KeyboardInputExample(nativeInputFactories.IKeyboardInputFactory());
+
+            case ExampleTypes::PODAnimation:
+                return new Examples::PODAnimationExample(renderContext,
+                                                         cameraModel,
+                                                         fileIO,
+                                                         textureLoader,
+                                                         fogging);
+
         }
     }
     

@@ -10,6 +10,10 @@
 		0924E86517857D4200C238AD /* water_reflectionmap_night.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 0924E86417857D4200C238AD /* water_reflectionmap_night.pvr */; };
 		11764FCE179848B800633459 /* KeyboardInputExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 11764FCC179848B700633459 /* KeyboardInputExample.cpp */; };
 		181749771770515400E4611F /* SearchExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 181749751770515400E4611F /* SearchExample.cpp */; };
+		1825103917AFD37B00251651 /* PODAnimationExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1825103717AFD37B00251651 /* PODAnimationExample.cpp */; };
+		1825103D17AFD5AD00251651 /* Test_ROBOT_ARM.pod in Resources */ = {isa = PBXBuildFile; fileRef = 1825103A17AFD5AD00251651 /* Test_ROBOT_ARM.pod */; };
+		1825103E17AFD5AD00251651 /* tex_arm.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 1825103B17AFD5AD00251651 /* tex_arm.pvr */; };
+		1825103F17AFD5AD00251651 /* tex_base.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 1825103C17AFD5AD00251651 /* tex_base.pvr */; };
 		1839B31C1768881C0059469B /* gen_water_03.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 1839B31B1768881C0059469B /* gen_water_03.pvr */; };
 		1839B323176888460059469B /* Water_02_LOD.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 1839B321176888460059469B /* Water_02_LOD.pvr */; };
 		1839B324176888460059469B /* Water_03_LOD.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 1839B322176888460059469B /* Water_03_LOD.pvr */; };
@@ -241,6 +245,11 @@
 		11764FCD179848B800633459 /* KeyboardInputExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyboardInputExample.h; sourceTree = "<group>"; };
 		181749751770515400E4611F /* SearchExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchExample.cpp; sourceTree = "<group>"; };
 		181749761770515400E4611F /* SearchExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchExample.h; sourceTree = "<group>"; };
+		1825103717AFD37B00251651 /* PODAnimationExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PODAnimationExample.cpp; sourceTree = "<group>"; };
+		1825103817AFD37B00251651 /* PODAnimationExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PODAnimationExample.h; sourceTree = "<group>"; };
+		1825103A17AFD5AD00251651 /* Test_ROBOT_ARM.pod */ = {isa = PBXFileReference; lastKnownFileType = file; path = Test_ROBOT_ARM.pod; sourceTree = "<group>"; };
+		1825103B17AFD5AD00251651 /* tex_arm.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = tex_arm.pvr; sourceTree = "<group>"; };
+		1825103C17AFD5AD00251651 /* tex_base.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = tex_base.pvr; sourceTree = "<group>"; };
 		1839B31B1768881C0059469B /* gen_water_03.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = gen_water_03.pvr; sourceTree = "<group>"; };
 		1839B321176888460059469B /* Water_02_LOD.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Water_02_LOD.pvr; sourceTree = "<group>"; };
 		1839B322176888460059469B /* Water_03_LOD.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Water_03_LOD.pvr; sourceTree = "<group>"; };
@@ -538,6 +547,8 @@
 				181749761770515400E4611F /* SearchExample.h */,
 				11764FCC179848B700633459 /* KeyboardInputExample.cpp */,
 				11764FCD179848B800633459 /* KeyboardInputExample.h */,
+				1825103717AFD37B00251651 /* PODAnimationExample.cpp */,
+				1825103817AFD37B00251651 /* PODAnimationExample.h */,
 			);
 			path = Examples;
 			sourceTree = SOURCE_ROOT;
@@ -608,6 +619,9 @@
 		7EE4825B16847E7C0006E99B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				1825103A17AFD5AD00251651 /* Test_ROBOT_ARM.pod */,
+				1825103B17AFD5AD00251651 /* tex_arm.pvr */,
+				1825103C17AFD5AD00251651 /* tex_base.pvr */,
 				59D6102D17661F420044449F /* CoverageTrees */,
 				7EA3084516C3FF0600602274 /* Themes */,
 				7EE4825C16847E7C0006E99B /* Common */,
@@ -1096,6 +1110,9 @@
 				7EE3392517A95C3400B22E64 /* TerrainTexture16.pvr in Resources */,
 				7EE3392617A95C3400B22E64 /* TerrainTexture17_LOD.pvr in Resources */,
 				7EE3392717A95C3400B22E64 /* TerrainTexture17.pvr in Resources */,
+				1825103D17AFD5AD00251651 /* Test_ROBOT_ARM.pod in Resources */,
+				1825103E17AFD5AD00251651 /* tex_arm.pvr in Resources */,
+				1825103F17AFD5AD00251651 /* tex_base.pvr in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1120,6 +1137,7 @@
 				187C5C72175DD69500146D06 /* EnvironmentFlatteningExample.cpp in Sources */,
 				181749771770515400E4611F /* SearchExample.cpp in Sources */,
 				11764FCE179848B800633459 /* KeyboardInputExample.cpp in Sources */,
+				1825103917AFD37B00251651 /* PODAnimationExample.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
