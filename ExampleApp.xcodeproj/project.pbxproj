@@ -21,6 +21,8 @@
 		187C5C72175DD69500146D06 /* EnvironmentFlatteningExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 187C5C70175DD69400146D06 /* EnvironmentFlatteningExample.cpp */; };
 		18D91728175F4B0D00DF96E0 /* trees_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 18D91726175F4B0D00DF96E0 /* trees_01.pvr */; };
 		18D91729175F4B0D00DF96E0 /* trees_top_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 18D91727175F4B0D00DF96E0 /* trees_top_01.pvr */; };
+		18EC760717BA421E0011EEE6 /* recce_trams.pod in Resources */ = {isa = PBXBuildFile; fileRef = 18EC760517BA421E0011EEE6 /* recce_trams.pod */; };
+		18EC760817BA421E0011EEE6 /* recce_trams.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 18EC760617BA421E0011EEE6 /* recce_trams.pvr */; };
 		2264D694177DA5870016C3ED /* ldn_trains_01.pod in Resources */ = {isa = PBXBuildFile; fileRef = 2264D692177DA5870016C3ED /* ldn_trains_01.pod */; };
 		2264D695177DA5870016C3ED /* ldn_trains_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 2264D693177DA5870016C3ED /* ldn_trains_01.pvr */; };
 		59D60FE8175E49950044449F /* TerrainTexture4_LOD.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 59D60FD7175E49950044449F /* TerrainTexture4_LOD.pvr */; };
@@ -258,6 +260,8 @@
 		187C5C71175DD69500146D06 /* EnvironmentFlatteningExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnvironmentFlatteningExample.h; sourceTree = "<group>"; };
 		18D91726175F4B0D00DF96E0 /* trees_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = trees_01.pvr; sourceTree = "<group>"; };
 		18D91727175F4B0D00DF96E0 /* trees_top_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = trees_top_01.pvr; sourceTree = "<group>"; };
+		18EC760517BA421E0011EEE6 /* recce_trams.pod */ = {isa = PBXFileReference; lastKnownFileType = file; path = recce_trams.pod; sourceTree = "<group>"; };
+		18EC760617BA421E0011EEE6 /* recce_trams.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = recce_trams.pvr; sourceTree = "<group>"; };
 		2264D692177DA5870016C3ED /* ldn_trains_01.pod */ = {isa = PBXFileReference; lastKnownFileType = file; path = ldn_trains_01.pod; sourceTree = "<group>"; };
 		2264D693177DA5870016C3ED /* ldn_trains_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = ldn_trains_01.pvr; sourceTree = "<group>"; };
 		59D60FD7175E49950044449F /* TerrainTexture4_LOD.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = TerrainTexture4_LOD.pvr; sourceTree = "<group>"; };
@@ -655,6 +659,8 @@
 		7EE4826116847E7C0006E99B /* Textures */ = {
 			isa = PBXGroup;
 			children = (
+				18EC760517BA421E0011EEE6 /* recce_trams.pod */,
+				18EC760617BA421E0011EEE6 /* recce_trams.pvr */,
 				7E43D7D9179434D400101629 /* ldn_trains_night_01.pod */,
 				7E43D7DA179434D400101629 /* ldn_trains_Night_01.pvr */,
 				7E43D7DB179434D400101629 /* sf_planes_01.pod */,
@@ -1113,6 +1119,8 @@
 				1825103D17AFD5AD00251651 /* Test_ROBOT_ARM.pod in Resources */,
 				1825103E17AFD5AD00251651 /* tex_arm.pvr in Resources */,
 				1825103F17AFD5AD00251651 /* tex_base.pvr in Resources */,
+				18EC760717BA421E0011EEE6 /* recce_trams.pod in Resources */,
+				18EC760817BA421E0011EEE6 /* recce_trams.pvr in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
