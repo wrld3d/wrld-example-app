@@ -33,7 +33,7 @@ namespace Examples
         void Suspend() {}
         
         void HandleKeyboardInputDismissed();
-        void HandleKeyboardInputKeyPressed(const AppInterface::KeyboardData& data);
+        bool HandleKeyboardInputKeyPressed(const AppInterface::KeyboardData& data);
     };
 }
 

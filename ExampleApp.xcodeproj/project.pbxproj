@@ -17,6 +17,7 @@
 		1839B31C1768881C0059469B /* gen_water_03.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 1839B31B1768881C0059469B /* gen_water_03.pvr */; };
 		1839B323176888460059469B /* Water_02_LOD.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 1839B321176888460059469B /* Water_02_LOD.pvr */; };
 		1839B324176888460059469B /* Water_03_LOD.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 1839B322176888460059469B /* Water_03_LOD.pvr */; };
+		185287F617BE464E0007DC65 /* Themes in Resources */ = {isa = PBXBuildFile; fileRef = 185287F517BE464E0007DC65 /* Themes */; };
 		1860B65C16CA65D90004A39D /* placeholder.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 1860B65B16CA65D90004A39D /* placeholder.pvr */; };
 		187C5C72175DD69500146D06 /* EnvironmentFlatteningExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 187C5C70175DD69400146D06 /* EnvironmentFlatteningExample.cpp */; };
 		18D91728175F4B0D00DF96E0 /* trees_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 18D91726175F4B0D00DF96E0 /* trees_01.pvr */; };
@@ -65,7 +66,6 @@
 		7E7DF51C17300A4E005911AC /* FileIOExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E7DF51A17300A4D005911AC /* FileIOExample.cpp */; };
 		7E7DF5271732AB27005911AC /* NavigationGraphExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E7DF5251732AB27005911AC /* NavigationGraphExample.cpp */; };
 		7E7DF52C1733B844005911AC /* ModifiedRenderingExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E7DF52A1733B844005911AC /* ModifiedRenderingExample.cpp */; };
-		7EA3084616C3FF0600602274 /* Themes in Resources */ = {isa = PBXBuildFile; fileRef = 7EA3084516C3FF0600602274 /* Themes */; };
 		7EB6F65A173A62F7004AE181 /* FrankBold50_Outline.fnt in Resources */ = {isa = PBXBuildFile; fileRef = 7EB6F657173A62F7004AE181 /* FrankBold50_Outline.fnt */; };
 		7EB6F65B173A62F7004AE181 /* FrankBold50_Outline.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EB6F658173A62F7004AE181 /* FrankBold50_Outline.png */; };
 		7EB6F65C173A62F7004AE181 /* FrankBold50.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EB6F659173A62F7004AE181 /* FrankBold50.png */; };
@@ -255,6 +255,7 @@
 		1839B31B1768881C0059469B /* gen_water_03.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = gen_water_03.pvr; sourceTree = "<group>"; };
 		1839B321176888460059469B /* Water_02_LOD.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Water_02_LOD.pvr; sourceTree = "<group>"; };
 		1839B322176888460059469B /* Water_03_LOD.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Water_03_LOD.pvr; sourceTree = "<group>"; };
+		185287F517BE464E0007DC65 /* Themes */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Themes; sourceTree = "<group>"; };
 		1860B65B16CA65D90004A39D /* placeholder.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = placeholder.pvr; sourceTree = "<group>"; };
 		187C5C70175DD69400146D06 /* EnvironmentFlatteningExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EnvironmentFlatteningExample.cpp; sourceTree = "<group>"; };
 		187C5C71175DD69500146D06 /* EnvironmentFlatteningExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnvironmentFlatteningExample.h; sourceTree = "<group>"; };
@@ -313,7 +314,6 @@
 		7E7DF5261732AB27005911AC /* NavigationGraphExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavigationGraphExample.h; sourceTree = "<group>"; };
 		7E7DF52A1733B844005911AC /* ModifiedRenderingExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ModifiedRenderingExample.cpp; sourceTree = "<group>"; };
 		7E7DF52B1733B844005911AC /* ModifiedRenderingExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModifiedRenderingExample.h; sourceTree = "<group>"; };
-		7EA3084516C3FF0600602274 /* Themes */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Themes; sourceTree = "<group>"; };
 		7EB6F657173A62F7004AE181 /* FrankBold50_Outline.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = FrankBold50_Outline.fnt; sourceTree = "<group>"; };
 		7EB6F658173A62F7004AE181 /* FrankBold50_Outline.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FrankBold50_Outline.png; sourceTree = "<group>"; };
 		7EB6F659173A62F7004AE181 /* FrankBold50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FrankBold50.png; sourceTree = "<group>"; };
@@ -623,11 +623,11 @@
 		7EE4825B16847E7C0006E99B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				185287F517BE464E0007DC65 /* Themes */,
 				1825103A17AFD5AD00251651 /* Test_ROBOT_ARM.pod */,
 				1825103B17AFD5AD00251651 /* tex_arm.pvr */,
 				1825103C17AFD5AD00251651 /* tex_base.pvr */,
 				59D6102D17661F420044449F /* CoverageTrees */,
-				7EA3084516C3FF0600602274 /* Themes */,
 				7EE4825C16847E7C0006E99B /* Common */,
 				7EE4829116847E7C0006E99B /* Icons */,
 				7EE4829C16847E7C0006E99B /* occupied_cells.txt */,
@@ -1061,7 +1061,6 @@
 				7EE4838716847E7C0006E99B /* Water_02.pvr in Resources */,
 				7EE4838816847E7C0006E99B /* Water_03.pvr in Resources */,
 				7EE4838916847E7C0006E99B /* WaterEdge_01.pvr in Resources */,
-				7EA3084616C3FF0600602274 /* Themes in Resources */,
 				1860B65C16CA65D90004A39D /* placeholder.pvr in Resources */,
 				7ED3D7FB16E0DB0B0050652B /* water_normalmap.pvr in Resources */,
 				7ED3D7FC16E0DB0B0050652B /* water_reflectionmap.pvr in Resources */,
@@ -1121,6 +1120,7 @@
 				1825103F17AFD5AD00251651 /* tex_base.pvr in Resources */,
 				18EC760717BA421E0011EEE6 /* recce_trams.pod in Resources */,
 				18EC760817BA421E0011EEE6 /* recce_trams.pvr in Resources */,
+				185287F617BE464E0007DC65 /* Themes in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

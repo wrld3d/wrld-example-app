@@ -27,7 +27,7 @@ void KeyboardInputExample::HandleKeyboardInputDismissed()
     Eegeo_TTY("%s", "\nDismissed the keyboard.");
 }
 
-void KeyboardInputExample::HandleKeyboardInputKeyPressed(const AppInterface::KeyboardData& data)
+bool KeyboardInputExample::HandleKeyboardInputKeyPressed(const AppInterface::KeyboardData& data)
 {
     if (data.printable)
     {
@@ -39,4 +39,6 @@ void KeyboardInputExample::HandleKeyboardInputKeyPressed(const AppInterface::Key
     {
         m_pKeyboardInput->Dismiss();
     }
+    
+    return false;
 }
