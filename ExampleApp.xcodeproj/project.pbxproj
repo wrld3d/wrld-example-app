@@ -20,6 +20,7 @@
 		185287F617BE464E0007DC65 /* Themes in Resources */ = {isa = PBXBuildFile; fileRef = 185287F517BE464E0007DC65 /* Themes */; };
 		1860B65C16CA65D90004A39D /* placeholder.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 1860B65B16CA65D90004A39D /* placeholder.pvr */; };
 		187C5C72175DD69500146D06 /* EnvironmentFlatteningExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 187C5C70175DD69400146D06 /* EnvironmentFlatteningExample.cpp */; };
+		18915BD317C7AF86005F24AB /* recce_trams_night.pod in Resources */ = {isa = PBXBuildFile; fileRef = 18915BD217C7AF86005F24AB /* recce_trams_night.pod */; };
 		18D91728175F4B0D00DF96E0 /* trees_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 18D91726175F4B0D00DF96E0 /* trees_01.pvr */; };
 		18D91729175F4B0D00DF96E0 /* trees_top_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 18D91727175F4B0D00DF96E0 /* trees_top_01.pvr */; };
 		18EC760717BA421E0011EEE6 /* recce_trams.pod in Resources */ = {isa = PBXBuildFile; fileRef = 18EC760517BA421E0011EEE6 /* recce_trams.pod */; };
@@ -259,6 +260,7 @@
 		1860B65B16CA65D90004A39D /* placeholder.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = placeholder.pvr; sourceTree = "<group>"; };
 		187C5C70175DD69400146D06 /* EnvironmentFlatteningExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EnvironmentFlatteningExample.cpp; sourceTree = "<group>"; };
 		187C5C71175DD69500146D06 /* EnvironmentFlatteningExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnvironmentFlatteningExample.h; sourceTree = "<group>"; };
+		18915BD217C7AF86005F24AB /* recce_trams_night.pod */ = {isa = PBXFileReference; lastKnownFileType = file; path = recce_trams_night.pod; sourceTree = "<group>"; };
 		18D91726175F4B0D00DF96E0 /* trees_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = trees_01.pvr; sourceTree = "<group>"; };
 		18D91727175F4B0D00DF96E0 /* trees_top_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = trees_top_01.pvr; sourceTree = "<group>"; };
 		18EC760517BA421E0011EEE6 /* recce_trams.pod */ = {isa = PBXFileReference; lastKnownFileType = file; path = recce_trams.pod; sourceTree = "<group>"; };
@@ -659,6 +661,7 @@
 		7EE4826116847E7C0006E99B /* Textures */ = {
 			isa = PBXGroup;
 			children = (
+				18915BD217C7AF86005F24AB /* recce_trams_night.pod */,
 				18EC760517BA421E0011EEE6 /* recce_trams.pod */,
 				18EC760617BA421E0011EEE6 /* recce_trams.pvr */,
 				7E43D7D9179434D400101629 /* ldn_trains_night_01.pod */,
@@ -1121,6 +1124,7 @@
 				18EC760717BA421E0011EEE6 /* recce_trams.pod in Resources */,
 				18EC760817BA421E0011EEE6 /* recce_trams.pvr in Resources */,
 				185287F617BE464E0007DC65 /* Themes in Resources */,
+				18915BD317C7AF86005F24AB /* recce_trams_night.pod in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
