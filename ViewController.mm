@@ -180,6 +180,7 @@ Eegeo::Location::GlobeCameraInterestPointProvider* m_pInterestPointProvider;
 iOSLocationService* piOSLocationService = NULL;
 Eegeo::Resources::Terrain::Heights::TerrainHeightRepository m_terrainHeightRepository;
 Eegeo::Resources::Terrain::Heights::TerrainHeightProvider m_terrainHeightProvider(&m_terrainHeightRepository);
+Eegeo::Weather::CurrentWeatherModel currentWeatherModel;
 
 Eegeo::UI::NativeInput::iOS::iOSInputBoxFactory inputBoxFactory;
 Eegeo::UI::NativeInput::iOS::iOSKeyboardInputFactory keyboardInputFactory;
@@ -243,6 +244,7 @@ Eegeo::UI::NativeUIFactories nativeUIFactories(alertBoxFactory, inputBoxFactory,
     
     // Update the game.
     myApp->Update(frameDuration);
+    currentWeatherModel.SetWeatherType(myApp->World().GetWeatherController().GetWeatherType());
     
     self.preferredFramesPerSecond = 60.0f;
     //////////
@@ -550,8 +552,8 @@ Eegeo::UI::NativeUIFactories nativeUIFactories(alertBoxFactory, inputBoxFactory,
     Eegeo::Web::IWebLoadRequestFactory* pPayloadRequestFactory = new Eegeo::Web::iOSWebLoadRequestFactory(*p_iOSHttpCache);
     Eegeo::Helpers::ITaskQueue* pTaskQueue = new iOSTaskQueue(10);
     
-    Eegeo::Rendering::IMaterialFactory* pMaterialFactory = new Eegeo::Rendering::DefaultMaterialFactory();
-    pMaterialFactory->Initialise(m_renderContext, pLighting, pFogging, m_pBlitter, pFileIO, pTextureFileLoader);
+    Eegeo::Rendering::DefaultMaterialFactory* pMaterialFactory = new Eegeo::Rendering::DefaultMaterialFactory();
+    pMaterialFactory->Initialise(&currentWeatherModel, m_renderContext, pLighting, pFogging, m_pBlitter, pFileIO, pTextureFileLoader);
     
     Eegeo::Traffic::VehicleModelRepository* pVehicleModelRepository = new Eegeo::Traffic::VehicleModelRepository;
     Eegeo::Traffic::VehicleModelLoader* pVehicleModelLoader = new Eegeo::Traffic::VehicleModelLoader(m_renderContext->GetGLState(),
