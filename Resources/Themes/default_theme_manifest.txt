@@ -1,0 +1,335 @@
+{
+    "AssetRoot_iOS": "Themes/",
+    "AssetRoot_Android": "Themes/",
+    
+    "AssetExtension_iOS": ".pvr",
+    "AssetExtension_Android": ".ktx",
+
+    "Themes": [
+        {
+            "Name": "Default",
+            "Lighting": {
+                "DefaultLighting": {
+                    "Key": [
+                        0.47058823529411764,
+                        0.43137254901960786,
+                        0.27450980392156865
+                    ],
+                    "Back": [
+                        0.24490196078431373,
+                        0.24490196078431373,
+                        0.11070588235294118
+                    ],
+                    "Fill": [
+                        0.19607843137254902,
+                        0.19607843137254902,
+                        0.11764705882352941
+                    ],
+                    "Ambient": [
+                        0.27450980392156865,
+                        0.39215686274509803,
+                        0.5632352941176471
+                    ]
+                },
+                "SunnyLighting": {
+                    "Key": [
+                        0.7058823529411765,
+                        0.6274509803921569,
+                        0.3137254901960784
+                    ],
+                    "Back": [
+                        0.43137254901960786,
+                        0.43137254901960786,
+                        0.1568627450980392
+                    ],
+                    "Fill": [
+                        0.19607843137254902,
+                        0.19607843137254902,
+                        0.11764705882352941
+                    ],
+                    "Ambient": [
+                        0.43137254901960786,
+                        0.5490196078431373,
+                        0.6274509803921569
+                    ]
+                },
+                "OvercastLighting": {
+                    "Key": [
+                        0.47058823529411764,
+                        0.43137254901960786,
+                        0.27450980392156865
+                    ],
+                    "Back": [
+                        0.24490196078431373,
+                        0.24490196078431373,
+                        0.11070588235294118
+                    ],
+                    "Fill": [
+                        0.19607843137254902,
+                        0.19607843137254902,
+                        0.11764705882352941
+                    ],
+                    "Ambient": [
+                        0.27450980392156865,
+                        0.39215686274509803,
+                        0.5632352941176471
+                    ]
+                },
+                "FoggyLighting": {
+                    "Key": [
+                        0.0784313725490196,
+                        0.0784313725490196,
+                        0.0784313725490196
+                    ],
+                    "Back": [
+                        0.0784313725490196,
+                        0.0784313725490196,
+                        0.0784313725490196
+                    ],
+                    "Fill": [
+                        0.39215686274509803,
+                        0.39215686274509803,
+                        0.35294117647058826
+                    ],
+                    "Ambient": [
+                        0.3137254901960784,
+                        0.3137254901960784,
+                        0.3137254901960784
+                    ]
+                },
+                "NightLighting": {
+                    "Key": [
+                        0,
+                        0,
+                        0
+                    ],
+                    "Back": [
+                        0,
+                        0,
+                        0
+                    ],
+                    "Fill": [
+                        0,
+                        0,
+                        0
+                    ],
+                    "Ambient": [
+                        0.19607843137254902,
+                        0.19607843137254902,
+                        0.19607843137254902
+                    ]
+                },
+                "DiffuseShadowColour": [
+                    1,
+                    1,
+                    1
+                ],
+                "SunnyShadowColour": [
+                    0.45098039215686275,
+                    0.5686274509803921,
+                    0.7058823529411765
+                ],
+                "OvercastShadowColour": [
+                    0.8627450980392157,
+                    0.8627450980392157,
+                    0.8627450980392157
+                ],
+                "DefaultFogColour": [
+                    0.5019607843137255,
+                    0.5019607843137255,
+                    0.5019607843137255
+                ],
+                "SnowyFogColour": [
+                    0.7647058823529411,
+                    0.7647058823529411,
+                    0.7647058823529411
+                ],
+                "NightFogColour": [
+                    0.3137254901960784,
+                    0.18823529411764706,
+                    0.09411764705882353
+                ],
+                "NightLightmapColour": [
+                    1.3,
+                    0.8309803921568627,
+                    0.20392156862745098
+                ],
+                "NightAmbientColour": [
+                    0.13725490196078433,
+                    0.15294117647058825,
+                    0.17254901960784313
+                ],
+                "MaxFogDensity":1.0
+            },
+            "Textures": {
+                "RoadDiffuse": "Default/Default_roadDiffuse_repeat",
+                "RoadSnowDiffuse": "Default/Default_Snow_roadDiffuse",
+                "RoadNightDiffuse": "Default/Default_Night_roadDiffuse",
+                "RailDiffuse": "Default/Default_railDiffuse_repeat",
+                "RailSnowDiffuse": "Default/Default_railDiffuse_repeat",
+                "RailNightDiffuse": "Default/Default_railDiffuse_night",
+                "BuildingDiffuse": "Default/Default_wallDiffuse",
+                "BuildingSnowDiffuse": "Default/Default_Snow_wallDiffuse",
+                "BuildingNightDiffuse": "Default/Default_Night_wallDiffuse",
+                "TreeSideDiffuse": "Default/trees_01",
+                "TreeSideSnowDiffuse": "Default/trees_01",
+                "TreeSideNightDiffuse": "Default/trees_01",
+                "TreeTopDiffuse": "Default/trees_top_01",
+                "TreeTopSnowDiffuse": "Default/trees_top_01",
+                "TreeTopNightDiffuse": "Default/trees_top_01",
+                "LCM": [
+                    {
+                        "LcmTerrainDiffuse": "Default/TerrainTexture0",
+                        "LcmTerrainSnowDiffuse": "Default/TerrainTexture0",
+                        "LcmTerrainNightDiffuse": "Default/TerrainTexture0",
+                        "LcmTerrainLodDiffuse": "Default/TerrainTexture0_LOD",
+                        "LcmTerrainLodSnowDiffuse": "Default/TerrainTexture0_LOD",
+                        "LcmTerrainLodNightDiffuse": "Default/TerrainTexture0_LOD"
+                    },
+                    {
+                        "LcmTerrainDiffuse": "Default/TerrainTexture1",
+                        "LcmTerrainSnowDiffuse": "Default/TerrainTexture1",
+                        "LcmTerrainNightDiffuse": "Default/TerrainTexture1",
+                        "LcmTerrainLodDiffuse": "Default/TerrainTexture1_LOD",
+                        "LcmTerrainLodSnowDiffuse": "Default/TerrainTexture1_LOD",
+                        "LcmTerrainLodNightDiffuse": "Default/TerrainTexture1_LOD"
+                    },
+                    {
+                        "LcmTerrainDiffuse": "Default/TerrainTexture2",
+                        "LcmTerrainSnowDiffuse": "Default/TerrainTexture2",
+                        "LcmTerrainNightDiffuse": "Default/TerrainTexture2",
+                        "LcmTerrainLodDiffuse": "Default/TerrainTexture2_LOD",
+                        "LcmTerrainLodSnowDiffuse": "Default/TerrainTexture2_LOD",
+                        "LcmTerrainLodNightDiffuse": "Default/TerrainTexture2_LOD"
+                    },
+                    {
+                        "LcmTerrainDiffuse": "Default/TerrainTexture3",
+                        "LcmTerrainSnowDiffuse": "Default/TerrainTexture3",
+                        "LcmTerrainNightDiffuse": "Default/TerrainTexture3",
+                        "LcmTerrainLodDiffuse": "Default/TerrainTexture3_LOD",
+                        "LcmTerrainLodSnowDiffuse": "Default/TerrainTexture3_LOD",
+                        "LcmTerrainLodNightDiffuse": "Default/TerrainTexture3_LOD"
+                    },
+                    {
+                        "LcmTerrainDiffuse": "Default/TerrainTexture4",
+                        "LcmTerrainSnowDiffuse": "Default/TerrainTexture4",
+                        "LcmTerrainNightDiffuse": "Default/TerrainTexture4",
+                        "LcmTerrainLodDiffuse": "Default/TerrainTexture4_LOD",
+                        "LcmTerrainLodSnowDiffuse": "Default/TerrainTexture4_LOD",
+                        "LcmTerrainLodNightDiffuse": "Default/TerrainTexture4_LOD"
+                    },
+                    {
+                        "LcmTerrainDiffuse": "Default/TerrainTexture5",
+                        "LcmTerrainSnowDiffuse": "Default/TerrainTexture5",
+                        "LcmTerrainNightDiffuse": "Default/TerrainTexture5",
+                        "LcmTerrainLodDiffuse": "Default/TerrainTexture5_LOD",
+                        "LcmTerrainLodSnowDiffuse": "Default/TerrainTexture5_LOD",
+                        "LcmTerrainLodNightDiffuse": "Default/TerrainTexture5_LOD"
+                    },
+                    {
+                        "LcmTerrainDiffuse": "Default/TerrainTexture6",
+                        "LcmTerrainSnowDiffuse": "Default/TerrainTexture6",
+                        "LcmTerrainNightDiffuse": "Default/TerrainTexture6",
+                        "LcmTerrainLodDiffuse": "Default/TerrainTexture6_LOD",
+                        "LcmTerrainLodSnowDiffuse": "Default/TerrainTexture6_LOD",
+                        "LcmTerrainLodNightDiffuse": "Default/TerrainTexture6_LOD"
+                    },
+                    {
+                        "LcmTerrainDiffuse": "Default/TerrainTexture7",
+                        "LcmTerrainSnowDiffuse": "Default/TerrainTexture7",
+                        "LcmTerrainNightDiffuse": "Default/TerrainTexture7",
+                        "LcmTerrainLodDiffuse": "Default/TerrainTexture7_LOD",
+                        "LcmTerrainLodSnowDiffuse": "Default/TerrainTexture7_LOD",
+                        "LcmTerrainLodNightDiffuse": "Default/TerrainTexture7_LOD"
+                    },
+                    {
+                        "LcmTerrainDiffuse": "Default/TerrainTexture8",
+                        "LcmTerrainSnowDiffuse": "Default/TerrainTexture8",
+                        "LcmTerrainNightDiffuse": "Default/TerrainTexture8",
+                        "LcmTerrainLodDiffuse": "Default/TerrainTexture8_LOD",
+                        "LcmTerrainLodSnowDiffuse": "Default/TerrainTexture8_LOD",
+                        "LcmTerrainLodNightDiffuse": "Default/TerrainTexture8_LOD"
+                    },
+                    {
+                        "LcmTerrainDiffuse": "Default/TerrainTexture9",
+                        "LcmTerrainSnowDiffuse": "Default/TerrainTexture9",
+                        "LcmTerrainNightDiffuse": "Default/TerrainTexture9",
+                        "LcmTerrainLodDiffuse": "Default/TerrainTexture9_LOD",
+                        "LcmTerrainLodSnowDiffuse": "Default/TerrainTexture9_LOD",
+                        "LcmTerrainLodNightDiffuse": "Default/TerrainTexture9_LOD"
+                    },
+                    {
+                        "LcmTerrainDiffuse": "Default/TerrainTexture10",
+                        "LcmTerrainSnowDiffuse": "Default/TerrainTexture10",
+                        "LcmTerrainNightDiffuse": "Default/TerrainTexture10",
+                        "LcmTerrainLodDiffuse": "Default/TerrainTexture10_LOD",
+                        "LcmTerrainLodSnowDiffuse": "Default/TerrainTexture10_LOD",
+                        "LcmTerrainLodNightDiffuse": "Default/TerrainTexture10_LOD"
+                    },
+                    {
+                        "LcmTerrainDiffuse": "Default/TerrainTexture11",
+                        "LcmTerrainSnowDiffuse": "Default/TerrainTexture11",
+                        "LcmTerrainNightDiffuse": "Default/TerrainTexture11",
+                        "LcmTerrainLodDiffuse": "Default/TerrainTexture11_LOD",
+                        "LcmTerrainLodSnowDiffuse": "Default/TerrainTexture11_LOD",
+                        "LcmTerrainLodNightDiffuse": "Default/TerrainTexture11_LOD"
+                    },
+                    {
+                        "LcmTerrainDiffuse": "Default/TerrainTexture12",
+                        "LcmTerrainSnowDiffuse": "Default/TerrainTexture12",
+                        "LcmTerrainNightDiffuse": "Default/TerrainTexture12",
+                        "LcmTerrainLodDiffuse": "Default/TerrainTexture12_LOD",
+                        "LcmTerrainLodSnowDiffuse": "Default/TerrainTexture12_LOD",
+                        "LcmTerrainLodNightDiffuse": "Default/TerrainTexture12_LOD"
+                    },
+                    {
+                        "LcmTerrainDiffuse": "Default/TerrainTexture13",
+                        "LcmTerrainSnowDiffuse": "Default/TerrainTexture13",
+                        "LcmTerrainNightDiffuse": "Default/TerrainTexture13",
+                        "LcmTerrainLodDiffuse": "Default/TerrainTexture13_LOD",
+                        "LcmTerrainLodSnowDiffuse": "Default/TerrainTexture13_LOD",
+                        "LcmTerrainLodNightDiffuse": "Default/TerrainTexture13_LOD"
+                    },
+                    {
+                        "LcmTerrainDiffuse": "Default/TerrainTexture14",
+                        "LcmTerrainSnowDiffuse": "Default/TerrainTexture14",
+                        "LcmTerrainNightDiffuse": "Default/TerrainTexture14",
+                        "LcmTerrainLodDiffuse": "Default/TerrainTexture14_LOD",
+                        "LcmTerrainLodSnowDiffuse": "Default/TerrainTexture14_LOD",
+                        "LcmTerrainLodNightDiffuse": "Default/TerrainTexture14_LOD"
+                    },
+                    {
+                        "LcmTerrainDiffuse": "Default/TerrainTexture15",
+                        "LcmTerrainSnowDiffuse": "Default/TerrainTexture15",
+                        "LcmTerrainNightDiffuse": "Default/TerrainTexture15",
+                        "LcmTerrainLodDiffuse": "Default/TerrainTexture15_LOD",
+                        "LcmTerrainLodSnowDiffuse": "Default/TerrainTexture15_LOD",
+                        "LcmTerrainLodNightDiffuse": "Default/TerrainTexture15_LOD"
+                    },
+                    {
+                        "LcmTerrainDiffuse": "Default/TerrainTexture16",
+                        "LcmTerrainSnowDiffuse": "Default/TerrainTexture16",
+                        "LcmTerrainNightDiffuse": "Default/TerrainTexture16",
+                        "LcmTerrainLodDiffuse": "Default/TerrainTexture16_LOD",
+                        "LcmTerrainLodSnowDiffuse": "Default/TerrainTexture16_LOD",
+                        "LcmTerrainLodNightDiffuse": "Default/TerrainTexture16_LOD"
+                    },
+                    {
+                        "LcmTerrainDiffuse": "Default/TerrainTexture17",
+                        "LcmTerrainSnowDiffuse": "Default/TerrainTexture17",
+                        "LcmTerrainNightDiffuse": "Default/TerrainTexture17",
+                        "LcmTerrainLodDiffuse": "Default/TerrainTexture17_LOD",
+                        "LcmTerrainLodSnowDiffuse": "Default/TerrainTexture17_LOD",
+                        "LcmTerrainLodNightDiffuse": "Default/TerrainTexture17_LOD"
+                    }
+                ]
+            },
+            "LocationLatLong": [
+                37.75253,
+                -122.449837
+            ],
+            "BaseAltitude": 0,
+            "DriveOnRight":true
+        }
+    ]
+}
