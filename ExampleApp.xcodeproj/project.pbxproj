@@ -17,7 +17,6 @@
 		1839B31C1768881C0059469B /* gen_water_03.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 1839B31B1768881C0059469B /* gen_water_03.pvr */; };
 		1839B323176888460059469B /* Water_02_LOD.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 1839B321176888460059469B /* Water_02_LOD.pvr */; };
 		1839B324176888460059469B /* Water_03_LOD.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 1839B322176888460059469B /* Water_03_LOD.pvr */; };
-		185287F617BE464E0007DC65 /* Themes in Resources */ = {isa = PBXBuildFile; fileRef = 185287F517BE464E0007DC65 /* Themes */; };
 		1860B65C16CA65D90004A39D /* placeholder.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 1860B65B16CA65D90004A39D /* placeholder.pvr */; };
 		187C5C72175DD69500146D06 /* EnvironmentFlatteningExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 187C5C70175DD69400146D06 /* EnvironmentFlatteningExample.cpp */; };
 		18915BD317C7AF86005F24AB /* recce_trams_night.pod in Resources */ = {isa = PBXBuildFile; fileRef = 18915BD217C7AF86005F24AB /* recce_trams_night.pod */; };
@@ -218,7 +217,6 @@
 		1839B31B1768881C0059469B /* gen_water_03.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = gen_water_03.pvr; sourceTree = "<group>"; };
 		1839B321176888460059469B /* Water_02_LOD.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Water_02_LOD.pvr; sourceTree = "<group>"; };
 		1839B322176888460059469B /* Water_03_LOD.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Water_03_LOD.pvr; sourceTree = "<group>"; };
-		185287F517BE464E0007DC65 /* Themes */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Themes; sourceTree = "<group>"; };
 		1860B65B16CA65D90004A39D /* placeholder.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = placeholder.pvr; sourceTree = "<group>"; };
 		187C5C70175DD69400146D06 /* EnvironmentFlatteningExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EnvironmentFlatteningExample.cpp; sourceTree = "<group>"; };
 		187C5C71175DD69500146D06 /* EnvironmentFlatteningExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnvironmentFlatteningExample.h; sourceTree = "<group>"; };
@@ -549,7 +547,6 @@
 		7EE4825B16847E7C0006E99B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				185287F517BE464E0007DC65 /* Themes */,
 				1825103A17AFD5AD00251651 /* Test_ROBOT_ARM.pod */,
 				1825103B17AFD5AD00251651 /* tex_arm.pvr */,
 				1825103C17AFD5AD00251651 /* tex_base.pvr */,
@@ -971,7 +968,6 @@
 				1825103F17AFD5AD00251651 /* tex_base.pvr in Resources */,
 				18EC760717BA421E0011EEE6 /* recce_trams.pod in Resources */,
 				18EC760817BA421E0011EEE6 /* recce_trams.pvr in Resources */,
-				185287F617BE464E0007DC65 /* Themes in Resources */,
 				18915BD317C7AF86005F24AB /* recce_trams_night.pod in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
