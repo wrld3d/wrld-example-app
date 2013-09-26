@@ -38,7 +38,7 @@ namespace Examples
         }
         
         exists = fileIO.Exists(filename);
-        Eegeo_TTY("mydata.bytes now %s\n", exists ? "exists" : "does not exist");
+        Eegeo_TTY("%s now %s\n", filename.c_str(), exists ? "exists" : "does not exist");
         
         std::fstream stream;
         size_t size;
@@ -56,6 +56,10 @@ namespace Examples
         }
         
         stream.close();
+    
+        Eegeo_TTY("Trying to delete %s...\n", filename.c_str());
+        bool deleted = fileIO.DeleteFile(filename);
+        Eegeo_TTY("Deleting %s %s!\n", filename.c_str(), deleted ? "succeeded" : "failed");
         
         Eegeo_TTY("Done!\n");
     }
