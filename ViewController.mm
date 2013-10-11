@@ -309,23 +309,18 @@ Eegeo::UI::NativeUIFactories nativeUIFactories(alertBoxFactory, inputBoxFactory,
     buildings.text = [NSString stringWithUTF8String:ss_buildings.str().c_str()];
     
     float meanTimeWaitingToBeQueuedHttp = myApp->World().GetPayloadPool().stateTimeStats(Eegeo::PayloadState::TO_BE_LOADED, false)->mean();
-    float meanTimeQueuedForLoadingHttp = myApp->World().GetPayloadPool().stateTimeStats(Eegeo::PayloadState::QUEUED_FOR_LOADING, false)->mean();
     float meanTimeToLoadHttp = myApp->World().GetPayloadPool().stateTimeStats(Eegeo::PayloadState::LOADING, false)->mean();
     float meanTimeWaitingToBeQueuedCache = myApp->World().GetPayloadPool().stateTimeStats(Eegeo::PayloadState::TO_BE_LOADED, true)->mean();
-    float meanTimeQueuedForLoadingCache = myApp->World().GetPayloadPool().stateTimeStats(Eegeo::PayloadState::QUEUED_FOR_LOADING, true)->mean();
     float meanTimeToLoadCache = myApp->World().GetPayloadPool().stateTimeStats(Eegeo::PayloadState::LOADING, true)->mean();
     
     std::stringstream ss_payloads;
     ss_payloads << "Payloads:: "
     << Eegeo::Debug::DebugValues::numPayloadsToLoad << " waiting to ld, "
-    << Eegeo::Debug::DebugValues::numPayloadsQueuedForLoading << " lding, "
     << Eegeo::Debug::DebugValues::numPayloadsFailedLoad << " failed ld, "
     << Eegeo::Debug::DebugValues::numPayloadsToBuild << " waiting to bld, "
     << (int)(meanTimeWaitingToBeQueuedHttp*1000) << "ms mean pre queue http, "
-    << (int)(meanTimeQueuedForLoadingHttp*1000) << "ms mean ld queue http, "
     << (int)(meanTimeToLoadHttp*1000) << "ms mean lding http, "
     << (int)(meanTimeWaitingToBeQueuedCache*1000) << "ms mean pre queue cache, "
-    << (int)(meanTimeQueuedForLoadingCache*1000) << "ms mean ld queue cache, "
     << (int)(meanTimeToLoadCache*1000) << "ms mean lding cache"
     ;
     payloads.text = [NSString stringWithUTF8String:ss_payloads.str().c_str()];
@@ -584,7 +579,13 @@ Eegeo::UI::NativeUIFactories nativeUIFactories(alertBoxFactory, inputBoxFactory,
                                        nativeUIFactories,
                                        &m_terrainHeightRepository,
                                        &m_terrainHeightProvider,
-                                       pCredentials
+                                       pCredentials,
+                                       
+                                       "",
+                                       "Default-Landscape@2x~ipad.png",
+                                       Eegeo::Standard,
+                                       true,
+                                       "http://cdn1.eegeo.com/coverage-trees/v50/manifest.txt.gz"
                                        ));
     
     m_renderContext->GetGLState().InvalidateAll();

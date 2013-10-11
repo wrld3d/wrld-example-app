@@ -63,6 +63,9 @@ namespace Examples
         Eegeo::m44::Mul(transform, cameraRelativeTransform, scaleMatrix);
         transform.SetRow(3, Eegeo::v4(cameraRelativePos, 1.f));
         
+        renderContext.GetGLState().DepthTest.Enable();
+        renderContext.GetGLState().DepthFunc(GL_LEQUAL);
+        
         //loaded model faces are ccw
         renderContext.GetGLState().FrontFace(GL_CCW);
         

@@ -146,20 +146,8 @@ namespace Examples
             Eegeo_GL(glVertexAttribPointer(shader.PositionAttribute, 3, GL_UNSIGNED_SHORT, GL_TRUE, sizeof(ShortDiffuseTexturedVertex), 0));
             Eegeo_GL(glVertexAttribPointer(shader.LightDotAttribute, 1, GL_FLOAT, GL_FALSE, sizeof(ShortDiffuseTexturedVertex), (GLvoid*) (sizeof(short)*6)));
             
-            Eegeo::Culling::CullingVolumeTree& cullingVolumeTree = item->GetCullingVolumeTree();
+            Eegeo_GL(glDrawElements(GL_TRIANGLES, item->IndexCount(), GL_UNSIGNED_SHORT, (void*)0 ));
             
-            if(cullingVolumeTree.containsNodes())
-            {
-                cullingVolumeTree.ComputeVisibleRanges(visibleVolume, 1.0f, rangesToDraw);
-                for(std::vector<Eegeo::Culling::IndexBufferRange>::const_iterator range = rangesToDraw.begin(); range != rangesToDraw.end(); ++range)
-                {
-                    Eegeo_GL(glDrawElements(GL_TRIANGLES, range->NumOfIndices(), GL_UNSIGNED_SHORT, (void*)(range->StartIndex() * 2)));
-                }
-            }
-            else
-            {
-                Eegeo_GL(glDrawElements(GL_TRIANGLES, item->IndexCount(), GL_UNSIGNED_SHORT, (void*)0 ));
-            }
         }
         
         glDisable(GL_BLEND);
