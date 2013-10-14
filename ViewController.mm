@@ -187,6 +187,8 @@ Eegeo::UI::NativeInput::iOS::iOSKeyboardInputFactory keyboardInputFactory;
 Eegeo::UI::NativeAlerts::iOS::iOSAlertBoxFactory alertBoxFactory;
 Eegeo::UI::NativeUIFactories nativeUIFactories(alertBoxFactory, inputBoxFactory, keyboardInputFactory);
 
+Eegeo::Web::iOSWebRequestService* webRequestService;
+
 // ---------------------------------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------------
 - (void)dealloc {
@@ -265,6 +267,8 @@ Eegeo::UI::NativeUIFactories nativeUIFactories(alertBoxFactory, inputBoxFactory,
             [precacheVolume setEnabled: true];
         }
     }
+    
+    webRequestService->Update();
     
     if (timeNow < debugStatsUpdateExpiry)
     {
@@ -544,7 +548,10 @@ Eegeo::UI::NativeUIFactories nativeUIFactories(alertBoxFactory, inputBoxFactory,
     Eegeo::Helpers::ITextureFileLoader* pTextureFileLoader = new iOSTextureFileLoader(p_iOSFileIO, m_renderContext->GetGLState());
     iOSHttpCache* p_iOSHttpCache = new iOSHttpCache(*p_iOSFileIO);
     Eegeo::Helpers::IHttpCache* pHttpCache = p_iOSHttpCache;
-    Eegeo::Web::IWebLoadRequestFactory* pPayloadRequestFactory = new Eegeo::Web::iOSWebLoadRequestFactory(*p_iOSHttpCache);
+    
+    webRequestService = new Eegeo::Web::iOSWebRequestService();
+    
+    Eegeo::Web::IWebLoadRequestFactory* pPayloadRequestFactory = new Eegeo::Web::iOSWebLoadRequestFactory(*p_iOSHttpCache, *webRequestService);
     Eegeo::Helpers::ITaskQueue* pTaskQueue = new iOSTaskQueue(10);
     
     Eegeo::Rendering::DefaultMaterialFactory* pMaterialFactory = new Eegeo::Rendering::DefaultMaterialFactory();
