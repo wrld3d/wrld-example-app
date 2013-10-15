@@ -31,6 +31,7 @@
 #include "SearchExample.h"
 #include "KeyboardInputExample.h"
 #include "PODAnimationExample.h"
+#include "Pick3DObjectExample.h"
 
 namespace ExampleTypes
 {
@@ -50,11 +51,12 @@ namespace ExampleTypes
         EnvironmentFlattening,
         Search,
         KeyboardInput,
-        PODAnimation
+        PODAnimation,
+        Pick3DObject
     };
 }
 
-ExampleTypes::Examples selectedExample = ExampleTypes::PODAnimation;
+ExampleTypes::Examples selectedExample = ExampleTypes::Pick3DObject;
 
 class MyApp : public Eegeo::IAppOnMap
 {
@@ -217,7 +219,7 @@ public:
             case ExampleTypes::ResourceSpatialQuery:
                 return new Examples::ResourceSpatialQueryExample(resourceSpatialQueryService,
                                                                  globeCamera);
-            
+                
             case ExampleTypes::EnvironmentFlattening:
                 return new Examples::EnvironmentFlatteningExample(environmentFlatteningService);
                 
@@ -227,35 +229,41 @@ public:
                 
             case ExampleTypes::KeyboardInput:
                 return new Examples::KeyboardInputExample(nativeInputFactories.IKeyboardInputFactory());
-
+                
             case ExampleTypes::PODAnimation:
                 return new Examples::PODAnimationExample(renderContext,
                                                          cameraModel,
                                                          fileIO,
                                                          textureLoader,
                                                          fogging);
-
+            case ExampleTypes::Pick3DObject:
+                return new Examples::Pick3DObjectExample(renderContext,
+                                                         interestLocation,
+                                                         cameraModel,
+                                                         renderCamera);
+                
+                
         }
     }
     
-    void Event_TouchRotate 			(const AppInterface::RotateData& data) { pGlobeCamera->Event_TouchRotate(data); }
-    void Event_TouchRotate_Start	(const AppInterface::RotateData& data) { pGlobeCamera->Event_TouchRotate_Start(data); }
-    void Event_TouchRotate_End 		(const AppInterface::RotateData& data) { pGlobeCamera->Event_TouchRotate_End(data); }
+    void Event_TouchRotate 			(const AppInterface::RotateData& data) { if(!pExample->Event_TouchRotate(data)) pGlobeCamera->Event_TouchRotate(data); }
+    void Event_TouchRotate_Start	(const AppInterface::RotateData& data) { if(!pExample->Event_TouchRotate_Start(data)) pGlobeCamera->Event_TouchRotate_Start(data); }
+    void Event_TouchRotate_End 		(const AppInterface::RotateData& data) { if(!pExample->Event_TouchRotate_End(data)) pGlobeCamera->Event_TouchRotate_End(data); }
     
-    void Event_TouchPinch 			(const AppInterface::PinchData& data) { pGlobeCamera->Event_TouchPinch(data); }
-    void Event_TouchPinch_Start 	(const AppInterface::PinchData& data) { pGlobeCamera->Event_TouchPinch_Start(data); }
-    void Event_TouchPinch_End 		(const AppInterface::PinchData& data) { pGlobeCamera->Event_TouchPinch_End(data); }
+    void Event_TouchPinch 			(const AppInterface::PinchData& data) { if(!pExample->Event_TouchPinch(data)) pGlobeCamera->Event_TouchPinch(data); }
+    void Event_TouchPinch_Start 	(const AppInterface::PinchData& data) { if(!pExample->Event_TouchPinch_Start(data)) pGlobeCamera->Event_TouchPinch_Start(data); }
+    void Event_TouchPinch_End 		(const AppInterface::PinchData& data) { if(!pExample->Event_TouchPinch_End(data)) pGlobeCamera->Event_TouchPinch_End(data); }
     
-    void Event_TouchPan				(const AppInterface::PanData& data) { pGlobeCamera->Event_TouchPan(data); }
-    void Event_TouchPan_Start		(const AppInterface::PanData& data) { pGlobeCamera->Event_TouchPan_Start(data); }
-    void Event_TouchPan_End 		(const AppInterface::PanData& data) { pGlobeCamera->Event_TouchPan_End(data); }
+    void Event_TouchPan				(const AppInterface::PanData& data) { if(!pExample->Event_TouchPan(data)) pGlobeCamera->Event_TouchPan(data); }
+    void Event_TouchPan_Start		(const AppInterface::PanData& data) { if(!pExample->Event_TouchPan_Start(data)) pGlobeCamera->Event_TouchPan_Start(data); }
+    void Event_TouchPan_End 		(const AppInterface::PanData& data) { if(!pExample->Event_TouchPan_End(data)) pGlobeCamera->Event_TouchPan_End(data); }
     
-    void Event_TouchTap 			(const AppInterface::TapData& data) { pGlobeCamera->Event_TouchTap(data); }
-    void Event_TouchDoubleTap		(const AppInterface::TapData& data) { pGlobeCamera->Event_TouchDoubleTap(data); }
+    void Event_TouchTap 			(const AppInterface::TapData& data) { if(!pExample->Event_TouchTap(data)) pGlobeCamera->Event_TouchTap(data); }
+    void Event_TouchDoubleTap		(const AppInterface::TapData& data) { if(!pExample->Event_TouchDoubleTap(data)) pGlobeCamera->Event_TouchDoubleTap(data); }
     
-    void Event_TouchDown 			(const AppInterface::TouchData& data) { pGlobeCamera->Event_TouchDown(data); }
-    void Event_TouchMove 			(const AppInterface::TouchData& data) { pGlobeCamera->Event_TouchMove(data); }
-    void Event_TouchUp 				(const AppInterface::TouchData& data) { pGlobeCamera->Event_TouchUp(data); }
+    void Event_TouchDown 			(const AppInterface::TouchData& data) { if(!pExample->Event_TouchDown(data)) pGlobeCamera->Event_TouchDown(data); }
+    void Event_TouchMove 			(const AppInterface::TouchData& data) { if(!pExample->Event_TouchMove(data)) pGlobeCamera->Event_TouchMove(data); }
+    void Event_TouchUp 				(const AppInterface::TouchData& data) { if(!pExample->Event_TouchUp(data)) pGlobeCamera->Event_TouchUp(data); }
 };
 
 #endif /* defined(__ExampleApp__AppOnMap__) */

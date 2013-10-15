@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0924E86517857D4200C238AD /* water_reflectionmap_night.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 0924E86417857D4200C238AD /* water_reflectionmap_night.pvr */; };
 		11764FCE179848B800633459 /* KeyboardInputExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 11764FCC179848B700633459 /* KeyboardInputExample.cpp */; };
+		1803F21317FD8A2F00D78405 /* Pick3DObjectExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1803F21117FD8A2F00D78405 /* Pick3DObjectExample.cpp */; };
 		181749771770515400E4611F /* SearchExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 181749751770515400E4611F /* SearchExample.cpp */; };
 		1825103917AFD37B00251651 /* PODAnimationExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1825103717AFD37B00251651 /* PODAnimationExample.cpp */; };
 		1825103D17AFD5AD00251651 /* Test_ROBOT_ARM.pod in Resources */ = {isa = PBXBuildFile; fileRef = 1825103A17AFD5AD00251651 /* Test_ROBOT_ARM.pod */; };
@@ -207,6 +208,8 @@
 		0924E86417857D4200C238AD /* water_reflectionmap_night.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = water_reflectionmap_night.pvr; sourceTree = "<group>"; };
 		11764FCC179848B700633459 /* KeyboardInputExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KeyboardInputExample.cpp; sourceTree = "<group>"; };
 		11764FCD179848B800633459 /* KeyboardInputExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyboardInputExample.h; sourceTree = "<group>"; };
+		1803F21117FD8A2F00D78405 /* Pick3DObjectExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Pick3DObjectExample.cpp; sourceTree = "<group>"; };
+		1803F21217FD8A2F00D78405 /* Pick3DObjectExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pick3DObjectExample.h; sourceTree = "<group>"; };
 		181749751770515400E4611F /* SearchExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchExample.cpp; sourceTree = "<group>"; };
 		181749761770515400E4611F /* SearchExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchExample.h; sourceTree = "<group>"; };
 		1825103717AFD37B00251651 /* PODAnimationExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PODAnimationExample.cpp; sourceTree = "<group>"; };
@@ -477,6 +480,8 @@
 				11764FCD179848B800633459 /* KeyboardInputExample.h */,
 				1825103717AFD37B00251651 /* PODAnimationExample.cpp */,
 				1825103817AFD37B00251651 /* PODAnimationExample.h */,
+				1803F21117FD8A2F00D78405 /* Pick3DObjectExample.cpp */,
+				1803F21217FD8A2F00D78405 /* Pick3DObjectExample.h */,
 			);
 			path = Examples;
 			sourceTree = SOURCE_ROOT;
@@ -994,6 +999,7 @@
 				181749771770515400E4611F /* SearchExample.cpp in Sources */,
 				11764FCE179848B800633459 /* KeyboardInputExample.cpp in Sources */,
 				1825103917AFD37B00251651 /* PODAnimationExample.cpp in Sources */,
+				1803F21317FD8A2F00D78405 /* Pick3DObjectExample.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
