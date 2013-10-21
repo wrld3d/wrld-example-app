@@ -590,8 +590,7 @@ Eegeo::Web::iOSWebRequestService* webRequestService;
                                        
                                        "",
                                        "Default-Landscape@2x~ipad.png",
-                                       Eegeo::Standard,
-                                       true
+                                       Eegeo::Standard
                                        ));
     
     m_renderContext->GetGLState().InvalidateAll();
