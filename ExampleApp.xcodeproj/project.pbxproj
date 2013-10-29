@@ -50,6 +50,7 @@
 		7EC9D1FA1701B9E600F30D39 /* libapps-on-maps-sim.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E75EE1D16848B8A00BCA283 /* libapps-on-maps-sim.a */; };
 		7EC9D1FB1701B9E600F30D39 /* libapps-on-maps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE48223168373E20006E99B /* libapps-on-maps.a */; };
 		7EC9D1FE1701BA8F00F30D39 /* FrankBold50.fnt in Resources */ = {isa = PBXBuildFile; fileRef = 7EC9D1FD1701BA8F00F30D39 /* FrankBold50.fnt */; };
+		7ED145971820212A0018218E /* placeholder_no_data.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7ED145961820212A0018218E /* placeholder_no_data.pvr */; };
 		7ED3D7FB16E0DB0B0050652B /* water_normalmap.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7ED3D7F916E0DB0B0050652B /* water_normalmap.pvr */; };
 		7ED3D7FC16E0DB0B0050652B /* water_reflectionmap.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7ED3D7FA16E0DB0B0050652B /* water_reflectionmap.pvr */; };
 		7ED4CF9317424CF400739A3D /* ToggleTrafficExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7ED4CF9117424CF400739A3D /* ToggleTrafficExample.cpp */; };
@@ -260,6 +261,7 @@
 		7EB6F658173A62F7004AE181 /* FrankBold50_Outline.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FrankBold50_Outline.png; sourceTree = "<group>"; };
 		7EB6F659173A62F7004AE181 /* FrankBold50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FrankBold50.png; sourceTree = "<group>"; };
 		7EC9D1FD1701BA8F00F30D39 /* FrankBold50.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = FrankBold50.fnt; sourceTree = "<group>"; };
+		7ED145961820212A0018218E /* placeholder_no_data.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = placeholder_no_data.pvr; sourceTree = "<group>"; };
 		7ED3D7F916E0DB0B0050652B /* water_normalmap.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = water_normalmap.pvr; sourceTree = "<group>"; };
 		7ED3D7FA16E0DB0B0050652B /* water_reflectionmap.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = water_reflectionmap.pvr; sourceTree = "<group>"; };
 		7ED4CF9117424CF400739A3D /* ToggleTrafficExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ToggleTrafficExample.cpp; sourceTree = "<group>"; };
@@ -612,6 +614,7 @@
 				7ED3D7F916E0DB0B0050652B /* water_normalmap.pvr */,
 				7ED3D7FA16E0DB0B0050652B /* water_reflectionmap.pvr */,
 				1860B65B16CA65D90004A39D /* placeholder.pvr */,
+				7ED145961820212A0018218E /* placeholder_no_data.pvr */,
 				7EE4826216847E7C0006E99B /* Boats_01.pvr */,
 				7EE4826316847E7C0006E99B /* Buildings_01.pvr */,
 				7EE4826416847E7C0006E99B /* Buildings_02.pvr */,
@@ -880,6 +883,7 @@
 				7EE4834A16847E7C0006E99B /* Rocks_02.pvr in Resources */,
 				7EE4834B16847E7C0006E99B /* Sand_01.pvr in Resources */,
 				7EE4834C16847E7C0006E99B /* SanFran_POI.dat in Resources */,
+				7ED145971820212A0018218E /* placeholder_no_data.pvr in Resources */,
 				7EE4834D16847E7C0006E99B /* SanFrancisco_Vehicles.pod in Resources */,
 				7EE4834E16847E7C0006E99B /* sf_att_park.pvr in Resources */,
 				7EE4834F16847E7C0006E99B /* SF_Boats.pod in Resources */,
