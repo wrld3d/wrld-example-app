@@ -2,11 +2,10 @@
 #define __ExampleApp__ScreenUnprojectExample__
 
 #include "IExample.h"
-#include "RenderContext.h"
-#include "NewGlobeCamera.h"
-#include "SphereMesh.h"
-#include "TerrainHeightProvider.h"
-#include "LatLongAltitude.h"
+#include "Rendering.h"
+#include "Terrain.h"
+#include "Camera.h"
+#include "DebugRendering.h"
 
 namespace Examples
 {
@@ -15,14 +14,12 @@ namespace Examples
     private:
         Eegeo::DebugRendering::SphereMesh* sphere;
         Eegeo::Rendering::RenderContext& renderContext;
-        Eegeo::Camera::CameraModel& cameraModel;
-        Eegeo::RenderCamera& renderCamera;
+        Eegeo::Camera::ICameraProvider& cameraProvider;
         Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider;
         
     public:
         ScreenUnprojectExample(Eegeo::Rendering::RenderContext& renderContext,
-                               Eegeo::Camera::CameraModel& cameraModel,
-                               Eegeo::RenderCamera& renderCamera,
+                               Eegeo::Camera::ICameraProvider& cameraProvider,
                                Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider);
         
         void Start();

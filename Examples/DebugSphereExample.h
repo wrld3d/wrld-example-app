@@ -2,10 +2,11 @@
 #define __ExampleApp__DebugSphereExample__
 
 #include "IExample.h"
-#include "RenderContext.h"
-#include "NewGlobeCamera.h"
-#include "SphereMesh.h"
 #include "LatLongAltitude.h"
+#include "Rendering.h"
+#include "DebugRendering.h"
+
+#include <vector>
 
 namespace Examples
 {
@@ -15,17 +16,13 @@ namespace Examples
         std::vector<Eegeo::DebugRendering::SphereMesh*> renderables;
         Eegeo::Rendering::RenderContext& renderContext;
         Eegeo::Space::LatLongAltitude interestLocation;
-        Eegeo::Camera::CameraModel& cameraModel;
-        Eegeo::RenderCamera& renderCamera;
         
         void AddSphere(Eegeo::Space::LatLongAltitude sphereLocation,
                        Eegeo::v3 color);
         
     public:
         DebugSphereExample(Eegeo::Rendering::RenderContext& renderContext,
-                           Eegeo::Space::LatLongAltitude interestLocation,
-                           Eegeo::Camera::CameraModel& cameraModel,
-                           Eegeo::RenderCamera& renderCamera);
+                           Eegeo::Space::LatLongAltitude interestLocation);
         
         void Start();
         void Update();

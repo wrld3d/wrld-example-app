@@ -13,12 +13,10 @@
 namespace Examples
 {
     PODAnimationExample::PODAnimationExample(Eegeo::Rendering::RenderContext& renderContext,
-                                       Eegeo::Camera::CameraModel& cameraModel,
                                              Eegeo::Helpers::IFileIO& fileIO,
-                                       Eegeo::Helpers::ITextureFileLoader& textureLoader,
-                                       Eegeo::Lighting::GlobalFogging& fogging)
+                                             Eegeo::Helpers::ITextureFileLoader& textureLoader,
+                                             Eegeo::Lighting::GlobalFogging& fogging)
     :renderContext(renderContext)
-    ,cameraModel(cameraModel)
     ,fileIO(fileIO)
     ,textureLoader(textureLoader)
     ,pModel(NULL)
@@ -55,7 +53,7 @@ namespace Examples
         Eegeo::v3 forward = (location  - Eegeo::v3(0.f, 1.f, 0.f)).Norm().ToSingle();
         Eegeo::v3 right(Eegeo::v3::Cross(up, forward).Norm());
         forward = Eegeo::v3::Cross(up, right);
-        Eegeo::v3 cameraRelativePos = (location - cameraModel.GetWorldPosition()).ToSingle();
+        Eegeo::v3 cameraRelativePos = (location - renderContext.GetCameraOriginEcef()).ToSingle();
         Eegeo::m44 scaleMatrix;
         scaleMatrix.Scale(1.f);
         Eegeo::m44 cameraRelativeTransform;

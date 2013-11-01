@@ -13,13 +13,12 @@
 
 #include <vector>
 #include "RenderContext.h"
-#include "CameraModel.h"
 #include "MeshPool.h"
 #include "RenderableItem.h"
 #include "DiffuseTexturedMaterial.h"
-#include "NewGlobeCamera.h"
 #include "ShaderCompiler.h"
 #include "GlobalLighting.h"
+#include "Location.h"
 
 namespace Examples
 {
@@ -103,9 +102,8 @@ namespace Examples
         MyShader shader;
         
         Eegeo::Rendering::RenderContext& renderContext;
-        Eegeo::RenderCamera& renderCamera;
-        Eegeo::Camera::CameraModel& cameraModel;
-        Eegeo::Camera::NewGlobeCamera& globeCamera;
+        Eegeo::Camera::ICameraProvider& cameraProvider;
+        Eegeo::Location::IInterestPointProvider& interestPointProvider;
         Eegeo::Lighting::GlobalLighting& lighting;
         Eegeo::Streaming::IStreamingVolume& visibleVolume;
         Eegeo::Resources::MeshPool<Eegeo::Rendering::RenderableItem*>& buildingPool;
@@ -116,9 +114,8 @@ namespace Examples
         
     public:
         ModifiedRenderingExample(Eegeo::Rendering::RenderContext& renderContext,
-                                 Eegeo::RenderCamera& renderCamera,
-                                 Eegeo::Camera::CameraModel& cameraModel,
-                                 Eegeo::Camera::NewGlobeCamera& globeCamera,
+                                 Eegeo::Camera::ICameraProvider& cameraProvider,
+                                 Eegeo::Location::IInterestPointProvider& interestPointProvider,
                                  Eegeo::Streaming::IStreamingVolume& visibleVolume,
                                  Eegeo::Lighting::GlobalLighting& lighting,
                                  Eegeo::Resources::MeshPool<Eegeo::Rendering::RenderableItem*>& buildingPool,

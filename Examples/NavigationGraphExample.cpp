@@ -8,6 +8,8 @@
 
 #include "NavigationGraphExample.h"
 #include "NavigationGraphRoad.h"
+#include "CameraHelpers.h"
+#include "DebugRenderable.h"
 
 using namespace Eegeo::Rendering;
 using namespace Eegeo::DebugRendering;
@@ -22,13 +24,9 @@ namespace {
 namespace Examples
 {
     NavigationGraphExample::NavigationGraphExample(RenderContext& renderContext,
-                                                   Eegeo::RenderCamera& renderCamera,
-                                                   Eegeo::Camera::CameraModel& cameraModel,
                                                    NavigationGraphRepository& navigationGraphRepository)
     :navigationGraphRepository(navigationGraphRepository)
     ,renderContext(renderContext)
-    ,renderCamera(renderCamera)
-    ,cameraModel(cameraModel)
     ,addedHandler(*this)
     ,removedHandler(*this)
     {
@@ -55,7 +53,8 @@ namespace Examples
             DebugRenderable &renderable = *it->second;
             
             Eegeo::dv3 ecefPosition = navGraph.GetCellInfo().GetFaceCentreECEF() + Eegeo::dv3::FromSingle(navGraph.GetUpECEF() * 2.0f);
-            renderable.Draw(renderCamera, ecefPosition - cameraModel.GetWorldPosition());
+            Eegeo::v3 cameraRelativePosition = Eegeo::Camera::CameraHelpers::CameraRelativePoint(ecefPosition, renderContext.GetCameraOriginEcef());
+            renderable.Draw(cameraRelativePosition);
         }
     }
     

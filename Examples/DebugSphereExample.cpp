@@ -1,15 +1,12 @@
 #include "DebugSphereExample.h"
+#include "SphereMesh.h"
 
 namespace Examples
 {
     DebugSphereExample::DebugSphereExample(Eegeo::Rendering::RenderContext& renderContext,
-                       Eegeo::Space::LatLongAltitude interestLocation,
-                       Eegeo::Camera::CameraModel& cameraModel,
-                       Eegeo::RenderCamera& renderCamera)
+                       Eegeo::Space::LatLongAltitude interestLocation)
     :renderContext(renderContext)
     ,interestLocation(interestLocation)
-    ,cameraModel(cameraModel)
-    ,renderCamera(renderCamera)
     {
         
     }
@@ -58,7 +55,7 @@ namespace Examples
         for(std::vector<Eegeo::DebugRendering::SphereMesh*>::iterator
             it = renderables.begin(); it != renderables.end(); ++ it)
         {
-            (*it)->Draw(renderCamera);
+            (*it)->Draw(renderContext);
         }
     }
     
@@ -68,7 +65,6 @@ namespace Examples
         //add a sphere of radius 20 meters at sphereLocation 
         Eegeo::DebugRendering::SphereMesh* sphere = new Eegeo::DebugRendering::SphereMesh(
                                                                                        renderContext,
-                                                                                       &cameraModel,
                                                                                        20.0f,
                                                                                        16, 16, //tessellation parameters
                                                                                        sphereLocation.ToECEF(),

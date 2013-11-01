@@ -8,6 +8,8 @@
 
 #include "Pick3DObjectExample.h"
 #include "Plane.h"
+#include "ICameraProvider.h"
+#include "RenderCamera.h"
 
 #define SPHERE_RADIUS 20.0
 #define UNPICKED_COLOUR Eegeo::v3(1.0f, 0.0f, 1.0f)
@@ -17,12 +19,10 @@ namespace Examples
 {
     Pick3DObjectExample::Pick3DObjectExample(Eegeo::Rendering::RenderContext& renderContext,
                                              Eegeo::Space::LatLongAltitude interestLocation,
-                                             Eegeo::Camera::CameraModel& cameraModel,
-                                             Eegeo::RenderCamera& renderCamera)
+                                             Eegeo::Camera::ICameraProvider& cameraProvider)
     :m_renderContext(renderContext)
     ,m_interestLocation(interestLocation)
-    ,m_cameraModel(cameraModel)
-    ,m_renderCamera(renderCamera)
+    ,m_cameraProvider(cameraProvider)
     ,m_movingObject(false)
     ,m_object(NULL)
     {
@@ -53,7 +53,7 @@ namespace Examples
     
     void Pick3DObjectExample::Draw()
     {
-        m_object->Draw(m_renderCamera);
+        m_object->Draw(m_renderContext);
     }
     
     bool Pick3DObjectExample::Event_TouchPan(const AppInterface::PanData& data)
@@ -85,6 +85,8 @@ namespace Examples
     
     void Pick3DObjectExample::CreateWorldSpaceRayFromScreen(const Eegeo::v2& screenPoint, Ray& ray)
     {
+        const Eegeo::Camera::RenderCamera& renderCamera = m_cameraProvider.GetRenderCamera();
+        
         //normalize the point
         double nx = 2.0 * screenPoint.GetX() / m_renderContext.GetScreenWidth() - 1;
         double ny = - 2.0 * screenPoint.GetY() / m_renderContext.GetScreenHeight() + 1;
@@ -94,7 +96,7 @@ namespace Examples
         Eegeo::v4 far(nx, ny, 1.0f, 1.0);
         
         Eegeo::m44 invVP;
-        Eegeo::m44::Inverse(invVP, m_cameraModel.GetViewProjectionTransform());
+        Eegeo::m44::Inverse(invVP, renderCamera.GetViewProjectionMatrix());
         
         //unproject the points
         Eegeo::v4 unprojectedNear = Eegeo::v4::Mul(near, invVP);
@@ -105,7 +107,7 @@ namespace Examples
         Eegeo::v3 unprojectedFarWorld = unprojectedFar / unprojectedFar.GetW();
         
         //check intersection with a ray cast from camera position
-        ray.origin = m_cameraModel.GetWorldPosition();
+        ray.origin = renderCamera.GetEcefLocation();
         ray.direction = (unprojectedNearWorld - unprojectedFarWorld).Norm();
     }
     
@@ -159,7 +161,6 @@ namespace Examples
         Eegeo_DELETE m_object;
         
         m_object = new Eegeo::DebugRendering::SphereMesh(m_renderContext,
-                                                         &m_cameraModel,
                                                          SPHERE_RADIUS,
                                                          16, 16, //tessellation parameters
                                                          m_objectLocationEcef,

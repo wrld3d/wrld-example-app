@@ -3,9 +3,8 @@
 
 #include "IExample.h"
 #include "RenderContext.h"
-#include "NewGlobeCamera.h"
 #include "LatLongAltitude.h"
-#include "CameraModel.h"
+
 #include "Model.h"
 
 namespace Examples
@@ -57,8 +56,6 @@ namespace Examples
         };
         
         Eegeo::Rendering::RenderContext& renderContext;
-        Eegeo::Camera::CameraModel& cameraModel;
-        Eegeo::RenderCamera& renderCamera;
         Eegeo::Helpers::IFileIO& fileIO;
         Eegeo::Helpers::ITextureFileLoader& textureLoader;
         Eegeo::Space::LatLongAltitude interestLocation;
@@ -71,8 +68,6 @@ namespace Examples
     public:
         LoadModelExample(Eegeo::Rendering::RenderContext& renderContext,
                          Eegeo::Space::LatLongAltitude interestLocation,
-                         Eegeo::Camera::CameraModel& cameraModel,
-                         Eegeo::RenderCamera& renderCamera,
                          Eegeo::Helpers::IFileIO& fileIO,
                          Eegeo::Helpers::ITextureFileLoader& textureLoader,
                          Eegeo::Lighting::GlobalFogging& fogging);

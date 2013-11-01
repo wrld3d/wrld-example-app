@@ -8,15 +8,16 @@
 
 #include "SearchExample.h"
 #include "PoiSearchResult.h"
+#include "IInterestPointProvider.h"
 
 using namespace Examples;
 using namespace Eegeo::Space;
 using namespace Eegeo::Search::Service;
 
 SearchExample::SearchExample(Eegeo::Search::Service::SearchService& searchService,
-                             Eegeo::Camera::NewGlobeCamera& cameraController)
+                             Eegeo::Location::IInterestPointProvider& interestPointProvider)
 :searchService(searchService)
-,cameraController(cameraController)
+,interestPointProvider(interestPointProvider)
 {
 }
 
@@ -24,7 +25,7 @@ void SearchExample::Start()
 {
     const std::string query = "Transamerica Pyramid";
     const bool isCategory = false;
-    const LatLongAltitude where = LatLongAltitude::FromECEF(cameraController.GetInterestPointECEF());
+    const LatLongAltitude where = LatLongAltitude::FromECEF(interestPointProvider.GetEcefInterestPoint());
     Eegeo::Search::Service::IPoiSearchCallback& callback = *this;
     
     Eegeo_TTY("Attempting to search for %s at (%f, %f)!\n",

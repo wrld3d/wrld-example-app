@@ -11,9 +11,8 @@
 
 #include "IExample.h"
 #include "RenderContext.h"
-#include "NewGlobeCamera.h"
 #include "LatLongAltitude.h"
-#include "CameraModel.h"
+
 #include "Model.h"
 
 namespace Examples
@@ -23,7 +22,6 @@ namespace Examples
     private:
         
         Eegeo::Rendering::RenderContext& renderContext;
-        Eegeo::Camera::CameraModel& cameraModel;
         Eegeo::Helpers::IFileIO& fileIO;
         Eegeo::Helpers::ITextureFileLoader& textureLoader;
         Eegeo::Lighting::GlobalFogging& globalFogging;
@@ -32,7 +30,6 @@ namespace Examples
         
     public:
         PODAnimationExample(Eegeo::Rendering::RenderContext& renderContext,
-                         Eegeo::Camera::CameraModel& cameraModel,
                          Eegeo::Helpers::IFileIO& fileIO,
                          Eegeo::Helpers::ITextureFileLoader& textureLoader,
                          Eegeo::Lighting::GlobalFogging& fogging);

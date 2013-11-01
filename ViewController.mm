@@ -11,9 +11,7 @@
 #include "ResourceCache.h"
 #include "External/Reachability/Reachability.h"
 #include "DebugValues.h"
-#include "CameraModel.h"
 #include "PrecacheService.h"
-#include "NewGlobeCamera.h"
 #include "MeshPool.h"
 #include "StreamingController.h"
 #include "EegeoEnvironmentRendering.h"
@@ -37,7 +35,6 @@
 #include "EffectHandler.h"
 #include "EffectHandler.h"
 #include "LatLongAltitude.h"
-#include "CameraModel.h"
 #include "IAppOnMap.h"
 #include "EegeoWorld.h"
 #include "Blitter.h"
@@ -57,12 +54,16 @@
 #include "iOSUrlEncoder.h"
 #include "SearchServiceCredentials.h"
 #include "GlobeCameraInterestPointProvider.h"
+#include "GlobeCameraController.h"
+#include "GlobeCameraTouchController.h"
+#include "GlobeCameraInterestPointProvider.h"
 #include "TerrainHeightProvider.h"
 
 #include "iOSInputBoxFactory.h"
 #include "iOSKeyboardInputFactory.h"
 #include "iOSAlertBoxFactory.h"
 #include "NativeUIFactories.h"
+#include "CameraHelpers.h"
 
 #define API_KEY "OBTAIN API KEY FROM https://appstore.eegeo.com AND INSERT IT HERE"
 
@@ -176,7 +177,7 @@ std::vector<Eegeo::Streaming::LoggingResourceStream*> streams;
 DebuggedResource::ResourceType currentDebuggedResource = DebuggedResource::None;
 UIButton* currentDebuggedResourceButton = NULL;
 NSTimer* touchTimer;
-Eegeo::Location::GlobeCameraInterestPointProvider* m_pInterestPointProvider;
+::Eegeo::Camera::GlobeCamera::GlobeCameraInterestPointProvider* m_pInterestPointProvider;
 iOSLocationService* piOSLocationService = NULL;
 Eegeo::Resources::Terrain::Heights::TerrainHeightRepository m_terrainHeightRepository;
 Eegeo::Resources::Terrain::Heights::TerrainHeightProvider m_terrainHeightProvider(&m_terrainHeightRepository);
@@ -217,7 +218,10 @@ Eegeo::Web::iOSWebRequestService* webRequestService;
     locationManager = [[CLLocationManager alloc] init];
     locationManager.delegate = self;
     locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    locationManager.headingFilter = kCLHeadingFilterNone;
+    
     [locationManager startUpdatingLocation];
+    [locationManager startUpdatingHeading];
     
     [self initInputs];
     [self initGraphics];
@@ -328,13 +332,18 @@ Eegeo::Web::iOSWebRequestService* webRequestService;
     << (int)(meanTimeToLoadCache*1000) << "ms mean lding cache"
     ;
     payloads.text = [NSString stringWithUTF8String:ss_payloads.str().c_str()];
+
+    const Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController = myApp->GetCameraController();
     
-    float rot = myApp->pGlobeCamera->CurrentRotationRadians();
+    const Eegeo::Space::EcefTangentBasis& cameraInterestBasis = cameraController.GetInterestBasis();
+    float rot = Eegeo::Camera::CameraHelpers::GetAbsoluteBearingRadians(cameraInterestBasis.GetPointEcef(), cameraInterestBasis.GetForward());
+
     rot = fmodf(Eegeo::Math::Rad2Deg(rot), 360.0f);
     if(rot < 0.0f) rot = 360.0f + rot;
     
-    Eegeo::Space::LatLongAltitude interestPoint = Eegeo::Space::LatLongAltitude::FromECEF(myApp->pGlobeCamera->GetInterestPointECEF());
-    Eegeo::Space::LatLongAltitude eyePoint = Eegeo::Space::LatLongAltitude::FromECEF(myApp->World().GetCameraModel().GetWorldPosition());
+    Eegeo::Space::LatLongAltitude interestPoint = Eegeo::Space::LatLongAltitude::FromECEF(cameraInterestBasis.GetPointEcef());
+    Eegeo::Space::LatLongAltitude eyePoint = Eegeo::Space::LatLongAltitude::FromECEF(cameraController.GetCamera()->GetEcefLocation());
+    
     char cameraParams[200];
     sprintf (
              cameraParams,
@@ -345,7 +354,7 @@ Eegeo::Web::iOSWebRequestService* webRequestService;
              rot
              );
     camera.text = [NSString stringWithUTF8String:cameraParams];
-    
+
     std::stringstream ss_renderdata;
     ss_renderdata << "Polys :: " << Eegeo::Debug::DebugValues::totalPolysRendered << ", Shadow Polys ::" << Eegeo::Debug::DebugValues::shadowPolysRendered << ", Batches :: " << Eegeo::Debug::DebugValues::totalDrawCalls << ", ShadowDraw :: " << Eegeo::Debug::DebugValues::totalShadowDrawCalls;
     renderData.text = [NSString stringWithUTF8String:ss_renderdata.str().c_str()];
@@ -527,15 +536,13 @@ Eegeo::Web::iOSWebRequestService* webRequestService;
 - (void) initWorld
 {
     Eegeo::EffectHandler::Initialise();
-    Eegeo::RenderCamera* pRenderCamera = new Eegeo::RenderCamera();
-    Eegeo::Camera::CameraModel*  pCameraModel = new Eegeo::Camera::CameraModel(pRenderCamera);
-    Eegeo::Camera::NewGlobeCamera* cameraController = new Eegeo::Camera::NewGlobeCamera(pCameraModel, pRenderCamera, m_terrainHeightProvider);
+
     
     piOSLocationService = new iOSLocationService;
-
-    myApp = new ::MyApp(cameraController);
     
-    pRenderCamera->SetViewport(0.f, 0.f, m_renderContext->GetScreenWidth(), m_renderContext->GetScreenHeight());
+    m_pInterestPointProvider = Eegeo_NEW(Eegeo::Camera::GlobeCamera::GlobeCameraInterestPointProvider());
+
+    myApp = new ::MyApp(*m_pInterestPointProvider);
     
     m_pBlitter = new Eegeo::Blitter(1024 * 128, 1024 * 64, 1024 * 32, *m_renderContext);
     m_pBlitter->Initialise();
@@ -564,8 +571,6 @@ Eegeo::Web::iOSWebRequestService* webRequestService;
    
     Eegeo::Traffic::VehicleModelLoaderHelper::LoadAllVehicleResourcesIntoRepository(*pVehicleModelLoader, *pVehicleModelRepository);
     
-    m_pInterestPointProvider = Eegeo_NEW(Eegeo::Location::GlobeCameraInterestPointProvider(*cameraController));
-    
     myApp->Start(new Eegeo::EegeoWorld(API_KEY,
                                        pHttpCache,
                                        pFileIO,
@@ -574,8 +579,6 @@ Eegeo::Web::iOSWebRequestService* webRequestService;
                                        pTaskQueue,
                                        pVehicleModelRepository,
                                        *m_renderContext,
-                                       pCameraModel,
-                                       cameraController,
                                        pLighting,
                                        pFogging,
                                        pMaterialFactory,
@@ -701,6 +704,7 @@ Eegeo::Web::iOSWebRequestService* webRequestService;
 	
 	data.rotation	= recognizer.rotation;
 	data.numTouches	= recognizer.numberOfTouches;
+    data.velocity = recognizer.velocity;
 	
     if (recognizer.state == UIGestureRecognizerStateBegan)
     {
@@ -797,6 +801,7 @@ Eegeo::Web::iOSWebRequestService* webRequestService;
     data.pointRelativeNormalized = (data.pointRelative)/majorScreenDimension;
 	data.pointAbsolute	= *(Eegeo::v2*)&positionAbs;
 	data.velocity	= *(Eegeo::v2*)&velocity;
+    data.majorScreenDimension = majorScreenDimension;
 	
     if (recognizer.state == UIGestureRecognizerStateBegan)
     {
@@ -969,76 +974,53 @@ Eegeo::Web::iOSWebRequestService* webRequestService;
 }
 
 -(void)goToSf {
-    myApp->pGlobeCamera->SetInterestHeadingDistance(Eegeo::Space::LatLongAltitude(37.7858,-122.401, 0, Eegeo::Space::LatLongUnits::Degrees),
-                                                    0.0f,
-                                                    1781.0f);
+    myApp->JumpTo(37.7858,-122.401, 0, 0.0f, 1781.0f);
 }
 
 -(void)goToLdn {
-    myApp->pGlobeCamera->SetInterestHeadingDistance(Eegeo::Space::LatLongAltitude(51.506172,-0.118915, 0, Eegeo::Space::LatLongUnits::Degrees),
-                                                    351.0f,
-                                                    2731.0f);
+    myApp->JumpTo(51.506172,-0.118915, 0, 351.0f, 2731.0f);
 }
 
 -(void)goToSanDiego {
-    myApp->pGlobeCamera->SetInterestHeadingDistance(Eegeo::Space::LatLongAltitude(32.707806,-117.167137, 0, Eegeo::Space::LatLongUnits::Degrees),
-                                                    25.0f,
-                                                    2000.0f);
+    myApp->JumpTo(32.707806,-117.167137, 0, 25.0f, 2000.0f);
 }
 
 -(void)goToNy {
-    myApp->pGlobeCamera->SetInterestHeadingDistance(Eegeo::Space::LatLongAltitude(40.703762, -74.013733, 0, Eegeo::Space::LatLongUnits::Degrees),
-                                                    240.0f,
-                                                    1800.0f);
+    myApp->JumpTo(40.703762, -74.013733, 0, 240.0f, 1800.0f);
 }
 
 -(void)goToChicago {
-    myApp->pGlobeCamera->SetInterestHeadingDistance(Eegeo::Space::LatLongAltitude(41.873651,-87.629906, 0, Eegeo::Space::LatLongUnits::Degrees),
-                                                    0.0f,
-                                                    1000.0f);
+    myApp->JumpTo(41.873651,-87.629906, 0, 0.0f, 1000.0f);
 }
 
 -(void)goToLa {
-    myApp->pGlobeCamera->SetInterestHeadingDistance(Eegeo::Space::LatLongAltitude(34.050175,-118.260048, 0, Eegeo::Space::LatLongUnits::Degrees),
-                                                    0.0f,
-                                                    1800.0f);
+    myApp->JumpTo(34.050175,-118.260048, 0,  0.0f, 1800.0f);
 }
 
 -(void)goToEdinburgh {
-    myApp->pGlobeCamera->SetInterestHeadingDistance(Eegeo::Space::LatLongAltitude(55.961559,-3.209940, 0, Eegeo::Space::LatLongUnits::Degrees),
-                                                    77.0f,
-                                                    1700.0f);
+    myApp->JumpTo(55.961559,-3.209940, 0, 77.0f, 1700.0f);
 }
 
 -(void)goToGlasgow {
-    myApp->pGlobeCamera->SetInterestHeadingDistance(Eegeo::Space::LatLongAltitude(55.865242,-4.288697, 0, Eegeo::Space::LatLongUnits::Degrees),
-                                                    224.0f,
-                                                    2320.0f);
+    myApp->JumpTo(55.865242,-4.288697, 0, 224.0f, 2320.0f);
 }
 
 -(void)goToCambridge {
-    myApp->pGlobeCamera->SetInterestHeadingDistance(Eegeo::Space::LatLongAltitude(52.201092,0.118611, 0, Eegeo::Space::LatLongUnits::Degrees),
-                                                    319.0f,
-                                                    1600.0f);
+    myApp->JumpTo(52.201092,0.118611, 0,  319.0f, 1600.0f);
 }
 
 -(void)goToOban {
-    myApp->pGlobeCamera->SetInterestHeadingDistance(Eegeo::Space::LatLongAltitude(56.416794,-5.486794, 0, Eegeo::Space::LatLongUnits::Degrees),
-                                                    114.0f,
-                                                    3000.0f);
+    myApp->JumpTo(56.416794,-5.486794, 0, 114.0f, 3000.0f);
 }
 
 -(void)goToBarcelona {
-    myApp->pGlobeCamera->SetInterestHeadingDistance(Eegeo::Space::LatLongAltitude(41.382476,2.17804, 0, Eegeo::Space::LatLongUnits::Degrees),
-                                                    114.0f,
-                                                    3000.0f);
+    myApp->JumpTo(41.382476,2.17804, 0, 114.0f, 3000.0f);
 }
 
 -(void)goToKyoto {
-    myApp->pGlobeCamera->SetInterestHeadingDistance(Eegeo::Space::LatLongAltitude(34.9977166,135.755402, 0, Eegeo::Space::LatLongUnits::Degrees),
-                                                    0.0f,
-                                                    1500.0f);
+    myApp->JumpTo(34.9977166,135.755402, 0, 0.0f, 1500.0f);
 }
+
 
 -(void)debugPlacesToggleButtonPressedHandler {
 	[sf setHidden:!sf.hidden];
@@ -1314,6 +1296,7 @@ Eegeo::Web::iOSWebRequestService* webRequestService;
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
     piOSLocationService->FailedToGetLocation();
+    piOSLocationService->FailedToGetHeading();
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
@@ -1332,6 +1315,18 @@ Eegeo::Web::iOSWebRequestService* webRequestService;
     else
     {
         piOSLocationService->FailedToGetLocation();
+    }
+}
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateHeading:(CLHeading *)newHeading
+{
+    if (newHeading.headingAccuracy >= 0)
+    {
+        piOSLocationService->UpdateHeading(newHeading.trueHeading);
+    }
+    else
+    {
+        piOSLocationService->FailedToGetHeading();
     }
 }
 

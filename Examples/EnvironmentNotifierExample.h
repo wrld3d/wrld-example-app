@@ -5,7 +5,6 @@
 
 #include "IExample.h"
 #include "RenderContext.h"
-#include "NewGlobeCamera.h"
 #include "SphereMesh.h"
 #include "LatLongAltitude.h"
 #include "TerrainStreaming.h"
@@ -18,20 +17,14 @@ namespace Examples
     {
     private:
         Eegeo::Rendering::RenderContext& renderContext;
-        Eegeo::Camera::CameraModel& cameraModel;
-        Eegeo::RenderCamera& renderCamera;
         std::map<Eegeo::Streaming::MortonKeyLong, Eegeo::DebugRendering::SphereMesh*, Eegeo::Streaming::MortonKeyLongCompare>& renderables;
         
         void AddSphere(const Eegeo::Streaming::MortonKeyLong& key);
     public:
         EnvironmentNotifierExampleTerrainStreamObserver(Eegeo::Rendering::RenderContext& renderContext,
-                                                        Eegeo::Camera::CameraModel& cameraModel,
-                                                        Eegeo::RenderCamera& renderCamera,
                                                         std::map<Eegeo::Streaming::MortonKeyLong, Eegeo::DebugRendering::SphereMesh*, Eegeo::Streaming::MortonKeyLongCompare>& renderables)
         :renderables(renderables)
-        ,cameraModel(cameraModel)
         ,renderContext(renderContext)
-        ,renderCamera(renderCamera)
         {
             
         }
@@ -44,8 +37,6 @@ namespace Examples
     {
     private:
         Eegeo::Rendering::RenderContext& renderContext;
-        Eegeo::Camera::CameraModel& cameraModel;
-        Eegeo::RenderCamera& renderCamera;
         Eegeo::Resources::Terrain::TerrainStreaming& terrainStreaming;
         EnvironmentNotifierExampleTerrainStreamObserver* observer;
         
@@ -54,8 +45,6 @@ namespace Examples
         
     public:
         EnvironmentNotifierExample(Eegeo::Rendering::RenderContext& renderContext,
-                                   Eegeo::Camera::CameraModel& cameraModel,
-                                   Eegeo::RenderCamera& renderCamera,
                                    Eegeo::Resources::Terrain::TerrainStreaming& terrainStreaming);
         
         void Start();

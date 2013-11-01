@@ -7,12 +7,8 @@ namespace Examples
 {
     //EnvironmentNotifierExample//
     EnvironmentNotifierExample::EnvironmentNotifierExample(Eegeo::Rendering::RenderContext& renderContext,
-                                                           Eegeo::Camera::CameraModel& cameraModel,
-                                                           Eegeo::RenderCamera& renderCamera,
                                                            Eegeo::Resources::Terrain::TerrainStreaming& terrainStreaming)
     :renderContext(renderContext)
-    ,cameraModel(cameraModel)
-    ,renderCamera(renderCamera)
     ,terrainStreaming(terrainStreaming)
     ,observer(NULL)
     {
@@ -20,7 +16,7 @@ namespace Examples
     
     void EnvironmentNotifierExample::Start()
     {
-        observer = new EnvironmentNotifierExampleTerrainStreamObserver(renderContext, cameraModel, renderCamera, renderables);
+        observer = new EnvironmentNotifierExampleTerrainStreamObserver(renderContext, renderables);
         terrainStreaming.AddStreamingObserver(observer);
     }
     
@@ -43,7 +39,7 @@ namespace Examples
             it = renderables.begin(); it != renderables.end(); ++ it)
         {
             Eegeo::DebugRendering::SphereMesh& mesh = *(*it).second;
-            mesh.Draw(renderCamera);
+            mesh.Draw(renderContext);
         }
     }
     
@@ -65,7 +61,6 @@ namespace Examples
         
         Eegeo::DebugRendering::SphereMesh* sphere = new Eegeo::DebugRendering::SphereMesh(
                                                                                           renderContext,
-                                                                                          &cameraModel,
                                                                                           20.0f,
                                                                                           16, 16,
                                                                                           spherePosition,

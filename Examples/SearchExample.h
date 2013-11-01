@@ -11,8 +11,8 @@
 
 #include "IExample.h"
 #include "SearchService.h"
-#include "NewGlobeCamera.h"
 #include "IPoiSearchCallback.h"
+#include "Location.h"
 
 namespace Examples
 {
@@ -21,11 +21,11 @@ namespace Examples
     {
     private:
         Eegeo::Search::Service::SearchService& searchService;
-        Eegeo::Camera::NewGlobeCamera& cameraController;
+        Eegeo::Location::IInterestPointProvider& interestPointProvider;
         
     public:
         SearchExample(Eegeo::Search::Service::SearchService& searchService,
-                      Eegeo::Camera::NewGlobeCamera& cameraController);
+                      Eegeo::Location::IInterestPointProvider& interestPointProvider);
         
         void Start();
         void Update() {}

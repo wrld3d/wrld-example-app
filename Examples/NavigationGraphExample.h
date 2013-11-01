@@ -17,7 +17,7 @@
 #include "NavigationGraph.h"
 #include "DebugRendering.h"
 #include "RenderContext.h"
-#include "CameraModel.h"
+
 
 namespace Examples
 {
@@ -43,8 +43,6 @@ namespace Examples
         void HandleRemovedGraph(const Eegeo::Resources::Roads::Navigation::NavigationGraph& navGraph);
         
         Eegeo::Rendering::RenderContext& renderContext;
-        Eegeo::RenderCamera& renderCamera;
-        Eegeo::Camera::CameraModel& cameraModel;
         Eegeo::Resources::Roads::Navigation::NavigationGraphRepository& navigationGraphRepository;
         
         Added addedHandler;
@@ -53,8 +51,6 @@ namespace Examples
         
     public:
         NavigationGraphExample(Eegeo::Rendering::RenderContext& renderContext,
-                               Eegeo::RenderCamera& renderCamera,
-                               Eegeo::Camera::CameraModel& cameraModel,
                                Eegeo::Resources::Roads::Navigation::NavigationGraphRepository& navigationGraphRepository);
         
         void Start();

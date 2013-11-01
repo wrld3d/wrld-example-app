@@ -13,7 +13,6 @@
 
 #include "IExample.h"
 #include "RenderContext.h"
-#include "NewGlobeCamera.h"
 #include "SphereMesh.h"
 #include "LatLongAltitude.h"
 #include "VectorMath.h"
@@ -35,14 +34,12 @@ namespace Examples
         
         Eegeo::Rendering::RenderContext& m_renderContext;
         Eegeo::Space::LatLongAltitude m_interestLocation;
-        Eegeo::Camera::CameraModel& m_cameraModel;
-        Eegeo::RenderCamera& m_renderCamera;
+        Eegeo::Camera::ICameraProvider& m_cameraProvider;
         
     public:
         Pick3DObjectExample(Eegeo::Rendering::RenderContext& renderContext,
                             Eegeo::Space::LatLongAltitude interestLocation,
-                            Eegeo::Camera::CameraModel& cameraModel,
-                            Eegeo::RenderCamera& renderCamera);
+                            Eegeo::Camera::ICameraProvider& cameraProvider);
         
         void Start();
         void Update();

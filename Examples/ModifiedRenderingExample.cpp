@@ -11,6 +11,8 @@
 #include "IStreamingVolume.h"
 #include "DiffuseTexturedVertex.h"
 #include "MathsHelpers.h"
+#include "IInterestPointProvider.h"
+#include "CameraHelpers.h"
 
 using namespace Eegeo;
 using namespace Eegeo::Rendering;
@@ -18,20 +20,18 @@ using namespace Eegeo::Rendering;
 namespace Examples
 {
     ModifiedRenderingExample::ModifiedRenderingExample(RenderContext& renderContext,
-                                                       Eegeo::RenderCamera& renderCamera,
-                                                       Eegeo::Camera::CameraModel& cameraModel,
-                                                       Eegeo::Camera::NewGlobeCamera& globeCamera,
+                                                       Eegeo::Camera::ICameraProvider& cameraProvider,
+                                                       Eegeo::Location::IInterestPointProvider& interestPointProvider,
                                                        Eegeo::Streaming::IStreamingVolume& visibleVolume,
                                                        Eegeo::Lighting::GlobalLighting& lighting,
                                                        Eegeo::Resources::MeshPool<Eegeo::Rendering::RenderableItem*>& buildingPool,
                                                        Eegeo::Resources::MeshPool<Eegeo::Rendering::RenderableItem*>& shadowPool)
     :renderContext(renderContext)
-    ,renderCamera(renderCamera)
-    ,cameraModel(cameraModel)
+    ,cameraProvider(cameraProvider)
+    ,interestPointProvider(interestPointProvider)
     ,visibleVolume(visibleVolume)
     ,buildingPool(buildingPool)
     ,shadowPool(shadowPool)
-    ,globeCamera(globeCamera)
     ,lighting(lighting)
     ,pCriteria(NULL)
     {
@@ -117,9 +117,10 @@ namespace Examples
             glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
             glEnable(GL_BLEND);
             
-            const Eegeo::dv3& cameraLocalPos = item->GetEcefPosition() - cameraModel.GetWorldPosition();
+            Eegeo::v3 cameraLocalPos = Eegeo::Camera::CameraHelpers::CameraRelativePoint(item->GetEcefPosition(), renderContext.GetCameraOriginEcef());
+
             Eegeo::m44 model, mvp;
-            Helpers::MathsHelpers::ComputeScaleAndOffset(model, 1.0f, item->GetEcefPosition().Norm().ToSingle(), cameraLocalPos.ToSingle());
+            Helpers::MathsHelpers::ComputeScaleAndOffset(model, 1.0f, item->GetEcefPosition().Norm().ToSingle(), cameraLocalPos);
             Eegeo::m44::Mul(mvp, renderContext.GetViewProjectionMatrix(), model);
             
             Eegeo_GL(glUniformMatrix4fv(shader.ModelViewProjectionUniform, 1, 0, (const GLfloat*)&mvp))
@@ -160,7 +161,9 @@ namespace Examples
         const double filterRadius = 400.0f;
         const double filterRadiusSq = filterRadius*filterRadius;
         
-        double delta = (item->GetEcefPosition() - owner->globeCamera.GetInterestPointECEF()).LengthSq();
+        Eegeo::v3 cameraRelativePos = Eegeo::Camera::CameraHelpers::CameraRelativePoint(item->GetEcefPosition(), owner->interestPointProvider.GetEcefInterestPoint());
+        
+        double delta = cameraRelativePos.LengthSq();
         bool closeToInterest = delta < filterRadiusSq;
         
         if (closeToInterest)

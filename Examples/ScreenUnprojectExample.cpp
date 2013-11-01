@@ -1,5 +1,11 @@
 #include "ScreenUnprojectExample.h"
 #include "EarthConstants.h"
+#include "ICameraProvider.h"
+#include "RenderCamera.h"
+#include "VectorMath.h"
+#include "SphereMesh.h"
+#include "TerrainHeightProvider.h"
+#include "LatLongAltitude.h"
 
 namespace
 {
@@ -54,12 +60,10 @@ namespace
 namespace Examples
 {
     ScreenUnprojectExample::ScreenUnprojectExample(Eegeo::Rendering::RenderContext& renderContext,
-                                                   Eegeo::Camera::CameraModel& cameraModel,
-                                                   Eegeo::RenderCamera& renderCamera,
+                                                   Eegeo::Camera::ICameraProvider& cameraProvider,
                                                    Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider)
     :renderContext(renderContext)
-    ,cameraModel(cameraModel)
-    ,renderCamera(renderCamera)
+    ,cameraProvider(cameraProvider)
     ,terrainHeightProvider(terrainHeightProvider)
     {
         
@@ -70,7 +74,6 @@ namespace Examples
         //create and tessellate a sphere mesh as in the DebugSphereExample program
         sphere = new Eegeo::DebugRendering::SphereMesh(
                                                        renderContext,
-                                                       &cameraModel,
                                                        20.0f,
                                                        16, 16,
                                                        Eegeo::dv3(),
@@ -89,20 +92,22 @@ namespace Examples
     
     void ScreenUnprojectExample::Update()
     {
+        const Eegeo::Camera::RenderCamera& renderCamera = cameraProvider.GetRenderCamera();
+
         //select the middle of the client screen as the position of the sphere
-        double screenPointOfInterestX = (renderContext.GetScreenWidth()/2.0f);
-        double screenPointOfInterestY = (renderContext.GetScreenHeight()/2.0f);
+        double screenPointOfInterestX = (renderCamera.GetViewportWidth()/2.0f);
+        double screenPointOfInterestY = (renderCamera.GetViewportHeight()/2.0f);
         
         //normalize this 
-        double nx = 2.0 * screenPointOfInterestX / renderContext.GetScreenWidth() - 1;
-        double ny = - 2.0 * screenPointOfInterestY / renderContext.GetScreenHeight() + 1;
+        double nx = 2.0 * screenPointOfInterestX / renderCamera.GetViewportWidth() - 1;
+        double ny = - 2.0 * screenPointOfInterestY / renderCamera.GetViewportHeight() + 1;
         
         //prepare near and far points
         Eegeo::v4 near(nx, ny, 0.0f, 1.0);
         Eegeo::v4 far(nx, ny, 1.0f, 1.0);
         
         Eegeo::m44 invVP;
-        Eegeo::m44::Inverse(invVP, cameraModel.GetViewProjectionTransform());
+        Eegeo::m44::Inverse(invVP, renderCamera.GetViewProjectionMatrix());
        
         //unproject the points
         Eegeo::v4 unprojectedNear = Eegeo::v4::Mul(near, invVP);
@@ -114,7 +119,7 @@ namespace Examples
         
         //check intersection with a world space ray from camera position
         Ray ray;
-        ray.origin = cameraModel.GetWorldPosition();
+        ray.origin = renderCamera.GetEcefLocation();
         ray.dir = (unprojectedFarWorld - unprojectedNearWorld).Norm();
         
         Eegeo::dv3 intersectionPoint;
@@ -122,7 +127,8 @@ namespace Examples
         {
             //we are intersecting the idealised sphere, so get height at the intersection location
             //and set sphere height to result
-            float height = terrainHeightProvider.getHeight(intersectionPoint, 0);
+            float height = 0.f;
+            terrainHeightProvider.TryGetHeight(intersectionPoint, 0, height);
             Eegeo::Space::LatLongAltitude intersectionLocation = Eegeo::Space::LatLongAltitude::FromECEF(intersectionPoint);
             intersectionLocation.SetAltitude(height);
             sphere->SetPositionECEF(intersectionLocation.ToECEF());
@@ -132,6 +138,6 @@ namespace Examples
     void ScreenUnprojectExample::Draw()
     {
         //draw the sphere at the current location
-        sphere->Draw(renderCamera);
+        sphere->Draw(renderContext);
     }
 }

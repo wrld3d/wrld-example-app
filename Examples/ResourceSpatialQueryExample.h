@@ -11,7 +11,7 @@
 
 #include "IExample.h"
 #include "ResourceSpatialQueryService.h"
-#include "NewGlobeCamera.h"
+#include "Location.h"
 
 namespace Examples
 {
@@ -19,14 +19,14 @@ namespace Examples
     {
     private:
         Eegeo::Resources::ResourceSpatialQueryService& resourceSpatialQueryService;
-        Eegeo::Camera::NewGlobeCamera& globeCamera;
+        Eegeo::Location::IInterestPointProvider& interestPointProvider;
         
         Eegeo::Streaming::MortonKeyLong key;
         int numBuildings;
         
     public:
         ResourceSpatialQueryExample(Eegeo::Resources::ResourceSpatialQueryService& resourceSpatialQueryService,
-                                    Eegeo::Camera::NewGlobeCamera& globeCamera);
+                                    Eegeo::Location::IInterestPointProvider& interestPointProvider);
         
         void Start() {}
         void Update();

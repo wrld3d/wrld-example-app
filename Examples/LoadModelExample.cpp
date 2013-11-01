@@ -6,15 +6,11 @@ namespace Examples
 {
     LoadModelExample::LoadModelExample(Eegeo::Rendering::RenderContext& renderContext,
                                        Eegeo::Space::LatLongAltitude interestLocation,
-                                       Eegeo::Camera::CameraModel& cameraModel,
-                                       Eegeo::RenderCamera& renderCamera,
                                        Eegeo::Helpers::IFileIO& fileIO,
                                        Eegeo::Helpers::ITextureFileLoader& textureLoader,
                                        Eegeo::Lighting::GlobalFogging& fogging)
     :renderContext(renderContext)
     ,interestLocation(interestLocation)
-    ,cameraModel(cameraModel)
-    ,renderCamera(renderCamera)
     ,fileIO(fileIO)
     ,textureLoader(textureLoader)
     ,pModel(NULL)
@@ -80,8 +76,9 @@ namespace Examples
         Eegeo::v3 right(Eegeo::v3::Cross(up, forward).Norm());
         up = Eegeo::v3::Cross(forward, right);
         
+       
         //compute a camera local position
-        Eegeo::v3 cameraRelativePos = (mesh.positionEcef - cameraModel.GetWorldPosition()).ToSingle();
+        Eegeo::v3 cameraRelativePos = (mesh.positionEcef - renderContext.GetCameraOriginEcef()).ToSingle();
         
         //generate a transform from this basis and position...
         Eegeo::m44 cameraRelativeTransform;

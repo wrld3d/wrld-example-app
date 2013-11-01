@@ -7,13 +7,14 @@
 //
 
 #include "ResourceSpatialQueryExample.h"
+#include "IInterestPointProvider.h"
 
 using namespace Examples;
 
 ResourceSpatialQueryExample::ResourceSpatialQueryExample(Eegeo::Resources::ResourceSpatialQueryService& resourceSpatialQueryService,
-                                                         Eegeo::Camera::NewGlobeCamera& globeCamera)
+                                                         Eegeo::Location::IInterestPointProvider& interestPointProvider)
 :resourceSpatialQueryService(resourceSpatialQueryService)
-,globeCamera(globeCamera)
+,interestPointProvider(interestPointProvider)
 ,numBuildings(0)
 {
     
@@ -21,7 +22,7 @@ ResourceSpatialQueryExample::ResourceSpatialQueryExample(Eegeo::Resources::Resou
 
 void ResourceSpatialQueryExample::Update()
 {
-    Eegeo::dv3 ecefPointOfInterest = globeCamera.GetInterestPointECEF();
+    Eegeo::dv3 ecefPointOfInterest = interestPointProvider.GetEcefInterestPoint();
 
     Eegeo::Streaming::MortonKeyLong lastKey = key;
     
