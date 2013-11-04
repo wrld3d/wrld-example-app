@@ -23,6 +23,7 @@ namespace ExampleTypes
     {
         DebugSphere=0,
         ScreenUnproject,
+        ScreenPick,
         TerrainHeightQuery,
         LoadModel,
         EnvironmentNotifier,
@@ -84,7 +85,7 @@ public:
     
     void Draw (float dt);
     
-    void JumpTo(double latitude, double longitude, double altitude, double headingDegrees, double distanceToInterest);
+    void JumpTo(double latitudeDegrees, double longitudeDegrees, double altitudeMetres, double headingDegrees, double distanceToInterestMetres);
     
     Eegeo::Camera::GlobeCamera::GlobeCameraController& GetCameraController() { return *m_globeCameraController; }
     

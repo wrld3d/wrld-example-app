@@ -802,6 +802,7 @@ Eegeo::Web::iOSWebRequestService* webRequestService;
 	data.pointAbsolute	= *(Eegeo::v2*)&positionAbs;
 	data.velocity	= *(Eegeo::v2*)&velocity;
     data.majorScreenDimension = majorScreenDimension;
+    data.numTouches = recognizer.numberOfTouches;
 	
     if (recognizer.state == UIGestureRecognizerStateBegan)
     {

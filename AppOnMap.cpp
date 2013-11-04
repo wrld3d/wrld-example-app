@@ -29,6 +29,7 @@
 #include "KeyboardInputExample.h"
 #include "PODAnimationExample.h"
 #include "Pick3DObjectExample.h"
+#include "ScreenPickExample.h"
 
 MyApp::MyApp(Eegeo::Camera::GlobeCamera::GlobeCameraInterestPointProvider& globeCameraInterestPointProvider,
              ExampleTypes::Examples selectedExample)
@@ -57,6 +58,9 @@ void MyApp::OnStart ()
     
     
     Eegeo::Camera::GlobeCamera::GlobeCameraTouchControllerConfiguration touchControllerConfig = Eegeo::Camera::GlobeCamera::GlobeCameraTouchControllerConfiguration::CreateDefault();
+    
+    // override default configuration to enable two-finger pan gesture to control additional camera pitch
+    touchControllerConfig.tiltEnabled = true;
     
     m_cameraTouchController = new Eegeo::Camera::GlobeCamera::GlobeCameraTouchController(touchControllerConfig);
     
@@ -154,15 +158,15 @@ void MyApp::Draw (float dt)
     pExample->Draw();
 }
 
-void MyApp::JumpTo(double latitude, double longitude, double altitude, double headingDegrees, double distanceToInterest)
+void MyApp::JumpTo(double latitudeDegrees, double longitudeDegrees, double altitudeMetres, double headingDegrees, double distanceToInterestMetres)
 {
-    Eegeo::dv3 interestPoint = Eegeo::Space::LatLongAltitude(latitude, longitude, altitude).ToECEF();
+    Eegeo::dv3 interestPoint = Eegeo::Space::LatLongAltitude(latitudeDegrees, longitudeDegrees, altitudeMetres, Eegeo::Space::LatLongUnits::Degrees).ToECEF();
     
     Eegeo::Space::EcefTangentBasis interestBasis;
     
     Eegeo::Camera::CameraHelpers::EcefTangentBasisFromPointAndHeading(interestPoint, headingDegrees, interestBasis);
     
-    m_globeCameraController->SetView(interestBasis, distanceToInterest);
+    m_globeCameraController->SetView(interestBasis, distanceToInterestMetres);
 }
 
 Examples::IExample* MyApp::CreateExample(ExampleTypes::Examples example,
@@ -202,6 +206,12 @@ Examples::IExample* MyApp::CreateExample(ExampleTypes::Examples example,
             return new Examples::ScreenUnprojectExample(renderContext,
                                                         cameraProvider,
                                                         terrainHeightProvider);
+            
+        case ExampleTypes::ScreenPick:
+            return new Examples::ScreenPickExample(renderContext,
+                                                   cameraProvider,
+                                                   terrainHeightProvider);
+
         case ExampleTypes::DebugSphere:
             return new Examples::DebugSphereExample(renderContext,
                                                     interestLocation);

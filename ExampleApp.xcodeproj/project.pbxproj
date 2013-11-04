@@ -204,6 +204,7 @@
 		7EE9888F175CEC3900D3CE09 /* Snow_01.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EE9888D175CEC3900D3CE09 /* Snow_01.png */; };
 		7EF5D8651737F9A40049D787 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EF5D8641737F9A40049D787 /* CoreLocation.framework */; };
 		E0399AAE1823FF3B0038996D /* AppOnMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E0399AAD1823FF3B0038996D /* AppOnMap.cpp */; };
+		E0399AB61827EA0D0038996D /* ScreenPickExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E0399AB41827EA0D0038996D /* ScreenPickExample.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -425,6 +426,8 @@
 		7EE9888D175CEC3900D3CE09 /* Snow_01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Snow_01.png; sourceTree = "<group>"; };
 		7EF5D8641737F9A40049D787 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		E0399AAD1823FF3B0038996D /* AppOnMap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppOnMap.cpp; sourceTree = SOURCE_ROOT; };
+		E0399AB41827EA0D0038996D /* ScreenPickExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ScreenPickExample.cpp; sourceTree = "<group>"; };
+		E0399AB51827EA0D0038996D /* ScreenPickExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScreenPickExample.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -486,6 +489,8 @@
 				1825103817AFD37B00251651 /* PODAnimationExample.h */,
 				1803F21117FD8A2F00D78405 /* Pick3DObjectExample.cpp */,
 				1803F21217FD8A2F00D78405 /* Pick3DObjectExample.h */,
+				E0399AB41827EA0D0038996D /* ScreenPickExample.cpp */,
+				E0399AB51827EA0D0038996D /* ScreenPickExample.h */,
 			);
 			path = Examples;
 			sourceTree = SOURCE_ROOT;
@@ -1006,6 +1011,7 @@
 				187C5C72175DD69500146D06 /* EnvironmentFlatteningExample.cpp in Sources */,
 				181749771770515400E4611F /* SearchExample.cpp in Sources */,
 				11764FCE179848B800633459 /* KeyboardInputExample.cpp in Sources */,
+				E0399AB61827EA0D0038996D /* ScreenPickExample.cpp in Sources */,
 				1825103917AFD37B00251651 /* PODAnimationExample.cpp in Sources */,
 				1803F21317FD8A2F00D78405 /* Pick3DObjectExample.cpp in Sources */,
 			);
@@ -1111,6 +1117,8 @@
 					armv7,
 					i386,
 				);
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ExampleApp/ExampleApp-Prefix.pch";
@@ -1121,6 +1129,7 @@
 					"\"$(SRCROOT)/Include\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				VALID_ARCHS = "armv7 i386";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1134,6 +1143,8 @@
 					armv7,
 					i386,
 				);
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ExampleApp/ExampleApp-Prefix.pch";
@@ -1144,6 +1155,7 @@
 					"\"$(SRCROOT)/Include\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				VALID_ARCHS = "armv7 i386";
 				WRAPPER_EXTENSION = app;
 			};
