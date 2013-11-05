@@ -783,6 +783,30 @@ Eegeo::Web::iOSWebRequestService* webRequestService;
     _previousDist = dist;
 }
 
+-(Eegeo::v2)getGestureTouchExtents:(UIGestureRecognizer*)recognizer
+{
+    Eegeo::v2 touchExtents = Eegeo::v2::Zero();
+    if (recognizer.numberOfTouches > 1)
+    {
+        CGPoint extentsMax = [recognizer locationOfTouch:0 inView:self.view];
+        CGPoint extentsMin = extentsMax;
+        for (int i = 1; i < recognizer.numberOfTouches; ++i)
+        {
+            CGPoint point = [recognizer locationOfTouch:i inView:self.view];
+            extentsMax.x = std::max(extentsMax.x, point.x);
+            extentsMax.y = std::max(extentsMax.y, point.y);
+            extentsMin.x = std::min(extentsMin.x, point.x);
+            extentsMin.y = std::min(extentsMin.y, point.y);
+        }
+        
+        CGPoint extents = extentsMax;
+        extents.x -= extentsMin.x;
+        extents.y -= extentsMin.y;
+        touchExtents = *(Eegeo::v2*)&extents;
+    }
+    return touchExtents;
+}
+
 // ---------------------------------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------------
 -(void)gesturePan_Callback:(UIPanGestureRecognizer*)recognizer
@@ -803,6 +827,7 @@ Eegeo::Web::iOSWebRequestService* webRequestService;
 	data.velocity	= *(Eegeo::v2*)&velocity;
     data.majorScreenDimension = majorScreenDimension;
     data.numTouches = recognizer.numberOfTouches;
+    data.touchExtents = [self getGestureTouchExtents :recognizer];
 	
     if (recognizer.state == UIGestureRecognizerStateBegan)
     {

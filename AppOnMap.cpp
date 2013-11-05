@@ -143,8 +143,8 @@ void MyApp::Update (float dt)
     
     eegeoWorld.EarlyUpdate(dt);
     
-    m_globeCameraController->Update(dt);
     m_cameraTouchController->Update(dt);
+    m_globeCameraController->Update(dt);
     
     eegeoWorld.Update(dt);
     pExample->Update();
