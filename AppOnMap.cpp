@@ -86,10 +86,9 @@ void MyApp::OnStart ()
     float interestPointLongitudeDegrees = -122.401f;
     float interestPointAltitudeMeters = 2.7;
     
-    Eegeo::Space::LatLongAltitude location = Eegeo::Space::LatLongAltitude(interestPointLatitudeDegrees,
-                                                                           interestPointLongitudeDegrees,
-                                                                           interestPointAltitudeMeters,
-                                                                           Eegeo::Space::LatLongUnits::Degrees);
+    Eegeo::Space::LatLongAltitude location = Eegeo::Space::LatLongAltitude::FromDegrees(interestPointLatitudeDegrees,
+                                                                                        interestPointLongitudeDegrees,
+                                                                                        interestPointAltitudeMeters);
     
     
     
@@ -160,7 +159,7 @@ void MyApp::Draw (float dt)
 
 void MyApp::JumpTo(double latitudeDegrees, double longitudeDegrees, double altitudeMetres, double headingDegrees, double distanceToInterestMetres)
 {
-    Eegeo::dv3 interestPoint = Eegeo::Space::LatLongAltitude(latitudeDegrees, longitudeDegrees, altitudeMetres, Eegeo::Space::LatLongUnits::Degrees).ToECEF();
+    Eegeo::dv3 interestPoint = Eegeo::Space::LatLongAltitude::FromDegrees(latitudeDegrees, longitudeDegrees, altitudeMetres).ToECEF();
     
     Eegeo::Space::EcefTangentBasis interestBasis;
     
