@@ -30,6 +30,7 @@
 #include "PODAnimationExample.h"
 #include "Pick3DObjectExample.h"
 #include "ScreenPickExample.h"
+#include "DebugPrimitiveRenderingExample.h"
 
 MyApp::MyApp(Eegeo::Camera::GlobeCamera::GlobeCameraInterestPointProvider& globeCameraInterestPointProvider,
              ExampleTypes::Examples selectedExample)
@@ -262,6 +263,8 @@ Examples::IExample* MyApp::CreateExample(ExampleTypes::Examples example,
             return new Examples::Pick3DObjectExample(renderContext,
                                                      interestLocation,
                                                      cameraProvider);
+        case ExampleTypes::DebugPrimitiveRendering:
+            return new Examples::DebugPrimitiveRenderingExample(World().GetDebugPrimitiveRenderer());
             
             
     }

@@ -37,7 +37,8 @@ namespace ExampleTypes
         Search,
         KeyboardInput,
         PODAnimation,
-        Pick3DObject
+        Pick3DObject,
+        DebugPrimitiveRendering,
     };
 }
 
