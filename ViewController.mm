@@ -64,6 +64,9 @@
 #include "iOSAlertBoxFactory.h"
 #include "NativeUIFactories.h"
 #include "CameraHelpers.h"
+#include "ChunkedBuildingBuilder.h"
+#include "ChunkedRoadBuilder.h"
+
 
 #define API_KEY "OBTAIN API KEY FROM https://appstore.eegeo.com AND INSERT IT HERE"
 
