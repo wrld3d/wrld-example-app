@@ -24,6 +24,7 @@
 		18915BD317C7AF86005F24AB /* recce_trams_night.pod in Resources */ = {isa = PBXBuildFile; fileRef = 18915BD217C7AF86005F24AB /* recce_trams_night.pod */; };
 		18EC760717BA421E0011EEE6 /* recce_trams.pod in Resources */ = {isa = PBXBuildFile; fileRef = 18EC760517BA421E0011EEE6 /* recce_trams.pod */; };
 		18EC760817BA421E0011EEE6 /* recce_trams.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 18EC760617BA421E0011EEE6 /* recce_trams.pvr */; };
+		2231E65318327973003FD2DB /* ControlCityThemeExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2231E65118327973003FD2DB /* ControlCityThemeExample.cpp */; };
 		2264D694177DA5870016C3ED /* ldn_trains_01.pod in Resources */ = {isa = PBXBuildFile; fileRef = 2264D692177DA5870016C3ED /* ldn_trains_01.pod */; };
 		2264D695177DA5870016C3ED /* ldn_trains_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 2264D693177DA5870016C3ED /* ldn_trains_01.pvr */; };
 		59D60FF4175E49950044449F /* Water_01_LOD.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 59D60FE3175E49950044449F /* Water_01_LOD.pvr */; };
@@ -232,6 +233,8 @@
 		18915BD217C7AF86005F24AB /* recce_trams_night.pod */ = {isa = PBXFileReference; lastKnownFileType = file; path = recce_trams_night.pod; sourceTree = "<group>"; };
 		18EC760517BA421E0011EEE6 /* recce_trams.pod */ = {isa = PBXFileReference; lastKnownFileType = file; path = recce_trams.pod; sourceTree = "<group>"; };
 		18EC760617BA421E0011EEE6 /* recce_trams.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = recce_trams.pvr; sourceTree = "<group>"; };
+		2231E65118327973003FD2DB /* ControlCityThemeExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ControlCityThemeExample.cpp; sourceTree = "<group>"; };
+		2231E65218327973003FD2DB /* ControlCityThemeExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ControlCityThemeExample.h; sourceTree = "<group>"; };
 		2264D692177DA5870016C3ED /* ldn_trains_01.pod */ = {isa = PBXFileReference; lastKnownFileType = file; path = ldn_trains_01.pod; sourceTree = "<group>"; };
 		2264D693177DA5870016C3ED /* ldn_trains_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = ldn_trains_01.pvr; sourceTree = "<group>"; };
 		59D60FE3175E49950044449F /* Water_01_LOD.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Water_01_LOD.pvr; sourceTree = "<group>"; };
@@ -461,6 +464,8 @@
 		7E5928A916CA7FA20005E64D /* Examples */ = {
 			isa = PBXGroup;
 			children = (
+				2231E65118327973003FD2DB /* ControlCityThemeExample.cpp */,
+				2231E65218327973003FD2DB /* ControlCityThemeExample.h */,
 				7EE1BC5C170C352200A4ED45 /* EnvironmentNotifierExample.cpp */,
 				7EE1BC5D170C352200A4ED45 /* EnvironmentNotifierExample.h */,
 				7E5928AA16CA7FA20005E64D /* DebugSphereExample.cpp */,
@@ -1006,6 +1011,7 @@
 				7E5928B216CA7FA20005E64D /* LoadModelExample.cpp in Sources */,
 				09C974C418310127001B9BD7 /* DebugPrimitiveRenderingExample.cpp in Sources */,
 				7E5928B316CA7FA20005E64D /* ScreenUnprojectExample.cpp in Sources */,
+				2231E65318327973003FD2DB /* ControlCityThemeExample.cpp in Sources */,
 				7EE1BC5E170C352200A4ED45 /* EnvironmentNotifierExample.cpp in Sources */,
 				7E7DF519172FD8F7005911AC /* WebRequestExample.cpp in Sources */,
 				7E7DF51C17300A4E005911AC /* FileIOExample.cpp in Sources */,
