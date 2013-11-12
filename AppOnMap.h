@@ -39,6 +39,7 @@ namespace ExampleTypes
         PODAnimation,
         Pick3DObject,
         DebugPrimitiveRendering,
+        ControlCityThemes,
     };
 }
 

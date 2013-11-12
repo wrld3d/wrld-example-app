@@ -31,6 +31,7 @@
 #include "Pick3DObjectExample.h"
 #include "ScreenPickExample.h"
 #include "DebugPrimitiveRenderingExample.h"
+#include "ControlCityThemeExample.h"
 
 MyApp::MyApp(Eegeo::Camera::GlobeCamera::GlobeCameraInterestPointProvider& globeCameraInterestPointProvider,
              ExampleTypes::Examples selectedExample)
@@ -265,7 +266,11 @@ Examples::IExample* MyApp::CreateExample(ExampleTypes::Examples example,
                                                      cameraProvider);
         case ExampleTypes::DebugPrimitiveRendering:
             return new Examples::DebugPrimitiveRenderingExample(World().GetDebugPrimitiveRenderer());
-            
+        case ExampleTypes::ControlCityThemes:
+            return new Examples::ControlCityThemeExample(World().GetCityThemesService(),
+                                                         World().GetCityThemesRepository(),
+                                                         World().GetCityThemesUpdater(),
+                                                         World());
             
     }
 }
