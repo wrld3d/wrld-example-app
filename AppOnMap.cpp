@@ -13,6 +13,7 @@
 #include "CameraHelpers.h"
 #include "WeatherController.h"
 #include "NativeUIFactories.h"
+#include "RouteService.h"
 
 #include "DebugSphereExample.h"
 #include "ScreenUnprojectExample.h"
@@ -32,6 +33,7 @@
 #include "ScreenPickExample.h"
 #include "DebugPrimitiveRenderingExample.h"
 #include "ControlCityThemeExample.h"
+#include "RouteDrawingExample.h"
 
 MyApp::MyApp(Eegeo::Camera::GlobeCamera::GlobeCameraInterestPointProvider& globeCameraInterestPointProvider,
              ExampleTypes::Examples selectedExample)
@@ -68,14 +70,14 @@ void MyApp::OnStart ()
     
     const bool useLowSpecSettings = false;
     Eegeo::Camera::GlobeCamera::GlobeCameraControllerConfiguration globeCameraControllerConfig = Eegeo::Camera::GlobeCamera::GlobeCameraControllerConfiguration::CreateDefault(useLowSpecSettings);
-
+    
     m_globeCameraController = new Eegeo::Camera::GlobeCamera::GlobeCameraController(eegeoWorld.GetTerrainHeightProvider(),
                                                                                     eegeoWorld.GetEnvironmentFlatteningService(),
                                                                                     eegeoWorld.GetResourceCeilingProvider(),
                                                                                     *m_cameraTouchController,
                                                                                     globeCameraControllerConfig);
     
-
+    
     
     Eegeo::Camera::RenderCamera* renderCamera = m_globeCameraController->GetCamera();
     const Eegeo::Rendering::RenderContext& renderContext = eegeoWorld.GetRenderContext();
@@ -83,7 +85,7 @@ void MyApp::OnStart ()
     eegeoWorld.SetCamera(renderCamera);
     
     m_globeCameraInterestPointProvider.SetGlobeCamera(m_globeCameraController);
-
+    
     float interestPointLatitudeDegrees = 37.7858f;
     float interestPointLongitudeDegrees = -122.401f;
     float interestPointAltitudeMeters = 2.7;
@@ -133,7 +135,8 @@ void MyApp::OnStart ()
                              eegeoWorld.GetEnvironmentFlatteningService(),
                              searchService,
                              eegeoWorld.GetNativeUIFactories(),
-                             eegeoWorld.GetInterestPointProvider());
+                             eegeoWorld.GetInterestPointProvider(),
+                             eegeoWorld.GetRouteService());
     
     pExample->Start();
 }
@@ -192,7 +195,8 @@ Examples::IExample* MyApp::CreateExample(ExampleTypes::Examples example,
                                          Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                          Eegeo::Search::Service::SearchService* searchService,
                                          Eegeo::UI::NativeUIFactories& nativeInputFactories,
-                                         Eegeo::Location::IInterestPointProvider& interestPointProvider)
+                                         Eegeo::Location::IInterestPointProvider& interestPointProvider,
+                                         Eegeo::Routes::RouteService& routeService)
 {
     switch(example)
     {
@@ -212,7 +216,7 @@ Examples::IExample* MyApp::CreateExample(ExampleTypes::Examples example,
             return new Examples::ScreenPickExample(renderContext,
                                                    cameraProvider,
                                                    terrainHeightProvider);
-
+            
         case ExampleTypes::DebugSphere:
             return new Examples::DebugSphereExample(renderContext,
                                                     interestLocation);
@@ -266,12 +270,15 @@ Examples::IExample* MyApp::CreateExample(ExampleTypes::Examples example,
                                                      cameraProvider);
         case ExampleTypes::DebugPrimitiveRendering:
             return new Examples::DebugPrimitiveRenderingExample(World().GetDebugPrimitiveRenderer());
+            
         case ExampleTypes::ControlCityThemes:
             return new Examples::ControlCityThemeExample(World().GetCityThemesService(),
                                                          World().GetCityThemesRepository(),
                                                          World().GetCityThemesUpdater(),
                                                          World());
-            
+        case ExampleTypes::RouteDrawing:
+            return new Examples::RouteDrawingExample(routeService,
+                                                     World());
     }
 }
 

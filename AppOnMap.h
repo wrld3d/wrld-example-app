@@ -16,7 +16,6 @@
 #include "Location.h"
 #include "GlobeCamera.h"
 
-
 namespace ExampleTypes
 {
     enum Examples
@@ -40,10 +39,11 @@ namespace ExampleTypes
         Pick3DObject,
         DebugPrimitiveRendering,
         ControlCityThemes,
+        RouteDrawing,
     };
 }
 
-static const ExampleTypes::Examples g_defaultSelectedExample = ExampleTypes::Pick3DObject;
+static const ExampleTypes::Examples g_defaultSelectedExample = ExampleTypes::RouteDrawing;
 
 namespace Eegeo
 {
@@ -61,6 +61,11 @@ namespace Eegeo
     namespace UI
     {
         class NativeUIFactories;
+    }
+    
+    namespace Routes
+    {
+        class RouteService;
     }
 }
 
@@ -113,7 +118,8 @@ public:
                                       Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                       Eegeo::Search::Service::SearchService* searchService,
                                       Eegeo::UI::NativeUIFactories& nativeInputFactories,
-                                      Eegeo::Location::IInterestPointProvider& interestPointProvider);
+                                      Eegeo::Location::IInterestPointProvider& interestPointProvider,
+                                      Eegeo::Routes::RouteService& routeService);
     
     
     void Event_TouchRotate 			(const AppInterface::RotateData& data);
