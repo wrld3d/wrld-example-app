@@ -144,8 +144,8 @@ namespace Examples
             glState.BindElementArrayBuffer(item->GetIndexBuffer());
             
             //i don't need the UV channel as not texturing them, but it is part of the buulding vertex so must be considered
-            Eegeo_GL(glVertexAttribPointer(shader.PositionAttribute, 3, GL_UNSIGNED_SHORT, GL_TRUE, sizeof(ShortDiffuseTexturedVertex), 0));
-            Eegeo_GL(glVertexAttribPointer(shader.LightDotAttribute, 1, GL_FLOAT, GL_FALSE, sizeof(ShortDiffuseTexturedVertex), (GLvoid*) (sizeof(short)*6)));
+            Eegeo_GL(glVertexAttribPointer(shader.PositionAttribute, 3, GL_UNSIGNED_SHORT, GL_TRUE, sizeof(VertexTypes::ShortDiffuseTexturedVertex), 0));
+            Eegeo_GL(glVertexAttribPointer(shader.LightDotAttribute, 1, GL_FLOAT, GL_FALSE, sizeof(VertexTypes::ShortDiffuseTexturedVertex), (GLvoid*) (sizeof(short)*6)));
             
             Eegeo_GL(glDrawElements(GL_TRIANGLES, item->IndexCount(), GL_UNSIGNED_SHORT, (void*)0 ));
             
