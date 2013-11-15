@@ -86,13 +86,22 @@ void RouteDrawingExample::Update()
         
         //Create a separate route to demonstrate multiple routes drawing at once...
         //
-        //This route surrounds AT & T Park.
+        //This route surrounds AT & T Park. This route has some nasty data; the route
+        //doubles back on itself (to produce exactly oppositing poly-line segments)
+        //and has a duplicated point, but still renders.
         std::vector<RouteVertex> otherPoints = builder.Start(routeBlue, halfWidth/2.f)
         .AddPoint(37.779483,-122.388609,altitudeMeters)
         .AddPoint(37.779916,-122.389317,altitudeMeters)
+        .ChangeColor(routeGreen)
+        //a nasty bit with a dupe point and a parallel line
         .AddPoint(37.777957,-122.391785,altitudeMeters)
+        .AddPoint(37.779916,-122.389317,altitudeMeters)
+        .AddPoint(37.777957,-122.391785,altitudeMeters)
+        .AddPoint(37.777957,-122.391785,altitudeMeters)
+        .ChangeColor(routeRed)
         .AddPoint(37.777126,-122.390551,altitudeMeters)
         .AddPoint(37.776134,-122.389972,altitudeMeters)
+        .ChangeColor(routeBlue)
         .AddPoint(37.776397,-122.387922,altitudeMeters)
         .FinishRoute();
         
