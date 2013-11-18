@@ -22,7 +22,7 @@ namespace Examples
         m_debugPrimitiveRenderer(debugPrimitiveRenderer) {}
         
         void Start();
-        void Update();
+        void Update(float dt);
         void Draw();
         void Suspend();
     };

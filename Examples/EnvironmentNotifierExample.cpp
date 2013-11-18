@@ -27,7 +27,7 @@ namespace Examples
         observer = NULL;
     }
     
-    void EnvironmentNotifierExample::Update()
+    void EnvironmentNotifierExample::Update(float dt)
     {
     }
     

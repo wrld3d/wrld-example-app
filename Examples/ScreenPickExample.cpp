@@ -49,7 +49,7 @@ namespace Examples
         
     }
     
-    void ScreenPickExample::Update()
+    void ScreenPickExample::Update(float dt)
     {
         
     }

@@ -28,7 +28,7 @@ namespace Examples
         KeyboardInputExample(Eegeo::UI::NativeInput::IKeyboardInputFactory& keyboardInputFactory);
         
         void Start();
-        void Update() {}
+        void Update(float dt) {}
         void Draw() {}
         void Suspend() {}
         

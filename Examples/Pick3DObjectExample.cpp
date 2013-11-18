@@ -46,7 +46,7 @@ namespace Examples
         m_object = NULL;
     }
     
-    void Pick3DObjectExample::Update()
+    void Pick3DObjectExample::Update(float dt)
     {
         m_object->SetPositionECEF(m_objectLocationEcef);
     }

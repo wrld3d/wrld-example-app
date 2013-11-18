@@ -39,7 +39,7 @@ namespace Examples
         pModel = NULL;
     }
     
-    void PODAnimationExample::Update()
+    void PODAnimationExample::Update(float dt)
     {
         pModel->UpdateAnimator(1.0f/30.0f);
     }

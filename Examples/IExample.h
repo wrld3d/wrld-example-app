@@ -11,7 +11,7 @@ namespace Examples
         virtual ~IExample() { }
         
         virtual void Start() = 0;
-        virtual void Update() = 0;
+        virtual void Update(float dt) = 0;
         virtual void Draw() = 0;
         virtual void Suspend()= 0 ;
         

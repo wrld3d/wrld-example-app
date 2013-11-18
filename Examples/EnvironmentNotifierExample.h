@@ -48,7 +48,7 @@ namespace Examples
                                    Eegeo::Resources::Terrain::TerrainStreaming& terrainStreaming);
         
         void Start();
-        void Update();
+        void Update(float dt);
         void Draw();
         void Suspend();
     };

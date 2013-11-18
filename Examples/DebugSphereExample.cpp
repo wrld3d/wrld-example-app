@@ -44,7 +44,7 @@ namespace Examples
         renderables.clear();
     }
     
-    void DebugSphereExample::Update()
+    void DebugSphereExample::Update(float dt)
     {
         //no work to do in update
     }

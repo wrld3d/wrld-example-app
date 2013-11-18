@@ -23,7 +23,7 @@ RouteDrawingExample::RouteDrawingExample(RouteService& routeService,
     
 }
 
-void RouteDrawingExample::Update()
+void RouteDrawingExample::Update(float dt)
 {
     //Defer creating the routes until the loading state is over.
     if(m_world.Initialising()) {

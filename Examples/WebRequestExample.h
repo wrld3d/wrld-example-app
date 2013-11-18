@@ -26,7 +26,7 @@ namespace Examples
         WebRequestExample(Eegeo::Web::IWebLoadRequestFactory& webRequestFactory);
         
         void Start();
-        void Update() {}
+        void Update(float dt) {}
         void Draw() {}
         void Suspend() {}
         

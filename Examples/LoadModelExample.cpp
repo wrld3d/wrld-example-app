@@ -48,7 +48,7 @@ namespace Examples
         pModel = NULL;
     }
     
-    void LoadModelExample::Update()
+    void LoadModelExample::Update(float dt)
     {
         //let's put the vehicle in the air
         interestLocation.SetAltitude(37.0f);

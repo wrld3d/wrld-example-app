@@ -23,7 +23,7 @@ namespace Examples
                                Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider);
         
         void Start();
-        void Update();
+        void Update(float dt);
         void Draw();
         void Suspend();
     };

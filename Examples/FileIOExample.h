@@ -24,7 +24,7 @@ namespace Examples
         FileIOExample(Eegeo::Helpers::IFileIO& fileIO);
         
         void Start();
-        void Update() {}
+        void Update(float dt) {}
         void Draw() {}
         void Suspend() {}
     };

@@ -20,7 +20,7 @@ ResourceSpatialQueryExample::ResourceSpatialQueryExample(Eegeo::Resources::Resou
     
 }
 
-void ResourceSpatialQueryExample::Update()
+void ResourceSpatialQueryExample::Update(float dt)
 {
     Eegeo::dv3 ecefPointOfInterest = interestPointProvider.GetEcefInterestPoint();
 

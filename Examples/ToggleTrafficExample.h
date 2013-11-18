@@ -24,7 +24,7 @@ namespace Examples
         ToggleTrafficExample(Eegeo::Traffic::TrafficSimulation& trafficSimulation);
         
         void Start() {}
-        void Update();
+        void Update(float dt);
         void Draw() {}
         void Suspend() {}
     };

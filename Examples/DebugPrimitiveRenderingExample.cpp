@@ -11,7 +11,7 @@ namespace Examples
         
     }
 
-    void DebugPrimitiveRenderingExample::Update()
+    void DebugPrimitiveRenderingExample::Update(float dt)
     {
         
     }

@@ -22,7 +22,7 @@ EnvironmentFlatteningExample::EnvironmentFlatteningExample(Eegeo::Rendering::Env
 {
 }
 
-void EnvironmentFlatteningExample::Update()
+void EnvironmentFlatteningExample::Update(float dt)
 {
     long long ms = MillisecondsSinceEpoch();
     long long delta = ms - lastToggle;

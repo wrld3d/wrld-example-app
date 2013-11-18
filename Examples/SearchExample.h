@@ -28,7 +28,7 @@ namespace Examples
                       Eegeo::Location::IInterestPointProvider& interestPointProvider);
         
         void Start();
-        void Update() {}
+        void Update(float dt) {}
         void Draw() {}
         void Suspend() {}
         

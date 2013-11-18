@@ -73,7 +73,7 @@ namespace Examples
                          Eegeo::Lighting::GlobalFogging& fogging);
         
         void Start();
-        void Update();
+        void Update(float dt);
         void Draw();
         void Suspend();
     };

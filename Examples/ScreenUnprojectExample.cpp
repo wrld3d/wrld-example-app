@@ -90,7 +90,7 @@ namespace Examples
         delete sphere;
     }
     
-    void ScreenUnprojectExample::Update()
+    void ScreenUnprojectExample::Update(float dt)
     {
         const Eegeo::Camera::RenderCamera& renderCamera = cameraProvider.GetRenderCamera();
 

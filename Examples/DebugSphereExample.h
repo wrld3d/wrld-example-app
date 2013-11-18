@@ -25,7 +25,7 @@ namespace Examples
                            Eegeo::Space::LatLongAltitude interestLocation);
         
         void Start();
-        void Update();
+        void Update(float dt);
         void Draw();
         void Suspend();
     };
