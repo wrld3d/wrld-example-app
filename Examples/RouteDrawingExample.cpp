@@ -9,6 +9,7 @@
 #include "RouteDrawingExample.h"
 #include "RouteBuilder.h"
 #include "VectorMath.h"
+#include "RouteStyle.h"
 
 using namespace Examples;
 using namespace Eegeo;
@@ -79,7 +80,8 @@ void RouteDrawingExample::Update(float dt)
         //
         //The route can be created using the CreateRoute method on the RouteService, which must
         //be destroyed through the complementary DestroyRoute method on RouteService.
-        Route* route = m_routeService.CreateRoute(points);
+        Eegeo::Routes::RouteStyle hardJoinStyle(Eegeo::Routes::RouteStyle::JoinStyleHard);
+        Route* route = m_routeService.CreateRoute(points, hardJoinStyle);
         
         //Keep a reference to the route so we can Destroy it later.
         m_routes.push_back(route);
@@ -105,7 +107,25 @@ void RouteDrawingExample::Update(float dt)
         .AddPoint(37.776397,-122.387922,altitudeMeters)
         .FinishRoute();
         
-        m_routes.push_back(m_routeService.CreateRoute(otherPoints));
+        Eegeo::Routes::RouteStyle arcJoinStyle(Eegeo::Routes::RouteStyle::JoinStyleArc);
+        m_routes.push_back(m_routeService.CreateRoute(otherPoints, arcJoinStyle));
+        
+        //this route curves around entirely on itself, and traces the bounds of treasure island
+        std::vector<RouteVertex> islandCircuitPoints = builder.Start(routeGreen, halfWidth)
+        .AddPoint(37.826701,-122.379162, altitudeMeters)
+        .AddPoint(37.830429,-122.377531, altitudeMeters)
+        .AddPoint(37.832328,-122.373368, altitudeMeters)
+        .AddPoint(37.831209,-122.368605, altitudeMeters)
+        .AddPoint(37.822633,-122.362983, altitudeMeters)
+        .AddPoint(37.818768,-122.364313, altitudeMeters)
+        .AddPoint(37.816158,-122.371480, altitudeMeters)
+        .AddPoint(37.818294,-122.373368, altitudeMeters)
+        .AddPoint(37.816938,-122.375128, altitudeMeters)
+        .AddPoint(37.820226,-122.374742, altitudeMeters)
+        .AddPoint(37.824158,-122.377574, altitudeMeters)
+        .FinishRoute();
+        
+        m_routes.push_back(m_routeService.CreateRoute(islandCircuitPoints, arcJoinStyle));
         
         //We have created the routes so don't need to do so again.
         m_createdRoutes = true;
