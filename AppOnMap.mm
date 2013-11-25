@@ -35,12 +35,15 @@
 #include "ControlCityThemeExample.h"
 #include "RouteDrawingExample.h"
 #include "PinsExample.h"
+#include "RouteSimulationExample.h"
 
 MyApp::MyApp(Eegeo::Camera::GlobeCamera::GlobeCameraInterestPointProvider& globeCameraInterestPointProvider,
+             UIView* pView,
              ExampleTypes::Examples selectedExample)
 : m_globeCameraController(NULL)
 , m_cameraTouchController(NULL)
 , m_globeCameraInterestPointProvider(globeCameraInterestPointProvider)
+, m_pView(pView)
 , m_selectedExampleType(selectedExample)
 , pExample(NULL)
 {
@@ -150,7 +153,7 @@ void MyApp::Update (float dt)
     
     m_cameraTouchController->Update(dt);
     m_globeCameraController->Update(dt);
-    
+
     eegeoWorld.Update(dt);
     pExample->Update(dt);
 }
@@ -291,6 +294,26 @@ Examples::IExample* MyApp::CreateExample(ExampleTypes::Examples example,
                                              World().GetCameraProvider(),
                                              World().GetTerrainHeightProvider()
                                              );
+            
+        case ExampleTypes::RouteSimulation:
+        {
+            Eegeo::Routes::Simulation::Camera::RouteSimulationGlobeCameraControllerFactory factory(World().GetTerrainHeightProvider(),
+                                                                                                   World().GetEnvironmentFlatteningService(),
+                                                                                                   World().GetResourceCeilingProvider());
+            
+            return new Examples::RouteSimulationExample(World().GetRouteService(),
+                                                        World().GetRouteSimulationService(),
+                                                        World().GetRouteSimulationViewService(),
+                                                        World().GetRenderContext().GetGLState(),
+                                                        World().GetFileIO(),
+                                                        World().GetTextureLoader(),
+                                                        *m_globeCameraController,
+                                                        World().GetInterestPointProvider(),
+                                                        factory,
+                                                        m_pView,
+                                                        World()
+                                                        );
+        }
     }
 }
 

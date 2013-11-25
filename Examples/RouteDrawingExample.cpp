@@ -35,15 +35,16 @@ void RouteDrawingExample::Update(float dt)
     if(!m_createdRoutes)
     {
         //An arbitrarily selected default half-width for the route line segments.
-        float halfWidth = 5.f;
+        const float halfWidth = 5.f;
+        const float routeSpeedMetersPerSecond = 40.f;
 
         //The color format is (Red, Green, Blue, Transparency - 0.0 is fully transparent and 1.0 is fully opaque).
-        Eegeo::v4 routeRed(1, 0, 0, 0.6f);
-        Eegeo::v4 routeGreen(0, 1, 0, 0.6f);
-        Eegeo::v4 routeBlue(0, 0, 1, 0.6f);
+        const Eegeo::v4 routeRed(1, 0, 0, 0.6f);
+        const Eegeo::v4 routeGreen(0, 1, 0, 0.6f);
+        const Eegeo::v4 routeBlue(0, 0, 1, 0.6f);
         
         //An arbitrarily selected altitude for the route visualisation.
-        float altitudeMeters = 3.f;
+        const float altitudeMeters = 3.f;
         
         //The route builder helper object provides a fluent interface to make building a route simpler.
         RouteBuilder builder;
@@ -55,7 +56,7 @@ void RouteDrawingExample::Update(float dt)
         //
         //The color can be changed arbitrarily along the route.
         //
-        std::vector<RouteVertex> points = builder.Start(routeRed, halfWidth)
+        std::vector<RouteVertex> points = builder.Start(routeRed, halfWidth, routeSpeedMetersPerSecond)
         .AddPoint(37.795729,-122.401698, altitudeMeters)
         .AddPoint(37.794873,-122.401516, altitudeMeters)
         .AddPoint(37.794728,-122.403179, altitudeMeters)
@@ -91,7 +92,7 @@ void RouteDrawingExample::Update(float dt)
         //This route surrounds AT & T Park. This route has some nasty data; the route
         //doubles back on itself (to produce exactly opposing poly-line segments)
         //and has a duplicated point, but still renders.
-        std::vector<RouteVertex> otherPoints = builder.Start(routeBlue, halfWidth/2.f)
+        std::vector<RouteVertex> otherPoints = builder.Start(routeBlue, halfWidth/2.f, routeSpeedMetersPerSecond)
         .AddPoint(37.779483,-122.388609,altitudeMeters)
         .AddPoint(37.779916,-122.389317,altitudeMeters)
         .ChangeColor(routeGreen)
@@ -111,7 +112,7 @@ void RouteDrawingExample::Update(float dt)
         m_routes.push_back(m_routeService.CreateRoute(otherPoints, arcJoinStyle));
         
         //this route curves around entirely on itself, and traces the bounds of treasure island
-        std::vector<RouteVertex> islandCircuitPoints = builder.Start(routeGreen, halfWidth)
+        std::vector<RouteVertex> islandCircuitPoints = builder.Start(routeGreen, halfWidth, routeSpeedMetersPerSecond)
         .AddPoint(37.826701,-122.379162, altitudeMeters)
         .AddPoint(37.830429,-122.377531, altitudeMeters)
         .AddPoint(37.832328,-122.373368, altitudeMeters)

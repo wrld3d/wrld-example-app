@@ -23,6 +23,7 @@
 		187C5C72175DD69500146D06 /* EnvironmentFlatteningExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 187C5C70175DD69400146D06 /* EnvironmentFlatteningExample.cpp */; };
 		18915BD317C7AF86005F24AB /* recce_trams_night.pod in Resources */ = {isa = PBXBuildFile; fileRef = 18915BD217C7AF86005F24AB /* recce_trams_night.pod */; };
 		18E3EC451835442A003454B7 /* RouteDrawingExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18E3EC4318354429003454B7 /* RouteDrawingExample.cpp */; };
+		18E3EC81183E804C003454B7 /* RouteSimulationExample.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18E3EC7F183E804B003454B7 /* RouteSimulationExample.mm */; };
 		18EC760717BA421E0011EEE6 /* recce_trams.pod in Resources */ = {isa = PBXBuildFile; fileRef = 18EC760517BA421E0011EEE6 /* recce_trams.pod */; };
 		18EC760817BA421E0011EEE6 /* recce_trams.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 18EC760617BA421E0011EEE6 /* recce_trams.pvr */; };
 		2231E65318327973003FD2DB /* ControlCityThemeExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2231E65118327973003FD2DB /* ControlCityThemeExample.cpp */; };
@@ -208,7 +209,7 @@
 		7EE9888E175CEC3900D3CE09 /* Rain_01.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EE9888C175CEC3900D3CE09 /* Rain_01.png */; };
 		7EE9888F175CEC3900D3CE09 /* Snow_01.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EE9888D175CEC3900D3CE09 /* Snow_01.png */; };
 		7EF5D8651737F9A40049D787 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EF5D8641737F9A40049D787 /* CoreLocation.framework */; };
-		E0399AAE1823FF3B0038996D /* AppOnMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E0399AAD1823FF3B0038996D /* AppOnMap.cpp */; };
+		E0399AAE1823FF3B0038996D /* AppOnMap.mm in Sources */ = {isa = PBXBuildFile; fileRef = E0399AAD1823FF3B0038996D /* AppOnMap.mm */; };
 		E0399AB61827EA0D0038996D /* ScreenPickExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E0399AB41827EA0D0038996D /* ScreenPickExample.cpp */; };
 /* End PBXBuildFile section */
 
@@ -236,6 +237,8 @@
 		18915BD217C7AF86005F24AB /* recce_trams_night.pod */ = {isa = PBXFileReference; lastKnownFileType = file; path = recce_trams_night.pod; sourceTree = "<group>"; };
 		18E3EC4318354429003454B7 /* RouteDrawingExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RouteDrawingExample.cpp; sourceTree = "<group>"; };
 		18E3EC4418354429003454B7 /* RouteDrawingExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RouteDrawingExample.h; sourceTree = "<group>"; };
+		18E3EC7F183E804B003454B7 /* RouteSimulationExample.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RouteSimulationExample.mm; sourceTree = "<group>"; };
+		18E3EC80183E804B003454B7 /* RouteSimulationExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RouteSimulationExample.h; sourceTree = "<group>"; };
 		18EC760517BA421E0011EEE6 /* recce_trams.pod */ = {isa = PBXFileReference; lastKnownFileType = file; path = recce_trams.pod; sourceTree = "<group>"; };
 		18EC760617BA421E0011EEE6 /* recce_trams.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = recce_trams.pvr; sourceTree = "<group>"; };
 		2231E65118327973003FD2DB /* ControlCityThemeExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ControlCityThemeExample.cpp; sourceTree = "<group>"; };
@@ -439,7 +442,7 @@
 		7EE9888C175CEC3900D3CE09 /* Rain_01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Rain_01.png; sourceTree = "<group>"; };
 		7EE9888D175CEC3900D3CE09 /* Snow_01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Snow_01.png; sourceTree = "<group>"; };
 		7EF5D8641737F9A40049D787 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		E0399AAD1823FF3B0038996D /* AppOnMap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppOnMap.cpp; sourceTree = SOURCE_ROOT; };
+		E0399AAD1823FF3B0038996D /* AppOnMap.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppOnMap.mm; sourceTree = SOURCE_ROOT; };
 		E0399AB41827EA0D0038996D /* ScreenPickExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ScreenPickExample.cpp; sourceTree = "<group>"; };
 		E0399AB51827EA0D0038996D /* ScreenPickExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScreenPickExample.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -511,6 +514,8 @@
 				09C974C318310127001B9BD7 /* DebugPrimitiveRenderingExample.h */,
 				18E3EC4318354429003454B7 /* RouteDrawingExample.cpp */,
 				18E3EC4418354429003454B7 /* RouteDrawingExample.h */,
+				18E3EC7F183E804B003454B7 /* RouteSimulationExample.mm */,
+				18E3EC80183E804B003454B7 /* RouteSimulationExample.h */,
 				59A943BC183A1758000AB7BD /* PinsExample.cpp */,
 				59A943BD183A1758000AB7BD /* PinsExample.h */,
 			);
@@ -561,10 +566,10 @@
 			children = (
 				7E5928A916CA7FA20005E64D /* Examples */,
 				7EE482121683715D0006E99B /* AppOnMap.h */,
+				E0399AAD1823FF3B0038996D /* AppOnMap.mm */,
 				7EE482131683715D0006E99B /* ViewController.h */,
 				7EE482141683715D0006E99B /* ViewController.mm */,
 				7EE481F316836F370006E99B /* Supporting Files */,
-				E0399AAD1823FF3B0038996D /* AppOnMap.cpp */,
 			);
 			path = ExampleApp;
 			sourceTree = "<group>";
@@ -1032,7 +1037,7 @@
 				7E7DF5271732AB27005911AC /* NavigationGraphExample.cpp in Sources */,
 				7E7DF52C1733B844005911AC /* ModifiedRenderingExample.cpp in Sources */,
 				7ED4CF9317424CF400739A3D /* ToggleTrafficExample.cpp in Sources */,
-				E0399AAE1823FF3B0038996D /* AppOnMap.cpp in Sources */,
+				E0399AAE1823FF3B0038996D /* AppOnMap.mm in Sources */,
 				7ED4CF9B1742A85200739A3D /* ResourceSpatialQueryExample.cpp in Sources */,
 				187C5C72175DD69500146D06 /* EnvironmentFlatteningExample.cpp in Sources */,
 				181749771770515400E4611F /* SearchExample.cpp in Sources */,
@@ -1042,6 +1047,7 @@
 				1803F21317FD8A2F00D78405 /* Pick3DObjectExample.cpp in Sources */,
 				18E3EC451835442A003454B7 /* RouteDrawingExample.cpp in Sources */,
 				59A943BE183A1758000AB7BD /* PinsExample.cpp in Sources */,
+				18E3EC81183E804C003454B7 /* RouteSimulationExample.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1123,6 +1129,8 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_PREPROCESSOR_DEFINITIONS = "";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;

@@ -545,7 +545,7 @@ Eegeo::Web::iOSWebRequestService* webRequestService;
     
     m_pInterestPointProvider = Eegeo_NEW(Eegeo::Camera::GlobeCamera::GlobeCameraInterestPointProvider());
 
-    myApp = new ::MyApp(*m_pInterestPointProvider);
+    myApp = new ::MyApp(*m_pInterestPointProvider, [self view]);
     
     m_pBlitter = new Eegeo::Blitter(1024 * 128, 1024 * 64, 1024 * 32, *m_renderContext);
     m_pBlitter->Initialise();

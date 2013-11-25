@@ -15,6 +15,7 @@
 #include "Web.h"
 #include "Location.h"
 #include "GlobeCamera.h"
+#import <UIKit/UIKit.h>
 
 namespace ExampleTypes
 {
@@ -40,11 +41,12 @@ namespace ExampleTypes
         DebugPrimitiveRendering,
         ControlCityThemes,
         RouteDrawing,
-        Pins
+        Pins,
+        RouteSimulation
     };
 }
 
-static const ExampleTypes::Examples g_defaultSelectedExample = ExampleTypes::Pins;
+static const ExampleTypes::Examples g_defaultSelectedExample = ExampleTypes::RouteSimulation;
 
 namespace Eegeo
 {
@@ -77,11 +79,13 @@ private:
     Eegeo::Camera::GlobeCamera::GlobeCameraController* m_globeCameraController;
     Eegeo::Camera::GlobeCamera::GlobeCameraTouchController* m_cameraTouchController;
     Eegeo::Camera::GlobeCamera::GlobeCameraInterestPointProvider& m_globeCameraInterestPointProvider;
+    UIView* m_pView;
     Examples::IExample* pExample;
 public:
     
     
     MyApp(Eegeo::Camera::GlobeCamera::GlobeCameraInterestPointProvider& globeCameraInterestPointProvider,
+          UIView* pView,
           ExampleTypes::Examples selectedExample = g_defaultSelectedExample);
     
     ~MyApp();
