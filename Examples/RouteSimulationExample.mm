@@ -161,7 +161,7 @@ void RouteSimulationExample::Update(float dt)
         m_pSessionAlternatingSpeedChanger->TogglePlaybackDirection();
         m_pSessionAlternatingSpeedChanger->Unpause();
         
-        float linkSpeedMultiplier = 1.f + ((rand() % 300)/100.f);
+        float linkSpeedMultiplier = 0.5f + ((rand() % 200)/100.f);
         m_pSessionAlternatingSpeedChanger->UseLinkSpeedValueWithMultiplier(linkSpeedMultiplier);
         
         //Change the direction of the vehicle when we alternate playback directions, so the vehice
@@ -244,6 +244,20 @@ void RouteSimulationExample::DecreaseSpeedFollowed()
     if(newSpeed < 0.5f) { newSpeed = 0.5f; }
     
     m_pSessionAlternatingSpeedChanger->UseLinkSpeedValueWithMultiplier(newSpeed);
+}
+
+void RouteSimulationExample::ToggleRotateToFollow()
+{
+    Eegeo_ASSERT(m_usingFollowCamera);
+
+    if(m_pRouteSessionFollowCameraController->GetOrientationMode() == RouteSimulationGlobeCameraController::UnlockedOrientation)
+    {
+        m_pRouteSessionFollowCameraController->LockFollowHeadingToCurrentLinkDirection();
+    }
+    else
+    {
+        m_pRouteSessionFollowCameraController->UnlockFollowHeading();
+    }
 }
 
 Route* RouteSimulationExample::BuildRoute() const
@@ -394,11 +408,13 @@ bool RouteSimulationExample::Event_TouchPan_End(const AppInterface::PanData& dat
 //to route our button click events though to call back the example.
 @interface IExampleBinding : NSObject
 
--(void) setExampleInstance:(RouteSimulationExample*)pExample :(UIButton*)direction :(UIButton*)increaseSpeed :(UIButton*)decreaseSpeed;
+-(void) setExampleInstance:(RouteSimulationExample*)pExample :(UIButton*)direction :(UIButton*)increaseSpeed :(UIButton*)decreaseSpeed :(UIButton*)rotateToFollow;
+
 -(void) toggleFollowCamera;
 -(void) changeFollowDirection;
 -(void) increaseSpeedFollowed;
 -(void) decreaseSpeedFollowed;
+-(void) rotateToFollow;
 
 @end
 
@@ -408,13 +424,15 @@ RouteSimulationExample* m_pExample;
 UIButton* m_pDirection;
 UIButton* m_pIncreaseSpeed;
 UIButton* m_pDecreaseSpeed;
+UIButton* m_pRotateToFollow;
 
--(void) setExampleInstance:(RouteSimulationExample*)pExample :(UIButton*)direction :(UIButton*)increaseSpeed :(UIButton*)decreaseSpeed
+-(void) setExampleInstance:(RouteSimulationExample*)pExample :(UIButton*)direction :(UIButton*)increaseSpeed :(UIButton*)decreaseSpeed :(UIButton*)rotateToFollow
 {
     m_pExample = pExample;
     m_pDirection = direction;
     m_pIncreaseSpeed = increaseSpeed;
     m_pDecreaseSpeed = decreaseSpeed;
+    m_pRotateToFollow = rotateToFollow;
 }
 
 -(void) toggleFollowCamera
@@ -424,6 +442,7 @@ UIButton* m_pDecreaseSpeed;
     [m_pDirection setHidden: ![m_pDirection isHidden]];
     [m_pIncreaseSpeed setHidden: ![m_pIncreaseSpeed isHidden]];
     [m_pDecreaseSpeed setHidden: ![m_pDecreaseSpeed isHidden]];
+    [m_pRotateToFollow setHidden: ![m_pRotateToFollow isHidden]];
 }
 
 -(void) changeFollowDirection
@@ -439,6 +458,11 @@ UIButton* m_pDecreaseSpeed;
 -(void) decreaseSpeedFollowed
 {
     m_pExample->DecreaseSpeedFollowed();
+}
+
+-(void) rotateToFollow
+{
+    m_pExample->ToggleRotateToFollow();
 }
 
 @end
@@ -468,31 +492,40 @@ void RouteSimulationExample::CreateAndBindUI()
     
     screenHeight -= 60.f;
     
-    UIButton * increaseSpeed = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    increaseSpeed.frame = CGRectMake(10, screenHeight, 200, 50);
-    [increaseSpeed setTitle:@"Increase Speed!" forState:UIControlStateNormal];
-    [increaseSpeed addTarget:pExampleWrapper action:@selector(increaseSpeedFollowed) forControlEvents:UIControlEventTouchDown];
-    [m_pView addSubview:increaseSpeed];
+    UIButton * increaseSpeedButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    increaseSpeedButton.frame = CGRectMake(10, screenHeight, 200, 50);
+    [increaseSpeedButton setTitle:@"Increase Speed!" forState:UIControlStateNormal];
+    [increaseSpeedButton addTarget:pExampleWrapper action:@selector(increaseSpeedFollowed) forControlEvents:UIControlEventTouchDown];
+    [m_pView addSubview:increaseSpeedButton];
     
     screenHeight -= 60.f;
     
-    UIButton * decreaseSpeed = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    decreaseSpeed.frame = CGRectMake(10, screenHeight, 200, 50);
-    [decreaseSpeed setTitle:@"Decrease Speed!" forState:UIControlStateNormal];
-    [decreaseSpeed addTarget:pExampleWrapper action:@selector(decreaseSpeedFollowed) forControlEvents:UIControlEventTouchDown];
-    [m_pView addSubview:decreaseSpeed];
+    UIButton * decreaseSpeedButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    decreaseSpeedButton.frame = CGRectMake(10, screenHeight, 200, 50);
+    [decreaseSpeedButton setTitle:@"Decrease Speed!" forState:UIControlStateNormal];
+    [decreaseSpeedButton addTarget:pExampleWrapper action:@selector(decreaseSpeedFollowed) forControlEvents:UIControlEventTouchDown];
+    [m_pView addSubview:decreaseSpeedButton];
     
     screenHeight -= 60.f;
     
-    UIButton * changeDirection = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    changeDirection.frame = CGRectMake(10, screenHeight, 200, 50);
-    [changeDirection setTitle:@"Change Direction!" forState:UIControlStateNormal];
-    [changeDirection addTarget:pExampleWrapper action:@selector(changeFollowDirection) forControlEvents:UIControlEventTouchDown];
-    [m_pView addSubview:changeDirection];
+    UIButton * changeDirectionButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    changeDirectionButton.frame = CGRectMake(10, screenHeight, 200, 50);
+    [changeDirectionButton setTitle:@"Change Direction!" forState:UIControlStateNormal];
+    [changeDirectionButton addTarget:pExampleWrapper action:@selector(changeFollowDirection) forControlEvents:UIControlEventTouchDown];
+    [m_pView addSubview:changeDirectionButton];
     
-    [pExampleWrapper setExampleInstance:this :changeDirection :increaseSpeed :decreaseSpeed];
+    screenHeight -= 60.f;
+    
+    UIButton * rotateToFollowButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    rotateToFollowButton.frame = CGRectMake(10, screenHeight, 200, 50);
+    [rotateToFollowButton setTitle:@"Rotate to Follow!" forState:UIControlStateNormal];
+    [rotateToFollowButton addTarget:pExampleWrapper action:@selector(rotateToFollow) forControlEvents:UIControlEventTouchDown];
+    [m_pView addSubview:rotateToFollowButton];
+    
+    [pExampleWrapper setExampleInstance:this :changeDirectionButton :increaseSpeedButton :decreaseSpeedButton :rotateToFollowButton];
     
     [m_pDirection setHidden: !m_usingFollowCamera];
     [m_pIncreaseSpeed setHidden: !m_usingFollowCamera];
     [m_pDecreaseSpeed setHidden: !m_usingFollowCamera];
+    [m_pRotateToFollow setHidden: !m_usingFollowCamera];
 }

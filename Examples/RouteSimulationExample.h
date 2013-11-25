@@ -98,6 +98,7 @@ namespace Examples
         void ChangeFollowDirection();
         void IncreaseSpeedFollowed();
         void DecreaseSpeedFollowed();
+        void ToggleRotateToFollow();
         
     private:
         
