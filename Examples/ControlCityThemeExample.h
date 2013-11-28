@@ -24,6 +24,7 @@ namespace Examples
         bool themeChanged;
 
         void ChangeTheme();
+        void FindThemeByPointInPolygon();
     public:
         ControlCityThemeExample(Eegeo::Resources::CityThemes::ICityThemesService& themeService,
                                 Eegeo::Resources::CityThemes::ICityThemeRepository& themeRepository,
