@@ -36,6 +36,7 @@
 #include "RouteDrawingExample.h"
 #include "PinsExample.h"
 #include "RouteSimulationExample.h"
+#include "RouteThicknessPolicyExample.h"
 
 MyApp::MyApp(Eegeo::Camera::GlobeCamera::GlobeCameraInterestPointProvider& globeCameraInterestPointProvider,
              UIView* pView,
@@ -313,6 +314,13 @@ Examples::IExample* MyApp::CreateExample(ExampleTypes::Examples example,
                                                         m_pView,
                                                         World()
                                                         );
+        }
+            
+        case ExampleTypes::RouteThicknessPolicy:
+        {
+            return new Examples::RouteThicknessPolicyExample(World().GetRouteService(),
+                                                             renderContext,
+                                                             World());
         }
     }
 }

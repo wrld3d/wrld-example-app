@@ -10,6 +10,7 @@
 		0924E86517857D4200C238AD /* water_reflectionmap_night.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 0924E86417857D4200C238AD /* water_reflectionmap_night.pvr */; };
 		09C974C418310127001B9BD7 /* DebugPrimitiveRenderingExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 09C974C218310127001B9BD7 /* DebugPrimitiveRenderingExample.cpp */; };
 		11764FCE179848B800633459 /* KeyboardInputExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 11764FCC179848B700633459 /* KeyboardInputExample.cpp */; };
+		1800232D1847A81F00C47D77 /* RouteThicknessPolicyExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1800232B1847A81F00C47D77 /* RouteThicknessPolicyExample.cpp */; };
 		1803F21317FD8A2F00D78405 /* Pick3DObjectExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1803F21117FD8A2F00D78405 /* Pick3DObjectExample.cpp */; };
 		181749771770515400E4611F /* SearchExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 181749751770515400E4611F /* SearchExample.cpp */; };
 		1825103917AFD37B00251651 /* PODAnimationExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1825103717AFD37B00251651 /* PODAnimationExample.cpp */; };
@@ -219,6 +220,8 @@
 		09C974C318310127001B9BD7 /* DebugPrimitiveRenderingExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebugPrimitiveRenderingExample.h; sourceTree = "<group>"; };
 		11764FCC179848B700633459 /* KeyboardInputExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KeyboardInputExample.cpp; sourceTree = "<group>"; };
 		11764FCD179848B800633459 /* KeyboardInputExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyboardInputExample.h; sourceTree = "<group>"; };
+		1800232B1847A81F00C47D77 /* RouteThicknessPolicyExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RouteThicknessPolicyExample.cpp; sourceTree = "<group>"; };
+		1800232C1847A81F00C47D77 /* RouteThicknessPolicyExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RouteThicknessPolicyExample.h; sourceTree = "<group>"; };
 		1803F21117FD8A2F00D78405 /* Pick3DObjectExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Pick3DObjectExample.cpp; sourceTree = "<group>"; };
 		1803F21217FD8A2F00D78405 /* Pick3DObjectExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pick3DObjectExample.h; sourceTree = "<group>"; };
 		181749751770515400E4611F /* SearchExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchExample.cpp; sourceTree = "<group>"; };
@@ -518,6 +521,8 @@
 				18E3EC80183E804B003454B7 /* RouteSimulationExample.h */,
 				59A943BC183A1758000AB7BD /* PinsExample.cpp */,
 				59A943BD183A1758000AB7BD /* PinsExample.h */,
+				1800232B1847A81F00C47D77 /* RouteThicknessPolicyExample.cpp */,
+				1800232C1847A81F00C47D77 /* RouteThicknessPolicyExample.h */,
 			);
 			path = Examples;
 			sourceTree = SOURCE_ROOT;
@@ -1048,6 +1053,7 @@
 				18E3EC451835442A003454B7 /* RouteDrawingExample.cpp in Sources */,
 				59A943BE183A1758000AB7BD /* PinsExample.cpp in Sources */,
 				18E3EC81183E804C003454B7 /* RouteSimulationExample.mm in Sources */,
+				1800232D1847A81F00C47D77 /* RouteThicknessPolicyExample.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
