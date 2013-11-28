@@ -286,7 +286,7 @@ Route* RouteSimulationExample::BuildRoute() const
     .AddPoint(37.793707,-122.392578, altitudeMeters)
     .FinishRoute();
     
-    const Eegeo::Routes::RouteStyle style(Eegeo::Routes::RouteStyle::JoinStyleArc);
+    const Eegeo::Routes::RouteStyle style(Eegeo::Routes::RouteStyle::JoinStyleArc, m_routeThicknessPolicy);
     return m_routeService.CreateRoute(points, style);
 }
 

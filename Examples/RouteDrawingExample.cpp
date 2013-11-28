@@ -77,11 +77,20 @@ void RouteDrawingExample::Update(float dt)
         .AddPoint(37.793707,-122.392578, altitudeMeters)
         .FinishRoute(); //Calling FinishRoute returns to us the set of points...
         
+        // Select a Style for the route, use the JoinStyleArc to give a curved arc join; JoinStyleHard can be used to give
+        // hard angular joins if preferred.
+        //
+        // A route thickness scaling policy should be provided; this informs the route how it should modify its thickness
+        // (for example, based on camera altitude, or to play a "pulse" animation). Two implementations are provided; the
+        // IdentityRouteThicknessPolicy and the LinearAltitudeScaleBasedRouteThicknessPolicy. For this example we use the
+        // identity policy which will not modify the thickness of the route. The style accepts a const reference, so it
+        // does not take ownership over the thickness policy.
+        Eegeo::Routes::RouteStyle hardJoinStyle(Eegeo::Routes::RouteStyle::JoinStyleHard, m_routeThicknessPolicy);
+        
         //We can now create a route from this set of points.
         //
         //The route can be created using the CreateRoute method on the RouteService, which must
         //be destroyed through the complementary DestroyRoute method on RouteService.
-        Eegeo::Routes::RouteStyle hardJoinStyle(Eegeo::Routes::RouteStyle::JoinStyleHard);
         Route* route = m_routeService.CreateRoute(points, hardJoinStyle);
         
         //Keep a reference to the route so we can Destroy it later.
@@ -108,7 +117,7 @@ void RouteDrawingExample::Update(float dt)
         .AddPoint(37.776397,-122.387922,altitudeMeters)
         .FinishRoute();
         
-        Eegeo::Routes::RouteStyle arcJoinStyle(Eegeo::Routes::RouteStyle::JoinStyleArc);
+        Eegeo::Routes::RouteStyle arcJoinStyle(Eegeo::Routes::RouteStyle::JoinStyleArc, m_routeThicknessPolicy);
         m_routes.push_back(m_routeService.CreateRoute(otherPoints, arcJoinStyle));
         
         //this route curves around entirely on itself, and traces the bounds of treasure island
