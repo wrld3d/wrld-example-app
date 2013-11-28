@@ -84,9 +84,6 @@ namespace Examples
     
     void ControlCityThemeExample::FindThemeByPointInPolygon()
     {
-        // a lat,long for Osaka, for which a polygon bounds exists in theme manifest:
-        // http://eegeo-static.s3.amazonaws.com/mobile-themes/v1_zdc_polygon_test/manifest-v2.txt.gz
-        // you can set the manifest in ViewController.mm, EegeoWorld ctor.
         Eegeo::Space::LatLong osaka = Eegeo::Space::LatLong::FromDegrees(34.700131,135.478884);
         Eegeo::v2 osakav2(osaka.GetLatitudeInDegrees(), osaka.GetLongitudeInDegrees());
     
