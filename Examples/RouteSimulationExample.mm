@@ -260,6 +260,13 @@ void RouteSimulationExample::ToggleRotateToFollow()
     }
 }
 
+void RouteSimulationExample::ToggleSideOfRoadToDriveOn()
+{
+    m_pSessionAlternatingSpeedChanger->SetDrivesOnRight(!m_pSessionAlternatingSpeedChanger->GetDrivesOnRight());
+    m_pSessionCamera->SetDrivesOnRight(!m_pSessionCamera->GetDrivesOnRight());
+    m_pSessionCycle->SetDrivesOnRight(!m_pSessionCycle->GetDrivesOnRight());
+}
+
 Route* RouteSimulationExample::BuildRoute() const
 {
     const float halfWidth = 5.f;
@@ -415,6 +422,7 @@ bool RouteSimulationExample::Event_TouchPan_End(const AppInterface::PanData& dat
 -(void) increaseSpeedFollowed;
 -(void) decreaseSpeedFollowed;
 -(void) rotateToFollow;
+-(void) toggleSideOfRoadToDriveOn;
 
 @end
 
@@ -463,6 +471,11 @@ UIButton* m_pRotateToFollow;
 -(void) rotateToFollow
 {
     m_pExample->ToggleRotateToFollow();
+}
+
+-(void) toggleSideOfRoadToDriveOn
+{
+    m_pExample->ToggleSideOfRoadToDriveOn();
 }
 
 @end
@@ -521,6 +534,13 @@ void RouteSimulationExample::CreateAndBindUI()
     [rotateToFollowButton setTitle:@"Rotate to Follow!" forState:UIControlStateNormal];
     [rotateToFollowButton addTarget:pExampleWrapper action:@selector(rotateToFollow) forControlEvents:UIControlEventTouchDown];
     [m_pView addSubview:rotateToFollowButton];
+    
+    //this one goes beside toggle follow as we can do it any time
+    UIButton * toggleSideOfRoadToDriveOnButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    toggleSideOfRoadToDriveOnButton.frame = CGRectMake(toggleFollowButton.frame.origin.x + toggleFollowButton.frame.size.width + 10, toggleFollowButton.frame.origin.y, 200, 50);
+    [toggleSideOfRoadToDriveOnButton setTitle:@"Toggle Road Side!" forState:UIControlStateNormal];
+    [toggleSideOfRoadToDriveOnButton addTarget:pExampleWrapper action:@selector(toggleSideOfRoadToDriveOn) forControlEvents:UIControlEventTouchDown];
+    [m_pView addSubview:toggleSideOfRoadToDriveOnButton];
     
     [pExampleWrapper setExampleInstance:this :changeDirectionButton :increaseSpeedButton :decreaseSpeedButton :rotateToFollowButton];
     

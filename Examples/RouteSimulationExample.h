@@ -101,6 +101,7 @@ namespace Examples
         void IncreaseSpeedFollowed();
         void DecreaseSpeedFollowed();
         void ToggleRotateToFollow();
+        void ToggleSideOfRoadToDriveOn();
         
     private:
         

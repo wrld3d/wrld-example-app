@@ -44,8 +44,9 @@ void RouteThicknessPolicyExample::Update(float dt)
         
         RouteBuilder builder;
         
-        ////
-        std::vector<Eegeo::Routes::RouteVertex> points1 = builder.Start(routeColor, halfWidth, routeSpeedMetersPerSecond)
+        //// Demonstrate a custom route scaling policy on a route around the transamerica pyramid.
+        //// This route animates to thicken and thin.
+        std::vector<Eegeo::Routes::RouteVertex> transamericaPyramidRoutePoints = builder.Start(routeColor, halfWidth, routeSpeedMetersPerSecond)
         .AddPoint(37.795729,-122.401698, altitudeMeters)
         .AddPoint(37.794873,-122.401516, altitudeMeters)
         .AddPoint(37.794728,-122.403179, altitudeMeters)
@@ -62,12 +63,13 @@ void RouteThicknessPolicyExample::Update(float dt)
         .AddPoint(37.793707,-122.392578, altitudeMeters)
         .FinishRoute();
         
-        Eegeo::Routes::RouteStyle joinStyle1(Eegeo::Routes::RouteStyle::JoinStyleArc, m_identityRouteThicknessPolicy);
-        Route* route1 = m_routeService.CreateRoute(points1, joinStyle1);
-        m_routes.push_back(route1);
+        Eegeo::Routes::RouteStyle transamericaPyramidStyle(Eegeo::Routes::RouteStyle::JoinStyleArc, m_myScalingRouteThicknessPolicy);
+        Route* transamericaPyramidRoute = m_routeService.CreateRoute(transamericaPyramidRoutePoints, transamericaPyramidStyle);
+        m_routes.push_back(transamericaPyramidRoute);
         
-        ////
-        std::vector<Eegeo::Routes::RouteVertex> points2 = builder.Start(routeColor, halfWidth, routeSpeedMetersPerSecond)
+        //// Demonstrate the built-in altitude based route scaling policy on a route at north treasure isle. This route thickens as the camera
+        //// altitude increases.
+        std::vector<Eegeo::Routes::RouteVertex> northTreasureIsleRoutePoints = builder.Start(routeColor, halfWidth, routeSpeedMetersPerSecond)
         .AddPoint(37.827209,-122.377746,altitudeMeters)
         .AddPoint(37.826057,-122.37663,altitudeMeters)
         .AddPoint(37.825802,-122.374223,altitudeMeters)
@@ -78,12 +80,13 @@ void RouteThicknessPolicyExample::Update(float dt)
         .AddPoint(37.830328,-122.373172,altitudeMeters)
         .FinishRoute();
         
-        Eegeo::Routes::RouteStyle joinStyle2(Eegeo::Routes::RouteStyle::JoinStyleArc, m_linearAltitudeBasedRouteThicknessPolicy);
-        Route* route2 = m_routeService.CreateRoute(points2, joinStyle2);
-        m_routes.push_back(route2);
+        Eegeo::Routes::RouteStyle northTreasureIsleStyle(Eegeo::Routes::RouteStyle::JoinStyleArc, m_linearAltitudeBasedRouteThicknessPolicy);
+        Route* northTreasureIsleRoute = m_routeService.CreateRoute(northTreasureIsleRoutePoints, northTreasureIsleStyle);
+        m_routes.push_back(northTreasureIsleRoute);
         
-        ///
-        std::vector<Eegeo::Routes::RouteVertex> points3 = builder.Start(routeColor, halfWidth, routeSpeedMetersPerSecond)
+        //// Demonstrate the built-in identity route scaling policy on a route at south treasure isle. This route remains
+        //// the same thickness.
+        std::vector<Eegeo::Routes::RouteVertex> southTreasureIsleRoutePoints = builder.Start(routeColor, halfWidth, routeSpeedMetersPerSecond)
         .AddPoint(37.818226,-122.370339,altitudeMeters)
         .AddPoint(37.820294,-122.371713,altitudeMeters)
         .AddPoint(37.821599,-122.370940,altitudeMeters)
@@ -92,18 +95,18 @@ void RouteThicknessPolicyExample::Update(float dt)
         .AddPoint(37.820277,-122.365361,altitudeMeters)
         .FinishRoute();
         
-        Eegeo::Routes::RouteStyle style3(Eegeo::Routes::RouteStyle::JoinStyleHard, m_myScalingRouteThicknessPolicy);
-        Route* route3 = m_routeService.CreateRoute(points3, style3);
-        m_routes.push_back(route3);
+        Eegeo::Routes::RouteStyle southTreasureIsleStyle(Eegeo::Routes::RouteStyle::JoinStyleHard, m_identityRouteThicknessPolicy);
+        Route* southTreasureIsleRoute = m_routeService.CreateRoute(southTreasureIsleRoutePoints, southTreasureIsleStyle);
+        m_routes.push_back(southTreasureIsleRoute);
         
         
         //We have created the routes so don't need to do so again.
         m_createdRoutes = true;
     }
     
+    //Update our custom thickness policy to make it animate.
     m_myScalingRouteThicknessPolicy.UpdateScale();
 }
-
 
 void RouteThicknessPolicyExample::MyScalingRouteThicknessPolicy::UpdateScale()
 {
