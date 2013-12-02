@@ -32,9 +32,30 @@
 #include "IInterestPointProvider.h"
 #import <UIKit/UIKit.h>
 #include "IdentityRouteThicknessPolicy.h"
+#include "IRouteSimulationSessionObserver.h"
 
 namespace Examples
 {
+    class RouteSimulationExampleObserver : public Eegeo::Routes::Simulation::IRouteSimulationSessionObserver
+    {
+    public:
+        RouteSimulationExampleObserver(
+                                       Eegeo::Routes::Simulation::View::RouteSimulationModelBinding* pModelBinding,
+                                       Eegeo::Model* pModel)
+        : m_pModelBinding(pModelBinding)
+        , m_pModel(pModel)
+        {
+        }
+                   
+        void OnLinkReached(const Eegeo::Routes::Simulation::RouteSimulationSession& session,
+                           const Eegeo::Routes::RouteVertex& startVertex,
+                           const Eegeo::Routes::RouteVertex& endVertex) const;
+    private:
+        Eegeo::Routes::Simulation::View::RouteSimulationModelBinding* m_pModelBinding;
+        Eegeo::Model* m_pModel;
+        Eegeo::Node* GetRandomModelNode() const;
+    };
+    
     class RouteSimulationExample : public IExample
     {
     private:
@@ -66,6 +87,7 @@ namespace Examples
         Eegeo::Routes::Simulation::Camera::RouteSimulationGlobeCameraControllerFactory m_routeSimulationGlobeCameraControllerFactory;
         Eegeo::Routes::Simulation::Camera::RouteSimulationGlobeCameraController* m_pRouteSessionFollowCameraController;
         
+        RouteSimulationExampleObserver* m_pExampleObserver;
     public:
         RouteSimulationExample(Eegeo::Routes::RouteService& routeService,
                                Eegeo::Routes::Simulation::RouteSimulationService& routeSimulationService,

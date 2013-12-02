@@ -11,6 +11,7 @@
 #include "VectorMath.h"
 #include "RouteStyle.h"
 #include "VectorMath.h"
+#include "GlobeCameraTouchControllerConfiguration.h"
 
 using namespace Examples;
 using namespace Eegeo;
@@ -18,6 +19,27 @@ using namespace Eegeo::Routes;
 using namespace Eegeo::Routes::Simulation;
 using namespace Eegeo::Routes::Simulation::View;
 using namespace Eegeo::Routes::Simulation::Camera;
+
+
+Eegeo::Node* RouteSimulationExampleObserver::GetRandomModelNode() const
+{
+    Eegeo::Node* parentNode = m_pModel->FindNode("Vehicles");
+    Eegeo_ASSERT(parentNode);
+    Eegeo_ASSERT(parentNode->GetNumChildNodes() >= 3);
+    int randomIndex = int((rand() % parentNode->GetNumChildNodes()));
+    return parentNode->GetChildNode(randomIndex);
+}
+
+void RouteSimulationExampleObserver::OnLinkReached(const Eegeo::Routes::Simulation::RouteSimulationSession& session,
+                                                   const Eegeo::Routes::RouteVertex& startVertex,
+                                                   const Eegeo::Routes::RouteVertex& endVertex) const
+{
+    // At each new link, we change the model being drawn
+    m_pModelBinding->SetModel(GetRandomModelNode());
+    
+    Eegeo::Space::LatLongAltitude latLongAltitude = Eegeo::Space::LatLongAltitude::FromECEF(session.GetCurrentPositionEcef());
+    Eegeo_TTY("New link reached at %f, %f\n", latLongAltitude.GetLatitudeInDegrees(), latLongAltitude.GetLongitudeInDegrees());
+}
 
 RouteSimulationExample::RouteSimulationExample(RouteService& routeService,
                                                RouteSimulationService& routeSimulationService,
@@ -101,9 +123,16 @@ void RouteSimulationExample::Initialise()
     m_pViewBindingForOscillatingSession = m_routeSimulationViewService.CreateBinding(*m_pSessionAlternatingSpeedChanger, pVehicle2, transform);
     m_pViewBindingForCameraSession = m_routeSimulationViewService.CreateBinding(*m_pSessionCamera, pVehicle3, transform);
     
-    m_pRouteSessionFollowCameraController = m_routeSimulationGlobeCameraControllerFactory.Create(false, *m_pSessionAlternatingSpeedChanger);
+    Eegeo::Camera::GlobeCamera::GlobeCameraTouchControllerConfiguration touchConfiguration = Eegeo::Camera::GlobeCamera::GlobeCameraTouchControllerConfiguration::CreateDefault();
+    touchConfiguration.tiltEnabled = true;
+    
+    m_pRouteSessionFollowCameraController = m_routeSimulationGlobeCameraControllerFactory.Create(false, *m_pSessionAlternatingSpeedChanger, touchConfiguration);
     m_pRouteSessionFollowCameraController->SetView(37.7858, -122.401, 0, 1781.0f);
     m_pRouteSessionFollowCameraController->StartFollowingSession();
+    
+    // Observe the progress along the route
+    m_pExampleObserver = Eegeo_NEW(RouteSimulationExampleObserver)(m_pViewBindingForCycleSession, m_pModel);
+    m_pSessionCycle->AddSessionObserver(*m_pExampleObserver);
     
     //Create some UI buttons for controlling the simulation...
     CreateAndBindUI();
@@ -177,6 +206,10 @@ void RouteSimulationExample::Update(float dt)
 
 void RouteSimulationExample::Suspend()
 {
+    m_pSessionCycle->RemoveSessionObserver(*m_pExampleObserver);
+    delete m_pExampleObserver;
+    m_pExampleObserver = NULL;
+    
     m_routeSimulationViewService.DestroyBinding(m_pViewBindingForCycleSession);
     m_routeSimulationViewService.DestroyBinding(m_pViewBindingForOscillatingSession);
     m_routeSimulationViewService.DestroyBinding(m_pViewBindingForCameraSession);
