@@ -138,7 +138,7 @@ void RouteSimulationExample::Initialise()
     CreateAndBindUI();
 }
 
-void RouteSimulationExample::Update(float dt)
+void RouteSimulationExample::EarlyUpdate(float dt)
 {
     //Defer initialisation until the loading state is over.
     if(m_world.Initialising()) {
@@ -165,6 +165,14 @@ void RouteSimulationExample::Update(float dt)
     else
     {
         m_world.SetCamera(m_defaultCamera.GetCamera());
+    }
+}
+
+void RouteSimulationExample::Update(float dt)
+{
+    //Defer initialisation until the loading state is over.
+    if(!m_initialised) {
+        return;
     }
     
     //The route session for which we want to project a position to (in this case, the ecef interest

@@ -102,6 +102,7 @@ namespace Examples
                                Eegeo::EegeoWorld& eegeoWorld);
         
         void Start() {}
+        void EarlyUpdate(float dt);
         void Update(float dt);
         void Draw() {}
         void Suspend();
