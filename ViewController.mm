@@ -58,6 +58,7 @@
 #include "GlobeCameraTouchController.h"
 #include "GlobeCameraInterestPointProvider.h"
 #include "TerrainHeightProvider.h"
+#include "EnvironmentMaterialController.h"
 
 #include "iOSInputBoxFactory.h"
 #include "iOSKeyboardInputFactory.h"
@@ -184,7 +185,9 @@ NSTimer* touchTimer;
 iOSLocationService* piOSLocationService = NULL;
 Eegeo::Resources::Terrain::Heights::TerrainHeightRepository m_terrainHeightRepository;
 Eegeo::Resources::Terrain::Heights::TerrainHeightProvider m_terrainHeightProvider(&m_terrainHeightRepository);
-Eegeo::Weather::CurrentWeatherModel currentWeatherModel;
+Eegeo::Weather::CurrentWeatherModel m_currentWeatherModel;
+Eegeo::Rendering::EnvironmentFlatteningService* m_pEnvironmentFlatteningService = NULL;
+Eegeo::Rendering::EnvironmentMaterialController* m_pEnvironmentMaterialController = NULL;
 
 Eegeo::UI::NativeInput::iOS::iOSInputBoxFactory inputBoxFactory;
 Eegeo::UI::NativeInput::iOS::iOSKeyboardInputFactory keyboardInputFactory;
@@ -197,6 +200,8 @@ Eegeo::Web::iOSWebRequestService* webRequestService;
 // ---------------------------------------------------------------------------------------------------------------------------
 - (void)dealloc {
     [super dealloc];
+    delete m_pEnvironmentFlatteningService;
+    delete m_pEnvironmentMaterialController;
 }
 
 // ---------------------------------------------------------------------------------------------------------------------------
@@ -253,7 +258,7 @@ Eegeo::Web::iOSWebRequestService* webRequestService;
     
     // Update the game.
     myApp->Update(frameDuration);
-    currentWeatherModel.SetWeatherType(myApp->World().GetWeatherController().GetWeatherType());
+    m_currentWeatherModel.SetWeatherType(myApp->World().GetWeatherController().GetWeatherType());
     
     self.preferredFramesPerSecond = 60.0f;
     //////////
@@ -552,6 +557,8 @@ Eegeo::Web::iOSWebRequestService* webRequestService;
     
     Eegeo::Lighting::GlobalLighting* pLighting = new Eegeo::Lighting::GlobalLighting();
     Eegeo::Lighting::GlobalFogging* pFogging = new Eegeo::Lighting::GlobalFogging();
+    m_pEnvironmentFlatteningService = new Eegeo::Rendering::EnvironmentFlatteningService();
+    m_pEnvironmentMaterialController = new Eegeo::Rendering::EnvironmentMaterialController(*m_renderContext, *pLighting, *pFogging, *m_pEnvironmentFlatteningService);
     
     iOSFileIO* p_iOSFileIO = new iOSFileIO();
     Eegeo::Helpers::IFileIO* pFileIO = p_iOSFileIO;
@@ -564,8 +571,7 @@ Eegeo::Web::iOSWebRequestService* webRequestService;
     Eegeo::Web::IWebLoadRequestFactory* pPayloadRequestFactory = new Eegeo::Web::iOSWebLoadRequestFactory(*p_iOSHttpCache, *webRequestService);
     Eegeo::Helpers::ITaskQueue* pTaskQueue = new iOSTaskQueue(10);
     
-    Eegeo::Rendering::DefaultMaterialFactory* pMaterialFactory = new Eegeo::Rendering::DefaultMaterialFactory();
-    pMaterialFactory->Initialise(&currentWeatherModel, m_renderContext, pLighting, pFogging, m_pBlitter, pFileIO, pTextureFileLoader);
+    Eegeo::Rendering::DefaultMaterialFactory* pMaterialFactory = new Eegeo::Rendering::DefaultMaterialFactory(m_currentWeatherModel, *m_pEnvironmentMaterialController);
     
     Eegeo::Traffic::VehicleModelRepository* pVehicleModelRepository = new Eegeo::Traffic::VehicleModelRepository;
     Eegeo::Traffic::VehicleModelLoader* pVehicleModelLoader = new Eegeo::Traffic::VehicleModelLoader(m_renderContext->GetGLState(),
@@ -573,6 +579,8 @@ Eegeo::Web::iOSWebRequestService* webRequestService;
                                                                                                      *pFileIO);
    
     Eegeo::Traffic::VehicleModelLoaderHelper::LoadAllVehicleResourcesIntoRepository(*pVehicleModelLoader, *pVehicleModelRepository);
+    
+    const Eegeo::EnvironmentCharacterSet::Type environmentCharacterSet = Eegeo::EnvironmentCharacterSet::Latin;
     
     myApp->Start(new Eegeo::EegeoWorld(API_KEY,
                                        pHttpCache,
@@ -592,6 +600,9 @@ Eegeo::Web::iOSWebRequestService* webRequestService;
                                        nativeUIFactories,
                                        &m_terrainHeightRepository,
                                        &m_terrainHeightProvider,
+                                       m_pEnvironmentMaterialController,
+                                       m_pEnvironmentFlatteningService,
+                                       environmentCharacterSet,
                                        pCredentials,
                                        
                                        "",

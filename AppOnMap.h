@@ -125,7 +125,8 @@ public:
                                       Eegeo::Search::Service::SearchService* searchService,
                                       Eegeo::UI::NativeUIFactories& nativeInputFactories,
                                       Eegeo::Location::IInterestPointProvider& interestPointProvider,
-                                      Eegeo::Routes::RouteService& routeService);
+                                      Eegeo::Routes::RouteService& routeService,
+                                      Eegeo::Rendering::EnvironmentMaterialController& environmentMaterialController);
     
     
     void Event_TouchRotate 			(const AppInterface::RotateData& data);
