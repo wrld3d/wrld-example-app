@@ -47,9 +47,8 @@ namespace Examples
         {
         }
                    
-        void OnLinkReached(const Eegeo::Routes::Simulation::RouteSimulationSession& session,
-                           const Eegeo::Routes::RouteVertex& startVertex,
-                           const Eegeo::Routes::RouteVertex& endVertex) const;
+        void OnLinkReached(const Eegeo::Routes::Simulation::RouteSimulationSession& session) const;
+        
     private:
         Eegeo::Routes::Simulation::View::RouteSimulationModelBinding* m_pModelBinding;
         Eegeo::Model* m_pModel;
@@ -74,7 +73,7 @@ namespace Examples
         bool m_usingFollowCamera;
         Eegeo::Model* m_pModel;
         Eegeo::Routes::Route* m_route;
-        Eegeo::Routes::IdentityRouteThicknessPolicy m_routeThicknessPolicy;
+        Eegeo::Routes::Style::Thickness::IdentityRouteThicknessPolicy m_routeThicknessPolicy;
         
         Eegeo::Routes::Simulation::RouteSimulationSession* m_pSessionCycle;
         Eegeo::Routes::Simulation::RouteSimulationSession* m_pSessionAlternatingSpeedChanger;

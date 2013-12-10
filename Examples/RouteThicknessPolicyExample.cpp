@@ -63,7 +63,7 @@ void RouteThicknessPolicyExample::Update(float dt)
         .AddPoint(37.793707,-122.392578, altitudeMeters)
         .FinishRoute();
         
-        Eegeo::Routes::RouteStyle transamericaPyramidStyle(Eegeo::Routes::RouteStyle::JoinStyleArc, m_myScalingRouteThicknessPolicy);
+        Eegeo::Routes::Style::RouteStyle transamericaPyramidStyle(Eegeo::Routes::Style::RouteStyle::JoinStyleArc, m_myScalingRouteThicknessPolicy);
         Route* transamericaPyramidRoute = m_routeService.CreateRoute(transamericaPyramidRoutePoints, transamericaPyramidStyle);
         m_routes.push_back(transamericaPyramidRoute);
         
@@ -80,7 +80,7 @@ void RouteThicknessPolicyExample::Update(float dt)
         .AddPoint(37.830328,-122.373172,altitudeMeters)
         .FinishRoute();
         
-        Eegeo::Routes::RouteStyle northTreasureIsleStyle(Eegeo::Routes::RouteStyle::JoinStyleArc, m_linearAltitudeBasedRouteThicknessPolicy);
+        Eegeo::Routes::Style::RouteStyle northTreasureIsleStyle(Eegeo::Routes::Style::RouteStyle::JoinStyleArc, m_linearAltitudeBasedRouteThicknessPolicy);
         Route* northTreasureIsleRoute = m_routeService.CreateRoute(northTreasureIsleRoutePoints, northTreasureIsleStyle);
         m_routes.push_back(northTreasureIsleRoute);
         
@@ -95,7 +95,7 @@ void RouteThicknessPolicyExample::Update(float dt)
         .AddPoint(37.820277,-122.365361,altitudeMeters)
         .FinishRoute();
         
-        Eegeo::Routes::RouteStyle southTreasureIsleStyle(Eegeo::Routes::RouteStyle::JoinStyleHard, m_identityRouteThicknessPolicy);
+        Eegeo::Routes::Style::RouteStyle southTreasureIsleStyle(Eegeo::Routes::Style::RouteStyle::JoinStyleHard, m_identityRouteThicknessPolicy);
         Route* southTreasureIsleRoute = m_routeService.CreateRoute(southTreasureIsleRoutePoints, southTreasureIsleStyle);
         m_routes.push_back(southTreasureIsleRoute);
         

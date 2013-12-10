@@ -22,7 +22,7 @@ namespace Examples
     class RouteThicknessPolicyExample : public IExample
     {
     private:
-        class MyScalingRouteThicknessPolicy : public Eegeo::Routes::IRouteThicknessPolicy
+        class MyScalingRouteThicknessPolicy : public Eegeo::Routes::Style::Thickness::IRouteThicknessPolicy
         {
             float m_scale;
             bool m_scaledown;
@@ -37,8 +37,8 @@ namespace Examples
         
         bool m_createdRoutes;
         std::vector<Eegeo::Routes::Route*> m_routes;
-        Eegeo::Routes::IdentityRouteThicknessPolicy m_identityRouteThicknessPolicy;
-        Eegeo::Routes::LinearAltitudeBasedRouteThicknessPolicy m_linearAltitudeBasedRouteThicknessPolicy;
+        Eegeo::Routes::Style::Thickness::IdentityRouteThicknessPolicy m_identityRouteThicknessPolicy;
+        Eegeo::Routes::Style::Thickness::LinearAltitudeBasedRouteThicknessPolicy m_linearAltitudeBasedRouteThicknessPolicy;
         MyScalingRouteThicknessPolicy m_myScalingRouteThicknessPolicy;
         
     public:

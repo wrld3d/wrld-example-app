@@ -26,7 +26,7 @@ namespace Examples
         
         bool m_createdRoutes;
         std::vector<Eegeo::Routes::Route*> m_routes;
-        Eegeo::Routes::IdentityRouteThicknessPolicy m_routeThicknessPolicy;
+        Eegeo::Routes::Style::Thickness::IdentityRouteThicknessPolicy m_routeThicknessPolicy;
         
     public:
         RouteDrawingExample(Eegeo::Routes::RouteService& routeService,

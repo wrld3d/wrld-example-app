@@ -30,9 +30,7 @@ Eegeo::Node* RouteSimulationExampleObserver::GetRandomModelNode() const
     return parentNode->GetChildNode(randomIndex);
 }
 
-void RouteSimulationExampleObserver::OnLinkReached(const Eegeo::Routes::Simulation::RouteSimulationSession& session,
-                                                   const Eegeo::Routes::RouteVertex& startVertex,
-                                                   const Eegeo::Routes::RouteVertex& endVertex) const
+void RouteSimulationExampleObserver::OnLinkReached(const Eegeo::Routes::Simulation::RouteSimulationSession& session) const
 {
     // At each new link, we change the model being drawn
     m_pModelBinding->SetModel(GetRandomModelNode());
@@ -334,7 +332,7 @@ Route* RouteSimulationExample::BuildRoute() const
     .AddPoint(37.793707,-122.392578, altitudeMeters)
     .FinishRoute();
     
-    const Eegeo::Routes::RouteStyle style(Eegeo::Routes::RouteStyle::JoinStyleArc, m_routeThicknessPolicy);
+    const Eegeo::Routes::Style::RouteStyle style(Eegeo::Routes::Style::RouteStyle::JoinStyleArc, m_routeThicknessPolicy);
     return m_routeService.CreateRoute(points, style);
 }
 
