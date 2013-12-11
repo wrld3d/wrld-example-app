@@ -68,6 +68,7 @@
 #include "ChunkedBuildingBuilder.h"
 #include "ChunkedRoadBuilder.h"
 #include "TerrainHeightRepository.h"
+#include "CurrentWeatherModel.h"
 
 
 #define API_KEY "OBTAIN API KEY FROM https://appstore.eegeo.com AND INSERT IT HERE"
@@ -259,8 +260,7 @@ Eegeo::Web::iOSWebRequestService* webRequestService;
     
     // Update the game.
     myApp->Update(frameDuration);
-    m_currentWeatherModel.SetWeatherType(myApp->World().GetWeatherController().GetWeatherType());
-    
+        
     self.preferredFramesPerSecond = 60.0f;
     //////////
     
@@ -593,6 +593,7 @@ Eegeo::Web::iOSWebRequestService* webRequestService;
                                        *m_renderContext,
                                        pLighting,
                                        pFogging,
+                                       m_currentWeatherModel,
                                        pMaterialFactory,
                                        piOSLocationService,
                                        m_pBlitter,
