@@ -67,6 +67,7 @@
 #include "CameraHelpers.h"
 #include "ChunkedBuildingBuilder.h"
 #include "ChunkedRoadBuilder.h"
+#include "TerrainHeightRepository.h"
 
 
 #define API_KEY "OBTAIN API KEY FROM https://appstore.eegeo.com AND INSERT IT HERE"
