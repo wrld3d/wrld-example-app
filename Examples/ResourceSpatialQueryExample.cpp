@@ -16,6 +16,7 @@ ResourceSpatialQueryExample::ResourceSpatialQueryExample(Eegeo::Resources::Resou
 :resourceSpatialQueryService(resourceSpatialQueryService)
 ,interestPointProvider(interestPointProvider)
 ,numBuildings(0)
+,key(0)
 {
     
 }
