@@ -17,12 +17,12 @@ namespace Examples
     {
     private:
         Eegeo::Rendering::RenderContext& renderContext;
-        std::map<Eegeo::Streaming::MortonKey, Eegeo::DebugRendering::SphereMesh*, Eegeo::Streaming::MortonKeyLongCompare>& renderables;
+        std::map<Eegeo::Streaming::MortonKey, Eegeo::DebugRendering::SphereMesh*, Eegeo::Streaming::MortonKeyCompare>& renderables;
         
         void AddSphere(const Eegeo::Streaming::MortonKey& key);
     public:
         EnvironmentNotifierExampleTerrainStreamObserver(Eegeo::Rendering::RenderContext& renderContext,
-                                                        std::map<Eegeo::Streaming::MortonKey, Eegeo::DebugRendering::SphereMesh*, Eegeo::Streaming::MortonKeyLongCompare>& renderables)
+                                                        std::map<Eegeo::Streaming::MortonKey, Eegeo::DebugRendering::SphereMesh*, Eegeo::Streaming::MortonKeyCompare>& renderables)
         :renderables(renderables)
         ,renderContext(renderContext)
         {
@@ -40,7 +40,7 @@ namespace Examples
         Eegeo::Resources::Terrain::TerrainStreaming& terrainStreaming;
         EnvironmentNotifierExampleTerrainStreamObserver* observer;
         
-        std::map<Eegeo::Streaming::MortonKey, Eegeo::DebugRendering::SphereMesh*, Eegeo::Streaming::MortonKeyLongCompare> renderables;
+        std::map<Eegeo::Streaming::MortonKey, Eegeo::DebugRendering::SphereMesh*, Eegeo::Streaming::MortonKeyCompare> renderables;
         
         
     public:
