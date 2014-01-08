@@ -25,7 +25,7 @@ void ResourceSpatialQueryExample::Update(float dt)
 {
     Eegeo::dv3 ecefPointOfInterest = interestPointProvider.GetEcefInterestPoint();
 
-    Eegeo::Streaming::MortonKeyLong lastKey = key;
+    Eegeo::Streaming::MortonKey lastKey = key;
     
     std::vector<Eegeo::Rendering::RenderableItem*> buildings = resourceSpatialQueryService.GetBuildingByEcefPoint(ecefPointOfInterest,
                                                                                                                  15,

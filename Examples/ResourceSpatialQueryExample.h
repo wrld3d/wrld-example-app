@@ -21,7 +21,7 @@ namespace Examples
         Eegeo::Resources::ResourceSpatialQueryService& resourceSpatialQueryService;
         Eegeo::Location::IInterestPointProvider& interestPointProvider;
         
-        Eegeo::Streaming::MortonKeyLong key;
+        Eegeo::Streaming::MortonKey key;
         int numBuildings;
         
     public:

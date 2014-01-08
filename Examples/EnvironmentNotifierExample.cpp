@@ -35,7 +35,7 @@ namespace Examples
     void EnvironmentNotifierExample::Draw()
     {
         //draw all the spheres
-        for(std::map<Eegeo::Streaming::MortonKeyLong, Eegeo::DebugRendering::SphereMesh*>::iterator
+        for(std::map<Eegeo::Streaming::MortonKey, Eegeo::DebugRendering::SphereMesh*>::iterator
             it = renderables.begin(); it != renderables.end(); ++ it)
         {
             Eegeo::DebugRendering::SphereMesh& mesh = *(*it).second;
@@ -45,7 +45,7 @@ namespace Examples
     
     
     //EnvironmentNotifierExampleTerrainStreamObserver///
-    void EnvironmentNotifierExampleTerrainStreamObserver::AddSphere(const Eegeo::Streaming::MortonKeyLong& key)
+    void EnvironmentNotifierExampleTerrainStreamObserver::AddSphere(const Eegeo::Streaming::MortonKey& key)
     {
         Eegeo::Space::CubeMap::CubeMapCellInfo cellInfo(key);
         const Eegeo::dv2& resourceQuadtreeCellCenter = cellInfo.GetFaceCentre();
@@ -72,13 +72,13 @@ namespace Examples
         renderables.insert(std::make_pair(key,sphere));
     }
     
-    void EnvironmentNotifierExampleTerrainStreamObserver::AddedStreamingResourceToSceneGraph(const Eegeo::Streaming::MortonKeyLong& key)
+    void EnvironmentNotifierExampleTerrainStreamObserver::AddedStreamingResourceToSceneGraph(const Eegeo::Streaming::MortonKey& key)
     {
         Eegeo_TTY("Adding Terrain Resource :: %s\n", key.ToString().c_str());
         AddSphere(key);
     }
     
-    void EnvironmentNotifierExampleTerrainStreamObserver::RemovedStreamingResourceFromSceneGraph(const Eegeo::Streaming::MortonKeyLong& key)
+    void EnvironmentNotifierExampleTerrainStreamObserver::RemovedStreamingResourceFromSceneGraph(const Eegeo::Streaming::MortonKey& key)
     {
         Eegeo_TTY("Removing Terrain Resource :: %s\n", key.ToString().c_str());
         renderables.erase(key);

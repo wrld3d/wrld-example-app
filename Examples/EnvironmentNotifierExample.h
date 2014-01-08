@@ -17,20 +17,20 @@ namespace Examples
     {
     private:
         Eegeo::Rendering::RenderContext& renderContext;
-        std::map<Eegeo::Streaming::MortonKeyLong, Eegeo::DebugRendering::SphereMesh*, Eegeo::Streaming::MortonKeyLongCompare>& renderables;
+        std::map<Eegeo::Streaming::MortonKey, Eegeo::DebugRendering::SphereMesh*, Eegeo::Streaming::MortonKeyLongCompare>& renderables;
         
-        void AddSphere(const Eegeo::Streaming::MortonKeyLong& key);
+        void AddSphere(const Eegeo::Streaming::MortonKey& key);
     public:
         EnvironmentNotifierExampleTerrainStreamObserver(Eegeo::Rendering::RenderContext& renderContext,
-                                                        std::map<Eegeo::Streaming::MortonKeyLong, Eegeo::DebugRendering::SphereMesh*, Eegeo::Streaming::MortonKeyLongCompare>& renderables)
+                                                        std::map<Eegeo::Streaming::MortonKey, Eegeo::DebugRendering::SphereMesh*, Eegeo::Streaming::MortonKeyLongCompare>& renderables)
         :renderables(renderables)
         ,renderContext(renderContext)
         {
             
         }
         
-        void AddedStreamingResourceToSceneGraph(const Eegeo::Streaming::MortonKeyLong& key);
-        void RemovedStreamingResourceFromSceneGraph(const Eegeo::Streaming::MortonKeyLong& key);
+        void AddedStreamingResourceToSceneGraph(const Eegeo::Streaming::MortonKey& key);
+        void RemovedStreamingResourceFromSceneGraph(const Eegeo::Streaming::MortonKey& key);
     };
     
     class EnvironmentNotifierExample : public IExample
@@ -40,7 +40,7 @@ namespace Examples
         Eegeo::Resources::Terrain::TerrainStreaming& terrainStreaming;
         EnvironmentNotifierExampleTerrainStreamObserver* observer;
         
-        std::map<Eegeo::Streaming::MortonKeyLong, Eegeo::DebugRendering::SphereMesh*, Eegeo::Streaming::MortonKeyLongCompare> renderables;
+        std::map<Eegeo::Streaming::MortonKey, Eegeo::DebugRendering::SphereMesh*, Eegeo::Streaming::MortonKeyLongCompare> renderables;
         
         
     public:
