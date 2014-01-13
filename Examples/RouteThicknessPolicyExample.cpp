@@ -46,7 +46,7 @@ void RouteThicknessPolicyExample::Update(float dt)
         
         //// Demonstrate a custom route scaling policy on a route around the transamerica pyramid.
         //// This route animates to thicken and thin.
-        std::vector<Eegeo::Routes::RouteVertex> transamericaPyramidRoutePoints = builder.Start(routeColor, halfWidth, routeSpeedMetersPerSecond)
+        std::vector<Eegeo::Routes::RouteVertex> transamericaPyramidRoutePoints = builder.Start(routeColor, halfWidth, routeSpeedMetersPerSecond, Routes::Road)
         .AddPoint(37.795729,-122.401698, altitudeMeters)
         .AddPoint(37.794873,-122.401516, altitudeMeters)
         .AddPoint(37.794728,-122.403179, altitudeMeters)
@@ -69,7 +69,7 @@ void RouteThicknessPolicyExample::Update(float dt)
         
         //// Demonstrate the built-in altitude based route scaling policy on a route at north treasure isle. This route thickens as the camera
         //// altitude increases.
-        std::vector<Eegeo::Routes::RouteVertex> northTreasureIsleRoutePoints = builder.Start(routeColor, halfWidth, routeSpeedMetersPerSecond)
+        std::vector<Eegeo::Routes::RouteVertex> northTreasureIsleRoutePoints = builder.Start(routeColor, halfWidth, routeSpeedMetersPerSecond, Routes::Road)
         .AddPoint(37.827209,-122.377746,altitudeMeters)
         .AddPoint(37.826057,-122.37663,altitudeMeters)
         .AddPoint(37.825802,-122.374223,altitudeMeters)
@@ -86,7 +86,7 @@ void RouteThicknessPolicyExample::Update(float dt)
         
         //// Demonstrate the built-in identity route scaling policy on a route at south treasure isle. This route remains
         //// the same thickness.
-        std::vector<Eegeo::Routes::RouteVertex> southTreasureIsleRoutePoints = builder.Start(routeColor, halfWidth, routeSpeedMetersPerSecond)
+        std::vector<Eegeo::Routes::RouteVertex> southTreasureIsleRoutePoints = builder.Start(routeColor, halfWidth, routeSpeedMetersPerSecond, Routes::Road)
         .AddPoint(37.818226,-122.370339,altitudeMeters)
         .AddPoint(37.820294,-122.371713,altitudeMeters)
         .AddPoint(37.821599,-122.370940,altitudeMeters)

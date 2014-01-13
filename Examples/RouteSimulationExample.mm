@@ -315,7 +315,7 @@ Route* RouteSimulationExample::BuildRoute() const
     
     RouteBuilder builder;
     
-    std::vector<RouteVertex> points = builder.Start(routeColor, halfWidth, routeSpeedMetersPerSecond)
+    std::vector<RouteVertex> points = builder.Start(routeColor, halfWidth, routeSpeedMetersPerSecond, Routes::Road)
     .AddPoint(37.795729,-122.401698, altitudeMeters)
     .AddPoint(37.794873,-122.401516, altitudeMeters)
     .AddPoint(37.794728,-122.403179, altitudeMeters)
