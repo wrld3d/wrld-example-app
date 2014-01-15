@@ -333,7 +333,7 @@ Route* RouteSimulationExample::BuildRoute() const
     .FinishRoute();
     
     const Eegeo::Routes::Style::RouteStyle style(Eegeo::Routes::Style::RouteStyle::JoinStyleArc, m_routeThicknessPolicy);
-    return m_routeService.CreateRoute(points, style);
+    return m_routeService.CreateRoute(points, style, false);
 }
 
 Eegeo::Model* RouteSimulationExample::LoadModelVehicleNodes(Eegeo::Node*& pVehicle1,

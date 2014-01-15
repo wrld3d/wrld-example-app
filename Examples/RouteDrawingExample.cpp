@@ -91,7 +91,7 @@ void RouteDrawingExample::Update(float dt)
         //
         //The route can be created using the CreateRoute method on the RouteService, which must
         //be destroyed through the complementary DestroyRoute method on RouteService.
-        Route* route = m_routeService.CreateRoute(points, hardJoinStyle);
+        Route* route = m_routeService.CreateRoute(points, hardJoinStyle, false);
         
         //Keep a reference to the route so we can Destroy it later.
         m_routes.push_back(route);
@@ -118,7 +118,7 @@ void RouteDrawingExample::Update(float dt)
         .FinishRoute();
         
         Eegeo::Routes::Style::RouteStyle arcJoinStyle(Eegeo::Routes::Style::RouteStyle::JoinStyleArc, m_routeThicknessPolicy);
-        m_routes.push_back(m_routeService.CreateRoute(otherPoints, arcJoinStyle));
+        m_routes.push_back(m_routeService.CreateRoute(otherPoints, arcJoinStyle, false));
         
         //this route curves around entirely on itself, and traces the bounds of treasure island
         std::vector<RouteVertex> islandCircuitPoints = builder.Start(routeGreen, halfWidth, routeSpeedMetersPerSecond, Routes::Road)
@@ -135,7 +135,7 @@ void RouteDrawingExample::Update(float dt)
         .AddPoint(37.824158,-122.377574, altitudeMeters)
         .FinishRoute();
         
-        m_routes.push_back(m_routeService.CreateRoute(islandCircuitPoints, arcJoinStyle));
+        m_routes.push_back(m_routeService.CreateRoute(islandCircuitPoints, arcJoinStyle, false));
         
         //We have created the routes so don't need to do so again.
         m_createdRoutes = true;

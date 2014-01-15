@@ -64,7 +64,7 @@ void RouteThicknessPolicyExample::Update(float dt)
         .FinishRoute();
         
         Eegeo::Routes::Style::RouteStyle transamericaPyramidStyle(Eegeo::Routes::Style::RouteStyle::JoinStyleArc, m_myScalingRouteThicknessPolicy);
-        Route* transamericaPyramidRoute = m_routeService.CreateRoute(transamericaPyramidRoutePoints, transamericaPyramidStyle);
+        Route* transamericaPyramidRoute = m_routeService.CreateRoute(transamericaPyramidRoutePoints, transamericaPyramidStyle, false);
         m_routes.push_back(transamericaPyramidRoute);
         
         //// Demonstrate the built-in altitude based route scaling policy on a route at north treasure isle. This route thickens as the camera
@@ -81,7 +81,7 @@ void RouteThicknessPolicyExample::Update(float dt)
         .FinishRoute();
         
         Eegeo::Routes::Style::RouteStyle northTreasureIsleStyle(Eegeo::Routes::Style::RouteStyle::JoinStyleArc, m_linearAltitudeBasedRouteThicknessPolicy);
-        Route* northTreasureIsleRoute = m_routeService.CreateRoute(northTreasureIsleRoutePoints, northTreasureIsleStyle);
+        Route* northTreasureIsleRoute = m_routeService.CreateRoute(northTreasureIsleRoutePoints, northTreasureIsleStyle, false);
         m_routes.push_back(northTreasureIsleRoute);
         
         //// Demonstrate the built-in identity route scaling policy on a route at south treasure isle. This route remains
@@ -96,7 +96,7 @@ void RouteThicknessPolicyExample::Update(float dt)
         .FinishRoute();
         
         Eegeo::Routes::Style::RouteStyle southTreasureIsleStyle(Eegeo::Routes::Style::RouteStyle::JoinStyleHard, m_identityRouteThicknessPolicy);
-        Route* southTreasureIsleRoute = m_routeService.CreateRoute(southTreasureIsleRoutePoints, southTreasureIsleStyle);
+        Route* southTreasureIsleRoute = m_routeService.CreateRoute(southTreasureIsleRoutePoints, southTreasureIsleStyle, false);
         m_routes.push_back(southTreasureIsleRoute);
         
         
