@@ -43,11 +43,12 @@ namespace ExampleTypes
         RouteDrawing,
         Pins,
         RouteSimulation,
-        RouteThicknessPolicy
+        RouteThicknessPolicy,
+        RouteMatching
     };
 }
 
-static const ExampleTypes::Examples g_defaultSelectedExample = ExampleTypes::RouteThicknessPolicy;
+static const ExampleTypes::Examples g_defaultSelectedExample = ExampleTypes::RouteMatching;
 
 namespace Eegeo
 {
