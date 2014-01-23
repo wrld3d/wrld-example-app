@@ -573,8 +573,6 @@ Eegeo::Web::iOSWebRequestService* webRequestService;
     Eegeo::Web::IWebLoadRequestFactory* pPayloadRequestFactory = new Eegeo::Web::iOSWebLoadRequestFactory(*p_iOSHttpCache, *webRequestService);
     Eegeo::Helpers::ITaskQueue* pTaskQueue = new iOSTaskQueue(10);
     
-    Eegeo::Rendering::DefaultMaterialFactory* pMaterialFactory = new Eegeo::Rendering::DefaultMaterialFactory(m_currentWeatherModel, *m_pEnvironmentMaterialController);
-    
     Eegeo::Traffic::VehicleModelRepository* pVehicleModelRepository = new Eegeo::Traffic::VehicleModelRepository;
     Eegeo::Traffic::VehicleModelLoader* pVehicleModelLoader = new Eegeo::Traffic::VehicleModelLoader(m_renderContext->GetGLState(),
                                                                                                      *pTextureFileLoader,
@@ -595,7 +593,7 @@ Eegeo::Web::iOSWebRequestService* webRequestService;
                                        pLighting,
                                        pFogging,
                                        m_currentWeatherModel,
-                                       pMaterialFactory,
+                                       NULL,
                                        piOSLocationService,
                                        m_pBlitter,
                                        &iOSUrlEncoder,
@@ -610,7 +608,9 @@ Eegeo::Web::iOSWebRequestService* webRequestService;
                                        
                                        "",
                                        "Default-Landscape@2x~ipad.png",
-                                       Eegeo::Standard
+                                       Eegeo::Standard,
+                                       "http://cdn1.eegeo.com/coverage-trees/v134_zdc/manifest.txt.gz",
+                                       "http://cdn1.eegeo.com/mobile-themes/v1-tj-yaml-test/manifest-new41.txt.gz" // temp manifest.
                                        ));
     
     m_renderContext->GetGLState().InvalidateAll();

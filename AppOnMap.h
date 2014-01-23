@@ -15,7 +15,10 @@
 #include "Web.h"
 #include "Location.h"
 #include "GlobeCamera.h"
+#include "Rendering2.h"
+#include "SceneElementRepository.h"
 #import <UIKit/UIKit.h>
+#include "GlHelpers.h"
 
 namespace ExampleTypes
 {
@@ -48,7 +51,7 @@ namespace ExampleTypes
     };
 }
 
-static const ExampleTypes::Examples g_defaultSelectedExample = ExampleTypes::RouteMatching;
+static const ExampleTypes::Examples g_defaultSelectedExample = ExampleTypes::ModifiedRendering;
 
 namespace Eegeo
 {
@@ -115,8 +118,10 @@ public:
                                       Eegeo::Resources::Terrain::TerrainStreaming& terrainStreaming,
                                       Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
                                       Eegeo::Resources::Roads::Navigation::NavigationGraphRepository& navigationGraphs,
-                                      Eegeo::Resources::MeshPool<Eegeo::Rendering::RenderableItem*>& buildingPool,
-                                      Eegeo::Resources::MeshPool<Eegeo::Rendering::RenderableItem*>& shadowPool,
+                                      Eegeo::Rendering2::Scene::SceneElementRepository<Eegeo::Rendering2::Renderables::PackedRenderable>& buildingRepository,
+                                      Eegeo::Rendering2::Filters::PackedRenderableFilter& buildingFilter,
+                                      Eegeo::Rendering2::Scene::SceneElementRepository<Eegeo::Rendering2::Renderables::PackedRenderable>& shadowRepository,
+                                      Eegeo::Rendering2::Filters::PackedRenderableFilter& shadowFilter,
                                       Eegeo::Streaming::IStreamingVolume& visibleVolume,
                                       Eegeo::Lighting::GlobalLighting& lighting,
                                       Eegeo::Lighting::GlobalFogging& fogging,
@@ -127,7 +132,13 @@ public:
                                       Eegeo::UI::NativeUIFactories& nativeInputFactories,
                                       Eegeo::Location::IInterestPointProvider& interestPointProvider,
                                       Eegeo::Routes::RouteService& routeService,
-                                      Eegeo::Rendering::EnvironmentMaterialController& environmentMaterialController);
+                                      Eegeo::Rendering::EnvironmentMaterialController& environmentMaterialController,
+                                      Eegeo::Rendering2::RenderQueue& renderQueue,
+                                      Eegeo::Rendering2::RenderableFilters& renderableFilters,
+                                      Eegeo::Rendering2::Shaders::ShaderIdGenerator& shaderIdGenerator,
+                                      Eegeo::Rendering2::Materials::MaterialIdGenerator& materialIdGenerator,
+                                      const Eegeo::Helpers::GLHelpers::TextureInfo& placeHolderTexture
+                                      );
     
     
     void Event_TouchRotate 			(const AppInterface::RotateData& data);

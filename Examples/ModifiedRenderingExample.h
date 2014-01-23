@@ -19,98 +19,83 @@
 #include "ShaderCompiler.h"
 #include "GlobalLighting.h"
 #include "Location.h"
+#include "Rendering2.h"
+#include "SceneElementRepository.h"
+#include "IRenderableFilter.h"
+#include "GlState.h"
+#include "PackedRenderable.h"
+#include "GlHelpers.h"
 
 namespace Examples
 {
-    struct MyShader
+    typedef Eegeo::Rendering2::Renderables::PackedRenderable TRenderable;
+    typedef TRenderable* TRenderablePtr;
+    typedef Eegeo::Rendering2::Scene::SceneElement<TRenderable> TSceneElement;
+    typedef TSceneElement* TSceneElementPtr;
+    typedef std::vector<TSceneElementPtr> TSceneElementPtrVec;
+    
+    class MyRenderable : public Eegeo::Rendering2::RenderableBase
     {
-        int PositionAttribute;
-        int LightDotAttribute;
-        int ModelViewProjectionUniform;
-        int DiffuseColorUniform;
-        int LightColorsUniform;
-        int MinVertRangeUniform;
-        int MaxVertRangeUniform;
-        u32 ProgramHandle;
-        
-        MyShader()
+    public:
+        MyRenderable(TRenderable& originalRenderable, const Eegeo::Rendering2::Materials::IMaterial* pMaterial)
+        : Eegeo::Rendering2::RenderableBase(Eegeo::Rendering2::LayerIds::Buildings, originalRenderable.GetEcefPosition(), pMaterial)
+        , m_originalRenderable(originalRenderable)
         {
-			std::string vertexShaderCode =
-			"attribute highp vec3 Position;\n"
-			"attribute highp float Lightdot;\n"
-			"varying highp vec4 ColorVarying;\n"
-			"uniform highp mat4 ModelViewProjectionMatrix;\n"
-			"uniform highp mat4 LightColorMatrix;\n"
-			"uniform highp vec4 DiffuseColor;\n"
-			"uniform highp vec3 MinVertRange;\n"
-			"uniform highp vec3 MaxVertRange;\n"
-			"uniform highp vec2 MinUVRange;\n"
-			"uniform highp vec2 MaxUVRange;\n"
-			"void main(void) { \n"
-			"highp vec3 dots = fract(vec3(Lightdot * 1.0, Lightdot * 256.0, Lightdot * 65536.0));"
-			"ColorVarying = (LightColorMatrix * vec4(dots, 1.0)) * DiffuseColor;"
-			"highp vec3 truePosition = mix(MinVertRange.xyz, MaxVertRange.xyz, Position.xyz);\n"
-			"gl_Position = ModelViewProjectionMatrix * vec4(truePosition.xyz, 1.0);\n"
-			"}";
-            
-            std::string fragmentShaderCode =
-            "varying highp vec4 ColorVarying;\n"
-            "void main(void) { \n"
-            "gl_FragColor =  ColorVarying; \n"
-            "}";
-
-            GLuint vertexShader = Eegeo::Helpers::ShaderCompiler::CompileShader(vertexShaderCode, GL_VERTEX_SHADER);
-            GLuint fragmentShader = Eegeo::Helpers::ShaderCompiler::CompileShader(fragmentShaderCode, GL_FRAGMENT_SHADER);
-            
-            ProgramHandle = glCreateProgram();
-            glAttachShader(ProgramHandle, vertexShader);
-            glAttachShader(ProgramHandle, fragmentShader);
-            glLinkProgram(ProgramHandle);
-            
-            GLint linkSuccess;
-            glGetProgramiv(ProgramHandle, GL_LINK_STATUS, &linkSuccess);
-            if (linkSuccess == GL_FALSE)
-            {
-                GLchar messages[256];
-                glGetProgramInfoLog(ProgramHandle, sizeof(messages), 0, &messages[0]);
-                Eegeo_TTY("ERROR COMPILING SHADER :: %s", &messages[0]);
-            }
-            
-            Eegeo_GL(glUseProgram(ProgramHandle));
-            PositionAttribute = glGetAttribLocation(ProgramHandle, "Position");
-            LightDotAttribute = glGetAttribLocation(ProgramHandle, "Lightdot");
-            ModelViewProjectionUniform = glGetUniformLocation(ProgramHandle, "ModelViewProjectionMatrix");
-            DiffuseColorUniform = glGetUniformLocation(ProgramHandle, "DiffuseColor");
-            LightColorsUniform = glGetUniformLocation(ProgramHandle, "LightColorMatrix");
-            MinVertRangeUniform = glGetUniformLocation(ProgramHandle, "MinVertRange");
-            MaxVertRangeUniform = glGetUniformLocation(ProgramHandle, "MaxVertRange");
         }
+        
+        void Update(Eegeo::Rendering::RenderContext& renderContext)
+        {
+            m_originalRenderable.CalcUnpackMVP(renderContext, 1.0f);
+            m_originalRenderable.SetVisible();
+        }
+        
+        void Render(Eegeo::Rendering::GLState& glState) const
+        {
+            m_originalRenderable.Render(glState);
+        }
+        
+    private:
+        TRenderable& m_originalRenderable;
     };
     
-    class ModifiedRenderingExample : public IExample
+    typedef Eegeo::Rendering2::Scene::ISceneElementObserver<Eegeo::Rendering2::Renderables::PackedRenderable> TSceneElementObserver;
+    
+    class ModifiedRenderingExample : public IExample, TSceneElementObserver, Eegeo::Rendering2::IRenderableFilter
     {
     private:
-        struct MyPoolFilterCriteria : Eegeo::Resources::PoolFilterCriteria<Eegeo::Rendering::RenderableItem*>
+        
+        struct MyPoolFilterCriteria : Eegeo::Rendering2::Scene::ISceneElementFilterCriteria<TRenderable>
         {
             ModifiedRenderingExample* owner;
         public:
             MyPoolFilterCriteria(ModifiedRenderingExample* owner):owner(owner) {}
-            virtual bool operator()(Eegeo::Rendering::RenderableItem* item);
+            virtual bool FiltersOut(const TSceneElement& item) const;
         };
         
         MyPoolFilterCriteria* pCriteria;
-        MyShader shader;
         
         Eegeo::Rendering::RenderContext& renderContext;
         Eegeo::Camera::ICameraProvider& cameraProvider;
         Eegeo::Location::IInterestPointProvider& interestPointProvider;
         Eegeo::Lighting::GlobalLighting& lighting;
         Eegeo::Streaming::IStreamingVolume& visibleVolume;
-        Eegeo::Resources::MeshPool<Eegeo::Rendering::RenderableItem*>& buildingPool;
-        Eegeo::Resources::MeshPool<Eegeo::Rendering::RenderableItem*>& shadowPool;
+        Eegeo::Rendering2::Scene::SceneElementRepository<Eegeo::Rendering2::Renderables::PackedRenderable>& buildingRepository;
+        Eegeo::Rendering2::Filters::PackedRenderableFilter& buildingFilter;
+        Eegeo::Rendering2::RenderQueue& renderQueue;
+        Eegeo::Rendering2::RenderableFilters& renderableFilters;
+        Eegeo::Rendering2::Shaders::ShaderIdGenerator& shaderIdGenerator;
+        Eegeo::Rendering2::Materials::MaterialIdGenerator& materialIdGenerator;
+        const Eegeo::Helpers::GLHelpers::TextureInfo& placeHolderTexture;
+        
+        Eegeo::Lighting::GlobalLighting* pAlternativeLighting;
+        Eegeo::Rendering2::Shaders::PackedDiffuseShader* pAlternativeShader;
+        Eegeo::Rendering2::Materials::PackedDiffuseMaterial* pAlternativeMaterial;
+        typedef std::map<TSceneElementPtr, MyRenderable*> TSceneElementToRenderablePtrMap;
+        TSceneElementToRenderablePtrMap alternativeRenderables;
+        
         int counter;
         
-        void DrawItems(const std::vector<Eegeo::Rendering::RenderableItem*>& items);
+        bool IsToBeReplacedWithAlternative(const TSceneElement* pSceneElement)  const;
         
     public:
         ModifiedRenderingExample(Eegeo::Rendering::RenderContext& renderContext,
@@ -118,8 +103,22 @@ namespace Examples
                                  Eegeo::Location::IInterestPointProvider& interestPointProvider,
                                  Eegeo::Streaming::IStreamingVolume& visibleVolume,
                                  Eegeo::Lighting::GlobalLighting& lighting,
-                                 Eegeo::Resources::MeshPool<Eegeo::Rendering::RenderableItem*>& buildingPool,
-                                 Eegeo::Resources::MeshPool<Eegeo::Rendering::RenderableItem*>& shadowPool);
+                                 Eegeo::Rendering2::Scene::SceneElementRepository<Eegeo::Rendering2::Renderables::PackedRenderable>& buildingRepository,
+                                 Eegeo::Rendering2::Filters::PackedRenderableFilter& buildingFilter,
+                                 Eegeo::Rendering2::RenderQueue& renderQueue,
+                                 Eegeo::Rendering2::RenderableFilters& renderableFilters,
+                                 Eegeo::Rendering2::Shaders::ShaderIdGenerator& shaderIdGenerator,
+                                 Eegeo::Rendering2::Materials::MaterialIdGenerator& materialIdGenerator,
+                                 const Eegeo::Helpers::GLHelpers::TextureInfo& placeHolderTexture
+                                 );
+        
+        //ISceneElementObserver interface.
+        typedef Eegeo::Rendering2::Scene::SceneElement<Eegeo::Rendering2::Renderables::PackedRenderable> TMySceneElement;
+        void OnSceneElementAdded(TMySceneElement& sceneElement);
+        void OnSceneElementRemoved(TMySceneElement& sceneElement);
+        
+        //IRenderableFilter interface.
+        void EnqueueRenderables(Eegeo::Rendering::RenderContext& renderContext, Eegeo::Rendering2::RenderQueue& renderQueue);
         
         void Start();
         void Update(float dt);

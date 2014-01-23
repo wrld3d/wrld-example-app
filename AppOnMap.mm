@@ -131,8 +131,10 @@ void MyApp::OnStart ()
                              eegeoWorld.GetTerrainStreaming(),
                              eegeoWorld.GetWebRequestFactory(),
                              eegeoWorld.GetNavigationGraphRepository(),
-                             eegeoWorld.GetBuildingMeshPool(),
-                             eegeoWorld.GetShadowMeshPool(),
+                             eegeoWorld.GetBuildingSceneElementRepository(),
+                             eegeoWorld.GetBuildingsRenderableFilter(),
+                             eegeoWorld.GetShadowSceneElementRepository(),
+                             eegeoWorld.GetShadowRenderableFilter(),
                              eegeoWorld.GetStreamingVolume(),
                              eegeoWorld.GetGlobalLighting(),
                              eegeoWorld.GetGlobalFogging(),
@@ -143,7 +145,13 @@ void MyApp::OnStart ()
                              eegeoWorld.GetNativeUIFactories(),
                              eegeoWorld.GetInterestPointProvider(),
                              eegeoWorld.GetRouteService(),
-                             eegeoWorld.GetEnvironmentMaterialController());
+                             eegeoWorld.GetEnvironmentMaterialController(),
+                             eegeoWorld.GetRenderQueue(),
+                             eegeoWorld.GetRenderableFilters(),
+                             eegeoWorld.GetShaderIdGenerator(),
+                             eegeoWorld.GetMaterialIdGenerator(),
+                             eegeoWorld.GetEnvironmentPlaceholderTexture()
+                             );
     
     pExample->Start();
 }
@@ -193,8 +201,10 @@ Examples::IExample* MyApp::CreateExample(ExampleTypes::Examples example,
                                          Eegeo::Resources::Terrain::TerrainStreaming& terrainStreaming,
                                          Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
                                          Eegeo::Resources::Roads::Navigation::NavigationGraphRepository& navigationGraphs,
-                                         Eegeo::Resources::MeshPool<Eegeo::Rendering::RenderableItem*>& buildingPool,
-                                         Eegeo::Resources::MeshPool<Eegeo::Rendering::RenderableItem*>& shadowPool,
+                                         Eegeo::Rendering2::Scene::SceneElementRepository<Eegeo::Rendering2::Renderables::PackedRenderable>& buildingRepository,
+                                         Eegeo::Rendering2::Filters::PackedRenderableFilter& buildingFilter,
+                                         Eegeo::Rendering2::Scene::SceneElementRepository<Eegeo::Rendering2::Renderables::PackedRenderable>& shadowRepository,
+                                         Eegeo::Rendering2::Filters::PackedRenderableFilter& shadowFilter,
                                          Eegeo::Streaming::IStreamingVolume& visibleVolume,
                                          Eegeo::Lighting::GlobalLighting& lighting,
                                          Eegeo::Lighting::GlobalFogging& fogging,
@@ -205,7 +215,13 @@ Examples::IExample* MyApp::CreateExample(ExampleTypes::Examples example,
                                          Eegeo::UI::NativeUIFactories& nativeInputFactories,
                                          Eegeo::Location::IInterestPointProvider& interestPointProvider,
                                          Eegeo::Routes::RouteService& routeService,
-                                         Eegeo::Rendering::EnvironmentMaterialController& environmentMaterialController)
+                                         Eegeo::Rendering::EnvironmentMaterialController& environmentMaterialController,
+                                         Eegeo::Rendering2::RenderQueue& renderQueue,
+                                         Eegeo::Rendering2::RenderableFilters& renderableFilters,
+                                         Eegeo::Rendering2::Shaders::ShaderIdGenerator& shaderIdGenerator,
+                                         Eegeo::Rendering2::Materials::MaterialIdGenerator& materialIdGenerator,
+                                         const Eegeo::Helpers::GLHelpers::TextureInfo& placeHolderTexture
+                                         )
 {
     switch(example)
     {
@@ -248,8 +264,13 @@ Examples::IExample* MyApp::CreateExample(ExampleTypes::Examples example,
                                                           interestPointProvider,
                                                           visibleVolume,
                                                           lighting,
-                                                          buildingPool,
-                                                          shadowPool);
+                                                          buildingRepository,
+                                                          buildingFilter,
+                                                          renderQueue,
+                                                          renderableFilters,
+                                                          shaderIdGenerator,
+                                                          materialIdGenerator,
+                                                          placeHolderTexture);
             
         case ExampleTypes::ToggleTraffic:
             return new Examples::ToggleTrafficExample(trafficSimulation);
