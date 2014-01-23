@@ -51,7 +51,7 @@ namespace ExampleTypes
     };
 }
 
-static const ExampleTypes::Examples g_defaultSelectedExample = ExampleTypes::ModifiedRendering;
+static const ExampleTypes::Examples g_defaultSelectedExample = ExampleTypes::ResourceSpatialQuery;
 
 namespace Eegeo
 {
@@ -132,7 +132,7 @@ public:
                                       Eegeo::UI::NativeUIFactories& nativeInputFactories,
                                       Eegeo::Location::IInterestPointProvider& interestPointProvider,
                                       Eegeo::Routes::RouteService& routeService,
-                                      Eegeo::Rendering::EnvironmentMaterialController& environmentMaterialController,
+//                                      Eegeo::Rendering::EnvironmentMaterialController& environmentMaterialController,
                                       Eegeo::Rendering2::RenderQueue& renderQueue,
                                       Eegeo::Rendering2::RenderableFilters& renderableFilters,
                                       Eegeo::Rendering2::Shaders::ShaderIdGenerator& shaderIdGenerator,

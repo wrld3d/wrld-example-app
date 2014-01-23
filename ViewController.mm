@@ -317,13 +317,13 @@ Eegeo::Web::iOSWebRequestService* webRequestService;
     mem.text = [NSString stringWithUTF8String:ss_mem.str().c_str()];
     
     std::stringstream ss_terrains;
-    Eegeo::Resources::MeshPool<Eegeo::Rendering::RenderableItem*>& terrainPool = myApp->World().GetTerrainMeshPool();
-    ss_terrains << "Terrains:: " << terrainPool.GetCount() << "/" <<  terrainPool.GetCapacity();
+    Eegeo::Rendering2::Scene::SceneElementRepository<Eegeo::Rendering2::Renderables::PackedRenderable>& terrainRepository = myApp->World().GetLcmSceneElementRepository();
+    ss_terrains << "LcmTerrains:: " << terrainRepository.GetNumOfSceneElements() << "/" <<  terrainRepository.GetCapacity();
     terrains.text = [NSString stringWithUTF8String:ss_terrains.str().c_str()];
     
     std::stringstream ss_buildings;
-    Eegeo::Resources::MeshPool<Eegeo::Rendering::RenderableItem*>& buildingPool = myApp->World().GetBuildingMeshPool();
-    ss_buildings << "Buildings:: " << buildingPool.GetCount() << "/" <<  buildingPool.GetCapacity();
+    Eegeo::Rendering2::Scene::SceneElementRepository<Eegeo::Rendering2::Renderables::PackedRenderable> & buildingRepository = myApp->World().GetBuildingSceneElementRepository();
+    ss_buildings << "Buildings:: " << buildingRepository.GetNumOfSceneElements() << "/" <<  buildingRepository.GetCapacity();
     buildings.text = [NSString stringWithUTF8String:ss_buildings.str().c_str()];
     
     float meanTimeWaitingToBeQueuedHttp = myApp->World().GetPayloadPool().stateTimeStats(Eegeo::PayloadState::TO_BE_LOADED, false)->mean();
@@ -378,10 +378,6 @@ Eegeo::Web::iOSWebRequestService* webRequestService;
 }
 
 -(void)wireframeBuildingsToggleButtonPressedHandler {
-    Eegeo::EegeoEnvironmentRendering& rendering = myApp->World().GetEnvironmentRendering();
-    Eegeo::Rendering::MaterialRepository<Eegeo::Rendering::Material>& materials = *rendering.Materials();
-    Eegeo::Rendering::StencilShadowMaterial& shadow = ((Eegeo::Rendering::StencilShadowMaterial&)*materials.GetMaterial("stencil_shadow"));
-    shadow.ToggleWireframe();
 }
 
 -(void)streamingToggleButtonPressedHandler {
@@ -592,8 +588,6 @@ Eegeo::Web::iOSWebRequestService* webRequestService;
                                        *m_renderContext,
                                        pLighting,
                                        pFogging,
-                                       m_currentWeatherModel,
-                                       NULL,
                                        piOSLocationService,
                                        m_pBlitter,
                                        &iOSUrlEncoder,
@@ -601,16 +595,14 @@ Eegeo::Web::iOSWebRequestService* webRequestService;
                                        nativeUIFactories,
                                        &m_terrainHeightRepository,
                                        &m_terrainHeightProvider,
-                                       m_pEnvironmentMaterialController,
                                        m_pEnvironmentFlatteningService,
                                        environmentCharacterSet,
                                        pCredentials,
-                                       
                                        "",
                                        "Default-Landscape@2x~ipad.png",
                                        Eegeo::Standard,
                                        "http://cdn1.eegeo.com/coverage-trees/v134_zdc/manifest.txt.gz",
-                                       "http://cdn1.eegeo.com/mobile-themes/v1-tj-yaml-test/manifest-new41.txt.gz" // temp manifest.
+                                       "http://cdn1.eegeo.com/mobile-themes/v1-tj-yaml-test/manifest-new131.txt.gz" // temp manifest.
                                        ));
     
     m_renderContext->GetGLState().InvalidateAll();

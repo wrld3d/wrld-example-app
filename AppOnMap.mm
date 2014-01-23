@@ -110,7 +110,7 @@ void MyApp::OnStart ()
     
     m_globeCameraController->SetView(cameraInterestBasis, cameraControllerDistanceFromInterestPointMeters);
     
-    eegeoWorld.GetWeatherController().SetWeather(Eegeo::Weather::Sunny, 1.0f);
+//    eegeoWorld.GetWeatherController().SetWeather(Eegeo::Weather::Sunny, 1.0f);
     
     Eegeo::Search::Service::SearchService* searchService = NULL;
     
@@ -145,7 +145,7 @@ void MyApp::OnStart ()
                              eegeoWorld.GetNativeUIFactories(),
                              eegeoWorld.GetInterestPointProvider(),
                              eegeoWorld.GetRouteService(),
-                             eegeoWorld.GetEnvironmentMaterialController(),
+//                             eegeoWorld.GetEnvironmentMaterialController(),
                              eegeoWorld.GetRenderQueue(),
                              eegeoWorld.GetRenderableFilters(),
                              eegeoWorld.GetShaderIdGenerator(),
@@ -215,7 +215,7 @@ Examples::IExample* MyApp::CreateExample(ExampleTypes::Examples example,
                                          Eegeo::UI::NativeUIFactories& nativeInputFactories,
                                          Eegeo::Location::IInterestPointProvider& interestPointProvider,
                                          Eegeo::Routes::RouteService& routeService,
-                                         Eegeo::Rendering::EnvironmentMaterialController& environmentMaterialController,
+//                                         Eegeo::Rendering::EnvironmentMaterialController& environmentMaterialController,
                                          Eegeo::Rendering2::RenderQueue& renderQueue,
                                          Eegeo::Rendering2::RenderableFilters& renderableFilters,
                                          Eegeo::Rendering2::Shaders::ShaderIdGenerator& shaderIdGenerator,
@@ -311,6 +311,7 @@ Examples::IExample* MyApp::CreateExample(ExampleTypes::Examples example,
                                                      World());
             
         case ExampleTypes::Pins:
+/*
             return new Examples::PinsExample(
                                              World().GetTextureLoader(),
                                              environmentMaterialController,
@@ -319,6 +320,7 @@ Examples::IExample* MyApp::CreateExample(ExampleTypes::Examples example,
                                              World().GetCameraProvider(),
                                              World().GetTerrainHeightProvider()
                                              );
+*/
             
         case ExampleTypes::RouteSimulation:
         {
