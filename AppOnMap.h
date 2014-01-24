@@ -51,7 +51,7 @@ namespace ExampleTypes
     };
 }
 
-static const ExampleTypes::Examples g_defaultSelectedExample = ExampleTypes::ResourceSpatialQuery;
+static const ExampleTypes::Examples g_defaultSelectedExample = ExampleTypes::Pins;
 
 namespace Eegeo
 {
@@ -131,13 +131,7 @@ public:
                                       Eegeo::Search::Service::SearchService* searchService,
                                       Eegeo::UI::NativeUIFactories& nativeInputFactories,
                                       Eegeo::Location::IInterestPointProvider& interestPointProvider,
-                                      Eegeo::Routes::RouteService& routeService,
-//                                      Eegeo::Rendering::EnvironmentMaterialController& environmentMaterialController,
-                                      Eegeo::Rendering2::RenderQueue& renderQueue,
-                                      Eegeo::Rendering2::RenderableFilters& renderableFilters,
-                                      Eegeo::Rendering2::Shaders::ShaderIdGenerator& shaderIdGenerator,
-                                      Eegeo::Rendering2::Materials::MaterialIdGenerator& materialIdGenerator,
-                                      const Eegeo::Helpers::GLHelpers::TextureInfo& placeHolderTexture
+                                      Eegeo::Routes::RouteService& routeService
                                       );
     
     

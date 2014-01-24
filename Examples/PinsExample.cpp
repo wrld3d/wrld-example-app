@@ -10,9 +10,11 @@ namespace Examples
 {
     PinsExample::PinsExample(
                             Eegeo::Helpers::ITextureFileLoader& textureLoader,
-                            const Eegeo::Rendering::EnvironmentMaterialController& environmentMaterialController,
                             Eegeo::Rendering::GlBufferPool& glBufferPool,
-                            Eegeo::Rendering::ItemRenderer& itemRenderer,
+                            Eegeo::Rendering2::Shaders::ShaderIdGenerator& shaderIdGenerator,
+                            Eegeo::Rendering2::Materials::MaterialIdGenerator& materialIdGenerator,
+                            Eegeo::Rendering2::VertexLayouts::VertexBindingPool& vertexBindingPool,
+                            Eegeo::Rendering2::RenderableFilters& renderableFilters,
                             const Eegeo::Camera::ICameraProvider& cameraProvider,
                             Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider
                             )
@@ -36,17 +38,19 @@ namespace Examples
         
         // N.B. The implementation for PinModule is given in PinModule.h as a guide for Apps that
         // require an alternate configuration of the various Pin related components.
-        
         m_pPinsModule = Eegeo_NEW(Eegeo::Pins::PinsModule)(
                                                            m_pinIconsTexture.textureId,
                                                            *m_pPinIconsTexturePageLayout,
-                                                           environmentMaterialController,
                                                            glBufferPool,
-                                                           itemRenderer,
+                                                           shaderIdGenerator,
+                                                           materialIdGenerator,
+                                                           vertexBindingPool,
+                                                           renderableFilters,
                                                            cameraProvider,
                                                            terrainHeightProvider,
                                                            spriteWidthInMetres,
-                                                           spriteHeightInMetres
+                                                           spriteHeightInMetres,
+                                                           Eegeo::Rendering2::LayerIds::PlaceNames
                                                            );
         
         CreateExamplePins();

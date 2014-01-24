@@ -37,9 +37,11 @@ namespace Examples
     public:
         PinsExample(
                     Eegeo::Helpers::ITextureFileLoader& textureLoader,
-                    const Eegeo::Rendering::EnvironmentMaterialController& environmentMaterialController,
                     Eegeo::Rendering::GlBufferPool& glBufferPool,
-                    Eegeo::Rendering::ItemRenderer& itemRenderer,
+                    Eegeo::Rendering2::Shaders::ShaderIdGenerator& shaderIdGenerator,
+                    Eegeo::Rendering2::Materials::MaterialIdGenerator& materialIdGenerator,
+                    Eegeo::Rendering2::VertexLayouts::VertexBindingPool& vertexBindingPool,
+                    Eegeo::Rendering2::RenderableFilters& renderableFilters,
                     const Eegeo::Camera::ICameraProvider& cameraProvider,
                     Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider
                     );

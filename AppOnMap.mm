@@ -144,13 +144,7 @@ void MyApp::OnStart ()
                              searchService,
                              eegeoWorld.GetNativeUIFactories(),
                              eegeoWorld.GetInterestPointProvider(),
-                             eegeoWorld.GetRouteService(),
-//                             eegeoWorld.GetEnvironmentMaterialController(),
-                             eegeoWorld.GetRenderQueue(),
-                             eegeoWorld.GetRenderableFilters(),
-                             eegeoWorld.GetShaderIdGenerator(),
-                             eegeoWorld.GetMaterialIdGenerator(),
-                             eegeoWorld.GetEnvironmentPlaceholderTexture()
+                             eegeoWorld.GetRouteService()
                              );
     
     pExample->Start();
@@ -214,13 +208,7 @@ Examples::IExample* MyApp::CreateExample(ExampleTypes::Examples example,
                                          Eegeo::Search::Service::SearchService* searchService,
                                          Eegeo::UI::NativeUIFactories& nativeInputFactories,
                                          Eegeo::Location::IInterestPointProvider& interestPointProvider,
-                                         Eegeo::Routes::RouteService& routeService,
-//                                         Eegeo::Rendering::EnvironmentMaterialController& environmentMaterialController,
-                                         Eegeo::Rendering2::RenderQueue& renderQueue,
-                                         Eegeo::Rendering2::RenderableFilters& renderableFilters,
-                                         Eegeo::Rendering2::Shaders::ShaderIdGenerator& shaderIdGenerator,
-                                         Eegeo::Rendering2::Materials::MaterialIdGenerator& materialIdGenerator,
-                                         const Eegeo::Helpers::GLHelpers::TextureInfo& placeHolderTexture
+                                         Eegeo::Routes::RouteService& routeService
                                          )
 {
     switch(example)
@@ -266,11 +254,11 @@ Examples::IExample* MyApp::CreateExample(ExampleTypes::Examples example,
                                                           lighting,
                                                           buildingRepository,
                                                           buildingFilter,
-                                                          renderQueue,
-                                                          renderableFilters,
-                                                          shaderIdGenerator,
-                                                          materialIdGenerator,
-                                                          placeHolderTexture);
+                                                          World().GetRenderQueue(),
+                                                          World().GetRenderableFilters(),
+                                                          World().GetShaderIdGenerator(),
+                                                          World().GetMaterialIdGenerator(),
+                                                          World().GetEnvironmentPlaceholderTexture());
             
         case ExampleTypes::ToggleTraffic:
             return new Examples::ToggleTrafficExample(trafficSimulation);
@@ -311,16 +299,16 @@ Examples::IExample* MyApp::CreateExample(ExampleTypes::Examples example,
                                                      World());
             
         case ExampleTypes::Pins:
-/*
             return new Examples::PinsExample(
                                              World().GetTextureLoader(),
-                                             environmentMaterialController,
                                              World().GetGlBufferPool(),
-                                             World().GetItemRenderer(),
+                                             World().GetShaderIdGenerator(),
+                                             World().GetMaterialIdGenerator(),
+                                             World().GetVertexBindingPool(),
+                                             World().GetRenderableFilters(),
                                              World().GetCameraProvider(),
                                              World().GetTerrainHeightProvider()
                                              );
-*/
             
         case ExampleTypes::RouteSimulation:
         {
