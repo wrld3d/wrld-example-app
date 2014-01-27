@@ -51,7 +51,7 @@ namespace ExampleTypes
     };
 }
 
-static const ExampleTypes::Examples g_defaultSelectedExample = ExampleTypes::Pins;
+static const ExampleTypes::Examples g_defaultSelectedExample = ExampleTypes::ControlCityThemes;
 
 namespace Eegeo
 {

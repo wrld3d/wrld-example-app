@@ -601,8 +601,8 @@ Eegeo::Web::iOSWebRequestService* webRequestService;
                                        "",
                                        "Default-Landscape@2x~ipad.png",
                                        Eegeo::Standard,
-                                       "http://cdn1.eegeo.com/coverage-trees/v134_zdc/manifest.txt.gz",
-                                       "http://cdn1.eegeo.com/mobile-themes/v1-tj-yaml-test/manifest-new131.txt.gz" // temp manifest.
+                                       "http://cdn1.eegeo.com/coverage-trees/v152_zdc/manifest.txt.gz",
+                                       "http://eegeo-static.s3.amazonaws.com/mobile-themes-new/v19/manifest.txt.gz"
                                        ));
     
     m_renderContext->GetGLState().InvalidateAll();

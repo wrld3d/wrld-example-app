@@ -65,7 +65,7 @@ namespace Examples
     // 2. Sets "New York" as the current Theme.
     void ControlCityThemeExample::ChangeTheme()
     {
-        const std::string themeToSelect = "New York";
+        const std::string themeToSelect = "SummerNewYork";
         
         Eegeo_TTY("Starting City Theme Control Example\n");
         
@@ -79,7 +79,7 @@ namespace Examples
         
         Eegeo_TTY("Setting %s Theme\n", themeToSelect.c_str());
         themeService.SetSpecificTheme(themeDataToSelect);
-        Eegeo_TTY("%s Theme will now be downloaded and applied asynchronsly. It will remain active until SetSpecificTheme is called again\n", themeToSelect.c_str());
+        Eegeo_TTY("%s Theme will now be downloaded and applied asynchronously. It will remain active until SetSpecificTheme is called again\n", themeToSelect.c_str());
     }
     
     void ControlCityThemeExample::FindThemeByPointInPolygon()
