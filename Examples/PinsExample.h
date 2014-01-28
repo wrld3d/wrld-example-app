@@ -22,6 +22,7 @@ namespace Examples
      *  PinsExample demonstrates the display of Pins within the 3D world.
      *  Pins are placed relative to the underlying terrain and displayed as Sprites which always face the camera.
      *  This example also demonstrates how Pins can be selected by testing against their screen bounds.
+     *  Pin add / remove functionality is demonstrated by adding / removing pin 0 every 3 seconds.
      */
     class PinsExample : public IExample
     {
@@ -33,6 +34,9 @@ namespace Examples
         std::string m_pin1UserData;
         std::string m_pin2UserData;
         std::string m_pin3UserData;
+        
+        float m_addRemoveTimer;
+        Eegeo::Pins::Pin* m_pPin0;
         
     public:
         PinsExample(
@@ -53,6 +57,7 @@ namespace Examples
         
     private:
         void CreateExamplePins();
+        void AddRemovePin0();
     };
 }
 

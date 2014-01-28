@@ -20,6 +20,8 @@ namespace Examples
     , m_pin1UserData("Pin One(1) User Data")
     , m_pin2UserData("Pin Two(2) User Data")
     , m_pin3UserData("Pin Three(3) User Data")
+    , m_addRemoveTimer(0.0f)
+    , m_pPin0(NULL)
     {        
         textureLoader.LoadTexture(m_pinIconsTexture, "PinIconTexturePage.png", true);
         Eegeo_ASSERT(m_pinIconsTexture.textureId != 0);
@@ -76,6 +78,9 @@ namespace Examples
         int pin0Icon = 0;
         Eegeo::Pins::Pin* pPin0 = Eegeo_NEW(Eegeo::Pins::Pin)(pin0Id, pin0Location, 0, pin0Icon, &m_pin0UserData);
         pinRepository.AddPin(pPin0);
+
+        // Save this pin so that we can add and remove it in AddRemovePin0()
+        m_pPin0 = pPin0;
         
         Eegeo::Pins::TPinId pin1Id = 1;
         Eegeo::Space::LatLong pin1Location = Eegeo::Space::LatLong::FromDegrees(37.78547,-122.40259);
@@ -106,12 +111,36 @@ namespace Examples
     
     void PinsExample::Update(float dt)
     {
+        m_addRemoveTimer += dt;
+        if(m_addRemoveTimer > 3.0f)
+        {
+            AddRemovePin0();
+            m_addRemoveTimer = 0.0f;
+        }
+        
         // Update the PinsModule to query terrain heights and update screen space coordinats for the Pins.
         m_pPinsModule->Update(dt);
     }
     
     void PinsExample::Draw()
     {
+    }
+    
+    void PinsExample::AddRemovePin0()
+    {
+        Eegeo::Pins::PinRepository& pinRepository = m_pPinsModule->GetRepository();
+        
+        Eegeo::Pins::Pin* pPin0 = pinRepository.GetPinById(m_pPin0->GetId());
+        if(pPin0)
+        {
+            Eegeo_TTY("Remove Pin 0 from repository.\n");
+            pinRepository.RemovePin(m_pPin0);
+        }
+        else
+        {
+            Eegeo_TTY("Add Pin 0 to repository.\n");
+            pinRepository.AddPin(m_pPin0);
+        }
     }
     
     bool PinsExample::Event_TouchTap(const AppInterface::TapData& data)
