@@ -33,9 +33,9 @@
 		2264D695177DA5870016C3ED /* ldn_trains_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 2264D693177DA5870016C3ED /* ldn_trains_01.pvr */; };
 		59A943BE183A1758000AB7BD /* PinsExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 59A943BC183A1758000AB7BD /* PinsExample.cpp */; };
 		59A943C1183A5CE2000AB7BD /* PinIconTexturePage.png in Resources */ = {isa = PBXBuildFile; fileRef = 59A943C0183A5CE2000AB7BD /* PinIconTexturePage.png */; };
-		59C09E51189A9F1700CC3751 /* alpha_material.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 59C09E4E189A9F1700CC3751 /* alpha_material.pvr */; };
-		59C09E52189A9F1700CC3751 /* sanfrancisco_vehicles_alpha.POD in Resources */ = {isa = PBXBuildFile; fileRef = 59C09E4F189A9F1700CC3751 /* sanfrancisco_vehicles_alpha.POD */; };
-		59C09E54189AA12700CC3751 /* alpha_disc_material.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 59C09E53189AA12700CC3751 /* alpha_disc_material.pvr */; };
+		59C09E64189BCAF700CC3751 /* alpha_disc_material.png in Resources */ = {isa = PBXBuildFile; fileRef = 59C09E61189BCAF700CC3751 /* alpha_disc_material.png */; };
+		59C09E65189BCAF700CC3751 /* alpha_material.png in Resources */ = {isa = PBXBuildFile; fileRef = 59C09E62189BCAF700CC3751 /* alpha_material.png */; };
+		59C09E66189BCAF700CC3751 /* sanfrancisco_vehicles_alpha.POD in Resources */ = {isa = PBXBuildFile; fileRef = 59C09E63189BCAF700CC3751 /* sanfrancisco_vehicles_alpha.POD */; };
 		59D60FF4175E49950044449F /* Water_01_LOD.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 59D60FE3175E49950044449F /* Water_01_LOD.pvr */; };
 		59D6102E17661F420044449F /* CoverageTrees in Resources */ = {isa = PBXBuildFile; fileRef = 59D6102D17661F420044449F /* CoverageTrees */; };
 		7E43D7E3179434D400101629 /* ldn_trains_night_01.pod in Resources */ = {isa = PBXBuildFile; fileRef = 7E43D7D9179434D400101629 /* ldn_trains_night_01.pod */; };
@@ -255,9 +255,9 @@
 		59A943BC183A1758000AB7BD /* PinsExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PinsExample.cpp; sourceTree = "<group>"; };
 		59A943BD183A1758000AB7BD /* PinsExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PinsExample.h; sourceTree = "<group>"; };
 		59A943C0183A5CE2000AB7BD /* PinIconTexturePage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PinIconTexturePage.png; sourceTree = "<group>"; };
-		59C09E4E189A9F1700CC3751 /* alpha_material.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = alpha_material.pvr; sourceTree = "<group>"; };
-		59C09E4F189A9F1700CC3751 /* sanfrancisco_vehicles_alpha.POD */ = {isa = PBXFileReference; lastKnownFileType = file; path = sanfrancisco_vehicles_alpha.POD; sourceTree = "<group>"; };
-		59C09E53189AA12700CC3751 /* alpha_disc_material.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = alpha_disc_material.pvr; sourceTree = "<group>"; };
+		59C09E61189BCAF700CC3751 /* alpha_disc_material.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = alpha_disc_material.png; sourceTree = "<group>"; };
+		59C09E62189BCAF700CC3751 /* alpha_material.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = alpha_material.png; sourceTree = "<group>"; };
+		59C09E63189BCAF700CC3751 /* sanfrancisco_vehicles_alpha.POD */ = {isa = PBXFileReference; lastKnownFileType = file; path = sanfrancisco_vehicles_alpha.POD; sourceTree = "<group>"; };
 		59D60FE3175E49950044449F /* Water_01_LOD.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Water_01_LOD.pvr; sourceTree = "<group>"; };
 		59D6102D17661F420044449F /* CoverageTrees */ = {isa = PBXFileReference; lastKnownFileType = folder; path = CoverageTrees; sourceTree = "<group>"; };
 		7E43D7D9179434D400101629 /* ldn_trains_night_01.pod */ = {isa = PBXFileReference; lastKnownFileType = file; path = ldn_trains_night_01.pod; sourceTree = "<group>"; };
@@ -715,9 +715,9 @@
 		7EE4829D16847E7C0006E99B /* San Fran */ = {
 			isa = PBXGroup;
 			children = (
-				59C09E53189AA12700CC3751 /* alpha_disc_material.pvr */,
-				59C09E4E189A9F1700CC3751 /* alpha_material.pvr */,
-				59C09E4F189A9F1700CC3751 /* sanfrancisco_vehicles_alpha.POD */,
+				59C09E61189BCAF700CC3751 /* alpha_disc_material.png */,
+				59C09E62189BCAF700CC3751 /* alpha_material.png */,
+				59C09E63189BCAF700CC3751 /* sanfrancisco_vehicles_alpha.POD */,
 				7EE4829E16847E7C0006E99B /* Boats_01.pvr */,
 				7EE4829F16847E7C0006E99B /* Buildings_01.pvr */,
 				7EE482A016847E7C0006E99B /* Buildings_02.pvr */,
@@ -947,6 +947,7 @@
 				7EE4835716847E7C0006E99B /* sf_de_young.pvr in Resources */,
 				7EE4835816847E7C0006E99B /* sf_embarcadero.pvr in Resources */,
 				7EE4835916847E7C0006E99B /* SF_Ferry_01.txt in Resources */,
+				59C09E64189BCAF700CC3751 /* alpha_disc_material.png in Resources */,
 				7EE4835A16847E7C0006E99B /* sf_ghiradelli_sq_01.pvr in Resources */,
 				7EE4835B16847E7C0006E99B /* sf_ghiradelli_sq_02.pvr in Resources */,
 				7EE4835C16847E7C0006E99B /* sf_grace_cathedral.pvr in Resources */,
@@ -963,18 +964,18 @@
 				7EE4836716847E7C0006E99B /* SF_Key_14.pvr in Resources */,
 				7EE4836816847E7C0006E99B /* SF_Key_15.pvr in Resources */,
 				7EE4836916847E7C0006E99B /* sf_north_point_towers.pvr in Resources */,
+				59C09E65189BCAF700CC3751 /* alpha_material.png in Resources */,
 				7EE4836A16847E7C0006E99B /* sf_pier_39_01.pvr in Resources */,
 				7EE4836B16847E7C0006E99B /* sf_pier_39_02.pvr in Resources */,
 				7EE4836C16847E7C0006E99B /* sf_pier_39_03.pvr in Resources */,
 				7EE4836D16847E7C0006E99B /* sf_rincon_hill.pvr in Resources */,
 				7EE4836E16847E7C0006E99B /* SF_Roads_01.txt in Resources */,
-				59C09E51189A9F1700CC3751 /* alpha_material.pvr in Resources */,
 				7EE4836F16847E7C0006E99B /* SF_Roads_02.txt in Resources */,
 				7EE4837016847E7C0006E99B /* SF_Roads_03.txt in Resources */,
 				7EE4837116847E7C0006E99B /* SF_Roads_04.txt in Resources */,
 				7EE4837216847E7C0006E99B /* SF_Roads_05.txt in Resources */,
+				59C09E66189BCAF700CC3751 /* sanfrancisco_vehicles_alpha.POD in Resources */,
 				7EE4837316847E7C0006E99B /* SF_Roads_06.txt in Resources */,
-				59C09E52189A9F1700CC3751 /* sanfrancisco_vehicles_alpha.POD in Resources */,
 				7EE4837416847E7C0006E99B /* SF_Roads_07.txt in Resources */,
 				7EE4837516847E7C0006E99B /* SF_Roads_08.txt in Resources */,
 				7EE4837616847E7C0006E99B /* sf_secrets.pvr in Resources */,
@@ -1008,7 +1009,6 @@
 				1839B31C1768881C0059469B /* gen_water_03.pvr in Resources */,
 				1839B323176888460059469B /* Water_02_LOD.pvr in Resources */,
 				1839B324176888460059469B /* Water_03_LOD.pvr in Resources */,
-				59C09E54189AA12700CC3751 /* alpha_disc_material.pvr in Resources */,
 				2264D694177DA5870016C3ED /* ldn_trains_01.pod in Resources */,
 				2264D695177DA5870016C3ED /* ldn_trains_01.pvr in Resources */,
 				0924E86517857D4200C238AD /* water_reflectionmap_night.pvr in Resources */,
