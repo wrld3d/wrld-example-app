@@ -16,8 +16,9 @@ namespace Examples
     ,pModel(NULL)
     ,boundsVisualiser(renderContext)
     ,globalFogging(fogging)
+    ,discMaterial(NULL)
+    ,elapsedTime(0.0f)
     {
-        
     }
     
     void LoadModelExample::Start()
@@ -41,6 +42,12 @@ namespace Examples
                       (pMaterial->GetMaterialFlags() & Eegeo::kMaterialFlag_Blend) ? "blended" : "opaque",
                       pMaterial->GetAlpha()
                       );
+        }
+
+        // Look up the material for the disc so that we can animate its alpha value.
+        if(!pModel->TryGetMaterialByName("alpha_disc_material", discMaterial))
+        {
+        	Eegeo_TTY("Failed to find disc material.\n");
         }
         
         //it should have some children, which are the vehicle meshes...
@@ -74,9 +81,15 @@ namespace Examples
         mesh.forward = Eegeo::v3::Cross(mesh.up, Eegeo::v3(0.0f, 1.0f, 0.0f));
         
         //set some big scale value so we can see the vehicle - vary between x20 and x70
-        struct timeval time;
-        gettimeofday(&time, NULL);
-        mesh.scale = 20.0f + ((sin(time.tv_sec)/ 2.0f + 0.5) * 50.0f);
+        mesh.scale = 20.0f + ((sin(elapsedTime)/ 2.0f + 0.5) * 50.0f);
+        
+        // pulse the opacity of the disk material up and down over time.
+        if(discMaterial != NULL)
+        {
+        	discMaterial->SetAlpha(fabs(sin(elapsedTime * 2)));
+        }
+        
+        elapsedTime += dt;
     }
     
     void LoadModelExample::Draw()
