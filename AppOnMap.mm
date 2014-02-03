@@ -11,7 +11,6 @@
 #include "GlobeCameraInterestPointProvider.h"
 #include "GlobeCameraController.h"
 #include "CameraHelpers.h"
-#include "WeatherController.h"
 #include "NativeUIFactories.h"
 #include "RouteService.h"
 
@@ -110,7 +109,7 @@ void MyApp::OnStart ()
     
     m_globeCameraController->SetView(cameraInterestBasis, cameraControllerDistanceFromInterestPointMeters);
     
-    eegeoWorld.GetWeatherController().SetWeather(Eegeo::Weather::Sunny, 1.0f);
+//    eegeoWorld.GetWeatherController().SetWeather(Eegeo::Weather::Sunny, 1.0f);
     
     Eegeo::Search::Service::SearchService* searchService = NULL;
     
@@ -131,8 +130,10 @@ void MyApp::OnStart ()
                              eegeoWorld.GetTerrainStreaming(),
                              eegeoWorld.GetWebRequestFactory(),
                              eegeoWorld.GetNavigationGraphRepository(),
-                             eegeoWorld.GetBuildingMeshPool(),
-                             eegeoWorld.GetShadowMeshPool(),
+                             eegeoWorld.GetBuildingSceneElementRepository(),
+                             eegeoWorld.GetBuildingsRenderableFilter(),
+                             eegeoWorld.GetShadowSceneElementRepository(),
+                             eegeoWorld.GetShadowRenderableFilter(),
                              eegeoWorld.GetStreamingVolume(),
                              eegeoWorld.GetGlobalLighting(),
                              eegeoWorld.GetGlobalFogging(),
@@ -142,8 +143,8 @@ void MyApp::OnStart ()
                              searchService,
                              eegeoWorld.GetNativeUIFactories(),
                              eegeoWorld.GetInterestPointProvider(),
-                             eegeoWorld.GetRouteService(),
-                             eegeoWorld.GetEnvironmentMaterialController());
+                             eegeoWorld.GetRouteService()
+                             );
     
     pExample->Start();
 }
@@ -193,8 +194,10 @@ Examples::IExample* MyApp::CreateExample(ExampleTypes::Examples example,
                                          Eegeo::Resources::Terrain::TerrainStreaming& terrainStreaming,
                                          Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
                                          Eegeo::Resources::Roads::Navigation::NavigationGraphRepository& navigationGraphs,
-                                         Eegeo::Resources::MeshPool<Eegeo::Rendering::RenderableItem*>& buildingPool,
-                                         Eegeo::Resources::MeshPool<Eegeo::Rendering::RenderableItem*>& shadowPool,
+                                         Eegeo::Rendering::Scene::SceneElementRepository<Eegeo::Rendering::Renderables::PackedRenderable>& buildingRepository,
+                                         Eegeo::Rendering::Filters::PackedRenderableFilter& buildingFilter,
+                                         Eegeo::Rendering::Scene::SceneElementRepository<Eegeo::Rendering::Renderables::PackedRenderable>& shadowRepository,
+                                         Eegeo::Rendering::Filters::PackedRenderableFilter& shadowFilter,
                                          Eegeo::Streaming::IStreamingVolume& visibleVolume,
                                          Eegeo::Lighting::GlobalLighting& lighting,
                                          Eegeo::Lighting::GlobalFogging& fogging,
@@ -204,8 +207,8 @@ Examples::IExample* MyApp::CreateExample(ExampleTypes::Examples example,
                                          Eegeo::Search::Service::SearchService* searchService,
                                          Eegeo::UI::NativeUIFactories& nativeInputFactories,
                                          Eegeo::Location::IInterestPointProvider& interestPointProvider,
-                                         Eegeo::Routes::RouteService& routeService,
-                                         Eegeo::Rendering::EnvironmentMaterialController& environmentMaterialController)
+                                         Eegeo::Routes::RouteService& routeService
+                                         )
 {
     switch(example)
     {
@@ -248,8 +251,13 @@ Examples::IExample* MyApp::CreateExample(ExampleTypes::Examples example,
                                                           interestPointProvider,
                                                           visibleVolume,
                                                           lighting,
-                                                          buildingPool,
-                                                          shadowPool);
+                                                          buildingRepository,
+                                                          buildingFilter,
+                                                          World().GetRenderQueue(),
+                                                          World().GetRenderableFilters(),
+                                                          World().GetShaderIdGenerator(),
+                                                          World().GetMaterialIdGenerator(),
+                                                          World().GetEnvironmentPlaceholderTexture());
             
         case ExampleTypes::ToggleTraffic:
             return new Examples::ToggleTrafficExample(trafficSimulation);
@@ -292,9 +300,12 @@ Examples::IExample* MyApp::CreateExample(ExampleTypes::Examples example,
         case ExampleTypes::Pins:
             return new Examples::PinsExample(
                                              World().GetTextureLoader(),
-                                             environmentMaterialController,
                                              World().GetGlBufferPool(),
-                                             World().GetItemRenderer(),
+                                             World().GetShaderIdGenerator(),
+                                             World().GetMaterialIdGenerator(),
+                                             World().GetVertexBindingPool(),
+                                             World().GetVertexLayoutPool(),
+                                             World().GetRenderableFilters(),
                                              World().GetCameraProvider(),
                                              World().GetTerrainHeightProvider()
                                              );

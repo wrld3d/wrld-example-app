@@ -15,7 +15,9 @@
 #include "Web.h"
 #include "Location.h"
 #include "GlobeCamera.h"
+#include "SceneElementRepository.h"
 #import <UIKit/UIKit.h>
+#include "GlHelpers.h"
 
 namespace ExampleTypes
 {
@@ -115,8 +117,10 @@ public:
                                       Eegeo::Resources::Terrain::TerrainStreaming& terrainStreaming,
                                       Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
                                       Eegeo::Resources::Roads::Navigation::NavigationGraphRepository& navigationGraphs,
-                                      Eegeo::Resources::MeshPool<Eegeo::Rendering::RenderableItem*>& buildingPool,
-                                      Eegeo::Resources::MeshPool<Eegeo::Rendering::RenderableItem*>& shadowPool,
+                                      Eegeo::Rendering::Scene::SceneElementRepository<Eegeo::Rendering::Renderables::PackedRenderable>& buildingRepository,
+                                      Eegeo::Rendering::Filters::PackedRenderableFilter& buildingFilter,
+                                      Eegeo::Rendering::Scene::SceneElementRepository<Eegeo::Rendering::Renderables::PackedRenderable>& shadowRepository,
+                                      Eegeo::Rendering::Filters::PackedRenderableFilter& shadowFilter,
                                       Eegeo::Streaming::IStreamingVolume& visibleVolume,
                                       Eegeo::Lighting::GlobalLighting& lighting,
                                       Eegeo::Lighting::GlobalFogging& fogging,
@@ -126,8 +130,8 @@ public:
                                       Eegeo::Search::Service::SearchService* searchService,
                                       Eegeo::UI::NativeUIFactories& nativeInputFactories,
                                       Eegeo::Location::IInterestPointProvider& interestPointProvider,
-                                      Eegeo::Routes::RouteService& routeService,
-                                      Eegeo::Rendering::EnvironmentMaterialController& environmentMaterialController);
+                                      Eegeo::Routes::RouteService& routeService
+                                      );
     
     
     void Event_TouchRotate 			(const AppInterface::RotateData& data);

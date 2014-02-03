@@ -12,11 +12,8 @@
 #include "External/Reachability/Reachability.h"
 #include "DebugValues.h"
 #include "PrecacheService.h"
-#include "MeshPool.h"
 #include "StreamingController.h"
-#include "EegeoEnvironmentRendering.h"
 #include "MaterialRepository.h"
-#include "StencilShadowMaterial.h"
 #include "App.h"
 #include "AppOnMap.h"
 #include "IOSHelper.h"
@@ -28,7 +25,6 @@
 #include "TerrainStreaming.h"
 #include "PlaceNamesStreaming.h"
 #include "RoadStreaming.h"
-#include "DefaultMaterialFactory.h"
 #include "EnvironmentFlatteningService.h"
 #include "Graphics.h"
 #include "Camera.h"
@@ -42,7 +38,6 @@
 #include "RenderContext.h"
 #include "GlobalLighting.h"
 #include "GlobalFogging.h"
-#include "DefaultMaterialFactory.h"
 #include "iOSTaskQueue.h"
 #include "ResourceCache.h"
 #include "iOSFileIO.h"
@@ -58,7 +53,6 @@
 #include "GlobeCameraTouchController.h"
 #include "GlobeCameraInterestPointProvider.h"
 #include "TerrainHeightProvider.h"
-#include "EnvironmentMaterialController.h"
 
 #include "iOSInputBoxFactory.h"
 #include "iOSKeyboardInputFactory.h"
@@ -68,7 +62,6 @@
 #include "ChunkedBuildingBuilder.h"
 #include "ChunkedRoadBuilder.h"
 #include "TerrainHeightRepository.h"
-#include "CurrentWeatherModel.h"
 #include "RenderCamera.h"
 
 
@@ -188,9 +181,7 @@ NSTimer* touchTimer;
 iOSLocationService* piOSLocationService = NULL;
 Eegeo::Resources::Terrain::Heights::TerrainHeightRepository m_terrainHeightRepository;
 Eegeo::Resources::Terrain::Heights::TerrainHeightProvider m_terrainHeightProvider(&m_terrainHeightRepository);
-Eegeo::Weather::CurrentWeatherModel m_currentWeatherModel;
 Eegeo::Rendering::EnvironmentFlatteningService* m_pEnvironmentFlatteningService = NULL;
-Eegeo::Rendering::EnvironmentMaterialController* m_pEnvironmentMaterialController = NULL;
 
 Eegeo::UI::NativeInput::iOS::iOSInputBoxFactory inputBoxFactory;
 Eegeo::UI::NativeInput::iOS::iOSKeyboardInputFactory keyboardInputFactory;
@@ -204,7 +195,6 @@ Eegeo::Web::iOSWebRequestService* webRequestService;
 - (void)dealloc {
     [super dealloc];
     delete m_pEnvironmentFlatteningService;
-    delete m_pEnvironmentMaterialController;
 }
 
 // ---------------------------------------------------------------------------------------------------------------------------
@@ -317,13 +307,13 @@ Eegeo::Web::iOSWebRequestService* webRequestService;
     mem.text = [NSString stringWithUTF8String:ss_mem.str().c_str()];
     
     std::stringstream ss_terrains;
-    Eegeo::Resources::MeshPool<Eegeo::Rendering::RenderableItem*>& terrainPool = myApp->World().GetTerrainMeshPool();
-    ss_terrains << "Terrains:: " << terrainPool.GetCount() << "/" <<  terrainPool.GetCapacity();
+    Eegeo::Rendering::Scene::SceneElementRepository<Eegeo::Rendering::Renderables::PackedRenderable>& terrainRepository = myApp->World().GetLcmSceneElementRepository();
+    ss_terrains << "LcmTerrains:: " << terrainRepository.GetNumOfSceneElements() << "/" <<  terrainRepository.GetCapacity();
     terrains.text = [NSString stringWithUTF8String:ss_terrains.str().c_str()];
     
     std::stringstream ss_buildings;
-    Eegeo::Resources::MeshPool<Eegeo::Rendering::RenderableItem*>& buildingPool = myApp->World().GetBuildingMeshPool();
-    ss_buildings << "Buildings:: " << buildingPool.GetCount() << "/" <<  buildingPool.GetCapacity();
+    Eegeo::Rendering::Scene::SceneElementRepository<Eegeo::Rendering::Renderables::PackedRenderable> & buildingRepository = myApp->World().GetBuildingSceneElementRepository();
+    ss_buildings << "Buildings:: " << buildingRepository.GetNumOfSceneElements() << "/" <<  buildingRepository.GetCapacity();
     buildings.text = [NSString stringWithUTF8String:ss_buildings.str().c_str()];
     
     float meanTimeWaitingToBeQueuedHttp = myApp->World().GetPayloadPool().stateTimeStats(Eegeo::PayloadState::TO_BE_LOADED, false)->mean();
@@ -378,10 +368,6 @@ Eegeo::Web::iOSWebRequestService* webRequestService;
 }
 
 -(void)wireframeBuildingsToggleButtonPressedHandler {
-    Eegeo::EegeoEnvironmentRendering& rendering = myApp->World().GetEnvironmentRendering();
-    Eegeo::Rendering::MaterialRepository<Eegeo::Rendering::Material>& materials = *rendering.Materials();
-    Eegeo::Rendering::StencilShadowMaterial& shadow = ((Eegeo::Rendering::StencilShadowMaterial&)*materials.GetMaterial("stencil_shadow"));
-    shadow.ToggleWireframe();
 }
 
 -(void)streamingToggleButtonPressedHandler {
@@ -560,7 +546,6 @@ Eegeo::Web::iOSWebRequestService* webRequestService;
     Eegeo::Lighting::GlobalLighting* pLighting = new Eegeo::Lighting::GlobalLighting();
     Eegeo::Lighting::GlobalFogging* pFogging = new Eegeo::Lighting::GlobalFogging();
     m_pEnvironmentFlatteningService = new Eegeo::Rendering::EnvironmentFlatteningService();
-    m_pEnvironmentMaterialController = new Eegeo::Rendering::EnvironmentMaterialController(*m_renderContext, *pLighting, *pFogging, *m_pEnvironmentFlatteningService);
     
     iOSFileIO* p_iOSFileIO = new iOSFileIO();
     Eegeo::Helpers::IFileIO* pFileIO = p_iOSFileIO;
@@ -572,8 +557,6 @@ Eegeo::Web::iOSWebRequestService* webRequestService;
     
     Eegeo::Web::IWebLoadRequestFactory* pPayloadRequestFactory = new Eegeo::Web::iOSWebLoadRequestFactory(*p_iOSHttpCache, *webRequestService);
     Eegeo::Helpers::ITaskQueue* pTaskQueue = new iOSTaskQueue(10);
-    
-    Eegeo::Rendering::DefaultMaterialFactory* pMaterialFactory = new Eegeo::Rendering::DefaultMaterialFactory(m_currentWeatherModel, *m_pEnvironmentMaterialController);
     
     Eegeo::Traffic::VehicleModelRepository* pVehicleModelRepository = new Eegeo::Traffic::VehicleModelRepository;
     Eegeo::Traffic::VehicleModelLoader* pVehicleModelLoader = new Eegeo::Traffic::VehicleModelLoader(m_renderContext->GetGLState(),
@@ -594,8 +577,6 @@ Eegeo::Web::iOSWebRequestService* webRequestService;
                                        *m_renderContext,
                                        pLighting,
                                        pFogging,
-                                       m_currentWeatherModel,
-                                       pMaterialFactory,
                                        piOSLocationService,
                                        m_pBlitter,
                                        &iOSUrlEncoder,
@@ -603,14 +584,14 @@ Eegeo::Web::iOSWebRequestService* webRequestService;
                                        nativeUIFactories,
                                        &m_terrainHeightRepository,
                                        &m_terrainHeightProvider,
-                                       m_pEnvironmentMaterialController,
                                        m_pEnvironmentFlatteningService,
                                        environmentCharacterSet,
                                        pCredentials,
-                                       
                                        "",
                                        "Default-Landscape@2x~ipad.png",
-                                       Eegeo::Standard
+                                       Eegeo::Standard,
+                                       "http://cdn1.eegeo.com/coverage-trees/v161/manifest.txt.gz",
+                                       "http://cdn1.eegeo.com/mobile-themes-new/v34/manifest.txt.gz"
                                        ));
     
     m_renderContext->GetGLState().InvalidateAll();

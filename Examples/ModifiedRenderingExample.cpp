@@ -7,12 +7,22 @@
 //
 
 #include "ModifiedRenderingExample.h"
-#include "PooledMesh.h"
 #include "IStreamingVolume.h"
-#include "DiffuseTexturedVertex.h"
 #include "MathsHelpers.h"
 #include "IInterestPointProvider.h"
 #include "CameraHelpers.h"
+#include "PackedRenderable.h"
+#include "RenderQueue.h"
+#include "PackedRenderableFilter.h"
+#include "RenderableFilters.h"
+#include "PackedDiffuseShader.h"
+#include "PackedDiffuseMaterial.h"
+#include "ShaderIdGenerator.h"
+#include "MaterialIdGenerator.h"
+#include "CityThemeState.h"
+#include "EnvironmentTextures.h"
+#include "MortonKey.h"
+#include "MaterialNames.h"
 
 using namespace Eegeo;
 using namespace Eegeo::Rendering;
@@ -24,16 +34,27 @@ namespace Examples
                                                        Eegeo::Location::IInterestPointProvider& interestPointProvider,
                                                        Eegeo::Streaming::IStreamingVolume& visibleVolume,
                                                        Eegeo::Lighting::GlobalLighting& lighting,
-                                                       Eegeo::Resources::MeshPool<Eegeo::Rendering::RenderableItem*>& buildingPool,
-                                                       Eegeo::Resources::MeshPool<Eegeo::Rendering::RenderableItem*>& shadowPool)
+                                                       Eegeo::Rendering::Scene::SceneElementRepository<Eegeo::Rendering::Renderables::PackedRenderable>& buildingRepository,
+                                                       Eegeo::Rendering::Filters::PackedRenderableFilter& buildingFilter,
+                                                       Eegeo::Rendering::RenderQueue& renderQueue,
+                                                       Eegeo::Rendering::RenderableFilters& renderableFilters,
+                                                       Eegeo::Rendering::Shaders::ShaderIdGenerator& shaderIdGenerator,
+                                                       Eegeo::Rendering::Materials::MaterialIdGenerator& materialIdGenerator,
+                                                       const Eegeo::Helpers::GLHelpers::TextureInfo& placeHolderTexture
+                                                       )
     :renderContext(renderContext)
     ,cameraProvider(cameraProvider)
     ,interestPointProvider(interestPointProvider)
     ,visibleVolume(visibleVolume)
-    ,buildingPool(buildingPool)
-    ,shadowPool(shadowPool)
+    ,buildingRepository(buildingRepository)
+    ,buildingFilter(buildingFilter)
     ,lighting(lighting)
     ,pCriteria(NULL)
+    ,renderQueue(renderQueue)
+    ,renderableFilters(renderableFilters)
+    ,shaderIdGenerator(shaderIdGenerator)
+    ,materialIdGenerator(materialIdGenerator)
+    ,placeHolderTexture(placeHolderTexture)
     {
     }
     
@@ -42,16 +63,45 @@ namespace Examples
         //MyPoolFilterCriteria implemented below... uses camera interest point as selection criteria
         pCriteria = new ModifiedRenderingExample::MyPoolFilterCriteria(this);
         
-        //apply to pools, but lifetime responsibility is ours
-        buildingPool.SetFilterCriteria(pCriteria);
-        shadowPool.SetFilterCriteria(pCriteria);
+        //apply to filter, but lifetime responsibility is ours
+        buildingFilter.SetFilterCriteria(pCriteria);
+        
+        //register for notifications when scene elements are added to or removed from the scene.
+        buildingRepository.AddObserver(*this);
+        
+        //register as a renderable filter so that we can submit our new renderables for rendering.
+        renderableFilters.AddRenderableFilter(this);
+        
+        // create alternative material to render with.
+        pAlternativeLighting = Eegeo_NEW(Eegeo::Lighting::GlobalLighting)();
+        
+        pAlternativeShader = Eegeo::Rendering::Shaders::PackedDiffuseShader::Create(shaderIdGenerator.GetNextId());
+        
+        pAlternativeMaterial = Eegeo_NEW(Eegeo::Rendering::Materials::PackedDiffuseMaterial)(
+                                                                                              materialIdGenerator.GetNextId(),
+                                                                                              "ExampleMaterial",
+                                                                                              *pAlternativeShader,
+                                                                                              *pAlternativeLighting,
+                                                                                              placeHolderTexture.textureId,
+                                                                                              Eegeo::Rendering::TextureMinify_NearestMipmap_Linear,
+                                                                                              false,
+                                                                                              false);
     }
     
     void ModifiedRenderingExample::Suspend()
     {
+        Eegeo_DELETE(pAlternativeMaterial);
+        Eegeo_DELETE(pAlternativeShader);
+        Eegeo_DELETE(pAlternativeLighting);
+        
+        // unregister for rendering.
+        renderableFilters.RemoveRenderableFilter(this);
+        
+        // un-register from receiving scene element notifications.
+        buildingRepository.RemoveObserver(*this);
+        
         //remove it from the pools, and destroy the criteria
-        buildingPool.SetFilterCriteria(NULL);
-        shadowPool.SetFilterCriteria(NULL);
+        buildingFilter.SetFilterCriteria(NULL);
         
         delete pCriteria;
         pCriteria = NULL;
@@ -63,113 +113,72 @@ namespace Examples
     
     void ModifiedRenderingExample::Draw()
     {
-        //i want to draw the buildings matching the criteria a flat color and transparent...
-        //if shadows match the filter criteria, just don't draw them
-        //
-        //if the buildings match, DrawItems uses my shader and sets state to draw transparently
-        
-        typedef Eegeo::Resources::PooledMesh<RenderableItem*>* TPooledMeshPtr;
-        typedef Eegeo::DataStructures::PoolEntry<TPooledMeshPtr> TPoolEntry;
-        typedef std::vector<TPoolEntry> TResVec;
-        
-        TResVec filtered;
-        buildingPool.GetEntriesMeetingFilterCriteria(filtered);
-        
-        std::vector<RenderableItem*> toRender;
-        
-        for(TResVec::const_iterator it = filtered.begin(); it != filtered.end(); ++ it)
-        {
-            const TPoolEntry& item = *it;
-            RenderableItem* resource = item.instance->GetResource();
-            
-            if(item.allocated && resource != NULL && item.instance->ShouldDraw())
-            {
-                toRender.push_back(resource);
-            }
-        }
-        
-        //ok, the toRender items were not drawn by the platform, so I should draw them now
-        DrawItems(toRender);
     }
     
-    void ModifiedRenderingExample::DrawItems(const std::vector<Eegeo::Rendering::RenderableItem*>& items)
+    void ModifiedRenderingExample::OnSceneElementAdded(TMySceneElement& sceneElement)
     {
-        GLState& glState = renderContext.GetGLState();
+        const TRenderablePtr pOriginalRenderable = &(sceneElement.GetResource());
         
-        std::vector<Eegeo::Culling::IndexBufferRange> rangesToDraw;
-        
-        if (glState.UseProgram.TrySet(shader.ProgramHandle))
+        if(!pOriginalRenderable->GetMaterial()->GetName().compare(Eegeo::Rendering::MaterialNames::Buildings))
         {
-            const Eegeo::m44 &colors = lighting.GetColors();
-            Eegeo_GL(glUniformMatrix4fv(shader.LightColorsUniform, 1, 0, (const GLfloat*)&colors));
-        }
-        
-        for(std::vector<RenderableItem*>::const_iterator it = items.begin(); it != items.end(); ++ it)
-        {
-            RenderableItem* item = *it;
-            
-            if(item->IndexCount() == 0) {
-                continue;
-            }
-            
-            //semt-transparent, so we're gonna be blending
-            glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
-            glEnable(GL_BLEND);
-            
-            Eegeo::v3 cameraLocalPos = Eegeo::Camera::CameraHelpers::CameraRelativePoint(item->GetEcefPosition(), renderContext.GetCameraOriginEcef());
+            //create an alternative renderable with a our own alternative material.
+            MyRenderable* pAlternativeRenderable = Eegeo_NEW(MyRenderable)(*pOriginalRenderable, pAlternativeMaterial);
 
-            Eegeo::m44 model, mvp;
-            Helpers::MathsHelpers::ComputeScaleAndOffset(model, 1.0f, item->GetEcefPosition().Norm().ToSingle(), cameraLocalPos);
-            Eegeo::m44::Mul(mvp, renderContext.GetViewProjectionMatrix(), model);
-            
-            Eegeo_GL(glUniformMatrix4fv(shader.ModelViewProjectionUniform, 1, 0, (const GLfloat*)&mvp))
-            
-            Eegeo_GL(glUniform3f(shader.MinVertRangeUniform,
-                                 item->GetMinVertexRange().GetX(),
-                                 item->GetMinVertexRange().GetY(),
-                                 item->GetMinVertexRange().GetZ()));
-            
-            Eegeo_GL(glUniform3f(shader.MaxVertRangeUniform,
-                                 item->GetMaxVertexRange().GetX(),
-                                 item->GetMaxVertexRange().GetY(),
-                                 item->GetMaxVertexRange().GetZ()));
-            
-            Eegeo_GL(glUniform4f(shader.DiffuseColorUniform, 0.0f, 0.0f, 1.0f, 0.1f)); //alpha 10%
-            
-            Eegeo_GL(glEnableVertexAttribArray(shader.PositionAttribute));
-            Eegeo_GL(glEnableVertexAttribArray(shader.LightDotAttribute));
-            
-            glState.BindArrayBuffer(item->GetVertexBuffer());
-            glState.BindElementArrayBuffer(item->GetIndexBuffer());
-            
-            //i don't need the UV channel as not texturing them, but it is part of the buulding vertex so must be considered
-            Eegeo_GL(glVertexAttribPointer(shader.PositionAttribute, 3, GL_UNSIGNED_SHORT, GL_TRUE, sizeof(VertexTypes::ShortDiffuseTexturedVertex), 0));
-            Eegeo_GL(glVertexAttribPointer(shader.LightDotAttribute, 1, GL_FLOAT, GL_FALSE, sizeof(VertexTypes::ShortDiffuseTexturedVertex), (GLvoid*) (sizeof(short)*6)));
-            
-            Eegeo_GL(glDrawElements(GL_TRIANGLES, item->IndexCount(), GL_UNSIGNED_SHORT, (void*)0 ));
-            
+            //add the alternative to our list of renderables.
+            alternativeRenderables.insert(std::pair<TSceneElementPtr, MyRenderable*>(&sceneElement, pAlternativeRenderable));
         }
-        
-        glDisable(GL_BLEND);
-        glState.BindArrayBuffer(0);
-        glState.BindElementArrayBuffer(0);
     }
     
-    bool ModifiedRenderingExample::MyPoolFilterCriteria::operator()(Eegeo::Rendering::RenderableItem* item)
+    void ModifiedRenderingExample::OnSceneElementRemoved(TMySceneElement& sceneElement)
     {
-        const double filterRadius = 400.0f;
-        const double filterRadiusSq = filterRadius*filterRadius;
+        TSceneElementToRenderablePtrMap::iterator it = alternativeRenderables.find(&sceneElement);
         
-        Eegeo::v3 cameraRelativePos = Eegeo::Camera::CameraHelpers::CameraRelativePoint(item->GetEcefPosition(), owner->interestPointProvider.GetEcefInterestPoint());
-        
-        double delta = cameraRelativePos.LengthSq();
-        bool closeToInterest = delta < filterRadiusSq;
-        
-        if (closeToInterest)
+        if(it != alternativeRenderables.end())
         {
-            return true; //i want to draw with custom semi-transparent rendering method
+            Eegeo_DELETE(it->second);
+            alternativeRenderables.erase(it);
+        }
+    }
+
+    bool ModifiedRenderingExample::IsToBeReplacedWithAlternative(const TSceneElement* pSceneElement)  const
+    {
+        const TRenderable& renderable = pSceneElement->GetResource();
+        
+        if(!renderable.GetMaterial()->GetName().compare(Eegeo::Rendering::MaterialNames::Buildings))
+        {
+            const double filterRadius = 400.0f;
+            const double filterRadiusSq = filterRadius*filterRadius;
+            
+            Eegeo::v3 cameraRelativePos = Eegeo::Camera::CameraHelpers::CameraRelativePoint(renderable.GetEcefPosition(), interestPointProvider.GetEcefInterestPoint());
+            
+            double delta = cameraRelativePos.LengthSq();
+            bool closeToInterest = delta < filterRadiusSq;
+            
+            if (closeToInterest)
+            {
+                return true;
+            }
         }
         
-        return false; //let the platform do the default rendering 
+        return false;
+    }
+
+    void ModifiedRenderingExample::EnqueueRenderables(Eegeo::Rendering::RenderContext& renderContext, Eegeo::Rendering::RenderQueue& renderQueue)
+    {
+        for(TSceneElementToRenderablePtrMap::const_iterator it = alternativeRenderables.begin(); it != alternativeRenderables.end(); ++it)
+        {
+            if(IsToBeReplacedWithAlternative(it->first))
+            {
+                MyRenderable* pRenderable = it->second;
+
+                pRenderable->Update(renderContext);
+                renderQueue.EnqueueRenderable(pRenderable);
+            }
+        }
+    }
+    
+    bool ModifiedRenderingExample::MyPoolFilterCriteria::FiltersOut(const TSceneElement& sceneElement) const
+    {
+        return owner->IsToBeReplacedWithAlternative(&sceneElement);
     }
 }
