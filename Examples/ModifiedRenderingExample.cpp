@@ -7,9 +7,7 @@
 //
 
 #include "ModifiedRenderingExample.h"
-#include "PooledMesh.h"
 #include "IStreamingVolume.h"
-#include "DiffuseTexturedVertex.h"
 #include "MathsHelpers.h"
 #include "IInterestPointProvider.h"
 #include "CameraHelpers.h"
@@ -24,7 +22,7 @@
 #include "CityThemeState.h"
 #include "EnvironmentTextures.h"
 #include "MortonKey.h"
-#include "MaterialNames2.h"
+#include "MaterialNames.h"
 
 using namespace Eegeo;
 using namespace Eegeo::Rendering;
@@ -36,12 +34,12 @@ namespace Examples
                                                        Eegeo::Location::IInterestPointProvider& interestPointProvider,
                                                        Eegeo::Streaming::IStreamingVolume& visibleVolume,
                                                        Eegeo::Lighting::GlobalLighting& lighting,
-                                                       Eegeo::Rendering2::Scene::SceneElementRepository<Eegeo::Rendering2::Renderables::PackedRenderable>& buildingRepository,
-                                                       Eegeo::Rendering2::Filters::PackedRenderableFilter& buildingFilter,
-                                                       Eegeo::Rendering2::RenderQueue& renderQueue,
-                                                       Eegeo::Rendering2::RenderableFilters& renderableFilters,
-                                                       Eegeo::Rendering2::Shaders::ShaderIdGenerator& shaderIdGenerator,
-                                                       Eegeo::Rendering2::Materials::MaterialIdGenerator& materialIdGenerator,
+                                                       Eegeo::Rendering::Scene::SceneElementRepository<Eegeo::Rendering::Renderables::PackedRenderable>& buildingRepository,
+                                                       Eegeo::Rendering::Filters::PackedRenderableFilter& buildingFilter,
+                                                       Eegeo::Rendering::RenderQueue& renderQueue,
+                                                       Eegeo::Rendering::RenderableFilters& renderableFilters,
+                                                       Eegeo::Rendering::Shaders::ShaderIdGenerator& shaderIdGenerator,
+                                                       Eegeo::Rendering::Materials::MaterialIdGenerator& materialIdGenerator,
                                                        const Eegeo::Helpers::GLHelpers::TextureInfo& placeHolderTexture
                                                        )
     :renderContext(renderContext)
@@ -77,9 +75,9 @@ namespace Examples
         // create alternative material to render with.
         pAlternativeLighting = Eegeo_NEW(Eegeo::Lighting::GlobalLighting)();
         
-        pAlternativeShader = Eegeo::Rendering2::Shaders::PackedDiffuseShader::Create(shaderIdGenerator.GetNextId());
+        pAlternativeShader = Eegeo::Rendering::Shaders::PackedDiffuseShader::Create(shaderIdGenerator.GetNextId());
         
-        pAlternativeMaterial = Eegeo_NEW(Eegeo::Rendering2::Materials::PackedDiffuseMaterial)(
+        pAlternativeMaterial = Eegeo_NEW(Eegeo::Rendering::Materials::PackedDiffuseMaterial)(
                                                                                               materialIdGenerator.GetNextId(),
                                                                                               "ExampleMaterial",
                                                                                               *pAlternativeShader,
@@ -121,7 +119,7 @@ namespace Examples
     {
         const TRenderablePtr pOriginalRenderable = &(sceneElement.GetResource());
         
-        if(!pOriginalRenderable->GetMaterial()->GetName().compare(Eegeo::Rendering2::MaterialNames2::Buildings))
+        if(!pOriginalRenderable->GetMaterial()->GetName().compare(Eegeo::Rendering::MaterialNames::Buildings))
         {
             //create an alternative renderable with a our own alternative material.
             MyRenderable* pAlternativeRenderable = Eegeo_NEW(MyRenderable)(*pOriginalRenderable, pAlternativeMaterial);
@@ -146,7 +144,7 @@ namespace Examples
     {
         const TRenderable& renderable = pSceneElement->GetResource();
         
-        if(!renderable.GetMaterial()->GetName().compare(Eegeo::Rendering2::MaterialNames2::Buildings))
+        if(!renderable.GetMaterial()->GetName().compare(Eegeo::Rendering::MaterialNames::Buildings))
         {
             const double filterRadius = 400.0f;
             const double filterRadiusSq = filterRadius*filterRadius;
@@ -165,7 +163,7 @@ namespace Examples
         return false;
     }
 
-    void ModifiedRenderingExample::EnqueueRenderables(Eegeo::Rendering::RenderContext& renderContext, Eegeo::Rendering2::RenderQueue& renderQueue)
+    void ModifiedRenderingExample::EnqueueRenderables(Eegeo::Rendering::RenderContext& renderContext, Eegeo::Rendering::RenderQueue& renderQueue)
     {
         for(TSceneElementToRenderablePtrMap::const_iterator it = alternativeRenderables.begin(); it != alternativeRenderables.end(); ++it)
         {

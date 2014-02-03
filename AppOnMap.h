@@ -15,7 +15,6 @@
 #include "Web.h"
 #include "Location.h"
 #include "GlobeCamera.h"
-#include "Rendering2.h"
 #include "SceneElementRepository.h"
 #import <UIKit/UIKit.h>
 #include "GlHelpers.h"
@@ -118,10 +117,10 @@ public:
                                       Eegeo::Resources::Terrain::TerrainStreaming& terrainStreaming,
                                       Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
                                       Eegeo::Resources::Roads::Navigation::NavigationGraphRepository& navigationGraphs,
-                                      Eegeo::Rendering2::Scene::SceneElementRepository<Eegeo::Rendering2::Renderables::PackedRenderable>& buildingRepository,
-                                      Eegeo::Rendering2::Filters::PackedRenderableFilter& buildingFilter,
-                                      Eegeo::Rendering2::Scene::SceneElementRepository<Eegeo::Rendering2::Renderables::PackedRenderable>& shadowRepository,
-                                      Eegeo::Rendering2::Filters::PackedRenderableFilter& shadowFilter,
+                                      Eegeo::Rendering::Scene::SceneElementRepository<Eegeo::Rendering::Renderables::PackedRenderable>& buildingRepository,
+                                      Eegeo::Rendering::Filters::PackedRenderableFilter& buildingFilter,
+                                      Eegeo::Rendering::Scene::SceneElementRepository<Eegeo::Rendering::Renderables::PackedRenderable>& shadowRepository,
+                                      Eegeo::Rendering::Filters::PackedRenderableFilter& shadowFilter,
                                       Eegeo::Streaming::IStreamingVolume& visibleVolume,
                                       Eegeo::Lighting::GlobalLighting& lighting,
                                       Eegeo::Lighting::GlobalFogging& fogging,

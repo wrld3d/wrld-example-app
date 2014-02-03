@@ -13,13 +13,10 @@
 
 #include <vector>
 #include "RenderContext.h"
-#include "MeshPool.h"
-#include "RenderableItem.h"
-#include "DiffuseTexturedMaterial.h"
 #include "ShaderCompiler.h"
 #include "GlobalLighting.h"
 #include "Location.h"
-#include "Rendering2.h"
+#include "Rendering.h"
 #include "SceneElementRepository.h"
 #include "IRenderableFilter.h"
 #include "GlState.h"
@@ -28,17 +25,17 @@
 
 namespace Examples
 {
-    typedef Eegeo::Rendering2::Renderables::PackedRenderable TRenderable;
+    typedef Eegeo::Rendering::Renderables::PackedRenderable TRenderable;
     typedef TRenderable* TRenderablePtr;
-    typedef Eegeo::Rendering2::Scene::SceneElement<TRenderable> TSceneElement;
+    typedef Eegeo::Rendering::Scene::SceneElement<TRenderable> TSceneElement;
     typedef TSceneElement* TSceneElementPtr;
     typedef std::vector<TSceneElementPtr> TSceneElementPtrVec;
     
-    class MyRenderable : public Eegeo::Rendering2::RenderableBase
+    class MyRenderable : public Eegeo::Rendering::RenderableBase
     {
     public:
-        MyRenderable(TRenderable& originalRenderable, const Eegeo::Rendering2::Materials::IMaterial* pMaterial)
-        : Eegeo::Rendering2::RenderableBase(Eegeo::Rendering2::LayerIds::Buildings, originalRenderable.GetEcefPosition(), pMaterial)
+        MyRenderable(TRenderable& originalRenderable, const Eegeo::Rendering::Materials::IMaterial* pMaterial)
+        : Eegeo::Rendering::RenderableBase(Eegeo::Rendering::LayerIds::Buildings, originalRenderable.GetEcefPosition(), pMaterial)
         , m_originalRenderable(originalRenderable)
         {
         }
@@ -58,13 +55,13 @@ namespace Examples
         TRenderable& m_originalRenderable;
     };
     
-    typedef Eegeo::Rendering2::Scene::ISceneElementObserver<Eegeo::Rendering2::Renderables::PackedRenderable> TSceneElementObserver;
+    typedef Eegeo::Rendering::Scene::ISceneElementObserver<Eegeo::Rendering::Renderables::PackedRenderable> TSceneElementObserver;
     
-    class ModifiedRenderingExample : public IExample, TSceneElementObserver, Eegeo::Rendering2::IRenderableFilter
+    class ModifiedRenderingExample : public IExample, TSceneElementObserver, Eegeo::Rendering::IRenderableFilter
     {
     private:
         
-        struct MyPoolFilterCriteria : Eegeo::Rendering2::Scene::ISceneElementFilterCriteria<TRenderable>
+        struct MyPoolFilterCriteria : Eegeo::Rendering::Scene::ISceneElementFilterCriteria<TRenderable>
         {
             ModifiedRenderingExample* owner;
         public:
@@ -79,17 +76,17 @@ namespace Examples
         Eegeo::Location::IInterestPointProvider& interestPointProvider;
         Eegeo::Lighting::GlobalLighting& lighting;
         Eegeo::Streaming::IStreamingVolume& visibleVolume;
-        Eegeo::Rendering2::Scene::SceneElementRepository<Eegeo::Rendering2::Renderables::PackedRenderable>& buildingRepository;
-        Eegeo::Rendering2::Filters::PackedRenderableFilter& buildingFilter;
-        Eegeo::Rendering2::RenderQueue& renderQueue;
-        Eegeo::Rendering2::RenderableFilters& renderableFilters;
-        Eegeo::Rendering2::Shaders::ShaderIdGenerator& shaderIdGenerator;
-        Eegeo::Rendering2::Materials::MaterialIdGenerator& materialIdGenerator;
+        Eegeo::Rendering::Scene::SceneElementRepository<Eegeo::Rendering::Renderables::PackedRenderable>& buildingRepository;
+        Eegeo::Rendering::Filters::PackedRenderableFilter& buildingFilter;
+        Eegeo::Rendering::RenderQueue& renderQueue;
+        Eegeo::Rendering::RenderableFilters& renderableFilters;
+        Eegeo::Rendering::Shaders::ShaderIdGenerator& shaderIdGenerator;
+        Eegeo::Rendering::Materials::MaterialIdGenerator& materialIdGenerator;
         const Eegeo::Helpers::GLHelpers::TextureInfo& placeHolderTexture;
         
         Eegeo::Lighting::GlobalLighting* pAlternativeLighting;
-        Eegeo::Rendering2::Shaders::PackedDiffuseShader* pAlternativeShader;
-        Eegeo::Rendering2::Materials::PackedDiffuseMaterial* pAlternativeMaterial;
+        Eegeo::Rendering::Shaders::PackedDiffuseShader* pAlternativeShader;
+        Eegeo::Rendering::Materials::PackedDiffuseMaterial* pAlternativeMaterial;
         typedef std::map<TSceneElementPtr, MyRenderable*> TSceneElementToRenderablePtrMap;
         TSceneElementToRenderablePtrMap alternativeRenderables;
         
@@ -103,22 +100,22 @@ namespace Examples
                                  Eegeo::Location::IInterestPointProvider& interestPointProvider,
                                  Eegeo::Streaming::IStreamingVolume& visibleVolume,
                                  Eegeo::Lighting::GlobalLighting& lighting,
-                                 Eegeo::Rendering2::Scene::SceneElementRepository<Eegeo::Rendering2::Renderables::PackedRenderable>& buildingRepository,
-                                 Eegeo::Rendering2::Filters::PackedRenderableFilter& buildingFilter,
-                                 Eegeo::Rendering2::RenderQueue& renderQueue,
-                                 Eegeo::Rendering2::RenderableFilters& renderableFilters,
-                                 Eegeo::Rendering2::Shaders::ShaderIdGenerator& shaderIdGenerator,
-                                 Eegeo::Rendering2::Materials::MaterialIdGenerator& materialIdGenerator,
+                                 Eegeo::Rendering::Scene::SceneElementRepository<Eegeo::Rendering::Renderables::PackedRenderable>& buildingRepository,
+                                 Eegeo::Rendering::Filters::PackedRenderableFilter& buildingFilter,
+                                 Eegeo::Rendering::RenderQueue& renderQueue,
+                                 Eegeo::Rendering::RenderableFilters& renderableFilters,
+                                 Eegeo::Rendering::Shaders::ShaderIdGenerator& shaderIdGenerator,
+                                 Eegeo::Rendering::Materials::MaterialIdGenerator& materialIdGenerator,
                                  const Eegeo::Helpers::GLHelpers::TextureInfo& placeHolderTexture
                                  );
         
         //ISceneElementObserver interface.
-        typedef Eegeo::Rendering2::Scene::SceneElement<Eegeo::Rendering2::Renderables::PackedRenderable> TMySceneElement;
+        typedef Eegeo::Rendering::Scene::SceneElement<Eegeo::Rendering::Renderables::PackedRenderable> TMySceneElement;
         void OnSceneElementAdded(TMySceneElement& sceneElement);
         void OnSceneElementRemoved(TMySceneElement& sceneElement);
         
         //IRenderableFilter interface.
-        void EnqueueRenderables(Eegeo::Rendering::RenderContext& renderContext, Eegeo::Rendering2::RenderQueue& renderQueue);
+        void EnqueueRenderables(Eegeo::Rendering::RenderContext& renderContext, Eegeo::Rendering::RenderQueue& renderQueue);
         
         void Start();
         void Update(float dt);

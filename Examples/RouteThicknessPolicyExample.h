@@ -26,7 +26,7 @@ namespace Examples
         {
             float m_scale;
             bool m_scaledown;
-            float GetThicknessScale() const;
+            float GetThicknessScale(const Eegeo::Routes::Fitting::FittedRoute& route) const;
         public:
             MyScalingRouteThicknessPolicy():m_scale(1.f), m_scaledown(false) {}
             void UpdateScale();

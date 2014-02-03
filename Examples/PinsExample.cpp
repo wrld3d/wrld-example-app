@@ -11,10 +11,11 @@ namespace Examples
     PinsExample::PinsExample(
                             Eegeo::Helpers::ITextureFileLoader& textureLoader,
                             Eegeo::Rendering::GlBufferPool& glBufferPool,
-                            Eegeo::Rendering2::Shaders::ShaderIdGenerator& shaderIdGenerator,
-                            Eegeo::Rendering2::Materials::MaterialIdGenerator& materialIdGenerator,
-                            Eegeo::Rendering2::VertexLayouts::VertexBindingPool& vertexBindingPool,
-                            Eegeo::Rendering2::RenderableFilters& renderableFilters,
+                            Eegeo::Rendering::Shaders::ShaderIdGenerator& shaderIdGenerator,
+                            Eegeo::Rendering::Materials::MaterialIdGenerator& materialIdGenerator,
+                            Eegeo::Rendering::VertexLayouts::VertexBindingPool& vertexBindingPool,
+                            Eegeo::Rendering::VertexLayouts::VertexLayoutPool& vertexLayoutPool,
+                            Eegeo::Rendering::RenderableFilters& renderableFilters,
                             const Eegeo::Camera::ICameraProvider& cameraProvider,
                             Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider
                             )
@@ -45,12 +46,13 @@ namespace Examples
                                                            shaderIdGenerator,
                                                            materialIdGenerator,
                                                            vertexBindingPool,
+                                                           vertexLayoutPool,
                                                            renderableFilters,
                                                            cameraProvider,
                                                            terrainHeightProvider,
                                                            spriteWidthInMetres,
                                                            spriteHeightInMetres,
-                                                           Eegeo::Rendering2::LayerIds::PlaceNames
+                                                           Eegeo::Rendering::LayerIds::PlaceNames
                                                            );
         
         CreateExamplePins();
