@@ -38,6 +38,7 @@
 #include "RenderContext.h"
 #include "GlobalLighting.h"
 #include "GlobalFogging.h"
+#include "GlobalShadowing.h"
 #include "iOSTaskQueue.h"
 #include "ResourceCache.h"
 #include "iOSFileIO.h"
@@ -545,6 +546,7 @@ Eegeo::Web::iOSWebRequestService* webRequestService;
     
     Eegeo::Lighting::GlobalLighting* pLighting = new Eegeo::Lighting::GlobalLighting();
     Eegeo::Lighting::GlobalFogging* pFogging = new Eegeo::Lighting::GlobalFogging();
+    Eegeo::Lighting::GlobalShadowing* pShadowing = new Eegeo::Lighting::GlobalShadowing();
     m_pEnvironmentFlatteningService = new Eegeo::Rendering::EnvironmentFlatteningService();
     
     iOSFileIO* p_iOSFileIO = new iOSFileIO();
@@ -577,6 +579,7 @@ Eegeo::Web::iOSWebRequestService* webRequestService;
                                        *m_renderContext,
                                        pLighting,
                                        pFogging,
+                                       pShadowing,
                                        piOSLocationService,
                                        m_pBlitter,
                                        &iOSUrlEncoder,
