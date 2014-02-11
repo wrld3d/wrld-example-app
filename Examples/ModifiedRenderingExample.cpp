@@ -167,7 +167,7 @@ namespace Examples
     {
         for(TSceneElementToRenderablePtrMap::const_iterator it = alternativeRenderables.begin(); it != alternativeRenderables.end(); ++it)
         {
-            if(IsToBeReplacedWithAlternative(it->first))
+            if(it->first->IsInSceneGraph() && IsToBeReplacedWithAlternative(it->first))
             {
                 MyRenderable* pRenderable = it->second;
 
