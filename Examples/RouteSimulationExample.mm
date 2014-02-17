@@ -34,9 +34,12 @@ void RouteSimulationExampleObserver::OnLinkReached(const Eegeo::Routes::Simulati
 {
     // At each new link, we change the model being drawn
     m_pModelBinding->SetModel(GetRandomModelNode());
-    
-    Eegeo::Space::LatLongAltitude latLongAltitude = Eegeo::Space::LatLongAltitude::FromECEF(session.GetCurrentPositionEcef());
-    Eegeo_TTY("New link reached at %f, %f\n", latLongAltitude.GetLatitudeInDegrees(), latLongAltitude.GetLongitudeInDegrees());
+
+    dv3 ecef;
+    if(session.TryGetCurrentPositionEcef(ecef)) {
+        Eegeo::Space::LatLongAltitude latLongAltitude = Eegeo::Space::LatLongAltitude::FromECEF(ecef);
+        Eegeo_TTY("New link reached at %f, %f\n", latLongAltitude.GetLatitudeInDegrees(), latLongAltitude.GetLongitudeInDegrees());
+    }
 }
 
 RouteSimulationExample::RouteSimulationExample(RouteService& routeService,
@@ -198,15 +201,6 @@ void RouteSimulationExample::Update(float dt)
         
         float linkSpeedMultiplier = 0.5f + ((rand() % 200)/100.f);
         m_pSessionAlternatingSpeedChanger->UseLinkSpeedValueWithMultiplier(linkSpeedMultiplier);
-        
-        //Change the direction of the vehicle when we alternate playback directions, so the vehice
-        //is always facing forward. If we did not do this, the vehicle would appear to reverse in
-        //rewind mode.
-        const m44& currentTransform = m_pViewBindingForOscillatingSession->GetModelTransform();
-        m44 rotation, newTransform;
-        rotation.RotateY(M_PI);
-        m44::Mul(newTransform, rotation, currentTransform);
-        m_pViewBindingForOscillatingSession->SetModelTransform(newTransform);
     }
 }
 
@@ -255,15 +249,6 @@ void RouteSimulationExample::ChangeFollowDirection()
     Eegeo_ASSERT(m_usingFollowCamera);
     
     m_pSessionAlternatingSpeedChanger->TogglePlaybackDirection();
-    
-    //Change the direction of the vehicle when we alternate playback directions, so the vehice
-    //is always facing forward. If we did not do this, the vehicle would appear to reverse in
-    //rewind mode.
-    const m44& currentTransform = m_pViewBindingForOscillatingSession->GetModelTransform();
-    m44 rotation, newTransform;
-    rotation.RotateY(M_PI);
-    m44::Mul(newTransform, rotation, currentTransform);
-    m_pViewBindingForOscillatingSession->SetModelTransform(newTransform);
 }
 
 void RouteSimulationExample::IncreaseSpeedFollowed()
