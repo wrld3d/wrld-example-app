@@ -37,6 +37,7 @@
 #include "RouteSimulationExample.h"
 #include "RouteThicknessPolicyExample.h"
 #include "RouteMatchingExample.h"
+#include "RouteSimulationAnimationExample.h"
 
 MyApp::MyApp(Eegeo::Camera::GlobeCamera::GlobeCameraInterestPointProvider& globeCameraInterestPointProvider,
              UIView* pView,
@@ -342,6 +343,22 @@ Examples::IExample* MyApp::CreateExample(ExampleTypes::Examples example,
             return new Examples::RouteMatchingExample(World().GetRouteService(),
                                                       World(),
                                                       m_pView);
+        }
+        case ExampleTypes::RouteSimulationAnimation:
+        {
+            Eegeo::Routes::Simulation::Camera::RouteSimulationGlobeCameraControllerFactory factory(World().GetTerrainHeightProvider(),
+                                                                                                   World().GetEnvironmentFlatteningService(),
+                                                                                                   World().GetResourceCeilingProvider());
+            
+            return new Examples::RouteSimulationAnimationExample(World().GetRouteService(),
+                                                        World().GetRouteSimulationService(),
+                                                        World().GetRouteSimulationViewService(),
+                                                        World().GetRenderContext().GetGLState(),
+                                                        World().GetFileIO(),
+                                                        World().GetTextureLoader(),
+                                                        factory,
+                                                        World()
+                                                        );
         }
     }
 }
