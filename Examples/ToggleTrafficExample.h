@@ -10,7 +10,7 @@
 #define __ExampleApp__ToggleTrafficExample__
 
 #include "IExample.h"
-#include "TrafficSimulation.h"
+#include "TrafficSimulationController.h"
 
 namespace Examples
 {
@@ -18,10 +18,10 @@ namespace Examples
     {
     private:
         long long lastToggle;
-        Eegeo::Traffic::TrafficSimulation& trafficSimulation;
+        Eegeo::Traffic::TrafficSimulationController& trafficSimulation;
         
     public:
-        ToggleTrafficExample(Eegeo::Traffic::TrafficSimulation& trafficSimulation);
+        ToggleTrafficExample(Eegeo::Traffic::TrafficSimulationController& trafficSimulation);
         
         void Start() {}
         void Update(float dt);

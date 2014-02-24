@@ -43,8 +43,6 @@
 #include "ResourceCache.h"
 #include "iOSFileIO.h"
 #include "iOSTextureFileLoader.h"
-#include "VehicleModelLoader.h"
-#include "VehicleModelRepository.h"
 #include "iOSWebLoadRequestFactory.h"
 #include "iOSLocationService.h"
 #include "iOSUrlEncoder.h"
@@ -560,13 +558,6 @@ Eegeo::Web::iOSWebRequestService* webRequestService;
     Eegeo::Web::IWebLoadRequestFactory* pPayloadRequestFactory = new Eegeo::Web::iOSWebLoadRequestFactory(*p_iOSHttpCache, *webRequestService);
     Eegeo::Helpers::ITaskQueue* pTaskQueue = new iOSTaskQueue(10);
     
-    Eegeo::Traffic::VehicleModelRepository* pVehicleModelRepository = new Eegeo::Traffic::VehicleModelRepository;
-    Eegeo::Traffic::VehicleModelLoader* pVehicleModelLoader = new Eegeo::Traffic::VehicleModelLoader(m_renderContext->GetGLState(),
-                                                                                                     *pTextureFileLoader,
-                                                                                                     *pFileIO);
-   
-    Eegeo::Traffic::VehicleModelLoaderHelper::LoadAllVehicleResourcesIntoRepository(*pVehicleModelLoader, *pVehicleModelRepository);
-    
     const Eegeo::EnvironmentCharacterSet::Type environmentCharacterSet = Eegeo::EnvironmentCharacterSet::Latin;
     
     myApp->Start(new Eegeo::EegeoWorld(API_KEY,
@@ -575,7 +566,6 @@ Eegeo::Web::iOSWebRequestService* webRequestService;
                                        pTextureFileLoader,
                                        pPayloadRequestFactory,
                                        pTaskQueue,
-                                       pVehicleModelRepository,
                                        *m_renderContext,
                                        pLighting,
                                        pFogging,
@@ -593,8 +583,8 @@ Eegeo::Web::iOSWebRequestService* webRequestService;
                                        "",
                                        "Default-Landscape@2x~ipad.png",
                                        Eegeo::Standard,
-                                       "http://cdn1.eegeo.com/coverage-trees/v199/manifest.txt.gz",
-                                       "http://cdn1.eegeo.com/mobile-themes-new/v75/manifest.txt.gz"
+                                       "http://cdn1.eegeo.com/coverage-trees/v207/manifest.txt.gz",
+                                       "http://cdn1.eegeo.com/mobile-themes-new/v86/manifest.txt.gz"
                                        ));
     
     m_renderContext->GetGLState().InvalidateAll();

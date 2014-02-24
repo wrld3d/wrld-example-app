@@ -1,5 +1,6 @@
 #include "LoadModelExample.h"
 #include "ShaderCompiler.h"
+#include "Model.h"
 #include <sys/time.h>
 
 namespace Examples
@@ -7,12 +8,12 @@ namespace Examples
     LoadModelExample::LoadModelExample(Eegeo::Rendering::RenderContext& renderContext,
                                        Eegeo::Space::LatLongAltitude interestLocation,
                                        Eegeo::Helpers::IFileIO& fileIO,
-                                       Eegeo::Helpers::ITextureFileLoader& textureLoader,
+                                       Eegeo::Rendering::AsyncTexturing::IAsyncTextureRequestor& textureRequestor,
                                        Eegeo::Lighting::GlobalFogging& fogging)
     :renderContext(renderContext)
     ,interestLocation(interestLocation)
     ,fileIO(fileIO)
-    ,textureLoader(textureLoader)
+    ,textureRequestor(textureRequestor)
     ,pModel(NULL)
     ,boundsVisualiser(renderContext)
     ,globalFogging(fogging)
@@ -23,10 +24,7 @@ namespace Examples
     
     void LoadModelExample::Start()
     {
-        pModel = new Eegeo::Model(renderContext.GetGLState(), textureLoader, fileIO);
-        
-        //this is a .pod resource file included in the build
-        pModel->Load("sanfrancisco_vehicles_alpha.POD");
+        pModel = Eegeo::Model::CreateFromPODFile("sanfrancisco_vehicles_alpha.POD", fileIO, renderContext.GetGLState(), &textureRequestor, "");
         
         //the layout of this resource is assumed - a "Vehicles" node should exist
         Eegeo::Node* parentNode = pModel->FindNode("Vehicles");

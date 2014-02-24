@@ -23,7 +23,7 @@ namespace Examples
         
         Eegeo::Rendering::RenderContext& renderContext;
         Eegeo::Helpers::IFileIO& fileIO;
-        Eegeo::Helpers::ITextureFileLoader& textureLoader;
+        Eegeo::Rendering::AsyncTexturing::IAsyncTextureRequestor& textureRequestor;
         Eegeo::Lighting::GlobalFogging& globalFogging;
         
         Eegeo::Model* pModel;
@@ -31,7 +31,7 @@ namespace Examples
     public:
         PODAnimationExample(Eegeo::Rendering::RenderContext& renderContext,
                          Eegeo::Helpers::IFileIO& fileIO,
-                         Eegeo::Helpers::ITextureFileLoader& textureLoader,
+                         Eegeo::Rendering::AsyncTexturing::IAsyncTextureRequestor& textureRequestor,
                          Eegeo::Lighting::GlobalFogging& fogging);
         
         void Start();

@@ -47,7 +47,7 @@ RouteSimulationExample::RouteSimulationExample(RouteService& routeService,
                                                RouteSimulationViewService& routeSimulationViewService,
                                                Eegeo::Rendering::GLState& glState,
                                                Eegeo::Helpers::IFileIO& fileIO,
-                                               Eegeo::Helpers::ITextureFileLoader& textureLoader,
+                                               Eegeo::Rendering::AsyncTexturing::IAsyncTextureRequestor& textureRequestor,
                                                Eegeo::Camera::GlobeCamera::GlobeCameraController& defaultCamera,
                                                Eegeo::Location::IInterestPointProvider& interestPointProvider,
                                                RouteSimulationGlobeCameraControllerFactory routeSimulationGlobeCameraControllerFactory,
@@ -58,7 +58,7 @@ RouteSimulationExample::RouteSimulationExample(RouteService& routeService,
 ,m_routeSimulationViewService(routeSimulationViewService)
 ,m_glState(glState)
 ,m_fileIO(fileIO)
-,m_textureLoader(textureLoader)
+,m_textureRequestor(textureRequestor)
 ,m_defaultCamera(defaultCamera)
 ,m_interestPointProvider(interestPointProvider)
 ,m_routeSimulationGlobeCameraControllerFactory(routeSimulationGlobeCameraControllerFactory)
@@ -325,9 +325,7 @@ Eegeo::Model* RouteSimulationExample::LoadModelVehicleNodes(Eegeo::Node*& pVehic
                                                             Eegeo::Node*& pVehicle2,
                                                             Eegeo::Node*& pVehicle3) const
 {
-    Eegeo::Model* pModel = new Eegeo::Model(m_glState, m_textureLoader, m_fileIO);
-    
-    pModel->Load("SanFrancisco_Vehicles.pod");
+    Eegeo::Model* pModel = Eegeo::Model::CreateFromPODFile("SanFrancisco_Vehicles.pod", m_fileIO, m_glState, &m_textureRequestor, "");
     Eegeo::Node* parentNode = pModel->FindNode("Vehicles");
     
     Eegeo_ASSERT(parentNode);

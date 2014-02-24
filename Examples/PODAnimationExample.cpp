@@ -14,11 +14,11 @@ namespace Examples
 {
     PODAnimationExample::PODAnimationExample(Eegeo::Rendering::RenderContext& renderContext,
                                              Eegeo::Helpers::IFileIO& fileIO,
-                                             Eegeo::Helpers::ITextureFileLoader& textureLoader,
+                                             Eegeo::Rendering::AsyncTexturing::IAsyncTextureRequestor& textureRequestor,
                                              Eegeo::Lighting::GlobalFogging& fogging)
     :renderContext(renderContext)
     ,fileIO(fileIO)
-    ,textureLoader(textureLoader)
+    ,textureRequestor(textureRequestor)
     ,pModel(NULL)
     ,globalFogging(fogging)
     {
@@ -27,8 +27,7 @@ namespace Examples
     
     void PODAnimationExample::Start()
     {
-        pModel = new Eegeo::Model(renderContext.GetGLState(), textureLoader, fileIO);
-        pModel->Load("Test_ROBOT_ARM.pod");
+        pModel = Eegeo::Model::CreateFromPODFile("Test_ROBOT_ARM.pod", fileIO, renderContext.GetGLState(), &textureRequestor, "");
         Eegeo_ASSERT(pModel->GetRootNode());
 
     }

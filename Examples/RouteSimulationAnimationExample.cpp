@@ -26,7 +26,7 @@ RouteSimulationAnimationExample::RouteSimulationAnimationExample(
                                                RouteSimulationViewService& routeSimulationViewService,
                                                Eegeo::Rendering::GLState& glState,
                                                Eegeo::Helpers::IFileIO& fileIO,
-                                               Eegeo::Helpers::ITextureFileLoader& textureLoader,
+                                               Eegeo::Rendering::AsyncTexturing::IAsyncTextureRequestor& textureRequestor,
                                                RouteSimulationGlobeCameraControllerFactory routeSimulationGlobeCameraControllerFactory,
                                                EegeoWorld& world)
 :m_routeService(routeService)
@@ -34,7 +34,7 @@ RouteSimulationAnimationExample::RouteSimulationAnimationExample(
 ,m_routeSimulationViewService(routeSimulationViewService)
 ,m_glState(glState)
 ,m_fileIO(fileIO)
-,m_textureLoader(textureLoader)
+,m_textureRequestor(textureRequestor)
 ,m_routeSimulationGlobeCameraControllerFactory(routeSimulationGlobeCameraControllerFactory)
 ,m_world(world)
 ,m_initialised(false)
@@ -180,8 +180,7 @@ Route* RouteSimulationAnimationExample::BuildRoute()
 
 Eegeo::Model* RouteSimulationAnimationExample::LoadCharacterModel(Eegeo::Node*& pCharacter) const
 {
-    Eegeo::Model* pModel = new Eegeo::Model(m_glState, m_textureLoader, m_fileIO);
-    pModel->Load("BoxCharacter.pod");
+    Eegeo::Model* pModel = Eegeo::Model::CreateFromPODFile("BoxCharacter.pod", m_fileIO, m_glState, &m_textureRequestor, "");
     Eegeo_ASSERT(pModel->GetRootNode());
     
     pCharacter = pModel->GetRootNode();

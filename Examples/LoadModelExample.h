@@ -4,7 +4,7 @@
 #include "IExample.h"
 #include "RenderContext.h"
 #include "LatLongAltitude.h"
-
+#include "IAsyncTextureRequestor.h"
 #include "Model.h"
 
 namespace Examples
@@ -57,7 +57,7 @@ namespace Examples
         
         Eegeo::Rendering::RenderContext& renderContext;
         Eegeo::Helpers::IFileIO& fileIO;
-        Eegeo::Helpers::ITextureFileLoader& textureLoader;
+        Eegeo::Rendering::AsyncTexturing::IAsyncTextureRequestor& textureRequestor;
         Eegeo::Space::LatLongAltitude interestLocation;
         Eegeo::Lighting::GlobalFogging& globalFogging;
    
@@ -71,7 +71,7 @@ namespace Examples
         LoadModelExample(Eegeo::Rendering::RenderContext& renderContext,
                          Eegeo::Space::LatLongAltitude interestLocation,
                          Eegeo::Helpers::IFileIO& fileIO,
-                         Eegeo::Helpers::ITextureFileLoader& textureLoader,
+                         Eegeo::Rendering::AsyncTexturing::IAsyncTextureRequestor& textureRequestor,
                          Eegeo::Lighting::GlobalFogging& fogging);
         
         void Start();

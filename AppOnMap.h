@@ -125,7 +125,7 @@ public:
                                       Eegeo::Streaming::IStreamingVolume& visibleVolume,
                                       Eegeo::Lighting::GlobalLighting& lighting,
                                       Eegeo::Lighting::GlobalFogging& fogging,
-                                      Eegeo::Traffic::TrafficSimulation& trafficSimulation,
+                                      Eegeo::Traffic::TrafficSimulationController& trafficSimulation,
                                       Eegeo::Resources::ResourceSpatialQueryService& resourceSpatialQueryService,
                                       Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                       Eegeo::Search::Service::SearchService* searchService,
