@@ -367,7 +367,7 @@ Examples::IExample* MyApp::CreateExample(ExampleTypes::Examples example,
             return new Examples::DynamicText3DExample(World().GetRenderContext().GetGLState(),
                                                       World().GetCameraProvider(),
                                                       World().GetEnvironmentFlatteningService(),
-                                                      World().GetPlaceNamesViewBuilder(),
+                                                      World().GetPlaceNameViewBuilder(),
                                                       World());
         }
             
