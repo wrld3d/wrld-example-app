@@ -17,6 +17,7 @@
 		1825103E17AFD5AD00251651 /* tex_arm.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 1825103B17AFD5AD00251651 /* tex_arm.pvr */; };
 		1825103F17AFD5AD00251651 /* tex_base.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 1825103C17AFD5AD00251651 /* tex_base.pvr */; };
 		1860B65C16CA65D90004A39D /* placeholder.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 1860B65B16CA65D90004A39D /* placeholder.pvr */; };
+		1874BF2B18BCFA7300A9BDC9 /* DynamicText3DExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1874BF2918BCFA7300A9BDC9 /* DynamicText3DExample.cpp */; };
 		187C5C72175DD69500146D06 /* EnvironmentFlatteningExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 187C5C70175DD69400146D06 /* EnvironmentFlatteningExample.cpp */; };
 		18915BD317C7AF86005F24AB /* recce_trams_night.pod in Resources */ = {isa = PBXBuildFile; fileRef = 18915BD217C7AF86005F24AB /* recce_trams_night.pod */; };
 		18C19F8C1887C90E00F129EC /* RouteMatchingExample.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18C19F8A1887C90E00F129EC /* RouteMatchingExample.mm */; };
@@ -111,6 +112,8 @@
 		1825103B17AFD5AD00251651 /* tex_arm.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = tex_arm.pvr; sourceTree = "<group>"; };
 		1825103C17AFD5AD00251651 /* tex_base.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = tex_base.pvr; sourceTree = "<group>"; };
 		1860B65B16CA65D90004A39D /* placeholder.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = placeholder.pvr; sourceTree = "<group>"; };
+		1874BF2918BCFA7300A9BDC9 /* DynamicText3DExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DynamicText3DExample.cpp; sourceTree = "<group>"; };
+		1874BF2A18BCFA7300A9BDC9 /* DynamicText3DExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DynamicText3DExample.h; sourceTree = "<group>"; };
 		187C5C70175DD69400146D06 /* EnvironmentFlatteningExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EnvironmentFlatteningExample.cpp; sourceTree = "<group>"; };
 		187C5C71175DD69500146D06 /* EnvironmentFlatteningExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnvironmentFlatteningExample.h; sourceTree = "<group>"; };
 		18915BD217C7AF86005F24AB /* recce_trams_night.pod */ = {isa = PBXFileReference; lastKnownFileType = file; path = recce_trams_night.pod; sourceTree = "<group>"; };
@@ -289,6 +292,8 @@
 				1800232C1847A81F00C47D77 /* RouteThicknessPolicyExample.h */,
 				18C19F8A1887C90E00F129EC /* RouteMatchingExample.mm */,
 				18C19F8B1887C90E00F129EC /* RouteMatchingExample.h */,
+				1874BF2918BCFA7300A9BDC9 /* DynamicText3DExample.cpp */,
+				1874BF2A18BCFA7300A9BDC9 /* DynamicText3DExample.h */,
 			);
 			path = Examples;
 			sourceTree = SOURCE_ROOT;
@@ -578,6 +583,7 @@
 				18E3EC81183E804C003454B7 /* RouteSimulationExample.mm in Sources */,
 				1800232D1847A81F00C47D77 /* RouteThicknessPolicyExample.cpp in Sources */,
 				18C19F8C1887C90E00F129EC /* RouteMatchingExample.mm in Sources */,
+				1874BF2B18BCFA7300A9BDC9 /* DynamicText3DExample.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
