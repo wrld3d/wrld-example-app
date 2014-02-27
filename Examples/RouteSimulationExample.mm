@@ -12,6 +12,7 @@
 #include "RouteStyle.h"
 #include "VectorMath.h"
 #include "GlobeCameraTouchControllerConfiguration.h"
+#include "Logger.h"
 
 using namespace Examples;
 using namespace Eegeo;
@@ -202,6 +203,8 @@ void RouteSimulationExample::Update(float dt)
         float linkSpeedMultiplier = 0.5f + ((rand() % 200)/100.f);
         m_pSessionAlternatingSpeedChanger->UseLinkSpeedValueWithMultiplier(linkSpeedMultiplier);
     }
+    
+    EXAMPLE_LOG("%f metres from start of route.\n", m_pSessionAlternatingSpeedChanger->GetDistanceFromStartInMetres());
 }
 
 void RouteSimulationExample::Suspend()

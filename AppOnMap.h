@@ -52,7 +52,7 @@ namespace ExampleTypes
     };
 }
 
-static const ExampleTypes::Examples g_defaultSelectedExample = ExampleTypes::DynamicText3D;
+static const ExampleTypes::Examples g_defaultSelectedExample = ExampleTypes::RouteSimulation;
 
 namespace Eegeo
 {
