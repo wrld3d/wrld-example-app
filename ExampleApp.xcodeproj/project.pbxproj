@@ -133,6 +133,7 @@
 		5660954818B3BCF00090B857 /* BoxCharacter.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; name = BoxCharacter.pvr; path = CharacterAnimation/BoxCharacter.pvr; sourceTree = "<group>"; };
 		5660954B18B3BCFB0090B857 /* RouteSimulationAnimationExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RouteSimulationAnimationExample.cpp; sourceTree = "<group>"; };
 		5660954C18B3BCFB0090B857 /* RouteSimulationAnimationExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RouteSimulationAnimationExample.h; sourceTree = "<group>"; };
+		59A5350018BED68200E8650D /* Logger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Logger.h; sourceTree = "<group>"; };
 		59A943BC183A1758000AB7BD /* PinsExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PinsExample.cpp; sourceTree = "<group>"; };
 		59A943BD183A1758000AB7BD /* PinsExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PinsExample.h; sourceTree = "<group>"; };
 		59A943C0183A5CE2000AB7BD /* PinIconTexturePage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PinIconTexturePage.png; sourceTree = "<group>"; };
@@ -345,6 +346,7 @@
 				E0399AAD1823FF3B0038996D /* AppOnMap.mm */,
 				7EE482131683715D0006E99B /* ViewController.h */,
 				7EE482141683715D0006E99B /* ViewController.mm */,
+				59A5350018BED68200E8650D /* Logger.h */,
 				7EE481F316836F370006E99B /* Supporting Files */,
 			);
 			path = ExampleApp;
