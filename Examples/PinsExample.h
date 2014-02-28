@@ -48,7 +48,8 @@ namespace Examples
                     Eegeo::Rendering::VertexLayouts::VertexLayoutPool& vertexLayoutPool,
                     Eegeo::Rendering::RenderableFilters& renderableFilters,
                     const Eegeo::Camera::ICameraProvider& cameraProvider,
-                    Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider
+                    Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider,
+                    Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService
                     );
         virtual ~PinsExample();
         void Start();

@@ -310,7 +310,8 @@ Examples::IExample* MyApp::CreateExample(ExampleTypes::Examples example,
                                              World().GetVertexLayoutPool(),
                                              World().GetRenderableFilters(),
                                              World().GetCameraProvider(),
-                                             World().GetTerrainHeightProvider()
+                                             World().GetTerrainHeightProvider(),
+                                             World().GetEnvironmentFlatteningService()
                                              );
             
         case ExampleTypes::RouteSimulation:
