@@ -41,6 +41,7 @@
 #include "RouteSimulationAnimationExample.h"
 #include "DynamicText3DExample.h"
 #include "SingleCityExample.h"
+#include "PinOverModelExample.h"
 
 MyApp::MyApp(Eegeo::Camera::GlobeCamera::GlobeCameraInterestPointProvider& globeCameraInterestPointProvider,
              UIView* pView,
@@ -113,7 +114,7 @@ void MyApp::OnStart ()
     
     m_globeCameraController->SetView(cameraInterestBasis, cameraControllerDistanceFromInterestPointMeters);
     
-//    eegeoWorld.GetWeatherController().SetWeather(Eegeo::Weather::Sunny, 1.0f);
+    //    eegeoWorld.GetWeatherController().SetWeather(Eegeo::Weather::Sunny, 1.0f);
     
     Eegeo::Search::Service::SearchService* searchService = NULL;
     
@@ -163,7 +164,7 @@ void MyApp::Update (float dt)
     m_cameraTouchController->Update(dt);
     m_globeCameraController->Update(dt);
     pExample->AfterCameraUpdate();
-
+    
     eegeoWorld.Update(dt);
     pExample->Update(dt);
 }
@@ -313,7 +314,11 @@ Examples::IExample* MyApp::CreateExample(ExampleTypes::Examples example,
                                              World().GetRenderableFilters(),
                                              World().GetCameraProvider(),
                                              World().GetTerrainHeightProvider(),
-                                             World().GetEnvironmentFlatteningService()
+                                             World().GetEnvironmentFlatteningService(),
+                                             renderContext,
+                                             fileIO,
+                                             World().GetLocalAsyncTextureLoader(),
+                                             fogging
                                              );
             
         case ExampleTypes::RouteSimulation:
@@ -356,14 +361,14 @@ Examples::IExample* MyApp::CreateExample(ExampleTypes::Examples example,
                                                                                                    World().GetResourceCeilingProvider());
             
             return new Examples::RouteSimulationAnimationExample(World().GetRouteService(),
-                                                        World().GetRouteSimulationService(),
-                                                        World().GetRouteSimulationViewService(),
-                                                        World().GetRenderContext().GetGLState(),
-                                                        World().GetFileIO(),
-                                                        World().GetLocalAsyncTextureLoader(),
-                                                        factory,
-                                                        World()
-                                                        );
+                                                                 World().GetRouteSimulationService(),
+                                                                 World().GetRouteSimulationViewService(),
+                                                                 World().GetRenderContext().GetGLState(),
+                                                                 World().GetFileIO(),
+                                                                 World().GetLocalAsyncTextureLoader(),
+                                                                 factory,
+                                                                 World()
+                                                                 );
         }
         case ExampleTypes::DynamicText3D:
         {
@@ -380,6 +385,24 @@ Examples::IExample* MyApp::CreateExample(ExampleTypes::Examples example,
                                                    World().GetStreamingVolumeController(),
                                                    World());
         }
+            
+        case ExampleTypes::PinOverModel:
+            return new Examples::PinOverModelExample(
+                                                     World().GetTextureLoader(),
+                                                     World().GetGlBufferPool(),
+                                                     World().GetShaderIdGenerator(),
+                                                     World().GetMaterialIdGenerator(),
+                                                     World().GetVertexBindingPool(),
+                                                     World().GetVertexLayoutPool(),
+                                                     World().GetRenderableFilters(),
+                                                     World().GetCameraProvider(),
+                                                     World().GetTerrainHeightProvider(),
+                                                     World().GetEnvironmentFlatteningService(),
+                                                     renderContext,
+                                                     fileIO,
+                                                     World().GetLocalAsyncTextureLoader(),
+                                                     fogging
+                                                     );
     }
 }
 

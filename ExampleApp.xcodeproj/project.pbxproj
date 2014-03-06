@@ -16,6 +16,7 @@
 		1825103D17AFD5AD00251651 /* Test_ROBOT_ARM.pod in Resources */ = {isa = PBXBuildFile; fileRef = 1825103A17AFD5AD00251651 /* Test_ROBOT_ARM.pod */; };
 		1825103E17AFD5AD00251651 /* tex_arm.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 1825103B17AFD5AD00251651 /* tex_arm.pvr */; };
 		1825103F17AFD5AD00251651 /* tex_base.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 1825103C17AFD5AD00251651 /* tex_base.pvr */; };
+		1826527418C8E09D0084A13C /* PinOverModelExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1826527218C8E09D0084A13C /* PinOverModelExample.cpp */; };
 		183D28ED18C78EBE004727F6 /* SingleCityExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 183D28EB18C78EBE004727F6 /* SingleCityExample.cpp */; };
 		1860B65C16CA65D90004A39D /* placeholder.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 1860B65B16CA65D90004A39D /* placeholder.pvr */; };
 		1874BF2B18BCFA7300A9BDC9 /* DynamicText3DExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1874BF2918BCFA7300A9BDC9 /* DynamicText3DExample.cpp */; };
@@ -112,6 +113,8 @@
 		1825103A17AFD5AD00251651 /* Test_ROBOT_ARM.pod */ = {isa = PBXFileReference; lastKnownFileType = file; path = Test_ROBOT_ARM.pod; sourceTree = "<group>"; };
 		1825103B17AFD5AD00251651 /* tex_arm.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = tex_arm.pvr; sourceTree = "<group>"; };
 		1825103C17AFD5AD00251651 /* tex_base.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = tex_base.pvr; sourceTree = "<group>"; };
+		1826527218C8E09D0084A13C /* PinOverModelExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PinOverModelExample.cpp; sourceTree = "<group>"; };
+		1826527318C8E09D0084A13C /* PinOverModelExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PinOverModelExample.h; sourceTree = "<group>"; };
 		183D28EB18C78EBE004727F6 /* SingleCityExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SingleCityExample.cpp; sourceTree = "<group>"; };
 		183D28EC18C78EBE004727F6 /* SingleCityExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SingleCityExample.h; sourceTree = "<group>"; };
 		1860B65B16CA65D90004A39D /* placeholder.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = placeholder.pvr; sourceTree = "<group>"; };
@@ -300,6 +303,8 @@
 				18C19F8B1887C90E00F129EC /* RouteMatchingExample.h */,
 				1874BF2918BCFA7300A9BDC9 /* DynamicText3DExample.cpp */,
 				1874BF2A18BCFA7300A9BDC9 /* DynamicText3DExample.h */,
+				1826527218C8E09D0084A13C /* PinOverModelExample.cpp */,
+				1826527318C8E09D0084A13C /* PinOverModelExample.h */,
 			);
 			path = Examples;
 			sourceTree = SOURCE_ROOT;
@@ -592,6 +597,7 @@
 				18C19F8C1887C90E00F129EC /* RouteMatchingExample.mm in Sources */,
 				1874BF2B18BCFA7300A9BDC9 /* DynamicText3DExample.cpp in Sources */,
 				183D28ED18C78EBE004727F6 /* SingleCityExample.cpp in Sources */,
+				1826527418C8E09D0084A13C /* PinOverModelExample.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
