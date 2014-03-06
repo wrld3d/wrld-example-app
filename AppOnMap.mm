@@ -314,11 +314,7 @@ Examples::IExample* MyApp::CreateExample(ExampleTypes::Examples example,
                                              World().GetRenderableFilters(),
                                              World().GetCameraProvider(),
                                              World().GetTerrainHeightProvider(),
-                                             World().GetEnvironmentFlatteningService(),
-                                             renderContext,
-                                             fileIO,
-                                             World().GetLocalAsyncTextureLoader(),
-                                             fogging
+                                             World().GetEnvironmentFlatteningService()
                                              );
             
         case ExampleTypes::RouteSimulation:
