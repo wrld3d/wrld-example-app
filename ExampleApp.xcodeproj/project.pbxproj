@@ -90,6 +90,7 @@
 		7EE4834D16847E7C0006E99B /* SanFrancisco_Vehicles.pod in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482B916847E7C0006E99B /* SanFrancisco_Vehicles.pod */; };
 		7EE4838416847E7C0006E99B /* Vehicles_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482F016847E7C0006E99B /* Vehicles_01.pvr */; };
 		7EF5D8651737F9A40049D787 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EF5D8641737F9A40049D787 /* CoreLocation.framework */; };
+		99DE1A5832509BD30A5C3DB1 /* TrafficCongestionExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 99DE1BE4CE4B22EDFFCF5E98 /* TrafficCongestionExample.cpp */; };
 		E0399AAE1823FF3B0038996D /* AppOnMap.mm in Sources */ = {isa = PBXBuildFile; fileRef = E0399AAD1823FF3B0038996D /* AppOnMap.mm */; };
 		E0399AB61827EA0D0038996D /* ScreenPickExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E0399AB41827EA0D0038996D /* ScreenPickExample.cpp */; };
 		E03F3E4A184E43BD002FF534 /* FrankBold50_A8_icons_0.png in Resources */ = {isa = PBXBuildFile; fileRef = E03F3E48184E43BD002FF534 /* FrankBold50_A8_icons_0.png */; };
@@ -232,6 +233,8 @@
 		7EE482B916847E7C0006E99B /* SanFrancisco_Vehicles.pod */ = {isa = PBXFileReference; lastKnownFileType = file; path = SanFrancisco_Vehicles.pod; sourceTree = "<group>"; };
 		7EE482F016847E7C0006E99B /* Vehicles_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Vehicles_01.pvr; sourceTree = "<group>"; };
 		7EF5D8641737F9A40049D787 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		99DE1A1B1274ECA08927668B /* TrafficCongestionExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrafficCongestionExample.h; sourceTree = "<group>"; };
+		99DE1BE4CE4B22EDFFCF5E98 /* TrafficCongestionExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TrafficCongestionExample.cpp; sourceTree = "<group>"; };
 		E0399AAD1823FF3B0038996D /* AppOnMap.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppOnMap.mm; sourceTree = SOURCE_ROOT; };
 		E0399AB41827EA0D0038996D /* ScreenPickExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ScreenPickExample.cpp; sourceTree = "<group>"; };
 		E0399AB51827EA0D0038996D /* ScreenPickExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScreenPickExample.h; sourceTree = "<group>"; };
@@ -329,6 +332,8 @@
 				1874BF2A18BCFA7300A9BDC9 /* DynamicText3DExample.h */,
 				1826527218C8E09D0084A13C /* PinOverModelExample.cpp */,
 				1826527318C8E09D0084A13C /* PinOverModelExample.h */,
+				99DE1BE4CE4B22EDFFCF5E98 /* TrafficCongestionExample.cpp */,
+				99DE1A1B1274ECA08927668B /* TrafficCongestionExample.h */,
 			);
 			path = Examples;
 			sourceTree = SOURCE_ROOT;
@@ -640,6 +645,7 @@
 				1874BF2B18BCFA7300A9BDC9 /* DynamicText3DExample.cpp in Sources */,
 				183D28ED18C78EBE004727F6 /* SingleCityExample.cpp in Sources */,
 				1826527418C8E09D0084A13C /* PinOverModelExample.cpp in Sources */,
+				99DE1A5832509BD30A5C3DB1 /* TrafficCongestionExample.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
