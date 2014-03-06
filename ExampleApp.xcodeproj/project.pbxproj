@@ -17,6 +17,7 @@
 		1825103E17AFD5AD00251651 /* tex_arm.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 1825103B17AFD5AD00251651 /* tex_arm.pvr */; };
 		1825103F17AFD5AD00251651 /* tex_base.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 1825103C17AFD5AD00251651 /* tex_base.pvr */; };
 		1826527418C8E09D0084A13C /* PinOverModelExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1826527218C8E09D0084A13C /* PinOverModelExample.cpp */; };
+		1826527D18C920460084A13C /* libapps-on-maps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1826527A18C920320084A13C /* libapps-on-maps.a */; };
 		183D28ED18C78EBE004727F6 /* SingleCityExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 183D28EB18C78EBE004727F6 /* SingleCityExample.cpp */; };
 		1860B65C16CA65D90004A39D /* placeholder.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 1860B65B16CA65D90004A39D /* placeholder.pvr */; };
 		1874BF2B18BCFA7300A9BDC9 /* DynamicText3DExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1874BF2918BCFA7300A9BDC9 /* DynamicText3DExample.cpp */; };
@@ -55,8 +56,6 @@
 		7E7DF51C17300A4E005911AC /* FileIOExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E7DF51A17300A4D005911AC /* FileIOExample.cpp */; };
 		7E7DF5271732AB27005911AC /* NavigationGraphExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E7DF5251732AB27005911AC /* NavigationGraphExample.cpp */; };
 		7E7DF52C1733B844005911AC /* ModifiedRenderingExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E7DF52A1733B844005911AC /* ModifiedRenderingExample.cpp */; };
-		7EC9D1FA1701B9E600F30D39 /* libapps-on-maps-sim.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E75EE1D16848B8A00BCA283 /* libapps-on-maps-sim.a */; };
-		7EC9D1FB1701B9E600F30D39 /* libapps-on-maps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE48223168373E20006E99B /* libapps-on-maps.a */; };
 		7ED145971820212A0018218E /* placeholder_no_data.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7ED145961820212A0018218E /* placeholder_no_data.pvr */; };
 		7ED4CF9317424CF400739A3D /* ToggleTrafficExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7ED4CF9117424CF400739A3D /* ToggleTrafficExample.cpp */; };
 		7ED4CF9B1742A85200739A3D /* ResourceSpatialQueryExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7ED4CF991742A85200739A3D /* ResourceSpatialQueryExample.cpp */; };
@@ -97,6 +96,23 @@
 		E03F3E4B184E43BD002FF534 /* FrankBold50_A8_icons.fnt in Resources */ = {isa = PBXBuildFile; fileRef = E03F3E49184E43BD002FF534 /* FrankBold50_A8_icons.fnt */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		1826527918C920320084A13C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1826527518C920310084A13C /* apps-on-maps.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 7E1A38F21670AC4600690512;
+			remoteInfo = "apps-on-maps";
+		};
+		1826527B18C920370084A13C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1826527518C920310084A13C /* apps-on-maps.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 7E1A38F11670AC4500690512;
+			remoteInfo = "apps-on-maps";
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		09C974C218310127001B9BD7 /* DebugPrimitiveRenderingExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DebugPrimitiveRenderingExample.cpp; sourceTree = "<group>"; };
 		09C974C318310127001B9BD7 /* DebugPrimitiveRenderingExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebugPrimitiveRenderingExample.h; sourceTree = "<group>"; };
@@ -115,6 +131,7 @@
 		1825103C17AFD5AD00251651 /* tex_base.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = tex_base.pvr; sourceTree = "<group>"; };
 		1826527218C8E09D0084A13C /* PinOverModelExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PinOverModelExample.cpp; sourceTree = "<group>"; };
 		1826527318C8E09D0084A13C /* PinOverModelExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PinOverModelExample.h; sourceTree = "<group>"; };
+		1826527518C920310084A13C /* apps-on-maps.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "apps-on-maps.xcodeproj"; path = "../eegeo-mobile/apps-on-maps-ios/apps-on-maps.xcodeproj"; sourceTree = "<group>"; };
 		183D28EB18C78EBE004727F6 /* SingleCityExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SingleCityExample.cpp; sourceTree = "<group>"; };
 		183D28EC18C78EBE004727F6 /* SingleCityExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SingleCityExample.h; sourceTree = "<group>"; };
 		1860B65B16CA65D90004A39D /* placeholder.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = placeholder.pvr; sourceTree = "<group>"; };
@@ -227,9 +244,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1826527D18C920460084A13C /* libapps-on-maps.a in Frameworks */,
 				7EF5D8651737F9A40049D787 /* CoreLocation.framework in Frameworks */,
-				7EC9D1FA1701B9E600F30D39 /* libapps-on-maps-sim.a in Frameworks */,
-				7EC9D1FB1701B9E600F30D39 /* libapps-on-maps.a in Frameworks */,
 				7EE48258168477CB0006E99B /* libz.dylib in Frameworks */,
 				7EE48256168477A80006E99B /* MobileCoreServices.framework in Frameworks */,
 				7EE48254168477600006E99B /* SystemConfiguration.framework in Frameworks */,
@@ -247,6 +263,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1826527618C920310084A13C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1826527A18C920320084A13C /* libapps-on-maps.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		7E5928A916CA7FA20005E64D /* Examples */ = {
 			isa = PBXGroup;
 			children = (
@@ -312,6 +336,7 @@
 		7EE481DB16836F360006E99B = {
 			isa = PBXGroup;
 			children = (
+				1826527518C920310084A13C /* apps-on-maps.xcodeproj */,
 				7EF5D8641737F9A40049D787 /* CoreLocation.framework */,
 				7EE4825B16847E7C0006E99B /* Resources */,
 				7EE481F216836F370006E99B /* ExampleApp */,
@@ -477,6 +502,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				1826527C18C920370084A13C /* PBXTargetDependency */,
 			);
 			name = ExampleApp;
 			productName = ExampleApp;
@@ -502,12 +528,28 @@
 			mainGroup = 7EE481DB16836F360006E99B;
 			productRefGroup = 7EE481E716836F370006E99B /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 1826527618C920310084A13C /* Products */;
+					ProjectRef = 1826527518C920310084A13C /* apps-on-maps.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				7EE481E516836F370006E99B /* ExampleApp */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		1826527A18C920320084A13C /* libapps-on-maps.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libapps-on-maps.a";
+			remoteRef = 1826527918C920320084A13C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		7EE481E416836F370006E99B /* Resources */ = {
@@ -602,6 +644,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		1826527C18C920370084A13C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "apps-on-maps";
+			targetProxy = 1826527B18C920370084A13C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		7EE481F516836F370006E99B /* InfoPlist.strings */ = {
@@ -708,7 +758,10 @@
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ExampleApp/ExampleApp-Prefix.pch";
-				HEADER_SEARCH_PATHS = "Include/**";
+				HEADER_SEARCH_PATHS = (
+					"Include/**",
+					"../eegeo-mobile/platform/**",
+				);
 				INFOPLIST_FILE = "ExampleApp/ExampleApp-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -734,7 +787,10 @@
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ExampleApp/ExampleApp-Prefix.pch";
-				HEADER_SEARCH_PATHS = "Include/**";
+				HEADER_SEARCH_PATHS = (
+					"Include/**",
+					"../eegeo-mobile/platform/**",
+				);
 				INFOPLIST_FILE = "ExampleApp/ExampleApp-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

@@ -20,18 +20,41 @@
 #include "IAsyncTextureRequestor.h"
 #include "GlobalFogging.h"
 #include "Model.h"
+#include "NullMaterial.h"
+#include "IRenderableFilter.h"
+#include "RenderableBase.h"
+#include "NullMaterial.h"
 
 namespace Examples
 {
-    /*!
-     *  PinsExample demonstrates the display of Pins within the 3D world.
-     *  Pins are placed relative to the underlying terrain and displayed as Sprites which always face the camera.
-     *  This example also demonstrates how Pins can be selected by testing against their screen bounds.
-     *  Pin add / remove functionality is demonstrated by adding / removing pin 0 every 3 seconds.
-     */
     class PinOverModelExample : public IExample
     {
     private:
+        
+        class MyModelRenderable : public Eegeo::Rendering::RenderableBase
+        {
+            Eegeo::Model& m_model;
+            Eegeo::Rendering::RenderContext& m_renderContext;
+            Eegeo::Lighting::GlobalFogging& m_globalFogging;
+            
+        public:
+            MyModelRenderable(Eegeo::Model& model,
+               Eegeo::Rendering::RenderContext& renderContext,
+               Eegeo::Lighting::GlobalFogging& globalFogging,
+               Eegeo::Rendering::Materials::NullMaterial& nullMat);
+            
+            void Render(Eegeo::Rendering::GLState& glState) const;
+        };
+        
+        class MyRenderableFilter : public Eegeo::Rendering::IRenderableFilter
+        {
+            Eegeo::Rendering::RenderableBase& m_renderable;
+        public:
+            MyRenderableFilter(Eegeo::Rendering::RenderableBase& renderable);
+            
+            void EnqueueRenderables(Eegeo::Rendering::RenderContext& renderContext, Eegeo::Rendering::RenderQueue& renderQueue);
+        };
+        
         Eegeo::Rendering::ITexturePageLayout* m_pPinIconsTexturePageLayout;
         Eegeo::Helpers::GLHelpers::TextureInfo m_pinIconsTexture;
         Eegeo::Pins::PinsModule* m_pPinsModule;
@@ -43,8 +66,13 @@ namespace Examples
         Eegeo::Helpers::IFileIO& fileIO;
         Eegeo::Rendering::AsyncTexturing::IAsyncTextureRequestor& textureRequestor;
         Eegeo::Lighting::GlobalFogging& globalFogging;
+        Eegeo::Rendering::RenderableFilters& renderableFilters;
         
         Eegeo::Model* pModel;
+        Eegeo::Rendering::Materials::NullMaterial& nullMat;
+        
+        MyModelRenderable* m_pMyModelRenderable;
+        MyRenderableFilter* m_pMyRenderableFilter;
         
     public:
         PinOverModelExample(
@@ -61,7 +89,8 @@ namespace Examples
                             Eegeo::Rendering::RenderContext& renderContext,
                             Eegeo::Helpers::IFileIO& fileIO,
                             Eegeo::Rendering::AsyncTexturing::IAsyncTextureRequestor& textureRequestor,
-                            Eegeo::Lighting::GlobalFogging& fogging
+                            Eegeo::Lighting::GlobalFogging& fogging,
+                            Eegeo::Rendering::Materials::NullMaterial& nullMat
                             );
         virtual ~PinOverModelExample();
         void Start();

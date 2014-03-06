@@ -397,7 +397,8 @@ Examples::IExample* MyApp::CreateExample(ExampleTypes::Examples example,
                                                      renderContext,
                                                      fileIO,
                                                      World().GetLocalAsyncTextureLoader(),
-                                                     fogging
+                                                     fogging,
+                                                      World().GetNullMaterial()
                                                      );
     }
 }

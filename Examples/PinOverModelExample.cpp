@@ -26,7 +26,8 @@ namespace Examples
                                              Eegeo::Rendering::RenderContext& renderContext,
                                              Eegeo::Helpers::IFileIO& fileIO,
                                              Eegeo::Rendering::AsyncTexturing::IAsyncTextureRequestor& textureRequestor,
-                                             Eegeo::Lighting::GlobalFogging& fogging
+                                             Eegeo::Lighting::GlobalFogging& fogging,
+                                             Eegeo::Rendering::Materials::NullMaterial& nullMat
                                              )
     : m_pin0UserData("Pin Zero(0) User Data")
     , m_pPin0(NULL)
@@ -35,6 +36,8 @@ namespace Examples
     ,textureRequestor(textureRequestor)
     ,pModel(NULL)
     ,globalFogging(fogging)
+    ,renderableFilters(renderableFilters)
+    ,nullMat(nullMat)
     {
         textureLoader.LoadTexture(m_pinIconsTexture, "PinIconTexturePage.png", true);
         Eegeo_ASSERT(m_pinIconsTexture.textureId != 0);
@@ -82,6 +85,9 @@ namespace Examples
         // Delete the icon texture and its layout.
         Eegeo_DELETE m_pPinIconsTexturePageLayout;
         glDeleteTextures(1, &m_pinIconsTexture.textureId);
+        
+        Eegeo_DELETE m_pMyRenderableFilter;
+        Eegeo_DELETE m_pMyModelRenderable;
     }
     
     void PinOverModelExample::CreateExamplePins()
@@ -93,7 +99,7 @@ namespace Examples
         Eegeo::Pins::TPinId pin0Id = 0;
         Eegeo::Space::LatLong pin0Location = Eegeo::Space::LatLong::FromDegrees(37.7858,-122.401);
         int pin0Icon = 0;
-        Eegeo::Pins::Pin* pPin0 = Eegeo_NEW(Eegeo::Pins::Pin)(pin0Id, pin0Location, 300, pin0Icon, &m_pin0UserData);
+        Eegeo::Pins::Pin* pPin0 = Eegeo_NEW(Eegeo::Pins::Pin)(pin0Id, pin0Location, 30, pin0Icon, &m_pin0UserData);
         pinRepository.AddPin(pPin0);
         
         m_pPin0 = pPin0;
@@ -103,6 +109,10 @@ namespace Examples
     {
         pModel = Eegeo::Model::CreateFromPODFile("Test_ROBOT_ARM.pod", fileIO, renderContext.GetGLState(), &textureRequestor, "");
         Eegeo_ASSERT(pModel->GetRootNode());
+        
+        m_pMyModelRenderable = Eegeo_NEW (MyModelRenderable)(*pModel, renderContext, globalFogging, nullMat);
+        m_pMyRenderableFilter = Eegeo_NEW (MyRenderableFilter)(*m_pMyModelRenderable);
+        renderableFilters.AddRenderableFilter(m_pMyRenderableFilter);
     }
     
     void PinOverModelExample::Suspend()
@@ -121,14 +131,32 @@ namespace Examples
     
     void PinOverModelExample::Draw()
     {
-        //create basis around a known location off coast of SF
+    }
+    
+    
+    PinOverModelExample::MyModelRenderable::MyModelRenderable(Eegeo::Model& model,
+                                                              Eegeo::Rendering::RenderContext& renderContext,
+                                                              Eegeo::Lighting::GlobalFogging& globalFogging,
+                                                              Eegeo::Rendering::Materials::NullMaterial& nullMat)
+    : Eegeo::Rendering::RenderableBase(Eegeo::Rendering::LayerIds::Buildings,
+                                       Eegeo::Space::LatLong::FromDegrees(37.7858,-122.401).ToECEF(),
+                                       &nullMat)
+    , m_model(model)
+    , m_renderContext(renderContext)
+    , m_globalFogging(globalFogging)
+    {
+        
+    }
+    
+    void PinOverModelExample::MyModelRenderable::Render(Eegeo::Rendering::GLState& glState) const
+    {
         Eegeo::m44 transform;
         Eegeo::dv3 location = Eegeo::Space::LatLong::FromDegrees(37.7858,-122.401).ToECEF();
         Eegeo::v3 up(location.Norm().ToSingle());
         Eegeo::v3 forward = (location  - Eegeo::v3(0.f, 1.f, 0.f)).Norm().ToSingle();
         Eegeo::v3 right(Eegeo::v3::Cross(up, forward).Norm());
         forward = Eegeo::v3::Cross(up, right);
-        Eegeo::v3 cameraRelativePos = (location - renderContext.GetCameraOriginEcef()).ToSingle();
+        Eegeo::v3 cameraRelativePos = (location - m_renderContext.GetCameraOriginEcef()).ToSingle();
         Eegeo::m44 scaleMatrix;
         scaleMatrix.Scale(1.f);
         Eegeo::m44 cameraRelativeTransform;
@@ -136,18 +164,31 @@ namespace Examples
         Eegeo::m44::Mul(transform, cameraRelativeTransform, scaleMatrix);
         transform.SetRow(3, Eegeo::v4(cameraRelativePos, 1.f));
         
-        renderContext.GetGLState().DepthTest.Enable();
-        renderContext.GetGLState().DepthFunc(GL_LEQUAL);
+        glState.DepthTest.Enable();
+        glState.DepthFunc(GL_LEQUAL);
         
         //loaded model faces are ccw
-        renderContext.GetGLState().FrontFace(GL_CCW);
+        glState.FrontFace(GL_CCW);
         
-        pModel->GetRootNode()->SetVisible(true);
-        pModel->GetRootNode()->SetLocalMatrix(transform);
-        pModel->GetRootNode()->UpdateRecursive();
-        pModel->GetRootNode()->UpdateSphereRecursive();
-        pModel->GetRootNode()->DrawRecursive(renderContext, globalFogging, NULL, true, false);
+        m_model.GetRootNode()->SetVisible(true);
+        m_model.GetRootNode()->SetLocalMatrix(transform);
+        m_model.GetRootNode()->UpdateRecursive();
+        m_model.GetRootNode()->UpdateSphereRecursive();
+        m_model.GetRootNode()->DrawRecursive(m_renderContext, m_globalFogging, NULL, true, false);
         
-        renderContext.GetGLState().FrontFace(GL_CW);
+        glState.FrontFace(GL_CW);
+        
+        Eegeo::EffectHandler::Reset();
+    }
+    
+    PinOverModelExample::MyRenderableFilter::MyRenderableFilter(Eegeo::Rendering::RenderableBase& renderable)
+    : m_renderable(renderable)
+    {
+        
+    }
+    void PinOverModelExample::MyRenderableFilter::EnqueueRenderables(Eegeo::Rendering::RenderContext& renderContext,
+                                                                     Eegeo::Rendering::RenderQueue& renderQueue)
+    {
+        renderQueue.EnqueueRenderable(m_renderable);
     }
 }
