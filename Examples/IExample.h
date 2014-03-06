@@ -12,6 +12,7 @@ namespace Examples
         
         virtual void Start() = 0;
         virtual void EarlyUpdate(float dt) { }
+        virtual void AfterCameraUpdate() { }
         virtual void Update(float dt) = 0;
         virtual void Draw() = 0;
         virtual void Suspend()= 0 ;
