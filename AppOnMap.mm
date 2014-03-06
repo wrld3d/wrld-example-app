@@ -42,6 +42,7 @@
 #include "DynamicText3DExample.h"
 #include "SingleCityExample.h"
 #include "PinOverModelExample.h"
+#include "TrafficCongestionExample.h"
 
 MyApp::MyApp(Eegeo::Camera::GlobeCamera::GlobeCameraInterestPointProvider& globeCameraInterestPointProvider,
              UIView* pView,
@@ -399,6 +400,10 @@ Examples::IExample* MyApp::CreateExample(ExampleTypes::Examples example,
                                                      World().GetLocalAsyncTextureLoader(),
                                                      fogging
                                                      );
+        case ExampleTypes::TrafficCongestion:
+            return new Examples::TrafficCongestionExample(
+                    World().GetTrafficCongestionService(),
+                    World());
     }
 }
 
