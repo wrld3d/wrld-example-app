@@ -502,17 +502,6 @@ Eegeo::Web::iOSWebRequestService* webRequestService;
     
     [EAGLContext setCurrentContext: view.context];
     
-	// Get the pixel scale to account for retina displays...
-	UIScreen* screen = [UIScreen mainScreen];
-	if ([screen respondsToSelector: @selector(scale)])
-	{
-		pixelScale = screen.scale;
-	}
-	else
-	{
-		pixelScale = 1.f;
-	}
-    
     float width 		= view.bounds.size.width * pixelScale;
     float height 		= view.bounds.size.height * pixelScale;
     
@@ -808,7 +797,7 @@ Eegeo::Web::iOSWebRequestService* webRequestService;
     
 	positionAbs.x *= pixelScale;
 	positionAbs.y *= pixelScale;
-    
+        
 	AppInterface::PanData data;
 	
 	data.pointRelative	= *(Eegeo::v2*)&position;
