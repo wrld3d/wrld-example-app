@@ -20,12 +20,19 @@ namespace Examples
         {
             m_hasCalled = true;
 
+            const int roadId = 0;
+
+            Eegeo::Streaming::MortonKey key = Eegeo::Streaming::MortonKey::CreateFromString("01131232132001");
+
             bool success = m_trafficCongestionService.TrySetCongestionFor(
-                    Eegeo::Streaming::MortonKey::CreateFromString("01131232132001"),
-                    0,
+                    key,
+                    roadId,
                     Eegeo::TrafficCongestion::CongestionLevel::Heavy);
 
-            Eegeo_ASSERT(success, "should've worked");
+            Eegeo_TTY("%s congestion level on road id %d for morton key %s\n",
+                    success ? "Successfully set" : "Failed to set",
+                    roadId,
+                    key.ToString().c_str());
         }
     }
 }
