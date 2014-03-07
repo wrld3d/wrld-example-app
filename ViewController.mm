@@ -525,7 +525,7 @@ Eegeo::Web::iOSWebRequestService* webRequestService;
     }
     
     m_renderContext = new Eegeo::Rendering::RenderContext();
-    m_renderContext->SetScreenDimensions(width, height, pixelScale);
+    m_renderContext->SetScreenDimensions(width, height, pixelScale, App::GetDeviceDpi()*pixelScale);
 }
 
 - (void) initWorld
