@@ -17,6 +17,7 @@
 #include "GlobeCamera.h"
 #include "SceneElementRepository.h"
 #import <UIKit/UIKit.h>
+#import <LatLongAltitude.h>
 #include "GlHelpers.h"
 
 namespace ExampleTypes
