@@ -41,6 +41,7 @@ namespace Examples
         Eegeo::Rendering::GLState& m_glState;
         Eegeo::Helpers::IFileIO& m_fileIO;
         Eegeo::Rendering::AsyncTexturing::IAsyncTextureRequestor& m_textureRequestor;
+        Eegeo::Camera::ICameraProvider& m_cameraProvider;
         Eegeo::EegeoWorld& m_world;
         float m_modelAnimationSpeed;
         
@@ -56,10 +57,13 @@ namespace Examples
         Eegeo::Routes::Simulation::Camera::RouteSimulationGlobeCameraControllerFactory m_routeSimulationGlobeCameraControllerFactory;
         Eegeo::Routes::Simulation::Camera::RouteSimulationGlobeCameraController* m_pRouteSessionFollowCameraController;
         
+        void CalculateTransform(Eegeo::m44& transform);
+        
     public:
         RouteSimulationAnimationExample(Eegeo::Routes::RouteService& routeService,
                                         Eegeo::Routes::Simulation::RouteSimulationService& routeSimulationService,
                                         Eegeo::Routes::Simulation::View::RouteSimulationViewService& routeSimulationViewService,
+                                        Eegeo::Camera::ICameraProvider& cameraProvider,
                                         Eegeo::Rendering::GLState& glState,
                                         Eegeo::Helpers::IFileIO& fileIO,
                                         Eegeo::Rendering::AsyncTexturing::IAsyncTextureRequestor& textureRequestor,
