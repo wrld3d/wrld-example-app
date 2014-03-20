@@ -548,7 +548,8 @@ Eegeo::Web::iOSWebRequestService* webRequestService;
     Eegeo::Helpers::ITaskQueue* pTaskQueue = new iOSTaskQueue(10);
     
     const Eegeo::EnvironmentCharacterSet::Type environmentCharacterSet = Eegeo::EnvironmentCharacterSet::Latin;
-    
+    Eegeo::Config::PlatformConfig config = Eegeo::Config::PlatformConfig();
+
     myApp->Start(new Eegeo::EegeoWorld(API_KEY,
                                        pHttpCache,
                                        pFileIO,
@@ -568,10 +569,10 @@ Eegeo::Web::iOSWebRequestService* webRequestService;
                                        &m_terrainHeightProvider,
                                        m_pEnvironmentFlatteningService,
                                        environmentCharacterSet,
+                                       config,
                                        pCredentials,
                                        "",
                                        "Default-Landscape@2x~ipad.png",
-                                       Eegeo::Standard,
                                        "http://cdn1.eegeo.com/coverage-trees/v207/manifest.txt.gz",
                                        "http://cdn1.eegeo.com/mobile-themes-new/v99/manifest.txt.gz"
                                        ));
