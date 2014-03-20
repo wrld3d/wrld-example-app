@@ -149,7 +149,8 @@ void MyApp::OnStart ()
                              searchService,
                              eegeoWorld.GetNativeUIFactories(),
                              eegeoWorld.GetInterestPointProvider(),
-                             eegeoWorld.GetRouteService()
+                             eegeoWorld.GetRouteService(),
+                             eegeoWorld.GetCollisionMeshResourceProvider()
                              );
     
     pExample->Start();
@@ -214,7 +215,8 @@ Examples::IExample* MyApp::CreateExample(ExampleTypes::Examples example,
                                          Eegeo::Search::Service::SearchService* searchService,
                                          Eegeo::UI::NativeUIFactories& nativeInputFactories,
                                          Eegeo::Location::IInterestPointProvider& interestPointProvider,
-                                         Eegeo::Routes::RouteService& routeService
+                                         Eegeo::Routes::RouteService& routeService,
+                                         const Eegeo::Resources::Terrain::Collision::ICollisionMeshResourceProvider& collisionMeshResourceProvider
                                          )
 {
     switch(example)
@@ -234,7 +236,8 @@ Examples::IExample* MyApp::CreateExample(ExampleTypes::Examples example,
         case ExampleTypes::ScreenPick:
             return new Examples::ScreenPickExample(renderContext,
                                                    cameraProvider,
-                                                   terrainHeightProvider);
+                                                   terrainHeightProvider,
+                                                   collisionMeshResourceProvider);
             
         case ExampleTypes::DebugSphere:
             return new Examples::DebugSphereExample(renderContext,

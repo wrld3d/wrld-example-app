@@ -9,15 +9,17 @@
 #include "EarthConstants.h"
 #include "SphereMesh.h"
 #include "TerrainHeightProvider.h"
+#include "RenderCamera.h"
+#include "TerrainRayPicker.h"
 
 namespace Examples
 {
     ScreenPickExample::ScreenPickExample(Eegeo::Rendering::RenderContext& renderContext,
                                          Eegeo::Camera::ICameraProvider& cameraProvider,
-                                         Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider)
+                                         Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider,
+                                         const Eegeo::Resources::Terrain::Collision::ICollisionMeshResourceProvider& collisionMeshResourceProvider)
     : m_renderContext(renderContext)
     , m_cameraProvider(cameraProvider)
-    , m_terrainHeightProvider(terrainHeightProvider)
     {
         const float radius = 20.f;
         const int numSegments = 16;
@@ -32,10 +34,13 @@ namespace Examples
                                                        red
                                                        );
         m_sphere->Tesselate();
+        
+        m_rayPicker = new Eegeo::Resources::Terrain::Collision::TerrainRayPicker(terrainHeightProvider, collisionMeshResourceProvider);
     }
     
     ScreenPickExample::~ScreenPickExample()
     {
+        delete m_rayPicker;
         delete m_sphere;
     }
     
@@ -64,29 +69,22 @@ namespace Examples
     bool ScreenPickExample::Event_TouchTap(const AppInterface::TapData& data)
     {
         const Eegeo::Camera::RenderCamera& renderCamera = m_cameraProvider.GetRenderCamera();
+
+        float screenPixelX = data.point.GetX();
+        float screenPixelY = data.point.GetY();
         
-        Eegeo::dv3 ecefIntersectionPoint;
+        Eegeo::dv3 rayOrigin = renderCamera.GetEcefLocation();
+        Eegeo::dv3 rayDirection;
+        Eegeo::Camera::CameraHelpers::GetScreenPickRay(renderCamera, screenPixelX, screenPixelY, rayDirection);
         
-        bool success = Eegeo::Camera::CameraHelpers::TryGetScreenPickIntersectionWithEarthCentredSphere(
-            renderCamera,
-            data.point.GetX(),
-            data.point.GetY(),
-            Eegeo::Space::EarthConstants::Radius,
-            ecefIntersectionPoint);
-        
-        if (success)
+        Eegeo::dv3 rayIntersectionPoint;
+        double intersectionParam;
+        bool rayPick = m_rayPicker->TryGetRayIntersection(rayOrigin, rayDirection, rayIntersectionPoint, intersectionParam);
+        if (rayPick)
         {
-            //we are intersecting the idealised sphere, so get height at the intersection location
-            //and set sphere height to result
-            float height = 0.f;
-            if (m_terrainHeightProvider.TryGetHeight(ecefIntersectionPoint, 0, height))
-            {
-                Eegeo::dv3 up = ecefIntersectionPoint.Norm();
-                ecefIntersectionPoint += up * height;
-            }
-            m_sphere->SetPositionECEF(ecefIntersectionPoint);
+            m_sphere->SetPositionECEF(rayIntersectionPoint);
         }
         
-        return success;
+        return true;
     }
 }

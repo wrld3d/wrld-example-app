@@ -26,13 +26,14 @@ namespace Examples
     private:
         Eegeo::DebugRendering::SphereMesh* m_sphere;
         Eegeo::Rendering::RenderContext& m_renderContext;
-        Eegeo::Camera::ICameraProvider& m_cameraProvider;
-        Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& m_terrainHeightProvider;
+        Eegeo::Camera::ICameraProvider& m_cameraProvider;        
+        Eegeo::Resources::Terrain::Collision::TerrainRayPicker* m_rayPicker;
         
     public:
         ScreenPickExample(Eegeo::Rendering::RenderContext& renderContext,
                                Eegeo::Camera::ICameraProvider& cameraProvider,
-                               Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider);
+                               Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider,
+                               const Eegeo::Resources::Terrain::Collision::ICollisionMeshResourceProvider& collisionMeshResourceProvider);
         virtual ~ScreenPickExample();
         void Start();
         void Update(float dt);

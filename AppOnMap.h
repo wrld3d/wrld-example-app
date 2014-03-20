@@ -56,7 +56,7 @@ namespace ExampleTypes
     };
 }
 
-static const ExampleTypes::Examples g_defaultSelectedExample = ExampleTypes::RouteSimulationAnimation;
+static const ExampleTypes::Examples g_defaultSelectedExample = ExampleTypes::DebugSphere;
 
 namespace Eegeo
 {
@@ -136,7 +136,8 @@ public:
                                       Eegeo::Search::Service::SearchService* searchService,
                                       Eegeo::UI::NativeUIFactories& nativeInputFactories,
                                       Eegeo::Location::IInterestPointProvider& interestPointProvider,
-                                      Eegeo::Routes::RouteService& routeService
+                                      Eegeo::Routes::RouteService& routeService,
+                                      const Eegeo::Resources::Terrain::Collision::ICollisionMeshResourceProvider& collisionMeshResourceProvider
                                       );
     
     
