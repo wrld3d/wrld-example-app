@@ -16,10 +16,10 @@ namespace Examples
 {
     /*!
      *  ScreenPickExample demonstrates projecting a ray through the camera origin and
-     *  a screen pixel when the touch screen is tapped. If the ray intersects the Earth
-     *  sphere, a red marker is drawn at the point on the terrain radially above the 
-     *  intersection point. The example is similar to ScreenUnprojectExample, but uses
-     *  helper method Eegeo::Camera::CameraHelpers::TryGetScreenPickIntersectionWithEarthCentredSphere
+     *  a screen pixel when the touch screen is tapped. 
+     *  We attempt to intersect the ray with the collision meshes of any currently
+     *  streamed terrain resources, making use of Eegeo::Resources::Terrain::Collision::TerrainRayPicker.
+     *  We draw a red marker sphere at the intersection point if found.
      */
     class ScreenPickExample : public IExample
     {
