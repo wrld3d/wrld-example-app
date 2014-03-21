@@ -62,6 +62,7 @@
 #include "ChunkedRoadBuilder.h"
 #include "TerrainHeightRepository.h"
 #include "RenderCamera.h"
+#include "iOSPlatformConfigBuilder.h"
 
 
 #define API_KEY "OBTAIN API KEY FROM https://appstore.eegeo.com AND INSERT IT HERE"
@@ -548,7 +549,7 @@ Eegeo::Web::iOSWebRequestService* webRequestService;
     Eegeo::Helpers::ITaskQueue* pTaskQueue = new iOSTaskQueue(10);
     
     const Eegeo::EnvironmentCharacterSet::Type environmentCharacterSet = Eegeo::EnvironmentCharacterSet::Latin;
-    Eegeo::Config::PlatformConfig config = Eegeo::Config::PlatformConfig();
+    Eegeo::Config::PlatformConfig config = Eegeo::iOS::iOSPlatformConfigBuilder(App::GetDevice(), App::IsDeviceMultiCore()).Build();
 
     myApp->Start(new Eegeo::EegeoWorld(API_KEY,
                                        pHttpCache,
