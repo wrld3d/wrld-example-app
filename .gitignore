@@ -6,3 +6,5 @@ ExampleApp.xcodeproj/xcuserdata/eegeo.xcuserdatad/xcschemes/ExampleApp.xcscheme
 ExampleApp.xcodeproj/xcuserdata/eegeo.xcuserdatad/xcschemes/xcschememanagement.plist
 .DS_Store
 ExampleApp.xcodeproj/project.xcworkspace/xcuserdata/eegeo.xcuserdatad/UserInterfaceState.xcuserstate
+*.idea
+*xcuserdatad
