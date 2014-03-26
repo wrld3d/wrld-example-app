@@ -90,6 +90,7 @@
 		7EE4833116847E7C0006E99B /* occupied_cells.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4829C16847E7C0006E99B /* occupied_cells.txt */; };
 		7EE4834D16847E7C0006E99B /* SanFrancisco_Vehicles.pod in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482B916847E7C0006E99B /* SanFrancisco_Vehicles.pod */; };
 		7EE4838416847E7C0006E99B /* Vehicles_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482F016847E7C0006E99B /* Vehicles_01.pvr */; };
+		7EE6B86518E3289C00535A4F /* Main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EE6B86418E3289C00535A4F /* Main.m */; };
 		7EF5D8651737F9A40049D787 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EF5D8641737F9A40049D787 /* CoreLocation.framework */; };
 		99DE1A5832509BD30A5C3DB1 /* TrafficCongestionExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 99DE1BE4CE4B22EDFFCF5E98 /* TrafficCongestionExample.cpp */; };
 		E0399AAE1823FF3B0038996D /* AppOnMap.mm in Sources */ = {isa = PBXBuildFile; fileRef = E0399AAD1823FF3B0038996D /* AppOnMap.mm */; };
@@ -215,6 +216,7 @@
 		7EE4829C16847E7C0006E99B /* occupied_cells.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = occupied_cells.txt; sourceTree = "<group>"; };
 		7EE482B916847E7C0006E99B /* SanFrancisco_Vehicles.pod */ = {isa = PBXFileReference; lastKnownFileType = file; path = SanFrancisco_Vehicles.pod; sourceTree = "<group>"; };
 		7EE482F016847E7C0006E99B /* Vehicles_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Vehicles_01.pvr; sourceTree = "<group>"; };
+		7EE6B86418E3289C00535A4F /* Main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Main.m; sourceTree = SOURCE_ROOT; };
 		7EF5D8641737F9A40049D787 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		99DE1A1B1274ECA08927668B /* TrafficCongestionExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrafficCongestionExample.h; sourceTree = "<group>"; };
 		99DE1BE4CE4B22EDFFCF5E98 /* TrafficCongestionExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TrafficCongestionExample.cpp; sourceTree = "<group>"; };
@@ -356,6 +358,7 @@
 		7EE481F216836F370006E99B /* ExampleApp */ = {
 			isa = PBXGroup;
 			children = (
+				7EE6B86418E3289C00535A4F /* Main.m */,
 				7E5928A916CA7FA20005E64D /* Examples */,
 				7EE482121683715D0006E99B /* AppOnMap.h */,
 				E0399AAD1823FF3B0038996D /* AppOnMap.mm */,
@@ -574,6 +577,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7EE6B86518E3289C00535A4F /* Main.m in Sources */,
 				7EE482151683715D0006E99B /* ViewController.mm in Sources */,
 				7E5928B116CA7FA20005E64D /* DebugSphereExample.cpp in Sources */,
 				7E5928B216CA7FA20005E64D /* LoadModelExample.cpp in Sources */,
