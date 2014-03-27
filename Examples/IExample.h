@@ -2,6 +2,8 @@
 #define __ExampleApp__Example__
 
 #include "IAppOnMap.h"
+#include "GlobeCameraController.h"
+#include "GlobeCameraTouchController.h"
 
 namespace Examples
 {
@@ -12,6 +14,15 @@ namespace Examples
         
         virtual void Start() = 0;
         virtual void EarlyUpdate(float dt) { }
+        
+        virtual void UpdateCamera(Eegeo::Camera::GlobeCamera::GlobeCameraController* pGlobeCameraController,
+                                  Eegeo::Camera::GlobeCamera::GlobeCameraTouchController* pCameraTouchController,
+                                  float dt)
+        {
+            pCameraTouchController->Update(dt);
+            pGlobeCameraController->Update(dt);
+        }
+        
         virtual void AfterCameraUpdate() { }
         virtual void Update(float dt) = 0;
         virtual void Draw() = 0;

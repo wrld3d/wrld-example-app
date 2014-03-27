@@ -32,6 +32,7 @@
 		2231E65318327973003FD2DB /* ControlCityThemeExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2231E65118327973003FD2DB /* ControlCityThemeExample.cpp */; };
 		2264D694177DA5870016C3ED /* ldn_trains_01.pod in Resources */ = {isa = PBXBuildFile; fileRef = 2264D692177DA5870016C3ED /* ldn_trains_01.pod */; };
 		2264D695177DA5870016C3ED /* ldn_trains_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 2264D693177DA5870016C3ED /* ldn_trains_01.pvr */; };
+		22E7F67018E42C9600AF064D /* CameraTransitionExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 22E7F66E18E42C9600AF064D /* CameraTransitionExample.cpp */; };
 		5660954918B3BCF00090B857 /* BoxCharacter.pod in Resources */ = {isa = PBXBuildFile; fileRef = 5660954718B3BCF00090B857 /* BoxCharacter.pod */; };
 		5660954A18B3BCF00090B857 /* BoxCharacter.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 5660954818B3BCF00090B857 /* BoxCharacter.pvr */; };
 		5660954D18B3BCFB0090B857 /* RouteSimulationAnimationExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5660954B18B3BCFB0090B857 /* RouteSimulationAnimationExample.cpp */; };
@@ -137,6 +138,8 @@
 		2231E65218327973003FD2DB /* ControlCityThemeExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ControlCityThemeExample.h; sourceTree = "<group>"; };
 		2264D692177DA5870016C3ED /* ldn_trains_01.pod */ = {isa = PBXFileReference; lastKnownFileType = file; path = ldn_trains_01.pod; sourceTree = "<group>"; };
 		2264D693177DA5870016C3ED /* ldn_trains_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = ldn_trains_01.pvr; sourceTree = "<group>"; };
+		22E7F66E18E42C9600AF064D /* CameraTransitionExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CameraTransitionExample.cpp; sourceTree = "<group>"; };
+		22E7F66F18E42C9600AF064D /* CameraTransitionExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraTransitionExample.h; sourceTree = "<group>"; };
 		5660954718B3BCF00090B857 /* BoxCharacter.pod */ = {isa = PBXFileReference; lastKnownFileType = file; name = BoxCharacter.pod; path = CharacterAnimation/BoxCharacter.pod; sourceTree = "<group>"; };
 		5660954818B3BCF00090B857 /* BoxCharacter.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; name = BoxCharacter.pvr; path = CharacterAnimation/BoxCharacter.pvr; sourceTree = "<group>"; };
 		5660954B18B3BCFB0090B857 /* RouteSimulationAnimationExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RouteSimulationAnimationExample.cpp; sourceTree = "<group>"; };
@@ -312,6 +315,8 @@
 				1826527318C8E09D0084A13C /* PinOverModelExample.h */,
 				99DE1BE4CE4B22EDFFCF5E98 /* TrafficCongestionExample.cpp */,
 				99DE1A1B1274ECA08927668B /* TrafficCongestionExample.h */,
+				22E7F66E18E42C9600AF064D /* CameraTransitionExample.cpp */,
+				22E7F66F18E42C9600AF064D /* CameraTransitionExample.h */,
 			);
 			path = Examples;
 			sourceTree = SOURCE_ROOT;
@@ -589,6 +594,7 @@
 				7E7DF51C17300A4E005911AC /* FileIOExample.cpp in Sources */,
 				7E7DF5271732AB27005911AC /* NavigationGraphExample.cpp in Sources */,
 				7E7DF52C1733B844005911AC /* ModifiedRenderingExample.cpp in Sources */,
+				22E7F67018E42C9600AF064D /* CameraTransitionExample.cpp in Sources */,
 				7ED4CF9317424CF400739A3D /* ToggleTrafficExample.cpp in Sources */,
 				5660954D18B3BCFB0090B857 /* RouteSimulationAnimationExample.cpp in Sources */,
 				E0399AAE1823FF3B0038996D /* AppOnMap.mm in Sources */,

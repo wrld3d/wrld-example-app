@@ -43,6 +43,7 @@
 #include "SingleCityExample.h"
 #include "PinOverModelExample.h"
 #include "TrafficCongestionExample.h"
+#include "CameraTransitionExample.h"
 
 MyApp::MyApp(Eegeo::Camera::GlobeCamera::GlobeCameraInterestPointProvider& globeCameraInterestPointProvider,
              UIView* pView,
@@ -162,9 +163,9 @@ void MyApp::Update (float dt)
     
     eegeoWorld.EarlyUpdate(dt);
     pExample->EarlyUpdate(dt);
+    pExample->UpdateCamera(
+                           m_globeCameraController,m_cameraTouchController, dt);
     
-    m_cameraTouchController->Update(dt);
-    m_globeCameraController->Update(dt);
     pExample->AfterCameraUpdate();
     
     eegeoWorld.Update(dt);
@@ -406,9 +407,17 @@ Examples::IExample* MyApp::CreateExample(ExampleTypes::Examples example,
                                                       World().GetNullMaterial()
                                                      );
         case ExampleTypes::TrafficCongestion:
+        {
             return new Examples::TrafficCongestionExample(
                     World().GetTrafficCongestionService(),
                     World());
+        }
+            
+        case ExampleTypes::CameraTransitionExample:
+        {
+            return new Examples::CameraTransitionExample(*m_globeCameraController,
+                                                         World().GetInterestPointProvider());
+        }
     }
 }
 

@@ -52,11 +52,12 @@ namespace ExampleTypes
         DynamicText3D,
         SingleCity,
         PinOverModel,
-        TrafficCongestion
+        TrafficCongestion,
+        CameraTransitionExample
     };
 }
 
-static const ExampleTypes::Examples g_defaultSelectedExample = ExampleTypes::DebugSphere;
+static const ExampleTypes::Examples g_defaultSelectedExample = ExampleTypes::CameraTransitionExample;
 
 namespace Eegeo
 {
