@@ -326,7 +326,8 @@ Examples::IExample* MyApp::CreateExample(ExampleTypes::Examples example,
         {
             Eegeo::Routes::Simulation::Camera::RouteSimulationGlobeCameraControllerFactory factory(World().GetTerrainHeightProvider(),
                                                                                                    World().GetEnvironmentFlatteningService(),
-                                                                                                   World().GetResourceCeilingProvider());
+                                                                                                   World().GetResourceCeilingProvider(),
+                                                                                                   collisionMeshResourceProvider);
             
             return new Examples::RouteSimulationExample(World().GetRouteService(),
                                                         World().GetRouteSimulationService(),
@@ -359,7 +360,8 @@ Examples::IExample* MyApp::CreateExample(ExampleTypes::Examples example,
         {
             Eegeo::Routes::Simulation::Camera::RouteSimulationGlobeCameraControllerFactory factory(World().GetTerrainHeightProvider(),
                                                                                                    World().GetEnvironmentFlatteningService(),
-                                                                                                   World().GetResourceCeilingProvider());
+                                                                                                   World().GetResourceCeilingProvider(),
+                                                                                                   collisionMeshResourceProvider);
             
             return new Examples::RouteSimulationAnimationExample(World().GetRouteService(),
                                                                  World().GetRouteSimulationService(),
