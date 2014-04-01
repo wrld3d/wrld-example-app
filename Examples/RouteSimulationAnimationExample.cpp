@@ -112,6 +112,8 @@ void RouteSimulationAnimationExample::Update(float dt)
         m_pSessionCamera->TogglePlaybackDirection();
         m_pSessionCamera->Unpause();
     }
+    
+    Eegeo_TTY("%f metres from start of route. %f percent.\n", m_pSessionCamera->GetDistanceFromStartInMetres(),(m_pSessionCamera->GetDistanceFromStartInMetres() / m_route->GetLength())*100.0f);
 
     Eegeo::m44 transform;
     CalculateTransform(transform);
