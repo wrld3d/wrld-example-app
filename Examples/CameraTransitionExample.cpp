@@ -116,7 +116,7 @@ namespace Examples
         }
         
         m_transitionTime += dt;
-        float transitionParam = Eegeo::Math::SmoothStep(0.f, 1.f,m_transitionTime / m_transitionDuration);
+        double transitionParam = Eegeo::Math::SmoothStep(0.0, 1.0, m_transitionTime / m_transitionDuration);
         
         float interpolatedDistance = Eegeo::Math::Lerp(m_startInterestDistance, m_endInterestDistance, transitionParam);
         Eegeo::dv3 interpolatedInterestPosition = Eegeo::dv3::Lerp(m_startTransitionInterestPoint, m_endTransitionInterestPoint, transitionParam);
