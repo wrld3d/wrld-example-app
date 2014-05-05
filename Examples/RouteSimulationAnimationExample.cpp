@@ -196,19 +196,16 @@ void RouteSimulationAnimationExample::CalculateTransform(Eegeo::m44& transform)
     const float scaleModifier = 100.f;
     const float minimumScale = 3.f;
     
-    Eegeo::dv3 position;
+    const Eegeo::dv3& position = m_pSessionCamera->GetCurrentPositionEcef();
+    float scaleAsFunctionOfAltitude = Eegeo::Helpers::TransformHelpers::ComputeModelScaleForConstantScreenSize(
+                                                m_cameraProvider.GetRenderCamera(),
+                                                position
+                                        ) / scaleModifier;
+    Eegeo::m44 scale, rotation;
+    scale.Scale(Eegeo::Max(scaleAsFunctionOfAltitude, minimumScale));
+    rotation.RotateY(M_PI);
+    m44::Mul(transform, scale, rotation);
     
-    if (m_pSessionCamera->TryGetCurrentPositionEcef(position))
-    {
-        float scaleAsFunctionOfAltitude = Eegeo::Helpers::TransformHelpers::ComputeModelScaleForConstantScreenSize(
-                                                    m_cameraProvider.GetRenderCamera(),
-                                                    position
-                                            ) / scaleModifier;
-        Eegeo::m44 scale, rotation;
-        scale.Scale(Eegeo::Max(scaleAsFunctionOfAltitude, minimumScale));
-        rotation.RotateY(M_PI);
-        m44::Mul(transform, scale, rotation);
-    }
 }
 
 

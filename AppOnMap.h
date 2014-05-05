@@ -57,7 +57,7 @@ namespace ExampleTypes
     };
 }
 
-static const ExampleTypes::Examples g_defaultSelectedExample = ExampleTypes::CameraTransitionExample;
+static const ExampleTypes::Examples g_defaultSelectedExample = ExampleTypes::DebugSphere;
 
 namespace Eegeo
 {
