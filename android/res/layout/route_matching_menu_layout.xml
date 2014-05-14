@@ -1,0 +1,24 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/example_ui_menu">
+
+    <RelativeLayout
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:paddingTop="16dp"
+	    android:paddingLeft="16dp"
+	    android:paddingRight="16dp" >
+	    
+	    <Button
+	        android:id="@+id/toggle_match"
+	        android:layout_width="96dp"
+	        android:layout_height="wrap_content"
+	        android:text="Toggle Match"
+      		android:layout_alignParentLeft="true"
+     		android:layout_alignParentBottom="true" />
+	    
+	</RelativeLayout>
+	
+</RelativeLayout>

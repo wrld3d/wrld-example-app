@@ -1,0 +1,35 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/example_ui_menu">
+
+    <RelativeLayout
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:paddingTop="16dp"
+	    android:paddingLeft="16dp"
+	    android:paddingRight="16dp" >
+	    
+	    <Spinner
+	        android:id="@+id/places"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="@+id/visit"
+	        android:layout_toLeftOf="@+id/visit" />
+	    <Button
+	        android:id="@+id/visit"
+	        android:layout_width="96dp"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentRight="true"
+	        android:text="Visit" />
+	    <Button
+	        android:id="@+id/close"
+	        android:layout_width="96dp"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@+id/visit"
+	        android:layout_alignParentRight="true"
+	        android:text="Close" />
+	</RelativeLayout>
+	
+</RelativeLayout>

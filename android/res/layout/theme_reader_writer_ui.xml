@@ -1,0 +1,42 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/theme_reader_writer_example_ui">
+
+    <RelativeLayout
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:paddingTop="16dp"
+	    android:paddingLeft="16dp"
+	    android:paddingRight="16dp" >
+	    
+	    <Spinner
+	        android:id="@+id/themes"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="@+id/change_theme"
+	        android:layout_toLeftOf="@+id/change_theme" />
+	    <Button
+	        android:id="@+id/change_theme"
+	        android:layout_width="96dp"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentRight="true"
+	        android:text="Change Theme" />
+	    <TextView
+	        android:id="@+id/current_theme_name_text"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:textColor="#ff0"
+	        android:layout_below="@+id/change_theme"
+	        android:layout_toLeftOf="@+id/get_current_theme_name" />
+	    <Button
+	        android:id="@+id/get_current_theme_name"
+	        android:layout_width="96dp"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@+id/change_theme"
+	        android:layout_alignParentRight="true"
+	        android:text="Read Theme Name" />
+	</RelativeLayout>
+	
+</RelativeLayout>
