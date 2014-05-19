@@ -15,7 +15,9 @@
 #include "Route.h"
 #include "EegeoWorld.h"
 #include "IdentityRouteThicknessPolicy.h"
-#import <UIKit/UIKit.h>
+#include "IRouteMatchingViewFactory.h"
+#include "IRouteMatchingView.h"
+#include "UIActionHandler.h"
 
 namespace Examples
 {
@@ -24,7 +26,10 @@ namespace Examples
     private:
         Eegeo::Routes::RouteService& m_routeService;
         Eegeo::EegeoWorld& m_world;
-        UIView* m_pView;
+        
+        const IRouteMatchingViewFactory& m_routeMatchingViewFactory;
+        UIActionHandler<RouteMatchingExample> m_toggleRouteMatchingHandler;
+        IRouteMatchingView* m_pRouteMatchingView;
         
         bool m_createdRoutes;
         bool m_routesMatchedToNavigationGraph;
@@ -38,7 +43,7 @@ namespace Examples
     public:
         RouteMatchingExample(Eegeo::Routes::RouteService& routeService,
                              Eegeo::EegeoWorld& eegeoWorld,
-                             UIView* pView);
+                             const IRouteMatchingViewFactory& routeMatchingViewFactory);
         
         void Start() {}
         void Update(float dt);

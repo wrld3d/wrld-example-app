@@ -1,0 +1,90 @@
+//
+//  iOSRouteMatchingExampleView.cpp
+//  ExampleApp
+//
+//  Created by Scott on 19/05/2014.
+//  Copyright (c) 2014 eeGeo. All rights reserved.
+//
+
+#include "iOSRouteMatchingExampleView.h"
+#include <algorithm>
+
+using namespace Examples;
+
+@implementation IRouteMatchingExampleBinding
+
+Examples::iOSRouteMatchingExampleView* m_pRouteMatchingExample;
+UIButton* m_pToggleMatching;
+
+-(void) setExampleInstance:(iOSRouteMatchingExampleView*)pExample :(UIButton*)pToggleMatching
+{
+    m_pRouteMatchingExample = pExample;
+    m_pToggleMatching = pToggleMatching;
+}
+
+-(void) toggleMatching
+{
+    m_pRouteMatchingExample->ToggleMatching();
+}
+
+@end
+
+namespace Examples
+{
+    iOSRouteMatchingExampleView::iOSRouteMatchingExampleView(UIView* pView)
+    : m_pView(pView)
+    {
+        m_pBinding = [[IRouteMatchingExampleBinding alloc] init];
+        
+        // Grab the window frame and adjust it for orientation
+        UIView *rootView = [[[UIApplication sharedApplication] keyWindow]
+                            rootViewController].view;
+        CGRect originalFrame = [[UIScreen mainScreen] bounds];
+        CGRect adjustedFrame = [rootView convertRect:originalFrame fromView:nil];
+        
+        float screenHeight = adjustedFrame.size.height - 80.f;
+        
+        m_pToggleMatchingButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        m_pToggleMatchingButton.frame = CGRectMake(10, screenHeight, 200, 50);
+        [m_pToggleMatchingButton setTitle:@"Toggle Match!" forState:UIControlStateNormal];
+        [m_pToggleMatchingButton addTarget:m_pBinding action:@selector(toggleMatching) forControlEvents:UIControlEventTouchDown];
+        [m_pView addSubview:m_pToggleMatchingButton];
+        
+        [m_pBinding setExampleInstance:this :m_pToggleMatchingButton];
+    }
+    
+    iOSRouteMatchingExampleView::~iOSRouteMatchingExampleView()
+    {
+        [m_pToggleMatchingButton removeFromSuperview];
+        m_pToggleMatchingButton = nil;
+        
+        [m_pBinding release];
+        m_pBinding = nil;
+    }
+    
+    void iOSRouteMatchingExampleView::AddMatchingToggledHandler(IUIActionHandler& handler)
+    {
+        m_matchingToggledHandlers.push_back(&handler);
+    }
+    
+    void iOSRouteMatchingExampleView::RemoveMatchingToggledHandler(IUIActionHandler& handler)
+    {
+        std::vector<IUIActionHandler*>::iterator it = std::find(m_matchingToggledHandlers.begin(),
+                                                                m_matchingToggledHandlers.end(),
+                                                                &handler);
+     
+        if(it != m_matchingToggledHandlers.end())
+        {
+            m_matchingToggledHandlers.erase(it);
+        }
+    }
+    
+    void iOSRouteMatchingExampleView::ToggleMatching()
+    {
+        for(std::vector<IUIActionHandler*>::iterator it = m_matchingToggledHandlers.begin(); it != m_matchingToggledHandlers.end(); ++ it)
+        {
+            IUIActionHandler& handler = **it;
+            handler();
+        }
+    }
+}

@@ -44,6 +44,7 @@
 #include "PinOverModelExample.h"
 #include "TrafficCongestionExample.h"
 #include "CameraTransitionExample.h"
+#include "iOSRouteMatchingExampleViewFactory.h"
 
 MyApp::MyApp(Eegeo::Camera::GlobeCamera::GlobeCameraInterestPointProvider& globeCameraInterestPointProvider,
              UIView* pView,
@@ -352,9 +353,11 @@ Examples::IExample* MyApp::CreateExample(ExampleTypes::Examples example,
             
         case ExampleTypes::RouteMatching:
         {
+            Examples::iOSRouteMatchingExampleViewFactory* pViewFactory_TEMP_HACK_LEAKING = Eegeo_NEW(Examples::iOSRouteMatchingExampleViewFactory)(m_pView);
+            
             return new Examples::RouteMatchingExample(World().GetRouteService(),
                                                       World(),
-                                                      m_pView);
+                                                      *pViewFactory_TEMP_HACK_LEAKING);
         }
         case ExampleTypes::RouteSimulationAnimation:
         {

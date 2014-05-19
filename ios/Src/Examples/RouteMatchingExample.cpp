@@ -17,12 +17,14 @@ using namespace Eegeo::Routes;
 
 RouteMatchingExample::RouteMatchingExample(RouteService& routeService,
                                            EegeoWorld& world,
-                                           UIView* pView)
+                                           const IRouteMatchingViewFactory& routeMatchingViewFactory)
 :m_routeService(routeService)
 ,m_world(world)
-,m_pView(pView)
 ,m_createdRoutes(false)
 ,m_routesMatchedToNavigationGraph(false)
+,m_routeMatchingViewFactory(routeMatchingViewFactory)
+,m_pRouteMatchingView(NULL)
+,m_toggleRouteMatchingHandler(this, &RouteMatchingExample::ToggleMatching)
 {
     
 }
@@ -140,6 +142,12 @@ void RouteMatchingExample::Update(float dt)
 void RouteMatchingExample::Suspend()
 {
     DestroyRoutes();
+    
+    m_pRouteMatchingView->RemoveMatchingToggledHandler(m_toggleRouteMatchingHandler);
+    
+    Eegeo_DELETE m_pRouteMatchingView;
+    
+    m_pRouteMatchingView = NULL;
 }
 
 void RouteMatchingExample::ToggleMatching()
@@ -149,54 +157,9 @@ void RouteMatchingExample::ToggleMatching()
     CreateRoutes(m_routesMatchedToNavigationGraph);
 }
 
-//Create some UI to let us toggle route matching
-@interface IRouteMatchingExampleBinding : NSObject
-
--(void) setExampleInstance:(RouteMatchingExample*)pExample :(UIButton*)pToggleMatching;
--(void) toggleMatching;
-
-@end
-
-@implementation IRouteMatchingExampleBinding
-
-RouteMatchingExample* m_pRouteMatchingExample;
-UIButton* m_pToggleMatching;
-
--(void) setExampleInstance:(RouteMatchingExample*)pExample :(UIButton*)pToggleMatching
-{
-    m_pRouteMatchingExample = pExample;
-    m_pToggleMatching = pToggleMatching;
-}
-
--(void) toggleMatching
-{
-    m_pRouteMatchingExample->ToggleMatching();
-}
-
-@end
-
-static IRouteMatchingExampleBinding *pExampleWrapper = nil;
-
 void RouteMatchingExample::CreateAndBindUI()
 {
-    if (pExampleWrapper == nil)
-    {
-        pExampleWrapper = [[IRouteMatchingExampleBinding alloc] init];
-    }
+    m_pRouteMatchingView = m_routeMatchingViewFactory.CreateRouteMatchingView();
     
-    // Grab the window frame and adjust it for orientation
-    UIView *rootView = [[[UIApplication sharedApplication] keyWindow]
-                        rootViewController].view;
-    CGRect originalFrame = [[UIScreen mainScreen] bounds];
-    CGRect adjustedFrame = [rootView convertRect:originalFrame fromView:nil];
-    
-    float screenHeight = adjustedFrame.size.height - 80.f;
-    
-    UIButton * toggleMatchingButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    toggleMatchingButton.frame = CGRectMake(10, screenHeight, 200, 50);
-    [toggleMatchingButton setTitle:@"Toggle Match!" forState:UIControlStateNormal];
-    [toggleMatchingButton addTarget:pExampleWrapper action:@selector(toggleMatching) forControlEvents:UIControlEventTouchDown];
-    [m_pView addSubview:toggleMatchingButton];
-    
-    [pExampleWrapper setExampleInstance:this :toggleMatchingButton];
+    m_pRouteMatchingView->AddMatchingToggledHandler(m_toggleRouteMatchingHandler);
 }
