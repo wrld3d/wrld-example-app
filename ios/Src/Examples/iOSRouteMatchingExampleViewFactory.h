@@ -10,12 +10,12 @@
 #define __ExampleApp__iOSRouteMatchingExampleViewFactory__
 
 #include "Types.h"
-#include "IRouteMatchingViewFactory.h"
+#include "IRouteMatchingExampleViewFactory.h"
 #import <UIKit/UIKit.h>
 
 namespace Examples
 {
-    class iOSRouteMatchingExampleViewFactory : public IRouteMatchingViewFactory, private Eegeo::NonCopyable
+    class iOSRouteMatchingExampleViewFactory : public IRouteMatchingExampleViewFactory, private Eegeo::NonCopyable
     {
         UIView* m_pView;
         
@@ -24,7 +24,7 @@ namespace Examples
         
         virtual ~iOSRouteMatchingExampleViewFactory();
         
-        virtual IRouteMatchingView* CreateRouteMatchingView() const;
+        virtual IRouteMatchingExampleView* CreateRouteMatchingExampleView() const;
     };
 }
 

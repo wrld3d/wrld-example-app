@@ -106,10 +106,10 @@
 		1825103A17AFD5AD00251651 /* Test_ROBOT_ARM.pod */ = {isa = PBXFileReference; lastKnownFileType = file; path = Test_ROBOT_ARM.pod; sourceTree = "<group>"; };
 		1825103B17AFD5AD00251651 /* tex_arm.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = tex_arm.pvr; sourceTree = "<group>"; };
 		1825103C17AFD5AD00251651 /* tex_base.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = tex_base.pvr; sourceTree = "<group>"; };
-		18259B77192A409400F0565F /* IRouteMatchingView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IRouteMatchingView.h; sourceTree = "<group>"; };
+		18259B77192A409400F0565F /* IRouteMatchingExampleView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IRouteMatchingExampleView.h; sourceTree = "<group>"; };
 		18259B78192A435F00F0565F /* IUIActionHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IUIActionHandler.h; sourceTree = "<group>"; };
 		18259B7A192A438C00F0565F /* UIActionHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIActionHandler.h; sourceTree = "<group>"; };
-		18259B7C192A443700F0565F /* IRouteMatchingViewFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IRouteMatchingViewFactory.h; sourceTree = "<group>"; };
+		18259B7C192A443700F0565F /* IRouteMatchingExampleViewFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IRouteMatchingExampleViewFactory.h; sourceTree = "<group>"; };
 		18259B7D192A449400F0565F /* iOSRouteMatchingExampleView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = iOSRouteMatchingExampleView.mm; sourceTree = "<group>"; };
 		18259B7E192A449400F0565F /* iOSRouteMatchingExampleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iOSRouteMatchingExampleView.h; sourceTree = "<group>"; };
 		183D9F041923C3E100015CDB /* CameraTransitionExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CameraTransitionExample.cpp; sourceTree = "<group>"; };
@@ -177,6 +177,7 @@
 		18915BD217C7AF86005F24AB /* recce_trams_night.pod */ = {isa = PBXFileReference; lastKnownFileType = file; path = recce_trams_night.pod; sourceTree = "<group>"; };
 		18A70D0A192A4DCE006B93FF /* iOSRouteMatchingExampleViewFactory.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = iOSRouteMatchingExampleViewFactory.mm; sourceTree = "<group>"; };
 		18A70D0B192A4DCE006B93FF /* iOSRouteMatchingExampleViewFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iOSRouteMatchingExampleViewFactory.h; sourceTree = "<group>"; };
+		18A70D0D192A5B44006B93FF /* IRouteSimulationExampleViewFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IRouteSimulationExampleViewFactory.h; sourceTree = "<group>"; };
 		18D8D0511923BDAC005A8C22 /* RouteMatchingExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RouteMatchingExample.h; sourceTree = "<group>"; };
 		18D8D0521923BDAC005A8C22 /* RouteMatchingExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RouteMatchingExample.cpp; sourceTree = "<group>"; };
 		18D8D0531923BDAC005A8C22 /* RouteSimulationExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RouteSimulationExample.h; sourceTree = "<group>"; };
@@ -349,14 +350,15 @@
 				18D8D0521923BDAC005A8C22 /* RouteMatchingExample.cpp */,
 				18D8D0531923BDAC005A8C22 /* RouteSimulationExample.h */,
 				18D8D0541923BDAC005A8C22 /* RouteSimulationExample.mm */,
-				18259B77192A409400F0565F /* IRouteMatchingView.h */,
+				18259B77192A409400F0565F /* IRouteMatchingExampleView.h */,
 				18259B78192A435F00F0565F /* IUIActionHandler.h */,
 				18259B7A192A438C00F0565F /* UIActionHandler.h */,
-				18259B7C192A443700F0565F /* IRouteMatchingViewFactory.h */,
+				18259B7C192A443700F0565F /* IRouteMatchingExampleViewFactory.h */,
 				18259B7D192A449400F0565F /* iOSRouteMatchingExampleView.mm */,
 				18259B7E192A449400F0565F /* iOSRouteMatchingExampleView.h */,
 				18A70D0A192A4DCE006B93FF /* iOSRouteMatchingExampleViewFactory.mm */,
 				18A70D0B192A4DCE006B93FF /* iOSRouteMatchingExampleViewFactory.h */,
+				18A70D0D192A5B44006B93FF /* IRouteSimulationExampleViewFactory.h */,
 			);
 			path = Examples;
 			sourceTree = "<group>";

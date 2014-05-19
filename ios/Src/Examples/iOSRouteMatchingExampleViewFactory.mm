@@ -22,7 +22,7 @@ iOSRouteMatchingExampleViewFactory::~iOSRouteMatchingExampleViewFactory()
     
 }
 
-IRouteMatchingView* iOSRouteMatchingExampleViewFactory::CreateRouteMatchingView() const
+IRouteMatchingExampleView* iOSRouteMatchingExampleViewFactory::CreateRouteMatchingExampleView() const
 {
     return Eegeo_NEW(iOSRouteMatchingExampleView)(m_pView);
 }

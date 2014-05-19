@@ -17,7 +17,7 @@ using namespace Eegeo::Routes;
 
 RouteMatchingExample::RouteMatchingExample(RouteService& routeService,
                                            EegeoWorld& world,
-                                           const IRouteMatchingViewFactory& routeMatchingViewFactory)
+                                           const IRouteMatchingExampleViewFactory& routeMatchingViewFactory)
 :m_routeService(routeService)
 ,m_world(world)
 ,m_createdRoutes(false)
@@ -159,7 +159,7 @@ void RouteMatchingExample::ToggleMatching()
 
 void RouteMatchingExample::CreateAndBindUI()
 {
-    m_pRouteMatchingView = m_routeMatchingViewFactory.CreateRouteMatchingView();
+    m_pRouteMatchingView = m_routeMatchingViewFactory.CreateRouteMatchingExampleView();
     
     m_pRouteMatchingView->AddMatchingToggledHandler(m_toggleRouteMatchingHandler);
 }

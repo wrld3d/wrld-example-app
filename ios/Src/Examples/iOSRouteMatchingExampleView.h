@@ -10,7 +10,7 @@
 #define __ExampleApp__iOSRouteMatchingExampleView__
 
 #include "Types.h"
-#include "IRouteMatchingView.h"
+#include "IRouteMatchingExampleView.h"
 #import <UIKit/UIKit.h>
 #include <vector>
 
@@ -28,7 +28,7 @@ namespace Examples
 
 namespace Examples
 {
-    class iOSRouteMatchingExampleView : public IRouteMatchingView, private Eegeo::NonCopyable
+    class iOSRouteMatchingExampleView : public IRouteMatchingExampleView, private Eegeo::NonCopyable
     {
         std::vector<IUIActionHandler*> m_matchingToggledHandlers;
         UIView* m_pView;
