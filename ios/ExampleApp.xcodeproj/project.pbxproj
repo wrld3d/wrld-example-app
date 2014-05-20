@@ -50,6 +50,7 @@
 		18A70D0C192A4DCE006B93FF /* iOSRouteMatchingExampleViewFactory.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18A70D0A192A4DCE006B93FF /* iOSRouteMatchingExampleViewFactory.mm */; };
 		18A70D10192A5CA3006B93FF /* iOSRouteSimulationExampleView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18A70D0E192A5CA3006B93FF /* iOSRouteSimulationExampleView.mm */; };
 		18A70D14192A5CC0006B93FF /* iOSRouteSimulationExampleViewFactory.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18A70D12192A5CC0006B93FF /* iOSRouteSimulationExampleViewFactory.mm */; };
+		18AB38E5192B71F100F15546 /* UIHelpers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18AB38E4192B71F100F15546 /* UIHelpers.cpp */; };
 		18EC760717BA421E0011EEE6 /* recce_trams.pod in Resources */ = {isa = PBXBuildFile; fileRef = 18EC760517BA421E0011EEE6 /* recce_trams.pod */; };
 		18EC760817BA421E0011EEE6 /* recce_trams.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 18EC760617BA421E0011EEE6 /* recce_trams.pvr */; };
 		2264D694177DA5870016C3ED /* ldn_trains_01.pod in Resources */ = {isa = PBXBuildFile; fileRef = 2264D692177DA5870016C3ED /* ldn_trains_01.pod */; };
@@ -190,6 +191,7 @@
 		18A70D0F192A5CA3006B93FF /* iOSRouteSimulationExampleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iOSRouteSimulationExampleView.h; sourceTree = "<group>"; };
 		18A70D12192A5CC0006B93FF /* iOSRouteSimulationExampleViewFactory.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = iOSRouteSimulationExampleViewFactory.mm; sourceTree = "<group>"; };
 		18A70D13192A5CC0006B93FF /* iOSRouteSimulationExampleViewFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iOSRouteSimulationExampleViewFactory.h; sourceTree = "<group>"; };
+		18AB38E4192B71F100F15546 /* UIHelpers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIHelpers.cpp; sourceTree = "<group>"; };
 		18EC760517BA421E0011EEE6 /* recce_trams.pod */ = {isa = PBXFileReference; lastKnownFileType = file; path = recce_trams.pod; sourceTree = "<group>"; };
 		18EC760617BA421E0011EEE6 /* recce_trams.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = recce_trams.pvr; sourceTree = "<group>"; };
 		2264D692177DA5870016C3ED /* ldn_trains_01.pod */ = {isa = PBXFileReference; lastKnownFileType = file; path = ldn_trains_01.pod; sourceTree = "<group>"; };
@@ -583,6 +585,7 @@
 				181438C4192B6EAE00BCDF2E /* IUIActionHandler.h */,
 				181438C5192B6EAE00BCDF2E /* UIActionHandler.h */,
 				181438C6192B6FEC00BCDF2E /* UIHelpers.h */,
+				18AB38E4192B71F100F15546 /* UIHelpers.cpp */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -906,6 +909,7 @@
 				181438B7192B6E4500BCDF2E /* ResourceSpatialQueryExample.cpp in Sources */,
 				181438A9192B6E4500BCDF2E /* DebugPrimitiveRenderingExample.cpp in Sources */,
 				181438BD192B6E4500BCDF2E /* ScreenPickExample.cpp in Sources */,
+				18AB38E5192B71F100F15546 /* UIHelpers.cpp in Sources */,
 				181438C3192B6E4500BCDF2E /* WebRequestExample.cpp in Sources */,
 				181438B1192B6E4500BCDF2E /* ModifiedRenderingExample.cpp in Sources */,
 				181438B4192B6E4500BCDF2E /* PinOverModelExample.cpp in Sources */,
