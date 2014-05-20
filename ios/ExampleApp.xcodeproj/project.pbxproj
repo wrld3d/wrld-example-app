@@ -7,39 +7,41 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		181438A7192B6E4500BCDF2E /* CameraTransitionExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18143849192B6E4500BCDF2E /* CameraTransitionExample.cpp */; };
+		181438A8192B6E4500BCDF2E /* ControlCityThemeExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1814384C192B6E4500BCDF2E /* ControlCityThemeExample.cpp */; };
+		181438A9192B6E4500BCDF2E /* DebugPrimitiveRenderingExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1814384F192B6E4500BCDF2E /* DebugPrimitiveRenderingExample.cpp */; };
+		181438AA192B6E4500BCDF2E /* DebugSphereExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18143852192B6E4500BCDF2E /* DebugSphereExample.cpp */; };
+		181438AB192B6E4500BCDF2E /* DynamicText3DExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18143855192B6E4500BCDF2E /* DynamicText3DExample.cpp */; };
+		181438AC192B6E4500BCDF2E /* EnvironmentFlatteningExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18143858192B6E4500BCDF2E /* EnvironmentFlatteningExample.cpp */; };
+		181438AD192B6E4500BCDF2E /* EnvironmentNotifierExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1814385B192B6E4500BCDF2E /* EnvironmentNotifierExample.cpp */; };
+		181438AE192B6E4500BCDF2E /* FileIOExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1814385E192B6E4500BCDF2E /* FileIOExample.cpp */; };
+		181438AF192B6E4500BCDF2E /* KeyboardInputExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18143863192B6E4500BCDF2E /* KeyboardInputExample.cpp */; };
+		181438B0192B6E4500BCDF2E /* LoadModelExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18143866192B6E4500BCDF2E /* LoadModelExample.cpp */; };
+		181438B1192B6E4500BCDF2E /* ModifiedRenderingExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18143869192B6E4500BCDF2E /* ModifiedRenderingExample.cpp */; };
+		181438B2192B6E4500BCDF2E /* NavigationGraphExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1814386C192B6E4500BCDF2E /* NavigationGraphExample.cpp */; };
+		181438B3192B6E4500BCDF2E /* Pick3DObjectExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1814386F192B6E4500BCDF2E /* Pick3DObjectExample.cpp */; };
+		181438B4192B6E4500BCDF2E /* PinOverModelExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18143872192B6E4500BCDF2E /* PinOverModelExample.cpp */; };
+		181438B5192B6E4500BCDF2E /* PinsExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18143875192B6E4500BCDF2E /* PinsExample.cpp */; };
+		181438B6192B6E4500BCDF2E /* PODAnimationExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18143878192B6E4500BCDF2E /* PODAnimationExample.cpp */; };
+		181438B7192B6E4500BCDF2E /* ResourceSpatialQueryExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1814387B192B6E4500BCDF2E /* ResourceSpatialQueryExample.cpp */; };
+		181438B8192B6E4500BCDF2E /* RouteDrawingExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1814387E192B6E4500BCDF2E /* RouteDrawingExample.cpp */; };
+		181438B9192B6E4500BCDF2E /* RouteMatchingExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18143883192B6E4500BCDF2E /* RouteMatchingExample.cpp */; };
+		181438BA192B6E4500BCDF2E /* RouteSimulationExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18143888192B6E4500BCDF2E /* RouteSimulationExample.cpp */; };
+		181438BB192B6E4500BCDF2E /* RouteSimulationAnimationExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1814388B192B6E4500BCDF2E /* RouteSimulationAnimationExample.cpp */; };
+		181438BC192B6E4500BCDF2E /* RouteThicknessPolicyExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1814388E192B6E4500BCDF2E /* RouteThicknessPolicyExample.cpp */; };
+		181438BD192B6E4500BCDF2E /* ScreenPickExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18143891192B6E4500BCDF2E /* ScreenPickExample.cpp */; };
+		181438BE192B6E4500BCDF2E /* ScreenUnprojectExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18143894192B6E4500BCDF2E /* ScreenUnprojectExample.cpp */; };
+		181438BF192B6E4500BCDF2E /* SearchExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18143897192B6E4500BCDF2E /* SearchExample.cpp */; };
+		181438C0192B6E4500BCDF2E /* SingleCityExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1814389A192B6E4500BCDF2E /* SingleCityExample.cpp */; };
+		181438C1192B6E4500BCDF2E /* ToggleTrafficExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1814389D192B6E4500BCDF2E /* ToggleTrafficExample.cpp */; };
+		181438C2192B6E4500BCDF2E /* TrafficCongestionExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 181438A0192B6E4500BCDF2E /* TrafficCongestionExample.cpp */; };
+		181438C3192B6E4500BCDF2E /* WebRequestExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 181438A5192B6E4500BCDF2E /* WebRequestExample.cpp */; };
 		1825103D17AFD5AD00251651 /* Test_ROBOT_ARM.pod in Resources */ = {isa = PBXBuildFile; fileRef = 1825103A17AFD5AD00251651 /* Test_ROBOT_ARM.pod */; };
 		1825103E17AFD5AD00251651 /* tex_arm.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 1825103B17AFD5AD00251651 /* tex_arm.pvr */; };
 		1825103F17AFD5AD00251651 /* tex_base.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 1825103C17AFD5AD00251651 /* tex_base.pvr */; };
 		18259B7F192A449400F0565F /* iOSRouteMatchingExampleView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18259B7D192A449400F0565F /* iOSRouteMatchingExampleView.mm */; };
 		182E453B18C92FA900F9DD92 /* libapps-on-maps-sim.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E75EE1D16848B8A00BCA283 /* libapps-on-maps-sim.a */; };
 		182E453C18C92FA900F9DD92 /* libapps-on-maps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE48223168373E20006E99B /* libapps-on-maps.a */; };
-		183D9F3B1923C3E200015CDB /* CameraTransitionExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 183D9F041923C3E100015CDB /* CameraTransitionExample.cpp */; };
-		183D9F3C1923C3E200015CDB /* ControlCityThemeExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 183D9F061923C3E100015CDB /* ControlCityThemeExample.cpp */; };
-		183D9F3D1923C3E200015CDB /* DebugPrimitiveRenderingExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 183D9F081923C3E100015CDB /* DebugPrimitiveRenderingExample.cpp */; };
-		183D9F3E1923C3E200015CDB /* DebugSphereExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 183D9F0A1923C3E100015CDB /* DebugSphereExample.cpp */; };
-		183D9F3F1923C3E200015CDB /* DynamicText3DExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 183D9F0C1923C3E100015CDB /* DynamicText3DExample.cpp */; };
-		183D9F401923C3E200015CDB /* EnvironmentFlatteningExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 183D9F0E1923C3E100015CDB /* EnvironmentFlatteningExample.cpp */; };
-		183D9F411923C3E200015CDB /* EnvironmentNotifierExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 183D9F101923C3E200015CDB /* EnvironmentNotifierExample.cpp */; };
-		183D9F421923C3E200015CDB /* FileIOExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 183D9F121923C3E200015CDB /* FileIOExample.cpp */; };
-		183D9F431923C3E200015CDB /* KeyboardInputExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 183D9F151923C3E200015CDB /* KeyboardInputExample.cpp */; };
-		183D9F441923C3E200015CDB /* LoadModelExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 183D9F171923C3E200015CDB /* LoadModelExample.cpp */; };
-		183D9F451923C3E200015CDB /* ModifiedRenderingExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 183D9F191923C3E200015CDB /* ModifiedRenderingExample.cpp */; };
-		183D9F461923C3E200015CDB /* NavigationGraphExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 183D9F1B1923C3E200015CDB /* NavigationGraphExample.cpp */; };
-		183D9F471923C3E200015CDB /* Pick3DObjectExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 183D9F1D1923C3E200015CDB /* Pick3DObjectExample.cpp */; };
-		183D9F481923C3E200015CDB /* PinOverModelExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 183D9F1F1923C3E200015CDB /* PinOverModelExample.cpp */; };
-		183D9F491923C3E200015CDB /* PinsExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 183D9F211923C3E200015CDB /* PinsExample.cpp */; };
-		183D9F4A1923C3E200015CDB /* PODAnimationExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 183D9F231923C3E200015CDB /* PODAnimationExample.cpp */; };
-		183D9F4B1923C3E200015CDB /* ResourceSpatialQueryExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 183D9F251923C3E200015CDB /* ResourceSpatialQueryExample.cpp */; };
-		183D9F4C1923C3E200015CDB /* RouteDrawingExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 183D9F271923C3E200015CDB /* RouteDrawingExample.cpp */; };
-		183D9F4D1923C3E200015CDB /* RouteSimulationAnimationExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 183D9F291923C3E200015CDB /* RouteSimulationAnimationExample.cpp */; };
-		183D9F4E1923C3E200015CDB /* RouteThicknessPolicyExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 183D9F2B1923C3E200015CDB /* RouteThicknessPolicyExample.cpp */; };
-		183D9F4F1923C3E200015CDB /* ScreenPickExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 183D9F2D1923C3E200015CDB /* ScreenPickExample.cpp */; };
-		183D9F501923C3E200015CDB /* ScreenUnprojectExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 183D9F2F1923C3E200015CDB /* ScreenUnprojectExample.cpp */; };
-		183D9F511923C3E200015CDB /* SearchExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 183D9F311923C3E200015CDB /* SearchExample.cpp */; };
-		183D9F521923C3E200015CDB /* SingleCityExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 183D9F331923C3E200015CDB /* SingleCityExample.cpp */; };
-		183D9F531923C3E200015CDB /* ToggleTrafficExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 183D9F351923C3E200015CDB /* ToggleTrafficExample.cpp */; };
-		183D9F541923C3E200015CDB /* TrafficCongestionExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 183D9F371923C3E200015CDB /* TrafficCongestionExample.cpp */; };
-		183D9F551923C3E200015CDB /* WebRequestExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 183D9F391923C3E200015CDB /* WebRequestExample.cpp */; };
 		1846BB0919228ACB007DC99C /* AppOnMap.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1846BB0419228ACB007DC99C /* AppOnMap.mm */; };
 		1846BB0A19228ACB007DC99C /* Main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1846BB0619228ACB007DC99C /* Main.m */; };
 		1846BB0B19228ACB007DC99C /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1846BB0819228ACB007DC99C /* ViewController.mm */; };
@@ -48,8 +50,6 @@
 		18A70D0C192A4DCE006B93FF /* iOSRouteMatchingExampleViewFactory.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18A70D0A192A4DCE006B93FF /* iOSRouteMatchingExampleViewFactory.mm */; };
 		18A70D10192A5CA3006B93FF /* iOSRouteSimulationExampleView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18A70D0E192A5CA3006B93FF /* iOSRouteSimulationExampleView.mm */; };
 		18A70D14192A5CC0006B93FF /* iOSRouteSimulationExampleViewFactory.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18A70D12192A5CC0006B93FF /* iOSRouteSimulationExampleViewFactory.mm */; };
-		18D8D0551923BDAC005A8C22 /* RouteMatchingExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18D8D0521923BDAC005A8C22 /* RouteMatchingExample.cpp */; };
-		18D8D0561923BDAC005A8C22 /* RouteSimulationExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18D8D0541923BDAC005A8C22 /* RouteSimulationExample.cpp */; };
 		18EC760717BA421E0011EEE6 /* recce_trams.pod in Resources */ = {isa = PBXBuildFile; fileRef = 18EC760517BA421E0011EEE6 /* recce_trams.pod */; };
 		18EC760817BA421E0011EEE6 /* recce_trams.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 18EC760617BA421E0011EEE6 /* recce_trams.pvr */; };
 		2264D694177DA5870016C3ED /* ldn_trains_01.pod in Resources */ = {isa = PBXBuildFile; fileRef = 2264D692177DA5870016C3ED /* ldn_trains_01.pod */; };
@@ -105,71 +105,77 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		18143845192A686500BCDF2E /* IRouteSimulationExampleView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IRouteSimulationExampleView.h; sourceTree = "<group>"; };
+		18143849192B6E4500BCDF2E /* CameraTransitionExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CameraTransitionExample.cpp; sourceTree = "<group>"; };
+		1814384A192B6E4500BCDF2E /* CameraTransitionExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraTransitionExample.h; sourceTree = "<group>"; };
+		1814384C192B6E4500BCDF2E /* ControlCityThemeExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ControlCityThemeExample.cpp; sourceTree = "<group>"; };
+		1814384D192B6E4500BCDF2E /* ControlCityThemeExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ControlCityThemeExample.h; sourceTree = "<group>"; };
+		1814384F192B6E4500BCDF2E /* DebugPrimitiveRenderingExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DebugPrimitiveRenderingExample.cpp; sourceTree = "<group>"; };
+		18143850192B6E4500BCDF2E /* DebugPrimitiveRenderingExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebugPrimitiveRenderingExample.h; sourceTree = "<group>"; };
+		18143852192B6E4500BCDF2E /* DebugSphereExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DebugSphereExample.cpp; sourceTree = "<group>"; };
+		18143853192B6E4500BCDF2E /* DebugSphereExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebugSphereExample.h; sourceTree = "<group>"; };
+		18143855192B6E4500BCDF2E /* DynamicText3DExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DynamicText3DExample.cpp; sourceTree = "<group>"; };
+		18143856192B6E4500BCDF2E /* DynamicText3DExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DynamicText3DExample.h; sourceTree = "<group>"; };
+		18143858192B6E4500BCDF2E /* EnvironmentFlatteningExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EnvironmentFlatteningExample.cpp; sourceTree = "<group>"; };
+		18143859192B6E4500BCDF2E /* EnvironmentFlatteningExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnvironmentFlatteningExample.h; sourceTree = "<group>"; };
+		1814385B192B6E4500BCDF2E /* EnvironmentNotifierExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EnvironmentNotifierExample.cpp; sourceTree = "<group>"; };
+		1814385C192B6E4500BCDF2E /* EnvironmentNotifierExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnvironmentNotifierExample.h; sourceTree = "<group>"; };
+		1814385E192B6E4500BCDF2E /* FileIOExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileIOExample.cpp; sourceTree = "<group>"; };
+		1814385F192B6E4500BCDF2E /* FileIOExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileIOExample.h; sourceTree = "<group>"; };
+		18143860192B6E4500BCDF2E /* IExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IExample.h; sourceTree = "<group>"; };
+		18143863192B6E4500BCDF2E /* KeyboardInputExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KeyboardInputExample.cpp; sourceTree = "<group>"; };
+		18143864192B6E4500BCDF2E /* KeyboardInputExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyboardInputExample.h; sourceTree = "<group>"; };
+		18143866192B6E4500BCDF2E /* LoadModelExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LoadModelExample.cpp; sourceTree = "<group>"; };
+		18143867192B6E4500BCDF2E /* LoadModelExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadModelExample.h; sourceTree = "<group>"; };
+		18143869192B6E4500BCDF2E /* ModifiedRenderingExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ModifiedRenderingExample.cpp; sourceTree = "<group>"; };
+		1814386A192B6E4500BCDF2E /* ModifiedRenderingExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModifiedRenderingExample.h; sourceTree = "<group>"; };
+		1814386C192B6E4500BCDF2E /* NavigationGraphExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NavigationGraphExample.cpp; sourceTree = "<group>"; };
+		1814386D192B6E4500BCDF2E /* NavigationGraphExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavigationGraphExample.h; sourceTree = "<group>"; };
+		1814386F192B6E4500BCDF2E /* Pick3DObjectExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Pick3DObjectExample.cpp; sourceTree = "<group>"; };
+		18143870192B6E4500BCDF2E /* Pick3DObjectExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pick3DObjectExample.h; sourceTree = "<group>"; };
+		18143872192B6E4500BCDF2E /* PinOverModelExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PinOverModelExample.cpp; sourceTree = "<group>"; };
+		18143873192B6E4500BCDF2E /* PinOverModelExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PinOverModelExample.h; sourceTree = "<group>"; };
+		18143875192B6E4500BCDF2E /* PinsExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PinsExample.cpp; sourceTree = "<group>"; };
+		18143876192B6E4500BCDF2E /* PinsExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PinsExample.h; sourceTree = "<group>"; };
+		18143878192B6E4500BCDF2E /* PODAnimationExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PODAnimationExample.cpp; sourceTree = "<group>"; };
+		18143879192B6E4500BCDF2E /* PODAnimationExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PODAnimationExample.h; sourceTree = "<group>"; };
+		1814387B192B6E4500BCDF2E /* ResourceSpatialQueryExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ResourceSpatialQueryExample.cpp; sourceTree = "<group>"; };
+		1814387C192B6E4500BCDF2E /* ResourceSpatialQueryExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceSpatialQueryExample.h; sourceTree = "<group>"; };
+		1814387E192B6E4500BCDF2E /* RouteDrawingExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RouteDrawingExample.cpp; sourceTree = "<group>"; };
+		1814387F192B6E4500BCDF2E /* RouteDrawingExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RouteDrawingExample.h; sourceTree = "<group>"; };
+		18143881192B6E4500BCDF2E /* IRouteMatchingExampleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRouteMatchingExampleView.h; sourceTree = "<group>"; };
+		18143882192B6E4500BCDF2E /* IRouteMatchingExampleViewFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRouteMatchingExampleViewFactory.h; sourceTree = "<group>"; };
+		18143883192B6E4500BCDF2E /* RouteMatchingExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RouteMatchingExample.cpp; sourceTree = "<group>"; };
+		18143884192B6E4500BCDF2E /* RouteMatchingExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RouteMatchingExample.h; sourceTree = "<group>"; };
+		18143886192B6E4500BCDF2E /* IRouteSimulationExampleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRouteSimulationExampleView.h; sourceTree = "<group>"; };
+		18143887192B6E4500BCDF2E /* IRouteSimulationExampleViewFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRouteSimulationExampleViewFactory.h; sourceTree = "<group>"; };
+		18143888192B6E4500BCDF2E /* RouteSimulationExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RouteSimulationExample.cpp; sourceTree = "<group>"; };
+		18143889192B6E4500BCDF2E /* RouteSimulationExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RouteSimulationExample.h; sourceTree = "<group>"; };
+		1814388B192B6E4500BCDF2E /* RouteSimulationAnimationExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RouteSimulationAnimationExample.cpp; sourceTree = "<group>"; };
+		1814388C192B6E4500BCDF2E /* RouteSimulationAnimationExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RouteSimulationAnimationExample.h; sourceTree = "<group>"; };
+		1814388E192B6E4500BCDF2E /* RouteThicknessPolicyExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RouteThicknessPolicyExample.cpp; sourceTree = "<group>"; };
+		1814388F192B6E4500BCDF2E /* RouteThicknessPolicyExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RouteThicknessPolicyExample.h; sourceTree = "<group>"; };
+		18143891192B6E4500BCDF2E /* ScreenPickExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ScreenPickExample.cpp; sourceTree = "<group>"; };
+		18143892192B6E4500BCDF2E /* ScreenPickExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScreenPickExample.h; sourceTree = "<group>"; };
+		18143894192B6E4500BCDF2E /* ScreenUnprojectExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ScreenUnprojectExample.cpp; sourceTree = "<group>"; };
+		18143895192B6E4500BCDF2E /* ScreenUnprojectExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScreenUnprojectExample.h; sourceTree = "<group>"; };
+		18143897192B6E4500BCDF2E /* SearchExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchExample.cpp; sourceTree = "<group>"; };
+		18143898192B6E4500BCDF2E /* SearchExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchExample.h; sourceTree = "<group>"; };
+		1814389A192B6E4500BCDF2E /* SingleCityExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SingleCityExample.cpp; sourceTree = "<group>"; };
+		1814389B192B6E4500BCDF2E /* SingleCityExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SingleCityExample.h; sourceTree = "<group>"; };
+		1814389D192B6E4500BCDF2E /* ToggleTrafficExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ToggleTrafficExample.cpp; sourceTree = "<group>"; };
+		1814389E192B6E4500BCDF2E /* ToggleTrafficExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ToggleTrafficExample.h; sourceTree = "<group>"; };
+		181438A0192B6E4500BCDF2E /* TrafficCongestionExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TrafficCongestionExample.cpp; sourceTree = "<group>"; };
+		181438A1192B6E4500BCDF2E /* TrafficCongestionExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrafficCongestionExample.h; sourceTree = "<group>"; };
+		181438A5192B6E4500BCDF2E /* WebRequestExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WebRequestExample.cpp; sourceTree = "<group>"; };
+		181438A6192B6E4500BCDF2E /* WebRequestExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebRequestExample.h; sourceTree = "<group>"; };
+		181438C4192B6EAE00BCDF2E /* IUIActionHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IUIActionHandler.h; sourceTree = "<group>"; };
+		181438C5192B6EAE00BCDF2E /* UIActionHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIActionHandler.h; sourceTree = "<group>"; };
+		181438C6192B6FEC00BCDF2E /* UIHelpers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UIHelpers.h; sourceTree = "<group>"; };
 		1825103A17AFD5AD00251651 /* Test_ROBOT_ARM.pod */ = {isa = PBXFileReference; lastKnownFileType = file; path = Test_ROBOT_ARM.pod; sourceTree = "<group>"; };
 		1825103B17AFD5AD00251651 /* tex_arm.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = tex_arm.pvr; sourceTree = "<group>"; };
 		1825103C17AFD5AD00251651 /* tex_base.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = tex_base.pvr; sourceTree = "<group>"; };
-		18259B77192A409400F0565F /* IRouteMatchingExampleView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IRouteMatchingExampleView.h; sourceTree = "<group>"; };
-		18259B78192A435F00F0565F /* IUIActionHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IUIActionHandler.h; sourceTree = "<group>"; };
-		18259B7A192A438C00F0565F /* UIActionHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIActionHandler.h; sourceTree = "<group>"; };
-		18259B7C192A443700F0565F /* IRouteMatchingExampleViewFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IRouteMatchingExampleViewFactory.h; sourceTree = "<group>"; };
 		18259B7D192A449400F0565F /* iOSRouteMatchingExampleView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = iOSRouteMatchingExampleView.mm; sourceTree = "<group>"; };
 		18259B7E192A449400F0565F /* iOSRouteMatchingExampleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iOSRouteMatchingExampleView.h; sourceTree = "<group>"; };
-		183D9F041923C3E100015CDB /* CameraTransitionExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CameraTransitionExample.cpp; sourceTree = "<group>"; };
-		183D9F051923C3E100015CDB /* CameraTransitionExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraTransitionExample.h; sourceTree = "<group>"; };
-		183D9F061923C3E100015CDB /* ControlCityThemeExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ControlCityThemeExample.cpp; sourceTree = "<group>"; };
-		183D9F071923C3E100015CDB /* ControlCityThemeExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ControlCityThemeExample.h; sourceTree = "<group>"; };
-		183D9F081923C3E100015CDB /* DebugPrimitiveRenderingExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DebugPrimitiveRenderingExample.cpp; sourceTree = "<group>"; };
-		183D9F091923C3E100015CDB /* DebugPrimitiveRenderingExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebugPrimitiveRenderingExample.h; sourceTree = "<group>"; };
-		183D9F0A1923C3E100015CDB /* DebugSphereExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DebugSphereExample.cpp; sourceTree = "<group>"; };
-		183D9F0B1923C3E100015CDB /* DebugSphereExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebugSphereExample.h; sourceTree = "<group>"; };
-		183D9F0C1923C3E100015CDB /* DynamicText3DExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DynamicText3DExample.cpp; sourceTree = "<group>"; };
-		183D9F0D1923C3E100015CDB /* DynamicText3DExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DynamicText3DExample.h; sourceTree = "<group>"; };
-		183D9F0E1923C3E100015CDB /* EnvironmentFlatteningExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EnvironmentFlatteningExample.cpp; sourceTree = "<group>"; };
-		183D9F0F1923C3E200015CDB /* EnvironmentFlatteningExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnvironmentFlatteningExample.h; sourceTree = "<group>"; };
-		183D9F101923C3E200015CDB /* EnvironmentNotifierExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EnvironmentNotifierExample.cpp; sourceTree = "<group>"; };
-		183D9F111923C3E200015CDB /* EnvironmentNotifierExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnvironmentNotifierExample.h; sourceTree = "<group>"; };
-		183D9F121923C3E200015CDB /* FileIOExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileIOExample.cpp; sourceTree = "<group>"; };
-		183D9F131923C3E200015CDB /* FileIOExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileIOExample.h; sourceTree = "<group>"; };
-		183D9F141923C3E200015CDB /* IExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IExample.h; sourceTree = "<group>"; };
-		183D9F151923C3E200015CDB /* KeyboardInputExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KeyboardInputExample.cpp; sourceTree = "<group>"; };
-		183D9F161923C3E200015CDB /* KeyboardInputExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyboardInputExample.h; sourceTree = "<group>"; };
-		183D9F171923C3E200015CDB /* LoadModelExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LoadModelExample.cpp; sourceTree = "<group>"; };
-		183D9F181923C3E200015CDB /* LoadModelExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadModelExample.h; sourceTree = "<group>"; };
-		183D9F191923C3E200015CDB /* ModifiedRenderingExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ModifiedRenderingExample.cpp; sourceTree = "<group>"; };
-		183D9F1A1923C3E200015CDB /* ModifiedRenderingExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModifiedRenderingExample.h; sourceTree = "<group>"; };
-		183D9F1B1923C3E200015CDB /* NavigationGraphExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NavigationGraphExample.cpp; sourceTree = "<group>"; };
-		183D9F1C1923C3E200015CDB /* NavigationGraphExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavigationGraphExample.h; sourceTree = "<group>"; };
-		183D9F1D1923C3E200015CDB /* Pick3DObjectExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Pick3DObjectExample.cpp; sourceTree = "<group>"; };
-		183D9F1E1923C3E200015CDB /* Pick3DObjectExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pick3DObjectExample.h; sourceTree = "<group>"; };
-		183D9F1F1923C3E200015CDB /* PinOverModelExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PinOverModelExample.cpp; sourceTree = "<group>"; };
-		183D9F201923C3E200015CDB /* PinOverModelExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PinOverModelExample.h; sourceTree = "<group>"; };
-		183D9F211923C3E200015CDB /* PinsExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PinsExample.cpp; sourceTree = "<group>"; };
-		183D9F221923C3E200015CDB /* PinsExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PinsExample.h; sourceTree = "<group>"; };
-		183D9F231923C3E200015CDB /* PODAnimationExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PODAnimationExample.cpp; sourceTree = "<group>"; };
-		183D9F241923C3E200015CDB /* PODAnimationExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PODAnimationExample.h; sourceTree = "<group>"; };
-		183D9F251923C3E200015CDB /* ResourceSpatialQueryExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ResourceSpatialQueryExample.cpp; sourceTree = "<group>"; };
-		183D9F261923C3E200015CDB /* ResourceSpatialQueryExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceSpatialQueryExample.h; sourceTree = "<group>"; };
-		183D9F271923C3E200015CDB /* RouteDrawingExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RouteDrawingExample.cpp; sourceTree = "<group>"; };
-		183D9F281923C3E200015CDB /* RouteDrawingExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RouteDrawingExample.h; sourceTree = "<group>"; };
-		183D9F291923C3E200015CDB /* RouteSimulationAnimationExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RouteSimulationAnimationExample.cpp; sourceTree = "<group>"; };
-		183D9F2A1923C3E200015CDB /* RouteSimulationAnimationExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RouteSimulationAnimationExample.h; sourceTree = "<group>"; };
-		183D9F2B1923C3E200015CDB /* RouteThicknessPolicyExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RouteThicknessPolicyExample.cpp; sourceTree = "<group>"; };
-		183D9F2C1923C3E200015CDB /* RouteThicknessPolicyExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RouteThicknessPolicyExample.h; sourceTree = "<group>"; };
-		183D9F2D1923C3E200015CDB /* ScreenPickExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ScreenPickExample.cpp; sourceTree = "<group>"; };
-		183D9F2E1923C3E200015CDB /* ScreenPickExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScreenPickExample.h; sourceTree = "<group>"; };
-		183D9F2F1923C3E200015CDB /* ScreenUnprojectExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ScreenUnprojectExample.cpp; sourceTree = "<group>"; };
-		183D9F301923C3E200015CDB /* ScreenUnprojectExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScreenUnprojectExample.h; sourceTree = "<group>"; };
-		183D9F311923C3E200015CDB /* SearchExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchExample.cpp; sourceTree = "<group>"; };
-		183D9F321923C3E200015CDB /* SearchExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchExample.h; sourceTree = "<group>"; };
-		183D9F331923C3E200015CDB /* SingleCityExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SingleCityExample.cpp; sourceTree = "<group>"; };
-		183D9F341923C3E200015CDB /* SingleCityExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SingleCityExample.h; sourceTree = "<group>"; };
-		183D9F351923C3E200015CDB /* ToggleTrafficExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ToggleTrafficExample.cpp; sourceTree = "<group>"; };
-		183D9F361923C3E200015CDB /* ToggleTrafficExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ToggleTrafficExample.h; sourceTree = "<group>"; };
-		183D9F371923C3E200015CDB /* TrafficCongestionExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TrafficCongestionExample.cpp; sourceTree = "<group>"; };
-		183D9F381923C3E200015CDB /* TrafficCongestionExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrafficCongestionExample.h; sourceTree = "<group>"; };
-		183D9F391923C3E200015CDB /* WebRequestExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WebRequestExample.cpp; sourceTree = "<group>"; };
-		183D9F3A1923C3E200015CDB /* WebRequestExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebRequestExample.h; sourceTree = "<group>"; };
 		1846BB0319228ACB007DC99C /* AppOnMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppOnMap.h; sourceTree = "<group>"; };
 		1846BB0419228ACB007DC99C /* AppOnMap.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppOnMap.mm; sourceTree = "<group>"; };
 		1846BB0519228ACB007DC99C /* Logger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Logger.h; sourceTree = "<group>"; };
@@ -180,15 +186,10 @@
 		18915BD217C7AF86005F24AB /* recce_trams_night.pod */ = {isa = PBXFileReference; lastKnownFileType = file; path = recce_trams_night.pod; sourceTree = "<group>"; };
 		18A70D0A192A4DCE006B93FF /* iOSRouteMatchingExampleViewFactory.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = iOSRouteMatchingExampleViewFactory.mm; sourceTree = "<group>"; };
 		18A70D0B192A4DCE006B93FF /* iOSRouteMatchingExampleViewFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iOSRouteMatchingExampleViewFactory.h; sourceTree = "<group>"; };
-		18A70D0D192A5B44006B93FF /* IRouteSimulationExampleViewFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IRouteSimulationExampleViewFactory.h; sourceTree = "<group>"; };
 		18A70D0E192A5CA3006B93FF /* iOSRouteSimulationExampleView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = iOSRouteSimulationExampleView.mm; sourceTree = "<group>"; };
 		18A70D0F192A5CA3006B93FF /* iOSRouteSimulationExampleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iOSRouteSimulationExampleView.h; sourceTree = "<group>"; };
 		18A70D12192A5CC0006B93FF /* iOSRouteSimulationExampleViewFactory.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = iOSRouteSimulationExampleViewFactory.mm; sourceTree = "<group>"; };
 		18A70D13192A5CC0006B93FF /* iOSRouteSimulationExampleViewFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iOSRouteSimulationExampleViewFactory.h; sourceTree = "<group>"; };
-		18D8D0511923BDAC005A8C22 /* RouteMatchingExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RouteMatchingExample.h; sourceTree = "<group>"; };
-		18D8D0521923BDAC005A8C22 /* RouteMatchingExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RouteMatchingExample.cpp; sourceTree = "<group>"; };
-		18D8D0531923BDAC005A8C22 /* RouteSimulationExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RouteSimulationExample.h; sourceTree = "<group>"; };
-		18D8D0541923BDAC005A8C22 /* RouteSimulationExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RouteSimulationExample.cpp; sourceTree = "<group>"; };
 		18EC760517BA421E0011EEE6 /* recce_trams.pod */ = {isa = PBXFileReference; lastKnownFileType = file; path = recce_trams.pod; sourceTree = "<group>"; };
 		18EC760617BA421E0011EEE6 /* recce_trams.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = recce_trams.pvr; sourceTree = "<group>"; };
 		2264D692177DA5870016C3ED /* ldn_trains_01.pod */ = {isa = PBXFileReference; lastKnownFileType = file; path = ldn_trains_01.pod; sourceTree = "<group>"; };
@@ -273,67 +274,326 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		183D9F031923C3E100015CDB /* src */ = {
+		18143846192B6E4500BCDF2E /* src */ = {
 			isa = PBXGroup;
 			children = (
-				183D9F041923C3E100015CDB /* CameraTransitionExample.cpp */,
-				183D9F051923C3E100015CDB /* CameraTransitionExample.h */,
-				183D9F061923C3E100015CDB /* ControlCityThemeExample.cpp */,
-				183D9F071923C3E100015CDB /* ControlCityThemeExample.h */,
-				183D9F081923C3E100015CDB /* DebugPrimitiveRenderingExample.cpp */,
-				183D9F091923C3E100015CDB /* DebugPrimitiveRenderingExample.h */,
-				183D9F0A1923C3E100015CDB /* DebugSphereExample.cpp */,
-				183D9F0B1923C3E100015CDB /* DebugSphereExample.h */,
-				183D9F0C1923C3E100015CDB /* DynamicText3DExample.cpp */,
-				183D9F0D1923C3E100015CDB /* DynamicText3DExample.h */,
-				183D9F0E1923C3E100015CDB /* EnvironmentFlatteningExample.cpp */,
-				183D9F0F1923C3E200015CDB /* EnvironmentFlatteningExample.h */,
-				183D9F101923C3E200015CDB /* EnvironmentNotifierExample.cpp */,
-				183D9F111923C3E200015CDB /* EnvironmentNotifierExample.h */,
-				183D9F121923C3E200015CDB /* FileIOExample.cpp */,
-				183D9F131923C3E200015CDB /* FileIOExample.h */,
-				183D9F141923C3E200015CDB /* IExample.h */,
-				183D9F151923C3E200015CDB /* KeyboardInputExample.cpp */,
-				183D9F161923C3E200015CDB /* KeyboardInputExample.h */,
-				183D9F171923C3E200015CDB /* LoadModelExample.cpp */,
-				183D9F181923C3E200015CDB /* LoadModelExample.h */,
-				183D9F191923C3E200015CDB /* ModifiedRenderingExample.cpp */,
-				183D9F1A1923C3E200015CDB /* ModifiedRenderingExample.h */,
-				183D9F1B1923C3E200015CDB /* NavigationGraphExample.cpp */,
-				183D9F1C1923C3E200015CDB /* NavigationGraphExample.h */,
-				183D9F1D1923C3E200015CDB /* Pick3DObjectExample.cpp */,
-				183D9F1E1923C3E200015CDB /* Pick3DObjectExample.h */,
-				183D9F1F1923C3E200015CDB /* PinOverModelExample.cpp */,
-				183D9F201923C3E200015CDB /* PinOverModelExample.h */,
-				183D9F211923C3E200015CDB /* PinsExample.cpp */,
-				183D9F221923C3E200015CDB /* PinsExample.h */,
-				183D9F231923C3E200015CDB /* PODAnimationExample.cpp */,
-				183D9F241923C3E200015CDB /* PODAnimationExample.h */,
-				183D9F251923C3E200015CDB /* ResourceSpatialQueryExample.cpp */,
-				183D9F261923C3E200015CDB /* ResourceSpatialQueryExample.h */,
-				183D9F271923C3E200015CDB /* RouteDrawingExample.cpp */,
-				183D9F281923C3E200015CDB /* RouteDrawingExample.h */,
-				183D9F291923C3E200015CDB /* RouteSimulationAnimationExample.cpp */,
-				183D9F2A1923C3E200015CDB /* RouteSimulationAnimationExample.h */,
-				183D9F2B1923C3E200015CDB /* RouteThicknessPolicyExample.cpp */,
-				183D9F2C1923C3E200015CDB /* RouteThicknessPolicyExample.h */,
-				183D9F2D1923C3E200015CDB /* ScreenPickExample.cpp */,
-				183D9F2E1923C3E200015CDB /* ScreenPickExample.h */,
-				183D9F2F1923C3E200015CDB /* ScreenUnprojectExample.cpp */,
-				183D9F301923C3E200015CDB /* ScreenUnprojectExample.h */,
-				183D9F311923C3E200015CDB /* SearchExample.cpp */,
-				183D9F321923C3E200015CDB /* SearchExample.h */,
-				183D9F331923C3E200015CDB /* SingleCityExample.cpp */,
-				183D9F341923C3E200015CDB /* SingleCityExample.h */,
-				183D9F351923C3E200015CDB /* ToggleTrafficExample.cpp */,
-				183D9F361923C3E200015CDB /* ToggleTrafficExample.h */,
-				183D9F371923C3E200015CDB /* TrafficCongestionExample.cpp */,
-				183D9F381923C3E200015CDB /* TrafficCongestionExample.h */,
-				183D9F391923C3E200015CDB /* WebRequestExample.cpp */,
-				183D9F3A1923C3E200015CDB /* WebRequestExample.h */,
+				18143847192B6E4500BCDF2E /* Examples */,
 			);
 			name = src;
 			path = ../../src;
+			sourceTree = "<group>";
+		};
+		18143847192B6E4500BCDF2E /* Examples */ = {
+			isa = PBXGroup;
+			children = (
+				18143848192B6E4500BCDF2E /* CameraTransition */,
+				1814384B192B6E4500BCDF2E /* ControlCityThemes */,
+				1814384E192B6E4500BCDF2E /* DebugPrimitiveRendering */,
+				18143851192B6E4500BCDF2E /* DebugSphere */,
+				18143854192B6E4500BCDF2E /* DynamicText3D */,
+				18143857192B6E4500BCDF2E /* EnvironmentFlattening */,
+				1814385A192B6E4500BCDF2E /* EnvironmentNotifier */,
+				1814385D192B6E4500BCDF2E /* FileIO */,
+				18143860192B6E4500BCDF2E /* IExample.h */,
+				18143862192B6E4500BCDF2E /* KeyboardInput */,
+				18143865192B6E4500BCDF2E /* LoadModel */,
+				18143868192B6E4500BCDF2E /* ModifiedRendering */,
+				1814386B192B6E4500BCDF2E /* NavigationGraph */,
+				1814386E192B6E4500BCDF2E /* Pick3DObject */,
+				18143871192B6E4500BCDF2E /* PinOverModel */,
+				18143874192B6E4500BCDF2E /* Pins */,
+				18143877192B6E4500BCDF2E /* PODAnimation */,
+				1814387A192B6E4500BCDF2E /* ResourceSpatialQuery */,
+				1814387D192B6E4500BCDF2E /* RouteDrawing */,
+				18143880192B6E4500BCDF2E /* RouteMatching */,
+				18143885192B6E4500BCDF2E /* RouteSimulation */,
+				1814388A192B6E4500BCDF2E /* RouteSimulationAnimation */,
+				1814388D192B6E4500BCDF2E /* RouteThicknessPolicy */,
+				18143890192B6E4500BCDF2E /* ScreenPick */,
+				18143893192B6E4500BCDF2E /* ScreenUnproject */,
+				18143896192B6E4500BCDF2E /* Search */,
+				18143899192B6E4500BCDF2E /* SingleCity */,
+				1814389C192B6E4500BCDF2E /* ToggleTraffic */,
+				1814389F192B6E4500BCDF2E /* TrafficCongestion */,
+				181438A2192B6E4500BCDF2E /* UI */,
+				181438A4192B6E4500BCDF2E /* WebRequest */,
+			);
+			path = Examples;
+			sourceTree = "<group>";
+		};
+		18143848192B6E4500BCDF2E /* CameraTransition */ = {
+			isa = PBXGroup;
+			children = (
+				18143849192B6E4500BCDF2E /* CameraTransitionExample.cpp */,
+				1814384A192B6E4500BCDF2E /* CameraTransitionExample.h */,
+			);
+			path = CameraTransition;
+			sourceTree = "<group>";
+		};
+		1814384B192B6E4500BCDF2E /* ControlCityThemes */ = {
+			isa = PBXGroup;
+			children = (
+				1814384C192B6E4500BCDF2E /* ControlCityThemeExample.cpp */,
+				1814384D192B6E4500BCDF2E /* ControlCityThemeExample.h */,
+			);
+			path = ControlCityThemes;
+			sourceTree = "<group>";
+		};
+		1814384E192B6E4500BCDF2E /* DebugPrimitiveRendering */ = {
+			isa = PBXGroup;
+			children = (
+				1814384F192B6E4500BCDF2E /* DebugPrimitiveRenderingExample.cpp */,
+				18143850192B6E4500BCDF2E /* DebugPrimitiveRenderingExample.h */,
+			);
+			path = DebugPrimitiveRendering;
+			sourceTree = "<group>";
+		};
+		18143851192B6E4500BCDF2E /* DebugSphere */ = {
+			isa = PBXGroup;
+			children = (
+				18143852192B6E4500BCDF2E /* DebugSphereExample.cpp */,
+				18143853192B6E4500BCDF2E /* DebugSphereExample.h */,
+			);
+			path = DebugSphere;
+			sourceTree = "<group>";
+		};
+		18143854192B6E4500BCDF2E /* DynamicText3D */ = {
+			isa = PBXGroup;
+			children = (
+				18143855192B6E4500BCDF2E /* DynamicText3DExample.cpp */,
+				18143856192B6E4500BCDF2E /* DynamicText3DExample.h */,
+			);
+			path = DynamicText3D;
+			sourceTree = "<group>";
+		};
+		18143857192B6E4500BCDF2E /* EnvironmentFlattening */ = {
+			isa = PBXGroup;
+			children = (
+				18143858192B6E4500BCDF2E /* EnvironmentFlatteningExample.cpp */,
+				18143859192B6E4500BCDF2E /* EnvironmentFlatteningExample.h */,
+			);
+			path = EnvironmentFlattening;
+			sourceTree = "<group>";
+		};
+		1814385A192B6E4500BCDF2E /* EnvironmentNotifier */ = {
+			isa = PBXGroup;
+			children = (
+				1814385B192B6E4500BCDF2E /* EnvironmentNotifierExample.cpp */,
+				1814385C192B6E4500BCDF2E /* EnvironmentNotifierExample.h */,
+			);
+			path = EnvironmentNotifier;
+			sourceTree = "<group>";
+		};
+		1814385D192B6E4500BCDF2E /* FileIO */ = {
+			isa = PBXGroup;
+			children = (
+				1814385E192B6E4500BCDF2E /* FileIOExample.cpp */,
+				1814385F192B6E4500BCDF2E /* FileIOExample.h */,
+			);
+			path = FileIO;
+			sourceTree = "<group>";
+		};
+		18143862192B6E4500BCDF2E /* KeyboardInput */ = {
+			isa = PBXGroup;
+			children = (
+				18143863192B6E4500BCDF2E /* KeyboardInputExample.cpp */,
+				18143864192B6E4500BCDF2E /* KeyboardInputExample.h */,
+			);
+			path = KeyboardInput;
+			sourceTree = "<group>";
+		};
+		18143865192B6E4500BCDF2E /* LoadModel */ = {
+			isa = PBXGroup;
+			children = (
+				18143866192B6E4500BCDF2E /* LoadModelExample.cpp */,
+				18143867192B6E4500BCDF2E /* LoadModelExample.h */,
+			);
+			path = LoadModel;
+			sourceTree = "<group>";
+		};
+		18143868192B6E4500BCDF2E /* ModifiedRendering */ = {
+			isa = PBXGroup;
+			children = (
+				18143869192B6E4500BCDF2E /* ModifiedRenderingExample.cpp */,
+				1814386A192B6E4500BCDF2E /* ModifiedRenderingExample.h */,
+			);
+			path = ModifiedRendering;
+			sourceTree = "<group>";
+		};
+		1814386B192B6E4500BCDF2E /* NavigationGraph */ = {
+			isa = PBXGroup;
+			children = (
+				1814386C192B6E4500BCDF2E /* NavigationGraphExample.cpp */,
+				1814386D192B6E4500BCDF2E /* NavigationGraphExample.h */,
+			);
+			path = NavigationGraph;
+			sourceTree = "<group>";
+		};
+		1814386E192B6E4500BCDF2E /* Pick3DObject */ = {
+			isa = PBXGroup;
+			children = (
+				1814386F192B6E4500BCDF2E /* Pick3DObjectExample.cpp */,
+				18143870192B6E4500BCDF2E /* Pick3DObjectExample.h */,
+			);
+			path = Pick3DObject;
+			sourceTree = "<group>";
+		};
+		18143871192B6E4500BCDF2E /* PinOverModel */ = {
+			isa = PBXGroup;
+			children = (
+				18143872192B6E4500BCDF2E /* PinOverModelExample.cpp */,
+				18143873192B6E4500BCDF2E /* PinOverModelExample.h */,
+			);
+			path = PinOverModel;
+			sourceTree = "<group>";
+		};
+		18143874192B6E4500BCDF2E /* Pins */ = {
+			isa = PBXGroup;
+			children = (
+				18143875192B6E4500BCDF2E /* PinsExample.cpp */,
+				18143876192B6E4500BCDF2E /* PinsExample.h */,
+			);
+			path = Pins;
+			sourceTree = "<group>";
+		};
+		18143877192B6E4500BCDF2E /* PODAnimation */ = {
+			isa = PBXGroup;
+			children = (
+				18143878192B6E4500BCDF2E /* PODAnimationExample.cpp */,
+				18143879192B6E4500BCDF2E /* PODAnimationExample.h */,
+			);
+			path = PODAnimation;
+			sourceTree = "<group>";
+		};
+		1814387A192B6E4500BCDF2E /* ResourceSpatialQuery */ = {
+			isa = PBXGroup;
+			children = (
+				1814387B192B6E4500BCDF2E /* ResourceSpatialQueryExample.cpp */,
+				1814387C192B6E4500BCDF2E /* ResourceSpatialQueryExample.h */,
+			);
+			path = ResourceSpatialQuery;
+			sourceTree = "<group>";
+		};
+		1814387D192B6E4500BCDF2E /* RouteDrawing */ = {
+			isa = PBXGroup;
+			children = (
+				1814387E192B6E4500BCDF2E /* RouteDrawingExample.cpp */,
+				1814387F192B6E4500BCDF2E /* RouteDrawingExample.h */,
+			);
+			path = RouteDrawing;
+			sourceTree = "<group>";
+		};
+		18143880192B6E4500BCDF2E /* RouteMatching */ = {
+			isa = PBXGroup;
+			children = (
+				18143881192B6E4500BCDF2E /* IRouteMatchingExampleView.h */,
+				18143882192B6E4500BCDF2E /* IRouteMatchingExampleViewFactory.h */,
+				18143883192B6E4500BCDF2E /* RouteMatchingExample.cpp */,
+				18143884192B6E4500BCDF2E /* RouteMatchingExample.h */,
+			);
+			path = RouteMatching;
+			sourceTree = "<group>";
+		};
+		18143885192B6E4500BCDF2E /* RouteSimulation */ = {
+			isa = PBXGroup;
+			children = (
+				18143886192B6E4500BCDF2E /* IRouteSimulationExampleView.h */,
+				18143887192B6E4500BCDF2E /* IRouteSimulationExampleViewFactory.h */,
+				18143888192B6E4500BCDF2E /* RouteSimulationExample.cpp */,
+				18143889192B6E4500BCDF2E /* RouteSimulationExample.h */,
+			);
+			path = RouteSimulation;
+			sourceTree = "<group>";
+		};
+		1814388A192B6E4500BCDF2E /* RouteSimulationAnimation */ = {
+			isa = PBXGroup;
+			children = (
+				1814388B192B6E4500BCDF2E /* RouteSimulationAnimationExample.cpp */,
+				1814388C192B6E4500BCDF2E /* RouteSimulationAnimationExample.h */,
+			);
+			path = RouteSimulationAnimation;
+			sourceTree = "<group>";
+		};
+		1814388D192B6E4500BCDF2E /* RouteThicknessPolicy */ = {
+			isa = PBXGroup;
+			children = (
+				1814388E192B6E4500BCDF2E /* RouteThicknessPolicyExample.cpp */,
+				1814388F192B6E4500BCDF2E /* RouteThicknessPolicyExample.h */,
+			);
+			path = RouteThicknessPolicy;
+			sourceTree = "<group>";
+		};
+		18143890192B6E4500BCDF2E /* ScreenPick */ = {
+			isa = PBXGroup;
+			children = (
+				18143891192B6E4500BCDF2E /* ScreenPickExample.cpp */,
+				18143892192B6E4500BCDF2E /* ScreenPickExample.h */,
+			);
+			path = ScreenPick;
+			sourceTree = "<group>";
+		};
+		18143893192B6E4500BCDF2E /* ScreenUnproject */ = {
+			isa = PBXGroup;
+			children = (
+				18143894192B6E4500BCDF2E /* ScreenUnprojectExample.cpp */,
+				18143895192B6E4500BCDF2E /* ScreenUnprojectExample.h */,
+			);
+			path = ScreenUnproject;
+			sourceTree = "<group>";
+		};
+		18143896192B6E4500BCDF2E /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				18143897192B6E4500BCDF2E /* SearchExample.cpp */,
+				18143898192B6E4500BCDF2E /* SearchExample.h */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
+		18143899192B6E4500BCDF2E /* SingleCity */ = {
+			isa = PBXGroup;
+			children = (
+				1814389A192B6E4500BCDF2E /* SingleCityExample.cpp */,
+				1814389B192B6E4500BCDF2E /* SingleCityExample.h */,
+			);
+			path = SingleCity;
+			sourceTree = "<group>";
+		};
+		1814389C192B6E4500BCDF2E /* ToggleTraffic */ = {
+			isa = PBXGroup;
+			children = (
+				1814389D192B6E4500BCDF2E /* ToggleTrafficExample.cpp */,
+				1814389E192B6E4500BCDF2E /* ToggleTrafficExample.h */,
+			);
+			path = ToggleTraffic;
+			sourceTree = "<group>";
+		};
+		1814389F192B6E4500BCDF2E /* TrafficCongestion */ = {
+			isa = PBXGroup;
+			children = (
+				181438A0192B6E4500BCDF2E /* TrafficCongestionExample.cpp */,
+				181438A1192B6E4500BCDF2E /* TrafficCongestionExample.h */,
+			);
+			path = TrafficCongestion;
+			sourceTree = "<group>";
+		};
+		181438A2192B6E4500BCDF2E /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				181438C4192B6EAE00BCDF2E /* IUIActionHandler.h */,
+				181438C5192B6EAE00BCDF2E /* UIActionHandler.h */,
+				181438C6192B6FEC00BCDF2E /* UIHelpers.h */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		181438A4192B6E4500BCDF2E /* WebRequest */ = {
+			isa = PBXGroup;
+			children = (
+				181438A5192B6E4500BCDF2E /* WebRequestExample.cpp */,
+				181438A6192B6E4500BCDF2E /* WebRequestExample.h */,
+			);
+			path = WebRequest;
 			sourceTree = "<group>";
 		};
 		1846BB0219228ACB007DC99C /* Src */ = {
@@ -353,22 +613,12 @@
 		18D8D0501923BDAC005A8C22 /* Examples */ = {
 			isa = PBXGroup;
 			children = (
-				18D8D0511923BDAC005A8C22 /* RouteMatchingExample.h */,
-				18D8D0521923BDAC005A8C22 /* RouteMatchingExample.cpp */,
-				18D8D0531923BDAC005A8C22 /* RouteSimulationExample.h */,
-				18D8D0541923BDAC005A8C22 /* RouteSimulationExample.cpp */,
-				18259B78192A435F00F0565F /* IUIActionHandler.h */,
-				18259B7A192A438C00F0565F /* UIActionHandler.h */,
-				18259B77192A409400F0565F /* IRouteMatchingExampleView.h */,
 				18259B7D192A449400F0565F /* iOSRouteMatchingExampleView.mm */,
 				18259B7E192A449400F0565F /* iOSRouteMatchingExampleView.h */,
-				18259B7C192A443700F0565F /* IRouteMatchingExampleViewFactory.h */,
 				18A70D0A192A4DCE006B93FF /* iOSRouteMatchingExampleViewFactory.mm */,
 				18A70D0B192A4DCE006B93FF /* iOSRouteMatchingExampleViewFactory.h */,
-				18143845192A686500BCDF2E /* IRouteSimulationExampleView.h */,
 				18A70D0E192A5CA3006B93FF /* iOSRouteSimulationExampleView.mm */,
 				18A70D0F192A5CA3006B93FF /* iOSRouteSimulationExampleView.h */,
-				18A70D0D192A5B44006B93FF /* IRouteSimulationExampleViewFactory.h */,
 				18A70D12192A5CC0006B93FF /* iOSRouteSimulationExampleViewFactory.mm */,
 				18A70D13192A5CC0006B93FF /* iOSRouteSimulationExampleViewFactory.h */,
 			);
@@ -417,7 +667,7 @@
 		7EE481F216836F370006E99B /* ExampleApp */ = {
 			isa = PBXGroup;
 			children = (
-				183D9F031923C3E100015CDB /* src */,
+				18143846192B6E4500BCDF2E /* src */,
 				1846BB0219228ACB007DC99C /* Src */,
 				7EE481F316836F370006E99B /* Supporting Files */,
 			);
@@ -631,42 +881,42 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				183D9F3B1923C3E200015CDB /* CameraTransitionExample.cpp in Sources */,
-				183D9F471923C3E200015CDB /* Pick3DObjectExample.cpp in Sources */,
-				183D9F4C1923C3E200015CDB /* RouteDrawingExample.cpp in Sources */,
-				183D9F3D1923C3E200015CDB /* DebugPrimitiveRenderingExample.cpp in Sources */,
-				183D9F481923C3E200015CDB /* PinOverModelExample.cpp in Sources */,
-				183D9F421923C3E200015CDB /* FileIOExample.cpp in Sources */,
-				183D9F4A1923C3E200015CDB /* PODAnimationExample.cpp in Sources */,
+				181438A8192B6E4500BCDF2E /* ControlCityThemeExample.cpp in Sources */,
+				181438B3192B6E4500BCDF2E /* Pick3DObjectExample.cpp in Sources */,
+				181438AC192B6E4500BCDF2E /* EnvironmentFlatteningExample.cpp in Sources */,
+				181438AD192B6E4500BCDF2E /* EnvironmentNotifierExample.cpp in Sources */,
+				181438BF192B6E4500BCDF2E /* SearchExample.cpp in Sources */,
+				181438BB192B6E4500BCDF2E /* RouteSimulationAnimationExample.cpp in Sources */,
+				181438BC192B6E4500BCDF2E /* RouteThicknessPolicyExample.cpp in Sources */,
 				18A70D14192A5CC0006B93FF /* iOSRouteSimulationExampleViewFactory.mm in Sources */,
-				183D9F3F1923C3E200015CDB /* DynamicText3DExample.cpp in Sources */,
-				183D9F491923C3E200015CDB /* PinsExample.cpp in Sources */,
-				183D9F501923C3E200015CDB /* ScreenUnprojectExample.cpp in Sources */,
-				183D9F401923C3E200015CDB /* EnvironmentFlatteningExample.cpp in Sources */,
-				183D9F411923C3E200015CDB /* EnvironmentNotifierExample.cpp in Sources */,
-				183D9F441923C3E200015CDB /* LoadModelExample.cpp in Sources */,
-				183D9F4E1923C3E200015CDB /* RouteThicknessPolicyExample.cpp in Sources */,
-				183D9F531923C3E200015CDB /* ToggleTrafficExample.cpp in Sources */,
-				183D9F3E1923C3E200015CDB /* DebugSphereExample.cpp in Sources */,
-				183D9F451923C3E200015CDB /* ModifiedRenderingExample.cpp in Sources */,
-				183D9F511923C3E200015CDB /* SearchExample.cpp in Sources */,
+				181438AB192B6E4500BCDF2E /* DynamicText3DExample.cpp in Sources */,
+				181438B0192B6E4500BCDF2E /* LoadModelExample.cpp in Sources */,
 				18259B7F192A449400F0565F /* iOSRouteMatchingExampleView.mm in Sources */,
-				18D8D0561923BDAC005A8C22 /* RouteSimulationExample.cpp in Sources */,
-				183D9F431923C3E200015CDB /* KeyboardInputExample.cpp in Sources */,
-				183D9F4F1923C3E200015CDB /* ScreenPickExample.cpp in Sources */,
-				183D9F461923C3E200015CDB /* NavigationGraphExample.cpp in Sources */,
+				181438B8192B6E4500BCDF2E /* RouteDrawingExample.cpp in Sources */,
+				181438AF192B6E4500BCDF2E /* KeyboardInputExample.cpp in Sources */,
+				181438BE192B6E4500BCDF2E /* ScreenUnprojectExample.cpp in Sources */,
 				1846BB0A19228ACB007DC99C /* Main.m in Sources */,
-				183D9F3C1923C3E200015CDB /* ControlCityThemeExample.cpp in Sources */,
+				181438AA192B6E4500BCDF2E /* DebugSphereExample.cpp in Sources */,
 				18A70D10192A5CA3006B93FF /* iOSRouteSimulationExampleView.mm in Sources */,
-				183D9F4B1923C3E200015CDB /* ResourceSpatialQueryExample.cpp in Sources */,
-				183D9F551923C3E200015CDB /* WebRequestExample.cpp in Sources */,
-				183D9F4D1923C3E200015CDB /* RouteSimulationAnimationExample.cpp in Sources */,
-				18D8D0551923BDAC005A8C22 /* RouteMatchingExample.cpp in Sources */,
-				183D9F521923C3E200015CDB /* SingleCityExample.cpp in Sources */,
+				181438A7192B6E4500BCDF2E /* CameraTransitionExample.cpp in Sources */,
 				1846BB0919228ACB007DC99C /* AppOnMap.mm in Sources */,
-				183D9F541923C3E200015CDB /* TrafficCongestionExample.cpp in Sources */,
+				181438C2192B6E4500BCDF2E /* TrafficCongestionExample.cpp in Sources */,
+				181438B6192B6E4500BCDF2E /* PODAnimationExample.cpp in Sources */,
+				181438B5192B6E4500BCDF2E /* PinsExample.cpp in Sources */,
+				181438B7192B6E4500BCDF2E /* ResourceSpatialQueryExample.cpp in Sources */,
+				181438A9192B6E4500BCDF2E /* DebugPrimitiveRenderingExample.cpp in Sources */,
+				181438BD192B6E4500BCDF2E /* ScreenPickExample.cpp in Sources */,
+				181438C3192B6E4500BCDF2E /* WebRequestExample.cpp in Sources */,
+				181438B1192B6E4500BCDF2E /* ModifiedRenderingExample.cpp in Sources */,
+				181438B4192B6E4500BCDF2E /* PinOverModelExample.cpp in Sources */,
 				1846BB0B19228ACB007DC99C /* ViewController.mm in Sources */,
+				181438AE192B6E4500BCDF2E /* FileIOExample.cpp in Sources */,
 				18A70D0C192A4DCE006B93FF /* iOSRouteMatchingExampleViewFactory.mm in Sources */,
+				181438BA192B6E4500BCDF2E /* RouteSimulationExample.cpp in Sources */,
+				181438C1192B6E4500BCDF2E /* ToggleTrafficExample.cpp in Sources */,
+				181438B2192B6E4500BCDF2E /* NavigationGraphExample.cpp in Sources */,
+				181438C0192B6E4500BCDF2E /* SingleCityExample.cpp in Sources */,
+				181438B9192B6E4500BCDF2E /* RouteMatchingExample.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -7,30 +7,7 @@
 //
 
 #include "iOSRouteSimulationExampleView.h"
-#include <algorithm>
-
-namespace
-{
-    template <typename T>
-    void RemoveFrom(std::vector<T>& vec, T item)
-    {
-        typename std::vector<T>::iterator it = std::find(vec.begin(), vec.end(), item);
-        
-        if(it != vec.end())
-        {
-            vec.erase(it);
-        }
-    }
-    
-    void InvokeAllHandlers(std::vector<Examples::IUIActionHandler*>& handlers)
-    {
-        for(std::vector<Examples::IUIActionHandler*>::iterator it = handlers.begin(); it != handlers.end(); ++ it)
-        {
-            Examples::IUIActionHandler& handler = **it;
-            handler();
-        }
-    }
-}
+#include "UIHelpers.h"
 
 using namespace Examples;
 

@@ -7,7 +7,7 @@
 //
 
 #include "iOSRouteMatchingExampleView.h"
-#include <algorithm>
+#include "UIHelpers.h"
 
 using namespace Examples;
 
@@ -69,22 +69,11 @@ namespace Examples
     
     void iOSRouteMatchingExampleView::RemoveMatchingToggledHandler(IUIActionHandler& handler)
     {
-        std::vector<IUIActionHandler*>::iterator it = std::find(m_matchingToggledHandlers.begin(),
-                                                                m_matchingToggledHandlers.end(),
-                                                                &handler);
-     
-        if(it != m_matchingToggledHandlers.end())
-        {
-            m_matchingToggledHandlers.erase(it);
-        }
+        RemoveFrom(m_matchingToggledHandlers, &handler);
     }
     
     void iOSRouteMatchingExampleView::ToggleMatching()
     {
-        for(std::vector<IUIActionHandler*>::iterator it = m_matchingToggledHandlers.begin(); it != m_matchingToggledHandlers.end(); ++ it)
-        {
-            IUIActionHandler& handler = **it;
-            handler();
-        }
+        InvokeAllHandlers(m_matchingToggledHandlers);
     }
 }
