@@ -20,10 +20,10 @@ LOCAL_SRC_FILES += ./AppOnMap.cpp
 LOCAL_SRC_FILES += ./ExampleCameraJumpController.cpp
 LOCAL_SRC_FILES += ./UiThreadToNativeThreadTaskQueue.cpp
 
-LOCAL_SRC_FILES += ./Examples/JavaHudCrossThreadCommunicationExample.cpp
-LOCAL_SRC_FILES += ./Examples/ShowJavaPlaceJumpUIExample.cpp
-LOCAL_SRC_FILES += ./Examples/PinsWithAttachedJavaUIExample.cpp
-LOCAL_SRC_FILES += ./Examples/PositionJavaPinButtonExample.cpp
+LOCAL_SRC_FILES += ./Examples/JavaHudCrossThreadCommunication/JavaHudCrossThreadCommunicationExample.cpp
+LOCAL_SRC_FILES += ./Examples/ShowJavaPlaceJumpUI/ShowJavaPlaceJumpUIExample.cpp
+LOCAL_SRC_FILES += ./Examples/PinsWithAttachedJavaUI/PinsWithAttachedJavaUIExample.cpp
+LOCAL_SRC_FILES += ./Examples/PositionJavaPinButton/PositionJavaPinButtonExample.cpp
 LOCAL_SRC_FILES += ./Examples/RouteMatching/AndroidRouteMatchingExampleView.cpp
 LOCAL_SRC_FILES += ./Examples/RouteMatching/AndroidRouteMatchingExampleViewFactory.cpp
 LOCAL_SRC_FILES += ./Examples/RouteSimulation/AndroidRouteSimulationExampleView.cpp
@@ -75,9 +75,8 @@ endif
 exampleincludes := $(shell find ./libs/../../src -type d)
 LOCAL_C_INCLUDES += $(exampleincludes:$(LOCAL_PATH)/%=%)
 
-LOCAL_C_INCLUDES += ./jni/Examples 
-LOCAL_C_INCLUDES += ./jni/Examples/RouteMatching
-LOCAL_C_INCLUDES += ./jni/Examples/RouteSimulation
+java_exampleincludes := $(shell find ./jni/Examples -type d)
+LOCAL_C_INCLUDES += $(java_exampleincludes:$(LOCAL_PATH)/%=%)
 
 LOCAL_C_INCLUDES += ./libs/png
 LOCAL_C_INCLUDES += ./libs/curl 
