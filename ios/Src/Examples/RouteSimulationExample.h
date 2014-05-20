@@ -30,9 +30,11 @@
 #include "GlobeCameraController.h"
 #include "EegeoWorld.h"
 #include "IInterestPointProvider.h"
-#import <UIKit/UIKit.h>
 #include "IdentityRouteThicknessPolicy.h"
 #include "IRouteSimulationSessionObserver.h"
+#include "IRouteSimulationExampleViewFactory.h"
+#include "IRouteSimulationExampleView.h"
+#include "UIActionHandler.h"
 
 namespace Examples
 {
@@ -66,8 +68,15 @@ namespace Examples
         Eegeo::Rendering::AsyncTexturing::IAsyncTextureRequestor& m_textureRequestor;
         Eegeo::Camera::GlobeCamera::GlobeCameraController& m_defaultCamera;
         Eegeo::Location::IInterestPointProvider& m_interestPointProvider;
-        UIView* m_pView;
         Eegeo::EegeoWorld& m_world;
+        IRouteSimulationExampleViewFactory& m_routeSimulationExampleViewFactory;
+        IRouteSimulationExampleView* m_pRouteSimulationView;
+        Examples::UIActionHandler<RouteSimulationExample> m_decreaseSpeedToggleHandler;
+        Examples::UIActionHandler<RouteSimulationExample> m_increaseSpeedToggleHandler;
+        Examples::UIActionHandler<RouteSimulationExample> m_followCameraToggleHandler;
+        Examples::UIActionHandler<RouteSimulationExample> m_rotateToFollowToggledHandler;
+        Examples::UIActionHandler<RouteSimulationExample> m_directionChangedHandler;
+        Examples::UIActionHandler<RouteSimulationExample> m_roadSideChangedHandler;
         
         bool m_initialised;
         bool m_usingFollowCamera;
@@ -99,7 +108,7 @@ namespace Examples
                                Eegeo::Camera::GlobeCamera::GlobeCameraController& defaultCamera,
                                Eegeo::Location::IInterestPointProvider& interestPointProvider,
                                Eegeo::Routes::Simulation::Camera::RouteSimulationGlobeCameraControllerFactory routeSimulationGlobeCameraControllerFactory,
-                               UIView* pView,
+                               IRouteSimulationExampleViewFactory& routeSimulationExampleViewFactory,
                                Eegeo::EegeoWorld& eegeoWorld);
         
         void Start() {}

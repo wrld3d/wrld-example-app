@@ -45,6 +45,7 @@
 #include "TrafficCongestionExample.h"
 #include "CameraTransitionExample.h"
 #include "iOSRouteMatchingExampleViewFactory.h"
+#include "iOSRouteSimulationExampleViewFactory.h"
 
 MyApp::MyApp(Eegeo::Camera::GlobeCamera::GlobeCameraInterestPointProvider& globeCameraInterestPointProvider,
              UIView* pView,
@@ -330,6 +331,8 @@ Examples::IExample* MyApp::CreateExample(ExampleTypes::Examples example,
                                                                                                    World().GetResourceCeilingProvider(),
                                                                                                    collisionMeshResourceProvider);
             
+            Examples::iOSRouteSimulationExampleViewFactory* pViewFactory_TEMP_HACK_LEAKING = Eegeo_NEW(Examples::iOSRouteSimulationExampleViewFactory)(m_pView);
+            
             return new Examples::RouteSimulationExample(World().GetRouteService(),
                                                         World().GetRouteSimulationService(),
                                                         World().GetRouteSimulationViewService(),
@@ -339,7 +342,7 @@ Examples::IExample* MyApp::CreateExample(ExampleTypes::Examples example,
                                                         *m_globeCameraController,
                                                         World().GetInterestPointProvider(),
                                                         factory,
-                                                        m_pView,
+                                                        *pViewFactory_TEMP_HACK_LEAKING,
                                                         World()
                                                         );
         }

@@ -52,7 +52,7 @@ RouteSimulationExample::RouteSimulationExample(RouteService& routeService,
                                                Eegeo::Camera::GlobeCamera::GlobeCameraController& defaultCamera,
                                                Eegeo::Location::IInterestPointProvider& interestPointProvider,
                                                RouteSimulationGlobeCameraControllerFactory routeSimulationGlobeCameraControllerFactory,
-                                               UIView* pView,
+                                               IRouteSimulationExampleViewFactory& routeSimulationExampleViewFactory,
                                                EegeoWorld& world)
 :m_routeService(routeService)
 ,m_routeSimulationService(routeSimulationService)
@@ -63,12 +63,18 @@ RouteSimulationExample::RouteSimulationExample(RouteService& routeService,
 ,m_defaultCamera(defaultCamera)
 ,m_interestPointProvider(interestPointProvider)
 ,m_routeSimulationGlobeCameraControllerFactory(routeSimulationGlobeCameraControllerFactory)
-,m_pView(pView)
 ,m_world(world)
 ,m_initialised(false)
 ,m_route(NULL)
 ,m_usingFollowCamera(false)
+,m_routeSimulationExampleViewFactory(routeSimulationExampleViewFactory)
 , m_linkSpeedMultiplier(1.f)
+,m_decreaseSpeedToggleHandler(this, &RouteSimulationExample::DecreaseSpeedFollowed)
+,m_increaseSpeedToggleHandler(this, &RouteSimulationExample::IncreaseSpeedFollowed)
+,m_followCameraToggleHandler(this, &RouteSimulationExample::ToggleFollowCamera)
+,m_rotateToFollowToggledHandler(this, &RouteSimulationExample::ToggleRotateToFollow)
+,m_directionChangedHandler(this, &RouteSimulationExample::ChangeFollowDirection)
+,m_roadSideChangedHandler(this, &RouteSimulationExample::ToggleSideOfRoadToDriveOn)
 {
 }
 
@@ -236,6 +242,17 @@ void RouteSimulationExample::Suspend()
     
     delete m_pRouteSessionFollowCameraController;
     m_pRouteSessionFollowCameraController = NULL;
+    
+    m_pRouteSimulationView->RemoveIncreaseSpeedHandler(m_increaseSpeedToggleHandler);
+    m_pRouteSimulationView->RemoveDecreaseSpeedHandler(m_decreaseSpeedToggleHandler);
+    m_pRouteSimulationView->RemoveFollowCameraDirectionChangedHandler(m_directionChangedHandler);
+    m_pRouteSimulationView->RemoveFollowCameraToggledHandler(m_followCameraToggleHandler);
+    m_pRouteSimulationView->RemoveRotateToFollowToggledHandler(m_rotateToFollowToggledHandler);
+    m_pRouteSimulationView->RemoveSideOfRoadToDriveOnToggledHandler(m_roadSideChangedHandler);
+    
+    Eegeo_DELETE m_pRouteSimulationView;
+    
+    m_pRouteSimulationView = NULL;
     
     m_initialised = false;
 }
@@ -443,142 +460,14 @@ bool RouteSimulationExample::Event_TouchPan_End(const AppInterface::PanData& dat
     return m_usingFollowCamera;
 }
 
-//Create some UI to let us toggle aspects of the simulation, such as camera follow, speed, etc.
-//The native iOS UI requires an objective-c object to bind to, so we create an objective-c object
-//to route our button click events though to call back the example.
-@interface IExampleBinding : NSObject
-
--(void) setExampleInstance:(RouteSimulationExample*)pExample :(UIButton*)direction :(UIButton*)increaseSpeed :(UIButton*)decreaseSpeed :(UIButton*)rotateToFollow;
-
--(void) toggleFollowCamera;
--(void) changeFollowDirection;
--(void) increaseSpeedFollowed;
--(void) decreaseSpeedFollowed;
--(void) rotateToFollow;
--(void) toggleSideOfRoadToDriveOn;
-
-@end
-
-@implementation IExampleBinding
-
-RouteSimulationExample* m_pExample;
-UIButton* m_pDirection;
-UIButton* m_pIncreaseSpeed;
-UIButton* m_pDecreaseSpeed;
-UIButton* m_pRotateToFollow;
-
--(void) setExampleInstance:(RouteSimulationExample*)pExample :(UIButton*)direction :(UIButton*)increaseSpeed :(UIButton*)decreaseSpeed :(UIButton*)rotateToFollow
-{
-    m_pExample = pExample;
-    m_pDirection = direction;
-    m_pIncreaseSpeed = increaseSpeed;
-    m_pDecreaseSpeed = decreaseSpeed;
-    m_pRotateToFollow = rotateToFollow;
-}
-
--(void) toggleFollowCamera
-{
-    m_pExample->ToggleFollowCamera();
-
-    [m_pDirection setHidden: ![m_pDirection isHidden]];
-    [m_pIncreaseSpeed setHidden: ![m_pIncreaseSpeed isHidden]];
-    [m_pDecreaseSpeed setHidden: ![m_pDecreaseSpeed isHidden]];
-    [m_pRotateToFollow setHidden: ![m_pRotateToFollow isHidden]];
-}
-
--(void) changeFollowDirection
-{
-    m_pExample->ChangeFollowDirection();
-}
-
--(void) increaseSpeedFollowed
-{
-    m_pExample->IncreaseSpeedFollowed();
-}
-
--(void) decreaseSpeedFollowed
-{
-    m_pExample->DecreaseSpeedFollowed();
-}
-
--(void) rotateToFollow
-{
-    m_pExample->ToggleRotateToFollow();
-}
-
--(void) toggleSideOfRoadToDriveOn
-{
-    m_pExample->ToggleSideOfRoadToDriveOn();
-}
-
-@end
-
-static IExampleBinding *pExampleWrapper = nil;
-
 void RouteSimulationExample::CreateAndBindUI()
 {
-    if (pExampleWrapper == nil)
-    {
-        pExampleWrapper = [[IExampleBinding alloc] init];
-    }
-   
-    // Grab the window frame and adjust it for orientation
-    UIView *rootView = [[[UIApplication sharedApplication] keyWindow]
-                        rootViewController].view;
-    CGRect originalFrame = [[UIScreen mainScreen] bounds];
-    CGRect adjustedFrame = [rootView convertRect:originalFrame fromView:nil];
+    m_pRouteSimulationView = m_routeSimulationExampleViewFactory.CreateRouteSimulationExampleView();
     
-    float screenHeight = adjustedFrame.size.height - 80.f;
-    
-    UIButton * toggleFollowButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    toggleFollowButton.frame = CGRectMake(10, screenHeight, 200, 50);
-    [toggleFollowButton setTitle:@"Toggle Follow!" forState:UIControlStateNormal];
-    [toggleFollowButton addTarget:pExampleWrapper action:@selector(toggleFollowCamera) forControlEvents:UIControlEventTouchDown];
-    [m_pView addSubview:toggleFollowButton];
-    
-    screenHeight -= 60.f;
-    
-    UIButton * increaseSpeedButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    increaseSpeedButton.frame = CGRectMake(10, screenHeight, 200, 50);
-    [increaseSpeedButton setTitle:@"Increase Speed!" forState:UIControlStateNormal];
-    [increaseSpeedButton addTarget:pExampleWrapper action:@selector(increaseSpeedFollowed) forControlEvents:UIControlEventTouchDown];
-    [m_pView addSubview:increaseSpeedButton];
-    
-    screenHeight -= 60.f;
-    
-    UIButton * decreaseSpeedButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    decreaseSpeedButton.frame = CGRectMake(10, screenHeight, 200, 50);
-    [decreaseSpeedButton setTitle:@"Decrease Speed!" forState:UIControlStateNormal];
-    [decreaseSpeedButton addTarget:pExampleWrapper action:@selector(decreaseSpeedFollowed) forControlEvents:UIControlEventTouchDown];
-    [m_pView addSubview:decreaseSpeedButton];
-    
-    screenHeight -= 60.f;
-    
-    UIButton * changeDirectionButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    changeDirectionButton.frame = CGRectMake(10, screenHeight, 200, 50);
-    [changeDirectionButton setTitle:@"Change Direction!" forState:UIControlStateNormal];
-    [changeDirectionButton addTarget:pExampleWrapper action:@selector(changeFollowDirection) forControlEvents:UIControlEventTouchDown];
-    [m_pView addSubview:changeDirectionButton];
-    
-    screenHeight -= 60.f;
-    
-    UIButton * rotateToFollowButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    rotateToFollowButton.frame = CGRectMake(10, screenHeight, 200, 50);
-    [rotateToFollowButton setTitle:@"Rotate to Follow!" forState:UIControlStateNormal];
-    [rotateToFollowButton addTarget:pExampleWrapper action:@selector(rotateToFollow) forControlEvents:UIControlEventTouchDown];
-    [m_pView addSubview:rotateToFollowButton];
-    
-    //this one goes beside toggle follow as we can do it any time
-    UIButton * toggleSideOfRoadToDriveOnButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    toggleSideOfRoadToDriveOnButton.frame = CGRectMake(toggleFollowButton.frame.origin.x + toggleFollowButton.frame.size.width + 10, toggleFollowButton.frame.origin.y, 200, 50);
-    [toggleSideOfRoadToDriveOnButton setTitle:@"Toggle Road Side!" forState:UIControlStateNormal];
-    [toggleSideOfRoadToDriveOnButton addTarget:pExampleWrapper action:@selector(toggleSideOfRoadToDriveOn) forControlEvents:UIControlEventTouchDown];
-    [m_pView addSubview:toggleSideOfRoadToDriveOnButton];
-    
-    [pExampleWrapper setExampleInstance:this :changeDirectionButton :increaseSpeedButton :decreaseSpeedButton :rotateToFollowButton];
-    
-    [m_pDirection setHidden: !m_usingFollowCamera];
-    [m_pIncreaseSpeed setHidden: !m_usingFollowCamera];
-    [m_pDecreaseSpeed setHidden: !m_usingFollowCamera];
-    [m_pRotateToFollow setHidden: !m_usingFollowCamera];
+    m_pRouteSimulationView->AddIncreaseSpeedHandler(m_increaseSpeedToggleHandler);
+    m_pRouteSimulationView->AddDecreaseSpeedHandler(m_decreaseSpeedToggleHandler);
+    m_pRouteSimulationView->AddFollowCameraDirectionChangedHandler(m_directionChangedHandler);
+    m_pRouteSimulationView->AddFollowCameraToggledHandler(m_followCameraToggleHandler);
+    m_pRouteSimulationView->AddRotateToFollowToggledHandler(m_rotateToFollowToggledHandler);
+    m_pRouteSimulationView->AddSideOfRoadToDriveOnToggledHandler(m_roadSideChangedHandler);
 }

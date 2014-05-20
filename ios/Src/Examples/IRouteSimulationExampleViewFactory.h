@@ -9,6 +9,20 @@
 #ifndef ExampleApp_IRouteSimulationExampleViewFactory_h
 #define ExampleApp_IRouteSimulationExampleViewFactory_h
 
+#include "IRouteSimulationExampleView.h"
+
+namespace Examples
+{
+    class IRouteSimulationExampleViewFactory
+    {
+    public:
+        
+        virtual ~IRouteSimulationExampleViewFactory() { }
+        
+        virtual IRouteSimulationExampleView* CreateRouteSimulationExampleView() const = 0;
+    };
+}
+
 
 
 #endif

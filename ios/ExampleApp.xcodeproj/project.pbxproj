@@ -46,8 +46,10 @@
 		1860B65C16CA65D90004A39D /* placeholder.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 1860B65B16CA65D90004A39D /* placeholder.pvr */; };
 		18915BD317C7AF86005F24AB /* recce_trams_night.pod in Resources */ = {isa = PBXBuildFile; fileRef = 18915BD217C7AF86005F24AB /* recce_trams_night.pod */; };
 		18A70D0C192A4DCE006B93FF /* iOSRouteMatchingExampleViewFactory.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18A70D0A192A4DCE006B93FF /* iOSRouteMatchingExampleViewFactory.mm */; };
+		18A70D10192A5CA3006B93FF /* iOSRouteSimulationExampleView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18A70D0E192A5CA3006B93FF /* iOSRouteSimulationExampleView.mm */; };
+		18A70D14192A5CC0006B93FF /* iOSRouteSimulationExampleViewFactory.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18A70D12192A5CC0006B93FF /* iOSRouteSimulationExampleViewFactory.mm */; };
 		18D8D0551923BDAC005A8C22 /* RouteMatchingExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18D8D0521923BDAC005A8C22 /* RouteMatchingExample.cpp */; };
-		18D8D0561923BDAC005A8C22 /* RouteSimulationExample.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18D8D0541923BDAC005A8C22 /* RouteSimulationExample.mm */; };
+		18D8D0561923BDAC005A8C22 /* RouteSimulationExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18D8D0541923BDAC005A8C22 /* RouteSimulationExample.cpp */; };
 		18EC760717BA421E0011EEE6 /* recce_trams.pod in Resources */ = {isa = PBXBuildFile; fileRef = 18EC760517BA421E0011EEE6 /* recce_trams.pod */; };
 		18EC760817BA421E0011EEE6 /* recce_trams.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 18EC760617BA421E0011EEE6 /* recce_trams.pvr */; };
 		2264D694177DA5870016C3ED /* ldn_trains_01.pod in Resources */ = {isa = PBXBuildFile; fileRef = 2264D692177DA5870016C3ED /* ldn_trains_01.pod */; };
@@ -103,6 +105,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		18143845192A686500BCDF2E /* IRouteSimulationExampleView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IRouteSimulationExampleView.h; sourceTree = "<group>"; };
 		1825103A17AFD5AD00251651 /* Test_ROBOT_ARM.pod */ = {isa = PBXFileReference; lastKnownFileType = file; path = Test_ROBOT_ARM.pod; sourceTree = "<group>"; };
 		1825103B17AFD5AD00251651 /* tex_arm.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = tex_arm.pvr; sourceTree = "<group>"; };
 		1825103C17AFD5AD00251651 /* tex_base.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = tex_base.pvr; sourceTree = "<group>"; };
@@ -178,10 +181,14 @@
 		18A70D0A192A4DCE006B93FF /* iOSRouteMatchingExampleViewFactory.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = iOSRouteMatchingExampleViewFactory.mm; sourceTree = "<group>"; };
 		18A70D0B192A4DCE006B93FF /* iOSRouteMatchingExampleViewFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iOSRouteMatchingExampleViewFactory.h; sourceTree = "<group>"; };
 		18A70D0D192A5B44006B93FF /* IRouteSimulationExampleViewFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IRouteSimulationExampleViewFactory.h; sourceTree = "<group>"; };
+		18A70D0E192A5CA3006B93FF /* iOSRouteSimulationExampleView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = iOSRouteSimulationExampleView.mm; sourceTree = "<group>"; };
+		18A70D0F192A5CA3006B93FF /* iOSRouteSimulationExampleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iOSRouteSimulationExampleView.h; sourceTree = "<group>"; };
+		18A70D12192A5CC0006B93FF /* iOSRouteSimulationExampleViewFactory.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = iOSRouteSimulationExampleViewFactory.mm; sourceTree = "<group>"; };
+		18A70D13192A5CC0006B93FF /* iOSRouteSimulationExampleViewFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iOSRouteSimulationExampleViewFactory.h; sourceTree = "<group>"; };
 		18D8D0511923BDAC005A8C22 /* RouteMatchingExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RouteMatchingExample.h; sourceTree = "<group>"; };
 		18D8D0521923BDAC005A8C22 /* RouteMatchingExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RouteMatchingExample.cpp; sourceTree = "<group>"; };
 		18D8D0531923BDAC005A8C22 /* RouteSimulationExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RouteSimulationExample.h; sourceTree = "<group>"; };
-		18D8D0541923BDAC005A8C22 /* RouteSimulationExample.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RouteSimulationExample.mm; sourceTree = "<group>"; };
+		18D8D0541923BDAC005A8C22 /* RouteSimulationExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RouteSimulationExample.cpp; sourceTree = "<group>"; };
 		18EC760517BA421E0011EEE6 /* recce_trams.pod */ = {isa = PBXFileReference; lastKnownFileType = file; path = recce_trams.pod; sourceTree = "<group>"; };
 		18EC760617BA421E0011EEE6 /* recce_trams.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = recce_trams.pvr; sourceTree = "<group>"; };
 		2264D692177DA5870016C3ED /* ldn_trains_01.pod */ = {isa = PBXFileReference; lastKnownFileType = file; path = ldn_trains_01.pod; sourceTree = "<group>"; };
@@ -349,16 +356,21 @@
 				18D8D0511923BDAC005A8C22 /* RouteMatchingExample.h */,
 				18D8D0521923BDAC005A8C22 /* RouteMatchingExample.cpp */,
 				18D8D0531923BDAC005A8C22 /* RouteSimulationExample.h */,
-				18D8D0541923BDAC005A8C22 /* RouteSimulationExample.mm */,
-				18259B77192A409400F0565F /* IRouteMatchingExampleView.h */,
+				18D8D0541923BDAC005A8C22 /* RouteSimulationExample.cpp */,
 				18259B78192A435F00F0565F /* IUIActionHandler.h */,
 				18259B7A192A438C00F0565F /* UIActionHandler.h */,
-				18259B7C192A443700F0565F /* IRouteMatchingExampleViewFactory.h */,
+				18259B77192A409400F0565F /* IRouteMatchingExampleView.h */,
 				18259B7D192A449400F0565F /* iOSRouteMatchingExampleView.mm */,
 				18259B7E192A449400F0565F /* iOSRouteMatchingExampleView.h */,
+				18259B7C192A443700F0565F /* IRouteMatchingExampleViewFactory.h */,
 				18A70D0A192A4DCE006B93FF /* iOSRouteMatchingExampleViewFactory.mm */,
 				18A70D0B192A4DCE006B93FF /* iOSRouteMatchingExampleViewFactory.h */,
+				18143845192A686500BCDF2E /* IRouteSimulationExampleView.h */,
+				18A70D0E192A5CA3006B93FF /* iOSRouteSimulationExampleView.mm */,
+				18A70D0F192A5CA3006B93FF /* iOSRouteSimulationExampleView.h */,
 				18A70D0D192A5B44006B93FF /* IRouteSimulationExampleViewFactory.h */,
+				18A70D12192A5CC0006B93FF /* iOSRouteSimulationExampleViewFactory.mm */,
+				18A70D13192A5CC0006B93FF /* iOSRouteSimulationExampleViewFactory.h */,
 			);
 			path = Examples;
 			sourceTree = "<group>";
@@ -626,6 +638,7 @@
 				183D9F481923C3E200015CDB /* PinOverModelExample.cpp in Sources */,
 				183D9F421923C3E200015CDB /* FileIOExample.cpp in Sources */,
 				183D9F4A1923C3E200015CDB /* PODAnimationExample.cpp in Sources */,
+				18A70D14192A5CC0006B93FF /* iOSRouteSimulationExampleViewFactory.mm in Sources */,
 				183D9F3F1923C3E200015CDB /* DynamicText3DExample.cpp in Sources */,
 				183D9F491923C3E200015CDB /* PinsExample.cpp in Sources */,
 				183D9F501923C3E200015CDB /* ScreenUnprojectExample.cpp in Sources */,
@@ -638,12 +651,13 @@
 				183D9F451923C3E200015CDB /* ModifiedRenderingExample.cpp in Sources */,
 				183D9F511923C3E200015CDB /* SearchExample.cpp in Sources */,
 				18259B7F192A449400F0565F /* iOSRouteMatchingExampleView.mm in Sources */,
-				18D8D0561923BDAC005A8C22 /* RouteSimulationExample.mm in Sources */,
+				18D8D0561923BDAC005A8C22 /* RouteSimulationExample.cpp in Sources */,
 				183D9F431923C3E200015CDB /* KeyboardInputExample.cpp in Sources */,
 				183D9F4F1923C3E200015CDB /* ScreenPickExample.cpp in Sources */,
 				183D9F461923C3E200015CDB /* NavigationGraphExample.cpp in Sources */,
 				1846BB0A19228ACB007DC99C /* Main.m in Sources */,
 				183D9F3C1923C3E200015CDB /* ControlCityThemeExample.cpp in Sources */,
+				18A70D10192A5CA3006B93FF /* iOSRouteSimulationExampleView.mm in Sources */,
 				183D9F4B1923C3E200015CDB /* ResourceSpatialQueryExample.cpp in Sources */,
 				183D9F551923C3E200015CDB /* WebRequestExample.cpp in Sources */,
 				183D9F4D1923C3E200015CDB /* RouteSimulationAnimationExample.cpp in Sources */,
