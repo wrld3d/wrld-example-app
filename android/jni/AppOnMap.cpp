@@ -50,6 +50,7 @@
 #include "PinOverModelExample.h"
 #include "TrafficCongestionExample.h"
 #include "PinsWithAttachedJavaUIExample.h"
+#include "AndroidRouteMatchingExampleViewFactory.h"
 
 MyApp::MyApp(
 		Eegeo::Android::Input::AndroidInputHandler* inputHandler,
@@ -190,6 +191,8 @@ void MyApp::Draw (float dt)
     glState.ClearColor(0.8f, 0.8f, 0.8f, 1.f);
     World().Draw(dt);
     pExample->Draw();
+
+    m_uiThreadToNativeThreadTaskQueue.TryExectuteBufferedWork();
 }
 
 void MyApp::JumpTo(double latitudeDegrees, double longitudeDegrees, double altitudeMetres, double headingDegrees, double distanceToInterestMetres)
@@ -360,7 +363,7 @@ Examples::IExample* MyApp::CreateExample(ExampleTypes::Examples example,
 
         case ExampleTypes::RouteSimulation:
         {
-            Eegeo::Routes::Simulation::Camera::RouteSimulationGlobeCameraControllerFactory factory(World().GetTerrainHeightProvider(),
+            /*Eegeo::Routes::Simulation::Camera::RouteSimulationGlobeCameraControllerFactory factory(World().GetTerrainHeightProvider(),
                                                                                                    World().GetEnvironmentFlatteningService(),
                                                                                                    World().GetResourceCeilingProvider(),
                                                                                                    collisionMeshResourceProvider);
@@ -376,7 +379,7 @@ Examples::IExample* MyApp::CreateExample(ExampleTypes::Examples example,
                                                         factory,
                                                         m_nativeState,
                                                         World()
-                                                        );
+                                                        );*/
         }
 
         case ExampleTypes::RouteThicknessPolicy:
@@ -398,10 +401,12 @@ Examples::IExample* MyApp::CreateExample(ExampleTypes::Examples example,
 
         case ExampleTypes::RouteMatching:
         {
+            Examples::AndroidRouteMatchingExampleViewFactory* pViewFactory_TEMP_HACK_LEAKING = Eegeo_NEW(Examples::AndroidRouteMatchingExampleViewFactory)(m_nativeState, m_uiThreadToNativeThreadTaskQueue);
+
         	return new Examples::RouteMatchingExample(
         			World().GetRouteService(),
         			World(),
-        			m_nativeState);
+        			*pViewFactory_TEMP_HACK_LEAKING);
         }
 
         case ExampleTypes::RouteSimulationAnimation:

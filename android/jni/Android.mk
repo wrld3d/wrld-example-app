@@ -21,39 +21,42 @@ LOCAL_SRC_FILES += ./ExampleCameraJumpController.cpp
 LOCAL_SRC_FILES += ./UiThreadToNativeThreadTaskQueue.cpp
 
 LOCAL_SRC_FILES += ./Examples/JavaHudCrossThreadCommunicationExample.cpp
-LOCAL_SRC_FILES += ./Examples/RouteMatchingExample.cpp
-LOCAL_SRC_FILES += ./Examples/RouteSimulationExample.cpp
 LOCAL_SRC_FILES += ./Examples/ShowJavaPlaceJumpUIExample.cpp
 LOCAL_SRC_FILES += ./Examples/PinsWithAttachedJavaUIExample.cpp
 LOCAL_SRC_FILES += ./Examples/PositionJavaPinButtonExample.cpp
+LOCAL_SRC_FILES += ./Examples/RouteMatching/AndroidRouteMatchingExampleView.cpp
+LOCAL_SRC_FILES += ./Examples/RouteMatching/AndroidRouteMatchingExampleViewFactory.cpp
 
-LOCAL_SRC_FILES += ./../../src/DebugSphereExample.cpp
-LOCAL_SRC_FILES += ./../../src/EnvironmentFlatteningExample.cpp
-LOCAL_SRC_FILES += ./../../src/EnvironmentNotifierExample.cpp
-LOCAL_SRC_FILES += ./../../src/FileIOExample.cpp
-LOCAL_SRC_FILES += ./../../src/LoadModelExample.cpp
-LOCAL_SRC_FILES += ./../../src/ModifiedRenderingExample.cpp
-LOCAL_SRC_FILES += ./../../src/NavigationGraphExample.cpp
-LOCAL_SRC_FILES += ./../../src/ResourceSpatialQueryExample.cpp
-LOCAL_SRC_FILES += ./../../src/ScreenUnprojectExample.cpp
-LOCAL_SRC_FILES += ./../../src/SearchExample.cpp
-LOCAL_SRC_FILES += ./../../src/ToggleTrafficExample.cpp
-LOCAL_SRC_FILES += ./../../src/WebRequestExample.cpp
-LOCAL_SRC_FILES += ./../../src/KeyboardInputExample.cpp
-LOCAL_SRC_FILES += ./../../src/PODAnimationExample.cpp
-LOCAL_SRC_FILES += ./../../src/Pick3DObjectExample.cpp
-LOCAL_SRC_FILES += ./../../src/ScreenPickExample.cpp
-LOCAL_SRC_FILES += ./../../src/DebugPrimitiveRenderingExample.cpp
-LOCAL_SRC_FILES += ./../../src/RouteDrawingExample.cpp
-LOCAL_SRC_FILES += ./../../src/PinsExample.cpp
-LOCAL_SRC_FILES += ./../../src/RouteSimulationAnimationExample.cpp
-LOCAL_SRC_FILES += ./../../src/RouteThicknessPolicyExample.cpp
-LOCAL_SRC_FILES += ./../../src/DynamicText3DExample.cpp
-LOCAL_SRC_FILES += ./../../src/SingleCityExample.cpp
-LOCAL_SRC_FILES += ./../../src/PinOverModelExample.cpp
-LOCAL_SRC_FILES += ./../../src/TrafficCongestionExample.cpp
-LOCAL_SRC_FILES += ./../../src/ControlCityThemeExample.cpp
-LOCAL_SRC_FILES += ./../../src/CameraTransitionExample.cpp
+LOCAL_SRC_FILES += ./../../src/Examples/DebugSphere/DebugSphereExample.cpp
+LOCAL_SRC_FILES += ./../../src/Examples/EnvironmentFlattening/EnvironmentFlatteningExample.cpp
+LOCAL_SRC_FILES += ./../../src/Examples/EnvironmentNotifier/EnvironmentNotifierExample.cpp
+LOCAL_SRC_FILES += ./../../src/Examples/FileIO/FileIOExample.cpp
+LOCAL_SRC_FILES += ./../../src/Examples/LoadModel/LoadModelExample.cpp
+LOCAL_SRC_FILES += ./../../src/Examples/ModifiedRendering/ModifiedRenderingExample.cpp
+LOCAL_SRC_FILES += ./../../src/Examples/NavigationGraph/NavigationGraphExample.cpp
+LOCAL_SRC_FILES += ./../../src/Examples/ResourceSpatialQuery/ResourceSpatialQueryExample.cpp
+LOCAL_SRC_FILES += ./../../src/Examples/ScreenUnproject/ScreenUnprojectExample.cpp
+LOCAL_SRC_FILES += ./../../src/Examples/Search/SearchExample.cpp
+LOCAL_SRC_FILES += ./../../src/Examples/ToggleTraffic/ToggleTrafficExample.cpp
+LOCAL_SRC_FILES += ./../../src/Examples/WebRequest/WebRequestExample.cpp
+LOCAL_SRC_FILES += ./../../src/Examples/KeyboardInput/KeyboardInputExample.cpp
+LOCAL_SRC_FILES += ./../../src/Examples/PODAnimation/PODAnimationExample.cpp
+LOCAL_SRC_FILES += ./../../src/Examples/Pick3DObject/Pick3DObjectExample.cpp
+LOCAL_SRC_FILES += ./../../src/Examples/ScreenPick/ScreenPickExample.cpp
+LOCAL_SRC_FILES += ./../../src/Examples/DebugPrimitiveRendering/DebugPrimitiveRenderingExample.cpp
+LOCAL_SRC_FILES += ./../../src/Examples/RouteDrawing/RouteDrawingExample.cpp
+LOCAL_SRC_FILES += ./../../src/Examples/Pins/PinsExample.cpp
+LOCAL_SRC_FILES += ./../../src/Examples/RouteSimulationAnimation/RouteSimulationAnimationExample.cpp
+LOCAL_SRC_FILES += ./../../src/Examples/RouteThicknessPolicy/RouteThicknessPolicyExample.cpp
+LOCAL_SRC_FILES += ./../../src/Examples/RouteMatching/RouteMatchingExample.cpp
+#LOCAL_SRC_FILES += ./../../src/Examples/RouteSimulationExample/RouteSimulationExample.cpp
+LOCAL_SRC_FILES += ./../../src/Examples/DynamicText3D/DynamicText3DExample.cpp
+LOCAL_SRC_FILES += ./../../src/Examples/SingleCity/SingleCityExample.cpp
+LOCAL_SRC_FILES += ./../../src/Examples/PinOverModel/PinOverModelExample.cpp
+LOCAL_SRC_FILES += ./../../src/Examples/TrafficCongestion/TrafficCongestionExample.cpp
+LOCAL_SRC_FILES += ./../../src/Examples/ControlCityThemes/ControlCityThemeExample.cpp
+LOCAL_SRC_FILES += ./../../src/Examples/CameraTransition/CameraTransitionExample.cpp
+LOCAL_SRC_FILES += ./../../src/Examples/UI/UIHelpers.cpp
 
 os_name:=$(shell uname -s)
 
@@ -67,9 +70,11 @@ else
 	LOCAL_C_INCLUDES += ./libs/platform 
 endif 
 
-LOCAL_C_INCLUDES += ./libs/../../src/
+exampleincludes := $(shell find ./libs/../../src -type d)
+LOCAL_C_INCLUDES += $(exampleincludes:$(LOCAL_PATH)/%=%)
 
 LOCAL_C_INCLUDES += ./jni/Examples 
+LOCAL_C_INCLUDES += ./jni/Examples/RouteMatching
 
 LOCAL_C_INCLUDES += ./libs/png
 LOCAL_C_INCLUDES += ./libs/curl 

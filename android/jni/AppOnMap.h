@@ -17,6 +17,7 @@
 #include "AndroidInputHandler.h"
 #include "AndroidNativeState.h"
 #include "GlobeCamera.h"
+#include "UiThreadToNativeThreadTaskQueue.h"
 
 namespace ExampleTypes
 {
@@ -58,7 +59,7 @@ namespace ExampleTypes
 	};
 }
 
-static const ExampleTypes::Examples g_defaultSelectedExample = ExampleTypes::DebugSphere;
+static const ExampleTypes::Examples g_defaultSelectedExample = ExampleTypes::RouteMatching;
 
 namespace Eegeo
 {
@@ -95,6 +96,7 @@ private:
     Eegeo::Camera::GlobeCamera::GlobeCameraTouchController* m_cameraTouchController;
     Eegeo::Camera::ICameraJumpController* m_cameraJumpController;
     Eegeo::Camera::GlobeCamera::GlobeCameraInterestPointProvider& m_globeCameraInterestPointProvider;
+    UiThreadToNativeThreadTaskQueue m_uiThreadToNativeThreadTaskQueue;
 
 public:
 	MyApp(
