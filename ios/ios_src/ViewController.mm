@@ -64,7 +64,6 @@
 #include "RenderCamera.h"
 #include "iOSPlatformConfigBuilder.h"
 
-
 #define API_KEY "OBTAIN API KEY FROM https://appstore.eegeo.com AND INSERT IT HERE"
 
 //#define USING_SEARCH_EXAMPLE

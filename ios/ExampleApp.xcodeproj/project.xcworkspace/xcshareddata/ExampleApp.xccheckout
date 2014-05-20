@@ -5,7 +5,7 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>30A1568E-25BC-4FC5-A807-8CD899E4520A</string>
+	<string>37144066-DD9F-4C08-B60F-09451ACCBDBC</string>
 	<key>IDESourceControlProjectName</key>
 	<string>ExampleApp</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
@@ -14,11 +14,11 @@
 		<string>ssh://github.com/eegeo/mobile-sdk-harness.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>ExampleApp.xcodeproj/project.xcworkspace</string>
+	<string>ios/ExampleApp.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>5B544AEB-AF9C-4865-8A59-D11E2EB20DCF</key>
-		<string>../..</string>
+		<string>../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>ssh://github.com/eegeo/mobile-sdk-harness.git</string>
