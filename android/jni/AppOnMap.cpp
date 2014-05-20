@@ -51,6 +51,7 @@
 #include "TrafficCongestionExample.h"
 #include "PinsWithAttachedJavaUIExample.h"
 #include "AndroidRouteMatchingExampleViewFactory.h"
+#include "AndroidRouteSimulationExampleViewFactory.h"
 
 MyApp::MyApp(
 		Eegeo::Android::Input::AndroidInputHandler* inputHandler,
@@ -363,10 +364,12 @@ Examples::IExample* MyApp::CreateExample(ExampleTypes::Examples example,
 
         case ExampleTypes::RouteSimulation:
         {
-            /*Eegeo::Routes::Simulation::Camera::RouteSimulationGlobeCameraControllerFactory factory(World().GetTerrainHeightProvider(),
+            Eegeo::Routes::Simulation::Camera::RouteSimulationGlobeCameraControllerFactory factory(World().GetTerrainHeightProvider(),
                                                                                                    World().GetEnvironmentFlatteningService(),
                                                                                                    World().GetResourceCeilingProvider(),
                                                                                                    collisionMeshResourceProvider);
+
+            Examples::AndroidRouteSimulationExampleViewFactory* pViewFactory_TEMP_HACK_LEAKING = Eegeo_NEW(Examples::AndroidRouteSimulationExampleViewFactory)(m_nativeState, m_uiThreadToNativeThreadTaskQueue);
 
             return new Examples::RouteSimulationExample(World().GetRouteService(),
                                                         World().GetRouteSimulationService(),
@@ -377,9 +380,9 @@ Examples::IExample* MyApp::CreateExample(ExampleTypes::Examples example,
                                                         *m_globeCameraController,
                                                         World().GetInterestPointProvider(),
                                                         factory,
-                                                        m_nativeState,
+                                                        *pViewFactory_TEMP_HACK_LEAKING,
                                                         World()
-                                                        );*/
+                                                        );
         }
 
         case ExampleTypes::RouteThicknessPolicy:

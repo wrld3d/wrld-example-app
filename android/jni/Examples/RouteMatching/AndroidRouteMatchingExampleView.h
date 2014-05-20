@@ -48,4 +48,4 @@ extern "C"
 			jlong nativeObjectPtr);
 }
 
-#endif /* defined(__ExampleApp__iOSRouteMatchingExampleView__) */
+#endif /* defined(__ExampleApp__AndroidRouteMatchingExampleView__) */

@@ -26,6 +26,8 @@ LOCAL_SRC_FILES += ./Examples/PinsWithAttachedJavaUIExample.cpp
 LOCAL_SRC_FILES += ./Examples/PositionJavaPinButtonExample.cpp
 LOCAL_SRC_FILES += ./Examples/RouteMatching/AndroidRouteMatchingExampleView.cpp
 LOCAL_SRC_FILES += ./Examples/RouteMatching/AndroidRouteMatchingExampleViewFactory.cpp
+LOCAL_SRC_FILES += ./Examples/RouteSimulation/AndroidRouteSimulationExampleView.cpp
+LOCAL_SRC_FILES += ./Examples/RouteSimulation/AndroidRouteSimulationExampleViewFactory.cpp
 
 LOCAL_SRC_FILES += ./../../src/Examples/DebugSphere/DebugSphereExample.cpp
 LOCAL_SRC_FILES += ./../../src/Examples/EnvironmentFlattening/EnvironmentFlatteningExample.cpp
@@ -49,7 +51,7 @@ LOCAL_SRC_FILES += ./../../src/Examples/Pins/PinsExample.cpp
 LOCAL_SRC_FILES += ./../../src/Examples/RouteSimulationAnimation/RouteSimulationAnimationExample.cpp
 LOCAL_SRC_FILES += ./../../src/Examples/RouteThicknessPolicy/RouteThicknessPolicyExample.cpp
 LOCAL_SRC_FILES += ./../../src/Examples/RouteMatching/RouteMatchingExample.cpp
-#LOCAL_SRC_FILES += ./../../src/Examples/RouteSimulationExample/RouteSimulationExample.cpp
+LOCAL_SRC_FILES += ./../../src/Examples/RouteSimulation/RouteSimulationExample.cpp
 LOCAL_SRC_FILES += ./../../src/Examples/DynamicText3D/DynamicText3DExample.cpp
 LOCAL_SRC_FILES += ./../../src/Examples/SingleCity/SingleCityExample.cpp
 LOCAL_SRC_FILES += ./../../src/Examples/PinOverModel/PinOverModelExample.cpp
@@ -75,6 +77,7 @@ LOCAL_C_INCLUDES += $(exampleincludes:$(LOCAL_PATH)/%=%)
 
 LOCAL_C_INCLUDES += ./jni/Examples 
 LOCAL_C_INCLUDES += ./jni/Examples/RouteMatching
+LOCAL_C_INCLUDES += ./jni/Examples/RouteSimulation
 
 LOCAL_C_INCLUDES += ./libs/png
 LOCAL_C_INCLUDES += ./libs/curl 

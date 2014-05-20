@@ -30,4 +30,4 @@ namespace Examples
     };
 }
 
-#endif /* defined(__ExampleApp__iOSRouteMatchingExampleViewFactory__) */
+#endif /* defined(__ExampleApp__AndroidRouteMatchingExampleViewFactory__) */
