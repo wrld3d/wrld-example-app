@@ -46,11 +46,11 @@ namespace Examples
         UIView* m_pView;
         IRouteSimulationExampleBinding* m_pBinding;
         UIButton* m_pToggleFollowButton;
-        UIButton* m_pDirectionButton;
         UIButton* m_pIncreaseSpeedButton;
         UIButton* m_pDecreaseSpeedButton;
         UIButton* m_pRotateToFollowButton;
         UIButton* m_pChangeDirectionButton;
+        UIButton* m_pToggleSideOfRoadToDriveOnButton;
         
     public:
         

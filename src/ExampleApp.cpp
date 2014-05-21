@@ -110,16 +110,16 @@ ExampleApp::ExampleApp(Eegeo::EegeoWorld* pWorld,
     m_exampleController.RegisterExample<Examples::ModifiedRenderingExampleFactory>();
     m_exampleController.RegisterExample<Examples::NavigationGraphExampleFactory>();
     m_exampleController.RegisterExample<Examples::Pick3DObjectExampleFactory>();
-    m_exampleController.RegisterExample<Examples::PinOverModelExampleFactory>();
     m_exampleController.RegisterExample<Examples::PinsExampleFactory>();
+    m_exampleController.RegisterExample<Examples::PinOverModelExampleFactory>();
     m_exampleController.RegisterExample<Examples::PODAnimationExampleFactory>();
     m_exampleController.RegisterExample<Examples::ResourceSpatialQueryExampleFactory>();
     m_exampleController.RegisterExample<Examples::RouteDrawingExampleFactory>();
-    m_exampleController.RegisterExample<Examples::RouteSimulationAnimationExampleFactory>();
+    m_exampleController.RegisterCameraExample<Examples::RouteSimulationAnimationExampleFactory>(*m_globeCameraController);
     m_exampleController.RegisterExample<Examples::RouteThicknessPolicyExampleFactory>();
     m_exampleController.RegisterExample<Examples::ScreenPickExampleFactory>();
     m_exampleController.RegisterExample<Examples::ScreenUnprojectExampleFactory>();
-    m_exampleController.RegisterExample<Examples::SearchExampleFactory>();
+    m_exampleController.RegisterExample<Examples::SearchExampleFactory>(); 
     m_exampleController.RegisterCameraExample<Examples::SingleCityExampleFactory>(*m_globeCameraController);
     m_exampleController.RegisterExample<Examples::ToggleTrafficExampleFactory>();
     m_exampleController.RegisterExample<Examples::TrafficCongestionExampleFactory>();
@@ -233,6 +233,7 @@ void ExampleApp::Event_TouchTap(const AppInterface::TapData& data)
 
 void ExampleApp::Event_TouchDoubleTap(const AppInterface::TapData& data)
 {
+    m_exampleController.ActivateNext();
     if(!m_exampleController.Event_TouchDoubleTap(data))
     {
         m_cameraTouchController->Event_TouchDoubleTap(data);

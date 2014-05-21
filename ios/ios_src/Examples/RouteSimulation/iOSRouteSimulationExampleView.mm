@@ -117,11 +117,11 @@ iOSRouteSimulationExampleView::iOSRouteSimulationExampleView(UIView* pView)
     [m_pView addSubview:m_pRotateToFollowButton];
     
     //this one goes beside toggle follow as we can do it any time
-    UIButton * toggleSideOfRoadToDriveOnButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    toggleSideOfRoadToDriveOnButton.frame = CGRectMake(m_pToggleFollowButton.frame.origin.x + m_pToggleFollowButton.frame.size.width + 10, m_pToggleFollowButton.frame.origin.y, 200, 50);
-    [toggleSideOfRoadToDriveOnButton setTitle:@"Toggle Road Side!" forState:UIControlStateNormal];
-    [toggleSideOfRoadToDriveOnButton addTarget:m_pBinding action:@selector(toggleSideOfRoadToDriveOn) forControlEvents:UIControlEventTouchDown];
-    [m_pView addSubview:toggleSideOfRoadToDriveOnButton];
+    m_pToggleSideOfRoadToDriveOnButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    m_pToggleSideOfRoadToDriveOnButton.frame = CGRectMake(m_pToggleFollowButton.frame.origin.x + m_pToggleFollowButton.frame.size.width + 10, m_pToggleFollowButton.frame.origin.y, 200, 50);
+    [m_pToggleSideOfRoadToDriveOnButton setTitle:@"Toggle Road Side!" forState:UIControlStateNormal];
+    [m_pToggleSideOfRoadToDriveOnButton addTarget:m_pBinding action:@selector(toggleSideOfRoadToDriveOn) forControlEvents:UIControlEventTouchDown];
+    [m_pView addSubview:m_pToggleSideOfRoadToDriveOnButton];
     
     [m_pBinding setExampleInstance:this :m_pChangeDirectionButton :m_pIncreaseSpeedButton :m_pDecreaseSpeedButton :m_pRotateToFollowButton];
     
@@ -132,9 +132,6 @@ iOSRouteSimulationExampleView::~iOSRouteSimulationExampleView()
 {
     [m_pToggleFollowButton removeFromSuperview];
     m_pToggleFollowButton = nil;
-    
-    [m_pDirectionButton removeFromSuperview];
-    m_pDirectionButton = nil;
     
     [m_pIncreaseSpeedButton removeFromSuperview];
     m_pIncreaseSpeedButton = nil;
@@ -147,6 +144,9 @@ iOSRouteSimulationExampleView::~iOSRouteSimulationExampleView()
     
     [m_pChangeDirectionButton removeFromSuperview];
     m_pChangeDirectionButton = nil;
+    
+    [m_pToggleSideOfRoadToDriveOnButton removeFromSuperview];
+    m_pToggleSideOfRoadToDriveOnButton = nil;
     
     [m_pBinding release];
     m_pBinding = nil;

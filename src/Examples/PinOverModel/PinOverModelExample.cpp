@@ -86,6 +86,8 @@ namespace Examples
         Eegeo_DELETE m_pPinIconsTexturePageLayout;
         glDeleteTextures(1, &m_pinIconsTexture.textureId);
         
+        renderableFilters.RemoveRenderableFilter(m_pMyRenderableFilter);
+        
         Eegeo_DELETE m_pMyRenderableFilter;
         Eegeo_DELETE m_pMyModelRenderable;
     }

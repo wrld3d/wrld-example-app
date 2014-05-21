@@ -45,7 +45,11 @@ void ExampleController::ActivatePrevious()
     DestroyCurrentExample();
     
     m_pCurrentExample = m_factories[m_currentExampleFactoryIndex]->CreateExample();
-    m_pCurrentExample->Start();
+    
+    if(m_pCurrentExample != NULL)
+    {
+        m_pCurrentExample->Start();
+    }
 }
 
 void ExampleController::ActivateNext()
@@ -63,7 +67,11 @@ void ExampleController::ActivateNext()
     DestroyCurrentExample();
 
     m_pCurrentExample = m_factories[m_currentExampleFactoryIndex]->CreateExample();
-    m_pCurrentExample->Start();
+    
+    if(m_pCurrentExample != NULL)
+    {
+        m_pCurrentExample->Start();
+    }
 }
 
 void ExampleController::EarlyUpdate(float dt,

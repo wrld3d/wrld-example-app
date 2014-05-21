@@ -20,18 +20,20 @@ using namespace Eegeo::Routes::Simulation::View;
 using namespace Eegeo::Routes::Simulation::Camera;
 
 RouteSimulationAnimationExample::RouteSimulationAnimationExample(
-                                               RouteService& routeService,
-                                               RouteSimulationService& routeSimulationService,
-                                               RouteSimulationViewService& routeSimulationViewService,
-                                               Eegeo::Camera::ICameraProvider& cameraProvider,
-                                               Eegeo::Rendering::GLState& glState,
-                                               Eegeo::Helpers::IFileIO& fileIO,
-                                               Eegeo::Rendering::AsyncTexturing::IAsyncTextureRequestor& textureRequestor,
-                                               RouteSimulationGlobeCameraControllerFactory routeSimulationGlobeCameraControllerFactory,
-                                               EegeoWorld& world)
+                                                                 RouteService& routeService,
+                                                                 RouteSimulationService& routeSimulationService,
+                                                                 RouteSimulationViewService& routeSimulationViewService,
+                                                                 Eegeo::Camera::GlobeCamera::GlobeCameraController& defaultCamera,
+                                                                 Eegeo::Camera::ICameraProvider& cameraProvider,
+                                                                 Eegeo::Rendering::GLState& glState,
+                                                                 Eegeo::Helpers::IFileIO& fileIO,
+                                                                 Eegeo::Rendering::AsyncTexturing::IAsyncTextureRequestor& textureRequestor,
+                                                                 RouteSimulationGlobeCameraControllerFactory routeSimulationGlobeCameraControllerFactory,
+                                                                 EegeoWorld& world)
 :m_routeService(routeService)
 ,m_routeSimulationService(routeSimulationService)
 ,m_routeSimulationViewService(routeSimulationViewService)
+,m_defaultCamera(defaultCamera)
 ,m_cameraProvider(cameraProvider)
 ,m_glState(glState)
 ,m_fileIO(fileIO)
@@ -127,7 +129,6 @@ void RouteSimulationAnimationExample::Update(float dt)
 
 void RouteSimulationAnimationExample::Suspend()
 {
-
     m_routeSimulationViewService.DestroyBinding(m_pViewBindingForCameraSession);
     
     m_routeSimulationService.EndRouteSimulationSession(m_pSessionCamera);
@@ -142,6 +143,8 @@ void RouteSimulationAnimationExample::Suspend()
     
     delete m_pRouteSessionFollowCameraController;
     m_pRouteSessionFollowCameraController = NULL;
+    
+    m_world.SetCamera(m_defaultCamera.GetCamera());
     
     m_initialised = false;
 }

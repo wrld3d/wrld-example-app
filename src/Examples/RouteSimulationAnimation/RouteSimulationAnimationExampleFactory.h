@@ -18,9 +18,11 @@ namespace Examples
     class RouteSimulationAnimationExampleFactory : public IExampleFactory
     {
         Eegeo::EegeoWorld& m_world;
+        Eegeo::Camera::GlobeCamera::GlobeCameraController& m_globeCameraController;
         
     public:
-        RouteSimulationAnimationExampleFactory(Eegeo::EegeoWorld& world);
+        RouteSimulationAnimationExampleFactory(Eegeo::EegeoWorld& world,
+                                               Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController);
         
         IExample* CreateExample() const;
     };

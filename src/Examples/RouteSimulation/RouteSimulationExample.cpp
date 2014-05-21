@@ -254,6 +254,8 @@ void RouteSimulationExample::Suspend()
     
     m_pRouteSimulationView = NULL;
     
+    m_world.SetCamera(m_defaultCamera.GetCamera());
+    
     m_initialised = false;
 }
 

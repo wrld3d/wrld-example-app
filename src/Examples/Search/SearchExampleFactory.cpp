@@ -8,6 +8,7 @@
 
 #include "SearchExampleFactory.h"
 #include "SearchExample.h"
+#include "Logger.h"
 
 using namespace Examples;
 
@@ -19,7 +20,11 @@ SearchExampleFactory::SearchExampleFactory(Eegeo::EegeoWorld& world)
 
 IExample* SearchExampleFactory::CreateExample() const
 {
-    Eegeo_ASSERT(m_world.IsSearchServiceAvailable(), "Cannot run Search example, you must set up here.com Credentials");
+    if(!m_world.IsSearchServiceAvailable())
+    {
+        EXAMPLE_LOG("Cannot run Search example, you must set up here.com credentials\n");
+        return NULL;
+    }
     
     return new Examples::SearchExample(m_world.GetSearchService(),
                                        m_world.GetInterestPointProvider());

@@ -12,8 +12,10 @@
 
 using namespace Examples;
 
-RouteSimulationAnimationExampleFactory::RouteSimulationAnimationExampleFactory(Eegeo::EegeoWorld& world)
+RouteSimulationAnimationExampleFactory::RouteSimulationAnimationExampleFactory(Eegeo::EegeoWorld& world,
+                                                                               Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController)
 : m_world(world)
+, m_globeCameraController(globeCameraController)
 {
     
 }
@@ -28,6 +30,7 @@ IExample* RouteSimulationAnimationExampleFactory::CreateExample() const
     return new Examples::RouteSimulationAnimationExample(m_world.GetRouteService(),
                                                          m_world.GetRouteSimulationService(),
                                                          m_world.GetRouteSimulationViewService(),
+                                                         m_globeCameraController,
                                                          m_world.GetCameraProvider(),
                                                          m_world.GetRenderContext().GetGLState(),
                                                          m_world.GetFileIO(),
