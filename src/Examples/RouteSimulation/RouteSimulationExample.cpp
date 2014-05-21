@@ -52,7 +52,7 @@ RouteSimulationExample::RouteSimulationExample(RouteService& routeService,
                                                Eegeo::Camera::GlobeCamera::GlobeCameraController& defaultCamera,
                                                Eegeo::Location::IInterestPointProvider& interestPointProvider,
                                                RouteSimulationGlobeCameraControllerFactory routeSimulationGlobeCameraControllerFactory,
-                                               IRouteSimulationExampleViewFactory& routeSimulationExampleViewFactory,
+                                               const IRouteSimulationExampleViewFactory& routeSimulationExampleViewFactory,
                                                EegeoWorld& world)
 :m_routeService(routeService)
 ,m_routeSimulationService(routeSimulationService)

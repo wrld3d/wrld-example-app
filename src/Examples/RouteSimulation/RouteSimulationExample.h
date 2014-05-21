@@ -69,7 +69,7 @@ namespace Examples
         Eegeo::Camera::GlobeCamera::GlobeCameraController& m_defaultCamera;
         Eegeo::Location::IInterestPointProvider& m_interestPointProvider;
         Eegeo::EegeoWorld& m_world;
-        IRouteSimulationExampleViewFactory& m_routeSimulationExampleViewFactory;
+        const IRouteSimulationExampleViewFactory& m_routeSimulationExampleViewFactory;
         IRouteSimulationExampleView* m_pRouteSimulationView;
         Examples::UIActionHandler<RouteSimulationExample> m_decreaseSpeedToggleHandler;
         Examples::UIActionHandler<RouteSimulationExample> m_increaseSpeedToggleHandler;
@@ -108,7 +108,7 @@ namespace Examples
                                Eegeo::Camera::GlobeCamera::GlobeCameraController& defaultCamera,
                                Eegeo::Location::IInterestPointProvider& interestPointProvider,
                                Eegeo::Routes::Simulation::Camera::RouteSimulationGlobeCameraControllerFactory routeSimulationGlobeCameraControllerFactory,
-                               IRouteSimulationExampleViewFactory& routeSimulationExampleViewFactory,
+                               const IRouteSimulationExampleViewFactory& routeSimulationExampleViewFactory,
                                Eegeo::EegeoWorld& eegeoWorld);
         
         void Start() {}
