@@ -270,6 +270,7 @@
 		189971C7192CCB7700E0E9F1 /* ExampleController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExampleController.h; sourceTree = "<group>"; };
 		189971CC192CCC0200E0E9F1 /* ExampleApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ExampleApp.cpp; sourceTree = "<group>"; };
 		189971CD192CCC0200E0E9F1 /* ExampleApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExampleApp.h; sourceTree = "<group>"; };
+		189971CF192CF46000E0E9F1 /* Logger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Logger.h; sourceTree = "<group>"; };
 		18AB38E4192B71F100F15546 /* UIHelpers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIHelpers.cpp; sourceTree = "<group>"; };
 		18AB38EB192B729F00F15546 /* iOSRouteMatchingExampleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iOSRouteMatchingExampleView.h; sourceTree = "<group>"; };
 		18AB38EC192B729F00F15546 /* iOSRouteMatchingExampleView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = iOSRouteMatchingExampleView.mm; sourceTree = "<group>"; };
@@ -279,7 +280,6 @@
 		18AB38F1192B729F00F15546 /* iOSRouteSimulationExampleView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = iOSRouteSimulationExampleView.mm; sourceTree = "<group>"; };
 		18AB38F2192B729F00F15546 /* iOSRouteSimulationExampleViewFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iOSRouteSimulationExampleViewFactory.h; sourceTree = "<group>"; };
 		18AB38F3192B729F00F15546 /* iOSRouteSimulationExampleViewFactory.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = iOSRouteSimulationExampleViewFactory.mm; sourceTree = "<group>"; };
-		18AB38F4192B729F00F15546 /* Logger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Logger.h; sourceTree = "<group>"; };
 		18AB38F5192B729F00F15546 /* Main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Main.m; sourceTree = "<group>"; };
 		18AB38F6192B729F00F15546 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		18AB38F7192B729F00F15546 /* ViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewController.mm; sourceTree = "<group>"; };
@@ -370,6 +370,7 @@
 		18143846192B6E4500BCDF2E /* src */ = {
 			isa = PBXGroup;
 			children = (
+				189971CF192CF46000E0E9F1 /* Logger.h */,
 				189971CC192CCC0200E0E9F1 /* ExampleApp.cpp */,
 				189971CD192CCC0200E0E9F1 /* ExampleApp.h */,
 				18143847192B6E4500BCDF2E /* Examples */,
@@ -757,7 +758,6 @@
 			isa = PBXGroup;
 			children = (
 				18AB38E9192B729F00F15546 /* Examples */,
-				18AB38F4192B729F00F15546 /* Logger.h */,
 				18AB38F5192B729F00F15546 /* Main.m */,
 				18AB38F6192B729F00F15546 /* ViewController.h */,
 				18AB38F7192B729F00F15546 /* ViewController.mm */,
