@@ -20,6 +20,12 @@
 #include "PlatformConfig.h"
 #include "AndroidPlatformConfigBuilder.h"
 #include "EnvironmentFlatteningService.h"
+#include "RouteMatchingExampleFactory.h"
+#include "RouteSimulationExampleFactory.h"
+#include "JavaHudCrossThreadCommunicationExampleFactory.h"
+#include "PinsWithAttachedJavaUIExampleFactory.h"
+#include "PositionJavaPinButtonExampleFactory.h"
+#include "ShowJavaPlaceJumpUIExampleFactory.h"
 
 using namespace Eegeo::Android;
 using namespace Eegeo::Android::Input;
@@ -36,7 +42,8 @@ void AppWindow::EnqueuePointerEvent(TouchInputEvent& e)
 AppWindow::AppWindow(AndroidNativeState* pState, PersistentAppState* pPersistentState, bool initialStart)
 : pState(pState)
 , persistentState(pPersistentState)
-, pAppOnMap(NULL)
+, m_pExampleApp(NULL)
+, m_pExampleController(NULL)
 , pInputProcessor(NULL)
 , pWorld(NULL)
 , pAndroidLocationService(NULL)
@@ -66,10 +73,14 @@ AppWindow::AppWindow(AndroidNativeState* pState, PersistentAppState* pPersistent
 
     this->display = eglGetDisplay(EGL_DEFAULT_DISPLAY);
     eglInitialize(display, 0, 0);
+
+    pInputHandler.AddDelegateInputHandler(this);
 }
 
 AppWindow::~AppWindow()
 {
+	pInputHandler.RemoveDelegateInputHandler(this);
+
 	pthread_mutex_destroy(&m_mutex);
 	pthread_mutex_destroy(&m_inputMutex);
 
@@ -178,7 +189,7 @@ void* AppWindow::Run(void* self)
         {
         	if(displayAvailable)
         	{
-        		Eegeo::Camera::GlobeCamera::GlobeCameraController& getCameraController = pSelf->GetAppOnMap().GetCameraController();
+        		Eegeo::Camera::GlobeCamera::GlobeCameraController& getCameraController = pSelf->GetExampleApp().GetCameraController();
 
         	    const Eegeo::Space::EcefTangentBasis& cameraInterest = getCameraController.GetInterestBasis();
         	    const float cameraHeadingRadians = Eegeo::Camera::CameraHelpers::GetAbsoluteBearingRadians(cameraInterest.GetPointEcef(), cameraInterest.GetForward());
@@ -218,14 +229,16 @@ void AppWindow::UpdateWorld()
 			this->pInputProcessor->HandleInput(inputs[i]);
 		}
 
+		m_uiThreadToNativeThreadTaskQueue.TryExectuteBufferedWork();
+
 		//update and render world
 		//Eegeo_TTY("UPDATING WORLD");
 	    Eegeo_GL(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT));
 
 		float fps = 1.0f/30.0f;
 		pAndroidWebRequestService->Update();
-		pAppOnMap->Update(fps);
-		pAppOnMap->Draw(fps);
+		m_pExampleApp->Update(fps);
+		m_pExampleApp->Draw(fps);
 
 		Eegeo_GL(glFinish());
 		Eegeo_GL(eglSwapBuffers(display, surface));
@@ -440,7 +453,10 @@ void AppWindow::TerminateWorld()
 {
 	pTaskQueue->StopWorkQueue();
 
-	delete pAppOnMap;
+	DestroyAndroidSpecificExamples();
+	delete m_pExampleApp;
+	delete m_pExampleController;
+
 	pHttpCache->FlushInMemoryCacheRepresentation();
 
 
@@ -576,19 +592,143 @@ void AppWindow::InitWorld()
             (initialStart) ? Eegeo::Rendering::LoadingScreenLayout::FullScreen : Eegeo::Rendering::LoadingScreenLayout::Centred
             );
 
-	pAppOnMap = new MyApp(&pInputHandler, *pState, *m_pInterestPointProvider);
-	pInputProcessor = new Eegeo::Android::Input::AndroidInputProcessor(&pInputHandler, pRenderContext->GetScreenWidth(), pRenderContext->GetScreenHeight());
+	m_pExampleController = new Examples::ExampleController(*pWorld);
 
-	pAppOnMap->Start(pWorld);
+	m_pExampleApp = new ExampleApp(pWorld, *m_pInterestPointProvider, *m_pExampleController);
+
+	RegisterAndroidSpecificExamples();
+
+	m_pExampleController->ActivatePrevious();
+
+	pInputProcessor = new Eegeo::Android::Input::AndroidInputProcessor(&pInputHandler, pRenderContext->GetScreenWidth(), pRenderContext->GetScreenHeight());
 
 	if (persistentState.valid)
 	{
         Eegeo::Space::EcefTangentBasis cameraInterestBasis;
         Eegeo::Camera::CameraHelpers::EcefTangentBasisFromPointAndHeading(persistentState.lastGlobeCameraLatLong.ToECEF(), persistentState.lastGlobeCameraHeadingDegrees, cameraInterestBasis);
-		pAppOnMap->GetCameraController().SetView(cameraInterestBasis, persistentState.lastGlobeCameraDistanceToInterest);
+        m_pExampleApp->GetCameraController().SetView(cameraInterestBasis, persistentState.lastGlobeCameraDistanceToInterest);
 	}
 
     pthread_mutex_lock(&m_mutex);
     worldInitialised = true;
     pthread_mutex_unlock(&m_mutex);
+}
+
+void AppWindow::RegisterAndroidSpecificExamples()
+{
+	m_pAndroidRouteMatchingExampleViewFactory = new Examples::AndroidRouteMatchingExampleViewFactory(
+			*pState,
+			m_uiThreadToNativeThreadTaskQueue);
+
+    m_pExampleController->RegisterExample(new Examples::RouteMatchingExampleFactory(
+    		*pWorld,
+    		*m_pAndroidRouteMatchingExampleViewFactory));
+
+
+    m_pAndroidRouteSimulationExampleViewFactory = Eegeo_NEW(Examples::AndroidRouteSimulationExampleViewFactory)(
+			*pState,
+			m_uiThreadToNativeThreadTaskQueue);
+
+    m_pExampleController->RegisterExample(Eegeo_NEW(Examples::RouteSimulationExampleFactory)(
+    		*pWorld,
+    		m_pExampleApp->GetCameraController(),
+    		*m_pAndroidRouteSimulationExampleViewFactory));
+
+    m_pExampleController->RegisterExample(Eegeo_NEW(Examples::JavaHudCrossThreadCommunicationExampleFactory(*pWorld, *pState)));
+    m_pExampleController->RegisterExample(Eegeo_NEW(Examples::PinsWithAttachedJavaUIExampleFactory(*pWorld, *pState)));
+    m_pExampleController->RegisterExample(Eegeo_NEW(Examples::PositionJavaPinButtonExampleFactory(*pWorld, *pState)));
+
+    m_pExampleCameraJumpController = new ExampleCameraJumpController(m_pExampleApp->GetCameraController(), m_pExampleApp->GetTouchController());
+    m_pExampleController->RegisterExample(Eegeo_NEW(Examples::ShowJavaPlaceJumpUIExampleFactory(*m_pExampleCameraJumpController, *pState)));
+}
+
+void AppWindow::DestroyAndroidSpecificExamples()
+{
+	delete m_pExampleCameraJumpController;
+	delete m_pAndroidRouteMatchingExampleViewFactory;
+	delete m_pAndroidRouteSimulationExampleViewFactory;
+}
+
+void AppWindow::Event_TouchRotate(const AppInterface::RotateData& data)
+{
+	Eegeo_ASSERT(m_pExampleApp != NULL);
+	m_pExampleApp->Event_TouchRotate(data);
+}
+
+void AppWindow::Event_TouchRotate_Start(const AppInterface::RotateData& data)
+{
+	Eegeo_ASSERT(m_pExampleApp != NULL);
+	m_pExampleApp->Event_TouchRotate_Start(data);
+}
+
+void AppWindow::Event_TouchRotate_End(const AppInterface::RotateData& data)
+{
+	Eegeo_ASSERT(m_pExampleApp != NULL);
+	m_pExampleApp->Event_TouchRotate_End(data);
+}
+
+void AppWindow::Event_TouchPinch(const AppInterface::PinchData& data)
+{
+	Eegeo_ASSERT(m_pExampleApp != NULL);
+	m_pExampleApp->Event_TouchPinch(data);
+}
+
+void AppWindow::Event_TouchPinch_Start(const AppInterface::PinchData& data)
+{
+	Eegeo_ASSERT(m_pExampleApp != NULL);
+	m_pExampleApp->Event_TouchPinch_Start(data);
+}
+
+void AppWindow::Event_TouchPinch_End(const AppInterface::PinchData& data)
+{
+	Eegeo_ASSERT(m_pExampleApp != NULL);
+	m_pExampleApp->Event_TouchPinch_End(data);
+}
+
+void AppWindow::Event_TouchPan(const AppInterface::PanData& data)
+{
+	Eegeo_ASSERT(m_pExampleApp != NULL);
+	m_pExampleApp->Event_TouchPan(data);
+}
+
+void AppWindow::Event_TouchPan_Start(const AppInterface::PanData& data)
+{
+	Eegeo_ASSERT(m_pExampleApp != NULL);
+	m_pExampleApp->Event_TouchPan_Start(data);
+}
+
+void AppWindow::Event_TouchPan_End(const AppInterface::PanData& data)
+{
+	Eegeo_ASSERT(m_pExampleApp != NULL);
+	m_pExampleApp->Event_TouchPan_End(data);
+}
+
+void AppWindow::Event_TouchTap(const AppInterface::TapData& data)
+{
+	Eegeo_ASSERT(m_pExampleApp != NULL);
+	m_pExampleApp->Event_TouchTap(data);
+}
+
+void AppWindow::Event_TouchDoubleTap(const AppInterface::TapData& data)
+{
+	Eegeo_ASSERT(m_pExampleApp != NULL);
+	m_pExampleApp->Event_TouchDoubleTap(data);
+}
+
+void AppWindow::Event_TouchDown(const AppInterface::TouchData& data)
+{
+	Eegeo_ASSERT(m_pExampleApp != NULL);
+	m_pExampleApp->Event_TouchDown(data);
+}
+
+void AppWindow::Event_TouchMove(const AppInterface::TouchData& data)
+{
+	Eegeo_ASSERT(m_pExampleApp != NULL);
+	m_pExampleApp->Event_TouchMove(data);
+}
+
+void AppWindow::Event_TouchUp(const AppInterface::TouchData& data)
+{
+	Eegeo_ASSERT(m_pExampleApp != NULL);
+	m_pExampleApp->Event_TouchUp(data);
 }

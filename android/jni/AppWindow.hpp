@@ -3,7 +3,7 @@
 #include "AndroidHttpCache.h"
 #include "AndroidTextureFileLoader.h"
 #include "AndroidWebRequestService.hpp"
-#include "AppOnMap.h"
+#include "ExampleApp.h"
 #include "AndroidTaskQueue.h"
 #include "AndroidWebLoadRequestFactory.h"
 #include "AndroidInputProcessor.h"
@@ -18,6 +18,11 @@
 #include "NativeUIFactories.h"
 #include "TerrainHeightRepository.h"
 #include "GlobalShadowing.h"
+#include "ExampleController.h"
+#include "UiThreadToNativeThreadTaskQueue.h"
+#include "AndroidRouteMatchingExampleViewFactory.h"
+#include "AndroidRouteSimulationExampleViewFactory.h"
+#include "ExampleCameraJumpController.h"
 
 namespace Eegeo
 {
@@ -45,10 +50,12 @@ struct PersistentAppState
 };
 
 
-class AppWindow 
+class AppWindow : public Eegeo::Android::Input::IAndroidInputHandler
 {
 private:
-	MyApp* pAppOnMap;
+	ExampleApp* m_pExampleApp;
+	UiThreadToNativeThreadTaskQueue m_uiThreadToNativeThreadTaskQueue;
+	Examples::ExampleController* m_pExampleController;
 	PersistentAppState persistentState;
 	Eegeo::Android::Input::AndroidInputProcessor* pInputProcessor;
 	Eegeo::Android::Input::AndroidInputHandler pInputHandler;
@@ -84,6 +91,10 @@ private:
 	Eegeo::UI::NativeAlerts::Android::AndroidAlertBoxFactory m_androidAlertBoxFactory;
 	Eegeo::UI::NativeUIFactories m_androidNativeUIFactories;
 
+	Examples::AndroidRouteMatchingExampleViewFactory* m_pAndroidRouteMatchingExampleViewFactory;
+	Examples::AndroidRouteSimulationExampleViewFactory* m_pAndroidRouteSimulationExampleViewFactory;
+	ExampleCameraJumpController* m_pExampleCameraJumpController;
+
 	bool appRunning;
 	bool displayAvailable;
 	int surfaceChanged;
@@ -113,6 +124,9 @@ private:
 
 	static void* Run(void* self);
 
+	void RegisterAndroidSpecificExamples();
+	void DestroyAndroidSpecificExamples();
+
 public:
 
 	AppWindow(AndroidNativeState* pState, PersistentAppState* pPersistentState, bool initialStart);
@@ -125,5 +139,28 @@ public:
 	void EnqueuePointerEvent(Eegeo::Android::Input::TouchInputEvent& e);
 
 	Eegeo::EegeoWorld& GetWorld() { return *pWorld; }
-	MyApp& GetAppOnMap() { return *pAppOnMap; }
+	ExampleApp& GetExampleApp() { return *m_pExampleApp; }
+
+	void Event_TouchRotate 			(const AppInterface::RotateData& data);
+	void Event_TouchRotate_Start	(const AppInterface::RotateData& data);
+	void Event_TouchRotate_End 		(const AppInterface::RotateData& data);
+
+	void Event_TouchPinch 			(const AppInterface::PinchData& data);
+	void Event_TouchPinch_Start 	(const AppInterface::PinchData& data);
+	void Event_TouchPinch_End 		(const AppInterface::PinchData& data);
+
+	void Event_TouchPan				(const AppInterface::PanData& data);
+	void Event_TouchPan_Start		(const AppInterface::PanData& data);
+	void Event_TouchPan_End 		(const AppInterface::PanData& data);
+
+	void Event_TouchTap 			(const AppInterface::TapData& data);
+	void Event_TouchDoubleTap		(const AppInterface::TapData& data);
+
+	void Event_TouchDown 			(const AppInterface::TouchData& data);
+	void Event_TouchMove 			(const AppInterface::TouchData& data);
+	void Event_TouchUp 				(const AppInterface::TouchData& data);
+
+	bool Event_KeyPress(const AppInterface::KeyboardData& data) { return false; }
+	void AddKeyPressListener(Eegeo::UI::NativeInput::IKeyboardInputKeyPressedHandler* handler) { }
+	bool RemoveKeyPressListener(Eegeo::UI::NativeInput::IKeyboardInputKeyPressedHandler* handler) { return false; }
 };

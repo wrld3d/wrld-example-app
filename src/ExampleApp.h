@@ -29,6 +29,8 @@ public:
     
     Eegeo::Camera::GlobeCamera::GlobeCameraController& GetCameraController() { return *m_globeCameraController; }
     
+    Eegeo::Camera::GlobeCamera::GlobeCameraTouchController& GetTouchController() { return *m_cameraTouchController; }
+    
     void Event_TouchRotate 			(const AppInterface::RotateData& data);
     void Event_TouchRotate_Start	(const AppInterface::RotateData& data);
     void Event_TouchRotate_End 		(const AppInterface::RotateData& data);
