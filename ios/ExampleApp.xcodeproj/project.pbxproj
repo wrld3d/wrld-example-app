@@ -73,8 +73,8 @@
 		189971C2192CBFFE00E0E9F1 /* RouteMatchingExampleFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 189971C0192CBFFE00E0E9F1 /* RouteMatchingExampleFactory.cpp */; };
 		189971C5192CC21600E0E9F1 /* RouteSimulationExampleFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 189971C3192CC21600E0E9F1 /* RouteSimulationExampleFactory.cpp */; };
 		189971C8192CCB7700E0E9F1 /* ExampleController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 189971C6192CCB7700E0E9F1 /* ExampleController.cpp */; };
+		189971CE192CCC0200E0E9F1 /* ExampleApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 189971CC192CCC0200E0E9F1 /* ExampleApp.cpp */; };
 		18AB38E5192B71F100F15546 /* UIHelpers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18AB38E4192B71F100F15546 /* UIHelpers.cpp */; };
-		18AB38F8192B729F00F15546 /* ExampleApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18AB38E8192B729F00F15546 /* ExampleApp.cpp */; };
 		18AB38F9192B729F00F15546 /* iOSRouteMatchingExampleView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18AB38EC192B729F00F15546 /* iOSRouteMatchingExampleView.mm */; };
 		18AB38FA192B729F00F15546 /* iOSRouteMatchingExampleViewFactory.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18AB38EE192B729F00F15546 /* iOSRouteMatchingExampleViewFactory.mm */; };
 		18AB38FB192B729F00F15546 /* iOSRouteSimulationExampleView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18AB38F1192B729F00F15546 /* iOSRouteSimulationExampleView.mm */; };
@@ -268,9 +268,9 @@
 		189971C4192CC21600E0E9F1 /* RouteSimulationExampleFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RouteSimulationExampleFactory.h; sourceTree = "<group>"; };
 		189971C6192CCB7700E0E9F1 /* ExampleController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ExampleController.cpp; sourceTree = "<group>"; };
 		189971C7192CCB7700E0E9F1 /* ExampleController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExampleController.h; sourceTree = "<group>"; };
+		189971CC192CCC0200E0E9F1 /* ExampleApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ExampleApp.cpp; sourceTree = "<group>"; };
+		189971CD192CCC0200E0E9F1 /* ExampleApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExampleApp.h; sourceTree = "<group>"; };
 		18AB38E4192B71F100F15546 /* UIHelpers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIHelpers.cpp; sourceTree = "<group>"; };
-		18AB38E7192B729F00F15546 /* ExampleApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExampleApp.h; sourceTree = "<group>"; };
-		18AB38E8192B729F00F15546 /* ExampleApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ExampleApp.cpp; sourceTree = "<group>"; };
 		18AB38EB192B729F00F15546 /* iOSRouteMatchingExampleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iOSRouteMatchingExampleView.h; sourceTree = "<group>"; };
 		18AB38EC192B729F00F15546 /* iOSRouteMatchingExampleView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = iOSRouteMatchingExampleView.mm; sourceTree = "<group>"; };
 		18AB38ED192B729F00F15546 /* iOSRouteMatchingExampleViewFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iOSRouteMatchingExampleViewFactory.h; sourceTree = "<group>"; };
@@ -370,6 +370,8 @@
 		18143846192B6E4500BCDF2E /* src */ = {
 			isa = PBXGroup;
 			children = (
+				189971CC192CCC0200E0E9F1 /* ExampleApp.cpp */,
+				189971CD192CCC0200E0E9F1 /* ExampleApp.h */,
 				18143847192B6E4500BCDF2E /* Examples */,
 			);
 			name = src;
@@ -754,8 +756,6 @@
 		18AB38E6192B729F00F15546 /* ios_src */ = {
 			isa = PBXGroup;
 			children = (
-				18AB38E7192B729F00F15546 /* ExampleApp.h */,
-				18AB38E8192B729F00F15546 /* ExampleApp.cpp */,
 				18AB38E9192B729F00F15546 /* Examples */,
 				18AB38F4192B729F00F15546 /* Logger.h */,
 				18AB38F5192B729F00F15546 /* Main.m */,
@@ -1055,6 +1055,7 @@
 				189971B0192CB63500E0E9F1 /* ScreenUnprojectExampleFactory.cpp in Sources */,
 				181438A8192B6E4500BCDF2E /* ControlCityThemeExample.cpp in Sources */,
 				189971B6192CB77A00E0E9F1 /* SingleCityExampleFactory.cpp in Sources */,
+				189971CE192CCC0200E0E9F1 /* ExampleApp.cpp in Sources */,
 				1899717A192CA77500E0E9F1 /* DebugSphereExampleFactory.cpp in Sources */,
 				181438B3192B6E4500BCDF2E /* Pick3DObjectExample.cpp in Sources */,
 				18997183192CABBE00E0E9F1 /* EnvironmentNotifierExampleFactory.cpp in Sources */,
@@ -1065,7 +1066,6 @@
 				181438BF192B6E4500BCDF2E /* SearchExample.cpp in Sources */,
 				18AB38FA192B729F00F15546 /* iOSRouteMatchingExampleViewFactory.mm in Sources */,
 				181438BB192B6E4500BCDF2E /* RouteSimulationAnimationExample.cpp in Sources */,
-				18AB38F8192B729F00F15546 /* ExampleApp.cpp in Sources */,
 				18AB38FE192B729F00F15546 /* ViewController.mm in Sources */,
 				181438BC192B6E4500BCDF2E /* RouteThicknessPolicyExample.cpp in Sources */,
 				181438AB192B6E4500BCDF2E /* DynamicText3DExample.cpp in Sources */,
