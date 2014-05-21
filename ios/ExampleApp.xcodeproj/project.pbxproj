@@ -44,7 +44,6 @@
 		1860B65C16CA65D90004A39D /* placeholder.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 1860B65B16CA65D90004A39D /* placeholder.pvr */; };
 		18915BD317C7AF86005F24AB /* recce_trams_night.pod in Resources */ = {isa = PBXBuildFile; fileRef = 18915BD217C7AF86005F24AB /* recce_trams_night.pod */; };
 		1899716A192C947D00E0E9F1 /* CameraTransitionExampleFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18997168192C947D00E0E9F1 /* CameraTransitionExampleFactory.cpp */; };
-		1899716E192C99EB00E0E9F1 /* ExampleController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1899716C192C99EB00E0E9F1 /* ExampleController.cpp */; };
 		18997174192CA64300E0E9F1 /* ControlCityThemeExampleFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18997172192CA64300E0E9F1 /* ControlCityThemeExampleFactory.cpp */; };
 		18997177192CA6FE00E0E9F1 /* DebugPrimitiveRenderingExampleFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18997175192CA6FE00E0E9F1 /* DebugPrimitiveRenderingExampleFactory.cpp */; };
 		1899717A192CA77500E0E9F1 /* DebugSphereExampleFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18997178192CA77500E0E9F1 /* DebugSphereExampleFactory.cpp */; };
@@ -73,6 +72,7 @@
 		189971BF192CB93200E0E9F1 /* WebRequestExampleFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 189971BD192CB93200E0E9F1 /* WebRequestExampleFactory.cpp */; };
 		189971C2192CBFFE00E0E9F1 /* RouteMatchingExampleFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 189971C0192CBFFE00E0E9F1 /* RouteMatchingExampleFactory.cpp */; };
 		189971C5192CC21600E0E9F1 /* RouteSimulationExampleFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 189971C3192CC21600E0E9F1 /* RouteSimulationExampleFactory.cpp */; };
+		189971C8192CCB7700E0E9F1 /* ExampleController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 189971C6192CCB7700E0E9F1 /* ExampleController.cpp */; };
 		18AB38E5192B71F100F15546 /* UIHelpers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18AB38E4192B71F100F15546 /* UIHelpers.cpp */; };
 		18AB38F8192B729F00F15546 /* ExampleApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18AB38E8192B729F00F15546 /* ExampleApp.cpp */; };
 		18AB38F9192B729F00F15546 /* iOSRouteMatchingExampleView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18AB38EC192B729F00F15546 /* iOSRouteMatchingExampleView.mm */; };
@@ -210,8 +210,6 @@
 		18997164192C8E9900E0E9F1 /* IExampleFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IExampleFactory.h; sourceTree = "<group>"; };
 		18997168192C947D00E0E9F1 /* CameraTransitionExampleFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CameraTransitionExampleFactory.cpp; sourceTree = "<group>"; };
 		18997169192C947D00E0E9F1 /* CameraTransitionExampleFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraTransitionExampleFactory.h; sourceTree = "<group>"; };
-		1899716C192C99EB00E0E9F1 /* ExampleController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ExampleController.cpp; path = FileIO/ExampleController.cpp; sourceTree = "<group>"; };
-		1899716D192C99EB00E0E9F1 /* ExampleController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExampleController.h; path = FileIO/ExampleController.h; sourceTree = "<group>"; };
 		18997172192CA64300E0E9F1 /* ControlCityThemeExampleFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ControlCityThemeExampleFactory.cpp; sourceTree = "<group>"; };
 		18997173192CA64300E0E9F1 /* ControlCityThemeExampleFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ControlCityThemeExampleFactory.h; sourceTree = "<group>"; };
 		18997175192CA6FE00E0E9F1 /* DebugPrimitiveRenderingExampleFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DebugPrimitiveRenderingExampleFactory.cpp; sourceTree = "<group>"; };
@@ -268,6 +266,8 @@
 		189971C1192CBFFE00E0E9F1 /* RouteMatchingExampleFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RouteMatchingExampleFactory.h; sourceTree = "<group>"; };
 		189971C3192CC21600E0E9F1 /* RouteSimulationExampleFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RouteSimulationExampleFactory.cpp; sourceTree = "<group>"; };
 		189971C4192CC21600E0E9F1 /* RouteSimulationExampleFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RouteSimulationExampleFactory.h; sourceTree = "<group>"; };
+		189971C6192CCB7700E0E9F1 /* ExampleController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ExampleController.cpp; sourceTree = "<group>"; };
+		189971C7192CCB7700E0E9F1 /* ExampleController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExampleController.h; sourceTree = "<group>"; };
 		18AB38E4192B71F100F15546 /* UIHelpers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIHelpers.cpp; sourceTree = "<group>"; };
 		18AB38E7192B729F00F15546 /* ExampleApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExampleApp.h; sourceTree = "<group>"; };
 		18AB38E8192B729F00F15546 /* ExampleApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ExampleApp.cpp; sourceTree = "<group>"; };
@@ -379,6 +379,8 @@
 		18143847192B6E4500BCDF2E /* Examples */ = {
 			isa = PBXGroup;
 			children = (
+				189971C6192CCB7700E0E9F1 /* ExampleController.cpp */,
+				189971C7192CCB7700E0E9F1 /* ExampleController.h */,
 				18143848192B6E4500BCDF2E /* CameraTransition */,
 				1814384B192B6E4500BCDF2E /* ControlCityThemes */,
 				1814384E192B6E4500BCDF2E /* DebugPrimitiveRendering */,
@@ -388,8 +390,6 @@
 				1814385A192B6E4500BCDF2E /* EnvironmentNotifier */,
 				1814385D192B6E4500BCDF2E /* FileIO */,
 				18143860192B6E4500BCDF2E /* IExample.h */,
-				1899716C192C99EB00E0E9F1 /* ExampleController.cpp */,
-				1899716D192C99EB00E0E9F1 /* ExampleController.h */,
 				18997164192C8E9900E0E9F1 /* IExampleFactory.h */,
 				18143862192B6E4500BCDF2E /* KeyboardInput */,
 				18143865192B6E4500BCDF2E /* LoadModel */,
@@ -1069,6 +1069,7 @@
 				18AB38FE192B729F00F15546 /* ViewController.mm in Sources */,
 				181438BC192B6E4500BCDF2E /* RouteThicknessPolicyExample.cpp in Sources */,
 				181438AB192B6E4500BCDF2E /* DynamicText3DExample.cpp in Sources */,
+				189971C8192CCB7700E0E9F1 /* ExampleController.cpp in Sources */,
 				189971A1192CB2D500E0E9F1 /* ResourceSpatialQueryExampleFactory.cpp in Sources */,
 				181438B0192B6E4500BCDF2E /* LoadModelExample.cpp in Sources */,
 				189971A7192CB3F800E0E9F1 /* RouteSimulationAnimationExampleFactory.cpp in Sources */,
@@ -1089,7 +1090,6 @@
 				181438B7192B6E4500BCDF2E /* ResourceSpatialQueryExample.cpp in Sources */,
 				189971AA192CB4D900E0E9F1 /* RouteThicknessPolicyExampleFactory.cpp in Sources */,
 				181438A9192B6E4500BCDF2E /* DebugPrimitiveRenderingExample.cpp in Sources */,
-				1899716E192C99EB00E0E9F1 /* ExampleController.cpp in Sources */,
 				1899718C192CAD9800E0E9F1 /* LoadModelExampleFactory.cpp in Sources */,
 				18997180192CAA8C00E0E9F1 /* EnvironmentFlatteningExampleFactory.cpp in Sources */,
 				181438BD192B6E4500BCDF2E /* ScreenPickExample.cpp in Sources */,
