@@ -12,8 +12,18 @@ LOCAL_STATIC_LIBRARIES := android_native_app_glue native-activity-lib
 
 #android-specific sources
 LOCAL_SRC_FILES += ./main.cpp
-LOCAL_SRC_FILES += ./AppWindow.cpp
 LOCAL_SRC_FILES += ./UiThreadToNativeThreadTaskQueue.cpp
+LOCAL_SRC_FILES += ./AppProxy.cpp
+LOCAL_SRC_FILES += ./AppRunner.cpp
+LOCAL_SRC_FILES += ./AppHost.cpp
+LOCAL_SRC_FILES += ./AppInputDelegate.cpp
+LOCAL_SRC_FILES += ./AppLifecycleMessages/AppPauseMessage.cpp
+LOCAL_SRC_FILES += ./AppLifecycleMessages/AppDisplayAvailableMessage.cpp
+LOCAL_SRC_FILES += ./InputMessages/TouchEventMessage.cpp
+LOCAL_SRC_FILES += ./GlDisplayService.cpp
+LOCAL_SRC_FILES += ./AppToJavaHandler.cpp
+LOCAL_SRC_FILES += ./AppToJavaProxy.cpp
+LOCAL_SRC_FILES += ./FrameRateRegulator.cpp
 
 LOCAL_SRC_FILES += ./Examples/JavaHudCrossThreadCommunication/JavaHudCrossThreadCommunicationExample.cpp
 LOCAL_SRC_FILES += ./Examples/JavaHudCrossThreadCommunication/JavaHudCrossThreadCommunicationExampleFactory.cpp
@@ -110,6 +120,11 @@ LOCAL_C_INCLUDES += $(exampleincludes:$(LOCAL_PATH)/%=%)
 
 java_exampleincludes := $(shell find ./jni/Examples -type d)
 LOCAL_C_INCLUDES += $(java_exampleincludes:$(LOCAL_PATH)/%=%)
+
+LOCAL_C_INCLUDES += ./jni/AppMessages
+LOCAL_C_INCLUDES += ./jni/AppMessages/AppToJava
+LOCAL_C_INCLUDES += ./jni/AppLifecycleMessages
+LOCAL_C_INCLUDES += ./jni/InputMessages
 
 LOCAL_C_INCLUDES += ./libs/png
 LOCAL_C_INCLUDES += ./libs/curl 

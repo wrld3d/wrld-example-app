@@ -12,9 +12,10 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback
     private EegeoSurfaceView m_surfaceView;
     private SurfaceHolder m_surfaceHolder;
     private long m_nativeAppWindowPtr;
+    private NativeToJavaMessagePump nativeToJavaMessageHandler;
     
-    public static native long startNativeCode(MainActivity activity, AssetManager assetManager, float dpi);
-    public static native void stopNativeCode();
+    public static native long createNativeCode(MainActivity activity, AssetManager assetManager, NativeToJavaMessagePump nativeToJavaMessageHandler, float dpi);
+    public static native void destroyNativeCode();
     public static native void pauseNativeCode();
     public static native void resumeNativeCode();
     public static native void setNativeSurface(Surface surface);
@@ -29,24 +30,20 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback
 
         m_surfaceView = (EegeoSurfaceView)findViewById(R.id.surface);
         m_surfaceView.getHolder().addCallback(this);
-    }
-    
-    @Override
-    protected void onStart() 
-    {
-        super.onStart();
+        
+    	nativeToJavaMessageHandler = new NativeToJavaMessagePump(this);
         
         DisplayMetrics dm = getResources().getDisplayMetrics();
 		float dpi = dm.ydpi;
         
-        m_nativeAppWindowPtr = startNativeCode(this, getAssets(), dpi);
+        m_nativeAppWindowPtr = createNativeCode(this, getAssets(), nativeToJavaMessageHandler, dpi);
         
         if(m_nativeAppWindowPtr == 0)
         {
         	throw new RuntimeException("Failed to start native code.");
         }
     }
-
+    
     @Override
     protected void onResume() 
     {
@@ -67,10 +64,10 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback
     }
 
     @Override
-    protected void onStop() 
+    protected void onDestroy() 
     {
         super.onStop();
-        stopNativeCode();
+        destroyNativeCode();
         m_nativeAppWindowPtr = 0;
     }
 

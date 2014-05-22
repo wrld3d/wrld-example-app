@@ -23,6 +23,10 @@ public:
     
     ~ExampleApp();
     
+    void OnPause();
+
+    void OnResume();
+
     void Update (float dt);
     
     void Draw (float dt);

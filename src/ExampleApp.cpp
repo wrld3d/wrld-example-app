@@ -132,6 +132,16 @@ ExampleApp::~ExampleApp()
     delete m_cameraTouchController;
 }
 
+void ExampleApp::OnPause()
+{
+
+}
+
+void ExampleApp::OnResume()
+{
+
+}
+
 void ExampleApp::Update (float dt)
 {
     Eegeo::EegeoWorld& eegeoWorld = World();
