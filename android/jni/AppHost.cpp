@@ -293,6 +293,7 @@ void AppHost::RegisterAndroidSpecificExamples()
     		m_pApp->GetCameraController(),
     		*m_pAndroidRouteSimulationExampleViewFactory));
 
+
     m_pExampleController->RegisterExample(new Examples::JavaHudCrossThreadCommunicationExampleFactory(*m_pWorld, m_nativeState, m_examplesMessageQueue));
     m_pExampleController->RegisterExample(new Examples::PinsWithAttachedJavaUIExampleFactory(*m_pWorld, m_nativeState));
     m_pExampleController->RegisterExample(new Examples::PositionJavaPinButtonExampleFactory(*m_pWorld, m_nativeState));
