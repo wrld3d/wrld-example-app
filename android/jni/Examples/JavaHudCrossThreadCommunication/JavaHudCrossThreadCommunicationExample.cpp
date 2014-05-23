@@ -33,6 +33,11 @@ namespace Examples
 		Eegeo_ASSERT(pProxy != NULL, "JavaHudCrossThreadCommunicationExample pProxy must be non-null.\n");
     }
 
+	JavaHudCrossThreadCommunicationExample::~JavaHudCrossThreadCommunicationExample()
+	{
+		Eegeo_DELETE m_pProxy;
+	}
+
     void JavaHudCrossThreadCommunicationExample::Start()
     {
 		//get an env for the current thread

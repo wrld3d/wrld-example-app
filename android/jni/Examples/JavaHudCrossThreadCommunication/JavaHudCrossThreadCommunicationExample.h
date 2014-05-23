@@ -37,6 +37,8 @@ namespace Examples
 			Eegeo::Resources::CityThemes::ICityThemeRepository& themeRepository,
 			Eegeo::Resources::CityThemes::ICityThemesUpdater& themeUpdater);
 
+    	~JavaHudCrossThreadCommunicationExample();
+
         void SetCurrentThemeByName(const std::string& themeName);
         void PostCurrentThemeNameToHud();
 

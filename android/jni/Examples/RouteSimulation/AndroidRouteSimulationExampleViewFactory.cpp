@@ -8,6 +8,7 @@
 
 #include "AndroidRouteSimulationExampleViewFactory.h"
 #include "AndroidRouteSimulationExampleView.h"
+#include "AndroidRouteSimulationProxy.h"
 
 using namespace Examples;
 
@@ -27,5 +28,7 @@ AndroidRouteSimulationExampleViewFactory::~AndroidRouteSimulationExampleViewFact
 
 IRouteSimulationExampleView* AndroidRouteSimulationExampleViewFactory::CreateRouteSimulationExampleView() const
 {
-    return Eegeo_NEW(AndroidRouteSimulationExampleView)(m_nativeState, m_messageQueue, false);
+	AndroidRouteSimulationProxy* pProxy = Eegeo_NEW(AndroidRouteSimulationProxy)(m_messageQueue);
+
+    return Eegeo_NEW(AndroidRouteSimulationExampleView)(m_nativeState, pProxy, false);
 }

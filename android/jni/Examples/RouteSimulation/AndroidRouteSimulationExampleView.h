@@ -12,13 +12,13 @@
 #include "Types.h"
 #include "IRouteSimulationExampleView.h"
 #include "AndroidNativeState.h"
-#include "MessageQueue.h"
-#include "IAndroidExampleMessage.h"
 #include <vector>
 #include <jni.h>
 
 namespace Examples
 {
+	class AndroidRouteSimulationProxy;
+
     class AndroidRouteSimulationExampleView : public IRouteSimulationExampleView, private Eegeo::NonCopyable
     {
         std::vector<IUIActionHandler*> m_followCameraToggledHandlers;
@@ -31,12 +31,12 @@ namespace Examples
     	AndroidNativeState& m_nativeState;
     	jclass m_routeSimulationExampleHudClass;
     	jobject m_routeSimulationExampleHud;
-    	Eegeo::Messaging::MessageQueue<IAndroidExampleMessage*>& m_messageQueue;
+    	AndroidRouteSimulationProxy* m_pProxy;
         
     public:
         AndroidRouteSimulationExampleView(
         		AndroidNativeState& androidNativeState,
-            	Eegeo::Messaging::MessageQueue<IAndroidExampleMessage*>& messageQueue,
+        		AndroidRouteSimulationProxy* pProxy,
         		bool usingFollowCamera);
         
         ~AndroidRouteSimulationExampleView();
@@ -77,7 +77,6 @@ namespace Examples
 
         void ChangeSideOfRoad();
 
-    	void SendMessage(IAndroidExampleMessage* pMessage);
     };
 }
 

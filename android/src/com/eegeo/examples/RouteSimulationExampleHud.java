@@ -14,22 +14,22 @@ public class RouteSimulationExampleHud
 	private MainActivity m_activity;
 	private View m_view;
     
-    public static native void ToggleFollowCamera(long nativeCallerPointer);
-    public static native void ChangeFollowDirection(long nativeCallerPointer);
-    public static native void IncreaseSpeedFollowed(long nativeCallerPointer);
-    public static native void DecreaseSpeedFollowed(long nativeCallerPointer);
-    public static native void ToggleDirectFollow(long nativeCallerPointer);
-    public static native void ToggleSideOfRoadToDriveOn(long nativeCallerPointer);
+    public static native void ToggleFollowCamera(long nativeCallerPointer, long nativeCallerProxyPointer);
+    public static native void ChangeFollowDirection(long nativeCallerPointer, long nativeCallerProxyPointer);
+    public static native void IncreaseSpeedFollowed(long nativeCallerPointer, long nativeCallerProxyPointer);
+    public static native void DecreaseSpeedFollowed(long nativeCallerPointer, long nativeCallerProxyPointer);
+    public static native void ToggleDirectFollow(long nativeCallerPointer, long nativeCallerProxyPointer);
+    public static native void ToggleSideOfRoadToDriveOn(long nativeCallerPointer, long nativeCallerProxyPointer);
     
-	public RouteSimulationExampleHud(MainActivity activity, long nativeCallerPointer, boolean followEnabled)
+	public RouteSimulationExampleHud(MainActivity activity, long nativeCallerPointer, long nativeCallerProxyPointer, boolean followEnabled)
     {
     	m_activity = activity;
     	m_view = null;
 
-    	createHud(nativeCallerPointer, followEnabled);
+    	createHud(nativeCallerPointer, nativeCallerProxyPointer, followEnabled);
     }
     
-    private void createHud(final long nativeCallerPointer, final boolean followEnabled)
+    private void createHud(final long nativeCallerPointer, final long nativeCallerProxyPointer, final boolean followEnabled)
     {	
     	m_activity.runOnUiThread(new Runnable()
 	    {
@@ -56,7 +56,7 @@ public class RouteSimulationExampleHud
 	            	toggleFollow.setOnClickListener(new OnClickListener() {
 	                    @Override
 	                    public void onClick(View v) {
-	                    	ToggleFollowCamera(nativeCallerPointer);
+	                    	ToggleFollowCamera(nativeCallerPointer, nativeCallerProxyPointer);
 	                    	
 	                    	int visibility = (View.VISIBLE == increaseSpeed.getVisibility()) ? View.INVISIBLE : View.VISIBLE;
 	    	            	increaseSpeed.setVisibility(visibility);
@@ -69,35 +69,35 @@ public class RouteSimulationExampleHud
 	            	increaseSpeed.setOnClickListener(new OnClickListener() {
 	                    @Override
 	                    public void onClick(View v) {
-	                    	IncreaseSpeedFollowed(nativeCallerPointer);
+	                    	IncreaseSpeedFollowed(nativeCallerPointer, nativeCallerProxyPointer);
 	                    }
 	                });
 	            	
 	            	decreaseSpeed.setOnClickListener(new OnClickListener() {
 	                    @Override
 	                    public void onClick(View v) {
-	                    	DecreaseSpeedFollowed(nativeCallerPointer);
+	                    	DecreaseSpeedFollowed(nativeCallerPointer, nativeCallerProxyPointer);
 	                    }
 	                });
 	            	
 	            	changeDirection.setOnClickListener(new OnClickListener() {
 	                    @Override
 	                    public void onClick(View v) {
-	                    	ChangeFollowDirection(nativeCallerPointer);
+	                    	ChangeFollowDirection(nativeCallerPointer, nativeCallerProxyPointer);
 	                    }
 	                });
 	            	
 	            	toggleDirectFollow.setOnClickListener(new OnClickListener() {
 	                    @Override
 	                    public void onClick(View v) {
-	                    	ToggleDirectFollow(nativeCallerPointer);
+	                    	ToggleDirectFollow(nativeCallerPointer, nativeCallerProxyPointer);
 	                    }
 	                });
 	            	
 	            	toggleRoadSide.setOnClickListener(new OnClickListener() {
 	                    @Override
 	                    public void onClick(View v) {
-	                    	ToggleSideOfRoadToDriveOn(nativeCallerPointer);
+	                    	ToggleSideOfRoadToDriveOn(nativeCallerPointer, nativeCallerProxyPointer);
 	                    }
 	                });
 	            	
