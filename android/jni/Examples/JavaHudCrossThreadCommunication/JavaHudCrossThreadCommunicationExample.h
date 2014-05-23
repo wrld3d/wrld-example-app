@@ -10,16 +10,11 @@
 
 #include "IExample.h"
 #include "AndroidNativeState.h"
-#include "UiThreadToNativeThreadTaskQueue.h"
 #include "CityThemes.h"
+#include "MessageQueue.h"
+#include "IAndroidExampleMessage.h"
 #include <string>
 #include <jni.h>
-
-extern "C"
-{
-    JNIEXPORT void JNICALL Java_com_eegeo_examples_ThemeReaderWriterHud_setCurrentTheme(JNIEnv* jenv, jobject obj, jlong nativeAppWindowPtr, jstring name);
-    JNIEXPORT void JNICALL Java_com_eegeo_examples_ThemeReaderWriterHud_readCurrentThemeName(JNIEnv* jenv, jobject obj, jlong nativeObjectPtr);
-}
 
 namespace Examples
 {
@@ -30,7 +25,7 @@ namespace Examples
 		Eegeo::Resources::CityThemes::ICityThemeRepository& m_themeRepository;
 		Eegeo::Resources::CityThemes::ICityThemesUpdater& m_themeUpdater;
 
-    	UiThreadToNativeThreadTaskQueue m_uiToNativeQueue;
+    	Eegeo::Messaging::MessageQueue<IAndroidExampleMessage*>& m_messageQueue;
 
     	jclass m_themeReaderWriterHudClass;
     	jobject m_themeReaderWriterHud;
@@ -38,20 +33,22 @@ namespace Examples
     public:
     	JavaHudCrossThreadCommunicationExample(
 			AndroidNativeState& pNativeState,
+	    	Eegeo::Messaging::MessageQueue<IAndroidExampleMessage*>& messageQueue,
 			Eegeo::Resources::CityThemes::ICityThemesService& themeService,
 			Eegeo::Resources::CityThemes::ICityThemeRepository& themeRepository,
 			Eegeo::Resources::CityThemes::ICityThemesUpdater& themeUpdater);
 
-    	void PostWorkToNative(UiThreadToNativeThreadTaskQueue::IBufferedWork* work);
+    	void SendMessage(IAndroidExampleMessage* pMessage);
 
         void SetCurrentThemeByName(const std::string& themeName);
         void PostCurrentThemeNameToHud();
 
         void Start();
-        void Update(float dt);
+        void Update(float dt) {}
         void Draw() {}
         void Suspend();
     };
 }
+
 
 #endif /* JAVAHUDCROSSTHREADCOMMUNICATIONEXAMPLE_H_ */

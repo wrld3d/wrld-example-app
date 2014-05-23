@@ -12,6 +12,8 @@
 #include "IExample.h"
 #include "EegeoWorld.h"
 #include "AndroidNativeState.h"
+#include "MessageQueue.h"
+#include "IAndroidExampleMessage.h"
 
 namespace Examples
 {
@@ -19,11 +21,13 @@ namespace Examples
     {
         Eegeo::EegeoWorld& m_world;
         AndroidNativeState& m_nativeState;
+    	Eegeo::Messaging::MessageQueue<IAndroidExampleMessage*>& m_messageQueue;
 
     public:
         JavaHudCrossThreadCommunicationExampleFactory(
         		Eegeo::EegeoWorld& world,
-        		AndroidNativeState& nativeState);
+        		AndroidNativeState& nativeState,
+            	Eegeo::Messaging::MessageQueue<IAndroidExampleMessage*>& messageQueue);
 
         IExample* CreateExample() const;
     };

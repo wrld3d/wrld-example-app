@@ -25,6 +25,10 @@ namespace Examples
 	: m_nativeState(nativeState)
 	, m_renderContext(renderContext)
 	, m_world(world)
+	, m_buttonID(0)
+	, m_hudPinControllerClass(NULL)
+	, m_hudPinController(NULL)
+	, m_updateLocationMethodId(NULL)
     , m_pinUserData("Pin User Data")
     {
         textureLoader.LoadTexture(m_pinIconsTexture, "PinIconTexturePage.png", true);

@@ -34,10 +34,12 @@
 //example app includes
 #include "ExampleApp.h"
 #include "ExampleController.h"
-#include "UiThreadToNativeThreadTaskQueue.h"
 #include "AndroidRouteMatchingExampleViewFactory.h"
 #include "AndroidRouteSimulationExampleViewFactory.h"
 #include "ExampleCameraJumpController.h"
+#include "MessageQueue.h"
+#include "IAndroidExampleMessage.h"
+
 
 class AppHost :
 	public IAndroidTouchInputHandler,
@@ -102,8 +104,8 @@ private:
 	Eegeo::UI::NativeUIFactories m_androidNativeUIFactories;
 
 	ExampleApp* m_pApp;
+	Eegeo::Messaging::MessageQueue<Examples::IAndroidExampleMessage*> m_examplesMessageQueue;
 	Examples::ExampleController* m_pExampleController;
-	UiThreadToNativeThreadTaskQueue m_uiThreadToNativeThreadTaskQueue;
 	Examples::AndroidRouteMatchingExampleViewFactory* m_pAndroidRouteMatchingExampleViewFactory;
 	Examples::AndroidRouteSimulationExampleViewFactory* m_pAndroidRouteSimulationExampleViewFactory;
 	ExampleCameraJumpController* m_pExampleCameraJumpController;

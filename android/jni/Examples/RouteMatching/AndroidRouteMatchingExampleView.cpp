@@ -8,14 +8,17 @@
 
 #include "AndroidRouteMatchingExampleView.h"
 #include "UIHelpers.h"
+#include "IMessage.h"
 
 using namespace Examples;
 
 namespace Examples
 {
-	AndroidRouteMatchingExampleView::AndroidRouteMatchingExampleView(AndroidNativeState& androidNativeState, UiThreadToNativeThreadTaskQueue& uiToNativeQueue)
+	AndroidRouteMatchingExampleView::AndroidRouteMatchingExampleView(
+			AndroidNativeState& androidNativeState,
+			Eegeo::Messaging::MessageQueue<IAndroidExampleMessage*>& messageQueue)
     : m_nativeState(androidNativeState)
-	, m_uiToNativeQueue(uiToNativeQueue)
+	, m_messageQueue(messageQueue)
     {
 		//get an env for the current thread
 		//
@@ -77,38 +80,8 @@ namespace Examples
         InvokeAllHandlers(m_matchingToggledHandlers);
     }
 
-    void AndroidRouteMatchingExampleView::PostWorkToNative(UiThreadToNativeThreadTaskQueue::IBufferedWork* pWork)
+    void AndroidRouteMatchingExampleView::SendMessage(IAndroidExampleMessage* pMessage)
     {
-    	m_uiToNativeQueue.PostWork(pWork);
+    	m_messageQueue.Enqueue(pMessage);
     }
 }
-
-namespace
-{
-	class ToggleRouteMatchingWorkItem : public UiThreadToNativeThreadTaskQueue::IBufferedWork
-	{
-		Examples::AndroidRouteMatchingExampleView* m_pExample;
-
-	public:
-		ToggleRouteMatchingWorkItem(Examples::AndroidRouteMatchingExampleView* pExample)
-		: m_pExample(pExample) {
-		}
-
-		void DoWork() {
-			//now we are executing on the main thread, so can safely read and write native structures
-			m_pExample->ToggleMatching();
-
-			// A little untidy, but we know it was dynamically allocated below in Java handler...
-			delete this;
-		}
-	};
-}
-
-JNIEXPORT void JNICALL Java_com_eegeo_examples_RouteMatchingExampleHud_ToggleRouteMatching(
-		JNIEnv* jenv, jobject obj,
-		jlong nativeObjectPtr)
-{
-	Examples::AndroidRouteMatchingExampleView* example = (Examples::AndroidRouteMatchingExampleView*)(nativeObjectPtr);;
-	example->PostWorkToNative(new ToggleRouteMatchingWorkItem(example));
-}
-

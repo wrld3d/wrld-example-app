@@ -12,9 +12,9 @@
 #include "Types.h"
 #include "IRouteMatchingExampleView.h"
 #include "AndroidNativeState.h"
-#include "UiThreadToNativeThreadTaskQueue.h"
+#include "MessageQueue.h"
+#include "IAndroidExampleMessage.h"
 #include <vector>
-#include <jni.h>
 
 namespace Examples
 {
@@ -24,10 +24,10 @@ namespace Examples
     	AndroidNativeState& m_nativeState;
     	jclass m_routeMatchingExampleHudClass;
     	jobject m_routeMatchingExampleHud;
-    	UiThreadToNativeThreadTaskQueue& m_uiToNativeQueue;
+    	Eegeo::Messaging::MessageQueue<IAndroidExampleMessage*>& m_messageQueue;
         
     public:
-        AndroidRouteMatchingExampleView(AndroidNativeState& androidNativeState, UiThreadToNativeThreadTaskQueue& uiToNativeQueue);
+        AndroidRouteMatchingExampleView(AndroidNativeState& androidNativeState, Eegeo::Messaging::MessageQueue<IAndroidExampleMessage*>& messageQueue);
         
         ~AndroidRouteMatchingExampleView();
         
@@ -37,15 +37,8 @@ namespace Examples
         
         void ToggleMatching();
 
-    	void PostWorkToNative(UiThreadToNativeThreadTaskQueue::IBufferedWork* work);
+    	void SendMessage(IAndroidExampleMessage* pMessage);
     };
-}
-
-extern "C"
-{
-	JNIEXPORT void JNICALL Java_com_eegeo_examples_RouteMatchingExampleHud_ToggleRouteMatching(
-			JNIEnv* jenv, jobject obj,
-			jlong nativeObjectPtr);
 }
 
 #endif /* defined(__ExampleApp__AndroidRouteMatchingExampleView__) */

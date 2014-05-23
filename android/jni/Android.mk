@@ -12,7 +12,6 @@ LOCAL_STATIC_LIBRARIES := android_native_app_glue native-activity-lib
 
 #android-specific sources
 LOCAL_SRC_FILES += ./main.cpp
-LOCAL_SRC_FILES += ./UiThreadToNativeThreadTaskQueue.cpp
 LOCAL_SRC_FILES += ./AppProxy.cpp
 LOCAL_SRC_FILES += ./AppRunner.cpp
 LOCAL_SRC_FILES += ./AppHost.cpp
@@ -27,6 +26,9 @@ LOCAL_SRC_FILES += ./FrameRateRegulator.cpp
 
 LOCAL_SRC_FILES += ./Examples/JavaHudCrossThreadCommunication/JavaHudCrossThreadCommunicationExample.cpp
 LOCAL_SRC_FILES += ./Examples/JavaHudCrossThreadCommunication/JavaHudCrossThreadCommunicationExampleFactory.cpp
+LOCAL_SRC_FILES += ./Examples/JavaHudCrossThreadCommunication/JavaHudCrossThreadCommunicationProxy.cpp
+LOCAL_SRC_FILES += ./Examples/JavaHudCrossThreadCommunication/RequestCurrentThemeNameMessage.cpp
+LOCAL_SRC_FILES += ./Examples/JavaHudCrossThreadCommunication/UpdateCurrentThemeMessage.cpp
 LOCAL_SRC_FILES += ./Examples/ShowJavaPlaceJumpUI/ShowJavaPlaceJumpUIExample.cpp
 LOCAL_SRC_FILES += ./Examples/ShowJavaPlaceJumpUI/ShowJavaPlaceJumpUIExampleFactory.cpp
 LOCAL_SRC_FILES += ./Examples/ShowJavaPlaceJumpUI/ExampleCameraJumpController.cpp
@@ -36,8 +38,12 @@ LOCAL_SRC_FILES += ./Examples/PositionJavaPinButton/PositionJavaPinButtonExample
 LOCAL_SRC_FILES += ./Examples/PositionJavaPinButton/PositionJavaPinButtonExampleFactory.cpp
 LOCAL_SRC_FILES += ./Examples/RouteMatching/AndroidRouteMatchingExampleView.cpp
 LOCAL_SRC_FILES += ./Examples/RouteMatching/AndroidRouteMatchingExampleViewFactory.cpp
+LOCAL_SRC_FILES += ./Examples/RouteMatching/AndroidRouteMatchingProxy.cpp
+LOCAL_SRC_FILES += ./Examples/RouteMatching/ToggleRouteMatchingMessage.cpp
 LOCAL_SRC_FILES += ./Examples/RouteSimulation/AndroidRouteSimulationExampleView.cpp
 LOCAL_SRC_FILES += ./Examples/RouteSimulation/AndroidRouteSimulationExampleViewFactory.cpp
+LOCAL_SRC_FILES += ./Examples/RouteSimulation/AndroidRouteSimulationProxy.cpp
+LOCAL_SRC_FILES += ./Examples/RouteSimulation/RouteSimulationActionMessage.cpp
 
 #cross-platform sources
 LOCAL_SRC_FILES += ./../../src/ExampleApp.cpp

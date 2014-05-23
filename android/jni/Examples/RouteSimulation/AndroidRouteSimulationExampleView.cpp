@@ -8,6 +8,7 @@
 
 #include "AndroidRouteSimulationExampleView.h"
 #include "UIHelpers.h"
+#include "IAndroidExampleMessage.h"
 
 using namespace Examples;
 
@@ -15,10 +16,10 @@ namespace Examples
 {
 	AndroidRouteSimulationExampleView::AndroidRouteSimulationExampleView(
 			AndroidNativeState& androidNativeState,
-			UiThreadToNativeThreadTaskQueue& uiToNativeQueue,
+        	Eegeo::Messaging::MessageQueue<IAndroidExampleMessage*>& messageQueue,
 			bool usingFollowCamera)
     : m_nativeState(androidNativeState)
-	, m_uiToNativeQueue(uiToNativeQueue)
+	, m_messageQueue(messageQueue)
     {
 		//get an env for the current thread
 		//
@@ -66,9 +67,9 @@ namespace Examples
 	    env->DeleteGlobalRef(m_routeSimulationExampleHudClass);
     }
     
-    void AndroidRouteSimulationExampleView::PostWorkToNative(UiThreadToNativeThreadTaskQueue::IBufferedWork* pWork)
+	void AndroidRouteSimulationExampleView::SendMessage(IAndroidExampleMessage* pMessage)
     {
-    	m_uiToNativeQueue.PostWork(pWork);
+    	m_messageQueue.Enqueue(pMessage);
     }
 
     void AndroidRouteSimulationExampleView::AddFollowCameraToggledHandler(IUIActionHandler& handler)
@@ -160,74 +161,5 @@ namespace Examples
     {
         InvokeAllHandlers(m_roadSideChangedHandlers);
     }
-}
-
-namespace
-{
-	class RouteSimulationBufferedWorkItem : public UiThreadToNativeThreadTaskQueue::IBufferedWork
-	{
-		typedef void (AndroidRouteSimulationExampleView::*Callback)();
-		Callback m_callback;
-        AndroidRouteSimulationExampleView* m_pView;
-
-	public:
-		RouteSimulationBufferedWorkItem(AndroidRouteSimulationExampleView* pView, Callback callback)
-		: m_pView(pView)
-		, m_callback(callback) { }
-
-		void DoWork() {
-			(m_pView->*m_callback)();
-			delete this;
-		}
-	};
-}
-
-JNIEXPORT void JNICALL Java_com_eegeo_examples_RouteSimulationExampleHud_ToggleFollowCamera(
-		JNIEnv* jenv, jobject obj,
-		jlong nativeObjectPtr)
-{
-	Examples::AndroidRouteSimulationExampleView* example = (Examples::AndroidRouteSimulationExampleView*)(nativeObjectPtr);
-	example->PostWorkToNative(new RouteSimulationBufferedWorkItem(example, &AndroidRouteSimulationExampleView::ToggleFollowCamera));
-}
-
-
-JNIEXPORT void JNICALL Java_com_eegeo_examples_RouteSimulationExampleHud_ChangeFollowDirection(
-		JNIEnv* jenv, jobject obj,
-		jlong nativeObjectPtr)
-{
-	Examples::AndroidRouteSimulationExampleView* example = (Examples::AndroidRouteSimulationExampleView*)(nativeObjectPtr);
-	example->PostWorkToNative(new RouteSimulationBufferedWorkItem(example, &AndroidRouteSimulationExampleView::ToggleCameraDirection));
-}
-
-JNIEXPORT void JNICALL Java_com_eegeo_examples_RouteSimulationExampleHud_IncreaseSpeedFollowed(
-		JNIEnv* jenv, jobject obj,
-		jlong nativeObjectPtr)
-{
-	Examples::AndroidRouteSimulationExampleView* example = (Examples::AndroidRouteSimulationExampleView*)(nativeObjectPtr);
-	example->PostWorkToNative(new RouteSimulationBufferedWorkItem(example, &AndroidRouteSimulationExampleView::IncreaseSpeed));
-}
-
-JNIEXPORT void JNICALL Java_com_eegeo_examples_RouteSimulationExampleHud_DecreaseSpeedFollowed(
-		JNIEnv* jenv, jobject obj,
-		jlong nativeObjectPtr)
-{
-	Examples::AndroidRouteSimulationExampleView* example = (Examples::AndroidRouteSimulationExampleView*)(nativeObjectPtr);
-	example->PostWorkToNative(new RouteSimulationBufferedWorkItem(example, &AndroidRouteSimulationExampleView::DecreaseSpeed));
-}
-
-JNIEXPORT void JNICALL Java_com_eegeo_examples_RouteSimulationExampleHud_ToggleDirectFollow(
-		JNIEnv* jenv, jobject obj,
-		jlong nativeObjectPtr)
-{
-	Examples::AndroidRouteSimulationExampleView* example = (Examples::AndroidRouteSimulationExampleView*)(nativeObjectPtr);
-	example->PostWorkToNative(new RouteSimulationBufferedWorkItem(example, &AndroidRouteSimulationExampleView::ToggleRotateToFollow));
-}
-
-JNIEXPORT void JNICALL Java_com_eegeo_examples_RouteSimulationExampleHud_ToggleSideOfRoadToDriveOn(
-		JNIEnv* jenv, jobject obj,
-		jlong nativeObjectPtr)
-{
-	Examples::AndroidRouteSimulationExampleView* example = (Examples::AndroidRouteSimulationExampleView*)(nativeObjectPtr);
-	example->PostWorkToNative(new RouteSimulationBufferedWorkItem(example, &AndroidRouteSimulationExampleView::ChangeSideOfRoad));
 }
 

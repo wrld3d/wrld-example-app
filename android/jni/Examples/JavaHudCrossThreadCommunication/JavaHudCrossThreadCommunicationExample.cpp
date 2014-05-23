@@ -11,6 +11,8 @@
 #include "ICityThemeRepository.h"
 #include "CityThemeData.h"
 #include "JavaHudCrossThreadCommunicationExample.h"
+#include "IMessage.h"
+
 
 namespace Examples
 {
@@ -18,11 +20,13 @@ namespace Examples
 //
 	JavaHudCrossThreadCommunicationExample::JavaHudCrossThreadCommunicationExample(
 		AndroidNativeState& nativeState,
+    	Eegeo::Messaging::MessageQueue<IAndroidExampleMessage*>& messageQueue,
 		Eegeo::Resources::CityThemes::ICityThemesService& themeService,
 		Eegeo::Resources::CityThemes::ICityThemeRepository& themeRepository,
 		Eegeo::Resources::CityThemes::ICityThemesUpdater& themeUpdater
 	)
 	: m_nativeState(nativeState)
+	, m_messageQueue(messageQueue)
 	, m_themeService(themeService)
 	, m_themeUpdater(themeUpdater)
 	, m_themeRepository(themeRepository)
@@ -80,14 +84,9 @@ namespace Examples
 		env->DeleteGlobalRef(m_themeReaderWriterHud);
 	}
 
-    void JavaHudCrossThreadCommunicationExample::Update(float dt)
+    void JavaHudCrossThreadCommunicationExample::SendMessage(IAndroidExampleMessage* pMessage)
     {
-    	m_uiToNativeQueue.TryExectuteBufferedWork();
-    }
-
-    void JavaHudCrossThreadCommunicationExample::PostWorkToNative(UiThreadToNativeThreadTaskQueue::IBufferedWork* pWork)
-    {
-    	m_uiToNativeQueue.PostWork(pWork);
+    	m_messageQueue.Enqueue(pMessage);
     }
 
     void JavaHudCrossThreadCommunicationExample::SetCurrentThemeByName(const std::string& themeName)
@@ -116,61 +115,4 @@ namespace Examples
 
 		env->DeleteLocalRef(themeNameJni);
     }
-}
-
-class SetCurrentThemeWorkItem : public UiThreadToNativeThreadTaskQueue::IBufferedWork
-{
-	Examples::JavaHudCrossThreadCommunicationExample* m_pExample;
-	std::string m_name;
-
-public:
-	SetCurrentThemeWorkItem(Examples::JavaHudCrossThreadCommunicationExample* pExample, std::string name)
-	: m_pExample(pExample)
-	, m_name(name) {
-	}
-
-	void DoWork() {
-		//now we are executing on the main thread, so can safely read and write native structures
-		m_pExample->SetCurrentThemeByName(m_name);
-
-		// A little untidy, but we know it was dynamically allocated below in Java handler...
-		delete this;
-	}
-};
-
-class GetCurrentThemeWorkItem : public UiThreadToNativeThreadTaskQueue::IBufferedWork
-{
-	Examples::JavaHudCrossThreadCommunicationExample* m_pExample;
-
-public:
-	GetCurrentThemeWorkItem(Examples::JavaHudCrossThreadCommunicationExample* pExample)
-	: m_pExample(pExample) {
-	}
-
-	void DoWork() {
-		//now we are executing on the main thread, so can safely read and write native structures
-		m_pExample->PostCurrentThemeNameToHud();
-
-		// A little untidy, but we know it was dynamically allocated below in Java handler...
-		delete this;
-	}
-};
-
-JNIEXPORT void JNICALL Java_com_eegeo_examples_ThemeReaderWriterHud_setCurrentTheme(JNIEnv* jenv, jobject obj, jlong nativeObjectPtr, jstring name)
-{
-	//extract the string from java via the JNI
-	const char* chars = jenv->GetStringUTFChars(name, 0);
-	std::string nameString = chars;
-	jenv->ReleaseStringUTFChars(name, chars);
-
-	//create a an item to set the theme and post it to our thread safe queue for deferred execution on native main thread
-	Examples::JavaHudCrossThreadCommunicationExample* example = (Examples::JavaHudCrossThreadCommunicationExample*)(nativeObjectPtr);
-	example->PostWorkToNative(new SetCurrentThemeWorkItem(example, nameString));
-}
-
-JNIEXPORT void JNICALL Java_com_eegeo_examples_ThemeReaderWriterHud_readCurrentThemeName(JNIEnv* jenv, jobject obj, jlong nativeObjectPtr)
-{
-	//create a an item to read the theme and post it to our thread safe queue for deferred execution on native main thread
-	Examples::JavaHudCrossThreadCommunicationExample* example = (Examples::JavaHudCrossThreadCommunicationExample*)(nativeObjectPtr);
-	example->PostWorkToNative(new GetCurrentThemeWorkItem(example));
 }

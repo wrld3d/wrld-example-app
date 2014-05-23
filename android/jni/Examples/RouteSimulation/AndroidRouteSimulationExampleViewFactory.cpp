@@ -11,9 +11,11 @@
 
 using namespace Examples;
 
-AndroidRouteSimulationExampleViewFactory::AndroidRouteSimulationExampleViewFactory(AndroidNativeState& nativeState, UiThreadToNativeThreadTaskQueue& uiToNativeQueue)
+AndroidRouteSimulationExampleViewFactory::AndroidRouteSimulationExampleViewFactory(
+		AndroidNativeState& nativeState,
+    	Eegeo::Messaging::MessageQueue<IAndroidExampleMessage*>& messageQueue)
 : m_nativeState(nativeState)
-, m_uiToNativeQueue(uiToNativeQueue)
+, m_messageQueue(messageQueue)
 {
     
 }
@@ -25,5 +27,5 @@ AndroidRouteSimulationExampleViewFactory::~AndroidRouteSimulationExampleViewFact
 
 IRouteSimulationExampleView* AndroidRouteSimulationExampleViewFactory::CreateRouteSimulationExampleView() const
 {
-    return Eegeo_NEW(AndroidRouteSimulationExampleView)(m_nativeState, m_uiToNativeQueue, false);
+    return Eegeo_NEW(AndroidRouteSimulationExampleView)(m_nativeState, m_messageQueue, false);
 }

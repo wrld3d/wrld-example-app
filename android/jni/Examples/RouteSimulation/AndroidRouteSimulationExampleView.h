@@ -12,7 +12,8 @@
 #include "Types.h"
 #include "IRouteSimulationExampleView.h"
 #include "AndroidNativeState.h"
-#include "UiThreadToNativeThreadTaskQueue.h"
+#include "MessageQueue.h"
+#include "IAndroidExampleMessage.h"
 #include <vector>
 #include <jni.h>
 
@@ -30,12 +31,12 @@ namespace Examples
     	AndroidNativeState& m_nativeState;
     	jclass m_routeSimulationExampleHudClass;
     	jobject m_routeSimulationExampleHud;
-    	UiThreadToNativeThreadTaskQueue& m_uiToNativeQueue;
+    	Eegeo::Messaging::MessageQueue<IAndroidExampleMessage*>& m_messageQueue;
         
     public:
         AndroidRouteSimulationExampleView(
         		AndroidNativeState& androidNativeState,
-        		UiThreadToNativeThreadTaskQueue& uiToNativeQueue,
+            	Eegeo::Messaging::MessageQueue<IAndroidExampleMessage*>& messageQueue,
         		bool usingFollowCamera);
         
         ~AndroidRouteSimulationExampleView();
@@ -76,35 +77,8 @@ namespace Examples
 
         void ChangeSideOfRoad();
 
-    	void PostWorkToNative(UiThreadToNativeThreadTaskQueue::IBufferedWork* work);
+    	void SendMessage(IAndroidExampleMessage* pMessage);
     };
-}
-
-extern "C"
-{
-	JNIEXPORT void JNICALL Java_com_eegeo_examples_RouteSimulationExampleHud_ToggleFollowCamera(
-			JNIEnv* jenv, jobject obj,
-			jlong nativeObjectPtr);
-
-	JNIEXPORT void JNICALL Java_com_eegeo_examples_RouteSimulationExampleHud_ChangeFollowDirection(
-			JNIEnv* jenv, jobject obj,
-			jlong nativeObjectPtr);
-
-	JNIEXPORT void JNICALL Java_com_eegeo_examples_RouteSimulationExampleHud_IncreaseSpeedFollowed(
-			JNIEnv* jenv, jobject obj,
-			jlong nativeObjectPtr);
-
-	JNIEXPORT void JNICALL Java_com_eegeo_examples_RouteSimulationExampleHud_DecreaseSpeedFollowed(
-			JNIEnv* jenv, jobject obj,
-			jlong nativeObjectPtr);
-
-	JNIEXPORT void JNICALL Java_com_eegeo_examples_RouteSimulationExampleHud_ToggleDirectFollow(
-			JNIEnv* jenv, jobject obj,
-			jlong nativeObjectPtr);
-
-	JNIEXPORT void JNICALL Java_com_eegeo_examples_RouteSimulationExampleHud_ToggleSideOfRoadToDriveOn(
-			JNIEnv* jenv, jobject obj,
-			jlong nativeObjectPtr);
 }
 
 #endif /* defined(__ExampleApp__AndroidRouteSimulationExampleView__) */

@@ -258,7 +258,13 @@ void AppHost::HandleTouchInputEvent(const Eegeo::Android::Input::TouchInputEvent
 
 void AppHost::Update(float dt)
 {
-	m_uiThreadToNativeThreadTaskQueue.TryExectuteBufferedWork(); // to remove
+	Examples::IAndroidExampleMessage* pMessage;
+	while(m_examplesMessageQueue.TryDequeue(pMessage))
+	{
+		pMessage->Handle();
+		delete pMessage;
+	}
+
 	m_pAndroidWebRequestService->Update();
 	m_pApp->Update(dt);
 }
@@ -272,7 +278,7 @@ void AppHost::RegisterAndroidSpecificExamples()
 {
 	m_pAndroidRouteMatchingExampleViewFactory = new Examples::AndroidRouteMatchingExampleViewFactory(
 			m_nativeState,
-			m_uiThreadToNativeThreadTaskQueue);
+			m_examplesMessageQueue);
 
     m_pExampleController->RegisterExample(new Examples::RouteMatchingExampleFactory(
 		*m_pWorld,
@@ -280,19 +286,19 @@ void AppHost::RegisterAndroidSpecificExamples()
 
     m_pAndroidRouteSimulationExampleViewFactory = new Examples::AndroidRouteSimulationExampleViewFactory(
     		m_nativeState,
-			m_uiThreadToNativeThreadTaskQueue);
+    		m_examplesMessageQueue);
 
     m_pExampleController->RegisterExample(new Examples::RouteSimulationExampleFactory(
     		*m_pWorld,
     		m_pApp->GetCameraController(),
     		*m_pAndroidRouteSimulationExampleViewFactory));
 
-    /*m_pExampleController->RegisterExample(new Examples::JavaHudCrossThreadCommunicationExampleFactory(*m_pWorld, m_nativeState));
+    m_pExampleController->RegisterExample(new Examples::JavaHudCrossThreadCommunicationExampleFactory(*m_pWorld, m_nativeState, m_examplesMessageQueue));
     m_pExampleController->RegisterExample(new Examples::PinsWithAttachedJavaUIExampleFactory(*m_pWorld, m_nativeState));
     m_pExampleController->RegisterExample(new Examples::PositionJavaPinButtonExampleFactory(*m_pWorld, m_nativeState));
 
     m_pExampleCameraJumpController = new ExampleCameraJumpController(m_pApp->GetCameraController(), m_pApp->GetTouchController());
-    m_pExampleController->RegisterExample(new Examples::ShowJavaPlaceJumpUIExampleFactory(*m_pExampleCameraJumpController, m_nativeState));*/
+    m_pExampleController->RegisterExample(new Examples::ShowJavaPlaceJumpUIExampleFactory(*m_pExampleCameraJumpController, m_nativeState));
 }
 
 void AppHost::DestroyAndroidSpecificExamples()
