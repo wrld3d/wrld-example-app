@@ -14,17 +14,17 @@ public class RouteMatchingExampleHud
 	private MainActivity m_activity;
 	private View m_view;
     
-    public static native void ToggleRouteMatching(long nativeCallerPointer);
+    public static native void ToggleRouteMatching(long nativeCallerPointer, long nativeCallerProxyPointer);
     
-	public RouteMatchingExampleHud(MainActivity activity, long nativeCallerPointer)
+	public RouteMatchingExampleHud(MainActivity activity, long nativeCallerPointer, long nativeCallerProxyPointer)
     {
     	m_activity = activity;
     	m_view = null;
 
-    	createHud(nativeCallerPointer);
+    	createHud(nativeCallerPointer, nativeCallerProxyPointer);
     }
     
-    private void createHud(final long nativeCallerPointer)
+    private void createHud(final long nativeCallerPointer, final long nativeCallerProxyPointer)
     {	
     	m_activity.runOnUiThread(new Runnable()
 	    {
@@ -40,7 +40,7 @@ public class RouteMatchingExampleHud
 	            	toggleRouteMatching.setOnClickListener(new OnClickListener() {
 	                    @Override
 	                    public void onClick(View v) {
-	                    	ToggleRouteMatching(nativeCallerPointer);
+	                    	ToggleRouteMatching(nativeCallerPointer, nativeCallerProxyPointer);
 	                    }
 	                });
 	            	

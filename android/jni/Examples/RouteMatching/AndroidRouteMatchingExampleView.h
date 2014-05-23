@@ -12,22 +12,22 @@
 #include "Types.h"
 #include "IRouteMatchingExampleView.h"
 #include "AndroidNativeState.h"
-#include "MessageQueue.h"
-#include "IAndroidExampleMessage.h"
 #include <vector>
 
 namespace Examples
 {
+	class AndroidRouteMatchingProxy;
+
     class AndroidRouteMatchingExampleView : public IRouteMatchingExampleView, private Eegeo::NonCopyable
     {
         std::vector<IUIActionHandler*> m_matchingToggledHandlers;
     	AndroidNativeState& m_nativeState;
+    	AndroidRouteMatchingProxy* m_pProxy;
     	jclass m_routeMatchingExampleHudClass;
     	jobject m_routeMatchingExampleHud;
-    	Eegeo::Messaging::MessageQueue<IAndroidExampleMessage*>& m_messageQueue;
         
     public:
-        AndroidRouteMatchingExampleView(AndroidNativeState& androidNativeState, Eegeo::Messaging::MessageQueue<IAndroidExampleMessage*>& messageQueue);
+        AndroidRouteMatchingExampleView(AndroidNativeState& androidNativeState, AndroidRouteMatchingProxy* pProxy);
         
         ~AndroidRouteMatchingExampleView();
         
@@ -36,8 +36,6 @@ namespace Examples
         void RemoveMatchingToggledHandler(IUIActionHandler& handler);
         
         void ToggleMatching();
-
-    	void SendMessage(IAndroidExampleMessage* pMessage);
     };
 }
 

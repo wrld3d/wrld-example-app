@@ -8,6 +8,7 @@
 
 #include "AndroidRouteMatchingExampleViewFactory.h"
 #include "AndroidRouteMatchingExampleView.h"
+#include "AndroidRouteMatchingProxy.h"
 
 using namespace Examples;
 
@@ -27,5 +28,7 @@ AndroidRouteMatchingExampleViewFactory::~AndroidRouteMatchingExampleViewFactory(
 
 IRouteMatchingExampleView* AndroidRouteMatchingExampleViewFactory::CreateRouteMatchingExampleView() const
 {
-    return Eegeo_NEW(AndroidRouteMatchingExampleView)(m_nativeState, m_messageQueue);
+	AndroidRouteMatchingProxy* pProxy = Eegeo_NEW(AndroidRouteMatchingProxy)(m_messageQueue);
+
+    return Eegeo_NEW(AndroidRouteMatchingExampleView)(m_nativeState, pProxy);
 }
