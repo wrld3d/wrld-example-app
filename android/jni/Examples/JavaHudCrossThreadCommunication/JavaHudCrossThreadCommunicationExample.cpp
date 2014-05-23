@@ -11,8 +11,7 @@
 #include "ICityThemeRepository.h"
 #include "CityThemeData.h"
 #include "JavaHudCrossThreadCommunicationExample.h"
-#include "IMessage.h"
-
+#include "JavaHudCrossThreadCommunicationProxy.h"
 
 namespace Examples
 {
@@ -20,17 +19,18 @@ namespace Examples
 //
 	JavaHudCrossThreadCommunicationExample::JavaHudCrossThreadCommunicationExample(
 		AndroidNativeState& nativeState,
-    	Eegeo::Messaging::MessageQueue<IAndroidExampleMessage*>& messageQueue,
+		JavaHudCrossThreadCommunicationProxy* pProxy,
 		Eegeo::Resources::CityThemes::ICityThemesService& themeService,
 		Eegeo::Resources::CityThemes::ICityThemeRepository& themeRepository,
 		Eegeo::Resources::CityThemes::ICityThemesUpdater& themeUpdater
 	)
 	: m_nativeState(nativeState)
-	, m_messageQueue(messageQueue)
+	, m_pProxy(pProxy)
 	, m_themeService(themeService)
 	, m_themeUpdater(themeUpdater)
 	, m_themeRepository(themeRepository)
     {
+		Eegeo_ASSERT(pProxy != NULL, "JavaHudCrossThreadCommunicationExample pProxy must be non-null.\n");
     }
 
     void JavaHudCrossThreadCommunicationExample::Start()
@@ -61,10 +61,10 @@ namespace Examples
 	    //get the showUi method, and call it on the instance we have created - the 'J'
 	    //argument refers to a long - we will carriage a pointer to this so we can be called
 	    //back by the java code when a menu item is selected
-		jmethodID showVisitMenu = env->GetMethodID(m_themeReaderWriterHudClass, "showUi", "(J)V");
+		jmethodID showVisitMenu = env->GetMethodID(m_themeReaderWriterHudClass, "showUi", "(JJ)V");
 
 		jlong pointerToThis = (jlong)(this);
-		env->CallVoidMethod(m_themeReaderWriterHud, showVisitMenu, pointerToThis);
+		env->CallVoidMethod(m_themeReaderWriterHud, showVisitMenu, pointerToThis, (jlong)(m_pProxy));
     }
 
     void JavaHudCrossThreadCommunicationExample::Suspend()
@@ -83,11 +83,6 @@ namespace Examples
 		env->DeleteGlobalRef(m_themeReaderWriterHudClass);
 		env->DeleteGlobalRef(m_themeReaderWriterHud);
 	}
-
-    void JavaHudCrossThreadCommunicationExample::SendMessage(IAndroidExampleMessage* pMessage)
-    {
-    	m_messageQueue.Enqueue(pMessage);
-    }
 
     void JavaHudCrossThreadCommunicationExample::SetCurrentThemeByName(const std::string& themeName)
     {

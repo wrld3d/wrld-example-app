@@ -11,21 +11,20 @@
 #include "IExample.h"
 #include "AndroidNativeState.h"
 #include "CityThemes.h"
-#include "MessageQueue.h"
-#include "IAndroidExampleMessage.h"
 #include <string>
 #include <jni.h>
 
 namespace Examples
 {
+	class JavaHudCrossThreadCommunicationProxy;
+
     class JavaHudCrossThreadCommunicationExample : public IExample
     {
     	AndroidNativeState& m_nativeState;
 		Eegeo::Resources::CityThemes::ICityThemesService& m_themeService;
 		Eegeo::Resources::CityThemes::ICityThemeRepository& m_themeRepository;
 		Eegeo::Resources::CityThemes::ICityThemesUpdater& m_themeUpdater;
-
-    	Eegeo::Messaging::MessageQueue<IAndroidExampleMessage*>& m_messageQueue;
+		JavaHudCrossThreadCommunicationProxy* m_pProxy;
 
     	jclass m_themeReaderWriterHudClass;
     	jobject m_themeReaderWriterHud;
@@ -33,12 +32,10 @@ namespace Examples
     public:
     	JavaHudCrossThreadCommunicationExample(
 			AndroidNativeState& pNativeState,
-	    	Eegeo::Messaging::MessageQueue<IAndroidExampleMessage*>& messageQueue,
+			JavaHudCrossThreadCommunicationProxy* pProxy,
 			Eegeo::Resources::CityThemes::ICityThemesService& themeService,
 			Eegeo::Resources::CityThemes::ICityThemeRepository& themeRepository,
 			Eegeo::Resources::CityThemes::ICityThemesUpdater& themeUpdater);
-
-    	void SendMessage(IAndroidExampleMessage* pMessage);
 
         void SetCurrentThemeByName(const std::string& themeName);
         void PostCurrentThemeNameToHud();

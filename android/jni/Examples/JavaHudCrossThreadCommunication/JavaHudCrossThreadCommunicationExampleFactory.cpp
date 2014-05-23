@@ -7,6 +7,7 @@
 
 #include "JavaHudCrossThreadCommunicationExampleFactory.h"
 #include "JavaHudCrossThreadCommunicationExample.h"
+#include "JavaHudCrossThreadCommunicationProxy.h"
 
 using namespace Examples;
 
@@ -23,9 +24,11 @@ JavaHudCrossThreadCommunicationExampleFactory::JavaHudCrossThreadCommunicationEx
 
 IExample* JavaHudCrossThreadCommunicationExampleFactory::CreateExample() const
 {
+	JavaHudCrossThreadCommunicationProxy* pProxy = Eegeo_NEW(JavaHudCrossThreadCommunicationProxy)(m_messageQueue);
+
     return new Examples::JavaHudCrossThreadCommunicationExample(
     		m_nativeState,
-    		m_messageQueue,
+    		pProxy,
     		m_world.GetCityThemesService(),
     		m_world.GetCityThemesRepository(),
     		m_world.GetCityThemesUpdater());
