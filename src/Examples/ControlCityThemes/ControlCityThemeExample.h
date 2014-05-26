@@ -31,6 +31,9 @@ namespace Examples
                                 Eegeo::Resources::CityThemes::ICityThemesUpdater& themeUpdater,
                                 Eegeo::EegeoWorld& eegeoWorld);
         
+        static std::string GetName() { return "ControlCityThemeExample"; }
+        std::string Name() const { return GetName(); }
+        
         void Start() {}
         void Update(float dt);
         void Draw() {}

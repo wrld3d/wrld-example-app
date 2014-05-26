@@ -34,6 +34,9 @@ namespace Examples
                          Eegeo::Rendering::AsyncTexturing::IAsyncTextureRequestor& textureRequestor,
                          Eegeo::Lighting::GlobalFogging& fogging);
         
+        static std::string GetName() { return "PODAnimationExample"; }
+        std::string Name() const { return GetName(); }
+        
         void Start();
         void Update(float dt);
         void Draw();

@@ -27,6 +27,9 @@ namespace Examples
         SearchExample(Eegeo::Search::Service::SearchService& searchService,
                       Eegeo::Location::IInterestPointProvider& interestPointProvider);
         
+        static std::string GetName() { return "SearchExample"; }
+        std::string Name() const { return GetName(); }
+        
         void Start();
         void Update(float dt) {}
         void Draw() {}

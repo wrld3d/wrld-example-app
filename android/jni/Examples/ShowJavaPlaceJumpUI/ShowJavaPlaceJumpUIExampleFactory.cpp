@@ -25,3 +25,8 @@ IExample* ShowJavaPlaceJumpUIExampleFactory::CreateExample() const
 			m_nativeState,
 			m_exampleCameraJumpController);
 }
+
+std::string ShowJavaPlaceJumpUIExampleFactory::ExampleName() const
+{
+	return Examples::ShowJavaPlaceJumpUIExample::GetName();
+}

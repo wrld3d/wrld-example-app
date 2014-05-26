@@ -25,6 +25,8 @@ namespace Examples
         		Eegeo::EegeoWorld& world,
         		AndroidNativeState& nativeState);
 
+        std::string ExampleName() const;
+
         IExample* CreateExample() const;
     };
 }

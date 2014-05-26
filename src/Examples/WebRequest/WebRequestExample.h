@@ -17,7 +17,7 @@
 
 namespace Examples
 {
-    class WebRequestExample : public IExample, public Eegeo::Web::TWebLoadRequestCompletionCallback<WebRequestExample>
+    class WebRequestExample : public IExample
     {
     private:
         Eegeo::Web::IWebLoadRequestFactory& webRequestFactory;
@@ -25,12 +25,13 @@ namespace Examples
     public:
         WebRequestExample(Eegeo::Web::IWebLoadRequestFactory& webRequestFactory);
         
+        static std::string GetName() { return "WebRequestExample"; }
+        std::string Name() const { return GetName(); }
+        
         void Start();
         void Update(float dt) {}
         void Draw() {}
         void Suspend() {}
-        
-        void RequestComplete(Eegeo::Web::IWebLoadRequest& webLoadRequest);
     };
 }
 

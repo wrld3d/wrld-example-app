@@ -23,6 +23,8 @@ namespace Examples
     public:
         SingleCityExampleFactory(Eegeo::EegeoWorld& world,
                                  Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController);
+
+        std::string ExampleName() const;
         
         IExample* CreateExample() const;
     };

@@ -21,6 +21,8 @@ namespace Examples
         
     public:
         RouteDrawingExampleFactory(Eegeo::EegeoWorld& world);
+
+        std::string ExampleName() const;
         
         IExample* CreateExample() const;
     };

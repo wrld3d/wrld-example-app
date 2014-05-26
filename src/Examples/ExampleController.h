@@ -13,7 +13,10 @@
 #include "IExampleFactory.h"
 #include "Types.h"
 #include "EegeoWorld.h"
+#include "UIActionHandler.h"
+#include "IExampleControllerView.h"
 #include <vector>
+#include <string>
 
 namespace Examples
 {
@@ -24,13 +27,25 @@ namespace Examples
         Eegeo::EegeoWorld& m_world;
         std::vector<IExampleFactory*> m_factories;
         
+        IExampleControllerView& m_view;
+        UIActionHandler<ExampleController> m_nextExampleHandler;
+        UIActionHandler<ExampleController> m_previousExampleHandler;
+        UIActionHandler<ExampleController> m_selectedExampleChangedHandler;
+        
         void DestroyCurrentExample();
         
+        void RefreshExample();
+
     public:
-        ExampleController(Eegeo::EegeoWorld& world);
+        ExampleController(Eegeo::EegeoWorld& world,
+                          IExampleControllerView& view);
         
         ~ExampleController();
         
+        std::vector<std::string> GetExampleNames() const;
+
+        void UpdateSelectedExample();
+
         void ActivatePrevious();
         
         void ActivateNext();

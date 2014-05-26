@@ -24,3 +24,10 @@ IExample* DebugSphereExampleFactory::CreateExample() const
     return new Examples::DebugSphereExample(m_world.GetRenderContext(),
                                             Eegeo::Space::LatLongAltitude::FromECEF(m_world.GetInterestPointProvider().GetEcefInterestPoint()));
 }
+
+std::string DebugSphereExampleFactory::ExampleName() const
+{
+	return Examples::DebugSphereExample::GetName();
+}
+
+

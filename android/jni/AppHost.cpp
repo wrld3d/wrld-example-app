@@ -145,31 +145,24 @@ AppHost::AppHost(
             Eegeo::Rendering::LoadingScreenLayout::FullScreen
             );
 
-	m_pExampleController = new Examples::ExampleController(*m_pWorld);
-	m_pApp = new ExampleApp(m_pWorld, *m_pInterestPointProvider, *m_pExampleController);
-
-	RegisterAndroidSpecificExamples();
-
-	m_pExampleController->ActivatePrevious();
-
 	m_pInputProcessor = new Eegeo::Android::Input::AndroidInputProcessor(&m_inputHandler, m_pRenderContext->GetScreenWidth(), m_pRenderContext->GetScreenHeight());
 
-	m_pAppInputDelegate = new AppInputDelegate(*m_pApp);
+    ConfigureExamples();
+
+    m_pAppInputDelegate = new AppInputDelegate(*m_pApp);
 	m_inputHandler.AddDelegateInputHandler(m_pAppInputDelegate);
 }
 
 AppHost::~AppHost()
 {
 	m_inputHandler.RemoveDelegateInputHandler(m_pAppInputDelegate);
+
 	delete m_pAppInputDelegate;
 	m_pAppInputDelegate = NULL;
 
 	m_pTaskQueue->StopWorkQueue();
 
-	DestroyAndroidSpecificExamples();
-
-	delete m_pExampleController;
-	m_pExampleController = NULL;
+	DestroyExamples();
 
 	delete m_pApp;
 	m_pApp = NULL;
@@ -274,6 +267,22 @@ void AppHost::Draw(float dt)
 	m_pApp->Draw(dt);
 }
 
+void AppHost::ConfigureExamples()
+{
+	m_pAndroidExampleControllerProxy = new Examples::AndroidExampleControllerProxy(m_examplesMessageQueue);
+
+	m_pAndroidExampleControllerView = new Examples::AndroidExampleControllerView(m_nativeState, m_pAndroidExampleControllerProxy);
+
+	m_pExampleController = new Examples::ExampleController(*m_pWorld, *m_pAndroidExampleControllerView);
+	m_pApp = new ExampleApp(m_pWorld, *m_pInterestPointProvider, *m_pExampleController);
+
+	RegisterAndroidSpecificExamples();
+
+	m_pAndroidExampleControllerView->PopulateExampleList(m_pExampleController->GetExampleNames());
+
+	m_pExampleController->ActivatePrevious();
+}
+
 void AppHost::RegisterAndroidSpecificExamples()
 {
 	m_pAndroidRouteMatchingExampleViewFactory = new Examples::AndroidRouteMatchingExampleViewFactory(
@@ -302,11 +311,15 @@ void AppHost::RegisterAndroidSpecificExamples()
     m_pExampleController->RegisterExample(new Examples::ShowJavaPlaceJumpUIExampleFactory(*m_pExampleCameraJumpController, m_nativeState));
 }
 
-void AppHost::DestroyAndroidSpecificExamples()
+void AppHost::DestroyExamples()
 {
 	delete m_pExampleCameraJumpController;
 	delete m_pAndroidRouteMatchingExampleViewFactory;
 	delete m_pAndroidRouteSimulationExampleViewFactory;
+
+	delete m_pAndroidExampleControllerView;
+	delete m_pAndroidExampleControllerProxy;
+	delete m_pExampleController;
 }
 
 

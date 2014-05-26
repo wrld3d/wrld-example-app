@@ -42,6 +42,9 @@ namespace Examples
         void SetCurrentThemeByName(const std::string& themeName);
         void PostCurrentThemeNameToHud();
 
+        static std::string GetName() { return "JavaHudCrossThreadCommunicationExample"; }
+        std::string Name() const { return GetName(); }
+
         void Start();
         void Update(float dt) {}
         void Draw() {}

@@ -28,3 +28,9 @@ IExample* LoadModelExampleFactory::CreateExample() const
                                           m_world.GetLocalAsyncTextureLoader(),
                                           m_world.GetGlobalFogging());
 }
+
+std::string LoadModelExampleFactory::ExampleName() const
+{
+	return Examples::LoadModelExample::GetName();
+}
+

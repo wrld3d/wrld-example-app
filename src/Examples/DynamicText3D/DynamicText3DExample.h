@@ -41,6 +41,9 @@ namespace Examples
                              Eegeo::Resources::PlaceNames::PlaceNameViewBuilder& placeNameViewBuilder,
                              Eegeo::EegeoWorld& world);
         
+        static std::string GetName() { return "DynamicText3DExample"; }
+        std::string Name() const { return GetName(); }
+        
         void Start() { }
         void Update(float dt);
         void Draw();

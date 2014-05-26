@@ -22,6 +22,9 @@ namespace Examples
                                Eegeo::Camera::ICameraProvider& cameraProvider,
                                Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider);
         
+        static std::string GetName() { return "ScreenUnprojectExample"; }
+        std::string Name() const { return GetName(); }
+        
         void Start();
         void Update(float dt);
         void Draw();

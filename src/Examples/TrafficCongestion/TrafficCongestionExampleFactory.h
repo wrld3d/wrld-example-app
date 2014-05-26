@@ -21,6 +21,8 @@ namespace Examples
         
     public:
         TrafficCongestionExampleFactory(Eegeo::EegeoWorld& world);
+
+        std::string ExampleName() const;
         
         IExample* CreateExample() const;
     };

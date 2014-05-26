@@ -29,3 +29,9 @@ IExample* SearchExampleFactory::CreateExample() const
     return new Examples::SearchExample(m_world.GetSearchService(),
                                        m_world.GetInterestPointProvider());
 }
+
+std::string SearchExampleFactory::ExampleName() const
+{
+	return Examples::SearchExample::GetName();
+}
+

@@ -21,3 +21,8 @@ IExample* WebRequestExampleFactory::CreateExample() const
 {
     return new Examples::WebRequestExample(m_world.GetWebRequestFactory());
 }
+
+std::string WebRequestExampleFactory::ExampleName() const
+{
+	return Examples::WebRequestExample::GetName();
+}

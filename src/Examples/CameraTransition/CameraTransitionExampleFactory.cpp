@@ -24,3 +24,9 @@ IExample* CameraTransitionExampleFactory::CreateExample() const
     return new Examples::CameraTransitionExample(m_globeCameraController,
                                                  m_world.GetInterestPointProvider());
 }
+
+std::string CameraTransitionExampleFactory::ExampleName() const
+{
+	return Examples::CameraTransitionExample::GetName();
+}
+

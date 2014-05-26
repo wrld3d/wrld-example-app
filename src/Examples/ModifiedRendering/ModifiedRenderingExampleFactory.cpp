@@ -32,3 +32,9 @@ IExample* ModifiedRenderingExampleFactory::CreateExample() const
                                                   m_world.GetMaterialIdGenerator(),
                                                   m_world.GetEnvironmentPlaceholderTexture());
 }
+
+std::string ModifiedRenderingExampleFactory::ExampleName() const
+{
+	return Examples::ModifiedRenderingExample::GetName();
+}
+

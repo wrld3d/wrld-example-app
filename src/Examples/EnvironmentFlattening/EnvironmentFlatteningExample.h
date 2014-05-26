@@ -24,6 +24,9 @@ namespace Examples
     public:
         EnvironmentFlatteningExample(Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService);
         
+        static std::string GetName() { return "EnvironmentFlatteningExample"; }
+        std::string Name() const { return GetName(); }
+        
         void Start() {}
         void Update(float dt);
         void Draw() {}

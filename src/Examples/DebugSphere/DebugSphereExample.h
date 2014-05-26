@@ -23,6 +23,9 @@ namespace Examples
     public:
         DebugSphereExample(Eegeo::Rendering::RenderContext& renderContext,
                            Eegeo::Space::LatLongAltitude interestLocation);
+
+        static std::string GetName() { return "DebugSphereExample"; }
+        std::string Name() const { return GetName(); }
         
         void Start();
         void Update(float dt);

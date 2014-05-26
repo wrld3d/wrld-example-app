@@ -21,6 +21,9 @@ namespace Examples
         DebugPrimitiveRenderingExample(Eegeo::DebugRendering::DebugPrimitiveRenderer &debugPrimitiveRenderer) :
         m_debugPrimitiveRenderer(debugPrimitiveRenderer) {}
         
+        static std::string GetName() { return "DebugPrimitiveRenderingExample"; }
+        std::string Name() const { return GetName(); }
+        
         void Start();
         void Update(float dt);
         void Draw();

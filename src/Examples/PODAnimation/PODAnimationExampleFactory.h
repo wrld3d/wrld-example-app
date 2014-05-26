@@ -21,6 +21,8 @@ namespace Examples
         
     public:
         PODAnimationExampleFactory(Eegeo::EegeoWorld& world);
+
+        std::string ExampleName() const;
         
         IExample* CreateExample() const;
     };

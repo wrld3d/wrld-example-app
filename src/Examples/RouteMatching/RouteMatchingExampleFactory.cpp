@@ -25,3 +25,8 @@ IExample* RouteMatchingExampleFactory::CreateExample() const
                                               m_world,
                                               m_routeMatchingViewFactory);
 }
+
+std::string RouteMatchingExampleFactory::ExampleName() const
+{
+	return Examples::RouteMatchingExample::GetName();
+}

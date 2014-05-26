@@ -22,3 +22,8 @@ IExample* TrafficCongestionExampleFactory::CreateExample() const
     return new Examples::TrafficCongestionExample(m_world.GetTrafficCongestionService(),
                                                   m_world);
 }
+
+std::string TrafficCongestionExampleFactory::ExampleName() const
+{
+	return Examples::TrafficCongestionExample::GetName();
+}

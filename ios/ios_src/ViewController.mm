@@ -18,7 +18,7 @@
 #include "RouteMatchingExampleFactory.h"
 #include "RouteSimulationExampleFactory.h"
 
-#define API_KEY "OBTAIN API_KEY FROM https://appstore.eegeo.com AND INSERT IT HERE"
+const std::string ApiKey = "OBTAIN API_KEY FROM https://appstore.eegeo.com AND INSERT IT HERE";
 
 //#define USING_SEARCH_EXAMPLE
 
@@ -41,6 +41,7 @@ using namespace Eegeo::iOS;
     [super dealloc];
     delete m_pEnvironmentFlatteningService;
     Eegeo_DELETE m_piOSRouteMatchingExampleViewFactory;
+    Eegeo_DELETE m_piOSExampleControllerView;
     Eegeo_DELETE m_pExampleController;
 }
 
@@ -210,7 +211,8 @@ using namespace Eegeo::iOS;
                                                       "http://cdn1.eegeo.com/mobile-themes-new/v99/manifest.txt.gz"
                                                       );
     
-    m_pExampleController = Eegeo_NEW(Examples::ExampleController)(*pWorld);
+    m_piOSExampleControllerView = Eegeo_NEW(Examples::iOSExampleControllerView)([self view]);
+    m_pExampleController = Eegeo_NEW(Examples::ExampleController)(*pWorld, *m_piOSExampleControllerView);
     
     m_pExampleApp = new ExampleApp(pWorld, *m_pInterestPointProvider, *m_pExampleController);
     

@@ -24,3 +24,8 @@ IExample* RouteThicknessPolicyExampleFactory::CreateExample() const
                                                      m_world.GetRenderContext(),
                                                      m_world);
 }
+
+std::string RouteThicknessPolicyExampleFactory::ExampleName() const
+{
+	return Examples::RouteThicknessPolicyExample::GetName();
+}

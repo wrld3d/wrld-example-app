@@ -36,11 +36,14 @@ namespace Examples
                           Eegeo::Streaming::StreamingVolumeController& streamingVolumeController,
                           Eegeo::EegeoWorld& world);
         
+        static std::string GetName() { return "SingleCityExample"; }
+        std::string Name() const { return GetName(); }
+        
         void Start() {}
         void Update(float dt);
         void AfterCameraUpdate();
         void Draw() {}
-        void Suspend() {}
+        void Suspend();
     };
 }
 

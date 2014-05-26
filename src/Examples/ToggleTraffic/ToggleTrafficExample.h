@@ -22,6 +22,9 @@ namespace Examples
         
     public:
         ToggleTrafficExample(Eegeo::Traffic::TrafficSimulationController& trafficSimulation);
+
+        static std::string GetName() { return "ToggleTrafficExample"; }
+        std::string Name() const { return GetName(); }
         
         void Start() {}
         void Update(float dt);

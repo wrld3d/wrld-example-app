@@ -52,6 +52,9 @@ namespace Examples
     public:
         NavigationGraphExample(Eegeo::Rendering::RenderContext& renderContext,
                                Eegeo::Resources::Roads::Navigation::NavigationGraphRepository& navigationGraphRepository);
+
+        static std::string GetName() { return "NavigationGraphExample"; }
+        std::string Name() const { return GetName(); }
         
         void Start();
         void Update(float dt) {}

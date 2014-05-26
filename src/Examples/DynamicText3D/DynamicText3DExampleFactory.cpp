@@ -25,3 +25,9 @@ IExample* DynamicText3DExampleFactory::CreateExample() const
                                               m_world.GetPlaceNameViewBuilder(),
                                               m_world);
 }
+
+std::string DynamicText3DExampleFactory::ExampleName() const
+{
+	return Examples::DynamicText3DExample::GetName();
+}
+

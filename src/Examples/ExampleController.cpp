@@ -10,16 +10,27 @@
 
 using namespace Examples;
 
-ExampleController::ExampleController(Eegeo::EegeoWorld& world)
+ExampleController::ExampleController(Eegeo::EegeoWorld& world,
+                                     IExampleControllerView& view)
 : m_world(world)
 , m_pCurrentExample(NULL)
 , m_currentExampleFactoryIndex(-1)
+, m_view(view)
+, m_nextExampleHandler(this, &ExampleController::ActivateNext)
+, m_previousExampleHandler(this, &ExampleController::ActivatePrevious)
+, m_selectedExampleChangedHandler(this, &ExampleController::UpdateSelectedExample)
 {
-    
+    m_view.AddSelectNextExampleHandler(m_nextExampleHandler);
+    m_view.AddSelectPreviousExampleHandler(m_previousExampleHandler);
+    m_view.AddExampleSelectedHandler(m_selectedExampleChangedHandler);
 }
 
 ExampleController::~ExampleController()
 {
+    m_view.RemoveSelectNextExampleHandler(m_nextExampleHandler);
+    m_view.RemoveSelectPreviousExampleHandler(m_previousExampleHandler);
+    m_view.RemoveExampleSelectedHandler(m_selectedExampleChangedHandler);
+    
     DestroyCurrentExample();
     
     for(size_t i = 0; i < m_factories.size(); ++ i)
@@ -28,6 +39,48 @@ ExampleController::~ExampleController()
     }
     
     m_factories.clear();
+}
+
+std::vector<std::string> ExampleController::GetExampleNames() const
+{
+	std::vector<std::string> result;
+
+	for(size_t i = 0; i < m_factories.size(); ++ i)
+	{
+		result.push_back(m_factories[i]->ExampleName());
+	}
+
+	return result;
+}
+
+void ExampleController::RefreshExample()
+{
+    DestroyCurrentExample();
+
+    m_pCurrentExample = m_factories[m_currentExampleFactoryIndex]->CreateExample();
+
+    if(m_pCurrentExample != NULL)
+    {
+        m_pCurrentExample->Start();
+        m_pCurrentExample->EarlyUpdate(0.f);
+        m_pCurrentExample->Update(0.f);
+        m_view.SetCurrentExampleName(m_pCurrentExample->Name());
+    }
+}
+
+void ExampleController::UpdateSelectedExample()
+{
+	std::string selectedExampleName = m_view.GetSelectedExample();
+
+	for(size_t i = 0; i < m_factories.size(); ++ i)
+	{
+		if(m_factories[i]->ExampleName() == selectedExampleName && i != m_currentExampleFactoryIndex)
+		{
+			m_currentExampleFactoryIndex = i;
+			RefreshExample();
+			return;
+		}
+	}
 }
 
 void ExampleController::ActivatePrevious()
@@ -42,14 +95,7 @@ void ExampleController::ActivatePrevious()
         m_currentExampleFactoryIndex = m_factories.size() - 1;
     }
     
-    DestroyCurrentExample();
-    
-    m_pCurrentExample = m_factories[m_currentExampleFactoryIndex]->CreateExample();
-    
-    if(m_pCurrentExample != NULL)
-    {
-        m_pCurrentExample->Start();
-    }
+    RefreshExample();
 }
 
 void ExampleController::ActivateNext()
@@ -64,14 +110,7 @@ void ExampleController::ActivateNext()
         m_currentExampleFactoryIndex = 0;
     }
     
-    DestroyCurrentExample();
-
-    m_pCurrentExample = m_factories[m_currentExampleFactoryIndex]->CreateExample();
-    
-    if(m_pCurrentExample != NULL)
-    {
-        m_pCurrentExample->Start();
-    }
+    RefreshExample();
 }
 
 void ExampleController::EarlyUpdate(float dt,

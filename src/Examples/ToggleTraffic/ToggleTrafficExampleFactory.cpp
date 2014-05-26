@@ -21,3 +21,8 @@ IExample* ToggleTrafficExampleFactory::CreateExample() const
 {
     return new Examples::ToggleTrafficExample(m_world.GetTrafficSimulationController());
 }
+
+std::string ToggleTrafficExampleFactory::ExampleName() const
+{
+	return Examples::ToggleTrafficExample::GetName();
+}

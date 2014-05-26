@@ -26,6 +26,8 @@ namespace Examples
         RouteSimulationExampleFactory(Eegeo::EegeoWorld& world,
                                       Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController,
                                       const IRouteSimulationExampleViewFactory& routeSimulationViewFactory);
+
+        std::string ExampleName() const;
         
         IExample* CreateExample() const;
     };

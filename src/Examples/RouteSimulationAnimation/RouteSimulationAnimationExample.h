@@ -73,6 +73,9 @@ namespace Examples
                                         Eegeo::Routes::Simulation::Camera::RouteSimulationGlobeCameraControllerFactory routeSimulationGlobeCameraControllerFactory,
                                         Eegeo::EegeoWorld& eegeoWorld);
         
+        static std::string GetName() { return "RouteSimulationAnimationExample"; }
+        std::string Name() const { return GetName(); }
+        
         void Start() {}
         void EarlyUpdate(float dt);
         void Update(float dt);

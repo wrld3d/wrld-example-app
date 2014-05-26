@@ -23,6 +23,8 @@ namespace Examples
     public:
         RouteSimulationAnimationExampleFactory(Eegeo::EegeoWorld& world,
                                                Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController);
+
+        std::string ExampleName() const;
         
         IExample* CreateExample() const;
     };

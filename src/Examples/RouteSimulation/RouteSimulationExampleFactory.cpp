@@ -42,3 +42,10 @@ IExample* RouteSimulationExampleFactory::CreateExample() const
                                                 m_routeSimulationViewFactory,
                                                 m_world);
 }
+
+std::string RouteSimulationExampleFactory::ExampleName() const
+{
+	return Examples::RouteSimulationExample::GetName();
+}
+
+

@@ -57,6 +57,10 @@ namespace Examples
                     Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService
                     );
         virtual ~PinsWithAttachedJavaUIExample();
+
+        static std::string GetName() { return "PinsWithAttachedJavaUIExample"; }
+        std::string Name() const { return GetName(); }
+
         void Start();
         void Update(float dt);
         void Draw();

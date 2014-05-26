@@ -105,7 +105,7 @@ ExampleApp::ExampleApp(Eegeo::EegeoWorld* pWorld,
     m_exampleController.RegisterExample<Examples::EnvironmentFlatteningExampleFactory>();
     m_exampleController.RegisterExample<Examples::EnvironmentNotifierExampleFactory>();
     m_exampleController.RegisterExample<Examples::FileIOExampleFactory>();
-    m_exampleController.RegisterExample<Examples::KeyboardInputExampleFactory>();
+    //m_exampleController.RegisterExample<Examples::KeyboardInputExampleFactory>();
     m_exampleController.RegisterExample<Examples::LoadModelExampleFactory>();
     m_exampleController.RegisterExample<Examples::ModifiedRenderingExampleFactory>();
     m_exampleController.RegisterExample<Examples::NavigationGraphExampleFactory>();
@@ -243,7 +243,6 @@ void ExampleApp::Event_TouchTap(const AppInterface::TapData& data)
 
 void ExampleApp::Event_TouchDoubleTap(const AppInterface::TapData& data)
 {
-    m_exampleController.ActivateNext();
     if(!m_exampleController.Event_TouchDoubleTap(data))
     {
         m_cameraTouchController->Event_TouchDoubleTap(data);

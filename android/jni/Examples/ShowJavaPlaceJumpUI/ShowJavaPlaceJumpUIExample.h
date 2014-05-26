@@ -62,6 +62,10 @@ namespace Examples
     			Eegeo::Camera::ICameraJumpController& cameraJumpController);
 
     	void JumpToLocation(const std::string& location);
+
+        static std::string GetName() { return "ShowJavaPlaceJumpUIExample"; }
+        std::string Name() const { return GetName(); }
+
         void Start();
         void Update(float dt);
         void Draw() {}

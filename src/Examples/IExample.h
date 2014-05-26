@@ -4,6 +4,7 @@
 #include "IAppOnMap.h"
 #include "GlobeCameraController.h"
 #include "GlobeCameraTouchController.h"
+#include <string>
 
 namespace Examples
 {
@@ -11,6 +12,8 @@ namespace Examples
     {
     public:
         virtual ~IExample() { }
+        
+        virtual std::string Name() const = 0;
         
         virtual void Start() = 0;
         virtual void EarlyUpdate(float dt) { }

@@ -10,6 +10,7 @@
 #define ExampleApp_IExampleFactory_h
 
 #include "IExample.h"
+#include <string>
 
 namespace Examples
 {
@@ -18,6 +19,7 @@ namespace Examples
     public:
         virtual ~IExampleFactory() { }
         
+        virtual std::string ExampleName() const = 0;
         virtual IExample* CreateExample() const = 0;
     };
 }

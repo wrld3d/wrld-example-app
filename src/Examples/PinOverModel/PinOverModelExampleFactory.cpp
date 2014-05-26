@@ -36,3 +36,10 @@ IExample* PinOverModelExampleFactory::CreateExample() const
                                              m_world.GetGlobalFogging(),
                                              m_world.GetNullMaterial());
 }
+
+std::string PinOverModelExampleFactory::ExampleName() const
+{
+	return Examples::PinOverModelExample::GetName();
+}
+
+

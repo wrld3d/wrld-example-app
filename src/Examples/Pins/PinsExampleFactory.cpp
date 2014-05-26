@@ -30,3 +30,9 @@ IExample* PinsExampleFactory::CreateExample() const
                                      m_world.GetTerrainHeightProvider(),
                                      m_world.GetEnvironmentFlatteningService());
 }
+
+std::string PinsExampleFactory::ExampleName() const
+{
+	return Examples::PinsExample::GetName();
+}
+

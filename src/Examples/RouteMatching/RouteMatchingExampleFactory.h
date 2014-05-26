@@ -25,6 +25,8 @@ namespace Examples
         RouteMatchingExampleFactory(Eegeo::EegeoWorld& world,
                                     const IRouteMatchingExampleViewFactory& routeMatchingViewFactory);
         
+        std::string ExampleName() const;
+
         IExample* CreateExample() const;
     };
 }

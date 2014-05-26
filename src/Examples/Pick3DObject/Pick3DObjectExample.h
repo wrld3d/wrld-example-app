@@ -41,6 +41,9 @@ namespace Examples
                             Eegeo::Space::LatLongAltitude interestLocation,
                             Eegeo::Camera::ICameraProvider& cameraProvider);
         
+        static std::string GetName() { return "Pick3DObjectExample"; }
+        std::string Name() const { return GetName(); }
+        
         void Start();
         void Update(float dt);
         void Draw();

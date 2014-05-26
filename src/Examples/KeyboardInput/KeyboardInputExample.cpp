@@ -22,6 +22,13 @@ void KeyboardInputExample::Start()
     m_pKeyboardInput = keyboardInputFactory.CreateKeyboardInput(*this, *this, KeyboardTypeDefault, ReturnKeySearch);
 }
 
+void KeyboardInputExample::Suspend()
+{
+    m_pKeyboardInput->Dismiss();
+    Eegeo_DELETE m_pKeyboardInput;
+    m_pKeyboardInput = NULL;
+}
+
 void KeyboardInputExample::HandleKeyboardInputDismissed()
 {
     Eegeo_TTY("%s", "\nDismissed the keyboard.");

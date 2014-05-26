@@ -24,3 +24,9 @@ IExample* ScreenPickExampleFactory::CreateExample() const
                                            m_world.GetTerrainHeightProvider(),
                                            m_world.GetCollisionMeshResourceProvider());
 }
+
+std::string ScreenPickExampleFactory::ExampleName() const
+{
+	return Examples::ScreenPickExample::GetName();
+}
+

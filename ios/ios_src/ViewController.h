@@ -12,6 +12,7 @@
 #include "ExampleController.h"
 #include "iOSRouteMatchingExampleViewFactory.h"
 #include "iOSRouteSimulationExampleViewFactory.h"
+#include "iOSExampleControllerView.h"
 #import "External/Reachability/Reachability.h"
 #import <CoreLocation/CoreLocation.h>
 #import <UIKit/UIKit.h>
@@ -20,6 +21,7 @@
 @interface ViewController : GLKViewController <UIGestureRecognizerDelegate, CLLocationManagerDelegate>{
 
     ExampleApp * m_pExampleApp;
+    Examples::iOSExampleControllerView* m_piOSExampleControllerView;
     Examples::ExampleController* m_pExampleController;
     Examples::iOSRouteSimulationExampleViewFactory* m_piOSRouteSimulationExampleViewFactory;
     Examples::iOSRouteMatchingExampleViewFactory* m_piOSRouteMatchingExampleViewFactory;

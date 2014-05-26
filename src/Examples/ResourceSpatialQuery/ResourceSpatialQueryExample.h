@@ -28,6 +28,9 @@ namespace Examples
         ResourceSpatialQueryExample(Eegeo::Resources::ResourceSpatialQueryService& resourceSpatialQueryService,
                                     Eegeo::Location::IInterestPointProvider& interestPointProvider);
         
+        static std::string GetName() { return "ResourceSpatialQueryExample"; }
+        std::string Name() const { return GetName(); }
+        
         void Start() {}
         void Update(float dt);
         void Draw() {}

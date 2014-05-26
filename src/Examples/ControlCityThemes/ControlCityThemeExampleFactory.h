@@ -21,6 +21,8 @@ namespace Examples
         
     public:
         ControlCityThemeExampleFactory(Eegeo::EegeoWorld& world);
+
+        std::string ExampleName() const;
         
         IExample* CreateExample() const;
     };

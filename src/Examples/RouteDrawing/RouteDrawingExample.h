@@ -32,6 +32,9 @@ namespace Examples
         RouteDrawingExample(Eegeo::Routes::RouteService& routeService,
                             Eegeo::EegeoWorld& eegeoWorld);
         
+        static std::string GetName() { return "RouteDrawingExample"; }
+        std::string Name() const { return GetName(); }
+        
         void Start() {}
         void Update(float dt);
         void Draw() {}

@@ -38,3 +38,8 @@ IExample* RouteSimulationAnimationExampleFactory::CreateExample() const
                                                          factory,
                                                          m_world);
 }
+
+std::string RouteSimulationAnimationExampleFactory::ExampleName() const
+{
+	return Examples::RouteSimulationAnimationExample::GetName();
+}

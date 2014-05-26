@@ -21,3 +21,8 @@ IExample* EnvironmentFlatteningExampleFactory::CreateExample() const
 {
     return new Examples::EnvironmentFlatteningExample(m_world.GetEnvironmentFlatteningService());
 }
+
+std::string EnvironmentFlatteningExampleFactory::ExampleName() const
+{
+	return Examples::EnvironmentFlatteningExample::GetName();
+}

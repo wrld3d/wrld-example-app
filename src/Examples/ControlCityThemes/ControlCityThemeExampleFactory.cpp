@@ -24,3 +24,9 @@ IExample* ControlCityThemeExampleFactory::CreateExample() const
                                                  m_world.GetCityThemesUpdater(),
                                                  m_world);
 }
+
+std::string ControlCityThemeExampleFactory::ExampleName() const
+{
+	return Examples::ControlCityThemeExample::GetName();
+}
+

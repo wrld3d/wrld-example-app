@@ -22,3 +22,9 @@ IExample* RouteDrawingExampleFactory::CreateExample() const
     return new Examples::RouteDrawingExample(m_world.GetRouteService(),
                                              m_world);
 }
+
+std::string RouteDrawingExampleFactory::ExampleName() const
+{
+	return Examples::RouteDrawingExample::GetName();
+}
+

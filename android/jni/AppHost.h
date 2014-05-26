@@ -34,6 +34,8 @@
 //example app includes
 #include "ExampleApp.h"
 #include "ExampleController.h"
+#include "AndroidExampleControllerView.h"
+#include "AndroidExampleControllerProxy.h"
 #include "AndroidRouteMatchingExampleViewFactory.h"
 #include "AndroidRouteSimulationExampleViewFactory.h"
 #include "ExampleCameraJumpController.h"
@@ -106,6 +108,8 @@ private:
 	ExampleApp* m_pApp;
 	Eegeo::Messaging::MessageQueue<Examples::IAndroidExampleMessage*> m_examplesMessageQueue;
 	Examples::ExampleController* m_pExampleController;
+	Examples::AndroidExampleControllerView* m_pAndroidExampleControllerView;
+	Examples::AndroidExampleControllerProxy* m_pAndroidExampleControllerProxy;
 	Examples::AndroidRouteMatchingExampleViewFactory* m_pAndroidRouteMatchingExampleViewFactory;
 	Examples::AndroidRouteSimulationExampleViewFactory* m_pAndroidRouteSimulationExampleViewFactory;
 	ExampleCameraJumpController* m_pExampleCameraJumpController;
@@ -114,8 +118,9 @@ private:
 
     AppToJavaProxy& m_appToJavaProxy;
 
+    void ConfigureExamples();
+    void DestroyExamples();
     void RegisterAndroidSpecificExamples();
-    void DestroyAndroidSpecificExamples();
 };
 
 #endif

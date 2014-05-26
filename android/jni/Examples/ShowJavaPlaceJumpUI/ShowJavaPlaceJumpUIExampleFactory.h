@@ -25,6 +25,8 @@ namespace Examples
         		ExampleCameraJumpController& exampleCameraJumpController,
         		AndroidNativeState& nativeState);
 
+        std::string ExampleName() const;
+
         IExample* CreateExample() const;
     };
 }

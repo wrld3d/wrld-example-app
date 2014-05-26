@@ -89,6 +89,14 @@ SingleCityExample::SingleCityExample(Eegeo::Camera::GlobeCamera::GlobeCameraCont
     
 }
 
+void SingleCityExample::Suspend()
+{
+    if(m_precacheService.CurrentlyPrecaching())
+    {
+        m_precacheService.CancelPrecaching();
+    }
+}
+
 void SingleCityExample::Update(float dt)
 {
     if(!m_world.Initialising() && !m_startedPrecaching)

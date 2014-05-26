@@ -21,3 +21,9 @@ IExample* DebugPrimitiveRenderingExampleFactory::CreateExample() const
 {
     return new Examples::DebugPrimitiveRenderingExample(m_world.GetDebugPrimitiveRenderer());
 }
+
+std::string DebugPrimitiveRenderingExampleFactory::ExampleName() const
+{
+	return Examples::DebugPrimitiveRenderingExample::GetName();
+}
+

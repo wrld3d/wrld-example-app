@@ -25,3 +25,9 @@ IExample* Pick3DObjectExampleFactory::CreateExample() const
                                              Eegeo::Space::LatLongAltitude::FromECEF(m_world.GetInterestPointProvider().GetEcefInterestPoint()),
                                              m_world.GetCameraProvider());
 }
+
+std::string Pick3DObjectExampleFactory::ExampleName() const
+{
+	return Examples::Pick3DObjectExample::GetName();
+}
+

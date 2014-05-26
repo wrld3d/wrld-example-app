@@ -24,6 +24,11 @@ LOCAL_SRC_FILES += ./AppToJavaHandler.cpp
 LOCAL_SRC_FILES += ./AppToJavaProxy.cpp
 LOCAL_SRC_FILES += ./FrameRateRegulator.cpp
 
+LOCAL_SRC_FILES += ./Examples/AndroidExampleControllerView/AndroidExampleControllerView.cpp
+LOCAL_SRC_FILES += ./Examples/AndroidExampleControllerView/AndroidExampleControllerProxy.cpp
+LOCAL_SRC_FILES += ./Examples/AndroidExampleControllerView/ActivateNextExampleMessage.cpp
+LOCAL_SRC_FILES += ./Examples/AndroidExampleControllerView/ActivatePreviousExampleMessage.cpp
+LOCAL_SRC_FILES += ./Examples/AndroidExampleControllerView/SelectExampleMessage.cpp
 LOCAL_SRC_FILES += ./Examples/AndroidExampleProxy.cpp
 LOCAL_SRC_FILES += ./Examples/JavaHudCrossThreadCommunication/JavaHudCrossThreadCommunicationExample.cpp
 LOCAL_SRC_FILES += ./Examples/JavaHudCrossThreadCommunication/JavaHudCrossThreadCommunicationExampleFactory.cpp

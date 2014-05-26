@@ -22,6 +22,8 @@ namespace Examples
     public:
         SearchExampleFactory(Eegeo::EegeoWorld& world);
         
+        std::string ExampleName() const;
+
         IExample* CreateExample() const;
     };
 }

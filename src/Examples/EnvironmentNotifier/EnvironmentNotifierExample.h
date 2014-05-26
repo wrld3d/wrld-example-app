@@ -47,6 +47,9 @@ namespace Examples
         EnvironmentNotifierExample(Eegeo::Rendering::RenderContext& renderContext,
                                    Eegeo::Resources::Terrain::TerrainStreaming& terrainStreaming);
         
+        static std::string GetName() { return "EnvironmentNotifierExample"; }
+        std::string Name() const { return GetName(); }
+        
         void Start();
         void Update(float dt);
         void Draw();

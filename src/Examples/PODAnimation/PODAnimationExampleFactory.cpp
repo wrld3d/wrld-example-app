@@ -25,3 +25,9 @@ IExample* PODAnimationExampleFactory::CreateExample() const
                                              m_world.GetLocalAsyncTextureLoader(),
                                              m_world.GetGlobalFogging());
 }
+
+std::string PODAnimationExampleFactory::ExampleName() const
+{
+	return Examples::PODAnimationExample::GetName();
+}
+

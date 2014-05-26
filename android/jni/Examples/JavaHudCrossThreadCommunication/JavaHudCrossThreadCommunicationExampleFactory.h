@@ -29,6 +29,8 @@ namespace Examples
         		AndroidNativeState& nativeState,
             	Eegeo::Messaging::MessageQueue<IAndroidExampleMessage*>& messageQueue);
 
+        std::string ExampleName() const;
+
         IExample* CreateExample() const;
     };
 }

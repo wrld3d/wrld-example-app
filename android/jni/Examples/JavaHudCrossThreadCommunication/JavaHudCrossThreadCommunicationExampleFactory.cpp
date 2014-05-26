@@ -33,3 +33,8 @@ IExample* JavaHudCrossThreadCommunicationExampleFactory::CreateExample() const
     		m_world.GetCityThemesRepository(),
     		m_world.GetCityThemesUpdater());
 }
+
+std::string JavaHudCrossThreadCommunicationExampleFactory::ExampleName() const
+{
+	return Examples::JavaHudCrossThreadCommunicationExample::GetName();
+}

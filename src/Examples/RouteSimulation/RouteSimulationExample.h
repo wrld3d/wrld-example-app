@@ -111,6 +111,9 @@ namespace Examples
                                const IRouteSimulationExampleViewFactory& routeSimulationExampleViewFactory,
                                Eegeo::EegeoWorld& eegeoWorld);
         
+        static std::string GetName() { return "RouteSimulationExample"; }
+        std::string Name() const { return GetName(); }
+        
         void Start() {}
         void EarlyUpdate(float dt);
         void Update(float dt);

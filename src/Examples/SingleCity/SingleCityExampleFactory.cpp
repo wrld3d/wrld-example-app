@@ -26,3 +26,8 @@ IExample* SingleCityExampleFactory::CreateExample() const
                                            m_world.GetStreamingVolumeController(),
                                            m_world);
 }
+
+std::string SingleCityExampleFactory::ExampleName() const
+{
+	return Examples::SingleCityExample::GetName();
+}

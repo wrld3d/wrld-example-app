@@ -23,3 +23,8 @@ IExample* ScreenUnprojectExampleFactory::CreateExample() const
                                                 m_world.GetCameraProvider(),
                                                 m_world.GetTerrainHeightProvider());
 }
+
+std::string ScreenUnprojectExampleFactory::ExampleName() const
+{
+	return Examples::ScreenUnprojectExample::GetName();
+}

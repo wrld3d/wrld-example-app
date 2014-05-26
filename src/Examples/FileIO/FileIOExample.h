@@ -22,6 +22,9 @@ namespace Examples
         
     public:
         FileIOExample(Eegeo::Helpers::IFileIO& fileIO);
+    
+        static std::string GetName() { return "FileIOExample"; }
+        std::string Name() const { return GetName(); }
         
         void Start();
         void Update(float dt) {}

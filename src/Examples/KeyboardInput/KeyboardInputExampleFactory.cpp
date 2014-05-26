@@ -22,3 +22,9 @@ IExample* KeyboardInputExampleFactory::CreateExample() const
 {
     return new Examples::KeyboardInputExample(m_world.GetNativeUIFactories().IKeyboardInputFactory());
 }
+
+std::string KeyboardInputExampleFactory::ExampleName() const
+{
+	return Examples::KeyboardInputExample::GetName();
+}
+

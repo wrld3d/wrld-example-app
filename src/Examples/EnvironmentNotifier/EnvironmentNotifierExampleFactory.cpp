@@ -22,3 +22,9 @@ IExample* EnvironmentNotifierExampleFactory::CreateExample() const
     return new Examples::EnvironmentNotifierExample(m_world.GetRenderContext(),
                                                     m_world.GetTerrainStreaming());
 }
+
+std::string EnvironmentNotifierExampleFactory::ExampleName() const
+{
+	return Examples::EnvironmentNotifierExample::GetName();
+}
+

@@ -20,7 +20,10 @@ namespace Examples
         TrafficCongestionExample(
                 Eegeo::TrafficCongestion::ITrafficCongestionService& trafficCongestionService,
                 Eegeo::EegeoWorld& world);
-
+        
+        static std::string GetName() { return "TrafficCongestionExample"; }
+        std::string Name() const { return GetName(); }
+        
         void Start() {}
         void Update(float dt);
         void Draw() {}

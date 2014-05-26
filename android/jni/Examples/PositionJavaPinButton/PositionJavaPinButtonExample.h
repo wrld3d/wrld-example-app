@@ -34,6 +34,9 @@ namespace Examples
     			AndroidNativeState& pNativeState,
     			Eegeo::Rendering::RenderContext& renderContext);
 
+        static std::string GetName() { return "PositionJavaPinButtonExample"; }
+        std::string Name() const { return GetName(); }
+
         void Start() {}
         void Update(float dt) {}
         void Draw();

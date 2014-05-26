@@ -27,10 +27,13 @@ namespace Examples
     public:
         KeyboardInputExample(Eegeo::UI::NativeInput::IKeyboardInputFactory& keyboardInputFactory);
         
+        static std::string GetName() { return "KeyboardInputExample"; }
+        std::string Name() const { return GetName(); }
+        
         void Start();
         void Update(float dt) {}
         void Draw() {}
-        void Suspend() {}
+        void Suspend();
         
         void HandleKeyboardInputDismissed();
         bool HandleKeyboardInputKeyPressed(const AppInterface::KeyboardData& data);

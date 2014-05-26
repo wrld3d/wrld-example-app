@@ -21,6 +21,8 @@ namespace Examples
         
     public:
         ToggleTrafficExampleFactory(Eegeo::EegeoWorld& world);
+
+        std::string ExampleName() const;
         
         IExample* CreateExample() const;
     };

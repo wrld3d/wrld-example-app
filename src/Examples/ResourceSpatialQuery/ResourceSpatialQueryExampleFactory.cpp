@@ -22,3 +22,10 @@ IExample* ResourceSpatialQueryExampleFactory::CreateExample() const
     return new Examples::ResourceSpatialQueryExample(m_world.GetResourceSpatialQueryService(),
                                                      m_world.GetInterestPointProvider());
 }
+
+std::string ResourceSpatialQueryExampleFactory::ExampleName() const
+{
+	return Examples::ResourceSpatialQueryExample::GetName();
+}
+
+

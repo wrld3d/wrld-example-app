@@ -22,3 +22,8 @@ IExample* NavigationGraphExampleFactory::CreateExample() const
     return new Examples::NavigationGraphExample(m_world.GetRenderContext(),
                                                 m_world.GetNavigationGraphRepository());
 }
+
+std::string NavigationGraphExampleFactory::ExampleName() const
+{
+	return Examples::NavigationGraphExample::GetName();
+}

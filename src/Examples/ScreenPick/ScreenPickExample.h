@@ -34,7 +34,12 @@ namespace Examples
                                Eegeo::Camera::ICameraProvider& cameraProvider,
                                Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider,
                                const Eegeo::Resources::Terrain::Collision::ICollisionMeshResourceProvider& collisionMeshResourceProvider);
+        
         virtual ~ScreenPickExample();
+        
+        static std::string GetName() { return "ScreenPickExample"; }
+        std::string Name() const { return GetName(); }
+        
         void Start();
         void Update(float dt);
         void Draw();

@@ -117,6 +117,9 @@ namespace Examples
         //IRenderableFilter interface.
         void EnqueueRenderables(Eegeo::Rendering::RenderContext& renderContext, Eegeo::Rendering::RenderQueue& renderQueue);
         
+        static std::string GetName() { return "ModifiedRenderingExample"; }
+        std::string Name() const { return GetName(); }
+        
         void Start();
         void Update(float dt);
         void Draw();

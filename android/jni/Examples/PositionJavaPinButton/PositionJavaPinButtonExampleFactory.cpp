@@ -26,3 +26,8 @@ IExample* PositionJavaPinButtonExampleFactory::CreateExample() const
 			m_nativeState,
 			m_world.GetRenderContext());
 }
+
+std::string PositionJavaPinButtonExampleFactory::ExampleName() const
+{
+	return Examples::PositionJavaPinButtonExample::GetName();
+}

@@ -36,3 +36,8 @@ IExample* PinsWithAttachedJavaUIExampleFactory::CreateExample() const
 			m_world.GetTerrainHeightProvider(),
 			m_world.GetEnvironmentFlatteningService());
 }
+
+std::string PinsWithAttachedJavaUIExampleFactory::ExampleName() const
+{
+	return Examples::PinsWithAttachedJavaUIExample::GetName();
+}

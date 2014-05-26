@@ -21,3 +21,10 @@ IExample* FileIOExampleFactory::CreateExample() const
 {
     return new Examples::FileIOExample(m_world.GetFileIO());
 }
+
+std::string FileIOExampleFactory::ExampleName() const
+{
+	return Examples::FileIOExample::GetName();
+}
+
+

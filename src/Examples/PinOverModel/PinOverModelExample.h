@@ -92,7 +92,12 @@ namespace Examples
                             Eegeo::Lighting::GlobalFogging& fogging,
                             Eegeo::Rendering::Materials::NullMaterial& nullMat
                             );
+        
         virtual ~PinOverModelExample();
+        
+        static std::string GetName() { return "PinOverModelExample"; }
+        std::string Name() const { return GetName(); }
+        
         void Start();
         void Update(float dt);
         void Draw();

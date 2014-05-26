@@ -47,6 +47,9 @@ namespace Examples
                                     Eegeo::Rendering::RenderContext& renderContext,
                                     Eegeo::EegeoWorld& eegeoWorld);
         
+        static std::string GetName() { return "RouteThicknessPolicyExample"; }
+        std::string Name() const { return GetName(); }
+        
         void Start() {}
         void Update(float dt);
         void Draw() {}

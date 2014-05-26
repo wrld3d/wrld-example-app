@@ -58,6 +58,9 @@ namespace Examples
         CameraTransitionExample(Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController,
                                 Eegeo::Location::IInterestPointProvider& interestPointProvider);
         
+        static std::string GetName() { return "CameraTransitionExample"; }
+        std::string Name() const { return GetName(); }
+        
         void Start() {}
         void EarlyUpdate(float dt);
         void Update(float dt) { }

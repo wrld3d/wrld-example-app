@@ -45,6 +45,9 @@ namespace Examples
                              Eegeo::EegeoWorld& eegeoWorld,
                              const IRouteMatchingExampleViewFactory& routeMatchingViewFactory);
         
+        static std::string GetName() { return "RouteMatchingExample"; }
+        std::string Name() const { return GetName(); }
+        
         void Start() {}
         void Update(float dt);
         void Draw() {}

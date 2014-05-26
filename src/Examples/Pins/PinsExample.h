@@ -52,6 +52,10 @@ namespace Examples
                     Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService
                     );
         virtual ~PinsExample();
+        
+        static std::string GetName() { return "PinsExample"; }
+        std::string Name() const { return GetName(); }
+        
         void Start();
         void Update(float dt);
         void Draw();
