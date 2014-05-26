@@ -1,11 +1,22 @@
-mobile-sdk-harness
+iOS mobile-sdk-harness
 ==================
 
 * Run ./update.platform.sh to get the latest platform libraries and headers.
 * The accompanying project has no code signing, so run in the simulator (or provide your own credentials).
 * The platform needs an API key to operate. Sign up at https://appstore.eegeo.com/ to get your API key and introduce it into the following line in ViewController.mm : 
+	#define API_KEY "OBTAIN API_KEY FROM https://appstore.eegeo.com AND INSERT IT HERE".
+* Scroll between the examples using the Next and Previous buttons; the current example name is displayed at the top of the screen.
+
+android mobile-sdk-harness
+==========================
+
+* Install the Android SDK and NDK
+* Run ./update.platform.sh to get the latest platform libraries and headers.
+* Open an ADT Eclipse workspace, importing this repository as an Android project
+* Set the NDK location in the ADT Eclipse workspace to where it was installed (Menu->ADT->Android->NDK)
+* Bring up the project menu, from within Android Tools add native support to the project
+* The platform needs an API key to operate. Sign up at https://appstore.eegeo.com/ to get your API key and introduce it into the following line in jni/main.cpp : 
 	#define API_KEY "OBTAIN API_KEY FROM https://appstore.eegeo.com AND INSERT IT HERE"
-* In AppOnMap.h, change the value of selectedExample to vary the examples:
-	* ExampleTypes::DebugSphere demonstrates the plotting of several colored spheres in world at different locations.
-	* ExampleTypes::LoadModel demonstrates the loading, rendering and scaling of a model resource.
-	* ExampleTypes::ScreenUnproject demonstrates an unproject of a screen point to a world space ray. It also demonstrates a terrain height lookup at the intersection of this unprojected ray with the earth, and the rendering of a sphere centered at that terrain point.
+* Build and debug from within ADT Eclipse
+* build.sh can be used to generate the native library if you want to manually package the .apk
+* Scroll between the examples using the Next and Previous buttons, or select the example from the drop-down list; the current example name is displayed at the top of the screen. 
