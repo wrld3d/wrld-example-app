@@ -53,7 +53,6 @@
     UIPanGestureRecognizer* gesturePan;
     UITapGestureRecognizer* gestureTap;
     UITapGestureRecognizer* gestureDoubleTap;
-    UILongPressGestureRecognizer* gesturePress;
     float _previousDist;
 }
 

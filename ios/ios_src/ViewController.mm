@@ -275,14 +275,6 @@ using namespace Eegeo::iOS;
 	gestureDoubleTap.numberOfTapsRequired = 2;
     [self.view addGestureRecognizer: gestureDoubleTap];
     [gestureDoubleTap release];
-    
-    
-    gesturePress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(gesturePress_Callback:)];
-    
-    [gesturePress setDelegate:self];
-    gesturePress.cancelsTouchesInView = FALSE;
-    [self.view addGestureRecognizer: gesturePress];
-    [gesturePress release];
 }
 
 -(void)gestureRotation_Callback:(UIRotationGestureRecognizer*)recognizer
