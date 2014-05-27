@@ -1,7 +1,5 @@
 #!/bin/sh
 
-sh "update.platform.sh ios"
-
 projectpath=$(pwd)/./
 targetName="ExampleApp"
 
