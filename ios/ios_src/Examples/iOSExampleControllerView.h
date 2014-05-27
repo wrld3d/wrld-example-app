@@ -48,6 +48,8 @@ namespace Examples
         
         ~iOSExampleControllerView();
         
+        void Show();
+        
         void SetCurrentExampleName(const std::string& name);
         
         void AddSelectPreviousExampleHandler(IUIActionHandler& handler);

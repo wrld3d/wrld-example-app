@@ -26,6 +26,7 @@ namespace Examples
         int m_currentExampleFactoryIndex;
         Eegeo::EegeoWorld& m_world;
         std::vector<IExampleFactory*> m_factories;
+        bool m_uiVisible;
         
         IExampleControllerView& m_view;
         UIActionHandler<ExampleController> m_nextExampleHandler;

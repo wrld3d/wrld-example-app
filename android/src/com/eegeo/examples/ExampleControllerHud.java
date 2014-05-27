@@ -15,10 +15,11 @@ import com.eegeo.R;
 
 public class ExampleControllerHud 
 {
-	private MainActivity m_activity;
-	private View m_view;
-	private Spinner m_spinner;
+	private MainActivity m_activity = null;
+	private View m_view = null;
+	private Spinner m_spinner = null;
 	private String[] m_items;
+	private boolean m_spinnerEnabled = false;
 	
     public static native void ActivatePrevious(long nativeCallerPointer, long nativeCallerProxyPointer);
     public static native void ActivateNext(long nativeCallerPointer, long nativeCallerProxyPointer);
@@ -27,8 +28,6 @@ public class ExampleControllerHud
 	public ExampleControllerHud(MainActivity activity, long nativeCallerPointer, long nativeCallerProxyPointer)
     {
     	m_activity = activity;
-    	m_view = null;
-
     	createHud(nativeCallerPointer, nativeCallerProxyPointer);
     }
     
@@ -61,12 +60,37 @@ public class ExampleControllerHud
 	                    }
 	                });
 	            	
+	            	previousExample.setVisibility(View.INVISIBLE);
+	            	nextExample.setVisibility(View.INVISIBLE);
+	            	
 	            	uiRoot.addView(m_view);
 	            }
 	            catch (Exception e)
 	            {
 	                Log.v("ExampleControllerHud", e.getMessage() == null ? "Error, but no message?!" : e.getMessage());
 	            }                            
+	        }
+	    });
+    }
+    
+    public void showViews()
+    {
+    	m_activity.runOnUiThread(new Runnable()
+	    {
+	        public void run()
+	        {
+		    	final Button previousExample = (Button)m_view.findViewById(R.id.previous_example);
+		    	final Button nextExample = (Button)m_view.findViewById(R.id.next_example);
+		
+		    	previousExample.setVisibility(View.VISIBLE);
+		    	nextExample.setVisibility(View.VISIBLE);    
+		    	
+		    	m_spinnerEnabled = true;
+		    	if(m_spinner != null) 
+		    	{
+		        	m_spinner = (Spinner)m_view.findViewById(R.id.example_list);
+		        	m_spinner.setEnabled(m_spinnerEnabled);
+		    	}
 	        }
 	    });
     }
@@ -103,6 +127,7 @@ public class ExampleControllerHud
 		    
 		        ArrayAdapter<String> adapter = new ArrayAdapter<String>(m_activity, android.R.layout.simple_spinner_item, items);
 		        m_spinner.setAdapter(adapter);
+		        m_spinner.setEnabled(m_spinnerEnabled);
 		
 		        m_spinner.setOnItemSelectedListener(new OnItemSelectedListener()
 		        {

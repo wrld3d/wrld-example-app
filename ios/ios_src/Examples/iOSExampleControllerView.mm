@@ -45,16 +45,16 @@ namespace Examples
         float screenWidth = SCREEN_WIDTH;
         
         m_pPreviousButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        [m_pPreviousButton retain];
         m_pPreviousButton.frame = CGRectMake(10, 10, 100, 30);
         [m_pPreviousButton setTitle:@"Previous" forState:UIControlStateNormal];
         [m_pPreviousButton addTarget:m_pBinding action:@selector(activatePrevious) forControlEvents:UIControlEventTouchDown];
-        [m_pView addSubview:m_pPreviousButton];
         
         m_pNextButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        [m_pNextButton retain];
         m_pNextButton.frame = CGRectMake(screenWidth - 110, 10, 100, 30);
         [m_pNextButton setTitle:@"Next" forState:UIControlStateNormal];
         [m_pNextButton addTarget:m_pBinding action:@selector(activateNext) forControlEvents:UIControlEventTouchDown];
-        [m_pView addSubview:m_pNextButton];
         
         [m_pBinding setBoundInstance:this];
         
@@ -76,6 +76,12 @@ namespace Examples
         
         [m_pBinding release];
         m_pBinding = nil;
+    }
+    
+    void iOSExampleControllerView::Show()
+    {
+        [m_pView addSubview:m_pPreviousButton];
+        [m_pView addSubview:m_pNextButton];
     }
     
     void iOSExampleControllerView::SetCurrentExampleName(const std::string &name)

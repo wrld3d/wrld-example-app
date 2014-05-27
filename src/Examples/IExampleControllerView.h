@@ -19,6 +19,8 @@ namespace Examples
     public:
         virtual ~IExampleControllerView() {}
         
+        virtual void Show()=0;
+        
         virtual void AddSelectPreviousExampleHandler(IUIActionHandler& handler)=0;
         
         virtual void RemoveSelectPreviousExampleHandler(IUIActionHandler& handler)=0;

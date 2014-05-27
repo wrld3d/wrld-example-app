@@ -19,6 +19,7 @@ ExampleController::ExampleController(Eegeo::EegeoWorld& world,
 , m_nextExampleHandler(this, &ExampleController::ActivateNext)
 , m_previousExampleHandler(this, &ExampleController::ActivatePrevious)
 , m_selectedExampleChangedHandler(this, &ExampleController::UpdateSelectedExample)
+, m_uiVisible(false)
 {
     m_view.AddSelectNextExampleHandler(m_nextExampleHandler);
     m_view.AddSelectPreviousExampleHandler(m_previousExampleHandler);
@@ -130,6 +131,12 @@ void ExampleController::Update(float dt)
     if(m_pCurrentExample != NULL)
     {
         m_pCurrentExample->Update(dt);
+    }
+    
+    if(!m_uiVisible && !m_world.Initialising())
+    {
+        m_view.Show();
+        m_uiVisible = true;
     }
 }
 

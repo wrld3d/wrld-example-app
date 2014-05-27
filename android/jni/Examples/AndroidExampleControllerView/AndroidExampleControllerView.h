@@ -31,6 +31,8 @@ namespace Examples
 
         ~AndroidExampleControllerView();
 
+        void Show();
+
         void AddSelectPreviousExampleHandler(IUIActionHandler& handler);
 
         void RemoveSelectPreviousExampleHandler(IUIActionHandler& handler);

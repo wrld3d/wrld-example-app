@@ -67,6 +67,18 @@ namespace Examples
 	    Eegeo_DELETE m_pProxy;
     }
 
+	void AndroidExampleControllerView::Show()
+	{
+		AndroidSafeNativeThreadAttachment attached(m_nativeState);
+		JNIEnv* env = attached.envForThread;
+
+		jmethodID showButtons = env->GetMethodID(m_androidExampleControllerViewClass, "showViews", "()V");
+
+		env->CallVoidMethod(
+				m_androidExampleControllerView,
+				showButtons);
+	}
+
 	void AndroidExampleControllerView::PopulateExampleList(const std::vector<std::string>& exampleNames)
 	{
 		AndroidSafeNativeThreadAttachment attached(m_nativeState);
