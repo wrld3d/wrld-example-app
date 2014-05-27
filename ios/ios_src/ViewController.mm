@@ -184,7 +184,7 @@ using namespace Eegeo::iOS;
     const Eegeo::EnvironmentCharacterSet::Type environmentCharacterSet = Eegeo::EnvironmentCharacterSet::Latin;
     Eegeo::Config::PlatformConfig config = Eegeo::iOS::iOSPlatformConfigBuilder(App::GetDevice(), App::IsDeviceMultiCore()).Build();
     
-    Eegeo::EegeoWorld* pWorld = new Eegeo::EegeoWorld(API_KEY,
+    Eegeo::EegeoWorld* pWorld = new Eegeo::EegeoWorld(ApiKey,
                                                       pHttpCache,
                                                       pFileIO,
                                                       pTextureFileLoader,
