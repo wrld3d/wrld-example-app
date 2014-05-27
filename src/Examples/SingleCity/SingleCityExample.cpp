@@ -95,11 +95,13 @@ void SingleCityExample::Suspend()
     {
         m_precacheService.CancelPrecaching();
     }
+    
+    m_startedPrecaching = false;
 }
 
 void SingleCityExample::Update(float dt)
 {
-    if(!m_world.Initialising() && !m_startedPrecaching)
+    if(!m_world.Initialising() && !m_startedPrecaching && !m_precacheService.CurrentlyPrecaching())
     {
         double sphereVolumeCentreLatitudeDegrees = 37.7858;
         double sphereVolumeCentreLongitudeDegrees = -122.401;
@@ -111,7 +113,7 @@ void SingleCityExample::Update(float dt)
         m_startedPrecaching = true;
     }
     
-    if(m_precacheService.CurrentlyPrecaching())
+    if(m_startedPrecaching && m_precacheService.CurrentlyPrecaching())
     {
         float toLoad = m_precacheService.TotalUrlsToLoad();
         float loaded = m_precacheService.UrlsLoaded();
