@@ -12,14 +12,13 @@ namespace Examples
     {
     private:
         Eegeo::TrafficCongestion::ITrafficCongestionService& m_trafficCongestionService;
-        Eegeo::EegeoWorld& m_world;
-
-        bool m_hasCalled;
-
+        float m_timeAccumulator;
+        Eegeo::Streaming::MortonKey m_key;
+        int m_congestionValue;
+        
     public:
         TrafficCongestionExample(
-                Eegeo::TrafficCongestion::ITrafficCongestionService& trafficCongestionService,
-                Eegeo::EegeoWorld& world);
+                Eegeo::TrafficCongestion::ITrafficCongestionService& trafficCongestionService);
         
         static std::string GetName() { return "TrafficCongestionExample"; }
         std::string Name() const { return GetName(); }
@@ -27,6 +26,6 @@ namespace Examples
         void Start() {}
         void Update(float dt);
         void Draw() {}
-        void Suspend() {}
+        void Suspend();
     };
 }

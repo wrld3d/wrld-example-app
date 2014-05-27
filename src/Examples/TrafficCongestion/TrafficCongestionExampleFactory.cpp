@@ -19,8 +19,7 @@ TrafficCongestionExampleFactory::TrafficCongestionExampleFactory(Eegeo::EegeoWor
 
 IExample* TrafficCongestionExampleFactory::CreateExample() const
 {
-    return new Examples::TrafficCongestionExample(m_world.GetTrafficCongestionService(),
-                                                  m_world);
+    return new Examples::TrafficCongestionExample(m_world.GetTrafficCongestionService());
 }
 
 std::string TrafficCongestionExampleFactory::ExampleName() const
