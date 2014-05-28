@@ -138,11 +138,7 @@ AppHost::AppHost(
             config,
             new Eegeo::Search::Service::SearchServiceCredentials("", ""),
             "",
-            "Default-Landscape@2x~ipad.png",
-            "http://cdn1.eegeo.com/coverage-trees/v367/manifest.txt.gz",
-            "http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v174/manifest.txt.gz",
-            NULL,
-            Eegeo::Rendering::LoadingScreenLayout::FullScreen
+            "Default-Landscape@2x~ipad.png"
             );
 
 	m_pInputProcessor = new Eegeo::Android::Input::AndroidInputProcessor(&m_inputHandler, m_pRenderContext->GetScreenWidth(), m_pRenderContext->GetScreenHeight());
