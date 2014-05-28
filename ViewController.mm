@@ -573,10 +573,7 @@ Eegeo::Web::iOSWebRequestService* webRequestService;
                                        config,
                                        pCredentials,
                                        "",
-                                       "Default-Landscape@2x~ipad.png",
-                                       "http://cdn1.eegeo.com/coverage-trees/v207/manifest.txt.gz",
-                                       "http://cdn1.eegeo.com/mobile-themes-new/v99/manifest.txt.gz"
-                                       ));
+                                       "Default-Landscape@2x~ipad.png"));
     
     m_renderContext->GetGLState().InvalidateAll();
 }
