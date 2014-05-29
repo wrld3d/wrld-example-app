@@ -10,114 +10,15 @@ LOCAL_MODULE := native-activity
 LOCAL_LDLIBS    := -llog -landroid -lEGL -lGLESv2 -L./libs/ -lpng -lz -lm -L./libs/ -lcrypto -L./libs/ -lssl -L./libs/ -lcurl -L./libs/ -lcares -L./libs/ -lsimd -L./libs/ -lmyjpeg
 LOCAL_STATIC_LIBRARIES := android_native_app_glue native-activity-lib
 
-#android-specific sources
-LOCAL_SRC_FILES += ./main.cpp
-LOCAL_SRC_FILES += ./AppProxy.cpp
-LOCAL_SRC_FILES += ./AppRunner.cpp
-LOCAL_SRC_FILES += ./AppHost.cpp
-LOCAL_SRC_FILES += ./AppInputDelegate.cpp
-LOCAL_SRC_FILES += ./AppLifecycleMessages/AppPauseMessage.cpp
-LOCAL_SRC_FILES += ./AppLifecycleMessages/AppDisplayAvailableMessage.cpp
-LOCAL_SRC_FILES += ./InputMessages/TouchEventMessage.cpp
-LOCAL_SRC_FILES += ./GlDisplayService.cpp
-LOCAL_SRC_FILES += ./AppToJavaHandler.cpp
-LOCAL_SRC_FILES += ./AppToJavaProxy.cpp
-LOCAL_SRC_FILES += ./FrameRateRegulator.cpp
-
-LOCAL_SRC_FILES += ./Examples/AndroidExampleControllerView/AndroidExampleControllerView.cpp
-LOCAL_SRC_FILES += ./Examples/AndroidExampleControllerView/AndroidExampleControllerProxy.cpp
-LOCAL_SRC_FILES += ./Examples/AndroidExampleControllerView/ActivateNextExampleMessage.cpp
-LOCAL_SRC_FILES += ./Examples/AndroidExampleControllerView/ActivatePreviousExampleMessage.cpp
-LOCAL_SRC_FILES += ./Examples/AndroidExampleControllerView/SelectExampleMessage.cpp
-LOCAL_SRC_FILES += ./Examples/AndroidExampleProxy.cpp
-LOCAL_SRC_FILES += ./Examples/JavaHudCrossThreadCommunication/JavaHudCrossThreadCommunicationExample.cpp
-LOCAL_SRC_FILES += ./Examples/JavaHudCrossThreadCommunication/JavaHudCrossThreadCommunicationExampleFactory.cpp
-LOCAL_SRC_FILES += ./Examples/JavaHudCrossThreadCommunication/JavaHudCrossThreadCommunicationProxy.cpp
-LOCAL_SRC_FILES += ./Examples/JavaHudCrossThreadCommunication/RequestCurrentThemeNameMessage.cpp
-LOCAL_SRC_FILES += ./Examples/JavaHudCrossThreadCommunication/UpdateCurrentThemeMessage.cpp
-LOCAL_SRC_FILES += ./Examples/ShowJavaPlaceJumpUI/ShowJavaPlaceJumpUIExample.cpp
-LOCAL_SRC_FILES += ./Examples/ShowJavaPlaceJumpUI/ShowJavaPlaceJumpUIExampleFactory.cpp
-LOCAL_SRC_FILES += ./Examples/ShowJavaPlaceJumpUI/ExampleCameraJumpController.cpp
-LOCAL_SRC_FILES += ./Examples/PinsWithAttachedJavaUI/PinsWithAttachedJavaUIExample.cpp
-LOCAL_SRC_FILES += ./Examples/PinsWithAttachedJavaUI/PinsWithAttachedJavaUIExampleFactory.cpp
-LOCAL_SRC_FILES += ./Examples/PositionJavaPinButton/PositionJavaPinButtonExample.cpp
-LOCAL_SRC_FILES += ./Examples/PositionJavaPinButton/PositionJavaPinButtonExampleFactory.cpp
-LOCAL_SRC_FILES += ./Examples/RouteMatching/AndroidRouteMatchingExampleView.cpp
-LOCAL_SRC_FILES += ./Examples/RouteMatching/AndroidRouteMatchingExampleViewFactory.cpp
-LOCAL_SRC_FILES += ./Examples/RouteMatching/AndroidRouteMatchingProxy.cpp
-LOCAL_SRC_FILES += ./Examples/RouteMatching/ToggleRouteMatchingMessage.cpp
-LOCAL_SRC_FILES += ./Examples/RouteSimulation/AndroidRouteSimulationExampleView.cpp
-LOCAL_SRC_FILES += ./Examples/RouteSimulation/AndroidRouteSimulationExampleViewFactory.cpp
-LOCAL_SRC_FILES += ./Examples/RouteSimulation/AndroidRouteSimulationProxy.cpp
-LOCAL_SRC_FILES += ./Examples/RouteSimulation/RouteSimulationActionMessage.cpp
-
-#cross-platform sources
-LOCAL_SRC_FILES += ./../../src/ExampleApp.cpp
-LOCAL_SRC_FILES += ./../../src/Examples/ExampleController.cpp
-
-LOCAL_SRC_FILES += ./../../src/Examples/DebugSphere/DebugSphereExample.cpp
-LOCAL_SRC_FILES += ./../../src/Examples/DebugSphere/DebugSphereExampleFactory.cpp
-LOCAL_SRC_FILES += ./../../src/Examples/EnvironmentFlattening/EnvironmentFlatteningExample.cpp
-LOCAL_SRC_FILES += ./../../src/Examples/EnvironmentFlattening/EnvironmentFlatteningExampleFactory.cpp
-LOCAL_SRC_FILES += ./../../src/Examples/EnvironmentNotifier/EnvironmentNotifierExample.cpp
-LOCAL_SRC_FILES += ./../../src/Examples/EnvironmentNotifier/EnvironmentNotifierExampleFactory.cpp
-LOCAL_SRC_FILES += ./../../src/Examples/FileIO/FileIOExample.cpp
-LOCAL_SRC_FILES += ./../../src/Examples/FileIO/FileIOExampleFactory.cpp
-LOCAL_SRC_FILES += ./../../src/Examples/LoadModel/LoadModelExample.cpp
-LOCAL_SRC_FILES += ./../../src/Examples/LoadModel/LoadModelExampleFactory.cpp
-LOCAL_SRC_FILES += ./../../src/Examples/ModifiedRendering/ModifiedRenderingExample.cpp
-LOCAL_SRC_FILES += ./../../src/Examples/ModifiedRendering/ModifiedRenderingExampleFactory.cpp
-LOCAL_SRC_FILES += ./../../src/Examples/NavigationGraph/NavigationGraphExample.cpp
-LOCAL_SRC_FILES += ./../../src/Examples/NavigationGraph/NavigationGraphExampleFactory.cpp
-LOCAL_SRC_FILES += ./../../src/Examples/ResourceSpatialQuery/ResourceSpatialQueryExample.cpp
-LOCAL_SRC_FILES += ./../../src/Examples/ResourceSpatialQuery/ResourceSpatialQueryExampleFactory.cpp
-LOCAL_SRC_FILES += ./../../src/Examples/ScreenUnproject/ScreenUnprojectExample.cpp
-LOCAL_SRC_FILES += ./../../src/Examples/ScreenUnproject/ScreenUnprojectExampleFactory.cpp
-LOCAL_SRC_FILES += ./../../src/Examples/Search/SearchExample.cpp
-LOCAL_SRC_FILES += ./../../src/Examples/Search/SearchExampleFactory.cpp
-LOCAL_SRC_FILES += ./../../src/Examples/ToggleTraffic/ToggleTrafficExample.cpp
-LOCAL_SRC_FILES += ./../../src/Examples/ToggleTraffic/ToggleTrafficExampleFactory.cpp
-LOCAL_SRC_FILES += ./../../src/Examples/WebRequest/WebRequestExample.cpp
-LOCAL_SRC_FILES += ./../../src/Examples/WebRequest/WebRequestExampleFactory.cpp
-LOCAL_SRC_FILES += ./../../src/Examples/KeyboardInput/KeyboardInputExample.cpp
-LOCAL_SRC_FILES += ./../../src/Examples/KeyboardInput/KeyboardInputExampleFactory.cpp
-LOCAL_SRC_FILES += ./../../src/Examples/PODAnimation/PODAnimationExample.cpp
-LOCAL_SRC_FILES += ./../../src/Examples/PODAnimation/PODAnimationExampleFactory.cpp
-LOCAL_SRC_FILES += ./../../src/Examples/Pick3DObject/Pick3DObjectExample.cpp
-LOCAL_SRC_FILES += ./../../src/Examples/Pick3DObject/Pick3DObjectExampleFactory.cpp
-LOCAL_SRC_FILES += ./../../src/Examples/ScreenPick/ScreenPickExample.cpp
-LOCAL_SRC_FILES += ./../../src/Examples/ScreenPick/ScreenPickExampleFactory.cpp
-LOCAL_SRC_FILES += ./../../src/Examples/DebugPrimitiveRendering/DebugPrimitiveRenderingExample.cpp
-LOCAL_SRC_FILES += ./../../src/Examples/DebugPrimitiveRendering/DebugPrimitiveRenderingExampleFactory.cpp
-LOCAL_SRC_FILES += ./../../src/Examples/RouteDrawing/RouteDrawingExample.cpp
-LOCAL_SRC_FILES += ./../../src/Examples/RouteDrawing/RouteDrawingExampleFactory.cpp
-LOCAL_SRC_FILES += ./../../src/Examples/Pins/PinsExample.cpp
-LOCAL_SRC_FILES += ./../../src/Examples/Pins/PinsExampleFactory.cpp
-LOCAL_SRC_FILES += ./../../src/Examples/RouteSimulationAnimation/RouteSimulationAnimationExample.cpp
-LOCAL_SRC_FILES += ./../../src/Examples/RouteSimulationAnimation/RouteSimulationAnimationExampleFactory.cpp
-LOCAL_SRC_FILES += ./../../src/Examples/RouteThicknessPolicy/RouteThicknessPolicyExample.cpp
-LOCAL_SRC_FILES += ./../../src/Examples/RouteThicknessPolicy/RouteThicknessPolicyExampleFactory.cpp
-LOCAL_SRC_FILES += ./../../src/Examples/RouteMatching/RouteMatchingExample.cpp
-LOCAL_SRC_FILES += ./../../src/Examples/RouteMatching/RouteMatchingExampleFactory.cpp
-LOCAL_SRC_FILES += ./../../src/Examples/RouteSimulation/RouteSimulationExample.cpp
-LOCAL_SRC_FILES += ./../../src/Examples/RouteSimulation/RouteSimulationExampleFactory.cpp
-LOCAL_SRC_FILES += ./../../src/Examples/DynamicText3D/DynamicText3DExample.cpp
-LOCAL_SRC_FILES += ./../../src/Examples/DynamicText3D/DynamicText3DExampleFactory.cpp
-LOCAL_SRC_FILES += ./../../src/Examples/SingleCity/SingleCityExample.cpp
-LOCAL_SRC_FILES += ./../../src/Examples/SingleCity/SingleCityExampleFactory.cpp
-LOCAL_SRC_FILES += ./../../src/Examples/PinOverModel/PinOverModelExample.cpp
-LOCAL_SRC_FILES += ./../../src/Examples/PinOverModel/PinOverModelExampleFactory.cpp
-LOCAL_SRC_FILES += ./../../src/Examples/TrafficCongestion/TrafficCongestionExample.cpp
-LOCAL_SRC_FILES += ./../../src/Examples/TrafficCongestion/TrafficCongestionExampleFactory.cpp
-LOCAL_SRC_FILES += ./../../src/Examples/ControlCityThemes/ControlCityThemeExample.cpp
-LOCAL_SRC_FILES += ./../../src/Examples/ControlCityThemes/ControlCityThemeExampleFactory.cpp
-LOCAL_SRC_FILES += ./../../src/Examples/CameraTransition/CameraTransitionExample.cpp
-LOCAL_SRC_FILES += ./../../src/Examples/CameraTransition/CameraTransitionExampleFactory.cpp
-LOCAL_SRC_FILES += ./../../src/Examples/UI/UIHelpers.cpp
-
 os_name:=$(shell uname -s)
 
 ifeq ($(os_name),Darwin)
+	android_specific_cpp_files := $(shell cd jni; find ./ -type f  -iname "*.cpp")
+	LOCAL_SRC_FILES := $(android_specific_cpp_files:$(LOCAL_PATH)/%=%)
+
+	shared_example_cpp_files := $(shell cd jni; find ./../../src/ -type f  -iname "*.cpp")
+	LOCAL_SRC_FILES += $(shared_example_cpp_files:$(LOCAL_PATH)/%=%)
+
 	platformincludes := $(shell find ./libs/platform -type d ! -path "*/OSX/*" ! -path "*/iOS/*")
 	LOCAL_C_INCLUDES := $(platformincludes:$(LOCAL_PATH)/%=%)
 
@@ -128,6 +29,13 @@ ifeq ($(os_name),Darwin)
 	LOCAL_C_INCLUDES += $(java_exampleincludes:$(LOCAL_PATH)/%=%)
 else
 	# assume windows if not specified for now (due to no uname)
+	
+	android_specific_cpp_files := $(shell cd jni && dir /a-d /b /s *.cpp)
+	LOCAL_SRC_FILES := $(android_specific_cpp_files:$(LOCALcd jni_PATH)/%=%)
+
+	shared_example_cpp_files := $(shell cd jni\..\..\src\ && dir /a-d /b /s *.cpp)
+	LOCAL_SRC_FILES += $(shared_example_cpp_files:$(LOCAL_PATH)/%=%)
+	
 	platformincludes := $(shell dir .\libs\platform /ad-h /s /b)
 	LOCAL_C_INCLUDES := $(platformincludes:$(LOCAL_PATH)/%=%)
 	LOCAL_C_INCLUDES += ./libs/platform 
