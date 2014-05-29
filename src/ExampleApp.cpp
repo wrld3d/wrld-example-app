@@ -20,7 +20,6 @@
 #include "EnvironmentFlatteningExampleFactory.h"
 #include "EnvironmentNotifierExampleFactory.h"
 #include "FileIOExampleFactory.h"
-#include "KeyboardInputExampleFactory.h"
 #include "LoadModelExampleFactory.h"
 #include "ModifiedRenderingExampleFactory.h"
 #include "NavigationGraphExampleFactory.h"
@@ -34,7 +33,6 @@
 #include "RouteThicknessPolicyExampleFactory.h"
 #include "ScreenPickExampleFactory.h"
 #include "ScreenUnprojectExampleFactory.h"
-#include "SearchExampleFactory.h"
 #include "SingleCityExampleFactory.h"
 #include "ToggleTrafficExampleFactory.h"
 #include "TrafficCongestionExampleFactory.h"
@@ -105,7 +103,6 @@ ExampleApp::ExampleApp(Eegeo::EegeoWorld* pWorld,
     m_exampleController.RegisterCameraExample<Examples::EnvironmentFlatteningExampleFactory>(*m_globeCameraController);
     m_exampleController.RegisterCameraExample<Examples::EnvironmentNotifierExampleFactory>(*m_globeCameraController);
     m_exampleController.RegisterCameraExample<Examples::FileIOExampleFactory>(*m_globeCameraController);
-    //m_exampleController.RegisterExample<Examples::KeyboardInputExampleFactory>();
     m_exampleController.RegisterCameraExample<Examples::LoadModelExampleFactory>(*m_globeCameraController);
     m_exampleController.RegisterCameraExample<Examples::ModifiedRenderingExampleFactory>(*m_globeCameraController);
     m_exampleController.RegisterCameraExample<Examples::NavigationGraphExampleFactory>(*m_globeCameraController);
@@ -119,7 +116,6 @@ ExampleApp::ExampleApp(Eegeo::EegeoWorld* pWorld,
     m_exampleController.RegisterCameraExample<Examples::RouteThicknessPolicyExampleFactory>(*m_globeCameraController);
     m_exampleController.RegisterCameraExample<Examples::ScreenPickExampleFactory>(*m_globeCameraController);
     m_exampleController.RegisterCameraExample<Examples::ScreenUnprojectExampleFactory>(*m_globeCameraController);
-    m_exampleController.RegisterExample<Examples::SearchExampleFactory>();
     m_exampleController.RegisterCameraExample<Examples::SingleCityExampleFactory>(*m_globeCameraController);
     m_exampleController.RegisterCameraExample<Examples::ToggleTrafficExampleFactory>(*m_globeCameraController);
     m_exampleController.RegisterCameraExample<Examples::TrafficCongestionExampleFactory>(*m_globeCameraController);

@@ -15,7 +15,6 @@
 		181438AC192B6E4500BCDF2E /* EnvironmentFlatteningExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18143858192B6E4500BCDF2E /* EnvironmentFlatteningExample.cpp */; };
 		181438AD192B6E4500BCDF2E /* EnvironmentNotifierExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1814385B192B6E4500BCDF2E /* EnvironmentNotifierExample.cpp */; };
 		181438AE192B6E4500BCDF2E /* FileIOExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1814385E192B6E4500BCDF2E /* FileIOExample.cpp */; };
-		181438AF192B6E4500BCDF2E /* KeyboardInputExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18143863192B6E4500BCDF2E /* KeyboardInputExample.cpp */; };
 		181438B0192B6E4500BCDF2E /* LoadModelExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18143866192B6E4500BCDF2E /* LoadModelExample.cpp */; };
 		181438B1192B6E4500BCDF2E /* ModifiedRenderingExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18143869192B6E4500BCDF2E /* ModifiedRenderingExample.cpp */; };
 		181438B2192B6E4500BCDF2E /* NavigationGraphExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1814386C192B6E4500BCDF2E /* NavigationGraphExample.cpp */; };
@@ -31,7 +30,6 @@
 		181438BC192B6E4500BCDF2E /* RouteThicknessPolicyExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1814388E192B6E4500BCDF2E /* RouteThicknessPolicyExample.cpp */; };
 		181438BD192B6E4500BCDF2E /* ScreenPickExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18143891192B6E4500BCDF2E /* ScreenPickExample.cpp */; };
 		181438BE192B6E4500BCDF2E /* ScreenUnprojectExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18143894192B6E4500BCDF2E /* ScreenUnprojectExample.cpp */; };
-		181438BF192B6E4500BCDF2E /* SearchExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18143897192B6E4500BCDF2E /* SearchExample.cpp */; };
 		181438C0192B6E4500BCDF2E /* SingleCityExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1814389A192B6E4500BCDF2E /* SingleCityExample.cpp */; };
 		181438C1192B6E4500BCDF2E /* ToggleTrafficExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1814389D192B6E4500BCDF2E /* ToggleTrafficExample.cpp */; };
 		181438C2192B6E4500BCDF2E /* TrafficCongestionExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 181438A0192B6E4500BCDF2E /* TrafficCongestionExample.cpp */; };
@@ -51,7 +49,6 @@
 		18997180192CAA8C00E0E9F1 /* EnvironmentFlatteningExampleFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1899717E192CAA8C00E0E9F1 /* EnvironmentFlatteningExampleFactory.cpp */; };
 		18997183192CABBE00E0E9F1 /* EnvironmentNotifierExampleFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18997181192CABBE00E0E9F1 /* EnvironmentNotifierExampleFactory.cpp */; };
 		18997186192CAC5400E0E9F1 /* FileIOExampleFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18997184192CAC5400E0E9F1 /* FileIOExampleFactory.cpp */; };
-		18997189192CACDD00E0E9F1 /* KeyboardInputExampleFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18997187192CACDD00E0E9F1 /* KeyboardInputExampleFactory.cpp */; };
 		1899718C192CAD9800E0E9F1 /* LoadModelExampleFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1899718A192CAD9800E0E9F1 /* LoadModelExampleFactory.cpp */; };
 		1899718F192CAE7E00E0E9F1 /* ModifiedRenderingExampleFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1899718D192CAE7E00E0E9F1 /* ModifiedRenderingExampleFactory.cpp */; };
 		18997192192CAF5F00E0E9F1 /* NavigationGraphExampleFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18997190192CAF5F00E0E9F1 /* NavigationGraphExampleFactory.cpp */; };
@@ -65,7 +62,6 @@
 		189971AA192CB4D900E0E9F1 /* RouteThicknessPolicyExampleFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 189971A8192CB4D900E0E9F1 /* RouteThicknessPolicyExampleFactory.cpp */; };
 		189971AD192CB59F00E0E9F1 /* ScreenPickExampleFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 189971AB192CB59F00E0E9F1 /* ScreenPickExampleFactory.cpp */; };
 		189971B0192CB63500E0E9F1 /* ScreenUnprojectExampleFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 189971AE192CB63500E0E9F1 /* ScreenUnprojectExampleFactory.cpp */; };
-		189971B3192CB6A100E0E9F1 /* SearchExampleFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 189971B1192CB6A100E0E9F1 /* SearchExampleFactory.cpp */; };
 		189971B6192CB77A00E0E9F1 /* SingleCityExampleFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 189971B4192CB77A00E0E9F1 /* SingleCityExampleFactory.cpp */; };
 		189971B9192CB83E00E0E9F1 /* ToggleTrafficExampleFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 189971B7192CB83E00E0E9F1 /* ToggleTrafficExampleFactory.cpp */; };
 		189971BC192CB8B800E0E9F1 /* TrafficCongestionExampleFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 189971BA192CB8B800E0E9F1 /* TrafficCongestionExampleFactory.cpp */; };
@@ -154,8 +150,6 @@
 		1814385E192B6E4500BCDF2E /* FileIOExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileIOExample.cpp; sourceTree = "<group>"; };
 		1814385F192B6E4500BCDF2E /* FileIOExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileIOExample.h; sourceTree = "<group>"; };
 		18143860192B6E4500BCDF2E /* IExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IExample.h; sourceTree = "<group>"; };
-		18143863192B6E4500BCDF2E /* KeyboardInputExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KeyboardInputExample.cpp; sourceTree = "<group>"; };
-		18143864192B6E4500BCDF2E /* KeyboardInputExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyboardInputExample.h; sourceTree = "<group>"; };
 		18143866192B6E4500BCDF2E /* LoadModelExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LoadModelExample.cpp; sourceTree = "<group>"; };
 		18143867192B6E4500BCDF2E /* LoadModelExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadModelExample.h; sourceTree = "<group>"; };
 		18143869192B6E4500BCDF2E /* ModifiedRenderingExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ModifiedRenderingExample.cpp; sourceTree = "<group>"; };
@@ -190,8 +184,6 @@
 		18143892192B6E4500BCDF2E /* ScreenPickExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScreenPickExample.h; sourceTree = "<group>"; };
 		18143894192B6E4500BCDF2E /* ScreenUnprojectExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ScreenUnprojectExample.cpp; sourceTree = "<group>"; };
 		18143895192B6E4500BCDF2E /* ScreenUnprojectExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScreenUnprojectExample.h; sourceTree = "<group>"; };
-		18143897192B6E4500BCDF2E /* SearchExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchExample.cpp; sourceTree = "<group>"; };
-		18143898192B6E4500BCDF2E /* SearchExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchExample.h; sourceTree = "<group>"; };
 		1814389A192B6E4500BCDF2E /* SingleCityExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SingleCityExample.cpp; sourceTree = "<group>"; };
 		1814389B192B6E4500BCDF2E /* SingleCityExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SingleCityExample.h; sourceTree = "<group>"; };
 		1814389D192B6E4500BCDF2E /* ToggleTrafficExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ToggleTrafficExample.cpp; sourceTree = "<group>"; };
@@ -225,8 +217,6 @@
 		18997182192CABBE00E0E9F1 /* EnvironmentNotifierExampleFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnvironmentNotifierExampleFactory.h; sourceTree = "<group>"; };
 		18997184192CAC5400E0E9F1 /* FileIOExampleFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileIOExampleFactory.cpp; sourceTree = "<group>"; };
 		18997185192CAC5400E0E9F1 /* FileIOExampleFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileIOExampleFactory.h; sourceTree = "<group>"; };
-		18997187192CACDD00E0E9F1 /* KeyboardInputExampleFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KeyboardInputExampleFactory.cpp; sourceTree = "<group>"; };
-		18997188192CACDD00E0E9F1 /* KeyboardInputExampleFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyboardInputExampleFactory.h; sourceTree = "<group>"; };
 		1899718A192CAD9800E0E9F1 /* LoadModelExampleFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LoadModelExampleFactory.cpp; sourceTree = "<group>"; };
 		1899718B192CAD9800E0E9F1 /* LoadModelExampleFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadModelExampleFactory.h; sourceTree = "<group>"; };
 		1899718D192CAE7E00E0E9F1 /* ModifiedRenderingExampleFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ModifiedRenderingExampleFactory.cpp; sourceTree = "<group>"; };
@@ -253,8 +243,6 @@
 		189971AC192CB59F00E0E9F1 /* ScreenPickExampleFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScreenPickExampleFactory.h; sourceTree = "<group>"; };
 		189971AE192CB63500E0E9F1 /* ScreenUnprojectExampleFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ScreenUnprojectExampleFactory.cpp; sourceTree = "<group>"; };
 		189971AF192CB63500E0E9F1 /* ScreenUnprojectExampleFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScreenUnprojectExampleFactory.h; sourceTree = "<group>"; };
-		189971B1192CB6A100E0E9F1 /* SearchExampleFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchExampleFactory.cpp; sourceTree = "<group>"; };
-		189971B2192CB6A100E0E9F1 /* SearchExampleFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchExampleFactory.h; sourceTree = "<group>"; };
 		189971B4192CB77A00E0E9F1 /* SingleCityExampleFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SingleCityExampleFactory.cpp; sourceTree = "<group>"; };
 		189971B5192CB77A00E0E9F1 /* SingleCityExampleFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SingleCityExampleFactory.h; sourceTree = "<group>"; };
 		189971B7192CB83E00E0E9F1 /* ToggleTrafficExampleFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ToggleTrafficExampleFactory.cpp; sourceTree = "<group>"; };
@@ -398,7 +386,6 @@
 				1814385D192B6E4500BCDF2E /* FileIO */,
 				18143860192B6E4500BCDF2E /* IExample.h */,
 				18997164192C8E9900E0E9F1 /* IExampleFactory.h */,
-				18143862192B6E4500BCDF2E /* KeyboardInput */,
 				18143865192B6E4500BCDF2E /* LoadModel */,
 				18143868192B6E4500BCDF2E /* ModifiedRendering */,
 				1814386B192B6E4500BCDF2E /* NavigationGraph */,
@@ -414,7 +401,6 @@
 				1814388D192B6E4500BCDF2E /* RouteThicknessPolicy */,
 				18143890192B6E4500BCDF2E /* ScreenPick */,
 				18143893192B6E4500BCDF2E /* ScreenUnproject */,
-				18143896192B6E4500BCDF2E /* Search */,
 				18143899192B6E4500BCDF2E /* SingleCity */,
 				1814389C192B6E4500BCDF2E /* ToggleTraffic */,
 				1814389F192B6E4500BCDF2E /* TrafficCongestion */,
@@ -511,17 +497,6 @@
 				18997185192CAC5400E0E9F1 /* FileIOExampleFactory.h */,
 			);
 			path = FileIO;
-			sourceTree = "<group>";
-		};
-		18143862192B6E4500BCDF2E /* KeyboardInput */ = {
-			isa = PBXGroup;
-			children = (
-				18143863192B6E4500BCDF2E /* KeyboardInputExample.cpp */,
-				18143864192B6E4500BCDF2E /* KeyboardInputExample.h */,
-				18997187192CACDD00E0E9F1 /* KeyboardInputExampleFactory.cpp */,
-				18997188192CACDD00E0E9F1 /* KeyboardInputExampleFactory.h */,
-			);
-			path = KeyboardInput;
 			sourceTree = "<group>";
 		};
 		18143865192B6E4500BCDF2E /* LoadModel */ = {
@@ -691,17 +666,6 @@
 				189971AF192CB63500E0E9F1 /* ScreenUnprojectExampleFactory.h */,
 			);
 			path = ScreenUnproject;
-			sourceTree = "<group>";
-		};
-		18143896192B6E4500BCDF2E /* Search */ = {
-			isa = PBXGroup;
-			children = (
-				18143897192B6E4500BCDF2E /* SearchExample.cpp */,
-				18143898192B6E4500BCDF2E /* SearchExample.h */,
-				189971B1192CB6A100E0E9F1 /* SearchExampleFactory.cpp */,
-				189971B2192CB6A100E0E9F1 /* SearchExampleFactory.h */,
-			);
-			path = Search;
 			sourceTree = "<group>";
 		};
 		18143899192B6E4500BCDF2E /* SingleCity */ = {
@@ -1070,7 +1034,6 @@
 				181438AC192B6E4500BCDF2E /* EnvironmentFlatteningExample.cpp in Sources */,
 				181438AD192B6E4500BCDF2E /* EnvironmentNotifierExample.cpp in Sources */,
 				1899718F192CAE7E00E0E9F1 /* ModifiedRenderingExampleFactory.cpp in Sources */,
-				181438BF192B6E4500BCDF2E /* SearchExample.cpp in Sources */,
 				18AB38FA192B729F00F15546 /* iOSRouteMatchingExampleViewFactory.mm in Sources */,
 				181438BB192B6E4500BCDF2E /* RouteSimulationAnimationExample.cpp in Sources */,
 				18AB38FE192B729F00F15546 /* ViewController.mm in Sources */,
@@ -1083,7 +1046,6 @@
 				181438B8192B6E4500BCDF2E /* RouteDrawingExample.cpp in Sources */,
 				189971B9192CB83E00E0E9F1 /* ToggleTrafficExampleFactory.cpp in Sources */,
 				18AB38FB192B729F00F15546 /* iOSRouteSimulationExampleView.mm in Sources */,
-				181438AF192B6E4500BCDF2E /* KeyboardInputExample.cpp in Sources */,
 				18AB38FD192B729F00F15546 /* Main.m in Sources */,
 				181438BE192B6E4500BCDF2E /* ScreenUnprojectExample.cpp in Sources */,
 				181438AA192B6E4500BCDF2E /* DebugSphereExample.cpp in Sources */,
@@ -1111,7 +1073,6 @@
 				18E6277F192F833A00B31DCE /* iOSExampleControllerView.mm in Sources */,
 				189971C2192CBFFE00E0E9F1 /* RouteMatchingExampleFactory.cpp in Sources */,
 				189971C5192CC21600E0E9F1 /* RouteSimulationExampleFactory.cpp in Sources */,
-				18997189192CACDD00E0E9F1 /* KeyboardInputExampleFactory.cpp in Sources */,
 				18997192192CAF5F00E0E9F1 /* NavigationGraphExampleFactory.cpp in Sources */,
 				18AB38FC192B729F00F15546 /* iOSRouteSimulationExampleViewFactory.mm in Sources */,
 				181438AE192B6E4500BCDF2E /* FileIOExample.cpp in Sources */,
@@ -1126,7 +1087,6 @@
 				181438C0192B6E4500BCDF2E /* SingleCityExample.cpp in Sources */,
 				181438B9192B6E4500BCDF2E /* RouteMatchingExample.cpp in Sources */,
 				189971BC192CB8B800E0E9F1 /* TrafficCongestionExampleFactory.cpp in Sources */,
-				189971B3192CB6A100E0E9F1 /* SearchExampleFactory.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
