@@ -29,6 +29,7 @@ namespace Examples
 	, m_themeService(themeService)
 	, m_themeUpdater(themeUpdater)
 	, m_themeRepository(themeRepository)
+	, m_initialCityTheme(themeService.GetCurrentTheme())
     {
 		Eegeo_ASSERT(pProxy != NULL, "JavaHudCrossThreadCommunicationExample pProxy must be non-null.\n");
     }
@@ -87,6 +88,8 @@ namespace Examples
 		//delete the persistent references to the class and object
 		env->DeleteGlobalRef(m_themeReaderWriterHudClass);
 		env->DeleteGlobalRef(m_themeReaderWriterHud);
+
+        m_themeService.SetSpecificTheme(m_initialCityTheme);
 	}
 
     void JavaHudCrossThreadCommunicationExample::SetCurrentThemeByName(const std::string& themeName)

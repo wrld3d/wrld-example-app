@@ -11,6 +11,7 @@
 #include "IExample.h"
 #include "AndroidNativeState.h"
 #include "CityThemes.h"
+#include "CityThemeData.h"
 #include <string>
 #include <jni.h>
 
@@ -25,6 +26,7 @@ namespace Examples
 		Eegeo::Resources::CityThemes::ICityThemeRepository& m_themeRepository;
 		Eegeo::Resources::CityThemes::ICityThemesUpdater& m_themeUpdater;
 		JavaHudCrossThreadCommunicationProxy* m_pProxy;
+        Eegeo::Resources::CityThemes::CityThemeData m_initialCityTheme;
 
     	jclass m_themeReaderWriterHudClass;
     	jobject m_themeReaderWriterHud;

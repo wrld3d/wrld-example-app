@@ -17,9 +17,10 @@ namespace Examples
     class EnvironmentFlatteningExample : public IExample
     {
     private:
-        long long lastToggle;
-        bool scaleUp;
-        Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService;
+        long long m_lastToggle;
+        bool m_scaleUp;
+        Eegeo::Rendering::EnvironmentFlatteningService& m_environmentFlatteningService;
+        float m_initialEnvironmentScale;
         
     public:
         EnvironmentFlatteningExample(Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService);
@@ -30,7 +31,7 @@ namespace Examples
         void Start() {}
         void Update(float dt);
         void Draw() {}
-        void Suspend() {}
+        void Suspend();
     };
 }
 

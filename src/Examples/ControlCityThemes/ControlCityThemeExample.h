@@ -11,17 +11,19 @@
 
 #include "IExample.h"
 #include "CityThemes.h"
+#include "CityThemeData.h"
 
 namespace Examples
 {
     class ControlCityThemeExample : public IExample
     {
     private:
-        Eegeo::Resources::CityThemes::ICityThemesService& themeService;
-        Eegeo::Resources::CityThemes::ICityThemeRepository& themeRepository;
-        Eegeo::Resources::CityThemes::ICityThemesUpdater& themeUpdater;
-        Eegeo::EegeoWorld& eegeoWorld;
-        bool themeChanged;
+        Eegeo::Resources::CityThemes::ICityThemesService& m_themeService;
+        Eegeo::Resources::CityThemes::ICityThemeRepository& m_themeRepository;
+        Eegeo::Resources::CityThemes::ICityThemesUpdater& m_themeUpdater;
+        Eegeo::EegeoWorld& m_eegeoWorld;
+        bool m_themeChanged;
+        Eegeo::Resources::CityThemes::CityThemeData m_initialCityTheme;
 
         void ChangeTheme();
         void FindThemeByPointInPolygon();
@@ -37,7 +39,7 @@ namespace Examples
         void Start() {}
         void Update(float dt);
         void Draw() {}
-        void Suspend() {}
+        void Suspend();
     };
 }
 

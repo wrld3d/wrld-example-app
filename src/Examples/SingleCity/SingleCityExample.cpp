@@ -33,7 +33,6 @@ namespace
                            bool& canRefineIntersectedKey,
                            double& intersectedNodeDepthSortSignedDistance)
         {
-            canRefineIntersectedKey = true;
             intersectedNodeDepthSortSignedDistance = 0.0;
             
             printf("Testing %s in volume...\n", key.ToString().c_str());
@@ -49,6 +48,7 @@ namespace
                 printf("%s in volume!\n", key.ToString().c_str());
                 
                 m_interesectedKeys.push_back(key);
+                canRefineIntersectedKey = true;
                 
                 return true;
             }
@@ -57,6 +57,7 @@ namespace
                 printf("%s NOT in volume...\n", key.ToString().c_str());
             }
             
+            canRefineIntersectedKey = false;
             return false;
         }
         

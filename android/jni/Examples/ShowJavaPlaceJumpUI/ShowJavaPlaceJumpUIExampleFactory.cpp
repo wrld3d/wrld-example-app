@@ -12,8 +12,10 @@ using namespace Examples;
 
 ShowJavaPlaceJumpUIExampleFactory::ShowJavaPlaceJumpUIExampleFactory(
 		ExampleCameraJumpController& exampleCameraJumpController,
+		Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController,
 		AndroidNativeState& nativeState)
 : m_exampleCameraJumpController(exampleCameraJumpController)
+, m_cameraController(cameraController)
 , m_nativeState(nativeState)
 {
 
@@ -23,6 +25,7 @@ IExample* ShowJavaPlaceJumpUIExampleFactory::CreateExample() const
 {
 	return new Examples::ShowJavaPlaceJumpUIExample(
 			m_nativeState,
+			m_cameraController,
 			m_exampleCameraJumpController);
 }
 

@@ -50,17 +50,24 @@ namespace
 namespace Examples
 {
     ControlCityThemeExample::ControlCityThemeExample(Eegeo::Resources::CityThemes::ICityThemesService& themeService,
-                                           Eegeo::Resources::CityThemes::ICityThemeRepository& themeRepository,
-                                           Eegeo::Resources::CityThemes::ICityThemesUpdater& themeUpdater,
-                                           Eegeo::EegeoWorld& eegeoWorld)
-    :themeService(themeService)
-    ,themeRepository(themeRepository)
-    ,themeUpdater(themeUpdater)
-    ,eegeoWorld(eegeoWorld)
-    ,themeChanged(false)
+                                                     Eegeo::Resources::CityThemes::ICityThemeRepository& themeRepository,
+                                                     Eegeo::Resources::CityThemes::ICityThemesUpdater& themeUpdater,
+                                                     Eegeo::EegeoWorld& eegeoWorld)
+    :m_themeService(themeService)
+    ,m_themeRepository(themeRepository)
+    ,m_themeUpdater(themeUpdater)
+    ,m_eegeoWorld(eegeoWorld)
+    ,m_themeChanged(false)
+    ,m_initialCityTheme(themeService.GetCurrentTheme())
     {
     }
-
+    
+    void ControlCityThemeExample::Suspend()
+    {
+        m_themeService.SetSpecificTheme(m_initialCityTheme);
+        m_themeUpdater.SetEnabled(true);
+    }
+    
     // This method does the following:
     // 1. Disables ICityThemesUpdater - so the App is in sole control of what Theme is active
     // 2. Sets "SummerNewYork" as the current Theme.
@@ -71,15 +78,15 @@ namespace Examples
         EXAMPLE_LOG("Starting City Theme Control Example\n");
         
         EXAMPLE_LOG("Disabling ICityThemesUpdater control over theme selection\n");
-        themeUpdater.SetEnabled(false);
-        const bool enabled = themeUpdater.GetEnabled();
+        m_themeUpdater.SetEnabled(false);
+        const bool enabled = m_themeUpdater.GetEnabled();
         EXAMPLE_LOG("ICityThemesUpdater control over theme selection: %d\n", enabled);
         
         EXAMPLE_LOG("Obtaining %s ThemeData\n", themeToSelect.c_str());
-        const Eegeo::Resources::CityThemes::CityThemeData& themeDataToSelect = themeRepository.GetThemeDataByName(themeToSelect);
+        const Eegeo::Resources::CityThemes::CityThemeData& themeDataToSelect = m_themeRepository.GetThemeDataByName(themeToSelect);
         
         EXAMPLE_LOG("Setting %s Theme\n", themeToSelect.c_str());
-        themeService.SetSpecificTheme(themeDataToSelect);
+        m_themeService.SetSpecificTheme(themeDataToSelect);
         EXAMPLE_LOG("%s Theme will now be downloaded and applied asynchronsly. It will remain active until SetSpecificTheme is called again\n", themeToSelect.c_str());
     }
     
@@ -89,10 +96,10 @@ namespace Examples
 		Eegeo::v2 osakav2(osaka.GetLatitudeInDegrees(), osaka.GetLongitudeInDegrees());
 
 		// enumerate all of the themes in the theme repository
-		int numberOfThemes = themeRepository.GetNumberOfThemes();
+		int numberOfThemes = m_themeRepository.GetNumberOfThemes();
 		for (int i=0; i<numberOfThemes; ++i)
 		{
-			const Eegeo::Resources::CityThemes::CityThemeData& themeData = themeRepository.GetCityThemeAt(i);
+			const Eegeo::Resources::CityThemes::CityThemeData& themeData = m_themeRepository.GetCityThemeAt(i);
 			if (themeData.PolygonBounds.size() > 0) // there are points in the bounding polygon
 			{
 				std::vector<Eegeo::v2> polygon;
@@ -109,14 +116,14 @@ namespace Examples
 
     void ControlCityThemeExample::Update(float dt)
     {
-        if (!themeChanged)
+        if (!m_themeChanged)
         {
             // This is required so that the theme manifest can be downloaded. Changing theme before EegeoWorld is Initialised will result in ICityThemeRepository being empty.
-            if (!eegeoWorld.Initialising())
+            if (!m_eegeoWorld.Initialising())
             {
                 ChangeTheme();
                 FindThemeByPointInPolygon();
-                themeChanged = true;
+                m_themeChanged = true;
             }
         }
     }

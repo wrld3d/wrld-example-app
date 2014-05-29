@@ -17,8 +17,8 @@ namespace Examples
     class ToggleTrafficExample : public IExample
     {
     private:
-        long long lastToggle;
-        Eegeo::Traffic::TrafficSimulationController& trafficSimulation;
+        long long m_lastToggle;
+        Eegeo::Traffic::TrafficSimulationController& m_trafficSimulation;
         
     public:
         ToggleTrafficExample(Eegeo::Traffic::TrafficSimulationController& trafficSimulation);
@@ -29,7 +29,7 @@ namespace Examples
         void Start() {}
         void Update(float dt);
         void Draw() {}
-        void Suspend() {}
+        void Suspend();
     };
 }
 

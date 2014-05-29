@@ -12,6 +12,8 @@
 #include "AndroidNativeState.h"
 #include "LatLongAltitude.h"
 #include "Camera.h"
+#include "GlobeCameraController.h"
+#include "EcefTangentBasis.h"
 
 #include <pthread.h>
 #include <map>
@@ -49,6 +51,9 @@ namespace Examples
     	std::map<std::string, ViewLocation> m_locations;
     	AndroidNativeState& m_nativeState;
         Eegeo::Camera::ICameraJumpController& m_cameraJumpController;
+		Eegeo::Camera::GlobeCamera::GlobeCameraController& m_cameraController;
+		Eegeo::Space::EcefTangentBasis m_initialBasis;
+		float m_initialDistance;
 
     	jclass m_placeJumpMenuClass;
     	jobject m_placeJumpMenu;
@@ -59,6 +64,7 @@ namespace Examples
     public:
     	ShowJavaPlaceJumpUIExample(
     			AndroidNativeState& pNativeState,
+    			Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController,
     			Eegeo::Camera::ICameraJumpController& cameraJumpController);
 
     	void JumpToLocation(const std::string& location);
