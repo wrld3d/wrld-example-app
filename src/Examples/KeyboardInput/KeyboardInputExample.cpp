@@ -12,8 +12,10 @@
 using namespace Examples;
 using namespace Eegeo::UI::NativeInput;
 
-KeyboardInputExample::KeyboardInputExample(Eegeo::UI::NativeInput::IKeyboardInputFactory& keyboardInputFactory) :
+KeyboardInputExample::KeyboardInputExample(Eegeo::UI::NativeInput::IKeyboardInputFactory& keyboardInputFactory,
+                                           Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController) :
 keyboardInputFactory(keyboardInputFactory)
+,m_globeCameraStateRestorer(cameraController)
 {
 }
 

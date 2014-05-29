@@ -41,11 +41,13 @@ namespace Examples
         Eegeo::Routes::Style::Thickness::IdentityRouteThicknessPolicy m_identityRouteThicknessPolicy;
         Eegeo::Routes::Style::Thickness::LinearAltitudeBasedRouteThicknessPolicy m_linearAltitudeBasedRouteThicknessPolicy;
         MyScalingRouteThicknessPolicy m_myScalingRouteThicknessPolicy;
+        GlobeCameraStateRestorer m_globeCameraStateRestorer;
         
     public:
         RouteThicknessPolicyExample(Eegeo::Routes::RouteService& routeService,
                                     Eegeo::Rendering::RenderContext& renderContext,
-                                    Eegeo::EegeoWorld& eegeoWorld);
+                                    Eegeo::EegeoWorld& eegeoWorld,
+                                    Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController);
         
         static std::string GetName() { return "RouteThicknessPolicyExample"; }
         std::string Name() const { return GetName(); }

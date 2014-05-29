@@ -12,15 +12,18 @@
 
 using namespace Examples;
 
-KeyboardInputExampleFactory::KeyboardInputExampleFactory(Eegeo::EegeoWorld& world)
+KeyboardInputExampleFactory::KeyboardInputExampleFactory(Eegeo::EegeoWorld& world,
+                                                         Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController)
 : m_world(world)
+, m_globeCameraController(globeCameraController)
 {
     
 }
 
 IExample* KeyboardInputExampleFactory::CreateExample() const
 {
-    return new Examples::KeyboardInputExample(m_world.GetNativeUIFactories().IKeyboardInputFactory());
+    return new Examples::KeyboardInputExample(m_world.GetNativeUIFactories().IKeyboardInputFactory(),
+                                              m_globeCameraController);
 }
 
 std::string KeyboardInputExampleFactory::ExampleName() const

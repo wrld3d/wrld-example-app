@@ -64,8 +64,10 @@ namespace {
 
 namespace Examples
 {
-    WebRequestExample::WebRequestExample(IWebLoadRequestFactory& webRequestFactory)
+    WebRequestExample::WebRequestExample(IWebLoadRequestFactory& webRequestFactory,
+                                         Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController)
     :webRequestFactory(webRequestFactory)
+    ,m_globeCameraStateRestorer(cameraController)
     {
     }
     

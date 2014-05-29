@@ -18,9 +18,11 @@ namespace Examples
     class ModifiedRenderingExampleFactory : public IExampleFactory
     {
         Eegeo::EegeoWorld& m_world;
+        Eegeo::Camera::GlobeCamera::GlobeCameraController& m_globeCameraController;
         
     public:
-        ModifiedRenderingExampleFactory(Eegeo::EegeoWorld& world);
+        ModifiedRenderingExampleFactory(Eegeo::EegeoWorld& world,
+                                        Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController);
 
         std::string ExampleName() const;
         

@@ -25,14 +25,16 @@ namespace Examples
         Eegeo::Helpers::IFileIO& fileIO;
         Eegeo::Rendering::AsyncTexturing::IAsyncTextureRequestor& textureRequestor;
         Eegeo::Lighting::GlobalFogging& globalFogging;
+        GlobeCameraStateRestorer m_globeCameraStateRestorer;
         
         Eegeo::Model* pModel;
         
     public:
         PODAnimationExample(Eegeo::Rendering::RenderContext& renderContext,
-                         Eegeo::Helpers::IFileIO& fileIO,
-                         Eegeo::Rendering::AsyncTexturing::IAsyncTextureRequestor& textureRequestor,
-                         Eegeo::Lighting::GlobalFogging& fogging);
+                            Eegeo::Helpers::IFileIO& fileIO,
+                            Eegeo::Rendering::AsyncTexturing::IAsyncTextureRequestor& textureRequestor,
+                            Eegeo::Lighting::GlobalFogging& fogging,
+                            Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController);
         
         static std::string GetName() { return "PODAnimationExample"; }
         std::string Name() const { return GetName(); }

@@ -15,11 +15,13 @@ using namespace Eegeo::Helpers::Time;
 
 #define ENVIRONMENT_FLATTEN_DIRECTION_SWITCH_DELAY_MILLISECONDS 5000
 
-EnvironmentFlatteningExample::EnvironmentFlatteningExample(Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService)
+EnvironmentFlatteningExample::EnvironmentFlatteningExample(Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
+                                                           Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController)
 :m_environmentFlatteningService(environmentFlatteningService)
 ,m_lastToggle(MillisecondsSinceEpoch())
 ,m_scaleUp(true)
 ,m_initialEnvironmentScale(environmentFlatteningService.GetCurrentScale())
+,m_globeCameraStateRestorer(cameraController)
 {
 }
 

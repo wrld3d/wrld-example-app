@@ -34,6 +34,7 @@ namespace Examples
         AndroidNativeState& m_nativeState;
         Eegeo::Rendering::RenderContext& m_renderContext;
         Eegeo::EegeoWorld& m_world;
+        GlobeCameraStateRestorer m_globeCameraStateRestorer;
 
         int m_buttonID;
         jclass m_hudPinControllerClass;
@@ -54,7 +55,8 @@ namespace Examples
                     Eegeo::Rendering::RenderableFilters& renderableFilters,
                     const Eegeo::Camera::ICameraProvider& cameraProvider,
                     Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider,
-                    Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService
+                    Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
+                    Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController
                     );
         virtual ~PinsWithAttachedJavaUIExample();
 

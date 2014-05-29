@@ -18,9 +18,11 @@ namespace Examples
     class PinOverModelExampleFactory : public IExampleFactory
     {
         Eegeo::EegeoWorld& m_world;
+        Eegeo::Camera::GlobeCamera::GlobeCameraController& m_globeCameraController;
         
     public:
-        PinOverModelExampleFactory(Eegeo::EegeoWorld& world);
+        PinOverModelExampleFactory(Eegeo::EegeoWorld& world,
+                                   Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController);
 
         std::string ExampleName() const;
         

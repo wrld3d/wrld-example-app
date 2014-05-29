@@ -24,6 +24,7 @@ namespace Examples
         Eegeo::Web::PrecacheService& m_precacheService;
         Eegeo::Streaming::StreamingVolumeController& m_streamingVolumeController;
         Eegeo::EegeoWorld& m_world;
+        GlobeCameraStateRestorer m_globeCameraStateRestorer;
         
         bool m_startedPrecaching;
         bool m_precacheComplete;
@@ -34,7 +35,8 @@ namespace Examples
         SingleCityExample(Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCamera,
                           Eegeo::Web::PrecacheService& precacheService,
                           Eegeo::Streaming::StreamingVolumeController& streamingVolumeController,
-                          Eegeo::EegeoWorld& world);
+                          Eegeo::EegeoWorld& world,
+                          Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController);
         
         static std::string GetName() { return "SingleCityExample"; }
         std::string Name() const { return GetName(); }

@@ -16,13 +16,15 @@ namespace Examples
         std::vector<Eegeo::DebugRendering::SphereMesh*> renderables;
         Eegeo::Rendering::RenderContext& renderContext;
         Eegeo::Space::LatLongAltitude interestLocation;
+        GlobeCameraStateRestorer m_globeCameraStateRestorer;
         
         void AddSphere(Eegeo::Space::LatLongAltitude sphereLocation,
                        Eegeo::v3 color);
         
     public:
         DebugSphereExample(Eegeo::Rendering::RenderContext& renderContext,
-                           Eegeo::Space::LatLongAltitude interestLocation);
+                           Eegeo::Space::LatLongAltitude interestLocation,
+                           Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController);
 
         static std::string GetName() { return "DebugSphereExample"; }
         std::string Name() const { return GetName(); }

@@ -22,6 +22,7 @@ namespace Examples
     	AndroidNativeState& m_nativeState;
     	Eegeo::Rendering::RenderContext& m_renderContext;
 		Eegeo::EegeoWorld& m_world;
+        GlobeCameraStateRestorer m_globeCameraStateRestorer;
 
     	int m_buttonID;
     	jclass m_hudPinControllerClass;
@@ -32,7 +33,8 @@ namespace Examples
     	PositionJavaPinButtonExample(
     			Eegeo::EegeoWorld& world,
     			AndroidNativeState& pNativeState,
-    			Eegeo::Rendering::RenderContext& renderContext);
+    			Eegeo::Rendering::RenderContext& renderContext,
+                Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController);
 
         static std::string GetName() { return "PositionJavaPinButtonExample"; }
         std::string Name() const { return GetName(); }

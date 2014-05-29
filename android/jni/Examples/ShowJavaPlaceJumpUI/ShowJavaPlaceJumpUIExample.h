@@ -51,9 +51,7 @@ namespace Examples
     	std::map<std::string, ViewLocation> m_locations;
     	AndroidNativeState& m_nativeState;
         Eegeo::Camera::ICameraJumpController& m_cameraJumpController;
-		Eegeo::Camera::GlobeCamera::GlobeCameraController& m_cameraController;
-		Eegeo::Space::EcefTangentBasis m_initialBasis;
-		float m_initialDistance;
+        GlobeCameraStateRestorer m_globeCameraStateRestorer;
 
     	jclass m_placeJumpMenuClass;
     	jobject m_placeJumpMenu;

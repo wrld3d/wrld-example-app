@@ -13,8 +13,10 @@
 
 using namespace Examples;
 
-DebugSphereExampleFactory::DebugSphereExampleFactory(Eegeo::EegeoWorld& world)
+DebugSphereExampleFactory::DebugSphereExampleFactory(Eegeo::EegeoWorld& world,
+                                                     Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController)
 : m_world(world)
+, m_globeCameraController(globeCameraController)
 {
     
 }
@@ -22,7 +24,8 @@ DebugSphereExampleFactory::DebugSphereExampleFactory(Eegeo::EegeoWorld& world)
 IExample* DebugSphereExampleFactory::CreateExample() const
 {
     return new Examples::DebugSphereExample(m_world.GetRenderContext(),
-                                            Eegeo::Space::LatLongAltitude::FromECEF(m_world.GetInterestPointProvider().GetEcefInterestPoint()));
+                                            Eegeo::Space::LatLongAltitude::FromECEF(m_world.GetInterestPointProvider().GetEcefInterestPoint()),
+                                            m_globeCameraController);
 }
 
 std::string DebugSphereExampleFactory::ExampleName() const

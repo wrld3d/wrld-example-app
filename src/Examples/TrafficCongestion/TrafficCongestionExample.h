@@ -15,10 +15,12 @@ namespace Examples
         float m_timeAccumulator;
         Eegeo::Streaming::MortonKey m_key;
         int m_congestionValue;
+        GlobeCameraStateRestorer m_globeCameraStateRestorer;
         
     public:
         TrafficCongestionExample(
-                Eegeo::TrafficCongestion::ITrafficCongestionService& trafficCongestionService);
+                                 Eegeo::TrafficCongestion::ITrafficCongestionService& trafficCongestionService,
+                                 Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController);
         
         static std::string GetName() { return "TrafficCongestionExample"; }
         std::string Name() const { return GetName(); }

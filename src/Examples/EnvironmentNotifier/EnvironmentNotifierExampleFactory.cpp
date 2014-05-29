@@ -11,8 +11,10 @@
 
 using namespace Examples;
 
-EnvironmentNotifierExampleFactory::EnvironmentNotifierExampleFactory(Eegeo::EegeoWorld& world)
+EnvironmentNotifierExampleFactory::EnvironmentNotifierExampleFactory(Eegeo::EegeoWorld& world,
+                                                                     Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController)
 : m_world(world)
+, m_globeCameraController(globeCameraController)
 {
     
 }
@@ -20,7 +22,8 @@ EnvironmentNotifierExampleFactory::EnvironmentNotifierExampleFactory(Eegeo::Eege
 IExample* EnvironmentNotifierExampleFactory::CreateExample() const
 {
     return new Examples::EnvironmentNotifierExample(m_world.GetRenderContext(),
-                                                    m_world.GetTerrainStreaming());
+                                                    m_world.GetTerrainStreaming(),
+                                                    m_globeCameraController);
 }
 
 std::string EnvironmentNotifierExampleFactory::ExampleName() const

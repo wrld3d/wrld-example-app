@@ -11,8 +11,10 @@
 
 using namespace Examples;
 
-PinsExampleFactory::PinsExampleFactory(Eegeo::EegeoWorld& world)
+PinsExampleFactory::PinsExampleFactory(Eegeo::EegeoWorld& world,
+                                       Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController)
 : m_world(world)
+, m_globeCameraController(globeCameraController)
 {
     
 }
@@ -28,7 +30,8 @@ IExample* PinsExampleFactory::CreateExample() const
                                      m_world.GetRenderableFilters(),
                                      m_world.GetCameraProvider(),
                                      m_world.GetTerrainHeightProvider(),
-                                     m_world.GetEnvironmentFlatteningService());
+                                     m_world.GetEnvironmentFlatteningService(),
+                                     m_globeCameraController);
 }
 
 std::string PinsExampleFactory::ExampleName() const

@@ -12,9 +12,11 @@ using namespace Examples;
 
 PinsWithAttachedJavaUIExampleFactory::PinsWithAttachedJavaUIExampleFactory(
 		Eegeo::EegeoWorld& world,
-		AndroidNativeState& nativeState)
+		AndroidNativeState& nativeState,
+        Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController)
 : m_world(world)
 , m_nativeState(nativeState)
+, m_globeCameraController(globeCameraController)
 {
 
 }
@@ -34,7 +36,8 @@ IExample* PinsWithAttachedJavaUIExampleFactory::CreateExample() const
 			m_world.GetRenderableFilters(),
 			m_world.GetCameraProvider(),
 			m_world.GetTerrainHeightProvider(),
-			m_world.GetEnvironmentFlatteningService());
+			m_world.GetEnvironmentFlatteningService(),
+			m_globeCameraController);
 }
 
 std::string PinsWithAttachedJavaUIExampleFactory::ExampleName() const

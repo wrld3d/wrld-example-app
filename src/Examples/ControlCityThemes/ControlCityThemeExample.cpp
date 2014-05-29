@@ -52,13 +52,15 @@ namespace Examples
     ControlCityThemeExample::ControlCityThemeExample(Eegeo::Resources::CityThemes::ICityThemesService& themeService,
                                                      Eegeo::Resources::CityThemes::ICityThemeRepository& themeRepository,
                                                      Eegeo::Resources::CityThemes::ICityThemesUpdater& themeUpdater,
-                                                     Eegeo::EegeoWorld& eegeoWorld)
+                                                     Eegeo::EegeoWorld& eegeoWorld,
+                                                     Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController)
     :m_themeService(themeService)
     ,m_themeRepository(themeRepository)
     ,m_themeUpdater(themeUpdater)
     ,m_eegeoWorld(eegeoWorld)
     ,m_themeChanged(false)
     ,m_initialCityTheme(themeService.GetCurrentTheme())
+    ,m_globeCameraStateRestorer(cameraController)
     {
     }
     

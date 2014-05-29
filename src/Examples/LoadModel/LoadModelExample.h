@@ -60,6 +60,7 @@ namespace Examples
         Eegeo::Rendering::AsyncTexturing::IAsyncTextureRequestor& textureRequestor;
         Eegeo::Space::LatLongAltitude interestLocation;
         Eegeo::Lighting::GlobalFogging& globalFogging;
+        GlobeCameraStateRestorer m_globeCameraStateRestorer;
    
         Eegeo::Model* pModel;
         BoundsVisualiser boundsVisualiser;
@@ -72,7 +73,8 @@ namespace Examples
                          Eegeo::Space::LatLongAltitude interestLocation,
                          Eegeo::Helpers::IFileIO& fileIO,
                          Eegeo::Rendering::AsyncTexturing::IAsyncTextureRequestor& textureRequestor,
-                         Eegeo::Lighting::GlobalFogging& fogging);
+                         Eegeo::Lighting::GlobalFogging& fogging,
+                         Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController);
         
         static std::string GetName() { return "LoadModelExample"; }
         std::string Name() const { return GetName(); }

@@ -20,13 +20,15 @@ namespace Examples
     private:
         Eegeo::Resources::ResourceSpatialQueryService& resourceSpatialQueryService;
         Eegeo::Location::IInterestPointProvider& interestPointProvider;
+        GlobeCameraStateRestorer m_globeCameraStateRestorer;
         
         Eegeo::Streaming::MortonKey key;
         int numBuildings;
         
     public:
         ResourceSpatialQueryExample(Eegeo::Resources::ResourceSpatialQueryService& resourceSpatialQueryService,
-                                    Eegeo::Location::IInterestPointProvider& interestPointProvider);
+                                    Eegeo::Location::IInterestPointProvider& interestPointProvider,
+                                    Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController);
         
         static std::string GetName() { return "ResourceSpatialQueryExample"; }
         std::string Name() const { return GetName(); }

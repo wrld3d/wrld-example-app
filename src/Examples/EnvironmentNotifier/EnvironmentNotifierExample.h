@@ -39,13 +39,15 @@ namespace Examples
         Eegeo::Rendering::RenderContext& renderContext;
         Eegeo::Resources::Terrain::TerrainStreaming& terrainStreaming;
         EnvironmentNotifierExampleTerrainStreamObserver* observer;
+        GlobeCameraStateRestorer m_globeCameraStateRestorer;
         
         std::map<Eegeo::Streaming::MortonKey, Eegeo::DebugRendering::SphereMesh*, Eegeo::Streaming::MortonKeyCompare> renderables;
         
         
     public:
         EnvironmentNotifierExample(Eegeo::Rendering::RenderContext& renderContext,
-                                   Eegeo::Resources::Terrain::TerrainStreaming& terrainStreaming);
+                                   Eegeo::Resources::Terrain::TerrainStreaming& terrainStreaming,
+                                   Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController);
         
         static std::string GetName() { return "EnvironmentNotifierExample"; }
         std::string Name() const { return GetName(); }

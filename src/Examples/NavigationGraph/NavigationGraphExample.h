@@ -44,6 +44,7 @@ namespace Examples
         
         Eegeo::Rendering::RenderContext& renderContext;
         Eegeo::Resources::Roads::Navigation::NavigationGraphRepository& navigationGraphRepository;
+        GlobeCameraStateRestorer m_globeCameraStateRestorer;
         
         Added addedHandler;
         Removed removedHandler;
@@ -51,7 +52,8 @@ namespace Examples
         
     public:
         NavigationGraphExample(Eegeo::Rendering::RenderContext& renderContext,
-                               Eegeo::Resources::Roads::Navigation::NavigationGraphRepository& navigationGraphRepository);
+                               Eegeo::Resources::Roads::Navigation::NavigationGraphRepository& navigationGraphRepository,
+                               Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController);
 
         static std::string GetName() { return "NavigationGraphExample"; }
         std::string Name() const { return GetName(); }

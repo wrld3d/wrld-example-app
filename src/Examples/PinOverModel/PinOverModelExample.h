@@ -67,6 +67,7 @@ namespace Examples
         Eegeo::Rendering::AsyncTexturing::IAsyncTextureRequestor& textureRequestor;
         Eegeo::Lighting::GlobalFogging& globalFogging;
         Eegeo::Rendering::RenderableFilters& renderableFilters;
+        GlobeCameraStateRestorer m_globeCameraStateRestorer;
         
         Eegeo::Model* pModel;
         Eegeo::Rendering::Materials::NullMaterial& nullMat;
@@ -90,7 +91,8 @@ namespace Examples
                             Eegeo::Helpers::IFileIO& fileIO,
                             Eegeo::Rendering::AsyncTexturing::IAsyncTextureRequestor& textureRequestor,
                             Eegeo::Lighting::GlobalFogging& fogging,
-                            Eegeo::Rendering::Materials::NullMaterial& nullMat
+                            Eegeo::Rendering::Materials::NullMaterial& nullMat,
+                            Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController
                             );
         
         virtual ~PinOverModelExample();

@@ -9,7 +9,6 @@
 #include "Location.h"
 #include "GlobeCamera.h"
 #include "VectorMath.h"
-#include "EcefTangentBasis.h"
 
 namespace Examples
 {
@@ -51,9 +50,8 @@ namespace Examples
         Eegeo::Camera::GlobeCamera::GlobeCameraController& m_cameraController;
         Eegeo::Location::IInterestPointProvider& m_interestPointProvider;
         CameraTransitioner m_transitioner;
+        GlobeCameraStateRestorer m_globeCameraStateRestorer;
         bool m_firstPoint;
-        Eegeo::Space::EcefTangentBasis m_initialEcefTangentBasis;
-        float m_initialDistance;
         
         void Transition();
 
@@ -68,7 +66,7 @@ namespace Examples
         void EarlyUpdate(float dt);
         void Update(float dt) { }
         void Draw() {}
-        void Suspend();
+        void Suspend() {}
         
         void UpdateCamera(Eegeo::Camera::GlobeCamera::GlobeCameraController* pGlobeCameraController,
                                   Eegeo::Camera::GlobeCamera::GlobeCameraTouchController* pCameraTouchController,

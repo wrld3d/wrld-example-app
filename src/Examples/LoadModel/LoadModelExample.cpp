@@ -12,7 +12,8 @@ namespace Examples
                                        Eegeo::Space::LatLongAltitude interestLocation,
                                        Eegeo::Helpers::IFileIO& fileIO,
                                        Eegeo::Rendering::AsyncTexturing::IAsyncTextureRequestor& textureRequestor,
-                                       Eegeo::Lighting::GlobalFogging& fogging)
+                                       Eegeo::Lighting::GlobalFogging& fogging,
+                                       Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController)
     :renderContext(renderContext)
     ,interestLocation(interestLocation)
     ,fileIO(fileIO)
@@ -22,6 +23,7 @@ namespace Examples
     ,globalFogging(fogging)
     ,discMaterial(NULL)
     ,elapsedTime(0.0f)
+    ,m_globeCameraStateRestorer(cameraController)
     {
     }
     

@@ -14,10 +14,12 @@ using namespace Examples;
 JavaHudCrossThreadCommunicationExampleFactory::JavaHudCrossThreadCommunicationExampleFactory(
 		Eegeo::EegeoWorld& world,
 		AndroidNativeState& nativeState,
-    	Eegeo::Messaging::MessageQueue<IAndroidExampleMessage*>& messageQueue)
+    	Eegeo::Messaging::MessageQueue<IAndroidExampleMessage*>& messageQueue,
+        Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController)
 : m_world(world)
 , m_nativeState(nativeState)
 , m_messageQueue(messageQueue)
+, m_globeCameraController(globeCameraController)
 {
 
 }
@@ -31,7 +33,8 @@ IExample* JavaHudCrossThreadCommunicationExampleFactory::CreateExample() const
     		pProxy,
     		m_world.GetCityThemesService(),
     		m_world.GetCityThemesRepository(),
-    		m_world.GetCityThemesUpdater());
+    		m_world.GetCityThemesUpdater(),
+    		m_globeCameraController);
 }
 
 std::string JavaHudCrossThreadCommunicationExampleFactory::ExampleName() const

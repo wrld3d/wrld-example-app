@@ -18,9 +18,11 @@ namespace Examples
     class PinsExampleFactory : public IExampleFactory
     {
         Eegeo::EegeoWorld& m_world;
+        Eegeo::Camera::GlobeCamera::GlobeCameraController& m_globeCameraController;
         
     public:
-        PinsExampleFactory(Eegeo::EegeoWorld& world);
+        PinsExampleFactory(Eegeo::EegeoWorld& world,
+                           Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController);
 
         std::string ExampleName() const;
         

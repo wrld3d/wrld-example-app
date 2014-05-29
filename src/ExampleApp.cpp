@@ -98,32 +98,32 @@ ExampleApp::ExampleApp(Eegeo::EegeoWorld* pWorld,
     
     //register all generic examples
     m_exampleController.RegisterCameraExample<Examples::CameraTransitionExampleFactory>(*m_globeCameraController);
-    m_exampleController.RegisterExample<Examples::ControlCityThemeExampleFactory>();
-    m_exampleController.RegisterExample<Examples::DebugPrimitiveRenderingExampleFactory>();
-    m_exampleController.RegisterExample<Examples::DebugSphereExampleFactory>();
-    m_exampleController.RegisterExample<Examples::DynamicText3DExampleFactory>();
-    m_exampleController.RegisterExample<Examples::EnvironmentFlatteningExampleFactory>();
-    m_exampleController.RegisterExample<Examples::EnvironmentNotifierExampleFactory>();
-    m_exampleController.RegisterExample<Examples::FileIOExampleFactory>();
+    m_exampleController.RegisterCameraExample<Examples::ControlCityThemeExampleFactory>(*m_globeCameraController);
+    m_exampleController.RegisterCameraExample<Examples::DebugPrimitiveRenderingExampleFactory>(*m_globeCameraController);
+    m_exampleController.RegisterCameraExample<Examples::DebugSphereExampleFactory>(*m_globeCameraController);
+    m_exampleController.RegisterCameraExample<Examples::DynamicText3DExampleFactory>(*m_globeCameraController);
+    m_exampleController.RegisterCameraExample<Examples::EnvironmentFlatteningExampleFactory>(*m_globeCameraController);
+    m_exampleController.RegisterCameraExample<Examples::EnvironmentNotifierExampleFactory>(*m_globeCameraController);
+    m_exampleController.RegisterCameraExample<Examples::FileIOExampleFactory>(*m_globeCameraController);
     //m_exampleController.RegisterExample<Examples::KeyboardInputExampleFactory>();
-    m_exampleController.RegisterExample<Examples::LoadModelExampleFactory>();
-    m_exampleController.RegisterExample<Examples::ModifiedRenderingExampleFactory>();
-    m_exampleController.RegisterExample<Examples::NavigationGraphExampleFactory>();
-    m_exampleController.RegisterExample<Examples::Pick3DObjectExampleFactory>();
-    m_exampleController.RegisterExample<Examples::PinsExampleFactory>();
-    m_exampleController.RegisterExample<Examples::PinOverModelExampleFactory>();
-    m_exampleController.RegisterExample<Examples::PODAnimationExampleFactory>();
-    m_exampleController.RegisterExample<Examples::ResourceSpatialQueryExampleFactory>();
-    m_exampleController.RegisterExample<Examples::RouteDrawingExampleFactory>();
+    m_exampleController.RegisterCameraExample<Examples::LoadModelExampleFactory>(*m_globeCameraController);
+    m_exampleController.RegisterCameraExample<Examples::ModifiedRenderingExampleFactory>(*m_globeCameraController);
+    m_exampleController.RegisterCameraExample<Examples::NavigationGraphExampleFactory>(*m_globeCameraController);
+    m_exampleController.RegisterCameraExample<Examples::Pick3DObjectExampleFactory>(*m_globeCameraController);
+    m_exampleController.RegisterCameraExample<Examples::PinsExampleFactory>(*m_globeCameraController);
+    m_exampleController.RegisterCameraExample<Examples::PinOverModelExampleFactory>(*m_globeCameraController);
+    m_exampleController.RegisterCameraExample<Examples::PODAnimationExampleFactory>(*m_globeCameraController);
+    m_exampleController.RegisterCameraExample<Examples::ResourceSpatialQueryExampleFactory>(*m_globeCameraController);
+    m_exampleController.RegisterCameraExample<Examples::RouteDrawingExampleFactory>(*m_globeCameraController);
     m_exampleController.RegisterCameraExample<Examples::RouteSimulationAnimationExampleFactory>(*m_globeCameraController);
-    m_exampleController.RegisterExample<Examples::RouteThicknessPolicyExampleFactory>();
-    m_exampleController.RegisterExample<Examples::ScreenPickExampleFactory>();
-    m_exampleController.RegisterExample<Examples::ScreenUnprojectExampleFactory>();
-    m_exampleController.RegisterExample<Examples::SearchExampleFactory>(); 
+    m_exampleController.RegisterCameraExample<Examples::RouteThicknessPolicyExampleFactory>(*m_globeCameraController);
+    m_exampleController.RegisterCameraExample<Examples::ScreenPickExampleFactory>(*m_globeCameraController);
+    m_exampleController.RegisterCameraExample<Examples::ScreenUnprojectExampleFactory>(*m_globeCameraController);
+    m_exampleController.RegisterExample<Examples::SearchExampleFactory>();
     m_exampleController.RegisterCameraExample<Examples::SingleCityExampleFactory>(*m_globeCameraController);
-    m_exampleController.RegisterExample<Examples::ToggleTrafficExampleFactory>();
-    m_exampleController.RegisterExample<Examples::TrafficCongestionExampleFactory>();
-    m_exampleController.RegisterExample<Examples::WebRequestExampleFactory>();
+    m_exampleController.RegisterCameraExample<Examples::ToggleTrafficExampleFactory>(*m_globeCameraController);
+    m_exampleController.RegisterCameraExample<Examples::TrafficCongestionExampleFactory>(*m_globeCameraController);
+    m_exampleController.RegisterCameraExample<Examples::WebRequestExampleFactory>(*m_globeCameraController);
 }
 
 ExampleApp::~ExampleApp()

@@ -15,9 +15,11 @@ using namespace Eegeo::Helpers::Time;
 
 #define TRAFFIC_ENABLED_SWITCH_DELAY_MILLISECONDS 5000
 
-ToggleTrafficExample::ToggleTrafficExample(Eegeo::Traffic::TrafficSimulationController& trafficSimulation)
+ToggleTrafficExample::ToggleTrafficExample(Eegeo::Traffic::TrafficSimulationController& trafficSimulation,
+                                           Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController)
 :m_trafficSimulation(trafficSimulation)
 ,m_lastToggle(MillisecondsSinceEpoch())
+,m_globeCameraStateRestorer(cameraController)
 {
 }
 

@@ -35,11 +35,13 @@ namespace Examples
         Eegeo::Rendering::RenderContext& m_renderContext;
         Eegeo::Space::LatLongAltitude m_interestLocation;
         Eegeo::Camera::ICameraProvider& m_cameraProvider;
+        GlobeCameraStateRestorer m_globeCameraStateRestorer;
         
     public:
         Pick3DObjectExample(Eegeo::Rendering::RenderContext& renderContext,
                             Eegeo::Space::LatLongAltitude interestLocation,
-                            Eegeo::Camera::ICameraProvider& cameraProvider);
+                            Eegeo::Camera::ICameraProvider& cameraProvider,
+                            Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController);
         
         static std::string GetName() { return "Pick3DObjectExample"; }
         std::string Name() const { return GetName(); }

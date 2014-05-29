@@ -98,6 +98,7 @@ namespace Examples
         Eegeo::Routes::Simulation::Camera::RouteSimulationGlobeCameraController* m_pRouteSessionFollowCameraController;
         
         RouteSimulationExampleObserver* m_pExampleObserver;
+        GlobeCameraStateRestorer m_globeCameraStateRestorer;
     public:
         RouteSimulationExample(Eegeo::Routes::RouteService& routeService,
                                Eegeo::Routes::Simulation::RouteSimulationService& routeSimulationService,

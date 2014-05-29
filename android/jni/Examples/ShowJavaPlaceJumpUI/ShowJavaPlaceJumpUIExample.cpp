@@ -20,10 +20,8 @@ namespace Examples
 			)
 	: m_nativeState(nativeState)
 	, m_cameraJumpController(cameraJumpController)
-	, m_cameraController(cameraController)
 	, m_pTargetLocation(NULL)
-	, m_initialBasis(m_cameraController.GetInterestBasis())
-	, m_initialDistance(m_cameraController.GetDistanceToInterest())
+	, m_globeCameraStateRestorer(cameraController)
     {
 		m_locations["NYC"] = ViewLocation(40.703762, -74.013733, 0, 240.0f, 1800.0f);
 		m_locations["London"] = ViewLocation(51.506172,-0.118915, 0, 351.0f, 2731.0f);
@@ -85,8 +83,6 @@ namespace Examples
 		env->DeleteGlobalRef(m_placeJumpMenu);
 
 	    pthread_mutex_destroy(&m_mutex);
-
-        m_cameraController.SetView(m_initialBasis, m_initialDistance);
 	}
 
     void ShowJavaPlaceJumpUIExample::Update(float dt)

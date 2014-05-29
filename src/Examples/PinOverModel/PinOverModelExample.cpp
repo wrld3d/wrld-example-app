@@ -27,7 +27,8 @@ namespace Examples
                                              Eegeo::Helpers::IFileIO& fileIO,
                                              Eegeo::Rendering::AsyncTexturing::IAsyncTextureRequestor& textureRequestor,
                                              Eegeo::Lighting::GlobalFogging& fogging,
-                                             Eegeo::Rendering::Materials::NullMaterial& nullMat
+                                             Eegeo::Rendering::Materials::NullMaterial& nullMat,
+                                             Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController
                                              )
     : m_pin0UserData("Pin Zero(0) User Data")
     , m_pPin0(NULL)
@@ -38,6 +39,7 @@ namespace Examples
     ,globalFogging(fogging)
     ,renderableFilters(renderableFilters)
     ,nullMat(nullMat)
+    ,m_globeCameraStateRestorer(cameraController)
     {
         textureLoader.LoadTexture(m_pinIconsTexture, "PinIconTexturePage.png", true);
         Eegeo_ASSERT(m_pinIconsTexture.textureId != 0);

@@ -15,12 +15,14 @@ namespace Examples
     PODAnimationExample::PODAnimationExample(Eegeo::Rendering::RenderContext& renderContext,
                                              Eegeo::Helpers::IFileIO& fileIO,
                                              Eegeo::Rendering::AsyncTexturing::IAsyncTextureRequestor& textureRequestor,
-                                             Eegeo::Lighting::GlobalFogging& fogging)
+                                             Eegeo::Lighting::GlobalFogging& fogging,
+                                             Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController)
     :renderContext(renderContext)
     ,fileIO(fileIO)
     ,textureRequestor(textureRequestor)
     ,pModel(NULL)
     ,globalFogging(fogging)
+    ,m_globeCameraStateRestorer(cameraController)
     {
         
     }

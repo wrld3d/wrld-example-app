@@ -150,16 +150,10 @@ namespace Examples
                                                      Eegeo::Location::IInterestPointProvider& interestPointProvider)
     : m_cameraController(cameraController)
     , m_interestPointProvider(interestPointProvider)
-    , m_transitioner(m_cameraController, m_interestPointProvider)
+    , m_transitioner(cameraController, interestPointProvider)
     , m_firstPoint(true)
-    , m_initialEcefTangentBasis(m_cameraController.GetInterestBasis())
-    , m_initialDistance(m_cameraController.GetDistanceToInterest())
+    ,m_globeCameraStateRestorer(cameraController)
     {
-    }
-    
-    void CameraTransitionExample::Suspend()
-    {
-        m_cameraController.SetView(m_initialEcefTangentBasis, m_initialDistance);
     }
     
     void CameraTransitionExample::Transition()

@@ -11,8 +11,10 @@
 
 using namespace Examples;
 
-ResourceSpatialQueryExampleFactory::ResourceSpatialQueryExampleFactory(Eegeo::EegeoWorld& world)
+ResourceSpatialQueryExampleFactory::ResourceSpatialQueryExampleFactory(Eegeo::EegeoWorld& world,
+                                                                       Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController)
 : m_world(world)
+, m_globeCameraController(globeCameraController)
 {
     
 }
@@ -20,7 +22,8 @@ ResourceSpatialQueryExampleFactory::ResourceSpatialQueryExampleFactory(Eegeo::Ee
 IExample* ResourceSpatialQueryExampleFactory::CreateExample() const
 {
     return new Examples::ResourceSpatialQueryExample(m_world.GetResourceSpatialQueryService(),
-                                                     m_world.GetInterestPointProvider());
+                                                     m_world.GetInterestPointProvider(),
+                                                     m_globeCameraController);
 }
 
 std::string ResourceSpatialQueryExampleFactory::ExampleName() const

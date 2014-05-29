@@ -21,9 +21,11 @@ namespace Examples
         bool m_scaleUp;
         Eegeo::Rendering::EnvironmentFlatteningService& m_environmentFlatteningService;
         float m_initialEnvironmentScale;
+        GlobeCameraStateRestorer m_globeCameraStateRestorer;
         
     public:
-        EnvironmentFlatteningExample(Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService);
+        EnvironmentFlatteningExample(Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
+                                     Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController);
         
         static std::string GetName() { return "EnvironmentFlatteningExample"; }
         std::string Name() const { return GetName(); }

@@ -22,7 +22,8 @@ namespace Examples
 		JavaHudCrossThreadCommunicationProxy* pProxy,
 		Eegeo::Resources::CityThemes::ICityThemesService& themeService,
 		Eegeo::Resources::CityThemes::ICityThemeRepository& themeRepository,
-		Eegeo::Resources::CityThemes::ICityThemesUpdater& themeUpdater
+		Eegeo::Resources::CityThemes::ICityThemesUpdater& themeUpdater,
+        Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController
 	)
 	: m_nativeState(nativeState)
 	, m_pProxy(pProxy)
@@ -30,6 +31,7 @@ namespace Examples
 	, m_themeUpdater(themeUpdater)
 	, m_themeRepository(themeRepository)
 	, m_initialCityTheme(themeService.GetCurrentTheme())
+	, m_globeCameraStateRestorer(globeCameraController)
     {
 		Eegeo_ASSERT(pProxy != NULL, "JavaHudCrossThreadCommunicationExample pProxy must be non-null.\n");
     }

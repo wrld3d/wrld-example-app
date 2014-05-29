@@ -30,6 +30,7 @@ namespace Examples
         Eegeo::Rendering::EnvironmentFlatteningService& m_environmentFlatteningService;
         Eegeo::Resources::PlaceNames::PlaceNameViewBuilder& m_placeNameViewBuilder;
         Eegeo::EegeoWorld& m_world;
+        GlobeCameraStateRestorer m_globeCameraStateRestorer;
         
         bool m_initialised;
         std::vector<Eegeo::Resources::PlaceNames::PlaceNameView*> m_views;
@@ -39,7 +40,8 @@ namespace Examples
                              Eegeo::Camera::ICameraProvider& cameraProvider,
                              Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                              Eegeo::Resources::PlaceNames::PlaceNameViewBuilder& placeNameViewBuilder,
-                             Eegeo::EegeoWorld& world);
+                             Eegeo::EegeoWorld& world,
+                             Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController);
         
         static std::string GetName() { return "DynamicText3DExample"; }
         std::string Name() const { return GetName(); }

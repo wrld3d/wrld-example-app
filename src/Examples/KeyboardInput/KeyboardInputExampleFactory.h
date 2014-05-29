@@ -18,9 +18,11 @@ namespace Examples
     class KeyboardInputExampleFactory : public IExampleFactory
     {
         Eegeo::EegeoWorld& m_world;
+        Eegeo::Camera::GlobeCamera::GlobeCameraController& m_globeCameraController;
         
     public:
-        KeyboardInputExampleFactory(Eegeo::EegeoWorld& world);
+        KeyboardInputExampleFactory(Eegeo::EegeoWorld& world,
+                                    Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController);
 
         std::string ExampleName() const;
         

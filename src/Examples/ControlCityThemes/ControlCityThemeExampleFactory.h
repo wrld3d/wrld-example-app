@@ -18,9 +18,11 @@ namespace Examples
     class ControlCityThemeExampleFactory : public IExampleFactory
     {
         Eegeo::EegeoWorld& m_world;
+        Eegeo::Camera::GlobeCamera::GlobeCameraController& m_globeCameraController;
         
     public:
-        ControlCityThemeExampleFactory(Eegeo::EegeoWorld& world);
+        ControlCityThemeExampleFactory(Eegeo::EegeoWorld& world,
+                                       Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController);
 
         std::string ExampleName() const;
         

@@ -79,13 +79,15 @@ namespace
 SingleCityExample::SingleCityExample(Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCamera,
                                      Eegeo::Web::PrecacheService& precacheService,
                                      Eegeo::Streaming::StreamingVolumeController& streamingVolumeController,
-                                     Eegeo::EegeoWorld& world)
+                                     Eegeo::EegeoWorld& world,
+                                     Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController)
 : m_precacheService(precacheService)
 , m_streamingVolumeController(streamingVolumeController)
 , m_globeCamera(globeCamera)
 , m_world(world)
 , m_startedPrecaching(false)
 , m_precacheComplete(false)
+, m_globeCameraStateRestorer(cameraController)
 {
     
 }

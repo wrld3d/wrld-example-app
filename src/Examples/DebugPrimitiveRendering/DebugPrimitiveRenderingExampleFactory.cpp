@@ -11,15 +11,18 @@
 
 using namespace Examples;
 
-DebugPrimitiveRenderingExampleFactory::DebugPrimitiveRenderingExampleFactory(Eegeo::EegeoWorld& world)
+DebugPrimitiveRenderingExampleFactory::DebugPrimitiveRenderingExampleFactory(Eegeo::EegeoWorld& world,
+                                                                             Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController)
 : m_world(world)
+, m_globeCameraController(globeCameraController)
 {
     
 }
 
 IExample* DebugPrimitiveRenderingExampleFactory::CreateExample() const
 {
-    return new Examples::DebugPrimitiveRenderingExample(m_world.GetDebugPrimitiveRenderer());
+    return new Examples::DebugPrimitiveRenderingExample(m_world.GetDebugPrimitiveRenderer(),
+                                                        m_globeCameraController);
 }
 
 std::string DebugPrimitiveRenderingExampleFactory::ExampleName() const

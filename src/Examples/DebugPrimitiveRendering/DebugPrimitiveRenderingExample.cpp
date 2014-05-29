@@ -6,6 +6,13 @@
 
 namespace Examples
 {
+    DebugPrimitiveRenderingExample::DebugPrimitiveRenderingExample(Eegeo::DebugRendering::DebugPrimitiveRenderer &debugPrimitiveRenderer,
+                                                                   Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController)
+    :m_debugPrimitiveRenderer(debugPrimitiveRenderer)
+    ,m_globeCameraStateRestorer(cameraController)
+    {
+    }
+    
     void DebugPrimitiveRenderingExample::Start()
     {
         

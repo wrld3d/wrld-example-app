@@ -18,9 +18,11 @@ namespace Examples
     class FileIOExampleFactory : public IExampleFactory
     {
         Eegeo::EegeoWorld& m_world;
+        Eegeo::Camera::GlobeCamera::GlobeCameraController& m_globeCameraController;
         
     public:
-        FileIOExampleFactory(Eegeo::EegeoWorld& world);
+        FileIOExampleFactory(Eegeo::EegeoWorld& world,
+                             Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController);
 
         std::string ExampleName() const;
         

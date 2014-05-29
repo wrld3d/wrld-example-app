@@ -9,24 +9,26 @@
 namespace Examples
 {
     PinsExample::PinsExample(
-                            Eegeo::Helpers::ITextureFileLoader& textureLoader,
-                            Eegeo::Rendering::GlBufferPool& glBufferPool,
-                            Eegeo::Rendering::Shaders::ShaderIdGenerator& shaderIdGenerator,
-                            Eegeo::Rendering::Materials::MaterialIdGenerator& materialIdGenerator,
-                            Eegeo::Rendering::VertexLayouts::VertexBindingPool& vertexBindingPool,
-                            Eegeo::Rendering::VertexLayouts::VertexLayoutPool& vertexLayoutPool,
-                            Eegeo::Rendering::RenderableFilters& renderableFilters,
-                            const Eegeo::Camera::ICameraProvider& cameraProvider,
-                            Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider,
-                            Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService
-                            )
+                             Eegeo::Helpers::ITextureFileLoader& textureLoader,
+                             Eegeo::Rendering::GlBufferPool& glBufferPool,
+                             Eegeo::Rendering::Shaders::ShaderIdGenerator& shaderIdGenerator,
+                             Eegeo::Rendering::Materials::MaterialIdGenerator& materialIdGenerator,
+                             Eegeo::Rendering::VertexLayouts::VertexBindingPool& vertexBindingPool,
+                             Eegeo::Rendering::VertexLayouts::VertexLayoutPool& vertexLayoutPool,
+                             Eegeo::Rendering::RenderableFilters& renderableFilters,
+                             const Eegeo::Camera::ICameraProvider& cameraProvider,
+                             Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider,
+                             Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
+                             Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController
+                             )
     : m_pin0UserData("Pin Zero(0) User Data")
     , m_pin1UserData("Pin One(1) User Data")
     , m_pin2UserData("Pin Two(2) User Data")
     , m_pin3UserData("Pin Three(3) User Data")
     , m_addRemoveTimer(0.0f)
     , m_pPin0(NULL)
-    {        
+    , m_globeCameraStateRestorer(cameraController)
+    {
         textureLoader.LoadTexture(m_pinIconsTexture, "PinIconTexturePage.png", true);
         Eegeo_ASSERT(m_pinIconsTexture.textureId != 0);
         
@@ -86,7 +88,7 @@ namespace Examples
         int pin0Icon = 0;
         Eegeo::Pins::Pin* pPin0 = Eegeo_NEW(Eegeo::Pins::Pin)(pin0Id, pin0Location, 0, pin0Icon, &m_pin0UserData);
         pinRepository.AddPin(pPin0);
-
+        
         // Save this pin so that we can add and remove it in AddRemovePin0()
         m_pPin0 = pPin0;
         
@@ -157,7 +159,7 @@ namespace Examples
         
         Eegeo_TTY("Searching for Pins intersecting tap point %d,%d...", (int) screenTapPoint.GetX(), (int) screenTapPoint.GetY());
         
-        Eegeo::Pins::PinController& pinController = m_pPinsModule->GetController();        
+        Eegeo::Pins::PinController& pinController = m_pPinsModule->GetController();
         std::vector<Eegeo::Pins::Pin*> intersectingPinsClosestToCameraFirst;
         if(pinController.TryGetPinsIntersectingScreenPoint(screenTapPoint, intersectingPinsClosestToCameraFirst))
         {
@@ -176,6 +178,6 @@ namespace Examples
         {
             Eegeo_TTY("none found.\n");
             return false;
-        }        
+        }
     }
 }

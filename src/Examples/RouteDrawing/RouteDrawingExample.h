@@ -27,10 +27,12 @@ namespace Examples
         bool m_createdRoutes;
         std::vector<Eegeo::Routes::Route*> m_routes;
         Eegeo::Routes::Style::Thickness::IdentityRouteThicknessPolicy m_routeThicknessPolicy;
+        GlobeCameraStateRestorer m_globeCameraStateRestorer;
         
     public:
         RouteDrawingExample(Eegeo::Routes::RouteService& routeService,
-                            Eegeo::EegeoWorld& eegeoWorld);
+                            Eegeo::EegeoWorld& eegeoWorld,
+                            Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController);
         
         static std::string GetName() { return "RouteDrawingExample"; }
         std::string Name() const { return GetName(); }

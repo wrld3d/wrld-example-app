@@ -12,11 +12,13 @@
 using namespace Examples;
 
 ResourceSpatialQueryExample::ResourceSpatialQueryExample(Eegeo::Resources::ResourceSpatialQueryService& resourceSpatialQueryService,
-                                                         Eegeo::Location::IInterestPointProvider& interestPointProvider)
+                                                         Eegeo::Location::IInterestPointProvider& interestPointProvider,
+                                                         Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController)
 :resourceSpatialQueryService(resourceSpatialQueryService)
 ,interestPointProvider(interestPointProvider)
 ,numBuildings(0)
 ,key(0)
+,m_globeCameraStateRestorer(cameraController)
 {
     
 }

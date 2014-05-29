@@ -17,11 +17,13 @@ namespace Examples
 	PositionJavaPinButtonExample::PositionJavaPinButtonExample(
 			Eegeo::EegeoWorld& world,
 			AndroidNativeState& nativeState,
-			Eegeo::Rendering::RenderContext& renderContext)
+			Eegeo::Rendering::RenderContext& renderContext,
+            Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController)
 	:m_nativeState(nativeState)
 	,m_renderContext(renderContext)
 	,m_world(world)
 	,m_buttonID(0)
+	,m_globeCameraStateRestorer(globeCameraController)
     {
     }
 

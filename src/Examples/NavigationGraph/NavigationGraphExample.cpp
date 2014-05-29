@@ -24,11 +24,13 @@ namespace {
 namespace Examples
 {
     NavigationGraphExample::NavigationGraphExample(RenderContext& renderContext,
-                                                   NavigationGraphRepository& navigationGraphRepository)
+                                                   NavigationGraphRepository& navigationGraphRepository,
+                                                   Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController)
     :navigationGraphRepository(navigationGraphRepository)
     ,renderContext(renderContext)
     ,addedHandler(*this)
     ,removedHandler(*this)
+    ,m_globeCameraStateRestorer(cameraController)
     {
     }
     

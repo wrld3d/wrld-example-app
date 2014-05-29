@@ -18,9 +18,11 @@ namespace Examples
     class EnvironmentNotifierExampleFactory : public IExampleFactory
     {
         Eegeo::EegeoWorld& m_world;
+        Eegeo::Camera::GlobeCamera::GlobeCameraController& m_globeCameraController;
         
     public:
-        EnvironmentNotifierExampleFactory(Eegeo::EegeoWorld& world);
+        EnvironmentNotifierExampleFactory(Eegeo::EegeoWorld& world,
+                                          Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController);
 
         std::string ExampleName() const;
         

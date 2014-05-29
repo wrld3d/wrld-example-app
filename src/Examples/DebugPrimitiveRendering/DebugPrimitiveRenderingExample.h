@@ -17,9 +17,11 @@ namespace Examples
     {
     private:
         Eegeo::DebugRendering::DebugPrimitiveRenderer& m_debugPrimitiveRenderer;
+        GlobeCameraStateRestorer m_globeCameraStateRestorer;
+        
     public:
-        DebugPrimitiveRenderingExample(Eegeo::DebugRendering::DebugPrimitiveRenderer &debugPrimitiveRenderer) :
-        m_debugPrimitiveRenderer(debugPrimitiveRenderer) {}
+        DebugPrimitiveRenderingExample(Eegeo::DebugRendering::DebugPrimitiveRenderer &debugPrimitiveRenderer,
+                                       Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController);
         
         static std::string GetName() { return "DebugPrimitiveRenderingExample"; }
         std::string Name() const { return GetName(); }

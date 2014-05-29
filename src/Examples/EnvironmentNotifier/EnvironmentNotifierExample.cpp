@@ -7,10 +7,12 @@ namespace Examples
 {
     //EnvironmentNotifierExample//
     EnvironmentNotifierExample::EnvironmentNotifierExample(Eegeo::Rendering::RenderContext& renderContext,
-                                                           Eegeo::Resources::Terrain::TerrainStreaming& terrainStreaming)
+                                                           Eegeo::Resources::Terrain::TerrainStreaming& terrainStreaming,
+                                                           Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController)
     :renderContext(renderContext)
     ,terrainStreaming(terrainStreaming)
     ,observer(NULL)
+    ,m_globeCameraStateRestorer(cameraController)
     {
     }
     

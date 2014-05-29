@@ -30,6 +30,7 @@ namespace Examples
         Eegeo::Rendering::ITexturePageLayout* m_pPinIconsTexturePageLayout;
         Eegeo::Helpers::GLHelpers::TextureInfo m_pinIconsTexture;
         Eegeo::Pins::PinsModule* m_pPinsModule;
+        GlobeCameraStateRestorer m_globeCameraStateRestorer;
         std::string m_pin0UserData;
         std::string m_pin1UserData;
         std::string m_pin2UserData;
@@ -49,7 +50,8 @@ namespace Examples
                     Eegeo::Rendering::RenderableFilters& renderableFilters,
                     const Eegeo::Camera::ICameraProvider& cameraProvider,
                     Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider,
-                    Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService
+                    Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
+                    Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController
                     );
         virtual ~PinsExample();
         

@@ -18,9 +18,11 @@ namespace Examples
     class RouteDrawingExampleFactory : public IExampleFactory
     {
         Eegeo::EegeoWorld& m_world;
+        Eegeo::Camera::GlobeCamera::GlobeCameraController& m_globeCameraController;
         
     public:
-        RouteDrawingExampleFactory(Eegeo::EegeoWorld& world);
+        RouteDrawingExampleFactory(Eegeo::EegeoWorld& world,
+                                   Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController);
 
         std::string ExampleName() const;
         

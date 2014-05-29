@@ -27,6 +27,7 @@ namespace Examples
 		Eegeo::Resources::CityThemes::ICityThemesUpdater& m_themeUpdater;
 		JavaHudCrossThreadCommunicationProxy* m_pProxy;
         Eegeo::Resources::CityThemes::CityThemeData m_initialCityTheme;
+        GlobeCameraStateRestorer m_globeCameraStateRestorer;
 
     	jclass m_themeReaderWriterHudClass;
     	jobject m_themeReaderWriterHud;
@@ -37,7 +38,8 @@ namespace Examples
 			JavaHudCrossThreadCommunicationProxy* pProxy,
 			Eegeo::Resources::CityThemes::ICityThemesService& themeService,
 			Eegeo::Resources::CityThemes::ICityThemeRepository& themeRepository,
-			Eegeo::Resources::CityThemes::ICityThemesUpdater& themeUpdater);
+			Eegeo::Resources::CityThemes::ICityThemesUpdater& themeUpdater,
+            Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController);
 
     	~JavaHudCrossThreadCommunicationExample();
 

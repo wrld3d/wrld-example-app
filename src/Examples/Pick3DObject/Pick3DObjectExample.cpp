@@ -19,12 +19,14 @@ namespace Examples
 {
     Pick3DObjectExample::Pick3DObjectExample(Eegeo::Rendering::RenderContext& renderContext,
                                              Eegeo::Space::LatLongAltitude interestLocation,
-                                             Eegeo::Camera::ICameraProvider& cameraProvider)
+                                             Eegeo::Camera::ICameraProvider& cameraProvider,
+                                             Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController)
     :m_renderContext(renderContext)
     ,m_interestLocation(interestLocation)
     ,m_cameraProvider(cameraProvider)
     ,m_movingObject(false)
     ,m_object(NULL)
+    ,m_globeCameraStateRestorer(cameraController)
     {
         
     }

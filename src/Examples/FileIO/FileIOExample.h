@@ -19,9 +19,11 @@ namespace Examples
     {
     private:
         Eegeo::Helpers::IFileIO& fileIO;
+        GlobeCameraStateRestorer m_globeCameraStateRestorer;
         
     public:
-        FileIOExample(Eegeo::Helpers::IFileIO& fileIO);
+        FileIOExample(Eegeo::Helpers::IFileIO& fileIO,
+                      Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController);
     
         static std::string GetName() { return "FileIOExample"; }
         std::string Name() const { return GetName(); }

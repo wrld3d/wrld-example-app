@@ -24,7 +24,8 @@ IExample* SingleCityExampleFactory::CreateExample() const
     return new Examples::SingleCityExample(m_globeCameraController,
                                            m_world.GetPrecachingService(),
                                            m_world.GetStreamingVolumeController(),
-                                           m_world);
+                                           m_world,
+                                           m_globeCameraController);
 }
 
 std::string SingleCityExampleFactory::ExampleName() const

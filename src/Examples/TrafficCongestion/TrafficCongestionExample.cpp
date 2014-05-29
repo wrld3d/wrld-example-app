@@ -12,12 +12,13 @@ namespace
 
 namespace Examples
 {
-    TrafficCongestionExample::TrafficCongestionExample(
-            Eegeo::TrafficCongestion::ITrafficCongestionService& trafficCongestionService) :
+    TrafficCongestionExample::TrafficCongestionExample(Eegeo::TrafficCongestion::ITrafficCongestionService& trafficCongestionService,
+                                                       Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController) :
     m_trafficCongestionService(trafficCongestionService),
     m_timeAccumulator(5.f),
     m_congestionValue(static_cast<int>(Eegeo::TrafficCongestion::CongestionLevel::Light)),
     m_key(Eegeo::Streaming::MortonKey::CreateFromString("01131232132001"))
+    ,m_globeCameraStateRestorer(cameraController)
     {
 
     }

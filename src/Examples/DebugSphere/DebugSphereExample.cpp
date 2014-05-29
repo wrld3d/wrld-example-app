@@ -4,9 +4,11 @@
 namespace Examples
 {
     DebugSphereExample::DebugSphereExample(Eegeo::Rendering::RenderContext& renderContext,
-                       Eegeo::Space::LatLongAltitude interestLocation)
+                                           Eegeo::Space::LatLongAltitude interestLocation,
+                                           Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController)
     :renderContext(renderContext)
     ,interestLocation(interestLocation)
+    ,m_globeCameraStateRestorer(cameraController)
     {
         
     }

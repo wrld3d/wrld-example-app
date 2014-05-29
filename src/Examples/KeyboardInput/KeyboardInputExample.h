@@ -23,9 +23,11 @@ namespace Examples
     private:
         Eegeo::UI::NativeInput::IKeyboardInput *m_pKeyboardInput;
         Eegeo::UI::NativeInput::IKeyboardInputFactory& keyboardInputFactory;
+        GlobeCameraStateRestorer m_globeCameraStateRestorer;
         
     public:
-        KeyboardInputExample(Eegeo::UI::NativeInput::IKeyboardInputFactory& keyboardInputFactory);
+        KeyboardInputExample(Eegeo::UI::NativeInput::IKeyboardInputFactory& keyboardInputFactory,
+                             Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController);
         
         static std::string GetName() { return "KeyboardInputExample"; }
         std::string Name() const { return GetName(); }

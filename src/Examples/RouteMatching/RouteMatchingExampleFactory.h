@@ -20,10 +20,12 @@ namespace Examples
     {
         Eegeo::EegeoWorld& m_world;
         const IRouteMatchingExampleViewFactory& m_routeMatchingViewFactory;
+        Eegeo::Camera::GlobeCamera::GlobeCameraController& m_globeCameraController;
         
     public:
         RouteMatchingExampleFactory(Eegeo::EegeoWorld& world,
-                                    const IRouteMatchingExampleViewFactory& routeMatchingViewFactory);
+                                    const IRouteMatchingExampleViewFactory& routeMatchingViewFactory,
+                                    Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController);
         
         std::string ExampleName() const;
 

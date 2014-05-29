@@ -11,15 +11,18 @@
 
 using namespace Examples;
 
-ToggleTrafficExampleFactory::ToggleTrafficExampleFactory(Eegeo::EegeoWorld& world)
+ToggleTrafficExampleFactory::ToggleTrafficExampleFactory(Eegeo::EegeoWorld& world,
+                                                         Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController)
 : m_world(world)
+, m_globeCameraController(globeCameraController)
 {
     
 }
 
 IExample* ToggleTrafficExampleFactory::CreateExample() const
 {
-    return new Examples::ToggleTrafficExample(m_world.GetTrafficSimulationController());
+    return new Examples::ToggleTrafficExample(m_world.GetTrafficSimulationController(),
+                                              m_globeCameraController);
 }
 
 std::string ToggleTrafficExampleFactory::ExampleName() const

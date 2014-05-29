@@ -17,7 +17,8 @@ using namespace Eegeo::Routes;
 
 RouteMatchingExample::RouteMatchingExample(RouteService& routeService,
                                            EegeoWorld& world,
-                                           const IRouteMatchingExampleViewFactory& routeMatchingViewFactory)
+                                           const IRouteMatchingExampleViewFactory& routeMatchingViewFactory,
+                                           Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController)
 :m_routeService(routeService)
 ,m_world(world)
 ,m_createdRoutes(false)
@@ -25,6 +26,7 @@ RouteMatchingExample::RouteMatchingExample(RouteService& routeService,
 ,m_routeMatchingViewFactory(routeMatchingViewFactory)
 ,m_pRouteMatchingView(NULL)
 ,m_toggleRouteMatchingHandler(this, &RouteMatchingExample::ToggleMatching)
+,m_globeCameraStateRestorer(cameraController)
 {
     
 }

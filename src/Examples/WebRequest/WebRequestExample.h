@@ -21,9 +21,11 @@ namespace Examples
     {
     private:
         Eegeo::Web::IWebLoadRequestFactory& webRequestFactory;
+        GlobeCameraStateRestorer m_globeCameraStateRestorer;
         
     public:
-        WebRequestExample(Eegeo::Web::IWebLoadRequestFactory& webRequestFactory);
+        WebRequestExample(Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
+                          Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController);
         
         static std::string GetName() { return "WebRequestExample"; }
         std::string Name() const { return GetName(); }

@@ -75,6 +75,7 @@ RouteSimulationExample::RouteSimulationExample(RouteService& routeService,
 ,m_rotateToFollowToggledHandler(this, &RouteSimulationExample::ToggleRotateToFollow)
 ,m_directionChangedHandler(this, &RouteSimulationExample::ChangeFollowDirection)
 ,m_roadSideChangedHandler(this, &RouteSimulationExample::ToggleSideOfRoadToDriveOn)
+,m_globeCameraStateRestorer(defaultCamera)
 {
 }
 

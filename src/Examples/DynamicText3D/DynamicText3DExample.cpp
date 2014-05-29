@@ -22,13 +22,15 @@ namespace Examples
                                                Eegeo::Camera::ICameraProvider& cameraProvider,
                                                Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                                Eegeo::Resources::PlaceNames::PlaceNameViewBuilder& placeNameViewBuilder,
-                                               Eegeo::EegeoWorld& world)
+                                               Eegeo::EegeoWorld& world,
+                                               Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController)
     : m_glState(glState)
     , m_cameraProvider(cameraProvider)
     , m_environmentFlatteningService(environmentFlatteningService)
     , m_placeNameViewBuilder(placeNameViewBuilder)
     , m_world(world)
     , m_initialised(false)
+    , m_globeCameraStateRestorer(globeCameraController)
     {
         
     }

@@ -51,6 +51,7 @@ namespace Examples
         Eegeo::Model* m_pModel;
         Eegeo::Routes::Route* m_route;
         Eegeo::Routes::Style::Thickness::IdentityRouteThicknessPolicy m_routeThicknessPolicy;
+        GlobeCameraStateRestorer m_globeCameraStateRestorer;
     
         Eegeo::Routes::Simulation::RouteSimulationSession* m_pSessionCamera;
         

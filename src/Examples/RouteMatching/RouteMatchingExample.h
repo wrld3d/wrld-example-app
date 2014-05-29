@@ -30,6 +30,7 @@ namespace Examples
         const IRouteMatchingExampleViewFactory& m_routeMatchingViewFactory;
         UIActionHandler<RouteMatchingExample> m_toggleRouteMatchingHandler;
         IRouteMatchingExampleView* m_pRouteMatchingView;
+        GlobeCameraStateRestorer m_globeCameraStateRestorer;
         
         bool m_createdRoutes;
         bool m_routesMatchedToNavigationGraph;
@@ -43,7 +44,8 @@ namespace Examples
     public:
         RouteMatchingExample(Eegeo::Routes::RouteService& routeService,
                              Eegeo::EegeoWorld& eegeoWorld,
-                             const IRouteMatchingExampleViewFactory& routeMatchingViewFactory);
+                             const IRouteMatchingExampleViewFactory& routeMatchingViewFactory,
+                             Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController);
         
         static std::string GetName() { return "RouteMatchingExample"; }
         std::string Name() const { return GetName(); }

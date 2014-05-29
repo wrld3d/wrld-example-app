@@ -14,8 +14,10 @@ using namespace Eegeo::Helpers;
 
 namespace Examples
 {
-    FileIOExample::FileIOExample(IFileIO& fileIO)
+    FileIOExample::FileIOExample(IFileIO& fileIO,
+                                 Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController)
     :fileIO(fileIO)
+    ,m_globeCameraStateRestorer(cameraController)
     {
     }
     

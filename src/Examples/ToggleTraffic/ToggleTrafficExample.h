@@ -19,9 +19,11 @@ namespace Examples
     private:
         long long m_lastToggle;
         Eegeo::Traffic::TrafficSimulationController& m_trafficSimulation;
+        GlobeCameraStateRestorer m_globeCameraStateRestorer;
         
     public:
-        ToggleTrafficExample(Eegeo::Traffic::TrafficSimulationController& trafficSimulation);
+        ToggleTrafficExample(Eegeo::Traffic::TrafficSimulationController& trafficSimulation,
+                             Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController);
 
         static std::string GetName() { return "ToggleTrafficExample"; }
         std::string Name() const { return GetName(); }

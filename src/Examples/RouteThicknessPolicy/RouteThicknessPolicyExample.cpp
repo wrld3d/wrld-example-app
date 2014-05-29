@@ -17,11 +17,13 @@ using namespace Eegeo::Routes;
 
 RouteThicknessPolicyExample::RouteThicknessPolicyExample(RouteService& routeService,
                                                          Eegeo::Rendering::RenderContext& renderContext,
-                                                         EegeoWorld& world)
+                                                         EegeoWorld& world,
+                                                         Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController)
 :m_routeService(routeService)
 ,m_world(world)
 ,m_createdRoutes(false)
 ,m_linearAltitudeBasedRouteThicknessPolicy(renderContext)
+,m_globeCameraStateRestorer(cameraController)
 {
     
 }

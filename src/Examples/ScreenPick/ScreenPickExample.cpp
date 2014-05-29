@@ -17,9 +17,11 @@ namespace Examples
     ScreenPickExample::ScreenPickExample(Eegeo::Rendering::RenderContext& renderContext,
                                          Eegeo::Camera::ICameraProvider& cameraProvider,
                                          Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider,
-                                         const Eegeo::Resources::Terrain::Collision::ICollisionMeshResourceProvider& collisionMeshResourceProvider)
+                                         const Eegeo::Resources::Terrain::Collision::ICollisionMeshResourceProvider& collisionMeshResourceProvider,
+                                         Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController)
     : m_renderContext(renderContext)
     , m_cameraProvider(cameraProvider)
+    , m_globeCameraStateRestorer(cameraController)
     {
         const float radius = 20.f;
         const int numSegments = 16;

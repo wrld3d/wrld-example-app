@@ -24,6 +24,7 @@ namespace Examples
         Eegeo::EegeoWorld& m_eegeoWorld;
         bool m_themeChanged;
         Eegeo::Resources::CityThemes::CityThemeData m_initialCityTheme;
+        GlobeCameraStateRestorer m_globeCameraStateRestorer;
 
         void ChangeTheme();
         void FindThemeByPointInPolygon();
@@ -31,7 +32,8 @@ namespace Examples
         ControlCityThemeExample(Eegeo::Resources::CityThemes::ICityThemesService& themeService,
                                 Eegeo::Resources::CityThemes::ICityThemeRepository& themeRepository,
                                 Eegeo::Resources::CityThemes::ICityThemesUpdater& themeUpdater,
-                                Eegeo::EegeoWorld& eegeoWorld);
+                                Eegeo::EegeoWorld& eegeoWorld,
+                                Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController);
         
         static std::string GetName() { return "ControlCityThemeExample"; }
         std::string Name() const { return GetName(); }

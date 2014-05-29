@@ -18,9 +18,11 @@ namespace Examples
     class LoadModelExampleFactory : public IExampleFactory
     {
         Eegeo::EegeoWorld& m_world;
+        Eegeo::Camera::GlobeCamera::GlobeCameraController& m_globeCameraController;
         
     public:
-        LoadModelExampleFactory(Eegeo::EegeoWorld& world);
+        LoadModelExampleFactory(Eegeo::EegeoWorld& world,
+                                Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController);
 
         std::string ExampleName() const;
         

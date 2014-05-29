@@ -16,10 +16,12 @@ using namespace Eegeo;
 using namespace Eegeo::Routes;
 
 RouteDrawingExample::RouteDrawingExample(RouteService& routeService,
-                                         EegeoWorld& world)
+                                         EegeoWorld& world,
+                                         Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController)
 :m_routeService(routeService)
 ,m_world(world)
 ,m_createdRoutes(false)
+,m_globeCameraStateRestorer(cameraController)
 {
     
 }

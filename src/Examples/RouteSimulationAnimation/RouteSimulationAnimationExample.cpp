@@ -47,6 +47,7 @@ RouteSimulationAnimationExample::RouteSimulationAnimationExample(
 ,m_pSessionCamera(NULL)
 ,m_pViewBindingForCameraSession(NULL)
 ,m_pRouteSessionFollowCameraController(NULL)
+,m_globeCameraStateRestorer(defaultCamera)
 {
 }
 

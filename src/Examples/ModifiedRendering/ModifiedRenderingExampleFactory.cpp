@@ -11,8 +11,10 @@
 
 using namespace Examples;
 
-ModifiedRenderingExampleFactory::ModifiedRenderingExampleFactory(Eegeo::EegeoWorld& world)
+ModifiedRenderingExampleFactory::ModifiedRenderingExampleFactory(Eegeo::EegeoWorld& world,
+                                                                 Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController)
 : m_world(world)
+, m_globeCameraController(globeCameraController)
 {
     
 }
@@ -30,7 +32,8 @@ IExample* ModifiedRenderingExampleFactory::CreateExample() const
                                                   m_world.GetRenderableFilters(),
                                                   m_world.GetShaderIdGenerator(),
                                                   m_world.GetMaterialIdGenerator(),
-                                                  m_world.GetEnvironmentPlaceholderTexture());
+                                                  m_world.GetEnvironmentPlaceholderTexture(),
+                                                  m_globeCameraController);
 }
 
 std::string ModifiedRenderingExampleFactory::ExampleName() const

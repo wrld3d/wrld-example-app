@@ -40,7 +40,8 @@ namespace Examples
                                                        Eegeo::Rendering::RenderableFilters& renderableFilters,
                                                        Eegeo::Rendering::Shaders::ShaderIdGenerator& shaderIdGenerator,
                                                        Eegeo::Rendering::Materials::MaterialIdGenerator& materialIdGenerator,
-                                                       const Eegeo::Helpers::GLHelpers::TextureInfo& placeHolderTexture
+                                                       const Eegeo::Helpers::GLHelpers::TextureInfo& placeHolderTexture,
+                                                       Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController
                                                        )
     :renderContext(renderContext)
     ,cameraProvider(cameraProvider)
@@ -55,6 +56,7 @@ namespace Examples
     ,shaderIdGenerator(shaderIdGenerator)
     ,materialIdGenerator(materialIdGenerator)
     ,placeHolderTexture(placeHolderTexture)
+    ,m_globeCameraStateRestorer(cameraController)
     {
     }
     

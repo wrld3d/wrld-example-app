@@ -83,6 +83,7 @@ namespace Examples
         Eegeo::Rendering::Shaders::ShaderIdGenerator& shaderIdGenerator;
         Eegeo::Rendering::Materials::MaterialIdGenerator& materialIdGenerator;
         const Eegeo::Helpers::GLHelpers::TextureInfo& placeHolderTexture;
+        GlobeCameraStateRestorer m_globeCameraStateRestorer;
         
         Eegeo::Lighting::GlobalLighting* pAlternativeLighting;
         Eegeo::Rendering::Shaders::PackedDiffuseShader* pAlternativeShader;
@@ -106,7 +107,8 @@ namespace Examples
                                  Eegeo::Rendering::RenderableFilters& renderableFilters,
                                  Eegeo::Rendering::Shaders::ShaderIdGenerator& shaderIdGenerator,
                                  Eegeo::Rendering::Materials::MaterialIdGenerator& materialIdGenerator,
-                                 const Eegeo::Helpers::GLHelpers::TextureInfo& placeHolderTexture
+                                 const Eegeo::Helpers::GLHelpers::TextureInfo& placeHolderTexture,
+                                 Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController
                                  );
         
         //ISceneElementObserver interface.

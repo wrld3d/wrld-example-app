@@ -11,15 +11,18 @@
 
 using namespace Examples;
 
-WebRequestExampleFactory::WebRequestExampleFactory(Eegeo::EegeoWorld& world)
+WebRequestExampleFactory::WebRequestExampleFactory(Eegeo::EegeoWorld& world,
+                                                   Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController)
 : m_world(world)
+, m_globeCameraController(globeCameraController)
 {
     
 }
 
 IExample* WebRequestExampleFactory::CreateExample() const
 {
-    return new Examples::WebRequestExample(m_world.GetWebRequestFactory());
+    return new Examples::WebRequestExample(m_world.GetWebRequestFactory(),
+                                           m_globeCameraController);
 }
 
 std::string WebRequestExampleFactory::ExampleName() const

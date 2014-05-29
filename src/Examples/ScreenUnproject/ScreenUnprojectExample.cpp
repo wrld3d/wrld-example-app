@@ -61,10 +61,12 @@ namespace Examples
 {
     ScreenUnprojectExample::ScreenUnprojectExample(Eegeo::Rendering::RenderContext& renderContext,
                                                    Eegeo::Camera::ICameraProvider& cameraProvider,
-                                                   Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider)
+                                                   Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider,
+                                                   Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController)
     :renderContext(renderContext)
     ,cameraProvider(cameraProvider)
     ,terrainHeightProvider(terrainHeightProvider)
+    ,m_globeCameraStateRestorer(cameraController)
     {
         
     }

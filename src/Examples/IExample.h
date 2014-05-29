@@ -4,6 +4,7 @@
 #include "IAppOnMap.h"
 #include "GlobeCameraController.h"
 #include "GlobeCameraTouchController.h"
+#include "EcefTangentBasis.h"
 #include <string>
 
 namespace Examples
@@ -50,6 +51,27 @@ namespace Examples
         virtual bool Event_TouchMove 			(const AppInterface::TouchData& data) { return false; }
         virtual bool Event_TouchUp 				(const AppInterface::TouchData& data) { return false; }
     };
+    
+    class GlobeCameraStateRestorer
+    {
+        Eegeo::Space::EcefTangentBasis m_initialEcefTangentBasis;
+        float m_initialDistance;
+        Eegeo::Camera::GlobeCamera::GlobeCameraController& m_globeCameraController;
+    public:
+        GlobeCameraStateRestorer(Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController)
+        :m_globeCameraController(globeCameraController)
+        ,m_initialEcefTangentBasis(globeCameraController.GetInterestBasis())
+        ,m_initialDistance(globeCameraController.GetDistanceToInterest())
+        {
+            
+        }
+        
+        ~GlobeCameraStateRestorer()
+        {
+            m_globeCameraController.SetView(m_initialEcefTangentBasis, m_initialDistance);
+        }
+    };
+    
 }
 
 #endif /* defined(__ExampleApp__Example__) */

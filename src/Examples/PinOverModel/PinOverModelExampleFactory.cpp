@@ -12,8 +12,10 @@
 
 using namespace Examples;
 
-PinOverModelExampleFactory::PinOverModelExampleFactory(Eegeo::EegeoWorld& world)
+PinOverModelExampleFactory::PinOverModelExampleFactory(Eegeo::EegeoWorld& world,
+                                                       Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController)
 : m_world(world)
+, m_globeCameraController(globeCameraController)
 {
     
 }
@@ -34,7 +36,8 @@ IExample* PinOverModelExampleFactory::CreateExample() const
                                              m_world.GetFileIO(),
                                              m_world.GetLocalAsyncTextureLoader(),
                                              m_world.GetGlobalFogging(),
-                                             m_world.GetNullMaterial());
+                                             m_world.GetNullMaterial(),
+                                             m_globeCameraController);
 }
 
 std::string PinOverModelExampleFactory::ExampleName() const

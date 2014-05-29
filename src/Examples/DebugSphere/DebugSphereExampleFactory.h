@@ -18,9 +18,11 @@ namespace Examples
     class DebugSphereExampleFactory : public IExampleFactory
     {
         Eegeo::EegeoWorld& m_world;
+        Eegeo::Camera::GlobeCamera::GlobeCameraController& m_globeCameraController;
         
     public:
-        DebugSphereExampleFactory(Eegeo::EegeoWorld& world);
+        DebugSphereExampleFactory(Eegeo::EegeoWorld& world,
+                                  Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController);
 
         std::string ExampleName() const;
         

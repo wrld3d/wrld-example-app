@@ -20,7 +20,8 @@ namespace Examples
                             Eegeo::Rendering::RenderableFilters& renderableFilters,
                             const Eegeo::Camera::ICameraProvider& cameraProvider,
                             Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider,
-                            Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService
+                            Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
+                            Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController
                             )
 	: m_nativeState(nativeState)
 	, m_renderContext(renderContext)
@@ -30,6 +31,7 @@ namespace Examples
 	, m_hudPinController(NULL)
 	, m_updateLocationMethodId(NULL)
     , m_pinUserData("Pin User Data")
+	, m_globeCameraStateRestorer(globeCameraController)
     {
         textureLoader.LoadTexture(m_pinIconsTexture, "PinIconTexturePage.png", true);
         Eegeo_ASSERT(m_pinIconsTexture.textureId != 0);
