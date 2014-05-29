@@ -136,7 +136,7 @@ AppHost::AppHost(
             m_pEnvironmentFlatteningService,
             environmentCharacterSet,
             config,
-            new Eegeo::Search::Service::SearchServiceCredentials("", ""),
+            NULL,
             "",
             "Default-Landscape@2x~ipad.png"
             );

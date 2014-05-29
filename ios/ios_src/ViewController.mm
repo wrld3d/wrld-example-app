@@ -20,19 +20,6 @@
 
 const std::string ApiKey = "OBTAIN API_KEY FROM https://appstore.eegeo.com AND INSERT IT HERE";
 
-//#define USING_SEARCH_EXAMPLE
-
-#if defined(USING_SEARCH_EXAMPLE)
-//If you intend to use the SearchService, you must provide SearchServiceCredentials for the
-//here.com provider, obtainable at http://developer.here.com/plans
-#define HERE_DOT_COM_DEVELOPER_APP_ID ""
-#define HERE_DOT_COM_DEVELOPER_APP_CODE ""
-Eegeo::Search::Service::SearchServiceCredentials credentials(HERE_DOT_COM_DEVELOPER_APP_ID, HERE_DOT_COM_DEVELOPER_APP_CODE);
-Eegeo::Search::Service::SearchServiceCredentials* pCredentials = &credentials;
-#else
-Eegeo::Search::Service::SearchServiceCredentials* pCredentials = NULL;
-#endif
-
 using namespace Eegeo::iOS;
 
 @implementation ViewController
@@ -204,7 +191,7 @@ using namespace Eegeo::iOS;
                                                       m_pEnvironmentFlatteningService,
                                                       environmentCharacterSet,
                                                       config,
-                                                      pCredentials,
+                                                      NULL,
                                                       "",
                                                       "Default-Landscape@2x~ipad.png"
                                                       );
@@ -217,7 +204,7 @@ using namespace Eegeo::iOS;
     //register examples with platform-specific view factories (i.e., pointer to [self view])
     
     m_piOSRouteMatchingExampleViewFactory = Eegeo_NEW(Examples::iOSRouteMatchingExampleViewFactory)([self view]);
-    m_pExampleController->RegisterExample(Eegeo_NEW(Examples::RouteMatchingExampleFactory)(*pWorld, *m_piOSRouteMatchingExampleViewFactory));
+    m_pExampleController->RegisterExample(Eegeo_NEW(Examples::RouteMatchingExampleFactory)(*pWorld, *m_piOSRouteMatchingExampleViewFactory, m_pExampleApp->GetCameraController()));
     
     m_piOSRouteSimulationExampleViewFactory = Eegeo_NEW(Examples::iOSRouteSimulationExampleViewFactory)([self view]);
     m_pExampleController->RegisterExample(Eegeo_NEW(Examples::RouteSimulationExampleFactory)(*pWorld, m_pExampleApp->GetCameraController(), *m_piOSRouteSimulationExampleViewFactory));
