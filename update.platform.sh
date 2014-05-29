@@ -3,7 +3,7 @@
 platformVersion=$1
 
 if [ -z "$platformVersion" ]; then
-    echo "Error: Target platform must be provided"
+    echo "\nError: Target platform must be provided.\n\nValid platform choices:\n\t- ios\n\t- android\n"
     exit 1
 fi
 
