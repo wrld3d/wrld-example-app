@@ -28,9 +28,3 @@ android mobile-sdk-harness
 * build.sh can be used to generate the native library if you want to manually package the .apk
 * Scroll between the examples using the Next and Previous buttons, or select the example from the drop-down list; the current example name is displayed at the top of the screen. 
 * To build at the command line, run ./build android from the repository root.
-
-* 7 - import existing android code into workspace
-	* select mobile-sdk-harness/android
-* 8 - eclipse->window->preferences->android->ndk : path from 6
-* 9 - project->android tools->add native support
-* 10 - jni->new folder->advanced->linked folder : mobile-sdk-harness/src
