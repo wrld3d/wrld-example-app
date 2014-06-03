@@ -15,5 +15,3 @@ fi
 echo
 
 exit $resultcode
-
-exit 0

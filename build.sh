@@ -14,10 +14,7 @@ if [ $platformVersion == ios ]; then
     ./update.platform.sh ios
     pushd ios
     ./build.sh
-    if [ $? = 1 ] ; then
-        popd
-        exit 1
-    fi
+    resultcode=$?
     popd
 elif [ $platformVersion == android ]; then
     echo "Building Android examples..."
@@ -27,12 +24,18 @@ elif [ $platformVersion == android ]; then
     ./update.platform.sh android
     pushd android
     ./build.sh
-    if [ $? = 1 ] ; then
-        popd
-        exit 1
-    fi
+    resultcode=$?
     popd
 else
     echo "Error: Build platform must be 'ios' or 'android'"
-    exit 1
+    resultcode=1
 fi
+
+if [ $resultcode = 0 ] ; then
+  echo "BUILD SUCCEEDED"
+  exit 
+else
+  echo "BUILD FAILED"
+fi
+
+exit $resultcode
