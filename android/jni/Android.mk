@@ -31,9 +31,9 @@ else
 	# assume windows if not specified for now (due to no uname)
 	
 	android_specific_cpp_files := $(shell cd jni && dir /a-d /b /s *.cpp)
-	LOCAL_SRC_FILES := $(android_specific_cpp_files:$(LOCALcd jni_PATH)/%=%)
-
-	shared_example_cpp_files := $(shell cd jni\..\..\src\ && dir /a-d /b /s *.cpp)
+	LOCAL_SRC_FILES := $(android_specific_cpp_files:$(LOCAL_PATH)/%=%)
+    
+    shared_example_cpp_files := $(shell cd jni\..\..\src\ && dir /a-d /b /s *.cpp)
 	LOCAL_SRC_FILES += $(shared_example_cpp_files:$(LOCAL_PATH)/%=%)
 	
 	platformincludes := $(shell dir .\libs\platform /ad-h /s /b)
