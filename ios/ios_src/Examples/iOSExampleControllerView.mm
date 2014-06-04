@@ -14,13 +14,29 @@
 
 using namespace Examples;
 
+@interface AvailableExamplesView : UIScrollView
+
+@end
+
 @implementation IExampleControllerViewBinding
 
 Examples::iOSExampleControllerView* m_pInstance;
+UIView* m_pView;
+std::vector<std::string> m_exampleNames;
+UIControl* m_pSelectionScreen;
+int m_exampleSelectorWidth;
 
--(void) setBoundInstance:(iOSExampleControllerView*)pInstance
+-(void) setExampleNames:(const std::vector<std::string>&)exampleNames
+{
+    m_exampleNames = exampleNames;
+}
+
+-(void) setBinding:(iOSExampleControllerView*)pInstance :(UIView*)pView :(int)exampleSelectorWidth
 {
     m_pInstance = pInstance;
+    m_pView = pView;
+    m_pSelectionScreen = nil;
+    m_exampleSelectorWidth = exampleSelectorWidth;
 }
 
 -(void) activateNext
@@ -31,6 +47,56 @@ Examples::iOSExampleControllerView* m_pInstance;
 -(void) activatePrevious
 {
     m_pInstance->ActivatePrevious();
+}
+
+-(void)selectionHandler:(UIButton*)sender
+{
+    std::string name = sender.titleLabel.text.UTF8String;
+    m_pInstance->SetCurrentExampleName(name);
+    
+    [m_pSelectionScreen removeFromSuperview];
+    [m_pSelectionScreen release];
+    m_pSelectionScreen = nil;
+}
+
+-(void) handleDismissSelectionScreen
+{
+    if(m_pSelectionScreen != nil)
+    {
+        [m_pSelectionScreen removeFromSuperview];
+        [m_pSelectionScreen release];
+        m_pSelectionScreen = nil;
+    }
+}
+
+-(void) openExampleSelectionMenu
+{
+    CGRect screenRect = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+    m_pSelectionScreen = [[UIControl alloc] initWithFrame:screenRect];
+    m_pSelectionScreen.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6];
+    
+    UIScrollView* scroller = [[UIScrollView alloc] initWithFrame:CGRectMake((SCREEN_WIDTH/2) - m_exampleSelectorWidth/2, 50, m_exampleSelectorWidth, SCREEN_HEIGHT - 100)];
+    
+    const int buttonHeight = 30;
+    
+    for (int i = 0; i < m_exampleNames.size(); ++ i)
+    {
+        NSString* label = [NSString stringWithUTF8String:m_exampleNames[i].c_str()];
+        UIButton* b = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        b.frame = CGRectMake(0, (i * buttonHeight), m_exampleSelectorWidth, buttonHeight);
+        [b setTitle:label forState:UIControlStateNormal];
+        [b addTarget:self action:@selector(selectionHandler:) forControlEvents:UIControlEventTouchDown];
+        [scroller addSubview:b];
+    }
+    
+    scroller.contentSize = CGSizeMake(m_exampleSelectorWidth, buttonHeight * m_exampleNames.size());
+    [m_pSelectionScreen addSubview:scroller];
+    [scroller release];
+    
+    [m_pSelectionScreen addTarget:self action:@selector(handleDismissSelectionScreen) forControlEvents:UIControlEventTouchDragInside];
+    [m_pSelectionScreen addTarget:self action:@selector(handleDismissSelectionScreen) forControlEvents:UIControlEventTouchUpInside];
+    
+    [m_pView addSubview:m_pSelectionScreen];
 }
 
 @end
@@ -56,11 +122,13 @@ namespace Examples
         [m_pNextButton setTitle:@"Next" forState:UIControlStateNormal];
         [m_pNextButton addTarget:m_pBinding action:@selector(activateNext) forControlEvents:UIControlEventTouchDown];
         
-        [m_pBinding setBoundInstance:this];
+        m_pSelectNewExampleButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        [m_pSelectNewExampleButton retain];
+        m_pSelectNewExampleButton.frame = CGRectMake(screenWidth/2 - 300, 10, 600, 30);
+        [m_pSelectNewExampleButton setTitle:@"" forState:UIControlStateNormal];
+        [m_pSelectNewExampleButton addTarget:m_pBinding action:@selector(openExampleSelectionMenu) forControlEvents:UIControlEventTouchDown];
         
-        m_pLabel = [[UILabel alloc]initWithFrame:CGRectMake(screenWidth/2 - 300, 10, 600, 30)];
-        m_pLabel.textAlignment = UITextAlignmentCenter;
-        [m_pView addSubview:m_pLabel];
+        [m_pBinding setBinding:this :m_pView :600];
     }
     
     iOSExampleControllerView::~iOSExampleControllerView()
@@ -71,22 +139,30 @@ namespace Examples
         [m_pPreviousButton removeFromSuperview];
         m_pPreviousButton = nil;
         
-        [m_pLabel removeFromSuperview];
-        m_pLabel = nil;
+        [m_pSelectNewExampleButton removeFromSuperview];
+        m_pSelectNewExampleButton = nil;
         
         [m_pBinding release];
         m_pBinding = nil;
+    }
+    
+    void iOSExampleControllerView::PopulateExampleList(const std::vector<std::string>& exampleNames)
+	{
+        [m_pBinding setExampleNames: exampleNames];
     }
     
     void iOSExampleControllerView::Show()
     {
         [m_pView addSubview:m_pPreviousButton];
         [m_pView addSubview:m_pNextButton];
+        [m_pView addSubview:m_pSelectNewExampleButton];
     }
     
     void iOSExampleControllerView::SetCurrentExampleName(const std::string &name)
     {
-        m_pLabel.text = [NSString stringWithUTF8String:name.c_str()];
+        NSString* s = [NSString stringWithUTF8String:name.c_str()];
+        [m_pSelectNewExampleButton setTitle:s forState:UIControlStateNormal];
+                       
         m_selectedExample = name;
         UpdateSelectedExample();
     }

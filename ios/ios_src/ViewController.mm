@@ -209,6 +209,8 @@ using namespace Eegeo::iOS;
     m_piOSRouteSimulationExampleViewFactory = Eegeo_NEW(Examples::iOSRouteSimulationExampleViewFactory)([self view]);
     m_pExampleController->RegisterExample(Eegeo_NEW(Examples::RouteSimulationExampleFactory)(*pWorld, m_pExampleApp->GetCameraController(), *m_piOSRouteSimulationExampleViewFactory));
     
+	m_piOSExampleControllerView->PopulateExampleList(m_pExampleController->GetExampleNames());
+    
     // start examples
     m_pExampleController->ActivatePrevious();
     

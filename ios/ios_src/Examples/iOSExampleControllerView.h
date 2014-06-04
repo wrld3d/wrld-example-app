@@ -23,9 +23,11 @@ namespace Examples
 
 @interface IExampleControllerViewBinding : NSObject
 
--(void) setBoundInstance:(Examples::iOSExampleControllerView*)pExample;
+-(void) setExampleNames:(const std::vector<std::string>&)exampleNames;
+-(void) setBinding:(Examples::iOSExampleControllerView*)pInstance :(UIView*)pView :(int)exampleSelectorWidth;
 -(void) activateNext;
 -(void) activatePrevious;
+-(void) openExampleSelectionMenu;
 
 @end
 
@@ -39,7 +41,7 @@ namespace Examples
         UIView* m_pView;
         UIButton * m_pNextButton;
         UIButton * m_pPreviousButton;
-        UILabel* m_pLabel;
+        UIButton* m_pSelectNewExampleButton;
         IExampleControllerViewBinding* m_pBinding;
         std::string m_selectedExample;
         
@@ -71,6 +73,8 @@ namespace Examples
         void ActivateNext();
         
         void ActivatePrevious();
+        
+        void PopulateExampleList(const std::vector<std::string>& exampleNames);
     };
 }
 
