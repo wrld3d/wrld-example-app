@@ -19,26 +19,24 @@ namespace Examples
 //
 	JavaHudCrossThreadCommunicationExample::JavaHudCrossThreadCommunicationExample(
 		AndroidNativeState& nativeState,
-		JavaHudCrossThreadCommunicationProxy* pProxy,
 		Eegeo::Resources::CityThemes::ICityThemesService& themeService,
 		Eegeo::Resources::CityThemes::ICityThemeRepository& themeRepository,
 		Eegeo::Resources::CityThemes::ICityThemesUpdater& themeUpdater,
         Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController
 	)
 	: m_nativeState(nativeState)
-	, m_pProxy(pProxy)
 	, m_themeService(themeService)
 	, m_themeUpdater(themeUpdater)
 	, m_themeRepository(themeRepository)
 	, m_initialCityTheme(themeService.GetCurrentTheme())
 	, m_globeCameraStateRestorer(globeCameraController)
     {
-		Eegeo_ASSERT(pProxy != NULL, "JavaHudCrossThreadCommunicationExample pProxy must be non-null.\n");
+
     }
 
 	JavaHudCrossThreadCommunicationExample::~JavaHudCrossThreadCommunicationExample()
 	{
-		Eegeo_DELETE m_pProxy;
+
 	}
 
     void JavaHudCrossThreadCommunicationExample::Start()
@@ -69,10 +67,12 @@ namespace Examples
 	    //get the showUi method, and call it on the instance we have created - the 'J'
 	    //argument refers to a long - we will carriage a pointer to this so we can be called
 	    //back by the java code when a menu item is selected
-		jmethodID showVisitMenu = env->GetMethodID(m_themeReaderWriterHudClass, "showUi", "(JJ)V");
+		jmethodID showVisitMenu = env->GetMethodID(m_themeReaderWriterHudClass, "showUi", "(J)V");
 
-		jlong pointerToThis = (jlong)(this);
-		env->CallVoidMethod(m_themeReaderWriterHud, showVisitMenu, pointerToThis, (jlong)(m_pProxy));
+		env->CallVoidMethod(
+				m_themeReaderWriterHud,
+				showVisitMenu,
+				(jlong)(this));
     }
 
     void JavaHudCrossThreadCommunicationExample::Suspend()

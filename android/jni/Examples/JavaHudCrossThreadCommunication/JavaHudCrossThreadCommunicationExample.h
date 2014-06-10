@@ -17,15 +17,12 @@
 
 namespace Examples
 {
-	class JavaHudCrossThreadCommunicationProxy;
-
     class JavaHudCrossThreadCommunicationExample : public IExample
     {
     	AndroidNativeState& m_nativeState;
 		Eegeo::Resources::CityThemes::ICityThemesService& m_themeService;
 		Eegeo::Resources::CityThemes::ICityThemeRepository& m_themeRepository;
 		Eegeo::Resources::CityThemes::ICityThemesUpdater& m_themeUpdater;
-		JavaHudCrossThreadCommunicationProxy* m_pProxy;
         Eegeo::Resources::CityThemes::CityThemeData m_initialCityTheme;
         GlobeCameraStateRestorer m_globeCameraStateRestorer;
 
@@ -35,7 +32,6 @@ namespace Examples
     public:
     	JavaHudCrossThreadCommunicationExample(
 			AndroidNativeState& pNativeState,
-			JavaHudCrossThreadCommunicationProxy* pProxy,
 			Eegeo::Resources::CityThemes::ICityThemesService& themeService,
 			Eegeo::Resources::CityThemes::ICityThemeRepository& themeRepository,
 			Eegeo::Resources::CityThemes::ICityThemesUpdater& themeUpdater,

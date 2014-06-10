@@ -3,22 +3,17 @@
 #include "AppRunner.h"
 #include "Graphics.h"
 #include "AndroidThreadHelper.h"
-#include "AppDisplayAvailableMessage.h"
-#include "TouchEventMessage.h"
 
 AppRunner::AppRunner
 		(
 		const std::string& apiKey,
-		AndroidNativeState* pNativeState,
-		AppToJavaProxy& appToJavaProxy
+		AndroidNativeState* pNativeState
 		)
 : m_apiKey(apiKey)
 , m_pNativeState(pNativeState)
-, m_frameRateRegulator(30)
-, m_deltaTime(1/30.0f)
 , m_pAppHost(NULL)
-, m_appToJavaProxy(appToJavaProxy)
 {
+	Eegeo::Helpers::ThreadHelpers::SetThisThreadAsMainThread();
 }
 
 AppRunner::~AppRunner()
@@ -32,56 +27,55 @@ AppRunner::~AppRunner()
 	}
 }
 
-void AppRunner::OnStarted()
+void AppRunner::CreateAppHost()
 {
-	Eegeo::Helpers::ThreadHelpers::SetThisThreadAsMainThread();
+	if(m_pAppHost == NULL && m_displayService.IsDisplayAvailable())
+	{
+		m_pAppHost = Eegeo_NEW(AppHost)
+		(
+			m_apiKey,
+			*m_pNativeState,
+			m_displayService.GetDisplayWidth(),
+			m_displayService.GetDisplayHeight(),
+			m_displayService.GetDisplay(),
+			m_displayService.GetSharedSurface(),
+			m_displayService.GetResourceBuildSharedContext()
+		);
+	}
+}
 
+void AppRunner::Pause()
+{
+	if(m_pAppHost != NULL)
+	{
+		m_pAppHost->OnPause();
+	}
+
+	ReleaseDisplay();
+}
+
+void AppRunner::Resume()
+{
 	if(m_pAppHost != NULL)
 	{
 		m_pAppHost->OnResume();
 	}
 }
 
-void AppRunner::OnStopped()
-{
-	if(m_pAppHost != NULL)
-	{
-		m_pAppHost->OnPause();
-	}
-}
-
-bool AppRunner::HandleMessage(const AppLifecycleMessages::AppPauseMessage& message)
+void AppRunner::ActivateSurface()
 {
 	ReleaseDisplay();
-
-	const bool continueRunning = false;
-	return continueRunning;
-}
-
-bool AppRunner::HandleMessage(const AppLifecycleMessages::AppDisplayAvailableMessage& message)
-{
-	ReleaseDisplay();
-
-	if(!TryBindDisplay())
-	{
-		SendMessage(&message);
-	}
-
+	bool displayBound = TryBindDisplay();
+	Eegeo_ASSERT(displayBound);
 	CreateAppHost();
-
-	const bool continueRunning = true;
-	return continueRunning;
 }
 
-bool AppRunner::HandleMessage(const InputMessages::TouchEventMessage& message)
+void AppRunner::HandleTouchEvent(const Eegeo::Android::Input::TouchInputEvent& event)
 {
 	if(m_pAppHost != NULL)
 	{
-		m_pAppHost->HandleTouchInputEvent(message.GetTouchInputEvent());
+		m_pAppHost->HandleTouchInputEvent(event);
 	}
-
-	const bool continueRunning = true;
-	return continueRunning;
 }
 
 void AppRunner::ReleaseDisplay()
@@ -109,48 +103,17 @@ bool AppRunner::TryBindDisplay()
 	return false;
 }
 
-void AppRunner::CreateAppHost()
-{
-	if(m_pAppHost == NULL && m_displayService.IsDisplayAvailable())
-	{
-		m_pAppHost = Eegeo_NEW(AppHost)
-		(
-			m_apiKey,
-			*m_pNativeState,
-			m_displayService.GetDisplayWidth(),
-			m_displayService.GetDisplayHeight(),
-			m_displayService.GetDisplay(),
-			m_displayService.GetSharedSurface(),
-			m_displayService.GetResourceBuildSharedContext(),
-			m_appToJavaProxy
-		);
-	}
-}
-
-void AppRunner::OnBeforeMessagesHandled()
-{
-	m_deltaTime = m_frameRateRegulator.WaitForFrameStart();
-}
-
-void AppRunner::OnAllMessagesHandled()
+void AppRunner::Update(float deltaSeconds)
 {
 	if(m_pAppHost != NULL && m_displayService.IsDisplayAvailable())
 	{
-		m_pAppHost->Update(m_deltaTime);
+		m_pAppHost->Update(deltaSeconds);
 
 		Eegeo_GL(eglSwapBuffers(m_displayService.GetDisplay(), m_displayService.GetSurface()));
 		Eegeo_GL(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT));
 
-		m_pAppHost->Draw(m_deltaTime);
+		m_pAppHost->Draw(deltaSeconds);
 	}
 }
-
-void AppRunner::OnMessageHandled(const AppMessages::IAppMessage* message)
-{
-	Eegeo_DELETE(message);
-}
-
-
-
 
 

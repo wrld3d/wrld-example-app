@@ -49,11 +49,6 @@ else
 	LOCAL_C_INCLUDES += .\jni\Examples
 endif 
 
-LOCAL_C_INCLUDES += ./jni/AppMessages
-LOCAL_C_INCLUDES += ./jni/AppMessages/AppToJava
-LOCAL_C_INCLUDES += ./jni/AppLifecycleMessages
-LOCAL_C_INCLUDES += ./jni/InputMessages
-
 LOCAL_C_INCLUDES += ./libs/png
 LOCAL_C_INCLUDES += ./libs/curl 
 LOCAL_C_INCLUDES += ./libs/jpeg  

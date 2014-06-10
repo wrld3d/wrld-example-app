@@ -1,6 +1,7 @@
 package com.eegeo;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.view.Surface;
 import android.view.SurfaceHolder;
@@ -12,13 +13,14 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback
     private EegeoSurfaceView m_surfaceView;
     private SurfaceHolder m_surfaceHolder;
     private long m_nativeAppWindowPtr;
-    private NativeToJavaMessagePump nativeToJavaMessageHandler;
+    private boolean m_shouldUpdateNativeCode;
     
-    public static native long createNativeCode(MainActivity activity, AssetManager assetManager, NativeToJavaMessagePump nativeToJavaMessageHandler, float dpi);
+    public static native long createNativeCode(MainActivity activity, AssetManager assetManager, float dpi);
     public static native void destroyNativeCode();
     public static native void pauseNativeCode();
     public static native void resumeNativeCode();
     public static native void setNativeSurface(Surface surface);
+    public static native void updateNativeCode();
     
     @Override
     public void onCreate(Bundle savedInstanceState) 
@@ -31,16 +33,36 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback
         m_surfaceView = (EegeoSurfaceView)findViewById(R.id.surface);
         m_surfaceView.getHolder().addCallback(this);
         
-    	nativeToJavaMessageHandler = new NativeToJavaMessagePump(this);
-        
         DisplayMetrics dm = getResources().getDisplayMetrics();
 		float dpi = dm.ydpi;
         
-        m_nativeAppWindowPtr = createNativeCode(this, getAssets(), nativeToJavaMessageHandler, dpi);
+        m_nativeAppWindowPtr = createNativeCode(this, getAssets(), dpi);
         
         if(m_nativeAppWindowPtr == 0)
         {
         	throw new RuntimeException("Failed to start native code.");
+        }
+        
+        m_shouldUpdateNativeCode = true;
+
+        if(m_shouldUpdateNativeCode) 
+        {
+        	// 1 millisecond is cool because it will only repost when tick is complete
+        	final int millisecondDelay = 1;
+        	
+            final Handler h = new Handler();
+            h.postDelayed(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                	if(m_nativeAppWindowPtr != 0)
+                	{
+                    	updateNativeCode();
+                		h.postDelayed(this, millisecondDelay);
+                	}
+                }
+            }, millisecondDelay); 
         }
     }
     

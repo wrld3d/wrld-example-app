@@ -12,13 +12,9 @@ using namespace Examples;
 namespace Examples
 {
 	AndroidExampleControllerView::AndroidExampleControllerView(
-			AndroidNativeState& androidNativeState,
-			AndroidExampleControllerProxy *pProxy)
+			AndroidNativeState& androidNativeState)
     : m_nativeState(androidNativeState)
-	, m_pProxy(pProxy)
     {
-		Eegeo_ASSERT(pProxy != NULL, "AndroidRouteMatchingExampleView pProxy must be non-null.\n");
-
 		//get an env for the current thread
 		//
 		//AndroidSafeNativeThreadAttachment will detach the thread if required at the end of the method
@@ -35,18 +31,13 @@ namespace Examples
 
 		//get the constructor for the ExampleControllerHud, which takes the activity, a pointer to 'this' as
 		//a parameter, and a flag to indicate if currently in follow mode.
-		jmethodID exampleControllerHudConstructor = env->GetMethodID(routeMatchingExampleHudClass, "<init>", "(Lcom/eegeo/MainActivity;JJ)V");
-
-		//construct an instance of the ExampleControllerHud, and create and cache a persistent reference to it.
-		//we will make calls on to this instance, and it will add elements to the UI for us form Java.
-		jlong pThis = (jlong)(this);
+		jmethodID exampleControllerHudConstructor = env->GetMethodID(routeMatchingExampleHudClass, "<init>", "(Lcom/eegeo/MainActivity;J)V");
 
 		jobject instance = env->NewObject(
 				m_androidExampleControllerViewClass,
 				exampleControllerHudConstructor,
 	    		m_nativeState.activity,
-	    		pThis,
-	    		(jlong)(m_pProxy));
+	    		(jlong)(this));
 
 		m_androidExampleControllerView = env->NewGlobalRef(instance);
     }
@@ -63,8 +54,6 @@ namespace Examples
 		//Destroy the cached global references.
 	    env->DeleteGlobalRef(m_androidExampleControllerView);
 	    env->DeleteGlobalRef(m_androidExampleControllerViewClass);
-
-	    Eegeo_DELETE m_pProxy;
     }
 
 	void AndroidExampleControllerView::Show()
@@ -95,13 +84,12 @@ namespace Examples
 			env->DeleteLocalRef(exampleNameJni);
 		}
 
-		jmethodID populateExampleSpinner = env->GetMethodID(m_androidExampleControllerViewClass, "PopulateExampleSpinner", "(JJ[Ljava/lang/String;)V");
+		jmethodID populateExampleSpinner = env->GetMethodID(m_androidExampleControllerViewClass, "PopulateExampleSpinner", "(J[Ljava/lang/String;)V");
 
 		env->CallVoidMethod(
 				m_androidExampleControllerView,
 				populateExampleSpinner,
 				(jlong)(this),
-	    		(jlong)(m_pProxy),
 				stringArray);
 
 		env->DeleteLocalRef(stringArray);

@@ -1,9 +1,5 @@
 //
 //  AndroidRouteSimulationExampleView.h
-//  ExampleApp
-//
-//  Created by Scott on 19/05/2014.
-//  Copyright (c) 2014 eeGeo. All rights reserved.
 //
 
 #ifndef __ExampleApp__AndroidRouteSimulationExampleView__
@@ -31,12 +27,10 @@ namespace Examples
     	AndroidNativeState& m_nativeState;
     	jclass m_routeSimulationExampleHudClass;
     	jobject m_routeSimulationExampleHud;
-    	AndroidRouteSimulationProxy* m_pProxy;
         
     public:
         AndroidRouteSimulationExampleView(
         		AndroidNativeState& androidNativeState,
-        		AndroidRouteSimulationProxy* pProxy,
         		bool usingFollowCamera);
         
         ~AndroidRouteSimulationExampleView();

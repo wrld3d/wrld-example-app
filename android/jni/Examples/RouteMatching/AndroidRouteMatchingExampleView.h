@@ -16,18 +16,15 @@
 
 namespace Examples
 {
-	class AndroidRouteMatchingProxy;
-
     class AndroidRouteMatchingExampleView : public IRouteMatchingExampleView, private Eegeo::NonCopyable
     {
         std::vector<IUIActionHandler*> m_matchingToggledHandlers;
     	AndroidNativeState& m_nativeState;
-    	AndroidRouteMatchingProxy* m_pProxy;
     	jclass m_routeMatchingExampleHudClass;
     	jobject m_routeMatchingExampleHud;
         
     public:
-        AndroidRouteMatchingExampleView(AndroidNativeState& androidNativeState, AndroidRouteMatchingProxy* pProxy);
+        AndroidRouteMatchingExampleView(AndroidNativeState& androidNativeState);
         
         ~AndroidRouteMatchingExampleView();
         

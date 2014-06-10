@@ -25,8 +25,6 @@
 #include "GlobalShadowing.h"
 #include "TouchEventWrapper.h"
 #include "Blitter.h"
-#include "IAndroidTouchInputHandler.h"
-#include "AppToJavaProxy.h"
 #include "AndroidNativeState.h"
 #include "AppInputDelegate.h"
 #include <vector>
@@ -39,13 +37,8 @@
 #include "AndroidRouteMatchingExampleViewFactory.h"
 #include "AndroidRouteSimulationExampleViewFactory.h"
 #include "ExampleCameraJumpController.h"
-#include "MessageQueue.h"
-#include "IAndroidExampleMessage.h"
 
-
-class AppHost :
-	public IAndroidTouchInputHandler,
-	protected Eegeo::NonCopyable
+class AppHost : protected Eegeo::NonCopyable
 {
 public:
 	AppHost(
@@ -55,8 +48,7 @@ public:
 			float displayHeight,
 		    EGLDisplay display,
 		    EGLSurface shareSurface,
-		    EGLContext resourceBuildShareContext,
-		    AppToJavaProxy& appToJavaProxy
+		    EGLContext resourceBuildShareContext
 			);
 	~AppHost();
 
@@ -106,17 +98,13 @@ private:
 	Eegeo::UI::NativeUIFactories m_androidNativeUIFactories;
 
 	ExampleApp* m_pApp;
-	Eegeo::Messaging::MessageQueue<Examples::IAndroidExampleMessage*> m_examplesMessageQueue;
 	Examples::ExampleController* m_pExampleController;
 	Examples::AndroidExampleControllerView* m_pAndroidExampleControllerView;
-	Examples::AndroidExampleControllerProxy* m_pAndroidExampleControllerProxy;
 	Examples::AndroidRouteMatchingExampleViewFactory* m_pAndroidRouteMatchingExampleViewFactory;
 	Examples::AndroidRouteSimulationExampleViewFactory* m_pAndroidRouteSimulationExampleViewFactory;
 	ExampleCameraJumpController* m_pExampleCameraJumpController;
 
 	Eegeo::Android::Input::AndroidInputProcessor* m_pInputProcessor;
-
-    AppToJavaProxy& m_appToJavaProxy;
 
     void ConfigureExamples();
     void DestroyExamples();

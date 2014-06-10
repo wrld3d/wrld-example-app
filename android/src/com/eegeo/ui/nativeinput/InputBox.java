@@ -36,49 +36,43 @@ public class InputBox
 			final boolean initialContentIsPlaceholder,
 			final int ptr)
     {
-    	a.runOnUiThread(new Runnable()
+    	try
     	{
-    		public void run()
+    		AlertDialog.Builder builder = new AlertDialog.Builder(a);
+    		builder.setTitle(title);
+    		builder.setMessage(message);
+
+    		final EditText input = new EditText(a);
+
+    		input.setInputType(InputType.TYPE_CLASS_TEXT);
+    		
+    		if(initialContentIsPlaceholder)
     		{
-    	    	try
-    	    	{
-    	    		AlertDialog.Builder builder = new AlertDialog.Builder(a);
-    	    		builder.setTitle(title);
-    	    		builder.setMessage(message);
-
-    	    		final EditText input = new EditText(a);
-
-    	    		input.setInputType(InputType.TYPE_CLASS_TEXT);
-    	    		
-    	    		if(initialContentIsPlaceholder)
-    	    		{
-    	    			input.setHint(intitialContent);
-    	    		}
-    	    		else
-    	    		{
-    	    			input.setText(intitialContent);
-    	    		}
-    	    		
-    	    		builder.setView(input);
-    	    		builder.setCancelable(false);
-    	    		
-    	    		// Set up the buttons
-    	    		builder.setPositiveButton(button, new DialogInterface.OnClickListener() { 
-    	    		    @Override
-    	    		    public void onClick(DialogInterface dialog, int which) {
-    	    		    	ms_text = input.getText().toString();
-    	    		    	callback(ptr);
-    	    		    	m_inputBox = null;
-    	    		    }
-    	    		});
-
-    	    		m_inputBox = builder.show();
-    	    	}
-    	    	catch (Exception e)
-    	    	{
-    	        	Log.v("InputBox", e.getMessage() == null ? "Error, but no message?!" : e.getMessage());
-    	    	}    			
+    			input.setHint(intitialContent);
     		}
-    	});
+    		else
+    		{
+    			input.setText(intitialContent);
+    		}
+    		
+    		builder.setView(input);
+    		builder.setCancelable(false);
+    		
+    		// Set up the buttons
+    		builder.setPositiveButton(button, new DialogInterface.OnClickListener() { 
+    		    @Override
+    		    public void onClick(DialogInterface dialog, int which) {
+    		    	ms_text = input.getText().toString();
+    		    	callback(ptr);
+    		    	m_inputBox = null;
+    		    }
+    		});
+
+    		m_inputBox = builder.show();
+    	}
+    	catch (Exception e)
+    	{
+        	Log.v("InputBox", e.getMessage() == null ? "Error, but no message?!" : e.getMessage());
+    	}    
     }
 }

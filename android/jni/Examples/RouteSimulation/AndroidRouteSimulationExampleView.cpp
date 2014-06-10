@@ -1,14 +1,9 @@
 //
 //  AndroidRouteSimulationExampleView.cpp
-//  ExampleApp
-//
-//  Created by Scott on 19/05/2014.
-//  Copyright (c) 2014 eeGeo. All rights reserved.
 //
 
 #include "AndroidRouteSimulationExampleView.h"
 #include "UIHelpers.h"
-#include "IAndroidExampleMessage.h"
 #include "AndroidRouteSimulationProxy.h"
 
 using namespace Examples;
@@ -17,13 +12,9 @@ namespace Examples
 {
 	AndroidRouteSimulationExampleView::AndroidRouteSimulationExampleView(
 			AndroidNativeState& androidNativeState,
-			AndroidRouteSimulationProxy* pProxy,
 			bool usingFollowCamera)
     : m_nativeState(androidNativeState)
-	, m_pProxy(pProxy)
     {
-		Eegeo_ASSERT(pProxy != NULL, "AndroidRouteSimulationExampleView pProxy must be non-null.\n");
-
 		//get an env for the current thread
 		//
 		//AndroidSafeNativeThreadAttachment will detach the thread if required at the end of the method
@@ -40,18 +31,13 @@ namespace Examples
 
 		//get the constructor for the RouteSimulationExampleHud, which takes the activity, a pointer to 'this' as
 		//a parameter, and a flag to indicate if currently in follow mode.
-		jmethodID routeSimulationExampleHudConstructor = env->GetMethodID(routeSimulationExampleHudClass, "<init>", "(Lcom/eegeo/MainActivity;JJZ)V");
-
-		//construct an instance of the RouteSimulationExampleHud, and create and cache a persistent reference to it.
-		//we will make calls on to this instance, and it will add elements to the UI for us form Java.
-		jlong pThis = (jlong)(this);
+		jmethodID routeSimulationExampleHudConstructor = env->GetMethodID(routeSimulationExampleHudClass, "<init>", "(Lcom/eegeo/MainActivity;JZ)V");
 
 		jobject instance = env->NewObject(
 	    		m_routeSimulationExampleHudClass,
 	    		routeSimulationExampleHudConstructor,
 	    		m_nativeState.activity,
-	    		pThis,
-	    		(jlong)(m_pProxy),
+	    		(jlong)(this),
 	    		usingFollowCamera);
 
 	    m_routeSimulationExampleHud = env->NewGlobalRef(instance);
@@ -69,8 +55,6 @@ namespace Examples
 		//Destroy the cached global references.
 	    env->DeleteGlobalRef(m_routeSimulationExampleHud);
 	    env->DeleteGlobalRef(m_routeSimulationExampleHudClass);
-
-		Eegeo_DELETE m_pProxy;
     }
 
     void AndroidRouteSimulationExampleView::AddFollowCameraToggledHandler(IUIActionHandler& handler)

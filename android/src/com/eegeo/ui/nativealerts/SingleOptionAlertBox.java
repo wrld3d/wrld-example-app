@@ -26,32 +26,26 @@ public class SingleOptionAlertBox
 			final String message,
 			final int ptr)
     {
-    	a.runOnUiThread(new Runnable()
+    	try
     	{
-    		public void run()
-    		{
-    	    	try
-    	    	{
-    	    		AlertDialog.Builder builder = new AlertDialog.Builder(a);
-    	    		builder.setTitle(title);
-    	    		builder.setMessage(message);
-    	    		
-    	    		// Set up the buttons
-    	    		builder.setPositiveButton("OK", new DialogInterface.OnClickListener() { 
-    	    		    @Override
-    	    		    public void onClick(DialogInterface dialog, int which) {
-    	    		    	callback(ptr);
-    	    		    	m_inputBox = null;
-    	    		    }
-    	    		});
+    		AlertDialog.Builder builder = new AlertDialog.Builder(a);
+    		builder.setTitle(title);
+    		builder.setMessage(message);
+    		
+    		// Set up the buttons
+    		builder.setPositiveButton("OK", new DialogInterface.OnClickListener() { 
+    		    @Override
+    		    public void onClick(DialogInterface dialog, int which) {
+    		    	callback(ptr);
+    		    	m_inputBox = null;
+    		    }
+    		});
 
-    	    		m_inputBox = builder.show();
-    	    	}
-    	    	catch (Exception e)
-    	    	{
-    	        	Log.v("InputBox", e.getMessage() == null ? "Error, but no message?!" : e.getMessage());
-    	    	}    			
-    		}
-    	});
+    		m_inputBox = builder.show();
+    	}
+    	catch (Exception e)
+    	{
+        	Log.v("InputBox", e.getMessage() == null ? "Error, but no message?!" : e.getMessage());
+    	}    	
     }
 }

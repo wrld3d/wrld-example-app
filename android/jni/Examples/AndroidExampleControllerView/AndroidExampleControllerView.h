@@ -13,21 +13,18 @@
 
 namespace Examples
 {
-	class AndroidExampleControllerProxy;
-
 	class AndroidExampleControllerView : public IExampleControllerView, private Eegeo::NonCopyable
 	{
         std::vector<IUIActionHandler*> m_exampleUpdatedHandlers;
         std::vector<IUIActionHandler*> m_nextHandlers;
         std::vector<IUIActionHandler*> m_previousHandlers;
     	AndroidNativeState& m_nativeState;
-    	AndroidExampleControllerProxy* m_pProxy;
     	jclass m_androidExampleControllerViewClass;
     	jobject m_androidExampleControllerView;
     	std::string m_selectedExampleName;
 
 	public:
-		AndroidExampleControllerView(AndroidNativeState& androidNativeState, AndroidExampleControllerProxy* pProxy);
+		AndroidExampleControllerView(AndroidNativeState& androidNativeState);
 
         ~AndroidExampleControllerView();
 

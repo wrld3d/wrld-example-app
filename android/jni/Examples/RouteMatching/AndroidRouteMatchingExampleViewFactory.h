@@ -12,20 +12,16 @@
 #include "Types.h"
 #include "IRouteMatchingExampleViewFactory.h"
 #include "AndroidNativeState.h"
-#include "MessageQueue.h"
-#include "IAndroidExampleMessage.h"
 
 namespace Examples
 {
     class AndroidRouteMatchingExampleViewFactory : public IRouteMatchingExampleViewFactory, private Eegeo::NonCopyable
     {
     	AndroidNativeState& m_nativeState;
-    	Eegeo::Messaging::MessageQueue<IAndroidExampleMessage*>& m_messageQueue;
 
     public:
     	AndroidRouteMatchingExampleViewFactory(
-    			AndroidNativeState& androidNativeState,
-    			Eegeo::Messaging::MessageQueue<IAndroidExampleMessage*>& messageQueue);
+    			AndroidNativeState& androidNativeState);
         
         virtual ~AndroidRouteMatchingExampleViewFactory();
         

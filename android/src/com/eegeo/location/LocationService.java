@@ -98,24 +98,19 @@ class LocationService
     	{
 	    	setupListenerAndLocationManager(a);
     		forceLocationFromCachedProviders(LocationService.locationManager);
-	    	a.runOnUiThread(new Runnable()
+	    	
+	    	try
 	    	{
-	    		public void run()
+	    		if (LocationService.locationListener != null)
 	    		{
-	    	    	try
-	    	    	{
-	    	    		if (LocationService.locationListener != null)
-	    	    		{
-	    	    			LocationService.locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, LocationService.locationListener);
-	    	    			LocationService.locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, LocationService.locationListener);
-	    	    		}
-	    	    	}
-	    	    	catch (Exception e)
-	    	    	{
-	    	        	Log.v("Location", e.getMessage());
-	    	    	}    			
+	    			LocationService.locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, LocationService.locationListener);
+	    			LocationService.locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, LocationService.locationListener);
 	    		}
-	    	});
+	    	}
+	    	catch (Exception e)
+	    	{
+	        	Log.v("Location", e.getMessage());
+	    	}    
     	}
     }
     

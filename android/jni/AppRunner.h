@@ -3,46 +3,30 @@
 #ifndef APPRUNNER_H_
 #define APPRUNNER_H_
 
-#include "Thread.h"
 #include "Graphics.h"
 #include "AppHost.h"
 #include "GlDisplayService.h"
-#include "IMessageQueue.h"
-#include "IAppMessage.h"
-#include "ActiveObject.h"
 #include "Types.h"
-#include "FrameRateRegulator.h"
-#include <algorithm>
 
-class AppRunner :
-	public Eegeo::Messaging::ActiveObject<const AppMessages::IAppMessage*, AppMessages::IAppMessageDispatcher>
+class AppRunner : Eegeo::NonCopyable
 {
 public:
 	AppRunner(
 			const std::string& apiKey,
-			AndroidNativeState* pNativeState,
-			AppToJavaProxy& appToJavaProxy
+			AndroidNativeState* pNativeState
 			);
 	~AppRunner();
 
-protected:
-	void OnStarted();
-	void OnStopped();
-	void OnMessageHandled(const AppMessages::IAppMessage* message);
-	void OnBeforeMessagesHandled();
-	void OnAllMessagesHandled();
+	void Pause();
+	void Resume();
+	void ActivateSurface();
+	void Update(float deltaSeconds);
+
+	void HandleTouchEvent(const Eegeo::Android::Input::TouchInputEvent& message);
 
 private:
 	const std::string& m_apiKey;
 	AndroidNativeState* m_pNativeState;
-	AppToJavaProxy& m_appToJavaProxy;
-
-	bool HandleMessage(const AppLifecycleMessages::AppPauseMessage& message);
-	bool HandleMessage(const AppLifecycleMessages::AppDisplayAvailableMessage& message);
-	bool HandleMessage(const InputMessages::TouchEventMessage& message);
-
-	FrameRateRegulator m_frameRateRegulator;
-	float m_deltaTime;
 
     GlDisplayService m_displayService;
 	void ReleaseDisplay();
