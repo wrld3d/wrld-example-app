@@ -8,6 +8,7 @@
 
 #include "PODAnimationExample.h"
 #include "ShaderCompiler.h"
+#include "CameraHelpers.h"
 #include <sys/time.h>
 
 namespace Examples
@@ -24,7 +25,14 @@ PODAnimationExample::PODAnimationExample(Eegeo::Rendering::RenderContext& render
 	,m_globalFogging(fogging)
 	,m_globeCameraStateRestorer(cameraController)
 {
+	Eegeo::Space::EcefTangentBasis cameraInterestBasis;
 
+	Eegeo::Camera::CameraHelpers::EcefTangentBasisFromPointAndHeading(
+			Eegeo::Space::LatLong::FromDegrees(37.780642, -122.385876).ToECEF(),
+			16.472872,
+			cameraInterestBasis);
+
+	cameraController.SetView(cameraInterestBasis, 1209.007812);
 }
 
 void PODAnimationExample::Start()

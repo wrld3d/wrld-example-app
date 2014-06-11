@@ -13,6 +13,7 @@
 #include "VectorMath.h"
 #include "GlobeCameraTouchControllerConfiguration.h"
 #include "Logger.h"
+#include "CameraHelpers.h"
 
 using namespace Examples;
 using namespace Eegeo;
@@ -77,6 +78,14 @@ RouteSimulationExample::RouteSimulationExample(RouteService& routeService,
 	,m_roadSideChangedHandler(this, &RouteSimulationExample::ToggleSideOfRoadToDriveOn)
 	,m_globeCameraStateRestorer(defaultCamera)
 {
+	Eegeo::Space::EcefTangentBasis cameraInterestBasis;
+
+	Eegeo::Camera::CameraHelpers::EcefTangentBasisFromPointAndHeading(
+			Eegeo::Space::LatLong::FromDegrees(37.793348, -122.399035).ToECEF(),
+			354.824249,
+			cameraInterestBasis);
+
+	defaultCamera.SetView(cameraInterestBasis, 1374.298706);
 }
 
 void RouteSimulationExample::Initialise()

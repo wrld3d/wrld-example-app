@@ -10,6 +10,7 @@
 #include "RouteBuilder.h"
 #include "VectorMath.h"
 #include "RouteStyle.h"
+#include "CameraHelpers.h"
 
 using namespace Examples;
 using namespace Eegeo;
@@ -23,7 +24,14 @@ RouteDrawingExample::RouteDrawingExample(RouteService& routeService,
 	,m_createdRoutes(false)
 	,m_globeCameraStateRestorer(cameraController)
 {
+	Eegeo::Space::EcefTangentBasis cameraInterestBasis;
 
+	Eegeo::Camera::CameraHelpers::EcefTangentBasisFromPointAndHeading(
+			Eegeo::Space::LatLong::FromDegrees(37.793348, -122.399035).ToECEF(),
+			354.824249,
+			cameraInterestBasis);
+
+	cameraController.SetView(cameraInterestBasis, 1374.298706);
 }
 
 void RouteDrawingExample::Update(float dt)
