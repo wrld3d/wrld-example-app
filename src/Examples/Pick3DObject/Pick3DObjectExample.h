@@ -24,12 +24,12 @@ class Pick3DObjectExample : public IExample
 private:
 	struct Ray
 	{
-		Eegeo::dv3 origin;
-		Eegeo::v3 direction;
+		Eegeo::dv3 m_origin;
+		Eegeo::v3 m_direction;
 	};
 
 	bool m_movingObject;
-	Eegeo::DebugRendering::SphereMesh* m_object;
+	Eegeo::DebugRendering::SphereMesh* m_pObject;
 	Eegeo::dv3 m_objectLocationEcef;
 
 	Eegeo::Rendering::RenderContext& m_renderContext;

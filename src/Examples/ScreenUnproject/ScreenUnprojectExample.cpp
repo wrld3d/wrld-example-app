@@ -63,9 +63,9 @@ ScreenUnprojectExample::ScreenUnprojectExample(Eegeo::Rendering::RenderContext& 
         Eegeo::Camera::ICameraProvider& cameraProvider,
         Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider,
         Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController)
-	:renderContext(renderContext)
-	,cameraProvider(cameraProvider)
-	,terrainHeightProvider(terrainHeightProvider)
+	:m_renderContext(renderContext)
+	,m_cameraProvider(cameraProvider)
+	,m_terrainHeightProvider(terrainHeightProvider)
 	,m_globeCameraStateRestorer(cameraController)
 {
 
@@ -74,27 +74,27 @@ ScreenUnprojectExample::ScreenUnprojectExample(Eegeo::Rendering::RenderContext& 
 void ScreenUnprojectExample::Start()
 {
 	//create and tessellate a sphere mesh as in the DebugSphereExample program
-	sphere = new Eegeo::DebugRendering::SphereMesh(
-	    renderContext,
+	m_pSphere = new Eegeo::DebugRendering::SphereMesh(
+	    m_renderContext,
 	    20.0f,
 	    16, 16,
 	    Eegeo::dv3(),
 	    NULL,
 	    Eegeo::v3(1.0f, 0.0f, 0.0f)
 	);
-	sphere->Tesselate();
+	m_pSphere->Tesselate();
 
 }
 
 void ScreenUnprojectExample::Suspend()
 {
 	//destroy the sphere
-	delete sphere;
+	delete m_pSphere;
 }
 
 void ScreenUnprojectExample::Update(float dt)
 {
-	const Eegeo::Camera::RenderCamera& renderCamera = cameraProvider.GetRenderCamera();
+	const Eegeo::Camera::RenderCamera& renderCamera = m_cameraProvider.GetRenderCamera();
 
 	//select the middle of the client screen as the position of the sphere
 	double screenPointOfInterestX = (renderCamera.GetViewportWidth()/2.0f);
@@ -130,16 +130,16 @@ void ScreenUnprojectExample::Update(float dt)
 		//we are intersecting the idealised sphere, so get height at the intersection location
 		//and set sphere height to result
 		float height = 0.f;
-		terrainHeightProvider.TryGetHeight(intersectionPoint, 0, height);
+		m_terrainHeightProvider.TryGetHeight(intersectionPoint, 0, height);
 		Eegeo::Space::LatLongAltitude intersectionLocation = Eegeo::Space::LatLongAltitude::FromECEF(intersectionPoint);
 		intersectionLocation.SetAltitude(height);
-		sphere->SetPositionECEF(intersectionLocation.ToECEF());
+		m_pSphere->SetPositionECEF(intersectionLocation.ToECEF());
 	}
 }
 
 void ScreenUnprojectExample::Draw()
 {
 	//draw the sphere at the current location
-	sphere->Draw(renderContext);
+	m_pSphere->Draw(m_renderContext);
 }
 }

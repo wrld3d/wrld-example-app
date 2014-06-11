@@ -63,35 +63,35 @@ private:
 
 	struct MyPoolFilterCriteria : Eegeo::Rendering::Scene::ISceneElementFilterCriteria<TRenderable>
 	{
-		ModifiedRenderingExample* owner;
+		ModifiedRenderingExample* m_pOwner;
 	public:
-		MyPoolFilterCriteria(ModifiedRenderingExample* owner):owner(owner) {}
+		MyPoolFilterCriteria(ModifiedRenderingExample* owner):m_pOwner(owner) {}
 		virtual bool FiltersOut(const TSceneElement& item) const;
 	};
 
-	MyPoolFilterCriteria* pCriteria;
+	MyPoolFilterCriteria* m_pCriteria;
 
-	Eegeo::Rendering::RenderContext& renderContext;
-	Eegeo::Camera::ICameraProvider& cameraProvider;
-	Eegeo::Location::IInterestPointProvider& interestPointProvider;
-	Eegeo::Lighting::GlobalLighting& lighting;
-	Eegeo::Streaming::IStreamingVolume& visibleVolume;
-	Eegeo::Rendering::Scene::SceneElementRepository<Eegeo::Rendering::Renderables::PackedRenderable>& buildingRepository;
-	Eegeo::Rendering::Filters::PackedRenderableFilter& buildingFilter;
-	Eegeo::Rendering::RenderQueue& renderQueue;
-	Eegeo::Rendering::RenderableFilters& renderableFilters;
-	Eegeo::Rendering::Shaders::ShaderIdGenerator& shaderIdGenerator;
-	Eegeo::Rendering::Materials::MaterialIdGenerator& materialIdGenerator;
-	const Eegeo::Helpers::GLHelpers::TextureInfo& placeHolderTexture;
+	Eegeo::Rendering::RenderContext& m_renderContext;
+	Eegeo::Camera::ICameraProvider& m_cameraProvider;
+	Eegeo::Location::IInterestPointProvider& m_interestPointProvider;
+	Eegeo::Lighting::GlobalLighting& m_lighting;
+	Eegeo::Streaming::IStreamingVolume& m_visibleVolume;
+	Eegeo::Rendering::Scene::SceneElementRepository<Eegeo::Rendering::Renderables::PackedRenderable>& m_buildingRepository;
+	Eegeo::Rendering::Filters::PackedRenderableFilter& m_buildingFilter;
+	Eegeo::Rendering::RenderQueue& m_renderQueue;
+	Eegeo::Rendering::RenderableFilters& m_renderableFilters;
+	Eegeo::Rendering::Shaders::ShaderIdGenerator& m_shaderIdGenerator;
+	Eegeo::Rendering::Materials::MaterialIdGenerator& m_materialIdGenerator;
+	const Eegeo::Helpers::GLHelpers::TextureInfo& m_placeHolderTexture;
 	GlobeCameraStateRestorer m_globeCameraStateRestorer;
 
-	Eegeo::Lighting::GlobalLighting* pAlternativeLighting;
-	Eegeo::Rendering::Shaders::PackedDiffuseShader* pAlternativeShader;
-	Eegeo::Rendering::Materials::PackedDiffuseMaterial* pAlternativeMaterial;
+	Eegeo::Lighting::GlobalLighting* m_pAlternativeLighting;
+	Eegeo::Rendering::Shaders::PackedDiffuseShader* m_pAlternativeShader;
+	Eegeo::Rendering::Materials::PackedDiffuseMaterial* m_pAlternativeMaterial;
 	typedef std::map<TSceneElementPtr, MyRenderable*> TSceneElementToRenderablePtrMap;
-	TSceneElementToRenderablePtrMap alternativeRenderables;
+	TSceneElementToRenderablePtrMap m_alternativeRenderables;
 
-	int counter;
+	int m_counter;
 
 	bool IsToBeReplacedWithAlternative(const TSceneElement* pSceneElement)  const;
 

@@ -13,9 +13,9 @@ namespace Examples
 class DebugSphereExample : public IExample
 {
 private:
-	std::vector<Eegeo::DebugRendering::SphereMesh*> renderables;
-	Eegeo::Rendering::RenderContext& renderContext;
-	Eegeo::Space::LatLongAltitude interestLocation;
+	std::vector<Eegeo::DebugRendering::SphereMesh*> m_renderables;
+	Eegeo::Rendering::RenderContext& m_renderContext;
+	Eegeo::Space::LatLongAltitude m_interestLocation;
 	GlobeCameraStateRestorer m_globeCameraStateRestorer;
 
 	void AddSphere(Eegeo::Space::LatLongAltitude sphereLocation,

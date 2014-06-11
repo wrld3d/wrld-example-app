@@ -41,7 +41,7 @@ RouteSimulationAnimationExample::RouteSimulationAnimationExample(
 	,m_routeSimulationGlobeCameraControllerFactory(routeSimulationGlobeCameraControllerFactory)
 	,m_world(world)
 	,m_initialised(false)
-	,m_route(NULL)
+	,m_pRoute(NULL)
 	,m_pModel(NULL)
 	,m_modelAnimationSpeed(1.f/30.f)
 	,m_pSessionCamera(NULL)
@@ -61,9 +61,9 @@ void RouteSimulationAnimationExample::Initialise()
 
 	//Build the route - see RouteDrawingExample.cpp for a detailed explanation of building routes, or
 	//check out http://sdk.eegeo.com/developers/mobiledocs/routes
-	m_route = BuildRoute();
+	m_pRoute = BuildRoute();
 
-	m_pSessionCamera = m_routeSimulationService.BeginRouteSimulationSession(*m_route);
+	m_pSessionCamera = m_routeSimulationService.BeginRouteSimulationSession(*m_pRoute);
 
 	Eegeo::m44 transform;
 	CalculateTransform(transform);
@@ -118,7 +118,7 @@ void RouteSimulationAnimationExample::Update(float dt)
 		m_pSessionCamera->Unpause();
 	}
 
-	Eegeo_TTY("%f metres from start of route. %f percent.\n", m_pSessionCamera->GetDistanceFromStartInMetres(),(m_pSessionCamera->GetDistanceFromStartInMetres() / m_route->GetLength())*100.0f);
+	Eegeo_TTY("%f metres from start of route. %f percent.\n", m_pSessionCamera->GetDistanceFromStartInMetres(),(m_pSessionCamera->GetDistanceFromStartInMetres() / m_pRoute->GetLength())*100.0f);
 
 	Eegeo::m44 transform;
 	CalculateTransform(transform);
@@ -138,8 +138,8 @@ void RouteSimulationAnimationExample::Suspend()
 
 	m_pSessionCamera = NULL;
 
-	m_routeService.DestroyRoute(m_route);
-	m_route = NULL;
+	m_routeService.DestroyRoute(m_pRoute);
+	m_pRoute = NULL;
 
 	delete m_pModel;
 	m_pModel = NULL;

@@ -28,21 +28,21 @@ private:
 
 	struct Added : public Eegeo::Resources::Roads::Navigation::INavigationGraphAddedCallback
 	{
-		NavigationGraphExample& example;
-		Added(NavigationGraphExample& example):example(example) {}
+		NavigationGraphExample& m_example;
+		Added(NavigationGraphExample& example):m_example(example) {}
 		void operator()(const Eegeo::Resources::Roads::Navigation::NavigationGraph& navGraph)
 		{
-			example.HandleAddedGraph(navGraph);
+			m_example.HandleAddedGraph(navGraph);
 		}
 	};
 
 	struct Removed : public Eegeo::Resources::Roads::Navigation::INavigationGraphRemovalCallback
 	{
-		NavigationGraphExample& example;
-		Removed(NavigationGraphExample& example):example(example) {}
+		NavigationGraphExample& m_example;
+		Removed(NavigationGraphExample& example):m_example(example) {}
 		void operator()(const Eegeo::Resources::Roads::Navigation::NavigationGraph& navGraph)
 		{
-			example.HandleRemovedGraph(navGraph);
+			m_example.HandleRemovedGraph(navGraph);
 		}
 	};
 
@@ -50,13 +50,13 @@ private:
 	void HandleAddedGraph(const Eegeo::Resources::Roads::Navigation::NavigationGraph& navGraph);
 	void HandleRemovedGraph(const Eegeo::Resources::Roads::Navigation::NavigationGraph& navGraph);
 
-	Eegeo::Rendering::RenderContext& renderContext;
-	Eegeo::Resources::Roads::Navigation::NavigationGraphRepository& navigationGraphRepository;
+	Eegeo::Rendering::RenderContext& m_renderContext;
+	Eegeo::Resources::Roads::Navigation::NavigationGraphRepository& m_navigationGraphRepository;
 	GlobeCameraStateRestorer m_globeCameraStateRestorer;
 
-	Added addedHandler;
-	Removed removedHandler;
-	MapType navGraphsToVisualisers;
+	Added m_addedHandler;
+	Removed m_removedHandler;
+	MapType m_navGraphsToVisualisers;
 
 public:
 	NavigationGraphExample(Eegeo::Rendering::RenderContext& renderContext,

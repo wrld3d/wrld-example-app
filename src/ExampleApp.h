@@ -8,8 +8,8 @@
 class ExampleApp
 {
 private:
-	Eegeo::Camera::GlobeCamera::GlobeCameraController* m_globeCameraController;
-	Eegeo::Camera::GlobeCamera::GlobeCameraTouchController* m_cameraTouchController;
+	Eegeo::Camera::GlobeCamera::GlobeCameraController* m_pGlobeCameraController;
+	Eegeo::Camera::GlobeCamera::GlobeCameraTouchController* m_pCameraTouchController;
 	Eegeo::Camera::GlobeCamera::GlobeCameraInterestPointProvider& m_globeCameraInterestPointProvider;
 	Eegeo::EegeoWorld* m_pWorld;
 	Examples::ExampleController& m_exampleController;
@@ -36,12 +36,12 @@ public:
 
 	Eegeo::Camera::GlobeCamera::GlobeCameraController& GetCameraController()
 	{
-		return *m_globeCameraController;
+		return *m_pGlobeCameraController;
 	}
 
 	Eegeo::Camera::GlobeCamera::GlobeCameraTouchController& GetTouchController()
 	{
-		return *m_cameraTouchController;
+		return *m_pCameraTouchController;
 	}
 
 	void Event_TouchRotate 			(const AppInterface::RotateData& data);

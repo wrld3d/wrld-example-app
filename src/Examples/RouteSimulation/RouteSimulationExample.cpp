@@ -65,7 +65,7 @@ RouteSimulationExample::RouteSimulationExample(RouteService& routeService,
 	,m_routeSimulationGlobeCameraControllerFactory(routeSimulationGlobeCameraControllerFactory)
 	,m_world(world)
 	,m_initialised(false)
-	,m_route(NULL)
+	,m_pRoute(NULL)
 	,m_usingFollowCamera(false)
 	,m_routeSimulationExampleViewFactory(routeSimulationExampleViewFactory)
 	, m_linkSpeedMultiplier(1.f)
@@ -89,22 +89,22 @@ void RouteSimulationExample::Initialise()
 
 	//Build the route - see RouteDrawingExample.cpp for a detailed explanation of building routes, or
 	//check out http://sdk.eegeo.com/developers/mobiledocs/routes
-	m_route = BuildRoute();
+	m_pRoute = BuildRoute();
 
 	//Create three simulation sessions for the same route. This first illustrates a session which
 	//we will control such that it just loops around in a cycle forever, to illustrate route 'playback'.
 	//The first session will just obey the link speed for the route links.
-	m_pSessionCycle = m_routeSimulationService.BeginRouteSimulationSession(*m_route);
+	m_pSessionCycle = m_routeSimulationService.BeginRouteSimulationSession(*m_pRoute);
 
 	//The second session we will control such that it oscillates back and forward to illustrate
 	//'rewinding' a route. We will vary the speed dynamically to illustrate 'fast-forward' playback.
-	m_pSessionAlternatingSpeedChanger = m_routeSimulationService.BeginRouteSimulationSession(*m_route);
+	m_pSessionAlternatingSpeedChanger = m_routeSimulationService.BeginRouteSimulationSession(*m_pRoute);
 
 	//The final session will be used to illustrate mapping a point on to the route. A useful application
 	//of this might be to map a GPS location on to the route, but for illustrative purposes we map the
 	//camera focus point on to the route, so that the effect is clear without relying on sampling the
 	//GPS (we should not require you to catch a bus to test this example!).
-	m_pSessionCamera = m_routeSimulationService.BeginRouteSimulationSession(*m_route);
+	m_pSessionCamera = m_routeSimulationService.BeginRouteSimulationSession(*m_pRoute);
 
 	//Start playback on the first two routes from the beginning - we will not start playback on the
 	//m_pSessionCamera session as we want to control this session manually by setting the position
@@ -216,7 +216,7 @@ void RouteSimulationExample::Update(float dt)
 		m_pSessionAlternatingSpeedChanger->UseLinkSpeedValueWithMultiplier(m_linkSpeedMultiplier);
 	}
 
-	EXAMPLE_LOG("%f metres from start of route. %f percent.\n", m_pSessionAlternatingSpeedChanger->GetDistanceFromStartInMetres(),(m_pSessionAlternatingSpeedChanger->GetDistanceFromStartInMetres() / m_route->GetLength())*100.0f) ;
+	EXAMPLE_LOG("%f metres from start of route. %f percent.\n", m_pSessionAlternatingSpeedChanger->GetDistanceFromStartInMetres(),(m_pSessionAlternatingSpeedChanger->GetDistanceFromStartInMetres() / m_pRoute->GetLength())*100.0f) ;
 }
 
 void RouteSimulationExample::Suspend()
@@ -237,8 +237,8 @@ void RouteSimulationExample::Suspend()
 	m_pSessionAlternatingSpeedChanger = NULL;
 	m_pSessionCamera = NULL;
 
-	m_routeService.DestroyRoute(m_route);
-	m_route = NULL;
+	m_routeService.DestroyRoute(m_pRoute);
+	m_pRoute = NULL;
 
 	delete m_pModel;
 	m_pModel = NULL;

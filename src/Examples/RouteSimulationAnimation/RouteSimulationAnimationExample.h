@@ -49,7 +49,7 @@ private:
 
 	bool m_initialised;
 	Eegeo::Model* m_pModel;
-	Eegeo::Routes::Route* m_route;
+	Eegeo::Routes::Route* m_pRoute;
 	Eegeo::Routes::Style::Thickness::IdentityRouteThicknessPolicy m_routeThicknessPolicy;
 	GlobeCameraStateRestorer m_globeCameraStateRestorer;
 

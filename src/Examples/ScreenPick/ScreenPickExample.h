@@ -24,10 +24,10 @@ namespace Examples
 class ScreenPickExample : public IExample
 {
 private:
-	Eegeo::DebugRendering::SphereMesh* m_sphere;
+	Eegeo::DebugRendering::SphereMesh* m_pSphere;
 	Eegeo::Rendering::RenderContext& m_renderContext;
 	Eegeo::Camera::ICameraProvider& m_cameraProvider;
-	Eegeo::Resources::Terrain::Collision::TerrainRayPicker* m_rayPicker;
+	Eegeo::Resources::Terrain::Collision::TerrainRayPicker* m_pRayPicker;
 	GlobeCameraStateRestorer m_globeCameraStateRestorer;
 
 public:

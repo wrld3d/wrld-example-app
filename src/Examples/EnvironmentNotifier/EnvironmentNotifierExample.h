@@ -16,15 +16,15 @@ namespace Examples
 class EnvironmentNotifierExampleTerrainStreamObserver : public Eegeo::Streaming::IStreamingObserver
 {
 private:
-	Eegeo::Rendering::RenderContext& renderContext;
-	std::map<Eegeo::Streaming::MortonKey, Eegeo::DebugRendering::SphereMesh*, Eegeo::Streaming::MortonKeyCompare>& renderables;
+	Eegeo::Rendering::RenderContext& m_renderContext;
+	std::map<Eegeo::Streaming::MortonKey, Eegeo::DebugRendering::SphereMesh*, Eegeo::Streaming::MortonKeyCompare>& m_renderables;
 
 	void AddSphere(const Eegeo::Streaming::MortonKey& key);
 public:
 	EnvironmentNotifierExampleTerrainStreamObserver(Eegeo::Rendering::RenderContext& renderContext,
 	        std::map<Eegeo::Streaming::MortonKey, Eegeo::DebugRendering::SphereMesh*, Eegeo::Streaming::MortonKeyCompare>& renderables)
-		:renderables(renderables)
-		,renderContext(renderContext)
+		:m_renderables(renderables)
+		,m_renderContext(renderContext)
 	{
 
 	}
@@ -36,12 +36,12 @@ public:
 class EnvironmentNotifierExample : public IExample
 {
 private:
-	Eegeo::Rendering::RenderContext& renderContext;
-	Eegeo::Resources::Terrain::TerrainStreaming& terrainStreaming;
-	EnvironmentNotifierExampleTerrainStreamObserver* observer;
+	Eegeo::Rendering::RenderContext& m_renderContext;
+	Eegeo::Resources::Terrain::TerrainStreaming& m_terrainStreaming;
+	EnvironmentNotifierExampleTerrainStreamObserver* m_pObserver;
 	GlobeCameraStateRestorer m_globeCameraStateRestorer;
 
-	std::map<Eegeo::Streaming::MortonKey, Eegeo::DebugRendering::SphereMesh*, Eegeo::Streaming::MortonKeyCompare> renderables;
+	std::map<Eegeo::Streaming::MortonKey, Eegeo::DebugRendering::SphereMesh*, Eegeo::Streaming::MortonKeyCompare> m_renderables;
 
 
 public:

@@ -20,7 +20,7 @@ class BoundsVisualiser
 
 	struct Vertex
 	{
-		float x, y, z;
+		float m_x, m_y, m_z;
 	};
 
 	static const size_t NumVerts;
@@ -28,7 +28,7 @@ class BoundsVisualiser
 	Shader* m_pShader;
 	u32 m_glVertexBuffer;
 	u32 m_glIndexBuffer;
-	Eegeo::Rendering::RenderContext& renderContext;
+	Eegeo::Rendering::RenderContext& m_renderContext;
 
 	std::string VertexShader();
 	std::string FragmentShader();
@@ -50,25 +50,25 @@ class LoadModelExample : public IExample
 private:
 	struct MeshInstance
 	{
-		float scale;
-		Eegeo::dv3 positionEcef;
-		Eegeo::v3 forward;
-		Eegeo::v3 up;
-		Eegeo::Node* node;
+		float m_scale;
+		Eegeo::dv3 m_positionEcef;
+		Eegeo::v3 m_forward;
+		Eegeo::v3 m_up;
+		Eegeo::Node* m_pNode;
 	};
 
-	Eegeo::Rendering::RenderContext& renderContext;
-	Eegeo::Helpers::IFileIO& fileIO;
-	Eegeo::Rendering::AsyncTexturing::IAsyncTextureRequestor& textureRequestor;
-	Eegeo::Space::LatLongAltitude interestLocation;
-	Eegeo::Lighting::GlobalFogging& globalFogging;
+	Eegeo::Rendering::RenderContext& m_renderContext;
+	Eegeo::Helpers::IFileIO& m_fileIO;
+	Eegeo::Rendering::AsyncTexturing::IAsyncTextureRequestor& m_textureRequestor;
+	Eegeo::Space::LatLongAltitude m_interestLocation;
+	Eegeo::Lighting::GlobalFogging& m_globalFogging;
 	GlobeCameraStateRestorer m_globeCameraStateRestorer;
 
-	Eegeo::Model* pModel;
-	BoundsVisualiser boundsVisualiser;
-	MeshInstance mesh;
-	Eegeo::ModelMaterial* discMaterial;
-	float elapsedTime;
+	Eegeo::Model* m_pModel;
+	BoundsVisualiser m_boundsVisualiser;
+	MeshInstance m_mesh;
+	Eegeo::ModelMaterial* m_pDiscMaterial;
+	float m_elapsedTime;
 
 public:
 	LoadModelExample(Eegeo::Rendering::RenderContext& renderContext,
