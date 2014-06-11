@@ -11,7 +11,7 @@ if [ $platformVersion == ios ]; then
     echo "Building iOS examples..."
     rm -rf "./ios/Include"
     rm -rf "./ios/build"
-    ./update.platform.sh ios
+    ./update.platform.sh -p ios
     pushd ios
     ./build.sh
     resultcode=$?
@@ -21,7 +21,7 @@ elif [ $platformVersion == android ]; then
     rm -rf "./android/libs"
     rm -rf "./android/obj"
     rm -rf "./android/bin"
-    ./update.platform.sh android
+    ./update.platform.sh -p android
     pushd android
     ./build.sh
     resultcode=$?
