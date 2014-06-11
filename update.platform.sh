@@ -6,6 +6,7 @@ baseUrl="http://s3.amazonaws.com/eegeo-static/"
 srcPackageName="INVALID"
 destPackageName="./sdk.package.tar.gz"
 includeDestination="INVALID"
+sdkDestination="INVALID"
 
 while getopts "p:c" o; do
     case "${o}" in
@@ -34,9 +35,11 @@ fi
 if [ "$p" == "ios" ]; then
    srcPackageName="sdk.package.ios"
    includeDestination="./ios/Include"
+   sdkDestination="sdk.package"
 elif [ "$p" == "android" ]; then
    srcPackageName="sdk.package.android"
    includeDestination="./android/libs"
+   sdkDestination="sdk.package.android"
 fi
 
 if [ "$c" == "cpp11" ]; then
@@ -49,7 +52,7 @@ echo "Updating $p platform..."
 rm -rf $includeDestination
 curl $baseUrl$srcPackageName > ./$destPackageName
 tar -zxvf $destPackageName
-rm -f $destPackageName
-platformVersion=`cat ./sdk.package/version.txt`
+rm -f ./$destPackageName
+platformVersion=`cat ./$sdkDestination/version.txt`
 echo "Platform version --> $platformVersion"
-mv ./sdk.package/ $includeDestination
+mv ./$sdkDestination $includeDestination
