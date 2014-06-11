@@ -12,7 +12,7 @@ while getopts "p:c" o; do
         p)
             p=${OPTARG}
             if [ "$p" != "ios" ]; then
-               if [ "$p" != "android"]; then
+               if [ "$p" != "android" ]; then
                  usage
                fi
             fi
