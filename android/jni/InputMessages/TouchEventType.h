@@ -5,15 +5,15 @@
 
 namespace InputMessages
 {
-	namespace TouchEventType
-	{
-		enum Values
-		{
-			Down,
-			Up,
-			Move
-		};
-	}
+namespace TouchEventType
+{
+enum Values
+{
+	Down,
+	Up,
+	Move
+};
+}
 }
 
 #endif

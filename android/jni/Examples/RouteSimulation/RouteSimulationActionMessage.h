@@ -10,16 +10,16 @@
 
 namespace Examples
 {
-	class RouteSimulationActionMessage : public AndroidExampleMessage<AndroidRouteSimulationExampleView>
-	{
-		typedef void (AndroidRouteSimulationExampleView::*Action)();
-		Action m_action;
+class RouteSimulationActionMessage : public AndroidExampleMessage<AndroidRouteSimulationExampleView>
+{
+	typedef void (AndroidRouteSimulationExampleView::*Action)();
+	Action m_action;
 
-	public:
-		RouteSimulationActionMessage(Examples::AndroidRouteSimulationExampleView* pExample, Action action);
+public:
+	RouteSimulationActionMessage(Examples::AndroidRouteSimulationExampleView* pExample, Action action);
 
-        virtual bool Handle(AndroidRouteSimulationExampleView& dispatcher) const;
-	};
+	virtual bool Handle(AndroidRouteSimulationExampleView& dispatcher) const;
+};
 }
 
 

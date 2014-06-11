@@ -13,50 +13,50 @@
 
 namespace Examples
 {
-	class AndroidExampleControllerProxy;
+class AndroidExampleControllerProxy;
 
-	class AndroidExampleControllerView : public IExampleControllerView, private Eegeo::NonCopyable
-	{
-        std::vector<IUIActionHandler*> m_exampleUpdatedHandlers;
-        std::vector<IUIActionHandler*> m_nextHandlers;
-        std::vector<IUIActionHandler*> m_previousHandlers;
-    	AndroidNativeState& m_nativeState;
-    	AndroidExampleControllerProxy* m_pProxy;
-    	jclass m_androidExampleControllerViewClass;
-    	jobject m_androidExampleControllerView;
-    	std::string m_selectedExampleName;
+class AndroidExampleControllerView : public IExampleControllerView, private Eegeo::NonCopyable
+{
+	std::vector<IUIActionHandler*> m_exampleUpdatedHandlers;
+	std::vector<IUIActionHandler*> m_nextHandlers;
+	std::vector<IUIActionHandler*> m_previousHandlers;
+	AndroidNativeState& m_nativeState;
+	AndroidExampleControllerProxy* m_pProxy;
+	jclass m_androidExampleControllerViewClass;
+	jobject m_androidExampleControllerView;
+	std::string m_selectedExampleName;
 
-	public:
-		AndroidExampleControllerView(AndroidNativeState& androidNativeState, AndroidExampleControllerProxy* pProxy);
+public:
+	AndroidExampleControllerView(AndroidNativeState& androidNativeState, AndroidExampleControllerProxy* pProxy);
 
-        ~AndroidExampleControllerView();
+	~AndroidExampleControllerView();
 
-        void Show();
+	void Show();
 
-        void AddSelectPreviousExampleHandler(IUIActionHandler& handler);
+	void AddSelectPreviousExampleHandler(IUIActionHandler& handler);
 
-        void RemoveSelectPreviousExampleHandler(IUIActionHandler& handler);
+	void RemoveSelectPreviousExampleHandler(IUIActionHandler& handler);
 
-        void AddSelectNextExampleHandler(IUIActionHandler& handler);
+	void AddSelectNextExampleHandler(IUIActionHandler& handler);
 
-        void SetCurrentExampleName(const std::string& name);
+	void SetCurrentExampleName(const std::string& name);
 
-        void RemoveSelectNextExampleHandler(IUIActionHandler& handler);
+	void RemoveSelectNextExampleHandler(IUIActionHandler& handler);
 
-        void AddExampleSelectedHandler(IUIActionHandler& handler);
+	void AddExampleSelectedHandler(IUIActionHandler& handler);
 
-        void RemoveExampleSelectedHandler(IUIActionHandler& handler);
+	void RemoveExampleSelectedHandler(IUIActionHandler& handler);
 
-        std::string GetSelectedExample();
+	std::string GetSelectedExample();
 
-        void UpdateSelectedExample();
+	void UpdateSelectedExample();
 
-        void SelectPrevious();
+	void SelectPrevious();
 
-        void SelectNext();
+	void SelectNext();
 
-        void PopulateExampleList(const std::vector<std::string>& exampleNames);
-	};
+	void PopulateExampleList(const std::vector<std::string>& exampleNames);
+};
 }
 
 

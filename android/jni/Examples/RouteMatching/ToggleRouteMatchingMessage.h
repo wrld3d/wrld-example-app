@@ -10,13 +10,13 @@
 
 namespace Examples
 {
-	class ToggleRouteMatchingMessage : public AndroidExampleMessage<AndroidRouteMatchingExampleView>
-	{
-	public:
-		ToggleRouteMatchingMessage(Examples::AndroidRouteMatchingExampleView* pExample);
+class ToggleRouteMatchingMessage : public AndroidExampleMessage<AndroidRouteMatchingExampleView>
+{
+public:
+	ToggleRouteMatchingMessage(Examples::AndroidRouteMatchingExampleView* pExample);
 
-        virtual bool Handle(AndroidRouteMatchingExampleView& dispatcher) const;
-	};
+	virtual bool Handle(AndroidRouteMatchingExampleView& dispatcher) const;
+};
 }
 
 

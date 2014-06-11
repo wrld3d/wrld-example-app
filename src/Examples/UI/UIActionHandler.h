@@ -14,23 +14,23 @@
 
 namespace Examples
 {
-    template <class T> class UIActionHandler : public IUIActionHandler, private Eegeo::NonCopyable
-    {
-    private:
-        void (T::*m_callback)();
-        T* m_context;
-    public:
-        UIActionHandler(T* context, void (T::*callback)())
-        : m_context(context)
-        , m_callback(callback)
-        {
-        }
-        
-        virtual void operator()()
-        {
-            (*m_context.*m_callback)();
-        }
-    };
+template <class T> class UIActionHandler : public IUIActionHandler, private Eegeo::NonCopyable
+{
+private:
+	void (T::*m_callback)();
+	T* m_context;
+public:
+	UIActionHandler(T* context, void (T::*callback)())
+		: m_context(context)
+		, m_callback(callback)
+	{
+	}
+
+	virtual void operator()()
+	{
+		(*m_context.*m_callback)();
+	}
+};
 }
 
 

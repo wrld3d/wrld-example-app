@@ -49,15 +49,15 @@ class AppHost :
 {
 public:
 	AppHost(
-			const std::string& apiKey,
-			AndroidNativeState& nativeState,
-			float displayWidth,
-			float displayHeight,
-		    EGLDisplay display,
-		    EGLSurface shareSurface,
-		    EGLContext resourceBuildShareContext,
-		    AppToJavaProxy& appToJavaProxy
-			);
+	    const std::string& apiKey,
+	    AndroidNativeState& nativeState,
+	    float displayWidth,
+	    float displayHeight,
+	    EGLDisplay display,
+	    EGLSurface shareSurface,
+	    EGLContext resourceBuildShareContext,
+	    AppToJavaProxy& appToJavaProxy
+	);
 	~AppHost();
 
 	void Update(float dt);
@@ -96,8 +96,8 @@ private:
 	Eegeo::Camera::GlobeCamera::GlobeCameraInterestPointProvider* m_pInterestPointProvider;
 	AppInputDelegate* m_pAppInputDelegate;
 
-    Eegeo::Resources::Terrain::Heights::TerrainHeightRepository m_terrainHeightRepository;
-    Eegeo::Resources::Terrain::Heights::TerrainHeightProvider m_terrainHeightProvider;
+	Eegeo::Resources::Terrain::Heights::TerrainHeightRepository m_terrainHeightRepository;
+	Eegeo::Resources::Terrain::Heights::TerrainHeightProvider m_terrainHeightProvider;
 
 	Eegeo::Android::Input::AndroidInputHandler m_inputHandler;
 	Eegeo::UI::NativeInput::Android::AndroidInputBoxFactory m_androidInputBoxFactory;
@@ -116,11 +116,11 @@ private:
 
 	Eegeo::Android::Input::AndroidInputProcessor* m_pInputProcessor;
 
-    AppToJavaProxy& m_appToJavaProxy;
+	AppToJavaProxy& m_appToJavaProxy;
 
-    void ConfigureExamples();
-    void DestroyExamples();
-    void RegisterAndroidSpecificExamples();
+	void ConfigureExamples();
+	void DestroyExamples();
+	void RegisterAndroidSpecificExamples();
 };
 
 #endif

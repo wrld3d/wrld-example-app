@@ -5,10 +5,10 @@
 
 namespace AppLifecycleMessages
 {
-	class IAppLifecycleMessageDispatcher;
+class IAppLifecycleMessageDispatcher;
 
-	class AppPauseMessage;
-	class AppDisplayAvailableMessage;
+class AppPauseMessage;
+class AppDisplayAvailableMessage;
 };
 
 #endif

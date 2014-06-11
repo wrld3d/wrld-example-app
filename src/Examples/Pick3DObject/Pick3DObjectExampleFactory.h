@@ -15,19 +15,19 @@
 
 namespace Examples
 {
-    class Pick3DObjectExampleFactory : public IExampleFactory
-    {
-        Eegeo::EegeoWorld& m_world;
-        Eegeo::Camera::GlobeCamera::GlobeCameraController& m_globeCameraController;
-        
-    public:
-        Pick3DObjectExampleFactory(Eegeo::EegeoWorld& world,
-                                   Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController);
+class Pick3DObjectExampleFactory : public IExampleFactory
+{
+	Eegeo::EegeoWorld& m_world;
+	Eegeo::Camera::GlobeCamera::GlobeCameraController& m_globeCameraController;
 
-        std::string ExampleName() const;
-        
-        IExample* CreateExample() const;
-    };
+public:
+	Pick3DObjectExampleFactory(Eegeo::EegeoWorld& world,
+	                           Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController);
+
+	std::string ExampleName() const;
+
+	IExample* CreateExample() const;
+};
 }
 
 

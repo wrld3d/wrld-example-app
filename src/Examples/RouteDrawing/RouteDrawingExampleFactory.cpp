@@ -12,18 +12,18 @@
 using namespace Examples;
 
 RouteDrawingExampleFactory::RouteDrawingExampleFactory(Eegeo::EegeoWorld& world,
-                                                       Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController)
-: m_world(world)
-, m_globeCameraController(globeCameraController)
+        Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController)
+	: m_world(world)
+	, m_globeCameraController(globeCameraController)
 {
-    
+
 }
 
 IExample* RouteDrawingExampleFactory::CreateExample() const
 {
-    return new Examples::RouteDrawingExample(m_world.GetRouteService(),
-                                             m_world,
-                                             m_globeCameraController);
+	return new Examples::RouteDrawingExample(m_world.GetRouteService(),
+	        m_world,
+	        m_globeCameraController);
 }
 
 std::string RouteDrawingExampleFactory::ExampleName() const

@@ -7,8 +7,8 @@
 using namespace Examples;
 
 SelectExampleMessage::SelectExampleMessage(Examples::AndroidExampleControllerView* pExample, const std::string& exampleName)
-: AndroidExampleMessage(pExample)
-, m_exampleName(exampleName)
+	: AndroidExampleMessage(pExample)
+	, m_exampleName(exampleName)
 {
 }
 

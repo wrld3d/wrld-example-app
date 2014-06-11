@@ -14,14 +14,14 @@
 
 namespace Examples
 {
-    class IExampleFactory
-    {
-    public:
-        virtual ~IExampleFactory() { }
-        
-        virtual std::string ExampleName() const = 0;
-        virtual IExample* CreateExample() const = 0;
-    };
+class IExampleFactory
+{
+public:
+	virtual ~IExampleFactory() { }
+
+	virtual std::string ExampleName() const = 0;
+	virtual IExample* CreateExample() const = 0;
+};
 }
 
 #endif

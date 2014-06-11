@@ -16,21 +16,21 @@
 
 namespace Examples
 {
-    class RouteMatchingExampleFactory : public IExampleFactory
-    {
-        Eegeo::EegeoWorld& m_world;
-        const IRouteMatchingExampleViewFactory& m_routeMatchingViewFactory;
-        Eegeo::Camera::GlobeCamera::GlobeCameraController& m_globeCameraController;
-        
-    public:
-        RouteMatchingExampleFactory(Eegeo::EegeoWorld& world,
-                                    const IRouteMatchingExampleViewFactory& routeMatchingViewFactory,
-                                    Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController);
-        
-        std::string ExampleName() const;
+class RouteMatchingExampleFactory : public IExampleFactory
+{
+	Eegeo::EegeoWorld& m_world;
+	const IRouteMatchingExampleViewFactory& m_routeMatchingViewFactory;
+	Eegeo::Camera::GlobeCamera::GlobeCameraController& m_globeCameraController;
 
-        IExample* CreateExample() const;
-    };
+public:
+	RouteMatchingExampleFactory(Eegeo::EegeoWorld& world,
+	                            const IRouteMatchingExampleViewFactory& routeMatchingViewFactory,
+	                            Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController);
+
+	std::string ExampleName() const;
+
+	IExample* CreateExample() const;
+};
 }
 
 #endif /* defined(__ExampleApp__RouteMatchingExampleFactory__) */

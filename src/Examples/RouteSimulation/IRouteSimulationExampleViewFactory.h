@@ -13,14 +13,14 @@
 
 namespace Examples
 {
-    class IRouteSimulationExampleViewFactory
-    {
-    public:
-        
-        virtual ~IRouteSimulationExampleViewFactory() { }
-        
-        virtual IRouteSimulationExampleView* CreateRouteSimulationExampleView() const = 0;
-    };
+class IRouteSimulationExampleViewFactory
+{
+public:
+
+	virtual ~IRouteSimulationExampleViewFactory() { }
+
+	virtual IRouteSimulationExampleView* CreateRouteSimulationExampleView() const = 0;
+};
 }
 
 

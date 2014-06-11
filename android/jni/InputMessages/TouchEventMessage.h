@@ -10,18 +10,18 @@
 
 namespace InputMessages
 {
-	class TouchEventMessage : public AppMessages::IAppMessage
-	{
-	public:
-		TouchEventMessage(const Eegeo::Android::Input::TouchInputEvent& touchInputEvent);
+class TouchEventMessage : public AppMessages::IAppMessage
+{
+public:
+	TouchEventMessage(const Eegeo::Android::Input::TouchInputEvent& touchInputEvent);
 
-		bool Handle(AppMessages::IAppMessageDispatcher& dispatcher) const;
+	bool Handle(AppMessages::IAppMessageDispatcher& dispatcher) const;
 
-		const Eegeo::Android::Input::TouchInputEvent& GetTouchInputEvent() const;
+	const Eegeo::Android::Input::TouchInputEvent& GetTouchInputEvent() const;
 
-	private:
-		Eegeo::Android::Input::TouchInputEvent m_touchInputEvent;
-	};
+private:
+	Eegeo::Android::Input::TouchInputEvent m_touchInputEvent;
+};
 }
 
 #endif

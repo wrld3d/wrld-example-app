@@ -11,7 +11,7 @@
 using namespace Examples;
 
 AndroidExampleControllerProxy::AndroidExampleControllerProxy(Eegeo::Messaging::MessageQueue<IAndroidExampleMessage*>& messageQueue)
-: AndroidExampleProxy(messageQueue)
+	: AndroidExampleProxy(messageQueue)
 {
 
 }
@@ -32,9 +32,9 @@ void AndroidExampleControllerProxy::SelectExample(Examples::AndroidExampleContro
 }
 
 JNIEXPORT void JNICALL Java_com_eegeo_examples_ExampleControllerHud_ActivatePrevious(
-		JNIEnv* jenv, jobject obj,
-		jlong nativeObjectPtr,
-		jlong nativeCallerProxyPtr)
+    JNIEnv* jenv, jobject obj,
+    jlong nativeObjectPtr,
+    jlong nativeCallerProxyPtr)
 {
 	Examples::AndroidExampleControllerView* pExample = (Examples::AndroidExampleControllerView*)(nativeObjectPtr);
 	Examples::AndroidExampleControllerProxy* pProxy = (Examples::AndroidExampleControllerProxy*)(nativeCallerProxyPtr);
@@ -42,9 +42,9 @@ JNIEXPORT void JNICALL Java_com_eegeo_examples_ExampleControllerHud_ActivatePrev
 }
 
 JNIEXPORT void JNICALL Java_com_eegeo_examples_ExampleControllerHud_ActivateNext(
-		JNIEnv* jenv, jobject obj,
-		jlong nativeObjectPtr,
-		jlong nativeCallerProxyPtr)
+    JNIEnv* jenv, jobject obj,
+    jlong nativeObjectPtr,
+    jlong nativeCallerProxyPtr)
 {
 	Examples::AndroidExampleControllerView* pExample = (Examples::AndroidExampleControllerView*)(nativeObjectPtr);
 	Examples::AndroidExampleControllerProxy* pProxy = (Examples::AndroidExampleControllerProxy*)(nativeCallerProxyPtr);
@@ -52,10 +52,10 @@ JNIEXPORT void JNICALL Java_com_eegeo_examples_ExampleControllerHud_ActivateNext
 }
 
 JNIEXPORT void JNICALL Java_com_eegeo_examples_ExampleControllerHud_SelectExample(
-		JNIEnv* jenv, jobject obj,
-		jlong nativeObjectPtr,
-		jlong nativeCallerProxyPtr,
-		jstring selectedExample)
+    JNIEnv* jenv, jobject obj,
+    jlong nativeObjectPtr,
+    jlong nativeCallerProxyPtr,
+    jstring selectedExample)
 {
 
 	//extract the string from java via the JNI

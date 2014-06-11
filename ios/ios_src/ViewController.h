@@ -18,42 +18,43 @@
 #import <UIKit/UIKit.h>
 #import <GLKit/GLKit.h>
 
-@interface ViewController : GLKViewController <UIGestureRecognizerDelegate, CLLocationManagerDelegate>{
+@interface ViewController : GLKViewController <UIGestureRecognizerDelegate, CLLocationManagerDelegate>
+{
 
-    ExampleApp * m_pExampleApp;
-    Examples::iOSExampleControllerView* m_piOSExampleControllerView;
-    Examples::ExampleController* m_pExampleController;
-    Examples::iOSRouteSimulationExampleViewFactory* m_piOSRouteSimulationExampleViewFactory;
-    Examples::iOSRouteMatchingExampleViewFactory* m_piOSRouteMatchingExampleViewFactory;
-    Eegeo::Rendering::RenderContext* m_renderContext;
-    Eegeo::Blitter* m_pBlitter;
-    iOSUrlEncoder iOSUrlEncoder;
-    
-    CLLocationManager *locationManager;
-    
-    CFTimeInterval previousTimestamp;
-    
-    float pixelScale;
-    NSTimer* touchTimer;
-    Eegeo::Camera::GlobeCamera::GlobeCameraInterestPointProvider* m_pInterestPointProvider;
-    Eegeo::iOS::iOSLocationService* piOSLocationService;
-    Eegeo::Resources::Terrain::Heights::TerrainHeightRepository m_terrainHeightRepository;
-    Eegeo::Resources::Terrain::Heights::TerrainHeightProvider* m_terrainHeightProvider;
-    Eegeo::Rendering::EnvironmentFlatteningService* m_pEnvironmentFlatteningService;
-    
-    Eegeo::UI::NativeInput::iOS::iOSInputBoxFactory inputBoxFactory;
-    Eegeo::UI::NativeInput::iOS::iOSKeyboardInputFactory keyboardInputFactory;
-    Eegeo::UI::NativeAlerts::iOS::iOSAlertBoxFactory alertBoxFactory;
-    Eegeo::UI::NativeUIFactories* nativeUIFactories;
-    
-    Eegeo::Web::iOSWebRequestService* webRequestService;
-    
-    UIRotationGestureRecognizer *gestureRotation;
-    UIPinchGestureRecognizer *gesturePinch;
-    UIPanGestureRecognizer* gesturePan;
-    UITapGestureRecognizer* gestureTap;
-    UITapGestureRecognizer* gestureDoubleTap;
-    float _previousDist;
+	ExampleApp * m_pExampleApp;
+	Examples::iOSExampleControllerView* m_piOSExampleControllerView;
+	Examples::ExampleController* m_pExampleController;
+	Examples::iOSRouteSimulationExampleViewFactory* m_piOSRouteSimulationExampleViewFactory;
+	Examples::iOSRouteMatchingExampleViewFactory* m_piOSRouteMatchingExampleViewFactory;
+	Eegeo::Rendering::RenderContext* m_renderContext;
+	Eegeo::Blitter* m_pBlitter;
+	iOSUrlEncoder iOSUrlEncoder;
+
+	CLLocationManager *locationManager;
+
+	CFTimeInterval previousTimestamp;
+
+	float pixelScale;
+	NSTimer* touchTimer;
+	Eegeo::Camera::GlobeCamera::GlobeCameraInterestPointProvider* m_pInterestPointProvider;
+	Eegeo::iOS::iOSLocationService* piOSLocationService;
+	Eegeo::Resources::Terrain::Heights::TerrainHeightRepository m_terrainHeightRepository;
+	Eegeo::Resources::Terrain::Heights::TerrainHeightProvider* m_terrainHeightProvider;
+	Eegeo::Rendering::EnvironmentFlatteningService* m_pEnvironmentFlatteningService;
+
+	Eegeo::UI::NativeInput::iOS::iOSInputBoxFactory inputBoxFactory;
+	Eegeo::UI::NativeInput::iOS::iOSKeyboardInputFactory keyboardInputFactory;
+	Eegeo::UI::NativeAlerts::iOS::iOSAlertBoxFactory alertBoxFactory;
+	Eegeo::UI::NativeUIFactories* nativeUIFactories;
+
+	Eegeo::Web::iOSWebRequestService* webRequestService;
+
+	UIRotationGestureRecognizer *gestureRotation;
+	UIPinchGestureRecognizer *gesturePinch;
+	UIPanGestureRecognizer* gesturePan;
+	UITapGestureRecognizer* gestureTap;
+	UITapGestureRecognizer* gestureDoubleTap;
+	float _previousDist;
 }
 
 - (void) initInputs;

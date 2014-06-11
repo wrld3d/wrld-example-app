@@ -14,25 +14,31 @@
 
 namespace Examples
 {
-    class ToggleTrafficExample : public IExample
-    {
-    private:
-        long long m_lastToggle;
-        Eegeo::Traffic::TrafficSimulationController& m_trafficSimulation;
-        GlobeCameraStateRestorer m_globeCameraStateRestorer;
-        
-    public:
-        ToggleTrafficExample(Eegeo::Traffic::TrafficSimulationController& trafficSimulation,
-                             Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController);
+class ToggleTrafficExample : public IExample
+{
+private:
+	long long m_lastToggle;
+	Eegeo::Traffic::TrafficSimulationController& m_trafficSimulation;
+	GlobeCameraStateRestorer m_globeCameraStateRestorer;
 
-        static std::string GetName() { return "ToggleTrafficExample"; }
-        std::string Name() const { return GetName(); }
-        
-        void Start() {}
-        void Update(float dt);
-        void Draw() {}
-        void Suspend();
-    };
+public:
+	ToggleTrafficExample(Eegeo::Traffic::TrafficSimulationController& trafficSimulation,
+	                     Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController);
+
+	static std::string GetName()
+	{
+		return "ToggleTrafficExample";
+	}
+	std::string Name() const
+	{
+		return GetName();
+	}
+
+	void Start() {}
+	void Update(float dt);
+	void Draw() {}
+	void Suspend();
+};
 }
 
 #endif /* defined(__ExampleApp__ToggleTrafficExample__) */

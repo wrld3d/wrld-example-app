@@ -14,15 +14,15 @@
 
 namespace Examples
 {
-    class IRouteMatchingExampleView
-    {
-    public:
-        virtual ~IRouteMatchingExampleView() { }
-        
-        virtual void AddMatchingToggledHandler(IUIActionHandler& handler)=0;
-        
-        virtual void RemoveMatchingToggledHandler(IUIActionHandler& handler)=0;
-    };
+class IRouteMatchingExampleView
+{
+public:
+	virtual ~IRouteMatchingExampleView() { }
+
+	virtual void AddMatchingToggledHandler(IUIActionHandler& handler)=0;
+
+	virtual void RemoveMatchingToggledHandler(IUIActionHandler& handler)=0;
+};
 }
 
 #endif

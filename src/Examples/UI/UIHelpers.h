@@ -15,18 +15,18 @@
 
 namespace Examples
 {
-    template <typename T>
-    void RemoveFrom(std::vector<T>& vec, T item)
-    {
-        typename std::vector<T>::iterator it = std::find(vec.begin(), vec.end(), item);
-        
-        if(it != vec.end())
-        {
-            vec.erase(it);
-        }
-    }
-    
-    void InvokeAllHandlers(std::vector<Examples::IUIActionHandler*>& handlers);
+template <typename T>
+void RemoveFrom(std::vector<T>& vec, T item)
+{
+	typename std::vector<T>::iterator it = std::find(vec.begin(), vec.end(), item);
+
+	if(it != vec.end())
+	{
+		vec.erase(it);
+	}
+}
+
+void InvokeAllHandlers(std::vector<Examples::IUIActionHandler*>& handlers);
 }
 
 #endif

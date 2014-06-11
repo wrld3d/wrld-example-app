@@ -15,19 +15,19 @@
 
 namespace Examples
 {
-    class EnvironmentNotifierExampleFactory : public IExampleFactory
-    {
-        Eegeo::EegeoWorld& m_world;
-        Eegeo::Camera::GlobeCamera::GlobeCameraController& m_globeCameraController;
-        
-    public:
-        EnvironmentNotifierExampleFactory(Eegeo::EegeoWorld& world,
-                                          Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController);
+class EnvironmentNotifierExampleFactory : public IExampleFactory
+{
+	Eegeo::EegeoWorld& m_world;
+	Eegeo::Camera::GlobeCamera::GlobeCameraController& m_globeCameraController;
 
-        std::string ExampleName() const;
-        
-        IExample* CreateExample() const;
-    };
+public:
+	EnvironmentNotifierExampleFactory(Eegeo::EegeoWorld& world,
+	                                  Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController);
+
+	std::string ExampleName() const;
+
+	IExample* CreateExample() const;
+};
 }
 
 #endif /* defined(__ExampleApp__EnvironmentNotifierExampleFactory__) */

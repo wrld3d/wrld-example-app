@@ -10,13 +10,13 @@
 
 namespace Examples
 {
-	class RequestCurrentThemeNameMessage : public AndroidExampleMessage<JavaHudCrossThreadCommunicationExample>
-	{
-	public:
-		RequestCurrentThemeNameMessage(JavaHudCrossThreadCommunicationExample* pExample);
+class RequestCurrentThemeNameMessage : public AndroidExampleMessage<JavaHudCrossThreadCommunicationExample>
+{
+public:
+	RequestCurrentThemeNameMessage(JavaHudCrossThreadCommunicationExample* pExample);
 
-        virtual bool Handle(JavaHudCrossThreadCommunicationExample& dispatcher) const;
-	};
+	virtual bool Handle(JavaHudCrossThreadCommunicationExample& dispatcher) const;
+};
 }
 
 

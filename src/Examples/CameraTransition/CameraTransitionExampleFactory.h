@@ -15,19 +15,19 @@
 
 namespace Examples
 {
-    class CameraTransitionExampleFactory : public IExampleFactory
-    {
-        Eegeo::EegeoWorld& m_world;
-        Eegeo::Camera::GlobeCamera::GlobeCameraController& m_globeCameraController;
-        
-    public:
-        CameraTransitionExampleFactory(Eegeo::EegeoWorld& world,
-                                       Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController);
+class CameraTransitionExampleFactory : public IExampleFactory
+{
+	Eegeo::EegeoWorld& m_world;
+	Eegeo::Camera::GlobeCamera::GlobeCameraController& m_globeCameraController;
 
-        std::string ExampleName() const;
-        
-        IExample* CreateExample() const;
-    };
+public:
+	CameraTransitionExampleFactory(Eegeo::EegeoWorld& world,
+	                               Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController);
+
+	std::string ExampleName() const;
+
+	IExample* CreateExample() const;
+};
 }
 
 #endif /* defined(__ExampleApp__CameraTransitionExampleFactory__) */

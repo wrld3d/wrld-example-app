@@ -13,10 +13,10 @@
 #include "ITouchController.h"
 
 ExampleCameraJumpController::ExampleCameraJumpController(
-		Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController,
-		Eegeo::Camera::GlobeCamera::GlobeCameraTouchController& cameraTouchController)
-: m_cameraController(cameraController)
-, m_cameraTouchController(cameraTouchController)
+    Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController,
+    Eegeo::Camera::GlobeCamera::GlobeCameraTouchController& cameraTouchController)
+	: m_cameraController(cameraController)
+	, m_cameraTouchController(cameraTouchController)
 {
 
 }

@@ -11,12 +11,12 @@
 
 namespace Examples
 {
-    class IUIActionHandler
-    {
-    public:
-    	virtual ~IUIActionHandler() {}
-        virtual void operator()() = 0;
-    };
+class IUIActionHandler
+{
+public:
+	virtual ~IUIActionHandler() {}
+	virtual void operator()() = 0;
+};
 }
 
 #endif

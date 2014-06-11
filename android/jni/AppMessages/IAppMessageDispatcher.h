@@ -12,15 +12,15 @@
 
 namespace AppMessages
 {
-	class IAppMessageDispatcher
-	{
-	public:
-		virtual ~IAppMessageDispatcher() {};
+class IAppMessageDispatcher
+{
+public:
+	virtual ~IAppMessageDispatcher() {};
 
-		virtual bool HandleMessage(const AppLifecycleMessages::AppPauseMessage& message) = 0;
-		virtual bool HandleMessage(const AppLifecycleMessages::AppDisplayAvailableMessage& message) = 0;
-		virtual bool HandleMessage(const InputMessages::TouchEventMessage& message) = 0;
-	};
+	virtual bool HandleMessage(const AppLifecycleMessages::AppPauseMessage& message) = 0;
+	virtual bool HandleMessage(const AppLifecycleMessages::AppDisplayAvailableMessage& message) = 0;
+	virtual bool HandleMessage(const InputMessages::TouchEventMessage& message) = 0;
+};
 }
 
 #endif

@@ -15,19 +15,19 @@
 
 namespace Examples
 {
-    class SingleCityExampleFactory : public IExampleFactory
-    {
-        Eegeo::EegeoWorld& m_world;
-        Eegeo::Camera::GlobeCamera::GlobeCameraController& m_globeCameraController;
-        
-    public:
-        SingleCityExampleFactory(Eegeo::EegeoWorld& world,
-                                 Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController);
+class SingleCityExampleFactory : public IExampleFactory
+{
+	Eegeo::EegeoWorld& m_world;
+	Eegeo::Camera::GlobeCamera::GlobeCameraController& m_globeCameraController;
 
-        std::string ExampleName() const;
-        
-        IExample* CreateExample() const;
-    };
+public:
+	SingleCityExampleFactory(Eegeo::EegeoWorld& world,
+	                         Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController);
+
+	std::string ExampleName() const;
+
+	IExample* CreateExample() const;
+};
 }
 
 #endif /* defined(__ExampleApp__SingleCityExampleFactory__) */

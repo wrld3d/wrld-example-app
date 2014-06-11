@@ -19,10 +19,10 @@ class AppRunner :
 {
 public:
 	AppRunner(
-			const std::string& apiKey,
-			AndroidNativeState* pNativeState,
-			AppToJavaProxy& appToJavaProxy
-			);
+	    const std::string& apiKey,
+	    AndroidNativeState* pNativeState,
+	    AppToJavaProxy& appToJavaProxy
+	);
 	~AppRunner();
 
 protected:
@@ -44,11 +44,11 @@ private:
 	FrameRateRegulator m_frameRateRegulator;
 	float m_deltaTime;
 
-    GlDisplayService m_displayService;
+	GlDisplayService m_displayService;
 	void ReleaseDisplay();
 	bool TryBindDisplay();
 
-    AppHost* m_pAppHost;
+	AppHost* m_pAppHost;
 	void CreateAppHost();
 };
 

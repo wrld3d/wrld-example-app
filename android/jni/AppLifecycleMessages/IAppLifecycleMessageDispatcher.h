@@ -7,13 +7,13 @@
 
 namespace AppLifecycleMessages
 {
-	class IAppLifecycleMessageDispatcher
-	{
-	public:
-		virtual ~IAppLifecycleMessageDispatcher() {};
-		virtual bool HandleMessage(const AppPauseMessage& message) = 0;
-		virtual bool HandleMessage(const AppDisplayAvailableMessage& message) = 0;
-	};
+class IAppLifecycleMessageDispatcher
+{
+public:
+	virtual ~IAppLifecycleMessageDispatcher() {};
+	virtual bool HandleMessage(const AppPauseMessage& message) = 0;
+	virtual bool HandleMessage(const AppDisplayAvailableMessage& message) = 0;
+};
 }
 
 #endif /* IAPPLIFECYCLEMESSAGEDISPATCHER_H_ */

@@ -9,34 +9,34 @@
 
 namespace Examples
 {
-	class IAndroidExampleMessage
-	{
-	public:
-		virtual ~IAndroidExampleMessage() { }
+class IAndroidExampleMessage
+{
+public:
+	virtual ~IAndroidExampleMessage() { }
 
-		virtual void Handle()=0;
+	virtual void Handle()=0;
 
-	protected:
-		IAndroidExampleMessage() {}
-	};
+protected:
+	IAndroidExampleMessage() {}
+};
 
-	template <typename THandler>
-	class AndroidExampleMessage : public IAndroidExampleMessage, public Eegeo::Messaging::IMessage<THandler>
-	{
-		THandler* m_pHandler;
-	public:
-		AndroidExampleMessage(THandler* pHandler)
+template <typename THandler>
+class AndroidExampleMessage : public IAndroidExampleMessage, public Eegeo::Messaging::IMessage<THandler>
+{
+	THandler* m_pHandler;
+public:
+	AndroidExampleMessage(THandler* pHandler)
 		: m_pHandler(pHandler)
-		{
-			Eegeo_ASSERT(pHandler != NULL, "AndroidExampleMessage handler pointer must be non-null.\n");
-		}
+	{
+		Eegeo_ASSERT(pHandler != NULL, "AndroidExampleMessage handler pointer must be non-null.\n");
+	}
 
-		void Handle()
-		{
-			Eegeo::Messaging::IMessage<THandler>* pThis = this;
-			pThis->Handle(*m_pHandler);
-		}
-	};
+	void Handle()
+	{
+		Eegeo::Messaging::IMessage<THandler>* pThis = this;
+		pThis->Handle(*m_pHandler);
+	}
+};
 }
 
 #endif /* IANDROIDEXAMPLEMESSAGE_H_ */

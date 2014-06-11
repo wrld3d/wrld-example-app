@@ -9,7 +9,7 @@
 using namespace Examples;
 
 AndroidRouteMatchingProxy::AndroidRouteMatchingProxy(Eegeo::Messaging::MessageQueue<IAndroidExampleMessage*>& messageQueue)
-: AndroidExampleProxy(messageQueue)
+	: AndroidExampleProxy(messageQueue)
 {
 
 }
@@ -20,9 +20,9 @@ void AndroidRouteMatchingProxy::ToggleRouteMatching(Examples::AndroidRouteMatchi
 }
 
 JNIEXPORT void JNICALL Java_com_eegeo_examples_RouteMatchingExampleHud_ToggleRouteMatching(
-		JNIEnv* jenv, jobject obj,
-		jlong nativeObjectPtr,
-		jlong nativeCallerProxyPtr)
+    JNIEnv* jenv, jobject obj,
+    jlong nativeObjectPtr,
+    jlong nativeCallerProxyPtr)
 {
 	Examples::AndroidRouteMatchingExampleView* pExample = (Examples::AndroidRouteMatchingExampleView*)(nativeObjectPtr);
 	Examples::AndroidRouteMatchingProxy* pProxy = (Examples::AndroidRouteMatchingProxy*)(nativeCallerProxyPtr);

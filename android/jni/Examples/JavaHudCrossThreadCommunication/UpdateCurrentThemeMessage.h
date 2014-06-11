@@ -10,14 +10,14 @@
 
 namespace Examples
 {
-	class UpdateCurrentThemeMessage : public AndroidExampleMessage<JavaHudCrossThreadCommunicationExample>
-	{
-		std::string m_themeName;
-	public:
-		UpdateCurrentThemeMessage(JavaHudCrossThreadCommunicationExample* pExample, const std::string& themeName);
+class UpdateCurrentThemeMessage : public AndroidExampleMessage<JavaHudCrossThreadCommunicationExample>
+{
+	std::string m_themeName;
+public:
+	UpdateCurrentThemeMessage(JavaHudCrossThreadCommunicationExample* pExample, const std::string& themeName);
 
-        virtual bool Handle(JavaHudCrossThreadCommunicationExample& dispatcher) const;
-	};
+	virtual bool Handle(JavaHudCrossThreadCommunicationExample& dispatcher) const;
+};
 }
 
 #endif /* UPDATECURRENTTHEMEMESSAGE_H_ */

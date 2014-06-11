@@ -12,17 +12,17 @@
 using namespace Examples;
 
 iOSRouteSimulationExampleViewFactory::iOSRouteSimulationExampleViewFactory(UIView* pView)
-: m_pView(pView)
+	: m_pView(pView)
 {
-    
+
 }
 
 iOSRouteSimulationExampleViewFactory::~iOSRouteSimulationExampleViewFactory()
 {
-    
+
 }
 
 IRouteSimulationExampleView* iOSRouteSimulationExampleViewFactory::CreateRouteSimulationExampleView() const
 {
-    return Eegeo_NEW(iOSRouteSimulationExampleView)(m_pView);
+	return Eegeo_NEW(iOSRouteSimulationExampleView)(m_pView);
 }

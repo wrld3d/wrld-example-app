@@ -8,8 +8,8 @@
 #include "AppDisplayAvailableMessage.h"
 
 AppProxy::AppProxy(AppRunner& appRunner)
-: m_appRunner(appRunner)
-, m_thread(appRunner)
+	: m_appRunner(appRunner)
+	, m_thread(appRunner)
 {
 }
 

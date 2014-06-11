@@ -8,14 +8,14 @@
 
 namespace AppMessages
 {
-	namespace AppToJava
-	{
-		class IAppToJavaMessage : public Eegeo::Messaging::IMessage<IAppToJavaMessageDispatcher>
-		{
-		public:
-			virtual ~IAppToJavaMessage() { };
-		};
-	}
+namespace AppToJava
+{
+class IAppToJavaMessage : public Eegeo::Messaging::IMessage<IAppToJavaMessageDispatcher>
+{
+public:
+	virtual ~IAppToJavaMessage() { };
+};
+}
 }
 
 

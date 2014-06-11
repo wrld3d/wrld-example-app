@@ -5,10 +5,10 @@
 
 namespace AppLifecycleMessages
 {
-	bool AppDisplayAvailableMessage::Handle(AppMessages::IAppMessageDispatcher& dispatcher) const
-	{
-		return dispatcher.HandleMessage(*this);
-	}
+bool AppDisplayAvailableMessage::Handle(AppMessages::IAppMessageDispatcher& dispatcher) const
+{
+	return dispatcher.HandleMessage(*this);
+}
 }
 
 

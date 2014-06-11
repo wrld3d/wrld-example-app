@@ -7,15 +7,15 @@
 
 namespace AppMessages
 {
-	namespace AppToJava
-	{
-		class IAppToJavaMessageDispatcher
-		{
-		public:
-			virtual ~IAppToJavaMessageDispatcher() {};
-		};
+namespace AppToJava
+{
+class IAppToJavaMessageDispatcher
+{
+public:
+	virtual ~IAppToJavaMessageDispatcher() {};
+};
 
-	}
+}
 }
 
 

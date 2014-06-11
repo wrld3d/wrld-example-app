@@ -22,59 +22,65 @@
 
 extern "C"
 {
-    JNIEXPORT void JNICALL Java_com_eegeo_examples_PlaceJumpMenu_visitLocation(JNIEnv* jenv, jobject obj, jlong nativeAppWindowPtr, jstring location);
+	JNIEXPORT void JNICALL Java_com_eegeo_examples_PlaceJumpMenu_visitLocation(JNIEnv* jenv, jobject obj, jlong nativeAppWindowPtr, jstring location);
 }
 
 namespace Examples
 {
-    class ShowJavaPlaceJumpUIExample : public IExample
-    {
-    	struct ViewLocation
-    	{
-            Eegeo::Space::LatLongAltitude location;
-    		float heading;
-    		float distance;
-            
-    		ViewLocation(): location(0,0,0)
-    		{
-                location = Eegeo::Space::LatLongAltitude::FromDegrees(0, 0, 0);
-            }
+class ShowJavaPlaceJumpUIExample : public IExample
+{
+	struct ViewLocation
+	{
+		Eegeo::Space::LatLongAltitude location;
+		float heading;
+		float distance;
 
-    		ViewLocation(float lat, float lon, float alt, float heading, float distance) : location(0,0,0)
-            {
-                location = Eegeo::Space::LatLongAltitude::FromDegrees(lat, lon, alt);
-                this->heading = heading;
-                this->distance = distance;
-            }
-        };
+		ViewLocation(): location(0,0,0)
+		{
+			location = Eegeo::Space::LatLongAltitude::FromDegrees(0, 0, 0);
+		}
 
-    	std::map<std::string, ViewLocation> m_locations;
-    	AndroidNativeState& m_nativeState;
-        Eegeo::Camera::ICameraJumpController& m_cameraJumpController;
-        GlobeCameraStateRestorer m_globeCameraStateRestorer;
+		ViewLocation(float lat, float lon, float alt, float heading, float distance) : location(0,0,0)
+		{
+			location = Eegeo::Space::LatLongAltitude::FromDegrees(lat, lon, alt);
+			this->heading = heading;
+			this->distance = distance;
+		}
+	};
 
-    	jclass m_placeJumpMenuClass;
-    	jobject m_placeJumpMenu;
+	std::map<std::string, ViewLocation> m_locations;
+	AndroidNativeState& m_nativeState;
+	Eegeo::Camera::ICameraJumpController& m_cameraJumpController;
+	GlobeCameraStateRestorer m_globeCameraStateRestorer;
 
-    	pthread_mutex_t m_mutex;
-    	ViewLocation* m_pTargetLocation;
+	jclass m_placeJumpMenuClass;
+	jobject m_placeJumpMenu;
 
-    public:
-    	ShowJavaPlaceJumpUIExample(
-    			AndroidNativeState& pNativeState,
-    			Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController,
-    			Eegeo::Camera::ICameraJumpController& cameraJumpController);
+	pthread_mutex_t m_mutex;
+	ViewLocation* m_pTargetLocation;
 
-    	void JumpToLocation(const std::string& location);
+public:
+	ShowJavaPlaceJumpUIExample(
+	    AndroidNativeState& pNativeState,
+	    Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController,
+	    Eegeo::Camera::ICameraJumpController& cameraJumpController);
 
-        static std::string GetName() { return "ShowJavaPlaceJumpUIExample"; }
-        std::string Name() const { return GetName(); }
+	void JumpToLocation(const std::string& location);
 
-        void Start();
-        void Update(float dt);
-        void Draw() {}
-        void Suspend();
-    };
+	static std::string GetName()
+	{
+		return "ShowJavaPlaceJumpUIExample";
+	}
+	std::string Name() const
+	{
+		return GetName();
+	}
+
+	void Start();
+	void Update(float dt);
+	void Draw() {}
+	void Suspend();
+};
 }
 
 #endif /* SHOWJAVAPLACEJUMPUIEXAMPLE_H_ */

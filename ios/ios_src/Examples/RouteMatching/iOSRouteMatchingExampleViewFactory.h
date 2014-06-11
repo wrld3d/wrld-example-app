@@ -15,17 +15,17 @@
 
 namespace Examples
 {
-    class iOSRouteMatchingExampleViewFactory : public IRouteMatchingExampleViewFactory, private Eegeo::NonCopyable
-    {
-        UIView* m_pView;
-        
-    public:
-        iOSRouteMatchingExampleViewFactory(UIView* pView);
-        
-        virtual ~iOSRouteMatchingExampleViewFactory();
-        
-        virtual IRouteMatchingExampleView* CreateRouteMatchingExampleView() const;
-    };
+class iOSRouteMatchingExampleViewFactory : public IRouteMatchingExampleViewFactory, private Eegeo::NonCopyable
+{
+	UIView* m_pView;
+
+public:
+	iOSRouteMatchingExampleViewFactory(UIView* pView);
+
+	virtual ~iOSRouteMatchingExampleViewFactory();
+
+	virtual IRouteMatchingExampleView* CreateRouteMatchingExampleView() const;
+};
 }
 
 #endif /* defined(__ExampleApp__iOSRouteMatchingExampleViewFactory__) */

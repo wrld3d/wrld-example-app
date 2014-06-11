@@ -13,14 +13,14 @@
 
 namespace Examples
 {
-    class IRouteMatchingExampleViewFactory
-    {
-    public:
-        
-        virtual ~IRouteMatchingExampleViewFactory() { }
-        
-        virtual IRouteMatchingExampleView* CreateRouteMatchingExampleView() const = 0;
-    };
+class IRouteMatchingExampleViewFactory
+{
+public:
+
+	virtual ~IRouteMatchingExampleViewFactory() { }
+
+	virtual IRouteMatchingExampleView* CreateRouteMatchingExampleView() const = 0;
+};
 }
 
 #endif

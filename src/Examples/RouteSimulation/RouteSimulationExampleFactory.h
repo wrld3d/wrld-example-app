@@ -16,21 +16,21 @@
 
 namespace Examples
 {
-    class RouteSimulationExampleFactory : public IExampleFactory
-    {
-        Eegeo::EegeoWorld& m_world;
-        const IRouteSimulationExampleViewFactory& m_routeSimulationViewFactory;
-        Eegeo::Camera::GlobeCamera::GlobeCameraController& m_globeCameraController;
-        
-    public:
-        RouteSimulationExampleFactory(Eegeo::EegeoWorld& world,
-                                      Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController,
-                                      const IRouteSimulationExampleViewFactory& routeSimulationViewFactory);
+class RouteSimulationExampleFactory : public IExampleFactory
+{
+	Eegeo::EegeoWorld& m_world;
+	const IRouteSimulationExampleViewFactory& m_routeSimulationViewFactory;
+	Eegeo::Camera::GlobeCamera::GlobeCameraController& m_globeCameraController;
 
-        std::string ExampleName() const;
-        
-        IExample* CreateExample() const;
-    };
+public:
+	RouteSimulationExampleFactory(Eegeo::EegeoWorld& world,
+	                              Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController,
+	                              const IRouteSimulationExampleViewFactory& routeSimulationViewFactory);
+
+	std::string ExampleName() const;
+
+	IExample* CreateExample() const;
+};
 }
 
 

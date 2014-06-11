@@ -7,17 +7,17 @@
 #include "TouchEventMessage.h"
 
 AppRunner::AppRunner
-		(
-		const std::string& apiKey,
-		AndroidNativeState* pNativeState,
-		AppToJavaProxy& appToJavaProxy
-		)
-: m_apiKey(apiKey)
-, m_pNativeState(pNativeState)
-, m_frameRateRegulator(30)
-, m_deltaTime(1/30.0f)
-, m_pAppHost(NULL)
-, m_appToJavaProxy(appToJavaProxy)
+(
+    const std::string& apiKey,
+    AndroidNativeState* pNativeState,
+    AppToJavaProxy& appToJavaProxy
+)
+	: m_apiKey(apiKey)
+	, m_pNativeState(pNativeState)
+	, m_frameRateRegulator(30)
+	, m_deltaTime(1/30.0f)
+	, m_pAppHost(NULL)
+	, m_appToJavaProxy(appToJavaProxy)
 {
 }
 
@@ -114,16 +114,16 @@ void AppRunner::CreateAppHost()
 	if(m_pAppHost == NULL && m_displayService.IsDisplayAvailable())
 	{
 		m_pAppHost = Eegeo_NEW(AppHost)
-		(
-			m_apiKey,
-			*m_pNativeState,
-			m_displayService.GetDisplayWidth(),
-			m_displayService.GetDisplayHeight(),
-			m_displayService.GetDisplay(),
-			m_displayService.GetSharedSurface(),
-			m_displayService.GetResourceBuildSharedContext(),
-			m_appToJavaProxy
-		);
+		             (
+		                 m_apiKey,
+		                 *m_pNativeState,
+		                 m_displayService.GetDisplayWidth(),
+		                 m_displayService.GetDisplayHeight(),
+		                 m_displayService.GetDisplay(),
+		                 m_displayService.GetSharedSurface(),
+		                 m_displayService.GetResourceBuildSharedContext(),
+		                 m_appToJavaProxy
+		             );
 	}
 }
 

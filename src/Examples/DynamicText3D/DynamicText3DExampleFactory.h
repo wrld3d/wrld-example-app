@@ -15,19 +15,19 @@
 
 namespace Examples
 {
-    class DynamicText3DExampleFactory : public IExampleFactory
-    {
-        Eegeo::EegeoWorld& m_world;
-        Eegeo::Camera::GlobeCamera::GlobeCameraController& m_globeCameraController;
-        
-    public:
-        DynamicText3DExampleFactory(Eegeo::EegeoWorld& world,
-                                    Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController);
+class DynamicText3DExampleFactory : public IExampleFactory
+{
+	Eegeo::EegeoWorld& m_world;
+	Eegeo::Camera::GlobeCamera::GlobeCameraController& m_globeCameraController;
 
-        std::string ExampleName() const;
-        
-        IExample* CreateExample() const;
-    };
+public:
+	DynamicText3DExampleFactory(Eegeo::EegeoWorld& world,
+	                            Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController);
+
+	std::string ExampleName() const;
+
+	IExample* CreateExample() const;
+};
 }
 
 

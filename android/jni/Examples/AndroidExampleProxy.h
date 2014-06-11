@@ -10,14 +10,14 @@
 
 namespace Examples
 {
-	class AndroidExampleProxy
-	{
-    	Eegeo::Messaging::MessageQueue<IAndroidExampleMessage*>& m_messageQueue;
-	protected:
-    	void SendMessage(IAndroidExampleMessage* pMessage);
+class AndroidExampleProxy
+{
+	Eegeo::Messaging::MessageQueue<IAndroidExampleMessage*>& m_messageQueue;
+protected:
+	void SendMessage(IAndroidExampleMessage* pMessage);
 
-		AndroidExampleProxy(Eegeo::Messaging::MessageQueue<IAndroidExampleMessage*>& messageQueue);
-	};
+	AndroidExampleProxy(Eegeo::Messaging::MessageQueue<IAndroidExampleMessage*>& messageQueue);
+};
 }
 
 #endif /* ANDROIDEXAMPLEPROXY_H_ */
