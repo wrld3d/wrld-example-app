@@ -1,7 +1,7 @@
 iOS mobile-sdk-harness
 ==================
 
-* Run ./update.platform.sh ios to get the latest platform libraries and headers.
+* Run ./update.platform.sh -p ios to get the latest platform libraries and headers.
 * The accompanying project has no code signing, so run in the simulator (or provide your own credentials).
 * The platform needs an API key to operate. Sign up at https://appstore.eegeo.com/ to get your API key and introduce it into the following line in ViewController.mm : 
 	#define API_KEY "OBTAIN API_KEY FROM https://appstore.eegeo.com AND INSERT IT HERE".
@@ -12,7 +12,7 @@ android mobile-sdk-harness
 ==========================
 
 * Install the Android SDK and NDK
-* Run ./update.platform.sh android to get the latest platform libraries and headers.
+* Run ./update.platform.sh -p android to get the latest platform libraries and headers.
 * Open an ADT Eclipse workspace, importing this repository as an Android project
 * Set the NDK location in the ADT Eclipse workspace to where it was installed (Menu->ADT->Android->NDK)
 * Configure your workspace:
