@@ -17,37 +17,43 @@
 
 namespace Examples
 {
-    class PositionJavaPinButtonExample : public IExample
-    {
-    	AndroidNativeState& m_nativeState;
-    	Eegeo::Rendering::RenderContext& m_renderContext;
-		Eegeo::EegeoWorld& m_world;
-        GlobeCameraStateRestorer m_globeCameraStateRestorer;
+class PositionJavaPinButtonExample : public IExample
+{
+	AndroidNativeState& m_nativeState;
+	Eegeo::Rendering::RenderContext& m_renderContext;
+	Eegeo::EegeoWorld& m_world;
+	GlobeCameraStateRestorer m_globeCameraStateRestorer;
 
-    	int m_buttonID;
-    	jclass m_hudPinControllerClass;
-    	jobject m_hudPinController;
-    	jmethodID m_updateLocationMethodId;
+	int m_buttonID;
+	jclass m_hudPinControllerClass;
+	jobject m_hudPinController;
+	jmethodID m_updateLocationMethodId;
 
-    public:
-    	PositionJavaPinButtonExample(
-    			Eegeo::EegeoWorld& world,
-    			AndroidNativeState& pNativeState,
-    			Eegeo::Rendering::RenderContext& renderContext,
-                Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController);
+public:
+	PositionJavaPinButtonExample(
+	    Eegeo::EegeoWorld& world,
+	    AndroidNativeState& pNativeState,
+	    Eegeo::Rendering::RenderContext& renderContext,
+	    Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController);
 
-        static std::string GetName() { return "PositionJavaPinButtonExample"; }
-        std::string Name() const { return GetName(); }
+	static std::string GetName()
+	{
+		return "PositionJavaPinButtonExample";
+	}
+	std::string Name() const
+	{
+		return GetName();
+	}
 
-        void Start() {}
-        void Update(float dt) {}
-        void Draw();
-        void Suspend();
+	void Start() {}
+	void Update(float dt) {}
+	void Draw();
+	void Suspend();
 
-    private:
-        void CreateButton();
-        void Project (const Eegeo::Space::LatLongAltitude& location, Eegeo::v3& screenPosition);
-    };
+private:
+	void CreateButton();
+	void Project (const Eegeo::Space::LatLongAltitude& location, Eegeo::v3& screenPosition);
+};
 }
 
 #endif /* POSITIONJAVAPINBUTTON_H_ */

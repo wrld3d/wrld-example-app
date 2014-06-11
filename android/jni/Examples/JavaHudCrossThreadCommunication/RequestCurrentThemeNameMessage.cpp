@@ -7,12 +7,13 @@
 using namespace Examples;
 
 RequestCurrentThemeNameMessage::RequestCurrentThemeNameMessage(JavaHudCrossThreadCommunicationExample* pExample)
-: AndroidExampleMessage(pExample)
+	: AndroidExampleMessage(pExample)
 {
 }
 
 bool RequestCurrentThemeNameMessage::Handle(JavaHudCrossThreadCommunicationExample& dispatcher) const
-{;
+{
+	;
 	dispatcher.PostCurrentThemeNameToHud();
 	return false;
 }

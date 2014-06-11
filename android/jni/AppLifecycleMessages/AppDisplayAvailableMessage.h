@@ -8,11 +8,11 @@
 
 namespace AppLifecycleMessages
 {
-	class AppDisplayAvailableMessage : public AppMessages::IAppMessage
-	{
-	public:
-		bool Handle(AppMessages::IAppMessageDispatcher& dispatcher) const;
-	};
+class AppDisplayAvailableMessage : public AppMessages::IAppMessage
+{
+public:
+	bool Handle(AppMessages::IAppMessageDispatcher& dispatcher) const;
+};
 }
 
 #endif

@@ -7,7 +7,7 @@
 using namespace Examples;
 
 ToggleRouteMatchingMessage::ToggleRouteMatchingMessage(Examples::AndroidRouteMatchingExampleView* pExample)
-: AndroidExampleMessage(pExample)
+	: AndroidExampleMessage(pExample)
 {
 }
 

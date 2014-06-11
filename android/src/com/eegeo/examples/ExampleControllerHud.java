@@ -13,162 +13,166 @@ import android.widget.Spinner;
 import com.eegeo.MainActivity;
 import com.eegeo.R;
 
-public class ExampleControllerHud 
+public class ExampleControllerHud
 {
 	private MainActivity m_activity = null;
 	private View m_view = null;
 	private Spinner m_spinner = null;
 	private String[] m_items;
 	private boolean m_spinnerEnabled = false;
-	
-    public static native void ActivatePrevious(long nativeCallerPointer, long nativeCallerProxyPointer);
-    public static native void ActivateNext(long nativeCallerPointer, long nativeCallerProxyPointer);
-    public static native void SelectExample(long nativeCallerPointer, long nativeCallerProxyPointer, String selectedExample);
-    
+
+	public static native void ActivatePrevious(long nativeCallerPointer, long nativeCallerProxyPointer);
+	public static native void ActivateNext(long nativeCallerPointer, long nativeCallerProxyPointer);
+	public static native void SelectExample(long nativeCallerPointer, long nativeCallerProxyPointer, String selectedExample);
+
 	public ExampleControllerHud(MainActivity activity, long nativeCallerPointer, long nativeCallerProxyPointer)
-    {
-    	m_activity = activity;
-    	createHud(nativeCallerPointer, nativeCallerProxyPointer);
-    }
-    
-    private void createHud(final long nativeCallerPointer, final long nativeCallerProxyPointer)
-    {	
-    	m_activity.runOnUiThread(new Runnable()
-	    {
-	        public void run()
-	        {
-	            try
-	            {
-	            	final RelativeLayout uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
-	            	m_view = m_activity.getLayoutInflater().inflate(R.layout.example_controller_layout, uiRoot, false);
+	{
+		m_activity = activity;
+		createHud(nativeCallerPointer, nativeCallerProxyPointer);
+	}
 
-	            	final Button previousExample = (Button)m_view.findViewById(R.id.previous_example);
-	           	
-	            	previousExample.setOnClickListener(new OnClickListener() {
-	                    @Override
-	                    public void onClick(View v) {
-	                    	ActivatePrevious(nativeCallerPointer, nativeCallerProxyPointer);
-	                    }
-	                });
+	private void createHud(final long nativeCallerPointer, final long nativeCallerProxyPointer)
+	{
+		m_activity.runOnUiThread(new Runnable()
+		{
+			public void run()
+			{
+				try
+				{
+					final RelativeLayout uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
+					m_view = m_activity.getLayoutInflater().inflate(R.layout.example_controller_layout, uiRoot, false);
 
-	            	final Button nextExample = (Button)m_view.findViewById(R.id.next_example);
-	           	
-	            	nextExample.setOnClickListener(new OnClickListener() {
-	                    @Override
-	                    public void onClick(View v) {
-	                    	ActivateNext(nativeCallerPointer, nativeCallerProxyPointer);
-	                    }
-	                });
-	            	
-	            	previousExample.setVisibility(View.INVISIBLE);
-	            	nextExample.setVisibility(View.INVISIBLE);
-	            	
-	            	uiRoot.addView(m_view);
-	            }
-	            catch (Exception e)
-	            {
-	                Log.v("ExampleControllerHud", e.getMessage() == null ? "Error, but no message?!" : e.getMessage());
-	            }                            
-	        }
-	    });
-    }
-    
-    public void showViews()
-    {
-    	m_activity.runOnUiThread(new Runnable()
-	    {
-	        public void run()
-	        {
-		    	final Button previousExample = (Button)m_view.findViewById(R.id.previous_example);
-		    	final Button nextExample = (Button)m_view.findViewById(R.id.next_example);
-		
-		    	previousExample.setVisibility(View.VISIBLE);
-		    	nextExample.setVisibility(View.VISIBLE);    
-		    	
-		    	m_spinnerEnabled = true;
-		    	if(m_spinner != null) 
-		    	{
-		        	m_spinner = (Spinner)m_view.findViewById(R.id.example_list);
-		        	m_spinner.setEnabled(m_spinnerEnabled);
-		    	}
-	        }
-	    });
-    }
-    
-    public void removeHud()
-    {
-    	m_activity.runOnUiThread(new Runnable()
-	    {
-	        public void run()
-	        {
-	            try
-	            {
-	            	final RelativeLayout uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
-                	uiRoot.removeView(m_view);
-                	m_view = null;
-	            }
-	            catch (Exception e)
-	            {
-	                //Log.v("ExampleControllerHud", e.getMessage() == null ? "Error, but no message?!" : e.getMessage());
-	            }                            
-	        }
-	    });
-    }
-    
-    public void PopulateExampleSpinner(final long nativeCallerPointer, final long nativeCallerProxyPointer, final String[] items)
-    {
-    	m_activity.runOnUiThread(new Runnable()
-	    {
-	        public void run()
-	        {
-	        	m_items = items;
-	        	
-	        	m_spinner = (Spinner)m_view.findViewById(R.id.example_list);
-		    
-		        ArrayAdapter<String> adapter = new ArrayAdapter<String>(m_activity, android.R.layout.simple_spinner_item, items);
-		        m_spinner.setAdapter(adapter);
-		        m_spinner.setEnabled(m_spinnerEnabled);
-		
-		        m_spinner.setOnItemSelectedListener(new OnItemSelectedListener()
-		        {
-		        	int spinnerCurrentSelection = -1; 
-		        	
+					final Button previousExample = (Button)m_view.findViewById(R.id.previous_example);
+
+					previousExample.setOnClickListener(new OnClickListener()
+					{
+						@Override
+						public void onClick(View v)
+						{
+							ActivatePrevious(nativeCallerPointer, nativeCallerProxyPointer);
+						}
+					});
+
+					final Button nextExample = (Button)m_view.findViewById(R.id.next_example);
+
+					nextExample.setOnClickListener(new OnClickListener()
+					{
+						@Override
+						public void onClick(View v)
+						{
+							ActivateNext(nativeCallerPointer, nativeCallerProxyPointer);
+						}
+					});
+
+					previousExample.setVisibility(View.INVISIBLE);
+					nextExample.setVisibility(View.INVISIBLE);
+
+					uiRoot.addView(m_view);
+				}
+				catch (Exception e)
+				{
+					Log.v("ExampleControllerHud", e.getMessage() == null ? "Error, but no message?!" : e.getMessage());
+				}
+			}
+		});
+	}
+
+	public void showViews()
+	{
+		m_activity.runOnUiThread(new Runnable()
+		{
+			public void run()
+			{
+				final Button previousExample = (Button)m_view.findViewById(R.id.previous_example);
+				final Button nextExample = (Button)m_view.findViewById(R.id.next_example);
+
+				previousExample.setVisibility(View.VISIBLE);
+				nextExample.setVisibility(View.VISIBLE);
+
+				m_spinnerEnabled = true;
+				if(m_spinner != null)
+				{
+					m_spinner = (Spinner)m_view.findViewById(R.id.example_list);
+					m_spinner.setEnabled(m_spinnerEnabled);
+				}
+			}
+		});
+	}
+
+	public void removeHud()
+	{
+		m_activity.runOnUiThread(new Runnable()
+		{
+			public void run()
+			{
+				try
+				{
+					final RelativeLayout uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
+					uiRoot.removeView(m_view);
+					m_view = null;
+				}
+				catch (Exception e)
+				{
+					//Log.v("ExampleControllerHud", e.getMessage() == null ? "Error, but no message?!" : e.getMessage());
+				}
+			}
+		});
+	}
+
+	public void PopulateExampleSpinner(final long nativeCallerPointer, final long nativeCallerProxyPointer, final String[] items)
+	{
+		m_activity.runOnUiThread(new Runnable()
+		{
+			public void run()
+			{
+				m_items = items;
+
+				m_spinner = (Spinner)m_view.findViewById(R.id.example_list);
+
+				ArrayAdapter<String> adapter = new ArrayAdapter<String>(m_activity, android.R.layout.simple_spinner_item, items);
+				m_spinner.setAdapter(adapter);
+				m_spinner.setEnabled(m_spinnerEnabled);
+
+				m_spinner.setOnItemSelectedListener(new OnItemSelectedListener()
+				{
+					int spinnerCurrentSelection = -1;
+
 					@Override
 					public void onItemSelected(AdapterView<?> parentView, View selectedItemView,
-							int position, long id) 
+					                           int position, long id)
 					{
 						if(spinnerCurrentSelection >= 0 && spinnerCurrentSelection != position)
 						{
-		                	String selection = (String)m_spinner.getSelectedItem();
-		                	SelectExample(nativeCallerPointer, nativeCallerProxyPointer, selection);
+							String selection = (String)m_spinner.getSelectedItem();
+							SelectExample(nativeCallerPointer, nativeCallerProxyPointer, selection);
 						}
 						spinnerCurrentSelection = position;
 					}
-		
+
 					@Override
-					public void onNothingSelected(AdapterView<?> parentView) 
+					public void onNothingSelected(AdapterView<?> parentView)
 					{
 					}
-		
-		    	});                        
-	        }
-	    });
-    }
-    
-    public void UpdateExampleSpinnerEntry(final String item)
-    {
-    	m_activity.runOnUiThread(new Runnable()
-	    {
-	        public void run()
-	        {
-	        	for(int i = 0; i < m_items.length; ++ i)
-	        	{
-	        		if(m_items[i].equals(item))
-	        		{
-	    	        	m_spinner.setSelection(i);
-	        		}
-	        	}
-	        }
-	    });
-    }
+
+				});
+			}
+		});
+	}
+
+	public void UpdateExampleSpinnerEntry(final String item)
+	{
+		m_activity.runOnUiThread(new Runnable()
+		{
+			public void run()
+			{
+				for(int i = 0; i < m_items.length; ++ i)
+				{
+					if(m_items[i].equals(item))
+					{
+						m_spinner.setSelection(i);
+					}
+				}
+			}
+		});
+	}
 }

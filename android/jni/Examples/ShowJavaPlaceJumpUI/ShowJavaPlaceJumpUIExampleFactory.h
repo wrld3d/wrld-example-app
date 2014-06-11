@@ -16,22 +16,22 @@
 
 namespace Examples
 {
-    class ShowJavaPlaceJumpUIExampleFactory : public IExampleFactory
-    {
-    	ExampleCameraJumpController& m_exampleCameraJumpController;
-		Eegeo::Camera::GlobeCamera::GlobeCameraController& m_cameraController;
-        AndroidNativeState& m_nativeState;
+class ShowJavaPlaceJumpUIExampleFactory : public IExampleFactory
+{
+	ExampleCameraJumpController& m_exampleCameraJumpController;
+	Eegeo::Camera::GlobeCamera::GlobeCameraController& m_cameraController;
+	AndroidNativeState& m_nativeState;
 
-    public:
-        ShowJavaPlaceJumpUIExampleFactory(
-        		ExampleCameraJumpController& exampleCameraJumpController,
-        		Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController,
-        		AndroidNativeState& nativeState);
+public:
+	ShowJavaPlaceJumpUIExampleFactory(
+	    ExampleCameraJumpController& exampleCameraJumpController,
+	    Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController,
+	    AndroidNativeState& nativeState);
 
-        std::string ExampleName() const;
+	std::string ExampleName() const;
 
-        IExample* CreateExample() const;
-    };
+	IExample* CreateExample() const;
+};
 }
 
 

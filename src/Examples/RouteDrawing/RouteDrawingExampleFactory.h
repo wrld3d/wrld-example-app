@@ -15,19 +15,19 @@
 
 namespace Examples
 {
-    class RouteDrawingExampleFactory : public IExampleFactory
-    {
-        Eegeo::EegeoWorld& m_world;
-        Eegeo::Camera::GlobeCamera::GlobeCameraController& m_globeCameraController;
-        
-    public:
-        RouteDrawingExampleFactory(Eegeo::EegeoWorld& world,
-                                   Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController);
+class RouteDrawingExampleFactory : public IExampleFactory
+{
+	Eegeo::EegeoWorld& m_world;
+	Eegeo::Camera::GlobeCamera::GlobeCameraController& m_globeCameraController;
 
-        std::string ExampleName() const;
-        
-        IExample* CreateExample() const;
-    };
+public:
+	RouteDrawingExampleFactory(Eegeo::EegeoWorld& world,
+	                           Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController);
+
+	std::string ExampleName() const;
+
+	IExample* CreateExample() const;
+};
 }
 
 #endif /* defined(__ExampleApp__RouteDrawingExampleFactory__) */

@@ -5,32 +5,38 @@
 
 namespace Eegeo
 {
-    namespace DebugRendering
-    {
-        class DebugPrimitiveRenderer;
-    }
+namespace DebugRendering
+{
+class DebugPrimitiveRenderer;
+}
 }
 
 namespace Examples
 {
-    class DebugPrimitiveRenderingExample : public Examples::IExample
-    {
-    private:
-        Eegeo::DebugRendering::DebugPrimitiveRenderer& m_debugPrimitiveRenderer;
-        GlobeCameraStateRestorer m_globeCameraStateRestorer;
-        
-    public:
-        DebugPrimitiveRenderingExample(Eegeo::DebugRendering::DebugPrimitiveRenderer &debugPrimitiveRenderer,
-                                       Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController);
-        
-        static std::string GetName() { return "DebugPrimitiveRenderingExample"; }
-        std::string Name() const { return GetName(); }
-        
-        void Start();
-        void Update(float dt);
-        void Draw();
-        void Suspend();
-    };
+class DebugPrimitiveRenderingExample : public Examples::IExample
+{
+private:
+	Eegeo::DebugRendering::DebugPrimitiveRenderer& m_debugPrimitiveRenderer;
+	GlobeCameraStateRestorer m_globeCameraStateRestorer;
+
+public:
+	DebugPrimitiveRenderingExample(Eegeo::DebugRendering::DebugPrimitiveRenderer &debugPrimitiveRenderer,
+	                               Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController);
+
+	static std::string GetName()
+	{
+		return "DebugPrimitiveRenderingExample";
+	}
+	std::string Name() const
+	{
+		return GetName();
+	}
+
+	void Start();
+	void Update(float dt);
+	void Draw();
+	void Suspend();
+};
 }
 
 

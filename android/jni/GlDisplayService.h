@@ -13,7 +13,7 @@ public:
 	~GlDisplayService();
 
 	bool TryBindDisplay(ANativeWindow& window);
-    void ReleaseDisplay(bool destroyEGL);
+	void ReleaseDisplay(bool destroyEGL);
 
 	bool IsDisplayAvailable() const;
 	int GetDisplayWidth() const;
@@ -25,11 +25,11 @@ public:
 	EGLContext GetResourceBuildSharedContext() const;
 
 private:
-    EGLDisplay m_display;
-    EGLSurface m_surface;
-    EGLSurface m_sharedSurface;
-    EGLContext m_context;
-    EGLContext m_resourceBuildSharedContext;
+	EGLDisplay m_display;
+	EGLSurface m_surface;
+	EGLSurface m_sharedSurface;
+	EGLContext m_context;
+	EGLContext m_resourceBuildSharedContext;
 	int m_displayWidth;
 	int m_displayHeight;
 	bool m_displayBound;

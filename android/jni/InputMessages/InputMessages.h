@@ -5,8 +5,8 @@
 
 namespace InputMessages
 {
-	class IInputMessageDispatcher;
-	class TouchEventMessage;
+class IInputMessageDispatcher;
+class TouchEventMessage;
 };
 
 #endif

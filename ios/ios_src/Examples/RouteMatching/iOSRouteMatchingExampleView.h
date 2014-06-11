@@ -16,7 +16,7 @@
 
 namespace Examples
 {
-    class iOSRouteMatchingExampleView;
+class iOSRouteMatchingExampleView;
 }
 
 @interface IRouteMatchingExampleBinding : NSObject
@@ -28,24 +28,24 @@ namespace Examples
 
 namespace Examples
 {
-    class iOSRouteMatchingExampleView : public IRouteMatchingExampleView, private Eegeo::NonCopyable
-    {
-        std::vector<IUIActionHandler*> m_matchingToggledHandlers;
-        UIView* m_pView;
-        UIButton * m_pToggleMatchingButton;
-        IRouteMatchingExampleBinding* m_pBinding;
-        
-    public:
-        iOSRouteMatchingExampleView(UIView* pView);
-        
-        ~iOSRouteMatchingExampleView();
-        
-        void AddMatchingToggledHandler(IUIActionHandler& handler);
-        
-        void RemoveMatchingToggledHandler(IUIActionHandler& handler);
-        
-        void ToggleMatching();
-    };
+class iOSRouteMatchingExampleView : public IRouteMatchingExampleView, private Eegeo::NonCopyable
+{
+	std::vector<IUIActionHandler*> m_matchingToggledHandlers;
+	UIView* m_pView;
+	UIButton * m_pToggleMatchingButton;
+	IRouteMatchingExampleBinding* m_pBinding;
+
+public:
+	iOSRouteMatchingExampleView(UIView* pView);
+
+	~iOSRouteMatchingExampleView();
+
+	void AddMatchingToggledHandler(IUIActionHandler& handler);
+
+	void RemoveMatchingToggledHandler(IUIActionHandler& handler);
+
+	void ToggleMatching();
+};
 }
 
 #endif /* defined(__ExampleApp__iOSRouteMatchingExampleView__) */

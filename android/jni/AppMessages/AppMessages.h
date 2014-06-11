@@ -5,8 +5,8 @@
 
 namespace AppMessages
 {
-	class IAppMessage;
-	class IAppMessageDispatcher;
+class IAppMessage;
+class IAppMessageDispatcher;
 };
 
 #endif

@@ -5,10 +5,10 @@
 
 namespace AppLifecycleMessages
 {
-	bool AppPauseMessage::Handle(AppMessages::IAppMessageDispatcher& dispatcher) const
-	{
-		return dispatcher.HandleMessage(*this);
-	}
+bool AppPauseMessage::Handle(AppMessages::IAppMessageDispatcher& dispatcher) const
+{
+	return dispatcher.HandleMessage(*this);
+}
 }
 
 

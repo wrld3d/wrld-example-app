@@ -7,12 +7,12 @@
 
 namespace InputMessages
 {
-	class IInputMessageDispatcher
-	{
-	public:
-		virtual ~IInputMessageDispatcher() {};
-		virtual bool HandleMessage(const TouchEventMessage& message) = 0;
-	};
+class IInputMessageDispatcher
+{
+public:
+	virtual ~IInputMessageDispatcher() {};
+	virtual bool HandleMessage(const TouchEventMessage& message) = 0;
+};
 }
 
 #endif

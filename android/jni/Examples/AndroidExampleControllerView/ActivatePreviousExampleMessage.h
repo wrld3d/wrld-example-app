@@ -10,13 +10,13 @@
 
 namespace Examples
 {
-	class ActivatePreviousExampleMessage : public AndroidExampleMessage<AndroidExampleControllerView>
-	{
-	public:
-		ActivatePreviousExampleMessage(Examples::AndroidExampleControllerView* pExample);
+class ActivatePreviousExampleMessage : public AndroidExampleMessage<AndroidExampleControllerView>
+{
+public:
+	ActivatePreviousExampleMessage(Examples::AndroidExampleControllerView* pExample);
 
-        virtual bool Handle(AndroidExampleControllerView& dispatcher) const;
-	};
+	virtual bool Handle(AndroidExampleControllerView& dispatcher) const;
+};
 }
 
 #endif /* ACTIVATEPREVIOUSEXAMPLEMESSAGE_H_ */

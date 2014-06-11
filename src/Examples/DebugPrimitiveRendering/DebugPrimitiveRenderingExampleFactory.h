@@ -15,19 +15,19 @@
 
 namespace Examples
 {
-    class DebugPrimitiveRenderingExampleFactory : public IExampleFactory
-    {
-        Eegeo::EegeoWorld& m_world;
-        Eegeo::Camera::GlobeCamera::GlobeCameraController& m_globeCameraController;
-        
-    public:
-        DebugPrimitiveRenderingExampleFactory(Eegeo::EegeoWorld& world,
-                                              Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController);
+class DebugPrimitiveRenderingExampleFactory : public IExampleFactory
+{
+	Eegeo::EegeoWorld& m_world;
+	Eegeo::Camera::GlobeCamera::GlobeCameraController& m_globeCameraController;
 
-        std::string ExampleName() const;
-        
-        IExample* CreateExample() const;
-    };
+public:
+	DebugPrimitiveRenderingExampleFactory(Eegeo::EegeoWorld& world,
+	                                      Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController);
+
+	std::string ExampleName() const;
+
+	IExample* CreateExample() const;
+};
 }
 
 

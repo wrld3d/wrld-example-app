@@ -5,11 +5,11 @@
 
 namespace AppMessages
 {
-	namespace AppToJava
-	{
-		class IAppToJavaMessage;
-		class IAppToJavaMessageDispatcher;
-	}
+namespace AppToJava
+{
+class IAppToJavaMessage;
+class IAppToJavaMessageDispatcher;
+}
 };
 
 

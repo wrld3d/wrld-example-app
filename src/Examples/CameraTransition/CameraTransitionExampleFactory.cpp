@@ -12,17 +12,17 @@
 using namespace Examples;
 
 CameraTransitionExampleFactory::CameraTransitionExampleFactory(Eegeo::EegeoWorld& world,
-                                                               Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController)
-: m_world(world)
-, m_globeCameraController(globeCameraController)
+        Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController)
+	: m_world(world)
+	, m_globeCameraController(globeCameraController)
 {
-    
+
 }
 
 IExample* CameraTransitionExampleFactory::CreateExample() const
 {
-    return new Examples::CameraTransitionExample(m_globeCameraController,
-                                                 m_world.GetInterestPointProvider());
+	return new Examples::CameraTransitionExample(m_globeCameraController,
+	        m_world.GetInterestPointProvider());
 }
 
 std::string CameraTransitionExampleFactory::ExampleName() const

@@ -3,7 +3,7 @@
 #include "AppInputDelegate.h"
 
 AppInputDelegate::AppInputDelegate(ExampleApp& exampleApp)
-:m_exampleApp(exampleApp)
+	:m_exampleApp(exampleApp)
 {
 
 }

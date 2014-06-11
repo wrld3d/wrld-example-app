@@ -7,7 +7,7 @@
 using namespace Examples;
 
 AndroidExampleProxy::AndroidExampleProxy(Eegeo::Messaging::MessageQueue<IAndroidExampleMessage*>& messageQueue)
-: m_messageQueue(messageQueue)
+	: m_messageQueue(messageQueue)
 {
 
 }

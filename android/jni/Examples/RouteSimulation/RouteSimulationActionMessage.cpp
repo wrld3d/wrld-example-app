@@ -7,8 +7,8 @@
 using namespace Examples;
 
 RouteSimulationActionMessage::RouteSimulationActionMessage(Examples::AndroidRouteSimulationExampleView* pExample, Action action)
-: AndroidExampleMessage(pExample)
-, m_action(action)
+	: AndroidExampleMessage(pExample)
+	, m_action(action)
 {
 }
 

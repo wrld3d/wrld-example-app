@@ -11,21 +11,21 @@
 
 namespace Examples
 {
-	class AndroidRouteMatchingProxy : public AndroidExampleProxy
-	{
-	public:
-		AndroidRouteMatchingProxy(Eegeo::Messaging::MessageQueue<IAndroidExampleMessage*>& messageQueue);
+class AndroidRouteMatchingProxy : public AndroidExampleProxy
+{
+public:
+	AndroidRouteMatchingProxy(Eegeo::Messaging::MessageQueue<IAndroidExampleMessage*>& messageQueue);
 
-		void ToggleRouteMatching(Examples::AndroidRouteMatchingExampleView* pExample);
-	};
+	void ToggleRouteMatching(Examples::AndroidRouteMatchingExampleView* pExample);
+};
 }
 
 extern "C"
 {
 	JNIEXPORT void JNICALL Java_com_eegeo_examples_RouteMatchingExampleHud_ToggleRouteMatching(
-			JNIEnv* jenv, jobject obj,
-			jlong nativeObjectPtr,
-			jlong nativeCallerProxyPtr);
+	    JNIEnv* jenv, jobject obj,
+	    jlong nativeObjectPtr,
+	    jlong nativeCallerProxyPtr);
 }
 
 #endif /* ANDROIDROUTEMATCHINGPROXY_H_ */

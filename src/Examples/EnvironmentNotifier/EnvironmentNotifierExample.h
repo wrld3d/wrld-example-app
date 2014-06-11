@@ -13,50 +13,56 @@
 
 namespace Examples
 {
-    class EnvironmentNotifierExampleTerrainStreamObserver : public Eegeo::Streaming::IStreamingObserver
-    {
-    private:
-        Eegeo::Rendering::RenderContext& renderContext;
-        std::map<Eegeo::Streaming::MortonKey, Eegeo::DebugRendering::SphereMesh*, Eegeo::Streaming::MortonKeyCompare>& renderables;
-        
-        void AddSphere(const Eegeo::Streaming::MortonKey& key);
-    public:
-        EnvironmentNotifierExampleTerrainStreamObserver(Eegeo::Rendering::RenderContext& renderContext,
-                                                        std::map<Eegeo::Streaming::MortonKey, Eegeo::DebugRendering::SphereMesh*, Eegeo::Streaming::MortonKeyCompare>& renderables)
-        :renderables(renderables)
-        ,renderContext(renderContext)
-        {
-            
-        }
-        
-        void AddedStreamingResourceToSceneGraph(const Eegeo::Streaming::MortonKey& key);
-        void RemovedStreamingResourceFromSceneGraph(const Eegeo::Streaming::MortonKey& key);
-    };
-    
-    class EnvironmentNotifierExample : public IExample
-    {
-    private:
-        Eegeo::Rendering::RenderContext& renderContext;
-        Eegeo::Resources::Terrain::TerrainStreaming& terrainStreaming;
-        EnvironmentNotifierExampleTerrainStreamObserver* observer;
-        GlobeCameraStateRestorer m_globeCameraStateRestorer;
-        
-        std::map<Eegeo::Streaming::MortonKey, Eegeo::DebugRendering::SphereMesh*, Eegeo::Streaming::MortonKeyCompare> renderables;
-        
-        
-    public:
-        EnvironmentNotifierExample(Eegeo::Rendering::RenderContext& renderContext,
-                                   Eegeo::Resources::Terrain::TerrainStreaming& terrainStreaming,
-                                   Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController);
-        
-        static std::string GetName() { return "EnvironmentNotifierExample"; }
-        std::string Name() const { return GetName(); }
-        
-        void Start();
-        void Update(float dt);
-        void Draw();
-        void Suspend();
-    };
+class EnvironmentNotifierExampleTerrainStreamObserver : public Eegeo::Streaming::IStreamingObserver
+{
+private:
+	Eegeo::Rendering::RenderContext& renderContext;
+	std::map<Eegeo::Streaming::MortonKey, Eegeo::DebugRendering::SphereMesh*, Eegeo::Streaming::MortonKeyCompare>& renderables;
+
+	void AddSphere(const Eegeo::Streaming::MortonKey& key);
+public:
+	EnvironmentNotifierExampleTerrainStreamObserver(Eegeo::Rendering::RenderContext& renderContext,
+	        std::map<Eegeo::Streaming::MortonKey, Eegeo::DebugRendering::SphereMesh*, Eegeo::Streaming::MortonKeyCompare>& renderables)
+		:renderables(renderables)
+		,renderContext(renderContext)
+	{
+
+	}
+
+	void AddedStreamingResourceToSceneGraph(const Eegeo::Streaming::MortonKey& key);
+	void RemovedStreamingResourceFromSceneGraph(const Eegeo::Streaming::MortonKey& key);
+};
+
+class EnvironmentNotifierExample : public IExample
+{
+private:
+	Eegeo::Rendering::RenderContext& renderContext;
+	Eegeo::Resources::Terrain::TerrainStreaming& terrainStreaming;
+	EnvironmentNotifierExampleTerrainStreamObserver* observer;
+	GlobeCameraStateRestorer m_globeCameraStateRestorer;
+
+	std::map<Eegeo::Streaming::MortonKey, Eegeo::DebugRendering::SphereMesh*, Eegeo::Streaming::MortonKeyCompare> renderables;
+
+
+public:
+	EnvironmentNotifierExample(Eegeo::Rendering::RenderContext& renderContext,
+	                           Eegeo::Resources::Terrain::TerrainStreaming& terrainStreaming,
+	                           Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController);
+
+	static std::string GetName()
+	{
+		return "EnvironmentNotifierExample";
+	}
+	std::string Name() const
+	{
+		return GetName();
+	}
+
+	void Start();
+	void Update(float dt);
+	void Draw();
+	void Suspend();
+};
 }
 
 

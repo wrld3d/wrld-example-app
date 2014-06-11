@@ -26,22 +26,22 @@ AppToJavaProxy* g_pAppToJavaProxy;
 
 namespace
 {
-	void FillEventFromJniData(
-		JNIEnv* jenv,
-		jint primaryActionIndex,
-		jint primaryActionIdentifier,
-		jint numPointers,
-		jfloatArray x,
-		jfloatArray y,
-		jintArray pointerIdentity,
-		jintArray pointerIndex,
-		TouchInputEvent& event);
+void FillEventFromJniData(
+    JNIEnv* jenv,
+    jint primaryActionIndex,
+    jint primaryActionIdentifier,
+    jint numPointers,
+    jfloatArray x,
+    jfloatArray y,
+    jintArray pointerIdentity,
+    jintArray pointerIndex,
+    TouchInputEvent& event);
 }
 
 JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM* vm, void* pvt)
 {
 	g_nativeState.vm = vm;
-    return JNI_VERSION_1_6;
+	return JNI_VERSION_1_6;
 }
 
 //lifecycle
@@ -121,21 +121,21 @@ JNIEXPORT void JNICALL Java_com_eegeo_MainActivity_setNativeSurface(JNIEnv* jenv
 		g_nativeState.window = NULL;
 	}
 
-    if (surface != NULL)
-    {
-    	g_nativeState.window = ANativeWindow_fromSurface(jenv, surface);
-    	g_pAppProxy->ActivateSurface();
-    }
+	if (surface != NULL)
+	{
+		g_nativeState.window = ANativeWindow_fromSurface(jenv, surface);
+		g_pAppProxy->ActivateSurface();
+	}
 }
 
 JNIEXPORT void JNICALL Java_com_eegeo_EegeoSurfaceView_processNativePointerDown(JNIEnv* jenv, jobject obj,
-		jint primaryActionIndex,
-		jint primaryActionIdentifier,
-		jint numPointers,
-		jfloatArray x,
-		jfloatArray y,
-		jintArray pointerIdentity,
-		jintArray pointerIndex)
+        jint primaryActionIndex,
+        jint primaryActionIdentifier,
+        jint numPointers,
+        jfloatArray x,
+        jfloatArray y,
+        jintArray pointerIdentity,
+        jintArray pointerIndex)
 {
 	TouchInputEvent event(false, true, primaryActionIndex, primaryActionIdentifier);
 	FillEventFromJniData(jenv, primaryActionIndex, primaryActionIdentifier, numPointers, x, y, pointerIdentity, pointerIndex, event);
@@ -144,13 +144,13 @@ JNIEXPORT void JNICALL Java_com_eegeo_EegeoSurfaceView_processNativePointerDown(
 }
 
 JNIEXPORT void JNICALL Java_com_eegeo_EegeoSurfaceView_processNativePointerUp(JNIEnv* jenv, jobject obj,
-		jint primaryActionIndex,
-		jint primaryActionIdentifier,
-		jint numPointers,
-		jfloatArray x,
-		jfloatArray y,
-		jintArray pointerIdentity,
-		jintArray pointerIndex)
+        jint primaryActionIndex,
+        jint primaryActionIdentifier,
+        jint numPointers,
+        jfloatArray x,
+        jfloatArray y,
+        jintArray pointerIdentity,
+        jintArray pointerIndex)
 {
 	TouchInputEvent event(true, false, primaryActionIndex, primaryActionIdentifier);
 	FillEventFromJniData(jenv, primaryActionIndex, primaryActionIdentifier, numPointers, x, y, pointerIdentity, pointerIndex, event);
@@ -159,13 +159,13 @@ JNIEXPORT void JNICALL Java_com_eegeo_EegeoSurfaceView_processNativePointerUp(JN
 }
 
 JNIEXPORT void JNICALL Java_com_eegeo_EegeoSurfaceView_processNativePointerMove(JNIEnv* jenv, jobject obj,
-		jint primaryActionIndex,
-		jint primaryActionIdentifier,
-		jint numPointers,
-		jfloatArray x,
-		jfloatArray y,
-		jintArray pointerIdentity,
-		jintArray pointerIndex)
+        jint primaryActionIndex,
+        jint primaryActionIdentifier,
+        jint numPointers,
+        jfloatArray x,
+        jfloatArray y,
+        jintArray pointerIdentity,
+        jintArray pointerIndex)
 {
 	TouchInputEvent event(false, false, primaryActionIndex, primaryActionIdentifier);
 	FillEventFromJniData(jenv, primaryActionIndex, primaryActionIdentifier, numPointers, x, y, pointerIdentity, pointerIndex, event);
@@ -175,31 +175,31 @@ JNIEXPORT void JNICALL Java_com_eegeo_EegeoSurfaceView_processNativePointerMove(
 
 namespace
 {
-	void FillEventFromJniData(
-		JNIEnv* jenv,
-		jint primaryActionIndex,
-		jint primaryActionIdentifier,
-		jint numPointers,
-		jfloatArray x,
-		jfloatArray y,
-		jintArray pointerIdentity,
-		jintArray pointerIndex,
-		TouchInputEvent& event)
+void FillEventFromJniData(
+    JNIEnv* jenv,
+    jint primaryActionIndex,
+    jint primaryActionIdentifier,
+    jint numPointers,
+    jfloatArray x,
+    jfloatArray y,
+    jintArray pointerIdentity,
+    jintArray pointerIndex,
+    TouchInputEvent& event)
+{
+	jfloat* xBuffer = jenv->GetFloatArrayElements(x, 0);
+	jfloat* yBuffer = jenv->GetFloatArrayElements(y, 0);
+	jint* identityBuffer = jenv->GetIntArrayElements(pointerIdentity, 0);
+	jint* indexBuffer = jenv->GetIntArrayElements(pointerIndex, 0);
+
+	for(int i = 0; i < numPointers; ++ i)
 	{
-		jfloat* xBuffer = jenv->GetFloatArrayElements(x, 0);
-		jfloat* yBuffer = jenv->GetFloatArrayElements(y, 0);
-		jint* identityBuffer = jenv->GetIntArrayElements(pointerIdentity, 0);
-		jint* indexBuffer = jenv->GetIntArrayElements(pointerIndex, 0);
-
-		for(int i = 0; i < numPointers; ++ i)
-		{
-			TouchInputPointerEvent p(xBuffer[i], yBuffer[i], identityBuffer[i], indexBuffer[i]);
-			event.pointerEvents.push_back(p);
-		}
-
-		jenv->ReleaseFloatArrayElements(x, xBuffer, 0);
-		jenv->ReleaseFloatArrayElements(y, yBuffer, 0);
-		jenv->ReleaseIntArrayElements(pointerIdentity, identityBuffer, 0);
-		jenv->ReleaseIntArrayElements(pointerIndex, indexBuffer, 0);
+		TouchInputPointerEvent p(xBuffer[i], yBuffer[i], identityBuffer[i], indexBuffer[i]);
+		event.pointerEvents.push_back(p);
 	}
+
+	jenv->ReleaseFloatArrayElements(x, xBuffer, 0);
+	jenv->ReleaseFloatArrayElements(y, yBuffer, 0);
+	jenv->ReleaseIntArrayElements(pointerIdentity, identityBuffer, 0);
+	jenv->ReleaseIntArrayElements(pointerIndex, indexBuffer, 0);
+}
 }

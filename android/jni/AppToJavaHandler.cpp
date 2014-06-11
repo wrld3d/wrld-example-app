@@ -8,12 +8,12 @@ JNIEXPORT long JNICALL Java_com_eegeo_NativeToJavaMessagePump_pumpNativeMessageQ
 }
 
 AppToJavaHandler::AppToJavaHandler(
-			AndroidNativeState& nativeState,
-			jobject& nativeToJavaMessageHandler,
-			jobject& mainActivity)
-: m_nativeState(nativeState)
-, m_nativeToJavaMessageHandler(nativeToJavaMessageHandler)
-, m_mainActivity(mainActivity)
+    AndroidNativeState& nativeState,
+    jobject& nativeToJavaMessageHandler,
+    jobject& mainActivity)
+	: m_nativeState(nativeState)
+	, m_nativeToJavaMessageHandler(nativeToJavaMessageHandler)
+	, m_mainActivity(mainActivity)
 {
 	AndroidSafeNativeThreadAttachment attached(m_nativeState);
 	JNIEnv* pEnv = attached.envForThread;

@@ -8,9 +8,9 @@
 
 namespace AppMessages
 {
-	class IAppMessage : public Eegeo::Messaging::IMessage<IAppMessageDispatcher>
-	{
-	};
+class IAppMessage : public Eegeo::Messaging::IMessage<IAppMessageDispatcher>
+{
+};
 }
 
 #endif

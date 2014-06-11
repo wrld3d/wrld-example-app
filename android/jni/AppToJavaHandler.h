@@ -13,19 +13,19 @@
 
 extern "C"
 {
-    JNIEXPORT long JNICALL Java_com_eegeo_NativeToJavaMessagePump_pumpNativeMessageQueue(JNIEnv* jenv, jobject obj, jlong nativeHandler);
+	JNIEXPORT long JNICALL Java_com_eegeo_NativeToJavaMessagePump_pumpNativeMessageQueue(JNIEnv* jenv, jobject obj, jlong nativeHandler);
 }
 
 class AppToJavaHandler :
 	public Eegeo::Messaging::ActiveObject<const AppMessages::AppToJava::IAppToJavaMessage*,
-										  AppMessages::AppToJava::IAppToJavaMessageDispatcher>
+	AppMessages::AppToJava::IAppToJavaMessageDispatcher>
 {
 public:
 	AppToJavaHandler(
-			AndroidNativeState& nativeState,
-			jobject& nativeToJavaMessageHandler,
-			jobject& mainActivity
-			);
+	    AndroidNativeState& nativeState,
+	    jobject& nativeToJavaMessageHandler,
+	    jobject& mainActivity
+	);
 	virtual ~AppToJavaHandler();
 
 	void SignalMessageAvailable();

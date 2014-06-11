@@ -16,8 +16,8 @@ class ExampleCameraJumpController : public Eegeo::Camera::ICameraJumpController
 {
 public:
 	ExampleCameraJumpController(
-			Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController,
-			Eegeo::Camera::GlobeCamera::GlobeCameraTouchController& cameraTouchController);
+	    Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController,
+	    Eegeo::Camera::GlobeCamera::GlobeCameraTouchController& cameraTouchController);
 
 	virtual void JumpTo(const Eegeo::Space::LatLongAltitude& interestPoint, float cameraHeadingDegrees, float cameraDistanceToInterest);
 	virtual void JumpTo(const Eegeo::Space::LatLongAltitude& interestPoint);

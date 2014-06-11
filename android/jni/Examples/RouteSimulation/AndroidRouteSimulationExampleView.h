@@ -17,67 +17,67 @@
 
 namespace Examples
 {
-	class AndroidRouteSimulationProxy;
+class AndroidRouteSimulationProxy;
 
-    class AndroidRouteSimulationExampleView : public IRouteSimulationExampleView, private Eegeo::NonCopyable
-    {
-        std::vector<IUIActionHandler*> m_followCameraToggledHandlers;
-        std::vector<IUIActionHandler*> m_directionChangedHandlers;
-        std::vector<IUIActionHandler*> m_increaseSpeedHandlers;
-        std::vector<IUIActionHandler*> m_decreaseSpeedHandlers;
-        std::vector<IUIActionHandler*> m_rotateToFollowToggledHandlers;
-        std::vector<IUIActionHandler*> m_roadSideChangedHandlers;
+class AndroidRouteSimulationExampleView : public IRouteSimulationExampleView, private Eegeo::NonCopyable
+{
+	std::vector<IUIActionHandler*> m_followCameraToggledHandlers;
+	std::vector<IUIActionHandler*> m_directionChangedHandlers;
+	std::vector<IUIActionHandler*> m_increaseSpeedHandlers;
+	std::vector<IUIActionHandler*> m_decreaseSpeedHandlers;
+	std::vector<IUIActionHandler*> m_rotateToFollowToggledHandlers;
+	std::vector<IUIActionHandler*> m_roadSideChangedHandlers;
 
-    	AndroidNativeState& m_nativeState;
-    	jclass m_routeSimulationExampleHudClass;
-    	jobject m_routeSimulationExampleHud;
-    	AndroidRouteSimulationProxy* m_pProxy;
-        
-    public:
-        AndroidRouteSimulationExampleView(
-        		AndroidNativeState& androidNativeState,
-        		AndroidRouteSimulationProxy* pProxy,
-        		bool usingFollowCamera);
-        
-        ~AndroidRouteSimulationExampleView();
-        
-        void AddFollowCameraToggledHandler(IUIActionHandler& handler);
+	AndroidNativeState& m_nativeState;
+	jclass m_routeSimulationExampleHudClass;
+	jobject m_routeSimulationExampleHud;
+	AndroidRouteSimulationProxy* m_pProxy;
 
-        void RemoveFollowCameraToggledHandler(IUIActionHandler& handler);
+public:
+	AndroidRouteSimulationExampleView(
+	    AndroidNativeState& androidNativeState,
+	    AndroidRouteSimulationProxy* pProxy,
+	    bool usingFollowCamera);
 
-        void ToggleFollowCamera();
+	~AndroidRouteSimulationExampleView();
 
-        void AddFollowCameraDirectionChangedHandler(IUIActionHandler& handler);
+	void AddFollowCameraToggledHandler(IUIActionHandler& handler);
 
-        void RemoveFollowCameraDirectionChangedHandler(IUIActionHandler& handler);
+	void RemoveFollowCameraToggledHandler(IUIActionHandler& handler);
 
-        void ToggleCameraDirection();
+	void ToggleFollowCamera();
 
-        void AddIncreaseSpeedHandler(IUIActionHandler& handler);
+	void AddFollowCameraDirectionChangedHandler(IUIActionHandler& handler);
 
-        void RemoveIncreaseSpeedHandler(IUIActionHandler& handler);
+	void RemoveFollowCameraDirectionChangedHandler(IUIActionHandler& handler);
 
-        void IncreaseSpeed();
+	void ToggleCameraDirection();
 
-        void AddDecreaseSpeedHandler(IUIActionHandler& handler);
+	void AddIncreaseSpeedHandler(IUIActionHandler& handler);
 
-        void RemoveDecreaseSpeedHandler(IUIActionHandler& handler);
+	void RemoveIncreaseSpeedHandler(IUIActionHandler& handler);
 
-        void DecreaseSpeed();
+	void IncreaseSpeed();
 
-        void AddRotateToFollowToggledHandler(IUIActionHandler& handler);
+	void AddDecreaseSpeedHandler(IUIActionHandler& handler);
 
-        void RemoveRotateToFollowToggledHandler(IUIActionHandler& handler);
+	void RemoveDecreaseSpeedHandler(IUIActionHandler& handler);
 
-        void ToggleRotateToFollow();
+	void DecreaseSpeed();
 
-        void AddSideOfRoadToDriveOnToggledHandler(IUIActionHandler& handler);
+	void AddRotateToFollowToggledHandler(IUIActionHandler& handler);
 
-        void RemoveSideOfRoadToDriveOnToggledHandler(IUIActionHandler& handler);
+	void RemoveRotateToFollowToggledHandler(IUIActionHandler& handler);
 
-        void ChangeSideOfRoad();
+	void ToggleRotateToFollow();
 
-    };
+	void AddSideOfRoadToDriveOnToggledHandler(IUIActionHandler& handler);
+
+	void RemoveSideOfRoadToDriveOnToggledHandler(IUIActionHandler& handler);
+
+	void ChangeSideOfRoad();
+
+};
 }
 
 #endif /* defined(__ExampleApp__AndroidRouteSimulationExampleView__) */

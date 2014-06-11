@@ -7,7 +7,7 @@
 using namespace Examples;
 
 ActivateNextExampleMessage::ActivateNextExampleMessage(Examples::AndroidExampleControllerView* pExample)
-: AndroidExampleMessage(pExample)
+	: AndroidExampleMessage(pExample)
 {
 }
 

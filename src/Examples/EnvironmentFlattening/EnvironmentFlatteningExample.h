@@ -14,27 +14,33 @@
 
 namespace Examples
 {
-    class EnvironmentFlatteningExample : public IExample
-    {
-    private:
-        long long m_lastToggle;
-        bool m_scaleUp;
-        Eegeo::Rendering::EnvironmentFlatteningService& m_environmentFlatteningService;
-        float m_initialEnvironmentScale;
-        GlobeCameraStateRestorer m_globeCameraStateRestorer;
-        
-    public:
-        EnvironmentFlatteningExample(Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
-                                     Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController);
-        
-        static std::string GetName() { return "EnvironmentFlatteningExample"; }
-        std::string Name() const { return GetName(); }
-        
-        void Start() {}
-        void Update(float dt);
-        void Draw() {}
-        void Suspend();
-    };
+class EnvironmentFlatteningExample : public IExample
+{
+private:
+	long long m_lastToggle;
+	bool m_scaleUp;
+	Eegeo::Rendering::EnvironmentFlatteningService& m_environmentFlatteningService;
+	float m_initialEnvironmentScale;
+	GlobeCameraStateRestorer m_globeCameraStateRestorer;
+
+public:
+	EnvironmentFlatteningExample(Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
+	                             Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController);
+
+	static std::string GetName()
+	{
+		return "EnvironmentFlatteningExample";
+	}
+	std::string Name() const
+	{
+		return GetName();
+	}
+
+	void Start() {}
+	void Update(float dt);
+	void Draw() {}
+	void Suspend();
+};
 }
 
 

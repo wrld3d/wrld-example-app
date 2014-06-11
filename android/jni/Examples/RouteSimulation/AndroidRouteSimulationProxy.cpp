@@ -9,7 +9,7 @@
 using namespace Examples;
 
 AndroidRouteSimulationProxy::AndroidRouteSimulationProxy(Eegeo::Messaging::MessageQueue<IAndroidExampleMessage*>& messageQueue)
-: AndroidExampleProxy(messageQueue)
+	: AndroidExampleProxy(messageQueue)
 {
 
 }
@@ -46,9 +46,9 @@ void AndroidRouteSimulationProxy::ToggleSideOfRoad(Examples::AndroidRouteSimulat
 
 
 JNIEXPORT void JNICALL Java_com_eegeo_examples_RouteSimulationExampleHud_ToggleFollowCamera(
-		JNIEnv* jenv, jobject obj,
-		jlong nativeObjectPtr,
-		jlong nativeObjectProxyPtr)
+    JNIEnv* jenv, jobject obj,
+    jlong nativeObjectPtr,
+    jlong nativeObjectProxyPtr)
 {
 	Examples::AndroidRouteSimulationExampleView* pExample = (Examples::AndroidRouteSimulationExampleView*)(nativeObjectPtr);
 	Examples::AndroidRouteSimulationProxy* pProxy = (Examples::AndroidRouteSimulationProxy*)(nativeObjectProxyPtr);
@@ -58,9 +58,9 @@ JNIEXPORT void JNICALL Java_com_eegeo_examples_RouteSimulationExampleHud_ToggleF
 
 
 JNIEXPORT void JNICALL Java_com_eegeo_examples_RouteSimulationExampleHud_ChangeFollowDirection(
-		JNIEnv* jenv, jobject obj,
-		jlong nativeObjectPtr,
-		jlong nativeObjectProxyPtr)
+    JNIEnv* jenv, jobject obj,
+    jlong nativeObjectPtr,
+    jlong nativeObjectProxyPtr)
 {
 	Examples::AndroidRouteSimulationExampleView* pExample = (Examples::AndroidRouteSimulationExampleView*)(nativeObjectPtr);
 	Examples::AndroidRouteSimulationProxy* pProxy = (Examples::AndroidRouteSimulationProxy*)(nativeObjectProxyPtr);
@@ -69,9 +69,9 @@ JNIEXPORT void JNICALL Java_com_eegeo_examples_RouteSimulationExampleHud_ChangeF
 }
 
 JNIEXPORT void JNICALL Java_com_eegeo_examples_RouteSimulationExampleHud_IncreaseSpeedFollowed(
-		JNIEnv* jenv, jobject obj,
-		jlong nativeObjectPtr,
-		jlong nativeObjectProxyPtr)
+    JNIEnv* jenv, jobject obj,
+    jlong nativeObjectPtr,
+    jlong nativeObjectProxyPtr)
 {
 	Examples::AndroidRouteSimulationExampleView* pExample = (Examples::AndroidRouteSimulationExampleView*)(nativeObjectPtr);
 	Examples::AndroidRouteSimulationProxy* pProxy = (Examples::AndroidRouteSimulationProxy*)(nativeObjectProxyPtr);
@@ -80,9 +80,9 @@ JNIEXPORT void JNICALL Java_com_eegeo_examples_RouteSimulationExampleHud_Increas
 }
 
 JNIEXPORT void JNICALL Java_com_eegeo_examples_RouteSimulationExampleHud_DecreaseSpeedFollowed(
-		JNIEnv* jenv, jobject obj,
-		jlong nativeObjectPtr,
-		jlong nativeObjectProxyPtr)
+    JNIEnv* jenv, jobject obj,
+    jlong nativeObjectPtr,
+    jlong nativeObjectProxyPtr)
 {
 	Examples::AndroidRouteSimulationExampleView* pExample = (Examples::AndroidRouteSimulationExampleView*)(nativeObjectPtr);
 	Examples::AndroidRouteSimulationProxy* pProxy = (Examples::AndroidRouteSimulationProxy*)(nativeObjectProxyPtr);
@@ -91,9 +91,9 @@ JNIEXPORT void JNICALL Java_com_eegeo_examples_RouteSimulationExampleHud_Decreas
 }
 
 JNIEXPORT void JNICALL Java_com_eegeo_examples_RouteSimulationExampleHud_ToggleDirectFollow(
-		JNIEnv* jenv, jobject obj,
-		jlong nativeObjectPtr,
-		jlong nativeObjectProxyPtr)
+    JNIEnv* jenv, jobject obj,
+    jlong nativeObjectPtr,
+    jlong nativeObjectProxyPtr)
 {
 	Examples::AndroidRouteSimulationExampleView* pExample = (Examples::AndroidRouteSimulationExampleView*)(nativeObjectPtr);
 	Examples::AndroidRouteSimulationProxy* pProxy = (Examples::AndroidRouteSimulationProxy*)(nativeObjectProxyPtr);
@@ -102,9 +102,9 @@ JNIEXPORT void JNICALL Java_com_eegeo_examples_RouteSimulationExampleHud_ToggleD
 }
 
 JNIEXPORT void JNICALL Java_com_eegeo_examples_RouteSimulationExampleHud_ToggleSideOfRoadToDriveOn(
-		JNIEnv* jenv, jobject obj,
-		jlong nativeObjectPtr,
-		jlong nativeObjectProxyPtr)
+    JNIEnv* jenv, jobject obj,
+    jlong nativeObjectPtr,
+    jlong nativeObjectProxyPtr)
 {
 	Examples::AndroidRouteSimulationExampleView* pExample = (Examples::AndroidRouteSimulationExampleView*)(nativeObjectPtr);
 	Examples::AndroidRouteSimulationProxy* pProxy = (Examples::AndroidRouteSimulationProxy*)(nativeObjectProxyPtr);

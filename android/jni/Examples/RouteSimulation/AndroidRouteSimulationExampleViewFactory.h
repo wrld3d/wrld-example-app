@@ -17,20 +17,20 @@
 
 namespace Examples
 {
-    class AndroidRouteSimulationExampleViewFactory : public IRouteSimulationExampleViewFactory, private Eegeo::NonCopyable
-    {
-    	AndroidNativeState& m_nativeState;
-    	Eegeo::Messaging::MessageQueue<IAndroidExampleMessage*>& m_messageQueue;
+class AndroidRouteSimulationExampleViewFactory : public IRouteSimulationExampleViewFactory, private Eegeo::NonCopyable
+{
+	AndroidNativeState& m_nativeState;
+	Eegeo::Messaging::MessageQueue<IAndroidExampleMessage*>& m_messageQueue;
 
-    public:
-    	AndroidRouteSimulationExampleViewFactory(
-    			AndroidNativeState& androidNativeState,
-    	    	Eegeo::Messaging::MessageQueue<IAndroidExampleMessage*>& messageQueue);
-        
-        virtual ~AndroidRouteSimulationExampleViewFactory();
-        
-        virtual IRouteSimulationExampleView* CreateRouteSimulationExampleView() const;
-    };
+public:
+	AndroidRouteSimulationExampleViewFactory(
+	    AndroidNativeState& androidNativeState,
+	    Eegeo::Messaging::MessageQueue<IAndroidExampleMessage*>& messageQueue);
+
+	virtual ~AndroidRouteSimulationExampleViewFactory();
+
+	virtual IRouteSimulationExampleView* CreateRouteSimulationExampleView() const;
+};
 }
 
 #endif /* defined(__ExampleApp__iOSRouteSimulationExampleViewFactory__) */

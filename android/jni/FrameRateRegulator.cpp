@@ -4,8 +4,8 @@
 #include <time.h>
 
 FrameRateRegulator::FrameRateRegulator(float targetFramesPerSecond)
-: m_targetFrameDurationInSeconds(1.0 / targetFramesPerSecond)
-, m_pendingFrameStartTimeInSeconds(0.0)
+	: m_targetFrameDurationInSeconds(1.0 / targetFramesPerSecond)
+	, m_pendingFrameStartTimeInSeconds(0.0)
 {
 	m_frameDeltaTimes.push_back(0.0);
 }
@@ -16,12 +16,12 @@ FrameRateRegulator::~FrameRateRegulator()
 
 namespace
 {
-	double GetTimeNowInSeconds()
-	{
-		 struct timespec res;
-		 clock_gettime(CLOCK_REALTIME, &res);
-		 return res.tv_sec + (double) res.tv_nsec * 1e-9;
-	}
+double GetTimeNowInSeconds()
+{
+	struct timespec res;
+	clock_gettime(CLOCK_REALTIME, &res);
+	return res.tv_sec + (double) res.tv_nsec * 1e-9;
+}
 }
 
 bool FrameRateRegulator::TryStartFrame(float& out_deltaTimeInSeconds)
@@ -36,8 +36,8 @@ bool FrameRateRegulator::TryStartFrame(float& out_deltaTimeInSeconds)
 	const double OverrunDurationInSeconds = 0.005;
 	if
 	(
-		(smoothedDeltaTimeInSeconds < m_targetFrameDurationInSeconds)
-		&& (pendingFrameDurationInSeconds < (m_targetFrameDurationInSeconds + OverrunDurationInSeconds))
+	    (smoothedDeltaTimeInSeconds < m_targetFrameDurationInSeconds)
+	    && (pendingFrameDurationInSeconds < (m_targetFrameDurationInSeconds + OverrunDurationInSeconds))
 	)
 	{
 		out_deltaTimeInSeconds = 0.0;

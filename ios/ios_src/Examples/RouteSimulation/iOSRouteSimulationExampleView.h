@@ -16,7 +16,7 @@
 
 namespace Examples
 {
-    class iOSRouteSimulationExampleView;
+class iOSRouteSimulationExampleView;
 }
 
 @interface IRouteSimulationExampleBinding : NSObject
@@ -34,70 +34,70 @@ namespace Examples
 
 namespace Examples
 {
-    class iOSRouteSimulationExampleView : public IRouteSimulationExampleView, private Eegeo::NonCopyable
-    {
-        std::vector<IUIActionHandler*> m_followCameraToggledHandlers;
-        std::vector<IUIActionHandler*> m_directionChangedHandlers;
-        std::vector<IUIActionHandler*> m_increaseSpeedHandlers;
-        std::vector<IUIActionHandler*> m_decreaseSpeedHandlers;
-        std::vector<IUIActionHandler*> m_rotateToFollowToggledHandlers;
-        std::vector<IUIActionHandler*> m_roadSideChangedHandlers;
-        
-        UIView* m_pView;
-        IRouteSimulationExampleBinding* m_pBinding;
-        UIButton* m_pToggleFollowButton;
-        UIButton* m_pIncreaseSpeedButton;
-        UIButton* m_pDecreaseSpeedButton;
-        UIButton* m_pRotateToFollowButton;
-        UIButton* m_pChangeDirectionButton;
-        UIButton* m_pToggleSideOfRoadToDriveOnButton;
-        
-    public:
-        
-        iOSRouteSimulationExampleView(UIView* pView);
-        
-        ~iOSRouteSimulationExampleView();
-        
-        void AddFollowCameraToggledHandler(IUIActionHandler& handler);
-        
-        void RemoveFollowCameraToggledHandler(IUIActionHandler& handler);
-        
-        void ToggleFollowCamera();
-        
-        void AddFollowCameraDirectionChangedHandler(IUIActionHandler& handler);
-        
-        void RemoveFollowCameraDirectionChangedHandler(IUIActionHandler& handler);
-        
-        void ToggleCameraDirection();
-        
-        void AddIncreaseSpeedHandler(IUIActionHandler& handler);
-        
-        void RemoveIncreaseSpeedHandler(IUIActionHandler& handler);
-        
-        void IncreaseSpeed();
-        
-        void AddDecreaseSpeedHandler(IUIActionHandler& handler);
-        
-        void RemoveDecreaseSpeedHandler(IUIActionHandler& handler);
-        
-        void DecreaseSpeed();
-        
-        void AddRotateToFollowToggledHandler(IUIActionHandler& handler);
-        
-        void RemoveRotateToFollowToggledHandler(IUIActionHandler& handler);
-        
-        void ToggleRotateToFollow();
-        
-        void AddSideOfRoadToDriveOnToggledHandler(IUIActionHandler& handler);
-        
-        void RemoveSideOfRoadToDriveOnToggledHandler(IUIActionHandler& handler);
-        
-        void ChangeSideOfRoad();
-        
-    private:
-        
-        void ToggleFollowMode(bool followEnabled);
-    };
+class iOSRouteSimulationExampleView : public IRouteSimulationExampleView, private Eegeo::NonCopyable
+{
+	std::vector<IUIActionHandler*> m_followCameraToggledHandlers;
+	std::vector<IUIActionHandler*> m_directionChangedHandlers;
+	std::vector<IUIActionHandler*> m_increaseSpeedHandlers;
+	std::vector<IUIActionHandler*> m_decreaseSpeedHandlers;
+	std::vector<IUIActionHandler*> m_rotateToFollowToggledHandlers;
+	std::vector<IUIActionHandler*> m_roadSideChangedHandlers;
+
+	UIView* m_pView;
+	IRouteSimulationExampleBinding* m_pBinding;
+	UIButton* m_pToggleFollowButton;
+	UIButton* m_pIncreaseSpeedButton;
+	UIButton* m_pDecreaseSpeedButton;
+	UIButton* m_pRotateToFollowButton;
+	UIButton* m_pChangeDirectionButton;
+	UIButton* m_pToggleSideOfRoadToDriveOnButton;
+
+public:
+
+	iOSRouteSimulationExampleView(UIView* pView);
+
+	~iOSRouteSimulationExampleView();
+
+	void AddFollowCameraToggledHandler(IUIActionHandler& handler);
+
+	void RemoveFollowCameraToggledHandler(IUIActionHandler& handler);
+
+	void ToggleFollowCamera();
+
+	void AddFollowCameraDirectionChangedHandler(IUIActionHandler& handler);
+
+	void RemoveFollowCameraDirectionChangedHandler(IUIActionHandler& handler);
+
+	void ToggleCameraDirection();
+
+	void AddIncreaseSpeedHandler(IUIActionHandler& handler);
+
+	void RemoveIncreaseSpeedHandler(IUIActionHandler& handler);
+
+	void IncreaseSpeed();
+
+	void AddDecreaseSpeedHandler(IUIActionHandler& handler);
+
+	void RemoveDecreaseSpeedHandler(IUIActionHandler& handler);
+
+	void DecreaseSpeed();
+
+	void AddRotateToFollowToggledHandler(IUIActionHandler& handler);
+
+	void RemoveRotateToFollowToggledHandler(IUIActionHandler& handler);
+
+	void ToggleRotateToFollow();
+
+	void AddSideOfRoadToDriveOnToggledHandler(IUIActionHandler& handler);
+
+	void RemoveSideOfRoadToDriveOnToggledHandler(IUIActionHandler& handler);
+
+	void ChangeSideOfRoad();
+
+private:
+
+	void ToggleFollowMode(bool followEnabled);
+};
 }
 
 

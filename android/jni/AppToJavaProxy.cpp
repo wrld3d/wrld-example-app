@@ -4,6 +4,6 @@
 #include "IAppToJavaMessage.h"
 
 AppToJavaProxy::AppToJavaProxy(AppToJavaHandler& appToJavaHandler)
-: m_appToJavaHandler(appToJavaHandler)
+	: m_appToJavaHandler(appToJavaHandler)
 {
 }
