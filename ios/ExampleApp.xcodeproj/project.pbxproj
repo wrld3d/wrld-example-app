@@ -1430,7 +1430,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/ExampleApp/ExampleApp-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\\\"$(SRCROOT)/Include\\\"",
+					"\"$(SRCROOT)/Include\"",
 				);
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
@@ -1462,7 +1462,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/ExampleApp/ExampleApp-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\\\"$(SRCROOT)/Include\\\"",
+					"\"$(SRCROOT)/Include\"",
 				);
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
