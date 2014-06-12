@@ -1,34 +1,52 @@
 #!/bin/sh
 
-platformVersion=$1
+allArguments=$@
 
-if [ -z "$platformVersion" ]; then
-        echo "\nError: Target platform must be provided.\n\nValid platform choices:\n\t- ios\n\t- android\n"
-        exit 1
+usage() { echo "Usage: $0 -p android|ios [-c]"; echo "  -p -> platform, ios or android (required)"; echo "  -c -> cpp11 support"; 1>&2; exit 1; }
+
+while getopts "p:c" o; do
+    case "${o}" in
+        p)
+            p=${OPTARG}
+            if [ "$p" != "ios" ]; then
+               if [ "$p" != "android" ]; then
+                 usage
+               fi
+            fi
+            ;;
+        c)
+            c="cpp11"
+            ;;
+        *)
+            usage
+            ;;
+    esac
+done
+shift $((OPTIND-1))
+
+if [ -z "${p}" ]; then
+    usage
 fi
 
-if [ $platformVersion == ios ]; then
+if [ $p == "ios" ]; then
     echo "Building iOS examples..."
     rm -rf "./ios/Include"
     rm -rf "./ios/build"
-    ./update.platform.sh -p ios
+    ./update.platform.sh $allArguments
     pushd ios
-    ./build.sh
+    ./build.sh $allArguments
     resultcode=$?
     popd
-elif [ $platformVersion == android ]; then
+elif [ $p == "android" ]; then
     echo "Building Android examples..."
     rm -rf "./android/libs"
     rm -rf "./android/obj"
     rm -rf "./android/bin"
-    ./update.platform.sh -p android
+    ./update.platform.sh $allArguments
     pushd android
     ./build.sh
     resultcode=$?
     popd
-else
-    echo "Error: Build platform must be 'ios' or 'android'"
-    resultcode=1
 fi
 
 if [ $resultcode = 0 ] ; then
