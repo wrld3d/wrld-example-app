@@ -37,7 +37,7 @@ PODAnimationExample::PODAnimationExample(Eegeo::Rendering::RenderContext& render
 
 void PODAnimationExample::Start()
 {
-	m_pModel = Eegeo::Model::CreateFromPODFile("Test_ROBOT_ARM.pod", m_fileIO, m_renderContext.GetGLState(), &m_textureRequestor, "");
+	m_pModel = Eegeo::Model::CreateFromPODFile("pod_animation_example/Test_ROBOT_ARM.pod", m_fileIO, m_renderContext.GetGLState(), &m_textureRequestor, "pod_animation_example/");
 	Eegeo_ASSERT(m_pModel->GetRootNode());
 
 }

@@ -33,7 +33,7 @@ PinsWithAttachedJavaUIExample::PinsWithAttachedJavaUIExample(
 	, m_pinUserData("Pin User Data")
 	, m_globeCameraStateRestorer(globeCameraController)
 {
-	textureLoader.LoadTexture(m_pinIconsTexture, "PinIconTexturePage.png", true);
+	textureLoader.LoadTexture(m_pinIconsTexture, "pins_with_attached_java_ui_example/PinIconTexturePage.png", true);
 	Eegeo_ASSERT(m_pinIconsTexture.textureId != 0);
 
 	int numberOfTilesAlongEachAxisOfTexturePage = 2;

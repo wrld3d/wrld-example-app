@@ -34,13 +34,8 @@
 		181438C1192B6E4500BCDF2E /* ToggleTrafficExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1814389D192B6E4500BCDF2E /* ToggleTrafficExample.cpp */; };
 		181438C2192B6E4500BCDF2E /* TrafficCongestionExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 181438A0192B6E4500BCDF2E /* TrafficCongestionExample.cpp */; };
 		181438C3192B6E4500BCDF2E /* WebRequestExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 181438A5192B6E4500BCDF2E /* WebRequestExample.cpp */; };
-		1825103D17AFD5AD00251651 /* Test_ROBOT_ARM.pod in Resources */ = {isa = PBXBuildFile; fileRef = 1825103A17AFD5AD00251651 /* Test_ROBOT_ARM.pod */; };
-		1825103E17AFD5AD00251651 /* tex_arm.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 1825103B17AFD5AD00251651 /* tex_arm.pvr */; };
-		1825103F17AFD5AD00251651 /* tex_base.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 1825103C17AFD5AD00251651 /* tex_base.pvr */; };
 		182E453B18C92FA900F9DD92 /* libapps-on-maps-sim.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E75EE1D16848B8A00BCA283 /* libapps-on-maps-sim.a */; };
 		182E453C18C92FA900F9DD92 /* libapps-on-maps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE48223168373E20006E99B /* libapps-on-maps.a */; };
-		1860B65C16CA65D90004A39D /* placeholder.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 1860B65B16CA65D90004A39D /* placeholder.pvr */; };
-		18915BD317C7AF86005F24AB /* recce_trams_night.pod in Resources */ = {isa = PBXBuildFile; fileRef = 18915BD217C7AF86005F24AB /* recce_trams_night.pod */; };
 		1899716A192C947D00E0E9F1 /* CameraTransitionExampleFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18997168192C947D00E0E9F1 /* CameraTransitionExampleFactory.cpp */; };
 		18997174192CA64300E0E9F1 /* ControlCityThemeExampleFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18997172192CA64300E0E9F1 /* ControlCityThemeExampleFactory.cpp */; };
 		18997177192CA6FE00E0E9F1 /* DebugPrimitiveRenderingExampleFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18997175192CA6FE00E0E9F1 /* DebugPrimitiveRenderingExampleFactory.cpp */; };
@@ -77,9 +72,27 @@
 		18AB38FC192B729F00F15546 /* iOSRouteSimulationExampleViewFactory.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18AB38F3192B729F00F15546 /* iOSRouteSimulationExampleViewFactory.mm */; };
 		18AB38FD192B729F00F15546 /* Main.m in Sources */ = {isa = PBXBuildFile; fileRef = 18AB38F5192B729F00F15546 /* Main.m */; };
 		18AB38FE192B729F00F15546 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18AB38F7192B729F00F15546 /* ViewController.mm */; };
+		18D1D354194A057200FAA1B9 /* FrankBold50_A8_icons_0.png in Resources */ = {isa = PBXBuildFile; fileRef = 18D1D343194A057200FAA1B9 /* FrankBold50_A8_icons_0.png */; };
+		18D1D355194A057200FAA1B9 /* FrankBold50_A8_icons.fnt in Resources */ = {isa = PBXBuildFile; fileRef = 18D1D344194A057200FAA1B9 /* FrankBold50_A8_icons.fnt */; };
+		18D1D357194A057200FAA1B9 /* load_model_example in Resources */ = {isa = PBXBuildFile; fileRef = 18D1D346194A057200FAA1B9 /* load_model_example */; };
+		18D1D358194A057200FAA1B9 /* pin_over_model_example in Resources */ = {isa = PBXBuildFile; fileRef = 18D1D347194A057200FAA1B9 /* pin_over_model_example */; };
+		18D1D359194A057200FAA1B9 /* pins_example in Resources */ = {isa = PBXBuildFile; fileRef = 18D1D348194A057200FAA1B9 /* pins_example */; };
+		18D1D35B194A057200FAA1B9 /* placeholder.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 18D1D34A194A057200FAA1B9 /* placeholder.pvr */; };
+		18D1D35C194A057200FAA1B9 /* pod_animation_example in Resources */ = {isa = PBXBuildFile; fileRef = 18D1D34B194A057200FAA1B9 /* pod_animation_example */; };
+		18D1D35D194A057200FAA1B9 /* route_simulation_animation_example in Resources */ = {isa = PBXBuildFile; fileRef = 18D1D34C194A057200FAA1B9 /* route_simulation_animation_example */; };
+		18D1D35E194A057200FAA1B9 /* route_simulation_example in Resources */ = {isa = PBXBuildFile; fileRef = 18D1D34D194A057200FAA1B9 /* route_simulation_example */; };
+		18D1D370194A0F7D00FAA1B9 /* AppIcone_iPad_72X72.png in Resources */ = {isa = PBXBuildFile; fileRef = 18D1D365194A0F7D00FAA1B9 /* AppIcone_iPad_72X72.png */; };
+		18D1D371194A0F7D00FAA1B9 /* AppIcone_iPad_Retina_144X144.png in Resources */ = {isa = PBXBuildFile; fileRef = 18D1D366194A0F7D00FAA1B9 /* AppIcone_iPad_Retina_144X144.png */; };
+		18D1D372194A0F7D00FAA1B9 /* AppIcone_iPhone_57X57.png in Resources */ = {isa = PBXBuildFile; fileRef = 18D1D367194A0F7D00FAA1B9 /* AppIcone_iPhone_57X57.png */; };
+		18D1D373194A0F7D00FAA1B9 /* AppIcone_iPhone_Retina_114X114.png in Resources */ = {isa = PBXBuildFile; fileRef = 18D1D368194A0F7D00FAA1B9 /* AppIcone_iPhone_Retina_114X114.png */; };
+		18D1D374194A0F7D00FAA1B9 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18D1D369194A0F7D00FAA1B9 /* Default-568h@2x.png */; };
+		18D1D375194A0F7D00FAA1B9 /* Default-Landscape@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 18D1D36A194A0F7D00FAA1B9 /* Default-Landscape@2x~ipad.png */; };
+		18D1D376194A0F7D00FAA1B9 /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 18D1D36B194A0F7D00FAA1B9 /* Default-Landscape~ipad.png */; };
+		18D1D377194A0F7D00FAA1B9 /* Default-Portrait@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 18D1D36C194A0F7D00FAA1B9 /* Default-Portrait@2x~ipad.png */; };
+		18D1D378194A0F7D00FAA1B9 /* Default-Portrait~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 18D1D36D194A0F7D00FAA1B9 /* Default-Portrait~ipad.png */; };
+		18D1D379194A0F7D00FAA1B9 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 18D1D36E194A0F7D00FAA1B9 /* Default.png */; };
+		18D1D37A194A0F7D00FAA1B9 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18D1D36F194A0F7D00FAA1B9 /* Default@2x.png */; };
 		18E6277F192F833A00B31DCE /* iOSExampleControllerView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18E6277D192F833A00B31DCE /* iOSExampleControllerView.mm */; };
-		18EC760717BA421E0011EEE6 /* recce_trams.pod in Resources */ = {isa = PBXBuildFile; fileRef = 18EC760517BA421E0011EEE6 /* recce_trams.pod */; };
-		18EC760817BA421E0011EEE6 /* recce_trams.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 18EC760617BA421E0011EEE6 /* recce_trams.pvr */; };
 		222E06491948B08B0004FFD9 /* ScreenUnprojectExampleFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 189971AE192CB63500E0E9F1 /* ScreenUnprojectExampleFactory.cpp */; };
 		222E064A1948B08B0004FFD9 /* ControlCityThemeExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1814384C192B6E4500BCDF2E /* ControlCityThemeExample.cpp */; };
 		222E064B1948B08B0004FFD9 /* SingleCityExampleFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 189971B4192CB77A00E0E9F1 /* SingleCityExampleFactory.cpp */; };
@@ -159,69 +172,8 @@
 		222E06991948B08B0004FFD9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7EE481F516836F370006E99B /* InfoPlist.strings */; };
 		222E069A1948B08B0004FFD9 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4820C1683713B0006E99B /* MainStoryboard_iPhone.storyboard */; };
 		222E069B1948B08B0004FFD9 /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4820F168371460006E99B /* MainStoryboard_iPad.storyboard */; };
-		222E069C1948B08B0004FFD9 /* SanFrancisco_Vehicles.pod in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4827816847E7C0006E99B /* SanFrancisco_Vehicles.pod */; };
-		222E069D1948B08B0004FFD9 /* AppIcone_iPad_72X72.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4829216847E7C0006E99B /* AppIcone_iPad_72X72.png */; };
-		222E069E1948B08B0004FFD9 /* AppIcone_iPad_Retina_144X144.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4829316847E7C0006E99B /* AppIcone_iPad_Retina_144X144.png */; };
-		222E069F1948B08B0004FFD9 /* AppIcone_iPhone_57X57.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4829416847E7C0006E99B /* AppIcone_iPhone_57X57.png */; };
-		222E06A01948B08B0004FFD9 /* BoxCharacter.pod in Resources */ = {isa = PBXBuildFile; fileRef = 5660954718B3BCF00090B857 /* BoxCharacter.pod */; };
-		222E06A11948B08B0004FFD9 /* AppIcone_iPhone_Retina_114X114.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4829516847E7C0006E99B /* AppIcone_iPhone_Retina_114X114.png */; };
-		222E06A21948B08B0004FFD9 /* Default-Landscape@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4829616847E7C0006E99B /* Default-Landscape@2x~ipad.png */; };
-		222E06A31948B08B0004FFD9 /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4829716847E7C0006E99B /* Default-Landscape~ipad.png */; };
-		222E06A41948B08B0004FFD9 /* Default-Portrait@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4829816847E7C0006E99B /* Default-Portrait@2x~ipad.png */; };
-		222E06A51948B08B0004FFD9 /* Default-Portrait~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4829916847E7C0006E99B /* Default-Portrait~ipad.png */; };
-		222E06A61948B08B0004FFD9 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4829A16847E7C0006E99B /* Default.png */; };
-		222E06A71948B08B0004FFD9 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4829B16847E7C0006E99B /* Default@2x.png */; };
-		222E06A81948B08B0004FFD9 /* occupied_cells.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4829C16847E7C0006E99B /* occupied_cells.txt */; };
-		222E06A91948B08B0004FFD9 /* FrankBold50_A8_icons.fnt in Resources */ = {isa = PBXBuildFile; fileRef = E03F3E49184E43BD002FF534 /* FrankBold50_A8_icons.fnt */; };
-		222E06AA1948B08B0004FFD9 /* placeholder_no_data.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7ED145961820212A0018218E /* placeholder_no_data.pvr */; };
-		222E06AB1948B08B0004FFD9 /* SanFrancisco_Vehicles.pod in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482B916847E7C0006E99B /* SanFrancisco_Vehicles.pod */; };
-		222E06AC1948B08B0004FFD9 /* alpha_disc_material.png in Resources */ = {isa = PBXBuildFile; fileRef = 59C09E61189BCAF700CC3751 /* alpha_disc_material.png */; };
-		222E06AD1948B08B0004FFD9 /* alpha_material.png in Resources */ = {isa = PBXBuildFile; fileRef = 59C09E62189BCAF700CC3751 /* alpha_material.png */; };
-		222E06AE1948B08B0004FFD9 /* sanfrancisco_vehicles_alpha.POD in Resources */ = {isa = PBXBuildFile; fileRef = 59C09E63189BCAF700CC3751 /* sanfrancisco_vehicles_alpha.POD */; };
-		222E06AF1948B08B0004FFD9 /* FrankBold50_A8_icons_0.png in Resources */ = {isa = PBXBuildFile; fileRef = E03F3E48184E43BD002FF534 /* FrankBold50_A8_icons_0.png */; };
-		222E06B01948B08B0004FFD9 /* Vehicles_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482F016847E7C0006E99B /* Vehicles_01.pvr */; };
-		222E06B11948B08B0004FFD9 /* placeholder.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 1860B65B16CA65D90004A39D /* placeholder.pvr */; };
-		222E06B21948B08B0004FFD9 /* ldn_trains_01.pod in Resources */ = {isa = PBXBuildFile; fileRef = 2264D692177DA5870016C3ED /* ldn_trains_01.pod */; };
-		222E06B31948B08B0004FFD9 /* BoxCharacter.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 5660954818B3BCF00090B857 /* BoxCharacter.pvr */; };
-		222E06B41948B08B0004FFD9 /* ldn_trains_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 2264D693177DA5870016C3ED /* ldn_trains_01.pvr */; };
-		222E06B51948B08B0004FFD9 /* ldn_trains_night_01.pod in Resources */ = {isa = PBXBuildFile; fileRef = 7E43D7D9179434D400101629 /* ldn_trains_night_01.pod */; };
-		222E06B61948B08B0004FFD9 /* ldn_trains_Night_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7E43D7DA179434D400101629 /* ldn_trains_Night_01.pvr */; };
-		222E06B71948B08B0004FFD9 /* sf_planes_01.pod in Resources */ = {isa = PBXBuildFile; fileRef = 7E43D7DB179434D400101629 /* sf_planes_01.pod */; };
-		222E06B81948B08B0004FFD9 /* sf_planes_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7E43D7DC179434D400101629 /* sf_planes_01.pvr */; };
-		222E06B91948B08B0004FFD9 /* sf_planes_night_01.pod in Resources */ = {isa = PBXBuildFile; fileRef = 7E43D7DD179434D400101629 /* sf_planes_night_01.pod */; };
-		222E06BA1948B08B0004FFD9 /* sf_planes_night_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7E43D7DE179434D400101629 /* sf_planes_night_01.pvr */; };
-		222E06BB1948B08B0004FFD9 /* sf_vehicles_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7E43D7DF179434D400101629 /* sf_vehicles_01.pvr */; };
-		222E06BC1948B08B0004FFD9 /* sf_vehicles_Night_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7E43D7E0179434D400101629 /* sf_vehicles_Night_01.pvr */; };
-		222E06BD1948B08B0004FFD9 /* Vehicles_SF_Day.pod in Resources */ = {isa = PBXBuildFile; fileRef = 7E43D7E1179434D400101629 /* Vehicles_SF_Day.pod */; };
-		222E06BE1948B08B0004FFD9 /* Vehicles_SF_Night.pod in Resources */ = {isa = PBXBuildFile; fileRef = 7E43D7E2179434D400101629 /* Vehicles_SF_Night.pod */; };
-		222E06BF1948B08B0004FFD9 /* Test_ROBOT_ARM.pod in Resources */ = {isa = PBXBuildFile; fileRef = 1825103A17AFD5AD00251651 /* Test_ROBOT_ARM.pod */; };
-		222E06C01948B08B0004FFD9 /* tex_arm.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 1825103B17AFD5AD00251651 /* tex_arm.pvr */; };
-		222E06C11948B08B0004FFD9 /* tex_base.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 1825103C17AFD5AD00251651 /* tex_base.pvr */; };
-		222E06C21948B08B0004FFD9 /* recce_trams.pod in Resources */ = {isa = PBXBuildFile; fileRef = 18EC760517BA421E0011EEE6 /* recce_trams.pod */; };
-		222E06C31948B08B0004FFD9 /* recce_trams.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 18EC760617BA421E0011EEE6 /* recce_trams.pvr */; };
-		222E06C41948B08B0004FFD9 /* recce_trams_night.pod in Resources */ = {isa = PBXBuildFile; fileRef = 18915BD217C7AF86005F24AB /* recce_trams_night.pod */; };
-		222E06C51948B08B0004FFD9 /* PinIconTexturePage.png in Resources */ = {isa = PBXBuildFile; fileRef = 59A943C0183A5CE2000AB7BD /* PinIconTexturePage.png */; };
 		222E06CD1948B0B70004FFD9 /* libapps-on-maps-cpp11-sim.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 222E06CB1948B0B70004FFD9 /* libapps-on-maps-cpp11-sim.a */; };
 		222E06CE1948B0B70004FFD9 /* libapps-on-maps-cpp11.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 222E06CC1948B0B70004FFD9 /* libapps-on-maps-cpp11.a */; };
-		2264D694177DA5870016C3ED /* ldn_trains_01.pod in Resources */ = {isa = PBXBuildFile; fileRef = 2264D692177DA5870016C3ED /* ldn_trains_01.pod */; };
-		2264D695177DA5870016C3ED /* ldn_trains_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 2264D693177DA5870016C3ED /* ldn_trains_01.pvr */; };
-		5660954918B3BCF00090B857 /* BoxCharacter.pod in Resources */ = {isa = PBXBuildFile; fileRef = 5660954718B3BCF00090B857 /* BoxCharacter.pod */; };
-		5660954A18B3BCF00090B857 /* BoxCharacter.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 5660954818B3BCF00090B857 /* BoxCharacter.pvr */; };
-		59A943C1183A5CE2000AB7BD /* PinIconTexturePage.png in Resources */ = {isa = PBXBuildFile; fileRef = 59A943C0183A5CE2000AB7BD /* PinIconTexturePage.png */; };
-		59C09E64189BCAF700CC3751 /* alpha_disc_material.png in Resources */ = {isa = PBXBuildFile; fileRef = 59C09E61189BCAF700CC3751 /* alpha_disc_material.png */; };
-		59C09E65189BCAF700CC3751 /* alpha_material.png in Resources */ = {isa = PBXBuildFile; fileRef = 59C09E62189BCAF700CC3751 /* alpha_material.png */; };
-		59C09E66189BCAF700CC3751 /* sanfrancisco_vehicles_alpha.POD in Resources */ = {isa = PBXBuildFile; fileRef = 59C09E63189BCAF700CC3751 /* sanfrancisco_vehicles_alpha.POD */; };
-		7E43D7E3179434D400101629 /* ldn_trains_night_01.pod in Resources */ = {isa = PBXBuildFile; fileRef = 7E43D7D9179434D400101629 /* ldn_trains_night_01.pod */; };
-		7E43D7E4179434D400101629 /* ldn_trains_Night_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7E43D7DA179434D400101629 /* ldn_trains_Night_01.pvr */; };
-		7E43D7E5179434D400101629 /* sf_planes_01.pod in Resources */ = {isa = PBXBuildFile; fileRef = 7E43D7DB179434D400101629 /* sf_planes_01.pod */; };
-		7E43D7E6179434D400101629 /* sf_planes_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7E43D7DC179434D400101629 /* sf_planes_01.pvr */; };
-		7E43D7E7179434D400101629 /* sf_planes_night_01.pod in Resources */ = {isa = PBXBuildFile; fileRef = 7E43D7DD179434D400101629 /* sf_planes_night_01.pod */; };
-		7E43D7E8179434D400101629 /* sf_planes_night_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7E43D7DE179434D400101629 /* sf_planes_night_01.pvr */; };
-		7E43D7E9179434D400101629 /* sf_vehicles_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7E43D7DF179434D400101629 /* sf_vehicles_01.pvr */; };
-		7E43D7EA179434D400101629 /* sf_vehicles_Night_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7E43D7E0179434D400101629 /* sf_vehicles_Night_01.pvr */; };
-		7E43D7EB179434D400101629 /* Vehicles_SF_Day.pod in Resources */ = {isa = PBXBuildFile; fileRef = 7E43D7E1179434D400101629 /* Vehicles_SF_Day.pod */; };
-		7E43D7EC179434D400101629 /* Vehicles_SF_Night.pod in Resources */ = {isa = PBXBuildFile; fileRef = 7E43D7E2179434D400101629 /* Vehicles_SF_Night.pod */; };
-		7ED145971820212A0018218E /* placeholder_no_data.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7ED145961820212A0018218E /* placeholder_no_data.pvr */; };
 		7EE481EB16836F370006E99B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE481EA16836F370006E99B /* UIKit.framework */; };
 		7EE481ED16836F370006E99B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE481EC16836F370006E99B /* Foundation.framework */; };
 		7EE481EF16836F370006E99B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE481EE16836F370006E99B /* CoreGraphics.framework */; };
@@ -236,23 +188,7 @@
 		7EE48254168477600006E99B /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE48252168477510006E99B /* SystemConfiguration.framework */; };
 		7EE48256168477A80006E99B /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE48255168477A80006E99B /* MobileCoreServices.framework */; };
 		7EE48258168477CB0006E99B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE48257168477CB0006E99B /* libz.dylib */; };
-		7EE4830E16847E7C0006E99B /* SanFrancisco_Vehicles.pod in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4827816847E7C0006E99B /* SanFrancisco_Vehicles.pod */; };
-		7EE4832716847E7C0006E99B /* AppIcone_iPad_72X72.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4829216847E7C0006E99B /* AppIcone_iPad_72X72.png */; };
-		7EE4832816847E7C0006E99B /* AppIcone_iPad_Retina_144X144.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4829316847E7C0006E99B /* AppIcone_iPad_Retina_144X144.png */; };
-		7EE4832916847E7C0006E99B /* AppIcone_iPhone_57X57.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4829416847E7C0006E99B /* AppIcone_iPhone_57X57.png */; };
-		7EE4832A16847E7C0006E99B /* AppIcone_iPhone_Retina_114X114.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4829516847E7C0006E99B /* AppIcone_iPhone_Retina_114X114.png */; };
-		7EE4832B16847E7C0006E99B /* Default-Landscape@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4829616847E7C0006E99B /* Default-Landscape@2x~ipad.png */; };
-		7EE4832C16847E7C0006E99B /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4829716847E7C0006E99B /* Default-Landscape~ipad.png */; };
-		7EE4832D16847E7C0006E99B /* Default-Portrait@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4829816847E7C0006E99B /* Default-Portrait@2x~ipad.png */; };
-		7EE4832E16847E7C0006E99B /* Default-Portrait~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4829916847E7C0006E99B /* Default-Portrait~ipad.png */; };
-		7EE4832F16847E7C0006E99B /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4829A16847E7C0006E99B /* Default.png */; };
-		7EE4833016847E7C0006E99B /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4829B16847E7C0006E99B /* Default@2x.png */; };
-		7EE4833116847E7C0006E99B /* occupied_cells.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4829C16847E7C0006E99B /* occupied_cells.txt */; };
-		7EE4834D16847E7C0006E99B /* SanFrancisco_Vehicles.pod in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482B916847E7C0006E99B /* SanFrancisco_Vehicles.pod */; };
-		7EE4838416847E7C0006E99B /* Vehicles_01.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 7EE482F016847E7C0006E99B /* Vehicles_01.pvr */; };
 		7EF5D8651737F9A40049D787 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EF5D8641737F9A40049D787 /* CoreLocation.framework */; };
-		E03F3E4A184E43BD002FF534 /* FrankBold50_A8_icons_0.png in Resources */ = {isa = PBXBuildFile; fileRef = E03F3E48184E43BD002FF534 /* FrankBold50_A8_icons_0.png */; };
-		E03F3E4B184E43BD002FF534 /* FrankBold50_A8_icons.fnt in Resources */ = {isa = PBXBuildFile; fileRef = E03F3E49184E43BD002FF534 /* FrankBold50_A8_icons.fnt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -318,11 +254,6 @@
 		181438C4192B6EAE00BCDF2E /* IUIActionHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IUIActionHandler.h; sourceTree = "<group>"; };
 		181438C5192B6EAE00BCDF2E /* UIActionHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIActionHandler.h; sourceTree = "<group>"; };
 		181438C6192B6FEC00BCDF2E /* UIHelpers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UIHelpers.h; sourceTree = "<group>"; };
-		1825103A17AFD5AD00251651 /* Test_ROBOT_ARM.pod */ = {isa = PBXFileReference; lastKnownFileType = file; path = Test_ROBOT_ARM.pod; sourceTree = "<group>"; };
-		1825103B17AFD5AD00251651 /* tex_arm.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = tex_arm.pvr; sourceTree = "<group>"; };
-		1825103C17AFD5AD00251651 /* tex_base.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = tex_base.pvr; sourceTree = "<group>"; };
-		1860B65B16CA65D90004A39D /* placeholder.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = placeholder.pvr; sourceTree = "<group>"; };
-		18915BD217C7AF86005F24AB /* recce_trams_night.pod */ = {isa = PBXFileReference; lastKnownFileType = file; path = recce_trams_night.pod; sourceTree = "<group>"; };
 		18997164192C8E9900E0E9F1 /* IExampleFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IExampleFactory.h; sourceTree = "<group>"; };
 		18997168192C947D00E0E9F1 /* CameraTransitionExampleFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CameraTransitionExampleFactory.cpp; sourceTree = "<group>"; };
 		18997169192C947D00E0E9F1 /* CameraTransitionExampleFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraTransitionExampleFactory.h; sourceTree = "<group>"; };
@@ -395,34 +326,33 @@
 		18AB38F5192B729F00F15546 /* Main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Main.m; sourceTree = "<group>"; };
 		18AB38F6192B729F00F15546 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		18AB38F7192B729F00F15546 /* ViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewController.mm; sourceTree = "<group>"; };
+		18D1D343194A057200FAA1B9 /* FrankBold50_A8_icons_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FrankBold50_A8_icons_0.png; sourceTree = "<group>"; };
+		18D1D344194A057200FAA1B9 /* FrankBold50_A8_icons.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = FrankBold50_A8_icons.fnt; sourceTree = "<group>"; };
+		18D1D346194A057200FAA1B9 /* load_model_example */ = {isa = PBXFileReference; lastKnownFileType = folder; path = load_model_example; sourceTree = "<group>"; };
+		18D1D347194A057200FAA1B9 /* pin_over_model_example */ = {isa = PBXFileReference; lastKnownFileType = folder; path = pin_over_model_example; sourceTree = "<group>"; };
+		18D1D348194A057200FAA1B9 /* pins_example */ = {isa = PBXFileReference; lastKnownFileType = folder; path = pins_example; sourceTree = "<group>"; };
+		18D1D34A194A057200FAA1B9 /* placeholder.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = placeholder.pvr; sourceTree = "<group>"; };
+		18D1D34B194A057200FAA1B9 /* pod_animation_example */ = {isa = PBXFileReference; lastKnownFileType = folder; path = pod_animation_example; sourceTree = "<group>"; };
+		18D1D34C194A057200FAA1B9 /* route_simulation_animation_example */ = {isa = PBXFileReference; lastKnownFileType = folder; path = route_simulation_animation_example; sourceTree = "<group>"; };
+		18D1D34D194A057200FAA1B9 /* route_simulation_example */ = {isa = PBXFileReference; lastKnownFileType = folder; path = route_simulation_example; sourceTree = "<group>"; };
+		18D1D365194A0F7D00FAA1B9 /* AppIcone_iPad_72X72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AppIcone_iPad_72X72.png; sourceTree = "<group>"; };
+		18D1D366194A0F7D00FAA1B9 /* AppIcone_iPad_Retina_144X144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AppIcone_iPad_Retina_144X144.png; sourceTree = "<group>"; };
+		18D1D367194A0F7D00FAA1B9 /* AppIcone_iPhone_57X57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AppIcone_iPhone_57X57.png; sourceTree = "<group>"; };
+		18D1D368194A0F7D00FAA1B9 /* AppIcone_iPhone_Retina_114X114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AppIcone_iPhone_Retina_114X114.png; sourceTree = "<group>"; };
+		18D1D369194A0F7D00FAA1B9 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		18D1D36A194A0F7D00FAA1B9 /* Default-Landscape@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape@2x~ipad.png"; sourceTree = "<group>"; };
+		18D1D36B194A0F7D00FAA1B9 /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape~ipad.png"; sourceTree = "<group>"; };
+		18D1D36C194A0F7D00FAA1B9 /* Default-Portrait@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait@2x~ipad.png"; sourceTree = "<group>"; };
+		18D1D36D194A0F7D00FAA1B9 /* Default-Portrait~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait~ipad.png"; sourceTree = "<group>"; };
+		18D1D36E194A0F7D00FAA1B9 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		18D1D36F194A0F7D00FAA1B9 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		18E6277D192F833A00B31DCE /* iOSExampleControllerView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = iOSExampleControllerView.mm; sourceTree = "<group>"; };
 		18E6277E192F833A00B31DCE /* iOSExampleControllerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iOSExampleControllerView.h; sourceTree = "<group>"; };
 		18E62780192FAD6200B31DCE /* IExampleControllerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IExampleControllerView.h; sourceTree = "<group>"; };
-		18EC760517BA421E0011EEE6 /* recce_trams.pod */ = {isa = PBXFileReference; lastKnownFileType = file; path = recce_trams.pod; sourceTree = "<group>"; };
-		18EC760617BA421E0011EEE6 /* recce_trams.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = recce_trams.pvr; sourceTree = "<group>"; };
 		222E06C91948B08B0004FFD9 /* ExampleAppCpp11.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExampleAppCpp11.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		222E06CB1948B0B70004FFD9 /* libapps-on-maps-cpp11-sim.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libapps-on-maps-cpp11-sim.a"; path = "Include/libapps-on-maps-cpp11-sim.a"; sourceTree = "<group>"; };
 		222E06CC1948B0B70004FFD9 /* libapps-on-maps-cpp11.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libapps-on-maps-cpp11.a"; path = "Include/libapps-on-maps-cpp11.a"; sourceTree = "<group>"; };
-		2264D692177DA5870016C3ED /* ldn_trains_01.pod */ = {isa = PBXFileReference; lastKnownFileType = file; path = ldn_trains_01.pod; sourceTree = "<group>"; };
-		2264D693177DA5870016C3ED /* ldn_trains_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = ldn_trains_01.pvr; sourceTree = "<group>"; };
-		5660954718B3BCF00090B857 /* BoxCharacter.pod */ = {isa = PBXFileReference; lastKnownFileType = file; name = BoxCharacter.pod; path = CharacterAnimation/BoxCharacter.pod; sourceTree = "<group>"; };
-		5660954818B3BCF00090B857 /* BoxCharacter.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; name = BoxCharacter.pvr; path = CharacterAnimation/BoxCharacter.pvr; sourceTree = "<group>"; };
-		59A943C0183A5CE2000AB7BD /* PinIconTexturePage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PinIconTexturePage.png; sourceTree = "<group>"; };
-		59C09E61189BCAF700CC3751 /* alpha_disc_material.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = alpha_disc_material.png; sourceTree = "<group>"; };
-		59C09E62189BCAF700CC3751 /* alpha_material.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = alpha_material.png; sourceTree = "<group>"; };
-		59C09E63189BCAF700CC3751 /* sanfrancisco_vehicles_alpha.POD */ = {isa = PBXFileReference; lastKnownFileType = file; path = sanfrancisco_vehicles_alpha.POD; sourceTree = "<group>"; };
-		7E43D7D9179434D400101629 /* ldn_trains_night_01.pod */ = {isa = PBXFileReference; lastKnownFileType = file; path = ldn_trains_night_01.pod; sourceTree = "<group>"; };
-		7E43D7DA179434D400101629 /* ldn_trains_Night_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = ldn_trains_Night_01.pvr; sourceTree = "<group>"; };
-		7E43D7DB179434D400101629 /* sf_planes_01.pod */ = {isa = PBXFileReference; lastKnownFileType = file; path = sf_planes_01.pod; sourceTree = "<group>"; };
-		7E43D7DC179434D400101629 /* sf_planes_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = sf_planes_01.pvr; sourceTree = "<group>"; };
-		7E43D7DD179434D400101629 /* sf_planes_night_01.pod */ = {isa = PBXFileReference; lastKnownFileType = file; path = sf_planes_night_01.pod; sourceTree = "<group>"; };
-		7E43D7DE179434D400101629 /* sf_planes_night_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = sf_planes_night_01.pvr; sourceTree = "<group>"; };
-		7E43D7DF179434D400101629 /* sf_vehicles_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = sf_vehicles_01.pvr; sourceTree = "<group>"; };
-		7E43D7E0179434D400101629 /* sf_vehicles_Night_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = sf_vehicles_Night_01.pvr; sourceTree = "<group>"; };
-		7E43D7E1179434D400101629 /* Vehicles_SF_Day.pod */ = {isa = PBXFileReference; lastKnownFileType = file; path = Vehicles_SF_Day.pod; sourceTree = "<group>"; };
-		7E43D7E2179434D400101629 /* Vehicles_SF_Night.pod */ = {isa = PBXFileReference; lastKnownFileType = file; path = Vehicles_SF_Night.pod; sourceTree = "<group>"; };
 		7E75EE1D16848B8A00BCA283 /* libapps-on-maps-sim.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libapps-on-maps-sim.a"; path = "Include/libapps-on-maps-sim.a"; sourceTree = "<group>"; };
-		7ED145961820212A0018218E /* placeholder_no_data.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = placeholder_no_data.pvr; sourceTree = "<group>"; };
 		7EE481E616836F370006E99B /* ExampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7EE481EA16836F370006E99B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		7EE481EC16836F370006E99B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -441,23 +371,7 @@
 		7EE48252168477510006E99B /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		7EE48255168477A80006E99B /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		7EE48257168477CB0006E99B /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		7EE4827816847E7C0006E99B /* SanFrancisco_Vehicles.pod */ = {isa = PBXFileReference; lastKnownFileType = file; path = SanFrancisco_Vehicles.pod; sourceTree = "<group>"; };
-		7EE4829216847E7C0006E99B /* AppIcone_iPad_72X72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AppIcone_iPad_72X72.png; sourceTree = "<group>"; };
-		7EE4829316847E7C0006E99B /* AppIcone_iPad_Retina_144X144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AppIcone_iPad_Retina_144X144.png; sourceTree = "<group>"; };
-		7EE4829416847E7C0006E99B /* AppIcone_iPhone_57X57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AppIcone_iPhone_57X57.png; sourceTree = "<group>"; };
-		7EE4829516847E7C0006E99B /* AppIcone_iPhone_Retina_114X114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AppIcone_iPhone_Retina_114X114.png; sourceTree = "<group>"; };
-		7EE4829616847E7C0006E99B /* Default-Landscape@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape@2x~ipad.png"; sourceTree = "<group>"; };
-		7EE4829716847E7C0006E99B /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape~ipad.png"; sourceTree = "<group>"; };
-		7EE4829816847E7C0006E99B /* Default-Portrait@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait@2x~ipad.png"; sourceTree = "<group>"; };
-		7EE4829916847E7C0006E99B /* Default-Portrait~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait~ipad.png"; sourceTree = "<group>"; };
-		7EE4829A16847E7C0006E99B /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
-		7EE4829B16847E7C0006E99B /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
-		7EE4829C16847E7C0006E99B /* occupied_cells.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = occupied_cells.txt; sourceTree = "<group>"; };
-		7EE482B916847E7C0006E99B /* SanFrancisco_Vehicles.pod */ = {isa = PBXFileReference; lastKnownFileType = file; path = SanFrancisco_Vehicles.pod; sourceTree = "<group>"; };
-		7EE482F016847E7C0006E99B /* Vehicles_01.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Vehicles_01.pvr; sourceTree = "<group>"; };
 		7EF5D8641737F9A40049D787 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		E03F3E48184E43BD002FF534 /* FrankBold50_A8_icons_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FrankBold50_A8_icons_0.png; sourceTree = "<group>"; };
-		E03F3E49184E43BD002FF534 /* FrankBold50_A8_icons.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = FrankBold50_A8_icons.fnt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -914,6 +828,35 @@
 			path = RouteSimulation;
 			sourceTree = "<group>";
 		};
+		18D1D363194A0EA000FAA1B9 /* platform_assets */ = {
+			isa = PBXGroup;
+			children = (
+				18D1D364194A0F7D00FAA1B9 /* Icons */,
+				18D1D34A194A057200FAA1B9 /* placeholder.pvr */,
+				18D1D343194A057200FAA1B9 /* FrankBold50_A8_icons_0.png */,
+				18D1D344194A057200FAA1B9 /* FrankBold50_A8_icons.fnt */,
+			);
+			name = platform_assets;
+			sourceTree = "<group>";
+		};
+		18D1D364194A0F7D00FAA1B9 /* Icons */ = {
+			isa = PBXGroup;
+			children = (
+				18D1D365194A0F7D00FAA1B9 /* AppIcone_iPad_72X72.png */,
+				18D1D366194A0F7D00FAA1B9 /* AppIcone_iPad_Retina_144X144.png */,
+				18D1D367194A0F7D00FAA1B9 /* AppIcone_iPhone_57X57.png */,
+				18D1D368194A0F7D00FAA1B9 /* AppIcone_iPhone_Retina_114X114.png */,
+				18D1D369194A0F7D00FAA1B9 /* Default-568h@2x.png */,
+				18D1D36A194A0F7D00FAA1B9 /* Default-Landscape@2x~ipad.png */,
+				18D1D36B194A0F7D00FAA1B9 /* Default-Landscape~ipad.png */,
+				18D1D36C194A0F7D00FAA1B9 /* Default-Portrait@2x~ipad.png */,
+				18D1D36D194A0F7D00FAA1B9 /* Default-Portrait~ipad.png */,
+				18D1D36E194A0F7D00FAA1B9 /* Default.png */,
+				18D1D36F194A0F7D00FAA1B9 /* Default@2x.png */,
+			);
+			path = Icons;
+			sourceTree = "<group>";
+		};
 		7EE481DB16836F360006E99B = {
 			isa = PBXGroup;
 			children = (
@@ -981,90 +924,15 @@
 		7EE4825B16847E7C0006E99B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				5660954718B3BCF00090B857 /* BoxCharacter.pod */,
-				5660954818B3BCF00090B857 /* BoxCharacter.pvr */,
-				59A943C0183A5CE2000AB7BD /* PinIconTexturePage.png */,
-				1825103A17AFD5AD00251651 /* Test_ROBOT_ARM.pod */,
-				1825103B17AFD5AD00251651 /* tex_arm.pvr */,
-				1825103C17AFD5AD00251651 /* tex_base.pvr */,
-				7EE4825C16847E7C0006E99B /* Common */,
-				7EE4829116847E7C0006E99B /* Icons */,
-				7EE4829C16847E7C0006E99B /* occupied_cells.txt */,
-				7EE4829D16847E7C0006E99B /* San Fran */,
+				18D1D363194A0EA000FAA1B9 /* platform_assets */,
+				18D1D346194A057200FAA1B9 /* load_model_example */,
+				18D1D347194A057200FAA1B9 /* pin_over_model_example */,
+				18D1D348194A057200FAA1B9 /* pins_example */,
+				18D1D34B194A057200FAA1B9 /* pod_animation_example */,
+				18D1D34C194A057200FAA1B9 /* route_simulation_animation_example */,
+				18D1D34D194A057200FAA1B9 /* route_simulation_example */,
 			);
 			path = Resources;
-			sourceTree = "<group>";
-		};
-		7EE4825C16847E7C0006E99B /* Common */ = {
-			isa = PBXGroup;
-			children = (
-				7EE4825D16847E7C0006E99B /* Fonts */,
-				7EE4826116847E7C0006E99B /* Textures */,
-			);
-			path = Common;
-			sourceTree = "<group>";
-		};
-		7EE4825D16847E7C0006E99B /* Fonts */ = {
-			isa = PBXGroup;
-			children = (
-				E03F3E48184E43BD002FF534 /* FrankBold50_A8_icons_0.png */,
-				E03F3E49184E43BD002FF534 /* FrankBold50_A8_icons.fnt */,
-			);
-			path = Fonts;
-			sourceTree = "<group>";
-		};
-		7EE4826116847E7C0006E99B /* Textures */ = {
-			isa = PBXGroup;
-			children = (
-				18915BD217C7AF86005F24AB /* recce_trams_night.pod */,
-				18EC760517BA421E0011EEE6 /* recce_trams.pod */,
-				18EC760617BA421E0011EEE6 /* recce_trams.pvr */,
-				7E43D7D9179434D400101629 /* ldn_trains_night_01.pod */,
-				7E43D7DA179434D400101629 /* ldn_trains_Night_01.pvr */,
-				7E43D7DB179434D400101629 /* sf_planes_01.pod */,
-				7E43D7DC179434D400101629 /* sf_planes_01.pvr */,
-				7E43D7DD179434D400101629 /* sf_planes_night_01.pod */,
-				7E43D7DE179434D400101629 /* sf_planes_night_01.pvr */,
-				7E43D7DF179434D400101629 /* sf_vehicles_01.pvr */,
-				7E43D7E0179434D400101629 /* sf_vehicles_Night_01.pvr */,
-				7E43D7E1179434D400101629 /* Vehicles_SF_Day.pod */,
-				7E43D7E2179434D400101629 /* Vehicles_SF_Night.pod */,
-				2264D692177DA5870016C3ED /* ldn_trains_01.pod */,
-				2264D693177DA5870016C3ED /* ldn_trains_01.pvr */,
-				1860B65B16CA65D90004A39D /* placeholder.pvr */,
-				7ED145961820212A0018218E /* placeholder_no_data.pvr */,
-				7EE4827816847E7C0006E99B /* SanFrancisco_Vehicles.pod */,
-			);
-			path = Textures;
-			sourceTree = "<group>";
-		};
-		7EE4829116847E7C0006E99B /* Icons */ = {
-			isa = PBXGroup;
-			children = (
-				7EE4829216847E7C0006E99B /* AppIcone_iPad_72X72.png */,
-				7EE4829316847E7C0006E99B /* AppIcone_iPad_Retina_144X144.png */,
-				7EE4829416847E7C0006E99B /* AppIcone_iPhone_57X57.png */,
-				7EE4829516847E7C0006E99B /* AppIcone_iPhone_Retina_114X114.png */,
-				7EE4829616847E7C0006E99B /* Default-Landscape@2x~ipad.png */,
-				7EE4829716847E7C0006E99B /* Default-Landscape~ipad.png */,
-				7EE4829816847E7C0006E99B /* Default-Portrait@2x~ipad.png */,
-				7EE4829916847E7C0006E99B /* Default-Portrait~ipad.png */,
-				7EE4829A16847E7C0006E99B /* Default.png */,
-				7EE4829B16847E7C0006E99B /* Default@2x.png */,
-			);
-			path = Icons;
-			sourceTree = "<group>";
-		};
-		7EE4829D16847E7C0006E99B /* San Fran */ = {
-			isa = PBXGroup;
-			children = (
-				59C09E61189BCAF700CC3751 /* alpha_disc_material.png */,
-				59C09E62189BCAF700CC3751 /* alpha_material.png */,
-				59C09E63189BCAF700CC3751 /* sanfrancisco_vehicles_alpha.POD */,
-				7EE482B916847E7C0006E99B /* SanFrancisco_Vehicles.pod */,
-				7EE482F016847E7C0006E99B /* Vehicles_01.pvr */,
-			);
-			path = "San Fran";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1139,48 +1007,6 @@
 				222E06991948B08B0004FFD9 /* InfoPlist.strings in Resources */,
 				222E069A1948B08B0004FFD9 /* MainStoryboard_iPhone.storyboard in Resources */,
 				222E069B1948B08B0004FFD9 /* MainStoryboard_iPad.storyboard in Resources */,
-				222E069C1948B08B0004FFD9 /* SanFrancisco_Vehicles.pod in Resources */,
-				222E069D1948B08B0004FFD9 /* AppIcone_iPad_72X72.png in Resources */,
-				222E069E1948B08B0004FFD9 /* AppIcone_iPad_Retina_144X144.png in Resources */,
-				222E069F1948B08B0004FFD9 /* AppIcone_iPhone_57X57.png in Resources */,
-				222E06A01948B08B0004FFD9 /* BoxCharacter.pod in Resources */,
-				222E06A11948B08B0004FFD9 /* AppIcone_iPhone_Retina_114X114.png in Resources */,
-				222E06A21948B08B0004FFD9 /* Default-Landscape@2x~ipad.png in Resources */,
-				222E06A31948B08B0004FFD9 /* Default-Landscape~ipad.png in Resources */,
-				222E06A41948B08B0004FFD9 /* Default-Portrait@2x~ipad.png in Resources */,
-				222E06A51948B08B0004FFD9 /* Default-Portrait~ipad.png in Resources */,
-				222E06A61948B08B0004FFD9 /* Default.png in Resources */,
-				222E06A71948B08B0004FFD9 /* Default@2x.png in Resources */,
-				222E06A81948B08B0004FFD9 /* occupied_cells.txt in Resources */,
-				222E06A91948B08B0004FFD9 /* FrankBold50_A8_icons.fnt in Resources */,
-				222E06AA1948B08B0004FFD9 /* placeholder_no_data.pvr in Resources */,
-				222E06AB1948B08B0004FFD9 /* SanFrancisco_Vehicles.pod in Resources */,
-				222E06AC1948B08B0004FFD9 /* alpha_disc_material.png in Resources */,
-				222E06AD1948B08B0004FFD9 /* alpha_material.png in Resources */,
-				222E06AE1948B08B0004FFD9 /* sanfrancisco_vehicles_alpha.POD in Resources */,
-				222E06AF1948B08B0004FFD9 /* FrankBold50_A8_icons_0.png in Resources */,
-				222E06B01948B08B0004FFD9 /* Vehicles_01.pvr in Resources */,
-				222E06B11948B08B0004FFD9 /* placeholder.pvr in Resources */,
-				222E06B21948B08B0004FFD9 /* ldn_trains_01.pod in Resources */,
-				222E06B31948B08B0004FFD9 /* BoxCharacter.pvr in Resources */,
-				222E06B41948B08B0004FFD9 /* ldn_trains_01.pvr in Resources */,
-				222E06B51948B08B0004FFD9 /* ldn_trains_night_01.pod in Resources */,
-				222E06B61948B08B0004FFD9 /* ldn_trains_Night_01.pvr in Resources */,
-				222E06B71948B08B0004FFD9 /* sf_planes_01.pod in Resources */,
-				222E06B81948B08B0004FFD9 /* sf_planes_01.pvr in Resources */,
-				222E06B91948B08B0004FFD9 /* sf_planes_night_01.pod in Resources */,
-				222E06BA1948B08B0004FFD9 /* sf_planes_night_01.pvr in Resources */,
-				222E06BB1948B08B0004FFD9 /* sf_vehicles_01.pvr in Resources */,
-				222E06BC1948B08B0004FFD9 /* sf_vehicles_Night_01.pvr in Resources */,
-				222E06BD1948B08B0004FFD9 /* Vehicles_SF_Day.pod in Resources */,
-				222E06BE1948B08B0004FFD9 /* Vehicles_SF_Night.pod in Resources */,
-				222E06BF1948B08B0004FFD9 /* Test_ROBOT_ARM.pod in Resources */,
-				222E06C01948B08B0004FFD9 /* tex_arm.pvr in Resources */,
-				222E06C11948B08B0004FFD9 /* tex_base.pvr in Resources */,
-				222E06C21948B08B0004FFD9 /* recce_trams.pod in Resources */,
-				222E06C31948B08B0004FFD9 /* recce_trams.pvr in Resources */,
-				222E06C41948B08B0004FFD9 /* recce_trams_night.pod in Resources */,
-				222E06C51948B08B0004FFD9 /* PinIconTexturePage.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1190,49 +1016,27 @@
 			files = (
 				7EE481F716836F370006E99B /* InfoPlist.strings in Resources */,
 				7EE4820E1683713B0006E99B /* MainStoryboard_iPhone.storyboard in Resources */,
+				18D1D379194A0F7D00FAA1B9 /* Default.png in Resources */,
 				7EE48211168371460006E99B /* MainStoryboard_iPad.storyboard in Resources */,
-				7EE4830E16847E7C0006E99B /* SanFrancisco_Vehicles.pod in Resources */,
-				7EE4832716847E7C0006E99B /* AppIcone_iPad_72X72.png in Resources */,
-				7EE4832816847E7C0006E99B /* AppIcone_iPad_Retina_144X144.png in Resources */,
-				7EE4832916847E7C0006E99B /* AppIcone_iPhone_57X57.png in Resources */,
-				5660954918B3BCF00090B857 /* BoxCharacter.pod in Resources */,
-				7EE4832A16847E7C0006E99B /* AppIcone_iPhone_Retina_114X114.png in Resources */,
-				7EE4832B16847E7C0006E99B /* Default-Landscape@2x~ipad.png in Resources */,
-				7EE4832C16847E7C0006E99B /* Default-Landscape~ipad.png in Resources */,
-				7EE4832D16847E7C0006E99B /* Default-Portrait@2x~ipad.png in Resources */,
-				7EE4832E16847E7C0006E99B /* Default-Portrait~ipad.png in Resources */,
-				7EE4832F16847E7C0006E99B /* Default.png in Resources */,
-				7EE4833016847E7C0006E99B /* Default@2x.png in Resources */,
-				7EE4833116847E7C0006E99B /* occupied_cells.txt in Resources */,
-				E03F3E4B184E43BD002FF534 /* FrankBold50_A8_icons.fnt in Resources */,
-				7ED145971820212A0018218E /* placeholder_no_data.pvr in Resources */,
-				7EE4834D16847E7C0006E99B /* SanFrancisco_Vehicles.pod in Resources */,
-				59C09E64189BCAF700CC3751 /* alpha_disc_material.png in Resources */,
-				59C09E65189BCAF700CC3751 /* alpha_material.png in Resources */,
-				59C09E66189BCAF700CC3751 /* sanfrancisco_vehicles_alpha.POD in Resources */,
-				E03F3E4A184E43BD002FF534 /* FrankBold50_A8_icons_0.png in Resources */,
-				7EE4838416847E7C0006E99B /* Vehicles_01.pvr in Resources */,
-				1860B65C16CA65D90004A39D /* placeholder.pvr in Resources */,
-				2264D694177DA5870016C3ED /* ldn_trains_01.pod in Resources */,
-				5660954A18B3BCF00090B857 /* BoxCharacter.pvr in Resources */,
-				2264D695177DA5870016C3ED /* ldn_trains_01.pvr in Resources */,
-				7E43D7E3179434D400101629 /* ldn_trains_night_01.pod in Resources */,
-				7E43D7E4179434D400101629 /* ldn_trains_Night_01.pvr in Resources */,
-				7E43D7E5179434D400101629 /* sf_planes_01.pod in Resources */,
-				7E43D7E6179434D400101629 /* sf_planes_01.pvr in Resources */,
-				7E43D7E7179434D400101629 /* sf_planes_night_01.pod in Resources */,
-				7E43D7E8179434D400101629 /* sf_planes_night_01.pvr in Resources */,
-				7E43D7E9179434D400101629 /* sf_vehicles_01.pvr in Resources */,
-				7E43D7EA179434D400101629 /* sf_vehicles_Night_01.pvr in Resources */,
-				7E43D7EB179434D400101629 /* Vehicles_SF_Day.pod in Resources */,
-				7E43D7EC179434D400101629 /* Vehicles_SF_Night.pod in Resources */,
-				1825103D17AFD5AD00251651 /* Test_ROBOT_ARM.pod in Resources */,
-				1825103E17AFD5AD00251651 /* tex_arm.pvr in Resources */,
-				1825103F17AFD5AD00251651 /* tex_base.pvr in Resources */,
-				18EC760717BA421E0011EEE6 /* recce_trams.pod in Resources */,
-				18EC760817BA421E0011EEE6 /* recce_trams.pvr in Resources */,
-				18915BD317C7AF86005F24AB /* recce_trams_night.pod in Resources */,
-				59A943C1183A5CE2000AB7BD /* PinIconTexturePage.png in Resources */,
+				18D1D378194A0F7D00FAA1B9 /* Default-Portrait~ipad.png in Resources */,
+				18D1D35D194A057200FAA1B9 /* route_simulation_animation_example in Resources */,
+				18D1D374194A0F7D00FAA1B9 /* Default-568h@2x.png in Resources */,
+				18D1D35E194A057200FAA1B9 /* route_simulation_example in Resources */,
+				18D1D371194A0F7D00FAA1B9 /* AppIcone_iPad_Retina_144X144.png in Resources */,
+				18D1D35C194A057200FAA1B9 /* pod_animation_example in Resources */,
+				18D1D373194A0F7D00FAA1B9 /* AppIcone_iPhone_Retina_114X114.png in Resources */,
+				18D1D37A194A0F7D00FAA1B9 /* Default@2x.png in Resources */,
+				18D1D372194A0F7D00FAA1B9 /* AppIcone_iPhone_57X57.png in Resources */,
+				18D1D359194A057200FAA1B9 /* pins_example in Resources */,
+				18D1D358194A057200FAA1B9 /* pin_over_model_example in Resources */,
+				18D1D35B194A057200FAA1B9 /* placeholder.pvr in Resources */,
+				18D1D376194A0F7D00FAA1B9 /* Default-Landscape~ipad.png in Resources */,
+				18D1D377194A0F7D00FAA1B9 /* Default-Portrait@2x~ipad.png in Resources */,
+				18D1D375194A0F7D00FAA1B9 /* Default-Landscape@2x~ipad.png in Resources */,
+				18D1D357194A057200FAA1B9 /* load_model_example in Resources */,
+				18D1D355194A057200FAA1B9 /* FrankBold50_A8_icons.fnt in Resources */,
+				18D1D354194A057200FAA1B9 /* FrankBold50_A8_icons_0.png in Resources */,
+				18D1D370194A0F7D00FAA1B9 /* AppIcone_iPad_72X72.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

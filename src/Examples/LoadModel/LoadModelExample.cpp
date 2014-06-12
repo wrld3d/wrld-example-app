@@ -29,7 +29,7 @@ LoadModelExample::LoadModelExample(Eegeo::Rendering::RenderContext& renderContex
 
 void LoadModelExample::Start()
 {
-	m_pModel = Eegeo::Model::CreateFromPODFile("sanfrancisco_vehicles_alpha.POD", m_fileIO, m_renderContext.GetGLState(), &m_textureRequestor, "");
+	m_pModel = Eegeo::Model::CreateFromPODFile("load_model_example/sanfrancisco_vehicles_alpha.POD", m_fileIO, m_renderContext.GetGLState(), &m_textureRequestor, "load_model_example/");
 
 	//the layout of this resource is assumed - a "Vehicles" node should exist
 	Eegeo::Node* parentNode = m_pModel->FindNode("Vehicles");
@@ -48,7 +48,7 @@ void LoadModelExample::Start()
 	}
 
 	// Look up the material for the disc so that we can animate its alpha value.
-	if(!m_pModel->TryGetMaterialByName("alpha_disc_material", m_pDiscMaterial))
+	if(!m_pModel->TryGetMaterialByName("load_model_example/alpha_disc_material", m_pDiscMaterial))
 	{
 		Eegeo_TTY("Failed to find disc material.\n");
 	}

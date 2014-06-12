@@ -41,7 +41,7 @@ PinOverModelExample::PinOverModelExample(
 	,m_nullMat(nullMat)
 	,m_globeCameraStateRestorer(cameraController)
 {
-	textureLoader.LoadTexture(m_pinIconsTexture, "PinIconTexturePage.png", true);
+	textureLoader.LoadTexture(m_pinIconsTexture, "pin_over_model_example/PinIconTexturePage.png", true);
 	Eegeo_ASSERT(m_pinIconsTexture.textureId != 0);
 
 	// This example uses a texture page containing 2 x 2 icons.
@@ -111,7 +111,7 @@ void PinOverModelExample::CreateExamplePins()
 
 void PinOverModelExample::Start()
 {
-	m_pModel = Eegeo::Model::CreateFromPODFile("Test_ROBOT_ARM.pod", m_fileIO, m_renderContext.GetGLState(), &m_textureRequestor, "");
+	m_pModel = Eegeo::Model::CreateFromPODFile("pin_over_model_example/Test_ROBOT_ARM.pod", m_fileIO, m_renderContext.GetGLState(), &m_textureRequestor, "pin_over_model_example/");
 	Eegeo_ASSERT(m_pModel->GetRootNode());
 
 	m_pMyModelRenderable = Eegeo_NEW (MyModelRenderable)(*m_pModel, m_renderContext, m_globalFogging, m_nullMat);

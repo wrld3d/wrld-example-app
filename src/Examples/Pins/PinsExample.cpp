@@ -29,7 +29,7 @@ PinsExample::PinsExample(
 	, m_pPin0(NULL)
 	, m_globeCameraStateRestorer(cameraController)
 {
-	textureLoader.LoadTexture(m_pinIconsTexture, "PinIconTexturePage.png", true);
+	textureLoader.LoadTexture(m_pinIconsTexture, "pins_example/PinIconTexturePage.png", true);
 	Eegeo_ASSERT(m_pinIconsTexture.textureId != 0);
 
 	// This example uses a texture page containing 2 x 2 icons.

@@ -89,8 +89,13 @@ AppHost::AppHost(
 	m_pEnvironmentFlatteningService = new Eegeo::Rendering::EnvironmentFlatteningService();
 
 	std::set<std::string> customApplicationAssetDirectories;
-	customApplicationAssetDirectories.insert("MyAppDataDirectory");
-	customApplicationAssetDirectories.insert("MyAppDataDirectory/MySubDirectory");
+	customApplicationAssetDirectories.insert("load_model_example");
+	customApplicationAssetDirectories.insert("pin_over_model_example");
+	customApplicationAssetDirectories.insert("pins_example");
+	customApplicationAssetDirectories.insert("pins_with_attached_java_ui_example");
+	customApplicationAssetDirectories.insert("pod_animation_example");
+	customApplicationAssetDirectories.insert("route_simulation_example");
+	customApplicationAssetDirectories.insert("route_simulation_animation_example");
 	m_pFileIO = new AndroidFileIO(&nativeState, customApplicationAssetDirectories);
 
 	m_pHttpCache = new AndroidHttpCache(m_pFileIO, "http://d2xvsc8j92rfya.cloudfront.net/");

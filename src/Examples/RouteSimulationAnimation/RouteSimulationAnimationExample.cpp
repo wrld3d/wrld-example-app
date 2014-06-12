@@ -189,7 +189,7 @@ Route* RouteSimulationAnimationExample::BuildRoute()
 
 Eegeo::Model* RouteSimulationAnimationExample::LoadCharacterModel(Eegeo::Node*& pCharacter) const
 {
-	Eegeo::Model* pModel = Eegeo::Model::CreateFromPODFile("BoxCharacter.pod", m_fileIO, m_glState, &m_textureRequestor, "");
+	Eegeo::Model* pModel = Eegeo::Model::CreateFromPODFile("route_simulation_animation_example/BoxCharacter.pod", m_fileIO, m_glState, &m_textureRequestor, "route_simulation_animation_example/");
 	Eegeo_ASSERT(pModel->GetRootNode());
 
 	pCharacter = pModel->GetRootNode();

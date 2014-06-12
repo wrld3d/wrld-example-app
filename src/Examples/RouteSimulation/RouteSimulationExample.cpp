@@ -367,7 +367,7 @@ Eegeo::Model* RouteSimulationExample::LoadModelVehicleNodes(Eegeo::Node*& pVehic
         Eegeo::Node*& pVehicle2,
         Eegeo::Node*& pVehicle3) const
 {
-	Eegeo::Model* pModel = Eegeo::Model::CreateFromPODFile("SanFrancisco_Vehicles.pod", m_fileIO, m_glState, &m_textureRequestor, "");
+	Eegeo::Model* pModel = Eegeo::Model::CreateFromPODFile("route_simulation_example/SanFrancisco_Vehicles.pod", m_fileIO, m_glState, &m_textureRequestor, "route_simulation_example/");
 	Eegeo::Node* parentNode = pModel->FindNode("Vehicles");
 
 	Eegeo_ASSERT(parentNode);
