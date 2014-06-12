@@ -1431,7 +1431,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\\\"$(SRCROOT)/Include\\\"",
-					"/Users/tim/work/mobile-sdk-harness/ios/Include",
 				);
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
@@ -1464,7 +1463,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\\\"$(SRCROOT)/Include\\\"",
-					"/Users/tim/work/mobile-sdk-harness/ios/Include",
 				);
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
