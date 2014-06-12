@@ -12,6 +12,7 @@
 #include "RenderCamera.h"
 #include "CubeMapCellInfo.h"
 #include "CubeMap.h"
+#include "CameraHelpers.h"
 
 using namespace Eegeo;
 using namespace Eegeo::Resources::PlaceNames;
@@ -32,7 +33,14 @@ DynamicText3DExample::DynamicText3DExample(Eegeo::Rendering::GLState& glState,
 	, m_initialised(false)
 	, m_globeCameraStateRestorer(globeCameraController)
 {
+	Eegeo::Space::EcefTangentBasis cameraInterestBasis;
 
+	Eegeo::Camera::CameraHelpers::EcefTangentBasisFromPointAndHeading(
+			Eegeo::Space::LatLong::FromDegrees(37.794907, -122.396954).ToECEF(),
+			0.0,
+			cameraInterestBasis);
+
+	globeCameraController.SetView(cameraInterestBasis, 1781.0);
 }
 
 void DynamicText3DExample::Update(float dt)

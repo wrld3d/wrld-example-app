@@ -18,11 +18,11 @@ namespace Examples
 class FileIOExample : public IExample
 {
 private:
-	Eegeo::Helpers::IFileIO& fileIO;
+	Eegeo::Helpers::IFileIO& m_fileIO;
 	GlobeCameraStateRestorer m_globeCameraStateRestorer;
 
 public:
-	FileIOExample(Eegeo::Helpers::IFileIO& fileIO,
+	FileIOExample(Eegeo::Helpers::IFileIO& m_fileIO,
 	              Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController);
 
 	static std::string GetName()

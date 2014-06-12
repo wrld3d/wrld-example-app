@@ -27,7 +27,7 @@ ScreenPickExample::ScreenPickExample(Eegeo::Rendering::RenderContext& renderCont
 	const int numSegments = 16;
 	const Eegeo::v3 red(1.f, 0.f, 0.f);
 
-	m_sphere = new Eegeo::DebugRendering::SphereMesh(
+	m_pSphere = new Eegeo::DebugRendering::SphereMesh(
 	    renderContext,
 	    radius,
 	    numSegments, numSegments,
@@ -35,15 +35,15 @@ ScreenPickExample::ScreenPickExample(Eegeo::Rendering::RenderContext& renderCont
 	    NULL,
 	    red
 	);
-	m_sphere->Tesselate();
+	m_pSphere->Tesselate();
 
-	m_rayPicker = new Eegeo::Resources::Terrain::Collision::TerrainRayPicker(terrainHeightProvider, collisionMeshResourceProvider);
+	m_pRayPicker = new Eegeo::Resources::Terrain::Collision::TerrainRayPicker(terrainHeightProvider, collisionMeshResourceProvider);
 }
 
 ScreenPickExample::~ScreenPickExample()
 {
-	delete m_rayPicker;
-	delete m_sphere;
+	delete m_pRayPicker;
+	delete m_pSphere;
 }
 
 void ScreenPickExample::Start()
@@ -63,10 +63,8 @@ void ScreenPickExample::Update(float dt)
 
 void ScreenPickExample::Draw()
 {
-	m_sphere->Draw(m_renderContext);
+	m_pSphere->Draw(m_renderContext);
 }
-
-
 
 bool ScreenPickExample::Event_TouchTap(const AppInterface::TapData& data)
 {
@@ -81,10 +79,10 @@ bool ScreenPickExample::Event_TouchTap(const AppInterface::TapData& data)
 
 	Eegeo::dv3 rayIntersectionPoint;
 	double intersectionParam;
-	bool rayPick = m_rayPicker->TryGetRayIntersection(rayOrigin, rayDirection, rayIntersectionPoint, intersectionParam);
+	bool rayPick = m_pRayPicker->TryGetRayIntersection(rayOrigin, rayDirection, rayIntersectionPoint, intersectionParam);
 	if (rayPick)
 	{
-		m_sphere->SetPositionECEF(rayIntersectionPoint);
+		m_pSphere->SetPositionECEF(rayIntersectionPoint);
 	}
 
 	return true;

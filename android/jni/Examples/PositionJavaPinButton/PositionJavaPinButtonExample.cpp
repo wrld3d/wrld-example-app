@@ -107,8 +107,8 @@ void PositionJavaPinButtonExample::Draw()
 	AndroidSafeNativeThreadAttachment attached(m_nativeState);
 	JNIEnv* env = attached.envForThread;
 
-	//calculate a screen position for the pin based on an ECEF location (the location of the Tranamerica Pyramid near the start location)
-	const Eegeo::Space::LatLongAltitude pinLocation = Eegeo::Space::LatLongAltitude::FromDegrees(37.795118f, -122.402797f, 0.f);
+	//calculate a screen position for the pin based on an ECEF location
+	const Eegeo::Space::LatLongAltitude pinLocation = Eegeo::Space::LatLongAltitude::FromDegrees(37.7858,-122.401, 0.f);
 	Eegeo::v3 screenPosition;
 	Project(pinLocation, screenPosition);
 

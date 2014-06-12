@@ -6,8 +6,8 @@ namespace Examples
 DebugSphereExample::DebugSphereExample(Eegeo::Rendering::RenderContext& renderContext,
                                        Eegeo::Space::LatLongAltitude interestLocation,
                                        Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController)
-	:renderContext(renderContext)
-	,interestLocation(interestLocation)
+	:m_renderContext(renderContext)
+	,m_interestLocation(interestLocation)
 	,m_globeCameraStateRestorer(cameraController)
 {
 
@@ -16,7 +16,7 @@ DebugSphereExample::DebugSphereExample(Eegeo::Rendering::RenderContext& renderCo
 void DebugSphereExample::Start()
 {
 	//add a set of spheres to the world with different heights and colors
-	Eegeo::Space::LatLongAltitude sphereLocation = interestLocation;
+	Eegeo::Space::LatLongAltitude sphereLocation = m_interestLocation;
 
 	sphereLocation.SetAltitude(100.0f);
 	AddSphere(sphereLocation, Eegeo::v3(1.0f, 0.0f, 0.0f));
@@ -38,12 +38,12 @@ void DebugSphereExample::Suspend()
 {
 	//destroy all the spheres
 	for(std::vector<Eegeo::DebugRendering::SphereMesh*>::iterator
-	        it = renderables.begin(); it != renderables.end(); ++ it)
+	        it = m_renderables.begin(); it != m_renderables.end(); ++ it)
 	{
 		delete *it;
 	}
 
-	renderables.clear();
+	m_renderables.clear();
 }
 
 void DebugSphereExample::Update(float dt)
@@ -55,9 +55,9 @@ void DebugSphereExample::Draw()
 {
 	//draw all the spheres
 	for(std::vector<Eegeo::DebugRendering::SphereMesh*>::iterator
-	        it = renderables.begin(); it != renderables.end(); ++ it)
+	        it = m_renderables.begin(); it != m_renderables.end(); ++ it)
 	{
-		(*it)->Draw(renderContext);
+		(*it)->Draw(m_renderContext);
 	}
 }
 
@@ -66,7 +66,7 @@ void DebugSphereExample::AddSphere(Eegeo::Space::LatLongAltitude sphereLocation,
 {
 	//add a sphere of radius 20 meters at sphereLocation
 	Eegeo::DebugRendering::SphereMesh* sphere = new Eegeo::DebugRendering::SphereMesh(
-	    renderContext,
+	    m_renderContext,
 	    20.0f,
 	    16, 16, //tessellation parameters
 	    sphereLocation.ToECEF(),
@@ -75,6 +75,6 @@ void DebugSphereExample::AddSphere(Eegeo::Space::LatLongAltitude sphereLocation,
 	);
 	sphere->Tesselate(); //tessellate the sphere
 
-	renderables.push_back(sphere);
+	m_renderables.push_back(sphere);
 }
 }

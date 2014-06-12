@@ -18,12 +18,12 @@ namespace Examples
 class ResourceSpatialQueryExample : public IExample
 {
 private:
-	Eegeo::Resources::ResourceSpatialQueryService& resourceSpatialQueryService;
-	Eegeo::Location::IInterestPointProvider& interestPointProvider;
+	Eegeo::Resources::ResourceSpatialQueryService& m_resourceSpatialQueryService;
+	Eegeo::Location::IInterestPointProvider& m_interestPointProvider;
 	GlobeCameraStateRestorer m_globeCameraStateRestorer;
 
-	Eegeo::Streaming::MortonKey key;
-	int numBuildings;
+	Eegeo::Streaming::MortonKey m_key;
+	int m_numBuildings;
 
 public:
 	ResourceSpatialQueryExample(Eegeo::Resources::ResourceSpatialQueryService& resourceSpatialQueryService,

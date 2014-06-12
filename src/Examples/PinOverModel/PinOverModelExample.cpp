@@ -30,15 +30,15 @@ PinOverModelExample::PinOverModelExample(
     Eegeo::Rendering::Materials::NullMaterial& nullMat,
     Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController
 )
-	: m_pin0UserData("Pin Zero(0) User Data")
-	, m_pPin0(NULL)
-	, renderContext(renderContext)
-	,fileIO(fileIO)
-	,textureRequestor(textureRequestor)
-	,pModel(NULL)
-	,globalFogging(fogging)
-	,renderableFilters(renderableFilters)
-	,nullMat(nullMat)
+	:m_pin0UserData("Pin Zero(0) User Data")
+	,m_pPin0(NULL)
+	,m_renderContext(renderContext)
+	,m_fileIO(fileIO)
+	,m_textureRequestor(textureRequestor)
+	,m_pModel(NULL)
+	,m_globalFogging(fogging)
+	,m_renderableFilters(renderableFilters)
+	,m_nullMat(nullMat)
 	,m_globeCameraStateRestorer(cameraController)
 {
 	textureLoader.LoadTexture(m_pinIconsTexture, "PinIconTexturePage.png", true);
@@ -88,7 +88,7 @@ PinOverModelExample::~PinOverModelExample()
 	Eegeo_DELETE m_pPinIconsTexturePageLayout;
 	glDeleteTextures(1, &m_pinIconsTexture.textureId);
 
-	renderableFilters.RemoveRenderableFilter(m_pMyRenderableFilter);
+	m_renderableFilters.RemoveRenderableFilter(m_pMyRenderableFilter);
 
 	Eegeo_DELETE m_pMyRenderableFilter;
 	Eegeo_DELETE m_pMyModelRenderable;
@@ -111,18 +111,18 @@ void PinOverModelExample::CreateExamplePins()
 
 void PinOverModelExample::Start()
 {
-	pModel = Eegeo::Model::CreateFromPODFile("Test_ROBOT_ARM.pod", fileIO, renderContext.GetGLState(), &textureRequestor, "");
-	Eegeo_ASSERT(pModel->GetRootNode());
+	m_pModel = Eegeo::Model::CreateFromPODFile("Test_ROBOT_ARM.pod", m_fileIO, m_renderContext.GetGLState(), &m_textureRequestor, "");
+	Eegeo_ASSERT(m_pModel->GetRootNode());
 
-	m_pMyModelRenderable = Eegeo_NEW (MyModelRenderable)(*pModel, renderContext, globalFogging, nullMat);
+	m_pMyModelRenderable = Eegeo_NEW (MyModelRenderable)(*m_pModel, m_renderContext, m_globalFogging, m_nullMat);
 	m_pMyRenderableFilter = Eegeo_NEW (MyRenderableFilter)(*m_pMyModelRenderable);
-	renderableFilters.AddRenderableFilter(m_pMyRenderableFilter);
+	m_renderableFilters.AddRenderableFilter(m_pMyRenderableFilter);
 }
 
 void PinOverModelExample::Suspend()
 {
-	delete pModel;
-	pModel = NULL;
+	delete m_pModel;
+	m_pModel = NULL;
 }
 
 void PinOverModelExample::Update(float dt)
@@ -130,13 +130,12 @@ void PinOverModelExample::Update(float dt)
 	// Update the PinsModule to query terrain heights and update screen space coordinats for the Pins.
 	m_pPinsModule->Update(dt);
 
-	pModel->UpdateAnimator(1.0f/30.0f);
+	m_pModel->UpdateAnimator(1.0f/30.0f);
 }
 
 void PinOverModelExample::Draw()
 {
 }
-
 
 PinOverModelExample::MyModelRenderable::MyModelRenderable(Eegeo::Model& model,
         Eegeo::Rendering::RenderContext& renderContext,

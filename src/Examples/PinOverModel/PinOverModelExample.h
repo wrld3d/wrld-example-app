@@ -62,15 +62,15 @@ private:
 
 	Eegeo::Pins::Pin* m_pPin0;
 
-	Eegeo::Rendering::RenderContext& renderContext;
-	Eegeo::Helpers::IFileIO& fileIO;
-	Eegeo::Rendering::AsyncTexturing::IAsyncTextureRequestor& textureRequestor;
-	Eegeo::Lighting::GlobalFogging& globalFogging;
-	Eegeo::Rendering::RenderableFilters& renderableFilters;
+	Eegeo::Rendering::RenderContext& m_renderContext;
+	Eegeo::Helpers::IFileIO& m_fileIO;
+	Eegeo::Rendering::AsyncTexturing::IAsyncTextureRequestor& m_textureRequestor;
+	Eegeo::Lighting::GlobalFogging& m_globalFogging;
+	Eegeo::Rendering::RenderableFilters& m_renderableFilters;
 	GlobeCameraStateRestorer m_globeCameraStateRestorer;
 
-	Eegeo::Model* pModel;
-	Eegeo::Rendering::Materials::NullMaterial& nullMat;
+	Eegeo::Model* m_pModel;
+	Eegeo::Rendering::Materials::NullMaterial& m_nullMat;
 
 	MyModelRenderable* m_pMyModelRenderable;
 	MyRenderableFilter* m_pMyRenderableFilter;

@@ -8,6 +8,7 @@
 
 #include "PODAnimationExample.h"
 #include "ShaderCompiler.h"
+#include "CameraHelpers.h"
 #include <sys/time.h>
 
 namespace Examples
@@ -17,32 +18,39 @@ PODAnimationExample::PODAnimationExample(Eegeo::Rendering::RenderContext& render
         Eegeo::Rendering::AsyncTexturing::IAsyncTextureRequestor& textureRequestor,
         Eegeo::Lighting::GlobalFogging& fogging,
         Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController)
-	:renderContext(renderContext)
-	,fileIO(fileIO)
-	,textureRequestor(textureRequestor)
-	,pModel(NULL)
-	,globalFogging(fogging)
+	:m_renderContext(renderContext)
+	,m_fileIO(fileIO)
+	,m_textureRequestor(textureRequestor)
+	,m_pModel(NULL)
+	,m_globalFogging(fogging)
 	,m_globeCameraStateRestorer(cameraController)
 {
+	Eegeo::Space::EcefTangentBasis cameraInterestBasis;
 
+	Eegeo::Camera::CameraHelpers::EcefTangentBasisFromPointAndHeading(
+			Eegeo::Space::LatLong::FromDegrees(37.780642, -122.385876).ToECEF(),
+			16.472872,
+			cameraInterestBasis);
+
+	cameraController.SetView(cameraInterestBasis, 1209.007812);
 }
 
 void PODAnimationExample::Start()
 {
-	pModel = Eegeo::Model::CreateFromPODFile("Test_ROBOT_ARM.pod", fileIO, renderContext.GetGLState(), &textureRequestor, "");
-	Eegeo_ASSERT(pModel->GetRootNode());
+	m_pModel = Eegeo::Model::CreateFromPODFile("Test_ROBOT_ARM.pod", m_fileIO, m_renderContext.GetGLState(), &m_textureRequestor, "");
+	Eegeo_ASSERT(m_pModel->GetRootNode());
 
 }
 
 void PODAnimationExample::Suspend()
 {
-	delete pModel;
-	pModel = NULL;
+	delete m_pModel;
+	m_pModel = NULL;
 }
 
 void PODAnimationExample::Update(float dt)
 {
-	pModel->UpdateAnimator(1.0f/30.0f);
+	m_pModel->UpdateAnimator(1.0f/30.0f);
 }
 
 void PODAnimationExample::Draw()
@@ -54,7 +62,7 @@ void PODAnimationExample::Draw()
 	Eegeo::v3 forward = (location  - Eegeo::v3(0.f, 1.f, 0.f)).Norm().ToSingle();
 	Eegeo::v3 right(Eegeo::v3::Cross(up, forward).Norm());
 	forward = Eegeo::v3::Cross(up, right);
-	Eegeo::v3 cameraRelativePos = (location - renderContext.GetCameraOriginEcef()).ToSingle();
+	Eegeo::v3 cameraRelativePos = (location - m_renderContext.GetCameraOriginEcef()).ToSingle();
 	Eegeo::m44 scaleMatrix;
 	scaleMatrix.Scale(1.f);
 	Eegeo::m44 cameraRelativeTransform;
@@ -62,19 +70,19 @@ void PODAnimationExample::Draw()
 	Eegeo::m44::Mul(transform, cameraRelativeTransform, scaleMatrix);
 	transform.SetRow(3, Eegeo::v4(cameraRelativePos, 1.f));
 
-	renderContext.GetGLState().DepthTest.Enable();
-	renderContext.GetGLState().DepthFunc(GL_LEQUAL);
+	m_renderContext.GetGLState().DepthTest.Enable();
+	m_renderContext.GetGLState().DepthFunc(GL_LEQUAL);
 
 	//loaded model faces are ccw
-	renderContext.GetGLState().FrontFace(GL_CCW);
+	m_renderContext.GetGLState().FrontFace(GL_CCW);
 
-	pModel->GetRootNode()->SetVisible(true);
-	pModel->GetRootNode()->SetLocalMatrix(transform);
-	pModel->GetRootNode()->UpdateRecursive();
-	pModel->GetRootNode()->UpdateSphereRecursive();
-	pModel->GetRootNode()->DrawRecursive(renderContext, globalFogging, NULL, true, false);
+	m_pModel->GetRootNode()->SetVisible(true);
+	m_pModel->GetRootNode()->SetLocalMatrix(transform);
+	m_pModel->GetRootNode()->UpdateRecursive();
+	m_pModel->GetRootNode()->UpdateSphereRecursive();
+	m_pModel->GetRootNode()->DrawRecursive(m_renderContext, m_globalFogging, NULL, true, false);
 
-	renderContext.GetGLState().FrontFace(GL_CW);
+	m_renderContext.GetGLState().FrontFace(GL_CW);
 
 }
 }

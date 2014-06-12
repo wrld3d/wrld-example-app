@@ -12,10 +12,10 @@ namespace Examples
 class ScreenUnprojectExample : public IExample
 {
 private:
-	Eegeo::DebugRendering::SphereMesh* sphere;
-	Eegeo::Rendering::RenderContext& renderContext;
-	Eegeo::Camera::ICameraProvider& cameraProvider;
-	Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider;
+	Eegeo::DebugRendering::SphereMesh* m_pSphere;
+	Eegeo::Rendering::RenderContext& m_renderContext;
+	Eegeo::Camera::ICameraProvider& m_cameraProvider;
+	Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& m_terrainHeightProvider;
 	GlobeCameraStateRestorer m_globeCameraStateRestorer;
 
 public:

@@ -20,7 +20,7 @@ namespace Examples
 class WebRequestExample : public IExample
 {
 private:
-	Eegeo::Web::IWebLoadRequestFactory& webRequestFactory;
+	Eegeo::Web::IWebLoadRequestFactory& m_webRequestFactory;
 	GlobeCameraStateRestorer m_globeCameraStateRestorer;
 
 public:

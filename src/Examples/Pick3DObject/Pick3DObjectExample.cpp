@@ -25,7 +25,7 @@ Pick3DObjectExample::Pick3DObjectExample(Eegeo::Rendering::RenderContext& render
 	,m_interestLocation(interestLocation)
 	,m_cameraProvider(cameraProvider)
 	,m_movingObject(false)
-	,m_object(NULL)
+	,m_pObject(NULL)
 	,m_globeCameraStateRestorer(cameraController)
 {
 
@@ -44,18 +44,18 @@ void Pick3DObjectExample::Start()
 
 void Pick3DObjectExample::Suspend()
 {
-	delete m_object;
-	m_object = NULL;
+	delete m_pObject;
+	m_pObject = NULL;
 }
 
 void Pick3DObjectExample::Update(float dt)
 {
-	m_object->SetPositionECEF(m_objectLocationEcef);
+	m_pObject->SetPositionECEF(m_objectLocationEcef);
 }
 
 void Pick3DObjectExample::Draw()
 {
-	m_object->Draw(m_renderContext);
+	m_pObject->Draw(m_renderContext);
 }
 
 bool Pick3DObjectExample::Event_TouchPan(const AppInterface::PanData& data)
@@ -109,33 +109,33 @@ void Pick3DObjectExample::CreateWorldSpaceRayFromScreen(const Eegeo::v2& screenP
 	Eegeo::v3 unprojectedFarWorld = unprojectedFar / unprojectedFar.GetW();
 
 	//check intersection with a ray cast from camera position
-	ray.origin = renderCamera.GetEcefLocation();
-	ray.direction = (unprojectedNearWorld - unprojectedFarWorld).Norm();
+	ray.m_origin = renderCamera.GetEcefLocation();
+	ray.m_direction = (unprojectedNearWorld - unprojectedFarWorld).Norm();
 }
 
 bool Pick3DObjectExample::IsScreenPointInsideModel(const Eegeo::v2& screenPoint)
 {
 	Ray ray;
 	CreateWorldSpaceRayFromScreen(screenPoint, ray);
-	ray.origin -= m_objectLocationEcef; //make object space
+	ray.m_origin -= m_objectLocationEcef; //make object space
 
 	//the following is a standard ray sphere intersection - for other shapes, an appropriate intersection method
 	//should be used
 
 	float a =
-	    ray.direction.GetX() * ray.direction.GetX()
-	    + ray.direction.GetY() * ray.direction.GetY()
-	    + ray.direction.GetZ() * ray.direction.GetZ();
+	    ray.m_direction.GetX() * ray.m_direction.GetX()
+	    + ray.m_direction.GetY() * ray.m_direction.GetY()
+	    + ray.m_direction.GetZ() * ray.m_direction.GetZ();
 
 	float b =
-	    ray.direction.GetX() * (2.0 * ray.origin.GetX())
-	    + ray.direction.GetY() * (2.0 * ray.origin.GetY())
-	    + ray.direction.GetZ() * (2.0 * ray.origin.GetZ());
+	    ray.m_direction.GetX() * (2.0 * ray.m_origin.GetX())
+	    + ray.m_direction.GetY() * (2.0 * ray.m_origin.GetY())
+	    + ray.m_direction.GetZ() * (2.0 * ray.m_origin.GetZ());
 
 	float c =
-	    (ray.origin.GetX() * ray.origin.GetX()
-	     + ray.origin.GetY() * ray.origin.GetY()
-	     + ray.origin.GetZ() * ray.origin.GetZ());
+	    (ray.m_origin.GetX() * ray.m_origin.GetX()
+	     + ray.m_origin.GetY() * ray.m_origin.GetY()
+	     + ray.m_origin.GetZ() * ray.m_origin.GetZ());
 
 	c -= (SPHERE_RADIUS * SPHERE_RADIUS);
 
@@ -162,14 +162,14 @@ bool Pick3DObjectExample::IsScreenPointInsideModel(const Eegeo::v2& screenPoint)
 void Pick3DObjectExample::CreateSphereAtLocation(const Eegeo::dv3& location, const Eegeo::v3& colour)
 {
 	//assumes sphere is null if not validly allocated so this delete is always safe
-	Eegeo_DELETE m_object;
+	Eegeo_DELETE m_pObject;
 
-	m_object = new Eegeo::DebugRendering::SphereMesh(m_renderContext,
+	m_pObject = new Eegeo::DebugRendering::SphereMesh(m_renderContext,
 	        SPHERE_RADIUS,
 	        16, 16, //tessellation parameters
 	        m_objectLocationEcef,
 	        NULL, //no texture, just color
 	        colour);
-	m_object->Tesselate();
+	m_pObject->Tesselate();
 }
 }

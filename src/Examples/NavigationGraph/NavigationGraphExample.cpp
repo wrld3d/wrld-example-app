@@ -27,10 +27,10 @@ namespace Examples
 NavigationGraphExample::NavigationGraphExample(RenderContext& renderContext,
         NavigationGraphRepository& navigationGraphRepository,
         Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController)
-	:navigationGraphRepository(navigationGraphRepository)
-	,renderContext(renderContext)
-	,addedHandler(*this)
-	,removedHandler(*this)
+	:m_navigationGraphRepository(navigationGraphRepository)
+	,m_renderContext(renderContext)
+	,m_addedHandler(*this)
+	,m_removedHandler(*this)
 	,m_globeCameraStateRestorer(cameraController)
 {
 }
@@ -38,39 +38,39 @@ NavigationGraphExample::NavigationGraphExample(RenderContext& renderContext,
 void NavigationGraphExample::Start()
 {
 	srand(time(0)); //for colors
-	navigationGraphRepository.RegisterAddedCallback(&addedHandler);
-	navigationGraphRepository.RegisterRemovalCallback(&removedHandler);
+	m_navigationGraphRepository.RegisterAddedCallback(&m_addedHandler);
+	m_navigationGraphRepository.RegisterRemovalCallback(&m_removedHandler);
 }
 
 void NavigationGraphExample::Suspend()
 {
-	navigationGraphRepository.UnregisterAddedCallback(&addedHandler);
-	navigationGraphRepository.UnregisterRemovalCallback(&removedHandler);
+	m_navigationGraphRepository.UnregisterAddedCallback(&m_addedHandler);
+	m_navigationGraphRepository.UnregisterRemovalCallback(&m_removedHandler);
 }
 
 void NavigationGraphExample::Draw()
 {
-	for(MapType::const_iterator it = navGraphsToVisualisers.begin(); it != navGraphsToVisualisers.end(); ++ it)
+	for(MapType::const_iterator it = m_navGraphsToVisualisers.begin(); it != m_navGraphsToVisualisers.end(); ++ it)
 	{
 		const NavigationGraph &navGraph = *it->first;
 		DebugRenderable &renderable = *it->second;
 
 		Eegeo::dv3 ecefPosition = navGraph.GetCellInfo().GetFaceCentreECEF() + Eegeo::dv3::FromSingle(navGraph.GetUpECEF() * 2.0f);
-		Eegeo::v3 cameraRelativePosition = Eegeo::Camera::CameraHelpers::CameraRelativePoint(ecefPosition, renderContext.GetCameraOriginEcef());
-		renderable.Draw(cameraRelativePosition);
+		Eegeo::v3 m_cameraRelativePosition = Eegeo::Camera::CameraHelpers::CameraRelativePoint(ecefPosition, m_renderContext.GetCameraOriginEcef());
+		renderable.Draw(m_cameraRelativePosition);
 	}
 }
 
 void NavigationGraphExample::HandleAddedGraph(const Eegeo::Resources::Roads::Navigation::NavigationGraph& navGraph)
 {
 	Eegeo::v3 roadColor((rand()%256)/256.0f, (rand()%256)/256.0f, (rand()%256)/256.0f);
-	navGraphsToVisualisers[&navGraph] = CreateVisualisation(renderContext, roadColor, navGraph);
+	m_navGraphsToVisualisers[&navGraph] = CreateVisualisation(m_renderContext, roadColor, navGraph);
 }
 
 void NavigationGraphExample::HandleRemovedGraph(const Eegeo::Resources::Roads::Navigation::NavigationGraph& navGraph)
 {
-	delete navGraphsToVisualisers[&navGraph];
-	navGraphsToVisualisers.erase(navGraphsToVisualisers.find(&navGraph));
+	delete m_navGraphsToVisualisers[&navGraph];
+	m_navGraphsToVisualisers.erase(m_navGraphsToVisualisers.find(&navGraph));
 }
 }
 

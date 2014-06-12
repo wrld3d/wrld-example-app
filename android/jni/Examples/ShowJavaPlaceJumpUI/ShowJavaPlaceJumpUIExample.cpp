@@ -90,7 +90,7 @@ void ShowJavaPlaceJumpUIExample::Update(float dt)
 	pthread_mutex_lock(&m_mutex);
 	if(m_pTargetLocation != NULL)
 	{
-		m_cameraJumpController.JumpTo(m_pTargetLocation->location, m_pTargetLocation->heading, m_pTargetLocation->distance);
+		m_cameraJumpController.JumpTo(m_pTargetLocation->m_location, m_pTargetLocation->m_heading, m_pTargetLocation->m_distance);
 		m_pTargetLocation = NULL;
 	}
 	pthread_mutex_unlock(&m_mutex);

@@ -14,31 +14,31 @@ LoadModelExample::LoadModelExample(Eegeo::Rendering::RenderContext& renderContex
                                    Eegeo::Rendering::AsyncTexturing::IAsyncTextureRequestor& textureRequestor,
                                    Eegeo::Lighting::GlobalFogging& fogging,
                                    Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController)
-	:renderContext(renderContext)
-	,interestLocation(interestLocation)
-	,fileIO(fileIO)
-	,textureRequestor(textureRequestor)
-	,pModel(NULL)
-	,boundsVisualiser(renderContext)
-	,globalFogging(fogging)
-	,discMaterial(NULL)
-	,elapsedTime(0.0f)
+	:m_renderContext(renderContext)
+	,m_interestLocation(interestLocation)
+	,m_fileIO(fileIO)
+	,m_textureRequestor(textureRequestor)
+	,m_pModel(NULL)
+	,m_boundsVisualiser(renderContext)
+	,m_globalFogging(fogging)
+	,m_pDiscMaterial(NULL)
+	,m_elapsedTime(0.0f)
 	,m_globeCameraStateRestorer(cameraController)
 {
 }
 
 void LoadModelExample::Start()
 {
-	pModel = Eegeo::Model::CreateFromPODFile("sanfrancisco_vehicles_alpha.POD", fileIO, renderContext.GetGLState(), &textureRequestor, "");
+	m_pModel = Eegeo::Model::CreateFromPODFile("sanfrancisco_vehicles_alpha.POD", m_fileIO, m_renderContext.GetGLState(), &m_textureRequestor, "");
 
 	//the layout of this resource is assumed - a "Vehicles" node should exist
-	Eegeo::Node* parentNode = pModel->FindNode("Vehicles");
+	Eegeo::Node* parentNode = m_pModel->FindNode("Vehicles");
 	Eegeo_ASSERT(parentNode);
 
 	// Print details of the materials in the POD.
-	for(int i = 0; i < pModel->GetNumMaterials(); i++)
+	for(int i = 0; i < m_pModel->GetNumMaterials(); i++)
 	{
-		Eegeo::ModelMaterial* pMaterial = pModel->GetMaterial(i);
+		Eegeo::ModelMaterial* pMaterial = m_pModel->GetMaterial(i);
 		Eegeo_TTY(
 		    "Material: %s %s alpha=%f\n",
 		    pMaterial->GetName().c_str(),
@@ -48,7 +48,7 @@ void LoadModelExample::Start()
 	}
 
 	// Look up the material for the disc so that we can animate its alpha value.
-	if(!pModel->TryGetMaterialByName("alpha_disc_material", discMaterial))
+	if(!m_pModel->TryGetMaterialByName("alpha_disc_material", m_pDiscMaterial))
 	{
 		Eegeo_TTY("Failed to find disc material.\n");
 	}
@@ -57,62 +57,61 @@ void LoadModelExample::Start()
 	Eegeo_ASSERT(parentNode->GetNumChildNodes() > 0);
 
 	//select a vehicle.
-	mesh.node = parentNode->GetChildNode(0);
+	m_mesh.m_pNode = parentNode->GetChildNode(0);
 }
 
 void LoadModelExample::Suspend()
 {
 	//destroy the example...
-	mesh.node = NULL;
+	m_mesh.m_pNode = NULL;
 
-	delete pModel;
-	pModel = NULL;
+	delete m_pModel;
+	m_pModel = NULL;
 }
 
 void LoadModelExample::Update(float dt)
 {
 	//let's put the vehicle in the air
-	interestLocation.SetAltitude(100.0f);
+	m_interestLocation.SetAltitude(100.0f);
 
 	//put the vehicle at interest point
-	mesh.positionEcef = interestLocation.ToECEF();
+	m_mesh.m_positionEcef = m_interestLocation.ToECEF();
 
 	//up is relative to earth location, normal to tangent plane formed at surface below model
-	mesh.up = mesh.positionEcef.Norm().ToSingle();
+	m_mesh.m_up = m_mesh.m_positionEcef.Norm().ToSingle();
 
 	//cross with north pole (0,1,0) for a forward vector
-	mesh.forward = Eegeo::v3::Cross(mesh.up, Eegeo::v3(0.0f, 1.0f, 0.0f));
+	m_mesh.m_forward = Eegeo::v3::Cross(m_mesh.m_up, Eegeo::v3(0.0f, 1.0f, 0.0f));
 
 	//set some big scale value so we can see the vehicle - vary between x20 and x70
-	mesh.scale = 20.0f + ((sin(elapsedTime)/ 2.0f + 0.5) * 50.0f);
+	m_mesh.m_scale = 20.0f + ((sin(m_elapsedTime)/ 2.0f + 0.5) * 50.0f);
 
 	// pulse the opacity of the disk material up and down over time.
-	if(discMaterial != NULL)
+	if(m_pDiscMaterial != NULL)
 	{
-		discMaterial->SetAlpha(fabs(sin(elapsedTime * 2)));
+		m_pDiscMaterial->SetAlpha(fabs(sin(m_elapsedTime * 2)));
 	}
 
-	elapsedTime += dt;
+	m_elapsedTime += dt;
 }
 
 void LoadModelExample::Draw()
 {
 	//form basis
-	Eegeo::v3 up(mesh.up);
-	Eegeo::v3 forward = -mesh.forward; //model is facing reverse (-ve z)
+	Eegeo::v3 up(m_mesh.m_up);
+	Eegeo::v3 forward = -m_mesh.m_forward; //model is facing reverse (-ve z)
 	Eegeo::v3 right(Eegeo::v3::Cross(up, forward).Norm());
 	up = Eegeo::v3::Cross(forward, right);
 
-
 	//compute a camera local position
-	Eegeo::v3 cameraRelativePos = (mesh.positionEcef - renderContext.GetCameraOriginEcef()).ToSingle();
+	Eegeo::v3 cameraRelativePos = (m_mesh.m_positionEcef - m_renderContext.GetCameraOriginEcef()).ToSingle();
 
 	//generate a transform from this basis and position...
 	Eegeo::m44 cameraRelativeTransform;
 	cameraRelativeTransform.SetFromBasis(right, up, forward, cameraRelativePos);
 
 	Eegeo::m44 scaleMatrix;
-	scaleMatrix.Scale(mesh.scale);
+	scaleMatrix.Scale(m_mesh.m_scale);
 
 	//...and scale
 	Eegeo::m44 transform;
@@ -120,28 +119,28 @@ void LoadModelExample::Draw()
 	transform.SetRow(3, Eegeo::v4(cameraRelativePos, 1.0f));
 
 	//update the mesh instance with the transform
-	mesh.node->SetLocalMatrix(transform);
-	mesh.node->UpdateRecursive();
-	mesh.node->UpdateSphereRecursive();
-	mesh.node->UpdateBBRecursive();
+	m_mesh.m_pNode->SetLocalMatrix(transform);
+	m_mesh.m_pNode->UpdateRecursive();
+	m_mesh.m_pNode->UpdateSphereRecursive();
+	m_mesh.m_pNode->UpdateBBRecursive();
 
 	// Enable z buffering.
-	Eegeo::Rendering::GLState& glState = renderContext.GetGLState();
+	Eegeo::Rendering::GLState& glState = m_renderContext.GetGLState();
 	glState.DepthTest.Enable();
 	glState.DepthFunc(GL_LEQUAL);
 	glState.DepthMask(GL_TRUE);
 
 	//draw the mesh
-	mesh.node->DrawRecursive(renderContext, globalFogging, NULL, true, true);
+	m_mesh.m_pNode->DrawRecursive(m_renderContext, m_globalFogging, NULL, true, true);
 
 	Eegeo::v3 min, max;
-	mesh.node->GetMinExtent(min);
-	mesh.node->GetMaxExtent(max);
-	boundsVisualiser.Draw(min, max);
+	m_mesh.m_pNode->GetMinExtent(min);
+	m_mesh.m_pNode->GetMaxExtent(max);
+	m_boundsVisualiser.Draw(min, max);
 }
 
 BoundsVisualiser::BoundsVisualiser(Eegeo::Rendering::RenderContext& renderContext)
-	:renderContext(renderContext)
+	:m_renderContext(renderContext)
 {
 	CompileShaders();
 }
@@ -237,9 +236,9 @@ void BoundsVisualiser::Build(const Eegeo::v3& minExtents, const Eegeo::v3& maxEx
 
 	for(size_t i = 0; i < NumVerts; ++ i)
 	{
-		vertexBuffer[i].x = verts[i].GetX();
-		vertexBuffer[i].y = verts[i].GetY();
-		vertexBuffer[i].z = verts[i].GetZ();
+		vertexBuffer[i].m_x = verts[i].GetX();
+		vertexBuffer[i].m_y = verts[i].GetY();
+		vertexBuffer[i].m_z = verts[i].GetZ();
 	}
 
 	indexBuffer[0] = 0;
@@ -311,7 +310,7 @@ void BoundsVisualiser::Draw(const Eegeo::v3& minExtents, const Eegeo::v3& maxExt
 	Eegeo::m44 mvp;
 	Eegeo::m44 w;
 	w.Identity();
-	Eegeo::m44::Mul(mvp, renderContext.GetViewProjectionMatrix(), w);
+	Eegeo::m44::Mul(mvp, m_renderContext.GetViewProjectionMatrix(), w);
 
 	Eegeo_GL(glUniformMatrix4fv(m_pShader->m_mvpUniform, 1, 0, (const GLfloat*)&mvp));
 

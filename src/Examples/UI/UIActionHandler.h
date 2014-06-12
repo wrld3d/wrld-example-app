@@ -18,17 +18,17 @@ template <class T> class UIActionHandler : public IUIActionHandler, private Eege
 {
 private:
 	void (T::*m_callback)();
-	T* m_context;
+	T* m_pContext;
 public:
 	UIActionHandler(T* context, void (T::*callback)())
-		: m_context(context)
+		: m_pContext(context)
 		, m_callback(callback)
 	{
 	}
 
 	virtual void operator()()
 	{
-		(*m_context.*m_callback)();
+		(*m_pContext.*m_callback)();
 	}
 };
 }
