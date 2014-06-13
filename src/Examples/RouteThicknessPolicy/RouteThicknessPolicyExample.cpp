@@ -1,10 +1,4 @@
-//
-//  RouteThicknessPolicyExample.cpp
-//  ExampleApp
-//
-//  Created by Scott on 28/11/2013.
-//  Copyright (c) 2013 eeGeo. All rights reserved.
-//
+// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
 #include "RouteThicknessPolicyExample.h"
 #include "RouteBuilder.h"

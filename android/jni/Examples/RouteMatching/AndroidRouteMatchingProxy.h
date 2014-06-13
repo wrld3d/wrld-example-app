@@ -1,6 +1,4 @@
-/*
- * AndroidRouteMatchingProxy.h
- */
+// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
 #ifndef ANDROIDROUTEMATCHINGPROXY_H_
 #define ANDROIDROUTEMATCHINGPROXY_H_

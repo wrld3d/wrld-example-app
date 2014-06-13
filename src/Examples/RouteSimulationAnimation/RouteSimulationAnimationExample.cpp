@@ -1,10 +1,4 @@
-//
-//  RouteSimulationAnimationExample.cpp
-//  ExampleApp
-//
-//  Created by Ian Hutchinson on 18/02/2014.
-//  Copyright (c) 2014 eeGeo. All rights reserved.
-//
+// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
 #include "RouteSimulationAnimationExample.h"
 #include "VectorMath.h"

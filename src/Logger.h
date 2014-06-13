@@ -1,9 +1,4 @@
-/*
- * Logger.h
- *
- *  Created on: Nov 6, 2013
- *      Author: kimbleoperations
- */
+// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
 #ifndef LOGGER_H_
 #define LOGGER_H_

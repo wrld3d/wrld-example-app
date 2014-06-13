@@ -1,4 +1,4 @@
-
+// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
 #ifndef __examples_ExampleCameraJumpController__
 #define __examples_ExampleCameraJumpController__

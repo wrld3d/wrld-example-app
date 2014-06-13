@@ -1,8 +1,4 @@
-/*
- * ExampleCameraJumpController.cpp
- *
- *  Created on: Nov 6, 2013
- */
+// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
 #include "ExampleCameraJumpController.h"
 #include "GlobeCameraController.h"

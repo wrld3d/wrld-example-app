@@ -1,6 +1,4 @@
-/*
- * ActivatePreviousExampleMessage.h
- */
+// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
 #ifndef ACTIVATEPREVIOUSEXAMPLEMESSAGE_H_
 #define ACTIVATEPREVIOUSEXAMPLEMESSAGE_H_

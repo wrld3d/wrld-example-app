@@ -1,4 +1,4 @@
-//  Copyright (c) 2014 eeGeo. All rights reserved.
+// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
 #ifndef NATIVETOJAVAMESSAGEBUS_H_
 #define NATIVETOJAVAMESSAGEBUS_H_

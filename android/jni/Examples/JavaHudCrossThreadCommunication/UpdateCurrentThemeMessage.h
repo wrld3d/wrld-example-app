@@ -1,6 +1,4 @@
-/*
- * UpdateCurrentThemeMessage.h
- */
+// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
 #ifndef UPDATECURRENTTHEMEMESSAGE_H_
 #define UPDATECURRENTTHEMEMESSAGE_H_

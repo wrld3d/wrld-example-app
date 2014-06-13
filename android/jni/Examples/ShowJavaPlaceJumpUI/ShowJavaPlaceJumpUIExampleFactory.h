@@ -1,9 +1,4 @@
-/*
- * ShowJavaPlaceJumpUIExampleFactory.h
- *
- *  Created on: Dec 10, 2013
- *      Author: kimbleoperations
- */
+// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
 #ifndef SHOWJAVAPLACEJUMPUIEXAMPLEFACTORY_H_
 #define SHOWJAVAPLACEJUMPUIEXAMPLEFACTORY_H_

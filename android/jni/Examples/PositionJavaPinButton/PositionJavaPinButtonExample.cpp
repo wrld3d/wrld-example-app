@@ -1,9 +1,4 @@
-/*
- * PositionJavaPinButton.cpp
- *
- *  Created on: Oct 31, 2013
- *      Author: kimbleoperations
- */
+// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
 #include <jni.h>
 #include "VectorMath.h"

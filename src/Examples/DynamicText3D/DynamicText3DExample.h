@@ -1,10 +1,4 @@
-//
-//  DynamicText3DExample.h
-//  ExampleApp
-//
-//  Created by Scott on 25/02/2014.
-//  Copyright (c) 2014 eeGeo. All rights reserved.
-//
+// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
 #ifndef __ExampleApp__DynamicText3DExample__
 #define __ExampleApp__DynamicText3DExample__

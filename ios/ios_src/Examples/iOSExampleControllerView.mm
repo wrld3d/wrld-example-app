@@ -1,10 +1,4 @@
-//
-//  ExampleControllerView.cpp
-//  ExampleApp
-//
-//  Created by Scott on 23/05/2014.
-//  Copyright (c) 2014 eeGeo. All rights reserved.
-//
+// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
 #include "iOSExampleControllerView.h"
 #include "UIHelpers.h"

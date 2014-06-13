@@ -1,9 +1,4 @@
-/*
- * JavaHudCrossThreadCommunicationProxy.cpp
- *
- *  Created on: May 23, 2014
- *      Author: kimbleoperations
- */
+// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
 #include "JavaHudCrossThreadCommunicationProxy.h"
 #include "JavaHudCrossThreadCommunicationExample.h"

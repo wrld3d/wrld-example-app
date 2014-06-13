@@ -1,4 +1,4 @@
-//  Copyright (c) 2014 eeGeo. All rights reserved.
+// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
 #ifndef TOUCHEVENTMESSAGE_H_
 #define TOUCHEVENTMESSAGE_H_

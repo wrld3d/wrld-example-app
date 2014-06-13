@@ -1,3 +1,5 @@
+// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+
 #ifndef __ExampleApp__LoadModelExample__
 #define __ExampleApp__LoadModelExample__
 

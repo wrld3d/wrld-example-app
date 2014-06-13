@@ -1,6 +1,4 @@
-/*
- * AndroidExampleControllerView.h
- */
+// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
 #ifndef ANDROIDEXAMPLECONTROLLERVIEW_H_
 #define ANDROIDEXAMPLECONTROLLERVIEW_H_

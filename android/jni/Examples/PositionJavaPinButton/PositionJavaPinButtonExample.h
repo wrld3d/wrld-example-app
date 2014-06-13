@@ -1,9 +1,4 @@
-/*
- * PositionJavaPinButton.h
- *
- *  Created on: Oct 31, 2013
- *      Author: kimbleoperations
- */
+// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
 #ifndef POSITIONJAVAPINBUTTON_H_
 #define POSITIONJAVAPINBUTTON_H_

@@ -1,6 +1,4 @@
-/*
- * SelectExampleMessage.h
- */
+// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
 #ifndef SELECTEXAMPLEMESSAGE_H_
 #define SELECTEXAMPLEMESSAGE_H_

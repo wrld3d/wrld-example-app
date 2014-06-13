@@ -1,7 +1,4 @@
-//
-//  PinsExample.h
-//  ExampleApp
-//
+// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
 #ifndef __ExampleApp__PinsExample__
 #define __ExampleApp__PinsExample__

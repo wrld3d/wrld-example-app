@@ -1,3 +1,5 @@
+// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+
 #ifndef __ExampleApp__ExampleApp__
 #define __ExampleApp__ExampleApp__
 

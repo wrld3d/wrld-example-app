@@ -1,10 +1,4 @@
-//
-//  Pick3DObjectExample.h
-//  ExampleApp
-//
-//  Created by Scott on 03/10/2013.
-//  Copyright (c) 2013 eeGeo. All rights reserved.
-//
+// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
 #ifndef __ExampleApp__Pick3DObjectExample__
 #define __ExampleApp__Pick3DObjectExample__

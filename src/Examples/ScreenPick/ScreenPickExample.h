@@ -1,7 +1,4 @@
-//
-//  ScreenPickExample.h
-//  ExampleApp
-//
+// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
 #ifndef __ExampleApp__ScreenPickExample__
 #define __ExampleApp__ScreenPickExample__

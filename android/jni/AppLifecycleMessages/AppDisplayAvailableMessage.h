@@ -1,4 +1,4 @@
-//  Copyright (c) 2014 eeGeo. All rights reserved.
+// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
 #ifndef APPDISPLAYAVAILABLEMESSAGE_H_
 #define APPDISPLAYAVAILABLEMESSAGE_H_

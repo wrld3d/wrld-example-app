@@ -1,6 +1,4 @@
-/*
- * AndroidExampleProxy.h
- */
+// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
 #ifndef ANDROIDEXAMPLEPROXY_H_
 #define ANDROIDEXAMPLEPROXY_H_

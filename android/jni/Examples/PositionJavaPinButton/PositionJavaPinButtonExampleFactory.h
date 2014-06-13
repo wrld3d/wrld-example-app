@@ -1,9 +1,4 @@
-/*
- * PositionJavaPinButtonExampleFactory.h
- *
- *  Created on: Dec 10, 2013
- *      Author: kimbleoperations
- */
+// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
 #ifndef POSITIONJAVAPINBUTTONEXAMPLEFACTORY_H_
 #define POSITIONJAVAPINBUTTONEXAMPLEFACTORY_H_

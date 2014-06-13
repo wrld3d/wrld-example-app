@@ -1,9 +1,4 @@
-/*
- * ShowJavaPlaceJumpUIExample.h
- *
- *  Created on: Oct 30, 2013
- *      Author: kimbleoperations
- */
+// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
 #ifndef SHOWJAVAPLACEJUMPUIEXAMPLE_H_
 #define SHOWJAVAPLACEJUMPUIEXAMPLE_H_

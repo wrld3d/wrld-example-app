@@ -1,3 +1,5 @@
+// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+
 package com.eegeo.web;
 
 import java.io.UnsupportedEncodingException;

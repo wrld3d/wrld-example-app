@@ -1,4 +1,4 @@
-//  Copyright (c) 2014 eeGeo. All rights reserved.
+// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
 #ifndef FRAMERATEREGULATOR_H_
 #define FRAMERATEREGULATOR_H_

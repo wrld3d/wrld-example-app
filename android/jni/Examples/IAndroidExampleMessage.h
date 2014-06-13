@@ -1,6 +1,4 @@
-/*
- * IAndroidExampleMessage.h
- */
+// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
 #ifndef IANDROIDEXAMPLEMESSAGE_H_
 #define IANDROIDEXAMPLEMESSAGE_H_

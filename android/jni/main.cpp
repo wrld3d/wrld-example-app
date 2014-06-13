@@ -1,3 +1,5 @@
+// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+
 #include <jni.h>
 #include "AppRunner.h"
 #include "AppProxy.h"
