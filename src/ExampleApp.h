@@ -7,7 +7,7 @@
 #include "EegeoWorld.h"
 #include "ExampleController.h"
 
-class ExampleApp
+class ExampleApp : private Eegeo::NonCopyable
 {
 private:
 	Eegeo::Camera::GlobeCamera::GlobeCameraController* m_pGlobeCameraController;
