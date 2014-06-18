@@ -46,7 +46,7 @@ RouteSimulationExample::RouteSimulationExample(RouteService& routeService,
         Eegeo::Rendering::AsyncTexturing::IAsyncTextureRequestor& textureRequestor,
         Eegeo::Camera::GlobeCamera::GlobeCameraController& defaultCamera,
         Eegeo::Location::IInterestPointProvider& interestPointProvider,
-        RouteSimulationGlobeCameraControllerFactory routeSimulationGlobeCameraControllerFactory,
+        RouteSimulationGlobeCameraControllerFactory& routeSimulationGlobeCameraControllerFactory,
         const IRouteSimulationExampleViewFactory& routeSimulationExampleViewFactory,
         EegeoWorld& world)
 	:m_routeService(routeService)
@@ -140,10 +140,12 @@ void RouteSimulationExample::Initialise()
 
 	Eegeo::Camera::GlobeCamera::GlobeCameraTouchControllerConfiguration touchConfiguration = Eegeo::Camera::GlobeCamera::GlobeCameraTouchControllerConfiguration::CreateDefault();
 	touchConfiguration.tiltEnabled = true;
+    
+    RouteSimulationGlobeCameraControllerConfig routeSimCameraConfig = RouteSimulationGlobeCameraControllerConfig::CreateDefault();
 
-	m_pRouteSessionFollowCameraController = m_routeSimulationGlobeCameraControllerFactory.Create(false, *m_pSessionAlternatingSpeedChanger, touchConfiguration);
+	m_pRouteSessionFollowCameraController = m_routeSimulationGlobeCameraControllerFactory.Create(false, touchConfiguration, routeSimCameraConfig);
 	m_pRouteSessionFollowCameraController->SetView(37.7858, -122.401, 0, 1781.0f);
-	m_pRouteSessionFollowCameraController->StartFollowingSession();
+	m_pRouteSessionFollowCameraController->StartFollowingSession(m_pSessionAlternatingSpeedChanger);
 
 	// Observe the progress along the route
 	m_pExampleObserver = Eegeo_NEW(RouteSimulationExampleObserver)(m_pViewBindingForCycleSession, m_pModel);
@@ -353,7 +355,7 @@ Route* RouteSimulationExample::BuildRoute() const
 	                                  .AddPoint(37.793707,-122.392578, altitudeMeters)
 	                                  .FinishRoute();
 
-	const Eegeo::Routes::Style::RouteStyle style(Eegeo::Routes::Style::RouteStyle::JoinStyleArc, m_routeThicknessPolicy);
+	const Eegeo::Routes::Style::RouteStyle style(Eegeo::Routes::Style::RouteStyle::JoinStyleArc, &m_routeThicknessPolicy, Eegeo::Routes::Style::RouteStyle::DebugStyleNone);
 	return m_routeService.CreateRoute(points, style, false);
 }
 

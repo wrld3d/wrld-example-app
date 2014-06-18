@@ -15,11 +15,14 @@ class RouteSimulationExampleFactory : public IExampleFactory
 	Eegeo::EegeoWorld& m_world;
 	const IRouteSimulationExampleViewFactory& m_routeSimulationViewFactory;
 	Eegeo::Camera::GlobeCamera::GlobeCameraController& m_globeCameraController;
+    Eegeo::Routes::Simulation::Camera::RouteSimulationGlobeCameraControllerFactory* m_pRouteSimulationGlobeCameraControllerFactory;
 
 public:
 	RouteSimulationExampleFactory(Eegeo::EegeoWorld& world,
 	                              Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController,
 	                              const IRouteSimulationExampleViewFactory& routeSimulationViewFactory);
+    
+    ~RouteSimulationExampleFactory();
 
 	std::string ExampleName() const;
 

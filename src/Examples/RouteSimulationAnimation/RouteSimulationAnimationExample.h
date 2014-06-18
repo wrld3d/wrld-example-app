@@ -38,6 +38,7 @@ private:
 	Eegeo::Rendering::AsyncTexturing::IAsyncTextureRequestor& m_textureRequestor;
 	Eegeo::Camera::GlobeCamera::GlobeCameraController& m_defaultCamera;
 	Eegeo::Camera::ICameraProvider& m_cameraProvider;
+    Eegeo::Routes::Simulation::Camera::RouteSimulationGlobeCameraControllerFactory& m_routeSimulationGlobeCameraControllerFactory;
 	Eegeo::EegeoWorld& m_world;
 	float m_modelAnimationSpeed;
 
@@ -47,11 +48,11 @@ private:
 	Eegeo::Routes::Style::Thickness::IdentityRouteThicknessPolicy m_routeThicknessPolicy;
 	GlobeCameraStateRestorer m_globeCameraStateRestorer;
 
-	Eegeo::Routes::Simulation::RouteSimulationSession* m_pSessionCamera;
+	Eegeo::Routes::Simulation::RouteSimulationSession* m_pRouteSimulationSession;
 
 	Eegeo::Routes::Simulation::View::RouteSimulationModelBinding* m_pViewBindingForCameraSession;
 
-	Eegeo::Routes::Simulation::Camera::RouteSimulationGlobeCameraControllerFactory m_routeSimulationGlobeCameraControllerFactory;
+	
 	Eegeo::Routes::Simulation::Camera::RouteSimulationGlobeCameraController* m_pRouteSessionFollowCameraController;
 
 	void CalculateTransform(Eegeo::m44& transform);
@@ -65,7 +66,7 @@ public:
 	                                Eegeo::Rendering::GLState& glState,
 	                                Eegeo::Helpers::IFileIO& fileIO,
 	                                Eegeo::Rendering::AsyncTexturing::IAsyncTextureRequestor& textureRequestor,
-	                                Eegeo::Routes::Simulation::Camera::RouteSimulationGlobeCameraControllerFactory routeSimulationGlobeCameraControllerFactory,
+	                                Eegeo::Routes::Simulation::Camera::RouteSimulationGlobeCameraControllerFactory& routeSimulationGlobeCameraControllerFactory,
 	                                Eegeo::EegeoWorld& eegeoWorld);
 
 	static std::string GetName()

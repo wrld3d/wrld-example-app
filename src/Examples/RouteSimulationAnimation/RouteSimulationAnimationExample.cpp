@@ -22,7 +22,7 @@ RouteSimulationAnimationExample::RouteSimulationAnimationExample(
     Eegeo::Rendering::GLState& glState,
     Eegeo::Helpers::IFileIO& fileIO,
     Eegeo::Rendering::AsyncTexturing::IAsyncTextureRequestor& textureRequestor,
-    RouteSimulationGlobeCameraControllerFactory routeSimulationGlobeCameraControllerFactory,
+    RouteSimulationGlobeCameraControllerFactory& routeSimulationGlobeCameraControllerFactory,
     EegeoWorld& world)
 	:m_routeService(routeService)
 	,m_routeSimulationService(routeSimulationService)
@@ -38,7 +38,7 @@ RouteSimulationAnimationExample::RouteSimulationAnimationExample(
 	,m_pRoute(NULL)
 	,m_pModel(NULL)
 	,m_modelAnimationSpeed(1.f/30.f)
-	,m_pSessionCamera(NULL)
+	,m_pRouteSimulationSession(NULL)
 	,m_pViewBindingForCameraSession(NULL)
 	,m_pRouteSessionFollowCameraController(NULL)
 	,m_globeCameraStateRestorer(defaultCamera)
@@ -57,21 +57,23 @@ void RouteSimulationAnimationExample::Initialise()
 	//check out http://sdk.eegeo.com/developers/mobiledocs/routes
 	m_pRoute = BuildRoute();
 
-	m_pSessionCamera = m_routeSimulationService.BeginRouteSimulationSession(*m_pRoute);
+	m_pRouteSimulationSession = m_routeSimulationService.BeginRouteSimulationSession(*m_pRoute);
 
 	Eegeo::m44 transform;
 	CalculateTransform(transform);
 
-	m_pViewBindingForCameraSession = m_routeSimulationViewService.CreateBinding(*m_pSessionCamera, pCharacter, transform);
+	m_pViewBindingForCameraSession = m_routeSimulationViewService.CreateBinding(*m_pRouteSimulationSession, pCharacter, transform);
 
-	m_pSessionCamera->StartPlaybackFromBeginning();
+	m_pRouteSimulationSession->StartPlaybackFromBeginning();
 
 	Eegeo::Camera::GlobeCamera::GlobeCameraTouchControllerConfiguration touchConfiguration = Eegeo::Camera::GlobeCamera::GlobeCameraTouchControllerConfiguration::CreateDefault();
 	touchConfiguration.tiltEnabled = true;
 
-	m_pRouteSessionFollowCameraController = m_routeSimulationGlobeCameraControllerFactory.Create(false, *m_pSessionCamera, touchConfiguration);
+    RouteSimulationGlobeCameraControllerConfig routeSimCameraConfig = RouteSimulationGlobeCameraControllerConfig::CreateDefault();
+    
+	m_pRouteSessionFollowCameraController = m_routeSimulationGlobeCameraControllerFactory.Create(false, touchConfiguration, routeSimCameraConfig);
 	m_pRouteSessionFollowCameraController->SetView(37.7858, -122.401, 0, 781.0f);
-	m_pRouteSessionFollowCameraController->StartFollowingSession();
+	m_pRouteSessionFollowCameraController->StartFollowingSession(m_pRouteSimulationSession);
 
 }
 
@@ -106,13 +108,13 @@ void RouteSimulationAnimationExample::Update(float dt)
 		return;
 	}
 
-	if(m_pSessionCamera->IsRouteCompleted())
+	if(m_pRouteSimulationSession->IsRouteCompleted())
 	{
-		m_pSessionCamera->TogglePlaybackDirection();
-		m_pSessionCamera->Unpause();
+		m_pRouteSimulationSession->TogglePlaybackDirection();
+		m_pRouteSimulationSession->Unpause();
 	}
 
-	Eegeo_TTY("%f metres from start of route. %f percent.\n", m_pSessionCamera->GetDistanceFromStartInMetres(),(m_pSessionCamera->GetDistanceFromStartInMetres() / m_pRoute->GetLength())*100.0f);
+	Eegeo_TTY("%f metres from start of route. %f percent.\n", m_pRouteSimulationSession->GetDistanceFromStartInMetres(),(m_pRouteSimulationSession->GetDistanceFromStartInMetres() / m_pRoute->GetLength())*100.0f);
 
 	Eegeo::m44 transform;
 	CalculateTransform(transform);
@@ -126,11 +128,16 @@ void RouteSimulationAnimationExample::Update(float dt)
 
 void RouteSimulationAnimationExample::Suspend()
 {
+    if (m_pRouteSessionFollowCameraController)
+    {
+        m_pRouteSessionFollowCameraController->StopFollowingSession();
+    }
+    
 	m_routeSimulationViewService.DestroyBinding(m_pViewBindingForCameraSession);
 
-	m_routeSimulationService.EndRouteSimulationSession(m_pSessionCamera);
+	m_routeSimulationService.EndRouteSimulationSession(m_pRouteSimulationSession);
 
-	m_pSessionCamera = NULL;
+	m_pRouteSimulationSession = NULL;
 
 	m_routeService.DestroyRoute(m_pRoute);
 	m_pRoute = NULL;
@@ -177,7 +184,7 @@ Route* RouteSimulationAnimationExample::BuildRoute()
 	                                  .AddPoint(37.793707,-122.392578, altitudeMeters)
 	                                  .FinishRoute();
 
-	const Eegeo::Routes::Style::RouteStyle style(Eegeo::Routes::Style::RouteStyle::JoinStyleArc, m_routeThicknessPolicy);
+	const Eegeo::Routes::Style::RouteStyle style(Eegeo::Routes::Style::RouteStyle::JoinStyleArc, &m_routeThicknessPolicy, Eegeo::Routes::Style::RouteStyle::DebugStyleNone);
 	return m_routeService.CreateRoute(points, style, false);
 }
 
@@ -196,7 +203,7 @@ void RouteSimulationAnimationExample::CalculateTransform(Eegeo::m44& transform)
 	const float scaleModifier = 100.f;
 	const float minimumScale = 3.f;
 
-	const Eegeo::dv3& position = m_pSessionCamera->GetCurrentPositionEcef();
+	const Eegeo::dv3& position = m_pRouteSimulationSession->GetCurrentPositionEcef();
 	float scaleAsFunctionOfAltitude = Eegeo::Helpers::TransformHelpers::ComputeModelScaleForConstantScreenSize(
 	                                      m_cameraProvider.GetRenderCamera(),
 	                                      position

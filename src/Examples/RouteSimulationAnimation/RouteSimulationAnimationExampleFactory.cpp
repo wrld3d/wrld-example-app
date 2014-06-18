@@ -10,17 +10,24 @@ RouteSimulationAnimationExampleFactory::RouteSimulationAnimationExampleFactory(E
         Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController)
 	: m_world(world)
 	, m_globeCameraController(globeCameraController)
+    , m_pRouteSimulationGlobeCameraControllerFactory(NULL)
 {
+    m_pRouteSimulationGlobeCameraControllerFactory = new Eegeo::Routes::Simulation::Camera::RouteSimulationGlobeCameraControllerFactory
+        (                                                                                                                                        m_world.GetTerrainHeightProvider(),
+            m_world.GetEnvironmentFlatteningService(),
+            m_world.GetResourceCeilingProvider(),
+            m_world.GetCollisionMeshResourceProvider()
+        );
+}
 
+
+RouteSimulationAnimationExampleFactory::~RouteSimulationAnimationExampleFactory()
+{
+    delete m_pRouteSimulationGlobeCameraControllerFactory;
 }
 
 IExample* RouteSimulationAnimationExampleFactory::CreateExample() const
 {
-	Eegeo::Routes::Simulation::Camera::RouteSimulationGlobeCameraControllerFactory factory(m_world.GetTerrainHeightProvider(),
-	        m_world.GetEnvironmentFlatteningService(),
-	        m_world.GetResourceCeilingProvider(),
-	        m_world.GetCollisionMeshResourceProvider());
-
 	return new Examples::RouteSimulationAnimationExample(m_world.GetRouteService(),
 	        m_world.GetRouteSimulationService(),
 	        m_world.GetRouteSimulationViewService(),
@@ -29,7 +36,7 @@ IExample* RouteSimulationAnimationExampleFactory::CreateExample() const
 	        m_world.GetRenderContext().GetGLState(),
 	        m_world.GetFileIO(),
 	        m_world.GetLocalAsyncTextureLoader(),
-	        factory,
+	        *m_pRouteSimulationGlobeCameraControllerFactory,
 	        m_world);
 }
 
