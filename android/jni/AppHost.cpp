@@ -303,8 +303,8 @@ void AppHost::DestroyExamples()
 	delete m_pAndroidRouteMatchingExampleViewFactory;
 	delete m_pAndroidRouteSimulationExampleViewFactory;
 
-	delete m_pAndroidExampleControllerView;
 	delete m_pExampleController;
+	delete m_pAndroidExampleControllerView;
 }
 
 
