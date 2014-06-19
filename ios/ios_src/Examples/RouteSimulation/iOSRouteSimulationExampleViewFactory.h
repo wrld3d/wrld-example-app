@@ -1,10 +1,4 @@
-//
-//  iOSRouteSimulationExampleViewFactory.h
-//  ExampleApp
-//
-//  Created by Scott on 19/05/2014.
-//  Copyright (c) 2014 eeGeo. All rights reserved.
-//
+// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
 #ifndef __ExampleApp__iOSRouteSimulationExampleViewFactory__
 #define __ExampleApp__iOSRouteSimulationExampleViewFactory__
@@ -16,17 +10,17 @@
 
 namespace Examples
 {
-    class iOSRouteSimulationExampleViewFactory : public IRouteSimulationExampleViewFactory, private Eegeo::NonCopyable
-    {
-        UIView* m_pView;
-        
-    public:
-        iOSRouteSimulationExampleViewFactory(UIView* pView);
-        
-        ~iOSRouteSimulationExampleViewFactory();
-        
-        IRouteSimulationExampleView* CreateRouteSimulationExampleView() const;
-    };
+class iOSRouteSimulationExampleViewFactory : public IRouteSimulationExampleViewFactory, private Eegeo::NonCopyable
+{
+	UIView* m_pView;
+
+public:
+	iOSRouteSimulationExampleViewFactory(UIView* pView);
+
+	~iOSRouteSimulationExampleViewFactory();
+
+	IRouteSimulationExampleView* CreateRouteSimulationExampleView() const;
+};
 }
 
 #endif /* defined(__ExampleApp__iOSRouteSimulationExampleViewFactory__) */

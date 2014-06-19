@@ -1,6 +1,4 @@
-/*
- * AndroidExampleControllerProxy.h
- */
+// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
 #ifndef ANDROIDEXAMPLECONTROLLERPROXY_H_
 #define ANDROIDEXAMPLECONTROLLERPROXY_H_

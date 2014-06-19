@@ -1,9 +1,4 @@
-/*
- * JavaHudCrossThreadCommunicationProxy.cpp
- *
- *  Created on: May 23, 2014
- *      Author: kimbleoperations
- */
+// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
 #include "JavaHudCrossThreadCommunicationProxy.h"
 #include "JavaHudCrossThreadCommunicationExample.h"
@@ -20,7 +15,6 @@ JNIEXPORT void JNICALL Java_com_eegeo_examples_ThemeReaderWriterHud_setCurrentTh
 	std::string nameString = chars;
 	jenv->ReleaseStringUTFChars(name, chars);
 
-	//create a an item to set the theme and post it to our thread safe queue for deferred execution on native main thread
 	Examples::JavaHudCrossThreadCommunicationExample* pExample = (Examples::JavaHudCrossThreadCommunicationExample*)(nativeObjectPtr);
 
 	pExample->SetCurrentThemeByName(nameString);
@@ -30,7 +24,6 @@ JNIEXPORT void JNICALL Java_com_eegeo_examples_ThemeReaderWriterHud_readCurrentT
 		JNIEnv* jenv, jobject obj,
 		jlong nativeObjectPtr)
 {
-	//create a an item to read the theme and post it to our thread safe queue for deferred execution on native main thread
 	Examples::JavaHudCrossThreadCommunicationExample* pExample = (Examples::JavaHudCrossThreadCommunicationExample*)(nativeObjectPtr);
 
 	pExample->PostCurrentThemeNameToHud();

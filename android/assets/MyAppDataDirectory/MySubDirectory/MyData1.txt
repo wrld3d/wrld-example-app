@@ -1,1 +1,0 @@
-This is MyData1.txt in MyAppDataDirectory/MySubDirectory

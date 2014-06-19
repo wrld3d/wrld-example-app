@@ -1,3 +1,5 @@
+// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+
 package com.eegeo.examples;
 
 import android.util.Log;
@@ -9,7 +11,7 @@ import android.widget.RelativeLayout;
 import com.eegeo.MainActivity;
 import com.eegeo.R;
 
-public class RouteSimulationExampleHud 
+public class RouteSimulationExampleHud
 {
 	private MainActivity m_activity;
 	private View m_view;

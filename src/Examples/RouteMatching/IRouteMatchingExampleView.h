@@ -1,10 +1,4 @@
-//
-//  IRouteMatchingExampleView.h
-//  ExampleApp
-//
-//  Created by Scott on 19/05/2014.
-//  Copyright (c) 2014 eeGeo. All rights reserved.
-//
+// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
 #ifndef ExampleApp_IRouteMatchingExampleView_h
 #define ExampleApp_IRouteMatchingExampleView_h
@@ -14,15 +8,15 @@
 
 namespace Examples
 {
-    class IRouteMatchingExampleView
-    {
-    public:
-        virtual ~IRouteMatchingExampleView() { }
-        
-        virtual void AddMatchingToggledHandler(IUIActionHandler& handler)=0;
-        
-        virtual void RemoveMatchingToggledHandler(IUIActionHandler& handler)=0;
-    };
+class IRouteMatchingExampleView
+{
+public:
+	virtual ~IRouteMatchingExampleView() { }
+
+	virtual void AddMatchingToggledHandler(IUIActionHandler& handler)=0;
+
+	virtual void RemoveMatchingToggledHandler(IUIActionHandler& handler)=0;
+};
 }
 
 #endif

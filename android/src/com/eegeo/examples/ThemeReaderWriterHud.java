@@ -1,3 +1,5 @@
+// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+
 package com.eegeo.examples;
 
 import android.util.Log;
@@ -14,7 +16,7 @@ import com.eegeo.R;
 
 //this is the java companion type to native JavaHudCrossThreadCommunicationExample
 //
-public class ThemeReaderWriterHud 
+public class ThemeReaderWriterHud
 {
 	private MainActivity m_activity;
 	private View m_view;

@@ -1,4 +1,4 @@
-//  Copyright (c) 2014 eeGeo. All rights reserved.
+// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
 #ifndef APPRUNNER_H_
 #define APPRUNNER_H_
@@ -28,11 +28,11 @@ private:
 	const std::string& m_apiKey;
 	AndroidNativeState* m_pNativeState;
 
-    GlDisplayService m_displayService;
+	GlDisplayService m_displayService;
 	void ReleaseDisplay();
 	bool TryBindDisplay();
 
-    AppHost* m_pAppHost;
+	AppHost* m_pAppHost;
 	void CreateAppHost();
 };
 

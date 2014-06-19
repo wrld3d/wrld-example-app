@@ -1,3 +1,5 @@
+// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+
 package com.eegeo;
 
 import android.os.Bundle;
@@ -94,20 +96,35 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback
     }
 
 	@Override
-	public void surfaceCreated(SurfaceHolder holder) 
+	protected void onPause()
+	{
+		pauseNativeCode();
+		super.onPause();
+	}
+
+	@Override
+	protected void onDestroy()
+	{
+		super.onStop();
+		destroyNativeCode();
+		m_nativeAppWindowPtr = 0;
+	}
+
+	@Override
+	public void surfaceCreated(SurfaceHolder holder)
 	{
 		//nothing to do
 	}
 
 	@Override
-	public void surfaceDestroyed(SurfaceHolder holder) 
+	public void surfaceDestroyed(SurfaceHolder holder)
 	{
 		m_surfaceHolder = null;
 		setNativeSurface(null);
 	}
-	
+
 	@Override
-	public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) 
+	public void surfaceChanged(SurfaceHolder holder, int format, int width, int height)
 	{
 		m_surfaceHolder = holder;
 		setNativeSurface(m_surfaceHolder.getSurface());

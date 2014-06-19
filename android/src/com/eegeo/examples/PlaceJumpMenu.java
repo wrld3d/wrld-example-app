@@ -1,3 +1,5 @@
+// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+
 package com.eegeo.examples;
 
 import android.util.Log;
@@ -13,13 +15,13 @@ import com.eegeo.R;
 
 //this is the java companion type to native ShowJavaPlaceJumpUIExample
 //
-public class PlaceJumpMenu 
+public class PlaceJumpMenu
 {
 	private MainActivity m_activity;
 	private View m_view;
-    
-    public static native void visitLocation(long nativeCallerPointer, String location);
-    
+
+	public static native void visitLocation(long nativeCallerPointer, String location);
+
 	public PlaceJumpMenu(MainActivity activity)
     {
     	m_activity = activity;

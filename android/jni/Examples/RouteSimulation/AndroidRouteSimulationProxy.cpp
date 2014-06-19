@@ -1,12 +1,9 @@
-/*
- * AndroidRouteSimulationProxy.cpp
- */
+// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
 #include "AndroidRouteSimulationProxy.h"
 #include "AndroidRouteSimulationExampleView.h"
 
 using namespace Examples;
-
 
 JNIEXPORT void JNICALL Java_com_eegeo_examples_RouteSimulationExampleHud_ToggleFollowCamera(
 		JNIEnv* jenv, jobject obj,

@@ -1,4 +1,4 @@
-//  Copyright (c) 2014 eeGeo. All rights reserved.
+// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
 #ifndef APPHOST_H_
 #define APPHOST_H_
@@ -64,7 +64,6 @@ public:
 	void SetCameraLocation(const Eegeo::Space::LatLongAltitude& interestPoint, double distanceToInterestPoint, double orientationInDegrees);
 	void SendCameraLocationToGUI();
 
-	// Suspect.
 	void SetSharedSurface(EGLSurface sharedSurface);
 	void SetViewportOffset(float x, float y);
 
@@ -88,8 +87,8 @@ private:
 	Eegeo::Camera::GlobeCamera::GlobeCameraInterestPointProvider* m_pInterestPointProvider;
 	AppInputDelegate* m_pAppInputDelegate;
 
-    Eegeo::Resources::Terrain::Heights::TerrainHeightRepository m_terrainHeightRepository;
-    Eegeo::Resources::Terrain::Heights::TerrainHeightProvider m_terrainHeightProvider;
+	Eegeo::Resources::Terrain::Heights::TerrainHeightRepository m_terrainHeightRepository;
+	Eegeo::Resources::Terrain::Heights::TerrainHeightProvider m_terrainHeightProvider;
 
 	Eegeo::Android::Input::AndroidInputHandler m_inputHandler;
 	Eegeo::UI::NativeInput::Android::AndroidInputBoxFactory m_androidInputBoxFactory;

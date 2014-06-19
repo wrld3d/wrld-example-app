@@ -1,6 +1,4 @@
-/*
- * AndroidRouteSimulationProxy.h
- */
+// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
 #ifndef ANDROIDROUTESIMULATIONPROXY_H_
 #define ANDROIDROUTESIMULATIONPROXY_H_

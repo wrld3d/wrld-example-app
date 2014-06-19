@@ -1,8 +1,4 @@
-/*
- * ExampleCameraJumpController.cpp
- *
- *  Created on: Nov 6, 2013
- */
+// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
 #include "ExampleCameraJumpController.h"
 #include "GlobeCameraController.h"
@@ -13,10 +9,10 @@
 #include "ITouchController.h"
 
 ExampleCameraJumpController::ExampleCameraJumpController(
-		Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController,
-		Eegeo::Camera::GlobeCamera::GlobeCameraTouchController& cameraTouchController)
-: m_cameraController(cameraController)
-, m_cameraTouchController(cameraTouchController)
+    Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController,
+    Eegeo::Camera::GlobeCamera::GlobeCameraTouchController& cameraTouchController)
+	: m_cameraController(cameraController)
+	, m_cameraTouchController(cameraTouchController)
 {
 
 }

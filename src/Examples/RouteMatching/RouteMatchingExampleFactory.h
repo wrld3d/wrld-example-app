@@ -1,10 +1,4 @@
-//
-//  RouteMatchingExampleFactory.h
-//  ExampleApp
-//
-//  Created by Scott on 21/05/2014.
-//  Copyright (c) 2014 eeGeo. All rights reserved.
-//
+// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
 #ifndef __ExampleApp__RouteMatchingExampleFactory__
 #define __ExampleApp__RouteMatchingExampleFactory__
@@ -16,21 +10,21 @@
 
 namespace Examples
 {
-    class RouteMatchingExampleFactory : public IExampleFactory
-    {
-        Eegeo::EegeoWorld& m_world;
-        const IRouteMatchingExampleViewFactory& m_routeMatchingViewFactory;
-        Eegeo::Camera::GlobeCamera::GlobeCameraController& m_globeCameraController;
-        
-    public:
-        RouteMatchingExampleFactory(Eegeo::EegeoWorld& world,
-                                    const IRouteMatchingExampleViewFactory& routeMatchingViewFactory,
-                                    Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController);
-        
-        std::string ExampleName() const;
+class RouteMatchingExampleFactory : public IExampleFactory
+{
+	Eegeo::EegeoWorld& m_world;
+	const IRouteMatchingExampleViewFactory& m_routeMatchingViewFactory;
+	Eegeo::Camera::GlobeCamera::GlobeCameraController& m_globeCameraController;
 
-        IExample* CreateExample() const;
-    };
+public:
+	RouteMatchingExampleFactory(Eegeo::EegeoWorld& world,
+	                            const IRouteMatchingExampleViewFactory& routeMatchingViewFactory,
+	                            Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController);
+
+	std::string ExampleName() const;
+
+	IExample* CreateExample() const;
+};
 }
 
 #endif /* defined(__ExampleApp__RouteMatchingExampleFactory__) */

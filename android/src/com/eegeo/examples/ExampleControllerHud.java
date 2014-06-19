@@ -1,3 +1,5 @@
+// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+
 package com.eegeo.examples;
 
 import android.util.Log;
@@ -13,7 +15,7 @@ import android.widget.Spinner;
 import com.eegeo.MainActivity;
 import com.eegeo.R;
 
-public class ExampleControllerHud 
+public class ExampleControllerHud
 {
 	private MainActivity m_activity = null;
 	private View m_view = null;

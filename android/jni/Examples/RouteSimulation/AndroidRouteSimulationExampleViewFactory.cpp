@@ -1,6 +1,4 @@
-//
-//  AndroidRouteSimulationExampleViewFactory.cpp
-//
+// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
 #include "AndroidRouteSimulationExampleViewFactory.h"
 #include "AndroidRouteSimulationExampleView.h"
@@ -11,12 +9,12 @@ AndroidRouteSimulationExampleViewFactory::AndroidRouteSimulationExampleViewFacto
 		AndroidNativeState& nativeState)
 : m_nativeState(nativeState)
 {
-    
+
 }
 
 AndroidRouteSimulationExampleViewFactory::~AndroidRouteSimulationExampleViewFactory()
 {
-    
+
 }
 
 IRouteSimulationExampleView* AndroidRouteSimulationExampleViewFactory::CreateRouteSimulationExampleView() const

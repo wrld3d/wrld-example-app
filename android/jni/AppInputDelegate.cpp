@@ -1,9 +1,9 @@
-//  Copyright (c) 2014 eeGeo. All rights reserved.
+// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
 #include "AppInputDelegate.h"
 
 AppInputDelegate::AppInputDelegate(ExampleApp& exampleApp)
-:m_exampleApp(exampleApp)
+	:m_exampleApp(exampleApp)
 {
 
 }

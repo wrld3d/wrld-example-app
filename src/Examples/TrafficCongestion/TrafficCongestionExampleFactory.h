@@ -1,10 +1,4 @@
-//
-//  TrafficCongestionExampleFactory.h
-//  ExampleApp
-//
-//  Created by Scott on 21/05/2014.
-//  Copyright (c) 2014 eeGeo. All rights reserved.
-//
+// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
 #ifndef __ExampleApp__TrafficCongestionExampleFactory__
 #define __ExampleApp__TrafficCongestionExampleFactory__
@@ -15,19 +9,19 @@
 
 namespace Examples
 {
-    class TrafficCongestionExampleFactory : public IExampleFactory
-    {
-        Eegeo::EegeoWorld& m_world;
-        Eegeo::Camera::GlobeCamera::GlobeCameraController& m_globeCameraController;
-        
-    public:
-        TrafficCongestionExampleFactory(Eegeo::EegeoWorld& world,
-                                        Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController);
+class TrafficCongestionExampleFactory : public IExampleFactory
+{
+	Eegeo::EegeoWorld& m_world;
+	Eegeo::Camera::GlobeCamera::GlobeCameraController& m_globeCameraController;
 
-        std::string ExampleName() const;
-        
-        IExample* CreateExample() const;
-    };
+public:
+	TrafficCongestionExampleFactory(Eegeo::EegeoWorld& world,
+	                                Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController);
+
+	std::string ExampleName() const;
+
+	IExample* CreateExample() const;
+};
 }
 
 #endif /* defined(__ExampleApp__TrafficCongestionExampleFactory__) */

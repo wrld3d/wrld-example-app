@@ -1,6 +1,4 @@
-/*
- * AndroidExampleControllerView.h
- */
+// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
 #ifndef ANDROIDEXAMPLECONTROLLERVIEW_H_
 #define ANDROIDEXAMPLECONTROLLERVIEW_H_
@@ -26,34 +24,34 @@ namespace Examples
 	public:
 		AndroidExampleControllerView(AndroidNativeState& androidNativeState);
 
-        ~AndroidExampleControllerView();
+	~AndroidExampleControllerView();
 
-        void Show();
+	void Show();
 
-        void AddSelectPreviousExampleHandler(IUIActionHandler& handler);
+	void AddSelectPreviousExampleHandler(IUIActionHandler& handler);
 
-        void RemoveSelectPreviousExampleHandler(IUIActionHandler& handler);
+	void RemoveSelectPreviousExampleHandler(IUIActionHandler& handler);
 
-        void AddSelectNextExampleHandler(IUIActionHandler& handler);
+	void AddSelectNextExampleHandler(IUIActionHandler& handler);
 
-        void SetCurrentExampleName(const std::string& name);
+	void SetCurrentExampleName(const std::string& name);
 
-        void RemoveSelectNextExampleHandler(IUIActionHandler& handler);
+	void RemoveSelectNextExampleHandler(IUIActionHandler& handler);
 
-        void AddExampleSelectedHandler(IUIActionHandler& handler);
+	void AddExampleSelectedHandler(IUIActionHandler& handler);
 
-        void RemoveExampleSelectedHandler(IUIActionHandler& handler);
+	void RemoveExampleSelectedHandler(IUIActionHandler& handler);
 
-        std::string GetSelectedExample();
+	std::string GetSelectedExample();
 
-        void UpdateSelectedExample();
+	void UpdateSelectedExample();
 
-        void SelectPrevious();
+	void SelectPrevious();
 
-        void SelectNext();
+	void SelectNext();
 
-        void PopulateExampleList(const std::vector<std::string>& exampleNames);
-	};
+	void PopulateExampleList(const std::vector<std::string>& exampleNames);
+};
 }
 
 

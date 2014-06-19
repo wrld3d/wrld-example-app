@@ -1,9 +1,4 @@
-/*
- * main.h
- *
- *  Created on: Oct 29, 2013
- *      Author: kimbleoperations
- */
+// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
 #ifndef MAIN_H_
 #define MAIN_H_

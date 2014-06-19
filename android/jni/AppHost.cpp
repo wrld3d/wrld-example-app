@@ -1,4 +1,4 @@
-//  Copyright (c) 2014 eeGeo. All rights reserved.
+// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
 #include "AppHost.h"
 #include "AndroidWebRequestService.hpp"
@@ -85,8 +85,13 @@ AppHost::AppHost(
 	m_pEnvironmentFlatteningService = new Eegeo::Rendering::EnvironmentFlatteningService();
 
 	std::set<std::string> customApplicationAssetDirectories;
-	customApplicationAssetDirectories.insert("MyAppDataDirectory");
-	customApplicationAssetDirectories.insert("MyAppDataDirectory/MySubDirectory");
+	customApplicationAssetDirectories.insert("load_model_example");
+	customApplicationAssetDirectories.insert("pin_over_model_example");
+	customApplicationAssetDirectories.insert("pins_example");
+	customApplicationAssetDirectories.insert("pins_with_attached_java_ui_example");
+	customApplicationAssetDirectories.insert("pod_animation_example");
+	customApplicationAssetDirectories.insert("route_simulation_example");
+	customApplicationAssetDirectories.insert("route_simulation_animation_example");
 	m_pFileIO = new AndroidFileIO(&nativeState, customApplicationAssetDirectories);
 
 	m_pHttpCache = new AndroidHttpCache(m_pFileIO, "http://d2xvsc8j92rfya.cloudfront.net/");
@@ -112,36 +117,36 @@ AppHost::AppHost(
 	Eegeo::Config::PlatformConfig config = Eegeo::Android::AndroidPlatformConfigBuilder(deviceModel).Build();
 
 	m_pWorld = new Eegeo::EegeoWorld(
-			apiKey,
-            m_pHttpCache,
-            m_pFileIO,
-            m_pTextureLoader,
-            m_pAndroidWebLoadRequestFactory,
-            m_pTaskQueue,
-            *m_pRenderContext,
-            m_pLighting,
-            m_pFogging,
-            m_pShadowing,
-            m_pAndroidLocationService,
-            m_pBlitter,
-            m_pAndroidUrlEncoder,
-            *m_pInterestPointProvider,
-            m_androidNativeUIFactories,
-            &m_terrainHeightRepository,
-            &m_terrainHeightProvider,
-            m_pEnvironmentFlatteningService,
-            environmentCharacterSet,
-            config,
-            NULL,
-            "",
-            "Default-Landscape@2x~ipad.png"
-            );
+	    apiKey,
+	    m_pHttpCache,
+	    m_pFileIO,
+	    m_pTextureLoader,
+	    m_pAndroidWebLoadRequestFactory,
+	    m_pTaskQueue,
+	    *m_pRenderContext,
+	    m_pLighting,
+	    m_pFogging,
+	    m_pShadowing,
+	    m_pAndroidLocationService,
+	    m_pBlitter,
+	    m_pAndroidUrlEncoder,
+	    *m_pInterestPointProvider,
+	    m_androidNativeUIFactories,
+	    &m_terrainHeightRepository,
+	    &m_terrainHeightProvider,
+	    m_pEnvironmentFlatteningService,
+	    environmentCharacterSet,
+	    config,
+	    NULL,
+	    "",
+	    "Default-Landscape@2x~ipad.png"
+	);
 
 	m_pInputProcessor = new Eegeo::Android::Input::AndroidInputProcessor(&m_inputHandler, m_pRenderContext->GetScreenWidth(), m_pRenderContext->GetScreenHeight());
 
-    ConfigureExamples();
+	ConfigureExamples();
 
-    m_pAppInputDelegate = new AppInputDelegate(*m_pApp);
+	m_pAppInputDelegate = new AppInputDelegate(*m_pApp);
 	m_inputHandler.AddDelegateInputHandler(m_pAppInputDelegate);
 }
 
@@ -161,56 +166,56 @@ AppHost::~AppHost()
 
 	m_pHttpCache->FlushInMemoryCacheRepresentation();
 
-    delete m_pInterestPointProvider;
-    m_pInterestPointProvider = NULL;
+	delete m_pInterestPointProvider;
+	m_pInterestPointProvider = NULL;
 
-    delete m_pWorld;
-    m_pWorld = NULL;
+	delete m_pWorld;
+	m_pWorld = NULL;
 
-    delete m_pAndroidUrlEncoder;
-    m_pAndroidUrlEncoder = NULL;
+	delete m_pAndroidUrlEncoder;
+	m_pAndroidUrlEncoder = NULL;
 
-    delete m_pAndroidLocationService;
-    m_pAndroidLocationService = NULL;
+	delete m_pAndroidLocationService;
+	m_pAndroidLocationService = NULL;
 
-    delete m_pRenderContext;
-    m_pRenderContext = NULL;
+	delete m_pRenderContext;
+	m_pRenderContext = NULL;
 
-    delete m_pShadowing;
-    m_pShadowing = NULL;
+	delete m_pShadowing;
+	m_pShadowing = NULL;
 
-    delete m_pFogging;
-    m_pFogging = NULL;
+	delete m_pFogging;
+	m_pFogging = NULL;
 
-    delete m_pLighting;
-    m_pLighting = NULL;
+	delete m_pLighting;
+	m_pLighting = NULL;
 
-    delete m_pFileIO;
-    m_pFileIO = NULL;
+	delete m_pFileIO;
+	m_pFileIO = NULL;
 
-    delete m_pHttpCache;
-    m_pHttpCache = NULL;
+	delete m_pHttpCache;
+	m_pHttpCache = NULL;
 
-    delete m_pTextureLoader;
-    m_pTextureLoader = NULL;
+	delete m_pTextureLoader;
+	m_pTextureLoader = NULL;
 
-    Eegeo::EffectHandler::Reset();
-    Eegeo::EffectHandler::Shutdown();
-    m_pBlitter->Shutdown();
-    delete m_pBlitter;
-    m_pBlitter = NULL;
+	Eegeo::EffectHandler::Reset();
+	Eegeo::EffectHandler::Shutdown();
+	m_pBlitter->Shutdown();
+	delete m_pBlitter;
+	m_pBlitter = NULL;
 
-    delete m_pAndroidWebRequestService;
-    m_pAndroidWebRequestService = NULL;
+	delete m_pAndroidWebRequestService;
+	m_pAndroidWebRequestService = NULL;
 
-    delete m_pAndroidWebLoadRequestFactory;
-    m_pAndroidWebLoadRequestFactory = NULL;
+	delete m_pAndroidWebLoadRequestFactory;
+	m_pAndroidWebLoadRequestFactory = NULL;
 
-    delete m_pEnvironmentFlatteningService;
-    m_pEnvironmentFlatteningService = NULL;
+	delete m_pEnvironmentFlatteningService;
+	m_pEnvironmentFlatteningService = NULL;
 
-    delete m_pTaskQueue;
-    m_pTaskQueue = NULL;
+	delete m_pTaskQueue;
+	m_pTaskQueue = NULL;
 }
 
 void AppHost::OnResume()
@@ -223,7 +228,7 @@ void AppHost::OnPause()
 {
 	m_pApp->OnPause();
 	m_pHttpCache->FlushInMemoryCacheRepresentation();
-    m_pAndroidLocationService->StopListening();
+	m_pAndroidLocationService->StopListening();
 }
 
 void AppHost::SetSharedSurface(EGLSurface sharedSurface)
@@ -271,25 +276,25 @@ void AppHost::RegisterAndroidSpecificExamples()
 	m_pAndroidRouteMatchingExampleViewFactory = new Examples::AndroidRouteMatchingExampleViewFactory(
 			m_nativeState);
 
-    m_pExampleController->RegisterExample(new Examples::RouteMatchingExampleFactory(
-		*m_pWorld,
-		*m_pAndroidRouteMatchingExampleViewFactory,
-		m_pApp->GetCameraController()));
+	m_pExampleController->RegisterExample(new Examples::RouteMatchingExampleFactory(
+	        *m_pWorld,
+	        *m_pAndroidRouteMatchingExampleViewFactory,
+	        m_pApp->GetCameraController()));
 
     m_pAndroidRouteSimulationExampleViewFactory = new Examples::AndroidRouteSimulationExampleViewFactory(
     		m_nativeState);
 
-    m_pExampleController->RegisterExample(new Examples::RouteSimulationExampleFactory(
-    		*m_pWorld,
-    		m_pApp->GetCameraController(),
-    		*m_pAndroidRouteSimulationExampleViewFactory));
+	m_pExampleController->RegisterExample(new Examples::RouteSimulationExampleFactory(
+	        *m_pWorld,
+	        m_pApp->GetCameraController(),
+	        *m_pAndroidRouteSimulationExampleViewFactory));
 
     m_pExampleController->RegisterExample(new Examples::JavaHudCrossThreadCommunicationExampleFactory(*m_pWorld, m_nativeState, m_pApp->GetCameraController()));
     m_pExampleController->RegisterExample(new Examples::PinsWithAttachedJavaUIExampleFactory(*m_pWorld, m_nativeState, m_pApp->GetCameraController()));
     m_pExampleController->RegisterExample(new Examples::PositionJavaPinButtonExampleFactory(*m_pWorld, m_nativeState, m_pApp->GetCameraController()));
 
-    m_pExampleCameraJumpController = new ExampleCameraJumpController(m_pApp->GetCameraController(), m_pApp->GetTouchController());
-    m_pExampleController->RegisterExample(new Examples::ShowJavaPlaceJumpUIExampleFactory(*m_pExampleCameraJumpController, m_pApp->GetCameraController(), m_nativeState));
+	m_pExampleCameraJumpController = new ExampleCameraJumpController(m_pApp->GetCameraController(), m_pApp->GetTouchController());
+	m_pExampleController->RegisterExample(new Examples::ShowJavaPlaceJumpUIExampleFactory(*m_pExampleCameraJumpController, m_pApp->GetCameraController(), m_nativeState));
 }
 
 void AppHost::DestroyExamples()

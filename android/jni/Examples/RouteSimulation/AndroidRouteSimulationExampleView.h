@@ -1,6 +1,4 @@
-//
-//  AndroidRouteSimulationExampleView.h
-//
+// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
 #ifndef __ExampleApp__AndroidRouteSimulationExampleView__
 #define __ExampleApp__AndroidRouteSimulationExampleView__
@@ -13,20 +11,18 @@
 
 namespace Examples
 {
-	class AndroidRouteSimulationProxy;
+class AndroidRouteSimulationExampleView : public IRouteSimulationExampleView, private Eegeo::NonCopyable
+{
+	std::vector<IUIActionHandler*> m_followCameraToggledHandlers;
+	std::vector<IUIActionHandler*> m_directionChangedHandlers;
+	std::vector<IUIActionHandler*> m_increaseSpeedHandlers;
+	std::vector<IUIActionHandler*> m_decreaseSpeedHandlers;
+	std::vector<IUIActionHandler*> m_rotateToFollowToggledHandlers;
+	std::vector<IUIActionHandler*> m_roadSideChangedHandlers;
 
-    class AndroidRouteSimulationExampleView : public IRouteSimulationExampleView, private Eegeo::NonCopyable
-    {
-        std::vector<IUIActionHandler*> m_followCameraToggledHandlers;
-        std::vector<IUIActionHandler*> m_directionChangedHandlers;
-        std::vector<IUIActionHandler*> m_increaseSpeedHandlers;
-        std::vector<IUIActionHandler*> m_decreaseSpeedHandlers;
-        std::vector<IUIActionHandler*> m_rotateToFollowToggledHandlers;
-        std::vector<IUIActionHandler*> m_roadSideChangedHandlers;
-
-    	AndroidNativeState& m_nativeState;
-    	jclass m_routeSimulationExampleHudClass;
-    	jobject m_routeSimulationExampleHud;
+	AndroidNativeState& m_nativeState;
+	jclass m_routeSimulationExampleHudClass;
+	jobject m_routeSimulationExampleHud;
         
     public:
         AndroidRouteSimulationExampleView(
@@ -37,41 +33,41 @@ namespace Examples
         
         void AddFollowCameraToggledHandler(IUIActionHandler& handler);
 
-        void RemoveFollowCameraToggledHandler(IUIActionHandler& handler);
+	void RemoveFollowCameraToggledHandler(IUIActionHandler& handler);
 
-        void ToggleFollowCamera();
+	void ToggleFollowCamera();
 
-        void AddFollowCameraDirectionChangedHandler(IUIActionHandler& handler);
+	void AddFollowCameraDirectionChangedHandler(IUIActionHandler& handler);
 
-        void RemoveFollowCameraDirectionChangedHandler(IUIActionHandler& handler);
+	void RemoveFollowCameraDirectionChangedHandler(IUIActionHandler& handler);
 
-        void ToggleCameraDirection();
+	void ToggleCameraDirection();
 
-        void AddIncreaseSpeedHandler(IUIActionHandler& handler);
+	void AddIncreaseSpeedHandler(IUIActionHandler& handler);
 
-        void RemoveIncreaseSpeedHandler(IUIActionHandler& handler);
+	void RemoveIncreaseSpeedHandler(IUIActionHandler& handler);
 
-        void IncreaseSpeed();
+	void IncreaseSpeed();
 
-        void AddDecreaseSpeedHandler(IUIActionHandler& handler);
+	void AddDecreaseSpeedHandler(IUIActionHandler& handler);
 
-        void RemoveDecreaseSpeedHandler(IUIActionHandler& handler);
+	void RemoveDecreaseSpeedHandler(IUIActionHandler& handler);
 
-        void DecreaseSpeed();
+	void DecreaseSpeed();
 
-        void AddRotateToFollowToggledHandler(IUIActionHandler& handler);
+	void AddRotateToFollowToggledHandler(IUIActionHandler& handler);
 
-        void RemoveRotateToFollowToggledHandler(IUIActionHandler& handler);
+	void RemoveRotateToFollowToggledHandler(IUIActionHandler& handler);
 
-        void ToggleRotateToFollow();
+	void ToggleRotateToFollow();
 
-        void AddSideOfRoadToDriveOnToggledHandler(IUIActionHandler& handler);
+	void AddSideOfRoadToDriveOnToggledHandler(IUIActionHandler& handler);
 
-        void RemoveSideOfRoadToDriveOnToggledHandler(IUIActionHandler& handler);
+	void RemoveSideOfRoadToDriveOnToggledHandler(IUIActionHandler& handler);
 
-        void ChangeSideOfRoad();
+	void ChangeSideOfRoad();
 
-    };
+};
 }
 
 #endif /* defined(__ExampleApp__AndroidRouteSimulationExampleView__) */

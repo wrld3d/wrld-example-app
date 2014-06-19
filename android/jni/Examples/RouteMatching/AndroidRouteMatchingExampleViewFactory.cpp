@@ -1,6 +1,4 @@
-//
-//  AndroidRouteMatchingExampleViewFactory.cpp
-//
+// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
 #include "AndroidRouteMatchingExampleViewFactory.h"
 #include "AndroidRouteMatchingExampleView.h"
@@ -11,12 +9,12 @@ AndroidRouteMatchingExampleViewFactory::AndroidRouteMatchingExampleViewFactory(
 		AndroidNativeState& nativeState)
 : m_nativeState(nativeState)
 {
-    
+
 }
 
 AndroidRouteMatchingExampleViewFactory::~AndroidRouteMatchingExampleViewFactory()
 {
-    
+
 }
 
 IRouteMatchingExampleView* AndroidRouteMatchingExampleViewFactory::CreateRouteMatchingExampleView() const

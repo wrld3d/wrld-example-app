@@ -1,10 +1,4 @@
-//
-//  IRouteMatchingExampleViewFactory.h
-//  ExampleApp
-//
-//  Created by Scott on 19/05/2014.
-//  Copyright (c) 2014 eeGeo. All rights reserved.
-//
+// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
 #ifndef ExampleApp_IRouteMatchingExampleViewFactory_h
 #define ExampleApp_IRouteMatchingExampleViewFactory_h
@@ -13,14 +7,14 @@
 
 namespace Examples
 {
-    class IRouteMatchingExampleViewFactory
-    {
-    public:
-        
-        virtual ~IRouteMatchingExampleViewFactory() { }
-        
-        virtual IRouteMatchingExampleView* CreateRouteMatchingExampleView() const = 0;
-    };
+class IRouteMatchingExampleViewFactory
+{
+public:
+
+	virtual ~IRouteMatchingExampleViewFactory() { }
+
+	virtual IRouteMatchingExampleView* CreateRouteMatchingExampleView() const = 0;
+};
 }
 
 #endif

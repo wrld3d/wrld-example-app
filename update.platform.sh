@@ -1,31 +1,58 @@
-#!/bin/sh
+#!/bin/bash
 
-platformVersion=$1
+usage() { echo "Usage: $0 -p android|ios [-c]"; echo "  -p -> platform, ios or android (required)"; echo "  -c -> cpp11 support"; 1>&2; exit 1; }
 
-if [ -z "$platformVersion" ]; then
-    echo "\nError: Target platform must be provided.\n\nValid platform choices:\n\t- ios\n\t- android\n"
-    exit 1
+baseUrl="http://s3.amazonaws.com/eegeo-static/"
+srcPackageName="INVALID"
+destPackageName="./sdk.package.tar.gz"
+includeDestination="INVALID"
+sdkDestination="INVALID"
+
+while getopts "p:c" o; do
+    case "${o}" in
+        p)
+            p=${OPTARG}
+            if [ "$p" != "ios" ]; then
+               if [ "$p" != "android" ]; then
+                 usage
+               fi
+            fi
+            ;;
+        c)
+            c="cpp11"
+            ;;
+        *)
+            usage
+            ;;
+    esac
+done
+shift $((OPTIND-1))
+
+if [ -z "${p}" ]; then
+    usage
 fi
 
-if [ $platformVersion == ios ]; then
-    echo "Updating iOS platform..."
-    rm -rf ./ios/Include
-	curl http://s3.amazonaws.com/eegeo-static/sdk.package.tar.gz > ./sdk.package.ios.tar.gz
-	tar -zxvf ./sdk.package.ios.tar.gz
-	rm -f ./sdk.package.ios.tar.gz
-	value=`cat ./sdk.package/version.txt`
-	echo "Platform version --> $value"
-	mv ./sdk.package/ ./ios/Include
-elif [ $platformVersion == android ]; then
-    echo "Updating Android platform..."
-    rm -rf ./android/libs
-	curl http://s3.amazonaws.com/eegeo-static/sdk.package.android.tar.gz > ./sdk.package.android.tar.gz
-	tar -zxvf ./sdk.package.android.tar.gz
-	rm -f ./sdk.package.android.tar.gz
-	value=`cat ./sdk.package.android/version.txt`
-	echo "Platform version --> $value"
-	mv ./sdk.package.android/ ./android/libs
+if [ "$p" == "ios" ]; then
+   srcPackageName="sdk.package.ios"
+   includeDestination="./ios/Include"
+   sdkDestination="sdk.package"
+elif [ "$p" == "android" ]; then
+   srcPackageName="sdk.package.android"
+   includeDestination="./android/libs"
+   sdkDestination="sdk.package.android"
+fi
+
+if [ "$c" == "cpp11" ]; then
+   srcPackageName="$srcPackageName.cpp11.tar.gz"
 else
-    echo "Error: Target platform must be 'ios' or 'android'"
-    exit 1
+   srcPackageName="$srcPackageName.tar.gz"
 fi
+
+echo "Updating $p platform..."
+rm -rf $includeDestination
+curl $baseUrl$srcPackageName > ./$destPackageName
+tar -zxvf $destPackageName
+rm -f ./$destPackageName
+platformVersion=`cat ./$sdkDestination/version.txt`
+echo "Platform version --> $platformVersion"
+mv ./$sdkDestination $includeDestination

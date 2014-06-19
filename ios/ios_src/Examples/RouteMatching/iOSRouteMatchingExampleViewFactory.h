@@ -1,10 +1,4 @@
-//
-//  iOSRouteMatchingExampleViewFactory.h
-//  ExampleApp
-//
-//  Created by Scott on 19/05/2014.
-//  Copyright (c) 2014 eeGeo. All rights reserved.
-//
+// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
 #ifndef __ExampleApp__iOSRouteMatchingExampleViewFactory__
 #define __ExampleApp__iOSRouteMatchingExampleViewFactory__
@@ -15,17 +9,17 @@
 
 namespace Examples
 {
-    class iOSRouteMatchingExampleViewFactory : public IRouteMatchingExampleViewFactory, private Eegeo::NonCopyable
-    {
-        UIView* m_pView;
-        
-    public:
-        iOSRouteMatchingExampleViewFactory(UIView* pView);
-        
-        virtual ~iOSRouteMatchingExampleViewFactory();
-        
-        virtual IRouteMatchingExampleView* CreateRouteMatchingExampleView() const;
-    };
+class iOSRouteMatchingExampleViewFactory : public IRouteMatchingExampleViewFactory, private Eegeo::NonCopyable
+{
+	UIView* m_pView;
+
+public:
+	iOSRouteMatchingExampleViewFactory(UIView* pView);
+
+	virtual ~iOSRouteMatchingExampleViewFactory();
+
+	virtual IRouteMatchingExampleView* CreateRouteMatchingExampleView() const;
+};
 }
 
 #endif /* defined(__ExampleApp__iOSRouteMatchingExampleViewFactory__) */

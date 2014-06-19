@@ -1,9 +1,4 @@
-/*
- * ShowJavaPlaceJumpUIExampleFactory.h
- *
- *  Created on: Dec 10, 2013
- *      Author: kimbleoperations
- */
+// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
 #ifndef SHOWJAVAPLACEJUMPUIEXAMPLEFACTORY_H_
 #define SHOWJAVAPLACEJUMPUIEXAMPLEFACTORY_H_
@@ -16,22 +11,22 @@
 
 namespace Examples
 {
-    class ShowJavaPlaceJumpUIExampleFactory : public IExampleFactory
-    {
-    	ExampleCameraJumpController& m_exampleCameraJumpController;
-		Eegeo::Camera::GlobeCamera::GlobeCameraController& m_cameraController;
-        AndroidNativeState& m_nativeState;
+class ShowJavaPlaceJumpUIExampleFactory : public IExampleFactory
+{
+	ExampleCameraJumpController& m_exampleCameraJumpController;
+	Eegeo::Camera::GlobeCamera::GlobeCameraController& m_cameraController;
+	AndroidNativeState& m_nativeState;
 
-    public:
-        ShowJavaPlaceJumpUIExampleFactory(
-        		ExampleCameraJumpController& exampleCameraJumpController,
-        		Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController,
-        		AndroidNativeState& nativeState);
+public:
+	ShowJavaPlaceJumpUIExampleFactory(
+	    ExampleCameraJumpController& exampleCameraJumpController,
+	    Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController,
+	    AndroidNativeState& nativeState);
 
-        std::string ExampleName() const;
+	std::string ExampleName() const;
 
-        IExample* CreateExample() const;
-    };
+	IExample* CreateExample() const;
+};
 }
 
 

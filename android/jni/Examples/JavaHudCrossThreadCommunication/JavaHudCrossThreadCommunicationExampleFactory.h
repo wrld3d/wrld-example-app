@@ -1,6 +1,4 @@
-/*
- * JavaHudCrossThreadCommunicationExampleFactory.h
- */
+// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
 #ifndef JAVAHUDCROSSTHREADCOMMUNICATIONEXAMPLEFACTORY_H_
 #define JAVAHUDCROSSTHREADCOMMUNICATIONEXAMPLEFACTORY_H_

@@ -1,10 +1,4 @@
-//
-//  IRouteSimulationExampleViewFactory.h
-//  ExampleApp
-//
-//  Created by Scott on 19/05/2014.
-//  Copyright (c) 2014 eeGeo. All rights reserved.
-//
+// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
 #ifndef ExampleApp_IRouteSimulationExampleViewFactory_h
 #define ExampleApp_IRouteSimulationExampleViewFactory_h
@@ -13,14 +7,14 @@
 
 namespace Examples
 {
-    class IRouteSimulationExampleViewFactory
-    {
-    public:
-        
-        virtual ~IRouteSimulationExampleViewFactory() { }
-        
-        virtual IRouteSimulationExampleView* CreateRouteSimulationExampleView() const = 0;
-    };
+class IRouteSimulationExampleViewFactory
+{
+public:
+
+	virtual ~IRouteSimulationExampleViewFactory() { }
+
+	virtual IRouteSimulationExampleView* CreateRouteSimulationExampleView() const = 0;
+};
 }
 
 

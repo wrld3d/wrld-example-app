@@ -1,3 +1,5 @@
+// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+
 package com.eegeo.ui.nativealerts;
 
 import android.app.Activity;
@@ -8,9 +10,9 @@ import android.util.Log;
 public class SingleOptionAlertBox
 {
 	private static AlertDialog m_inputBox = null;
-	
+
 	public native static void callback(int ptr);
-	
+
 	public static void close()
 	{
 		if(m_inputBox!=null)
@@ -19,7 +21,7 @@ public class SingleOptionAlertBox
 			m_inputBox = null;
 		}
 	}
-	
+
 	public static void popUpBox(
 			final Activity a,
 			final String title,
