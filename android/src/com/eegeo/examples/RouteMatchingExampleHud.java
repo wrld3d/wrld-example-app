@@ -16,42 +16,17 @@ public class RouteMatchingExampleHud
 	private MainActivity m_activity;
 	private View m_view;
 
-	public static native void ToggleRouteMatching(long nativeCallerPointer, long nativeCallerProxyPointer);
+	public static native void ToggleRouteMatching(long nativeCallerPointer);
 
-	public RouteMatchingExampleHud(MainActivity activity, long nativeCallerPointer, long nativeCallerProxyPointer)
+	public RouteMatchingExampleHud(MainActivity activity, long nativeCallerPointer)
 	{
 		m_activity = activity;
 		m_view = null;
 
-		createHud(nativeCallerPointer, nativeCallerProxyPointer);
+		createHud(nativeCallerPointer);
 	}
-
-	private void createHud(final long nativeCallerPointer, final long nativeCallerProxyPointer)
-	{
-		m_activity.runOnUiThread(new Runnable()
-		{
-			public void run()
-			{
-				try
-				{
-					final RelativeLayout uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
-					m_view = m_activity.getLayoutInflater().inflate(R.layout.route_matching_menu_layout, uiRoot, false);
-
-					final Button toggleRouteMatching = (Button)m_view.findViewById(R.id.toggle_match);
-
-					toggleRouteMatching.setOnClickListener(new OnClickListener()
-					{
-						@Override
-						public void onClick(View v)
-						{
-							ToggleRouteMatching(nativeCallerPointer, nativeCallerProxyPointer);
-						}
-					});
-
-    	createHud(nativeCallerPointer, nativeCallerProxyPointer);
-    }
     
-    private void createHud(final long nativeCallerPointer, final long nativeCallerProxyPointer)
+    private void createHud(final long nativeCallerPointer)
     {	
         try
         {
@@ -63,7 +38,7 @@ public class RouteMatchingExampleHud
         	toggleRouteMatching.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                	ToggleRouteMatching(nativeCallerPointer, nativeCallerProxyPointer);
+                	ToggleRouteMatching(nativeCallerPointer);
                 }
             });
         	

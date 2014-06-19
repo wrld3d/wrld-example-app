@@ -29,7 +29,7 @@ namespace Examples
 
 		//get the constructor for the RouteMatchingExampleHud, which takes the activity, a pointer to 'this' as
 		//a parameter, and a flag to indicate if currently in follow mode.
-		jmethodID routeMatchingExampleHudConstructor = env->GetMethodID(routeMatchingExampleHudClass, "<init>", "(Lcom/eegeo/MainActivity;JJ)V");
+		jmethodID routeMatchingExampleHudConstructor = env->GetMethodID(routeMatchingExampleHudClass, "<init>", "(Lcom/eegeo/MainActivity;J)V");
 
 		jobject instance = env->NewObject(
 				m_routeMatchingExampleHudClass,
