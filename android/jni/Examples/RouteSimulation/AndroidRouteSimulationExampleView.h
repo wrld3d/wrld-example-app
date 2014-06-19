@@ -23,15 +23,15 @@ class AndroidRouteSimulationExampleView : public IRouteSimulationExampleView, pr
 	AndroidNativeState& m_nativeState;
 	jclass m_routeSimulationExampleHudClass;
 	jobject m_routeSimulationExampleHud;
-        
-    public:
-        AndroidRouteSimulationExampleView(
-        		AndroidNativeState& androidNativeState,
-        		bool usingFollowCamera);
-        
-        ~AndroidRouteSimulationExampleView();
-        
-        void AddFollowCameraToggledHandler(IUIActionHandler& handler);
+
+public:
+	AndroidRouteSimulationExampleView(
+	    AndroidNativeState& androidNativeState,
+	    bool usingFollowCamera);
+
+	~AndroidRouteSimulationExampleView();
+
+	void AddFollowCameraToggledHandler(IUIActionHandler& handler);
 
 	void RemoveFollowCameraToggledHandler(IUIActionHandler& handler);
 

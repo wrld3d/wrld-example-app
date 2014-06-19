@@ -62,7 +62,7 @@ private:
 	Eegeo::Rendering::AsyncTexturing::IAsyncTextureRequestor& m_textureRequestor;
 	Eegeo::Camera::GlobeCamera::GlobeCameraController& m_defaultCamera;
 	Eegeo::Location::IInterestPointProvider& m_interestPointProvider;
-    Eegeo::Routes::Simulation::Camera::RouteSimulationGlobeCameraControllerFactory& m_routeSimulationGlobeCameraControllerFactory;
+	Eegeo::Routes::Simulation::Camera::RouteSimulationGlobeCameraControllerFactory& m_routeSimulationGlobeCameraControllerFactory;
 	Eegeo::EegeoWorld& m_world;
 	const IRouteSimulationExampleViewFactory& m_routeSimulationExampleViewFactory;
 	IRouteSimulationExampleView* m_pRouteSimulationView;
@@ -89,7 +89,7 @@ private:
 
 	float m_linkSpeedMultiplier;
 
-	
+
 	Eegeo::Routes::Simulation::Camera::RouteSimulationGlobeCameraController* m_pRouteSessionFollowCameraController;
 
 	RouteSimulationExampleObserver* m_pExampleObserver;

@@ -11,18 +11,18 @@
 
 namespace Examples
 {
-	class AndroidExampleControllerView : public IExampleControllerView, private Eegeo::NonCopyable
-	{
-        std::vector<IUIActionHandler*> m_exampleUpdatedHandlers;
-        std::vector<IUIActionHandler*> m_nextHandlers;
-        std::vector<IUIActionHandler*> m_previousHandlers;
-    	AndroidNativeState& m_nativeState;
-    	jclass m_androidExampleControllerViewClass;
-    	jobject m_androidExampleControllerView;
-    	std::string m_selectedExampleName;
+class AndroidExampleControllerView : public IExampleControllerView, private Eegeo::NonCopyable
+{
+	std::vector<IUIActionHandler*> m_exampleUpdatedHandlers;
+	std::vector<IUIActionHandler*> m_nextHandlers;
+	std::vector<IUIActionHandler*> m_previousHandlers;
+	AndroidNativeState& m_nativeState;
+	jclass m_androidExampleControllerViewClass;
+	jobject m_androidExampleControllerView;
+	std::string m_selectedExampleName;
 
-	public:
-		AndroidExampleControllerView(AndroidNativeState& androidNativeState);
+public:
+	AndroidExampleControllerView(AndroidNativeState& androidNativeState);
 
 	~AndroidExampleControllerView();
 

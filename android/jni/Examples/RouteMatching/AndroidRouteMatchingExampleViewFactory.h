@@ -9,18 +9,18 @@
 
 namespace Examples
 {
-    class AndroidRouteMatchingExampleViewFactory : public IRouteMatchingExampleViewFactory, private Eegeo::NonCopyable
-    {
-    	AndroidNativeState& m_nativeState;
+class AndroidRouteMatchingExampleViewFactory : public IRouteMatchingExampleViewFactory, private Eegeo::NonCopyable
+{
+	AndroidNativeState& m_nativeState;
 
-    public:
-    	AndroidRouteMatchingExampleViewFactory(
-    			AndroidNativeState& androidNativeState);
-        
-        virtual ~AndroidRouteMatchingExampleViewFactory();
-        
-        virtual IRouteMatchingExampleView* CreateRouteMatchingExampleView() const;
-    };
+public:
+	AndroidRouteMatchingExampleViewFactory(
+	    AndroidNativeState& androidNativeState);
+
+	virtual ~AndroidRouteMatchingExampleViewFactory();
+
+	virtual IRouteMatchingExampleView* CreateRouteMatchingExampleView() const;
+};
 }
 
 #endif /* defined(__ExampleApp__AndroidRouteMatchingExampleViewFactory__) */

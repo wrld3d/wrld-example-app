@@ -42,14 +42,14 @@ class AppHost : protected Eegeo::NonCopyable
 {
 public:
 	AppHost(
-			const std::string& apiKey,
-			AndroidNativeState& nativeState,
-			float displayWidth,
-			float displayHeight,
-		    EGLDisplay display,
-		    EGLSurface shareSurface,
-		    EGLContext resourceBuildShareContext
-			);
+	    const std::string& apiKey,
+	    AndroidNativeState& nativeState,
+	    float displayWidth,
+	    float displayHeight,
+	    EGLDisplay display,
+	    EGLSurface shareSurface,
+	    EGLContext resourceBuildShareContext
+	);
 	~AppHost();
 
 	void Update(float dt);
@@ -105,9 +105,9 @@ private:
 
 	Eegeo::Android::Input::AndroidInputProcessor* m_pInputProcessor;
 
-    void ConfigureExamples();
-    void DestroyExamples();
-    void RegisterAndroidSpecificExamples();
+	void ConfigureExamples();
+	void DestroyExamples();
+	void RegisterAndroidSpecificExamples();
 };
 
 #endif

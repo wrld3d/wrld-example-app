@@ -12,9 +12,9 @@ class AppRunner : Eegeo::NonCopyable
 {
 public:
 	AppRunner(
-			const std::string& apiKey,
-			AndroidNativeState* pNativeState
-			);
+	    const std::string& apiKey,
+	    AndroidNativeState* pNativeState
+	);
 	~AppRunner();
 
 	void Pause();

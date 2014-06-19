@@ -74,14 +74,14 @@ void ModifiedRenderingExample::Start()
 	m_pAlternativeShader = Eegeo::Rendering::Shaders::PackedDiffuseShader::Create(m_shaderIdGenerator.GetNextId());
 
 	m_pAlternativeMaterial = Eegeo_NEW(Eegeo::Rendering::Materials::PackedDiffuseMaterial)(
-	                           m_materialIdGenerator.GetNextId(),
-	                           "ExampleMaterial",
-	                           *m_pAlternativeShader,
-	                           *m_pAlternativeLighting,
-	                           m_placeHolderTexture.textureId,
-	                           Eegeo::Rendering::TextureMinify_NearestMipmap_Linear,
-	                           false,
-	                           false);
+	                             m_materialIdGenerator.GetNextId(),
+	                             "ExampleMaterial",
+	                             *m_pAlternativeShader,
+	                             *m_pAlternativeLighting,
+	                             m_placeHolderTexture.textureId,
+	                             Eegeo::Rendering::TextureMinify_NearestMipmap_Linear,
+	                             false,
+	                             false);
 }
 
 void ModifiedRenderingExample::Suspend()

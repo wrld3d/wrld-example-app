@@ -15,17 +15,17 @@ RouteSimulationExampleFactory::RouteSimulationExampleFactory(Eegeo::EegeoWorld& 
 	, m_routeSimulationViewFactory(routeSimulationViewFactory)
 {
 	m_pRouteSimulationGlobeCameraControllerFactory = new Eegeo::Routes::Simulation::Camera::RouteSimulationGlobeCameraControllerFactory
-        (
-            m_world.GetTerrainHeightProvider(),
-            m_world.GetEnvironmentFlatteningService(),
-            m_world.GetResourceCeilingProvider(),
-            m_world.GetCollisionMeshResourceProvider()
-        );
+	(
+	    m_world.GetTerrainHeightProvider(),
+	    m_world.GetEnvironmentFlatteningService(),
+	    m_world.GetResourceCeilingProvider(),
+	    m_world.GetCollisionMeshResourceProvider()
+	);
 }
 
 RouteSimulationExampleFactory::~RouteSimulationExampleFactory()
 {
-    delete m_pRouteSimulationGlobeCameraControllerFactory;
+	delete m_pRouteSimulationGlobeCameraControllerFactory;
 }
 
 IExample* RouteSimulationExampleFactory::CreateExample() const

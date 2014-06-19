@@ -30,9 +30,9 @@ DynamicText3DExample::DynamicText3DExample(Eegeo::Rendering::GLState& glState,
 	Eegeo::Space::EcefTangentBasis cameraInterestBasis;
 
 	Eegeo::Camera::CameraHelpers::EcefTangentBasisFromPointAndHeading(
-			Eegeo::Space::LatLong::FromDegrees(37.794907, -122.396954).ToECEF(),
-			0.0,
-			cameraInterestBasis);
+	    Eegeo::Space::LatLong::FromDegrees(37.794907, -122.396954).ToECEF(),
+	    0.0,
+	    cameraInterestBasis);
 
 	globeCameraController.SetView(cameraInterestBasis, 1781.0);
 }

@@ -111,11 +111,11 @@ JNIEXPORT void JNICALL Java_com_eegeo_MainActivity_setNativeSurface(JNIEnv* jenv
 		g_nativeState.window = NULL;
 	}
 
-    if (surface != NULL)
-    {
-    	g_nativeState.window = ANativeWindow_fromSurface(jenv, surface);
-    	g_pAppRunner->ActivateSurface();
-    }
+	if (surface != NULL)
+	{
+		g_nativeState.window = ANativeWindow_fromSurface(jenv, surface);
+		g_pAppRunner->ActivateSurface();
+	}
 }
 
 JNIEXPORT void JNICALL Java_com_eegeo_EegeoSurfaceView_processNativePointerDown(JNIEnv* jenv, jobject obj,

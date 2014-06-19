@@ -69,8 +69,8 @@ void RouteSimulationAnimationExample::Initialise()
 	Eegeo::Camera::GlobeCamera::GlobeCameraTouchControllerConfiguration touchConfiguration = Eegeo::Camera::GlobeCamera::GlobeCameraTouchControllerConfiguration::CreateDefault();
 	touchConfiguration.tiltEnabled = true;
 
-    RouteSimulationGlobeCameraControllerConfig routeSimCameraConfig = RouteSimulationGlobeCameraControllerConfig::CreateDefault();
-    
+	RouteSimulationGlobeCameraControllerConfig routeSimCameraConfig = RouteSimulationGlobeCameraControllerConfig::CreateDefault();
+
 	m_pRouteSessionFollowCameraController = m_routeSimulationGlobeCameraControllerFactory.Create(false, touchConfiguration, routeSimCameraConfig);
 	m_pRouteSessionFollowCameraController->SetView(37.7858, -122.401, 0, 781.0f);
 	m_pRouteSessionFollowCameraController->StartFollowingSession(m_pRouteSimulationSession);
@@ -128,11 +128,11 @@ void RouteSimulationAnimationExample::Update(float dt)
 
 void RouteSimulationAnimationExample::Suspend()
 {
-    if (m_pRouteSessionFollowCameraController)
-    {
-        m_pRouteSessionFollowCameraController->StopFollowingSession();
-    }
-    
+	if (m_pRouteSessionFollowCameraController)
+	{
+		m_pRouteSessionFollowCameraController->StopFollowingSession();
+	}
+
 	m_routeSimulationViewService.DestroyBinding(m_pViewBindingForCameraSession);
 
 	m_routeSimulationService.EndRouteSimulationSession(m_pRouteSimulationSession);

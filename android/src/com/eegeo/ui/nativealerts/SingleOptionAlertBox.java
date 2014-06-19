@@ -23,31 +23,33 @@ public class SingleOptionAlertBox
 	}
 
 	public static void popUpBox(
-			final Activity a,
-			final String title,
-			final String message,
-			final int ptr)
-    {
-    	try
-    	{
-    		AlertDialog.Builder builder = new AlertDialog.Builder(a);
-    		builder.setTitle(title);
-    		builder.setMessage(message);
-    		
-    		// Set up the buttons
-    		builder.setPositiveButton("OK", new DialogInterface.OnClickListener() { 
-    		    @Override
-    		    public void onClick(DialogInterface dialog, int which) {
-    		    	callback(ptr);
-    		    	m_inputBox = null;
-    		    }
-    		});
+	    final Activity a,
+	    final String title,
+	    final String message,
+	    final int ptr)
+	{
+		try
+		{
+			AlertDialog.Builder builder = new AlertDialog.Builder(a);
+			builder.setTitle(title);
+			builder.setMessage(message);
 
-    		m_inputBox = builder.show();
-    	}
-    	catch (Exception e)
-    	{
-        	Log.v("InputBox", e.getMessage() == null ? "Error, but no message?!" : e.getMessage());
-    	}    	
-    }
+			// Set up the buttons
+			builder.setPositiveButton("OK", new DialogInterface.OnClickListener()
+			{
+				@Override
+				public void onClick(DialogInterface dialog, int which)
+				{
+					callback(ptr);
+					m_inputBox = null;
+				}
+			});
+
+			m_inputBox = builder.show();
+		}
+		catch (Exception e)
+		{
+			Log.v("InputBox", e.getMessage() == null ? "Error, but no message?!" : e.getMessage());
+		}
+	}
 }

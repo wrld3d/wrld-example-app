@@ -6,9 +6,9 @@
 using namespace Examples;
 
 JNIEXPORT void JNICALL Java_com_eegeo_examples_ThemeReaderWriterHud_setCurrentTheme(
-		JNIEnv* jenv, jobject obj,
-		jlong nativeObjectPtr,
-		jstring name)
+    JNIEnv* jenv, jobject obj,
+    jlong nativeObjectPtr,
+    jstring name)
 {
 	//extract the string from java via the JNI
 	const char* chars = jenv->GetStringUTFChars(name, 0);
@@ -21,8 +21,8 @@ JNIEXPORT void JNICALL Java_com_eegeo_examples_ThemeReaderWriterHud_setCurrentTh
 }
 
 JNIEXPORT void JNICALL Java_com_eegeo_examples_ThemeReaderWriterHud_readCurrentThemeName(
-		JNIEnv* jenv, jobject obj,
-		jlong nativeObjectPtr)
+    JNIEnv* jenv, jobject obj,
+    jlong nativeObjectPtr)
 {
 	Examples::JavaHudCrossThreadCommunicationExample* pExample = (Examples::JavaHudCrossThreadCommunicationExample*)(nativeObjectPtr);
 

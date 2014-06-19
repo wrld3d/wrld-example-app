@@ -21,9 +21,9 @@ RouteDrawingExample::RouteDrawingExample(RouteService& routeService,
 	Eegeo::Space::EcefTangentBasis cameraInterestBasis;
 
 	Eegeo::Camera::CameraHelpers::EcefTangentBasisFromPointAndHeading(
-			Eegeo::Space::LatLong::FromDegrees(37.793348, -122.399035).ToECEF(),
-			354.824249,
-			cameraInterestBasis);
+	    Eegeo::Space::LatLong::FromDegrees(37.793348, -122.399035).ToECEF(),
+	    354.824249,
+	    cameraInterestBasis);
 
 	cameraController.SetView(cameraInterestBasis, 1374.298706);
 }

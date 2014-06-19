@@ -5,13 +5,13 @@
 #include "AndroidThreadHelper.h"
 
 AppRunner::AppRunner
-		(
-		const std::string& apiKey,
-		AndroidNativeState* pNativeState
-		)
-: m_apiKey(apiKey)
-, m_pNativeState(pNativeState)
-, m_pAppHost(NULL)
+(
+    const std::string& apiKey,
+    AndroidNativeState* pNativeState
+)
+	: m_apiKey(apiKey)
+	, m_pNativeState(pNativeState)
+	, m_pAppHost(NULL)
 {
 	Eegeo::Helpers::ThreadHelpers::SetThisThreadAsMainThread();
 }
@@ -32,15 +32,15 @@ void AppRunner::CreateAppHost()
 	if(m_pAppHost == NULL && m_displayService.IsDisplayAvailable())
 	{
 		m_pAppHost = Eegeo_NEW(AppHost)
-		(
-			m_apiKey,
-			*m_pNativeState,
-			m_displayService.GetDisplayWidth(),
-			m_displayService.GetDisplayHeight(),
-			m_displayService.GetDisplay(),
-			m_displayService.GetSharedSurface(),
-			m_displayService.GetResourceBuildSharedContext()
-		);
+		             (
+		                 m_apiKey,
+		                 *m_pNativeState,
+		                 m_displayService.GetDisplayWidth(),
+		                 m_displayService.GetDisplayHeight(),
+		                 m_displayService.GetDisplay(),
+		                 m_displayService.GetSharedSurface(),
+		                 m_displayService.GetResourceBuildSharedContext()
+		             );
 	}
 }
 

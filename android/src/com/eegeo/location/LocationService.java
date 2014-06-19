@@ -86,52 +86,54 @@ class LocationService
 		return exception;
 	}
 
-    public static boolean lastQuerySucceeded() {
-    	return bestLocation != null;
-    }
+	public static boolean lastQuerySucceeded()
+	{
+		return bestLocation != null;
+	}
 
-    public static boolean locationValid() {
-    	return bestLocation != null;
-    }
-    
-    public static void startListeningToUpdates(Activity a)
-    {
-    	if (!isListening)
-    	{
-	    	setupListenerAndLocationManager(a);
-    		forceLocationFromCachedProviders(LocationService.locationManager);
-	    	
-	    	try
-	    	{
-	    		if (LocationService.locationListener != null)
-	    		{
-	    			LocationService.locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, LocationService.locationListener);
-	    			LocationService.locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, LocationService.locationListener);
-	    		}
-	    	}
-	    	catch (Exception e)
-	    	{
-	        	Log.v("Location", e.getMessage());
-	    	}    
-    	}
-    }
-    
-    public static void stopListeningToUpdates(Activity a)
-    {
-    	if( isListening )
-    	{
-    		LocationService.locationManager.removeUpdates(LocationService.locationListener);
-    		tearDownListener();
-    	}
-    }
+	public static boolean locationValid()
+	{
+		return bestLocation != null;
+	}
 
-    public static void updateLocation(Activity a)
-    {
-    	LocationService.startListeningToUpdates(a);
-    }
-    
-    private static void forceLocationFromCachedProviders(LocationManager locationManager)
-    {
+	public static void startListeningToUpdates(Activity a)
+	{
+		if (!isListening)
+		{
+			setupListenerAndLocationManager(a);
+			forceLocationFromCachedProviders(LocationService.locationManager);
+
+			try
+			{
+				if (LocationService.locationListener != null)
+				{
+					LocationService.locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, LocationService.locationListener);
+					LocationService.locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, LocationService.locationListener);
+				}
+			}
+			catch (Exception e)
+			{
+				Log.v("Location", e.getMessage());
+			}
+		}
+	}
+
+	public static void stopListeningToUpdates(Activity a)
+	{
+		if( isListening )
+		{
+			LocationService.locationManager.removeUpdates(LocationService.locationListener);
+			tearDownListener();
+		}
+	}
+
+	public static void updateLocation(Activity a)
+	{
+		LocationService.startListeningToUpdates(a);
+	}
+
+	private static void forceLocationFromCachedProviders(LocationManager locationManager)
+	{
 		List<String> providers = locationManager.getProviders(true);
 		Location bestCachedLocation = null;
 		for (String provider : providers)

@@ -75,9 +75,9 @@ RouteSimulationExample::RouteSimulationExample(RouteService& routeService,
 	Eegeo::Space::EcefTangentBasis cameraInterestBasis;
 
 	Eegeo::Camera::CameraHelpers::EcefTangentBasisFromPointAndHeading(
-			Eegeo::Space::LatLong::FromDegrees(37.793348, -122.399035).ToECEF(),
-			354.824249,
-			cameraInterestBasis);
+	    Eegeo::Space::LatLong::FromDegrees(37.793348, -122.399035).ToECEF(),
+	    354.824249,
+	    cameraInterestBasis);
 
 	defaultCamera.SetView(cameraInterestBasis, 1374.298706);
 }
@@ -140,8 +140,8 @@ void RouteSimulationExample::Initialise()
 
 	Eegeo::Camera::GlobeCamera::GlobeCameraTouchControllerConfiguration touchConfiguration = Eegeo::Camera::GlobeCamera::GlobeCameraTouchControllerConfiguration::CreateDefault();
 	touchConfiguration.tiltEnabled = true;
-    
-    RouteSimulationGlobeCameraControllerConfig routeSimCameraConfig = RouteSimulationGlobeCameraControllerConfig::CreateDefault();
+
+	RouteSimulationGlobeCameraControllerConfig routeSimCameraConfig = RouteSimulationGlobeCameraControllerConfig::CreateDefault();
 
 	m_pRouteSessionFollowCameraController = m_routeSimulationGlobeCameraControllerFactory.Create(false, touchConfiguration, routeSimCameraConfig);
 	m_pRouteSessionFollowCameraController->SetView(37.7858, -122.401, 0, 1781.0f);

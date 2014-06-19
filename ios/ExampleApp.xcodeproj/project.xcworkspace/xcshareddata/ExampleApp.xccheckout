@@ -5,19 +5,19 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>DA79AE07-649F-4EF8-A50E-8D246D4A8069</string>
+	<string>C9821350-1959-4E67-AE8C-34D87A5B7349</string>
 	<key>IDESourceControlProjectName</key>
 	<string>ExampleApp</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>5B544AEB-AF9C-4865-8A59-D11E2EB20DCF</key>
+		<key>EC3E5146-DCCB-4D09-AF92-5A9BE18A8253</key>
 		<string>ssh://github.com/eegeo/mobile-sdk-harness.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>ios/ExampleApp.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>5B544AEB-AF9C-4865-8A59-D11E2EB20DCF</key>
+		<key>EC3E5146-DCCB-4D09-AF92-5A9BE18A8253</key>
 		<string>../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
@@ -25,14 +25,14 @@
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>5B544AEB-AF9C-4865-8A59-D11E2EB20DCF</string>
+	<string>EC3E5146-DCCB-4D09-AF92-5A9BE18A8253</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>5B544AEB-AF9C-4865-8A59-D11E2EB20DCF</string>
+			<string>EC3E5146-DCCB-4D09-AF92-5A9BE18A8253</string>
 			<key>IDESourceControlWCCName</key>
 			<string>mobile-sdk-harness</string>
 		</dict>

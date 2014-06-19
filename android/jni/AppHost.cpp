@@ -36,40 +36,40 @@ using namespace Eegeo::Android;
 using namespace Eegeo::Android::Input;
 
 AppHost::AppHost(
-		const std::string& apiKey,
-		AndroidNativeState& nativeState,
-		float displayWidth,
-		float displayHeight,
-	    EGLDisplay display,
-	    EGLSurface shareSurface,
-	    EGLContext resourceBuildShareContext
-		)
-:m_pTaskQueue(NULL)
-,m_pEnvironmentFlatteningService(NULL)
-,m_pAndroidWebLoadRequestFactory(NULL)
-,m_pAndroidWebRequestService(NULL)
-,m_pBlitter(NULL)
-,m_pTextureLoader(NULL)
-,m_pHttpCache(NULL)
-,m_pFileIO(NULL)
-,m_pLighting(NULL)
-,m_pFogging(NULL)
-,m_pShadowing(NULL)
-,m_pRenderContext(NULL)
-,m_pAndroidLocationService(NULL)
-,m_pAndroidUrlEncoder(NULL)
-,m_pWorld(NULL)
-,m_pInterestPointProvider(NULL)
-,m_androidInputBoxFactory(&nativeState)
-,m_androidKeyboardInputFactory(&nativeState, m_inputHandler)
-,m_androidAlertBoxFactory(&nativeState)
-,m_androidNativeUIFactories(m_androidAlertBoxFactory, m_androidInputBoxFactory, m_androidKeyboardInputFactory)
-,m_terrainHeightRepository()
-,m_terrainHeightProvider(&m_terrainHeightRepository)
-,m_pApp(NULL)
-,m_pExampleController(NULL)
-,m_pInputProcessor(NULL)
-,m_nativeState(nativeState)
+    const std::string& apiKey,
+    AndroidNativeState& nativeState,
+    float displayWidth,
+    float displayHeight,
+    EGLDisplay display,
+    EGLSurface shareSurface,
+    EGLContext resourceBuildShareContext
+)
+	:m_pTaskQueue(NULL)
+	,m_pEnvironmentFlatteningService(NULL)
+	,m_pAndroidWebLoadRequestFactory(NULL)
+	,m_pAndroidWebRequestService(NULL)
+	,m_pBlitter(NULL)
+	,m_pTextureLoader(NULL)
+	,m_pHttpCache(NULL)
+	,m_pFileIO(NULL)
+	,m_pLighting(NULL)
+	,m_pFogging(NULL)
+	,m_pShadowing(NULL)
+	,m_pRenderContext(NULL)
+	,m_pAndroidLocationService(NULL)
+	,m_pAndroidUrlEncoder(NULL)
+	,m_pWorld(NULL)
+	,m_pInterestPointProvider(NULL)
+	,m_androidInputBoxFactory(&nativeState)
+	,m_androidKeyboardInputFactory(&nativeState, m_inputHandler)
+	,m_androidAlertBoxFactory(&nativeState)
+	,m_androidNativeUIFactories(m_androidAlertBoxFactory, m_androidInputBoxFactory, m_androidKeyboardInputFactory)
+	,m_terrainHeightRepository()
+	,m_terrainHeightProvider(&m_terrainHeightRepository)
+	,m_pApp(NULL)
+	,m_pExampleController(NULL)
+	,m_pInputProcessor(NULL)
+	,m_nativeState(nativeState)
 {
 	Eegeo_ASSERT(resourceBuildShareContext != EGL_NO_CONTEXT);
 
@@ -274,24 +274,24 @@ void AppHost::ConfigureExamples()
 void AppHost::RegisterAndroidSpecificExamples()
 {
 	m_pAndroidRouteMatchingExampleViewFactory = new Examples::AndroidRouteMatchingExampleViewFactory(
-			m_nativeState);
+	    m_nativeState);
 
 	m_pExampleController->RegisterExample(new Examples::RouteMatchingExampleFactory(
 	        *m_pWorld,
 	        *m_pAndroidRouteMatchingExampleViewFactory,
 	        m_pApp->GetCameraController()));
 
-    m_pAndroidRouteSimulationExampleViewFactory = new Examples::AndroidRouteSimulationExampleViewFactory(
-    		m_nativeState);
+	m_pAndroidRouteSimulationExampleViewFactory = new Examples::AndroidRouteSimulationExampleViewFactory(
+	    m_nativeState);
 
 	m_pExampleController->RegisterExample(new Examples::RouteSimulationExampleFactory(
 	        *m_pWorld,
 	        m_pApp->GetCameraController(),
 	        *m_pAndroidRouteSimulationExampleViewFactory));
 
-    m_pExampleController->RegisterExample(new Examples::JavaHudCrossThreadCommunicationExampleFactory(*m_pWorld, m_nativeState, m_pApp->GetCameraController()));
-    m_pExampleController->RegisterExample(new Examples::PinsWithAttachedJavaUIExampleFactory(*m_pWorld, m_nativeState, m_pApp->GetCameraController()));
-    m_pExampleController->RegisterExample(new Examples::PositionJavaPinButtonExampleFactory(*m_pWorld, m_nativeState, m_pApp->GetCameraController()));
+	m_pExampleController->RegisterExample(new Examples::JavaHudCrossThreadCommunicationExampleFactory(*m_pWorld, m_nativeState, m_pApp->GetCameraController()));
+	m_pExampleController->RegisterExample(new Examples::PinsWithAttachedJavaUIExampleFactory(*m_pWorld, m_nativeState, m_pApp->GetCameraController()));
+	m_pExampleController->RegisterExample(new Examples::PositionJavaPinButtonExampleFactory(*m_pWorld, m_nativeState, m_pApp->GetCameraController()));
 
 	m_pExampleCameraJumpController = new ExampleCameraJumpController(m_pApp->GetCameraController(), m_pApp->GetTouchController());
 	m_pExampleController->RegisterExample(new Examples::ShowJavaPlaceJumpUIExampleFactory(*m_pExampleCameraJumpController, m_pApp->GetCameraController(), m_nativeState));

@@ -6,8 +6,8 @@
 using namespace Examples;
 
 AndroidRouteSimulationExampleViewFactory::AndroidRouteSimulationExampleViewFactory(
-		AndroidNativeState& nativeState)
-: m_nativeState(nativeState)
+    AndroidNativeState& nativeState)
+	: m_nativeState(nativeState)
 {
 
 }
@@ -19,5 +19,5 @@ AndroidRouteSimulationExampleViewFactory::~AndroidRouteSimulationExampleViewFact
 
 IRouteSimulationExampleView* AndroidRouteSimulationExampleViewFactory::CreateRouteSimulationExampleView() const
 {
-    return Eegeo_NEW(AndroidRouteSimulationExampleView)(m_nativeState, false);
+	return Eegeo_NEW(AndroidRouteSimulationExampleView)(m_nativeState, false);
 }

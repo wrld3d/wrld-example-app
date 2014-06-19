@@ -7,12 +7,12 @@
 using namespace Examples;
 
 JavaHudCrossThreadCommunicationExampleFactory::JavaHudCrossThreadCommunicationExampleFactory(
-		Eegeo::EegeoWorld& world,
-		AndroidNativeState& nativeState,
-        Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController)
-: m_world(world)
-, m_nativeState(nativeState)
-, m_globeCameraController(globeCameraController)
+    Eegeo::EegeoWorld& world,
+    AndroidNativeState& nativeState,
+    Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController)
+	: m_world(world)
+	, m_nativeState(nativeState)
+	, m_globeCameraController(globeCameraController)
 {
 
 }
@@ -20,11 +20,11 @@ JavaHudCrossThreadCommunicationExampleFactory::JavaHudCrossThreadCommunicationEx
 IExample* JavaHudCrossThreadCommunicationExampleFactory::CreateExample() const
 {
 	return new Examples::JavaHudCrossThreadCommunicationExample(
-    		m_nativeState,
-    		m_world.GetCityThemesService(),
-    		m_world.GetCityThemesRepository(),
-    		m_world.GetCityThemesUpdater(),
-    		m_globeCameraController);
+	           m_nativeState,
+	           m_world.GetCityThemesService(),
+	           m_world.GetCityThemesRepository(),
+	           m_world.GetCityThemesUpdater(),
+	           m_globeCameraController);
 }
 
 std::string JavaHudCrossThreadCommunicationExampleFactory::ExampleName() const

@@ -12,88 +12,88 @@ import android.content.res.AssetManager;
 
 public class MainActivity extends Activity implements SurfaceHolder.Callback
 {
-    private EegeoSurfaceView m_surfaceView;
-    private SurfaceHolder m_surfaceHolder;
-    private long m_nativeAppWindowPtr;
-    private boolean m_shouldUpdateNativeCode;
-    
-    public static native long createNativeCode(MainActivity activity, AssetManager assetManager, float dpi);
-    public static native void destroyNativeCode();
-    public static native void pauseNativeCode();
-    public static native void resumeNativeCode();
-    public static native void setNativeSurface(Surface surface);
-    public static native void updateNativeCode();
-    
-    @Override
-    public void onCreate(Bundle savedInstanceState) 
-    {
-        super.onCreate(savedInstanceState);
-        System.loadLibrary("native-activity");
-        
-        setContentView(R.layout.activity_main);  
+	private EegeoSurfaceView m_surfaceView;
+	private SurfaceHolder m_surfaceHolder;
+	private long m_nativeAppWindowPtr;
+	private boolean m_shouldUpdateNativeCode;
 
-        m_surfaceView = (EegeoSurfaceView)findViewById(R.id.surface);
-        m_surfaceView.getHolder().addCallback(this);
-        
-        DisplayMetrics dm = getResources().getDisplayMetrics();
+	public static native long createNativeCode(MainActivity activity, AssetManager assetManager, float dpi);
+	public static native void destroyNativeCode();
+	public static native void pauseNativeCode();
+	public static native void resumeNativeCode();
+	public static native void setNativeSurface(Surface surface);
+	public static native void updateNativeCode();
+
+	@Override
+	public void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
+		System.loadLibrary("native-activity");
+
+		setContentView(R.layout.activity_main);
+
+		m_surfaceView = (EegeoSurfaceView)findViewById(R.id.surface);
+		m_surfaceView.getHolder().addCallback(this);
+
+		DisplayMetrics dm = getResources().getDisplayMetrics();
 		float dpi = dm.ydpi;
-        
-        m_nativeAppWindowPtr = createNativeCode(this, getAssets(), dpi);
-        
-        if(m_nativeAppWindowPtr == 0)
-        {
-        	throw new RuntimeException("Failed to start native code.");
-        }
-        
-        m_shouldUpdateNativeCode = true;
 
-        if(m_shouldUpdateNativeCode) 
-        {
-        	// 1 millisecond is cool because it will only repost when tick is complete
-        	final int millisecondDelay = 1;
-        	
-            final Handler h = new Handler();
-            h.postDelayed(new Runnable()
-            {
-                @Override
-                public void run()
-                {
-                	if(m_nativeAppWindowPtr != 0)
-                	{
-                    	updateNativeCode();
-                		h.postDelayed(this, millisecondDelay);
-                	}
-                }
-            }, millisecondDelay); 
-        }
-    }
-    
-    @Override
-    protected void onResume() 
-    {
-        super.onResume();
-        resumeNativeCode();
-        
-        if(m_surfaceHolder != null)
-        {
-        	setNativeSurface(m_surfaceHolder.getSurface());
-        }
-    }
-    
-    @Override
-    protected void onPause() 
-    {
-        pauseNativeCode();
-        super.onPause();
-    }
+		m_nativeAppWindowPtr = createNativeCode(this, getAssets(), dpi);
 
-    @Override
-    protected void onDestroy() 
-    {
-        super.onStop();
-        destroyNativeCode();
-        m_nativeAppWindowPtr = 0;
-    }
+		if(m_nativeAppWindowPtr == 0)
+		{
+			throw new RuntimeException("Failed to start native code.");
+		}
+
+		m_shouldUpdateNativeCode = true;
+
+		if(m_shouldUpdateNativeCode)
+		{
+			// 1 millisecond is cool because it will only repost when tick is complete
+			final int millisecondDelay = 1;
+
+			final Handler h = new Handler();
+			h.postDelayed(new Runnable()
+			{
+				@Override
+				public void run()
+				{
+					if(m_nativeAppWindowPtr != 0)
+					{
+						updateNativeCode();
+						h.postDelayed(this, millisecondDelay);
+					}
+				}
+			}, millisecondDelay);
+		}
+	}
+
+	@Override
+	protected void onResume()
+	{
+		super.onResume();
+		resumeNativeCode();
+
+		if(m_surfaceHolder != null)
+		{
+			setNativeSurface(m_surfaceHolder.getSurface());
+		}
+	}
+
+	@Override
+	protected void onPause()
+	{
+		pauseNativeCode();
+		super.onPause();
+	}
+
+	@Override
+	protected void onDestroy()
+	{
+		super.onStop();
+		destroyNativeCode();
+		m_nativeAppWindowPtr = 0;
+	}
 
 	@Override
 	public void surfaceCreated(SurfaceHolder holder)
