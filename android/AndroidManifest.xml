@@ -14,7 +14,7 @@
 
     <application android:label="EegeoDroid" android:theme="@android:style/Theme.NoTitleBar">>
        
-        <activity android:name=".MainActivity"
+        <activity android:name="com.eegeo.BackgroundThreadActivity"
                   android:label="EegeoDroid"
                   android:configChanges="orientation|keyboardHidden"
                   android:screenOrientation="landscape"

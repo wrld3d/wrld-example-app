@@ -30,28 +30,46 @@ public class HudPinController
 		final Button pin = new Button(m_activity);
 		m_buttons.add(pin);
 
-		final RelativeLayout uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
-		uiRoot.addView(pin);
+		m_activity.runOnUiThread(new Runnable()
+		{
+			public void run()
+			{
+				final RelativeLayout uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
+				uiRoot.addView(pin);
+			}
+		});
 
 		return id;
 	}
 
 	public void removeJavaPinButton(final int id)
 	{
-		int index = id - 1;
+		final int index = id - 1;
 		final Button pin = m_buttons.get(index);
-		m_buttons.remove(index);
 
-		final RelativeLayout uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
-		uiRoot.removeView(pin);
+		m_activity.runOnUiThread(new Runnable()
+		{
+			public void run()
+			{
+				final RelativeLayout uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
+				uiRoot.removeView(pin);
+				m_buttons.remove(index);
+			}
+		});
 	}
 
 	public void updatePinButtonScreenLocation(final int pinID, final float x, final float y)
 	{
-		Button pin = m_buttons.get(pinID - 1);
-		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(80, 80);
-		params.leftMargin = (int)x;
-		params.topMargin = (int)y;
-		pin.setLayoutParams(params);
+		m_activity.runOnUiThread(new Runnable()
+		{
+			public void run()
+			{
+				Button pin = m_buttons.get(pinID - 1);
+				RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(80, 80);
+				params.leftMargin = (int)x;
+				params.topMargin = (int)y;
+				pin.setLayoutParams(params);
+			}
+		});
 	}
 }

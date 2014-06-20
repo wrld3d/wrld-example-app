@@ -13,9 +13,16 @@ public class EegeoSurfaceView extends SurfaceView
 	public static native void processNativePointerUp(int primaryActionIndex, int primaryActionIdentifier, int pointerCount, float[] x, float y[], int[] pointerIdentity, int[] pointerIndex);
 	public static native void processNativePointerMove(int primaryActionIndex, int primaryActionIdentifier, int pointerCount, float[] x, float y[], int[] pointerIdentity, int[] pointerIndex);
 
+	private INativeMessageRunner m_nativeMessageRunner;
+
 	public EegeoSurfaceView(Context context, AttributeSet attrs)
 	{
 		super(context, attrs);
+	}
+
+	void setActivity(INativeMessageRunner nativeMessageRunner)
+	{
+		m_nativeMessageRunner = nativeMessageRunner;
 	}
 
 	@Override
@@ -30,14 +37,14 @@ public class EegeoSurfaceView extends SurfaceView
 			int pointerIndex;
 		 */
 
-		int pointerCount = e.getPointerCount();
-		int primaryActionIndex = e.getActionIndex();
-		int primaryActionIdentifier = e.getPointerId(primaryActionIndex);
+		final int pointerCount = e.getPointerCount();
+		final int primaryActionIndex = e.getActionIndex();
+		final int primaryActionIdentifier = e.getPointerId(primaryActionIndex);
 
-		float[] xArray = new float[pointerCount];
-		float[] yArray = new float[pointerCount];
-		int[] pointerIdentityArray = new int[pointerCount];
-		int[] pointerIndexArray = new int[pointerCount];
+		final float[] xArray = new float[pointerCount];
+		final float[] yArray = new float[pointerCount];
+		final int[] pointerIdentityArray = new int[pointerCount];
+		final int[] pointerIndexArray = new int[pointerCount];
 
 		for(int pointerIndex = 0; pointerIndex < pointerCount; ++pointerIndex)
 		{
@@ -52,20 +59,38 @@ public class EegeoSurfaceView extends SurfaceView
 		case MotionEvent.ACTION_DOWN:
 		case MotionEvent.ACTION_POINTER_DOWN:
 		{
-			processNativePointerDown(primaryActionIndex, primaryActionIdentifier, pointerCount, xArray, yArray, pointerIdentityArray, pointerIndexArray);
+			m_nativeMessageRunner.runOnNativeThread(new Runnable()
+			{
+				public void run()
+				{
+					processNativePointerDown(primaryActionIndex, primaryActionIdentifier, pointerCount, xArray, yArray, pointerIdentityArray, pointerIndexArray);
+				}
+			});
 		}
 		break;
 
 		case MotionEvent.ACTION_POINTER_UP:
 		case MotionEvent.ACTION_UP:
 		{
-			processNativePointerUp(primaryActionIndex, primaryActionIdentifier, pointerCount, xArray, yArray, pointerIdentityArray, pointerIndexArray);
+			m_nativeMessageRunner.runOnNativeThread(new Runnable()
+			{
+				public void run()
+				{
+					processNativePointerUp(primaryActionIndex, primaryActionIdentifier, pointerCount, xArray, yArray, pointerIdentityArray, pointerIndexArray);
+				}
+			});
 		}
 		break;
 
 		case MotionEvent.ACTION_MOVE:
 		{
-			processNativePointerMove(primaryActionIndex, primaryActionIdentifier, pointerCount, xArray, yArray, pointerIdentityArray, pointerIndexArray);
+			m_nativeMessageRunner.runOnNativeThread(new Runnable()
+			{
+				public void run()
+				{
+					processNativePointerMove(primaryActionIndex, primaryActionIdentifier, pointerCount, xArray, yArray, pointerIdentityArray, pointerIndexArray);
+				}
+			});
 		}
 		break;
 		}

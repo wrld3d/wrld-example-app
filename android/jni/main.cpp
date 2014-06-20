@@ -12,7 +12,7 @@
 using namespace Eegeo::Android;
 using namespace Eegeo::Android::Input;
 
-const std::string ApiKey = "OBTAIN API_KEY FROM https://appstore.eegeo.com AND INSERT IT HERE";
+const std::string ApiKey = "c93bd872c1e600d53d458b59bc797b51";
 
 AndroidNativeState g_nativeState;
 AppRunner* g_pAppRunner;
@@ -38,7 +38,7 @@ JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM* vm, void* pvt)
 }
 
 //lifecycle
-JNIEXPORT long JNICALL Java_com_eegeo_MainActivity_createNativeCode(JNIEnv* jenv, jobject obj, jobject activity, jobject assetManager, jfloat dpi)
+JNIEXPORT long JNICALL Java_com_eegeo_NativeJniCalls_createNativeCode(JNIEnv* jenv, jobject obj, jobject activity, jobject assetManager, jfloat dpi)
 {
 	Eegeo_TTY("startNativeCode\n");
 
@@ -73,7 +73,7 @@ JNIEXPORT long JNICALL Java_com_eegeo_MainActivity_createNativeCode(JNIEnv* jenv
 	return ((long)g_pAppRunner);
 }
 
-JNIEXPORT void JNICALL Java_com_eegeo_MainActivity_destroyNativeCode(JNIEnv* jenv, jobject obj)
+JNIEXPORT void JNICALL Java_com_eegeo_NativeJniCallsy_destroyNativeCode(JNIEnv* jenv, jobject obj)
 {
 	Eegeo_TTY("stopNativeCode()\n");
 
@@ -87,22 +87,22 @@ JNIEXPORT void JNICALL Java_com_eegeo_MainActivity_destroyNativeCode(JNIEnv* jen
 	jenv->DeleteGlobalRef(g_nativeState.classLoader);
 }
 
-JNIEXPORT void JNICALL Java_com_eegeo_MainActivity_pauseNativeCode(JNIEnv* jenv, jobject obj)
+JNIEXPORT void JNICALL Java_com_eegeo_NativeJniCalls_pauseNativeCode(JNIEnv* jenv, jobject obj)
 {
 	g_pAppRunner->Pause();
 }
 
-JNIEXPORT void JNICALL Java_com_eegeo_MainActivity_resumeNativeCode(JNIEnv* jenv, jobject obj)
+JNIEXPORT void JNICALL Java_com_eegeo_NativeJniCalls_resumeNativeCode(JNIEnv* jenv, jobject obj)
 {
 	g_pAppRunner->Resume();
 }
 
-JNIEXPORT void JNICALL Java_com_eegeo_MainActivity_updateNativeCode(JNIEnv* jenv, jobject obj, jfloat deltaSeconds)
+JNIEXPORT void JNICALL Java_com_eegeo_NativeJniCalls_updateNativeCode(JNIEnv* jenv, jobject obj, jfloat deltaSeconds)
 {
 	g_pAppRunner->Update((float)deltaSeconds);
 }
 
-JNIEXPORT void JNICALL Java_com_eegeo_MainActivity_setNativeSurface(JNIEnv* jenv, jobject obj, jobject surface)
+JNIEXPORT void JNICALL Java_com_eegeo_NativeJniCalls_setNativeSurface(JNIEnv* jenv, jobject obj, jobject surface)
 {
 	if(g_nativeState.window != NULL)
 	{

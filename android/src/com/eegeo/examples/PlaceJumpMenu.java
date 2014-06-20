@@ -30,64 +30,82 @@ public class PlaceJumpMenu
 
 	public void showVisitMenu(final long nativeCallerPointer)
 	{
-		try
+		m_activity.runOnUiThread(new Runnable()
 		{
-			final RelativeLayout uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
-			m_view = m_activity.getLayoutInflater().inflate(R.layout.ui_menu, uiRoot, false);
-
-			final Spinner spinner = (Spinner)m_view.findViewById(R.id.places);
-
-			String items[] = new String[5];
-			items[0] = "NYC";
-			items[1] = "London";
-			items[2] = "SF";
-			items[3] = "Kyoto";
-			items[4] = "Melbourne";
-			ArrayAdapter<String> adapter = new ArrayAdapter<String>(m_activity, android.R.layout.simple_spinner_item, items);
-			spinner.setAdapter(adapter);
-
-			final Button close = (Button)m_view.findViewById(R.id.close);
-			final Button visit = (Button)m_view.findViewById(R.id.visit);
-
-			close.setOnClickListener(new OnClickListener()
+			public void run()
 			{
-				@Override
-				public void onClick(View v)
+				try
 				{
-					close.setOnClickListener(null);
-					visit.setOnClickListener(null);
-					uiRoot.removeView(m_view);
-				}
-			});
+					final RelativeLayout uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
+					m_view = m_activity.getLayoutInflater().inflate(R.layout.ui_menu, uiRoot, false);
 
-			visit.setOnClickListener(new OnClickListener()
-			{
-				@Override
-				public void onClick(View v)
+					final Spinner spinner = (Spinner)m_view.findViewById(R.id.places);
+
+					String items[] = new String[5];
+					items[0] = "NYC";
+					items[1] = "London";
+					items[2] = "SF";
+					items[3] = "Kyoto";
+					items[4] = "Melbourne";
+					ArrayAdapter<String> adapter = new ArrayAdapter<String>(m_activity, android.R.layout.simple_spinner_item, items);
+					spinner.setAdapter(adapter);
+
+					final Button close = (Button)m_view.findViewById(R.id.close);
+					final Button visit = (Button)m_view.findViewById(R.id.visit);
+
+					close.setOnClickListener(new OnClickListener()
+					{
+						@Override
+						public void onClick(View v)
+						{
+							close.setOnClickListener(null);
+							visit.setOnClickListener(null);
+							uiRoot.removeView(m_view);
+						}
+					});
+
+					visit.setOnClickListener(new OnClickListener()
+					{
+						@Override
+						public void onClick(View v)
+						{
+							final String selection = (String)spinner.getSelectedItem();
+							m_activity.runOnNativeThread(new Runnable()
+							{
+								public void run()
+								{
+									visitLocation(nativeCallerPointer, selection);
+								}
+							});
+						}
+					});
+
+					uiRoot.addView(m_view);
+				}
+				catch (Exception e)
 				{
-					String selection = (String)spinner.getSelectedItem();
-					visitLocation(nativeCallerPointer, selection);
+					Log.v("PlaceJumpMenu", e.getMessage() == null ? "Error, but no message?!" : e.getMessage());
 				}
-			});
-
-			uiRoot.addView(m_view);
-		}
-		catch (Exception e)
-		{
-			Log.v("PlaceJumpMenu", e.getMessage() == null ? "Error, but no message?!" : e.getMessage());
-		}
+			}
+		});
 	}
 
 	public void removeVisitMenu()
 	{
-		try
+		m_activity.runOnUiThread(new Runnable()
 		{
-			final RelativeLayout uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
-			uiRoot.removeView(m_view);
-		}
-		catch (Exception e)
-		{
-			Log.v("PlaceJumpMenu", e.getMessage() == null ? "Error, but no message?!" : e.getMessage());
-		}
+			public void run()
+			{
+				try
+				{
+					final RelativeLayout uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
+					uiRoot.removeView(m_view);
+				}
+				catch (Exception e)
+				{
+					Log.v("PlaceJumpMenu", e.getMessage() == null ? "Error, but no message?!" : e.getMessage());
+				}
+			}
+		});
 	}
 }

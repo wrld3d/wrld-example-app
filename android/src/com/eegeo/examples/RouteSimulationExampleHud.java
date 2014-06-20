@@ -33,96 +33,138 @@ public class RouteSimulationExampleHud
 
 	private void createHud(final long nativeCallerPointer, final boolean followEnabled)
 	{
-		try
+		m_activity.runOnUiThread(new Runnable()
 		{
-			final RelativeLayout uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
-			m_view = m_activity.getLayoutInflater().inflate(R.layout.route_simulation_menu_layout, uiRoot, false);
-
-			final Button toggleFollow = (Button)m_view.findViewById(R.id.toggle_follow);
-			final Button increaseSpeed = (Button)m_view.findViewById(R.id.increase_speed);
-			final Button decreaseSpeed = (Button)m_view.findViewById(R.id.decrease_speed);
-			final Button changeDirection = (Button)m_view.findViewById(R.id.change_direction);
-			final Button toggleDirectFollow = (Button)m_view.findViewById(R.id.toggle_direct_follow);
-			final Button toggleRoadSide = (Button)m_view.findViewById(R.id.toggle_road_side);
-
-			int visibility = followEnabled ? View.VISIBLE : View.INVISIBLE;
-			increaseSpeed.setVisibility(visibility);
-			decreaseSpeed.setVisibility(visibility);
-			changeDirection.setVisibility(visibility);
-			toggleDirectFollow.setVisibility(visibility);
-
-			toggleFollow.setOnClickListener(new OnClickListener()
+			public void run()
 			{
-				@Override
-				public void onClick(View v)
+				try
 				{
-					ToggleFollowCamera(nativeCallerPointer);
+					final RelativeLayout uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
+					m_view = m_activity.getLayoutInflater().inflate(R.layout.route_simulation_menu_layout, uiRoot, false);
 
-					int visibility = (View.VISIBLE == increaseSpeed.getVisibility()) ? View.INVISIBLE : View.VISIBLE;
+					final Button toggleFollow = (Button)m_view.findViewById(R.id.toggle_follow);
+					final Button increaseSpeed = (Button)m_view.findViewById(R.id.increase_speed);
+					final Button decreaseSpeed = (Button)m_view.findViewById(R.id.decrease_speed);
+					final Button changeDirection = (Button)m_view.findViewById(R.id.change_direction);
+					final Button toggleDirectFollow = (Button)m_view.findViewById(R.id.toggle_direct_follow);
+					final Button toggleRoadSide = (Button)m_view.findViewById(R.id.toggle_road_side);
+
+					int visibility = followEnabled ? View.VISIBLE : View.INVISIBLE;
 					increaseSpeed.setVisibility(visibility);
 					decreaseSpeed.setVisibility(visibility);
 					changeDirection.setVisibility(visibility);
 					toggleDirectFollow.setVisibility(visibility);
-				}
-			});
 
-			increaseSpeed.setOnClickListener(new OnClickListener()
-			{
-				@Override
-				public void onClick(View v)
+					toggleFollow.setOnClickListener(new OnClickListener()
+					{
+						@Override
+						public void onClick(View v)
+						{
+							ToggleFollowCamera(nativeCallerPointer);
+
+							int visibility = (View.VISIBLE == increaseSpeed.getVisibility()) ? View.INVISIBLE : View.VISIBLE;
+							increaseSpeed.setVisibility(visibility);
+							decreaseSpeed.setVisibility(visibility);
+							changeDirection.setVisibility(visibility);
+							toggleDirectFollow.setVisibility(visibility);
+						}
+					});
+
+					increaseSpeed.setOnClickListener(new OnClickListener()
+					{
+						@Override
+						public void onClick(View v)
+						{
+							m_activity.runOnNativeThread(new Runnable()
+							{
+								public void run()
+								{
+									IncreaseSpeedFollowed(nativeCallerPointer);
+								}
+							});
+						}
+					});
+
+					decreaseSpeed.setOnClickListener(new OnClickListener()
+					{
+						@Override
+						public void onClick(View v)
+						{
+							m_activity.runOnNativeThread(new Runnable()
+							{
+								public void run()
+								{
+									DecreaseSpeedFollowed(nativeCallerPointer);
+								}
+							});
+						}
+					});
+
+					changeDirection.setOnClickListener(new OnClickListener()
+					{
+						@Override
+						public void onClick(View v)
+						{
+							m_activity.runOnNativeThread(new Runnable()
+							{
+								public void run()
+								{
+									ChangeFollowDirection(nativeCallerPointer);
+								}
+							});
+						}
+					});
+
+					toggleDirectFollow.setOnClickListener(new OnClickListener()
+					{
+						@Override
+						public void onClick(View v)
+						{
+							m_activity.runOnNativeThread(new Runnable()
+							{
+								public void run()
+								{
+									ToggleDirectFollow(nativeCallerPointer);
+								}
+							});
+						}
+					});
+
+					toggleRoadSide.setOnClickListener(new OnClickListener()
+					{
+						@Override
+						public void onClick(View v)
+						{
+							m_activity.runOnNativeThread(new Runnable()
+							{
+								public void run()
+								{
+									ToggleSideOfRoadToDriveOn(nativeCallerPointer);
+								}
+							});
+						}
+					});
+
+					uiRoot.addView(m_view);
+				}
+				catch (Exception e)
 				{
-					IncreaseSpeedFollowed(nativeCallerPointer);
+					Log.v("RouteSimulationExampleHud", e.getMessage() == null ? "Error, but no message?!" : e.getMessage());
 				}
-			});
-
-			decreaseSpeed.setOnClickListener(new OnClickListener()
-			{
-				@Override
-				public void onClick(View v)
-				{
-					DecreaseSpeedFollowed(nativeCallerPointer);
-				}
-			});
-
-			changeDirection.setOnClickListener(new OnClickListener()
-			{
-				@Override
-				public void onClick(View v)
-				{
-					ChangeFollowDirection(nativeCallerPointer);
-				}
-			});
-
-			toggleDirectFollow.setOnClickListener(new OnClickListener()
-			{
-				@Override
-				public void onClick(View v)
-				{
-					ToggleDirectFollow(nativeCallerPointer);
-				}
-			});
-
-			toggleRoadSide.setOnClickListener(new OnClickListener()
-			{
-				@Override
-				public void onClick(View v)
-				{
-					ToggleSideOfRoadToDriveOn(nativeCallerPointer);
-				}
-			});
-
-			uiRoot.addView(m_view);
-		}
-		catch (Exception e)
-		{
-			Log.v("RouteSimulationExampleHud", e.getMessage() == null ? "Error, but no message?!" : e.getMessage());
-		}
+			}
+		});
 	}
 
 	public void removeHud()
 	{
-		final RelativeLayout uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
-		uiRoot.removeView(m_view);
-		m_view = null;
+		m_activity.runOnUiThread(new Runnable()
+		{
+			public void run()
+			{
+				final RelativeLayout uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
+				uiRoot.removeView(m_view);
+				m_view = null;
+			}
+		});
 	}
 }

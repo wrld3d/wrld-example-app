@@ -2,7 +2,6 @@
 
 package com.eegeo.examples;
 
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
@@ -32,56 +31,86 @@ public class ThemeReaderWriterHud
 
 	public void showUi(final long nativeCallerPointer)
 	{
-		final RelativeLayout uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
-		m_view = m_activity.getLayoutInflater().inflate(R.layout.theme_reader_writer_ui, uiRoot, false);
-
-		final Spinner spinner = (Spinner)m_view.findViewById(R.id.themes);
-
-		String items[] = new String[4];
-		items[0] = "SummerSanFrancisco";
-		items[1] = "WinterNewYork";
-		items[2] = "AutumnLondon";
-		items[3] = "SpringJapan";
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(m_activity, android.R.layout.simple_spinner_item, items);
-		spinner.setAdapter(adapter);
-
-		final Button getTheme = (Button)m_view.findViewById(R.id.get_current_theme_name);
-		final Button changeTheme = (Button)m_view.findViewById(R.id.change_theme);
-
-		final TextView currentThemeLabel = (TextView)m_view.findViewById(R.id.current_theme_name_text);
-		currentThemeLabel.setText("Current Theme --> ????");
-
-		getTheme.setOnClickListener(new OnClickListener()
+		m_activity.runOnUiThread(new Runnable()
 		{
-			@Override
-			public void onClick(View v)
+			public void run()
 			{
-				readCurrentThemeName(nativeCallerPointer);
+				final RelativeLayout uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
+				m_view = m_activity.getLayoutInflater().inflate(R.layout.theme_reader_writer_ui, uiRoot, false);
+
+				final Spinner spinner = (Spinner)m_view.findViewById(R.id.themes);
+
+				String items[] = new String[4];
+				items[0] = "SummerSanFrancisco";
+				items[1] = "WinterNewYork";
+				items[2] = "AutumnLondon";
+				items[3] = "SpringJapan";
+				ArrayAdapter<String> adapter = new ArrayAdapter<String>(m_activity, android.R.layout.simple_spinner_item, items);
+				spinner.setAdapter(adapter);
+
+				final Button getTheme = (Button)m_view.findViewById(R.id.get_current_theme_name);
+				final Button changeTheme = (Button)m_view.findViewById(R.id.change_theme);
+
+				final TextView currentThemeLabel = (TextView)m_view.findViewById(R.id.current_theme_name_text);
+				currentThemeLabel.setText("Current Theme --> ????");
+
+				getTheme.setOnClickListener(new OnClickListener()
+				{
+					@Override
+					public void onClick(View v)
+					{
+						m_activity.runOnNativeThread(new Runnable()
+						{
+							public void run()
+							{
+								readCurrentThemeName(nativeCallerPointer);
+							}
+						});
+					}
+				});
+
+				changeTheme.setOnClickListener(new OnClickListener()
+				{
+					@Override
+					public void onClick(View v)
+					{
+						final String selection = (String)spinner.getSelectedItem();
+						m_activity.runOnNativeThread(new Runnable()
+						{
+							public void run()
+							{
+								setCurrentTheme(nativeCallerPointer, selection);
+							}
+						});
+					}
+				});
+
+				uiRoot.addView(m_view);
 			}
 		});
-
-		changeTheme.setOnClickListener(new OnClickListener()
-		{
-			@Override
-			public void onClick(View v)
-			{
-				String selection = (String)spinner.getSelectedItem();
-				setCurrentTheme(nativeCallerPointer, selection);
-			}
-		});
-
-		uiRoot.addView(m_view);
 	}
 
 	public void setCurrentThemeName(final String currentThemeName)
 	{
-		final TextView currentThemeLabel = (TextView)m_view.findViewById(R.id.current_theme_name_text);
-		currentThemeLabel.setText("Current Theme --> " + currentThemeName);
+		m_activity.runOnUiThread(new Runnable()
+		{
+			public void run()
+			{
+				final TextView currentThemeLabel = (TextView)m_view.findViewById(R.id.current_theme_name_text);
+				currentThemeLabel.setText("Current Theme --> " + currentThemeName);
+			}
+		});
 	}
 
 	public void removeUi()
 	{
-		final RelativeLayout uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
-		uiRoot.removeView(m_view);
+		m_activity.runOnUiThread(new Runnable()
+		{
+			public void run()
+			{
+				final RelativeLayout uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
+				uiRoot.removeView(m_view);
+			}
+		});
 	}
 }
