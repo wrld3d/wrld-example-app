@@ -15,14 +15,14 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback
 	private EegeoSurfaceView m_surfaceView;
 	private SurfaceHolder m_surfaceHolder;
 	private long m_nativeAppWindowPtr;
-	private boolean m_shouldUpdateNativeCode;
+	private NativeUpdateRunner m_nativeRunner;
 
 	public static native long createNativeCode(MainActivity activity, AssetManager assetManager, float dpi);
 	public static native void destroyNativeCode();
 	public static native void pauseNativeCode();
 	public static native void resumeNativeCode();
 	public static native void setNativeSurface(Surface surface);
-	public static native void updateNativeCode();
+	public static native void updateNativeCode(float deltaTimeSeconds);
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -45,27 +45,9 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback
 			throw new RuntimeException("Failed to start native code.");
 		}
 
-		m_shouldUpdateNativeCode = true;
-
-		if(m_shouldUpdateNativeCode)
-		{
-			// 1 millisecond is cool because it will only repost when tick is complete
-			final int millisecondDelay = 1;
-
-			final Handler h = new Handler();
-			h.postDelayed(new Runnable()
-			{
-				@Override
-				public void run()
-				{
-					if(m_nativeAppWindowPtr != 0)
-					{
-						updateNativeCode();
-						h.postDelayed(this, millisecondDelay);
-					}
-				}
-			}, millisecondDelay);
-		}
+		final Handler handler = new Handler();
+		m_nativeRunner = new NativeUpdateRunner(handler, true);
+		handler.post(m_nativeRunner);
 	}
 
 	@Override
@@ -91,6 +73,7 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback
 	protected void onDestroy()
 	{
 		super.onStop();
+		m_nativeRunner.setIsRunning(false);
 		destroyNativeCode();
 		m_nativeAppWindowPtr = 0;
 	}
@@ -113,5 +96,37 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback
 	{
 		m_surfaceHolder = holder;
 		setNativeSurface(m_surfaceHolder.getSurface());
+	}
+
+	private class NativeUpdateRunner implements Runnable
+	{
+		private long m_endOfLastFrameNano;
+		private Handler m_mainThreadHandler;
+		private boolean m_running;
+
+		public NativeUpdateRunner(Handler mainThreadHandler, boolean running)
+		{
+			m_endOfLastFrameNano = System.nanoTime();
+			m_mainThreadHandler = mainThreadHandler;
+			m_running = running;
+		}
+
+		public void setIsRunning(boolean running)
+		{
+			m_running = running;
+		}
+
+		public void run()
+		{
+			if(m_running)
+			{
+				long timeNowNano = System.nanoTime();
+				long nanoDelta = timeNowNano - m_endOfLastFrameNano;
+				float deltaSeconds = (float)((double)nanoDelta / 1e9);
+				updateNativeCode(deltaSeconds);
+				m_endOfLastFrameNano = timeNowNano;
+				m_mainThreadHandler.post(this);
+			}
+		}
 	}
 }

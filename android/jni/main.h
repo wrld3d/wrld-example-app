@@ -17,7 +17,7 @@ extern "C"
 	JNIEXPORT void JNICALL Java_com_eegeo_MainActivity_setNativeSurface(JNIEnv* jenv, jobject obj, jobject surface);
 
 	//tick
-	JNIEXPORT void JNICALL Java_com_eegeo_MainActivity_updateNativeCode(JNIEnv* jenv, jobject obj);
+	JNIEXPORT void JNICALL Java_com_eegeo_MainActivity_updateNativeCode(JNIEnv* jenv, jobject obj, jfloat deltaSeconds);
 
 	//input
 	JNIEXPORT void JNICALL Java_com_eegeo_EegeoSurfaceView_processNativePointerDown(JNIEnv* jenv, jobject obj,

@@ -97,10 +97,9 @@ JNIEXPORT void JNICALL Java_com_eegeo_MainActivity_resumeNativeCode(JNIEnv* jenv
 	g_pAppRunner->Resume();
 }
 
-JNIEXPORT void JNICALL Java_com_eegeo_MainActivity_updateNativeCode(JNIEnv* jenv, jobject obj)
+JNIEXPORT void JNICALL Java_com_eegeo_MainActivity_updateNativeCode(JNIEnv* jenv, jobject obj, jfloat deltaSeconds)
 {
-	float deltaSeconds = 1.f/30.f;
-	g_pAppRunner->Update(deltaSeconds);
+	g_pAppRunner->Update((float)deltaSeconds);
 }
 
 JNIEXPORT void JNICALL Java_com_eegeo_MainActivity_setNativeSurface(JNIEnv* jenv, jobject obj, jobject surface)
