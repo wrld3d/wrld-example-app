@@ -1,5 +1,11 @@
 LOCAL_PATH := $(call my-dir)
 
+ifdef COMPILE_CPP_11
+   $(info Building C++11)
+else
+   $(info Building C++0x)
+endif
+
 include $(CLEAR_VARS)
 LOCAL_MODULE := native-activity-lib
 LOCAL_SRC_FILES := ./../libs/libnative-activity-lib.a
@@ -9,6 +15,11 @@ include $(CLEAR_VARS)
 LOCAL_MODULE := native-activity
 LOCAL_LDLIBS    := -llog -landroid -lEGL -lGLESv2 -L./libs/ -lpng -lz -lm -L./libs/ -lcrypto -L./libs/ -lssl -L./libs/ -lcurl -L./libs/ -lcares -L./libs/ -lsimd -L./libs/ -lmyjpeg
 LOCAL_STATIC_LIBRARIES := android_native_app_glue native-activity-lib
+
+ifdef COMPILE_CPP_11
+  LOCAL_LDLIBS += -fuse-ld=bfd
+  LOCAL_CPPFLAGS += -DCOMPILE_CPP_11=1 -std=c++11
+endif
 
 os_name:=$(shell uname -s)
 
