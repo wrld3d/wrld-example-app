@@ -1,11 +1,5 @@
 LOCAL_PATH := $(call my-dir)
 
-ifdef COMPILE_CPP_11
-   $(info Building C++11)
-else
-   $(info Building C++0x)
-endif
-
 include $(CLEAR_VARS)
 LOCAL_MODULE := native-activity-lib
 LOCAL_SRC_FILES := ./../libs/libnative-activity-lib.a
