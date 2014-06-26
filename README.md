@@ -42,3 +42,4 @@ android c++11 support
 * Only tested against gcc 4.8 & gnu libstd++ (see android/jni/Application.mk for how to target these)
 * ./update.platform.sh -p android -c will fetch c++11/gnu libstdc++ ABI compatible versions of the SDK
 * ./build -p android -c from the command line will build targeting c++11
+* Pass COMPILE_CPP_11=1 to ndk-build to build cpp11
