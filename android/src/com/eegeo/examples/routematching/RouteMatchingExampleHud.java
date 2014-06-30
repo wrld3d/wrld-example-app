@@ -1,10 +1,9 @@
 // Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
-package com.eegeo.examples;
+package com.eegeo.examples.routematching;
 
 import android.util.Log;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 
@@ -15,18 +14,22 @@ public class RouteMatchingExampleHud
 {
 	private MainActivity m_activity;
 	private View m_view;
-
-	public static native void ToggleRouteMatching(long nativeCallerPointer);
+	private ToggleRouteMatchingOnClickListener m_toggleRouteMatchingOnClickListener;
 
 	public RouteMatchingExampleHud(MainActivity activity, long nativeCallerPointer)
 	{
 		m_activity = activity;
 		m_view = null;
-
-		createHud(nativeCallerPointer);
+		
+		m_toggleRouteMatchingOnClickListener = new ToggleRouteMatchingOnClickListener(
+				m_activity,
+				nativeCallerPointer
+			);
+		
+		createHud();
 	}
 
-	private void createHud(final long nativeCallerPointer)
+	private void createHud()
 	{
 		m_activity.runOnUiThread(new Runnable()
 		{
@@ -39,20 +42,7 @@ public class RouteMatchingExampleHud
 
 					final Button toggleRouteMatching = (Button)m_view.findViewById(R.id.toggle_match);
 
-					toggleRouteMatching.setOnClickListener(new OnClickListener()
-					{
-						@Override
-						public void onClick(View v)
-						{
-							m_activity.runOnNativeThread(new Runnable()
-							{
-								public void run()
-								{
-									ToggleRouteMatching(nativeCallerPointer);
-								}
-							});
-						}
-					});
+					toggleRouteMatching.setOnClickListener(m_toggleRouteMatchingOnClickListener);
 
 					uiRoot.addView(m_view);
 				}

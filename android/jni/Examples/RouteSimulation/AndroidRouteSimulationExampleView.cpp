@@ -20,7 +20,7 @@ AndroidRouteSimulationExampleView::AndroidRouteSimulationExampleView(
 	JNIEnv* env = attached.envForThread;
 
 	//get the java RouteSimulationExampleHud class
-	jstring strClassName = env->NewStringUTF("com/eegeo/examples/RouteSimulationExampleHud");
+	jstring strClassName = env->NewStringUTF("com/eegeo/examples/routesimulation/RouteSimulationExampleHud");
 	jclass routeSimulationExampleHudClass = m_nativeState.LoadClass(env, strClassName);
 	env->DeleteLocalRef(strClassName);
 

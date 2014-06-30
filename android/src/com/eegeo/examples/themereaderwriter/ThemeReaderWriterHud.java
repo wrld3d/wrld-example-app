@@ -1,9 +1,8 @@
 // Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
-package com.eegeo.examples;
+package com.eegeo.examples.themereaderwriter;
 
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.RelativeLayout;
@@ -19,9 +18,6 @@ public class ThemeReaderWriterHud
 {
 	private MainActivity m_activity;
 	private View m_view;
-
-	public static native void setCurrentTheme(long nativeCallerPointer, String location);
-	public static native void readCurrentThemeName(long nativeCallerPointer);
 
 	public ThemeReaderWriterHud(MainActivity activity)
 	{
@@ -54,37 +50,19 @@ public class ThemeReaderWriterHud
 				final TextView currentThemeLabel = (TextView)m_view.findViewById(R.id.current_theme_name_text);
 				currentThemeLabel.setText("Current Theme --> ????");
 
-				getTheme.setOnClickListener(new OnClickListener()
-				{
-					@Override
-					public void onClick(View v)
-					{
-						m_activity.runOnNativeThread(new Runnable()
-						{
-							public void run()
-							{
-								readCurrentThemeName(nativeCallerPointer);
-							}
-						});
-					}
-				});
+				ReadThemeNameOnClickListener readThemeNameOnClickListener = new ReadThemeNameOnClickListener(
+						m_activity,
+						nativeCallerPointer
+					);
+				getTheme.setOnClickListener(readThemeNameOnClickListener);
 
-				changeTheme.setOnClickListener(new OnClickListener()
-				{
-					@Override
-					public void onClick(View v)
-					{
-						final String selection = (String)spinner.getSelectedItem();
-						m_activity.runOnNativeThread(new Runnable()
-						{
-							public void run()
-							{
-								setCurrentTheme(nativeCallerPointer, selection);
-							}
-						});
-					}
-				});
-
+				SetThemeOnClickListener setThemeOnClickListener = new SetThemeOnClickListener(
+						spinner,
+						m_activity,
+						nativeCallerPointer
+					);
+				changeTheme.setOnClickListener(setThemeOnClickListener);
+				
 				uiRoot.addView(m_view);
 			}
 		});

@@ -73,7 +73,7 @@ JNIEXPORT long JNICALL Java_com_eegeo_NativeJniCalls_createNativeCode(JNIEnv* je
 	return ((long)g_pAppRunner);
 }
 
-JNIEXPORT void JNICALL Java_com_eegeo_NativeJniCallsy_destroyNativeCode(JNIEnv* jenv, jobject obj)
+JNIEXPORT void JNICALL Java_com_eegeo_NativeJniCalls_destroyNativeCode(JNIEnv* jenv, jobject obj)
 {
 	Eegeo_TTY("stopNativeCode()\n");
 

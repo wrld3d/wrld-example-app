@@ -1,12 +1,9 @@
 // Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
-package com.eegeo.examples;
+package com.eegeo.examples.examplecontroller;
 
 import android.util.Log;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.RelativeLayout;
@@ -19,21 +16,31 @@ public class ExampleControllerHud
 {
 	private MainActivity m_activity = null;
 	private View m_view = null;
+	private SelectPreviousExampleOnClickListener m_previousExampleClickListener = null;
+	private SelectNextExampleOnClickListener m_nextExampleClickListener = null;
+	private SelectExampleOnItemSelectedListener m_selectExampleOnItemSelectedListener = null;
 	private Spinner m_spinner = null;
 	private String[] m_items;
 	private boolean m_spinnerEnabled = false;
 
-	public static native void ActivatePrevious(long nativeCallerPointer);
-	public static native void ActivateNext(long nativeCallerPointer);
-	public static native void SelectExample(long nativeCallerPointer, String selectedExample);
-
 	public ExampleControllerHud(MainActivity activity, long nativeCallerPointer)
 	{
 		m_activity = activity;
-		createHud(nativeCallerPointer);
+
+		m_previousExampleClickListener = new SelectPreviousExampleOnClickListener(
+				m_activity,
+				nativeCallerPointer
+			);
+
+		m_nextExampleClickListener = new SelectNextExampleOnClickListener(
+				m_activity,
+				nativeCallerPointer
+			);
+		
+		createHud();
 	}
 
-	private void createHud(final long nativeCallerPointer)
+	private void createHud()
 	{
 		m_activity.runOnUiThread(new Runnable()
 		{
@@ -45,38 +52,10 @@ public class ExampleControllerHud
 					m_view = m_activity.getLayoutInflater().inflate(R.layout.example_controller_layout, uiRoot, false);
 
 					final Button previousExample = (Button)m_view.findViewById(R.id.previous_example);
-
-					previousExample.setOnClickListener(new OnClickListener()
-					{
-						@Override
-						public void onClick(View v)
-						{
-							m_activity.runOnNativeThread(new Runnable()
-							{
-								public void run()
-								{
-									ActivatePrevious(nativeCallerPointer);
-								}
-							});
-						}
-					});
+					previousExample.setOnClickListener(m_previousExampleClickListener);
 
 					final Button nextExample = (Button)m_view.findViewById(R.id.next_example);
-
-					nextExample.setOnClickListener(new OnClickListener()
-					{
-						@Override
-						public void onClick(View v)
-						{
-							m_activity.runOnNativeThread(new Runnable()
-							{
-								public void run()
-								{
-									ActivateNext(nativeCallerPointer);
-								}
-							});
-						}
-					});
+					nextExample.setOnClickListener(m_nextExampleClickListener);
 
 					previousExample.setVisibility(View.INVISIBLE);
 					nextExample.setVisibility(View.INVISIBLE);
@@ -146,35 +125,14 @@ public class ExampleControllerHud
 				ArrayAdapter<String> adapter = new ArrayAdapter<String>(m_activity, android.R.layout.simple_spinner_item, items);
 				m_spinner.setAdapter(adapter);
 				m_spinner.setEnabled(m_spinnerEnabled);
-
-				m_spinner.setOnItemSelectedListener(new OnItemSelectedListener()
-				{
-					int spinnerCurrentSelection = -1;
-
-					@Override
-					public void onItemSelected(AdapterView<?> parentView, View selectedItemView,
-					                           int position, long id)
-					{
-						if(spinnerCurrentSelection >= 0 && spinnerCurrentSelection != position)
-						{
-							final String selection = (String)m_spinner.getSelectedItem();
-
-							m_activity.runOnNativeThread(new Runnable()
-							{
-								public void run()
-								{
-									SelectExample(nativeCallerPointer, selection);
-								}
-							});
-						}
-						spinnerCurrentSelection = position;
-					}
-
-					@Override
-					public void onNothingSelected(AdapterView<?> parentView)
-					{
-					}
-				});
+				
+				m_selectExampleOnItemSelectedListener = new SelectExampleOnItemSelectedListener(
+						m_spinner,
+						m_activity,
+						nativeCallerPointer
+					);
+		
+				m_spinner.setOnItemSelectedListener(m_selectExampleOnItemSelectedListener);
 			}
 		});
 	}

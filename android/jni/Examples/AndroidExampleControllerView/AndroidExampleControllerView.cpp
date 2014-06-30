@@ -22,7 +22,7 @@ AndroidExampleControllerView::AndroidExampleControllerView(
 	JNIEnv* env = attached.envForThread;
 
 	//get the java RouteMatchingExampleHud class
-	jstring strClassName = env->NewStringUTF("com/eegeo/examples/ExampleControllerHud");
+	jstring strClassName = env->NewStringUTF("com/eegeo/examples/examplecontroller/ExampleControllerHud");
 	jclass routeMatchingExampleHudClass = m_nativeState.LoadClass(env, strClassName);
 	env->DeleteLocalRef(strClassName);
 

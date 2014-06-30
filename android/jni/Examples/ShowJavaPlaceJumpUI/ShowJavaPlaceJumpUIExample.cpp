@@ -36,7 +36,7 @@ void ShowJavaPlaceJumpUIExample::Start()
 	JNIEnv* env = attached.envForThread;
 
 	//get the java HudPinController class
-	jstring strClassName = env->NewStringUTF("com/eegeo/examples/PlaceJumpMenu");
+	jstring strClassName = env->NewStringUTF("com/eegeo/examples/placejump/PlaceJumpMenu");
 	jclass placeJumpMenuClass = m_nativeState.LoadClass(env, strClassName);
 	env->DeleteLocalRef(strClassName);
 
@@ -99,7 +99,7 @@ void ShowJavaPlaceJumpUIExample::JumpToLocation(const std::string& location)
 }
 }
 
-JNIEXPORT void JNICALL Java_com_eegeo_examples_PlaceJumpMenu_visitLocation(JNIEnv* jenv, jobject obj, jlong nativeObjectPtr, jstring location)
+JNIEXPORT void JNICALL Java_com_eegeo_examples_placejump_PlaceJumpMenuJniMethods_VisitLocation(JNIEnv* jenv, jobject obj, jlong nativeObjectPtr, jstring location)
 {
 	//extract the string from java via the JNI
 	const char* chars = jenv->GetStringUTFChars(location, 0);

@@ -43,7 +43,7 @@ void JavaHudCrossThreadCommunicationExample::Start()
 	JNIEnv* env = attached.envForThread;
 
 	//get the java HudPinController class
-	jstring strClassName = env->NewStringUTF("com/eegeo/examples/ThemeReaderWriterHud");
+	jstring strClassName = env->NewStringUTF("com/eegeo/examples/themereaderwriter/ThemeReaderWriterHud");
 	jclass themeReaderWriterHudClass = m_nativeState.LoadClass(env, strClassName);
 	env->DeleteLocalRef(strClassName);
 

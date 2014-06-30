@@ -1,6 +1,6 @@
 // Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
-package com.eegeo.examples;
+package com.eegeo.examples.hudpincontroller;
 
 import java.util.ArrayList;
 import java.util.List;

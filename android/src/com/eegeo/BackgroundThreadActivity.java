@@ -39,7 +39,7 @@ public class BackgroundThreadActivity extends MainActivity
 
 		m_threadedRunner.blockUntilThreadStartedRunning();
 
-		m_threadedRunner.postTo(new Runnable()
+		runOnNativeThread(new Runnable()
 		{
 			public void run()
 			{
@@ -62,7 +62,7 @@ public class BackgroundThreadActivity extends MainActivity
 	protected void onResume()
 	{
 		super.onResume();
-		m_threadedRunner.postTo(new Runnable()
+		runOnNativeThread(new Runnable()
 		{
 			public void run()
 			{
@@ -72,7 +72,7 @@ public class BackgroundThreadActivity extends MainActivity
 
 		if(m_surfaceHolder != null)
 		{
-			m_threadedRunner.postTo(new Runnable()
+			runOnNativeThread(new Runnable()
 			{
 				public void run()
 				{
@@ -85,7 +85,7 @@ public class BackgroundThreadActivity extends MainActivity
 	@Override
 	protected void onPause()
 	{
-		m_threadedRunner.postTo(new Runnable()
+		runOnNativeThread(new Runnable()
 		{
 			public void run()
 			{
@@ -100,7 +100,7 @@ public class BackgroundThreadActivity extends MainActivity
 	{
 		super.onStop();
 
-		m_threadedRunner.postTo(new Runnable()
+		runOnNativeThread(new Runnable()
 		{
 			public void run()
 			{
@@ -122,7 +122,7 @@ public class BackgroundThreadActivity extends MainActivity
 	{
 		m_surfaceHolder = null;
 
-		m_threadedRunner.postTo(new Runnable()
+		runOnNativeThread(new Runnable()
 		{
 			public void run()
 			{
@@ -137,7 +137,7 @@ public class BackgroundThreadActivity extends MainActivity
 	{
 		m_surfaceHolder = holder;
 
-		m_threadedRunner.postTo(new Runnable()
+		runOnNativeThread(new Runnable()
 		{
 			public void run()
 			{
@@ -186,30 +186,23 @@ public class BackgroundThreadActivity extends MainActivity
 
 			while(true)
 			{
-				try
+				runOnNativeThread(new Runnable()
 				{
-					m_nativeThreadHandler.post(new Runnable()
+					public void run()
 					{
-						public void run()
+						long timeNowNano = System.nanoTime();
+						if(m_running)
 						{
-							long timeNowNano = System.nanoTime();
-							if(m_running)
-							{
-								long nanoDelta = timeNowNano - m_endOfLastFrameNano;
-								float deltaSeconds = (float)((double)nanoDelta / 1e9);
-								NativeJniCalls.updateNativeCode(deltaSeconds);
-							}
-							m_endOfLastFrameNano = timeNowNano;
-							m_nativeThreadHandler.post(this);
+							long nanoDelta = timeNowNano - m_endOfLastFrameNano;
+							float deltaSeconds = (float)((double)nanoDelta / 1e9);
+							NativeJniCalls.updateNativeCode(deltaSeconds);
 						}
-					});
+						m_endOfLastFrameNano = timeNowNano;
+						runOnNativeThread(this);
+					}
+				});
 
-					Looper.loop();
-				}
-				catch(Exception e)
-				{
-					e.printStackTrace();
-				}
+				Looper.loop();
 			}
 		}
 	}

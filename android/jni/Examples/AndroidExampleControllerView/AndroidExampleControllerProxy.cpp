@@ -5,7 +5,7 @@
 
 using namespace Examples;
 
-JNIEXPORT void JNICALL Java_com_eegeo_examples_ExampleControllerHud_ActivatePrevious(
+JNIEXPORT void JNICALL Java_com_eegeo_examples_examplecontroller_ExampleControllerJniMethods_ActivatePrevious(
     JNIEnv* jenv, jobject obj,
     jlong nativeObjectPtr)
 {
@@ -13,7 +13,7 @@ JNIEXPORT void JNICALL Java_com_eegeo_examples_ExampleControllerHud_ActivatePrev
 	pExample->SelectPrevious();
 }
 
-JNIEXPORT void JNICALL Java_com_eegeo_examples_ExampleControllerHud_ActivateNext(
+JNIEXPORT void JNICALL Java_com_eegeo_examples_examplecontroller_ExampleControllerJniMethods_ActivateNext(
     JNIEnv* jenv, jobject obj,
     jlong nativeObjectPtr)
 {
@@ -21,7 +21,7 @@ JNIEXPORT void JNICALL Java_com_eegeo_examples_ExampleControllerHud_ActivateNext
 	pExample->SelectNext();
 }
 
-JNIEXPORT void JNICALL Java_com_eegeo_examples_ExampleControllerHud_SelectExample(
+JNIEXPORT void JNICALL Java_com_eegeo_examples_examplecontroller_ExampleControllerJniMethods_SelectExample(
     JNIEnv* jenv, jobject obj,
     jlong nativeObjectPtr,
     jstring selectedExample)

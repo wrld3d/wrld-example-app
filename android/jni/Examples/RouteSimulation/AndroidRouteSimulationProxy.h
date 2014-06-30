@@ -7,27 +7,27 @@
 
 extern "C"
 {
-	JNIEXPORT void JNICALL Java_com_eegeo_examples_RouteSimulationExampleHud_ToggleFollowCamera(
+	JNIEXPORT void JNICALL Java_com_eegeo_examples_routesimulation_RouteSimulationJniMethods_ToggleFollowCamera(
 	    JNIEnv* jenv, jobject obj,
 	    jlong nativeObjectPtr);
 
-	JNIEXPORT void JNICALL Java_com_eegeo_examples_RouteSimulationExampleHud_ChangeFollowDirection(
+	JNIEXPORT void JNICALL Java_com_eegeo_examples_routesimulation_RouteSimulationJniMethods_ChangeFollowDirection(
 	    JNIEnv* jenv, jobject obj,
 	    jlong nativeObjectPtr);
 
-	JNIEXPORT void JNICALL Java_com_eegeo_examples_RouteSimulationExampleHud_IncreaseSpeedFollowed(
+	JNIEXPORT void JNICALL Java_com_eegeo_examples_routesimulation_RouteSimulationJniMethods_IncreaseSpeedFollowed(
 	    JNIEnv* jenv, jobject obj,
 	    jlong nativeObjectPtr);
 
-	JNIEXPORT void JNICALL Java_com_eegeo_examples_RouteSimulationExampleHud_DecreaseSpeedFollowed(
+	JNIEXPORT void JNICALL Java_com_eegeo_examples_routesimulation_RouteSimulationJniMethods_DecreaseSpeedFollowed(
 	    JNIEnv* jenv, jobject obj,
 	    jlong nativeObjectPtr);
 
-	JNIEXPORT void JNICALL Java_com_eegeo_examples_RouteSimulationExampleHud_ToggleDirectFollow(
+	JNIEXPORT void JNICALL Java_com_eegeo_examples_routesimulation_RouteSimulationJniMethods_ToggleDirectFollow(
 	    JNIEnv* jenv, jobject obj,
 	    jlong nativeObjectPtr);
 
-	JNIEXPORT void JNICALL Java_com_eegeo_examples_RouteSimulationExampleHud_ToggleSideOfRoadToDriveOn(
+	JNIEXPORT void JNICALL Java_com_eegeo_examples_routesimulation_RouteSimulationJniMethods_ToggleSideOfRoadToDriveOn(
 	    JNIEnv* jenv, jobject obj,
 	    jlong nativeObjectPtr);
 }

@@ -1,6 +1,6 @@
 // Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
-package com.eegeo.examples;
+package com.eegeo.examples.placejump;
 
 import android.util.Log;
 import android.view.View;
@@ -12,6 +12,7 @@ import android.widget.Spinner;
 
 import com.eegeo.MainActivity;
 import com.eegeo.R;
+
 
 //this is the java companion type to native ShowJavaPlaceJumpUIExample
 //
@@ -63,22 +64,14 @@ public class PlaceJumpMenu
 							uiRoot.removeView(m_view);
 						}
 					});
+					
+					VisitButtonOnClickListener clickListener = new VisitButtonOnClickListener(
+							spinner,
+							m_activity,
+							nativeCallerPointer
+						);
 
-					visit.setOnClickListener(new OnClickListener()
-					{
-						@Override
-						public void onClick(View v)
-						{
-							final String selection = (String)spinner.getSelectedItem();
-							m_activity.runOnNativeThread(new Runnable()
-							{
-								public void run()
-								{
-									visitLocation(nativeCallerPointer, selection);
-								}
-							});
-						}
-					});
+					visit.setOnClickListener(clickListener);
 
 					uiRoot.addView(m_view);
 				}

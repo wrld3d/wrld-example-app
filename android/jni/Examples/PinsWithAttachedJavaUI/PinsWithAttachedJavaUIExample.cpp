@@ -204,7 +204,7 @@ void PinsWithAttachedJavaUIExample::CreateJavaUIButton()
 	JNIEnv* env = attached.envForThread;
 
 	//get the java HudPinController class
-	jstring strClassName = env->NewStringUTF("com/eegeo/examples/HudPinController");
+	jstring strClassName = env->NewStringUTF("com/eegeo/examples/hudpincontroller/HudPinController");
 	jclass hudPinControllerClass = m_nativeState.LoadClass(env, strClassName);
 	env->DeleteLocalRef(strClassName);
 

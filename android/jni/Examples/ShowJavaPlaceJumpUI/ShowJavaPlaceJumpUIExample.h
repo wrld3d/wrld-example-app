@@ -17,7 +17,7 @@
 
 extern "C"
 {
-	JNIEXPORT void JNICALL Java_com_eegeo_examples_PlaceJumpMenu_visitLocation(JNIEnv* jenv, jobject obj, jlong nativeAppWindowPtr, jstring location);
+	JNIEXPORT void JNICALL Java_com_eegeo_examples_placejump_PlaceJumpMenuJniMethods_VisitLocation(JNIEnv* jenv, jobject obj, jlong nativeAppWindowPtr, jstring location);
 }
 
 namespace Examples

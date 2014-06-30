@@ -20,7 +20,7 @@ AndroidRouteMatchingExampleView::AndroidRouteMatchingExampleView(
 	JNIEnv* env = attached.envForThread;
 
 	//get the java RouteMatchingExampleHud class
-	jstring strClassName = env->NewStringUTF("com/eegeo/examples/RouteMatchingExampleHud");
+	jstring strClassName = env->NewStringUTF("com/eegeo/examples/routematching/RouteMatchingExampleHud");
 	jclass routeMatchingExampleHudClass = m_nativeState.LoadClass(env, strClassName);
 	env->DeleteLocalRef(strClassName);
 
