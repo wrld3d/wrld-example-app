@@ -44,7 +44,7 @@ elif [ $p == "android" ]; then
     rm -rf "./android/bin"
     ./update.platform.sh $allArguments
     pushd android
-    ./build.sh
+    ./build.sh $allArguments
     resultcode=$?
     popd
 fi
