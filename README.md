@@ -1,6 +1,11 @@
 eeGeo 3D Maps mobile-sdk-harness
 ================================
 
+Additional documentation available at http://sdk.eegeo.com
+
+iOS
+===
+
 * Run ./update.platform.sh -p ios to get the latest platform libraries and headers.
 * The accompanying project has no code signing, so run in the simulator (or provide your own credentials).
 * The platform needs an API key to operate. Sign up at https://appstore.eegeo.com/ to get your API key and introduce it into the following line in ViewController.mm : 
@@ -8,8 +13,8 @@ eeGeo 3D Maps mobile-sdk-harness
 * Scroll between the examples using the Next and Previous buttons; the current example name is displayed at the top of the screen.
 * To build at the command line, run ./build -p ios from the repository root.
 
-android mobile-sdk-harness
-==========================
+Android
+=======
 
 * Install the Android SDK and NDK
 * Run ./update.platform.sh -p android to get the latest platform libraries and headers.
