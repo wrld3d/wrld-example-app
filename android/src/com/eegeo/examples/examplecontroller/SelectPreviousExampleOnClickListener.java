@@ -1,6 +1,5 @@
 package com.eegeo.examples.examplecontroller;
 
-import android.view.View;
 
 import com.eegeo.INativeMessageRunner;
 import com.eegeo.examples.NativeThreadOnClickHandler;
@@ -15,7 +14,7 @@ class SelectPreviousExampleOnClickListener extends NativeThreadOnClickHandler
 	}
 
 	@Override
-	protected void onClickNativeThread(View v) 
+	protected void onClickNativeThread() 
 	{
 		ExampleControllerJniMethods.ActivatePrevious(m_nativeCallerPointer);	
 	}

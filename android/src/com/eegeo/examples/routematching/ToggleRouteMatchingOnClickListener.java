@@ -1,6 +1,5 @@
 package com.eegeo.examples.routematching;
 
-import android.view.View;
 
 import com.eegeo.INativeMessageRunner;
 import com.eegeo.examples.NativeThreadOnClickHandler;
@@ -15,7 +14,7 @@ class ToggleRouteMatchingOnClickListener extends NativeThreadOnClickHandler
 	}
 
 	@Override
-	protected void onClickNativeThread(View v) 
+	protected void onClickNativeThread() 
 	{
 		RouteMatchingJniMethods.ToggleRouteMatching(m_nativeCallerPointer);
 	}

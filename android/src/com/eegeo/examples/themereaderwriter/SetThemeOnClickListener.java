@@ -1,6 +1,5 @@
 package com.eegeo.examples.themereaderwriter;
 
-import android.view.View;
 import android.widget.Spinner;
 
 import com.eegeo.INativeMessageRunner;
@@ -20,7 +19,7 @@ class SetThemeOnClickListener extends NativeThreadOnClickHandler
 	}
 
 	@Override
-	protected void onClickNativeThread(View v) 
+	protected void onClickNativeThread() 
 	{
 		final String selection = (String)m_spinner.getSelectedItem();
 		ThemeReaderWriterJniMethods.SetCurrentTheme(m_nativeCallerPointer, selection);

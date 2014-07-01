@@ -21,15 +21,14 @@ public abstract class NativeThreadOnClickHandler implements OnClickListener
 	@Override
 	public void onClick(View v) 
 	{
-		final View _v = v;
 		m_nativeMessageRunner.runOnNativeThread(new Runnable()
 		{
 			public void run()
 			{
-				onClickNativeThread(_v);
+				onClickNativeThread();
 			}
 		});
 	}
 	
-	protected abstract void onClickNativeThread(View v);
+	protected abstract void onClickNativeThread();
 }

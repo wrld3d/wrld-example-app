@@ -1,6 +1,5 @@
 package com.eegeo.examples.routesimulation;
 
-import android.view.View;
 
 import com.eegeo.INativeMessageRunner;
 import com.eegeo.examples.NativeThreadOnClickHandler;
@@ -15,7 +14,7 @@ class ToggleSideOfRoadToDriveOnOnClickListener extends NativeThreadOnClickHandle
 	}
 
 	@Override
-	protected void onClickNativeThread(View v) 
+	protected void onClickNativeThread() 
 	{
 		RouteSimulationJniMethods.ToggleSideOfRoadToDriveOn(m_nativeCallerPointer);
 	}

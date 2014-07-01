@@ -29,20 +29,18 @@ class ToggleFollowCameraOnClickListener extends NativeThreadOnClickHandler
 			int visibility = (View.VISIBLE == button.getVisibility()) ? View.INVISIBLE : View.VISIBLE;
 			button.setVisibility(visibility);
 		}
-
-		final View _v = v;
 		
 		m_nativeMessageRunner.runOnNativeThread(new Runnable()
 		{
 			public void run()
 			{
-				onClickNativeThread(_v);
+				onClickNativeThread();
 			}
 		});
 	}
 
 	@Override
-	protected void onClickNativeThread(View v) 
+	protected void onClickNativeThread() 
 	{
 		RouteSimulationJniMethods.ToggleFollowCamera(m_nativeCallerPointer);
 	}

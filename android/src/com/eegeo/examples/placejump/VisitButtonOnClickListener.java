@@ -1,6 +1,5 @@
 package com.eegeo.examples.placejump;
 
-import android.view.View;
 import android.widget.Spinner;
 
 import com.eegeo.INativeMessageRunner;
@@ -20,7 +19,7 @@ class VisitButtonOnClickListener extends NativeThreadOnClickHandler
 	}
 
 	@Override
-	protected void onClickNativeThread(View v) 
+	protected void onClickNativeThread() 
 	{
 		final String selection = (String)m_spinner.getSelectedItem();
 		PlaceJumpMenuJniMethods.VisitLocation(m_nativeCallerPointer, selection);
