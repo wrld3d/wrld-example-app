@@ -72,6 +72,11 @@
 		18AB38FC192B729F00F15546 /* iOSRouteSimulationExampleViewFactory.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18AB38F3192B729F00F15546 /* iOSRouteSimulationExampleViewFactory.mm */; };
 		18AB38FD192B729F00F15546 /* Main.m in Sources */ = {isa = PBXBuildFile; fileRef = 18AB38F5192B729F00F15546 /* Main.m */; };
 		18AB38FE192B729F00F15546 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18AB38F7192B729F00F15546 /* ViewController.mm */; };
+		18C45A7019658A5C009B18A8 /* AppHost.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18C45A6519658A5C009B18A8 /* AppHost.mm */; };
+		18C45A7119658A5C009B18A8 /* AppInputDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18C45A6719658A5C009B18A8 /* AppInputDelegate.mm */; };
+		18C45A7219658A5C009B18A8 /* AppLocationDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18C45A6919658A5C009B18A8 /* AppLocationDelegate.mm */; };
+		18C45A7319658A5C009B18A8 /* AppRunner.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18C45A6B19658A5C009B18A8 /* AppRunner.mm */; };
+		18C45A7419658A5C009B18A8 /* GlDisplayService.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18C45A6C19658A5C009B18A8 /* GlDisplayService.mm */; };
 		18D1D354194A057200FAA1B9 /* FrankBold50_A8_icons_0.png in Resources */ = {isa = PBXBuildFile; fileRef = 18D1D343194A057200FAA1B9 /* FrankBold50_A8_icons_0.png */; };
 		18D1D355194A057200FAA1B9 /* FrankBold50_A8_icons.fnt in Resources */ = {isa = PBXBuildFile; fileRef = 18D1D344194A057200FAA1B9 /* FrankBold50_A8_icons.fnt */; };
 		18D1D357194A057200FAA1B9 /* load_model_example in Resources */ = {isa = PBXBuildFile; fileRef = 18D1D346194A057200FAA1B9 /* load_model_example */; };
@@ -326,6 +331,16 @@
 		18AB38F5192B729F00F15546 /* Main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Main.m; sourceTree = "<group>"; };
 		18AB38F6192B729F00F15546 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		18AB38F7192B729F00F15546 /* ViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewController.mm; sourceTree = "<group>"; };
+		18C45A6419658A5C009B18A8 /* AppHost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppHost.h; sourceTree = "<group>"; };
+		18C45A6519658A5C009B18A8 /* AppHost.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppHost.mm; sourceTree = "<group>"; };
+		18C45A6619658A5C009B18A8 /* AppInputDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppInputDelegate.h; sourceTree = "<group>"; };
+		18C45A6719658A5C009B18A8 /* AppInputDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppInputDelegate.mm; sourceTree = "<group>"; };
+		18C45A6819658A5C009B18A8 /* AppLocationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppLocationDelegate.h; sourceTree = "<group>"; };
+		18C45A6919658A5C009B18A8 /* AppLocationDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppLocationDelegate.mm; sourceTree = "<group>"; };
+		18C45A6A19658A5C009B18A8 /* AppRunner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppRunner.h; sourceTree = "<group>"; };
+		18C45A6B19658A5C009B18A8 /* AppRunner.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppRunner.mm; sourceTree = "<group>"; };
+		18C45A6C19658A5C009B18A8 /* GlDisplayService.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GlDisplayService.mm; sourceTree = "<group>"; };
+		18C45A6D19658A5C009B18A8 /* GlDisplayService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlDisplayService.h; sourceTree = "<group>"; };
 		18D1D343194A057200FAA1B9 /* FrankBold50_A8_icons_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FrankBold50_A8_icons_0.png; sourceTree = "<group>"; };
 		18D1D344194A057200FAA1B9 /* FrankBold50_A8_icons.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = FrankBold50_A8_icons.fnt; sourceTree = "<group>"; };
 		18D1D346194A057200FAA1B9 /* load_model_example */ = {isa = PBXFileReference; lastKnownFileType = folder; path = load_model_example; sourceTree = "<group>"; };
@@ -788,6 +803,16 @@
 			isa = PBXGroup;
 			children = (
 				18AB38E9192B729F00F15546 /* Examples */,
+				18C45A6419658A5C009B18A8 /* AppHost.h */,
+				18C45A6519658A5C009B18A8 /* AppHost.mm */,
+				18C45A6619658A5C009B18A8 /* AppInputDelegate.h */,
+				18C45A6719658A5C009B18A8 /* AppInputDelegate.mm */,
+				18C45A6819658A5C009B18A8 /* AppLocationDelegate.h */,
+				18C45A6919658A5C009B18A8 /* AppLocationDelegate.mm */,
+				18C45A6A19658A5C009B18A8 /* AppRunner.h */,
+				18C45A6B19658A5C009B18A8 /* AppRunner.mm */,
+				18C45A6C19658A5C009B18A8 /* GlDisplayService.mm */,
+				18C45A6D19658A5C009B18A8 /* GlDisplayService.h */,
 				18AB38F5192B729F00F15546 /* Main.m */,
 				18AB38F6192B729F00F15546 /* ViewController.h */,
 				18AB38F7192B729F00F15546 /* ViewController.mm */,
@@ -1150,14 +1175,17 @@
 				181438B5192B6E4500BCDF2E /* PinsExample.cpp in Sources */,
 				18997174192CA64300E0E9F1 /* ControlCityThemeExampleFactory.cpp in Sources */,
 				18AB38F9192B729F00F15546 /* iOSRouteMatchingExampleView.mm in Sources */,
+				18C45A7019658A5C009B18A8 /* AppHost.mm in Sources */,
 				18997195192CAFED00E0E9F1 /* Pick3DObjectExampleFactory.cpp in Sources */,
 				181438B7192B6E4500BCDF2E /* ResourceSpatialQueryExample.cpp in Sources */,
 				189971AA192CB4D900E0E9F1 /* RouteThicknessPolicyExampleFactory.cpp in Sources */,
 				181438A9192B6E4500BCDF2E /* DebugPrimitiveRenderingExample.cpp in Sources */,
 				1899718C192CAD9800E0E9F1 /* LoadModelExampleFactory.cpp in Sources */,
 				18997180192CAA8C00E0E9F1 /* EnvironmentFlatteningExampleFactory.cpp in Sources */,
+				18C45A7319658A5C009B18A8 /* AppRunner.mm in Sources */,
 				181438BD192B6E4500BCDF2E /* ScreenPickExample.cpp in Sources */,
 				18AB38E5192B71F100F15546 /* UIHelpers.cpp in Sources */,
+				18C45A7119658A5C009B18A8 /* AppInputDelegate.mm in Sources */,
 				181438C3192B6E4500BCDF2E /* WebRequestExample.cpp in Sources */,
 				1899719B192CB17100E0E9F1 /* PinsExampleFactory.cpp in Sources */,
 				181438B1192B6E4500BCDF2E /* ModifiedRenderingExample.cpp in Sources */,
@@ -1170,6 +1198,8 @@
 				189971C5192CC21600E0E9F1 /* RouteSimulationExampleFactory.cpp in Sources */,
 				18997192192CAF5F00E0E9F1 /* NavigationGraphExampleFactory.cpp in Sources */,
 				18AB38FC192B729F00F15546 /* iOSRouteSimulationExampleViewFactory.mm in Sources */,
+				18C45A7219658A5C009B18A8 /* AppLocationDelegate.mm in Sources */,
+				18C45A7419658A5C009B18A8 /* GlDisplayService.mm in Sources */,
 				181438AE192B6E4500BCDF2E /* FileIOExample.cpp in Sources */,
 				181438BA192B6E4500BCDF2E /* RouteSimulationExample.cpp in Sources */,
 				181438C1192B6E4500BCDF2E /* ToggleTrafficExample.cpp in Sources */,
