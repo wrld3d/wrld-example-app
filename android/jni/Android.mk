@@ -6,9 +6,10 @@ LOCAL_SRC_FILES := ./../libs/libnative-activity-lib.a
 include $(PREBUILT_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
+
 LOCAL_MODULE := native-activity
-LOCAL_LDLIBS    := -llog -landroid -lEGL -lGLESv2 -L./libs/ -lpng -lz -lm -L./libs/ -lcrypto -L./libs/ -lssl -L./libs/ -lcurl -L./libs/ -lcares -L./libs/ -lsimd -L./libs/ -lmyjpeg
-LOCAL_STATIC_LIBRARIES := android_native_app_glue native-activity-lib
+LOCAL_LDLIBS    := -llog -landroid -lEGL -lGLESv2 -L./libs/ -lpng -lz -lm -L./libs/ -lcrypto -L./libs/ -lssl -L./libs/ -lcurl -L./libs/ -lcares -L./libs/ -lsimd -L./libs/ -lmyjpeg -L./libs/ -lhttpxx-lib
+LOCAL_STATIC_LIBRARIES := android_native_app_glue native-activity-lib 
 
 ifdef COMPILE_CPP_11
   LOCAL_LDLIBS += -fuse-ld=bfd
@@ -57,6 +58,8 @@ endif
 LOCAL_C_INCLUDES += ./libs/png
 LOCAL_C_INCLUDES += ./libs/curl 
 LOCAL_C_INCLUDES += ./libs/jpeg  
+LOCAL_C_INCLUDES += ./libs/httpxx/code
+LOCAL_C_INCLUDES += ./libs/httpxx/libs/http-parser
 
 include $(BUILD_SHARED_LIBRARY)
 

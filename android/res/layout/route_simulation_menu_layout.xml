@@ -25,12 +25,6 @@
 	        android:layout_above="@+id/toggle_follow"
 	        android:text="Increase Speed" />
 	    <Button
-	        android:id="@+id/decrease_speed"
-	        android:layout_width="96dp"
-	        android:layout_height="wrap_content"
-	        android:layout_above="@+id/increase_speed"
-	        android:text="Decrease Speed" />
-	    <Button
 	        android:id="@+id/change_direction"
 	        android:layout_width="96dp"
 	        android:layout_height="wrap_content"
@@ -50,6 +44,16 @@
 	        android:text="Toggle Road Side!"
 	        android:layout_toRightOf="@+id/toggle_follow" 
      		android:layout_alignParentBottom="true"/>
+
+	    <Button
+	        android:id="@+id/decrease_speed"
+	        android:layout_width="96dp"
+	        android:layout_height="wrap_content"
+	        android:layout_alignBaseline="@+id/increase_speed"
+	        android:layout_alignBottom="@+id/increase_speed"
+	        android:layout_alignLeft="@+id/toggle_road_side"
+	        android:text="Decrease Speed" />
+
 	</RelativeLayout>
 	
 </RelativeLayout>

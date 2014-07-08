@@ -74,7 +74,7 @@ private:
 	Eegeo::Android::AndroidWebRequestService* m_pAndroidWebRequestService;
 	Eegeo::Blitter* m_pBlitter;
 	Eegeo::Android::AndroidTextureFileLoader* m_pTextureLoader;
-	Eegeo::Android::AndroidHttpCache* m_pHttpCache;
+	Eegeo::Android::Cache::AndroidHttpCache* m_pHttpCache;
 	Eegeo::Android::AndroidFileIO* m_pFileIO;
 	Eegeo::Lighting::GlobalLighting* m_pLighting;
 	Eegeo::Lighting::GlobalFogging* m_pFogging;

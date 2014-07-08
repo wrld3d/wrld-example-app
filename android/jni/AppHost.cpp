@@ -94,7 +94,7 @@ AppHost::AppHost(
 	customApplicationAssetDirectories.insert("route_simulation_animation_example");
 	m_pFileIO = new AndroidFileIO(&nativeState, customApplicationAssetDirectories);
 
-	m_pHttpCache = new AndroidHttpCache(m_pFileIO, "http://d2xvsc8j92rfya.cloudfront.net/");
+	m_pHttpCache = new Cache::AndroidHttpCache(*m_pFileIO);
 	m_pTextureLoader = new AndroidTextureFileLoader(m_pFileIO, m_pRenderContext->GetGLState());
 
 	Eegeo::EffectHandler::Initialise();
