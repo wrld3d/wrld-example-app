@@ -36,6 +36,11 @@
 		181438C3192B6E4500BCDF2E /* WebRequestExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 181438A5192B6E4500BCDF2E /* WebRequestExample.cpp */; };
 		182E453B18C92FA900F9DD92 /* libapps-on-maps-sim.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E75EE1D16848B8A00BCA283 /* libapps-on-maps-sim.a */; };
 		182E453C18C92FA900F9DD92 /* libapps-on-maps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE48223168373E20006E99B /* libapps-on-maps.a */; };
+		186D2926196D9D0900E004E0 /* AppHost.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18C45A6519658A5C009B18A8 /* AppHost.mm */; };
+		186D2927196D9D0900E004E0 /* AppInputDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18C45A6719658A5C009B18A8 /* AppInputDelegate.mm */; };
+		186D2928196D9D0900E004E0 /* AppLocationDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18C45A6919658A5C009B18A8 /* AppLocationDelegate.mm */; };
+		186D2929196D9D0900E004E0 /* AppRunner.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18C45A6B19658A5C009B18A8 /* AppRunner.mm */; };
+		186D292A196D9D0900E004E0 /* GlDisplayService.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18C45A6C19658A5C009B18A8 /* GlDisplayService.mm */; };
 		1899716A192C947D00E0E9F1 /* CameraTransitionExampleFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18997168192C947D00E0E9F1 /* CameraTransitionExampleFactory.cpp */; };
 		18997174192CA64300E0E9F1 /* ControlCityThemeExampleFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18997172192CA64300E0E9F1 /* ControlCityThemeExampleFactory.cpp */; };
 		18997177192CA6FE00E0E9F1 /* DebugPrimitiveRenderingExampleFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18997175192CA6FE00E0E9F1 /* DebugPrimitiveRenderingExampleFactory.cpp */; };
@@ -1072,6 +1077,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				186D2926196D9D0900E004E0 /* AppHost.mm in Sources */,
+				186D2927196D9D0900E004E0 /* AppInputDelegate.mm in Sources */,
+				186D2928196D9D0900E004E0 /* AppLocationDelegate.mm in Sources */,
+				186D2929196D9D0900E004E0 /* AppRunner.mm in Sources */,
+				186D292A196D9D0900E004E0 /* GlDisplayService.mm in Sources */,
 				222E06491948B08B0004FFD9 /* ScreenUnprojectExampleFactory.cpp in Sources */,
 				222E064A1948B08B0004FFD9 /* ControlCityThemeExample.cpp in Sources */,
 				222E064B1948B08B0004FFD9 /* SingleCityExampleFactory.cpp in Sources */,
