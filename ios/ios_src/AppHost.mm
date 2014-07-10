@@ -21,6 +21,7 @@
 #include "EnvironmentFlatteningService.h"
 #include "RouteMatchingExampleFactory.h"
 #include "RouteSimulationExampleFactory.h"
+#include "iOSWebRequestService.h"
 
 using namespace Eegeo::iOS;
 

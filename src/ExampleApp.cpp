@@ -7,6 +7,7 @@
 #include "GlobeCameraInterestPointProvider.h"
 #include "GlobeCameraController.h"
 #include "CameraHelpers.h"
+#include "LatLongAltitude.h"
 
 //example factories
 #include "CameraTransitionExampleFactory.h"
@@ -34,6 +35,7 @@
 #include "ToggleTrafficExampleFactory.h"
 #include "TrafficCongestionExampleFactory.h"
 #include "WebRequestExampleFactory.h"
+
 
 ExampleApp::ExampleApp(Eegeo::EegeoWorld* pWorld,
                        Eegeo::Camera::GlobeCamera::GlobeCameraInterestPointProvider& globeCameraInterestPointProvider,

@@ -7,6 +7,8 @@
 #include "CubeMapCellInfo.h"
 #include "CubeMap.h"
 #include "CameraHelpers.h"
+#include "IMaterial.h"
+#include "PlaceNameRenderable.h"
 
 using namespace Eegeo;
 using namespace Eegeo::Resources::PlaceNames;

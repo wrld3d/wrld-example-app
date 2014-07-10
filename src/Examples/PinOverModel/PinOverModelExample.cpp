@@ -3,6 +3,10 @@
 #include "PinOverModelExample.h"
 
 #include "RegularTexturePageLayout.h"
+#include "RenderContext.h"
+#include "Node.h"
+#include "EffectHandler.h"
+#include "RenderQueue.h"
 
 namespace Examples
 {

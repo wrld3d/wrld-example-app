@@ -2,6 +2,7 @@
 
 #include "PinsExample.h"
 #include "RegularTexturePageLayout.h"
+#include "MaterialIdGenerator.h"
 
 namespace Examples
 {

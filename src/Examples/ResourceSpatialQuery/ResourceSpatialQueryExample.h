@@ -6,6 +6,7 @@
 #include "IExample.h"
 #include "ResourceSpatialQueryService.h"
 #include "Location.h"
+#include "MortonKey.h"
 
 namespace Examples
 {

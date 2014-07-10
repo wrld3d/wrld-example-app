@@ -12,6 +12,8 @@
 #include "ICameraProvider.h"
 #include "IInterestPointProvider.h"
 #include "GlobeCameraTouchController.h"
+#include "EarthConstants.h"
+#include "LatLongAltitude.h"
 
 namespace Examples
 {

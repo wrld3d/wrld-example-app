@@ -3,6 +3,9 @@
 #include "LoadModelExample.h"
 #include "ShaderCompiler.h"
 #include "Model.h"
+#include "ModelMaterial.h"
+#include "Mesh.h"
+#include "Node.h"
 #include <sys/time.h>
 
 namespace Examples

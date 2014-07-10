@@ -3,6 +3,8 @@
 #include "PODAnimationExample.h"
 #include "ShaderCompiler.h"
 #include "CameraHelpers.h"
+#include "Model.h"
+#include "Node.h"
 #include <sys/time.h>
 
 namespace Examples
