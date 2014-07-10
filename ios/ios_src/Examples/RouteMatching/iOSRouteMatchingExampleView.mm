@@ -2,6 +2,7 @@
 
 #include "iOSRouteMatchingExampleView.h"
 #include "UIHelpers.h"
+#include "iOSUIHelpers.h"
 
 using namespace Examples;
 
@@ -37,10 +38,18 @@ iOSRouteMatchingExampleView::iOSRouteMatchingExampleView(UIView* pView)
 	CGRect adjustedFrame = [rootView convertRect:originalFrame fromView:nil];
 
 	float screenHeight = adjustedFrame.size.height - 80.f;
+    const float deviceSizeScale = IS_IPAD ? 1.f : 0.5f;
 
-	m_pToggleMatchingButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-	m_pToggleMatchingButton.frame = CGRectMake(10, screenHeight, 200, 50);
+	m_pToggleMatchingButton = [UIButton buttonWithType:BUTTON_TYPE];
+	m_pToggleMatchingButton.frame = CGRectMake(10 * deviceSizeScale, screenHeight, 200 * deviceSizeScale, 50 * deviceSizeScale);
+    
+    if (!IS_IPAD)
+    {
+        m_pToggleMatchingButton.titleLabel.font = [UIFont systemFontOfSize:10];
+    }
+	
 	[m_pToggleMatchingButton setTitle:@"Toggle Match!" forState:UIControlStateNormal];
+    [m_pToggleMatchingButton setBackgroundColor:[UIColor colorWithRed:0.0/255.0f green:0.0/255.0f blue:128.0/255.0f alpha:0.6]];
 	[m_pToggleMatchingButton addTarget:m_pBinding action:@selector(toggleMatching) forControlEvents:UIControlEventTouchDown];
 	[m_pView addSubview:m_pToggleMatchingButton];
 
