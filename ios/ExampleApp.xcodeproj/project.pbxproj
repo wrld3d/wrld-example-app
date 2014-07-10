@@ -386,6 +386,7 @@
 		18D1D36D194A0F7D00FAA1B9 /* Default-Portrait~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait~ipad.png"; sourceTree = "<group>"; };
 		18D1D36E194A0F7D00FAA1B9 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		18D1D36F194A0F7D00FAA1B9 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		18E0BDDA196EA82700165453 /* iOSUIHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iOSUIHelpers.h; sourceTree = "<group>"; };
 		18E6277D192F833A00B31DCE /* iOSExampleControllerView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = iOSExampleControllerView.mm; sourceTree = "<group>"; };
 		18E6277E192F833A00B31DCE /* iOSExampleControllerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iOSExampleControllerView.h; sourceTree = "<group>"; };
 		18E62780192FAD6200B31DCE /* IExampleControllerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IExampleControllerView.h; sourceTree = "<group>"; };
@@ -848,6 +849,7 @@
 		18AB38E9192B729F00F15546 /* Examples */ = {
 			isa = PBXGroup;
 			children = (
+				18E0BDDA196EA82700165453 /* iOSUIHelpers.h */,
 				18AB38EA192B729F00F15546 /* RouteMatching */,
 				18AB38EF192B729F00F15546 /* RouteSimulation */,
 				18E6277D192F833A00B31DCE /* iOSExampleControllerView.mm */,

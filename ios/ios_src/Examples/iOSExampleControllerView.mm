@@ -2,9 +2,7 @@
 
 #include "iOSExampleControllerView.h"
 #include "UIHelpers.h"
-
-#define SCREEN_WIDTH ((([UIApplication sharedApplication].statusBarOrientation == UIInterfaceOrientationPortrait) || ([UIApplication sharedApplication].statusBarOrientation == UIInterfaceOrientationPortraitUpsideDown)) ? [[UIScreen mainScreen] bounds].size.width : [[UIScreen mainScreen] bounds].size.height)
-#define SCREEN_HEIGHT ((([UIApplication sharedApplication].statusBarOrientation == UIInterfaceOrientationPortrait) || ([UIApplication sharedApplication].statusBarOrientation == UIInterfaceOrientationPortraitUpsideDown)) ? [[UIScreen mainScreen] bounds].size.height : [[UIScreen mainScreen] bounds].size.width)
+#include "iOSUIHelpers.h"
 
 using namespace Examples;
 
@@ -67,7 +65,7 @@ int m_exampleSelectorWidth;
 {
 	CGRect screenRect = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 	m_pSelectionScreen = [[UIControl alloc] initWithFrame:screenRect];
-	m_pSelectionScreen.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6];
+	m_pSelectionScreen.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.8];
 
 	UIScrollView* scroller = [[UIScrollView alloc] initWithFrame:CGRectMake((SCREEN_WIDTH/2) - m_exampleSelectorWidth/2, 50, m_exampleSelectorWidth, SCREEN_HEIGHT - 100)];
 
@@ -76,10 +74,11 @@ int m_exampleSelectorWidth;
 	for (int i = 0; i < m_exampleNames.size(); ++ i)
 	{
 		NSString* label = [NSString stringWithUTF8String:m_exampleNames[i].c_str()];
-		UIButton* b = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+		UIButton* b = [UIButton buttonWithType:BUTTON_TYPE];
 		b.frame = CGRectMake(0, (i * buttonHeight), m_exampleSelectorWidth, buttonHeight);
+
 		[b setTitle:label forState:UIControlStateNormal];
-		[b addTarget:self action:@selector(selectionHandler:) forControlEvents:UIControlEventTouchDown];
+        [b addTarget:self action:@selector(selectionHandler:) forControlEvents:UIControlEventTouchDown];
 		[scroller addSubview:b];
 	}
 
@@ -104,21 +103,27 @@ iOSExampleControllerView::iOSExampleControllerView(UIView* pView)
 
 	float screenWidth = SCREEN_WIDTH;
 
-	m_pPreviousButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-	[m_pPreviousButton retain];
-	m_pPreviousButton.frame = CGRectMake(10, 10, 100, 30);
-	[m_pPreviousButton setTitle:@"Previous" forState:UIControlStateNormal];
-	[m_pPreviousButton addTarget:m_pBinding action:@selector(activatePrevious) forControlEvents:UIControlEventTouchDown];
-
-	m_pNextButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-	[m_pNextButton retain];
-	m_pNextButton.frame = CGRectMake(screenWidth - 110, 10, 100, 30);
-	[m_pNextButton setTitle:@"Next" forState:UIControlStateNormal];
-	[m_pNextButton addTarget:m_pBinding action:@selector(activateNext) forControlEvents:UIControlEventTouchDown];
-
-	m_pSelectNewExampleButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    if(IS_IPAD)
+    {
+        m_pPreviousButton = [UIButton buttonWithType:BUTTON_TYPE];
+        [m_pPreviousButton retain];
+        m_pPreviousButton.frame = CGRectMake(10, 10, 100, 30);
+        [m_pPreviousButton setBackgroundColor:[UIColor colorWithRed:0.0/255.0f green:0.0/255.0f blue:128.0/255.0f alpha:0.6]];
+        [m_pPreviousButton setTitle:@"Previous" forState:UIControlStateNormal];
+        [m_pPreviousButton addTarget:m_pBinding action:@selector(activatePrevious) forControlEvents:UIControlEventTouchDown];
+        
+        m_pNextButton = [UIButton buttonWithType:BUTTON_TYPE];
+        [m_pNextButton retain];
+        m_pNextButton.frame = CGRectMake(screenWidth - 110, 10, 100, 30);
+        [m_pNextButton setBackgroundColor:[UIColor colorWithRed:0.0/255.0f green:0.0/255.0f blue:128.0/255.0f alpha:0.6]];
+        [m_pNextButton setTitle:@"Next" forState:UIControlStateNormal];
+        [m_pNextButton addTarget:m_pBinding action:@selector(activateNext) forControlEvents:UIControlEventTouchDown];
+    }
+    
+	m_pSelectNewExampleButton = [UIButton buttonWithType:BUTTON_TYPE];
 	[m_pSelectNewExampleButton retain];
-	m_pSelectNewExampleButton.frame = CGRectMake(screenWidth/2 - 300, 10, 600, 30);
+	m_pSelectNewExampleButton.frame = CGRectMake(screenWidth/2 - 300, 20, 600, 30);
+    [m_pSelectNewExampleButton setBackgroundColor:[UIColor colorWithRed:0.0/255.0f green:0.0/255.0f blue:128.0/255.0f alpha:0.6]];
 	[m_pSelectNewExampleButton setTitle:@"" forState:UIControlStateNormal];
 	[m_pSelectNewExampleButton addTarget:m_pBinding action:@selector(openExampleSelectionMenu) forControlEvents:UIControlEventTouchDown];
 
@@ -127,12 +132,15 @@ iOSExampleControllerView::iOSExampleControllerView(UIView* pView)
 
 iOSExampleControllerView::~iOSExampleControllerView()
 {
-	[m_pNextButton removeFromSuperview];
-	m_pNextButton = nil;
-
-	[m_pPreviousButton removeFromSuperview];
-	m_pPreviousButton = nil;
-
+    if(IS_IPAD)
+    {
+        [m_pNextButton removeFromSuperview];
+        m_pNextButton = nil;
+        
+        [m_pPreviousButton removeFromSuperview];
+        m_pPreviousButton = nil;
+    }
+    
 	[m_pSelectNewExampleButton removeFromSuperview];
 	m_pSelectNewExampleButton = nil;
 
@@ -147,8 +155,11 @@ void iOSExampleControllerView::PopulateExampleList(const std::vector<std::string
 
 void iOSExampleControllerView::Show()
 {
-	[m_pView addSubview:m_pPreviousButton];
-	[m_pView addSubview:m_pNextButton];
+    if(IS_IPAD)
+    {
+        [m_pView addSubview:m_pPreviousButton];
+        [m_pView addSubview:m_pNextButton];
+    }
 	[m_pView addSubview:m_pSelectNewExampleButton];
 }
 

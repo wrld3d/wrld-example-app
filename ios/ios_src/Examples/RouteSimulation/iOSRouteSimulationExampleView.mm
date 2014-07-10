@@ -2,6 +2,7 @@
 
 #include "iOSRouteSimulationExampleView.h"
 #include "UIHelpers.h"
+#include "iOSUIHelpers.h"
 
 using namespace Examples;
 
@@ -59,6 +60,29 @@ UIButton* m_pRotateToFollow;
 
 @end
 
+namespace
+{
+    float ApplyPlatformScale(int position)
+    {
+        const float deviceSizeScale = IS_IPAD ? 1.f : 0.5f;
+        return position*deviceSizeScale;
+    }
+    
+    UIButton* CreateVerticalMenuButton(float screenY, NSString * title)
+    {
+        UIButton* button = [UIButton buttonWithType:BUTTON_TYPE];
+        button.frame = CGRectMake(ApplyPlatformScale(10), screenY, ApplyPlatformScale(200), ApplyPlatformScale(50));
+        [button setBackgroundColor:[UIColor colorWithRed:0.0/255.0f green:0.0/255.0f blue:128.0/255.0f alpha:0.6]];
+        [button setTitle:title forState:UIControlStateNormal];
+        
+        if(!IS_IPAD) {
+            button.titleLabel.font = [UIFont systemFontOfSize:10];
+        }
+        
+        return button;
+    }
+}
+
 iOSRouteSimulationExampleView::iOSRouteSimulationExampleView(UIView* pView)
 	: m_pView(pView)
 {
@@ -71,51 +95,48 @@ iOSRouteSimulationExampleView::iOSRouteSimulationExampleView(UIView* pView)
 	CGRect adjustedFrame = [rootView convertRect:originalFrame fromView:nil];
 
 	float screenHeight = adjustedFrame.size.height - 80.f;
-
-	m_pToggleFollowButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-	m_pToggleFollowButton.frame = CGRectMake(10, screenHeight, 200, 50);
-	[m_pToggleFollowButton setTitle:@"Toggle Follow!" forState:UIControlStateNormal];
+    
+    m_pToggleFollowButton = CreateVerticalMenuButton(screenHeight, @"Toggle Follow!");
 	[m_pToggleFollowButton addTarget:m_pBinding action:@selector(toggleFollowCamera) forControlEvents:UIControlEventTouchDown];
 	[m_pView addSubview:m_pToggleFollowButton];
 
-	screenHeight -= 60.f;
+	screenHeight -= ApplyPlatformScale(60.f);
 
-	m_pIncreaseSpeedButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-	m_pIncreaseSpeedButton.frame = CGRectMake(10, screenHeight, 200, 50);
-	[m_pIncreaseSpeedButton setTitle:@"Increase Speed!" forState:UIControlStateNormal];
+    m_pIncreaseSpeedButton = CreateVerticalMenuButton(screenHeight, @"Increase Speed!");
 	[m_pIncreaseSpeedButton addTarget:m_pBinding action:@selector(increaseSpeedFollowed) forControlEvents:UIControlEventTouchDown];
 	[m_pView addSubview:m_pIncreaseSpeedButton];
 
-	screenHeight -= 60.f;
-
-	m_pDecreaseSpeedButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-	m_pDecreaseSpeedButton.frame = CGRectMake(10, screenHeight, 200, 50);
-	[m_pDecreaseSpeedButton setTitle:@"Decrease Speed!" forState:UIControlStateNormal];
-	[m_pDecreaseSpeedButton addTarget:m_pBinding action:@selector(decreaseSpeedFollowed) forControlEvents:UIControlEventTouchDown];
+	screenHeight -= ApplyPlatformScale(60.f);
+    
+    m_pDecreaseSpeedButton = CreateVerticalMenuButton(screenHeight, @"Decrease Speed!");
+	[m_pDecreaseSpeedButton addTarget:m_pBinding action:@selector(increaseSpeedFollowed) forControlEvents:UIControlEventTouchDown];
 	[m_pView addSubview:m_pDecreaseSpeedButton];
-
-	screenHeight -= 60.f;
-
-	m_pChangeDirectionButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-	m_pChangeDirectionButton.frame = CGRectMake(10, screenHeight, 200, 50);
-	[m_pChangeDirectionButton setTitle:@"Change Direction!" forState:UIControlStateNormal];
+    
+	screenHeight -= ApplyPlatformScale(60.f);
+    
+    m_pChangeDirectionButton = CreateVerticalMenuButton(screenHeight, @"Change Direction!");
 	[m_pChangeDirectionButton addTarget:m_pBinding action:@selector(changeFollowDirection) forControlEvents:UIControlEventTouchDown];
 	[m_pView addSubview:m_pChangeDirectionButton];
+    
+	screenHeight -= ApplyPlatformScale(60.f);
 
-	screenHeight -= 60.f;
-
-	m_pRotateToFollowButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-	m_pRotateToFollowButton.frame = CGRectMake(10, screenHeight, 200, 50);
-	[m_pRotateToFollowButton setTitle:@"Rotate to Follow!" forState:UIControlStateNormal];
+    m_pRotateToFollowButton = CreateVerticalMenuButton(screenHeight, @"Rotate to Follow!");
 	[m_pRotateToFollowButton addTarget:m_pBinding action:@selector(rotateToFollow) forControlEvents:UIControlEventTouchDown];
 	[m_pView addSubview:m_pRotateToFollowButton];
+    
 
 	//this one goes beside toggle follow as we can do it any time
-	m_pToggleSideOfRoadToDriveOnButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-	m_pToggleSideOfRoadToDriveOnButton.frame = CGRectMake(m_pToggleFollowButton.frame.origin.x + m_pToggleFollowButton.frame.size.width + 10, m_pToggleFollowButton.frame.origin.y, 200, 50);
+	m_pToggleSideOfRoadToDriveOnButton = [UIButton buttonWithType:BUTTON_TYPE];
+	m_pToggleSideOfRoadToDriveOnButton.frame = CGRectMake(m_pToggleFollowButton.frame.origin.x + m_pToggleFollowButton.frame.size.width + ApplyPlatformScale(10),
+                                                          m_pToggleFollowButton.frame.origin.y, ApplyPlatformScale(200), ApplyPlatformScale(50));
+    [m_pToggleSideOfRoadToDriveOnButton setBackgroundColor:[UIColor colorWithRed:0.0/255.0f green:0.0/255.0f blue:128.0/255.0f alpha:0.6]];
 	[m_pToggleSideOfRoadToDriveOnButton setTitle:@"Toggle Road Side!" forState:UIControlStateNormal];
 	[m_pToggleSideOfRoadToDriveOnButton addTarget:m_pBinding action:@selector(toggleSideOfRoadToDriveOn) forControlEvents:UIControlEventTouchDown];
 	[m_pView addSubview:m_pToggleSideOfRoadToDriveOnButton];
+    
+    if (!IS_IPAD) {
+        m_pToggleSideOfRoadToDriveOnButton.titleLabel.font = [UIFont systemFontOfSize:10];
+    }
 
 	[m_pBinding setExampleInstance:this :m_pChangeDirectionButton :m_pIncreaseSpeedButton :m_pDecreaseSpeedButton :m_pRotateToFollowButton];
 
