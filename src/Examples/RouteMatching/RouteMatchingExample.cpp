@@ -30,7 +30,7 @@ RouteMatchingExample::RouteMatchingExample(RouteService& routeService,
 	    9.429380,
 	    cameraInterestBasis);
 
-	cameraController.SetView(cameraInterestBasis, 963.714111);
+	cameraController.SetView(cameraInterestBasis, 963.714111f);
 }
 
 void RouteMatchingExample::CreateRoutes(bool shouldMatchToNavigationGraph)
@@ -46,8 +46,8 @@ void RouteMatchingExample::CreateRoutes(bool shouldMatchToNavigationGraph)
 	const Eegeo::v4 routeGreen(0, 1, 0, 0.6f);
 	const Eegeo::v4 routeBlue(0, 0, 1, 0.6f);
 	const float altitudeMeters = 3.f;
-	Eegeo::Routes::Style::RouteStyle hardJoinStyle(Eegeo::Routes::Style::RouteStyle::JoinStyleHard, &m_routeThicknessPolicy, Eegeo::Routes::Style::RouteStyle::DebugStyleNone);
-	Eegeo::Routes::Style::RouteStyle arcJoinStyle(Eegeo::Routes::Style::RouteStyle::JoinStyleArc, &m_routeThicknessPolicy, Eegeo::Routes::Style::RouteStyle::DebugStyleNone);
+	Eegeo::Routes::Style::RouteStyle hardJoinStyle(&m_routeThicknessPolicy, Eegeo::Routes::Style::RouteStyle::DebugStyleNone);
+	Eegeo::Routes::Style::RouteStyle arcJoinStyle(&m_routeThicknessPolicy, Eegeo::Routes::Style::RouteStyle::DebugStyleNone);
 
 	RouteBuilder builder;
 

@@ -90,7 +90,7 @@ void RouteDrawingExample::Update(float dt)
 		// IdentityRouteThicknessPolicy and the LinearAltitudeScaleBasedRouteThicknessPolicy. For this example we use the
 		// identity policy which will not modify the thickness of the route. The style accepts a const reference, so it
 		// does not take ownership over the thickness policy.
-		Eegeo::Routes::Style::RouteStyle hardJoinStyle(Eegeo::Routes::Style::RouteStyle::JoinStyleHard, &m_routeThicknessPolicy, Eegeo::Routes::Style::RouteStyle::DebugStyleNone);
+		Eegeo::Routes::Style::RouteStyle hardJoinStyle(&m_routeThicknessPolicy, Eegeo::Routes::Style::RouteStyle::DebugStyleNone);
 
 		//We can now create a route from this set of points.
 		//
@@ -122,7 +122,7 @@ void RouteDrawingExample::Update(float dt)
 		                                       .AddPoint(37.776397,-122.387922,altitudeMeters)
 		                                       .FinishRoute();
 
-		Eegeo::Routes::Style::RouteStyle arcJoinStyle(Eegeo::Routes::Style::RouteStyle::JoinStyleArc, &m_routeThicknessPolicy, Eegeo::Routes::Style::RouteStyle::DebugStyleNone);
+		Eegeo::Routes::Style::RouteStyle arcJoinStyle(&m_routeThicknessPolicy, Eegeo::Routes::Style::RouteStyle::DebugStyleNone);
 		m_routes.push_back(m_routeService.CreateRoute(otherPoints, arcJoinStyle, false));
 
 		//this route curves around entirely on itself, and traces the bounds of treasure island
