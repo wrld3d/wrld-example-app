@@ -102,7 +102,7 @@ void PinOverModelExample::CreateExamplePins()
 	Eegeo::Space::LatLong pin0Location = Eegeo::Space::LatLong::FromDegrees(37.7858,-122.401);
 	int pin0Icon = 0;
 	Eegeo::Pins::Pin* pPin0 = Eegeo_NEW(Eegeo::Pins::Pin)(pin0Id, pin0Location, 30, pin0Icon, &m_pin0UserData);
-	pinRepository.AddPin(pPin0);
+	pinRepository.AddPin(*pPin0);
 
 	m_pPin0 = pPin0;
 }

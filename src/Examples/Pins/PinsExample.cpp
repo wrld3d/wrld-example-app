@@ -85,7 +85,7 @@ void PinsExample::CreateExamplePins()
 	Eegeo::Space::LatLong pin0Location = Eegeo::Space::LatLong::FromDegrees(37.7858,-122.401);
 	int pin0Icon = 0;
 	Eegeo::Pins::Pin* pPin0 = Eegeo_NEW(Eegeo::Pins::Pin)(pin0Id, pin0Location, 0, pin0Icon, &m_pin0UserData);
-	pinRepository.AddPin(pPin0);
+	pinRepository.AddPin(*pPin0);
 
 	// Save this pin so that we can add and remove it in AddRemovePin0()
 	m_pPin0 = pPin0;
@@ -94,19 +94,19 @@ void PinsExample::CreateExamplePins()
 	Eegeo::Space::LatLong pin1Location = Eegeo::Space::LatLong::FromDegrees(37.78547,-122.40259);
 	int pin1Icon = 1;
 	Eegeo::Pins::Pin* pPin1 = Eegeo_NEW(Eegeo::Pins::Pin)(pin1Id, pin1Location, 0, pin1Icon, &m_pin1UserData);
-	pinRepository.AddPin(pPin1);
+	pinRepository.AddPin(*pPin1);
 
 	Eegeo::Pins::TPinId pin2Id = 2;
 	Eegeo::Space::LatLong pin2Location = Eegeo::Space::LatLong::FromDegrees(37.78547,-122.402);
 	int pin2Icon = 2;
 	Eegeo::Pins::Pin* pPin2 = Eegeo_NEW(Eegeo::Pins::Pin)(pin2Id, pin2Location, 0, pin2Icon, &m_pin2UserData);
-	pinRepository.AddPin(pPin2);
+	pinRepository.AddPin(*pPin2);
 
 	Eegeo::Pins::TPinId pin3Id = 3;
 	Eegeo::Space::LatLong pin3Location = Eegeo::Space::LatLong::FromDegrees(37.78547,-122.403);
 	int pin3Icon = 3;
 	Eegeo::Pins::Pin* pPin3 = Eegeo_NEW(Eegeo::Pins::Pin)(pin3Id, pin3Location, 30, pin3Icon, &m_pin3UserData);
-	pinRepository.AddPin(pPin3);
+	pinRepository.AddPin(*pPin3);
 }
 
 void PinsExample::Start()
@@ -142,12 +142,12 @@ void PinsExample::AddRemovePin0()
 	if(pPin0)
 	{
 		Eegeo_TTY("Remove Pin 0 from repository.\n");
-		pinRepository.RemovePin(m_pPin0);
+		pinRepository.RemovePin(*m_pPin0);
 	}
 	else
 	{
 		Eegeo_TTY("Add Pin 0 to repository.\n");
-		pinRepository.AddPin(m_pPin0);
+		pinRepository.AddPin(*m_pPin0);
 	}
 }
 

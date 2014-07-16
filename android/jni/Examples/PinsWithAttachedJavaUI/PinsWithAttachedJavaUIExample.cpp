@@ -84,7 +84,7 @@ void PinsWithAttachedJavaUIExample::CreateExamplePins()
 	Eegeo::Space::LatLong pinLocation = Eegeo::Space::LatLong::FromDegrees(37.7858,-122.401);
 	int pinIcon = 0;
 	Eegeo::Pins::Pin* pPin = Eegeo_NEW(Eegeo::Pins::Pin)(pinId, pinLocation, 0, pinIcon, &m_pinUserData);
-	pinRepository.AddPin(pPin);
+	pinRepository.AddPin(*pPin);
 }
 
 void PinsWithAttachedJavaUIExample::Start()
