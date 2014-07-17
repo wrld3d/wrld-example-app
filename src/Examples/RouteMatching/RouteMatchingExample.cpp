@@ -46,8 +46,7 @@ void RouteMatchingExample::CreateRoutes(bool shouldMatchToNavigationGraph)
 	const Eegeo::v4 routeGreen(0, 1, 0, 0.6f);
 	const Eegeo::v4 routeBlue(0, 0, 1, 0.6f);
 	const float altitudeMeters = 3.f;
-	Eegeo::Routes::Style::RouteStyle hardJoinStyle(&m_routeThicknessPolicy, Eegeo::Routes::Style::RouteStyle::DebugStyleNone);
-	Eegeo::Routes::Style::RouteStyle arcJoinStyle(&m_routeThicknessPolicy, Eegeo::Routes::Style::RouteStyle::DebugStyleNone);
+	Eegeo::Routes::Style::RouteStyle routeStyle(&m_routeThicknessPolicy, Eegeo::Routes::Style::RouteStyle::DebugStyleNone);
 
 	RouteBuilder builder;
 
@@ -68,7 +67,7 @@ void RouteMatchingExample::CreateRoutes(bool shouldMatchToNavigationGraph)
 	        .AddPoint(37.80658,-122.413816, altitudeMeters)
 	        .FinishRoute();
 
-	Route* route = m_routeService.CreateRoute(fishermansWharfPoints, hardJoinStyle, shouldMatchToNavigationGraph);
+	Route* route = m_routeService.CreateRoute(fishermansWharfPoints, routeStyle, shouldMatchToNavigationGraph);
 	m_routes.push_back(route);
 
 	// Create a route at Buena Vista park in San Francisco - the park is on a hill, this example demonstrates
@@ -87,7 +86,7 @@ void RouteMatchingExample::CreateRoutes(bool shouldMatchToNavigationGraph)
 	        .AddPoint(37.767683,-122.441276,altitudeMeters)
 	        .FinishRoute();
 
-	m_routes.push_back(m_routeService.CreateRoute(buenaVistaPoints, arcJoinStyle, shouldMatchToNavigationGraph));
+	m_routes.push_back(m_routeService.CreateRoute(buenaVistaPoints, routeStyle, shouldMatchToNavigationGraph));
 
 	// Create a route on Treasure Island in San Francisco. This route starts on the road network, but includes a
 	// pedestrian section. The road vertices are colored red and the pedestrian section is colored blue. The
@@ -108,7 +107,7 @@ void RouteMatchingExample::CreateRoutes(bool shouldMatchToNavigationGraph)
 	                                        .AddPoint(37.824709,-122.370316, altitudeMeters)
 	                                        .FinishRoute();
 
-	m_routes.push_back(m_routeService.CreateRoute(islandPoints, arcJoinStyle, shouldMatchToNavigationGraph));
+	m_routes.push_back(m_routeService.CreateRoute(islandPoints, routeStyle, shouldMatchToNavigationGraph));
 
 	//We have created the routes so don't need to do so again.
 	m_createdRoutes = true;

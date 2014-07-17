@@ -82,21 +82,18 @@ void RouteDrawingExample::Update(float dt)
 		                                  .AddPoint(37.793707,-122.392578, altitudeMeters)
 		                                  .FinishRoute(); //Calling FinishRoute returns to us the set of points...
 
-		// Select a Style for the route, use the JoinStyleArc to give a curved arc join; JoinStyleHard can be used to give
-		// hard angular joins if preferred.
-		//
 		// A route thickness scaling policy should be provided; this informs the route how it should modify its thickness
 		// (for example, based on camera altitude, or to play a "pulse" animation). Two implementations are provided; the
 		// IdentityRouteThicknessPolicy and the LinearAltitudeScaleBasedRouteThicknessPolicy. For this example we use the
 		// identity policy which will not modify the thickness of the route. The style accepts a const reference, so it
 		// does not take ownership over the thickness policy.
-		Eegeo::Routes::Style::RouteStyle hardJoinStyle(&m_routeThicknessPolicy, Eegeo::Routes::Style::RouteStyle::DebugStyleNone);
+		Eegeo::Routes::Style::RouteStyle routeStyle(&m_routeThicknessPolicy, Eegeo::Routes::Style::RouteStyle::DebugStyleNone);
 
 		//We can now create a route from this set of points.
 		//
 		//The route can be created using the CreateRoute method on the RouteService, which must
 		//be destroyed through the complementary DestroyRoute method on RouteService.
-		Route* route = m_routeService.CreateRoute(points, hardJoinStyle, false);
+		Route* route = m_routeService.CreateRoute(points, routeStyle, false);
 
 		//Keep a reference to the route so we can Destroy it later.
 		m_routes.push_back(route);
@@ -122,8 +119,7 @@ void RouteDrawingExample::Update(float dt)
 		                                       .AddPoint(37.776397,-122.387922,altitudeMeters)
 		                                       .FinishRoute();
 
-		Eegeo::Routes::Style::RouteStyle arcJoinStyle(&m_routeThicknessPolicy, Eegeo::Routes::Style::RouteStyle::DebugStyleNone);
-		m_routes.push_back(m_routeService.CreateRoute(otherPoints, arcJoinStyle, false));
+		m_routes.push_back(m_routeService.CreateRoute(otherPoints, routeStyle, false));
 
 		//this route curves around entirely on itself, and traces the bounds of treasure island
 		std::vector<RouteVertex> islandCircuitPoints = builder.Start(routeGreen, halfWidth, routeSpeedMetersPerSecond, Routes::Road)
@@ -140,7 +136,7 @@ void RouteDrawingExample::Update(float dt)
 		        .AddPoint(37.824158,-122.377574, altitudeMeters)
 		        .FinishRoute();
 
-		m_routes.push_back(m_routeService.CreateRoute(islandCircuitPoints, arcJoinStyle, false));
+		m_routes.push_back(m_routeService.CreateRoute(islandCircuitPoints, routeStyle, false));
 
 		//We have created the routes so don't need to do so again.
 		m_createdRoutes = true;

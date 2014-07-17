@@ -160,7 +160,7 @@ Route* RouteSimulationAnimationExample::BuildRoute()
 	// 0.00185 is a factor that works well for the animation
 	// speed of this model
 	const float routeSpeedMetersPerSecond = 30.f;
-	m_modelAnimationSpeed = routeSpeedMetersPerSecond * 0.00185;
+	m_modelAnimationSpeed = routeSpeedMetersPerSecond * 0.00185f;
 
 	const Eegeo::v4 routeColor(1, 0, 1, 0.6f);
 	const float altitudeMeters = 3.f;
@@ -184,8 +184,8 @@ Route* RouteSimulationAnimationExample::BuildRoute()
 	                                  .AddPoint(37.793707,-122.392578, altitudeMeters)
 	                                  .FinishRoute();
 
-	const Eegeo::Routes::Style::RouteStyle style(&m_routeThicknessPolicy, Eegeo::Routes::Style::RouteStyle::DebugStyleNone);
-	return m_routeService.CreateRoute(points, style, false);
+	const Eegeo::Routes::Style::RouteStyle routeStyle(&m_routeThicknessPolicy, Eegeo::Routes::Style::RouteStyle::DebugStyleNone);
+	return m_routeService.CreateRoute(points, routeStyle, false);
 }
 
 Eegeo::Model* RouteSimulationAnimationExample::LoadCharacterModel(Eegeo::Node*& pCharacter) const
@@ -210,7 +210,7 @@ void RouteSimulationAnimationExample::CalculateTransform(Eegeo::m44& transform)
 	                                  ) / scaleModifier;
 	Eegeo::m44 scale, rotation;
 	scale.Scale(Eegeo::Max(scaleAsFunctionOfAltitude, minimumScale));
-	rotation.RotateY(M_PI);
+	rotation.RotateY(static_cast<float>(M_PI));
 	m44::Mul(transform, scale, rotation);
 
 }
