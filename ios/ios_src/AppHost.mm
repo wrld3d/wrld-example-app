@@ -22,6 +22,7 @@
 #include "RouteMatchingExampleFactory.h"
 #include "RouteSimulationExampleFactory.h"
 #include "iOSWebRequestService.h"
+#include "iOSGlTaskContextFactory.h"
 
 using namespace Eegeo::iOS;
 
@@ -34,10 +35,10 @@ AppHost::AppHost(
                  float pixelScale
                  )
     :m_viewController(viewController)
-    ,m_pTaskQueue(NULL)
 	,m_pEnvironmentFlatteningService(NULL)
 	,m_piOSWebLoadRequestFactory(NULL)
 	,m_piOSWebRequestService(NULL)
+    ,m_pGlTaskContextFactory(NULL)
 	,m_pBlitter(NULL)
 	,m_pTextureLoader(NULL)
 	,m_pHttpCache(NULL)
@@ -78,8 +79,6 @@ AppHost::AppHost(
 	m_pBlitter = new Eegeo::Blitter(1024 * 128, 1024 * 64, 1024 * 32, *m_pRenderContext);
 	m_pBlitter->Initialise();
 
-	m_pTaskQueue = new iOSTaskQueue(10);
-
 	m_piOSWebRequestService = new Eegeo::Web::iOSWebRequestService();
 
 	m_piOSWebLoadRequestFactory = new Eegeo::Web::iOSWebLoadRequestFactory(*m_pHttpCache, *m_piOSWebRequestService);
@@ -89,13 +88,15 @@ AppHost::AppHost(
 	const Eegeo::EnvironmentCharacterSet::Type environmentCharacterSet = Eegeo::EnvironmentCharacterSet::Latin;
 	Eegeo::Config::PlatformConfig config = Eegeo::iOS::iOSPlatformConfigBuilder(App::GetDevice(), App::IsDeviceMultiCore()).Build();
 
+    m_pGlTaskContextFactory = new iOSGlTaskContextFactory();
+    
 	m_pWorld = new Eegeo::EegeoWorld(
 	    apiKey,
 	    *m_pHttpCache,
 	    *m_pFileIO,
 	    *m_pTextureLoader,
 	    *m_piOSWebLoadRequestFactory,
-	    *m_pTaskQueue,
+        *m_pGlTaskContextFactory,
 	    *m_pRenderContext,
 	    *m_pLighting,
 	    *m_pFogging,
@@ -185,9 +186,9 @@ AppHost::~AppHost()
 
 	delete m_pEnvironmentFlatteningService;
 	m_pEnvironmentFlatteningService = NULL;
-
-	delete m_pTaskQueue;
-	m_pTaskQueue = NULL;
+    
+    delete m_pGlTaskContextFactory;
+    m_pGlTaskContextFactory = NULL;
 }
 
 void AppHost::OnResume()

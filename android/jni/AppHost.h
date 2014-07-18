@@ -9,7 +9,6 @@
 #include "AndroidHttpCache.h"
 #include "AndroidTextureFileLoader.h"
 #include "AndroidWebRequestService.hpp"
-#include "AndroidTaskQueue.h"
 #include "AndroidWebLoadRequestFactory.h"
 #include "AndroidInputProcessor.h"
 #include "AndroidLocationService.h"
@@ -34,11 +33,12 @@
 #include "ExampleController.h"
 #include "AndroidExampleControllerView.h"
 #include "AndroidExampleControllerProxy.h"
+#include "AndroidSharedGlContext.h"
 #include "AndroidRouteMatchingExampleViewFactory.h"
 #include "AndroidRouteSimulationExampleViewFactory.h"
 #include "ExampleCameraJumpController.h"
 
-class AppHost : protected Eegeo::NonCopyable
+class AppHost : public Eegeo::Concurrency::Tasks::IGlTaskContextFactory, protected Eegeo::NonCopyable
 {
 public:
 	AppHost(
@@ -67,8 +67,9 @@ public:
 	void SetSharedSurface(EGLSurface sharedSurface);
 	void SetViewportOffset(float x, float y);
 
+	Eegeo::Concurrency::Tasks::IGlTaskContext* Build();
+
 private:
-	Eegeo::Android::AndroidTaskQueue* m_pTaskQueue;
 	Eegeo::Rendering::EnvironmentFlatteningService* m_pEnvironmentFlatteningService;
 	Eegeo::Android::AndroidWebLoadRequestFactory* m_pAndroidWebLoadRequestFactory;
 	Eegeo::Android::AndroidWebRequestService* m_pAndroidWebRequestService;
@@ -104,6 +105,8 @@ private:
 	ExampleCameraJumpController* m_pExampleCameraJumpController;
 
 	Eegeo::Android::Input::AndroidInputProcessor* m_pInputProcessor;
+
+	Eegeo::Android::AndroidSharedGlContext* m_pSharedGlContext;
 
 	void ConfigureExamples();
 	void DestroyExamples();

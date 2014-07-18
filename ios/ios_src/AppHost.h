@@ -8,7 +8,6 @@
 #include "iOSFileIO.h"
 #include "iOSHttpCache.h"
 #include "iOSTextureFileLoader.h"
-#include "iOSTaskQueue.h"
 #include "iOSWebLoadRequestFactory.h"
 #include "iOSLocationService.h"
 #include "iOSUrlEncoder.h"
@@ -24,6 +23,7 @@
 #include "Blitter.h"
 #include "AppInputDelegate.h"
 #include "AppLocationDelegate.h"
+#include "IGlTaskContextFactory.h"
 #include <vector>
 
 //example app includes
@@ -60,7 +60,6 @@ public:
 
 private:
     ViewController& m_viewController;
-	iOSTaskQueue* m_pTaskQueue;
 	Eegeo::Rendering::EnvironmentFlatteningService* m_pEnvironmentFlatteningService;
 	Eegeo::Web::iOSWebLoadRequestFactory* m_piOSWebLoadRequestFactory;
 	Eegeo::Web::iOSWebRequestService* m_piOSWebRequestService;
@@ -73,6 +72,7 @@ private:
 	Eegeo::Lighting::GlobalShadowing* m_pShadowing;
 	Eegeo::Rendering::RenderContext* m_pRenderContext;
 	Eegeo::iOS::iOSLocationService* m_piOSLocationService;
+    Eegeo::Concurrency::Tasks::IGlTaskContextFactory* m_pGlTaskContextFactory;
 	iOSUrlEncoder* m_piOSUrlEncoder;
 	Eegeo::EegeoWorld* m_pWorld;
 	Eegeo::Camera::GlobeCamera::GlobeCameraInterestPointProvider* m_pInterestPointProvider;
@@ -92,7 +92,7 @@ private:
 	Examples::iOSExampleControllerView* m_piOSExampleControllerView;
 	Examples::iOSRouteMatchingExampleViewFactory* m_piOSRouteMatchingExampleViewFactory;
 	Examples::iOSRouteSimulationExampleViewFactory* m_piOSRouteSimulationExampleViewFactory;
-	
+    
     void ConfigureExamples();
 	void DestroyExamples();
 	void RegisteriOSSpecificExamples();

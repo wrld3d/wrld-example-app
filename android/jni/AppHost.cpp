@@ -2,7 +2,7 @@
 
 #include "AppHost.h"
 #include "AndroidWebRequestService.hpp"
-#include "AndroidTaskQueue.h"
+#include "AndroidSharedGlContext.h"
 #include "LatLongAltitude.h"
 #include "EegeoWorld.h"
 #include "RenderContext.h"
@@ -44,8 +44,7 @@ AppHost::AppHost(
     EGLSurface shareSurface,
     EGLContext resourceBuildShareContext
 )
-	:m_pTaskQueue(NULL)
-	,m_pEnvironmentFlatteningService(NULL)
+	:m_pEnvironmentFlatteningService(NULL)
 	,m_pAndroidWebLoadRequestFactory(NULL)
 	,m_pAndroidWebRequestService(NULL)
 	,m_pBlitter(NULL)
@@ -72,6 +71,8 @@ AppHost::AppHost(
 	,m_nativeState(nativeState)
 {
 	Eegeo_ASSERT(resourceBuildShareContext != EGL_NO_CONTEXT);
+
+	m_pSharedGlContext = new Eegeo::Android::AndroidSharedGlContext(display, resourceBuildShareContext, shareSurface);
 
 	m_pAndroidUrlEncoder = new AndroidUrlEncoder(&nativeState);
 	m_pAndroidLocationService = new AndroidLocationService(&nativeState);
@@ -101,12 +102,10 @@ AppHost::AppHost(
 	m_pBlitter = new Eegeo::Blitter(1024 * 128, 1024 * 64, 1024 * 32, *m_pRenderContext);
 	m_pBlitter->Initialise();
 
-	m_pTaskQueue = new AndroidTaskQueue(10, resourceBuildShareContext, shareSurface, display);
-
 	const int webLoadPoolSize = 10;
 	const int cacheLoadPoolSize = 40;
 	const int cacheStorePoolSize = 20;
-	m_pAndroidWebRequestService = new AndroidWebRequestService(*m_pFileIO, m_pHttpCache, m_pTaskQueue, webLoadPoolSize, cacheLoadPoolSize, cacheStorePoolSize);
+	m_pAndroidWebRequestService = new AndroidWebRequestService(*m_pFileIO, m_pHttpCache, webLoadPoolSize, cacheLoadPoolSize, cacheStorePoolSize);
 
 	m_pAndroidWebLoadRequestFactory = new AndroidWebLoadRequestFactory(m_pAndroidWebRequestService, m_pHttpCache);
 
@@ -122,7 +121,7 @@ AppHost::AppHost(
 	    *m_pFileIO,
 	    *m_pTextureLoader,
 	    *m_pAndroidWebLoadRequestFactory,
-	    *m_pTaskQueue,
+	    *this,
 	    *m_pRenderContext,
 	    *m_pLighting,
 	    *m_pFogging,
@@ -142,6 +141,7 @@ AppHost::AppHost(
 	    "Default-Landscape@2x~ipad.png"
 	);
 
+	m_pAndroidWebRequestService->SetWorkPool(m_pWorld->GetWorkPool());
 	m_pInputProcessor = new Eegeo::Android::Input::AndroidInputProcessor(&m_inputHandler, m_pRenderContext->GetScreenWidth(), m_pRenderContext->GetScreenHeight());
 
 	ConfigureExamples();
@@ -156,8 +156,6 @@ AppHost::~AppHost()
 
 	delete m_pAppInputDelegate;
 	m_pAppInputDelegate = NULL;
-
-	m_pTaskQueue->StopWorkQueue();
 
 	DestroyExamples();
 
@@ -214,8 +212,8 @@ AppHost::~AppHost()
 	delete m_pEnvironmentFlatteningService;
 	m_pEnvironmentFlatteningService = NULL;
 
-	delete m_pTaskQueue;
-	m_pTaskQueue = NULL;
+	delete m_pSharedGlContext;
+	m_pSharedGlContext = NULL;
 }
 
 void AppHost::OnResume()
@@ -233,7 +231,7 @@ void AppHost::OnPause()
 
 void AppHost::SetSharedSurface(EGLSurface sharedSurface)
 {
-	m_pTaskQueue->UpdateSurface(sharedSurface);
+	m_pSharedGlContext->UpdateSurface(sharedSurface);
 }
 
 void AppHost::SetViewportOffset(float x, float y)
@@ -307,6 +305,10 @@ void AppHost::DestroyExamples()
 	delete m_pAndroidExampleControllerView;
 }
 
+Eegeo::Concurrency::Tasks::IGlTaskContext* AppHost::Build()
+{
+	return m_pSharedGlContext;
+}
 
 
 
