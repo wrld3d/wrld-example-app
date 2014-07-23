@@ -204,6 +204,10 @@
 		222E069B1948B08B0004FFD9 /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4820F168371460006E99B /* MainStoryboard_iPad.storyboard */; };
 		222E06CD1948B0B70004FFD9 /* libapps-on-maps-cpp11-sim.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 222E06CB1948B0B70004FFD9 /* libapps-on-maps-cpp11-sim.a */; };
 		222E06CE1948B0B70004FFD9 /* libapps-on-maps-cpp11.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 222E06CC1948B0B70004FFD9 /* libapps-on-maps-cpp11.a */; };
+		7E1A248F197FF827000ED126 /* CameraSplineExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E1A248D197FF827000ED126 /* CameraSplineExample.cpp */; };
+		7E1A2490197FF827000ED126 /* CameraSplineExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E1A248D197FF827000ED126 /* CameraSplineExample.cpp */; };
+		7E1A2493197FF84E000ED126 /* CameraSplineExampleFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E1A2491197FF84E000ED126 /* CameraSplineExampleFactory.cpp */; };
+		7E1A2494197FF84E000ED126 /* CameraSplineExampleFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E1A2491197FF84E000ED126 /* CameraSplineExampleFactory.cpp */; };
 		7EE481EB16836F370006E99B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE481EA16836F370006E99B /* UIKit.framework */; };
 		7EE481ED16836F370006E99B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE481EC16836F370006E99B /* Foundation.framework */; };
 		7EE481EF16836F370006E99B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE481EE16836F370006E99B /* CoreGraphics.framework */; };
@@ -393,6 +397,10 @@
 		222E06C91948B08B0004FFD9 /* ExampleAppCpp11.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExampleAppCpp11.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		222E06CB1948B0B70004FFD9 /* libapps-on-maps-cpp11-sim.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libapps-on-maps-cpp11-sim.a"; path = "Include/libapps-on-maps-cpp11-sim.a"; sourceTree = "<group>"; };
 		222E06CC1948B0B70004FFD9 /* libapps-on-maps-cpp11.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libapps-on-maps-cpp11.a"; path = "Include/libapps-on-maps-cpp11.a"; sourceTree = "<group>"; };
+		7E1A248D197FF827000ED126 /* CameraSplineExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CameraSplineExample.cpp; sourceTree = "<group>"; };
+		7E1A248E197FF827000ED126 /* CameraSplineExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraSplineExample.h; sourceTree = "<group>"; };
+		7E1A2491197FF84E000ED126 /* CameraSplineExampleFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CameraSplineExampleFactory.cpp; sourceTree = "<group>"; };
+		7E1A2492197FF84E000ED126 /* CameraSplineExampleFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraSplineExampleFactory.h; sourceTree = "<group>"; };
 		7E75EE1D16848B8A00BCA283 /* libapps-on-maps-sim.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libapps-on-maps-sim.a"; path = "Include/libapps-on-maps-sim.a"; sourceTree = "<group>"; };
 		7EE481E616836F370006E99B /* ExampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7EE481EA16836F370006E99B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -479,6 +487,7 @@
 				189971C6192CCB7700E0E9F1 /* ExampleController.cpp */,
 				189971C7192CCB7700E0E9F1 /* ExampleController.h */,
 				18143848192B6E4500BCDF2E /* CameraTransition */,
+				7E1A248C197FF827000ED126 /* CameraSpline */,
 				1814384B192B6E4500BCDF2E /* ControlCityThemes */,
 				1814384E192B6E4500BCDF2E /* DebugPrimitiveRendering */,
 				18143851192B6E4500BCDF2E /* DebugSphere */,
@@ -909,6 +918,17 @@
 			path = Icons;
 			sourceTree = "<group>";
 		};
+		7E1A248C197FF827000ED126 /* CameraSpline */ = {
+			isa = PBXGroup;
+			children = (
+				7E1A248D197FF827000ED126 /* CameraSplineExample.cpp */,
+				7E1A248E197FF827000ED126 /* CameraSplineExample.h */,
+				7E1A2491197FF84E000ED126 /* CameraSplineExampleFactory.cpp */,
+				7E1A2492197FF84E000ED126 /* CameraSplineExampleFactory.h */,
+			);
+			path = CameraSpline;
+			sourceTree = "<group>";
+		};
 		7EE481DB16836F360006E99B = {
 			isa = PBXGroup;
 			children = (
@@ -1129,6 +1149,7 @@
 				222E064B1948B08B0004FFD9 /* SingleCityExampleFactory.cpp in Sources */,
 				222E064C1948B08B0004FFD9 /* ExampleApp.cpp in Sources */,
 				222E064D1948B08B0004FFD9 /* DebugSphereExampleFactory.cpp in Sources */,
+				7E1A2494197FF84E000ED126 /* CameraSplineExampleFactory.cpp in Sources */,
 				222E064E1948B08B0004FFD9 /* Pick3DObjectExample.cpp in Sources */,
 				222E064F1948B08B0004FFD9 /* EnvironmentNotifierExampleFactory.cpp in Sources */,
 				222E06501948B08B0004FFD9 /* DebugPrimitiveRenderingExampleFactory.cpp in Sources */,
@@ -1185,6 +1206,7 @@
 				222E06831948B08B0004FFD9 /* DynamicText3DExampleFactory.cpp in Sources */,
 				222E06841948B08B0004FFD9 /* ScreenPickExampleFactory.cpp in Sources */,
 				222E06851948B08B0004FFD9 /* PinOverModelExampleFactory.cpp in Sources */,
+				7E1A2490197FF827000ED126 /* CameraSplineExample.cpp in Sources */,
 				222E06861948B08B0004FFD9 /* SingleCityExample.cpp in Sources */,
 				222E06871948B08B0004FFD9 /* RouteMatchingExample.cpp in Sources */,
 				222E06881948B08B0004FFD9 /* TrafficCongestionExampleFactory.cpp in Sources */,
@@ -1205,6 +1227,7 @@
 				18997177192CA6FE00E0E9F1 /* DebugPrimitiveRenderingExampleFactory.cpp in Sources */,
 				181438AC192B6E4500BCDF2E /* EnvironmentFlatteningExample.cpp in Sources */,
 				181438AD192B6E4500BCDF2E /* EnvironmentNotifierExample.cpp in Sources */,
+				7E1A2493197FF84E000ED126 /* CameraSplineExampleFactory.cpp in Sources */,
 				1899718F192CAE7E00E0E9F1 /* ModifiedRenderingExampleFactory.cpp in Sources */,
 				18AB38FA192B729F00F15546 /* iOSRouteMatchingExampleViewFactory.mm in Sources */,
 				181438BB192B6E4500BCDF2E /* RouteSimulationAnimationExample.cpp in Sources */,
@@ -1261,6 +1284,7 @@
 				1899717D192CAA0500E0E9F1 /* DynamicText3DExampleFactory.cpp in Sources */,
 				189971AD192CB59F00E0E9F1 /* ScreenPickExampleFactory.cpp in Sources */,
 				18997198192CB08A00E0E9F1 /* PinOverModelExampleFactory.cpp in Sources */,
+				7E1A248F197FF827000ED126 /* CameraSplineExample.cpp in Sources */,
 				181438C0192B6E4500BCDF2E /* SingleCityExample.cpp in Sources */,
 				181438B9192B6E4500BCDF2E /* RouteMatchingExample.cpp in Sources */,
 				189971BC192CB8B800E0E9F1 /* TrafficCongestionExampleFactory.cpp in Sources */,
@@ -1474,6 +1498,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/Include\"",
 				);
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				VALID_ARCHS = "armv7 i386";

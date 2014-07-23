@@ -35,6 +35,7 @@
 #include "ToggleTrafficExampleFactory.h"
 #include "TrafficCongestionExampleFactory.h"
 #include "WebRequestExampleFactory.h"
+#include "CameraSplineExampleFactory.h"
 
 
 ExampleApp::ExampleApp(Eegeo::EegeoWorld* pWorld,
@@ -90,6 +91,7 @@ ExampleApp::ExampleApp(Eegeo::EegeoWorld* pWorld,
 	m_pGlobeCameraController->SetView(cameraInterestBasis, cameraControllerDistanceFromInterestPointMeters);
 
 	//register all generic examples
+    m_exampleController.RegisterCameraExample<Examples::CameraSplineExampleFactory>(*m_pGlobeCameraController);
 	m_exampleController.RegisterCameraExample<Examples::CameraTransitionExampleFactory>(*m_pGlobeCameraController);
 	m_exampleController.RegisterCameraExample<Examples::ControlCityThemeExampleFactory>(*m_pGlobeCameraController);
 	m_exampleController.RegisterCameraExample<Examples::DebugPrimitiveRenderingExampleFactory>(*m_pGlobeCameraController);
