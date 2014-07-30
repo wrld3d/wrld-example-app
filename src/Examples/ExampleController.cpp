@@ -134,6 +134,14 @@ void ExampleController::Update(float dt)
 	}
 }
 
+void ExampleController::PreWorldDraw()
+{
+	if(m_pCurrentExample != NULL)
+	{
+		m_pCurrentExample->PreWorldDraw();
+	}
+}
+
 void ExampleController::Draw()
 {
 	if(m_pCurrentExample != NULL)

@@ -25,6 +25,7 @@
 #include "PinOverModelExampleFactory.h"
 #include "PinsExampleFactory.h"
 #include "PODAnimationExampleFactory.h"
+#include "RenderToTextureExampleFactory.h"
 #include "ResourceSpatialQueryExampleFactory.h"
 #include "RouteDrawingExampleFactory.h"
 #include "RouteSimulationAnimationExampleFactory.h"
@@ -107,6 +108,7 @@ ExampleApp::ExampleApp(Eegeo::EegeoWorld* pWorld,
 	m_exampleController.RegisterCameraExample<Examples::PinsExampleFactory>(*m_pGlobeCameraController);
 	m_exampleController.RegisterCameraExample<Examples::PinOverModelExampleFactory>(*m_pGlobeCameraController);
 	m_exampleController.RegisterCameraExample<Examples::PODAnimationExampleFactory>(*m_pGlobeCameraController);
+	m_exampleController.RegisterCameraExample<Examples::RenderToTextureExampleFactory>(*m_pGlobeCameraController);
 	m_exampleController.RegisterCameraExample<Examples::ResourceSpatialQueryExampleFactory>(*m_pGlobeCameraController);
 	m_exampleController.RegisterCameraExample<Examples::RouteDrawingExampleFactory>(*m_pGlobeCameraController);
 	m_exampleController.RegisterCameraExample<Examples::RouteSimulationAnimationExampleFactory>(*m_pGlobeCameraController);
@@ -150,6 +152,7 @@ void ExampleApp::Draw (float dt)
 {
 	Eegeo::Rendering::GLState& glState = World().GetRenderContext().GetGLState();
 	glState.ClearColor(0.8f, 0.8f, 0.8f, 1.f);
+	m_exampleController.PreWorldDraw();
 	World().Draw(dt);
 	m_exampleController.Draw();
 }

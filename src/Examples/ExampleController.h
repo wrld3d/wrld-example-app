@@ -50,7 +50,9 @@ public:
 	                 Eegeo::Camera::GlobeCamera::GlobeCameraTouchController& globeCameraTouchController);
 
 	void Update(float dt);
-
+    
+	void PreWorldDraw();
+    
 	void Draw();
 
 	void RegisterExample(IExampleFactory* pFactory);

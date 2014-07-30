@@ -122,6 +122,12 @@
 		18D1D378194A0F7D00FAA1B9 /* Default-Portrait~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 18D1D36D194A0F7D00FAA1B9 /* Default-Portrait~ipad.png */; };
 		18D1D379194A0F7D00FAA1B9 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 18D1D36E194A0F7D00FAA1B9 /* Default.png */; };
 		18D1D37A194A0F7D00FAA1B9 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18D1D36F194A0F7D00FAA1B9 /* Default@2x.png */; };
+		18E1845E19891C990065F81D /* PostProcessVignetteRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18E1845819891C990065F81D /* PostProcessVignetteRenderer.cpp */; };
+		18E1845F19891C990065F81D /* PostProcessVignetteRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18E1845819891C990065F81D /* PostProcessVignetteRenderer.cpp */; };
+		18E1846019891C990065F81D /* RenderToTextureExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18E1845A19891C990065F81D /* RenderToTextureExample.cpp */; };
+		18E1846119891C990065F81D /* RenderToTextureExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18E1845A19891C990065F81D /* RenderToTextureExample.cpp */; };
+		18E1846219891C990065F81D /* RenderToTextureExampleFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18E1845C19891C990065F81D /* RenderToTextureExampleFactory.cpp */; };
+		18E1846319891C990065F81D /* RenderToTextureExampleFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18E1845C19891C990065F81D /* RenderToTextureExampleFactory.cpp */; };
 		18E6277F192F833A00B31DCE /* iOSExampleControllerView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18E6277D192F833A00B31DCE /* iOSExampleControllerView.mm */; };
 		222E06491948B08B0004FFD9 /* ScreenUnprojectExampleFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 189971AE192CB63500E0E9F1 /* ScreenUnprojectExampleFactory.cpp */; };
 		222E064A1948B08B0004FFD9 /* ControlCityThemeExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1814384C192B6E4500BCDF2E /* ControlCityThemeExample.cpp */; };
@@ -391,6 +397,12 @@
 		18D1D36E194A0F7D00FAA1B9 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		18D1D36F194A0F7D00FAA1B9 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		18E0BDDA196EA82700165453 /* iOSUIHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iOSUIHelpers.h; sourceTree = "<group>"; };
+		18E1845819891C990065F81D /* PostProcessVignetteRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PostProcessVignetteRenderer.cpp; sourceTree = "<group>"; };
+		18E1845919891C990065F81D /* PostProcessVignetteRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostProcessVignetteRenderer.h; sourceTree = "<group>"; };
+		18E1845A19891C990065F81D /* RenderToTextureExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RenderToTextureExample.cpp; sourceTree = "<group>"; };
+		18E1845B19891C990065F81D /* RenderToTextureExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderToTextureExample.h; sourceTree = "<group>"; };
+		18E1845C19891C990065F81D /* RenderToTextureExampleFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RenderToTextureExampleFactory.cpp; sourceTree = "<group>"; };
+		18E1845D19891C990065F81D /* RenderToTextureExampleFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderToTextureExampleFactory.h; sourceTree = "<group>"; };
 		18E6277D192F833A00B31DCE /* iOSExampleControllerView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = iOSExampleControllerView.mm; sourceTree = "<group>"; };
 		18E6277E192F833A00B31DCE /* iOSExampleControllerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iOSExampleControllerView.h; sourceTree = "<group>"; };
 		18E62780192FAD6200B31DCE /* IExampleControllerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IExampleControllerView.h; sourceTree = "<group>"; };
@@ -504,6 +516,7 @@
 				18143871192B6E4500BCDF2E /* PinOverModel */,
 				18143874192B6E4500BCDF2E /* Pins */,
 				18143877192B6E4500BCDF2E /* PODAnimation */,
+				18E1845719891C990065F81D /* RenderToTexture */,
 				1814387A192B6E4500BCDF2E /* ResourceSpatialQuery */,
 				1814387D192B6E4500BCDF2E /* RouteDrawing */,
 				18143880192B6E4500BCDF2E /* RouteMatching */,
@@ -918,6 +931,19 @@
 			path = Icons;
 			sourceTree = "<group>";
 		};
+		18E1845719891C990065F81D /* RenderToTexture */ = {
+			isa = PBXGroup;
+			children = (
+				18E1845819891C990065F81D /* PostProcessVignetteRenderer.cpp */,
+				18E1845919891C990065F81D /* PostProcessVignetteRenderer.h */,
+				18E1845A19891C990065F81D /* RenderToTextureExample.cpp */,
+				18E1845B19891C990065F81D /* RenderToTextureExample.h */,
+				18E1845C19891C990065F81D /* RenderToTextureExampleFactory.cpp */,
+				18E1845D19891C990065F81D /* RenderToTextureExampleFactory.h */,
+			);
+			path = RenderToTexture;
+			sourceTree = "<group>";
+		};
 		7E1A248C197FF827000ED126 /* CameraSpline */ = {
 			isa = PBXGroup;
 			children = (
@@ -1157,6 +1183,7 @@
 				222E06521948B08B0004FFD9 /* EnvironmentNotifierExample.cpp in Sources */,
 				222E06531948B08B0004FFD9 /* ModifiedRenderingExampleFactory.cpp in Sources */,
 				222E06541948B08B0004FFD9 /* iOSRouteMatchingExampleViewFactory.mm in Sources */,
+				18E1846319891C990065F81D /* RenderToTextureExampleFactory.cpp in Sources */,
 				222E06551948B08B0004FFD9 /* RouteSimulationAnimationExample.cpp in Sources */,
 				222E06561948B08B0004FFD9 /* ViewController.mm in Sources */,
 				222E06571948B08B0004FFD9 /* RouteThicknessPolicyExample.cpp in Sources */,
@@ -1189,6 +1216,7 @@
 				222E06721948B08B0004FFD9 /* PinsExampleFactory.cpp in Sources */,
 				222E06731948B08B0004FFD9 /* ModifiedRenderingExample.cpp in Sources */,
 				222E06741948B08B0004FFD9 /* FileIOExampleFactory.cpp in Sources */,
+				18E1845F19891C990065F81D /* PostProcessVignetteRenderer.cpp in Sources */,
 				222E06751948B08B0004FFD9 /* RouteDrawingExampleFactory.cpp in Sources */,
 				222E06761948B08B0004FFD9 /* PODAnimationExampleFactory.cpp in Sources */,
 				222E06771948B08B0004FFD9 /* PinOverModelExample.cpp in Sources */,
@@ -1203,6 +1231,7 @@
 				222E06801948B08B0004FFD9 /* CameraTransitionExampleFactory.cpp in Sources */,
 				222E06811948B08B0004FFD9 /* NavigationGraphExample.cpp in Sources */,
 				222E06821948B08B0004FFD9 /* WebRequestExampleFactory.cpp in Sources */,
+				18E1846119891C990065F81D /* RenderToTextureExample.cpp in Sources */,
 				222E06831948B08B0004FFD9 /* DynamicText3DExampleFactory.cpp in Sources */,
 				222E06841948B08B0004FFD9 /* ScreenPickExampleFactory.cpp in Sources */,
 				222E06851948B08B0004FFD9 /* PinOverModelExampleFactory.cpp in Sources */,
@@ -1235,6 +1264,7 @@
 				181438BC192B6E4500BCDF2E /* RouteThicknessPolicyExample.cpp in Sources */,
 				181438AB192B6E4500BCDF2E /* DynamicText3DExample.cpp in Sources */,
 				189971C8192CCB7700E0E9F1 /* ExampleController.cpp in Sources */,
+				18E1846219891C990065F81D /* RenderToTextureExampleFactory.cpp in Sources */,
 				189971A1192CB2D500E0E9F1 /* ResourceSpatialQueryExampleFactory.cpp in Sources */,
 				181438B0192B6E4500BCDF2E /* LoadModelExample.cpp in Sources */,
 				189971A7192CB3F800E0E9F1 /* RouteSimulationAnimationExampleFactory.cpp in Sources */,
@@ -1267,6 +1297,7 @@
 				18997186192CAC5400E0E9F1 /* FileIOExampleFactory.cpp in Sources */,
 				189971A4192CB35600E0E9F1 /* RouteDrawingExampleFactory.cpp in Sources */,
 				1899719E192CB24B00E0E9F1 /* PODAnimationExampleFactory.cpp in Sources */,
+				18E1845E19891C990065F81D /* PostProcessVignetteRenderer.cpp in Sources */,
 				181438B4192B6E4500BCDF2E /* PinOverModelExample.cpp in Sources */,
 				18E6277F192F833A00B31DCE /* iOSExampleControllerView.mm in Sources */,
 				189971C2192CBFFE00E0E9F1 /* RouteMatchingExampleFactory.cpp in Sources */,
@@ -1281,6 +1312,7 @@
 				1899716A192C947D00E0E9F1 /* CameraTransitionExampleFactory.cpp in Sources */,
 				181438B2192B6E4500BCDF2E /* NavigationGraphExample.cpp in Sources */,
 				189971BF192CB93200E0E9F1 /* WebRequestExampleFactory.cpp in Sources */,
+				18E1846019891C990065F81D /* RenderToTextureExample.cpp in Sources */,
 				1899717D192CAA0500E0E9F1 /* DynamicText3DExampleFactory.cpp in Sources */,
 				189971AD192CB59F00E0E9F1 /* ScreenPickExampleFactory.cpp in Sources */,
 				18997198192CB08A00E0E9F1 /* PinOverModelExampleFactory.cpp in Sources */,
