@@ -6,21 +6,43 @@
 #include "IExample.h"
 #include "RenderTexture.h"
 #include "Rendering.h"
-#include "PostProcessVignetteRenderer.h"
+#include "RenderToTextureExampleIncludes.h"
 
 namespace Examples
 {
     class RenderToTextureExample : public IExample
     {
     private:
-        PostProcessVignetteRenderer m_renderer;
         GlobeCameraStateRestorer m_globeCameraStateRestorer;
-        Eegeo::Rendering::RenderTexture* m_pRenderTexture;
         Eegeo::Rendering::RenderContext& m_renderContext;
+        Eegeo::Rendering::VertexLayouts::VertexBindingPool& m_vertexBindingPool;
+        Eegeo::Rendering::Shaders::ShaderIdGenerator& m_shaderIdGenerator;
+        Eegeo::Rendering::Materials::MaterialIdGenerator& m_materialIdGenerator;
+        Eegeo::Rendering::RenderableFilters& m_renderableFilters;
+        Eegeo::Rendering::GlBufferPool& m_glBufferPool;
+        
+        PostProcessVignetteShader* m_pVignetteShader;
+        PostProcessVignetteMaterial* m_pVignetteMaterial;
+        Eegeo::Rendering::VertexLayouts::VertexLayout* m_pMeshVertexLayout;
+        TexturedClipSpaceMeshFactory* m_pMeshFactory;
+        Eegeo::Rendering::Mesh* m_pRenderableMesh;
+        PostProcessVignetteRenderable* m_pRenderable;
+        PostProcessVignetteRenderer* m_pVignetteRenderer;
+        Eegeo::Rendering::RenderTexture* m_pRenderTexture;
+        
+        static const float SecondsBetweenEffectUpdates;
+        float m_secondsSinceLastEffectUpate;
+        
+        void UpdateEffect();
         
     public:
         RenderToTextureExample(Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController,
-                               Eegeo::Rendering::RenderContext& renderContext);
+                               Eegeo::Rendering::RenderContext& renderContext,
+                               Eegeo::Rendering::VertexLayouts::VertexBindingPool& vertexBindingPool,
+                               Eegeo::Rendering::Shaders::ShaderIdGenerator& shaderIdGenerator,
+                               Eegeo::Rendering::Materials::MaterialIdGenerator& materialIdGenerator,
+                               Eegeo::Rendering::RenderableFilters& renderableFilters,
+                               Eegeo::Rendering::GlBufferPool& m_glBufferPool);
         
         static std::string GetName()
         {
@@ -33,9 +55,9 @@ namespace Examples
         }
         
         void Start();
-        void Update(float dt) {}
+        void Update(float dt);
         void PreWorldDraw();
-        void Draw();
+        void Draw() {}
         void Suspend();
     };
 }

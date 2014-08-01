@@ -15,7 +15,13 @@ namespace Examples
     
     IExample* RenderToTextureExampleFactory::CreateExample() const
     {
-        return new Examples::RenderToTextureExample(m_globeCameraController, m_world.GetRenderContext());
+        return new Examples::RenderToTextureExample(m_globeCameraController,
+                                                    m_world.GetRenderContext(),
+                                                    m_world.GetVertexBindingPool(),
+                                                    m_world.GetShaderIdGenerator(),
+                                                    m_world.GetMaterialIdGenerator(),
+                                                    m_world.GetRenderableFilters(),
+                                                    m_world.GetGlBufferPool());
     }
     
     std::string RenderToTextureExampleFactory::ExampleName() const
