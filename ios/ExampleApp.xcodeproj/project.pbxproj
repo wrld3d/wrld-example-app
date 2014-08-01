@@ -134,10 +134,6 @@
 		18E18E90198BE4C80065F81D /* PostProcessVignetteRenderable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18E18E83198BE4C80065F81D /* PostProcessVignetteRenderable.cpp */; };
 		18E18E91198BE4C80065F81D /* PostProcessVignetteShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18E18E85198BE4C80065F81D /* PostProcessVignetteShader.cpp */; };
 		18E18E92198BE4C80065F81D /* PostProcessVignetteShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18E18E85198BE4C80065F81D /* PostProcessVignetteShader.cpp */; };
-		18E18E93198BE4C80065F81D /* TexturedClipSpaceMeshFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18E18E88198BE4C80065F81D /* TexturedClipSpaceMeshFactory.cpp */; };
-		18E18E94198BE4C80065F81D /* TexturedClipSpaceMeshFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18E18E88198BE4C80065F81D /* TexturedClipSpaceMeshFactory.cpp */; };
-		18E18E95198BE4C80065F81D /* TexturedClipSpaceVertexLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18E18E8B198BE4C80065F81D /* TexturedClipSpaceVertexLayout.cpp */; };
-		18E18E96198BE4C80065F81D /* TexturedClipSpaceVertexLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18E18E8B198BE4C80065F81D /* TexturedClipSpaceVertexLayout.cpp */; };
 		18E6277F192F833A00B31DCE /* iOSExampleControllerView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18E6277D192F833A00B31DCE /* iOSExampleControllerView.mm */; };
 		222E06491948B08B0004FFD9 /* ScreenUnprojectExampleFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 189971AE192CB63500E0E9F1 /* ScreenUnprojectExampleFactory.cpp */; };
 		222E064A1948B08B0004FFD9 /* ControlCityThemeExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1814384C192B6E4500BCDF2E /* ControlCityThemeExample.cpp */; };
@@ -420,11 +416,6 @@
 		18E18E85198BE4C80065F81D /* PostProcessVignetteShader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PostProcessVignetteShader.cpp; sourceTree = "<group>"; };
 		18E18E86198BE4C80065F81D /* PostProcessVignetteShader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostProcessVignetteShader.h; sourceTree = "<group>"; };
 		18E18E87198BE4C80065F81D /* RenderToTextureExampleIncludes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderToTextureExampleIncludes.h; sourceTree = "<group>"; };
-		18E18E88198BE4C80065F81D /* TexturedClipSpaceMeshFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TexturedClipSpaceMeshFactory.cpp; sourceTree = "<group>"; };
-		18E18E89198BE4C80065F81D /* TexturedClipSpaceMeshFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TexturedClipSpaceMeshFactory.h; sourceTree = "<group>"; };
-		18E18E8A198BE4C80065F81D /* TexturedClipSpaceVertex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TexturedClipSpaceVertex.h; sourceTree = "<group>"; };
-		18E18E8B198BE4C80065F81D /* TexturedClipSpaceVertexLayout.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TexturedClipSpaceVertexLayout.cpp; sourceTree = "<group>"; };
-		18E18E8C198BE4C80065F81D /* TexturedClipSpaceVertexLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TexturedClipSpaceVertexLayout.h; sourceTree = "<group>"; };
 		18E6277D192F833A00B31DCE /* iOSExampleControllerView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = iOSExampleControllerView.mm; sourceTree = "<group>"; };
 		18E6277E192F833A00B31DCE /* iOSExampleControllerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iOSExampleControllerView.h; sourceTree = "<group>"; };
 		18E62780192FAD6200B31DCE /* IExampleControllerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IExampleControllerView.h; sourceTree = "<group>"; };
@@ -963,11 +954,6 @@
 				18E18E85198BE4C80065F81D /* PostProcessVignetteShader.cpp */,
 				18E18E86198BE4C80065F81D /* PostProcessVignetteShader.h */,
 				18E18E87198BE4C80065F81D /* RenderToTextureExampleIncludes.h */,
-				18E18E88198BE4C80065F81D /* TexturedClipSpaceMeshFactory.cpp */,
-				18E18E89198BE4C80065F81D /* TexturedClipSpaceMeshFactory.h */,
-				18E18E8A198BE4C80065F81D /* TexturedClipSpaceVertex.h */,
-				18E18E8B198BE4C80065F81D /* TexturedClipSpaceVertexLayout.cpp */,
-				18E18E8C198BE4C80065F81D /* TexturedClipSpaceVertexLayout.h */,
 				18E1845819891C990065F81D /* PostProcessVignetteRenderer.cpp */,
 				18E1845919891C990065F81D /* PostProcessVignetteRenderer.h */,
 				18E1845A19891C990065F81D /* RenderToTextureExample.cpp */,
@@ -1219,7 +1205,6 @@
 				222E06531948B08B0004FFD9 /* ModifiedRenderingExampleFactory.cpp in Sources */,
 				222E06541948B08B0004FFD9 /* iOSRouteMatchingExampleViewFactory.mm in Sources */,
 				18E1846319891C990065F81D /* RenderToTextureExampleFactory.cpp in Sources */,
-				18E18E94198BE4C80065F81D /* TexturedClipSpaceMeshFactory.cpp in Sources */,
 				222E06551948B08B0004FFD9 /* RouteSimulationAnimationExample.cpp in Sources */,
 				222E06561948B08B0004FFD9 /* ViewController.mm in Sources */,
 				222E06571948B08B0004FFD9 /* RouteThicknessPolicyExample.cpp in Sources */,
@@ -1276,7 +1261,6 @@
 				7E1A2490197FF827000ED126 /* CameraSplineExample.cpp in Sources */,
 				222E06861948B08B0004FFD9 /* SingleCityExample.cpp in Sources */,
 				222E06871948B08B0004FFD9 /* RouteMatchingExample.cpp in Sources */,
-				18E18E96198BE4C80065F81D /* TexturedClipSpaceVertexLayout.cpp in Sources */,
 				222E06881948B08B0004FFD9 /* TrafficCongestionExampleFactory.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1305,7 +1289,6 @@
 				181438AB192B6E4500BCDF2E /* DynamicText3DExample.cpp in Sources */,
 				189971C8192CCB7700E0E9F1 /* ExampleController.cpp in Sources */,
 				18E1846219891C990065F81D /* RenderToTextureExampleFactory.cpp in Sources */,
-				18E18E93198BE4C80065F81D /* TexturedClipSpaceMeshFactory.cpp in Sources */,
 				189971A1192CB2D500E0E9F1 /* ResourceSpatialQueryExampleFactory.cpp in Sources */,
 				181438B0192B6E4500BCDF2E /* LoadModelExample.cpp in Sources */,
 				189971A7192CB3F800E0E9F1 /* RouteSimulationAnimationExampleFactory.cpp in Sources */,
@@ -1362,7 +1345,6 @@
 				7E1A248F197FF827000ED126 /* CameraSplineExample.cpp in Sources */,
 				181438C0192B6E4500BCDF2E /* SingleCityExample.cpp in Sources */,
 				181438B9192B6E4500BCDF2E /* RouteMatchingExample.cpp in Sources */,
-				18E18E95198BE4C80065F81D /* TexturedClipSpaceVertexLayout.cpp in Sources */,
 				189971BC192CB8B800E0E9F1 /* TrafficCongestionExampleFactory.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

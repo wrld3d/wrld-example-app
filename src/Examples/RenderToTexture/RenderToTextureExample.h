@@ -15,6 +15,7 @@ namespace Examples
     private:
         GlobeCameraStateRestorer m_globeCameraStateRestorer;
         Eegeo::Rendering::RenderContext& m_renderContext;
+        Eegeo::Rendering::VertexLayouts::VertexLayoutPool& m_vertexLayoutPool;
         Eegeo::Rendering::VertexLayouts::VertexBindingPool& m_vertexBindingPool;
         Eegeo::Rendering::Shaders::ShaderIdGenerator& m_shaderIdGenerator;
         Eegeo::Rendering::Materials::MaterialIdGenerator& m_materialIdGenerator;
@@ -24,7 +25,7 @@ namespace Examples
         PostProcessVignetteShader* m_pVignetteShader;
         PostProcessVignetteMaterial* m_pVignetteMaterial;
         Eegeo::Rendering::VertexLayouts::VertexLayout* m_pMeshVertexLayout;
-        TexturedClipSpaceMeshFactory* m_pMeshFactory;
+        //TexturedClipSpaceMeshFactory* m_pMeshFactory;
         Eegeo::Rendering::Mesh* m_pRenderableMesh;
         PostProcessVignetteRenderable* m_pRenderable;
         PostProcessVignetteRenderer* m_pVignetteRenderer;
@@ -38,6 +39,7 @@ namespace Examples
     public:
         RenderToTextureExample(Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController,
                                Eegeo::Rendering::RenderContext& renderContext,
+                               Eegeo::Rendering::VertexLayouts::VertexLayoutPool& vertexLayoutPool,
                                Eegeo::Rendering::VertexLayouts::VertexBindingPool& vertexBindingPool,
                                Eegeo::Rendering::Shaders::ShaderIdGenerator& shaderIdGenerator,
                                Eegeo::Rendering::Materials::MaterialIdGenerator& materialIdGenerator,

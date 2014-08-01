@@ -14,16 +14,8 @@
 #include "PostProcessVignetteMaterial.h"
 #include "PostProcessVignetteRenderer.h"
 #include "PostProcessVignetteRenderable.h"
-#include "TexturedClipSpaceVertexLayout.h"
-#include "TexturedClipSpaceVertex.h"
-#include "TexturedClipSpaceMeshFactory.h"
+#include "Quad.h"
 #include "RenderToTextureExample.h"
-
-namespace
-{
-    void InitialiseMeshBuffers(std::vector<Examples::TexturedClipSpaceVertex>& vertexBuffer,
-                               std::vector<u16>& indexBuffer);
-}
 
 namespace Examples
 {
@@ -32,6 +24,7 @@ namespace Examples
     
     RenderToTextureExample::RenderToTextureExample(Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController,
                                                    Eegeo::Rendering::RenderContext& renderContext,
+                                                   Eegeo::Rendering::VertexLayouts::VertexLayoutPool& vertexLayoutPool,
                                                    Eegeo::Rendering::VertexLayouts::VertexBindingPool& vertexBindingPool,
                                                    Eegeo::Rendering::Shaders::ShaderIdGenerator& shaderIdGenerator,
                                                    Eegeo::Rendering::Materials::MaterialIdGenerator& materialIdGenerator,
@@ -39,6 +32,7 @@ namespace Examples
                                                    Eegeo::Rendering::GlBufferPool& glBufferPool)
     :m_globeCameraStateRestorer(cameraController)
     ,m_renderContext(renderContext)
+    ,m_vertexLayoutPool(vertexLayoutPool)
     ,m_vertexBindingPool(vertexBindingPool)
     ,m_shaderIdGenerator(shaderIdGenerator)
     ,m_materialIdGenerator(materialIdGenerator)
@@ -46,8 +40,6 @@ namespace Examples
     ,m_glBufferPool(glBufferPool)
     ,m_pVignetteShader(NULL)
     ,m_pVignetteMaterial(NULL)
-    ,m_pMeshVertexLayout(NULL)
-    ,m_pMeshFactory(NULL)
     ,m_pRenderableMesh(NULL)
     ,m_pRenderable(NULL)
     ,m_pVignetteRenderer(NULL)
@@ -75,21 +67,7 @@ namespace Examples
                                                                      *m_pVignetteShader,
                                                                      *m_pRenderTexture);
         
-        m_pMeshVertexLayout = CreateTexturedClipSpaceLayout();
-        
-        m_pMeshFactory = Eegeo_NEW(TexturedClipSpaceMeshFactory)(m_glBufferPool, *m_pMeshVertexLayout, sizeof(TexturedClipSpaceVertex));
-        
-        std::vector<TexturedClipSpaceVertex> renderVertices;
-        std::vector<u16> renderIndices;
-        
-        InitialiseMeshBuffers(renderVertices, renderIndices);
-        
-        m_pRenderableMesh = m_pMeshFactory->CreateMesh(renderVertices.data(),
-                                                       renderVertices.size(),
-                                                       renderIndices.data(),
-                                                       (sizeof(u16) * renderIndices.size()),
-                                                       renderIndices.size(),
-                                                       "PostProcessVignetteTexturedClipSpaceMesh");
+        m_pRenderableMesh = Eegeo::Rendering::Geometry::CreatePositionUVViewportQuad(m_glBufferPool, m_vertexLayoutPool, 1.f);
         
         const Eegeo::Rendering::VertexLayouts::VertexLayout& vertexLayout = m_pRenderableMesh->GetVertexLayout();
         const Eegeo::Rendering::VertexLayouts::VertexAttribs& vertexAttributes = m_pVignetteShader->GetVertexAttributes();
@@ -116,12 +94,6 @@ namespace Examples
         
         Eegeo_DELETE m_pRenderable;
         m_pRenderable = NULL;
-        
-        Eegeo_DELETE m_pMeshFactory;
-        m_pMeshFactory = NULL;
-        
-        Eegeo_DELETE m_pMeshVertexLayout;
-        m_pMeshVertexLayout = NULL;
         
         Eegeo_DELETE m_pVignetteMaterial;
         m_pVignetteMaterial = NULL;
@@ -155,45 +127,6 @@ namespace Examples
         m_pRenderable->SetVignetteColour(Eegeo::v3(0.9f, 0.8f, 0.6f));
         const float radiusIntensityVariance = (2-(rand()%5))/10.f;
         m_pRenderable->SetVignetteRadiusModifier(3.6f + radiusIntensityVariance);
-    }
-}
-
-namespace
-{
-    void InitialiseMeshBuffers(std::vector<Examples::TexturedClipSpaceVertex>& vertexBuffer,
-                               std::vector<u16>& indexBuffer)
-    {
-        vertexBuffer.resize(4);
-        
-        vertexBuffer[0].m_x = -1.f;
-        vertexBuffer[0].m_y = 1.f;
-        vertexBuffer[0].m_u = 0.f;
-        vertexBuffer[0].m_v = 1.f;
-        
-        vertexBuffer[1].m_x = 1.f;
-        vertexBuffer[1].m_y = 1.f;
-        vertexBuffer[1].m_u = 1.f;
-        vertexBuffer[1].m_v = 1.f;
-        
-        vertexBuffer[2].m_x = -1.f;
-        vertexBuffer[2].m_y = -1.f;
-        vertexBuffer[2].m_u = 0.f;
-        vertexBuffer[2].m_v = 0.f;
-        
-        vertexBuffer[3].m_x = 1.f;
-        vertexBuffer[3].m_y = -1.f;
-        vertexBuffer[3].m_u = 1.f;
-        vertexBuffer[3].m_v = 0.f;
-        
-        indexBuffer.resize(6);
-        
-        indexBuffer[0] = 0;
-        indexBuffer[1] = 1;
-        indexBuffer[2] = 2;
-        
-        indexBuffer[3] = 1;
-        indexBuffer[4] = 3;
-        indexBuffer[5] = 2;
     }
 }
 

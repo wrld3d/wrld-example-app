@@ -12,8 +12,8 @@ namespace Examples
     class PostProcessVignetteShader;
     class PostProcessVignetteRenderable;
     
-    struct TexturedClipSpaceVertex;
-    class TexturedClipSpaceMeshFactory;
+    //struct TexturedClipSpaceVertex;
+    //class TexturedClipSpaceMeshFactory;
 }
 
 #endif
