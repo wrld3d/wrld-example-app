@@ -6,6 +6,7 @@
 #include "Types.h"
 #include "Graphics.h"
 #include "AndroidFileIO.h"
+#include "AndroidCacheFileIO.h"
 #include "AndroidHttpCache.h"
 #include "AndroidTextureFileLoader.h"
 #include "AndroidWebRequestService.hpp"
@@ -77,6 +78,7 @@ private:
 	Eegeo::Android::AndroidTextureFileLoader* m_pTextureLoader;
 	Eegeo::Android::Cache::AndroidHttpCache* m_pHttpCache;
 	Eegeo::Android::AndroidFileIO* m_pFileIO;
+	Eegeo::Android::AndroidCacheFileIO* m_pCacheFileIO;
 	Eegeo::Lighting::GlobalLighting* m_pLighting;
 	Eegeo::Lighting::GlobalFogging* m_pFogging;
 	Eegeo::Lighting::GlobalShadowing* m_pShadowing;
