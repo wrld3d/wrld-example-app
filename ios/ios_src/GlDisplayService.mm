@@ -74,13 +74,20 @@ bool GlDisplayService::TryBindDisplay(GLKView& view)
     
 	[EAGLContext setCurrentContext: pView.context];
     
-    m_pixelScale = 1.f;
+	UIScreen* screen = [UIScreen mainScreen];
+    if ([screen respondsToSelector: @selector(scale)])
+	{
+		m_pixelScale = screen.scale;
+	}
+	else
+	{
+		m_pixelScale = 1.f;
+	}
     
 	float width 		= pView.bounds.size.width * m_pixelScale;
 	float height 		= pView.bounds.size.height * m_pixelScale;
     
 	bool boPortrait = App::IsDeviceSmall();
-    
 	if (!boPortrait)
 	{
 		float temp = width;
