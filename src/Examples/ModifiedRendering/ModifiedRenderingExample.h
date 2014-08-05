@@ -88,6 +88,8 @@ private:
 	int m_counter;
 
 	bool IsToBeReplacedWithAlternative(const TSceneElement* pSceneElement)  const;
+    void AddAlternativeRenderable(TSceneElement& sceneElement);
+    void PopulateAlternativeRenderablesFromInitialSceneGraph();
 
 public:
 	ModifiedRenderingExample(Eegeo::Rendering::RenderContext& renderContext,

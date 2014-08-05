@@ -82,6 +82,8 @@ void ModifiedRenderingExample::Start()
 	                             Eegeo::Rendering::TextureMinify_NearestMipmap_Linear,
 	                             false,
 	                             false);
+    
+    PopulateAlternativeRenderablesFromInitialSceneGraph();
 }
 
 void ModifiedRenderingExample::Suspend()
@@ -110,19 +112,38 @@ void ModifiedRenderingExample::Update(float dt)
 void ModifiedRenderingExample::Draw()
 {
 }
+    
+void ModifiedRenderingExample::PopulateAlternativeRenderablesFromInitialSceneGraph()
+{
+    TSceneElementPtrVec sceneElements;
+    m_buildingRepository.GetSceneElements(sceneElements);
+    
+    for (TSceneElementPtrVec::iterator it = sceneElements.begin(); it != sceneElements.end(); ++it)
+    {
+        AddAlternativeRenderable(**it);
+    }
+}
 
+void ModifiedRenderingExample::AddAlternativeRenderable(TMySceneElement& sceneElement)
+{
+    const TRenderablePtr pOriginalRenderable = &(sceneElement.GetResource());
+    
+    //create an alternative renderable with a our own alternative material.
+    MyRenderable* pAlternativeRenderable = Eegeo_NEW(MyRenderable)(*pOriginalRenderable, m_pAlternativeMaterial);
+    
+    //add the alternative to our list of renderables.
+    m_alternativeRenderables.insert(std::pair<TSceneElementPtr, MyRenderable*>(&sceneElement, pAlternativeRenderable));
+}
+    
 void ModifiedRenderingExample::OnSceneElementAdded(TMySceneElement& sceneElement)
 {
 	const TRenderablePtr pOriginalRenderable = &(sceneElement.GetResource());
 
 	if(!pOriginalRenderable->GetMaterial()->GetName().compare(Eegeo::Rendering::MaterialNames::Buildings))
 	{
-		//create an alternative renderable with a our own alternative material.
-		MyRenderable* pAlternativeRenderable = Eegeo_NEW(MyRenderable)(*pOriginalRenderable, m_pAlternativeMaterial);
-
-		//add the alternative to our list of renderables.
-		m_alternativeRenderables.insert(std::pair<TSceneElementPtr, MyRenderable*>(&sceneElement, pAlternativeRenderable));
+        AddAlternativeRenderable(sceneElement);
 	}
+    
 }
 
 void ModifiedRenderingExample::OnSceneElementRemoved(TMySceneElement& sceneElement)
