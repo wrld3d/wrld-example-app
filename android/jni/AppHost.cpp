@@ -51,6 +51,7 @@ AppHost::AppHost(
 	,m_pTextureLoader(NULL)
 	,m_pHttpCache(NULL)
 	,m_pFileIO(NULL)
+	,m_pCacheFileIO(NULL)
 	,m_pLighting(NULL)
 	,m_pFogging(NULL)
 	,m_pShadowing(NULL)
@@ -94,8 +95,9 @@ AppHost::AppHost(
 	customApplicationAssetDirectories.insert("route_simulation_example");
 	customApplicationAssetDirectories.insert("route_simulation_animation_example");
 	m_pFileIO = new AndroidFileIO(&nativeState, customApplicationAssetDirectories);
+	m_pCacheFileIO = new AndroidCacheFileIO(&nativeState);
 
-	m_pHttpCache = new Cache::AndroidHttpCache(*m_pFileIO);
+	m_pHttpCache = new Cache::AndroidHttpCache(*m_pCacheFileIO);
 	m_pTextureLoader = new AndroidTextureFileLoader(m_pFileIO, m_pRenderContext->GetGLState());
 
 	Eegeo::EffectHandler::Initialise();
@@ -105,7 +107,7 @@ AppHost::AppHost(
 	const int webLoadPoolSize = 10;
 	const int cacheLoadPoolSize = 40;
 	const int cacheStorePoolSize = 20;
-	m_pAndroidWebRequestService = new AndroidWebRequestService(*m_pFileIO, m_pHttpCache, webLoadPoolSize, cacheLoadPoolSize, cacheStorePoolSize);
+	m_pAndroidWebRequestService = new AndroidWebRequestService(*m_pCacheFileIO, m_pHttpCache, webLoadPoolSize, cacheLoadPoolSize, cacheStorePoolSize);
 
 	m_pAndroidWebLoadRequestFactory = new AndroidWebLoadRequestFactory(m_pAndroidWebRequestService, m_pHttpCache);
 
@@ -190,6 +192,9 @@ AppHost::~AppHost()
 
 	delete m_pFileIO;
 	m_pFileIO = NULL;
+
+	delete m_pCacheFileIO;
+	m_pCacheFileIO = NULL;
 
 	delete m_pHttpCache;
 	m_pHttpCache = NULL;
