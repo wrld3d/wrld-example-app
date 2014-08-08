@@ -3,26 +3,22 @@
 #ifndef __ExampleApp__DebugPrimitiveRenderingExample__
 #define __ExampleApp__DebugPrimitiveRenderingExample__
 
+#include "DebugRendering.h"
 #include "IExample.h"
-
-namespace Eegeo
-{
-namespace DebugRendering
-{
-class DebugPrimitiveRenderer;
-}
-}
 
 namespace Examples
 {
 class DebugPrimitiveRenderingExample : public Examples::IExample
 {
 private:
-	Eegeo::DebugRendering::DebugPrimitiveRenderer& m_debugPrimitiveRenderer;
+	Eegeo::DebugRendering::DebugRenderer& m_debugRenderer;
+    const Eegeo::Camera::RenderCamera& m_camera;
 	GlobeCameraStateRestorer m_globeCameraStateRestorer;
+    float m_frustumDrawTimer;
 
 public:
-	DebugPrimitiveRenderingExample(Eegeo::DebugRendering::DebugPrimitiveRenderer &debugPrimitiveRenderer,
+	DebugPrimitiveRenderingExample(Eegeo::DebugRendering::DebugRenderer &debugRenderer,
+                                   const Eegeo::Camera::RenderCamera& camera,
 	                               Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController);
 
 	static std::string GetName()
