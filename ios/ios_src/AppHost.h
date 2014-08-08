@@ -8,6 +8,7 @@
 #include "iOSFileIO.h"
 #include "iOSHttpCache.h"
 #include "iOSTextureFileLoader.h"
+#include "IJpegLoader.h"
 #include "iOSWebLoadRequestFactory.h"
 #include "iOSLocationService.h"
 #include "iOSUrlEncoder.h"
@@ -65,6 +66,7 @@ private:
 	Eegeo::Web::iOSWebRequestService* m_piOSWebRequestService;
 	Eegeo::Blitter* m_pBlitter;
 	Eegeo::iOS::iOSTextureFileLoader* m_pTextureLoader;
+    Eegeo::Helpers::Jpeg::IJpegLoader* m_pJpegLoader;
 	iOSHttpCache* m_pHttpCache;
 	Eegeo::iOS::iOSFileIO* m_pFileIO;
 	Eegeo::Lighting::GlobalLighting* m_pLighting;

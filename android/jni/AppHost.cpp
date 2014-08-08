@@ -9,6 +9,7 @@
 #include "GlobalLighting.h"
 #include "GlobalFogging.h"
 #include "AppInterface.h"
+#include "JpegLoader.h"
 #include "Blitter.h"
 #include "EffectHandler.h"
 #include "SearchServiceCredentials.h"
@@ -49,6 +50,7 @@ AppHost::AppHost(
 	,m_pAndroidWebRequestService(NULL)
 	,m_pBlitter(NULL)
 	,m_pTextureLoader(NULL)
+    ,m_pJpegLoader(NULL)
 	,m_pHttpCache(NULL)
 	,m_pFileIO(NULL)
 	,m_pCacheFileIO(NULL)
@@ -98,7 +100,8 @@ AppHost::AppHost(
 	m_pCacheFileIO = new AndroidCacheFileIO(&nativeState);
 
 	m_pHttpCache = new Cache::AndroidHttpCache(*m_pCacheFileIO);
-	m_pTextureLoader = new AndroidTextureFileLoader(m_pFileIO, m_pRenderContext->GetGLState());
+	m_pJpegLoader = new Eegeo::Helpers::Jpeg::JpegLoader();
+	m_pTextureLoader = new AndroidTextureFileLoader(m_pFileIO, m_pRenderContext->GetGLState(), *m_pJpegLoader);
 
 	Eegeo::EffectHandler::Initialise();
 	m_pBlitter = new Eegeo::Blitter(1024 * 128, 1024 * 64, 1024 * 32, *m_pRenderContext);
@@ -122,6 +125,7 @@ AppHost::AppHost(
 	    *m_pHttpCache,
 	    *m_pFileIO,
 	    *m_pTextureLoader,
+	    *m_pJpegLoader,
 	    *m_pAndroidWebLoadRequestFactory,
 	    *this,
 	    *m_pRenderContext,
@@ -201,6 +205,9 @@ AppHost::~AppHost()
 
 	delete m_pTextureLoader;
 	m_pTextureLoader = NULL;
+
+	delete m_pJpegLoader;
+	m_pJpegLoader = NULL;
 
 	Eegeo::EffectHandler::Reset();
 	Eegeo::EffectHandler::Shutdown();
