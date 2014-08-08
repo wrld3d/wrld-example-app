@@ -23,6 +23,7 @@
 #include "RouteSimulationExampleFactory.h"
 #include "iOSWebRequestService.h"
 #include "iOSGlTaskContextFactory.h"
+#include "JpegLoader.h"
 
 using namespace Eegeo::iOS;
 
@@ -41,6 +42,7 @@ AppHost::AppHost(
     ,m_pGlTaskContextFactory(NULL)
 	,m_pBlitter(NULL)
 	,m_pTextureLoader(NULL)
+    ,m_pJpegLoader(NULL)
 	,m_pHttpCache(NULL)
 	,m_pFileIO(NULL)
 	,m_pLighting(NULL)
@@ -73,7 +75,8 @@ AppHost::AppHost(
     
 	m_pFileIO = new iOSFileIO();
 	m_pHttpCache = new iOSHttpCache(*m_pFileIO);
-	m_pTextureLoader = new iOSTextureFileLoader(m_pFileIO, m_pRenderContext->GetGLState());
+    m_pJpegLoader = new Eegeo::Helpers::Jpeg::JpegLoader();
+	m_pTextureLoader = new iOSTextureFileLoader(m_pFileIO, m_pRenderContext->GetGLState(), *m_pJpegLoader);
 
 	Eegeo::EffectHandler::Initialise();
 	m_pBlitter = new Eegeo::Blitter(1024 * 128, 1024 * 64, 1024 * 32, *m_pRenderContext);
@@ -95,6 +98,7 @@ AppHost::AppHost(
 	    *m_pHttpCache,
 	    *m_pFileIO,
 	    *m_pTextureLoader,
+        *m_pJpegLoader,
 	    *m_piOSWebLoadRequestFactory,
         *m_pGlTaskContextFactory,
 	    *m_pRenderContext,
@@ -171,6 +175,9 @@ AppHost::~AppHost()
 
 	delete m_pTextureLoader;
 	m_pTextureLoader = NULL;
+    
+    delete m_pJpegLoader;
+    m_pJpegLoader = NULL;
 
 	Eegeo::EffectHandler::Reset();
 	Eegeo::EffectHandler::Shutdown();

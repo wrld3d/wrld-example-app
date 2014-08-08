@@ -13,6 +13,7 @@
 #include "AndroidWebLoadRequestFactory.h"
 #include "AndroidInputProcessor.h"
 #include "AndroidLocationService.h"
+#include "IJpegLoader.h"
 #include "AndroidUrlEncoder.h"
 #include "GlobeCameraInterestPointProvider.h"
 #include "TerrainHeightProvider.h"
@@ -76,6 +77,7 @@ private:
 	Eegeo::Android::AndroidWebRequestService* m_pAndroidWebRequestService;
 	Eegeo::Blitter* m_pBlitter;
 	Eegeo::Android::AndroidTextureFileLoader* m_pTextureLoader;
+    Eegeo::Helpers::Jpeg::IJpegLoader* m_pJpegLoader;
 	Eegeo::Android::Cache::AndroidHttpCache* m_pHttpCache;
 	Eegeo::Android::AndroidFileIO* m_pFileIO;
 	Eegeo::Android::AndroidCacheFileIO* m_pCacheFileIO;
