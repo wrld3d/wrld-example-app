@@ -159,6 +159,11 @@ void ExampleApp::Draw (float dt)
 
 void ExampleApp::Event_TouchRotate(const AppInterface::RotateData& data)
 {
+	if(World().Initialising())
+	{
+		return;
+	}
+
 	if(!m_exampleController.Event_TouchRotate(data))
 	{
 		m_pCameraTouchController->Event_TouchRotate(data);
@@ -167,6 +172,11 @@ void ExampleApp::Event_TouchRotate(const AppInterface::RotateData& data)
 
 void ExampleApp::Event_TouchRotate_Start(const AppInterface::RotateData& data)
 {
+    if(World().Initialising())
+	{
+		return;
+	}
+    
 	if(!m_exampleController.Event_TouchRotate_Start(data))
 	{
 		m_pCameraTouchController->Event_TouchRotate_Start(data);
@@ -175,6 +185,11 @@ void ExampleApp::Event_TouchRotate_Start(const AppInterface::RotateData& data)
 
 void ExampleApp::Event_TouchRotate_End(const AppInterface::RotateData& data)
 {
+    if(World().Initialising())
+	{
+		return;
+	}
+    
 	if(!m_exampleController.Event_TouchRotate_End(data))
 	{
 		m_pCameraTouchController->Event_TouchRotate_End(data);
@@ -183,6 +198,11 @@ void ExampleApp::Event_TouchRotate_End(const AppInterface::RotateData& data)
 
 void ExampleApp::Event_TouchPinch(const AppInterface::PinchData& data)
 {
+    if(World().Initialising())
+	{
+		return;
+	}
+    
 	if(!m_exampleController.Event_TouchPinch(data))
 	{
 		m_pCameraTouchController->Event_TouchPinch(data);
@@ -191,6 +211,11 @@ void ExampleApp::Event_TouchPinch(const AppInterface::PinchData& data)
 
 void ExampleApp::Event_TouchPinch_Start(const AppInterface::PinchData& data)
 {
+    if(World().Initialising())
+	{
+		return;
+	}
+    
 	if(!m_exampleController.Event_TouchPinch_Start(data))
 	{
 		m_pCameraTouchController->Event_TouchPinch_Start(data);
@@ -199,6 +224,11 @@ void ExampleApp::Event_TouchPinch_Start(const AppInterface::PinchData& data)
 
 void ExampleApp::Event_TouchPinch_End(const AppInterface::PinchData& data)
 {
+    if(World().Initialising())
+	{
+		return;
+	}
+    
 	if(!m_exampleController.Event_TouchPinch_End(data))
 	{
 		m_pCameraTouchController->Event_TouchPinch_End(data);
@@ -207,6 +237,11 @@ void ExampleApp::Event_TouchPinch_End(const AppInterface::PinchData& data)
 
 void ExampleApp::Event_TouchPan(const AppInterface::PanData& data)
 {
+    if(World().Initialising())
+	{
+		return;
+	}
+    
 	if(!m_exampleController.Event_TouchPan(data))
 	{
 		m_pCameraTouchController->Event_TouchPan(data);
@@ -215,6 +250,11 @@ void ExampleApp::Event_TouchPan(const AppInterface::PanData& data)
 
 void ExampleApp::Event_TouchPan_Start(const AppInterface::PanData& data)
 {
+    if(World().Initialising())
+	{
+		return;
+	}
+    
 	if(!m_exampleController.Event_TouchPan_Start(data))
 	{
 		m_pCameraTouchController->Event_TouchPan_Start(data);
@@ -223,6 +263,11 @@ void ExampleApp::Event_TouchPan_Start(const AppInterface::PanData& data)
 
 void ExampleApp::Event_TouchPan_End(const AppInterface::PanData& data)
 {
+    if(World().Initialising())
+	{
+		return;
+	}
+    
 	if(!m_exampleController.Event_TouchPan_End(data))
 	{
 		m_pCameraTouchController->Event_TouchPan_End(data);
@@ -231,6 +276,11 @@ void ExampleApp::Event_TouchPan_End(const AppInterface::PanData& data)
 
 void ExampleApp::Event_TouchTap(const AppInterface::TapData& data)
 {
+    if(World().Initialising())
+	{
+		return;
+	}
+    
 	if(!m_exampleController.Event_TouchTap(data))
 	{
 		m_pCameraTouchController->Event_TouchTap(data);
@@ -239,6 +289,11 @@ void ExampleApp::Event_TouchTap(const AppInterface::TapData& data)
 
 void ExampleApp::Event_TouchDoubleTap(const AppInterface::TapData& data)
 {
+    if(World().Initialising())
+	{
+		return;
+	}
+    
 	if(!m_exampleController.Event_TouchDoubleTap(data))
 	{
 		m_pCameraTouchController->Event_TouchDoubleTap(data);
@@ -247,6 +302,11 @@ void ExampleApp::Event_TouchDoubleTap(const AppInterface::TapData& data)
 
 void ExampleApp::Event_TouchDown(const AppInterface::TouchData& data)
 {
+    if(World().Initialising())
+	{
+		return;
+	}
+    
 	if(!m_exampleController.Event_TouchDown(data))
 	{
 		m_pCameraTouchController->Event_TouchDown(data);
@@ -255,6 +315,11 @@ void ExampleApp::Event_TouchDown(const AppInterface::TouchData& data)
 
 void ExampleApp::Event_TouchMove(const AppInterface::TouchData& data)
 {
+    if(World().Initialising())
+	{
+		return;
+	}
+    
 	if(!m_exampleController.Event_TouchMove(data))
 	{
 		m_pCameraTouchController->Event_TouchMove(data);
@@ -263,6 +328,11 @@ void ExampleApp::Event_TouchMove(const AppInterface::TouchData& data)
 
 void ExampleApp::Event_TouchUp(const AppInterface::TouchData& data)
 {
+    if(World().Initialising())
+	{
+		return;
+	}
+    
 	if(!m_exampleController.Event_TouchUp(data))
 	{
 		m_pCameraTouchController->Event_TouchUp(data);

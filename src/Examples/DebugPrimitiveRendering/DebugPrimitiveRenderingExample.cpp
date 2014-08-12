@@ -57,7 +57,7 @@ void DebugPrimitiveRenderingExample::Update(float dt)
         Eegeo::dv3 pos = ecefCenter + (tangentBasis.GetRight() * i) + (tangentBasis.GetUp() * amplitude * sin(m_frustumDrawTimer + i*0.1));
         ecefWavePoints.push_back(pos);
     }
-    m_debugRenderer.DrawPolyLine(ecefWavePoints, Eegeo::v4(1.0f, 1.0f, 1.0f, 0.5f));
+    m_debugRenderer.DrawPolyLine(ecefWavePoints, Eegeo::Rendering::Colors::WHITE);
     
     // Draw a transparent XZ quad on the tangent space
     const float quadSize = 100.0f;
@@ -86,7 +86,8 @@ void DebugPrimitiveRenderingExample::Update(float dt)
         m_debugRenderer.DrawWireFrustum(m_camera.GetEcefLocation(), frustum, Eegeo::Rendering::Colors::GREEN, 3.0f);
         
         // And draw some text for 4 seconds where the cube is
-        m_debugRenderer.DrawText(ecefCenter2, "Debug Text!", 20, 4.0f);
+        Eegeo::dv3 ecefCenter3 = ConvertLatLongAltitudeToEcef(Eegeo::Space::LatLongAltitude::FromDegrees(37.78469,-122.40143, 400));
+        m_debugRenderer.DrawText(ecefCenter3, "Debug Text!", 20, 4.0f);
     }
 
     
