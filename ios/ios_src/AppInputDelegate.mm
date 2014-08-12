@@ -17,6 +17,7 @@ UIPinchGestureRecognizer *gesturePinch;
 UIPanGestureRecognizer* gesturePan;
 UITapGestureRecognizer* gestureTap;
 UITapGestureRecognizer* gestureDoubleTap;
+UILongPressGestureRecognizer* gestureTouch;
 
 -(void) bindToViewController:(ViewController*)pViewController :(AppInputDelegate*)pAppInputDelegate :(float)width :(float)height :(float)pixelScale
 {
@@ -62,6 +63,14 @@ UITapGestureRecognizer* gestureDoubleTap;
 	gestureDoubleTap.numberOfTapsRequired = 2;
 	[pView addGestureRecognizer: gestureDoubleTap];
 	[gestureDoubleTap release];
+    
+    gestureTouch = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(gestureTouch_Callback:)];
+    [gestureTouch setDelegate:m_pViewController];
+    gestureTouch.cancelsTouchesInView = FALSE;
+    gestureTouch.minimumPressDuration = 0;
+    [pView addGestureRecognizer: gestureTouch];
+	[gestureTouch release];
+    
 }
 
 -(void)gestureRotation_Callback:(UIRotationGestureRecognizer*)recognizer
@@ -236,55 +245,27 @@ UITapGestureRecognizer* gestureDoubleTap;
 	}
 }
 
--(void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+-(void)gestureTouch_Callback:(UILongPressGestureRecognizer*)recognizer
 {
-	if ([touches count]>0)
-	{
-		UITouch *touch = [[touches allObjects] objectAtIndex:0];
-		CGPoint position = [touch locationInView: m_pViewController.view];
-        
-		position.x *= m_pixelScale;
-		position.y *= m_pixelScale;
-        
-		AppInterface::TouchData data;
-		data.point	= *(Eegeo::v2*)&position;
-        
-		m_pAppInputDelegate->Event_TouchDown (data);
-	}
-}
-
--(void) touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
-{
-	if ([touches count]>0)
-	{
-		UITouch *touch = [[touches allObjects] objectAtIndex:0];
-		CGPoint position = [touch locationInView: m_pViewController.view];
-        
-		position.x *= m_pixelScale;
-		position.y *= m_pixelScale;
-        
-		AppInterface::TouchData data;
-		data.point	= *(Eegeo::v2*)&position;
-        
-		m_pAppInputDelegate->Event_TouchMove (data);
-	}
-}
-
--(void) touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
-{
-	if ([touches count]>0)
-	{
-		UITouch *touch = [[touches allObjects] objectAtIndex:0];
-		CGPoint position = [touch locationInView: m_pViewController.view];
-        
-		position.x *= m_pixelScale;
-		position.y *= m_pixelScale;
-        
-		AppInterface::TouchData data;
-		data.point	= *(Eegeo::v2*)&position;
-        
-		m_pAppInputDelegate->Event_TouchUp (data);
-	}
+    AppInterface::TouchData data;
+    
+    CGPoint position = [recognizer locationInView:m_pViewController.view];
+    position.x *= m_pixelScale;
+    position.y *= m_pixelScale;
+    data.point	= *(Eegeo::v2*)&position;
+    
+    if(recognizer.state == UIGestureRecognizerStateBegan)
+    {
+        m_pAppInputDelegate->Event_TouchDown(data);
+    }
+    else if(recognizer.state == UIGestureRecognizerStateChanged)
+    {
+        m_pAppInputDelegate->Event_TouchMove(data);
+    }
+    else if(recognizer.state == UIGestureRecognizerStateEnded)
+    {
+        m_pAppInputDelegate->Event_TouchUp(data);
+    }
 }
 
 @end
