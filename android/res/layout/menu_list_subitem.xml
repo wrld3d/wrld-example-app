@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/menu_list_item"
+    android:layout_width="fill_parent"
+    android:layout_height="20dp"
+    android:paddingLeft="13dp">
+    
+	<LinearLayout
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:minHeight="0dip"
+	    android:background="@drawable/menu_item_selected_states"
+		>
+	
+		
+	    <RelativeLayout android:layout_width="fill_parent"
+	        			android:layout_height="fill_parent">
+	        			
+	    <TextView
+	        android:id="@+id/menu_list_item_name"
+	        android:layout_width="fill_parent"
+	        android:layout_height="fill_parent"
+	        android:layout_marginLeft="30dp"
+	        android:gravity="left|center_vertical"
+	        android:textAppearance="?android:attr/textAppearanceListItemSmall"
+	        android:textColor="@color/gold"
+	        android:textSize="11.0dp" />
+	    
+	    <ImageView
+	        android:id="@+id/menu_list_item_icon"
+	      	android:contentDescription="@string/content_desc_category_icon"
+	  		android:layout_width="20dp"
+	        android:layout_height="20dp"
+	        android:src="@drawable/icon1_coffee"/>
+	    </RelativeLayout>
+	    
+	</LinearLayout>
+	
+	<RelativeLayout
+	    android:id="@+id/menu_list_item_shadow"
+	    android:layout_width="fill_parent"
+	    android:layout_height="20dp"
+	    android:scaleType="fitXY"
+	    android:background="@drawable/shadow_01" />
+	
+
+</RelativeLayout>

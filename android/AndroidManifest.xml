@@ -12,12 +12,13 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
-    <application android:label="EegeoDroid" android:theme="@android:style/Theme.NoTitleBar">
+    <application android:icon="@drawable/icon" android:label="eeGeo Example" android:theme="@android:style/Theme.NoTitleBar">
        
         <activity android:name="com.eegeo.BackgroundThreadActivity"
-                  android:label="EegeoDroid"
+                  android:label="eeGeo Example"
                   android:configChanges="orientation|keyboardHidden"
                   android:screenOrientation="landscape"
+                  android:windowSoftInputMode="adjustPan"
               	  android:launchMode="singleInstance"
               	  android:hardwareAccelerated="false">
             <intent-filter>

@@ -1,7 +1,6 @@
 // Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
-#ifndef APPLOCATIONDELEGATE_H_
-#define APPLOCATIONDELEGATE_H_
+#pragma once
 
 #import <CoreLocation/CoreLocation.h>
 #import <CoreLocation/CLLocationManagerDelegate.h>
@@ -19,8 +18,8 @@ class AppLocationDelegate : protected Eegeo::NonCopyable
     AppLocationDelegateLocationListener* m_pAppLocationDelegateLocationListener;
     
 public:
-	AppLocationDelegate(Eegeo::iOS::iOSLocationService& m_iOSLocationService);
+	AppLocationDelegate(Eegeo::iOS::iOSLocationService& iOSLocationService,
+                        UIViewController& viewController);
+    
     ~AppLocationDelegate();
 };
-
-#endif

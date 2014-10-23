@@ -1,16 +1,15 @@
 // Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
-#ifndef APPINPUTDELEGATE_H_
-#define APPINPUTDELEGATE_H_
+#pragma once
 
 #include "Types.h"
-#include "ExampleApp.h"
+#include "MobileExampleApp.h"
 #include "IAndroidInputHandler.h"
 
 class AppInputDelegate : public Eegeo::Android::Input::IAndroidInputHandler, protected Eegeo::NonCopyable
 {
 public:
-	AppInputDelegate(ExampleApp& exampleApp);
+	AppInputDelegate(ExampleApp::MobileExampleApp& exampleApp);
 	~AppInputDelegate();
 
 	void Event_TouchRotate 			(const AppInterface::RotateData& data);
@@ -43,7 +42,7 @@ public:
 	}
 
 private:
-	ExampleApp& m_exampleApp;
+	ExampleApp::MobileExampleApp& m_exampleApp;
 };
 
-#endif
+

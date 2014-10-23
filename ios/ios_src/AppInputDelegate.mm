@@ -183,6 +183,10 @@ UILongPressGestureRecognizer* gestureTouch;
     
 	positionAbs.x *= m_pixelScale;
 	positionAbs.y *= m_pixelScale;
+    position.x *= m_pixelScale;
+    position.y *= m_pixelScale;
+    velocity.x *= m_pixelScale;
+    velocity.y *= m_pixelScale;
     
 	AppInterface::PanData data;
     
@@ -271,7 +275,7 @@ UILongPressGestureRecognizer* gestureTouch;
 @end
 
 AppInputDelegate::AppInputDelegate(
-                                   ExampleApp& exampleApp,
+                                   ExampleApp::MobileExampleApp& exampleApp,
                                    ViewController& viewController,
                                    float width,
                                    float height,

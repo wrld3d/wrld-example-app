@@ -1,6 +1,7 @@
 // Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
 #include "GlDisplayService.h"
+#include "Logger.h"
 
 GlDisplayService::GlDisplayService()
 	: m_display(EGL_NO_DISPLAY)
@@ -68,16 +69,16 @@ bool DefaultEGLChooser(EGLDisplay disp, u32 requestedSurfaceType, EGLConfig& bes
 	EGLint count = 0;
 	if (!eglGetConfigs(disp, NULL, 0, &count))
 	{
-		Eegeo_TTY("defaultEGLChooser cannot query count of all configs");
+		EXAMPLE_LOG("defaultEGLChooser cannot query count of all configs");
 		return false;
 	}
 
-	Eegeo_TTY("Config count = %d", count);
+	EXAMPLE_LOG("Config count = %d", count);
 
-	EGLConfig* configs = new EGLConfig[count];
+	EGLConfig* configs = Eegeo_ARRAY_NEW(EGLConfig, count);
 	if (!eglGetConfigs(disp, configs, count, &count))
 	{
-		Eegeo_TTY("defaultEGLChooser cannot query all configs");
+		EXAMPLE_LOG("defaultEGLChooser cannot query all configs");
 		return false;
 	}
 
@@ -136,19 +137,19 @@ bool DefaultEGLChooser(EGLDisplay disp, u32 requestedSurfaceType, EGLConfig& bes
 		{
 			bestMatch = match;
 			bestIndex = i;
-			Eegeo_TTY("New best Config[%d]: R%dG%dB%dA%d D%dS%d Type=%04x Render=%04x",
+			EXAMPLE_LOG("New best Config[%d]: R%dG%dB%dA%d D%dS%d Type=%04x Render=%04x",
 			          i, redBits, greenBits, blueBits, alphaBits, depthBits, stencilBits, surfaceType, renderableFlags);
 		}
 	}
 
 	if (bestIndex < 0)
 	{
-		delete[] configs;
+		Eegeo_ARRAY_DELETE configs;
 		return false;
 	}
 
 	bestConfig = configs[bestIndex];
-	delete[] configs;
+	Eegeo_ARRAY_DELETE configs;
 
 	return true;
 }
@@ -156,7 +157,7 @@ bool DefaultEGLChooser(EGLDisplay disp, u32 requestedSurfaceType, EGLConfig& bes
 
 bool GlDisplayService::TryBindDisplay(ANativeWindow& window)
 {
-	EGLint w, h, dummy, format;
+	EGLint w, h, format;
 	EGLConfig config;
 	EGLSurface surface;
 
@@ -190,9 +191,9 @@ bool GlDisplayService::TryBindDisplay(ANativeWindow& window)
 		return false;
 	}
 
-	//Eegeo_TTY("printing extensions\n");
+	//EXAMPLE_LOG("printing extensions\n");
 	//char * extensionsString =  (char *) glGetString(GL_EXTENSIONS);
-	//Eegeo_TTY("%s\n",extensionsString);
+	//EXAMPLE_LOG("%s\n",extensionsString);
 
 	Eegeo_GL(eglQuerySurface(m_display, surface, EGL_WIDTH, &w));
 	Eegeo_GL(eglQuerySurface(m_display, surface, EGL_HEIGHT, &h));

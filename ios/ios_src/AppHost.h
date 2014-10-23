@@ -1,38 +1,35 @@
 // Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
-#ifndef APPHOST_H_
-#define APPHOST_H_
+#pragma once
 
 #include "Types.h"
 #include "Graphics.h"
-#include "iOSFileIO.h"
-#include "iOSHttpCache.h"
-#include "iOSTextureFileLoader.h"
 #include "IJpegLoader.h"
-#include "iOSWebLoadRequestFactory.h"
-#include "iOSLocationService.h"
-#include "iOSUrlEncoder.h"
 #include "GlobeCameraInterestPointProvider.h"
-#include "TerrainHeightProvider.h"
 #include "iOSInputBoxFactory.h"
 #include "iOSKeyboardInputFactory.h"
 #include "iOSAlertBoxFactory.h"
 #include "NativeUIFactories.h"
-#include "TerrainHeightRepository.h"
-#include "GlobalShadowing.h"
 #include "TouchEventWrapper.h"
 #include "Blitter.h"
 #include "AppInputDelegate.h"
 #include "AppLocationDelegate.h"
-#include "IGlTaskContextFactory.h"
+#include "Modules.h"
 #include <vector>
 
-//example app includes
-#include "ExampleApp.h"
-#include "ExampleController.h"
-#include "iOSExampleControllerView.h"
-#include "iOSRouteMatchingExampleViewFactory.h"
-#include "iOSRouteSimulationExampleViewFactory.h"
+#include "MobileExampleApp.h"
+#include "InitialExperience.h"
+#include "iOSPersistentSettingsModel.h"
+#include "ViewControllerUpdater.h"
+#include "PrimaryMenuViewIncludes.h"
+#include "SecondaryMenuViewIncludes.h"
+#include "SearchResultMenuViewModule.h"
+#include "ModalBackgroundViewIncludes.h"
+#include "FlattenButtonViewIncludes.h"
+#include "SearchResultPoiViewIncludes.h"
+#include "SearchResultOnMapViewIncludes.h"
+#include "CompassViewIncludes.h"
+#include "AboutPageViewIncludes.h"
 
 @class ViewController;
 class AppInputDelegate;
@@ -42,62 +39,56 @@ class AppHost : protected Eegeo::NonCopyable
 {
 public:
 	AppHost(
-	    const std::string& apiKey,
-        ViewController& viewController,
-	    float displayWidth,
-	    float displayHeight,
-        float deviceDpi,
-        float pixelScale
-	);
+            ViewController& viewController,
+            UIView* pView,
+            float displayWidth,
+            float displayHeight,
+            float deviceDpi,
+            float pixelScale
+            );
 	~AppHost();
-
+    
+    bool IsRunning();
+    
 	void Update(float dt);
 	void Draw(float dt);
-
+    
 	void OnPause();
 	void OnResume();
     
 	void SetViewportOffset(float x, float y);
-
+    
 private:
+    UIView* m_pView;
     ViewController& m_viewController;
-	Eegeo::Rendering::EnvironmentFlatteningService* m_pEnvironmentFlatteningService;
-	Eegeo::Web::iOSWebLoadRequestFactory* m_piOSWebLoadRequestFactory;
-	Eegeo::Web::iOSWebRequestService* m_piOSWebRequestService;
-	Eegeo::Blitter* m_pBlitter;
-	Eegeo::iOS::iOSTextureFileLoader* m_pTextureLoader;
     Eegeo::Helpers::Jpeg::IJpegLoader* m_pJpegLoader;
-	iOSHttpCache* m_pHttpCache;
-	Eegeo::iOS::iOSFileIO* m_pFileIO;
-	Eegeo::Lighting::GlobalLighting* m_pLighting;
-	Eegeo::Lighting::GlobalFogging* m_pFogging;
-	Eegeo::Lighting::GlobalShadowing* m_pShadowing;
-	Eegeo::Rendering::RenderContext* m_pRenderContext;
+    Eegeo::Rendering::ScreenProperties* m_pScreenProperties;
 	Eegeo::iOS::iOSLocationService* m_piOSLocationService;
-    Eegeo::Concurrency::Tasks::IGlTaskContextFactory* m_pGlTaskContextFactory;
-	iOSUrlEncoder* m_piOSUrlEncoder;
-	Eegeo::EegeoWorld* m_pWorld;
-	Eegeo::Camera::GlobeCamera::GlobeCameraInterestPointProvider* m_pInterestPointProvider;
 	AppInputDelegate* m_pAppInputDelegate;
     AppLocationDelegate* m_pAppLocationDelegate;
-
-	Eegeo::Resources::Terrain::Heights::TerrainHeightRepository m_terrainHeightRepository;
-	Eegeo::Resources::Terrain::Heights::TerrainHeightProvider m_terrainHeightProvider;
-
+    
 	Eegeo::UI::NativeInput::iOS::iOSInputBoxFactory m_iOSInputBoxFactory;
 	Eegeo::UI::NativeInput::iOS::iOSKeyboardInputFactory m_iOSKeyboardInputFactory;
 	Eegeo::UI::NativeAlerts::iOS::iOSAlertBoxFactory m_iOSAlertBoxFactory;
 	Eegeo::UI::NativeUIFactories m_iOSNativeUIFactories;
-
-	ExampleApp* m_pApp;
-	Examples::ExampleController* m_pExampleController;
-	Examples::iOSExampleControllerView* m_piOSExampleControllerView;
-	Examples::iOSRouteMatchingExampleViewFactory* m_piOSRouteMatchingExampleViewFactory;
-	Examples::iOSRouteSimulationExampleViewFactory* m_piOSRouteSimulationExampleViewFactory;
+    Eegeo::iOS::iOSPlatformAbstractionModule* m_piOSPlatformAbstractionModule;
     
-    void ConfigureExamples();
-	void DestroyExamples();
-	void RegisteriOSSpecificExamples();
+    ExampleApp::PrimaryMenu::IPrimaryMenuViewModule* m_pPrimaryMenuViewModule;
+    ExampleApp::SecondaryMenu::ISecondaryMenuViewModule* m_pSecondaryMenuViewModule;
+    ExampleApp::SearchResultMenu::ISearchResultMenuViewModule* m_pSearchResultMenuViewModule;
+    ExampleApp::ModalBackground::IModalBackgroundViewModule* m_pModalBackgroundViewModule;
+    ExampleApp::FlattenButton::IFlattenButtonViewModule* m_pFlattenButtonViewModule;
+    ExampleApp::SearchResultPoi::ISearchResultPoiViewModule* m_pSearchResultPoiViewModule;
+    ExampleApp::SearchResultOnMap::ISearchResultOnMapViewModule* m_pSearchResultOnMapViewModule;
+    ExampleApp::Compass::ICompassViewModule* m_pCompassViewModule;
+    ExampleApp::ViewControllerUpdater::IViewControllerUpdaterModule* m_pViewControllerUpdaterModule;
+    ExampleApp::PersistentSettings::iOSPersistentSettingsModel m_iOSPersistentSettingsModel;
+    ExampleApp::InitialExperience::IInitialExperienceModule* m_pInitialExperienceModule;
+    ExampleApp::AboutPage::IAboutPageViewModule* m_pAboutPageViewModule;
+    
+    ExampleApp::MobileExampleApp* m_pApp;
+    
+    void CreateApplicationViewModules();
+    void DestroyApplicationViewModules();
 };
 
-#endif

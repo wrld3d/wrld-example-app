@@ -1,7 +1,6 @@
 // Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
-#ifndef APPRUNNER_H_
-#define APPRUNNER_H_
+#pragma once
 
 #include "Graphics.h"
 #include "AppHost.h"
@@ -12,7 +11,6 @@ class AppRunner : Eegeo::NonCopyable
 {
 public:
 	AppRunner(
-	    const std::string& apiKey,
 	    AndroidNativeState* pNativeState
 	);
 	~AppRunner();
@@ -25,7 +23,6 @@ public:
 	void HandleTouchEvent(const Eegeo::Android::Input::TouchInputEvent& message);
 
 private:
-	const std::string& m_apiKey;
 	AndroidNativeState* m_pNativeState;
 
 	GlDisplayService m_displayService;
@@ -36,4 +33,3 @@ private:
 	void CreateAppHost();
 };
 
-#endif

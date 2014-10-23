@@ -6,15 +6,23 @@
 
 CLLocationManager* m_pLocationManager;
 Eegeo::iOS::iOSLocationService* m_piOSLocationService;
+UIViewController* m_pUIViewController;
 
 -(void)start:(Eegeo::iOS::iOSLocationService *)piOSLocationService
+            :(UIViewController*)pViewController
 {
     m_piOSLocationService = piOSLocationService;
+    m_pUIViewController = pViewController;
     
 	m_pLocationManager = [[CLLocationManager alloc] init];
 	m_pLocationManager.delegate = self;
 	m_pLocationManager.desiredAccuracy = kCLLocationAccuracyBest;
 	m_pLocationManager.headingFilter = kCLHeadingFilterNone;
+    
+    if([m_pLocationManager respondsToSelector:@selector(requestWhenInUseAuthorization)])
+    {
+        [m_pLocationManager requestWhenInUseAuthorization];
+    }
     
 	[m_pLocationManager startUpdatingLocation];
 	[m_pLocationManager startUpdatingHeading];
@@ -49,7 +57,27 @@ Eegeo::iOS::iOSLocationService* m_piOSLocationService;
 {
 	if (newHeading.headingAccuracy >= 0)
 	{
-		m_piOSLocationService->UpdateHeading(newHeading.trueHeading);
+        float heading = newHeading.trueHeading;
+        
+        if (m_pUIViewController.interfaceOrientation == UIInterfaceOrientationLandscapeLeft)
+        {
+            heading -= 90.f;
+        }
+        else if (m_pUIViewController.interfaceOrientation == UIInterfaceOrientationLandscapeRight)
+        {
+            heading += 90.f;
+        }
+        else if (m_pUIViewController.interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown)
+        {
+            heading += 180.f;
+        }
+        else
+        {
+            heading += 0.f;
+        }
+        
+        heading = fmodf((heading + 360.f), 360.f);
+		m_piOSLocationService->UpdateHeading(heading);
 	}
 	else
 	{
@@ -59,10 +87,11 @@ Eegeo::iOS::iOSLocationService* m_piOSLocationService;
 
 @end
 
-AppLocationDelegate::AppLocationDelegate(Eegeo::iOS::iOSLocationService& iOSLocationService)
+AppLocationDelegate::AppLocationDelegate(Eegeo::iOS::iOSLocationService& iOSLocationService,
+                                         UIViewController& viewController)
 {
 	m_pAppLocationDelegateLocationListener = [[AppLocationDelegateLocationListener alloc] init];
-    [m_pAppLocationDelegateLocationListener start:&iOSLocationService];
+    [m_pAppLocationDelegateLocationListener start:&iOSLocationService :&viewController];
 }
 
 AppLocationDelegate::~AppLocationDelegate()

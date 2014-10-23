@@ -1,7 +1,6 @@
 // Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
-#ifndef GLDISPLAYSERVICE_H_
-#define GLDISPLAYSERVICE_H_
+#pragma once
 
 #include "Types.h"
 #include "Graphics.h"
@@ -35,4 +34,3 @@ private:
 	bool m_displayBound;
 };
 
-#endif

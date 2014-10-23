@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/menu_list_item"
+    android:layout_width="match_parent"
+    android:layout_height="32dp"
+    android:paddingEnd="0dip"
+    android:minHeight="0dip"
+    android:background="@drawable/menu_item_selected_states"
+    android:orientation="horizontal"
+	>
+	
+    <RelativeLayout android:layout_width="match_parent"
+        			android:layout_height="match_parent">
+    
+    <TextView
+        android:id="@+id/menu_list_item_name"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginLeft="42dp"
+        android:gravity="left|center_vertical"
+        android:padding="2.5dp"
+        android:textAppearance="?android:attr/textAppearanceListItemSmall"
+        android:textColor="@color/gold"
+        android:textSize="16dp"/>
+    
+    <ImageView
+        android:id="@+id/menu_list_item_icon"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/icon1_coffee"/>
+    
+    <RelativeLayout 
+        android:id="@+id/menu_list_openable_shape"
+        android:layout_height="16dp"
+    	android:layout_width="16dp"
+        android:layout_centerVertical="true"
+        android:layout_margin="8dp"
+    	android:background="@drawable/arrow2" >
+    </RelativeLayout>
+    
+    </RelativeLayout>
+</LinearLayout>

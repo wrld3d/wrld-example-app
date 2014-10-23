@@ -3,24 +3,44 @@
 #include "ViewController.h"
 #include "AppLocationDelegate.h"
 
-const std::string ApiKey = "OBTAIN API_KEY FROM https://appstore.eegeo.com AND INSERT IT HERE";
-
 using namespace Eegeo::iOS;
 
 @implementation ViewController
 
 - (void)viewDidLoad
 {
-	[super viewDidLoad];
+    [super viewDidLoad];
     
-	m_previousTimestamp = CFAbsoluteTimeGetCurrent();
-	self.preferredFramesPerSecond = 60.0f;
+    if([self respondsToSelector:@selector(setNeedsStatusBarAppearanceUpdate)])
+    {
+        [self setNeedsStatusBarAppearanceUpdate];
+    }
     
-    m_pAppRunner = new AppRunner(ApiKey, *self);
+    m_previousTimestamp = CFAbsoluteTimeGetCurrent();
+    self.preferredFramesPerSecond = 30.0f;
+    m_pAppRunner = NULL;
+}
+
+-(UIStatusBarStyle)preferredStatusBarStyle
+{
+    return UIStatusBarStyleLightContent;
+}
+
+- (void)viewWillLayoutSubviews
+{
+    if(m_pAppRunner == NULL)
+    {
+        m_pAppRunner = new AppRunner(*self, [self view]);
+    }
 }
 
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect
 {
+    if(m_pAppRunner == NULL)
+    {
+        return;
+    }
+    
 	CFTimeInterval timeNow = CFAbsoluteTimeGetCurrent();
 	CFTimeInterval frameDuration = timeNow - m_previousTimestamp;
     m_pAppRunner->Update(frameDuration);
@@ -29,6 +49,23 @@ using namespace Eegeo::iOS;
 	Eegeo_GL(glDiscardFramebufferEXT(GL_READ_FRAMEBUFFER_APPLE, 2, discards));
     
     m_previousTimestamp = timeNow;
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
+       shouldReceiveTouch:(UITouch *)touch
+{
+    for (UIView *subview in [self view].subviews)
+    {
+        if ([subview respondsToSelector: @selector(consumesTouch:)])
+        {
+            if([subview consumesTouch: touch])
+            {
+                return NO;
+            }
+        }
+        
+    }
+    return YES;
 }
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
@@ -41,9 +78,17 @@ using namespace Eegeo::iOS;
 	return YES;
 }
 
+-(void)willRotateToInterfaceOrientation: (UIInterfaceOrientation)orientation duration:(NSTimeInterval)duration
+{
+    
+}
+
+
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    return m_pAppRunner->ShouldAutoRotateToInterfaceOrientation(interfaceOrientation);
+    return (m_pAppRunner == NULL)
+    ? true
+    : m_pAppRunner->ShouldAutoRotateToInterfaceOrientation(interfaceOrientation);
 }
 
 @end

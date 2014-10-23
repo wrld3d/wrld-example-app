@@ -1,0 +1,165 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:id="@+id/about_page_view">
+
+    <RelativeLayout
+        android:layout_width="450dp"
+        android:layout_height="300dp"
+        android:layout_alignLeft="@+id/about_page_view_container"
+        android:layout_alignTop="@+id/about_page_view_container"
+        android:layout_centerInParent="false"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/black"
+        android:alpha="0.1" />
+    
+    <RelativeLayout
+        android:layout_width="450dp"
+        android:layout_height="300dp"
+        android:layout_centerInParent="true"
+        android:background="@color/gold"/>
+    
+    <LinearLayout
+    	android:id="@+id/about_page_view_container"
+	    android:layout_width="450dp"
+	    android:layout_height="300dp"
+	    android:layout_centerInParent="true"
+	    android:orientation="vertical"
+	    android:paddingTop="10dp">
+		    
+        <!-- Title bar -->
+        <RelativeLayout 
+            android:layout_width="fill_parent"
+            android:layout_height="40dp"
+            android:background="@color/white">
+            
+            <TextView
+                android:id="@+id/about_page_view_title"
+                android:layout_width="fill_parent"
+                android:layout_height="40dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center_vertical"
+                android:text="@string/about_page_title"
+                android:textColor="@color/gold"
+                android:textSize="18dp" />
+            
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="195dp"
+            android:background="@color/white">
+            
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="10dp"
+                android:scaleType="fitXY"
+                android:background="@drawable/shadow_03" />
+            
+            <!--  Scrolling icontent -->
+            
+            <ScrollView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+            
+            <LinearLayout 
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:orientation="vertical">
+                
+                <!--  About text  -->
+                
+                <TextView
+                    android:id="@+id/about_page_view_developed_by_text"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:textColor="@color/darkgrey"
+                    android:textSize="12dp"
+                    android:paddingLeft="3dp"
+                    android:text="Developed by eeGeo"
+                    android:gravity="center"
+                    android:layout_marginBottom="5dp"/>
+
+                <ImageView
+                    android:id="@+id/about_page_eegeo_logo"
+                    android:layout_width="311dp"
+                    android:layout_height="52dp"
+                    android:contentDescription="Eegeo Logo"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:src="@drawable/eegeo_logo" />
+                
+                <TextView
+                    android:id="@+id/about_page_view_about_text"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:textColor="@color/darkgrey"
+                    android:textSize="12dp"
+                    android:paddingLeft="3dp"
+                    android:gravity="center"
+                    android:layout_marginBottom="5dp"/>
+                
+                 <!--  Platform version  -->
+                
+                <TextView
+                    android:id="@+id/about_page_view_platform_version"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:textColor="@color/darkgrey"
+                    android:textSize="12dp"
+                    android:paddingLeft="3dp"
+                    android:gravity="center"
+                    android:layout_marginBottom="5dp"/>
+                
+                 <!--  Platform hash  -->
+                
+                <TextView
+                    android:id="@+id/about_page_view_platform_hash"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:linksClickable="true"
+                    android:padding="5dp"
+                    android:paddingLeft="3dp"
+                    android:textColor="@color/darkgrey"
+                    android:gravity="center"
+                    android:textSize="12dp" />
+                
+            </LinearLayout>
+            </ScrollView>
+            
+        </RelativeLayout>
+        
+        <!--  Bottom bar with close button -->
+        <RelativeLayout
+           android:layout_width="fill_parent"
+           android:layout_height="55dp">
+ 
+         <Button
+             android:id="@+id/about_page_view_close_button"
+             android:layout_width="55dp"
+             android:layout_height="55dp"
+             android:layout_alignParentBottom="true"
+             android:layout_alignParentRight="true"
+             android:background="@drawable/button_close_states" />
+         
+         <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="10dp"
+                android:scaleType="fitXY"
+                android:background="@drawable/shadow_03" />
+         
+         </RelativeLayout>
+	        
+	</LinearLayout>
+	
+    
+	
+</RelativeLayout>

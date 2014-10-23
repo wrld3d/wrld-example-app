@@ -2,7 +2,7 @@
 
 #include "AppInputDelegate.h"
 
-AppInputDelegate::AppInputDelegate(ExampleApp& exampleApp)
+AppInputDelegate::AppInputDelegate(ExampleApp::MobileExampleApp& exampleApp)
 	:m_exampleApp(exampleApp)
 {
 

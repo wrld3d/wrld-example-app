@@ -1,18 +1,17 @@
 // Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
 #include <jni.h>
-#include "AppRunner.h"
-#include "main.h"
 #include <android/native_window.h>
 #include <android/native_window_jni.h>
 #include <android/asset_manager.h>
 #include <android/asset_manager_jni.h>
 #include <pthread.h>
+#include "AppRunner.h"
+#include "main.h"
+#include "Logger.h"
 
 using namespace Eegeo::Android;
 using namespace Eegeo::Android::Input;
-
-const std::string ApiKey = "OBTAIN API_KEY FROM https://appstore.eegeo.com AND INSERT IT HERE";
 
 AndroidNativeState g_nativeState;
 AppRunner* g_pAppRunner;
@@ -40,7 +39,7 @@ JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM* vm, void* pvt)
 //lifecycle
 JNIEXPORT long JNICALL Java_com_eegeo_NativeJniCalls_createNativeCode(JNIEnv* jenv, jobject obj, jobject activity, jobject assetManager, jfloat dpi)
 {
-	Eegeo_TTY("startNativeCode\n");
+	EXAMPLE_LOG("startNativeCode\n");
 
 	g_nativeState.javaMainThread = pthread_self();
 	g_nativeState.mainThreadEnv = jenv;
@@ -68,16 +67,16 @@ JNIEXPORT long JNICALL Java_com_eegeo_NativeJniCalls_createNativeCode(JNIEnv* je
 	g_nativeState.assetManagerGlobalRef = jenv->NewGlobalRef(assetManager);
 	g_nativeState.assetManager = AAssetManager_fromJava(jenv, g_nativeState.assetManagerGlobalRef);
 
-	g_pAppRunner = Eegeo_NEW(AppRunner)(ApiKey, &g_nativeState);
+	g_pAppRunner = Eegeo_NEW(AppRunner)(&g_nativeState);
 
 	return ((long)g_pAppRunner);
 }
 
 JNIEXPORT void JNICALL Java_com_eegeo_NativeJniCalls_destroyNativeCode(JNIEnv* jenv, jobject obj)
 {
-	Eegeo_TTY("stopNativeCode()\n");
+	EXAMPLE_LOG("stopNativeCode()\n");
 
-	delete g_pAppRunner;
+	Eegeo_DELETE g_pAppRunner;
 	g_pAppRunner = NULL;
 
 	jenv->DeleteGlobalRef(g_nativeState.assetManagerGlobalRef);
@@ -113,7 +112,11 @@ JNIEXPORT void JNICALL Java_com_eegeo_NativeJniCalls_setNativeSurface(JNIEnv* je
 	if (surface != NULL)
 	{
 		g_nativeState.window = ANativeWindow_fromSurface(jenv, surface);
-		g_pAppRunner->ActivateSurface();
+
+		if (g_nativeState.window != NULL)
+		{
+			g_pAppRunner->ActivateSurface();
+		}
 	}
 }
 

@@ -6,12 +6,12 @@
 
 AppRunner::AppRunner
 (
- const std::string& apiKey,
- ViewController& viewController
-)
-	: m_viewController(viewController)
-    , m_apiKey(apiKey)
-	, m_pAppHost(NULL)
+ ViewController& viewController,
+ UIView* pView
+ )
+: m_viewController(viewController)
+, m_pView(pView)
+, m_pAppHost(NULL)
 {
 	ReleaseDisplay();
 	bool displayBound = TryBindDisplay();
@@ -22,7 +22,7 @@ AppRunner::AppRunner
 AppRunner::~AppRunner()
 {
 	m_displayService.ReleaseDisplay();
-
+    
 	if(m_pAppHost != NULL)
 	{
 		Eegeo_DELETE(m_pAppHost);
@@ -35,13 +35,13 @@ void AppRunner::CreateAppHost()
 	{
 		m_pAppHost = Eegeo_NEW(AppHost)
         (
-         m_apiKey,
          m_viewController,
+         m_pView,
          m_displayService.GetDisplayWidth(),
          m_displayService.GetDisplayHeight(),
          m_displayService.GetDisplayDpi(),
          m_displayService.GetPixelScale()
-        );
+         );
 	}
 }
 
@@ -51,7 +51,7 @@ void AppRunner::Pause()
 	{
 		m_pAppHost->OnPause();
 	}
-
+    
 	ReleaseDisplay();
 }
 
@@ -79,10 +79,10 @@ bool AppRunner::TryBindDisplay()
 		{
 			m_pAppHost->SetViewportOffset(0, 0);
 		}
-
+        
 		return true;
 	}
-
+    
 	return false;
 }
 
@@ -91,16 +91,26 @@ void AppRunner::Update(float deltaSeconds)
 	if(m_pAppHost != NULL && m_displayService.IsDisplayAvailable())
 	{
 		m_pAppHost->Update(deltaSeconds);
-
+        
 		Eegeo_GL(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT));
-
+        
 		m_pAppHost->Draw(deltaSeconds);
 	}
 }
 
+bool AppRunner::IsRunning()
+{
+	if(m_pAppHost == NULL)
+    {
+        return false;
+    }
+    
+    return m_pAppHost->IsRunning();
+}
+
 bool AppRunner::ShouldAutoRotateToInterfaceOrientation(UIInterfaceOrientation interfaceOrientation)
 {
-    if(App::IsDeviceSmall())
+    if (m_displayService.IsPortraitAspect())
     {
         return (interfaceOrientation == UIInterfaceOrientationPortrait);
     }

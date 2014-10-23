@@ -1,10 +1,9 @@
 // Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
-#ifndef APPINPUTDELEGATE_H_
-#define APPINPUTDELEGATE_H_
+#pragma once
 
 #include "Types.h"
-#include "ExampleApp.h"
+#include "MobileExampleApp.h"
 #import <UIKit/UIKit.h>
 
 @class ViewController;
@@ -21,7 +20,7 @@ class AppInputDelegate : protected Eegeo::NonCopyable
 {
 public:
 	AppInputDelegate(
-                     ExampleApp& exampleApp,
+                     ExampleApp::MobileExampleApp& exampleApp,
                      ViewController& viewController,
                      float width,
                      float height,
@@ -47,10 +46,9 @@ public:
 	void Event_TouchDown 			(const AppInterface::TouchData& data);
 	void Event_TouchMove 			(const AppInterface::TouchData& data);
 	void Event_TouchUp 				(const AppInterface::TouchData& data);
-
+    
 private:
-	ExampleApp& m_exampleApp;
+    ExampleApp::MobileExampleApp& m_exampleApp;
     AppInputDelegateGestureListener* m_pAppInputDelegateGestureListener;
 };
 
-#endif

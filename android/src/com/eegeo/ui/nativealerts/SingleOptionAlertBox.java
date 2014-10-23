@@ -33,6 +33,7 @@ public class SingleOptionAlertBox
 			AlertDialog.Builder builder = new AlertDialog.Builder(a);
 			builder.setTitle(title);
 			builder.setMessage(message);
+                        builder.setCancelable(false);
 
 			// Set up the buttons
 			builder.setPositiveButton("OK", new DialogInterface.OnClickListener()

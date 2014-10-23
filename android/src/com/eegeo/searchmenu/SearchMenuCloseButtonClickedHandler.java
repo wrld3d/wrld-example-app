@@ -1,0 +1,29 @@
+package com.eegeo.searchmenu;
+
+import com.eegeo.MainActivity;
+
+import android.view.View;
+
+public class SearchMenuCloseButtonClickedHandler implements View.OnClickListener
+{
+	private MainActivity m_activity;
+	private long m_nativeCallerPointer;
+	
+	SearchMenuCloseButtonClickedHandler(MainActivity activity, long nativeCallerPointer)
+	{
+		m_activity = activity;
+		m_nativeCallerPointer = nativeCallerPointer;
+	}
+	
+	@Override
+	public void onClick(View view) 
+	{
+		m_activity.runOnNativeThread(new Runnable()
+		{
+			public void run()
+			{
+				SearchMenuViewJniMethods.HandleClosed(m_nativeCallerPointer);
+			}
+		});
+	}
+}

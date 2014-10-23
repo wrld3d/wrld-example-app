@@ -2,7 +2,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity" >
+    tools:context=".MainActivity" 
+    android:clipChildren="false"
+    android:clipToPadding="false">
 
     <com.eegeo.EegeoSurfaceView
         android:id="@+id/surface"
@@ -13,6 +15,8 @@
     <RelativeLayout 
         android:id="@+id/ui_container"
     	android:layout_width="fill_parent" 
-    	android:layout_height="fill_parent"/>
+    	android:layout_height="fill_parent"
+    	android:clipChildren="false"
+   		android:clipToPadding="false"/>
 
 </RelativeLayout>

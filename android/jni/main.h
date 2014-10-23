@@ -1,7 +1,6 @@
 // Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
-#ifndef MAIN_H_
-#define MAIN_H_
+#pragma once
 
 #include <jni.h>
 
@@ -45,4 +44,3 @@ extern "C"
 	        jintArray pointerIndex);
 };
 
-#endif /* MAIN_H_ */

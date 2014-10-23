@@ -1,7 +1,6 @@
 // Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
-#ifndef APPHOST_H_
-#define APPHOST_H_
+#pragma once
 
 #include "Types.h"
 #include "Graphics.h"
@@ -28,23 +27,23 @@
 #include "Blitter.h"
 #include "AndroidNativeState.h"
 #include "AppInputDelegate.h"
+#include "Modules.h"
 #include <vector>
+#include "InitialExperience.h"
+#include "AndroidPersistentSettingsModel.h"
+#include "ViewControllerUpdater.h"
+#include "MenuViewIncludes.h"
+#include "ModalBackgroundViewIncludes.h"
+#include "FlattenButtonViewIncludes.h"
+#include "SearchResultPoiViewIncludes.h"
+#include "SearchResultOnMapViewIncludes.h"
+#include "CompassViewIncludes.h"
+#include "AboutPageViewIncludes.h"
 
-//example app includes
-#include "ExampleApp.h"
-#include "ExampleController.h"
-#include "AndroidExampleControllerView.h"
-#include "AndroidExampleControllerProxy.h"
-#include "AndroidSharedGlContext.h"
-#include "AndroidRouteMatchingExampleViewFactory.h"
-#include "AndroidRouteSimulationExampleViewFactory.h"
-#include "ExampleCameraJumpController.h"
-
-class AppHost : public Eegeo::Concurrency::Tasks::IGlTaskContextFactory, protected Eegeo::NonCopyable
+class AppHost : protected Eegeo::NonCopyable
 {
 public:
 	AppHost(
-	    const std::string& apiKey,
 	    AndroidNativeState& nativeState,
 	    float displayWidth,
 	    float displayHeight,
@@ -69,31 +68,13 @@ public:
 	void SetSharedSurface(EGLSurface sharedSurface);
 	void SetViewportOffset(float x, float y);
 
-	Eegeo::Concurrency::Tasks::IGlTaskContext* Build();
-
 private:
-	Eegeo::Rendering::EnvironmentFlatteningService* m_pEnvironmentFlatteningService;
-	Eegeo::Android::AndroidWebLoadRequestFactory* m_pAndroidWebLoadRequestFactory;
-	Eegeo::Android::AndroidWebRequestService* m_pAndroidWebRequestService;
-	Eegeo::Blitter* m_pBlitter;
-	Eegeo::Android::AndroidTextureFileLoader* m_pTextureLoader;
+	bool m_isPaused;
     Eegeo::Helpers::Jpeg::IJpegLoader* m_pJpegLoader;
-	Eegeo::Android::Cache::AndroidHttpCache* m_pHttpCache;
-	Eegeo::Android::AndroidFileIO* m_pFileIO;
-	Eegeo::Android::AndroidCacheFileIO* m_pCacheFileIO;
-	Eegeo::Lighting::GlobalLighting* m_pLighting;
-	Eegeo::Lighting::GlobalFogging* m_pFogging;
-	Eegeo::Lighting::GlobalShadowing* m_pShadowing;
-	Eegeo::Rendering::RenderContext* m_pRenderContext;
+	Eegeo::Rendering::ScreenProperties* m_pScreenProperties;
 	Eegeo::Android::AndroidLocationService* m_pAndroidLocationService;
-	Eegeo::Android::AndroidUrlEncoder* m_pAndroidUrlEncoder;
-	Eegeo::EegeoWorld* m_pWorld;
 	AndroidNativeState& m_nativeState;
-	Eegeo::Camera::GlobeCamera::GlobeCameraInterestPointProvider* m_pInterestPointProvider;
 	AppInputDelegate* m_pAppInputDelegate;
-
-	Eegeo::Resources::Terrain::Heights::TerrainHeightRepository m_terrainHeightRepository;
-	Eegeo::Resources::Terrain::Heights::TerrainHeightProvider m_terrainHeightProvider;
 
 	Eegeo::Android::Input::AndroidInputHandler m_inputHandler;
 	Eegeo::UI::NativeInput::Android::AndroidInputBoxFactory m_androidInputBoxFactory;
@@ -101,20 +82,26 @@ private:
 	Eegeo::UI::NativeAlerts::Android::AndroidAlertBoxFactory m_androidAlertBoxFactory;
 	Eegeo::UI::NativeUIFactories m_androidNativeUIFactories;
 
-	ExampleApp* m_pApp;
-	Examples::ExampleController* m_pExampleController;
-	Examples::AndroidExampleControllerView* m_pAndroidExampleControllerView;
-	Examples::AndroidRouteMatchingExampleViewFactory* m_pAndroidRouteMatchingExampleViewFactory;
-	Examples::AndroidRouteSimulationExampleViewFactory* m_pAndroidRouteSimulationExampleViewFactory;
-	ExampleCameraJumpController* m_pExampleCameraJumpController;
-
 	Eegeo::Android::Input::AndroidInputProcessor* m_pInputProcessor;
 
-	Eegeo::Android::AndroidSharedGlContext* m_pSharedGlContext;
+	Eegeo::Android::AndroidPlatformAbstractionModule* m_pAndroidPlatformAbstractionModule;
+	ExampleApp::ViewControllerUpdater::IViewControllerUpdaterModule* m_pViewControllerUpdaterModule;
+    ExampleApp::Menu::IMenuViewModule* m_pPrimaryMenuViewModule;
+    ExampleApp::Menu::IMenuViewModule* m_pSecondaryMenuViewModule;
+    ExampleApp::Menu::IMenuViewModule* m_pSearchResultMenuViewModule;
+    ExampleApp::ModalBackground::IModalBackgroundViewModule* m_pModalBackgroundViewModule;
+    ExampleApp::FlattenButton::IFlattenButtonViewModule* m_pFlattenButtonViewModule;
+    ExampleApp::SearchResultPoi::ISearchResultPoiViewModule* m_pSearchResultPoiViewModule;
+    ExampleApp::SearchResultOnMap::ISearchResultOnMapViewModule* m_pSearchResultOnMapViewModule;
+    ExampleApp::AboutPage::IAboutPageViewModule* m_pAboutPageViewModule;
+    ExampleApp::Compass::ICompassViewModule* m_pCompassViewModule;
 
-	void ConfigureExamples();
-	void DestroyExamples();
-	void RegisterAndroidSpecificExamples();
+    ExampleApp::MobileExampleApp* m_pApp;
+
+    ExampleApp::PersistentSettings::AndroidPersistentSettingsModel m_androidPersistentSettingsModel;
+    ExampleApp::InitialExperience::IInitialExperienceModule* m_pInitialExperienceModule;
+
+    void CreateApplicationViewModules();
+    void DestroyApplicationViewModules();
 };
 
-#endif

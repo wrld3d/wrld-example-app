@@ -25,19 +25,48 @@
 #include "AndroidLocationService.h"
 #include "EegeoWorld.h"
 #include "EnvironmentFlatteningService.h"
-#include "RouteMatchingExampleFactory.h"
-#include "RouteSimulationExampleFactory.h"
-#include "JavaHudCrossThreadCommunicationExampleFactory.h"
-#include "PinsWithAttachedJavaUIExampleFactory.h"
-#include "PositionJavaPinButtonExampleFactory.h"
-#include "ExampleCameraJumpController.h"
-#include "ShowJavaPlaceJumpUIExampleFactory.h"
+#include "TtyHandler.h"
+
+#include "MenuViewModule.h"
+#include "PrimaryMenuModule.h"
+#include "SecondaryMenuModule.h"
+#include "ModalityModule.h"
+#include "ModalBackgroundViewModule.h"
+#include "MenuModel.h"
+#include "MenuViewModel.h"
+#include "SearchResultMenuModule.h"
+#include "MenuOptionsModel.h"
+#include "SearchModule.h"
+#include "SearchResultOnMapModule.h"
+#include "WorldPinsModule.h"
+#include "RegularTexturePageLayout.h"
+#include "PinsModule.h"
+#include "SearchResultRepository.h"
+#include "LatLongAltitude.h"
+#include "SearchResultPoiModule.h"
+#include "AndroidPlatformAbstractionModule.h"
+#include "FlattenButtonModule.h"
+#include "FlattenButtonViewModule.h"
+#include "SearchResultPoiViewModule.h"
+#include "SearchResultOnMapViewModule.h"
+#include "PlaceJumpsModule.h"
+#include "IPlaceJumpController.h"
+#include "SecondaryMenuViewModule.h"
+#include "SearchMenuViewModule.h"
+#include "CompassViewModule.h"
+#include "CompassModule.h"
+#include "AboutPageViewModule.h"
+#include "AndroidInitialExperienceModule.h"
+#include "ViewControllerUpdaterModule.h"
+#include "ViewControllerUpdaterModel.h"
+#include "IMenuViewController.h"
+#include "CategorySearchModule.h"
+#include "ScreenProperties.h"
 
 using namespace Eegeo::Android;
 using namespace Eegeo::Android::Input;
 
 AppHost::AppHost(
-    const std::string& apiKey,
     AndroidNativeState& nativeState,
     float displayWidth,
     float displayHeight,
@@ -45,205 +74,127 @@ AppHost::AppHost(
     EGLSurface shareSurface,
     EGLContext resourceBuildShareContext
 )
-	:m_pEnvironmentFlatteningService(NULL)
-	,m_pAndroidWebLoadRequestFactory(NULL)
-	,m_pAndroidWebRequestService(NULL)
-	,m_pBlitter(NULL)
-	,m_pTextureLoader(NULL)
+	:m_isPaused(false)
     ,m_pJpegLoader(NULL)
-	,m_pHttpCache(NULL)
-	,m_pFileIO(NULL)
-	,m_pCacheFileIO(NULL)
-	,m_pLighting(NULL)
-	,m_pFogging(NULL)
-	,m_pShadowing(NULL)
-	,m_pRenderContext(NULL)
+	,m_pScreenProperties(NULL)
 	,m_pAndroidLocationService(NULL)
-	,m_pAndroidUrlEncoder(NULL)
-	,m_pWorld(NULL)
-	,m_pInterestPointProvider(NULL)
+	,m_nativeState(nativeState)
 	,m_androidInputBoxFactory(&nativeState)
 	,m_androidKeyboardInputFactory(&nativeState, m_inputHandler)
 	,m_androidAlertBoxFactory(&nativeState)
 	,m_androidNativeUIFactories(m_androidAlertBoxFactory, m_androidInputBoxFactory, m_androidKeyboardInputFactory)
-	,m_terrainHeightRepository()
-	,m_terrainHeightProvider(&m_terrainHeightRepository)
-	,m_pApp(NULL)
-	,m_pExampleController(NULL)
 	,m_pInputProcessor(NULL)
-	,m_nativeState(nativeState)
+	,m_pAndroidPlatformAbstractionModule(NULL)
+	,m_pViewControllerUpdaterModule(NULL)
+	,m_pPrimaryMenuViewModule(NULL)
+	,m_pSecondaryMenuViewModule(NULL)
+	,m_pSearchResultMenuViewModule(NULL)
+	,m_pModalBackgroundViewModule(NULL)
+	,m_pFlattenButtonViewModule(NULL)
+	,m_pSearchResultPoiViewModule(NULL)
+	,m_pSearchResultOnMapViewModule(NULL)
+	,m_pCompassViewModule(NULL)
+	,m_pApp(NULL)
+	,m_androidPersistentSettingsModel(nativeState)
 {
 	Eegeo_ASSERT(resourceBuildShareContext != EGL_NO_CONTEXT);
 
-	m_pSharedGlContext = new Eegeo::Android::AndroidSharedGlContext(display, resourceBuildShareContext, shareSurface);
+	Eegeo::TtyHandler::TtyEnabled = true;
+	Eegeo::AssertHandler::BreakOnAssert = true;
 
-	m_pAndroidUrlEncoder = new AndroidUrlEncoder(&nativeState);
-	m_pAndroidLocationService = new AndroidLocationService(&nativeState);
+	m_pAndroidLocationService = Eegeo_NEW(AndroidLocationService)(&nativeState);
 
-	m_pRenderContext = new Eegeo::Rendering::RenderContext();
-	m_pRenderContext->SetScreenDimensions(displayWidth, displayHeight, 1.0f, nativeState.deviceDpi);
+	m_pScreenProperties = Eegeo_NEW(Eegeo::Rendering::ScreenProperties)(displayWidth, displayHeight, 1.0f, nativeState.deviceDpi);
 
-	m_pLighting = new Eegeo::Lighting::GlobalLighting();
-	m_pFogging = new Eegeo::Lighting::GlobalFogging();
-	m_pShadowing = new Eegeo::Lighting::GlobalShadowing();
-	m_pEnvironmentFlatteningService = new Eegeo::Rendering::EnvironmentFlatteningService();
+	m_pJpegLoader = Eegeo_NEW(Eegeo::Helpers::Jpeg::JpegLoader)();
 
 	std::set<std::string> customApplicationAssetDirectories;
-	customApplicationAssetDirectories.insert("load_model_example");
-	customApplicationAssetDirectories.insert("pin_over_model_example");
-	customApplicationAssetDirectories.insert("pins_example");
-	customApplicationAssetDirectories.insert("pins_with_attached_java_ui_example");
-	customApplicationAssetDirectories.insert("pod_animation_example");
-	customApplicationAssetDirectories.insert("route_simulation_example");
-	customApplicationAssetDirectories.insert("route_simulation_animation_example");
-	m_pFileIO = new AndroidFileIO(&nativeState, customApplicationAssetDirectories);
-	m_pCacheFileIO = new AndroidCacheFileIO(&nativeState);
+	customApplicationAssetDirectories.insert("SearchResultOnMap");
 
-	m_pHttpCache = new Cache::AndroidHttpCache(*m_pCacheFileIO);
-	m_pJpegLoader = new Eegeo::Helpers::Jpeg::JpegLoader();
-	m_pTextureLoader = new AndroidTextureFileLoader(m_pFileIO, m_pRenderContext->GetGLState(), *m_pJpegLoader);
+	m_pAndroidPlatformAbstractionModule = Eegeo_NEW(Eegeo::Android::AndroidPlatformAbstractionModule)(
+		nativeState,
+		*m_pJpegLoader,
+		display,
+		resourceBuildShareContext,
+		shareSurface,
+		customApplicationAssetDirectories);
 
 	Eegeo::EffectHandler::Initialise();
-	m_pBlitter = new Eegeo::Blitter(1024 * 128, 1024 * 64, 1024 * 32, *m_pRenderContext);
-	m_pBlitter->Initialise();
-
-	const int webLoadPoolSize = 10;
-	const int cacheLoadPoolSize = 40;
-	const int cacheStorePoolSize = 20;
-	m_pAndroidWebRequestService = new AndroidWebRequestService(*m_pCacheFileIO, m_pHttpCache, webLoadPoolSize, cacheLoadPoolSize, cacheStorePoolSize);
-
-	m_pAndroidWebLoadRequestFactory = new AndroidWebLoadRequestFactory(m_pAndroidWebRequestService, m_pHttpCache);
-
-	m_pInterestPointProvider = new Eegeo::Camera::GlobeCamera::GlobeCameraInterestPointProvider();
 
 	const Eegeo::EnvironmentCharacterSet::Type environmentCharacterSet = Eegeo::EnvironmentCharacterSet::Latin;
 	std::string deviceModel = std::string(nativeState.deviceModel, strlen(nativeState.deviceModel));
-	Eegeo::Config::PlatformConfig config = Eegeo::Android::AndroidPlatformConfigBuilder(deviceModel).Build();
+	Eegeo::Config::PlatformConfig platformConfig = Eegeo::Android::AndroidPlatformConfigBuilder(deviceModel).Build();
 
-	m_pWorld = new Eegeo::EegeoWorld(
-	    apiKey,
-	    *m_pHttpCache,
-	    *m_pFileIO,
-	    *m_pTextureLoader,
-	    *m_pJpegLoader,
-	    *m_pAndroidWebLoadRequestFactory,
-	    *this,
-	    *m_pRenderContext,
-	    *m_pLighting,
-	    *m_pFogging,
-	    *m_pShadowing,
-	    *m_pAndroidLocationService,
-	    *m_pBlitter,
-	    *m_pAndroidUrlEncoder,
-	    *m_pInterestPointProvider,
-	    m_androidNativeUIFactories,
-	    m_terrainHeightRepository,
-	    m_terrainHeightProvider,
-	    *m_pEnvironmentFlatteningService,
-	    environmentCharacterSet,
-	    config,
-	    NULL,
-	    "",
-	    "Default-Landscape@2x~ipad.png"
-	);
 
-	m_pAndroidWebRequestService->SetWorkPool(m_pWorld->GetWorkPool());
-	m_pInputProcessor = new Eegeo::Android::Input::AndroidInputProcessor(&m_inputHandler, m_pRenderContext->GetScreenWidth(), m_pRenderContext->GetScreenHeight());
 
-	ConfigureExamples();
+	m_pInputProcessor = Eegeo_NEW(Eegeo::Android::Input::AndroidInputProcessor)(&m_inputHandler, m_pScreenProperties->GetScreenWidth(), m_pScreenProperties->GetScreenHeight());
 
-	m_pAppInputDelegate = new AppInputDelegate(*m_pApp);
+    m_pInitialExperienceModule = Eegeo_NEW(ExampleApp::InitialExperience::AndroidInitialExperienceModule)(
+    	m_nativeState,
+    	m_androidPersistentSettingsModel
+    );
+
+    m_pApp = Eegeo_NEW(ExampleApp::MobileExampleApp)(*m_pAndroidPlatformAbstractionModule,
+                                                     *m_pScreenProperties,
+                                                     *m_pAndroidLocationService,
+                                                     m_androidNativeUIFactories,
+                                                     platformConfig,
+                                                     *m_pJpegLoader,
+                                                     *m_pInitialExperienceModule);
+
+	m_pAndroidPlatformAbstractionModule->SetWebRequestServiceWorkPool(m_pApp->World().GetWorkPool());
+
+	CreateApplicationViewModules();
+
+	m_pAppInputDelegate = Eegeo_NEW(AppInputDelegate)(*m_pApp);
 	m_inputHandler.AddDelegateInputHandler(m_pAppInputDelegate);
 }
+
 
 AppHost::~AppHost()
 {
 	m_inputHandler.RemoveDelegateInputHandler(m_pAppInputDelegate);
 
-	delete m_pAppInputDelegate;
+	Eegeo_DELETE m_pAppInputDelegate;
 	m_pAppInputDelegate = NULL;
 
-	DestroyExamples();
+	DestroyApplicationViewModules();
 
-	delete m_pApp;
+	Eegeo_DELETE m_pApp;
 	m_pApp = NULL;
-
-	m_pHttpCache->FlushInMemoryCacheRepresentation();
-
-	delete m_pInterestPointProvider;
-	m_pInterestPointProvider = NULL;
-
-	delete m_pWorld;
-	m_pWorld = NULL;
-
-	delete m_pAndroidUrlEncoder;
-	m_pAndroidUrlEncoder = NULL;
-
-	delete m_pAndroidLocationService;
-	m_pAndroidLocationService = NULL;
-
-	delete m_pRenderContext;
-	m_pRenderContext = NULL;
-
-	delete m_pShadowing;
-	m_pShadowing = NULL;
-
-	delete m_pFogging;
-	m_pFogging = NULL;
-
-	delete m_pLighting;
-	m_pLighting = NULL;
-
-	delete m_pFileIO;
-	m_pFileIO = NULL;
-
-	delete m_pCacheFileIO;
-	m_pCacheFileIO = NULL;
-
-	delete m_pHttpCache;
-	m_pHttpCache = NULL;
-
-	delete m_pTextureLoader;
-	m_pTextureLoader = NULL;
-
-	delete m_pJpegLoader;
-	m_pJpegLoader = NULL;
 
 	Eegeo::EffectHandler::Reset();
 	Eegeo::EffectHandler::Shutdown();
-	m_pBlitter->Shutdown();
-	delete m_pBlitter;
-	m_pBlitter = NULL;
 
-	delete m_pAndroidWebRequestService;
-	m_pAndroidWebRequestService = NULL;
+	Eegeo_DELETE m_pAndroidPlatformAbstractionModule;
+	m_pAndroidPlatformAbstractionModule = NULL;
 
-	delete m_pAndroidWebLoadRequestFactory;
-	m_pAndroidWebLoadRequestFactory = NULL;
+	Eegeo_DELETE m_pJpegLoader;
+	m_pJpegLoader = NULL;
 
-	delete m_pEnvironmentFlatteningService;
-	m_pEnvironmentFlatteningService = NULL;
+	Eegeo_DELETE m_pScreenProperties;
+	m_pScreenProperties = NULL;
 
-	delete m_pSharedGlContext;
-	m_pSharedGlContext = NULL;
+	Eegeo_DELETE m_pAndroidLocationService;
+	m_pAndroidLocationService = NULL;
 }
 
 void AppHost::OnResume()
 {
-	m_pHttpCache->ReloadCacheRepresentationFromStorage();
 	m_pApp->OnResume();
+	m_isPaused = false;
 }
 
 void AppHost::OnPause()
 {
+	m_isPaused = true;
 	m_pApp->OnPause();
-	m_pHttpCache->FlushInMemoryCacheRepresentation();
 	m_pAndroidLocationService->StopListening();
 }
 
 void AppHost::SetSharedSurface(EGLSurface sharedSurface)
 {
-	m_pSharedGlContext->UpdateSurface(sharedSurface);
+	m_pAndroidPlatformAbstractionModule->UpdateSurface(sharedSurface);
 }
 
 void AppHost::SetViewportOffset(float x, float y)
@@ -258,70 +209,127 @@ void AppHost::HandleTouchInputEvent(const Eegeo::Android::Input::TouchInputEvent
 
 void AppHost::Update(float dt)
 {
-	m_pAndroidWebRequestService->Update();
+	if(m_isPaused)
+	{
+		return;
+	}
+
 	m_pApp->Update(dt);
+    m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel().UpdateObjects(dt);
 }
 
 void AppHost::Draw(float dt)
 {
+	if(m_isPaused)
+	{
+		return;
+	}
+
 	m_pApp->Draw(dt);
+	m_pInputProcessor->Update(dt);
 }
 
-void AppHost::ConfigureExamples()
+void AppHost::CreateApplicationViewModules()
 {
-	m_pAndroidExampleControllerView = new Examples::AndroidExampleControllerView(m_nativeState);
+    ExampleApp::MobileExampleApp& app = *m_pApp;
 
-	m_pExampleController = new Examples::ExampleController(*m_pWorld, *m_pAndroidExampleControllerView);
-	m_pApp = new ExampleApp(m_pWorld, *m_pInterestPointProvider, *m_pExampleController);
+    // 3d map view layer.
+    m_pSearchResultOnMapViewModule = Eegeo_NEW(ExampleApp::SearchResultOnMap::SearchResultOnMapViewModule)(
+		m_nativeState,
+		app.SearchResultOnMapModule().GetSearchResultOnMapInFocusViewModel(),
+		app.SearchResultOnMapModule().GetScreenControlViewModel(),
+		app.ModalityModule().GetModalityModel(),
+		app.PinDiameter()
+	);
 
-	RegisterAndroidSpecificExamples();
+    // HUD behind modal background layer.
+    m_pFlattenButtonViewModule = Eegeo_NEW(ExampleApp::FlattenButton::FlattenButtonViewModule)(
+    	m_nativeState,
+    	app.FlattenButtonModule().GetFlattenButtonModel(),
+    	app.FlattenButtonModule().GetFlattenButtonViewModel()
+    );
 
-	m_pAndroidExampleControllerView->PopulateExampleList(m_pExampleController->GetExampleNames());
+    m_pCompassViewModule = Eegeo_NEW(ExampleApp::Compass::CompassViewModule)(
+		m_nativeState,
+		app.CompassModule().GetCompassModel(),
+		app.CompassModule().GetCompassViewModel()
+	);
 
-	m_pExampleController->ActivatePrevious();
+    // Modal background layer.
+    m_pModalBackgroundViewModule = Eegeo_NEW(ExampleApp::ModalBackground::ModalBackgroundViewModule)(
+    	m_nativeState,
+    	app.ModalityModule().GetModalityModel(),
+    	app.World().GetRenderingModule()
+    );
+
+    // Menus & HUD layer.
+    m_pPrimaryMenuViewModule = Eegeo_NEW(ExampleApp::Menu::MenuViewModule)(
+    	"com/eegeo/primarymenu/PrimaryMenuView",
+    	m_nativeState,
+    	app.PrimaryMenuModule().GetPrimaryMenuModel(),
+    	app.PrimaryMenuModule().GetPrimaryMenuViewModel()
+	);
+
+    m_pSecondaryMenuViewModule = Eegeo_NEW(ExampleApp::SecondaryMenu::SecondaryMenuViewModule)(
+    	"com/eegeo/secondarymenu/SecondaryMenuView",
+    	m_nativeState,
+    	app.SecondaryMenuModule().GetSecondaryMenuModel(),
+    	app.SecondaryMenuModule().GetSecondaryMenuViewModel(),
+    	app.SearchModule().GetSearchService(),
+    	app.SearchModule().GetSearchQueryPerformer()
+	);
+
+    m_pSearchResultMenuViewModule = Eegeo_NEW(ExampleApp::SearchMenu::SearchMenuViewModule)(
+		"com/eegeo/searchmenu/SearchMenuView",
+		m_nativeState,
+		app.SearchResultMenuModule().GetSearchResultMenuModel(),
+		app.SearchResultMenuModule().GetMenuViewModel(),
+    	app.SearchModule().GetSearchQueryPerformer(),
+    	app.SearchModule().GetSearchService(),
+    	app.CategorySearchModule().GetCategorySearchRepository(),
+    	app.SearchResultMenuModule().GetSearchResultMenuViewModel()
+	);
+
+    // Pop-up layer.
+    m_pSearchResultPoiViewModule = Eegeo_NEW(ExampleApp::SearchResultPoi::SearchResultPoiViewModule)(
+    	m_nativeState,
+    	app.SearchResultPoiModule().GetSearchResultPoiViewModel()
+    );
+
+    m_pAboutPageViewModule = Eegeo_NEW(ExampleApp::AboutPage::AboutPageViewModule)(
+		m_nativeState,
+		app.AboutPageModule().GetAboutPageModel(),
+		app.AboutPageModule().GetAboutPageViewModel()
+    );
+
+    m_pViewControllerUpdaterModule = Eegeo_NEW(ExampleApp::ViewControllerUpdater::ViewControllerUpdaterModule)();
+    ExampleApp::ViewControllerUpdater::IViewControllerUpdaterModel& viewControllerUpdaterModel = m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel();
+
+    viewControllerUpdaterModel.AddUpdateableObject(m_pPrimaryMenuViewModule->GetMenuViewController());
+    viewControllerUpdaterModel.AddUpdateableObject(m_pSecondaryMenuViewModule->GetMenuViewController());
+    viewControllerUpdaterModel.AddUpdateableObject(m_pSearchResultMenuViewModule->GetMenuViewController());
 }
 
-void AppHost::RegisterAndroidSpecificExamples()
+void AppHost::DestroyApplicationViewModules()
 {
-	m_pAndroidRouteMatchingExampleViewFactory = new Examples::AndroidRouteMatchingExampleViewFactory(
-	    m_nativeState);
+	Eegeo_DELETE m_pViewControllerUpdaterModule;
 
-	m_pExampleController->RegisterExample(new Examples::RouteMatchingExampleFactory(
-	        *m_pWorld,
-	        *m_pAndroidRouteMatchingExampleViewFactory,
-	        m_pApp->GetCameraController()));
+	Eegeo_DELETE m_pFlattenButtonViewModule;
 
-	m_pAndroidRouteSimulationExampleViewFactory = new Examples::AndroidRouteSimulationExampleViewFactory(
-	    m_nativeState);
+    Eegeo_DELETE m_pAboutPageViewModule;
 
-	m_pExampleController->RegisterExample(new Examples::RouteSimulationExampleFactory(
-	        *m_pWorld,
-	        m_pApp->GetCameraController(),
-	        *m_pAndroidRouteSimulationExampleViewFactory));
+    Eegeo_DELETE m_pSearchResultOnMapViewModule;
 
-	m_pExampleController->RegisterExample(new Examples::JavaHudCrossThreadCommunicationExampleFactory(*m_pWorld, m_nativeState, m_pApp->GetCameraController()));
-	m_pExampleController->RegisterExample(new Examples::PinsWithAttachedJavaUIExampleFactory(*m_pWorld, m_nativeState, m_pApp->GetCameraController()));
-	m_pExampleController->RegisterExample(new Examples::PositionJavaPinButtonExampleFactory(*m_pWorld, m_nativeState, m_pApp->GetCameraController()));
+    Eegeo_DELETE m_pSearchResultPoiViewModule;
 
-	m_pExampleCameraJumpController = new ExampleCameraJumpController(m_pApp->GetCameraController(), m_pApp->GetTouchController());
-	m_pExampleController->RegisterExample(new Examples::ShowJavaPlaceJumpUIExampleFactory(*m_pExampleCameraJumpController, m_pApp->GetCameraController(), m_nativeState));
+    Eegeo_DELETE m_pModalBackgroundViewModule;
+
+    Eegeo_DELETE m_pSearchResultMenuViewModule;
+
+    Eegeo_DELETE m_pSecondaryMenuViewModule;
+
+    Eegeo_DELETE m_pPrimaryMenuViewModule;
+
+    Eegeo_DELETE m_pCompassViewModule;
 }
-
-void AppHost::DestroyExamples()
-{
-	delete m_pExampleCameraJumpController;
-	delete m_pAndroidRouteMatchingExampleViewFactory;
-	delete m_pAndroidRouteSimulationExampleViewFactory;
-
-	delete m_pExampleController;
-	delete m_pAndroidExampleControllerView;
-}
-
-Eegeo::Concurrency::Tasks::IGlTaskContext* AppHost::Build()
-{
-	return m_pSharedGlContext;
-}
-
-
-
 

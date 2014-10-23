@@ -1,7 +1,6 @@
 // Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
-#ifndef LOGGER_H_
-#define LOGGER_H_
+#pragma once
 
 #include "Types.h"
 
@@ -12,4 +11,3 @@
 #define EXAMPLE_LOG(...) printf(__VA_ARGS__)
 #endif
 
-#endif /* LOGGER_H_ */
