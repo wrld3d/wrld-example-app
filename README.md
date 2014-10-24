@@ -1,14 +1,28 @@
-eeGeo 3D Maps mobile-sdk-harness
+eeGeo 3D Maps mobile-example-app
 ================================
 
-Additional documentation available at http://sdk.eegeo.com
+Unlike the tightly focussed SDK examples, this example is intended to convey best practices for interacting with the eeGeo platform from a rich client application, demonstrating:
+
+* A tactile menu based user experience for manipulating the application
+* Category and free-text point of interest search and display using an off the shelf third party search service
+* In world display for points of interest using both 2D native UI widgets and 3D pins
+* Dynamic weather and season control
+* Environment flattening to enter "map-mode"
+* Animated camera transitioning between in-world locations
+* GPS usage to control a compass widget
+* Background preloading of environment resources
+* A model for implementing an initial user experience
+
+Additional documentation available at http://sdk.eegeo.com/developers/mobiledocs/mobileexampleapp
+
+The following instructions explain how to configure your environment to build the application.
 
 iOS
 ===
 
 * Run ./update.platform.sh -p ios to get the latest platform libraries and headers.
 * The accompanying project has no code signing, so run in the simulator (or provide your own credentials).
-* The platform needs an API key to operate. Sign up at https://appstore.eegeo.com/ to get your API key and introduce it into the following line in ViewController.mm : 
+* The platform needs an API key to operate. Sign up at https://appstore.eegeo.com/ to get your API key and introduce it into the following line in src/MobileExampleApp.cpp : 
 	#define API_KEY "OBTAIN API_KEY FROM https://appstore.eegeo.com AND INSERT IT HERE".
 * Scroll between the examples using the Next and Previous buttons; the current example name is displayed at the top of the screen.
 * To build at the command line, run ./build -p ios from the repository root.
@@ -27,7 +41,7 @@ Android
     * Select imported activity -> Android Tools : 'Add native support'
     * Select jni directory -> New folder -> Advanced -> Linked folder : mobile-sdk-harness/src
 * Bring up the project menu, from within Android Tools add native support to the project
-* The platform needs an API key to operate. Sign up at https://appstore.eegeo.com/ to get your API key and introduce it into the following line in jni/main.cpp : 
+* The platform needs an API key to operate. Sign up at https://appstore.eegeo.com/ to get your API key and introduce it into the following line in src/MobileExampleApp.cpp : 
 	#define API_KEY "OBTAIN API_KEY FROM https://appstore.eegeo.com AND INSERT IT HERE"
 * Build and debug from within ADT Eclipse
 * build.sh can be used to generate the native library if you want to manually package the .apk
