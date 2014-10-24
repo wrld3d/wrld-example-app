@@ -376,6 +376,18 @@
 		222E069B1948B08B0004FFD9 /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4820F168371460006E99B /* MainStoryboard_iPad.storyboard */; };
 		222E06CD1948B0B70004FFD9 /* libapps-on-maps-cpp11-sim.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 222E06CB1948B0B70004FFD9 /* libapps-on-maps-cpp11-sim.a */; };
 		222E06CE1948B0B70004FFD9 /* libapps-on-maps-cpp11.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 222E06CC1948B0B70004FFD9 /* libapps-on-maps-cpp11.a */; };
+		5602F7DE19FFF338005004D6 /* PoiRingView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5602F7D819FFF338005004D6 /* PoiRingView.cpp */; };
+		5602F7DF19FFF338005004D6 /* PoiRingView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5602F7D819FFF338005004D6 /* PoiRingView.cpp */; };
+		5602F7E019FFF338005004D6 /* PoiRingRenderable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5602F7DA19FFF338005004D6 /* PoiRingRenderable.cpp */; };
+		5602F7E119FFF338005004D6 /* PoiRingRenderable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5602F7DA19FFF338005004D6 /* PoiRingRenderable.cpp */; };
+		5602F7E819FFF8F5005004D6 /* PoiRingController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5602F7E419FFF8F5005004D6 /* PoiRingController.cpp */; };
+		5602F7E919FFF8F5005004D6 /* PoiRingController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5602F7E419FFF8F5005004D6 /* PoiRingController.cpp */; };
+		5602F7EA19FFF8F5005004D6 /* PoiRingTouchController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5602F7E619FFF8F5005004D6 /* PoiRingTouchController.cpp */; };
+		5602F7EB19FFF8F5005004D6 /* PoiRingTouchController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5602F7E619FFF8F5005004D6 /* PoiRingTouchController.cpp */; };
+		5602F7EF1A000659005004D6 /* PoiCreationButtonScreenControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5602F7ED1A000659005004D6 /* PoiCreationButtonScreenControl.cpp */; };
+		5602F7F01A000659005004D6 /* PoiCreationButtonScreenControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5602F7ED1A000659005004D6 /* PoiCreationButtonScreenControl.cpp */; };
+		5602F7F31A000720005004D6 /* PoiCreationButtonViewModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5602F7F11A000720005004D6 /* PoiCreationButtonViewModel.cpp */; };
+		5602F7F41A000720005004D6 /* PoiCreationButtonViewModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5602F7F11A000720005004D6 /* PoiCreationButtonViewModel.cpp */; };
 		5605EDD519F81CFC00D1D594 /* ModalityController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5605EDCF19F81CFC00D1D594 /* ModalityController.cpp */; };
 		5605EDD619F81CFC00D1D594 /* ModalityController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5605EDCF19F81CFC00D1D594 /* ModalityController.cpp */; };
 		5605EDD719F81CFC00D1D594 /* ModalityModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5605EDD119F81CFC00D1D594 /* ModalityModel.cpp */; };
@@ -392,10 +404,67 @@
 		5605EDF019F824CD00D1D594 /* ReactionModelModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5605EDE719F824CD00D1D594 /* ReactionModelModule.cpp */; };
 		5606E31719ED1B93009059D4 /* eegeo_logo@ipho.png in Resources */ = {isa = PBXBuildFile; fileRef = 5606E31619ED1B93009059D4 /* eegeo_logo@ipho.png */; };
 		5606E31819ED1B93009059D4 /* eegeo_logo@ipho.png in Resources */ = {isa = PBXBuildFile; fileRef = 5606E31619ED1B93009059D4 /* eegeo_logo@ipho.png */; };
+		5637F1EE1A0CD51F0011B509 /* MyPinModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5637F1EC1A0CD51F0011B509 /* MyPinModel.cpp */; };
+		5637F1EF1A0CD51F0011B509 /* MyPinModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5637F1EC1A0CD51F0011B509 /* MyPinModel.cpp */; };
+		5637F1F71A0CDAFB0011B509 /* MyPinsService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5637F1F51A0CDAFB0011B509 /* MyPinsService.cpp */; };
+		5637F1F81A0CDAFB0011B509 /* MyPinsService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5637F1F51A0CDAFB0011B509 /* MyPinsService.cpp */; };
+		5637F2051A10F3930011B509 /* MyPinsModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5637F2031A10F3930011B509 /* MyPinsModule.cpp */; };
+		5637F2061A10F3930011B509 /* MyPinsModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5637F2031A10F3930011B509 /* MyPinsModule.cpp */; };
+		5637F2091A10F4CD0011B509 /* MyPinsFileIO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5637F2071A10F4CD0011B509 /* MyPinsFileIO.cpp */; };
+		5637F20A1A10F4CD0011B509 /* MyPinsFileIO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5637F2071A10F4CD0011B509 /* MyPinsFileIO.cpp */; };
+		566D3DB31A0291780067B38A /* PoiCreationCompositeViewModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 566D3DB11A0291780067B38A /* PoiCreationCompositeViewModel.cpp */; };
+		566D3DB41A0291780067B38A /* PoiCreationCompositeViewModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 566D3DB11A0291780067B38A /* PoiCreationCompositeViewModel.cpp */; };
+		566D3DB81A079E6C0067B38A /* PoiRingModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 566D3DB61A079E6C0067B38A /* PoiRingModule.cpp */; };
+		566D3DB91A079E6C0067B38A /* PoiRingModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 566D3DB61A079E6C0067B38A /* PoiRingModule.cpp */; };
+		566D3DC61A07BD430067B38A /* PoiCreationDetailsView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 566D3DC51A07BD430067B38A /* PoiCreationDetailsView.mm */; };
+		566D3DC71A07BD430067B38A /* PoiCreationDetailsView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 566D3DC51A07BD430067B38A /* PoiCreationDetailsView.mm */; };
+		566D3DC91A07BE030067B38A /* PoiCreationDetailsViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 566D3DC81A07BE030067B38A /* PoiCreationDetailsViewController.mm */; };
+		566D3DCA1A07BE030067B38A /* PoiCreationDetailsViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 566D3DC81A07BE030067B38A /* PoiCreationDetailsViewController.mm */; };
+		566D3DCE1A07BFEC0067B38A /* PoiCreationDetailsOpenableControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 566D3DCC1A07BFEC0067B38A /* PoiCreationDetailsOpenableControl.cpp */; };
+		566D3DCF1A07BFEC0067B38A /* PoiCreationDetailsOpenableControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 566D3DCC1A07BFEC0067B38A /* PoiCreationDetailsOpenableControl.cpp */; };
+		566D3DD21A07C0810067B38A /* PoiCreationDetailsViewModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 566D3DD01A07C0810067B38A /* PoiCreationDetailsViewModel.cpp */; };
+		566D3DD31A07C0810067B38A /* PoiCreationDetailsViewModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 566D3DD01A07C0810067B38A /* PoiCreationDetailsViewModel.cpp */; };
+		566D3DD71A07C48D0067B38A /* PoiCreationDetailsModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 566D3DD51A07C48D0067B38A /* PoiCreationDetailsModule.cpp */; };
+		566D3DD81A07C48D0067B38A /* PoiCreationDetailsModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 566D3DD51A07C48D0067B38A /* PoiCreationDetailsModule.cpp */; };
+		566D3DDB1A07CAC20067B38A /* PoiCreationModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 566D3DD91A07CAC20067B38A /* PoiCreationModel.cpp */; };
+		566D3DDC1A07CAC20067B38A /* PoiCreationModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 566D3DD91A07CAC20067B38A /* PoiCreationModel.cpp */; };
+		566D3DE11A07F0290067B38A /* PoiCreationDetailsViewModule.mm in Sources */ = {isa = PBXBuildFile; fileRef = 566D3DE01A07F0290067B38A /* PoiCreationDetailsViewModule.mm */; };
+		566D3DE21A07F0290067B38A /* PoiCreationDetailsViewModule.mm in Sources */ = {isa = PBXBuildFile; fileRef = 566D3DE01A07F0290067B38A /* PoiCreationDetailsViewModule.mm */; };
 		5675901E19F53C7A00C4599E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5675901D19F53C7A00C4599E /* QuartzCore.framework */; };
 		5675901F19F53C9100C4599E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE481EE16836F370006E99B /* CoreGraphics.framework */; };
 		5675902619F54A8200C4599E /* CustomTableView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5675902519F54A8200C4599E /* CustomTableView.mm */; };
 		5675902719F54A8200C4599E /* CustomTableView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5675902519F54A8200C4599E /* CustomTableView.mm */; };
+		569668141A0BEA6C0025A716 /* CustomImagePickerController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 569668131A0BEA6C0025A716 /* CustomImagePickerController.mm */; };
+		569668151A0BEA6C0025A716 /* CustomImagePickerController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 569668131A0BEA6C0025A716 /* CustomImagePickerController.mm */; };
+		56A8DF7D19FEA977009DC352 /* Geosphere_01.pod in Resources */ = {isa = PBXBuildFile; fileRef = 56A8DF7A19FEA977009DC352 /* Geosphere_01.pod */; };
+		56A8DF7E19FEA977009DC352 /* Geosphere_01.pod in Resources */ = {isa = PBXBuildFile; fileRef = 56A8DF7A19FEA977009DC352 /* Geosphere_01.pod */; };
+		56BDAA1A1A0279C100429C19 /* PoiCreationConfirmationViewModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56BDAA181A0279C100429C19 /* PoiCreationConfirmationViewModel.cpp */; };
+		56BDAA1B1A0279C100429C19 /* PoiCreationConfirmationViewModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56BDAA181A0279C100429C19 /* PoiCreationConfirmationViewModel.cpp */; };
+		56BDAA261A027AF500429C19 /* PoiCreationButtonView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 56BDAA1F1A027AF500429C19 /* PoiCreationButtonView.mm */; };
+		56BDAA271A027AF500429C19 /* PoiCreationButtonView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 56BDAA1F1A027AF500429C19 /* PoiCreationButtonView.mm */; };
+		56BDAA281A027AF500429C19 /* PoiCreationButtonViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 56BDAA211A027AF500429C19 /* PoiCreationButtonViewController.mm */; };
+		56BDAA291A027AF500429C19 /* PoiCreationButtonViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 56BDAA211A027AF500429C19 /* PoiCreationButtonViewController.mm */; };
+		56BDAA2A1A027AF500429C19 /* PoiCreationButtonViewModule.mm in Sources */ = {isa = PBXBuildFile; fileRef = 56BDAA251A027AF500429C19 /* PoiCreationButtonViewModule.mm */; };
+		56BDAA2B1A027AF500429C19 /* PoiCreationButtonViewModule.mm in Sources */ = {isa = PBXBuildFile; fileRef = 56BDAA251A027AF500429C19 /* PoiCreationButtonViewModule.mm */; };
+		56BDAA3C1A02800B00429C19 /* PoiCreationConfirmationView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 56BDAA381A02800B00429C19 /* PoiCreationConfirmationView.mm */; };
+		56BDAA3D1A02800B00429C19 /* PoiCreationConfirmationView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 56BDAA381A02800B00429C19 /* PoiCreationConfirmationView.mm */; };
+		56BDAA3E1A02800B00429C19 /* PoiCreationConfirmationViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 56BDAA3A1A02800B00429C19 /* PoiCreationConfirmationViewController.mm */; };
+		56BDAA3F1A02800B00429C19 /* PoiCreationConfirmationViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 56BDAA3A1A02800B00429C19 /* PoiCreationConfirmationViewController.mm */; };
+		56BDAA431A02820200429C19 /* PoiCreationConfirmationScreenControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56BDAA411A02820200429C19 /* PoiCreationConfirmationScreenControl.cpp */; };
+		56BDAA441A02820200429C19 /* PoiCreationConfirmationScreenControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56BDAA411A02820200429C19 /* PoiCreationConfirmationScreenControl.cpp */; };
+		56BDAA491A02876500429C19 /* PoiCreationConfirmationViewModule.mm in Sources */ = {isa = PBXBuildFile; fileRef = 56BDAA481A02876500429C19 /* PoiCreationConfirmationViewModule.mm */; };
+		56BDAA4A1A02876500429C19 /* PoiCreationConfirmationViewModule.mm in Sources */ = {isa = PBXBuildFile; fileRef = 56BDAA481A02876500429C19 /* PoiCreationConfirmationViewModule.mm */; };
+		56BE03B419FA6D110039CD7F /* PoiCreationModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56BE03AE19FA6D110039CD7F /* PoiCreationModule.cpp */; };
+		56BE03B519FA6D110039CD7F /* PoiCreationModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56BE03AE19FA6D110039CD7F /* PoiCreationModule.cpp */; };
+		56FBCDEF1A0BB5150026546E /* button_checkbox_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 56FBCDE71A0BB5150026546E /* button_checkbox_off.png */; };
+		56FBCDF01A0BB5150026546E /* button_checkbox_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 56FBCDE81A0BB5150026546E /* button_checkbox_on.png */; };
+		56FBCDF11A0BB5150026546E /* button_create_poi.png in Resources */ = {isa = PBXBuildFile; fileRef = 56FBCDE91A0BB5150026546E /* button_create_poi.png */; };
+		56FBCDF21A0BB5150026546E /* button_gallery.png in Resources */ = {isa = PBXBuildFile; fileRef = 56FBCDEA1A0BB5150026546E /* button_gallery.png */; };
+		56FBCDF31A0BB5150026546E /* button_ok.png in Resources */ = {isa = PBXBuildFile; fileRef = 56FBCDEB1A0BB5150026546E /* button_ok.png */; };
+		56FBCDF41A0BB5150026546E /* button_photo.png in Resources */ = {isa = PBXBuildFile; fileRef = 56FBCDEC1A0BB5150026546E /* button_photo.png */; };
+		56FBCDF51A0BB5150026546E /* image_blank.png in Resources */ = {isa = PBXBuildFile; fileRef = 56FBCDED1A0BB5150026546E /* image_blank.png */; };
+		56FBCDF61A0BB5150026546E /* poi_marker.png in Resources */ = {isa = PBXBuildFile; fileRef = 56FBCDEE1A0BB5150026546E /* poi_marker.png */; };
+		56FBCDFA1A0BC97D0026546E /* PostPoiWorkItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56FBCDF81A0BC97D0026546E /* PostPoiWorkItem.cpp */; };
 		7EE481EB16836F370006E99B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE481EA16836F370006E99B /* UIKit.framework */; };
 		7EE481ED16836F370006E99B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE481EC16836F370006E99B /* Foundation.framework */; };
 		7EE481F116836F370006E99B /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE481F016836F370006E99B /* CoreData.framework */; };
@@ -840,6 +909,22 @@
 		222E06C91948B08B0004FFD9 /* ExampleAppCpp11.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExampleAppCpp11.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		222E06CB1948B0B70004FFD9 /* libapps-on-maps-cpp11-sim.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libapps-on-maps-cpp11-sim.a"; path = "Include/libapps-on-maps-cpp11-sim.a"; sourceTree = "<group>"; };
 		222E06CC1948B0B70004FFD9 /* libapps-on-maps-cpp11.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libapps-on-maps-cpp11.a"; path = "Include/libapps-on-maps-cpp11.a"; sourceTree = "<group>"; };
+		5602F7D019FFE9BF005004D6 /* IPoiCreationModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IPoiCreationModule.h; sourceTree = "<group>"; };
+		5602F7D819FFF338005004D6 /* PoiRingView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PoiRingView.cpp; sourceTree = "<group>"; };
+		5602F7D919FFF338005004D6 /* PoiRingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PoiRingView.h; sourceTree = "<group>"; };
+		5602F7DA19FFF338005004D6 /* PoiRingRenderable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PoiRingRenderable.cpp; sourceTree = "<group>"; };
+		5602F7DB19FFF338005004D6 /* PoiRingRenderable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PoiRingRenderable.h; sourceTree = "<group>"; };
+		5602F7E219FFF8F5005004D6 /* IPoiRingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPoiRingController.h; sourceTree = "<group>"; };
+		5602F7E319FFF8F5005004D6 /* IPoiRingTouchController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPoiRingTouchController.h; sourceTree = "<group>"; };
+		5602F7E419FFF8F5005004D6 /* PoiRingController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PoiRingController.cpp; sourceTree = "<group>"; };
+		5602F7E519FFF8F5005004D6 /* PoiRingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PoiRingController.h; sourceTree = "<group>"; };
+		5602F7E619FFF8F5005004D6 /* PoiRingTouchController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PoiRingTouchController.cpp; sourceTree = "<group>"; };
+		5602F7E719FFF8F5005004D6 /* PoiRingTouchController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PoiRingTouchController.h; sourceTree = "<group>"; };
+		5602F7EC1A000605005004D6 /* IPoiCreationButtonViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IPoiCreationButtonViewModel.h; sourceTree = "<group>"; };
+		5602F7ED1A000659005004D6 /* PoiCreationButtonScreenControl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PoiCreationButtonScreenControl.cpp; sourceTree = "<group>"; };
+		5602F7EE1A000659005004D6 /* PoiCreationButtonScreenControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PoiCreationButtonScreenControl.h; sourceTree = "<group>"; };
+		5602F7F11A000720005004D6 /* PoiCreationButtonViewModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PoiCreationButtonViewModel.cpp; sourceTree = "<group>"; };
+		5602F7F21A000720005004D6 /* PoiCreationButtonViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PoiCreationButtonViewModel.h; sourceTree = "<group>"; };
 		5605EDCB19F81CFC00D1D594 /* IModalityController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IModalityController.h; sourceTree = "<group>"; };
 		5605EDCC19F81CFC00D1D594 /* IModalityModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IModalityModel.h; sourceTree = "<group>"; };
 		5605EDCD19F81CFC00D1D594 /* IModalityModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IModalityModule.h; sourceTree = "<group>"; };
@@ -864,10 +949,90 @@
 		5605EDE719F824CD00D1D594 /* ReactionModelModule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ReactionModelModule.cpp; sourceTree = "<group>"; };
 		5605EDE819F824CD00D1D594 /* ReactionModelModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReactionModelModule.h; sourceTree = "<group>"; };
 		5606E31619ED1B93009059D4 /* eegeo_logo@ipho.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "eegeo_logo@ipho.png"; sourceTree = "<group>"; };
+		5637F1EC1A0CD51F0011B509 /* MyPinModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MyPinModel.cpp; sourceTree = "<group>"; };
+		5637F1ED1A0CD51F0011B509 /* MyPinModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPinModel.h; sourceTree = "<group>"; };
+		5637F1F01A0CD5CB0011B509 /* IMyPinsRepository.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IMyPinsRepository.h; sourceTree = "<group>"; };
+		5637F1F21A0CD5F00011B509 /* MyPinsRepository.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPinsRepository.h; sourceTree = "<group>"; };
+		5637F1F51A0CDAFB0011B509 /* MyPinsService.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MyPinsService.cpp; sourceTree = "<group>"; };
+		5637F1F61A0CDAFB0011B509 /* MyPinsService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPinsService.h; sourceTree = "<group>"; };
+		5637F1F91A0CDB1D0011B509 /* IMyPinsService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IMyPinsService.h; sourceTree = "<group>"; };
+		5637F1FA1A0CDB370011B509 /* MyPins.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyPins.h; sourceTree = "<group>"; };
+		5637F2031A10F3930011B509 /* MyPinsModule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MyPinsModule.cpp; sourceTree = "<group>"; };
+		5637F2041A10F3930011B509 /* MyPinsModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPinsModule.h; sourceTree = "<group>"; };
+		5637F2071A10F4CD0011B509 /* MyPinsFileIO.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MyPinsFileIO.cpp; sourceTree = "<group>"; };
+		5637F2081A10F4CD0011B509 /* MyPinsFileIO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPinsFileIO.h; sourceTree = "<group>"; };
+		566D3DB11A0291780067B38A /* PoiCreationCompositeViewModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PoiCreationCompositeViewModel.cpp; sourceTree = "<group>"; };
+		566D3DB21A0291780067B38A /* PoiCreationCompositeViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PoiCreationCompositeViewModel.h; sourceTree = "<group>"; };
+		566D3DB61A079E6C0067B38A /* PoiRingModule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PoiRingModule.cpp; sourceTree = "<group>"; };
+		566D3DB71A079E6C0067B38A /* PoiRingModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PoiRingModule.h; sourceTree = "<group>"; };
+		566D3DBA1A07A2850067B38A /* IPoiRingModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IPoiRingModule.h; sourceTree = "<group>"; };
+		566D3DBC1A07B3070067B38A /* PoiCreationDetails.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PoiCreationDetails.h; sourceTree = "<group>"; };
+		566D3DBD1A07B3870067B38A /* IPoiCreationDetailsModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IPoiCreationDetailsModule.h; sourceTree = "<group>"; };
+		566D3DC01A07BB050067B38A /* IPoiCreationDetailsViewModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IPoiCreationDetailsViewModule.h; sourceTree = "<group>"; };
+		566D3DC11A07BBD00067B38A /* IPoiCreationDetailsViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IPoiCreationDetailsViewModel.h; sourceTree = "<group>"; };
+		566D3DC21A07BC140067B38A /* PoiCreationDetailsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PoiCreationDetailsViewController.h; sourceTree = "<group>"; };
+		566D3DC41A07BCAD0067B38A /* PoiCreationDetailsView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PoiCreationDetailsView.h; sourceTree = "<group>"; };
+		566D3DC51A07BD430067B38A /* PoiCreationDetailsView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PoiCreationDetailsView.mm; sourceTree = "<group>"; };
+		566D3DC81A07BE030067B38A /* PoiCreationDetailsViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PoiCreationDetailsViewController.mm; sourceTree = "<group>"; };
+		566D3DCB1A07BF640067B38A /* PoiCreationDetailsViewIncludes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PoiCreationDetailsViewIncludes.h; sourceTree = "<group>"; };
+		566D3DCC1A07BFEC0067B38A /* PoiCreationDetailsOpenableControl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PoiCreationDetailsOpenableControl.cpp; sourceTree = "<group>"; };
+		566D3DCD1A07BFEC0067B38A /* PoiCreationDetailsOpenableControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PoiCreationDetailsOpenableControl.h; sourceTree = "<group>"; };
+		566D3DD01A07C0810067B38A /* PoiCreationDetailsViewModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PoiCreationDetailsViewModel.cpp; sourceTree = "<group>"; };
+		566D3DD11A07C0810067B38A /* PoiCreationDetailsViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PoiCreationDetailsViewModel.h; sourceTree = "<group>"; };
+		566D3DD41A07C16A0067B38A /* PoiCreationDetailsViewControllerInterop.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PoiCreationDetailsViewControllerInterop.h; sourceTree = "<group>"; };
+		566D3DD51A07C48D0067B38A /* PoiCreationDetailsModule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PoiCreationDetailsModule.cpp; sourceTree = "<group>"; };
+		566D3DD61A07C48D0067B38A /* PoiCreationDetailsModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PoiCreationDetailsModule.h; sourceTree = "<group>"; };
+		566D3DD91A07CAC20067B38A /* PoiCreationModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PoiCreationModel.cpp; sourceTree = "<group>"; };
+		566D3DDA1A07CAC20067B38A /* PoiCreationModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PoiCreationModel.h; sourceTree = "<group>"; };
+		566D3DDD1A07CB880067B38A /* IPoiCreationModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IPoiCreationModel.h; sourceTree = "<group>"; };
+		566D3DDE1A07CBE10067B38A /* PoiCreationStage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PoiCreationStage.h; sourceTree = "<group>"; };
+		566D3DDF1A07F0110067B38A /* PoiCreationDetailsViewModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PoiCreationDetailsViewModule.h; sourceTree = "<group>"; };
+		566D3DE01A07F0290067B38A /* PoiCreationDetailsViewModule.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PoiCreationDetailsViewModule.mm; sourceTree = "<group>"; };
 		567036ED19F7C01000C57333 /* CellConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CellConstants.h; sourceTree = "<group>"; };
 		5675901D19F53C7A00C4599E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		5675902419F54A8200C4599E /* CustomTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTableView.h; sourceTree = "<group>"; };
 		5675902519F54A8200C4599E /* CustomTableView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CustomTableView.mm; sourceTree = "<group>"; };
+		569668121A0BEA210025A716 /* CustomImagePickerController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomImagePickerController.h; sourceTree = "<group>"; };
+		569668131A0BEA6C0025A716 /* CustomImagePickerController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CustomImagePickerController.mm; sourceTree = "<group>"; };
+		56A8DF7A19FEA977009DC352 /* Geosphere_01.pod */ = {isa = PBXFileReference; lastKnownFileType = file; path = Geosphere_01.pod; sourceTree = "<group>"; };
+		56B258D61A110CE6003C50CF /* IMyPinsModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IMyPinsModule.h; sourceTree = "<group>"; };
+		56BDAA181A0279C100429C19 /* PoiCreationConfirmationViewModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PoiCreationConfirmationViewModel.cpp; sourceTree = "<group>"; };
+		56BDAA191A0279C100429C19 /* PoiCreationConfirmationViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PoiCreationConfirmationViewModel.h; sourceTree = "<group>"; };
+		56BDAA1D1A027AF500429C19 /* IPoiCreationButtonViewModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPoiCreationButtonViewModule.h; sourceTree = "<group>"; };
+		56BDAA1E1A027AF500429C19 /* PoiCreationButtonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PoiCreationButtonView.h; sourceTree = "<group>"; };
+		56BDAA1F1A027AF500429C19 /* PoiCreationButtonView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PoiCreationButtonView.mm; sourceTree = "<group>"; };
+		56BDAA201A027AF500429C19 /* PoiCreationButtonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PoiCreationButtonViewController.h; sourceTree = "<group>"; };
+		56BDAA211A027AF500429C19 /* PoiCreationButtonViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PoiCreationButtonViewController.mm; sourceTree = "<group>"; };
+		56BDAA221A027AF500429C19 /* PoiCreationButtonViewControllerInterop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PoiCreationButtonViewControllerInterop.h; sourceTree = "<group>"; };
+		56BDAA231A027AF500429C19 /* PoiCreationButtonViewIncludes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PoiCreationButtonViewIncludes.h; sourceTree = "<group>"; };
+		56BDAA241A027AF500429C19 /* PoiCreationButtonViewModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PoiCreationButtonViewModule.h; sourceTree = "<group>"; };
+		56BDAA251A027AF500429C19 /* PoiCreationButtonViewModule.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PoiCreationButtonViewModule.mm; sourceTree = "<group>"; };
+		56BDAA371A02800B00429C19 /* PoiCreationConfirmationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PoiCreationConfirmationView.h; sourceTree = "<group>"; };
+		56BDAA381A02800B00429C19 /* PoiCreationConfirmationView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PoiCreationConfirmationView.mm; sourceTree = "<group>"; };
+		56BDAA391A02800B00429C19 /* PoiCreationConfirmationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PoiCreationConfirmationViewController.h; sourceTree = "<group>"; };
+		56BDAA3A1A02800B00429C19 /* PoiCreationConfirmationViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PoiCreationConfirmationViewController.mm; sourceTree = "<group>"; };
+		56BDAA3B1A02800B00429C19 /* PoiCreationConfirmationViewIncludes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PoiCreationConfirmationViewIncludes.h; sourceTree = "<group>"; };
+		56BDAA401A0280C700429C19 /* IPoiCreationConfirmationViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IPoiCreationConfirmationViewModel.h; sourceTree = "<group>"; };
+		56BDAA411A02820200429C19 /* PoiCreationConfirmationScreenControl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PoiCreationConfirmationScreenControl.cpp; sourceTree = "<group>"; };
+		56BDAA421A02820200429C19 /* PoiCreationConfirmationScreenControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PoiCreationConfirmationScreenControl.h; sourceTree = "<group>"; };
+		56BDAA451A02841900429C19 /* PoiCreationConfirmationViewControllerInterop.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PoiCreationConfirmationViewControllerInterop.h; sourceTree = "<group>"; };
+		56BDAA461A0286B600429C19 /* IPoiCreationConfirmationViewModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IPoiCreationConfirmationViewModule.h; sourceTree = "<group>"; };
+		56BDAA471A02870C00429C19 /* PoiCreationConfirmationViewModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PoiCreationConfirmationViewModule.h; sourceTree = "<group>"; };
+		56BDAA481A02876500429C19 /* PoiCreationConfirmationViewModule.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PoiCreationConfirmationViewModule.mm; sourceTree = "<group>"; };
+		56BDAA4B1A028E7900429C19 /* IPoiCreationCompositeViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IPoiCreationCompositeViewModel.h; sourceTree = "<group>"; };
+		56BE03AD19FA6D110039CD7F /* PoiCreation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PoiCreation.h; sourceTree = "<group>"; };
+		56BE03AE19FA6D110039CD7F /* PoiCreationModule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PoiCreationModule.cpp; sourceTree = "<group>"; };
+		56BE03AF19FA6D110039CD7F /* PoiCreationModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PoiCreationModule.h; sourceTree = "<group>"; };
+		56FBCDE71A0BB5150026546E /* button_checkbox_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_checkbox_off.png; sourceTree = "<group>"; };
+		56FBCDE81A0BB5150026546E /* button_checkbox_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_checkbox_on.png; sourceTree = "<group>"; };
+		56FBCDE91A0BB5150026546E /* button_create_poi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_create_poi.png; sourceTree = "<group>"; };
+		56FBCDEA1A0BB5150026546E /* button_gallery.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_gallery.png; sourceTree = "<group>"; };
+		56FBCDEB1A0BB5150026546E /* button_ok.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_ok.png; sourceTree = "<group>"; };
+		56FBCDEC1A0BB5150026546E /* button_photo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_photo.png; sourceTree = "<group>"; };
+		56FBCDED1A0BB5150026546E /* image_blank.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = image_blank.png; sourceTree = "<group>"; };
+		56FBCDEE1A0BB5150026546E /* poi_marker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = poi_marker.png; sourceTree = "<group>"; };
+		56FBCDF81A0BC97D0026546E /* PostPoiWorkItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PostPoiWorkItem.cpp; sourceTree = "<group>"; };
+		56FBCDF91A0BC97D0026546E /* PostPoiWorkItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostPoiWorkItem.h; sourceTree = "<group>"; };
 		7E75EE1D16848B8A00BCA283 /* libapps-on-maps-sim.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libapps-on-maps-sim.a"; path = "Include/libapps-on-maps-sim.a"; sourceTree = "<group>"; };
 		7EE481E616836F370006E99B /* ExampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7EE481EA16836F370006E99B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -948,11 +1113,17 @@
 				18B5A9CF19DC158F00BA4A38 /* Compass */,
 				18B5A9E019DC158F00BA4A38 /* FlattenButton */,
 				18B5A9F219DC158F00BA4A38 /* InitialExperience */,
+				189971CF192CF46000E0E9F1 /* Logger.h */,
 				18B5AA0419DC158F00BA4A38 /* Menu */,
+				189971CC192CCC0200E0E9F1 /* MobileExampleApp.cpp */,
+				189971CD192CCC0200E0E9F1 /* MobileExampleApp.h */,
 				18B5AA3319DC158F00BA4A38 /* Modality */,
+				5637F1EB1A0CD50D0011B509 /* MyPins */,
 				18B5AA3419DC158F00BA4A38 /* OpenableControlViewModel */,
 				18B5AA3919DC158F00BA4A38 /* PersistentSettings */,
 				18B5AA3C19DC158F00BA4A38 /* PlaceJumps */,
+				56BE03AC19FA6D110039CD7F /* PoiCreation */,
+				566D3DBB1A07B2EC0067B38A /* PoiCreationDetails */,
 				18B5AA4A19DC158F00BA4A38 /* PrimaryMenu */,
 				5605EDDB19F824CD00D1D594 /* Reaction */,
 				18B5AA5219DC158F00BA4A38 /* Repository */,
@@ -965,9 +1136,6 @@
 				18B5AAAC19DC158F00BA4A38 /* WeatherMenu */,
 				18B5AABA19DC158F00BA4A38 /* WorldAreaLoader */,
 				18B5AAC519DC158F00BA4A38 /* WorldPins */,
-				189971CF192CF46000E0E9F1 /* Logger.h */,
-				189971CC192CCC0200E0E9F1 /* MobileExampleApp.cpp */,
-				189971CD192CCC0200E0E9F1 /* MobileExampleApp.h */,
 			);
 			name = src;
 			path = ../../src;
@@ -1451,6 +1619,9 @@
 		18B5AB8219DC159B00BA4A38 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				566D3DBF1A07BAD40067B38A /* PoiCreationDetails */,
+				56BDAA361A02800B00429C19 /* PoiCreationConfirmation */,
+				56BDAA1C1A027AF500429C19 /* PoiCreationButton */,
 				18B5AB8319DC159B00BA4A38 /* AboutPage */,
 				18B5AB8D19DC159B00BA4A38 /* Compass */,
 				18B5AB9719DC159B00BA4A38 /* FlattenButton */,
@@ -1690,6 +1861,26 @@
 			path = Icons;
 			sourceTree = "<group>";
 		};
+		5602F7D419FFF338005004D6 /* PoiRing */ = {
+			isa = PBXGroup;
+			children = (
+				5602F7E219FFF8F5005004D6 /* IPoiRingController.h */,
+				5602F7E319FFF8F5005004D6 /* IPoiRingTouchController.h */,
+				5602F7E419FFF8F5005004D6 /* PoiRingController.cpp */,
+				5602F7E519FFF8F5005004D6 /* PoiRingController.h */,
+				5602F7E619FFF8F5005004D6 /* PoiRingTouchController.cpp */,
+				5602F7E719FFF8F5005004D6 /* PoiRingTouchController.h */,
+				5602F7DA19FFF338005004D6 /* PoiRingRenderable.cpp */,
+				5602F7DB19FFF338005004D6 /* PoiRingRenderable.h */,
+				5602F7D819FFF338005004D6 /* PoiRingView.cpp */,
+				5602F7D919FFF338005004D6 /* PoiRingView.h */,
+				566D3DB61A079E6C0067B38A /* PoiRingModule.cpp */,
+				566D3DB71A079E6C0067B38A /* PoiRingModule.h */,
+				566D3DBA1A07A2850067B38A /* IPoiRingModule.h */,
+			);
+			path = PoiRing;
+			sourceTree = "<group>";
+		};
 		5605EDDB19F824CD00D1D594 /* Reaction */ = {
 			isa = PBXGroup;
 			children = (
@@ -1708,6 +1899,123 @@
 				5605EDE819F824CD00D1D594 /* ReactionModelModule.h */,
 			);
 			path = Reaction;
+			sourceTree = "<group>";
+		};
+		5637F1EB1A0CD50D0011B509 /* MyPins */ = {
+			isa = PBXGroup;
+			children = (
+				5637F1EC1A0CD51F0011B509 /* MyPinModel.cpp */,
+				5637F1ED1A0CD51F0011B509 /* MyPinModel.h */,
+				5637F1F01A0CD5CB0011B509 /* IMyPinsRepository.h */,
+				5637F1F21A0CD5F00011B509 /* MyPinsRepository.h */,
+				5637F1F51A0CDAFB0011B509 /* MyPinsService.cpp */,
+				5637F1F61A0CDAFB0011B509 /* MyPinsService.h */,
+				5637F1F91A0CDB1D0011B509 /* IMyPinsService.h */,
+				5637F1FA1A0CDB370011B509 /* MyPins.h */,
+				5637F2031A10F3930011B509 /* MyPinsModule.cpp */,
+				5637F2041A10F3930011B509 /* MyPinsModule.h */,
+				5637F2071A10F4CD0011B509 /* MyPinsFileIO.cpp */,
+				5637F2081A10F4CD0011B509 /* MyPinsFileIO.h */,
+				56B258D61A110CE6003C50CF /* IMyPinsModule.h */,
+			);
+			path = MyPins;
+			sourceTree = "<group>";
+		};
+		566D3DBB1A07B2EC0067B38A /* PoiCreationDetails */ = {
+			isa = PBXGroup;
+			children = (
+				566D3DBC1A07B3070067B38A /* PoiCreationDetails.h */,
+				566D3DBD1A07B3870067B38A /* IPoiCreationDetailsModule.h */,
+				566D3DC11A07BBD00067B38A /* IPoiCreationDetailsViewModel.h */,
+				566D3DCC1A07BFEC0067B38A /* PoiCreationDetailsOpenableControl.cpp */,
+				566D3DCD1A07BFEC0067B38A /* PoiCreationDetailsOpenableControl.h */,
+				566D3DD01A07C0810067B38A /* PoiCreationDetailsViewModel.cpp */,
+				566D3DD11A07C0810067B38A /* PoiCreationDetailsViewModel.h */,
+				566D3DD51A07C48D0067B38A /* PoiCreationDetailsModule.cpp */,
+				566D3DD61A07C48D0067B38A /* PoiCreationDetailsModule.h */,
+			);
+			path = PoiCreationDetails;
+			sourceTree = "<group>";
+		};
+		566D3DBF1A07BAD40067B38A /* PoiCreationDetails */ = {
+			isa = PBXGroup;
+			children = (
+				566D3DC01A07BB050067B38A /* IPoiCreationDetailsViewModule.h */,
+				566D3DC41A07BCAD0067B38A /* PoiCreationDetailsView.h */,
+				566D3DC51A07BD430067B38A /* PoiCreationDetailsView.mm */,
+				566D3DC21A07BC140067B38A /* PoiCreationDetailsViewController.h */,
+				566D3DC81A07BE030067B38A /* PoiCreationDetailsViewController.mm */,
+				566D3DD41A07C16A0067B38A /* PoiCreationDetailsViewControllerInterop.h */,
+				566D3DCB1A07BF640067B38A /* PoiCreationDetailsViewIncludes.h */,
+				566D3DDF1A07F0110067B38A /* PoiCreationDetailsViewModule.h */,
+				566D3DE01A07F0290067B38A /* PoiCreationDetailsViewModule.mm */,
+				569668121A0BEA210025A716 /* CustomImagePickerController.h */,
+				569668131A0BEA6C0025A716 /* CustomImagePickerController.mm */,
+			);
+			path = PoiCreationDetails;
+			sourceTree = "<group>";
+		};
+		56BDAA1C1A027AF500429C19 /* PoiCreationButton */ = {
+			isa = PBXGroup;
+			children = (
+				56BDAA1D1A027AF500429C19 /* IPoiCreationButtonViewModule.h */,
+				56BDAA1E1A027AF500429C19 /* PoiCreationButtonView.h */,
+				56BDAA1F1A027AF500429C19 /* PoiCreationButtonView.mm */,
+				56BDAA201A027AF500429C19 /* PoiCreationButtonViewController.h */,
+				56BDAA211A027AF500429C19 /* PoiCreationButtonViewController.mm */,
+				56BDAA221A027AF500429C19 /* PoiCreationButtonViewControllerInterop.h */,
+				56BDAA231A027AF500429C19 /* PoiCreationButtonViewIncludes.h */,
+				56BDAA241A027AF500429C19 /* PoiCreationButtonViewModule.h */,
+				56BDAA251A027AF500429C19 /* PoiCreationButtonViewModule.mm */,
+			);
+			path = PoiCreationButton;
+			sourceTree = "<group>";
+		};
+		56BDAA361A02800B00429C19 /* PoiCreationConfirmation */ = {
+			isa = PBXGroup;
+			children = (
+				56BDAA371A02800B00429C19 /* PoiCreationConfirmationView.h */,
+				56BDAA381A02800B00429C19 /* PoiCreationConfirmationView.mm */,
+				56BDAA391A02800B00429C19 /* PoiCreationConfirmationViewController.h */,
+				56BDAA3A1A02800B00429C19 /* PoiCreationConfirmationViewController.mm */,
+				56BDAA3B1A02800B00429C19 /* PoiCreationConfirmationViewIncludes.h */,
+				56BDAA451A02841900429C19 /* PoiCreationConfirmationViewControllerInterop.h */,
+				56BDAA461A0286B600429C19 /* IPoiCreationConfirmationViewModule.h */,
+				56BDAA471A02870C00429C19 /* PoiCreationConfirmationViewModule.h */,
+				56BDAA481A02876500429C19 /* PoiCreationConfirmationViewModule.mm */,
+			);
+			path = PoiCreationConfirmation;
+			sourceTree = "<group>";
+		};
+		56BE03AC19FA6D110039CD7F /* PoiCreation */ = {
+			isa = PBXGroup;
+			children = (
+				5602F7EC1A000605005004D6 /* IPoiCreationButtonViewModel.h */,
+				56BDAA4B1A028E7900429C19 /* IPoiCreationCompositeViewModel.h */,
+				56BDAA401A0280C700429C19 /* IPoiCreationConfirmationViewModel.h */,
+				566D3DDD1A07CB880067B38A /* IPoiCreationModel.h */,
+				5602F7D019FFE9BF005004D6 /* IPoiCreationModule.h */,
+				56BE03AD19FA6D110039CD7F /* PoiCreation.h */,
+				5602F7ED1A000659005004D6 /* PoiCreationButtonScreenControl.cpp */,
+				5602F7EE1A000659005004D6 /* PoiCreationButtonScreenControl.h */,
+				5602F7F11A000720005004D6 /* PoiCreationButtonViewModel.cpp */,
+				5602F7F21A000720005004D6 /* PoiCreationButtonViewModel.h */,
+				566D3DB11A0291780067B38A /* PoiCreationCompositeViewModel.cpp */,
+				566D3DB21A0291780067B38A /* PoiCreationCompositeViewModel.h */,
+				56BDAA411A02820200429C19 /* PoiCreationConfirmationScreenControl.cpp */,
+				56BDAA421A02820200429C19 /* PoiCreationConfirmationScreenControl.h */,
+				56BDAA181A0279C100429C19 /* PoiCreationConfirmationViewModel.cpp */,
+				56BDAA191A0279C100429C19 /* PoiCreationConfirmationViewModel.h */,
+				566D3DD91A07CAC20067B38A /* PoiCreationModel.cpp */,
+				566D3DDA1A07CAC20067B38A /* PoiCreationModel.h */,
+				56BE03AE19FA6D110039CD7F /* PoiCreationModule.cpp */,
+				56BE03AF19FA6D110039CD7F /* PoiCreationModule.h */,
+				566D3DDE1A07CBE10067B38A /* PoiCreationStage.h */,
+				5602F7D419FFF338005004D6 /* PoiRing */,
+				56FBCDF81A0BC97D0026546E /* PostPoiWorkItem.cpp */,
+				56FBCDF91A0BC97D0026546E /* PostPoiWorkItem.h */,
+			);
+			path = PoiCreation;
 			sourceTree = "<group>";
 		};
 		7EE481DB16836F360006E99B = {
@@ -1779,6 +2087,15 @@
 		7EE4825B16847E7C0006E99B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				56FBCDE71A0BB5150026546E /* button_checkbox_off.png */,
+				56FBCDE81A0BB5150026546E /* button_checkbox_on.png */,
+				56FBCDE91A0BB5150026546E /* button_create_poi.png */,
+				56FBCDEA1A0BB5150026546E /* button_gallery.png */,
+				56FBCDEB1A0BB5150026546E /* button_ok.png */,
+				56FBCDEC1A0BB5150026546E /* button_photo.png */,
+				56FBCDED1A0BB5150026546E /* image_blank.png */,
+				56FBCDEE1A0BB5150026546E /* poi_marker.png */,
+				56A8DF7A19FEA977009DC352 /* Geosphere_01.pod */,
 				E0DD09F219EED4AF008BD39D /* SplashScreen.png */,
 				5606E31619ED1B93009059D4 /* eegeo_logo@ipho.png */,
 				18B5ACFD19DC160E00BA4A38 /* SearchResultOnMap */,
@@ -1908,6 +2225,7 @@
 			files = (
 				189B246919F9355A006DD887 /* SplashScreen.png in Resources */,
 				189B246819F93547006DD887 /* Images.xcassets in Resources */,
+				56A8DF7E19FEA977009DC352 /* Geosphere_01.pod in Resources */,
 				18B5ACB419DC15CD00BA4A38 /* icon1_park.png in Resources */,
 				18B5AC9619DC15CD00BA4A38 /* icon1_arts.png in Resources */,
 				18B5AC9019DC15CD00BA4A38 /* compass_shadow.png in Resources */,
@@ -1974,6 +2292,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				18B5ACB319DC15CD00BA4A38 /* icon1_park.png in Resources */,
+				56FBCDF31A0BB5150026546E /* button_ok.png in Resources */,
 				18B5AC9519DC15CD00BA4A38 /* icon1_arts.png in Resources */,
 				18B5AC8F19DC15CD00BA4A38 /* compass_shadow.png in Resources */,
 				18B5ACA519DC15CD00BA4A38 /* icon1_food.png in Resources */,
@@ -1981,11 +2300,13 @@
 				18B5ACF519DC15CD00BA4A38 /* shadow_01_flip.png in Resources */,
 				18B5ACC319DC15CD00BA4A38 /* icon1_weather.png in Resources */,
 				18B5ACAF19DC15CD00BA4A38 /* icon1_nightlife.png in Resources */,
+				56FBCDF61A0BB5150026546E /* poi_marker.png in Resources */,
 				18B5ACF119DC15CD00BA4A38 /* placejumps.json in Resources */,
 				7EE481F716836F370006E99B /* InfoPlist.strings in Resources */,
 				7EE4820E1683713B0006E99B /* MainStoryboard_iPhone.storyboard in Resources */,
 				18B5AC9719DC15CD00BA4A38 /* icon1_autumn.png in Resources */,
 				18B5AC7F19DC15CD00BA4A38 /* arrow1.png in Resources */,
+				56FBCDF21A0BB5150026546E /* button_gallery.png in Resources */,
 				18B5AC9319DC15CD00BA4A38 /* icon0_search_icon.png in Resources */,
 				7EE48211168371460006E99B /* MainStoryboard_iPad.storyboard in Resources */,
 				18B5ACCD19DC15CD00BA4A38 /* icon2_food.png in Resources */,
@@ -1995,12 +2316,16 @@
 				18B5AC8119DC15CD00BA4A38 /* button_close_off.png in Resources */,
 				18B5ACA319DC15CD00BA4A38 /* icon1_foggy.png in Resources */,
 				18B5ACBB19DC15CD00BA4A38 /* icon1_snowy.png in Resources */,
+				56FBCDF51A0BB5150026546E /* image_blank.png in Resources */,
 				E0DD09F319EED4AF008BD39D /* SplashScreen.png in Resources */,
 				18B5ACCB19DC15CD00BA4A38 /* icon2_coffee.png in Resources */,
+				56FBCDEF1A0BB5150026546E /* button_checkbox_off.png in Resources */,
 				18B5AC8B19DC15CD00BA4A38 /* buttonsmall_close_on.png in Resources */,
+				56FBCDF01A0BB5150026546E /* button_checkbox_on.png in Resources */,
 				18B5ACB519DC15CD00BA4A38 /* icon1_place.png in Resources */,
 				18B5ACA719DC15CD00BA4A38 /* icon1_hotel.png in Resources */,
 				E016040E19EEC26E0029A035 /* Images.xcassets in Resources */,
+				56FBCDF11A0BB5150026546E /* button_create_poi.png in Resources */,
 				18B5ACC519DC15CD00BA4A38 /* icon1_winter.png in Resources */,
 				18B5AC8D19DC15CD00BA4A38 /* compass_lock.png in Resources */,
 				18B5ACBF19DC15CD00BA4A38 /* icon1_summer.png in Resources */,
@@ -2011,6 +2336,7 @@
 				18B5ACD519DC15CD00BA4A38 /* icon2_park.png in Resources */,
 				18D1D35B194A057200FAA1B9 /* placeholder.pvr in Resources */,
 				18B5AC9919DC15CD00BA4A38 /* icon1_bank.png in Resources */,
+				56A8DF7D19FEA977009DC352 /* Geosphere_01.pod in Resources */,
 				18B5ACF919DC15CD00BA4A38 /* shadow_03.png in Resources */,
 				18B5ACB919DC15CD00BA4A38 /* icon1_search.png in Resources */,
 				18B5ACD319DC15CD00BA4A38 /* icon2_nightlife.png in Resources */,
@@ -2029,6 +2355,7 @@
 				18B5AC8719DC15CD00BA4A38 /* button_streets_on.png in Resources */,
 				18B5AC9119DC15CD00BA4A38 /* icon0_me_icon.png in Resources */,
 				18B5ACB119DC15CD00BA4A38 /* icon1_overcast.png in Resources */,
+				56FBCDF41A0BB5150026546E /* button_photo.png in Resources */,
 				18B5ACD119DC15CD00BA4A38 /* icon2_misc.png in Resources */,
 				18B5ACCF19DC15CD00BA4A38 /* icon2_hotel.png in Resources */,
 				18B5ACBD19DC15CD00BA4A38 /* icon1_spring.png in Resources */,
@@ -2044,10 +2371,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				18B5AAEC19DC159000BA4A38 /* CompassScreenControl.cpp in Sources */,
+				56BDAA3D1A02800B00429C19 /* PoiCreationConfirmationView.mm in Sources */,
 				18B5AB5C19DC159000BA4A38 /* SearchResultPoiModule.cpp in Sources */,
 				18B5AADE19DC159000BA4A38 /* CameraTransitionController.cpp in Sources */,
+				56BDAA271A027AF500429C19 /* PoiCreationButtonView.mm in Sources */,
 				18B5AB2019DC159000BA4A38 /* OpenableControlViewModelBase.cpp in Sources */,
 				18B5AB0A19DC159000BA4A38 /* MenuOptionsModel.cpp in Sources */,
+				566D3DCF1A07BFEC0067B38A /* PoiCreationDetailsOpenableControl.cpp in Sources */,
 				18B5AB2419DC159000BA4A38 /* PlaceJumpsDataParser.cpp in Sources */,
 				18B5AB7419DC159000BA4A38 /* WorldPinsFactory.cpp in Sources */,
 				18B5AC3719DC159B00BA4A38 /* SecondaryMenuView.mm in Sources */,
@@ -2056,23 +2386,28 @@
 				18B5AB5419DC159000BA4A38 /* SearchResultOnMapItemModel.cpp in Sources */,
 				18B5ABF719DC159B00BA4A38 /* iOSPersistentSettingsModel.mm in Sources */,
 				18B5AB5A19DC159000BA4A38 /* SearchResultOnMapScaleController.cpp in Sources */,
+				5602F7EB19FFF8F5005004D6 /* PoiRingTouchController.cpp in Sources */,
 				18B5AB6419DC159000BA4A38 /* WeatherController.cpp in Sources */,
 				18B5AAE019DC159000BA4A38 /* CategorySearchMenuOption.cpp in Sources */,
+				5637F1F81A0CDAFB0011B509 /* MyPinsService.cpp in Sources */,
 				18B5AC1119DC159B00BA4A38 /* MenuView.mm in Sources */,
 				18B5AAEA19DC159000BA4A38 /* CompassModule.cpp in Sources */,
 				18B5AAD819DC159000BA4A38 /* AboutPageModule.cpp in Sources */,
 				18B5ABF519DC159B00BA4A38 /* iOSInitialExperiencePreLoadModel.mm in Sources */,
+				5602F7F01A000659005004D6 /* PoiCreationButtonScreenControl.cpp in Sources */,
 				18B5AAF619DC159000BA4A38 /* FlattenButtonScreenControl.cpp in Sources */,
 				5605EDF019F824CD00D1D594 /* ReactionModelModule.cpp in Sources */,
 				18B5AC2B19DC159B00BA4A38 /* SearchResultOnMapViewModule.mm in Sources */,
 				18B5AB4C19DC159000BA4A38 /* SearchResultOnMapIconCategoryMapper.cpp in Sources */,
 				18B5AB1019DC159000BA4A38 /* MenuSectionViewModel.cpp in Sources */,
+				56BDAA4A1A02876500429C19 /* PoiCreationConfirmationViewModule.mm in Sources */,
 				18B5AC2719DC159B00BA4A38 /* SearchResultOnMapView.mm in Sources */,
 				18B5AAE619DC159000BA4A38 /* CategorySearchRepository.cpp in Sources */,
 				18B5AB2C19DC159000BA4A38 /* PrimaryMenuModule.cpp in Sources */,
 				180E99FF19E6B4CC007D63FD /* CustomTableViewCell.mm in Sources */,
 				18B5AAE419DC159000BA4A38 /* CategorySearchModule.cpp in Sources */,
 				18B5AC3319DC159B00BA4A38 /* SearchViewController.mm in Sources */,
+				566D3DD81A07C48D0067B38A /* PoiCreationDetailsModule.cpp in Sources */,
 				18B5AC1D19DC159B00BA4A38 /* PrimaryMenuViewModule.mm in Sources */,
 				18B5AB4019DC159000BA4A38 /* SearchServiceBase.cpp in Sources */,
 				18B5AB3C19DC159000BA4A38 /* SearchResultModel.cpp in Sources */,
@@ -2081,6 +2416,7 @@
 				186D2926196D9D0900E004E0 /* AppHost.mm in Sources */,
 				186D2927196D9D0900E004E0 /* AppInputDelegate.mm in Sources */,
 				18B5AB4619DC159000BA4A38 /* SearchResultMenuModule.cpp in Sources */,
+				5637F20A1A10F4CD0011B509 /* MyPinsFileIO.cpp in Sources */,
 				186D2928196D9D0900E004E0 /* AppLocationDelegate.mm in Sources */,
 				18B5AC0319DC159B00BA4A38 /* CompassViewModule.mm in Sources */,
 				18B5AAE819DC159000BA4A38 /* CompassModel.cpp in Sources */,
@@ -2088,11 +2424,14 @@
 				186D2929196D9D0900E004E0 /* AppRunner.mm in Sources */,
 				5605EDEC19F824CD00D1D594 /* ReactionControllerModule.cpp in Sources */,
 				18B5AB2219DC159000BA4A38 /* PlaceJumpController.cpp in Sources */,
+				566D3DCA1A07BE030067B38A /* PoiCreationDetailsViewController.mm in Sources */,
 				186D292A196D9D0900E004E0 /* GlDisplayService.mm in Sources */,
 				222E064C1948B08B0004FFD9 /* MobileExampleApp.cpp in Sources */,
 				5605EDDA19F81CFC00D1D594 /* ModalityModule.cpp in Sources */,
+				566D3DE21A07F0290067B38A /* PoiCreationDetailsViewModule.mm in Sources */,
 				5675902719F54A8200C4599E /* CustomTableView.mm in Sources */,
 				18B5AC2319DC159B00BA4A38 /* SearchResultMenuViewController.mm in Sources */,
+				569668151A0BEA6C0025A716 /* CustomImagePickerController.mm in Sources */,
 				18B5AB5E19DC159000BA4A38 /* SearchResultPoiOpenableControl.cpp in Sources */,
 				18B5AC3B19DC159B00BA4A38 /* ViewControllerUpdaterModel.mm in Sources */,
 				18B5AC2919DC159B00BA4A38 /* SearchResultOnMapViewController.mm in Sources */,
@@ -2101,6 +2440,7 @@
 				18B5AB7819DC159000BA4A38 /* WorldPinsService.cpp in Sources */,
 				5605EDD619F81CFC00D1D594 /* ModalityController.cpp in Sources */,
 				18B5AAF819DC159000BA4A38 /* FlattenButtonViewModel.cpp in Sources */,
+				566D3DDC1A07CAC20067B38A /* PoiCreationModel.cpp in Sources */,
 				18B5ABF319DC159B00BA4A38 /* iOSInitialExperienceModule.cpp in Sources */,
 				18B5AC0D19DC159B00BA4A38 /* ImageHelpers.mm in Sources */,
 				18B5AC2119DC159B00BA4A38 /* SearchResultMenuView.mm in Sources */,
@@ -2110,6 +2450,9 @@
 				18B5AC3119DC159B00BA4A38 /* SearchResultPoiViewModule.mm in Sources */,
 				18B5AAFE19DC159000BA4A38 /* InitialExperienceModuleBase.cpp in Sources */,
 				5605EDD819F81CFC00D1D594 /* ModalityModel.cpp in Sources */,
+				5602F7E119FFF338005004D6 /* PoiRingRenderable.cpp in Sources */,
+				566D3DB91A079E6C0067B38A /* PoiRingModule.cpp in Sources */,
+				56BDAA291A027AF500429C19 /* PoiCreationButtonViewController.mm in Sources */,
 				18B5AB3619DC159000BA4A38 /* SearchQuery.cpp in Sources */,
 				18B5AADC19DC159000BA4A38 /* AboutPageViewModel.cpp in Sources */,
 				18B5AC1319DC159B00BA4A38 /* MenuViewController.mm in Sources */,
@@ -2121,26 +2464,33 @@
 				18B5AB4419DC159000BA4A38 /* SearchResultMenuModel.cpp in Sources */,
 				18B5AB6019DC159000BA4A38 /* SearchResultPoiViewModel.cpp in Sources */,
 				18B5ABFD19DC159B00BA4A38 /* AboutPageViewModule.mm in Sources */,
+				5602F7DF19FFF338005004D6 /* PoiRingView.cpp in Sources */,
 				18B5ABF919DC159B00BA4A38 /* AboutPageView.mm in Sources */,
 				18B5AAF219DC159000BA4A38 /* FlattenButtonModel.cpp in Sources */,
+				566D3DC71A07BD430067B38A /* PoiCreationDetailsView.mm in Sources */,
 				18B5AB2819DC159000BA4A38 /* PlaceJumpsModule.cpp in Sources */,
 				18B5AAE219DC159000BA4A38 /* CategorySearchModel.cpp in Sources */,
 				18B5AC1919DC159B00BA4A38 /* ModalBackgroundViewModule.mm in Sources */,
 				18B5AB3419DC159000BA4A38 /* SearchModule.cpp in Sources */,
+				5602F7E919FFF8F5005004D6 /* PoiRingController.cpp in Sources */,
 				18B5AB0419DC159000BA4A38 /* MenuItemModel.cpp in Sources */,
 				18B5AB6A19DC159000BA4A38 /* WeatherMenuStateModel.cpp in Sources */,
 				18B5AB4E19DC159000BA4A38 /* SearchResultOnMapInFocusController.cpp in Sources */,
+				56BDAA1B1A0279C100429C19 /* PoiCreationConfirmationViewModel.cpp in Sources */,
 				18B5AC1519DC159B00BA4A38 /* ModalBackgroundView.mm in Sources */,
 				18B5AB4A19DC159000BA4A38 /* SearchResultOnMapFactory.cpp in Sources */,
 				18B5AB5819DC159000BA4A38 /* SearchResultOnMapModule.cpp in Sources */,
 				18B5AC0F19DC159B00BA4A38 /* UIColors.mm in Sources */,
+				5637F2061A10F3930011B509 /* MyPinsModule.cpp in Sources */,
 				18B5AAF019DC159000BA4A38 /* CompassViewModel.cpp in Sources */,
+				5602F7F41A000720005004D6 /* PoiCreationButtonViewModel.cpp in Sources */,
 				18B5AC0119DC159B00BA4A38 /* CompassViewController.mm in Sources */,
 				18B5AAFC19DC159000BA4A38 /* InitialExperienceModel.cpp in Sources */,
 				18B5AB5619DC159000BA4A38 /* SearchResultOnMapModel.cpp in Sources */,
 				18B5AADA19DC159000BA4A38 /* AboutPageOpenableControl.cpp in Sources */,
 				222E06561948B08B0004FFD9 /* ViewController.mm in Sources */,
 				18B5AB3019DC159000BA4A38 /* DecartaSearchJsonParser.cpp in Sources */,
+				56BDAA3F1A02800B00429C19 /* PoiCreationConfirmationViewController.mm in Sources */,
 				18B5AB6E19DC159000BA4A38 /* WorldAreaLoaderModel.cpp in Sources */,
 				18B5AB4219DC159000BA4A38 /* SearchResultItemModel.cpp in Sources */,
 				18B5AB3219DC159000BA4A38 /* DecartaSearchService.cpp in Sources */,
@@ -2148,12 +2498,18 @@
 				18B5AB4819DC159000BA4A38 /* SearchResultMenuViewModel.cpp in Sources */,
 				18B5AC3D19DC159B00BA4A38 /* ViewControllerUpdaterModule.mm in Sources */,
 				18B5AB5019DC159000BA4A38 /* SearchResultOnMapInFocusScreenControl.cpp in Sources */,
+				56BDAA2B1A027AF500429C19 /* PoiCreationButtonViewModule.mm in Sources */,
 				18B5AC0919DC159B00BA4A38 /* FlattenButtonViewModule.mm in Sources */,
+				566D3DB41A0291780067B38A /* PoiCreationCompositeViewModel.cpp in Sources */,
 				18B5AB6819DC159000BA4A38 /* WeatherMenuModule.cpp in Sources */,
+				56BDAA441A02820200429C19 /* PoiCreationConfirmationScreenControl.cpp in Sources */,
 				18B5AC1B19DC159B00BA4A38 /* PrimaryMenuView.mm in Sources */,
 				18B5AAFA19DC159000BA4A38 /* InitialExperienceController.cpp in Sources */,
 				18B5AC0519DC159B00BA4A38 /* FlattenButtonView.mm in Sources */,
 				18B5AB7219DC159000BA4A38 /* WorldPinItemModel.cpp in Sources */,
+				566D3DD31A07C0810067B38A /* PoiCreationDetailsViewModel.cpp in Sources */,
+				5637F1EF1A0CD51F0011B509 /* MyPinModel.cpp in Sources */,
+				56BE03B519FA6D110039CD7F /* PoiCreationModule.cpp in Sources */,
 				18B5AB5219DC159000BA4A38 /* SearchResultOnMapInFocusViewModel.cpp in Sources */,
 				18B5AB3E19DC159000BA4A38 /* SearchResultRepository.cpp in Sources */,
 				18B5AB3819DC159000BA4A38 /* SearchQueryPerformer.cpp in Sources */,
@@ -2179,10 +2535,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				18B5AAEB19DC159000BA4A38 /* CompassScreenControl.cpp in Sources */,
+				56BDAA3C1A02800B00429C19 /* PoiCreationConfirmationView.mm in Sources */,
 				18B5AB5B19DC159000BA4A38 /* SearchResultPoiModule.cpp in Sources */,
 				18B5AADD19DC159000BA4A38 /* CameraTransitionController.cpp in Sources */,
+				56BDAA261A027AF500429C19 /* PoiCreationButtonView.mm in Sources */,
 				18B5AB1F19DC159000BA4A38 /* OpenableControlViewModelBase.cpp in Sources */,
 				18B5AB0919DC159000BA4A38 /* MenuOptionsModel.cpp in Sources */,
+				5637F1F71A0CDAFB0011B509 /* MyPinsService.cpp in Sources */,
+				566D3DCE1A07BFEC0067B38A /* PoiCreationDetailsOpenableControl.cpp in Sources */,
 				18B5AB2319DC159000BA4A38 /* PlaceJumpsDataParser.cpp in Sources */,
 				18B5AB7319DC159000BA4A38 /* WorldPinsFactory.cpp in Sources */,
 				18B5AC3619DC159B00BA4A38 /* SecondaryMenuView.mm in Sources */,
@@ -2191,23 +2551,29 @@
 				18B5AB5319DC159000BA4A38 /* SearchResultOnMapItemModel.cpp in Sources */,
 				18B5ABF619DC159B00BA4A38 /* iOSPersistentSettingsModel.mm in Sources */,
 				18B5AB5919DC159000BA4A38 /* SearchResultOnMapScaleController.cpp in Sources */,
+				5602F7EA19FFF8F5005004D6 /* PoiRingTouchController.cpp in Sources */,
 				18B5AB6319DC159000BA4A38 /* WeatherController.cpp in Sources */,
+				56FBCDFA1A0BC97D0026546E /* PostPoiWorkItem.cpp in Sources */,
 				18B5AADF19DC159000BA4A38 /* CategorySearchMenuOption.cpp in Sources */,
 				18B5AC1019DC159B00BA4A38 /* MenuView.mm in Sources */,
 				18B5AAE919DC159000BA4A38 /* CompassModule.cpp in Sources */,
 				18B5AAD719DC159000BA4A38 /* AboutPageModule.cpp in Sources */,
 				18B5ABF419DC159B00BA4A38 /* iOSInitialExperiencePreLoadModel.mm in Sources */,
+				5602F7EF1A000659005004D6 /* PoiCreationButtonScreenControl.cpp in Sources */,
+				5637F1EE1A0CD51F0011B509 /* MyPinModel.cpp in Sources */,
 				18B5AAF519DC159000BA4A38 /* FlattenButtonScreenControl.cpp in Sources */,
 				5605EDEF19F824CD00D1D594 /* ReactionModelModule.cpp in Sources */,
 				18B5AC2A19DC159B00BA4A38 /* SearchResultOnMapViewModule.mm in Sources */,
 				18B5AB4B19DC159000BA4A38 /* SearchResultOnMapIconCategoryMapper.cpp in Sources */,
 				18B5AB0F19DC159000BA4A38 /* MenuSectionViewModel.cpp in Sources */,
+				56BDAA491A02876500429C19 /* PoiCreationConfirmationViewModule.mm in Sources */,
 				18B5AC2619DC159B00BA4A38 /* SearchResultOnMapView.mm in Sources */,
 				18B5AAE519DC159000BA4A38 /* CategorySearchRepository.cpp in Sources */,
 				18B5AB2B19DC159000BA4A38 /* PrimaryMenuModule.cpp in Sources */,
 				180E99FE19E6B4CC007D63FD /* CustomTableViewCell.mm in Sources */,
 				18B5AAE319DC159000BA4A38 /* CategorySearchModule.cpp in Sources */,
 				18B5AC3219DC159B00BA4A38 /* SearchViewController.mm in Sources */,
+				566D3DD71A07C48D0067B38A /* PoiCreationDetailsModule.cpp in Sources */,
 				18B5AC1C19DC159B00BA4A38 /* PrimaryMenuViewModule.mm in Sources */,
 				18B5AB3F19DC159000BA4A38 /* SearchServiceBase.cpp in Sources */,
 				18B5AB3B19DC159000BA4A38 /* SearchResultModel.cpp in Sources */,
@@ -2223,9 +2589,11 @@
 				18C45A7019658A5C009B18A8 /* AppHost.mm in Sources */,
 				5605EDEB19F824CD00D1D594 /* ReactionControllerModule.cpp in Sources */,
 				18B5AB2119DC159000BA4A38 /* PlaceJumpController.cpp in Sources */,
+				566D3DC91A07BE030067B38A /* PoiCreationDetailsViewController.mm in Sources */,
 				18C45A7319658A5C009B18A8 /* AppRunner.mm in Sources */,
 				18C45A7119658A5C009B18A8 /* AppInputDelegate.mm in Sources */,
 				5605EDD919F81CFC00D1D594 /* ModalityModule.cpp in Sources */,
+				566D3DE11A07F0290067B38A /* PoiCreationDetailsViewModule.mm in Sources */,
 				5675902619F54A8200C4599E /* CustomTableView.mm in Sources */,
 				18B5AC2219DC159B00BA4A38 /* SearchResultMenuViewController.mm in Sources */,
 				18B5AB5D19DC159000BA4A38 /* SearchResultPoiOpenableControl.cpp in Sources */,
@@ -2236,6 +2604,7 @@
 				18B5AB7719DC159000BA4A38 /* WorldPinsService.cpp in Sources */,
 				5605EDD519F81CFC00D1D594 /* ModalityController.cpp in Sources */,
 				18B5AAF719DC159000BA4A38 /* FlattenButtonViewModel.cpp in Sources */,
+				566D3DDB1A07CAC20067B38A /* PoiCreationModel.cpp in Sources */,
 				18B5ABF219DC159B00BA4A38 /* iOSInitialExperienceModule.cpp in Sources */,
 				18B5AC0C19DC159B00BA4A38 /* ImageHelpers.mm in Sources */,
 				18B5AC2019DC159B00BA4A38 /* SearchResultMenuView.mm in Sources */,
@@ -2245,6 +2614,10 @@
 				18B5AC3019DC159B00BA4A38 /* SearchResultPoiViewModule.mm in Sources */,
 				18B5AAFD19DC159000BA4A38 /* InitialExperienceModuleBase.cpp in Sources */,
 				5605EDD719F81CFC00D1D594 /* ModalityModel.cpp in Sources */,
+				5602F7E019FFF338005004D6 /* PoiRingRenderable.cpp in Sources */,
+				5637F2091A10F4CD0011B509 /* MyPinsFileIO.cpp in Sources */,
+				566D3DB81A079E6C0067B38A /* PoiRingModule.cpp in Sources */,
+				56BDAA281A027AF500429C19 /* PoiCreationButtonViewController.mm in Sources */,
 				18B5AB3519DC159000BA4A38 /* SearchQuery.cpp in Sources */,
 				18B5AADB19DC159000BA4A38 /* AboutPageViewModel.cpp in Sources */,
 				18B5AC1219DC159B00BA4A38 /* MenuViewController.mm in Sources */,
@@ -2256,26 +2629,33 @@
 				18B5AB4319DC159000BA4A38 /* SearchResultMenuModel.cpp in Sources */,
 				18B5AB5F19DC159000BA4A38 /* SearchResultPoiViewModel.cpp in Sources */,
 				18B5ABFC19DC159B00BA4A38 /* AboutPageViewModule.mm in Sources */,
+				5602F7DE19FFF338005004D6 /* PoiRingView.cpp in Sources */,
 				18B5ABF819DC159B00BA4A38 /* AboutPageView.mm in Sources */,
 				18B5AAF119DC159000BA4A38 /* FlattenButtonModel.cpp in Sources */,
+				566D3DC61A07BD430067B38A /* PoiCreationDetailsView.mm in Sources */,
 				18B5AB2719DC159000BA4A38 /* PlaceJumpsModule.cpp in Sources */,
 				18B5AAE119DC159000BA4A38 /* CategorySearchModel.cpp in Sources */,
 				18B5AC1819DC159B00BA4A38 /* ModalBackgroundViewModule.mm in Sources */,
 				18B5AB3319DC159000BA4A38 /* SearchModule.cpp in Sources */,
+				5602F7E819FFF8F5005004D6 /* PoiRingController.cpp in Sources */,
 				18B5AB0319DC159000BA4A38 /* MenuItemModel.cpp in Sources */,
 				18B5AB6919DC159000BA4A38 /* WeatherMenuStateModel.cpp in Sources */,
 				18B5AB4D19DC159000BA4A38 /* SearchResultOnMapInFocusController.cpp in Sources */,
+				56BDAA1A1A0279C100429C19 /* PoiCreationConfirmationViewModel.cpp in Sources */,
 				18B5AC1419DC159B00BA4A38 /* ModalBackgroundView.mm in Sources */,
 				18B5AB4919DC159000BA4A38 /* SearchResultOnMapFactory.cpp in Sources */,
 				18B5AB5719DC159000BA4A38 /* SearchResultOnMapModule.cpp in Sources */,
 				18B5AC0E19DC159B00BA4A38 /* UIColors.mm in Sources */,
 				18B5AAEF19DC159000BA4A38 /* CompassViewModel.cpp in Sources */,
+				5602F7F31A000720005004D6 /* PoiCreationButtonViewModel.cpp in Sources */,
 				18B5AC0019DC159B00BA4A38 /* CompassViewController.mm in Sources */,
 				18B5AAFB19DC159000BA4A38 /* InitialExperienceModel.cpp in Sources */,
 				18B5AB5519DC159000BA4A38 /* SearchResultOnMapModel.cpp in Sources */,
 				18B5AAD919DC159000BA4A38 /* AboutPageOpenableControl.cpp in Sources */,
+				5637F2051A10F3930011B509 /* MyPinsModule.cpp in Sources */,
 				18C45A7219658A5C009B18A8 /* AppLocationDelegate.mm in Sources */,
 				18B5AB2F19DC159000BA4A38 /* DecartaSearchJsonParser.cpp in Sources */,
+				56BDAA3E1A02800B00429C19 /* PoiCreationConfirmationViewController.mm in Sources */,
 				18B5AB6D19DC159000BA4A38 /* WorldAreaLoaderModel.cpp in Sources */,
 				18B5AB4119DC159000BA4A38 /* SearchResultItemModel.cpp in Sources */,
 				18B5AB3119DC159000BA4A38 /* DecartaSearchService.cpp in Sources */,
@@ -2283,12 +2663,18 @@
 				18B5AB4719DC159000BA4A38 /* SearchResultMenuViewModel.cpp in Sources */,
 				18B5AC3C19DC159B00BA4A38 /* ViewControllerUpdaterModule.mm in Sources */,
 				18B5AB4F19DC159000BA4A38 /* SearchResultOnMapInFocusScreenControl.cpp in Sources */,
+				56BDAA2A1A027AF500429C19 /* PoiCreationButtonViewModule.mm in Sources */,
 				18B5AC0819DC159B00BA4A38 /* FlattenButtonViewModule.mm in Sources */,
+				566D3DB31A0291780067B38A /* PoiCreationCompositeViewModel.cpp in Sources */,
 				18B5AB6719DC159000BA4A38 /* WeatherMenuModule.cpp in Sources */,
+				56BDAA431A02820200429C19 /* PoiCreationConfirmationScreenControl.cpp in Sources */,
 				18B5AC1A19DC159B00BA4A38 /* PrimaryMenuView.mm in Sources */,
 				18B5AAF919DC159000BA4A38 /* InitialExperienceController.cpp in Sources */,
 				18B5AC0419DC159B00BA4A38 /* FlattenButtonView.mm in Sources */,
 				18B5AB7119DC159000BA4A38 /* WorldPinItemModel.cpp in Sources */,
+				566D3DD21A07C0810067B38A /* PoiCreationDetailsViewModel.cpp in Sources */,
+				56BE03B419FA6D110039CD7F /* PoiCreationModule.cpp in Sources */,
+				569668141A0BEA6C0025A716 /* CustomImagePickerController.mm in Sources */,
 				18B5AB5119DC159000BA4A38 /* SearchResultOnMapInFocusViewModel.cpp in Sources */,
 				18B5AB3D19DC159000BA4A38 /* SearchResultRepository.cpp in Sources */,
 				18B5AB3719DC159000BA4A38 /* SearchQueryPerformer.cpp in Sources */,

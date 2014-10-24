@@ -30,6 +30,9 @@
 #include "SearchResultOnMapViewIncludes.h"
 #include "CompassViewIncludes.h"
 #include "AboutPageViewIncludes.h"
+#include "PoiCreationButtonViewIncludes.h"
+#include "PoiCreationConfirmationViewIncludes.h"
+#include "PoiCreationDetailsViewIncludes.h"
 
 @class ViewController;
 class AppInputDelegate;
@@ -85,6 +88,9 @@ private:
     ExampleApp::PersistentSettings::iOSPersistentSettingsModel m_iOSPersistentSettingsModel;
     ExampleApp::InitialExperience::IInitialExperienceModule* m_pInitialExperienceModule;
     ExampleApp::AboutPage::IAboutPageViewModule* m_pAboutPageViewModule;
+    ExampleApp::PoiCreation::IPoiCreationButtonViewModule* m_pPoiCreationButtonViewModule;
+    ExampleApp::PoiCreation::IPoiCreationConfirmationViewModule* m_pPoiCreationConfirmationViewModule;
+    ExampleApp::PoiCreationDetails::IPoiCreationDetailsViewModule* m_pPoiCreationDetailsViewModule;
     
     ExampleApp::MobileExampleApp* m_pApp;
     

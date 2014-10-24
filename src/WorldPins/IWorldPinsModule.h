@@ -14,6 +14,8 @@ namespace ExampleApp
             virtual ~IWorldPinsModule() { }
             
             virtual IWorldPinsService& GetWorldPinsService() const = 0;
+            
+            virtual IWorldPinsFactory& GetWorldPinsFactory() const = 0;
         };
     }
 }

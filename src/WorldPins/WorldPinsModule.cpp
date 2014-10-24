@@ -36,5 +36,10 @@ namespace ExampleApp
         {
             return *m_pWorldPinsService;
         }
+        
+        IWorldPinsFactory& WorldPinsModule::GetWorldPinsFactory() const
+        {
+            return *m_pWorldPinsFactory;
+        }
     }
 }

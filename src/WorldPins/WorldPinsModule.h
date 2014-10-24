@@ -26,6 +26,8 @@ namespace ExampleApp
             ~WorldPinsModule();
             
             IWorldPinsService& GetWorldPinsService() const;
+            
+            IWorldPinsFactory& GetWorldPinsFactory() const;
         };
     }
 }

@@ -53,6 +53,9 @@
 #include "WorldAreaLoader.h"
 #include "InitialExperience.h"
 #include "IInitialExperienceModule.h"
+#include "PoiCreation.h"
+#include "PoiCreationDetails.h"
+#include "MyPins.h"
 
 namespace ExampleApp
 {
@@ -93,6 +96,10 @@ namespace ExampleApp
         ExampleApp::WorldAreaLoader::IWorldAreaLoaderModule* m_pWorldAreaLoaderModule;
         ExampleApp::AboutPage::IAboutPageModule* m_pAboutPageModule;
         ExampleApp::InitialExperience::IInitialExperienceModule& m_initialExperienceModule;
+        ExampleApp::PoiCreation::PoiRing::IPoiRingModule* m_pPoiRingModule;
+        ExampleApp::PoiCreation::IPoiCreationModule* m_pPoiCreationModule;
+        ExampleApp::PoiCreationDetails::IPoiCreationDetailsModule* m_pPoiCreationDetailsModule;
+        ExampleApp::MyPins::IMyPinsModule* m_pMyPinsModule;
         
         void CreateApplicationModelModules();
         
@@ -160,6 +167,14 @@ namespace ExampleApp
         const ExampleApp::AboutPage::IAboutPageModule& AboutPageModule() const { return *m_pAboutPageModule; }
         
         const ExampleApp::CategorySearch::ICategorySearchModule& CategorySearchModule() const { return *m_pCategorySearchModule; }
+        
+        const ExampleApp::PoiCreation::IPoiCreationModule& PoiCreationModule() const { return *m_pPoiCreationModule; }
+        
+        const ExampleApp::PoiCreation::PoiRing::IPoiRingModule& PoiRingModule() const { return *m_pPoiRingModule; }
+        
+        const ExampleApp::PoiCreationDetails::IPoiCreationDetailsModule& PoiCreationDetailsModule() const { return *m_pPoiCreationDetailsModule; }
+        
+        const ExampleApp::MyPins::IMyPinsModule& MyPinsModule() const { return *m_pMyPinsModule; }
         
         void OnPause();
         

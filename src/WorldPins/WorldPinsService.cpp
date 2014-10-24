@@ -65,6 +65,8 @@ namespace ExampleApp
         void WorldPinsService::RemovePin(const WorldPinItemModel& pinItemModel)
         {
             Eegeo::Pins::Pin* pPin = m_pinRepository.GetPinById(pinItemModel.Id());
+            
+            Eegeo_TTY("Pin removed\n");
             m_pinRepository.RemovePin(*pPin);
             ErasePin(pinItemModel.Id());
             m_worldPinsRepository.RemoveItem(pinItemModel);

@@ -13,7 +13,7 @@ using namespace Eegeo::iOS;
     
     if([self respondsToSelector:@selector(setNeedsStatusBarAppearanceUpdate)])
     {
-        [self setNeedsStatusBarAppearanceUpdate];
+       // [self setNeedsStatusBarAppearanceUpdate];
     }
     
     m_previousTimestamp = CFAbsoluteTimeGetCurrent();

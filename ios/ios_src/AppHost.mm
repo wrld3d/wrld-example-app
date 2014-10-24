@@ -42,6 +42,15 @@
 #include "AboutPageViewModule.h"
 #include "AboutPageView.h"
 #include "CategorySearchModule.h"
+#include "PoiCreationButtonViewModule.h"
+#include "PoiCreationButtonView.h"
+#include "PoiCreationConfirmationViewModule.h"
+#include "PoiCreationConfirmationView.h"
+#include "IPoiCreationModule.h"
+#include "IPoiRingModule.h"
+#include "IPoiCreationDetailsModule.h"
+#include "PoiCreationDetailsViewModule.h"
+#include "PoiCreationDetailsView.h"
 
 using namespace Eegeo::iOS;
 
@@ -205,12 +214,27 @@ void AppHost::CreateApplicationViewModules()
     m_pAboutPageViewModule = Eegeo_NEW(ExampleApp::AboutPage::AboutPageViewModule)(app.AboutPageModule().GetAboutPageModel(),
                                                                                    app.AboutPageModule().GetAboutPageViewModel());
     
+    m_pPoiCreationButtonViewModule = Eegeo_NEW(ExampleApp::PoiCreation::PoiCreationButtonViewModule)(app.PoiCreationModule().GetPoiCreationModel(),
+                                                                                                     app.PoiCreationModule().GetPoiCreationButtonViewModel(),
+                                                                                                     *m_pScreenProperties);
+    
+    m_pPoiCreationConfirmationViewModule = Eegeo_NEW(ExampleApp::PoiCreation::PoiCreationConfirmationViewModule)(app.PoiCreationModule().GetPoiCreationModel(),
+                                                                                                                 app.PoiCreationModule().GetPoiCreationConfirmationViewModel(),
+                                                                                                                 app.PoiCreationModule().GetPoiCreationCompositeViewModel(),
+                                                                                                                 app.PoiCreationDetailsModule().GetPoiCreationDetailsViewModel(),
+                                                                                                                 *m_pScreenProperties);
+    
+    m_pPoiCreationDetailsViewModule = Eegeo_NEW(ExampleApp::PoiCreationDetails::PoiCreationDetailsViewModule)(app.PoiCreationModule().GetPoiCreationModel(),
+                                                                                                              app.PoiCreationDetailsModule().GetPoiCreationDetailsViewModel());
+    
     // 3d map view layer.
     [m_pView addSubview: &m_pSearchResultOnMapViewModule->GetSearchResultOnMapView()];
     
     // HUD behind modal background layer.
     [m_pView addSubview: &m_pFlattenButtonViewModule->GetFlattenButtonView()];
     [m_pView addSubview: &m_pCompassViewModule->GetCompassView()];
+    [m_pView addSubview: &m_pPoiCreationButtonViewModule->GetPoiCreationButtonView()];
+    [m_pView addSubview: &m_pPoiCreationConfirmationViewModule->GetPoiCreationConfirmationView()];
     
     // Modal background layer.
     [m_pView addSubview: &m_pModalBackgroundViewModule->GetModalBackgroundView()];
@@ -223,6 +247,7 @@ void AppHost::CreateApplicationViewModules()
     // Pop-up layer.
     [m_pView addSubview: &m_pSearchResultPoiViewModule->GetSearchResultPoiView()];
     [m_pView addSubview: &m_pAboutPageViewModule->GetAboutPageView()];
+    [m_pView addSubview: &m_pPoiCreationDetailsViewModule->GetPoiCreationDetailsView()];
     
     m_pViewControllerUpdaterModule = Eegeo_NEW(ExampleApp::ViewControllerUpdater::ViewControllerUpdaterModule);
     ExampleApp::ViewControllerUpdater::IViewControllerUpdaterModel& viewControllerUpdaterModel = m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel();
@@ -240,6 +265,8 @@ void AppHost::DestroyApplicationViewModules()
     // HUD behind modal background layer.
     [&m_pFlattenButtonViewModule->GetFlattenButtonView() removeFromSuperview];
     [&m_pCompassViewModule->GetCompassView() removeFromSuperview];
+    [&m_pPoiCreationButtonViewModule->GetPoiCreationButtonView() removeFromSuperview];
+    [&m_pPoiCreationConfirmationViewModule->GetPoiCreationConfirmationView() removeFromSuperview];
     
     // Modal background layer.
     [&m_pModalBackgroundViewModule->GetModalBackgroundView() removeFromSuperview];
@@ -250,10 +277,17 @@ void AppHost::DestroyApplicationViewModules()
     [&m_pSearchResultMenuViewModule->GetSearchResultMenuView() removeFromSuperview];
     
     // Pop-up layer.
+    [&m_pPoiCreationDetailsViewModule->GetPoiCreationDetailsView() removeFromSuperview];
     [&m_pSearchResultPoiViewModule->GetSearchResultPoiView() removeFromSuperview];
     [&m_pAboutPageViewModule->GetAboutPageView() removeFromSuperview];
     
     Eegeo_DELETE m_pViewControllerUpdaterModule;
+    
+    Eegeo_DELETE m_pPoiCreationDetailsViewModule;
+    
+    Eegeo_DELETE m_pPoiCreationConfirmationViewModule;
+    
+    Eegeo_DELETE m_pPoiCreationButtonViewModule;
     
     Eegeo_DELETE m_pAboutPageViewModule;
     

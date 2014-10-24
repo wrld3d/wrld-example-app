@@ -33,7 +33,13 @@
 #include "StreamingModule.h"
 #include "EnvironmentCharacterSet.h"
 #include "Blitter.h"
-
+#include "IPoiRingTouchController.h"
+#include "PoiCreationModule.h"
+#include "ISearchResultMenuViewModel.h"
+#include "PoiRingModule.h"
+#include "IPoiRingController.h"
+#include "PoiCreationDetailsModule.h"
+#include "MyPinsModule.h"
 
 namespace ExampleApp
 {
@@ -108,7 +114,13 @@ namespace ExampleApp
     , m_pAboutPageModule(NULL)
     , m_initialExperienceModule(initialExperienceModule)
     , m_pBlitter(NULL)
+    , m_pPoiCreationModule(NULL)
+    , m_pPoiRingModule(NULL)
+    , m_pPoiCreationDetailsModule(NULL)
+    , m_pMyPinsModule(NULL)
     {
+        Eegeo::TtyHandler::TtyEnabled = true;
+        
         m_pBlitter = Eegeo_NEW(Eegeo::Blitter)(1024 * 128, 1024 * 64, 1024 * 32, screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight());
         m_pBlitter->Initialise();
         
@@ -174,6 +186,8 @@ namespace ExampleApp
         CreateApplicationModelModules();
         
         m_pLoadingScreen = CreateLoadingScreen(screenProperties, m_pWorld->GetRenderingModule(), m_pWorld->GetPlatformAbstractionModule());
+        
+
     }
     
     
@@ -191,6 +205,7 @@ namespace ExampleApp
         m_pBlitter->Shutdown();
         Eegeo_DELETE m_pBlitter;
         m_pBlitter = NULL;
+
     }
     
     void MobileExampleApp::CreateApplicationModelModules()
@@ -211,7 +226,7 @@ namespace ExampleApp
         m_pCompassModule = Eegeo_NEW(ExampleApp::Compass::CompassModule)(*m_pNavigationService,
                                                                          *m_pGlobeCameraController,
                                                                          m_identityProvider);
-        
+
         Eegeo::Modules::Map::CityThemesModule& cityThemesModule = world.GetCityThemesModule();
         
         m_pWeatherMenuModule = Eegeo_NEW(ExampleApp::WeatherMenu::WeatherMenuModule)(m_platformAbstractions.GetFileIO(),
@@ -254,6 +269,9 @@ namespace ExampleApp
                                                                                                     m_pSearchModule->GetSearchQueryPerformer(),
                                                                                                     m_pSearchModule->GetSearchService());
         
+        m_pPoiCreationDetailsModule = Eegeo_NEW(ExampleApp::PoiCreationDetails::PoiCreationDetailsModule)(m_identityProvider,
+                                                                                                          m_pReactionControllerModule->GetReactionControllerModel());
+        
         std::vector<ExampleApp::OpenableControlViewModel::IOpenableControlViewModel*> openables(GetOpenableControls());
         
         m_pModalityModule = Eegeo_NEW(ExampleApp::Modality::ModalityModule)(openables);
@@ -265,6 +283,25 @@ namespace ExampleApp
                                                                                                        m_pModalityModule->GetModalityModel(),
                                                                                                        world.GetScreenProperties(),
                                                                                                        *m_pGlobeCameraController->GetCamera());
+        
+        m_pMyPinsModule = Eegeo_NEW(ExampleApp::MyPins::MyPinsModule)(m_pPinsModule->GetRepository(),
+                                                                      m_pWorldPinsModule->GetWorldPinsFactory(),
+                                                                      m_platformAbstractions.GetFileIO());
+        
+        m_pPoiCreationModule = Eegeo_NEW(ExampleApp::PoiCreation::PoiCreationModule)(m_pMyPinsModule->GetMyPinsService(),
+                                                                                     m_identityProvider,
+                                                                                     m_pPrimaryMenuModule->GetPrimaryMenuViewModel(),
+                                                                                     m_pSecondaryMenuModule->GetSecondaryMenuViewModel(),
+                                                                                     m_pSearchModule->GetSearchQueryPerformer(),
+                                                                                     m_pSearchResultMenuModule->GetMenuViewModel());
+        
+        m_pPoiRingModule = Eegeo_NEW(ExampleApp::PoiCreation::PoiRing::PoiRingModule)(m_pPoiCreationModule->GetPoiCreationModel(),
+                                                                                      m_platformAbstractions,
+                                                                                      m_pWorld->GetRenderingModule(),
+                                                                                      m_pWorld->GetAsyncLoadersModule(),
+                                                                                      m_pWorld->GetLightingModule(),
+                                                                                      m_pWorld->GetTerrainModelModule(),
+                                                                                      m_pWorld->GetScreenProperties());
         
         std::vector<ExampleApp::ScreenControlViewModel::IScreenControlViewModel*> reactors(GetReactorControls());
         
@@ -280,6 +317,12 @@ namespace ExampleApp
     
     void MobileExampleApp::DestroyApplicationModelModules()
     {
+        Eegeo_DELETE m_pPoiCreationModule;
+        
+        Eegeo_DELETE m_pPoiRingModule;
+        
+        Eegeo_DELETE m_pMyPinsModule;
+        
         m_initialExperienceModule.TearDown();
         
         Eegeo_DELETE m_pWorldAreaLoaderModule;
@@ -327,6 +370,7 @@ namespace ExampleApp
         openables.push_back(&SearchResultMenuModule().GetMenuViewModel());
         openables.push_back(&SearchResultPoiModule().GetObservableOpenableControl());
         openables.push_back(&AboutPageModule().GetObservableOpenableControl());
+        openables.push_back(&PoiCreationDetailsModule().GetObservableOpenableControl());
         return openables;
     }
     
@@ -339,6 +383,7 @@ namespace ExampleApp
         reactors.push_back(&FlattenButtonModule().GetScreenControlViewModel());
         reactors.push_back(&SearchResultOnMapModule().GetScreenControlViewModel());
         reactors.push_back(&CompassModule().GetScreenControlViewModel());
+        reactors.push_back(&PoiCreationModule().GetButtonScreenControlViewModel());
         return reactors;
     }
     
@@ -372,6 +417,8 @@ namespace ExampleApp
                                                            mapModule.GetEnvironmentFlatteningService()
                                                            );
         
+
+        
         m_pWorldPinsModule = Eegeo_NEW(ExampleApp::WorldPins::WorldPinsModule)(m_pPinsModule->GetRepository(),
                                                                                m_pPinsModule->GetController(),
                                                                                mapModule.GetEnvironmentFlatteningService());
@@ -403,6 +450,8 @@ namespace ExampleApp
         
         m_pGlobeCameraController->Update(dt);
         m_pCameraTransitionController->Update(dt);
+        
+        m_pPoiRingModule->GetPoiRingController().Update(dt, *m_pGlobeCameraController->GetCamera(), m_pGlobeCameraController->GetEcefInterestPoint());
         
         eegeoWorld.Update(dt, *m_pGlobeCameraController->GetCamera(), m_pGlobeCameraController->GetEcefInterestPoint());
         
@@ -443,6 +492,7 @@ namespace ExampleApp
         m_pSearchResultMenuModule->GetMenuViewModel().AddToScreen();
         m_pFlattenButtonModule->GetScreenControlViewModel().AddToScreen();
         m_pCompassModule->GetScreenControlViewModel().AddToScreen();
+        m_pPoiCreationModule->GetButtonScreenControlViewModel().AddToScreen();
     }
     
     void MobileExampleApp::UpdateLoadingScreen(float dt)
@@ -548,7 +598,8 @@ namespace ExampleApp
     
     void MobileExampleApp::Event_TouchPan(const AppInterface::PanData& data)
     {
-        if(World().Initialising())
+        PoiCreation::PoiRing::IPoiRingTouchController& poiRingTouchController = m_pPoiRingModule->GetPoiRingTouchController();
+        if(World().Initialising() || poiRingTouchController.IsDragging())
         {
             return;
         }
@@ -558,7 +609,8 @@ namespace ExampleApp
     
     void MobileExampleApp::Event_TouchPan_Start(const AppInterface::PanData& data)
     {
-        if(World().Initialising())
+        PoiCreation::PoiRing::IPoiRingTouchController& poiRingTouchController = m_pPoiRingModule->GetPoiRingTouchController();
+        if(World().Initialising() || poiRingTouchController.IsDragging())
         {
             return;
         }
@@ -568,7 +620,8 @@ namespace ExampleApp
     
     void MobileExampleApp::Event_TouchPan_End(const AppInterface::PanData& data)
     {
-        if(World().Initialising())
+        PoiCreation::PoiRing::IPoiRingTouchController& poiRingTouchController = m_pPoiRingModule->GetPoiRingTouchController();
+        if(World().Initialising() || poiRingTouchController.IsDragging())
         {
             return;
         }
@@ -582,7 +635,7 @@ namespace ExampleApp
         {
             return;
         }
-        
+ 
         if(!m_pWorldPinsModule->GetWorldPinsService().HandleTouchTap(data.point))
         {
             m_pCameraTouchController->Event_TouchTap(data);
@@ -606,7 +659,12 @@ namespace ExampleApp
             return;
         }
         
-        m_pCameraTouchController->Event_TouchDown(data);
+        PoiCreation::PoiRing::IPoiRingTouchController& poiRingTouchController = m_pPoiRingModule->GetPoiRingTouchController();
+        if (!poiRingTouchController.HandleTouchDown(data, *m_pGlobeCameraController->GetCamera()))
+        {
+            m_pCameraTouchController->Event_TouchDown(data);
+        }
+       
     }
     
     void MobileExampleApp::Event_TouchMove(const AppInterface::TouchData& data)
@@ -616,7 +674,11 @@ namespace ExampleApp
             return;
         }
         
-        m_pCameraTouchController->Event_TouchMove(data);
+        PoiCreation::PoiRing::IPoiRingTouchController& poiRingTouchController = m_pPoiRingModule->GetPoiRingTouchController();
+        if (!poiRingTouchController.HandleTouchMove(data, *m_pGlobeCameraController->GetCamera()))
+        {
+            m_pCameraTouchController->Event_TouchMove(data);
+        }
     }
     
     void MobileExampleApp::Event_TouchUp(const AppInterface::TouchData& data)
@@ -626,6 +688,10 @@ namespace ExampleApp
             return;
         }
         
-        m_pCameraTouchController->Event_TouchUp(data);
+        PoiCreation::PoiRing::IPoiRingTouchController& poiRingTouchController = m_pPoiRingModule->GetPoiRingTouchController();
+        if (!poiRingTouchController.HandleTouchUp(data))
+        {
+            m_pCameraTouchController->Event_TouchUp(data);
+        }
     }
 }
