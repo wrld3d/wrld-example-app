@@ -6,7 +6,7 @@
     android:clipChildren="false"
     android:clipToPadding="false">
 
-    <com.eegeo.EegeoSurfaceView
+    <com.eegeo.mobileexampleapp.EegeoSurfaceView
         android:id="@+id/surface"
     	android:layout_width="fill_parent" 
     	android:layout_height="fill_parent"/>

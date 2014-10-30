@@ -1,7 +1,7 @@
 package com.eegeo.flattenbutton;
 
-import com.eegeo.MainActivity;
-import com.eegeo.R;
+import com.eegeo.mobileexampleapp.MainActivity;
+import com.eegeo.mobileexampleapp.R;
 
 import android.view.View;
 import android.widget.RelativeLayout;

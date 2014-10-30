@@ -12,8 +12,8 @@ import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 
-import com.eegeo.MainActivity;
-import com.eegeo.R;
+import com.eegeo.mobileexampleapp.MainActivity;
+import com.eegeo.mobileexampleapp.R;
 import com.eegeo.categories.CategoryResources;
 import com.eegeo.menu.MenuView;
 import com.eegeo.menu.MenuViewJniMethods;

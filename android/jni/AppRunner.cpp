@@ -63,7 +63,7 @@ void AppRunner::ActivateSurface()
 {
 	ReleaseDisplay();
 	bool displayBound = TryBindDisplay();
-	Eegeo_ASSERT(displayBound);
+	Eegeo_ASSERT(displayBound, "Failed to bind display");
 	CreateAppHost();
 }
 

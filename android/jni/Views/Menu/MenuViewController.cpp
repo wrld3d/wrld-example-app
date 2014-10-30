@@ -48,7 +48,7 @@ namespace ExampleApp
 
 			m_uiViewClass = static_cast<jclass>(env->NewGlobalRef(uiClass));
 			env->DeleteLocalRef(uiClass);
-			jmethodID uiViewCtor = env->GetMethodID(m_uiViewClass, "<init>", "(Lcom/eegeo/MainActivity;J)V");
+			jmethodID uiViewCtor = env->GetMethodID(m_uiViewClass, "<init>", "(Lcom/eegeo/mobileexampleapp/MainActivity;J)V");
 
 			jobject instance = env->NewObject(
 				m_uiViewClass,

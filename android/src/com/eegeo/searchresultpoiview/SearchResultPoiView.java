@@ -10,8 +10,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.eegeo.MainActivity;
-import com.eegeo.R;
+import com.eegeo.mobileexampleapp.MainActivity;
+import com.eegeo.mobileexampleapp.R;
 import com.eegeo.categories.CategoryResources;
 
 public class SearchResultPoiView implements View.OnClickListener

@@ -5,8 +5,8 @@ package com.eegeo.modalbackground;
 import android.view.View;
 import android.widget.RelativeLayout;
 
-import com.eegeo.MainActivity;
-import com.eegeo.R;
+import com.eegeo.mobileexampleapp.MainActivity;
+import com.eegeo.mobileexampleapp.R;
 
 public class ModalBackgroundView
 {
