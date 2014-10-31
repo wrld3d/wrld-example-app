@@ -207,21 +207,36 @@ namespace ExampleApp
 		void MenuViewController::HandleDraggingViewStarted()
 		{
 			Eegeo_ASSERT(!m_dragInProgress, "identity %d\n", Identity());
-		    Eegeo_ASSERT(m_menuViewModel.TryAcquireReactorControl(), "%d failed to acquire reactor control.\n", Identity());
+
+			{
+				const bool acquiredReactorControl = m_menuViewModel.TryAcquireReactorControl();
+				Eegeo_ASSERT(acquiredReactorControl, "%d failed to acquire reactor control.\n", Identity());
+			}
+
 		    m_dragInProgress = true;
 		}
 
 		void MenuViewController::HandleDraggingViewInProgress(float normalisedDragState)
 		{
 			Eegeo_ASSERT(m_dragInProgress);
-		    Eegeo_ASSERT(m_menuViewModel.TryAcquireReactorControl(), "%d failed to acquire reactor control.\n", Identity());
+
+			{
+				const bool acquiredReactorControl = m_menuViewModel.TryAcquireReactorControl();
+				Eegeo_ASSERT(acquiredReactorControl, "%d failed to acquire reactor control.\n", Identity());
+			}
+
 			m_menuViewModel.UpdateOpenState(normalisedDragState);
 		}
 
 		void MenuViewController::HandleDraggingViewCompleted()
 		{
 			Eegeo_ASSERT(m_dragInProgress);
-		    Eegeo_ASSERT(m_menuViewModel.TryAcquireReactorControl(), "%d failed to acquire reactor control.\n", Identity());
+
+			{
+				const bool acquiredReactorControl = m_menuViewModel.TryAcquireReactorControl();
+				Eegeo_ASSERT(acquiredReactorControl, "%d failed to acquire reactor control.\n", Identity());
+			}
+
 			m_dragInProgress = false;
 		}
 

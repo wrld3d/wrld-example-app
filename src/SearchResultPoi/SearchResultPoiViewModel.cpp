@@ -49,7 +49,12 @@ namespace ExampleApp
         void SearchResultPoiViewModel::Close()
         {
             Eegeo_ASSERT(IsOpen(), "Cannot close SearchResultModel when view model when already closed.\n");
-            Eegeo_ASSERT(m_openable.Close());
+
+            {
+            	const bool closed = m_openable.Close();
+            	Eegeo_ASSERT(closed, "Failed to close");
+            }
+
             m_closedCallbacks.ExecuteCallbacks();
         }
         

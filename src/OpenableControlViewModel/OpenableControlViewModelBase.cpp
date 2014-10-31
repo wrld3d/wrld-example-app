@@ -70,7 +70,12 @@ namespace ExampleApp
                 m_openState = 1.f;
                 m_openStateChangedCallbacks.ExecuteCallbacks(*this, m_openState);
                 ReleaseReactorControl();
-                Eegeo_ASSERT(TryAcquireOpenableControl());
+
+                {
+                	const bool acquiredOpenableControl = TryAcquireOpenableControl();
+                	Eegeo_ASSERT(acquiredOpenableControl, "failed to acquire openable control");
+                }
+
                 return true;
             }
             return false;
@@ -93,7 +98,10 @@ namespace ExampleApp
         {
             Eegeo_ASSERT(openState >= 0.f && openState <= 1.f, "Invalid value %f for open state, valid range for UI open-state is 0.0 to 1.0 inclusive.\n", openState)
             
-            Eegeo_ASSERT(TryAcquireReactorControl());
+			{
+				const bool acquiredReactorControl = TryAcquireReactorControl();
+				Eegeo_ASSERT(acquiredReactorControl, "failed to acquire reactor control");
+			}
             
             if(openState < 1.f)
             {

@@ -42,7 +42,11 @@ namespace ExampleApp
         {
             if(IsOpen())
         	{
-                Eegeo_ASSERT(m_openable.Close());
+            	{
+					const bool closed = m_openable.Close();
+					Eegeo_ASSERT(closed, "Failed to close");
+            	}
+
                 m_closedCallbacks.ExecuteCallbacks();
         	}
         }
