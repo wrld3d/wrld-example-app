@@ -15,8 +15,8 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
-import com.eegeo.MainActivity;
-import com.eegeo.R;
+import com.eegeo.mobileexampleapp.MainActivity;
+import com.eegeo.mobileexampleapp.R;
 import com.eegeo.menu.MenuViewJniMethods;
 
 public abstract class MenuView implements View.OnTouchListener, View.OnClickListener

@@ -22,6 +22,8 @@
 		186D2937196D9E4B00E004E0 /* FrankBold50_A8_icons_0.png in Resources */ = {isa = PBXBuildFile; fileRef = 18D1D343194A057200FAA1B9 /* FrankBold50_A8_icons_0.png */; };
 		186D2938196D9E4B00E004E0 /* FrankBold50_A8_icons.fnt in Resources */ = {isa = PBXBuildFile; fileRef = 18D1D344194A057200FAA1B9 /* FrankBold50_A8_icons.fnt */; };
 		189971CE192CCC0200E0E9F1 /* MobileExampleApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 189971CC192CCC0200E0E9F1 /* MobileExampleApp.cpp */; };
+		189B246819F93547006DD887 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E016040D19EEC26E0029A035 /* Images.xcassets */; };
+		189B246919F9355A006DD887 /* SplashScreen.png in Resources */ = {isa = PBXBuildFile; fileRef = E0DD09F219EED4AF008BD39D /* SplashScreen.png */; };
 		18AB38FD192B729F00F15546 /* Main.m in Sources */ = {isa = PBXBuildFile; fileRef = 18AB38F5192B729F00F15546 /* Main.m */; };
 		18AB38FE192B729F00F15546 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18AB38F7192B729F00F15546 /* ViewController.mm */; };
 		18B5AAD519DC159000BA4A38 /* AboutPageModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18B5A9B319DC158F00BA4A38 /* AboutPageModel.cpp */; };
@@ -1904,6 +1906,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				189B246919F9355A006DD887 /* SplashScreen.png in Resources */,
+				189B246819F93547006DD887 /* Images.xcassets in Resources */,
 				18B5ACB419DC15CD00BA4A38 /* icon1_park.png in Resources */,
 				18B5AC9619DC15CD00BA4A38 /* icon1_arts.png in Resources */,
 				18B5AC9019DC15CD00BA4A38 /* compass_shadow.png in Resources */,

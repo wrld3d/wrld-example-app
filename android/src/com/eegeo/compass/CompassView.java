@@ -1,7 +1,7 @@
 package com.eegeo.compass;
 
-import com.eegeo.MainActivity;
-import com.eegeo.R;
+import com.eegeo.mobileexampleapp.MainActivity;
+import com.eegeo.mobileexampleapp.R;
 
 import android.graphics.PorterDuff.Mode;
 import android.view.View;

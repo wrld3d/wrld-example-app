@@ -1,6 +1,6 @@
 // Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
-package com.eegeo;
+package com.eegeo.mobileexampleapp;
 
 import android.content.Context;
 import android.util.AttributeSet;

@@ -1,6 +1,6 @@
 package com.eegeo.searchmenu;
 
-import com.eegeo.INativeMessageRunner;
+import com.eegeo.mobileexampleapp.INativeMessageRunner;
 import com.eegeo.menu.MenuViewJniMethods;
 
 import android.view.View;

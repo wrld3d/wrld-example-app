@@ -1,7 +1,21 @@
-eeGeo 3D Maps mobile-sdk-harness
+eeGeo 3D Maps mobile-example-app
 ================================
 
-Additional documentation available at http://sdk.eegeo.com
+Unlike the tightly focussed SDK examples, this example is intended to convey best practices for interacting with the eeGeo platform from a rich client application, demonstrating:
+
+* A tactile menu based user experience for manipulating the application
+* Category and free-text point of interest search and display using an off the shelf third party search service
+* In world display for points of interest using both 2D native UI widgets and 3D pins
+* Dynamic weather and season control
+* Environment flattening to enter "map-mode"
+* Animated camera transitioning between in-world locations
+* GPS usage to control a compass widget
+* Background preloading of environment resources
+* A model for implementing an initial user experience
+
+Additional documentation available at http://sdk.eegeo.com/developers/mobiledocs/mobileexampleapp
+
+The following instructions explain how to configure your environment to build the application.
 
 iOS
 ===

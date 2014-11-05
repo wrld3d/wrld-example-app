@@ -1,4 +1,4 @@
-package com.eegeo;
+package com.eegeo.mobileexampleapp;
 
 import android.app.Activity;
 import android.content.res.AssetManager;

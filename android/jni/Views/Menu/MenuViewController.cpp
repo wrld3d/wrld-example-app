@@ -48,7 +48,7 @@ namespace ExampleApp
 
 			m_uiViewClass = static_cast<jclass>(env->NewGlobalRef(uiClass));
 			env->DeleteLocalRef(uiClass);
-			jmethodID uiViewCtor = env->GetMethodID(m_uiViewClass, "<init>", "(Lcom/eegeo/MainActivity;J)V");
+			jmethodID uiViewCtor = env->GetMethodID(m_uiViewClass, "<init>", "(Lcom/eegeo/mobileexampleapp/MainActivity;J)V");
 
 			jobject instance = env->NewObject(
 				m_uiViewClass,
@@ -207,21 +207,36 @@ namespace ExampleApp
 		void MenuViewController::HandleDraggingViewStarted()
 		{
 			Eegeo_ASSERT(!m_dragInProgress, "identity %d\n", Identity());
-		    Eegeo_ASSERT(m_menuViewModel.TryAcquireReactorControl(), "%d failed to acquire reactor control.\n", Identity());
+
+			{
+				const bool acquiredReactorControl = m_menuViewModel.TryAcquireReactorControl();
+				Eegeo_ASSERT(acquiredReactorControl, "%d failed to acquire reactor control.\n", Identity());
+			}
+
 		    m_dragInProgress = true;
 		}
 
 		void MenuViewController::HandleDraggingViewInProgress(float normalisedDragState)
 		{
 			Eegeo_ASSERT(m_dragInProgress);
-		    Eegeo_ASSERT(m_menuViewModel.TryAcquireReactorControl(), "%d failed to acquire reactor control.\n", Identity());
+
+			{
+				const bool acquiredReactorControl = m_menuViewModel.TryAcquireReactorControl();
+				Eegeo_ASSERT(acquiredReactorControl, "%d failed to acquire reactor control.\n", Identity());
+			}
+
 			m_menuViewModel.UpdateOpenState(normalisedDragState);
 		}
 
 		void MenuViewController::HandleDraggingViewCompleted()
 		{
 			Eegeo_ASSERT(m_dragInProgress);
-		    Eegeo_ASSERT(m_menuViewModel.TryAcquireReactorControl(), "%d failed to acquire reactor control.\n", Identity());
+
+			{
+				const bool acquiredReactorControl = m_menuViewModel.TryAcquireReactorControl();
+				Eegeo_ASSERT(acquiredReactorControl, "%d failed to acquire reactor control.\n", Identity());
+			}
+
 			m_dragInProgress = false;
 		}
 

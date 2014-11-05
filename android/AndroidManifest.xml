@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- BEGIN_INCLUDE(manifest) -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-        package="com.eegeo"
+        package="com.eegeo.mobileexampleapp"
         android:versionCode="1"
         android:versionName="1.0">
 
@@ -14,7 +14,7 @@
 
     <application android:icon="@drawable/icon" android:label="eeGeo Example" android:theme="@android:style/Theme.NoTitleBar">
        
-        <activity android:name="com.eegeo.BackgroundThreadActivity"
+        <activity android:name=".BackgroundThreadActivity"
                   android:label="eeGeo Example"
                   android:configChanges="orientation|keyboardHidden"
                   android:screenOrientation="landscape"

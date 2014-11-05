@@ -1,6 +1,6 @@
 package com.eegeo.searchmenu;
 
-import com.eegeo.MainActivity;
+import com.eegeo.mobileexampleapp.MainActivity;
 
 import android.view.View;
 

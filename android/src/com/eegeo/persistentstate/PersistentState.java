@@ -3,7 +3,7 @@ package com.eegeo.persistentstate;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.eegeo.MainActivity;
+import com.eegeo.mobileexampleapp.MainActivity;
 
 public class PersistentState 
 {

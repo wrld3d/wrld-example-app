@@ -1,4 +1,4 @@
-package com.eegeo;
+package com.eegeo.mobileexampleapp;
 
 public interface INativeMessageRunner
 {

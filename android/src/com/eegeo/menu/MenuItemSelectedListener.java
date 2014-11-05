@@ -4,7 +4,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 
-import com.eegeo.INativeMessageRunner;
+import com.eegeo.mobileexampleapp.INativeMessageRunner;
 
 public class MenuItemSelectedListener implements OnItemClickListener
 {
