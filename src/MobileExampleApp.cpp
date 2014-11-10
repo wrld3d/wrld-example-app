@@ -350,12 +350,8 @@ namespace ExampleApp
         int numberOfTilesAlongEachAxisOfTexturePage = 4;
         m_pPinIconsTexturePageLayout = Eegeo_NEW(Eegeo::Rendering::RegularTexturePageLayout)(numberOfTilesAlongEachAxisOfTexturePage);
         
-        const Eegeo::Rendering::ScreenProperties& screenProperties = world.GetScreenProperties();
-        
-        const float mediumDpi = 160.f;
-        m_pinDiameter = 50.f * std::min(screenProperties.GetScreenDpi() / mediumDpi, 2.f);
-        int spriteWidthInMetres = m_pinDiameter;
-        int spriteHeightInMetres = m_pinDiameter;
+        int spriteWidth = m_pinDiameter;
+        int spriteHeight = m_pinDiameter;
         
         Eegeo::Modules::Core::RenderingModule& renderingModule = world.GetRenderingModule();
         Eegeo::Modules::Map::Layers::TerrainModelModule& terrainModelModule = world.GetTerrainModelModule();
@@ -370,8 +366,8 @@ namespace ExampleApp
                                                            renderingModule.GetVertexLayoutPool(),
                                                            renderingModule.GetRenderableFilters(),
                                                            terrainModelModule.GetTerrainHeightProvider(),
-                                                           spriteWidthInMetres,
-                                                           spriteHeightInMetres,
+                                                           spriteWidth,
+                                                           spriteHeight,
                                                            Eegeo::Rendering::LayerIds::PlaceNames,
                                                            mapModule.GetEnvironmentFlatteningService()
                                                            );
