@@ -5,8 +5,11 @@ package com.eegeo.mobileexampleapp;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.SystemClock;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.SurfaceHolder;
+import android.view.View;
 import android.app.Activity;
 
 
@@ -40,6 +43,8 @@ public class BackgroundThreadActivity extends MainActivity
 		m_threadedRunner = new ThreadedUpdateRunner(false);
 		m_updater = new Thread(m_threadedRunner);
 		m_updater.start();
+		
+		
 
 		m_threadedRunner.blockUntilThreadStartedRunning();
 
@@ -86,7 +91,7 @@ public class BackgroundThreadActivity extends MainActivity
 	protected void onPause()
 	{
 		super.onPause();
-		
+
 		runOnNativeThread(new Runnable()
 		{
 			public void run()
@@ -213,32 +218,33 @@ public class BackgroundThreadActivity extends MainActivity
 			Looper.prepare();
 			m_nativeThreadHandler = new Handler();
 
-			while(true)
+			runOnNativeThread(new Runnable()
 			{
-				runOnNativeThread(new Runnable()
+				public void run()
 				{
-					public void run()
+					long timeNowNano = System.nanoTime();
+					long nanoDelta = timeNowNano - m_endOfLastFrameNano;
+					float deltaSeconds = (float)((double)nanoDelta / 1e9);
+					
+					if(deltaSeconds > m_frameThrottleDelaySeconds)
 					{
-						long timeNowNano = System.nanoTime();
-						long nanoDelta = timeNowNano - m_endOfLastFrameNano;
-						float deltaSeconds = (float)((double)nanoDelta / 1e9);
-						
-						if(deltaSeconds > m_frameThrottleDelaySeconds)
+						if(m_running)
 						{
-							if(m_running)
-							{
-								NativeJniCalls.updateNativeCode(deltaSeconds);
-							}
-
-							m_endOfLastFrameNano = timeNowNano;
+							NativeJniCalls.updateNativeCode(deltaSeconds);
+						}
+						else
+						{
+							SystemClock.sleep(200);
 						}
 
-						runOnNativeThread(this);
+						m_endOfLastFrameNano = timeNowNano;
 					}
-				});
 
-				Looper.loop();
-			}
+					runOnNativeThread(this);
+				}
+			});
+
+			Looper.loop();
 		}
 	}
 }
