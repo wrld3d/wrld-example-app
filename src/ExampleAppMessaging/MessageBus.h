@@ -20,10 +20,10 @@ namespace ExampleApp
     {
 #ifdef EEGEO_USE_CONCURRENT_MESSAGE_BUS
     	template <typename TMessageCatalog>
-    	class MessageBus : public MPMCMessageBus<TMessageCatalog> { };
+    	class MessageBus : public Eegeo::Messaging::MPMCMessageBus<TMessageCatalog> { };
 #else
     	template <typename TMessageCatalog>
-    	class MessageBus : public ImmediateMessageBus<TMessageCatalog> { };
+    	class MessageBus : public Eegeo::Messaging::ImmediateMessageBus<TMessageCatalog> { };
 #endif
     }
 }

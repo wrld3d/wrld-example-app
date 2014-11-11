@@ -22,17 +22,17 @@ namespace ExampleApp
     namespace ExampleAppMessaging
     {
     	class NativeToUiMessageCatalog
-    	: public CatalogBinding<SearchResultMenu::SearchResultAddedMessage>
-    	, public CatalogBinding<SearchResultMenu::SearchResultRemovedMessage>
-    	, public CatalogBinding<Search::SearchQueryPerformedMessage>
-        , public CatalogBinding<Search::SearchQueryRemovedMessage>
-        , public CatalogBinding<FlattenButton::FlattenButtonModelStateChangedMessage>
-    	, public CatalogBinding<Search::SearchQueryResponseReceivedMessage>
-        , public CatalogBinding<Compass::CompassModeChangedMessage>
-        , public CatalogBinding<Compass::CompassHeadingUpdateMessage>
-        , public CatalogBinding<SearchResultOnMap::SearchResultGainedFocusMessage>
-        , public CatalogBinding<SearchResultOnMap::SearchResultLostFocusMessage>
-        , public CatalogBinding<SearchResultOnMap::SearchResultInFocusChangedLocationMessage>
+    	: public Eegeo::Messaging::CatalogBinding<SearchResultMenu::SearchResultAddedMessage>
+    	, public Eegeo::Messaging::CatalogBinding<SearchResultMenu::SearchResultRemovedMessage>
+    	, public Eegeo::Messaging::CatalogBinding<Search::SearchQueryPerformedMessage>
+        , public Eegeo::Messaging::CatalogBinding<Search::SearchQueryRemovedMessage>
+        , public Eegeo::Messaging::CatalogBinding<FlattenButton::FlattenButtonModelStateChangedMessage>
+    	, public Eegeo::Messaging::CatalogBinding<Search::SearchQueryResponseReceivedMessage>
+        , public Eegeo::Messaging::CatalogBinding<Compass::CompassModeChangedMessage>
+        , public Eegeo::Messaging::CatalogBinding<Compass::CompassHeadingUpdateMessage>
+        , public Eegeo::Messaging::CatalogBinding<SearchResultOnMap::SearchResultGainedFocusMessage>
+        , public Eegeo::Messaging::CatalogBinding<SearchResultOnMap::SearchResultLostFocusMessage>
+        , public Eegeo::Messaging::CatalogBinding<SearchResultOnMap::SearchResultInFocusChangedLocationMessage>
     	, private Eegeo::NonCopyable
     	{
 
