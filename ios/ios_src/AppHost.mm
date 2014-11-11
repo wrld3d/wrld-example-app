@@ -95,7 +95,8 @@ AppHost::AppHost(
                                                      m_iOSNativeUIFactories,
                                                      platformConfig,
                                                      *m_pJpegLoader,
-                                                     *m_pInitialExperienceModule);
+                                                     *m_pInitialExperienceModule,
+                                                     m_iOSPersistentSettingsModel);
     
     
     CreateApplicationViewModules();

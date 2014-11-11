@@ -6,7 +6,8 @@
 #include "MyPins.h"
 #include "Pins.h"
 #include "WorldPins.h"
-#include "IFileIO.h"
+#include "PersistentSettings.h"
+#include "Modules.h"
 
 namespace ExampleApp
 {
@@ -17,7 +18,8 @@ namespace ExampleApp
         public:
             MyPinsModule(Eegeo::Pins::PinRepository& pinRepository,
                          WorldPins::IWorldPinsFactory& pinFactory,
-                         Eegeo::Helpers::IFileIO& fileIO);
+                         Eegeo::Modules::IPlatformAbstractionModule& platformAbstractions,
+                         PersistentSettings::IPersistentSettingsModel& persistentSettings);
             
             ~MyPinsModule();
             

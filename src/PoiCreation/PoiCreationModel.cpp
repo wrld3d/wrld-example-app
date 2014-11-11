@@ -58,6 +58,8 @@ namespace ExampleApp
                                     imageData,
                                     imageSize,
                                     shouldShare);
+            
+            SetCreationStage(Inactive);
         }
         
         void PoiCreationModel::AddStateChangedCallback(Eegeo::Helpers::ICallback1<PoiCreationStage>& stateChangedCallback)

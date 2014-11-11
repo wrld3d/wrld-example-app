@@ -6,6 +6,7 @@
 #include "MyPinsFileIO.h"
 #include "MyPinsService.h"
 #include "LatLongAltitude.h"
+#include "IPlatformAbstractionModule.h"
 
 namespace ExampleApp
 {
@@ -13,17 +14,19 @@ namespace ExampleApp
     {
         MyPinsModule::MyPinsModule(Eegeo::Pins::PinRepository& pinRepository,
                                    WorldPins::IWorldPinsFactory& pinFactory,
-                                   Eegeo::Helpers::IFileIO& fileIO)
+                                   Eegeo::Modules::IPlatformAbstractionModule& platformAbstractions,
+                                   PersistentSettings::IPersistentSettingsModel& persistentSettings)
         : m_pMyPinsRepository(NULL)
         , m_pMyPinsFileIO(NULL)
         , m_pMyPinsService(NULL)
         {
             m_pMyPinsRepository = Eegeo_NEW(MyPinsRepository)();
-            m_pMyPinsFileIO = Eegeo_NEW(MyPinsFileIO)(fileIO);
+            m_pMyPinsFileIO = Eegeo_NEW(MyPinsFileIO)(platformAbstractions.GetFileIO(), persistentSettings);
             m_pMyPinsService = Eegeo_NEW(MyPinsService)(*m_pMyPinsRepository,
                                                         *m_pMyPinsFileIO,
                                                         pinRepository,
-                                                        pinFactory);
+                                                        pinFactory,
+                                                        platformAbstractions.GetWebLoadRequestFactory());
         
         }
         

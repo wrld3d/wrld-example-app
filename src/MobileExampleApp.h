@@ -56,6 +56,7 @@
 #include "PoiCreation.h"
 #include "PoiCreationDetails.h"
 #include "MyPins.h"
+#include "PersistentSettings.h"
 
 namespace ExampleApp
 {
@@ -75,6 +76,8 @@ namespace ExampleApp
         CameraTransitions::ICameraTransitionController* m_pCameraTransitionController;
         
         Eegeo::Helpers::IdentityProvider m_identityProvider;
+        
+        ExampleApp::PersistentSettings::IPersistentSettingsModel& m_persistentSettings;
         ExampleApp::PrimaryMenu::IPrimaryMenuModule* m_pPrimaryMenuModule;
         ExampleApp::SecondaryMenu::ISecondaryMenuModule* m_pSecondaryMenuModule;
         ExampleApp::SearchResultMenu::ISearchResultMenuModule* m_pSearchResultMenuModule;
@@ -122,7 +125,8 @@ namespace ExampleApp
                          Eegeo::UI::NativeUIFactories& nativeUIFactories,
                          Eegeo::Config::PlatformConfig platformConfig,
                          Eegeo::Helpers::Jpeg::IJpegLoader& jpegLoader,
-                         ExampleApp::InitialExperience::IInitialExperienceModule& initialExperienceModule);
+                         ExampleApp::InitialExperience::IInitialExperienceModule& initialExperienceModule,
+                         ExampleApp::PersistentSettings::IPersistentSettingsModel& persistentSettings);
         
         
         ~MobileExampleApp();

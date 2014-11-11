@@ -2,12 +2,15 @@
 
 #include "MyPinsFileIO.h"
 #include "LatLongAltitude.h"
+#include "IPersistentSettingsModel.h"
 
-#include <sstream>
-#include <vector>
 #include "document.h"
 #include "writer.h"
 #include "stringbuffer.h"
+
+#include <sstream>
+#include <vector>
+
 
 namespace ExampleApp
 {
@@ -15,12 +18,14 @@ namespace ExampleApp
     {
         const std::string MyPinsDataFilename = "pin_data.json";
         const std::string MyPinImagePrefix = "my_pin_image_";
+        const std::string MyPins_LastMyPinModelIdKey = "MyPins_LastMyPinModelIdKey";
         const std::string MyPinsJsonArrayName = "myPins";
         
         void CreateEmptyJsonFile(Eegeo::Helpers::IFileIO& fileIO)
         {
             rapidjson::Document jsonDoc;
             jsonDoc.SetObject();
+            
             rapidjson::Value myArray(rapidjson::kArrayType);
             rapidjson::Document::AllocatorType& allocator = jsonDoc.GetAllocator();
             
@@ -41,18 +46,27 @@ namespace ExampleApp
             return ss.str();
         }
         
-        MyPinsFileIO::MyPinsFileIO(Eegeo::Helpers::IFileIO& fileIO)
+        MyPinsFileIO::MyPinsFileIO(Eegeo::Helpers::IFileIO& fileIO,
+                                   PersistentSettings::IPersistentSettingsModel& persistentSettings)
         : m_fileIO(fileIO)
+        , m_persistentSettings(persistentSettings)
         {
             if (!m_fileIO.Exists(MyPinsDataFilename))
             {
                 CreateEmptyJsonFile(m_fileIO);
             }
+            
+            int lastId = 0;
+            if (!m_persistentSettings.TryGetValue(MyPins_LastMyPinModelIdKey, lastId))
+            {
+                m_persistentSettings.SetValue(MyPins_LastMyPinModelIdKey, lastId);
+            }
+    
         }
         
         bool MyPinsFileIO::TryCacheImageToDisk(Byte* imageData,
                                                size_t imageSize,
-                                               unsigned int myPinId,
+                                               int myPinId,
                                                std::string& out_filename)
         {
             out_filename = "";
@@ -79,7 +93,7 @@ namespace ExampleApp
             return false;
         }
         
-        void MyPinsFileIO::SavePinModelToDisk(const unsigned int pinId,
+        void MyPinsFileIO::SavePinModelToDisk(const int pinId,
                                               const std::string& title,
                                               const std::string& description,
                                               const std::string& imagePath,
@@ -90,14 +104,18 @@ namespace ExampleApp
             
             if (m_fileIO.OpenFile(stream, size, MyPinsDataFilename))
             {
-                std::vector<Byte> readData;
-                readData.resize(size);
-                stream.read((char*)&readData[0], size);
-                unsigned char* buffer = &readData[0];
+                std::string json((std::istreambuf_iterator<char>(stream)),
+                                 (std::istreambuf_iterator<char>()));
 
                 rapidjson::Document jsonDoc;
-                jsonDoc.Parse<0>((const char*)buffer);
+                if (jsonDoc.Parse<0>(json.c_str()).HasParseError())
+                {
+                    Eegeo_TTY("Parse error in MyPins JSON.\n");
+                    return;
+                }
 
+                Eegeo_ASSERT(jsonDoc.IsObject(), "JSON document is not of object type");
+                
                 rapidjson::Document::AllocatorType& allocator = jsonDoc.GetAllocator();
                 rapidjson::Value& myPinsArray = jsonDoc[MyPinsJsonArrayName.c_str()];
                 
@@ -119,7 +137,15 @@ namespace ExampleApp
                 rapidjson::Writer<rapidjson::StringBuffer> writer(strbuf);
                 jsonDoc.Accept(writer);
                 std::string jsonString = strbuf.GetString();
-                WriteJsonToDisk(jsonString);
+                
+                if (WriteJsonToDisk(jsonString))
+                {
+                    m_persistentSettings.SetValue(MyPins_LastMyPinModelIdKey, pinId);
+                }
+            }
+            else
+            {
+                Eegeo_TTY("Couldn't open file:%s\n", MyPinsDataFilename.c_str());
             }
         }
         
@@ -127,6 +153,14 @@ namespace ExampleApp
         {
             m_fileIO.DeleteFile(MyPinsDataFilename);
             return m_fileIO.WriteFile((Byte*)jsonString.c_str(), jsonString.size(), MyPinsDataFilename);
+        }
+        
+        int MyPinsFileIO::GetLastIdWrittenToDisk() const
+        {
+            int lastId = 0;
+            m_persistentSettings.TryGetValue(MyPins_LastMyPinModelIdKey, lastId);
+        
+            return lastId;
         }
     }
 }

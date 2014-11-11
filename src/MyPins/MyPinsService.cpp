@@ -6,6 +6,10 @@
 #include "IWorldPinsFactory.h"
 #include "Pin.h"
 #include "MyPinsFileIO.h"
+#include "IWebLoadRequestFactory.h"
+#include "IWebLoadRequest.h"
+
+#include <string>
 
 namespace ExampleApp
 {
@@ -14,12 +18,15 @@ namespace ExampleApp
         MyPinsService::MyPinsService(IMyPinsRepository& myPinsRepository,
                                      MyPinsFileIO& myPinsFileIO,
                                      Eegeo::Pins::PinRepository& pinRepository,
-                                     WorldPins::IWorldPinsFactory& pinFactory)
+                                     WorldPins::IWorldPinsFactory& pinFactory,
+                                     Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory)
         : m_myPinsRepository(myPinsRepository)
         , m_myPinsFileIO(myPinsFileIO)
         , m_pinRepository(pinRepository)
         , m_pinFactory(pinFactory)
-        , m_lastIdUsed(0)
+        , m_webLoadRequestFactory(webLoadRequestFactory)
+        , m_lastIdUsed(m_myPinsFileIO.GetLastIdWrittenToDisk())
+        , m_webRequestCompleteCallback(this, &MyPinsService::WebRequestCompleteCallback)
         {
             
         }
@@ -69,7 +76,7 @@ namespace ExampleApp
                                     size_t imageSize,
                                     bool shouldShare)
         {
-            unsigned int idForThisPin = m_lastIdUsed++;
+            unsigned int idForThisPin = ++m_lastIdUsed;
             
             std::string imagePath = "";
 
@@ -82,7 +89,37 @@ namespace ExampleApp
             
             if (shouldShare)
             {
-                // Punt web request here...
+//                // Punt web request here...
+                std::string image = "@" + imagePath;
+                
+                std::map<std::string, std::string> formData;
+                formData["poi[title]"] = title;
+                formData["poi[description]"] = description;
+                formData["poi[image]"] = image;
+                formData["poi[latitude]"] = "123.45";
+                formData["poi[longitude]"] = "666.66";
+                
+                std::map<std::string, std::string> headerData;
+                headerData["Authorization"] = "XXXX";
+                
+                m_webLoadRequestFactory.CreatePost("http://design-in-motion-staging.eegeo.com/pois/new",
+                                                   m_webRequestCompleteCallback,
+                                                   NULL,
+                                                   formData,
+                                                   headerData)->Load();
+            }
+        }
+        
+        void MyPinsService::WebRequestCompleteCallback(Eegeo::Web::IWebLoadRequest& webLoadRequest)
+        {
+            Eegeo_TTY("Response code: %d\n", webLoadRequest.HttpStatusCode());
+            if (webLoadRequest.IsSucceeded())
+            {
+                Eegeo_TTY("Web request succeded\n");
+            }
+            else
+            {
+                Eegeo_TTY("Web request failed\n");
             }
         }
     }

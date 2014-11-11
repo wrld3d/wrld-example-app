@@ -83,7 +83,8 @@ namespace ExampleApp
                                        Eegeo::UI::NativeUIFactories& nativeUIFactories,
                                        Eegeo::Config::PlatformConfig platformConfig,
                                        Eegeo::Helpers::Jpeg::IJpegLoader& jpegLoader,
-                                       ExampleApp::InitialExperience::IInitialExperienceModule& initialExperienceModule)
+                                       ExampleApp::InitialExperience::IInitialExperienceModule& initialExperienceModule,
+                                       ExampleApp::PersistentSettings::IPersistentSettingsModel& persistentSettings)
     : m_pGlobeCameraController(NULL)
     , m_pCameraTouchController(NULL)
     , m_pNavigationService(NULL)
@@ -113,6 +114,7 @@ namespace ExampleApp
     , m_pWorldAreaLoaderModule(NULL)
     , m_pAboutPageModule(NULL)
     , m_initialExperienceModule(initialExperienceModule)
+    , m_persistentSettings(persistentSettings)
     , m_pBlitter(NULL)
     , m_pPoiCreationModule(NULL)
     , m_pPoiRingModule(NULL)
@@ -286,7 +288,8 @@ namespace ExampleApp
         
         m_pMyPinsModule = Eegeo_NEW(ExampleApp::MyPins::MyPinsModule)(m_pPinsModule->GetRepository(),
                                                                       m_pWorldPinsModule->GetWorldPinsFactory(),
-                                                                      m_platformAbstractions.GetFileIO());
+                                                                      m_platformAbstractions,
+                                                                      m_persistentSettings);
         
         m_pPoiCreationModule = Eegeo_NEW(ExampleApp::PoiCreation::PoiCreationModule)(m_pMyPinsModule->GetMyPinsService(),
                                                                                      m_identityProvider,
