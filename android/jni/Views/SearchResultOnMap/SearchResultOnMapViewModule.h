@@ -6,7 +6,7 @@
 #include "SearchResultOnMap.h"
 #include "ISearchResultOnMapViewModule.h"
 #include "IScreenControlViewModel.h"
-#include "Modality.h"
+#include "ISearchResultPoiViewModel.h"
 
 namespace ExampleApp
 {
@@ -22,7 +22,7 @@ namespace ExampleApp
 				AndroidNativeState& nativeState,
 				ISearchResultOnMapInFocusViewModel& searchResultOnMapInFocusViewModel,
 				ScreenControlViewModel::IScreenControlViewModel& searchResultOnMapInFocusScreenControlViewModel,
-    			Modality::IModalityModel& modalityModel,
+				SearchResultPoi::ISearchResultPoiViewModel& searchResultPoiViewModel,
     			float pinDiameter
 			);
             

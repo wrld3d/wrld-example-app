@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+        // Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
 #include "App.h"
 #include "AppHost.h"
@@ -18,9 +18,7 @@
 #include "EegeoWorld.h"
 #include "JpegLoader.h"
 #include "iOSPlatformAbstractionModule.h"
-
 #include "ViewController.h"
-
 #include "PrimaryMenuViewModule.h"
 #include "PrimaryMenuView.h"
 #include "SecondaryMenuViewModule.h"
@@ -65,6 +63,7 @@ AppHost::AppHost(
 ,m_iOSNativeUIFactories(m_iOSAlertBoxFactory, m_iOSInputBoxFactory, m_iOSKeyboardInputFactory)
 ,m_piOSPlatformAbstractionModule(NULL)
 ,m_pApp(NULL)
+,m_requestedApplicationInitialiseViewState(false)
 {
     m_piOSLocationService = Eegeo_NEW(iOSLocationService)();
     
@@ -86,8 +85,9 @@ AppHost::AppHost(
                                                      m_iOSNativeUIFactories,
                                                      platformConfig,
                                                      *m_pJpegLoader,
-                                                     *m_pInitialExperienceModule);
-    
+                                                     *m_pInitialExperienceModule,
+                                                     m_uiToNativeMessageBus,
+                                                     m_nativeToUiMessageBus);
     
     CreateApplicationViewModules();
     
@@ -143,6 +143,12 @@ void AppHost::SetViewportOffset(float x, float y)
 
 void AppHost::Update(float dt)
 {
+    if(m_pApp->IsLoadingScreenComplete() && !m_requestedApplicationInitialiseViewState)
+    {
+        m_requestedApplicationInitialiseViewState = true;
+        m_pApp->InitialiseApplicationViewState();
+    }
+    
     m_pApp->Update(dt);
     m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel().UpdateObjects(dt);
 }
@@ -174,22 +180,23 @@ void AppHost::CreateApplicationViewModules()
                                                                                                *m_pScreenProperties,
                                                                                                app.ModalityModule().GetModalityModel(),
                                                                                                app.SearchModule().GetSearchQueryPerformer(),
-                                                                                               app.SearchModule().GetSearchService());
+                                                                                               m_nativeToUiMessageBus);
     
-    m_pSearchResultMenuViewModule = Eegeo_NEW(ExampleApp::SearchResultMenu::SearchResultMenuViewModule)(app.SearchModule().GetSearchService(),
-                                                                                                        app.SearchModule().GetSearchQueryPerformer(),
-                                                                                                        app.CategorySearchModule().GetCategorySearchRepository(),
+    m_pSearchResultMenuViewModule = Eegeo_NEW(ExampleApp::SearchResultMenu::SearchResultMenuViewModule)(app.CategorySearchModule().GetCategorySearchRepository(),
                                                                                                         app.SearchResultMenuModule().GetSearchResultMenuModel(),
                                                                                                         app.SearchResultMenuModule().GetMenuViewModel(),
                                                                                                         app.SearchResultMenuModule().GetSearchResultMenuViewModel(),
                                                                                                         *m_pScreenProperties,
-                                                                                                        app.ModalityModule().GetModalityModel());
+                                                                                                        app.ModalityModule().GetModalityModel(),
+                                                                             m_uiToNativeMessageBus,m_nativeToUiMessageBus);
     
     m_pSearchResultPoiViewModule = Eegeo_NEW(ExampleApp::SearchResultPoi::SearchResultPoiViewModule)(app.SearchResultPoiModule().GetSearchResultPoiViewModel());
     
     m_pFlattenButtonViewModule = Eegeo_NEW(ExampleApp::FlattenButton::FlattenButtonViewModule)(app.FlattenButtonModule().GetFlattenButtonModel(),
                                                                                                app.FlattenButtonModule().GetFlattenButtonViewModel(),
-                                                                                               *m_pScreenProperties);
+                                                                                               *m_pScreenProperties,
+                                                                                               m_uiToNativeMessageBus,
+                                                                                               m_nativeToUiMessageBus);
     
     m_pSearchResultOnMapViewModule = Eegeo_NEW(ExampleApp::SearchResultOnMap::SearchResultOnMapViewModule)(app.SearchResultOnMapModule().GetSearchResultOnMapInFocusViewModel(),
                                                                                                            app.SearchResultOnMapModule().GetScreenControlViewModel(),
@@ -198,9 +205,10 @@ void AppHost::CreateApplicationViewModules()
                                                                                                            m_pScreenProperties->GetPixelScale());
     
     
-    m_pCompassViewModule = Eegeo_NEW(ExampleApp::Compass::CompassViewModule)(app.CompassModule().GetCompassModel(),
-                                                                             app.CompassModule().GetCompassViewModel(),
-                                                                             *m_pScreenProperties);
+    m_pCompassViewModule = Eegeo_NEW(ExampleApp::Compass::CompassViewModule)(app.CompassModule().GetCompassViewModel(),
+                                                                             *m_pScreenProperties,
+                                                                             m_uiToNativeMessageBus,
+                                                                             m_nativeToUiMessageBus);
     
     m_pAboutPageViewModule = Eegeo_NEW(ExampleApp::AboutPage::AboutPageViewModule)(app.AboutPageModule().GetAboutPageModel(),
                                                                                    app.AboutPageModule().GetAboutPageViewModel());

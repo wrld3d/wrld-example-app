@@ -4,7 +4,6 @@
 #include "SearchResultOnMapScaleController.h"
 #include "IWorldPinsService.h"
 #include "ISearchResultOnMapInFocusViewModel.h"
-#include "IModalityModel.h"
 #include "ScreenProperties.h"
 #include "RenderCamera.h"
 
@@ -14,24 +13,20 @@ namespace ExampleApp
     {
         SearchResultOnMapScaleController::SearchResultOnMapScaleController(SearchResultOnMapModel& searchResultOnMapModel,
                                                                            WorldPins::IWorldPinsService& worldPinsService,
-                                                                           Modality::IModalityModel& modalityModel,
                                                                            const Eegeo::Rendering::ScreenProperties& screenProperties,
                                                                            Eegeo::Camera::RenderCamera& renderCamera)
         : m_searchResultOnMapModel(searchResultOnMapModel)
         , m_worldPinsService(worldPinsService)
-        , m_modalityModel(modalityModel)
         , m_screenProperties(screenProperties)
         , m_renderCamera(renderCamera)
-        , m_globalScale(1.f)
-        , m_pModalityChangedCallback(Eegeo_NEW(Eegeo::Helpers::TCallback0<SearchResultOnMapScaleController>)(this, &SearchResultOnMapScaleController::HandleModalityChanged))
+        , m_modality(0.f)
         {
-            m_modalityModel.InsertModalityChangedCallback(*m_pModalityChangedCallback);
+
         }
         
         SearchResultOnMapScaleController::~SearchResultOnMapScaleController()
         {
-            m_modalityModel.RemoveModalityChangedCallback(*m_pModalityChangedCallback);
-            Eegeo_DELETE m_pModalityChangedCallback;
+
         }
         
         void SearchResultOnMapScaleController::Update(float deltaSeconds)
@@ -44,9 +39,17 @@ namespace ExampleApp
                 WorldPins::WorldPinItemModel& worldPinItemModel = it->second;
 
                 UpdateWorldPin(worldPinItemModel, deltaSeconds);
-                float scale = m_globalScale * GetResultScale(searchResultModel) * worldPinItemModel.TransitionStateValue();
+                const float globalScale = 1.f - m_modality;
+                float scale = globalScale * GetResultScale(searchResultModel) * worldPinItemModel.TransitionStateValue();
                 m_worldPinsService.UpdatePinScale(worldPinItemModel, scale);
             }
+        }
+        
+        void SearchResultOnMapScaleController::SetModality(float modality)
+        {
+            Eegeo_ASSERT(modality >= 0.f && modality <= 1.f, "Invalid modality value %f, valid range for modality is 0.0 to 1.0 inclusive.\n", modality);
+            
+            m_modality = modality;
         }
         
         float SearchResultOnMapScaleController::GetResultScale(Search::SearchResultModel& searchResultModel)
@@ -76,11 +79,6 @@ namespace ExampleApp
             }
             
             worldPinItemModel.Update(deltaSeconds);
-        }
-        
-        void SearchResultOnMapScaleController::HandleModalityChanged()
-        {
-            m_globalScale = 1.f - m_modalityModel.GetModality();
         }
         
         void SearchResultOnMapScaleController::GetScreenLocation(const WorldPins::WorldPinItemModel& worldPinItemModel, Eegeo::v2& screenLocation) const

@@ -18,15 +18,14 @@ namespace ExampleApp
         {
         public:
             
-            CompassViewModel(ICompassModel& model,
-                             Eegeo::Helpers::TIdentity identity,
+            CompassViewModel(Eegeo::Helpers::TIdentity identity,
                              bool isInitiallyOnScreen);
             
-            void UpdateHeadingAngleRadians(float headingRadians);
+            /*void UpdateHeadingAngleRadians(float headingRadians);
             
             void InsertUpdateCallback(Eegeo::Helpers::ICallback1<float>& updateCallback);
             
-            void RemoveUpdateCallback(Eegeo::Helpers::ICallback1<float>& updateCallback);
+            void RemoveUpdateCallback(Eegeo::Helpers::ICallback1<float>& updateCallback);*/
             
             Eegeo::Helpers::TIdentity GetIdentity() const;
             
@@ -49,9 +48,9 @@ namespace ExampleApp
             ScreenControlViewModel::IScreenControlViewModel& GetScreenControlViewModel();
             
         private:
-            ICompassModel& m_model;
+            //ICompassModel& m_model;
             CompassScreenControl m_screenControl;
-            Eegeo::Helpers::CallbackCollection1<float> m_updateCallbacks;
+            //Eegeo::Helpers::CallbackCollection1<float> m_updateCallbacks;
         };
     }
 }

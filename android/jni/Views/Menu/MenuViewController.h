@@ -37,6 +37,8 @@ namespace ExampleApp
 
 		    Eegeo::Helpers::TIdentity Identity() const;
 
+		    void ExecuteTaskOnNativeThread(IMenuOptionSelectionTask* pNativeTask);
+
 		public:
 		    MenuViewController(
 		    		const std::string& viewClassName,
@@ -47,7 +49,7 @@ namespace ExampleApp
 
 			~MenuViewController();
 
-			virtual void Update(float deltaSeconds);
+			virtual void UpdateUiThread(float deltaSeconds);
 
 			virtual bool TryBeginDrag();
 

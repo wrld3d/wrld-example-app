@@ -7,6 +7,8 @@
 #include "Types.h"
 #include "FLattenButton.h"
 #include "FlattenButtonViewIncludes.h"
+#include "UiToNativeMessageBus.h"
+#include "NativeToUiMessageBus.h"
 
 namespace ExampleApp
 {
@@ -20,8 +22,9 @@ namespace ExampleApp
         public:
         	FlattenButtonViewModule(
             	AndroidNativeState& nativeState,
-				FlattenButton::IFlattenButtonModel& model,
-        		FlattenButton::IFlattenButtonViewModel& viewModel
+        		FlattenButton::IFlattenButtonViewModel& viewModel,
+				ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
+				ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus
             );
 
             ~FlattenButtonViewModule();

@@ -17,6 +17,7 @@
 #include "ISearchResultMenuViewModel.h"
 #include "CustomTableViewCell.h"
 #include "UIColors.h"
+#include "SearchResultViewClearedMessage.h"
 
 @interface SearchResultMenuViewController()<UIGestureRecognizerDelegate>
 {
@@ -30,14 +31,14 @@
 
 CGFloat const SearchResultRowHeight = 53.0f;
 
-- (id)initWithParams:(ExampleApp::Search::ISearchService*) pSearchService
-                    :(ExampleApp::Search::ISearchQueryPerformer*) pQueryPerformer
-                    :(ExampleApp::CategorySearch::ICategorySearchRepository*) pCategorySearchRepository
+- (id)initWithParams:(ExampleApp::CategorySearch::ICategorySearchRepository*) pCategorySearchRepository
                     :(ExampleApp::Menu::IMenuModel *)pMenuModel
                     :(ExampleApp::Menu::IMenuViewModel *)pMenuViewModel
                     :(ExampleApp::SearchResultMenu::ISearchResultMenuViewModel *)pSearchResultMenuViewModel
                     :(SearchResultMenuView*)pMenuView
                     :(ExampleApp::Modality::IModalityModel*)pModalityModel
+                    :(ExampleApp::ExampleAppMessaging::UiToNativeMessageBus*)pUiToNativeMessageBus
+                    :(ExampleApp::ExampleAppMessaging::NativeToUiMessageBus*)pNativeToUiMessageBus
 
 {
     if(self = [super initWithParams:pMenuModel:pMenuViewModel:pMenuView:pModalityModel:false])
@@ -45,10 +46,11 @@ CGFloat const SearchResultRowHeight = 53.0f;
         m_pSearchResultMenuViewModel = pSearchResultMenuViewModel;
         m_pSearchResultMenuView = pMenuView;
         m_pCategorySearchRepository = pCategorySearchRepository;
-        m_pQueryPerformer = pQueryPerformer;
+        m_pUiToNativeMessageBus = pUiToNativeMessageBus;
         m_pControllerInterop = Eegeo_NEW(ExampleApp::SearchResultMenu::SearchResultMenuViewControllerInterop)(self,
-                                                                                                              *pSearchService,
-                                                                                                              *m_pCategorySearchRepository);
+                                                                                                              
+                                                                                                              *m_pCategorySearchRepository,
+                                                                                                              *pNativeToUiMessageBus);
         
         _closedViewTapHandler = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(_closedViewTapHandler:)] autorelease];
         [_closedViewTapHandler setDelegate:self];
@@ -76,7 +78,7 @@ CGFloat const SearchResultRowHeight = 53.0f;
 
 - (void)_closedViewTapHandler:(UITapGestureRecognizer *)recognizer
 {
-    m_pQueryPerformer->RemoveSearchQueryResults();
+    m_pUiToNativeMessageBus->Publish(ExampleApp::SearchResultMenu::SearchResultViewClearedMessage());
     m_pMenuViewModel->RemoveFromScreen();
 }
 

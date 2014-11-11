@@ -9,6 +9,10 @@
 #include "GlobeCamera.h"
 #include "IIdentity.h"
 #include "Location.h"
+#include "CompassModeObserver.h"
+#include "CompassViewCycledObserver.h"
+#include "NativeToUiMessageBus.h"
+#include "UiToNativeMessageBus.h"
 
 namespace ExampleApp
 {
@@ -20,11 +24,16 @@ namespace ExampleApp
             CompassViewModel* m_pViewModel;
             ICompassModel* m_pModel;
             ICompassUpdateController* m_pCompassUpdateController;
+            CompassModeObserver* m_pCompassModeObserver;
+            CompassViewCycledObserver* m_pCompassViewCycledObserver;
             
         public:
             CompassModule(Eegeo::Location::NavigationService& navigationService,
                           Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& cameraController,
-                          Eegeo::Helpers::IIdentityProvider& identityProvider);
+                          Eegeo::Helpers::IIdentityProvider& identityProvider,
+                          ExampleApp::ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
+                          ExampleApp::ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus
+                          );
             
             ~CompassModule();
             

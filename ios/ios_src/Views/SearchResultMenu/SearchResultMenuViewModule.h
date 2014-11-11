@@ -10,6 +10,8 @@
 #include "Rendering.h"
 #include "Modality.h"
 #include "SearchResultMenu.h"
+#include "UiToNativeMessageBus.h"
+#include "NativeToUiMessageBus.h"
 
 namespace ExampleApp
 {
@@ -22,14 +24,14 @@ namespace ExampleApp
             SearchResultMenuView* m_pView;
             
         public:
-            SearchResultMenuViewModule(Search::ISearchService& searchService,
-                                       Search::ISearchQueryPerformer& searchQueryPerformer,
-                                       CategorySearch::ICategorySearchRepository& categorySearchRepository,
+            SearchResultMenuViewModule(CategorySearch::ICategorySearchRepository& categorySearchRepository,
                                        Menu::IMenuModel& searchResultMenuModel,
                                        Menu::IMenuViewModel& menuViewModel,
                                        SearchResultMenu::ISearchResultMenuViewModel& searchResultMenuViewModel,
                                        const Eegeo::Rendering::ScreenProperties& screenProperties,
-                                       Modality::IModalityModel& modalityModel);
+                                       Modality::IModalityModel& modalityModel,
+                                       ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
+                                       ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus);
             
             ~SearchResultMenuViewModule();
             

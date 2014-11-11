@@ -13,7 +13,12 @@
 #include "IIdentity.h"
 #include "Rendering.h"
 #include "Camera.h"
+#include "SearchResultOnMapScaleController.h"
 #include "SearchResultOnMapInFocusViewModel.h"
+#include "SearchResultOnMapModalityObserver.h"
+#include "SearchResultOnMapInFocusObserver.h"
+#include "UiToNativeMessageBus.h"
+#include "NativeToUiMessageBus.h"
 
 namespace ExampleApp
 {
@@ -25,18 +30,21 @@ namespace ExampleApp
             ISearchResultOnMapModel* m_pSearchResultOnMapModel;
             SearchResultOnMapInFocusViewModel* m_pSearchResultOnMapInFocusViewModel;
             ISearchResultOnMapInFocusController* m_pSearchResultOnMapInFocusController;
-            ISearchResultOnMapScaleController* m_pSearchResultOnMapScaleController;
+            SearchResultOnMapScaleController* m_pSearchResultOnMapScaleController;
             ISearchResultOnMapFactory* m_pSearchResultOnMapFactory;
             ISearchResultOnMapIconCategoryMapper* m_pSearchResultOnMapIconCategoryMapper;
+            SearchResultOnMapModalityObserver* m_pSearchResultOnMapModalityObserver;
+            SearchResultOnMapInFocusObserver* m_pSearchResultOnMapInFocusObserver;
             
         public:
             SearchResultOnMapModule(Search::ISearchResultRepository& searchResultRepository,
                                     SearchResultPoi::ISearchResultPoiViewModel& searchResultPoiViewModel,
                                     WorldPins::IWorldPinsService& worldPinsService,
                                     Eegeo::Helpers::IIdentityProvider& identityProvider,
-                                    Modality::IModalityModel& modalityModel,
                                     const Eegeo::Rendering::ScreenProperties& screenProperties,
-                                    Eegeo::Camera::RenderCamera& renderCamera);
+                                    Eegeo::Camera::RenderCamera& renderCamera,
+                                    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
+                                    ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus);
             
             ~SearchResultOnMapModule();
             

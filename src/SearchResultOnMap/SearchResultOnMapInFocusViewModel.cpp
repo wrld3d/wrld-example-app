@@ -46,7 +46,7 @@ namespace ExampleApp
             m_searchResultPoiViewModel.Open(m_searchResultModel);
         }
         
-        void SearchResultOnMapInFocusViewModel::Open(Search::SearchResultModel& searchResultModel, const Eegeo::v2& screenPos)
+        void SearchResultOnMapInFocusViewModel::Open(const Search::SearchResultModel& searchResultModel, const Eegeo::v2& screenPos)
         {
             m_searchResultModel = searchResultModel;
             m_isOpen = true;

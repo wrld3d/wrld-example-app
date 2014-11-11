@@ -5,13 +5,16 @@
 #include "MenuViewModel.h"
 #include "MenuOptionsModel.h"
 #include "MenuSectionViewModel.h"
+#include "PerformedSearchMessageHandler.h"
 
 namespace ExampleApp
 {
     namespace SecondaryMenu
     {
         SecondaryMenuModule::SecondaryMenuModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
-                                                 Reaction::IReactionControllerModel& reactionControllerModel)
+                                                 Reaction::IReactionControllerModel& reactionControllerModel,
+                                                 Search::ISearchQueryPerformer& searchQueryPerformer,
+                                                 ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus)
         {
             m_pModel = Eegeo_NEW(Menu::MenuModel)();
             m_pMenuOptionsModel = Eegeo_NEW(Menu::MenuOptionsModel)(*m_pModel);
@@ -21,10 +24,17 @@ namespace ExampleApp
                                                           reactionControllerModel);
             
             AddMenuSection("Secondary", "", *m_pModel, false);
+
+            m_pPerformedSearchMessageHandler = Eegeo_NEW(PerformedSearchMessageHandler)(
+				searchQueryPerformer,
+				uiToNativeMessageBus
+            );
         }
         
         SecondaryMenuModule::~SecondaryMenuModule()
         {
+        	Eegeo_DELETE m_pPerformedSearchMessageHandler;
+
             for(std::vector<Menu::IMenuSectionViewModel*>::iterator it = m_sections.begin(); it != m_sections.end(); ++ it)
             {
                 Eegeo_DELETE *it;

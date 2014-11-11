@@ -5,6 +5,8 @@
 #include "ICompassModel.h"
 #include "ICompassViewModel.h"
 #include "IScreenControlViewModel.h"
+#include "AndroidAppThreadAssertionMacros.h"
+#include "CompassViewCycledMessage.h"
 
 namespace ExampleApp
 {
@@ -12,18 +14,23 @@ namespace ExampleApp
     {
     	CompassViewController::CompassViewController(
     			AndroidNativeState& nativeState,
-        		Compass::ICompassModel& model,
-				ExampleApp::Compass::ICompassViewModel& viewModel)
+				ExampleApp::Compass::ICompassViewModel& viewModel,
+                ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
+				ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus)
     	: m_nativeState(nativeState)
-        , m_model(model)
         , m_viewModel(viewModel)
-        , m_pGpsModelChangedCallback(Eegeo_NEW(Eegeo::Helpers::TCallback0<CompassViewController>)(this, &CompassViewController::OnGpsModeChanged))
-    	, m_pUpdateCallback(Eegeo_NEW((Eegeo::Helpers::TCallback1<CompassViewController, float>))(this, &CompassViewController::OnHeadingUpdated))
-    	, m_pOnScreenStateChangedCallback(Eegeo_NEW((Eegeo::Helpers::TCallback2<CompassViewController, ScreenControlViewModel::IScreenControlViewModel&, float>))(this, &CompassViewController::OnScreenStateChangedCallback))
+    	, m_uiToNativeMessageBus(uiToNativeMessageBus)
+    	, m_nativeToUiMessageBus(nativeToUiMessageBus)
+    	, m_onScreenStateChangedCallback(this, &CompassViewController::OnScreenStateChangedCallback)
+    	, m_modeChangedCallback(this, &CompassViewController::OnCompassModeChanged)
+    	, m_headingChangedCallback(this, &CompassViewController::OnCompassHeadingChanged)
         {
-            m_model.InsertGpsModeChangedCallback(*m_pGpsModelChangedCallback);
-            m_viewModel.InsertUpdateCallback(*m_pUpdateCallback);
-            m_viewModel.InsertOnScreenStateChangedCallback(*m_pOnScreenStateChangedCallback);
+    		ASSERT_UI_THREAD
+
+            m_viewModel.InsertOnScreenStateChangedCallback(m_onScreenStateChangedCallback);
+
+    		m_nativeToUiMessageBus.Subscribe(m_modeChangedCallback);
+    		m_nativeToUiMessageBus.Subscribe(m_headingChangedCallback);
 
     		AndroidSafeNativeThreadAttachment attached(m_nativeState);
 			JNIEnv* env = attached.envForThread;
@@ -47,13 +54,12 @@ namespace ExampleApp
 
     	CompassViewController::~CompassViewController()
     	{
-            m_viewModel.RemoveOnScreenStateChangedCallback(*m_pOnScreenStateChangedCallback);
-            m_viewModel.RemoveUpdateCallback(*m_pUpdateCallback);
-            m_model.RemoveGpsModeChangedCallback(*m_pGpsModelChangedCallback);
+    		ASSERT_UI_THREAD
 
-            Eegeo_DELETE m_pOnScreenStateChangedCallback;
-            Eegeo_DELETE m_pUpdateCallback;
-            Eegeo_DELETE m_pGpsModelChangedCallback;
+            m_viewModel.RemoveOnScreenStateChangedCallback(m_onScreenStateChangedCallback);
+
+    		m_nativeToUiMessageBus.Unsubscribe(m_modeChangedCallback);
+    		m_nativeToUiMessageBus.Unsubscribe(m_headingChangedCallback);
 
 			AndroidSafeNativeThreadAttachment attached(m_nativeState);
 			JNIEnv* env = attached.envForThread;
@@ -65,11 +71,15 @@ namespace ExampleApp
 
     	void CompassViewController::HandleClick()
     	{
-    		m_model.CycleToNextGpsMode();
+    		ASSERT_UI_THREAD
+
+    		m_uiToNativeMessageBus.Publish(CompassViewCycledMessage());
     	}
 
     	void CompassViewController::OnScreenStateChangedCallback(ScreenControlViewModel::IScreenControlViewModel& viewModel, float& onScreenState)
     	{
+    		ASSERT_UI_THREAD
+
 			AndroidSafeNativeThreadAttachment attached(m_nativeState);
 			JNIEnv* env = attached.envForThread;
 
@@ -90,8 +100,11 @@ namespace ExampleApp
 			}
     	}
 
-		void CompassViewController::OnHeadingUpdated(float& headingAngleRadians)
+        void CompassViewController::OnCompassHeadingChanged(const CompassHeadingUpdateMessage& message)
 		{
+			ASSERT_UI_THREAD
+
+			float headingAngleRadians = message.GetHeadingRadians();
 			AndroidSafeNativeThreadAttachment attached(m_nativeState);
 			JNIEnv* env = attached.envForThread;
 
@@ -99,14 +112,16 @@ namespace ExampleApp
 			env->CallVoidMethod(m_uiView, updateHeading, headingAngleRadians);
 		}
 
-		void CompassViewController::OnGpsModeChanged()
+        void CompassViewController::OnCompassModeChanged(const CompassModeChangedMessage& message)
 		{
+			ASSERT_UI_THREAD
+
 			AndroidSafeNativeThreadAttachment attached(m_nativeState);
 			JNIEnv* env = attached.envForThread;
 
 			std::string jniMethodName;
 
-		    switch(m_model.GetGpsMode())
+		    switch(message.GetMode())
 		    {
 		        case ExampleApp::Compass::GpsMode::GpsDisabled:
 		        {

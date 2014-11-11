@@ -6,6 +6,7 @@
 #include "CategorySearchModel.h"
 #include "Search.h"
 #include "Menu.h"
+#include "UiToNativeMessageBus.h"
 
 namespace ExampleApp
 {
@@ -14,13 +15,13 @@ namespace ExampleApp
         class CategorySearchMenuOption : public Menu::IMenuOption
         {
             CategorySearchModel m_model;
-            Search::ISearchQueryPerformer& m_searchQueryPerformer;
             ExampleApp::Menu::IMenuViewModel& m_menuViewModel;
+            ExampleAppMessaging::UiToNativeMessageBus& m_uiToNativeMessageBus;
             
         public:
             CategorySearchMenuOption(CategorySearchModel model,
-                                     Search::ISearchQueryPerformer& searchQueryPerformer,
-                                     ExampleApp::Menu::IMenuViewModel& menuViewModel);
+                                     ExampleApp::Menu::IMenuViewModel& menuViewModel,
+                                     ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus);
             
             ~CategorySearchMenuOption();
             

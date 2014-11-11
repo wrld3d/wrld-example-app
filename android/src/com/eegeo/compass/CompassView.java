@@ -33,26 +33,14 @@ public class CompassView implements View.OnClickListener
 		m_activity = activity;
 		m_nativeCallerPointer = nativeCallerPointer;
 
-		m_activity.runOnUiThread(new Runnable()
-		{
-			public void run()
-			{
-				createView();
-			}
-		});
+		createView();
 	}
 	
 	public void destroy()
 	{
-		m_activity.runOnUiThread(new Runnable()
-		{
-			public void run()
-			{
-				final RelativeLayout uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
-				uiRoot.removeView(m_view);
-				m_view = null;
-			}
-		});
+		final RelativeLayout uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
+		uiRoot.removeView(m_view);
+		m_view = null;
 	}
 	
 	private void createView()
@@ -91,99 +79,55 @@ public class CompassView implements View.OnClickListener
 	{
 		final float theta = -headingAngleRadians;
 
-		m_activity.runOnUiThread(new Runnable()
-		{
-			public void run()
-			{
-				final float sinTheta = (float)Math.sin(theta);
-				final float cosTheta = (float)Math.cos(theta);
-				final float x = 0.f;
-				final float y = m_activity.dipAsPx(-15.f);
-				final float newX = x*cosTheta - y*sinTheta;
-				final float newY = y*cosTheta + x*sinTheta;
-				m_compassPoint.setX(m_compassPointOffset + newX);
-				m_compassPoint.setY(m_compassPointOffset + newY);
-				
-				final float shadowOffset = m_activity.dipAsPx(2.0f);
-				m_compassPointShadow.setX(m_compassPointOffset + newX + shadowOffset);
-				m_compassPointShadow.setY(m_compassPointOffset + newY + shadowOffset);
-			}
-		});
+		final float sinTheta = (float)Math.sin(theta);
+		final float cosTheta = (float)Math.cos(theta);
+		final float x = 0.f;
+		final float y = m_activity.dipAsPx(-15.f);
+		final float newX = x*cosTheta - y*sinTheta;
+		final float newY = y*cosTheta + x*sinTheta;
+		m_compassPoint.setX(m_compassPointOffset + newX);
+		m_compassPoint.setY(m_compassPointOffset + newY);
 		
-		
+		final float shadowOffset = m_activity.dipAsPx(2.0f);
+		m_compassPointShadow.setX(m_compassPointOffset + newX + shadowOffset);
+		m_compassPointShadow.setY(m_compassPointOffset + newY + shadowOffset);		
 	}
 	
 	public void showGpsDisabledView()
 	{
-		m_activity.runOnUiThread(new Runnable()
-		{
-			public void run()
-			{
-				setCompassColours(m_colorGold, m_colorWhite);
-				
-				m_compassLock.animate().alpha(0.0f).setDuration(200).start();
-			}
-		});
+		setCompassColours(m_colorGold, m_colorWhite);
+		
+		m_compassLock.animate().alpha(0.0f).setDuration(200).start();
 	}
 	
 	public void showGpsFollowView()
 	{
-		m_activity.runOnUiThread(new Runnable()
-		{
-			public void run()
-			{
-				setCompassColours(m_colorWhite, m_colorGold);
-				
-				m_compassLock.animate().alpha(0.0f).setDuration(200).start();
-			}
-		});
+		setCompassColours(m_colorWhite, m_colorGold);
+		
+		m_compassLock.animate().alpha(0.0f).setDuration(200).start();
 	}
 	
 	public void showGpsCompassModeView()
 	{
-		m_activity.runOnUiThread(new Runnable()
-		{
-			public void run()
-			{
-				setCompassColours(m_colorWhite, m_colorGold);
+		setCompassColours(m_colorWhite, m_colorGold);
 				
-				m_compassLock.animate().alpha(1.0f).setDuration(200).start();
-			}
-		});
+		m_compassLock.animate().alpha(1.0f).setDuration(200).start();
 	}
 	
 	@Override
 	public void onClick(View view)
 	{
-		m_activity.runOnNativeThread(new Runnable()
-		{
-			public void run()
-			{
-				CompassViewJniMethods.HandleClick(m_nativeCallerPointer);
-			}
-		});
+		CompassViewJniMethods.HandleClick(m_nativeCallerPointer);
 	}
 	
 	public void animateToActive()
 	{
-		m_activity.runOnUiThread(new Runnable()
-		{
-			public void run()
-			{
-				animateViewToY((int)m_yPosActive);
-			}
-		});	
+		animateViewToY((int)m_yPosActive);
 	}
 	
 	public void animateToInactive()
 	{
-		m_activity.runOnUiThread(new Runnable()
-		{
-			public void run()
-			{
-				animateViewToY((int)m_yPosInactive);
-			}
-		});	
+		animateViewToY((int)m_yPosInactive);
 	}
 	
 	protected void animateViewToY(final int yAsPx)
@@ -195,19 +139,13 @@ public class CompassView implements View.OnClickListener
 	
 	public void animateToIntermediateOnScreenState(final float onScreenState)
 	{
-		m_activity.runOnUiThread(new Runnable()
-		{
-			public void run()
-			{   
-				int viewYPx = (int)m_view.getY();
-			    int newYPx = (int)(m_yPosInactive + (int)(((m_yPosActive - m_yPosInactive) * onScreenState) + 0.5f));
-			 
-			    if(viewYPx != newYPx) 
-			    {
-				    m_view.setY(newYPx);
-			    }
-			}
-		});
+		int viewYPx = (int)m_view.getY();
+	    int newYPx = (int)(m_yPosInactive + (int)(((m_yPosActive - m_yPosInactive) * onScreenState) + 0.5f));
+	 
+	    if(viewYPx != newYPx) 
+	    {
+		    m_view.setY(newYPx);
+	    }
 	}
 	
 	private void setCompassColours(int bodyColour, int pointColour)

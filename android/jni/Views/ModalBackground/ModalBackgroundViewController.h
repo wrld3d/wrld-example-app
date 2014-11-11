@@ -18,7 +18,6 @@ namespace ExampleApp
 		{
 			AndroidNativeState& m_nativeState;
 			Modality::IModalityModel& m_modalityModel;
-			ModalBackgroundView& m_modalBackgroundView;
 
 			jclass m_uiViewClass;
 			jobject m_uiView;
@@ -28,8 +27,7 @@ namespace ExampleApp
 		public:
 		    ModalBackgroundViewController(
 				AndroidNativeState& nativeState,
-				Modality::IModalityModel& modalityModel,
-				ModalBackgroundView& modalBackgroundView
+				Modality::IModalityModel& modalityModel
 			);
 
 			~ModalBackgroundViewController();

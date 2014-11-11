@@ -9,9 +9,10 @@
 #include "ICallback.h"
 #include "IMenuSectionViewModel.h"
 #include "Logger.h"
+#include "AndroidAppThreadAssertionMacros.h"
 
-//#define MenuViewController_TTY EXAMPLE_LOG
-#define MenuViewController_TTY(...)
+#define MenuViewController_TTY EXAMPLE_LOG
+//#define MenuViewController_TTY(...)
 
 namespace ExampleApp
 {
@@ -33,6 +34,8 @@ namespace ExampleApp
 		, m_dragInProgress(false)
     	, m_presentationDirty(false)
 		{
+    		ASSERT_UI_THREAD
+
     		m_menuModel.InsertItemAddedCallback(*m_pMenuAddedCallback);
     		m_menuModel.InsertItemRemovedCallback(*m_pMenuRemovedCallback);
 
@@ -66,11 +69,13 @@ namespace ExampleApp
 				OpenStateChangedCallback(m_menuViewModel, value);
 			}
 
-			RefreshPresentation();
+			m_presentationDirty = true;
 		}
 
     	MenuViewController::~MenuViewController()
 		{
+    		ASSERT_UI_THREAD
+
     		m_menuModel.RemoveItemAddedCallback(*m_pMenuAddedCallback);
     		m_menuModel.RemoveItemRemovedCallback(*m_pMenuRemovedCallback);
 
@@ -91,8 +96,10 @@ namespace ExampleApp
 			env->DeleteGlobalRef(m_uiViewClass);
 		}
 
-    	void MenuViewController::Update(float deltaSeconds)
+    	void MenuViewController::UpdateUiThread(float deltaSeconds)
     	{
+    		ASSERT_UI_THREAD
+
     		if(m_presentationDirty)
     		{
     			RefreshPresentation();
@@ -126,6 +133,8 @@ namespace ExampleApp
 
 		void MenuViewController::HandleViewOpenCompleted()
 		{
+    		ASSERT_UI_THREAD
+
 			Eegeo_ASSERT(!m_dragInProgress, "identity %d\n", Identity());
 
 			if(!m_menuViewModel.IsFullyOpen())
@@ -143,6 +152,8 @@ namespace ExampleApp
 
 		void MenuViewController::HandleViewCloseCompleted()
 		{
+    		ASSERT_UI_THREAD
+
 			Eegeo_ASSERT(!m_dragInProgress, "identity %d\n", Identity());
 
 			if(!m_menuViewModel.IsFullyClosed())
@@ -160,11 +171,15 @@ namespace ExampleApp
 
 		Eegeo::Helpers::TIdentity MenuViewController::Identity() const
 		{
+    		ASSERT_UI_THREAD
+
 			return static_cast<OpenableControlViewModel::IOpenableControlViewModel&>(m_menuViewModel).GetIdentity();
 		}
 
 		void MenuViewController::HandleViewClicked()
 		{
+    		ASSERT_UI_THREAD
+
 			MenuViewController_TTY("MenuViewController::HandleViewClicked -- %d\n", Identity());
 		    if(!m_menuViewModel.TryAcquireReactorControl())
 		    {
@@ -194,6 +209,8 @@ namespace ExampleApp
 
     	bool MenuViewController::TryBeginDrag()
     	{
+    		ASSERT_UI_THREAD
+
     		if(m_menuViewModel.TryAcquireReactorControl())
     		{
     			MenuViewController_TTY("MenuViewController::TryBeginDrag -- reactor granted for %d!\n", Identity());
@@ -206,6 +223,8 @@ namespace ExampleApp
 
 		void MenuViewController::HandleDraggingViewStarted()
 		{
+    		ASSERT_UI_THREAD
+
 			Eegeo_ASSERT(!m_dragInProgress, "identity %d\n", Identity());
 
 			{
@@ -218,6 +237,8 @@ namespace ExampleApp
 
 		void MenuViewController::HandleDraggingViewInProgress(float normalisedDragState)
 		{
+    		ASSERT_UI_THREAD
+
 			Eegeo_ASSERT(m_dragInProgress);
 
 			{
@@ -230,6 +251,8 @@ namespace ExampleApp
 
 		void MenuViewController::HandleDraggingViewCompleted()
 		{
+    		ASSERT_UI_THREAD
+
 			Eegeo_ASSERT(m_dragInProgress);
 
 			{
@@ -242,16 +265,22 @@ namespace ExampleApp
 
 		void MenuViewController::ItemAddedCallback(ExampleApp::Menu::MenuItemModel& item)
 		{
+			ASSERT_UI_THREAD
+
 			m_presentationDirty = true;
 		}
 
 		void MenuViewController::ItemRemovedCallback(ExampleApp::Menu::MenuItemModel& item)
 		{
+			ASSERT_UI_THREAD
+
 			m_presentationDirty = true;
 		}
 
 		void MenuViewController::OnScreenStateChangedCallback(ScreenControlViewModel::IScreenControlViewModel& viewModel, float& onScreenState)
 		{
+    		ASSERT_UI_THREAD
+
 			AndroidSafeNativeThreadAttachment attached(m_nativeState);
 			JNIEnv* env = attached.envForThread;
 
@@ -274,6 +303,8 @@ namespace ExampleApp
 
 		void MenuViewController::OpenStateChangedCallback(OpenableControlViewModel::IOpenableControlViewModel& viewModel, float& openState)
 		{
+    		ASSERT_UI_THREAD
+
 			if(m_dragInProgress)
 			{
 				return;
@@ -301,12 +332,15 @@ namespace ExampleApp
 
 	    void MenuViewController::HandleItemSelected(const std::string& selection, const int index)
 	    {
+    		ASSERT_UI_THREAD
+
 	    	const size_t numSections = m_menuViewModel.SectionsCount();
 	    	int currentIndex = 0;
 	    	for(size_t i = 0; i < numSections; ++ i)
 	    	{
 	    		Menu::IMenuSectionViewModel& section = m_menuViewModel.GetMenuSection(i);
 	    		const size_t numItemsInSection = section.Size();
+
 	    		for(size_t j = 0; j < numItemsInSection; ++ j)
 	    		{
 	    			if(currentIndex == index)
@@ -328,7 +362,9 @@ namespace ExampleApp
 						{
 							int itemIndex = section.IsExpandable() ? j - 1 : j;
 							ExampleApp::Menu::MenuItemModel item = section.GetItemAtIndex(itemIndex);
+
 							item.Select();
+
 							return;
 						}
 	    			}
@@ -339,6 +375,8 @@ namespace ExampleApp
 
 		void MenuViewController::RefreshPresentation()
 		{
+			ASSERT_UI_THREAD
+
 			AndroidSafeNativeThreadAttachment attached(m_nativeState);
 			JNIEnv* env = attached.envForThread;
 
@@ -405,7 +443,6 @@ namespace ExampleApp
 			env->DeleteLocalRef(groupIsExpandableArray);
 
 			m_presentationDirty = false;
-
 		}
     }
 }

@@ -54,7 +54,7 @@ namespace ExampleApp
         
         void MenuItemModel::Select()
         {
-            m_pOption->Select();
+        	m_pOption->Select();
         }
     }
 }

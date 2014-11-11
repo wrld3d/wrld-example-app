@@ -8,6 +8,7 @@
 #include "Location.h"
 #include "CompassGpsMode.h"
 #include "NavigationService.h"
+#include "NativeToUiMessageBus.h"
 
 namespace ExampleApp
 {
@@ -18,16 +19,15 @@ namespace ExampleApp
         public:
             
             CompassUpdateController(ICompassModel& model,
-                                    ICompassViewModel& viewModel,
-                                    Eegeo::Location::NavigationService& navigationService);
+                                    Eegeo::Location::NavigationService& navigationService,
+                                    ExampleApp::ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus);
             
             void Update(float deltaSeconds);
             
         private:
             ICompassModel& m_model;
-            ICompassViewModel& m_viewModel;
             Eegeo::Location::NavigationService& m_navigationService;
-                
+            ExampleApp::ExampleAppMessaging::NativeToUiMessageBus& m_nativeToUiMessageBus;
         };
     }
 }

@@ -26,12 +26,12 @@
 #include "EegeoWorld.h"
 #include "EnvironmentFlatteningService.h"
 #include "TtyHandler.h"
-
 #include "MenuViewModule.h"
 #include "PrimaryMenuModule.h"
 #include "SecondaryMenuModule.h"
 #include "ModalityModule.h"
 #include "ModalBackgroundViewModule.h"
+#include "ModalBackgroundNativeViewModule.h"
 #include "MenuModel.h"
 #include "MenuViewModel.h"
 #include "SearchResultMenuModule.h"
@@ -62,6 +62,9 @@
 #include "IMenuViewController.h"
 #include "CategorySearchModule.h"
 #include "ScreenProperties.h"
+#include "Logger.h"
+#include "AndroidAppThreadAssertionMacros.h"
+#include "SearchResultRepositoryObserver.h"
 
 using namespace Eegeo::Android;
 using namespace Eegeo::Android::Input;
@@ -85,7 +88,6 @@ AppHost::AppHost(
 	,m_androidNativeUIFactories(m_androidAlertBoxFactory, m_androidInputBoxFactory, m_androidKeyboardInputFactory)
 	,m_pInputProcessor(NULL)
 	,m_pAndroidPlatformAbstractionModule(NULL)
-	,m_pViewControllerUpdaterModule(NULL)
 	,m_pPrimaryMenuViewModule(NULL)
 	,m_pSecondaryMenuViewModule(NULL)
 	,m_pSearchResultMenuViewModule(NULL)
@@ -96,7 +98,13 @@ AppHost::AppHost(
 	,m_pCompassViewModule(NULL)
 	,m_pApp(NULL)
 	,m_androidPersistentSettingsModel(nativeState)
+	,m_createdUIModules(false)
+	,m_requestedApplicationInitialiseViewState(false)
+	,m_uiCreatedMessageReceivedOnNativeThread(false)
+	,m_pViewControllerUpdaterModule(NULL)
 {
+	ASSERT_NATIVE_THREAD
+
 	Eegeo_ASSERT(resourceBuildShareContext != EGL_NO_CONTEXT);
 
 	Eegeo::TtyHandler::TtyEnabled = true;
@@ -121,11 +129,8 @@ AppHost::AppHost(
 
 	Eegeo::EffectHandler::Initialise();
 
-	const Eegeo::EnvironmentCharacterSet::Type environmentCharacterSet = Eegeo::EnvironmentCharacterSet::Latin;
 	std::string deviceModel = std::string(nativeState.deviceModel, strlen(nativeState.deviceModel));
 	Eegeo::Config::PlatformConfig platformConfig = Eegeo::Android::AndroidPlatformConfigBuilder(deviceModel).Build();
-
-
 
 	m_pInputProcessor = Eegeo_NEW(Eegeo::Android::Input::AndroidInputProcessor)(&m_inputHandler, m_pScreenProperties->GetScreenWidth(), m_pScreenProperties->GetScreenHeight());
 
@@ -140,25 +145,29 @@ AppHost::AppHost(
                                                      m_androidNativeUIFactories,
                                                      platformConfig,
                                                      *m_pJpegLoader,
-                                                     *m_pInitialExperienceModule);
+                                                     *m_pInitialExperienceModule,
+                                                     m_uiToNativeMessageBus,
+                                                     m_nativeToUiMessageBus);
+
+    m_pModalBackgroundNativeViewModule = Eegeo_NEW(ExampleApp::ModalBackground::ModalBackgroundNativeViewModule)(
+		m_pApp->World().GetRenderingModule(),
+		m_uiToNativeMessageBus
+    );
 
 	m_pAndroidPlatformAbstractionModule->SetWebRequestServiceWorkPool(m_pApp->World().GetWorkPool());
-
-	CreateApplicationViewModules();
 
 	m_pAppInputDelegate = Eegeo_NEW(AppInputDelegate)(*m_pApp);
 	m_inputHandler.AddDelegateInputHandler(m_pAppInputDelegate);
 }
 
-
 AppHost::~AppHost()
 {
+	ASSERT_NATIVE_THREAD
+
 	m_inputHandler.RemoveDelegateInputHandler(m_pAppInputDelegate);
 
 	Eegeo_DELETE m_pAppInputDelegate;
 	m_pAppInputDelegate = NULL;
-
-	DestroyApplicationViewModules();
 
 	Eegeo_DELETE m_pApp;
 	m_pApp = NULL;
@@ -181,12 +190,16 @@ AppHost::~AppHost()
 
 void AppHost::OnResume()
 {
+	ASSERT_NATIVE_THREAD
+
 	m_pApp->OnResume();
 	m_isPaused = false;
 }
 
 void AppHost::OnPause()
 {
+	ASSERT_NATIVE_THREAD
+
 	m_isPaused = true;
 	m_pApp->OnPause();
 	m_pAndroidLocationService->StopListening();
@@ -194,32 +207,49 @@ void AppHost::OnPause()
 
 void AppHost::SetSharedSurface(EGLSurface sharedSurface)
 {
+	ASSERT_NATIVE_THREAD
+
 	m_pAndroidPlatformAbstractionModule->UpdateSurface(sharedSurface);
 }
 
 void AppHost::SetViewportOffset(float x, float y)
 {
+	ASSERT_NATIVE_THREAD
+
 	m_inputHandler.SetViewportOffset(x, y);
 }
 
 void AppHost::HandleTouchInputEvent(const Eegeo::Android::Input::TouchInputEvent& event)
 {
+	ASSERT_NATIVE_THREAD
+
 	m_pInputProcessor->HandleInput(event);
 }
 
 void AppHost::Update(float dt)
 {
+	ASSERT_NATIVE_THREAD
+
 	if(m_isPaused)
 	{
 		return;
 	}
 
+	m_uiToNativeMessageBus.Flush();
+
 	m_pApp->Update(dt);
-    m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel().UpdateObjects(dt);
+
+	if(m_pApp->IsLoadingScreenComplete() && !m_requestedApplicationInitialiseViewState)
+	{
+		m_requestedApplicationInitialiseViewState = true;
+		DispatchRevealUiMessageToUiThreadFromNativeThread();
+	}
 }
 
 void AppHost::Draw(float dt)
 {
+	ASSERT_NATIVE_THREAD
+
 	if(m_isPaused)
 	{
 		return;
@@ -229,8 +259,77 @@ void AppHost::Draw(float dt)
 	m_pInputProcessor->Update(dt);
 }
 
-void AppHost::CreateApplicationViewModules()
+void AppHost::HandleApplicationUiCreatedOnNativeThread()
 {
+	ASSERT_NATIVE_THREAD
+
+	m_uiCreatedMessageReceivedOnNativeThread = true;
+}
+
+void AppHost::DispatchRevealUiMessageToUiThreadFromNativeThread()
+{
+	ASSERT_NATIVE_THREAD
+
+	AndroidSafeNativeThreadAttachment attached(m_nativeState);
+	JNIEnv* env = attached.envForThread;
+	jmethodID dispatchRevealUiMessageToUiThreadFromNativeThread = env->GetMethodID(m_nativeState.activityClass, "dispatchRevealUiMessageToUiThreadFromNativeThread", "(J)V");
+	env->CallVoidMethod(m_nativeState.activity, dispatchRevealUiMessageToUiThreadFromNativeThread, (jlong)(this));
+}
+
+void AppHost::DispatchUiCreatedMessageToNativeThreadFromUiThread()
+{
+	ASSERT_UI_THREAD
+
+	AndroidSafeNativeThreadAttachment attached(m_nativeState);
+	JNIEnv* env = attached.envForThread;
+	jmethodID dispatchUiCreatedMessageToNativeThreadFromUiThread = env->GetMethodID(m_nativeState.activityClass, "dispatchUiCreatedMessageToNativeThreadFromUiThread", "(J)V");
+	env->CallVoidMethod(m_nativeState.activity, dispatchUiCreatedMessageToNativeThreadFromUiThread, (jlong)(this));
+}
+
+void AppHost::RevealUiFromUiThread()
+{
+	ASSERT_UI_THREAD
+
+	m_pApp->InitialiseApplicationViewState();
+}
+
+void AppHost::CreateUiFromUiThread()
+{
+	ASSERT_UI_THREAD
+
+	Eegeo_ASSERT(!m_createdUIModules);
+	CreateApplicationViewModulesFromUiThread();
+	DispatchUiCreatedMessageToNativeThreadFromUiThread();
+}
+
+void AppHost::UpdateUiViewsFromUiThread(float dt)
+{
+	ASSERT_UI_THREAD
+
+	m_nativeToUiMessageBus.Flush();
+
+	if(m_createdUIModules)
+	{
+		m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel().UpdateObjectsUiThread(dt);
+	}
+	else
+	{
+		CreateUiFromUiThread();
+	}
+}
+
+void AppHost::DestroyUiFromUiThread()
+{
+	ASSERT_UI_THREAD
+
+	DestroyApplicationViewModulesFromUiThread();
+}
+
+void AppHost::CreateApplicationViewModulesFromUiThread()
+{
+	ASSERT_UI_THREAD
+
+	m_createdUIModules = true;
     ExampleApp::MobileExampleApp& app = *m_pApp;
 
     // 3d map view layer.
@@ -238,28 +337,29 @@ void AppHost::CreateApplicationViewModules()
 		m_nativeState,
 		app.SearchResultOnMapModule().GetSearchResultOnMapInFocusViewModel(),
 		app.SearchResultOnMapModule().GetScreenControlViewModel(),
-		app.ModalityModule().GetModalityModel(),
+    	app.SearchResultPoiModule().GetSearchResultPoiViewModel(),
 		app.PinDiameter()
 	);
 
     // HUD behind modal background layer.
     m_pFlattenButtonViewModule = Eegeo_NEW(ExampleApp::FlattenButton::FlattenButtonViewModule)(
     	m_nativeState,
-    	app.FlattenButtonModule().GetFlattenButtonModel(),
-    	app.FlattenButtonModule().GetFlattenButtonViewModel()
+    	app.FlattenButtonModule().GetFlattenButtonViewModel(),
+    	m_uiToNativeMessageBus,
+    	m_nativeToUiMessageBus
     );
 
     m_pCompassViewModule = Eegeo_NEW(ExampleApp::Compass::CompassViewModule)(
 		m_nativeState,
-		app.CompassModule().GetCompassModel(),
-		app.CompassModule().GetCompassViewModel()
+		app.CompassModule().GetCompassViewModel(),
+		m_uiToNativeMessageBus,
+		m_nativeToUiMessageBus
 	);
 
     // Modal background layer.
     m_pModalBackgroundViewModule = Eegeo_NEW(ExampleApp::ModalBackground::ModalBackgroundViewModule)(
     	m_nativeState,
-    	app.ModalityModule().GetModalityModel(),
-    	app.World().GetRenderingModule()
+    	app.ModalityModule().GetModalityModel()
     );
 
     // Menus & HUD layer.
@@ -275,8 +375,8 @@ void AppHost::CreateApplicationViewModules()
     	m_nativeState,
     	app.SecondaryMenuModule().GetSecondaryMenuModel(),
     	app.SecondaryMenuModule().GetSecondaryMenuViewModel(),
-    	app.SearchModule().GetSearchService(),
-    	app.SearchModule().GetSearchQueryPerformer()
+    	m_uiToNativeMessageBus,
+    	m_nativeToUiMessageBus
 	);
 
     m_pSearchResultMenuViewModule = Eegeo_NEW(ExampleApp::SearchMenu::SearchMenuViewModule)(
@@ -284,10 +384,10 @@ void AppHost::CreateApplicationViewModules()
 		m_nativeState,
 		app.SearchResultMenuModule().GetSearchResultMenuModel(),
 		app.SearchResultMenuModule().GetMenuViewModel(),
-    	app.SearchModule().GetSearchQueryPerformer(),
-    	app.SearchModule().GetSearchService(),
     	app.CategorySearchModule().GetCategorySearchRepository(),
-    	app.SearchResultMenuModule().GetSearchResultMenuViewModel()
+    	app.SearchResultMenuModule().GetSearchResultMenuViewModel(),
+    	m_uiToNativeMessageBus,
+    	m_nativeToUiMessageBus
 	);
 
     // Pop-up layer.
@@ -302,7 +402,8 @@ void AppHost::CreateApplicationViewModules()
 		app.AboutPageModule().GetAboutPageViewModel()
     );
 
-    m_pViewControllerUpdaterModule = Eegeo_NEW(ExampleApp::ViewControllerUpdater::ViewControllerUpdaterModule)();
+	m_pViewControllerUpdaterModule = Eegeo_NEW(ExampleApp::ViewControllerUpdater::ViewControllerUpdaterModule);
+
     ExampleApp::ViewControllerUpdater::IViewControllerUpdaterModel& viewControllerUpdaterModel = m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel();
 
     viewControllerUpdaterModel.AddUpdateableObject(m_pPrimaryMenuViewModule->GetMenuViewController());
@@ -310,26 +411,33 @@ void AppHost::CreateApplicationViewModules()
     viewControllerUpdaterModel.AddUpdateableObject(m_pSearchResultMenuViewModule->GetMenuViewController());
 }
 
-void AppHost::DestroyApplicationViewModules()
+void AppHost::DestroyApplicationViewModulesFromUiThread()
 {
-	Eegeo_DELETE m_pViewControllerUpdaterModule;
+	ASSERT_UI_THREAD
 
-	Eegeo_DELETE m_pFlattenButtonViewModule;
+	if(m_createdUIModules)
+	{
+		Eegeo_DELETE m_pViewControllerUpdaterModule;
 
-    Eegeo_DELETE m_pAboutPageViewModule;
+		Eegeo_DELETE m_pFlattenButtonViewModule;
 
-    Eegeo_DELETE m_pSearchResultOnMapViewModule;
+		Eegeo_DELETE m_pAboutPageViewModule;
 
-    Eegeo_DELETE m_pSearchResultPoiViewModule;
+		Eegeo_DELETE m_pSearchResultOnMapViewModule;
 
-    Eegeo_DELETE m_pModalBackgroundViewModule;
+		Eegeo_DELETE m_pSearchResultPoiViewModule;
 
-    Eegeo_DELETE m_pSearchResultMenuViewModule;
+		Eegeo_DELETE m_pModalBackgroundViewModule;
 
-    Eegeo_DELETE m_pSecondaryMenuViewModule;
+		Eegeo_DELETE m_pSearchResultMenuViewModule;
 
-    Eegeo_DELETE m_pPrimaryMenuViewModule;
+		Eegeo_DELETE m_pSecondaryMenuViewModule;
 
-    Eegeo_DELETE m_pCompassViewModule;
+		Eegeo_DELETE m_pPrimaryMenuViewModule;
+
+		Eegeo_DELETE m_pCompassViewModule;
+	}
+	m_createdUIModules = false;
 }
+
 

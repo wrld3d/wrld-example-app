@@ -10,7 +10,7 @@ namespace ExampleApp
         {
         public:
             virtual ~IMenuOption() { }
-            
+
             virtual void Select() = 0;
         };
     }

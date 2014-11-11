@@ -23,7 +23,7 @@ namespace ExampleApp
             
             virtual void SelectFocussedResult() = 0;
             
-            virtual void Open(Search::SearchResultModel& searchResultModel, const Eegeo::v2& screenPos) = 0;
+            virtual void Open(const Search::SearchResultModel& searchResultModel, const Eegeo::v2& screenPos) = 0;
             
             virtual void Close() = 0;
             

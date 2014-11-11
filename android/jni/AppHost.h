@@ -39,6 +39,8 @@
 #include "SearchResultOnMapViewIncludes.h"
 #include "CompassViewIncludes.h"
 #include "AboutPageViewIncludes.h"
+#include "UiToNativeMessageBus.h"
+#include "NativeToUiMessageBus.h"
 
 class AppHost : protected Eegeo::NonCopyable
 {
@@ -55,6 +57,12 @@ public:
 
 	void Update(float dt);
 	void Draw(float dt);
+
+	void CreateUiFromUiThread();
+	void RevealUiFromUiThread();
+	void UpdateUiViewsFromUiThread(float deltaSeconds);
+	void DestroyUiFromUiThread();
+    void HandleApplicationUiCreatedOnNativeThread();
 
 	void OnPause();
 	void OnResume();
@@ -84,8 +92,10 @@ private:
 
 	Eegeo::Android::Input::AndroidInputProcessor* m_pInputProcessor;
 
+	ExampleApp::ModalBackground::IModalBackgroundNativeViewModule* m_pModalBackgroundNativeViewModule;
+
+
 	Eegeo::Android::AndroidPlatformAbstractionModule* m_pAndroidPlatformAbstractionModule;
-	ExampleApp::ViewControllerUpdater::IViewControllerUpdaterModule* m_pViewControllerUpdaterModule;
     ExampleApp::Menu::IMenuViewModule* m_pPrimaryMenuViewModule;
     ExampleApp::Menu::IMenuViewModule* m_pSecondaryMenuViewModule;
     ExampleApp::Menu::IMenuViewModule* m_pSearchResultMenuViewModule;
@@ -101,7 +111,18 @@ private:
     ExampleApp::PersistentSettings::AndroidPersistentSettingsModel m_androidPersistentSettingsModel;
     ExampleApp::InitialExperience::IInitialExperienceModule* m_pInitialExperienceModule;
 
-    void CreateApplicationViewModules();
-    void DestroyApplicationViewModules();
+    bool m_createdUIModules;
+	bool m_requestedApplicationInitialiseViewState;
+	bool m_uiCreatedMessageReceivedOnNativeThread;
+	ExampleApp::ViewControllerUpdater::IViewControllerUpdaterModule* m_pViewControllerUpdaterModule;
+
+    ExampleApp::ExampleAppMessaging::UiToNativeMessageBus m_uiToNativeMessageBus;
+    ExampleApp::ExampleAppMessaging::NativeToUiMessageBus m_nativeToUiMessageBus;
+
+    void DispatchRevealUiMessageToUiThreadFromNativeThread();
+    void DispatchUiCreatedMessageToNativeThreadFromUiThread();
+    void CreateApplicationViewModulesFromUiThread();
+    void DestroyApplicationViewModulesFromUiThread();
 };
+
 

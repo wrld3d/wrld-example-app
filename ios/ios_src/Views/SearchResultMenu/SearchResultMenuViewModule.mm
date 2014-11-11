@@ -11,14 +11,14 @@ namespace ExampleApp
 {
     namespace SearchResultMenu
     {
-        SearchResultMenuViewModule::SearchResultMenuViewModule(Search::ISearchService& searchService,
-                                                               Search::ISearchQueryPerformer& searchQueryPerformer,
-                                                               CategorySearch::ICategorySearchRepository& categorySearchRepository,
+        SearchResultMenuViewModule::SearchResultMenuViewModule(CategorySearch::ICategorySearchRepository& categorySearchRepository,
                                                                Menu::IMenuModel& searchResultMenuModel,
                                                                Menu::IMenuViewModel& menuViewModel,
                                                                SearchResultMenu::ISearchResultMenuViewModel& searchResultMenuViewModel,
                                                                const Eegeo::Rendering::ScreenProperties& screenProperties,
-                                                               Modality::IModalityModel& modalityModel)
+                                                               Modality::IModalityModel& modalityModel,
+                                                               ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
+                                                               ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus)
         {
             m_pView = [[SearchResultMenuView alloc]  initWithDimensions
                        :screenProperties.GetScreenWidth()
@@ -26,14 +26,14 @@ namespace ExampleApp
                        :screenProperties.GetPixelScale()];
             
             m_pMenuViewController = [[SearchResultMenuViewController alloc] initWithParams
-                                     :&searchService
-                                     :&searchQueryPerformer
                                      :&categorySearchRepository
                                      :&searchResultMenuModel
                                      :&menuViewModel
                                      :&searchResultMenuViewModel
                                      :m_pView
-                                     :&modalityModel];
+                                     :&modalityModel
+                                     :&uiToNativeMessageBus
+                                     :&nativeToUiMessageBus];
         }
         
         SearchResultMenuViewModule::~SearchResultMenuViewModule()

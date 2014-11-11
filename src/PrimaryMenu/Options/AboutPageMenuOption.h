@@ -23,7 +23,7 @@ namespace ExampleApp
                                     AboutPage::IAboutPageViewModel& aboutPageViewModel);
                 
                 ~AboutPageMenuOption();
-                
+
                 void Select();
             };
         }

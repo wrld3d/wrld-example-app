@@ -14,9 +14,9 @@ namespace ExampleApp
         public:
             virtual ~ISearchResultMenuModule() { }
             
+            virtual Menu::IMenuOptionsModel& GetSearchResultMenuOptionsModel() const = 0;
+
             virtual Menu::IMenuModel& GetSearchResultMenuModel() const = 0;
-            
-            virtual ISearchResultMenuModel& GetSearchResultModel() const = 0;
             
             virtual Menu::IMenuViewModel& GetMenuViewModel() const = 0;
             

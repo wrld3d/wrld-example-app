@@ -7,6 +7,8 @@ namespace ExampleApp
     namespace SearchResultMenu
     {
         class ISearchResultMenuModel;
+        class ISearchResultMenuModelMutator;
+        class ISearchResultMenuModelMutatorFactory;
         class ISearchResultMenuModule;
         class ISearchResultMenuViewModel;
     }

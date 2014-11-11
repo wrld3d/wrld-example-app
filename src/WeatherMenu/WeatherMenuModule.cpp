@@ -17,7 +17,8 @@ namespace ExampleApp
     {
         WeatherMenuModule::WeatherMenuModule(Eegeo::Helpers::IFileIO& fileIO,
                                              Eegeo::Resources::CityThemes::ICityThemesService& themesService,
-                                             Eegeo::Resources::CityThemes::ICityThemesUpdater& themesUpdater)
+                                             Eegeo::Resources::CityThemes::ICityThemesUpdater& themesUpdater,
+                                             ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus)
         {
             m_pMenuModel = Eegeo_NEW(Menu::MenuModel)();
             m_pMenuOptionsModel = Eegeo_NEW(Menu::MenuOptionsModel)(*m_pMenuModel);
@@ -46,13 +47,15 @@ namespace ExampleApp
                 WeatherMenuStateModel& weatherState = *it;
                 m_pMenuOptionsModel->AddItem(weatherState.GetName(),
                                              weatherState.GetName(), "", weatherState.GetIcon(),
-                                             Eegeo_NEW(WeatherMenuStateOption)(weatherState, *m_pWeatherController));
+                                             Eegeo_NEW(WeatherMenuStateOption)(weatherState, uiToNativeMessageBus));
             }
             
+            m_pWeatherSelectedMessageHandler = Eegeo_NEW(WeatherSelectedMessageHandler)(*m_pWeatherController, uiToNativeMessageBus);
         }
         
         WeatherMenuModule::~WeatherMenuModule()
         {
+        	Eegeo_DELETE m_pWeatherSelectedMessageHandler;
             Eegeo_DELETE m_pWeatherController;
             Eegeo_DELETE m_pMenuOptionsModel;
             Eegeo_DELETE m_pMenuModel;

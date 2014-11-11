@@ -7,6 +7,8 @@
 #include "SearchRefreshService.h"
 #include "DecartaSearchJsonParser.h"
 #include "DecartaSearchService.h"
+#include "UiToNativeMessageBus.h"
+#include "NativeToUiMessageBus.h"
 
 namespace ExampleApp
 {
@@ -16,7 +18,9 @@ namespace ExampleApp
                                    Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory,
                                    Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder,
                                    Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& cameraController,
-                                   CameraTransitions::ICameraTransitionController& cameraTransitionsController)
+                                   CameraTransitions::ICameraTransitionController& cameraTransitionsController,
+                                   ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
+                                   ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus)
         {
             m_pSearchResultRepository = Eegeo_NEW(SearchResultRepository)();
             
@@ -36,10 +40,17 @@ namespace ExampleApp
                                                                       cameraTransitionsController,
                                                                       1.f,
                                                                       500.f);
+
+            m_pSearchQueryObserver = Eegeo_NEW(SearchQueryObserver)(
+				*m_pSearchService,
+				*m_pSearchQueryPerformer,
+            	nativeToUiMessageBus
+            );
         }
         
         SearchModule::~SearchModule()
         {
+        	Eegeo_DELETE m_pSearchQueryObserver;
             Eegeo_DELETE m_pSearchRefreshService;
             Eegeo_DELETE m_pSearchQueryPerformer;
             Eegeo_DELETE m_pSearchService;

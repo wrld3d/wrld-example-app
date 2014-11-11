@@ -2,6 +2,7 @@
 
 #include "FlattenButtonViewModule.h"
 #include "FlattenButtonViewController.h"
+#include "AndroidAppThreadAssertionMacros.h"
 
 namespace ExampleApp
 {
@@ -9,18 +10,25 @@ namespace ExampleApp
     {
     	FlattenButtonViewModule::FlattenButtonViewModule(
             	AndroidNativeState& nativeState,
-				FlattenButton::IFlattenButtonModel& model,
-        		FlattenButton::IFlattenButtonViewModel& viewModel
+        		FlattenButton::IFlattenButtonViewModel& viewModel,
+				ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
+				ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus
             )
     	{
+    		ASSERT_UI_THREAD
+
     		m_pController = Eegeo_NEW(FlattenButtonViewController)(
-    				nativeState,
-    				model,
-    				viewModel);
+				nativeState,
+				viewModel,
+				uiToNativeMessageBus,
+				nativeToUiMessageBus
+			);
     	}
 
     	FlattenButtonViewModule::~FlattenButtonViewModule()
     	{
+    		ASSERT_UI_THREAD
+
     		Eegeo_DELETE m_pController;
     	}
     }

@@ -3,21 +3,23 @@
 #include <limits>
 #include "SearchResultOnMapInFocusController.h"
 #include "IWorldPinsService.h"
-#include "ISearchResultOnMapInFocusViewModel.h"
 #include "VectorMath.h"
 #include "IInterestPointProvider.h"
 #include "RenderCamera.h"
+#include "SearchResultGainedFocusMessage.h"
+#include "SearchResultLostFocusMessage.h"
+#include "SearchResultInFocusChangedLocationMessage.h"
 
 namespace ExampleApp
 {
     namespace SearchResultOnMap
     {
         SearchResultOnMapInFocusController::SearchResultOnMapInFocusController(SearchResultOnMapModel& searchResultOnMapModel,
-                                                                               ISearchResultOnMapInFocusViewModel& searchResultOnMapInFocusViewModel,
+                                                                               ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus,
                                                                                WorldPins::IWorldPinsService& worldPinsService,
                                                                                Eegeo::Camera::RenderCamera& renderCamera)
         : m_searchResultOnMapModel(searchResultOnMapModel)
-        , m_searchResultOnMapInFocusViewModel(searchResultOnMapInFocusViewModel)
+        , m_nativeToUiMessageBus(nativeToUiMessageBus)
         , m_worldPinsService(worldPinsService)
         , m_renderCamera(renderCamera)
         , m_pLastFocussedModel(NULL)
@@ -71,18 +73,18 @@ namespace ExampleApp
                 
                 if(m_pLastFocussedModel != NULL)
                 {
-                    m_searchResultOnMapInFocusViewModel.Open(*m_pLastFocussedModel, closestScreenPinLocation);
+                    m_nativeToUiMessageBus.Publish(SearchResultGainedFocusMessage(*m_pLastFocussedModel, closestScreenPinLocation));
                 }
                 else
                 {
-                    m_searchResultOnMapInFocusViewModel.Close();
+                	m_nativeToUiMessageBus.Publish(SearchResultLostFocusMessage());
                 }
             }
             else
             {
                 if(m_pLastFocussedModel != NULL)
                 {
-                    m_searchResultOnMapInFocusViewModel.UpdateScreenLocation(closestScreenPinLocation);
+                    m_nativeToUiMessageBus.Publish(SearchResultInFocusChangedLocationMessage(closestScreenPinLocation));
                 }
             }
         }

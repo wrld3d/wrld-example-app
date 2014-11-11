@@ -19,7 +19,8 @@ namespace ExampleApp
         PlaceJumpsModule::PlaceJumpsModule(Eegeo::Helpers::IFileIO& fileIO,
                                            Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& controller,
                                            Compass::ICompassModel& compassModel,
-                                           ExampleApp::Menu::IMenuViewModel& menuViewModel)
+                                           ExampleApp::Menu::IMenuViewModel& menuViewModel,
+                                           ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus)
         {
             m_pJumpController = Eegeo_NEW(PlaceJumpController)(controller, compassModel);
             
@@ -49,12 +50,15 @@ namespace ExampleApp
                 PlaceJumpModel& jump = *it;
                 m_pMenuOptionsModel->AddItem(jump.GetName(),
                                              jump.GetName(), "", jump.GetIcon(),
-                                             Eegeo_NEW(PlaceJumpMenuOption)(jump, *m_pJumpController, menuViewModel));
+                                             Eegeo_NEW(PlaceJumpMenuOption)(jump, menuViewModel, uiToNativeMessageBus));
             }
+
+            m_pPlaceJumpSelectedMessageHandler = Eegeo_NEW(PlaceJumpSelectedMessageHandler)(*m_pJumpController, uiToNativeMessageBus);
         }
         
         PlaceJumpsModule::~PlaceJumpsModule()
         {
+        	Eegeo_DELETE m_pPlaceJumpSelectedMessageHandler;
             Eegeo_DELETE m_pMenuOptionsModel;
             Eegeo_DELETE m_pMenuModel;
             Eegeo_DELETE m_pJumpController;

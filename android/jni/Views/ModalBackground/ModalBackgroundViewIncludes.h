@@ -9,5 +9,7 @@ namespace ExampleApp
 		class IModalBackgroundViewController;
 		class ModalBackgroundViewController;
         class IModalBackgroundViewModule;
+        class IModalBackgroundNativeViewModule;
+        class ModalBackgroundView;
     }
 }

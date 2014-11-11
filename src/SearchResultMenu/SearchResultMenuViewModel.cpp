@@ -13,20 +13,15 @@ namespace ExampleApp
         SearchResultMenuViewModel::SearchResultMenuViewModel(Menu::IMenuModel& menuModel,
                                                              bool isInitiallyOnScreen,
                                                              Eegeo::Helpers::TIdentity identity,
-                                                             Reaction::IReactionControllerModel& reactionControllerModel,
-                                                             const Search::ISearchQueryPerformer& searchQueryPerformer,
-                                                             Search::ISearchService& searchService)
+                                                             Reaction::IReactionControllerModel& reactionControllerModel)
         : Menu::MenuViewModel(isInitiallyOnScreen, identity, reactionControllerModel)
         , m_menuModel(menuModel)
         , m_realOnScreenState(isInitiallyOnScreen ? 1.f : 0.f)
         , m_pMenuContentsChangedCallback(Eegeo_NEW((Eegeo::Helpers::TCallback1<SearchResultMenuViewModel, Menu::MenuItemModel>))(this, &SearchResultMenuViewModel::HandleMenuContentsChanged))
-        , m_searchQueryPerformer(searchQueryPerformer)
-        , m_searchService(searchService)
-        , m_pSearchQueryPerformedCallback(Eegeo_NEW((Eegeo::Helpers::TCallback1<SearchResultMenuViewModel, const Search::SearchQuery&>))(this, &SearchResultMenuViewModel::HandleSearchQueryPerformed))
         , m_pModalReactorOpenControlReleasedCallback(Eegeo_NEW((Eegeo::Helpers::TCallback0<SearchResultMenuViewModel>))(this, &SearchResultMenuViewModel::HandleReactorOpenControlReleased))
         , m_reactionControllerModel(reactionControllerModel)
+        , m_hasSearchQuery(false)
         {
-            m_searchService.InsertOnPerformedQueryCallback(*m_pSearchQueryPerformedCallback);
             m_menuModel.InsertItemAddedCallback(*m_pMenuContentsChangedCallback);
             m_menuModel.InsertItemRemovedCallback(*m_pMenuContentsChangedCallback);
             m_reactionControllerModel.InsertOpenControlReleasedCallback(*m_pModalReactorOpenControlReleasedCallback);
@@ -37,15 +32,13 @@ namespace ExampleApp
             m_reactionControllerModel.RemoveOpenControlReleasedCallback(*m_pModalReactorOpenControlReleasedCallback);
             m_menuModel.RemoveItemAddedCallback(*m_pMenuContentsChangedCallback);
             m_menuModel.RemoveItemRemovedCallback(*m_pMenuContentsChangedCallback);
-            m_searchService.RemoveOnPerformedQueryCallback(*m_pSearchQueryPerformedCallback);
             Eegeo_DELETE m_pModalReactorOpenControlReleasedCallback;
             Eegeo_DELETE m_pMenuContentsChangedCallback;
-            Eegeo_DELETE m_pSearchQueryPerformedCallback;
         }
         
         bool SearchResultMenuViewModel::CanShowOnScreen() const
         {
-            if(!m_searchQueryPerformer.HasQuery())
+            if(!m_hasSearchQuery)
             {
                 return false;
             }
@@ -107,9 +100,14 @@ namespace ExampleApp
             }
         }
         
-        void SearchResultMenuViewModel::HandleSearchQueryPerformed(const Search::SearchQuery& query)
+        void SearchResultMenuViewModel::SetHasSearchQuery(bool hasSearchQuery)
         {
-            AddToScreen();
+        	m_hasSearchQuery = hasSearchQuery;
+
+        	if(m_hasSearchQuery)
+        	{
+        		AddToScreen();
+        	}
         }
         
         void SearchResultMenuViewModel::HandleReactorOpenControlReleased()

@@ -9,6 +9,9 @@
 #include "ICallback.h"
 #include "SearchQuery.h"
 #include "ICategorySearchRepository.h"
+#include "NativeToUiMessageBus.h"
+#include "SearchQueryPerformedMessage.h"
+#include "SearchQueryResponseReceivedMessage.h"
 
 namespace ExampleApp
 {
@@ -17,47 +20,45 @@ namespace ExampleApp
         class SearchResultMenuViewControllerInterop : private Eegeo::NonCopyable
         {
             SearchResultMenuViewController* m_pController;
-            Search::ISearchService& m_searchService;
             CategorySearch::ICategorySearchRepository& m_categorySearchRepository;
+            ExampleAppMessaging::NativeToUiMessageBus& m_nativeToUiMessageBus;
             
-            Eegeo::Helpers::ICallback1<const Search::SearchQuery&>* m_pSearchQueryIssuedCallback;
-            Eegeo::Helpers::ICallback2<const Search::SearchQuery&, const std::vector<Search::SearchResultModel> &>* m_pSearchResultReceivedCallback;
+            Eegeo::Helpers::TCallback1<SearchResultMenuViewControllerInterop, const Search::SearchQueryPerformedMessage&> m_searchQueryIssuedCallback;
+            Eegeo::Helpers::TCallback1<SearchResultMenuViewControllerInterop, const Search::SearchQueryResponseReceivedMessage&> m_searchResultReceivedCallback;
             
-            void HandleSearchQueryIssued(const Search::SearchQuery& query)
+            void HandleSearchQueryIssued(const Search::SearchQueryPerformedMessage& message)
             {
                 [m_pController updateHeaderInResponseToQueryIssued
-                 :CategorySearch::GetPresentationStringForQuery(m_categorySearchRepository, query)];
+                 :CategorySearch::GetPresentationStringForQuery(m_categorySearchRepository, message.Query())];
             }
             
-            void HandleSearchResultReceived(const Search::SearchQuery& query, const std::vector<Search::SearchResultModel>& results)
+            void HandleSearchResultReceived(const Search::SearchQueryResponseReceivedMessage& message)
             {
                 [m_pController updateHeaderInResponseToQueryResultsReceived
-                 :CategorySearch::GetPresentationStringForQuery(m_categorySearchRepository, query)
-                 :results.size()];
+                 :CategorySearch::GetPresentationStringForQuery(m_categorySearchRepository, message.GetQuery())
+                 :message.GetResults().size()];
             }
             
         public:
             
             SearchResultMenuViewControllerInterop(SearchResultMenuViewController* pController,
-                                                  Search::ISearchService& searchService,
-                                                  CategorySearch::ICategorySearchRepository& categorySearchRepository)
+                                                  CategorySearch::ICategorySearchRepository& categorySearchRepository,
+                                                  ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus
+                                                  )
             : m_pController(pController)
-            , m_searchService(searchService)
+            , m_nativeToUiMessageBus(nativeToUiMessageBus)
             , m_categorySearchRepository(categorySearchRepository)
-            , m_pSearchQueryIssuedCallback(Eegeo_NEW((Eegeo::Helpers::TCallback1<SearchResultMenuViewControllerInterop, const Search::SearchQuery &>))(this, &SearchResultMenuViewControllerInterop::HandleSearchQueryIssued))
-            , m_pSearchResultReceivedCallback(Eegeo_NEW((Eegeo::Helpers::TCallback2<SearchResultMenuViewControllerInterop, const Search::SearchQuery&, const std::vector<Search::SearchResultModel> &>))(this, &SearchResultMenuViewControllerInterop::HandleSearchResultReceived))
+            , m_searchResultReceivedCallback(this, &SearchResultMenuViewControllerInterop::HandleSearchResultReceived)
+            , m_searchQueryIssuedCallback(this, &SearchResultMenuViewControllerInterop::HandleSearchQueryIssued)
             {
-                m_searchService.InsertOnPerformedQueryCallback(*m_pSearchQueryIssuedCallback);
-                m_searchService.InsertOnReceivedQueryResultsCallback(*m_pSearchResultReceivedCallback);
+                m_nativeToUiMessageBus.Subscribe(m_searchResultReceivedCallback);
+                m_nativeToUiMessageBus.Subscribe(m_searchQueryIssuedCallback);
             }
             
             ~SearchResultMenuViewControllerInterop()
             {
-                m_searchService.RemoveOnReceivedQueryResultsCallback(*m_pSearchResultReceivedCallback);
-                m_searchService.RemoveOnPerformedQueryCallback(*m_pSearchQueryIssuedCallback);
-                
-                Eegeo_DELETE m_pSearchResultReceivedCallback;
-                Eegeo_DELETE m_pSearchQueryIssuedCallback;
+                m_nativeToUiMessageBus.Unsubscribe(m_searchResultReceivedCallback);
+                m_nativeToUiMessageBus.Unsubscribe(m_searchQueryIssuedCallback);
             }
         };
         

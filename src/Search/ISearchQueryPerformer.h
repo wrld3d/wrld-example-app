@@ -5,6 +5,7 @@
 #include <string>
 #include "ICallback.h"
 #include "Space.h"
+#include "SearchQuery.h"
 
 namespace ExampleApp
 {

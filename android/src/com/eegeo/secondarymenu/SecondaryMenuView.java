@@ -32,9 +32,9 @@ public class SecondaryMenuView extends MenuView implements TextView.OnEditorActi
 	public SecondaryMenuView(MainActivity activity, long nativeCallerPointer)
 	{
 		super(activity, nativeCallerPointer);
+		createView();
 	}
 
-	@Override
 	protected void createView() 
 	{
 		final RelativeLayout uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
@@ -85,18 +85,15 @@ public class SecondaryMenuView extends MenuView implements TextView.OnEditorActi
 	public boolean onEditorAction(TextView view, int actionId, KeyEvent event) 
 	{	
         if (actionId == EditorInfo.IME_ACTION_GO ||
-        	actionId == event.KEYCODE_ENTER)
+        	actionId == KeyEvent.KEYCODE_ENTER)
         {
         	final String queryText = m_editText.getText().toString();
         	m_activity.dismissKeyboard(m_editText.getWindowToken());
         	
-        	m_activity.runOnNativeThread(new Runnable()
-    		{
-    			public void run()
-    			{
-    				SecondaryMenuViewJniMethods.PerformSearchQuery(m_nativeCallerPointer, queryText);
-    			}
-    		});
+        	if(queryText.length() > 0)
+        	{
+        		SecondaryMenuViewJniMethods.PerformSearchQuery(m_nativeCallerPointer, queryText);
+        	}
         	
         	return true;
         }
@@ -106,35 +103,17 @@ public class SecondaryMenuView extends MenuView implements TextView.OnEditorActi
 	
 	public void removeSeachKeyboard()
 	{
-		m_activity.runOnUiThread(new Runnable()
-		{
-			public void run()
-			{
-	        	m_activity.dismissKeyboard(m_editText.getWindowToken());
-			}
-		});
+		m_activity.dismissKeyboard(m_editText.getWindowToken());
 	}
 	
 	public void disableEditText()
 	{
-		m_activity.runOnUiThread(new Runnable()
-		{
-			public void run()
-			{
-				m_editText.setEnabled(false);
-			}
-		});
+		m_editText.setEnabled(false);
 	}
 	
 	public void enableEditText()
 	{
-		m_activity.runOnUiThread(new Runnable()
-		{
-			public void run()
-			{
-				m_editText.setEnabled(true);
-			}
-		});
+		m_editText.setEnabled(true);
 	}
 
 	@Override
@@ -148,14 +127,8 @@ public class SecondaryMenuView extends MenuView implements TextView.OnEditorActi
 	    final int upXPx = (open ? m_openXPx : m_closedXPx);
 		log("ACTION_UP", "x: " + upXPx);
 	    
-	    m_activity.runOnNativeThread(new Runnable()
-		{
-			public void run()
-			{
-				animateViewToX(upXPx);
-				MenuViewJniMethods.ViewDragCompleted(m_nativeCallerPointer);
-			}
-		});
+		animateViewToX(upXPx);
+		MenuViewJniMethods.ViewDragCompleted(m_nativeCallerPointer);
 	}
 
 	@Override
@@ -175,15 +148,9 @@ public class SecondaryMenuView extends MenuView implements TextView.OnEditorActi
 	    
 	    float normalisedDragState = Math.abs(newXPx + (-m_closedXPx)) / (Math.abs(m_openXPx - m_closedXPx));
 	    final float clampedNormalisedDragState = clamp(normalisedDragState, 0.f, 1.f);
-	    
-	    m_activity.runOnNativeThread(new Runnable()
-		{
-			public void run()
-			{
-				MenuViewJniMethods.ViewDragInProgress(m_nativeCallerPointer, clampedNormalisedDragState);
-			}
-		});
-	    
+	
+	    MenuViewJniMethods.ViewDragInProgress(m_nativeCallerPointer, clampedNormalisedDragState);
+	
 	    m_view.setX(newXPx);
 	    log("ACTION_MOVE", "x: " + newXPx+ ", clamp: " + clampedNormalisedDragState);
 	}

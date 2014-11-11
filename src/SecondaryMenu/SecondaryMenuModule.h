@@ -9,6 +9,9 @@
 #include "ISecondaryMenuModule.h"
 #include "IIdentity.h"
 #include "Reaction.h"
+#include "Search.h"
+#include "SecondaryMenu.h"
+#include "UiToNativeMessageBus.h"
 
 namespace ExampleApp
 {
@@ -21,10 +24,13 @@ namespace ExampleApp
             Menu::IMenuOptionsModel* m_pMenuOptionsModel;
             Menu::IMenuViewModel* m_pViewModel;
             std::vector<Menu::IMenuSectionViewModel*> m_sections;
+            PerformedSearchMessageHandler* m_pPerformedSearchMessageHandler;
             
         public:
             SecondaryMenuModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
-                                Reaction::IReactionControllerModel& reactionControllerModel);
+                                Reaction::IReactionControllerModel& reactionControllerModel,
+                                Search::ISearchQueryPerformer& searchQueryPerformer,
+                                ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus);
             
             ~SecondaryMenuModule();
             

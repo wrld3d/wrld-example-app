@@ -7,6 +7,8 @@
 #include "Rendering.h"
 #include "FlattenButton.h"
 #include "IFlattenButtonViewModule.h"
+#include "UiToNativeMessageBus.h"
+#include "NativeToUiMessageBus.h"
 
 namespace ExampleApp
 {
@@ -21,7 +23,9 @@ namespace ExampleApp
         public:
             FlattenButtonViewModule(IFlattenButtonModel& model,
                                     IFlattenButtonViewModel& viewModel,
-                                    const Eegeo::Rendering::ScreenProperties& screenProperties);
+                                    const Eegeo::Rendering::ScreenProperties& screenProperties,
+                                    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
+                                    ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus);
             
             ~FlattenButtonViewModule();
             

@@ -23,30 +23,6 @@ public class FlattenButtonView implements View.OnClickListener
 		m_activity = activity;
 		m_nativeCallerPointer = nativeCallerPointer;
 
-		m_activity.runOnUiThread(new Runnable()
-		{
-			public void run()
-			{
-				createView();
-			}
-		});
-	}
-	
-	public void destroy()
-	{
-		m_activity.runOnUiThread(new Runnable()
-		{
-			public void run()
-			{
-				final RelativeLayout uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
-				uiRoot.removeView(m_view);
-				m_view = null;
-			}
-		});
-	}
-	
-	private void createView()
-	{
 		final RelativeLayout uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
 		m_view = (ToggleButton)m_activity.getLayoutInflater().inflate(R.layout.flatten_button_layout, uiRoot, false);
 		
@@ -61,49 +37,32 @@ public class FlattenButtonView implements View.OnClickListener
 		uiRoot.addView(m_view);
 	}
 	
+	public void destroy()
+	{
+		final RelativeLayout uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
+		uiRoot.removeView(m_view);
+		m_view = null;
+	}
+	
 	public void updateViewStateBasedOnFlattening(final boolean isFlattened)
 	{
-		m_activity.runOnUiThread(new Runnable()
-		{
-			public void run()
-			{
-				m_view.setChecked(isFlattened);
-			}
-		});	
+		m_view.setChecked(isFlattened);
 	}
 	
 	@Override
 	public void onClick(View view) 
 	{
-		m_activity.runOnNativeThread(new Runnable()
-		{
-			public void run()
-			{
-				FlattenButtonViewJniMethods.SetFlatten(m_nativeCallerPointer, ((ToggleButton)m_view).isChecked());
-			}
-		});
+		FlattenButtonViewJniMethods.SetFlatten(m_nativeCallerPointer, ((ToggleButton)m_view).isChecked());
 	}
 	
 	public void animateToActive()
 	{
-		m_activity.runOnUiThread(new Runnable()
-		{
-			public void run()
-			{
-				animateViewToX((int)m_xPosActive);
-			}
-		});	
+		animateViewToX((int)m_xPosActive);
 	}
 	
 	public void animateToInactive()
 	{
-		m_activity.runOnUiThread(new Runnable()
-		{
-			public void run()
-			{
-				animateViewToX((int)m_xPosInactive);
-			}
-		});	
+		animateViewToX((int)m_xPosInactive);
 	}
 	
 	protected void animateViewToX(final int xAsPx)
@@ -115,18 +74,12 @@ public class FlattenButtonView implements View.OnClickListener
 	
 	public void animateToIntermediateOnScreenState(final float onScreenState)
 	{
-		m_activity.runOnUiThread(new Runnable()
-		{
-			public void run()
-			{   
-				int viewXPx = (int)m_view.getX();
-			    int newXPx = (int)(m_xPosInactive + (int)(((m_xPosActive - m_xPosInactive) * onScreenState) + 0.5f));
-			 
-			    if(viewXPx != newXPx) 
-			    {
-				    m_view.setX(newXPx);
-			    }
-			}
-		});
+		int viewXPx = (int)m_view.getX();
+	    int newXPx = (int)(m_xPosInactive + (int)(((m_xPosActive - m_xPosInactive) * onScreenState) + 0.5f));
+	 
+	    if(viewXPx != newXPx) 
+	    {
+		    m_view.setX(newXPx);
+	    }
 	}
 }

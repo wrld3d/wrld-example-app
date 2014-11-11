@@ -24,9 +24,9 @@ public class PrimaryMenuView extends MenuView
 	public PrimaryMenuView(MainActivity activity, long nativeCallerPointer)
 	{
 		super(activity, nativeCallerPointer);
+		createView();
 	}
 
-	@Override
 	protected void createView() 
 	{
 		final RelativeLayout uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
@@ -76,14 +76,8 @@ public class PrimaryMenuView extends MenuView
 	    final int upXPx = close ? m_closedXPx : m_openXPx;
 		log("ACTION_UP", "x: " + upXPx);
 		
-	    m_activity.runOnNativeThread(new Runnable()
-		{
-			public void run()
-			{
-				animateViewToX(upXPx);
-				MenuViewJniMethods.ViewDragCompleted(m_nativeCallerPointer);
-			}
-		});
+		animateViewToX(upXPx);
+		MenuViewJniMethods.ViewDragCompleted(m_nativeCallerPointer);
 	}
 
 	@Override
@@ -101,18 +95,11 @@ public class PrimaryMenuView extends MenuView
 	    	newXPx = m_closedXPx;
 	    }
 	    
-	    
 	    float normalisedDragState = (newXPx + (-m_closedXPx)) / (Math.abs(m_openXPx - m_closedXPx));
 	    final float clampedNormalisedDragState = clamp(normalisedDragState, 0.f, 1.f);
-	    
-	    m_activity.runOnNativeThread(new Runnable()
-		{
-			public void run()
-			{
-				MenuViewJniMethods.ViewDragInProgress(m_nativeCallerPointer, clampedNormalisedDragState);
-			}
-		});
-	    
+	
+		MenuViewJniMethods.ViewDragInProgress(m_nativeCallerPointer, clampedNormalisedDragState);
+	
 	    m_view.setX(newXPx);
 	    log("ACTION_MOVE", "x: " + newXPx+ ", clamp: " + clampedNormalisedDragState);
 	}

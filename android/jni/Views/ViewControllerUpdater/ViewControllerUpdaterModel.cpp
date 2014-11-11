@@ -3,6 +3,7 @@
 #include <algorithm>
 #include "ViewControllerUpdaterModel.h"
 #include "IUpdateableViewController.h"
+#include "AndroidAppThreadAssertionMacros.h"
 
 namespace ExampleApp
 {
@@ -10,30 +11,36 @@ namespace ExampleApp
     {
         ViewControllerUpdaterModel::ViewControllerUpdaterModel()
         {
-            
+        	ASSERT_UI_THREAD
         }
         
         ViewControllerUpdaterModel::~ViewControllerUpdaterModel()
         {
-            
+        	ASSERT_UI_THREAD
         }
         
         void ViewControllerUpdaterModel::AddUpdateableObject(IUpdateableViewController& updateableViewController)
         {
-            m_updateTargets.push_back(&updateableViewController);
+        	ASSERT_UI_THREAD
+
+            m_updateTargetsUi.push_back(&updateableViewController);
         }
         
         void ViewControllerUpdaterModel::RemoveUpdateableObject(IUpdateableViewController& updateableViewController)
         {
-            m_updateTargets.erase(std::remove(m_updateTargets.begin(), m_updateTargets.end(), &updateableViewController), m_updateTargets.end());
+        	ASSERT_UI_THREAD
+
+        	m_updateTargetsUi.erase(std::remove(m_updateTargetsUi.begin(), m_updateTargetsUi.end(), &updateableViewController), m_updateTargetsUi.end());
         }
-        
-        void ViewControllerUpdaterModel::UpdateObjects(float deltaSeconds)
+
+        void ViewControllerUpdaterModel::UpdateObjectsUiThread(float deltaSeconds)
         {
-            for(std::vector<IUpdateableViewController*>::iterator it = m_updateTargets.begin(); it != m_updateTargets.end(); ++ it)
+        	ASSERT_UI_THREAD
+
+            for(std::vector<IUpdateableViewController*>::iterator it = m_updateTargetsUi.begin(); it != m_updateTargetsUi.end(); ++ it)
             {
             	IUpdateableViewController& updatable =**it;
-            	updatable.Update(deltaSeconds);
+            	updatable.UpdateUiThread(deltaSeconds);
             }
         }
     }

@@ -10,6 +10,7 @@
 #include "ISearchService.h"
 #include "SearchQuery.h"
 #include "ISearchQueryPerformer.h"
+#include "AndroidAppThreadAssertionMacros.h"
 
 namespace ExampleApp
 {
@@ -20,45 +21,47 @@ namespace ExampleApp
 				AndroidNativeState& nativeState,
 				ExampleApp::Menu::IMenuModel& menuModel,
 				ExampleApp::Menu::IMenuViewModel& menuViewModel,
-				Search::ISearchService& searchService,
-				Search::ISearchQueryPerformer& searchQueryPerformer
+				ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
+				ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus
 		)
 		: Menu::MenuViewController(viewClassName, nativeState, menuModel, menuViewModel)
-		, m_searchService(searchService)
-    	, m_searchQueryPerformer(searchQueryPerformer)
-        , m_pPerformedQueryCallback(Eegeo_NEW((Eegeo::Helpers::TCallback1<SecondaryMenuViewController, const Search::SearchQuery&>))(this, &SecondaryMenuViewController::PerformedQueryCallback))
-        , m_pReceivedQueryResponseCallback(Eegeo_NEW((Eegeo::Helpers::TCallback2<SecondaryMenuViewController, const Search::SearchQuery&, const std::vector<Search::SearchResultModel>&>))(this, &SecondaryMenuViewController::ReceivedQueryResponseCallback))
-        , m_pMenuOpenStateChangedCallback(Eegeo_NEW((Eegeo::Helpers::TCallback2<SecondaryMenuViewController, OpenableControlViewModel::IOpenableControlViewModel&, float>))(this, &SecondaryMenuViewController::HandleOpenStateChanged))
+		, m_performedQueryCallback(this, &SecondaryMenuViewController::PerformedQueryCallback)
+        , m_receivedQueryResponseCallback(this, &SecondaryMenuViewController::ReceivedQueryResponseCallback)
+        , m_menuOpenStateChangedCallback(this, &SecondaryMenuViewController::HandleOpenStateChanged)
+    	, m_uiToNativeMessageBus(uiToNativeMessageBus)
+    	, m_nativeToUiMessageBus(nativeToUiMessageBus)
 		{
-            m_menuViewModel.InsertOpenStateChangedCallback(*m_pMenuOpenStateChangedCallback);
-            m_searchService.InsertOnPerformedQueryCallback(*m_pPerformedQueryCallback);
-            m_searchService.InsertOnReceivedQueryResultsCallback(*m_pReceivedQueryResponseCallback);
+    		ASSERT_UI_THREAD
+
+            m_menuViewModel.InsertOpenStateChangedCallback(m_menuOpenStateChangedCallback);
+    		m_nativeToUiMessageBus.Subscribe(m_performedQueryCallback);
+    		m_nativeToUiMessageBus.Subscribe(m_receivedQueryResponseCallback);
 		}
 
     	SecondaryMenuViewController::~SecondaryMenuViewController()
 		{
-            m_searchService.RemoveOnPerformedQueryCallback(*m_pPerformedQueryCallback);
-            m_searchService.RemoveOnReceivedQueryResultsCallback(*m_pReceivedQueryResponseCallback);
-            m_menuViewModel.RemoveOpenStateChangedCallback(*m_pMenuOpenStateChangedCallback);
+    		ASSERT_UI_THREAD
 
-            Eegeo_DELETE m_pPerformedQueryCallback;
-            Eegeo_DELETE m_pReceivedQueryResponseCallback;
-            Eegeo_DELETE m_pMenuOpenStateChangedCallback;
+    		m_nativeToUiMessageBus.Unsubscribe(m_performedQueryCallback);
+    		m_nativeToUiMessageBus.Unsubscribe(m_receivedQueryResponseCallback);
+            m_menuViewModel.RemoveOpenStateChangedCallback(m_menuOpenStateChangedCallback);
 		}
 
     	void SecondaryMenuViewController::HandleSearch(const std::string& searchQuery)
     	{
-    		if(!searchQuery.empty())
-    		{
-    			m_searchQueryPerformer.PerformSearchQuery(searchQuery, false);
-    			m_menuViewModel.Close();
-    		}
+    		ASSERT_UI_THREAD
+
+    		m_menuViewModel.Close();
+
+    		m_uiToNativeMessageBus.Publish(PerformedSearchMessage(searchQuery, false));
     	}
 
         void SecondaryMenuViewController::HandleOpenStateChanged(
 			OpenableControlViewModel::IOpenableControlViewModel& viewModel,
 			float& openState)
         {
+        	ASSERT_UI_THREAD
+
             if(openState != 1.f)
             {
     			AndroidSafeNativeThreadAttachment attached(m_nativeState);
@@ -68,16 +71,20 @@ namespace ExampleApp
             }
         }
 
-        void SecondaryMenuViewController::PerformedQueryCallback(const Search::SearchQuery& query)
+        void SecondaryMenuViewController::PerformedQueryCallback(const Search::SearchQueryPerformedMessage& message)
         {
+        	ASSERT_UI_THREAD
+
 			AndroidSafeNativeThreadAttachment attached(m_nativeState);
 			JNIEnv* env = attached.envForThread;
 			jmethodID disableEditText = env->GetMethodID(m_uiViewClass, "disableEditText", "()V");
 			env->CallVoidMethod(m_uiView, disableEditText);
         }
 
-        void SecondaryMenuViewController::ReceivedQueryResponseCallback(const Search::SearchQuery& query, const std::vector<Search::SearchResultModel>& results)
+        void SecondaryMenuViewController::ReceivedQueryResponseCallback(const Search::SearchQueryResponseReceivedMessage& message)
         {
+        	ASSERT_UI_THREAD
+
 			AndroidSafeNativeThreadAttachment attached(m_nativeState);
 			JNIEnv* env = attached.envForThread;
 			jmethodID enableEditText = env->GetMethodID(m_uiViewClass, "enableEditText", "()V");

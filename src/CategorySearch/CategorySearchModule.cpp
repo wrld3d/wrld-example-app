@@ -8,6 +8,7 @@
 #include "CategorySearchRepository.h"
 #include "MenuModel.h"
 #include "MenuOptionsModel.h"
+#include "CategorySearchSelectedMessageHandler.h"
 
 namespace
 {
@@ -31,7 +32,8 @@ namespace ExampleApp
     namespace CategorySearch
     {
         CategorySearchModule::CategorySearchModule(Search::ISearchQueryPerformer& searchQueryPerformer,
-                                                   ExampleApp::Menu::IMenuViewModel& menuViewModel)
+                                                   ExampleApp::Menu::IMenuViewModel& menuViewModel,
+                                                   ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus)
         {
             m_pMenuModel = Eegeo_NEW(Menu::MenuModel)();
             m_pMenuOptionsModel = Eegeo_NEW(Menu::MenuOptionsModel)(*m_pMenuModel);
@@ -48,12 +50,19 @@ namespace ExampleApp
                                              categorySearchModel.Name(),
                                              "",
                                              categorySearchModel.Icon(),
-                                             Eegeo_NEW(CategorySearchMenuOption)(categorySearchModel, searchQueryPerformer, menuViewModel));
+                                             Eegeo_NEW(CategorySearchMenuOption)(categorySearchModel, menuViewModel, uiToNativeMessageBus));
             }
+
+
+            m_pCategorySearchSelectedMessageHandler = Eegeo_NEW(CategorySearchSelectedMessageHandler)(
+				searchQueryPerformer,
+				uiToNativeMessageBus
+            );
         }
         
         CategorySearchModule::~CategorySearchModule()
         {
+        	Eegeo_DELETE m_pCategorySearchSelectedMessageHandler;
             Eegeo_DELETE m_pMenuOptionsModel;
             Eegeo_DELETE m_pMenuModel;
             Eegeo_DELETE m_pCategorySearchRepository;

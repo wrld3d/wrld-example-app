@@ -34,11 +34,10 @@
 #include "EnvironmentCharacterSet.h"
 #include "Blitter.h"
 
-
 namespace ExampleApp
 {
-    const std::string ApiKey = "OBTAIN API_KEY FROM https://appstore.eegeo.com AND INSERT IT HERE";
-    const std::string DecartaApiKey = "OBTAIN DECARTA SEARCH KEY AND INSERT IT HERE";
+	const std::string ApiKey = "OBTAIN API_KEY FROM https://appstore.eegeo.com AND INSERT IT HERE";
+	const std::string DecartaApiKey = "OBTAIN DECARTA SEARCH KEY AND INSERT IT HERE";
     
     namespace
     {
@@ -71,13 +70,16 @@ namespace ExampleApp
     }
     
     
-    MobileExampleApp::MobileExampleApp(Eegeo::Modules::IPlatformAbstractionModule& platformAbstractions,
-                                       Eegeo::Rendering::ScreenProperties& screenProperties,
-                                       Eegeo::Location::ILocationService& locationService,
-                                       Eegeo::UI::NativeUIFactories& nativeUIFactories,
-                                       Eegeo::Config::PlatformConfig platformConfig,
-                                       Eegeo::Helpers::Jpeg::IJpegLoader& jpegLoader,
-                                       ExampleApp::InitialExperience::IInitialExperienceModule& initialExperienceModule)
+    MobileExampleApp::MobileExampleApp(
+		Eegeo::Modules::IPlatformAbstractionModule& platformAbstractions,
+		Eegeo::Rendering::ScreenProperties& screenProperties,
+		Eegeo::Location::ILocationService& locationService,
+		Eegeo::UI::NativeUIFactories& nativeUIFactories,
+		Eegeo::Config::PlatformConfig platformConfig,
+		Eegeo::Helpers::Jpeg::IJpegLoader& jpegLoader,
+		ExampleApp::InitialExperience::IInitialExperienceModule& initialExperienceModule,
+		ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
+        ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus)
     : m_pGlobeCameraController(NULL)
     , m_pCameraTouchController(NULL)
     , m_pNavigationService(NULL)
@@ -85,7 +87,7 @@ namespace ExampleApp
     , m_platformAbstractions(platformAbstractions)
     , m_pLoadingScreen(NULL)
     , m_pinDiameter(50.f)
-    , m_initialisedApplicationState(false)
+    , m_initialisedApplicationViewState(false)
     , m_pCameraTransitionController(NULL)
     , m_pPrimaryMenuModule(NULL)
     , m_pSecondaryMenuModule(NULL)
@@ -108,6 +110,8 @@ namespace ExampleApp
     , m_pAboutPageModule(NULL)
     , m_initialExperienceModule(initialExperienceModule)
     , m_pBlitter(NULL)
+    , m_uiToNativeMessageBus(uiToNativeMessageBus)
+    , m_nativeToUiMessageBus(nativeToUiMessageBus)
     {
         m_pBlitter = Eegeo_NEW(Eegeo::Blitter)(1024 * 128, 1024 * 64, 1024 * 32, screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight());
         m_pBlitter->Initialise();
@@ -176,7 +180,6 @@ namespace ExampleApp
         m_pLoadingScreen = CreateLoadingScreen(screenProperties, m_pWorld->GetRenderingModule(), m_pWorld->GetPlatformAbstractionModule());
     }
     
-    
     MobileExampleApp::~MobileExampleApp()
     {
         DestroyApplicationModelModules();
@@ -206,32 +209,42 @@ namespace ExampleApp
                                                                       m_platformAbstractions.GetWebLoadRequestFactory(),
                                                                       m_platformAbstractions.GetUrlEncoder(),
                                                                       *m_pGlobeCameraController,
-                                                                      *m_pCameraTransitionController);
+                                                                      *m_pCameraTransitionController,
+                                                                      m_uiToNativeMessageBus,
+                                                                      m_nativeToUiMessageBus);
         
         m_pCompassModule = Eegeo_NEW(ExampleApp::Compass::CompassModule)(*m_pNavigationService,
                                                                          *m_pGlobeCameraController,
-                                                                         m_identityProvider);
+                                                                         m_identityProvider,
+                                                                         m_uiToNativeMessageBus,
+                                                                         m_nativeToUiMessageBus);
         
         Eegeo::Modules::Map::CityThemesModule& cityThemesModule = world.GetCityThemesModule();
         
         m_pWeatherMenuModule = Eegeo_NEW(ExampleApp::WeatherMenu::WeatherMenuModule)(m_platformAbstractions.GetFileIO(),
                                                                                      cityThemesModule.GetCityThemesService(),
-                                                                                     cityThemesModule.GetCityThemesUpdater());
+                                                                                     cityThemesModule.GetCityThemesUpdater(),
+                                                                                     m_uiToNativeMessageBus);
         
         m_pPrimaryMenuModule = Eegeo_NEW(ExampleApp::PrimaryMenu::PrimaryMenuModule)(m_identityProvider,
                                                                                      AboutPageModule().GetAboutPageViewModel(),
                                                                                      m_pReactionControllerModule->GetReactionControllerModel());
         
         m_pSecondaryMenuModule = Eegeo_NEW(ExampleApp::SecondaryMenu::SecondaryMenuModule)(m_identityProvider,
-                                                                                           m_pReactionControllerModule->GetReactionControllerModel());
+                                                                                           m_pReactionControllerModule->GetReactionControllerModel(),
+                                                                                           m_pSearchModule->GetSearchQueryPerformer(),
+                                                                                           m_uiToNativeMessageBus);
         
         m_pPlaceJumpsModule = Eegeo_NEW(ExampleApp::PlaceJumps::PlaceJumpsModule)(m_platformAbstractions.GetFileIO(),
                                                                                   GetCameraController(),
                                                                                   m_pCompassModule->GetCompassModel(),
-                                                                                  m_pSecondaryMenuModule->GetSecondaryMenuViewModel());
+                                                                                  m_pSecondaryMenuModule->GetSecondaryMenuViewModel(),
+                                                                                  m_uiToNativeMessageBus);
         
-        m_pCategorySearchModule = Eegeo_NEW(ExampleApp::CategorySearch::CategorySearchModule(SearchModule().GetSearchQueryPerformer(),
-                                                                                             m_pSecondaryMenuModule->GetSecondaryMenuViewModel()));
+        m_pCategorySearchModule = Eegeo_NEW(ExampleApp::CategorySearch::CategorySearchModule(
+        	SearchModule().GetSearchQueryPerformer(),
+        	m_pSecondaryMenuModule->GetSecondaryMenuViewModel(),
+        	m_uiToNativeMessageBus));
         
         m_pSecondaryMenuModule->AddMenuSection("Search", "place", m_pCategorySearchModule->GetCategorySearchMenuModel(), true);
         m_pSecondaryMenuModule->AddMenuSection("Weather", "weather", m_pWeatherMenuModule->GetWeatherMenuModel(), true);
@@ -240,33 +253,38 @@ namespace ExampleApp
         Eegeo::Modules::Map::MapModule& mapModule = world.GetMapModule();
         
         m_pFlattenButtonModule = Eegeo_NEW(ExampleApp::FlattenButton::FlattenButtonModule)(mapModule.GetEnvironmentFlatteningService(),
-                                                                                           m_identityProvider);
+                                                                                           m_identityProvider,
+                                                                                           m_uiToNativeMessageBus,
+                                                                                           m_nativeToUiMessageBus);
         
         InitialisePinsModules(mapModule, world);
         
         m_pSearchResultPoiModule = Eegeo_NEW(ExampleApp::SearchResultPoi::SearchResultPoiModule)(m_identityProvider,
                                                                                                  m_pReactionControllerModule->GetReactionControllerModel());
         
-        m_pSearchResultMenuModule = Eegeo_NEW(ExampleApp::SearchResultMenu::SearchResultMenuModule)(m_pSearchModule->GetSearchResultRepository(),
-                                                                                                    m_identityProvider,
-                                                                                                    *m_pCameraTransitionController,
-                                                                                                    m_pReactionControllerModule->GetReactionControllerModel(),
-                                                                                                    m_pSearchModule->GetSearchQueryPerformer(),
-                                                                                                    m_pSearchModule->GetSearchService());
-        
-        std::vector<ExampleApp::OpenableControlViewModel::IOpenableControlViewModel*> openables(GetOpenableControls());
-        
-        m_pModalityModule = Eegeo_NEW(ExampleApp::Modality::ModalityModule)(openables);
+        m_pSearchResultMenuModule = Eegeo_NEW(ExampleApp::SearchResultMenu::SearchResultMenuModule)(
+			m_pSearchModule->GetSearchResultRepository(),
+            m_pSearchModule->GetSearchQueryPerformer(),
+			m_identityProvider,
+			*m_pCameraTransitionController,
+			m_pReactionControllerModule->GetReactionControllerModel(),
+			m_uiToNativeMessageBus,
+			m_nativeToUiMessageBus
+		);
         
         m_pSearchResultOnMapModule = Eegeo_NEW(ExampleApp::SearchResultOnMap::SearchResultOnMapModule)(m_pSearchModule->GetSearchResultRepository(),
                                                                                                        m_pSearchResultPoiModule->GetSearchResultPoiViewModel(),
                                                                                                        m_pWorldPinsModule->GetWorldPinsService(),
                                                                                                        m_identityProvider,
-                                                                                                       m_pModalityModule->GetModalityModel(),
                                                                                                        world.GetScreenProperties(),
-                                                                                                       *m_pGlobeCameraController->GetCamera());
+                                                                                                       *m_pGlobeCameraController->GetCamera(),
+                                                                                                       m_uiToNativeMessageBus,
+                                                                                                       m_nativeToUiMessageBus);
         
         std::vector<ExampleApp::ScreenControlViewModel::IScreenControlViewModel*> reactors(GetReactorControls());
+        std::vector<ExampleApp::OpenableControlViewModel::IOpenableControlViewModel*> openables(GetOpenableControls());
+
+        m_pModalityModule = Eegeo_NEW(ExampleApp::Modality::ModalityModule)(m_uiToNativeMessageBus, openables);
         
         m_pReactionModelModule = Eegeo_NEW(ExampleApp::Reaction::ReactionModelModule)(m_pReactionControllerModule->GetReactionControllerModel(),
                                                                                       openables,
@@ -393,16 +411,10 @@ namespace ExampleApp
         eegeoWorld.OnResume();
     }
     
-    void MobileExampleApp::Update (float dt)
+    void MobileExampleApp::Update(float dt)
     {
         Eegeo::EegeoWorld& eegeoWorld = World();
-        
-        if(!eegeoWorld.Initialising())
-        {
-            SearchResultOnMapModule().GetSearchResultOnMapScaleController().Update(dt);
-            CompassModule().GetCompassUpdateController().Update(dt);
-        }
-        
+
         eegeoWorld.EarlyUpdate(dt);
         
         m_pGlobeCameraController->Update(dt);
@@ -413,6 +425,12 @@ namespace ExampleApp
         m_pSearchModule->GetSearchRefreshService().TryRefreshSearch(dt, m_pGlobeCameraController->GetEcefInterestPoint());
         
         m_pPinsModule->GetController().Update(dt, *m_pGlobeCameraController->GetCamera());
+        
+        if(!eegeoWorld.Initialising())
+        {
+            SearchResultOnMapModule().GetSearchResultOnMapScaleController().Update(dt);
+            CompassModule().GetCompassUpdateController().Update(dt);
+        }
         
         m_pNavigationService->Update(dt);
         
@@ -436,11 +454,11 @@ namespace ExampleApp
         }
     }
     
-    void MobileExampleApp::InitialiseApplicationState()
+    void MobileExampleApp::InitialiseApplicationViewState()
     {
-        Eegeo_ASSERT(m_initialisedApplicationState == false, "Can only initialise application state once!\n");
+        Eegeo_ASSERT(m_initialisedApplicationViewState == false, "Can only initialise application state once!\n");
         
-        m_initialisedApplicationState = true;
+        m_initialisedApplicationViewState = true;
         
         m_pPrimaryMenuModule->GetPrimaryMenuViewModel().AddToScreen();
         m_pSecondaryMenuModule->GetSecondaryMenuViewModel().AddToScreen();
@@ -476,11 +494,6 @@ namespace ExampleApp
             {
                 InitialExperience::IInitialExperienceController& initialExperienceController = m_initialExperienceModule.GetInitialExperienceController();
                 initialExperienceController.Update(dt);
-            }
-            
-            if(!m_initialisedApplicationState)
-            {
-                InitialiseApplicationState();
             }
         }
     }

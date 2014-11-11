@@ -33,4 +33,8 @@ public abstract class MainActivity extends Activity implements SurfaceHolder.Cal
 		imm.hideSoftInputFromWindow(binder, 0);
     	getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 	}
+	
+	public abstract void dispatchRevealUiMessageToUiThreadFromNativeThread(final long nativeCallerPointer);
+
+	public abstract void dispatchUiCreatedMessageToNativeThreadFromUiThread(final long nativeCallerPointer);
 }

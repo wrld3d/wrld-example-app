@@ -6,12 +6,13 @@
 #include "ISearchQueryPerformer.h"
 #include "IMenuViewModel.h"
 #include "UIColors.h"
+#include "NativeToUiMessageBus.h"
 
 @implementation SearchViewController
 
 - (id)initWithParams:(UITextField*)pTextView
                     :(ExampleApp::Search::ISearchQueryPerformer*) pSearchQueryPerformer
-                    :(ExampleApp::Search::ISearchService*) pSearchService
+                    :(ExampleApp::ExampleAppMessaging::NativeToUiMessageBus*) pNativeToUiMessageBus
                     :(ExampleApp::Menu::IMenuViewModel*) pMenuViewModel
 {
     if(self = [super init])
@@ -25,10 +26,9 @@
         m_keyboardActive = false;
         
         m_pSearchQueryPerformer = pSearchQueryPerformer;
-        m_pSearchService = pSearchService;
         m_pMenuViewModel = pMenuViewModel;
         
-        m_pInterop = Eegeo_NEW(ExampleApp::SecondaryMenu::SearchViewControllerInterop)(self, *pMenuViewModel, *m_pSearchService);
+        m_pInterop = Eegeo_NEW(ExampleApp::SecondaryMenu::SearchViewControllerInterop)(self, *pMenuViewModel, *pNativeToUiMessageBus);
         
         [[NSNotificationCenter defaultCenter]
          addObserver:self

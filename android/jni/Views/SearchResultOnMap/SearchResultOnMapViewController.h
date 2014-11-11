@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include <string>
 #include "AndroidNativeState.h"
 #include "Types.h"
 #include "SearchResultPoi.h"
@@ -10,7 +11,7 @@
 #include "SearchResultModel.h"
 #include "ISearchResultOnMapInFocusViewModel.h"
 #include "IScreenControlViewModel.h"
-#include "Modality.h"
+#include "ISearchResultPoiViewModel.h"
 
 namespace ExampleApp
 {
@@ -21,7 +22,7 @@ namespace ExampleApp
 			AndroidNativeState& m_nativeState;
             ISearchResultOnMapInFocusViewModel& m_searchResultOnMapInFocusViewModel;
             ScreenControlViewModel::IScreenControlViewModel& m_searchResultPoiScreenControlViewModel;
-            Modality::IModalityModel& m_modalityModel;
+			SearchResultPoi::ISearchResultPoiViewModel& m_searchResultPoiViewModel;
 
             Eegeo::Helpers::ICallback0* m_pSearchResultOnMapFocusOpenedCallback;
             Eegeo::Helpers::ICallback0* m_pSearchResultOnMapFocusClosedCallback;
@@ -37,7 +38,7 @@ namespace ExampleApp
 				AndroidNativeState& nativeState,
                 ExampleApp::SearchResultOnMap::ISearchResultOnMapInFocusViewModel& searchResultOnMapInFocusViewModel,
                 ScreenControlViewModel::IScreenControlViewModel& searchResultPoiScreenControlViewModel,
-                Modality::IModalityModel& modalityModel,
+    			SearchResultPoi::ISearchResultPoiViewModel& searchResultPoiViewModel,
     			float pinDiameter
 			);
 

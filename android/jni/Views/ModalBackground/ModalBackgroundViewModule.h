@@ -7,9 +7,6 @@
 #include "Modality.h"
 #include "ModalBackgroundViewIncludes.h"
 #include "IModalBackgroundViewModule.h"
-#include "ModalBackgroundView.h"
-#include "Rendering.h"
-#include "Modules.h"
 
 namespace ExampleApp
 {
@@ -19,15 +16,11 @@ namespace ExampleApp
         {
         private:
             ModalBackgroundViewController* m_pModalBackgroundViewController;
-            ModalBackgroundView* m_pModalBackgroundView;
-            
-            Eegeo::Rendering::RenderableFilters& m_renderableFilters;
 
         public:
             ModalBackgroundViewModule(
 				AndroidNativeState& nativeState,
-				Modality::IModalityModel& modalityModel,
-				Eegeo::Modules::Core::RenderingModule& renderingModule
+				Modality::IModalityModel& modalityModel
         	);
             
             ~ModalBackgroundViewModule();

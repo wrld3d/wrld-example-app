@@ -4,6 +4,7 @@
 #include "Menu.h"
 #include "SearchMenuViewModule.h"
 #include "SearchMenuViewController.h"
+#include "AndroidAppThreadAssertionMacros.h"
 
 namespace ExampleApp
 {
@@ -14,31 +15,37 @@ namespace ExampleApp
 			AndroidNativeState& nativeState,
 			Menu::IMenuModel& menuModel,
 			Menu::IMenuViewModel& menuViewModel,
-    		Search::ISearchQueryPerformer& searchQueryPerformer,
-    		Search::ISearchService& searchService,
             CategorySearch::ICategorySearchRepository& categorySearchRepository,
-            SearchResultMenu::ISearchResultMenuViewModel& searchResultMenuViewModel
+            SearchResultMenu::ISearchResultMenuViewModel& searchResultMenuViewModel,
+            ExampleApp::ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
+            ExampleApp::ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus
 		)
         {
+    		ASSERT_UI_THREAD
+
             m_pMenuViewController = Eegeo_NEW(SearchMenuViewController)(
 				viewName,
 				nativeState,
 				menuModel,
 				menuViewModel,
-				searchService,
-				searchQueryPerformer,
 				categorySearchRepository,
-				searchResultMenuViewModel
+				searchResultMenuViewModel,
+				uiToNativeMessageBus,
+				nativeToUiMessageBus
 			);
         }
         
     	SearchMenuViewModule::~SearchMenuViewModule()
         {
+    		ASSERT_UI_THREAD
+
             Eegeo_DELETE m_pMenuViewController;
         }
         
         Menu::IMenuViewController& SearchMenuViewModule::GetMenuViewController() const
         {
+    		ASSERT_UI_THREAD
+
             return *m_pMenuViewController;
         }
     }

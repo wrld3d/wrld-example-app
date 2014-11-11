@@ -4,6 +4,7 @@
 #include "Types.h"
 #include "IAboutPageViewModel.h"
 #include "IAboutPageModel.h"
+#include "AndroidAppThreadAssertionMacros.h"
 
 namespace ExampleApp
 {
@@ -20,6 +21,8 @@ namespace ExampleApp
         , m_pAboutPageOpenedCallback(Eegeo_NEW(Eegeo::Helpers::TCallback0<AboutPageViewController>)(this, &AboutPageViewController::AboutPageOpenedCallback))
         , m_pAboutPageClosedCallback(Eegeo_NEW(Eegeo::Helpers::TCallback0<AboutPageViewController>)(this, &AboutPageViewController::AboutPageClosedCallback))
 		{
+			ASSERT_UI_THREAD
+
 			m_aboutPageViewModel.InsertOpenedCallback(*m_pAboutPageOpenedCallback);
 			m_aboutPageViewModel.InsertClosedCallback(*m_pAboutPageClosedCallback);
 
@@ -45,6 +48,8 @@ namespace ExampleApp
 
 		AboutPageViewController::~AboutPageViewController()
 		{
+			ASSERT_UI_THREAD
+
 			m_aboutPageViewModel.RemoveOpenedCallback(*m_pAboutPageOpenedCallback);
 			m_aboutPageViewModel.RemoveClosedCallback(*m_pAboutPageClosedCallback);
 
@@ -61,6 +66,8 @@ namespace ExampleApp
 
 		void AboutPageViewController::HandleCloseButtonPressed()
 		{
+			ASSERT_UI_THREAD
+
 			if(m_aboutPageViewModel.IsOpen())
 			{
 				m_aboutPageViewModel.Close();
@@ -69,6 +76,8 @@ namespace ExampleApp
 
 		void AboutPageViewController::AboutPageOpenedCallback()
 		{
+			ASSERT_UI_THREAD
+
 			if(!m_aboutPageViewModel.TryAcquireReactorControl())
 			{
 				if(m_aboutPageViewModel.IsOpen())
@@ -95,6 +104,8 @@ namespace ExampleApp
 
 		void AboutPageViewController::AboutPageClosedCallback()
 		{
+			ASSERT_UI_THREAD
+
 			AndroidSafeNativeThreadAttachment attached(m_nativeState);
 			JNIEnv* env = attached.envForThread;
 

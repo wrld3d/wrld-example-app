@@ -5,12 +5,15 @@
 #include "FlattenButtonViewModel.h"
 #include "FlattenButtonViewControllerInterop.h"
 #include "IFlattenButtonModel.h"
+#include "FlattenButtonViewStateChangedMessage.h"
 
 @implementation FlattenButtonViewController
 
 - (id)initWithParams:(ExampleApp::FlattenButton::IFlattenButtonViewModel*)pViewModel
                     :(ExampleApp::FlattenButton::IFlattenButtonModel*)pModel
                     :(FlattenButtonView*)pButtonView
+                    :(ExampleApp::ExampleAppMessaging::UiToNativeMessageBus*)pUiToNativeMessageBus
+                    :(ExampleApp::ExampleAppMessaging::NativeToUiMessageBus*)pNativeToUiMessageBus
 {
     if(self = [super init])
     {
@@ -20,10 +23,10 @@
         
         m_pViewModel = pViewModel;
         m_pModel = pModel;
-        m_pInterop = Eegeo_NEW(ExampleApp::FlattenButton::FlattenButtonViewControllerInterop)(self, *m_pModel, *m_pViewModel);
+        m_pInterop = Eegeo_NEW(ExampleApp::FlattenButton::FlattenButtonViewControllerInterop)(self, *pNativeToUiMessageBus, *m_pViewModel);
+        m_pUiToNativeMessageBus = pUiToNativeMessageBus;
         
         [self.pButtonView setOnScreenStateToIntermediateValue:m_pViewModel->OnScreenState()];
-        
     }
     
     return self;
@@ -37,14 +40,7 @@
 
 - (void) setSelected:(BOOL)selected
 {
-    if(selected)
-    {
-        m_pModel->Flatten();
-    }
-    else
-    {
-        m_pModel->Unflatten();
-    }
+    m_pUiToNativeMessageBus->Publish(ExampleApp::FlattenButton::FlattenButtonViewStateChangedMessage(selected));
 }
 
 - (void) handleModelStateChanged:(BOOL)flattened

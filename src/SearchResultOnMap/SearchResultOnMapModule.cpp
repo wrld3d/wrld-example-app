@@ -19,9 +19,10 @@ namespace ExampleApp
                                                          SearchResultPoi::ISearchResultPoiViewModel& searchResultPoiViewModel,
                                                          WorldPins::IWorldPinsService& worldPinsService,
                                                          Eegeo::Helpers::IIdentityProvider& identityProvider,
-                                                         Modality::IModalityModel& modalityModel,
                                                          const Eegeo::Rendering::ScreenProperties& screenProperties,
-                                                         Eegeo::Camera::RenderCamera& renderCamera)
+                                                         Eegeo::Camera::RenderCamera& renderCamera,
+                                                         ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
+                                                         ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus)
         {
             m_pSearchResultOnMapIconCategoryMapper = Eegeo_NEW(SearchResultOnMapIconCategoryMapper);
             
@@ -38,19 +39,29 @@ namespace ExampleApp
                                                                                                 identityProvider.GetNextIdentity());
             
             m_pSearchResultOnMapInFocusController = Eegeo_NEW(SearchResultOnMapInFocusController)(*pSearchResultOnMapModel,
-                                                                                                  *m_pSearchResultOnMapInFocusViewModel,
+                                                                                                  nativeToUiMessageBus,
                                                                                                   worldPinsService,
                                                                                                   renderCamera);
             
             m_pSearchResultOnMapScaleController = Eegeo_NEW(SearchResultOnMapScaleController)(*pSearchResultOnMapModel,
                                                                                               worldPinsService,
-                                                                                              modalityModel,
                                                                                               screenProperties,
                                                                                               renderCamera);
+            
+            m_pSearchResultOnMapModalityObserver = Eegeo_NEW(SearchResultOnMapModalityObserver)(*m_pSearchResultOnMapScaleController,
+                                                                                                uiToNativeMessageBus);
+
+            m_pSearchResultOnMapInFocusObserver = Eegeo_NEW(SearchResultOnMapInFocusObserver)(
+				*m_pSearchResultOnMapInFocusViewModel,
+				nativeToUiMessageBus);
         }
         
         SearchResultOnMapModule::~SearchResultOnMapModule()
         {
+            Eegeo_DELETE m_pSearchResultOnMapInFocusObserver;
+            Eegeo_DELETE m_pSearchResultOnMapModalityObserver;
+            Eegeo_DELETE m_pSearchResultOnMapScaleController;
+            Eegeo_DELETE m_pSearchResultOnMapInFocusController;
             Eegeo_DELETE m_pSearchResultOnMapInFocusViewModel;
             Eegeo_DELETE m_pSearchResultOnMapModel;
             Eegeo_DELETE m_pSearchResultOnMapFactory;

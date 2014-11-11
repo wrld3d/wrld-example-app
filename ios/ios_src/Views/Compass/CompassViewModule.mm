@@ -8,13 +8,15 @@ namespace ExampleApp
 {
     namespace Compass
     {
-        CompassViewModule::CompassViewModule(ICompassModel& model,
-                                             ICompassViewModel& viewModel,
-                                             const Eegeo::Rendering::ScreenProperties& screenProperties)
+        CompassViewModule::CompassViewModule(ICompassViewModel& viewModel,
+                                             const Eegeo::Rendering::ScreenProperties& screenProperties,
+                                             ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
+                                             ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus)
         {
-            m_pController = [[CompassViewController alloc] initWithParams:&model
-                                                                         :&viewModel
-                                                                         :&screenProperties];
+            m_pController = [[CompassViewController alloc] initWithParams:&viewModel
+                                                                         :&screenProperties
+                                                                         :&uiToNativeMessageBus
+                                                                         :&nativeToUiMessageBus];
         }
         
         CompassViewModule::~CompassViewModule()

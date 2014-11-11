@@ -11,6 +11,9 @@
 #include "UrlHelpers.h"
 #include "GlobeCameraController.h"
 #include "CameraTransitions.h"
+#include "UiToNativeMessageBus.h"
+#include "NativeToUiMessageBus.h"
+#include "SearchQueryObserver.h"
 
 namespace ExampleApp
 {
@@ -24,13 +27,16 @@ namespace ExampleApp
             ISearchResultParser* m_pSearchResultParser;
             ISearchQueryPerformer* m_pSearchQueryPerformer;
             ISearchRefreshService* m_pSearchRefreshService;
+            SearchQueryObserver* m_pSearchQueryObserver;
             
         public:
             SearchModule(const std::string& searchApiKey,
                          Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory,
                          Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder,
                          Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& cameraController,
-                         CameraTransitions::ICameraTransitionController& cameraTransitionsController);
+                         CameraTransitions::ICameraTransitionController& cameraTransitionsController,
+                         ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
+                         ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus);
             
             ~SearchModule();
             

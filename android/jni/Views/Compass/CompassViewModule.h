@@ -7,6 +7,8 @@
 #include "Types.h"
 #include "Compass.h"
 #include "CompassViewIncludes.h"
+#include "NativeToUiMessageBus.h"
+#include "UiToNativeMessageBus.h"
 
 namespace ExampleApp
 {
@@ -20,8 +22,9 @@ namespace ExampleApp
         public:
         	CompassViewModule(
             	AndroidNativeState& nativeState,
-        		Compass::ICompassModel& model,
-        		Compass::ICompassViewModel& viewModel
+        		Compass::ICompassViewModel& viewModel,
+                ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
+				ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus
             );
 
             ~CompassViewModule();
