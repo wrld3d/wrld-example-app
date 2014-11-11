@@ -2,6 +2,7 @@
 
 #include "GlDisplayService.h"
 #include "Logger.h"
+#include "AndroidAppThreadAssertionMacros.h"
 
 GlDisplayService::GlDisplayService()
 	: m_display(EGL_NO_DISPLAY)
@@ -11,53 +12,73 @@ GlDisplayService::GlDisplayService()
 	, m_resourceBuildSharedContext(EGL_NO_CONTEXT)
 	, m_displayBound(false)
 {
+	ASSERT_NATIVE_THREAD
+
 	m_display = eglGetDisplay(EGL_DEFAULT_DISPLAY);
 	eglInitialize(m_display, 0, 0);
 }
 
 GlDisplayService::~GlDisplayService()
 {
+	ASSERT_NATIVE_THREAD
+
 	bool destroyEGL = true;
 	ReleaseDisplay(destroyEGL);
 }
 
 bool GlDisplayService::IsDisplayAvailable() const
 {
+	ASSERT_NATIVE_THREAD
+
 	return m_displayBound;
 }
 
 int GlDisplayService::GetDisplayWidth() const
 {
+	ASSERT_NATIVE_THREAD
+
 	return m_displayWidth;
 }
 
 int GlDisplayService::GetDisplayHeight() const
 {
+	ASSERT_NATIVE_THREAD
+
 	return m_displayHeight;
 }
 
 EGLDisplay GlDisplayService::GetDisplay() const
 {
+	ASSERT_NATIVE_THREAD
+
 	return m_display;
 }
 
 EGLSurface GlDisplayService::GetSurface() const
 {
+	ASSERT_NATIVE_THREAD
+
 	return m_surface;
 }
 
 EGLSurface GlDisplayService::GetSharedSurface() const
 {
+	ASSERT_NATIVE_THREAD
+
 	return m_sharedSurface;
 }
 
 EGLContext GlDisplayService::GetContext() const
 {
+	ASSERT_NATIVE_THREAD
+
 	return m_context;
 }
 
 EGLContext GlDisplayService::GetResourceBuildSharedContext() const
 {
+	ASSERT_NATIVE_THREAD
+
 	return m_resourceBuildSharedContext;
 }
 
@@ -66,6 +87,8 @@ namespace
 // based on nVidia example app for Tegra
 bool DefaultEGLChooser(EGLDisplay disp, u32 requestedSurfaceType, EGLConfig& bestConfig)
 {
+	ASSERT_NATIVE_THREAD
+
 	EGLint count = 0;
 	if (!eglGetConfigs(disp, NULL, 0, &count))
 	{
@@ -157,6 +180,8 @@ bool DefaultEGLChooser(EGLDisplay disp, u32 requestedSurfaceType, EGLConfig& bes
 
 bool GlDisplayService::TryBindDisplay(ANativeWindow& window)
 {
+	ASSERT_NATIVE_THREAD
+
 	EGLint w, h, format;
 	EGLConfig config;
 	EGLSurface surface;
@@ -265,6 +290,8 @@ bool GlDisplayService::TryBindDisplay(ANativeWindow& window)
 
 void GlDisplayService::ReleaseDisplay(bool destroyEGL)
 {
+	ASSERT_NATIVE_THREAD
+
 	if (m_display != EGL_NO_DISPLAY)
 	{
 		Eegeo_GL(eglMakeCurrent(m_display, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT));

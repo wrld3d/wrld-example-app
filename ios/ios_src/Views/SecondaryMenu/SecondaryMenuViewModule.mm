@@ -17,7 +17,7 @@ namespace ExampleApp
                                                          const Eegeo::Rendering::ScreenProperties& screenProperties,
                                                          Modality::IModalityModel& modalityModel,
                                                          Search::ISearchQueryPerformer& searchQueryPerformer,
-                                                         Search::ISearchService& searchService)
+                                                         ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus)
         {
             m_pView = [[SecondaryMenuView alloc] initWithDimensions
                        :screenProperties.GetScreenWidth()
@@ -32,7 +32,7 @@ namespace ExampleApp
             
             m_pSearchViewController = [[SearchViewController alloc] initWithParams:[m_pView pSearchEditBox]
                                                                                   :&searchQueryPerformer
-                                                                                  :&searchService
+                                                                                  :&nativeToUiMessageBus
                                                                                   :&secondaryMenuViewModel];
         }
         

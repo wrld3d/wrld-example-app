@@ -4,6 +4,8 @@
 #include "IFlattenButtonViewModel.h"
 #include "IScreenControlViewModel.h"
 #include "IFlattenButtonModel.h"
+#include "AndroidAppThreadAssertionMacros.h"
+#include "FlattenButtonViewStateChangedMessage.h"
 
 namespace ExampleApp
 {
@@ -11,16 +13,20 @@ namespace ExampleApp
     {
     	FlattenButtonViewController::FlattenButtonViewController(
     			AndroidNativeState& nativeState,
-				FlattenButton::IFlattenButtonModel& model,
-				FlattenButton::IFlattenButtonViewModel& viewModel)
+				FlattenButton::IFlattenButtonViewModel& viewModel,
+				ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
+				ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus)
     	: m_nativeState(nativeState)
-    	, m_model(model)
     	, m_viewModel(viewModel)
-        , m_pFlattenModelStateChangedCallback(Eegeo_NEW(Eegeo::Helpers::TCallback0<FlattenButtonViewController>)(this, &FlattenButtonViewController::OnFlattenModelStateChangedCallback))
+    	, m_uiToNativeMessageBus(uiToNativeMessageBus)
+    	, m_nativeToUiMessageBus(nativeToUiMessageBus)
+        , m_flattenModelStateChangedCallback(this, &FlattenButtonViewController::OnFlattenModelStateChangedCallback)
     	, m_pOnScreenStateChangedCallback(Eegeo_NEW((
     			Eegeo::Helpers::TCallback2<FlattenButtonViewController, ScreenControlViewModel::IScreenControlViewModel&, float>))(this, &FlattenButtonViewController::OnScreenStateChangedCallback))
     	{
-            m_model.InsertChangedCallback(*m_pFlattenModelStateChangedCallback);
+    		ASSERT_UI_THREAD
+
+            m_nativeToUiMessageBus.Subscribe(m_flattenModelStateChangedCallback);
     		m_viewModel.InsertOnScreenStateChangedCallback(*m_pOnScreenStateChangedCallback);
 
     		AndroidSafeNativeThreadAttachment attached(m_nativeState);
@@ -45,10 +51,11 @@ namespace ExampleApp
 
     	FlattenButtonViewController::~FlattenButtonViewController()
     	{
-			m_viewModel.RemoveOnScreenStateChangedCallback(*m_pOnScreenStateChangedCallback);
-            m_model.RemoveChangedCallback(*m_pFlattenModelStateChangedCallback);
+    		ASSERT_UI_THREAD
 
-            Eegeo_DELETE m_pFlattenModelStateChangedCallback;
+			m_viewModel.RemoveOnScreenStateChangedCallback(*m_pOnScreenStateChangedCallback);
+            m_nativeToUiMessageBus.Unsubscribe(m_flattenModelStateChangedCallback);
+
 			Eegeo_DELETE m_pOnScreenStateChangedCallback;
 
 			AndroidSafeNativeThreadAttachment attached(m_nativeState);
@@ -61,6 +68,8 @@ namespace ExampleApp
 
     	void FlattenButtonViewController::OnScreenStateChangedCallback(ScreenControlViewModel::IScreenControlViewModel& viewModel, float& onScreenState)
     	{
+    		ASSERT_UI_THREAD
+
 			AndroidSafeNativeThreadAttachment attached(m_nativeState);
 			JNIEnv* env = attached.envForThread;
 
@@ -81,25 +90,22 @@ namespace ExampleApp
 			}
     	}
 
-        void FlattenButtonViewController::OnFlattenModelStateChangedCallback()
-        {
+    	void FlattenButtonViewController::OnFlattenModelStateChangedCallback(const FlattenButtonModelStateChangedMessage& message)
+    	{
+        	ASSERT_UI_THREAD
+
 			AndroidSafeNativeThreadAttachment attached(m_nativeState);
 			JNIEnv* env = attached.envForThread;
 
 			jmethodID updateViewStateBasedOnFlattening = env->GetMethodID(m_uiViewClass, "updateViewStateBasedOnFlattening", "(Z)V");
-			env->CallVoidMethod(m_uiView, updateViewStateBasedOnFlattening, m_model.GetFlattened());
-        }
+			env->CallVoidMethod(m_uiView, updateViewStateBasedOnFlattening, message.IsFlattened());
+    	}
 
     	void FlattenButtonViewController::SetFlattened(bool flattened)
     	{
-    		if(flattened)
-    		{
-    			m_model.Flatten();
-    		}
-    		else
-    		{
-    			m_model.Unflatten();
-    		}
+    		ASSERT_UI_THREAD
+
+    		m_uiToNativeMessageBus.Publish(FlattenButtonViewStateChangedMessage(flattened));
     	}
     }
 }

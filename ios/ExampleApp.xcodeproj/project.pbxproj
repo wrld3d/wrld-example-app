@@ -122,8 +122,6 @@
 		18B5AB4019DC159000BA4A38 /* SearchServiceBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18B5AA7319DC158F00BA4A38 /* SearchServiceBase.cpp */; };
 		18B5AB4119DC159000BA4A38 /* SearchResultItemModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18B5AA7919DC158F00BA4A38 /* SearchResultItemModel.cpp */; };
 		18B5AB4219DC159000BA4A38 /* SearchResultItemModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18B5AA7919DC158F00BA4A38 /* SearchResultItemModel.cpp */; };
-		18B5AB4319DC159000BA4A38 /* SearchResultMenuModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18B5AA7C19DC158F00BA4A38 /* SearchResultMenuModel.cpp */; };
-		18B5AB4419DC159000BA4A38 /* SearchResultMenuModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18B5AA7C19DC158F00BA4A38 /* SearchResultMenuModel.cpp */; };
 		18B5AB4519DC159000BA4A38 /* SearchResultMenuModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18B5AA7E19DC158F00BA4A38 /* SearchResultMenuModule.cpp */; };
 		18B5AB4619DC159000BA4A38 /* SearchResultMenuModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18B5AA7E19DC158F00BA4A38 /* SearchResultMenuModule.cpp */; };
 		18B5AB4719DC159000BA4A38 /* SearchResultMenuViewModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18B5AA8019DC158F00BA4A38 /* SearchResultMenuViewModel.cpp */; };
@@ -415,12 +413,45 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		180169E01A10E5C0003C7EA1 /* SearchQueryPerformedMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchQueryPerformedMessage.h; sourceTree = "<group>"; };
+		180169E11A10E5C0003C7EA1 /* SearchQueryRemovedMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchQueryRemovedMessage.h; sourceTree = "<group>"; };
+		180169E21A10E5DB003C7EA1 /* SearchResultMenuSearchQueryPerformedMessageHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultMenuSearchQueryPerformedMessageHandler.h; sourceTree = "<group>"; };
+		180169E31A10E5DB003C7EA1 /* SearchResultMenuSearchQueryRemovedMessageHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultMenuSearchQueryRemovedMessageHandler.h; sourceTree = "<group>"; };
+		180169E41A10FAAA003C7EA1 /* SearchQueryObserver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchQueryObserver.h; sourceTree = "<group>"; };
+		180169E51A1102C2003C7EA1 /* PerformedSearchMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformedSearchMessage.h; sourceTree = "<group>"; };
+		180169E61A1102C2003C7EA1 /* PerformedSearchMessageHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformedSearchMessageHandler.h; sourceTree = "<group>"; };
+		180169E71A1113F2003C7EA1 /* ModalityChangedMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModalityChangedMessage.h; sourceTree = "<group>"; };
+		180169E81A1113F2003C7EA1 /* ModalityObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModalityObserver.h; sourceTree = "<group>"; };
+		180169E91A1115F4003C7EA1 /* SearchResultOnMapModalityObserver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchResultOnMapModalityObserver.h; sourceTree = "<group>"; };
+		180169EA1A111F3D003C7EA1 /* FlattenButtonViewStateChangedMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FlattenButtonViewStateChangedMessage.h; sourceTree = "<group>"; };
+		180169EB1A112045003C7EA1 /* FlattenButtonViewStateChangedObserver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FlattenButtonViewStateChangedObserver.h; sourceTree = "<group>"; };
+		180169EC1A112822003C7EA1 /* FlattenButtonModelStateChangedMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FlattenButtonModelStateChangedMessage.h; sourceTree = "<group>"; };
+		180169ED1A112A5A003C7EA1 /* FlattenButtonModelStateChangedObserver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FlattenButtonModelStateChangedObserver.h; sourceTree = "<group>"; };
+		180169EE1A1250E8003C7EA1 /* SearchQueryResponseReceivedMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchQueryResponseReceivedMessage.h; sourceTree = "<group>"; };
 		180E99F919E67E64007D63FD /* arrow2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow2.png; sourceTree = "<group>"; };
 		180E99FC19E6B420007D63FD /* CustomTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomTableViewCell.h; sourceTree = "<group>"; };
 		180E99FD19E6B4CC007D63FD /* CustomTableViewCell.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CustomTableViewCell.mm; sourceTree = "<group>"; };
 		189971CC192CCC0200E0E9F1 /* MobileExampleApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MobileExampleApp.cpp; sourceTree = "<group>"; };
 		189971CD192CCC0200E0E9F1 /* MobileExampleApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobileExampleApp.h; sourceTree = "<group>"; };
 		189971CF192CF46000E0E9F1 /* Logger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Logger.h; sourceTree = "<group>"; };
+		18A9C9911A0D28520042B937 /* CatalogBinding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CatalogBinding.h; sourceTree = "<group>"; };
+		18A9C9921A0D28520042B937 /* ImmediateMessageBus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImmediateMessageBus.h; sourceTree = "<group>"; };
+		18A9C9931A0D28520042B937 /* MessageBus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageBus.h; sourceTree = "<group>"; };
+		18A9C9941A0D28520042B937 /* MPMCMessageBus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPMCMessageBus.h; sourceTree = "<group>"; };
+		18A9C9951A0D28520042B937 /* NativeToUiMessageBus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NativeToUiMessageBus.h; sourceTree = "<group>"; };
+		18A9C9961A0D28520042B937 /* UiToNativeMessageBus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UiToNativeMessageBus.h; sourceTree = "<group>"; };
+		18A9C9971A0D29C40042B937 /* SearchResultAddedMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultAddedMessage.h; sourceTree = "<group>"; };
+		18A9C9981A0D29C40042B937 /* SearchResultAddRemoveHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultAddRemoveHandler.h; sourceTree = "<group>"; };
+		18A9C9991A0D29C40042B937 /* SearchResultMenuItemSelectedMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultMenuItemSelectedMessage.h; sourceTree = "<group>"; };
+		18A9C99A1A0D29C40042B937 /* SearchResultMenuItemSelectedMessageHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultMenuItemSelectedMessageHandler.h; sourceTree = "<group>"; };
+		18A9C99B1A0D29C40042B937 /* SearchResultRemovedMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultRemovedMessage.h; sourceTree = "<group>"; };
+		18A9C99C1A0D29C40042B937 /* SearchResultRepositoryObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultRepositoryObserver.h; sourceTree = "<group>"; };
+		18A9C99D1A0D31A70042B937 /* CategorySearchSelectedMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategorySearchSelectedMessage.h; sourceTree = "<group>"; };
+		18A9C99E1A0D31A70042B937 /* CategorySearchSelectedMessageHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategorySearchSelectedMessageHandler.h; sourceTree = "<group>"; };
+		18A9C99F1A0D37FE0042B937 /* WeatherSelectedMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeatherSelectedMessage.h; sourceTree = "<group>"; };
+		18A9C9A01A0D37FE0042B937 /* WeatherSelectedMessageHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeatherSelectedMessageHandler.h; sourceTree = "<group>"; };
+		18A9C9A11A0D3DF50042B937 /* PlaceJumpSelectedMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaceJumpSelectedMessage.h; sourceTree = "<group>"; };
+		18A9C9A21A0D3DF50042B937 /* PlaceJumpSelectedMessageHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaceJumpSelectedMessageHandler.h; sourceTree = "<group>"; };
 		18AB38F5192B729F00F15546 /* Main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Main.m; sourceTree = "<group>"; };
 		18AB38F6192B729F00F15546 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		18AB38F7192B729F00F15546 /* ViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewController.mm; sourceTree = "<group>"; };
@@ -573,14 +604,11 @@
 		18B5AA7219DC158F00BA4A38 /* SearchResultRepository.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultRepository.h; sourceTree = "<group>"; };
 		18B5AA7319DC158F00BA4A38 /* SearchServiceBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchServiceBase.cpp; sourceTree = "<group>"; };
 		18B5AA7419DC158F00BA4A38 /* SearchServiceBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchServiceBase.h; sourceTree = "<group>"; };
-		18B5AA7619DC158F00BA4A38 /* ISearchResultMenuModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISearchResultMenuModel.h; sourceTree = "<group>"; };
 		18B5AA7719DC158F00BA4A38 /* ISearchResultMenuModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISearchResultMenuModule.h; sourceTree = "<group>"; };
 		18B5AA7819DC158F00BA4A38 /* ISearchResultMenuViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISearchResultMenuViewModel.h; sourceTree = "<group>"; };
 		18B5AA7919DC158F00BA4A38 /* SearchResultItemModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchResultItemModel.cpp; sourceTree = "<group>"; };
 		18B5AA7A19DC158F00BA4A38 /* SearchResultItemModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultItemModel.h; sourceTree = "<group>"; };
 		18B5AA7B19DC158F00BA4A38 /* SearchResultMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultMenu.h; sourceTree = "<group>"; };
-		18B5AA7C19DC158F00BA4A38 /* SearchResultMenuModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchResultMenuModel.cpp; sourceTree = "<group>"; };
-		18B5AA7D19DC158F00BA4A38 /* SearchResultMenuModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultMenuModel.h; sourceTree = "<group>"; };
 		18B5AA7E19DC158F00BA4A38 /* SearchResultMenuModule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchResultMenuModule.cpp; sourceTree = "<group>"; };
 		18B5AA7F19DC158F00BA4A38 /* SearchResultMenuModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultMenuModule.h; sourceTree = "<group>"; };
 		18B5AA8019DC158F00BA4A38 /* SearchResultMenuViewModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchResultMenuViewModel.cpp; sourceTree = "<group>"; };
@@ -840,6 +868,13 @@
 		222E06C91948B08B0004FFD9 /* ExampleAppCpp11.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExampleAppCpp11.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		222E06CB1948B0B70004FFD9 /* libapps-on-maps-cpp11-sim.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libapps-on-maps-cpp11-sim.a"; path = "Include/libapps-on-maps-cpp11-sim.a"; sourceTree = "<group>"; };
 		222E06CC1948B0B70004FFD9 /* libapps-on-maps-cpp11.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libapps-on-maps-cpp11.a"; path = "Include/libapps-on-maps-cpp11.a"; sourceTree = "<group>"; };
+		2232E9B01A126EDB00A33239 /* SearchResultViewClearedMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultViewClearedMessage.h; sourceTree = "<group>"; };
+		2232E9B11A126EDB00A33239 /* SearchResultViewClearedObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultViewClearedObserver.h; sourceTree = "<group>"; };
+		22CA66EC1A12353300FA71F0 /* CompassModeChangedMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompassModeChangedMessage.h; sourceTree = "<group>"; };
+		22CA66EF1A12359D00FA71F0 /* CompassModeObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompassModeObserver.h; sourceTree = "<group>"; };
+		22CA66F21A123B4B00FA71F0 /* CompassHeadingUpdateMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompassHeadingUpdateMessage.h; sourceTree = "<group>"; };
+		22CA66F71A12469400FA71F0 /* CompassViewCycledMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CompassViewCycledMessage.h; sourceTree = "<group>"; };
+		22CA66F91A1246F400FA71F0 /* CompassViewCycledObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompassViewCycledObserver.h; sourceTree = "<group>"; };
 		5605EDCB19F81CFC00D1D594 /* IModalityController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IModalityController.h; sourceTree = "<group>"; };
 		5605EDCC19F81CFC00D1D594 /* IModalityModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IModalityModel.h; sourceTree = "<group>"; };
 		5605EDCD19F81CFC00D1D594 /* IModalityModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IModalityModule.h; sourceTree = "<group>"; };
@@ -946,6 +981,7 @@
 				18B5A9BE19DC158F00BA4A38 /* CameraTransitions */,
 				18B5A9C319DC158F00BA4A38 /* CategorySearch */,
 				18B5A9CF19DC158F00BA4A38 /* Compass */,
+				18A9C9901A0D28520042B937 /* ExampleAppMessaging */,
 				18B5A9E019DC158F00BA4A38 /* FlattenButton */,
 				18B5A9F219DC158F00BA4A38 /* InitialExperience */,
 				18B5AA0419DC158F00BA4A38 /* Menu */,
@@ -971,6 +1007,19 @@
 			);
 			name = src;
 			path = ../../src;
+			sourceTree = "<group>";
+		};
+		18A9C9901A0D28520042B937 /* ExampleAppMessaging */ = {
+			isa = PBXGroup;
+			children = (
+				18A9C9911A0D28520042B937 /* CatalogBinding.h */,
+				18A9C9921A0D28520042B937 /* ImmediateMessageBus.h */,
+				18A9C9931A0D28520042B937 /* MessageBus.h */,
+				18A9C9941A0D28520042B937 /* MPMCMessageBus.h */,
+				18A9C9951A0D28520042B937 /* NativeToUiMessageBus.h */,
+				18A9C9961A0D28520042B937 /* UiToNativeMessageBus.h */,
+			);
+			path = ExampleAppMessaging;
 			sourceTree = "<group>";
 		};
 		18AB38E6192B729F00F15546 /* ios_src */ = {
@@ -1029,6 +1078,8 @@
 		18B5A9C319DC158F00BA4A38 /* CategorySearch */ = {
 			isa = PBXGroup;
 			children = (
+				18A9C99D1A0D31A70042B937 /* CategorySearchSelectedMessage.h */,
+				18A9C99E1A0D31A70042B937 /* CategorySearchSelectedMessageHandler.h */,
 				18B5A9C419DC158F00BA4A38 /* CategorySearch.h */,
 				18B5A9C519DC158F00BA4A38 /* CategorySearchMenuOption.cpp */,
 				18B5A9C619DC158F00BA4A38 /* CategorySearchMenuOption.h */,
@@ -1063,6 +1114,11 @@
 				18B5A9DD19DC158F00BA4A38 /* ICompassModule.h */,
 				18B5A9DE19DC158F00BA4A38 /* ICompassUpdateController.h */,
 				18B5A9DF19DC158F00BA4A38 /* ICompassViewModel.h */,
+				22CA66EC1A12353300FA71F0 /* CompassModeChangedMessage.h */,
+				22CA66EF1A12359D00FA71F0 /* CompassModeObserver.h */,
+				22CA66F21A123B4B00FA71F0 /* CompassHeadingUpdateMessage.h */,
+				22CA66F71A12469400FA71F0 /* CompassViewCycledMessage.h */,
+				22CA66F91A1246F400FA71F0 /* CompassViewCycledObserver.h */,
 			);
 			path = Compass;
 			sourceTree = "<group>";
@@ -1082,6 +1138,10 @@
 				18B5A9EA19DC158F00BA4A38 /* IFlattenButtonModel.h */,
 				18B5A9EB19DC158F00BA4A38 /* IFlattenButtonModule.h */,
 				18B5A9EC19DC158F00BA4A38 /* IFlattenButtonViewModel.h */,
+				180169EA1A111F3D003C7EA1 /* FlattenButtonViewStateChangedMessage.h */,
+				180169EB1A112045003C7EA1 /* FlattenButtonViewStateChangedObserver.h */,
+				180169EC1A112822003C7EA1 /* FlattenButtonModelStateChangedMessage.h */,
+				180169ED1A112A5A003C7EA1 /* FlattenButtonModelStateChangedObserver.h */,
 			);
 			path = FlattenButton;
 			sourceTree = "<group>";
@@ -1150,6 +1210,8 @@
 		18B5AA3319DC158F00BA4A38 /* Modality */ = {
 			isa = PBXGroup;
 			children = (
+				180169E71A1113F2003C7EA1 /* ModalityChangedMessage.h */,
+				180169E81A1113F2003C7EA1 /* ModalityObserver.h */,
 				5605EDCB19F81CFC00D1D594 /* IModalityController.h */,
 				5605EDCC19F81CFC00D1D594 /* IModalityModel.h */,
 				5605EDCD19F81CFC00D1D594 /* IModalityModule.h */,
@@ -1187,6 +1249,8 @@
 		18B5AA3C19DC158F00BA4A38 /* PlaceJumps */ = {
 			isa = PBXGroup;
 			children = (
+				18A9C9A11A0D3DF50042B937 /* PlaceJumpSelectedMessage.h */,
+				18A9C9A21A0D3DF50042B937 /* PlaceJumpSelectedMessageHandler.h */,
 				18B5AA3D19DC158F00BA4A38 /* IPlaceJumpController.h */,
 				18B5AA3E19DC158F00BA4A38 /* IPlaceJumpsModel.h */,
 				18B5AA3F19DC158F00BA4A38 /* IPlaceJumpsModule.h */,
@@ -1260,8 +1324,12 @@
 				18B5AA6819DC158F00BA4A38 /* SearchModule.h */,
 				18B5AA6919DC158F00BA4A38 /* SearchQuery.cpp */,
 				18B5AA6A19DC158F00BA4A38 /* SearchQuery.h */,
+				180169E41A10FAAA003C7EA1 /* SearchQueryObserver.h */,
 				18B5AA6B19DC158F00BA4A38 /* SearchQueryPerformer.cpp */,
 				18B5AA6C19DC158F00BA4A38 /* SearchQueryPerformer.h */,
+				180169E01A10E5C0003C7EA1 /* SearchQueryPerformedMessage.h */,
+				180169E11A10E5C0003C7EA1 /* SearchQueryRemovedMessage.h */,
+				180169EE1A1250E8003C7EA1 /* SearchQueryResponseReceivedMessage.h */,
 				18B5AA6D19DC158F00BA4A38 /* SearchRefreshService.cpp */,
 				18B5AA6E19DC158F00BA4A38 /* SearchRefreshService.h */,
 				18B5AA6F19DC158F00BA4A38 /* SearchResultModel.cpp */,
@@ -1288,14 +1356,21 @@
 		18B5AA7519DC158F00BA4A38 /* SearchResultMenu */ = {
 			isa = PBXGroup;
 			children = (
-				18B5AA7619DC158F00BA4A38 /* ISearchResultMenuModel.h */,
+				2232E9B01A126EDB00A33239 /* SearchResultViewClearedMessage.h */,
+				2232E9B11A126EDB00A33239 /* SearchResultViewClearedObserver.h */,
+				18A9C9971A0D29C40042B937 /* SearchResultAddedMessage.h */,
+				18A9C9981A0D29C40042B937 /* SearchResultAddRemoveHandler.h */,
+				18A9C9991A0D29C40042B937 /* SearchResultMenuItemSelectedMessage.h */,
+				18A9C99A1A0D29C40042B937 /* SearchResultMenuItemSelectedMessageHandler.h */,
+				18A9C99B1A0D29C40042B937 /* SearchResultRemovedMessage.h */,
+				18A9C99C1A0D29C40042B937 /* SearchResultRepositoryObserver.h */,
 				18B5AA7719DC158F00BA4A38 /* ISearchResultMenuModule.h */,
+				180169E21A10E5DB003C7EA1 /* SearchResultMenuSearchQueryPerformedMessageHandler.h */,
+				180169E31A10E5DB003C7EA1 /* SearchResultMenuSearchQueryRemovedMessageHandler.h */,
 				18B5AA7819DC158F00BA4A38 /* ISearchResultMenuViewModel.h */,
 				18B5AA7919DC158F00BA4A38 /* SearchResultItemModel.cpp */,
 				18B5AA7A19DC158F00BA4A38 /* SearchResultItemModel.h */,
 				18B5AA7B19DC158F00BA4A38 /* SearchResultMenu.h */,
-				18B5AA7C19DC158F00BA4A38 /* SearchResultMenuModel.cpp */,
-				18B5AA7D19DC158F00BA4A38 /* SearchResultMenuModel.h */,
 				18B5AA7E19DC158F00BA4A38 /* SearchResultMenuModule.cpp */,
 				18B5AA7F19DC158F00BA4A38 /* SearchResultMenuModule.h */,
 				18B5AA8019DC158F00BA4A38 /* SearchResultMenuViewModel.cpp */,
@@ -1333,6 +1408,7 @@
 				18B5AA9A19DC158F00BA4A38 /* SearchResultOnMapModule.h */,
 				18B5AA9B19DC158F00BA4A38 /* SearchResultOnMapScaleController.cpp */,
 				18B5AA9C19DC158F00BA4A38 /* SearchResultOnMapScaleController.h */,
+				180169E91A1115F4003C7EA1 /* SearchResultOnMapModalityObserver.h */,
 			);
 			path = SearchResultOnMap;
 			sourceTree = "<group>";
@@ -1356,6 +1432,8 @@
 		18B5AAA719DC158F00BA4A38 /* SecondaryMenu */ = {
 			isa = PBXGroup;
 			children = (
+				180169E51A1102C2003C7EA1 /* PerformedSearchMessage.h */,
+				180169E61A1102C2003C7EA1 /* PerformedSearchMessageHandler.h */,
 				18B5AAA819DC158F00BA4A38 /* ISecondaryMenuModule.h */,
 				18B5AAA919DC158F00BA4A38 /* SecondaryMenu.h */,
 				18B5AAAA19DC158F00BA4A38 /* SecondaryMenuModule.cpp */,
@@ -1367,6 +1445,8 @@
 		18B5AAAC19DC158F00BA4A38 /* WeatherMenu */ = {
 			isa = PBXGroup;
 			children = (
+				18A9C99F1A0D37FE0042B937 /* WeatherSelectedMessage.h */,
+				18A9C9A01A0D37FE0042B937 /* WeatherSelectedMessageHandler.h */,
 				18B5AAAD19DC158F00BA4A38 /* IWeatherController.h */,
 				18B5AAAE19DC158F00BA4A38 /* IWeatherMenuModule.h */,
 				18B5AAAF19DC158F00BA4A38 /* IWeatherMenuStateModel.h */,
@@ -2118,7 +2198,6 @@
 				18B5AAEE19DC159000BA4A38 /* CompassUpdateController.cpp in Sources */,
 				18B5AAF419DC159000BA4A38 /* FlattenButtonModule.cpp in Sources */,
 				18B5AC3919DC159B00BA4A38 /* SecondaryMenuViewModule.mm in Sources */,
-				18B5AB4419DC159000BA4A38 /* SearchResultMenuModel.cpp in Sources */,
 				18B5AB6019DC159000BA4A38 /* SearchResultPoiViewModel.cpp in Sources */,
 				18B5ABFD19DC159B00BA4A38 /* AboutPageViewModule.mm in Sources */,
 				18B5ABF919DC159B00BA4A38 /* AboutPageView.mm in Sources */,
@@ -2253,7 +2332,6 @@
 				18B5AAED19DC159000BA4A38 /* CompassUpdateController.cpp in Sources */,
 				18B5AAF319DC159000BA4A38 /* FlattenButtonModule.cpp in Sources */,
 				18B5AC3819DC159B00BA4A38 /* SecondaryMenuViewModule.mm in Sources */,
-				18B5AB4319DC159000BA4A38 /* SearchResultMenuModel.cpp in Sources */,
 				18B5AB5F19DC159000BA4A38 /* SearchResultPoiViewModel.cpp in Sources */,
 				18B5ABFC19DC159B00BA4A38 /* AboutPageViewModule.mm in Sources */,
 				18B5ABF819DC159B00BA4A38 /* AboutPageView.mm in Sources */,

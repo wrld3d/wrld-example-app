@@ -10,6 +10,7 @@ namespace ExampleApp
         class IMenuModel;
         class IMenuOption;
         class IMenuOptionsModel;
+        class IMenuOptionSelectionTask;
         class IMenuViewModel;
         class IMenuSectionViewModel;
         class IMenuSectionsViewModel;

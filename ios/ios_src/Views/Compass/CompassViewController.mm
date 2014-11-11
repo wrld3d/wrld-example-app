@@ -5,6 +5,8 @@
 #include "CompassViewModel.h"
 #include "CompassViewControllerInterop.h"
 #include "ScreenProperties.h"
+#include "CompassGpsMode.h"
+#include "CompassViewCycledMessage.h"
 
 @interface CompassViewController()<UIGestureRecognizerDelegate>
 {
@@ -14,10 +16,10 @@
 
 @implementation CompassViewController
 
-- (id)initWithParams:(ExampleApp::Compass::ICompassModel*)pModel
-                    :(ExampleApp::Compass::ICompassViewModel*)pViewModel
+- (id)initWithParams:(ExampleApp::Compass::ICompassViewModel*)pViewModel
                     :(const Eegeo::Rendering::ScreenProperties*)pScreenProperties
-
+                    :(ExampleApp::ExampleAppMessaging::UiToNativeMessageBus*)pUiToNativeMessageBus
+                    :(ExampleApp::ExampleAppMessaging::NativeToUiMessageBus*)pNativeToUiMessageBus;
 {
     if(self = [super init])
     {
@@ -28,10 +30,9 @@
                              :pScreenProperties->GetPixelScale()] autorelease];
         
         self.view = self.pCompassView;
-        
-        m_pModel = pModel;
+        m_pUiToNativeMessageBus = pUiToNativeMessageBus;
         m_pViewModel = pViewModel;
-        m_pInterop = Eegeo_NEW(ExampleApp::Compass::CompassViewControllerInterop)(self, *m_pModel, *m_pViewModel);
+        m_pInterop = Eegeo_NEW(ExampleApp::Compass::CompassViewControllerInterop)(self, *m_pViewModel, *pNativeToUiMessageBus);
         
         _tapGestureRecogniser = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(_tapTabGesture:)] autorelease];
         [_tapGestureRecogniser setDelegate:self];
@@ -52,9 +53,9 @@
     [super dealloc];
 }
 
-- (void) handleGpsModeChanged
+- (void) handleGpsModeChanged:(ExampleApp::Compass::GpsMode::Values)value
 {
-    switch(m_pModel->GetGpsMode())
+    switch(value)
     {
         case ExampleApp::Compass::GpsMode::GpsDisabled:
         {
@@ -101,7 +102,7 @@
 
 - (void)_tapTabGesture:(UITapGestureRecognizer *)recognizer
 {
-    m_pModel->CycleToNextGpsMode();
+    m_pUiToNativeMessageBus->Publish(ExampleApp::Compass::CompassViewCycledMessage());
 }
 
 

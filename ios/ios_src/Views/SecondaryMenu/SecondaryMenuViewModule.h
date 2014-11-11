@@ -8,6 +8,7 @@
 #include "Rendering.h"
 #include "Modality.h"
 #include "Search.h"
+#include "NativeToUiMessageBus.h"
 
 namespace ExampleApp
 {
@@ -26,7 +27,7 @@ namespace ExampleApp
                                     const Eegeo::Rendering::ScreenProperties& screenProperties,
                                     Modality::IModalityModel& modalityModel,
                                     Search::ISearchQueryPerformer& searchQueryPerformer,
-                                    Search::ISearchService& searchService);
+                                    ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus);
             
             ~SecondaryMenuViewModule();
             

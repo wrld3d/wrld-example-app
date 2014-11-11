@@ -52,7 +52,6 @@ public abstract class MenuView implements View.OnTouchListener, View.OnClickList
 	protected int m_dragThresholdPx;
 	
 	protected boolean m_canBeginDrag = false;
-	protected boolean m_canBeginDragRequestPending = false;
 	
 	protected boolean m_animating = false;
 	protected PointF m_animationEndPos = new PointF();
@@ -61,7 +60,6 @@ public abstract class MenuView implements View.OnTouchListener, View.OnClickList
 	
 	protected boolean m_isFirstAnimationCeremony = true;
 	
-	protected abstract void createView();
 	protected abstract void refreshListData(List<String> groups, List<Boolean> groupsExpandable, HashMap<String, List<String>> groupToChildrenMap);
 
 	public MenuView(MainActivity activity, long nativeCallerPointer)
@@ -71,27 +69,13 @@ public abstract class MenuView implements View.OnTouchListener, View.OnClickList
 		
 		final int dragThesholdDip = 10;
 		m_dragThresholdPx = m_activity.dipAsPx(dragThesholdDip);
-		
-		m_activity.runOnUiThread(new Runnable()
-		{
-			public void run()
-			{
-				createView();
-			}
-		});
 	}
 	
 	public void destroy()
 	{
-		m_activity.runOnUiThread(new Runnable()
-		{
-			public void run()
-			{
-				final RelativeLayout uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
-				uiRoot.removeView(m_view);
-				m_view = null;
-			}
-		});
+		final RelativeLayout uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
+		uiRoot.removeView(m_view);
+		m_view = null;
 	}
 	
 	public boolean isAnimating()
@@ -124,13 +108,15 @@ public abstract class MenuView implements View.OnTouchListener, View.OnClickList
 		{
 			done = true;
 		}
+
+		animateToCurrentPos(false);
 		
-		boolean animationCompleteAndOpen = false;
 		if(done)
 		{
 		    m_animationCurrentPos.x = m_animationEndPos.x;
 		    m_animationCurrentPos.y = m_animationEndPos.y;
-		    
+
+			animateToCurrentPos(false);
 		    
 		    log("animation complete", "("+m_animationCurrentPos.x + "," + m_animationCurrentPos.y + ")");
 		    
@@ -146,27 +132,19 @@ public abstract class MenuView implements View.OnTouchListener, View.OnClickList
 		    }
 			else if(open)
 			{
-				animationCompleteAndOpen = true;
+				animateToCurrentPos(true);
 		    	MenuViewJniMethods.ViewOpenCompleted(m_nativeCallerPointer);
 			}
 		    
 		    m_animating = false;
 		}
-		
-		final boolean shouldEnableContent = animationCompleteAndOpen;
-		final float x = m_animationCurrentPos.x;
-		final float y = m_animationCurrentPos.y;
-		
-		m_activity.runOnUiThread(new Runnable()
-		{
-			public void run()
-			{
-				log("", "Animation set pos (" + x + ", " + y + ")");
-				setViewX(x);
-				setViewY(y);
-				m_list.setEnabled(shouldEnableContent);
-			}
-		});
+	}
+	
+	void animateToCurrentPos(boolean animationCompleteAndOpen) 
+	{	
+		setViewX(m_animationCurrentPos.x);
+		setViewY(m_animationCurrentPos.y);
+		m_list.setEnabled(animationCompleteAndOpen);
 	}
 
 	public float normalisedAnimationProgress()
@@ -195,78 +173,39 @@ public abstract class MenuView implements View.OnTouchListener, View.OnClickList
 	}
 
 	public void animateToClosedOnScreen()
-	{
-		m_activity.runOnUiThread(new Runnable()
-		{
-			public void run()
-			{
-				int viewXPx = viewXPx();
-				final boolean shouldRunAnimationBasedOnCurrentViewLocation = (!m_dragInProgress && viewXPx != m_closedXPx);
-				
-				m_activity.runOnNativeThread(new Runnable()
-				{
-					public void run()
-					{ 
-						if(shouldRunAnimationBasedOnCurrentViewLocation || (m_animating && m_animationEndPos.x != m_closedXPx)) 
-					    {
-					    	int newXPx = m_closedXPx;
-					    	log("animateToClosedOnScreen", "x: " + newXPx);
-							animateViewToX(newXPx);
-					    }
-					}
-				});
-			}
-		});	
+	{ 
+		final boolean shouldRunAnimationBasedOnCurrentViewLocation = (!m_dragInProgress && viewXPx() != m_closedXPx);
+		
+		if(shouldRunAnimationBasedOnCurrentViewLocation || (m_animating && m_animationEndPos.x != m_closedXPx)) 
+	    {
+	    	int newXPx = m_closedXPx;
+	    	log("animateToClosedOnScreen", "x: " + newXPx);
+			animateViewToX(newXPx);
+	    }
 	}
 	
 	public void animateToOpenOnScreen()
 	{
-		m_activity.runOnUiThread(new Runnable()
+		final boolean shouldRunAnimationBasedOnCurrentViewLocation = (!m_dragInProgress && viewXPx() != m_openXPx);
+	   
+		if(shouldRunAnimationBasedOnCurrentViewLocation || (m_animating && m_animationEndPos.x != m_openXPx)) 
 		{
-			public void run()
-			{
-				int viewXPx = viewXPx();
-				final boolean shouldRunAnimationBasedOnCurrentViewLocation = (!m_dragInProgress && viewXPx != m_openXPx);
-			   
-		    	m_activity.runOnNativeThread(new Runnable()
-				{
-					public void run()
-					{ 
-						if(shouldRunAnimationBasedOnCurrentViewLocation || (m_animating && m_animationEndPos.x != m_openXPx)) 
-						{
-							int newXPx = m_openXPx;
-							log("animateToOpenOnScreen", "x: " + newXPx);
-							animateViewToX(newXPx);
-						}
-					}
-				});
-			}
-		});	
+			int newXPx = m_openXPx;
+			log("animateToOpenOnScreen", "x: " + newXPx);
+			animateViewToX(newXPx);
+		}
 	}
 	
 	public void animateOffScreen()
 	{
-		m_activity.runOnUiThread(new Runnable()
-		{
-			public void run()
-			{
-				int viewXPx = viewXPx();
-				final boolean shouldRunAnimationBasedOnCurrentViewLocation = (!m_dragInProgress && viewXPx != m_offscreenXPx);
-			
-		    	m_activity.runOnNativeThread(new Runnable()
-				{
-					public void run()
-					{
-						if(shouldRunAnimationBasedOnCurrentViewLocation || (m_animating && m_animationEndPos.x != m_offscreenXPx)) 
-					    {
-					    	int newXPx = m_offscreenXPx;
-					    	log("animateOffScreen", "x: " + newXPx);
-							animateViewToX(newXPx);
-					    }
-					}
-				});
-			}
-		});	
+		final boolean shouldRunAnimationBasedOnCurrentViewLocation = (!m_dragInProgress && viewXPx() != m_offscreenXPx);
+
+		if(shouldRunAnimationBasedOnCurrentViewLocation || (m_animating && m_animationEndPos.x != m_offscreenXPx)) 
+	    {
+	    	int newXPx = m_offscreenXPx;
+	    	log("animateOffScreen", "x: " + newXPx);
+			animateViewToX(newXPx);
+	    }
 	}
 	
 	public void animateToIntermediateOnScreenState(final float onScreenState)
@@ -276,20 +215,14 @@ public abstract class MenuView implements View.OnTouchListener, View.OnClickList
 			return;
 		}
 	    
-		m_activity.runOnUiThread(new Runnable()
-		{
-			public void run()
-			{   
-				int viewXPx = viewXPx();
-			    int newXPx = m_offscreenXPx + (int)(((m_closedXPx - m_offscreenXPx) * onScreenState) + 0.5f);
-			 
-			    if(!m_dragInProgress && viewXPx != newXPx) 
-			    {
-			    	log("animateToIntermediateOnScreenState", "x: " + newXPx);
-			    	setViewX(newXPx);
-			    }
-			}
-		});
+		int viewXPx = viewXPx();
+	    int newXPx = m_offscreenXPx + (int)(((m_closedXPx - m_offscreenXPx) * onScreenState) + 0.5f);
+	 
+	    if(!m_dragInProgress && viewXPx != newXPx) 
+	    {
+	    	log("animateToIntermediateOnScreenState", "x: " + newXPx);
+	    	setViewX(newXPx);
+	    }
 	}
 	
 	public void animateToIntermediateOpenState(final float openState)
@@ -299,20 +232,13 @@ public abstract class MenuView implements View.OnTouchListener, View.OnClickList
 			return;
 		}
 		
-		m_activity.runOnUiThread(new Runnable()
-		{
-			public void run()
-			{   
-				int viewXPx = viewXPx();
-			    int newXPx = m_closedXPx + (int)(((m_openXPx - m_closedXPx) * openState) + 0.5f);
-			 
-			    if(!m_dragInProgress && viewXPx != newXPx) 
-			    {
-			    	log("animateToIntermediateOpenState", "x: " + newXPx);
-			    	setViewX(newXPx);
-			    }
-			}
-		});
+	    int newXPx = m_closedXPx + (int)(((m_openXPx - m_closedXPx) * openState) + 0.5f);
+	 
+	    if(!m_dragInProgress && viewXPx() != newXPx) 
+	    {
+	    	log("animateToIntermediateOpenState", "x: " + newXPx);
+	    	setViewX(newXPx);
+	    }
 	}
 	
 	public void populateData(
@@ -322,32 +248,27 @@ public abstract class MenuView implements View.OnTouchListener, View.OnClickList
 			final boolean[] groupIsExpandable, 
 			final String[] childJson)
 	{
-		m_activity.runOnUiThread(new Runnable()
+		List<String> groups = Arrays.asList(groupNames);
+		List<Boolean> groupsExpandable = toBooleanList(groupIsExpandable);
+		HashMap<String, List<String>> childMap = new HashMap<String,List<String>>();
+		int childIndex = 0;
+		for(int groupIndex = 0; groupIndex < groups.size(); groupIndex++)
 		{
-			public void run()
+			int size = groupSizes[groupIndex];
+			ArrayList<String> children = new ArrayList<String>();
+			for(int i = 0; i < size; i++)
 			{
-				List<String> groups = Arrays.asList(groupNames);
-				List<Boolean> groupsExpandable = toBooleanList(groupIsExpandable);
-				HashMap<String, List<String>> childMap = new HashMap<String,List<String>>();
-				int childIndex = 0;
-				for(int groupIndex = 0; groupIndex < groups.size(); groupIndex++)
-				{
-					int size = groupSizes[groupIndex];
-					ArrayList<String> children = new ArrayList<String>();
-					for(int i = 0; i < size; i++)
-					{
-						children.add(childJson[childIndex]);
-						childIndex++;
-					}
-					childMap.put(groupNames[groupIndex], children);
-				}
-				
-				refreshListData(groups, groupsExpandable, childMap);
+				children.add(childJson[childIndex]);
+				childIndex++;
 			}
-		});
+			childMap.put(groupNames[groupIndex], children);
+		}
+		
+		refreshListData(groups, groupsExpandable, childMap);
 	}
 	
-	protected List<Boolean> toBooleanList(boolean[] booleanArray) {
+	protected List<Boolean> toBooleanList(boolean[] booleanArray) 
+	{
 		ArrayList<Boolean> list = new ArrayList<Boolean>();
 		for(int i = 0; i < booleanArray.length; i++)
 		{
@@ -362,13 +283,8 @@ public abstract class MenuView implements View.OnTouchListener, View.OnClickList
 	    m_dragStartPosXPx = xPx;
 	    m_controlStartPosXPx = viewXPx();
 	    log("ACTION_DOWN", "x: " + Integer.toString(xPx));
-	    m_activity.runOnNativeThread(new Runnable()
-		{
-			public void run()
-			{
-				MenuViewJniMethods.ViewDragStarted(m_nativeCallerPointer);
-			}
-		});
+	
+		MenuViewJniMethods.ViewDragStarted(m_nativeCallerPointer);
 	}
 
 	protected abstract void handleDragUpdate(int xPx, int yPx);
@@ -377,13 +293,7 @@ public abstract class MenuView implements View.OnTouchListener, View.OnClickList
 	
 	public void onClick(View view)
 	{	
-		m_activity.runOnNativeThread(new Runnable()
-		{
-			public void run()
-			{
-				MenuViewJniMethods.ViewClicked(m_nativeCallerPointer);
-			}
-		});
+		MenuViewJniMethods.ViewClicked(m_nativeCallerPointer);
 	}	
 	
 	public boolean onTouch(View view, MotionEvent event)
@@ -393,25 +303,9 @@ public abstract class MenuView implements View.OnTouchListener, View.OnClickList
 			return true;
 		}
 		
-		if(!m_canBeginDragRequestPending && !m_canBeginDrag)
+		if(!m_canBeginDrag)
 		{
-			m_canBeginDragRequestPending = true;
-			m_activity.runOnNativeThread(new Runnable()
-			{
-				public void run()
-				{
-					final boolean canBeginDrag = MenuViewJniMethods.TryBeginDrag(m_nativeCallerPointer);
-					
-					m_activity.runOnUiThread(new Runnable()
-					{
-						public void run()
-						{
-							m_canBeginDrag = canBeginDrag;
-							m_canBeginDragRequestPending = false;
-						}
-					});
-				}
-			});
+			m_canBeginDrag = MenuViewJniMethods.TryBeginDrag(m_nativeCallerPointer);
 		}
 		
 		final int xPx = (int)(event.getRawX());
@@ -425,7 +319,6 @@ public abstract class MenuView implements View.OnTouchListener, View.OnClickList
 			break;
 		case MotionEvent.ACTION_UP:
 			m_canBeginDrag = false;
-			m_canBeginDragRequestPending = false;
 			if(m_dragInProgress)
 			{
 				handleDragFinish(xPx, yPx);

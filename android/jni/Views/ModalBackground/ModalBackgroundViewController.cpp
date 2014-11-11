@@ -3,6 +3,7 @@
 #include "ModalBackgroundViewController.h"
 #include "Types.h"
 #include "ModalityModel.h"
+#include "AndroidAppThreadAssertionMacros.h"
 
 namespace ExampleApp
 {
@@ -10,14 +11,14 @@ namespace ExampleApp
     {
 		ModalBackgroundViewController::ModalBackgroundViewController(
 			AndroidNativeState& nativeState,
-			Modality::IModalityModel& modalityModel,
-			ModalBackgroundView& modalBackgroundView
+			Modality::IModalityModel& modalityModel
 		)
 		: m_nativeState(nativeState)
 		, m_modalityModel(modalityModel)
-		, m_modalBackgroundView(modalBackgroundView)
 		, m_pOpenStateChangedCallback(Eegeo_NEW(Eegeo::Helpers::TCallback0<ModalBackgroundViewController>)(this, &ModalBackgroundViewController::OpenStateChangedCallback))
 		{
+			ASSERT_UI_THREAD
+
 			m_modalityModel.InsertModalityChangedCallback(*m_pOpenStateChangedCallback);
 
 			AndroidSafeNativeThreadAttachment attached(m_nativeState);
@@ -41,6 +42,8 @@ namespace ExampleApp
 
 		ModalBackgroundViewController::~ModalBackgroundViewController()
 		{
+			ASSERT_UI_THREAD
+
 			m_modalityModel.RemoveModalityChangedCallback(*m_pOpenStateChangedCallback);
 
 			Eegeo_DELETE m_pOpenStateChangedCallback;
@@ -55,7 +58,7 @@ namespace ExampleApp
 
 		void ModalBackgroundViewController::OpenStateChangedCallback()
 		{
-			m_modalBackgroundView.SetAlpha(m_modalityModel.GetModality());
+			ASSERT_UI_THREAD
 
 			AndroidSafeNativeThreadAttachment attached(m_nativeState);
 			JNIEnv* env = attached.envForThread;

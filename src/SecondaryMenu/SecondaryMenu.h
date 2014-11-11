@@ -7,5 +7,6 @@ namespace ExampleApp
     namespace SecondaryMenu
     {
         class ISecondaryMenuModule;
+        class PerformedSearchMessageHandler;
     }
 }

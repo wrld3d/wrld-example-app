@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include <vector>
 #include "Types.h"
 #include "Graphics.h"
 #include "IJpegLoader.h"
@@ -15,8 +16,6 @@
 #include "AppInputDelegate.h"
 #include "AppLocationDelegate.h"
 #include "Modules.h"
-#include <vector>
-
 #include "MobileExampleApp.h"
 #include "InitialExperience.h"
 #include "iOSPersistentSettingsModel.h"
@@ -30,6 +29,8 @@
 #include "SearchResultOnMapViewIncludes.h"
 #include "CompassViewIncludes.h"
 #include "AboutPageViewIncludes.h"
+#include "UiToNativeMessageBus.h"
+#include "NativeToUiMessageBus.h"
 
 @class ViewController;
 class AppInputDelegate;
@@ -87,6 +88,10 @@ private:
     ExampleApp::AboutPage::IAboutPageViewModule* m_pAboutPageViewModule;
     
     ExampleApp::MobileExampleApp* m_pApp;
+    bool m_requestedApplicationInitialiseViewState;
+    
+    ExampleApp::ExampleAppMessaging::UiToNativeMessageBus m_uiToNativeMessageBus;
+    ExampleApp::ExampleAppMessaging::NativeToUiMessageBus m_nativeToUiMessageBus;
     
     void CreateApplicationViewModules();
     void DestroyApplicationViewModules();

@@ -4,7 +4,8 @@
 
 #include "IMenuOption.h"
 #include "WeatherMenuStateModel.h"
-#include "IWeatherController.h"
+#include "UiToNativeMessageBus.h"
+#include "WeatherSelectedMessage.h"
 
 namespace ExampleApp
 {
@@ -13,35 +14,23 @@ namespace ExampleApp
         class WeatherMenuStateOption : public Menu::IMenuOption
         {
         public:
-            WeatherMenuStateOption(WeatherMenuStateModel& weatherStateModel,
-                                   IWeatherController& weatherController)
+            WeatherMenuStateOption(
+            	WeatherMenuStateModel& weatherStateModel,
+                ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus)
             : m_weatherStateModel(weatherStateModel)
-            , m_weatherController(weatherController)
+            , m_uiToNativeMessageBus(uiToNativeMessageBus)
             {
             }
-            
+
             void Select()
             {
-                if(m_weatherStateModel.HasTimeState())
-                {
-                    m_weatherController.SetTime(m_weatherStateModel.GetTimeState());
-                }
-                if(m_weatherStateModel.HasWeatherState())
-                {
-                    m_weatherController.SetWeather(m_weatherStateModel.GetWeatherState());
-                }
-                if(m_weatherStateModel.HasSeasonState())
-                {
-                    m_weatherController.SetSeason(m_weatherStateModel.GetSeasonState());
-                }
-                
-                m_weatherController.Refresh();
+            	m_uiToNativeMessageBus.Publish(WeatherSelectedMessage(m_weatherStateModel));
             }
             
         private:
             
             WeatherMenuStateModel m_weatherStateModel;
-            IWeatherController& m_weatherController;
+            ExampleAppMessaging::UiToNativeMessageBus& m_uiToNativeMessageBus;
         };
     }
 }

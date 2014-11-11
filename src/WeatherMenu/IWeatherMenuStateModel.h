@@ -12,6 +12,8 @@ namespace ExampleApp
         class IWeatherMenuStateModel
         {
         public:
+        	virtual ~IWeatherMenuStateModel() { }
+
             virtual const bool HasTimeState() const = 0;
             virtual const bool HasWeatherState() const = 0;
             virtual const bool HasSeasonState() const = 0;

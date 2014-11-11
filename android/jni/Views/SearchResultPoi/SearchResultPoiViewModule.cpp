@@ -3,6 +3,7 @@
 #include "SearchResultPoiViewModule.h"
 #include "SearchResultPoi.h"
 #include "SearchResultPoiViewController.h"
+#include "AndroidAppThreadAssertionMacros.h"
 
 namespace ExampleApp
 {
@@ -13,6 +14,8 @@ namespace ExampleApp
 			SearchResultPoi::ISearchResultPoiViewModel& searchResultPoiViewModel
 		)
         {
+    		ASSERT_UI_THREAD
+
             m_pSearchResultPoiViewController = Eegeo_NEW(SearchResultPoiViewController)(
 				nativeState,
 				searchResultPoiViewModel
@@ -21,11 +24,15 @@ namespace ExampleApp
         
         SearchResultPoiViewModule::~SearchResultPoiViewModule()
         {
+    		ASSERT_UI_THREAD
+
             Eegeo_DELETE(m_pSearchResultPoiViewController);
         }
         
         ISearchResultPoiViewController& SearchResultPoiViewModule::GetSearchResultPoiViewController() const
         {
+    		ASSERT_UI_THREAD
+
             return *m_pSearchResultPoiViewController;
         }
     }

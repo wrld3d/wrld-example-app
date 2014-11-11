@@ -7,6 +7,8 @@
 #include "Rendering.h"
 #include "Compass.h"
 #include "ICompassViewModule.h"
+#include "NativeToUiMessageBus.h"
+#include "UiToNativeMessageBus.h"
 
 namespace ExampleApp
 {
@@ -18,9 +20,10 @@ namespace ExampleApp
             CompassViewController* m_pController;
             
         public:
-            CompassViewModule(ICompassModel& model,
-                              ICompassViewModel& viewModel,
-                              const Eegeo::Rendering::ScreenProperties& screenProperties);
+            CompassViewModule(ICompassViewModel& viewModel,
+                              const Eegeo::Rendering::ScreenProperties& screenProperties,
+                              ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
+                              ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus);
             
             ~CompassViewModule();
             

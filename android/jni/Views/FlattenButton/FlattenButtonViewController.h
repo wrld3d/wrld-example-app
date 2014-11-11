@@ -8,6 +8,9 @@
 #include "FlattenButtonViewIncludes.h"
 #include "ScreenControlViewModelIncludes.h"
 #include "ICallback.h"
+#include "UiToNativeMessageBus.h"
+#include "NativeToUiMessageBus.h"
+#include "FlattenButtonModelStateChangedMessage.h"
 
 namespace ExampleApp
 {
@@ -19,8 +22,9 @@ namespace ExampleApp
 		public:
     		FlattenButtonViewController(
 					AndroidNativeState& nativeState,
-					FlattenButton::IFlattenButtonModel& model,
-					FlattenButton::IFlattenButtonViewModel& menuViewModel
+					FlattenButton::IFlattenButtonViewModel& menuViewModel,
+					ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
+					ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus
 			);
 
     		~FlattenButtonViewController();
@@ -34,15 +38,16 @@ namespace ExampleApp
     		jclass m_uiViewClass;
     		jobject m_uiView;
 
-			FlattenButton::IFlattenButtonModel& m_model;
     		ExampleApp::FlattenButton::IFlattenButtonViewModel& m_viewModel;
+			ExampleAppMessaging::UiToNativeMessageBus& m_uiToNativeMessageBus;
+			ExampleAppMessaging::NativeToUiMessageBus& m_nativeToUiMessageBus;
 
-            Eegeo::Helpers::ICallback0* m_pFlattenModelStateChangedCallback;
+            Eegeo::Helpers::TCallback1<FlattenButtonViewController, const FlattenButtonModelStateChangedMessage&> m_flattenModelStateChangedCallback;
     		Eegeo::Helpers::ICallback2<ScreenControlViewModel::IScreenControlViewModel&, float>* m_pOnScreenStateChangedCallback;
 
     		void OnScreenStateChangedCallback(ScreenControlViewModel::IScreenControlViewModel& viewModel, float& onScreenState);
 
-            void OnFlattenModelStateChangedCallback();
+    		void OnFlattenModelStateChangedCallback(const FlattenButtonModelStateChangedMessage& message);
 		};
     }
 }

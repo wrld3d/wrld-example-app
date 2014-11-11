@@ -4,6 +4,7 @@
 #include "Types.h"
 #include "ISearchResultPoiViewModel.h"
 #include "SearchResultModel.h"
+#include "AndroidAppThreadAssertionMacros.h"
 
 namespace ExampleApp
 {
@@ -18,6 +19,8 @@ namespace ExampleApp
         , m_pSearchResultPoiOpenedCallback(Eegeo_NEW(Eegeo::Helpers::TCallback0<SearchResultPoiViewController>)(this, &SearchResultPoiViewController::SearchResultPoiOpenedCallback))
         , m_pSearchResultPoiClosedCallback(Eegeo_NEW(Eegeo::Helpers::TCallback0<SearchResultPoiViewController>)(this, &SearchResultPoiViewController::SearchResultPoiClosedCallback))
 		{
+    		ASSERT_UI_THREAD
+
             m_searchResultPoiViewModel.InsertOpenedCallback(*m_pSearchResultPoiOpenedCallback);
             m_searchResultPoiViewModel.InsertClosedCallback(*m_pSearchResultPoiClosedCallback);
 
@@ -43,6 +46,8 @@ namespace ExampleApp
 
 		SearchResultPoiViewController::~SearchResultPoiViewController()
 		{
+    		ASSERT_UI_THREAD
+
             m_searchResultPoiViewModel.RemoveOpenedCallback(*m_pSearchResultPoiOpenedCallback);
             m_searchResultPoiViewModel.RemoveClosedCallback(*m_pSearchResultPoiClosedCallback);
 
@@ -59,6 +64,8 @@ namespace ExampleApp
 
 		void SearchResultPoiViewController::HandleCloseButtonPressed()
 		{
+    		ASSERT_UI_THREAD
+
 			if(m_searchResultPoiViewModel.IsOpen())
 			{
 				m_searchResultPoiViewModel.Close();
@@ -67,6 +74,8 @@ namespace ExampleApp
 
 		void SearchResultPoiViewController::SearchResultPoiOpenedCallback()
 		{
+    		ASSERT_UI_THREAD
+
 			if(!m_searchResultPoiViewModel.TryAcquireReactorControl())
 			{
 				if(m_searchResultPoiViewModel.IsOpen())
@@ -99,6 +108,8 @@ namespace ExampleApp
 
 		void SearchResultPoiViewController::SearchResultPoiClosedCallback()
 		{
+    		ASSERT_UI_THREAD
+
 			AndroidSafeNativeThreadAttachment attached(m_nativeState);
 			JNIEnv* env = attached.envForThread;
 

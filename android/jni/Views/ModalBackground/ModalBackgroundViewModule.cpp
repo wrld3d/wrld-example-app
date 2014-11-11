@@ -3,9 +3,7 @@
 #include "ModalBackgroundViewModule.h"
 #include "Modality.h"
 #include "ModalBackgroundViewController.h"
-#include "RenderableFilters.h"
-
-#include "RenderingModule.h"
+#include "AndroidAppThreadAssertionMacros.h"
 
 namespace ExampleApp
 {
@@ -13,37 +11,28 @@ namespace ExampleApp
     {
         ModalBackgroundViewModule::ModalBackgroundViewModule(
 			AndroidNativeState& nativeState,
-			Modality::IModalityModel& modalityModel,
-			Eegeo::Modules::Core::RenderingModule& renderingModule
+			Modality::IModalityModel& modalityModel
 		)
-        : m_renderableFilters(renderingModule.GetRenderableFilters())
         {
-        	m_pModalBackgroundView = Eegeo_NEW(ModalBackgroundView)(
-        			renderingModule.GetShaderIdGenerator(),
-        			renderingModule.GetMaterialIdGenerator(),
-        			renderingModule.GetGlBufferPool(),
-        			renderingModule.GetVertexLayoutPool(),
-        			renderingModule.GetVertexBindingPool());
+    		ASSERT_UI_THREAD
 
             m_pModalBackgroundViewController = Eegeo_NEW(ModalBackgroundViewController)(
 				nativeState,
-				modalityModel,
-				*m_pModalBackgroundView
+				modalityModel
             );
-
-            m_renderableFilters.AddRenderableFilter(*m_pModalBackgroundView);
         }
         
         ModalBackgroundViewModule::~ModalBackgroundViewModule()
         {
-            Eegeo_DELETE(m_pModalBackgroundViewController);
+        	ASSERT_UI_THREAD
 
-        	m_renderableFilters.RemoveRenderableFilter(*m_pModalBackgroundView);
-        	Eegeo_DELETE(m_pModalBackgroundView);
+            Eegeo_DELETE(m_pModalBackgroundViewController);
         }
         
         IModalBackgroundViewController& ModalBackgroundViewModule::GetModalBackgroundViewController() const
         {
+        	ASSERT_UI_THREAD
+
             return *m_pModalBackgroundViewController;
         }
     }

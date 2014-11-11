@@ -3,6 +3,7 @@
 #include "AboutPageViewModule.h"
 #include "AboutPage.h"
 #include "AboutPageViewController.h"
+#include "AndroidAppThreadAssertionMacros.h"
 
 namespace ExampleApp
 {
@@ -14,6 +15,8 @@ namespace ExampleApp
 			AboutPage::IAboutPageViewModel& aboutPageViewModel
 		)
         {
+        	ASSERT_UI_THREAD
+
             m_pAboutPageViewController = Eegeo_NEW(AboutPageViewController)(
 				nativeState,
 				aboutPageModel,
@@ -23,11 +26,15 @@ namespace ExampleApp
         
         AboutPageViewModule::~AboutPageViewModule()
         {
+        	ASSERT_UI_THREAD
+
             Eegeo_DELETE(m_pAboutPageViewController);
         }
         
         IAboutPageViewController& AboutPageViewModule::GetAboutPageViewController() const
         {
+        	ASSERT_UI_THREAD
+
             return *m_pAboutPageViewController;
         }
     }

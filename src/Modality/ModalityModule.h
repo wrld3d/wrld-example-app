@@ -8,6 +8,8 @@
 #include "IModalityModule.h"
 #include "IMenuViewModel.h"
 #include "IOpenableControlViewModel.h"
+#include "UiToNativeMessageBus.h"
+#include "ModalityObserver.h"
 
 namespace ExampleApp
 {
@@ -18,9 +20,11 @@ namespace ExampleApp
         private:
             IModalityController* m_pController;
             IModalityModel* m_pModel;
+            ModalityObserver* m_pModalityObserver;
             
         public:
-            ModalityModule(const std::vector<OpenableControlViewModel::IOpenableControlViewModel*>& viewModels);
+            ModalityModule(ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
+                           const std::vector<OpenableControlViewModel::IOpenableControlViewModel*>& viewModels);
             
             ~ModalityModule();
             

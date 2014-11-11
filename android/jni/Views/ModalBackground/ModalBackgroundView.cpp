@@ -20,6 +20,7 @@
 #include "VectorMath.h"
 #include "RenderContext.h"
 #include "RenderQueue.h"
+#include "AndroidAppThreadAssertionMacros.h"
 
 namespace ExampleApp
 {
@@ -32,6 +33,8 @@ namespace ExampleApp
 				Eegeo::Rendering::VertexLayouts::VertexLayoutPool& vertexLayoutPool,
 				Eegeo::Rendering::VertexLayouts::VertexBindingPool& vertexBindingPool)
 		{
+    		ASSERT_NATIVE_THREAD
+
 			m_pShader = Eegeo::Rendering::Shaders::ColorShader::Create(shaderIdGenerator.GetNextId());
 
 			m_pMaterial = Eegeo_NEW(Eegeo::Rendering::Materials::ColorMaterial)(materialIdGenerator.GetNextId(),
@@ -55,6 +58,8 @@ namespace ExampleApp
 
 		ModalBackgroundView::~ModalBackgroundView()
 		{
+    		ASSERT_NATIVE_THREAD
+
 			Eegeo_DELETE m_pModalBackgroundRenderable;
 			Eegeo_DELETE m_pMaterial;
 			Eegeo_DELETE m_pShader;
@@ -62,6 +67,8 @@ namespace ExampleApp
 
 		void ModalBackgroundView::EnqueueRenderables(const Eegeo::Rendering::RenderContext& renderContext, Eegeo::Rendering::RenderQueue& renderQueue)
 		{
+    		ASSERT_NATIVE_THREAD
+
 			if(m_pMaterial->GetColor().w > 0.0f)
 			{
 				renderQueue.EnqueueRenderable(m_pModalBackgroundRenderable);
@@ -70,6 +77,8 @@ namespace ExampleApp
 
 		void ModalBackgroundView::SetAlpha(float alpha)
 		{
+    		ASSERT_NATIVE_THREAD
+
 			Eegeo::v4 color(0.0f, 0.0f, 0.0f, alpha * m_baseAlpha);
 			m_pMaterial->SetColor(color);
 		}

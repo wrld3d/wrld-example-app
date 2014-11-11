@@ -32,14 +32,8 @@ public class MenuItemSelectedListener implements OnItemClickListener
 		
 		final String selection = (String)parent.getAdapter().getItem(position);
 		final int index = position;
-        																																		
-		m_nativeMessageRunner.runOnNativeThread(new Runnable()
-		{
-			public void run()
-			{
-				MenuViewJniMethods.SelectedItem(m_nativeCallerPointer, selection, index);
-			}
-		});
+
+		MenuViewJniMethods.SelectedItem(m_nativeCallerPointer, selection, index);
 	}
 }
 

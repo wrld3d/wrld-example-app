@@ -4,6 +4,7 @@
 #include "SearchResultOnMapViewModule.h"
 #include "ISearchResultOnMapInFocusViewModel.h"
 #include "SearchResultOnMapViewController.h"
+#include "AndroidAppThreadAssertionMacros.h"
 
 namespace ExampleApp
 {
@@ -13,26 +14,32 @@ namespace ExampleApp
 			AndroidNativeState& nativeState,
 			ISearchResultOnMapInFocusViewModel& searchResultOnMapInFocusViewModel,
 			ScreenControlViewModel::IScreenControlViewModel& searchResultOnMapInFocusScreenControlViewModel,
-			Modality::IModalityModel& modalityModel,
+			SearchResultPoi::ISearchResultPoiViewModel& searchResultPoiViewModel,
 			float pinDiameter
 		)
         {
+    		ASSERT_UI_THREAD
+
             m_pSearchResultOnMapViewController = Eegeo_NEW(SearchResultOnMapViewController)(
 				nativeState,
 				searchResultOnMapInFocusViewModel,
 				searchResultOnMapInFocusScreenControlViewModel,
-				modalityModel,
+				searchResultPoiViewModel,
 				pinDiameter
             );
         }
         
         SearchResultOnMapViewModule::~SearchResultOnMapViewModule()
         {
+    		ASSERT_UI_THREAD
+
             Eegeo_DELETE m_pSearchResultOnMapViewController;
         }
         
         SearchResultOnMapViewController& SearchResultOnMapViewModule::GetSearchResultOnMapViewController() const
         {
+    		ASSERT_UI_THREAD
+
             return *m_pSearchResultOnMapViewController;
         }
     }

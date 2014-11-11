@@ -5,6 +5,8 @@
 #include "ISearchResultPoiViewModel.h"
 #include "IModalityModel.h"
 #include "SearchResultModel.h"
+#include "AndroidAppThreadAssertionMacros.h"
+#include "AndroidSearchResultSerializer.h"
 
 namespace ExampleApp
 {
@@ -14,19 +16,21 @@ namespace ExampleApp
 			AndroidNativeState& nativeState,
 			ExampleApp::SearchResultOnMap::ISearchResultOnMapInFocusViewModel& searchResultOnMapInFocusViewModel,
 			ScreenControlViewModel::IScreenControlViewModel& searchResultPoiScreenControlViewModel,
-			Modality::IModalityModel& modalityModel,
+			SearchResultPoi::ISearchResultPoiViewModel& searchResultPoiViewModel,
 			float pinDiameter
 		)
 		: m_nativeState(nativeState)
         , m_searchResultOnMapInFocusViewModel(searchResultOnMapInFocusViewModel)
         , m_searchResultPoiScreenControlViewModel(searchResultPoiScreenControlViewModel)
-    	, m_modalityModel(modalityModel)
+    	, m_searchResultPoiViewModel(searchResultPoiViewModel)
         , m_pSearchResultOnMapFocusOpenedCallback(Eegeo_NEW(Eegeo::Helpers::TCallback0<SearchResultOnMapViewController>)(this, &SearchResultOnMapViewController::SearchResultOnMapFocusOpenedCallback))
         , m_pSearchResultOnMapFocusClosedCallback(Eegeo_NEW(Eegeo::Helpers::TCallback0<SearchResultOnMapViewController>)(this, &SearchResultOnMapViewController::SearchResultOnMapFocusClosedCallback))
         , m_pSearchResultOnMapFocusUpdatedCallback(Eegeo_NEW(Eegeo::Helpers::TCallback0<SearchResultOnMapViewController>)(this, &SearchResultOnMapViewController::SearchResultOnMapFocusUpdatedCallback))
         , m_pOnScreenStateChangedCallback(Eegeo_NEW((Eegeo::Helpers::TCallback2<SearchResultOnMapViewController, ScreenControlViewModel::IScreenControlViewModel&, float>))(this, &SearchResultOnMapViewController::OnScreenStateChangedCallback))
     	, m_pinOffset(pinDiameter / 2.f)
     	{
+    		ASSERT_UI_THREAD
+
             m_searchResultOnMapInFocusViewModel.InsertOpenedCallback(*m_pSearchResultOnMapFocusOpenedCallback);
             m_searchResultOnMapInFocusViewModel.InsertClosedCallback(*m_pSearchResultOnMapFocusClosedCallback);
             m_searchResultOnMapInFocusViewModel.InsertUpdateCallback(*m_pSearchResultOnMapFocusUpdatedCallback);
@@ -55,6 +59,8 @@ namespace ExampleApp
 
     	SearchResultOnMapViewController::~SearchResultOnMapViewController()
 		{
+    		ASSERT_UI_THREAD
+
             m_searchResultPoiScreenControlViewModel.RemoveOnScreenStateChangedCallback(*m_pOnScreenStateChangedCallback);
 
             m_searchResultOnMapInFocusViewModel.RemoveUpdateCallback(*m_pSearchResultOnMapFocusUpdatedCallback);
@@ -76,17 +82,22 @@ namespace ExampleApp
 
 		void SearchResultOnMapViewController::HandleSearchResultOnMapClicked()
 		{
-			if(!m_modalityModel.IsModalEnabled())
+			ASSERT_UI_THREAD
+
+			//if(m_modalityObserver.GetModality() == 0.f)
 			{
 				if(m_searchResultOnMapInFocusViewModel.IsOpen())
 				{
-					m_searchResultOnMapInFocusViewModel.SelectFocussedResult();
+					Search::SearchResultModel model = m_searchResultOnMapInFocusViewModel.GetSearchResultModel();
+					m_searchResultPoiViewModel.Open(model);
 				}
 			}
 		}
 
         void SearchResultOnMapViewController::SearchResultOnMapFocusOpenedCallback()
         {
+        	ASSERT_UI_THREAD
+
 		    const Eegeo::v2& location = m_searchResultOnMapInFocusViewModel.ScreenLocation();
 		    float offsetY = location.y - m_pinOffset;
 
@@ -106,6 +117,8 @@ namespace ExampleApp
 
         void SearchResultOnMapViewController::SearchResultOnMapFocusClosedCallback()
         {
+        	ASSERT_UI_THREAD
+
 			AndroidSafeNativeThreadAttachment attached(m_nativeState);
 			JNIEnv* env = attached.envForThread;
 
@@ -115,6 +128,8 @@ namespace ExampleApp
 
         void SearchResultOnMapViewController::SearchResultOnMapFocusUpdatedCallback()
         {
+        	ASSERT_UI_THREAD
+
 		    const Eegeo::v2& location = m_searchResultOnMapInFocusViewModel.ScreenLocation();
 		    float offsetY = location.y - m_pinOffset;
 
@@ -127,6 +142,8 @@ namespace ExampleApp
 
         void SearchResultOnMapViewController::OnScreenStateChangedCallback(ScreenControlViewModel::IScreenControlViewModel &viewModel, float& onScreenState)
         {
+    		ASSERT_UI_THREAD
+
         	if(m_searchResultOnMapInFocusViewModel.IsOpen())
         	{
 				AndroidSafeNativeThreadAttachment attached(m_nativeState);

@@ -15,6 +15,8 @@ namespace ExampleApp
             virtual ~ISearchResultMenuViewModel() { }
             
             virtual bool CanInteract() const = 0;
+
+            virtual void SetHasSearchQuery(bool hasSearchQuery) = 0;
         };
     }
 }

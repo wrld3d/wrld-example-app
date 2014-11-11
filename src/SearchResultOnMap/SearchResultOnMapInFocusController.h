@@ -10,6 +10,7 @@
 #include "VectorMathDecl.h"
 #include "Location.h"
 #include "Camera.h"
+#include "NativeToUiMessageBus.h"
 
 namespace ExampleApp
 {
@@ -19,16 +20,17 @@ namespace ExampleApp
         {
         private:
             SearchResultOnMapModel& m_searchResultOnMapModel;
-            ISearchResultOnMapInFocusViewModel& m_searchResultOnMapInFocusViewModel;
+            ExampleAppMessaging::NativeToUiMessageBus& m_nativeToUiMessageBus;
             WorldPins::IWorldPinsService& m_worldPinsService;
-            Search::SearchResultModel* m_pLastFocussedModel;
             Eegeo::Camera::RenderCamera& m_renderCamera;
+            Search::SearchResultModel* m_pLastFocussedModel;
             
         public:
-            SearchResultOnMapInFocusController(SearchResultOnMapModel& searchResultOnMapModel,
-                                               ISearchResultOnMapInFocusViewModel& searchResultOnMapInFocusViewModel,
-                                               WorldPins::IWorldPinsService& worldPinsService,
-                                               Eegeo::Camera::RenderCamera& renderCamera);
+            SearchResultOnMapInFocusController(
+				SearchResultOnMapModel& searchResultOnMapModel,
+				ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus,
+				WorldPins::IWorldPinsService& worldPinsService,
+				Eegeo::Camera::RenderCamera& renderCamera);
             
             ~SearchResultOnMapInFocusController();
             

@@ -17,7 +17,7 @@ namespace ExampleApp
 
             virtual void RemoveUpdateableObject(IUpdateableViewController& updateProtocolImplementation) = 0;
 
-            virtual void UpdateObjects(float deltaSeconds) = 0;
+            virtual void UpdateObjectsUiThread(float deltaSeconds) = 0;
         };
     }
 }

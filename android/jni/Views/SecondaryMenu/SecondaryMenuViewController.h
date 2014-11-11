@@ -15,8 +15,10 @@
 #include "ScreenControlViewModelIncludes.h"
 #include "OpenableControlViewModelIncludes.h"
 #include "Search.h"
-
-
+#include "UiToNativeMessageBus.h"
+#include "NativeToUiMessageBus.h"
+#include "SearchQueryPerformedMessage.h"
+#include "SearchQueryResponseReceivedMessage.h"
 
 namespace ExampleApp
 {
@@ -24,12 +26,12 @@ namespace ExampleApp
     {
 		class SecondaryMenuViewController : public Menu::MenuViewController
 		{
-            Search::ISearchService& m_searchService;
-			Search::ISearchQueryPerformer& m_searchQueryPerformer;
+			Eegeo::Helpers::TCallback1<SecondaryMenuViewController, const Search::SearchQueryPerformedMessage&> m_performedQueryCallback;
+			Eegeo::Helpers::TCallback1<SecondaryMenuViewController, const Search::SearchQueryResponseReceivedMessage&> m_receivedQueryResponseCallback;
+			Eegeo::Helpers::TCallback2<SecondaryMenuViewController, OpenableControlViewModel::IOpenableControlViewModel&, float> m_menuOpenStateChangedCallback;
 
-			Eegeo::Helpers::ICallback1<const Search::SearchQuery&>* m_pPerformedQueryCallback;
-			Eegeo::Helpers::ICallback2<const Search::SearchQuery&, const std::vector<Search::SearchResultModel>&>* m_pReceivedQueryResponseCallback;
-			Eegeo::Helpers::ICallback2<OpenableControlViewModel::IOpenableControlViewModel&, float>* m_pMenuOpenStateChangedCallback;
+			ExampleAppMessaging::UiToNativeMessageBus& m_uiToNativeMessageBus;
+			ExampleAppMessaging::NativeToUiMessageBus& m_nativeToUiMessageBus;
 
 		public:
 		    SecondaryMenuViewController(
@@ -37,8 +39,8 @@ namespace ExampleApp
 					AndroidNativeState& nativeState,
 					Menu::IMenuModel& menuModel,
 					Menu::IMenuViewModel& menuViewModel,
-					Search::ISearchService& searchService,
-					Search::ISearchQueryPerformer& searchQueryPerformer
+					ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
+					ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus
 			);
 
 			~SecondaryMenuViewController();
@@ -47,9 +49,9 @@ namespace ExampleApp
 
 		private:
 
-            void PerformedQueryCallback(const Search::SearchQuery& query);
+            void PerformedQueryCallback(const Search::SearchQueryPerformedMessage& message);
 
-            void ReceivedQueryResponseCallback(const Search::SearchQuery& query, const std::vector<Search::SearchResultModel>& results);
+            void ReceivedQueryResponseCallback(const Search::SearchQueryResponseReceivedMessage& message);
 
             void HandleOpenStateChanged(OpenableControlViewModel::IOpenableControlViewModel& viewModel, float& openState);
 

@@ -53,6 +53,8 @@
 #include "WorldAreaLoader.h"
 #include "InitialExperience.h"
 #include "IInitialExperienceModule.h"
+#include "UiToNativeMessageBus.h"
+#include "NativeToUiMessageBus.h"
 
 namespace ExampleApp
 {
@@ -66,7 +68,7 @@ namespace ExampleApp
         Eegeo::Modules::IPlatformAbstractionModule& m_platformAbstractions;
         Eegeo::Rendering::LoadingScreen* m_pLoadingScreen;
         Eegeo::Blitter* m_pBlitter;
-        bool m_initialisedApplicationState;
+        bool m_initialisedApplicationViewState;
         float m_pinDiameter;
         
         CameraTransitions::ICameraTransitionController* m_pCameraTransitionController;
@@ -93,12 +95,12 @@ namespace ExampleApp
         ExampleApp::WorldAreaLoader::IWorldAreaLoaderModule* m_pWorldAreaLoaderModule;
         ExampleApp::AboutPage::IAboutPageModule* m_pAboutPageModule;
         ExampleApp::InitialExperience::IInitialExperienceModule& m_initialExperienceModule;
+        ExampleAppMessaging::UiToNativeMessageBus& m_uiToNativeMessageBus;
+        ExampleAppMessaging::NativeToUiMessageBus& m_nativeToUiMessageBus;
         
         void CreateApplicationModelModules();
         
         void DestroyApplicationModelModules();
-        
-        void InitialiseApplicationState();
         
         void UpdateLoadingScreen(float dt);
         
@@ -115,7 +117,9 @@ namespace ExampleApp
                          Eegeo::UI::NativeUIFactories& nativeUIFactories,
                          Eegeo::Config::PlatformConfig platformConfig,
                          Eegeo::Helpers::Jpeg::IJpegLoader& jpegLoader,
-                         ExampleApp::InitialExperience::IInitialExperienceModule& initialExperienceModule);
+                         ExampleApp::InitialExperience::IInitialExperienceModule& initialExperienceModule,
+         				 ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
+         		         ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus);
         
         
         ~MobileExampleApp();
@@ -126,6 +130,8 @@ namespace ExampleApp
         }
         
         float PinDiameter() const { return m_pinDiameter; }
+
+        CameraTransitions::ICameraTransitionController& CameraTransitionController() const { return *m_pCameraTransitionController; }
         
         const ExampleApp::PrimaryMenu::IPrimaryMenuModule& PrimaryMenuModule() const { return *m_pPrimaryMenuModule; }
         
@@ -171,6 +177,12 @@ namespace ExampleApp
         
         bool IsRunning() const;
         
+        bool IsLoadingScreenComplete() const { return m_pLoadingScreen == NULL; }
+
+        bool IsApplicationViewStateInitialised() const { return m_initialisedApplicationViewState; }
+
+        void InitialiseApplicationViewState();
+
         Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& GetCameraController()
         {
             return *m_pGlobeCameraController;

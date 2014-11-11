@@ -39,7 +39,7 @@ namespace ExampleApp
             
             void SelectFocussedResult();
             
-            void Open(Search::SearchResultModel& searchResultModel, const Eegeo::v2& screenPos);
+            void Open(const Search::SearchResultModel& searchResultModel, const Eegeo::v2& screenPos);
             
             void Close();
             

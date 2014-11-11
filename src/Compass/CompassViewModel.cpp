@@ -6,16 +6,14 @@ namespace ExampleApp
 {
     namespace Compass
     {
-        CompassViewModel::CompassViewModel(ICompassModel& model,
-                                           Eegeo::Helpers::TIdentity identity,
+        CompassViewModel::CompassViewModel(Eegeo::Helpers::TIdentity identity,
                                            bool initiallyOnScreen)
-        : m_model(model)
-        , m_screenControl(initiallyOnScreen, identity)
+        : m_screenControl(initiallyOnScreen, identity)
         {
             
         }
         
-        void CompassViewModel::UpdateHeadingAngleRadians(float headingRadians)
+        /*void CompassViewModel::UpdateHeadingAngleRadians(float headingRadians)
         {
             m_updateCallbacks.ExecuteCallbacks(headingRadians);
         }
@@ -28,7 +26,7 @@ namespace ExampleApp
         void CompassViewModel::RemoveUpdateCallback(Eegeo::Helpers::ICallback1<float>& updateCallback)
         {
             m_updateCallbacks.RemoveCallback(updateCallback);
-        }
+        }*/
         
         ScreenControlViewModel::IScreenControlViewModel& CompassViewModel::GetScreenControlViewModel()
         {

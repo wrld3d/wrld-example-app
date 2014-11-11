@@ -11,37 +11,32 @@ namespace ExampleApp
     {
         SearchViewControllerInterop::SearchViewControllerInterop(SearchViewController* pInstance,
                                                                  ExampleApp::Menu::IMenuViewModel& menuViewModel,
-                                                                 ExampleApp::Search::ISearchService& searchService)
+                                                                 ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus)
         : m_pInstance(pInstance)
-        , m_searchService(searchService)
         , m_menuViewModel(menuViewModel)
-        , m_pPerformedQueryCallback(Eegeo_NEW((Eegeo::Helpers::TCallback1<SearchViewControllerInterop, const Search::SearchQuery&>))(this, &SearchViewControllerInterop::PerformedQueryCallback))
-        , m_pReceivedQueryResponseCallback(Eegeo_NEW((Eegeo::Helpers::TCallback2<SearchViewControllerInterop, const Search::SearchQuery&, const std::vector<Search::SearchResultModel>&>))(this, &SearchViewControllerInterop::ReceivedQueryResponseCallback))
-        , m_pMenuOpenStateChangedCallback(Eegeo_NEW((Eegeo::Helpers::TCallback2<SearchViewControllerInterop, OpenableControlViewModel::IOpenableControlViewModel&, float>))(this, &SearchViewControllerInterop::HandleOpenStateChanged))
+        , m_nativeToUiMessageBus(nativeToUiMessageBus)
+        , m_performedQueryCallback(this, &SearchViewControllerInterop::PerformedQueryCallback)
+        , m_receivedQueryResponseCallback(this, &SearchViewControllerInterop::ReceivedQueryResponseCallback)
+        , m_menuOpenStateChangedCallback(this, &SearchViewControllerInterop::HandleOpenStateChanged)
         {
-            m_menuViewModel.InsertOpenStateChangedCallback(*m_pMenuOpenStateChangedCallback);
-            m_searchService.InsertOnPerformedQueryCallback(*m_pPerformedQueryCallback);
-            m_searchService.InsertOnReceivedQueryResultsCallback(*m_pReceivedQueryResponseCallback);
+            m_menuViewModel.InsertOpenStateChangedCallback(m_menuOpenStateChangedCallback);
+            m_nativeToUiMessageBus.Subscribe(m_performedQueryCallback);
+            m_nativeToUiMessageBus.Subscribe(m_receivedQueryResponseCallback);
         }
         
         SearchViewControllerInterop::~SearchViewControllerInterop()
         {
-            m_searchService.RemoveOnPerformedQueryCallback(*m_pPerformedQueryCallback);
-            m_searchService.RemoveOnReceivedQueryResultsCallback(*m_pReceivedQueryResponseCallback);
-            m_menuViewModel.RemoveOpenStateChangedCallback(*m_pMenuOpenStateChangedCallback);
-            
-            Eegeo_DELETE m_pPerformedQueryCallback;
-            Eegeo_DELETE m_pReceivedQueryResponseCallback;
-            Eegeo_DELETE m_pMenuOpenStateChangedCallback;
+            m_nativeToUiMessageBus.Unsubscribe(m_performedQueryCallback);
+            m_nativeToUiMessageBus.Unsubscribe(m_receivedQueryResponseCallback);
+            m_menuViewModel.RemoveOpenStateChangedCallback(m_menuOpenStateChangedCallback);
         }
         
-        void SearchViewControllerInterop::PerformedQueryCallback(const Search::SearchQuery& query)
+        void SearchViewControllerInterop::PerformedQueryCallback(const Search::SearchQueryPerformedMessage& message)
         {
             [m_pInstance disableEdit];
         }
         
-        void SearchViewControllerInterop::ReceivedQueryResponseCallback(const Search::SearchQuery& query,
-                                                                        const std::vector<Search::SearchResultModel>& results)
+        void SearchViewControllerInterop::ReceivedQueryResponseCallback(const Search::SearchQueryResponseReceivedMessage& message)
         {
             [m_pInstance enableEdit];
         }

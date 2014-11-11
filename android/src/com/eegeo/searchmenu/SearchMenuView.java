@@ -40,9 +40,9 @@ public class SearchMenuView extends MenuView
 	public SearchMenuView(MainActivity activity, long nativeCallerPointer)
 	{
 		super(activity, nativeCallerPointer);
+		createView();
 	}
 
-	@Override
 	protected void createView() 
 	{	
 		final RelativeLayout uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
@@ -89,148 +89,90 @@ public class SearchMenuView extends MenuView
 		m_headerCategoryImage = (ImageView)m_view.findViewById(R.id.search_menu_header_category_icon);
 		m_headerText = (TextView)m_view.findViewById(R.id.search_menu_header_text);
 		
-		m_menuItemSelectedListener = new SearchMenuItemSelectedListener(m_activity, m_nativeCallerPointer);
+		m_menuItemSelectedListener = new SearchMenuItemSelectedListener(m_nativeCallerPointer);
 		m_list.setOnItemClickListener(m_menuItemSelectedListener);
 	}
 
 	public void updateHeader(final String searchText, final boolean pendingQueryResult, final int numResults)
 	{
-		m_activity.runOnUiThread(new Runnable()
+		if(pendingQueryResult)
 		{
-			public void run()
-			{
-				if(pendingQueryResult)
-				{
-					m_progressSpinner.setVisibility(View.VISIBLE);
-					m_numResultsText.setVisibility(View.GONE);
-				}
-				else
-				{
-					m_numResultsText.setText(String.valueOf(numResults));
-					m_numResultsText.setVisibility(View.VISIBLE);
-					m_progressSpinner.setVisibility(View.GONE);
-				}
-				
-				m_headerCategoryImage.setImageResource(CategoryResources.getSmallIconForCategory(m_activity, searchText));
-				m_headerText.setText(searchText);
-			}
-		});
+			m_progressSpinner.setVisibility(View.VISIBLE);
+			m_numResultsText.setVisibility(View.GONE);
+		}
+		else
+		{
+			m_numResultsText.setText(String.valueOf(numResults));
+			m_numResultsText.setVisibility(View.VISIBLE);
+			m_progressSpinner.setVisibility(View.GONE);
+		}
+		
+		m_headerCategoryImage.setImageResource(CategoryResources.getSmallIconForCategory(m_activity, searchText));
+		m_headerText.setText(searchText);
 	}
 	
 	@Override
 	public void animateToClosedOnScreen()
 	{
-		m_activity.runOnUiThread(new Runnable()
-		{
-			public void run()
-			{
-				int viewYPx = viewYPx();
-				final boolean shouldRunAnimationBasedOnCurrentViewLocation = (!m_dragInProgress && viewYPx != m_closedYPx);
-				
-				m_activity.runOnNativeThread(new Runnable()
-				{
-					public void run()
-					{ 
-					    if(shouldRunAnimationBasedOnCurrentViewLocation || (m_animating && m_animationEndPos.y != m_closedYPx)) 
-					    {
-					    	int newYPx = m_closedYPx;
-					    	log("animateToClosedOnScreen", "y: " + newYPx);
-							animateViewToY(newYPx);
-					    }
-					}
-				});
-			}
-		});	
+		final boolean shouldRunAnimationBasedOnCurrentViewLocation = (!m_dragInProgress && viewYPx() != m_closedYPx);
+		
+	    if(shouldRunAnimationBasedOnCurrentViewLocation || (m_animating && m_animationEndPos.y != m_closedYPx)) 
+	    {
+	    	int newYPx = m_closedYPx;
+	    	log("animateToClosedOnScreen", "y: " + newYPx);
+			animateViewToY(newYPx);
+	    }
 	}
 
 	@Override
 	public void animateToOpenOnScreen()
 	{
-		m_activity.runOnUiThread(new Runnable()
-		{
-			public void run()
-			{
-				int viewYPx = viewYPx();
-				final boolean shouldRunAnimationBasedOnCurrentViewLocation = (!m_dragInProgress && viewYPx != m_openYPx);
-				
-				m_activity.runOnNativeThread(new Runnable()
-				{
-					public void run()
-					{ 
-					    if(shouldRunAnimationBasedOnCurrentViewLocation || (m_animating && m_animationEndPos.y != m_openYPx)) 
-					    {
-					    	int newYPx = m_openYPx;
-					    	log("animateToOpenOnScreen", "y: " + newYPx);
-							animateViewToY(newYPx);
-					    }
-					}
-				});
-			}
-		});	
+		final boolean shouldRunAnimationBasedOnCurrentViewLocation = (!m_dragInProgress && viewYPx() != m_openYPx);
+
+	    if(shouldRunAnimationBasedOnCurrentViewLocation || (m_animating && m_animationEndPos.y != m_openYPx)) 
+	    {
+	    	int newYPx = m_openYPx;
+	    	log("animateToOpenOnScreen", "y: " + newYPx);
+			animateViewToY(newYPx);
+	    }	
 	}
 
 	@Override
 	public void animateOffScreen()
 	{
-		m_activity.runOnUiThread(new Runnable()
-		{
-			public void run()
-			{
-				int viewYPx = viewYPx();
-				final boolean shouldRunAnimationBasedOnCurrentViewLocation = (!m_dragInProgress && viewYPx != m_offscreenYPx);
+		final boolean shouldRunAnimationBasedOnCurrentViewLocation = (!m_dragInProgress && viewYPx() != m_offscreenYPx);
 				
-				m_activity.runOnNativeThread(new Runnable()
-				{
-					public void run()
-					{ 
-					    if(shouldRunAnimationBasedOnCurrentViewLocation || (m_animating && m_animationEndPos.y != m_offscreenYPx)) 
-					    {
-					    	int newYPx = m_offscreenYPx;
-					    	log("animateOffScreen", "y: " + newYPx);
-							animateViewToY(newYPx);
-					    }
-					}
-				});
-			}
-		});	
+	    if(shouldRunAnimationBasedOnCurrentViewLocation || (m_animating && m_animationEndPos.y != m_offscreenYPx)) 
+	    {
+	    	int newYPx = m_offscreenYPx;
+	    	log("animateOffScreen", "y: " + newYPx);
+			animateViewToY(newYPx);
+	    }	
 	}
 	
 	@Override
 	public void animateToIntermediateOnScreenState(final float onScreenState)
 	{
-		m_activity.runOnUiThread(new Runnable()
-		{
-			public void run()
-			{   
-				int viewYPx = viewYPx();
-			    int newYPx = m_offscreenYPx - (int)((Math.abs(m_closedYPx - m_offscreenYPx) * onScreenState) + 0.5f);
-			 
-			    if(!m_dragInProgress && viewYPx != newYPx) 
-			    {
-			    	log("animateToIntermediateOnScreenState", "y: " + newYPx + ", t: " + onScreenState);
-				    m_view.setY(newYPx);
-			    }
-			}
-		});
+	    int newYPx = m_offscreenYPx - (int)((Math.abs(m_closedYPx - m_offscreenYPx) * onScreenState) + 0.5f);
+	 
+	    if(!m_dragInProgress && viewYPx() != newYPx) 
+	    {
+	    	log("animateToIntermediateOnScreenState", "y: " + newYPx + ", t: " + onScreenState);
+		    m_view.setY(newYPx);
+	    }
 	}
 
 	@Override
 	public void animateToIntermediateOpenState(final float openState)
 	{
-		m_activity.runOnUiThread(new Runnable()
-		{
-			public void run()
-			{   
-				int viewYPx = viewYPx();
-			    int newYPx = m_closedYPx + (int)(((m_openYPx - m_closedYPx) * openState) + 0.5f);
-			 
-			    if(!m_dragInProgress && viewYPx != newYPx) 
-			    {
-			    	log("animateToIntermediateOpenState", "y: " + newYPx);
-				    m_view.setY(newYPx);
-			    }
-			}
-		});
+		int viewYPx = viewYPx();
+	    int newYPx = m_closedYPx + (int)(((m_openYPx - m_closedYPx) * openState) + 0.5f);
+	 
+	    if(!m_dragInProgress && viewYPx != newYPx) 
+	    {
+	    	log("animateToIntermediateOpenState", "y: " + newYPx);
+		    m_view.setY(newYPx);
+	    }
 	}
 
 	@Override
@@ -253,14 +195,9 @@ public class SearchMenuView extends MenuView
 	    final int upYPx = (open ? m_openYPx : m_closedYPx);
 
 		log("ACTION_UP", "y: " + upYPx);
-	    m_activity.runOnNativeThread(new Runnable()
-		{
-			public void run()
-			{
-				animateViewToY(upYPx);
-				MenuViewJniMethods.ViewDragCompleted(m_nativeCallerPointer);
-			}
-		});
+
+		animateViewToY(upYPx);
+		MenuViewJniMethods.ViewDragCompleted(m_nativeCallerPointer);
 	}
 	
 	@Override
@@ -280,15 +217,9 @@ public class SearchMenuView extends MenuView
 	    
 	    float normalisedDragState = Math.abs(newYPx - m_closedYPx) / (Math.abs(m_openYPx - m_closedYPx));
 	    final float clampedNormalisedDragState = clamp(normalisedDragState, 0.f, 1.f);
-	    
-	    m_activity.runOnNativeThread(new Runnable()
-		{
-			public void run()
-			{
-				MenuViewJniMethods.ViewDragInProgress(m_nativeCallerPointer, clampedNormalisedDragState);
-			}
-		});
-	    
+	 
+		MenuViewJniMethods.ViewDragInProgress(m_nativeCallerPointer, clampedNormalisedDragState);
+		
 	    m_view.setY(newYPx);
 	    log("ACTION_MOVE", "y: " + newYPx+ ", clamp: " + clampedNormalisedDragState);
 	}

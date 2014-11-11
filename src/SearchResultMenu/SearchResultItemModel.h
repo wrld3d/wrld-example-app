@@ -8,6 +8,8 @@
 #include "Search.h"
 #include "CameraTransitions.h"
 #include "IOpenableControlViewModel.h"
+#include "VectorMath.h"
+#include "UiToNativeMessageBus.h"
 
 namespace ExampleApp
 {
@@ -16,16 +18,15 @@ namespace ExampleApp
         class SearchResultItemModel: public Menu::IMenuOption, private Eegeo::NonCopyable
         {
             std::string m_name;
-            Search::SearchResultModel& m_searchResultModel;
-            CameraTransitions::ICameraTransitionController& m_cameraTransitionController;
+            Eegeo::dv3 m_searchResultModelLocationEcef;
             OpenableControlViewModel::IOpenableControlViewModel& m_searchMenuViewModel;
-            
+            ExampleAppMessaging::UiToNativeMessageBus& m_uiToNativeMessageBus;
             
         public:
             SearchResultItemModel(const std::string& name,
-                                  Search::SearchResultModel& searchResultModel,
-                                  CameraTransitions::ICameraTransitionController& cameraTransitionController,
-                                  OpenableControlViewModel::IOpenableControlViewModel& searchMenuViewModel);
+                                  const Eegeo::dv3& searchResultModelLocationEcef,
+                                  OpenableControlViewModel::IOpenableControlViewModel& searchMenuViewModel,
+                                  ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus);
             
             ~SearchResultItemModel();
             

@@ -9,6 +9,8 @@
 #include "IPlaceJumpsModel.h"
 #include "Logger.h"
 #include "IMenuViewModel.h"
+#include "UiToNativeMessageBus.h"
+#include "PlaceJumpSelectedMessage.h"
 
 namespace ExampleApp
 {
@@ -18,26 +20,24 @@ namespace ExampleApp
         {
         public:
             PlaceJumpMenuOption(PlaceJumpModel jumpModel,
-                                IPlaceJumpController& jumpController,
-                                ExampleApp::Menu::IMenuViewModel& menuViewModel)
+                                ExampleApp::Menu::IMenuViewModel& menuViewModel,
+                                ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus)
             : m_jumpModel(jumpModel)
-            , m_jumpController(jumpController)
             , m_menuViewModel(menuViewModel)
+            , m_uiToNativeMessageBus(uiToNativeMessageBus)
             {
             }
-            
+
             void Select()
             {
-                EXAMPLE_LOG("Jumping to %f,%f (%s)\n", m_jumpModel.GetLocation().GetLatitudeInDegrees(), m_jumpModel.GetLocation().GetLongitudeInDegrees(), m_jumpModel.GetName().c_str());
-                
-                m_jumpController.JumpTo(m_jumpModel);
                 m_menuViewModel.Close();
+                m_uiToNativeMessageBus.Publish(PlaceJumpSelectedMessage(m_jumpModel));
             }
             
         private:
             
             PlaceJumpModel m_jumpModel;
-            IPlaceJumpController& m_jumpController;
+            ExampleAppMessaging::UiToNativeMessageBus& m_uiToNativeMessageBus;
             ExampleApp::Menu::IMenuViewModel& m_menuViewModel;
         };
 

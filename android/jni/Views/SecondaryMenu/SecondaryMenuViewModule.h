@@ -10,6 +10,8 @@
 #include "MenuViewIncludes.h"
 #include "IMenuViewModule.h"
 #include "Search.h"
+#include "UiToNativeMessageBus.h"
+#include "NativeToUiMessageBus.h"
 
 namespace ExampleApp
 {
@@ -26,8 +28,8 @@ namespace ExampleApp
             	AndroidNativeState& nativeState,
         		Menu::IMenuModel& menuModelModel,
         		Menu::IMenuViewModel& menuViewModel,
-    			Search::ISearchService& searchService,
-    			Search::ISearchQueryPerformer& searchQueryPerformer
+    			ExampleAppMessaging::UiToNativeMessageBus& messageBus,
+    			ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus
             );
             
             ~SecondaryMenuViewModule();

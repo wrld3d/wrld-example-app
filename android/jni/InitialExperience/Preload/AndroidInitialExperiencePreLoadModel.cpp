@@ -1,6 +1,7 @@
 // Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
 #include "AndroidInitialExperiencePreLoadModel.h"
+#include "AndroidAppThreadAssertionMacros.h"
 
 namespace ExampleApp
 {
@@ -18,15 +19,20 @@ namespace ExampleApp
 			, m_jniApiClass(NULL)
 			, m_jniApiInstance(NULL)
 			{
+				ASSERT_NATIVE_THREAD
 			}
 
 			AndroidInitialExperiencePreLoadModel::~AndroidInitialExperiencePreLoadModel()
 			{
+				ASSERT_NATIVE_THREAD
+
 				DestroyOptions();
 			}
 
 			void AndroidInitialExperiencePreLoadModel::HandleDismiss(bool shouldPreload)
 			{
+				ASSERT_NATIVE_THREAD
+
 				DestroyOptions();
 
 				if(shouldPreload)
@@ -41,6 +47,8 @@ namespace ExampleApp
 
 			void AndroidInitialExperiencePreLoadModel::DestroyOptions()
 			{
+				ASSERT_NATIVE_THREAD
+
 				if(m_jniApiInstance != NULL)
 				{
 					AndroidSafeNativeThreadAttachment attached(m_nativeState);
@@ -56,6 +64,8 @@ namespace ExampleApp
 
 			void AndroidInitialExperiencePreLoadModel::ShowOptions()
 			{
+				ASSERT_NATIVE_THREAD
+
 	    		AndroidSafeNativeThreadAttachment attached(m_nativeState);
 				JNIEnv* env = attached.envForThread;
 
@@ -84,6 +94,8 @@ JNIEXPORT void JNICALL Java_com_eegeo_initialexperience_preload_PreLoadInitialEx
 		jlong nativeObjectPtr,
 		jboolean shouldPreload)
 {
+	ASSERT_NATIVE_THREAD
+
 	ExampleApp::InitialExperience::PreLoad::AndroidInitialExperiencePreLoadModel* pApi = reinterpret_cast<ExampleApp::InitialExperience::PreLoad::AndroidInitialExperiencePreLoadModel*>(nativeObjectPtr);
 	pApi->HandleDismiss(shouldPreload);
 }

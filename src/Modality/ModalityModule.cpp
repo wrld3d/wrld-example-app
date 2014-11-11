@@ -9,16 +9,20 @@ namespace ExampleApp
 {
     namespace Modality
     {
-        ModalityModule::ModalityModule(const std::vector<OpenableControlViewModel::IOpenableControlViewModel*>& viewModels)
+        ModalityModule::ModalityModule(ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
+                                       const std::vector<OpenableControlViewModel::IOpenableControlViewModel*>& viewModels)
         {
             m_pModel = Eegeo_NEW(ModalityModel)();
             
             m_pController = Eegeo_NEW(ModalityController)(*m_pModel,
                                                           viewModels);
+            
+            m_pModalityObserver = Eegeo_NEW(ModalityObserver)(*m_pModel, uiToNativeMessageBus);
         }
         
         ModalityModule::~ModalityModule()
         {
+            Eegeo_DELETE m_pModalityObserver;
             Eegeo_DELETE m_pModel;
         }
         

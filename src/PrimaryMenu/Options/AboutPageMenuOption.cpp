@@ -22,7 +22,7 @@ namespace ExampleApp
             {
                 
             }
-            
+
             void AboutPageMenuOption::Select()
             {
                 m_aboutOptionContainerMenu.Close();

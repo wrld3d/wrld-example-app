@@ -14,11 +14,11 @@ namespace ExampleApp
         public:
             virtual ~ICompassViewModel() { }
             
-            virtual void UpdateHeadingAngleRadians(float headingRadians) = 0;
+            //virtual void UpdateHeadingAngleRadians(float headingRadians) = 0;
             
-            virtual void InsertUpdateCallback(Eegeo::Helpers::ICallback1<float>& updateCallback) = 0;
+            //virtual void InsertUpdateCallback(Eegeo::Helpers::ICallback1<float>& updateCallback) = 0;
             
-            virtual void RemoveUpdateCallback(Eegeo::Helpers::ICallback1<float>& updateCallback) = 0;
+            //virtual void RemoveUpdateCallback(Eegeo::Helpers::ICallback1<float>& updateCallback) = 0;
         };
     }
 }

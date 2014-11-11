@@ -10,6 +10,8 @@
 #include "IFileIO.h"
 #include "GlobeCamera.h"
 #include "Compass.h"
+#include "UiToNativeMessageBus.h"
+#include "PlaceJumpSelectedMessageHandler.h"
 
 namespace ExampleApp
 {
@@ -23,7 +25,8 @@ namespace ExampleApp
             PlaceJumpsModule(Eegeo::Helpers::IFileIO& fileIO,
                              Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& camera,
                              Compass::ICompassModel& compassModel,
-                             ExampleApp::Menu::IMenuViewModel& menuViewModel);
+                             ExampleApp::Menu::IMenuViewModel& menuViewModel,
+                             ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus);
             
             ~PlaceJumpsModule();
             
@@ -35,6 +38,7 @@ namespace ExampleApp
             Menu::IMenuModel* m_pMenuModel;
             Menu::IMenuOptionsModel* m_pMenuOptionsModel;
             IPlaceJumpController* m_pJumpController;
+            PlaceJumpSelectedMessageHandler* m_pPlaceJumpSelectedMessageHandler;
         };
     }
 }

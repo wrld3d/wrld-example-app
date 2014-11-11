@@ -8,6 +8,10 @@
 #include "CompassViewIncludes.h"
 #include "ScreenControlViewModelIncludes.h"
 #include "ICallback.h"
+#include "CompassModeChangedMessage.h"
+#include "CompassHeadingUpdateMessage.h"
+#include "NativeToUiMessageBus.h"
+#include "UiToNativeMessageBus.h"
 
 namespace ExampleApp
 {
@@ -20,18 +24,21 @@ namespace ExampleApp
     		jclass m_uiViewClass;
     		jobject m_uiView;
 
-    		Compass::ICompassModel& m_model;
     		Compass::ICompassViewModel& m_viewModel;
 
-    		Eegeo::Helpers::ICallback0* m_pGpsModelChangedCallback;
-    		Eegeo::Helpers::ICallback1<float>* m_pUpdateCallback;
-    		Eegeo::Helpers::ICallback2<ScreenControlViewModel::IScreenControlViewModel&, float>* m_pOnScreenStateChangedCallback;
+            ExampleAppMessaging::UiToNativeMessageBus& m_uiToNativeMessageBus;
+			ExampleAppMessaging::NativeToUiMessageBus& m_nativeToUiMessageBus;
+
+            Eegeo::Helpers::TCallback2<CompassViewController, ScreenControlViewModel::IScreenControlViewModel&, float> m_onScreenStateChangedCallback;
+            Eegeo::Helpers::TCallback1<CompassViewController, const CompassModeChangedMessage&> m_modeChangedCallback;
+            Eegeo::Helpers::TCallback1<CompassViewController, const CompassHeadingUpdateMessage&> m_headingChangedCallback;
 
 		public:
     		CompassViewController(
 					AndroidNativeState& nativeState,
-	        		Compass::ICompassModel& model,
-					Compass::ICompassViewModel& menuViewModel
+					Compass::ICompassViewModel& menuViewModel,
+                    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
+					ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus
 			);
 
     		~CompassViewController();
@@ -39,11 +46,11 @@ namespace ExampleApp
     		void HandleClick();
 
 		private:
+            void OnCompassModeChanged(const CompassModeChangedMessage& message);
+
+            void OnCompassHeadingChanged(const CompassHeadingUpdateMessage& message);
+
 			void OnScreenStateChangedCallback(ScreenControlViewModel::IScreenControlViewModel &viewModel, float& onScreenState);
-
-			void OnHeadingUpdated(float& headingAngleRadians);
-
-			void OnGpsModeChanged();
 		};
     }
 }
