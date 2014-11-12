@@ -30,7 +30,6 @@ namespace ExampleApp
                 void Render(Eegeo::Rendering::GLState& glState) const;
                 
                 void SetSphereMvp(const Eegeo::m44& mvp) const;
-                void SetQuadMvp(const Eegeo::m44& mvp) const;
                 
                 void SetInnerSphereScale(const float scale);
             private:

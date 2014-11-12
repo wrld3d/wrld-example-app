@@ -43,7 +43,7 @@
 
 namespace ExampleApp
 {
-    const std::string ApiKey = "c64bd6720e714a22bd5d14b35d232c44";
+    const std::string ApiKey = "OBTAIN API_KEY FROM https://appstore.eegeo.com AND INSERT IT HERE";
     const std::string DecartaApiKey = "OBTAIN DECARTA SEARCH KEY AND INSERT IT HERE";
 
 	namespace
@@ -125,9 +125,6 @@ namespace ExampleApp
         , m_pMyPinCreationDetailsModule(NULL)
         , m_pMyPinsModule(NULL)
 	{
-        
-        Eegeo::TtyHandler::TtyEnabled = true;
-        
 		m_pBlitter = Eegeo_NEW(Eegeo::Blitter)(1024 * 128, 1024 * 64, 1024 * 32, screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight());
 		m_pBlitter->Initialise();
 
@@ -315,8 +312,7 @@ namespace ExampleApp
                                                                                       m_pWorld->GetRenderingModule(),
                                                                                       m_pWorld->GetAsyncLoadersModule(),
                                                                                       m_pWorld->GetLightingModule(),
-                                                                                      m_pWorld->GetTerrainModelModule(),
-                                                                                      m_pWorld->GetScreenProperties());
+                                                                                      m_pWorld->GetTerrainModelModule());
 
         m_pMyPinCreationDetailsModule = Eegeo_NEW(ExampleApp::MyPinCreationDetails::MyPinCreationDetailsModule)(m_identityProvider,
                                                                                                           m_pReactionControllerModule->GetReactionControllerModel());

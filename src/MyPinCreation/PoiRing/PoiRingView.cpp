@@ -29,10 +29,9 @@ namespace ExampleApp
             {
             }
             
-            void PoiRingView::SetRingTransforms(const Eegeo::m44& sphereMvp, const Eegeo::m44& quadMvp) const
+            void PoiRingView::SetRingTransforms(const Eegeo::m44& sphereMvp) const
             {
                 m_poiRingRenderable.SetSphereMvp(sphereMvp);
-                m_poiRingRenderable.SetQuadMvp(quadMvp);
             }
             
             void PoiRingView::EnqueueRenderables(const Eegeo::Rendering::RenderContext& renderContext, Eegeo::Rendering::RenderQueue& renderQueue)

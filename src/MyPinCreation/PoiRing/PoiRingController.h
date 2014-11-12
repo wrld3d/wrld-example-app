@@ -7,7 +7,6 @@
 #include "AppInterface.h"
 #include "Camera.h"
 #include "Terrain.h"
-#include "Rendering.h"
 
 namespace ExampleApp
 {
@@ -19,14 +18,11 @@ namespace ExampleApp
             {
             public:
                 PoiRingController(IMyPinCreationModel& myPinCreationModel,
-                                  PoiRingView& poiRingView,
-                                  const Eegeo::Rendering::ScreenProperties& screenProperties);
+                                  PoiRingView& poiRingView);
             
                 void Update(float dt, const Eegeo::Camera::RenderCamera& renderCamera, const Eegeo::dv3& cameraEcefInterestPoint);
                 
             private:
-                const Eegeo::Rendering::ScreenProperties& m_screenProperties;
-                
                 IMyPinCreationModel& m_pMyPinCreationModel;
                 
                 PoiRingView& m_poiRingView;

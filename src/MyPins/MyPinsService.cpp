@@ -114,7 +114,7 @@ namespace ExampleApp
                 formData["poi[longitude]"] = ConvertModelDetailToString(latLong.GetLongitudeInDegrees());
                 
                 std::map<std::string, std::string> headerData;
-                headerData["Authorization"] = "Token d8b15bf42cd046aa811836e4e86545b2";
+                headerData["Authorization"] = "XXXX";
                 
                 Eegeo::Web::ImageUploadData imageUpload(imagePath, "pin_image.jpg", Eegeo::Web::ImageUploadData::JPEG);
                 std::map<std::string, Eegeo::Web::ImageUploadData> imageData;

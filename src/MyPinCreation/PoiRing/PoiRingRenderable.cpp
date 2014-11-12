@@ -68,6 +68,10 @@ namespace ExampleApp
             
             void PoiRingRenderable::Render(Eegeo::Rendering::GLState &glState) const
             {
+                // Note: This renderable has quite unique behaviour, given the masking
+                //       techniques it uses. It should not be used as a reference for
+                //       common use of the renderable pattern. Please see the examples
+                //       at https://github.com/eegeo/mobile-sdk-harness for correct usage.
                 RenderClearStencil(glState);
                 RenderSpheres(glState);
                 RenderRingEffects(glState);
@@ -83,7 +87,7 @@ namespace ExampleApp
                 glState.ColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
                 glState.Blend.Disable();
                 glState.StencilTest.Enable();
-                glState.StencilFunc(GL_ALWAYS, 0, 0xFFFFFFFF);
+                glState.StencilFunc(GL_ALWAYS, 0, 0xFF);
                 glState.StencilOp(GL_REPLACE, GL_REPLACE, GL_REPLACE);
             
                 m_pQuadRenderable->Render(glState);
@@ -101,7 +105,7 @@ namespace ExampleApp
                 glState.CullFace.Disable();
                 
                 glState.StencilTest.Enable();
-                glState.StencilFunc(GL_ALWAYS, 1, 0xFFFFFFFF);
+                glState.StencilFunc(GL_ALWAYS, 1, 0xFF);
                 glState.StencilOpSeparate(GL_FRONT, GL_KEEP, GL_KEEP, GL_INCR_WRAP);
                 glState.StencilOpSeparate(GL_BACK, GL_KEEP, GL_KEEP, GL_DECR_WRAP);
             
@@ -128,7 +132,7 @@ namespace ExampleApp
                 
                 glState.StencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
                 glState.ColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
-                glState.StencilFunc(GL_EQUAL, 1, 0xFFFFFFFF);
+                glState.StencilFunc(GL_EQUAL, 1, 0xFF);
                 glState.BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
                 glState.BlendEquation(GL_FUNC_ADD);
                 
@@ -137,7 +141,7 @@ namespace ExampleApp
                 glState.Blend.Enable();
                 glState.BlendFunc(GL_DST_COLOR, GL_SRC_ALPHA);
                 glState.BlendEquation(GL_FUNC_ADD);
-                glState.StencilFunc(GL_EQUAL, 2, 0xFFFFFFFF);
+                glState.StencilFunc(GL_EQUAL, 2, 0xFF);
 
                 Eegeo::v4 fillColor = Eegeo::v4(0.2f, 0.2f, 0.2f, 1.0f);
                 m_pColorMaterial->SetColor(fillColor);
@@ -149,11 +153,6 @@ namespace ExampleApp
                 Eegeo::Node* pRootNode = m_pSphere->GetRootNode();
                 pRootNode->SetLocalMatrix(mvp);
                 m_pSphere->Update();
-            }
-            
-            void PoiRingRenderable::SetQuadMvp(const Eegeo::m44& mvp) const
-            {
-                m_pQuadRenderable->SetModelViewProjection(mvp);
             }
             
             void PoiRingRenderable::SetInnerSphereScale(const float scale)
