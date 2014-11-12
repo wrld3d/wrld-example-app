@@ -2,6 +2,10 @@
 
 #pragma once
 
+#include <vector>
+#include "SearchQuery.h"
+#include "SearchResultModel.h"
+
 namespace ExampleApp
 {
 	namespace Search

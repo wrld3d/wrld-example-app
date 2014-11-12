@@ -5,6 +5,7 @@
 #include "Types.h"
 #include "ISearchResultOnMapFactory.h"
 #include "SearchResultPoi.h"
+#include "NativeToUiMessageBus.h"
 
 namespace ExampleApp
 {
@@ -12,10 +13,10 @@ namespace ExampleApp
 	{
 		class SearchResultOnMapFactory : public ISearchResultOnMapFactory, private Eegeo::NonCopyable
 		{
-			SearchResultPoi::ISearchResultPoiViewModel& m_searchResultPoiViewModel;
+			ExampleAppMessaging::NativeToUiMessageBus& m_nativeToUiMessageBus;
 
 		public:
-			SearchResultOnMapFactory(SearchResultPoi::ISearchResultPoiViewModel& searchResultPoiViewModel);
+			SearchResultOnMapFactory(ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus);
 
 			~SearchResultOnMapFactory();
 

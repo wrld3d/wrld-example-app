@@ -17,6 +17,8 @@
 #include "SearchResultOnMapInFocusViewModel.h"
 #include "SearchResultOnMapModalityObserver.h"
 #include "SearchResultOnMapInFocusObserver.h"
+#include "SearchResultOnMapInFocusObserver.h"
+#include "SearchResultOnMapItemModelSelectedObserver.h"
 #include "UiToNativeMessageBus.h"
 #include "NativeToUiMessageBus.h"
 
@@ -35,6 +37,7 @@ namespace ExampleApp
 			ISearchResultOnMapIconCategoryMapper* m_pSearchResultOnMapIconCategoryMapper;
 			SearchResultOnMapModalityObserver* m_pSearchResultOnMapModalityObserver;
 			SearchResultOnMapInFocusObserver* m_pSearchResultOnMapInFocusObserver;
+			SearchResultOnMapItemModelSelectedObserver* m_pSearchResultOnMapItemModelSelectedObserver;
 
 		public:
 			SearchResultOnMapModule(Search::ISearchResultRepository& searchResultRepository,

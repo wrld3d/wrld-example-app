@@ -32,7 +32,7 @@ namespace ExampleApp
 
 			bool IsOpen() const;
 
-			void Open(Search::SearchResultModel& searchResultModel);
+			void Open(const Search::SearchResultModel& searchResultModel);
 
 			void Close();
 

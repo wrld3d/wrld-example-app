@@ -36,7 +36,7 @@ namespace ExampleApp
 			return m_openable.IsFullyOpen();
 		}
 
-		void SearchResultPoiViewModel::Open(Search::SearchResultModel& searchResultModel)
+		void SearchResultPoiViewModel::Open(const Search::SearchResultModel& searchResultModel)
 		{
 			Eegeo_ASSERT(!IsOpen(), "Cannot open SearchResultPoiViewModel when already open.\n");
 			if(m_openable.Open())
