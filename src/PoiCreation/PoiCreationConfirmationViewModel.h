@@ -4,7 +4,7 @@
 
 #include "Types.h"
 #include "Rendering.h"
-#include "PoiCreationConfirmationScreenControl.h"
+#include "PoiCreationScreenControl.h"
 #include "IIdentity.h"
 #include "IPoiCreationConfirmationViewModel.h"
 #include "PoiCreation.h"
@@ -41,7 +41,7 @@ namespace ExampleApp
             
             ScreenControlViewModel::IScreenControlViewModel& GetScreenControlViewModel();
         private:
-            PoiCreationConfirmationScreenControl m_screenControl;
+            PoiCreationScreenControl m_screenControl;
         };
     }
 }

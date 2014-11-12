@@ -4,7 +4,7 @@
 
 #include "Types.h"
 #include "Rendering.h"
-#include "PoiCreationButtonScreenControl.h"
+#include "PoiCreationScreenControl.h"
 #include "IIdentity.h"
 #include "IPoiCreationButtonViewModel.h"
 #include "PoiCreation.h"
@@ -46,7 +46,7 @@ namespace ExampleApp
             void SetShouldOffsetViewButton(bool shouldOffset);
             
         private:
-            PoiCreationButtonScreenControl m_screenControl;
+            PoiCreationScreenControl m_screenControl;
             bool m_shouldOffsetViewButton;
         };
     }

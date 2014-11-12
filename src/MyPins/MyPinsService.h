@@ -9,6 +9,7 @@
 #include "WorldPins.h"
 #include "Web.h"
 #include "WebLoadRequestCompletionCallback.h"
+#include "Menu.h"
 
 namespace ExampleApp
 {
@@ -19,6 +20,7 @@ namespace ExampleApp
         public:
             MyPinsService(IMyPinsRepository& myPinsRepository,
                           MyPinsFileIO& myPinsFileIO,
+                          Menu::IMenuOptionsModel& menuOptionsModel,
                           Eegeo::Pins::PinRepository& pinRepository,
                           WorldPins::IWorldPinsFactory& pinFactory,
                           Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory);
@@ -42,6 +44,7 @@ namespace ExampleApp
         private:
             IMyPinsRepository& m_myPinsRepository;
             MyPinsFileIO& m_myPinsFileIO;
+            Menu::IMenuOptionsModel& m_menuOptionsModel;
             
             Eegeo::Pins::PinRepository& m_pinRepository;
             WorldPins::IWorldPinsFactory& m_pinFactory;

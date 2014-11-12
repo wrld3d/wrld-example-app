@@ -26,9 +26,6 @@ namespace ExampleApp
             m_pMenuOptionsModel->AddItem("About", "About", "", "misc", Eegeo_NEW(Options::AboutPageMenuOption)(*m_pViewModel,
                                                                                                                aboutPageViewModel));
             
-            m_pMenuOptionsModel->AddItem("MyPins", "My Pins", "", "place", Eegeo_NEW(Options::AboutPageMenuOption)(*m_pViewModel,
-                                                                                                               aboutPageViewModel));
-            
             m_pMenuSectionMisc = Eegeo_NEW(Menu::MenuSectionViewModel)("Misc", "misc", *m_pModel, false);
             
             m_pViewModel->AddSection(*m_pMenuSectionMisc);
@@ -36,10 +33,22 @@ namespace ExampleApp
         
         PrimaryMenuModule::~PrimaryMenuModule()
         {
+            for (std::vector<Menu::IMenuSectionViewModel*>::iterator it = m_sections.begin(); it != m_sections.end(); ++it)
+            {
+                Eegeo_DELETE *it;
+            }
+            
             Eegeo_DELETE m_pMenuSectionMisc;
             Eegeo_DELETE m_pViewModel;
             Eegeo_DELETE m_pMenuOptionsModel;
             Eegeo_DELETE m_pModel;
+        }
+        
+        void PrimaryMenuModule::AddMenuSection(const std::string& name, const std::string& icon, Menu::IMenuModel& menuModel, bool isExpandable)
+        {
+            Menu::MenuSectionViewModel* pMenuSection = Eegeo_NEW(Menu::MenuSectionViewModel)(name, icon, menuModel, isExpandable);
+            m_pViewModel->AddSection(*pMenuSection);
+            m_sections.push_back(pMenuSection);
         }
         
         Menu::IMenuModel& PrimaryMenuModule::GetPrimaryMenuModel() const

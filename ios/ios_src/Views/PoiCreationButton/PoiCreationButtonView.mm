@@ -37,7 +37,6 @@
 
 - (void) onClick:(UIButton *)sender
 {
-//    [sender setSelected:!sender.selected];
     [m_pController setSelected:true];
 }
 

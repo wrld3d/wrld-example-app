@@ -6,19 +6,16 @@ namespace ExampleApp
 {
     namespace MyPins
     {
-        MyPinModel::MyPinModel(unsigned int modelId,
+        MyPinModel::MyPinModel(int modelId,
                                std::string title,
                                std::string description,
                                std::string imagePath,
-                               Eegeo::Space::LatLong latLong,
-                               bool shouldShare)
-        : m_latLong(latLong)
-//        : m_modelId(modelId)
-//        , m_title(title)
-//        , m_description(description)
-//        , m_imagePath(imagePath)
-//        , m_latLong(latLong)
-//        , m_shouldShare(shouldShare)
+                               Eegeo::Space::LatLong latLong)
+        : m_modelId(modelId)
+        , m_title(title)
+        , m_description(description)
+        , m_imagePath(imagePath)
+        , m_latLong(latLong)
         {
             
         }

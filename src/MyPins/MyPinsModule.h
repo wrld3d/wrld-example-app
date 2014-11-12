@@ -8,6 +8,7 @@
 #include "WorldPins.h"
 #include "PersistentSettings.h"
 #include "Modules.h"
+#include "Menu.h"
 
 namespace ExampleApp
 {
@@ -24,11 +25,15 @@ namespace ExampleApp
             ~MyPinsModule();
             
             IMyPinsService& GetMyPinsService() const;
+            Menu::IMenuModel& GetMyPinsMenuModel() const { return *m_pMenuModel; }
             
         private:
             MyPinsRepository* m_pMyPinsRepository;
             MyPinsFileIO* m_pMyPinsFileIO;
             MyPinsService* m_pMyPinsService;
+            
+            Menu::IMenuModel* m_pMenuModel;
+            Menu::IMenuOptionsModel* m_pMenuOptionsModel;
         };
     }
 }

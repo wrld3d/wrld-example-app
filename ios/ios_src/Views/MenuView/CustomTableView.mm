@@ -10,6 +10,11 @@
     UIScrollView* m_pContainer;
 }
 
+- (instancetype)initWithFrame:(CGRect)frame style:(UITableViewStyle)style
+{
+    return [self initWithFrame: frame style: style container: nil];
+}
+
 - (instancetype)initWithFrame:(CGRect)frame style:(UITableViewStyle)style container:(UIScrollView*)container
 {
     id it = [super initWithFrame:frame style:style];
@@ -18,6 +23,7 @@
     m_inAnimationCeremony = NO;
     return it;
 }
+
 
 -(BOOL)inAnimationCeremony
 {

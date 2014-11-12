@@ -275,7 +275,7 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 3;
     return m_pMenuViewModel->GetMenuSection(section).Size();
 }
 
-- (void) populateCellWithJson:(std::string)json :(UITableViewCell*)cell
+- (void) populateCellWithJson:(std::string)json :(UITableViewCell*)cell :(const bool)isHeader
 {
     rapidjson::Document document;
     if (!document.Parse<0>(json.c_str()).HasParseError())
@@ -284,31 +284,31 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 3;
         std::string icon = document["icon"].GetString();
         std::string iconResourceName = ExampleApp::Helpers::IconResources::GetSmallIconPathForResourceName(icon);
       
+        cell.imageView.image = [UIImage imageNamed: [NSString stringWithUTF8String:iconResourceName.c_str()]];
+        cell.imageView.contentMode = UIViewContentModeScaleToFill;
+        
         if (m_isRightMenu)
         {
             cell.textLabel.text = [NSString stringWithUTF8String:name.c_str()];
-            cell.imageView.image = [UIImage imageNamed: [NSString stringWithUTF8String:iconResourceName.c_str()]];
-            cell.imageView.contentMode = UIViewContentModeScaleToFill;
         }
         else
         {
-            cell.accessoryView = [[ UIImageView alloc ] initWithImage: [UIImage imageNamed: [NSString stringWithUTF8String: iconResourceName.c_str()]]];
-            cell.accessoryView.contentMode = UIViewContentModeScaleToFill;
+            for (UIView* subview in cell.contentView.subviews)
+            {
+                [subview removeFromSuperview];
+            }
             
             const float subLabelWidth = 160.f;
-            const float subLabelHeight = 55.f;
+            const float subLabelHeight = isHeader ? SECTION_HEADER_CELL_HEIGHT : SUB_SECTION_CELL_HEIGHT;
             UILabel *subLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, subLabelWidth, subLabelHeight)];
-            
             subLabel.backgroundColor = [UIColor clearColor];
             subLabel.textAlignment = NSTextAlignmentRight;
             subLabel.text = [NSString stringWithUTF8String:name.c_str()];
             subLabel.textColor = ExampleApp::Helpers::ColorPalette::GoldTone;
             subLabel.highlightedTextColor = ExampleApp::Helpers::ColorPalette::WhiteTone;
-            subLabel.font = [UIFont systemFontOfSize: 25.0];
-     
-            [cell.contentView addSubview:subLabel];
+            subLabel.font = [UIFont systemFontOfSize: [self getTextLabelFontSize: isHeader]];
+            [cell.contentView addSubview: subLabel];
         }
-        
     }
 }
 
@@ -360,16 +360,18 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 3;
     
     [self setFlippedShadowVisibility: (CustomTableViewCell*) cell : flippedShadowIsVisible];
     
+    const bool isHeader = isExpandableHeader | !section.IsExpandable();
+    
     if(isExpandableHeader)
     {
         std::string json = section.SerializeJson();
-        [self populateCellWithJson :json :cell];
+        [self populateCellWithJson :json :cell :isHeader];
     }
     else
     {
         ExampleApp::Menu::MenuItemModel item = section.GetItemAtIndex(index);
         std::string json = item.SerializeJson();
-        [self populateCellWithJson :json :cell];
+        [self populateCellWithJson :json :cell :isHeader];
     }
     
     return cell;

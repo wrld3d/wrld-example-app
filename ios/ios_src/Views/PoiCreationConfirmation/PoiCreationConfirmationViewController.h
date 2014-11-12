@@ -26,8 +26,6 @@
 
 - (void) handleScreenStateChanged:(float)onScreenState;
 
-//- (void) setSelected:(BOOL)selected;
-
 - (void) handleCloseButtonSelected;
 
 - (void) handleConfirmButtonSelected;

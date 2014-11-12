@@ -3,7 +3,6 @@
 #include "PoiCreationDetailsView.h"
 #include "UIColors.h"
 #include "ImageHelpers.h"
-#include "CustomImagePickerController.h"
 
 #import <QuartzCore/QuartzCore.h>
 
@@ -262,7 +261,6 @@
 
 - (void) onCheckboxPressed:(UIButton *) sender
 {
-    NSLog(@"Checkbox pressed");
     [sender setSelected:!sender.selected];
 }
 
@@ -285,9 +283,7 @@
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(NSDictionary *)editingInfo
 {
-    NSLog(@"Image picked!\n");
     self.pPoiImage.image = image;
-//    self.pPoiImage.image = [UIImage imageNamed:[editingInfo objectForKey:UIImagePickerControllerOriginalImage]];
     
     m_imageAttached = YES;
     [self.pPopover dismissPopoverAnimated: YES];
@@ -296,14 +292,11 @@
 
 - (void) onCloseButtonPressed:(UIButton *)sender
 {
-    NSLog(@"Close button pressed!\n");
     [m_pController handleClosedButtonPressed];
 }
 
 - (void) onCameraButtonPressed:(UIButton *)sender
 {
-    NSLog(@"Camera button pressed!");
-
     UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
     
     imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
@@ -324,13 +317,13 @@
                      permittedArrowDirections:UIPopoverArrowDirectionDown
                                      animated:YES];
 
+        // Full screen camera...
 //        [m_pController presentViewController:imagePicker animated:YES completion: nil];
     }
 }
 
 - (void) onConfirmButtonPressed:(UIButton *)sender
 {
-    NSLog(@"Confirm button pressed!");
     UIImage* imageToSend = m_imageAttached ? self.pPoiImage.image : nil;
     
     [m_pController handleConfirmButtonPressed : self.pTitleText.text

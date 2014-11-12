@@ -73,7 +73,6 @@
 - (void) onCancelButtonPressed:(UIButton *)sender
 {
     [sender setSelected:!sender.selected];
-//    [m_pController setSelected: false];
     [m_pController handleCloseButtonSelected];
 }
 

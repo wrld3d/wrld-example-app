@@ -8,27 +8,56 @@
 #include "MyPinsFileIO.h"
 #include "IWebLoadRequestFactory.h"
 #include "IWebLoadRequest.h"
+#include "iOSWebLoadRequest.h"
+#include "ImageUploadData.h"
+#include "IMenuOptionsModel.h"
+#include "MyPinMenuOption.h"
 
 #include <string>
+#include <sstream>
 
 namespace ExampleApp
 {
     namespace MyPins
     {
+        
+        template<typename T>
+        std::string ConvertModelDetailToString(const T& detail)
+        {
+            std::stringstream ss;
+            ss << detail;
+            return ss.str();
+        }
+        
         MyPinsService::MyPinsService(IMyPinsRepository& myPinsRepository,
                                      MyPinsFileIO& myPinsFileIO,
+                                     Menu::IMenuOptionsModel& menuOptionsModel,
                                      Eegeo::Pins::PinRepository& pinRepository,
                                      WorldPins::IWorldPinsFactory& pinFactory,
                                      Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory)
         : m_myPinsRepository(myPinsRepository)
         , m_myPinsFileIO(myPinsFileIO)
+        , m_menuOptionsModel(menuOptionsModel)
         , m_pinRepository(pinRepository)
         , m_pinFactory(pinFactory)
         , m_webLoadRequestFactory(webLoadRequestFactory)
         , m_lastIdUsed(m_myPinsFileIO.GetLastIdWrittenToDisk())
         , m_webRequestCompleteCallback(this, &MyPinsService::WebRequestCompleteCallback)
         {
+            std::vector<MyPinModel> pinModels;
+            m_myPinsFileIO.LoadPinModelsFromDisk(pinModels);
+
             
+            for (std::vector<MyPinModel>::iterator it = pinModels.begin(); it != pinModels.end(); ++it)
+            {
+                const MyPinModel& pinModel = *it;
+
+                m_menuOptionsModel.AddItem(ConvertModelDetailToString(pinModel.Identifier()),
+                                           pinModel.GetTitle(),
+                                           "",
+                                           "place",
+                                           Eegeo_NEW(MyPinMenuOption)(pinModel));
+            }
         }
         
         void MyPinsService::AddPin(const std::string& title,
@@ -38,18 +67,7 @@ namespace ExampleApp
                                    size_t imageSize,
                                    bool shouldShare)
         {
-//            Eegeo::Pins::Pin* pin = m_pinFactory.CreatePin(latLong, 0);
-//            m_pinRepository.AddPin(*pin);
-            
-//            MyPinModel *myPinModel = m_myPinModelFactory.CreateMyPinModel(title,
-//                                                                          description,
-//                                                                          imageData,
-//                                                                          imageSize,
-//                                                                          latLong,
-//                                                                          shouldShare);
-//            m_myPinsRepository.AddItem(*myPinModel);
-//            
-//            m_modelToPinIdMap.insert(std::make_pair(myPinModel, pin->GetId()));
+            // Stub, for adding pins to screen
         }
         
         void MyPinsService::RemovePin(const MyPinModel& myPinModel)
@@ -89,38 +107,43 @@ namespace ExampleApp
             
             if (shouldShare)
             {
-//                // Punt web request here...
-                std::string image = "@" + imagePath;
-                
                 std::map<std::string, std::string> formData;
                 formData["poi[title]"] = title;
                 formData["poi[description]"] = description;
-                formData["poi[image]"] = image;
-                formData["poi[latitude]"] = "123.45";
-                formData["poi[longitude]"] = "666.66";
+                formData["poi[latitude]"] = ConvertModelDetailToString(latLong.GetLatitudeInDegrees());
+                formData["poi[longitude]"] = ConvertModelDetailToString(latLong.GetLongitudeInDegrees());
                 
                 std::map<std::string, std::string> headerData;
                 headerData["Authorization"] = "XXXX";
                 
+                Eegeo::Web::ImageUploadData imageUpload(imagePath, "pin_image.jpg", Eegeo::Web::ImageUploadData::JPEG);
+                std::map<std::string, Eegeo::Web::ImageUploadData> imageData;
+                imageData.insert(std::make_pair("poi[image]", imageUpload));
+  
                 m_webLoadRequestFactory.CreatePost("http://design-in-motion-staging.eegeo.com/pois/new",
                                                    m_webRequestCompleteCallback,
                                                    NULL,
                                                    formData,
-                                                   headerData)->Load();
+                                                   headerData,
+                                                   imageData)->Load();
             }
+            
+            MyPinModel pinModel(idForThisPin,
+                                title,
+                                description,
+                                imagePath,
+                                latLong);
+            
+            m_menuOptionsModel.AddItem(ConvertModelDetailToString(pinModel.Identifier()),
+                                       pinModel.GetTitle(),
+                                       "",
+                                       "place",
+                                       Eegeo_NEW(MyPinMenuOption)(pinModel));
         }
         
         void MyPinsService::WebRequestCompleteCallback(Eegeo::Web::IWebLoadRequest& webLoadRequest)
         {
-            Eegeo_TTY("Response code: %d\n", webLoadRequest.HttpStatusCode());
-            if (webLoadRequest.IsSucceeded())
-            {
-                Eegeo_TTY("Web request succeded\n");
-            }
-            else
-            {
-                Eegeo_TTY("Web request failed\n");
-            }
+            Eegeo_TTY("Web Request Completed, code: %d\n", webLoadRequest.HttpStatusCode());
         }
     }
 }

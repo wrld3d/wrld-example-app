@@ -4,6 +4,7 @@
 #include "MathFunc.h"
 #include "ImageHelpers.h"
 #include "UIColors.h"
+#include "CellConstants.h"
 
 #include "MenuViewControllerInterop.h"
 
@@ -64,6 +65,7 @@
     self.pTableview.backgroundColor = [UIColor clearColor];
     self.pTableview.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.pTableview.scrollEnabled = NO;
+    self.pTableview.bounces = NO;
     
     m_offscreenX = -(m_mainContainerWidth + m_dragTabWidth);
     m_closedX = -(m_mainContainerOnScreenWidth - m_mainContainerVisibleOnScreenWhenClosedX);

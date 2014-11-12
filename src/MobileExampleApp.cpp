@@ -121,8 +121,6 @@ namespace ExampleApp
     , m_pPoiCreationDetailsModule(NULL)
     , m_pMyPinsModule(NULL)
     {
-        Eegeo::TtyHandler::TtyEnabled = true;
-        
         m_pBlitter = Eegeo_NEW(Eegeo::Blitter)(1024 * 128, 1024 * 64, 1024 * 32, screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight());
         m_pBlitter->Initialise();
         
@@ -290,6 +288,8 @@ namespace ExampleApp
                                                                       m_pWorldPinsModule->GetWorldPinsFactory(),
                                                                       m_platformAbstractions,
                                                                       m_persistentSettings);
+        
+        m_pPrimaryMenuModule->AddMenuSection("My Pins", "place", m_pMyPinsModule->GetMyPinsMenuModel(), true);
         
         m_pPoiCreationModule = Eegeo_NEW(ExampleApp::PoiCreation::PoiCreationModule)(m_pMyPinsModule->GetMyPinsService(),
                                                                                      m_identityProvider,

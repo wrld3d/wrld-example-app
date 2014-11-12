@@ -6,6 +6,9 @@
 #include "PersistentSettings.h"
 #include "Types.h"
 #include "Space.h"
+#include "MyPins.h"
+
+#include <vector>
 
 namespace ExampleApp
 {
@@ -28,6 +31,7 @@ namespace ExampleApp
                                     const std::string& imagePath,
                                     const Eegeo::Space::LatLong& latLong);
             
+            void LoadPinModelsFromDisk(std::vector<MyPinModel>& out_pinModels);
         
             int GetLastIdWrittenToDisk() const;
             

@@ -9,12 +9,12 @@ namespace ExampleApp
 {
     namespace PoiCreation
     {
-        class PoiCreationConfirmationScreenControl : public ScreenControlViewModel::ScreenControlViewModelBase, private Eegeo::NonCopyable
+        class PoiCreationScreenControl : public ScreenControlViewModel::ScreenControlViewModelBase, private Eegeo::NonCopyable
         {
             Eegeo::Helpers::TIdentity m_identity;
             
         public:
-            PoiCreationConfirmationScreenControl(bool initiallyOnScreen, Eegeo::Helpers::TIdentity identity);
+            PoiCreationScreenControl(bool initiallyOnScreen, Eegeo::Helpers::TIdentity identity);
             
             Eegeo::Helpers::TIdentity GetIdentity() const;
         };

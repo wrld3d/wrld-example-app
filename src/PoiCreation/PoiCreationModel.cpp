@@ -4,7 +4,6 @@
 #include "IFileIO.h"
 #include "IWebLoadRequestFactory.h"
 #include "LatLongAltitude.h"
-#include "PostPoiWorkItem.h"
 #include "MyPinModel.h"
 #include "IMyPinsService.h"
 
