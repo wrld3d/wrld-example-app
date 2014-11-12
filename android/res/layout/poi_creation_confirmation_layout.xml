@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/poi_creation_confirmation_main"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+   	
+    <!--  Title bar -->
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="20dp"
+        android:gravity="center"
+        android:background="@color/white"
+        android:text="@string/pin_confirmation_title"
+        android:textColor="@color/darkgrey" />
+    
+    <!--  Button bar -->
+    <RelativeLayout 
+        android:layout_width="fill_parent"
+        android:layout_height="55dp">
+        
+        <RelativeLayout 
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/gold"/>
+        
+        <Button
+            android:id="@+id/poi_creation_confirmation_close_button"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:background="@drawable/button_close_states" />
+        
+        <Button
+            android:id="@+id/poi_creation_confirmation_ok_button"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/button_ok_states" />
+        
+        <RelativeLayout
+        	android:layout_width="fill_parent"
+        	android:layout_height="10dp"
+        	android:background="@drawable/shadow_03"/>
+        
+    </RelativeLayout>
+
+</LinearLayout>

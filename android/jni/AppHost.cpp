@@ -62,6 +62,10 @@
 #include "IMenuViewController.h"
 #include "CategorySearchModule.h"
 #include "ScreenProperties.h"
+#include "PoiCreationViewModule.h"
+#include "IPoiCreationModule.h"
+#include "IPoiCreationDetailsModule.h"
+#include "PoiCreationDetailsViewModule.h"
 
 using namespace Eegeo::Android;
 using namespace Eegeo::Android::Input;
@@ -91,6 +95,8 @@ AppHost::AppHost(
 	,m_pSearchResultMenuViewModule(NULL)
 	,m_pModalBackgroundViewModule(NULL)
 	,m_pFlattenButtonViewModule(NULL)
+	,m_pPoiCreationViewModule(NULL)
+	,m_pPoiCreationDetailsViewModule(NULL)
 	,m_pSearchResultPoiViewModule(NULL)
 	,m_pSearchResultOnMapViewModule(NULL)
 	,m_pCompassViewModule(NULL)
@@ -249,6 +255,14 @@ void AppHost::CreateApplicationViewModules()
     	app.FlattenButtonModule().GetFlattenButtonViewModel()
     );
 
+    m_pPoiCreationViewModule = Eegeo_NEW(ExampleApp::PoiCreation::PoiCreationViewModule)(
+		m_nativeState,
+		app.PoiCreationModule().GetPoiCreationModel(),
+		app.PoiCreationModule().GetPoiCreationButtonViewModel(),
+		app.PoiCreationModule().GetPoiCreationConfirmationViewModel(),
+		app.PoiCreationDetailsModule().GetPoiCreationDetailsViewModel()
+	);
+
     m_pCompassViewModule = Eegeo_NEW(ExampleApp::Compass::CompassViewModule)(
 		m_nativeState,
 		app.CompassModule().GetCompassModel(),
@@ -302,6 +316,12 @@ void AppHost::CreateApplicationViewModules()
 		app.AboutPageModule().GetAboutPageViewModel()
     );
 
+    m_pPoiCreationDetailsViewModule = Eegeo_NEW(ExampleApp::PoiCreationDetails::PoiCreationDetailsViewModule)(
+		m_nativeState,
+		app.PoiCreationModule().GetPoiCreationModel(),
+		app.PoiCreationDetailsModule().GetPoiCreationDetailsViewModel()
+    );
+
     m_pViewControllerUpdaterModule = Eegeo_NEW(ExampleApp::ViewControllerUpdater::ViewControllerUpdaterModule)();
     ExampleApp::ViewControllerUpdater::IViewControllerUpdaterModel& viewControllerUpdaterModel = m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel();
 
@@ -313,6 +333,8 @@ void AppHost::CreateApplicationViewModules()
 void AppHost::DestroyApplicationViewModules()
 {
 	Eegeo_DELETE m_pViewControllerUpdaterModule;
+
+	Eegeo_DELETE m_pPoiCreationViewModule;
 
 	Eegeo_DELETE m_pFlattenButtonViewModule;
 

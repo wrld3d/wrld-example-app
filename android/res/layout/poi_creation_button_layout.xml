@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Button xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/poi_creation_button_main"
+    android:layout_width="40dp"
+    android:layout_height="40dp"
+   	android:background="@drawable/button_create_poi"
+   	android:textOn=""
+   	android:textOff=""
+   	/>

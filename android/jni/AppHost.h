@@ -39,6 +39,8 @@
 #include "SearchResultOnMapViewIncludes.h"
 #include "CompassViewIncludes.h"
 #include "AboutPageViewIncludes.h"
+#include "PoiCreationViewIncludes.h"
+#include "PoiCreationDetailsViewIncludes.h"
 
 class AppHost : protected Eegeo::NonCopyable
 {
@@ -95,6 +97,8 @@ private:
     ExampleApp::SearchResultOnMap::ISearchResultOnMapViewModule* m_pSearchResultOnMapViewModule;
     ExampleApp::AboutPage::IAboutPageViewModule* m_pAboutPageViewModule;
     ExampleApp::Compass::ICompassViewModule* m_pCompassViewModule;
+    ExampleApp::PoiCreation::IPoiCreationViewModule* m_pPoiCreationViewModule;
+    ExampleApp::PoiCreationDetails::IPoiCreationDetailsViewModule* m_pPoiCreationDetailsViewModule;
 
     ExampleApp::MobileExampleApp* m_pApp;
 
