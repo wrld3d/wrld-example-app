@@ -4,8 +4,8 @@
 
 namespace ExampleApp
 {
-    namespace ModalBackground
-    {
+	namespace ModalBackground
+	{
 		class IModalBackgroundViewController
 		{
 		public:

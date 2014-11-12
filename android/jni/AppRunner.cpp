@@ -3,6 +3,7 @@
 #include "AppRunner.h"
 #include "Graphics.h"
 #include "AndroidThreadHelper.h"
+#include "AndroidAppThreadAssertionMacros.h"
 
 AppRunner::AppRunner
 (
@@ -10,12 +11,17 @@ AppRunner::AppRunner
 )
 	: m_pNativeState(pNativeState)
 	, m_pAppHost(NULL)
+	, m_updatingNative(true)
 {
+	ASSERT_NATIVE_THREAD
+
 	Eegeo::Helpers::ThreadHelpers::SetThisThreadAsMainThread();
 }
 
 AppRunner::~AppRunner()
 {
+	ASSERT_NATIVE_THREAD
+
 	bool destroyEGL = true;
 	m_displayService.ReleaseDisplay(destroyEGL);
 
@@ -27,6 +33,8 @@ AppRunner::~AppRunner()
 
 void AppRunner::CreateAppHost()
 {
+	ASSERT_NATIVE_THREAD
+
 	if(m_pAppHost == NULL && m_displayService.IsDisplayAvailable())
 	{
 		m_pAppHost = Eegeo_NEW(AppHost)
@@ -43,6 +51,8 @@ void AppRunner::CreateAppHost()
 
 void AppRunner::Pause()
 {
+	ASSERT_NATIVE_THREAD
+
 	if(m_pAppHost != NULL)
 	{
 		m_pAppHost->OnPause();
@@ -61,6 +71,8 @@ void AppRunner::Resume()
 
 void AppRunner::ActivateSurface()
 {
+	ASSERT_NATIVE_THREAD
+
 	ReleaseDisplay();
 	bool displayBound = TryBindDisplay();
 	Eegeo_ASSERT(displayBound, "Failed to bind display");
@@ -69,6 +81,8 @@ void AppRunner::ActivateSurface()
 
 void AppRunner::HandleTouchEvent(const Eegeo::Android::Input::TouchInputEvent& event)
 {
+	ASSERT_NATIVE_THREAD
+
 	if(m_pAppHost != NULL)
 	{
 		m_pAppHost->HandleTouchInputEvent(event);
@@ -77,6 +91,8 @@ void AppRunner::HandleTouchEvent(const Eegeo::Android::Input::TouchInputEvent& e
 
 void AppRunner::ReleaseDisplay()
 {
+	ASSERT_NATIVE_THREAD
+
 	if(m_displayService.IsDisplayAvailable())
 	{
 		const bool teardownEGL = false;
@@ -86,6 +102,8 @@ void AppRunner::ReleaseDisplay()
 
 bool AppRunner::TryBindDisplay()
 {
+	ASSERT_NATIVE_THREAD
+
 	if(m_displayService.TryBindDisplay(*(m_pNativeState->window)))
 	{
 		if(m_pAppHost != NULL)
@@ -100,9 +118,11 @@ bool AppRunner::TryBindDisplay()
 	return false;
 }
 
-void AppRunner::Update(float deltaSeconds)
+void AppRunner::UpdateNative(float deltaSeconds)
 {
-	if(m_pAppHost != NULL && m_displayService.IsDisplayAvailable())
+	ASSERT_NATIVE_THREAD
+
+	if(m_updatingNative && m_pAppHost != NULL && m_displayService.IsDisplayAvailable())
 	{
 		m_pAppHost->Update(deltaSeconds);
 
@@ -113,4 +133,30 @@ void AppRunner::Update(float deltaSeconds)
 	}
 }
 
+void AppRunner::UpdateUiViews(float deltaSeconds)
+{
+	ASSERT_UI_THREAD
 
+	if(m_pAppHost != NULL)
+	{
+		m_pAppHost->UpdateUiViewsFromUiThread(deltaSeconds);
+	}
+}
+
+void AppRunner::StopUpdatingNativeBeforeTeardown()
+{
+	ASSERT_NATIVE_THREAD
+
+	Eegeo_ASSERT(m_updatingNative, "Should only call StopUpdatingNativeBeforeTeardown once, before teardown.\n");
+	m_updatingNative = false;
+}
+
+void AppRunner::DestroyApplicationUi()
+{
+	ASSERT_UI_THREAD
+
+	if(m_pAppHost != NULL)
+	{
+		m_pAppHost->DestroyUiFromUiThread();
+	}
+}

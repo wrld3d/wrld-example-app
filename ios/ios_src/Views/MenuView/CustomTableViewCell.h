@@ -6,11 +6,11 @@
 
 @interface CustomTableViewCell : UITableViewCell
 {
-    bool m_rightAlignFrame;
-    bool m_rightAlignImage;
-    bool m_isHeader;
-    float m_initialWidth;
-    UITableView* m_tableView;
+	bool m_rightAlignFrame;
+	bool m_rightAlignImage;
+	bool m_isHeader;
+	float m_initialWidth;
+	UITableView* m_tableView;
 }
 
 - (void)setAlignInfo:(bool)rightAlignFrame :(bool)rightAlignImage :(bool)isHeader;

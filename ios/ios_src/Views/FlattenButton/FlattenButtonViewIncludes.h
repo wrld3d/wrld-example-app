@@ -7,11 +7,11 @@
 
 namespace ExampleApp
 {
-    namespace FlattenButton
-    {
-        class IFlattenButtonViewModule;
-        class FlattenButtonViewModule;
-        class FlattenButtonViewControllerInterop;
-        
-    }
+	namespace FlattenButton
+	{
+		class IFlattenButtonViewModule;
+		class FlattenButtonViewModule;
+		class FlattenButtonViewControllerInterop;
+
+	}
 }

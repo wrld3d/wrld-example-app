@@ -6,24 +6,24 @@
 
 namespace ExampleApp
 {
-    namespace FlattenButton
-    {
-        class IFlattenButtonModel
-        {
-        public:
-            
-            virtual ~IFlattenButtonModel() {}
-            
-            virtual void Flatten() = 0;
-            
-            virtual void Unflatten() = 0;
-            
-            virtual bool GetFlattened() const = 0;
-            
-            virtual void InsertChangedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
-            
-            virtual void RemoveChangedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
-        };
+	namespace FlattenButton
+	{
+		class IFlattenButtonModel
+		{
+		public:
 
-    }
+			virtual ~IFlattenButtonModel() {}
+
+			virtual void Flatten() = 0;
+
+			virtual void Unflatten() = 0;
+
+			virtual bool GetFlattened() const = 0;
+
+			virtual void InsertChangedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
+
+			virtual void RemoveChangedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
+		};
+
+	}
 }

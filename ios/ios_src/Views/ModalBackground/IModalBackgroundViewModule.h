@@ -6,16 +6,16 @@
 
 namespace ExampleApp
 {
-    namespace ModalBackground
-    {
-        class IModalBackgroundViewModule
-        {
-        public:
-            virtual ~IModalBackgroundViewModule() { }
-            
-            virtual ModalBackgroundViewController& GetModalBackgroundViewController() const = 0;
-            
-            virtual ModalBackgroundView& GetModalBackgroundView() const = 0;
-        };
-    }
+	namespace ModalBackground
+	{
+		class IModalBackgroundViewModule
+		{
+		public:
+			virtual ~IModalBackgroundViewModule() { }
+
+			virtual ModalBackgroundViewController& GetModalBackgroundViewController() const = 0;
+
+			virtual ModalBackgroundView& GetModalBackgroundView() const = 0;
+		};
+	}
 }

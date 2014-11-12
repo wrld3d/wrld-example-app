@@ -7,32 +7,25 @@
 #include "Modality.h"
 #include "ModalBackgroundViewIncludes.h"
 #include "IModalBackgroundViewModule.h"
-#include "ModalBackgroundView.h"
-#include "Rendering.h"
-#include "Modules.h"
 
 namespace ExampleApp
 {
-    namespace ModalBackground
-    {
-        class ModalBackgroundViewModule: public IModalBackgroundViewModule, private Eegeo::NonCopyable
-        {
-        private:
-            ModalBackgroundViewController* m_pModalBackgroundViewController;
-            ModalBackgroundView* m_pModalBackgroundView;
-            
-            Eegeo::Rendering::RenderableFilters& m_renderableFilters;
+	namespace ModalBackground
+	{
+		class ModalBackgroundViewModule: public IModalBackgroundViewModule, private Eegeo::NonCopyable
+		{
+		private:
+			ModalBackgroundViewController* m_pModalBackgroundViewController;
 
-        public:
-            ModalBackgroundViewModule(
-				AndroidNativeState& nativeState,
-				Modality::IModalityModel& modalityModel,
-				Eegeo::Modules::Core::RenderingModule& renderingModule
-        	);
-            
-            ~ModalBackgroundViewModule();
-            
-            IModalBackgroundViewController& GetModalBackgroundViewController() const;
-        };
-    }
+		public:
+			ModalBackgroundViewModule(
+			    AndroidNativeState& nativeState,
+			    Modality::IModalityModel& modalityModel
+			);
+
+			~ModalBackgroundViewModule();
+
+			IModalBackgroundViewController& GetModalBackgroundViewController() const;
+		};
+	}
 }

@@ -14,27 +14,27 @@ class AppRunner : Eegeo::NonCopyable
 {
 public:
 	AppRunner(
-              ViewController& pViewController,
-              UIView* pView
-              );
+	    ViewController& pViewController,
+	    UIView* pView
+	);
 	~AppRunner();
-    
-    bool IsRunning();
-    
+
+	bool IsRunning();
+
 	void Pause();
 	void Resume();
 	void Update(float deltaSeconds);
-    
-    bool ShouldAutoRotateToInterfaceOrientation(UIInterfaceOrientation interfaceOrientation);
-    
+
+	bool ShouldAutoRotateToInterfaceOrientation(UIInterfaceOrientation interfaceOrientation);
+
 private:
-    ViewController& m_viewController;
-    UIView* m_pView;
-    
+	ViewController& m_viewController;
+	UIView* m_pView;
+
 	GlDisplayService m_displayService;
 	void ReleaseDisplay();
 	bool TryBindDisplay();
-    
+
 	AppHost* m_pAppHost;
 	void CreateAppHost();
 };

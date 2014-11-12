@@ -8,22 +8,16 @@ public class SearchMenuCloseButtonClickedHandler implements View.OnClickListener
 {
 	private MainActivity m_activity;
 	private long m_nativeCallerPointer;
-	
+
 	SearchMenuCloseButtonClickedHandler(MainActivity activity, long nativeCallerPointer)
 	{
 		m_activity = activity;
 		m_nativeCallerPointer = nativeCallerPointer;
 	}
-	
+
 	@Override
-	public void onClick(View view) 
+	public void onClick(View view)
 	{
-		m_activity.runOnNativeThread(new Runnable()
-		{
-			public void run()
-			{
-				SearchMenuViewJniMethods.HandleClosed(m_nativeCallerPointer);
-			}
-		});
+		SearchMenuViewJniMethods.HandleClosed(m_nativeCallerPointer);
 	}
 }

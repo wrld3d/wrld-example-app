@@ -8,31 +8,32 @@
 #include "Rendering.h"
 #include "Modality.h"
 #include "Search.h"
+#include "NativeToUiMessageBus.h"
 
 namespace ExampleApp
 {
-    namespace SecondaryMenu
-    {
-        class SecondaryMenuViewModule: public ISecondaryMenuViewModule, private Eegeo::NonCopyable
-        {
-        private:
-            MenuViewController* m_pMenuViewController;
-            SearchViewController* m_pSearchViewController;
-            SecondaryMenuView* m_pView;
-            
-        public:
-            SecondaryMenuViewModule(Menu::IMenuModel& secondaryMenuModel,
-                                    Menu::IMenuViewModel& secondaryMenuViewModel,
-                                    const Eegeo::Rendering::ScreenProperties& screenProperties,
-                                    Modality::IModalityModel& modalityModel,
-                                    Search::ISearchQueryPerformer& searchQueryPerformer,
-                                    Search::ISearchService& searchService);
-            
-            ~SecondaryMenuViewModule();
-            
-            MenuViewController& GetSecondaryMenuViewController() const;
-            
-            SecondaryMenuView& GetSecondaryMenuView() const;
-        };
-    }
+	namespace SecondaryMenu
+	{
+		class SecondaryMenuViewModule: public ISecondaryMenuViewModule, private Eegeo::NonCopyable
+		{
+		private:
+			MenuViewController* m_pMenuViewController;
+			SearchViewController* m_pSearchViewController;
+			SecondaryMenuView* m_pView;
+
+		public:
+			SecondaryMenuViewModule(Menu::IMenuModel& secondaryMenuModel,
+			                        Menu::IMenuViewModel& secondaryMenuViewModel,
+			                        const Eegeo::Rendering::ScreenProperties& screenProperties,
+			                        Modality::IModalityModel& modalityModel,
+			                        Search::ISearchQueryPerformer& searchQueryPerformer,
+			                        ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus);
+
+			~SecondaryMenuViewModule();
+
+			MenuViewController& GetSecondaryMenuViewController() const;
+
+			SecondaryMenuView& GetSecondaryMenuView() const;
+		};
+	}
 }

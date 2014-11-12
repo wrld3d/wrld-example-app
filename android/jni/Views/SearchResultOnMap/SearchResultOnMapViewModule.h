@@ -6,29 +6,29 @@
 #include "SearchResultOnMap.h"
 #include "ISearchResultOnMapViewModule.h"
 #include "IScreenControlViewModel.h"
-#include "Modality.h"
+#include "ISearchResultPoiViewModel.h"
 
 namespace ExampleApp
 {
-    namespace SearchResultOnMap
-    {
-        class SearchResultOnMapViewModule: public ISearchResultOnMapViewModule, private Eegeo::NonCopyable
-        {
-        private:
-            SearchResultOnMapViewController* m_pSearchResultOnMapViewController;
-            
-        public:
-            SearchResultOnMapViewModule(
-				AndroidNativeState& nativeState,
-				ISearchResultOnMapInFocusViewModel& searchResultOnMapInFocusViewModel,
-				ScreenControlViewModel::IScreenControlViewModel& searchResultOnMapInFocusScreenControlViewModel,
-    			Modality::IModalityModel& modalityModel,
-    			float pinDiameter
+	namespace SearchResultOnMap
+	{
+		class SearchResultOnMapViewModule: public ISearchResultOnMapViewModule, private Eegeo::NonCopyable
+		{
+		private:
+			SearchResultOnMapViewController* m_pSearchResultOnMapViewController;
+
+		public:
+			SearchResultOnMapViewModule(
+			    AndroidNativeState& nativeState,
+			    ISearchResultOnMapInFocusViewModel& searchResultOnMapInFocusViewModel,
+			    ScreenControlViewModel::IScreenControlViewModel& searchResultOnMapInFocusScreenControlViewModel,
+			    SearchResultPoi::ISearchResultPoiViewModel& searchResultPoiViewModel,
+			    float pinDiameter
 			);
-            
-            ~SearchResultOnMapViewModule();
-            
-            SearchResultOnMapViewController& GetSearchResultOnMapViewController() const;
-        };
-    }
+
+			~SearchResultOnMapViewModule();
+
+			SearchResultOnMapViewController& GetSearchResultOnMapViewController() const;
+		};
+	}
 }

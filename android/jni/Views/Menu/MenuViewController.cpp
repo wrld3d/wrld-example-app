@@ -9,32 +9,35 @@
 #include "ICallback.h"
 #include "IMenuSectionViewModel.h"
 #include "Logger.h"
+#include "AndroidAppThreadAssertionMacros.h"
 
-//#define MenuViewController_TTY EXAMPLE_LOG
-#define MenuViewController_TTY(...)
+#define MenuViewController_TTY EXAMPLE_LOG
+//#define MenuViewController_TTY(...)
 
 namespace ExampleApp
 {
-    namespace Menu
-    {
-    	MenuViewController::MenuViewController(
-	    		const std::string& viewClassName,
-				AndroidNativeState& nativeState,
-				ExampleApp::Menu::IMenuModel& menuModel,
-				ExampleApp::Menu::IMenuViewModel& menuViewModel
+	namespace Menu
+	{
+		MenuViewController::MenuViewController(
+		    const std::string& viewClassName,
+		    AndroidNativeState& nativeState,
+		    ExampleApp::Menu::IMenuModel& menuModel,
+		    ExampleApp::Menu::IMenuViewModel& menuViewModel
 		)
-		: m_nativeState(nativeState)
-		, m_menuModel(menuModel)
-		, m_menuViewModel(menuViewModel)
-		, m_pMenuAddedCallback(Eegeo_NEW((Eegeo::Helpers::TCallback1<MenuViewController, MenuItemModel>))(this, &MenuViewController::ItemAddedCallback))
-		, m_pMenuRemovedCallback(Eegeo_NEW((Eegeo::Helpers::TCallback1<MenuViewController, MenuItemModel>))(this, &MenuViewController::ItemRemovedCallback))
-		, m_pOpenStateChangedCallback(Eegeo_NEW((Eegeo::Helpers::TCallback2<MenuViewController, OpenableControlViewModel::IOpenableControlViewModel&, float>))(this, &MenuViewController::OpenStateChangedCallback))
-		, m_pOnScreenStateChangedCallback(Eegeo_NEW((Eegeo::Helpers::TCallback2<MenuViewController, ScreenControlViewModel::IScreenControlViewModel&, float>))(this, &MenuViewController::OnScreenStateChangedCallback))
-		, m_dragInProgress(false)
-    	, m_presentationDirty(false)
+			: m_nativeState(nativeState)
+			, m_menuModel(menuModel)
+			, m_menuViewModel(menuViewModel)
+			, m_pMenuAddedCallback(Eegeo_NEW((Eegeo::Helpers::TCallback1<MenuViewController, MenuItemModel>))(this, &MenuViewController::ItemAddedCallback))
+			, m_pMenuRemovedCallback(Eegeo_NEW((Eegeo::Helpers::TCallback1<MenuViewController, MenuItemModel>))(this, &MenuViewController::ItemRemovedCallback))
+			, m_pOpenStateChangedCallback(Eegeo_NEW((Eegeo::Helpers::TCallback2<MenuViewController, OpenableControlViewModel::IOpenableControlViewModel&, float>))(this, &MenuViewController::OpenStateChangedCallback))
+			, m_pOnScreenStateChangedCallback(Eegeo_NEW((Eegeo::Helpers::TCallback2<MenuViewController, ScreenControlViewModel::IScreenControlViewModel&, float>))(this, &MenuViewController::OnScreenStateChangedCallback))
+			, m_dragInProgress(false)
+			, m_presentationDirty(false)
 		{
-    		m_menuModel.InsertItemAddedCallback(*m_pMenuAddedCallback);
-    		m_menuModel.InsertItemRemovedCallback(*m_pMenuRemovedCallback);
+			ASSERT_UI_THREAD
+
+			m_menuModel.InsertItemAddedCallback(*m_pMenuAddedCallback);
+			m_menuModel.InsertItemRemovedCallback(*m_pMenuRemovedCallback);
 
 			m_menuViewModel.InsertOnScreenStateChangedCallback(*m_pOnScreenStateChangedCallback);
 			m_menuViewModel.InsertOpenStateChangedCallback(*m_pOpenStateChangedCallback);
@@ -51,11 +54,11 @@ namespace ExampleApp
 			jmethodID uiViewCtor = env->GetMethodID(m_uiViewClass, "<init>", "(Lcom/eegeo/mobileexampleapp/MainActivity;J)V");
 
 			jobject instance = env->NewObject(
-				m_uiViewClass,
-				uiViewCtor,
-				m_nativeState.activity,
-				(jlong)(this)
-			);
+			                       m_uiViewClass,
+			                       uiViewCtor,
+			                       m_nativeState.activity,
+			                       (jlong)(this)
+			                   );
 
 			m_uiView = env->NewGlobalRef(instance);
 			env->DeleteLocalRef(instance);
@@ -66,13 +69,15 @@ namespace ExampleApp
 				OpenStateChangedCallback(m_menuViewModel, value);
 			}
 
-			RefreshPresentation();
+			m_presentationDirty = true;
 		}
 
-    	MenuViewController::~MenuViewController()
+		MenuViewController::~MenuViewController()
 		{
-    		m_menuModel.RemoveItemAddedCallback(*m_pMenuAddedCallback);
-    		m_menuModel.RemoveItemRemovedCallback(*m_pMenuRemovedCallback);
+			ASSERT_UI_THREAD
+
+			m_menuModel.RemoveItemAddedCallback(*m_pMenuAddedCallback);
+			m_menuModel.RemoveItemRemovedCallback(*m_pMenuRemovedCallback);
 
 			Eegeo_DELETE m_pMenuAddedCallback;
 			Eegeo_DELETE m_pMenuRemovedCallback;
@@ -91,17 +96,19 @@ namespace ExampleApp
 			env->DeleteGlobalRef(m_uiViewClass);
 		}
 
-    	void MenuViewController::Update(float deltaSeconds)
-    	{
-    		if(m_presentationDirty)
-    		{
-    			RefreshPresentation();
-    		}
+		void MenuViewController::UpdateUiThread(float deltaSeconds)
+		{
+			ASSERT_UI_THREAD
 
-    		if(m_dragInProgress)
-    		{
-    			return;
-    		}
+			if(m_presentationDirty)
+			{
+				RefreshPresentation();
+			}
+
+			if(m_dragInProgress)
+			{
+				return;
+			}
 
 			AndroidSafeNativeThreadAttachment attached(m_nativeState);
 			JNIEnv* env = attached.envForThread;
@@ -109,23 +116,25 @@ namespace ExampleApp
 			static jmethodID isAnimatingMethod = env->GetMethodID(m_uiViewClass, "isAnimating", "()Z");
 			const bool isAnimating = env->CallBooleanMethod(m_uiView, isAnimatingMethod);
 
-    	    if(isAnimating)
-    	    {
-    	    	static jmethodID updateAnimationMethod = env->GetMethodID(m_uiViewClass, "updateAnimation", "(F)V");
-    			env->CallVoidMethod(m_uiView, updateAnimationMethod, deltaSeconds);
+			if(isAnimating)
+			{
+				static jmethodID updateAnimationMethod = env->GetMethodID(m_uiViewClass, "updateAnimation", "(F)V");
+				env->CallVoidMethod(m_uiView, updateAnimationMethod, deltaSeconds);
 
-    			if(m_menuViewModel.HasReactorControl())
-    	        {
-    				static jmethodID normalisedAnimationProgressMethod = env->GetMethodID(m_uiViewClass, "normalisedAnimationProgress", "()F");
-        			const float normalisedAnimationProgress = env->CallFloatMethod(m_uiView, normalisedAnimationProgressMethod);
-        			MenuViewController_TTY("Normalised animation progress: %f\n", normalisedAnimationProgress);
-    	            m_menuViewModel.UpdateOpenState(normalisedAnimationProgress);
-    	        }
-    	    }
-    	}
+				if(m_menuViewModel.HasReactorControl())
+				{
+					static jmethodID normalisedAnimationProgressMethod = env->GetMethodID(m_uiViewClass, "normalisedAnimationProgress", "()F");
+					const float normalisedAnimationProgress = env->CallFloatMethod(m_uiView, normalisedAnimationProgressMethod);
+					MenuViewController_TTY("Normalised animation progress: %f\n", normalisedAnimationProgress);
+					m_menuViewModel.UpdateOpenState(normalisedAnimationProgress);
+				}
+			}
+		}
 
 		void MenuViewController::HandleViewOpenCompleted()
 		{
+			ASSERT_UI_THREAD
+
 			Eegeo_ASSERT(!m_dragInProgress, "identity %d\n", Identity());
 
 			if(!m_menuViewModel.IsFullyOpen())
@@ -134,15 +143,17 @@ namespace ExampleApp
 				m_menuViewModel.Open();
 			}
 
-		    if(m_menuViewModel.HasReactorControl())
-		    {
-		    	MenuViewController_TTY("ReleaseReactorControl -- HandleViewOpenCompleted\n");
-		    	m_menuViewModel.ReleaseReactorControl();
-		    }
+			if(m_menuViewModel.HasReactorControl())
+			{
+				MenuViewController_TTY("ReleaseReactorControl -- HandleViewOpenCompleted\n");
+				m_menuViewModel.ReleaseReactorControl();
+			}
 		}
 
 		void MenuViewController::HandleViewCloseCompleted()
 		{
+			ASSERT_UI_THREAD
+
 			Eegeo_ASSERT(!m_dragInProgress, "identity %d\n", Identity());
 
 			if(!m_menuViewModel.IsFullyClosed())
@@ -151,26 +162,30 @@ namespace ExampleApp
 				m_menuViewModel.Close();
 			}
 
-		    if(m_menuViewModel.HasReactorControl())
-		    {
-		    	MenuViewController_TTY("ReleaseReactorControl -- HandleViewCloseCompleted\n");
-		    	m_menuViewModel.ReleaseReactorControl();
-		    }
+			if(m_menuViewModel.HasReactorControl())
+			{
+				MenuViewController_TTY("ReleaseReactorControl -- HandleViewCloseCompleted\n");
+				m_menuViewModel.ReleaseReactorControl();
+			}
 		}
 
 		Eegeo::Helpers::TIdentity MenuViewController::Identity() const
 		{
+			ASSERT_UI_THREAD
+
 			return static_cast<OpenableControlViewModel::IOpenableControlViewModel&>(m_menuViewModel).GetIdentity();
 		}
 
 		void MenuViewController::HandleViewClicked()
 		{
+			ASSERT_UI_THREAD
+
 			MenuViewController_TTY("MenuViewController::HandleViewClicked -- %d\n", Identity());
-		    if(!m_menuViewModel.TryAcquireReactorControl())
-		    {
-		    	MenuViewController_TTY("MenuViewController::HandleViewClicked -- reactor denied for %d!\n", Identity());
-		        return;
-		    }
+			if(!m_menuViewModel.TryAcquireReactorControl())
+			{
+				MenuViewController_TTY("MenuViewController::HandleViewClicked -- reactor denied for %d!\n", Identity());
+				return;
+			}
 
 			AndroidSafeNativeThreadAttachment attached(m_nativeState);
 			JNIEnv* env = attached.envForThread;
@@ -185,27 +200,31 @@ namespace ExampleApp
 				jmethodID animateToClosedOnScreen = env->GetMethodID(m_uiViewClass, "animateToClosedOnScreen", "()V");
 				env->CallVoidMethod(m_uiView, animateToClosedOnScreen);
 			}
-		    else
-		    {
-		    	MenuViewController_TTY("ReleaseReactorControl -- HandleViewClicked\n");
-		    	m_menuViewModel.ReleaseReactorControl();
-		    }
+			else
+			{
+				MenuViewController_TTY("ReleaseReactorControl -- HandleViewClicked\n");
+				m_menuViewModel.ReleaseReactorControl();
+			}
 		}
 
-    	bool MenuViewController::TryBeginDrag()
-    	{
-    		if(m_menuViewModel.TryAcquireReactorControl())
-    		{
-    			MenuViewController_TTY("MenuViewController::TryBeginDrag -- reactor granted for %d!\n", Identity());
-    			return true;
-    		}
+		bool MenuViewController::TryBeginDrag()
+		{
+			ASSERT_UI_THREAD
 
-    		MenuViewController_TTY("MenuViewController::TryBeginDrag -- reactor denied for %d!\n", Identity());
-    		return false;
-    	}
+			if(m_menuViewModel.TryAcquireReactorControl())
+			{
+				MenuViewController_TTY("MenuViewController::TryBeginDrag -- reactor granted for %d!\n", Identity());
+				return true;
+			}
+
+			MenuViewController_TTY("MenuViewController::TryBeginDrag -- reactor denied for %d!\n", Identity());
+			return false;
+		}
 
 		void MenuViewController::HandleDraggingViewStarted()
 		{
+			ASSERT_UI_THREAD
+
 			Eegeo_ASSERT(!m_dragInProgress, "identity %d\n", Identity());
 
 			{
@@ -213,11 +232,13 @@ namespace ExampleApp
 				Eegeo_ASSERT(acquiredReactorControl, "%d failed to acquire reactor control.\n", Identity());
 			}
 
-		    m_dragInProgress = true;
+			m_dragInProgress = true;
 		}
 
 		void MenuViewController::HandleDraggingViewInProgress(float normalisedDragState)
 		{
+			ASSERT_UI_THREAD
+
 			Eegeo_ASSERT(m_dragInProgress);
 
 			{
@@ -230,6 +251,8 @@ namespace ExampleApp
 
 		void MenuViewController::HandleDraggingViewCompleted()
 		{
+			ASSERT_UI_THREAD
+
 			Eegeo_ASSERT(m_dragInProgress);
 
 			{
@@ -242,16 +265,22 @@ namespace ExampleApp
 
 		void MenuViewController::ItemAddedCallback(ExampleApp::Menu::MenuItemModel& item)
 		{
+			ASSERT_UI_THREAD
+
 			m_presentationDirty = true;
 		}
 
 		void MenuViewController::ItemRemovedCallback(ExampleApp::Menu::MenuItemModel& item)
 		{
+			ASSERT_UI_THREAD
+
 			m_presentationDirty = true;
 		}
 
 		void MenuViewController::OnScreenStateChangedCallback(ScreenControlViewModel::IScreenControlViewModel& viewModel, float& onScreenState)
 		{
+			ASSERT_UI_THREAD
+
 			AndroidSafeNativeThreadAttachment attached(m_nativeState);
 			JNIEnv* env = attached.envForThread;
 
@@ -274,6 +303,8 @@ namespace ExampleApp
 
 		void MenuViewController::OpenStateChangedCallback(OpenableControlViewModel::IOpenableControlViewModel& viewModel, float& openState)
 		{
+			ASSERT_UI_THREAD
+
 			if(m_dragInProgress)
 			{
 				return;
@@ -299,20 +330,23 @@ namespace ExampleApp
 			}
 		}
 
-	    void MenuViewController::HandleItemSelected(const std::string& selection, const int index)
-	    {
-	    	const size_t numSections = m_menuViewModel.SectionsCount();
-	    	int currentIndex = 0;
-	    	for(size_t i = 0; i < numSections; ++ i)
-	    	{
-	    		Menu::IMenuSectionViewModel& section = m_menuViewModel.GetMenuSection(i);
-	    		const size_t numItemsInSection = section.Size();
-	    		for(size_t j = 0; j < numItemsInSection; ++ j)
-	    		{
-	    			if(currentIndex == index)
-	    			{
-	    				if(section.IsExpandable() && j == 0)
-	    				{
+		void MenuViewController::HandleItemSelected(const std::string& selection, const int index)
+		{
+			ASSERT_UI_THREAD
+
+			const size_t numSections = m_menuViewModel.SectionsCount();
+			int currentIndex = 0;
+			for(size_t i = 0; i < numSections; ++ i)
+			{
+				Menu::IMenuSectionViewModel& section = m_menuViewModel.GetMenuSection(i);
+				const size_t numItemsInSection = section.Size();
+
+				for(size_t j = 0; j < numItemsInSection; ++ j)
+				{
+					if(currentIndex == index)
+					{
+						if(section.IsExpandable() && j == 0)
+						{
 							if(section.IsExpanded())
 							{
 								section.Contract();
@@ -323,22 +357,26 @@ namespace ExampleApp
 							}
 							m_presentationDirty = true;
 							return;
-	    				}
-	    				else
+						}
+						else
 						{
 							int itemIndex = section.IsExpandable() ? j - 1 : j;
 							ExampleApp::Menu::MenuItemModel item = section.GetItemAtIndex(itemIndex);
+
 							item.Select();
+
 							return;
 						}
-	    			}
-		    		currentIndex++;
-	    		}
-	    	}
-	    }
+					}
+					currentIndex++;
+				}
+			}
+		}
 
 		void MenuViewController::RefreshPresentation()
 		{
+			ASSERT_UI_THREAD
+
 			AndroidSafeNativeThreadAttachment attached(m_nativeState);
 			JNIEnv* env = attached.envForThread;
 
@@ -368,8 +406,8 @@ namespace ExampleApp
 				{
 					int itemIndex = section.IsExpandable() ? childIndex-1 : childIndex;
 					std::string jsonData = section.IsExpandable() && childIndex == 0
-							? section.SerializeJson()
-							: section.GetItemAtIndex(itemIndex).SerializeJson();
+					                       ? section.SerializeJson()
+					                       : section.GetItemAtIndex(itemIndex).SerializeJson();
 					jstring jsonDataStr = env->NewStringUTF(jsonData.c_str());
 					env->SetObjectArrayElement(childNamesArray, currentChildIndex, jsonDataStr);
 					env->DeleteLocalRef(jsonDataStr);
@@ -390,7 +428,7 @@ namespace ExampleApp
 			jmethodID populateData = env->GetMethodID(m_uiViewClass, "populateData", "(J[Ljava/lang/String;[I[Z[Ljava/lang/String;)V");
 
 			env->CallVoidMethod(
-				m_uiView,
+			    m_uiView,
 			    populateData,
 			    (jlong)(this),
 			    groupNamesArray,
@@ -405,9 +443,8 @@ namespace ExampleApp
 			env->DeleteLocalRef(groupIsExpandableArray);
 
 			m_presentationDirty = false;
-
 		}
-    }
+	}
 }
 
 #undef MenuViewController_TTY

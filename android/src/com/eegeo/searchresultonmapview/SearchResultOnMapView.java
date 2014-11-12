@@ -24,136 +24,92 @@ public class SearchResultOnMapView implements View.OnClickListener
 	private float m_horizontalOffsetPx;
 	private TextView m_titleView;
 	private TextView m_detailsView;
-    
+
 	public SearchResultOnMapView(MainActivity activity, long nativeCallerPointer)
 	{
 		m_activity = activity;
 		m_nativeCallerPointer = nativeCallerPointer;
-		
-		final SearchResultOnMapView self = this;
-		
-		m_activity.runOnUiThread(new Runnable()
-		{
-			public void run()
-			{
-				m_uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
-				m_view = m_activity.getLayoutInflater().inflate(R.layout.search_result_on_map_layout, m_uiRoot, false);
-				m_view.setOnClickListener(self);
-				m_uiRoot.addView(m_view);
-				RelativeLayout.LayoutParams layout = (LayoutParams) m_view.getLayoutParams();
-				m_horizontalOffsetPx = layout.width / 2.f;
-				m_height = layout.height;
-				
-				m_view.setVisibility(View.GONE);
-				m_titleView = (TextView)m_view.findViewById(R.id.search_result_on_map_view_title);
-				m_detailsView = (TextView)m_view.findViewById(R.id.search_result_on_map_view_details);
-			}
-		});
+
+		m_uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
+		m_view = m_activity.getLayoutInflater().inflate(R.layout.search_result_on_map_layout, m_uiRoot, false);
+		m_view.setOnClickListener(this);
+		m_uiRoot.addView(m_view);
+		RelativeLayout.LayoutParams layout = (LayoutParams) m_view.getLayoutParams();
+		m_horizontalOffsetPx = layout.width / 2.f;
+		m_height = layout.height;
+
+		m_view.setVisibility(View.GONE);
+		m_titleView = (TextView)m_view.findViewById(R.id.search_result_on_map_view_title);
+		m_detailsView = (TextView)m_view.findViewById(R.id.search_result_on_map_view_details);
 	}
-	
+
 	public void destroy()
 	{
-		m_activity.runOnUiThread(new Runnable()
-		{
-			public void run()
-			{
-				m_uiRoot.removeView(m_view);
-			}
-		});
+		m_uiRoot.removeView(m_view);
 	}
 
 	public void showAtScreenLocation(final String title, final String details, final float x, final float y, final float openState)
 	{
 		m_x = x - m_horizontalOffsetPx;
 		m_y = y - m_height;
-		
-		m_activity.runOnUiThread(new Runnable()
-		{
-			public void run()
-			{
-				m_view.setEnabled(true);
-				m_titleView.setText(title);
-				m_detailsView.setText(details);
-				m_view.setVisibility(View.VISIBLE);
-				animateToAlpha(openState);
-				m_view.setX(m_x);
-				m_view.setY(m_y);
-			}
-		});	
+
+		m_view.setEnabled(true);
+		m_titleView.setText(title);
+		m_detailsView.setText(details);
+		m_view.setVisibility(View.VISIBLE);
+		animateToAlpha(openState);
+		m_view.setX(m_x);
+		m_view.setY(m_y);
 	}
 
 	public void updateScreenLocation(final float x, final float y)
 	{
 		m_x = x - m_horizontalOffsetPx;
 		m_y = y - m_height;
-		
-		m_activity.runOnUiThread(new Runnable()
-		{
-			public void run()
-			{
-				m_view.setX(m_x);
-				m_view.setY(m_y);
-			}
-		});	
+
+		m_view.setX(m_x);
+		m_view.setY(m_y);
 	}
-	
+
 	public void updateScreenVisibility(final float onScreenState)
 	{
-		m_activity.runOnUiThread(new Runnable()
-		{
-			public void run()
-			{
-				m_view.setAlpha(onScreenState);
-			}
-		});	
+		m_view.setAlpha(onScreenState);
 	}
-	
+
 	public void dismiss()
 	{
-		m_activity.runOnUiThread(new Runnable()
-		{
-			public void run()
-			{
-				animateToAlpha(0.f);
-			}
-		});	
+		animateToAlpha(0.f);
 	}
-	
+
 	public void onClick(View view)
 	{
-		m_activity.runOnNativeThread(new Runnable()
-		{
-			public void run()
-			{
-				SearchResultOnMapViewJniMethods.HandleClick(m_nativeCallerPointer);
-			}
-		});
-	}	
-	
+		SearchResultOnMapViewJniMethods.HandleClick(m_nativeCallerPointer);
+	}
+
 	private void animateToAlpha(final float alpha)
 	{
 		m_view.animate()
-			.alpha(alpha)
-			.setDuration(m_stateChangeAnimationTimeMilliseconds)
-			.setListener(new Animator.AnimatorListener() 
+		.alpha(alpha)
+		.setDuration(m_stateChangeAnimationTimeMilliseconds)
+		.setListener(new Animator.AnimatorListener()
+		{
+			public void onAnimationEnd(Animator animation)
 			{
-				public void onAnimationEnd(Animator animation)
+				if(alpha == 0.f)
 				{
-					if(alpha == 0.f)
-					{
-						m_view.setEnabled(false);
-						m_view.setX(-m_view.getWidth());
-						m_view.setY(-m_view.getHeight());
-					}
-					else
-					{
-						m_view.setEnabled(true);
-					}
+					m_view.setEnabled(false);
+					m_view.setX(-m_view.getWidth());
+					m_view.setY(-m_view.getHeight());
 				}
-				
-				public void onAnimationCancel(Animator animation) {}
-				public void onAnimationRepeat(Animator animation) {}	
-				public void onAnimationStart(Animator animation) {}
-			});
+				else
+				{
+					m_view.setEnabled(true);
+				}
+			}
+
+			public void onAnimationCancel(Animator animation) {}
+			public void onAnimationRepeat(Animator animation) {}
+			public void onAnimationStart(Animator animation) {}
+		});
 	}
 }

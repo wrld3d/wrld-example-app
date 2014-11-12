@@ -9,26 +9,26 @@
 
 namespace ExampleApp
 {
-    namespace WorldPins
-    {
-        class IWorldPinsService
-        {
-        public:
-            virtual ~IWorldPinsService() {}
-            
-            virtual WorldPinItemModel AddPin(IWorldPinSelectionHandler* pSelectionHandler,
-                                             const Eegeo::Space::LatLong& location,
-                                             int iconIndex) = 0;
-            
-            virtual void RemovePin(const WorldPinItemModel& pinItemModel) = 0;
-            
-            virtual void UpdatePinScale(const WorldPinItemModel& pinItemModel, float scale) = 0;
-            
-            virtual void GetPinEcefAndScreenLocations(const WorldPinItemModel& pinItemModel,
-                                                      Eegeo::dv3& ecefLocation,
-                                                      Eegeo::v2& screenLocation) const = 0;
-            
-            virtual bool HandleTouchTap(const Eegeo::v2& screenTapPoint) = 0;
-        };
-    }
+	namespace WorldPins
+	{
+		class IWorldPinsService
+		{
+		public:
+			virtual ~IWorldPinsService() {}
+
+			virtual WorldPinItemModel AddPin(IWorldPinSelectionHandler* pSelectionHandler,
+			                                 const Eegeo::Space::LatLong& location,
+			                                 int iconIndex) = 0;
+
+			virtual void RemovePin(const WorldPinItemModel& pinItemModel) = 0;
+
+			virtual void UpdatePinScale(const WorldPinItemModel& pinItemModel, float scale) = 0;
+
+			virtual void GetPinEcefAndScreenLocations(const WorldPinItemModel& pinItemModel,
+			        Eegeo::dv3& ecefLocation,
+			        Eegeo::v2& screenLocation) const = 0;
+
+			virtual bool HandleTouchTap(const Eegeo::v2& screenTapPoint) = 0;
+		};
+	}
 }

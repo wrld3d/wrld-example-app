@@ -7,24 +7,27 @@
 #include "Types.h"
 #include "FLattenButton.h"
 #include "FlattenButtonViewIncludes.h"
+#include "UiToNativeMessageBus.h"
+#include "NativeToUiMessageBus.h"
 
 namespace ExampleApp
 {
-    namespace FlattenButton
-    {
-        class FlattenButtonViewModule: public IFlattenButtonViewModule, private Eegeo::NonCopyable
-        {
-        private:
-        	FlattenButtonViewController* m_pController;
+	namespace FlattenButton
+	{
+		class FlattenButtonViewModule: public IFlattenButtonViewModule, private Eegeo::NonCopyable
+		{
+		private:
+			FlattenButtonViewController* m_pController;
 
-        public:
-        	FlattenButtonViewModule(
-            	AndroidNativeState& nativeState,
-				FlattenButton::IFlattenButtonModel& model,
-        		FlattenButton::IFlattenButtonViewModel& viewModel
-            );
+		public:
+			FlattenButtonViewModule(
+			    AndroidNativeState& nativeState,
+			    FlattenButton::IFlattenButtonViewModel& viewModel,
+			    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
+			    ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus
+			);
 
-            ~FlattenButtonViewModule();
-        };
-    }
+			~FlattenButtonViewModule();
+		};
+	}
 }

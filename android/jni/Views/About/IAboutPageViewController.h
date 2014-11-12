@@ -4,8 +4,8 @@
 
 namespace ExampleApp
 {
-    namespace AboutPage
-    {
+	namespace AboutPage
+	{
 		class IAboutPageViewController
 		{
 		public:

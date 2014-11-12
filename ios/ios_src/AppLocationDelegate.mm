@@ -9,21 +9,21 @@ Eegeo::iOS::iOSLocationService* m_piOSLocationService;
 UIViewController* m_pUIViewController;
 
 -(void)start:(Eegeo::iOS::iOSLocationService *)piOSLocationService
-            :(UIViewController*)pViewController
+    :(UIViewController*)pViewController
 {
-    m_piOSLocationService = piOSLocationService;
-    m_pUIViewController = pViewController;
-    
+	m_piOSLocationService = piOSLocationService;
+	m_pUIViewController = pViewController;
+
 	m_pLocationManager = [[CLLocationManager alloc] init];
 	m_pLocationManager.delegate = self;
 	m_pLocationManager.desiredAccuracy = kCLLocationAccuracyBest;
 	m_pLocationManager.headingFilter = kCLHeadingFilterNone;
-    
-    if([m_pLocationManager respondsToSelector:@selector(requestWhenInUseAuthorization)])
-    {
-        [m_pLocationManager requestWhenInUseAuthorization];
-    }
-    
+
+	if([m_pLocationManager respondsToSelector:@selector(requestWhenInUseAuthorization)])
+	{
+		[m_pLocationManager requestWhenInUseAuthorization];
+	}
+
 	[m_pLocationManager startUpdatingLocation];
 	[m_pLocationManager startUpdatingHeading];
 }
@@ -37,7 +37,7 @@ UIViewController* m_pUIViewController;
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
 {
 	CLLocation *currentLocation = newLocation;
-    
+
 	if (currentLocation != nil)
 	{
 		double latDegrees = currentLocation.coordinate.latitude;
@@ -57,26 +57,26 @@ UIViewController* m_pUIViewController;
 {
 	if (newHeading.headingAccuracy >= 0)
 	{
-        float heading = newHeading.trueHeading;
-        
-        if (m_pUIViewController.interfaceOrientation == UIInterfaceOrientationLandscapeLeft)
-        {
-            heading -= 90.f;
-        }
-        else if (m_pUIViewController.interfaceOrientation == UIInterfaceOrientationLandscapeRight)
-        {
-            heading += 90.f;
-        }
-        else if (m_pUIViewController.interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown)
-        {
-            heading += 180.f;
-        }
-        else
-        {
-            heading += 0.f;
-        }
-        
-        heading = fmodf((heading + 360.f), 360.f);
+		float heading = newHeading.trueHeading;
+
+		if (m_pUIViewController.interfaceOrientation == UIInterfaceOrientationLandscapeLeft)
+		{
+			heading -= 90.f;
+		}
+		else if (m_pUIViewController.interfaceOrientation == UIInterfaceOrientationLandscapeRight)
+		{
+			heading += 90.f;
+		}
+		else if (m_pUIViewController.interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown)
+		{
+			heading += 180.f;
+		}
+		else
+		{
+			heading += 0.f;
+		}
+
+		heading = fmodf((heading + 360.f), 360.f);
 		m_piOSLocationService->UpdateHeading(heading);
 	}
 	else
@@ -88,10 +88,10 @@ UIViewController* m_pUIViewController;
 @end
 
 AppLocationDelegate::AppLocationDelegate(Eegeo::iOS::iOSLocationService& iOSLocationService,
-                                         UIViewController& viewController)
+        UIViewController& viewController)
 {
 	m_pAppLocationDelegateLocationListener = [[AppLocationDelegateLocationListener alloc] init];
-    [m_pAppLocationDelegateLocationListener start:&iOSLocationService :&viewController];
+	[m_pAppLocationDelegateLocationListener start:&iOSLocationService :&viewController];
 }
 
 AppLocationDelegate::~AppLocationDelegate()

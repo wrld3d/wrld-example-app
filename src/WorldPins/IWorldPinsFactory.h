@@ -8,15 +8,15 @@
 
 namespace ExampleApp
 {
-    namespace WorldPins
-    {
-        class IWorldPinsFactory
-        {
-        public:
-            virtual ~IWorldPinsFactory() { }
-            
-            virtual Eegeo::Pins::Pin* CreatePin(const Eegeo::Space::LatLong& location,
-                                                int iconIndex) = 0;
-        };
-    }
+	namespace WorldPins
+	{
+		class IWorldPinsFactory
+		{
+		public:
+			virtual ~IWorldPinsFactory() { }
+
+			virtual Eegeo::Pins::Pin* CreatePin(const Eegeo::Space::LatLong& location,
+			                                    int iconIndex) = 0;
+		};
+	}
 }

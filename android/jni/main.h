@@ -13,7 +13,10 @@ extern "C"
 	JNIEXPORT void JNICALL Java_com_eegeo_mobileexampleapp_NativeJniCalls_pauseNativeCode(JNIEnv* jenv, jobject obj);
 	JNIEXPORT void JNICALL Java_com_eegeo_mobileexampleapp_NativeJniCalls_resumeNativeCode(JNIEnv* jenv, jobject obj);
 	JNIEXPORT void JNICALL Java_com_eegeo_mobileexampleapp_NativeJniCalls_setNativeSurface(JNIEnv* jenv, jobject obj, jobject surface);
+	JNIEXPORT void JNICALL Java_com_eegeo_mobileexampleapp_NativeJniCalls_stopUpdatingNativeCode(JNIEnv* jenv, jobject obj);
 	JNIEXPORT void JNICALL Java_com_eegeo_mobileexampleapp_NativeJniCalls_updateNativeCode(JNIEnv* jenv, jobject obj, jfloat deltaSeconds);
+	JNIEXPORT void JNICALL Java_com_eegeo_mobileexampleapp_NativeJniCalls_updateUiViewCode(JNIEnv* jenv, jobject obj, jfloat deltaSeconds);
+	JNIEXPORT void JNICALL Java_com_eegeo_mobileexampleapp_NativeJniCalls_destroyApplicationUi(JNIEnv* jenv, jobject obj);
 
 	//input
 	JNIEXPORT void JNICALL Java_com_eegeo_mobileexampleapp_EegeoSurfaceView_processNativePointerDown(JNIEnv* jenv, jobject obj,

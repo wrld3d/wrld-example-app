@@ -8,22 +8,22 @@
 
 namespace ExampleApp
 {
-    namespace AboutPage
-    {
-        class AboutPageViewModule: public IAboutPageViewModule, private Eegeo::NonCopyable
-        {
-        private:
-            AboutPageViewController* m_pAboutPageViewController;
-            
-        public:
-            AboutPageViewModule(IAboutPageModel& aboutPageModel,
-                                IAboutPageViewModel& aboutPageViewModel);
-            
-            ~AboutPageViewModule();
-            
-            AboutPageViewController& GetAboutPageViewController() const;
-            
-            AboutPageView& GetAboutPageView() const;
-        };
-    }
+	namespace AboutPage
+	{
+		class AboutPageViewModule: public IAboutPageViewModule, private Eegeo::NonCopyable
+		{
+		private:
+			AboutPageViewController* m_pAboutPageViewController;
+
+		public:
+			AboutPageViewModule(IAboutPageModel& aboutPageModel,
+			                    IAboutPageViewModel& aboutPageViewModel);
+
+			~AboutPageViewModule();
+
+			AboutPageViewController& GetAboutPageViewController() const;
+
+			AboutPageView& GetAboutPageView() const;
+		};
+	}
 }

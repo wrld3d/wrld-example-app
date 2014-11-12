@@ -10,48 +10,48 @@
 
 namespace ExampleApp
 {
-    namespace OpenableControlViewModel
-    {
-        class OpenableControlViewModelBase : public IOpenableControlViewModel
-        {
-        private:
-            float m_openState;
-            Reaction::IReactionControllerModel& m_reactionControllerModel;
-            
-            Eegeo::Helpers::CallbackCollection2<IOpenableControlViewModel&, float> m_openStateChangedCallbacks;
-        
-            bool TryAcquireOpenableControl();
-            
-            void ReleaseOpenableControl();
-            
-        protected:
-            OpenableControlViewModelBase(Reaction::IReactionControllerModel& reactionControllerModel);
-            
-        public:
-            
-            ~OpenableControlViewModelBase();
-            
-            bool HasReactorControl() const;
-            
-            bool TryAcquireReactorControl();
-            
-            void ReleaseReactorControl();
-            
-            bool Open();
-            
-            bool Close();
-            
-            void UpdateOpenState(float openState);
-            
-            void InsertOpenStateChangedCallback(Eegeo::Helpers::ICallback2<IOpenableControlViewModel&, float>& callback);
-            
-            void RemoveOpenStateChangedCallback(Eegeo::Helpers::ICallback2<IOpenableControlViewModel&, float>& callback);
-            
-            bool IsFullyOpen() const;
-            
-            bool IsFullyClosed() const;
-            
-            float OpenState() const;
-        };
-    }
+	namespace OpenableControlViewModel
+	{
+		class OpenableControlViewModelBase : public IOpenableControlViewModel
+		{
+		private:
+			float m_openState;
+			Reaction::IReactionControllerModel& m_reactionControllerModel;
+
+			Eegeo::Helpers::CallbackCollection2<IOpenableControlViewModel&, float> m_openStateChangedCallbacks;
+
+			bool TryAcquireOpenableControl();
+
+			void ReleaseOpenableControl();
+
+		protected:
+			OpenableControlViewModelBase(Reaction::IReactionControllerModel& reactionControllerModel);
+
+		public:
+
+			~OpenableControlViewModelBase();
+
+			bool HasReactorControl() const;
+
+			bool TryAcquireReactorControl();
+
+			void ReleaseReactorControl();
+
+			bool Open();
+
+			bool Close();
+
+			void UpdateOpenState(float openState);
+
+			void InsertOpenStateChangedCallback(Eegeo::Helpers::ICallback2<IOpenableControlViewModel&, float>& callback);
+
+			void RemoveOpenStateChangedCallback(Eegeo::Helpers::ICallback2<IOpenableControlViewModel&, float>& callback);
+
+			bool IsFullyOpen() const;
+
+			bool IsFullyClosed() const;
+
+			float OpenState() const;
+		};
+	}
 }

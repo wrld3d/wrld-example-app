@@ -4,11 +4,11 @@
 
 namespace ExampleApp
 {
-    namespace InitialExperience
-    {
-        class IInitialExperienceModule;
-        class IInitialExperienceModel;
-        class IInitialExperienceStep;
-        class IInitialExperienceController;
-    }
+	namespace InitialExperience
+	{
+		class IInitialExperienceModule;
+		class IInitialExperienceModel;
+		class IInitialExperienceStep;
+		class IInitialExperienceController;
+	}
 }

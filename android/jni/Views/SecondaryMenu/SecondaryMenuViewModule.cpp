@@ -4,38 +4,45 @@
 #include "Menu.h"
 #include "SecondaryMenuViewModule.h"
 #include "SecondaryMenuViewController.h"
+#include "AndroidAppThreadAssertionMacros.h"
 
 namespace ExampleApp
 {
-    namespace SecondaryMenu
-    {
-    	SecondaryMenuViewModule::SecondaryMenuViewModule(
-    		const std::string& viewName,
-			AndroidNativeState& nativeState,
-			Menu::IMenuModel& menuModel,
-			Menu::IMenuViewModel& menuViewModel,
-			Search::ISearchService& searchService,
-			Search::ISearchQueryPerformer& searchQueryPerformer
+	namespace SecondaryMenu
+	{
+		SecondaryMenuViewModule::SecondaryMenuViewModule(
+		    const std::string& viewName,
+		    AndroidNativeState& nativeState,
+		    Menu::IMenuModel& menuModel,
+		    Menu::IMenuViewModel& menuViewModel,
+		    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
+		    ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus
 		)
-        {
-            m_pMenuViewController = Eegeo_NEW(SecondaryMenuViewController)(
-				viewName,
-				nativeState,
-				menuModel,
-				menuViewModel,
-				searchService,
-				searchQueryPerformer
-			);
-        }
-        
-    	SecondaryMenuViewModule::~SecondaryMenuViewModule()
-        {
-            Eegeo_DELETE m_pMenuViewController;
-        }
-        
-        Menu::IMenuViewController& SecondaryMenuViewModule::GetMenuViewController() const
-        {
-            return *m_pMenuViewController;
-        }
-    }
+		{
+			ASSERT_UI_THREAD
+
+			m_pMenuViewController = Eegeo_NEW(SecondaryMenuViewController)(
+			                            viewName,
+			                            nativeState,
+			                            menuModel,
+			                            menuViewModel,
+			                            uiToNativeMessageBus,
+			                            nativeToUiMessageBus
+			                        );
+		}
+
+		SecondaryMenuViewModule::~SecondaryMenuViewModule()
+		{
+			ASSERT_UI_THREAD
+
+			Eegeo_DELETE m_pMenuViewController;
+		}
+
+		Menu::IMenuViewController& SecondaryMenuViewModule::GetMenuViewController() const
+		{
+			ASSERT_UI_THREAD
+
+			return *m_pMenuViewController;
+		}
+	}
 }

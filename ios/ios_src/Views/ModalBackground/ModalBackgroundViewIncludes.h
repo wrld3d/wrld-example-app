@@ -7,8 +7,8 @@
 
 namespace ExampleApp
 {
-    namespace ModalBackground
-    {
-        class IModalBackgroundViewModule;
-    }
+	namespace ModalBackground
+	{
+		class IModalBackgroundViewModule;
+	}
 }

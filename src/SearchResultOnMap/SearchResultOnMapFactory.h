@@ -8,18 +8,18 @@
 
 namespace ExampleApp
 {
-    namespace SearchResultOnMap
-    {
-        class SearchResultOnMapFactory : public ISearchResultOnMapFactory, private Eegeo::NonCopyable
-        {
-            SearchResultPoi::ISearchResultPoiViewModel& m_searchResultPoiViewModel;
-            
-        public:
-            SearchResultOnMapFactory(SearchResultPoi::ISearchResultPoiViewModel& searchResultPoiViewModel);
-            
-            ~SearchResultOnMapFactory();
-            
-            SearchResultOnMapItemModel* CreateSearchResultOnMapItemModel(Search::SearchResultModel& searchResultModel) const;
-        };
-    }
+	namespace SearchResultOnMap
+	{
+		class SearchResultOnMapFactory : public ISearchResultOnMapFactory, private Eegeo::NonCopyable
+		{
+			SearchResultPoi::ISearchResultPoiViewModel& m_searchResultPoiViewModel;
+
+		public:
+			SearchResultOnMapFactory(SearchResultPoi::ISearchResultPoiViewModel& searchResultPoiViewModel);
+
+			~SearchResultOnMapFactory();
+
+			SearchResultOnMapItemModel* CreateSearchResultOnMapItemModel(Search::SearchResultModel& searchResultModel) const;
+		};
+	}
 }

@@ -5,12 +5,12 @@ import android.content.DialogInterface;
 
 import com.eegeo.mobileexampleapp.MainActivity;
 
-public class PreLoadInitialExperience 
-{	
+public class PreLoadInitialExperience
+{
 	private MainActivity m_activity = null;
 	private long m_nativeCallerPointer;
 	private static AlertDialog m_options = null;
-	
+
 	public PreLoadInitialExperience(MainActivity activity, long nativeCallerPointer)
 	{
 		m_activity = activity;
@@ -21,18 +21,18 @@ public class PreLoadInitialExperience
 			public void run()
 			{
 				AlertDialog.Builder builder = new AlertDialog.Builder(m_activity);
-				
+
 				builder.setTitle("Pre-load San Francisco?");
 				builder.setMessage("Select 'Yes' to pre-load data for the city of San Francisco. This message will not appear again.");
 				builder.setPositiveButton("Yes", createClickListener(true));
 				builder.setNegativeButton("No", createClickListener(false));
 				builder.setCancelable(false);
-				
+
 				m_options = builder.show();
 			}
 		});
 	}
-	
+
 	public void destroy()
 	{
 		m_activity.runOnUiThread(new Runnable()
@@ -47,7 +47,7 @@ public class PreLoadInitialExperience
 			}
 		});
 	}
-	
+
 	private DialogInterface.OnClickListener createClickListener(final boolean shouldPreload)
 	{
 		return new DialogInterface.OnClickListener()
@@ -59,7 +59,7 @@ public class PreLoadInitialExperience
 			}
 		};
 	}
-	
+
 	private void handleSelection(final boolean shouldPreload)
 	{
 		m_activity.runOnNativeThread(new Runnable()
@@ -69,7 +69,7 @@ public class PreLoadInitialExperience
 				PreLoadInitialExperienceJniMethods.HandleSelection(m_nativeCallerPointer, shouldPreload);
 			}
 		});
-		
+
 		m_options = null;
 	}
 }

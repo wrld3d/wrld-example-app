@@ -8,15 +8,15 @@
 
 namespace ExampleApp
 {
-    namespace Search
-    {
-        class ISearchResultParser
-        {
-        public:
-            virtual ~ISearchResultParser() { }
-            
-            virtual void ParseSearchResults(const std::string& serialized,
-                                            std::vector<SearchResultModel>& out_results) = 0;
-        };
-    }
+	namespace Search
+	{
+		class ISearchResultParser
+		{
+		public:
+			virtual ~ISearchResultParser() { }
+
+			virtual void ParseSearchResults(const std::string& serialized,
+			                                std::vector<SearchResultModel>& out_results) = 0;
+		};
+	}
 }

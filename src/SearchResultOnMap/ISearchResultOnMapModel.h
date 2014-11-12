@@ -4,12 +4,12 @@
 
 namespace ExampleApp
 {
-    namespace SearchResultOnMap
-    {
-        class ISearchResultOnMapModel
-        {
-        public:
-            virtual ~ISearchResultOnMapModel() { }
-        };
-    }
+	namespace SearchResultOnMap
+	{
+		class ISearchResultOnMapModel
+		{
+		public:
+			virtual ~ISearchResultOnMapModel() { }
+		};
+	}
 }

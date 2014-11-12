@@ -18,42 +18,47 @@
 #include "SearchQuery.h"
 #include "CategorySearch.h"
 #include "SearchResultMenu.h"
+#include "ICallback.h"
+#include "UiToNativeMessageBus.h"
+#include "NativeToUiMessageBus.h"
 
 namespace ExampleApp
 {
-    namespace SearchMenu
-    {
+	namespace SearchMenu
+	{
 		class SearchMenuViewController : public Menu::MenuViewController
 		{
-            Search::ISearchService& m_searchService;
-            Eegeo::Helpers::ICallback1<const Search::SearchQuery&>* m_pSearchResultQueryIssuedCallback;
-            Eegeo::Helpers::ICallback2<const Search::SearchQuery&, const std::vector<Search::SearchResultModel> &>* m_pSearchResultReceivedCallback;
-            Search::ISearchQueryPerformer& m_queryPerformer;
-            CategorySearch::ICategorySearchRepository& m_categorySearchRepository;
-            SearchResultMenu::ISearchResultMenuViewModel& m_searchResultMenuViewModel;
+			Eegeo::Helpers::TCallback1<SearchMenuViewController, const Search::SearchQueryPerformedMessage&> m_searchQueryIssuedCallback;
+			Eegeo::Helpers::TCallback1<SearchMenuViewController, const Search::SearchQueryResponseReceivedMessage&> m_searchResultReceivedCallback;
+
+			ExampleAppMessaging::UiToNativeMessageBus& m_uiToNativeMessageBus;
+			ExampleAppMessaging::NativeToUiMessageBus& m_nativeToUiMessageBus;
+
+			CategorySearch::ICategorySearchRepository& m_categorySearchRepository;
+			SearchResultMenu::ISearchResultMenuViewModel& m_searchResultMenuViewModel;
 
 			bool TryBeginDrag();
 
 			void HandleViewClicked();
 
-			void HandleSearchQueryIssued(const Search::SearchQuery& query);
+			void HandleSearchQueryIssued(const Search::SearchQueryPerformedMessage& message);
 
-			void HandleSearchResultReceived(const Search::SearchQuery& query, const std::vector<Search::SearchResultModel>& results);
+			void HandleSearchResultReceived(const Search::SearchQueryResponseReceivedMessage& message);
 
-            std::string GetHeaderTextForQuery(const Search::SearchQuery& query);
+			std::string GetHeaderTextForQuery(const Search::SearchQuery& query);
 
-        	void RefreshViewHeader(const Search::SearchQuery& headerText, bool queryPending, int numResult);
+			void RefreshViewHeader(const Search::SearchQuery& headerText, bool queryPending, int numResult);
 
 		public:
-		    SearchMenuViewController(
-				const std::string& viewClassName,
-				AndroidNativeState& nativeState,
-				Menu::IMenuModel& menuModel,
-				Menu::IMenuViewModel& menuViewModel,
-				Search::ISearchService& searchService,
-                Search::ISearchQueryPerformer& queryPerformer,
-	            CategorySearch::ICategorySearchRepository& categorySearchRepository,
-	            SearchResultMenu::ISearchResultMenuViewModel& searchResultMenuViewModel
+			SearchMenuViewController(
+			    const std::string& viewClassName,
+			    AndroidNativeState& nativeState,
+			    Menu::IMenuModel& menuModel,
+			    Menu::IMenuViewModel& menuViewModel,
+			    CategorySearch::ICategorySearchRepository& categorySearchRepository,
+			    SearchResultMenu::ISearchResultMenuViewModel& searchResultMenuViewModel,
+			    ExampleApp::ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
+			    ExampleApp::ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus
 			);
 
 			~SearchMenuViewController();

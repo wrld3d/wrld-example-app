@@ -9,14 +9,14 @@
 
 namespace ExampleApp
 {
-    namespace Search
-    {
-        class ISearchResultRepository : public Repository::IRepositoryModel<SearchResultModel*>
-        {
-        public:
-            virtual ~ISearchResultRepository() { }
-            
-            virtual void RemoveFirstResultWithIdentifier(const std::string& identifier) = 0;
-        };
-    }
+	namespace Search
+	{
+		class ISearchResultRepository : public Repository::IRepositoryModel<SearchResultModel*>
+		{
+		public:
+			virtual ~ISearchResultRepository() { }
+
+			virtual void RemoveFirstResultWithIdentifier(const std::string& identifier) = 0;
+		};
+	}
 }

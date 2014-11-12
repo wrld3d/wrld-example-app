@@ -4,17 +4,17 @@
 
 namespace ExampleApp
 {
-    namespace Menu
-    {
-        MenuScreenControl::MenuScreenControl(Eegeo::Helpers::TIdentity identity)
-        : ScreenControlViewModel::ScreenControlViewModelBase(false)
-        , m_identity(identity)
-        {
-        }
-        
-        Eegeo::Helpers::TIdentity MenuScreenControl::GetIdentity() const
-        {
-            return m_identity;
-        }
-    }
+	namespace Menu
+	{
+		MenuScreenControl::MenuScreenControl(Eegeo::Helpers::TIdentity identity)
+			: ScreenControlViewModel::ScreenControlViewModelBase(false)
+			, m_identity(identity)
+		{
+		}
+
+		Eegeo::Helpers::TIdentity MenuScreenControl::GetIdentity() const
+		{
+			return m_identity;
+		}
+	}
 }

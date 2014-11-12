@@ -3,29 +3,30 @@
 #include "CategorySearchMenuOption.h"
 #include "ISearchQueryPerformer.h"
 #include "IMenuViewModel.h"
+#include "CategorySearchSelectedMessage.h"
 
 namespace ExampleApp
 {
-    namespace CategorySearch
-    {
-        CategorySearchMenuOption::CategorySearchMenuOption(CategorySearchModel model,
-                                                           Search::ISearchQueryPerformer& searchQueryPerformer,
-                                                           ExampleApp::Menu::IMenuViewModel& menuViewModel)
-        : m_model(model)
-        , m_searchQueryPerformer(searchQueryPerformer)
-        , m_menuViewModel(menuViewModel)
-        {
-        }
-        
-        CategorySearchMenuOption::~CategorySearchMenuOption()
-        {
-            
-        }
-        
-        void CategorySearchMenuOption::Select()
-        {
-            m_menuViewModel.Close();
-            m_searchQueryPerformer.PerformSearchQuery(m_model.SearchCategory(), true);
-        }
-    }
+	namespace CategorySearch
+	{
+		CategorySearchMenuOption::CategorySearchMenuOption(CategorySearchModel model,
+		        ExampleApp::Menu::IMenuViewModel& menuViewModel,
+		        ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus)
+			: m_model(model)
+			, m_menuViewModel(menuViewModel)
+			, m_uiToNativeMessageBus(uiToNativeMessageBus)
+		{
+		}
+
+		CategorySearchMenuOption::~CategorySearchMenuOption()
+		{
+
+		}
+
+		void CategorySearchMenuOption::Select()
+		{
+			m_menuViewModel.Close();
+			m_uiToNativeMessageBus.Publish(CategorySearchSelectedMessage(m_model.SearchCategory()));
+		}
+	}
 }

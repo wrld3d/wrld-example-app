@@ -4,12 +4,12 @@
 
 namespace ExampleApp
 {
-    namespace Compass
-    {
-        class ICompassModel;
-        class ICompassModule;
-        class ICompassViewModel;
-        class ICompassUpdateController;
-        class CompassViewModel;
-    }
+	namespace Compass
+	{
+		class ICompassModel;
+		class ICompassModule;
+		class ICompassViewModel;
+		class ICompassUpdateController;
+		class CompassViewModel;
+	}
 }

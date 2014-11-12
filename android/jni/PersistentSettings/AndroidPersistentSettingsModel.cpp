@@ -1,15 +1,18 @@
 // Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
 #include "AndroidPersistentSettingsModel.h"
+#include "AndroidAppThreadAssertionMacros.h"
 
 namespace ExampleApp
 {
-    namespace PersistentSettings
-    {
+	namespace PersistentSettings
+	{
 		AndroidPersistentSettingsModel::AndroidPersistentSettingsModel(AndroidNativeState& nativeState)
-		: m_nativeState(nativeState)
+			: m_nativeState(nativeState)
 		{
-    		AndroidSafeNativeThreadAttachment attached(m_nativeState);
+			ASSERT_NATIVE_THREAD
+
+			AndroidSafeNativeThreadAttachment attached(m_nativeState);
 			JNIEnv* env = attached.envForThread;
 
 			jstring strClassName = env->NewStringUTF("com.eegeo.persistentstate.PersistentState");
@@ -20,17 +23,19 @@ namespace ExampleApp
 			jmethodID ctor = env->GetMethodID(m_jniApiClass, "<init>", "(Lcom/eegeo/mobileexampleapp/MainActivity;J)V");
 
 			jobject instance = env->NewObject(
-				m_jniApiClass,
-				ctor,
-				m_nativeState.activity,
-				(jlong)(this)
-			);
+			                       m_jniApiClass,
+			                       ctor,
+			                       m_nativeState.activity,
+			                       (jlong)(this)
+			                   );
 
 			m_jniApiInstance = env->NewGlobalRef(instance);
 		}
 
 		AndroidPersistentSettingsModel::~AndroidPersistentSettingsModel()
 		{
+			ASSERT_NATIVE_THREAD
+
 			AndroidSafeNativeThreadAttachment attached(m_nativeState);
 			JNIEnv* env = attached.envForThread;
 
@@ -40,6 +45,8 @@ namespace ExampleApp
 
 		bool AndroidPersistentSettingsModel::TryGetValue(const std::string& name, bool& out_value) const
 		{
+			ASSERT_NATIVE_THREAD
+
 			if(HasValue(name))
 			{
 				AndroidSafeNativeThreadAttachment attached(m_nativeState);
@@ -56,6 +63,8 @@ namespace ExampleApp
 
 		bool AndroidPersistentSettingsModel::TryGetValue(const std::string& name, int& out_value) const
 		{
+			ASSERT_NATIVE_THREAD
+
 			if(HasValue(name))
 			{
 				AndroidSafeNativeThreadAttachment attached(m_nativeState);
@@ -72,6 +81,8 @@ namespace ExampleApp
 
 		bool AndroidPersistentSettingsModel::TryGetValue(const std::string& name, double& out_value) const
 		{
+			ASSERT_NATIVE_THREAD
+
 			if(HasValue(name))
 			{
 				AndroidSafeNativeThreadAttachment attached(m_nativeState);
@@ -88,6 +99,8 @@ namespace ExampleApp
 
 		bool AndroidPersistentSettingsModel::TryGetValue(const std::string& name, std::string& out_value) const
 		{
+			ASSERT_NATIVE_THREAD
+
 			if(HasValue(name))
 			{
 				AndroidSafeNativeThreadAttachment attached(m_nativeState);
@@ -107,21 +120,29 @@ namespace ExampleApp
 
 		void AndroidPersistentSettingsModel::SetValue(const std::string& name, bool value)
 		{
+			ASSERT_NATIVE_THREAD
+
 			SetValue(name, value, "setBoolean", "(Ljava/lang/String;Z)V");
 		}
 
 		void AndroidPersistentSettingsModel::SetValue(const std::string& name, int value)
 		{
+			ASSERT_NATIVE_THREAD
+
 			SetValue(name, value, "setInt", "(Ljava/lang/String;I)V");
 		}
 
 		void AndroidPersistentSettingsModel::SetValue(const std::string& name, double value)
 		{
+			ASSERT_NATIVE_THREAD
+
 			SetValue(name, value, "setDouble", "(Ljava/lang/String;D)V");
 		}
 
 		void AndroidPersistentSettingsModel::SetValue(const std::string& name, const std::string& value)
 		{
+			ASSERT_NATIVE_THREAD
+
 			AndroidSafeNativeThreadAttachment attached(m_nativeState);
 			JNIEnv* env = attached.envForThread;
 			jstring keyJstr = env->NewStringUTF(name.c_str());
@@ -134,6 +155,8 @@ namespace ExampleApp
 
 		void AndroidPersistentSettingsModel::ClearAll()
 		{
+			ASSERT_NATIVE_THREAD
+
 			AndroidSafeNativeThreadAttachment attached(m_nativeState);
 			JNIEnv* env = attached.envForThread;
 			jmethodID methodId = env->GetMethodID(m_jniApiClass, "clearAll", "()V");
@@ -151,15 +174,17 @@ namespace ExampleApp
 			return result;
 		}
 
-        template <typename TValue>
-        void AndroidPersistentSettingsModel::SetValue(const std::string& name, TValue value, const std::string& method, const std::string& signature)
-        {
+		template <typename TValue>
+		void AndroidPersistentSettingsModel::SetValue(const std::string& name, TValue value, const std::string& method, const std::string& signature)
+		{
+			ASSERT_NATIVE_THREAD
+
 			AndroidSafeNativeThreadAttachment attached(m_nativeState);
 			JNIEnv* env = attached.envForThread;
 			jstring keyJstr = env->NewStringUTF(name.c_str());
 			jmethodID methodId = env->GetMethodID(m_jniApiClass, method.c_str(), signature.c_str());
 			env->CallVoidMethod(m_jniApiInstance, methodId, keyJstr, value);
 			env->DeleteLocalRef(keyJstr);
-        }
-    }
+		}
+	}
 }

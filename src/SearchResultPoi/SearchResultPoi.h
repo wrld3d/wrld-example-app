@@ -4,9 +4,9 @@
 
 namespace ExampleApp
 {
-    namespace SearchResultPoi
-    {
-        class ISearchResultPoiModule;
-        class ISearchResultPoiViewModel;
-    }
+	namespace SearchResultPoi
+	{
+		class ISearchResultPoiModule;
+		class ISearchResultPoiViewModel;
+	}
 }

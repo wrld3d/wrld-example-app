@@ -21,41 +21,41 @@ UILongPressGestureRecognizer* gestureTouch;
 
 -(void) bindToViewController:(ViewController*)pViewController :(AppInputDelegate*)pAppInputDelegate :(float)width :(float)height :(float)pixelScale
 {
-    m_screenWidth = width;
-    m_screenHeight = height;
-    m_pixelScale = pixelScale;
-    
+	m_screenWidth = width;
+	m_screenHeight = height;
+	m_pixelScale = pixelScale;
+
 	m_pViewController = pViewController;
 	m_pAppInputDelegate = pAppInputDelegate;
-    
-    UIView* pView = [m_pViewController view];
-    
-    [pView setMultipleTouchEnabled: true];
-    
+
+	UIView* pView = [m_pViewController view];
+
+	[pView setMultipleTouchEnabled: true];
+
 	gestureRotation = [[UIRotationGestureRecognizer alloc] initWithTarget:self action:@selector(gestureRotation_Callback:)];
 	[gestureRotation setDelegate:m_pViewController];
 	gestureRotation.cancelsTouchesInView = FALSE;
 	[pView addGestureRecognizer: gestureRotation];
 	[gestureRotation release];
-    
+
 	gesturePinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(gesturePinch_Callback:)];
 	[gesturePinch setDelegate:m_pViewController];
 	gesturePinch.cancelsTouchesInView = FALSE;
 	[pView addGestureRecognizer: gesturePinch];
 	[gesturePinch release];
-    
+
 	gesturePan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(gesturePan_Callback:)];
 	[gesturePan setDelegate:m_pViewController];
 	gesturePan.cancelsTouchesInView = FALSE;
 	[pView addGestureRecognizer: gesturePan];
 	[gesturePan release];
-    
+
 	gestureTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gestureTap_Callback:)];
 	[gestureTap setDelegate:m_pViewController];
 	gestureTap.cancelsTouchesInView = FALSE;
 	[pView addGestureRecognizer: gestureTap];
 	[gestureTap release];
-    
+
 	gestureDoubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gestureDoubleTap_Callback:)];
 	[gestureDoubleTap setDelegate:m_pViewController];
 	gestureDoubleTap.cancelsTouchesInView = FALSE;
@@ -63,24 +63,24 @@ UILongPressGestureRecognizer* gestureTouch;
 	gestureDoubleTap.numberOfTapsRequired = 2;
 	[pView addGestureRecognizer: gestureDoubleTap];
 	[gestureDoubleTap release];
-    
-    gestureTouch = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(gestureTouch_Callback:)];
-    [gestureTouch setDelegate:m_pViewController];
-    gestureTouch.cancelsTouchesInView = FALSE;
-    gestureTouch.minimumPressDuration = 0;
-    [pView addGestureRecognizer: gestureTouch];
+
+	gestureTouch = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(gestureTouch_Callback:)];
+	[gestureTouch setDelegate:m_pViewController];
+	gestureTouch.cancelsTouchesInView = FALSE;
+	gestureTouch.minimumPressDuration = 0;
+	[pView addGestureRecognizer: gestureTouch];
 	[gestureTouch release];
-    
+
 }
 
 -(void)gestureRotation_Callback:(UIRotationGestureRecognizer*)recognizer
 {
 	AppInterface::RotateData data;
-    
+
 	data.rotation	= recognizer.rotation;
 	data.numTouches	= recognizer.numberOfTouches;
 	data.velocity = recognizer.velocity;
-    
+
 	if (recognizer.state == UIGestureRecognizerStateBegan)
 	{
 		m_pAppInputDelegate->Event_TouchRotate_Start (data);
@@ -99,19 +99,19 @@ UILongPressGestureRecognizer* gestureTouch;
 {
 	float dist;
 	static bool reset = true;
-    
+
 	if (recognizer.numberOfTouches == 2)
 	{
 		CGPoint point0 = [recognizer locationOfTouch:0 inView:m_pViewController.view];
 		CGPoint point1 = [recognizer locationOfTouch:1 inView:m_pViewController.view];
-        
+
 		Eegeo::v2 p0(point0.x, point0.y);
 		Eegeo::v2 p1(point1.x, point1.y);
-        
+
 		Eegeo::v2 v2Dist = Eegeo::v2::Sub(p0, p1);
-        
+
 		dist = v2Dist.Length();
-        
+
 		if (reset)
 		{
 			m_previousDist = dist;
@@ -123,16 +123,16 @@ UILongPressGestureRecognizer* gestureTouch;
 		dist = m_previousDist;
 		reset = true;
 	}
-    
+
 	AppInterface::PinchData data;
-    
+
 	if (recognizer.state == UIGestureRecognizerStateBegan)
 	{
 		m_previousDist = dist;
-        
+
 		data.scale	= 0.0f;
 		m_pAppInputDelegate->Event_TouchPinch_Start(data);
-        
+
 	}
 	else if (recognizer.state == UIGestureRecognizerStateChanged)
 	{
@@ -147,7 +147,7 @@ UILongPressGestureRecognizer* gestureTouch;
 		data.scale	= recognizer.scale;
 		m_pAppInputDelegate->Event_TouchPinch_End (data);
 	}
-    
+
 	m_previousDist = dist;
 }
 
@@ -166,7 +166,7 @@ UILongPressGestureRecognizer* gestureTouch;
 			extentsMin.x = std::min(extentsMin.x, point.x);
 			extentsMin.y = std::min(extentsMin.y, point.y);
 		}
-        
+
 		CGPoint extents = extentsMax;
 		extents.x -= extentsMin.x;
 		extents.y -= extentsMin.y;
@@ -180,25 +180,25 @@ UILongPressGestureRecognizer* gestureTouch;
 	CGPoint position = [recognizer translationInView:m_pViewController.view];
 	CGPoint positionAbs = [recognizer locationInView:m_pViewController.view];
 	CGPoint velocity = [recognizer velocityInView:m_pViewController.view];
-    
+
 	positionAbs.x *= m_pixelScale;
 	positionAbs.y *= m_pixelScale;
-    position.x *= m_pixelScale;
-    position.y *= m_pixelScale;
-    velocity.x *= m_pixelScale;
-    velocity.y *= m_pixelScale;
-    
+	position.x *= m_pixelScale;
+	position.y *= m_pixelScale;
+	velocity.x *= m_pixelScale;
+	velocity.y *= m_pixelScale;
+
 	AppInterface::PanData data;
-    
+
 	data.pointRelative	= *(Eegeo::v2*)&position;
-    float majorScreenDimension = fmaxf(m_screenHeight, m_screenWidth);
+	float majorScreenDimension = fmaxf(m_screenHeight, m_screenWidth);
 	data.pointRelativeNormalized = (data.pointRelative)/majorScreenDimension;
 	data.pointAbsolute	= *(Eegeo::v2*)&positionAbs;
 	data.velocity	= *(Eegeo::v2*)&velocity;
 	data.majorScreenDimension = majorScreenDimension;
 	data.numTouches = recognizer.numberOfTouches;
 	data.touchExtents = [self getGestureTouchExtents :recognizer];
-    
+
 	if (recognizer.state == UIGestureRecognizerStateBegan)
 	{
 		m_pAppInputDelegate->Event_TouchPan_Start (data);
@@ -218,16 +218,16 @@ UILongPressGestureRecognizer* gestureTouch;
 	if (recognizer.state == UIGestureRecognizerStateEnded)
 	{
 		CGPoint position = [recognizer locationInView:m_pViewController.view];
-        
+
 		position.x *= m_pixelScale;
 		position.y *= m_pixelScale;
-        
+
 		AppInterface::TapData data;
-        
+
 		data.point	= *(Eegeo::v2*)&position;
-        
+
 		m_pAppInputDelegate->Event_TouchTap (data);
-        
+
 	}
 }
 
@@ -236,55 +236,55 @@ UILongPressGestureRecognizer* gestureTouch;
 	if (recognizer.state == UIGestureRecognizerStateEnded)
 	{
 		CGPoint position = [recognizer locationInView:m_pViewController.view];
-        
+
 		position.x *= m_pixelScale;
 		position.y *= m_pixelScale;
-        
+
 		AppInterface::TapData data;
-        
+
 		data.point	= *(Eegeo::v2*)&position;
-        
+
 		m_pAppInputDelegate->Event_TouchDoubleTap (data);
-        
+
 	}
 }
 
 -(void)gestureTouch_Callback:(UILongPressGestureRecognizer*)recognizer
 {
-    AppInterface::TouchData data;
-    
-    CGPoint position = [recognizer locationInView:m_pViewController.view];
-    position.x *= m_pixelScale;
-    position.y *= m_pixelScale;
-    data.point	= *(Eegeo::v2*)&position;
-    
-    if(recognizer.state == UIGestureRecognizerStateBegan)
-    {
-        m_pAppInputDelegate->Event_TouchDown(data);
-    }
-    else if(recognizer.state == UIGestureRecognizerStateChanged)
-    {
-        m_pAppInputDelegate->Event_TouchMove(data);
-    }
-    else if(recognizer.state == UIGestureRecognizerStateEnded)
-    {
-        m_pAppInputDelegate->Event_TouchUp(data);
-    }
+	AppInterface::TouchData data;
+
+	CGPoint position = [recognizer locationInView:m_pViewController.view];
+	position.x *= m_pixelScale;
+	position.y *= m_pixelScale;
+	data.point	= *(Eegeo::v2*)&position;
+
+	if(recognizer.state == UIGestureRecognizerStateBegan)
+	{
+		m_pAppInputDelegate->Event_TouchDown(data);
+	}
+	else if(recognizer.state == UIGestureRecognizerStateChanged)
+	{
+		m_pAppInputDelegate->Event_TouchMove(data);
+	}
+	else if(recognizer.state == UIGestureRecognizerStateEnded)
+	{
+		m_pAppInputDelegate->Event_TouchUp(data);
+	}
 }
 
 @end
 
 AppInputDelegate::AppInputDelegate(
-                                   ExampleApp::MobileExampleApp& exampleApp,
-                                   ViewController& viewController,
-                                   float width,
-                                   float height,
-                                   float pixelScale
-                                   )
+    ExampleApp::MobileExampleApp& exampleApp,
+    ViewController& viewController,
+    float width,
+    float height,
+    float pixelScale
+)
 	:m_exampleApp(exampleApp)
 {
 	m_pAppInputDelegateGestureListener = [[AppInputDelegateGestureListener alloc] init];
-    [m_pAppInputDelegateGestureListener bindToViewController:&viewController :this :width :height :pixelScale];
+	[m_pAppInputDelegateGestureListener bindToViewController:&viewController :this :width :height :pixelScale];
 }
 
 AppInputDelegate::~AppInputDelegate()

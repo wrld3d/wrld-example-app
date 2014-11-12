@@ -9,17 +9,17 @@
 
 @interface AppLocationDelegateLocationListener : NSObject<CLLocationManagerDelegate>
 {
-    
+
 }
 @end
 
 class AppLocationDelegate : protected Eegeo::NonCopyable
 {
-    AppLocationDelegateLocationListener* m_pAppLocationDelegateLocationListener;
-    
+	AppLocationDelegateLocationListener* m_pAppLocationDelegateLocationListener;
+
 public:
 	AppLocationDelegate(Eegeo::iOS::iOSLocationService& iOSLocationService,
-                        UIViewController& viewController);
-    
-    ~AppLocationDelegate();
+	                    UIViewController& viewController);
+
+	~AppLocationDelegate();
 };

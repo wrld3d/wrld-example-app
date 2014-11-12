@@ -6,14 +6,14 @@
 
 namespace ExampleApp
 {
-    namespace SearchResultPoi
-    {
-        class ISearchResultPoiViewModule
-        {
-        public:
-            virtual ~ISearchResultPoiViewModule() { }
-            
-            virtual ISearchResultPoiViewController& GetSearchResultPoiViewController() const = 0;
-        };
-    }
+	namespace SearchResultPoi
+	{
+		class ISearchResultPoiViewModule
+		{
+		public:
+			virtual ~ISearchResultPoiViewModule() { }
+
+			virtual ISearchResultPoiViewController& GetSearchResultPoiViewController() const = 0;
+		};
+	}
 }

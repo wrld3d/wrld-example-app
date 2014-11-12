@@ -6,14 +6,14 @@
 
 namespace ExampleApp
 {
-    namespace SearchResultOnMap
-    {
-        class ISearchResultOnMapInFocusController
-        {
-        public:
-            virtual ~ISearchResultOnMapInFocusController() { }
-            
-            virtual void Update(float dt, const Eegeo::dv3& ecefInterestPoint) = 0;
-        };
-    }
+	namespace SearchResultOnMap
+	{
+		class ISearchResultOnMapInFocusController
+		{
+		public:
+			virtual ~ISearchResultOnMapInFocusController() { }
+
+			virtual void Update(float dt, const Eegeo::dv3& ecefInterestPoint) = 0;
+		};
+	}
 }

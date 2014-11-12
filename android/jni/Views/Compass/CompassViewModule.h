@@ -7,24 +7,27 @@
 #include "Types.h"
 #include "Compass.h"
 #include "CompassViewIncludes.h"
+#include "NativeToUiMessageBus.h"
+#include "UiToNativeMessageBus.h"
 
 namespace ExampleApp
 {
-    namespace Compass
-    {
-        class CompassViewModule: public ICompassViewModule, private Eegeo::NonCopyable
-        {
-        private:
-        	CompassViewController* m_pController;
+	namespace Compass
+	{
+		class CompassViewModule: public ICompassViewModule, private Eegeo::NonCopyable
+		{
+		private:
+			CompassViewController* m_pController;
 
-        public:
-        	CompassViewModule(
-            	AndroidNativeState& nativeState,
-        		Compass::ICompassModel& model,
-        		Compass::ICompassViewModel& viewModel
-            );
+		public:
+			CompassViewModule(
+			    AndroidNativeState& nativeState,
+			    Compass::ICompassViewModel& viewModel,
+			    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
+			    ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus
+			);
 
-            ~CompassViewModule();
-        };
-    }
+			~CompassViewModule();
+		};
+	}
 }

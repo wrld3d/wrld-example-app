@@ -4,10 +4,10 @@
 
 namespace ExampleApp
 {
-    namespace PlaceJumps
-    {
-        class IPlaceJumpsModule;
-        class IPlaceJumpModel;
-        class IPlaceJumpController;
-    }
+	namespace PlaceJumps
+	{
+		class IPlaceJumpsModule;
+		class IPlaceJumpModel;
+		class IPlaceJumpController;
+	}
 }

@@ -11,8 +11,8 @@
 
 @interface AboutPageView : UIView
 {
-    __weak AboutPageViewController* m_pController;
-    float m_stateChangeAnimationTimeSeconds;
+	__weak AboutPageViewController* m_pController;
+	float m_stateChangeAnimationTimeSeconds;
 }
 
 - (id) initWithController:(AboutPageViewController *)controller;

@@ -8,18 +8,18 @@
 
 namespace ExampleApp
 {
-    namespace InitialExperience
-    {
-        class InitialExperienceController : public IInitialExperienceController, private Eegeo::NonCopyable
-        {
-            IInitialExperienceModel& m_initialExperienceModel;
-            
-        public:
-            InitialExperienceController(IInitialExperienceModel& initialExperienceModel);
-            
-            ~InitialExperienceController();
-            
-            void Update(float deltaSeconds);
-        };
-    }
+	namespace InitialExperience
+	{
+		class InitialExperienceController : public IInitialExperienceController, private Eegeo::NonCopyable
+		{
+			IInitialExperienceModel& m_initialExperienceModel;
+
+		public:
+			InitialExperienceController(IInitialExperienceModel& initialExperienceModel);
+
+			~InitialExperienceController();
+
+			void Update(float deltaSeconds);
+		};
+	}
 }

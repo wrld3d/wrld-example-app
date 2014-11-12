@@ -8,17 +8,17 @@
 
 namespace ExampleApp
 {
-    namespace SearchResultPoi
-    {
-        class SearchResultPoiOpenableControl : public OpenableControlViewModel::OpenableControlViewModelBase, private Eegeo::NonCopyable
-        {
-            Eegeo::Helpers::TIdentity m_identity;
-            
-        public:
-            SearchResultPoiOpenableControl(Eegeo::Helpers::TIdentity identity,
-                                           Reaction::IReactionControllerModel& reactionControllerModel);
-            
-            Eegeo::Helpers::TIdentity GetIdentity() const;
-        };
-    }
+	namespace SearchResultPoi
+	{
+		class SearchResultPoiOpenableControl : public OpenableControlViewModel::OpenableControlViewModelBase, private Eegeo::NonCopyable
+		{
+			Eegeo::Helpers::TIdentity m_identity;
+
+		public:
+			SearchResultPoiOpenableControl(Eegeo::Helpers::TIdentity identity,
+			                               Reaction::IReactionControllerModel& reactionControllerModel);
+
+			Eegeo::Helpers::TIdentity GetIdentity() const;
+		};
+	}
 }

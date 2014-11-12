@@ -11,7 +11,7 @@
 
 @interface SearchResultMenuView : MenuView
 {
-    __weak MenuViewController* m_pController;
+	__weak MenuViewController* m_pController;
 }
 
 - (id) setController:(MenuViewController *)controller;

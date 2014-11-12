@@ -4,22 +4,25 @@
 #include "Types.h"
 #include "IAboutPageViewModel.h"
 #include "IAboutPageModel.h"
+#include "AndroidAppThreadAssertionMacros.h"
 
 namespace ExampleApp
 {
-    namespace AboutPage
-    {
+	namespace AboutPage
+	{
 		AboutPageViewController::AboutPageViewController(
-			AndroidNativeState& nativeState,
-            AboutPage::IAboutPageModel& aboutPageModel,
-			IAboutPageViewModel& aboutPageViewModel
+		    AndroidNativeState& nativeState,
+		    AboutPage::IAboutPageModel& aboutPageModel,
+		    IAboutPageViewModel& aboutPageViewModel
 		)
-		: m_nativeState(nativeState)
-		, m_aboutPageModel(aboutPageModel)
-		, m_aboutPageViewModel(aboutPageViewModel)
-        , m_pAboutPageOpenedCallback(Eegeo_NEW(Eegeo::Helpers::TCallback0<AboutPageViewController>)(this, &AboutPageViewController::AboutPageOpenedCallback))
-        , m_pAboutPageClosedCallback(Eegeo_NEW(Eegeo::Helpers::TCallback0<AboutPageViewController>)(this, &AboutPageViewController::AboutPageClosedCallback))
+			: m_nativeState(nativeState)
+			, m_aboutPageModel(aboutPageModel)
+			, m_aboutPageViewModel(aboutPageViewModel)
+			, m_pAboutPageOpenedCallback(Eegeo_NEW(Eegeo::Helpers::TCallback0<AboutPageViewController>)(this, &AboutPageViewController::AboutPageOpenedCallback))
+			, m_pAboutPageClosedCallback(Eegeo_NEW(Eegeo::Helpers::TCallback0<AboutPageViewController>)(this, &AboutPageViewController::AboutPageClosedCallback))
 		{
+			ASSERT_UI_THREAD
+
 			m_aboutPageViewModel.InsertOpenedCallback(*m_pAboutPageOpenedCallback);
 			m_aboutPageViewModel.InsertClosedCallback(*m_pAboutPageClosedCallback);
 
@@ -34,22 +37,24 @@ namespace ExampleApp
 			jmethodID uiViewCtor = env->GetMethodID(m_uiViewClass, "<init>", "(Lcom/eegeo/mobileexampleapp/MainActivity;J)V");
 
 			jobject instance = env->NewObject(
-				m_uiViewClass,
-				uiViewCtor,
-				m_nativeState.activity,
-				(jlong)(this)
-			);
+			                       m_uiViewClass,
+			                       uiViewCtor,
+			                       m_nativeState.activity,
+			                       (jlong)(this)
+			                   );
 
 			m_uiView = env->NewGlobalRef(instance);
 		}
 
 		AboutPageViewController::~AboutPageViewController()
 		{
+			ASSERT_UI_THREAD
+
 			m_aboutPageViewModel.RemoveOpenedCallback(*m_pAboutPageOpenedCallback);
 			m_aboutPageViewModel.RemoveClosedCallback(*m_pAboutPageClosedCallback);
 
-            Eegeo_DELETE m_pAboutPageOpenedCallback;
-            Eegeo_DELETE m_pAboutPageClosedCallback;
+			Eegeo_DELETE m_pAboutPageOpenedCallback;
+			Eegeo_DELETE m_pAboutPageClosedCallback;
 
 			AndroidSafeNativeThreadAttachment attached(m_nativeState);
 			JNIEnv* env = attached.envForThread;
@@ -61,6 +66,8 @@ namespace ExampleApp
 
 		void AboutPageViewController::HandleCloseButtonPressed()
 		{
+			ASSERT_UI_THREAD
+
 			if(m_aboutPageViewModel.IsOpen())
 			{
 				m_aboutPageViewModel.Close();
@@ -69,6 +76,8 @@ namespace ExampleApp
 
 		void AboutPageViewController::AboutPageOpenedCallback()
 		{
+			ASSERT_UI_THREAD
+
 			if(!m_aboutPageViewModel.TryAcquireReactorControl())
 			{
 				if(m_aboutPageViewModel.IsOpen())
@@ -95,11 +104,13 @@ namespace ExampleApp
 
 		void AboutPageViewController::AboutPageClosedCallback()
 		{
+			ASSERT_UI_THREAD
+
 			AndroidSafeNativeThreadAttachment attached(m_nativeState);
 			JNIEnv* env = attached.envForThread;
 
 			jmethodID dismissPoiInfo = env->GetMethodID(m_uiViewClass, "dismissAboutPage", "()V");
 			env->CallVoidMethod(m_uiView, dismissPoiInfo);
 		}
-    }
+	}
 }

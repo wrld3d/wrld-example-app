@@ -12,14 +12,14 @@
 
 - (id)setController:(MenuViewController*)controller
 {
-    self = [super setController:controller];
-     
-    if(self)
-    {
-        m_pController = controller;
-    }
-    
-    return self;
+	self = [super setController:controller];
+
+	if(self)
+	{
+		m_pController = controller;
+	}
+
+	return self;
 }
 
 - (void)initialiseViews:(size_t)numberOfSections numberOfCells:(size_t)numberOfCells
@@ -87,80 +87,80 @@
 
 - (void)dealloc
 {
-    [self.pTableview removeFromSuperview];
-    [self.pTableview release];
-    
-    [self.pDragTab removeFromSuperview];
-    [self.pDragTab release];
-    
-    [self.pMenuHeaderStub removeFromSuperview];
-    [self.pMenuHeaderStub release];
-    
-    [self.pMenuContainer removeFromSuperview];
-    [self.pMenuContainer release];
-    
-    [self removeFromSuperview];
-    [super dealloc];
+	[self.pTableview removeFromSuperview];
+	[self.pTableview release];
+
+	[self.pDragTab removeFromSuperview];
+	[self.pDragTab release];
+
+	[self.pMenuHeaderStub removeFromSuperview];
+	[self.pMenuHeaderStub release];
+
+	[self.pMenuContainer removeFromSuperview];
+	[self.pMenuContainer release];
+
+	[self removeFromSuperview];
+	[super dealloc];
 }
 
 - (void) setOnScreenStateToIntermediateValue:(float)onScreenState
 {
-    if([self isAnimating])
-    {
-        return;
-    }
-    
-    self.hidden = false;
-    [self setOffscreenPartsHiddenState:false];
-    
-    float newX = m_offscreenX + ((m_closedX - m_offscreenX) * onScreenState);
-    if(fabs(self.frame.origin.x - newX) < 0.01f)
-    {
-        return;
-    }
-    
-    CGRect f = self.frame;
-    f.origin.x = newX;
-    self.frame = f;
+	if([self isAnimating])
+	{
+		return;
+	}
+
+	self.hidden = false;
+	[self setOffscreenPartsHiddenState:false];
+
+	float newX = m_offscreenX + ((m_closedX - m_offscreenX) * onScreenState);
+	if(fabs(self.frame.origin.x - newX) < 0.01f)
+	{
+		return;
+	}
+
+	CGRect f = self.frame;
+	f.origin.x = newX;
+	self.frame = f;
 }
 
 - (void) updateDrag:(CGPoint)absolutePosition velocity:(CGPoint)absoluteVelocity
 {
-    CGRect f = self.frame;
-    f.origin.x = m_controlStartPos.x + (absolutePosition.x - m_dragStartPos.x);
-    
-    if(f.origin.x > m_mainContainerOffscreenOffsetX)
-    {
-        f.origin.x = m_mainContainerOffscreenOffsetX;
-    }
-    
-    if(f.origin.x < m_closedX)
-    {
-        f.origin.x = m_closedX;
-    }
-    
-    float normalisedDragState = (self.frame.origin.x + (-m_closedX)) / (abs(m_openX - m_closedX));
-    normalisedDragState = Eegeo::Clamp(normalisedDragState, 0.f, 1.f);
-    
-    [m_pMenuViewController handleDraggingViewInProgress:normalisedDragState];
-    self.frame = f;
-    
-    [self.layer removeAllAnimations];
+	CGRect f = self.frame;
+	f.origin.x = m_controlStartPos.x + (absolutePosition.x - m_dragStartPos.x);
+
+	if(f.origin.x > m_mainContainerOffscreenOffsetX)
+	{
+		f.origin.x = m_mainContainerOffscreenOffsetX;
+	}
+
+	if(f.origin.x < m_closedX)
+	{
+		f.origin.x = m_closedX;
+	}
+
+	float normalisedDragState = (self.frame.origin.x + (-m_closedX)) / (abs(m_openX - m_closedX));
+	normalisedDragState = Eegeo::Clamp(normalisedDragState, 0.f, 1.f);
+
+	[m_pMenuViewController handleDraggingViewInProgress:normalisedDragState];
+	self.frame = f;
+
+	[self.layer removeAllAnimations];
 }
 
 - (void) completeDrag:(CGPoint)absolutePosition velocity:(CGPoint)absoluteVelocity
 {
-    const bool startedClosed = m_controlStartPos.x == m_closedX;
-    const float minimumXValueToClose = startedClosed ? 0.35f : 0.65f;
-    bool close = absolutePosition.x < ((m_dragTabWidth+m_mainContainerWidth) * minimumXValueToClose);
-    
-    const float velocityMagitude = abs(absoluteVelocity.x);
-    if(velocityMagitude > (200 * m_pixelScale))
-    {
-        close = absoluteVelocity.x < 0 ? true : false;
-    }
-    
-    [self animateToX:(close ? m_closedX : m_openX)];
+	const bool startedClosed = m_controlStartPos.x == m_closedX;
+	const float minimumXValueToClose = startedClosed ? 0.35f : 0.65f;
+	bool close = absolutePosition.x < ((m_dragTabWidth+m_mainContainerWidth) * minimumXValueToClose);
+
+	const float velocityMagitude = abs(absoluteVelocity.x);
+	if(velocityMagitude > (200 * m_pixelScale))
+	{
+		close = absoluteVelocity.x < 0 ? true : false;
+	}
+
+	[self animateToX:(close ? m_closedX : m_openX)];
 }
 
 @end

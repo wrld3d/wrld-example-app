@@ -6,66 +6,66 @@
 #include "ISearchQueryPerformer.h"
 #include "IMenuViewModel.h"
 #include "UIColors.h"
+#include "NativeToUiMessageBus.h"
 
 @implementation SearchViewController
 
 - (id)initWithParams:(UITextField*)pTextView
-                    :(ExampleApp::Search::ISearchQueryPerformer*) pSearchQueryPerformer
-                    :(ExampleApp::Search::ISearchService*) pSearchService
-                    :(ExampleApp::Menu::IMenuViewModel*) pMenuViewModel
+    :(ExampleApp::Search::ISearchQueryPerformer*) pSearchQueryPerformer
+    :(ExampleApp::ExampleAppMessaging::NativeToUiMessageBus*) pNativeToUiMessageBus
+    :(ExampleApp::Menu::IMenuViewModel*) pMenuViewModel
 {
-    if(self = [super init])
-    {
-        self.pTextView = pTextView;
-        self.view = pTextView;
-        self.pTextView.borderStyle = UITextBorderStyleRoundedRect;
-        self.pTextView.returnKeyType = UIReturnKeySearch;
-        
-        m_returnPressed = false;
-        m_keyboardActive = false;
-        
-        m_pSearchQueryPerformer = pSearchQueryPerformer;
-        m_pSearchService = pSearchService;
-        m_pMenuViewModel = pMenuViewModel;
-        
-        m_pInterop = Eegeo_NEW(ExampleApp::SecondaryMenu::SearchViewControllerInterop)(self, *pMenuViewModel, *m_pSearchService);
-        
-        [[NSNotificationCenter defaultCenter]
-         addObserver:self
-         selector:@selector(keyboardDidChangeFrame:)
-         name:UIKeyboardDidChangeFrameNotification
-         object:nil];
-        
-        [self.pTextView setDelegate:self];
-    }
-    
-    return self;
+	if(self = [super init])
+	{
+		self.pTextView = pTextView;
+		self.view = pTextView;
+		self.pTextView.borderStyle = UITextBorderStyleRoundedRect;
+		self.pTextView.returnKeyType = UIReturnKeySearch;
+
+		m_returnPressed = false;
+		m_keyboardActive = false;
+
+		m_pSearchQueryPerformer = pSearchQueryPerformer;
+		m_pMenuViewModel = pMenuViewModel;
+
+		m_pInterop = Eegeo_NEW(ExampleApp::SecondaryMenu::SearchViewControllerInterop)(self, *pMenuViewModel, *pNativeToUiMessageBus);
+
+		[[NSNotificationCenter defaultCenter]
+		 addObserver:self
+		 selector:@selector(keyboardDidChangeFrame:)
+		 name:UIKeyboardDidChangeFrameNotification
+		 object:nil];
+
+		[self.pTextView setDelegate:self];
+	}
+
+	return self;
 }
 
 - (void)dealloc
 {
-    [[NSNotificationCenter defaultCenter]
-     removeObserver:self
-     name:UIKeyboardDidChangeFrameNotification
-     object:nil];
-    
-    Eegeo_DELETE m_pInterop;
-    
-    [self.pTextView release];
-    
-    [super dealloc];
+	[[NSNotificationCenter defaultCenter]
+	 removeObserver:self
+	 name:UIKeyboardDidChangeFrameNotification
+	 object:nil];
+
+	Eegeo_DELETE m_pInterop;
+
+	[self.pTextView release];
+
+	[super dealloc];
 }
 
 - (void) enableEdit
 {
-    [self.pTextView setEnabled:YES];
-    self.pTextView.textColor = [UIColor blackColor];
+	[self.pTextView setEnabled:YES];
+	self.pTextView.textColor = [UIColor blackColor];
 }
 
 - (void) disableEdit
 {
-    [self.pTextView setEnabled:NO];
-    self.pTextView.textColor = [UIColor lightGrayColor];
+	[self.pTextView setEnabled:NO];
+	self.pTextView.textColor = [UIColor lightGrayColor];
 }
 
 - (void) removeSeachKeyboard
@@ -88,10 +88,10 @@
 {
 	m_keyboardActive = true;
 	m_returnPressed = false;
-    
-    textField.layer.borderColor = ExampleApp::Helpers::ColorPalette::MainHudColor.CGColor;
-    textField.layer.borderWidth = 2.0;
-    textField.layer.cornerRadius = 10.0;
+
+	textField.layer.borderColor = ExampleApp::Helpers::ColorPalette::MainHudColor.CGColor;
+	textField.layer.borderWidth = 2.0;
+	textField.layer.cornerRadius = 10.0;
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -104,20 +104,20 @@
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
 	m_keyboardActive = false;
-    
-    textField.layer.borderColor = [[UIColor clearColor] CGColor];
-    textField.layer.borderWidth = 1.0;
-    textField.layer.cornerRadius = 10.0;
-    
-    if (!m_returnPressed || [self.pTextView.text isEqualToString:@""])
+
+	textField.layer.borderColor = [[UIColor clearColor] CGColor];
+	textField.layer.borderWidth = 1.0;
+	textField.layer.cornerRadius = 10.0;
+
+	if (!m_returnPressed || [self.pTextView.text isEqualToString:@""])
 	{
-        return;
+		return;
 	}
-	
-    std::string searchString = [self.pTextView.text UTF8String];
-    m_pSearchQueryPerformer->PerformSearchQuery(searchString, false);
-    
-    m_pMenuViewModel->Close();
+
+	std::string searchString = [self.pTextView.text UTF8String];
+	m_pSearchQueryPerformer->PerformSearchQuery(searchString, false);
+
+	m_pMenuViewModel->Close();
 }
 
 @end

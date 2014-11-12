@@ -8,16 +8,16 @@
 
 namespace ExampleApp
 {
-    namespace Menu
-    {
-        class MenuOpenableControl : public OpenableControlViewModel::OpenableControlViewModelBase, private Eegeo::NonCopyable
-        {
-            Eegeo::Helpers::TIdentity m_identity;
-            
-        public:
-            MenuOpenableControl(Eegeo::Helpers::TIdentity identity, Reaction::IReactionControllerModel& reactionControllerModel);
-            
-            Eegeo::Helpers::TIdentity GetIdentity() const;
-        };
-    }
+	namespace Menu
+	{
+		class MenuOpenableControl : public OpenableControlViewModel::OpenableControlViewModelBase, private Eegeo::NonCopyable
+		{
+			Eegeo::Helpers::TIdentity m_identity;
+
+		public:
+			MenuOpenableControl(Eegeo::Helpers::TIdentity identity, Reaction::IReactionControllerModel& reactionControllerModel);
+
+			Eegeo::Helpers::TIdentity GetIdentity() const;
+		};
+	}
 }

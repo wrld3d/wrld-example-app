@@ -6,14 +6,14 @@
 
 namespace ExampleApp
 {
-    namespace AboutPage
-    {
-        class IAboutPageViewModule
-        {
-        public:
-            virtual ~IAboutPageViewModule() { }
-            
-            virtual IAboutPageViewController& GetAboutPageViewController() const = 0;
-        };
-    }
+	namespace AboutPage
+	{
+		class IAboutPageViewModule
+		{
+		public:
+			virtual ~IAboutPageViewModule() { }
+
+			virtual IAboutPageViewController& GetAboutPageViewController() const = 0;
+		};
+	}
 }

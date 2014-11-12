@@ -7,9 +7,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.SystemClock;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.SurfaceHolder;
-import android.view.View;
 import android.app.Activity;
 
 
@@ -21,10 +19,11 @@ public class BackgroundThreadActivity extends MainActivity
 	private ThreadedUpdateRunner m_threadedRunner;
 	private Thread m_updater;
 
-	static {
+	static
+	{
 		System.loadLibrary("native-activity");
 	}
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
@@ -43,8 +42,6 @@ public class BackgroundThreadActivity extends MainActivity
 		m_threadedRunner = new ThreadedUpdateRunner(false);
 		m_updater = new Thread(m_threadedRunner);
 		m_updater.start();
-		
-		
 
 		m_threadedRunner.blockUntilThreadStartedRunning();
 
@@ -71,14 +68,14 @@ public class BackgroundThreadActivity extends MainActivity
 	protected void onResume()
 	{
 		super.onResume();
-		
+
 		runOnNativeThread(new Runnable()
 		{
 			public void run()
 			{
 				NativeJniCalls.resumeNativeCode();
 				m_threadedRunner.start();
-				
+
 				if(m_surfaceHolder != null && m_surfaceHolder.getSurface() != null)
 				{
 					NativeJniCalls.setNativeSurface(m_surfaceHolder.getSurface());
@@ -106,7 +103,20 @@ public class BackgroundThreadActivity extends MainActivity
 	protected void onDestroy()
 	{
 		super.onDestroy();
-		
+
+		runOnNativeThread(new Runnable()
+		{
+			public void run()
+			{
+				NativeJniCalls.stopUpdatingNativeCode();
+				m_threadedRunner.flagUpdatingNativeCodeStopped();
+			}
+		});
+
+		m_threadedRunner.blockUntilThreadHasStoppedUpdatingPlatform();
+
+		NativeJniCalls.destroyApplicationUi();
+
 		runOnNativeThread(new Runnable()
 		{
 			public void run()
@@ -118,15 +128,16 @@ public class BackgroundThreadActivity extends MainActivity
 		});
 
 		m_threadedRunner.blockUntilThreadHasDestroyedPlatform();
+
 		m_nativeAppWindowPtr = 0;
 	}
-	
+
 	@Override
-	public void onBackPressed() 
+	public void onBackPressed()
 	{
-	    moveTaskToBack(true);
+		moveTaskToBack(true);
 	}
-	
+
 	@Override
 	public void surfaceCreated(SurfaceHolder holder)
 	{
@@ -136,7 +147,6 @@ public class BackgroundThreadActivity extends MainActivity
 	@Override
 	public void surfaceDestroyed(SurfaceHolder holder)
 	{
-
 		runOnNativeThread(new Runnable()
 		{
 			public void run()
@@ -150,17 +160,39 @@ public class BackgroundThreadActivity extends MainActivity
 	public void surfaceChanged(SurfaceHolder holder, int format, int width, int height)
 	{
 		final SurfaceHolder h = holder;
-		
+
 		runOnNativeThread(new Runnable()
 		{
 			public void run()
 			{
 				m_surfaceHolder = h;
-				if(m_surfaceHolder != null) 
+				if(m_surfaceHolder != null)
 				{
 					NativeJniCalls.setNativeSurface(m_surfaceHolder.getSurface());
 					m_threadedRunner.start();
 				}
+			}
+		});
+	}
+
+	public void dispatchRevealUiMessageToUiThreadFromNativeThread(final long nativeCallerPointer)
+	{
+		runOnUiThread(new Runnable()
+		{
+			public void run()
+			{
+				NativeJniCalls.revealApplicationUi(nativeCallerPointer);
+			}
+		});
+	}
+
+	public void dispatchUiCreatedMessageToNativeThreadFromUiThread(final long nativeCallerPointer)
+	{
+		runOnNativeThread(new Runnable()
+		{
+			public void run()
+			{
+				NativeJniCalls.handleApplicationUiCreatedOnNativeThread(nativeCallerPointer);
 			}
 		});
 	}
@@ -172,12 +204,14 @@ public class BackgroundThreadActivity extends MainActivity
 		private Handler m_nativeThreadHandler;
 		private float m_frameThrottleDelaySeconds;
 		private boolean m_destroyed;
+		private boolean m_stoppedUpdatingPlatformBeforeTeardown;
 
 		public ThreadedUpdateRunner(boolean running)
 		{
 			m_endOfLastFrameNano = System.nanoTime();
 			m_running = false;
 			m_destroyed = false;
+			m_stoppedUpdatingPlatformBeforeTeardown = false;
 
 			float targetFramesPerSecond = 30.f;
 			m_frameThrottleDelaySeconds = 1.f/targetFramesPerSecond;
@@ -191,6 +225,11 @@ public class BackgroundThreadActivity extends MainActivity
 		synchronized void blockUntilThreadHasDestroyedPlatform()
 		{
 			while(!m_destroyed);
+		}
+
+		synchronized void blockUntilThreadHasStoppedUpdatingPlatform()
+		{
+			while(!m_stoppedUpdatingPlatformBeforeTeardown);
 		}
 
 		public void postTo(Runnable runnable)
@@ -213,6 +252,11 @@ public class BackgroundThreadActivity extends MainActivity
 			m_destroyed = true;
 		}
 
+		void flagUpdatingNativeCodeStopped()
+		{
+			m_stoppedUpdatingPlatformBeforeTeardown = true;
+		}
+
 		public void run()
 		{
 			Looper.prepare();
@@ -224,13 +268,21 @@ public class BackgroundThreadActivity extends MainActivity
 				{
 					long timeNowNano = System.nanoTime();
 					long nanoDelta = timeNowNano - m_endOfLastFrameNano;
-					float deltaSeconds = (float)((double)nanoDelta / 1e9);
-					
+					final float deltaSeconds = (float)((double)nanoDelta / 1e9);
+
 					if(deltaSeconds > m_frameThrottleDelaySeconds)
 					{
 						if(m_running)
 						{
 							NativeJniCalls.updateNativeCode(deltaSeconds);
+
+							runOnUiThread(new Runnable()
+							{
+								public void run()
+								{
+									NativeJniCalls.updateUiViewCode(deltaSeconds);
+								}
+							});
 						}
 						else
 						{

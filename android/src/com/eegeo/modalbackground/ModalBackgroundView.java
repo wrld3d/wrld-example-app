@@ -12,69 +12,39 @@ public class ModalBackgroundView
 {
 	private MainActivity m_activity = null;
 	private View m_view = null;
-	
-    final float m_stateChangeAnimationTimeSeconds = 0.2f;
-    
+
+	final float m_stateChangeAnimationTimeSeconds = 0.2f;
+
 	public ModalBackgroundView(MainActivity activity)
 	{
 		m_activity = activity;
-		
-		m_activity.runOnUiThread(new Runnable()
-		{
-			public void run()
-			{
-				final RelativeLayout uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
-				m_view = m_activity.getLayoutInflater().inflate(R.layout.modal_background_layout, uiRoot, false);
-				m_view.setClickable(false);
-		
-				uiRoot.addView(m_view);
-			}
-		});
+
+		final RelativeLayout uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
+		m_view = m_activity.getLayoutInflater().inflate(R.layout.modal_background_layout, uiRoot, false);
+		m_view.setClickable(false);
+
+		uiRoot.addView(m_view);
 	}
-	
+
 	public void destroy()
 	{
-		m_activity.runOnUiThread(new Runnable()
-		{
-			public void run()
-			{
-				final RelativeLayout uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
-				uiRoot.removeView(m_view);
-				m_view = null;
-			}
-		});
+		final RelativeLayout uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
+		uiRoot.removeView(m_view);
+		m_view = null;
 	}
 
 	public void animateToFullyInactive()
 	{
-		m_activity.runOnUiThread(new Runnable()
-		{
-			public void run()
-			{
-				m_view.setClickable(false);
-			}
-		});	
+		m_view.setClickable(false);
 	}
-	
+
 	public void animateToFullyActive()
 	{
-		m_activity.runOnUiThread(new Runnable()
-		{
-			public void run()
-			{
-				m_view.setClickable(true);
-			}
-		});	
+		m_view.setClickable(true);
 	}
-	
+
 	public void animateToIntermediateActivityState(final float openState)
 	{
-		m_activity.runOnUiThread(new Runnable()
-		{
-			public void run()
-			{   
-				m_view.setClickable(openState > 0.f);
-			}
-		});
+		m_view.setClickable(openState > 0.f);
 	}
 }

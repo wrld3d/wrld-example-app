@@ -6,30 +6,32 @@
 
 namespace ExampleApp
 {
-    namespace Compass
-    {
-        CompassViewModule::CompassViewModule(ICompassModel& model,
-                                             ICompassViewModel& viewModel,
-                                             const Eegeo::Rendering::ScreenProperties& screenProperties)
-        {
-            m_pController = [[CompassViewController alloc] initWithParams:&model
-                                                                         :&viewModel
-                                                                         :&screenProperties];
-        }
-        
-        CompassViewModule::~CompassViewModule()
-        {
-            [m_pController release];
-        }
-        
-        CompassViewController& CompassViewModule::GetCompassViewController() const
-        {
-            return *m_pController;
-        }
-        
-        CompassView& CompassViewModule::GetCompassView() const
-        {
-            return *[m_pController pCompassView];
-        }
-    }
+	namespace Compass
+	{
+		CompassViewModule::CompassViewModule(ICompassViewModel& viewModel,
+		                                     const Eegeo::Rendering::ScreenProperties& screenProperties,
+		                                     ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
+		                                     ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus)
+		{
+			m_pController = [[CompassViewController alloc] initWithParams:&viewModel
+			                 :&screenProperties
+			                 :&uiToNativeMessageBus
+			                 :&nativeToUiMessageBus];
+		}
+
+		CompassViewModule::~CompassViewModule()
+		{
+			[m_pController release];
+		}
+
+		CompassViewController& CompassViewModule::GetCompassViewController() const
+		{
+			return *m_pController;
+		}
+
+		CompassView& CompassViewModule::GetCompassView() const
+		{
+			return *[m_pController pCompassView];
+		}
+	}
 }

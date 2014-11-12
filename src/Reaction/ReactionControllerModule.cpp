@@ -5,21 +5,21 @@
 
 namespace ExampleApp
 {
-    namespace Reaction
-    {
-        ReactionControllerModule::ReactionControllerModule()
-        {
-            m_pReactionControllerModel = Eegeo_NEW(ReactionControllerModel)();
-        }
-        
-        ReactionControllerModule::~ReactionControllerModule()
-        {
-            Eegeo_DELETE m_pReactionControllerModel;
-        }
-        
-        IReactionControllerModel& ReactionControllerModule::GetReactionControllerModel() const
-        {
-            return *m_pReactionControllerModel;
-        }
-    }
+	namespace Reaction
+	{
+		ReactionControllerModule::ReactionControllerModule()
+		{
+			m_pReactionControllerModel = Eegeo_NEW(ReactionControllerModel)();
+		}
+
+		ReactionControllerModule::~ReactionControllerModule()
+		{
+			Eegeo_DELETE m_pReactionControllerModel;
+		}
+
+		IReactionControllerModel& ReactionControllerModule::GetReactionControllerModel() const
+		{
+			return *m_pReactionControllerModel;
+		}
+	}
 }

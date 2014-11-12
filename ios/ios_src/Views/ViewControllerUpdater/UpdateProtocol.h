@@ -3,5 +3,5 @@
 #pragma once
 
 @protocol UpdateProtocol<NSObject>
-    -(void)update:(float)deltaSeconds;
+-(void)update:(float)deltaSeconds;
 @end

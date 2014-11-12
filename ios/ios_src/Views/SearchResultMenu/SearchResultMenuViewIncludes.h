@@ -8,8 +8,8 @@
 
 namespace ExampleApp
 {
-    namespace SearchResultMenu
-    {
-        class ISearchResultMenuViewModule;
-    }
+	namespace SearchResultMenu
+	{
+		class ISearchResultMenuViewModule;
+	}
 }

@@ -11,24 +11,24 @@
 
 namespace ExampleApp
 {
-    namespace AboutPage
-    {
-        class AboutPageModule : public IAboutPageModule, private Eegeo::NonCopyable
-        {
-            IAboutPageModel* m_pAboutPageModel;
-            AboutPageViewModel* m_pAboutPageViewModel;
-            
-        public:
-            AboutPageModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
-                            Reaction::IReactionControllerModel& reactionControllerModel);
-            
-            ~AboutPageModule();
-            
-            IAboutPageModel& GetAboutPageModel() const;
-            
-            IAboutPageViewModel& GetAboutPageViewModel() const;
-            
-            OpenableControlViewModel::IOpenableControlViewModel& GetObservableOpenableControl() const;
-        };
-    }
+	namespace AboutPage
+	{
+		class AboutPageModule : public IAboutPageModule, private Eegeo::NonCopyable
+		{
+			IAboutPageModel* m_pAboutPageModel;
+			AboutPageViewModel* m_pAboutPageViewModel;
+
+		public:
+			AboutPageModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
+			                Reaction::IReactionControllerModel& reactionControllerModel);
+
+			~AboutPageModule();
+
+			IAboutPageModel& GetAboutPageModel() const;
+
+			IAboutPageViewModel& GetAboutPageViewModel() const;
+
+			OpenableControlViewModel::IOpenableControlViewModel& GetObservableOpenableControl() const;
+		};
+	}
 }

@@ -7,16 +7,16 @@
 
 namespace ExampleApp
 {
-    namespace CategorySearch
-    {
-        class ICategorySearchModule
-        {
-        public:
-            virtual ~ICategorySearchModule() { }
-            
-            virtual Menu::IMenuModel& GetCategorySearchMenuModel() const = 0;
-            
-            virtual ICategorySearchRepository& GetCategorySearchRepository() const = 0;
-        };
-    }
+	namespace CategorySearch
+	{
+		class ICategorySearchModule
+		{
+		public:
+			virtual ~ICategorySearchModule() { }
+
+			virtual Menu::IMenuModel& GetCategorySearchMenuModel() const = 0;
+
+			virtual ICategorySearchRepository& GetCategorySearchRepository() const = 0;
+		};
+	}
 }

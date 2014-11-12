@@ -9,16 +9,16 @@
 
 namespace ExampleApp
 {
-    namespace SearchResultPoi
-    {
-        class SearchResultPoiViewControllerInterop;
-    }
+	namespace SearchResultPoi
+	{
+		class SearchResultPoiViewControllerInterop;
+	}
 }
 
 @interface SearchResultPoiViewController : UIViewController
 {
-    ExampleApp::SearchResultPoi::ISearchResultPoiViewModel* m_pSearchResultPoiViewModel;
-    ExampleApp::SearchResultPoi::SearchResultPoiViewControllerInterop* m_pInterop;
+	ExampleApp::SearchResultPoi::ISearchResultPoiViewModel* m_pSearchResultPoiViewModel;
+	ExampleApp::SearchResultPoi::SearchResultPoiViewControllerInterop* m_pInterop;
 }
 
 - (id)initWithParams:(ExampleApp::SearchResultPoi::ISearchResultPoiViewModel*)pSearchResultPoiViewModel;

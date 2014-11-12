@@ -11,15 +11,15 @@
 
 @interface SearchResultOnMapView : UIView
 {
-    __weak SearchResultOnMapViewController* m_pController;
-    float m_stateChangeAnimationTimeSeconds;
+	__weak SearchResultOnMapViewController* m_pController;
+	float m_stateChangeAnimationTimeSeconds;
 }
 
 - (id) initWithController:(SearchResultOnMapViewController *)controller;
 
 - (BOOL) consumesTouch:(UITouch *)touch;
 
-- (void) setLabel:(std::string)name :(std::string)detail; 
+- (void) setLabel:(std::string)name :(std::string)detail;
 
 - (void) setFullyActive;
 

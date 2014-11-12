@@ -5,30 +5,30 @@
 
 namespace ExampleApp
 {
-    namespace InitialExperience
-    {
-        InitialExperienceController::InitialExperienceController(IInitialExperienceModel& initialExperienceModel)
-        : m_initialExperienceModel(initialExperienceModel)
-        {
-            
-        }
-        
-        InitialExperienceController::~InitialExperienceController()
-        {
-            
-        }
-        
-        void InitialExperienceController::Update(float deltaSeconds)
-        {
-            if(!m_initialExperienceModel.HasCompletedInitialExperience())
-            {
-                m_initialExperienceModel.DoNextPartOfInitialExperience();
-                
-                if(!m_initialExperienceModel.HasCompletedInitialExperience())
-                {
-                    m_initialExperienceModel.UpdateCurrentStep(deltaSeconds);
-                }
-            }
-        }
-    };
+	namespace InitialExperience
+	{
+		InitialExperienceController::InitialExperienceController(IInitialExperienceModel& initialExperienceModel)
+			: m_initialExperienceModel(initialExperienceModel)
+		{
+
+		}
+
+		InitialExperienceController::~InitialExperienceController()
+		{
+
+		}
+
+		void InitialExperienceController::Update(float deltaSeconds)
+		{
+			if(!m_initialExperienceModel.HasCompletedInitialExperience())
+			{
+				m_initialExperienceModel.DoNextPartOfInitialExperience();
+
+				if(!m_initialExperienceModel.HasCompletedInitialExperience())
+				{
+					m_initialExperienceModel.UpdateCurrentStep(deltaSeconds);
+				}
+			}
+		}
+	};
 }

@@ -11,22 +11,22 @@
 
 namespace ExampleApp
 {
-    namespace SearchResultPoi
-    {
-        class SearchResultPoiModule: public ISearchResultPoiModule, private Eegeo::NonCopyable
-        {
-        private:
-            SearchResultPoiViewModel* m_pSearchResultPoiViewModel;
-            
-        public:
-            SearchResultPoiModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
-                                  Reaction::IReactionControllerModel& reactionControllerModel);
-            
-            ~SearchResultPoiModule();
-            
-            ISearchResultPoiViewModel& GetSearchResultPoiViewModel() const;
-            
-            OpenableControlViewModel::IOpenableControlViewModel& GetObservableOpenableControl() const;
-        };
-    }
+	namespace SearchResultPoi
+	{
+		class SearchResultPoiModule: public ISearchResultPoiModule, private Eegeo::NonCopyable
+		{
+		private:
+			SearchResultPoiViewModel* m_pSearchResultPoiViewModel;
+
+		public:
+			SearchResultPoiModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
+			                      Reaction::IReactionControllerModel& reactionControllerModel);
+
+			~SearchResultPoiModule();
+
+			ISearchResultPoiViewModel& GetSearchResultPoiViewModel() const;
+
+			OpenableControlViewModel::IOpenableControlViewModel& GetObservableOpenableControl() const;
+		};
+	}
 }

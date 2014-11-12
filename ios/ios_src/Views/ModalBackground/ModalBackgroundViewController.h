@@ -10,8 +10,8 @@ class ModalBackgroundViewControllerInterop;
 
 @interface ModalBackgroundViewController : UIViewController
 {
-    ExampleApp::Modality::IModalityModel* m_pModalityModel;
-    ModalBackgroundViewControllerInterop* m_pInterop;
+	ExampleApp::Modality::IModalityModel* m_pModalityModel;
+	ModalBackgroundViewControllerInterop* m_pInterop;
 }
 
 - (id)initWithParams:(ExampleApp::Modality::IModalityModel *)pModalityModel;

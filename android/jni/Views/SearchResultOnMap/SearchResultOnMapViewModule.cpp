@@ -4,36 +4,43 @@
 #include "SearchResultOnMapViewModule.h"
 #include "ISearchResultOnMapInFocusViewModel.h"
 #include "SearchResultOnMapViewController.h"
+#include "AndroidAppThreadAssertionMacros.h"
 
 namespace ExampleApp
 {
-    namespace SearchResultOnMap
-    {
-        SearchResultOnMapViewModule::SearchResultOnMapViewModule(
-			AndroidNativeState& nativeState,
-			ISearchResultOnMapInFocusViewModel& searchResultOnMapInFocusViewModel,
-			ScreenControlViewModel::IScreenControlViewModel& searchResultOnMapInFocusScreenControlViewModel,
-			Modality::IModalityModel& modalityModel,
-			float pinDiameter
+	namespace SearchResultOnMap
+	{
+		SearchResultOnMapViewModule::SearchResultOnMapViewModule(
+		    AndroidNativeState& nativeState,
+		    ISearchResultOnMapInFocusViewModel& searchResultOnMapInFocusViewModel,
+		    ScreenControlViewModel::IScreenControlViewModel& searchResultOnMapInFocusScreenControlViewModel,
+		    SearchResultPoi::ISearchResultPoiViewModel& searchResultPoiViewModel,
+		    float pinDiameter
 		)
-        {
-            m_pSearchResultOnMapViewController = Eegeo_NEW(SearchResultOnMapViewController)(
-				nativeState,
-				searchResultOnMapInFocusViewModel,
-				searchResultOnMapInFocusScreenControlViewModel,
-				modalityModel,
-				pinDiameter
-            );
-        }
-        
-        SearchResultOnMapViewModule::~SearchResultOnMapViewModule()
-        {
-            Eegeo_DELETE m_pSearchResultOnMapViewController;
-        }
-        
-        SearchResultOnMapViewController& SearchResultOnMapViewModule::GetSearchResultOnMapViewController() const
-        {
-            return *m_pSearchResultOnMapViewController;
-        }
-    }
+		{
+			ASSERT_UI_THREAD
+
+			m_pSearchResultOnMapViewController = Eegeo_NEW(SearchResultOnMapViewController)(
+			        nativeState,
+			        searchResultOnMapInFocusViewModel,
+			        searchResultOnMapInFocusScreenControlViewModel,
+			        searchResultPoiViewModel,
+			        pinDiameter
+			                                     );
+		}
+
+		SearchResultOnMapViewModule::~SearchResultOnMapViewModule()
+		{
+			ASSERT_UI_THREAD
+
+			Eegeo_DELETE m_pSearchResultOnMapViewController;
+		}
+
+		SearchResultOnMapViewController& SearchResultOnMapViewModule::GetSearchResultOnMapViewController() const
+		{
+			ASSERT_UI_THREAD
+
+			return *m_pSearchResultOnMapViewController;
+		}
+	}
 }

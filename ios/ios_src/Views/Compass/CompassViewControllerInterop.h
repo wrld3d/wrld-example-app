@@ -7,64 +7,63 @@
 #include "Types.h"
 #include "ICallback.h"
 #include "IScreenControlViewModel.h"
+#include "CompassModeChangedMessage.h"
+#include "CompassHeadingUpdateMessage.h"
+#include "NativeToUiMessageBus.h"
 
 namespace ExampleApp
 {
-    namespace Compass
-    {
-        class CompassViewControllerInterop : private Eegeo::NonCopyable
-        {
-            CompassViewController* m_pController;
-            ICompassModel& m_model;
-            ICompassViewModel& m_viewModel;
-            
-            Eegeo::Helpers::ICallback0* m_pGpsModelChangedCallback;
-            Eegeo::Helpers::ICallback1<float>* m_pUpdateCallback;
-            Eegeo::Helpers::ICallback2<ScreenControlViewModel::IScreenControlViewModel&, float>* m_pOnScreenStateChangedCallback;
-            
-            void OnScreenStateChangedCallback(ScreenControlViewModel::IScreenControlViewModel &viewModel, float& onScreenState)
-            {
-                [m_pController handleScreenStateChanged:m_viewModel.OnScreenState()];
-            }
-            
-            void OnHeadingUpdated(float& heading)
-            {
-                [m_pController updateHeading:heading];
-            }
-            
-            void OnGpsModeChanged()
-            {
-                [m_pController handleGpsModeChanged];
-            }
-            
-        public:
-            
-            CompassViewControllerInterop(CompassViewController* pController,
-                                         ICompassModel& model,
-                                         ICompassViewModel& viewModel)
-            : m_pController(pController)
-            , m_model(model)
-            , m_viewModel(viewModel)
-            , m_pGpsModelChangedCallback(Eegeo_NEW(Eegeo::Helpers::TCallback0<CompassViewControllerInterop>)(this, &CompassViewControllerInterop::OnGpsModeChanged))
-            , m_pOnScreenStateChangedCallback(Eegeo_NEW((Eegeo::Helpers::TCallback2<CompassViewControllerInterop, ScreenControlViewModel::IScreenControlViewModel&, float>))(this, &CompassViewControllerInterop::OnScreenStateChangedCallback))
-            , m_pUpdateCallback(Eegeo_NEW((Eegeo::Helpers::TCallback1<CompassViewControllerInterop, float>))(this, &CompassViewControllerInterop::OnHeadingUpdated))
-            {
-                m_model.InsertGpsModeChangedCallback(*m_pGpsModelChangedCallback);
-                m_viewModel.InsertUpdateCallback(*m_pUpdateCallback);
-                m_viewModel.InsertOnScreenStateChangedCallback(*m_pOnScreenStateChangedCallback);
-            }
-            
-            ~CompassViewControllerInterop()
-            {
-                m_viewModel.RemoveOnScreenStateChangedCallback(*m_pOnScreenStateChangedCallback);
-                m_viewModel.RemoveUpdateCallback(*m_pUpdateCallback);
-                m_model.RemoveGpsModeChangedCallback(*m_pGpsModelChangedCallback);
-                
-                Eegeo_DELETE m_pOnScreenStateChangedCallback;
-                Eegeo_DELETE m_pUpdateCallback;
-                Eegeo_DELETE m_pGpsModelChangedCallback;
-            }
-        };
-        
-    }
+	namespace Compass
+	{
+		class CompassViewControllerInterop : private Eegeo::NonCopyable
+		{
+			CompassViewController* m_pController;
+			ICompassViewModel& m_viewModel;
+			ExampleAppMessaging::NativeToUiMessageBus& m_nativeToUiMessageBus;
+
+			Eegeo::Helpers::TCallback2<CompassViewControllerInterop, ScreenControlViewModel::IScreenControlViewModel&, float> m_onScreenStateChangedCallback;
+			Eegeo::Helpers::TCallback1<CompassViewControllerInterop, const CompassModeChangedMessage&> m_modeChangedCallback;
+			Eegeo::Helpers::TCallback1<CompassViewControllerInterop, const CompassHeadingUpdateMessage&> m_headingChangedCallback;
+
+			void OnCompassModeChanged(const CompassModeChangedMessage& message)
+			{
+				[m_pController handleGpsModeChanged:message.GetMode()];
+			}
+
+			void OnCompassHeadingChanged(const CompassHeadingUpdateMessage& message)
+			{
+				[m_pController updateHeading:message.GetHeadingRadians()];
+			}
+
+			void OnScreenStateChangedCallback(ScreenControlViewModel::IScreenControlViewModel &viewModel, float& onScreenState)
+			{
+				[m_pController handleScreenStateChanged:m_viewModel.OnScreenState()];
+			}
+
+		public:
+
+			CompassViewControllerInterop(CompassViewController* pController,
+			                             ICompassViewModel& viewModel,
+			                             ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus)
+				: m_pController(pController)
+				, m_viewModel(viewModel)
+				, m_nativeToUiMessageBus(nativeToUiMessageBus)
+				, m_onScreenStateChangedCallback(this, &CompassViewControllerInterop::OnScreenStateChangedCallback)
+				, m_modeChangedCallback(this, &CompassViewControllerInterop::OnCompassModeChanged)
+				, m_headingChangedCallback(this, &CompassViewControllerInterop::OnCompassHeadingChanged)
+			{
+				m_nativeToUiMessageBus.Subscribe(m_modeChangedCallback);
+				m_nativeToUiMessageBus.Subscribe(m_headingChangedCallback);
+				m_viewModel.InsertOnScreenStateChangedCallback(m_onScreenStateChangedCallback);
+			}
+
+			~CompassViewControllerInterop()
+			{
+				m_viewModel.RemoveOnScreenStateChangedCallback(m_onScreenStateChangedCallback);
+				m_nativeToUiMessageBus.Unsubscribe(m_modeChangedCallback);
+				m_nativeToUiMessageBus.Unsubscribe(m_headingChangedCallback);
+			}
+		};
+
+	}
 }
