@@ -34,16 +34,16 @@
 #include "EnvironmentCharacterSet.h"
 #include "Blitter.h"
 #include "IPoiRingTouchController.h"
-#include "PoiCreationModule.h"
+#include "MyPinCreationModule.h"
 #include "ISearchResultMenuViewModel.h"
 #include "PoiRingModule.h"
 #include "IPoiRingController.h"
-#include "PoiCreationDetailsModule.h"
+#include "MyPinCreationDetailsModule.h"
 #include "MyPinsModule.h"
 
 namespace ExampleApp
 {
-    const std::string ApiKey = "OBTAIN API_KEY FROM https://appstore.eegeo.com AND INSERT IT HERE";
+    const std::string ApiKey = "c64bd6720e714a22bd5d14b35d232c44";
     const std::string DecartaApiKey = "OBTAIN DECARTA SEARCH KEY AND INSERT IT HERE";
 
 	namespace
@@ -120,9 +120,9 @@ namespace ExampleApp
 		, m_uiToNativeMessageBus(uiToNativeMessageBus)
 		, m_nativeToUiMessageBus(nativeToUiMessageBus)
         , m_persistentSettings(persistentSettings)
-        , m_pPoiCreationModule(NULL)
+        , m_pMyPinCreationModule(NULL)
         , m_pPoiRingModule(NULL)
-        , m_pPoiCreationDetailsModule(NULL)
+        , m_pMyPinCreationDetailsModule(NULL)
         , m_pMyPinsModule(NULL)
 	{
         
@@ -303,14 +303,14 @@ namespace ExampleApp
         
         m_pPrimaryMenuModule->AddMenuSection("My Pins", "place", m_pMyPinsModule->GetMyPinsMenuModel(), true);
         
-        m_pPoiCreationModule = Eegeo_NEW(ExampleApp::PoiCreation::PoiCreationModule)(m_pMyPinsModule->GetMyPinsService(),
+        m_pMyPinCreationModule = Eegeo_NEW(ExampleApp::MyPinCreation::MyPinCreationModule)(m_pMyPinsModule->GetMyPinsService(),
                                                                                      m_identityProvider,
                                                                                      m_pPrimaryMenuModule->GetPrimaryMenuViewModel(),
                                                                                      m_pSecondaryMenuModule->GetSecondaryMenuViewModel(),
                                                                                      m_pSearchModule->GetSearchQueryPerformer(),
                                                                                      m_pSearchResultMenuModule->GetMenuViewModel());
         
-        m_pPoiRingModule = Eegeo_NEW(ExampleApp::PoiCreation::PoiRing::PoiRingModule)(m_pPoiCreationModule->GetPoiCreationModel(),
+        m_pPoiRingModule = Eegeo_NEW(ExampleApp::MyPinCreation::PoiRing::PoiRingModule)(m_pMyPinCreationModule->GetMyPinCreationModel(),
                                                                                       m_platformAbstractions,
                                                                                       m_pWorld->GetRenderingModule(),
                                                                                       m_pWorld->GetAsyncLoadersModule(),
@@ -318,7 +318,7 @@ namespace ExampleApp
                                                                                       m_pWorld->GetTerrainModelModule(),
                                                                                       m_pWorld->GetScreenProperties());
 
-        m_pPoiCreationDetailsModule = Eegeo_NEW(ExampleApp::PoiCreationDetails::PoiCreationDetailsModule)(m_identityProvider,
+        m_pMyPinCreationDetailsModule = Eegeo_NEW(ExampleApp::MyPinCreationDetails::MyPinCreationDetailsModule)(m_identityProvider,
                                                                                                           m_pReactionControllerModule->GetReactionControllerModel());
 
 		std::vector<ExampleApp::ScreenControlViewModel::IScreenControlViewModel*> reactors(GetReactorControls());
@@ -338,7 +338,7 @@ namespace ExampleApp
 
 	void MobileExampleApp::DestroyApplicationModelModules()
 	{
-        Eegeo_DELETE m_pPoiCreationModule;
+        Eegeo_DELETE m_pMyPinCreationModule;
         
         Eegeo_DELETE m_pPoiRingModule;
         
@@ -391,7 +391,7 @@ namespace ExampleApp
 		openables.push_back(&SearchResultMenuModule().GetMenuViewModel());
 		openables.push_back(&SearchResultPoiModule().GetObservableOpenableControl());
 		openables.push_back(&AboutPageModule().GetObservableOpenableControl());
-        openables.push_back(&PoiCreationDetailsModule().GetObservableOpenableControl());
+        openables.push_back(&MyPinCreationDetailsModule().GetObservableOpenableControl());
 		return openables;
 	}
 
@@ -404,7 +404,7 @@ namespace ExampleApp
 		reactors.push_back(&FlattenButtonModule().GetScreenControlViewModel());
 		reactors.push_back(&SearchResultOnMapModule().GetScreenControlViewModel());
 		reactors.push_back(&CompassModule().GetScreenControlViewModel());
-        reactors.push_back(&PoiCreationModule().GetButtonScreenControlViewModel());
+        reactors.push_back(&MyPinCreationModule().GetInitiationScreenControlViewModel());
 		return reactors;
 	}
 
@@ -511,7 +511,7 @@ namespace ExampleApp
 		m_pSearchResultMenuModule->GetMenuViewModel().AddToScreen();
 		m_pFlattenButtonModule->GetScreenControlViewModel().AddToScreen();
 		m_pCompassModule->GetScreenControlViewModel().AddToScreen();
-        m_pPoiCreationModule->GetButtonScreenControlViewModel().AddToScreen();
+        m_pMyPinCreationModule->GetInitiationScreenControlViewModel().AddToScreen();
 	}
 
 	void MobileExampleApp::UpdateLoadingScreen(float dt)
@@ -612,7 +612,7 @@ namespace ExampleApp
 
     void MobileExampleApp::Event_TouchPan(const AppInterface::PanData& data)
     {
-        PoiCreation::PoiRing::IPoiRingTouchController& poiRingTouchController = m_pPoiRingModule->GetPoiRingTouchController();
+        MyPinCreation::PoiRing::IPoiRingTouchController& poiRingTouchController = m_pPoiRingModule->GetPoiRingTouchController();
         if(World().Initialising() || poiRingTouchController.IsDragging())
         {
             return;
@@ -623,7 +623,7 @@ namespace ExampleApp
 
     void MobileExampleApp::Event_TouchPan_Start(const AppInterface::PanData& data)
     {
-        PoiCreation::PoiRing::IPoiRingTouchController& poiRingTouchController = m_pPoiRingModule->GetPoiRingTouchController();
+        MyPinCreation::PoiRing::IPoiRingTouchController& poiRingTouchController = m_pPoiRingModule->GetPoiRingTouchController();
         if(World().Initialising() || poiRingTouchController.IsDragging())
         {
             return;
@@ -634,7 +634,7 @@ namespace ExampleApp
 
     void MobileExampleApp::Event_TouchPan_End(const AppInterface::PanData& data)
     {
-        PoiCreation::PoiRing::IPoiRingTouchController& poiRingTouchController = m_pPoiRingModule->GetPoiRingTouchController();
+        MyPinCreation::PoiRing::IPoiRingTouchController& poiRingTouchController = m_pPoiRingModule->GetPoiRingTouchController();
         if(World().Initialising() || poiRingTouchController.IsDragging())
         {
             return;
@@ -673,7 +673,7 @@ namespace ExampleApp
             return;
         }
         
-        PoiCreation::PoiRing::IPoiRingTouchController& poiRingTouchController = m_pPoiRingModule->GetPoiRingTouchController();
+        MyPinCreation::PoiRing::IPoiRingTouchController& poiRingTouchController = m_pPoiRingModule->GetPoiRingTouchController();
         if (!poiRingTouchController.HandleTouchDown(data, *m_pGlobeCameraController->GetCamera()))
         {
             m_pCameraTouchController->Event_TouchDown(data);
@@ -688,7 +688,7 @@ namespace ExampleApp
             return;
         }
         
-        PoiCreation::PoiRing::IPoiRingTouchController& poiRingTouchController = m_pPoiRingModule->GetPoiRingTouchController();
+        MyPinCreation::PoiRing::IPoiRingTouchController& poiRingTouchController = m_pPoiRingModule->GetPoiRingTouchController();
         if (!poiRingTouchController.HandleTouchMove(data, *m_pGlobeCameraController->GetCamera()))
         {
             m_pCameraTouchController->Event_TouchMove(data);
@@ -702,7 +702,7 @@ namespace ExampleApp
             return;
         }
         
-        PoiCreation::PoiRing::IPoiRingTouchController& poiRingTouchController = m_pPoiRingModule->GetPoiRingTouchController();
+        MyPinCreation::PoiRing::IPoiRingTouchController& poiRingTouchController = m_pPoiRingModule->GetPoiRingTouchController();
         if (!poiRingTouchController.HandleTouchUp(data))
         {
             m_pCameraTouchController->Event_TouchUp(data);

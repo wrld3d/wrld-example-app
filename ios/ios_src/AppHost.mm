@@ -40,15 +40,15 @@
 #include "AboutPageViewModule.h"
 #include "AboutPageView.h"
 #include "CategorySearchModule.h"
-#include "PoiCreationButtonViewModule.h"
-#include "PoiCreationButtonView.h"
-#include "PoiCreationConfirmationViewModule.h"
-#include "PoiCreationConfirmationView.h"
-#include "IPoiCreationModule.h"
+#include "MyPinCreationInitiationViewModule.h"
+#include "MyPinCreationInitiationView.h"
+#include "MyPinCreationConfirmationViewModule.h"
+#include "MyPinCreationConfirmationView.h"
+#include "IMyPinCreationModule.h"
 #include "IPoiRingModule.h"
-#include "IPoiCreationDetailsModule.h"
-#include "PoiCreationDetailsViewModule.h"
-#include "PoiCreationDetailsView.h"
+#include "IMyPinCreationDetailsModule.h"
+#include "MyPinCreationDetailsViewModule.h"
+#include "MyPinCreationDetailsView.h"
 
 using namespace Eegeo::iOS;
 
@@ -223,18 +223,18 @@ void AppHost::CreateApplicationViewModules()
 	m_pAboutPageViewModule = Eegeo_NEW(ExampleApp::AboutPage::AboutPageViewModule)(app.AboutPageModule().GetAboutPageModel(),
 	                         app.AboutPageModule().GetAboutPageViewModel());
     
-    m_pPoiCreationButtonViewModule = Eegeo_NEW(ExampleApp::PoiCreation::PoiCreationButtonViewModule)(app.PoiCreationModule().GetPoiCreationModel(),
-                                                                                                     app.PoiCreationModule().GetPoiCreationButtonViewModel(),
-                                                                                                     *m_pScreenProperties);
+    m_pMyPinCreationInitiationViewModule = Eegeo_NEW(ExampleApp::MyPinCreation::MyPinCreationInitiationViewModule)(app.MyPinCreationModule().GetMyPinCreationModel(),
+                                                                                                                   app.MyPinCreationModule().GetMyPinCreationInitiationViewModel(),
+                                                                                                                   *m_pScreenProperties);
     
-    m_pPoiCreationConfirmationViewModule = Eegeo_NEW(ExampleApp::PoiCreation::PoiCreationConfirmationViewModule)(app.PoiCreationModule().GetPoiCreationModel(),
-                                                                                                                 app.PoiCreationModule().GetPoiCreationConfirmationViewModel(),
-                                                                                                                 app.PoiCreationModule().GetPoiCreationCompositeViewModel(),
-                                                                                                                 app.PoiCreationDetailsModule().GetPoiCreationDetailsViewModel(),
-                                                                                                                 *m_pScreenProperties);
+    m_pMyPinCreationConfirmationViewModule = Eegeo_NEW(ExampleApp::MyPinCreation::MyPinCreationConfirmationViewModule)(app.MyPinCreationModule().GetMyPinCreationModel(),
+                                                                                                                       app.MyPinCreationModule().GetMyPinCreationConfirmationViewModel(),
+                                                                                                                       app.MyPinCreationModule().GetMyPinCreationCompositeViewModel(),
+                                                                                                                       app.MyPinCreationDetailsModule().GetMyPinCreationDetailsViewModel(),
+                                                                                                                       *m_pScreenProperties);
     
-    m_pPoiCreationDetailsViewModule = Eegeo_NEW(ExampleApp::PoiCreationDetails::PoiCreationDetailsViewModule)(app.PoiCreationModule().GetPoiCreationModel(),
-                                                                                                              app.PoiCreationDetailsModule().GetPoiCreationDetailsViewModel());
+    m_pMyPinCreationDetailsViewModule = Eegeo_NEW(ExampleApp::MyPinCreationDetails::MyPinCreationDetailsViewModule)(app.MyPinCreationModule().GetMyPinCreationModel(),
+                                                                                                                    app.MyPinCreationDetailsModule().GetMyPinCreationDetailsViewModel());
 
     // 3d map view layer.
     [m_pView addSubview: &m_pSearchResultOnMapViewModule->GetSearchResultOnMapView()];
@@ -242,8 +242,8 @@ void AppHost::CreateApplicationViewModules()
     // HUD behind modal background layer.
     [m_pView addSubview: &m_pFlattenButtonViewModule->GetFlattenButtonView()];
     [m_pView addSubview: &m_pCompassViewModule->GetCompassView()];
-    [m_pView addSubview: &m_pPoiCreationButtonViewModule->GetPoiCreationButtonView()];
-    [m_pView addSubview: &m_pPoiCreationConfirmationViewModule->GetPoiCreationConfirmationView()];
+    [m_pView addSubview: &m_pMyPinCreationInitiationViewModule->GetMyPinCreationInitiationView()];
+    [m_pView addSubview: &m_pMyPinCreationConfirmationViewModule->GetMyPinCreationConfirmationView()];
     
     // Modal background layer.
     [m_pView addSubview: &m_pModalBackgroundViewModule->GetModalBackgroundView()];
@@ -256,7 +256,7 @@ void AppHost::CreateApplicationViewModules()
     // Pop-up layer.
     [m_pView addSubview: &m_pSearchResultPoiViewModule->GetSearchResultPoiView()];
     [m_pView addSubview: &m_pAboutPageViewModule->GetAboutPageView()];
-    [m_pView addSubview: &m_pPoiCreationDetailsViewModule->GetPoiCreationDetailsView()];
+    [m_pView addSubview: &m_pMyPinCreationDetailsViewModule->GetMyPinCreationDetailsView()];
 
 	m_pViewControllerUpdaterModule = Eegeo_NEW(ExampleApp::ViewControllerUpdater::ViewControllerUpdaterModule);
 	ExampleApp::ViewControllerUpdater::IViewControllerUpdaterModel& viewControllerUpdaterModel = m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel();
@@ -274,8 +274,8 @@ void AppHost::DestroyApplicationViewModules()
     // HUD behind modal background layer.
     [&m_pFlattenButtonViewModule->GetFlattenButtonView() removeFromSuperview];
     [&m_pCompassViewModule->GetCompassView() removeFromSuperview];
-    [&m_pPoiCreationButtonViewModule->GetPoiCreationButtonView() removeFromSuperview];
-    [&m_pPoiCreationConfirmationViewModule->GetPoiCreationConfirmationView() removeFromSuperview];
+    [&m_pMyPinCreationInitiationViewModule->GetMyPinCreationInitiationView() removeFromSuperview];
+    [&m_pMyPinCreationConfirmationViewModule->GetMyPinCreationConfirmationView() removeFromSuperview];
     
     // Modal background layer.
     [&m_pModalBackgroundViewModule->GetModalBackgroundView() removeFromSuperview];
@@ -286,15 +286,15 @@ void AppHost::DestroyApplicationViewModules()
     [&m_pSearchResultMenuViewModule->GetSearchResultMenuView() removeFromSuperview];
     
     // Pop-up layer.
-    [&m_pPoiCreationDetailsViewModule->GetPoiCreationDetailsView() removeFromSuperview];
+    [&m_pMyPinCreationDetailsViewModule->GetMyPinCreationDetailsView() removeFromSuperview];
     [&m_pSearchResultPoiViewModule->GetSearchResultPoiView() removeFromSuperview];
     [&m_pAboutPageViewModule->GetAboutPageView() removeFromSuperview];
     
     Eegeo_DELETE m_pViewControllerUpdaterModule;
     
-    Eegeo_DELETE m_pPoiCreationDetailsViewModule;
+    Eegeo_DELETE m_pMyPinCreationDetailsViewModule;
     
-    Eegeo_DELETE m_pPoiCreationConfirmationViewModule;
+    Eegeo_DELETE m_pMyPinCreationConfirmationViewModule;
 
 	Eegeo_DELETE m_pViewControllerUpdaterModule;
 

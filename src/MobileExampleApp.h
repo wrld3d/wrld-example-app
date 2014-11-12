@@ -53,8 +53,8 @@
 #include "WorldAreaLoader.h"
 #include "InitialExperience.h"
 #include "IInitialExperienceModule.h"
-#include "PoiCreation.h"
-#include "PoiCreationDetails.h"
+#include "MyPinCreation.h"
+#include "MyPinCreationDetails.h"
 #include "MyPins.h"
 #include "PersistentSettings.h"
 #include "UiToNativeMessageBus.h"
@@ -100,9 +100,9 @@ namespace ExampleApp
 		ExampleApp::WorldAreaLoader::IWorldAreaLoaderModule* m_pWorldAreaLoaderModule;
 		ExampleApp::AboutPage::IAboutPageModule* m_pAboutPageModule;
 		ExampleApp::InitialExperience::IInitialExperienceModule& m_initialExperienceModule;
-        ExampleApp::PoiCreation::PoiRing::IPoiRingModule* m_pPoiRingModule;
-        ExampleApp::PoiCreation::IPoiCreationModule* m_pPoiCreationModule;
-        ExampleApp::PoiCreationDetails::IPoiCreationDetailsModule* m_pPoiCreationDetailsModule;
+        ExampleApp::MyPinCreation::PoiRing::IPoiRingModule* m_pPoiRingModule;
+        ExampleApp::MyPinCreation::IMyPinCreationModule* m_pMyPinCreationModule;
+        ExampleApp::MyPinCreationDetails::IMyPinCreationDetailsModule* m_pMyPinCreationDetailsModule;
         ExampleApp::MyPins::IMyPinsModule* m_pMyPinsModule;
         
 		ExampleAppMessaging::UiToNativeMessageBus& m_uiToNativeMessageBus;
@@ -235,19 +235,19 @@ namespace ExampleApp
 			return *m_pCategorySearchModule;
 		}
 
-        const ExampleApp::PoiCreation::IPoiCreationModule& PoiCreationModule() const
+        const ExampleApp::MyPinCreation::IMyPinCreationModule& MyPinCreationModule() const
         {
-            return *m_pPoiCreationModule;
+            return *m_pMyPinCreationModule;
         }
         
-        const ExampleApp::PoiCreation::PoiRing::IPoiRingModule& PoiRingModule() const
+        const ExampleApp::MyPinCreation::PoiRing::IPoiRingModule& PoiRingModule() const
         {
             return *m_pPoiRingModule;
         }
         
-        const ExampleApp::PoiCreationDetails::IPoiCreationDetailsModule& PoiCreationDetailsModule() const
+        const ExampleApp::MyPinCreationDetails::IMyPinCreationDetailsModule& MyPinCreationDetailsModule() const
         {
-            return *m_pPoiCreationDetailsModule;
+            return *m_pMyPinCreationDetailsModule;
         }
         
         const ExampleApp::MyPins::IMyPinsModule& MyPinsModule() const
