@@ -11,26 +11,26 @@
 
 namespace ExampleApp
 {
-namespace CategorySearch
-{
-class CategorySearchModule : public ICategorySearchModule, private Eegeo::NonCopyable
-{
-public:
-	CategorySearchModule(Search::ISearchQueryPerformer& searchQueryPerformer,
-	                     ExampleApp::Menu::IMenuViewModel& menuViewModel,
-	                     ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus);
+	namespace CategorySearch
+	{
+		class CategorySearchModule : public ICategorySearchModule, private Eegeo::NonCopyable
+		{
+		public:
+			CategorySearchModule(Search::ISearchQueryPerformer& searchQueryPerformer,
+			                     ExampleApp::Menu::IMenuViewModel& menuViewModel,
+			                     ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus);
 
-	~CategorySearchModule();
+			~CategorySearchModule();
 
-	Menu::IMenuModel& GetCategorySearchMenuModel() const;
+			Menu::IMenuModel& GetCategorySearchMenuModel() const;
 
-	ICategorySearchRepository& GetCategorySearchRepository() const;
+			ICategorySearchRepository& GetCategorySearchRepository() const;
 
-private:
-	Menu::IMenuModel* m_pMenuModel;
-	Menu::IMenuOptionsModel* m_pMenuOptionsModel;
-	ICategorySearchRepository* m_pCategorySearchRepository;
-	CategorySearchSelectedMessageHandler* m_pCategorySearchSelectedMessageHandler;
-};
-}
+		private:
+			Menu::IMenuModel* m_pMenuModel;
+			Menu::IMenuOptionsModel* m_pMenuOptionsModel;
+			ICategorySearchRepository* m_pCategorySearchRepository;
+			CategorySearchSelectedMessageHandler* m_pCategorySearchSelectedMessageHandler;
+		};
+	}
 }

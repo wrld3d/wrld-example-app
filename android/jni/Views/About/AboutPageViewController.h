@@ -11,35 +11,35 @@
 
 namespace ExampleApp
 {
-namespace AboutPage
-{
-class AboutPageViewController : public IAboutPageViewController, private Eegeo::NonCopyable
-{
-	AndroidNativeState& m_nativeState;
-	AboutPage::IAboutPageModel& m_aboutPageModel;
-	AboutPage::IAboutPageViewModel& m_aboutPageViewModel;
-	Eegeo::Helpers::ICallback0* m_pAboutPageOpenedCallback;
-	Eegeo::Helpers::ICallback0* m_pAboutPageClosedCallback;
+	namespace AboutPage
+	{
+		class AboutPageViewController : public IAboutPageViewController, private Eegeo::NonCopyable
+		{
+			AndroidNativeState& m_nativeState;
+			AboutPage::IAboutPageModel& m_aboutPageModel;
+			AboutPage::IAboutPageViewModel& m_aboutPageViewModel;
+			Eegeo::Helpers::ICallback0* m_pAboutPageOpenedCallback;
+			Eegeo::Helpers::ICallback0* m_pAboutPageClosedCallback;
 
-	jclass m_uiViewClass;
-	jobject m_uiView;
+			jclass m_uiViewClass;
+			jobject m_uiView;
 
-public:
-	AboutPageViewController(
-	    AndroidNativeState& nativeState,
-	    AboutPage::IAboutPageModel& aboutPageModel,
-	    AboutPage::IAboutPageViewModel& viewModel
-	);
+		public:
+			AboutPageViewController(
+			    AndroidNativeState& nativeState,
+			    AboutPage::IAboutPageModel& aboutPageModel,
+			    AboutPage::IAboutPageViewModel& viewModel
+			);
 
-	~AboutPageViewController();
+			~AboutPageViewController();
 
-	void HandleCloseButtonPressed();
+			void HandleCloseButtonPressed();
 
-private:
+		private:
 
-	void AboutPageOpenedCallback();
+			void AboutPageOpenedCallback();
 
-	void AboutPageClosedCallback();
-};
-}
+			void AboutPageClosedCallback();
+		};
+	}
 }

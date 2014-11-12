@@ -4,14 +4,14 @@
 
 namespace ExampleApp
 {
-namespace ViewControllerUpdater
-{
-class IViewControllerUpdaterModule
-{
-public:
-	virtual ~IViewControllerUpdaterModule() { }
+	namespace ViewControllerUpdater
+	{
+		class IViewControllerUpdaterModule
+		{
+		public:
+			virtual ~IViewControllerUpdaterModule() { }
 
-	virtual IViewControllerUpdaterModel& GetViewControllerUpdaterModel() const = 0;
-};
-}
+			virtual IViewControllerUpdaterModel& GetViewControllerUpdaterModel() const = 0;
+		};
+	}
 }

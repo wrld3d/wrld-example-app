@@ -7,13 +7,13 @@
 
 namespace ExampleApp
 {
-namespace InitialExperience
-{
-namespace PreLoad
-{
-class iOSInitialExperiencePreLoadModel;
-}
-}
+	namespace InitialExperience
+	{
+		namespace PreLoad
+		{
+			class iOSInitialExperiencePreLoadModel;
+		}
+	}
 }
 
 @interface PreLoadModelListener : NSObject<UIAlertViewDelegate>
@@ -64,51 +64,51 @@ class iOSInitialExperiencePreLoadModel;
 
 namespace ExampleApp
 {
-namespace InitialExperience
-{
-namespace PreLoad
-{
-iOSInitialExperiencePreLoadModel::iOSInitialExperiencePreLoadModel(WorldAreaLoader::IWorldAreaLoaderModel& worldAreaLoaderModel,
-        PersistentSettings::IPersistentSettingsModel& persistentSettings)
-	: InitialExperiencePreLoadModelBase(worldAreaLoaderModel, persistentSettings)
-	, m_pAlertListener(NULL)
-{
-
-}
-
-iOSInitialExperiencePreLoadModel::~iOSInitialExperiencePreLoadModel()
-{
-	DestroyAlertListener();
-}
-
-void iOSInitialExperiencePreLoadModel::DestroyAlertListener()
-{
-	if(m_pAlertListener != NULL)
+	namespace InitialExperience
 	{
-		PreLoadModelListener* pAlertListener = static_cast<PreLoadModelListener*>(m_pAlertListener);
-		[pAlertListener release];
-		m_pAlertListener = NULL;
-	}
-}
+		namespace PreLoad
+		{
+			iOSInitialExperiencePreLoadModel::iOSInitialExperiencePreLoadModel(WorldAreaLoader::IWorldAreaLoaderModel& worldAreaLoaderModel,
+			        PersistentSettings::IPersistentSettingsModel& persistentSettings)
+				: InitialExperiencePreLoadModelBase(worldAreaLoaderModel, persistentSettings)
+				, m_pAlertListener(NULL)
+			{
 
-void iOSInitialExperiencePreLoadModel::HandleDismiss(bool shouldPreload)
-{
-	DestroyAlertListener();
+			}
 
-	if(shouldPreload)
-	{
-		PrecacheRegion();
-	}
-	else
-	{
-		Complete();
-	}
-}
+			iOSInitialExperiencePreLoadModel::~iOSInitialExperiencePreLoadModel()
+			{
+				DestroyAlertListener();
+			}
 
-void iOSInitialExperiencePreLoadModel::ShowOptions()
-{
-	m_pAlertListener = [[PreLoadModelListener alloc] initWithParams:this];
-}
-}
-}
+			void iOSInitialExperiencePreLoadModel::DestroyAlertListener()
+			{
+				if(m_pAlertListener != NULL)
+				{
+					PreLoadModelListener* pAlertListener = static_cast<PreLoadModelListener*>(m_pAlertListener);
+					[pAlertListener release];
+					m_pAlertListener = NULL;
+				}
+			}
+
+			void iOSInitialExperiencePreLoadModel::HandleDismiss(bool shouldPreload)
+			{
+				DestroyAlertListener();
+
+				if(shouldPreload)
+				{
+					PrecacheRegion();
+				}
+				else
+				{
+					Complete();
+				}
+			}
+
+			void iOSInitialExperiencePreLoadModel::ShowOptions()
+			{
+				m_pAlertListener = [[PreLoadModelListener alloc] initWithParams:this];
+			}
+		}
+	}
 }

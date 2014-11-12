@@ -6,9 +6,9 @@
 
 namespace ExampleApp
 {
-namespace ViewControllerUpdater
-{
-class IViewControllerUpdaterModel;
-class IViewControllerUpdaterModule;
-}
+	namespace ViewControllerUpdater
+	{
+		class IViewControllerUpdaterModel;
+		class IViewControllerUpdaterModule;
+	}
 }

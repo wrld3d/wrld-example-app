@@ -4,23 +4,23 @@
 
 namespace ExampleApp
 {
-namespace Modality
-{
-class ModalityChangedMessage
-{
-	float m_modality;
-
-public:
-	ModalityChangedMessage(float modality)
-		: m_modality(modality)
+	namespace Modality
 	{
+		class ModalityChangedMessage
+		{
+			float m_modality;
 
-	}
+		public:
+			ModalityChangedMessage(float modality)
+				: m_modality(modality)
+			{
 
-	float Modality() const
-	{
-		return m_modality;
+			}
+
+			float Modality() const
+			{
+				return m_modality;
+			}
+		};
 	}
-};
-}
 }

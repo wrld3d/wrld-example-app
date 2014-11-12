@@ -7,30 +7,30 @@
 
 namespace ExampleApp
 {
-namespace SearchResultOnMap
-{
-class SearchResultGainedFocusMessage
-{
-	Search::SearchResultModel m_focussedModel;
-	Eegeo::v2 m_screenLocation;
-
-public:
-	SearchResultGainedFocusMessage(const Search::SearchResultModel& focussedModel, const Eegeo::v2& screenLocation)
-		: m_focussedModel(focussedModel)
-		, m_screenLocation(screenLocation)
+	namespace SearchResultOnMap
 	{
+		class SearchResultGainedFocusMessage
+		{
+			Search::SearchResultModel m_focussedModel;
+			Eegeo::v2 m_screenLocation;
 
-	}
+		public:
+			SearchResultGainedFocusMessage(const Search::SearchResultModel& focussedModel, const Eegeo::v2& screenLocation)
+				: m_focussedModel(focussedModel)
+				, m_screenLocation(screenLocation)
+			{
 
-	const Search::SearchResultModel& FocussedModel() const
-	{
-		return m_focussedModel;
-	}
+			}
 
-	const Eegeo::v2& ScreenLocation() const
-	{
-		return m_screenLocation;
+			const Search::SearchResultModel& FocussedModel() const
+			{
+				return m_focussedModel;
+			}
+
+			const Eegeo::v2& ScreenLocation() const
+			{
+				return m_screenLocation;
+			}
+		};
 	}
-};
-}
 }

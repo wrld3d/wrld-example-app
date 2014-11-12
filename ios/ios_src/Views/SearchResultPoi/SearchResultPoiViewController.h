@@ -9,10 +9,10 @@
 
 namespace ExampleApp
 {
-namespace SearchResultPoi
-{
-class SearchResultPoiViewControllerInterop;
-}
+	namespace SearchResultPoi
+	{
+		class SearchResultPoiViewControllerInterop;
+	}
 }
 
 @interface SearchResultPoiViewController : UIViewController

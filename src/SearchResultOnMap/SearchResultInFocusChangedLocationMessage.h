@@ -6,23 +6,23 @@
 
 namespace ExampleApp
 {
-namespace SearchResultOnMap
-{
-class SearchResultInFocusChangedLocationMessage
-{
-	Eegeo::v2 m_screenLocation;
-
-public:
-	SearchResultInFocusChangedLocationMessage(const Eegeo::v2& screenLocation)
-		: m_screenLocation(screenLocation)
+	namespace SearchResultOnMap
 	{
+		class SearchResultInFocusChangedLocationMessage
+		{
+			Eegeo::v2 m_screenLocation;
 
-	}
+		public:
+			SearchResultInFocusChangedLocationMessage(const Eegeo::v2& screenLocation)
+				: m_screenLocation(screenLocation)
+			{
 
-	const Eegeo::v2& ScreenLocation() const
-	{
-		return m_screenLocation;
+			}
+
+			const Eegeo::v2& ScreenLocation() const
+			{
+				return m_screenLocation;
+			}
+		};
 	}
-};
-}
 }

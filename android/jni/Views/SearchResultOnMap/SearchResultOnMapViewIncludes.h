@@ -4,9 +4,9 @@
 
 namespace ExampleApp
 {
-namespace SearchResultOnMap
-{
-class SearchResultOnMapViewController;
-class ISearchResultOnMapViewModule;
-}
+	namespace SearchResultOnMap
+	{
+		class SearchResultOnMapViewController;
+		class ISearchResultOnMapViewModule;
+	}
 }

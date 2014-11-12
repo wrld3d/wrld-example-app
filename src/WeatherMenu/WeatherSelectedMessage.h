@@ -6,22 +6,22 @@
 
 namespace ExampleApp
 {
-namespace WeatherMenu
-{
-class WeatherSelectedMessage
-{
-	WeatherMenuStateModel m_weatherStateModel;
-
-public:
-	WeatherSelectedMessage(const WeatherMenuStateModel& weatherStateModel)
-		: m_weatherStateModel(weatherStateModel)
+	namespace WeatherMenu
 	{
-	}
+		class WeatherSelectedMessage
+		{
+			WeatherMenuStateModel m_weatherStateModel;
 
-	const WeatherMenuStateModel& Model() const
-	{
-		return m_weatherStateModel;
+		public:
+			WeatherSelectedMessage(const WeatherMenuStateModel& weatherStateModel)
+				: m_weatherStateModel(weatherStateModel)
+			{
+			}
+
+			const WeatherMenuStateModel& Model() const
+			{
+				return m_weatherStateModel;
+			}
+		};
 	}
-};
-}
 }

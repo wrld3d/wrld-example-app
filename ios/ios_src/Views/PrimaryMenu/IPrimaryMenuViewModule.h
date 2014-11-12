@@ -6,16 +6,16 @@
 
 namespace ExampleApp
 {
-namespace PrimaryMenu
-{
-class IPrimaryMenuViewModule
-{
-public:
-	virtual ~IPrimaryMenuViewModule() { }
+	namespace PrimaryMenu
+	{
+		class IPrimaryMenuViewModule
+		{
+		public:
+			virtual ~IPrimaryMenuViewModule() { }
 
-	virtual MenuViewController& GetPrimaryMenuViewController() const = 0;
+			virtual MenuViewController& GetPrimaryMenuViewController() const = 0;
 
-	virtual PrimaryMenuView& GetPrimaryMenuView() const = 0;
-};
-}
+			virtual PrimaryMenuView& GetPrimaryMenuView() const = 0;
+		};
+	}
 }

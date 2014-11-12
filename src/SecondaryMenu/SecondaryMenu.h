@@ -4,9 +4,9 @@
 
 namespace ExampleApp
 {
-namespace SecondaryMenu
-{
-class ISecondaryMenuModule;
-class PerformedSearchMessageHandler;
-}
+	namespace SecondaryMenu
+	{
+		class ISecondaryMenuModule;
+		class PerformedSearchMessageHandler;
+	}
 }

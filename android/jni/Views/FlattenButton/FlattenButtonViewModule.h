@@ -12,22 +12,22 @@
 
 namespace ExampleApp
 {
-namespace FlattenButton
-{
-class FlattenButtonViewModule: public IFlattenButtonViewModule, private Eegeo::NonCopyable
-{
-private:
-	FlattenButtonViewController* m_pController;
+	namespace FlattenButton
+	{
+		class FlattenButtonViewModule: public IFlattenButtonViewModule, private Eegeo::NonCopyable
+		{
+		private:
+			FlattenButtonViewController* m_pController;
 
-public:
-	FlattenButtonViewModule(
-	    AndroidNativeState& nativeState,
-	    FlattenButton::IFlattenButtonViewModel& viewModel,
-	    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
-	    ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus
-	);
+		public:
+			FlattenButtonViewModule(
+			    AndroidNativeState& nativeState,
+			    FlattenButton::IFlattenButtonViewModel& viewModel,
+			    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
+			    ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus
+			);
 
-	~FlattenButtonViewModule();
-};
-}
+			~FlattenButtonViewModule();
+		};
+	}
 }

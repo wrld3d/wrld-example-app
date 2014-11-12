@@ -7,35 +7,35 @@
 
 namespace ExampleApp
 {
-namespace SearchResultOnMap
-{
-SearchResultOnMapViewModule::SearchResultOnMapViewModule(ISearchResultOnMapInFocusViewModel& searchResultOnMapInFocusViewModel,
-        ScreenControlViewModel::IScreenControlViewModel& searchResultOnMapInFocusScreenControlViewModel,
-        Modality::IModalityModel& modalityModel,
-        float pinDiameter,
-        float pixelScale)
-{
-	m_pSearchResultOnMapViewController = [[SearchResultOnMapViewController alloc] initWithParams
-	                                      :&searchResultOnMapInFocusViewModel
-	                                      :&searchResultOnMapInFocusScreenControlViewModel
-	                                      :&modalityModel
-	                                      :pinDiameter
-	                                      :pixelScale];
-}
+	namespace SearchResultOnMap
+	{
+		SearchResultOnMapViewModule::SearchResultOnMapViewModule(ISearchResultOnMapInFocusViewModel& searchResultOnMapInFocusViewModel,
+		        ScreenControlViewModel::IScreenControlViewModel& searchResultOnMapInFocusScreenControlViewModel,
+		        Modality::IModalityModel& modalityModel,
+		        float pinDiameter,
+		        float pixelScale)
+		{
+			m_pSearchResultOnMapViewController = [[SearchResultOnMapViewController alloc] initWithParams
+			                                      :&searchResultOnMapInFocusViewModel
+			                                      :&searchResultOnMapInFocusScreenControlViewModel
+			                                      :&modalityModel
+			                                      :pinDiameter
+			                                      :pixelScale];
+		}
 
-SearchResultOnMapViewModule::~SearchResultOnMapViewModule()
-{
-	[m_pSearchResultOnMapViewController release];
-}
+		SearchResultOnMapViewModule::~SearchResultOnMapViewModule()
+		{
+			[m_pSearchResultOnMapViewController release];
+		}
 
-SearchResultOnMapViewController& SearchResultOnMapViewModule::GetSearchResultOnMapViewController() const
-{
-	return *m_pSearchResultOnMapViewController;
-}
+		SearchResultOnMapViewController& SearchResultOnMapViewModule::GetSearchResultOnMapViewController() const
+		{
+			return *m_pSearchResultOnMapViewController;
+		}
 
-SearchResultOnMapView& SearchResultOnMapViewModule::GetSearchResultOnMapView() const
-{
-	return *[m_pSearchResultOnMapViewController pSearchResultOnMapView];
-}
-}
+		SearchResultOnMapView& SearchResultOnMapViewModule::GetSearchResultOnMapView() const
+		{
+			return *[m_pSearchResultOnMapViewController pSearchResultOnMapView];
+		}
+	}
 }

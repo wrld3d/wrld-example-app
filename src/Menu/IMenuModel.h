@@ -7,11 +7,11 @@
 
 namespace ExampleApp
 {
-namespace Menu
-{
-class IMenuModel : public Repository::IRepositoryModel<MenuItemModel>
-{
+	namespace Menu
+	{
+		class IMenuModel : public Repository::IRepositoryModel<MenuItemModel>
+		{
 
-};
-}
+		};
+	}
 }

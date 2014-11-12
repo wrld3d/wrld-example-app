@@ -7,16 +7,16 @@
 
 namespace ExampleApp
 {
-namespace Compass
-{
-class CompassScreenControl : public ScreenControlViewModel::ScreenControlViewModelBase, private Eegeo::NonCopyable
-{
-	Eegeo::Helpers::TIdentity m_identity;
+	namespace Compass
+	{
+		class CompassScreenControl : public ScreenControlViewModel::ScreenControlViewModelBase, private Eegeo::NonCopyable
+		{
+			Eegeo::Helpers::TIdentity m_identity;
 
-public:
-	CompassScreenControl(bool initiallyOnScreen, Eegeo::Helpers::TIdentity identity);
+		public:
+			CompassScreenControl(bool initiallyOnScreen, Eegeo::Helpers::TIdentity identity);
 
-	Eegeo::Helpers::TIdentity GetIdentity() const;
-};
-}
+			Eegeo::Helpers::TIdentity GetIdentity() const;
+		};
+	}
 }

@@ -4,8 +4,8 @@
 
 namespace ExampleApp
 {
-namespace PersistentSettings
-{
-class IPersistentSettingsModel;
-}
+	namespace PersistentSettings
+	{
+		class IPersistentSettingsModel;
+	}
 }

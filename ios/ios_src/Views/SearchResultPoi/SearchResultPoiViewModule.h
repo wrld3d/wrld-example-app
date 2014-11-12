@@ -8,21 +8,21 @@
 
 namespace ExampleApp
 {
-namespace SearchResultPoi
-{
-class SearchResultPoiViewModule: public ISearchResultPoiViewModule, private Eegeo::NonCopyable
-{
-private:
-	SearchResultPoiViewController* m_pSearchResultPoiViewController;
+	namespace SearchResultPoi
+	{
+		class SearchResultPoiViewModule: public ISearchResultPoiViewModule, private Eegeo::NonCopyable
+		{
+		private:
+			SearchResultPoiViewController* m_pSearchResultPoiViewController;
 
-public:
-	SearchResultPoiViewModule(ISearchResultPoiViewModel& searchResultPoiViewModel);
+		public:
+			SearchResultPoiViewModule(ISearchResultPoiViewModel& searchResultPoiViewModel);
 
-	~SearchResultPoiViewModule();
+			~SearchResultPoiViewModule();
 
-	SearchResultPoiViewController& GetSearchResultPoiViewController() const;
+			SearchResultPoiViewController& GetSearchResultPoiViewController() const;
 
-	SearchResultPoiView& GetSearchResultPoiView() const;
-};
-}
+			SearchResultPoiView& GetSearchResultPoiView() const;
+		};
+	}
 }

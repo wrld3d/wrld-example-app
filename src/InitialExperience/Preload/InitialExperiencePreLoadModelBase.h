@@ -10,36 +10,36 @@
 
 namespace ExampleApp
 {
-namespace InitialExperience
-{
-namespace PreLoad
-{
-class InitialExperiencePreLoadModelBase : public IInitialExperiencePreLoadModel, private Eegeo::NonCopyable
-{
-	WorldAreaLoader::IWorldAreaLoaderModel& m_worldAreaLoaderModel;
-	PersistentSettings::IPersistentSettingsModel& m_persistentSettings;
-	Eegeo::Helpers::ICallback0* m_pPreloadCompleteCallback;
+	namespace InitialExperience
+	{
+		namespace PreLoad
+		{
+			class InitialExperiencePreLoadModelBase : public IInitialExperiencePreLoadModel, private Eegeo::NonCopyable
+			{
+				WorldAreaLoader::IWorldAreaLoaderModel& m_worldAreaLoaderModel;
+				PersistentSettings::IPersistentSettingsModel& m_persistentSettings;
+				Eegeo::Helpers::ICallback0* m_pPreloadCompleteCallback;
 
-	void HandlePreloadComplete();
+				void HandlePreloadComplete();
 
-public:
-	InitialExperiencePreLoadModelBase(WorldAreaLoader::IWorldAreaLoaderModel& worldAreaLoaderModel,
-	                                  PersistentSettings::IPersistentSettingsModel& persistentSettings);
+			public:
+				InitialExperiencePreLoadModelBase(WorldAreaLoader::IWorldAreaLoaderModel& worldAreaLoaderModel,
+				                                  PersistentSettings::IPersistentSettingsModel& persistentSettings);
 
-	~InitialExperiencePreLoadModelBase();
+				~InitialExperiencePreLoadModelBase();
 
-	bool HasStarted() const;
+				bool HasStarted() const;
 
-	bool HasCompleted() const;
+				bool HasCompleted() const;
 
-	void PerformInitialExperience();
+				void PerformInitialExperience();
 
-protected:
+			protected:
 
-	void PrecacheRegion();
+				void PrecacheRegion();
 
-	void Complete();
-};
-}
-}
+				void Complete();
+			};
+		}
+	}
 }

@@ -9,17 +9,17 @@
 
 namespace ExampleApp
 {
-namespace Search
-{
-namespace Decarta
-{
-class DecartaSearchJsonParser : public ISearchResultParser, private Eegeo::NonCopyable
-{
-public:
-	void ParseSearchResults(const std::string& serialized,
-	                        std::vector<SearchResultModel>& out_results);
-};
-}
-}
+	namespace Search
+	{
+		namespace Decarta
+		{
+			class DecartaSearchJsonParser : public ISearchResultParser, private Eegeo::NonCopyable
+			{
+			public:
+				void ParseSearchResults(const std::string& serialized,
+				                        std::vector<SearchResultModel>& out_results);
+			};
+		}
+	}
 }
 

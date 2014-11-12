@@ -16,14 +16,14 @@
 
 namespace ExampleApp
 {
-namespace ExampleAppMessaging
-{
+	namespace ExampleAppMessaging
+	{
 #ifdef EEGEO_USE_CONCURRENT_MESSAGE_BUS
-template <typename TMessageCatalog>
-class MessageBus : public Eegeo::Messaging::MPMCMessageBus<TMessageCatalog> { };
+		template <typename TMessageCatalog>
+		class MessageBus : public Eegeo::Messaging::MPMCMessageBus<TMessageCatalog> { };
 #else
-template <typename TMessageCatalog>
-class MessageBus : public Eegeo::Messaging::ImmediateMessageBus<TMessageCatalog> { };
+		template <typename TMessageCatalog>
+		class MessageBus : public Eegeo::Messaging::ImmediateMessageBus<TMessageCatalog> { };
 #endif
-}
+	}
 }

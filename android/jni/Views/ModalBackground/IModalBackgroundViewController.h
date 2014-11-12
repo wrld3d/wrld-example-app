@@ -4,12 +4,12 @@
 
 namespace ExampleApp
 {
-namespace ModalBackground
-{
-class IModalBackgroundViewController
-{
-public:
-	virtual ~IModalBackgroundViewController() { }
-};
-}
+	namespace ModalBackground
+	{
+		class IModalBackgroundViewController
+		{
+		public:
+			virtual ~IModalBackgroundViewController() { }
+		};
+	}
 }

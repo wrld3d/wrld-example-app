@@ -9,35 +9,35 @@
 
 namespace ExampleApp
 {
-namespace InitialExperience
-{
-namespace PreLoad
-{
-class AndroidInitialExperiencePreLoadModel : public InitialExperiencePreLoadModelBase
-{
-	AndroidNativeState& m_nativeState;
-	jclass m_jniApiClass;
-	jobject m_jniApiInstance;
+	namespace InitialExperience
+	{
+		namespace PreLoad
+		{
+			class AndroidInitialExperiencePreLoadModel : public InitialExperiencePreLoadModelBase
+			{
+				AndroidNativeState& m_nativeState;
+				jclass m_jniApiClass;
+				jobject m_jniApiInstance;
 
-	void DestroyOptions();
+				void DestroyOptions();
 
-public:
-	AndroidInitialExperiencePreLoadModel(
-	    AndroidNativeState& nativeState,
-	    WorldAreaLoader::IWorldAreaLoaderModel& worldAreaLoaderModel,
-	    PersistentSettings::IPersistentSettingsModel& persistentSettings
-	);
+			public:
+				AndroidInitialExperiencePreLoadModel(
+				    AndroidNativeState& nativeState,
+				    WorldAreaLoader::IWorldAreaLoaderModel& worldAreaLoaderModel,
+				    PersistentSettings::IPersistentSettingsModel& persistentSettings
+				);
 
-	~AndroidInitialExperiencePreLoadModel();
+				~AndroidInitialExperiencePreLoadModel();
 
-	void HandleDismiss(bool shouldPreload);
+				void HandleDismiss(bool shouldPreload);
 
-protected:
+			protected:
 
-	void ShowOptions();
-};
-}
-}
+				void ShowOptions();
+			};
+		}
+	}
 }
 
 extern "C"

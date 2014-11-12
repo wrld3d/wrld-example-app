@@ -4,14 +4,14 @@
 
 namespace ExampleApp
 {
-namespace WorldPins
-{
-class IWorldPinSelectionHandler
-{
-public:
-	virtual ~IWorldPinSelectionHandler() { }
+	namespace WorldPins
+	{
+		class IWorldPinSelectionHandler
+		{
+		public:
+			virtual ~IWorldPinSelectionHandler() { }
 
-	virtual void SelectPin() = 0;
-};
-}
+			virtual void SelectPin() = 0;
+		};
+	}
 }

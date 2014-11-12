@@ -8,19 +8,19 @@
 
 namespace ExampleApp
 {
-namespace Reaction
-{
-class ReactionControllerModule: public IReactionControllerModule, private Eegeo::NonCopyable
-{
-private:
-	IReactionControllerModel* m_pReactionControllerModel;
+	namespace Reaction
+	{
+		class ReactionControllerModule: public IReactionControllerModule, private Eegeo::NonCopyable
+		{
+		private:
+			IReactionControllerModel* m_pReactionControllerModel;
 
-public:
-	ReactionControllerModule();
+		public:
+			ReactionControllerModule();
 
-	~ReactionControllerModule();
+			~ReactionControllerModule();
 
-	IReactionControllerModel& GetReactionControllerModel() const;
-};
-}
+			IReactionControllerModel& GetReactionControllerModel() const;
+		};
+	}
 }

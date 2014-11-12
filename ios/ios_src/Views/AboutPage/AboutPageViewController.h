@@ -8,10 +8,10 @@
 
 namespace ExampleApp
 {
-namespace AboutPage
-{
-class AboutPageViewControllerInterop;
-}
+	namespace AboutPage
+	{
+		class AboutPageViewControllerInterop;
+	}
 }
 
 @interface AboutPageViewController : UIViewController

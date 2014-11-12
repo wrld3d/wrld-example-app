@@ -10,33 +10,33 @@
 
 namespace ExampleApp
 {
-namespace SearchResultOnMap
-{
-class SearchResultOnMapModalityObserver : private Eegeo::NonCopyable
-{
-	SearchResultOnMapScaleController& m_searchResultOnMapScaleController;
-	ExampleAppMessaging::UiToNativeMessageBus& m_messageBus;
-	Eegeo::Helpers::TCallback1<SearchResultOnMapModalityObserver, const Modality::ModalityChangedMessage&> m_handlerBinding;
-
-	void HandleReceivedModalityChangedMessage(const Modality::ModalityChangedMessage& message)
+	namespace SearchResultOnMap
 	{
-		m_searchResultOnMapScaleController.SetModality(message.Modality());
-	}
+		class SearchResultOnMapModalityObserver : private Eegeo::NonCopyable
+		{
+			SearchResultOnMapScaleController& m_searchResultOnMapScaleController;
+			ExampleAppMessaging::UiToNativeMessageBus& m_messageBus;
+			Eegeo::Helpers::TCallback1<SearchResultOnMapModalityObserver, const Modality::ModalityChangedMessage&> m_handlerBinding;
 
-public:
-	SearchResultOnMapModalityObserver(SearchResultOnMapScaleController& searchResultOnMapScaleController,
-	                                  ExampleAppMessaging::UiToNativeMessageBus& messageBus)
-		: m_searchResultOnMapScaleController(searchResultOnMapScaleController)
-		, m_messageBus(messageBus)
-		, m_handlerBinding(this, &SearchResultOnMapModalityObserver::HandleReceivedModalityChangedMessage)
-	{
-		m_messageBus.Subscribe(m_handlerBinding);
-	}
+			void HandleReceivedModalityChangedMessage(const Modality::ModalityChangedMessage& message)
+			{
+				m_searchResultOnMapScaleController.SetModality(message.Modality());
+			}
 
-	~SearchResultOnMapModalityObserver()
-	{
-		m_messageBus.Unsubscribe(m_handlerBinding);
+		public:
+			SearchResultOnMapModalityObserver(SearchResultOnMapScaleController& searchResultOnMapScaleController,
+			                                  ExampleAppMessaging::UiToNativeMessageBus& messageBus)
+				: m_searchResultOnMapScaleController(searchResultOnMapScaleController)
+				, m_messageBus(messageBus)
+				, m_handlerBinding(this, &SearchResultOnMapModalityObserver::HandleReceivedModalityChangedMessage)
+			{
+				m_messageBus.Subscribe(m_handlerBinding);
+			}
+
+			~SearchResultOnMapModalityObserver()
+			{
+				m_messageBus.Unsubscribe(m_handlerBinding);
+			}
+		};
 	}
-};
-}
 }

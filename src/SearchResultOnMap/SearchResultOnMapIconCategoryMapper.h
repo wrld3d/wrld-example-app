@@ -10,18 +10,18 @@
 
 namespace ExampleApp
 {
-namespace SearchResultOnMap
-{
-class SearchResultOnMapIconCategoryMapper : public ISearchResultOnMapIconCategoryMapper, private Eegeo::NonCopyable
-{
-	std::map<std::string, int> m_categoryToIconIndex;
+	namespace SearchResultOnMap
+	{
+		class SearchResultOnMapIconCategoryMapper : public ISearchResultOnMapIconCategoryMapper, private Eegeo::NonCopyable
+		{
+			std::map<std::string, int> m_categoryToIconIndex;
 
-public:
-	SearchResultOnMapIconCategoryMapper();
+		public:
+			SearchResultOnMapIconCategoryMapper();
 
-	~SearchResultOnMapIconCategoryMapper();
+			~SearchResultOnMapIconCategoryMapper();
 
-	int GetIconIndexFromSearchResult(const Search::SearchResultModel& searchResultModel) const;
-};
-}
+			int GetIconIndexFromSearchResult(const Search::SearchResultModel& searchResultModel) const;
+		};
+	}
 }

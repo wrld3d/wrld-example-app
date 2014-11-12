@@ -15,36 +15,36 @@
 
 namespace ExampleApp
 {
-namespace PlaceJumps
-{
-
-class PlaceJumpsModule : public IPlaceJumpsModule, private Eegeo::NonCopyable
-{
-public:
-
-	PlaceJumpsModule(Eegeo::Helpers::IFileIO& fileIO,
-	                 Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& camera,
-	                 Compass::ICompassModel& compassModel,
-	                 ExampleApp::Menu::IMenuViewModel& menuViewModel,
-	                 ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus);
-
-	~PlaceJumpsModule();
-
-	Menu::IMenuModel& GetPlaceJumpsMenuModel() const
+	namespace PlaceJumps
 	{
-		return *m_pMenuModel;
-	}
-	IPlaceJumpController& GetPlaceJumpController() const
-	{
-		return *m_pJumpController;
-	}
 
-private:
+		class PlaceJumpsModule : public IPlaceJumpsModule, private Eegeo::NonCopyable
+		{
+		public:
 
-	Menu::IMenuModel* m_pMenuModel;
-	Menu::IMenuOptionsModel* m_pMenuOptionsModel;
-	IPlaceJumpController* m_pJumpController;
-	PlaceJumpSelectedMessageHandler* m_pPlaceJumpSelectedMessageHandler;
-};
-}
+			PlaceJumpsModule(Eegeo::Helpers::IFileIO& fileIO,
+			                 Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& camera,
+			                 Compass::ICompassModel& compassModel,
+			                 ExampleApp::Menu::IMenuViewModel& menuViewModel,
+			                 ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus);
+
+			~PlaceJumpsModule();
+
+			Menu::IMenuModel& GetPlaceJumpsMenuModel() const
+			{
+				return *m_pMenuModel;
+			}
+			IPlaceJumpController& GetPlaceJumpController() const
+			{
+				return *m_pJumpController;
+			}
+
+		private:
+
+			Menu::IMenuModel* m_pMenuModel;
+			Menu::IMenuOptionsModel* m_pMenuOptionsModel;
+			IPlaceJumpController* m_pJumpController;
+			PlaceJumpSelectedMessageHandler* m_pPlaceJumpSelectedMessageHandler;
+		};
+	}
 }

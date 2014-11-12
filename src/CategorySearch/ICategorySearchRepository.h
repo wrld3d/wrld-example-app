@@ -7,16 +7,16 @@
 
 namespace ExampleApp
 {
-namespace CategorySearch
-{
-class ICategorySearchRepository
-{
-public:
-	virtual ~ICategorySearchRepository() { }
+	namespace CategorySearch
+	{
+		class ICategorySearchRepository
+		{
+		public:
+			virtual ~ICategorySearchRepository() { }
 
-	virtual bool TryGetCategorySearchNameByQuery(const std::string& query, std::string& out_name) const = 0;
-};
+			virtual bool TryGetCategorySearchNameByQuery(const std::string& query, std::string& out_name) const = 0;
+		};
 
-std::string GetPresentationStringForQuery(const ICategorySearchRepository& categorySearchRepository, const Search::SearchQuery& query);
-}
+		std::string GetPresentationStringForQuery(const ICategorySearchRepository& categorySearchRepository, const Search::SearchQuery& query);
+	}
 }

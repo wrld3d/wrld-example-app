@@ -16,63 +16,63 @@
 
 namespace ExampleApp
 {
-namespace SearchResultMenu
-{
-class SearchResultAddRemoveHandler : private Eegeo::NonCopyable
-{
-	Menu::IMenuOptionsModel& m_menuOptions;
-	Menu::IMenuViewModel& m_menuViewModel;
-	ExampleAppMessaging::NativeToUiMessageBus& m_nativeToUiMessageBus;
-	ExampleAppMessaging::UiToNativeMessageBus& m_uiToNativeMessageBus;
-
-	Eegeo::Helpers::TCallback1<SearchResultAddRemoveHandler, const SearchResultAddedMessage&> m_handleSearchResultAddedMessageBinding;
-	Eegeo::Helpers::TCallback1<SearchResultAddRemoveHandler, const SearchResultRemovedMessage&> m_handleSearchResultRemovedMessageBinding;
-
-	void HandleSearchResultAddedMessage(const SearchResultAddedMessage& message)
+	namespace SearchResultMenu
 	{
-		const Search::SearchResultModel& model(message.Model());
+		class SearchResultAddRemoveHandler : private Eegeo::NonCopyable
+		{
+			Menu::IMenuOptionsModel& m_menuOptions;
+			Menu::IMenuViewModel& m_menuViewModel;
+			ExampleAppMessaging::NativeToUiMessageBus& m_nativeToUiMessageBus;
+			ExampleAppMessaging::UiToNativeMessageBus& m_uiToNativeMessageBus;
 
-		m_menuOptions.AddItem(
-		    model.GetIdentifier(),
-		    model.GetTitle(),
-		    model.GetAddress(),
-		    model.GetCategory(),
-		    Eegeo_NEW(SearchResultItemModel)(
-		        model.GetTitle(),
-		        model.GetLocation().ToECEF(),
-		        m_menuViewModel,
-		        m_uiToNativeMessageBus)
-		);
-	}
+			Eegeo::Helpers::TCallback1<SearchResultAddRemoveHandler, const SearchResultAddedMessage&> m_handleSearchResultAddedMessageBinding;
+			Eegeo::Helpers::TCallback1<SearchResultAddRemoveHandler, const SearchResultRemovedMessage&> m_handleSearchResultRemovedMessageBinding;
 
-	void HandleSearchResultRemovedMessage(const SearchResultRemovedMessage& message)
-	{
-		const Search::SearchResultModel& model(message.Model());
-		m_menuOptions.RemoveItem(model.GetIdentifier());
-	}
+			void HandleSearchResultAddedMessage(const SearchResultAddedMessage& message)
+			{
+				const Search::SearchResultModel& model(message.Model());
 
-public:
-	SearchResultAddRemoveHandler(
-	    Menu::IMenuOptionsModel& menuOptions,
-	    Menu::IMenuViewModel& menuViewModel,
-	    ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus,
-	    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus)
-		: m_menuOptions(menuOptions)
-		, m_menuViewModel(menuViewModel)
-		, m_nativeToUiMessageBus(nativeToUiMessageBus)
-		, m_uiToNativeMessageBus(uiToNativeMessageBus)
-		, m_handleSearchResultAddedMessageBinding(this, &SearchResultAddRemoveHandler::HandleSearchResultAddedMessage)
-		, m_handleSearchResultRemovedMessageBinding(this, &SearchResultAddRemoveHandler::HandleSearchResultRemovedMessage)
-	{
-		m_nativeToUiMessageBus.Subscribe(m_handleSearchResultAddedMessageBinding);
-		m_nativeToUiMessageBus.Subscribe(m_handleSearchResultRemovedMessageBinding);
-	}
+				m_menuOptions.AddItem(
+				    model.GetIdentifier(),
+				    model.GetTitle(),
+				    model.GetAddress(),
+				    model.GetCategory(),
+				    Eegeo_NEW(SearchResultItemModel)(
+				        model.GetTitle(),
+				        model.GetLocation().ToECEF(),
+				        m_menuViewModel,
+				        m_uiToNativeMessageBus)
+				);
+			}
 
-	~SearchResultAddRemoveHandler()
-	{
-		m_nativeToUiMessageBus.Unsubscribe(m_handleSearchResultAddedMessageBinding);
-		m_nativeToUiMessageBus.Unsubscribe(m_handleSearchResultRemovedMessageBinding);
+			void HandleSearchResultRemovedMessage(const SearchResultRemovedMessage& message)
+			{
+				const Search::SearchResultModel& model(message.Model());
+				m_menuOptions.RemoveItem(model.GetIdentifier());
+			}
+
+		public:
+			SearchResultAddRemoveHandler(
+			    Menu::IMenuOptionsModel& menuOptions,
+			    Menu::IMenuViewModel& menuViewModel,
+			    ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus,
+			    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus)
+				: m_menuOptions(menuOptions)
+				, m_menuViewModel(menuViewModel)
+				, m_nativeToUiMessageBus(nativeToUiMessageBus)
+				, m_uiToNativeMessageBus(uiToNativeMessageBus)
+				, m_handleSearchResultAddedMessageBinding(this, &SearchResultAddRemoveHandler::HandleSearchResultAddedMessage)
+				, m_handleSearchResultRemovedMessageBinding(this, &SearchResultAddRemoveHandler::HandleSearchResultRemovedMessage)
+			{
+				m_nativeToUiMessageBus.Subscribe(m_handleSearchResultAddedMessageBinding);
+				m_nativeToUiMessageBus.Subscribe(m_handleSearchResultRemovedMessageBinding);
+			}
+
+			~SearchResultAddRemoveHandler()
+			{
+				m_nativeToUiMessageBus.Unsubscribe(m_handleSearchResultAddedMessageBinding);
+				m_nativeToUiMessageBus.Unsubscribe(m_handleSearchResultRemovedMessageBinding);
+			}
+		};
 	}
-};
-}
 }

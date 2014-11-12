@@ -5,29 +5,29 @@
 
 namespace ExampleApp
 {
-namespace InitialExperience
-{
-iOSInitialExperienceModule::iOSInitialExperienceModule(PersistentSettings::IPersistentSettingsModel& persistentSettings)
-	:InitialExperienceModuleBase(persistentSettings)
-{
+	namespace InitialExperience
+	{
+		iOSInitialExperienceModule::iOSInitialExperienceModule(PersistentSettings::IPersistentSettingsModel& persistentSettings)
+			:InitialExperienceModuleBase(persistentSettings)
+		{
 
-}
+		}
 
-iOSInitialExperienceModule::~iOSInitialExperienceModule()
-{
+		iOSInitialExperienceModule::~iOSInitialExperienceModule()
+		{
 
-}
+		}
 
-std::vector<IInitialExperienceStep*> iOSInitialExperienceModule::CreateSteps(WorldAreaLoader::IWorldAreaLoaderModel& worldAreaLoaderModel) const
-{
-	std::vector<IInitialExperienceStep*> steps;
+		std::vector<IInitialExperienceStep*> iOSInitialExperienceModule::CreateSteps(WorldAreaLoader::IWorldAreaLoaderModel& worldAreaLoaderModel) const
+		{
+			std::vector<IInitialExperienceStep*> steps;
 
-	IInitialExperienceStep* pWorldAreaLoaderStep = Eegeo_NEW(PreLoad::iOSInitialExperiencePreLoadModel)(worldAreaLoaderModel,
-	        GetPersistentSettings());
+			IInitialExperienceStep* pWorldAreaLoaderStep = Eegeo_NEW(PreLoad::iOSInitialExperiencePreLoadModel)(worldAreaLoaderModel,
+			        GetPersistentSettings());
 
-	steps.push_back(pWorldAreaLoaderStep);
+			steps.push_back(pWorldAreaLoaderStep);
 
-	return steps;
-}
-}
+			return steps;
+		}
+	}
 }

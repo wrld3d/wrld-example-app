@@ -7,31 +7,31 @@
 
 namespace ExampleApp
 {
-namespace ModalBackground
-{
-class ModalBackgroundView : public Eegeo::Rendering::IRenderableFilter
-{
-public:
-	ModalBackgroundView(
-	    Eegeo::Rendering::Shaders::ShaderIdGenerator& shaderIdGenerator,
-	    Eegeo::Rendering::Materials::MaterialIdGenerator& materialIdGenerator,
-	    Eegeo::Rendering::GlBufferPool& glBufferPool,
-	    Eegeo::Rendering::VertexLayouts::VertexLayoutPool& vertexLayoutPool,
-	    Eegeo::Rendering::VertexLayouts::VertexBindingPool& vertexBindingPool);
+	namespace ModalBackground
+	{
+		class ModalBackgroundView : public Eegeo::Rendering::IRenderableFilter
+		{
+		public:
+			ModalBackgroundView(
+			    Eegeo::Rendering::Shaders::ShaderIdGenerator& shaderIdGenerator,
+			    Eegeo::Rendering::Materials::MaterialIdGenerator& materialIdGenerator,
+			    Eegeo::Rendering::GlBufferPool& glBufferPool,
+			    Eegeo::Rendering::VertexLayouts::VertexLayoutPool& vertexLayoutPool,
+			    Eegeo::Rendering::VertexLayouts::VertexBindingPool& vertexBindingPool);
 
-	virtual ~ModalBackgroundView();
+			virtual ~ModalBackgroundView();
 
-	void SetAlpha(float alpha);
+			void SetAlpha(float alpha);
 
-	void EnqueueRenderables(const Eegeo::Rendering::RenderContext& renderContext, Eegeo::Rendering::RenderQueue& renderQueue);
+			void EnqueueRenderables(const Eegeo::Rendering::RenderContext& renderContext, Eegeo::Rendering::RenderQueue& renderQueue);
 
-private:
+		private:
 
-	Eegeo::Rendering::Shaders::ColorShader* m_pShader;
-	Eegeo::Rendering::Materials::ColorMaterial* m_pMaterial;
-	Eegeo::Rendering::Renderables::WorldMeshRenderable* m_pModalBackgroundRenderable;
-	float m_baseAlpha;
-};
-}
+			Eegeo::Rendering::Shaders::ColorShader* m_pShader;
+			Eegeo::Rendering::Materials::ColorMaterial* m_pMaterial;
+			Eegeo::Rendering::Renderables::WorldMeshRenderable* m_pModalBackgroundRenderable;
+			float m_baseAlpha;
+		};
+	}
 }
 

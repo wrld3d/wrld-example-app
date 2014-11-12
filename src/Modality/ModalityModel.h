@@ -11,27 +11,27 @@
 
 namespace ExampleApp
 {
-namespace Modality
-{
-class ModalityModel : public IModalityModel, private Eegeo::NonCopyable
-{
-	float m_modality;
-	Eegeo::Helpers::CallbackCollection0 m_modalityChangedCallbacks;
+	namespace Modality
+	{
+		class ModalityModel : public IModalityModel, private Eegeo::NonCopyable
+		{
+			float m_modality;
+			Eegeo::Helpers::CallbackCollection0 m_modalityChangedCallbacks;
 
-public:
-	ModalityModel();
+		public:
+			ModalityModel();
 
-	~ModalityModel();
+			~ModalityModel();
 
-	bool IsModalEnabled() const;
+			bool IsModalEnabled() const;
 
-	float GetModality() const;
+			float GetModality() const;
 
-	void SetModality(float modality);
+			void SetModality(float modality);
 
-	void InsertModalityChangedCallback(Eegeo::Helpers::ICallback0& modalityChangedCallback);
+			void InsertModalityChangedCallback(Eegeo::Helpers::ICallback0& modalityChangedCallback);
 
-	void RemoveModalityChangedCallback(Eegeo::Helpers::ICallback0& modalityChangedCallback);
-};
-}
+			void RemoveModalityChangedCallback(Eegeo::Helpers::ICallback0& modalityChangedCallback);
+		};
+	}
 }

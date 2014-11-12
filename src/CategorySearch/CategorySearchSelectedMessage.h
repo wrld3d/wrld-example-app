@@ -6,24 +6,24 @@
 
 namespace ExampleApp
 {
-namespace CategorySearch
-{
-class CategorySearchSelectedMessage
-{
-	std::string m_category;
-
-public:
-	CategorySearchSelectedMessage(
-	    const std::string& category
-	)
-		: m_category(category)
+	namespace CategorySearch
 	{
-	}
+		class CategorySearchSelectedMessage
+		{
+			std::string m_category;
 
-	const std::string& Category() const
-	{
-		return m_category;
+		public:
+			CategorySearchSelectedMessage(
+			    const std::string& category
+			)
+				: m_category(category)
+			{
+			}
+
+			const std::string& Category() const
+			{
+				return m_category;
+			}
+		};
 	}
-};
-}
 }

@@ -12,29 +12,29 @@
 
 namespace ExampleApp
 {
-namespace ModalBackground
-{
-class ModalBackgroundViewController : public IModalBackgroundViewController, private Eegeo::NonCopyable
-{
-	AndroidNativeState& m_nativeState;
-	Modality::IModalityModel& m_modalityModel;
+	namespace ModalBackground
+	{
+		class ModalBackgroundViewController : public IModalBackgroundViewController, private Eegeo::NonCopyable
+		{
+			AndroidNativeState& m_nativeState;
+			Modality::IModalityModel& m_modalityModel;
 
-	jclass m_uiViewClass;
-	jobject m_uiView;
+			jclass m_uiViewClass;
+			jobject m_uiView;
 
-	Eegeo::Helpers::ICallback0* m_pOpenStateChangedCallback;
+			Eegeo::Helpers::ICallback0* m_pOpenStateChangedCallback;
 
-public:
-	ModalBackgroundViewController(
-	    AndroidNativeState& nativeState,
-	    Modality::IModalityModel& modalityModel
-	);
+		public:
+			ModalBackgroundViewController(
+			    AndroidNativeState& nativeState,
+			    Modality::IModalityModel& modalityModel
+			);
 
-	~ModalBackgroundViewController();
+			~ModalBackgroundViewController();
 
-private:
+		private:
 
-	void OpenStateChangedCallback();
-};
-}
+			void OpenStateChangedCallback();
+		};
+	}
 }

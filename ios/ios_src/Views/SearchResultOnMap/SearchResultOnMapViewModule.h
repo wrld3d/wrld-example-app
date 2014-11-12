@@ -10,25 +10,25 @@
 
 namespace ExampleApp
 {
-namespace SearchResultOnMap
-{
-class SearchResultOnMapViewModule: public ISearchResultOnMapViewModule, private Eegeo::NonCopyable
-{
-private:
-	SearchResultOnMapViewController* m_pSearchResultOnMapViewController;
+	namespace SearchResultOnMap
+	{
+		class SearchResultOnMapViewModule: public ISearchResultOnMapViewModule, private Eegeo::NonCopyable
+		{
+		private:
+			SearchResultOnMapViewController* m_pSearchResultOnMapViewController;
 
-public:
-	SearchResultOnMapViewModule(ISearchResultOnMapInFocusViewModel& searchResultOnMapInFocusViewModel,
-	                            ScreenControlViewModel::IScreenControlViewModel& searchResultOnMapInFocusScreenControlViewModel,
-	                            Modality::IModalityModel& modalityModel,
-	                            float pinDiameter,
-	                            float pixelScale);
+		public:
+			SearchResultOnMapViewModule(ISearchResultOnMapInFocusViewModel& searchResultOnMapInFocusViewModel,
+			                            ScreenControlViewModel::IScreenControlViewModel& searchResultOnMapInFocusScreenControlViewModel,
+			                            Modality::IModalityModel& modalityModel,
+			                            float pinDiameter,
+			                            float pixelScale);
 
-	~SearchResultOnMapViewModule();
+			~SearchResultOnMapViewModule();
 
-	SearchResultOnMapViewController& GetSearchResultOnMapViewController() const;
+			SearchResultOnMapViewController& GetSearchResultOnMapViewController() const;
 
-	SearchResultOnMapView& GetSearchResultOnMapView() const;
-};
-}
+			SearchResultOnMapView& GetSearchResultOnMapView() const;
+		};
+	}
 }

@@ -4,9 +4,9 @@
 
 namespace ExampleApp
 {
-namespace Compass
-{
-class ICompassViewModule;
-class CompassViewController;
-}
+	namespace Compass
+	{
+		class ICompassViewModule;
+		class CompassViewController;
+	}
 }

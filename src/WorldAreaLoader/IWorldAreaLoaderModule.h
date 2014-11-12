@@ -6,14 +6,14 @@
 
 namespace ExampleApp
 {
-namespace WorldAreaLoader
-{
-class IWorldAreaLoaderModule
-{
-public:
-	virtual ~IWorldAreaLoaderModule() { }
+	namespace WorldAreaLoader
+	{
+		class IWorldAreaLoaderModule
+		{
+		public:
+			virtual ~IWorldAreaLoaderModule() { }
 
-	virtual IWorldAreaLoaderModel& GetWorldAreaLoaderModel() const = 0;
-};
-}
+			virtual IWorldAreaLoaderModel& GetWorldAreaLoaderModel() const = 0;
+		};
+	}
 }

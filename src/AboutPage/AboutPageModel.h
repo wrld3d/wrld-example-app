@@ -8,26 +8,26 @@
 
 namespace ExampleApp
 {
-namespace AboutPage
-{
-class AboutPageModel : public IAboutPageModel, private Eegeo::NonCopyable
-{
-	std::string m_platformVersion;
-	std::string m_platformHash;
-	std::string m_aboutText;
+	namespace AboutPage
+	{
+		class AboutPageModel : public IAboutPageModel, private Eegeo::NonCopyable
+		{
+			std::string m_platformVersion;
+			std::string m_platformHash;
+			std::string m_aboutText;
 
-public:
-	AboutPageModel(const std::string& platformVersion,
-	               const std::string& platformHash,
-	               const std::string& aboutText);
+		public:
+			AboutPageModel(const std::string& platformVersion,
+			               const std::string& platformHash,
+			               const std::string& aboutText);
 
-	~AboutPageModel();
+			~AboutPageModel();
 
-	const std::string& GetPlatformVersion() const;
+			const std::string& GetPlatformVersion() const;
 
-	const std::string& GetPlatformHash() const;
+			const std::string& GetPlatformHash() const;
 
-	const std::string& GetAboutText() const;
-};
-}
+			const std::string& GetAboutText() const;
+		};
+	}
 }

@@ -6,14 +6,14 @@
 
 namespace ExampleApp
 {
-namespace SearchResultOnMap
-{
-class ISearchResultOnMapViewModule
-{
-public:
-	virtual ~ISearchResultOnMapViewModule() { }
+	namespace SearchResultOnMap
+	{
+		class ISearchResultOnMapViewModule
+		{
+		public:
+			virtual ~ISearchResultOnMapViewModule() { }
 
-	virtual SearchResultOnMapViewController& GetSearchResultOnMapViewController() const = 0;
-};
-}
+			virtual SearchResultOnMapViewController& GetSearchResultOnMapViewController() const = 0;
+		};
+	}
 }

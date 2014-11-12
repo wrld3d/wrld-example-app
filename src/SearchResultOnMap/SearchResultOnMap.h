@@ -4,15 +4,15 @@
 
 namespace ExampleApp
 {
-namespace SearchResultOnMap
-{
-class ISearchResultOnMapIconCategoryMapper;
-class ISearchResultOnMapInFocusViewModel;
-class ISearchResultOnMapInFocusController;
-class ISearchResultOnMapScaleController;
-class ISearchResultOnMapFactory;
-class ISearchResultOnMapModule;
-class ISearchResultOnMapModel;
-class SearchResultOnMapItemModel;
-}
+	namespace SearchResultOnMap
+	{
+		class ISearchResultOnMapIconCategoryMapper;
+		class ISearchResultOnMapInFocusViewModel;
+		class ISearchResultOnMapInFocusController;
+		class ISearchResultOnMapScaleController;
+		class ISearchResultOnMapFactory;
+		class ISearchResultOnMapModule;
+		class ISearchResultOnMapModel;
+		class SearchResultOnMapItemModel;
+	}
 }

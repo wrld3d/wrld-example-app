@@ -13,25 +13,25 @@
 
 namespace ExampleApp
 {
-namespace SearchResultMenu
-{
-class SearchResultItemModel: public Menu::IMenuOption, private Eegeo::NonCopyable
-{
-	std::string m_name;
-	Eegeo::dv3 m_searchResultModelLocationEcef;
-	OpenableControlViewModel::IOpenableControlViewModel& m_searchMenuViewModel;
-	ExampleAppMessaging::UiToNativeMessageBus& m_uiToNativeMessageBus;
+	namespace SearchResultMenu
+	{
+		class SearchResultItemModel: public Menu::IMenuOption, private Eegeo::NonCopyable
+		{
+			std::string m_name;
+			Eegeo::dv3 m_searchResultModelLocationEcef;
+			OpenableControlViewModel::IOpenableControlViewModel& m_searchMenuViewModel;
+			ExampleAppMessaging::UiToNativeMessageBus& m_uiToNativeMessageBus;
 
-public:
-	SearchResultItemModel(const std::string& name,
-	                      const Eegeo::dv3& searchResultModelLocationEcef,
-	                      OpenableControlViewModel::IOpenableControlViewModel& searchMenuViewModel,
-	                      ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus);
+		public:
+			SearchResultItemModel(const std::string& name,
+			                      const Eegeo::dv3& searchResultModelLocationEcef,
+			                      OpenableControlViewModel::IOpenableControlViewModel& searchMenuViewModel,
+			                      ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus);
 
-	~SearchResultItemModel();
+			~SearchResultItemModel();
 
-	void Select();
-};
-}
+			void Select();
+		};
+	}
 
 }

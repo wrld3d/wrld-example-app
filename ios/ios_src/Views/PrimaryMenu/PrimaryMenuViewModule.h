@@ -10,25 +10,25 @@
 
 namespace ExampleApp
 {
-namespace PrimaryMenu
-{
-class PrimaryMenuViewModule: public IPrimaryMenuViewModule, private Eegeo::NonCopyable
-{
-private:
-	MenuViewController* m_pMenuViewController;
-	PrimaryMenuView* m_pView;
+	namespace PrimaryMenu
+	{
+		class PrimaryMenuViewModule: public IPrimaryMenuViewModule, private Eegeo::NonCopyable
+		{
+		private:
+			MenuViewController* m_pMenuViewController;
+			PrimaryMenuView* m_pView;
 
-public:
-	PrimaryMenuViewModule(Menu::IMenuModel& primaryMenuModel,
-	                      Menu::IMenuViewModel& primaryMenuViewModel,
-	                      const Eegeo::Rendering::ScreenProperties& screenProperties,
-	                      Modality::IModalityModel& modalityModel);
+		public:
+			PrimaryMenuViewModule(Menu::IMenuModel& primaryMenuModel,
+			                      Menu::IMenuViewModel& primaryMenuViewModel,
+			                      const Eegeo::Rendering::ScreenProperties& screenProperties,
+			                      Modality::IModalityModel& modalityModel);
 
-	~PrimaryMenuViewModule();
+			~PrimaryMenuViewModule();
 
-	MenuViewController& GetPrimaryMenuViewController() const;
+			MenuViewController& GetPrimaryMenuViewController() const;
 
-	PrimaryMenuView& GetPrimaryMenuView() const;
-};
-}
+			PrimaryMenuView& GetPrimaryMenuView() const;
+		};
+	}
 }

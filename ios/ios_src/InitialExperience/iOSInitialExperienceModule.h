@@ -10,18 +10,18 @@
 
 namespace ExampleApp
 {
-namespace InitialExperience
-{
-class iOSInitialExperienceModule : public InitialExperienceModuleBase, private Eegeo::NonCopyable
-{
-public:
-	iOSInitialExperienceModule(PersistentSettings::IPersistentSettingsModel& persistentSettings);
+	namespace InitialExperience
+	{
+		class iOSInitialExperienceModule : public InitialExperienceModuleBase, private Eegeo::NonCopyable
+		{
+		public:
+			iOSInitialExperienceModule(PersistentSettings::IPersistentSettingsModel& persistentSettings);
 
-	~iOSInitialExperienceModule();
+			~iOSInitialExperienceModule();
 
-protected:
+		protected:
 
-	std::vector<IInitialExperienceStep*> CreateSteps(WorldAreaLoader::IWorldAreaLoaderModel& worldAreaLoaderModel) const;
-};
-}
+			std::vector<IInitialExperienceStep*> CreateSteps(WorldAreaLoader::IWorldAreaLoaderModel& worldAreaLoaderModel) const;
+		};
+	}
 }

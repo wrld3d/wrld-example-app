@@ -10,48 +10,48 @@
 
 namespace ExampleApp
 {
-namespace OpenableControlViewModel
-{
-class OpenableControlViewModelBase : public IOpenableControlViewModel
-{
-private:
-	float m_openState;
-	Reaction::IReactionControllerModel& m_reactionControllerModel;
+	namespace OpenableControlViewModel
+	{
+		class OpenableControlViewModelBase : public IOpenableControlViewModel
+		{
+		private:
+			float m_openState;
+			Reaction::IReactionControllerModel& m_reactionControllerModel;
 
-	Eegeo::Helpers::CallbackCollection2<IOpenableControlViewModel&, float> m_openStateChangedCallbacks;
+			Eegeo::Helpers::CallbackCollection2<IOpenableControlViewModel&, float> m_openStateChangedCallbacks;
 
-	bool TryAcquireOpenableControl();
+			bool TryAcquireOpenableControl();
 
-	void ReleaseOpenableControl();
+			void ReleaseOpenableControl();
 
-protected:
-	OpenableControlViewModelBase(Reaction::IReactionControllerModel& reactionControllerModel);
+		protected:
+			OpenableControlViewModelBase(Reaction::IReactionControllerModel& reactionControllerModel);
 
-public:
+		public:
 
-	~OpenableControlViewModelBase();
+			~OpenableControlViewModelBase();
 
-	bool HasReactorControl() const;
+			bool HasReactorControl() const;
 
-	bool TryAcquireReactorControl();
+			bool TryAcquireReactorControl();
 
-	void ReleaseReactorControl();
+			void ReleaseReactorControl();
 
-	bool Open();
+			bool Open();
 
-	bool Close();
+			bool Close();
 
-	void UpdateOpenState(float openState);
+			void UpdateOpenState(float openState);
 
-	void InsertOpenStateChangedCallback(Eegeo::Helpers::ICallback2<IOpenableControlViewModel&, float>& callback);
+			void InsertOpenStateChangedCallback(Eegeo::Helpers::ICallback2<IOpenableControlViewModel&, float>& callback);
 
-	void RemoveOpenStateChangedCallback(Eegeo::Helpers::ICallback2<IOpenableControlViewModel&, float>& callback);
+			void RemoveOpenStateChangedCallback(Eegeo::Helpers::ICallback2<IOpenableControlViewModel&, float>& callback);
 
-	bool IsFullyOpen() const;
+			bool IsFullyOpen() const;
 
-	bool IsFullyClosed() const;
+			bool IsFullyClosed() const;
 
-	float OpenState() const;
-};
-}
+			float OpenState() const;
+		};
+	}
 }

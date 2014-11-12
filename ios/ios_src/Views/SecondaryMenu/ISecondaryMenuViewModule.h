@@ -6,16 +6,16 @@
 
 namespace ExampleApp
 {
-namespace SecondaryMenu
-{
-class ISecondaryMenuViewModule
-{
-public:
-	virtual ~ISecondaryMenuViewModule() { }
+	namespace SecondaryMenu
+	{
+		class ISecondaryMenuViewModule
+		{
+		public:
+			virtual ~ISecondaryMenuViewModule() { }
 
-	virtual MenuViewController& GetSecondaryMenuViewController() const = 0;
+			virtual MenuViewController& GetSecondaryMenuViewController() const = 0;
 
-	virtual SecondaryMenuView& GetSecondaryMenuView() const = 0;
-};
-}
+			virtual SecondaryMenuView& GetSecondaryMenuView() const = 0;
+		};
+	}
 }

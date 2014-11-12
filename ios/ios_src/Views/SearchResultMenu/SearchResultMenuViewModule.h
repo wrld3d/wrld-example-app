@@ -15,29 +15,29 @@
 
 namespace ExampleApp
 {
-namespace SearchResultMenu
-{
-class SearchResultMenuViewModule: public ISearchResultMenuViewModule, private Eegeo::NonCopyable
-{
-private:
-	SearchResultMenuViewController* m_pMenuViewController;
-	SearchResultMenuView* m_pView;
+	namespace SearchResultMenu
+	{
+		class SearchResultMenuViewModule: public ISearchResultMenuViewModule, private Eegeo::NonCopyable
+		{
+		private:
+			SearchResultMenuViewController* m_pMenuViewController;
+			SearchResultMenuView* m_pView;
 
-public:
-	SearchResultMenuViewModule(CategorySearch::ICategorySearchRepository& categorySearchRepository,
-	                           Menu::IMenuModel& searchResultMenuModel,
-	                           Menu::IMenuViewModel& menuViewModel,
-	                           SearchResultMenu::ISearchResultMenuViewModel& searchResultMenuViewModel,
-	                           const Eegeo::Rendering::ScreenProperties& screenProperties,
-	                           Modality::IModalityModel& modalityModel,
-	                           ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
-	                           ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus);
+		public:
+			SearchResultMenuViewModule(CategorySearch::ICategorySearchRepository& categorySearchRepository,
+			                           Menu::IMenuModel& searchResultMenuModel,
+			                           Menu::IMenuViewModel& menuViewModel,
+			                           SearchResultMenu::ISearchResultMenuViewModel& searchResultMenuViewModel,
+			                           const Eegeo::Rendering::ScreenProperties& screenProperties,
+			                           Modality::IModalityModel& modalityModel,
+			                           ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
+			                           ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus);
 
-	~SearchResultMenuViewModule();
+			~SearchResultMenuViewModule();
 
-	MenuViewController& GetSearchResultMenuViewController() const;
+			MenuViewController& GetSearchResultMenuViewController() const;
 
-	SearchResultMenuView& GetSearchResultMenuView() const;
-};
-}
+			SearchResultMenuView& GetSearchResultMenuView() const;
+		};
+	}
 }

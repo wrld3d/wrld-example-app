@@ -12,24 +12,24 @@
 
 namespace ExampleApp
 {
-namespace Menu
-{
-class MenuViewModule: public IMenuViewModule, private Eegeo::NonCopyable
-{
-private:
-	MenuViewController* m_pMenuViewController;
+	namespace Menu
+	{
+		class MenuViewModule: public IMenuViewModule, private Eegeo::NonCopyable
+		{
+		private:
+			MenuViewController* m_pMenuViewController;
 
-public:
-	MenuViewModule(
-	    const std::string& viewName,
-	    AndroidNativeState& nativeState,
-	    Menu::IMenuModel& menuModelModel,
-	    Menu::IMenuViewModel& menuViewModel
-	);
+		public:
+			MenuViewModule(
+			    const std::string& viewName,
+			    AndroidNativeState& nativeState,
+			    Menu::IMenuModel& menuModelModel,
+			    Menu::IMenuViewModel& menuViewModel
+			);
 
-	~MenuViewModule();
+			~MenuViewModule();
 
-	IMenuViewController& GetMenuViewController() const;
-};
-}
+			IMenuViewController& GetMenuViewController() const;
+		};
+	}
 }

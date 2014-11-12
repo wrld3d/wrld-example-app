@@ -7,58 +7,58 @@
 
 namespace ExampleApp
 {
-namespace Repository
-{
-template<typename TItem>
-class RepositoryModel : public IRepositoryModel<TItem>
-{
-protected:
-	Eegeo::Helpers::ObservableVector<TItem> m_items;
-
-public:
-	RepositoryModel() {}
-
-	void AddItem(const TItem& item)
+	namespace Repository
 	{
-		TItem i = item;
-		m_items.AddItem(i);
-	}
+		template<typename TItem>
+		class RepositoryModel : public IRepositoryModel<TItem>
+		{
+		protected:
+			Eegeo::Helpers::ObservableVector<TItem> m_items;
 
-	void RemoveItem(const TItem& item)
-	{
-		TItem i = item;
-		m_items.RemoveItem(i);
-	}
+		public:
+			RepositoryModel() {}
 
-	size_t GetItemCount() const
-	{
-		return m_items.size();
-	}
+			void AddItem(const TItem& item)
+			{
+				TItem i = item;
+				m_items.AddItem(i);
+			}
 
-	TItem GetItemAtIndex(size_t index)
-	{
-		return m_items.at(index);
-	}
+			void RemoveItem(const TItem& item)
+			{
+				TItem i = item;
+				m_items.RemoveItem(i);
+			}
 
-	void InsertItemAddedCallback(Eegeo::Helpers::ICallback1<TItem>& callback)
-	{
-		m_items.AddItemAddedCallback(callback);
-	}
+			size_t GetItemCount() const
+			{
+				return m_items.size();
+			}
 
-	void RemoveItemAddedCallback(Eegeo::Helpers::ICallback1<TItem>& callback)
-	{
-		m_items.RemoveItemAddedCallback(callback);
-	}
+			TItem GetItemAtIndex(size_t index)
+			{
+				return m_items.at(index);
+			}
 
-	void InsertItemRemovedCallback(Eegeo::Helpers::ICallback1<TItem>& callback)
-	{
-		m_items.AddItemRemovedCallback(callback);
-	}
+			void InsertItemAddedCallback(Eegeo::Helpers::ICallback1<TItem>& callback)
+			{
+				m_items.AddItemAddedCallback(callback);
+			}
 
-	void RemoveItemRemovedCallback(Eegeo::Helpers::ICallback1<TItem>& callback)
-	{
-		m_items.RemoveItemRemovedCallback(callback);
+			void RemoveItemAddedCallback(Eegeo::Helpers::ICallback1<TItem>& callback)
+			{
+				m_items.RemoveItemAddedCallback(callback);
+			}
+
+			void InsertItemRemovedCallback(Eegeo::Helpers::ICallback1<TItem>& callback)
+			{
+				m_items.AddItemRemovedCallback(callback);
+			}
+
+			void RemoveItemRemovedCallback(Eegeo::Helpers::ICallback1<TItem>& callback)
+			{
+				m_items.RemoveItemRemovedCallback(callback);
+			}
+		};
 	}
-};
-}
 }

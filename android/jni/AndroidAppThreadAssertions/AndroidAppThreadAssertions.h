@@ -4,18 +4,18 @@
 
 namespace ExampleApp
 {
-namespace AndroidAppThreadAssertions
-{
-void NominateCurrentlyRunningThreadAsUiThread();
+	namespace AndroidAppThreadAssertions
+	{
+		void NominateCurrentlyRunningThreadAsUiThread();
 
-void AssertCurrentlyRunningOnNominatedUiThread(const char* file, int line);
+		void AssertCurrentlyRunningOnNominatedUiThread(const char* file, int line);
 
-void RemoveNominationForUiThread();
+		void RemoveNominationForUiThread();
 
-void NominateCurrentlyRunningThreadAsNativeThread();
+		void NominateCurrentlyRunningThreadAsNativeThread();
 
-void AssertCurrentlyRunningOnNominatedNativeThread(const char* file, int line);
+		void AssertCurrentlyRunningOnNominatedNativeThread(const char* file, int line);
 
-void RemoveNominationForNativeThread();
-}
+		void RemoveNominationForNativeThread();
+	}
 }

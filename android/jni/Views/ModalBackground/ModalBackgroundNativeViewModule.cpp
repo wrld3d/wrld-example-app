@@ -7,40 +7,40 @@
 
 namespace ExampleApp
 {
-namespace ModalBackground
-{
-ModalBackgroundNativeViewModule::ModalBackgroundNativeViewModule(
-    Eegeo::Modules::Core::RenderingModule& renderingModule,
-    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageCatalog
-)
-	: m_renderableFilters(renderingModule.GetRenderableFilters())
-{
-	ASSERT_NATIVE_THREAD
+	namespace ModalBackground
+	{
+		ModalBackgroundNativeViewModule::ModalBackgroundNativeViewModule(
+		    Eegeo::Modules::Core::RenderingModule& renderingModule,
+		    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageCatalog
+		)
+			: m_renderableFilters(renderingModule.GetRenderableFilters())
+		{
+			ASSERT_NATIVE_THREAD
 
-	m_pModalBackgroundView = Eegeo_NEW(ModalBackgroundView)(
-	                             renderingModule.GetShaderIdGenerator(),
-	                             renderingModule.GetMaterialIdGenerator(),
-	                             renderingModule.GetGlBufferPool(),
-	                             renderingModule.GetVertexLayoutPool(),
-	                             renderingModule.GetVertexBindingPool()
-	                         );
+			m_pModalBackgroundView = Eegeo_NEW(ModalBackgroundView)(
+			                             renderingModule.GetShaderIdGenerator(),
+			                             renderingModule.GetMaterialIdGenerator(),
+			                             renderingModule.GetGlBufferPool(),
+			                             renderingModule.GetVertexLayoutPool(),
+			                             renderingModule.GetVertexBindingPool()
+			                         );
 
-	m_renderableFilters.AddRenderableFilter(*m_pModalBackgroundView);
+			m_renderableFilters.AddRenderableFilter(*m_pModalBackgroundView);
 
-	m_pModalBackgroundNativeModalityObserver = Eegeo_NEW(ModalBackgroundNativeModalityObserver)(
-	            *m_pModalBackgroundView,
-	            uiToNativeMessageCatalog
-	        );
-}
+			m_pModalBackgroundNativeModalityObserver = Eegeo_NEW(ModalBackgroundNativeModalityObserver)(
+			            *m_pModalBackgroundView,
+			            uiToNativeMessageCatalog
+			        );
+		}
 
-ModalBackgroundNativeViewModule::~ModalBackgroundNativeViewModule()
-{
-	ASSERT_NATIVE_THREAD
+		ModalBackgroundNativeViewModule::~ModalBackgroundNativeViewModule()
+		{
+			ASSERT_NATIVE_THREAD
 
-	Eegeo_DELETE m_pModalBackgroundNativeModalityObserver;
+			Eegeo_DELETE m_pModalBackgroundNativeModalityObserver;
 
-	m_renderableFilters.RemoveRenderableFilter(*m_pModalBackgroundView);
-	Eegeo_DELETE(m_pModalBackgroundView);
-}
-}
+			m_renderableFilters.RemoveRenderableFilter(*m_pModalBackgroundView);
+			Eegeo_DELETE(m_pModalBackgroundView);
+		}
+	}
 }

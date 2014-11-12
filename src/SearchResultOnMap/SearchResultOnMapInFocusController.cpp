@@ -12,81 +12,81 @@
 
 namespace ExampleApp
 {
-namespace SearchResultOnMap
-{
-SearchResultOnMapInFocusController::SearchResultOnMapInFocusController(SearchResultOnMapModel& searchResultOnMapModel,
-        ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus,
-        WorldPins::IWorldPinsService& worldPinsService,
-        Eegeo::Camera::RenderCamera& renderCamera)
-	: m_searchResultOnMapModel(searchResultOnMapModel)
-	, m_nativeToUiMessageBus(nativeToUiMessageBus)
-	, m_worldPinsService(worldPinsService)
-	, m_renderCamera(renderCamera)
-	, m_pLastFocussedModel(NULL)
-{
-
-}
-
-SearchResultOnMapInFocusController::~SearchResultOnMapInFocusController()
-{
-
-}
-
-void SearchResultOnMapInFocusController::Update(float deltaSeconds, const Eegeo::dv3& ecefInterestPoint)
-{
-	Search::SearchResultModel* pClosest = NULL;
-	double minDistanceSq = std::numeric_limits<double>::max();
-	Eegeo::v2 closestScreenPinLocation;
-
-	for(SearchResultOnMapModel::mapIt it = m_searchResultOnMapModel.begin();
-	        it != m_searchResultOnMapModel.end();
-	        ++ it)
+	namespace SearchResultOnMap
 	{
-		Search::SearchResultModel& searchResultModel = *it->first;
-		ExampleApp::WorldPins::WorldPinItemModel& worldPinItemModel = it->second;
-
-		Eegeo::dv3 ecefPinLocation;
-		Eegeo::v2 screenPinLocation;
-
-		m_worldPinsService.GetPinEcefAndScreenLocations(worldPinItemModel,
-		        ecefPinLocation,
-		        screenPinLocation);
-
-		Eegeo::v3 cameraLocal = (ecefPinLocation - m_renderCamera.GetEcefLocation()).ToSingle();
-		Eegeo::v3 screenPos;
-		m_renderCamera.Project(cameraLocal, screenPos);
-		screenPinLocation.Set(screenPos.GetX(), screenPos.GetY());
-
-		double distanceToFocusSq = (ecefInterestPoint - ecefPinLocation).LengthSq();
-
-		if(distanceToFocusSq < minDistanceSq && worldPinItemModel.IsVisible())
+		SearchResultOnMapInFocusController::SearchResultOnMapInFocusController(SearchResultOnMapModel& searchResultOnMapModel,
+		        ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus,
+		        WorldPins::IWorldPinsService& worldPinsService,
+		        Eegeo::Camera::RenderCamera& renderCamera)
+			: m_searchResultOnMapModel(searchResultOnMapModel)
+			, m_nativeToUiMessageBus(nativeToUiMessageBus)
+			, m_worldPinsService(worldPinsService)
+			, m_renderCamera(renderCamera)
+			, m_pLastFocussedModel(NULL)
 		{
-			pClosest = &searchResultModel;
-			minDistanceSq = distanceToFocusSq;
-			closestScreenPinLocation = screenPinLocation;
+
+		}
+
+		SearchResultOnMapInFocusController::~SearchResultOnMapInFocusController()
+		{
+
+		}
+
+		void SearchResultOnMapInFocusController::Update(float deltaSeconds, const Eegeo::dv3& ecefInterestPoint)
+		{
+			Search::SearchResultModel* pClosest = NULL;
+			double minDistanceSq = std::numeric_limits<double>::max();
+			Eegeo::v2 closestScreenPinLocation;
+
+			for(SearchResultOnMapModel::mapIt it = m_searchResultOnMapModel.begin();
+			        it != m_searchResultOnMapModel.end();
+			        ++ it)
+			{
+				Search::SearchResultModel& searchResultModel = *it->first;
+				ExampleApp::WorldPins::WorldPinItemModel& worldPinItemModel = it->second;
+
+				Eegeo::dv3 ecefPinLocation;
+				Eegeo::v2 screenPinLocation;
+
+				m_worldPinsService.GetPinEcefAndScreenLocations(worldPinItemModel,
+				        ecefPinLocation,
+				        screenPinLocation);
+
+				Eegeo::v3 cameraLocal = (ecefPinLocation - m_renderCamera.GetEcefLocation()).ToSingle();
+				Eegeo::v3 screenPos;
+				m_renderCamera.Project(cameraLocal, screenPos);
+				screenPinLocation.Set(screenPos.GetX(), screenPos.GetY());
+
+				double distanceToFocusSq = (ecefInterestPoint - ecefPinLocation).LengthSq();
+
+				if(distanceToFocusSq < minDistanceSq && worldPinItemModel.IsVisible())
+				{
+					pClosest = &searchResultModel;
+					minDistanceSq = distanceToFocusSq;
+					closestScreenPinLocation = screenPinLocation;
+				}
+			}
+
+			if(m_pLastFocussedModel != pClosest)
+			{
+				m_pLastFocussedModel = pClosest;
+
+				if(m_pLastFocussedModel != NULL)
+				{
+					m_nativeToUiMessageBus.Publish(SearchResultGainedFocusMessage(*m_pLastFocussedModel, closestScreenPinLocation));
+				}
+				else
+				{
+					m_nativeToUiMessageBus.Publish(SearchResultLostFocusMessage());
+				}
+			}
+			else
+			{
+				if(m_pLastFocussedModel != NULL)
+				{
+					m_nativeToUiMessageBus.Publish(SearchResultInFocusChangedLocationMessage(closestScreenPinLocation));
+				}
+			}
 		}
 	}
-
-	if(m_pLastFocussedModel != pClosest)
-	{
-		m_pLastFocussedModel = pClosest;
-
-		if(m_pLastFocussedModel != NULL)
-		{
-			m_nativeToUiMessageBus.Publish(SearchResultGainedFocusMessage(*m_pLastFocussedModel, closestScreenPinLocation));
-		}
-		else
-		{
-			m_nativeToUiMessageBus.Publish(SearchResultLostFocusMessage());
-		}
-	}
-	else
-	{
-		if(m_pLastFocussedModel != NULL)
-		{
-			m_nativeToUiMessageBus.Publish(SearchResultInFocusChangedLocationMessage(closestScreenPinLocation));
-		}
-	}
-}
-}
 }

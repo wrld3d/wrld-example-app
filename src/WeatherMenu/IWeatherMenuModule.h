@@ -6,15 +6,15 @@
 
 namespace ExampleApp
 {
-namespace WeatherMenu
-{
-class IWeatherMenuModule
-{
-public:
+	namespace WeatherMenu
+	{
+		class IWeatherMenuModule
+		{
+		public:
 
-	virtual ~IWeatherMenuModule() { }
+			virtual ~IWeatherMenuModule() { }
 
-	virtual Menu::IMenuModel& GetWeatherMenuModel() const = 0;
-};
-}
+			virtual Menu::IMenuModel& GetWeatherMenuModel() const = 0;
+		};
+	}
 }

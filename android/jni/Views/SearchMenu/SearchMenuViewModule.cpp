@@ -8,45 +8,45 @@
 
 namespace ExampleApp
 {
-namespace SearchMenu
-{
-SearchMenuViewModule::SearchMenuViewModule(
-    const std::string& viewName,
-    AndroidNativeState& nativeState,
-    Menu::IMenuModel& menuModel,
-    Menu::IMenuViewModel& menuViewModel,
-    CategorySearch::ICategorySearchRepository& categorySearchRepository,
-    SearchResultMenu::ISearchResultMenuViewModel& searchResultMenuViewModel,
-    ExampleApp::ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
-    ExampleApp::ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus
-)
-{
-	ASSERT_UI_THREAD
+	namespace SearchMenu
+	{
+		SearchMenuViewModule::SearchMenuViewModule(
+		    const std::string& viewName,
+		    AndroidNativeState& nativeState,
+		    Menu::IMenuModel& menuModel,
+		    Menu::IMenuViewModel& menuViewModel,
+		    CategorySearch::ICategorySearchRepository& categorySearchRepository,
+		    SearchResultMenu::ISearchResultMenuViewModel& searchResultMenuViewModel,
+		    ExampleApp::ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
+		    ExampleApp::ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus
+		)
+		{
+			ASSERT_UI_THREAD
 
-	m_pMenuViewController = Eegeo_NEW(SearchMenuViewController)(
-	                            viewName,
-	                            nativeState,
-	                            menuModel,
-	                            menuViewModel,
-	                            categorySearchRepository,
-	                            searchResultMenuViewModel,
-	                            uiToNativeMessageBus,
-	                            nativeToUiMessageBus
-	                        );
-}
+			m_pMenuViewController = Eegeo_NEW(SearchMenuViewController)(
+			                            viewName,
+			                            nativeState,
+			                            menuModel,
+			                            menuViewModel,
+			                            categorySearchRepository,
+			                            searchResultMenuViewModel,
+			                            uiToNativeMessageBus,
+			                            nativeToUiMessageBus
+			                        );
+		}
 
-SearchMenuViewModule::~SearchMenuViewModule()
-{
-	ASSERT_UI_THREAD
+		SearchMenuViewModule::~SearchMenuViewModule()
+		{
+			ASSERT_UI_THREAD
 
-	Eegeo_DELETE m_pMenuViewController;
-}
+			Eegeo_DELETE m_pMenuViewController;
+		}
 
-Menu::IMenuViewController& SearchMenuViewModule::GetMenuViewController() const
-{
-	ASSERT_UI_THREAD
+		Menu::IMenuViewController& SearchMenuViewModule::GetMenuViewController() const
+		{
+			ASSERT_UI_THREAD
 
-	return *m_pMenuViewController;
-}
-}
+			return *m_pMenuViewController;
+		}
+	}
 }

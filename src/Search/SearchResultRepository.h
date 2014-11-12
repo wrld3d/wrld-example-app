@@ -7,59 +7,59 @@
 
 namespace ExampleApp
 {
-namespace Search
-{
-class SearchResultRepository : public ISearchResultRepository, private Eegeo::NonCopyable
-{
-	typedef SearchResultModel* TModel;
-
-	Repository::RepositoryModel<TModel> m_repository;
-
-public:
-	~SearchResultRepository();
-
-	void AddItem(const TModel& item)
+	namespace Search
 	{
-		m_repository.AddItem(item);
-	}
+		class SearchResultRepository : public ISearchResultRepository, private Eegeo::NonCopyable
+		{
+			typedef SearchResultModel* TModel;
 
-	void RemoveItem(const TModel& item)
-	{
-		m_repository.RemoveItem(item);
-	}
+			Repository::RepositoryModel<TModel> m_repository;
 
-	size_t GetItemCount() const
-	{
-		return m_repository.GetItemCount();
-	}
+		public:
+			~SearchResultRepository();
 
-	TModel GetItemAtIndex(size_t index)
-	{
-		return m_repository.GetItemAtIndex(index);
-	}
+			void AddItem(const TModel& item)
+			{
+				m_repository.AddItem(item);
+			}
 
-	void InsertItemAddedCallback(Eegeo::Helpers::ICallback1<TModel>& callback)
-	{
-		m_repository.InsertItemAddedCallback(callback);
-	}
+			void RemoveItem(const TModel& item)
+			{
+				m_repository.RemoveItem(item);
+			}
 
-	void RemoveItemAddedCallback(Eegeo::Helpers::ICallback1<TModel>& callback)
-	{
-		m_repository.RemoveItemAddedCallback(callback);
-	}
+			size_t GetItemCount() const
+			{
+				return m_repository.GetItemCount();
+			}
 
-	void InsertItemRemovedCallback(Eegeo::Helpers::ICallback1<TModel>& callback)
-	{
-		m_repository.InsertItemRemovedCallback(callback);
-	}
+			TModel GetItemAtIndex(size_t index)
+			{
+				return m_repository.GetItemAtIndex(index);
+			}
 
-	void RemoveItemRemovedCallback(Eegeo::Helpers::ICallback1<TModel>& callback)
-	{
-		m_repository.RemoveItemRemovedCallback(callback);
-	}
+			void InsertItemAddedCallback(Eegeo::Helpers::ICallback1<TModel>& callback)
+			{
+				m_repository.InsertItemAddedCallback(callback);
+			}
 
-	void RemoveFirstResultWithIdentifier(const std::string& identifier);
-};
-}
+			void RemoveItemAddedCallback(Eegeo::Helpers::ICallback1<TModel>& callback)
+			{
+				m_repository.RemoveItemAddedCallback(callback);
+			}
+
+			void InsertItemRemovedCallback(Eegeo::Helpers::ICallback1<TModel>& callback)
+			{
+				m_repository.InsertItemRemovedCallback(callback);
+			}
+
+			void RemoveItemRemovedCallback(Eegeo::Helpers::ICallback1<TModel>& callback)
+			{
+				m_repository.RemoveItemRemovedCallback(callback);
+			}
+
+			void RemoveFirstResultWithIdentifier(const std::string& identifier);
+		};
+	}
 }
 

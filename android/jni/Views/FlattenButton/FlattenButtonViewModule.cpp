@@ -6,30 +6,30 @@
 
 namespace ExampleApp
 {
-namespace FlattenButton
-{
-FlattenButtonViewModule::FlattenButtonViewModule(
-    AndroidNativeState& nativeState,
-    FlattenButton::IFlattenButtonViewModel& viewModel,
-    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
-    ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus
-)
-{
-	ASSERT_UI_THREAD
+	namespace FlattenButton
+	{
+		FlattenButtonViewModule::FlattenButtonViewModule(
+		    AndroidNativeState& nativeState,
+		    FlattenButton::IFlattenButtonViewModel& viewModel,
+		    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
+		    ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus
+		)
+		{
+			ASSERT_UI_THREAD
 
-	m_pController = Eegeo_NEW(FlattenButtonViewController)(
-	                    nativeState,
-	                    viewModel,
-	                    uiToNativeMessageBus,
-	                    nativeToUiMessageBus
-	                );
-}
+			m_pController = Eegeo_NEW(FlattenButtonViewController)(
+			                    nativeState,
+			                    viewModel,
+			                    uiToNativeMessageBus,
+			                    nativeToUiMessageBus
+			                );
+		}
 
-FlattenButtonViewModule::~FlattenButtonViewModule()
-{
-	ASSERT_UI_THREAD
+		FlattenButtonViewModule::~FlattenButtonViewModule()
+		{
+			ASSERT_UI_THREAD
 
-	Eegeo_DELETE m_pController;
-}
-}
+			Eegeo_DELETE m_pController;
+		}
+	}
 }

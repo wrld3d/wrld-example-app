@@ -9,20 +9,20 @@
 
 namespace ExampleApp
 {
-namespace PlaceJumps
-{
-class PlaceJumpController : public IPlaceJumpController
-{
-public:
-	PlaceJumpController(Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& globeCameraController,
-	                    Compass::ICompassModel& compassModel);
+	namespace PlaceJumps
+	{
+		class PlaceJumpController : public IPlaceJumpController
+		{
+		public:
+			PlaceJumpController(Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& globeCameraController,
+			                    Compass::ICompassModel& compassModel);
 
-	void JumpTo(IPlaceJumpModel& jumpModel);
+			void JumpTo(IPlaceJumpModel& jumpModel);
 
-private:
-	Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& m_cameraController;
-	Compass::ICompassModel& m_compassModel;
-};
+		private:
+			Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& m_cameraController;
+			Compass::ICompassModel& m_compassModel;
+		};
 
-}
+	}
 }

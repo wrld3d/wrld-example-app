@@ -4,10 +4,10 @@
 
 namespace ExampleApp
 {
-namespace WorldAreaLoader
-{
-class IWorldAreaLoaderModule;
-class IWorldAreaLoaderModel;
-class IWorldAreaLoaderController;
-}
+	namespace WorldAreaLoader
+	{
+		class IWorldAreaLoaderModule;
+		class IWorldAreaLoaderModel;
+		class IWorldAreaLoaderController;
+	}
 }

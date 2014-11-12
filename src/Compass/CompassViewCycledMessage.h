@@ -4,10 +4,10 @@
 
 namespace ExampleApp
 {
-namespace Compass
-{
-class CompassViewCycledMessage
-{
-};
-}
+	namespace Compass
+	{
+		class CompassViewCycledMessage
+		{
+		};
+	}
 }

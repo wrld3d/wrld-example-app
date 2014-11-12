@@ -36,609 +36,609 @@
 
 namespace ExampleApp
 {
-const std::string ApiKey = "OBTAIN API_KEY FROM https://appstore.eegeo.com AND INSERT IT HERE";
-const std::string DecartaApiKey = "OBTAIN DECARTA SEARCH KEY AND INSERT IT HERE";
+    const std::string ApiKey = "OBTAIN API_KEY FROM https://appstore.eegeo.com AND INSERT IT HERE";
+    const std::string DecartaApiKey = "OBTAIN DECARTA SEARCH KEY AND INSERT IT HERE";
 
-namespace
-{
-Eegeo::Rendering::LoadingScreen* CreateLoadingScreen(const Eegeo::Rendering::ScreenProperties& screenProperties,
-        const Eegeo::Modules::Core::RenderingModule& renderingModule,
-        const Eegeo::Modules::IPlatformAbstractionModule& platformAbstractionModule)
-{
-	Eegeo::Rendering::LoadingScreenConfig loadingScreenConfig;
-	loadingScreenConfig.layout = Eegeo::Rendering::LoadingScreenLayout::Centred;
-	loadingScreenConfig.backgroundColor = Eegeo::v4::One();
-	loadingScreenConfig.loadingBarColor = Eegeo::v4(135.0f/255.0f, 213.0f/255.f, 245.0f/255.f, 1.0f);
-	loadingScreenConfig.loadingBarBackgroundColor = Eegeo::v4(0.5f, 0.5f, 0.5f, 1.0f);
-	loadingScreenConfig.fadeOutDurationSeconds = 1.5f;
-	loadingScreenConfig.screenWidth = screenProperties.GetScreenWidth();
-	loadingScreenConfig.screenHeight = screenProperties.GetScreenHeight();
-
-
-	Eegeo::Rendering::LoadingScreen* loadingScreen = Eegeo::Rendering::LoadingScreen::Create(
-	            "SplashScreen.png",
-	            loadingScreenConfig,
-	            renderingModule.GetShaderIdGenerator(),
-	            renderingModule.GetMaterialIdGenerator(),
-	            renderingModule.GetGlBufferPool(),
-	            renderingModule.GetVertexLayoutPool(),
-	            renderingModule.GetVertexBindingPool(),
-	            platformAbstractionModule.GetTextureFileLoader());
-
-	return loadingScreen;
-}
-}
-
-
-MobileExampleApp::MobileExampleApp(
-    Eegeo::Modules::IPlatformAbstractionModule& platformAbstractions,
-    Eegeo::Rendering::ScreenProperties& screenProperties,
-    Eegeo::Location::ILocationService& locationService,
-    Eegeo::UI::NativeUIFactories& nativeUIFactories,
-    Eegeo::Config::PlatformConfig platformConfig,
-    Eegeo::Helpers::Jpeg::IJpegLoader& jpegLoader,
-    ExampleApp::InitialExperience::IInitialExperienceModule& initialExperienceModule,
-    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
-    ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus)
-	: m_pGlobeCameraController(NULL)
-	, m_pCameraTouchController(NULL)
-	, m_pNavigationService(NULL)
-	, m_pWorld(NULL)
-	, m_platformAbstractions(platformAbstractions)
-	, m_pLoadingScreen(NULL)
-	, m_pinDiameter(50.f)
-	, m_initialisedApplicationViewState(false)
-	, m_pCameraTransitionController(NULL)
-	, m_pPrimaryMenuModule(NULL)
-	, m_pSecondaryMenuModule(NULL)
-	, m_pSearchResultMenuModule(NULL)
-	, m_pModalityModule(NULL)
-	, m_pCategorySearchModule(NULL)
-	, m_pFlattenButtonModule(NULL)
-	, m_pSearchModule(NULL)
-	, m_pPinIconsTexturePageLayout(NULL)
-	, m_pPinsModule(NULL)
-	, m_pWorldPinsModule(NULL)
-	, m_pSearchResultOnMapModule(NULL)
-	, m_pReactionModelModule(NULL)
-	, m_pReactionControllerModule(NULL)
-	, m_pSearchResultPoiModule(NULL)
-	, m_pPlaceJumpsModule(NULL)
-	, m_pWeatherMenuModule(NULL)
-	, m_pCompassModule(NULL)
-	, m_pWorldAreaLoaderModule(NULL)
-	, m_pAboutPageModule(NULL)
-	, m_initialExperienceModule(initialExperienceModule)
-	, m_pBlitter(NULL)
-	, m_uiToNativeMessageBus(uiToNativeMessageBus)
-	, m_nativeToUiMessageBus(nativeToUiMessageBus)
-{
-	m_pBlitter = Eegeo_NEW(Eegeo::Blitter)(1024 * 128, 1024 * 64, 1024 * 32, screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight());
-	m_pBlitter->Initialise();
-
-	m_pWorld = Eegeo_NEW(Eegeo::EegeoWorld)(ApiKey,
-	                                        m_platformAbstractions,
-	                                        jpegLoader,
-	                                        screenProperties,
-	                                        locationService,
-	                                        *m_pBlitter,
-	                                        nativeUIFactories,
-	                                        Eegeo::EnvironmentCharacterSet::Latin,
-	                                        platformConfig,
-	                                        NULL);
-
-	Eegeo::Modules::Map::Layers::TerrainModelModule& terrainModelModule = m_pWorld->GetTerrainModelModule();
-	Eegeo::Modules::Map::MapModule& mapModule = m_pWorld->GetMapModule();
-
-	m_pNavigationService = Eegeo_NEW(Eegeo::Location::NavigationService)(&m_pWorld->GetLocationService(),
-	                       &terrainModelModule.GetTerrainHeightProvider());
-
-	Eegeo::Camera::GlobeCamera::GpsGlobeCameraControllerFactory cameraControllerFactory(terrainModelModule.GetTerrainHeightProvider(),
-	        mapModule.GetEnvironmentFlatteningService(),
-	        mapModule.GetResourceCeilingProvider(),
-	        *m_pNavigationService);
-
-
-	const bool useLowSpecSettings = false;
-
-	Eegeo::Camera::GlobeCamera::GpsGlobeCameraComponentConfiguration gpsGlobeCameraConfig = Eegeo::Camera::GlobeCamera::GpsGlobeCameraComponentConfiguration::CreateDefault();
-	gpsGlobeCameraConfig.panToUnlockThreshold =  0.03f;
-	Eegeo::Camera::GlobeCamera::GlobeCameraTouchControllerConfiguration touchControllerConfig = Eegeo::Camera::GlobeCamera::GlobeCameraTouchControllerConfiguration::CreateDefault();
-	Eegeo::Camera::GlobeCamera::GlobeCameraControllerConfiguration globeCameraConfig = Eegeo::Camera::GlobeCamera::GlobeCameraControllerConfiguration::CreateDefault(useLowSpecSettings);
-
-	m_pGlobeCameraController = cameraControllerFactory.Create(gpsGlobeCameraConfig, touchControllerConfig, globeCameraConfig);
-
-	m_pCameraTouchController = &m_pGlobeCameraController->GetTouchController();
-
-	Eegeo::Camera::RenderCamera* renderCamera = m_pGlobeCameraController->GetCamera();
-	renderCamera->SetViewport(0.f, 0.f, screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight());
-
-	Eegeo::Camera::GlobeCamera::GlobeCameraTouchSettings touchSettings = m_pGlobeCameraController->GetGlobeCameraController().GetTouchSettings();
-	touchSettings.TiltEnabled = true;
-	m_pGlobeCameraController->GetGlobeCameraController().SetTouchSettings(touchSettings);
-
-	float interestPointLatitudeDegrees = 37.7858f;
-	float interestPointLongitudeDegrees = -122.401f;
-	float interestPointAltitudeMeters = 2.7;
-
-	Eegeo::Space::LatLongAltitude location = Eegeo::Space::LatLongAltitude::FromDegrees(interestPointLatitudeDegrees,
-	        interestPointLongitudeDegrees,
-	        interestPointAltitudeMeters);
-
-	float cameraControllerOrientationDegrees = 0.0f;
-	float cameraControllerDistanceFromInterestPointMeters = 1781.0f;
-
-	Eegeo::Space::EcefTangentBasis cameraInterestBasis;
-	Eegeo::Camera::CameraHelpers::EcefTangentBasisFromPointAndHeading(location.ToECEF(), cameraControllerOrientationDegrees, cameraInterestBasis);
-
-	m_pGlobeCameraController->SetView(cameraInterestBasis, cameraControllerDistanceFromInterestPointMeters);
-
-	m_pCameraTransitionController = Eegeo_NEW(ExampleApp::CameraTransitions::CameraTransitionController)(*m_pGlobeCameraController, *m_pNavigationService);
-
-	CreateApplicationModelModules();
-
-	m_pLoadingScreen = CreateLoadingScreen(screenProperties, m_pWorld->GetRenderingModule(), m_pWorld->GetPlatformAbstractionModule());
-}
-
-MobileExampleApp::~MobileExampleApp()
-{
-	DestroyApplicationModelModules();
-
-	Eegeo_DELETE m_pCameraTransitionController;
-	Eegeo_DELETE m_pNavigationService;
-	Eegeo_DELETE m_pGlobeCameraController;
-	Eegeo_DELETE m_pLoadingScreen;
-
-	Eegeo_DELETE m_pWorld;
-
-	m_pBlitter->Shutdown();
-	Eegeo_DELETE m_pBlitter;
-	m_pBlitter = NULL;
-}
-
-void MobileExampleApp::CreateApplicationModelModules()
-{
-	Eegeo::EegeoWorld& world = *m_pWorld;
-
-	m_pReactionControllerModule = Eegeo_NEW(ExampleApp::Reaction::ReactionControllerModule)();
-
-	m_pAboutPageModule = Eegeo_NEW(ExampleApp::AboutPage::AboutPageModule)(m_identityProvider,
-	                     m_pReactionControllerModule->GetReactionControllerModel());
-
-	m_pSearchModule = Eegeo_NEW(ExampleApp::Search::SearchModule)(DecartaApiKey,
-	                  m_platformAbstractions.GetWebLoadRequestFactory(),
-	                  m_platformAbstractions.GetUrlEncoder(),
-	                  *m_pGlobeCameraController,
-	                  *m_pCameraTransitionController,
-	                  m_uiToNativeMessageBus,
-	                  m_nativeToUiMessageBus);
-
-	m_pCompassModule = Eegeo_NEW(ExampleApp::Compass::CompassModule)(*m_pNavigationService,
-	                   *m_pGlobeCameraController,
-	                   m_identityProvider,
-	                   m_uiToNativeMessageBus,
-	                   m_nativeToUiMessageBus);
-
-	Eegeo::Modules::Map::CityThemesModule& cityThemesModule = world.GetCityThemesModule();
-
-	m_pWeatherMenuModule = Eegeo_NEW(ExampleApp::WeatherMenu::WeatherMenuModule)(m_platformAbstractions.GetFileIO(),
-	                       cityThemesModule.GetCityThemesService(),
-	                       cityThemesModule.GetCityThemesUpdater(),
-	                       m_uiToNativeMessageBus);
-
-	m_pPrimaryMenuModule = Eegeo_NEW(ExampleApp::PrimaryMenu::PrimaryMenuModule)(m_identityProvider,
-	                       AboutPageModule().GetAboutPageViewModel(),
-	                       m_pReactionControllerModule->GetReactionControllerModel());
-
-	m_pSecondaryMenuModule = Eegeo_NEW(ExampleApp::SecondaryMenu::SecondaryMenuModule)(m_identityProvider,
-	                         m_pReactionControllerModule->GetReactionControllerModel(),
-	                         m_pSearchModule->GetSearchQueryPerformer(),
-	                         m_uiToNativeMessageBus);
-
-	m_pPlaceJumpsModule = Eegeo_NEW(ExampleApp::PlaceJumps::PlaceJumpsModule)(m_platformAbstractions.GetFileIO(),
-	                      GetCameraController(),
-	                      m_pCompassModule->GetCompassModel(),
-	                      m_pSecondaryMenuModule->GetSecondaryMenuViewModel(),
-	                      m_uiToNativeMessageBus);
-
-	m_pCategorySearchModule = Eegeo_NEW(ExampleApp::CategorySearch::CategorySearchModule(
-	                                        SearchModule().GetSearchQueryPerformer(),
-	                                        m_pSecondaryMenuModule->GetSecondaryMenuViewModel(),
-	                                        m_uiToNativeMessageBus));
-
-	m_pSecondaryMenuModule->AddMenuSection("Search", "place", m_pCategorySearchModule->GetCategorySearchMenuModel(), true);
-	m_pSecondaryMenuModule->AddMenuSection("Weather", "weather", m_pWeatherMenuModule->GetWeatherMenuModel(), true);
-	m_pSecondaryMenuModule->AddMenuSection("Locations", "location", m_pPlaceJumpsModule->GetPlaceJumpsMenuModel(), true);
-
-	Eegeo::Modules::Map::MapModule& mapModule = world.GetMapModule();
-
-	m_pFlattenButtonModule = Eegeo_NEW(ExampleApp::FlattenButton::FlattenButtonModule)(mapModule.GetEnvironmentFlatteningService(),
-	                         m_identityProvider,
-	                         m_uiToNativeMessageBus,
-	                         m_nativeToUiMessageBus);
-
-	InitialisePinsModules(mapModule, world);
-
-	m_pSearchResultPoiModule = Eegeo_NEW(ExampleApp::SearchResultPoi::SearchResultPoiModule)(m_identityProvider,
-	                           m_pReactionControllerModule->GetReactionControllerModel());
-
-	m_pSearchResultMenuModule = Eegeo_NEW(ExampleApp::SearchResultMenu::SearchResultMenuModule)(
-	                                m_pSearchModule->GetSearchResultRepository(),
-	                                m_pSearchModule->GetSearchQueryPerformer(),
-	                                m_identityProvider,
-	                                *m_pCameraTransitionController,
-	                                m_pReactionControllerModule->GetReactionControllerModel(),
-	                                m_uiToNativeMessageBus,
-	                                m_nativeToUiMessageBus
-	                            );
-
-	m_pSearchResultOnMapModule = Eegeo_NEW(ExampleApp::SearchResultOnMap::SearchResultOnMapModule)(m_pSearchModule->GetSearchResultRepository(),
-	                             m_pSearchResultPoiModule->GetSearchResultPoiViewModel(),
-	                             m_pWorldPinsModule->GetWorldPinsService(),
-	                             m_identityProvider,
-	                             world.GetScreenProperties(),
-	                             *m_pGlobeCameraController->GetCamera(),
-	                             m_uiToNativeMessageBus,
-	                             m_nativeToUiMessageBus);
-
-	std::vector<ExampleApp::ScreenControlViewModel::IScreenControlViewModel*> reactors(GetReactorControls());
-	std::vector<ExampleApp::OpenableControlViewModel::IOpenableControlViewModel*> openables(GetOpenableControls());
-
-	m_pModalityModule = Eegeo_NEW(ExampleApp::Modality::ModalityModule)(m_uiToNativeMessageBus, openables);
-
-	m_pReactionModelModule = Eegeo_NEW(ExampleApp::Reaction::ReactionModelModule)(m_pReactionControllerModule->GetReactionControllerModel(),
-	                         openables,
-	                         reactors);
-
-	Eegeo::Modules::Map::StreamingModule& streamingModule = world.GetStreamingModule();
-	m_pWorldAreaLoaderModule = Eegeo_NEW(WorldAreaLoader::WorldAreaLoaderModule)(streamingModule.GetPrecachingService());
-
-	m_initialExperienceModule.InitialiseWithApplicationModels(m_pWorldAreaLoaderModule->GetWorldAreaLoaderModel());
-}
-
-void MobileExampleApp::DestroyApplicationModelModules()
-{
-	m_initialExperienceModule.TearDown();
-
-	Eegeo_DELETE m_pWorldAreaLoaderModule;
-
-	Eegeo_DELETE m_pReactionModelModule;
-
-	Eegeo_DELETE m_pSearchResultMenuModule;
-
-	Eegeo_DELETE m_pModalityModule;
-
-	Eegeo_DELETE m_pSearchResultOnMapModule;
-
-	Eegeo_DELETE m_pSearchResultPoiModule;
-
-	Eegeo_DELETE m_pWorldPinsModule;
-
-	Eegeo_DELETE m_pPinsModule;
-
-	Eegeo_DELETE m_pPlaceJumpsModule;
-
-	Eegeo_DELETE m_pCategorySearchModule;
-
-	Eegeo_DELETE m_pSecondaryMenuModule;
-
-	Eegeo_DELETE m_pPrimaryMenuModule;
-
-	Eegeo_DELETE m_pFlattenButtonModule;
-
-	Eegeo_DELETE m_pWeatherMenuModule;
-
-	Eegeo_DELETE m_pCompassModule;
-
-	Eegeo_DELETE m_pSearchModule;
-
-	Eegeo_DELETE m_pAboutPageModule;
-
-	Eegeo_DELETE m_pReactionControllerModule;
-}
-
-std::vector<ExampleApp::OpenableControlViewModel::IOpenableControlViewModel*> MobileExampleApp::GetOpenableControls() const
-{
-	std::vector<ExampleApp::OpenableControlViewModel::IOpenableControlViewModel*> openables;
-	openables.push_back(&PrimaryMenuModule().GetPrimaryMenuViewModel());
-	openables.push_back(&SecondaryMenuModule().GetSecondaryMenuViewModel());
-	openables.push_back(&SearchResultMenuModule().GetMenuViewModel());
-	openables.push_back(&SearchResultPoiModule().GetObservableOpenableControl());
-	openables.push_back(&AboutPageModule().GetObservableOpenableControl());
-	return openables;
-}
-
-std::vector<ExampleApp::ScreenControlViewModel::IScreenControlViewModel*> MobileExampleApp::GetReactorControls() const
-{
-	std::vector<ExampleApp::ScreenControlViewModel::IScreenControlViewModel*> reactors;
-	reactors.push_back(&PrimaryMenuModule().GetPrimaryMenuViewModel());
-	reactors.push_back(&SecondaryMenuModule().GetSecondaryMenuViewModel());
-	reactors.push_back(&SearchResultMenuModule().GetMenuViewModel());
-	reactors.push_back(&FlattenButtonModule().GetScreenControlViewModel());
-	reactors.push_back(&SearchResultOnMapModule().GetScreenControlViewModel());
-	reactors.push_back(&CompassModule().GetScreenControlViewModel());
-	return reactors;
-}
-
-void MobileExampleApp::InitialisePinsModules(Eegeo::Modules::Map::MapModule& mapModule, Eegeo::EegeoWorld& world)
-{
-	m_platformAbstractions.GetTextureFileLoader().LoadTexture(m_pinIconsTexture, "SearchResultOnMap/PinIconTexturePage.png", true);
-	Eegeo_ASSERT(m_pinIconsTexture.textureId != 0);
-
-	int numberOfTilesAlongEachAxisOfTexturePage = 4;
-	m_pPinIconsTexturePageLayout = Eegeo_NEW(Eegeo::Rendering::RegularTexturePageLayout)(numberOfTilesAlongEachAxisOfTexturePage);
-
-	int spriteWidth = m_pinDiameter;
-	int spriteHeight = m_pinDiameter;
-
-	Eegeo::Modules::Core::RenderingModule& renderingModule = world.GetRenderingModule();
-	Eegeo::Modules::Map::Layers::TerrainModelModule& terrainModelModule = world.GetTerrainModelModule();
-
-	m_pPinsModule = Eegeo_NEW(Eegeo::Pins::PinsModule)(
-	                    m_pinIconsTexture.textureId,
-	                    *m_pPinIconsTexturePageLayout,
-	                    renderingModule.GetGlBufferPool(),
-	                    renderingModule.GetShaderIdGenerator(),
-	                    renderingModule.GetMaterialIdGenerator(),
-	                    renderingModule.GetVertexBindingPool(),
-	                    renderingModule.GetVertexLayoutPool(),
-	                    renderingModule.GetRenderableFilters(),
-	                    terrainModelModule.GetTerrainHeightProvider(),
-	                    spriteWidth,
-	                    spriteHeight,
-	                    Eegeo::Rendering::LayerIds::PlaceNames,
-	                    mapModule.GetEnvironmentFlatteningService()
-	                );
-
-	m_pWorldPinsModule = Eegeo_NEW(ExampleApp::WorldPins::WorldPinsModule)(m_pPinsModule->GetRepository(),
-	                     m_pPinsModule->GetController(),
-	                     mapModule.GetEnvironmentFlatteningService());
-}
-
-void MobileExampleApp::OnPause()
-{
-	Eegeo::EegeoWorld& eegeoWorld = World();
-	eegeoWorld.OnPause();
-}
-
-void MobileExampleApp::OnResume()
-{
-	Eegeo::EegeoWorld& eegeoWorld = World();
-	eegeoWorld.OnResume();
-}
-
-void MobileExampleApp::Update(float dt)
-{
-	Eegeo::EegeoWorld& eegeoWorld = World();
-
-	eegeoWorld.EarlyUpdate(dt);
-
-	m_pGlobeCameraController->Update(dt);
-	m_pCameraTransitionController->Update(dt);
-
-	eegeoWorld.Update(dt, *m_pGlobeCameraController->GetCamera(), m_pGlobeCameraController->GetEcefInterestPoint());
-
-	m_pSearchModule->GetSearchRefreshService().TryRefreshSearch(dt, m_pGlobeCameraController->GetEcefInterestPoint());
-
-	m_pPinsModule->GetController().Update(dt, *m_pGlobeCameraController->GetCamera());
-
-	if(!eegeoWorld.Initialising())
+	namespace
 	{
-		SearchResultOnMapModule().GetSearchResultOnMapScaleController().Update(dt);
-		CompassModule().GetCompassUpdateController().Update(dt);
-	}
-
-	m_pNavigationService->Update(dt);
-
-	UpdateLoadingScreen(dt);
-}
-
-void MobileExampleApp::Draw (float dt)
-{
-	Eegeo::EegeoWorld& eegeoWorld = World();
-
-	if(!eegeoWorld.Initialising())
-	{
-		SearchResultOnMapModule().GetSearchResultOnMapInFocusController().Update(dt, m_pGlobeCameraController->GetEcefInterestPoint());
-	}
-
-	eegeoWorld.Draw(*m_pGlobeCameraController->GetCamera());
-
-	if (m_pLoadingScreen != NULL)
-	{
-		m_pLoadingScreen->Draw();
-	}
-}
-
-void MobileExampleApp::InitialiseApplicationViewState()
-{
-	Eegeo_ASSERT(m_initialisedApplicationViewState == false, "Can only initialise application state once!\n");
-
-	m_initialisedApplicationViewState = true;
-
-	m_pPrimaryMenuModule->GetPrimaryMenuViewModel().AddToScreen();
-	m_pSecondaryMenuModule->GetSecondaryMenuViewModel().AddToScreen();
-	m_pSearchResultMenuModule->GetMenuViewModel().AddToScreen();
-	m_pFlattenButtonModule->GetScreenControlViewModel().AddToScreen();
-	m_pCompassModule->GetScreenControlViewModel().AddToScreen();
-}
-
-void MobileExampleApp::UpdateLoadingScreen(float dt)
-{
-	if (m_pLoadingScreen == NULL)
-	{
-		return;
-	}
-
-	Eegeo::EegeoWorld& eegeoWorld = World();
-
-	if (!eegeoWorld.Initialising() && !m_pLoadingScreen->IsDismissed())
-	{
-		m_pLoadingScreen->Dismiss();
-	}
-
-	m_pLoadingScreen->SetProgress(eegeoWorld.GetInitialisationProgress());
-	m_pLoadingScreen->Update(dt);
-
-	if (!m_pLoadingScreen->IsVisible())
-	{
-		Eegeo_DELETE m_pLoadingScreen;
-		m_pLoadingScreen = NULL;
-
-		InitialExperience::IInitialExperienceModel& initialExperienceModel = m_initialExperienceModule.GetInitialExperienceModel();
-		if(!initialExperienceModel.HasCompletedInitialExperience())
+		Eegeo::Rendering::LoadingScreen* CreateLoadingScreen(const Eegeo::Rendering::ScreenProperties& screenProperties,
+		        const Eegeo::Modules::Core::RenderingModule& renderingModule,
+		        const Eegeo::Modules::IPlatformAbstractionModule& platformAbstractionModule)
 		{
-			InitialExperience::IInitialExperienceController& initialExperienceController = m_initialExperienceModule.GetInitialExperienceController();
-			initialExperienceController.Update(dt);
+			Eegeo::Rendering::LoadingScreenConfig loadingScreenConfig;
+			loadingScreenConfig.layout = Eegeo::Rendering::LoadingScreenLayout::Centred;
+			loadingScreenConfig.backgroundColor = Eegeo::v4::One();
+			loadingScreenConfig.loadingBarColor = Eegeo::v4(135.0f/255.0f, 213.0f/255.f, 245.0f/255.f, 1.0f);
+			loadingScreenConfig.loadingBarBackgroundColor = Eegeo::v4(0.5f, 0.5f, 0.5f, 1.0f);
+			loadingScreenConfig.fadeOutDurationSeconds = 1.5f;
+			loadingScreenConfig.screenWidth = screenProperties.GetScreenWidth();
+			loadingScreenConfig.screenHeight = screenProperties.GetScreenHeight();
+
+
+			Eegeo::Rendering::LoadingScreen* loadingScreen = Eegeo::Rendering::LoadingScreen::Create(
+			            "SplashScreen.png",
+			            loadingScreenConfig,
+			            renderingModule.GetShaderIdGenerator(),
+			            renderingModule.GetMaterialIdGenerator(),
+			            renderingModule.GetGlBufferPool(),
+			            renderingModule.GetVertexLayoutPool(),
+			            renderingModule.GetVertexBindingPool(),
+			            platformAbstractionModule.GetTextureFileLoader());
+
+			return loadingScreen;
 		}
 	}
-}
 
-bool MobileExampleApp::IsRunning() const
-{
-	return !m_pWorld->Initialising();
-}
 
-void MobileExampleApp::Event_TouchRotate(const AppInterface::RotateData& data)
-{
-	if(World().Initialising())
+	MobileExampleApp::MobileExampleApp(
+	    Eegeo::Modules::IPlatformAbstractionModule& platformAbstractions,
+	    Eegeo::Rendering::ScreenProperties& screenProperties,
+	    Eegeo::Location::ILocationService& locationService,
+	    Eegeo::UI::NativeUIFactories& nativeUIFactories,
+	    Eegeo::Config::PlatformConfig platformConfig,
+	    Eegeo::Helpers::Jpeg::IJpegLoader& jpegLoader,
+	    ExampleApp::InitialExperience::IInitialExperienceModule& initialExperienceModule,
+	    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
+	    ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus)
+		: m_pGlobeCameraController(NULL)
+		, m_pCameraTouchController(NULL)
+		, m_pNavigationService(NULL)
+		, m_pWorld(NULL)
+		, m_platformAbstractions(platformAbstractions)
+		, m_pLoadingScreen(NULL)
+		, m_pinDiameter(50.f)
+		, m_initialisedApplicationViewState(false)
+		, m_pCameraTransitionController(NULL)
+		, m_pPrimaryMenuModule(NULL)
+		, m_pSecondaryMenuModule(NULL)
+		, m_pSearchResultMenuModule(NULL)
+		, m_pModalityModule(NULL)
+		, m_pCategorySearchModule(NULL)
+		, m_pFlattenButtonModule(NULL)
+		, m_pSearchModule(NULL)
+		, m_pPinIconsTexturePageLayout(NULL)
+		, m_pPinsModule(NULL)
+		, m_pWorldPinsModule(NULL)
+		, m_pSearchResultOnMapModule(NULL)
+		, m_pReactionModelModule(NULL)
+		, m_pReactionControllerModule(NULL)
+		, m_pSearchResultPoiModule(NULL)
+		, m_pPlaceJumpsModule(NULL)
+		, m_pWeatherMenuModule(NULL)
+		, m_pCompassModule(NULL)
+		, m_pWorldAreaLoaderModule(NULL)
+		, m_pAboutPageModule(NULL)
+		, m_initialExperienceModule(initialExperienceModule)
+		, m_pBlitter(NULL)
+		, m_uiToNativeMessageBus(uiToNativeMessageBus)
+		, m_nativeToUiMessageBus(nativeToUiMessageBus)
 	{
-		return;
+		m_pBlitter = Eegeo_NEW(Eegeo::Blitter)(1024 * 128, 1024 * 64, 1024 * 32, screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight());
+		m_pBlitter->Initialise();
+
+		m_pWorld = Eegeo_NEW(Eegeo::EegeoWorld)(ApiKey,
+		                                        m_platformAbstractions,
+		                                        jpegLoader,
+		                                        screenProperties,
+		                                        locationService,
+		                                        *m_pBlitter,
+		                                        nativeUIFactories,
+		                                        Eegeo::EnvironmentCharacterSet::Latin,
+		                                        platformConfig,
+		                                        NULL);
+
+		Eegeo::Modules::Map::Layers::TerrainModelModule& terrainModelModule = m_pWorld->GetTerrainModelModule();
+		Eegeo::Modules::Map::MapModule& mapModule = m_pWorld->GetMapModule();
+
+		m_pNavigationService = Eegeo_NEW(Eegeo::Location::NavigationService)(&m_pWorld->GetLocationService(),
+		                       &terrainModelModule.GetTerrainHeightProvider());
+
+		Eegeo::Camera::GlobeCamera::GpsGlobeCameraControllerFactory cameraControllerFactory(terrainModelModule.GetTerrainHeightProvider(),
+		        mapModule.GetEnvironmentFlatteningService(),
+		        mapModule.GetResourceCeilingProvider(),
+		        *m_pNavigationService);
+
+
+		const bool useLowSpecSettings = false;
+
+		Eegeo::Camera::GlobeCamera::GpsGlobeCameraComponentConfiguration gpsGlobeCameraConfig = Eegeo::Camera::GlobeCamera::GpsGlobeCameraComponentConfiguration::CreateDefault();
+		gpsGlobeCameraConfig.panToUnlockThreshold =  0.03f;
+		Eegeo::Camera::GlobeCamera::GlobeCameraTouchControllerConfiguration touchControllerConfig = Eegeo::Camera::GlobeCamera::GlobeCameraTouchControllerConfiguration::CreateDefault();
+		Eegeo::Camera::GlobeCamera::GlobeCameraControllerConfiguration globeCameraConfig = Eegeo::Camera::GlobeCamera::GlobeCameraControllerConfiguration::CreateDefault(useLowSpecSettings);
+
+		m_pGlobeCameraController = cameraControllerFactory.Create(gpsGlobeCameraConfig, touchControllerConfig, globeCameraConfig);
+
+		m_pCameraTouchController = &m_pGlobeCameraController->GetTouchController();
+
+		Eegeo::Camera::RenderCamera* renderCamera = m_pGlobeCameraController->GetCamera();
+		renderCamera->SetViewport(0.f, 0.f, screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight());
+
+		Eegeo::Camera::GlobeCamera::GlobeCameraTouchSettings touchSettings = m_pGlobeCameraController->GetGlobeCameraController().GetTouchSettings();
+		touchSettings.TiltEnabled = true;
+		m_pGlobeCameraController->GetGlobeCameraController().SetTouchSettings(touchSettings);
+
+		float interestPointLatitudeDegrees = 37.7858f;
+		float interestPointLongitudeDegrees = -122.401f;
+		float interestPointAltitudeMeters = 2.7;
+
+		Eegeo::Space::LatLongAltitude location = Eegeo::Space::LatLongAltitude::FromDegrees(interestPointLatitudeDegrees,
+		        interestPointLongitudeDegrees,
+		        interestPointAltitudeMeters);
+
+		float cameraControllerOrientationDegrees = 0.0f;
+		float cameraControllerDistanceFromInterestPointMeters = 1781.0f;
+
+		Eegeo::Space::EcefTangentBasis cameraInterestBasis;
+		Eegeo::Camera::CameraHelpers::EcefTangentBasisFromPointAndHeading(location.ToECEF(), cameraControllerOrientationDegrees, cameraInterestBasis);
+
+		m_pGlobeCameraController->SetView(cameraInterestBasis, cameraControllerDistanceFromInterestPointMeters);
+
+		m_pCameraTransitionController = Eegeo_NEW(ExampleApp::CameraTransitions::CameraTransitionController)(*m_pGlobeCameraController, *m_pNavigationService);
+
+		CreateApplicationModelModules();
+
+		m_pLoadingScreen = CreateLoadingScreen(screenProperties, m_pWorld->GetRenderingModule(), m_pWorld->GetPlatformAbstractionModule());
 	}
 
-	m_pCameraTouchController->Event_TouchRotate(data);
-}
-
-void MobileExampleApp::Event_TouchRotate_Start(const AppInterface::RotateData& data)
-{
-	if(World().Initialising())
+	MobileExampleApp::~MobileExampleApp()
 	{
-		return;
+		DestroyApplicationModelModules();
+
+		Eegeo_DELETE m_pCameraTransitionController;
+		Eegeo_DELETE m_pNavigationService;
+		Eegeo_DELETE m_pGlobeCameraController;
+		Eegeo_DELETE m_pLoadingScreen;
+
+		Eegeo_DELETE m_pWorld;
+
+		m_pBlitter->Shutdown();
+		Eegeo_DELETE m_pBlitter;
+		m_pBlitter = NULL;
 	}
 
-	m_pCameraTouchController->Event_TouchRotate_Start(data);
-}
-
-void MobileExampleApp::Event_TouchRotate_End(const AppInterface::RotateData& data)
-{
-	if(World().Initialising())
+	void MobileExampleApp::CreateApplicationModelModules()
 	{
-		return;
+		Eegeo::EegeoWorld& world = *m_pWorld;
+
+		m_pReactionControllerModule = Eegeo_NEW(ExampleApp::Reaction::ReactionControllerModule)();
+
+		m_pAboutPageModule = Eegeo_NEW(ExampleApp::AboutPage::AboutPageModule)(m_identityProvider,
+		                     m_pReactionControllerModule->GetReactionControllerModel());
+
+		m_pSearchModule = Eegeo_NEW(ExampleApp::Search::SearchModule)(DecartaApiKey,
+		                  m_platformAbstractions.GetWebLoadRequestFactory(),
+		                  m_platformAbstractions.GetUrlEncoder(),
+		                  *m_pGlobeCameraController,
+		                  *m_pCameraTransitionController,
+		                  m_uiToNativeMessageBus,
+		                  m_nativeToUiMessageBus);
+
+		m_pCompassModule = Eegeo_NEW(ExampleApp::Compass::CompassModule)(*m_pNavigationService,
+		                   *m_pGlobeCameraController,
+		                   m_identityProvider,
+		                   m_uiToNativeMessageBus,
+		                   m_nativeToUiMessageBus);
+
+		Eegeo::Modules::Map::CityThemesModule& cityThemesModule = world.GetCityThemesModule();
+
+		m_pWeatherMenuModule = Eegeo_NEW(ExampleApp::WeatherMenu::WeatherMenuModule)(m_platformAbstractions.GetFileIO(),
+		                       cityThemesModule.GetCityThemesService(),
+		                       cityThemesModule.GetCityThemesUpdater(),
+		                       m_uiToNativeMessageBus);
+
+		m_pPrimaryMenuModule = Eegeo_NEW(ExampleApp::PrimaryMenu::PrimaryMenuModule)(m_identityProvider,
+		                       AboutPageModule().GetAboutPageViewModel(),
+		                       m_pReactionControllerModule->GetReactionControllerModel());
+
+		m_pSecondaryMenuModule = Eegeo_NEW(ExampleApp::SecondaryMenu::SecondaryMenuModule)(m_identityProvider,
+		                         m_pReactionControllerModule->GetReactionControllerModel(),
+		                         m_pSearchModule->GetSearchQueryPerformer(),
+		                         m_uiToNativeMessageBus);
+
+		m_pPlaceJumpsModule = Eegeo_NEW(ExampleApp::PlaceJumps::PlaceJumpsModule)(m_platformAbstractions.GetFileIO(),
+		                      GetCameraController(),
+		                      m_pCompassModule->GetCompassModel(),
+		                      m_pSecondaryMenuModule->GetSecondaryMenuViewModel(),
+		                      m_uiToNativeMessageBus);
+
+		m_pCategorySearchModule = Eegeo_NEW(ExampleApp::CategorySearch::CategorySearchModule(
+		                                        SearchModule().GetSearchQueryPerformer(),
+		                                        m_pSecondaryMenuModule->GetSecondaryMenuViewModel(),
+		                                        m_uiToNativeMessageBus));
+
+		m_pSecondaryMenuModule->AddMenuSection("Search", "place", m_pCategorySearchModule->GetCategorySearchMenuModel(), true);
+		m_pSecondaryMenuModule->AddMenuSection("Weather", "weather", m_pWeatherMenuModule->GetWeatherMenuModel(), true);
+		m_pSecondaryMenuModule->AddMenuSection("Locations", "location", m_pPlaceJumpsModule->GetPlaceJumpsMenuModel(), true);
+
+		Eegeo::Modules::Map::MapModule& mapModule = world.GetMapModule();
+
+		m_pFlattenButtonModule = Eegeo_NEW(ExampleApp::FlattenButton::FlattenButtonModule)(mapModule.GetEnvironmentFlatteningService(),
+		                         m_identityProvider,
+		                         m_uiToNativeMessageBus,
+		                         m_nativeToUiMessageBus);
+
+		InitialisePinsModules(mapModule, world);
+
+		m_pSearchResultPoiModule = Eegeo_NEW(ExampleApp::SearchResultPoi::SearchResultPoiModule)(m_identityProvider,
+		                           m_pReactionControllerModule->GetReactionControllerModel());
+
+		m_pSearchResultMenuModule = Eegeo_NEW(ExampleApp::SearchResultMenu::SearchResultMenuModule)(
+		                                m_pSearchModule->GetSearchResultRepository(),
+		                                m_pSearchModule->GetSearchQueryPerformer(),
+		                                m_identityProvider,
+		                                *m_pCameraTransitionController,
+		                                m_pReactionControllerModule->GetReactionControllerModel(),
+		                                m_uiToNativeMessageBus,
+		                                m_nativeToUiMessageBus
+		                            );
+
+		m_pSearchResultOnMapModule = Eegeo_NEW(ExampleApp::SearchResultOnMap::SearchResultOnMapModule)(m_pSearchModule->GetSearchResultRepository(),
+		                             m_pSearchResultPoiModule->GetSearchResultPoiViewModel(),
+		                             m_pWorldPinsModule->GetWorldPinsService(),
+		                             m_identityProvider,
+		                             world.GetScreenProperties(),
+		                             *m_pGlobeCameraController->GetCamera(),
+		                             m_uiToNativeMessageBus,
+		                             m_nativeToUiMessageBus);
+
+		std::vector<ExampleApp::ScreenControlViewModel::IScreenControlViewModel*> reactors(GetReactorControls());
+		std::vector<ExampleApp::OpenableControlViewModel::IOpenableControlViewModel*> openables(GetOpenableControls());
+
+		m_pModalityModule = Eegeo_NEW(ExampleApp::Modality::ModalityModule)(m_uiToNativeMessageBus, openables);
+
+		m_pReactionModelModule = Eegeo_NEW(ExampleApp::Reaction::ReactionModelModule)(m_pReactionControllerModule->GetReactionControllerModel(),
+		                         openables,
+		                         reactors);
+
+		Eegeo::Modules::Map::StreamingModule& streamingModule = world.GetStreamingModule();
+		m_pWorldAreaLoaderModule = Eegeo_NEW(WorldAreaLoader::WorldAreaLoaderModule)(streamingModule.GetPrecachingService());
+
+		m_initialExperienceModule.InitialiseWithApplicationModels(m_pWorldAreaLoaderModule->GetWorldAreaLoaderModel());
 	}
 
-	m_pCameraTouchController->Event_TouchRotate_End(data);
-}
-
-void MobileExampleApp::Event_TouchPinch(const AppInterface::PinchData& data)
-{
-	if(World().Initialising())
+	void MobileExampleApp::DestroyApplicationModelModules()
 	{
-		return;
+		m_initialExperienceModule.TearDown();
+
+		Eegeo_DELETE m_pWorldAreaLoaderModule;
+
+		Eegeo_DELETE m_pReactionModelModule;
+
+		Eegeo_DELETE m_pSearchResultMenuModule;
+
+		Eegeo_DELETE m_pModalityModule;
+
+		Eegeo_DELETE m_pSearchResultOnMapModule;
+
+		Eegeo_DELETE m_pSearchResultPoiModule;
+
+		Eegeo_DELETE m_pWorldPinsModule;
+
+		Eegeo_DELETE m_pPinsModule;
+
+		Eegeo_DELETE m_pPlaceJumpsModule;
+
+		Eegeo_DELETE m_pCategorySearchModule;
+
+		Eegeo_DELETE m_pSecondaryMenuModule;
+
+		Eegeo_DELETE m_pPrimaryMenuModule;
+
+		Eegeo_DELETE m_pFlattenButtonModule;
+
+		Eegeo_DELETE m_pWeatherMenuModule;
+
+		Eegeo_DELETE m_pCompassModule;
+
+		Eegeo_DELETE m_pSearchModule;
+
+		Eegeo_DELETE m_pAboutPageModule;
+
+		Eegeo_DELETE m_pReactionControllerModule;
 	}
 
-	m_pCameraTouchController->Event_TouchPinch(data);
-}
-
-void MobileExampleApp::Event_TouchPinch_Start(const AppInterface::PinchData& data)
-{
-	if(World().Initialising())
+	std::vector<ExampleApp::OpenableControlViewModel::IOpenableControlViewModel*> MobileExampleApp::GetOpenableControls() const
 	{
-		return;
+		std::vector<ExampleApp::OpenableControlViewModel::IOpenableControlViewModel*> openables;
+		openables.push_back(&PrimaryMenuModule().GetPrimaryMenuViewModel());
+		openables.push_back(&SecondaryMenuModule().GetSecondaryMenuViewModel());
+		openables.push_back(&SearchResultMenuModule().GetMenuViewModel());
+		openables.push_back(&SearchResultPoiModule().GetObservableOpenableControl());
+		openables.push_back(&AboutPageModule().GetObservableOpenableControl());
+		return openables;
 	}
 
-	m_pCameraTouchController->Event_TouchPinch_Start(data);
-}
-
-void MobileExampleApp::Event_TouchPinch_End(const AppInterface::PinchData& data)
-{
-	if(World().Initialising())
+	std::vector<ExampleApp::ScreenControlViewModel::IScreenControlViewModel*> MobileExampleApp::GetReactorControls() const
 	{
-		return;
+		std::vector<ExampleApp::ScreenControlViewModel::IScreenControlViewModel*> reactors;
+		reactors.push_back(&PrimaryMenuModule().GetPrimaryMenuViewModel());
+		reactors.push_back(&SecondaryMenuModule().GetSecondaryMenuViewModel());
+		reactors.push_back(&SearchResultMenuModule().GetMenuViewModel());
+		reactors.push_back(&FlattenButtonModule().GetScreenControlViewModel());
+		reactors.push_back(&SearchResultOnMapModule().GetScreenControlViewModel());
+		reactors.push_back(&CompassModule().GetScreenControlViewModel());
+		return reactors;
 	}
 
-	m_pCameraTouchController->Event_TouchPinch_End(data);
-}
-
-void MobileExampleApp::Event_TouchPan(const AppInterface::PanData& data)
-{
-	if(World().Initialising())
+	void MobileExampleApp::InitialisePinsModules(Eegeo::Modules::Map::MapModule& mapModule, Eegeo::EegeoWorld& world)
 	{
-		return;
+		m_platformAbstractions.GetTextureFileLoader().LoadTexture(m_pinIconsTexture, "SearchResultOnMap/PinIconTexturePage.png", true);
+		Eegeo_ASSERT(m_pinIconsTexture.textureId != 0);
+
+		int numberOfTilesAlongEachAxisOfTexturePage = 4;
+		m_pPinIconsTexturePageLayout = Eegeo_NEW(Eegeo::Rendering::RegularTexturePageLayout)(numberOfTilesAlongEachAxisOfTexturePage);
+
+		int spriteWidth = m_pinDiameter;
+		int spriteHeight = m_pinDiameter;
+
+		Eegeo::Modules::Core::RenderingModule& renderingModule = world.GetRenderingModule();
+		Eegeo::Modules::Map::Layers::TerrainModelModule& terrainModelModule = world.GetTerrainModelModule();
+
+		m_pPinsModule = Eegeo_NEW(Eegeo::Pins::PinsModule)(
+		                    m_pinIconsTexture.textureId,
+		                    *m_pPinIconsTexturePageLayout,
+		                    renderingModule.GetGlBufferPool(),
+		                    renderingModule.GetShaderIdGenerator(),
+		                    renderingModule.GetMaterialIdGenerator(),
+		                    renderingModule.GetVertexBindingPool(),
+		                    renderingModule.GetVertexLayoutPool(),
+		                    renderingModule.GetRenderableFilters(),
+		                    terrainModelModule.GetTerrainHeightProvider(),
+		                    spriteWidth,
+		                    spriteHeight,
+		                    Eegeo::Rendering::LayerIds::PlaceNames,
+		                    mapModule.GetEnvironmentFlatteningService()
+		                );
+
+		m_pWorldPinsModule = Eegeo_NEW(ExampleApp::WorldPins::WorldPinsModule)(m_pPinsModule->GetRepository(),
+		                     m_pPinsModule->GetController(),
+		                     mapModule.GetEnvironmentFlatteningService());
 	}
 
-	m_pCameraTouchController->Event_TouchPan(data);
-}
-
-void MobileExampleApp::Event_TouchPan_Start(const AppInterface::PanData& data)
-{
-	if(World().Initialising())
+	void MobileExampleApp::OnPause()
 	{
-		return;
+		Eegeo::EegeoWorld& eegeoWorld = World();
+		eegeoWorld.OnPause();
 	}
 
-	m_pCameraTouchController->Event_TouchPan_Start(data);
-}
-
-void MobileExampleApp::Event_TouchPan_End(const AppInterface::PanData& data)
-{
-	if(World().Initialising())
+	void MobileExampleApp::OnResume()
 	{
-		return;
+		Eegeo::EegeoWorld& eegeoWorld = World();
+		eegeoWorld.OnResume();
 	}
 
-	m_pCameraTouchController->Event_TouchPan_End(data);
-}
-
-void MobileExampleApp::Event_TouchTap(const AppInterface::TapData& data)
-{
-	if(World().Initialising())
+	void MobileExampleApp::Update(float dt)
 	{
-		return;
+		Eegeo::EegeoWorld& eegeoWorld = World();
+
+		eegeoWorld.EarlyUpdate(dt);
+
+		m_pGlobeCameraController->Update(dt);
+		m_pCameraTransitionController->Update(dt);
+
+		eegeoWorld.Update(dt, *m_pGlobeCameraController->GetCamera(), m_pGlobeCameraController->GetEcefInterestPoint());
+
+		m_pSearchModule->GetSearchRefreshService().TryRefreshSearch(dt, m_pGlobeCameraController->GetEcefInterestPoint());
+
+		m_pPinsModule->GetController().Update(dt, *m_pGlobeCameraController->GetCamera());
+
+		if(!eegeoWorld.Initialising())
+		{
+			SearchResultOnMapModule().GetSearchResultOnMapScaleController().Update(dt);
+			CompassModule().GetCompassUpdateController().Update(dt);
+		}
+
+		m_pNavigationService->Update(dt);
+
+		UpdateLoadingScreen(dt);
 	}
 
-	if(!m_pWorldPinsModule->GetWorldPinsService().HandleTouchTap(data.point))
+	void MobileExampleApp::Draw (float dt)
 	{
-		m_pCameraTouchController->Event_TouchTap(data);
-	}
-}
+		Eegeo::EegeoWorld& eegeoWorld = World();
 
-void MobileExampleApp::Event_TouchDoubleTap(const AppInterface::TapData& data)
-{
-	if(World().Initialising())
-	{
-		return;
-	}
+		if(!eegeoWorld.Initialising())
+		{
+			SearchResultOnMapModule().GetSearchResultOnMapInFocusController().Update(dt, m_pGlobeCameraController->GetEcefInterestPoint());
+		}
 
-	m_pCameraTouchController->Event_TouchDoubleTap(data);
-}
+		eegeoWorld.Draw(*m_pGlobeCameraController->GetCamera());
 
-void MobileExampleApp::Event_TouchDown(const AppInterface::TouchData& data)
-{
-	if(World().Initialising())
-	{
-		return;
+		if (m_pLoadingScreen != NULL)
+		{
+			m_pLoadingScreen->Draw();
+		}
 	}
 
-	m_pCameraTouchController->Event_TouchDown(data);
-}
-
-void MobileExampleApp::Event_TouchMove(const AppInterface::TouchData& data)
-{
-	if(World().Initialising())
+	void MobileExampleApp::InitialiseApplicationViewState()
 	{
-		return;
+		Eegeo_ASSERT(m_initialisedApplicationViewState == false, "Can only initialise application state once!\n");
+
+		m_initialisedApplicationViewState = true;
+
+		m_pPrimaryMenuModule->GetPrimaryMenuViewModel().AddToScreen();
+		m_pSecondaryMenuModule->GetSecondaryMenuViewModel().AddToScreen();
+		m_pSearchResultMenuModule->GetMenuViewModel().AddToScreen();
+		m_pFlattenButtonModule->GetScreenControlViewModel().AddToScreen();
+		m_pCompassModule->GetScreenControlViewModel().AddToScreen();
 	}
 
-	m_pCameraTouchController->Event_TouchMove(data);
-}
-
-void MobileExampleApp::Event_TouchUp(const AppInterface::TouchData& data)
-{
-	if(World().Initialising())
+	void MobileExampleApp::UpdateLoadingScreen(float dt)
 	{
-		return;
+		if (m_pLoadingScreen == NULL)
+		{
+			return;
+		}
+
+		Eegeo::EegeoWorld& eegeoWorld = World();
+
+		if (!eegeoWorld.Initialising() && !m_pLoadingScreen->IsDismissed())
+		{
+			m_pLoadingScreen->Dismiss();
+		}
+
+		m_pLoadingScreen->SetProgress(eegeoWorld.GetInitialisationProgress());
+		m_pLoadingScreen->Update(dt);
+
+		if (!m_pLoadingScreen->IsVisible())
+		{
+			Eegeo_DELETE m_pLoadingScreen;
+			m_pLoadingScreen = NULL;
+
+			InitialExperience::IInitialExperienceModel& initialExperienceModel = m_initialExperienceModule.GetInitialExperienceModel();
+			if(!initialExperienceModel.HasCompletedInitialExperience())
+			{
+				InitialExperience::IInitialExperienceController& initialExperienceController = m_initialExperienceModule.GetInitialExperienceController();
+				initialExperienceController.Update(dt);
+			}
+		}
 	}
 
-	m_pCameraTouchController->Event_TouchUp(data);
-}
+	bool MobileExampleApp::IsRunning() const
+	{
+		return !m_pWorld->Initialising();
+	}
+
+	void MobileExampleApp::Event_TouchRotate(const AppInterface::RotateData& data)
+	{
+		if(World().Initialising())
+		{
+			return;
+		}
+
+		m_pCameraTouchController->Event_TouchRotate(data);
+	}
+
+	void MobileExampleApp::Event_TouchRotate_Start(const AppInterface::RotateData& data)
+	{
+		if(World().Initialising())
+		{
+			return;
+		}
+
+		m_pCameraTouchController->Event_TouchRotate_Start(data);
+	}
+
+	void MobileExampleApp::Event_TouchRotate_End(const AppInterface::RotateData& data)
+	{
+		if(World().Initialising())
+		{
+			return;
+		}
+
+		m_pCameraTouchController->Event_TouchRotate_End(data);
+	}
+
+	void MobileExampleApp::Event_TouchPinch(const AppInterface::PinchData& data)
+	{
+		if(World().Initialising())
+		{
+			return;
+		}
+
+		m_pCameraTouchController->Event_TouchPinch(data);
+	}
+
+	void MobileExampleApp::Event_TouchPinch_Start(const AppInterface::PinchData& data)
+	{
+		if(World().Initialising())
+		{
+			return;
+		}
+
+		m_pCameraTouchController->Event_TouchPinch_Start(data);
+	}
+
+	void MobileExampleApp::Event_TouchPinch_End(const AppInterface::PinchData& data)
+	{
+		if(World().Initialising())
+		{
+			return;
+		}
+
+		m_pCameraTouchController->Event_TouchPinch_End(data);
+	}
+
+	void MobileExampleApp::Event_TouchPan(const AppInterface::PanData& data)
+	{
+		if(World().Initialising())
+		{
+			return;
+		}
+
+		m_pCameraTouchController->Event_TouchPan(data);
+	}
+
+	void MobileExampleApp::Event_TouchPan_Start(const AppInterface::PanData& data)
+	{
+		if(World().Initialising())
+		{
+			return;
+		}
+
+		m_pCameraTouchController->Event_TouchPan_Start(data);
+	}
+
+	void MobileExampleApp::Event_TouchPan_End(const AppInterface::PanData& data)
+	{
+		if(World().Initialising())
+		{
+			return;
+		}
+
+		m_pCameraTouchController->Event_TouchPan_End(data);
+	}
+
+	void MobileExampleApp::Event_TouchTap(const AppInterface::TapData& data)
+	{
+		if(World().Initialising())
+		{
+			return;
+		}
+
+		if(!m_pWorldPinsModule->GetWorldPinsService().HandleTouchTap(data.point))
+		{
+			m_pCameraTouchController->Event_TouchTap(data);
+		}
+	}
+
+	void MobileExampleApp::Event_TouchDoubleTap(const AppInterface::TapData& data)
+	{
+		if(World().Initialising())
+		{
+			return;
+		}
+
+		m_pCameraTouchController->Event_TouchDoubleTap(data);
+	}
+
+	void MobileExampleApp::Event_TouchDown(const AppInterface::TouchData& data)
+	{
+		if(World().Initialising())
+		{
+			return;
+		}
+
+		m_pCameraTouchController->Event_TouchDown(data);
+	}
+
+	void MobileExampleApp::Event_TouchMove(const AppInterface::TouchData& data)
+	{
+		if(World().Initialising())
+		{
+			return;
+		}
+
+		m_pCameraTouchController->Event_TouchMove(data);
+	}
+
+	void MobileExampleApp::Event_TouchUp(const AppInterface::TouchData& data)
+	{
+		if(World().Initialising())
+		{
+			return;
+		}
+
+		m_pCameraTouchController->Event_TouchUp(data);
+	}
 }

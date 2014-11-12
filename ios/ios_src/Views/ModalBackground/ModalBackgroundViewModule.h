@@ -8,21 +8,21 @@
 
 namespace ExampleApp
 {
-namespace ModalBackground
-{
-class ModalBackgroundViewModule: public IModalBackgroundViewModule, private Eegeo::NonCopyable
-{
-private:
-	ModalBackgroundViewController* m_pModalBackgroundViewController;
+	namespace ModalBackground
+	{
+		class ModalBackgroundViewModule: public IModalBackgroundViewModule, private Eegeo::NonCopyable
+		{
+		private:
+			ModalBackgroundViewController* m_pModalBackgroundViewController;
 
-public:
-	ModalBackgroundViewModule(Modality::IModalityModel& modalityModel);
+		public:
+			ModalBackgroundViewModule(Modality::IModalityModel& modalityModel);
 
-	~ModalBackgroundViewModule();
+			~ModalBackgroundViewModule();
 
-	ModalBackgroundViewController& GetModalBackgroundViewController() const;
+			ModalBackgroundViewController& GetModalBackgroundViewController() const;
 
-	ModalBackgroundView& GetModalBackgroundView() const;
-};
-}
+			ModalBackgroundView& GetModalBackgroundView() const;
+		};
+	}
 }

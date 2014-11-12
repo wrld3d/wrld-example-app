@@ -7,8 +7,8 @@
 
 namespace ExampleApp
 {
-namespace SearchResultOnMap
-{
-class ISearchResultOnMapViewModule;
-}
+	namespace SearchResultOnMap
+	{
+		class ISearchResultOnMapViewModule;
+	}
 }

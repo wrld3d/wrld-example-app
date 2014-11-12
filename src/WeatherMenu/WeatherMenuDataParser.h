@@ -11,11 +11,11 @@
 
 namespace ExampleApp
 {
-namespace WeatherMenu
-{
-namespace WeatherMenuDataParser
-{
-bool ParseWeatherStates(const std::string& json, std::vector<WeatherMenuStateModel>&  out_weatherStates);
-}
-}
+	namespace WeatherMenu
+	{
+		namespace WeatherMenuDataParser
+		{
+			bool ParseWeatherStates(const std::string& json, std::vector<WeatherMenuStateModel>&  out_weatherStates);
+		}
+	}
 }

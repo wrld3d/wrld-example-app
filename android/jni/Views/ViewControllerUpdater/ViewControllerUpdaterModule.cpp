@@ -6,27 +6,27 @@
 
 namespace ExampleApp
 {
-namespace ViewControllerUpdater
-{
-ViewControllerUpdaterModule::ViewControllerUpdaterModule()
-{
-	ASSERT_UI_THREAD
+	namespace ViewControllerUpdater
+	{
+		ViewControllerUpdaterModule::ViewControllerUpdaterModule()
+		{
+			ASSERT_UI_THREAD
 
-	m_pViewControllerUpdaterModel = Eegeo_NEW(ViewControllerUpdaterModel)();
-}
+			m_pViewControllerUpdaterModel = Eegeo_NEW(ViewControllerUpdaterModel)();
+		}
 
-ViewControllerUpdaterModule::~ViewControllerUpdaterModule()
-{
-	ASSERT_UI_THREAD
+		ViewControllerUpdaterModule::~ViewControllerUpdaterModule()
+		{
+			ASSERT_UI_THREAD
 
-	Eegeo_DELETE m_pViewControllerUpdaterModel;
-}
+			Eegeo_DELETE m_pViewControllerUpdaterModel;
+		}
 
-IViewControllerUpdaterModel& ViewControllerUpdaterModule::GetViewControllerUpdaterModel() const
-{
-	ASSERT_UI_THREAD
+		IViewControllerUpdaterModel& ViewControllerUpdaterModule::GetViewControllerUpdaterModel() const
+		{
+			ASSERT_UI_THREAD
 
-	return *m_pViewControllerUpdaterModel;
-}
-}
+			return *m_pViewControllerUpdaterModel;
+		}
+	}
 }

@@ -7,26 +7,26 @@
 
 namespace ExampleApp
 {
-namespace CategorySearch
-{
-CategorySearchMenuOption::CategorySearchMenuOption(CategorySearchModel model,
-        ExampleApp::Menu::IMenuViewModel& menuViewModel,
-        ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus)
-	: m_model(model)
-	, m_menuViewModel(menuViewModel)
-	, m_uiToNativeMessageBus(uiToNativeMessageBus)
-{
-}
+	namespace CategorySearch
+	{
+		CategorySearchMenuOption::CategorySearchMenuOption(CategorySearchModel model,
+		        ExampleApp::Menu::IMenuViewModel& menuViewModel,
+		        ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus)
+			: m_model(model)
+			, m_menuViewModel(menuViewModel)
+			, m_uiToNativeMessageBus(uiToNativeMessageBus)
+		{
+		}
 
-CategorySearchMenuOption::~CategorySearchMenuOption()
-{
+		CategorySearchMenuOption::~CategorySearchMenuOption()
+		{
 
-}
+		}
 
-void CategorySearchMenuOption::Select()
-{
-	m_menuViewModel.Close();
-	m_uiToNativeMessageBus.Publish(CategorySearchSelectedMessage(m_model.SearchCategory()));
-}
-}
+		void CategorySearchMenuOption::Select()
+		{
+			m_menuViewModel.Close();
+			m_uiToNativeMessageBus.Publish(CategorySearchSelectedMessage(m_model.SearchCategory()));
+		}
+	}
 }

@@ -4,10 +4,10 @@
 
 namespace ExampleApp
 {
-namespace Menu
-{
-class IMenuViewController;
-class MenuViewController;
-class IMenuViewModule;
-}
+	namespace Menu
+	{
+		class IMenuViewController;
+		class MenuViewController;
+		class IMenuViewModule;
+	}
 }

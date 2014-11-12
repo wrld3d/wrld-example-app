@@ -6,14 +6,14 @@
 
 namespace ExampleApp
 {
-namespace Reaction
-{
-class IReactionControllerModule
-{
-public:
-	virtual ~IReactionControllerModule() { }
+	namespace Reaction
+	{
+		class IReactionControllerModule
+		{
+		public:
+			virtual ~IReactionControllerModule() { }
 
-	virtual IReactionControllerModel& GetReactionControllerModel() const = 0;
-};
-}
+			virtual IReactionControllerModel& GetReactionControllerModel() const = 0;
+		};
+	}
 }

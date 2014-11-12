@@ -17,28 +17,28 @@
 
 namespace ExampleApp
 {
-namespace SearchMenu
-{
-class SearchMenuViewModule: public Menu::IMenuViewModule, private Eegeo::NonCopyable
-{
-private:
-	Menu::IMenuViewController* m_pMenuViewController;
+	namespace SearchMenu
+	{
+		class SearchMenuViewModule: public Menu::IMenuViewModule, private Eegeo::NonCopyable
+		{
+		private:
+			Menu::IMenuViewController* m_pMenuViewController;
 
-public:
-	SearchMenuViewModule(
-	    const std::string& viewName,
-	    AndroidNativeState& nativeState,
-	    Menu::IMenuModel& menuModelModel,
-	    Menu::IMenuViewModel& menuViewModel,
-	    CategorySearch::ICategorySearchRepository& categorySearchRepository,
-	    SearchResultMenu::ISearchResultMenuViewModel& searchResultMenuViewModel,
-	    ExampleApp::ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
-	    ExampleApp::ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus
-	);
+		public:
+			SearchMenuViewModule(
+			    const std::string& viewName,
+			    AndroidNativeState& nativeState,
+			    Menu::IMenuModel& menuModelModel,
+			    Menu::IMenuViewModel& menuViewModel,
+			    CategorySearch::ICategorySearchRepository& categorySearchRepository,
+			    SearchResultMenu::ISearchResultMenuViewModel& searchResultMenuViewModel,
+			    ExampleApp::ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
+			    ExampleApp::ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus
+			);
 
-	~SearchMenuViewModule();
+			~SearchMenuViewModule();
 
-	Menu::IMenuViewController& GetMenuViewController() const;
-};
-}
+			Menu::IMenuViewController& GetMenuViewController() const;
+		};
+	}
 }

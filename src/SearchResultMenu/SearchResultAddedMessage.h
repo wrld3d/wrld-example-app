@@ -6,24 +6,24 @@
 
 namespace ExampleApp
 {
-namespace SearchResultMenu
-{
-class SearchResultAddedMessage
-{
-	Search::SearchResultModel m_model;
-
-public:
-	SearchResultAddedMessage(
-	    const Search::SearchResultModel& model
-	)
-		: m_model(model)
+	namespace SearchResultMenu
 	{
-	}
+		class SearchResultAddedMessage
+		{
+			Search::SearchResultModel m_model;
 
-	const Search::SearchResultModel& Model() const
-	{
-		return m_model;
+		public:
+			SearchResultAddedMessage(
+			    const Search::SearchResultModel& model
+			)
+				: m_model(model)
+			{
+			}
+
+			const Search::SearchResultModel& Model() const
+			{
+				return m_model;
+			}
+		};
 	}
-};
-}
 }

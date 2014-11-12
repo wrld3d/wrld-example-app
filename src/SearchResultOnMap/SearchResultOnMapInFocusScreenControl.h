@@ -7,16 +7,16 @@
 
 namespace ExampleApp
 {
-namespace SearchResultOnMap
-{
-class SearchResultOnMapInFocusScreenControl : public ScreenControlViewModel::ScreenControlViewModelBase, private Eegeo::NonCopyable
-{
-	Eegeo::Helpers::TIdentity m_identity;
+	namespace SearchResultOnMap
+	{
+		class SearchResultOnMapInFocusScreenControl : public ScreenControlViewModel::ScreenControlViewModelBase, private Eegeo::NonCopyable
+		{
+			Eegeo::Helpers::TIdentity m_identity;
 
-public:
-	SearchResultOnMapInFocusScreenControl(Eegeo::Helpers::TIdentity identity);
+		public:
+			SearchResultOnMapInFocusScreenControl(Eegeo::Helpers::TIdentity identity);
 
-	Eegeo::Helpers::TIdentity GetIdentity() const;
-};
-}
+			Eegeo::Helpers::TIdentity GetIdentity() const;
+		};
+	}
 }

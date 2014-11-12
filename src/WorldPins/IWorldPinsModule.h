@@ -6,14 +6,14 @@
 
 namespace ExampleApp
 {
-namespace WorldPins
-{
-class IWorldPinsModule
-{
-public:
-	virtual ~IWorldPinsModule() { }
+	namespace WorldPins
+	{
+		class IWorldPinsModule
+		{
+		public:
+			virtual ~IWorldPinsModule() { }
 
-	virtual IWorldPinsService& GetWorldPinsService() const = 0;
-};
-}
+			virtual IWorldPinsService& GetWorldPinsService() const = 0;
+		};
+	}
 }

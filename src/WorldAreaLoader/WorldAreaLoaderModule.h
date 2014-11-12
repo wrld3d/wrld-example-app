@@ -8,18 +8,18 @@
 
 namespace ExampleApp
 {
-namespace WorldAreaLoader
-{
-class WorldAreaLoaderModule : public IWorldAreaLoaderModule
-{
-	IWorldAreaLoaderModel* m_pWorldAreaLoaderModel;
+	namespace WorldAreaLoader
+	{
+		class WorldAreaLoaderModule : public IWorldAreaLoaderModule
+		{
+			IWorldAreaLoaderModel* m_pWorldAreaLoaderModel;
 
-public:
-	WorldAreaLoaderModule(Eegeo::Web::PrecacheService& precacheService);
+		public:
+			WorldAreaLoaderModule(Eegeo::Web::PrecacheService& precacheService);
 
-	~WorldAreaLoaderModule();
+			~WorldAreaLoaderModule();
 
-	IWorldAreaLoaderModel& GetWorldAreaLoaderModel() const;
-};
-}
+			IWorldAreaLoaderModel& GetWorldAreaLoaderModel() const;
+		};
+	}
 }

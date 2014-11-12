@@ -4,16 +4,16 @@
 
 namespace ExampleApp
 {
-namespace FlattenButton
-{
-class IFlattenButtonViewModule
-{
-public:
+	namespace FlattenButton
+	{
+		class IFlattenButtonViewModule
+		{
+		public:
 
-	virtual ~IFlattenButtonViewModule() { }
+			virtual ~IFlattenButtonViewModule() { }
 
-	virtual FlattenButtonViewController& GetFlattenButtonViewController() const = 0;
-	virtual FlattenButtonView& GetFlattenButtonView() const = 0;
-};
-}
+			virtual FlattenButtonViewController& GetFlattenButtonViewController() const = 0;
+			virtual FlattenButtonView& GetFlattenButtonView() const = 0;
+		};
+	}
 }

@@ -9,57 +9,57 @@
 
 namespace ExampleApp
 {
-namespace Menu
-{
-class MenuSectionViewModel : public IMenuSectionViewModel, private Eegeo::NonCopyable
-{
-public:
-
-	MenuSectionViewModel(const std::string& name, const std::string& icon, IMenuModel& menuModel, bool isExpandable);
-
-	const std::string& Name() const
+	namespace Menu
 	{
-		return m_name;
-	};
+		class MenuSectionViewModel : public IMenuSectionViewModel, private Eegeo::NonCopyable
+		{
+		public:
 
-	const std::string& Icon() const
-	{
-		return m_icon;
-	};
+			MenuSectionViewModel(const std::string& name, const std::string& icon, IMenuModel& menuModel, bool isExpandable);
 
-	std::string Details() const
-	{
-		return "";
-	};
+			const std::string& Name() const
+			{
+				return m_name;
+			};
 
-	std::string SerializeJson() const;
+			const std::string& Icon() const
+			{
+				return m_icon;
+			};
 
-	size_t Size() const;
+			std::string Details() const
+			{
+				return "";
+			};
 
-	size_t GetTotalItemCount() const;
+			std::string SerializeJson() const;
 
-	MenuItemModel GetItemAtIndex(int index) const;
+			size_t Size() const;
 
-	bool IsExpanded() const
-	{
-		return m_isExpandable ? m_expanded : true;
-	};
-	bool IsExpandable() const
-	{
-		return m_isExpandable;
+			size_t GetTotalItemCount() const;
+
+			MenuItemModel GetItemAtIndex(int index) const;
+
+			bool IsExpanded() const
+			{
+				return m_isExpandable ? m_expanded : true;
+			};
+			bool IsExpandable() const
+			{
+				return m_isExpandable;
+			}
+
+			void Expand();
+			void Contract();
+
+		private:
+
+			std::string m_name;
+			std::string m_icon;
+			IMenuModel& m_menuModel;
+
+			const bool m_isExpandable;
+			bool m_expanded;
+		};
 	}
-
-	void Expand();
-	void Contract();
-
-private:
-
-	std::string m_name;
-	std::string m_icon;
-	IMenuModel& m_menuModel;
-
-	const bool m_isExpandable;
-	bool m_expanded;
-};
-}
 }

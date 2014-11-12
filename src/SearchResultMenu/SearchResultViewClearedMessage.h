@@ -4,10 +4,10 @@
 
 namespace ExampleApp
 {
-namespace SearchResultMenu
-{
-class SearchResultViewClearedMessage
-{
-};
-}
+	namespace SearchResultMenu
+	{
+		class SearchResultViewClearedMessage
+		{
+		};
+	}
 }

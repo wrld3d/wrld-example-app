@@ -11,34 +11,34 @@
 
 namespace ExampleApp
 {
-namespace ModalBackground
-{
-class ModalBackgroundNativeModalityObserver : private Eegeo::NonCopyable
-{
-	ModalBackgroundView& m_modalBackgroundView;
-	ExampleAppMessaging::UiToNativeMessageBus& m_uiToNativeMessageBus;
-	Eegeo::Helpers::TCallback1<ModalBackgroundNativeModalityObserver, const Modality::ModalityChangedMessage&> m_handlerBinding;
-
-	void HandleModalityChanged(const Modality::ModalityChangedMessage& message)
+	namespace ModalBackground
 	{
-		m_modalBackgroundView.SetAlpha(message.Modality());
-	}
+		class ModalBackgroundNativeModalityObserver : private Eegeo::NonCopyable
+		{
+			ModalBackgroundView& m_modalBackgroundView;
+			ExampleAppMessaging::UiToNativeMessageBus& m_uiToNativeMessageBus;
+			Eegeo::Helpers::TCallback1<ModalBackgroundNativeModalityObserver, const Modality::ModalityChangedMessage&> m_handlerBinding;
 
-public:
-	ModalBackgroundNativeModalityObserver(
-	    ModalBackgroundView& modalBackgroundView,
-	    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus)
-		: m_modalBackgroundView(modalBackgroundView)
-		, m_uiToNativeMessageBus(uiToNativeMessageBus)
-		, m_handlerBinding(this, &ModalBackgroundNativeModalityObserver::HandleModalityChanged)
-	{
-		m_uiToNativeMessageBus.Subscribe(m_handlerBinding);
-	}
+			void HandleModalityChanged(const Modality::ModalityChangedMessage& message)
+			{
+				m_modalBackgroundView.SetAlpha(message.Modality());
+			}
 
-	~ModalBackgroundNativeModalityObserver()
-	{
-		m_uiToNativeMessageBus.Unsubscribe(m_handlerBinding);
+		public:
+			ModalBackgroundNativeModalityObserver(
+			    ModalBackgroundView& modalBackgroundView,
+			    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus)
+				: m_modalBackgroundView(modalBackgroundView)
+				, m_uiToNativeMessageBus(uiToNativeMessageBus)
+				, m_handlerBinding(this, &ModalBackgroundNativeModalityObserver::HandleModalityChanged)
+			{
+				m_uiToNativeMessageBus.Subscribe(m_handlerBinding);
+			}
+
+			~ModalBackgroundNativeModalityObserver()
+			{
+				m_uiToNativeMessageBus.Unsubscribe(m_handlerBinding);
+			}
+		};
 	}
-};
-}
 }

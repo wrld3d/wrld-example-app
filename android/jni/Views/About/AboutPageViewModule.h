@@ -10,23 +10,23 @@
 
 namespace ExampleApp
 {
-namespace AboutPage
-{
-class AboutPageViewModule: public IAboutPageViewModule, private Eegeo::NonCopyable
-{
-private:
-	AboutPage::IAboutPageViewController* m_pAboutPageViewController;
+	namespace AboutPage
+	{
+		class AboutPageViewModule: public IAboutPageViewModule, private Eegeo::NonCopyable
+		{
+		private:
+			AboutPage::IAboutPageViewController* m_pAboutPageViewController;
 
-public:
-	AboutPageViewModule(
-	    AndroidNativeState& nativeState,
-	    AboutPage::IAboutPageModel& aboutPageModel,
-	    AboutPage::IAboutPageViewModel& aboutPageViewModel
-	);
+		public:
+			AboutPageViewModule(
+			    AndroidNativeState& nativeState,
+			    AboutPage::IAboutPageModel& aboutPageModel,
+			    AboutPage::IAboutPageViewModel& aboutPageViewModel
+			);
 
-	~AboutPageViewModule();
+			~AboutPageViewModule();
 
-	IAboutPageViewController& GetAboutPageViewController() const;
-};
-}
+			IAboutPageViewController& GetAboutPageViewController() const;
+		};
+	}
 }

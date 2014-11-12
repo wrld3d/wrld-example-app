@@ -7,55 +7,55 @@
 
 namespace ExampleApp
 {
-namespace InitialExperience
-{
-InitialExperienceModuleBase::InitialExperienceModuleBase(PersistentSettings::IPersistentSettingsModel& persistentSettings)
-	: m_pInitialExperienceModel(NULL)
-	, m_pInitialExperienceController(NULL)
-	, m_persistentSettings(persistentSettings)
-{
-}
+	namespace InitialExperience
+	{
+		InitialExperienceModuleBase::InitialExperienceModuleBase(PersistentSettings::IPersistentSettingsModel& persistentSettings)
+			: m_pInitialExperienceModel(NULL)
+			, m_pInitialExperienceController(NULL)
+			, m_persistentSettings(persistentSettings)
+		{
+		}
 
-InitialExperienceModuleBase::~InitialExperienceModuleBase()
-{
-	TearDown();
-}
+		InitialExperienceModuleBase::~InitialExperienceModuleBase()
+		{
+			TearDown();
+		}
 
-PersistentSettings::IPersistentSettingsModel& InitialExperienceModuleBase::GetPersistentSettings() const
-{
-	return m_persistentSettings;
-}
+		PersistentSettings::IPersistentSettingsModel& InitialExperienceModuleBase::GetPersistentSettings() const
+		{
+			return m_persistentSettings;
+		}
 
-void InitialExperienceModuleBase::InitialiseWithApplicationModels(WorldAreaLoader::IWorldAreaLoaderModel &worldAreaLoaderModel)
-{
-	Eegeo_ASSERT(m_pInitialExperienceModel == NULL, "Cannot call InitialExperienceModule::InitialiseWithApplicationModels twice.\n");
+		void InitialExperienceModuleBase::InitialiseWithApplicationModels(WorldAreaLoader::IWorldAreaLoaderModel &worldAreaLoaderModel)
+		{
+			Eegeo_ASSERT(m_pInitialExperienceModel == NULL, "Cannot call InitialExperienceModule::InitialiseWithApplicationModels twice.\n");
 
-	std::vector<IInitialExperienceStep*> steps = CreateSteps(worldAreaLoaderModel);
+			std::vector<IInitialExperienceStep*> steps = CreateSteps(worldAreaLoaderModel);
 
-	m_pInitialExperienceModel = Eegeo_NEW(InitialExperienceModel)(steps);
+			m_pInitialExperienceModel = Eegeo_NEW(InitialExperienceModel)(steps);
 
-	m_pInitialExperienceController = Eegeo_NEW(InitialExperienceController)(*m_pInitialExperienceModel);
-}
+			m_pInitialExperienceController = Eegeo_NEW(InitialExperienceController)(*m_pInitialExperienceModel);
+		}
 
-void InitialExperienceModuleBase::TearDown()
-{
-	Eegeo_DELETE m_pInitialExperienceController;
-	m_pInitialExperienceController = NULL;
+		void InitialExperienceModuleBase::TearDown()
+		{
+			Eegeo_DELETE m_pInitialExperienceController;
+			m_pInitialExperienceController = NULL;
 
-	Eegeo_DELETE m_pInitialExperienceModel;
-	m_pInitialExperienceModel = NULL;
-}
+			Eegeo_DELETE m_pInitialExperienceModel;
+			m_pInitialExperienceModel = NULL;
+		}
 
-IInitialExperienceModel& InitialExperienceModuleBase::GetInitialExperienceModel() const
-{
-	Eegeo_ASSERT(m_pInitialExperienceModel != NULL, "Must call InitialExperienceModule::InitialiseWithApplicationModels before accessing model.\n");
-	return *m_pInitialExperienceModel;
-}
+		IInitialExperienceModel& InitialExperienceModuleBase::GetInitialExperienceModel() const
+		{
+			Eegeo_ASSERT(m_pInitialExperienceModel != NULL, "Must call InitialExperienceModule::InitialiseWithApplicationModels before accessing model.\n");
+			return *m_pInitialExperienceModel;
+		}
 
-IInitialExperienceController& InitialExperienceModuleBase::GetInitialExperienceController() const
-{
-	Eegeo_ASSERT(m_pInitialExperienceController != NULL, "Must call InitialExperienceModule::InitialiseWithApplicationModels before accessing controller.\n");
-	return *m_pInitialExperienceController;
-}
-}
+		IInitialExperienceController& InitialExperienceModuleBase::GetInitialExperienceController() const
+		{
+			Eegeo_ASSERT(m_pInitialExperienceController != NULL, "Must call InitialExperienceModule::InitialiseWithApplicationModels before accessing controller.\n");
+			return *m_pInitialExperienceController;
+		}
+	}
 }

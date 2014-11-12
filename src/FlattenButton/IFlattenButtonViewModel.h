@@ -6,13 +6,13 @@
 
 namespace ExampleApp
 {
-namespace FlattenButton
-{
-class IFlattenButtonViewModel : public ScreenControlViewModel::IScreenControlViewModel
-{
-public:
+	namespace FlattenButton
+	{
+		class IFlattenButtonViewModel : public ScreenControlViewModel::IScreenControlViewModel
+		{
+		public:
 
-	virtual ~IFlattenButtonViewModel() { }
-};
-}
+			virtual ~IFlattenButtonViewModel() { }
+		};
+	}
 }

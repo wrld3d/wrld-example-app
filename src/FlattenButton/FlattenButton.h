@@ -4,11 +4,11 @@
 
 namespace ExampleApp
 {
-namespace FlattenButton
-{
-class IFlattenButtonModel;
-class IFlattenButtonModule;
-class IFlattenButtonViewModel;
+	namespace FlattenButton
+	{
+		class IFlattenButtonModel;
+		class IFlattenButtonModule;
+		class IFlattenButtonViewModel;
 
-}
+	}
 }

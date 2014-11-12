@@ -7,20 +7,20 @@
 
 namespace ExampleApp
 {
-namespace InitialExperience
-{
-class IInitialExperienceModule
-{
-public:
-	virtual ~IInitialExperienceModule() { }
+	namespace InitialExperience
+	{
+		class IInitialExperienceModule
+		{
+		public:
+			virtual ~IInitialExperienceModule() { }
 
-	virtual void InitialiseWithApplicationModels(WorldAreaLoader::IWorldAreaLoaderModel& worldAreaLoaderModel) = 0;
+			virtual void InitialiseWithApplicationModels(WorldAreaLoader::IWorldAreaLoaderModel& worldAreaLoaderModel) = 0;
 
-	virtual void TearDown() = 0;
+			virtual void TearDown() = 0;
 
-	virtual IInitialExperienceController& GetInitialExperienceController() const = 0;
+			virtual IInitialExperienceController& GetInitialExperienceController() const = 0;
 
-	virtual IInitialExperienceModel& GetInitialExperienceModel() const = 0;
-};
-}
+			virtual IInitialExperienceModel& GetInitialExperienceModel() const = 0;
+		};
+	}
 }

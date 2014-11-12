@@ -10,36 +10,36 @@
 
 namespace ExampleApp
 {
-namespace AboutPage
-{
-class AboutPageViewModel : public IAboutPageViewModel, private Eegeo::NonCopyable
-{
-	Eegeo::Helpers::CallbackCollection0 m_openedCallbacks;
-	Eegeo::Helpers::CallbackCollection0 m_closedCallbacks;
-	AboutPageOpenableControl m_openable;
+	namespace AboutPage
+	{
+		class AboutPageViewModel : public IAboutPageViewModel, private Eegeo::NonCopyable
+		{
+			Eegeo::Helpers::CallbackCollection0 m_openedCallbacks;
+			Eegeo::Helpers::CallbackCollection0 m_closedCallbacks;
+			AboutPageOpenableControl m_openable;
 
-public:
-	AboutPageViewModel(Eegeo::Helpers::TIdentity identity, Reaction::IReactionControllerModel& reactionControllerModel);
+		public:
+			AboutPageViewModel(Eegeo::Helpers::TIdentity identity, Reaction::IReactionControllerModel& reactionControllerModel);
 
-	~AboutPageViewModel();
+			~AboutPageViewModel();
 
-	bool TryAcquireReactorControl();
+			bool TryAcquireReactorControl();
 
-	bool IsOpen() const;
+			bool IsOpen() const;
 
-	void Open();
+			void Open();
 
-	void Close();
+			void Close();
 
-	OpenableControlViewModel::IOpenableControlViewModel& GetOpenableControl();
+			OpenableControlViewModel::IOpenableControlViewModel& GetOpenableControl();
 
-	void InsertOpenedCallback(Eegeo::Helpers::ICallback0& openedCallback);
+			void InsertOpenedCallback(Eegeo::Helpers::ICallback0& openedCallback);
 
-	void RemoveOpenedCallback(Eegeo::Helpers::ICallback0& openedCallback);
+			void RemoveOpenedCallback(Eegeo::Helpers::ICallback0& openedCallback);
 
-	void InsertClosedCallback(Eegeo::Helpers::ICallback0& closedCallback);
+			void InsertClosedCallback(Eegeo::Helpers::ICallback0& closedCallback);
 
-	void RemoveClosedCallback(Eegeo::Helpers::ICallback0& closedCallback);
-};
-}
+			void RemoveClosedCallback(Eegeo::Helpers::ICallback0& closedCallback);
+		};
+	}
 }

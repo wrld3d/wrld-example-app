@@ -4,10 +4,10 @@
 
 namespace ExampleApp
 {
-namespace Search
-{
-class SearchQueryRemovedMessage
-{
-};
-}
+	namespace Search
+	{
+		class SearchQueryRemovedMessage
+		{
+		};
+	}
 }

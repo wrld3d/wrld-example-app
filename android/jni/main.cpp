@@ -19,16 +19,16 @@ AppRunner* g_pAppRunner;
 
 namespace
 {
-void FillEventFromJniData(
-    JNIEnv* jenv,
-    jint primaryActionIndex,
-    jint primaryActionIdentifier,
-    jint numPointers,
-    jfloatArray x,
-    jfloatArray y,
-    jintArray pointerIdentity,
-    jintArray pointerIndex,
-    TouchInputEvent& event);
+	void FillEventFromJniData(
+	    JNIEnv* jenv,
+	    jint primaryActionIndex,
+	    jint primaryActionIdentifier,
+	    jint numPointers,
+	    jfloatArray x,
+	    jfloatArray y,
+	    jintArray pointerIdentity,
+	    jintArray pointerIndex,
+	    TouchInputEvent& event);
 }
 
 JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM* vm, void* pvt)
@@ -185,31 +185,31 @@ JNIEXPORT void JNICALL Java_com_eegeo_mobileexampleapp_EegeoSurfaceView_processN
 
 namespace
 {
-void FillEventFromJniData(
-    JNIEnv* jenv,
-    jint primaryActionIndex,
-    jint primaryActionIdentifier,
-    jint numPointers,
-    jfloatArray x,
-    jfloatArray y,
-    jintArray pointerIdentity,
-    jintArray pointerIndex,
-    TouchInputEvent& event)
-{
-	jfloat* xBuffer = jenv->GetFloatArrayElements(x, 0);
-	jfloat* yBuffer = jenv->GetFloatArrayElements(y, 0);
-	jint* identityBuffer = jenv->GetIntArrayElements(pointerIdentity, 0);
-	jint* indexBuffer = jenv->GetIntArrayElements(pointerIndex, 0);
-
-	for(int i = 0; i < numPointers; ++ i)
+	void FillEventFromJniData(
+	    JNIEnv* jenv,
+	    jint primaryActionIndex,
+	    jint primaryActionIdentifier,
+	    jint numPointers,
+	    jfloatArray x,
+	    jfloatArray y,
+	    jintArray pointerIdentity,
+	    jintArray pointerIndex,
+	    TouchInputEvent& event)
 	{
-		TouchInputPointerEvent p(xBuffer[i], yBuffer[i], identityBuffer[i], indexBuffer[i]);
-		event.pointerEvents.push_back(p);
-	}
+		jfloat* xBuffer = jenv->GetFloatArrayElements(x, 0);
+		jfloat* yBuffer = jenv->GetFloatArrayElements(y, 0);
+		jint* identityBuffer = jenv->GetIntArrayElements(pointerIdentity, 0);
+		jint* indexBuffer = jenv->GetIntArrayElements(pointerIndex, 0);
 
-	jenv->ReleaseFloatArrayElements(x, xBuffer, 0);
-	jenv->ReleaseFloatArrayElements(y, yBuffer, 0);
-	jenv->ReleaseIntArrayElements(pointerIdentity, identityBuffer, 0);
-	jenv->ReleaseIntArrayElements(pointerIndex, indexBuffer, 0);
-}
+		for(int i = 0; i < numPointers; ++ i)
+		{
+			TouchInputPointerEvent p(xBuffer[i], yBuffer[i], identityBuffer[i], indexBuffer[i]);
+			event.pointerEvents.push_back(p);
+		}
+
+		jenv->ReleaseFloatArrayElements(x, xBuffer, 0);
+		jenv->ReleaseFloatArrayElements(y, yBuffer, 0);
+		jenv->ReleaseIntArrayElements(pointerIdentity, identityBuffer, 0);
+		jenv->ReleaseIntArrayElements(pointerIndex, indexBuffer, 0);
+	}
 }

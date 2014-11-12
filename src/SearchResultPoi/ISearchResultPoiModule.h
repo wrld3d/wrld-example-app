@@ -7,16 +7,16 @@
 
 namespace ExampleApp
 {
-namespace SearchResultPoi
-{
-class ISearchResultPoiModule
-{
-public:
-	virtual ~ISearchResultPoiModule() { }
+	namespace SearchResultPoi
+	{
+		class ISearchResultPoiModule
+		{
+		public:
+			virtual ~ISearchResultPoiModule() { }
 
-	virtual ISearchResultPoiViewModel& GetSearchResultPoiViewModel() const = 0;
+			virtual ISearchResultPoiViewModel& GetSearchResultPoiViewModel() const = 0;
 
-	virtual OpenableControlViewModel::IOpenableControlViewModel& GetObservableOpenableControl() const = 0;
-};
-}
+			virtual OpenableControlViewModel::IOpenableControlViewModel& GetObservableOpenableControl() const = 0;
+		};
+	}
 }

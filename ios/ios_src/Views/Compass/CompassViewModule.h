@@ -12,24 +12,24 @@
 
 namespace ExampleApp
 {
-namespace Compass
-{
-class CompassViewModule: public ICompassViewModule, private Eegeo::NonCopyable
-{
-private:
-	CompassViewController* m_pController;
+	namespace Compass
+	{
+		class CompassViewModule: public ICompassViewModule, private Eegeo::NonCopyable
+		{
+		private:
+			CompassViewController* m_pController;
 
-public:
-	CompassViewModule(ICompassViewModel& viewModel,
-	                  const Eegeo::Rendering::ScreenProperties& screenProperties,
-	                  ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
-	                  ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus);
+		public:
+			CompassViewModule(ICompassViewModel& viewModel,
+			                  const Eegeo::Rendering::ScreenProperties& screenProperties,
+			                  ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
+			                  ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus);
 
-	~CompassViewModule();
+			~CompassViewModule();
 
-	CompassViewController& GetCompassViewController() const;
+			CompassViewController& GetCompassViewController() const;
 
-	CompassView& GetCompassView() const;
-};
-}
+			CompassView& GetCompassView() const;
+		};
+	}
 }

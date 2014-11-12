@@ -7,16 +7,16 @@
 
 namespace ExampleApp
 {
-namespace Menu
-{
-class MenuScreenControl : public ScreenControlViewModel::ScreenControlViewModelBase, private Eegeo::NonCopyable
-{
-	Eegeo::Helpers::TIdentity m_identity;
+	namespace Menu
+	{
+		class MenuScreenControl : public ScreenControlViewModel::ScreenControlViewModelBase, private Eegeo::NonCopyable
+		{
+			Eegeo::Helpers::TIdentity m_identity;
 
-public:
-	MenuScreenControl(Eegeo::Helpers::TIdentity identity);
+		public:
+			MenuScreenControl(Eegeo::Helpers::TIdentity identity);
 
-	Eegeo::Helpers::TIdentity GetIdentity() const;
-};
-}
+			Eegeo::Helpers::TIdentity GetIdentity() const;
+		};
+	}
 }

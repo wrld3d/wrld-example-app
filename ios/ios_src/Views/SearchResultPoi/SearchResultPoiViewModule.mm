@@ -6,26 +6,26 @@
 
 namespace ExampleApp
 {
-namespace SearchResultPoi
-{
-SearchResultPoiViewModule::SearchResultPoiViewModule(ISearchResultPoiViewModel& searchResultPoiViewModel)
-{
-	m_pSearchResultPoiViewController = [[SearchResultPoiViewController alloc] initWithParams :&searchResultPoiViewModel];
-}
+	namespace SearchResultPoi
+	{
+		SearchResultPoiViewModule::SearchResultPoiViewModule(ISearchResultPoiViewModel& searchResultPoiViewModel)
+		{
+			m_pSearchResultPoiViewController = [[SearchResultPoiViewController alloc] initWithParams :&searchResultPoiViewModel];
+		}
 
-SearchResultPoiViewModule::~SearchResultPoiViewModule()
-{
-	[m_pSearchResultPoiViewController release];
-}
+		SearchResultPoiViewModule::~SearchResultPoiViewModule()
+		{
+			[m_pSearchResultPoiViewController release];
+		}
 
-SearchResultPoiViewController& SearchResultPoiViewModule::GetSearchResultPoiViewController() const
-{
-	return *m_pSearchResultPoiViewController;
-}
+		SearchResultPoiViewController& SearchResultPoiViewModule::GetSearchResultPoiViewController() const
+		{
+			return *m_pSearchResultPoiViewController;
+		}
 
-SearchResultPoiView& SearchResultPoiViewModule::GetSearchResultPoiView() const
-{
-	return *[m_pSearchResultPoiViewController pSearchResultPoiView];
-}
-}
+		SearchResultPoiView& SearchResultPoiViewModule::GetSearchResultPoiView() const
+		{
+			return *[m_pSearchResultPoiViewController pSearchResultPoiView];
+		}
+	}
 }

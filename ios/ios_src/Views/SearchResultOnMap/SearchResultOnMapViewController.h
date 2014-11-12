@@ -11,10 +11,10 @@
 
 namespace ExampleApp
 {
-namespace SearchResultOnMap
-{
-class SearchResultOnMapViewControllerInterop;
-}
+	namespace SearchResultOnMap
+	{
+		class SearchResultOnMapViewControllerInterop;
+	}
 }
 
 @interface SearchResultOnMapViewController : UIViewController

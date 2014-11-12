@@ -4,11 +4,11 @@
 
 namespace ExampleApp
 {
-namespace CategorySearch
-{
-class ICategorySearchModule;
-class ICategorySearchModel;
-class ICategorySearchRepository;
-class CategorySearchMenuOption;
-}
+	namespace CategorySearch
+	{
+		class ICategorySearchModule;
+		class ICategorySearchModel;
+		class ICategorySearchRepository;
+		class CategorySearchMenuOption;
+	}
 }

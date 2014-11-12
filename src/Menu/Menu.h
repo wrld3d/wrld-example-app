@@ -4,16 +4,16 @@
 
 namespace ExampleApp
 {
-namespace Menu
-{
-class MenuItemModel;
-class IMenuModel;
-class IMenuOption;
-class IMenuOptionsModel;
-class IMenuOptionSelectionTask;
-class IMenuViewModel;
-class IMenuSectionViewModel;
-class IMenuSectionsViewModel;
-struct MenuItemViewModel;
-}
+	namespace Menu
+	{
+		class MenuItemModel;
+		class IMenuModel;
+		class IMenuOption;
+		class IMenuOptionsModel;
+		class IMenuOptionSelectionTask;
+		class IMenuViewModel;
+		class IMenuSectionViewModel;
+		class IMenuSectionsViewModel;
+		struct MenuItemViewModel;
+	}
 }

@@ -8,54 +8,54 @@
 
 namespace ExampleApp
 {
-namespace WorldPins
-{
-class WorldPinsRepository : public IWorldPinsRepository, private Eegeo::NonCopyable
-{
-	typedef WorldPinItemModel TModel;
-
-	Repository::RepositoryModel<TModel> m_repository;
-
-public:
-	void AddItem(const TModel& item)
+	namespace WorldPins
 	{
-		m_repository.AddItem(item);
-	}
+		class WorldPinsRepository : public IWorldPinsRepository, private Eegeo::NonCopyable
+		{
+			typedef WorldPinItemModel TModel;
 
-	void RemoveItem(const TModel& item)
-	{
-		m_repository.RemoveItem(item);
-	}
+			Repository::RepositoryModel<TModel> m_repository;
 
-	size_t GetItemCount() const
-	{
-		return m_repository.GetItemCount();
-	}
+		public:
+			void AddItem(const TModel& item)
+			{
+				m_repository.AddItem(item);
+			}
 
-	TModel GetItemAtIndex(size_t index)
-	{
-		return m_repository.GetItemAtIndex(index);
-	}
+			void RemoveItem(const TModel& item)
+			{
+				m_repository.RemoveItem(item);
+			}
 
-	void InsertItemAddedCallback(Eegeo::Helpers::ICallback1<TModel>& callback)
-	{
-		m_repository.InsertItemAddedCallback(callback);
-	}
+			size_t GetItemCount() const
+			{
+				return m_repository.GetItemCount();
+			}
 
-	void RemoveItemAddedCallback(Eegeo::Helpers::ICallback1<TModel>& callback)
-	{
-		m_repository.RemoveItemAddedCallback(callback);
-	}
+			TModel GetItemAtIndex(size_t index)
+			{
+				return m_repository.GetItemAtIndex(index);
+			}
 
-	void InsertItemRemovedCallback(Eegeo::Helpers::ICallback1<TModel>& callback)
-	{
-		m_repository.InsertItemRemovedCallback(callback);
-	}
+			void InsertItemAddedCallback(Eegeo::Helpers::ICallback1<TModel>& callback)
+			{
+				m_repository.InsertItemAddedCallback(callback);
+			}
 
-	void RemoveItemRemovedCallback(Eegeo::Helpers::ICallback1<TModel>& callback)
-	{
-		m_repository.RemoveItemRemovedCallback(callback);
+			void RemoveItemAddedCallback(Eegeo::Helpers::ICallback1<TModel>& callback)
+			{
+				m_repository.RemoveItemAddedCallback(callback);
+			}
+
+			void InsertItemRemovedCallback(Eegeo::Helpers::ICallback1<TModel>& callback)
+			{
+				m_repository.InsertItemRemovedCallback(callback);
+			}
+
+			void RemoveItemRemovedCallback(Eegeo::Helpers::ICallback1<TModel>& callback)
+			{
+				m_repository.RemoveItemRemovedCallback(callback);
+			}
+		};
 	}
-};
-}
 }

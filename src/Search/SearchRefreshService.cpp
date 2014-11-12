@@ -8,104 +8,104 @@
 
 namespace ExampleApp
 {
-namespace Search
-{
-SearchRefreshService::SearchRefreshService(ISearchService& searchService,
-        ISearchQueryPerformer& searchQueryPerformer,
-        CameraTransitions::ICameraTransitionController& cameraTransitionsController,
-        float minimumSecondsBetweenUpdates,
-        float minimumMetresBetweenUpdates)
-	: m_minimumSecondsBetweenUpdates(minimumSecondsBetweenUpdates)
-	, m_minimumMetresSquaredBetweenUpdates(minimumMetresBetweenUpdates * minimumMetresBetweenUpdates)
-	, m_searchService(searchService)
-	, m_searchQueryPerformer(searchQueryPerformer)
-	, m_cameraTransitionsController(cameraTransitionsController)
-	, m_pSearchResultQueryIssuedCallback(Eegeo_NEW((Eegeo::Helpers::TCallback1<SearchRefreshService, const SearchQuery&>))(this, &SearchRefreshService::HandleSearchQueryIssued))
-	, m_pSearchResultResponseReceivedCallback(Eegeo_NEW((Eegeo::Helpers::TCallback2<SearchRefreshService, const SearchQuery&, const std::vector<SearchResultModel>& >))(this, &SearchRefreshService::HandleSearchResultsResponseReceived))
-	, m_pSearchQueryResultsClearedCallback(Eegeo_NEW(Eegeo::Helpers::TCallback0<SearchRefreshService>)(this, &SearchRefreshService::HandleSearchQueryResultsCleared))
-	, m_queriesPending(0)
-	, m_searchResultsExist(false)
-	, m_secondsSincePreviousRefresh(0.f)
-	, m_cameraTransitioning(false)
-{
-	m_searchService.InsertOnPerformedQueryCallback(*m_pSearchResultQueryIssuedCallback);
-	m_searchService.InsertOnReceivedQueryResultsCallback(*m_pSearchResultResponseReceivedCallback);
-	m_searchQueryPerformer.InsertOnSearchResultsClearedCallback(*m_pSearchQueryResultsClearedCallback);
-}
-
-SearchRefreshService::~SearchRefreshService()
-{
-	m_searchQueryPerformer.RemoveOnSearchResultsClearedCallback(*m_pSearchQueryResultsClearedCallback);
-	m_searchService.RemoveOnReceivedQueryResultsCallback(*m_pSearchResultResponseReceivedCallback);
-	m_searchService.RemoveOnPerformedQueryCallback(*m_pSearchResultQueryIssuedCallback);
-
-	Eegeo_DELETE m_pSearchResultResponseReceivedCallback;
-	Eegeo_DELETE m_pSearchResultQueryIssuedCallback;
-	Eegeo_DELETE m_pSearchQueryResultsClearedCallback;
-}
-
-void SearchRefreshService::TryRefreshSearch(float deltaSeconds, const Eegeo::dv3& ecefLocation)
-{
-	if(m_searchResultsExist)
+	namespace Search
 	{
-		m_secondsSincePreviousRefresh += deltaSeconds;
-	}
-	else
-	{
-		m_secondsSincePreviousRefresh = 0.f;
-	}
-
-	if(m_queriesPending == 0 && m_searchResultsExist)
-	{
-		if(m_cameraTransitionsController.IsTransitioning())
+		SearchRefreshService::SearchRefreshService(ISearchService& searchService,
+		        ISearchQueryPerformer& searchQueryPerformer,
+		        CameraTransitions::ICameraTransitionController& cameraTransitionsController,
+		        float minimumSecondsBetweenUpdates,
+		        float minimumMetresBetweenUpdates)
+			: m_minimumSecondsBetweenUpdates(minimumSecondsBetweenUpdates)
+			, m_minimumMetresSquaredBetweenUpdates(minimumMetresBetweenUpdates * minimumMetresBetweenUpdates)
+			, m_searchService(searchService)
+			, m_searchQueryPerformer(searchQueryPerformer)
+			, m_cameraTransitionsController(cameraTransitionsController)
+			, m_pSearchResultQueryIssuedCallback(Eegeo_NEW((Eegeo::Helpers::TCallback1<SearchRefreshService, const SearchQuery&>))(this, &SearchRefreshService::HandleSearchQueryIssued))
+			, m_pSearchResultResponseReceivedCallback(Eegeo_NEW((Eegeo::Helpers::TCallback2<SearchRefreshService, const SearchQuery&, const std::vector<SearchResultModel>& >))(this, &SearchRefreshService::HandleSearchResultsResponseReceived))
+			, m_pSearchQueryResultsClearedCallback(Eegeo_NEW(Eegeo::Helpers::TCallback0<SearchRefreshService>)(this, &SearchRefreshService::HandleSearchQueryResultsCleared))
+			, m_queriesPending(0)
+			, m_searchResultsExist(false)
+			, m_secondsSincePreviousRefresh(0.f)
+			, m_cameraTransitioning(false)
 		{
-			m_cameraTransitioning = true;
-			return;
-		}
-		else if(m_cameraTransitioning)
-		{
-			m_previousQueryLocationEcef = Eegeo::Space::LatLong::FromECEF(ecefLocation).ToECEF();
-			m_cameraTransitioning = false;
+			m_searchService.InsertOnPerformedQueryCallback(*m_pSearchResultQueryIssuedCallback);
+			m_searchService.InsertOnReceivedQueryResultsCallback(*m_pSearchResultResponseReceivedCallback);
+			m_searchQueryPerformer.InsertOnSearchResultsClearedCallback(*m_pSearchQueryResultsClearedCallback);
 		}
 
-		if(m_secondsSincePreviousRefresh >= m_minimumSecondsBetweenUpdates)
+		SearchRefreshService::~SearchRefreshService()
 		{
-			Eegeo::Space::LatLongAltitude currentLocationSeaLevel = Eegeo::Space::LatLongAltitude::FromECEF(ecefLocation);
-			currentLocationSeaLevel.SetAltitude(0.f);
-			Eegeo::dv3 currentEcefSeaLevel = currentLocationSeaLevel.ToECEF();
+			m_searchQueryPerformer.RemoveOnSearchResultsClearedCallback(*m_pSearchQueryResultsClearedCallback);
+			m_searchService.RemoveOnReceivedQueryResultsCallback(*m_pSearchResultResponseReceivedCallback);
+			m_searchService.RemoveOnPerformedQueryCallback(*m_pSearchResultQueryIssuedCallback);
 
-			double distanceMetresSq = (currentEcefSeaLevel - m_previousQueryLocationEcef).LengthSq();
+			Eegeo_DELETE m_pSearchResultResponseReceivedCallback;
+			Eegeo_DELETE m_pSearchResultQueryIssuedCallback;
+			Eegeo_DELETE m_pSearchQueryResultsClearedCallback;
+		}
 
-			if(distanceMetresSq >= m_minimumMetresSquaredBetweenUpdates)
+		void SearchRefreshService::TryRefreshSearch(float deltaSeconds, const Eegeo::dv3& ecefLocation)
+		{
+			if(m_searchResultsExist)
 			{
-				m_previousQueryLocationEcef = currentEcefSeaLevel;
-				const SearchQuery& previousQuery = m_searchQueryPerformer.GetPreviousSearchQuery();
-				m_searchQueryPerformer.PerformSearchQuery(previousQuery.Query(), previousQuery.IsCategory(), currentLocationSeaLevel);
-
+				m_secondsSincePreviousRefresh += deltaSeconds;
+			}
+			else
+			{
 				m_secondsSincePreviousRefresh = 0.f;
 			}
+
+			if(m_queriesPending == 0 && m_searchResultsExist)
+			{
+				if(m_cameraTransitionsController.IsTransitioning())
+				{
+					m_cameraTransitioning = true;
+					return;
+				}
+				else if(m_cameraTransitioning)
+				{
+					m_previousQueryLocationEcef = Eegeo::Space::LatLong::FromECEF(ecefLocation).ToECEF();
+					m_cameraTransitioning = false;
+				}
+
+				if(m_secondsSincePreviousRefresh >= m_minimumSecondsBetweenUpdates)
+				{
+					Eegeo::Space::LatLongAltitude currentLocationSeaLevel = Eegeo::Space::LatLongAltitude::FromECEF(ecefLocation);
+					currentLocationSeaLevel.SetAltitude(0.f);
+					Eegeo::dv3 currentEcefSeaLevel = currentLocationSeaLevel.ToECEF();
+
+					double distanceMetresSq = (currentEcefSeaLevel - m_previousQueryLocationEcef).LengthSq();
+
+					if(distanceMetresSq >= m_minimumMetresSquaredBetweenUpdates)
+					{
+						m_previousQueryLocationEcef = currentEcefSeaLevel;
+						const SearchQuery& previousQuery = m_searchQueryPerformer.GetPreviousSearchQuery();
+						m_searchQueryPerformer.PerformSearchQuery(previousQuery.Query(), previousQuery.IsCategory(), currentLocationSeaLevel);
+
+						m_secondsSincePreviousRefresh = 0.f;
+					}
+				}
+			}
+		}
+
+		void SearchRefreshService::HandleSearchQueryIssued(const SearchQuery& query)
+		{
+			++ m_queriesPending;
+		}
+
+		void SearchRefreshService::HandleSearchResultsResponseReceived(const SearchQuery& query,
+		        const std::vector<SearchResultModel>& results)
+		{
+			m_searchResultsExist = true;
+			m_previousQueryLocationEcef = query.Location().ToECEF();
+			-- m_queriesPending;
+			Eegeo_ASSERT(m_queriesPending >= 0);
+		}
+
+		void SearchRefreshService::HandleSearchQueryResultsCleared()
+		{
+			m_searchResultsExist = false;
 		}
 	}
-}
-
-void SearchRefreshService::HandleSearchQueryIssued(const SearchQuery& query)
-{
-	++ m_queriesPending;
-}
-
-void SearchRefreshService::HandleSearchResultsResponseReceived(const SearchQuery& query,
-        const std::vector<SearchResultModel>& results)
-{
-	m_searchResultsExist = true;
-	m_previousQueryLocationEcef = query.Location().ToECEF();
-	-- m_queriesPending;
-	Eegeo_ASSERT(m_queriesPending >= 0);
-}
-
-void SearchRefreshService::HandleSearchQueryResultsCleared()
-{
-	m_searchResultsExist = false;
-}
-}
 }
 

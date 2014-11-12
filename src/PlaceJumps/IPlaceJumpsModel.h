@@ -7,18 +7,18 @@
 
 namespace ExampleApp
 {
-namespace PlaceJumps
-{
-class IPlaceJumpModel
-{
-public:
+	namespace PlaceJumps
+	{
+		class IPlaceJumpModel
+		{
+		public:
 
-	virtual ~IPlaceJumpModel() {}
+			virtual ~IPlaceJumpModel() {}
 
-	virtual std::string GetName() const = 0;
-	virtual Eegeo::Space::LatLong GetLocation() const = 0;
-	virtual float GetHeadingDegrees() const = 0;
-	virtual float GetDistance() const = 0;
-};
-}
+			virtual std::string GetName() const = 0;
+			virtual Eegeo::Space::LatLong GetLocation() const = 0;
+			virtual float GetHeadingDegrees() const = 0;
+			virtual float GetDistance() const = 0;
+		};
+	}
 }

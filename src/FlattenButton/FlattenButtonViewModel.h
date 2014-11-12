@@ -10,37 +10,37 @@
 
 namespace ExampleApp
 {
-namespace FlattenButton
-{
-class FlattenButtonViewModel : public IFlattenButtonViewModel, private Eegeo::NonCopyable
-{
-public:
+	namespace FlattenButton
+	{
+		class FlattenButtonViewModel : public IFlattenButtonViewModel, private Eegeo::NonCopyable
+		{
+		public:
 
-	FlattenButtonViewModel(Eegeo::Helpers::TIdentity identity,
-	                       bool isInitiallyOnScreen);
+			FlattenButtonViewModel(Eegeo::Helpers::TIdentity identity,
+			                       bool isInitiallyOnScreen);
 
-	Eegeo::Helpers::TIdentity GetIdentity() const;
+			Eegeo::Helpers::TIdentity GetIdentity() const;
 
-	void AddToScreen();
+			void AddToScreen();
 
-	void RemoveFromScreen();
+			void RemoveFromScreen();
 
-	void UpdateOnScreenState(float onScreenState);
+			void UpdateOnScreenState(float onScreenState);
 
-	void InsertOnScreenStateChangedCallback(Eegeo::Helpers::ICallback2<ScreenControlViewModel::IScreenControlViewModel&, float>& callback);
+			void InsertOnScreenStateChangedCallback(Eegeo::Helpers::ICallback2<ScreenControlViewModel::IScreenControlViewModel&, float>& callback);
 
-	void RemoveOnScreenStateChangedCallback(Eegeo::Helpers::ICallback2<ScreenControlViewModel::IScreenControlViewModel&, float>& callback);
+			void RemoveOnScreenStateChangedCallback(Eegeo::Helpers::ICallback2<ScreenControlViewModel::IScreenControlViewModel&, float>& callback);
 
-	bool IsFullyOffScreen() const;
+			bool IsFullyOffScreen() const;
 
-	bool IsFullyOnScreen() const;
+			bool IsFullyOnScreen() const;
 
-	float OnScreenState() const;
+			float OnScreenState() const;
 
-	ScreenControlViewModel::IScreenControlViewModel& GetScreenControlViewModel();
+			ScreenControlViewModel::IScreenControlViewModel& GetScreenControlViewModel();
 
-private:
-	FlattenButtonScreenControl m_screenControl;
-};
-}
+		private:
+			FlattenButtonScreenControl m_screenControl;
+		};
+	}
 }

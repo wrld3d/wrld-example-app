@@ -11,34 +11,34 @@
 
 namespace ExampleApp
 {
-namespace SearchResultPoi
-{
-class SearchResultPoiViewController : public ISearchResultPoiViewController, private Eegeo::NonCopyable
-{
-	AndroidNativeState& m_nativeState;
-	SearchResultPoi::ISearchResultPoiViewModel& m_searchResultPoiViewModel;
-	Eegeo::Helpers::ICallback0* m_pSearchResultPoiOpenedCallback;
-	Eegeo::Helpers::ICallback0* m_pSearchResultPoiClosedCallback;
+	namespace SearchResultPoi
+	{
+		class SearchResultPoiViewController : public ISearchResultPoiViewController, private Eegeo::NonCopyable
+		{
+			AndroidNativeState& m_nativeState;
+			SearchResultPoi::ISearchResultPoiViewModel& m_searchResultPoiViewModel;
+			Eegeo::Helpers::ICallback0* m_pSearchResultPoiOpenedCallback;
+			Eegeo::Helpers::ICallback0* m_pSearchResultPoiClosedCallback;
 
-	jclass m_uiViewClass;
-	jobject m_uiView;
+			jclass m_uiViewClass;
+			jobject m_uiView;
 
-public:
-	SearchResultPoiViewController(
-	    AndroidNativeState& nativeState,
-	    SearchResultPoi::ISearchResultPoiViewModel& viewModel
-	);
+		public:
+			SearchResultPoiViewController(
+			    AndroidNativeState& nativeState,
+			    SearchResultPoi::ISearchResultPoiViewModel& viewModel
+			);
 
-	~SearchResultPoiViewController();
+			~SearchResultPoiViewController();
 
-	void HandleCloseButtonPressed();
+			void HandleCloseButtonPressed();
 
-private:
+		private:
 
-	void SearchResultPoiOpenedCallback();
+			void SearchResultPoiOpenedCallback();
 
-	void SearchResultPoiClosedCallback();
-};
-}
+			void SearchResultPoiClosedCallback();
+		};
+	}
 }
 

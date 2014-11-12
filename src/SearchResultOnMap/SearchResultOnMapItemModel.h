@@ -9,20 +9,20 @@
 
 namespace ExampleApp
 {
-namespace SearchResultOnMap
-{
-class SearchResultOnMapItemModel : public WorldPins::IWorldPinSelectionHandler, private Eegeo::NonCopyable
-{
-	Search::SearchResultModel& m_searchResultModel;
-	SearchResultPoi::ISearchResultPoiViewModel& m_searchResultPoiViewModel;
+	namespace SearchResultOnMap
+	{
+		class SearchResultOnMapItemModel : public WorldPins::IWorldPinSelectionHandler, private Eegeo::NonCopyable
+		{
+			Search::SearchResultModel& m_searchResultModel;
+			SearchResultPoi::ISearchResultPoiViewModel& m_searchResultPoiViewModel;
 
-public:
-	SearchResultOnMapItemModel(Search::SearchResultModel& searchResultModel,
-	                           SearchResultPoi::ISearchResultPoiViewModel& searchResultPoiViewModel);
+		public:
+			SearchResultOnMapItemModel(Search::SearchResultModel& searchResultModel,
+			                           SearchResultPoi::ISearchResultPoiViewModel& searchResultPoiViewModel);
 
-	~SearchResultOnMapItemModel();
+			~SearchResultOnMapItemModel();
 
-	void SelectPin();
-};
-}
+			void SelectPin();
+		};
+	}
 }

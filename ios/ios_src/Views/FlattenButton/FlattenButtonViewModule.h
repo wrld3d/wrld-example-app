@@ -12,26 +12,26 @@
 
 namespace ExampleApp
 {
-namespace FlattenButton
-{
-class FlattenButtonViewModule: public IFlattenButtonViewModule, private Eegeo::NonCopyable
-{
-private:
-	FlattenButtonViewController* m_pController;
-	FlattenButtonView* m_pView;
+	namespace FlattenButton
+	{
+		class FlattenButtonViewModule: public IFlattenButtonViewModule, private Eegeo::NonCopyable
+		{
+		private:
+			FlattenButtonViewController* m_pController;
+			FlattenButtonView* m_pView;
 
-public:
-	FlattenButtonViewModule(IFlattenButtonModel& model,
-	                        IFlattenButtonViewModel& viewModel,
-	                        const Eegeo::Rendering::ScreenProperties& screenProperties,
-	                        ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
-	                        ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus);
+		public:
+			FlattenButtonViewModule(IFlattenButtonModel& model,
+			                        IFlattenButtonViewModel& viewModel,
+			                        const Eegeo::Rendering::ScreenProperties& screenProperties,
+			                        ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
+			                        ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus);
 
-	~FlattenButtonViewModule();
+			~FlattenButtonViewModule();
 
-	FlattenButtonViewController& GetFlattenButtonViewController() const;
+			FlattenButtonViewController& GetFlattenButtonViewController() const;
 
-	FlattenButtonView& GetFlattenButtonView() const;
-};
-}
+			FlattenButtonView& GetFlattenButtonView() const;
+		};
+	}
 }

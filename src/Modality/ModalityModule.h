@@ -13,22 +13,22 @@
 
 namespace ExampleApp
 {
-namespace Modality
-{
-class ModalityModule: public IModalityModule, private Eegeo::NonCopyable
-{
-private:
-	IModalityController* m_pController;
-	IModalityModel* m_pModel;
-	ModalityObserver* m_pModalityObserver;
+	namespace Modality
+	{
+		class ModalityModule: public IModalityModule, private Eegeo::NonCopyable
+		{
+		private:
+			IModalityController* m_pController;
+			IModalityModel* m_pModel;
+			ModalityObserver* m_pModalityObserver;
 
-public:
-	ModalityModule(ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
-	               const std::vector<OpenableControlViewModel::IOpenableControlViewModel*>& viewModels);
+		public:
+			ModalityModule(ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
+			               const std::vector<OpenableControlViewModel::IOpenableControlViewModel*>& viewModels);
 
-	~ModalityModule();
+			~ModalityModule();
 
-	IModalityModel& GetModalityModel() const;
-};
-}
+			IModalityModel& GetModalityModel() const;
+		};
+	}
 }

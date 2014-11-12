@@ -21,44 +21,44 @@
 
 namespace ExampleApp
 {
-namespace SearchResultMenu
-{
-class SearchResultMenuModule: public ISearchResultMenuModule, private Eegeo::NonCopyable
-{
-private:
-	Menu::IMenuModel* m_pModel;
-	Menu::IMenuOptionsModel* m_pMenuOptionsModel;
-	SearchResultMenuViewModel* m_pViewModel;
-	SearchResultRepositoryObserver* m_pSearchResultRepositoryObserver;
-	Menu::IMenuSectionViewModel* m_pMenuSection;
-	SearchResultMenuItemSelectedMessageHandler* m_pSearchResultMenuItemSelectedMessageHandler;
-	SearchResultAddRemoveHandler* m_pSearchResultAddRemoveHandler;
-	SearchResultMenuSearchQueryPerformedMessageHandler* m_pSearchResultMenuSearchQueryPerformedMessageHandler;
-	SearchResultMenuSearchQueryRemovedMessageHandler* m_pSearchResultMenuSearchQueryRemovedMessageHandler;
-	SearchResultViewClearedObserver* m_pSearchResultViewClearedObserver;
+	namespace SearchResultMenu
+	{
+		class SearchResultMenuModule: public ISearchResultMenuModule, private Eegeo::NonCopyable
+		{
+		private:
+			Menu::IMenuModel* m_pModel;
+			Menu::IMenuOptionsModel* m_pMenuOptionsModel;
+			SearchResultMenuViewModel* m_pViewModel;
+			SearchResultRepositoryObserver* m_pSearchResultRepositoryObserver;
+			Menu::IMenuSectionViewModel* m_pMenuSection;
+			SearchResultMenuItemSelectedMessageHandler* m_pSearchResultMenuItemSelectedMessageHandler;
+			SearchResultAddRemoveHandler* m_pSearchResultAddRemoveHandler;
+			SearchResultMenuSearchQueryPerformedMessageHandler* m_pSearchResultMenuSearchQueryPerformedMessageHandler;
+			SearchResultMenuSearchQueryRemovedMessageHandler* m_pSearchResultMenuSearchQueryRemovedMessageHandler;
+			SearchResultViewClearedObserver* m_pSearchResultViewClearedObserver;
 
-public:
-	SearchResultMenuModule(
-	    Search::ISearchResultRepository& searchResultRepository,
-	    Search::ISearchQueryPerformer& queryPerformer,
-	    Eegeo::Helpers::IIdentityProvider& identityProvider,
-	    CameraTransitions::ICameraTransitionController& cameraTransitionController,
-	    Reaction::IReactionControllerModel& reactionControllerModel,
-	    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
-	    ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus
-	);
+		public:
+			SearchResultMenuModule(
+			    Search::ISearchResultRepository& searchResultRepository,
+			    Search::ISearchQueryPerformer& queryPerformer,
+			    Eegeo::Helpers::IIdentityProvider& identityProvider,
+			    CameraTransitions::ICameraTransitionController& cameraTransitionController,
+			    Reaction::IReactionControllerModel& reactionControllerModel,
+			    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
+			    ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus
+			);
 
-	~SearchResultMenuModule();
+			~SearchResultMenuModule();
 
-	Menu::IMenuOptionsModel& GetSearchResultMenuOptionsModel() const;
+			Menu::IMenuOptionsModel& GetSearchResultMenuOptionsModel() const;
 
-	Menu::IMenuModel& GetSearchResultMenuModel() const;
+			Menu::IMenuModel& GetSearchResultMenuModel() const;
 
-	ISearchResultMenuModel& GetSearchResultModel() const;
+			ISearchResultMenuModel& GetSearchResultModel() const;
 
-	Menu::IMenuViewModel& GetMenuViewModel() const;
+			Menu::IMenuViewModel& GetMenuViewModel() const;
 
-	ISearchResultMenuViewModel& GetSearchResultMenuViewModel() const;
-};
-}
+			ISearchResultMenuViewModel& GetSearchResultMenuViewModel() const;
+		};
+	}
 }

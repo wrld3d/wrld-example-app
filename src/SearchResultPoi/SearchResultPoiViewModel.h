@@ -11,40 +11,40 @@
 
 namespace ExampleApp
 {
-namespace SearchResultPoi
-{
-class SearchResultPoiViewModel : public ISearchResultPoiViewModel, private Eegeo::NonCopyable
-{
-	Search::SearchResultModel m_searchResultModel;
-	Eegeo::Helpers::CallbackCollection0 m_openedCallbacks;
-	Eegeo::Helpers::CallbackCollection0 m_closedCallbacks;
-	SearchResultPoiOpenableControl m_openable;
+	namespace SearchResultPoi
+	{
+		class SearchResultPoiViewModel : public ISearchResultPoiViewModel, private Eegeo::NonCopyable
+		{
+			Search::SearchResultModel m_searchResultModel;
+			Eegeo::Helpers::CallbackCollection0 m_openedCallbacks;
+			Eegeo::Helpers::CallbackCollection0 m_closedCallbacks;
+			SearchResultPoiOpenableControl m_openable;
 
-public:
-	SearchResultPoiViewModel(Eegeo::Helpers::TIdentity identity,
-	                         Reaction::IReactionControllerModel& reactionControllerModel);
+		public:
+			SearchResultPoiViewModel(Eegeo::Helpers::TIdentity identity,
+			                         Reaction::IReactionControllerModel& reactionControllerModel);
 
-	~SearchResultPoiViewModel();
+			~SearchResultPoiViewModel();
 
-	const Search::SearchResultModel& GetSearchResultModel() const;
+			const Search::SearchResultModel& GetSearchResultModel() const;
 
-	bool TryAcquireReactorControl();
+			bool TryAcquireReactorControl();
 
-	bool IsOpen() const;
+			bool IsOpen() const;
 
-	void Open(Search::SearchResultModel& searchResultModel);
+			void Open(Search::SearchResultModel& searchResultModel);
 
-	void Close();
+			void Close();
 
-	OpenableControlViewModel::IOpenableControlViewModel& GetOpenableControl();
+			OpenableControlViewModel::IOpenableControlViewModel& GetOpenableControl();
 
-	void InsertOpenedCallback(Eegeo::Helpers::ICallback0& openedCallback);
+			void InsertOpenedCallback(Eegeo::Helpers::ICallback0& openedCallback);
 
-	void RemoveOpenedCallback(Eegeo::Helpers::ICallback0& openedCallback);
+			void RemoveOpenedCallback(Eegeo::Helpers::ICallback0& openedCallback);
 
-	void InsertClosedCallback(Eegeo::Helpers::ICallback0& closedCallback);
+			void InsertClosedCallback(Eegeo::Helpers::ICallback0& closedCallback);
 
-	void RemoveClosedCallback(Eegeo::Helpers::ICallback0& closedCallback);
-};
-}
+			void RemoveClosedCallback(Eegeo::Helpers::ICallback0& closedCallback);
+		};
+	}
 }

@@ -12,70 +12,70 @@
 
 namespace ExampleApp
 {
-namespace Search
-{
-SearchModule::SearchModule(const std::string& searchApiKey,
-                           Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory,
-                           Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder,
-                           Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& cameraController,
-                           CameraTransitions::ICameraTransitionController& cameraTransitionsController,
-                           ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
-                           ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus)
-{
-	m_pSearchResultRepository = Eegeo_NEW(SearchResultRepository)();
+	namespace Search
+	{
+		SearchModule::SearchModule(const std::string& searchApiKey,
+		                           Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory,
+		                           Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder,
+		                           Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& cameraController,
+		                           CameraTransitions::ICameraTransitionController& cameraTransitionsController,
+		                           ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
+		                           ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus)
+		{
+			m_pSearchResultRepository = Eegeo_NEW(SearchResultRepository)();
 
-	m_pSearchResultParser = Eegeo_NEW(Decarta::DecartaSearchJsonParser);
+			m_pSearchResultParser = Eegeo_NEW(Decarta::DecartaSearchJsonParser);
 
-	m_pSearchService = Eegeo_NEW(Decarta::DecartaSearchService)(searchApiKey,
-	                   *m_pSearchResultParser,
-	                   urlEncoder,
-	                   webLoadRequestFactory);
+			m_pSearchService = Eegeo_NEW(Decarta::DecartaSearchService)(searchApiKey,
+			                   *m_pSearchResultParser,
+			                   urlEncoder,
+			                   webLoadRequestFactory);
 
-	m_pSearchQueryPerformer = Eegeo_NEW(SearchQueryPerformer)(*m_pSearchService,
-	                          *m_pSearchResultRepository,
-	                          cameraController);
+			m_pSearchQueryPerformer = Eegeo_NEW(SearchQueryPerformer)(*m_pSearchService,
+			                          *m_pSearchResultRepository,
+			                          cameraController);
 
-	m_pSearchRefreshService = Eegeo_NEW(SearchRefreshService)(*m_pSearchService,
-	                          *m_pSearchQueryPerformer,
-	                          cameraTransitionsController,
-	                          1.f,
-	                          500.f);
+			m_pSearchRefreshService = Eegeo_NEW(SearchRefreshService)(*m_pSearchService,
+			                          *m_pSearchQueryPerformer,
+			                          cameraTransitionsController,
+			                          1.f,
+			                          500.f);
 
-	m_pSearchQueryObserver = Eegeo_NEW(SearchQueryObserver)(
-	                             *m_pSearchService,
-	                             *m_pSearchQueryPerformer,
-	                             nativeToUiMessageBus
-	                         );
-}
+			m_pSearchQueryObserver = Eegeo_NEW(SearchQueryObserver)(
+			                             *m_pSearchService,
+			                             *m_pSearchQueryPerformer,
+			                             nativeToUiMessageBus
+			                         );
+		}
 
-SearchModule::~SearchModule()
-{
-	Eegeo_DELETE m_pSearchQueryObserver;
-	Eegeo_DELETE m_pSearchRefreshService;
-	Eegeo_DELETE m_pSearchQueryPerformer;
-	Eegeo_DELETE m_pSearchService;
-	Eegeo_DELETE m_pSearchResultParser;
-	Eegeo_DELETE m_pSearchResultRepository;
-}
+		SearchModule::~SearchModule()
+		{
+			Eegeo_DELETE m_pSearchQueryObserver;
+			Eegeo_DELETE m_pSearchRefreshService;
+			Eegeo_DELETE m_pSearchQueryPerformer;
+			Eegeo_DELETE m_pSearchService;
+			Eegeo_DELETE m_pSearchResultParser;
+			Eegeo_DELETE m_pSearchResultRepository;
+		}
 
-ISearchService& SearchModule::GetSearchService() const
-{
-	return *m_pSearchService;
-}
+		ISearchService& SearchModule::GetSearchService() const
+		{
+			return *m_pSearchService;
+		}
 
-ISearchResultRepository& SearchModule::GetSearchResultRepository() const
-{
-	return *m_pSearchResultRepository;
-}
+		ISearchResultRepository& SearchModule::GetSearchResultRepository() const
+		{
+			return *m_pSearchResultRepository;
+		}
 
-ISearchQueryPerformer& SearchModule::GetSearchQueryPerformer() const
-{
-	return *m_pSearchQueryPerformer;
-}
+		ISearchQueryPerformer& SearchModule::GetSearchQueryPerformer() const
+		{
+			return *m_pSearchQueryPerformer;
+		}
 
-ISearchRefreshService& SearchModule::GetSearchRefreshService() const
-{
-	return *m_pSearchRefreshService;
-}
-}
+		ISearchRefreshService& SearchModule::GetSearchRefreshService() const
+		{
+			return *m_pSearchRefreshService;
+		}
+	}
 }

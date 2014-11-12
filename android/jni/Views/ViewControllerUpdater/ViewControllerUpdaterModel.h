@@ -9,24 +9,24 @@
 
 namespace ExampleApp
 {
-namespace ViewControllerUpdater
-{
-class ViewControllerUpdaterModel: public IViewControllerUpdaterModel, private Eegeo::NonCopyable
-{
-private:
-	std::vector<IUpdateableViewController*> m_updateTargetsUi;
+	namespace ViewControllerUpdater
+	{
+		class ViewControllerUpdaterModel: public IViewControllerUpdaterModel, private Eegeo::NonCopyable
+		{
+		private:
+			std::vector<IUpdateableViewController*> m_updateTargetsUi;
 
-public:
-	ViewControllerUpdaterModel();
+		public:
+			ViewControllerUpdaterModel();
 
-	~ViewControllerUpdaterModel();
+			~ViewControllerUpdaterModel();
 
-	void AddUpdateableObject(IUpdateableViewController& updateProtocolImplementation);
+			void AddUpdateableObject(IUpdateableViewController& updateProtocolImplementation);
 
-	void RemoveUpdateableObject(IUpdateableViewController& updateProtocolImplementation);
+			void RemoveUpdateableObject(IUpdateableViewController& updateProtocolImplementation);
 
-	void UpdateObjectsUiThread(float deltaSeconds);
-};
-}
+			void UpdateObjectsUiThread(float deltaSeconds);
+		};
+	}
 }
 

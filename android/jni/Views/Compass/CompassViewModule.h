@@ -12,22 +12,22 @@
 
 namespace ExampleApp
 {
-namespace Compass
-{
-class CompassViewModule: public ICompassViewModule, private Eegeo::NonCopyable
-{
-private:
-	CompassViewController* m_pController;
+	namespace Compass
+	{
+		class CompassViewModule: public ICompassViewModule, private Eegeo::NonCopyable
+		{
+		private:
+			CompassViewController* m_pController;
 
-public:
-	CompassViewModule(
-	    AndroidNativeState& nativeState,
-	    Compass::ICompassViewModel& viewModel,
-	    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
-	    ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus
-	);
+		public:
+			CompassViewModule(
+			    AndroidNativeState& nativeState,
+			    Compass::ICompassViewModel& viewModel,
+			    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
+			    ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus
+			);
 
-	~CompassViewModule();
-};
-}
+			~CompassViewModule();
+		};
+	}
 }

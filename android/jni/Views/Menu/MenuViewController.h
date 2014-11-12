@@ -14,70 +14,70 @@
 
 namespace ExampleApp
 {
-namespace Menu
-{
-class MenuViewController : public IMenuViewController, private Eegeo::NonCopyable
-{
-protected:
-	AndroidNativeState& m_nativeState;
-	ExampleApp::Menu::IMenuModel& m_menuModel;
-	ExampleApp::Menu::IMenuViewModel& m_menuViewModel;
+	namespace Menu
+	{
+		class MenuViewController : public IMenuViewController, private Eegeo::NonCopyable
+		{
+		protected:
+			AndroidNativeState& m_nativeState;
+			ExampleApp::Menu::IMenuModel& m_menuModel;
+			ExampleApp::Menu::IMenuViewModel& m_menuViewModel;
 
-	jclass m_uiViewClass;
-	jobject m_uiView;
+			jclass m_uiViewClass;
+			jobject m_uiView;
 
-	Eegeo::Helpers::ICallback1<ExampleApp::Menu::MenuItemModel>* m_pMenuAddedCallback;
-	Eegeo::Helpers::ICallback1<ExampleApp::Menu::MenuItemModel>* m_pMenuRemovedCallback;
+			Eegeo::Helpers::ICallback1<ExampleApp::Menu::MenuItemModel>* m_pMenuAddedCallback;
+			Eegeo::Helpers::ICallback1<ExampleApp::Menu::MenuItemModel>* m_pMenuRemovedCallback;
 
-	Eegeo::Helpers::ICallback2<OpenableControlViewModel::IOpenableControlViewModel&, float>* m_pOpenStateChangedCallback;
-	Eegeo::Helpers::ICallback2<ScreenControlViewModel::IScreenControlViewModel&, float>* m_pOnScreenStateChangedCallback;
+			Eegeo::Helpers::ICallback2<OpenableControlViewModel::IOpenableControlViewModel&, float>* m_pOpenStateChangedCallback;
+			Eegeo::Helpers::ICallback2<ScreenControlViewModel::IScreenControlViewModel&, float>* m_pOnScreenStateChangedCallback;
 
-	bool m_dragInProgress;
-	bool m_presentationDirty;
+			bool m_dragInProgress;
+			bool m_presentationDirty;
 
-	Eegeo::Helpers::TIdentity Identity() const;
+			Eegeo::Helpers::TIdentity Identity() const;
 
-	void ExecuteTaskOnNativeThread(IMenuOptionSelectionTask* pNativeTask);
+			void ExecuteTaskOnNativeThread(IMenuOptionSelectionTask* pNativeTask);
 
-public:
-	MenuViewController(
-	    const std::string& viewClassName,
-	    AndroidNativeState& nativeState,
-	    Menu::IMenuModel& menuModel,
-	    Menu::IMenuViewModel& menuViewModel
-	);
+		public:
+			MenuViewController(
+			    const std::string& viewClassName,
+			    AndroidNativeState& nativeState,
+			    Menu::IMenuModel& menuModel,
+			    Menu::IMenuViewModel& menuViewModel
+			);
 
-	~MenuViewController();
+			~MenuViewController();
 
-	virtual void UpdateUiThread(float deltaSeconds);
+			virtual void UpdateUiThread(float deltaSeconds);
 
-	virtual bool TryBeginDrag();
+			virtual bool TryBeginDrag();
 
-	virtual void HandleViewOpenCompleted();
+			virtual void HandleViewOpenCompleted();
 
-	virtual void HandleViewCloseCompleted();
+			virtual void HandleViewCloseCompleted();
 
-	virtual void HandleViewClicked();
+			virtual void HandleViewClicked();
 
-	virtual void HandleDraggingViewStarted();
+			virtual void HandleDraggingViewStarted();
 
-	virtual void HandleDraggingViewInProgress(float normalisedDragState);
+			virtual void HandleDraggingViewInProgress(float normalisedDragState);
 
-	virtual void HandleDraggingViewCompleted();
+			virtual void HandleDraggingViewCompleted();
 
-	virtual void HandleItemSelected(const std::string& selection, const int index);
+			virtual void HandleItemSelected(const std::string& selection, const int index);
 
-protected:
+		protected:
 
-	void RefreshPresentation();
+			void RefreshPresentation();
 
-	void ItemAddedCallback(ExampleApp::Menu::MenuItemModel& item);
+			void ItemAddedCallback(ExampleApp::Menu::MenuItemModel& item);
 
-	void ItemRemovedCallback(ExampleApp::Menu::MenuItemModel& item);
+			void ItemRemovedCallback(ExampleApp::Menu::MenuItemModel& item);
 
-	void OnScreenStateChangedCallback(ScreenControlViewModel::IScreenControlViewModel& viewModel, float& onScreenState);
+			void OnScreenStateChangedCallback(ScreenControlViewModel::IScreenControlViewModel& viewModel, float& onScreenState);
 
-	void OpenStateChangedCallback(OpenableControlViewModel::IOpenableControlViewModel& viewModel, float& openState);
-};
-}
+			void OpenStateChangedCallback(OpenableControlViewModel::IOpenableControlViewModel& viewModel, float& openState);
+		};
+	}
 }

@@ -10,34 +10,34 @@
 
 namespace ExampleApp
 {
-namespace SearchResultMenu
-{
-class SearchResultMenuSearchQueryRemovedMessageHandler : private Eegeo::NonCopyable
-{
-	SearchResultMenu::ISearchResultMenuViewModel& m_searchResultMenuViewModel;
-	ExampleAppMessaging::NativeToUiMessageBus& m_messageBus;
-	Eegeo::Helpers::TCallback1<SearchResultMenuSearchQueryRemovedMessageHandler, const Search::SearchQueryRemovedMessage&> m_handlerBinding;
-
-	void HandleReceivedSearchQueryRemovedMessage(const Search::SearchQueryRemovedMessage& message)
+	namespace SearchResultMenu
 	{
-		m_searchResultMenuViewModel.SetHasSearchQuery(false);
-	}
+		class SearchResultMenuSearchQueryRemovedMessageHandler : private Eegeo::NonCopyable
+		{
+			SearchResultMenu::ISearchResultMenuViewModel& m_searchResultMenuViewModel;
+			ExampleAppMessaging::NativeToUiMessageBus& m_messageBus;
+			Eegeo::Helpers::TCallback1<SearchResultMenuSearchQueryRemovedMessageHandler, const Search::SearchQueryRemovedMessage&> m_handlerBinding;
 
-public:
-	SearchResultMenuSearchQueryRemovedMessageHandler(
-	    SearchResultMenu::ISearchResultMenuViewModel& searchResultMenuViewModel,
-	    ExampleAppMessaging::NativeToUiMessageBus& messageBus)
-		: m_searchResultMenuViewModel(searchResultMenuViewModel)
-		, m_messageBus(messageBus)
-		, m_handlerBinding(this, &SearchResultMenuSearchQueryRemovedMessageHandler::HandleReceivedSearchQueryRemovedMessage)
-	{
-		m_messageBus.Subscribe(m_handlerBinding);
-	}
+			void HandleReceivedSearchQueryRemovedMessage(const Search::SearchQueryRemovedMessage& message)
+			{
+				m_searchResultMenuViewModel.SetHasSearchQuery(false);
+			}
 
-	~SearchResultMenuSearchQueryRemovedMessageHandler()
-	{
-		m_messageBus.Unsubscribe(m_handlerBinding);
+		public:
+			SearchResultMenuSearchQueryRemovedMessageHandler(
+			    SearchResultMenu::ISearchResultMenuViewModel& searchResultMenuViewModel,
+			    ExampleAppMessaging::NativeToUiMessageBus& messageBus)
+				: m_searchResultMenuViewModel(searchResultMenuViewModel)
+				, m_messageBus(messageBus)
+				, m_handlerBinding(this, &SearchResultMenuSearchQueryRemovedMessageHandler::HandleReceivedSearchQueryRemovedMessage)
+			{
+				m_messageBus.Subscribe(m_handlerBinding);
+			}
+
+			~SearchResultMenuSearchQueryRemovedMessageHandler()
+			{
+				m_messageBus.Unsubscribe(m_handlerBinding);
+			}
+		};
 	}
-};
-}
 }

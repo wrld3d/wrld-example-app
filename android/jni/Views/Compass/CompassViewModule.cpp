@@ -6,29 +6,29 @@
 
 namespace ExampleApp
 {
-namespace Compass
-{
-CompassViewModule::CompassViewModule(
-    AndroidNativeState& nativeState,
-    Compass::ICompassViewModel& viewModel,
-    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
-    ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus
-)
-{
-	ASSERT_UI_THREAD
+	namespace Compass
+	{
+		CompassViewModule::CompassViewModule(
+		    AndroidNativeState& nativeState,
+		    Compass::ICompassViewModel& viewModel,
+		    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
+		    ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus
+		)
+		{
+			ASSERT_UI_THREAD
 
-	m_pController = Eegeo_NEW(CompassViewController)(
-	                    nativeState,
-	                    viewModel,
-	                    uiToNativeMessageBus,
-	                    nativeToUiMessageBus);
-}
+			m_pController = Eegeo_NEW(CompassViewController)(
+			                    nativeState,
+			                    viewModel,
+			                    uiToNativeMessageBus,
+			                    nativeToUiMessageBus);
+		}
 
-CompassViewModule::~CompassViewModule()
-{
-	ASSERT_UI_THREAD
+		CompassViewModule::~CompassViewModule()
+		{
+			ASSERT_UI_THREAD
 
-	Eegeo_DELETE m_pController;
-}
-}
+			Eegeo_DELETE m_pController;
+		}
+	}
 }

@@ -9,19 +9,19 @@
 
 namespace ExampleApp
 {
-namespace ViewControllerUpdater
-{
-class ViewControllerUpdaterModule: public IViewControllerUpdaterModule, private Eegeo::NonCopyable
-{
-private:
-	IViewControllerUpdaterModel* m_pViewControllerUpdaterModel;
+	namespace ViewControllerUpdater
+	{
+		class ViewControllerUpdaterModule: public IViewControllerUpdaterModule, private Eegeo::NonCopyable
+		{
+		private:
+			IViewControllerUpdaterModel* m_pViewControllerUpdaterModel;
 
-public:
-	ViewControllerUpdaterModule();
+		public:
+			ViewControllerUpdaterModule();
 
-	~ViewControllerUpdaterModule();
+			~ViewControllerUpdaterModule();
 
-	IViewControllerUpdaterModel& GetViewControllerUpdaterModel() const;
-};
-}
+			IViewControllerUpdaterModel& GetViewControllerUpdaterModel() const;
+		};
+	}
 }

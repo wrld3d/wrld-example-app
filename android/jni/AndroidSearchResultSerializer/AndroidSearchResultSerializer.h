@@ -8,10 +8,10 @@
 
 namespace ExampleApp
 {
-namespace AndroidSearchResultSerializer
-{
-std::string SerializeSearchResult(const Search::SearchResultModel& searchResult);
+	namespace AndroidSearchResultSerializer
+	{
+		std::string SerializeSearchResult(const Search::SearchResultModel& searchResult);
 
-Search::SearchResultModel DeserializeSearchResult(const std::string& searchResult);
-}
+		Search::SearchResultModel DeserializeSearchResult(const std::string& searchResult);
+	}
 }

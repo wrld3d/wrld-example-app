@@ -16,35 +16,35 @@
 
 namespace ExampleApp
 {
-namespace Compass
-{
-class CompassModule : public ICompassModule, private Eegeo::NonCopyable
-{
-private:
-	CompassViewModel* m_pViewModel;
-	ICompassModel* m_pModel;
-	ICompassUpdateController* m_pCompassUpdateController;
-	CompassModeObserver* m_pCompassModeObserver;
-	CompassViewCycledObserver* m_pCompassViewCycledObserver;
+	namespace Compass
+	{
+		class CompassModule : public ICompassModule, private Eegeo::NonCopyable
+		{
+		private:
+			CompassViewModel* m_pViewModel;
+			ICompassModel* m_pModel;
+			ICompassUpdateController* m_pCompassUpdateController;
+			CompassModeObserver* m_pCompassModeObserver;
+			CompassViewCycledObserver* m_pCompassViewCycledObserver;
 
-public:
-	CompassModule(Eegeo::Location::NavigationService& navigationService,
-	              Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& cameraController,
-	              Eegeo::Helpers::IIdentityProvider& identityProvider,
-	              ExampleApp::ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
-	              ExampleApp::ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus
-	             );
+		public:
+			CompassModule(Eegeo::Location::NavigationService& navigationService,
+			              Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& cameraController,
+			              Eegeo::Helpers::IIdentityProvider& identityProvider,
+			              ExampleApp::ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
+			              ExampleApp::ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus
+			             );
 
-	~CompassModule();
+			~CompassModule();
 
-	ICompassModel& GetCompassModel() const;
+			ICompassModel& GetCompassModel() const;
 
-	ICompassViewModel& GetCompassViewModel() const;
+			ICompassViewModel& GetCompassViewModel() const;
 
-	ICompassUpdateController& GetCompassUpdateController() const;
+			ICompassUpdateController& GetCompassUpdateController() const;
 
-	ScreenControlViewModel::IScreenControlViewModel& GetScreenControlViewModel() const;
-};
+			ScreenControlViewModel::IScreenControlViewModel& GetScreenControlViewModel() const;
+		};
 
-}
+	}
 }

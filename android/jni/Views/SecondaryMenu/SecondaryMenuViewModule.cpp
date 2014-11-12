@@ -8,41 +8,41 @@
 
 namespace ExampleApp
 {
-namespace SecondaryMenu
-{
-SecondaryMenuViewModule::SecondaryMenuViewModule(
-    const std::string& viewName,
-    AndroidNativeState& nativeState,
-    Menu::IMenuModel& menuModel,
-    Menu::IMenuViewModel& menuViewModel,
-    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
-    ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus
-)
-{
-	ASSERT_UI_THREAD
+	namespace SecondaryMenu
+	{
+		SecondaryMenuViewModule::SecondaryMenuViewModule(
+		    const std::string& viewName,
+		    AndroidNativeState& nativeState,
+		    Menu::IMenuModel& menuModel,
+		    Menu::IMenuViewModel& menuViewModel,
+		    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
+		    ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus
+		)
+		{
+			ASSERT_UI_THREAD
 
-	m_pMenuViewController = Eegeo_NEW(SecondaryMenuViewController)(
-	                            viewName,
-	                            nativeState,
-	                            menuModel,
-	                            menuViewModel,
-	                            uiToNativeMessageBus,
-	                            nativeToUiMessageBus
-	                        );
-}
+			m_pMenuViewController = Eegeo_NEW(SecondaryMenuViewController)(
+			                            viewName,
+			                            nativeState,
+			                            menuModel,
+			                            menuViewModel,
+			                            uiToNativeMessageBus,
+			                            nativeToUiMessageBus
+			                        );
+		}
 
-SecondaryMenuViewModule::~SecondaryMenuViewModule()
-{
-	ASSERT_UI_THREAD
+		SecondaryMenuViewModule::~SecondaryMenuViewModule()
+		{
+			ASSERT_UI_THREAD
 
-	Eegeo_DELETE m_pMenuViewController;
-}
+			Eegeo_DELETE m_pMenuViewController;
+		}
 
-Menu::IMenuViewController& SecondaryMenuViewModule::GetMenuViewController() const
-{
-	ASSERT_UI_THREAD
+		Menu::IMenuViewController& SecondaryMenuViewModule::GetMenuViewController() const
+		{
+			ASSERT_UI_THREAD
 
-	return *m_pMenuViewController;
-}
-}
+			return *m_pMenuViewController;
+		}
+	}
 }

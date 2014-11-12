@@ -12,25 +12,25 @@
 
 namespace ExampleApp
 {
-namespace Modality
-{
-class ModalityController : public IModalityController, private Eegeo::NonCopyable
-{
-	IModalityModel& m_modalityModel;
-	std::vector<OpenableControlViewModel::IOpenableControlViewModel*> m_viewModels;
-	Eegeo::Helpers::ICallback2<OpenableControlViewModel::IOpenableControlViewModel&, float>* m_pMenuOpenStateChangedCallback;
+	namespace Modality
+	{
+		class ModalityController : public IModalityController, private Eegeo::NonCopyable
+		{
+			IModalityModel& m_modalityModel;
+			std::vector<OpenableControlViewModel::IOpenableControlViewModel*> m_viewModels;
+			Eegeo::Helpers::ICallback2<OpenableControlViewModel::IOpenableControlViewModel&, float>* m_pMenuOpenStateChangedCallback;
 
-public:
-	ModalityController(IModalityModel& modalityModel,
-	                   const std::vector<OpenableControlViewModel::IOpenableControlViewModel*>& viewModels);
+		public:
+			ModalityController(IModalityModel& modalityModel,
+			                   const std::vector<OpenableControlViewModel::IOpenableControlViewModel*>& viewModels);
 
-	~ModalityController();
+			~ModalityController();
 
-private:
+		private:
 
-	float GetModality() const;
+			float GetModality() const;
 
-	void MenuOpenStateChangeHandler(OpenableControlViewModel::IOpenableControlViewModel& viewModel, float& openState);
-};
-}
+			void MenuOpenStateChangeHandler(OpenableControlViewModel::IOpenableControlViewModel& viewModel, float& openState);
+		};
+	}
 }

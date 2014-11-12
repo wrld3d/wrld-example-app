@@ -4,20 +4,20 @@
 
 namespace ExampleApp
 {
-namespace PlaceJumps
-{
-PlaceJumpModel::PlaceJumpModel(std::string& name,
-                               Eegeo::Space::LatLong location,
-                               float headingDegrees,
-                               float distance,
-                               std::string& icon)
-	: m_name(name)
-	, m_location(location)
-	, m_headingDegrees(headingDegrees)
-	, m_distance(distance)
-	, m_icon(icon)
-{
+	namespace PlaceJumps
+	{
+		PlaceJumpModel::PlaceJumpModel(std::string& name,
+		                               Eegeo::Space::LatLong location,
+		                               float headingDegrees,
+		                               float distance,
+		                               std::string& icon)
+			: m_name(name)
+			, m_location(location)
+			, m_headingDegrees(headingDegrees)
+			, m_distance(distance)
+			, m_icon(icon)
+		{
 
-}
-}
+		}
+	}
 }

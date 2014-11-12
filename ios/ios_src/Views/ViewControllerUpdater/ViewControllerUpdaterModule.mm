@@ -5,21 +5,21 @@
 
 namespace ExampleApp
 {
-namespace ViewControllerUpdater
-{
-ViewControllerUpdaterModule::ViewControllerUpdaterModule()
-{
-	m_pViewControllerUpdaterModel = Eegeo_NEW(ViewControllerUpdaterModel)();
-}
+	namespace ViewControllerUpdater
+	{
+		ViewControllerUpdaterModule::ViewControllerUpdaterModule()
+		{
+			m_pViewControllerUpdaterModel = Eegeo_NEW(ViewControllerUpdaterModel)();
+		}
 
-ViewControllerUpdaterModule::~ViewControllerUpdaterModule()
-{
-	Eegeo_DELETE m_pViewControllerUpdaterModel;
-}
+		ViewControllerUpdaterModule::~ViewControllerUpdaterModule()
+		{
+			Eegeo_DELETE m_pViewControllerUpdaterModel;
+		}
 
-IViewControllerUpdaterModel& ViewControllerUpdaterModule::GetViewControllerUpdaterModel() const
-{
-	return *m_pViewControllerUpdaterModel;
-}
-}
+		IViewControllerUpdaterModel& ViewControllerUpdaterModule::GetViewControllerUpdaterModel() const
+		{
+			return *m_pViewControllerUpdaterModel;
+		}
+	}
 }

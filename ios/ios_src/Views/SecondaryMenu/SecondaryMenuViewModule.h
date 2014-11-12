@@ -12,28 +12,28 @@
 
 namespace ExampleApp
 {
-namespace SecondaryMenu
-{
-class SecondaryMenuViewModule: public ISecondaryMenuViewModule, private Eegeo::NonCopyable
-{
-private:
-	MenuViewController* m_pMenuViewController;
-	SearchViewController* m_pSearchViewController;
-	SecondaryMenuView* m_pView;
+	namespace SecondaryMenu
+	{
+		class SecondaryMenuViewModule: public ISecondaryMenuViewModule, private Eegeo::NonCopyable
+		{
+		private:
+			MenuViewController* m_pMenuViewController;
+			SearchViewController* m_pSearchViewController;
+			SecondaryMenuView* m_pView;
 
-public:
-	SecondaryMenuViewModule(Menu::IMenuModel& secondaryMenuModel,
-	                        Menu::IMenuViewModel& secondaryMenuViewModel,
-	                        const Eegeo::Rendering::ScreenProperties& screenProperties,
-	                        Modality::IModalityModel& modalityModel,
-	                        Search::ISearchQueryPerformer& searchQueryPerformer,
-	                        ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus);
+		public:
+			SecondaryMenuViewModule(Menu::IMenuModel& secondaryMenuModel,
+			                        Menu::IMenuViewModel& secondaryMenuViewModel,
+			                        const Eegeo::Rendering::ScreenProperties& screenProperties,
+			                        Modality::IModalityModel& modalityModel,
+			                        Search::ISearchQueryPerformer& searchQueryPerformer,
+			                        ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus);
 
-	~SecondaryMenuViewModule();
+			~SecondaryMenuViewModule();
 
-	MenuViewController& GetSecondaryMenuViewController() const;
+			MenuViewController& GetSecondaryMenuViewController() const;
 
-	SecondaryMenuView& GetSecondaryMenuView() const;
-};
-}
+			SecondaryMenuView& GetSecondaryMenuView() const;
+		};
+	}
 }

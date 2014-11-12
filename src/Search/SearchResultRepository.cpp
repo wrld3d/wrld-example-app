@@ -4,31 +4,31 @@
 
 namespace ExampleApp
 {
-namespace Search
-{
-SearchResultRepository::~SearchResultRepository()
-{
-	while(GetItemCount() > 0)
+	namespace Search
 	{
-		SearchResultModel* pModel = GetItemAtIndex(0);
-		RemoveItem(pModel);
-		Eegeo_DELETE pModel;
-	}
-}
-
-void SearchResultRepository::RemoveFirstResultWithIdentifier(const std::string& identifier)
-{
-	for(size_t i = 0; i < GetItemCount(); ++ i)
-	{
-		SearchResultModel& model = *GetItemAtIndex(i);
-
-		if(model.GetIdentifier() == identifier)
+		SearchResultRepository::~SearchResultRepository()
 		{
-			RemoveItem(&model);
-			return;
+			while(GetItemCount() > 0)
+			{
+				SearchResultModel* pModel = GetItemAtIndex(0);
+				RemoveItem(pModel);
+				Eegeo_DELETE pModel;
+			}
+		}
+
+		void SearchResultRepository::RemoveFirstResultWithIdentifier(const std::string& identifier)
+		{
+			for(size_t i = 0; i < GetItemCount(); ++ i)
+			{
+				SearchResultModel& model = *GetItemAtIndex(i);
+
+				if(model.GetIdentifier() == identifier)
+				{
+					RemoveItem(&model);
+					return;
+				}
+			}
 		}
 	}
-}
-}
 }
 

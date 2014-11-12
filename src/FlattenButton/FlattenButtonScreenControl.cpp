@@ -4,17 +4,17 @@
 
 namespace ExampleApp
 {
-namespace FlattenButton
-{
-FlattenButtonScreenControl::FlattenButtonScreenControl(bool initiallyOnScreen, Eegeo::Helpers::TIdentity identity)
-	: ScreenControlViewModel::ScreenControlViewModelBase(initiallyOnScreen)
-	, m_identity(identity)
-{
-}
+	namespace FlattenButton
+	{
+		FlattenButtonScreenControl::FlattenButtonScreenControl(bool initiallyOnScreen, Eegeo::Helpers::TIdentity identity)
+			: ScreenControlViewModel::ScreenControlViewModelBase(initiallyOnScreen)
+			, m_identity(identity)
+		{
+		}
 
-Eegeo::Helpers::TIdentity FlattenButtonScreenControl::GetIdentity() const
-{
-	return m_identity;
-}
-}
+		Eegeo::Helpers::TIdentity FlattenButtonScreenControl::GetIdentity() const
+		{
+			return m_identity;
+		}
+	}
 }

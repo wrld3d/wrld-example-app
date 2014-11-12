@@ -10,22 +10,22 @@
 
 namespace ExampleApp
 {
-namespace SearchResultPoi
-{
-class SearchResultPoiViewModule: public ISearchResultPoiViewModule, private Eegeo::NonCopyable
-{
-private:
-	SearchResultPoi::ISearchResultPoiViewController* m_pSearchResultPoiViewController;
+	namespace SearchResultPoi
+	{
+		class SearchResultPoiViewModule: public ISearchResultPoiViewModule, private Eegeo::NonCopyable
+		{
+		private:
+			SearchResultPoi::ISearchResultPoiViewController* m_pSearchResultPoiViewController;
 
-public:
-	SearchResultPoiViewModule(
-	    AndroidNativeState& nativeState,
-	    SearchResultPoi::ISearchResultPoiViewModel& searchResultPoiViewModel
-	);
+		public:
+			SearchResultPoiViewModule(
+			    AndroidNativeState& nativeState,
+			    SearchResultPoi::ISearchResultPoiViewModel& searchResultPoiViewModel
+			);
 
-	~SearchResultPoiViewModule();
+			~SearchResultPoiViewModule();
 
-	ISearchResultPoiViewController& GetSearchResultPoiViewController() const;
-};
-}
+			ISearchResultPoiViewController& GetSearchResultPoiViewController() const;
+		};
+	}
 }

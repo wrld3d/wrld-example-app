@@ -12,22 +12,22 @@
 
 namespace ExampleApp
 {
-namespace Compass
-{
-class CompassUpdateController : public ICompassUpdateController, private Eegeo::NonCopyable
-{
-public:
+	namespace Compass
+	{
+		class CompassUpdateController : public ICompassUpdateController, private Eegeo::NonCopyable
+		{
+		public:
 
-	CompassUpdateController(ICompassModel& model,
-	                        Eegeo::Location::NavigationService& navigationService,
-	                        ExampleApp::ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus);
+			CompassUpdateController(ICompassModel& model,
+			                        Eegeo::Location::NavigationService& navigationService,
+			                        ExampleApp::ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus);
 
-	void Update(float deltaSeconds);
+			void Update(float deltaSeconds);
 
-private:
-	ICompassModel& m_model;
-	Eegeo::Location::NavigationService& m_navigationService;
-	ExampleApp::ExampleAppMessaging::NativeToUiMessageBus& m_nativeToUiMessageBus;
-};
-}
+		private:
+			ICompassModel& m_model;
+			Eegeo::Location::NavigationService& m_navigationService;
+			ExampleApp::ExampleAppMessaging::NativeToUiMessageBus& m_nativeToUiMessageBus;
+		};
+	}
 }

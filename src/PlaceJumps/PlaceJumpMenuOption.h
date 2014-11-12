@@ -14,32 +14,32 @@
 
 namespace ExampleApp
 {
-namespace PlaceJumps
-{
-class PlaceJumpMenuOption : public Menu::IMenuOption
-{
-public:
-	PlaceJumpMenuOption(PlaceJumpModel jumpModel,
-	                    ExampleApp::Menu::IMenuViewModel& menuViewModel,
-	                    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus)
-		: m_jumpModel(jumpModel)
-		, m_menuViewModel(menuViewModel)
-		, m_uiToNativeMessageBus(uiToNativeMessageBus)
+	namespace PlaceJumps
 	{
+		class PlaceJumpMenuOption : public Menu::IMenuOption
+		{
+		public:
+			PlaceJumpMenuOption(PlaceJumpModel jumpModel,
+			                    ExampleApp::Menu::IMenuViewModel& menuViewModel,
+			                    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus)
+				: m_jumpModel(jumpModel)
+				, m_menuViewModel(menuViewModel)
+				, m_uiToNativeMessageBus(uiToNativeMessageBus)
+			{
+			}
+
+			void Select()
+			{
+				m_menuViewModel.Close();
+				m_uiToNativeMessageBus.Publish(PlaceJumpSelectedMessage(m_jumpModel));
+			}
+
+		private:
+
+			PlaceJumpModel m_jumpModel;
+			ExampleAppMessaging::UiToNativeMessageBus& m_uiToNativeMessageBus;
+			ExampleApp::Menu::IMenuViewModel& m_menuViewModel;
+		};
+
 	}
-
-	void Select()
-	{
-		m_menuViewModel.Close();
-		m_uiToNativeMessageBus.Publish(PlaceJumpSelectedMessage(m_jumpModel));
-	}
-
-private:
-
-	PlaceJumpModel m_jumpModel;
-	ExampleAppMessaging::UiToNativeMessageBus& m_uiToNativeMessageBus;
-	ExampleApp::Menu::IMenuViewModel& m_menuViewModel;
-};
-
-}
 }

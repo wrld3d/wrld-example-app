@@ -8,16 +8,16 @@
 
 namespace ExampleApp
 {
-namespace AboutPage
-{
-class AboutPageOpenableControl : public OpenableControlViewModel::OpenableControlViewModelBase, private Eegeo::NonCopyable
-{
-	Eegeo::Helpers::TIdentity m_identity;
+	namespace AboutPage
+	{
+		class AboutPageOpenableControl : public OpenableControlViewModel::OpenableControlViewModelBase, private Eegeo::NonCopyable
+		{
+			Eegeo::Helpers::TIdentity m_identity;
 
-public:
-	AboutPageOpenableControl(Eegeo::Helpers::TIdentity identity, Reaction::IReactionControllerModel& reactionControllerModel);
+		public:
+			AboutPageOpenableControl(Eegeo::Helpers::TIdentity identity, Reaction::IReactionControllerModel& reactionControllerModel);
 
-	Eegeo::Helpers::TIdentity GetIdentity() const;
-};
-}
+			Eegeo::Helpers::TIdentity GetIdentity() const;
+		};
+	}
 }
