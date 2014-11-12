@@ -9,42 +9,42 @@
 
 namespace ExampleApp
 {
-    namespace PersistentSettings
-    {
-        class AndroidPersistentSettingsModel : public IPersistentSettingsModel, private Eegeo::NonCopyable
-        {
-    		AndroidNativeState& m_nativeState;
-    		jclass m_jniApiClass;
-    		jobject m_jniApiInstance;
+namespace PersistentSettings
+{
+class AndroidPersistentSettingsModel : public IPersistentSettingsModel, private Eegeo::NonCopyable
+{
+	AndroidNativeState& m_nativeState;
+	jclass m_jniApiClass;
+	jobject m_jniApiInstance;
 
-        public:
-        	AndroidPersistentSettingsModel(AndroidNativeState& nativeState);
+public:
+	AndroidPersistentSettingsModel(AndroidNativeState& nativeState);
 
-            ~AndroidPersistentSettingsModel();
+	~AndroidPersistentSettingsModel();
 
-            bool TryGetValue(const std::string& name, bool& out_value) const;
+	bool TryGetValue(const std::string& name, bool& out_value) const;
 
-            bool TryGetValue(const std::string& name, int& out_value) const;
+	bool TryGetValue(const std::string& name, int& out_value) const;
 
-            bool TryGetValue(const std::string& name, double& out_value) const;
+	bool TryGetValue(const std::string& name, double& out_value) const;
 
-            bool TryGetValue(const std::string& name, std::string& out_value) const;
+	bool TryGetValue(const std::string& name, std::string& out_value) const;
 
-            void SetValue(const std::string& name, bool value);
+	void SetValue(const std::string& name, bool value);
 
-            void SetValue(const std::string& name, int value);
+	void SetValue(const std::string& name, int value);
 
-            void SetValue(const std::string& name, double value);
+	void SetValue(const std::string& name, double value);
 
-            void SetValue(const std::string& name, const std::string& value);
+	void SetValue(const std::string& name, const std::string& value);
 
-            void ClearAll();
+	void ClearAll();
 
-        private:
-            bool HasValue(const std::string& name) const;
+private:
+	bool HasValue(const std::string& name) const;
 
-            template <typename TValue>
-            void SetValue(const std::string& name, TValue value, const std::string& method, const std::string& signature);
-        };
-    }
+	template <typename TValue>
+	void SetValue(const std::string& name, TValue value, const std::string& method, const std::string& signature);
+};
+}
 }

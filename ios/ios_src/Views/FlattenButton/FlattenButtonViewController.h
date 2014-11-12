@@ -12,17 +12,17 @@
 
 @interface FlattenButtonViewController : UIViewController
 {
-    ExampleApp::FlattenButton::IFlattenButtonModel* m_pModel;
-    ExampleApp::FlattenButton::IFlattenButtonViewModel* m_pViewModel;
-    ExampleApp::FlattenButton::FlattenButtonViewControllerInterop* m_pInterop;
-    ExampleApp::ExampleAppMessaging::UiToNativeMessageBus* m_pUiToNativeMessageBus;
+	ExampleApp::FlattenButton::IFlattenButtonModel* m_pModel;
+	ExampleApp::FlattenButton::IFlattenButtonViewModel* m_pViewModel;
+	ExampleApp::FlattenButton::FlattenButtonViewControllerInterop* m_pInterop;
+	ExampleApp::ExampleAppMessaging::UiToNativeMessageBus* m_pUiToNativeMessageBus;
 }
 
 - (id)initWithParams:(ExampleApp::FlattenButton::IFlattenButtonViewModel*)pViewModel
-                    :(ExampleApp::FlattenButton::IFlattenButtonModel*)pModel
-                    :(FlattenButtonView*)pButtonView
-                    :(ExampleApp::ExampleAppMessaging::UiToNativeMessageBus*)pUiToNativeMessageBus
-                    :(ExampleApp::ExampleAppMessaging::NativeToUiMessageBus*)pNativeToUiMessageBus;
+    :(ExampleApp::FlattenButton::IFlattenButtonModel*)pModel
+    :(FlattenButtonView*)pButtonView
+    :(ExampleApp::ExampleAppMessaging::UiToNativeMessageBus*)pUiToNativeMessageBus
+    :(ExampleApp::ExampleAppMessaging::NativeToUiMessageBus*)pNativeToUiMessageBus;
 
 - (void) setSelected:(BOOL)selected;
 

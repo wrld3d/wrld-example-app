@@ -14,27 +14,27 @@
 
 namespace ExampleApp
 {
-    namespace SearchResultOnMap
-    {
-        class SearchResultOnMapInFocusController : public ISearchResultOnMapInFocusController, private Eegeo::NonCopyable
-        {
-        private:
-            SearchResultOnMapModel& m_searchResultOnMapModel;
-            ExampleAppMessaging::NativeToUiMessageBus& m_nativeToUiMessageBus;
-            WorldPins::IWorldPinsService& m_worldPinsService;
-            Eegeo::Camera::RenderCamera& m_renderCamera;
-            Search::SearchResultModel* m_pLastFocussedModel;
-            
-        public:
-            SearchResultOnMapInFocusController(
-				SearchResultOnMapModel& searchResultOnMapModel,
-				ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus,
-				WorldPins::IWorldPinsService& worldPinsService,
-				Eegeo::Camera::RenderCamera& renderCamera);
-            
-            ~SearchResultOnMapInFocusController();
-            
-            void Update(float deltaSeconds, const Eegeo::dv3& ecefInterestPoint);
-        };
-    }
+namespace SearchResultOnMap
+{
+class SearchResultOnMapInFocusController : public ISearchResultOnMapInFocusController, private Eegeo::NonCopyable
+{
+private:
+	SearchResultOnMapModel& m_searchResultOnMapModel;
+	ExampleAppMessaging::NativeToUiMessageBus& m_nativeToUiMessageBus;
+	WorldPins::IWorldPinsService& m_worldPinsService;
+	Eegeo::Camera::RenderCamera& m_renderCamera;
+	Search::SearchResultModel* m_pLastFocussedModel;
+
+public:
+	SearchResultOnMapInFocusController(
+	    SearchResultOnMapModel& searchResultOnMapModel,
+	    ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus,
+	    WorldPins::IWorldPinsService& worldPinsService,
+	    Eegeo::Camera::RenderCamera& renderCamera);
+
+	~SearchResultOnMapInFocusController();
+
+	void Update(float deltaSeconds, const Eegeo::dv3& ecefInterestPoint);
+};
+}
 }

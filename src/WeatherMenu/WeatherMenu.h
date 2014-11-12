@@ -4,10 +4,10 @@
 
 namespace ExampleApp
 {
-    namespace WeatherMenu
-    {
-        class IWeatherMenuModule;
-        class IWeatherMenuStateModel;
-        class IWeatherController;
-    }
+namespace WeatherMenu
+{
+class IWeatherMenuModule;
+class IWeatherMenuStateModel;
+class IWeatherController;
+}
 }

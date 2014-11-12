@@ -12,20 +12,20 @@ public class ModalBackgroundView
 {
 	private MainActivity m_activity = null;
 	private View m_view = null;
-	
-    final float m_stateChangeAnimationTimeSeconds = 0.2f;
-    
+
+	final float m_stateChangeAnimationTimeSeconds = 0.2f;
+
 	public ModalBackgroundView(MainActivity activity)
 	{
 		m_activity = activity;
-		
+
 		final RelativeLayout uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
 		m_view = m_activity.getLayoutInflater().inflate(R.layout.modal_background_layout, uiRoot, false);
 		m_view.setClickable(false);
 
 		uiRoot.addView(m_view);
 	}
-	
+
 	public void destroy()
 	{
 		final RelativeLayout uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
@@ -37,12 +37,12 @@ public class ModalBackgroundView
 	{
 		m_view.setClickable(false);
 	}
-	
+
 	public void animateToFullyActive()
 	{
 		m_view.setClickable(true);
 	}
-	
+
 	public void animateToIntermediateActivityState(final float openState)
 	{
 		m_view.setClickable(openState > 0.f);

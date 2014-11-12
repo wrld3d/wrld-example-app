@@ -10,35 +10,35 @@
 
 namespace ExampleApp
 {
-	namespace SearchResultMenu
+namespace SearchResultMenu
+{
+class SearchResultMenuItemSelectedMessageHandler : private Eegeo::NonCopyable
+{
+	CameraTransitions::ICameraTransitionController& m_cameraTransitionController;
+	ExampleAppMessaging::UiToNativeMessageBus& m_messageBus;
+	Eegeo::Helpers::TCallback1<SearchResultMenuItemSelectedMessageHandler, const SearchResultMenuItemSelectedMessage&> m_handleSearchResultMenuItemSelectedMessageBinding;
+
+	void HandleReceivedSearchResultMenuItemSelectedMessage(const SearchResultMenuItemSelectedMessage& message)
 	{
-		class SearchResultMenuItemSelectedMessageHandler : private Eegeo::NonCopyable
-		{
-			CameraTransitions::ICameraTransitionController& m_cameraTransitionController;
-			ExampleAppMessaging::UiToNativeMessageBus& m_messageBus;
-			Eegeo::Helpers::TCallback1<SearchResultMenuItemSelectedMessageHandler, const SearchResultMenuItemSelectedMessage&> m_handleSearchResultMenuItemSelectedMessageBinding;
-
-			void HandleReceivedSearchResultMenuItemSelectedMessage(const SearchResultMenuItemSelectedMessage& message)
-			{
-				const float newDistanceFromInterest = 1000;
-				m_cameraTransitionController.StartTransitionTo(message.SearchResultLocationEcef(), newDistanceFromInterest);
-			}
-
-		public:
-			SearchResultMenuItemSelectedMessageHandler(
-				CameraTransitions::ICameraTransitionController& cameraTransitionController,
-				ExampleAppMessaging::UiToNativeMessageBus& messageBus)
-			: m_cameraTransitionController(cameraTransitionController)
-			, m_messageBus(messageBus)
-			, m_handleSearchResultMenuItemSelectedMessageBinding(this, &SearchResultMenuItemSelectedMessageHandler::HandleReceivedSearchResultMenuItemSelectedMessage)
-			{
-				m_messageBus.Subscribe(m_handleSearchResultMenuItemSelectedMessageBinding);
-			}
-
-			~SearchResultMenuItemSelectedMessageHandler()
-			{
-				m_messageBus.Unsubscribe(m_handleSearchResultMenuItemSelectedMessageBinding);
-			}
-		};
+		const float newDistanceFromInterest = 1000;
+		m_cameraTransitionController.StartTransitionTo(message.SearchResultLocationEcef(), newDistanceFromInterest);
 	}
+
+public:
+	SearchResultMenuItemSelectedMessageHandler(
+	    CameraTransitions::ICameraTransitionController& cameraTransitionController,
+	    ExampleAppMessaging::UiToNativeMessageBus& messageBus)
+		: m_cameraTransitionController(cameraTransitionController)
+		, m_messageBus(messageBus)
+		, m_handleSearchResultMenuItemSelectedMessageBinding(this, &SearchResultMenuItemSelectedMessageHandler::HandleReceivedSearchResultMenuItemSelectedMessage)
+	{
+		m_messageBus.Subscribe(m_handleSearchResultMenuItemSelectedMessageBinding);
+	}
+
+	~SearchResultMenuItemSelectedMessageHandler()
+	{
+		m_messageBus.Unsubscribe(m_handleSearchResultMenuItemSelectedMessageBinding);
+	}
+};
+}
 }

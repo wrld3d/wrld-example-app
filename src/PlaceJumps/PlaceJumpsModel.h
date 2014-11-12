@@ -13,29 +13,44 @@
 
 namespace ExampleApp
 {
-    namespace PlaceJumps
-    {
-        class PlaceJumpModel : public IPlaceJumpModel
-        {
-        public:
-            
-            PlaceJumpModel(std::string& name, Eegeo::Space::LatLong location, float headingDegrees, float distance, std::string& icon);
-            
-            std::string GetName() const { return m_name; }
-            Eegeo::Space::LatLong GetLocation() const { return m_location; }
-            float GetHeadingDegrees() const { return m_headingDegrees; }
-            float GetDistance() const { return m_distance; }
-            const std::string& GetIcon() const { return m_icon; }
+namespace PlaceJumps
+{
+class PlaceJumpModel : public IPlaceJumpModel
+{
+public:
 
-        private:
-            
-            std::string m_name;
-            Eegeo::Space::LatLong m_location;
-            float m_headingDegrees;
-            float m_distance;
-            std::string m_icon;
-            
-        };
+	PlaceJumpModel(std::string& name, Eegeo::Space::LatLong location, float headingDegrees, float distance, std::string& icon);
 
-    }
+	std::string GetName() const
+	{
+		return m_name;
+	}
+	Eegeo::Space::LatLong GetLocation() const
+	{
+		return m_location;
+	}
+	float GetHeadingDegrees() const
+	{
+		return m_headingDegrees;
+	}
+	float GetDistance() const
+	{
+		return m_distance;
+	}
+	const std::string& GetIcon() const
+	{
+		return m_icon;
+	}
+
+private:
+
+	std::string m_name;
+	Eegeo::Space::LatLong m_location;
+	float m_headingDegrees;
+	float m_distance;
+	std::string m_icon;
+
+};
+
+}
 }

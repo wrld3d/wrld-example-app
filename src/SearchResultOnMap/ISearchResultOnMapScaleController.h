@@ -4,14 +4,14 @@
 
 namespace ExampleApp
 {
-    namespace SearchResultOnMap
-    {
-        class ISearchResultOnMapScaleController
-        {
-        public:
-            virtual ~ISearchResultOnMapScaleController() { }
-            
-            virtual void Update(float deltaSeconds) = 0;
-        };
-    }
+namespace SearchResultOnMap
+{
+class ISearchResultOnMapScaleController
+{
+public:
+	virtual ~ISearchResultOnMapScaleController() { }
+
+	virtual void Update(float deltaSeconds) = 0;
+};
+}
 }

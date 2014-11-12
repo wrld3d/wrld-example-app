@@ -5,9 +5,9 @@
 #include "AndroidAppThreadAssertionMacros.h"
 
 JNIEXPORT void JNICALL Java_com_eegeo_flattenbutton_FlattenButtonViewJniMethods_SetFlatten(
-	    JNIEnv* jenv, jobject obj,
-	    jlong nativeObjectPtr,
-	    jboolean flattened)
+    JNIEnv* jenv, jobject obj,
+    jlong nativeObjectPtr,
+    jboolean flattened)
 {
 	ASSERT_UI_THREAD
 

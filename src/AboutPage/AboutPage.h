@@ -4,10 +4,10 @@
 
 namespace ExampleApp
 {
-    namespace AboutPage
-    {
-        class IAboutPageModule;
-        class IAboutPageModel;
-        class IAboutPageViewModel;
-    }
+namespace AboutPage
+{
+class IAboutPageModule;
+class IAboutPageModel;
+class IAboutPageViewModel;
+}
 }

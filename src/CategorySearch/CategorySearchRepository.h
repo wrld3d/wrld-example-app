@@ -9,16 +9,16 @@
 
 namespace ExampleApp
 {
-    namespace CategorySearch
-    {
-        class CategorySearchRepository : public ICategorySearchRepository, private Eegeo::NonCopyable
-        {
-            std::vector<CategorySearchModel> m_models;
-            
-        public:
-            CategorySearchRepository(const std::vector<CategorySearchModel>& models);
-            
-            bool TryGetCategorySearchNameByQuery(const std::string& query, std::string& out_name) const;
-        };
-    }
+namespace CategorySearch
+{
+class CategorySearchRepository : public ICategorySearchRepository, private Eegeo::NonCopyable
+{
+	std::vector<CategorySearchModel> m_models;
+
+public:
+	CategorySearchRepository(const std::vector<CategorySearchModel>& models);
+
+	bool TryGetCategorySearchNameByQuery(const std::string& query, std::string& out_name) const;
+};
+}
 }

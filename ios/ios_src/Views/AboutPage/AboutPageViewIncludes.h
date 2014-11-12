@@ -7,8 +7,8 @@
 
 namespace ExampleApp
 {
-    namespace AboutPage
-    {
-        class IAboutPageViewModule;
-    }
+namespace AboutPage
+{
+class IAboutPageViewModule;
+}
 }

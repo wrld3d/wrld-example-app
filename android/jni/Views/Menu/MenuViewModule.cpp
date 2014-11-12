@@ -8,32 +8,32 @@
 
 namespace ExampleApp
 {
-    namespace Menu
-    {
-    	MenuViewModule::MenuViewModule(
-    		const std::string& viewName,
-			AndroidNativeState& nativeState,
-			Menu::IMenuModel& menuModel,
-			Menu::IMenuViewModel& menuViewModel
-		)
-        {
-    		ASSERT_UI_THREAD
+namespace Menu
+{
+MenuViewModule::MenuViewModule(
+    const std::string& viewName,
+    AndroidNativeState& nativeState,
+    Menu::IMenuModel& menuModel,
+    Menu::IMenuViewModel& menuViewModel
+)
+{
+	ASSERT_UI_THREAD
 
-            m_pMenuViewController = Eegeo_NEW(MenuViewController)(viewName, nativeState, menuModel, menuViewModel);
-        }
-        
-    	MenuViewModule::~MenuViewModule()
-        {
-    		ASSERT_UI_THREAD
+	m_pMenuViewController = Eegeo_NEW(MenuViewController)(viewName, nativeState, menuModel, menuViewModel);
+}
 
-            Eegeo_DELETE m_pMenuViewController;
-        }
-        
-        IMenuViewController& MenuViewModule::GetMenuViewController() const
-        {
-    		ASSERT_UI_THREAD
+MenuViewModule::~MenuViewModule()
+{
+	ASSERT_UI_THREAD
 
-            return *m_pMenuViewController;
-        }
-    }
+	Eegeo_DELETE m_pMenuViewController;
+}
+
+IMenuViewController& MenuViewModule::GetMenuViewController() const
+{
+	ASSERT_UI_THREAD
+
+	return *m_pMenuViewController;
+}
+}
 }

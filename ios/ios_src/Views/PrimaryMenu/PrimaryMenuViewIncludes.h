@@ -7,8 +7,8 @@
 
 namespace ExampleApp
 {
-    namespace PrimaryMenu
-    {
-        class IPrimaryMenuViewModule;
-    }
+namespace PrimaryMenu
+{
+class IPrimaryMenuViewModule;
+}
 }

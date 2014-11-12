@@ -6,22 +6,22 @@
 
 namespace ExampleApp
 {
-	namespace PlaceJumps
+namespace PlaceJumps
+{
+class PlaceJumpSelectedMessage
+{
+	PlaceJumpModel m_placeJumpModel;
+
+public:
+	PlaceJumpSelectedMessage(const PlaceJumpModel& placeJumpModel)
+		: m_placeJumpModel(placeJumpModel)
 	{
-		class PlaceJumpSelectedMessage
-		{
-			PlaceJumpModel m_placeJumpModel;
-
-		public:
-            PlaceJumpSelectedMessage(const PlaceJumpModel& placeJumpModel)
-			: m_placeJumpModel(placeJumpModel)
-			{
-			}
-
-			const PlaceJumpModel& Model() const
-			{
-				return m_placeJumpModel;
-			}
-		};
 	}
+
+	const PlaceJumpModel& Model() const
+	{
+		return m_placeJumpModel;
+	}
+};
+}
 }

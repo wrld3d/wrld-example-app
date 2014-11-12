@@ -13,15 +13,15 @@
 
 @interface CompassViewController : UIViewController
 {
-    ExampleApp::Compass::ICompassViewModel* m_pViewModel;
-    ExampleApp::Compass::CompassViewControllerInterop* m_pInterop;
-    ExampleApp::ExampleAppMessaging::UiToNativeMessageBus* m_pUiToNativeMessageBus;
+	ExampleApp::Compass::ICompassViewModel* m_pViewModel;
+	ExampleApp::Compass::CompassViewControllerInterop* m_pInterop;
+	ExampleApp::ExampleAppMessaging::UiToNativeMessageBus* m_pUiToNativeMessageBus;
 }
 
 - (id)initWithParams:(ExampleApp::Compass::ICompassViewModel*)pViewModel
-                    :(const Eegeo::Rendering::ScreenProperties*)pScreenProperties
-                    :(ExampleApp::ExampleAppMessaging::UiToNativeMessageBus*)pUiToNativeMessageBus
-                    :(ExampleApp::ExampleAppMessaging::NativeToUiMessageBus*)pNativeToUiMessageBus;
+    :(const Eegeo::Rendering::ScreenProperties*)pScreenProperties
+    :(ExampleApp::ExampleAppMessaging::UiToNativeMessageBus*)pUiToNativeMessageBus
+    :(ExampleApp::ExampleAppMessaging::NativeToUiMessageBus*)pNativeToUiMessageBus;
 
 - (void) handleGpsModeChanged:(ExampleApp::Compass::GpsMode::Values)value;
 

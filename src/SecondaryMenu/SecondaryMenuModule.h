@@ -15,32 +15,32 @@
 
 namespace ExampleApp
 {
-    namespace SecondaryMenu
-    {
-        class SecondaryMenuModule: public ISecondaryMenuModule, private Eegeo::NonCopyable
-        {
-        private:
-            Menu::IMenuModel* m_pModel;
-            Menu::IMenuOptionsModel* m_pMenuOptionsModel;
-            Menu::IMenuViewModel* m_pViewModel;
-            std::vector<Menu::IMenuSectionViewModel*> m_sections;
-            PerformedSearchMessageHandler* m_pPerformedSearchMessageHandler;
-            
-        public:
-            SecondaryMenuModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
-                                Reaction::IReactionControllerModel& reactionControllerModel,
-                                Search::ISearchQueryPerformer& searchQueryPerformer,
-                                ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus);
-            
-            ~SecondaryMenuModule();
-            
-            void AddMenuSection(const std::string& name, const std::string& icon, Menu::IMenuModel& menuModel, bool isExpandable);
-            
-            Menu::IMenuModel& GetSecondaryMenuModel() const;
-            
-            Menu::IMenuOptionsModel& GetSecondaryMenuOptionsModel() const;
-            
-            Menu::IMenuViewModel& GetSecondaryMenuViewModel() const;
-        };
-    }
+namespace SecondaryMenu
+{
+class SecondaryMenuModule: public ISecondaryMenuModule, private Eegeo::NonCopyable
+{
+private:
+	Menu::IMenuModel* m_pModel;
+	Menu::IMenuOptionsModel* m_pMenuOptionsModel;
+	Menu::IMenuViewModel* m_pViewModel;
+	std::vector<Menu::IMenuSectionViewModel*> m_sections;
+	PerformedSearchMessageHandler* m_pPerformedSearchMessageHandler;
+
+public:
+	SecondaryMenuModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
+	                    Reaction::IReactionControllerModel& reactionControllerModel,
+	                    Search::ISearchQueryPerformer& searchQueryPerformer,
+	                    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus);
+
+	~SecondaryMenuModule();
+
+	void AddMenuSection(const std::string& name, const std::string& icon, Menu::IMenuModel& menuModel, bool isExpandable);
+
+	Menu::IMenuModel& GetSecondaryMenuModel() const;
+
+	Menu::IMenuOptionsModel& GetSecondaryMenuOptionsModel() const;
+
+	Menu::IMenuViewModel& GetSecondaryMenuViewModel() const;
+};
+}
 }

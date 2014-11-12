@@ -6,24 +6,24 @@
 
 namespace ExampleApp
 {
-	namespace SearchResultMenu
+namespace SearchResultMenu
+{
+class SearchResultMenuItemSelectedMessage
+{
+	Eegeo::dv3 m_searchResultModelLocationEcef;
+
+public:
+	SearchResultMenuItemSelectedMessage(
+	    const Eegeo::dv3& searchResultModelLocationEcef
+	)
+		: m_searchResultModelLocationEcef(searchResultModelLocationEcef)
 	{
-		class SearchResultMenuItemSelectedMessage
-		{
-			Eegeo::dv3 m_searchResultModelLocationEcef;
-
-		public:
-			SearchResultMenuItemSelectedMessage(
-				const Eegeo::dv3& searchResultModelLocationEcef
-			)
-			: m_searchResultModelLocationEcef(searchResultModelLocationEcef)
-			{
-			}
-
-			const Eegeo::dv3& SearchResultLocationEcef() const
-			{
-				return m_searchResultModelLocationEcef;
-			}
-		};
 	}
+
+	const Eegeo::dv3& SearchResultLocationEcef() const
+	{
+		return m_searchResultModelLocationEcef;
+	}
+};
+}
 }

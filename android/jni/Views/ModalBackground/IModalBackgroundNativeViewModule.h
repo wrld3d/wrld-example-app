@@ -6,12 +6,12 @@
 
 namespace ExampleApp
 {
-    namespace ModalBackground
-    {
-        class IModalBackgroundNativeViewModule
-        {
-        public:
-            virtual ~IModalBackgroundNativeViewModule() { }
-        };
-    }
+namespace ModalBackground
+{
+class IModalBackgroundNativeViewModule
+{
+public:
+	virtual ~IModalBackgroundNativeViewModule() { }
+};
+}
 }

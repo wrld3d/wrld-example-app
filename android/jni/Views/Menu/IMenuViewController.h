@@ -6,12 +6,12 @@
 
 namespace ExampleApp
 {
-    namespace Menu
-    {
-		class IMenuViewController : public ViewControllerUpdater::IUpdateableViewController
-		{
-		public:
-			virtual ~IMenuViewController() { }
-		};
-	}
+namespace Menu
+{
+class IMenuViewController : public ViewControllerUpdater::IUpdateableViewController
+{
+public:
+	virtual ~IMenuViewController() { }
+};
+}
 }

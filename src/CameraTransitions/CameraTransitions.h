@@ -4,8 +4,8 @@
 
 namespace ExampleApp
 {
-    namespace CameraTransitions
-    {
-        class ICameraTransitionController;
-    }
+namespace CameraTransitions
+{
+class ICameraTransitionController;
+}
 }

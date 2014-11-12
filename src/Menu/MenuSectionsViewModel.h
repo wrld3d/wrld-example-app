@@ -9,21 +9,24 @@
 
 namespace ExampleApp
 {
-    namespace Menu
-    {
-        class MenuSectionsViewModel : public IMenuSectionsViewModel, private Eegeo::NonCopyable
-        {
-        public:
-            void AddSection(IMenuSectionViewModel& section);
-            void RemoveSection(IMenuSectionViewModel& section);
-            
-            size_t SectionsCount() const { return m_menuSections.size(); }
-            
-            IMenuSectionViewModel& GetMenuSection(int index) const;
-            
-        private:
-            
-            std::vector<IMenuSectionViewModel*> m_menuSections;
-        };
-    }
+namespace Menu
+{
+class MenuSectionsViewModel : public IMenuSectionsViewModel, private Eegeo::NonCopyable
+{
+public:
+	void AddSection(IMenuSectionViewModel& section);
+	void RemoveSection(IMenuSectionViewModel& section);
+
+	size_t SectionsCount() const
+	{
+		return m_menuSections.size();
+	}
+
+	IMenuSectionViewModel& GetMenuSection(int index) const;
+
+private:
+
+	std::vector<IMenuSectionViewModel*> m_menuSections;
+};
+}
 }

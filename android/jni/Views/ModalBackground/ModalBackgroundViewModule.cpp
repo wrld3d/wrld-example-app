@@ -7,33 +7,33 @@
 
 namespace ExampleApp
 {
-    namespace ModalBackground
-    {
-        ModalBackgroundViewModule::ModalBackgroundViewModule(
-			AndroidNativeState& nativeState,
-			Modality::IModalityModel& modalityModel
-		)
-        {
-    		ASSERT_UI_THREAD
+namespace ModalBackground
+{
+ModalBackgroundViewModule::ModalBackgroundViewModule(
+    AndroidNativeState& nativeState,
+    Modality::IModalityModel& modalityModel
+)
+{
+	ASSERT_UI_THREAD
 
-            m_pModalBackgroundViewController = Eegeo_NEW(ModalBackgroundViewController)(
-				nativeState,
-				modalityModel
-            );
-        }
-        
-        ModalBackgroundViewModule::~ModalBackgroundViewModule()
-        {
-        	ASSERT_UI_THREAD
+	m_pModalBackgroundViewController = Eegeo_NEW(ModalBackgroundViewController)(
+	                                       nativeState,
+	                                       modalityModel
+	                                   );
+}
 
-            Eegeo_DELETE(m_pModalBackgroundViewController);
-        }
-        
-        IModalBackgroundViewController& ModalBackgroundViewModule::GetModalBackgroundViewController() const
-        {
-        	ASSERT_UI_THREAD
+ModalBackgroundViewModule::~ModalBackgroundViewModule()
+{
+	ASSERT_UI_THREAD
 
-            return *m_pModalBackgroundViewController;
-        }
-    }
+	Eegeo_DELETE(m_pModalBackgroundViewController);
+}
+
+IModalBackgroundViewController& ModalBackgroundViewModule::GetModalBackgroundViewController() const
+{
+	ASSERT_UI_THREAD
+
+	return *m_pModalBackgroundViewController;
+}
+}
 }

@@ -4,16 +4,16 @@
 
 namespace ExampleApp
 {
-    namespace Compass
-    {
-        class ICompassViewModule
-        {
-        public:
-            
-            virtual ~ICompassViewModule() { }
-            
-            virtual CompassViewController& GetCompassViewController() const = 0;
-            virtual CompassView& GetCompassView() const = 0;
-        };
-    }
+namespace Compass
+{
+class ICompassViewModule
+{
+public:
+
+	virtual ~ICompassViewModule() { }
+
+	virtual CompassViewController& GetCompassViewController() const = 0;
+	virtual CompassView& GetCompassView() const = 0;
+};
+}
 }

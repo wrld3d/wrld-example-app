@@ -8,21 +8,21 @@
 
 namespace ExampleApp
 {
-    namespace AboutPage
-    {
-        class AboutPageViewControllerInterop;
-    }
+namespace AboutPage
+{
+class AboutPageViewControllerInterop;
+}
 }
 
 @interface AboutPageViewController : UIViewController
 {
-    ExampleApp::AboutPage::IAboutPageModel* m_pAboutPageModel;
-    ExampleApp::AboutPage::IAboutPageViewModel* m_pAboutPageViewModel;
-    ExampleApp::AboutPage::AboutPageViewControllerInterop* m_pInterop;
+	ExampleApp::AboutPage::IAboutPageModel* m_pAboutPageModel;
+	ExampleApp::AboutPage::IAboutPageViewModel* m_pAboutPageViewModel;
+	ExampleApp::AboutPage::AboutPageViewControllerInterop* m_pInterop;
 }
 
 - (id)initWithParams:(ExampleApp::AboutPage::IAboutPageModel*)pAboutPageModel
-                    :(ExampleApp::AboutPage::IAboutPageViewModel*)pAboutPageViewModel;
+    :(ExampleApp::AboutPage::IAboutPageViewModel*)pAboutPageViewModel;
 
 - (void) open;
 

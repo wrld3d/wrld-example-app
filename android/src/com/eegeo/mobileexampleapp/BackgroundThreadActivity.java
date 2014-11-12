@@ -19,15 +19,16 @@ public class BackgroundThreadActivity extends MainActivity
 	private ThreadedUpdateRunner m_threadedRunner;
 	private Thread m_updater;
 
-	static {
+	static
+	{
 		System.loadLibrary("native-activity");
 	}
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		
+
 		setContentView(R.layout.activity_main);
 
 		m_surfaceView = (EegeoSurfaceView)findViewById(R.id.surface);
@@ -43,7 +44,7 @@ public class BackgroundThreadActivity extends MainActivity
 		m_updater.start();
 
 		m_threadedRunner.blockUntilThreadStartedRunning();
-		
+
 		runOnNativeThread(new Runnable()
 		{
 			public void run()
@@ -67,14 +68,14 @@ public class BackgroundThreadActivity extends MainActivity
 	protected void onResume()
 	{
 		super.onResume();
-		
+
 		runOnNativeThread(new Runnable()
 		{
 			public void run()
 			{
 				NativeJniCalls.resumeNativeCode();
 				m_threadedRunner.start();
-				
+
 				if(m_surfaceHolder != null && m_surfaceHolder.getSurface() != null)
 				{
 					NativeJniCalls.setNativeSurface(m_surfaceHolder.getSurface());
@@ -87,7 +88,7 @@ public class BackgroundThreadActivity extends MainActivity
 	protected void onPause()
 	{
 		super.onPause();
-		
+
 		runOnNativeThread(new Runnable()
 		{
 			public void run()
@@ -113,9 +114,9 @@ public class BackgroundThreadActivity extends MainActivity
 		});
 
 		m_threadedRunner.blockUntilThreadHasStoppedUpdatingPlatform();
-		
+
 		NativeJniCalls.destroyApplicationUi();
-		
+
 		runOnNativeThread(new Runnable()
 		{
 			public void run()
@@ -130,13 +131,13 @@ public class BackgroundThreadActivity extends MainActivity
 
 		m_nativeAppWindowPtr = 0;
 	}
-	
+
 	@Override
-	public void onBackPressed() 
+	public void onBackPressed()
 	{
-	    moveTaskToBack(true);
+		moveTaskToBack(true);
 	}
-	
+
 	@Override
 	public void surfaceCreated(SurfaceHolder holder)
 	{
@@ -159,13 +160,13 @@ public class BackgroundThreadActivity extends MainActivity
 	public void surfaceChanged(SurfaceHolder holder, int format, int width, int height)
 	{
 		final SurfaceHolder h = holder;
-		
+
 		runOnNativeThread(new Runnable()
 		{
 			public void run()
 			{
 				m_surfaceHolder = h;
-				if(m_surfaceHolder != null) 
+				if(m_surfaceHolder != null)
 				{
 					NativeJniCalls.setNativeSurface(m_surfaceHolder.getSurface());
 					m_threadedRunner.start();
@@ -173,7 +174,7 @@ public class BackgroundThreadActivity extends MainActivity
 			}
 		});
 	}
-	
+
 	public void dispatchRevealUiMessageToUiThreadFromNativeThread(final long nativeCallerPointer)
 	{
 		runOnUiThread(new Runnable()
@@ -184,7 +185,7 @@ public class BackgroundThreadActivity extends MainActivity
 			}
 		});
 	}
-	
+
 	public void dispatchUiCreatedMessageToNativeThreadFromUiThread(final long nativeCallerPointer)
 	{
 		runOnNativeThread(new Runnable()
@@ -225,12 +226,12 @@ public class BackgroundThreadActivity extends MainActivity
 		{
 			while(!m_destroyed);
 		}
-		
+
 		synchronized void blockUntilThreadHasStoppedUpdatingPlatform()
 		{
 			while(!m_stoppedUpdatingPlatformBeforeTeardown);
 		}
-		
+
 		public void postTo(Runnable runnable)
 		{
 			m_nativeThreadHandler.post(runnable);
@@ -260,7 +261,7 @@ public class BackgroundThreadActivity extends MainActivity
 		{
 			Looper.prepare();
 			m_nativeThreadHandler = new Handler();
-			
+
 			runOnNativeThread(new Runnable()
 			{
 				public void run()
@@ -268,13 +269,13 @@ public class BackgroundThreadActivity extends MainActivity
 					long timeNowNano = System.nanoTime();
 					long nanoDelta = timeNowNano - m_endOfLastFrameNano;
 					final float deltaSeconds = (float)((double)nanoDelta / 1e9);
-					
+
 					if(deltaSeconds > m_frameThrottleDelaySeconds)
 					{
 						if(m_running)
 						{
 							NativeJniCalls.updateNativeCode(deltaSeconds);
-							
+
 							runOnUiThread(new Runnable()
 							{
 								public void run()

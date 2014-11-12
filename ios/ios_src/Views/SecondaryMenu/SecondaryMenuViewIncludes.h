@@ -8,8 +8,8 @@
 
 namespace ExampleApp
 {
-    namespace SecondaryMenu
-    {
-        class ISecondaryMenuViewModule;
-    }
+namespace SecondaryMenu
+{
+class ISecondaryMenuViewModule;
+}
 }

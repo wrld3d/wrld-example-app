@@ -9,20 +9,20 @@
 
 @interface FlattenButtonView : UIButton
 {
-    __weak FlattenButtonViewController* m_pController;
-    UIColor* m_pColour;
-    
-    float m_width;
-    float m_height;
-    
-    float m_screenWidth;
-    float m_screenHeight;
-    float m_pixelScale;
-    
-    float m_xPosActive;
-    float m_xPosInactive;
-    
-    float m_stateChangeAnimationTimeSeconds;
+	__weak FlattenButtonViewController* m_pController;
+	UIColor* m_pColour;
+
+	float m_width;
+	float m_height;
+
+	float m_screenWidth;
+	float m_screenHeight;
+	float m_pixelScale;
+
+	float m_xPosActive;
+	float m_xPosInactive;
+
+	float m_stateChangeAnimationTimeSeconds;
 }
 
 - (id) setController:(FlattenButtonViewController *)controller;

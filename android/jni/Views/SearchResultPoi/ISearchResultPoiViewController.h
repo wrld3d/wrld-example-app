@@ -4,12 +4,12 @@
 
 namespace ExampleApp
 {
-    namespace SearchResultPoi
-    {
-		class ISearchResultPoiViewController
-		{
-		public:
-			virtual ~ISearchResultPoiViewController() { }
-		};
-	}
+namespace SearchResultPoi
+{
+class ISearchResultPoiViewController
+{
+public:
+	virtual ~ISearchResultPoiViewController() { }
+};
+}
 }

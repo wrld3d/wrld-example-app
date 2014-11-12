@@ -4,8 +4,8 @@
 
 namespace ExampleApp
 {
-    namespace OpenableControlViewModel
-    {
-        class IOpenableControlViewModel;
-    }
+namespace OpenableControlViewModel
+{
+class IOpenableControlViewModel;
+}
 }

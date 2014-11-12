@@ -9,23 +9,23 @@
 
 namespace ExampleApp
 {
-    namespace PrimaryMenu
-    {
-        namespace Options
-        {
-            class AboutPageMenuOption : public Menu::IMenuOption, private Eegeo::NonCopyable
-            {
-                Menu::IMenuViewModel& m_aboutOptionContainerMenu;
-                AboutPage::IAboutPageViewModel& m_aboutPageViewModel;
-                
-            public:
-                AboutPageMenuOption(Menu::IMenuViewModel& aboutOptionContainerMenu,
-                                    AboutPage::IAboutPageViewModel& aboutPageViewModel);
-                
-                ~AboutPageMenuOption();
+namespace PrimaryMenu
+{
+namespace Options
+{
+class AboutPageMenuOption : public Menu::IMenuOption, private Eegeo::NonCopyable
+{
+	Menu::IMenuViewModel& m_aboutOptionContainerMenu;
+	AboutPage::IAboutPageViewModel& m_aboutPageViewModel;
 
-                void Select();
-            };
-        }
-    }
+public:
+	AboutPageMenuOption(Menu::IMenuViewModel& aboutOptionContainerMenu,
+	                    AboutPage::IAboutPageViewModel& aboutPageViewModel);
+
+	~AboutPageMenuOption();
+
+	void Select();
+};
+}
+}
 }

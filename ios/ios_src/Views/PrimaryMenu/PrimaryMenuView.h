@@ -9,9 +9,9 @@
 
 @class PrimaryMenuView;
 
-@interface PrimaryMenuView : MenuView 
+@interface PrimaryMenuView : MenuView
 {
-    __weak MenuViewController* m_pController;
+	__weak MenuViewController* m_pController;
 }
 
 - (id) setController:(MenuViewController *)controller;

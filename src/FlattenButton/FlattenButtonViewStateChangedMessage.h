@@ -4,20 +4,23 @@
 
 namespace ExampleApp
 {
-    namespace FlattenButton
-    {
-        class FlattenButtonViewStateChangedMessage
-        {
-            bool m_isFlattened;
-            
-        public:
-            FlattenButtonViewStateChangedMessage(bool isFlattened)
-            : m_isFlattened(isFlattened)
-            {
-                
-            }
-            
-            bool IsFlattened() const { return m_isFlattened; }
-        };
-    }
+namespace FlattenButton
+{
+class FlattenButtonViewStateChangedMessage
+{
+	bool m_isFlattened;
+
+public:
+	FlattenButtonViewStateChangedMessage(bool isFlattened)
+		: m_isFlattened(isFlattened)
+	{
+
+	}
+
+	bool IsFlattened() const
+	{
+		return m_isFlattened;
+	}
+};
+}
 }

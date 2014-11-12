@@ -7,8 +7,8 @@
 extern "C"
 {
 	JNIEXPORT void JNICALL Java_com_eegeo_menu_MenuViewJniMethods_ViewClicked(
-			JNIEnv* jenv, jobject obj,
-			jlong nativeObjectPtr);
+	    JNIEnv* jenv, jobject obj,
+	    jlong nativeObjectPtr);
 
 	JNIEXPORT void JNICALL Java_com_eegeo_menu_MenuViewJniMethods_ViewOpenCompleted(
 	    JNIEnv* jenv, jobject obj,

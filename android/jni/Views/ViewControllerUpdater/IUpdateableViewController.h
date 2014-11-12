@@ -4,14 +4,14 @@
 
 namespace ExampleApp
 {
-    namespace ViewControllerUpdater
-    {
-		class IUpdateableViewController
-		{
-		public:
-			virtual ~IUpdateableViewController() { }
+namespace ViewControllerUpdater
+{
+class IUpdateableViewController
+{
+public:
+	virtual ~IUpdateableViewController() { }
 
-			virtual void UpdateUiThread(float deltaSeconds) = 0;
-		};
-	}
+	virtual void UpdateUiThread(float deltaSeconds) = 0;
+};
+}
 }

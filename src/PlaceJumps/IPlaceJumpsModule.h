@@ -7,15 +7,15 @@
 
 namespace ExampleApp
 {
-    namespace PlaceJumps
-    {
-        class IPlaceJumpsModule
-        {
-            public:
-                virtual ~IPlaceJumpsModule() { }
-            
-                virtual Menu::IMenuModel& GetPlaceJumpsMenuModel() const = 0;
-                virtual IPlaceJumpController& GetPlaceJumpController() const = 0;
-        };
-    }
+namespace PlaceJumps
+{
+class IPlaceJumpsModule
+{
+public:
+	virtual ~IPlaceJumpsModule() { }
+
+	virtual Menu::IMenuModel& GetPlaceJumpsMenuModel() const = 0;
+	virtual IPlaceJumpController& GetPlaceJumpController() const = 0;
+};
+}
 }

@@ -19,32 +19,32 @@ public class AboutPageView implements View.OnClickListener
 	private TextView m_aboutTextView = null;
 	private TextView m_platformVersionView = null;
 	private TextView m_platformHashView = null;
- 
+
 	public AboutPageView(MainActivity activity, long nativeCallerPointer)
 	{
 		m_activity = activity;
 		m_nativeCallerPointer = nativeCallerPointer;
-		
+
 		m_uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
-		
+
 		m_view = m_activity.getLayoutInflater().inflate(R.layout.about_page_layout, m_uiRoot, false);
 		m_closeButton = m_view.findViewById(R.id.about_page_view_close_button);
 		m_aboutTextView = (TextView)m_view.findViewById(R.id.about_page_view_about_text);
 		m_platformVersionView = (TextView)m_view.findViewById(R.id.about_page_view_platform_version);
 		m_platformHashView = (TextView)m_view.findViewById(R.id.about_page_view_platform_hash);
-		
+
 		m_closeButton.setOnClickListener(this);
 		m_view.setVisibility(View.GONE);
 		m_uiRoot.addView(m_view);
 	}
-	
+
 	public void destroy()
 	{
 		m_uiRoot.removeView(m_view);
 	}
 
 	public void displayPoiInfo(final String aboutText, final String platformHash, final String platformVersion)
-	{	
+	{
 		m_aboutTextView.setText(aboutText);
 		m_platformVersionView.setText("Platform version: " + platformVersion);
 		m_platformHashView.setText("Platform hash: " + platformHash);
@@ -53,15 +53,15 @@ public class AboutPageView implements View.OnClickListener
 		m_view.setVisibility(View.VISIBLE);
 		m_view.requestFocus();
 	}
-	
+
 	public void dismissAboutPage()
 	{
 		m_view.setVisibility(View.GONE);
 	}
-	
+
 	public void onClick(View view)
 	{
 		m_closeButton.setEnabled(false);
 		AboutPageViewJniMethods.CloseButtonClicked(m_nativeCallerPointer);
-	}	
+	}
 }

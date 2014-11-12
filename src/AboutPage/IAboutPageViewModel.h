@@ -6,28 +6,28 @@
 
 namespace ExampleApp
 {
-    namespace AboutPage
-    {
-        class IAboutPageViewModel
-        {
-        public:
-            virtual ~IAboutPageViewModel() { }
-            
-            virtual bool TryAcquireReactorControl() = 0;
-            
-            virtual bool IsOpen() const = 0;
-            
-            virtual void Open() = 0;
-            
-            virtual void Close() = 0;
-            
-            virtual void InsertOpenedCallback(Eegeo::Helpers::ICallback0& openedCallback) = 0;
-            
-            virtual void RemoveOpenedCallback(Eegeo::Helpers::ICallback0& openedCallback) = 0;
-            
-            virtual void InsertClosedCallback(Eegeo::Helpers::ICallback0& closedCallback) = 0;
-            
-            virtual void RemoveClosedCallback(Eegeo::Helpers::ICallback0& closedCallback) = 0;
-        };
-    }
+namespace AboutPage
+{
+class IAboutPageViewModel
+{
+public:
+	virtual ~IAboutPageViewModel() { }
+
+	virtual bool TryAcquireReactorControl() = 0;
+
+	virtual bool IsOpen() const = 0;
+
+	virtual void Open() = 0;
+
+	virtual void Close() = 0;
+
+	virtual void InsertOpenedCallback(Eegeo::Helpers::ICallback0& openedCallback) = 0;
+
+	virtual void RemoveOpenedCallback(Eegeo::Helpers::ICallback0& openedCallback) = 0;
+
+	virtual void InsertClosedCallback(Eegeo::Helpers::ICallback0& closedCallback) = 0;
+
+	virtual void RemoveClosedCallback(Eegeo::Helpers::ICallback0& closedCallback) = 0;
+};
+}
 }

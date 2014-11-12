@@ -6,18 +6,18 @@
 
 namespace ExampleApp
 {
-    namespace AboutPage
-    {
-        class IAboutPageModule
-        {
-        public:
-            virtual ~IAboutPageModule() { }
-            
-            virtual IAboutPageModel& GetAboutPageModel() const = 0;
-            
-            virtual IAboutPageViewModel& GetAboutPageViewModel() const = 0;
-            
-            virtual OpenableControlViewModel::IOpenableControlViewModel& GetObservableOpenableControl() const = 0;
-        };
-    }
+namespace AboutPage
+{
+class IAboutPageModule
+{
+public:
+	virtual ~IAboutPageModule() { }
+
+	virtual IAboutPageModel& GetAboutPageModel() const = 0;
+
+	virtual IAboutPageViewModel& GetAboutPageViewModel() const = 0;
+
+	virtual OpenableControlViewModel::IOpenableControlViewModel& GetObservableOpenableControl() const = 0;
+};
+}
 }

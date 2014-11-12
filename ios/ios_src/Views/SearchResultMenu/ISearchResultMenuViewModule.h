@@ -6,16 +6,16 @@
 
 namespace ExampleApp
 {
-    namespace SearchResultMenu
-    {
-        class ISearchResultMenuViewModule
-        {
-        public:
-            virtual ~ISearchResultMenuViewModule() { }
-            
-            virtual MenuViewController& GetSearchResultMenuViewController() const = 0;
-            
-            virtual SearchResultMenuView& GetSearchResultMenuView() const = 0;
-        };
-    }
+namespace SearchResultMenu
+{
+class ISearchResultMenuViewModule
+{
+public:
+	virtual ~ISearchResultMenuViewModule() { }
+
+	virtual MenuViewController& GetSearchResultMenuViewController() const = 0;
+
+	virtual SearchResultMenuView& GetSearchResultMenuView() const = 0;
+};
+}
 }

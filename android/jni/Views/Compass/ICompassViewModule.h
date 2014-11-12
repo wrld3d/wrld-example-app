@@ -4,12 +4,12 @@
 
 namespace ExampleApp
 {
-    namespace Compass
-    {
-    	class ICompassViewModule
-    	{
-    	public:
-    		virtual ~ICompassViewModule() { }
-    	};
-    }
+namespace Compass
+{
+class ICompassViewModule
+{
+public:
+	virtual ~ICompassViewModule() { }
+};
+}
 }

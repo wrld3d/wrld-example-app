@@ -4,10 +4,10 @@
 
 namespace ExampleApp
 {
-	namespace SearchResultOnMap
-	{
-		class SearchResultLostFocusMessage
-		{
-		};
-	}
+namespace SearchResultOnMap
+{
+class SearchResultLostFocusMessage
+{
+};
+}
 }

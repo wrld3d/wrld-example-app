@@ -4,14 +4,14 @@
 
 namespace ExampleApp
 {
-    namespace Menu
-    {
-        class IMenuOption
-        {
-        public:
-            virtual ~IMenuOption() { }
+namespace Menu
+{
+class IMenuOption
+{
+public:
+	virtual ~IMenuOption() { }
 
-            virtual void Select() = 0;
-        };
-    }
+	virtual void Select() = 0;
+};
+}
 }

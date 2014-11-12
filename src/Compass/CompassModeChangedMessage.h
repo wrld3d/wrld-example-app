@@ -6,20 +6,23 @@
 
 namespace ExampleApp
 {
-    namespace Compass
-    {
-        class CompassModeChangedMessage
-        {
-        private:
-            GpsMode::Values m_mode;
-            
-        public:
-            CompassModeChangedMessage(GpsMode::Values mode)
-            : m_mode(mode)
-            {
-            }
-            
-            GpsMode::Values GetMode() const { return m_mode; }
-        };
-    }
+namespace Compass
+{
+class CompassModeChangedMessage
+{
+private:
+	GpsMode::Values m_mode;
+
+public:
+	CompassModeChangedMessage(GpsMode::Values mode)
+		: m_mode(mode)
+	{
+	}
+
+	GpsMode::Values GetMode() const
+	{
+		return m_mode;
+	}
+};
+}
 }

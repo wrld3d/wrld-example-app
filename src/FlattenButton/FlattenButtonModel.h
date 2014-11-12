@@ -9,31 +9,31 @@
 
 namespace ExampleApp
 {
-    namespace FlattenButton
-    {
-        class FlattenButtonModel : public IFlattenButtonModel, private Eegeo::NonCopyable
-        {
-            Eegeo::Rendering::EnvironmentFlatteningService& m_environmentFlattening;
-            Eegeo::Helpers::CallbackCollection0 m_changedCallbacks;
-            Eegeo::Helpers::ICallback0* m_pFlatteningModelChangedCallback;
-            
-        public:
-            
-            FlattenButtonModel(Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService);
-            
-            ~FlattenButtonModel();
-            
-            void HandleModelChanged();
-            
-            void Flatten();
-            
-            void Unflatten();
-            
-            bool GetFlattened() const;
-            
-            void InsertChangedCallback(Eegeo::Helpers::ICallback0& callback);
-            
-            void RemoveChangedCallback(Eegeo::Helpers::ICallback0& callback);
-        };
-    }
+namespace FlattenButton
+{
+class FlattenButtonModel : public IFlattenButtonModel, private Eegeo::NonCopyable
+{
+	Eegeo::Rendering::EnvironmentFlatteningService& m_environmentFlattening;
+	Eegeo::Helpers::CallbackCollection0 m_changedCallbacks;
+	Eegeo::Helpers::ICallback0* m_pFlatteningModelChangedCallback;
+
+public:
+
+	FlattenButtonModel(Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService);
+
+	~FlattenButtonModel();
+
+	void HandleModelChanged();
+
+	void Flatten();
+
+	void Unflatten();
+
+	bool GetFlattened() const;
+
+	void InsertChangedCallback(Eegeo::Helpers::ICallback0& callback);
+
+	void RemoveChangedCallback(Eegeo::Helpers::ICallback0& callback);
+};
+}
 }

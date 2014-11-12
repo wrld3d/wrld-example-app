@@ -40,60 +40,60 @@ class AppHost : protected Eegeo::NonCopyable
 {
 public:
 	AppHost(
-            ViewController& viewController,
-            UIView* pView,
-            float displayWidth,
-            float displayHeight,
-            float deviceDpi,
-            float pixelScale
-            );
+	    ViewController& viewController,
+	    UIView* pView,
+	    float displayWidth,
+	    float displayHeight,
+	    float deviceDpi,
+	    float pixelScale
+	);
 	~AppHost();
-    
-    bool IsRunning();
-    
+
+	bool IsRunning();
+
 	void Update(float dt);
 	void Draw(float dt);
-    
+
 	void OnPause();
 	void OnResume();
-    
+
 	void SetViewportOffset(float x, float y);
-    
+
 private:
-    UIView* m_pView;
-    ViewController& m_viewController;
-    Eegeo::Helpers::Jpeg::IJpegLoader* m_pJpegLoader;
-    Eegeo::Rendering::ScreenProperties* m_pScreenProperties;
+	UIView* m_pView;
+	ViewController& m_viewController;
+	Eegeo::Helpers::Jpeg::IJpegLoader* m_pJpegLoader;
+	Eegeo::Rendering::ScreenProperties* m_pScreenProperties;
 	Eegeo::iOS::iOSLocationService* m_piOSLocationService;
 	AppInputDelegate* m_pAppInputDelegate;
-    AppLocationDelegate* m_pAppLocationDelegate;
-    
+	AppLocationDelegate* m_pAppLocationDelegate;
+
 	Eegeo::UI::NativeInput::iOS::iOSInputBoxFactory m_iOSInputBoxFactory;
 	Eegeo::UI::NativeInput::iOS::iOSKeyboardInputFactory m_iOSKeyboardInputFactory;
 	Eegeo::UI::NativeAlerts::iOS::iOSAlertBoxFactory m_iOSAlertBoxFactory;
 	Eegeo::UI::NativeUIFactories m_iOSNativeUIFactories;
-    Eegeo::iOS::iOSPlatformAbstractionModule* m_piOSPlatformAbstractionModule;
-    
-    ExampleApp::PrimaryMenu::IPrimaryMenuViewModule* m_pPrimaryMenuViewModule;
-    ExampleApp::SecondaryMenu::ISecondaryMenuViewModule* m_pSecondaryMenuViewModule;
-    ExampleApp::SearchResultMenu::ISearchResultMenuViewModule* m_pSearchResultMenuViewModule;
-    ExampleApp::ModalBackground::IModalBackgroundViewModule* m_pModalBackgroundViewModule;
-    ExampleApp::FlattenButton::IFlattenButtonViewModule* m_pFlattenButtonViewModule;
-    ExampleApp::SearchResultPoi::ISearchResultPoiViewModule* m_pSearchResultPoiViewModule;
-    ExampleApp::SearchResultOnMap::ISearchResultOnMapViewModule* m_pSearchResultOnMapViewModule;
-    ExampleApp::Compass::ICompassViewModule* m_pCompassViewModule;
-    ExampleApp::ViewControllerUpdater::IViewControllerUpdaterModule* m_pViewControllerUpdaterModule;
-    ExampleApp::PersistentSettings::iOSPersistentSettingsModel m_iOSPersistentSettingsModel;
-    ExampleApp::InitialExperience::IInitialExperienceModule* m_pInitialExperienceModule;
-    ExampleApp::AboutPage::IAboutPageViewModule* m_pAboutPageViewModule;
-    
-    ExampleApp::MobileExampleApp* m_pApp;
-    bool m_requestedApplicationInitialiseViewState;
-    
-    ExampleApp::ExampleAppMessaging::UiToNativeMessageBus m_uiToNativeMessageBus;
-    ExampleApp::ExampleAppMessaging::NativeToUiMessageBus m_nativeToUiMessageBus;
-    
-    void CreateApplicationViewModules();
-    void DestroyApplicationViewModules();
+	Eegeo::iOS::iOSPlatformAbstractionModule* m_piOSPlatformAbstractionModule;
+
+	ExampleApp::PrimaryMenu::IPrimaryMenuViewModule* m_pPrimaryMenuViewModule;
+	ExampleApp::SecondaryMenu::ISecondaryMenuViewModule* m_pSecondaryMenuViewModule;
+	ExampleApp::SearchResultMenu::ISearchResultMenuViewModule* m_pSearchResultMenuViewModule;
+	ExampleApp::ModalBackground::IModalBackgroundViewModule* m_pModalBackgroundViewModule;
+	ExampleApp::FlattenButton::IFlattenButtonViewModule* m_pFlattenButtonViewModule;
+	ExampleApp::SearchResultPoi::ISearchResultPoiViewModule* m_pSearchResultPoiViewModule;
+	ExampleApp::SearchResultOnMap::ISearchResultOnMapViewModule* m_pSearchResultOnMapViewModule;
+	ExampleApp::Compass::ICompassViewModule* m_pCompassViewModule;
+	ExampleApp::ViewControllerUpdater::IViewControllerUpdaterModule* m_pViewControllerUpdaterModule;
+	ExampleApp::PersistentSettings::iOSPersistentSettingsModel m_iOSPersistentSettingsModel;
+	ExampleApp::InitialExperience::IInitialExperienceModule* m_pInitialExperienceModule;
+	ExampleApp::AboutPage::IAboutPageViewModule* m_pAboutPageViewModule;
+
+	ExampleApp::MobileExampleApp* m_pApp;
+	bool m_requestedApplicationInitialiseViewState;
+
+	ExampleApp::ExampleAppMessaging::UiToNativeMessageBus m_uiToNativeMessageBus;
+	ExampleApp::ExampleAppMessaging::NativeToUiMessageBus m_nativeToUiMessageBus;
+
+	void CreateApplicationViewModules();
+	void DestroyApplicationViewModules();
 };
 

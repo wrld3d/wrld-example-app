@@ -10,36 +10,36 @@
 
 namespace ExampleApp
 {
-    namespace InitialExperience
-    {
-        namespace PreLoad
-        {
-            class InitialExperiencePreLoadModelBase : public IInitialExperiencePreLoadModel, private Eegeo::NonCopyable
-            {
-                WorldAreaLoader::IWorldAreaLoaderModel& m_worldAreaLoaderModel;
-                PersistentSettings::IPersistentSettingsModel& m_persistentSettings;
-                Eegeo::Helpers::ICallback0* m_pPreloadCompleteCallback;
-                
-                void HandlePreloadComplete();
-                
-            public:
-                InitialExperiencePreLoadModelBase(WorldAreaLoader::IWorldAreaLoaderModel& worldAreaLoaderModel,
-                                                  PersistentSettings::IPersistentSettingsModel& persistentSettings);
-                
-                ~InitialExperiencePreLoadModelBase();
-                
-                bool HasStarted() const;
-                
-                bool HasCompleted() const;
-                
-                void PerformInitialExperience();
-                
-            protected:
-                
-                void PrecacheRegion();
-                
-                void Complete();
-            };
-        }
-    }
+namespace InitialExperience
+{
+namespace PreLoad
+{
+class InitialExperiencePreLoadModelBase : public IInitialExperiencePreLoadModel, private Eegeo::NonCopyable
+{
+	WorldAreaLoader::IWorldAreaLoaderModel& m_worldAreaLoaderModel;
+	PersistentSettings::IPersistentSettingsModel& m_persistentSettings;
+	Eegeo::Helpers::ICallback0* m_pPreloadCompleteCallback;
+
+	void HandlePreloadComplete();
+
+public:
+	InitialExperiencePreLoadModelBase(WorldAreaLoader::IWorldAreaLoaderModel& worldAreaLoaderModel,
+	                                  PersistentSettings::IPersistentSettingsModel& persistentSettings);
+
+	~InitialExperiencePreLoadModelBase();
+
+	bool HasStarted() const;
+
+	bool HasCompleted() const;
+
+	void PerformInitialExperience();
+
+protected:
+
+	void PrecacheRegion();
+
+	void Complete();
+};
+}
+}
 }

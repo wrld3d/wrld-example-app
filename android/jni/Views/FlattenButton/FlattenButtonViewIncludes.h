@@ -4,9 +4,9 @@
 
 namespace ExampleApp
 {
-    namespace FlattenButton
-    {
-    	class IFlattenButtonViewModule;
-    	class FlattenButtonViewController;
-    }
+namespace FlattenButton
+{
+class IFlattenButtonViewModule;
+class FlattenButtonViewController;
+}
 }

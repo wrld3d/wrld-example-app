@@ -10,22 +10,22 @@
 
 namespace ExampleApp
 {
-    namespace CategorySearch
-    {
-        class CategorySearchMenuOption : public Menu::IMenuOption
-        {
-            CategorySearchModel m_model;
-            ExampleApp::Menu::IMenuViewModel& m_menuViewModel;
-            ExampleAppMessaging::UiToNativeMessageBus& m_uiToNativeMessageBus;
-            
-        public:
-            CategorySearchMenuOption(CategorySearchModel model,
-                                     ExampleApp::Menu::IMenuViewModel& menuViewModel,
-                                     ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus);
-            
-            ~CategorySearchMenuOption();
-            
-            void Select();
-        };
-    }
+namespace CategorySearch
+{
+class CategorySearchMenuOption : public Menu::IMenuOption
+{
+	CategorySearchModel m_model;
+	ExampleApp::Menu::IMenuViewModel& m_menuViewModel;
+	ExampleAppMessaging::UiToNativeMessageBus& m_uiToNativeMessageBus;
+
+public:
+	CategorySearchMenuOption(CategorySearchModel model,
+	                         ExampleApp::Menu::IMenuViewModel& menuViewModel,
+	                         ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus);
+
+	~CategorySearchMenuOption();
+
+	void Select();
+};
+}
 }

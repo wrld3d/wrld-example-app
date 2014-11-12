@@ -4,9 +4,9 @@
 
 namespace ExampleApp
 {
-    namespace AboutPage
-    {
-		class IAboutPageViewController;
-        class IAboutPageViewModule;
-    }
+namespace AboutPage
+{
+class IAboutPageViewController;
+class IAboutPageViewModule;
+}
 }

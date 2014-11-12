@@ -7,18 +7,18 @@
 
 namespace ExampleApp
 {
-    namespace Compass
-    {
-        class ICompassViewModel : public ScreenControlViewModel::IScreenControlViewModel
-        {
-        public:
-            virtual ~ICompassViewModel() { }
-            
-            //virtual void UpdateHeadingAngleRadians(float headingRadians) = 0;
-            
-            //virtual void InsertUpdateCallback(Eegeo::Helpers::ICallback1<float>& updateCallback) = 0;
-            
-            //virtual void RemoveUpdateCallback(Eegeo::Helpers::ICallback1<float>& updateCallback) = 0;
-        };
-    }
+namespace Compass
+{
+class ICompassViewModel : public ScreenControlViewModel::IScreenControlViewModel
+{
+public:
+	virtual ~ICompassViewModel() { }
+
+	//virtual void UpdateHeadingAngleRadians(float headingRadians) = 0;
+
+	//virtual void InsertUpdateCallback(Eegeo::Helpers::ICallback1<float>& updateCallback) = 0;
+
+	//virtual void RemoveUpdateCallback(Eegeo::Helpers::ICallback1<float>& updateCallback) = 0;
+};
+}
 }

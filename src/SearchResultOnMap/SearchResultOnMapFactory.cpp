@@ -7,23 +7,23 @@
 
 namespace ExampleApp
 {
-    namespace SearchResultOnMap
-    {
-        SearchResultOnMapFactory::SearchResultOnMapFactory(SearchResultPoi::ISearchResultPoiViewModel& searchResultPoiViewModel)
-        : m_searchResultPoiViewModel(searchResultPoiViewModel)
-        {
-            
-        }
-        
-        SearchResultOnMapFactory::~SearchResultOnMapFactory()
-        {
-            
-        }
-        
-        SearchResultOnMapItemModel* SearchResultOnMapFactory::CreateSearchResultOnMapItemModel(Search::SearchResultModel& searchResultModel) const
-        {
-            return Eegeo_NEW(SearchResultOnMapItemModel(searchResultModel,
-                                                        m_searchResultPoiViewModel));
-        }
-    }
+namespace SearchResultOnMap
+{
+SearchResultOnMapFactory::SearchResultOnMapFactory(SearchResultPoi::ISearchResultPoiViewModel& searchResultPoiViewModel)
+	: m_searchResultPoiViewModel(searchResultPoiViewModel)
+{
+
+}
+
+SearchResultOnMapFactory::~SearchResultOnMapFactory()
+{
+
+}
+
+SearchResultOnMapItemModel* SearchResultOnMapFactory::CreateSearchResultOnMapItemModel(Search::SearchResultModel& searchResultModel) const
+{
+	return Eegeo_NEW(SearchResultOnMapItemModel(searchResultModel,
+	                 m_searchResultPoiViewModel));
+}
+}
 }

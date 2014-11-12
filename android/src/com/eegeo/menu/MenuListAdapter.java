@@ -23,7 +23,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class MenuListAdapter extends BaseAdapter {
+public class MenuListAdapter extends BaseAdapter
+{
 
 	private Activity m_context;
 	private List<String> m_groups;
@@ -34,34 +35,34 @@ public class MenuListAdapter extends BaseAdapter {
 	private HashMap<String, Integer> m_animatedSizesMap;
 	private ValueAnimator m_expandContractAnim;
 	private boolean m_shouldAlignIconRight;
-	
-	public MenuListAdapter(Activity context, 
-			final int groupViewId, 
-			final int childViewId,
-			final boolean shouldAlignIconRight)
+
+	public MenuListAdapter(Activity context,
+	                       final int groupViewId,
+	                       final int childViewId,
+	                       final boolean shouldAlignIconRight)
 	{
 		m_context = context;
-		
+
 		m_groupViewId = groupViewId;
 		m_childViewId = childViewId;
 		m_animatedSizesMap = new HashMap<String, Integer>();
-		
+
 		m_groups = new ArrayList<String>();
 		m_groupsExpandable = new ArrayList<Boolean>();
 		m_groupToChildrenMap = new HashMap<String, List<String>>();
-		
+
 		m_shouldAlignIconRight = shouldAlignIconRight;
 	}
-	
+
 	public boolean isAnimating()
 	{
 		return m_expandContractAnim != null && m_expandContractAnim.isRunning();
 	}
 
 	public void setData(
-			final List<String> groups,
-			final List<Boolean> groupsExpandable,
-			final HashMap<String, List<String>> groupToChildren)
+	    final List<String> groups,
+	    final List<Boolean> groupsExpandable,
+	    final HashMap<String, List<String>> groupToChildren)
 	{
 		if(m_groups.size() != groups.size())
 		{
@@ -74,17 +75,17 @@ public class MenuListAdapter extends BaseAdapter {
 			updateAndAnimateSources(groups, groupsExpandable, groupToChildren);
 		}
 	}
-	
+
 	public void updateSources(
-			final List<String> groups,
-			final List<Boolean> groupsExpandable,
-			final HashMap<String, List<String>> groupToChildren)
+	    final List<String> groups,
+	    final List<Boolean> groupsExpandable,
+	    final HashMap<String, List<String>> groupToChildren)
 	{
 		m_groups = groups;
 		m_groupsExpandable = groupsExpandable;
 		m_groupToChildrenMap = groupToChildren;
 	}
-	
+
 	private void forceSetAnimatedSizes()
 	{
 		for(int i = 0; i < m_groups.size(); i++)
@@ -93,14 +94,14 @@ public class MenuListAdapter extends BaseAdapter {
 			m_animatedSizesMap.put(key, m_groupToChildrenMap.get(key).size());
 		}
 	}
-	
+
 	public void setAnimatedGroupSize(String groupName, int size)
 	{
 		if(!m_animatedSizesMap.containsKey(groupName))
 		{
 			throw new IllegalArgumentException("No group named " + groupName + " found!");
 		}
-		
+
 		if(m_animatedSizesMap.get(groupName) != size)
 		{
 			m_animatedSizesMap.put(groupName, size);
@@ -109,37 +110,37 @@ public class MenuListAdapter extends BaseAdapter {
 	}
 
 	private void updateAndAnimateSources(
-			final List<String> groups,
-			final List<Boolean> groupsExpandable,
-			final HashMap<String, List<String>> groupToChildren)
+	    final List<String> groups,
+	    final List<Boolean> groupsExpandable,
+	    final HashMap<String, List<String>> groupToChildren)
 	{
 		boolean anySizeChanges = false;
-		
+
 		// Check each group to see if it has changed in size.
 		for(int i = 0; i < m_groups.size(); i++)
 		{
 			final int groupIndex = i;
 			final String groupName = m_groups.get(groupIndex);
 			int currentSize = m_groupToChildrenMap.get(groupName).size();
-		
+
 			if(!groupToChildren.containsKey(groupName))
 			{
 				throw new IllegalArgumentException("New data source missing group '" + groupName + "'. Cannot animate sizes!");
 			}
 			int targetSize = groupToChildren.get(groupName).size();
-			
+
 			if(currentSize == targetSize)
 			{
 				continue;
 			}
-			
+
 			anySizeChanges = true;
-			
+
 			// If so, animate them to the new size.
 			m_expandContractAnim = ValueAnimator.ofInt(currentSize, targetSize);
 			m_expandContractAnim.setDuration(Math.abs((targetSize - currentSize) * 30));
 			m_expandContractAnim.addUpdateListener(new MenuSectionAnimatorUpdateListener(this, groupName));
-			
+
 			// If contracting, update sources at the end of the animation, otherwise update it at the beginning.
 			if(targetSize < currentSize)
 			{
@@ -149,10 +150,10 @@ public class MenuListAdapter extends BaseAdapter {
 			{
 				updateSources(groups, groupsExpandable, groupToChildren);
 			}
-			
+
 			m_expandContractAnim.start();
 		}
-		
+
 		// If there were no size changes, don't animate anything and just refresh the data sources.
 		if(!anySizeChanges)
 		{
@@ -160,9 +161,10 @@ public class MenuListAdapter extends BaseAdapter {
 			notifyDataSetChanged();
 		}
 	}
-	
+
 	@Override
-	public int getCount() {
+	public int getCount()
+	{
 		int count = 0;
 		for(int groupIndex = 0; groupIndex < m_groups.size(); groupIndex++)
 		{
@@ -173,7 +175,8 @@ public class MenuListAdapter extends BaseAdapter {
 	}
 
 	@Override
-	public Object getItem(int index) {
+	public Object getItem(int index)
+	{
 		int count = 0;
 		for(int groupIndex = 0; groupIndex < m_groups.size(); groupIndex++)
 		{
@@ -190,7 +193,7 @@ public class MenuListAdapter extends BaseAdapter {
 				{
 					return children.get(childIndex);
 				}
-				
+
 				count++;
 			}
 		}
@@ -198,10 +201,11 @@ public class MenuListAdapter extends BaseAdapter {
 	}
 
 	@Override
-	public long getItemId(int index) {
+	public long getItemId(int index)
+	{
 		return index;
 	}
-	
+
 	private boolean isHeader(int index)
 	{
 		int count = 0;
@@ -213,7 +217,7 @@ public class MenuListAdapter extends BaseAdapter {
 			{
 				continue;
 			}
-			
+
 			// Only first child in group is header if expandable, otherwise all children are.
 			if(count == index || !m_groupsExpandable.get(groupIndex))
 			{
@@ -228,9 +232,10 @@ public class MenuListAdapter extends BaseAdapter {
 	}
 
 	@Override
-	public View getView(int index, View reusableView, ViewGroup parent) {
+	public View getView(int index, View reusableView, ViewGroup parent)
+	{
 		final String json = (String)getItem(index);
-		
+
 		final int viewId = isHeader(index) ? m_groupViewId : m_childViewId;
 		if(reusableView == null || (Integer)reusableView.getTag() != viewId)
 		{
@@ -238,36 +243,36 @@ public class MenuListAdapter extends BaseAdapter {
 			reusableView = inflater.inflate(viewId, null);
 			reusableView.setTag((Integer)viewId);
 		}
-		
+
 		try
 		{
 			JSONObject data = new JSONObject(json);
-		
+
 			TextView nameLabel = (TextView)reusableView.findViewById(R.id.menu_list_item_name);
-            nameLabel.setText(data.getString("name"));
-            
-            ImageView icon = (ImageView)reusableView.findViewById(R.id.menu_list_item_icon);
-            icon.setImageResource(CategoryResources.getSmallIconForResourceName(m_context, data.getString("icon")));
-            
-            int margin = icon.getLayoutParams().width + 10;
-  
-            if (m_shouldAlignIconRight)
-            {
-                RelativeLayout.LayoutParams iconParams = new RelativeLayout.LayoutParams(icon.getLayoutParams());
-                iconParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, RelativeLayout.TRUE);
-                icon.setLayoutParams(iconParams);
-                
-                RelativeLayout.LayoutParams textParams = new RelativeLayout.LayoutParams(nameLabel.getLayoutParams());
-            	nameLabel.setGravity(Gravity.CENTER_VERTICAL|Gravity.RIGHT);
-            	textParams.setMargins(0, 0, margin, 0);
-                nameLabel.setLayoutParams(textParams);
-            }
+			nameLabel.setText(data.getString("name"));
+
+			ImageView icon = (ImageView)reusableView.findViewById(R.id.menu_list_item_icon);
+			icon.setImageResource(CategoryResources.getSmallIconForResourceName(m_context, data.getString("icon")));
+
+			int margin = icon.getLayoutParams().width + 10;
+
+			if (m_shouldAlignIconRight)
+			{
+				RelativeLayout.LayoutParams iconParams = new RelativeLayout.LayoutParams(icon.getLayoutParams());
+				iconParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, RelativeLayout.TRUE);
+				icon.setLayoutParams(iconParams);
+
+				RelativeLayout.LayoutParams textParams = new RelativeLayout.LayoutParams(nameLabel.getLayoutParams());
+				nameLabel.setGravity(Gravity.CENTER_VERTICAL|Gravity.RIGHT);
+				textParams.setMargins(0, 0, margin, 0);
+				nameLabel.setLayoutParams(textParams);
+			}
 		}
 		catch(JSONException e)
 		{
 			Log.e("Eegeo", "Failed to read json data object: " + e.getMessage());
 		}
-		
+
 		if(viewId == m_childViewId)
 		{
 			RelativeLayout shadow = (RelativeLayout)reusableView.findViewById(R.id.menu_list_item_shadow);
@@ -292,45 +297,45 @@ public class MenuListAdapter extends BaseAdapter {
 		{
 			RelativeLayout openableArrow = (RelativeLayout)reusableView.findViewById(R.id.menu_list_openable_shape);
 			int groupIndex = getGroupIndexForViewIndex(index);
-			
+
 			if(m_groupsExpandable.get(groupIndex))
 			{
-                RelativeLayout.LayoutParams openableArrowParams = new RelativeLayout.LayoutParams(openableArrow.getLayoutParams());
-                
-	            if(m_shouldAlignIconRight)
-	            {
-	                openableArrowParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
-	            }
-	            else
-	            { 
-	                openableArrowParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, RelativeLayout.TRUE);
-	                openableArrow.setRotation(180);
-	            }
+				RelativeLayout.LayoutParams openableArrowParams = new RelativeLayout.LayoutParams(openableArrow.getLayoutParams());
+
+				if(m_shouldAlignIconRight)
+				{
+					openableArrowParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
+				}
+				else
+				{
+					openableArrowParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, RelativeLayout.TRUE);
+					openableArrow.setRotation(180);
+				}
 
 				String groupName = m_groups.get(groupIndex);
-	            if(m_animatedSizesMap.get(groupName) > 1)
-	            {
-	            	openableArrow.setRotation(90);
-	            }
-	            
-                openableArrowParams.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
-                openableArrow.setLayoutParams(openableArrowParams);
+				if(m_animatedSizesMap.get(groupName) > 1)
+				{
+					openableArrow.setRotation(90);
+				}
+
+				openableArrowParams.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
+				openableArrow.setLayoutParams(openableArrowParams);
 			}
 			else
 			{
 				openableArrow.setVisibility(View.GONE);
 			}
 		}
-		
+
 		return reusableView;
 	}
-	
+
 	private String getGroupIndexBelongsTo(int index)
 	{
 		int groupIndex = getGroupIndexForViewIndex(index);
 		return groupIndex == -1 ? "" : m_groups.get(groupIndex);
 	}
-	
+
 	private int getGroupIndexForViewIndex(int index)
 	{
 		int count = 0;
@@ -348,7 +353,7 @@ public class MenuListAdapter extends BaseAdapter {
 		}
 		return -1;
 	}
-	
+
 	public int getPlaceInGroup(int index)
 	{
 		int count = 0;

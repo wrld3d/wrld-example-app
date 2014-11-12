@@ -7,35 +7,35 @@
 
 namespace ExampleApp
 {
-    namespace AboutPage
-    {
-        AboutPageViewModule::AboutPageViewModule(
-			AndroidNativeState& nativeState,
-			AboutPage::IAboutPageModel& aboutPageModel,
-			AboutPage::IAboutPageViewModel& aboutPageViewModel
-		)
-        {
-        	ASSERT_UI_THREAD
+namespace AboutPage
+{
+AboutPageViewModule::AboutPageViewModule(
+    AndroidNativeState& nativeState,
+    AboutPage::IAboutPageModel& aboutPageModel,
+    AboutPage::IAboutPageViewModel& aboutPageViewModel
+)
+{
+	ASSERT_UI_THREAD
 
-            m_pAboutPageViewController = Eegeo_NEW(AboutPageViewController)(
-				nativeState,
-				aboutPageModel,
-				aboutPageViewModel
-            );
-        }
-        
-        AboutPageViewModule::~AboutPageViewModule()
-        {
-        	ASSERT_UI_THREAD
+	m_pAboutPageViewController = Eegeo_NEW(AboutPageViewController)(
+	                                 nativeState,
+	                                 aboutPageModel,
+	                                 aboutPageViewModel
+	                             );
+}
 
-            Eegeo_DELETE(m_pAboutPageViewController);
-        }
-        
-        IAboutPageViewController& AboutPageViewModule::GetAboutPageViewController() const
-        {
-        	ASSERT_UI_THREAD
+AboutPageViewModule::~AboutPageViewModule()
+{
+	ASSERT_UI_THREAD
 
-            return *m_pAboutPageViewController;
-        }
-    }
+	Eegeo_DELETE(m_pAboutPageViewController);
+}
+
+IAboutPageViewController& AboutPageViewModule::GetAboutPageViewController() const
+{
+	ASSERT_UI_THREAD
+
+	return *m_pAboutPageViewController;
+}
+}
 }

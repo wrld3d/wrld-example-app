@@ -7,8 +7,8 @@
 
 namespace ExampleApp
 {
-    namespace SearchResultPoi
-    {
-        class ISearchResultPoiViewModule;
-    }
+namespace SearchResultPoi
+{
+class ISearchResultPoiViewModule;
+}
 }

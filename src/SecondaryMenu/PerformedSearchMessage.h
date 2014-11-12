@@ -6,24 +6,30 @@
 
 namespace ExampleApp
 {
-	namespace SecondaryMenu
+namespace SecondaryMenu
+{
+class PerformedSearchMessage
+{
+	std::string m_searchQuery;
+	bool m_isCategory;
+
+public:
+	PerformedSearchMessage(const std::string& searchQuery, bool isCategory)
+		: m_searchQuery(searchQuery)
+		, m_isCategory(isCategory)
 	{
-		class PerformedSearchMessage
-		{
-			std::string m_searchQuery;
-			bool m_isCategory;
 
-		public:
-			PerformedSearchMessage(const std::string& searchQuery, bool isCategory)
-			: m_searchQuery(searchQuery)
-			, m_isCategory(isCategory)
-			{
-
-			}
-
-			const std::string& SearchQuery() const { return m_searchQuery; }
-
-			bool IsCategory() const { return m_isCategory; }
-		};
 	}
+
+	const std::string& SearchQuery() const
+	{
+		return m_searchQuery;
+	}
+
+	bool IsCategory() const
+	{
+		return m_isCategory;
+	}
+};
+}
 }

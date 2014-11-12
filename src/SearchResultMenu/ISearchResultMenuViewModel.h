@@ -7,16 +7,16 @@
 
 namespace ExampleApp
 {
-    namespace SearchResultMenu
-    {
-        class ISearchResultMenuViewModel
-        {
-        public:
-            virtual ~ISearchResultMenuViewModel() { }
-            
-            virtual bool CanInteract() const = 0;
+namespace SearchResultMenu
+{
+class ISearchResultMenuViewModel
+{
+public:
+	virtual ~ISearchResultMenuViewModel() { }
 
-            virtual void SetHasSearchQuery(bool hasSearchQuery) = 0;
-        };
-    }
+	virtual bool CanInteract() const = 0;
+
+	virtual void SetHasSearchQuery(bool hasSearchQuery) = 0;
+};
+}
 }

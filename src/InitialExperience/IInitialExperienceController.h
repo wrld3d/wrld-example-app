@@ -4,14 +4,14 @@
 
 namespace ExampleApp
 {
-    namespace InitialExperience
-    {
-        class IInitialExperienceController
-        {
-        public:
-            virtual ~IInitialExperienceController() { }
-            
-            virtual void Update(float deltaSeconds) = 0;
-        };
-    }
+namespace InitialExperience
+{
+class IInitialExperienceController
+{
+public:
+	virtual ~IInitialExperienceController() { }
+
+	virtual void Update(float deltaSeconds) = 0;
+};
+}
 }

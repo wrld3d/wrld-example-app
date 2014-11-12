@@ -78,7 +78,7 @@ AppHost::AppHost(
     EGLContext resourceBuildShareContext
 )
 	:m_isPaused(false)
-    ,m_pJpegLoader(NULL)
+	,m_pJpegLoader(NULL)
 	,m_pScreenProperties(NULL)
 	,m_pAndroidLocationService(NULL)
 	,m_nativeState(nativeState)
@@ -120,12 +120,12 @@ AppHost::AppHost(
 	customApplicationAssetDirectories.insert("SearchResultOnMap");
 
 	m_pAndroidPlatformAbstractionModule = Eegeo_NEW(Eegeo::Android::AndroidPlatformAbstractionModule)(
-		nativeState,
-		*m_pJpegLoader,
-		display,
-		resourceBuildShareContext,
-		shareSurface,
-		customApplicationAssetDirectories);
+	        nativeState,
+	        *m_pJpegLoader,
+	        display,
+	        resourceBuildShareContext,
+	        shareSurface,
+	        customApplicationAssetDirectories);
 
 	Eegeo::EffectHandler::Initialise();
 
@@ -134,25 +134,25 @@ AppHost::AppHost(
 
 	m_pInputProcessor = Eegeo_NEW(Eegeo::Android::Input::AndroidInputProcessor)(&m_inputHandler, m_pScreenProperties->GetScreenWidth(), m_pScreenProperties->GetScreenHeight());
 
-    m_pInitialExperienceModule = Eegeo_NEW(ExampleApp::InitialExperience::AndroidInitialExperienceModule)(
-    	m_nativeState,
-    	m_androidPersistentSettingsModel
-    );
+	m_pInitialExperienceModule = Eegeo_NEW(ExampleApp::InitialExperience::AndroidInitialExperienceModule)(
+	                                 m_nativeState,
+	                                 m_androidPersistentSettingsModel
+	                             );
 
-    m_pApp = Eegeo_NEW(ExampleApp::MobileExampleApp)(*m_pAndroidPlatformAbstractionModule,
-                                                     *m_pScreenProperties,
-                                                     *m_pAndroidLocationService,
-                                                     m_androidNativeUIFactories,
-                                                     platformConfig,
-                                                     *m_pJpegLoader,
-                                                     *m_pInitialExperienceModule,
-                                                     m_uiToNativeMessageBus,
-                                                     m_nativeToUiMessageBus);
+	m_pApp = Eegeo_NEW(ExampleApp::MobileExampleApp)(*m_pAndroidPlatformAbstractionModule,
+	         *m_pScreenProperties,
+	         *m_pAndroidLocationService,
+	         m_androidNativeUIFactories,
+	         platformConfig,
+	         *m_pJpegLoader,
+	         *m_pInitialExperienceModule,
+	         m_uiToNativeMessageBus,
+	         m_nativeToUiMessageBus);
 
-    m_pModalBackgroundNativeViewModule = Eegeo_NEW(ExampleApp::ModalBackground::ModalBackgroundNativeViewModule)(
-		m_pApp->World().GetRenderingModule(),
-		m_uiToNativeMessageBus
-    );
+	m_pModalBackgroundNativeViewModule = Eegeo_NEW(ExampleApp::ModalBackground::ModalBackgroundNativeViewModule)(
+	        m_pApp->World().GetRenderingModule(),
+	        m_uiToNativeMessageBus
+	                                     );
 
 	m_pAndroidPlatformAbstractionModule->SetWebRequestServiceWorkPool(m_pApp->World().GetWorkPool());
 
@@ -330,85 +330,85 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
 	ASSERT_UI_THREAD
 
 	m_createdUIModules = true;
-    ExampleApp::MobileExampleApp& app = *m_pApp;
+	ExampleApp::MobileExampleApp& app = *m_pApp;
 
-    // 3d map view layer.
-    m_pSearchResultOnMapViewModule = Eegeo_NEW(ExampleApp::SearchResultOnMap::SearchResultOnMapViewModule)(
-		m_nativeState,
-		app.SearchResultOnMapModule().GetSearchResultOnMapInFocusViewModel(),
-		app.SearchResultOnMapModule().GetScreenControlViewModel(),
-    	app.SearchResultPoiModule().GetSearchResultPoiViewModel(),
-		app.PinDiameter()
-	);
+	// 3d map view layer.
+	m_pSearchResultOnMapViewModule = Eegeo_NEW(ExampleApp::SearchResultOnMap::SearchResultOnMapViewModule)(
+	                                     m_nativeState,
+	                                     app.SearchResultOnMapModule().GetSearchResultOnMapInFocusViewModel(),
+	                                     app.SearchResultOnMapModule().GetScreenControlViewModel(),
+	                                     app.SearchResultPoiModule().GetSearchResultPoiViewModel(),
+	                                     app.PinDiameter()
+	                                 );
 
-    // HUD behind modal background layer.
-    m_pFlattenButtonViewModule = Eegeo_NEW(ExampleApp::FlattenButton::FlattenButtonViewModule)(
-    	m_nativeState,
-    	app.FlattenButtonModule().GetFlattenButtonViewModel(),
-    	m_uiToNativeMessageBus,
-    	m_nativeToUiMessageBus
-    );
+	// HUD behind modal background layer.
+	m_pFlattenButtonViewModule = Eegeo_NEW(ExampleApp::FlattenButton::FlattenButtonViewModule)(
+	                                 m_nativeState,
+	                                 app.FlattenButtonModule().GetFlattenButtonViewModel(),
+	                                 m_uiToNativeMessageBus,
+	                                 m_nativeToUiMessageBus
+	                             );
 
-    m_pCompassViewModule = Eegeo_NEW(ExampleApp::Compass::CompassViewModule)(
-		m_nativeState,
-		app.CompassModule().GetCompassViewModel(),
-		m_uiToNativeMessageBus,
-		m_nativeToUiMessageBus
-	);
+	m_pCompassViewModule = Eegeo_NEW(ExampleApp::Compass::CompassViewModule)(
+	                           m_nativeState,
+	                           app.CompassModule().GetCompassViewModel(),
+	                           m_uiToNativeMessageBus,
+	                           m_nativeToUiMessageBus
+	                       );
 
-    // Modal background layer.
-    m_pModalBackgroundViewModule = Eegeo_NEW(ExampleApp::ModalBackground::ModalBackgroundViewModule)(
-    	m_nativeState,
-    	app.ModalityModule().GetModalityModel()
-    );
+	// Modal background layer.
+	m_pModalBackgroundViewModule = Eegeo_NEW(ExampleApp::ModalBackground::ModalBackgroundViewModule)(
+	                                   m_nativeState,
+	                                   app.ModalityModule().GetModalityModel()
+	                               );
 
-    // Menus & HUD layer.
-    m_pPrimaryMenuViewModule = Eegeo_NEW(ExampleApp::Menu::MenuViewModule)(
-    	"com/eegeo/primarymenu/PrimaryMenuView",
-    	m_nativeState,
-    	app.PrimaryMenuModule().GetPrimaryMenuModel(),
-    	app.PrimaryMenuModule().GetPrimaryMenuViewModel()
-	);
+	// Menus & HUD layer.
+	m_pPrimaryMenuViewModule = Eegeo_NEW(ExampleApp::Menu::MenuViewModule)(
+	                               "com/eegeo/primarymenu/PrimaryMenuView",
+	                               m_nativeState,
+	                               app.PrimaryMenuModule().GetPrimaryMenuModel(),
+	                               app.PrimaryMenuModule().GetPrimaryMenuViewModel()
+	                           );
 
-    m_pSecondaryMenuViewModule = Eegeo_NEW(ExampleApp::SecondaryMenu::SecondaryMenuViewModule)(
-    	"com/eegeo/secondarymenu/SecondaryMenuView",
-    	m_nativeState,
-    	app.SecondaryMenuModule().GetSecondaryMenuModel(),
-    	app.SecondaryMenuModule().GetSecondaryMenuViewModel(),
-    	m_uiToNativeMessageBus,
-    	m_nativeToUiMessageBus
-	);
+	m_pSecondaryMenuViewModule = Eegeo_NEW(ExampleApp::SecondaryMenu::SecondaryMenuViewModule)(
+	                                 "com/eegeo/secondarymenu/SecondaryMenuView",
+	                                 m_nativeState,
+	                                 app.SecondaryMenuModule().GetSecondaryMenuModel(),
+	                                 app.SecondaryMenuModule().GetSecondaryMenuViewModel(),
+	                                 m_uiToNativeMessageBus,
+	                                 m_nativeToUiMessageBus
+	                             );
 
-    m_pSearchResultMenuViewModule = Eegeo_NEW(ExampleApp::SearchMenu::SearchMenuViewModule)(
-		"com/eegeo/searchmenu/SearchMenuView",
-		m_nativeState,
-		app.SearchResultMenuModule().GetSearchResultMenuModel(),
-		app.SearchResultMenuModule().GetMenuViewModel(),
-    	app.CategorySearchModule().GetCategorySearchRepository(),
-    	app.SearchResultMenuModule().GetSearchResultMenuViewModel(),
-    	m_uiToNativeMessageBus,
-    	m_nativeToUiMessageBus
-	);
+	m_pSearchResultMenuViewModule = Eegeo_NEW(ExampleApp::SearchMenu::SearchMenuViewModule)(
+	                                    "com/eegeo/searchmenu/SearchMenuView",
+	                                    m_nativeState,
+	                                    app.SearchResultMenuModule().GetSearchResultMenuModel(),
+	                                    app.SearchResultMenuModule().GetMenuViewModel(),
+	                                    app.CategorySearchModule().GetCategorySearchRepository(),
+	                                    app.SearchResultMenuModule().GetSearchResultMenuViewModel(),
+	                                    m_uiToNativeMessageBus,
+	                                    m_nativeToUiMessageBus
+	                                );
 
-    // Pop-up layer.
-    m_pSearchResultPoiViewModule = Eegeo_NEW(ExampleApp::SearchResultPoi::SearchResultPoiViewModule)(
-    	m_nativeState,
-    	app.SearchResultPoiModule().GetSearchResultPoiViewModel()
-    );
+	// Pop-up layer.
+	m_pSearchResultPoiViewModule = Eegeo_NEW(ExampleApp::SearchResultPoi::SearchResultPoiViewModule)(
+	                                   m_nativeState,
+	                                   app.SearchResultPoiModule().GetSearchResultPoiViewModel()
+	                               );
 
-    m_pAboutPageViewModule = Eegeo_NEW(ExampleApp::AboutPage::AboutPageViewModule)(
-		m_nativeState,
-		app.AboutPageModule().GetAboutPageModel(),
-		app.AboutPageModule().GetAboutPageViewModel()
-    );
+	m_pAboutPageViewModule = Eegeo_NEW(ExampleApp::AboutPage::AboutPageViewModule)(
+	                             m_nativeState,
+	                             app.AboutPageModule().GetAboutPageModel(),
+	                             app.AboutPageModule().GetAboutPageViewModel()
+	                         );
 
 	m_pViewControllerUpdaterModule = Eegeo_NEW(ExampleApp::ViewControllerUpdater::ViewControllerUpdaterModule);
 
-    ExampleApp::ViewControllerUpdater::IViewControllerUpdaterModel& viewControllerUpdaterModel = m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel();
+	ExampleApp::ViewControllerUpdater::IViewControllerUpdaterModel& viewControllerUpdaterModel = m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel();
 
-    viewControllerUpdaterModel.AddUpdateableObject(m_pPrimaryMenuViewModule->GetMenuViewController());
-    viewControllerUpdaterModel.AddUpdateableObject(m_pSecondaryMenuViewModule->GetMenuViewController());
-    viewControllerUpdaterModel.AddUpdateableObject(m_pSearchResultMenuViewModule->GetMenuViewController());
+	viewControllerUpdaterModel.AddUpdateableObject(m_pPrimaryMenuViewModule->GetMenuViewController());
+	viewControllerUpdaterModel.AddUpdateableObject(m_pSecondaryMenuViewModule->GetMenuViewController());
+	viewControllerUpdaterModel.AddUpdateableObject(m_pSearchResultMenuViewModule->GetMenuViewController());
 }
 
 void AppHost::DestroyApplicationViewModulesFromUiThread()

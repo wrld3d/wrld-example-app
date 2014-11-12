@@ -12,18 +12,18 @@
 
 namespace ExampleApp
 {
-    namespace Reaction
-    {
-        class ReactionModelModule: public IReactionModelModule, private Eegeo::NonCopyable
-        {
-        private:
-            IReactionModel* m_pModel;
-        public:
-            ReactionModelModule(IReactionControllerModel& reactionControllerModel,
-                                const std::vector<OpenableControlViewModel::IOpenableControlViewModel*>& openables,
-                                const std::vector<ScreenControlViewModel::IScreenControlViewModel*>& reactors);
-            
-            ~ReactionModelModule();
-        };
-    }
+namespace Reaction
+{
+class ReactionModelModule: public IReactionModelModule, private Eegeo::NonCopyable
+{
+private:
+	IReactionModel* m_pModel;
+public:
+	ReactionModelModule(IReactionControllerModel& reactionControllerModel,
+	                    const std::vector<OpenableControlViewModel::IOpenableControlViewModel*>& openables,
+	                    const std::vector<ScreenControlViewModel::IScreenControlViewModel*>& reactors);
+
+	~ReactionModelModule();
+};
+}
 }

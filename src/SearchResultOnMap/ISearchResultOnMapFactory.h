@@ -7,14 +7,14 @@
 
 namespace ExampleApp
 {
-    namespace SearchResultOnMap
-    {
-        class ISearchResultOnMapFactory
-        {
-        public:
-            virtual ~ISearchResultOnMapFactory() { }
-            
-            virtual SearchResultOnMapItemModel* CreateSearchResultOnMapItemModel(Search::SearchResultModel& searchResultModel) const = 0;
-        };
-    }
+namespace SearchResultOnMap
+{
+class ISearchResultOnMapFactory
+{
+public:
+	virtual ~ISearchResultOnMapFactory() { }
+
+	virtual SearchResultOnMapItemModel* CreateSearchResultOnMapItemModel(Search::SearchResultModel& searchResultModel) const = 0;
+};
+}
 }

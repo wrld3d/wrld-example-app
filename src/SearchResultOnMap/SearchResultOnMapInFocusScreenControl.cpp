@@ -4,17 +4,17 @@
 
 namespace ExampleApp
 {
-    namespace SearchResultOnMap
-    {
-        SearchResultOnMapInFocusScreenControl::SearchResultOnMapInFocusScreenControl(Eegeo::Helpers::TIdentity identity)
-        : ScreenControlViewModel::ScreenControlViewModelBase(false)
-        , m_identity(identity)
-        {
-        }
-        
-        Eegeo::Helpers::TIdentity SearchResultOnMapInFocusScreenControl::GetIdentity() const
-        {
-            return m_identity;
-        }
-    }
+namespace SearchResultOnMap
+{
+SearchResultOnMapInFocusScreenControl::SearchResultOnMapInFocusScreenControl(Eegeo::Helpers::TIdentity identity)
+	: ScreenControlViewModel::ScreenControlViewModelBase(false)
+	, m_identity(identity)
+{
+}
+
+Eegeo::Helpers::TIdentity SearchResultOnMapInFocusScreenControl::GetIdentity() const
+{
+	return m_identity;
+}
+}
 }

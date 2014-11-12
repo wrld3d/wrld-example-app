@@ -22,39 +22,39 @@
 
 namespace ExampleApp
 {
-    namespace SecondaryMenu
-    {
-		class SecondaryMenuViewController : public Menu::MenuViewController
-		{
-			Eegeo::Helpers::TCallback1<SecondaryMenuViewController, const Search::SearchQueryPerformedMessage&> m_performedQueryCallback;
-			Eegeo::Helpers::TCallback1<SecondaryMenuViewController, const Search::SearchQueryResponseReceivedMessage&> m_receivedQueryResponseCallback;
-			Eegeo::Helpers::TCallback2<SecondaryMenuViewController, OpenableControlViewModel::IOpenableControlViewModel&, float> m_menuOpenStateChangedCallback;
+namespace SecondaryMenu
+{
+class SecondaryMenuViewController : public Menu::MenuViewController
+{
+	Eegeo::Helpers::TCallback1<SecondaryMenuViewController, const Search::SearchQueryPerformedMessage&> m_performedQueryCallback;
+	Eegeo::Helpers::TCallback1<SecondaryMenuViewController, const Search::SearchQueryResponseReceivedMessage&> m_receivedQueryResponseCallback;
+	Eegeo::Helpers::TCallback2<SecondaryMenuViewController, OpenableControlViewModel::IOpenableControlViewModel&, float> m_menuOpenStateChangedCallback;
 
-			ExampleAppMessaging::UiToNativeMessageBus& m_uiToNativeMessageBus;
-			ExampleAppMessaging::NativeToUiMessageBus& m_nativeToUiMessageBus;
+	ExampleAppMessaging::UiToNativeMessageBus& m_uiToNativeMessageBus;
+	ExampleAppMessaging::NativeToUiMessageBus& m_nativeToUiMessageBus;
 
-		public:
-		    SecondaryMenuViewController(
-		    		const std::string& viewClassName,
-					AndroidNativeState& nativeState,
-					Menu::IMenuModel& menuModel,
-					Menu::IMenuViewModel& menuViewModel,
-					ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
-					ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus
-			);
+public:
+	SecondaryMenuViewController(
+	    const std::string& viewClassName,
+	    AndroidNativeState& nativeState,
+	    Menu::IMenuModel& menuModel,
+	    Menu::IMenuViewModel& menuViewModel,
+	    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
+	    ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus
+	);
 
-			~SecondaryMenuViewController();
+	~SecondaryMenuViewController();
 
-			void HandleSearch(const std::string& query);
+	void HandleSearch(const std::string& query);
 
-		private:
+private:
 
-            void PerformedQueryCallback(const Search::SearchQueryPerformedMessage& message);
+	void PerformedQueryCallback(const Search::SearchQueryPerformedMessage& message);
 
-            void ReceivedQueryResponseCallback(const Search::SearchQueryResponseReceivedMessage& message);
+	void ReceivedQueryResponseCallback(const Search::SearchQueryResponseReceivedMessage& message);
 
-            void HandleOpenStateChanged(OpenableControlViewModel::IOpenableControlViewModel& viewModel, float& openState);
+	void HandleOpenStateChanged(OpenableControlViewModel::IOpenableControlViewModel& viewModel, float& openState);
 
-		};
-	}
+};
+}
 }

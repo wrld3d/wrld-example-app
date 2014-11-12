@@ -6,8 +6,8 @@
 #include "AndroidAppThreadAssertionMacros.h"
 
 JNIEXPORT void JNICALL Java_com_eegeo_menu_MenuViewJniMethods_ViewClicked(
-		JNIEnv* jenv, jobject obj,
-		jlong nativeObjectPtr)
+    JNIEnv* jenv, jobject obj,
+    jlong nativeObjectPtr)
 {
 	ASSERT_UI_THREAD
 

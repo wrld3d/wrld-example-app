@@ -11,29 +11,29 @@
 
 namespace ExampleApp
 {
-    namespace PrimaryMenu
-    {
-        class PrimaryMenuModule: public IPrimaryMenuModule, private Eegeo::NonCopyable
-        {
-        private:
-            Menu::IMenuModel* m_pModel;
-            Menu::IMenuOptionsModel* m_pMenuOptionsModel;
-            Menu::IMenuViewModel* m_pViewModel;
-            
-            Menu::IMenuSectionViewModel* m_pMenuSectionMisc;
-            
-        public:
-            PrimaryMenuModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
-                              AboutPage::IAboutPageViewModel& aboutPageViewModel,
-                              Reaction::IReactionControllerModel& reactionControllerModel);
-            
-            ~PrimaryMenuModule();
-            
-            Menu::IMenuModel& GetPrimaryMenuModel() const;
-            
-            Menu::IMenuOptionsModel& GetPrimaryMenuOptionsModel() const;
-            
-            Menu::IMenuViewModel& GetPrimaryMenuViewModel() const;
-        };
-    }
+namespace PrimaryMenu
+{
+class PrimaryMenuModule: public IPrimaryMenuModule, private Eegeo::NonCopyable
+{
+private:
+	Menu::IMenuModel* m_pModel;
+	Menu::IMenuOptionsModel* m_pMenuOptionsModel;
+	Menu::IMenuViewModel* m_pViewModel;
+
+	Menu::IMenuSectionViewModel* m_pMenuSectionMisc;
+
+public:
+	PrimaryMenuModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
+	                  AboutPage::IAboutPageViewModel& aboutPageViewModel,
+	                  Reaction::IReactionControllerModel& reactionControllerModel);
+
+	~PrimaryMenuModule();
+
+	Menu::IMenuModel& GetPrimaryMenuModel() const;
+
+	Menu::IMenuOptionsModel& GetPrimaryMenuOptionsModel() const;
+
+	Menu::IMenuViewModel& GetPrimaryMenuViewModel() const;
+};
+}
 }

@@ -4,17 +4,17 @@
 
 namespace ExampleApp
 {
-    namespace Compass
-    {
-        namespace GpsMode
-        {
-            enum Values
-            {
-                GpsDisabled = 0,
-                GpsFollow,
-                GpsCompassMode,
-                GpsMode_Max
-            };
-        }
-    }
+namespace Compass
+{
+namespace GpsMode
+{
+enum Values
+{
+	GpsDisabled = 0,
+	GpsFollow,
+	GpsCompassMode,
+	GpsMode_Max
+};
+}
+}
 }

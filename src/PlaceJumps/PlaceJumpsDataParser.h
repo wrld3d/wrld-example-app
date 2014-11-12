@@ -10,11 +10,11 @@
 
 namespace ExampleApp
 {
-    namespace PlaceJumps
-    {
-        namespace PlaceJumpsDataParser
-        {
-            bool ParsePlaceJumps(const std::string& json, std::vector<PlaceJumpModel>&  out_placeJumpModel);
-        }
-    }
+namespace PlaceJumps
+{
+namespace PlaceJumpsDataParser
+{
+bool ParsePlaceJumps(const std::string& json, std::vector<PlaceJumpModel>&  out_placeJumpModel);
+}
+}
 }

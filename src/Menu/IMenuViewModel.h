@@ -9,15 +9,15 @@
 
 namespace ExampleApp
 {
-    namespace Menu
-    {
-        class IMenuViewModel
-        : public ScreenControlViewModel::IScreenControlViewModel
-        , public OpenableControlViewModel::IOpenableControlViewModel
-        , public IMenuSectionsViewModel
-        {
-        public:
-            virtual ~IMenuViewModel() { }
-        };
-    }
+namespace Menu
+{
+class IMenuViewModel
+	: public ScreenControlViewModel::IScreenControlViewModel
+	, public OpenableControlViewModel::IOpenableControlViewModel
+	, public IMenuSectionsViewModel
+{
+public:
+	virtual ~IMenuViewModel() { }
+};
+}
 }

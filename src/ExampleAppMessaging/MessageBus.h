@@ -5,25 +5,25 @@
 #include "Types.h"
 
 #ifdef EEGEO_DROID
-	#define EEGEO_USE_CONCURRENT_MESSAGE_BUS
+#define EEGEO_USE_CONCURRENT_MESSAGE_BUS
 #endif
 
 #ifdef EEGEO_USE_CONCURRENT_MESSAGE_BUS
-	#include "MPMCMessageBus.h"
+#include "MPMCMessageBus.h"
 #else
-	#include "ImmediateMessageBus.h"
+#include "ImmediateMessageBus.h"
 #endif
 
 namespace ExampleApp
 {
-    namespace ExampleAppMessaging
-    {
+namespace ExampleAppMessaging
+{
 #ifdef EEGEO_USE_CONCURRENT_MESSAGE_BUS
-    	template <typename TMessageCatalog>
-    	class MessageBus : public Eegeo::Messaging::MPMCMessageBus<TMessageCatalog> { };
+template <typename TMessageCatalog>
+class MessageBus : public Eegeo::Messaging::MPMCMessageBus<TMessageCatalog> { };
 #else
-    	template <typename TMessageCatalog>
-    	class MessageBus : public Eegeo::Messaging::ImmediateMessageBus<TMessageCatalog> { };
+template <typename TMessageCatalog>
+class MessageBus : public Eegeo::Messaging::ImmediateMessageBus<TMessageCatalog> { };
 #endif
-    }
+}
 }

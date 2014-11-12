@@ -13,23 +13,23 @@
 
 namespace ExampleApp
 {
-    namespace ModalBackground
-    {
-        class ModalBackgroundNativeViewModule : public IModalBackgroundNativeViewModule, private Eegeo::NonCopyable
-        {
-        private:
-            ModalBackgroundView* m_pModalBackgroundView;
-            ModalBackgroundNativeModalityObserver* m_pModalBackgroundNativeModalityObserver;
+namespace ModalBackground
+{
+class ModalBackgroundNativeViewModule : public IModalBackgroundNativeViewModule, private Eegeo::NonCopyable
+{
+private:
+	ModalBackgroundView* m_pModalBackgroundView;
+	ModalBackgroundNativeModalityObserver* m_pModalBackgroundNativeModalityObserver;
 
-            Eegeo::Rendering::RenderableFilters& m_renderableFilters;
+	Eegeo::Rendering::RenderableFilters& m_renderableFilters;
 
-        public:
-            ModalBackgroundNativeViewModule(
-				Eegeo::Modules::Core::RenderingModule& renderingModule,
-				ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageCatalog
-        	);
+public:
+	ModalBackgroundNativeViewModule(
+	    Eegeo::Modules::Core::RenderingModule& renderingModule,
+	    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageCatalog
+	);
 
-            ~ModalBackgroundNativeViewModule();
-        };
-    }
+	~ModalBackgroundNativeViewModule();
+};
+}
 }

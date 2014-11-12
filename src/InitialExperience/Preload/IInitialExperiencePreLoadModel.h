@@ -6,17 +6,17 @@
 
 namespace ExampleApp
 {
-    namespace InitialExperience
-    {
-        namespace PreLoad
-        {
-            class IInitialExperiencePreLoadModel : public IInitialExperienceStep
-            {
-            public:
-                virtual ~IInitialExperiencePreLoadModel() { }
-                
-                virtual void ShowOptions() = 0;
-            };
-        }
-    }
+namespace InitialExperience
+{
+namespace PreLoad
+{
+class IInitialExperiencePreLoadModel : public IInitialExperienceStep
+{
+public:
+	virtual ~IInitialExperiencePreLoadModel() { }
+
+	virtual void ShowOptions() = 0;
+};
+}
+}
 }

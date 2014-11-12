@@ -6,20 +6,23 @@
 
 namespace ExampleApp
 {
-	namespace Search
+namespace Search
+{
+class SearchQueryPerformedMessage
+{
+	SearchQuery m_query;
+
+public:
+	SearchQueryPerformedMessage(const SearchQuery& searchQuery)
+		: m_query(searchQuery)
 	{
-		class SearchQueryPerformedMessage
-		{
-			SearchQuery m_query;
 
-		public:
-			SearchQueryPerformedMessage(const SearchQuery& searchQuery)
-			: m_query(searchQuery)
-			{
-
-			}
-
-			const SearchQuery& Query() const { return m_query; }
-		};
 	}
+
+	const SearchQuery& Query() const
+	{
+		return m_query;
+	}
+};
+}
 }

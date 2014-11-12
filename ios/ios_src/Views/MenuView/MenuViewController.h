@@ -16,18 +16,18 @@ FOUNDATION_EXPORT NSInteger const SubItemCellShadowFlippedViewTag;
 
 @interface MenuViewController : UITableViewController<UIGestureRecognizerDelegate, UITableViewDelegate, UITableViewDataSource, UpdateProtocol>
 {
-    ExampleApp::Menu::IMenuModel* m_pMenuModel;
-    ExampleApp::Menu::IMenuViewModel* m_pMenuViewModel;
-    ExampleApp::Modality::IModalityModel* m_pModalityModel;
-    ExampleApp::MenuView::MenuViewControllerInterop<ExampleApp::Menu::MenuItemModel, MenuViewController>* m_pInterop;
-    bool m_isRightMenu;
+	ExampleApp::Menu::IMenuModel* m_pMenuModel;
+	ExampleApp::Menu::IMenuViewModel* m_pMenuViewModel;
+	ExampleApp::Modality::IModalityModel* m_pModalityModel;
+	ExampleApp::MenuView::MenuViewControllerInterop<ExampleApp::Menu::MenuItemModel, MenuViewController>* m_pInterop;
+	bool m_isRightMenu;
 }
 
 - (id)initWithParams:(ExampleApp::Menu::IMenuModel *)pMenuModel
-                    :(ExampleApp::Menu::IMenuViewModel *)pMenuViewModel
-                    :(MenuView*)pMenuView
-                    :(ExampleApp::Modality::IModalityModel*)pModalityModel
-                    :(bool)isRightMenu;
+    :(ExampleApp::Menu::IMenuViewModel *)pMenuViewModel
+    :(MenuView*)pMenuView
+    :(ExampleApp::Modality::IModalityModel*)pModalityModel
+    :(bool)isRightMenu;
 
 - (void)handleItemAdded;
 

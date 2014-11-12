@@ -6,18 +6,18 @@
 
 namespace ExampleApp
 {
-    namespace ViewControllerUpdater
-    {
-        class IViewControllerUpdaterModel
-        {
-        public:
-            virtual ~IViewControllerUpdaterModel() { }
+namespace ViewControllerUpdater
+{
+class IViewControllerUpdaterModel
+{
+public:
+	virtual ~IViewControllerUpdaterModel() { }
 
-            virtual void AddUpdateableObject(IUpdateableViewController& updateProtocolImplementation) = 0;
+	virtual void AddUpdateableObject(IUpdateableViewController& updateProtocolImplementation) = 0;
 
-            virtual void RemoveUpdateableObject(IUpdateableViewController& updateProtocolImplementation) = 0;
+	virtual void RemoveUpdateableObject(IUpdateableViewController& updateProtocolImplementation) = 0;
 
-            virtual void UpdateObjectsUiThread(float deltaSeconds) = 0;
-        };
-    }
+	virtual void UpdateObjectsUiThread(float deltaSeconds) = 0;
+};
+}
 }

@@ -7,11 +7,11 @@
 
 namespace ExampleApp
 {
-    namespace WorldPins
-    {
-        class IWorldPinsRepository : public Repository::IRepositoryModel<WorldPinItemModel>
-        {
-            
-        };
-    }
+namespace WorldPins
+{
+class IWorldPinsRepository : public Repository::IRepositoryModel<WorldPinItemModel>
+{
+
+};
+}
 }

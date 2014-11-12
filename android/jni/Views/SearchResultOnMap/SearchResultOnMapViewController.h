@@ -15,46 +15,46 @@
 
 namespace ExampleApp
 {
-    namespace SearchResultOnMap
-    {
-		class SearchResultOnMapViewController : private Eegeo::NonCopyable
-		{
-			AndroidNativeState& m_nativeState;
-            ISearchResultOnMapInFocusViewModel& m_searchResultOnMapInFocusViewModel;
-            ScreenControlViewModel::IScreenControlViewModel& m_searchResultPoiScreenControlViewModel;
-			SearchResultPoi::ISearchResultPoiViewModel& m_searchResultPoiViewModel;
+namespace SearchResultOnMap
+{
+class SearchResultOnMapViewController : private Eegeo::NonCopyable
+{
+	AndroidNativeState& m_nativeState;
+	ISearchResultOnMapInFocusViewModel& m_searchResultOnMapInFocusViewModel;
+	ScreenControlViewModel::IScreenControlViewModel& m_searchResultPoiScreenControlViewModel;
+	SearchResultPoi::ISearchResultPoiViewModel& m_searchResultPoiViewModel;
 
-            Eegeo::Helpers::ICallback0* m_pSearchResultOnMapFocusOpenedCallback;
-            Eegeo::Helpers::ICallback0* m_pSearchResultOnMapFocusClosedCallback;
-            Eegeo::Helpers::ICallback0* m_pSearchResultOnMapFocusUpdatedCallback;
-            Eegeo::Helpers::ICallback2<ScreenControlViewModel::IScreenControlViewModel&, float>* m_pOnScreenStateChangedCallback;
+	Eegeo::Helpers::ICallback0* m_pSearchResultOnMapFocusOpenedCallback;
+	Eegeo::Helpers::ICallback0* m_pSearchResultOnMapFocusClosedCallback;
+	Eegeo::Helpers::ICallback0* m_pSearchResultOnMapFocusUpdatedCallback;
+	Eegeo::Helpers::ICallback2<ScreenControlViewModel::IScreenControlViewModel&, float>* m_pOnScreenStateChangedCallback;
 
-			jclass m_uiViewClass;
-			jobject m_uiView;
-			const float m_pinOffset;
+	jclass m_uiViewClass;
+	jobject m_uiView;
+	const float m_pinOffset;
 
-		public:
-			SearchResultOnMapViewController(
-				AndroidNativeState& nativeState,
-                ExampleApp::SearchResultOnMap::ISearchResultOnMapInFocusViewModel& searchResultOnMapInFocusViewModel,
-                ScreenControlViewModel::IScreenControlViewModel& searchResultPoiScreenControlViewModel,
-    			SearchResultPoi::ISearchResultPoiViewModel& searchResultPoiViewModel,
-    			float pinDiameter
-			);
+public:
+	SearchResultOnMapViewController(
+	    AndroidNativeState& nativeState,
+	    ExampleApp::SearchResultOnMap::ISearchResultOnMapInFocusViewModel& searchResultOnMapInFocusViewModel,
+	    ScreenControlViewModel::IScreenControlViewModel& searchResultPoiScreenControlViewModel,
+	    SearchResultPoi::ISearchResultPoiViewModel& searchResultPoiViewModel,
+	    float pinDiameter
+	);
 
-			~SearchResultOnMapViewController();
+	~SearchResultOnMapViewController();
 
-			void HandleSearchResultOnMapClicked();
+	void HandleSearchResultOnMapClicked();
 
-		private:
+private:
 
-            void SearchResultOnMapFocusOpenedCallback();
+	void SearchResultOnMapFocusOpenedCallback();
 
-            void SearchResultOnMapFocusClosedCallback();
+	void SearchResultOnMapFocusClosedCallback();
 
-            void SearchResultOnMapFocusUpdatedCallback();
+	void SearchResultOnMapFocusUpdatedCallback();
 
-            void OnScreenStateChangedCallback(ScreenControlViewModel::IScreenControlViewModel &viewModel, float& onScreenState);
-		};
-    }
+	void OnScreenStateChangedCallback(ScreenControlViewModel::IScreenControlViewModel &viewModel, float& onScreenState);
+};
+}
 }

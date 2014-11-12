@@ -4,8 +4,8 @@
 
 namespace ExampleApp
 {
-    namespace ScreenControlViewModel
-    {
-        class IScreenControlViewModel;
-    }
+namespace ScreenControlViewModel
+{
+class IScreenControlViewModel;
+}
 }

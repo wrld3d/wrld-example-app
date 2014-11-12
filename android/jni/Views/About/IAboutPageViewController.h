@@ -4,12 +4,12 @@
 
 namespace ExampleApp
 {
-    namespace AboutPage
-    {
-		class IAboutPageViewController
-		{
-		public:
-			virtual ~IAboutPageViewController() { }
-		};
-	}
+namespace AboutPage
+{
+class IAboutPageViewController
+{
+public:
+	virtual ~IAboutPageViewController() { }
+};
+}
 }

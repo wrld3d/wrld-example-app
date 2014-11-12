@@ -7,18 +7,18 @@
 
 namespace ExampleApp
 {
-    namespace ViewControllerUpdater
-    {
-        class IViewControllerUpdaterModel
-        {
-        public:
-            virtual ~IViewControllerUpdaterModel() { }
-            
-            virtual void AddUpdateableObject(id<UpdateProtocol> updateProtocolImplementation) = 0;
-            
-            virtual void RemoveUpdateableObject(id<UpdateProtocol> updateProtocolImplementation) = 0;
-            
-            virtual void UpdateObjects(float deltaSeconds) = 0;
-        };
-    }
+namespace ViewControllerUpdater
+{
+class IViewControllerUpdaterModel
+{
+public:
+	virtual ~IViewControllerUpdaterModel() { }
+
+	virtual void AddUpdateableObject(id<UpdateProtocol> updateProtocolImplementation) = 0;
+
+	virtual void RemoveUpdateableObject(id<UpdateProtocol> updateProtocolImplementation) = 0;
+
+	virtual void UpdateObjects(float deltaSeconds) = 0;
+};
+}
 }

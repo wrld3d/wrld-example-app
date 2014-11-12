@@ -6,18 +6,18 @@
 
 namespace ExampleApp
 {
-    namespace PrimaryMenu
-    {
-        class IPrimaryMenuModule
-        {
-        public:
-            virtual ~IPrimaryMenuModule() { }
-            
-            virtual Menu::IMenuModel& GetPrimaryMenuModel() const = 0;
-            
-            virtual Menu::IMenuOptionsModel& GetPrimaryMenuOptionsModel() const = 0;
-            
-            virtual Menu::IMenuViewModel& GetPrimaryMenuViewModel() const = 0;
-        };
-    }
+namespace PrimaryMenu
+{
+class IPrimaryMenuModule
+{
+public:
+	virtual ~IPrimaryMenuModule() { }
+
+	virtual Menu::IMenuModel& GetPrimaryMenuModel() const = 0;
+
+	virtual Menu::IMenuOptionsModel& GetPrimaryMenuOptionsModel() const = 0;
+
+	virtual Menu::IMenuViewModel& GetPrimaryMenuViewModel() const = 0;
+};
+}
 }

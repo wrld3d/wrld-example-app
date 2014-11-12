@@ -161,7 +161,7 @@ bool DefaultEGLChooser(EGLDisplay disp, u32 requestedSurfaceType, EGLConfig& bes
 			bestMatch = match;
 			bestIndex = i;
 			EXAMPLE_LOG("New best Config[%d]: R%dG%dB%dA%d D%dS%d Type=%04x Render=%04x",
-			          i, redBits, greenBits, blueBits, alphaBits, depthBits, stencilBits, surfaceType, renderableFlags);
+			            i, redBits, greenBits, blueBits, alphaBits, depthBits, stencilBits, surfaceType, renderableFlags);
 		}
 	}
 
