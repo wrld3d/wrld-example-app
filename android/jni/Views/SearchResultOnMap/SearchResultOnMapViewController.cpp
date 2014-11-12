@@ -6,7 +6,6 @@
 #include "IModalityModel.h"
 #include "SearchResultModel.h"
 #include "AndroidAppThreadAssertionMacros.h"
-#include "AndroidSearchResultSerializer.h"
 
 namespace ExampleApp
 {
