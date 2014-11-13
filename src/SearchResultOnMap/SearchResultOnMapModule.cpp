@@ -26,7 +26,7 @@ namespace ExampleApp
 		{
 			m_pSearchResultOnMapIconCategoryMapper = Eegeo_NEW(SearchResultOnMapIconCategoryMapper);
 
-			m_pSearchResultOnMapFactory = Eegeo_NEW(SearchResultOnMapFactory)(searchResultPoiViewModel);
+			m_pSearchResultOnMapFactory = Eegeo_NEW(SearchResultOnMapFactory)(nativeToUiMessageBus);
 
 			SearchResultOnMapModel* pSearchResultOnMapModel = Eegeo_NEW(SearchResultOnMapModel)(worldPinsService,
 			        *m_pSearchResultOnMapFactory,
@@ -54,10 +54,14 @@ namespace ExampleApp
 			m_pSearchResultOnMapInFocusObserver = Eegeo_NEW(SearchResultOnMapInFocusObserver)(
 			        *m_pSearchResultOnMapInFocusViewModel,
 			        nativeToUiMessageBus);
+
+			m_pSearchResultOnMapItemModelSelectedObserver = Eegeo_NEW(SearchResultOnMapItemModelSelectedObserver)(searchResultPoiViewModel,
+			        nativeToUiMessageBus);
 		}
 
 		SearchResultOnMapModule::~SearchResultOnMapModule()
 		{
+			Eegeo_DELETE m_pSearchResultOnMapItemModelSelectedObserver;
 			Eegeo_DELETE m_pSearchResultOnMapInFocusObserver;
 			Eegeo_DELETE m_pSearchResultOnMapModalityObserver;
 			Eegeo_DELETE m_pSearchResultOnMapScaleController;

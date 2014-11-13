@@ -20,7 +20,7 @@ namespace ExampleApp
 
 			virtual bool IsOpen() const = 0;
 
-			virtual void Open(Search::SearchResultModel& searchResultModel) = 0;
+			virtual void Open(const Search::SearchResultModel& searchResultModel) = 0;
 
 			virtual void Close() = 0;
 

@@ -4,15 +4,16 @@
 #include "SearchResultModel.h"
 #include "ISearchResultPoiViewModel.h"
 #include "Logger.h"
+#include "SearchResultOnMapItemModelSelectedMessage.h"
 
 namespace ExampleApp
 {
 	namespace SearchResultOnMap
 	{
 		SearchResultOnMapItemModel::SearchResultOnMapItemModel(Search::SearchResultModel& searchResultModel,
-		        SearchResultPoi::ISearchResultPoiViewModel& searchResultPoiViewModel)
+		        ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus)
 			: m_searchResultModel(searchResultModel)
-			, m_searchResultPoiViewModel(searchResultPoiViewModel)
+			, m_nativeToUiMessageBus(nativeToUiMessageBus)
 		{
 
 		}
@@ -24,11 +25,7 @@ namespace ExampleApp
 
 		void SearchResultOnMapItemModel::SelectPin()
 		{
-			if(!m_searchResultPoiViewModel.IsOpen())
-			{
-				EXAMPLE_LOG("Selected search result: %s\n", m_searchResultModel.GetTitle().c_str());
-				m_searchResultPoiViewModel.Open(m_searchResultModel);
-			}
+			m_nativeToUiMessageBus.Publish(SearchResultOnMapItemModelSelectedMessage(m_searchResultModel));
 		}
 	}
 }
