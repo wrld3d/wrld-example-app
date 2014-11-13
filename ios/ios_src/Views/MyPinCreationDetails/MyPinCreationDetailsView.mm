@@ -138,7 +138,7 @@
     self.pTitleText.font = [UIFont systemFontOfSize:25.0f];
     self.pTitleText.textColor = ExampleApp::Helpers::ColorPalette::GoldTone;
     self.pTitleText.placeholder = @"Name your pin...";
-    self.pTitleText.textAlignment = UITextAlignmentLeft;
+    self.pTitleText.textAlignment = NSTextAlignmentLeft;
     self.pTitleText.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
     self.pTitleText.clearsOnBeginEditing = YES;
     
@@ -212,7 +212,7 @@
     self.pTermsLabel.frame = CGRectMake(termsLabelX, termsLabelY, termsLabelWidth, termsLabelHeight);
     self.pTermsLabel.text = @"Terms & Conditions";
     self.pTermsLabel.font = [UIFont systemFontOfSize: 16.f];
-    self.pTermsLabel.textAlignment = UITextAlignmentRight;
+    self.pTermsLabel.textAlignment = NSTextAlignmentRight;
     
     self.pFooterContainer.frame = CGRectMake(0, footerY, footerWidth, footerHeight);
     self.pFooterContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::GoldTone;

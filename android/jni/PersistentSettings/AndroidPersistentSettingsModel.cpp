@@ -70,7 +70,7 @@ namespace ExampleApp
 				AndroidSafeNativeThreadAttachment attached(m_nativeState);
 				JNIEnv* env = attached.envForThread;
 				jstring keyJstr = env->NewStringUTF(name.c_str());
-				jmethodID methodId = env->GetMethodID(m_jniApiClass, "getInteger", "(Ljava/lang/String;)I");
+				jmethodID methodId = env->GetMethodID(m_jniApiClass, "getInt", "(Ljava/lang/String;)I");
 				out_value = env->CallIntMethod(m_jniApiInstance, methodId, keyJstr);
 				env->DeleteLocalRef(keyJstr);
 				return true;
@@ -106,7 +106,7 @@ namespace ExampleApp
 				AndroidSafeNativeThreadAttachment attached(m_nativeState);
 				JNIEnv* env = attached.envForThread;
 				jstring keyJstr = env->NewStringUTF(name.c_str());
-				jmethodID methodId = env->GetMethodID(m_jniApiClass, "getDouble", "(Ljava/lang/String;)Ljava/lang/String;");
+				jmethodID methodId = env->GetMethodID(m_jniApiClass, "getString", "(Ljava/lang/String;)Ljava/lang/String;");
 				jstring resultJString = static_cast<jstring>(env->CallObjectMethod(m_jniApiInstance, methodId, keyJstr));
 				const char* chars = env->GetStringUTFChars(resultJString, 0);
 				out_value = chars;
