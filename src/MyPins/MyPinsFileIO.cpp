@@ -85,11 +85,7 @@ namespace ExampleApp
             return false;
         }
         
-        void MyPinsFileIO::SavePinModelToDisk(const int pinId,
-                                              const std::string& title,
-                                              const std::string& description,
-                                              const std::string& imagePath,
-                                              const Eegeo::Space::LatLong& latLong)
+        void MyPinsFileIO::SavePinModelToDisk(const MyPinModel& pinModel)
         {
             std::fstream stream;
             size_t size;
@@ -111,11 +107,13 @@ namespace ExampleApp
                 rapidjson::Document::AllocatorType& allocator = jsonDoc.GetAllocator();
                 rapidjson::Value& myPinsArray = jsonDoc[MyPinsJsonArrayName.c_str()];
                 
+                const Eegeo::Space::LatLong& latLong = pinModel.GetLatLong();
+                
                 rapidjson::Value valueObject(rapidjson::kObjectType);
-                valueObject.AddMember("id", pinId, allocator);
-                valueObject.AddMember("title", title.c_str(), allocator);
-                valueObject.AddMember("description", description.c_str(), allocator);
-                valueObject.AddMember("image", imagePath.c_str(), allocator);
+                valueObject.AddMember("id", pinModel.Identifier(), allocator);
+                valueObject.AddMember("title", pinModel.GetTitle().c_str(), allocator);
+                valueObject.AddMember("description", pinModel.GetDescription().c_str(), allocator);
+                valueObject.AddMember("image", pinModel.GetImagePath().c_str(), allocator);
                 valueObject.AddMember("latitude", latLong.GetLatitudeInDegrees(), allocator);
                 valueObject.AddMember("longitude", latLong.GetLongitudeInDegrees(), allocator);
             
@@ -128,7 +126,7 @@ namespace ExampleApp
                 
                 if (WriteJsonToDisk(jsonString))
                 {
-                    m_persistentSettings.SetValue(MyPins_LastMyPinModelIdKey, pinId);
+                    m_persistentSettings.SetValue(MyPins_LastMyPinModelIdKey, pinModel.Identifier());
                 }
             }
             else

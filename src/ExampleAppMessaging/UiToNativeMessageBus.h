@@ -14,6 +14,8 @@
 #include "FlattenButtonViewStateChangedMessage.h"
 #include "CompassViewCycledMessage.h"
 #include "SearchResultViewClearedMessage.h"
+#include "MyPinCreationViewStateChangedMessage.h"
+#include "MyPinCreationViewSavePinMessage.h"
 
 namespace ExampleApp
 {
@@ -29,6 +31,8 @@ namespace ExampleApp
 			, public Eegeo::Messaging::CatalogBinding<FlattenButton::FlattenButtonViewStateChangedMessage>
 			, public Eegeo::Messaging::CatalogBinding<Compass::CompassViewCycledMessage>
 			, public Eegeo::Messaging::CatalogBinding<SearchResultMenu::SearchResultViewClearedMessage>
+            , public Eegeo::Messaging::CatalogBinding<MyPinCreation::MyPinCreationViewStateChangedMessage>
+            , public Eegeo::Messaging::CatalogBinding<MyPinCreation::MyPinCreationViewSavePinMessage>
 			, private Eegeo::NonCopyable
 		{
 

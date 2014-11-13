@@ -10,6 +10,8 @@
 #include "SearchResultMenu.h"
 #include "ScreenControlViewModelBase.h"
 #include "Search.h"
+#include "NativeToUiMessageBus.h"
+#include "MyPinCreationStateChangedMessage.h"
 
 namespace ExampleApp
 {
@@ -19,7 +21,7 @@ namespace ExampleApp
         {
         public:
             
-            MyPinCreationCompositeViewModel(IMyPinCreationModel& MyPinCreationModel,
+            MyPinCreationCompositeViewModel(ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus,
                                           IMyPinCreationInitiationViewModel& initiationViewModel,
                                           IMyPinCreationConfirmationViewModel& confirmationViewModel,
                                           ExampleApp::Menu::IMenuViewModel& primaryMenuViewModel,
@@ -30,13 +32,14 @@ namespace ExampleApp
             ~MyPinCreationCompositeViewModel();
             
             void HandlePoiRingStateChanged(MyPinCreationStage& stage);
+            void OnPoiRingStateChanged(const MyPinCreationStateChangedMessage& message);
             void HandleSearchResultMenuStateChanged(ScreenControlViewModel::IScreenControlViewModel &viewModel, float& onScreenState);
             
         private:
-            Eegeo::Helpers::ICallback1<MyPinCreationStage>* m_pStateChangeCallback;
-            Eegeo::Helpers::ICallback2<ScreenControlViewModel::IScreenControlViewModel&, float>* m_pSearchResultMenuStateChangedCallback;
+            Eegeo::Helpers::TCallback1<MyPinCreationCompositeViewModel, const MyPinCreationStateChangedMessage&> m_stateChangeHandler;
+            Eegeo::Helpers::TCallback2<MyPinCreationCompositeViewModel, ScreenControlViewModel::IScreenControlViewModel&, float> m_searchResultMenuStateChangedCallback;
             
-            IMyPinCreationModel& m_MyPinCreationModel;
+            ExampleAppMessaging::NativeToUiMessageBus& m_nativeToUiMessageBus;
             IMyPinCreationInitiationViewModel& m_initiationViewModel;
             IMyPinCreationConfirmationViewModel& m_confirmationViewModel;
             ExampleApp::Menu::IMenuViewModel& m_primaryMenuViewModel;

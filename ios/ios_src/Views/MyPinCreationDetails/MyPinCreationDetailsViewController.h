@@ -6,17 +6,18 @@
 #include "MyPinCreationDetails.h"
 #include "MyPinCreation.h"
 #include "MyPinCreationDetailsViewIncludes.h"
+#include "UiToNativeMessageBus.h"
 
 @class MyPinCreationDetailsView;
 
 @interface MyPinCreationDetailsViewController : UIViewController
 {
-    ExampleApp::MyPinCreation::IMyPinCreationModel* m_pModel;
+    ExampleApp::ExampleAppMessaging::UiToNativeMessageBus* m_pUiToNativeMessageBus;
     ExampleApp::MyPinCreationDetails::IMyPinCreationDetailsViewModel* m_pViewModel;
     ExampleApp::MyPinCreationDetails::MyPinCreationDetailsViewControllerInterop* m_pInterop;
 }
 
-- (id)initWithParams:(ExampleApp::MyPinCreation::IMyPinCreationModel*)pModel
+- (id)initWithParams:(ExampleApp::ExampleAppMessaging::UiToNativeMessageBus*) pUiToNativeMessageBus
                     :(ExampleApp::MyPinCreationDetails::IMyPinCreationDetailsViewModel*)pViewModel;
 
 - (void) open;

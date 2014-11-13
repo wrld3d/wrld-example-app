@@ -103,42 +103,29 @@ namespace ExampleApp
                 m_myPinsFileIO.TryCacheImageToDisk(imageData, imageSize, idForThisPin, imagePath);
             }
             
-            m_myPinsFileIO.SavePinModelToDisk(idForThisPin, title, description, imagePath, latLong);
-            
-            if (shouldShare)
-            {
-                std::map<std::string, std::string> formData;
-                formData["poi[title]"] = title;
-                formData["poi[description]"] = description;
-                formData["poi[latitude]"] = ConvertModelDetailToString(latLong.GetLatitudeInDegrees());
-                formData["poi[longitude]"] = ConvertModelDetailToString(latLong.GetLongitudeInDegrees());
-                
-                std::map<std::string, std::string> headerData;
-                headerData["Authorization"] = "XXXX";
-                
-                Eegeo::Web::ImageUploadData imageUpload(imagePath, "pin_image.jpg", Eegeo::Web::ImageUploadData::JPEG);
-                std::map<std::string, Eegeo::Web::ImageUploadData> imageData;
-                imageData.insert(std::make_pair("poi[image]", imageUpload));
-  
-                m_webLoadRequestFactory.CreatePost("http://design-in-motion-staging.eegeo.com/pois/new",
-                                                   m_webRequestCompleteCallback,
-                                                   NULL,
-                                                   formData,
-                                                   headerData,
-                                                   imageData)->Load();
-            }
-            
             MyPinModel pinModel(idForThisPin,
                                 title,
                                 description,
                                 imagePath,
                                 latLong);
             
+            m_myPinsFileIO.SavePinModelToDisk(pinModel);
+            
+            if (shouldShare)
+            {
+                SubmitPinToWebService(pinModel);
+            }
+            
             m_menuOptionsModel.AddItem(ConvertModelDetailToString(pinModel.Identifier()),
                                        pinModel.GetTitle(),
                                        "",
                                        "place",
                                        Eegeo_NEW(MyPinMenuOption)(pinModel));
+        }
+        
+        void MyPinsService::SubmitPinToWebService(const ExampleApp::MyPins::MyPinModel &myPinModel)
+        {
+            Eegeo_TTY("Here is where you submit pin to web service\n");
         }
         
         void MyPinsService::WebRequestCompleteCallback(Eegeo::Web::IWebLoadRequest& webLoadRequest)

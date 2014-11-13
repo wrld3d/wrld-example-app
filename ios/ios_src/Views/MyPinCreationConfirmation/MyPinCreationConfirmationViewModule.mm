@@ -8,17 +8,17 @@ namespace ExampleApp
 {
     namespace MyPinCreation
     {
-        MyPinCreationConfirmationViewModule::MyPinCreationConfirmationViewModule(IMyPinCreationModel& model,
+        MyPinCreationConfirmationViewModule::MyPinCreationConfirmationViewModule(ExampleApp::ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
                                                                                  IMyPinCreationConfirmationViewModel& viewModel,
                                                                                  IMyPinCreationCompositeViewModel& compositeViewModel,
                                                                                  MyPinCreationDetails::IMyPinCreationDetailsViewModel& MyPinCreationDetailsViewModel,
                                                                                  const Eegeo::Rendering::ScreenProperties& screenProperties)
         {
-            m_pController = [[MyPinCreationConfirmationViewController alloc] initWithParams:&model
-                                                                                         :&viewModel
-                                                                                         :&compositeViewModel
-                                                                                         :&MyPinCreationDetailsViewModel
-                                                                                         :&screenProperties];
+            m_pController = [[MyPinCreationConfirmationViewController alloc] initWithParams:&uiToNativeMessageBus
+                                                                                           :&viewModel
+                                                                                           :&compositeViewModel
+                                                                                           :&MyPinCreationDetailsViewModel
+                                                                                           :&screenProperties];
         }
         
         MyPinCreationConfirmationViewModule::~MyPinCreationConfirmationViewModule()

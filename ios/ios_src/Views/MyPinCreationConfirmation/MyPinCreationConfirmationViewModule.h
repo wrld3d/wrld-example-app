@@ -8,6 +8,7 @@
 #include "MyPinCreation.h"
 #include "IMyPinCreationConfirmationViewModule.h"
 #include "MyPinCreationDetails.h"
+#include "UiToNativeMessageBus.h"
 
 namespace ExampleApp
 {
@@ -19,11 +20,11 @@ namespace ExampleApp
             MyPinCreationConfirmationViewController* m_pController;
             
         public:
-            MyPinCreationConfirmationViewModule(IMyPinCreationModel& model,
-                                              IMyPinCreationConfirmationViewModel& viewModel,
-                                              IMyPinCreationCompositeViewModel& compositeViewModel,
-                                              MyPinCreationDetails::IMyPinCreationDetailsViewModel& MyPinCreationDetailsViewModel,
-                                              const Eegeo::Rendering::ScreenProperties& screenProperties);
+            MyPinCreationConfirmationViewModule(ExampleApp::ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
+                                                IMyPinCreationConfirmationViewModel& viewModel,
+                                                IMyPinCreationCompositeViewModel& compositeViewModel,
+                                                MyPinCreationDetails::IMyPinCreationDetailsViewModel& MyPinCreationDetailsViewModel,
+                                                const Eegeo::Rendering::ScreenProperties& screenProperties);
             
             ~MyPinCreationConfirmationViewModule();
             

@@ -16,11 +16,10 @@ namespace ExampleApp
         class MyPinCreationConfirmationViewControllerInterop : private Eegeo::NonCopyable
         {
             MyPinCreationConfirmationViewController* m_pController;
-            IMyPinCreationModel& m_model;
             IMyPinCreationConfirmationViewModel& m_viewModel;
             IMyPinCreationCompositeViewModel& m_compositeViewModel;
             
-            Eegeo::Helpers::ICallback2<ScreenControlViewModel::IScreenControlViewModel&, float>* m_pOnScreenStateChangedCallback;
+            Eegeo::Helpers::TCallback2<MyPinCreationConfirmationViewControllerInterop, ScreenControlViewModel::IScreenControlViewModel&, float> m_onScreenStateChangedCallback;
 
             void OnScreenStateChangedCallback(ScreenControlViewModel::IScreenControlViewModel &viewModel, float& onScreenState)
             {
@@ -31,23 +30,19 @@ namespace ExampleApp
         public:
             
             MyPinCreationConfirmationViewControllerInterop(MyPinCreationConfirmationViewController* pController,
-                                                         IMyPinCreationModel& model,
-                                                         IMyPinCreationConfirmationViewModel& viewModel,
-                                                         IMyPinCreationCompositeViewModel& compositeViewModel)
+                                                           IMyPinCreationConfirmationViewModel& viewModel,
+                                                           IMyPinCreationCompositeViewModel& compositeViewModel)
             : m_pController(pController)
-            , m_model(model)
             , m_viewModel(viewModel)
             , m_compositeViewModel(compositeViewModel)
-            , m_pOnScreenStateChangedCallback(Eegeo_NEW((Eegeo::Helpers::TCallback2<MyPinCreationConfirmationViewControllerInterop, ScreenControlViewModel::IScreenControlViewModel&, float>))(this, &MyPinCreationConfirmationViewControllerInterop::OnScreenStateChangedCallback))
+            , m_onScreenStateChangedCallback(this, &MyPinCreationConfirmationViewControllerInterop::OnScreenStateChangedCallback)
             {
-                m_viewModel.InsertOnScreenStateChangedCallback(*m_pOnScreenStateChangedCallback);
+                m_viewModel.InsertOnScreenStateChangedCallback(m_onScreenStateChangedCallback);
             }
             
             ~MyPinCreationConfirmationViewControllerInterop()
             {
-                m_viewModel.RemoveOnScreenStateChangedCallback(*m_pOnScreenStateChangedCallback);
-                
-                Eegeo_DELETE m_pOnScreenStateChangedCallback;
+                m_viewModel.RemoveOnScreenStateChangedCallback(m_onScreenStateChangedCallback);
             }
         };
         

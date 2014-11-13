@@ -6,14 +6,15 @@
 #include "MyPinCreationConfirmationViewControllerInterop.h"
 #include "ScreenProperties.h"
 #include "IMyPinCreationDetailsViewModel.h"
+#include "MyPinCreationViewStateChangedMessage.h"
 
 @implementation MyPinCreationConfirmationViewController
 
-- (id)initWithParams:(ExampleApp::MyPinCreation::IMyPinCreationModel*)pModel
+- (id)initWithParams:(ExampleApp::ExampleAppMessaging::UiToNativeMessageBus*)pUiToNativeMessageBus
                     :(ExampleApp::MyPinCreation::IMyPinCreationConfirmationViewModel*)pViewModel
                     :(ExampleApp::MyPinCreation::IMyPinCreationCompositeViewModel*)pCompositeViewModel
                     :(ExampleApp::MyPinCreationDetails::IMyPinCreationDetailsViewModel*)pDetailsViewModel
-                    :(const Eegeo::Rendering::ScreenProperties*)pScreenProperties
+                    :(const Eegeo::Rendering::ScreenProperties*)pScreenProperties;
 
 {
     if(self = [super init])
@@ -23,10 +24,10 @@
                                                                                                  :pScreenProperties->GetScreenHeight()
                                                                                                  :pScreenProperties->GetPixelScale()] autorelease];
         
-        m_pModel = pModel;
+        m_pUiToNativeMessageBus = pUiToNativeMessageBus;
         m_pViewModel = pViewModel;
         m_pDetailsViewModel = pDetailsViewModel;
-        m_pInterop = Eegeo_NEW(ExampleApp::MyPinCreation::MyPinCreationConfirmationViewControllerInterop)(self, *m_pModel, *m_pViewModel, *pCompositeViewModel);
+        m_pInterop = Eegeo_NEW(ExampleApp::MyPinCreation::MyPinCreationConfirmationViewControllerInterop)(self, *m_pViewModel, *pCompositeViewModel);
         
         [self.pMyPinCreationConfirmationView setOnScreenStateToIntermediateValue:m_pViewModel->OnScreenState()];
         
@@ -61,12 +62,12 @@
 
 - (void) handleCloseButtonSelected
 {
-    m_pModel->SetCreationStage(ExampleApp::MyPinCreation::Inactive);
+    m_pUiToNativeMessageBus->Publish(ExampleApp::MyPinCreation::MyPinCreationViewStateChangedMessage(ExampleApp::MyPinCreation::Inactive));
 }
 
 - (void) handleConfirmButtonSelected
 {
-    m_pModel->SetCreationStage(ExampleApp::MyPinCreation::Details);
+    m_pUiToNativeMessageBus->Publish(ExampleApp::MyPinCreation::MyPinCreationViewStateChangedMessage(ExampleApp::MyPinCreation::Details));
     m_pViewModel->RemoveFromScreen();
     m_pDetailsViewModel->Open();
 }

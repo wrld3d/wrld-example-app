@@ -7,11 +7,11 @@ namespace ExampleApp
 {
     namespace MyPinCreationDetails
     {
-        MyPinCreationDetailsViewModule::MyPinCreationDetailsViewModule(MyPinCreation::IMyPinCreationModel& MyPinCreationModel,
-                                                                       IMyPinCreationDetailsViewModel& MyPinCreationDetailsViewModel)
+        MyPinCreationDetailsViewModule::MyPinCreationDetailsViewModule(ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
+                                                                       IMyPinCreationDetailsViewModel& myPinCreationDetailsViewModel)
         {
-            m_pController = [[MyPinCreationDetailsViewController alloc] initWithParams:&MyPinCreationModel
-                                                                                      :&MyPinCreationDetailsViewModel];
+            m_pController = [[MyPinCreationDetailsViewController alloc] initWithParams:&uiToNativeMessageBus
+                                                                                      :&myPinCreationDetailsViewModel];
         }
         
         MyPinCreationDetailsViewModule::~MyPinCreationDetailsViewModule()

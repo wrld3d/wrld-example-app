@@ -7,6 +7,7 @@
 #include "Rendering.h"
 #include "MyPinCreation.h"
 #include "IMyPinCreationInitiationViewModule.h"
+#include "UiToNativeMessageBus.h"
 
 namespace ExampleApp
 {
@@ -18,9 +19,9 @@ namespace ExampleApp
             MyPinCreationInitiationViewController* m_pController;
             
         public:
-            MyPinCreationInitiationViewModule(IMyPinCreationModel& model,
-                                        IMyPinCreationInitiationViewModel& viewModel,
-                                        const Eegeo::Rendering::ScreenProperties& screenProperties);
+            MyPinCreationInitiationViewModule(ExampleApp::ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
+                                              IMyPinCreationInitiationViewModel& viewModel,
+                                              const Eegeo::Rendering::ScreenProperties& screenProperties);
             
             ~MyPinCreationInitiationViewModule();
             

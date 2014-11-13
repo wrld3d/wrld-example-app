@@ -15,6 +15,11 @@
 #include "Search.h"
 #include "IdTypes.h"
 #include "MyPins.h"
+#include "MyPinCreationModelObserver.h"
+#include "MyPinCreationViewStateChangedHandler.h"
+#include "MyPinCreationViewSavePinHandler.h"
+#include "NativeToUiMessageBus.h"
+#include "UiToNativeMessageBus.h"
 
 namespace ExampleApp
 {
@@ -28,7 +33,9 @@ namespace ExampleApp
                               ExampleApp::Menu::IMenuViewModel& primaryMenuViewModel,
                               ExampleApp::Menu::IMenuViewModel& secondaryMenuViewModel,
                               ExampleApp::Search::ISearchQueryPerformer& searchQueryPerformer,
-                              ExampleApp::Menu::IMenuViewModel& searchResultMenuViewModel);
+                              ExampleApp::Menu::IMenuViewModel& searchResultMenuViewModel,
+                                ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus,
+                                ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus);
             
             ~MyPinCreationModule();
             
@@ -46,6 +53,9 @@ namespace ExampleApp
             MyPinCreationInitiationViewModel* m_pMyPinCreationInitiationViewModel;
             MyPinCreationConfirmationViewModel* m_pMyPinCreationConfirmationViewModel;
             MyPinCreationCompositeViewModel* m_pMyPinCreationCompositeViewModel;
+            MyPinCreationModelObserver* m_pMyPinCreationModelObserver;
+            MyPinCreationViewStateChangedHandler* m_pMyPinCreationViewStateChangedHandler;
+            MyPinCreationViewSavePinHandler* m_pMyPinCreationViewSavePinHandler;
         };
     }
 }

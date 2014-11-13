@@ -1,7 +1,6 @@
 // Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
 #include "MyPinCreationCompositeViewModel.h"
-#include "IMyPinCreationModel.h"
 #include "IMyPinCreationInitiationViewModel.h"
 #include "IMyPinCreationConfirmationViewModel.h"
 #include "IMenuViewModel.h"
@@ -12,16 +11,16 @@ namespace ExampleApp
 {
     namespace MyPinCreation
     {
-        MyPinCreationCompositeViewModel::MyPinCreationCompositeViewModel(IMyPinCreationModel& MyPinCreationModel,
+        MyPinCreationCompositeViewModel::MyPinCreationCompositeViewModel(ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus,
                                                                      IMyPinCreationInitiationViewModel& initiationViewModel,
                                                                      IMyPinCreationConfirmationViewModel& confirmationViewModel,
                                                                      ExampleApp::Menu::IMenuViewModel& primaryMenuViewModel,
                                                                      ExampleApp::Menu::IMenuViewModel& secondaryMenuViewModel,
                                                                      ExampleApp::Search::ISearchQueryPerformer& searchQueryPerformer,
                                                                      ExampleApp::Menu::IMenuViewModel& searchResultMenuViewModel)
-        : m_pStateChangeCallback(Eegeo_NEW((Eegeo::Helpers::TCallback1<MyPinCreationCompositeViewModel, MyPinCreationStage>))(this, &MyPinCreationCompositeViewModel::HandlePoiRingStateChanged))
-        , m_pSearchResultMenuStateChangedCallback(Eegeo_NEW((Eegeo::Helpers::TCallback2<MyPinCreationCompositeViewModel, ScreenControlViewModel::IScreenControlViewModel&, float>))(this, &MyPinCreationCompositeViewModel::HandleSearchResultMenuStateChanged))
-        , m_MyPinCreationModel(MyPinCreationModel)
+        : m_stateChangeHandler(this, &MyPinCreationCompositeViewModel::OnPoiRingStateChanged)
+        , m_searchResultMenuStateChangedCallback(this, &MyPinCreationCompositeViewModel::HandleSearchResultMenuStateChanged)
+        , m_nativeToUiMessageBus(nativeToUiMessageBus)
         , m_initiationViewModel(initiationViewModel)
         , m_confirmationViewModel(confirmationViewModel)
         , m_primaryMenuViewModel(primaryMenuViewModel)
@@ -29,22 +28,19 @@ namespace ExampleApp
         , m_searchQueryPerformer(searchQueryPerformer)
         , m_searchResultMenuViewModel(searchResultMenuViewModel)
         {
-            m_MyPinCreationModel.AddStateChangedCallback(*m_pStateChangeCallback);
-            m_searchResultMenuViewModel.InsertOnScreenStateChangedCallback(*m_pSearchResultMenuStateChangedCallback);
+            m_nativeToUiMessageBus.Subscribe(m_stateChangeHandler);
+            m_searchResultMenuViewModel.InsertOnScreenStateChangedCallback(m_searchResultMenuStateChangedCallback);
         }
         
         MyPinCreationCompositeViewModel::~MyPinCreationCompositeViewModel()
         {
-            m_MyPinCreationModel.RemoveStateChangedCallback(*m_pStateChangeCallback);
-            Eegeo_DELETE m_pStateChangeCallback;
-            
-            m_searchResultMenuViewModel.RemoveOnScreenStateChangedCallback(*m_pSearchResultMenuStateChangedCallback);
-            Eegeo_DELETE m_pSearchResultMenuStateChangedCallback;
+            m_nativeToUiMessageBus.Unsubscribe(m_stateChangeHandler);
+            m_searchResultMenuViewModel.RemoveOnScreenStateChangedCallback(m_searchResultMenuStateChangedCallback);
         }
         
-        void MyPinCreationCompositeViewModel::HandlePoiRingStateChanged(MyPinCreationStage& stage)
+        void MyPinCreationCompositeViewModel::OnPoiRingStateChanged(const ExampleApp::MyPinCreation::MyPinCreationStateChangedMessage &message)
         {
-            switch (stage)
+            switch (message.GetMyPinCreationStage())
             {
                 case Inactive:
                 {

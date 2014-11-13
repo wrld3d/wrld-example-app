@@ -6,6 +6,7 @@
 #include "MyPinCreationDetailsViewIncludes.h"
 #include "MyPinCreationDetails.h"
 #include "MyPinCreation.h"
+#include "UiToNativeMessageBus.h"
 
 namespace ExampleApp
 {
@@ -14,8 +15,8 @@ namespace ExampleApp
         class MyPinCreationDetailsViewModule : public IMyPinCreationDetailsViewModule
         {
         public:
-            MyPinCreationDetailsViewModule(MyPinCreation::IMyPinCreationModel& MyPinCreationModel,
-                                           IMyPinCreationDetailsViewModel& MyPinCreationDetailsViewModel);
+            MyPinCreationDetailsViewModule(ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
+                                           IMyPinCreationDetailsViewModel& myPinCreationDetailsViewModel);
             
             ~MyPinCreationDetailsViewModule();
             

@@ -16,6 +16,7 @@
 #include "SearchResultGainedFocusMessage.h"
 #include "SearchResultLostFocusMessage.h"
 #include "SearchResultInFocusChangedLocationMessage.h"
+#include "MyPinCreationStateChangedMessage.h"
 
 namespace ExampleApp
 {
@@ -33,6 +34,7 @@ namespace ExampleApp
 			, public Eegeo::Messaging::CatalogBinding<SearchResultOnMap::SearchResultGainedFocusMessage>
 			, public Eegeo::Messaging::CatalogBinding<SearchResultOnMap::SearchResultLostFocusMessage>
 			, public Eegeo::Messaging::CatalogBinding<SearchResultOnMap::SearchResultInFocusChangedLocationMessage>
+            , public Eegeo::Messaging::CatalogBinding<MyPinCreation::MyPinCreationStateChangedMessage>
 			, private Eegeo::NonCopyable
 		{
 

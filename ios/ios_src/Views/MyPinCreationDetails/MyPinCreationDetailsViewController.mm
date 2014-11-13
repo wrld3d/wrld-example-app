@@ -4,17 +4,19 @@
 #include "MyPinCreationDetailsViewControllerInterop.h"
 #include "MyPinCreationDetailsView.h"
 #include "MyPinCreationDetailsViewModel.h"
-#include "IMyPinCreationModel.h"
+#include "MyPinCreationViewStateChangedMessage.h"
+#include "MyPinCreationViewSavePinMessage.h"
+
 #include <string>
 
 @implementation MyPinCreationDetailsViewController
 
-- (id)initWithParams:(ExampleApp::MyPinCreation::IMyPinCreationModel*)pModel
+- (id)initWithParams:(ExampleApp::ExampleAppMessaging::UiToNativeMessageBus*) pUiToNativeMessageBus
                     :(ExampleApp::MyPinCreationDetails::IMyPinCreationDetailsViewModel*)pViewModel
 {
     if(self = [super init])
     {
-        m_pModel = pModel;
+        m_pUiToNativeMessageBus = pUiToNativeMessageBus;
         m_pViewModel = pViewModel;
         m_pInterop = Eegeo_NEW(ExampleApp::MyPinCreationDetails::MyPinCreationDetailsViewControllerInterop)(self, *m_pViewModel);
         
@@ -51,8 +53,10 @@
 
 - (void) handleClosedButtonPressed
 {
-    m_pModel->SetCreationStage(ExampleApp::MyPinCreation::Inactive);
     m_pViewModel->Close();
+    
+    ExampleApp::MyPinCreation::MyPinCreationViewStateChangedMessage message(ExampleApp::MyPinCreation::Inactive);
+    m_pUiToNativeMessageBus->Publish(message);
 }
 
 - (void) handleConfirmButtonPressed:(NSString*) title
@@ -60,8 +64,11 @@
                                    :(UIImage*) image
                                    :(BOOL) shouldShare
 {
-    std::string titleAsString = title ? [title UTF8String] : "";
-    std::string descriptionAsString = description ? [description UTF8String] : "";
+    
+    m_pViewModel->Close();
+    
+    std::string titleAsString = title ? [title UTF8String] : "Untitled Pin";
+    std::string descriptionAsString = description ? [description UTF8String] : "No Description";
     std::string imagePathAsString;
     
     Byte* imageDataBytes = NULL;
@@ -73,14 +80,14 @@
         imageDataBytes = (Byte*) [imageData bytes];
         imageSize = [imageData length] / sizeof(Byte);
     }
-
-    m_pModel->SavePoi(titleAsString,
-                      descriptionAsString,
-                      imageDataBytes,
-                      imageSize,
-                      shouldShare);
     
-    m_pViewModel->Close();
+    ExampleApp::MyPinCreation::MyPinCreationViewSavePinMessage message(titleAsString,
+                                                                       descriptionAsString,
+                                                                       imageDataBytes,
+                                                                       imageSize,
+                                                                       shouldShare);
+    
+    m_pUiToNativeMessageBus->Publish(message);
 }
 
 @end

@@ -41,6 +41,8 @@ namespace ExampleApp
                          size_t imageSize,
                          bool shouldShare);
             
+            void SubmitPinToWebService(const MyPinModel& myPinModel);
+            
         private:
             IMyPinsRepository& m_myPinsRepository;
             MyPinsFileIO& m_myPinsFileIO;

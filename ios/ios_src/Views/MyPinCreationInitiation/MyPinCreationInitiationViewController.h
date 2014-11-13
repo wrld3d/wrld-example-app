@@ -6,17 +6,18 @@
 #include "MyPinCreation.h"
 #include "MyPinCreationInitiationViewIncludes.h"
 #include "Rendering.h"
+#include "UiToNativeMessageBus.h"
 
 @class MyPinCreationInitiationView;
 
 @interface MyPinCreationInitiationViewController : UIViewController
 {
-    ExampleApp::MyPinCreation::IMyPinCreationModel* m_pModel;
+    ExampleApp::ExampleAppMessaging::UiToNativeMessageBus* m_pUiToNativeMessageBus;
     ExampleApp::MyPinCreation::IMyPinCreationInitiationViewModel* m_pViewModel;
     ExampleApp::MyPinCreation::MyPinCreationInitiationViewControllerInterop* m_pInterop;
 }
 
-- (id)initWithParams:(ExampleApp::MyPinCreation::IMyPinCreationModel*)pModel
+- (id)initWithParams:(ExampleApp::ExampleAppMessaging::UiToNativeMessageBus*) pUiToNativeMessageBus
                     :(ExampleApp::MyPinCreation::IMyPinCreationInitiationViewModel*)pViewModel
                     :(const Eegeo::Rendering::ScreenProperties*)pScreenProperties;
 

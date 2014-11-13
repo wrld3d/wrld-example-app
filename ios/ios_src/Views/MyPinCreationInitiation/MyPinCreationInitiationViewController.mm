@@ -5,12 +5,13 @@
 #include "MyPinCreationInitiationViewModel.h"
 #include "MyPinCreationInitiationViewControllerInterop.h"
 #include "ScreenProperties.h"
+#include "MyPinCreationViewStateChangedMessage.h"
 
 @implementation MyPinCreationInitiationViewController
 
-- (id)initWithParams:(ExampleApp::MyPinCreation::IMyPinCreationModel*)pModel
+- (id)initWithParams:(ExampleApp::ExampleAppMessaging::UiToNativeMessageBus*) pUiToNativeMessageBus
                     :(ExampleApp::MyPinCreation::IMyPinCreationInitiationViewModel*)pViewModel
-                    :(const Eegeo::Rendering::ScreenProperties*)pScreenProperties
+                    :(const Eegeo::Rendering::ScreenProperties*)pScreenProperties;
 
 {
     if(self = [super init])
@@ -20,9 +21,9 @@
                                                                                      :pScreenProperties->GetScreenHeight()
                                                                                      :pScreenProperties->GetPixelScale()] autorelease];
         
-        m_pModel = pModel;
+        m_pUiToNativeMessageBus = pUiToNativeMessageBus;
         m_pViewModel = pViewModel;
-        m_pInterop = Eegeo_NEW(ExampleApp::MyPinCreation::MyPinCreationInitiationViewControllerInterop)(self, *m_pModel, *m_pViewModel);
+        m_pInterop = Eegeo_NEW(ExampleApp::MyPinCreation::MyPinCreationInitiationViewControllerInterop)(self, *m_pViewModel);
 
         [self.pMyPinCreationInitiationView setOnScreenStateToIntermediateValue:m_pViewModel->OnScreenState()];
         
@@ -60,7 +61,8 @@
 
 - (void) setSelected:(BOOL)selected
 {
-    m_pModel->SetCreationStage(ExampleApp::MyPinCreation::Ring);
+    ExampleApp::MyPinCreation::MyPinCreationViewStateChangedMessage message(ExampleApp::MyPinCreation::Ring);
+    m_pUiToNativeMessageBus->Publish(message);
 }
 
 

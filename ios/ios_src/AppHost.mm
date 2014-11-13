@@ -223,17 +223,17 @@ void AppHost::CreateApplicationViewModules()
 	m_pAboutPageViewModule = Eegeo_NEW(ExampleApp::AboutPage::AboutPageViewModule)(app.AboutPageModule().GetAboutPageModel(),
 	                         app.AboutPageModule().GetAboutPageViewModel());
     
-    m_pMyPinCreationInitiationViewModule = Eegeo_NEW(ExampleApp::MyPinCreation::MyPinCreationInitiationViewModule)(app.MyPinCreationModule().GetMyPinCreationModel(),
+    m_pMyPinCreationInitiationViewModule = Eegeo_NEW(ExampleApp::MyPinCreation::MyPinCreationInitiationViewModule)(m_uiToNativeMessageBus,
                                                                                                                    app.MyPinCreationModule().GetMyPinCreationInitiationViewModel(),
                                                                                                                    *m_pScreenProperties);
     
-    m_pMyPinCreationConfirmationViewModule = Eegeo_NEW(ExampleApp::MyPinCreation::MyPinCreationConfirmationViewModule)(app.MyPinCreationModule().GetMyPinCreationModel(),
+    m_pMyPinCreationConfirmationViewModule = Eegeo_NEW(ExampleApp::MyPinCreation::MyPinCreationConfirmationViewModule)(m_uiToNativeMessageBus,
                                                                                                                        app.MyPinCreationModule().GetMyPinCreationConfirmationViewModel(),
                                                                                                                        app.MyPinCreationModule().GetMyPinCreationCompositeViewModel(),
                                                                                                                        app.MyPinCreationDetailsModule().GetMyPinCreationDetailsViewModel(),
                                                                                                                        *m_pScreenProperties);
     
-    m_pMyPinCreationDetailsViewModule = Eegeo_NEW(ExampleApp::MyPinCreationDetails::MyPinCreationDetailsViewModule)(app.MyPinCreationModule().GetMyPinCreationModel(),
+    m_pMyPinCreationDetailsViewModule = Eegeo_NEW(ExampleApp::MyPinCreationDetails::MyPinCreationDetailsViewModule)(m_uiToNativeMessageBus,
                                                                                                                     app.MyPinCreationDetailsModule().GetMyPinCreationDetailsViewModel());
 
     // 3d map view layer.

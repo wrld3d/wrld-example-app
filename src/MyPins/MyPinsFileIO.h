@@ -25,11 +25,7 @@ namespace ExampleApp
                                      int myPinId,
                                      std::string& out_filename);
             
-            void SavePinModelToDisk(const int pinId,
-                                    const std::string& title,
-                                    const std::string& description,
-                                    const std::string& imagePath,
-                                    const Eegeo::Space::LatLong& latLong);
+            void SavePinModelToDisk(const MyPinModel& pinModel);
             
             void LoadPinModelsFromDisk(std::vector<MyPinModel>& out_pinModels);
         

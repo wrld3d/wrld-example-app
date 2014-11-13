@@ -15,10 +15,9 @@ namespace ExampleApp
         class MyPinCreationInitiationViewControllerInterop : private Eegeo::NonCopyable
         {
             MyPinCreationInitiationViewController* m_pController;
-            IMyPinCreationModel& m_model;
             IMyPinCreationInitiationViewModel& m_viewModel;
 
-            Eegeo::Helpers::ICallback2<ScreenControlViewModel::IScreenControlViewModel&, float>* m_pOnScreenStateChangedCallback;
+            Eegeo::Helpers::TCallback2<MyPinCreationInitiationViewControllerInterop, ScreenControlViewModel::IScreenControlViewModel&, float> m_onScreenStateChangedCallback;
             
             void OnScreenStateChangedCallback(ScreenControlViewModel::IScreenControlViewModel &viewModel, float& onScreenState)
             {
@@ -28,21 +27,17 @@ namespace ExampleApp
         public:
             
             MyPinCreationInitiationViewControllerInterop(MyPinCreationInitiationViewController* pController,
-                                                   IMyPinCreationModel& model,
-                                                   IMyPinCreationInitiationViewModel& viewModel)
+                                                         IMyPinCreationInitiationViewModel& viewModel)
             : m_pController(pController)
-            , m_model(model)
             , m_viewModel(viewModel)
-            , m_pOnScreenStateChangedCallback(Eegeo_NEW((Eegeo::Helpers::TCallback2<MyPinCreationInitiationViewControllerInterop, ScreenControlViewModel::IScreenControlViewModel&, float>))(this, &MyPinCreationInitiationViewControllerInterop::OnScreenStateChangedCallback))
+            , m_onScreenStateChangedCallback(this, &MyPinCreationInitiationViewControllerInterop::OnScreenStateChangedCallback)
             {
-                m_viewModel.InsertOnScreenStateChangedCallback(*m_pOnScreenStateChangedCallback);
+                m_viewModel.InsertOnScreenStateChangedCallback(m_onScreenStateChangedCallback);
             }
             
             ~MyPinCreationInitiationViewControllerInterop()
             {
-                m_viewModel.RemoveOnScreenStateChangedCallback(*m_pOnScreenStateChangedCallback);
-    
-                Eegeo_DELETE m_pOnScreenStateChangedCallback;
+                m_viewModel.RemoveOnScreenStateChangedCallback(m_onScreenStateChangedCallback);
             }
         };
         

@@ -8,11 +8,11 @@ namespace ExampleApp
 {
     namespace MyPinCreation
     {
-        MyPinCreationInitiationViewModule::MyPinCreationInitiationViewModule(IMyPinCreationModel& model,
+        MyPinCreationInitiationViewModule::MyPinCreationInitiationViewModule(ExampleApp::ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
                                                                              IMyPinCreationInitiationViewModel& viewModel,
                                                                              const Eegeo::Rendering::ScreenProperties& screenProperties)
         {
-            m_pController = [[MyPinCreationInitiationViewController alloc] initWithParams:&model
+            m_pController = [[MyPinCreationInitiationViewController alloc] initWithParams:&uiToNativeMessageBus
                                                                                          :&viewModel
                                                                                          :&screenProperties];
         }

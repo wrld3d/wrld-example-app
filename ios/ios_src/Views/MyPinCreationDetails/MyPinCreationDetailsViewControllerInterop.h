@@ -17,8 +17,8 @@ namespace ExampleApp
             MyPinCreationDetailsViewController* m_pController;
             IMyPinCreationDetailsViewModel& m_viewModel;
             
-            Eegeo::Helpers::ICallback0* m_pMyPinCreationDetailsOpenedCallback;
-            Eegeo::Helpers::ICallback0* m_pMyPinCreationDetailsClosedCallback;
+            Eegeo::Helpers::TCallback0<MyPinCreationDetailsViewControllerInterop> m_myPinCreationDetailsOpenedCallback;
+            Eegeo::Helpers::TCallback0<MyPinCreationDetailsViewControllerInterop> m_myPinCreationDetailsClosedCallback;
             
             void HandleMyPinCreationDetailsOpened()
             {
@@ -32,23 +32,20 @@ namespace ExampleApp
             
         public:
             MyPinCreationDetailsViewControllerInterop(MyPinCreationDetailsViewController* pController,
-                                                    IMyPinCreationDetailsViewModel& viewModel)
+                                                      IMyPinCreationDetailsViewModel& viewModel)
             : m_pController(pController)
             , m_viewModel(viewModel)
-            , m_pMyPinCreationDetailsOpenedCallback(Eegeo_NEW(Eegeo::Helpers::TCallback0<MyPinCreationDetailsViewControllerInterop>(this, &MyPinCreationDetailsViewControllerInterop::HandleMyPinCreationDetailsOpened)))
-            , m_pMyPinCreationDetailsClosedCallback(Eegeo_NEW(Eegeo::Helpers::TCallback0<MyPinCreationDetailsViewControllerInterop>(this, &MyPinCreationDetailsViewControllerInterop::HandleMyPinCreationDetailsClosed)))
+            , m_myPinCreationDetailsOpenedCallback(this, &MyPinCreationDetailsViewControllerInterop::HandleMyPinCreationDetailsOpened)
+            , m_myPinCreationDetailsClosedCallback(this, &MyPinCreationDetailsViewControllerInterop::HandleMyPinCreationDetailsClosed)
             {
-                m_viewModel.InsertOpenedCallback(*m_pMyPinCreationDetailsOpenedCallback);
-                m_viewModel.InsertClosedCallback(*m_pMyPinCreationDetailsClosedCallback);
+                m_viewModel.InsertOpenedCallback(m_myPinCreationDetailsOpenedCallback);
+                m_viewModel.InsertClosedCallback(m_myPinCreationDetailsClosedCallback);
             }
             
             ~MyPinCreationDetailsViewControllerInterop()
             {
-                m_viewModel.RemoveOpenedCallback(*m_pMyPinCreationDetailsOpenedCallback);
-                m_viewModel.RemoveClosedCallback(*m_pMyPinCreationDetailsClosedCallback);
-                
-                Eegeo_DELETE m_pMyPinCreationDetailsOpenedCallback;
-                Eegeo_DELETE m_pMyPinCreationDetailsClosedCallback;
+                m_viewModel.RemoveOpenedCallback(m_myPinCreationDetailsOpenedCallback);
+                m_viewModel.RemoveClosedCallback(m_myPinCreationDetailsClosedCallback);
             }
         };
     }

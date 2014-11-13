@@ -7,18 +7,19 @@
 #include "MyPinCreationDetails.h"
 #include "MyPinCreationConfirmationViewIncludes.h"
 #include "Rendering.h"
+#include "UiToNativeMessageBus.h"
 
 @class MyPinCreationConfirmationView;
 
 @interface MyPinCreationConfirmationViewController : UIViewController
 {
-    ExampleApp::MyPinCreation::IMyPinCreationModel* m_pModel;
+    ExampleApp::ExampleAppMessaging::UiToNativeMessageBus* m_pUiToNativeMessageBus;
     ExampleApp::MyPinCreation::IMyPinCreationConfirmationViewModel* m_pViewModel;
     ExampleApp::MyPinCreationDetails::IMyPinCreationDetailsViewModel* m_pDetailsViewModel;
     ExampleApp::MyPinCreation::MyPinCreationConfirmationViewControllerInterop* m_pInterop;
 }
 
-- (id)initWithParams:(ExampleApp::MyPinCreation::IMyPinCreationModel*)pModel
+- (id)initWithParams:(ExampleApp::ExampleAppMessaging::UiToNativeMessageBus*)pUiToNativeMessageBus
                     :(ExampleApp::MyPinCreation::IMyPinCreationConfirmationViewModel*)pViewModel
                     :(ExampleApp::MyPinCreation::IMyPinCreationCompositeViewModel*)pCompositeViewModel
                     :(ExampleApp::MyPinCreationDetails::IMyPinCreationDetailsViewModel*)pDetailsViewModel

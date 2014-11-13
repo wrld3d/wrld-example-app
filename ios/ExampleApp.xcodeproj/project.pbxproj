@@ -1047,6 +1047,12 @@
 		5695FEEA1A13C1DE00F1E6CE /* MyPinCreationInitiationViewIncludes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPinCreationInitiationViewIncludes.h; sourceTree = "<group>"; };
 		5695FEEB1A13C1DE00F1E6CE /* MyPinCreationInitiationViewModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPinCreationInitiationViewModule.h; sourceTree = "<group>"; };
 		5695FEEC1A13C1DE00F1E6CE /* MyPinCreationInitiationViewModule.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyPinCreationInitiationViewModule.mm; sourceTree = "<group>"; };
+		5695FF001A14B11A00F1E6CE /* MyPinCreationStateChangedMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyPinCreationStateChangedMessage.h; sourceTree = "<group>"; };
+		5695FF011A14B2C300F1E6CE /* MyPinCreationModelObserver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyPinCreationModelObserver.h; sourceTree = "<group>"; };
+		5695FF021A14B7F500F1E6CE /* MyPinCreationViewStateChangedMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyPinCreationViewStateChangedMessage.h; sourceTree = "<group>"; };
+		5695FF031A14BF3800F1E6CE /* MyPinCreationViewStateChangedHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyPinCreationViewStateChangedHandler.h; sourceTree = "<group>"; };
+		5695FF041A14C75300F1E6CE /* MyPinCreationViewSavePinMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyPinCreationViewSavePinMessage.h; sourceTree = "<group>"; };
+		5695FF061A14CCE400F1E6CE /* MyPinCreationViewSavePinHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyPinCreationViewSavePinHandler.h; sourceTree = "<group>"; };
 		56A88C9B1A135DC300FCBE9A /* MyPinMenuOption.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyPinMenuOption.h; sourceTree = "<group>"; };
 		56A8DF7A19FEA977009DC352 /* Geosphere_01.pod */ = {isa = PBXFileReference; lastKnownFileType = file; path = Geosphere_01.pod; sourceTree = "<group>"; };
 		56B258D61A110CE6003C50CF /* IMyPinsModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IMyPinsModule.h; sourceTree = "<group>"; };
@@ -1995,6 +2001,12 @@
 				5695FE991A13C17800F1E6CE /* MyPinCreationScreenControl.h */,
 				5695FE9A1A13C17800F1E6CE /* MyPinCreationStage.h */,
 				5695FE9B1A13C17800F1E6CE /* PoiRing */,
+				5695FF001A14B11A00F1E6CE /* MyPinCreationStateChangedMessage.h */,
+				5695FF011A14B2C300F1E6CE /* MyPinCreationModelObserver.h */,
+				5695FF021A14B7F500F1E6CE /* MyPinCreationViewStateChangedMessage.h */,
+				5695FF031A14BF3800F1E6CE /* MyPinCreationViewStateChangedHandler.h */,
+				5695FF041A14C75300F1E6CE /* MyPinCreationViewSavePinMessage.h */,
+				5695FF061A14CCE400F1E6CE /* MyPinCreationViewSavePinHandler.h */,
 			);
 			path = MyPinCreation;
 			sourceTree = "<group>";

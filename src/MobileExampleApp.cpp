@@ -43,7 +43,7 @@
 
 namespace ExampleApp
 {
-    const std::string ApiKey = "OBTAIN API_KEY FROM https://appstore.eegeo.com AND INSERT IT HERE";
+    const std::string ApiKey = "c64bd6720e714a22bd5d14b35d232c44";
     const std::string DecartaApiKey = "OBTAIN DECARTA SEARCH KEY AND INSERT IT HERE";
 
 	namespace
@@ -301,11 +301,13 @@ namespace ExampleApp
         m_pPrimaryMenuModule->AddMenuSection("My Pins", "place", m_pMyPinsModule->GetMyPinsMenuModel(), true);
         
         m_pMyPinCreationModule = Eegeo_NEW(ExampleApp::MyPinCreation::MyPinCreationModule)(m_pMyPinsModule->GetMyPinsService(),
-                                                                                     m_identityProvider,
-                                                                                     m_pPrimaryMenuModule->GetPrimaryMenuViewModel(),
-                                                                                     m_pSecondaryMenuModule->GetSecondaryMenuViewModel(),
-                                                                                     m_pSearchModule->GetSearchQueryPerformer(),
-                                                                                     m_pSearchResultMenuModule->GetMenuViewModel());
+                                                                                           m_identityProvider,
+                                                                                           m_pPrimaryMenuModule->GetPrimaryMenuViewModel(),
+                                                                                           m_pSecondaryMenuModule->GetSecondaryMenuViewModel(),
+                                                                                           m_pSearchModule->GetSearchQueryPerformer(),
+                                                                                           m_pSearchResultMenuModule->GetMenuViewModel(),
+                                                                                           m_nativeToUiMessageBus,
+                                                                                           m_uiToNativeMessageBus);
         
         m_pPoiRingModule = Eegeo_NEW(ExampleApp::MyPinCreation::PoiRing::PoiRingModule)(m_pMyPinCreationModule->GetMyPinCreationModel(),
                                                                                       m_platformAbstractions,
