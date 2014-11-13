@@ -16,16 +16,9 @@ namespace ExampleApp
 		public:
 			WeatherMenuStateOption(
 			    WeatherMenuStateModel& weatherStateModel,
-			    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus)
-				: m_weatherStateModel(weatherStateModel)
-				, m_uiToNativeMessageBus(uiToNativeMessageBus)
-			{
-			}
+			    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus);
 
-			void Select()
-			{
-				m_uiToNativeMessageBus.Publish(WeatherSelectedMessage(m_weatherStateModel));
-			}
+			void Select();
 
 		private:
 

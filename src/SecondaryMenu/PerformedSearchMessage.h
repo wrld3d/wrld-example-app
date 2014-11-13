@@ -14,22 +14,11 @@ namespace ExampleApp
 			bool m_isCategory;
 
 		public:
-			PerformedSearchMessage(const std::string& searchQuery, bool isCategory)
-				: m_searchQuery(searchQuery)
-				, m_isCategory(isCategory)
-			{
+			PerformedSearchMessage(const std::string& searchQuery, bool isCategory);
 
-			}
+			const std::string& SearchQuery() const;
 
-			const std::string& SearchQuery() const
-			{
-				return m_searchQuery;
-			}
-
-			bool IsCategory() const
-			{
-				return m_isCategory;
-			}
+			bool IsCategory() const;
 		};
 	}
 }

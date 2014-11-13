@@ -18,26 +18,14 @@ namespace ExampleApp
 			ExampleAppMessaging::NativeToUiMessageBus& m_messageBus;
 			Eegeo::Helpers::TCallback1<SearchResultMenuSearchQueryRemovedMessageHandler, const Search::SearchQueryRemovedMessage&> m_handlerBinding;
 
-			void HandleReceivedSearchQueryRemovedMessage(const Search::SearchQueryRemovedMessage& message)
-			{
-				m_searchResultMenuViewModel.SetHasSearchQuery(false);
-			}
+			void HandleReceivedSearchQueryRemovedMessage(const Search::SearchQueryRemovedMessage& message);
 
 		public:
 			SearchResultMenuSearchQueryRemovedMessageHandler(
 			    SearchResultMenu::ISearchResultMenuViewModel& searchResultMenuViewModel,
-			    ExampleAppMessaging::NativeToUiMessageBus& messageBus)
-				: m_searchResultMenuViewModel(searchResultMenuViewModel)
-				, m_messageBus(messageBus)
-				, m_handlerBinding(this, &SearchResultMenuSearchQueryRemovedMessageHandler::HandleReceivedSearchQueryRemovedMessage)
-			{
-				m_messageBus.Subscribe(m_handlerBinding);
-			}
+			    ExampleAppMessaging::NativeToUiMessageBus& messageBus);
 
-			~SearchResultMenuSearchQueryRemovedMessageHandler()
-			{
-				m_messageBus.Unsubscribe(m_handlerBinding);
-			}
+			~SearchResultMenuSearchQueryRemovedMessageHandler();
 		};
 	}
 }

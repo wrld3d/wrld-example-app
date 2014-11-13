@@ -131,13 +131,13 @@ public class BackgroundThreadActivity extends MainActivity
 
 		m_nativeAppWindowPtr = 0;
 	}
-
+/*
 	@Override
 	public void onBackPressed()
 	{
 		moveTaskToBack(true);
 	}
-
+*/
 	@Override
 	public void surfaceCreated(SurfaceHolder holder)
 	{

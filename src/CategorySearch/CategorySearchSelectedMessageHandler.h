@@ -17,26 +17,14 @@ namespace ExampleApp
 			ExampleAppMessaging::UiToNativeMessageBus& m_messageBus;
 			Eegeo::Helpers::TCallback1<CategorySearchSelectedMessageHandler, const CategorySearchSelectedMessage&> m_handlerBinding;
 
-			void HandleReceivedCategorySearchSelectedMessage(const CategorySearchSelectedMessage& message)
-			{
-				m_searchQueryPerformer.PerformSearchQuery(message.Category(), true);
-			}
+			void HandleReceivedCategorySearchSelectedMessage(const CategorySearchSelectedMessage& message);
 
 		public:
 			CategorySearchSelectedMessageHandler(
 			    Search::ISearchQueryPerformer& searchQueryPerformer,
-			    ExampleAppMessaging::UiToNativeMessageBus& messageBus)
-				: m_searchQueryPerformer(searchQueryPerformer)
-				, m_messageBus(messageBus)
-				, m_handlerBinding(this, &CategorySearchSelectedMessageHandler::HandleReceivedCategorySearchSelectedMessage)
-			{
-				m_messageBus.Subscribe(m_handlerBinding);
-			}
+			    ExampleAppMessaging::UiToNativeMessageBus& messageBus);
 
-			~CategorySearchSelectedMessageHandler()
-			{
-				m_messageBus.Unsubscribe(m_handlerBinding);
-			}
+			~CategorySearchSelectedMessageHandler();
 		};
 	}
 }

@@ -15,15 +15,9 @@ namespace ExampleApp
 		public:
 			SearchResultRemovedMessage(
 			    const Search::SearchResultModel& model
-			)
-				: m_model(model)
-			{
-			}
+			);
 
-			const Search::SearchResultModel& Model() const
-			{
-				return m_model;
-			}
+			const Search::SearchResultModel& Model() const;
 		};
 	}
 }

@@ -21,24 +21,15 @@ namespace ExampleApp
 		public:
 			PlaceJumpMenuOption(PlaceJumpModel jumpModel,
 			                    ExampleApp::Menu::IMenuViewModel& menuViewModel,
-			                    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus)
-				: m_jumpModel(jumpModel)
-				, m_menuViewModel(menuViewModel)
-				, m_uiToNativeMessageBus(uiToNativeMessageBus)
-			{
-			}
+			                    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus);
 
-			void Select()
-			{
-				m_menuViewModel.Close();
-				m_uiToNativeMessageBus.Publish(PlaceJumpSelectedMessage(m_jumpModel));
-			}
+			void Select();
 
 		private:
 
 			PlaceJumpModel m_jumpModel;
-			ExampleAppMessaging::UiToNativeMessageBus& m_uiToNativeMessageBus;
 			ExampleApp::Menu::IMenuViewModel& m_menuViewModel;
+			ExampleAppMessaging::UiToNativeMessageBus& m_uiToNativeMessageBus;
 		};
 
 	}

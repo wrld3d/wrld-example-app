@@ -19,25 +19,13 @@ namespace ExampleApp
 			ExampleApp::ExampleAppMessaging::NativeToUiMessageBus& m_nativeToUiMessageBus;
 			Eegeo::Helpers::TCallback0<CompassModeObserver> m_callback;
 
-			void OnGpsModeChanged()
-			{
-				m_nativeToUiMessageBus.Publish(CompassModeChangedMessage(m_model.GetGpsMode()));
-			}
+			void OnGpsModeChanged();
 
 		public:
 			CompassModeObserver(ICompassModel& model,
-			                    ExampleApp::ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus)
-				: m_model(model)
-				, m_nativeToUiMessageBus(nativeToUiMessageBus)
-				, m_callback(this, &CompassModeObserver::OnGpsModeChanged)
-			{
-				m_model.InsertGpsModeChangedCallback(m_callback);
-			}
+			                    ExampleApp::ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus);
 
-			~CompassModeObserver()
-			{
-				m_model.RemoveGpsModeChangedCallback(m_callback);
-			}
+			~CompassModeObserver();
 		};
 	}
 }

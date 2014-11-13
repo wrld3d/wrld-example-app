@@ -12,15 +12,9 @@ namespace ExampleApp
 			float m_headingRadians;
 
 		public:
-			CompassHeadingUpdateMessage(float headingRadians)
-				: m_headingRadians(headingRadians)
-			{
-			}
+			CompassHeadingUpdateMessage(float headingRadians);
 
-			float GetHeadingRadians() const
-			{
-				return m_headingRadians;
-			}
+			float GetHeadingRadians() const;
 		};
 	}
 }

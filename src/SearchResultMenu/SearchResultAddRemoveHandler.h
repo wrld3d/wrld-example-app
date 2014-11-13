@@ -28,51 +28,18 @@ namespace ExampleApp
 			Eegeo::Helpers::TCallback1<SearchResultAddRemoveHandler, const SearchResultAddedMessage&> m_handleSearchResultAddedMessageBinding;
 			Eegeo::Helpers::TCallback1<SearchResultAddRemoveHandler, const SearchResultRemovedMessage&> m_handleSearchResultRemovedMessageBinding;
 
-			void HandleSearchResultAddedMessage(const SearchResultAddedMessage& message)
-			{
-				const Search::SearchResultModel& model(message.Model());
+			void HandleSearchResultAddedMessage(const SearchResultAddedMessage& message);
 
-				m_menuOptions.AddItem(
-				    model.GetIdentifier(),
-				    model.GetTitle(),
-				    model.GetAddress(),
-				    model.GetCategory(),
-				    Eegeo_NEW(SearchResultItemModel)(
-				        model.GetTitle(),
-				        model.GetLocation().ToECEF(),
-				        m_menuViewModel,
-				        m_uiToNativeMessageBus)
-				);
-			}
-
-			void HandleSearchResultRemovedMessage(const SearchResultRemovedMessage& message)
-			{
-				const Search::SearchResultModel& model(message.Model());
-				m_menuOptions.RemoveItem(model.GetIdentifier());
-			}
+			void HandleSearchResultRemovedMessage(const SearchResultRemovedMessage& message);
 
 		public:
 			SearchResultAddRemoveHandler(
 			    Menu::IMenuOptionsModel& menuOptions,
 			    Menu::IMenuViewModel& menuViewModel,
 			    ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus,
-			    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus)
-				: m_menuOptions(menuOptions)
-				, m_menuViewModel(menuViewModel)
-				, m_nativeToUiMessageBus(nativeToUiMessageBus)
-				, m_uiToNativeMessageBus(uiToNativeMessageBus)
-				, m_handleSearchResultAddedMessageBinding(this, &SearchResultAddRemoveHandler::HandleSearchResultAddedMessage)
-				, m_handleSearchResultRemovedMessageBinding(this, &SearchResultAddRemoveHandler::HandleSearchResultRemovedMessage)
-			{
-				m_nativeToUiMessageBus.Subscribe(m_handleSearchResultAddedMessageBinding);
-				m_nativeToUiMessageBus.Subscribe(m_handleSearchResultRemovedMessageBinding);
-			}
+			    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus);
 
-			~SearchResultAddRemoveHandler()
-			{
-				m_nativeToUiMessageBus.Unsubscribe(m_handleSearchResultAddedMessageBinding);
-				m_nativeToUiMessageBus.Unsubscribe(m_handleSearchResultRemovedMessageBinding);
-			}
+			~SearchResultAddRemoveHandler();
 		};
 	}
 }

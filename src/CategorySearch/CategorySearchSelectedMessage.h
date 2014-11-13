@@ -15,15 +15,9 @@ namespace ExampleApp
 		public:
 			CategorySearchSelectedMessage(
 			    const std::string& category
-			)
-				: m_category(category)
-			{
-			}
+			);
 
-			const std::string& Category() const
-			{
-				return m_category;
-			}
+			const std::string& Category() const;
 		};
 	}
 }

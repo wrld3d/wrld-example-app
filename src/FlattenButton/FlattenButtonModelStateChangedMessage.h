@@ -11,16 +11,9 @@ namespace ExampleApp
 			bool m_isFlattened;
 
 		public:
-			FlattenButtonModelStateChangedMessage(bool isFlattened)
-				: m_isFlattened(isFlattened)
-			{
+			FlattenButtonModelStateChangedMessage(bool isFlattened);
 
-			}
-
-			bool IsFlattened() const
-			{
-				return m_isFlattened;
-			}
+			bool IsFlattened() const;
 		};
 	}
 }

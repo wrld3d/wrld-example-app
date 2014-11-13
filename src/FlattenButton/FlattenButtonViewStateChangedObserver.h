@@ -17,33 +17,13 @@ namespace ExampleApp
 			ExampleAppMessaging::UiToNativeMessageBus& m_messageBus;
 			Eegeo::Helpers::TCallback1<FlattenButtonViewStateChangedObserver, const FlattenButtonViewStateChangedMessage&> m_handlerBinding;
 
-			void HandleReceivedFlattenButtonStateChangedMessage(const FlattenButtonViewStateChangedMessage& message)
-			{
-				if(message.IsFlattened())
-				{
-					m_flattenButtonModel.Flatten();
-				}
-				else
-				{
-					m_flattenButtonModel.Unflatten();
-				}
-			}
+			void HandleReceivedFlattenButtonStateChangedMessage(const FlattenButtonViewStateChangedMessage& message);
 
 		public:
 			FlattenButtonViewStateChangedObserver(IFlattenButtonModel& flattenButtonModel,
-			                                      ExampleAppMessaging::UiToNativeMessageBus& messageBus)
-				: m_flattenButtonModel(flattenButtonModel)
-				, m_messageBus(messageBus)
-				, m_handlerBinding(this, &FlattenButtonViewStateChangedObserver::HandleReceivedFlattenButtonStateChangedMessage)
-			{
-				m_messageBus.Subscribe(m_handlerBinding);
-			}
+			                                      ExampleAppMessaging::UiToNativeMessageBus& messageBus);
 
-			~FlattenButtonViewStateChangedObserver()
-			{
-				m_messageBus.Unsubscribe(m_handlerBinding);
-			}
-
+			~FlattenButtonViewStateChangedObserver();
 		};
 	}
 }

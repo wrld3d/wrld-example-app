@@ -22,42 +22,18 @@ namespace ExampleApp
 			Eegeo::Helpers::TCallback1<SearchResultOnMapInFocusObserver, const SearchResultLostFocusMessage&> m_lostFocusHandler;
 			Eegeo::Helpers::TCallback1<SearchResultOnMapInFocusObserver, const SearchResultInFocusChangedLocationMessage&> m_focusScreenLocationUpdatedHandler;
 
-			void HandleReceivedSearchResultGainedFocusMessage(const SearchResultGainedFocusMessage& message)
-			{
-				m_searchResultOnMapInFocusViewModel.Open(message.FocussedModel(), message.ScreenLocation());
-			}
+			void HandleReceivedSearchResultGainedFocusMessage(const SearchResultGainedFocusMessage& message);
 
-			void HandleReceivedSearchResultLostFocusMessage(const SearchResultLostFocusMessage& message)
-			{
-				m_searchResultOnMapInFocusViewModel.Close();
-			}
+			void HandleReceivedSearchResultLostFocusMessage(const SearchResultLostFocusMessage& message);
 
-			void HandleReceivedSearchResultInFocusChangedLocationMessage(const SearchResultInFocusChangedLocationMessage& message)
-			{
-				m_searchResultOnMapInFocusViewModel.UpdateScreenLocation(message.ScreenLocation());
-			}
+			void HandleReceivedSearchResultInFocusChangedLocationMessage(const SearchResultInFocusChangedLocationMessage& message);
 
 		public:
 			SearchResultOnMapInFocusObserver(
 			    ISearchResultOnMapInFocusViewModel& searchResultOnMapInFocusViewModel,
-			    ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus)
-				: m_searchResultOnMapInFocusViewModel(searchResultOnMapInFocusViewModel)
-				, m_nativeToUiMessageBus(nativeToUiMessageBus)
-				, m_gainedFocusHandler(this, &SearchResultOnMapInFocusObserver::HandleReceivedSearchResultGainedFocusMessage)
-				, m_lostFocusHandler(this, &SearchResultOnMapInFocusObserver::HandleReceivedSearchResultLostFocusMessage)
-				, m_focusScreenLocationUpdatedHandler(this, &SearchResultOnMapInFocusObserver::HandleReceivedSearchResultInFocusChangedLocationMessage)
-			{
-				m_nativeToUiMessageBus.Subscribe(m_gainedFocusHandler);
-				m_nativeToUiMessageBus.Subscribe(m_lostFocusHandler);
-				m_nativeToUiMessageBus.Subscribe(m_focusScreenLocationUpdatedHandler);
-			}
+			    ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus);
 
-			~SearchResultOnMapInFocusObserver()
-			{
-				m_nativeToUiMessageBus.Unsubscribe(m_gainedFocusHandler);
-				m_nativeToUiMessageBus.Unsubscribe(m_lostFocusHandler);
-				m_nativeToUiMessageBus.Unsubscribe(m_focusScreenLocationUpdatedHandler);
-			}
+			~SearchResultOnMapInFocusObserver();
 		};
 	}
 }

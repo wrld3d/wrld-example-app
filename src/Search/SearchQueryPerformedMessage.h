@@ -13,16 +13,9 @@ namespace ExampleApp
 			SearchQuery m_query;
 
 		public:
-			SearchQueryPerformedMessage(const SearchQuery& searchQuery)
-				: m_query(searchQuery)
-			{
+			SearchQueryPerformedMessage(const SearchQuery& searchQuery);
 
-			}
-
-			const SearchQuery& Query() const
-			{
-				return m_query;
-			}
+			const SearchQuery& Query() const;
 		};
 	}
 }

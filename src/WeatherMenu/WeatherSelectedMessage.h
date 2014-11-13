@@ -13,15 +13,9 @@ namespace ExampleApp
 			WeatherMenuStateModel m_weatherStateModel;
 
 		public:
-			WeatherSelectedMessage(const WeatherMenuStateModel& weatherStateModel)
-				: m_weatherStateModel(weatherStateModel)
-			{
-			}
+			WeatherSelectedMessage(const WeatherMenuStateModel& weatherStateModel);
 
-			const WeatherMenuStateModel& Model() const
-			{
-				return m_weatherStateModel;
-			}
+			const WeatherMenuStateModel& Model() const;
 		};
 	}
 }

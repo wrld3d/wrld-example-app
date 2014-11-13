@@ -18,20 +18,11 @@ namespace ExampleApp
 
 		public:
 			SearchQueryResponseReceivedMessage(const Search::SearchQuery& query,
-			                                   const std::vector<SearchResultModel>& results)
-				: m_query(query)
-				, m_results(results)
-			{
-			}
+			                                   const std::vector<SearchResultModel>& results);
 
-			const Search::SearchQuery GetQuery() const
-			{
-				return m_query;
-			}
-			const std::vector<SearchResultModel>& GetResults() const
-			{
-				return m_results;
-			}
+			const Search::SearchQuery GetQuery() const;
+
+			const std::vector<SearchResultModel>& GetResults() const;
 		};
 	}
 }

@@ -15,22 +15,11 @@ namespace ExampleApp
 			Eegeo::v2 m_screenLocation;
 
 		public:
-			SearchResultGainedFocusMessage(const Search::SearchResultModel& focussedModel, const Eegeo::v2& screenLocation)
-				: m_focussedModel(focussedModel)
-				, m_screenLocation(screenLocation)
-			{
+			SearchResultGainedFocusMessage(const Search::SearchResultModel& focussedModel, const Eegeo::v2& screenLocation);
 
-			}
+			const Search::SearchResultModel& FocussedModel() const;
 
-			const Search::SearchResultModel& FocussedModel() const
-			{
-				return m_focussedModel;
-			}
-
-			const Eegeo::v2& ScreenLocation() const
-			{
-				return m_screenLocation;
-			}
+			const Eegeo::v2& ScreenLocation() const;
 		};
 	}
 }
