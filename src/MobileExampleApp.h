@@ -53,6 +53,10 @@
 #include "WorldAreaLoader.h"
 #include "InitialExperience.h"
 #include "IInitialExperienceModule.h"
+#include "MyPinCreation.h"
+#include "MyPinCreationDetails.h"
+#include "MyPins.h"
+#include "PersistentSettings.h"
 #include "UiToNativeMessageBus.h"
 #include "NativeToUiMessageBus.h"
 
@@ -73,6 +77,7 @@ namespace ExampleApp
 
 		CameraTransitions::ICameraTransitionController* m_pCameraTransitionController;
 
+        ExampleApp::PersistentSettings::IPersistentSettingsModel& m_persistentSettings;
 		Eegeo::Helpers::IdentityProvider m_identityProvider;
 		ExampleApp::PrimaryMenu::IPrimaryMenuModule* m_pPrimaryMenuModule;
 		ExampleApp::SecondaryMenu::ISecondaryMenuModule* m_pSecondaryMenuModule;
@@ -95,6 +100,11 @@ namespace ExampleApp
 		ExampleApp::WorldAreaLoader::IWorldAreaLoaderModule* m_pWorldAreaLoaderModule;
 		ExampleApp::AboutPage::IAboutPageModule* m_pAboutPageModule;
 		ExampleApp::InitialExperience::IInitialExperienceModule& m_initialExperienceModule;
+        ExampleApp::MyPinCreation::PoiRing::IPoiRingModule* m_pPoiRingModule;
+        ExampleApp::MyPinCreation::IMyPinCreationModule* m_pMyPinCreationModule;
+        ExampleApp::MyPinCreationDetails::IMyPinCreationDetailsModule* m_pMyPinCreationDetailsModule;
+        ExampleApp::MyPins::IMyPinsModule* m_pMyPinsModule;
+        
 		ExampleAppMessaging::UiToNativeMessageBus& m_uiToNativeMessageBus;
 		ExampleAppMessaging::NativeToUiMessageBus& m_nativeToUiMessageBus;
 
@@ -118,6 +128,7 @@ namespace ExampleApp
 		                 Eegeo::Config::PlatformConfig platformConfig,
 		                 Eegeo::Helpers::Jpeg::IJpegLoader& jpegLoader,
 		                 ExampleApp::InitialExperience::IInitialExperienceModule& initialExperienceModule,
+                         ExampleApp::PersistentSettings::IPersistentSettingsModel& persistentSettings,
 		                 ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
 		                 ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus);
 
@@ -224,6 +235,26 @@ namespace ExampleApp
 			return *m_pCategorySearchModule;
 		}
 
+        const ExampleApp::MyPinCreation::IMyPinCreationModule& MyPinCreationModule() const
+        {
+            return *m_pMyPinCreationModule;
+        }
+        
+        const ExampleApp::MyPinCreation::PoiRing::IPoiRingModule& PoiRingModule() const
+        {
+            return *m_pPoiRingModule;
+        }
+        
+        const ExampleApp::MyPinCreationDetails::IMyPinCreationDetailsModule& MyPinCreationDetailsModule() const
+        {
+            return *m_pMyPinCreationDetailsModule;
+        }
+        
+        const ExampleApp::MyPins::IMyPinsModule& MyPinsModule() const
+        {
+            return *m_pMyPinsModule;
+        }
+        
 		void OnPause();
 
 		void OnResume();

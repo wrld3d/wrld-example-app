@@ -33,6 +33,13 @@
 #include "StreamingModule.h"
 #include "EnvironmentCharacterSet.h"
 #include "Blitter.h"
+#include "IPoiRingTouchController.h"
+#include "MyPinCreationModule.h"
+#include "ISearchResultMenuViewModel.h"
+#include "PoiRingModule.h"
+#include "IPoiRingController.h"
+#include "MyPinCreationDetailsModule.h"
+#include "MyPinsModule.h"
 
 namespace ExampleApp
 {
@@ -69,7 +76,6 @@ namespace ExampleApp
 		}
 	}
 
-
 	MobileExampleApp::MobileExampleApp(
 	    Eegeo::Modules::IPlatformAbstractionModule& platformAbstractions,
 	    Eegeo::Rendering::ScreenProperties& screenProperties,
@@ -78,6 +84,7 @@ namespace ExampleApp
 	    Eegeo::Config::PlatformConfig platformConfig,
 	    Eegeo::Helpers::Jpeg::IJpegLoader& jpegLoader,
 	    ExampleApp::InitialExperience::IInitialExperienceModule& initialExperienceModule,
+        ExampleApp::PersistentSettings::IPersistentSettingsModel& persistentSettings,
 	    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
 	    ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus)
 		: m_pGlobeCameraController(NULL)
@@ -112,6 +119,11 @@ namespace ExampleApp
 		, m_pBlitter(NULL)
 		, m_uiToNativeMessageBus(uiToNativeMessageBus)
 		, m_nativeToUiMessageBus(nativeToUiMessageBus)
+        , m_persistentSettings(persistentSettings)
+        , m_pMyPinCreationModule(NULL)
+        , m_pPoiRingModule(NULL)
+        , m_pMyPinCreationDetailsModule(NULL)
+        , m_pMyPinsModule(NULL)
 	{
 		m_pBlitter = Eegeo_NEW(Eegeo::Blitter)(1024 * 128, 1024 * 64, 1024 * 32, screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight());
 		m_pBlitter->Initialise();
@@ -280,6 +292,32 @@ namespace ExampleApp
 		                             *m_pGlobeCameraController->GetCamera(),
 		                             m_uiToNativeMessageBus,
 		                             m_nativeToUiMessageBus);
+        
+        m_pMyPinsModule = Eegeo_NEW(ExampleApp::MyPins::MyPinsModule)(m_pPinsModule->GetRepository(),
+                                                                      m_pWorldPinsModule->GetWorldPinsFactory(),
+                                                                      m_platformAbstractions,
+                                                                      m_persistentSettings);
+        
+        m_pPrimaryMenuModule->AddMenuSection("My Pins", "place", m_pMyPinsModule->GetMyPinsMenuModel(), true);
+        
+        m_pMyPinCreationModule = Eegeo_NEW(ExampleApp::MyPinCreation::MyPinCreationModule)(m_pMyPinsModule->GetMyPinsService(),
+                                                                                           m_identityProvider,
+                                                                                           m_pPrimaryMenuModule->GetPrimaryMenuViewModel(),
+                                                                                           m_pSecondaryMenuModule->GetSecondaryMenuViewModel(),
+                                                                                           m_pSearchModule->GetSearchQueryPerformer(),
+                                                                                           m_pSearchResultMenuModule->GetMenuViewModel(),
+                                                                                           m_nativeToUiMessageBus,
+                                                                                           m_uiToNativeMessageBus);
+        
+        m_pPoiRingModule = Eegeo_NEW(ExampleApp::MyPinCreation::PoiRing::PoiRingModule)(m_pMyPinCreationModule->GetMyPinCreationModel(),
+                                                                                      m_platformAbstractions,
+                                                                                      m_pWorld->GetRenderingModule(),
+                                                                                      m_pWorld->GetAsyncLoadersModule(),
+                                                                                      m_pWorld->GetLightingModule(),
+                                                                                      m_pWorld->GetTerrainModelModule());
+
+        m_pMyPinCreationDetailsModule = Eegeo_NEW(ExampleApp::MyPinCreationDetails::MyPinCreationDetailsModule)(m_identityProvider,
+                                                                                                          m_pReactionControllerModule->GetReactionControllerModel());
 
 		std::vector<ExampleApp::ScreenControlViewModel::IScreenControlViewModel*> reactors(GetReactorControls());
 		std::vector<ExampleApp::OpenableControlViewModel::IOpenableControlViewModel*> openables(GetOpenableControls());
@@ -298,6 +336,12 @@ namespace ExampleApp
 
 	void MobileExampleApp::DestroyApplicationModelModules()
 	{
+        Eegeo_DELETE m_pMyPinCreationModule;
+        
+        Eegeo_DELETE m_pPoiRingModule;
+        
+        Eegeo_DELETE m_pMyPinsModule;
+        
 		m_initialExperienceModule.TearDown();
 
 		Eegeo_DELETE m_pWorldAreaLoaderModule;
@@ -345,6 +389,7 @@ namespace ExampleApp
 		openables.push_back(&SearchResultMenuModule().GetMenuViewModel());
 		openables.push_back(&SearchResultPoiModule().GetObservableOpenableControl());
 		openables.push_back(&AboutPageModule().GetObservableOpenableControl());
+        openables.push_back(&MyPinCreationDetailsModule().GetObservableOpenableControl());
 		return openables;
 	}
 
@@ -357,6 +402,7 @@ namespace ExampleApp
 		reactors.push_back(&FlattenButtonModule().GetScreenControlViewModel());
 		reactors.push_back(&SearchResultOnMapModule().GetScreenControlViewModel());
 		reactors.push_back(&CompassModule().GetScreenControlViewModel());
+        reactors.push_back(&MyPinCreationModule().GetInitiationScreenControlViewModel());
 		return reactors;
 	}
 
@@ -415,6 +461,8 @@ namespace ExampleApp
 
 		m_pGlobeCameraController->Update(dt);
 		m_pCameraTransitionController->Update(dt);
+        
+        m_pPoiRingModule->GetPoiRingController().Update(dt, *m_pGlobeCameraController->GetCamera(), m_pGlobeCameraController->GetEcefInterestPoint());
 
 		eegeoWorld.Update(dt, *m_pGlobeCameraController->GetCamera(), m_pGlobeCameraController->GetEcefInterestPoint());
 
@@ -461,6 +509,7 @@ namespace ExampleApp
 		m_pSearchResultMenuModule->GetMenuViewModel().AddToScreen();
 		m_pFlattenButtonModule->GetScreenControlViewModel().AddToScreen();
 		m_pCompassModule->GetScreenControlViewModel().AddToScreen();
+        m_pMyPinCreationModule->GetInitiationScreenControlViewModel().AddToScreen();
 	}
 
 	void MobileExampleApp::UpdateLoadingScreen(float dt)
@@ -499,146 +548,162 @@ namespace ExampleApp
 		return !m_pWorld->Initialising();
 	}
 
-	void MobileExampleApp::Event_TouchRotate(const AppInterface::RotateData& data)
-	{
-		if(World().Initialising())
-		{
-			return;
-		}
+    void MobileExampleApp::Event_TouchRotate(const AppInterface::RotateData& data)
+    {
+        if(World().Initialising())
+        {
+            return;
+        }
+        
+        m_pCameraTouchController->Event_TouchRotate(data);
+    }
 
-		m_pCameraTouchController->Event_TouchRotate(data);
-	}
+    void MobileExampleApp::Event_TouchRotate_Start(const AppInterface::RotateData& data)
+    {
+        if(World().Initialising())
+        {
+            return;
+        }
+        
+        m_pCameraTouchController->Event_TouchRotate_Start(data);
+    }
 
-	void MobileExampleApp::Event_TouchRotate_Start(const AppInterface::RotateData& data)
-	{
-		if(World().Initialising())
-		{
-			return;
-		}
+    void MobileExampleApp::Event_TouchRotate_End(const AppInterface::RotateData& data)
+    {
+        if(World().Initialising())
+        {
+            return;
+        }
+        
+        m_pCameraTouchController->Event_TouchRotate_End(data);
+    }
 
-		m_pCameraTouchController->Event_TouchRotate_Start(data);
-	}
+    void MobileExampleApp::Event_TouchPinch(const AppInterface::PinchData& data)
+    {
+        if(World().Initialising())
+        {
+            return;
+        }
+        
+        m_pCameraTouchController->Event_TouchPinch(data);
+    }
 
-	void MobileExampleApp::Event_TouchRotate_End(const AppInterface::RotateData& data)
-	{
-		if(World().Initialising())
-		{
-			return;
-		}
+    void MobileExampleApp::Event_TouchPinch_Start(const AppInterface::PinchData& data)
+    {
+        if(World().Initialising())
+        {
+            return;
+        }
+        
+        m_pCameraTouchController->Event_TouchPinch_Start(data);
+    }
 
-		m_pCameraTouchController->Event_TouchRotate_End(data);
-	}
+    void MobileExampleApp::Event_TouchPinch_End(const AppInterface::PinchData& data)
+    {
+        if(World().Initialising())
+        {
+            return;
+        }
+        
+        m_pCameraTouchController->Event_TouchPinch_End(data);
+    }
 
-	void MobileExampleApp::Event_TouchPinch(const AppInterface::PinchData& data)
-	{
-		if(World().Initialising())
-		{
-			return;
-		}
+    void MobileExampleApp::Event_TouchPan(const AppInterface::PanData& data)
+    {
+        MyPinCreation::PoiRing::IPoiRingTouchController& poiRingTouchController = m_pPoiRingModule->GetPoiRingTouchController();
+        if(World().Initialising() || poiRingTouchController.IsDragging())
+        {
+            return;
+        }
+        
+        m_pCameraTouchController->Event_TouchPan(data);
+    }
 
-		m_pCameraTouchController->Event_TouchPinch(data);
-	}
+    void MobileExampleApp::Event_TouchPan_Start(const AppInterface::PanData& data)
+    {
+        MyPinCreation::PoiRing::IPoiRingTouchController& poiRingTouchController = m_pPoiRingModule->GetPoiRingTouchController();
+        if(World().Initialising() || poiRingTouchController.IsDragging())
+        {
+            return;
+        }
+        
+        m_pCameraTouchController->Event_TouchPan_Start(data);
+    }
 
-	void MobileExampleApp::Event_TouchPinch_Start(const AppInterface::PinchData& data)
-	{
-		if(World().Initialising())
-		{
-			return;
-		}
+    void MobileExampleApp::Event_TouchPan_End(const AppInterface::PanData& data)
+    {
+        MyPinCreation::PoiRing::IPoiRingTouchController& poiRingTouchController = m_pPoiRingModule->GetPoiRingTouchController();
+        if(World().Initialising() || poiRingTouchController.IsDragging())
+        {
+            return;
+        }
+        
+        m_pCameraTouchController->Event_TouchPan_End(data);
+    }
 
-		m_pCameraTouchController->Event_TouchPinch_Start(data);
-	}
+    void MobileExampleApp::Event_TouchTap(const AppInterface::TapData& data)
+    {
+        if(World().Initialising())
+        {
+            return;
+        }
+        
+        if(!m_pWorldPinsModule->GetWorldPinsService().HandleTouchTap(data.point))
+        {
+            m_pCameraTouchController->Event_TouchTap(data);
+        }
+    }
 
-	void MobileExampleApp::Event_TouchPinch_End(const AppInterface::PinchData& data)
-	{
-		if(World().Initialising())
-		{
-			return;
-		}
+    void MobileExampleApp::Event_TouchDoubleTap(const AppInterface::TapData& data)
+    {
+        if(World().Initialising())
+        {
+            return;
+        }
+        
+        m_pCameraTouchController->Event_TouchDoubleTap(data);
+    }
 
-		m_pCameraTouchController->Event_TouchPinch_End(data);
-	}
+    void MobileExampleApp::Event_TouchDown(const AppInterface::TouchData& data)
+    {
+        if(World().Initialising())
+        {
+            return;
+        }
+        
+        MyPinCreation::PoiRing::IPoiRingTouchController& poiRingTouchController = m_pPoiRingModule->GetPoiRingTouchController();
+        if (!poiRingTouchController.HandleTouchDown(data, *m_pGlobeCameraController->GetCamera()))
+        {
+            m_pCameraTouchController->Event_TouchDown(data);
+        }
+        
+    }
 
-	void MobileExampleApp::Event_TouchPan(const AppInterface::PanData& data)
-	{
-		if(World().Initialising())
-		{
-			return;
-		}
+    void MobileExampleApp::Event_TouchMove(const AppInterface::TouchData& data)
+    {
+        if(World().Initialising())
+        {
+            return;
+        }
+        
+        MyPinCreation::PoiRing::IPoiRingTouchController& poiRingTouchController = m_pPoiRingModule->GetPoiRingTouchController();
+        if (!poiRingTouchController.HandleTouchMove(data, *m_pGlobeCameraController->GetCamera()))
+        {
+            m_pCameraTouchController->Event_TouchMove(data);
+        }
+    }
 
-		m_pCameraTouchController->Event_TouchPan(data);
-	}
-
-	void MobileExampleApp::Event_TouchPan_Start(const AppInterface::PanData& data)
-	{
-		if(World().Initialising())
-		{
-			return;
-		}
-
-		m_pCameraTouchController->Event_TouchPan_Start(data);
-	}
-
-	void MobileExampleApp::Event_TouchPan_End(const AppInterface::PanData& data)
-	{
-		if(World().Initialising())
-		{
-			return;
-		}
-
-		m_pCameraTouchController->Event_TouchPan_End(data);
-	}
-
-	void MobileExampleApp::Event_TouchTap(const AppInterface::TapData& data)
-	{
-		if(World().Initialising())
-		{
-			return;
-		}
-
-		if(!m_pWorldPinsModule->GetWorldPinsService().HandleTouchTap(data.point))
-		{
-			m_pCameraTouchController->Event_TouchTap(data);
-		}
-	}
-
-	void MobileExampleApp::Event_TouchDoubleTap(const AppInterface::TapData& data)
-	{
-		if(World().Initialising())
-		{
-			return;
-		}
-
-		m_pCameraTouchController->Event_TouchDoubleTap(data);
-	}
-
-	void MobileExampleApp::Event_TouchDown(const AppInterface::TouchData& data)
-	{
-		if(World().Initialising())
-		{
-			return;
-		}
-
-		m_pCameraTouchController->Event_TouchDown(data);
-	}
-
-	void MobileExampleApp::Event_TouchMove(const AppInterface::TouchData& data)
-	{
-		if(World().Initialising())
-		{
-			return;
-		}
-
-		m_pCameraTouchController->Event_TouchMove(data);
-	}
-
-	void MobileExampleApp::Event_TouchUp(const AppInterface::TouchData& data)
-	{
-		if(World().Initialising())
-		{
-			return;
-		}
-
-		m_pCameraTouchController->Event_TouchUp(data);
-	}
+    void MobileExampleApp::Event_TouchUp(const AppInterface::TouchData& data)
+    {
+        if(World().Initialising())
+        {
+            return;
+        }
+        
+        MyPinCreation::PoiRing::IPoiRingTouchController& poiRingTouchController = m_pPoiRingModule->GetPoiRingTouchController();
+        if (!poiRingTouchController.HandleTouchUp(data))
+        {
+            m_pCameraTouchController->Event_TouchUp(data);
+        }
+    }
 }

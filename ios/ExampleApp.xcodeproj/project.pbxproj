@@ -390,10 +390,74 @@
 		5605EDF019F824CD00D1D594 /* ReactionModelModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5605EDE719F824CD00D1D594 /* ReactionModelModule.cpp */; };
 		5606E31719ED1B93009059D4 /* eegeo_logo@ipho.png in Resources */ = {isa = PBXBuildFile; fileRef = 5606E31619ED1B93009059D4 /* eegeo_logo@ipho.png */; };
 		5606E31819ED1B93009059D4 /* eegeo_logo@ipho.png in Resources */ = {isa = PBXBuildFile; fileRef = 5606E31619ED1B93009059D4 /* eegeo_logo@ipho.png */; };
+		5637F1EE1A0CD51F0011B509 /* MyPinModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5637F1EC1A0CD51F0011B509 /* MyPinModel.cpp */; };
+		5637F1EF1A0CD51F0011B509 /* MyPinModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5637F1EC1A0CD51F0011B509 /* MyPinModel.cpp */; };
+		5637F1F71A0CDAFB0011B509 /* MyPinsService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5637F1F51A0CDAFB0011B509 /* MyPinsService.cpp */; };
+		5637F1F81A0CDAFB0011B509 /* MyPinsService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5637F1F51A0CDAFB0011B509 /* MyPinsService.cpp */; };
+		5637F2051A10F3930011B509 /* MyPinsModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5637F2031A10F3930011B509 /* MyPinsModule.cpp */; };
+		5637F2061A10F3930011B509 /* MyPinsModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5637F2031A10F3930011B509 /* MyPinsModule.cpp */; };
+		5637F2091A10F4CD0011B509 /* MyPinsFileIO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5637F2071A10F4CD0011B509 /* MyPinsFileIO.cpp */; };
+		5637F20A1A10F4CD0011B509 /* MyPinsFileIO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5637F2071A10F4CD0011B509 /* MyPinsFileIO.cpp */; };
 		5675901E19F53C7A00C4599E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5675901D19F53C7A00C4599E /* QuartzCore.framework */; };
 		5675901F19F53C9100C4599E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE481EE16836F370006E99B /* CoreGraphics.framework */; };
 		5675902619F54A8200C4599E /* CustomTableView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5675902519F54A8200C4599E /* CustomTableView.mm */; };
 		5675902719F54A8200C4599E /* CustomTableView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5675902519F54A8200C4599E /* CustomTableView.mm */; };
+		5695FEB31A13C17800F1E6CE /* MyPinCreationCompositeViewModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5695FE8E1A13C17800F1E6CE /* MyPinCreationCompositeViewModel.cpp */; };
+		5695FEB41A13C17800F1E6CE /* MyPinCreationCompositeViewModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5695FE8E1A13C17800F1E6CE /* MyPinCreationCompositeViewModel.cpp */; };
+		5695FEB51A13C17800F1E6CE /* MyPinCreationConfirmationViewModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5695FE901A13C17800F1E6CE /* MyPinCreationConfirmationViewModel.cpp */; };
+		5695FEB61A13C17800F1E6CE /* MyPinCreationConfirmationViewModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5695FE901A13C17800F1E6CE /* MyPinCreationConfirmationViewModel.cpp */; };
+		5695FEB71A13C17800F1E6CE /* MyPinCreationInitiationViewModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5695FE921A13C17800F1E6CE /* MyPinCreationInitiationViewModel.cpp */; };
+		5695FEB81A13C17800F1E6CE /* MyPinCreationInitiationViewModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5695FE921A13C17800F1E6CE /* MyPinCreationInitiationViewModel.cpp */; };
+		5695FEB91A13C17800F1E6CE /* MyPinCreationModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5695FE941A13C17800F1E6CE /* MyPinCreationModel.cpp */; };
+		5695FEBA1A13C17800F1E6CE /* MyPinCreationModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5695FE941A13C17800F1E6CE /* MyPinCreationModel.cpp */; };
+		5695FEBB1A13C17800F1E6CE /* MyPinCreationModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5695FE961A13C17800F1E6CE /* MyPinCreationModule.cpp */; };
+		5695FEBC1A13C17800F1E6CE /* MyPinCreationModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5695FE961A13C17800F1E6CE /* MyPinCreationModule.cpp */; };
+		5695FEBD1A13C17800F1E6CE /* MyPinCreationScreenControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5695FE981A13C17800F1E6CE /* MyPinCreationScreenControl.cpp */; };
+		5695FEBE1A13C17800F1E6CE /* MyPinCreationScreenControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5695FE981A13C17800F1E6CE /* MyPinCreationScreenControl.cpp */; };
+		5695FEBF1A13C17800F1E6CE /* PoiRingController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5695FE9F1A13C17800F1E6CE /* PoiRingController.cpp */; };
+		5695FEC01A13C17800F1E6CE /* PoiRingController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5695FE9F1A13C17800F1E6CE /* PoiRingController.cpp */; };
+		5695FEC11A13C17800F1E6CE /* PoiRingModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5695FEA11A13C17800F1E6CE /* PoiRingModule.cpp */; };
+		5695FEC21A13C17800F1E6CE /* PoiRingModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5695FEA11A13C17800F1E6CE /* PoiRingModule.cpp */; };
+		5695FEC31A13C17800F1E6CE /* PoiRingRenderable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5695FEA31A13C17800F1E6CE /* PoiRingRenderable.cpp */; };
+		5695FEC41A13C17800F1E6CE /* PoiRingRenderable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5695FEA31A13C17800F1E6CE /* PoiRingRenderable.cpp */; };
+		5695FEC51A13C17800F1E6CE /* PoiRingTouchController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5695FEA51A13C17800F1E6CE /* PoiRingTouchController.cpp */; };
+		5695FEC61A13C17800F1E6CE /* PoiRingTouchController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5695FEA51A13C17800F1E6CE /* PoiRingTouchController.cpp */; };
+		5695FEC71A13C17800F1E6CE /* PoiRingView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5695FEA71A13C17800F1E6CE /* PoiRingView.cpp */; };
+		5695FEC81A13C17800F1E6CE /* PoiRingView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5695FEA71A13C17800F1E6CE /* PoiRingView.cpp */; };
+		5695FEC91A13C17800F1E6CE /* MyPinCreationDetailsModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5695FEAD1A13C17800F1E6CE /* MyPinCreationDetailsModule.cpp */; };
+		5695FECA1A13C17800F1E6CE /* MyPinCreationDetailsModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5695FEAD1A13C17800F1E6CE /* MyPinCreationDetailsModule.cpp */; };
+		5695FECB1A13C17800F1E6CE /* MyPinCreationDetailsOpenableControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5695FEAF1A13C17800F1E6CE /* MyPinCreationDetailsOpenableControl.cpp */; };
+		5695FECC1A13C17800F1E6CE /* MyPinCreationDetailsOpenableControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5695FEAF1A13C17800F1E6CE /* MyPinCreationDetailsOpenableControl.cpp */; };
+		5695FECD1A13C17800F1E6CE /* MyPinCreationDetailsViewModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5695FEB11A13C17800F1E6CE /* MyPinCreationDetailsViewModel.cpp */; };
+		5695FECE1A13C17800F1E6CE /* MyPinCreationDetailsViewModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5695FEB11A13C17800F1E6CE /* MyPinCreationDetailsViewModel.cpp */; };
+		5695FEED1A13C1DE00F1E6CE /* MyPinCreationConfirmationView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5695FED21A13C1DE00F1E6CE /* MyPinCreationConfirmationView.mm */; };
+		5695FEEE1A13C1DE00F1E6CE /* MyPinCreationConfirmationView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5695FED21A13C1DE00F1E6CE /* MyPinCreationConfirmationView.mm */; };
+		5695FEEF1A13C1DE00F1E6CE /* MyPinCreationConfirmationViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5695FED41A13C1DE00F1E6CE /* MyPinCreationConfirmationViewController.mm */; };
+		5695FEF01A13C1DE00F1E6CE /* MyPinCreationConfirmationViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5695FED41A13C1DE00F1E6CE /* MyPinCreationConfirmationViewController.mm */; };
+		5695FEF11A13C1DE00F1E6CE /* MyPinCreationConfirmationViewModule.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5695FED81A13C1DE00F1E6CE /* MyPinCreationConfirmationViewModule.mm */; };
+		5695FEF21A13C1DE00F1E6CE /* MyPinCreationConfirmationViewModule.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5695FED81A13C1DE00F1E6CE /* MyPinCreationConfirmationViewModule.mm */; };
+		5695FEF31A13C1DE00F1E6CE /* MyPinCreationDetailsView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5695FEDC1A13C1DE00F1E6CE /* MyPinCreationDetailsView.mm */; };
+		5695FEF41A13C1DE00F1E6CE /* MyPinCreationDetailsView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5695FEDC1A13C1DE00F1E6CE /* MyPinCreationDetailsView.mm */; };
+		5695FEF51A13C1DE00F1E6CE /* MyPinCreationDetailsViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5695FEDE1A13C1DE00F1E6CE /* MyPinCreationDetailsViewController.mm */; };
+		5695FEF61A13C1DE00F1E6CE /* MyPinCreationDetailsViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5695FEDE1A13C1DE00F1E6CE /* MyPinCreationDetailsViewController.mm */; };
+		5695FEF71A13C1DE00F1E6CE /* MyPinCreationDetailsViewModule.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5695FEE21A13C1DE00F1E6CE /* MyPinCreationDetailsViewModule.mm */; };
+		5695FEF81A13C1DE00F1E6CE /* MyPinCreationDetailsViewModule.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5695FEE21A13C1DE00F1E6CE /* MyPinCreationDetailsViewModule.mm */; };
+		5695FEF91A13C1DE00F1E6CE /* MyPinCreationInitiationView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5695FEE61A13C1DE00F1E6CE /* MyPinCreationInitiationView.mm */; };
+		5695FEFA1A13C1DE00F1E6CE /* MyPinCreationInitiationView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5695FEE61A13C1DE00F1E6CE /* MyPinCreationInitiationView.mm */; };
+		5695FEFB1A13C1DE00F1E6CE /* MyPinCreationInitiationViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5695FEE81A13C1DE00F1E6CE /* MyPinCreationInitiationViewController.mm */; };
+		5695FEFC1A13C1DE00F1E6CE /* MyPinCreationInitiationViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5695FEE81A13C1DE00F1E6CE /* MyPinCreationInitiationViewController.mm */; };
+		5695FEFD1A13C1DE00F1E6CE /* MyPinCreationInitiationViewModule.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5695FEEC1A13C1DE00F1E6CE /* MyPinCreationInitiationViewModule.mm */; };
+		5695FEFE1A13C1DE00F1E6CE /* MyPinCreationInitiationViewModule.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5695FEEC1A13C1DE00F1E6CE /* MyPinCreationInitiationViewModule.mm */; };
+		56A8DF7D19FEA977009DC352 /* Geosphere_01.pod in Resources */ = {isa = PBXBuildFile; fileRef = 56A8DF7A19FEA977009DC352 /* Geosphere_01.pod */; };
+		56A8DF7E19FEA977009DC352 /* Geosphere_01.pod in Resources */ = {isa = PBXBuildFile; fileRef = 56A8DF7A19FEA977009DC352 /* Geosphere_01.pod */; };
+		56FBCDEF1A0BB5150026546E /* button_checkbox_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 56FBCDE71A0BB5150026546E /* button_checkbox_off.png */; };
+		56FBCDF01A0BB5150026546E /* button_checkbox_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 56FBCDE81A0BB5150026546E /* button_checkbox_on.png */; };
+		56FBCDF11A0BB5150026546E /* button_create_poi.png in Resources */ = {isa = PBXBuildFile; fileRef = 56FBCDE91A0BB5150026546E /* button_create_poi.png */; };
+		56FBCDF21A0BB5150026546E /* button_gallery.png in Resources */ = {isa = PBXBuildFile; fileRef = 56FBCDEA1A0BB5150026546E /* button_gallery.png */; };
+		56FBCDF31A0BB5150026546E /* button_ok.png in Resources */ = {isa = PBXBuildFile; fileRef = 56FBCDEB1A0BB5150026546E /* button_ok.png */; };
+		56FBCDF41A0BB5150026546E /* button_photo.png in Resources */ = {isa = PBXBuildFile; fileRef = 56FBCDEC1A0BB5150026546E /* button_photo.png */; };
+		56FBCDF51A0BB5150026546E /* image_blank.png in Resources */ = {isa = PBXBuildFile; fileRef = 56FBCDED1A0BB5150026546E /* image_blank.png */; };
+		56FBCDF61A0BB5150026546E /* poi_marker.png in Resources */ = {isa = PBXBuildFile; fileRef = 56FBCDEE1A0BB5150026546E /* poi_marker.png */; };
 		7EE481EB16836F370006E99B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE481EA16836F370006E99B /* UIKit.framework */; };
 		7EE481ED16836F370006E99B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE481EC16836F370006E99B /* Foundation.framework */; };
 		7EE481F116836F370006E99B /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE481F016836F370006E99B /* CoreData.framework */; };
@@ -899,10 +963,107 @@
 		5605EDE719F824CD00D1D594 /* ReactionModelModule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ReactionModelModule.cpp; sourceTree = "<group>"; };
 		5605EDE819F824CD00D1D594 /* ReactionModelModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReactionModelModule.h; sourceTree = "<group>"; };
 		5606E31619ED1B93009059D4 /* eegeo_logo@ipho.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "eegeo_logo@ipho.png"; sourceTree = "<group>"; };
+		5637F1EC1A0CD51F0011B509 /* MyPinModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MyPinModel.cpp; sourceTree = "<group>"; };
+		5637F1ED1A0CD51F0011B509 /* MyPinModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPinModel.h; sourceTree = "<group>"; };
+		5637F1F01A0CD5CB0011B509 /* IMyPinsRepository.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IMyPinsRepository.h; sourceTree = "<group>"; };
+		5637F1F21A0CD5F00011B509 /* MyPinsRepository.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPinsRepository.h; sourceTree = "<group>"; };
+		5637F1F51A0CDAFB0011B509 /* MyPinsService.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MyPinsService.cpp; sourceTree = "<group>"; };
+		5637F1F61A0CDAFB0011B509 /* MyPinsService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPinsService.h; sourceTree = "<group>"; };
+		5637F1F91A0CDB1D0011B509 /* IMyPinsService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IMyPinsService.h; sourceTree = "<group>"; };
+		5637F1FA1A0CDB370011B509 /* MyPins.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyPins.h; sourceTree = "<group>"; };
+		5637F2031A10F3930011B509 /* MyPinsModule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MyPinsModule.cpp; sourceTree = "<group>"; };
+		5637F2041A10F3930011B509 /* MyPinsModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPinsModule.h; sourceTree = "<group>"; };
+		5637F2071A10F4CD0011B509 /* MyPinsFileIO.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MyPinsFileIO.cpp; sourceTree = "<group>"; };
+		5637F2081A10F4CD0011B509 /* MyPinsFileIO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPinsFileIO.h; sourceTree = "<group>"; };
 		567036ED19F7C01000C57333 /* CellConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CellConstants.h; sourceTree = "<group>"; };
 		5675901D19F53C7A00C4599E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		5675902419F54A8200C4599E /* CustomTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTableView.h; sourceTree = "<group>"; };
 		5675902519F54A8200C4599E /* CustomTableView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CustomTableView.mm; sourceTree = "<group>"; };
+		5695FE881A13C17800F1E6CE /* IMyPinCreationCompositeViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMyPinCreationCompositeViewModel.h; sourceTree = "<group>"; };
+		5695FE891A13C17800F1E6CE /* IMyPinCreationConfirmationViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMyPinCreationConfirmationViewModel.h; sourceTree = "<group>"; };
+		5695FE8A1A13C17800F1E6CE /* IMyPinCreationInitiationViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMyPinCreationInitiationViewModel.h; sourceTree = "<group>"; };
+		5695FE8B1A13C17800F1E6CE /* IMyPinCreationModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMyPinCreationModel.h; sourceTree = "<group>"; };
+		5695FE8C1A13C17800F1E6CE /* IMyPinCreationModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMyPinCreationModule.h; sourceTree = "<group>"; };
+		5695FE8D1A13C17800F1E6CE /* MyPinCreation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPinCreation.h; sourceTree = "<group>"; };
+		5695FE8E1A13C17800F1E6CE /* MyPinCreationCompositeViewModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MyPinCreationCompositeViewModel.cpp; sourceTree = "<group>"; };
+		5695FE8F1A13C17800F1E6CE /* MyPinCreationCompositeViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPinCreationCompositeViewModel.h; sourceTree = "<group>"; };
+		5695FE901A13C17800F1E6CE /* MyPinCreationConfirmationViewModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MyPinCreationConfirmationViewModel.cpp; sourceTree = "<group>"; };
+		5695FE911A13C17800F1E6CE /* MyPinCreationConfirmationViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPinCreationConfirmationViewModel.h; sourceTree = "<group>"; };
+		5695FE921A13C17800F1E6CE /* MyPinCreationInitiationViewModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MyPinCreationInitiationViewModel.cpp; sourceTree = "<group>"; };
+		5695FE931A13C17800F1E6CE /* MyPinCreationInitiationViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPinCreationInitiationViewModel.h; sourceTree = "<group>"; };
+		5695FE941A13C17800F1E6CE /* MyPinCreationModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MyPinCreationModel.cpp; sourceTree = "<group>"; };
+		5695FE951A13C17800F1E6CE /* MyPinCreationModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPinCreationModel.h; sourceTree = "<group>"; };
+		5695FE961A13C17800F1E6CE /* MyPinCreationModule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MyPinCreationModule.cpp; sourceTree = "<group>"; };
+		5695FE971A13C17800F1E6CE /* MyPinCreationModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPinCreationModule.h; sourceTree = "<group>"; };
+		5695FE981A13C17800F1E6CE /* MyPinCreationScreenControl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MyPinCreationScreenControl.cpp; sourceTree = "<group>"; };
+		5695FE991A13C17800F1E6CE /* MyPinCreationScreenControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPinCreationScreenControl.h; sourceTree = "<group>"; };
+		5695FE9A1A13C17800F1E6CE /* MyPinCreationStage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPinCreationStage.h; sourceTree = "<group>"; };
+		5695FE9C1A13C17800F1E6CE /* IPoiRingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPoiRingController.h; sourceTree = "<group>"; };
+		5695FE9D1A13C17800F1E6CE /* IPoiRingModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPoiRingModule.h; sourceTree = "<group>"; };
+		5695FE9E1A13C17800F1E6CE /* IPoiRingTouchController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPoiRingTouchController.h; sourceTree = "<group>"; };
+		5695FE9F1A13C17800F1E6CE /* PoiRingController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PoiRingController.cpp; sourceTree = "<group>"; };
+		5695FEA01A13C17800F1E6CE /* PoiRingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PoiRingController.h; sourceTree = "<group>"; };
+		5695FEA11A13C17800F1E6CE /* PoiRingModule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PoiRingModule.cpp; sourceTree = "<group>"; };
+		5695FEA21A13C17800F1E6CE /* PoiRingModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PoiRingModule.h; sourceTree = "<group>"; };
+		5695FEA31A13C17800F1E6CE /* PoiRingRenderable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PoiRingRenderable.cpp; sourceTree = "<group>"; };
+		5695FEA41A13C17800F1E6CE /* PoiRingRenderable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PoiRingRenderable.h; sourceTree = "<group>"; };
+		5695FEA51A13C17800F1E6CE /* PoiRingTouchController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PoiRingTouchController.cpp; sourceTree = "<group>"; };
+		5695FEA61A13C17800F1E6CE /* PoiRingTouchController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PoiRingTouchController.h; sourceTree = "<group>"; };
+		5695FEA71A13C17800F1E6CE /* PoiRingView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PoiRingView.cpp; sourceTree = "<group>"; };
+		5695FEA81A13C17800F1E6CE /* PoiRingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PoiRingView.h; sourceTree = "<group>"; };
+		5695FEAA1A13C17800F1E6CE /* IMyPinCreationDetailsModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMyPinCreationDetailsModule.h; sourceTree = "<group>"; };
+		5695FEAB1A13C17800F1E6CE /* IMyPinCreationDetailsViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMyPinCreationDetailsViewModel.h; sourceTree = "<group>"; };
+		5695FEAC1A13C17800F1E6CE /* MyPinCreationDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPinCreationDetails.h; sourceTree = "<group>"; };
+		5695FEAD1A13C17800F1E6CE /* MyPinCreationDetailsModule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MyPinCreationDetailsModule.cpp; sourceTree = "<group>"; };
+		5695FEAE1A13C17800F1E6CE /* MyPinCreationDetailsModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPinCreationDetailsModule.h; sourceTree = "<group>"; };
+		5695FEAF1A13C17800F1E6CE /* MyPinCreationDetailsOpenableControl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MyPinCreationDetailsOpenableControl.cpp; sourceTree = "<group>"; };
+		5695FEB01A13C17800F1E6CE /* MyPinCreationDetailsOpenableControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPinCreationDetailsOpenableControl.h; sourceTree = "<group>"; };
+		5695FEB11A13C17800F1E6CE /* MyPinCreationDetailsViewModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MyPinCreationDetailsViewModel.cpp; sourceTree = "<group>"; };
+		5695FEB21A13C17800F1E6CE /* MyPinCreationDetailsViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPinCreationDetailsViewModel.h; sourceTree = "<group>"; };
+		5695FED01A13C1DE00F1E6CE /* IMyPinCreationConfirmationViewModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMyPinCreationConfirmationViewModule.h; sourceTree = "<group>"; };
+		5695FED11A13C1DE00F1E6CE /* MyPinCreationConfirmationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPinCreationConfirmationView.h; sourceTree = "<group>"; };
+		5695FED21A13C1DE00F1E6CE /* MyPinCreationConfirmationView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyPinCreationConfirmationView.mm; sourceTree = "<group>"; };
+		5695FED31A13C1DE00F1E6CE /* MyPinCreationConfirmationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPinCreationConfirmationViewController.h; sourceTree = "<group>"; };
+		5695FED41A13C1DE00F1E6CE /* MyPinCreationConfirmationViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyPinCreationConfirmationViewController.mm; sourceTree = "<group>"; };
+		5695FED51A13C1DE00F1E6CE /* MyPinCreationConfirmationViewControllerInterop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPinCreationConfirmationViewControllerInterop.h; sourceTree = "<group>"; };
+		5695FED61A13C1DE00F1E6CE /* MyPinCreationConfirmationViewIncludes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPinCreationConfirmationViewIncludes.h; sourceTree = "<group>"; };
+		5695FED71A13C1DE00F1E6CE /* MyPinCreationConfirmationViewModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPinCreationConfirmationViewModule.h; sourceTree = "<group>"; };
+		5695FED81A13C1DE00F1E6CE /* MyPinCreationConfirmationViewModule.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyPinCreationConfirmationViewModule.mm; sourceTree = "<group>"; };
+		5695FEDA1A13C1DE00F1E6CE /* IMyPinCreationDetailsViewModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMyPinCreationDetailsViewModule.h; sourceTree = "<group>"; };
+		5695FEDB1A13C1DE00F1E6CE /* MyPinCreationDetailsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPinCreationDetailsView.h; sourceTree = "<group>"; };
+		5695FEDC1A13C1DE00F1E6CE /* MyPinCreationDetailsView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyPinCreationDetailsView.mm; sourceTree = "<group>"; };
+		5695FEDD1A13C1DE00F1E6CE /* MyPinCreationDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPinCreationDetailsViewController.h; sourceTree = "<group>"; };
+		5695FEDE1A13C1DE00F1E6CE /* MyPinCreationDetailsViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyPinCreationDetailsViewController.mm; sourceTree = "<group>"; };
+		5695FEDF1A13C1DE00F1E6CE /* MyPinCreationDetailsViewControllerInterop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPinCreationDetailsViewControllerInterop.h; sourceTree = "<group>"; };
+		5695FEE01A13C1DE00F1E6CE /* MyPinCreationDetailsViewIncludes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPinCreationDetailsViewIncludes.h; sourceTree = "<group>"; };
+		5695FEE11A13C1DE00F1E6CE /* MyPinCreationDetailsViewModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPinCreationDetailsViewModule.h; sourceTree = "<group>"; };
+		5695FEE21A13C1DE00F1E6CE /* MyPinCreationDetailsViewModule.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyPinCreationDetailsViewModule.mm; sourceTree = "<group>"; };
+		5695FEE41A13C1DE00F1E6CE /* IMyPinCreationInitiationViewModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMyPinCreationInitiationViewModule.h; sourceTree = "<group>"; };
+		5695FEE51A13C1DE00F1E6CE /* MyPinCreationInitiationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPinCreationInitiationView.h; sourceTree = "<group>"; };
+		5695FEE61A13C1DE00F1E6CE /* MyPinCreationInitiationView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyPinCreationInitiationView.mm; sourceTree = "<group>"; };
+		5695FEE71A13C1DE00F1E6CE /* MyPinCreationInitiationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPinCreationInitiationViewController.h; sourceTree = "<group>"; };
+		5695FEE81A13C1DE00F1E6CE /* MyPinCreationInitiationViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyPinCreationInitiationViewController.mm; sourceTree = "<group>"; };
+		5695FEE91A13C1DE00F1E6CE /* MyPinCreationInitiationViewControllerInterop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPinCreationInitiationViewControllerInterop.h; sourceTree = "<group>"; };
+		5695FEEA1A13C1DE00F1E6CE /* MyPinCreationInitiationViewIncludes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPinCreationInitiationViewIncludes.h; sourceTree = "<group>"; };
+		5695FEEB1A13C1DE00F1E6CE /* MyPinCreationInitiationViewModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPinCreationInitiationViewModule.h; sourceTree = "<group>"; };
+		5695FEEC1A13C1DE00F1E6CE /* MyPinCreationInitiationViewModule.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyPinCreationInitiationViewModule.mm; sourceTree = "<group>"; };
+		5695FF001A14B11A00F1E6CE /* MyPinCreationStateChangedMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyPinCreationStateChangedMessage.h; sourceTree = "<group>"; };
+		5695FF011A14B2C300F1E6CE /* MyPinCreationModelObserver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyPinCreationModelObserver.h; sourceTree = "<group>"; };
+		5695FF021A14B7F500F1E6CE /* MyPinCreationViewStateChangedMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyPinCreationViewStateChangedMessage.h; sourceTree = "<group>"; };
+		5695FF031A14BF3800F1E6CE /* MyPinCreationViewStateChangedHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyPinCreationViewStateChangedHandler.h; sourceTree = "<group>"; };
+		5695FF041A14C75300F1E6CE /* MyPinCreationViewSavePinMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyPinCreationViewSavePinMessage.h; sourceTree = "<group>"; };
+		5695FF061A14CCE400F1E6CE /* MyPinCreationViewSavePinHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyPinCreationViewSavePinHandler.h; sourceTree = "<group>"; };
+		56A88C9B1A135DC300FCBE9A /* MyPinMenuOption.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyPinMenuOption.h; sourceTree = "<group>"; };
+		56A8DF7A19FEA977009DC352 /* Geosphere_01.pod */ = {isa = PBXFileReference; lastKnownFileType = file; path = Geosphere_01.pod; sourceTree = "<group>"; };
+		56B258D61A110CE6003C50CF /* IMyPinsModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IMyPinsModule.h; sourceTree = "<group>"; };
+		56FBCDE71A0BB5150026546E /* button_checkbox_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_checkbox_off.png; sourceTree = "<group>"; };
+		56FBCDE81A0BB5150026546E /* button_checkbox_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_checkbox_on.png; sourceTree = "<group>"; };
+		56FBCDE91A0BB5150026546E /* button_create_poi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_create_poi.png; sourceTree = "<group>"; };
+		56FBCDEA1A0BB5150026546E /* button_gallery.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_gallery.png; sourceTree = "<group>"; };
+		56FBCDEB1A0BB5150026546E /* button_ok.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_ok.png; sourceTree = "<group>"; };
+		56FBCDEC1A0BB5150026546E /* button_photo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_photo.png; sourceTree = "<group>"; };
+		56FBCDED1A0BB5150026546E /* image_blank.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = image_blank.png; sourceTree = "<group>"; };
+		56FBCDEE1A0BB5150026546E /* poi_marker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = poi_marker.png; sourceTree = "<group>"; };
 		7E75EE1D16848B8A00BCA283 /* libapps-on-maps-sim.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libapps-on-maps-sim.a"; path = "Include/libapps-on-maps-sim.a"; sourceTree = "<group>"; };
 		7EE481E616836F370006E99B /* ExampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7EE481EA16836F370006E99B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -984,8 +1145,14 @@
 				18A9C9901A0D28520042B937 /* ExampleAppMessaging */,
 				18B5A9E019DC158F00BA4A38 /* FlattenButton */,
 				18B5A9F219DC158F00BA4A38 /* InitialExperience */,
+				189971CF192CF46000E0E9F1 /* Logger.h */,
 				18B5AA0419DC158F00BA4A38 /* Menu */,
+				189971CC192CCC0200E0E9F1 /* MobileExampleApp.cpp */,
+				189971CD192CCC0200E0E9F1 /* MobileExampleApp.h */,
 				18B5AA3319DC158F00BA4A38 /* Modality */,
+				5695FE871A13C17800F1E6CE /* MyPinCreation */,
+				5695FEA91A13C17800F1E6CE /* MyPinCreationDetails */,
+				5637F1EB1A0CD50D0011B509 /* MyPins */,
 				18B5AA3419DC158F00BA4A38 /* OpenableControlViewModel */,
 				18B5AA3919DC158F00BA4A38 /* PersistentSettings */,
 				18B5AA3C19DC158F00BA4A38 /* PlaceJumps */,
@@ -1001,9 +1168,6 @@
 				18B5AAAC19DC158F00BA4A38 /* WeatherMenu */,
 				18B5AABA19DC158F00BA4A38 /* WorldAreaLoader */,
 				18B5AAC519DC158F00BA4A38 /* WorldPins */,
-				189971CF192CF46000E0E9F1 /* Logger.h */,
-				189971CC192CCC0200E0E9F1 /* MobileExampleApp.cpp */,
-				189971CD192CCC0200E0E9F1 /* MobileExampleApp.h */,
 			);
 			name = src;
 			path = ../../src;
@@ -1537,6 +1701,9 @@
 				18B5ABA119DC159B00BA4A38 /* Helpers */,
 				18B5ABA819DC159B00BA4A38 /* MenuView */,
 				18B5ABAE19DC159B00BA4A38 /* ModalBackground */,
+				5695FECF1A13C1DE00F1E6CE /* MyPinCreationConfirmation */,
+				5695FED91A13C1DE00F1E6CE /* MyPinCreationDetails */,
+				5695FEE31A13C1DE00F1E6CE /* MyPinCreationInitiation */,
 				18B5ABB719DC159B00BA4A38 /* PrimaryMenu */,
 				18B5ABBE19DC159B00BA4A38 /* SearchResultMapLabels */,
 				18B5ABBF19DC159B00BA4A38 /* SearchResultMenu */,
@@ -1790,6 +1957,144 @@
 			path = Reaction;
 			sourceTree = "<group>";
 		};
+		5637F1EB1A0CD50D0011B509 /* MyPins */ = {
+			isa = PBXGroup;
+			children = (
+				5637F1EC1A0CD51F0011B509 /* MyPinModel.cpp */,
+				5637F1ED1A0CD51F0011B509 /* MyPinModel.h */,
+				5637F1F01A0CD5CB0011B509 /* IMyPinsRepository.h */,
+				5637F1F21A0CD5F00011B509 /* MyPinsRepository.h */,
+				5637F1F51A0CDAFB0011B509 /* MyPinsService.cpp */,
+				5637F1F61A0CDAFB0011B509 /* MyPinsService.h */,
+				5637F1F91A0CDB1D0011B509 /* IMyPinsService.h */,
+				5637F1FA1A0CDB370011B509 /* MyPins.h */,
+				5637F2031A10F3930011B509 /* MyPinsModule.cpp */,
+				5637F2041A10F3930011B509 /* MyPinsModule.h */,
+				5637F2071A10F4CD0011B509 /* MyPinsFileIO.cpp */,
+				5637F2081A10F4CD0011B509 /* MyPinsFileIO.h */,
+				56B258D61A110CE6003C50CF /* IMyPinsModule.h */,
+				56A88C9B1A135DC300FCBE9A /* MyPinMenuOption.h */,
+			);
+			path = MyPins;
+			sourceTree = "<group>";
+		};
+		5695FE871A13C17800F1E6CE /* MyPinCreation */ = {
+			isa = PBXGroup;
+			children = (
+				5695FE881A13C17800F1E6CE /* IMyPinCreationCompositeViewModel.h */,
+				5695FE891A13C17800F1E6CE /* IMyPinCreationConfirmationViewModel.h */,
+				5695FE8A1A13C17800F1E6CE /* IMyPinCreationInitiationViewModel.h */,
+				5695FE8B1A13C17800F1E6CE /* IMyPinCreationModel.h */,
+				5695FE8C1A13C17800F1E6CE /* IMyPinCreationModule.h */,
+				5695FE8D1A13C17800F1E6CE /* MyPinCreation.h */,
+				5695FE8E1A13C17800F1E6CE /* MyPinCreationCompositeViewModel.cpp */,
+				5695FE8F1A13C17800F1E6CE /* MyPinCreationCompositeViewModel.h */,
+				5695FE901A13C17800F1E6CE /* MyPinCreationConfirmationViewModel.cpp */,
+				5695FE911A13C17800F1E6CE /* MyPinCreationConfirmationViewModel.h */,
+				5695FE921A13C17800F1E6CE /* MyPinCreationInitiationViewModel.cpp */,
+				5695FE931A13C17800F1E6CE /* MyPinCreationInitiationViewModel.h */,
+				5695FE941A13C17800F1E6CE /* MyPinCreationModel.cpp */,
+				5695FE951A13C17800F1E6CE /* MyPinCreationModel.h */,
+				5695FE961A13C17800F1E6CE /* MyPinCreationModule.cpp */,
+				5695FE971A13C17800F1E6CE /* MyPinCreationModule.h */,
+				5695FE981A13C17800F1E6CE /* MyPinCreationScreenControl.cpp */,
+				5695FE991A13C17800F1E6CE /* MyPinCreationScreenControl.h */,
+				5695FE9A1A13C17800F1E6CE /* MyPinCreationStage.h */,
+				5695FE9B1A13C17800F1E6CE /* PoiRing */,
+				5695FF001A14B11A00F1E6CE /* MyPinCreationStateChangedMessage.h */,
+				5695FF011A14B2C300F1E6CE /* MyPinCreationModelObserver.h */,
+				5695FF021A14B7F500F1E6CE /* MyPinCreationViewStateChangedMessage.h */,
+				5695FF031A14BF3800F1E6CE /* MyPinCreationViewStateChangedHandler.h */,
+				5695FF041A14C75300F1E6CE /* MyPinCreationViewSavePinMessage.h */,
+				5695FF061A14CCE400F1E6CE /* MyPinCreationViewSavePinHandler.h */,
+			);
+			path = MyPinCreation;
+			sourceTree = "<group>";
+		};
+		5695FE9B1A13C17800F1E6CE /* PoiRing */ = {
+			isa = PBXGroup;
+			children = (
+				5695FE9C1A13C17800F1E6CE /* IPoiRingController.h */,
+				5695FE9D1A13C17800F1E6CE /* IPoiRingModule.h */,
+				5695FE9E1A13C17800F1E6CE /* IPoiRingTouchController.h */,
+				5695FE9F1A13C17800F1E6CE /* PoiRingController.cpp */,
+				5695FEA01A13C17800F1E6CE /* PoiRingController.h */,
+				5695FEA11A13C17800F1E6CE /* PoiRingModule.cpp */,
+				5695FEA21A13C17800F1E6CE /* PoiRingModule.h */,
+				5695FEA31A13C17800F1E6CE /* PoiRingRenderable.cpp */,
+				5695FEA41A13C17800F1E6CE /* PoiRingRenderable.h */,
+				5695FEA51A13C17800F1E6CE /* PoiRingTouchController.cpp */,
+				5695FEA61A13C17800F1E6CE /* PoiRingTouchController.h */,
+				5695FEA71A13C17800F1E6CE /* PoiRingView.cpp */,
+				5695FEA81A13C17800F1E6CE /* PoiRingView.h */,
+			);
+			path = PoiRing;
+			sourceTree = "<group>";
+		};
+		5695FEA91A13C17800F1E6CE /* MyPinCreationDetails */ = {
+			isa = PBXGroup;
+			children = (
+				5695FEAA1A13C17800F1E6CE /* IMyPinCreationDetailsModule.h */,
+				5695FEAB1A13C17800F1E6CE /* IMyPinCreationDetailsViewModel.h */,
+				5695FEAC1A13C17800F1E6CE /* MyPinCreationDetails.h */,
+				5695FEAD1A13C17800F1E6CE /* MyPinCreationDetailsModule.cpp */,
+				5695FEAE1A13C17800F1E6CE /* MyPinCreationDetailsModule.h */,
+				5695FEAF1A13C17800F1E6CE /* MyPinCreationDetailsOpenableControl.cpp */,
+				5695FEB01A13C17800F1E6CE /* MyPinCreationDetailsOpenableControl.h */,
+				5695FEB11A13C17800F1E6CE /* MyPinCreationDetailsViewModel.cpp */,
+				5695FEB21A13C17800F1E6CE /* MyPinCreationDetailsViewModel.h */,
+			);
+			path = MyPinCreationDetails;
+			sourceTree = "<group>";
+		};
+		5695FECF1A13C1DE00F1E6CE /* MyPinCreationConfirmation */ = {
+			isa = PBXGroup;
+			children = (
+				5695FED01A13C1DE00F1E6CE /* IMyPinCreationConfirmationViewModule.h */,
+				5695FED11A13C1DE00F1E6CE /* MyPinCreationConfirmationView.h */,
+				5695FED21A13C1DE00F1E6CE /* MyPinCreationConfirmationView.mm */,
+				5695FED31A13C1DE00F1E6CE /* MyPinCreationConfirmationViewController.h */,
+				5695FED41A13C1DE00F1E6CE /* MyPinCreationConfirmationViewController.mm */,
+				5695FED51A13C1DE00F1E6CE /* MyPinCreationConfirmationViewControllerInterop.h */,
+				5695FED61A13C1DE00F1E6CE /* MyPinCreationConfirmationViewIncludes.h */,
+				5695FED71A13C1DE00F1E6CE /* MyPinCreationConfirmationViewModule.h */,
+				5695FED81A13C1DE00F1E6CE /* MyPinCreationConfirmationViewModule.mm */,
+			);
+			path = MyPinCreationConfirmation;
+			sourceTree = "<group>";
+		};
+		5695FED91A13C1DE00F1E6CE /* MyPinCreationDetails */ = {
+			isa = PBXGroup;
+			children = (
+				5695FEDA1A13C1DE00F1E6CE /* IMyPinCreationDetailsViewModule.h */,
+				5695FEDB1A13C1DE00F1E6CE /* MyPinCreationDetailsView.h */,
+				5695FEDC1A13C1DE00F1E6CE /* MyPinCreationDetailsView.mm */,
+				5695FEDD1A13C1DE00F1E6CE /* MyPinCreationDetailsViewController.h */,
+				5695FEDE1A13C1DE00F1E6CE /* MyPinCreationDetailsViewController.mm */,
+				5695FEDF1A13C1DE00F1E6CE /* MyPinCreationDetailsViewControllerInterop.h */,
+				5695FEE01A13C1DE00F1E6CE /* MyPinCreationDetailsViewIncludes.h */,
+				5695FEE11A13C1DE00F1E6CE /* MyPinCreationDetailsViewModule.h */,
+				5695FEE21A13C1DE00F1E6CE /* MyPinCreationDetailsViewModule.mm */,
+			);
+			path = MyPinCreationDetails;
+			sourceTree = "<group>";
+		};
+		5695FEE31A13C1DE00F1E6CE /* MyPinCreationInitiation */ = {
+			isa = PBXGroup;
+			children = (
+				5695FEE41A13C1DE00F1E6CE /* IMyPinCreationInitiationViewModule.h */,
+				5695FEE51A13C1DE00F1E6CE /* MyPinCreationInitiationView.h */,
+				5695FEE61A13C1DE00F1E6CE /* MyPinCreationInitiationView.mm */,
+				5695FEE71A13C1DE00F1E6CE /* MyPinCreationInitiationViewController.h */,
+				5695FEE81A13C1DE00F1E6CE /* MyPinCreationInitiationViewController.mm */,
+				5695FEE91A13C1DE00F1E6CE /* MyPinCreationInitiationViewControllerInterop.h */,
+				5695FEEA1A13C1DE00F1E6CE /* MyPinCreationInitiationViewIncludes.h */,
+				5695FEEB1A13C1DE00F1E6CE /* MyPinCreationInitiationViewModule.h */,
+				5695FEEC1A13C1DE00F1E6CE /* MyPinCreationInitiationViewModule.mm */,
+			);
+			path = MyPinCreationInitiation;
+			sourceTree = "<group>";
+		};
 		7EE481DB16836F360006E99B = {
 			isa = PBXGroup;
 			children = (
@@ -1859,6 +2164,15 @@
 		7EE4825B16847E7C0006E99B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				56FBCDE71A0BB5150026546E /* button_checkbox_off.png */,
+				56FBCDE81A0BB5150026546E /* button_checkbox_on.png */,
+				56FBCDE91A0BB5150026546E /* button_create_poi.png */,
+				56FBCDEA1A0BB5150026546E /* button_gallery.png */,
+				56FBCDEB1A0BB5150026546E /* button_ok.png */,
+				56FBCDEC1A0BB5150026546E /* button_photo.png */,
+				56FBCDED1A0BB5150026546E /* image_blank.png */,
+				56FBCDEE1A0BB5150026546E /* poi_marker.png */,
+				56A8DF7A19FEA977009DC352 /* Geosphere_01.pod */,
 				E0DD09F219EED4AF008BD39D /* SplashScreen.png */,
 				5606E31619ED1B93009059D4 /* eegeo_logo@ipho.png */,
 				18B5ACFD19DC160E00BA4A38 /* SearchResultOnMap */,
@@ -1988,6 +2302,7 @@
 			files = (
 				189B246919F9355A006DD887 /* SplashScreen.png in Resources */,
 				189B246819F93547006DD887 /* Images.xcassets in Resources */,
+				56A8DF7E19FEA977009DC352 /* Geosphere_01.pod in Resources */,
 				18B5ACB419DC15CD00BA4A38 /* icon1_park.png in Resources */,
 				18B5AC9619DC15CD00BA4A38 /* icon1_arts.png in Resources */,
 				18B5AC9019DC15CD00BA4A38 /* compass_shadow.png in Resources */,
@@ -2054,6 +2369,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				18B5ACB319DC15CD00BA4A38 /* icon1_park.png in Resources */,
+				56FBCDF31A0BB5150026546E /* button_ok.png in Resources */,
 				18B5AC9519DC15CD00BA4A38 /* icon1_arts.png in Resources */,
 				18B5AC8F19DC15CD00BA4A38 /* compass_shadow.png in Resources */,
 				18B5ACA519DC15CD00BA4A38 /* icon1_food.png in Resources */,
@@ -2061,11 +2377,13 @@
 				18B5ACF519DC15CD00BA4A38 /* shadow_01_flip.png in Resources */,
 				18B5ACC319DC15CD00BA4A38 /* icon1_weather.png in Resources */,
 				18B5ACAF19DC15CD00BA4A38 /* icon1_nightlife.png in Resources */,
+				56FBCDF61A0BB5150026546E /* poi_marker.png in Resources */,
 				18B5ACF119DC15CD00BA4A38 /* placejumps.json in Resources */,
 				7EE481F716836F370006E99B /* InfoPlist.strings in Resources */,
 				7EE4820E1683713B0006E99B /* MainStoryboard_iPhone.storyboard in Resources */,
 				18B5AC9719DC15CD00BA4A38 /* icon1_autumn.png in Resources */,
 				18B5AC7F19DC15CD00BA4A38 /* arrow1.png in Resources */,
+				56FBCDF21A0BB5150026546E /* button_gallery.png in Resources */,
 				18B5AC9319DC15CD00BA4A38 /* icon0_search_icon.png in Resources */,
 				7EE48211168371460006E99B /* MainStoryboard_iPad.storyboard in Resources */,
 				18B5ACCD19DC15CD00BA4A38 /* icon2_food.png in Resources */,
@@ -2075,12 +2393,16 @@
 				18B5AC8119DC15CD00BA4A38 /* button_close_off.png in Resources */,
 				18B5ACA319DC15CD00BA4A38 /* icon1_foggy.png in Resources */,
 				18B5ACBB19DC15CD00BA4A38 /* icon1_snowy.png in Resources */,
+				56FBCDF51A0BB5150026546E /* image_blank.png in Resources */,
 				E0DD09F319EED4AF008BD39D /* SplashScreen.png in Resources */,
 				18B5ACCB19DC15CD00BA4A38 /* icon2_coffee.png in Resources */,
+				56FBCDEF1A0BB5150026546E /* button_checkbox_off.png in Resources */,
 				18B5AC8B19DC15CD00BA4A38 /* buttonsmall_close_on.png in Resources */,
+				56FBCDF01A0BB5150026546E /* button_checkbox_on.png in Resources */,
 				18B5ACB519DC15CD00BA4A38 /* icon1_place.png in Resources */,
 				18B5ACA719DC15CD00BA4A38 /* icon1_hotel.png in Resources */,
 				E016040E19EEC26E0029A035 /* Images.xcassets in Resources */,
+				56FBCDF11A0BB5150026546E /* button_create_poi.png in Resources */,
 				18B5ACC519DC15CD00BA4A38 /* icon1_winter.png in Resources */,
 				18B5AC8D19DC15CD00BA4A38 /* compass_lock.png in Resources */,
 				18B5ACBF19DC15CD00BA4A38 /* icon1_summer.png in Resources */,
@@ -2091,6 +2413,7 @@
 				18B5ACD519DC15CD00BA4A38 /* icon2_park.png in Resources */,
 				18D1D35B194A057200FAA1B9 /* placeholder.pvr in Resources */,
 				18B5AC9919DC15CD00BA4A38 /* icon1_bank.png in Resources */,
+				56A8DF7D19FEA977009DC352 /* Geosphere_01.pod in Resources */,
 				18B5ACF919DC15CD00BA4A38 /* shadow_03.png in Resources */,
 				18B5ACB919DC15CD00BA4A38 /* icon1_search.png in Resources */,
 				18B5ACD319DC15CD00BA4A38 /* icon2_nightlife.png in Resources */,
@@ -2109,6 +2432,7 @@
 				18B5AC8719DC15CD00BA4A38 /* button_streets_on.png in Resources */,
 				18B5AC9119DC15CD00BA4A38 /* icon0_me_icon.png in Resources */,
 				18B5ACB119DC15CD00BA4A38 /* icon1_overcast.png in Resources */,
+				56FBCDF41A0BB5150026546E /* button_photo.png in Resources */,
 				18B5ACD119DC15CD00BA4A38 /* icon2_misc.png in Resources */,
 				18B5ACCF19DC15CD00BA4A38 /* icon2_hotel.png in Resources */,
 				18B5ACBD19DC15CD00BA4A38 /* icon1_spring.png in Resources */,
@@ -2131,6 +2455,7 @@
 				18B5AB2419DC159000BA4A38 /* PlaceJumpsDataParser.cpp in Sources */,
 				18B5AB7419DC159000BA4A38 /* WorldPinsFactory.cpp in Sources */,
 				18B5AC3719DC159B00BA4A38 /* SecondaryMenuView.mm in Sources */,
+				5695FEBC1A13C17800F1E6CE /* MyPinCreationModule.cpp in Sources */,
 				18B5AB2619DC159000BA4A38 /* PlaceJumpsModel.cpp in Sources */,
 				18B5AB2E19DC159000BA4A38 /* ScreenControlViewModelBase.cpp in Sources */,
 				18B5AB5419DC159000BA4A38 /* SearchResultOnMapItemModel.cpp in Sources */,
@@ -2138,9 +2463,11 @@
 				18B5AB5A19DC159000BA4A38 /* SearchResultOnMapScaleController.cpp in Sources */,
 				18B5AB6419DC159000BA4A38 /* WeatherController.cpp in Sources */,
 				18B5AAE019DC159000BA4A38 /* CategorySearchMenuOption.cpp in Sources */,
+				5637F1F81A0CDAFB0011B509 /* MyPinsService.cpp in Sources */,
 				18B5AC1119DC159B00BA4A38 /* MenuView.mm in Sources */,
 				18B5AAEA19DC159000BA4A38 /* CompassModule.cpp in Sources */,
 				18B5AAD819DC159000BA4A38 /* AboutPageModule.cpp in Sources */,
+				5695FEC61A13C17800F1E6CE /* PoiRingTouchController.cpp in Sources */,
 				18B5ABF519DC159B00BA4A38 /* iOSInitialExperiencePreLoadModel.mm in Sources */,
 				18B5AAF619DC159000BA4A38 /* FlattenButtonScreenControl.cpp in Sources */,
 				5605EDF019F824CD00D1D594 /* ReactionModelModule.cpp in Sources */,
@@ -2150,8 +2477,10 @@
 				18B5AC2719DC159B00BA4A38 /* SearchResultOnMapView.mm in Sources */,
 				18B5AAE619DC159000BA4A38 /* CategorySearchRepository.cpp in Sources */,
 				18B5AB2C19DC159000BA4A38 /* PrimaryMenuModule.cpp in Sources */,
+				5695FEF61A13C1DE00F1E6CE /* MyPinCreationDetailsViewController.mm in Sources */,
 				180E99FF19E6B4CC007D63FD /* CustomTableViewCell.mm in Sources */,
 				18B5AAE419DC159000BA4A38 /* CategorySearchModule.cpp in Sources */,
+				5695FEEE1A13C1DE00F1E6CE /* MyPinCreationConfirmationView.mm in Sources */,
 				18B5AC3319DC159B00BA4A38 /* SearchViewController.mm in Sources */,
 				18B5AC1D19DC159B00BA4A38 /* PrimaryMenuViewModule.mm in Sources */,
 				18B5AB4019DC159000BA4A38 /* SearchServiceBase.cpp in Sources */,
@@ -2161,23 +2490,31 @@
 				186D2926196D9D0900E004E0 /* AppHost.mm in Sources */,
 				186D2927196D9D0900E004E0 /* AppInputDelegate.mm in Sources */,
 				18B5AB4619DC159000BA4A38 /* SearchResultMenuModule.cpp in Sources */,
+				5695FEFE1A13C1DE00F1E6CE /* MyPinCreationInitiationViewModule.mm in Sources */,
+				5637F20A1A10F4CD0011B509 /* MyPinsFileIO.cpp in Sources */,
 				186D2928196D9D0900E004E0 /* AppLocationDelegate.mm in Sources */,
 				18B5AC0319DC159B00BA4A38 /* CompassViewModule.mm in Sources */,
 				18B5AAE819DC159000BA4A38 /* CompassModel.cpp in Sources */,
+				5695FEB61A13C17800F1E6CE /* MyPinCreationConfirmationViewModel.cpp in Sources */,
 				18B5AB0E19DC159000BA4A38 /* MenuSectionsViewModel.cpp in Sources */,
 				186D2929196D9D0900E004E0 /* AppRunner.mm in Sources */,
 				5605EDEC19F824CD00D1D594 /* ReactionControllerModule.cpp in Sources */,
 				18B5AB2219DC159000BA4A38 /* PlaceJumpController.cpp in Sources */,
 				186D292A196D9D0900E004E0 /* GlDisplayService.mm in Sources */,
 				222E064C1948B08B0004FFD9 /* MobileExampleApp.cpp in Sources */,
+				5695FEF41A13C1DE00F1E6CE /* MyPinCreationDetailsView.mm in Sources */,
 				5605EDDA19F81CFC00D1D594 /* ModalityModule.cpp in Sources */,
 				5675902719F54A8200C4599E /* CustomTableView.mm in Sources */,
+				5695FEFC1A13C1DE00F1E6CE /* MyPinCreationInitiationViewController.mm in Sources */,
 				18B5AC2319DC159B00BA4A38 /* SearchResultMenuViewController.mm in Sources */,
 				18B5AB5E19DC159000BA4A38 /* SearchResultPoiOpenableControl.cpp in Sources */,
 				18B5AC3B19DC159B00BA4A38 /* ViewControllerUpdaterModel.mm in Sources */,
 				18B5AC2919DC159B00BA4A38 /* SearchResultOnMapViewController.mm in Sources */,
+				5695FEBE1A13C17800F1E6CE /* MyPinCreationScreenControl.cpp in Sources */,
+				5695FEB81A13C17800F1E6CE /* MyPinCreationInitiationViewModel.cpp in Sources */,
 				18B5AB7019DC159000BA4A38 /* WorldAreaLoaderModule.cpp in Sources */,
 				18B5AC3519DC159B00BA4A38 /* SearchViewControllerInterop.mm in Sources */,
+				5695FECC1A13C17800F1E6CE /* MyPinCreationDetailsOpenableControl.cpp in Sources */,
 				18B5AB7819DC159000BA4A38 /* WorldPinsService.cpp in Sources */,
 				5605EDD619F81CFC00D1D594 /* ModalityController.cpp in Sources */,
 				18B5AAF819DC159000BA4A38 /* FlattenButtonViewModel.cpp in Sources */,
@@ -2187,6 +2524,8 @@
 				18B5AB6619DC159000BA4A38 /* WeatherMenuDataParser.cpp in Sources */,
 				18B5AB6219DC159000BA4A38 /* SecondaryMenuModule.cpp in Sources */,
 				18B5AB0219DC159000BA4A38 /* PreloadSphereVolume.cpp in Sources */,
+				5695FEB41A13C17800F1E6CE /* MyPinCreationCompositeViewModel.cpp in Sources */,
+				5695FECA1A13C17800F1E6CE /* MyPinCreationDetailsModule.cpp in Sources */,
 				18B5AC3119DC159B00BA4A38 /* SearchResultPoiViewModule.mm in Sources */,
 				18B5AAFE19DC159000BA4A38 /* InitialExperienceModuleBase.cpp in Sources */,
 				5605EDD819F81CFC00D1D594 /* ModalityModel.cpp in Sources */,
@@ -2202,19 +2541,26 @@
 				18B5ABFD19DC159B00BA4A38 /* AboutPageViewModule.mm in Sources */,
 				18B5ABF919DC159B00BA4A38 /* AboutPageView.mm in Sources */,
 				18B5AAF219DC159000BA4A38 /* FlattenButtonModel.cpp in Sources */,
+				5695FEBA1A13C17800F1E6CE /* MyPinCreationModel.cpp in Sources */,
 				18B5AB2819DC159000BA4A38 /* PlaceJumpsModule.cpp in Sources */,
 				18B5AAE219DC159000BA4A38 /* CategorySearchModel.cpp in Sources */,
 				18B5AC1919DC159B00BA4A38 /* ModalBackgroundViewModule.mm in Sources */,
 				18B5AB3419DC159000BA4A38 /* SearchModule.cpp in Sources */,
 				18B5AB0419DC159000BA4A38 /* MenuItemModel.cpp in Sources */,
 				18B5AB6A19DC159000BA4A38 /* WeatherMenuStateModel.cpp in Sources */,
+				5695FEFA1A13C1DE00F1E6CE /* MyPinCreationInitiationView.mm in Sources */,
+				5695FEC21A13C17800F1E6CE /* PoiRingModule.cpp in Sources */,
 				18B5AB4E19DC159000BA4A38 /* SearchResultOnMapInFocusController.cpp in Sources */,
 				18B5AC1519DC159B00BA4A38 /* ModalBackgroundView.mm in Sources */,
 				18B5AB4A19DC159000BA4A38 /* SearchResultOnMapFactory.cpp in Sources */,
 				18B5AB5819DC159000BA4A38 /* SearchResultOnMapModule.cpp in Sources */,
 				18B5AC0F19DC159B00BA4A38 /* UIColors.mm in Sources */,
+				5637F2061A10F3930011B509 /* MyPinsModule.cpp in Sources */,
 				18B5AAF019DC159000BA4A38 /* CompassViewModel.cpp in Sources */,
+				5695FEC81A13C17800F1E6CE /* PoiRingView.cpp in Sources */,
+				5695FEF21A13C1DE00F1E6CE /* MyPinCreationConfirmationViewModule.mm in Sources */,
 				18B5AC0119DC159B00BA4A38 /* CompassViewController.mm in Sources */,
+				5695FEF01A13C1DE00F1E6CE /* MyPinCreationConfirmationViewController.mm in Sources */,
 				18B5AAFC19DC159000BA4A38 /* InitialExperienceModel.cpp in Sources */,
 				18B5AB5619DC159000BA4A38 /* SearchResultOnMapModel.cpp in Sources */,
 				18B5AADA19DC159000BA4A38 /* AboutPageOpenableControl.cpp in Sources */,
@@ -2232,10 +2578,13 @@
 				18B5AC1B19DC159B00BA4A38 /* PrimaryMenuView.mm in Sources */,
 				18B5AAFA19DC159000BA4A38 /* InitialExperienceController.cpp in Sources */,
 				18B5AC0519DC159B00BA4A38 /* FlattenButtonView.mm in Sources */,
+				5695FEC41A13C17800F1E6CE /* PoiRingRenderable.cpp in Sources */,
 				18B5AB7219DC159000BA4A38 /* WorldPinItemModel.cpp in Sources */,
+				5637F1EF1A0CD51F0011B509 /* MyPinModel.cpp in Sources */,
 				18B5AB5219DC159000BA4A38 /* SearchResultOnMapInFocusViewModel.cpp in Sources */,
 				18B5AB3E19DC159000BA4A38 /* SearchResultRepository.cpp in Sources */,
 				18B5AB3819DC159000BA4A38 /* SearchQueryPerformer.cpp in Sources */,
+				5695FEF81A13C1DE00F1E6CE /* MyPinCreationDetailsViewModule.mm in Sources */,
 				5605EDEE19F824CD00D1D594 /* ReactionModel.cpp in Sources */,
 				18B5AB2A19DC159000BA4A38 /* AboutPageMenuOption.cpp in Sources */,
 				18B5AB0C19DC159000BA4A38 /* MenuScreenControl.cpp in Sources */,
@@ -2248,7 +2597,9 @@
 				18B5AB0019DC159000BA4A38 /* InitialExperiencePreLoadModel.cpp in Sources */,
 				18B5AC1719DC159B00BA4A38 /* ModalBackgroundViewController.mm in Sources */,
 				18B5ABFB19DC159B00BA4A38 /* AboutPageViewController.mm in Sources */,
+				5695FEC01A13C17800F1E6CE /* PoiRingController.cpp in Sources */,
 				222E06601948B08B0004FFD9 /* Main.m in Sources */,
+				5695FECE1A13C17800F1E6CE /* MyPinCreationDetailsViewModel.cpp in Sources */,
 				18B5AB3A19DC159000BA4A38 /* SearchRefreshService.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2262,8 +2613,10 @@
 				18B5AADD19DC159000BA4A38 /* CameraTransitionController.cpp in Sources */,
 				18B5AB1F19DC159000BA4A38 /* OpenableControlViewModelBase.cpp in Sources */,
 				18B5AB0919DC159000BA4A38 /* MenuOptionsModel.cpp in Sources */,
+				5637F1F71A0CDAFB0011B509 /* MyPinsService.cpp in Sources */,
 				18B5AB2319DC159000BA4A38 /* PlaceJumpsDataParser.cpp in Sources */,
 				18B5AB7319DC159000BA4A38 /* WorldPinsFactory.cpp in Sources */,
+				5695FEBB1A13C17800F1E6CE /* MyPinCreationModule.cpp in Sources */,
 				18B5AC3619DC159B00BA4A38 /* SecondaryMenuView.mm in Sources */,
 				18B5AB2519DC159000BA4A38 /* PlaceJumpsModel.cpp in Sources */,
 				18B5AB2D19DC159000BA4A38 /* ScreenControlViewModelBase.cpp in Sources */,
@@ -2275,7 +2628,9 @@
 				18B5AC1019DC159B00BA4A38 /* MenuView.mm in Sources */,
 				18B5AAE919DC159000BA4A38 /* CompassModule.cpp in Sources */,
 				18B5AAD719DC159000BA4A38 /* AboutPageModule.cpp in Sources */,
+				5695FEC51A13C17800F1E6CE /* PoiRingTouchController.cpp in Sources */,
 				18B5ABF419DC159B00BA4A38 /* iOSInitialExperiencePreLoadModel.mm in Sources */,
+				5637F1EE1A0CD51F0011B509 /* MyPinModel.cpp in Sources */,
 				18B5AAF519DC159000BA4A38 /* FlattenButtonScreenControl.cpp in Sources */,
 				5605EDEF19F824CD00D1D594 /* ReactionModelModule.cpp in Sources */,
 				18B5AC2A19DC159B00BA4A38 /* SearchResultOnMapViewModule.mm in Sources */,
@@ -2283,8 +2638,10 @@
 				18B5AB0F19DC159000BA4A38 /* MenuSectionViewModel.cpp in Sources */,
 				18B5AC2619DC159B00BA4A38 /* SearchResultOnMapView.mm in Sources */,
 				18B5AAE519DC159000BA4A38 /* CategorySearchRepository.cpp in Sources */,
+				5695FEF51A13C1DE00F1E6CE /* MyPinCreationDetailsViewController.mm in Sources */,
 				18B5AB2B19DC159000BA4A38 /* PrimaryMenuModule.cpp in Sources */,
 				180E99FE19E6B4CC007D63FD /* CustomTableViewCell.mm in Sources */,
+				5695FEED1A13C1DE00F1E6CE /* MyPinCreationConfirmationView.mm in Sources */,
 				18B5AAE319DC159000BA4A38 /* CategorySearchModule.cpp in Sources */,
 				18B5AC3219DC159B00BA4A38 /* SearchViewController.mm in Sources */,
 				18B5AC1C19DC159B00BA4A38 /* PrimaryMenuViewModule.mm in Sources */,
@@ -2294,24 +2651,31 @@
 				5605EDE919F824CD00D1D594 /* ReactionControllerModel.cpp in Sources */,
 				189971CE192CCC0200E0E9F1 /* MobileExampleApp.cpp in Sources */,
 				18AB38FE192B729F00F15546 /* ViewController.mm in Sources */,
+				5695FEFD1A13C1DE00F1E6CE /* MyPinCreationInitiationViewModule.mm in Sources */,
 				18B5AB4519DC159000BA4A38 /* SearchResultMenuModule.cpp in Sources */,
 				18AB38FD192B729F00F15546 /* Main.m in Sources */,
 				18B5AC0219DC159B00BA4A38 /* CompassViewModule.mm in Sources */,
 				18B5AAE719DC159000BA4A38 /* CompassModel.cpp in Sources */,
+				5695FEB51A13C17800F1E6CE /* MyPinCreationConfirmationViewModel.cpp in Sources */,
 				18B5AB0D19DC159000BA4A38 /* MenuSectionsViewModel.cpp in Sources */,
 				18C45A7019658A5C009B18A8 /* AppHost.mm in Sources */,
 				5605EDEB19F824CD00D1D594 /* ReactionControllerModule.cpp in Sources */,
 				18B5AB2119DC159000BA4A38 /* PlaceJumpController.cpp in Sources */,
 				18C45A7319658A5C009B18A8 /* AppRunner.mm in Sources */,
 				18C45A7119658A5C009B18A8 /* AppInputDelegate.mm in Sources */,
+				5695FEF31A13C1DE00F1E6CE /* MyPinCreationDetailsView.mm in Sources */,
 				5605EDD919F81CFC00D1D594 /* ModalityModule.cpp in Sources */,
 				5675902619F54A8200C4599E /* CustomTableView.mm in Sources */,
+				5695FEFB1A13C1DE00F1E6CE /* MyPinCreationInitiationViewController.mm in Sources */,
 				18B5AC2219DC159B00BA4A38 /* SearchResultMenuViewController.mm in Sources */,
 				18B5AB5D19DC159000BA4A38 /* SearchResultPoiOpenableControl.cpp in Sources */,
 				18B5AC3A19DC159B00BA4A38 /* ViewControllerUpdaterModel.mm in Sources */,
 				18B5AC2819DC159B00BA4A38 /* SearchResultOnMapViewController.mm in Sources */,
+				5695FEBD1A13C17800F1E6CE /* MyPinCreationScreenControl.cpp in Sources */,
+				5695FEB71A13C17800F1E6CE /* MyPinCreationInitiationViewModel.cpp in Sources */,
 				18B5AB6F19DC159000BA4A38 /* WorldAreaLoaderModule.cpp in Sources */,
 				18B5AC3419DC159B00BA4A38 /* SearchViewControllerInterop.mm in Sources */,
+				5695FECB1A13C17800F1E6CE /* MyPinCreationDetailsOpenableControl.cpp in Sources */,
 				18B5AB7719DC159000BA4A38 /* WorldPinsService.cpp in Sources */,
 				5605EDD519F81CFC00D1D594 /* ModalityController.cpp in Sources */,
 				18B5AAF719DC159000BA4A38 /* FlattenButtonViewModel.cpp in Sources */,
@@ -2321,9 +2685,12 @@
 				18B5AB6519DC159000BA4A38 /* WeatherMenuDataParser.cpp in Sources */,
 				18B5AB6119DC159000BA4A38 /* SecondaryMenuModule.cpp in Sources */,
 				18B5AB0119DC159000BA4A38 /* PreloadSphereVolume.cpp in Sources */,
+				5695FEB31A13C17800F1E6CE /* MyPinCreationCompositeViewModel.cpp in Sources */,
+				5695FEC91A13C17800F1E6CE /* MyPinCreationDetailsModule.cpp in Sources */,
 				18B5AC3019DC159B00BA4A38 /* SearchResultPoiViewModule.mm in Sources */,
 				18B5AAFD19DC159000BA4A38 /* InitialExperienceModuleBase.cpp in Sources */,
 				5605EDD719F81CFC00D1D594 /* ModalityModel.cpp in Sources */,
+				5637F2091A10F4CD0011B509 /* MyPinsFileIO.cpp in Sources */,
 				18B5AB3519DC159000BA4A38 /* SearchQuery.cpp in Sources */,
 				18B5AADB19DC159000BA4A38 /* AboutPageViewModel.cpp in Sources */,
 				18B5AC1219DC159B00BA4A38 /* MenuViewController.mm in Sources */,
@@ -2335,12 +2702,15 @@
 				18B5AB5F19DC159000BA4A38 /* SearchResultPoiViewModel.cpp in Sources */,
 				18B5ABFC19DC159B00BA4A38 /* AboutPageViewModule.mm in Sources */,
 				18B5ABF819DC159B00BA4A38 /* AboutPageView.mm in Sources */,
+				5695FEB91A13C17800F1E6CE /* MyPinCreationModel.cpp in Sources */,
 				18B5AAF119DC159000BA4A38 /* FlattenButtonModel.cpp in Sources */,
 				18B5AB2719DC159000BA4A38 /* PlaceJumpsModule.cpp in Sources */,
 				18B5AAE119DC159000BA4A38 /* CategorySearchModel.cpp in Sources */,
 				18B5AC1819DC159B00BA4A38 /* ModalBackgroundViewModule.mm in Sources */,
 				18B5AB3319DC159000BA4A38 /* SearchModule.cpp in Sources */,
 				18B5AB0319DC159000BA4A38 /* MenuItemModel.cpp in Sources */,
+				5695FEF91A13C1DE00F1E6CE /* MyPinCreationInitiationView.mm in Sources */,
+				5695FEC11A13C17800F1E6CE /* PoiRingModule.cpp in Sources */,
 				18B5AB6919DC159000BA4A38 /* WeatherMenuStateModel.cpp in Sources */,
 				18B5AB4D19DC159000BA4A38 /* SearchResultOnMapInFocusController.cpp in Sources */,
 				18B5AC1419DC159B00BA4A38 /* ModalBackgroundView.mm in Sources */,
@@ -2348,10 +2718,14 @@
 				18B5AB5719DC159000BA4A38 /* SearchResultOnMapModule.cpp in Sources */,
 				18B5AC0E19DC159B00BA4A38 /* UIColors.mm in Sources */,
 				18B5AAEF19DC159000BA4A38 /* CompassViewModel.cpp in Sources */,
+				5695FEC71A13C17800F1E6CE /* PoiRingView.cpp in Sources */,
+				5695FEF11A13C1DE00F1E6CE /* MyPinCreationConfirmationViewModule.mm in Sources */,
 				18B5AC0019DC159B00BA4A38 /* CompassViewController.mm in Sources */,
+				5695FEEF1A13C1DE00F1E6CE /* MyPinCreationConfirmationViewController.mm in Sources */,
 				18B5AAFB19DC159000BA4A38 /* InitialExperienceModel.cpp in Sources */,
 				18B5AB5519DC159000BA4A38 /* SearchResultOnMapModel.cpp in Sources */,
 				18B5AAD919DC159000BA4A38 /* AboutPageOpenableControl.cpp in Sources */,
+				5637F2051A10F3930011B509 /* MyPinsModule.cpp in Sources */,
 				18C45A7219658A5C009B18A8 /* AppLocationDelegate.mm in Sources */,
 				18B5AB2F19DC159000BA4A38 /* DecartaSearchJsonParser.cpp in Sources */,
 				18B5AB6D19DC159000BA4A38 /* WorldAreaLoaderModel.cpp in Sources */,
@@ -2365,11 +2739,13 @@
 				18B5AB6719DC159000BA4A38 /* WeatherMenuModule.cpp in Sources */,
 				18B5AC1A19DC159B00BA4A38 /* PrimaryMenuView.mm in Sources */,
 				18B5AAF919DC159000BA4A38 /* InitialExperienceController.cpp in Sources */,
+				5695FEC31A13C17800F1E6CE /* PoiRingRenderable.cpp in Sources */,
 				18B5AC0419DC159B00BA4A38 /* FlattenButtonView.mm in Sources */,
 				18B5AB7119DC159000BA4A38 /* WorldPinItemModel.cpp in Sources */,
 				18B5AB5119DC159000BA4A38 /* SearchResultOnMapInFocusViewModel.cpp in Sources */,
 				18B5AB3D19DC159000BA4A38 /* SearchResultRepository.cpp in Sources */,
 				18B5AB3719DC159000BA4A38 /* SearchQueryPerformer.cpp in Sources */,
+				5695FEF71A13C1DE00F1E6CE /* MyPinCreationDetailsViewModule.mm in Sources */,
 				5605EDED19F824CD00D1D594 /* ReactionModel.cpp in Sources */,
 				18B5AB2919DC159000BA4A38 /* AboutPageMenuOption.cpp in Sources */,
 				18B5AB0B19DC159000BA4A38 /* MenuScreenControl.cpp in Sources */,
@@ -2382,7 +2758,9 @@
 				18B5AAFF19DC159000BA4A38 /* InitialExperiencePreLoadModel.cpp in Sources */,
 				18B5AC1619DC159B00BA4A38 /* ModalBackgroundViewController.mm in Sources */,
 				18B5ABFA19DC159B00BA4A38 /* AboutPageViewController.mm in Sources */,
+				5695FEBF1A13C17800F1E6CE /* PoiRingController.cpp in Sources */,
 				18C45A7419658A5C009B18A8 /* GlDisplayService.mm in Sources */,
+				5695FECD1A13C17800F1E6CE /* MyPinCreationDetailsViewModel.cpp in Sources */,
 				18B5AB3919DC159000BA4A38 /* SearchRefreshService.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

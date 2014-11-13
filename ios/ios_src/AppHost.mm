@@ -40,6 +40,15 @@
 #include "AboutPageViewModule.h"
 #include "AboutPageView.h"
 #include "CategorySearchModule.h"
+#include "MyPinCreationInitiationViewModule.h"
+#include "MyPinCreationInitiationView.h"
+#include "MyPinCreationConfirmationViewModule.h"
+#include "MyPinCreationConfirmationView.h"
+#include "IMyPinCreationModule.h"
+#include "IPoiRingModule.h"
+#include "IMyPinCreationDetailsModule.h"
+#include "MyPinCreationDetailsViewModule.h"
+#include "MyPinCreationDetailsView.h"
 
 using namespace Eegeo::iOS;
 
@@ -86,6 +95,7 @@ AppHost::AppHost(
 	         platformConfig,
 	         *m_pJpegLoader,
 	         *m_pInitialExperienceModule,
+             m_iOSPersistentSettingsModel,
 	         m_uiToNativeMessageBus,
 	         m_nativeToUiMessageBus);
 
@@ -212,25 +222,41 @@ void AppHost::CreateApplicationViewModules()
 
 	m_pAboutPageViewModule = Eegeo_NEW(ExampleApp::AboutPage::AboutPageViewModule)(app.AboutPageModule().GetAboutPageModel(),
 	                         app.AboutPageModule().GetAboutPageViewModel());
+    
+    m_pMyPinCreationInitiationViewModule = Eegeo_NEW(ExampleApp::MyPinCreation::MyPinCreationInitiationViewModule)(m_uiToNativeMessageBus,
+                                                                                                                   app.MyPinCreationModule().GetMyPinCreationInitiationViewModel(),
+                                                                                                                   *m_pScreenProperties);
+    
+    m_pMyPinCreationConfirmationViewModule = Eegeo_NEW(ExampleApp::MyPinCreation::MyPinCreationConfirmationViewModule)(m_uiToNativeMessageBus,
+                                                                                                                       app.MyPinCreationModule().GetMyPinCreationConfirmationViewModel(),
+                                                                                                                       app.MyPinCreationModule().GetMyPinCreationCompositeViewModel(),
+                                                                                                                       app.MyPinCreationDetailsModule().GetMyPinCreationDetailsViewModel(),
+                                                                                                                       *m_pScreenProperties);
+    
+    m_pMyPinCreationDetailsViewModule = Eegeo_NEW(ExampleApp::MyPinCreationDetails::MyPinCreationDetailsViewModule)(m_uiToNativeMessageBus,
+                                                                                                                    app.MyPinCreationDetailsModule().GetMyPinCreationDetailsViewModel());
 
-	// 3d map view layer.
-	[m_pView addSubview: &m_pSearchResultOnMapViewModule->GetSearchResultOnMapView()];
-
-	// HUD behind modal background layer.
-	[m_pView addSubview: &m_pFlattenButtonViewModule->GetFlattenButtonView()];
-	[m_pView addSubview: &m_pCompassViewModule->GetCompassView()];
-
-	// Modal background layer.
-	[m_pView addSubview: &m_pModalBackgroundViewModule->GetModalBackgroundView()];
-
-	// Menus & HUD layer.
-	[m_pView addSubview: &m_pPrimaryMenuViewModule->GetPrimaryMenuView()];
-	[m_pView addSubview: &m_pSecondaryMenuViewModule->GetSecondaryMenuView()];
-	[m_pView addSubview: &m_pSearchResultMenuViewModule->GetSearchResultMenuView()];
-
-	// Pop-up layer.
-	[m_pView addSubview: &m_pSearchResultPoiViewModule->GetSearchResultPoiView()];
-	[m_pView addSubview: &m_pAboutPageViewModule->GetAboutPageView()];
+    // 3d map view layer.
+    [m_pView addSubview: &m_pSearchResultOnMapViewModule->GetSearchResultOnMapView()];
+    
+    // HUD behind modal background layer.
+    [m_pView addSubview: &m_pFlattenButtonViewModule->GetFlattenButtonView()];
+    [m_pView addSubview: &m_pCompassViewModule->GetCompassView()];
+    [m_pView addSubview: &m_pMyPinCreationInitiationViewModule->GetMyPinCreationInitiationView()];
+    [m_pView addSubview: &m_pMyPinCreationConfirmationViewModule->GetMyPinCreationConfirmationView()];
+    
+    // Modal background layer.
+    [m_pView addSubview: &m_pModalBackgroundViewModule->GetModalBackgroundView()];
+    
+    // Menus & HUD layer.
+    [m_pView addSubview: &m_pPrimaryMenuViewModule->GetPrimaryMenuView()];
+    [m_pView addSubview: &m_pSecondaryMenuViewModule->GetSecondaryMenuView()];
+    [m_pView addSubview: &m_pSearchResultMenuViewModule->GetSearchResultMenuView()];
+    
+    // Pop-up layer.
+    [m_pView addSubview: &m_pSearchResultPoiViewModule->GetSearchResultPoiView()];
+    [m_pView addSubview: &m_pAboutPageViewModule->GetAboutPageView()];
+    [m_pView addSubview: &m_pMyPinCreationDetailsViewModule->GetMyPinCreationDetailsView()];
 
 	m_pViewControllerUpdaterModule = Eegeo_NEW(ExampleApp::ViewControllerUpdater::ViewControllerUpdaterModule);
 	ExampleApp::ViewControllerUpdater::IViewControllerUpdaterModel& viewControllerUpdaterModel = m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel();
@@ -242,24 +268,33 @@ void AppHost::CreateApplicationViewModules()
 
 void AppHost::DestroyApplicationViewModules()
 {
-	// 3d map view layer.
-	[&m_pSearchResultOnMapViewModule->GetSearchResultOnMapView() removeFromSuperview];
-
-	// HUD behind modal background layer.
-	[&m_pFlattenButtonViewModule->GetFlattenButtonView() removeFromSuperview];
-	[&m_pCompassViewModule->GetCompassView() removeFromSuperview];
-
-	// Modal background layer.
-	[&m_pModalBackgroundViewModule->GetModalBackgroundView() removeFromSuperview];
-
-	// Menus & HUD layer.
-	[&m_pPrimaryMenuViewModule->GetPrimaryMenuView() removeFromSuperview];
-	[&m_pSecondaryMenuViewModule->GetSecondaryMenuView() removeFromSuperview];
-	[&m_pSearchResultMenuViewModule->GetSearchResultMenuView() removeFromSuperview];
-
-	// Pop-up layer.
-	[&m_pSearchResultPoiViewModule->GetSearchResultPoiView() removeFromSuperview];
-	[&m_pAboutPageViewModule->GetAboutPageView() removeFromSuperview];
+    // 3d map view layer.
+    [&m_pSearchResultOnMapViewModule->GetSearchResultOnMapView() removeFromSuperview];
+    
+    // HUD behind modal background layer.
+    [&m_pFlattenButtonViewModule->GetFlattenButtonView() removeFromSuperview];
+    [&m_pCompassViewModule->GetCompassView() removeFromSuperview];
+    [&m_pMyPinCreationInitiationViewModule->GetMyPinCreationInitiationView() removeFromSuperview];
+    [&m_pMyPinCreationConfirmationViewModule->GetMyPinCreationConfirmationView() removeFromSuperview];
+    
+    // Modal background layer.
+    [&m_pModalBackgroundViewModule->GetModalBackgroundView() removeFromSuperview];
+    
+    // Menus & HUD layer.
+    [&m_pPrimaryMenuViewModule->GetPrimaryMenuView() removeFromSuperview];
+    [&m_pSecondaryMenuViewModule->GetSecondaryMenuView() removeFromSuperview];
+    [&m_pSearchResultMenuViewModule->GetSearchResultMenuView() removeFromSuperview];
+    
+    // Pop-up layer.
+    [&m_pMyPinCreationDetailsViewModule->GetMyPinCreationDetailsView() removeFromSuperview];
+    [&m_pSearchResultPoiViewModule->GetSearchResultPoiView() removeFromSuperview];
+    [&m_pAboutPageViewModule->GetAboutPageView() removeFromSuperview];
+    
+    Eegeo_DELETE m_pViewControllerUpdaterModule;
+    
+    Eegeo_DELETE m_pMyPinCreationDetailsViewModule;
+    
+    Eegeo_DELETE m_pMyPinCreationConfirmationViewModule;
 
 	Eegeo_DELETE m_pViewControllerUpdaterModule;
 

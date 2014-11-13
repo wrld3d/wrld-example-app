@@ -29,6 +29,9 @@
 #include "SearchResultOnMapViewIncludes.h"
 #include "CompassViewIncludes.h"
 #include "AboutPageViewIncludes.h"
+#include "MyPinCreationInitiationViewIncludes.h"
+#include "MyPinCreationConfirmationViewIncludes.h"
+#include "MyPinCreationDetailsViewIncludes.h"
 #include "UiToNativeMessageBus.h"
 #include "NativeToUiMessageBus.h"
 
@@ -86,6 +89,9 @@ private:
 	ExampleApp::PersistentSettings::iOSPersistentSettingsModel m_iOSPersistentSettingsModel;
 	ExampleApp::InitialExperience::IInitialExperienceModule* m_pInitialExperienceModule;
 	ExampleApp::AboutPage::IAboutPageViewModule* m_pAboutPageViewModule;
+    ExampleApp::MyPinCreation::IMyPinCreationInitiationViewModule* m_pMyPinCreationInitiationViewModule;
+    ExampleApp::MyPinCreation::IMyPinCreationConfirmationViewModule* m_pMyPinCreationConfirmationViewModule;
+    ExampleApp::MyPinCreationDetails::IMyPinCreationDetailsViewModule* m_pMyPinCreationDetailsViewModule;
 
 	ExampleApp::MobileExampleApp* m_pApp;
 	bool m_requestedApplicationInitialiseViewState;

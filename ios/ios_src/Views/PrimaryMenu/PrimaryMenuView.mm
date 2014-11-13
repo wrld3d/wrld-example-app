@@ -4,6 +4,7 @@
 #include "MathFunc.h"
 #include "ImageHelpers.h"
 #include "UIColors.h"
+#include "CellConstants.h"
 
 #include "MenuViewControllerInterop.h"
 
@@ -23,64 +24,65 @@
 
 - (void)initialiseViews:(size_t)numberOfSections numberOfCells:(size_t)numberOfCells
 {
-	m_pColour = ExampleApp::Helpers::ColorPalette::WhiteTone;
-
-	m_stateChangeAnimationTimeSeconds = 0.2;
-
-	m_mainContainerOffscreenOffsetX = (0.f * m_pixelScale);
-	m_mainContainerOffscreenOffsetY = (0.f * m_pixelScale);
-	m_mainContainerVisibleOnScreenWhenClosedX = (0.f * m_pixelScale);
-	m_mainContainerVisibleOnScreenWhenClosedY = (0.f * m_pixelScale);
-	m_mainContainerX = (0.f * m_pixelScale) - m_mainContainerOffscreenOffsetX;
-	m_mainContainerY = (50.f * m_pixelScale);
-	m_mainContainerOnScreenWidth = (220.f * m_pixelScale);
-	m_mainContainerOnScreenHeight = m_screenHeight - m_mainContainerY;
-	m_mainContainerWidth = m_mainContainerOnScreenWidth + m_mainContainerOffscreenOffsetX;
-	m_mainContainerHeight = m_mainContainerOnScreenHeight;
-
-	self.pMenuContainer = [[[UIView alloc] initWithFrame:CGRectMake(m_mainContainerX, m_mainContainerY, m_mainContainerWidth, m_mainContainerHeight)] autorelease];
-	self.pMenuContainer.backgroundColor = [UIColor clearColor];
-
-	m_dragTabX = m_mainContainerOnScreenWidth;
-	m_dragTabY = m_mainContainerY + (0.f * m_pixelScale);
-	m_dragTabWidth = (64.f * m_pixelScale);
-	m_dragTabHeight = (64.f * m_pixelScale);
-	self.pDragTab = [[[UIView alloc] initWithFrame:CGRectMake(m_dragTabX, m_dragTabY, m_dragTabWidth, m_dragTabHeight)] autorelease];
-	self.pDragTab.backgroundColor = ExampleApp::Helpers::ColorPalette::GoldTone;
-
-	const float menuHeaderStubX = m_mainContainerVisibleOnScreenWhenClosedX;
-	const float menuHeaderStubY = m_mainContainerVisibleOnScreenWhenClosedY;
-	const float menuHeaderStubWidth = m_mainContainerOnScreenWidth;
-	const float menuHeaderStubHeight = 64 * m_pixelScale;
-	self.pMenuHeaderStub = [[[UIView alloc] initWithFrame:CGRectMake(menuHeaderStubX, menuHeaderStubY, menuHeaderStubWidth, menuHeaderStubHeight)] autorelease];
-	self.pMenuHeaderStub.backgroundColor = ExampleApp::Helpers::ColorPalette::WhiteTone;
-
-	m_tableOffsetIntoContainerX = m_tableOffsetIntoContainerY = m_mainContainerVisibleOnScreenWhenClosedX;
-	m_tableX = m_tableOffsetIntoContainerX + m_mainContainerOffscreenOffsetX;
-	m_tableY = m_tableOffsetIntoContainerY + menuHeaderStubHeight;
-	m_tableWidth = m_mainContainerOnScreenWidth - (2 * m_tableOffsetIntoContainerX);
-	m_tableHeight = m_mainContainerHeight - m_tableOffsetIntoContainerY;
-	self.pTableview = [[[CustomTableView alloc] initWithFrame:CGRectMake(m_tableX, m_tableY, m_tableWidth, m_tableHeight) style:UITableViewStylePlain] autorelease];
-	self.pTableview.backgroundColor = [UIColor clearColor];
-	self.pTableview.separatorStyle = UITableViewCellSeparatorStyleNone;
-	self.pTableview.scrollEnabled = NO;
-
-	m_offscreenX = -(m_mainContainerWidth + m_dragTabWidth);
-	m_closedX = -(m_mainContainerOnScreenWidth - m_mainContainerVisibleOnScreenWhenClosedX);
-	m_openX = (0.f * m_pixelScale);
-
-	[self addSubview: self.pMenuContainer];
-	[self addSubview: self.pDragTab];
-	[self.pMenuContainer addSubview: self.pMenuHeaderStub];
-	[self.pMenuContainer addSubview:self.pTableview];
-
-	ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pDragTab, "icon0_me_icon", ExampleApp::Helpers::ImageHelpers::Centre);
-
-	ExampleApp::Helpers::ImageHelpers::OffsetValue offset = ExampleApp::Helpers::ImageHelpers::Centre | ExampleApp::Helpers::ImageHelpers::Below;
-	ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pDragTab, "shadow_01", offset);
-
-	ExampleApp::Helpers::ImageHelpers::OffsetValue menuShadowOffset = ExampleApp::Helpers::ImageHelpers::Centre | ExampleApp::Helpers::ImageHelpers::Top;
-	ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pTableview, "shadow_03", menuShadowOffset);
+    m_pColour = ExampleApp::Helpers::ColorPalette::WhiteTone;
+    
+    m_stateChangeAnimationTimeSeconds = 0.2;
+    
+    m_mainContainerOffscreenOffsetX = (0.f * m_pixelScale);
+    m_mainContainerOffscreenOffsetY = (0.f * m_pixelScale);
+    m_mainContainerVisibleOnScreenWhenClosedX = (0.f * m_pixelScale);
+    m_mainContainerVisibleOnScreenWhenClosedY = (0.f * m_pixelScale);
+    m_mainContainerX = (0.f * m_pixelScale) - m_mainContainerOffscreenOffsetX;
+    m_mainContainerY = (50.f * m_pixelScale);
+    m_mainContainerOnScreenWidth = (220.f * m_pixelScale);
+    m_mainContainerOnScreenHeight = m_screenHeight - m_mainContainerY;
+    m_mainContainerWidth = m_mainContainerOnScreenWidth + m_mainContainerOffscreenOffsetX;
+    m_mainContainerHeight = m_mainContainerOnScreenHeight;
+    
+    self.pMenuContainer = [[[UIView alloc] initWithFrame:CGRectMake(m_mainContainerX, m_mainContainerY, m_mainContainerWidth, m_mainContainerHeight)] autorelease];
+    self.pMenuContainer.backgroundColor = [UIColor clearColor];
+    
+    m_dragTabX = m_mainContainerOnScreenWidth;
+    m_dragTabY = m_mainContainerY + (0.f * m_pixelScale);
+    m_dragTabWidth = (64.f * m_pixelScale);
+    m_dragTabHeight = (64.f * m_pixelScale);
+    self.pDragTab = [[[UIView alloc] initWithFrame:CGRectMake(m_dragTabX, m_dragTabY, m_dragTabWidth, m_dragTabHeight)] autorelease];
+    self.pDragTab.backgroundColor = ExampleApp::Helpers::ColorPalette::GoldTone;
+    
+    const float menuHeaderStubX = m_mainContainerVisibleOnScreenWhenClosedX;
+    const float menuHeaderStubY = m_mainContainerVisibleOnScreenWhenClosedY;
+    const float menuHeaderStubWidth = m_mainContainerOnScreenWidth;
+    const float menuHeaderStubHeight = 64 * m_pixelScale;
+    self.pMenuHeaderStub = [[[UIView alloc] initWithFrame:CGRectMake(menuHeaderStubX, menuHeaderStubY, menuHeaderStubWidth, menuHeaderStubHeight)] autorelease];
+    self.pMenuHeaderStub.backgroundColor = ExampleApp::Helpers::ColorPalette::WhiteTone;
+    
+    m_tableOffsetIntoContainerX = m_tableOffsetIntoContainerY = m_mainContainerVisibleOnScreenWhenClosedX;
+    m_tableX = m_tableOffsetIntoContainerX + m_mainContainerOffscreenOffsetX;
+    m_tableY = m_tableOffsetIntoContainerY + menuHeaderStubHeight;
+    m_tableWidth = m_mainContainerOnScreenWidth - (2 * m_tableOffsetIntoContainerX);
+    m_tableHeight = m_mainContainerHeight - m_tableOffsetIntoContainerY;
+    self.pTableview = [[[CustomTableView alloc] initWithFrame:CGRectMake(m_tableX, m_tableY, m_tableWidth, m_tableHeight) style:UITableViewStylePlain] autorelease];
+    self.pTableview.backgroundColor = [UIColor clearColor];
+    self.pTableview.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.pTableview.scrollEnabled = NO;
+    self.pTableview.bounces = NO;
+    
+    m_offscreenX = -(m_mainContainerWidth + m_dragTabWidth);
+    m_closedX = -(m_mainContainerOnScreenWidth - m_mainContainerVisibleOnScreenWhenClosedX);
+    m_openX = (0.f * m_pixelScale);
+    
+    [self addSubview: self.pMenuContainer];
+    [self addSubview: self.pDragTab];
+    [self.pMenuContainer addSubview: self.pMenuHeaderStub];
+    [self.pMenuContainer addSubview:self.pTableview];
+    
+    ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pDragTab, "icon0_me_icon", ExampleApp::Helpers::ImageHelpers::Centre);
+    
+    ExampleApp::Helpers::ImageHelpers::OffsetValue offset = ExampleApp::Helpers::ImageHelpers::Centre | ExampleApp::Helpers::ImageHelpers::Below;
+    ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pDragTab, "shadow_01", offset);
+    
+    ExampleApp::Helpers::ImageHelpers::OffsetValue menuShadowOffset = ExampleApp::Helpers::ImageHelpers::Centre | ExampleApp::Helpers::ImageHelpers::Top;
+    ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pTableview, "shadow_03", menuShadowOffset);
 }
 
 - (void)dealloc
