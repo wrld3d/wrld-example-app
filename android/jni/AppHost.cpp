@@ -146,6 +146,7 @@ AppHost::AppHost(
 	         platformConfig,
 	         *m_pJpegLoader,
 	         *m_pInitialExperienceModule,
+	         m_androidPersistentSettingsModel,
 	         m_uiToNativeMessageBus,
 	         m_nativeToUiMessageBus);
 

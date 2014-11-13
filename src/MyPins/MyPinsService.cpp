@@ -8,7 +8,6 @@
 #include "MyPinsFileIO.h"
 #include "IWebLoadRequestFactory.h"
 #include "IWebLoadRequest.h"
-#include "iOSWebLoadRequest.h"
 #include "ImageUploadData.h"
 #include "IMenuOptionsModel.h"
 #include "MyPinMenuOption.h"
@@ -133,4 +132,8 @@ namespace ExampleApp
             Eegeo_TTY("Web Request Completed, code: %d\n", webLoadRequest.HttpStatusCode());
         }
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> master
