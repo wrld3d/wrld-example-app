@@ -43,7 +43,7 @@
 
 namespace ExampleApp
 {
-    const std::string ApiKey = "c64bd6720e714a22bd5d14b35d232c44";
+    const std::string ApiKey = "OBTAIN API_KEY FROM https://appstore.eegeo.com AND INSERT IT HERE";
     const std::string DecartaApiKey = "OBTAIN DECARTA SEARCH KEY AND INSERT IT HERE";
 
 	namespace
