@@ -24,12 +24,10 @@ public class PhotoIntentDispatcher
 	private MainActivity m_activity = null;
 	private List<IActivityIntentResultHandler> m_activityCallbacks = new ArrayList<IActivityIntentResultHandler>();
 	private Uri m_currentPhotoPath;
-	private String m_galleryPath;
 	
-	public PhotoIntentDispatcher(MainActivity activity, String galleryPath)
+	public PhotoIntentDispatcher(MainActivity activity)
 	{
 		m_activity = activity;
-		m_galleryPath = galleryPath;
 	}
 	
 	public void takePhoto()
@@ -38,8 +36,8 @@ public class PhotoIntentDispatcher
 		if(takePictureIntent.resolveActivity(m_activity.getPackageManager()) != null)
 		{
 			String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
-			String filePath = m_galleryPath + "/" + timeStamp + ".jpg";
-			File file = new File(Environment.getExternalStorageDirectory(), filePath);
+			String filePath = timeStamp + ".jpg";
+			File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), filePath);
 			m_currentPhotoPath = Uri.fromFile(file);
 			takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, m_currentPhotoPath);
 			m_activity.startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);

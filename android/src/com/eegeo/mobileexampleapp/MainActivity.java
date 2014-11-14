@@ -18,7 +18,7 @@ public abstract class MainActivity extends Activity implements SurfaceHolder.Cal
 	
 	public MainActivity()
 	{
-		m_photoIntentDispatcher = new PhotoIntentDispatcher(this, "eegeo Example App");
+		m_photoIntentDispatcher = new PhotoIntentDispatcher(this);
 	}
 	
 	public PhotoIntentDispatcher getPhotoIntentDispatcher()
