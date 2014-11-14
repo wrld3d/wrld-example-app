@@ -36,11 +36,11 @@ namespace ExampleApp
 
 			~WorldPinsService();
 
-			WorldPinItemModel AddPin(IWorldPinSelectionHandler* pSelectionHandler,
+			WorldPinItemModel* AddPin(IWorldPinSelectionHandler* pSelectionHandler,
 			                         const Eegeo::Space::LatLong& location,
 			                         int iconIndex);
 
-			void RemovePin(const WorldPinItemModel& pinItemModel);
+			void RemovePin(WorldPinItemModel* pinItemModel);
 
 			void UpdatePinScale(const WorldPinItemModel& pinItemModel, float scale);
 

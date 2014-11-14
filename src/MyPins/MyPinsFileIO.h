@@ -27,7 +27,7 @@ namespace ExampleApp
             
             void SavePinModelToDisk(const MyPinModel& pinModel);
             
-            void LoadPinModelsFromDisk(std::vector<MyPinModel>& out_pinModels);
+            void LoadPinModelsFromDisk(std::vector<MyPinModel*>& out_pinModels);
         
             int GetLastIdWrittenToDisk() const;
             

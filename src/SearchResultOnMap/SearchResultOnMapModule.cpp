@@ -8,7 +8,6 @@
 #include "SearchResultOnMapInFocusViewModel.h"
 #include "SearchResultOnMapInFocusController.h"
 #include "SearchResultOnMapIconCategoryMapper.h"
-#include "SearchResultOnMapScaleController.h"
 #include "IIdentity.h"
 
 namespace ExampleApp
@@ -16,13 +15,13 @@ namespace ExampleApp
 	namespace SearchResultOnMap
 	{
 		SearchResultOnMapModule::SearchResultOnMapModule(Search::ISearchResultRepository& searchResultRepository,
-		        SearchResultPoi::ISearchResultPoiViewModel& searchResultPoiViewModel,
-		        WorldPins::IWorldPinsService& worldPinsService,
-		        Eegeo::Helpers::IIdentityProvider& identityProvider,
-		        const Eegeo::Rendering::ScreenProperties& screenProperties,
-		        Eegeo::Camera::RenderCamera& renderCamera,
-		        ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
-		        ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus)
+                                                         SearchResultPoi::ISearchResultPoiViewModel& searchResultPoiViewModel,
+                                                         WorldPins::IWorldPinsService& worldPinsService,
+                                                         Eegeo::Helpers::IIdentityProvider& identityProvider,
+                                                         Eegeo::Camera::RenderCamera& renderCamera,
+                                                         WorldPins::IWorldPinsScaleController& worldPinsScaleController,
+                                                         ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
+                                                         ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus)
 		{
 			m_pSearchResultOnMapIconCategoryMapper = Eegeo_NEW(SearchResultOnMapIconCategoryMapper);
 
@@ -43,13 +42,8 @@ namespace ExampleApp
 			                                        worldPinsService,
 			                                        renderCamera);
 
-			m_pSearchResultOnMapScaleController = Eegeo_NEW(SearchResultOnMapScaleController)(*pSearchResultOnMapModel,
-			                                      worldPinsService,
-			                                      screenProperties,
-			                                      renderCamera);
-
-			m_pSearchResultOnMapModalityObserver = Eegeo_NEW(SearchResultOnMapModalityObserver)(*m_pSearchResultOnMapScaleController,
-			                                       uiToNativeMessageBus);
+			m_pSearchResultOnMapModalityObserver = Eegeo_NEW(SearchResultOnMapModalityObserver)(worldPinsScaleController,
+                                                                                                uiToNativeMessageBus);
 
 			m_pSearchResultOnMapInFocusObserver = Eegeo_NEW(SearchResultOnMapInFocusObserver)(
 			        *m_pSearchResultOnMapInFocusViewModel,
@@ -64,7 +58,6 @@ namespace ExampleApp
 			Eegeo_DELETE m_pSearchResultOnMapItemModelSelectedObserver;
 			Eegeo_DELETE m_pSearchResultOnMapInFocusObserver;
 			Eegeo_DELETE m_pSearchResultOnMapModalityObserver;
-			Eegeo_DELETE m_pSearchResultOnMapScaleController;
 			Eegeo_DELETE m_pSearchResultOnMapInFocusController;
 			Eegeo_DELETE m_pSearchResultOnMapInFocusViewModel;
 			Eegeo_DELETE m_pSearchResultOnMapModel;
@@ -85,11 +78,6 @@ namespace ExampleApp
 		ISearchResultOnMapInFocusController& SearchResultOnMapModule::GetSearchResultOnMapInFocusController() const
 		{
 			return *m_pSearchResultOnMapInFocusController;
-		}
-
-		ISearchResultOnMapScaleController& SearchResultOnMapModule::GetSearchResultOnMapScaleController() const
-		{
-			return *m_pSearchResultOnMapScaleController;
 		}
 
 		ScreenControlViewModel::IScreenControlViewModel& SearchResultOnMapModule::GetScreenControlViewModel() const

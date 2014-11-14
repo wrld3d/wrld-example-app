@@ -16,11 +16,11 @@ namespace ExampleApp
 		public:
 			virtual ~IWorldPinsService() {}
 
-			virtual WorldPinItemModel AddPin(IWorldPinSelectionHandler* pSelectionHandler,
-			                                 const Eegeo::Space::LatLong& location,
-			                                 int iconIndex) = 0;
+			virtual WorldPinItemModel* AddPin(IWorldPinSelectionHandler* pSelectionHandler,
+                                              const Eegeo::Space::LatLong& location,
+                                              int iconIndex) = 0;
 
-			virtual void RemovePin(const WorldPinItemModel& pinItemModel) = 0;
+			virtual void RemovePin(WorldPinItemModel* pinItemModel) = 0;
 
 			virtual void UpdatePinScale(const WorldPinItemModel& pinItemModel, float scale) = 0;
 

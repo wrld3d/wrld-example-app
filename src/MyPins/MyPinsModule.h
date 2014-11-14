@@ -9,6 +9,7 @@
 #include "PersistentSettings.h"
 #include "Modules.h"
 #include "Menu.h"
+#include "UiToNativeMessageBus.h"
 
 namespace ExampleApp
 {
@@ -17,10 +18,11 @@ namespace ExampleApp
         class MyPinsModule : public IMyPinsModule
         {
         public:
-            MyPinsModule(Eegeo::Pins::PinRepository& pinRepository,
-                         WorldPins::IWorldPinsFactory& pinFactory,
+            MyPinsModule(WorldPins::IWorldPinsService& worldPinsService,
                          Eegeo::Modules::IPlatformAbstractionModule& platformAbstractions,
-                         PersistentSettings::IPersistentSettingsModel& persistentSettings);
+                         PersistentSettings::IPersistentSettingsModel& persistentSettings,
+                         ExampleApp::Menu::IMenuViewModel& menuViewModel,
+                         ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus);
             
             ~MyPinsModule();
             
@@ -31,6 +33,7 @@ namespace ExampleApp
             MyPinsRepository* m_pMyPinsRepository;
             MyPinsFileIO* m_pMyPinsFileIO;
             MyPinsService* m_pMyPinsService;
+            MyPinsRepositoryObserver* m_pMyPinsRepositoryObserver;
             
             Menu::IMenuModel* m_pMenuModel;
             Menu::IMenuOptionsModel* m_pMenuOptionsModel;

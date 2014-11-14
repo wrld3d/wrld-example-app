@@ -13,7 +13,6 @@
 #include "IIdentity.h"
 #include "Rendering.h"
 #include "Camera.h"
-#include "SearchResultOnMapScaleController.h"
 #include "SearchResultOnMapInFocusViewModel.h"
 #include "SearchResultOnMapModalityObserver.h"
 #include "SearchResultOnMapInFocusObserver.h"
@@ -32,7 +31,6 @@ namespace ExampleApp
 			ISearchResultOnMapModel* m_pSearchResultOnMapModel;
 			SearchResultOnMapInFocusViewModel* m_pSearchResultOnMapInFocusViewModel;
 			ISearchResultOnMapInFocusController* m_pSearchResultOnMapInFocusController;
-			SearchResultOnMapScaleController* m_pSearchResultOnMapScaleController;
 			ISearchResultOnMapFactory* m_pSearchResultOnMapFactory;
 			ISearchResultOnMapIconCategoryMapper* m_pSearchResultOnMapIconCategoryMapper;
 			SearchResultOnMapModalityObserver* m_pSearchResultOnMapModalityObserver;
@@ -44,8 +42,8 @@ namespace ExampleApp
 			                        SearchResultPoi::ISearchResultPoiViewModel& searchResultPoiViewModel,
 			                        WorldPins::IWorldPinsService& worldPinsService,
 			                        Eegeo::Helpers::IIdentityProvider& identityProvider,
-			                        const Eegeo::Rendering::ScreenProperties& screenProperties,
 			                        Eegeo::Camera::RenderCamera& renderCamera,
+                                    WorldPins::IWorldPinsScaleController& worldPinsScaleController,
 			                        ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
 			                        ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus);
 
@@ -56,8 +54,6 @@ namespace ExampleApp
 			ISearchResultOnMapInFocusViewModel& GetSearchResultOnMapInFocusViewModel() const;
 
 			ISearchResultOnMapInFocusController& GetSearchResultOnMapInFocusController() const;
-
-			ISearchResultOnMapScaleController& GetSearchResultOnMapScaleController() const;
 
 			ScreenControlViewModel::IScreenControlViewModel& GetScreenControlViewModel() const;
 		};

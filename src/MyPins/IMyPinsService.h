@@ -17,14 +17,7 @@ namespace ExampleApp
         public:
             virtual ~IMyPinsService() {}
             
-            virtual void AddPin(const std::string& title,
-                                const std::string& description,
-                                const Eegeo::Space::LatLong& latLong,
-                                Byte* imageData,
-                                size_t imageSize,
-                                bool shouldShare) = 0;
-            
-            virtual void RemovePin(const MyPinModel& myPinModel) = 0;
+            virtual void RemovePin(MyPinModel* myPinModel) = 0;
             
             virtual void SavePin(const std::string& title,
                                  const std::string& description,

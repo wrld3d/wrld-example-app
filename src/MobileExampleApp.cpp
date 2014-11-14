@@ -24,7 +24,6 @@
 #include "CategorySearchModule.h"
 #include "AboutPageModule.h"
 #include "RenderContext.h"
-#include "ISearchResultOnMapScaleController.h"
 #include "ScreenProperties.h"
 #include "TerrainModelModule.h"
 #include "MapModule.h"
@@ -285,18 +284,19 @@ namespace ExampleApp
 		                            );
 
 		m_pSearchResultOnMapModule = Eegeo_NEW(ExampleApp::SearchResultOnMap::SearchResultOnMapModule)(m_pSearchModule->GetSearchResultRepository(),
-		                             m_pSearchResultPoiModule->GetSearchResultPoiViewModel(),
-		                             m_pWorldPinsModule->GetWorldPinsService(),
-		                             m_identityProvider,
-		                             world.GetScreenProperties(),
-		                             *m_pGlobeCameraController->GetCamera(),
-		                             m_uiToNativeMessageBus,
-		                             m_nativeToUiMessageBus);
+                                                                                                       m_pSearchResultPoiModule->GetSearchResultPoiViewModel(),
+                                                                                                       m_pWorldPinsModule->GetWorldPinsService(),
+                                                                                                       m_identityProvider,
+                                                                                                       *m_pGlobeCameraController->GetCamera(),
+                                                                                                       m_pWorldPinsModule->GetWorldPinsScaleController(),
+                                                                                                       m_uiToNativeMessageBus,
+                                                                                                       m_nativeToUiMessageBus);
         
-        m_pMyPinsModule = Eegeo_NEW(ExampleApp::MyPins::MyPinsModule)(m_pPinsModule->GetRepository(),
-                                                                      m_pWorldPinsModule->GetWorldPinsFactory(),
+        m_pMyPinsModule = Eegeo_NEW(ExampleApp::MyPins::MyPinsModule)(m_pWorldPinsModule->GetWorldPinsService(),
                                                                       m_platformAbstractions,
-                                                                      m_persistentSettings);
+                                                                      m_persistentSettings,
+                                                                      m_pPrimaryMenuModule->GetPrimaryMenuViewModel(),
+                                                                      m_uiToNativeMessageBus);
         
         m_pPrimaryMenuModule->AddMenuSection("My Pins", "place", m_pMyPinsModule->GetMyPinsMenuModel(), true);
         
@@ -310,11 +310,11 @@ namespace ExampleApp
                                                                                            m_uiToNativeMessageBus);
         
         m_pPoiRingModule = Eegeo_NEW(ExampleApp::MyPinCreation::PoiRing::PoiRingModule)(m_pMyPinCreationModule->GetMyPinCreationModel(),
-                                                                                      m_platformAbstractions,
-                                                                                      m_pWorld->GetRenderingModule(),
-                                                                                      m_pWorld->GetAsyncLoadersModule(),
-                                                                                      m_pWorld->GetLightingModule(),
-                                                                                      m_pWorld->GetTerrainModelModule());
+                                                                                        m_platformAbstractions,
+                                                                                        m_pWorld->GetRenderingModule(),
+                                                                                        m_pWorld->GetAsyncLoadersModule(),
+                                                                                        m_pWorld->GetLightingModule(),
+                                                                                        m_pWorld->GetTerrainModelModule());
 
         m_pMyPinCreationDetailsModule = Eegeo_NEW(ExampleApp::MyPinCreationDetails::MyPinCreationDetailsModule)(m_identityProvider,
                                                                                                           m_pReactionControllerModule->GetReactionControllerModel());
@@ -437,8 +437,9 @@ namespace ExampleApp
 		                );
 
 		m_pWorldPinsModule = Eegeo_NEW(ExampleApp::WorldPins::WorldPinsModule)(m_pPinsModule->GetRepository(),
-		                     m_pPinsModule->GetController(),
-		                     mapModule.GetEnvironmentFlatteningService());
+                                                                               m_pPinsModule->GetController(),
+                                                                               mapModule.GetEnvironmentFlatteningService(),
+                                                                               world.GetScreenProperties());
 	}
 
 	void MobileExampleApp::OnPause()
@@ -472,7 +473,7 @@ namespace ExampleApp
 
 		if(!eegeoWorld.Initialising())
 		{
-			SearchResultOnMapModule().GetSearchResultOnMapScaleController().Update(dt);
+            WorldPinsModule().GetWorldPinsScaleController().Update(dt, *m_pGlobeCameraController->GetCamera());
 			CompassModule().GetCompassUpdateController().Update(dt);
 		}
 

@@ -58,9 +58,9 @@ namespace ExampleApp
 
 			const int pinIconIndex = m_searchResultOnMapIconCategoryMapper.GetIconIndexFromSearchResult(*pSearchResultModel);
 
-			ExampleApp::WorldPins::WorldPinItemModel pinItemModel = m_worldPinsService.AddPin(pSearchResultOnMapItemModel,
-			        pSearchResultModel->GetLocation(),
-			        pinIconIndex);
+			ExampleApp::WorldPins::WorldPinItemModel *pinItemModel = m_worldPinsService.AddPin(pSearchResultOnMapItemModel,
+                                                                                               pSearchResultModel->GetLocation(),
+                                                                                               pinIconIndex);
 
 			m_searchResultsToPinModel.insert(std::make_pair(pSearchResultModel, pinItemModel));
 		}
@@ -70,7 +70,7 @@ namespace ExampleApp
 			mapIt it = m_searchResultsToPinModel.find(pSearchResultModel);
 			Eegeo_ASSERT(it != m_searchResultsToPinModel.end(), "Trying to remove the world pin for a search result, but no pin exists for result.");
 
-			ExampleApp::WorldPins::WorldPinItemModel pinItemModel = it->second;
+			ExampleApp::WorldPins::WorldPinItemModel* pinItemModel = it->second;
 			m_worldPinsService.RemovePin(pinItemModel);
 			m_searchResultsToPinModel.erase(it);
 		}

@@ -10,6 +10,7 @@
 #include "Web.h"
 #include "WebLoadRequestCompletionCallback.h"
 #include "Menu.h"
+#include "UiToNativeMessageBus.h"
 
 namespace ExampleApp
 {
@@ -20,19 +21,11 @@ namespace ExampleApp
         public:
             MyPinsService(IMyPinsRepository& myPinsRepository,
                           MyPinsFileIO& myPinsFileIO,
-                          Menu::IMenuOptionsModel& menuOptionsModel,
-                          Eegeo::Pins::PinRepository& pinRepository,
-                          WorldPins::IWorldPinsFactory& pinFactory,
+                          WorldPins::IWorldPinsService& worldPinsService,
                           Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory);
+
             
-            void AddPin(const std::string& title,
-                        const std::string& description,
-                        const Eegeo::Space::LatLong& latLong,
-                        Byte* imageData,
-                        size_t imageSize,
-                        bool shouldShare);
-            
-            void RemovePin(const MyPinModel& myPinModel);
+            void RemovePin(MyPinModel* myPinModel);
             
             void SavePin(const std::string& title,
                          const std::string& description,
@@ -41,15 +34,14 @@ namespace ExampleApp
                          size_t imageSize,
                          bool shouldShare);
             
-            void SubmitPinToWebService(const MyPinModel& myPinModel);
+
             
         private:
             IMyPinsRepository& m_myPinsRepository;
             MyPinsFileIO& m_myPinsFileIO;
-            Menu::IMenuOptionsModel& m_menuOptionsModel;
             
-            Eegeo::Pins::PinRepository& m_pinRepository;
-            WorldPins::IWorldPinsFactory& m_pinFactory;
+            WorldPins::IWorldPinsService& m_worldPinsService;
+            
             Eegeo::Web::IWebLoadRequestFactory& m_webLoadRequestFactory;
             
             Eegeo::Web::TWebLoadRequestCompletionCallback<ExampleApp::MyPins::MyPinsService> m_webRequestCompleteCallback;
@@ -57,12 +49,12 @@ namespace ExampleApp
             
             unsigned int m_lastIdUsed;
             
-            typedef std::map<const MyPinModel*, Eegeo::Pins::TPinId> TModelToPinIdMap;
-            TModelToPinIdMap m_modelToPinIdMap;
+            typedef std::map<const MyPinModel*, WorldPins::WorldPinItemModel*> TMyPinToWorldPinMap;
+            TMyPinToWorldPinMap m_myPinToWorldPinMap;
             
+            void AddPinToMap(MyPinModel* pMyPinModel);
             
-            
-            Eegeo::Pins::TPinId GetPinIdForModel(const MyPinModel* model);
+            void SubmitPinToWebService(const MyPinModel& myPinModel);
         };
     }
 }

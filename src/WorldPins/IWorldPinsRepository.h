@@ -9,9 +9,8 @@ namespace ExampleApp
 {
 	namespace WorldPins
 	{
-		class IWorldPinsRepository : public Repository::IRepositoryModel<WorldPinItemModel>
+		class IWorldPinsRepository : public Repository::IRepositoryModel<WorldPinItemModel*>
 		{
-
 		};
 	}
 }

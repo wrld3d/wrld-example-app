@@ -6,12 +6,13 @@
 #include "LatLongAltitude.h"
 #include "Types.h"
 #include "Pins.h"
+#include "IWorldPinSelectionHandler.h"
 
 namespace ExampleApp
 {
     namespace MyPins
     {
-        class MyPinModel
+        class MyPinModel : public WorldPins::IWorldPinSelectionHandler
         {
         private:
             int m_modelId;
@@ -26,6 +27,9 @@ namespace ExampleApp
                        std::string description,
                        std::string imagePath,
                        Eegeo::Space::LatLong latLong);
+            
+            
+            void SelectPin();
             
             int Identifier() const { return m_modelId; }
             const std::string& GetTitle() const { return m_title; }

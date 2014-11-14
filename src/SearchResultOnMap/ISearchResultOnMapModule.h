@@ -19,9 +19,7 @@ namespace ExampleApp
 
 			virtual ISearchResultOnMapInFocusViewModel& GetSearchResultOnMapInFocusViewModel() const = 0;
 
-			virtual ISearchResultOnMapInFocusController& GetSearchResultOnMapInFocusController() const = 0;
-
-			virtual ISearchResultOnMapScaleController& GetSearchResultOnMapScaleController() const = 0;
+            virtual ISearchResultOnMapInFocusController& GetSearchResultOnMapInFocusController() const = 0;
 
 			virtual ScreenControlViewModel::IScreenControlViewModel& GetScreenControlViewModel() const = 0;
 		};

@@ -135,7 +135,7 @@ namespace ExampleApp
             }
         }
         
-        void MyPinsFileIO::LoadPinModelsFromDisk(std::vector<MyPinModel>& out_pinModels)
+        void MyPinsFileIO::LoadPinModelsFromDisk(std::vector<MyPinModel*>& out_pinModels)
         {
             out_pinModels.clear();
             
@@ -170,11 +170,11 @@ namespace ExampleApp
                     double latitude = entry["latitude"].GetDouble();
                     double longitude = entry["longitude"].GetDouble();
                     
-                    out_pinModels.push_back(MyPinModel(pinId,
-                                                       title,
-                                                       description,
-                                                       image,
-                                                       Eegeo::Space::LatLong::FromDegrees(latitude, longitude)));
+                    out_pinModels.push_back(Eegeo_NEW(MyPinModel)(pinId,
+                                                                  title,
+                                                                  description,
+                                                                  image,
+                                                                  Eegeo::Space::LatLong::FromDegrees(latitude, longitude)));
                 }
             }
         }
