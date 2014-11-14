@@ -2,6 +2,7 @@
 
 #include "GlDisplayService.h"
 #include "Logger.h"
+#include "AndroidAppThreadAssertionMacros.h"
 
 GlDisplayService::GlDisplayService()
 	: m_display(EGL_NO_DISPLAY)
@@ -11,152 +12,176 @@ GlDisplayService::GlDisplayService()
 	, m_resourceBuildSharedContext(EGL_NO_CONTEXT)
 	, m_displayBound(false)
 {
+	ASSERT_NATIVE_THREAD
+
 	m_display = eglGetDisplay(EGL_DEFAULT_DISPLAY);
 	eglInitialize(m_display, 0, 0);
 }
 
 GlDisplayService::~GlDisplayService()
 {
+	ASSERT_NATIVE_THREAD
+
 	bool destroyEGL = true;
 	ReleaseDisplay(destroyEGL);
 }
 
 bool GlDisplayService::IsDisplayAvailable() const
 {
+	ASSERT_NATIVE_THREAD
+
 	return m_displayBound;
 }
 
 int GlDisplayService::GetDisplayWidth() const
 {
+	ASSERT_NATIVE_THREAD
+
 	return m_displayWidth;
 }
 
 int GlDisplayService::GetDisplayHeight() const
 {
+	ASSERT_NATIVE_THREAD
+
 	return m_displayHeight;
 }
 
 EGLDisplay GlDisplayService::GetDisplay() const
 {
+	ASSERT_NATIVE_THREAD
+
 	return m_display;
 }
 
 EGLSurface GlDisplayService::GetSurface() const
 {
+	ASSERT_NATIVE_THREAD
+
 	return m_surface;
 }
 
 EGLSurface GlDisplayService::GetSharedSurface() const
 {
+	ASSERT_NATIVE_THREAD
+
 	return m_sharedSurface;
 }
 
 EGLContext GlDisplayService::GetContext() const
 {
+	ASSERT_NATIVE_THREAD
+
 	return m_context;
 }
 
 EGLContext GlDisplayService::GetResourceBuildSharedContext() const
 {
+	ASSERT_NATIVE_THREAD
+
 	return m_resourceBuildSharedContext;
 }
 
 namespace
 {
 // based on nVidia example app for Tegra
-bool DefaultEGLChooser(EGLDisplay disp, u32 requestedSurfaceType, EGLConfig& bestConfig)
-{
-	EGLint count = 0;
-	if (!eglGetConfigs(disp, NULL, 0, &count))
+	bool DefaultEGLChooser(EGLDisplay disp, u32 requestedSurfaceType, EGLConfig& bestConfig)
 	{
-		EXAMPLE_LOG("defaultEGLChooser cannot query count of all configs");
-		return false;
-	}
+		ASSERT_NATIVE_THREAD
 
-	EXAMPLE_LOG("Config count = %d", count);
-
-	EGLConfig* configs = Eegeo_ARRAY_NEW(EGLConfig, count);
-	if (!eglGetConfigs(disp, configs, count, &count))
-	{
-		EXAMPLE_LOG("defaultEGLChooser cannot query all configs");
-		return false;
-	}
-
-	int bestMatch = 1<<30;
-	int bestIndex = -1;
-
-	int i;
-	for (i = 0; i < count; i++)
-	{
-		int match = 0;
-		EGLint surfaceType = 0;
-		EGLint blueBits = 0;
-		EGLint greenBits = 0;
-		EGLint redBits = 0;
-		EGLint alphaBits = 0;
-		EGLint depthBits = 0;
-		EGLint stencilBits = 0;
-		EGLint renderableFlags = 0;
-
-		eglGetConfigAttrib(disp, configs[i], EGL_SURFACE_TYPE, &surfaceType);
-		eglGetConfigAttrib(disp, configs[i], EGL_BLUE_SIZE, &blueBits);
-		eglGetConfigAttrib(disp, configs[i], EGL_GREEN_SIZE, &greenBits);
-		eglGetConfigAttrib(disp, configs[i], EGL_RED_SIZE, &redBits);
-		eglGetConfigAttrib(disp, configs[i], EGL_ALPHA_SIZE, &alphaBits);
-		eglGetConfigAttrib(disp, configs[i], EGL_DEPTH_SIZE, &depthBits);
-		eglGetConfigAttrib(disp, configs[i], EGL_STENCIL_SIZE, &stencilBits);
-		eglGetConfigAttrib(disp, configs[i], EGL_RENDERABLE_TYPE, &renderableFlags);
-
-
-		if ((surfaceType & requestedSurfaceType) == 0)
-			continue;
-		if ((renderableFlags & EGL_OPENGL_ES2_BIT) == 0)
-			continue;
-
-		if (depthBits < 16)
-			continue;
-		if ((redBits < 5) || (greenBits < 6) || (blueBits < 5))
-			continue;
-		if (stencilBits < 8)
-			continue;
-
-		int penalty = depthBits - 16;
-		match += penalty * penalty;
-		penalty = redBits - 5;
-		match += penalty * penalty;
-		penalty = greenBits - 6;
-		match += penalty * penalty;
-		penalty = blueBits - 5;
-		match += penalty * penalty;
-		penalty = alphaBits;
-		match += penalty * penalty;
-		penalty = stencilBits - 8;
-		match += penalty * penalty;
-
-		if ((match < bestMatch) || (bestIndex == -1))
+		EGLint count = 0;
+		if (!eglGetConfigs(disp, NULL, 0, &count))
 		{
-			bestMatch = match;
-			bestIndex = i;
-			EXAMPLE_LOG("New best Config[%d]: R%dG%dB%dA%d D%dS%d Type=%04x Render=%04x",
-			          i, redBits, greenBits, blueBits, alphaBits, depthBits, stencilBits, surfaceType, renderableFlags);
+			EXAMPLE_LOG("defaultEGLChooser cannot query count of all configs");
+			return false;
 		}
-	}
 
-	if (bestIndex < 0)
-	{
+		EXAMPLE_LOG("Config count = %d", count);
+
+		EGLConfig* configs = Eegeo_ARRAY_NEW(EGLConfig, count);
+		if (!eglGetConfigs(disp, configs, count, &count))
+		{
+			EXAMPLE_LOG("defaultEGLChooser cannot query all configs");
+			return false;
+		}
+
+		int bestMatch = 1<<30;
+		int bestIndex = -1;
+
+		int i;
+		for (i = 0; i < count; i++)
+		{
+			int match = 0;
+			EGLint surfaceType = 0;
+			EGLint blueBits = 0;
+			EGLint greenBits = 0;
+			EGLint redBits = 0;
+			EGLint alphaBits = 0;
+			EGLint depthBits = 0;
+			EGLint stencilBits = 0;
+			EGLint renderableFlags = 0;
+
+			eglGetConfigAttrib(disp, configs[i], EGL_SURFACE_TYPE, &surfaceType);
+			eglGetConfigAttrib(disp, configs[i], EGL_BLUE_SIZE, &blueBits);
+			eglGetConfigAttrib(disp, configs[i], EGL_GREEN_SIZE, &greenBits);
+			eglGetConfigAttrib(disp, configs[i], EGL_RED_SIZE, &redBits);
+			eglGetConfigAttrib(disp, configs[i], EGL_ALPHA_SIZE, &alphaBits);
+			eglGetConfigAttrib(disp, configs[i], EGL_DEPTH_SIZE, &depthBits);
+			eglGetConfigAttrib(disp, configs[i], EGL_STENCIL_SIZE, &stencilBits);
+			eglGetConfigAttrib(disp, configs[i], EGL_RENDERABLE_TYPE, &renderableFlags);
+
+
+			if ((surfaceType & requestedSurfaceType) == 0)
+				continue;
+			if ((renderableFlags & EGL_OPENGL_ES2_BIT) == 0)
+				continue;
+
+			if (depthBits < 16)
+				continue;
+			if ((redBits < 5) || (greenBits < 6) || (blueBits < 5))
+				continue;
+			if (stencilBits < 8)
+				continue;
+
+			int penalty = depthBits - 16;
+			match += penalty * penalty;
+			penalty = redBits - 5;
+			match += penalty * penalty;
+			penalty = greenBits - 6;
+			match += penalty * penalty;
+			penalty = blueBits - 5;
+			match += penalty * penalty;
+			penalty = alphaBits;
+			match += penalty * penalty;
+			penalty = stencilBits - 8;
+			match += penalty * penalty;
+
+			if ((match < bestMatch) || (bestIndex == -1))
+			{
+				bestMatch = match;
+				bestIndex = i;
+				EXAMPLE_LOG("New best Config[%d]: R%dG%dB%dA%d D%dS%d Type=%04x Render=%04x",
+				            i, redBits, greenBits, blueBits, alphaBits, depthBits, stencilBits, surfaceType, renderableFlags);
+			}
+		}
+
+		if (bestIndex < 0)
+		{
+			Eegeo_ARRAY_DELETE configs;
+			return false;
+		}
+
+		bestConfig = configs[bestIndex];
 		Eegeo_ARRAY_DELETE configs;
-		return false;
+
+		return true;
 	}
-
-	bestConfig = configs[bestIndex];
-	Eegeo_ARRAY_DELETE configs;
-
-	return true;
-}
 }
 
 bool GlDisplayService::TryBindDisplay(ANativeWindow& window)
 {
+	ASSERT_NATIVE_THREAD
+
 	EGLint w, h, format;
 	EGLConfig config;
 	EGLSurface surface;
@@ -265,6 +290,8 @@ bool GlDisplayService::TryBindDisplay(ANativeWindow& window)
 
 void GlDisplayService::ReleaseDisplay(bool destroyEGL)
 {
+	ASSERT_NATIVE_THREAD
+
 	if (m_display != EGL_NO_DISPLAY)
 	{
 		Eegeo_GL(eglMakeCurrent(m_display, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT));

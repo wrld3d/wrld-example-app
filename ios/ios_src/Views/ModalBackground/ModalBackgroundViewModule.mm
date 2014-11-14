@@ -6,26 +6,26 @@
 
 namespace ExampleApp
 {
-    namespace ModalBackground
-    {
-        ModalBackgroundViewModule::ModalBackgroundViewModule(Modality::IModalityModel& modalityModel)
-        {
-            m_pModalBackgroundViewController = [[ModalBackgroundViewController alloc] initWithParams :&modalityModel];
-        }
-        
-        ModalBackgroundViewModule::~ModalBackgroundViewModule()
-        {
-            [m_pModalBackgroundViewController release];
-        }
-        
-        ModalBackgroundViewController& ModalBackgroundViewModule::GetModalBackgroundViewController() const
-        {
-            return *m_pModalBackgroundViewController;
-        }
-        
-        ModalBackgroundView& ModalBackgroundViewModule::GetModalBackgroundView() const
-        {
-            return *[m_pModalBackgroundViewController pModalBackgroundView];
-        }
-    }
+	namespace ModalBackground
+	{
+		ModalBackgroundViewModule::ModalBackgroundViewModule(Modality::IModalityModel& modalityModel)
+		{
+			m_pModalBackgroundViewController = [[ModalBackgroundViewController alloc] initWithParams :&modalityModel];
+		}
+
+		ModalBackgroundViewModule::~ModalBackgroundViewModule()
+		{
+			[m_pModalBackgroundViewController release];
+		}
+
+		ModalBackgroundViewController& ModalBackgroundViewModule::GetModalBackgroundViewController() const
+		{
+			return *m_pModalBackgroundViewController;
+		}
+
+		ModalBackgroundView& ModalBackgroundViewModule::GetModalBackgroundView() const
+		{
+			return *[m_pModalBackgroundViewController pModalBackgroundView];
+		}
+	}
 }

@@ -5,21 +5,22 @@
 #include "Types.h"
 #include "ISearchResultOnMapFactory.h"
 #include "SearchResultPoi.h"
+#include "NativeToUiMessageBus.h"
 
 namespace ExampleApp
 {
-    namespace SearchResultOnMap
-    {
-        class SearchResultOnMapFactory : public ISearchResultOnMapFactory, private Eegeo::NonCopyable
-        {
-            SearchResultPoi::ISearchResultPoiViewModel& m_searchResultPoiViewModel;
-            
-        public:
-            SearchResultOnMapFactory(SearchResultPoi::ISearchResultPoiViewModel& searchResultPoiViewModel);
-            
-            ~SearchResultOnMapFactory();
-            
-            SearchResultOnMapItemModel* CreateSearchResultOnMapItemModel(Search::SearchResultModel& searchResultModel) const;
-        };
-    }
+	namespace SearchResultOnMap
+	{
+		class SearchResultOnMapFactory : public ISearchResultOnMapFactory, private Eegeo::NonCopyable
+		{
+			ExampleAppMessaging::NativeToUiMessageBus& m_nativeToUiMessageBus;
+
+		public:
+			SearchResultOnMapFactory(ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus);
+
+			~SearchResultOnMapFactory();
+
+			SearchResultOnMapItemModel* CreateSearchResultOnMapItemModel(Search::SearchResultModel& searchResultModel) const;
+		};
+	}
 }

@@ -39,8 +39,10 @@
 #include "SearchResultOnMapViewIncludes.h"
 #include "CompassViewIncludes.h"
 #include "AboutPageViewIncludes.h"
-#include "PoiCreationViewIncludes.h"
-#include "PoiCreationDetailsViewIncludes.h"
+#include "MyPinCreationViewIncludes.h"
+#include "MyPinCreationDetailsViewIncludes.h"
+#include "UiToNativeMessageBus.h"
+#include "NativeToUiMessageBus.h"
 
 class AppHost : protected Eegeo::NonCopyable
 {
@@ -58,6 +60,12 @@ public:
 	void Update(float dt);
 	void Draw(float dt);
 
+	void CreateUiFromUiThread();
+	void RevealUiFromUiThread();
+	void UpdateUiViewsFromUiThread(float deltaSeconds);
+	void DestroyUiFromUiThread();
+	void HandleApplicationUiCreatedOnNativeThread();
+
 	void OnPause();
 	void OnResume();
 
@@ -72,7 +80,7 @@ public:
 
 private:
 	bool m_isPaused;
-    Eegeo::Helpers::Jpeg::IJpegLoader* m_pJpegLoader;
+	Eegeo::Helpers::Jpeg::IJpegLoader* m_pJpegLoader;
 	Eegeo::Rendering::ScreenProperties* m_pScreenProperties;
 	Eegeo::Android::AndroidLocationService* m_pAndroidLocationService;
 	AndroidNativeState& m_nativeState;
@@ -86,26 +94,39 @@ private:
 
 	Eegeo::Android::Input::AndroidInputProcessor* m_pInputProcessor;
 
+	ExampleApp::ModalBackground::IModalBackgroundNativeViewModule* m_pModalBackgroundNativeViewModule;
+
+
 	Eegeo::Android::AndroidPlatformAbstractionModule* m_pAndroidPlatformAbstractionModule;
+	ExampleApp::Menu::IMenuViewModule* m_pPrimaryMenuViewModule;
+	ExampleApp::Menu::IMenuViewModule* m_pSecondaryMenuViewModule;
+	ExampleApp::Menu::IMenuViewModule* m_pSearchResultMenuViewModule;
+	ExampleApp::ModalBackground::IModalBackgroundViewModule* m_pModalBackgroundViewModule;
+	ExampleApp::FlattenButton::IFlattenButtonViewModule* m_pFlattenButtonViewModule;
+	ExampleApp::SearchResultPoi::ISearchResultPoiViewModule* m_pSearchResultPoiViewModule;
+	ExampleApp::SearchResultOnMap::ISearchResultOnMapViewModule* m_pSearchResultOnMapViewModule;
+	ExampleApp::AboutPage::IAboutPageViewModule* m_pAboutPageViewModule;
+	ExampleApp::Compass::ICompassViewModule* m_pCompassViewModule;
+	ExampleApp::MyPinCreation::IMyPinCreationViewModule* m_pMyPinCreationViewModule;
+    ExampleApp::MyPinCreationDetails::IMyPinCreationDetailsViewModule* m_pMyPinCreationDetailsViewModule;
+
+	ExampleApp::MobileExampleApp* m_pApp;
+
+	ExampleApp::PersistentSettings::AndroidPersistentSettingsModel m_androidPersistentSettingsModel;
+	ExampleApp::InitialExperience::IInitialExperienceModule* m_pInitialExperienceModule;
+
+	bool m_createdUIModules;
+	bool m_requestedApplicationInitialiseViewState;
+	bool m_uiCreatedMessageReceivedOnNativeThread;
 	ExampleApp::ViewControllerUpdater::IViewControllerUpdaterModule* m_pViewControllerUpdaterModule;
-    ExampleApp::Menu::IMenuViewModule* m_pPrimaryMenuViewModule;
-    ExampleApp::Menu::IMenuViewModule* m_pSecondaryMenuViewModule;
-    ExampleApp::Menu::IMenuViewModule* m_pSearchResultMenuViewModule;
-    ExampleApp::ModalBackground::IModalBackgroundViewModule* m_pModalBackgroundViewModule;
-    ExampleApp::FlattenButton::IFlattenButtonViewModule* m_pFlattenButtonViewModule;
-    ExampleApp::SearchResultPoi::ISearchResultPoiViewModule* m_pSearchResultPoiViewModule;
-    ExampleApp::SearchResultOnMap::ISearchResultOnMapViewModule* m_pSearchResultOnMapViewModule;
-    ExampleApp::AboutPage::IAboutPageViewModule* m_pAboutPageViewModule;
-    ExampleApp::Compass::ICompassViewModule* m_pCompassViewModule;
-    ExampleApp::PoiCreation::IPoiCreationViewModule* m_pPoiCreationViewModule;
-    ExampleApp::PoiCreationDetails::IPoiCreationDetailsViewModule* m_pPoiCreationDetailsViewModule;
 
-    ExampleApp::MobileExampleApp* m_pApp;
+	ExampleApp::ExampleAppMessaging::UiToNativeMessageBus m_uiToNativeMessageBus;
+	ExampleApp::ExampleAppMessaging::NativeToUiMessageBus m_nativeToUiMessageBus;
 
-    ExampleApp::PersistentSettings::AndroidPersistentSettingsModel m_androidPersistentSettingsModel;
-    ExampleApp::InitialExperience::IInitialExperienceModule* m_pInitialExperienceModule;
-
-    void CreateApplicationViewModules();
-    void DestroyApplicationViewModules();
+	void DispatchRevealUiMessageToUiThreadFromNativeThread();
+	void DispatchUiCreatedMessageToNativeThreadFromUiThread();
+	void CreateApplicationViewModulesFromUiThread();
+	void DestroyApplicationViewModulesFromUiThread();
 };
+
 

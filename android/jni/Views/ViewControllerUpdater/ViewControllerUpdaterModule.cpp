@@ -2,24 +2,31 @@
 
 #include "ViewControllerUpdaterModule.h"
 #include "ViewControllerUpdaterModel.h"
+#include "AndroidAppThreadAssertionMacros.h"
 
 namespace ExampleApp
 {
-    namespace ViewControllerUpdater
-    {
-        ViewControllerUpdaterModule::ViewControllerUpdaterModule()
-        {
-            m_pViewControllerUpdaterModel = Eegeo_NEW(ViewControllerUpdaterModel)();
-        }
-        
-        ViewControllerUpdaterModule::~ViewControllerUpdaterModule()
-        {
-            Eegeo_DELETE m_pViewControllerUpdaterModel;
-        }
-        
-        IViewControllerUpdaterModel& ViewControllerUpdaterModule::GetViewControllerUpdaterModel() const
-        {
-            return *m_pViewControllerUpdaterModel;
-        }
-    }
+	namespace ViewControllerUpdater
+	{
+		ViewControllerUpdaterModule::ViewControllerUpdaterModule()
+		{
+			ASSERT_UI_THREAD
+
+			m_pViewControllerUpdaterModel = Eegeo_NEW(ViewControllerUpdaterModel)();
+		}
+
+		ViewControllerUpdaterModule::~ViewControllerUpdaterModule()
+		{
+			ASSERT_UI_THREAD
+
+			Eegeo_DELETE m_pViewControllerUpdaterModel;
+		}
+
+		IViewControllerUpdaterModel& ViewControllerUpdaterModule::GetViewControllerUpdaterModel() const
+		{
+			ASSERT_UI_THREAD
+
+			return *m_pViewControllerUpdaterModel;
+		}
+	}
 }

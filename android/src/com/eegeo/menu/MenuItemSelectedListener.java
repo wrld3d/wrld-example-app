@@ -11,11 +11,11 @@ public class MenuItemSelectedListener implements OnItemClickListener
 	private final INativeMessageRunner m_nativeMessageRunner;
 	private final long m_nativeCallerPointer;
 	private MenuListAdapter m_adapter;
-	
+
 	public MenuItemSelectedListener(
-			MenuListAdapter adapter,
-			INativeMessageRunner nativeMessageRunner,
-			long nativeCallerPointer)
+	    MenuListAdapter adapter,
+	    INativeMessageRunner nativeMessageRunner,
+	    long nativeCallerPointer)
 	{
 		m_adapter = adapter;
 		m_nativeMessageRunner = nativeMessageRunner;
@@ -29,17 +29,11 @@ public class MenuItemSelectedListener implements OnItemClickListener
 		{
 			return;
 		}
-		
+
 		final String selection = (String)parent.getAdapter().getItem(position);
 		final int index = position;
-        																																		
-		m_nativeMessageRunner.runOnNativeThread(new Runnable()
-		{
-			public void run()
-			{
-				MenuViewJniMethods.SelectedItem(m_nativeCallerPointer, selection, index);
-			}
-		});
+
+		MenuViewJniMethods.SelectedItem(m_nativeCallerPointer, selection, index);
 	}
 }
 

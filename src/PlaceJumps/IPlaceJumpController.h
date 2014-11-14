@@ -8,14 +8,14 @@
 
 namespace ExampleApp
 {
-    namespace PlaceJumps
-    {
-        class IPlaceJumpController
-        {
-        public:
-            virtual ~IPlaceJumpController() { }
-            
-            virtual void JumpTo(IPlaceJumpModel& jumpModel) = 0;
-        };
-    }
+	namespace PlaceJumps
+	{
+		class IPlaceJumpController
+		{
+		public:
+			virtual ~IPlaceJumpController() { }
+
+			virtual void JumpTo(IPlaceJumpModel& jumpModel) = 0;
+		};
+	}
 }

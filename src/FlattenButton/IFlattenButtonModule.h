@@ -7,18 +7,18 @@
 
 namespace ExampleApp
 {
-    namespace FlattenButton
-    {
-        class IFlattenButtonModule
-        {
-        public:
-            virtual ~IFlattenButtonModule() { }
-            
-            virtual IFlattenButtonModel& GetFlattenButtonModel() const = 0;
-            
-            virtual IFlattenButtonViewModel& GetFlattenButtonViewModel() const = 0;
-            
-            virtual ScreenControlViewModel::IScreenControlViewModel& GetScreenControlViewModel() const = 0;
-        };
-    }
+	namespace FlattenButton
+	{
+		class IFlattenButtonModule
+		{
+		public:
+			virtual ~IFlattenButtonModule() { }
+
+			virtual IFlattenButtonModel& GetFlattenButtonModel() const = 0;
+
+			virtual IFlattenButtonViewModel& GetFlattenButtonViewModel() const = 0;
+
+			virtual ScreenControlViewModel::IScreenControlViewModel& GetScreenControlViewModel() const = 0;
+		};
+	}
 }

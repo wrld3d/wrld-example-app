@@ -5,33 +5,36 @@
 #include "ISearchResultPoiViewModel.h"
 #include "IModalityModel.h"
 #include "SearchResultModel.h"
+#include "AndroidAppThreadAssertionMacros.h"
 
 namespace ExampleApp
 {
-    namespace SearchResultOnMap
-    {
-    	SearchResultOnMapViewController::SearchResultOnMapViewController(
-			AndroidNativeState& nativeState,
-			ExampleApp::SearchResultOnMap::ISearchResultOnMapInFocusViewModel& searchResultOnMapInFocusViewModel,
-			ScreenControlViewModel::IScreenControlViewModel& searchResultPoiScreenControlViewModel,
-			Modality::IModalityModel& modalityModel,
-			float pinDiameter
+	namespace SearchResultOnMap
+	{
+		SearchResultOnMapViewController::SearchResultOnMapViewController(
+		    AndroidNativeState& nativeState,
+		    ExampleApp::SearchResultOnMap::ISearchResultOnMapInFocusViewModel& searchResultOnMapInFocusViewModel,
+		    ScreenControlViewModel::IScreenControlViewModel& searchResultPoiScreenControlViewModel,
+		    SearchResultPoi::ISearchResultPoiViewModel& searchResultPoiViewModel,
+		    float pinDiameter
 		)
-		: m_nativeState(nativeState)
-        , m_searchResultOnMapInFocusViewModel(searchResultOnMapInFocusViewModel)
-        , m_searchResultPoiScreenControlViewModel(searchResultPoiScreenControlViewModel)
-    	, m_modalityModel(modalityModel)
-        , m_pSearchResultOnMapFocusOpenedCallback(Eegeo_NEW(Eegeo::Helpers::TCallback0<SearchResultOnMapViewController>)(this, &SearchResultOnMapViewController::SearchResultOnMapFocusOpenedCallback))
-        , m_pSearchResultOnMapFocusClosedCallback(Eegeo_NEW(Eegeo::Helpers::TCallback0<SearchResultOnMapViewController>)(this, &SearchResultOnMapViewController::SearchResultOnMapFocusClosedCallback))
-        , m_pSearchResultOnMapFocusUpdatedCallback(Eegeo_NEW(Eegeo::Helpers::TCallback0<SearchResultOnMapViewController>)(this, &SearchResultOnMapViewController::SearchResultOnMapFocusUpdatedCallback))
-        , m_pOnScreenStateChangedCallback(Eegeo_NEW((Eegeo::Helpers::TCallback2<SearchResultOnMapViewController, ScreenControlViewModel::IScreenControlViewModel&, float>))(this, &SearchResultOnMapViewController::OnScreenStateChangedCallback))
-    	, m_pinOffset(pinDiameter / 2.f)
-    	{
-            m_searchResultOnMapInFocusViewModel.InsertOpenedCallback(*m_pSearchResultOnMapFocusOpenedCallback);
-            m_searchResultOnMapInFocusViewModel.InsertClosedCallback(*m_pSearchResultOnMapFocusClosedCallback);
-            m_searchResultOnMapInFocusViewModel.InsertUpdateCallback(*m_pSearchResultOnMapFocusUpdatedCallback);
+			: m_nativeState(nativeState)
+			, m_searchResultOnMapInFocusViewModel(searchResultOnMapInFocusViewModel)
+			, m_searchResultPoiScreenControlViewModel(searchResultPoiScreenControlViewModel)
+			, m_searchResultPoiViewModel(searchResultPoiViewModel)
+			, m_pSearchResultOnMapFocusOpenedCallback(Eegeo_NEW(Eegeo::Helpers::TCallback0<SearchResultOnMapViewController>)(this, &SearchResultOnMapViewController::SearchResultOnMapFocusOpenedCallback))
+			, m_pSearchResultOnMapFocusClosedCallback(Eegeo_NEW(Eegeo::Helpers::TCallback0<SearchResultOnMapViewController>)(this, &SearchResultOnMapViewController::SearchResultOnMapFocusClosedCallback))
+			, m_pSearchResultOnMapFocusUpdatedCallback(Eegeo_NEW(Eegeo::Helpers::TCallback0<SearchResultOnMapViewController>)(this, &SearchResultOnMapViewController::SearchResultOnMapFocusUpdatedCallback))
+			, m_pOnScreenStateChangedCallback(Eegeo_NEW((Eegeo::Helpers::TCallback2<SearchResultOnMapViewController, ScreenControlViewModel::IScreenControlViewModel&, float>))(this, &SearchResultOnMapViewController::OnScreenStateChangedCallback))
+			, m_pinOffset(pinDiameter / 2.f)
+		{
+			ASSERT_UI_THREAD
 
-            m_searchResultPoiScreenControlViewModel.InsertOnScreenStateChangedCallback(*m_pOnScreenStateChangedCallback);
+			m_searchResultOnMapInFocusViewModel.InsertOpenedCallback(*m_pSearchResultOnMapFocusOpenedCallback);
+			m_searchResultOnMapInFocusViewModel.InsertClosedCallback(*m_pSearchResultOnMapFocusClosedCallback);
+			m_searchResultOnMapInFocusViewModel.InsertUpdateCallback(*m_pSearchResultOnMapFocusUpdatedCallback);
+
+			m_searchResultPoiScreenControlViewModel.InsertOnScreenStateChangedCallback(*m_pOnScreenStateChangedCallback);
 
 			AndroidSafeNativeThreadAttachment attached(m_nativeState);
 			JNIEnv* env = attached.envForThread;
@@ -44,27 +47,29 @@ namespace ExampleApp
 			jmethodID uiViewCtor = env->GetMethodID(m_uiViewClass, "<init>", "(Lcom/eegeo/mobileexampleapp/MainActivity;J)V");
 
 			jobject instance = env->NewObject(
-				m_uiViewClass,
-				uiViewCtor,
-				m_nativeState.activity,
-				(jlong)(this)
-			);
+			                       m_uiViewClass,
+			                       uiViewCtor,
+			                       m_nativeState.activity,
+			                       (jlong)(this)
+			                   );
 
 			m_uiView = env->NewGlobalRef(instance);
 		}
 
-    	SearchResultOnMapViewController::~SearchResultOnMapViewController()
+		SearchResultOnMapViewController::~SearchResultOnMapViewController()
 		{
-            m_searchResultPoiScreenControlViewModel.RemoveOnScreenStateChangedCallback(*m_pOnScreenStateChangedCallback);
+			ASSERT_UI_THREAD
 
-            m_searchResultOnMapInFocusViewModel.RemoveUpdateCallback(*m_pSearchResultOnMapFocusUpdatedCallback);
-            m_searchResultOnMapInFocusViewModel.RemoveOpenedCallback(*m_pSearchResultOnMapFocusOpenedCallback);
-            m_searchResultOnMapInFocusViewModel.RemoveClosedCallback(*m_pSearchResultOnMapFocusClosedCallback);
+			m_searchResultPoiScreenControlViewModel.RemoveOnScreenStateChangedCallback(*m_pOnScreenStateChangedCallback);
 
-            Eegeo_DELETE m_pSearchResultOnMapFocusUpdatedCallback;
-            Eegeo_DELETE m_pSearchResultOnMapFocusOpenedCallback;
-            Eegeo_DELETE m_pSearchResultOnMapFocusClosedCallback;
-            Eegeo_DELETE m_pOnScreenStateChangedCallback;
+			m_searchResultOnMapInFocusViewModel.RemoveUpdateCallback(*m_pSearchResultOnMapFocusUpdatedCallback);
+			m_searchResultOnMapInFocusViewModel.RemoveOpenedCallback(*m_pSearchResultOnMapFocusOpenedCallback);
+			m_searchResultOnMapInFocusViewModel.RemoveClosedCallback(*m_pSearchResultOnMapFocusClosedCallback);
+
+			Eegeo_DELETE m_pSearchResultOnMapFocusUpdatedCallback;
+			Eegeo_DELETE m_pSearchResultOnMapFocusOpenedCallback;
+			Eegeo_DELETE m_pSearchResultOnMapFocusClosedCallback;
+			Eegeo_DELETE m_pOnScreenStateChangedCallback;
 
 			AndroidSafeNativeThreadAttachment attached(m_nativeState);
 			JNIEnv* env = attached.envForThread;
@@ -76,19 +81,24 @@ namespace ExampleApp
 
 		void SearchResultOnMapViewController::HandleSearchResultOnMapClicked()
 		{
-			if(!m_modalityModel.IsModalEnabled())
+			ASSERT_UI_THREAD
+
+			//if(m_modalityObserver.GetModality() == 0.f)
 			{
 				if(m_searchResultOnMapInFocusViewModel.IsOpen())
 				{
-					m_searchResultOnMapInFocusViewModel.SelectFocussedResult();
+					Search::SearchResultModel model = m_searchResultOnMapInFocusViewModel.GetSearchResultModel();
+					m_searchResultPoiViewModel.Open(model);
 				}
 			}
 		}
 
-        void SearchResultOnMapViewController::SearchResultOnMapFocusOpenedCallback()
-        {
-		    const Eegeo::v2& location = m_searchResultOnMapInFocusViewModel.ScreenLocation();
-		    float offsetY = location.y - m_pinOffset;
+		void SearchResultOnMapViewController::SearchResultOnMapFocusOpenedCallback()
+		{
+			ASSERT_UI_THREAD
+
+			const Eegeo::v2& location = m_searchResultOnMapInFocusViewModel.ScreenLocation();
+			float offsetY = location.y - m_pinOffset;
 
 			AndroidSafeNativeThreadAttachment attached(m_nativeState);
 			JNIEnv* env = attached.envForThread;
@@ -102,39 +112,45 @@ namespace ExampleApp
 
 			env->DeleteLocalRef(titleStr);
 			env->DeleteLocalRef(detailsStr);
-        }
+		}
 
-        void SearchResultOnMapViewController::SearchResultOnMapFocusClosedCallback()
-        {
+		void SearchResultOnMapViewController::SearchResultOnMapFocusClosedCallback()
+		{
+			ASSERT_UI_THREAD
+
 			AndroidSafeNativeThreadAttachment attached(m_nativeState);
 			JNIEnv* env = attached.envForThread;
 
 			jmethodID dismiss = env->GetMethodID(m_uiViewClass, "dismiss", "()V");
 			env->CallVoidMethod(m_uiView, dismiss);
-        }
+		}
 
-        void SearchResultOnMapViewController::SearchResultOnMapFocusUpdatedCallback()
-        {
-		    const Eegeo::v2& location = m_searchResultOnMapInFocusViewModel.ScreenLocation();
-		    float offsetY = location.y - m_pinOffset;
+		void SearchResultOnMapViewController::SearchResultOnMapFocusUpdatedCallback()
+		{
+			ASSERT_UI_THREAD
+
+			const Eegeo::v2& location = m_searchResultOnMapInFocusViewModel.ScreenLocation();
+			float offsetY = location.y - m_pinOffset;
 
 			AndroidSafeNativeThreadAttachment attached(m_nativeState);
 			JNIEnv* env = attached.envForThread;
 
 			jmethodID updateScreenLocation = env->GetMethodID(m_uiViewClass, "updateScreenLocation", "(FF)V");
 			env->CallVoidMethod(m_uiView, updateScreenLocation, location.x, offsetY);
-        }
+		}
 
-        void SearchResultOnMapViewController::OnScreenStateChangedCallback(ScreenControlViewModel::IScreenControlViewModel &viewModel, float& onScreenState)
-        {
-        	if(m_searchResultOnMapInFocusViewModel.IsOpen())
-        	{
+		void SearchResultOnMapViewController::OnScreenStateChangedCallback(ScreenControlViewModel::IScreenControlViewModel &viewModel, float& onScreenState)
+		{
+			ASSERT_UI_THREAD
+
+			if(m_searchResultOnMapInFocusViewModel.IsOpen())
+			{
 				AndroidSafeNativeThreadAttachment attached(m_nativeState);
 				JNIEnv* env = attached.envForThread;
 
 				jmethodID updateScreenVisibility = env->GetMethodID(m_uiViewClass, "updateScreenVisibility", "(F)V");
 				env->CallVoidMethod(m_uiView, updateScreenVisibility, onScreenState);
-        	}
-        }
-    }
+			}
+		}
+	}
 }

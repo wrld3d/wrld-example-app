@@ -1,32 +1,38 @@
 // Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
 #include "AndroidInitialExperiencePreLoadModel.h"
+#include "AndroidAppThreadAssertionMacros.h"
 
 namespace ExampleApp
 {
-    namespace InitialExperience
-    {
-    	namespace PreLoad
-    	{
+	namespace InitialExperience
+	{
+		namespace PreLoad
+		{
 			AndroidInitialExperiencePreLoadModel::AndroidInitialExperiencePreLoadModel(
-		    	AndroidNativeState& nativeState,
-				WorldAreaLoader::IWorldAreaLoaderModel& worldAreaLoaderModel,
-				PersistentSettings::IPersistentSettingsModel& persistentSettings
+			    AndroidNativeState& nativeState,
+			    WorldAreaLoader::IWorldAreaLoaderModel& worldAreaLoaderModel,
+			    PersistentSettings::IPersistentSettingsModel& persistentSettings
 			)
-			: InitialExperiencePreLoadModelBase(worldAreaLoaderModel, persistentSettings)
-			, m_nativeState(nativeState)
-			, m_jniApiClass(NULL)
-			, m_jniApiInstance(NULL)
+				: InitialExperiencePreLoadModelBase(worldAreaLoaderModel, persistentSettings)
+				, m_nativeState(nativeState)
+				, m_jniApiClass(NULL)
+				, m_jniApiInstance(NULL)
 			{
+				ASSERT_NATIVE_THREAD
 			}
 
 			AndroidInitialExperiencePreLoadModel::~AndroidInitialExperiencePreLoadModel()
 			{
+				ASSERT_NATIVE_THREAD
+
 				DestroyOptions();
 			}
 
 			void AndroidInitialExperiencePreLoadModel::HandleDismiss(bool shouldPreload)
 			{
+				ASSERT_NATIVE_THREAD
+
 				DestroyOptions();
 
 				if(shouldPreload)
@@ -41,6 +47,8 @@ namespace ExampleApp
 
 			void AndroidInitialExperiencePreLoadModel::DestroyOptions()
 			{
+				ASSERT_NATIVE_THREAD
+
 				if(m_jniApiInstance != NULL)
 				{
 					AndroidSafeNativeThreadAttachment attached(m_nativeState);
@@ -56,7 +64,9 @@ namespace ExampleApp
 
 			void AndroidInitialExperiencePreLoadModel::ShowOptions()
 			{
-	    		AndroidSafeNativeThreadAttachment attached(m_nativeState);
+				ASSERT_NATIVE_THREAD
+
+				AndroidSafeNativeThreadAttachment attached(m_nativeState);
 				JNIEnv* env = attached.envForThread;
 
 				jstring strClassName = env->NewStringUTF("com.eegeo.initialexperience.preload.PreLoadInitialExperience");
@@ -67,23 +77,25 @@ namespace ExampleApp
 				jmethodID ctor = env->GetMethodID(m_jniApiClass, "<init>", "(Lcom/eegeo/mobileexampleapp/MainActivity;J)V");
 
 				jobject instance = env->NewObject(
-					m_jniApiClass,
-					ctor,
-					m_nativeState.activity,
-					(jlong)(this)
-				);
+				                       m_jniApiClass,
+				                       ctor,
+				                       m_nativeState.activity,
+				                       (jlong)(this)
+				                   );
 
 				m_jniApiInstance = env->NewGlobalRef(instance);
 			}
-    	}
-    }
+		}
+	}
 }
 
 JNIEXPORT void JNICALL Java_com_eegeo_initialexperience_preload_PreLoadInitialExperienceJniMethods_HandleSelection(
-		JNIEnv* jenv, jobject obj,
-		jlong nativeObjectPtr,
-		jboolean shouldPreload)
+    JNIEnv* jenv, jobject obj,
+    jlong nativeObjectPtr,
+    jboolean shouldPreload)
 {
+	ASSERT_NATIVE_THREAD
+
 	ExampleApp::InitialExperience::PreLoad::AndroidInitialExperiencePreLoadModel* pApi = reinterpret_cast<ExampleApp::InitialExperience::PreLoad::AndroidInitialExperiencePreLoadModel*>(nativeObjectPtr);
 	pApi->HandleDismiss(shouldPreload);
 }

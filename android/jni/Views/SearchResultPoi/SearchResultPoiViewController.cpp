@@ -4,22 +4,25 @@
 #include "Types.h"
 #include "ISearchResultPoiViewModel.h"
 #include "SearchResultModel.h"
+#include "AndroidAppThreadAssertionMacros.h"
 
 namespace ExampleApp
 {
-    namespace SearchResultPoi
-    {
+	namespace SearchResultPoi
+	{
 		SearchResultPoiViewController::SearchResultPoiViewController(
-			AndroidNativeState& nativeState,
-			ISearchResultPoiViewModel& searchResultPoiViewModel
+		    AndroidNativeState& nativeState,
+		    ISearchResultPoiViewModel& searchResultPoiViewModel
 		)
-		: m_nativeState(nativeState)
-		, m_searchResultPoiViewModel(searchResultPoiViewModel)
-        , m_pSearchResultPoiOpenedCallback(Eegeo_NEW(Eegeo::Helpers::TCallback0<SearchResultPoiViewController>)(this, &SearchResultPoiViewController::SearchResultPoiOpenedCallback))
-        , m_pSearchResultPoiClosedCallback(Eegeo_NEW(Eegeo::Helpers::TCallback0<SearchResultPoiViewController>)(this, &SearchResultPoiViewController::SearchResultPoiClosedCallback))
+			: m_nativeState(nativeState)
+			, m_searchResultPoiViewModel(searchResultPoiViewModel)
+			, m_pSearchResultPoiOpenedCallback(Eegeo_NEW(Eegeo::Helpers::TCallback0<SearchResultPoiViewController>)(this, &SearchResultPoiViewController::SearchResultPoiOpenedCallback))
+			, m_pSearchResultPoiClosedCallback(Eegeo_NEW(Eegeo::Helpers::TCallback0<SearchResultPoiViewController>)(this, &SearchResultPoiViewController::SearchResultPoiClosedCallback))
 		{
-            m_searchResultPoiViewModel.InsertOpenedCallback(*m_pSearchResultPoiOpenedCallback);
-            m_searchResultPoiViewModel.InsertClosedCallback(*m_pSearchResultPoiClosedCallback);
+			ASSERT_UI_THREAD
+
+			m_searchResultPoiViewModel.InsertOpenedCallback(*m_pSearchResultPoiOpenedCallback);
+			m_searchResultPoiViewModel.InsertClosedCallback(*m_pSearchResultPoiClosedCallback);
 
 			AndroidSafeNativeThreadAttachment attached(m_nativeState);
 			JNIEnv* env = attached.envForThread;
@@ -32,22 +35,24 @@ namespace ExampleApp
 			jmethodID uiViewCtor = env->GetMethodID(m_uiViewClass, "<init>", "(Lcom/eegeo/mobileexampleapp/MainActivity;J)V");
 
 			jobject instance = env->NewObject(
-				m_uiViewClass,
-				uiViewCtor,
-				m_nativeState.activity,
-				(jlong)(this)
-			);
+			                       m_uiViewClass,
+			                       uiViewCtor,
+			                       m_nativeState.activity,
+			                       (jlong)(this)
+			                   );
 
 			m_uiView = env->NewGlobalRef(instance);
 		}
 
 		SearchResultPoiViewController::~SearchResultPoiViewController()
 		{
-            m_searchResultPoiViewModel.RemoveOpenedCallback(*m_pSearchResultPoiOpenedCallback);
-            m_searchResultPoiViewModel.RemoveClosedCallback(*m_pSearchResultPoiClosedCallback);
+			ASSERT_UI_THREAD
 
-            Eegeo_DELETE m_pSearchResultPoiOpenedCallback;
-            Eegeo_DELETE m_pSearchResultPoiClosedCallback;
+			m_searchResultPoiViewModel.RemoveOpenedCallback(*m_pSearchResultPoiOpenedCallback);
+			m_searchResultPoiViewModel.RemoveClosedCallback(*m_pSearchResultPoiClosedCallback);
+
+			Eegeo_DELETE m_pSearchResultPoiOpenedCallback;
+			Eegeo_DELETE m_pSearchResultPoiClosedCallback;
 
 			AndroidSafeNativeThreadAttachment attached(m_nativeState);
 			JNIEnv* env = attached.envForThread;
@@ -59,6 +64,8 @@ namespace ExampleApp
 
 		void SearchResultPoiViewController::HandleCloseButtonPressed()
 		{
+			ASSERT_UI_THREAD
+
 			if(m_searchResultPoiViewModel.IsOpen())
 			{
 				m_searchResultPoiViewModel.Close();
@@ -67,6 +74,8 @@ namespace ExampleApp
 
 		void SearchResultPoiViewController::SearchResultPoiOpenedCallback()
 		{
+			ASSERT_UI_THREAD
+
 			if(!m_searchResultPoiViewModel.TryAcquireReactorControl())
 			{
 				if(m_searchResultPoiViewModel.IsOpen())
@@ -99,11 +108,13 @@ namespace ExampleApp
 
 		void SearchResultPoiViewController::SearchResultPoiClosedCallback()
 		{
+			ASSERT_UI_THREAD
+
 			AndroidSafeNativeThreadAttachment attached(m_nativeState);
 			JNIEnv* env = attached.envForThread;
 
 			jmethodID dismissPoiInfo = env->GetMethodID(m_uiViewClass, "dismissPoiInfo", "()V");
 			env->CallVoidMethod(m_uiView, dismissPoiInfo);
 		}
-    }
+	}
 }

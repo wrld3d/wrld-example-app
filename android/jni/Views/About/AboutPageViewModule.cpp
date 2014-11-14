@@ -3,32 +3,39 @@
 #include "AboutPageViewModule.h"
 #include "AboutPage.h"
 #include "AboutPageViewController.h"
+#include "AndroidAppThreadAssertionMacros.h"
 
 namespace ExampleApp
 {
-    namespace AboutPage
-    {
-        AboutPageViewModule::AboutPageViewModule(
-			AndroidNativeState& nativeState,
-			AboutPage::IAboutPageModel& aboutPageModel,
-			AboutPage::IAboutPageViewModel& aboutPageViewModel
+	namespace AboutPage
+	{
+		AboutPageViewModule::AboutPageViewModule(
+		    AndroidNativeState& nativeState,
+		    AboutPage::IAboutPageModel& aboutPageModel,
+		    AboutPage::IAboutPageViewModel& aboutPageViewModel
 		)
-        {
-            m_pAboutPageViewController = Eegeo_NEW(AboutPageViewController)(
-				nativeState,
-				aboutPageModel,
-				aboutPageViewModel
-            );
-        }
-        
-        AboutPageViewModule::~AboutPageViewModule()
-        {
-            Eegeo_DELETE(m_pAboutPageViewController);
-        }
-        
-        IAboutPageViewController& AboutPageViewModule::GetAboutPageViewController() const
-        {
-            return *m_pAboutPageViewController;
-        }
-    }
+		{
+			ASSERT_UI_THREAD
+
+			m_pAboutPageViewController = Eegeo_NEW(AboutPageViewController)(
+			                                 nativeState,
+			                                 aboutPageModel,
+			                                 aboutPageViewModel
+			                             );
+		}
+
+		AboutPageViewModule::~AboutPageViewModule()
+		{
+			ASSERT_UI_THREAD
+
+			Eegeo_DELETE(m_pAboutPageViewController);
+		}
+
+		IAboutPageViewController& AboutPageViewModule::GetAboutPageViewController() const
+		{
+			ASSERT_UI_THREAD
+
+			return *m_pAboutPageViewController;
+		}
+	}
 }

@@ -6,28 +6,28 @@
 
 namespace ExampleApp
 {
-    namespace PrimaryMenu
-    {
-        namespace Options
-        {
-            AboutPageMenuOption::AboutPageMenuOption(Menu::IMenuViewModel& aboutOptionContainerMenu,
-                                                     AboutPage::IAboutPageViewModel& aboutPageViewModel)
-            : m_aboutOptionContainerMenu(aboutOptionContainerMenu)
-            , m_aboutPageViewModel(aboutPageViewModel)
-            {
-                
-            }
-            
-            AboutPageMenuOption::~AboutPageMenuOption()
-            {
-                
-            }
-            
-            void AboutPageMenuOption::Select()
-            {
-                m_aboutOptionContainerMenu.Close();
-                m_aboutPageViewModel.Open();
-            }
-        }
-    }
+	namespace PrimaryMenu
+	{
+		namespace Options
+		{
+			AboutPageMenuOption::AboutPageMenuOption(Menu::IMenuViewModel& aboutOptionContainerMenu,
+			        AboutPage::IAboutPageViewModel& aboutPageViewModel)
+				: m_aboutOptionContainerMenu(aboutOptionContainerMenu)
+				, m_aboutPageViewModel(aboutPageViewModel)
+			{
+
+			}
+
+			AboutPageMenuOption::~AboutPageMenuOption()
+			{
+
+			}
+
+			void AboutPageMenuOption::Select()
+			{
+				m_aboutOptionContainerMenu.Close();
+				m_aboutPageViewModel.Open();
+			}
+		}
+	}
 }

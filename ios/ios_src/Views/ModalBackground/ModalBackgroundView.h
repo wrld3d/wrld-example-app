@@ -10,8 +10,8 @@
 
 @interface ModalBackgroundView : UIView
 {
-    __weak ModalBackgroundViewController* m_pController;
-    float m_stateChangeAnimationTimeSeconds;
+	__weak ModalBackgroundViewController* m_pController;
+	float m_stateChangeAnimationTimeSeconds;
 }
 
 - (id) initWithController:(ModalBackgroundViewController *)controller;

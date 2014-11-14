@@ -11,27 +11,27 @@
 
 namespace ExampleApp
 {
-    namespace PlaceJumps
-    {
-        PlaceJumpController::PlaceJumpController(Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& globeCameraController,
-                                                 Compass::ICompassModel& compassModel)
-        : m_cameraController(globeCameraController)
-        , m_compassModel(compassModel)
-        {
-            
-        }
-        
-        void PlaceJumpController::JumpTo(IPlaceJumpModel& jumpModel)
-        {
-            m_compassModel.DisableGpsMode();
-            
-            Eegeo::Space::EcefTangentBasis cameraInterestBasis;
-            Eegeo::Camera::CameraHelpers::EcefTangentBasisFromPointAndHeading(jumpModel.GetLocation().ToECEF(),
-                                                                              jumpModel.GetHeadingDegrees(),
-                                                                              cameraInterestBasis);
-            
-            
-            m_cameraController.SetView(cameraInterestBasis, jumpModel.GetDistance());
-        }
-    }
+	namespace PlaceJumps
+	{
+		PlaceJumpController::PlaceJumpController(Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& globeCameraController,
+		        Compass::ICompassModel& compassModel)
+			: m_cameraController(globeCameraController)
+			, m_compassModel(compassModel)
+		{
+
+		}
+
+		void PlaceJumpController::JumpTo(IPlaceJumpModel& jumpModel)
+		{
+			m_compassModel.DisableGpsMode();
+
+			Eegeo::Space::EcefTangentBasis cameraInterestBasis;
+			Eegeo::Camera::CameraHelpers::EcefTangentBasisFromPointAndHeading(jumpModel.GetLocation().ToECEF(),
+			        jumpModel.GetHeadingDegrees(),
+			        cameraInterestBasis);
+
+
+			m_cameraController.SetView(cameraInterestBasis, jumpModel.GetDistance());
+		}
+	}
 }

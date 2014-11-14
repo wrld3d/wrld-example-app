@@ -9,14 +9,14 @@
 
 @class SecondaryMenuView;
 
-@interface SecondaryMenuView : MenuView 
+@interface SecondaryMenuView : MenuView
 {
-    __weak MenuViewController* m_pController;
-    
-    float m_searchBoxContainerX;
-    float m_searchBoxContainerY;
-    float m_searchBoxContainerWidth;
-    float m_searchBoxContainerHeight;
+	__weak MenuViewController* m_pController;
+
+	float m_searchBoxContainerX;
+	float m_searchBoxContainerY;
+	float m_searchBoxContainerWidth;
+	float m_searchBoxContainerHeight;
 }
 
 - (id) setController:(MenuViewController *)controller;

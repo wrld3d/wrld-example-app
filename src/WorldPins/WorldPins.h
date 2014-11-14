@@ -4,13 +4,13 @@
 
 namespace ExampleApp
 {
-    namespace WorldPins
-    {
-        class WorldPinItemModel;
-        class IWorldPinsModule;
-        class IWorldPinsFactory;
-        class IWorldPinsService;
-        class IWorldPinsRepository;
-        class IWorldPinSelectionHandler;
-    }
+	namespace WorldPins
+	{
+		class WorldPinItemModel;
+		class IWorldPinsModule;
+		class IWorldPinsFactory;
+		class IWorldPinsService;
+		class IWorldPinsRepository;
+		class IWorldPinSelectionHandler;
+	}
 }

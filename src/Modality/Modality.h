@@ -4,10 +4,10 @@
 
 namespace ExampleApp
 {
-    namespace Modality
-    {
-        class IModalityController;
-        class IModalityModel;
-        class IModalityModule;
-    }
+	namespace Modality
+	{
+		class IModalityController;
+		class IModalityModel;
+		class IModalityModule;
+	}
 }

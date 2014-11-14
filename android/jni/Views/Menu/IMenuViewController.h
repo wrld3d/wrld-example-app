@@ -6,8 +6,8 @@
 
 namespace ExampleApp
 {
-    namespace Menu
-    {
+	namespace Menu
+	{
 		class IMenuViewController : public ViewControllerUpdater::IUpdateableViewController
 		{
 		public:

@@ -8,41 +8,46 @@
 #include "FlattenButtonViewIncludes.h"
 #include "ScreenControlViewModelIncludes.h"
 #include "ICallback.h"
+#include "UiToNativeMessageBus.h"
+#include "NativeToUiMessageBus.h"
+#include "FlattenButtonModelStateChangedMessage.h"
 
 namespace ExampleApp
 {
-    namespace FlattenButton
-    {
-    	class FlattenButtonViewController : private Eegeo::NonCopyable
+	namespace FlattenButton
+	{
+		class FlattenButtonViewController : private Eegeo::NonCopyable
 		{
 
 		public:
-    		FlattenButtonViewController(
-					AndroidNativeState& nativeState,
-					FlattenButton::IFlattenButtonModel& model,
-					FlattenButton::IFlattenButtonViewModel& menuViewModel
+			FlattenButtonViewController(
+			    AndroidNativeState& nativeState,
+			    FlattenButton::IFlattenButtonViewModel& menuViewModel,
+			    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
+			    ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus
 			);
 
-    		~FlattenButtonViewController();
+			~FlattenButtonViewController();
 
-    		void SetFlattened(bool flattened);
+			void SetFlattened(bool flattened);
 
 		private:
 
-    		AndroidNativeState& m_nativeState;
+			AndroidNativeState& m_nativeState;
 
-    		jclass m_uiViewClass;
-    		jobject m_uiView;
+			jclass m_uiViewClass;
+			jobject m_uiView;
 
-			FlattenButton::IFlattenButtonModel& m_model;
-    		ExampleApp::FlattenButton::IFlattenButtonViewModel& m_viewModel;
+			ExampleApp::FlattenButton::IFlattenButtonViewModel& m_viewModel;
+			ExampleAppMessaging::UiToNativeMessageBus& m_uiToNativeMessageBus;
+			ExampleAppMessaging::NativeToUiMessageBus& m_nativeToUiMessageBus;
 
-            Eegeo::Helpers::ICallback0* m_pFlattenModelStateChangedCallback;
-    		Eegeo::Helpers::ICallback2<ScreenControlViewModel::IScreenControlViewModel&, float>* m_pOnScreenStateChangedCallback;
+			Eegeo::Helpers::TCallback1<FlattenButtonViewController, const FlattenButtonModelStateChangedMessage&> m_flattenModelStateChangedCallback;
+			Eegeo::Helpers::ICallback2<ScreenControlViewModel::IScreenControlViewModel&, float>* m_pOnScreenStateChangedCallback;
 
-    		void OnScreenStateChangedCallback(ScreenControlViewModel::IScreenControlViewModel& viewModel, float& onScreenState);
+			void OnScreenStateChangedCallback(ScreenControlViewModel::IScreenControlViewModel& viewModel, float& onScreenState);
 
-            void OnFlattenModelStateChangedCallback();
+			void OnFlattenModelStateChangedCallback(const FlattenButtonModelStateChangedMessage& message);
 		};
-    }
+	}
 }

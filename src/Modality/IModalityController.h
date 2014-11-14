@@ -4,12 +4,12 @@
 
 namespace ExampleApp
 {
-    namespace Modality
-    {
-        class IModalityController
-        {
-        public:
-            virtual ~IModalityController() { }
-        };
-    }
+	namespace Modality
+	{
+		class IModalityController
+		{
+		public:
+			virtual ~IModalityController() { }
+		};
+	}
 }

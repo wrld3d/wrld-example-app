@@ -4,17 +4,17 @@ import java.util.Locale;
 
 import android.app.Activity;
 
-public class CategoryResources 
+public class CategoryResources
 {
 	public static int getSearchResultIconForCategory(Activity activity, String category)
 	{
 		String matchedCategory = getCategoryMatch(category);
 		String uri = "drawable/icon2_" + matchedCategory;
 		int imageResource = activity.getResources().getIdentifier(uri, null, activity.getPackageName());
-		
+
 		return imageResource;
 	}
-	
+
 	private static String getCategoryMatch(String category)
 	{
 		category = category.toLowerCase(Locale.getDefault());
@@ -46,7 +46,7 @@ public class CategoryResources
 		{
 			return "food";
 		}
-		
+
 		return "misc";
 	}
 
@@ -55,7 +55,7 @@ public class CategoryResources
 		String matchedCategory = getCategoryMatch(category);
 		return getSmallIconForResourceName(activity, matchedCategory);
 	}
-	
+
 	public static int getSmallIconForResourceName(Activity activity, String resourceName)
 	{
 		String uri = "drawable/icon1_" + resourceName;

@@ -6,18 +6,18 @@
 
 namespace ExampleApp
 {
-    namespace AboutPage
-    {
-        class IAboutPageModel
-        {
-        public:
-            virtual ~IAboutPageModel() { }
-            
-            virtual const std::string& GetPlatformVersion() const = 0;
-            
-            virtual const std::string& GetPlatformHash() const = 0;
-            
-            virtual const std::string& GetAboutText() const = 0;
-        };
-    }
+	namespace AboutPage
+	{
+		class IAboutPageModel
+		{
+		public:
+			virtual ~IAboutPageModel() { }
+
+			virtual const std::string& GetPlatformVersion() const = 0;
+
+			virtual const std::string& GetPlatformHash() const = 0;
+
+			virtual const std::string& GetAboutText() const = 0;
+		};
+	}
 }

@@ -11,24 +11,24 @@
 
 namespace ExampleApp
 {
-    namespace AboutPage
-    {
+	namespace AboutPage
+	{
 		class AboutPageViewController : public IAboutPageViewController, private Eegeo::NonCopyable
 		{
 			AndroidNativeState& m_nativeState;
-            AboutPage::IAboutPageModel& m_aboutPageModel;
-            AboutPage::IAboutPageViewModel& m_aboutPageViewModel;
-            Eegeo::Helpers::ICallback0* m_pAboutPageOpenedCallback;
-            Eegeo::Helpers::ICallback0* m_pAboutPageClosedCallback;
+			AboutPage::IAboutPageModel& m_aboutPageModel;
+			AboutPage::IAboutPageViewModel& m_aboutPageViewModel;
+			Eegeo::Helpers::ICallback0* m_pAboutPageOpenedCallback;
+			Eegeo::Helpers::ICallback0* m_pAboutPageClosedCallback;
 
 			jclass m_uiViewClass;
 			jobject m_uiView;
 
 		public:
-		    AboutPageViewController(
-				AndroidNativeState& nativeState,
-	            AboutPage::IAboutPageModel& aboutPageModel,
-				AboutPage::IAboutPageViewModel& viewModel
+			AboutPageViewController(
+			    AndroidNativeState& nativeState,
+			    AboutPage::IAboutPageModel& aboutPageModel,
+			    AboutPage::IAboutPageViewModel& viewModel
 			);
 
 			~AboutPageViewController();
@@ -37,9 +37,9 @@ namespace ExampleApp
 
 		private:
 
-            void AboutPageOpenedCallback();
+			void AboutPageOpenedCallback();
 
-            void AboutPageClosedCallback();
+			void AboutPageClosedCallback();
 		};
-    }
+	}
 }

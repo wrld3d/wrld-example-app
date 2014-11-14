@@ -4,14 +4,14 @@
 
 namespace ExampleApp
 {
-    namespace Compass
-    {
-        class ICompassUpdateController
-        {
-        public:
-            virtual ~ICompassUpdateController() { }
-            
-            virtual void Update(float deltaSeconds) = 0;
-        };
-    }
+	namespace Compass
+	{
+		class ICompassUpdateController
+		{
+		public:
+			virtual ~ICompassUpdateController() { }
+
+			virtual void Update(float deltaSeconds) = 0;
+		};
+	}
 }

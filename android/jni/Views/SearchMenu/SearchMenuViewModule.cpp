@@ -4,42 +4,49 @@
 #include "Menu.h"
 #include "SearchMenuViewModule.h"
 #include "SearchMenuViewController.h"
+#include "AndroidAppThreadAssertionMacros.h"
 
 namespace ExampleApp
 {
-    namespace SearchMenu
-    {
-    	SearchMenuViewModule::SearchMenuViewModule(
-    		const std::string& viewName,
-			AndroidNativeState& nativeState,
-			Menu::IMenuModel& menuModel,
-			Menu::IMenuViewModel& menuViewModel,
-    		Search::ISearchQueryPerformer& searchQueryPerformer,
-    		Search::ISearchService& searchService,
-            CategorySearch::ICategorySearchRepository& categorySearchRepository,
-            SearchResultMenu::ISearchResultMenuViewModel& searchResultMenuViewModel
+	namespace SearchMenu
+	{
+		SearchMenuViewModule::SearchMenuViewModule(
+		    const std::string& viewName,
+		    AndroidNativeState& nativeState,
+		    Menu::IMenuModel& menuModel,
+		    Menu::IMenuViewModel& menuViewModel,
+		    CategorySearch::ICategorySearchRepository& categorySearchRepository,
+		    SearchResultMenu::ISearchResultMenuViewModel& searchResultMenuViewModel,
+		    ExampleApp::ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
+		    ExampleApp::ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus
 		)
-        {
-            m_pMenuViewController = Eegeo_NEW(SearchMenuViewController)(
-				viewName,
-				nativeState,
-				menuModel,
-				menuViewModel,
-				searchService,
-				searchQueryPerformer,
-				categorySearchRepository,
-				searchResultMenuViewModel
-			);
-        }
-        
-    	SearchMenuViewModule::~SearchMenuViewModule()
-        {
-            Eegeo_DELETE m_pMenuViewController;
-        }
-        
-        Menu::IMenuViewController& SearchMenuViewModule::GetMenuViewController() const
-        {
-            return *m_pMenuViewController;
-        }
-    }
+		{
+			ASSERT_UI_THREAD
+
+			m_pMenuViewController = Eegeo_NEW(SearchMenuViewController)(
+			                            viewName,
+			                            nativeState,
+			                            menuModel,
+			                            menuViewModel,
+			                            categorySearchRepository,
+			                            searchResultMenuViewModel,
+			                            uiToNativeMessageBus,
+			                            nativeToUiMessageBus
+			                        );
+		}
+
+		SearchMenuViewModule::~SearchMenuViewModule()
+		{
+			ASSERT_UI_THREAD
+
+			Eegeo_DELETE m_pMenuViewController;
+		}
+
+		Menu::IMenuViewController& SearchMenuViewModule::GetMenuViewController() const
+		{
+			ASSERT_UI_THREAD
+
+			return *m_pMenuViewController;
+		}
+	}
 }

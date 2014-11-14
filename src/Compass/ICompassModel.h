@@ -8,32 +8,32 @@
 
 namespace ExampleApp
 {
-    namespace Compass
-    {
-        class ICompassModel
-        {
-        public:
-            
-            virtual ~ICompassModel() {}
-            
-            virtual bool GetGpsModeActive() const = 0;
-            
-            virtual GpsMode::Values GetGpsMode() const = 0;
-            
-            virtual float GetHeadingRadians() const = 0;
-            
-            virtual float GetHeadingDegrees() const = 0;
-            
-            virtual void TryUpdateToNavigationServiceGpsMode(Eegeo::Location::NavigationService::GpsMode value) = 0;
-            
-            virtual void DisableGpsMode() = 0;
-            
-            virtual void CycleToNextGpsMode() = 0;
-            
-            virtual void InsertGpsModeChangedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
-            
-            virtual void RemoveGpsModeChangedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
-        };
+	namespace Compass
+	{
+		class ICompassModel
+		{
+		public:
 
-    }
+			virtual ~ICompassModel() {}
+
+			virtual bool GetGpsModeActive() const = 0;
+
+			virtual GpsMode::Values GetGpsMode() const = 0;
+
+			virtual float GetHeadingRadians() const = 0;
+
+			virtual float GetHeadingDegrees() const = 0;
+
+			virtual void TryUpdateToNavigationServiceGpsMode(Eegeo::Location::NavigationService::GpsMode value) = 0;
+
+			virtual void DisableGpsMode() = 0;
+
+			virtual void CycleToNextGpsMode() = 0;
+
+			virtual void InsertGpsModeChangedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
+
+			virtual void RemoveGpsModeChangedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
+		};
+
+	}
 }

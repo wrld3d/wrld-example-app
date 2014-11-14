@@ -8,23 +8,27 @@
 #include "IModalityModule.h"
 #include "IMenuViewModel.h"
 #include "IOpenableControlViewModel.h"
+#include "UiToNativeMessageBus.h"
+#include "ModalityObserver.h"
 
 namespace ExampleApp
 {
-    namespace Modality
-    {
-        class ModalityModule: public IModalityModule, private Eegeo::NonCopyable
-        {
-        private:
-            IModalityController* m_pController;
-            IModalityModel* m_pModel;
-            
-        public:
-            ModalityModule(const std::vector<OpenableControlViewModel::IOpenableControlViewModel*>& viewModels);
-            
-            ~ModalityModule();
-            
-            IModalityModel& GetModalityModel() const;
-        };
-    }
+	namespace Modality
+	{
+		class ModalityModule: public IModalityModule, private Eegeo::NonCopyable
+		{
+		private:
+			IModalityController* m_pController;
+			IModalityModel* m_pModel;
+			ModalityObserver* m_pModalityObserver;
+
+		public:
+			ModalityModule(ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
+			               const std::vector<OpenableControlViewModel::IOpenableControlViewModel*>& viewModels);
+
+			~ModalityModule();
+
+			IModalityModel& GetModalityModel() const;
+		};
+	}
 }

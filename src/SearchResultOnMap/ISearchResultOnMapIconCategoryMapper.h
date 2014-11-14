@@ -6,14 +6,14 @@
 
 namespace ExampleApp
 {
-    namespace SearchResultOnMap
-    {
-        class ISearchResultOnMapIconCategoryMapper
-        {
-        public:
-            virtual ~ISearchResultOnMapIconCategoryMapper() { }
-            
-            virtual int GetIconIndexFromSearchResult(const Search::SearchResultModel& searchResultModel) const = 0;
-        };
-    }
+	namespace SearchResultOnMap
+	{
+		class ISearchResultOnMapIconCategoryMapper
+		{
+		public:
+			virtual ~ISearchResultOnMapIconCategoryMapper() { }
+
+			virtual int GetIconIndexFromSearchResult(const Search::SearchResultModel& searchResultModel) const = 0;
+		};
+	}
 }

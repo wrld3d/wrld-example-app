@@ -2,12 +2,16 @@
 
 #include "MyPinsFileIO.h"
 #include "LatLongAltitude.h"
+#include "IPersistentSettingsModel.h"
+#include "MyPinModel.h"
 
-#include <sstream>
-#include <vector>
 #include "document.h"
 #include "writer.h"
 #include "stringbuffer.h"
+
+#include <sstream>
+#include <vector>
+
 
 namespace ExampleApp
 {
@@ -15,16 +19,17 @@ namespace ExampleApp
     {
         const std::string MyPinsDataFilename = "pin_data.json";
         const std::string MyPinImagePrefix = "my_pin_image_";
+        const std::string MyPins_LastMyPinModelIdKey = "MyPins_LastMyPinModelIdKey";
         const std::string MyPinsJsonArrayName = "myPins";
         
         void CreateEmptyJsonFile(Eegeo::Helpers::IFileIO& fileIO)
         {
             rapidjson::Document jsonDoc;
             jsonDoc.SetObject();
-            rapidjson::Value myArray(rapidjson::kArrayType);
-            rapidjson::Document::AllocatorType& allocator = jsonDoc.GetAllocator();
             
-            jsonDoc.AddMember(MyPinsJsonArrayName.c_str(), myArray, allocator);
+            rapidjson::Value myArray(rapidjson::kArrayType);
+            
+            jsonDoc.AddMember(MyPinsJsonArrayName.c_str(), myArray, jsonDoc.GetAllocator());
             rapidjson::StringBuffer strbuf;
             rapidjson::Writer<rapidjson::StringBuffer> writer(strbuf);
             jsonDoc.Accept(writer);
@@ -33,26 +38,27 @@ namespace ExampleApp
             fileIO.WriteFile((Byte*)jsonString.c_str(), jsonString.size(), MyPinsDataFilename);
         }
         
-        template<typename T>
-        std::string ConvertModelDetailToString(const T& detail)
-        {
-            std::stringstream ss;
-            ss << detail;
-            return ss.str();
-        }
-        
-        MyPinsFileIO::MyPinsFileIO(Eegeo::Helpers::IFileIO& fileIO)
+        MyPinsFileIO::MyPinsFileIO(Eegeo::Helpers::IFileIO& fileIO,
+                                   PersistentSettings::IPersistentSettingsModel& persistentSettings)
         : m_fileIO(fileIO)
+        , m_persistentSettings(persistentSettings)
         {
             if (!m_fileIO.Exists(MyPinsDataFilename))
             {
                 CreateEmptyJsonFile(m_fileIO);
             }
+            
+            int lastId = 0;
+            if (!m_persistentSettings.TryGetValue(MyPins_LastMyPinModelIdKey, lastId))
+            {
+                m_persistentSettings.SetValue(MyPins_LastMyPinModelIdKey, lastId);
+            }
+    
         }
         
         bool MyPinsFileIO::TryCacheImageToDisk(Byte* imageData,
                                                size_t imageSize,
-                                               unsigned int myPinId,
+                                               int myPinId,
                                                std::string& out_filename)
         {
             out_filename = "";
@@ -79,39 +85,37 @@ namespace ExampleApp
             return false;
         }
         
-        void MyPinsFileIO::SavePinModelToDisk(const unsigned int pinId,
-                                              const std::string& title,
-                                              const std::string& description,
-                                              const std::string& imagePath,
-                                              const Eegeo::Space::LatLong& latLong)
+        void MyPinsFileIO::SavePinModelToDisk(const MyPinModel& pinModel)
         {
             std::fstream stream;
             size_t size;
             
             if (m_fileIO.OpenFile(stream, size, MyPinsDataFilename))
             {
-                std::vector<Byte> readData;
-                readData.resize(size);
-                stream.read((char*)&readData[0], size);
-                unsigned char* buffer = &readData[0];
+                std::string json((std::istreambuf_iterator<char>(stream)),
+                                 (std::istreambuf_iterator<char>()));
 
                 rapidjson::Document jsonDoc;
-                jsonDoc.Parse<0>((const char*)buffer);
+                if (jsonDoc.Parse<0>(json.c_str()).HasParseError())
+                {
+                    Eegeo_TTY("Parse error in MyPins JSON.\n");
+                    return;
+                }
 
+                Eegeo_ASSERT(jsonDoc.IsObject(), "JSON document is not of object type");
+                
                 rapidjson::Document::AllocatorType& allocator = jsonDoc.GetAllocator();
                 rapidjson::Value& myPinsArray = jsonDoc[MyPinsJsonArrayName.c_str()];
                 
-                std::string idAsString = ConvertModelDetailToString(pinId);
-                std::string latitudeString = ConvertModelDetailToString(latLong.GetLatitudeInDegrees());
-                std::string longitudeString = ConvertModelDetailToString(latLong.GetLongitudeInDegrees());
+                const Eegeo::Space::LatLong& latLong = pinModel.GetLatLong();
                 
                 rapidjson::Value valueObject(rapidjson::kObjectType);
-                valueObject.AddMember("id", idAsString.c_str(), allocator);
-                valueObject.AddMember("title", title.c_str(), allocator);
-                valueObject.AddMember("description", description.c_str(), allocator);
-                valueObject.AddMember("image", imagePath.c_str(), allocator);
-                valueObject.AddMember("latitude", latitudeString.c_str(), allocator);
-                valueObject.AddMember("longitude", longitudeString.c_str(), allocator);
+                valueObject.AddMember("id", pinModel.Identifier(), allocator);
+                valueObject.AddMember("title", pinModel.GetTitle().c_str(), allocator);
+                valueObject.AddMember("description", pinModel.GetDescription().c_str(), allocator);
+                valueObject.AddMember("image", pinModel.GetImagePath().c_str(), allocator);
+                valueObject.AddMember("latitude", latLong.GetLatitudeInDegrees(), allocator);
+                valueObject.AddMember("longitude", latLong.GetLongitudeInDegrees(), allocator);
             
                 myPinsArray.PushBack(valueObject, allocator);
                 
@@ -119,7 +123,59 @@ namespace ExampleApp
                 rapidjson::Writer<rapidjson::StringBuffer> writer(strbuf);
                 jsonDoc.Accept(writer);
                 std::string jsonString = strbuf.GetString();
-                WriteJsonToDisk(jsonString);
+                
+                if (WriteJsonToDisk(jsonString))
+                {
+                    m_persistentSettings.SetValue(MyPins_LastMyPinModelIdKey, pinModel.Identifier());
+                }
+            }
+            else
+            {
+                Eegeo_TTY("Couldn't open file:%s\n", MyPinsDataFilename.c_str());
+            }
+        }
+        
+        void MyPinsFileIO::LoadPinModelsFromDisk(std::vector<MyPinModel>& out_pinModels)
+        {
+            out_pinModels.clear();
+            
+            std::fstream stream;
+            size_t size;
+            
+            if (m_fileIO.OpenFile(stream, size, MyPinsDataFilename))
+            {
+                std::string json((std::istreambuf_iterator<char>(stream)),
+                                 (std::istreambuf_iterator<char>()));
+                
+                rapidjson::Document jsonDoc;
+                if (jsonDoc.Parse<0>(json.c_str()).HasParseError())
+                {
+                    Eegeo_TTY("Parse error in MyPins JSON.\n");
+                    return;
+                }
+                
+                Eegeo_ASSERT(jsonDoc.IsObject(), "JSON document is not of object type");
+    
+                const rapidjson::Value& myPinsArray = jsonDoc[MyPinsJsonArrayName.c_str()];
+                size_t numEntries = myPinsArray.Size();
+                
+                for(int i = 0; i < numEntries; ++i)
+                {
+                    const rapidjson::Value& entry = myPinsArray[i];
+                    
+                    int pinId = entry["id"].GetInt();
+                    std::string title = entry["title"].GetString();
+                    std::string description = entry["description"].GetString();
+                    std::string image = entry["image"].GetString();
+                    double latitude = entry["latitude"].GetDouble();
+                    double longitude = entry["longitude"].GetDouble();
+                    
+                    out_pinModels.push_back(MyPinModel(pinId,
+                                                       title,
+                                                       description,
+                                                       image,
+                                                       Eegeo::Space::LatLong::FromDegrees(latitude, longitude)));
+                }
             }
         }
         
@@ -127,6 +183,14 @@ namespace ExampleApp
         {
             m_fileIO.DeleteFile(MyPinsDataFilename);
             return m_fileIO.WriteFile((Byte*)jsonString.c_str(), jsonString.size(), MyPinsDataFilename);
+        }
+        
+        int MyPinsFileIO::GetLastIdWrittenToDisk() const
+        {
+            int lastId = -1;
+            m_persistentSettings.TryGetValue(MyPins_LastMyPinModelIdKey, lastId);
+        
+            return lastId;
         }
     }
 }

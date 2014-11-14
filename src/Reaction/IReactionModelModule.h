@@ -6,12 +6,12 @@
 
 namespace ExampleApp
 {
-    namespace Reaction
-    {
-        class IReactionModelModule
-        {
-        public:
-            virtual ~IReactionModelModule() { }
-        };
-    }
+	namespace Reaction
+	{
+		class IReactionModelModule
+		{
+		public:
+			virtual ~IReactionModelModule() { }
+		};
+	}
 }

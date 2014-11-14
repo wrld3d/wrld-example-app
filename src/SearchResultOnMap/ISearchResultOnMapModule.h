@@ -8,22 +8,22 @@
 
 namespace ExampleApp
 {
-    namespace SearchResultOnMap
-    {
-        class ISearchResultOnMapModule
-        {
-        public:
-            virtual ~ISearchResultOnMapModule() { }
-            
-            virtual ISearchResultOnMapModel& GetSearchResultOnMapModel() const = 0;
-            
-            virtual ISearchResultOnMapInFocusViewModel& GetSearchResultOnMapInFocusViewModel() const = 0;
-            
-            virtual ISearchResultOnMapInFocusController& GetSearchResultOnMapInFocusController() const = 0;
-            
-            virtual ISearchResultOnMapScaleController& GetSearchResultOnMapScaleController() const = 0;
-            
-            virtual ScreenControlViewModel::IScreenControlViewModel& GetScreenControlViewModel() const = 0;
-        };
-    }
+	namespace SearchResultOnMap
+	{
+		class ISearchResultOnMapModule
+		{
+		public:
+			virtual ~ISearchResultOnMapModule() { }
+
+			virtual ISearchResultOnMapModel& GetSearchResultOnMapModel() const = 0;
+
+			virtual ISearchResultOnMapInFocusViewModel& GetSearchResultOnMapInFocusViewModel() const = 0;
+
+			virtual ISearchResultOnMapInFocusController& GetSearchResultOnMapInFocusController() const = 0;
+
+			virtual ISearchResultOnMapScaleController& GetSearchResultOnMapScaleController() const = 0;
+
+			virtual ScreenControlViewModel::IScreenControlViewModel& GetScreenControlViewModel() const = 0;
+		};
+	}
 }

@@ -4,17 +4,17 @@
 
 namespace ExampleApp
 {
-    namespace Compass
-    {
-        CompassScreenControl::CompassScreenControl(bool initiallyOnScreen, Eegeo::Helpers::TIdentity identity)
-        : ScreenControlViewModel::ScreenControlViewModelBase(initiallyOnScreen)
-        , m_identity(identity)
-        {
-        }
-        
-        Eegeo::Helpers::TIdentity CompassScreenControl::GetIdentity() const
-        {
-            return m_identity;
-        }
-    }
+	namespace Compass
+	{
+		CompassScreenControl::CompassScreenControl(bool initiallyOnScreen, Eegeo::Helpers::TIdentity identity)
+			: ScreenControlViewModel::ScreenControlViewModelBase(initiallyOnScreen)
+			, m_identity(identity)
+		{
+		}
+
+		Eegeo::Helpers::TIdentity CompassScreenControl::GetIdentity() const
+		{
+			return m_identity;
+		}
+	}
 }

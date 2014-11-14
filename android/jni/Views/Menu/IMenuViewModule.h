@@ -6,14 +6,14 @@
 
 namespace ExampleApp
 {
-    namespace Menu
-    {
-        class IMenuViewModule
-        {
-        public:
-            virtual ~IMenuViewModule() { }
-            
-            virtual IMenuViewController& GetMenuViewController() const = 0;
-        };
-    }
+	namespace Menu
+	{
+		class IMenuViewModule
+		{
+		public:
+			virtual ~IMenuViewModule() { }
+
+			virtual IMenuViewController& GetMenuViewController() const = 0;
+		};
+	}
 }

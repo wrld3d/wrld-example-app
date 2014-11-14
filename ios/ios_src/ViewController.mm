@@ -9,63 +9,63 @@ using namespace Eegeo::iOS;
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
-    
-    if([self respondsToSelector:@selector(setNeedsStatusBarAppearanceUpdate)])
-    {
-       // [self setNeedsStatusBarAppearanceUpdate];
-    }
-    
-    m_previousTimestamp = CFAbsoluteTimeGetCurrent();
-    self.preferredFramesPerSecond = 30.0f;
-    m_pAppRunner = NULL;
+	[super viewDidLoad];
+
+	if([self respondsToSelector:@selector(setNeedsStatusBarAppearanceUpdate)])
+	{
+		[self setNeedsStatusBarAppearanceUpdate];
+	}
+
+	m_previousTimestamp = CFAbsoluteTimeGetCurrent();
+	self.preferredFramesPerSecond = 30.0f;
+	m_pAppRunner = NULL;
 }
 
 -(UIStatusBarStyle)preferredStatusBarStyle
 {
-    return UIStatusBarStyleLightContent;
+	return UIStatusBarStyleLightContent;
 }
 
 - (void)viewWillLayoutSubviews
 {
-    if(m_pAppRunner == NULL)
-    {
-        m_pAppRunner = new AppRunner(*self, [self view]);
-    }
+	if(m_pAppRunner == NULL)
+	{
+		m_pAppRunner = new AppRunner(*self, [self view]);
+	}
 }
 
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect
 {
-    if(m_pAppRunner == NULL)
-    {
-        return;
-    }
-    
+	if(m_pAppRunner == NULL)
+	{
+		return;
+	}
+
 	CFTimeInterval timeNow = CFAbsoluteTimeGetCurrent();
 	CFTimeInterval frameDuration = timeNow - m_previousTimestamp;
-    m_pAppRunner->Update(frameDuration);
-    
+	m_pAppRunner->Update(frameDuration);
+
 	const GLenum discards[]  = {GL_DEPTH_ATTACHMENT, GL_STENCIL_ATTACHMENT};
 	Eegeo_GL(glDiscardFramebufferEXT(GL_READ_FRAMEBUFFER_APPLE, 2, discards));
-    
-    m_previousTimestamp = timeNow;
+
+	m_previousTimestamp = timeNow;
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
-       shouldReceiveTouch:(UITouch *)touch
+    shouldReceiveTouch:(UITouch *)touch
 {
-    for (UIView *subview in [self view].subviews)
-    {
-        if ([subview respondsToSelector: @selector(consumesTouch:)])
-        {
-            if([subview consumesTouch: touch])
-            {
-                return NO;
-            }
-        }
-        
-    }
-    return YES;
+	for (UIView *subview in [self view].subviews)
+	{
+		if ([subview respondsToSelector: @selector(consumesTouch:)])
+		{
+			if([subview consumesTouch: touch])
+			{
+				return NO;
+			}
+		}
+
+	}
+	return YES;
 }
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
@@ -80,15 +80,15 @@ using namespace Eegeo::iOS;
 
 -(void)willRotateToInterfaceOrientation: (UIInterfaceOrientation)orientation duration:(NSTimeInterval)duration
 {
-    
+
 }
 
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    return (m_pAppRunner == NULL)
-    ? true
-    : m_pAppRunner->ShouldAutoRotateToInterfaceOrientation(interfaceOrientation);
+	return (m_pAppRunner == NULL)
+	       ? true
+	       : m_pAppRunner->ShouldAutoRotateToInterfaceOrientation(interfaceOrientation);
 }
 
 @end

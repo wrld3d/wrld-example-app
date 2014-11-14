@@ -3,6 +3,7 @@
 #pragma once
 
 #include "MyPins.h"
+#include "Menu.h"
 
 namespace ExampleApp
 {
@@ -13,6 +14,7 @@ namespace ExampleApp
         public:
             virtual ~IMyPinsModule() { }
             virtual IMyPinsService& GetMyPinsService() const = 0;
+            virtual Menu::IMenuModel& GetMyPinsMenuModel() const = 0;
         };
     }
 }

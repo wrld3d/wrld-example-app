@@ -4,8 +4,8 @@
 
 namespace ExampleApp
 {
-    namespace SearchResultPoi
-    {
+	namespace SearchResultPoi
+	{
 		class ISearchResultPoiViewController
 		{
 		public:

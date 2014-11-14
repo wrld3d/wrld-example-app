@@ -3,21 +3,22 @@
 #include "ModalBackgroundViewController.h"
 #include "Types.h"
 #include "ModalityModel.h"
+#include "AndroidAppThreadAssertionMacros.h"
 
 namespace ExampleApp
 {
-    namespace ModalBackground
-    {
+	namespace ModalBackground
+	{
 		ModalBackgroundViewController::ModalBackgroundViewController(
-			AndroidNativeState& nativeState,
-			Modality::IModalityModel& modalityModel,
-			ModalBackgroundView& modalBackgroundView
+		    AndroidNativeState& nativeState,
+		    Modality::IModalityModel& modalityModel
 		)
-		: m_nativeState(nativeState)
-		, m_modalityModel(modalityModel)
-		, m_modalBackgroundView(modalBackgroundView)
-		, m_pOpenStateChangedCallback(Eegeo_NEW(Eegeo::Helpers::TCallback0<ModalBackgroundViewController>)(this, &ModalBackgroundViewController::OpenStateChangedCallback))
+			: m_nativeState(nativeState)
+			, m_modalityModel(modalityModel)
+			, m_pOpenStateChangedCallback(Eegeo_NEW(Eegeo::Helpers::TCallback0<ModalBackgroundViewController>)(this, &ModalBackgroundViewController::OpenStateChangedCallback))
 		{
+			ASSERT_UI_THREAD
+
 			m_modalityModel.InsertModalityChangedCallback(*m_pOpenStateChangedCallback);
 
 			AndroidSafeNativeThreadAttachment attached(m_nativeState);
@@ -31,16 +32,18 @@ namespace ExampleApp
 			jmethodID uiViewCtor = env->GetMethodID(m_uiViewClass, "<init>", "(Lcom/eegeo/mobileexampleapp/MainActivity;)V");
 
 			jobject instance = env->NewObject(
-				m_uiViewClass,
-				uiViewCtor,
-				m_nativeState.activity
-			);
+			                       m_uiViewClass,
+			                       uiViewCtor,
+			                       m_nativeState.activity
+			                   );
 
 			m_uiView = env->NewGlobalRef(instance);
 		}
 
 		ModalBackgroundViewController::~ModalBackgroundViewController()
 		{
+			ASSERT_UI_THREAD
+
 			m_modalityModel.RemoveModalityChangedCallback(*m_pOpenStateChangedCallback);
 
 			Eegeo_DELETE m_pOpenStateChangedCallback;
@@ -55,7 +58,7 @@ namespace ExampleApp
 
 		void ModalBackgroundViewController::OpenStateChangedCallback()
 		{
-			m_modalBackgroundView.SetAlpha(m_modalityModel.GetModality());
+			ASSERT_UI_THREAD
 
 			AndroidSafeNativeThreadAttachment attached(m_nativeState);
 			JNIEnv* env = attached.envForThread;
@@ -63,7 +66,7 @@ namespace ExampleApp
 			jmethodID animateToIntermediateActivityState = env->GetMethodID(m_uiViewClass, "animateToIntermediateActivityState", "(F)V");
 			env->CallVoidMethod(m_uiView, animateToIntermediateActivityState, m_modalityModel.GetModality());
 		}
-    }
+	}
 }
 
 

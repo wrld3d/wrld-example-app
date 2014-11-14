@@ -6,18 +6,18 @@
 
 namespace ExampleApp
 {
-    namespace Reaction
-    {
-        ReactionModelModule::ReactionModelModule(IReactionControllerModel& reactionControllerModel,
-                                                 const std::vector<OpenableControlViewModel::IOpenableControlViewModel*>& openables,
-                                                 const std::vector<ScreenControlViewModel::IScreenControlViewModel*>& reactors)
-        {
-            m_pModel = Eegeo_NEW(ReactionModel)(reactionControllerModel, openables, reactors);
-        }
-        
-        ReactionModelModule::~ReactionModelModule()
-        {
-            Eegeo_DELETE m_pModel;
-        }
-    }
+	namespace Reaction
+	{
+		ReactionModelModule::ReactionModelModule(IReactionControllerModel& reactionControllerModel,
+		        const std::vector<OpenableControlViewModel::IOpenableControlViewModel*>& openables,
+		        const std::vector<ScreenControlViewModel::IScreenControlViewModel*>& reactors)
+		{
+			m_pModel = Eegeo_NEW(ReactionModel)(reactionControllerModel, openables, reactors);
+		}
+
+		ReactionModelModule::~ReactionModelModule()
+		{
+			Eegeo_DELETE m_pModel;
+		}
+	}
 }

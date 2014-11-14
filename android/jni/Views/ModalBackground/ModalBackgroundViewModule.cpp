@@ -3,48 +3,37 @@
 #include "ModalBackgroundViewModule.h"
 #include "Modality.h"
 #include "ModalBackgroundViewController.h"
-#include "RenderableFilters.h"
-
-#include "RenderingModule.h"
+#include "AndroidAppThreadAssertionMacros.h"
 
 namespace ExampleApp
 {
-    namespace ModalBackground
-    {
-        ModalBackgroundViewModule::ModalBackgroundViewModule(
-			AndroidNativeState& nativeState,
-			Modality::IModalityModel& modalityModel,
-			Eegeo::Modules::Core::RenderingModule& renderingModule
+	namespace ModalBackground
+	{
+		ModalBackgroundViewModule::ModalBackgroundViewModule(
+		    AndroidNativeState& nativeState,
+		    Modality::IModalityModel& modalityModel
 		)
-        : m_renderableFilters(renderingModule.GetRenderableFilters())
-        {
-        	m_pModalBackgroundView = Eegeo_NEW(ModalBackgroundView)(
-        			renderingModule.GetShaderIdGenerator(),
-        			renderingModule.GetMaterialIdGenerator(),
-        			renderingModule.GetGlBufferPool(),
-        			renderingModule.GetVertexLayoutPool(),
-        			renderingModule.GetVertexBindingPool());
+		{
+			ASSERT_UI_THREAD
 
-            m_pModalBackgroundViewController = Eegeo_NEW(ModalBackgroundViewController)(
-				nativeState,
-				modalityModel,
-				*m_pModalBackgroundView
-            );
+			m_pModalBackgroundViewController = Eegeo_NEW(ModalBackgroundViewController)(
+			                                       nativeState,
+			                                       modalityModel
+			                                   );
+		}
 
-            m_renderableFilters.AddRenderableFilter(*m_pModalBackgroundView);
-        }
-        
-        ModalBackgroundViewModule::~ModalBackgroundViewModule()
-        {
-            Eegeo_DELETE(m_pModalBackgroundViewController);
+		ModalBackgroundViewModule::~ModalBackgroundViewModule()
+		{
+			ASSERT_UI_THREAD
 
-        	m_renderableFilters.RemoveRenderableFilter(*m_pModalBackgroundView);
-        	Eegeo_DELETE(m_pModalBackgroundView);
-        }
-        
-        IModalBackgroundViewController& ModalBackgroundViewModule::GetModalBackgroundViewController() const
-        {
-            return *m_pModalBackgroundViewController;
-        }
-    }
+			Eegeo_DELETE(m_pModalBackgroundViewController);
+		}
+
+		IModalBackgroundViewController& ModalBackgroundViewModule::GetModalBackgroundViewController() const
+		{
+			ASSERT_UI_THREAD
+
+			return *m_pModalBackgroundViewController;
+		}
+	}
 }

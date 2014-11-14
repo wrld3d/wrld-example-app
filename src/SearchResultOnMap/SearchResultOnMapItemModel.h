@@ -6,23 +6,24 @@
 #include "IWorldPinSelectionHandler.h"
 #include "Search.h"
 #include "SearchResultPoi.h"
+#include "NativeToUiMessageBus.h"
 
 namespace ExampleApp
 {
-    namespace SearchResultOnMap
-    {
-        class SearchResultOnMapItemModel : public WorldPins::IWorldPinSelectionHandler, private Eegeo::NonCopyable
-        {
-            Search::SearchResultModel& m_searchResultModel;
-            SearchResultPoi::ISearchResultPoiViewModel& m_searchResultPoiViewModel;
-            
-        public:
-            SearchResultOnMapItemModel(Search::SearchResultModel& searchResultModel,
-                                       SearchResultPoi::ISearchResultPoiViewModel& searchResultPoiViewModel);
-            
-            ~SearchResultOnMapItemModel();
-            
-            void SelectPin();
-        };
-    }
+	namespace SearchResultOnMap
+	{
+		class SearchResultOnMapItemModel : public WorldPins::IWorldPinSelectionHandler, private Eegeo::NonCopyable
+		{
+			Search::SearchResultModel& m_searchResultModel;
+			ExampleAppMessaging::NativeToUiMessageBus& m_nativeToUiMessageBus;
+
+		public:
+			SearchResultOnMapItemModel(Search::SearchResultModel& searchResultModel,
+			                           ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus);
+
+			~SearchResultOnMapItemModel();
+
+			void SelectPin();
+		};
+	}
 }

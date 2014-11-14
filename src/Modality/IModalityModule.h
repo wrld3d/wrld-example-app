@@ -6,14 +6,14 @@
 
 namespace ExampleApp
 {
-    namespace Modality
-    {
-        class IModalityModule
-        {
-        public:
-            virtual ~IModalityModule() { }
-            
-            virtual IModalityModel& GetModalityModel() const = 0;
-        };
-    }
+	namespace Modality
+	{
+		class IModalityModule
+		{
+		public:
+			virtual ~IModalityModule() { }
+
+			virtual IModalityModel& GetModalityModel() const = 0;
+		};
+	}
 }

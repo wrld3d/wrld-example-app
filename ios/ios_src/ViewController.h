@@ -7,7 +7,7 @@
 @interface ViewController : GLKViewController <UIGestureRecognizerDelegate>
 {
 	CFTimeInterval m_previousTimestamp;
-    AppRunner* m_pAppRunner;
+	AppRunner* m_pAppRunner;
 }
 
 @end

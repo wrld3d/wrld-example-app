@@ -7,11 +7,11 @@
 
 namespace ExampleApp
 {
-    namespace Compass
-    {
-        class ICompassViewModule;
-        class CompassViewModule;
-        class CompassViewControllerInterop;
-        
-    }
+	namespace Compass
+	{
+		class ICompassViewModule;
+		class CompassViewModule;
+		class CompassViewControllerInterop;
+
+	}
 }

@@ -2,12 +2,15 @@
 
 #include "FlattenButtonJni.h"
 #include "FlattenButtonViewController.h"
+#include "AndroidAppThreadAssertionMacros.h"
 
 JNIEXPORT void JNICALL Java_com_eegeo_flattenbutton_FlattenButtonViewJniMethods_SetFlatten(
-	    JNIEnv* jenv, jobject obj,
-	    jlong nativeObjectPtr,
-	    jboolean flattened)
+    JNIEnv* jenv, jobject obj,
+    jlong nativeObjectPtr,
+    jboolean flattened)
 {
+	ASSERT_UI_THREAD
+
 	ExampleApp::FlattenButton::FlattenButtonViewController* pController = reinterpret_cast<ExampleApp::FlattenButton::FlattenButtonViewController*>(nativeObjectPtr);
 	pController->SetFlattened(flattened);
 }

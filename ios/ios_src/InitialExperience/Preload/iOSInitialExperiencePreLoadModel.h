@@ -7,28 +7,28 @@
 
 namespace ExampleApp
 {
-    namespace InitialExperience
-    {
-        namespace PreLoad
-        {
-            class iOSInitialExperiencePreLoadModel : public InitialExperiencePreLoadModelBase
-            {
-                void* m_pAlertListener;
-                
-                void DestroyAlertListener();
-                
-            public:
-                iOSInitialExperiencePreLoadModel(WorldAreaLoader::IWorldAreaLoaderModel& worldAreaLoaderModel,
-                                                 PersistentSettings::IPersistentSettingsModel& persistentSettings);
-                
-                ~iOSInitialExperiencePreLoadModel();
-                
-                void HandleDismiss(bool shouldPreload);
-                
-            protected:
-                
-                void ShowOptions();
-            };
-        }
-    }
+	namespace InitialExperience
+	{
+		namespace PreLoad
+		{
+			class iOSInitialExperiencePreLoadModel : public InitialExperiencePreLoadModelBase
+			{
+				void* m_pAlertListener;
+
+				void DestroyAlertListener();
+
+			public:
+				iOSInitialExperiencePreLoadModel(WorldAreaLoader::IWorldAreaLoaderModel& worldAreaLoaderModel,
+				                                 PersistentSettings::IPersistentSettingsModel& persistentSettings);
+
+				~iOSInitialExperiencePreLoadModel();
+
+				void HandleDismiss(bool shouldPreload);
+
+			protected:
+
+				void ShowOptions();
+			};
+		}
+	}
 }

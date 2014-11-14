@@ -18,18 +18,21 @@ public:
 	void Pause();
 	void Resume();
 	void ActivateSurface();
-	void Update(float deltaSeconds);
+	void UpdateNative(float deltaSeconds);
+	void UpdateUiViews(float deltaSeconds);
+	void StopUpdatingNativeBeforeTeardown();
+	void DestroyApplicationUi();
 
 	void HandleTouchEvent(const Eegeo::Android::Input::TouchInputEvent& message);
 
 private:
 	AndroidNativeState* m_pNativeState;
+	AppHost* m_pAppHost;
+	bool m_updatingNative;
 
 	GlDisplayService m_displayService;
 	void ReleaseDisplay();
 	bool TryBindDisplay();
-
-	AppHost* m_pAppHost;
 	void CreateAppHost();
 };
 

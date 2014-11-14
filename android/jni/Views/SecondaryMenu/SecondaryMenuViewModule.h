@@ -10,29 +10,31 @@
 #include "MenuViewIncludes.h"
 #include "IMenuViewModule.h"
 #include "Search.h"
+#include "UiToNativeMessageBus.h"
+#include "NativeToUiMessageBus.h"
 
 namespace ExampleApp
 {
-    namespace SecondaryMenu
-    {
-        class SecondaryMenuViewModule: public Menu::IMenuViewModule, private Eegeo::NonCopyable
-        {
-        private:
-        	Menu::IMenuViewController* m_pMenuViewController;
-            
-        public:
-        	SecondaryMenuViewModule(
-        		const std::string& viewName,
-            	AndroidNativeState& nativeState,
-        		Menu::IMenuModel& menuModelModel,
-        		Menu::IMenuViewModel& menuViewModel,
-    			Search::ISearchService& searchService,
-    			Search::ISearchQueryPerformer& searchQueryPerformer
-            );
-            
-            ~SecondaryMenuViewModule();
-            
-            Menu::IMenuViewController& GetMenuViewController() const;
-        };
-    }
+	namespace SecondaryMenu
+	{
+		class SecondaryMenuViewModule: public Menu::IMenuViewModule, private Eegeo::NonCopyable
+		{
+		private:
+			Menu::IMenuViewController* m_pMenuViewController;
+
+		public:
+			SecondaryMenuViewModule(
+			    const std::string& viewName,
+			    AndroidNativeState& nativeState,
+			    Menu::IMenuModel& menuModelModel,
+			    Menu::IMenuViewModel& menuViewModel,
+			    ExampleAppMessaging::UiToNativeMessageBus& messageBus,
+			    ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus
+			);
+
+			~SecondaryMenuViewModule();
+
+			Menu::IMenuViewController& GetMenuViewController() const;
+		};
+	}
 }

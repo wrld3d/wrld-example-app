@@ -9,6 +9,7 @@
 #include "AppRunner.h"
 #include "main.h"
 #include "Logger.h"
+#include "AndroidAppThreadAssertions.h"
 
 using namespace Eegeo::Android;
 using namespace Eegeo::Android::Input;
@@ -18,20 +19,21 @@ AppRunner* g_pAppRunner;
 
 namespace
 {
-void FillEventFromJniData(
-    JNIEnv* jenv,
-    jint primaryActionIndex,
-    jint primaryActionIdentifier,
-    jint numPointers,
-    jfloatArray x,
-    jfloatArray y,
-    jintArray pointerIdentity,
-    jintArray pointerIndex,
-    TouchInputEvent& event);
+	void FillEventFromJniData(
+	    JNIEnv* jenv,
+	    jint primaryActionIndex,
+	    jint primaryActionIdentifier,
+	    jint numPointers,
+	    jfloatArray x,
+	    jfloatArray y,
+	    jintArray pointerIdentity,
+	    jintArray pointerIndex,
+	    TouchInputEvent& event);
 }
 
 JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM* vm, void* pvt)
 {
+	ExampleApp::AndroidAppThreadAssertions::NominateCurrentlyRunningThreadAsUiThread();
 	g_nativeState.vm = vm;
 	return JNI_VERSION_1_6;
 }
@@ -40,6 +42,8 @@ JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM* vm, void* pvt)
 JNIEXPORT long JNICALL Java_com_eegeo_mobileexampleapp_NativeJniCalls_createNativeCode(JNIEnv* jenv, jobject obj, jobject activity, jobject assetManager, jfloat dpi)
 {
 	EXAMPLE_LOG("startNativeCode\n");
+
+	ExampleApp::AndroidAppThreadAssertions::NominateCurrentlyRunningThreadAsNativeThread();
 
 	g_nativeState.javaMainThread = pthread_self();
 	g_nativeState.mainThreadEnv = jenv;
@@ -72,6 +76,11 @@ JNIEXPORT long JNICALL Java_com_eegeo_mobileexampleapp_NativeJniCalls_createNati
 	return ((long)g_pAppRunner);
 }
 
+JNIEXPORT void JNICALL Java_com_eegeo_mobileexampleapp_NativeJniCalls_stopUpdatingNativeCode(JNIEnv* jenv, jobject obj)
+{
+	g_pAppRunner->StopUpdatingNativeBeforeTeardown();
+}
+
 JNIEXPORT void JNICALL Java_com_eegeo_mobileexampleapp_NativeJniCalls_destroyNativeCode(JNIEnv* jenv, jobject obj)
 {
 	EXAMPLE_LOG("stopNativeCode()\n");
@@ -84,6 +93,8 @@ JNIEXPORT void JNICALL Java_com_eegeo_mobileexampleapp_NativeJniCalls_destroyNat
 	jenv->DeleteGlobalRef(g_nativeState.activityClass);
 	jenv->DeleteGlobalRef(g_nativeState.classLoaderClass);
 	jenv->DeleteGlobalRef(g_nativeState.classLoader);
+
+	ExampleApp::AndroidAppThreadAssertions::RemoveNominationForNativeThread();
 }
 
 JNIEXPORT void JNICALL Java_com_eegeo_mobileexampleapp_NativeJniCalls_pauseNativeCode(JNIEnv* jenv, jobject obj)
@@ -98,7 +109,17 @@ JNIEXPORT void JNICALL Java_com_eegeo_mobileexampleapp_NativeJniCalls_resumeNati
 
 JNIEXPORT void JNICALL Java_com_eegeo_mobileexampleapp_NativeJniCalls_updateNativeCode(JNIEnv* jenv, jobject obj, jfloat deltaSeconds)
 {
-	g_pAppRunner->Update((float)deltaSeconds);
+	g_pAppRunner->UpdateNative((float)deltaSeconds);
+}
+
+JNIEXPORT void JNICALL Java_com_eegeo_mobileexampleapp_NativeJniCalls_updateUiViewCode(JNIEnv* jenv, jobject obj, jfloat deltaSeconds)
+{
+	g_pAppRunner->UpdateUiViews((float)deltaSeconds);
+}
+
+JNIEXPORT void JNICALL Java_com_eegeo_mobileexampleapp_NativeJniCalls_destroyApplicationUi(JNIEnv* jenv, jobject obj)
+{
+	g_pAppRunner->DestroyApplicationUi();
 }
 
 JNIEXPORT void JNICALL Java_com_eegeo_mobileexampleapp_NativeJniCalls_setNativeSurface(JNIEnv* jenv, jobject obj, jobject surface)
@@ -164,31 +185,31 @@ JNIEXPORT void JNICALL Java_com_eegeo_mobileexampleapp_EegeoSurfaceView_processN
 
 namespace
 {
-void FillEventFromJniData(
-    JNIEnv* jenv,
-    jint primaryActionIndex,
-    jint primaryActionIdentifier,
-    jint numPointers,
-    jfloatArray x,
-    jfloatArray y,
-    jintArray pointerIdentity,
-    jintArray pointerIndex,
-    TouchInputEvent& event)
-{
-	jfloat* xBuffer = jenv->GetFloatArrayElements(x, 0);
-	jfloat* yBuffer = jenv->GetFloatArrayElements(y, 0);
-	jint* identityBuffer = jenv->GetIntArrayElements(pointerIdentity, 0);
-	jint* indexBuffer = jenv->GetIntArrayElements(pointerIndex, 0);
-
-	for(int i = 0; i < numPointers; ++ i)
+	void FillEventFromJniData(
+	    JNIEnv* jenv,
+	    jint primaryActionIndex,
+	    jint primaryActionIdentifier,
+	    jint numPointers,
+	    jfloatArray x,
+	    jfloatArray y,
+	    jintArray pointerIdentity,
+	    jintArray pointerIndex,
+	    TouchInputEvent& event)
 	{
-		TouchInputPointerEvent p(xBuffer[i], yBuffer[i], identityBuffer[i], indexBuffer[i]);
-		event.pointerEvents.push_back(p);
-	}
+		jfloat* xBuffer = jenv->GetFloatArrayElements(x, 0);
+		jfloat* yBuffer = jenv->GetFloatArrayElements(y, 0);
+		jint* identityBuffer = jenv->GetIntArrayElements(pointerIdentity, 0);
+		jint* indexBuffer = jenv->GetIntArrayElements(pointerIndex, 0);
 
-	jenv->ReleaseFloatArrayElements(x, xBuffer, 0);
-	jenv->ReleaseFloatArrayElements(y, yBuffer, 0);
-	jenv->ReleaseIntArrayElements(pointerIdentity, identityBuffer, 0);
-	jenv->ReleaseIntArrayElements(pointerIndex, indexBuffer, 0);
-}
+		for(int i = 0; i < numPointers; ++ i)
+		{
+			TouchInputPointerEvent p(xBuffer[i], yBuffer[i], identityBuffer[i], indexBuffer[i]);
+			event.pointerEvents.push_back(p);
+		}
+
+		jenv->ReleaseFloatArrayElements(x, xBuffer, 0);
+		jenv->ReleaseFloatArrayElements(y, yBuffer, 0);
+		jenv->ReleaseIntArrayElements(pointerIdentity, identityBuffer, 0);
+		jenv->ReleaseIntArrayElements(pointerIndex, indexBuffer, 0);
+	}
 }

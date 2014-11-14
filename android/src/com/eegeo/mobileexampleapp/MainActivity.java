@@ -34,19 +34,19 @@ public abstract class MainActivity extends Activity implements SurfaceHolder.Cal
 		int dip = (int)((px / density) + 0.5f);
 		return dip;
 	}
-	
+
 	public int dipAsPx(float dip)
 	{
 		float density = getResources().getDisplayMetrics().density;
 		int px = (int)((dip * density) + 0.5f);
 		return px;
 	}
-	
+
 	public void dismissKeyboard(IBinder binder)
 	{
 		InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
 		imm.hideSoftInputFromWindow(binder, 0);
-    	getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 	}
 	
 	@Override
@@ -54,4 +54,8 @@ public abstract class MainActivity extends Activity implements SurfaceHolder.Cal
 	{
 		m_photoIntentDispatcher.onActivityResult(requestCode, resultCode, data);
 	}
+	
+	public abstract void dispatchRevealUiMessageToUiThreadFromNativeThread(final long nativeCallerPointer);
+
+	public abstract void dispatchUiCreatedMessageToNativeThreadFromUiThread(final long nativeCallerPointer);
 }

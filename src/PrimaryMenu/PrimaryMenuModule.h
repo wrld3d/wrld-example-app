@@ -9,6 +9,9 @@
 #include "AboutPage.h"
 #include "Reaction.h"
 
+#include <vector>
+#include <string>
+
 namespace ExampleApp
 {
     namespace PrimaryMenu
@@ -20,6 +23,8 @@ namespace ExampleApp
             Menu::IMenuOptionsModel* m_pMenuOptionsModel;
             Menu::IMenuViewModel* m_pViewModel;
             
+            std::vector<Menu::IMenuSectionViewModel*> m_sections;
+            
             Menu::IMenuSectionViewModel* m_pMenuSectionMisc;
             
         public:
@@ -28,6 +33,8 @@ namespace ExampleApp
                               Reaction::IReactionControllerModel& reactionControllerModel);
             
             ~PrimaryMenuModule();
+            
+            void AddMenuSection(const std::string& name, const std::string& icon, Menu::IMenuModel& menuModel, bool isExpandable);
             
             Menu::IMenuModel& GetPrimaryMenuModel() const;
             

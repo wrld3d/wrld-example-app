@@ -6,17 +6,17 @@
 
 namespace ExampleApp
 {
-    namespace Helpers
-    {
-        namespace IconResources
-        {
-            std::string GetCategoryMatch(std::string category);
-            
-            std::string GetSmallIconForCategory(const std::string& category);
-            
-            std::string GetSmallIconPathForResourceName(const std::string& resource);
-            
-            std::string GetSearchResultIconPathForResourceName(const std::string& resource);
-        }
-    }
+	namespace Helpers
+	{
+		namespace IconResources
+		{
+			std::string GetCategoryMatch(std::string category);
+
+			std::string GetSmallIconForCategory(const std::string& category);
+
+			std::string GetSmallIconPathForResourceName(const std::string& resource);
+
+			std::string GetSearchResultIconPathForResourceName(const std::string& resource);
+		}
+	}
 }

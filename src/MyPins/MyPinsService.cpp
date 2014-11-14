@@ -6,22 +6,57 @@
 #include "IWorldPinsFactory.h"
 #include "Pin.h"
 #include "MyPinsFileIO.h"
+#include "IWebLoadRequestFactory.h"
+#include "IWebLoadRequest.h"
+#include "ImageUploadData.h"
+#include "IMenuOptionsModel.h"
+#include "MyPinMenuOption.h"
+
+#include <string>
+#include <sstream>
 
 namespace ExampleApp
 {
     namespace MyPins
     {
+        
+        template<typename T>
+        std::string ConvertModelDetailToString(const T& detail)
+        {
+            std::stringstream ss;
+            ss << detail;
+            return ss.str();
+        }
+        
         MyPinsService::MyPinsService(IMyPinsRepository& myPinsRepository,
                                      MyPinsFileIO& myPinsFileIO,
+                                     Menu::IMenuOptionsModel& menuOptionsModel,
                                      Eegeo::Pins::PinRepository& pinRepository,
-                                     WorldPins::IWorldPinsFactory& pinFactory)
+                                     WorldPins::IWorldPinsFactory& pinFactory,
+                                     Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory)
         : m_myPinsRepository(myPinsRepository)
         , m_myPinsFileIO(myPinsFileIO)
+        , m_menuOptionsModel(menuOptionsModel)
         , m_pinRepository(pinRepository)
         , m_pinFactory(pinFactory)
-        , m_lastIdUsed(0)
+        , m_webLoadRequestFactory(webLoadRequestFactory)
+        , m_lastIdUsed(m_myPinsFileIO.GetLastIdWrittenToDisk())
+        , m_webRequestCompleteCallback(this, &MyPinsService::WebRequestCompleteCallback)
         {
+            std::vector<MyPinModel> pinModels;
+            m_myPinsFileIO.LoadPinModelsFromDisk(pinModels);
+
             
+            for (std::vector<MyPinModel>::iterator it = pinModels.begin(); it != pinModels.end(); ++it)
+            {
+                const MyPinModel& pinModel = *it;
+
+                m_menuOptionsModel.AddItem(ConvertModelDetailToString(pinModel.Identifier()),
+                                           pinModel.GetTitle(),
+                                           "",
+                                           "place",
+                                           Eegeo_NEW(MyPinMenuOption)(pinModel));
+            }
         }
         
         void MyPinsService::AddPin(const std::string& title,
@@ -31,18 +66,7 @@ namespace ExampleApp
                                    size_t imageSize,
                                    bool shouldShare)
         {
-//            Eegeo::Pins::Pin* pin = m_pinFactory.CreatePin(latLong, 0);
-//            m_pinRepository.AddPin(*pin);
-            
-//            MyPinModel *myPinModel = m_myPinModelFactory.CreateMyPinModel(title,
-//                                                                          description,
-//                                                                          imageData,
-//                                                                          imageSize,
-//                                                                          latLong,
-//                                                                          shouldShare);
-//            m_myPinsRepository.AddItem(*myPinModel);
-//            
-//            m_modelToPinIdMap.insert(std::make_pair(myPinModel, pin->GetId()));
+            // Stub, for adding pins to screen
         }
         
         void MyPinsService::RemovePin(const MyPinModel& myPinModel)
@@ -69,7 +93,7 @@ namespace ExampleApp
                                     size_t imageSize,
                                     bool shouldShare)
         {
-            unsigned int idForThisPin = m_lastIdUsed++;
+            unsigned int idForThisPin = ++m_lastIdUsed;
             
             std::string imagePath = "";
 
@@ -78,12 +102,34 @@ namespace ExampleApp
                 m_myPinsFileIO.TryCacheImageToDisk(imageData, imageSize, idForThisPin, imagePath);
             }
             
-            m_myPinsFileIO.SavePinModelToDisk(idForThisPin, title, description, imagePath, latLong);
+            MyPinModel pinModel(idForThisPin,
+                                title,
+                                description,
+                                imagePath,
+                                latLong);
+            
+            m_myPinsFileIO.SavePinModelToDisk(pinModel);
             
             if (shouldShare)
             {
-                // Punt web request here...
+                SubmitPinToWebService(pinModel);
             }
+            
+            m_menuOptionsModel.AddItem(ConvertModelDetailToString(pinModel.Identifier()),
+                                       pinModel.GetTitle(),
+                                       "",
+                                       "place",
+                                       Eegeo_NEW(MyPinMenuOption)(pinModel));
+        }
+        
+        void MyPinsService::SubmitPinToWebService(const ExampleApp::MyPins::MyPinModel &myPinModel)
+        {
+            Eegeo_TTY("Here is where you submit pin to web service\n");
+        }
+        
+        void MyPinsService::WebRequestCompleteCallback(Eegeo::Web::IWebLoadRequest& webLoadRequest)
+        {
+            Eegeo_TTY("Web Request Completed, code: %d\n", webLoadRequest.HttpStatusCode());
         }
     }
 }

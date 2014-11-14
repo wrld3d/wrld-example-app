@@ -6,18 +6,18 @@
 
 namespace ExampleApp
 {
-    namespace InitialExperience
-    {
-        class IInitialExperienceModel
-        {
-        public:
-            virtual ~IInitialExperienceModel() {}
-            
-            virtual bool HasCompletedInitialExperience() const = 0;
-            
-            virtual void DoNextPartOfInitialExperience() = 0;
-            
-            virtual void UpdateCurrentStep(float deltaSeconds) = 0;
-        };
-    }
+	namespace InitialExperience
+	{
+		class IInitialExperienceModel
+		{
+		public:
+			virtual ~IInitialExperienceModel() {}
+
+			virtual bool HasCompletedInitialExperience() const = 0;
+
+			virtual void DoNextPartOfInitialExperience() = 0;
+
+			virtual void UpdateCurrentStep(float deltaSeconds) = 0;
+		};
+	}
 }

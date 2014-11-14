@@ -11,22 +11,22 @@
 
 namespace ExampleApp
 {
-    namespace SearchResultPoi
-    {
+	namespace SearchResultPoi
+	{
 		class SearchResultPoiViewController : public ISearchResultPoiViewController, private Eegeo::NonCopyable
 		{
 			AndroidNativeState& m_nativeState;
-            SearchResultPoi::ISearchResultPoiViewModel& m_searchResultPoiViewModel;
-            Eegeo::Helpers::ICallback0* m_pSearchResultPoiOpenedCallback;
-            Eegeo::Helpers::ICallback0* m_pSearchResultPoiClosedCallback;
+			SearchResultPoi::ISearchResultPoiViewModel& m_searchResultPoiViewModel;
+			Eegeo::Helpers::ICallback0* m_pSearchResultPoiOpenedCallback;
+			Eegeo::Helpers::ICallback0* m_pSearchResultPoiClosedCallback;
 
 			jclass m_uiViewClass;
 			jobject m_uiView;
 
 		public:
-		    SearchResultPoiViewController(
-				AndroidNativeState& nativeState,
-				SearchResultPoi::ISearchResultPoiViewModel& viewModel
+			SearchResultPoiViewController(
+			    AndroidNativeState& nativeState,
+			    SearchResultPoi::ISearchResultPoiViewModel& viewModel
 			);
 
 			~SearchResultPoiViewController();
@@ -35,10 +35,10 @@ namespace ExampleApp
 
 		private:
 
-            void SearchResultPoiOpenedCallback();
+			void SearchResultPoiOpenedCallback();
 
-            void SearchResultPoiClosedCallback();
+			void SearchResultPoiClosedCallback();
 		};
-    }
+	}
 }
 

@@ -4,15 +4,15 @@
 
 namespace ExampleApp
 {
-    namespace Search
-    {
-        class ISearchModule;
-        class ISearchQueryPerformer;
-        class ISearchRefreshService;
-        class ISearchResultParser;
-        class ISearchResultRepository;
-        class ISearchService;
-        class SearchQuery;
-        class SearchResultModel;
-    }
+	namespace Search
+	{
+		class ISearchModule;
+		class ISearchQueryPerformer;
+		class ISearchRefreshService;
+		class ISearchResultParser;
+		class ISearchResultRepository;
+		class ISearchService;
+		class SearchQuery;
+		class SearchResultModel;
+	}
 }

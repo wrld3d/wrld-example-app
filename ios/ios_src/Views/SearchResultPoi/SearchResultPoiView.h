@@ -11,8 +11,8 @@
 
 @interface SearchResultPoiView : UIView
 {
-    __weak SearchResultPoiViewController* m_pController;
-    float m_stateChangeAnimationTimeSeconds;
+	__weak SearchResultPoiViewController* m_pController;
+	float m_stateChangeAnimationTimeSeconds;
 }
 
 - (id) initWithController:(SearchResultPoiViewController *)controller;

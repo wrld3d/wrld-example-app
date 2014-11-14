@@ -4,11 +4,11 @@
 
 namespace ExampleApp
 {
-    namespace Reaction
-    {
-        class IReactionModelModule;
-        class IReactionControllerModel;
-        class IReactionModel;
-        class IReactionControllerModule;
-    }
+	namespace Reaction
+	{
+		class IReactionModelModule;
+		class IReactionControllerModel;
+		class IReactionModel;
+		class IReactionControllerModule;
+	}
 }

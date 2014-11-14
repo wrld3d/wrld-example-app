@@ -12,89 +12,100 @@
 #include "ICategorySearchRepository.h"
 #include "SearchResultModel.h"
 #include "ISearchResultMenuViewModel.h"
+#include "AndroidAppThreadAssertionMacros.h"
+#include "SearchResultViewClearedMessage.h"
 
 namespace ExampleApp
 {
-    namespace SearchMenu
-    {
-    	SearchMenuViewController::SearchMenuViewController(
-	    		const std::string& viewClassName,
-				AndroidNativeState& nativeState,
-				ExampleApp::Menu::IMenuModel& menuModel,
-				ExampleApp::Menu::IMenuViewModel& menuViewModel,
-        		Search::ISearchService& searchService,
-                Search::ISearchQueryPerformer& queryPerformer,
-	            CategorySearch::ICategorySearchRepository& categorySearchRepository,
-	            SearchResultMenu::ISearchResultMenuViewModel& searchResultMenuViewModel
+	namespace SearchMenu
+	{
+		SearchMenuViewController::SearchMenuViewController(
+		    const std::string& viewClassName,
+		    AndroidNativeState& nativeState,
+		    ExampleApp::Menu::IMenuModel& menuModel,
+		    ExampleApp::Menu::IMenuViewModel& menuViewModel,
+		    CategorySearch::ICategorySearchRepository& categorySearchRepository,
+		    SearchResultMenu::ISearchResultMenuViewModel& searchResultMenuViewModel,
+		    ExampleApp::ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
+		    ExampleApp::ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus
 		)
-		: Menu::MenuViewController(viewClassName, nativeState, menuModel, menuViewModel)
-		, m_searchService(searchService)
-    	, m_pSearchResultQueryIssuedCallback(Eegeo_NEW((Eegeo::Helpers::TCallback1<SearchMenuViewController, const Search::SearchQuery&>))(this, &SearchMenuViewController::HandleSearchQueryIssued))
-    	, m_pSearchResultReceivedCallback(Eegeo_NEW((Eegeo::Helpers::TCallback2<SearchMenuViewController, const Search::SearchQuery&, const std::vector<Search::SearchResultModel> &>))(this, &SearchMenuViewController::HandleSearchResultReceived))
-    	, m_queryPerformer(queryPerformer)
-    	, m_categorySearchRepository(categorySearchRepository)
-    	, m_searchResultMenuViewModel(searchResultMenuViewModel)
-    	{
-    		m_searchService.InsertOnReceivedQueryResultsCallback(*m_pSearchResultReceivedCallback);
-    		m_searchService.InsertOnPerformedQueryCallback(*m_pSearchResultQueryIssuedCallback);
-		}
-
-    	SearchMenuViewController::~SearchMenuViewController()
+			: Menu::MenuViewController(viewClassName, nativeState, menuModel, menuViewModel)
+			, m_searchQueryIssuedCallback(this, &SearchMenuViewController::HandleSearchQueryIssued)
+			, m_searchResultReceivedCallback(this, &SearchMenuViewController::HandleSearchResultReceived)
+			, m_categorySearchRepository(categorySearchRepository)
+			, m_searchResultMenuViewModel(searchResultMenuViewModel)
+			, m_nativeToUiMessageBus(nativeToUiMessageBus)
+			, m_uiToNativeMessageBus(uiToNativeMessageBus)
 		{
-    		m_searchService.RemoveOnReceivedQueryResultsCallback(*m_pSearchResultReceivedCallback);
-    		m_searchService.RemoveOnPerformedQueryCallback(*m_pSearchResultQueryIssuedCallback);
-
-    		Eegeo_DELETE m_pSearchResultReceivedCallback;
-    		Eegeo_DELETE m_pSearchResultQueryIssuedCallback;
+			ASSERT_UI_THREAD
+			m_nativeToUiMessageBus.Subscribe(m_searchResultReceivedCallback);
+			m_nativeToUiMessageBus.Subscribe(m_searchQueryIssuedCallback);
 		}
 
-    	bool SearchMenuViewController::TryBeginDrag()
-    	{
-    	    if(m_searchResultMenuViewModel.CanInteract())
-    	    {
-    	    	return MenuViewController::TryBeginDrag();
-    	    }
-
-    	    return false;
-    	}
-
-    	void SearchMenuViewController::HandleViewClicked()
+		SearchMenuViewController::~SearchMenuViewController()
 		{
-    	    if(m_searchResultMenuViewModel.CanInteract())
-    	    {
-    	    	MenuViewController::HandleViewClicked();
-    	    }
+			ASSERT_UI_THREAD
+			m_nativeToUiMessageBus.Unsubscribe(m_searchResultReceivedCallback);
+			m_nativeToUiMessageBus.Unsubscribe(m_searchQueryIssuedCallback);
 		}
 
-    	void SearchMenuViewController::HandleClosed()
-    	{
-    		m_queryPerformer.RemoveSearchQueryResults();
-    	    m_menuViewModel.RemoveFromScreen();
-    	}
-
-    	void SearchMenuViewController::RefreshViewHeader(const Search::SearchQuery& query, bool queryPending, int numResult)
-    	{
-    		AndroidSafeNativeThreadAttachment attached(m_nativeState);
-    		JNIEnv* env = attached.envForThread;
-
-    		jmethodID updateHeaderMethod = env->GetMethodID(m_uiViewClass, "updateHeader", "(Ljava/lang/String;ZI)V");
-    		std::string headerString = CategorySearch::GetPresentationStringForQuery(m_categorySearchRepository, query);
-    		jstring queryString = env->NewStringUTF(headerString.c_str());
-
-    		env->CallVoidMethod(m_uiView, updateHeaderMethod, queryString, queryPending, numResult);
-    		env->DeleteLocalRef(queryString);
-    	}
-
-    	void SearchMenuViewController::HandleSearchQueryIssued(const Search::SearchQuery& query)
-    	{
-    		RefreshViewHeader(query, true, 0);
-    	}
-
-        void SearchMenuViewController::HandleSearchResultReceived(
-			const Search::SearchQuery& query,
-			const std::vector<Search::SearchResultModel>& results)
+		bool SearchMenuViewController::TryBeginDrag()
 		{
-    		RefreshViewHeader(query, false, results.size());
+			ASSERT_UI_THREAD
+
+			if(m_searchResultMenuViewModel.CanInteract())
+			{
+				return MenuViewController::TryBeginDrag();
+			}
+
+			return false;
 		}
-    }
+
+		void SearchMenuViewController::HandleViewClicked()
+		{
+			ASSERT_UI_THREAD
+
+			if(m_searchResultMenuViewModel.CanInteract())
+			{
+				MenuViewController::HandleViewClicked();
+			}
+		}
+
+		void SearchMenuViewController::HandleClosed()
+		{
+			ASSERT_UI_THREAD
+
+			m_uiToNativeMessageBus.Publish(ExampleApp::SearchResultMenu::SearchResultViewClearedMessage());
+			m_menuViewModel.RemoveFromScreen();
+		}
+
+		void SearchMenuViewController::RefreshViewHeader(const Search::SearchQuery& query, bool queryPending, int numResult)
+		{
+			ASSERT_UI_THREAD
+
+			AndroidSafeNativeThreadAttachment attached(m_nativeState);
+			JNIEnv* env = attached.envForThread;
+
+			jmethodID updateHeaderMethod = env->GetMethodID(m_uiViewClass, "updateHeader", "(Ljava/lang/String;ZI)V");
+			std::string headerString = CategorySearch::GetPresentationStringForQuery(m_categorySearchRepository, query);
+			jstring queryString = env->NewStringUTF(headerString.c_str());
+
+			env->CallVoidMethod(m_uiView, updateHeaderMethod, queryString, queryPending, numResult);
+			env->DeleteLocalRef(queryString);
+		}
+
+		void SearchMenuViewController::HandleSearchQueryIssued(const Search::SearchQueryPerformedMessage& message)
+		{
+			ASSERT_UI_THREAD
+
+			RefreshViewHeader(message.Query(), true, 0);
+		}
+
+		void SearchMenuViewController::HandleSearchResultReceived(const Search::SearchQueryResponseReceivedMessage& message)
+		{
+			ASSERT_UI_THREAD
+
+			RefreshViewHeader(message.GetQuery(), false, message.GetResults().size());
+		}
+	}
 }

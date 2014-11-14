@@ -11,26 +11,26 @@
 
 namespace ExampleApp
 {
-    namespace SearchResultOnMap
-    {
-        class SearchResultOnMapViewControllerInterop;
-    }
+	namespace SearchResultOnMap
+	{
+		class SearchResultOnMapViewControllerInterop;
+	}
 }
 
 @interface SearchResultOnMapViewController : UIViewController
 {
-    ExampleApp::SearchResultOnMap::ISearchResultOnMapInFocusViewModel* m_pSearchResultOnMapInFocusViewModel;
-    ExampleApp::SearchResultOnMap::SearchResultOnMapViewControllerInterop* m_pInterop;
-    ExampleApp::Modality::IModalityModel* m_pModalityModel;
-    float m_pinOffset;
-    float m_pixelScale;
+	ExampleApp::SearchResultOnMap::ISearchResultOnMapInFocusViewModel* m_pSearchResultOnMapInFocusViewModel;
+	ExampleApp::SearchResultOnMap::SearchResultOnMapViewControllerInterop* m_pInterop;
+	ExampleApp::Modality::IModalityModel* m_pModalityModel;
+	float m_pinOffset;
+	float m_pixelScale;
 }
 
 - (id)initWithParams:(ExampleApp::SearchResultOnMap::ISearchResultOnMapInFocusViewModel*)pSearchResultOnMapInFocusViewModel
-                    :(ExampleApp::ScreenControlViewModel::IScreenControlViewModel*)pSearchResultPoiScreenControlViewModel
-                    :(ExampleApp::Modality::IModalityModel*)pModalityModel
-                    :(float)pinDiameter
-                    :(float)pixelScale;
+    :(ExampleApp::ScreenControlViewModel::IScreenControlViewModel*)pSearchResultPoiScreenControlViewModel
+    :(ExampleApp::Modality::IModalityModel*)pModalityModel
+    :(float)pinDiameter
+    :(float)pixelScale;
 
 - (void) open;
 

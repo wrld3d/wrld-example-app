@@ -3,6 +3,7 @@
 #pragma once
 
 #include "Menu.h"
+#include <string>
 
 namespace ExampleApp
 {
@@ -14,6 +15,8 @@ namespace ExampleApp
             virtual ~IPrimaryMenuModule() { }
             
             virtual Menu::IMenuModel& GetPrimaryMenuModel() const = 0;
+            
+            virtual void AddMenuSection(const std::string& name, const std::string& icon, Menu::IMenuModel& menuModel, bool isExpandable) = 0;
             
             virtual Menu::IMenuOptionsModel& GetPrimaryMenuOptionsModel() const = 0;
             

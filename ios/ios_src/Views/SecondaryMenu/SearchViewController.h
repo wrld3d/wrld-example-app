@@ -9,18 +9,17 @@
 
 @interface SearchViewController : UIViewController<UITextFieldDelegate>
 {
-    bool m_keyboardActive;
-    bool m_returnPressed;
-    ExampleApp::Search::ISearchQueryPerformer* m_pSearchQueryPerformer;
-    ExampleApp::Search::ISearchService* m_pSearchService;
-    ExampleApp::Menu::IMenuViewModel* m_pMenuViewModel;
-    ExampleApp::SecondaryMenu::SearchViewControllerInterop* m_pInterop;
+	bool m_keyboardActive;
+	bool m_returnPressed;
+	ExampleApp::Search::ISearchQueryPerformer* m_pSearchQueryPerformer;
+	ExampleApp::Menu::IMenuViewModel* m_pMenuViewModel;
+	ExampleApp::SecondaryMenu::SearchViewControllerInterop* m_pInterop;
 }
 
 - (id)initWithParams:(UITextField*)pView
-                    :(ExampleApp::Search::ISearchQueryPerformer*)pSearchQueryPerformer
-                    :(ExampleApp::Search::ISearchService*) pSearchService
-                    :(ExampleApp::Menu::IMenuViewModel*) pMenuViewModel;
+    :(ExampleApp::Search::ISearchQueryPerformer*)pSearchQueryPerformer
+    :(ExampleApp::ExampleAppMessaging::NativeToUiMessageBus*) pNativeToUiMessageBus
+    :(ExampleApp::Menu::IMenuViewModel*) pMenuViewModel;
 
 - (void) enableEdit;
 

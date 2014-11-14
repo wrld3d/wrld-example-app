@@ -11,29 +11,29 @@
 
 namespace ExampleApp
 {
-    namespace Reaction
-    {
-        class ReactionModel : public IReactionModel, private Eegeo::NonCopyable
-        {
-            IReactionControllerModel& m_reactionControllerModel;
-            
-            std::vector<OpenableControlViewModel::IOpenableControlViewModel*> m_openables;
-            std::vector<ScreenControlViewModel::IScreenControlViewModel*> m_reactors;
-            
-            Eegeo::Helpers::ICallback2<OpenableControlViewModel::IOpenableControlViewModel&, float>* m_pMenuOpenStateChangedCallback;
-            
-        public:
-            ReactionModel(IReactionControllerModel& reactionControllerModel,
-                          const std::vector<OpenableControlViewModel::IOpenableControlViewModel*>& openables,
-                          const std::vector<ScreenControlViewModel::IScreenControlViewModel*>& reactors);
-            
-            ~ReactionModel();
-            
-        private:
-            
-            void UpdateOnScreenStatesInReactionToMenuOpenStateChange(OpenableControlViewModel::IOpenableControlViewModel& viewModel, float openState);
-            
-            void MenuOpenStateChangeHandler(OpenableControlViewModel::IOpenableControlViewModel& viewModel, float& openState);
-        };
-    }
+	namespace Reaction
+	{
+		class ReactionModel : public IReactionModel, private Eegeo::NonCopyable
+		{
+			IReactionControllerModel& m_reactionControllerModel;
+
+			std::vector<OpenableControlViewModel::IOpenableControlViewModel*> m_openables;
+			std::vector<ScreenControlViewModel::IScreenControlViewModel*> m_reactors;
+
+			Eegeo::Helpers::ICallback2<OpenableControlViewModel::IOpenableControlViewModel&, float>* m_pMenuOpenStateChangedCallback;
+
+		public:
+			ReactionModel(IReactionControllerModel& reactionControllerModel,
+			              const std::vector<OpenableControlViewModel::IOpenableControlViewModel*>& openables,
+			              const std::vector<ScreenControlViewModel::IScreenControlViewModel*>& reactors);
+
+			~ReactionModel();
+
+		private:
+
+			void UpdateOnScreenStatesInReactionToMenuOpenStateChange(OpenableControlViewModel::IOpenableControlViewModel& viewModel, float openState);
+
+			void MenuOpenStateChangeHandler(OpenableControlViewModel::IOpenableControlViewModel& viewModel, float& openState);
+		};
+	}
 }

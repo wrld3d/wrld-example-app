@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include <string>
 #include "AndroidNativeState.h"
 #include "Types.h"
 #include "SearchResultPoi.h"
@@ -10,23 +11,23 @@
 #include "SearchResultModel.h"
 #include "ISearchResultOnMapInFocusViewModel.h"
 #include "IScreenControlViewModel.h"
-#include "Modality.h"
+#include "ISearchResultPoiViewModel.h"
 
 namespace ExampleApp
 {
-    namespace SearchResultOnMap
-    {
+	namespace SearchResultOnMap
+	{
 		class SearchResultOnMapViewController : private Eegeo::NonCopyable
 		{
 			AndroidNativeState& m_nativeState;
-            ISearchResultOnMapInFocusViewModel& m_searchResultOnMapInFocusViewModel;
-            ScreenControlViewModel::IScreenControlViewModel& m_searchResultPoiScreenControlViewModel;
-            Modality::IModalityModel& m_modalityModel;
+			ISearchResultOnMapInFocusViewModel& m_searchResultOnMapInFocusViewModel;
+			ScreenControlViewModel::IScreenControlViewModel& m_searchResultPoiScreenControlViewModel;
+			SearchResultPoi::ISearchResultPoiViewModel& m_searchResultPoiViewModel;
 
-            Eegeo::Helpers::ICallback0* m_pSearchResultOnMapFocusOpenedCallback;
-            Eegeo::Helpers::ICallback0* m_pSearchResultOnMapFocusClosedCallback;
-            Eegeo::Helpers::ICallback0* m_pSearchResultOnMapFocusUpdatedCallback;
-            Eegeo::Helpers::ICallback2<ScreenControlViewModel::IScreenControlViewModel&, float>* m_pOnScreenStateChangedCallback;
+			Eegeo::Helpers::ICallback0* m_pSearchResultOnMapFocusOpenedCallback;
+			Eegeo::Helpers::ICallback0* m_pSearchResultOnMapFocusClosedCallback;
+			Eegeo::Helpers::ICallback0* m_pSearchResultOnMapFocusUpdatedCallback;
+			Eegeo::Helpers::ICallback2<ScreenControlViewModel::IScreenControlViewModel&, float>* m_pOnScreenStateChangedCallback;
 
 			jclass m_uiViewClass;
 			jobject m_uiView;
@@ -34,11 +35,11 @@ namespace ExampleApp
 
 		public:
 			SearchResultOnMapViewController(
-				AndroidNativeState& nativeState,
-                ExampleApp::SearchResultOnMap::ISearchResultOnMapInFocusViewModel& searchResultOnMapInFocusViewModel,
-                ScreenControlViewModel::IScreenControlViewModel& searchResultPoiScreenControlViewModel,
-                Modality::IModalityModel& modalityModel,
-    			float pinDiameter
+			    AndroidNativeState& nativeState,
+			    ExampleApp::SearchResultOnMap::ISearchResultOnMapInFocusViewModel& searchResultOnMapInFocusViewModel,
+			    ScreenControlViewModel::IScreenControlViewModel& searchResultPoiScreenControlViewModel,
+			    SearchResultPoi::ISearchResultPoiViewModel& searchResultPoiViewModel,
+			    float pinDiameter
 			);
 
 			~SearchResultOnMapViewController();
@@ -47,13 +48,13 @@ namespace ExampleApp
 
 		private:
 
-            void SearchResultOnMapFocusOpenedCallback();
+			void SearchResultOnMapFocusOpenedCallback();
 
-            void SearchResultOnMapFocusClosedCallback();
+			void SearchResultOnMapFocusClosedCallback();
 
-            void SearchResultOnMapFocusUpdatedCallback();
+			void SearchResultOnMapFocusUpdatedCallback();
 
-            void OnScreenStateChangedCallback(ScreenControlViewModel::IScreenControlViewModel &viewModel, float& onScreenState);
+			void OnScreenStateChangedCallback(ScreenControlViewModel::IScreenControlViewModel &viewModel, float& onScreenState);
 		};
-    }
+	}
 }
