@@ -105,6 +105,8 @@ namespace ExampleApp
 			//	imageSize,
 			//	shouldShare);
 
+    		Eegeo_TTY("Got some info for ya: %s - %s - %s - %d", title.c_str(), description.c_str(), image.c_str(), shouldShare);
+
 			m_viewModel.Close();
     	}
     }

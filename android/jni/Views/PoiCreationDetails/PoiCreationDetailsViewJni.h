@@ -12,6 +12,6 @@ extern "C"
 
 	JNIEXPORT void JNICALL Java_com_eegeo_poicreationdetails_PoiCreationDetailsJniMethods_SubmitButtonPressed(
 		JNIEnv* jenv, jobject obj,
-		jlong nativeObjectPtr);
+		jlong nativeObjectPtr, jstring title, jstring description, jstring imagePath, jboolean shouldShare);
 }
 

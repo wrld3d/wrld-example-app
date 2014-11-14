@@ -2,15 +2,30 @@
 
 package com.eegeo.mobileexampleapp;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.IBinder;
 import android.view.SurfaceHolder;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.app.Activity;
-import android.content.Context;
+
+import com.eegeo.photos.PhotoIntentDispatcher;
 
 public abstract class MainActivity extends Activity implements SurfaceHolder.Callback, INativeMessageRunner
 {
+	private PhotoIntentDispatcher m_photoIntentDispatcher;
+	
+	public MainActivity()
+	{
+		m_photoIntentDispatcher = new PhotoIntentDispatcher(this, "eegeo Example App");
+	}
+	
+	public PhotoIntentDispatcher getPhotoIntentDispatcher()
+	{
+		return m_photoIntentDispatcher;
+	}
+	
 	// http://developer.android.com/guide/practices/screens_support.html#dips-pels 
 	// and http://stackoverflow.com/a/9904844
 	public int pxAsDip(float px)
@@ -32,5 +47,11 @@ public abstract class MainActivity extends Activity implements SurfaceHolder.Cal
 		InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
 		imm.hideSoftInputFromWindow(binder, 0);
     	getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data)
+	{
+		m_photoIntentDispatcher.onActivityResult(requestCode, resultCode, data);
 	}
 }

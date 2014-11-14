@@ -13,9 +13,21 @@ JNIEXPORT void JNICALL Java_com_eegeo_poicreationdetails_PoiCreationDetailsJniMe
 
 JNIEXPORT void JNICALL Java_com_eegeo_poicreationdetails_PoiCreationDetailsJniMethods_SubmitButtonPressed(
 	    JNIEnv* jenv, jobject obj,
-	    jlong nativeObjectPtr)
+	    jlong nativeObjectPtr, jstring title, jstring description, jstring imagePath, jboolean shouldShare)
 {
-	//ExampleApp::PoiCreationDetails::PoiCreationDetailsViewController* pController = reinterpret_cast<ExampleApp::PoiCreationDetails::PoiCreationDetailsViewController*>(nativeObjectPtr);
-	//pController->HandleConfirmButtonPressed(title, desc, image, shouldShare);
+	const char* titlechars = jenv->GetStringUTFChars(title, 0);
+	std::string titleString = titlechars;
+	jenv->ReleaseStringUTFChars(title, titlechars);
+
+	const char* descChars = jenv->GetStringUTFChars(description, 0);
+	std::string descriptionString = descChars;
+	jenv->ReleaseStringUTFChars(description, descChars);
+
+	const char* imageChars = jenv->GetStringUTFChars(imagePath, 0);
+	std::string imageString = imageChars;
+	jenv->ReleaseStringUTFChars(imagePath, imageChars);
+
+	ExampleApp::PoiCreationDetails::PoiCreationDetailsViewController* pController = reinterpret_cast<ExampleApp::PoiCreationDetails::PoiCreationDetailsViewController*>(nativeObjectPtr);
+	pController->HandleConfirmButtonPressed(titleString, descriptionString, imageString, shouldShare);
 }
 
