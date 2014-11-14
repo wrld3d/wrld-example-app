@@ -13,17 +13,17 @@ namespace ExampleApp
 
 		CategorySearchSelectedMessageHandler::CategorySearchSelectedMessageHandler(
 			Search::ISearchQueryPerformer& searchQueryPerformer,
-			ExampleAppMessaging::UiToNativeMessageBus& messageBus)
+			ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus)
 			: m_searchQueryPerformer(searchQueryPerformer)
-			, m_messageBus(messageBus)
+			, m_uiToNativeMessageBus(uiToNativeMessageBus)
 			, m_handlerBinding(this, &CategorySearchSelectedMessageHandler::HandleReceivedCategorySearchSelectedMessage)
 		{
-			m_messageBus.Subscribe(m_handlerBinding);
+			m_uiToNativeMessageBus.Subscribe(m_handlerBinding);
 		}
 
 		CategorySearchSelectedMessageHandler::~CategorySearchSelectedMessageHandler()
 		{
-			m_messageBus.Unsubscribe(m_handlerBinding);
+			m_uiToNativeMessageBus.Unsubscribe(m_handlerBinding);
 		}
 	}
 }

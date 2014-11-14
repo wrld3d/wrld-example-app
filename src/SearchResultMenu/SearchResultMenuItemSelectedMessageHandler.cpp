@@ -14,17 +14,17 @@ namespace ExampleApp
 
 		SearchResultMenuItemSelectedMessageHandler::SearchResultMenuItemSelectedMessageHandler(
 			CameraTransitions::ICameraTransitionController& cameraTransitionController,
-			ExampleAppMessaging::UiToNativeMessageBus& messageBus)
+			ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus)
 			: m_cameraTransitionController(cameraTransitionController)
-			, m_messageBus(messageBus)
+			, m_uiToNativeMessageBus(uiToNativeMessageBus)
 			, m_handleSearchResultMenuItemSelectedMessageBinding(this, &SearchResultMenuItemSelectedMessageHandler::HandleReceivedSearchResultMenuItemSelectedMessage)
 		{
-			m_messageBus.Subscribe(m_handleSearchResultMenuItemSelectedMessageBinding);
+			m_uiToNativeMessageBus.Subscribe(m_handleSearchResultMenuItemSelectedMessageBinding);
 		}
 
 		SearchResultMenuItemSelectedMessageHandler::~SearchResultMenuItemSelectedMessageHandler()
 		{
-			m_messageBus.Unsubscribe(m_handleSearchResultMenuItemSelectedMessageBinding);
+			m_uiToNativeMessageBus.Unsubscribe(m_handleSearchResultMenuItemSelectedMessageBinding);
 		}
 	}
 }

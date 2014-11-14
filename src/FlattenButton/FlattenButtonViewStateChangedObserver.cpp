@@ -7,17 +7,17 @@ namespace ExampleApp
 	namespace FlattenButton
 	{
 		FlattenButtonViewStateChangedObserver::FlattenButtonViewStateChangedObserver(IFlattenButtonModel& flattenButtonModel,
-											  ExampleAppMessaging::UiToNativeMessageBus& messageBus)
+											  ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus)
 			: m_flattenButtonModel(flattenButtonModel)
-			, m_messageBus(messageBus)
+			, m_uiToNativeMessageBus(uiToNativeMessageBus)
 			, m_handlerBinding(this, &FlattenButtonViewStateChangedObserver::HandleReceivedFlattenButtonStateChangedMessage)
 		{
-			m_messageBus.Subscribe(m_handlerBinding);
+			m_uiToNativeMessageBus.Subscribe(m_handlerBinding);
 		}
 
 		FlattenButtonViewStateChangedObserver::~FlattenButtonViewStateChangedObserver()
 		{
-			m_messageBus.Unsubscribe(m_handlerBinding);
+			m_uiToNativeMessageBus.Unsubscribe(m_handlerBinding);
 		}
 
 		void FlattenButtonViewStateChangedObserver::HandleReceivedFlattenButtonStateChangedMessage(const FlattenButtonViewStateChangedMessage& message)

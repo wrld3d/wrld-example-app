@@ -8,17 +8,17 @@ namespace ExampleApp
 	{
 		PlaceJumpSelectedMessageHandler::PlaceJumpSelectedMessageHandler(
 			IPlaceJumpController& placeJumpController,
-			ExampleAppMessaging::UiToNativeMessageBus& messageBus)
+			ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus)
 			: m_placeJumpController(placeJumpController)
-			, m_messageBus(messageBus)
+			, m_uiToNativeMessageBus(uiToNativeMessageBus)
 			, m_handlerBinding(this, &PlaceJumpSelectedMessageHandler::HandleReceivedPlaceJumpSelectedMessage)
 		{
-			m_messageBus.Subscribe(m_handlerBinding);
+			m_uiToNativeMessageBus.Subscribe(m_handlerBinding);
 		}
 
 		PlaceJumpSelectedMessageHandler::~PlaceJumpSelectedMessageHandler()
 		{
-			m_messageBus.Unsubscribe(m_handlerBinding);
+			m_uiToNativeMessageBus.Unsubscribe(m_handlerBinding);
 		}
 
 		void PlaceJumpSelectedMessageHandler::HandleReceivedPlaceJumpSelectedMessage(const PlaceJumpSelectedMessage& message)

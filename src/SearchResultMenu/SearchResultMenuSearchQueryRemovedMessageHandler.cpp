@@ -8,17 +8,17 @@ namespace ExampleApp
 	{
 		SearchResultMenuSearchQueryRemovedMessageHandler::SearchResultMenuSearchQueryRemovedMessageHandler(
 			SearchResultMenu::ISearchResultMenuViewModel& searchResultMenuViewModel,
-			ExampleAppMessaging::NativeToUiMessageBus& messageBus)
+			ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus)
 			: m_searchResultMenuViewModel(searchResultMenuViewModel)
-			, m_messageBus(messageBus)
+			, m_nativeToUiMessageBus(nativeToUiMessageBus)
 			, m_handlerBinding(this, &SearchResultMenuSearchQueryRemovedMessageHandler::HandleReceivedSearchQueryRemovedMessage)
 		{
-			m_messageBus.Subscribe(m_handlerBinding);
+			m_nativeToUiMessageBus.Subscribe(m_handlerBinding);
 		}
 
 		SearchResultMenuSearchQueryRemovedMessageHandler::~SearchResultMenuSearchQueryRemovedMessageHandler()
 		{
-			m_messageBus.Unsubscribe(m_handlerBinding);
+			m_nativeToUiMessageBus.Unsubscribe(m_handlerBinding);
 		}
 
 		void SearchResultMenuSearchQueryRemovedMessageHandler::HandleReceivedSearchQueryRemovedMessage(const Search::SearchQueryRemovedMessage& message)

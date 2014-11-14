@@ -8,17 +8,17 @@ namespace ExampleApp
 	{
 		PerformedSearchMessageHandler::PerformedSearchMessageHandler(
 			Search::ISearchQueryPerformer& searchQueryPerformer,
-			ExampleAppMessaging::UiToNativeMessageBus& messageBus)
+			ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus)
 			: m_searchQueryPerformer(searchQueryPerformer)
-			, m_messageBus(messageBus)
+			, m_uiToNativeMessageBus(uiToNativeMessageBus)
 			, m_handlePerformedSearchMessageBinding(this, &PerformedSearchMessageHandler::HandleReceivedPerformedSearchMessage)
 		{
-			m_messageBus.Subscribe(m_handlePerformedSearchMessageBinding);
+			m_uiToNativeMessageBus.Subscribe(m_handlePerformedSearchMessageBinding);
 		}
 
 		PerformedSearchMessageHandler::~PerformedSearchMessageHandler()
 		{
-			m_messageBus.Unsubscribe(m_handlePerformedSearchMessageBinding);
+			m_uiToNativeMessageBus.Unsubscribe(m_handlePerformedSearchMessageBinding);
 		}
 
 		void PerformedSearchMessageHandler::HandleReceivedPerformedSearchMessage(const PerformedSearchMessage& message)

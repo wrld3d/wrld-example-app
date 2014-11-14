@@ -28,17 +28,17 @@ namespace ExampleApp
 
 		WeatherSelectedMessageHandler::WeatherSelectedMessageHandler(
 			IWeatherController& weatherController,
-			ExampleAppMessaging::UiToNativeMessageBus& messageBus)
+			ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus)
 			: m_weatherController(weatherController)
-			, m_messageBus(messageBus)
+			, m_uiToNativeMessageBus(uiToNativeMessageBus)
 			, m_handlerBinding(this, &WeatherSelectedMessageHandler::HandleReceivedWeatherSelectedMessage)
 		{
-			m_messageBus.Subscribe(m_handlerBinding);
+			m_uiToNativeMessageBus.Subscribe(m_handlerBinding);
 		}
 
 		WeatherSelectedMessageHandler::~WeatherSelectedMessageHandler()
 		{
-			m_messageBus.Unsubscribe(m_handlerBinding);
+			m_uiToNativeMessageBus.Unsubscribe(m_handlerBinding);
 		}
 	}
 }

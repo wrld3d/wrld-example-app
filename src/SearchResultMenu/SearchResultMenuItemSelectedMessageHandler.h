@@ -15,7 +15,7 @@ namespace ExampleApp
 		class SearchResultMenuItemSelectedMessageHandler : private Eegeo::NonCopyable
 		{
 			CameraTransitions::ICameraTransitionController& m_cameraTransitionController;
-			ExampleAppMessaging::UiToNativeMessageBus& m_messageBus;
+			ExampleAppMessaging::UiToNativeMessageBus& m_uiToNativeMessageBus;
 			Eegeo::Helpers::TCallback1<SearchResultMenuItemSelectedMessageHandler, const SearchResultMenuItemSelectedMessage&> m_handleSearchResultMenuItemSelectedMessageBinding;
 
 			void HandleReceivedSearchResultMenuItemSelectedMessage(const SearchResultMenuItemSelectedMessage& message);
@@ -23,7 +23,7 @@ namespace ExampleApp
 		public:
 			SearchResultMenuItemSelectedMessageHandler(
 			    CameraTransitions::ICameraTransitionController& cameraTransitionController,
-			    ExampleAppMessaging::UiToNativeMessageBus& messageBus);
+			    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus);
 
 			~SearchResultMenuItemSelectedMessageHandler();
 		};

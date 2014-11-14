@@ -7,9 +7,9 @@ namespace ExampleApp
 	namespace FlattenButton
 	{
 		FlattenButtonModelStateChangedObserver::FlattenButtonModelStateChangedObserver(IFlattenButtonModel& flattenButtonModel,
-											   ExampleAppMessaging::NativeToUiMessageBus& messageBus)
+											   ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus)
 			: m_flattenButtonModel(flattenButtonModel)
-			, m_messageBus(messageBus)
+			, m_nativeToUiMessageBus(nativeToUiMessageBus)
 			, m_flattenStateChangedCallback(this, &FlattenButtonModelStateChangedObserver::HandleFlattenStateChanged)
 		{
 			m_flattenButtonModel.InsertChangedCallback(m_flattenStateChangedCallback);
@@ -22,7 +22,7 @@ namespace ExampleApp
 
 		void FlattenButtonModelStateChangedObserver::HandleFlattenStateChanged()
 		{
-			m_messageBus.Publish(FlattenButtonModelStateChangedMessage(m_flattenButtonModel.GetFlattened()));
+			m_nativeToUiMessageBus.Publish(FlattenButtonModelStateChangedMessage(m_flattenButtonModel.GetFlattened()));
 		}
 	}
 }

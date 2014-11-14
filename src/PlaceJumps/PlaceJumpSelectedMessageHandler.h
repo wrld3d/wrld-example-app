@@ -15,7 +15,7 @@ namespace ExampleApp
 		class PlaceJumpSelectedMessageHandler : private Eegeo::NonCopyable
 		{
 			IPlaceJumpController& m_placeJumpController;
-			ExampleAppMessaging::UiToNativeMessageBus& m_messageBus;
+			ExampleAppMessaging::UiToNativeMessageBus& m_uiToNativeMessageBus;
 			Eegeo::Helpers::TCallback1<PlaceJumpSelectedMessageHandler, const PlaceJumpSelectedMessage&> m_handlerBinding;
 
 			void HandleReceivedPlaceJumpSelectedMessage(const PlaceJumpSelectedMessage& message);
@@ -23,7 +23,7 @@ namespace ExampleApp
 		public:
 			PlaceJumpSelectedMessageHandler(
 			    IPlaceJumpController& placeJumpController,
-			    ExampleAppMessaging::UiToNativeMessageBus& messageBus);
+			    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus);
 
 			~PlaceJumpSelectedMessageHandler();
 		};

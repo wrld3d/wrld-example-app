@@ -15,14 +15,14 @@ namespace ExampleApp
 		class SearchResultOnMapModalityObserver : private Eegeo::NonCopyable
 		{
 			SearchResultOnMapScaleController& m_searchResultOnMapScaleController;
-			ExampleAppMessaging::UiToNativeMessageBus& m_messageBus;
+			ExampleAppMessaging::UiToNativeMessageBus& m_uiToNativeMessageBus;
 			Eegeo::Helpers::TCallback1<SearchResultOnMapModalityObserver, const Modality::ModalityChangedMessage&> m_handlerBinding;
 
 			void HandleReceivedModalityChangedMessage(const Modality::ModalityChangedMessage& message);
 
 		public:
 			SearchResultOnMapModalityObserver(SearchResultOnMapScaleController& searchResultOnMapScaleController,
-			                                  ExampleAppMessaging::UiToNativeMessageBus& messageBus);
+			                                  ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus);
 
 			~SearchResultOnMapModalityObserver();
 		};

@@ -15,7 +15,7 @@ namespace ExampleApp
 		class PerformedSearchMessageHandler : private Eegeo::NonCopyable
 		{
 			Search::ISearchQueryPerformer& m_searchQueryPerformer;
-			ExampleAppMessaging::UiToNativeMessageBus& m_messageBus;
+			ExampleAppMessaging::UiToNativeMessageBus& m_uiToNativeMessageBus;
 			Eegeo::Helpers::TCallback1<PerformedSearchMessageHandler, const PerformedSearchMessage&> m_handlePerformedSearchMessageBinding;
 
 			void HandleReceivedPerformedSearchMessage(const PerformedSearchMessage& message);
@@ -23,7 +23,7 @@ namespace ExampleApp
 		public:
 			PerformedSearchMessageHandler(
 			    Search::ISearchQueryPerformer& searchQueryPerformer,
-			    ExampleAppMessaging::UiToNativeMessageBus& messageBus);
+			    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus);
 
 			~PerformedSearchMessageHandler();
 		};

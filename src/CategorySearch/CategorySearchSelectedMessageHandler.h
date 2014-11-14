@@ -14,7 +14,7 @@ namespace ExampleApp
 		class CategorySearchSelectedMessageHandler : private Eegeo::NonCopyable
 		{
 			Search::ISearchQueryPerformer& m_searchQueryPerformer;
-			ExampleAppMessaging::UiToNativeMessageBus& m_messageBus;
+			ExampleAppMessaging::UiToNativeMessageBus& m_uiToNativeMessageBus;
 			Eegeo::Helpers::TCallback1<CategorySearchSelectedMessageHandler, const CategorySearchSelectedMessage&> m_handlerBinding;
 
 			void HandleReceivedCategorySearchSelectedMessage(const CategorySearchSelectedMessage& message);
@@ -22,7 +22,7 @@ namespace ExampleApp
 		public:
 			CategorySearchSelectedMessageHandler(
 			    Search::ISearchQueryPerformer& searchQueryPerformer,
-			    ExampleAppMessaging::UiToNativeMessageBus& messageBus);
+			    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus);
 
 			~CategorySearchSelectedMessageHandler();
 		};

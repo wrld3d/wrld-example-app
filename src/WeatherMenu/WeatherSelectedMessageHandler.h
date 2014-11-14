@@ -15,7 +15,7 @@ namespace ExampleApp
 		class WeatherSelectedMessageHandler : private Eegeo::NonCopyable
 		{
 			IWeatherController& m_weatherController;
-			ExampleAppMessaging::UiToNativeMessageBus& m_messageBus;
+			ExampleAppMessaging::UiToNativeMessageBus& m_uiToNativeMessageBus;
 			Eegeo::Helpers::TCallback1<WeatherSelectedMessageHandler, const WeatherSelectedMessage&> m_handlerBinding;
 
 			void HandleReceivedWeatherSelectedMessage(const WeatherSelectedMessage& message);
@@ -23,7 +23,7 @@ namespace ExampleApp
 		public:
 			WeatherSelectedMessageHandler(
 			    IWeatherController& weatherController,
-			    ExampleAppMessaging::UiToNativeMessageBus& messageBus);
+			    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus);
 
 			~WeatherSelectedMessageHandler();
 		};

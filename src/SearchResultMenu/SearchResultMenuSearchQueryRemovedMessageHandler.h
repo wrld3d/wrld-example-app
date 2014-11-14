@@ -15,7 +15,7 @@ namespace ExampleApp
 		class SearchResultMenuSearchQueryRemovedMessageHandler : private Eegeo::NonCopyable
 		{
 			SearchResultMenu::ISearchResultMenuViewModel& m_searchResultMenuViewModel;
-			ExampleAppMessaging::NativeToUiMessageBus& m_messageBus;
+			ExampleAppMessaging::NativeToUiMessageBus& m_nativeToUiMessageBus;
 			Eegeo::Helpers::TCallback1<SearchResultMenuSearchQueryRemovedMessageHandler, const Search::SearchQueryRemovedMessage&> m_handlerBinding;
 
 			void HandleReceivedSearchQueryRemovedMessage(const Search::SearchQueryRemovedMessage& message);
@@ -23,7 +23,7 @@ namespace ExampleApp
 		public:
 			SearchResultMenuSearchQueryRemovedMessageHandler(
 			    SearchResultMenu::ISearchResultMenuViewModel& searchResultMenuViewModel,
-			    ExampleAppMessaging::NativeToUiMessageBus& messageBus);
+			    ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus);
 
 			~SearchResultMenuSearchQueryRemovedMessageHandler();
 		};

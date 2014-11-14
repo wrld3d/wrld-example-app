@@ -16,14 +16,14 @@ namespace ExampleApp
 		class FlattenButtonModelStateChangedObserver
 		{
 			IFlattenButtonModel& m_flattenButtonModel;
-			ExampleAppMessaging::NativeToUiMessageBus& m_messageBus;
+			ExampleAppMessaging::NativeToUiMessageBus& m_nativeToUiMessageBus;
 			Eegeo::Helpers::TCallback0<FlattenButtonModelStateChangedObserver> m_flattenStateChangedCallback;
 
 			void HandleFlattenStateChanged();
 
 		public:
 			FlattenButtonModelStateChangedObserver(IFlattenButtonModel& flattenButtonModel,
-			                                       ExampleAppMessaging::NativeToUiMessageBus& messageBus);
+			                                       ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus);
 
 			~FlattenButtonModelStateChangedObserver();
 		};
