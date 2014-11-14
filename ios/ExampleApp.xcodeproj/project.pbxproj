@@ -142,8 +142,6 @@
 		18B5AB5619DC159000BA4A38 /* SearchResultOnMapModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18B5AA9719DC158F00BA4A38 /* SearchResultOnMapModel.cpp */; };
 		18B5AB5719DC159000BA4A38 /* SearchResultOnMapModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18B5AA9919DC158F00BA4A38 /* SearchResultOnMapModule.cpp */; };
 		18B5AB5819DC159000BA4A38 /* SearchResultOnMapModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18B5AA9919DC158F00BA4A38 /* SearchResultOnMapModule.cpp */; };
-		18B5AB5919DC159000BA4A38 /* SearchResultOnMapScaleController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18B5AA9B19DC158F00BA4A38 /* SearchResultOnMapScaleController.cpp */; };
-		18B5AB5A19DC159000BA4A38 /* SearchResultOnMapScaleController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18B5AA9B19DC158F00BA4A38 /* SearchResultOnMapScaleController.cpp */; };
 		18B5AB5B19DC159000BA4A38 /* SearchResultPoiModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18B5AAA119DC158F00BA4A38 /* SearchResultPoiModule.cpp */; };
 		18B5AB5C19DC159000BA4A38 /* SearchResultPoiModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18B5AAA119DC158F00BA4A38 /* SearchResultPoiModule.cpp */; };
 		18B5AB5D19DC159000BA4A38 /* SearchResultPoiOpenableControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18B5AAA319DC158F00BA4A38 /* SearchResultPoiOpenableControl.cpp */; };
@@ -390,6 +388,10 @@
 		5605EDF019F824CD00D1D594 /* ReactionModelModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5605EDE719F824CD00D1D594 /* ReactionModelModule.cpp */; };
 		5606E31719ED1B93009059D4 /* eegeo_logo@ipho.png in Resources */ = {isa = PBXBuildFile; fileRef = 5606E31619ED1B93009059D4 /* eegeo_logo@ipho.png */; };
 		5606E31819ED1B93009059D4 /* eegeo_logo@ipho.png in Resources */ = {isa = PBXBuildFile; fileRef = 5606E31619ED1B93009059D4 /* eegeo_logo@ipho.png */; };
+		562925091A15043300EA1B1F /* WorldPinsScaleController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 562925071A15043300EA1B1F /* WorldPinsScaleController.cpp */; };
+		5629250A1A15043300EA1B1F /* WorldPinsScaleController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 562925071A15043300EA1B1F /* WorldPinsScaleController.cpp */; };
+		5629250E1A16125000EA1B1F /* MyPinsRepositoryObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5629250C1A16125000EA1B1F /* MyPinsRepositoryObserver.cpp */; };
+		5629250F1A16125000EA1B1F /* MyPinsRepositoryObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5629250C1A16125000EA1B1F /* MyPinsRepositoryObserver.cpp */; };
 		5637F1EE1A0CD51F0011B509 /* MyPinModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5637F1EC1A0CD51F0011B509 /* MyPinModel.cpp */; };
 		5637F1EF1A0CD51F0011B509 /* MyPinModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5637F1EC1A0CD51F0011B509 /* MyPinModel.cpp */; };
 		5637F1F71A0CDAFB0011B509 /* MyPinsService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5637F1F51A0CDAFB0011B509 /* MyPinsService.cpp */; };
@@ -683,7 +685,6 @@
 		18B5AA8619DC158F00BA4A38 /* ISearchResultOnMapInFocusViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISearchResultOnMapInFocusViewModel.h; sourceTree = "<group>"; };
 		18B5AA8719DC158F00BA4A38 /* ISearchResultOnMapModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISearchResultOnMapModel.h; sourceTree = "<group>"; };
 		18B5AA8819DC158F00BA4A38 /* ISearchResultOnMapModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISearchResultOnMapModule.h; sourceTree = "<group>"; };
-		18B5AA8919DC158F00BA4A38 /* ISearchResultOnMapScaleController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISearchResultOnMapScaleController.h; sourceTree = "<group>"; };
 		18B5AA8A19DC158F00BA4A38 /* SearchResultOnMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultOnMap.h; sourceTree = "<group>"; };
 		18B5AA8B19DC158F00BA4A38 /* SearchResultOnMapFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchResultOnMapFactory.cpp; sourceTree = "<group>"; };
 		18B5AA8C19DC158F00BA4A38 /* SearchResultOnMapFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultOnMapFactory.h; sourceTree = "<group>"; };
@@ -701,8 +702,6 @@
 		18B5AA9819DC158F00BA4A38 /* SearchResultOnMapModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultOnMapModel.h; sourceTree = "<group>"; };
 		18B5AA9919DC158F00BA4A38 /* SearchResultOnMapModule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchResultOnMapModule.cpp; sourceTree = "<group>"; };
 		18B5AA9A19DC158F00BA4A38 /* SearchResultOnMapModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultOnMapModule.h; sourceTree = "<group>"; };
-		18B5AA9B19DC158F00BA4A38 /* SearchResultOnMapScaleController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchResultOnMapScaleController.cpp; sourceTree = "<group>"; };
-		18B5AA9C19DC158F00BA4A38 /* SearchResultOnMapScaleController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultOnMapScaleController.h; sourceTree = "<group>"; };
 		18B5AA9E19DC158F00BA4A38 /* ISearchResultPoiModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISearchResultPoiModule.h; sourceTree = "<group>"; };
 		18B5AA9F19DC158F00BA4A38 /* ISearchResultPoiViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISearchResultPoiViewModel.h; sourceTree = "<group>"; };
 		18B5AAA019DC158F00BA4A38 /* SearchResultPoi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultPoi.h; sourceTree = "<group>"; };
@@ -963,6 +962,11 @@
 		5605EDE719F824CD00D1D594 /* ReactionModelModule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ReactionModelModule.cpp; sourceTree = "<group>"; };
 		5605EDE819F824CD00D1D594 /* ReactionModelModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReactionModelModule.h; sourceTree = "<group>"; };
 		5606E31619ED1B93009059D4 /* eegeo_logo@ipho.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "eegeo_logo@ipho.png"; sourceTree = "<group>"; };
+		562925071A15043300EA1B1F /* WorldPinsScaleController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WorldPinsScaleController.cpp; sourceTree = "<group>"; };
+		562925081A15043300EA1B1F /* WorldPinsScaleController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorldPinsScaleController.h; sourceTree = "<group>"; };
+		5629250B1A1504A400EA1B1F /* IWorldPinsScaleController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IWorldPinsScaleController.h; sourceTree = "<group>"; };
+		5629250C1A16125000EA1B1F /* MyPinsRepositoryObserver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MyPinsRepositoryObserver.cpp; sourceTree = "<group>"; };
+		5629250D1A16125000EA1B1F /* MyPinsRepositoryObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPinsRepositoryObserver.h; sourceTree = "<group>"; };
 		5637F1EC1A0CD51F0011B509 /* MyPinModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MyPinModel.cpp; sourceTree = "<group>"; };
 		5637F1ED1A0CD51F0011B509 /* MyPinModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPinModel.h; sourceTree = "<group>"; };
 		5637F1F01A0CD5CB0011B509 /* IMyPinsRepository.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IMyPinsRepository.h; sourceTree = "<group>"; };
@@ -1552,7 +1556,6 @@
 				18B5AA8619DC158F00BA4A38 /* ISearchResultOnMapInFocusViewModel.h */,
 				18B5AA8719DC158F00BA4A38 /* ISearchResultOnMapModel.h */,
 				18B5AA8819DC158F00BA4A38 /* ISearchResultOnMapModule.h */,
-				18B5AA8919DC158F00BA4A38 /* ISearchResultOnMapScaleController.h */,
 				18B5AA8A19DC158F00BA4A38 /* SearchResultOnMap.h */,
 				18B5AA8B19DC158F00BA4A38 /* SearchResultOnMapFactory.cpp */,
 				18B5AA8C19DC158F00BA4A38 /* SearchResultOnMapFactory.h */,
@@ -1570,8 +1573,6 @@
 				18B5AA9819DC158F00BA4A38 /* SearchResultOnMapModel.h */,
 				18B5AA9919DC158F00BA4A38 /* SearchResultOnMapModule.cpp */,
 				18B5AA9A19DC158F00BA4A38 /* SearchResultOnMapModule.h */,
-				18B5AA9B19DC158F00BA4A38 /* SearchResultOnMapScaleController.cpp */,
-				18B5AA9C19DC158F00BA4A38 /* SearchResultOnMapScaleController.h */,
 				180169E91A1115F4003C7EA1 /* SearchResultOnMapModalityObserver.h */,
 			);
 			path = SearchResultOnMap;
@@ -1649,6 +1650,7 @@
 				18B5AAC719DC158F00BA4A38 /* IWorldPinsFactory.h */,
 				18B5AAC819DC158F00BA4A38 /* IWorldPinsModule.h */,
 				18B5AAC919DC158F00BA4A38 /* IWorldPinsRepository.h */,
+				5629250B1A1504A400EA1B1F /* IWorldPinsScaleController.h */,
 				18B5AACA19DC158F00BA4A38 /* IWorldPinsService.h */,
 				18B5AACB19DC158F00BA4A38 /* WorldPinItemModel.cpp */,
 				18B5AACC19DC158F00BA4A38 /* WorldPinItemModel.h */,
@@ -1658,6 +1660,8 @@
 				18B5AAD019DC159000BA4A38 /* WorldPinsModule.cpp */,
 				18B5AAD119DC159000BA4A38 /* WorldPinsModule.h */,
 				18B5AAD219DC159000BA4A38 /* WorldPinsRepository.h */,
+				562925071A15043300EA1B1F /* WorldPinsScaleController.cpp */,
+				562925081A15043300EA1B1F /* WorldPinsScaleController.h */,
 				18B5AAD319DC159000BA4A38 /* WorldPinsService.cpp */,
 				18B5AAD419DC159000BA4A38 /* WorldPinsService.h */,
 			);
@@ -1974,6 +1978,8 @@
 				5637F2081A10F4CD0011B509 /* MyPinsFileIO.h */,
 				56B258D61A110CE6003C50CF /* IMyPinsModule.h */,
 				56A88C9B1A135DC300FCBE9A /* MyPinMenuOption.h */,
+				5629250C1A16125000EA1B1F /* MyPinsRepositoryObserver.cpp */,
+				5629250D1A16125000EA1B1F /* MyPinsRepositoryObserver.h */,
 			);
 			path = MyPins;
 			sourceTree = "<group>";
@@ -2458,9 +2464,9 @@
 				5695FEBC1A13C17800F1E6CE /* MyPinCreationModule.cpp in Sources */,
 				18B5AB2619DC159000BA4A38 /* PlaceJumpsModel.cpp in Sources */,
 				18B5AB2E19DC159000BA4A38 /* ScreenControlViewModelBase.cpp in Sources */,
+				5629250A1A15043300EA1B1F /* WorldPinsScaleController.cpp in Sources */,
 				18B5AB5419DC159000BA4A38 /* SearchResultOnMapItemModel.cpp in Sources */,
 				18B5ABF719DC159B00BA4A38 /* iOSPersistentSettingsModel.mm in Sources */,
-				18B5AB5A19DC159000BA4A38 /* SearchResultOnMapScaleController.cpp in Sources */,
 				18B5AB6419DC159000BA4A38 /* WeatherController.cpp in Sources */,
 				18B5AAE019DC159000BA4A38 /* CategorySearchMenuOption.cpp in Sources */,
 				5637F1F81A0CDAFB0011B509 /* MyPinsService.cpp in Sources */,
@@ -2543,6 +2549,7 @@
 				18B5AAF219DC159000BA4A38 /* FlattenButtonModel.cpp in Sources */,
 				5695FEBA1A13C17800F1E6CE /* MyPinCreationModel.cpp in Sources */,
 				18B5AB2819DC159000BA4A38 /* PlaceJumpsModule.cpp in Sources */,
+				5629250F1A16125000EA1B1F /* MyPinsRepositoryObserver.cpp in Sources */,
 				18B5AAE219DC159000BA4A38 /* CategorySearchModel.cpp in Sources */,
 				18B5AC1919DC159B00BA4A38 /* ModalBackgroundViewModule.mm in Sources */,
 				18B5AB3419DC159000BA4A38 /* SearchModule.cpp in Sources */,
@@ -2619,10 +2626,10 @@
 				5695FEBB1A13C17800F1E6CE /* MyPinCreationModule.cpp in Sources */,
 				18B5AC3619DC159B00BA4A38 /* SecondaryMenuView.mm in Sources */,
 				18B5AB2519DC159000BA4A38 /* PlaceJumpsModel.cpp in Sources */,
+				562925091A15043300EA1B1F /* WorldPinsScaleController.cpp in Sources */,
 				18B5AB2D19DC159000BA4A38 /* ScreenControlViewModelBase.cpp in Sources */,
 				18B5AB5319DC159000BA4A38 /* SearchResultOnMapItemModel.cpp in Sources */,
 				18B5ABF619DC159B00BA4A38 /* iOSPersistentSettingsModel.mm in Sources */,
-				18B5AB5919DC159000BA4A38 /* SearchResultOnMapScaleController.cpp in Sources */,
 				18B5AB6319DC159000BA4A38 /* WeatherController.cpp in Sources */,
 				18B5AADF19DC159000BA4A38 /* CategorySearchMenuOption.cpp in Sources */,
 				18B5AC1019DC159B00BA4A38 /* MenuView.mm in Sources */,
@@ -2704,6 +2711,7 @@
 				18B5ABF819DC159B00BA4A38 /* AboutPageView.mm in Sources */,
 				5695FEB91A13C17800F1E6CE /* MyPinCreationModel.cpp in Sources */,
 				18B5AAF119DC159000BA4A38 /* FlattenButtonModel.cpp in Sources */,
+				5629250E1A16125000EA1B1F /* MyPinsRepositoryObserver.cpp in Sources */,
 				18B5AB2719DC159000BA4A38 /* PlaceJumpsModule.cpp in Sources */,
 				18B5AAE119DC159000BA4A38 /* CategorySearchModel.cpp in Sources */,
 				18B5AC1819DC159B00BA4A38 /* ModalBackgroundViewModule.mm in Sources */,

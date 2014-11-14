@@ -5,6 +5,10 @@
 #include "MyPins.h"
 #include "IMenuOption.h"
 #include "MyPinModel.h"
+#include "UiToNativeMessageBus.h"
+#include "PlaceJumpsModel.h"
+#include "PlaceJumpSelectedMessage.h"
+#include "IMenuViewModel.h"
 
 #include <string>
 
@@ -15,19 +19,35 @@ namespace ExampleApp
         class MyPinMenuOption : public Menu::IMenuOption
         {
         public:
-            MyPinMenuOption(MyPinModel myPinModel)
+            MyPinMenuOption(MyPinModel myPinModel,
+                            ExampleApp::Menu::IMenuViewModel& menuViewModel,
+                            ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus)
             : m_myPinModel(myPinModel)
+            , m_menuViewModel(menuViewModel)
+            , m_uiToNativeMessageBus(uiToNativeMessageBus)
             {
                 
             }
             
             void Select()
             {
-                Eegeo_TTY("Selected %s\n", m_myPinModel.GetTitle().c_str());
+                m_menuViewModel.Close();
+                
+                std::string name = m_myPinModel.GetTitle();
+                std::string dummy = "";
+                
+                PlaceJumps::PlaceJumpModel placeJumpModel(name,
+                                                          m_myPinModel.GetLatLong(),
+                                                          0.f,
+                                                          1500.f,
+                                                          dummy);
+                
+                m_uiToNativeMessageBus.Publish(PlaceJumps::PlaceJumpSelectedMessage(placeJumpModel));
             }
         private:
             MyPinModel m_myPinModel;
-            
+            ExampleApp::Menu::IMenuViewModel& m_menuViewModel;
+            ExampleAppMessaging::UiToNativeMessageBus& m_uiToNativeMessageBus;
         };
     }
 }

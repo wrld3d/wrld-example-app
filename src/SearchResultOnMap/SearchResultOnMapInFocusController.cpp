@@ -43,12 +43,12 @@ namespace ExampleApp
 			        ++ it)
 			{
 				Search::SearchResultModel& searchResultModel = *it->first;
-				ExampleApp::WorldPins::WorldPinItemModel& worldPinItemModel = it->second;
+				ExampleApp::WorldPins::WorldPinItemModel* worldPinItemModel = it->second;
 
 				Eegeo::dv3 ecefPinLocation;
 				Eegeo::v2 screenPinLocation;
 
-				m_worldPinsService.GetPinEcefAndScreenLocations(worldPinItemModel,
+				m_worldPinsService.GetPinEcefAndScreenLocations(*worldPinItemModel,
 				        ecefPinLocation,
 				        screenPinLocation);
 
@@ -59,7 +59,7 @@ namespace ExampleApp
 
 				double distanceToFocusSq = (ecefInterestPoint - ecefPinLocation).LengthSq();
 
-				if(distanceToFocusSq < minDistanceSq && worldPinItemModel.IsVisible())
+				if(distanceToFocusSq < minDistanceSq && worldPinItemModel->IsVisible())
 				{
 					pClosest = &searchResultModel;
 					minDistanceSq = distanceToFocusSq;

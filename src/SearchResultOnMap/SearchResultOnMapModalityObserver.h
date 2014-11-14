@@ -6,7 +6,7 @@
 #include "UiToNativeMessageBus.h"
 #include "ICallback.h"
 #include "ModalityChangedMessage.h"
-#include "SearchResultOnMapScaleController.h"
+#include "IWorldPinsScaleController.h"
 
 namespace ExampleApp
 {
@@ -14,19 +14,19 @@ namespace ExampleApp
 	{
 		class SearchResultOnMapModalityObserver : private Eegeo::NonCopyable
 		{
-			SearchResultOnMapScaleController& m_searchResultOnMapScaleController;
+			WorldPins::IWorldPinsScaleController& m_worldPinsScaleController;
 			ExampleAppMessaging::UiToNativeMessageBus& m_messageBus;
 			Eegeo::Helpers::TCallback1<SearchResultOnMapModalityObserver, const Modality::ModalityChangedMessage&> m_handlerBinding;
 
 			void HandleReceivedModalityChangedMessage(const Modality::ModalityChangedMessage& message)
 			{
-				m_searchResultOnMapScaleController.SetModality(message.Modality());
+				m_worldPinsScaleController.SetModality(message.Modality());
 			}
 
 		public:
-			SearchResultOnMapModalityObserver(SearchResultOnMapScaleController& searchResultOnMapScaleController,
+			SearchResultOnMapModalityObserver(WorldPins::IWorldPinsScaleController& worldPinsScaleController,
 			                                  ExampleAppMessaging::UiToNativeMessageBus& messageBus)
-				: m_searchResultOnMapScaleController(searchResultOnMapScaleController)
+				: m_worldPinsScaleController(worldPinsScaleController)
 				, m_messageBus(messageBus)
 				, m_handlerBinding(this, &SearchResultOnMapModalityObserver::HandleReceivedModalityChangedMessage)
 			{

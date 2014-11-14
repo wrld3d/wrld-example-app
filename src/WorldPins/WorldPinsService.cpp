@@ -33,12 +33,12 @@ namespace ExampleApp
         {
             while(m_worldPinsRepository.GetItemCount() != 0)
             {
-                WorldPinItemModel item = m_worldPinsRepository.GetItemAtIndex(0);
+                WorldPinItemModel* item = m_worldPinsRepository.GetItemAtIndex(0);
                 RemovePin(item);
             }
         }
         
-        WorldPinItemModel WorldPinsService::AddPin(IWorldPinSelectionHandler* pSelectionHandler,
+        WorldPinItemModel* WorldPinsService::AddPin(IWorldPinSelectionHandler* pSelectionHandler,
                                                    const Eegeo::Space::LatLong& location,
                                                    int iconIndex)
         {
@@ -54,22 +54,24 @@ namespace ExampleApp
             
             m_pinsToSelectionHandlers[pinId] = pSelectionHandler;
             
-            WorldPinItemModel model(pinId, pSelectionHandler);
+            WorldPinItemModel* model = Eegeo_NEW(WorldPinItemModel)(pinId, pSelectionHandler);
             m_worldPinsRepository.AddItem(model);
-            
-            UpdatePinScale(model, model.TransitionStateValue());
+
+            UpdatePinScale(*model, model->TransitionStateValue());
             
             return model;
         }
         
-        void WorldPinsService::RemovePin(const WorldPinItemModel& pinItemModel)
+        void WorldPinsService::RemovePin(WorldPinItemModel* pinItemModel)
         {
-            Eegeo::Pins::Pin* pPin = m_pinRepository.GetPinById(pinItemModel.Id());
+            Eegeo::Pins::Pin* pPin = m_pinRepository.GetPinById(pinItemModel->Id());
             
             Eegeo_TTY("Pin removed\n");
             m_pinRepository.RemovePin(*pPin);
-            ErasePin(pinItemModel.Id());
+            ErasePin(pinItemModel->Id());
+            
             m_worldPinsRepository.RemoveItem(pinItemModel);
+            Eegeo_DELETE pinItemModel;
         }
         
         void WorldPinsService::UpdatePinScale(const WorldPinItemModel& pinItemModel, float scale)

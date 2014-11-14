@@ -9,7 +9,7 @@ namespace ExampleApp
 {
     namespace MyPins
     {
-        class IMyPinsRepository : public Repository::IRepositoryModel<MyPinModel>
+        class IMyPinsRepository : public Repository::IRepositoryModel<MyPinModel*>
         {
             
         };

@@ -5,6 +5,7 @@
 #include "WorldPinsFactory.h"
 #include "WorldPinsRepository.h"
 #include "WorldPinsService.h"
+#include "WorldPinsScaleController.h"
 
 namespace ExampleApp
 {
@@ -12,7 +13,8 @@ namespace ExampleApp
     {
         WorldPinsModule::WorldPinsModule(Eegeo::Pins::PinRepository& pinRepository,
                                          Eegeo::Pins::PinController& pinController,
-                                         const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService)
+                                         const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
+                                         const Eegeo::Rendering::ScreenProperties& screenProperties)
         {
             m_pWorldPinsFactory = Eegeo_NEW(WorldPinsFactory);
             
@@ -23,10 +25,15 @@ namespace ExampleApp
                                                               pinRepository,
                                                               pinController,
                                                               environmentFlatteningService);
+            
+            m_pWorldPinsScaleController = Eegeo_NEW(WorldPinsScaleController)(*m_pWorldPinsRepository,
+                                                                              *m_pWorldPinsService,
+                                                                              screenProperties);
         }
         
         WorldPinsModule::~WorldPinsModule()
         {
+            Eegeo_DELETE m_pWorldPinsScaleController;
             Eegeo_DELETE m_pWorldPinsService;
             Eegeo_DELETE m_pWorldPinsRepository;
             Eegeo_DELETE m_pWorldPinsFactory;
@@ -40,6 +47,11 @@ namespace ExampleApp
         IWorldPinsFactory& WorldPinsModule::GetWorldPinsFactory() const
         {
             return *m_pWorldPinsFactory;
+        }
+        
+        IWorldPinsScaleController& WorldPinsModule::GetWorldPinsScaleController() const
+        {
+            return *m_pWorldPinsScaleController;
         }
     }
 }

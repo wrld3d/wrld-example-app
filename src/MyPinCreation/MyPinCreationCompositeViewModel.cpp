@@ -60,6 +60,7 @@ namespace ExampleApp
                     m_secondaryMenuViewModel.RemoveFromScreen();
                     
                     m_searchQueryPerformer.RemoveSearchQueryResults();
+                    m_searchResultMenuViewModel.RemoveFromScreen();
                     break;
                 }
                 case Details:

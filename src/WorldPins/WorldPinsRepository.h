@@ -12,8 +12,8 @@ namespace ExampleApp
 	{
 		class WorldPinsRepository : public IWorldPinsRepository, private Eegeo::NonCopyable
 		{
-			typedef WorldPinItemModel TModel;
-
+            typedef WorldPinItemModel* TModel;
+            
 			Repository::RepositoryModel<TModel> m_repository;
 
 		public:

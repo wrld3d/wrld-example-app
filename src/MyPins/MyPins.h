@@ -22,5 +22,7 @@ namespace ExampleApp
         class MyPinsService;
         
         class MyPinsFileIO;
+        
+        class MyPinsRepositoryObserver;
     }
 }

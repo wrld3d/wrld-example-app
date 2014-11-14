@@ -12,7 +12,7 @@ namespace ExampleApp
     {
         class MyPinsRepository : public IMyPinsRepository, private Eegeo::NonCopyable
         {
-            typedef MyPinModel TModel;
+            typedef MyPinModel* TModel;
             
             Repository::RepositoryModel<TModel> m_repository;
             
