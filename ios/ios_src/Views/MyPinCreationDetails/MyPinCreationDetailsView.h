@@ -7,7 +7,7 @@
 
 @class MyPinCreationDetailsView;
 
-@interface MyPinCreationDetailsView : UIView <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextViewDelegate>
+@interface MyPinCreationDetailsView : UIView <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextViewDelegate, UITextFieldDelegate>
 {
     __weak MyPinCreationDetailsViewController* m_pController;
     float m_stateChangeAnimationTimeSeconds;
@@ -25,6 +25,8 @@
 - (void) setFullyInactive;
 
 - (void) setActiveStateToIntermediateValue:(float)activeState;
+
+- (void) addDoneToolBarToKeyboard:(UITextView *)textView;
 
 @property (nonatomic, retain) UIView* pControlContainer;
 

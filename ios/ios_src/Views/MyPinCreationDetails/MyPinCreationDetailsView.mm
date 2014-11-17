@@ -3,7 +3,7 @@
 #include "MyPinCreationDetailsView.h"
 #include "UIColors.h"
 #include "ImageHelpers.h"
-
+#include "App.h"
 #import <QuartzCore/QuartzCore.h>
 
 @implementation MyPinCreationDetailsView
@@ -141,6 +141,8 @@
     self.pTitleText.textAlignment = NSTextAlignmentLeft;
     self.pTitleText.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
     self.pTitleText.clearsOnBeginEditing = YES;
+    self.pTitleText.returnKeyType = UIReturnKeyDone;
+    [self.pTitleText setDelegate: self];
     
     const float bodyContainerY = titleContainerY + titleContainerHeight;
     const float bodyContainerHeight = controlContainerHeight - (2 * titleImageHeight);
@@ -161,6 +163,11 @@
     self.pPoiDescriptionBox.layer.borderColor = [ExampleApp::Helpers::ColorPalette::GoldTone CGColor];
     self.pPoiDescriptionBox.layer.borderWidth = 2.f;
     [self.pPoiDescriptionBox setDelegate: self];
+    
+    if(App::IsDevicePhone())
+    {
+        [self addDoneToolBarToKeyboard :self.pPoiDescriptionBox];
+    }
     
     const float placeholderTextOffset = 8.f;
     self.pDescriptionPlaceholder.frame = CGRectMake(placeholderTextOffset, 2.f, poiDescriptionBoxWidth - placeholderTextOffset, 30.f);
@@ -390,5 +397,29 @@
                          }
                      }];
 }
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    return YES;
+}
+
+-(void)addDoneToolBarToKeyboard:(UITextView *)textView
+{
+    UIToolbar* doneToolbar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, 320, 50)];
+    doneToolbar.barStyle = UIBarStyleBlackTranslucent;
+    doneToolbar.items = [NSArray arrayWithObjects:
+                         [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
+                         [[UIBarButtonItem alloc]initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(doneButtonClickedDismissKeyboard)],
+                         nil];
+    [doneToolbar sizeToFit];
+    textView.inputAccessoryView = doneToolbar;
+}
+
+-(void)doneButtonClickedDismissKeyboard
+{
+    [self.pPoiDescriptionBox resignFirstResponder];
+}
+
 
 @end
