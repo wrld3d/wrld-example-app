@@ -67,6 +67,7 @@ public class SearchResultOnMapView implements View.OnClickListener
 		m_x = x - m_horizontalOffsetPx;
 		m_y = y - m_height;
 
+		m_view.setEnabled(true);
 		m_view.setX(m_x);
 		m_view.setY(m_y);
 	}
