@@ -13,16 +13,9 @@ namespace ExampleApp
 			Eegeo::v2 m_screenLocation;
 
 		public:
-			WorldPinInFocusChangedLocationMessage(const Eegeo::v2& screenLocation)
-				: m_screenLocation(screenLocation)
-			{
+            WorldPinInFocusChangedLocationMessage(const Eegeo::v2& screenLocation);
 
-			}
-
-			const Eegeo::v2& ScreenLocation() const
-			{
-				return m_screenLocation;
-			}
+            const Eegeo::v2& ScreenLocation() const;
 		};
 	}
 }

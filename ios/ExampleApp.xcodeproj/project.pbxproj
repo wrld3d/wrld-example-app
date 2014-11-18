@@ -376,6 +376,16 @@
 		5605EDF019F824CD00D1D594 /* ReactionModelModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5605EDE719F824CD00D1D594 /* ReactionModelModule.cpp */; };
 		5606E31719ED1B93009059D4 /* eegeo_logo@ipho.png in Resources */ = {isa = PBXBuildFile; fileRef = 5606E31619ED1B93009059D4 /* eegeo_logo@ipho.png */; };
 		5606E31819ED1B93009059D4 /* eegeo_logo@ipho.png in Resources */ = {isa = PBXBuildFile; fileRef = 5606E31619ED1B93009059D4 /* eegeo_logo@ipho.png */; };
+		56070CC41A1B691900E3DFF6 /* WorldPinsModalityObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56070CC31A1B691900E3DFF6 /* WorldPinsModalityObserver.cpp */; };
+		56070CC51A1B691900E3DFF6 /* WorldPinsModalityObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56070CC31A1B691900E3DFF6 /* WorldPinsModalityObserver.cpp */; };
+		56070CC71A1B69B900E3DFF6 /* WorldPinInFocusChangedLocationMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56070CC61A1B69B900E3DFF6 /* WorldPinInFocusChangedLocationMessage.cpp */; };
+		56070CC81A1B69B900E3DFF6 /* WorldPinInFocusChangedLocationMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56070CC61A1B69B900E3DFF6 /* WorldPinInFocusChangedLocationMessage.cpp */; };
+		56070CCA1A1B69D400E3DFF6 /* WorldPinGainedFocusMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56070CC91A1B69D400E3DFF6 /* WorldPinGainedFocusMessage.cpp */; };
+		56070CCB1A1B69D400E3DFF6 /* WorldPinGainedFocusMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56070CC91A1B69D400E3DFF6 /* WorldPinGainedFocusMessage.cpp */; };
+		56070CCD1A1B6A2D00E3DFF6 /* WorldPinLostFocusMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56070CCC1A1B6A2D00E3DFF6 /* WorldPinLostFocusMessage.cpp */; };
+		56070CCE1A1B6A2D00E3DFF6 /* WorldPinLostFocusMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56070CCC1A1B6A2D00E3DFF6 /* WorldPinLostFocusMessage.cpp */; };
+		56070CD01A1B6A4600E3DFF6 /* WorldPinInFocusObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56070CCF1A1B6A4600E3DFF6 /* WorldPinInFocusObserver.cpp */; };
+		56070CD11A1B6A4600E3DFF6 /* WorldPinInFocusObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56070CCF1A1B6A4600E3DFF6 /* WorldPinInFocusObserver.cpp */; };
 		562270E71A1A786C0025AB34 /* WorldPinOnMapView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 562270E01A1A786C0025AB34 /* WorldPinOnMapView.mm */; };
 		562270E81A1A786C0025AB34 /* WorldPinOnMapView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 562270E01A1A786C0025AB34 /* WorldPinOnMapView.mm */; };
 		562270E91A1A786C0025AB34 /* WorldPinOnMapViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 562270E21A1A786C0025AB34 /* WorldPinOnMapViewController.mm */; };
@@ -487,7 +497,6 @@
 		180169E61A1102C2003C7EA1 /* PerformedSearchMessageHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformedSearchMessageHandler.h; sourceTree = "<group>"; };
 		180169E71A1113F2003C7EA1 /* ModalityChangedMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModalityChangedMessage.h; sourceTree = "<group>"; };
 		180169E81A1113F2003C7EA1 /* ModalityObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModalityObserver.h; sourceTree = "<group>"; };
-		180169E91A1115F4003C7EA1 /* SearchResultOnMapModalityObserver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchResultOnMapModalityObserver.h; sourceTree = "<group>"; };
 		180169EA1A111F3D003C7EA1 /* FlattenButtonViewStateChangedMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FlattenButtonViewStateChangedMessage.h; sourceTree = "<group>"; };
 		180169EB1A112045003C7EA1 /* FlattenButtonViewStateChangedObserver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FlattenButtonViewStateChangedObserver.h; sourceTree = "<group>"; };
 		180169EC1A112822003C7EA1 /* FlattenButtonModelStateChangedMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FlattenButtonModelStateChangedMessage.h; sourceTree = "<group>"; };
@@ -944,6 +953,12 @@
 		5605EDE719F824CD00D1D594 /* ReactionModelModule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ReactionModelModule.cpp; sourceTree = "<group>"; };
 		5605EDE819F824CD00D1D594 /* ReactionModelModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReactionModelModule.h; sourceTree = "<group>"; };
 		5606E31619ED1B93009059D4 /* eegeo_logo@ipho.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "eegeo_logo@ipho.png"; sourceTree = "<group>"; };
+		56070CC21A1B67AE00E3DFF6 /* WorldPinsModalityObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorldPinsModalityObserver.h; sourceTree = "<group>"; };
+		56070CC31A1B691900E3DFF6 /* WorldPinsModalityObserver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WorldPinsModalityObserver.cpp; sourceTree = "<group>"; };
+		56070CC61A1B69B900E3DFF6 /* WorldPinInFocusChangedLocationMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WorldPinInFocusChangedLocationMessage.cpp; sourceTree = "<group>"; };
+		56070CC91A1B69D400E3DFF6 /* WorldPinGainedFocusMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WorldPinGainedFocusMessage.cpp; sourceTree = "<group>"; };
+		56070CCC1A1B6A2D00E3DFF6 /* WorldPinLostFocusMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WorldPinLostFocusMessage.cpp; sourceTree = "<group>"; };
+		56070CCF1A1B6A4600E3DFF6 /* WorldPinInFocusObserver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WorldPinInFocusObserver.cpp; sourceTree = "<group>"; };
 		562270DE1A1A786C0025AB34 /* IWorldPinOnMapViewModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IWorldPinOnMapViewModule.h; sourceTree = "<group>"; };
 		562270DF1A1A786C0025AB34 /* WorldPinOnMapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorldPinOnMapView.h; sourceTree = "<group>"; };
 		562270E01A1A786C0025AB34 /* WorldPinOnMapView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = WorldPinOnMapView.mm; sourceTree = "<group>"; };
@@ -1576,7 +1591,6 @@
 				18B5AA9819DC158F00BA4A38 /* SearchResultOnMapModel.h */,
 				18B5AA9919DC158F00BA4A38 /* SearchResultOnMapModule.cpp */,
 				18B5AA9A19DC158F00BA4A38 /* SearchResultOnMapModule.h */,
-				180169E91A1115F4003C7EA1 /* SearchResultOnMapModalityObserver.h */,
 			);
 			path = SearchResultOnMap;
 			sourceTree = "<group>";
@@ -1659,8 +1673,11 @@
 				5629250B1A1504A400EA1B1F /* IWorldPinsScaleController.h */,
 				18B5AACA19DC158F00BA4A38 /* IWorldPinsService.h */,
 				56DDC0F71A1A5D030024B52E /* WorldPinFocusData.h */,
+				56070CC91A1B69D400E3DFF6 /* WorldPinGainedFocusMessage.cpp */,
 				56DDC0ED1A1A47B90024B52E /* WorldPinGainedFocusMessage.h */,
+				56070CC61A1B69B900E3DFF6 /* WorldPinInFocusChangedLocationMessage.cpp */,
 				56DDC0EE1A1A47B90024B52E /* WorldPinInFocusChangedLocationMessage.h */,
+				56070CCF1A1B6A4600E3DFF6 /* WorldPinInFocusObserver.cpp */,
 				56DDC0EF1A1A47B90024B52E /* WorldPinInFocusObserver.h */,
 				56DDC0F01A1A47B90024B52E /* WorldPinInFocusScreenControl.cpp */,
 				56DDC0F11A1A47B90024B52E /* WorldPinInFocusScreenControl.h */,
@@ -1668,6 +1685,7 @@
 				56DDC0F31A1A47B90024B52E /* WorldPinInFocusViewModel.h */,
 				18B5AACB19DC158F00BA4A38 /* WorldPinItemModel.cpp */,
 				18B5AACC19DC158F00BA4A38 /* WorldPinItemModel.h */,
+				56070CCC1A1B6A2D00E3DFF6 /* WorldPinLostFocusMessage.cpp */,
 				56DDC0F41A1A47B90024B52E /* WorldPinLostFocusMessage.h */,
 				18B5AACD19DC158F00BA4A38 /* WorldPins.h */,
 				18B5AACE19DC158F00BA4A38 /* WorldPinsFactory.cpp */,
@@ -1676,6 +1694,8 @@
 				5688EDCF1A1634DB0073A940 /* WorldPinsInFocusController.h */,
 				565F758C1A1A390B00AD3DE9 /* WorldPinsInFocusModel.cpp */,
 				565F758D1A1A390B00AD3DE9 /* WorldPinsInFocusModel.h */,
+				56070CC31A1B691900E3DFF6 /* WorldPinsModalityObserver.cpp */,
+				56070CC21A1B67AE00E3DFF6 /* WorldPinsModalityObserver.h */,
 				18B5AAD019DC159000BA4A38 /* WorldPinsModule.cpp */,
 				18B5AAD119DC159000BA4A38 /* WorldPinsModule.h */,
 				18B5AAD219DC159000BA4A38 /* WorldPinsRepository.h */,
@@ -2505,6 +2525,7 @@
 				180E99FF19E6B4CC007D63FD /* CustomTableViewCell.mm in Sources */,
 				18B5AAE419DC159000BA4A38 /* CategorySearchModule.cpp in Sources */,
 				5695FEEE1A13C1DE00F1E6CE /* MyPinCreationConfirmationView.mm in Sources */,
+				56070CC51A1B691900E3DFF6 /* WorldPinsModalityObserver.cpp in Sources */,
 				18B5AC3319DC159B00BA4A38 /* SearchViewController.mm in Sources */,
 				18B5AC1D19DC159B00BA4A38 /* PrimaryMenuViewModule.mm in Sources */,
 				18B5AB4019DC159000BA4A38 /* SearchServiceBase.cpp in Sources */,
@@ -2549,6 +2570,7 @@
 				18B5AB6219DC159000BA4A38 /* SecondaryMenuModule.cpp in Sources */,
 				18B5AB0219DC159000BA4A38 /* PreloadSphereVolume.cpp in Sources */,
 				5695FEB41A13C17800F1E6CE /* MyPinCreationCompositeViewModel.cpp in Sources */,
+				56070CD11A1B6A4600E3DFF6 /* WorldPinInFocusObserver.cpp in Sources */,
 				5695FECA1A13C17800F1E6CE /* MyPinCreationDetailsModule.cpp in Sources */,
 				18B5AC3119DC159B00BA4A38 /* SearchResultPoiViewModule.mm in Sources */,
 				18B5AAFE19DC159000BA4A38 /* InitialExperienceModuleBase.cpp in Sources */,
@@ -2560,11 +2582,14 @@
 				18B5AC0B19DC159B00BA4A38 /* IconResources.cpp in Sources */,
 				18B5AAEE19DC159000BA4A38 /* CompassUpdateController.cpp in Sources */,
 				18B5AAF419DC159000BA4A38 /* FlattenButtonModule.cpp in Sources */,
+				56070CCE1A1B6A2D00E3DFF6 /* WorldPinLostFocusMessage.cpp in Sources */,
 				18B5AC3919DC159B00BA4A38 /* SecondaryMenuViewModule.mm in Sources */,
+				56070CC81A1B69B900E3DFF6 /* WorldPinInFocusChangedLocationMessage.cpp in Sources */,
 				18B5AB6019DC159000BA4A38 /* SearchResultPoiViewModel.cpp in Sources */,
 				18B5ABFD19DC159B00BA4A38 /* AboutPageViewModule.mm in Sources */,
 				18B5ABF919DC159B00BA4A38 /* AboutPageView.mm in Sources */,
 				18B5AAF219DC159000BA4A38 /* FlattenButtonModel.cpp in Sources */,
+				56070CCB1A1B69D400E3DFF6 /* WorldPinGainedFocusMessage.cpp in Sources */,
 				5695FEBA1A13C17800F1E6CE /* MyPinCreationModel.cpp in Sources */,
 				18B5AB2819DC159000BA4A38 /* PlaceJumpsModule.cpp in Sources */,
 				5629250F1A16125000EA1B1F /* MyPinsRepositoryObserver.cpp in Sources */,
@@ -2680,6 +2705,7 @@
 				18B5AC0219DC159B00BA4A38 /* CompassViewModule.mm in Sources */,
 				18B5AAE719DC159000BA4A38 /* CompassModel.cpp in Sources */,
 				5695FEB51A13C17800F1E6CE /* MyPinCreationConfirmationViewModel.cpp in Sources */,
+				56070CC71A1B69B900E3DFF6 /* WorldPinInFocusChangedLocationMessage.cpp in Sources */,
 				18B5AB0D19DC159000BA4A38 /* MenuSectionsViewModel.cpp in Sources */,
 				18C45A7019658A5C009B18A8 /* AppHost.mm in Sources */,
 				5605EDEB19F824CD00D1D594 /* ReactionControllerModule.cpp in Sources */,
@@ -2693,6 +2719,7 @@
 				18B5AC2219DC159B00BA4A38 /* SearchResultMenuViewController.mm in Sources */,
 				18B5AB5D19DC159000BA4A38 /* SearchResultPoiOpenableControl.cpp in Sources */,
 				18B5AC3A19DC159B00BA4A38 /* ViewControllerUpdaterModel.mm in Sources */,
+				56070CC41A1B691900E3DFF6 /* WorldPinsModalityObserver.cpp in Sources */,
 				5695FEBD1A13C17800F1E6CE /* MyPinCreationScreenControl.cpp in Sources */,
 				5695FEB71A13C17800F1E6CE /* MyPinCreationInitiationViewModel.cpp in Sources */,
 				18B5AB6F19DC159000BA4A38 /* WorldAreaLoaderModule.cpp in Sources */,
@@ -2712,6 +2739,7 @@
 				5695FEC91A13C17800F1E6CE /* MyPinCreationDetailsModule.cpp in Sources */,
 				18B5AC3019DC159B00BA4A38 /* SearchResultPoiViewModule.mm in Sources */,
 				18B5AAFD19DC159000BA4A38 /* InitialExperienceModuleBase.cpp in Sources */,
+				56070CD01A1B6A4600E3DFF6 /* WorldPinInFocusObserver.cpp in Sources */,
 				5688EDD01A1634DB0073A940 /* WorldPinsInFocusController.cpp in Sources */,
 				5605EDD719F81CFC00D1D594 /* ModalityModel.cpp in Sources */,
 				5637F2091A10F4CD0011B509 /* MyPinsFileIO.cpp in Sources */,
@@ -2752,6 +2780,7 @@
 				18B5AAFB19DC159000BA4A38 /* InitialExperienceModel.cpp in Sources */,
 				18B5AB5519DC159000BA4A38 /* SearchResultOnMapModel.cpp in Sources */,
 				18B5AAD919DC159000BA4A38 /* AboutPageOpenableControl.cpp in Sources */,
+				56070CCA1A1B69D400E3DFF6 /* WorldPinGainedFocusMessage.cpp in Sources */,
 				56DDC0F51A1A47B90024B52E /* WorldPinInFocusScreenControl.cpp in Sources */,
 				5637F2051A10F3930011B509 /* MyPinsModule.cpp in Sources */,
 				18C45A7219658A5C009B18A8 /* AppLocationDelegate.mm in Sources */,
@@ -2760,6 +2789,7 @@
 				18B5AB4119DC159000BA4A38 /* SearchResultItemModel.cpp in Sources */,
 				18B5AB3119DC159000BA4A38 /* DecartaSearchService.cpp in Sources */,
 				18B5AB0719DC159000BA4A38 /* MenuOpenableControl.cpp in Sources */,
+				56070CCD1A1B6A2D00E3DFF6 /* WorldPinLostFocusMessage.cpp in Sources */,
 				18B5AB4719DC159000BA4A38 /* SearchResultMenuViewModel.cpp in Sources */,
 				18B5AC3C19DC159B00BA4A38 /* ViewControllerUpdaterModule.mm in Sources */,
 				18B5AC0819DC159B00BA4A38 /* FlattenButtonViewModule.mm in Sources */,

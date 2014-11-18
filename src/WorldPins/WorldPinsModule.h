@@ -9,9 +9,11 @@
 #include "Rendering.h"
 #include "Camera.h"
 #include "NativeToUiMessageBus.h"
+#include "UiToNativeMessageBus.h"
 #include "WorldPinInFocusObserver.h"
 #include "IIdentity.h"
 #include "IScreenControlViewModel.h"
+#include "WorldPinsModalityObserver.h"
 
 namespace ExampleApp
 {
@@ -26,6 +28,7 @@ namespace ExampleApp
             WorldPinInFocusViewModel* m_pWorldPinsInFocusViewModel;
             IWorldPinsInFocusController* m_pWorldPinsInFocusController;
             WorldPinInFocusObserver* m_pWorldPinInFocusObserver;
+            WorldPinsModalityObserver* m_pWorldPinsModalityObserver;
             
         public:
             WorldPinsModule(Eegeo::Pins::PinRepository& pinRepository,
@@ -33,7 +36,8 @@ namespace ExampleApp
                             const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                             const Eegeo::Rendering::ScreenProperties& screenProperties,
                             Eegeo::Helpers::IIdentityProvider& identityProvider,
-                            ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus);
+                            ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus,
+                            ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus);
             
             ~WorldPinsModule();
             

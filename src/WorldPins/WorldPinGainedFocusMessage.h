@@ -15,22 +15,10 @@ namespace ExampleApp
 			Eegeo::v2 m_screenLocation;
 
 		public:
-			WorldPinGainedFocusMessage(const WorldPinsInFocusModel& focussedModel, const Eegeo::v2& screenLocation)
-				: m_focussedModel(focussedModel)
-				, m_screenLocation(screenLocation)
-			{
+            WorldPinGainedFocusMessage(const WorldPinsInFocusModel& focussedModel, const Eegeo::v2& screenLocation);
 
-			}
-
-			const WorldPinsInFocusModel& FocussedModel() const
-			{
-				return m_focussedModel;
-			}
-
-			const Eegeo::v2& ScreenLocation() const
-			{
-				return m_screenLocation;
-			}
+            const WorldPinsInFocusModel& FocussedModel() const;
+            const Eegeo::v2& ScreenLocation() const;
 		};
 	}
 }

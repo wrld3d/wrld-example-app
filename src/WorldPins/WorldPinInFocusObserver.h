@@ -22,43 +22,15 @@ namespace ExampleApp
 			Eegeo::Helpers::TCallback1<WorldPinInFocusObserver, const WorldPinLostFocusMessage&> m_lostFocusHandler;
 			Eegeo::Helpers::TCallback1<WorldPinInFocusObserver, const WorldPinInFocusChangedLocationMessage&> m_focusScreenLocationUpdatedHandler;
 
-            void HandleReceivedWorldPinGainedFocusMessage(const WorldPinGainedFocusMessage& message)
-			{
-				m_worldPinInFocusViewModel.Open(message.FocussedModel(), message.ScreenLocation());
-      
-			}
-
-			void HandleReceivedWorldPinLostFocusMessage(const WorldPinLostFocusMessage& message)
-			{
-				m_worldPinInFocusViewModel.Close();
-			}
-
-			void HandleReceivedWorldPinInFocusChangedLocationMessage(const WorldPinInFocusChangedLocationMessage& message)
-			{
-				m_worldPinInFocusViewModel.UpdateScreenLocation(message.ScreenLocation());
-			}
+            void HandleReceivedWorldPinGainedFocusMessage(const WorldPinGainedFocusMessage& message);
+            void HandleReceivedWorldPinLostFocusMessage(const WorldPinLostFocusMessage& message);
+            void HandleReceivedWorldPinInFocusChangedLocationMessage(const WorldPinInFocusChangedLocationMessage& message);
 
 		public:
-			WorldPinInFocusObserver(
-                                         IWorldPinInFocusViewModel& worldPinInFocusViewModel,
-                                         ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus)
-				: m_worldPinInFocusViewModel(worldPinInFocusViewModel)
-				, m_nativeToUiMessageBus(nativeToUiMessageBus)
-				, m_gainedFocusHandler(this, &WorldPinInFocusObserver::HandleReceivedWorldPinGainedFocusMessage)
-				, m_lostFocusHandler(this, &WorldPinInFocusObserver::HandleReceivedWorldPinLostFocusMessage)
-				, m_focusScreenLocationUpdatedHandler(this, &WorldPinInFocusObserver::HandleReceivedWorldPinInFocusChangedLocationMessage)
-			{
-				m_nativeToUiMessageBus.Subscribe(m_gainedFocusHandler);
-				m_nativeToUiMessageBus.Subscribe(m_lostFocusHandler);
-				m_nativeToUiMessageBus.Subscribe(m_focusScreenLocationUpdatedHandler);
-			}
+			WorldPinInFocusObserver(IWorldPinInFocusViewModel& worldPinInFocusViewModel,
+                                    ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus);
 
-			~WorldPinInFocusObserver()
-			{
-				m_nativeToUiMessageBus.Unsubscribe(m_gainedFocusHandler);
-				m_nativeToUiMessageBus.Unsubscribe(m_lostFocusHandler);
-				m_nativeToUiMessageBus.Unsubscribe(m_focusScreenLocationUpdatedHandler);
-			}
+            ~WorldPinInFocusObserver();
 		};
 	}
 }
