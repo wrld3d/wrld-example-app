@@ -6,6 +6,8 @@
 #include "WorldPinsRepository.h"
 #include "WorldPinsService.h"
 #include "WorldPinsScaleController.h"
+#include "WorldPinsInFocusController.h"
+#include "WorldPinInFocusViewModel.h"
 
 namespace ExampleApp
 {
@@ -14,7 +16,9 @@ namespace ExampleApp
         WorldPinsModule::WorldPinsModule(Eegeo::Pins::PinRepository& pinRepository,
                                          Eegeo::Pins::PinController& pinController,
                                          const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
-                                         const Eegeo::Rendering::ScreenProperties& screenProperties)
+                                         const Eegeo::Rendering::ScreenProperties& screenProperties,
+                                         Eegeo::Helpers::IIdentityProvider& identityProvider,
+                                         ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus)
         {
             m_pWorldPinsFactory = Eegeo_NEW(WorldPinsFactory);
             
@@ -29,10 +33,26 @@ namespace ExampleApp
             m_pWorldPinsScaleController = Eegeo_NEW(WorldPinsScaleController)(*m_pWorldPinsRepository,
                                                                               *m_pWorldPinsService,
                                                                               screenProperties);
+            
+            m_pWorldPinsInFocusViewModel = Eegeo_NEW(WorldPinInFocusViewModel)(identityProvider.GetNextIdentity(),
+                                                                               *m_pWorldPinsService);
+            
+            m_pWorldPinsInFocusController = Eegeo_NEW(WorldPinsInFocusController)(*m_pWorldPinsRepository,
+                                                                                  *m_pWorldPinsService,
+                                                                                  nativeToUiMessageBus);
+            
+            
+            m_pWorldPinInFocusObserver = Eegeo_NEW(WorldPinInFocusObserver)(*m_pWorldPinsInFocusViewModel,
+                                                                            nativeToUiMessageBus);
+            
+            
         }
         
         WorldPinsModule::~WorldPinsModule()
         {
+            Eegeo_DELETE m_pWorldPinInFocusObserver;
+            Eegeo_DELETE m_pWorldPinsInFocusController;
+            Eegeo_DELETE m_pWorldPinsInFocusViewModel;
             Eegeo_DELETE m_pWorldPinsScaleController;
             Eegeo_DELETE m_pWorldPinsService;
             Eegeo_DELETE m_pWorldPinsRepository;
@@ -52,6 +72,21 @@ namespace ExampleApp
         IWorldPinsScaleController& WorldPinsModule::GetWorldPinsScaleController() const
         {
             return *m_pWorldPinsScaleController;
+        }
+        
+        IWorldPinInFocusViewModel& WorldPinsModule::GetWorldPinInFocusViewModel() const
+        {
+            return *m_pWorldPinsInFocusViewModel;
+        }
+        
+        IWorldPinsInFocusController& WorldPinsModule::GetWorldPinsInFocusController() const
+        {
+            return *m_pWorldPinsInFocusController;
+        }
+        
+        ScreenControlViewModel::IScreenControlViewModel& WorldPinsModule::GetScreenControlViewModel() const
+        {
+            return m_pWorldPinsInFocusViewModel->GetScreenControlViewModel();
         }
     }
 }

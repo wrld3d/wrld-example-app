@@ -13,10 +13,7 @@
 #include "IIdentity.h"
 #include "Rendering.h"
 #include "Camera.h"
-#include "SearchResultOnMapInFocusViewModel.h"
 #include "SearchResultOnMapModalityObserver.h"
-#include "SearchResultOnMapInFocusObserver.h"
-#include "SearchResultOnMapInFocusObserver.h"
 #include "SearchResultOnMapItemModelSelectedObserver.h"
 #include "UiToNativeMessageBus.h"
 #include "NativeToUiMessageBus.h"
@@ -29,12 +26,9 @@ namespace ExampleApp
 		{
 		private:
 			ISearchResultOnMapModel* m_pSearchResultOnMapModel;
-			SearchResultOnMapInFocusViewModel* m_pSearchResultOnMapInFocusViewModel;
-			ISearchResultOnMapInFocusController* m_pSearchResultOnMapInFocusController;
 			ISearchResultOnMapFactory* m_pSearchResultOnMapFactory;
 			ISearchResultOnMapIconCategoryMapper* m_pSearchResultOnMapIconCategoryMapper;
 			SearchResultOnMapModalityObserver* m_pSearchResultOnMapModalityObserver;
-			SearchResultOnMapInFocusObserver* m_pSearchResultOnMapInFocusObserver;
 			SearchResultOnMapItemModelSelectedObserver* m_pSearchResultOnMapItemModelSelectedObserver;
 
 		public:
@@ -51,11 +45,6 @@ namespace ExampleApp
 
 			ISearchResultOnMapModel& GetSearchResultOnMapModel() const;
 
-			ISearchResultOnMapInFocusViewModel& GetSearchResultOnMapInFocusViewModel() const;
-
-			ISearchResultOnMapInFocusController& GetSearchResultOnMapInFocusController() const;
-
-			ScreenControlViewModel::IScreenControlViewModel& GetScreenControlViewModel() const;
 		};
 	}
 }

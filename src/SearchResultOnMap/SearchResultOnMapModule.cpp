@@ -4,10 +4,8 @@
 #include "Search.h"
 #include "SearchResultOnMap.h"
 #include "SearchResultOnMapFactory.h"
-#include "SearchResultOnMapModel.h"
-#include "SearchResultOnMapInFocusViewModel.h"
-#include "SearchResultOnMapInFocusController.h"
 #include "SearchResultOnMapIconCategoryMapper.h"
+#include "SearchResultOnMapModel.h"
 #include "IIdentity.h"
 
 namespace ExampleApp
@@ -34,20 +32,8 @@ namespace ExampleApp
 
 			m_pSearchResultOnMapModel = pSearchResultOnMapModel;
 
-			m_pSearchResultOnMapInFocusViewModel = Eegeo_NEW(SearchResultOnMapInFocusViewModel)(searchResultPoiViewModel,
-			                                       identityProvider.GetNextIdentity());
-
-			m_pSearchResultOnMapInFocusController = Eegeo_NEW(SearchResultOnMapInFocusController)(*pSearchResultOnMapModel,
-			                                        nativeToUiMessageBus,
-			                                        worldPinsService,
-			                                        renderCamera);
-
 			m_pSearchResultOnMapModalityObserver = Eegeo_NEW(SearchResultOnMapModalityObserver)(worldPinsScaleController,
                                                                                                 uiToNativeMessageBus);
-
-			m_pSearchResultOnMapInFocusObserver = Eegeo_NEW(SearchResultOnMapInFocusObserver)(
-			        *m_pSearchResultOnMapInFocusViewModel,
-			        nativeToUiMessageBus);
 
 			m_pSearchResultOnMapItemModelSelectedObserver = Eegeo_NEW(SearchResultOnMapItemModelSelectedObserver)(searchResultPoiViewModel,
 			        nativeToUiMessageBus);
@@ -56,10 +42,7 @@ namespace ExampleApp
 		SearchResultOnMapModule::~SearchResultOnMapModule()
 		{
 			Eegeo_DELETE m_pSearchResultOnMapItemModelSelectedObserver;
-			Eegeo_DELETE m_pSearchResultOnMapInFocusObserver;
 			Eegeo_DELETE m_pSearchResultOnMapModalityObserver;
-			Eegeo_DELETE m_pSearchResultOnMapInFocusController;
-			Eegeo_DELETE m_pSearchResultOnMapInFocusViewModel;
 			Eegeo_DELETE m_pSearchResultOnMapModel;
 			Eegeo_DELETE m_pSearchResultOnMapFactory;
 			Eegeo_DELETE m_pSearchResultOnMapIconCategoryMapper;
@@ -68,21 +51,6 @@ namespace ExampleApp
 		ISearchResultOnMapModel& SearchResultOnMapModule::GetSearchResultOnMapModel() const
 		{
 			return *m_pSearchResultOnMapModel;
-		}
-
-		ISearchResultOnMapInFocusViewModel& SearchResultOnMapModule::GetSearchResultOnMapInFocusViewModel() const
-		{
-			return *m_pSearchResultOnMapInFocusViewModel;
-		}
-
-		ISearchResultOnMapInFocusController& SearchResultOnMapModule::GetSearchResultOnMapInFocusController() const
-		{
-			return *m_pSearchResultOnMapInFocusController;
-		}
-
-		ScreenControlViewModel::IScreenControlViewModel& SearchResultOnMapModule::GetScreenControlViewModel() const
-		{
-			return m_pSearchResultOnMapInFocusViewModel->GetScreenControlViewModel();
 		}
 	}
 }

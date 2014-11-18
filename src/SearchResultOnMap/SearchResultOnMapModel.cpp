@@ -7,6 +7,7 @@
 #include "ISearchResultRepository.h"
 #include "SearchResultModel.h"
 #include "ISearchResultOnMapIconCategoryMapper.h"
+#include "WorldPinFocusData.h"
 
 namespace ExampleApp
 {
@@ -58,7 +59,10 @@ namespace ExampleApp
 
 			const int pinIconIndex = m_searchResultOnMapIconCategoryMapper.GetIconIndexFromSearchResult(*pSearchResultModel);
 
+            WorldPins::WorldPinFocusData worldPinFocusData(pSearchResultModel->GetTitle(), pSearchResultModel->GetAddress());
+            
 			ExampleApp::WorldPins::WorldPinItemModel *pinItemModel = m_worldPinsService.AddPin(pSearchResultOnMapItemModel,
+                                                                                               worldPinFocusData,
                                                                                                pSearchResultModel->GetLocation(),
                                                                                                pinIconIndex);
 

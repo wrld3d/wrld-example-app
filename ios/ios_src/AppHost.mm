@@ -26,8 +26,8 @@
 #include "ModalBackgroundView.h"
 #include "FlattenButtonView.h"
 #include "FlattenButtonViewModule.h"
-#include "SearchResultOnMapViewModule.h"
-#include "SearchResultOnMapView.h"
+#include "WorldPinOnMapViewModule.h"
+#include "WorldPinOnMapView.h"
 #include "SearchResultPoiViewModule.h"
 #include "SearchResultPoiView.h"
 #include "SearchResultMenuView.h"
@@ -208,11 +208,11 @@ void AppHost::CreateApplicationViewModules()
 	                             m_uiToNativeMessageBus,
 	                             m_nativeToUiMessageBus);
 
-	m_pSearchResultOnMapViewModule = Eegeo_NEW(ExampleApp::SearchResultOnMap::SearchResultOnMapViewModule)(app.SearchResultOnMapModule().GetSearchResultOnMapInFocusViewModel(),
-	                                 app.SearchResultOnMapModule().GetScreenControlViewModel(),
-	                                 app.ModalityModule().GetModalityModel(),
-	                                 app.PinDiameter(),
-	                                 m_pScreenProperties->GetPixelScale());
+	m_pWorldPinOnMapViewModule = Eegeo_NEW(ExampleApp::WorldPins::WorldPinOnMapViewModule)(app.WorldPinsModule().GetWorldPinInFocusViewModel(),
+                                                                                           app.WorldPinsModule().GetScreenControlViewModel(),
+                                                                                           app.ModalityModule().GetModalityModel(),
+                                                                                           app.PinDiameter(),
+                                                                                           m_pScreenProperties->GetPixelScale());
 
 
 	m_pCompassViewModule = Eegeo_NEW(ExampleApp::Compass::CompassViewModule)(app.CompassModule().GetCompassViewModel(),
@@ -237,7 +237,7 @@ void AppHost::CreateApplicationViewModules()
                                                                                                                     app.MyPinCreationDetailsModule().GetMyPinCreationDetailsViewModel());
 
     // 3d map view layer.
-    [m_pView addSubview: &m_pSearchResultOnMapViewModule->GetSearchResultOnMapView()];
+    [m_pView addSubview: &m_pWorldPinOnMapViewModule->GetWorldPinOnMapView()];
     
     // HUD behind modal background layer.
     [m_pView addSubview: &m_pFlattenButtonViewModule->GetFlattenButtonView()];
@@ -269,7 +269,7 @@ void AppHost::CreateApplicationViewModules()
 void AppHost::DestroyApplicationViewModules()
 {
     // 3d map view layer.
-    [&m_pSearchResultOnMapViewModule->GetSearchResultOnMapView() removeFromSuperview];
+    [&m_pWorldPinOnMapViewModule->GetWorldPinOnMapView() removeFromSuperview];
     
     // HUD behind modal background layer.
     [&m_pFlattenButtonViewModule->GetFlattenButtonView() removeFromSuperview];
@@ -302,7 +302,7 @@ void AppHost::DestroyApplicationViewModules()
 
 	Eegeo_DELETE m_pCompassViewModule;
 
-	Eegeo_DELETE m_pSearchResultOnMapViewModule;
+	Eegeo_DELETE m_pWorldPinOnMapViewModule;
 
 	Eegeo_DELETE m_pSearchResultPoiViewModule;
 

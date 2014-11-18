@@ -4,9 +4,9 @@
 
 namespace ExampleApp
 {
-	namespace SearchResultOnMap
+	namespace WorldPins
 	{
-		class SearchResultLostFocusMessage
+		class WorldPinLostFocusMessage
 		{
 		};
 	}

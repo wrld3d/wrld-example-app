@@ -8,6 +8,10 @@
 #include "PinController.h"
 #include "Rendering.h"
 #include "Camera.h"
+#include "NativeToUiMessageBus.h"
+#include "WorldPinInFocusObserver.h"
+#include "IIdentity.h"
+#include "IScreenControlViewModel.h"
 
 namespace ExampleApp
 {
@@ -19,12 +23,17 @@ namespace ExampleApp
             IWorldPinsService* m_pWorldPinsService;
             IWorldPinsRepository* m_pWorldPinsRepository;
             IWorldPinsScaleController* m_pWorldPinsScaleController;
+            WorldPinInFocusViewModel* m_pWorldPinsInFocusViewModel;
+            IWorldPinsInFocusController* m_pWorldPinsInFocusController;
+            WorldPinInFocusObserver* m_pWorldPinInFocusObserver;
             
         public:
             WorldPinsModule(Eegeo::Pins::PinRepository& pinRepository,
                             Eegeo::Pins::PinController& pinController,
                             const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
-                            const Eegeo::Rendering::ScreenProperties& screenProperties);
+                            const Eegeo::Rendering::ScreenProperties& screenProperties,
+                            Eegeo::Helpers::IIdentityProvider& identityProvider,
+                            ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus);
             
             ~WorldPinsModule();
             
@@ -33,6 +42,12 @@ namespace ExampleApp
             IWorldPinsFactory& GetWorldPinsFactory() const;
             
             IWorldPinsScaleController& GetWorldPinsScaleController() const;
+            
+            IWorldPinInFocusViewModel& GetWorldPinInFocusViewModel() const;
+            
+            IWorldPinsInFocusController& GetWorldPinsInFocusController() const;
+            
+            ScreenControlViewModel::IScreenControlViewModel& GetScreenControlViewModel() const;
         };
     }
 }

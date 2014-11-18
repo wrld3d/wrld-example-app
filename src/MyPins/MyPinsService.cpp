@@ -12,6 +12,7 @@
 #include "IMenuOptionsModel.h"
 #include "MyPinMenuOption.h"
 #include "IWorldPinsService.h"
+#include "WorldPinFocusData.h"
 
 #include <string>
 #include <sstream>
@@ -45,7 +46,8 @@ namespace ExampleApp
         
         void MyPinsService::AddPinToMap(MyPinModel* pMyPinModel)
         {
-            WorldPins::WorldPinItemModel* worldPinItemModel = m_worldPinsService.AddPin(pMyPinModel, pMyPinModel->GetLatLong(), 0);
+            WorldPins::WorldPinFocusData worldPinFocusData(pMyPinModel->GetTitle(), pMyPinModel->GetDescription());
+            WorldPins::WorldPinItemModel* worldPinItemModel = m_worldPinsService.AddPin(pMyPinModel, worldPinFocusData, pMyPinModel->GetLatLong(), 0);
             m_myPinToWorldPinMap.insert(std::make_pair(pMyPinModel, worldPinItemModel));
         }
         

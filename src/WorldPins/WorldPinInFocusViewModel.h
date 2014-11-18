@@ -3,35 +3,35 @@
 #pragma once
 
 #include "Types.h"
-#include "ISearchResultOnMapInFocusViewModel.h"
+#include "IWorldPinInFocusViewModel.h"
 #include "CallbackCollection.h"
-#include "SearchResultModel.h"
-#include "SearchResultPoi.h"
-#include "SearchResultOnMapInFocusScreenControl.h"
+#include "WorldPinsInFocusModel.h"
+#include "WorldPins.h"
+#include "WorldPinInFocusScreenControl.h"
 #include "IIdentity.h"
 
 namespace ExampleApp
 {
-	namespace SearchResultOnMap
+	namespace WorldPins
 	{
-		class SearchResultOnMapInFocusViewModel : public ISearchResultOnMapInFocusViewModel, private Eegeo::NonCopyable
+		class WorldPinInFocusViewModel : public IWorldPinInFocusViewModel, private Eegeo::NonCopyable
 		{
 			bool m_isOpen;
 			Eegeo::v2 m_screenPos;
-			Search::SearchResultModel m_searchResultModel;
+			WorldPinsInFocusModel m_worldPinInFocusModel;
 			Eegeo::Helpers::CallbackCollection0 m_openedCallbacks;
 			Eegeo::Helpers::CallbackCollection0 m_closedCallbacks;
 			Eegeo::Helpers::CallbackCollection0 m_updateCallbacks;
-			SearchResultPoi::ISearchResultPoiViewModel& m_searchResultPoiViewModel;
-			SearchResultOnMapInFocusScreenControl m_screenControl;
+			WorldPinInFocusScreenControl m_screenControl;
+            IWorldPinsService& m_worldPinsService;
 
 		public:
-			SearchResultOnMapInFocusViewModel(SearchResultPoi::ISearchResultPoiViewModel& searchResultPoiViewModel,
-			                                  Eegeo::Helpers::TIdentity identity);
+			WorldPinInFocusViewModel(Eegeo::Helpers::TIdentity identity,
+                                     IWorldPinsService& worldPinsService);
 
-			~SearchResultOnMapInFocusViewModel();
+			~WorldPinInFocusViewModel();
 
-			const Search::SearchResultModel& GetSearchResultModel() const;
+			const WorldPinsInFocusModel& GetWorldPinsInFocusModel() const;
 
 			bool IsOpen() const;
 
@@ -39,7 +39,7 @@ namespace ExampleApp
 
 			void SelectFocussedResult();
 
-			void Open(const Search::SearchResultModel& searchResultModel, const Eegeo::v2& screenPos);
+			void Open(const WorldPinsInFocusModel& worldPinInFocusModel, const Eegeo::v2& screenPos);
 
 			void Close();
 
