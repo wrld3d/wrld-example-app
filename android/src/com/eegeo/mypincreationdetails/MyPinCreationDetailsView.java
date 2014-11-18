@@ -101,6 +101,8 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
 		m_poiImage.setImageResource(R.drawable.image_blank);
 		m_title.setText("");
 		m_description.setText("");
+		
+		m_currentImageUri = null;
 	}
 	
 	public void dismiss()
@@ -128,24 +130,31 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
 			String titleText = m_title.getText().toString();
 			String descriptionText = m_description.getText().toString();
 			
-			try
+			byte[] byteArray = null;
+			
+			if(m_currentImageUri != null)
 			{
-				InputStream is = m_activity.getContentResolver().openInputStream(m_currentImageUri);
-				Bitmap bitmap = BitmapFactory.decodeStream(is);
-				is.close();
-				
-				ByteArrayOutputStream stream = new ByteArrayOutputStream();
-				bitmap.compress(Bitmap.CompressFormat.JPEG, JPEG_QUALITY, stream);
-				byte[] byteArray = stream.toByteArray();
-				stream.close();
-				
-				Boolean shouldShare = m_shouldShareButton.isChecked();
-				MyPinCreationDetailsJniMethods.SubmitButtonPressed(m_nativeCallerPointer, titleText, descriptionText, m_currentImageUri.toString(), byteArray, shouldShare);
+				try
+				{
+					InputStream is = m_activity.getContentResolver().openInputStream(m_currentImageUri);
+					Bitmap bitmap = BitmapFactory.decodeStream(is);
+					is.close();
+					
+					ByteArrayOutputStream stream = new ByteArrayOutputStream();
+					bitmap.compress(Bitmap.CompressFormat.JPEG, JPEG_QUALITY, stream);
+					byteArray = stream.toByteArray();
+					stream.close();
+					
+				}
+				catch(Exception e)
+				{
+					Log.e("EEGEO", e.getMessage());
+				}
 			}
-			catch(Exception e)
-			{
-				Log.e("EEGEO", e.getMessage());
-			}
+			
+			Boolean shouldShare = m_shouldShareButton.isChecked();
+			String uriPath = m_currentImageUri != null ? m_currentImageUri.toString() : "";
+			MyPinCreationDetailsJniMethods.SubmitButtonPressed(m_nativeCallerPointer, titleText, descriptionText, uriPath, byteArray, shouldShare);
 			
 		}
 	}
