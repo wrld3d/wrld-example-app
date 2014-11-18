@@ -12,6 +12,6 @@ extern "C"
 
 	JNIEXPORT void JNICALL Java_com_eegeo_mypincreationdetails_MyPinCreationDetailsJniMethods_SubmitButtonPressed(
 		JNIEnv* jenv, jobject obj,
-		jlong nativeObjectPtr, jstring title, jstring description, jstring imagePath, jboolean shouldShare);
+		jlong nativeObjectPtr, jstring title, jstring description, jstring imagePath, jbyteArray imageData, jboolean shouldShare);
 }
 

@@ -13,7 +13,7 @@ JNIEXPORT void JNICALL Java_com_eegeo_mypincreationdetails_MyPinCreationDetailsJ
 
 JNIEXPORT void JNICALL Java_com_eegeo_mypincreationdetails_MyPinCreationDetailsJniMethods_SubmitButtonPressed(
 	    JNIEnv* jenv, jobject obj,
-	    jlong nativeObjectPtr, jstring title, jstring description, jstring imagePath, jboolean shouldShare)
+	    jlong nativeObjectPtr, jstring title, jstring description, jstring imagePath, jbyteArray imageData, jboolean shouldShare)
 {
 	const char* titlechars = jenv->GetStringUTFChars(title, 0);
 	std::string titleString = titlechars;
@@ -27,7 +27,15 @@ JNIEXPORT void JNICALL Java_com_eegeo_mypincreationdetails_MyPinCreationDetailsJ
 	std::string imageString = imageChars;
 	jenv->ReleaseStringUTFChars(imagePath, imageChars);
 
+	jbyte* pBuffer = jenv->GetByteArrayElements(imageData, NULL);
+
+	Byte* imageDataBytes = reinterpret_cast<Byte *>(pBuffer);
+	size_t imageSize = std::size_t(jenv->GetArrayLength(imageData));
+
 	ExampleApp::MyPinCreationDetails::MyPinCreationDetailsViewController* pController = reinterpret_cast<ExampleApp::MyPinCreationDetails::MyPinCreationDetailsViewController*>(nativeObjectPtr);
-	pController->HandleConfirmButtonPressed(titleString, descriptionString, imageString, shouldShare);
+	pController->HandleConfirmButtonPressed(titleString, descriptionString, imageString, imageDataBytes, imageSize, shouldShare);
+
+	jenv->ReleaseByteArrayElements(imageData, pBuffer, 0);
+
 }
 

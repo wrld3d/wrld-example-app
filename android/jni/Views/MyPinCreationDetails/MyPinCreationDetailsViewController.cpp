@@ -6,6 +6,7 @@
 #include "MyPinCreationStage.h"
 #include "AndroidAppThreadAssertionMacros.h"
 #include "MyPinCreationViewStateChangedMessage.h"
+#include "MyPinCreationViewSavePinMessage.h";
 
 namespace ExampleApp
 {
@@ -109,14 +110,20 @@ namespace ExampleApp
     	void MyPinCreationDetailsViewController::HandleConfirmButtonPressed(
     			std::string title,
     			std::string description,
-    			std::string image,
+    			std::string imagePath,
+    			Byte* pImageBytes,
+    			size_t imageSize,
     			bool shouldShare)
     	{
     		ASSERT_UI_THREAD
 
-
-
-    		Eegeo_TTY("Got some info for ya: %s - %s - %s - %d", title.c_str(), description.c_str(), image.c_str(), shouldShare);
+    		m_uiToNativeMessageBus.Publish(MyPinCreation::MyPinCreationViewSavePinMessage(
+    				title,
+    				description,
+    				pImageBytes,
+    				imageSize,
+    				shouldShare
+    				));
 
 			m_viewModel.Close();
     	}

@@ -30,7 +30,9 @@ namespace ExampleApp
 			void HandleCloseButtonPressed();
 			void HandleConfirmButtonPressed(std::string title,
 											std::string description,
-											std::string image,
+											std::string imagePath,
+							    			Byte* pImageBytes,
+							    			size_t imageSize,
 											bool shouldShare);
 
 		private:

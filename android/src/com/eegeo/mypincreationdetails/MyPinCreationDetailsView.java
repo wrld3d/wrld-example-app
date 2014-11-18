@@ -1,9 +1,13 @@
 package com.eegeo.mypincreationdetails;
 
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+
 import android.content.Intent;
-import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,6 +35,8 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
 	protected ToggleButton m_shouldShareButton = null;
 	
 	private Uri m_currentImageUri = null;
+	
+	private final int JPEG_QUALITY = 90;
 	
 	public MyPinCreationDetailsView(MainActivity activity, long nativeCallerPointer)
 	{
@@ -110,13 +116,26 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
 		{
 			String titleText = m_title.getText().toString();
 			String descriptionText = m_description.getText().toString();
-			String imagePath = "";
-			if(m_currentImageUri != null)
+			
+			try
 			{
-				imagePath = getRealPathFromURI(m_currentImageUri);
+				InputStream is = m_activity.getContentResolver().openInputStream(m_currentImageUri);
+				Bitmap bitmap = BitmapFactory.decodeStream(is);
+				is.close();
+				
+				ByteArrayOutputStream stream = new ByteArrayOutputStream();
+				bitmap.compress(Bitmap.CompressFormat.JPEG, JPEG_QUALITY, stream);
+				byte[] byteArray = stream.toByteArray();
+				stream.close();
+				
+				Boolean shouldShare = m_shouldShareButton.isChecked();
+				MyPinCreationDetailsJniMethods.SubmitButtonPressed(m_nativeCallerPointer, titleText, descriptionText, m_currentImageUri.toString(), byteArray, shouldShare);
 			}
-			Boolean shouldShare = m_shouldShareButton.isChecked();
-			MyPinCreationDetailsJniMethods.SubmitButtonPressed(m_nativeCallerPointer, titleText, descriptionText, imagePath, shouldShare);
+			catch(Exception e)
+			{
+				Log.e("EEGEO", e.getMessage());
+			}
+			
 		}
 	}
 
@@ -141,19 +160,5 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
 		}
 	}
 	
-	private String getRealPathFromURI(Uri contentUri)
-	{
-		String[] proj = { MediaStore.Images.Media.DATA };
-		
-		Cursor cursor = m_activity.getContentResolver().query(contentUri, proj, null, null, null);
-		if(cursor == null)
-		{
-			return contentUri.getPath();
-		}
-		int columnIndex = cursor.getColumnIndexOrThrow(proj[0]);
-		cursor.moveToFirst();
-		String result = cursor.getString(columnIndex);
-		cursor.close();
-		return result;
-	}
+	
 }
