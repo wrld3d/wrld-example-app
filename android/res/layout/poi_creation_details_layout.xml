@@ -33,16 +33,16 @@
               	android:layout_height="40dp"/>
             
             <EditText
-	            android:inputType="text"
-	            android:background="@color/white"
-	            android:textColor="@color/black"
-				android:layout_width="fill_parent"
-				android:layout_height="fill_parent"
-				android:paddingLeft="10dp"
-				android:textSize="15.0dp"
-		    	android:id="@+id/poi_creation_details_title"
-		    	android:imeOptions="actionGo"
-		    	android:hint="@string/poi_creation_details_title_hint"/>
+                android:id="@+id/poi_creation_details_title"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@color/white"
+                android:hint="@string/poi_creation_details_title_hint"
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:paddingLeft="10dp"
+                android:textColor="@color/black"
+                android:textSize="15.0dp" />
             
         </LinearLayout>
         
@@ -68,6 +68,8 @@
 		                android:layout_margin="10dp"
 		                android:gravity="top|left"
 		                android:hint="@string/poi_creation_details_description_hint"
+		                android:imeOptions="actionDone"
+		                android:inputType="text"
 		                android:textSize="15.0dp" />
 		            
 		            <ImageView
@@ -75,9 +77,10 @@
 		                android:layout_width="wrap_content"
 		                android:layout_height="wrap_content"
 		                android:layout_margin="10dp"
-		                android:scaleType="fitStart"
-		                android:src="@drawable/image_blank"
-		                android:contentDescription="@string/poi_creation_details_image" />
+		                android:adjustViewBounds="true"
+		                android:contentDescription="@string/poi_creation_details_image"
+		                android:scaleType="fitCenter"
+		                android:src="@drawable/image_blank" />
 		            
 		        </LinearLayout>
 	        
