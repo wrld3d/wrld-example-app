@@ -33,16 +33,16 @@
               	android:layout_height="40dp"/>
             
             <EditText
-	            android:inputType="text"
-	            android:background="@color/white"
-	            android:textColor="@color/black"
-				android:layout_width="fill_parent"
-				android:layout_height="fill_parent"
-				android:paddingLeft="10dp"
-				android:textSize="15.0dp"
-		    	android:id="@+id/poi_creation_details_title"
-		    	android:imeOptions="actionGo"
-		    	android:hint="@string/poi_creation_details_title_hint"/>
+                android:id="@+id/poi_creation_details_title"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@color/white"
+                android:hint="@string/poi_creation_details_title_hint"
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:paddingLeft="10dp"
+                android:textColor="@color/black"
+                android:textSize="15.0dp" />
             
         </LinearLayout>
         
@@ -68,6 +68,8 @@
 		                android:layout_margin="10dp"
 		                android:gravity="top|left"
 		                android:hint="@string/poi_creation_details_description_hint"
+		                android:imeOptions="actionDone"
+		                android:inputType="text"
 		                android:textSize="15.0dp" />
 		            
 		            <ImageView
