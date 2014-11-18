@@ -1,13 +1,13 @@
 // Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
-#include "SearchResultOnMapView.h"
+#include "WorldPinOnMapView.h"
 #include "MathFunc.h"
 #include "UIColors.h"
 #include "ImageHelpers.h"
 
-@implementation SearchResultOnMapView
+@implementation WorldPinOnMapView
 
-- (id)initWithController:(SearchResultOnMapViewController*)controller
+- (id)initWithController:(WorldPinOnMapViewController*)controller
 {
 	self = [super init];
 

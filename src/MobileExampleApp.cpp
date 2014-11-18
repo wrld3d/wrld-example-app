@@ -8,7 +8,6 @@
 #include "CameraHelpers.h"
 #include "LatLongAltitude.h"
 #include "IWorldPinsService.h"
-#include "ISearchResultOnMapInFocusController.h"
 #include "ISearchRefreshService.h"
 #include "GpsGlobeCameraControllerFactory.h"
 #include "GlobeCameraTouchSettings.h"
@@ -39,12 +38,13 @@
 #include "IPoiRingController.h"
 #include "MyPinCreationDetailsModule.h"
 #include "MyPinsModule.h"
+#include "IWorldPinsInFocusController.h"
 
 namespace ExampleApp
 {
     const std::string ApiKey = "OBTAIN API_KEY FROM https://appstore.eegeo.com AND INSERT IT HERE";
     const std::string DecartaApiKey = "OBTAIN DECARTA SEARCH KEY AND INSERT IT HERE";
-
+    
 	namespace
 	{
 		Eegeo::Rendering::LoadingScreen* CreateLoadingScreen(const Eegeo::Rendering::ScreenProperties& screenProperties,
@@ -400,7 +400,7 @@ namespace ExampleApp
 		reactors.push_back(&SecondaryMenuModule().GetSecondaryMenuViewModel());
 		reactors.push_back(&SearchResultMenuModule().GetMenuViewModel());
 		reactors.push_back(&FlattenButtonModule().GetScreenControlViewModel());
-		reactors.push_back(&SearchResultOnMapModule().GetScreenControlViewModel());
+		reactors.push_back(&WorldPinsModule().GetScreenControlViewModel());
 		reactors.push_back(&CompassModule().GetScreenControlViewModel());
         reactors.push_back(&MyPinCreationModule().GetInitiationScreenControlViewModel());
 		return reactors;
@@ -439,7 +439,9 @@ namespace ExampleApp
 		m_pWorldPinsModule = Eegeo_NEW(ExampleApp::WorldPins::WorldPinsModule)(m_pPinsModule->GetRepository(),
                                                                                m_pPinsModule->GetController(),
                                                                                mapModule.GetEnvironmentFlatteningService(),
-                                                                               world.GetScreenProperties());
+                                                                               world.GetScreenProperties(),
+                                                                               m_identityProvider,
+                                                                               m_nativeToUiMessageBus);
 	}
 
 	void MobileExampleApp::OnPause()
@@ -488,7 +490,7 @@ namespace ExampleApp
 
 		if(!eegeoWorld.Initialising())
 		{
-			SearchResultOnMapModule().GetSearchResultOnMapInFocusController().Update(dt, m_pGlobeCameraController->GetEcefInterestPoint());
+            WorldPinsModule().GetWorldPinsInFocusController().Update(dt, m_pGlobeCameraController->GetEcefInterestPoint(), *m_pGlobeCameraController->GetCamera());
 		}
 
 		eegeoWorld.Draw(*m_pGlobeCameraController->GetCamera());

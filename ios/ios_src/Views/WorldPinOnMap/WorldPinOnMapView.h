@@ -6,16 +6,16 @@
 #include <string>
 #include "AppRunner.h"
 
-@class SearchResultOnMapView;
-@class SearchResultOnMapViewController;
+@class WorldPinOnMapView;
+@class WorldPinOnMapViewController;
 
-@interface SearchResultOnMapView : UIView
+@interface WorldPinOnMapView : UIView
 {
-	__weak SearchResultOnMapViewController* m_pController;
+	__weak WorldPinOnMapViewController* m_pController;
 	float m_stateChangeAnimationTimeSeconds;
 }
 
-- (id) initWithController:(SearchResultOnMapViewController *)controller;
+- (id) initWithController:(WorldPinOnMapViewController *)controller;
 
 - (BOOL) consumesTouch:(UITouch *)touch;
 

@@ -14,9 +14,11 @@ namespace ExampleApp
 		}
 
 		WorldPinItemModel::WorldPinItemModel(const WorldPinItemModelId& id,
-		                                     IWorldPinSelectionHandler* pSelectionHandler)
+		                                     IWorldPinSelectionHandler* pSelectionHandler,
+                                             const WorldPinFocusData& worldPinFocusData)
 			: m_id(id)
 			, m_pSelectionHandler(pSelectionHandler)
+            , m_focusModel(m_id, worldPinFocusData.title, worldPinFocusData.subtitle)
 			, m_transitionState(StableHidden)
 			, m_transitionStateValue(0.f)
 		{
@@ -90,5 +92,10 @@ namespace ExampleApp
 				}
 			}
 		}
+        
+        const IWorldPinsInFocusModel& WorldPinItemModel::GetInFocusModel() const
+        {
+            return m_focusModel;
+        }
 	}
 }

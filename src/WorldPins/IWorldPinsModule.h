@@ -3,6 +3,7 @@
 #pragma once
 
 #include "WorldPins.h"
+#include "IScreenControlViewModel.h"
 
 namespace ExampleApp
 {
@@ -18,6 +19,12 @@ namespace ExampleApp
             virtual IWorldPinsFactory& GetWorldPinsFactory() const = 0;
             
             virtual IWorldPinsScaleController& GetWorldPinsScaleController() const = 0;
+            
+            virtual IWorldPinInFocusViewModel& GetWorldPinInFocusViewModel() const = 0;
+
+            virtual IWorldPinsInFocusController& GetWorldPinsInFocusController() const = 0;
+            
+            virtual ScreenControlViewModel::IScreenControlViewModel& GetScreenControlViewModel() const = 0;
         };
     }
 }

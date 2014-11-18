@@ -2,20 +2,20 @@
 
 #pragma once
 
-#include "Search.h"
 #include "ICallback.h"
 #include "VectorMath.h"
+#include "WorldPinsInFocusModel.h"
 
 namespace ExampleApp
 {
-	namespace SearchResultOnMap
+	namespace WorldPins
 	{
-		class ISearchResultOnMapInFocusViewModel
+		class IWorldPinInFocusViewModel
 		{
 		public:
-			virtual ~ISearchResultOnMapInFocusViewModel() { }
+			virtual ~IWorldPinInFocusViewModel() { }
 
-			virtual const Search::SearchResultModel& GetSearchResultModel() const = 0;
+			virtual const WorldPinsInFocusModel& GetWorldPinsInFocusModel() const = 0;
 
 			virtual bool IsOpen() const = 0;
 
@@ -23,7 +23,7 @@ namespace ExampleApp
 
 			virtual void SelectFocussedResult() = 0;
 
-			virtual void Open(const Search::SearchResultModel& searchResultModel, const Eegeo::v2& screenPos) = 0;
+			virtual void Open(const WorldPinsInFocusModel& worldPinInFocusModel, const Eegeo::v2& screenPos) = 0;
 
 			virtual void Close() = 0;
 

@@ -37,8 +37,9 @@ namespace ExampleApp
 			~WorldPinsService();
 
 			WorldPinItemModel* AddPin(IWorldPinSelectionHandler* pSelectionHandler,
-			                         const Eegeo::Space::LatLong& location,
-			                         int iconIndex);
+                                      const WorldPinFocusData& worldPinFocusData,
+                                      const Eegeo::Space::LatLong& location,
+                                      int iconIndex);
 
 			void RemovePin(WorldPinItemModel* pinItemModel);
 
@@ -49,6 +50,8 @@ namespace ExampleApp
 			void GetPinEcefAndScreenLocations(const WorldPinItemModel& pinItemModel,
 			                                  Eegeo::dv3& ecefLocation,
 			                                  Eegeo::v2& screenLocation) const;
+            
+            IWorldPinSelectionHandler* GetSelectionHandlerForPin(WorldPinItemModel::WorldPinItemModelId worldPinItemModelId);
 
 		private:
 			void ErasePin(const WorldPinItemModel::WorldPinItemModelId& id);

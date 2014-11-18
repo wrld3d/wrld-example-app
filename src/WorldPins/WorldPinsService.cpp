@@ -39,8 +39,9 @@ namespace ExampleApp
         }
         
         WorldPinItemModel* WorldPinsService::AddPin(IWorldPinSelectionHandler* pSelectionHandler,
-                                                   const Eegeo::Space::LatLong& location,
-                                                   int iconIndex)
+                                                    const WorldPinFocusData& worldPinFocusData,
+                                                    const Eegeo::Space::LatLong& location,
+                                                    int iconIndex)
         {
             
             Eegeo::Pins::Pin* pPin = m_worldPinsFactory.CreatePin(location, iconIndex);
@@ -54,7 +55,7 @@ namespace ExampleApp
             
             m_pinsToSelectionHandlers[pinId] = pSelectionHandler;
             
-            WorldPinItemModel* model = Eegeo_NEW(WorldPinItemModel)(pinId, pSelectionHandler);
+            WorldPinItemModel* model = Eegeo_NEW(WorldPinItemModel)(pinId, pSelectionHandler, worldPinFocusData);
             m_worldPinsRepository.AddItem(model);
 
             UpdatePinScale(*model, model->TransitionStateValue());
@@ -122,6 +123,18 @@ namespace ExampleApp
             IWorldPinSelectionHandler* pHandler = pinIt->second;
             m_pinsToSelectionHandlers.erase(pinIt);
             Eegeo_DELETE pHandler;
+        }
+        
+        IWorldPinSelectionHandler* WorldPinsService::GetSelectionHandlerForPin(WorldPinItemModel::WorldPinItemModelId worldPinItemModelId)
+        {
+            if (m_pinsToSelectionHandlers.find(worldPinItemModelId) != m_pinsToSelectionHandlers.end())
+            {
+                return m_pinsToSelectionHandlers[worldPinItemModelId];
+            }
+            else
+            {
+                return NULL;
+            }
         }
     }
 }

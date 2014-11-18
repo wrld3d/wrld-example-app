@@ -13,9 +13,9 @@
 #include "SearchQueryResponseReceivedMessage.h"
 #include "CompassModeCHangedMessage.h"
 #include "CompassHeadingUpdateMessage.h"
-#include "SearchResultGainedFocusMessage.h"
-#include "SearchResultLostFocusMessage.h"
-#include "SearchResultInFocusChangedLocationMessage.h"
+#include "WorldPinGainedFocusMessage.h"
+#include "WorldPinLostFocusMessage.h"
+#include "WorldPinInFocusChangedLocationMessage.h"
 #include "MyPinCreationStateChangedMessage.h"
 #include "SearchResultOnMapItemModelSelectedMessage.h"
 
@@ -32,9 +32,9 @@ namespace ExampleApp
 			, public Eegeo::Messaging::CatalogBinding<Search::SearchQueryResponseReceivedMessage>
 			, public Eegeo::Messaging::CatalogBinding<Compass::CompassModeChangedMessage>
 			, public Eegeo::Messaging::CatalogBinding<Compass::CompassHeadingUpdateMessage>
-			, public Eegeo::Messaging::CatalogBinding<SearchResultOnMap::SearchResultGainedFocusMessage>
-			, public Eegeo::Messaging::CatalogBinding<SearchResultOnMap::SearchResultLostFocusMessage>
-			, public Eegeo::Messaging::CatalogBinding<SearchResultOnMap::SearchResultInFocusChangedLocationMessage>
+			, public Eegeo::Messaging::CatalogBinding<WorldPins::WorldPinGainedFocusMessage>
+			, public Eegeo::Messaging::CatalogBinding<WorldPins::WorldPinLostFocusMessage>
+			, public Eegeo::Messaging::CatalogBinding<WorldPins::WorldPinInFocusChangedLocationMessage>
                         , public Eegeo::Messaging::CatalogBinding<MyPinCreation::MyPinCreationStateChangedMessage>
 			, public Eegeo::Messaging::CatalogBinding<SearchResultOnMap::SearchResultOnMapItemModelSelectedMessage>
 			, private Eegeo::NonCopyable

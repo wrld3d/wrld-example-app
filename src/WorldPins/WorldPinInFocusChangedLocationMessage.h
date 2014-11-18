@@ -6,14 +6,14 @@
 
 namespace ExampleApp
 {
-	namespace SearchResultOnMap
+	namespace WorldPins
 	{
-		class SearchResultInFocusChangedLocationMessage
+		class WorldPinInFocusChangedLocationMessage
 		{
 			Eegeo::v2 m_screenLocation;
 
 		public:
-			SearchResultInFocusChangedLocationMessage(const Eegeo::v2& screenLocation)
+			WorldPinInFocusChangedLocationMessage(const Eegeo::v2& screenLocation)
 				: m_screenLocation(screenLocation)
 			{
 

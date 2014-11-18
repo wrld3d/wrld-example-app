@@ -6,6 +6,7 @@
 #include "WorldPinItemModel.h"
 #include "Space.h"
 #include "VectorMath.h"
+#include "WorldPinFocusData.h"
 
 namespace ExampleApp
 {
@@ -17,6 +18,7 @@ namespace ExampleApp
 			virtual ~IWorldPinsService() {}
 
 			virtual WorldPinItemModel* AddPin(IWorldPinSelectionHandler* pSelectionHandler,
+                                              const WorldPinFocusData& worldPinFocusData,
                                               const Eegeo::Space::LatLong& location,
                                               int iconIndex) = 0;
 
@@ -29,6 +31,9 @@ namespace ExampleApp
 			        Eegeo::v2& screenLocation) const = 0;
 
 			virtual bool HandleTouchTap(const Eegeo::v2& screenTapPoint) = 0;
+            
+            virtual IWorldPinSelectionHandler* GetSelectionHandlerForPin(WorldPinItemModel::WorldPinItemModelId worldPinItemModelId) = 0;
+
 		};
 	}
 }
