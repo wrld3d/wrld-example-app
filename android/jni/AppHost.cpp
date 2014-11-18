@@ -48,7 +48,7 @@
 #include "FlattenButtonModule.h"
 #include "FlattenButtonViewModule.h"
 #include "SearchResultPoiViewModule.h"
-#include "SearchResultOnMapViewModule.h"
+#include "WorldPinOnMapViewModule.h"
 #include "PlaceJumpsModule.h"
 #include "IPlaceJumpController.h"
 #include "SecondaryMenuViewModule.h"
@@ -100,7 +100,7 @@ AppHost::AppHost(
 	,m_pMyPinCreationViewModule(NULL)
 	,m_pMyPinCreationDetailsViewModule(NULL)
 	,m_pSearchResultPoiViewModule(NULL)
-	,m_pSearchResultOnMapViewModule(NULL)
+	,m_pWorldPinOnMapViewModule(NULL)
 	,m_pCompassViewModule(NULL)
 	,m_pApp(NULL)
 	,m_androidPersistentSettingsModel(nativeState)
@@ -340,11 +340,10 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
 	ExampleApp::MobileExampleApp& app = *m_pApp;
 
 	// 3d map view layer.
-	m_pSearchResultOnMapViewModule = Eegeo_NEW(ExampleApp::SearchResultOnMap::SearchResultOnMapViewModule)(
+	m_pWorldPinOnMapViewModule = Eegeo_NEW(ExampleApp::WorldPins::WorldPinOnMapViewModule)(
 	                                     m_nativeState,
-	                                     app.SearchResultOnMapModule().GetSearchResultOnMapInFocusViewModel(),
-	                                     app.SearchResultOnMapModule().GetScreenControlViewModel(),
-	                                     app.SearchResultPoiModule().GetSearchResultPoiViewModel(),
+	                                     app.WorldPinsModule().GetWorldPinInFocusViewModel(),
+	                                     app.WorldPinsModule().GetScreenControlViewModel(),
 	                                     app.PinDiameter()
 	                                 );
 
@@ -451,7 +450,7 @@ void AppHost::DestroyApplicationViewModulesFromUiThread()
 
 		Eegeo_DELETE m_pAboutPageViewModule;
 
-		Eegeo_DELETE m_pSearchResultOnMapViewModule;
+		Eegeo_DELETE m_pWorldPinOnMapViewModule;
 
 		Eegeo_DELETE m_pSearchResultPoiViewModule;
 

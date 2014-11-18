@@ -6,7 +6,7 @@
 
 extern "C"
 {
-	JNIEXPORT void JNICALL Java_com_eegeo_searchresultonmapview_SearchResultOnMapViewJniMethods_HandleClick(
+	JNIEXPORT void JNICALL Java_com_eegeo_worldpinonmapview_WorldPinOnMapViewJniMethods_HandleClick(
 	    JNIEnv* jenv, jobject obj,
 	    jlong nativeObjectPtr);
 }

@@ -1,6 +1,6 @@
 // Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
-package com.eegeo.searchresultonmapview;
+package com.eegeo.worldpinonmapview;
 
 import android.animation.Animator;
 import android.view.View;
@@ -11,7 +11,7 @@ import android.widget.RelativeLayout.LayoutParams;
 import com.eegeo.mobileexampleapp.MainActivity;
 import com.eegeo.mobileexampleapp.R;
 
-public class SearchResultOnMapView implements View.OnClickListener
+public class WorldPinOnMapView implements View.OnClickListener
 {
 	protected MainActivity m_activity = null;
 	protected long m_nativeCallerPointer;
@@ -25,7 +25,7 @@ public class SearchResultOnMapView implements View.OnClickListener
 	private TextView m_titleView;
 	private TextView m_detailsView;
 
-	public SearchResultOnMapView(MainActivity activity, long nativeCallerPointer)
+	public WorldPinOnMapView(MainActivity activity, long nativeCallerPointer)
 	{
 		m_activity = activity;
 		m_nativeCallerPointer = nativeCallerPointer;
@@ -83,7 +83,7 @@ public class SearchResultOnMapView implements View.OnClickListener
 
 	public void onClick(View view)
 	{
-		SearchResultOnMapViewJniMethods.HandleClick(m_nativeCallerPointer);
+		WorldPinOnMapViewJniMethods.HandleClick(m_nativeCallerPointer);
 	}
 
 	private void animateToAlpha(final float alpha)

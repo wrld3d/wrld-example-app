@@ -115,6 +115,8 @@ namespace ExampleApp
     			size_t imageSize,
     			bool shouldShare)
     	{
+    		Eegeo_TTY("Confirm button pressed!\n");
+
     		ASSERT_UI_THREAD
 
     		m_uiToNativeMessageBus.Publish(MyPinCreation::MyPinCreationViewSavePinMessage(
