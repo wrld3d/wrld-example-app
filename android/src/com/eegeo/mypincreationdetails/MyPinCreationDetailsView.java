@@ -1,6 +1,8 @@
 package com.eegeo.mypincreationdetails;
 
 import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 
 import android.content.Intent;
@@ -39,6 +41,8 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
 	protected TextView m_termsAndConditionsLink = null;
 	
 	private Uri m_currentImageUri = null;
+	
+	
 	
 	private final int JPEG_QUALITY = 90;
 	private final String TERMS_AND_CONDITIONS_LINK = "http://sdk.eegeo.com";
@@ -136,9 +140,7 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
 			{
 				try
 				{
-					InputStream is = m_activity.getContentResolver().openInputStream(m_currentImageUri);
-					Bitmap bitmap = BitmapFactory.decodeStream(is);
-					is.close();
+					Bitmap bitmap = decodeImage();
 					
 					ByteArrayOutputStream stream = new ByteArrayOutputStream();
 					bitmap.compress(Bitmap.CompressFormat.JPEG, JPEG_QUALITY, stream);
@@ -155,7 +157,6 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
 			Boolean shouldShare = m_shouldShareButton.isChecked();
 			String uriPath = m_currentImageUri != null ? m_currentImageUri.toString() : "";
 			MyPinCreationDetailsJniMethods.SubmitButtonPressed(m_nativeCallerPointer, titleText, descriptionText, uriPath, byteArray, shouldShare);
-			
 		}
 	}
 
@@ -178,6 +179,32 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
 			m_poiImage.setImageURI(selectedUri);
 			m_currentImageUri = selectedUri;
 		}
+	}
+	
+	private Bitmap decodeImage() throws IOException
+	{
+		final int idealSizePx = 1024;
+		
+		InputStream is = m_activity.getContentResolver().openInputStream(m_currentImageUri);
+		
+		BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+		bmOptions.inJustDecodeBounds = true;
+		
+		Bitmap bitmap = BitmapFactory.decodeStream(is, null, bmOptions);
+		is.close();
+		int photoWidth = bmOptions.outWidth;
+		int photoHeight = bmOptions.outHeight;
+		
+		int scaleFactor = Math.min(photoWidth/idealSizePx, photoHeight/idealSizePx);
+		bmOptions.inJustDecodeBounds = false;
+		bmOptions.inSampleSize = scaleFactor;
+		bmOptions.inPurgeable = true;
+		
+		is = m_activity.getContentResolver().openInputStream(m_currentImageUri);
+		bitmap = BitmapFactory.decodeStream(is, null, bmOptions);
+		is.close();
+		
+		return bitmap;
 	}
 	
 	
