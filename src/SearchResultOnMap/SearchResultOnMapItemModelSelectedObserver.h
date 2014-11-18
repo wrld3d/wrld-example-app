@@ -18,28 +18,13 @@ namespace ExampleApp
 			ExampleAppMessaging::NativeToUiMessageBus& m_nativeToUiMessageBus;
 			Eegeo::Helpers::TCallback1<SearchResultOnMapItemModelSelectedObserver, const SearchResultOnMapItemModelSelectedMessage&> m_handlerBinding;
 
-			void HandleReceivedSearchResultOnMapItemModelSelectedMessage(const SearchResultOnMapItemModelSelectedMessage& message)
-			{
-				if(!m_searchResultPoiViewModel.IsOpen())
-				{
-					m_searchResultPoiViewModel.Open(message.GetModel());
-				}
-			}
+			void HandleReceivedSearchResultOnMapItemModelSelectedMessage(const SearchResultOnMapItemModelSelectedMessage& message);
 
 		public:
 			SearchResultOnMapItemModelSelectedObserver(SearchResultPoi::ISearchResultPoiViewModel& searchResultPoiViewModel,
-			        ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus)
-				: m_searchResultPoiViewModel(searchResultPoiViewModel)
-				, m_nativeToUiMessageBus(nativeToUiMessageBus)
-				, m_handlerBinding(this, &SearchResultOnMapItemModelSelectedObserver::HandleReceivedSearchResultOnMapItemModelSelectedMessage)
-			{
-				m_nativeToUiMessageBus.Subscribe(m_handlerBinding);
-			}
+			        ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus);
 
-			~SearchResultOnMapItemModelSelectedObserver()
-			{
-				m_nativeToUiMessageBus.Unsubscribe(m_handlerBinding);
-			}
+			~SearchResultOnMapItemModelSelectedObserver();
 		};
 	}
 }

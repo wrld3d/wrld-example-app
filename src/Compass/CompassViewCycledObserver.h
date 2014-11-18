@@ -19,26 +19,14 @@ namespace ExampleApp
 			ICompassModel& m_model;
 			Eegeo::Helpers::TCallback1<CompassViewCycledObserver, const CompassViewCycledMessage&> m_handler;
 
-			void OnCompassCycled(const CompassViewCycledMessage& message)
-			{
-				m_model.CycleToNextGpsMode();
-			}
+			void OnCompassCycled(const CompassViewCycledMessage& message);
 
 		public:
 			CompassViewCycledObserver(ICompassModel& model,
 			                          ExampleApp::ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus
-			                         )
-				: m_model(model)
-				, m_uiToNativeMessageBus(uiToNativeMessageBus)
-				, m_handler(this, &CompassViewCycledObserver::OnCompassCycled)
-			{
-				m_uiToNativeMessageBus.Subscribe(m_handler);
-			}
+			                         );
 
-			~CompassViewCycledObserver()
-			{
-				m_uiToNativeMessageBus.Unsubscribe(m_handler);
-			}
+			~CompassViewCycledObserver();
 		};
 	}
 }

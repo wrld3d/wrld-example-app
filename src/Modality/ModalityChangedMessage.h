@@ -11,16 +11,9 @@ namespace ExampleApp
 			float m_modality;
 
 		public:
-			ModalityChangedMessage(float modality)
-				: m_modality(modality)
-			{
+			ModalityChangedMessage(float modality);
 
-			}
-
-			float Modality() const
-			{
-				return m_modality;
-			}
+			float Modality() const;
 		};
 	}
 }

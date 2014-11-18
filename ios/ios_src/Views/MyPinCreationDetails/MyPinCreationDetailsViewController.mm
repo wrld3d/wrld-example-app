@@ -67,8 +67,8 @@
     
     m_pViewModel->Close();
     
-    std::string titleAsString = title ? [title UTF8String] : "Untitled Pin";
-    std::string descriptionAsString = description ? [description UTF8String] : "No Description";
+    std::string titleAsString = (title != nil && title.length > 0) ? [title UTF8String] : "Untitled Pin";
+    std::string descriptionAsString = (description != nil && description.length > 0) ? [description UTF8String] : "No Description";
     std::string imagePathAsString;
     
     Byte* imageDataBytes = NULL;

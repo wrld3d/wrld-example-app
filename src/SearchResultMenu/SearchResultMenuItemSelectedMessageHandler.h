@@ -15,30 +15,17 @@ namespace ExampleApp
 		class SearchResultMenuItemSelectedMessageHandler : private Eegeo::NonCopyable
 		{
 			CameraTransitions::ICameraTransitionController& m_cameraTransitionController;
-			ExampleAppMessaging::UiToNativeMessageBus& m_messageBus;
+			ExampleAppMessaging::UiToNativeMessageBus& m_uiToNativeMessageBus;
 			Eegeo::Helpers::TCallback1<SearchResultMenuItemSelectedMessageHandler, const SearchResultMenuItemSelectedMessage&> m_handleSearchResultMenuItemSelectedMessageBinding;
 
-			void HandleReceivedSearchResultMenuItemSelectedMessage(const SearchResultMenuItemSelectedMessage& message)
-			{
-				const float newDistanceFromInterest = 1000;
-				m_cameraTransitionController.StartTransitionTo(message.SearchResultLocationEcef(), newDistanceFromInterest);
-			}
+			void HandleReceivedSearchResultMenuItemSelectedMessage(const SearchResultMenuItemSelectedMessage& message);
 
 		public:
 			SearchResultMenuItemSelectedMessageHandler(
 			    CameraTransitions::ICameraTransitionController& cameraTransitionController,
-			    ExampleAppMessaging::UiToNativeMessageBus& messageBus)
-				: m_cameraTransitionController(cameraTransitionController)
-				, m_messageBus(messageBus)
-				, m_handleSearchResultMenuItemSelectedMessageBinding(this, &SearchResultMenuItemSelectedMessageHandler::HandleReceivedSearchResultMenuItemSelectedMessage)
-			{
-				m_messageBus.Subscribe(m_handleSearchResultMenuItemSelectedMessageBinding);
-			}
+			    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus);
 
-			~SearchResultMenuItemSelectedMessageHandler()
-			{
-				m_messageBus.Unsubscribe(m_handleSearchResultMenuItemSelectedMessageBinding);
-			}
+			~SearchResultMenuItemSelectedMessageHandler();
 		};
 	}
 }

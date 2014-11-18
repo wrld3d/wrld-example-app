@@ -11,16 +11,9 @@ namespace ExampleApp
         class MyPinCreationStateChangedMessage
         {
         public:
-            MyPinCreationStateChangedMessage(MyPinCreationStage& stage)
-            : m_stage(stage)
-            {
-                
-            }
+            MyPinCreationStateChangedMessage(MyPinCreationStage& stage);
             
-            const MyPinCreationStage& GetMyPinCreationStage() const
-            {
-                return m_stage;
-            }
+            const MyPinCreationStage& GetMyPinCreationStage() const;
             
         private:
             MyPinCreationStage m_stage;

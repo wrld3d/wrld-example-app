@@ -14,15 +14,9 @@ namespace ExampleApp
 			Search::SearchResultModel m_model;
 
 		public:
-			SearchResultOnMapItemModelSelectedMessage(const Search::SearchResultModel& model)
-				: m_model(model)
-			{
-			}
+			SearchResultOnMapItemModelSelectedMessage(const Search::SearchResultModel& model);
 
-			const Search::SearchResultModel& GetModel() const
-			{
-				return m_model;
-			}
+			const Search::SearchResultModel& GetModel() const;
 		};
 	}
 }

@@ -93,7 +93,6 @@ namespace ExampleApp
             {
                 Eegeo_DELETE m_pPoiRingTouchController;
                 Eegeo_DELETE m_pTerrainRayPicker;
-                Eegeo_DELETE m_pPoiRingTouchController;
                 
                 m_renderableFilters.RemoveRenderableFilter(*m_pPoiRingView);
                 Eegeo_DELETE m_pPoiRingView;

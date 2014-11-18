@@ -16,18 +16,9 @@ namespace ExampleApp
         public:
             
             MyPinCreationViewSavePinHandler(IMyPinCreationModel& myPinCreationModel,
-                                            ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus)
-            : m_myPinCreationModel(myPinCreationModel)
-            , m_uiToNativeMessageBus(uiToNativeMessageBus)
-            , m_handler(this, &MyPinCreationViewSavePinHandler::OnMyPinCreationViewSavePinMessageReceived)
-            {
-                m_uiToNativeMessageBus.Subscribe(m_handler);
-            }
+                                            ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus);
             
-            ~MyPinCreationViewSavePinHandler()
-            {
-                m_uiToNativeMessageBus.Unsubscribe(m_handler);
-            }
+            ~MyPinCreationViewSavePinHandler();
             
         private:
             IMyPinCreationModel& m_myPinCreationModel;
@@ -35,14 +26,7 @@ namespace ExampleApp
             
             Eegeo::Helpers::TCallback1<MyPinCreationViewSavePinHandler, const MyPinCreationViewSavePinMessage&> m_handler;
             
-            void OnMyPinCreationViewSavePinMessageReceived(const MyPinCreationViewSavePinMessage& message)
-            {
-                m_myPinCreationModel.SavePoi(message.GetTitle(),
-                                             message.GetDescription(),
-                                             message.GetImageData(),
-                                             message.GetImageSize(),
-                                             message.GetShouldShare());
-            }
+            void OnMyPinCreationViewSavePinMessageReceived(const MyPinCreationViewSavePinMessage& message);
         };
     }
 }

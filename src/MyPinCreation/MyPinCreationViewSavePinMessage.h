@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include <string>
 #include "Types.h"
 
 namespace ExampleApp
@@ -15,45 +16,19 @@ namespace ExampleApp
                                             const std::string& description,
                                             Byte* pImageData,
                                             size_t imageSize,
-                                            bool shouldShare)
-            : m_title(title)
-            , m_description(description)
-            , m_pImageData(pImageData)
-            , m_imageSize(imageSize)
-            , m_shouldShare(shouldShare)
-            {
-                
-            }
+                                            bool shouldShare);
             
-            ~MyPinCreationViewSavePinMessage()
-            {
-                
-            }
+            ~MyPinCreationViewSavePinMessage();
             
-            const std::string& GetTitle() const
-            {
-                return m_title;
-            }
+            const std::string& GetTitle() const;
             
-            const std::string& GetDescription() const
-            {
-                return m_description;
-            }
+            const std::string& GetDescription() const;
             
-            Byte* GetImageData() const
-            {
-                return m_pImageData;
-            }
+            Byte* GetImageData() const;
             
-            size_t GetImageSize() const
-            {
-                return m_imageSize;
-            }
+            size_t GetImageSize() const;
             
-            bool GetShouldShare() const
-            {
-                return m_shouldShare;
-            }
+            bool GetShouldShare() const;
             
         private:
             std::string m_title;

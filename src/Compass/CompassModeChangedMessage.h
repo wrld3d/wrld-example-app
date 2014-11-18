@@ -14,15 +14,9 @@ namespace ExampleApp
 			GpsMode::Values m_mode;
 
 		public:
-			CompassModeChangedMessage(GpsMode::Values mode)
-				: m_mode(mode)
-			{
-			}
+			CompassModeChangedMessage(GpsMode::Values mode);
 
-			GpsMode::Values GetMode() const
-			{
-				return m_mode;
-			}
+			GpsMode::Values GetMode() const;
 		};
 	}
 }

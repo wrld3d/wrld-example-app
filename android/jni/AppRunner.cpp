@@ -63,6 +63,8 @@ void AppRunner::Pause()
 
 void AppRunner::Resume()
 {
+	ASSERT_NATIVE_THREAD
+
 	if(m_pAppHost != NULL)
 	{
 		m_pAppHost->OnResume();

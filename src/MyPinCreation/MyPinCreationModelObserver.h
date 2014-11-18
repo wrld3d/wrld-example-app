@@ -15,18 +15,9 @@ namespace ExampleApp
         {
         public:
             MyPinCreationModelObserver(IMyPinCreationModel& myPinCreationModel,
-                                       ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus)
-            : m_myPinCreationModel(myPinCreationModel)
-            , m_nativeToUiMessageBus(nativeToUiMessageBus)
-            , m_callback(this, &MyPinCreationModelObserver::HandlePoiCreationModelStateChange)
-            {
-                m_myPinCreationModel.AddStateChangedCallback(m_callback);
-            }
+                                       ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus);
             
-            ~MyPinCreationModelObserver()
-            {
-                m_myPinCreationModel.RemoveStateChangedCallback(m_callback);
-            }
+            ~MyPinCreationModelObserver();
         
         private:
             IMyPinCreationModel& m_myPinCreationModel;
@@ -34,10 +25,7 @@ namespace ExampleApp
             
             Eegeo::Helpers::TCallback1<MyPinCreationModelObserver, MyPinCreationStage> m_callback;
             
-            void HandlePoiCreationModelStateChange(MyPinCreationStage& stage)
-            {
-                m_nativeToUiMessageBus.Publish(MyPinCreationStateChangedMessage(stage));
-            }
+            void HandlePoiCreationModelStateChange(MyPinCreationStage& stage);
         };
     }
 }

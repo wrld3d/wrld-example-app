@@ -15,29 +15,17 @@ namespace ExampleApp
 		class SearchResultMenuSearchQueryRemovedMessageHandler : private Eegeo::NonCopyable
 		{
 			SearchResultMenu::ISearchResultMenuViewModel& m_searchResultMenuViewModel;
-			ExampleAppMessaging::NativeToUiMessageBus& m_messageBus;
+			ExampleAppMessaging::NativeToUiMessageBus& m_nativeToUiMessageBus;
 			Eegeo::Helpers::TCallback1<SearchResultMenuSearchQueryRemovedMessageHandler, const Search::SearchQueryRemovedMessage&> m_handlerBinding;
 
-			void HandleReceivedSearchQueryRemovedMessage(const Search::SearchQueryRemovedMessage& message)
-			{
-				m_searchResultMenuViewModel.SetHasSearchQuery(false);
-			}
+			void HandleReceivedSearchQueryRemovedMessage(const Search::SearchQueryRemovedMessage& message);
 
 		public:
 			SearchResultMenuSearchQueryRemovedMessageHandler(
 			    SearchResultMenu::ISearchResultMenuViewModel& searchResultMenuViewModel,
-			    ExampleAppMessaging::NativeToUiMessageBus& messageBus)
-				: m_searchResultMenuViewModel(searchResultMenuViewModel)
-				, m_messageBus(messageBus)
-				, m_handlerBinding(this, &SearchResultMenuSearchQueryRemovedMessageHandler::HandleReceivedSearchQueryRemovedMessage)
-			{
-				m_messageBus.Subscribe(m_handlerBinding);
-			}
+			    ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus);
 
-			~SearchResultMenuSearchQueryRemovedMessageHandler()
-			{
-				m_messageBus.Unsubscribe(m_handlerBinding);
-			}
+			~SearchResultMenuSearchQueryRemovedMessageHandler();
 		};
 	}
 }
