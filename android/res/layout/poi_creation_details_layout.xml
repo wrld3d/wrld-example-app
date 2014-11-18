@@ -75,9 +75,10 @@
 		                android:layout_width="wrap_content"
 		                android:layout_height="wrap_content"
 		                android:layout_margin="10dp"
-		                android:scaleType="fitStart"
-		                android:src="@drawable/image_blank"
-		                android:contentDescription="@string/poi_creation_details_image" />
+		                android:adjustViewBounds="true"
+		                android:contentDescription="@string/poi_creation_details_image"
+		                android:scaleType="fitCenter"
+		                android:src="@drawable/image_blank" />
 		            
 		        </LinearLayout>
 	        
