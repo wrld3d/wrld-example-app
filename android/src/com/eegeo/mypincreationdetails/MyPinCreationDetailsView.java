@@ -7,12 +7,15 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.eegeo.helpers.IActivityIntentResultHandler;
@@ -33,10 +36,12 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
 	protected EditText m_title = null;
 	protected EditText m_description = null;
 	protected ToggleButton m_shouldShareButton = null;
+	protected TextView m_termsAndConditionsLink = null;
 	
 	private Uri m_currentImageUri = null;
 	
 	private final int JPEG_QUALITY = 90;
+	private final String TERMS_AND_CONDITIONS_LINK = "http://sdk.eegeo.com";
 	
 	public MyPinCreationDetailsView(MainActivity activity, long nativeCallerPointer)
 	{
@@ -74,8 +79,14 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
 		m_title = (EditText)m_view.findViewById(R.id.poi_creation_details_title);
 		m_description = (EditText)m_view.findViewById(R.id.poi_creation_details_description);
 		m_shouldShareButton = (ToggleButton)m_view.findViewById(R.id.poi_creation_details_share_togglebutton);
+		m_termsAndConditionsLink = (TextView)m_view.findViewById(R.id.poi_creation_details_terms_conditions_link);
 		
 		m_view.setVisibility(View.GONE);
+		
+		m_termsAndConditionsLink.setClickable(true);
+		m_termsAndConditionsLink.setMovementMethod(LinkMovementMethod.getInstance());
+		String linkText = "<a href='" + TERMS_AND_CONDITIONS_LINK + "'>Terms & Conditions</a>";
+		m_termsAndConditionsLink.setText(Html.fromHtml(linkText));
 		
 		m_activity.getPhotoIntentDispatcher().addActivityIntentResultHandler(this);
 		
