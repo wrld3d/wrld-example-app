@@ -123,6 +123,7 @@
                 android:textStyle="italic" />
             
             <TextView
+                android:id="@+id/poi_creation_details_terms_conditions_link"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:layout_alignParentRight="true"

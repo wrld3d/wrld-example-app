@@ -27,15 +27,25 @@ JNIEXPORT void JNICALL Java_com_eegeo_mypincreationdetails_MyPinCreationDetailsJ
 	std::string imageString = imageChars;
 	jenv->ReleaseStringUTFChars(imagePath, imageChars);
 
-	jbyte* pBuffer = jenv->GetByteArrayElements(imageData, NULL);
-
-	Byte* imageDataBytes = reinterpret_cast<Byte *>(pBuffer);
-	size_t imageSize = std::size_t(jenv->GetArrayLength(imageData));
-
 	ExampleApp::MyPinCreationDetails::MyPinCreationDetailsViewController* pController = reinterpret_cast<ExampleApp::MyPinCreationDetails::MyPinCreationDetailsViewController*>(nativeObjectPtr);
+
+	Byte* imageDataBytes = NULL;
+	size_t imageSize = 0;
+	jbyte* pBuffer = NULL;
+
+	if(imageData != NULL)
+	{
+		pBuffer = jenv->GetByteArrayElements(imageData, NULL);
+
+		imageDataBytes = reinterpret_cast<Byte *>(pBuffer);
+		imageSize = std::size_t(jenv->GetArrayLength(imageData));
+	}
+
 	pController->HandleConfirmButtonPressed(titleString, descriptionString, imageString, imageDataBytes, imageSize, shouldShare);
 
-	jenv->ReleaseByteArrayElements(imageData, pBuffer, 0);
-
+	if(imageData != NULL)
+	{
+		jenv->ReleaseByteArrayElements(imageData, pBuffer, 0);
+	}
 }
 

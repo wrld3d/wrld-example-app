@@ -7,12 +7,15 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.eegeo.helpers.IActivityIntentResultHandler;
@@ -33,10 +36,12 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
 	protected EditText m_title = null;
 	protected EditText m_description = null;
 	protected ToggleButton m_shouldShareButton = null;
+	protected TextView m_termsAndConditionsLink = null;
 	
 	private Uri m_currentImageUri = null;
 	
 	private final int JPEG_QUALITY = 90;
+	private final String TERMS_AND_CONDITIONS_LINK = "http://sdk.eegeo.com";
 	
 	public MyPinCreationDetailsView(MainActivity activity, long nativeCallerPointer)
 	{
@@ -74,8 +79,14 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
 		m_title = (EditText)m_view.findViewById(R.id.poi_creation_details_title);
 		m_description = (EditText)m_view.findViewById(R.id.poi_creation_details_description);
 		m_shouldShareButton = (ToggleButton)m_view.findViewById(R.id.poi_creation_details_share_togglebutton);
+		m_termsAndConditionsLink = (TextView)m_view.findViewById(R.id.poi_creation_details_terms_conditions_link);
 		
 		m_view.setVisibility(View.GONE);
+		
+		m_termsAndConditionsLink.setClickable(true);
+		m_termsAndConditionsLink.setMovementMethod(LinkMovementMethod.getInstance());
+		String linkText = "<a href='" + TERMS_AND_CONDITIONS_LINK + "'>Terms & Conditions</a>";
+		m_termsAndConditionsLink.setText(Html.fromHtml(linkText));
 		
 		m_activity.getPhotoIntentDispatcher().addActivityIntentResultHandler(this);
 		
@@ -90,6 +101,8 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
 		m_poiImage.setImageResource(R.drawable.image_blank);
 		m_title.setText("");
 		m_description.setText("");
+		
+		m_currentImageUri = null;
 	}
 	
 	public void dismiss()
@@ -117,24 +130,31 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
 			String titleText = m_title.getText().toString();
 			String descriptionText = m_description.getText().toString();
 			
-			try
+			byte[] byteArray = null;
+			
+			if(m_currentImageUri != null)
 			{
-				InputStream is = m_activity.getContentResolver().openInputStream(m_currentImageUri);
-				Bitmap bitmap = BitmapFactory.decodeStream(is);
-				is.close();
-				
-				ByteArrayOutputStream stream = new ByteArrayOutputStream();
-				bitmap.compress(Bitmap.CompressFormat.JPEG, JPEG_QUALITY, stream);
-				byte[] byteArray = stream.toByteArray();
-				stream.close();
-				
-				Boolean shouldShare = m_shouldShareButton.isChecked();
-				MyPinCreationDetailsJniMethods.SubmitButtonPressed(m_nativeCallerPointer, titleText, descriptionText, m_currentImageUri.toString(), byteArray, shouldShare);
+				try
+				{
+					InputStream is = m_activity.getContentResolver().openInputStream(m_currentImageUri);
+					Bitmap bitmap = BitmapFactory.decodeStream(is);
+					is.close();
+					
+					ByteArrayOutputStream stream = new ByteArrayOutputStream();
+					bitmap.compress(Bitmap.CompressFormat.JPEG, JPEG_QUALITY, stream);
+					byteArray = stream.toByteArray();
+					stream.close();
+					
+				}
+				catch(Exception e)
+				{
+					Log.e("EEGEO", e.getMessage());
+				}
 			}
-			catch(Exception e)
-			{
-				Log.e("EEGEO", e.getMessage());
-			}
+			
+			Boolean shouldShare = m_shouldShareButton.isChecked();
+			String uriPath = m_currentImageUri != null ? m_currentImageUri.toString() : "";
+			MyPinCreationDetailsJniMethods.SubmitButtonPressed(m_nativeCallerPointer, titleText, descriptionText, uriPath, byteArray, shouldShare);
 			
 		}
 	}
