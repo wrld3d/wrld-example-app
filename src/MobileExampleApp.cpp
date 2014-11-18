@@ -39,6 +39,7 @@
 #include "MyPinCreationDetailsModule.h"
 #include "MyPinsModule.h"
 #include "IWorldPinsInFocusController.h"
+#include "IWorldPinsScaleController.h"
 
 namespace ExampleApp
 {
@@ -286,10 +287,6 @@ namespace ExampleApp
 		m_pSearchResultOnMapModule = Eegeo_NEW(ExampleApp::SearchResultOnMap::SearchResultOnMapModule)(m_pSearchModule->GetSearchResultRepository(),
                                                                                                        m_pSearchResultPoiModule->GetSearchResultPoiViewModel(),
                                                                                                        m_pWorldPinsModule->GetWorldPinsService(),
-                                                                                                       m_identityProvider,
-                                                                                                       *m_pGlobeCameraController->GetCamera(),
-                                                                                                       m_pWorldPinsModule->GetWorldPinsScaleController(),
-                                                                                                       m_uiToNativeMessageBus,
                                                                                                        m_nativeToUiMessageBus);
         
         m_pMyPinsModule = Eegeo_NEW(ExampleApp::MyPins::MyPinsModule)(m_pWorldPinsModule->GetWorldPinsService(),
@@ -441,7 +438,8 @@ namespace ExampleApp
                                                                                mapModule.GetEnvironmentFlatteningService(),
                                                                                world.GetScreenProperties(),
                                                                                m_identityProvider,
-                                                                               m_nativeToUiMessageBus);
+                                                                               m_nativeToUiMessageBus,
+                                                                               m_uiToNativeMessageBus);
 	}
 
 	void MobileExampleApp::OnPause()

@@ -18,7 +18,8 @@ namespace ExampleApp
                                          const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                          const Eegeo::Rendering::ScreenProperties& screenProperties,
                                          Eegeo::Helpers::IIdentityProvider& identityProvider,
-                                         ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus)
+                                         ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus,
+                                         ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus)
         {
             m_pWorldPinsFactory = Eegeo_NEW(WorldPinsFactory);
             
@@ -45,11 +46,15 @@ namespace ExampleApp
             m_pWorldPinInFocusObserver = Eegeo_NEW(WorldPinInFocusObserver)(*m_pWorldPinsInFocusViewModel,
                                                                             nativeToUiMessageBus);
             
+            m_pWorldPinsModalityObserver = Eegeo_NEW(WorldPinsModalityObserver)(*m_pWorldPinsScaleController,
+                                                                                uiToNativeMessageBus);
+            
             
         }
         
         WorldPinsModule::~WorldPinsModule()
         {
+            Eegeo_DELETE m_pWorldPinsModalityObserver;
             Eegeo_DELETE m_pWorldPinInFocusObserver;
             Eegeo_DELETE m_pWorldPinsInFocusController;
             Eegeo_DELETE m_pWorldPinsInFocusViewModel;
