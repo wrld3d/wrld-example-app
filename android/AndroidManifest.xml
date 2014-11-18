@@ -11,6 +11,12 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-feature android:name="android.hardware.camera"
+        android:required="true"/>
+    <uses-feature android:name="android.hardware.camera.autofocus"
+        android:required="true"/>
 
     <application android:icon="@drawable/icon" android:label="eeGeo Example" android:theme="@android:style/Theme.NoTitleBar">
        
@@ -19,7 +25,7 @@
                   android:configChanges="orientation|keyboardHidden"
                   android:screenOrientation="landscape"
                   android:windowSoftInputMode="adjustPan"
-              	  android:launchMode="singleInstance"
+              	  android:launchMode="standard"
               	  android:hardwareAccelerated="false">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

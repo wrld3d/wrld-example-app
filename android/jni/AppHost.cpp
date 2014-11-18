@@ -62,6 +62,10 @@
 #include "IMenuViewController.h"
 #include "CategorySearchModule.h"
 #include "ScreenProperties.h"
+#include "MyPinCreationViewModule.h"
+#include "IMyPinCreationModule.h"
+#include "IMyPinCreationDetailsModule.h"
+#include "MyPinCreationDetailsViewModule.h"
 #include "Logger.h"
 #include "AndroidAppThreadAssertionMacros.h"
 #include "SearchResultRepositoryObserver.h"
@@ -93,6 +97,8 @@ AppHost::AppHost(
 	,m_pSearchResultMenuViewModule(NULL)
 	,m_pModalBackgroundViewModule(NULL)
 	,m_pFlattenButtonViewModule(NULL)
+	,m_pMyPinCreationViewModule(NULL)
+	,m_pMyPinCreationDetailsViewModule(NULL)
 	,m_pSearchResultPoiViewModule(NULL)
 	,m_pSearchResultOnMapViewModule(NULL)
 	,m_pCompassViewModule(NULL)
@@ -350,6 +356,16 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
 	                                 m_nativeToUiMessageBus
 	                             );
 
+	m_pMyPinCreationViewModule = Eegeo_NEW(ExampleApp::MyPinCreation::MyPinCreationViewModule)(
+									m_nativeState,
+									app.MyPinCreationModule().GetMyPinCreationModel(),
+									app.MyPinCreationModule().GetMyPinCreationInitiationViewModel(),
+									app.MyPinCreationModule().GetMyPinCreationConfirmationViewModel(),
+									app.MyPinCreationDetailsModule().GetMyPinCreationDetailsViewModel(),
+									m_uiToNativeMessageBus
+								);
+
+
 	m_pCompassViewModule = Eegeo_NEW(ExampleApp::Compass::CompassViewModule)(
 	                           m_nativeState,
 	                           app.CompassModule().GetCompassViewModel(),
@@ -403,6 +419,13 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
 	                             app.AboutPageModule().GetAboutPageViewModel()
 	                         );
 
+	m_pMyPinCreationDetailsViewModule = Eegeo_NEW(ExampleApp::MyPinCreationDetails::MyPinCreationDetailsViewModule)(
+								m_nativeState,
+								app.MyPinCreationModule().GetMyPinCreationModel(),
+								app.MyPinCreationDetailsModule().GetMyPinCreationDetailsViewModel(),
+								m_uiToNativeMessageBus
+							);
+
 	m_pViewControllerUpdaterModule = Eegeo_NEW(ExampleApp::ViewControllerUpdater::ViewControllerUpdaterModule);
 
 	ExampleApp::ViewControllerUpdater::IViewControllerUpdaterModel& viewControllerUpdaterModel = m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel();
@@ -420,7 +443,11 @@ void AppHost::DestroyApplicationViewModulesFromUiThread()
 	{
 		Eegeo_DELETE m_pViewControllerUpdaterModule;
 
+		Eegeo_DELETE m_pMyPinCreationDetailsViewModule;
+
 		Eegeo_DELETE m_pFlattenButtonViewModule;
+
+		Eegeo_DELETE m_pMyPinCreationViewModule;
 
 		Eegeo_DELETE m_pAboutPageViewModule;
 
