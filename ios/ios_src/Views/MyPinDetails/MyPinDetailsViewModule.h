@@ -5,6 +5,7 @@
 #include "Types.h"
 #include "MyPinDetails.h"
 #include "IMyPinDetailsViewModule.h"
+#include "UiToNativeMessageBus.h"
 
 namespace ExampleApp
 {
@@ -16,7 +17,8 @@ namespace ExampleApp
 			MyPinDetailsViewController* m_pMyPinDetailsViewController;
 
 		public:
-			MyPinDetailsViewModule(IMyPinDetailsViewModel& MyPinDetailsViewModel);
+			MyPinDetailsViewModule(ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
+                                   IMyPinDetailsViewModel& MyPinDetailsViewModel);
 
 			~MyPinDetailsViewModule();
 

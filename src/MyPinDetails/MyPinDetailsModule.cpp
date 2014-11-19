@@ -10,13 +10,18 @@ namespace ExampleApp
 	{
 		MyPinDetailsModule::MyPinDetailsModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
                                                Reaction::IReactionControllerModel& reactionControllerModel,
-                                               ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus)
+                                               MyPins::IMyPinsService& myPinsService,
+                                               ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus,
+                                               ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus)
 		{
 			m_pMyPinDetailsViewModel = Eegeo_NEW(MyPinDetailsViewModel)(identityProvider.GetNextIdentity(),
 			                              reactionControllerModel);
             
             m_pMyPinDetailsModelSelectedObserver = Eegeo_NEW(MyPinDetailsModelSelectedObserver)(*m_pMyPinDetailsViewModel,
                                                                                                 nativeToUiMessageBus);
+            
+            m_pMyPinDetailsViewRemovePinHandler = Eegeo_NEW(MyPinDetailsViewRemovePinHandler)(myPinsService,
+                                                                                              uiToNativeMessageBus);
 		}
 
 		MyPinDetailsModule::~MyPinDetailsModule()

@@ -239,7 +239,8 @@ void AppHost::CreateApplicationViewModules()
     m_pMyPinCreationDetailsViewModule = Eegeo_NEW(ExampleApp::MyPinCreationDetails::MyPinCreationDetailsViewModule)(m_uiToNativeMessageBus,
                                                                                                                     app.MyPinCreationDetailsModule().GetMyPinCreationDetailsViewModel());
     
-    m_pMyPinDetailsViewModule = Eegeo_NEW(ExampleApp::MyPinDetails::MyPinDetailsViewModule)(app.MyPinDetailsModule().GetMyPinDetailsViewModel());
+    m_pMyPinDetailsViewModule = Eegeo_NEW(ExampleApp::MyPinDetails::MyPinDetailsViewModule)(m_uiToNativeMessageBus,
+                                                                                            app.MyPinDetailsModule().GetMyPinDetailsViewModel());
 
     // 3d map view layer.
     [m_pView addSubview: &m_pWorldPinOnMapViewModule->GetWorldPinOnMapView()];

@@ -25,9 +25,13 @@ namespace ExampleApp
                                      int myPinId,
                                      std::string& out_filename);
             
+            void DeleteImageFromDisk(const std::string& imagePath);
+            
             void SavePinModelToDisk(const MyPinModel& pinModel);
             
             void LoadPinModelsFromDisk(std::vector<MyPinModel*>& out_pinModels);
+            
+            void SaveAllRepositoryPinsToDisk(const std::vector<MyPinModel*>& pinModels);
         
             int GetLastIdWrittenToDisk() const;
             

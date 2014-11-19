@@ -6,19 +6,17 @@
 #include "IMyPinDetailsViewModel.h"
 #include "ICallback.h"
 #include "MyPinDetailsViewControllerInterop.h"
+#include "MyPinDetailsViewRemovePinMessage.h"
 
-@interface MyPinDetailsViewController()<UIGestureRecognizerDelegate>
-{
-	UITapGestureRecognizer* _tapGestureRecogniser;
-}
-@end
 
 @implementation MyPinDetailsViewController
 
-- (id)initWithParams:(ExampleApp::MyPinDetails::IMyPinDetailsViewModel*)pMyPinDetailsViewModel;
+- (id)initWithParams:(ExampleApp::ExampleAppMessaging::UiToNativeMessageBus*) pUiToNativeMessageBus
+                    :(ExampleApp::MyPinDetails::IMyPinDetailsViewModel*)pMyPinDetailsViewModel;
 {
 	if(self = [super init])
 	{
+        m_pUiToNativeMessageBus = pUiToNativeMessageBus;
 		m_pMyPinDetailsViewModel = pMyPinDetailsViewModel;
 		m_pInterop = Eegeo_NEW(ExampleApp::MyPinDetails::MyPinDetailsViewControllerInterop)(self, *m_pMyPinDetailsViewModel);
 
@@ -31,9 +29,6 @@
 			[self openWithModel:m_pMyPinDetailsViewModel->GetMyPinModel()];
 		}
 
-		_tapGestureRecogniser = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(_tapTabGesture:)] autorelease];
-		[_tapGestureRecogniser setDelegate:self];
-		[[self.pMyPinDetailsView pCloseButton] addGestureRecognizer: _tapGestureRecogniser];
 	}
 
 	return self;
@@ -64,9 +59,18 @@
 	[self.pMyPinDetailsView setFullyInactive];
 }
 
-- (void)_tapTabGesture:(UITapGestureRecognizer *)recognizer
+- (void) handleCloseButtonPressed
 {
-	m_pMyPinDetailsViewModel->Close();
+    m_pMyPinDetailsViewModel->Close();
+}
+
+- (void) handleRemovePinButtonPressed
+{
+    const ExampleApp::MyPins::MyPinModel& myPinModel = m_pMyPinDetailsViewModel->GetMyPinModel();
+    ExampleApp::MyPinDetails::MyPinDetailsViewRemovePinMessage message(myPinModel.Identifier());
+    m_pUiToNativeMessageBus->Publish(message);
+    
+    m_pMyPinDetailsViewModel->Close();
 }
 
 @end

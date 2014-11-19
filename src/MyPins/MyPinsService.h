@@ -26,7 +26,7 @@ namespace ExampleApp
                           Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory);
 
             
-            void RemovePin(MyPinModel* myPinModel);
+            void RemovePinWithId(const int myPinId);
             
             void SavePin(const std::string& title,
                          const std::string& description,
@@ -51,12 +51,14 @@ namespace ExampleApp
             
             unsigned int m_lastIdUsed;
             
-            typedef std::map<const MyPinModel*, WorldPins::WorldPinItemModel*> TMyPinToWorldPinMap;
+            typedef std::map<MyPinModel*, WorldPins::WorldPinItemModel*> TMyPinToWorldPinMap;
             TMyPinToWorldPinMap m_myPinToWorldPinMap;
             
             void AddPinToMap(MyPinModel* pMyPinModel);
             
             void SubmitPinToWebService(const MyPinModel& myPinModel);
+            
+            MyPinModel* GetPinWithId(int pinId);
         };
     }
 }

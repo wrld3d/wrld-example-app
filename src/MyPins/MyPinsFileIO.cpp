@@ -85,6 +85,14 @@ namespace ExampleApp
             return false;
         }
         
+        void MyPinsFileIO::DeleteImageFromDisk(const std::string& imagePath)
+        {
+            if (m_fileIO.Exists(imagePath))
+            {
+                m_fileIO.DeleteFile(imagePath);
+            }
+        }
+        
         void MyPinsFileIO::SavePinModelToDisk(const MyPinModel& pinModel)
         {
             std::fstream stream;
@@ -134,6 +142,49 @@ namespace ExampleApp
                 Eegeo_TTY("Couldn't open file:%s\n", MyPinsDataFilename.c_str());
             }
         }
+        
+        
+        void MyPinsFileIO::SaveAllRepositoryPinsToDisk(const std::vector<MyPinModel*>& pinModels)
+        {
+            if (m_fileIO.Exists(MyPinsDataFilename))
+            {
+                m_fileIO.DeleteFile(MyPinsDataFilename);
+            }
+            
+            rapidjson::Document jsonDoc;
+            jsonDoc.SetObject();
+            
+            rapidjson::Value pinsArray(rapidjson::kArrayType);
+            pinsArray.SetArray();
+            rapidjson::Document::AllocatorType& allocator = jsonDoc.GetAllocator();
+            
+            jsonDoc.AddMember(MyPinsJsonArrayName.c_str(), pinsArray, allocator);
+            rapidjson::Value& myPinsArray = jsonDoc[MyPinsJsonArrayName.c_str()];
+            
+            for (std::vector<MyPinModel*>::const_iterator it = pinModels.begin(); it != pinModels.end(); ++it)
+            {
+                const MyPinModel* pinModel = *it;
+                const Eegeo::Space::LatLong& latLong = pinModel->GetLatLong();
+                
+                rapidjson::Value valueObject(rapidjson::kObjectType);
+                valueObject.AddMember("id", pinModel->Identifier(), allocator);
+                valueObject.AddMember("title", pinModel->GetTitle().c_str(), allocator);
+                valueObject.AddMember("description", pinModel->GetDescription().c_str(), allocator);
+                valueObject.AddMember("image", pinModel->GetImagePath().c_str(), allocator);
+                valueObject.AddMember("latitude", latLong.GetLatitudeInDegrees(), allocator);
+                valueObject.AddMember("longitude", latLong.GetLongitudeInDegrees(), allocator);
+                
+                myPinsArray.PushBack(valueObject, allocator);
+            }
+            
+            rapidjson::StringBuffer strbuf;
+            rapidjson::Writer<rapidjson::StringBuffer> writer(strbuf);
+            jsonDoc.Accept(writer);
+            
+            std::string jsonString(strbuf.GetString());
+            m_fileIO.WriteFile((Byte*)jsonString.c_str(), jsonString.size(), MyPinsDataFilename);
+        }
+        
         
         void MyPinsFileIO::LoadPinModelsFromDisk(std::vector<MyPinModel*>& out_pinModels)
         {

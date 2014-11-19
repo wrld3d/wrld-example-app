@@ -16,6 +16,7 @@
 #include "SearchResultViewClearedMessage.h"
 #include "MyPinCreationViewStateChangedMessage.h"
 #include "MyPinCreationViewSavePinMessage.h"
+#include "MyPinDetailsViewRemovePinMessage.h"
 
 namespace ExampleApp
 {
@@ -33,6 +34,7 @@ namespace ExampleApp
 			, public Eegeo::Messaging::CatalogBinding<SearchResultMenu::SearchResultViewClearedMessage>
             , public Eegeo::Messaging::CatalogBinding<MyPinCreation::MyPinCreationViewStateChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<MyPinCreation::MyPinCreationViewSavePinMessage>
+            , public Eegeo::Messaging::CatalogBinding<MyPinDetails::MyPinDetailsViewRemovePinMessage>
 			, private Eegeo::NonCopyable
 		{
 

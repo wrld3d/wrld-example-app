@@ -23,8 +23,6 @@ namespace ExampleApp
 {
     namespace MyPins
     {
-
-        
         MyPinsService::MyPinsService(IMyPinsRepository& myPinsRepository,
                                      MyPinsFileIO& myPinsFileIO,
                                      IMyPinSelectionHandlerFactory& myPinSelectionHandlerFactory,
@@ -57,18 +55,27 @@ namespace ExampleApp
             m_myPinToWorldPinMap.insert(std::make_pair(pMyPinModel, worldPinItemModel));
         }
         
-        void MyPinsService::RemovePin(MyPinModel* myPinModel)
+        void MyPinsService::RemovePinWithId(const int myPinId)
         {
-            TMyPinToWorldPinMap::iterator it = m_myPinToWorldPinMap.find(myPinModel);
-            
-            if (it != m_myPinToWorldPinMap.end())
+            for (TMyPinToWorldPinMap::iterator it = m_myPinToWorldPinMap.begin(); it != m_myPinToWorldPinMap.end(); ++it)
             {
+                MyPinModel* pinModel = it->first;
                 WorldPins::WorldPinItemModel* worldPinItemModel = it->second;
-                m_worldPinsService.RemovePin(worldPinItemModel);
                 
-                m_myPinsRepository.RemoveItem(myPinModel);
-                m_myPinToWorldPinMap.erase(it);
-                Eegeo_DELETE myPinModel;
+                if (pinModel->Identifier() == myPinId)
+                {
+                    if (!pinModel->GetImagePath().empty())
+                    {
+                        m_myPinsFileIO.DeleteImageFromDisk(pinModel->GetImagePath());
+                    }
+                    
+                    m_worldPinsService.RemovePin(worldPinItemModel);
+                    
+                    m_myPinsRepository.RemoveItem(pinModel);
+                    m_myPinToWorldPinMap.erase(it);
+                    
+                    break;
+                }
             }
         }
         

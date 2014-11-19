@@ -33,15 +33,18 @@ namespace ExampleApp
             m_pMenuOptionsModel = Eegeo_NEW(Menu::MenuOptionsModel)(*m_pMenuModel);
             
             m_pMyPinsRepository = Eegeo_NEW(MyPinsRepository)();
+
+            m_pMyPinsSelectionHandlerFactory = Eegeo_NEW(MyPinSelectionHandlerFactory)(nativeToUiMessageBus);
+            
+            m_pMyPinsFileIO = Eegeo_NEW(MyPinsFileIO)(platformAbstractions.GetFileIO(), persistentSettings);
             
             m_pMyPinsRepositoryObserver = Eegeo_NEW(MyPinsRepositoryObserver)(*m_pMyPinsRepository,
+                                                                              *m_pMyPinsFileIO,
                                                                               *m_pMenuOptionsModel,
                                                                               menuViewModel,
                                                                               uiToNativeMessageBus);
             
-            m_pMyPinsSelectionHandlerFactory = Eegeo_NEW(MyPinSelectionHandlerFactory)(nativeToUiMessageBus);
             
-            m_pMyPinsFileIO = Eegeo_NEW(MyPinsFileIO)(platformAbstractions.GetFileIO(), persistentSettings);
             m_pMyPinsService = Eegeo_NEW(MyPinsService)(*m_pMyPinsRepository,
                                                         *m_pMyPinsFileIO,
                                                         *m_pMyPinsSelectionHandlerFactory,

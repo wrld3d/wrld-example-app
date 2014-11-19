@@ -9,7 +9,7 @@
 @class MyPinDetailsView;
 @class MyPinDetailsViewController;
 
-@interface MyPinDetailsView : UIView
+@interface MyPinDetailsView : UIView <UIAlertViewDelegate>
 {
 	__weak MyPinDetailsViewController* m_pController;
 	float m_stateChangeAnimationTimeSeconds;
@@ -31,6 +31,7 @@
 
 @property (nonatomic, retain) UIView* pCloseButtonContainer;
 @property (nonatomic, retain) UIButton* pCloseButton;
+@property (nonatomic, retain) UIButton* pRemovePinButton;
 @property (nonatomic, retain) UIView* pShadowContainer;
 @property (nonatomic, retain) UIView* pControlContainer;
 @property (nonatomic, retain) UIView* pHeadlineContainer;

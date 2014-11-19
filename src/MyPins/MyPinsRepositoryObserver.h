@@ -17,6 +17,7 @@ namespace ExampleApp
             typedef MyPinModel* TModel;
             
             MyPinsRepositoryObserver(MyPinsRepository& myPinsRepository,
+                                     MyPinsFileIO& myPinsFileIO,
                                      Menu::IMenuOptionsModel& menuOptionsModel,
                                      Menu::IMenuViewModel& menuViewModel,
                                      ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus);
@@ -25,6 +26,7 @@ namespace ExampleApp
 
         private:
             MyPinsRepository& m_myPinsRepository;
+            MyPinsFileIO& m_myPinsFileIO;
             Menu::IMenuOptionsModel& m_menuOptionsModel;
             Menu::IMenuViewModel& m_menuViewModel;
             ExampleAppMessaging::UiToNativeMessageBus& m_uiToNativeMessageBus;

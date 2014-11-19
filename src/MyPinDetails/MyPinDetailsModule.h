@@ -9,6 +9,8 @@
 #include "IIdentity.h"
 #include "Reaction.h"
 #include "NativeToUiMessageBus.h"
+#include "UiToNativeMessageBus.h"
+#include "MyPinDetailsViewRemovePinHandler.h"
 
 namespace ExampleApp
 {
@@ -19,11 +21,14 @@ namespace ExampleApp
 		private:
 			MyPinDetailsViewModel* m_pMyPinDetailsViewModel;
             MyPinDetailsModelSelectedObserver* m_pMyPinDetailsModelSelectedObserver;
+            MyPinDetailsViewRemovePinHandler* m_pMyPinDetailsViewRemovePinHandler;
             
 		public:
 			MyPinDetailsModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
                                Reaction::IReactionControllerModel& reactionControllerModel,
-                               ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus);
+                               MyPins::IMyPinsService& myPinsService,
+                               ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus,
+                               ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus);
 
 			~MyPinDetailsModule();
 

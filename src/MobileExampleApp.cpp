@@ -321,7 +321,9 @@ namespace ExampleApp
         
         m_pMyPinDetailsModule = Eegeo_NEW(ExampleApp::MyPinDetails::MyPinDetailsModule)(m_identityProvider,
                                                                                         m_pReactionControllerModule->GetReactionControllerModel(),
-                                                                                        m_nativeToUiMessageBus);
+                                                                                        m_pMyPinsModule->GetMyPinsService(),
+                                                                                        m_nativeToUiMessageBus,
+                                                                                        m_uiToNativeMessageBus);
 
 		std::vector<ExampleApp::ScreenControlViewModel::IScreenControlViewModel*> reactors(GetReactorControls());
 		std::vector<ExampleApp::OpenableControlViewModel::IOpenableControlViewModel*> openables(GetOpenableControls());

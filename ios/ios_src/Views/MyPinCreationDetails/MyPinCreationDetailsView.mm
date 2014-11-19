@@ -179,7 +179,7 @@
     const float poiImageY = poiDescriptionBoxHeight + poiDescriptionBoxY + 30.f;
     const float poiImageX = 20.f;
     const float poiImageWidth = bodyContainerWidth - (2 * poiImageX);
-    const float poiImageHeight = poiImageWidth;
+    const float poiImageHeight = poiImageWidth * 0.75f;
     self.pPoiImage.frame = CGRectMake(poiImageX, poiImageY, poiImageWidth, poiImageHeight);
     self.pPoiImage.image = self.pPlaceholderImage;
     
@@ -220,6 +220,10 @@
     self.pTermsLabel.text = @"Terms & Conditions";
     self.pTermsLabel.font = [UIFont systemFontOfSize: 16.f];
     self.pTermsLabel.textAlignment = NSTextAlignmentRight;
+    self.pTermsLabel.textColor = ExampleApp::Helpers::ColorPalette::LinkTone;
+    UITapGestureRecognizer* urlTappedGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(userTappedOnLink:)];
+    [self.pTermsLabel setUserInteractionEnabled:YES];
+    [self.pTermsLabel addGestureRecognizer:urlTappedGesture];
     
     self.pFooterContainer.frame = CGRectMake(0, footerY, footerWidth, footerHeight);
     self.pFooterContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::GoldTone;
@@ -421,5 +425,14 @@
     [self.pPoiDescriptionBox resignFirstResponder];
 }
 
+- (void) userTappedOnLink:(UITapGestureRecognizer *)recognizer
+{
+    NSString * webUrlString = @"http://sdk.eegeo.com";
+    NSURL *url = [NSURL URLWithString:webUrlString];
+    if (![[UIApplication sharedApplication] openURL:url])
+    {
+        NSLog(@"%@%@",@"Failed to open url:",[url description]);
+    }
+}
 
 @end

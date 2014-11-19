@@ -8,6 +8,7 @@
 #include "ImageHelpers.h"
 #include "IconResources.h"
 #include "StringHelpers.h"
+#include "MyPinDetailsViewController.h"
 
 @implementation MyPinDetailsView
 
@@ -38,8 +39,13 @@
 
 		self.pCloseButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
 		[self.pCloseButton setBackgroundImage:[UIImage imageNamed:@"button_close_off.png"] forState:UIControlStateNormal];
-		[self.pCloseButton setBackgroundImage:[UIImage imageNamed:@"button_close_on.png"] forState:UIControlStateHighlighted];
+        [self.pCloseButton addTarget:self action:@selector(onCloseButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 		[self.pCloseButtonContainer addSubview: self.pCloseButton];
+        
+        self.pRemovePinButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        [self.pRemovePinButton setBackgroundImage:[UIImage imageNamed:@"button_remove_pin.png"] forState:UIControlStateNormal];
+        [self.pRemovePinButton addTarget:self action:@selector(onRemovePinButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        [self.pCloseButtonContainer addSubview: self.pRemovePinButton];
 
 		self.pContentContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
 		self.pContentContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::WhiteTone;
@@ -87,6 +93,9 @@
 
 - (void)dealloc
 {
+    [self.pRemovePinButton removeFromSuperview];
+    [self.pRemovePinButton release];
+    
 	[self.pCloseButton removeFromSuperview];
 	[self.pCloseButton release];
 
@@ -199,6 +208,11 @@
 	                                     0.f,
 	                                     closeButtonSectionHeight,
 	                                     closeButtonSectionHeight);
+    
+    self.pRemovePinButton.frame = CGRectMake(0.f,
+                                             0.f,
+                                             closeButtonSectionHeight,
+                                             closeButtonSectionHeight);
 
 	const float titlePadding = 10.0f;
 	self.pTitleLabel.frame = CGRectMake(titlePadding,
@@ -231,7 +245,7 @@
 	self.pImageHeaderLabel.text = @"Image";
 	currentLabelY += labelYSpacing + self.pImageHeaderContainer.frame.size.height;
 
-	self.pImageContent.frame = CGRectMake(headerTextPadding, currentLabelY, m_labelsSectionWidth - headerTextPadding, 300.f);
+	self.pImageContent.frame = CGRectMake(headerTextPadding, currentLabelY, m_labelsSectionWidth - headerTextPadding, m_labelsSectionWidth * 0.75f);
     currentLabelY += labelYSpacing + self.pImageContent.frame.size.height;
     
 	[self.pLabelsContainer setContentSize:CGSizeMake(m_labelsSectionWidth, currentLabelY)];
@@ -258,7 +272,7 @@
     self.pDescriptionContent.hidden = false;
     self.pDescriptionContent.numberOfLines = numberOfLines;
     self.pDescriptionContent.text = [NSString stringWithUTF8String: pModel->GetDescription().c_str()];
-    self.pDescriptionContent.backgroundColor = [UIColor redColor];
+//    self.pDescriptionContent.backgroundColor = [UIColor redColor];
 
 //    [self.pDescriptionContent sizeToFit];
 
@@ -326,6 +340,31 @@
 	pLabel.backgroundColor = backgroundColor;
 	pLabel.textAlignment = NSTextAlignmentLeft;
 	return pLabel;
+}
+
+- (void) onCloseButtonPressed:(UIButton *)sender
+{
+    [m_pController handleCloseButtonPressed];
+}
+
+- (void) onRemovePinButtonPressed:(UIButton *)sender
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Remove Pin"
+                                                    message:@"Are you sure you want to remove this pin?"
+                                                   delegate:self
+                                          cancelButtonTitle:@"No, keep it"
+                                          otherButtonTitles:@"Yes, delete it", nil];
+    
+    [alert show];
+    [alert release];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1)
+    {
+        [m_pController handleRemovePinButtonPressed];
+    }
 }
 
 @end

@@ -5,6 +5,7 @@
 #include "IMenuOptionsModel.h"
 #include "MyPinModel.h"
 #include "MyPinMenuOption.h"
+#include "MyPinsFileIO.h"
 
 #include <string>
 #include <sstream>
@@ -22,10 +23,12 @@ namespace ExampleApp
         }
         
         MyPinsRepositoryObserver::MyPinsRepositoryObserver(MyPinsRepository& myPinsRepository,
+                                                           MyPinsFileIO& myPinsFileIO,
                                                            Menu::IMenuOptionsModel& menuOptionsModel,
                                                            Menu::IMenuViewModel& menuViewModel,
                                                            ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus)
         : m_myPinsRepository(myPinsRepository)
+        , m_myPinsFileIO(myPinsFileIO)
         , m_menuOptionsModel(menuOptionsModel)
         , m_menuViewModel(menuViewModel)
         , m_uiToNativeMessageBus(uiToNativeMessageBus)
@@ -55,6 +58,16 @@ namespace ExampleApp
         void MyPinsRepositoryObserver::HandlePinRemovedFromRepository(MyPinModel*& myPinModel)
         {
             m_menuOptionsModel.RemoveItem(ConvertModelDetailToString(myPinModel->Identifier()));
+            
+            std::vector<MyPinModel*> pinModels;
+            pinModels.reserve(m_myPinsRepository.GetItemCount());
+            
+            for (int i = 0; i < m_myPinsRepository.GetItemCount(); ++i)
+            {
+                pinModels.push_back(m_myPinsRepository.GetItemAtIndex(i));
+            }
+            
+            m_myPinsFileIO.SaveAllRepositoryPinsToDisk(pinModels);
         }
     }
 }

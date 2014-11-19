@@ -17,7 +17,7 @@ namespace ExampleApp
         public:
             virtual ~IMyPinsService() {}
             
-            virtual void RemovePin(MyPinModel* myPinModel) = 0;
+            virtual void RemovePinWithId(const int myPinId) = 0;
             
             virtual void SavePin(const std::string& title,
                                  const std::string& description,

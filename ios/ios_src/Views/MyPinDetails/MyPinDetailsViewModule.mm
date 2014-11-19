@@ -8,9 +8,11 @@ namespace ExampleApp
 {
 	namespace MyPinDetails
 	{
-		MyPinDetailsViewModule::MyPinDetailsViewModule(IMyPinDetailsViewModel& MyPinDetailsViewModel)
+		MyPinDetailsViewModule::MyPinDetailsViewModule(ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
+                                                       IMyPinDetailsViewModel& MyPinDetailsViewModel)
 		{
-			m_pMyPinDetailsViewController = [[MyPinDetailsViewController alloc] initWithParams :&MyPinDetailsViewModel];
+			m_pMyPinDetailsViewController = [[MyPinDetailsViewController alloc] initWithParams :&uiToNativeMessageBus
+                                                                                               :&MyPinDetailsViewModel];
 		}
 
 		MyPinDetailsViewModule::~MyPinDetailsViewModule()

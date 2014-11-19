@@ -6,6 +6,7 @@
 #include "MyPinDetailsView.h"
 #include "SearchResultModel.h"
 #include "IMyPinDetailsViewModel.h"
+#include "UiToNativeMessageBus.h"
 
 namespace ExampleApp
 {
@@ -19,13 +20,19 @@ namespace ExampleApp
 {
 	ExampleApp::MyPinDetails::IMyPinDetailsViewModel* m_pMyPinDetailsViewModel;
 	ExampleApp::MyPinDetails::MyPinDetailsViewControllerInterop* m_pInterop;
+    ExampleApp::ExampleAppMessaging::UiToNativeMessageBus* m_pUiToNativeMessageBus;
 }
 
-- (id)initWithParams:(ExampleApp::MyPinDetails::IMyPinDetailsViewModel*)pMyPinDetailsViewModel;
+- (id)initWithParams:(ExampleApp::ExampleAppMessaging::UiToNativeMessageBus*) pUiToNativeMessageBus
+                    :(ExampleApp::MyPinDetails::IMyPinDetailsViewModel*) pMyPinDetailsViewModel;
 
 - (void) openWithModel:(const ExampleApp::MyPins::MyPinModel&)myPinModel;
 
 - (void) close;
+
+- (void) handleCloseButtonPressed;
+
+- (void) handleRemovePinButtonPressed;
 
 @property (nonatomic, retain) MyPinDetailsView* pMyPinDetailsView;
 

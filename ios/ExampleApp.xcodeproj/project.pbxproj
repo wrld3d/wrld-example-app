@@ -564,6 +564,12 @@
 		56962CCE1A1BBC6100D4355E /* MyPinDetailsViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 56962CC61A1BBC6100D4355E /* MyPinDetailsViewController.mm */; };
 		56962CCF1A1BBC6100D4355E /* MyPinDetailsViewModule.mm in Sources */ = {isa = PBXBuildFile; fileRef = 56962CCA1A1BBC6100D4355E /* MyPinDetailsViewModule.mm */; };
 		56962CD01A1BBC6100D4355E /* MyPinDetailsViewModule.mm in Sources */ = {isa = PBXBuildFile; fileRef = 56962CCA1A1BBC6100D4355E /* MyPinDetailsViewModule.mm */; };
+		56962CD21A1CB95E00D4355E /* button_remove_pin.png in Resources */ = {isa = PBXBuildFile; fileRef = 56962CD11A1CB95E00D4355E /* button_remove_pin.png */; };
+		56962CD31A1CB95E00D4355E /* button_remove_pin.png in Resources */ = {isa = PBXBuildFile; fileRef = 56962CD11A1CB95E00D4355E /* button_remove_pin.png */; };
+		56962CD61A1CBED600D4355E /* MyPinDetailsViewRemovePinHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56962CD41A1CBED600D4355E /* MyPinDetailsViewRemovePinHandler.cpp */; };
+		56962CD71A1CBED600D4355E /* MyPinDetailsViewRemovePinHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56962CD41A1CBED600D4355E /* MyPinDetailsViewRemovePinHandler.cpp */; };
+		56962CDA1A1CBF2400D4355E /* MyPinDetailsViewRemovePinMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56962CD81A1CBF2400D4355E /* MyPinDetailsViewRemovePinMessage.cpp */; };
+		56962CDB1A1CBF2400D4355E /* MyPinDetailsViewRemovePinMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56962CD81A1CBF2400D4355E /* MyPinDetailsViewRemovePinMessage.cpp */; };
 		56A8DF7D19FEA977009DC352 /* Geosphere_01.pod in Resources */ = {isa = PBXBuildFile; fileRef = 56A8DF7A19FEA977009DC352 /* Geosphere_01.pod */; };
 		56A8DF7E19FEA977009DC352 /* Geosphere_01.pod in Resources */ = {isa = PBXBuildFile; fileRef = 56A8DF7A19FEA977009DC352 /* Geosphere_01.pod */; };
 		56DDC0F51A1A47B90024B52E /* WorldPinInFocusScreenControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56DDC0F01A1A47B90024B52E /* WorldPinInFocusScreenControl.cpp */; };
@@ -1250,6 +1256,11 @@
 		56962CC81A1BBC6100D4355E /* MyPinDetailsViewIncludes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPinDetailsViewIncludes.h; sourceTree = "<group>"; };
 		56962CC91A1BBC6100D4355E /* MyPinDetailsViewModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPinDetailsViewModule.h; sourceTree = "<group>"; };
 		56962CCA1A1BBC6100D4355E /* MyPinDetailsViewModule.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyPinDetailsViewModule.mm; sourceTree = "<group>"; };
+		56962CD11A1CB95E00D4355E /* button_remove_pin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_remove_pin.png; sourceTree = "<group>"; };
+		56962CD41A1CBED600D4355E /* MyPinDetailsViewRemovePinHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MyPinDetailsViewRemovePinHandler.cpp; sourceTree = "<group>"; };
+		56962CD51A1CBED600D4355E /* MyPinDetailsViewRemovePinHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPinDetailsViewRemovePinHandler.h; sourceTree = "<group>"; };
+		56962CD81A1CBF2400D4355E /* MyPinDetailsViewRemovePinMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MyPinDetailsViewRemovePinMessage.cpp; sourceTree = "<group>"; };
+		56962CD91A1CBF2400D4355E /* MyPinDetailsViewRemovePinMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPinDetailsViewRemovePinMessage.h; sourceTree = "<group>"; };
 		56A88C9B1A135DC300FCBE9A /* MyPinMenuOption.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyPinMenuOption.h; sourceTree = "<group>"; };
 		56A8DF7A19FEA977009DC352 /* Geosphere_01.pod */ = {isa = PBXFileReference; lastKnownFileType = file; path = Geosphere_01.pod; sourceTree = "<group>"; };
 		56B258D61A110CE6003C50CF /* IMyPinsModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IMyPinsModule.h; sourceTree = "<group>"; };
@@ -2249,12 +2260,6 @@
 		5695FE871A13C17800F1E6CE /* MyPinCreation */ = {
 			isa = PBXGroup;
 			children = (
-				18CCC8981A15236100DC2D95 /* MyPinCreationViewStateChangedMessage.cpp */,
-				18CCC8991A15236100DC2D95 /* MyPinCreationViewStateChangedHandler.cpp */,
-				18CCC89A1A15236100DC2D95 /* MyPinCreationViewSavePinMessage.cpp */,
-				18CCC89B1A15236100DC2D95 /* MyPinCreationViewSavePinHandler.cpp */,
-				18CCC89C1A15236100DC2D95 /* MyPinCreationStateChangedMessage.cpp */,
-				18CCC89D1A15236100DC2D95 /* MyPinCreationModelObserver.cpp */,
 				5695FE881A13C17800F1E6CE /* IMyPinCreationCompositeViewModel.h */,
 				5695FE891A13C17800F1E6CE /* IMyPinCreationConfirmationViewModel.h */,
 				5695FE8A1A13C17800F1E6CE /* IMyPinCreationInitiationViewModel.h */,
@@ -2269,18 +2274,24 @@
 				5695FE931A13C17800F1E6CE /* MyPinCreationInitiationViewModel.h */,
 				5695FE941A13C17800F1E6CE /* MyPinCreationModel.cpp */,
 				5695FE951A13C17800F1E6CE /* MyPinCreationModel.h */,
+				18CCC89D1A15236100DC2D95 /* MyPinCreationModelObserver.cpp */,
+				5695FF011A14B2C300F1E6CE /* MyPinCreationModelObserver.h */,
 				5695FE961A13C17800F1E6CE /* MyPinCreationModule.cpp */,
 				5695FE971A13C17800F1E6CE /* MyPinCreationModule.h */,
 				5695FE981A13C17800F1E6CE /* MyPinCreationScreenControl.cpp */,
 				5695FE991A13C17800F1E6CE /* MyPinCreationScreenControl.h */,
 				5695FE9A1A13C17800F1E6CE /* MyPinCreationStage.h */,
-				5695FE9B1A13C17800F1E6CE /* PoiRing */,
+				18CCC89C1A15236100DC2D95 /* MyPinCreationStateChangedMessage.cpp */,
 				5695FF001A14B11A00F1E6CE /* MyPinCreationStateChangedMessage.h */,
-				5695FF011A14B2C300F1E6CE /* MyPinCreationModelObserver.h */,
-				5695FF021A14B7F500F1E6CE /* MyPinCreationViewStateChangedMessage.h */,
-				5695FF031A14BF3800F1E6CE /* MyPinCreationViewStateChangedHandler.h */,
-				5695FF041A14C75300F1E6CE /* MyPinCreationViewSavePinMessage.h */,
+				18CCC89B1A15236100DC2D95 /* MyPinCreationViewSavePinHandler.cpp */,
 				5695FF061A14CCE400F1E6CE /* MyPinCreationViewSavePinHandler.h */,
+				18CCC89A1A15236100DC2D95 /* MyPinCreationViewSavePinMessage.cpp */,
+				5695FF041A14C75300F1E6CE /* MyPinCreationViewSavePinMessage.h */,
+				18CCC8991A15236100DC2D95 /* MyPinCreationViewStateChangedHandler.cpp */,
+				5695FF031A14BF3800F1E6CE /* MyPinCreationViewStateChangedHandler.h */,
+				18CCC8981A15236100DC2D95 /* MyPinCreationViewStateChangedMessage.cpp */,
+				5695FF021A14B7F500F1E6CE /* MyPinCreationViewStateChangedMessage.h */,
+				5695FE9B1A13C17800F1E6CE /* PoiRing */,
 			);
 			path = MyPinCreation;
 			sourceTree = "<group>";
@@ -2385,6 +2396,10 @@
 				56962CAD1A1BA8AE00D4355E /* MyPinDetailsModelSelectedMessage.h */,
 				56962CB01A1BA95500D4355E /* MyPinDetailsModelSelectedObserver.cpp */,
 				56962CB11A1BA95500D4355E /* MyPinDetailsModelSelectedObserver.h */,
+				56962CD41A1CBED600D4355E /* MyPinDetailsViewRemovePinHandler.cpp */,
+				56962CD51A1CBED600D4355E /* MyPinDetailsViewRemovePinHandler.h */,
+				56962CD81A1CBF2400D4355E /* MyPinDetailsViewRemovePinMessage.cpp */,
+				56962CD91A1CBF2400D4355E /* MyPinDetailsViewRemovePinMessage.h */,
 			);
 			path = MyPinDetails;
 			sourceTree = "<group>";
@@ -2395,8 +2410,8 @@
 				56962CC21A1BBC6100D4355E /* IMyPinDetailsViewModule.h */,
 				56962CC31A1BBC6100D4355E /* MyPinDetailsView.h */,
 				56962CC41A1BBC6100D4355E /* MyPinDetailsView.mm */,
-				56962CC51A1BBC6100D4355E /* MyPinDetailsViewController.h */,
 				56962CC61A1BBC6100D4355E /* MyPinDetailsViewController.mm */,
+				56962CC51A1BBC6100D4355E /* MyPinDetailsViewController.h */,
 				56962CC71A1BBC6100D4355E /* MyPinDetailsViewControllerInterop.h */,
 				56962CC81A1BBC6100D4355E /* MyPinDetailsViewIncludes.h */,
 				56962CC91A1BBC6100D4355E /* MyPinDetailsViewModule.h */,
@@ -2474,6 +2489,7 @@
 		7EE4825B16847E7C0006E99B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				56962CD11A1CB95E00D4355E /* button_remove_pin.png */,
 				56FBCDE71A0BB5150026546E /* button_checkbox_off.png */,
 				56FBCDE81A0BB5150026546E /* button_checkbox_on.png */,
 				56FBCDE91A0BB5150026546E /* button_create_poi.png */,
@@ -2669,6 +2685,7 @@
 				18B5ACD219DC15CD00BA4A38 /* icon2_misc.png in Resources */,
 				18B5ACD019DC15CD00BA4A38 /* icon2_hotel.png in Resources */,
 				18B5ACBE19DC15CD00BA4A38 /* icon1_spring.png in Resources */,
+				56962CD31A1CB95E00D4355E /* button_remove_pin.png in Resources */,
 				222E069B1948B08B0004FFD9 /* MainStoryboard_iPad.storyboard in Resources */,
 				18B5ACAA19DC15CD00BA4A38 /* icon1_location.png in Resources */,
 			);
@@ -2747,6 +2764,7 @@
 				18B5ACCF19DC15CD00BA4A38 /* icon2_hotel.png in Resources */,
 				18B5ACBD19DC15CD00BA4A38 /* icon1_spring.png in Resources */,
 				18B5ACA919DC15CD00BA4A38 /* icon1_location.png in Resources */,
+				56962CD21A1CB95E00D4355E /* button_remove_pin.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2809,6 +2827,7 @@
 				18CCC8FD1A1523BE00DC2D95 /* PerformedSearchMessage.cpp in Sources */,
 				18CCC8A71A15236100DC2D95 /* MyPinCreationStateChangedMessage.cpp in Sources */,
 				18B5AC1D19DC159B00BA4A38 /* PrimaryMenuViewModule.mm in Sources */,
+				56962CD71A1CBED600D4355E /* MyPinDetailsViewRemovePinHandler.cpp in Sources */,
 				18B5AB4019DC159000BA4A38 /* SearchServiceBase.cpp in Sources */,
 				18B5AB3C19DC159000BA4A38 /* SearchResultModel.cpp in Sources */,
 				18B5ABFF19DC159B00BA4A38 /* CompassView.mm in Sources */,
@@ -2893,6 +2912,7 @@
 				18B5AB2819DC159000BA4A38 /* PlaceJumpsModule.cpp in Sources */,
 				5629250F1A16125000EA1B1F /* MyPinsRepositoryObserver.cpp in Sources */,
 				18B5AAE219DC159000BA4A38 /* CategorySearchModel.cpp in Sources */,
+				56962CDB1A1CBF2400D4355E /* MyPinDetailsViewRemovePinMessage.cpp in Sources */,
 				18B5AC1919DC159B00BA4A38 /* ModalBackgroundViewModule.mm in Sources */,
 				18CCC8A91A15236100DC2D95 /* MyPinCreationModelObserver.cpp in Sources */,
 				18B5AB3419DC159000BA4A38 /* SearchModule.cpp in Sources */,
@@ -2981,6 +3001,7 @@
 				18B5AADD19DC159000BA4A38 /* CameraTransitionController.cpp in Sources */,
 				18B5AB1F19DC159000BA4A38 /* OpenableControlViewModelBase.cpp in Sources */,
 				18B5AB0919DC159000BA4A38 /* MenuOptionsModel.cpp in Sources */,
+				56962CDA1A1CBF2400D4355E /* MyPinDetailsViewRemovePinMessage.cpp in Sources */,
 				5637F1F71A0CDAFB0011B509 /* MyPinsService.cpp in Sources */,
 				18B5AB2319DC159000BA4A38 /* PlaceJumpsDataParser.cpp in Sources */,
 				18B5AB7319DC159000BA4A38 /* WorldPinsFactory.cpp in Sources */,
@@ -3160,6 +3181,7 @@
 				5695FEC31A13C17800F1E6CE /* PoiRingRenderable.cpp in Sources */,
 				18B5AC0419DC159B00BA4A38 /* FlattenButtonView.mm in Sources */,
 				18B5AB7119DC159000BA4A38 /* WorldPinItemModel.cpp in Sources */,
+				56962CD61A1CBED600D4355E /* MyPinDetailsViewRemovePinHandler.cpp in Sources */,
 				18B5AB3D19DC159000BA4A38 /* SearchResultRepository.cpp in Sources */,
 				18B5AB3719DC159000BA4A38 /* SearchQueryPerformer.cpp in Sources */,
 				5695FEF71A13C1DE00F1E6CE /* MyPinCreationDetailsViewModule.mm in Sources */,
