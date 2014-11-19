@@ -40,11 +40,13 @@ namespace ExampleApp
             }
             
             PoiRingController::PoiRingController(IMyPinCreationModel& myPinCreationModel,
-                                                 PoiRingView& poiRingView)
+                                                 PoiRingView& poiRingView,
+                                                 Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService)
             : m_pMyPinCreationModel(myPinCreationModel)
             , m_poiRingView(poiRingView)
             , m_scaleInterpolationParam(0.f)
             , m_easeDurationInSeconds(1.2f)
+            , m_environmentFlatteningService(environmentFlatteningService)
             {
                 
             }
@@ -64,7 +66,9 @@ namespace ExampleApp
                 const float outerRingRadiusInMeters = 120.f;
                 sphereTransformMatrix.Scale(outerRingRadiusInMeters * transitionScale);
                 
-                Eegeo::dv3 cameraRelativePosition = m_pMyPinCreationModel.GetPosition() - renderCamera.GetEcefLocation();
+                Eegeo::dv3 scaledPoint = Eegeo::Rendering::EnvironmentFlatteningService::GetScaledPointEcef(m_pMyPinCreationModel.GetPosition(), m_environmentFlatteningService.GetCurrentScale());
+                
+                Eegeo::dv3 cameraRelativePosition = scaledPoint - renderCamera.GetEcefLocation();
                 sphereTransformMatrix.SetRow(3, Eegeo::v4(cameraRelativePosition.ToSingle(), 1.f));
                 
                 m_poiRingView.SetRingTransforms(sphereTransformMatrix);
@@ -75,8 +79,13 @@ namespace ExampleApp
                 Eegeo::v3 up = m_pMyPinCreationModel.GetPosition().Norm().ToSingle();
                 const float iconHeightInMeters = 150.f * transitionScale;
                 Eegeo::dv3 iconPosition = m_pMyPinCreationModel.GetPosition() + (up * iconHeightInMeters);
+                Eegeo::dv3 scaledIconPosition = Eegeo::Rendering::EnvironmentFlatteningService::GetScaledPointAboveGroundEcef(
+                                                                                                                    iconPosition,
+                                                                                                                    iconHeightInMeters,
+                                                                                                                    m_environmentFlatteningService.GetCurrentScale());
+
                 const float iconScale = CalculateAltitudeBasedIconScale(renderCamera.GetAltitude());
-                m_poiRingView.AddIconSprite(renderCamera, iconPosition, iconScale * transitionScale);
+                m_poiRingView.AddIconSprite(renderCamera, scaledIconPosition, iconScale * transitionScale);
             }
             
             float PoiRingController::CalculateTransitionScale(float dt)

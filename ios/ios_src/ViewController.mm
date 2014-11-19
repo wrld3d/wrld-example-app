@@ -9,7 +9,17 @@ using namespace Eegeo::iOS;
 
 - (void)viewDidLoad
 {
-	[super viewDidLoad];
+    [super viewDidLoad];
+    
+    [[NSNotificationCenter defaultCenter] addObserver: self
+                                             selector: @selector(onPause)
+                                                 name: @"handlePause"
+                                               object: nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver: self
+                                             selector: @selector(onResume)
+                                                 name: @"handleResume"
+                                               object: nil];
 
 	if([self respondsToSelector:@selector(setNeedsStatusBarAppearanceUpdate)])
 	{
@@ -19,6 +29,16 @@ using namespace Eegeo::iOS;
 	m_previousTimestamp = CFAbsoluteTimeGetCurrent();
 	self.preferredFramesPerSecond = 30.0f;
 	m_pAppRunner = NULL;
+}
+
+- (void)onPause
+{
+    m_pAppRunner->Pause();
+}
+
+- (void)onResume
+{
+    m_pAppRunner->Resume();
 }
 
 -(UIStatusBarStyle)preferredStatusBarStyle

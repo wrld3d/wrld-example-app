@@ -7,6 +7,7 @@
 #include "AppInterface.h"
 #include "IRayPicker.h"
 #include "Camera.h"
+#include "GpsGlobeCameraController.h"
 
 namespace ExampleApp
 {
@@ -20,9 +21,9 @@ namespace ExampleApp
                 PoiRingTouchController(IMyPinCreationModel& myPinCreationModel,
                                        Eegeo::Resources::Terrain::Collision::IRayPicker& rayPicker);
                 
-                bool HandleTouchDown(const AppInterface::TouchData& data, const Eegeo::Camera::RenderCamera& renderCamera);
+                bool HandleTouchDown(const AppInterface::TouchData& data, const Eegeo::Camera::RenderCamera& renderCamera, Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController);
                 bool HandleTouchUp(const AppInterface::TouchData& data);
-                bool HandleTouchMove(const AppInterface::TouchData& data, const Eegeo::Camera::RenderCamera& renderCamera);
+                bool HandleTouchMove(const AppInterface::TouchData& data, const Eegeo::Camera::RenderCamera& renderCamera, Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController);
                 
                 bool IsDragging() const;
                 
