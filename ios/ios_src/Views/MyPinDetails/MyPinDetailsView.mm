@@ -70,8 +70,9 @@
 		self.pDescriptionHeaderLabel = [self createLabel :ExampleApp::Helpers::ColorPalette::WhiteTone :ExampleApp::Helpers::ColorPalette::GoldTone];
 		[self.pDescriptionHeaderContainer addSubview: self.pDescriptionHeaderLabel];
 
-		self.pDescriptionContent = [self createLabel :ExampleApp::Helpers::ColorPalette::MainHudColor :ExampleApp::Helpers::ColorPalette::WhiteTone];
+        self.pDescriptionContent = [[[UITextView alloc] initWithFrame: CGRectMake(0, 0, 0, 0)] autorelease];
 		self.pDescriptionContent.textColor = ExampleApp::Helpers::ColorPalette::DarkGreyTone;
+        self.pDescriptionContent.editable = NO;
 		[self.pLabelsContainer addSubview: self.pDescriptionContent];
 
 		self.pImageHeaderContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
@@ -233,10 +234,11 @@
 	self.pDescriptionHeaderLabel.text = @"Description";
 	currentLabelY += labelYSpacing + self.pDescriptionHeaderContainer.frame.size.height;
 
+    m_descriptionContentY = currentLabelY;
 	self.pDescriptionContent.frame = CGRectMake(headerTextPadding, currentLabelY, m_labelsSectionWidth - headerTextPadding, 60.f);
 	self.pDescriptionContent.text = @"";
-//	self.pDescriptionContent.adjustsFontSizeToFitWidth = NO;
-    self.pDescriptionContent.lineBreakMode = NSLineBreakByTruncatingTail;
+    self.pDescriptionContent.font = [UIFont systemFontOfSize: 16.f];
+    self.pDescriptionContent.contentInset = UIEdgeInsetsMake(-4,-8,0,0);
 	currentLabelY += labelYSpacing + self.pDescriptionContent.frame.size.height;
 
 	self.pImageHeaderContainer.frame = CGRectMake(0.f, currentLabelY, m_labelsSectionWidth, headerLabelHeight + 2 * headerTextPadding);
@@ -262,20 +264,11 @@
 	self.pImageContent.hidden = true;
 
     float scrollContentHeight = 60.f;
-    
-    std::string descriptionString = pModel->GetDescription().c_str();
-    const int maxCharactersInLine = 40;
-    int numberOfLines = descriptionString.length() / maxCharactersInLine;
-//    NSLog(@"Number of lines: %d\n", numberOfLines);
+    float textHeight = m_maxContentSize;
     
     self.pDescriptionHeaderContainer.hidden = false;
     self.pDescriptionContent.hidden = false;
-    self.pDescriptionContent.numberOfLines = numberOfLines;
     self.pDescriptionContent.text = [NSString stringWithUTF8String: pModel->GetDescription().c_str()];
-//    self.pDescriptionContent.backgroundColor = [UIColor redColor];
-
-//    [self.pDescriptionContent sizeToFit];
-
 
 	if(!pModel->GetImagePath().empty())
 	{
@@ -288,8 +281,10 @@
 		self.pImageHeaderContainer.hidden = false;
 		self.pImageContent.hidden = false;
         scrollContentHeight = m_maxContentSize;
+        textHeight = 60.f;
 	}
 
+    self.pDescriptionContent.frame = CGRectMake(3.f, m_descriptionContentY, m_labelsSectionWidth - 3.f, textHeight);
     self.pLabelsContainer.contentSize = CGSizeMake(m_labelsSectionWidth, scrollContentHeight);
 	[self.pLabelsContainer setContentOffset:CGPointMake(0,0) animated:NO];
 }

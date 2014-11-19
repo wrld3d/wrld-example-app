@@ -1966,7 +1966,6 @@
 		18B5AB8219DC159B00BA4A38 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				56962CC11A1BBC6100D4355E /* MyPinDetails */,
 				18B5AB8319DC159B00BA4A38 /* AboutPage */,
 				18B5AB8D19DC159B00BA4A38 /* Compass */,
 				18B5AB9719DC159B00BA4A38 /* FlattenButton */,
@@ -1976,6 +1975,7 @@
 				5695FECF1A13C1DE00F1E6CE /* MyPinCreationConfirmation */,
 				5695FED91A13C1DE00F1E6CE /* MyPinCreationDetails */,
 				5695FEE31A13C1DE00F1E6CE /* MyPinCreationInitiation */,
+				56962CC11A1BBC6100D4355E /* MyPinDetails */,
 				18B5ABB719DC159B00BA4A38 /* PrimaryMenu */,
 				18B5ABBE19DC159B00BA4A38 /* SearchResultMapLabels */,
 				18B5ABBF19DC159B00BA4A38 /* SearchResultMenu */,
