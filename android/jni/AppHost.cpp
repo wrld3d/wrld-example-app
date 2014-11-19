@@ -66,6 +66,8 @@
 #include "IMyPinCreationModule.h"
 #include "IMyPinCreationDetailsModule.h"
 #include "MyPinCreationDetailsViewModule.h"
+#include "MyPinDetailsViewModule.h"
+#include "IMyPinDetailsModule.h"
 #include "Logger.h"
 #include "AndroidAppThreadAssertionMacros.h"
 #include "SearchResultRepositoryObserver.h"
@@ -99,6 +101,7 @@ AppHost::AppHost(
 	,m_pFlattenButtonViewModule(NULL)
 	,m_pMyPinCreationViewModule(NULL)
 	,m_pMyPinCreationDetailsViewModule(NULL)
+	,m_pMyPinDetailsViewModule(NULL)
 	,m_pSearchResultPoiViewModule(NULL)
 	,m_pWorldPinOnMapViewModule(NULL)
 	,m_pCompassViewModule(NULL)
@@ -425,6 +428,11 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
 								m_uiToNativeMessageBus
 							);
 
+	m_pMyPinDetailsViewModule = Eegeo_NEW(ExampleApp::MyPinDetails::MyPinDetailsViewModule)(
+								m_nativeState,
+								app.MyPinDetailsModule().GetMyPinDetailsViewModel()
+							);
+
 	m_pViewControllerUpdaterModule = Eegeo_NEW(ExampleApp::ViewControllerUpdater::ViewControllerUpdaterModule);
 
 	ExampleApp::ViewControllerUpdater::IViewControllerUpdaterModel& viewControllerUpdaterModel = m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel();
@@ -440,6 +448,8 @@ void AppHost::DestroyApplicationViewModulesFromUiThread()
 
 	if(m_createdUIModules)
 	{
+		Eegeo_DELETE m_pMyPinDetailsViewModule;
+
 		Eegeo_DELETE m_pViewControllerUpdaterModule;
 
 		Eegeo_DELETE m_pMyPinCreationDetailsViewModule;

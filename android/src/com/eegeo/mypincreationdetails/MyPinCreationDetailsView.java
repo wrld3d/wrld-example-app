@@ -132,7 +132,11 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
 		else if(view == m_submitButton)
 		{
 			String titleText = m_title.getText().toString();
+			titleText = titleText.isEmpty() ? "Untitled Pin" : titleText;
 			String descriptionText = m_description.getText().toString();
+			descriptionText = descriptionText.isEmpty() ? "No description" : descriptionText;
+			
+			Log.d("EEGEO", "title:" + titleText + " description:" + descriptionText);
 			
 			byte[] byteArray = null;
 			
