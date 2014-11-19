@@ -4,6 +4,7 @@
 #include "AndroidAppThreadAssertionMacros.h"
 #include "IMyPinDetailsViewModel.h"
 #include "MyPinModel.h"
+#include "MyPinDetailsViewRemovePinMessage.h"
 
 namespace ExampleApp
 {
@@ -11,9 +12,11 @@ namespace ExampleApp
     {
 		MyPinDetailsViewController::MyPinDetailsViewController(
 				AndroidNativeState& nativeState,
-				IMyPinDetailsViewModel& myPinDetailsViewModel)
+				IMyPinDetailsViewModel& myPinDetailsViewModel,
+			    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus)
 		: m_nativeState(nativeState)
 		, m_viewModel(myPinDetailsViewModel)
+		, m_uiToNativeMessageBus(uiToNativeMessageBus)
 		, m_pOpenedCallback(Eegeo_NEW(Eegeo::Helpers::TCallback0<MyPinDetailsViewController>)(this, &MyPinDetailsViewController::Open))
 		, m_pClosedCallback(Eegeo_NEW(Eegeo::Helpers::TCallback0<MyPinDetailsViewController>)(this, &MyPinDetailsViewController::Close))
 		{
@@ -104,6 +107,15 @@ namespace ExampleApp
 		void MyPinDetailsViewController::HandleCloseButtonPressed()
 		{
 			ASSERT_UI_THREAD
+
+			m_viewModel.Close();
+		}
+
+		void MyPinDetailsViewController::HandleRemoveButtonPressed()
+		{
+			const MyPins::MyPinModel& myPinModel = m_viewModel.GetMyPinModel();
+			MyPinDetailsViewRemovePinMessage message(myPinModel.Identifier());
+			m_uiToNativeMessageBus.Publish(message);
 
 			m_viewModel.Close();
 		}

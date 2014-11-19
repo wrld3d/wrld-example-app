@@ -6,6 +6,7 @@
 #include "MyPinDetailsViewIncludes.h"
 #include "AndroidNativeState.h"
 #include "MyPinDetails.h"
+#include "UiToNativeMessageBus.h"
 
 namespace ExampleApp
 {
@@ -16,7 +17,8 @@ namespace ExampleApp
 		public:
 			MyPinDetailsViewModule(
 					AndroidNativeState& nativeState,
-    				IMyPinDetailsViewModel& myPinDetailsViewModel);
+    				IMyPinDetailsViewModel& myPinDetailsViewModel,
+    			    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus);
 			~MyPinDetailsViewModule();
 
 		private:

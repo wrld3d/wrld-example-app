@@ -14,3 +14,13 @@ JNIEXPORT void JNICALL Java_com_eegeo_mypindetails_MyPinDetailsJniMethods_CloseB
 	pController->HandleCloseButtonPressed();
 }
 
+JNIEXPORT void JNICALL Java_com_eegeo_mypindetails_MyPinDetailsJniMethods_RemovePinButtonClicked(
+    JNIEnv* jenv, jobject obj,
+    jlong nativeObjectPtr)
+{
+	ASSERT_UI_THREAD
+
+	ExampleApp::MyPinDetails::MyPinDetailsViewController* pController = reinterpret_cast<ExampleApp::MyPinDetails::MyPinDetailsViewController*>(nativeObjectPtr);
+	pController->HandleRemoveButtonPressed();
+}
+
