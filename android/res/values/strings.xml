@@ -5,6 +5,8 @@
     <string name="header_address">Address</string>
     <string name="header_phone">Phone</string>
     <string name="header_web">Web</string>
+    <string name="header_description">Description</string>
+    <string name="header_image">Image</string>
     
     <string name="content_desc_compass_lock">This icon represents that the compass is now locked to the device\'s heading.</string>
     <string name="content_desc_category_icon">This icon represents a specific place of interest category</string>

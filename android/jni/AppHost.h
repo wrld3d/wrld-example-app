@@ -41,6 +41,7 @@
 #include "AboutPageViewIncludes.h"
 #include "MyPinCreationViewIncludes.h"
 #include "MyPinCreationDetailsViewIncludes.h"
+#include "MyPinDetailsViewIncludes.h"
 #include "UiToNativeMessageBus.h"
 #include "NativeToUiMessageBus.h"
 
@@ -109,6 +110,7 @@ private:
 	ExampleApp::Compass::ICompassViewModule* m_pCompassViewModule;
 	ExampleApp::MyPinCreation::IMyPinCreationViewModule* m_pMyPinCreationViewModule;
     ExampleApp::MyPinCreationDetails::IMyPinCreationDetailsViewModule* m_pMyPinCreationDetailsViewModule;
+    ExampleApp::MyPinDetails::IMyPinDetailsViewModule* m_pMyPinDetailsViewModule;
 
 	ExampleApp::MobileExampleApp* m_pApp;
 
