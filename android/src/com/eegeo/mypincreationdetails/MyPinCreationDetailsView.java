@@ -1,7 +1,6 @@
 package com.eegeo.mypincreationdetails;
 
 import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -11,7 +10,6 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -41,9 +39,7 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
 	protected TextView m_termsAndConditionsLink = null;
 	
 	private Uri m_currentImageUri = null;
-	
-	
-	
+
 	private final int JPEG_QUALITY = 90;
 	private final String TERMS_AND_CONDITIONS_LINK = "http://sdk.eegeo.com";
 	
@@ -136,8 +132,6 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
 			String descriptionText = m_description.getText().toString();
 			descriptionText = descriptionText.isEmpty() ? "No description" : descriptionText;
 			
-			Log.d("EEGEO", "title:" + titleText + " description:" + descriptionText);
-			
 			byte[] byteArray = null;
 			
 			if(m_currentImageUri != null)
@@ -154,7 +148,7 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
 				}
 				catch(Exception e)
 				{
-					Log.e("EEGEO", e.getMessage());
+					e.printStackTrace();
 				}
 			}
 			
@@ -174,20 +168,39 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
 			mediaScanIntent.setData(contentUri);
 			m_activity.sendBroadcast(mediaScanIntent);
 			
-			m_poiImage.setImageURI(contentUri);
 			m_currentImageUri = contentUri;
+			
+			try 
+			{
+				Bitmap bitmap = decodeImage();
+				m_poiImage.setImageBitmap(bitmap);
+			} 
+			catch (IOException e) 
+			{
+				e.printStackTrace();
+			}
+			
 		}
 		else if(requestCode == PhotoIntentDispatcher.SELECT_PHOTO_FROM_GALLERY && resultCode == MainActivity.RESULT_OK)
 		{
 			Uri selectedUri = data.getData();
-			m_poiImage.setImageURI(selectedUri);
 			m_currentImageUri = selectedUri;
+			
+			try 
+			{
+				Bitmap bitmap = decodeImage();
+				m_poiImage.setImageBitmap(bitmap);
+			} 
+			catch (IOException e) 
+			{
+				e.printStackTrace();
+			}
 		}
 	}
 	
 	private Bitmap decodeImage() throws IOException
 	{
-		final int idealSizePx = 1024;
+		final int idealSizePx = 512;
 		
 		InputStream is = m_activity.getContentResolver().openInputStream(m_currentImageUri);
 		
