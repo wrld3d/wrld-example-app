@@ -9,4 +9,8 @@ extern "C"
 	JNIEXPORT void JNICALL Java_com_eegeo_mypindetails_MyPinDetailsJniMethods_CloseButtonClicked(
 	    JNIEnv* jenv, jobject obj,
 	    jlong nativeObjectPtr);
+
+	JNIEXPORT void JNICALL Java_com_eegeo_mypindetails_MyPinDetailsJniMethods_RemovePinButtonClicked(
+		    JNIEnv* jenv, jobject obj,
+		    jlong nativeObjectPtr);
 }

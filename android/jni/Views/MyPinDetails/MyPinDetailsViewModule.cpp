@@ -9,9 +9,10 @@ namespace ExampleApp
     {
     	MyPinDetailsViewModule::MyPinDetailsViewModule(
     			AndroidNativeState& nativeState,
-    			IMyPinDetailsViewModel& myPinDetailsViewModel)
+    			IMyPinDetailsViewModel& myPinDetailsViewModel,
+			    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus)
 		{
-    		m_pViewController = Eegeo_NEW(MyPinDetailsViewController)(nativeState, myPinDetailsViewModel);
+    		m_pViewController = Eegeo_NEW(MyPinDetailsViewController)(nativeState, myPinDetailsViewModel, uiToNativeMessageBus);
 		}
 
 		MyPinDetailsViewModule::~MyPinDetailsViewModule()

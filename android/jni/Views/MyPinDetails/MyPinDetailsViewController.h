@@ -6,6 +6,7 @@
 #include "Types.h"
 #include "AndroidNativeState.h"
 #include "ICallback.h"
+#include "UiToNativeMessageBus.h"
 
 namespace ExampleApp
 {
@@ -17,12 +18,14 @@ namespace ExampleApp
 
     		MyPinDetailsViewController(
     				AndroidNativeState& nativeState,
-    				IMyPinDetailsViewModel& myPinDetailsViewModel);
+    				IMyPinDetailsViewModel& myPinDetailsViewModel,
+    			    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus);
     		~MyPinDetailsViewController();
 
     		void Open();
     		void Close();
     		void HandleCloseButtonPressed();
+    		void HandleRemoveButtonPressed();
 
 		private:
 
@@ -35,6 +38,8 @@ namespace ExampleApp
 
     		Eegeo::Helpers::ICallback0* m_pOpenedCallback;
     		Eegeo::Helpers::ICallback0* m_pClosedCallback;
+
+    		ExampleAppMessaging::UiToNativeMessageBus& m_uiToNativeMessageBus;
     	};
     }
 }

@@ -2,6 +2,8 @@ package com.eegeo.mypindetails;
 
 import java.io.File;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.view.View;
 import android.widget.ImageView;
@@ -18,6 +20,7 @@ public class MyPinDetailsView implements View.OnClickListener
 	private View m_view = null;
 	private RelativeLayout m_uiRoot = null;
 	private View m_closeButton = null;
+	private View m_deleteButton = null;
 	private TextView m_titleView = null;
 	private TextView m_descriptionView = null;
 	private TextView m_descriptionHeader = null;
@@ -31,6 +34,7 @@ public class MyPinDetailsView implements View.OnClickListener
 
 		m_uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
 		m_view = m_activity.getLayoutInflater().inflate(R.layout.my_pin_details_layout, m_uiRoot, false);
+		m_deleteButton = m_view.findViewById(R.id.my_pin_details_view_delete_button);
 		m_closeButton = m_view.findViewById(R.id.my_pin_details_view_close_button);
 		m_titleView = (TextView)m_view.findViewById(R.id.my_pin_details_view_title);
 		m_descriptionView = (TextView)m_view.findViewById(R.id.my_pin_details_view_description);
@@ -38,6 +42,7 @@ public class MyPinDetailsView implements View.OnClickListener
 		m_imageView = (ImageView)m_view.findViewById(R.id.my_pin_details_view_image);
 		m_imageHeader = (TextView)m_view.findViewById(R.id.my_pin_details_view_image_header);
 		
+		m_deleteButton.setOnClickListener(this);
 		m_closeButton.setOnClickListener(this);
 		m_view.setVisibility(View.GONE);
 		m_uiRoot.addView(m_view);
@@ -92,7 +97,35 @@ public class MyPinDetailsView implements View.OnClickListener
 	public void onClick(View view)
 	{
 		m_view.setEnabled(false);
-
-		MyPinDetailsJniMethods.CloseButtonClicked(m_nativeCallerPointer);
+		
+		if(view == m_closeButton)
+		{
+			MyPinDetailsJniMethods.CloseButtonClicked(m_nativeCallerPointer);
+		}
+		else if(view == m_deleteButton)
+		{
+			showRemovePinDialog();	
+		}
+	}
+	
+	private void showRemovePinDialog()
+	{
+		AlertDialog.Builder builder = new AlertDialog.Builder(m_activity);
+		builder.setTitle("Remove Pin")
+			   .setMessage("Are you sure you want to remove this pin?")
+			   .setPositiveButton("Yes,  delete it", new DialogInterface.OnClickListener() {
+				   @Override
+				   public void onClick(DialogInterface dialog, int id) {
+					   MyPinDetailsJniMethods.RemovePinButtonClicked(m_nativeCallerPointer);
+				   }
+			   })
+			   .setNegativeButton("No,  keep it", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						m_view.setEnabled(true);
+					}
+			   });
+		AlertDialog dialog = builder.create();
+		dialog.show();
 	}
 }

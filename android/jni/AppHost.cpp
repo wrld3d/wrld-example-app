@@ -430,7 +430,8 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
 
 	m_pMyPinDetailsViewModule = Eegeo_NEW(ExampleApp::MyPinDetails::MyPinDetailsViewModule)(
 								m_nativeState,
-								app.MyPinDetailsModule().GetMyPinDetailsViewModel()
+								app.MyPinDetailsModule().GetMyPinDetailsViewModel(),
+								m_uiToNativeMessageBus
 							);
 
 	m_pViewControllerUpdaterModule = Eegeo_NEW(ExampleApp::ViewControllerUpdater::ViewControllerUpdaterModule);
