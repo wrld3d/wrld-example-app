@@ -13,6 +13,8 @@
 #include "MyPinMenuOption.h"
 #include "IWorldPinsService.h"
 #include "WorldPinFocusData.h"
+#include "IMyPinSelectionHandlerFactory.h"
+#include "MyPinSelectionHandler.h"
 
 #include <string>
 #include <sstream>
@@ -25,10 +27,12 @@ namespace ExampleApp
         
         MyPinsService::MyPinsService(IMyPinsRepository& myPinsRepository,
                                      MyPinsFileIO& myPinsFileIO,
+                                     IMyPinSelectionHandlerFactory& myPinSelectionHandlerFactory,
                                      WorldPins::IWorldPinsService& worldPinsService,
                                      Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory)
         : m_myPinsRepository(myPinsRepository)
         , m_myPinsFileIO(myPinsFileIO)
+        , m_myPinSelectionHandlerFactory(myPinSelectionHandlerFactory)
         , m_worldPinsService(worldPinsService)
         , m_webLoadRequestFactory(webLoadRequestFactory)
         , m_lastIdUsed(m_myPinsFileIO.GetLastIdWrittenToDisk())
@@ -47,7 +51,9 @@ namespace ExampleApp
         void MyPinsService::AddPinToMap(MyPinModel* pMyPinModel)
         {
             WorldPins::WorldPinFocusData worldPinFocusData(pMyPinModel->GetTitle(), pMyPinModel->GetDescription());
-            WorldPins::WorldPinItemModel* worldPinItemModel = m_worldPinsService.AddPin(pMyPinModel, worldPinFocusData, pMyPinModel->GetLatLong(), 0);
+            MyPinSelectionHandler* selectionHandler = m_myPinSelectionHandlerFactory.CreateMyPinSelectionHandler(*pMyPinModel);
+            
+            WorldPins::WorldPinItemModel* worldPinItemModel = m_worldPinsService.AddPin(selectionHandler, worldPinFocusData, pMyPinModel->GetLatLong(), 0);
             m_myPinToWorldPinMap.insert(std::make_pair(pMyPinModel, worldPinItemModel));
         }
         

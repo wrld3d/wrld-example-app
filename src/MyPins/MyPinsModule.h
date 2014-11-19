@@ -10,6 +10,7 @@
 #include "Modules.h"
 #include "Menu.h"
 #include "UiToNativeMessageBus.h"
+#include "NativeToUiMessageBus.h"
 
 namespace ExampleApp
 {
@@ -22,7 +23,8 @@ namespace ExampleApp
                          Eegeo::Modules::IPlatformAbstractionModule& platformAbstractions,
                          PersistentSettings::IPersistentSettingsModel& persistentSettings,
                          ExampleApp::Menu::IMenuViewModel& menuViewModel,
-                         ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus);
+                         ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
+                         ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus);
             
             ~MyPinsModule();
             
@@ -34,6 +36,7 @@ namespace ExampleApp
             MyPinsFileIO* m_pMyPinsFileIO;
             MyPinsService* m_pMyPinsService;
             MyPinsRepositoryObserver* m_pMyPinsRepositoryObserver;
+            MyPinSelectionHandlerFactory* m_pMyPinsSelectionHandlerFactory;
             
             Menu::IMenuModel* m_pMenuModel;
             Menu::IMenuOptionsModel* m_pMenuOptionsModel;

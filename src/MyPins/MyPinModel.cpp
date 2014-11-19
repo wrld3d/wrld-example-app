@@ -7,6 +7,13 @@ namespace ExampleApp
 {
     namespace MyPins
     {
+        MyPinModel::MyPinModel()
+        : m_modelId(-1)
+        , m_latLong(0.0, 0.0)
+        {
+            
+        }
+        
         MyPinModel::MyPinModel(int modelId,
                                std::string title,
                                std::string description,
@@ -19,11 +26,6 @@ namespace ExampleApp
         , m_latLong(latLong)
         {
             
-        }
-        
-        void MyPinModel::SelectPin()
-        {
-            EXAMPLE_LOG("%s pin selected\n", m_title.c_str());
         }
     }
 }

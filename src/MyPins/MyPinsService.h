@@ -21,6 +21,7 @@ namespace ExampleApp
         public:
             MyPinsService(IMyPinsRepository& myPinsRepository,
                           MyPinsFileIO& myPinsFileIO,
+                          IMyPinSelectionHandlerFactory& myPinSelectionHandlerFactory,
                           WorldPins::IWorldPinsService& worldPinsService,
                           Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory);
 
@@ -39,6 +40,7 @@ namespace ExampleApp
         private:
             IMyPinsRepository& m_myPinsRepository;
             MyPinsFileIO& m_myPinsFileIO;
+            IMyPinSelectionHandlerFactory& m_myPinSelectionHandlerFactory;
             
             WorldPins::IWorldPinsService& m_worldPinsService;
             

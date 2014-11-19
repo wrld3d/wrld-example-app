@@ -15,14 +15,15 @@ namespace ExampleApp
         class IMyPinsModule;
         class MyPinsModule;
  
-        class IMyPinModelFactory;
-        class MyPinModelFactory;
-        
         class IMyPinsService;
         class MyPinsService;
         
         class MyPinsFileIO;
         
         class MyPinsRepositoryObserver;
+        
+        class IMyPinSelectionHandlerFactory;
+        class MyPinSelectionHandlerFactory;
+        class MyPinSelectionHandler;
     }
 }

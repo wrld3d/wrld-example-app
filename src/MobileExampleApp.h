@@ -56,6 +56,7 @@
 #include "MyPinCreation.h"
 #include "MyPinCreationDetails.h"
 #include "MyPins.h"
+#include "MyPinDetails.h"
 #include "PersistentSettings.h"
 #include "UiToNativeMessageBus.h"
 #include "NativeToUiMessageBus.h"
@@ -104,6 +105,7 @@ namespace ExampleApp
         ExampleApp::MyPinCreation::IMyPinCreationModule* m_pMyPinCreationModule;
         ExampleApp::MyPinCreationDetails::IMyPinCreationDetailsModule* m_pMyPinCreationDetailsModule;
         ExampleApp::MyPins::IMyPinsModule* m_pMyPinsModule;
+        ExampleApp::MyPinDetails::IMyPinDetailsModule* m_pMyPinDetailsModule;
         
 		ExampleAppMessaging::UiToNativeMessageBus& m_uiToNativeMessageBus;
 		ExampleAppMessaging::NativeToUiMessageBus& m_nativeToUiMessageBus;
@@ -253,6 +255,11 @@ namespace ExampleApp
         const ExampleApp::MyPins::IMyPinsModule& MyPinsModule() const
         {
             return *m_pMyPinsModule;
+        }
+        
+        const ExampleApp::MyPinDetails::IMyPinDetailsModule& MyPinDetailsModule() const
+        {
+            return *m_pMyPinDetailsModule;
         }
         
 		void OnPause();

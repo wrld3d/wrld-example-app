@@ -18,6 +18,7 @@
 #include "WorldPinInFocusChangedLocationMessage.h"
 #include "MyPinCreationStateChangedMessage.h"
 #include "SearchResultOnMapItemModelSelectedMessage.h"
+#include "MyPinDetailsModelSelectedMessage.h"
 
 namespace ExampleApp
 {
@@ -35,8 +36,9 @@ namespace ExampleApp
 			, public Eegeo::Messaging::CatalogBinding<WorldPins::WorldPinGainedFocusMessage>
 			, public Eegeo::Messaging::CatalogBinding<WorldPins::WorldPinLostFocusMessage>
 			, public Eegeo::Messaging::CatalogBinding<WorldPins::WorldPinInFocusChangedLocationMessage>
-                        , public Eegeo::Messaging::CatalogBinding<MyPinCreation::MyPinCreationStateChangedMessage>
+            , public Eegeo::Messaging::CatalogBinding<MyPinCreation::MyPinCreationStateChangedMessage>
 			, public Eegeo::Messaging::CatalogBinding<SearchResultOnMap::SearchResultOnMapItemModelSelectedMessage>
+            , public Eegeo::Messaging::CatalogBinding<MyPinDetails::MyPinDetailsModelSelectedMessage>
 			, private Eegeo::NonCopyable
 		{
 

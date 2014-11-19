@@ -49,6 +49,9 @@
 #include "IMyPinCreationDetailsModule.h"
 #include "MyPinCreationDetailsViewModule.h"
 #include "MyPinCreationDetailsView.h"
+#include "MyPinDetailsViewModule.h"
+#include "MyPinDetailsView.h"
+#include "IMyPinDetailsModule.h"
 
 using namespace Eegeo::iOS;
 
@@ -235,6 +238,8 @@ void AppHost::CreateApplicationViewModules()
     
     m_pMyPinCreationDetailsViewModule = Eegeo_NEW(ExampleApp::MyPinCreationDetails::MyPinCreationDetailsViewModule)(m_uiToNativeMessageBus,
                                                                                                                     app.MyPinCreationDetailsModule().GetMyPinCreationDetailsViewModel());
+    
+    m_pMyPinDetailsViewModule = Eegeo_NEW(ExampleApp::MyPinDetails::MyPinDetailsViewModule)(app.MyPinDetailsModule().GetMyPinDetailsViewModel());
 
     // 3d map view layer.
     [m_pView addSubview: &m_pWorldPinOnMapViewModule->GetWorldPinOnMapView()];
@@ -257,6 +262,7 @@ void AppHost::CreateApplicationViewModules()
     [m_pView addSubview: &m_pSearchResultPoiViewModule->GetSearchResultPoiView()];
     [m_pView addSubview: &m_pAboutPageViewModule->GetAboutPageView()];
     [m_pView addSubview: &m_pMyPinCreationDetailsViewModule->GetMyPinCreationDetailsView()];
+    [m_pView addSubview: &m_pMyPinDetailsViewModule->GetMyPinDetailsView()];
 
 	m_pViewControllerUpdaterModule = Eegeo_NEW(ExampleApp::ViewControllerUpdater::ViewControllerUpdaterModule);
 	ExampleApp::ViewControllerUpdater::IViewControllerUpdaterModel& viewControllerUpdaterModel = m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel();
@@ -286,11 +292,14 @@ void AppHost::DestroyApplicationViewModules()
     [&m_pSearchResultMenuViewModule->GetSearchResultMenuView() removeFromSuperview];
     
     // Pop-up layer.
+    [&m_pMyPinDetailsViewModule->GetMyPinDetailsView() removeFromSuperview];
     [&m_pMyPinCreationDetailsViewModule->GetMyPinCreationDetailsView() removeFromSuperview];
     [&m_pSearchResultPoiViewModule->GetSearchResultPoiView() removeFromSuperview];
     [&m_pAboutPageViewModule->GetAboutPageView() removeFromSuperview];
     
     Eegeo_DELETE m_pViewControllerUpdaterModule;
+    
+    Eegeo_DELETE m_pMyPinDetailsViewModule;
     
     Eegeo_DELETE m_pMyPinCreationDetailsViewModule;
     

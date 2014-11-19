@@ -34,6 +34,7 @@
 #include "MyPinCreationDetailsViewIncludes.h"
 #include "UiToNativeMessageBus.h"
 #include "NativeToUiMessageBus.h"
+#include "MyPinDetailsViewIncludes.h"
 
 @class ViewController;
 class AppInputDelegate;
@@ -92,6 +93,7 @@ private:
     ExampleApp::MyPinCreation::IMyPinCreationInitiationViewModule* m_pMyPinCreationInitiationViewModule;
     ExampleApp::MyPinCreation::IMyPinCreationConfirmationViewModule* m_pMyPinCreationConfirmationViewModule;
     ExampleApp::MyPinCreationDetails::IMyPinCreationDetailsViewModule* m_pMyPinCreationDetailsViewModule;
+    ExampleApp::MyPinDetails::IMyPinDetailsViewModule* m_pMyPinDetailsViewModule;
 
 	ExampleApp::MobileExampleApp* m_pApp;
 	bool m_requestedApplicationInitialiseViewState;

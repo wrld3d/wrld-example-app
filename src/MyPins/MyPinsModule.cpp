@@ -10,6 +10,7 @@
 #include "IPlatformAbstractionModule.h"
 #include "MenuModel.h"
 #include "MenuOptionsModel.h"
+#include "MyPinSelectionHandlerFactory.h"
 
 namespace ExampleApp
 {
@@ -19,7 +20,8 @@ namespace ExampleApp
                                    Eegeo::Modules::IPlatformAbstractionModule& platformAbstractions,
                                    PersistentSettings::IPersistentSettingsModel& persistentSettings,
                                    ExampleApp::Menu::IMenuViewModel& menuViewModel,
-                                   ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus)
+                                   ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
+                                   ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus)
         : m_pMyPinsRepository(NULL)
         , m_pMyPinsFileIO(NULL)
         , m_pMyPinsService(NULL)
@@ -37,17 +39,24 @@ namespace ExampleApp
                                                                               menuViewModel,
                                                                               uiToNativeMessageBus);
             
+            m_pMyPinsSelectionHandlerFactory = Eegeo_NEW(MyPinSelectionHandlerFactory)(nativeToUiMessageBus);
+            
             m_pMyPinsFileIO = Eegeo_NEW(MyPinsFileIO)(platformAbstractions.GetFileIO(), persistentSettings);
             m_pMyPinsService = Eegeo_NEW(MyPinsService)(*m_pMyPinsRepository,
                                                         *m_pMyPinsFileIO,
+                                                        *m_pMyPinsSelectionHandlerFactory,
                                                         worldPinsService,
                                                         platformAbstractions.GetWebLoadRequestFactory());
+            
+            
         }
         
         MyPinsModule::~MyPinsModule()
         {
             Eegeo_DELETE m_pMyPinsService;
             Eegeo_DELETE m_pMyPinsFileIO;
+            
+            Eegeo_DELETE m_pMyPinsSelectionHandlerFactory;
             Eegeo_DELETE m_pMyPinsRepositoryObserver;
             Eegeo_DELETE m_pMyPinsRepository;
             

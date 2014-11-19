@@ -40,6 +40,7 @@
 #include "MyPinsModule.h"
 #include "IWorldPinsInFocusController.h"
 #include "IWorldPinsScaleController.h"
+#include "MyPinDetailsModule.h"
 
 namespace ExampleApp
 {
@@ -124,6 +125,7 @@ namespace ExampleApp
         , m_pPoiRingModule(NULL)
         , m_pMyPinCreationDetailsModule(NULL)
         , m_pMyPinsModule(NULL)
+        , m_pMyPinDetailsModule(NULL)
 	{
 		m_pBlitter = Eegeo_NEW(Eegeo::Blitter)(1024 * 128, 1024 * 64, 1024 * 32, screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight());
 		m_pBlitter->Initialise();
@@ -293,7 +295,8 @@ namespace ExampleApp
                                                                       m_platformAbstractions,
                                                                       m_persistentSettings,
                                                                       m_pPrimaryMenuModule->GetPrimaryMenuViewModel(),
-                                                                      m_uiToNativeMessageBus);
+                                                                      m_uiToNativeMessageBus,
+                                                                      m_nativeToUiMessageBus);
         
         m_pPrimaryMenuModule->AddMenuSection("My Pins", "place", m_pMyPinsModule->GetMyPinsMenuModel(), true);
         
@@ -315,6 +318,10 @@ namespace ExampleApp
 
         m_pMyPinCreationDetailsModule = Eegeo_NEW(ExampleApp::MyPinCreationDetails::MyPinCreationDetailsModule)(m_identityProvider,
                                                                                                           m_pReactionControllerModule->GetReactionControllerModel());
+        
+        m_pMyPinDetailsModule = Eegeo_NEW(ExampleApp::MyPinDetails::MyPinDetailsModule)(m_identityProvider,
+                                                                                        m_pReactionControllerModule->GetReactionControllerModel(),
+                                                                                        m_nativeToUiMessageBus);
 
 		std::vector<ExampleApp::ScreenControlViewModel::IScreenControlViewModel*> reactors(GetReactorControls());
 		std::vector<ExampleApp::OpenableControlViewModel::IOpenableControlViewModel*> openables(GetOpenableControls());
@@ -333,6 +340,8 @@ namespace ExampleApp
 
 	void MobileExampleApp::DestroyApplicationModelModules()
 	{
+        Eegeo_DELETE m_pMyPinDetailsModule;
+        
         Eegeo_DELETE m_pMyPinCreationModule;
         
         Eegeo_DELETE m_pPoiRingModule;
@@ -387,6 +396,7 @@ namespace ExampleApp
 		openables.push_back(&SearchResultPoiModule().GetObservableOpenableControl());
 		openables.push_back(&AboutPageModule().GetObservableOpenableControl());
         openables.push_back(&MyPinCreationDetailsModule().GetObservableOpenableControl());
+        openables.push_back(&MyPinDetailsModule().GetObservableOpenableControl());
 		return openables;
 	}
 

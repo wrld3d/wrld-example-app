@@ -12,7 +12,7 @@ namespace ExampleApp
 {
     namespace MyPins
     {
-        class MyPinModel : public WorldPins::IWorldPinSelectionHandler
+        class MyPinModel
         {
         private:
             int m_modelId;
@@ -22,14 +22,13 @@ namespace ExampleApp
             Eegeo::Space::LatLong m_latLong;
             
         public:
+            MyPinModel();
+            
             MyPinModel(int modelId,
                        std::string title,
                        std::string description,
                        std::string imagePath,
                        Eegeo::Space::LatLong latLong);
-            
-            
-            void SelectPin();
             
             int Identifier() const { return m_modelId; }
             const std::string& GetTitle() const { return m_title; }
