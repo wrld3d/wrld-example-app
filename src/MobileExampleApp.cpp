@@ -314,7 +314,8 @@ namespace ExampleApp
                                                                                       m_pWorld->GetRenderingModule(),
                                                                                       m_pWorld->GetAsyncLoadersModule(),
                                                                                       m_pWorld->GetLightingModule(),
-                                                                                      m_pWorld->GetTerrainModelModule());
+                                                                                      m_pWorld->GetTerrainModelModule(),
+                                                                                      m_pWorld->GetMapModule());
 
         m_pMyPinCreationDetailsModule = Eegeo_NEW(ExampleApp::MyPinCreationDetails::MyPinCreationDetailsModule)(m_identityProvider,
                                                                                                           m_pReactionControllerModule->GetReactionControllerModel());
@@ -672,7 +673,7 @@ namespace ExampleApp
         }
         
         MyPinCreation::PoiRing::IPoiRingTouchController& poiRingTouchController = m_pPoiRingModule->GetPoiRingTouchController();
-        if (!poiRingTouchController.HandleTouchDown(data, *m_pGlobeCameraController->GetCamera()))
+        if (!poiRingTouchController.HandleTouchDown(data, *m_pGlobeCameraController->GetCamera(), m_pGlobeCameraController->GetGlobeCameraController()))
         {
             m_pCameraTouchController->Event_TouchDown(data);
         }
@@ -687,7 +688,7 @@ namespace ExampleApp
         }
         
         MyPinCreation::PoiRing::IPoiRingTouchController& poiRingTouchController = m_pPoiRingModule->GetPoiRingTouchController();
-        if (!poiRingTouchController.HandleTouchMove(data, *m_pGlobeCameraController->GetCamera()))
+        if (!poiRingTouchController.HandleTouchMove(data, *m_pGlobeCameraController->GetCamera(), m_pGlobeCameraController->GetGlobeCameraController()))
         {
             m_pCameraTouchController->Event_TouchMove(data);
         }
