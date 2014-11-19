@@ -51,8 +51,6 @@ void AppRunner::Pause()
 	{
 		m_pAppHost->OnPause();
 	}
-
-	ReleaseDisplay();
 }
 
 void AppRunner::Resume()
