@@ -15,6 +15,7 @@
 	float m_stateChangeAnimationTimeSeconds;
     float m_labelsSectionWidth;
     float m_maxContentSize;
+    float m_descriptionContentY;
 }
 
 - (id) initWithController:(MyPinDetailsViewController *)controller;
@@ -41,7 +42,7 @@
 @property (nonatomic, retain) UILabel* pTitleLabel;
 @property (nonatomic, retain) UIView* pDescriptionHeaderContainer;
 @property (nonatomic, retain) UILabel* pDescriptionHeaderLabel;
-@property (nonatomic, retain) UILabel* pDescriptionContent;
+@property (nonatomic, retain) UITextView* pDescriptionContent;
 @property (nonatomic, retain) UIView* pImageHeaderContainer;
 @property (nonatomic, retain) UILabel* pImageHeaderLabel;
 @property (nonatomic, retain) UIImageView* pImageContent;
