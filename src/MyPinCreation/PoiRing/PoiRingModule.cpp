@@ -83,7 +83,8 @@ namespace ExampleApp
                 
                 m_pPoiRingController = Eegeo_NEW(PoiRingController)(myPinCreationModel,
                                                                     *m_pPoiRingView,
-                                                                    mapModule.GetEnvironmentFlatteningService());
+                                                                    mapModule.GetEnvironmentFlatteningService(),
+                                                                    terrainModelModule.GetTerrainHeightProvider());
                 
                 
                 m_pTerrainRayPicker = Eegeo_NEW(Eegeo::Resources::Terrain::Collision::TerrainRayPicker)(terrainModelModule.GetTerrainHeightProvider(),

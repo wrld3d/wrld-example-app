@@ -27,6 +27,8 @@ namespace ExampleApp
             
             const Eegeo::dv3& GetPosition() const;
             void SetPosition(const Eegeo::dv3& position);
+            void SetTerrainHeight(float height);
+            bool NeedsTerrainHeight() const;
             
             void SavePoi(const std::string& title,
                          const std::string& description,
@@ -38,6 +40,7 @@ namespace ExampleApp
             void RemoveStateChangedCallback(Eegeo::Helpers::ICallback1<MyPinCreationStage>& stateChangedCallback);
             
         private:
+            bool m_needsTerrainHeightUpdate;
             MyPinCreationStage m_stage;
             Eegeo::dv3 m_position;
             

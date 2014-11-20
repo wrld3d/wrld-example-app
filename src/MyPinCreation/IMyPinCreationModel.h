@@ -23,7 +23,9 @@ namespace ExampleApp
             
             virtual const Eegeo::dv3& GetPosition() const = 0;
             virtual void SetPosition(const Eegeo::dv3& position) = 0;
-            
+            virtual void SetTerrainHeight(float height) = 0;
+            virtual bool NeedsTerrainHeight() const = 0;
+
             virtual void SavePoi(const std::string& title,
                                  const std::string& description,
                                  Byte* imageData,

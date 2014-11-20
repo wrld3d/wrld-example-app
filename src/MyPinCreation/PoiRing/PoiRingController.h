@@ -20,12 +20,14 @@ namespace ExampleApp
             public:
                 PoiRingController(IMyPinCreationModel& myPinCreationModel,
                                   PoiRingView& poiRingView,
-                                  Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService);
+                                  Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
+                                  Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider);
             
                 void Update(float dt, const Eegeo::Camera::RenderCamera& renderCamera, const Eegeo::dv3& cameraEcefInterestPoint);
                 
             private:
                 Eegeo::Rendering::EnvironmentFlatteningService& m_environmentFlatteningService;
+                Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& m_terrainHeightProvider;
                 
                 IMyPinCreationModel& m_pMyPinCreationModel;
                 

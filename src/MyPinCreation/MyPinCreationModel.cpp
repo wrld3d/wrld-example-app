@@ -6,6 +6,7 @@
 #include "LatLongAltitude.h"
 #include "MyPinModel.h"
 #include "IMyPinsService.h"
+#include "EarthConstants.h"
 
 namespace ExampleApp
 {
@@ -15,6 +16,7 @@ namespace ExampleApp
         : m_stage(Inactive)
         , m_position(Eegeo::dv3::Zero())
         , m_myPinsService(myPinsService)
+        , m_needsTerrainHeightUpdate(false)
         {
             
         }
@@ -32,6 +34,10 @@ namespace ExampleApp
         void MyPinCreationModel::SetCreationStage(ExampleApp::MyPinCreation::MyPinCreationStage stage)
         {
             m_stage = stage;
+            if(stage == Ring)
+            {
+                m_needsTerrainHeightUpdate = true;
+            }
             m_stateChangedCallbacks.ExecuteCallbacks(m_stage);
         }
         
@@ -43,6 +49,17 @@ namespace ExampleApp
         void MyPinCreationModel::SetPosition(const Eegeo::dv3& position)
         {
             m_position = position;
+        }
+        
+        void MyPinCreationModel::SetTerrainHeight(float height)
+        {
+            m_position = m_position.Norm() * (Eegeo::Space::EarthConstants::Radius + height);
+            m_needsTerrainHeightUpdate = false;
+        }
+        
+        bool MyPinCreationModel::NeedsTerrainHeight() const
+        {
+            return m_needsTerrainHeightUpdate;
         }
         
         void MyPinCreationModel::SavePoi(const std::string& title,

@@ -11,6 +11,8 @@
 #include "MathsHelpers.h"
 #include "IMyPinCreationInitiationViewModel.h"
 #include "IMyPinCreationModel.h"
+#include "EarthConstants.h"
+#include "TerrainHeightProvider.h"
 
 namespace ExampleApp
 {
@@ -41,12 +43,14 @@ namespace ExampleApp
             
             PoiRingController::PoiRingController(IMyPinCreationModel& myPinCreationModel,
                                                  PoiRingView& poiRingView,
-                                                 Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService)
+                                                 Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
+                                                 Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider)
             : m_pMyPinCreationModel(myPinCreationModel)
             , m_poiRingView(poiRingView)
             , m_scaleInterpolationParam(0.f)
             , m_easeDurationInSeconds(1.2f)
             , m_environmentFlatteningService(environmentFlatteningService)
+            , m_terrainHeightProvider(terrainHeightProvider)
             {
                 
             }
@@ -58,6 +62,15 @@ namespace ExampleApp
                 if (m_pMyPinCreationModel.GetCreationStage() == Inactive && m_scaleInterpolationParam < 0.01f)
                 {
                     m_pMyPinCreationModel.SetPosition(cameraEcefInterestPoint);
+                }
+                
+                if(m_pMyPinCreationModel.NeedsTerrainHeight())
+                {
+                    float terrainHeight;
+                    if(m_terrainHeightProvider.TryGetHeight(m_pMyPinCreationModel.GetPosition(), 11, terrainHeight))
+                    {
+                        m_pMyPinCreationModel.SetTerrainHeight(terrainHeight);
+                    }
                 }
             
                 Eegeo::m44 sphereTransformMatrix;
