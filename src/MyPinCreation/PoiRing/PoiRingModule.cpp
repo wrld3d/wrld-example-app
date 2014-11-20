@@ -72,7 +72,7 @@ namespace ExampleApp
                                                                                                              m_pPoiRingIconMaterial,
                                                                                                              iconVertexBinding,
                                                                                                              renderingModule.GetGlBufferPool(),
-                                                                                                             Eegeo::Rendering::Renderables::BatchedSpriteAnchor::Centre);
+                                                                                                             Eegeo::Rendering::Renderables::BatchedSpriteAnchor::Bottom);
                 
                 
                 m_pPoiRingView = Eegeo_NEW(PoiRing::PoiRingView)(*m_pPoiRingRenderable,
