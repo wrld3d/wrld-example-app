@@ -29,6 +29,7 @@
 #include "AsyncLoadersModule.h"
 #include "LightingModule.h"
 #include "TerrainModelModule.h"
+#include "MapModule.h"
 
 namespace ExampleApp
 {
@@ -41,7 +42,8 @@ namespace ExampleApp
                                          Eegeo::Modules::Core::RenderingModule& renderingModule,
                                          Eegeo::Modules::Core::AsyncLoadersModule& asyncLoadersModule,
                                          Eegeo::Modules::Core::LightingModule& lightingModule,
-                                         Eegeo::Modules::Map::Layers::TerrainModelModule& terrainModelModule)
+                                         Eegeo::Modules::Map::Layers::TerrainModelModule& terrainModelModule,
+                                         Eegeo::Modules::Map::MapModule& mapModule)
             : m_renderableFilters(renderingModule.GetRenderableFilters())
             {
                 m_pPoiRingRenderable = Eegeo_NEW(PoiRingRenderable)(renderingModule,
@@ -80,7 +82,9 @@ namespace ExampleApp
                 
                 
                 m_pPoiRingController = Eegeo_NEW(PoiRingController)(myPinCreationModel,
-                                                                    *m_pPoiRingView);
+                                                                    *m_pPoiRingView,
+                                                                    mapModule.GetEnvironmentFlatteningService(),
+                                                                    terrainModelModule.GetTerrainHeightProvider());
                 
                 
                 m_pTerrainRayPicker = Eegeo_NEW(Eegeo::Resources::Terrain::Collision::TerrainRayPicker)(terrainModelModule.GetTerrainHeightProvider(),

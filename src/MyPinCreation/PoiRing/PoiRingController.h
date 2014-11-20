@@ -7,6 +7,7 @@
 #include "AppInterface.h"
 #include "Camera.h"
 #include "Terrain.h"
+#include "EnvironmentFlatteningService.h"
 
 namespace ExampleApp
 {
@@ -18,11 +19,16 @@ namespace ExampleApp
             {
             public:
                 PoiRingController(IMyPinCreationModel& myPinCreationModel,
-                                  PoiRingView& poiRingView);
+                                  PoiRingView& poiRingView,
+                                  Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
+                                  Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider);
             
                 void Update(float dt, const Eegeo::Camera::RenderCamera& renderCamera, const Eegeo::dv3& cameraEcefInterestPoint);
                 
             private:
+                Eegeo::Rendering::EnvironmentFlatteningService& m_environmentFlatteningService;
+                Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& m_terrainHeightProvider;
+                
                 IMyPinCreationModel& m_pMyPinCreationModel;
                 
                 PoiRingView& m_poiRingView;

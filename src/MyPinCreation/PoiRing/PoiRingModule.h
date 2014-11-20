@@ -24,7 +24,8 @@ namespace ExampleApp
                               Eegeo::Modules::Core::RenderingModule& renderingModule,
                               Eegeo::Modules::Core::AsyncLoadersModule& asyncLoadersModule,
                               Eegeo::Modules::Core::LightingModule& lightingModule,
-                              Eegeo::Modules::Map::Layers::TerrainModelModule& terrainModelModule);
+                              Eegeo::Modules::Map::Layers::TerrainModelModule& terrainModelModule,
+                              Eegeo::Modules::Map::MapModule& mapModule);
                 
                 ~PoiRingModule();
                 

@@ -413,8 +413,6 @@
 		18CCC8ED1A1523B100DC2D95 /* SearchResultOnMapItemModelSelectedObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18CCC8DF1A1523B100DC2D95 /* SearchResultOnMapItemModelSelectedObserver.cpp */; };
 		18CCC8EE1A1523B100DC2D95 /* SearchResultOnMapItemModelSelectedMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18CCC8E11A1523B100DC2D95 /* SearchResultOnMapItemModelSelectedMessage.cpp */; };
 		18CCC8EF1A1523B100DC2D95 /* SearchResultOnMapItemModelSelectedMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18CCC8E11A1523B100DC2D95 /* SearchResultOnMapItemModelSelectedMessage.cpp */; };
-		18CCC8F51A1523B100DC2D95 /* SearchResultInFocusChangedLocationMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18CCC8E71A1523B100DC2D95 /* SearchResultInFocusChangedLocationMessage.cpp */; };
-		18CCC8F71A1523B100DC2D95 /* SearchResultGainedFocusMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18CCC8E91A1523B100DC2D95 /* SearchResultGainedFocusMessage.cpp */; };
 		18CCC8FA1A1523BE00DC2D95 /* PerformedSearchMessageHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18CCC8F81A1523BE00DC2D95 /* PerformedSearchMessageHandler.cpp */; };
 		18CCC8FB1A1523BE00DC2D95 /* PerformedSearchMessageHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18CCC8F81A1523BE00DC2D95 /* PerformedSearchMessageHandler.cpp */; };
 		18CCC8FC1A1523BE00DC2D95 /* PerformedSearchMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18CCC8F91A1523BE00DC2D95 /* PerformedSearchMessage.cpp */; };
@@ -570,6 +568,10 @@
 		56962CD71A1CBED600D4355E /* MyPinDetailsViewRemovePinHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56962CD41A1CBED600D4355E /* MyPinDetailsViewRemovePinHandler.cpp */; };
 		56962CDA1A1CBF2400D4355E /* MyPinDetailsViewRemovePinMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56962CD81A1CBF2400D4355E /* MyPinDetailsViewRemovePinMessage.cpp */; };
 		56962CDB1A1CBF2400D4355E /* MyPinDetailsViewRemovePinMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56962CD81A1CBF2400D4355E /* MyPinDetailsViewRemovePinMessage.cpp */; };
+		56962CDC1A1D0DED00D4355E /* WorldPinGainedFocusMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56070CC91A1B69D400E3DFF6 /* WorldPinGainedFocusMessage.cpp */; };
+		56962CDD1A1D0E0000D4355E /* WorldPinInFocusViewModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56DDC0F21A1A47B90024B52E /* WorldPinInFocusViewModel.cpp */; };
+		56962CDE1A1D0E1700D4355E /* WorldPinInFocusScreenControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56DDC0F01A1A47B90024B52E /* WorldPinInFocusScreenControl.cpp */; };
+		56962CDF1A1D0E2400D4355E /* WorldPinsInFocusController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5688EDCE1A1634DB0073A940 /* WorldPinsInFocusController.cpp */; };
 		56A8DF7D19FEA977009DC352 /* Geosphere_01.pod in Resources */ = {isa = PBXBuildFile; fileRef = 56A8DF7A19FEA977009DC352 /* Geosphere_01.pod */; };
 		56A8DF7E19FEA977009DC352 /* Geosphere_01.pod in Resources */ = {isa = PBXBuildFile; fileRef = 56A8DF7A19FEA977009DC352 /* Geosphere_01.pod */; };
 		56DDC0F51A1A47B90024B52E /* WorldPinInFocusScreenControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56DDC0F01A1A47B90024B52E /* WorldPinInFocusScreenControl.cpp */; };
@@ -1057,8 +1059,6 @@
 		18CCC8DF1A1523B100DC2D95 /* SearchResultOnMapItemModelSelectedObserver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchResultOnMapItemModelSelectedObserver.cpp; sourceTree = "<group>"; };
 		18CCC8E01A1523B100DC2D95 /* SearchResultOnMapItemModelSelectedMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultOnMapItemModelSelectedMessage.h; sourceTree = "<group>"; };
 		18CCC8E11A1523B100DC2D95 /* SearchResultOnMapItemModelSelectedMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchResultOnMapItemModelSelectedMessage.cpp; sourceTree = "<group>"; };
-		18CCC8E71A1523B100DC2D95 /* SearchResultInFocusChangedLocationMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchResultInFocusChangedLocationMessage.cpp; sourceTree = "<group>"; };
-		18CCC8E91A1523B100DC2D95 /* SearchResultGainedFocusMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchResultGainedFocusMessage.cpp; sourceTree = "<group>"; };
 		18CCC8F81A1523BE00DC2D95 /* PerformedSearchMessageHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PerformedSearchMessageHandler.cpp; sourceTree = "<group>"; };
 		18CCC8F91A1523BE00DC2D95 /* PerformedSearchMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PerformedSearchMessage.cpp; sourceTree = "<group>"; };
 		18CCC8FE1A1523C500DC2D95 /* WeatherSelectedMessageHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WeatherSelectedMessageHandler.cpp; sourceTree = "<group>"; };
@@ -2840,7 +2840,6 @@
 				5695FEFE1A13C1DE00F1E6CE /* MyPinCreationInitiationViewModule.mm in Sources */,
 				18CCC8D81A1523A200DC2D95 /* SearchResultMenuItemSelectedMessage.cpp in Sources */,
 				5637F20A1A10F4CD0011B509 /* MyPinsFileIO.cpp in Sources */,
-				18CCC8F51A1523B100DC2D95 /* SearchResultInFocusChangedLocationMessage.cpp in Sources */,
 				56962CA71A1BA4F800D4355E /* MyPinDetailsModule.cpp in Sources */,
 				186D2928196D9D0900E004E0 /* AppLocationDelegate.mm in Sources */,
 				18B5AC0319DC159B00BA4A38 /* CompassViewModule.mm in Sources */,
@@ -2851,6 +2850,7 @@
 				18CCC8CE1A1523A200DC2D95 /* SearchResultRepositoryObserver.cpp in Sources */,
 				18CCC89F1A15236100DC2D95 /* MyPinCreationViewStateChangedMessage.cpp in Sources */,
 				5605EDEC19F824CD00D1D594 /* ReactionControllerModule.cpp in Sources */,
+				56962CDD1A1D0E0000D4355E /* WorldPinInFocusViewModel.cpp in Sources */,
 				18CCC8B81A15239600DC2D95 /* SearchQueryResponseReceivedMessage.cpp in Sources */,
 				18B5AB2219DC159000BA4A38 /* PlaceJumpController.cpp in Sources */,
 				186D292A196D9D0900E004E0 /* GlDisplayService.mm in Sources */,
@@ -2878,7 +2878,6 @@
 				18CCC87D1A1522D100DC2D95 /* CompassViewCycledObserver.cpp in Sources */,
 				18B5AC2119DC159B00BA4A38 /* SearchResultMenuView.mm in Sources */,
 				18B5AB6619DC159000BA4A38 /* WeatherMenuDataParser.cpp in Sources */,
-				18CCC8F71A1523B100DC2D95 /* SearchResultGainedFocusMessage.cpp in Sources */,
 				18B5AB6219DC159000BA4A38 /* SecondaryMenuModule.cpp in Sources */,
 				18B5AB0219DC159000BA4A38 /* PreloadSphereVolume.cpp in Sources */,
 				18CCC8B01A15238100DC2D95 /* PlaceJumpSelectedMessage.cpp in Sources */,
@@ -2926,6 +2925,7 @@
 				18B5AC1519DC159B00BA4A38 /* ModalBackgroundView.mm in Sources */,
 				18B5AB4A19DC159000BA4A38 /* SearchResultOnMapFactory.cpp in Sources */,
 				18B5AB5819DC159000BA4A38 /* SearchResultOnMapModule.cpp in Sources */,
+				56962CDC1A1D0DED00D4355E /* WorldPinGainedFocusMessage.cpp in Sources */,
 				18B5AC0F19DC159B00BA4A38 /* UIColors.mm in Sources */,
 				5637F2061A10F3930011B509 /* MyPinsModule.cpp in Sources */,
 				18B5AAF019DC159000BA4A38 /* CompassViewModel.cpp in Sources */,
@@ -2939,6 +2939,7 @@
 				18B5AADA19DC159000BA4A38 /* AboutPageOpenableControl.cpp in Sources */,
 				562270E81A1A786C0025AB34 /* WorldPinOnMapView.mm in Sources */,
 				222E06561948B08B0004FFD9 /* ViewController.mm in Sources */,
+				56962CDE1A1D0E1700D4355E /* WorldPinInFocusScreenControl.cpp in Sources */,
 				18B5AB3019DC159000BA4A38 /* DecartaSearchJsonParser.cpp in Sources */,
 				18B5AB6E19DC159000BA4A38 /* WorldAreaLoaderModel.cpp in Sources */,
 				18B5AB4219DC159000BA4A38 /* SearchResultItemModel.cpp in Sources */,
@@ -2978,6 +2979,7 @@
 				18B5AC2519DC159B00BA4A38 /* SearchResultMenuViewModule.mm in Sources */,
 				56962CBF1A1BB8E400D4355E /* MyPinSelectionHandlerFactory.cpp in Sources */,
 				18B5AB0019DC159000BA4A38 /* InitialExperiencePreLoadModel.cpp in Sources */,
+				56962CDF1A1D0E2400D4355E /* WorldPinsInFocusController.cpp in Sources */,
 				18B5AC1719DC159B00BA4A38 /* ModalBackgroundViewController.mm in Sources */,
 				18CCC8BE1A15239600DC2D95 /* SearchQueryObserver.cpp in Sources */,
 				18B5ABFB19DC159B00BA4A38 /* AboutPageViewController.mm in Sources */,

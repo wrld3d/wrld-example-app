@@ -15,7 +15,6 @@
 #include "TerrainModelModule.h"
 #include "TerrainRayPicker.h"
 
-#include "TerrainHeightProvider.h"
 #include "CollisionMeshResourceRepository.h"
 
 #include "MyPinCreationModel.h"
