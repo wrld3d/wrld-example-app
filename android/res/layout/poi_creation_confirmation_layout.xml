@@ -11,6 +11,7 @@
         android:layout_height="20dp"
         android:gravity="center"
         android:background="@color/white"
+        android:clickable="true"
         android:text="@string/pin_confirmation_title"
         android:textColor="@color/darkgrey" />
     
@@ -22,6 +23,7 @@
         <RelativeLayout 
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:clickable="true"
         android:background="@color/gold"/>
         
         <Button

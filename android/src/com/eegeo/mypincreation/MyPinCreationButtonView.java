@@ -18,7 +18,9 @@ public class MyPinCreationButtonView implements View.OnClickListener
 	private float m_yPosActive;
 	private float m_yPosInactive;
 	
-	private final long m_stateChangeAnimationTimeMilliseconds = 200;
+	private final long stateChangeAnimationTimeMilliseconds = 200;
+	private final float offsetButtonPosition = 45;
+	private final float offsetButtonWithSearchMenuPosition = 85;
 	
 	public MyPinCreationButtonView(MainActivity activity, long nativeCallerPointer)
 	{
@@ -71,7 +73,7 @@ public class MyPinCreationButtonView implements View.OnClickListener
 	{
 		m_view.animate()
 			.y(xAsPx)
-			.setDuration(m_stateChangeAnimationTimeMilliseconds);
+			.setDuration(stateChangeAnimationTimeMilliseconds);
 	}
 	
 	public void animateToIntermediateOnScreenState(final float onScreenState)
@@ -83,6 +85,13 @@ public class MyPinCreationButtonView implements View.OnClickListener
 	    {
 		    m_view.setY(newXPx);
 	    }
+	}
+	
+	public void shouldOffsetButton(final boolean offsetButton)
+	{
+		final RelativeLayout uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
+		float verticalOffset = offsetButton ? offsetButtonWithSearchMenuPosition : offsetButtonPosition;
+		m_yPosActive = uiRoot.getHeight() - m_activity.dipAsPx(verticalOffset);
 	}
 }
 

@@ -43,6 +43,7 @@ namespace ExampleApp
     		Eegeo::Helpers::ICallback2<ScreenControlViewModel::IScreenControlViewModel&, float>* m_pOnScreenStateChangedCallback;
 
     		void OnScreenStateChangedCallback(ScreenControlViewModel::IScreenControlViewModel& viewModel, float& onScreenState);
+    		void RefreshOffset();
 		};
     }
 }
