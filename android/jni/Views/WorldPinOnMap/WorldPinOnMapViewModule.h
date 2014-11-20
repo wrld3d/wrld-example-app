@@ -7,6 +7,7 @@
 #include "IScreenControlViewModel.h"
 #include "WorldPinOnMapViewIncludes.h"
 #include "IWorldPinInFocusViewModel.h"
+#include "Modality.h"
 
 namespace ExampleApp
 {
@@ -22,6 +23,7 @@ namespace ExampleApp
 			    AndroidNativeState& nativeState,
 			    IWorldPinInFocusViewModel& worldPinInFocusViewModel,
 			    ScreenControlViewModel::IScreenControlViewModel& worldPinOnMapInFocusScreenControlViewModel,
+			    Modality::IModalityModel& modalityModel,
 			    float pinDiameter
 			);
 
