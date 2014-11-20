@@ -16,6 +16,9 @@
     float m_labelsSectionWidth;
     float m_maxContentSize;
     float m_descriptionContentY;
+    float m_maxImageWidth;
+    float m_scrollContentWidth;
+    float m_scrollContentBottomMargin;
 }
 
 - (id) initWithController:(MyPinDetailsViewController *)controller;
@@ -29,6 +32,8 @@
 - (void) setFullyInactive;
 
 - (void) setActiveStateToIntermediateValue:(float)activeState;
+
+- (void) resizeImageViewToFit:(float)sourceImageWidth :(float)sourceImageHeight;
 
 @property (nonatomic, retain) UIView* pCloseButtonContainer;
 @property (nonatomic, retain) UIButton* pCloseButton;

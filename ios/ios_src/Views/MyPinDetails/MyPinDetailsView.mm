@@ -247,8 +247,11 @@
 	self.pImageHeaderLabel.text = @"Image";
 	currentLabelY += labelYSpacing + self.pImageHeaderContainer.frame.size.height;
 
-	self.pImageContent.frame = CGRectMake(headerTextPadding, currentLabelY, m_labelsSectionWidth - headerTextPadding, m_labelsSectionWidth * 0.75f);
+    m_maxImageWidth = m_labelsSectionWidth - headerTextPadding;
+	self.pImageContent.frame = CGRectMake(headerTextPadding, currentLabelY, m_maxImageWidth, m_labelsSectionWidth * 0.75f);
     currentLabelY += labelYSpacing + self.pImageContent.frame.size.height;
+    m_scrollContentBottomMargin = 0;
+    m_scrollContentWidth = m_labelsSectionWidth;
     
 	[self.pLabelsContainer setContentSize:CGSizeMake(m_labelsSectionWidth, currentLabelY)];
     m_maxContentSize = currentLabelY;
@@ -269,6 +272,10 @@
     self.pDescriptionHeaderContainer.hidden = false;
     self.pDescriptionContent.hidden = false;
     self.pDescriptionContent.text = [NSString stringWithUTF8String: pModel->GetDescription().c_str()];
+    
+    self.pDescriptionContent.frame = CGRectMake(3.f, m_descriptionContentY, m_labelsSectionWidth - 3.f, textHeight);
+    self.pLabelsContainer.contentSize = CGSizeMake(m_labelsSectionWidth, scrollContentHeight);
+    [self.pLabelsContainer setContentOffset:CGPointMake(0,0) animated:NO];
 
 	if(!pModel->GetImagePath().empty())
 	{
@@ -280,13 +287,11 @@
         self.pImageContent.image = [UIImage imageWithContentsOfFile: fullPathToImage];
 		self.pImageHeaderContainer.hidden = false;
 		self.pImageContent.hidden = false;
-        scrollContentHeight = m_maxContentSize;
         textHeight = 60.f;
+        
+        [self resizeImageViewToFit:self.pImageContent.image.size.width :self.pImageContent.image.size.height];
 	}
-
-    self.pDescriptionContent.frame = CGRectMake(3.f, m_descriptionContentY, m_labelsSectionWidth - 3.f, textHeight);
-    self.pLabelsContainer.contentSize = CGSizeMake(m_labelsSectionWidth, scrollContentHeight);
-	[self.pLabelsContainer setContentOffset:CGPointMake(0,0) animated:NO];
+    
 }
 
 - (void) setFullyActive
@@ -360,6 +365,17 @@
     {
         [m_pController handleRemovePinButtonPressed];
     }
+}
+
+- (void) resizeImageViewToFit:(float)sourceImageWidth :(float)sourceImageHeight
+{
+    const float widthRatio = m_maxImageWidth/sourceImageWidth;
+    const float height = sourceImageHeight * widthRatio;
+    
+    CGRect frame = self.pImageContent.frame;
+    self.pImageContent.frame = CGRectMake(frame.origin.x, frame.origin.y, m_maxImageWidth, height);
+    
+    self.pLabelsContainer.contentSize = CGSizeMake(m_scrollContentWidth, self.pImageContent.frame.origin.y + self.pImageContent.frame.size.height + m_scrollContentBottomMargin);
 }
 
 @end

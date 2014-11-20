@@ -108,6 +108,8 @@
 {
     const float boundsWidth = self.superview.bounds.size.width;
     const float boundsHeight = self.superview.bounds.size.height;
+    
+    m_scrollContentBottomMargin = 50;
 
     const bool useFullScreenSize = (boundsHeight < 600.f || boundsWidth < 400.f);
     const float boundsOccupyMultiplier = useFullScreenSize ? 0.9f : 0.6f;
@@ -178,13 +180,14 @@
     
     const float poiImageY = poiDescriptionBoxHeight + poiDescriptionBoxY + 30.f;
     const float poiImageX = 20.f;
-    const float poiImageWidth = bodyContainerWidth - (2 * poiImageX);
-    const float poiImageHeight = poiImageWidth * 0.75f;
-    self.pPoiImage.frame = CGRectMake(poiImageX, poiImageY, poiImageWidth, poiImageHeight);
+    m_scrollContentWidth = bodyContainerWidth;
+    m_maxImageWidth = bodyContainerWidth - (2 * poiImageX);
+    const float poiImageHeight = m_maxImageWidth * 0.75f;
+    self.pPoiImage.frame = CGRectMake(poiImageX, poiImageY, m_maxImageWidth, poiImageHeight);
     self.pPoiImage.image = self.pPlaceholderImage;
     
-    const float scrollHeight = poiDescriptionBoxHeight + poiImageHeight + 50.f;
-    self.pBodyScrollView.contentSize = CGSizeMake(bodyContainerWidth, scrollHeight);
+    const float scrollHeight = poiDescriptionBoxHeight + poiImageHeight + m_scrollContentBottomMargin;
+    self.pBodyScrollView.contentSize = CGSizeMake(m_scrollContentWidth, scrollHeight);
     
     const float shadowHeight = 10.f;
     ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pBodyContainer, "shadow_03", 0.f, 0.f, bodyContainerWidth, shadowHeight);
@@ -256,6 +259,8 @@
     
     m_popoverX = bodyContainerWidth * 0.5f;
     m_popoverY = footerY;
+    
+    [self resizeImageViewToFit:self.pPlaceholderImage.size.width :self.pPlaceholderImage.size.height];
 }
 
 - (void) resetView
@@ -264,6 +269,9 @@
     self.pPoiDescriptionBox.text = @"";
     self.pDescriptionPlaceholder.hidden = NO;
     self.pPoiImage.image = self.pPlaceholderImage;
+    
+    [self resizeImageViewToFit:self.pPlaceholderImage.size.width :self.pPlaceholderImage.size.height];
+    
     self.pCheckbox.selected = YES;
     m_imageAttached = NO;
     [self.pBodyScrollView setContentOffset:
@@ -295,6 +303,7 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(NSDictionary *)editingInfo
 {
     self.pPoiImage.image = image;
+    [self resizeImageViewToFit:image.size.width :image.size.height];
     
     m_imageAttached = YES;
     [self.pPopover dismissPopoverAnimated: YES];
@@ -433,6 +442,17 @@
     {
         NSLog(@"%@%@",@"Failed to open url:",[url description]);
     }
+}
+
+- (void) resizeImageViewToFit:(float)sourceImageWidth :(float)sourceImageHeight
+{
+    const float widthRatio = m_maxImageWidth/sourceImageWidth;
+    const float height = sourceImageHeight * widthRatio;
+    
+    CGRect frame = self.pPoiImage.frame;
+    self.pPoiImage.frame = CGRectMake(frame.origin.x, frame.origin.y, m_maxImageWidth, height);
+    
+    self.pBodyScrollView.contentSize = CGSizeMake(m_scrollContentWidth, self.pPoiImage.frame.origin.y + self.pPoiImage.frame.size.height + m_scrollContentBottomMargin);
 }
 
 @end
