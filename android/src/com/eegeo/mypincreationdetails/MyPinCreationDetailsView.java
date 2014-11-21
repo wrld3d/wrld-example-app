@@ -39,6 +39,7 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
 	protected TextView m_termsAndConditionsLink = null;
 	
 	private Uri m_currentImageUri = null;
+	private boolean m_awaitingIntentResponse;
 
 	private final int JPEG_QUALITY = 90;
 	private final String TERMS_AND_CONDITIONS_LINK = "http://sdk.eegeo.com";
@@ -103,6 +104,8 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
 		m_description.setText("");
 		
 		m_currentImageUri = null;
+		
+		m_awaitingIntentResponse = false;;
 	}
 	
 	public void dismiss()
@@ -115,11 +118,24 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
 	{
 		if(view == m_takePhotoButton)
 		{
+			if(m_awaitingIntentResponse)
+			{
+				return;
+			}
+			
 			m_activity.getPhotoIntentDispatcher().takePhoto();
+			
+			m_awaitingIntentResponse = true;
 		}
 		else if(view == m_selectFromGalleryButton)
 		{
+			if(m_awaitingIntentResponse)
+			{
+				return;
+			}
+			
 			m_activity.getPhotoIntentDispatcher().selectPhotoFromGallery();
+			m_awaitingIntentResponse = true;
 		}
 		else if(view == m_closeButton)
 		{
@@ -180,6 +196,8 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
 				e.printStackTrace();
 			}
 			
+			
+			
 		}
 		else if(requestCode == PhotoIntentDispatcher.SELECT_PHOTO_FROM_GALLERY && resultCode == MainActivity.RESULT_OK)
 		{
@@ -195,6 +213,11 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
 			{
 				e.printStackTrace();
 			}
+		}
+		
+		if(requestCode == PhotoIntentDispatcher.SELECT_PHOTO_FROM_GALLERY || requestCode == PhotoIntentDispatcher.REQUEST_IMAGE_CAPTURE)
+		{
+			m_awaitingIntentResponse = false;
 		}
 	}
 	
