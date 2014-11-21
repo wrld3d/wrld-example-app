@@ -507,4 +507,14 @@
     self.pBodyScrollView.contentSize = CGSizeMake(m_scrollContentWidth, self.pPoiImage.frame.origin.y + self.pPoiImage.frame.size.height + m_scrollContentBottomMargin);
 }
 
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if(textField == self.pTitleText)
+    {
+        NSUInteger newLength  = [textField.text length] + [string length] - range.length;
+        return (newLength <= 100);
+    }
+    else return YES;
+}
+
 @end

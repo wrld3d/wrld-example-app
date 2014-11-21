@@ -40,8 +40,11 @@
                 android:hint="@string/poi_creation_details_title_hint"
                 android:imeOptions="actionDone"
                 android:inputType="text"
+                android:lines="0"
+                android:maxLength="100"
+                android:maxLines="1"
                 android:paddingLeft="10dp"
-                android:textColor="@color/black"
+                android:textColor="@color/gold"
                 android:textSize="15.0dp" />
             
         </LinearLayout>
@@ -108,10 +111,11 @@
                 android:id="@+id/poi_creation_details_share_togglebutton"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:background="@drawable/check_button_states"
                 android:layout_marginLeft="10dp"
-                android:textOn=""
-   				android:textOff=""/>
+                android:background="@drawable/check_button_states"
+                android:checked="true"
+                android:textOff=""
+                android:textOn="" />
             
             <TextView
                 android:layout_width="wrap_content"
