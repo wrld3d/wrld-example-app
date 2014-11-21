@@ -62,7 +62,6 @@ namespace ExampleApp
                     m_primaryMenuViewModel.RemoveFromScreen();
                     m_secondaryMenuViewModel.RemoveFromScreen();
                     
-					//m_searchQueryPerformer.RemoveSearchQueryResults(); // <- The culprit. This be the changin' model thread!
                     m_uiToNativeMessageBus.Publish(Search::SearchResultsClearMessage());
                     m_searchResultMenuViewModel.RemoveFromScreen();
                     break;
