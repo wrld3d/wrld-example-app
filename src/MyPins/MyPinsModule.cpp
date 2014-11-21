@@ -11,6 +11,8 @@
 #include "MenuModel.h"
 #include "MenuOptionsModel.h"
 #include "MyPinSelectionHandlerFactory.h"
+#include "MyPinAddedToMenuObserver.h"
+#include "MyPinRemovedFromMenuObserver.h"
 
 namespace ExampleApp
 {
@@ -40,10 +42,16 @@ namespace ExampleApp
             
             m_pMyPinsRepositoryObserver = Eegeo_NEW(MyPinsRepositoryObserver)(*m_pMyPinsRepository,
                                                                               *m_pMyPinsFileIO,
-                                                                              *m_pMenuOptionsModel,
-                                                                              menuViewModel,
-                                                                              uiToNativeMessageBus);
+                                                                              nativeToUiMessageBus);
+
             
+            m_pMyPinAddedToMenuObserver = Eegeo_NEW(MyPinAddedToMenuObserver)(menuViewModel,
+            																  *m_pMenuOptionsModel,
+            																  uiToNativeMessageBus,
+            																  nativeToUiMessageBus);
+            
+            m_pMyPinRemovedFromMenuObserver = Eegeo_NEW(MyPinRemovedFromMenuObserver)(*m_pMenuOptionsModel,
+                                                                                      nativeToUiMessageBus);
             
             m_pMyPinsService = Eegeo_NEW(MyPinsService)(*m_pMyPinsRepository,
                                                         *m_pMyPinsFileIO,
@@ -57,6 +65,10 @@ namespace ExampleApp
         MyPinsModule::~MyPinsModule()
         {
             Eegeo_DELETE m_pMyPinsService;
+
+            Eegeo_DELETE m_pMyPinRemovedFromMenuObserver;
+            Eegeo_DELETE m_pMyPinAddedToMenuObserver;
+
             Eegeo_DELETE m_pMyPinsFileIO;
             
             Eegeo_DELETE m_pMyPinsSelectionHandlerFactory;

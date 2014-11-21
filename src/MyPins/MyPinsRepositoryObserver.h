@@ -5,7 +5,7 @@
 #include "MyPins.h"
 #include "Menu.h"
 #include "ICallback.h"
-#include "UiToNativeMessageBus.h"
+#include "NativeToUiMessageBus.h"
 
 namespace ExampleApp
 {
@@ -18,19 +18,15 @@ namespace ExampleApp
             
             MyPinsRepositoryObserver(MyPinsRepository& myPinsRepository,
                                      MyPinsFileIO& myPinsFileIO,
-                                     Menu::IMenuOptionsModel& menuOptionsModel,
-                                     Menu::IMenuViewModel& menuViewModel,
-                                     ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus);
+                                     ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus);
             
             ~MyPinsRepositoryObserver();
 
         private:
             MyPinsRepository& m_myPinsRepository;
             MyPinsFileIO& m_myPinsFileIO;
-            Menu::IMenuOptionsModel& m_menuOptionsModel;
-            Menu::IMenuViewModel& m_menuViewModel;
-            ExampleAppMessaging::UiToNativeMessageBus& m_uiToNativeMessageBus;
-            
+            ExampleAppMessaging::NativeToUiMessageBus& m_nativeToUiMessageBus;
+
             Eegeo::Helpers::TCallback1<MyPinsRepositoryObserver, MyPinModel*> m_pinAddedCallback;
             Eegeo::Helpers::TCallback1<MyPinsRepositoryObserver, MyPinModel*> m_pinRemovedCallback;
             

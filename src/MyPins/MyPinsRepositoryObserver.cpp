@@ -2,10 +2,10 @@
 
 #include "MyPinsRepositoryObserver.h"
 #include "MyPinsRepository.h"
-#include "IMenuOptionsModel.h"
 #include "MyPinModel.h"
-#include "MyPinMenuOption.h"
 #include "MyPinsFileIO.h"
+#include "MyPinAddedToMenuMessage.h"
+#include "MyPinRemovedFromMenuMessage.h"
 
 #include <string>
 #include <sstream>
@@ -14,24 +14,12 @@ namespace ExampleApp
 {
     namespace MyPins
     {
-        template<typename T>
-        std::string ConvertModelDetailToString(const T& detail)
-        {
-            std::stringstream ss;
-            ss << detail;
-            return ss.str();
-        }
-        
         MyPinsRepositoryObserver::MyPinsRepositoryObserver(MyPinsRepository& myPinsRepository,
                                                            MyPinsFileIO& myPinsFileIO,
-                                                           Menu::IMenuOptionsModel& menuOptionsModel,
-                                                           Menu::IMenuViewModel& menuViewModel,
-                                                           ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus)
+                                                           ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus)
         : m_myPinsRepository(myPinsRepository)
         , m_myPinsFileIO(myPinsFileIO)
-        , m_menuOptionsModel(menuOptionsModel)
-        , m_menuViewModel(menuViewModel)
-        , m_uiToNativeMessageBus(uiToNativeMessageBus)
+        , m_nativeToUiMessageBus(nativeToUiMessageBus)
         , m_pinAddedCallback(this, &MyPinsRepositoryObserver::HandlePinAddedToRepository)
         , m_pinRemovedCallback(this, &MyPinsRepositoryObserver::HandlePinRemovedFromRepository)
         {
@@ -48,16 +36,12 @@ namespace ExampleApp
         
         void MyPinsRepositoryObserver::HandlePinAddedToRepository(MyPinModel*& myPinModel)
         {
-            m_menuOptionsModel.AddItem(ConvertModelDetailToString(myPinModel->Identifier()),
-                                       myPinModel->GetTitle(),
-                                       "",
-                                       "place",
-                                       Eegeo_NEW(MyPinMenuOption)(*myPinModel, m_menuViewModel, m_uiToNativeMessageBus));
+        	m_nativeToUiMessageBus.Publish(MyPinAddedToMenuMessage(myPinModel));
         }
         
         void MyPinsRepositoryObserver::HandlePinRemovedFromRepository(MyPinModel*& myPinModel)
         {
-            m_menuOptionsModel.RemoveItem(ConvertModelDetailToString(myPinModel->Identifier()));
+            m_nativeToUiMessageBus.Publish(MyPinRemovedFromMenuMessage(myPinModel));
             
             std::vector<MyPinModel*> pinModels;
             pinModels.reserve(m_myPinsRepository.GetItemCount());

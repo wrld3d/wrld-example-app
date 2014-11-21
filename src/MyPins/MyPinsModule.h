@@ -37,6 +37,8 @@ namespace ExampleApp
             MyPinsService* m_pMyPinsService;
             MyPinsRepositoryObserver* m_pMyPinsRepositoryObserver;
             MyPinSelectionHandlerFactory* m_pMyPinsSelectionHandlerFactory;
+            MyPinAddedToMenuObserver* m_pMyPinAddedToMenuObserver;
+            MyPinRemovedFromMenuObserver* m_pMyPinRemovedFromMenuObserver;
             
             Menu::IMenuModel* m_pMenuModel;
             Menu::IMenuOptionsModel* m_pMenuOptionsModel;

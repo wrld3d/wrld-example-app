@@ -19,6 +19,8 @@
 #include "MyPinCreationStateChangedMessage.h"
 #include "SearchResultOnMapItemModelSelectedMessage.h"
 #include "MyPinDetailsModelSelectedMessage.h"
+#include "MyPinAddedToMenuMessage.h"
+#include "MyPinRemovedFromMenuMessage.h"
 
 namespace ExampleApp
 {
@@ -39,6 +41,8 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<MyPinCreation::MyPinCreationStateChangedMessage>
 			, public Eegeo::Messaging::CatalogBinding<SearchResultOnMap::SearchResultOnMapItemModelSelectedMessage>
             , public Eegeo::Messaging::CatalogBinding<MyPinDetails::MyPinDetailsModelSelectedMessage>
+			, public Eegeo::Messaging::CatalogBinding<MyPins::MyPinAddedToMenuMessage>
+            , public Eegeo::Messaging::CatalogBinding<MyPins::MyPinRemovedFromMenuMessage>
 			, private Eegeo::NonCopyable
 		{
 

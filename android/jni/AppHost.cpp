@@ -71,6 +71,7 @@
 #include "Logger.h"
 #include "AndroidAppThreadAssertionMacros.h"
 #include "SearchResultRepositoryObserver.h"
+#include "IMyPinsModule.h"
 
 using namespace Eegeo::Android;
 using namespace Eegeo::Android::Input;
@@ -385,7 +386,7 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
 	m_pPrimaryMenuViewModule = Eegeo_NEW(ExampleApp::Menu::MenuViewModule)(
 	                               "com/eegeo/primarymenu/PrimaryMenuView",
 	                               m_nativeState,
-	                               app.PrimaryMenuModule().GetPrimaryMenuModel(),
+	                               app.MyPinsModule().GetMyPinsMenuModel(),
 	                               app.PrimaryMenuModule().GetPrimaryMenuViewModel()
 	                           );
 
