@@ -11,6 +11,7 @@
 #include "ScreenControlViewModelBase.h"
 #include "Search.h"
 #include "NativeToUiMessageBus.h"
+#include "UiToNativeMessageBus.h"
 #include "MyPinCreationStateChangedMessage.h"
 
 namespace ExampleApp
@@ -22,6 +23,7 @@ namespace ExampleApp
         public:
             
             MyPinCreationCompositeViewModel(ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus,
+            							  ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
                                           IMyPinCreationInitiationViewModel& initiationViewModel,
                                           IMyPinCreationConfirmationViewModel& confirmationViewModel,
                                           ExampleApp::Menu::IMenuViewModel& primaryMenuViewModel,
@@ -40,6 +42,7 @@ namespace ExampleApp
             Eegeo::Helpers::TCallback2<MyPinCreationCompositeViewModel, ScreenControlViewModel::IScreenControlViewModel&, float> m_searchResultMenuStateChangedCallback;
             
             ExampleAppMessaging::NativeToUiMessageBus& m_nativeToUiMessageBus;
+            ExampleAppMessaging::UiToNativeMessageBus& m_uiToNativeMessageBus;
             IMyPinCreationInitiationViewModel& m_initiationViewModel;
             IMyPinCreationConfirmationViewModel& m_confirmationViewModel;
             ExampleApp::Menu::IMenuViewModel& m_primaryMenuViewModel;

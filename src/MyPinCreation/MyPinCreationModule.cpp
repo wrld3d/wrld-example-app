@@ -64,6 +64,7 @@ namespace ExampleApp
                                                                                                   false);
             
             m_pMyPinCreationCompositeViewModel = Eegeo_NEW(MyPinCreationCompositeViewModel)(nativeToUiMessageBus,
+            																				uiToNativeMessageBus,
                                                                                             *m_pMyPinCreationInitiationViewModel,
                                                                                             *m_pMyPinCreationConfirmationViewModel,
                                                                                             primaryMenuViewModel,

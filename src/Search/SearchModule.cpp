@@ -46,10 +46,16 @@ namespace ExampleApp
 			                             *m_pSearchQueryPerformer,
 			                             nativeToUiMessageBus
 			                         );
+
+			m_pSearchResultsClearMessageHandler = Eegeo_NEW(SearchResultsClearMessageHandler)(
+										*m_pSearchQueryPerformer,
+										uiToNativeMessageBus
+									);
 		}
 
 		SearchModule::~SearchModule()
 		{
+			Eegeo_DELETE m_pSearchResultsClearMessageHandler;
 			Eegeo_DELETE m_pSearchQueryObserver;
 			Eegeo_DELETE m_pSearchRefreshService;
 			Eegeo_DELETE m_pSearchQueryPerformer;

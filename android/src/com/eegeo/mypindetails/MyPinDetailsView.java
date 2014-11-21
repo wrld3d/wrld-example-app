@@ -26,6 +26,8 @@ public class MyPinDetailsView implements View.OnClickListener
 	private TextView m_descriptionHeader = null;
 	private ImageView m_imageView = null;
 	private TextView m_imageHeader = null;
+	
+	private boolean m_handlingClick = false;
 
 	public MyPinDetailsView(MainActivity activity, long nativeCallerPointer)
 	{
@@ -87,6 +89,8 @@ public class MyPinDetailsView implements View.OnClickListener
 		m_closeButton.setEnabled(true);
 		m_view.setVisibility(View.VISIBLE);
 		m_view.requestFocus();
+		
+		m_handlingClick = false;
 	}
 
 	public void dismiss()
@@ -96,7 +100,11 @@ public class MyPinDetailsView implements View.OnClickListener
 
 	public void onClick(View view)
 	{
-		m_view.setEnabled(false);
+		if(m_handlingClick)
+		{
+			return;
+		}
+		m_handlingClick = true;
 		
 		if(view == m_closeButton)
 		{
@@ -122,9 +130,15 @@ public class MyPinDetailsView implements View.OnClickListener
 			   .setNegativeButton("No,  keep it", new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						m_view.setEnabled(true);
+						m_handlingClick = false;
 					}
-			   });
+			   })
+			   .setOnCancelListener(new DialogInterface.OnCancelListener() {
+					@Override
+					public void onCancel(DialogInterface dialog) {
+						m_handlingClick = false;
+					}
+				});
 		AlertDialog dialog = builder.create();
 		dialog.show();
 	}

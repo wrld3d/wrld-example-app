@@ -6,12 +6,14 @@
 #include "IMenuViewModel.h"
 #include "ISearchResultMenuViewModel.h"
 #include "ISearchQueryPerformer.h"
+#include "SearchResultsClearMessage.h"
 
 namespace ExampleApp
 {
     namespace MyPinCreation
     {
         MyPinCreationCompositeViewModel::MyPinCreationCompositeViewModel(ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus,
+        															 ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
                                                                      IMyPinCreationInitiationViewModel& initiationViewModel,
                                                                      IMyPinCreationConfirmationViewModel& confirmationViewModel,
                                                                      ExampleApp::Menu::IMenuViewModel& primaryMenuViewModel,
@@ -21,6 +23,7 @@ namespace ExampleApp
         : m_stateChangeHandler(this, &MyPinCreationCompositeViewModel::OnPoiRingStateChanged)
         , m_searchResultMenuStateChangedCallback(this, &MyPinCreationCompositeViewModel::HandleSearchResultMenuStateChanged)
         , m_nativeToUiMessageBus(nativeToUiMessageBus)
+        , m_uiToNativeMessageBus(uiToNativeMessageBus)
         , m_initiationViewModel(initiationViewModel)
         , m_confirmationViewModel(confirmationViewModel)
         , m_primaryMenuViewModel(primaryMenuViewModel)
@@ -59,7 +62,7 @@ namespace ExampleApp
                     m_primaryMenuViewModel.RemoveFromScreen();
                     m_secondaryMenuViewModel.RemoveFromScreen();
                     
-                    m_searchQueryPerformer.RemoveSearchQueryResults();
+                    m_uiToNativeMessageBus.Publish(Search::SearchResultsClearMessage());
                     m_searchResultMenuViewModel.RemoveFromScreen();
                     break;
                 }
