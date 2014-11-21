@@ -305,21 +305,35 @@
     imagePicker.delegate=self;
     imagePicker.allowsEditing = NO;
 
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad)
-    {
-        self.pPopover = [[UIPopoverController alloc] initWithContentViewController:imagePicker];
-        CGRect popoverRect = CGRectMake(m_popoverX, m_popoverY, 1.f, 1.f);
-        
-        [self.pPopover presentPopoverFromRect:popoverRect inView:self.pControlContainer permittedArrowDirections:UIPopoverArrowDirectionDown animated:YES];
-    }
+    self.pPopover = [[UIPopoverController alloc] initWithContentViewController:imagePicker];
+
+    CGRect popoverRect = CGRectMake(m_popoverX, m_popoverY, 1.f, 1.f);
+    
+    [self.pPopover presentPopoverFromRect:popoverRect
+                                   inView:self.pControlContainer
+                 permittedArrowDirections:UIPopoverArrowDirectionDown
+                                 animated:YES];
+    
+    [self.pPopover setDelegate: self];
+    
+    [self prohibitScreenRotations];
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(NSDictionary *)editingInfo
 {
+    [self reinstateScreenRotations];
     self.pPoiImage.image = image;
     [self resizeImageViewToFit:image.size.width :image.size.height];
     
     m_imageAttached = YES;
+    [self.pPopover dismissPopoverAnimated: YES];
+    [picker dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [self reinstateScreenRotations];
+    
     [self.pPopover dismissPopoverAnimated: YES];
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
@@ -329,31 +343,48 @@
     [m_pController handleClosedButtonPressed];
 }
 
+- (void) prohibitScreenRotations
+{
+    UIDevice* currentDevice = [UIDevice currentDevice];
+    
+    while ([currentDevice isGeneratingDeviceOrientationNotifications])
+    {
+        [currentDevice endGeneratingDeviceOrientationNotifications];
+    }
+}
+
+- (void) reinstateScreenRotations
+{
+    [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
+}
+
 - (void) onCameraButtonPressed:(UIButton *)sender
 {
+    [self prohibitScreenRotations];
+    
+    if ([UIImagePickerController isSourceTypeAvailable: UIImagePickerControllerSourceTypeCamera] == NO)
+    {
+        UIAlertView* noCameraAlert = [[UIAlertView alloc] initWithTitle: @"No Camera!"
+                                                                message: @"This device has no available camera"
+                                                               delegate: nil
+                                                      cancelButtonTitle: @"Dismiss"
+                                                      otherButtonTitles: nil];
+        
+        [noCameraAlert show];
+        return;
+    }
+    
+    
     UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
     
+
     imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
     imagePicker.delegate = self;
     imagePicker.allowsEditing = NO;
     imagePicker.showsCameraControls = YES;
     imagePicker.navigationBarHidden = YES;
-    imagePicker.toolbarHidden = YES;
-    imagePicker.wantsFullScreenLayout = YES;
     
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad)
-    {
-        self.pPopover = [[UIPopoverController alloc] initWithContentViewController:imagePicker];
-        CGRect popoverRect = CGRectMake(m_popoverX, m_popoverY, 1.f, 1.f);
-        
-        [self.pPopover presentPopoverFromRect:popoverRect
-                                       inView:self.pControlContainer
-                     permittedArrowDirections:UIPopoverArrowDirectionDown
-                                     animated:YES];
-
-        // Full screen camera...
-//        [m_pController presentViewController:imagePicker animated:YES completion: nil];
-    }
+    [m_pController presentViewController:imagePicker animated:YES completion:nil];
 }
 
 - (void) onConfirmButtonPressed:(UIButton *)sender
@@ -364,6 +395,13 @@
                                               : self.pPoiDescriptionBox.text
                                               : imageToSend
                                               : self.pCheckbox.selected];
+}
+
+- (BOOL)popoverControllerShouldDismissPopover:(UIPopoverController *)popoverController
+{
+    [self.pPopover dismissPopoverAnimated:YES];
+    [self reinstateScreenRotations];
+    return YES;
 }
 
 - (void)textViewDidBeginEditing:(UITextView *)textView
