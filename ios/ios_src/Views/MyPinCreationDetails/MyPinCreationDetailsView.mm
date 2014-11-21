@@ -261,6 +261,20 @@
     m_popoverY = footerY;
     
     [self resizeImageViewToFit:self.pPlaceholderImage.size.width :self.pPlaceholderImage.size.height];
+    [self setTouchExclusivity: self];
+}
+
+- (void) setTouchExclusivity: (UIView*) view
+{
+    for (UIView *subView in [view subviews])
+    {
+        if ([subView subviews] != nil)
+        {
+            [self setTouchExclusivity: subView];
+        }
+
+        subView.exclusiveTouch = YES;
+    }
 }
 
 - (void) resetView

@@ -99,9 +99,24 @@
 		[self.pWebContent addGestureRecognizer:urlTappedGesture];
 
 		[self.pLabelsContainer addSubview: self.pWebContent];
+        
+        [self setTouchExclusivity: self];
 	}
 
 	return self;
+}
+
+- (void) setTouchExclusivity: (UIView*) view
+{
+    for (UIView *subView in [view subviews])
+    {
+        if ([subView subviews] != nil)
+        {
+            [self setTouchExclusivity: subView];
+        }
+        
+        subView.exclusiveTouch = YES;
+    }
 }
 
 - (void)dealloc
