@@ -35,6 +35,8 @@ public class MenuListAdapter extends BaseAdapter
 	private HashMap<String, Integer> m_animatedSizesMap;
 	private ValueAnimator m_expandContractAnim;
 	private boolean m_shouldAlignIconRight;
+	
+	private final float SubItemIndent = 13.0f;
 
 	public MenuListAdapter(Activity context,
 	                       final int groupViewId,
@@ -208,27 +210,14 @@ public class MenuListAdapter extends BaseAdapter
 
 	private boolean isHeader(int index)
 	{
-		int count = 0;
-		for(int groupIndex = 0; groupIndex < m_groups.size(); groupIndex++)
+		int groupIndex = getGroupIndexForViewIndex(index);
+		int placeInGroup = getPlaceInGroup(index);
+		
+		if(!m_groupsExpandable.get(groupIndex))
 		{
-			String groupName = m_groups.get(groupIndex);
-			List<String> children = m_groupToChildrenMap.get(groupName);
-			if(children.size() == 0)
-			{
-				continue;
-			}
-
-			// Only first child in group is header if expandable, otherwise all children are.
-			if(count == index || !m_groupsExpandable.get(groupIndex))
-			{
-				return true;
-			}
-			else
-			{
-				count += m_animatedSizesMap.get(groupName);
-			}
+			return true;
 		}
-		return false;
+		return placeInGroup == 0;
 	}
 
 	@Override
@@ -292,6 +281,13 @@ public class MenuListAdapter extends BaseAdapter
 			{
 				shadow.setVisibility(View.INVISIBLE);
 			}
+			
+			float scale = m_context.getResources().getDisplayMetrics().density;
+			reusableView.setPadding(
+					!m_shouldAlignIconRight ? (int)(SubItemIndent * scale + 0.5f) : 0, 
+					0, 
+					m_shouldAlignIconRight ? (int)(SubItemIndent * scale + 0.5f) : 0, 
+					0);
 		}
 		else
 		{
@@ -305,6 +301,7 @@ public class MenuListAdapter extends BaseAdapter
 				if(m_shouldAlignIconRight)
 				{
 					openableArrowParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
+					openableArrow.setRotation(0);
 				}
 				else
 				{
