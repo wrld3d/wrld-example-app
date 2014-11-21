@@ -46,6 +46,8 @@ namespace ExampleApp
 			);
 
 			m_uiView = env->NewGlobalRef(instance);
+
+			RefreshOffset();
     	}
 
     	MyPinCreationInitiationViewController::~MyPinCreationInitiationViewController()
@@ -78,6 +80,8 @@ namespace ExampleApp
 			AndroidSafeNativeThreadAttachment attached(m_nativeState);
 			JNIEnv* env = attached.envForThread;
 
+			RefreshOffset();
+
 			if(m_viewModel.IsFullyOnScreen())
 			{
 				jmethodID animateToClosedOnScreen = env->GetMethodID(m_uiViewClass, "animateToActive", "()V");
@@ -93,6 +97,17 @@ namespace ExampleApp
 				jmethodID animateToIntermediateOpenStateOnScreen = env->GetMethodID(m_uiViewClass, "animateToIntermediateOnScreenState", "(F)V");
 				env->CallVoidMethod(m_uiView, animateToIntermediateOpenStateOnScreen, onScreenState);
 			}
+    	}
+
+    	void MyPinCreationInitiationViewController::RefreshOffset()
+    	{
+    		ASSERT_UI_THREAD
+
+			AndroidSafeNativeThreadAttachment attached(m_nativeState);
+			JNIEnv* env = attached.envForThread;
+
+			jmethodID shouldOffsetButtonMethod = env->GetMethodID(m_uiViewClass, "shouldOffsetButton", "(Z)V");
+			env->CallVoidMethod(m_uiView, shouldOffsetButtonMethod, m_viewModel.ShouldOffsetViewButton());
     	}
     }
 }

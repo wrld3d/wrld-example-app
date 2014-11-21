@@ -14,6 +14,7 @@ namespace ExampleApp
 		    AndroidNativeState& nativeState,
 		    IWorldPinInFocusViewModel& worldPinInFocusViewModel,
 		    ScreenControlViewModel::IScreenControlViewModel& worldPinOnMapInFocusScreenControlViewModel,
+		    Modality::IModalityModel& modalityModel,
 		    float pinDiameter
 		)
 		{
@@ -23,6 +24,7 @@ namespace ExampleApp
 			        nativeState,
 			        worldPinInFocusViewModel,
 			        worldPinOnMapInFocusScreenControlViewModel,
+			        modalityModel,
 			        pinDiameter
 			                                     );
 		}

@@ -4,6 +4,7 @@
 #include "Types.h"
 #include "IModalityModel.h"
 #include "AndroidAppThreadAssertionMacros.h"
+#include "IModalityModel.h"
 
 namespace ExampleApp
 {
@@ -13,14 +14,17 @@ namespace ExampleApp
 		    AndroidNativeState& nativeState,
 		    IWorldPinInFocusViewModel& worldPinInFocusViewModel,
 		    ScreenControlViewModel::IScreenControlViewModel& worldPinScreenControlViewModel,
+		    const Modality::IModalityModel& modalityModel,
 		    float pinDiameter
 		)
 			: m_nativeState(nativeState)
 			, m_worldPinInFocusViewModel(worldPinInFocusViewModel)
 			, m_worldPinScreenControlViewModel(worldPinScreenControlViewModel)
+			, m_modalityModel(modalityModel)
 			, m_worldPinOnMapFocusOpenedCallback(this, &WorldPinOnMapViewController::WorldPinOnMapFocusOpenedCallback)
-			, m_worldPinOnMapFocusUpdatedCallback(this, &WorldPinOnMapViewController::WorldPinOnMapFocusUpdatedCallback)
 			, m_worldPinOnMapFocusClosedCallback(this, &WorldPinOnMapViewController::WorldPinOnMapFocusClosedCallback)
+			, m_worldPinOnMapFocusUpdatedCallback(this, &WorldPinOnMapViewController::WorldPinOnMapFocusUpdatedCallback)
+			, m_screenStateChangedCallback(this, &WorldPinOnMapViewController::ScreenStateChangedCallback)
 			, m_pinOffset(pinDiameter / 2.f)
 		{
 			ASSERT_UI_THREAD
@@ -28,6 +32,7 @@ namespace ExampleApp
 			m_worldPinInFocusViewModel.InsertOpenedCallback(m_worldPinOnMapFocusOpenedCallback);
 			m_worldPinInFocusViewModel.InsertClosedCallback(m_worldPinOnMapFocusClosedCallback);
 			m_worldPinInFocusViewModel.InsertUpdateCallback(m_worldPinOnMapFocusUpdatedCallback);
+			m_worldPinScreenControlViewModel.InsertOnScreenStateChangedCallback(m_screenStateChangedCallback);
 
 			AndroidSafeNativeThreadAttachment attached(m_nativeState);
 			JNIEnv* env = attached.envForThread;
@@ -47,12 +52,22 @@ namespace ExampleApp
 			                   );
 
 			m_uiView = env->NewGlobalRef(instance);
+
+			if(m_worldPinInFocusViewModel.IsOpen())
+			{
+				WorldPinOnMapFocusOpenedCallback();
+			}
+			else
+			{
+				WorldPinOnMapFocusClosedCallback();
+			}
 		}
 
 			WorldPinOnMapViewController::~WorldPinOnMapViewController()
 		{
 			ASSERT_UI_THREAD
 
+			m_worldPinScreenControlViewModel.RemoveOnScreenStateChangedCallback(m_screenStateChangedCallback);
 			m_worldPinInFocusViewModel.RemoveUpdateCallback(m_worldPinOnMapFocusUpdatedCallback);
 			m_worldPinInFocusViewModel.RemoveOpenedCallback(m_worldPinOnMapFocusOpenedCallback);
 			m_worldPinInFocusViewModel.RemoveClosedCallback(m_worldPinOnMapFocusClosedCallback);
@@ -90,7 +105,7 @@ namespace ExampleApp
 			jstring detailsStr = env->NewStringUTF(worldPinsInFocusModel.GetSubtitle().c_str());
 
 			jmethodID showAtScreenLocation = env->GetMethodID(m_uiViewClass, "showAtScreenLocation", "(Ljava/lang/String;Ljava/lang/String;FFF)V");
-			env->CallVoidMethod(m_uiView, showAtScreenLocation, titleStr, detailsStr, location.x, offsetY, m_worldPinScreenControlViewModel.OnScreenState());
+			env->CallVoidMethod(m_uiView, showAtScreenLocation, titleStr, detailsStr, location.x, offsetY, 1.f - m_modalityModel.GetModality());
 
 			env->DeleteLocalRef(titleStr);
 			env->DeleteLocalRef(detailsStr);
@@ -119,6 +134,20 @@ namespace ExampleApp
 
 			jmethodID updateScreenLocation = env->GetMethodID(m_uiViewClass, "updateScreenLocation", "(FF)V");
 			env->CallVoidMethod(m_uiView, updateScreenLocation, location.x, offsetY);
+		}
+
+		void WorldPinOnMapViewController::ScreenStateChangedCallback(ScreenControlViewModel::IScreenControlViewModel& screenControlViewModel, float& screenState)
+		{
+			ASSERT_UI_THREAD
+
+			if(m_worldPinInFocusViewModel.IsOpen())
+			{
+				AndroidSafeNativeThreadAttachment attached(m_nativeState);
+				JNIEnv* env = attached.envForThread;
+
+				jmethodID updateScreenVisibility = env->GetMethodID(m_uiViewClass, "updateScreenVisibility", "(F)V");
+				env->CallVoidMethod(m_uiView, updateScreenVisibility, screenState);
+			}
 		}
 	}
 }

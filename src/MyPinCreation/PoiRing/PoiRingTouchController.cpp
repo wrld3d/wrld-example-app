@@ -56,12 +56,13 @@ namespace ExampleApp
             
             bool PoiRingTouchController::HandleTouchUp(const AppInterface::TouchData& data)
             {
+                m_isDragging = false;
+                
                 if (m_myPinCreationModel.GetCreationStage() != Ring)
                 {
                     return false;
                 }
                 
-                m_isDragging = false;
                 return true;
             }
             
@@ -98,7 +99,7 @@ namespace ExampleApp
             
             bool PoiRingTouchController::IsDragging() const
             {
-                return m_isDragging;
+                return m_isDragging && m_myPinCreationModel.GetCreationStage() == Ring;
             }
         }
     }

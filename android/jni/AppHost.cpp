@@ -348,6 +348,7 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
 	                                     m_nativeState,
 	                                     app.WorldPinsModule().GetWorldPinInFocusViewModel(),
 	                                     app.WorldPinsModule().GetScreenControlViewModel(),
+	                                     app.ModalityModule().GetModalityModel(),
 	                                     app.PinDiameter()
 	                                 );
 

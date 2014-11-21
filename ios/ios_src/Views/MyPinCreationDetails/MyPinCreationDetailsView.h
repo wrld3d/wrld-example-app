@@ -13,6 +13,9 @@
     float m_stateChangeAnimationTimeSeconds;
     float m_popoverX;
     float m_popoverY;
+    float m_maxImageWidth;
+    float m_scrollContentWidth;
+    float m_scrollContentBottomMargin;
     BOOL m_imageAttached;
 }
 
@@ -27,6 +30,8 @@
 - (void) setActiveStateToIntermediateValue:(float)activeState;
 
 - (void) addDoneToolBarToKeyboard:(UITextView *)textView;
+
+- (void) resizeImageViewToFit:(float)sourceImageWidth :(float)sourceImageHeight;
 
 @property (nonatomic, retain) UIView* pControlContainer;
 

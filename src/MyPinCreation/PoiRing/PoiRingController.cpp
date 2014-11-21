@@ -13,6 +13,7 @@
 #include "IMyPinCreationModel.h"
 #include "EarthConstants.h"
 #include "TerrainHeightProvider.h"
+#include "TransformHelpers.h"
 
 namespace ExampleApp
 {
@@ -89,16 +90,14 @@ namespace ExampleApp
                 float altitudeBasedScale = CalculateAltitudeBasedSphereScale(renderCamera.GetAltitude(), outerRingRadiusInMeters);
                 m_poiRingView.SetInnerSphereScale(altitudeBasedScale * transitionScale);
                 
-                Eegeo::v3 up = m_pMyPinCreationModel.GetPosition().Norm().ToSingle();
-                const float iconHeightInMeters = 150.f * transitionScale;
-                Eegeo::dv3 iconPosition = m_pMyPinCreationModel.GetPosition() + (up * iconHeightInMeters);
-                Eegeo::dv3 scaledIconPosition = Eegeo::Rendering::EnvironmentFlatteningService::GetScaledPointAboveGroundEcef(
-                                                                                                                    iconPosition,
-                                                                                                                    iconHeightInMeters,
-                                                                                                                    m_environmentFlatteningService.GetCurrentScale());
+                Eegeo::dv3 iconPosition = m_pMyPinCreationModel.GetPosition();
+                Eegeo::dv3 scaledIconPosition = Eegeo::Rendering::EnvironmentFlatteningService::GetScaledPointEcef(
+                    iconPosition,
+                    m_environmentFlatteningService.GetCurrentScale());
 
-                const float iconScale = CalculateAltitudeBasedIconScale(renderCamera.GetAltitude());
-                m_poiRingView.AddIconSprite(renderCamera, scaledIconPosition, iconScale * transitionScale);
+                const float iconConstantScale = 0.002f;
+                const float iconScale = Eegeo::Helpers::TransformHelpers::ComputeModelScaleForConstantScreenSize(renderCamera, scaledIconPosition) * iconConstantScale;
+                m_poiRingView.AddIconSprite(renderCamera, scaledIconPosition, Eegeo::Max(iconScale * transitionScale, 0.0f));
             }
             
             float PoiRingController::CalculateTransitionScale(float dt)
