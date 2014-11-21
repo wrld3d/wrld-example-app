@@ -7,7 +7,7 @@
 
 @class MyPinCreationDetailsView;
 
-@interface MyPinCreationDetailsView : UIView <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextViewDelegate, UITextFieldDelegate>
+@interface MyPinCreationDetailsView : UIView <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextViewDelegate, UITextFieldDelegate, UIPopoverControllerDelegate>
 {
     __weak MyPinCreationDetailsViewController* m_pController;
     float m_stateChangeAnimationTimeSeconds;
