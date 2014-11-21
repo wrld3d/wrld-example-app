@@ -53,6 +53,8 @@ FOUNDATION_EXPORT NSInteger const SubItemCellShadowFlippedViewTag;
 
 - (void)showOpenableArrowOpen:(UITableViewCell *)cell;
 
+- (size_t)getTotalNumberOfCellsInTableView;
+
 @property (nonatomic, retain) MenuView* pMenuView;
 @property (nonatomic, retain) UIImage* pSubItemShadow;
 @property (nonatomic, retain) UIImage* pSubItemShadowFlipped;

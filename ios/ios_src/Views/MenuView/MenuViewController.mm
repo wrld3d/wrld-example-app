@@ -43,15 +43,14 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 3;
 		m_isRightMenu = isRightMenu;
 		self.pMenuView = pMenuView;
 		[self.pMenuView setController:self];
+        
+        m_pMenuModel = pMenuModel;
+        
+        m_pMenuViewModel = pMenuViewModel;
+        m_pModalityModel = pModalityModel;
 
-		size_t numberOfSections = pMenuViewModel->SectionsCount() - 1;
-		size_t numberOfCells = 0;
-
-		for (int i = 1; i < pMenuViewModel->SectionsCount(); ++i)
-		{
-			ExampleApp::Menu::IMenuSectionViewModel& menuSectionViewModel = pMenuViewModel->GetMenuSection(i);
-			numberOfCells += menuSectionViewModel.GetTotalItemCount();
-		}
+		size_t numberOfSections = pMenuViewModel->SectionsCount();
+        size_t numberOfCells = [self getTotalNumberOfCellsInTableView];
 
 		[self.pMenuView initialiseViews:numberOfSections numberOfCells: numberOfCells];
 
@@ -59,10 +58,6 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 3;
 		self.view = pMenuView;
 
 		_dragging = false;
-		m_pMenuModel = pMenuModel;
-
-		m_pMenuViewModel = pMenuViewModel;
-		m_pModalityModel = pModalityModel;
 
 		m_pInterop = Eegeo_NEW((ExampleApp::MenuView::MenuViewControllerInterop<ExampleApp::Menu::MenuItemModel, MenuViewController>))(self, *pMenuModel, *pMenuViewModel);
 
@@ -134,11 +129,21 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 3;
 
 -(void)handleItemAdded
 {
+    size_t numberOfSections = m_pMenuViewModel->SectionsCount();
+    size_t numberOfCells = [self getTotalNumberOfCellsInTableView];
+    
+    [self.pMenuView refreshTableHeights: numberOfSections numberOfCells:numberOfCells];
+    
 	[[self.pMenuView pTableview] reloadData];
 }
 
 -(void)handleItemRemoved
 {
+    size_t numberOfSections = m_pMenuViewModel->SectionsCount();
+    size_t numberOfCells = [self getTotalNumberOfCellsInTableView];
+    
+    [self.pMenuView refreshTableHeights: numberOfSections numberOfCells:numberOfCells];
+    
 	[[self.pMenuView pTableview] reloadData];
 }
 
@@ -265,6 +270,19 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 3;
 	{
 		m_pMenuViewModel->ReleaseReactorControl();
 	}
+}
+
+- (size_t)getTotalNumberOfCellsInTableView
+{
+    size_t numberOfCells = 0;
+    
+    for (int i = 0; i < m_pMenuViewModel->SectionsCount(); ++i)
+    {
+        ExampleApp::Menu::IMenuSectionViewModel& menuSectionViewModel = m_pMenuViewModel->GetMenuSection(i);
+        numberOfCells += menuSectionViewModel.GetTotalItemCount();
+    }
+    
+    return numberOfCells;
 }
 
 - (NSInteger)numberOfSectionsInTableView: (UITableView *)tableView

@@ -52,6 +52,7 @@
 #include "MyPinDetailsViewModule.h"
 #include "MyPinDetailsView.h"
 #include "IMyPinDetailsModule.h"
+#include "IMyPinsModule.h"
 
 using namespace Eegeo::iOS;
 
@@ -183,7 +184,7 @@ void AppHost::CreateApplicationViewModules()
 	m_pModalBackgroundViewModule = Eegeo_NEW(ExampleApp::ModalBackground::ModalBackgroundViewModule)(app.ModalityModule().GetModalityModel());
 
 
-	m_pPrimaryMenuViewModule = Eegeo_NEW(ExampleApp::PrimaryMenu::PrimaryMenuViewModule)(app.PrimaryMenuModule().GetPrimaryMenuModel(),
+	m_pPrimaryMenuViewModule = Eegeo_NEW(ExampleApp::PrimaryMenu::PrimaryMenuViewModule)(app.MyPinsModule().GetMyPinsMenuModel(),
 	                           app.PrimaryMenuModule().GetPrimaryMenuViewModel(),
 	                           *m_pScreenProperties,
 	                           app.ModalityModule().GetModalityModel());

@@ -60,8 +60,23 @@
     m_tableX = m_tableOffsetIntoContainerX + m_mainContainerOffscreenOffsetX;
     m_tableY = m_tableOffsetIntoContainerY + menuHeaderStubHeight;
     m_tableWidth = m_mainContainerOnScreenWidth - (2 * m_tableOffsetIntoContainerX);
-    m_tableHeight = m_mainContainerHeight - m_tableOffsetIntoContainerY;
-    self.pTableview = [[[CustomTableView alloc] initWithFrame:CGRectMake(m_tableX, m_tableY, m_tableWidth, m_tableHeight) style:UITableViewStylePlain] autorelease];
+    m_tableHeight = m_mainContainerHeight - menuHeaderStubHeight;
+    const float tableScreenY = m_mainContainerY + m_mainContainerOffscreenOffsetY + m_tableY;
+    const float tableScreenSpace = m_screenHeight - tableScreenY;
+    m_tableHeight = fmin(tableScreenSpace, m_tableHeight);
+    
+    const float realTableHeight =  (SECTION_HEADER_CELL_HEIGHT * numberOfSections) + (SUB_SECTION_CELL_HEIGHT * (numberOfCells));
+    
+    self.pTableviewContainer = [[[UIScrollView alloc] initWithFrame:CGRectMake(m_tableX, m_tableY, m_tableWidth, m_tableHeight)] autorelease];
+    self.pTableviewContainer.bounces = NO;
+    self.pTableviewContainer.contentSize = CGSizeMake(m_tableWidth, realTableHeight);
+    self.pTableviewContainer.scrollIndicatorInsets = UIEdgeInsetsMake(0,0,0,self.pTableviewContainer.bounds.size.width-8);
+    
+    self.pTableview = [[[CustomTableView alloc] initWithFrame:CGRectMake(0.f, 0.f, m_tableWidth, realTableHeight)
+                                                        style:UITableViewStylePlain
+                                                    container:self.pTableviewContainer
+                        ] autorelease];
+    
     self.pTableview.backgroundColor = [UIColor clearColor];
     self.pTableview.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.pTableview.scrollEnabled = NO;
@@ -74,7 +89,9 @@
     [self addSubview: self.pMenuContainer];
     [self addSubview: self.pDragTab];
     [self.pMenuContainer addSubview: self.pMenuHeaderStub];
-    [self.pMenuContainer addSubview:self.pTableview];
+
+    [self.pTableviewContainer addSubview:self.pTableview];
+    [self.pMenuContainer addSubview:self.pTableviewContainer];
     
     ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pDragTab, "icon0_me_icon", ExampleApp::Helpers::ImageHelpers::Centre);
     

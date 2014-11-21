@@ -3,6 +3,7 @@
 #include "MenuView.h"
 #include "MathFunc.h"
 #include "UIColors.h"
+#include "CellConstants.h"
 
 @implementation MenuView
 
@@ -325,6 +326,19 @@
 	}];
 
 	return hitView;
+}
+
+- (void) refreshTableHeights: (size_t)numberOfSections numberOfCells:(size_t)numberOfCells
+{
+    const float tableScreenY = m_mainContainerY + m_mainContainerOffscreenOffsetY + m_tableY;
+    const float tableScreenSpace = m_screenHeight - tableScreenY;
+    m_tableHeight = fmin(tableScreenSpace, m_tableHeight);
+    
+    const float realTableHeight =  (SECTION_HEADER_CELL_HEIGHT * numberOfSections) + (SUB_SECTION_CELL_HEIGHT * (numberOfCells));
+    self.pTableviewContainer.frame = CGRectMake(m_tableX, m_tableY, m_tableWidth, m_tableHeight);
+    self.pTableviewContainer.bounces = NO;
+    self.pTableviewContainer.contentSize = CGSizeMake(m_tableWidth, realTableHeight);
+    self.pTableview.frame = CGRectMake(0.f, 0.f, m_tableWidth, realTableHeight);
 }
 
 @end

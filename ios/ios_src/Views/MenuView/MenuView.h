@@ -99,6 +99,8 @@
 
 - (void) initialiseViews:(size_t)numberOfSections numberOfCells:(size_t)numberOfCells;
 
+- (void) refreshTableHeights: (size_t)numberOfSections numberOfCells:(size_t)numberOfCells;
+
 @property (nonatomic, retain) UIView* pMenuContainer;
 @property (nonatomic, retain) UIView* pDragTab;
 @property (nonatomic, retain) UIView* pMenuHeaderStub;
