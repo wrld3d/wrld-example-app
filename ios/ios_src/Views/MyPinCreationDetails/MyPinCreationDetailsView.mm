@@ -4,6 +4,7 @@
 #include "UIColors.h"
 #include "ImageHelpers.h"
 #include "App.h"
+#import "UIView+TouchExclusivity.h"
 #import <QuartzCore/QuartzCore.h>
 
 @implementation MyPinCreationDetailsView
@@ -77,6 +78,7 @@
         m_usePopover = !App::IsDevicePhone();
         
         [self layoutSubviews];
+        [self setTouchExclusivity: self];
     }
     
     return self;
@@ -267,21 +269,9 @@
     m_popoverY = footerY;
     
     [self resizeImageViewToFit:self.pPlaceholderImage.size.width :self.pPlaceholderImage.size.height];
-    [self setTouchExclusivity: self];
 }
 
-- (void) setTouchExclusivity: (UIView*) view
-{
-    for (UIView *subView in [view subviews])
-    {
-        if ([subView subviews] != nil)
-        {
-            [self setTouchExclusivity: subView];
-        }
 
-        subView.exclusiveTouch = YES;
-    }
-}
 
 - (void) resetView
 {

@@ -3,6 +3,7 @@
 #include "MyPinCreationConfirmationView.h"
 #include "UIColors.h"
 #include "ImageHelpers.h"
+#import "UIView+TouchExclusivity.h"
 
 @implementation MyPinCreationConfirmationView
 
@@ -73,19 +74,6 @@
     }
     
     return self;
-}
-
-- (void) setTouchExclusivity: (UIView*) view
-{
-    for (UIView *subView in [view subviews])
-    {
-        if ([subView subviews] != nil)
-        {
-            [self setTouchExclusivity: subView];
-        }
-        
-        subView.exclusiveTouch = YES;
-    }
 }
 
 - (void) onCancelButtonPressed:(UIButton *)sender

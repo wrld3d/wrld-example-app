@@ -8,6 +8,7 @@
 #include "ImageHelpers.h"
 #include "IconResources.h"
 #include "StringHelpers.h"
+#import "UIView+TouchExclusivity.h"
 
 @implementation SearchResultPoiView
 
@@ -104,19 +105,6 @@
 	}
 
 	return self;
-}
-
-- (void) setTouchExclusivity: (UIView*) view
-{
-    for (UIView *subView in [view subviews])
-    {
-        if ([subView subviews] != nil)
-        {
-            [self setTouchExclusivity: subView];
-        }
-        
-        subView.exclusiveTouch = YES;
-    }
 }
 
 - (void)dealloc

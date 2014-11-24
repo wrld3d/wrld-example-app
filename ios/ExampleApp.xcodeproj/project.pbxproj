@@ -600,6 +600,8 @@
 		56A3DCEC1A239BD100110FDD /* button_remove_pin_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 56A3DCDD1A239BD000110FDD /* button_remove_pin_off.png */; };
 		56A3DCED1A239BD100110FDD /* button_remove_pin_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 56A3DCDE1A239BD100110FDD /* button_remove_pin_on.png */; };
 		56A3DCEE1A239BD100110FDD /* button_remove_pin_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 56A3DCDE1A239BD100110FDD /* button_remove_pin_on.png */; };
+		56A3DCF01A23A83100110FDD /* UIView+TouchExclusivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 56A3DCEF1A23A83100110FDD /* UIView+TouchExclusivity.m */; };
+		56A3DCF11A23A83100110FDD /* UIView+TouchExclusivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 56A3DCEF1A23A83100110FDD /* UIView+TouchExclusivity.m */; };
 		56A8DF7D19FEA977009DC352 /* Geosphere_01.pod in Resources */ = {isa = PBXBuildFile; fileRef = 56A8DF7A19FEA977009DC352 /* Geosphere_01.pod */; };
 		56A8DF7E19FEA977009DC352 /* Geosphere_01.pod in Resources */ = {isa = PBXBuildFile; fileRef = 56A8DF7A19FEA977009DC352 /* Geosphere_01.pod */; };
 		56DDC0F51A1A47B90024B52E /* WorldPinInFocusScreenControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56DDC0F01A1A47B90024B52E /* WorldPinInFocusScreenControl.cpp */; };
@@ -1307,6 +1309,8 @@
 		56A3DCDC1A239BD000110FDD /* button_photo_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_photo_on.png; sourceTree = "<group>"; };
 		56A3DCDD1A239BD000110FDD /* button_remove_pin_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_remove_pin_off.png; sourceTree = "<group>"; };
 		56A3DCDE1A239BD100110FDD /* button_remove_pin_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_remove_pin_on.png; sourceTree = "<group>"; };
+		56A3DCEF1A23A83100110FDD /* UIView+TouchExclusivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+TouchExclusivity.m"; sourceTree = "<group>"; };
+		56A3DCF21A23A84300110FDD /* UIView+TouchExclusivity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+TouchExclusivity.h"; sourceTree = "<group>"; };
 		56A88C9B1A135DC300FCBE9A /* MyPinMenuOption.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyPinMenuOption.h; sourceTree = "<group>"; };
 		56A8DF7A19FEA977009DC352 /* Geosphere_01.pod */ = {isa = PBXFileReference; lastKnownFileType = file; path = Geosphere_01.pod; sourceTree = "<group>"; };
 		56B258D61A110CE6003C50CF /* IMyPinsModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IMyPinsModule.h; sourceTree = "<group>"; };
@@ -2030,6 +2034,8 @@
 				18B5ABDE19DC159B00BA4A38 /* SecondaryMenu */,
 				18B5ABE919DC159B00BA4A38 /* ViewControllerUpdater */,
 				562270DD1A1A786C0025AB34 /* WorldPinOnMap */,
+				56A3DCEF1A23A83100110FDD /* UIView+TouchExclusivity.m */,
+				56A3DCF21A23A84300110FDD /* UIView+TouchExclusivity.h */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2922,6 +2928,7 @@
 				18B5AB0E19DC159000BA4A38 /* MenuSectionsViewModel.cpp in Sources */,
 				186D2929196D9D0900E004E0 /* AppRunner.mm in Sources */,
 				18CCC8CE1A1523A200DC2D95 /* SearchResultRepositoryObserver.cpp in Sources */,
+				56A3DCF11A23A83100110FDD /* UIView+TouchExclusivity.m in Sources */,
 				18CCC89F1A15236100DC2D95 /* MyPinCreationViewStateChangedMessage.cpp in Sources */,
 				5605EDEC19F824CD00D1D594 /* ReactionControllerModule.cpp in Sources */,
 				56962CDD1A1D0E0000D4355E /* WorldPinInFocusViewModel.cpp in Sources */,
@@ -3152,6 +3159,7 @@
 				18CCC8CD1A1523A200DC2D95 /* SearchResultRepositoryObserver.cpp in Sources */,
 				56962CBE1A1BB8E400D4355E /* MyPinSelectionHandlerFactory.cpp in Sources */,
 				18CCC89E1A15236100DC2D95 /* MyPinCreationViewStateChangedMessage.cpp in Sources */,
+				56A3DCF01A23A83100110FDD /* UIView+TouchExclusivity.m in Sources */,
 				5605EDEB19F824CD00D1D594 /* ReactionControllerModule.cpp in Sources */,
 				18CCC8B71A15239600DC2D95 /* SearchQueryResponseReceivedMessage.cpp in Sources */,
 				56962CA61A1BA4F800D4355E /* MyPinDetailsModule.cpp in Sources */,
