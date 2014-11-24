@@ -223,33 +223,33 @@
 	self.pTitleLabel.font = [UIFont systemFontOfSize:24.0f];
 	self.pTitleLabel.text = @"";
 
-	const float headerLabelHeight = 20.f;
-	const float labelYSpacing = 8.f;
-	float currentLabelY = labelYSpacing;
+	m_headerLabelHeight = 20.f;
+	m_labelYSpacing = 8.f;
+	float currentLabelY = m_labelYSpacing;
 
-	const float headerTextPadding = 3.0f;
-	self.pDescriptionHeaderContainer.frame = CGRectMake(0.f, currentLabelY, m_labelsSectionWidth, headerLabelHeight + 2 * headerTextPadding);
+	m_headerTextPadding = 3.0f;
+	self.pDescriptionHeaderContainer.frame = CGRectMake(0.f, currentLabelY, m_labelsSectionWidth, m_headerLabelHeight + 2 * m_headerTextPadding);
 
-	self.pDescriptionHeaderLabel.frame = CGRectMake(headerTextPadding, headerTextPadding, m_labelsSectionWidth - headerTextPadding, headerLabelHeight);
+	self.pDescriptionHeaderLabel.frame = CGRectMake(m_headerTextPadding, m_headerTextPadding, m_labelsSectionWidth - m_headerTextPadding, m_headerLabelHeight);
 	self.pDescriptionHeaderLabel.text = @"Description";
-	currentLabelY += labelYSpacing + self.pDescriptionHeaderContainer.frame.size.height;
+	currentLabelY += m_labelYSpacing + self.pDescriptionHeaderContainer.frame.size.height;
 
     m_descriptionContentY = currentLabelY;
-	self.pDescriptionContent.frame = CGRectMake(headerTextPadding, currentLabelY, m_labelsSectionWidth - headerTextPadding, 60.f);
+	self.pDescriptionContent.frame = CGRectMake(m_headerTextPadding, currentLabelY, m_labelsSectionWidth - m_headerTextPadding, 60.f);
 	self.pDescriptionContent.text = @"";
     self.pDescriptionContent.font = [UIFont systemFontOfSize: 16.f];
     self.pDescriptionContent.contentInset = UIEdgeInsetsMake(-4,-8,0,0);
-	currentLabelY += labelYSpacing + self.pDescriptionContent.frame.size.height;
+	currentLabelY += m_labelYSpacing + self.pDescriptionContent.frame.size.height;
 
-	self.pImageHeaderContainer.frame = CGRectMake(0.f, currentLabelY, m_labelsSectionWidth, headerLabelHeight + 2 * headerTextPadding);
+	self.pImageHeaderContainer.frame = CGRectMake(0.f, currentLabelY, m_labelsSectionWidth, m_headerLabelHeight + 2 * m_headerTextPadding);
 
-	self.pImageHeaderLabel.frame = CGRectMake(headerTextPadding, headerTextPadding, m_labelsSectionWidth - headerTextPadding, headerLabelHeight);
+	self.pImageHeaderLabel.frame = CGRectMake(m_headerTextPadding, m_headerTextPadding, m_labelsSectionWidth - m_headerTextPadding, m_headerLabelHeight);
 	self.pImageHeaderLabel.text = @"Image";
-	currentLabelY += labelYSpacing + self.pImageHeaderContainer.frame.size.height;
+	currentLabelY += m_labelYSpacing + self.pImageHeaderContainer.frame.size.height;
 
-    m_maxImageWidth = m_labelsSectionWidth - headerTextPadding;
-	self.pImageContent.frame = CGRectMake(headerTextPadding, currentLabelY, m_maxImageWidth, m_labelsSectionWidth * 0.75f);
-    currentLabelY += labelYSpacing + self.pImageContent.frame.size.height;
+    m_maxImageWidth = m_labelsSectionWidth - m_headerTextPadding;
+	self.pImageContent.frame = CGRectMake(m_headerTextPadding, currentLabelY, m_maxImageWidth, m_labelsSectionWidth * 0.75f);
+    currentLabelY += m_labelYSpacing + self.pImageContent.frame.size.height;
     m_scrollContentBottomMargin = 0;
     m_scrollContentWidth = m_labelsSectionWidth;
     
@@ -265,16 +265,15 @@
 	self.pDescriptionContent.hidden = true;
 	self.pImageHeaderContainer.hidden = true;
 	self.pImageContent.hidden = true;
-
-    float scrollContentHeight = 60.f;
-    float textHeight = m_maxContentSize;
     
     self.pDescriptionHeaderContainer.hidden = false;
     self.pDescriptionContent.hidden = false;
     self.pDescriptionContent.text = [NSString stringWithUTF8String: pModel->GetDescription().c_str()];
     
-    self.pDescriptionContent.frame = CGRectMake(3.f, m_descriptionContentY, m_labelsSectionWidth - 3.f, textHeight);
-    self.pLabelsContainer.contentSize = CGSizeMake(m_labelsSectionWidth, scrollContentHeight);
+    float textContentSize = self.pDescriptionHeaderContainer.bounds.size.height + self.pDescriptionContent.contentSize.height;
+    
+    self.pDescriptionContent.frame = CGRectMake(m_headerTextPadding, m_descriptionContentY, m_labelsSectionWidth - m_headerTextPadding, m_maxContentSize);
+    self.pLabelsContainer.contentSize = CGSizeMake(m_labelsSectionWidth, textContentSize);
     [self.pLabelsContainer setContentOffset:CGPointMake(0,0) animated:NO];
 
 	if(!pModel->GetImagePath().empty())
@@ -284,10 +283,13 @@
         NSString* imageFilename = [NSString stringWithUTF8String: pModel->GetImagePath().c_str()];
         NSString* fullPathToImage  = [libraryDirectory stringByAppendingPathComponent: imageFilename];
         
+        float imageContentHeaderOriginY = m_descriptionContentY + textContentSize;
+        
         self.pImageContent.image = [UIImage imageWithContentsOfFile: fullPathToImage];
 		self.pImageHeaderContainer.hidden = false;
+        self.pImageHeaderContainer.frame = CGRectMake(m_headerTextPadding, imageContentHeaderOriginY, m_labelsSectionWidth, 20.0f + 2 * m_headerTextPadding);
+        self.pImageContent.frame = CGRectMake(m_headerTextPadding, imageContentHeaderOriginY + m_headerLabelHeight + m_labelYSpacing, 0, 0);
 		self.pImageContent.hidden = false;
-        textHeight = 60.f;
         
         [self resizeImageViewToFit:self.pImageContent.image.size.width :self.pImageContent.image.size.height];
 	}

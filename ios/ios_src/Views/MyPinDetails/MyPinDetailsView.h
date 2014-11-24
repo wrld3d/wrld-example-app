@@ -19,6 +19,9 @@
     float m_maxImageWidth;
     float m_scrollContentWidth;
     float m_scrollContentBottomMargin;
+    float m_headerLabelHeight;
+    float m_headerTextPadding;
+    float m_labelYSpacing;
 }
 
 - (id) initWithController:(MyPinDetailsViewController *)controller;
