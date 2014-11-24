@@ -487,8 +487,8 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 3;
 		shadow.hidden = true;
 		shadowFlipped.hidden = true;
 		openableArrow.hidden = !section.IsExpandable();
-
-		if(section.IsExpanded())
+        
+		if(section.IsExpanded() && section.Size() > 1)
 		{
 			[self showOpenableArrowOpen :cell];
 		}
