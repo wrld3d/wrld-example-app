@@ -21,6 +21,7 @@ namespace ExampleApp
         public:
             MyPinCreationInitiationViewModule(ExampleApp::ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
                                               IMyPinCreationInitiationViewModel& viewModel,
+                                              IMyPinCreationConfirmationViewModel& confirmationViewModel,
                                               const Eegeo::Rendering::ScreenProperties& screenProperties);
             
             ~MyPinCreationInitiationViewModule();

@@ -9,6 +9,7 @@
 #include "IMyPinCreationConfirmationViewModel.h"
 #include "MyPinCreation.h"
 #include "CallbackCollection.h"
+#include "MyPinCreationConfirmationOpenableControl.h"
 
 namespace ExampleApp
 {
@@ -19,7 +20,9 @@ namespace ExampleApp
         public:
             
             MyPinCreationConfirmationViewModel(Eegeo::Helpers::TIdentity identity,
-                                             bool isInitiallyOnScreen);
+                                               bool isInitiallyOnScreen,
+                                               Reaction::IReactionControllerModel& reactionControllerModel);
+
             
             Eegeo::Helpers::TIdentity GetIdentity() const;
             
@@ -40,8 +43,16 @@ namespace ExampleApp
             float OnScreenState() const;
             
             ScreenControlViewModel::IScreenControlViewModel& GetScreenControlViewModel();
+
+            OpenableControlViewModel::IOpenableControlViewModel& GetOpenableControlViewModel();
+
+            bool TryOpen();
+            
+            void Close();
+            
         private:
             MyPinCreationScreenControl m_screenControl;
+            MyPinCreationConfirmationOpenableControl m_openable;
         };
     }
 }

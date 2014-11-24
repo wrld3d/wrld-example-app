@@ -46,7 +46,8 @@ namespace ExampleApp
                                                  ExampleApp::Search::ISearchQueryPerformer& searchQueryPerformer,
                                                  ExampleApp::Menu::IMenuViewModel& searchResultMenuViewModel,
                                                  ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus,
-                                                 ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus)
+                                                 ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
+                                                 ExampleApp::Reaction::IReactionControllerModel& reactionControllerModel)
         {
             
             m_pMyPinCreationModel = Eegeo_NEW(MyPinCreationModel)(myPinsService);
@@ -61,7 +62,8 @@ namespace ExampleApp
                                                                                               false);
             
             m_pMyPinCreationConfirmationViewModel = Eegeo_NEW(MyPinCreationConfirmationViewModel)(identityProvider.GetNextIdentity(),
-                                                                                                  false);
+                                                                                                  false,
+                                                                                                  reactionControllerModel);
             
             m_pMyPinCreationCompositeViewModel = Eegeo_NEW(MyPinCreationCompositeViewModel)(nativeToUiMessageBus,
             																				uiToNativeMessageBus,
@@ -110,6 +112,11 @@ namespace ExampleApp
         ScreenControlViewModel::IScreenControlViewModel& MyPinCreationModule::GetConfirmationScreenControlViewModel() const
         {
             return m_pMyPinCreationConfirmationViewModel->GetScreenControlViewModel();
+        }
+
+        OpenableControlViewModel::IOpenableControlViewModel& MyPinCreationModule::GetObservableOpenableControl() const
+        {
+            return m_pMyPinCreationConfirmationViewModel->GetOpenableControlViewModel();
         }
     }
 }

@@ -6,6 +6,7 @@
 #include "MyPinCreationStage.h"
 #include "AndroidAppThreadAssertionMacros.h"
 #include "MyPinCreationViewStateChangedMessage.h"
+#include "IMyPinCreationConfirmationViewModel.h"
 
 namespace ExampleApp
 {
@@ -15,11 +16,13 @@ namespace ExampleApp
     			AndroidNativeState& nativeState,
     			MyPinCreation::IMyPinCreationModel& model,
     			MyPinCreation::IMyPinCreationInitiationViewModel& viewModel,
+    			MyPinCreation::IMyPinCreationConfirmationViewModel& confirmationViewModel,
 				ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus
   			)
     	: m_nativeState(nativeState)
        	, m_model(model)
     	, m_viewModel(viewModel)
+    	, m_confirmationViewModel(confirmationViewModel)
     	, m_uiToNativeMessageBus(uiToNativeMessageBus)
     	, m_pOnScreenStateChangedCallback(Eegeo_NEW((
     	    			Eegeo::Helpers::TCallback2<MyPinCreationInitiationViewController, ScreenControlViewModel::IScreenControlViewModel&, float>))(this, &MyPinCreationInitiationViewController::OnScreenStateChangedCallback))
@@ -69,8 +72,10 @@ namespace ExampleApp
     	void MyPinCreationInitiationViewController::Selected()
     	{
     		ASSERT_UI_THREAD
-
-    		m_uiToNativeMessageBus.Publish(MyPinCreationViewStateChangedMessage(ExampleApp::MyPinCreation::Ring));
+    		if(m_confirmationViewModel.TryOpen())
+    		{
+    			m_uiToNativeMessageBus.Publish(MyPinCreationViewStateChangedMessage(ExampleApp::MyPinCreation::Ring));
+    		}
     	}
 
     	void MyPinCreationInitiationViewController::OnScreenStateChangedCallback(ScreenControlViewModel::IScreenControlViewModel& viewModel, float& onScreenState)

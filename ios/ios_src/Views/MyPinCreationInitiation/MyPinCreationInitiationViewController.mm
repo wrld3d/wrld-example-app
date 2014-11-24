@@ -6,11 +6,13 @@
 #include "MyPinCreationInitiationViewControllerInterop.h"
 #include "ScreenProperties.h"
 #include "MyPinCreationViewStateChangedMessage.h"
+#include "IMyPinCreationConfirmationViewModel.h"
 
 @implementation MyPinCreationInitiationViewController
 
 - (id)initWithParams:(ExampleApp::ExampleAppMessaging::UiToNativeMessageBus*) pUiToNativeMessageBus
                     :(ExampleApp::MyPinCreation::IMyPinCreationInitiationViewModel*)pViewModel
+                    :(ExampleApp::MyPinCreation::IMyPinCreationConfirmationViewModel*) pConfirmationViewModel
                     :(const Eegeo::Rendering::ScreenProperties*)pScreenProperties;
 
 {
@@ -23,6 +25,7 @@
         
         m_pUiToNativeMessageBus = pUiToNativeMessageBus;
         m_pViewModel = pViewModel;
+        m_pConfirmationViewModel = pConfirmationViewModel;
         m_pInterop = Eegeo_NEW(ExampleApp::MyPinCreation::MyPinCreationInitiationViewControllerInterop)(self, *m_pViewModel);
 
         [self.pMyPinCreationInitiationView setOnScreenStateToIntermediateValue:m_pViewModel->OnScreenState()];
@@ -61,8 +64,11 @@
 
 - (void) setSelected:(BOOL)selected
 {
-    ExampleApp::MyPinCreation::MyPinCreationViewStateChangedMessage message(ExampleApp::MyPinCreation::Ring);
-    m_pUiToNativeMessageBus->Publish(message);
+    if(m_pConfirmationViewModel->TryOpen())
+    {
+        ExampleApp::MyPinCreation::MyPinCreationViewStateChangedMessage message(ExampleApp::MyPinCreation::Ring);
+        m_pUiToNativeMessageBus->Publish(message);
+    }
 }
 
 

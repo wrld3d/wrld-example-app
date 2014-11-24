@@ -62,11 +62,13 @@
 
 - (void) handleCloseButtonSelected
 {
+    m_pViewModel->Close();
     m_pUiToNativeMessageBus->Publish(ExampleApp::MyPinCreation::MyPinCreationViewStateChangedMessage(ExampleApp::MyPinCreation::Inactive));
 }
 
 - (void) handleConfirmButtonSelected
 {
+    m_pViewModel->Close();
     m_pUiToNativeMessageBus->Publish(ExampleApp::MyPinCreation::MyPinCreationViewStateChangedMessage(ExampleApp::MyPinCreation::Details));
     m_pViewModel->RemoveFromScreen();
     m_pDetailsViewModel->Open();

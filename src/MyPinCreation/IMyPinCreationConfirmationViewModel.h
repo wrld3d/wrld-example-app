@@ -13,6 +13,8 @@ namespace ExampleApp
         public:
             
             virtual ~IMyPinCreationConfirmationViewModel() { }
+            virtual bool TryOpen() = 0;
+            virtual void Close() = 0;
         };
     }
 }

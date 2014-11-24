@@ -10,10 +10,12 @@ namespace ExampleApp
     {
         MyPinCreationInitiationViewModule::MyPinCreationInitiationViewModule(ExampleApp::ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
                                                                              IMyPinCreationInitiationViewModel& viewModel,
+                                                                             IMyPinCreationConfirmationViewModel& confirmationViewModel,
                                                                              const Eegeo::Rendering::ScreenProperties& screenProperties)
         {
             m_pController = [[MyPinCreationInitiationViewController alloc] initWithParams:&uiToNativeMessageBus
                                                                                          :&viewModel
+                                                                                         :&confirmationViewModel
                                                                                          :&screenProperties];
         }
         

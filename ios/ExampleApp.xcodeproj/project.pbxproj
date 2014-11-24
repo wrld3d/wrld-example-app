@@ -24,6 +24,8 @@
 		189971CE192CCC0200E0E9F1 /* MobileExampleApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 189971CC192CCC0200E0E9F1 /* MobileExampleApp.cpp */; };
 		189B246819F93547006DD887 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E016040D19EEC26E0029A035 /* Images.xcassets */; };
 		189B246919F9355A006DD887 /* SplashScreen.png in Resources */ = {isa = PBXBuildFile; fileRef = E0DD09F219EED4AF008BD39D /* SplashScreen.png */; };
+		189DD9B11A1F56F200299448 /* MyPinCreationConfirmationOpenableControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 189DD9AF1A1F56F200299448 /* MyPinCreationConfirmationOpenableControl.cpp */; };
+		189DD9B21A1F56F200299448 /* MyPinCreationConfirmationOpenableControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 189DD9AF1A1F56F200299448 /* MyPinCreationConfirmationOpenableControl.cpp */; };
 		18AB38FD192B729F00F15546 /* Main.m in Sources */ = {isa = PBXBuildFile; fileRef = 18AB38F5192B729F00F15546 /* Main.m */; };
 		18AB38FE192B729F00F15546 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18AB38F7192B729F00F15546 /* ViewController.mm */; };
 		18B5AAD519DC159000BA4A38 /* AboutPageModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18B5A9B319DC158F00BA4A38 /* AboutPageModel.cpp */; };
@@ -635,6 +637,8 @@
 		189971CC192CCC0200E0E9F1 /* MobileExampleApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MobileExampleApp.cpp; sourceTree = "<group>"; };
 		189971CD192CCC0200E0E9F1 /* MobileExampleApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobileExampleApp.h; sourceTree = "<group>"; };
 		189971CF192CF46000E0E9F1 /* Logger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Logger.h; sourceTree = "<group>"; };
+		189DD9AF1A1F56F200299448 /* MyPinCreationConfirmationOpenableControl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MyPinCreationConfirmationOpenableControl.cpp; sourceTree = "<group>"; };
+		189DD9B01A1F56F200299448 /* MyPinCreationConfirmationOpenableControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPinCreationConfirmationOpenableControl.h; sourceTree = "<group>"; };
 		18A9C9911A0D28520042B937 /* CatalogBinding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CatalogBinding.h; sourceTree = "<group>"; };
 		18A9C9921A0D28520042B937 /* ImmediateMessageBus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImmediateMessageBus.h; sourceTree = "<group>"; };
 		18A9C9931A0D28520042B937 /* MessageBus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageBus.h; sourceTree = "<group>"; };
@@ -2296,6 +2300,8 @@
 		5695FE871A13C17800F1E6CE /* MyPinCreation */ = {
 			isa = PBXGroup;
 			children = (
+				189DD9AF1A1F56F200299448 /* MyPinCreationConfirmationOpenableControl.cpp */,
+				189DD9B01A1F56F200299448 /* MyPinCreationConfirmationOpenableControl.h */,
 				5695FE881A13C17800F1E6CE /* IMyPinCreationCompositeViewModel.h */,
 				5695FE891A13C17800F1E6CE /* IMyPinCreationConfirmationViewModel.h */,
 				5695FE8A1A13C17800F1E6CE /* IMyPinCreationInitiationViewModel.h */,
@@ -2840,6 +2846,7 @@
 				18CCC8B21A15238100DC2D95 /* PlaceJumpMenuOption.cpp in Sources */,
 				18B5AAF619DC159000BA4A38 /* FlattenButtonScreenControl.cpp in Sources */,
 				5605EDF019F824CD00D1D594 /* ReactionModelModule.cpp in Sources */,
+				189DD9B21A1F56F200299448 /* MyPinCreationConfirmationOpenableControl.cpp in Sources */,
 				18B5AB4C19DC159000BA4A38 /* SearchResultOnMapIconCategoryMapper.cpp in Sources */,
 				18B5AB1019DC159000BA4A38 /* MenuSectionViewModel.cpp in Sources */,
 				18CCC8D21A1523A200DC2D95 /* SearchResultMenuSearchQueryRemovedMessageHandler.cpp in Sources */,
@@ -3069,6 +3076,7 @@
 				18B5ABF419DC159B00BA4A38 /* iOSInitialExperiencePreLoadModel.mm in Sources */,
 				18CCC8B11A15238100DC2D95 /* PlaceJumpMenuOption.cpp in Sources */,
 				5637F1EE1A0CD51F0011B509 /* MyPinModel.cpp in Sources */,
+				189DD9B11A1F56F200299448 /* MyPinCreationConfirmationOpenableControl.cpp in Sources */,
 				18B5AAF519DC159000BA4A38 /* FlattenButtonScreenControl.cpp in Sources */,
 				5605EDEF19F824CD00D1D594 /* ReactionModelModule.cpp in Sources */,
 				18B5AB4B19DC159000BA4A38 /* SearchResultOnMapIconCategoryMapper.cpp in Sources */,

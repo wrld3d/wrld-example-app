@@ -22,6 +22,7 @@ namespace ExampleApp
 					AndroidNativeState& nativeState,
 					MyPinCreation::IMyPinCreationModel& model,
 					MyPinCreation::IMyPinCreationInitiationViewModel& viewModel,
+					MyPinCreation::IMyPinCreationConfirmationViewModel& confirmationViewModel,
 					ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus
 			);
 
@@ -38,6 +39,7 @@ namespace ExampleApp
 
     		MyPinCreation::IMyPinCreationModel& m_model;
     		MyPinCreation::IMyPinCreationInitiationViewModel& m_viewModel;
+    		MyPinCreation::IMyPinCreationConfirmationViewModel& m_confirmationViewModel;
     		ExampleAppMessaging::UiToNativeMessageBus& m_uiToNativeMessageBus;
 
     		Eegeo::Helpers::ICallback2<ScreenControlViewModel::IScreenControlViewModel&, float>* m_pOnScreenStateChangedCallback;

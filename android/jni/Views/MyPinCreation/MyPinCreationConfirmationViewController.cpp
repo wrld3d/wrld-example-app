@@ -70,14 +70,14 @@ namespace ExampleApp
     	void MyPinCreationConfirmationViewController::HandleCancelSelected()
     	{
     		ASSERT_UI_THREAD
-
+    		m_viewModel.Close();
     		m_uiToNativeMessageBus.Publish(MyPinCreationViewStateChangedMessage(ExampleApp::MyPinCreation::Inactive));
     	}
 
     	void MyPinCreationConfirmationViewController::HandleConfirmSelected()
 		{
     		ASSERT_UI_THREAD
-
+    		m_viewModel.Close();
     		m_uiToNativeMessageBus.Publish(MyPinCreationViewStateChangedMessage(ExampleApp::MyPinCreation::Details));
 			m_viewModel.RemoveFromScreen();
 			m_detailsViewModel.Open();
