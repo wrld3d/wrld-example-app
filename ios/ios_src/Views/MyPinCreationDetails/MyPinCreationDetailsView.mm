@@ -74,6 +74,8 @@
         self.pConfirmButton = [[[UIButton alloc] initWithFrame: CGRectMake(0, 0, 0, 0)] autorelease];
         [self.pFooterContainer addSubview: self.pConfirmButton];
         
+        m_usePopover = !App::IsDevicePhone();
+        
         [self layoutSubviews];
     }
     
@@ -304,17 +306,24 @@
     imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     imagePicker.delegate=self;
     imagePicker.allowsEditing = NO;
-
-    self.pPopover = [[UIPopoverController alloc] initWithContentViewController:imagePicker];
-
-    CGRect popoverRect = CGRectMake(m_popoverX, m_popoverY, 1.f, 1.f);
     
-    [self.pPopover presentPopoverFromRect:popoverRect
-                                   inView:self.pControlContainer
-                 permittedArrowDirections:UIPopoverArrowDirectionDown
-                                 animated:YES];
-    
-    [self.pPopover setDelegate: self];
+    if(m_usePopover)
+    {
+        self.pPopover = [[UIPopoverController alloc] initWithContentViewController:imagePicker];
+        
+        CGRect popoverRect = CGRectMake(m_popoverX, m_popoverY, 1.f, 1.f);
+        
+        [self.pPopover presentPopoverFromRect:popoverRect
+                                       inView:self.pControlContainer
+                     permittedArrowDirections:UIPopoverArrowDirectionDown
+                                     animated:YES];
+        
+        [self.pPopover setDelegate: self];
+    }
+    else
+    {
+        [m_pController presentViewController:imagePicker animated:YES completion:nil];
+    }
     
     [self prohibitScreenRotations];
 }
@@ -326,7 +335,10 @@
     [self resizeImageViewToFit:image.size.width :image.size.height];
     
     m_imageAttached = YES;
-    [self.pPopover dismissPopoverAnimated: YES];
+    if(m_usePopover)
+    {
+        [self.pPopover dismissPopoverAnimated: YES];
+    }
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -334,7 +346,10 @@
 {
     [self reinstateScreenRotations];
     
-    [self.pPopover dismissPopoverAnimated: YES];
+    if(m_usePopover)
+    {
+        [self.pPopover dismissPopoverAnimated: YES];
+    }
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -399,7 +414,10 @@
 
 - (BOOL)popoverControllerShouldDismissPopover:(UIPopoverController *)popoverController
 {
-    [self.pPopover dismissPopoverAnimated:YES];
+    if(m_usePopover)
+    {
+        [self.pPopover dismissPopoverAnimated: YES];
+    }
     [self reinstateScreenRotations];
     return YES;
 }

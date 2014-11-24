@@ -17,6 +17,7 @@
     float m_scrollContentWidth;
     float m_scrollContentBottomMargin;
     BOOL m_imageAttached;
+    BOOL m_usePopover;
 }
 
 - (id) initWithController:(MyPinCreationDetailsViewController *)controller;
