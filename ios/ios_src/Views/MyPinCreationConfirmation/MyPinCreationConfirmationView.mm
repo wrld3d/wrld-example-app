@@ -65,6 +65,8 @@
         self.pConfirmButton.frame = CGRectMake(containerWidth - buttonSize, 0, buttonSize, buttonSize);
         [self.pConfirmButton setBackgroundImage:[UIImage imageNamed:@"button_ok.png"] forState:UIControlStateNormal];
         [self.pConfirmButton addTarget:self action:@selector(onOkayButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        
+        [self setHidden:YES];
     }
     
     return self;
@@ -92,7 +94,7 @@
 {
     float newY = m_yPosInactive + (m_yPosActive - m_yPosInactive) * onScreenState;
     
-    self.hidden = false;
+    self.hidden = onScreenState == 0.0f;
     CGRect f = self.frame;
     f.origin.y = newY;
     self.frame = f;
