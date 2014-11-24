@@ -242,21 +242,25 @@
     const float closeButtonX = buttonPadding;
     self.pCloseButton.frame = CGRectMake(closeButtonX, 0, buttonWidth, buttonHeight);
     [self.pCloseButton setBackgroundImage:[UIImage imageNamed:@"button_close_off.png"] forState:UIControlStateNormal];
+    [self.pCloseButton setBackgroundImage:[UIImage imageNamed:@"button_close_on.png"] forState:UIControlStateHighlighted];
     [self.pCloseButton addTarget:self action:@selector(onCloseButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     
     const float cameraButtonX = buttonWidth + 2 * buttonPadding;
     self.pCameraButton.frame = CGRectMake(cameraButtonX, 0, buttonWidth, buttonHeight);
-    [self.pCameraButton setBackgroundImage:[UIImage imageNamed:@"button_photo.png"] forState:UIControlStateNormal];
+    [self.pCameraButton setBackgroundImage:[UIImage imageNamed:@"button_photo_off.png"] forState:UIControlStateNormal];
+    [self.pCameraButton setBackgroundImage:[UIImage imageNamed:@"button_photo_on.png"] forState:UIControlStateHighlighted];
     [self.pCameraButton addTarget:self action:@selector(onCameraButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     
     const float galleryButtonX = 2 * buttonWidth + 3 * buttonPadding;
     self.pGalleryButton.frame = CGRectMake(galleryButtonX, 0, buttonWidth, buttonHeight);
-    [self.pGalleryButton setBackgroundImage:[UIImage imageNamed:@"button_gallery.png"] forState:UIControlStateNormal];
+    [self.pGalleryButton setBackgroundImage:[UIImage imageNamed:@"button_gallery_off.png"] forState:UIControlStateNormal];
+    [self.pGalleryButton setBackgroundImage:[UIImage imageNamed:@"button_gallery_on.png"] forState:UIControlStateHighlighted];
     [self.pGalleryButton addTarget:self action:@selector(onGalleryButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     
     const float confirmButtonX = 3 * buttonWidth + 4 * buttonPadding;
     self.pConfirmButton.frame = CGRectMake(confirmButtonX, 0, buttonWidth, buttonHeight);
-    [self.pConfirmButton setBackgroundImage:[UIImage imageNamed:@"button_ok.png"] forState:UIControlStateNormal];
+    [self.pConfirmButton setBackgroundImage:[UIImage imageNamed:@"button_ok_off.png"] forState:UIControlStateNormal];
+    [self.pConfirmButton setBackgroundImage:[UIImage imageNamed:@"button_ok_on.png"] forState:UIControlStateHighlighted];
     [self.pConfirmButton addTarget:self action:@selector(onConfirmButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     
     m_popoverX = bodyContainerWidth * 0.5f;

@@ -57,30 +57,44 @@
     
         self.pCancelButton.frame = CGRectMake(0, 0, buttonSize, buttonSize);
         [self.pCancelButton setBackgroundImage:[UIImage imageNamed:@"button_close_off.png"] forState:UIControlStateNormal];
+        [self.pCancelButton setBackgroundImage:[UIImage imageNamed:@"button_close_on.png"] forState:UIControlStateHighlighted];
         [self.pCancelButton addTarget:self action:@selector(onCancelButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         
         self.pConfirmButton = [[[UIButton alloc] initWithFrame: CGRectMake(0, 0, 0, 0)] autorelease];
         [self.pMainSection addSubview: self.pConfirmButton];
         
         self.pConfirmButton.frame = CGRectMake(containerWidth - buttonSize, 0, buttonSize, buttonSize);
-        [self.pConfirmButton setBackgroundImage:[UIImage imageNamed:@"button_ok.png"] forState:UIControlStateNormal];
+        [self.pConfirmButton setBackgroundImage:[UIImage imageNamed:@"button_ok_off.png"] forState:UIControlStateNormal];
+        [self.pConfirmButton setBackgroundImage:[UIImage imageNamed:@"button_ok_on.png"] forState:UIControlStateHighlighted];
         [self.pConfirmButton addTarget:self action:@selector(onOkayButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         
         [self setHidden:YES];
+        [self setTouchExclusivity: self];
     }
     
     return self;
 }
 
+- (void) setTouchExclusivity: (UIView*) view
+{
+    for (UIView *subView in [view subviews])
+    {
+        if ([subView subviews] != nil)
+        {
+            [self setTouchExclusivity: subView];
+        }
+        
+        subView.exclusiveTouch = YES;
+    }
+}
+
 - (void) onCancelButtonPressed:(UIButton *)sender
 {
-    [sender setSelected:!sender.selected];
     [m_pController handleCloseButtonSelected];
 }
 
 - (void) onOkayButtonPressed:(UIButton *)sender
 {
-    [sender setSelected:!sender.selected];
     [m_pController handleConfirmButtonSelected];
 }
 

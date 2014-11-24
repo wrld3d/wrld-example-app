@@ -130,7 +130,7 @@
              android:layout_height="55dp"
              android:layout_alignParentBottom="true"
              android:layout_alignParentLeft="true"
-             android:background="@drawable/button_remove_pin" />
+             android:background="@drawable/button_remove_pin_states" />
             
          <Button
              android:id="@+id/my_pin_details_view_close_button"

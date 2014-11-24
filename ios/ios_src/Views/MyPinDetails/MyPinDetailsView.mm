@@ -39,11 +39,13 @@
 
 		self.pCloseButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
 		[self.pCloseButton setBackgroundImage:[UIImage imageNamed:@"button_close_off.png"] forState:UIControlStateNormal];
+        [self.pCloseButton setBackgroundImage:[UIImage imageNamed:@"button_close_on.png"] forState:UIControlStateHighlighted];
         [self.pCloseButton addTarget:self action:@selector(onCloseButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 		[self.pCloseButtonContainer addSubview: self.pCloseButton];
         
         self.pRemovePinButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        [self.pRemovePinButton setBackgroundImage:[UIImage imageNamed:@"button_remove_pin.png"] forState:UIControlStateNormal];
+        [self.pRemovePinButton setBackgroundImage:[UIImage imageNamed:@"button_remove_pin_off.png"] forState:UIControlStateNormal];
+        [self.pRemovePinButton setBackgroundImage:[UIImage imageNamed:@"button_remove_pin_on.png"] forState:UIControlStateHighlighted];
         [self.pRemovePinButton addTarget:self action:@selector(onRemovePinButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         [self.pCloseButtonContainer addSubview: self.pRemovePinButton];
 
