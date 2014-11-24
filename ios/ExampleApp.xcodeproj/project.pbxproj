@@ -3325,6 +3325,7 @@
 					./../external/rapidjson,
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/ExampleApp/ExampleApp-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Include\"",
@@ -3362,6 +3363,7 @@
 					./../external/rapidjson,
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/ExampleApp/ExampleApp-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Include\"",
@@ -3463,6 +3465,7 @@
 					"./../external/rapidjson/**",
 				);
 				INFOPLIST_FILE = "ExampleApp/ExampleApp-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Include\"",
@@ -3496,6 +3499,7 @@
 					"./../external/rapidjson/**",
 				);
 				INFOPLIST_FILE = "ExampleApp/ExampleApp-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Include\"",
