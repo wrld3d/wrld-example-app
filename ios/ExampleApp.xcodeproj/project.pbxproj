@@ -604,6 +604,8 @@
 		56A3DCF11A23A83100110FDD /* UIView+TouchExclusivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 56A3DCEF1A23A83100110FDD /* UIView+TouchExclusivity.m */; };
 		56A8DF7D19FEA977009DC352 /* Geosphere_01.pod in Resources */ = {isa = PBXBuildFile; fileRef = 56A8DF7A19FEA977009DC352 /* Geosphere_01.pod */; };
 		56A8DF7E19FEA977009DC352 /* Geosphere_01.pod in Resources */ = {isa = PBXBuildFile; fileRef = 56A8DF7A19FEA977009DC352 /* Geosphere_01.pod */; };
+		56CF26871A24776600B30439 /* icon_create_poi.png in Resources */ = {isa = PBXBuildFile; fileRef = 56CF26861A24776600B30439 /* icon_create_poi.png */; };
+		56CF26881A24777100B30439 /* icon_create_poi.png in Resources */ = {isa = PBXBuildFile; fileRef = 56CF26861A24776600B30439 /* icon_create_poi.png */; };
 		56DDC0F51A1A47B90024B52E /* WorldPinInFocusScreenControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56DDC0F01A1A47B90024B52E /* WorldPinInFocusScreenControl.cpp */; };
 		56DDC0F61A1A47B90024B52E /* WorldPinInFocusViewModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56DDC0F21A1A47B90024B52E /* WorldPinInFocusViewModel.cpp */; };
 		56FBCDEF1A0BB5150026546E /* button_checkbox_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 56FBCDE71A0BB5150026546E /* button_checkbox_off.png */; };
@@ -1314,6 +1316,7 @@
 		56A88C9B1A135DC300FCBE9A /* MyPinMenuOption.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyPinMenuOption.h; sourceTree = "<group>"; };
 		56A8DF7A19FEA977009DC352 /* Geosphere_01.pod */ = {isa = PBXFileReference; lastKnownFileType = file; path = Geosphere_01.pod; sourceTree = "<group>"; };
 		56B258D61A110CE6003C50CF /* IMyPinsModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IMyPinsModule.h; sourceTree = "<group>"; };
+		56CF26861A24776600B30439 /* icon_create_poi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_create_poi.png; sourceTree = "<group>"; };
 		56DDC0EC1A1A47B90024B52E /* IWorldPinInFocusViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IWorldPinInFocusViewModel.h; sourceTree = "<group>"; };
 		56DDC0ED1A1A47B90024B52E /* WorldPinGainedFocusMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorldPinGainedFocusMessage.h; sourceTree = "<group>"; };
 		56DDC0EE1A1A47B90024B52E /* WorldPinInFocusChangedLocationMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorldPinInFocusChangedLocationMessage.h; sourceTree = "<group>"; };
@@ -2552,6 +2555,7 @@
 		7EE4825B16847E7C0006E99B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				56CF26861A24776600B30439 /* icon_create_poi.png */,
 				56A3DCD71A239BD000110FDD /* button_gallery_off.png */,
 				56A3DCD81A239BD000110FDD /* button_gallery_on.png */,
 				56A3DCD91A239BD000110FDD /* button_ok_off.png */,
@@ -2708,6 +2712,7 @@
 				18B5ACF219DC15CD00BA4A38 /* placejumps.json in Resources */,
 				18B5AC9819DC15CD00BA4A38 /* icon1_autumn.png in Resources */,
 				18B5AC8019DC15CD00BA4A38 /* arrow1.png in Resources */,
+				56CF26881A24777100B30439 /* icon_create_poi.png in Resources */,
 				18B5AC9419DC15CD00BA4A38 /* icon0_search_icon.png in Resources */,
 				18B5ACCE19DC15CD00BA4A38 /* icon2_food.png in Resources */,
 				18B5AC9C19DC15CD00BA4A38 /* icon1_coffee.png in Resources */,
@@ -2834,6 +2839,7 @@
 				18D1D354194A057200FAA1B9 /* FrankBold50_A8_icons_0.png in Resources */,
 				18B5ACB719DC15CD00BA4A38 /* icon1_rainy.png in Resources */,
 				18B5ACC919DC15CD00BA4A38 /* icon2_bank.png in Resources */,
+				56CF26871A24776600B30439 /* icon_create_poi.png in Resources */,
 				18B5ACC119DC15CD00BA4A38 /* icon1_sunny.png in Resources */,
 				18B5AC9D19DC15CD00BA4A38 /* icon1_dawn.png in Resources */,
 				18B5AC8719DC15CD00BA4A38 /* button_streets_on.png in Resources */,

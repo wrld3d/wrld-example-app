@@ -35,11 +35,20 @@
             android:layout_height="50dp"
             android:background="@color/white">
             
+            <ImageView
+                android:id="@+id/my_pin_details_icon"
+                android:contentDescription="@string/my_pin_details_icon"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/icon_create_poi" />
+            
             <TextView
                 android:id="@+id/my_pin_details_view_title"
-                android:layout_width="fill_parent"
+                android:layout_width="200dp"
                 android:layout_height="50dp"
                 android:layout_margin="5dp"
+                android:layout_toRightOf="@id/my_pin_details_icon"
                 android:ellipsize="end"
                 android:gravity="center_vertical"
                 android:singleLine="true"

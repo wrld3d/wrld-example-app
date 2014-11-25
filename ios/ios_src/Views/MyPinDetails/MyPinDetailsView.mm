@@ -56,6 +56,9 @@
 		self.pHeadlineContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
 		self.pHeadlineContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::MainHudColor;
 		[self.pControlContainer addSubview: self.pHeadlineContainer];
+        
+        self.pIconContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        [self.pHeadlineContainer addSubview: self.pIconContainer];
 
 		self.pTitleLabel = [self createLabel :ExampleApp::Helpers::ColorPalette::MainHudColor :ExampleApp::Helpers::ColorPalette::WhiteTone];
 		self.pTitleLabel.textColor = ExampleApp::Helpers::ColorPalette::GoldTone;
@@ -123,6 +126,9 @@
 	[self.pTitleLabel removeFromSuperview];
 	[self.pTitleLabel release];
 
+    [self.pIconContainer removeFromSuperview];
+    [self.pIconContainer release];
+    
 	[self.pDescriptionHeaderLabel removeFromSuperview];
 	[self.pDescriptionHeaderLabel release];
 
@@ -217,10 +223,14 @@
                                              closeButtonSectionHeight,
                                              closeButtonSectionHeight);
 
+    
+    self.pIconContainer.frame = CGRectMake(0.f, 0.f, headlineHeight, headlineHeight);
+    ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pIconContainer, "icon_create_poi.png", ExampleApp::Helpers::ImageHelpers::Centre);
+    
 	const float titlePadding = 10.0f;
-	self.pTitleLabel.frame = CGRectMake(titlePadding,
+	self.pTitleLabel.frame = CGRectMake(headlineHeight + titlePadding,
 	                                    0.f,
-	                                    mainWindowWidth - titlePadding,
+	                                    mainWindowWidth - headlineHeight - titlePadding,
 	                                    headlineHeight);
 	self.pTitleLabel.font = [UIFont systemFontOfSize:24.0f];
 	self.pTitleLabel.text = @"";
