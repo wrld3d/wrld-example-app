@@ -13,7 +13,8 @@
         android:background="@color/white"
         android:clickable="true"
         android:text="@string/pin_confirmation_title"
-        android:textColor="@color/darkgrey" />
+        android:textColor="@color/darkgrey"
+        android:textSize="14dp" />
     
     <!--  Button bar -->
     <RelativeLayout 
