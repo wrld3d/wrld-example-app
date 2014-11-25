@@ -51,7 +51,9 @@ namespace ExampleApp
             WorldPins::WorldPinFocusData worldPinFocusData(pMyPinModel->GetTitle(), pMyPinModel->GetDescription());
             MyPinSelectionHandler* selectionHandler = m_myPinSelectionHandlerFactory.CreateMyPinSelectionHandler(*pMyPinModel);
             
-            WorldPins::WorldPinItemModel* worldPinItemModel = m_worldPinsService.AddPin(selectionHandler, worldPinFocusData, pMyPinModel->GetLatLong(), 0);
+            const int myPinIconIndex = 9;
+            
+            WorldPins::WorldPinItemModel* worldPinItemModel = m_worldPinsService.AddPin(selectionHandler, worldPinFocusData, pMyPinModel->GetLatLong(), myPinIconIndex);
             m_myPinToWorldPinMap.insert(std::make_pair(pMyPinModel, worldPinItemModel));
         }
         
