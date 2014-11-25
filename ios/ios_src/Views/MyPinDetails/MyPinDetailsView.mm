@@ -54,6 +54,8 @@
 		self.pHeadlineContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
 		self.pHeadlineContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::MainHudColor;
 		[self.pControlContainer addSubview: self.pHeadlineContainer];
+        
+        self.pHeadlineShadow = ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pHeadlineContainer, "shadow_03", 0.f, 0.f, 0.f, 0.f);
 
 		self.pTitleLabel = [self createLabel :ExampleApp::Helpers::ColorPalette::MainHudColor :ExampleApp::Helpers::ColorPalette::WhiteTone];
 		self.pTitleLabel.textColor = ExampleApp::Helpers::ColorPalette::GoldTone;
@@ -70,9 +72,8 @@
 		self.pDescriptionHeaderLabel = [self createLabel :ExampleApp::Helpers::ColorPalette::WhiteTone :ExampleApp::Helpers::ColorPalette::GoldTone];
 		[self.pDescriptionHeaderContainer addSubview: self.pDescriptionHeaderLabel];
 
-        self.pDescriptionContent = [[[UITextView alloc] initWithFrame: CGRectMake(0, 0, 0, 0)] autorelease];
+        self.pDescriptionContent = [[[UILabel alloc] initWithFrame: CGRectMake(0, 0, 0, 0)] autorelease];
 		self.pDescriptionContent.textColor = ExampleApp::Helpers::ColorPalette::DarkGreyTone;
-        self.pDescriptionContent.editable = NO;
 		[self.pLabelsContainer addSubview: self.pDescriptionContent];
 
 		self.pImageHeaderContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
@@ -87,6 +88,8 @@
         self.pImageContent.image = [UIImage imageNamed: @"image_blank.png"];
 
 		[self.pLabelsContainer addSubview: self.pImageContent];
+        
+        self.pContentShadow = ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pContentContainer, "shadow_03", 0.f, 0.f, 0.f, 0.f);
 	}
 
 	return self;
@@ -108,6 +111,9 @@
 
 	[self.pControlContainer removeFromSuperview];
 	[self.pControlContainer release];
+    
+    [self.pHeadlineShadow removeFromSuperview];
+    [self.pHeadlineShadow release];
 
 	[self.pHeadlineContainer removeFromSuperview];
 	[self.pHeadlineContainer release];
@@ -115,6 +121,9 @@
 	[self.pLabelsContainer removeFromSuperview];
 	[self.pLabelsContainer release];
 
+    [self.pContentShadow removeFromSuperview];
+    [self.pContentShadow release];
+    
 	[self.pContentContainer removeFromSuperview];
 	[self.pContentContainer release];
 
@@ -181,7 +190,7 @@
 	                                mainWindowWidth,
 	                                headlineHeight);
 
-	ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pHeadlineContainer, "shadow_03", 0.f, headlineHeight, mainWindowWidth, shadowHeight);
+    self.pHeadlineShadow.frame = CGRectMake(0.f, headlineHeight, mainWindowWidth, shadowHeight);
 
 
 	self.pContentContainer.frame = CGRectMake(0.f,
@@ -203,7 +212,7 @@
 	                                   mainWindowWidth,
 	                                   closeButtonSectionHeight);
 
-	ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pContentContainer, "shadow_03", 0.f, contentSectionHeight, mainWindowWidth, shadowHeight);
+    self.pContentShadow.frame = CGRectMake(0.f, contentSectionHeight, mainWindowWidth, shadowHeight);
 
 	self.pCloseButton.frame = CGRectMake(mainWindowWidth - closeButtonSectionHeight,
 	                                     0.f,
@@ -221,7 +230,6 @@
 	                                    mainWindowWidth - titlePadding,
 	                                    headlineHeight);
 	self.pTitleLabel.font = [UIFont systemFontOfSize:24.0f];
-	self.pTitleLabel.text = @"";
 
 	m_headerLabelHeight = 20.f;
 	m_labelYSpacing = 8.f;
@@ -235,46 +243,52 @@
 	currentLabelY += m_labelYSpacing + self.pDescriptionHeaderContainer.frame.size.height;
 
     m_descriptionContentY = currentLabelY;
-	self.pDescriptionContent.frame = CGRectMake(m_headerTextPadding, currentLabelY, m_labelsSectionWidth - m_headerTextPadding, 60.f);
-	self.pDescriptionContent.text = @"";
     self.pDescriptionContent.font = [UIFont systemFontOfSize: 16.f];
-    self.pDescriptionContent.contentInset = UIEdgeInsetsMake(-4,-8,0,0);
+    self.pDescriptionContent.frame = CGRectMake(m_headerTextPadding, m_descriptionContentY, m_labelsSectionWidth - m_headerTextPadding, 0);
+    self.pDescriptionContent.lineBreakMode = UILineBreakModeWordWrap;
+    self.pDescriptionContent.numberOfLines = 0;
+    [self.pDescriptionContent sizeToFit];
+
 	currentLabelY += m_labelYSpacing + self.pDescriptionContent.frame.size.height;
 
-	self.pImageHeaderContainer.frame = CGRectMake(0.f, currentLabelY, m_labelsSectionWidth, m_headerLabelHeight + 2 * m_headerTextPadding);
 
-	self.pImageHeaderLabel.frame = CGRectMake(m_headerTextPadding, m_headerTextPadding, m_labelsSectionWidth - m_headerTextPadding, m_headerLabelHeight);
-	self.pImageHeaderLabel.text = @"Image";
-	currentLabelY += m_labelYSpacing + self.pImageHeaderContainer.frame.size.height;
-
-    m_maxImageWidth = m_labelsSectionWidth - m_headerTextPadding;
-	self.pImageContent.frame = CGRectMake(m_headerTextPadding, currentLabelY, m_maxImageWidth, m_labelsSectionWidth * 0.75f);
-    currentLabelY += m_labelYSpacing + self.pImageContent.frame.size.height;
-    m_scrollContentBottomMargin = 0;
-    m_scrollContentWidth = m_labelsSectionWidth;
+    self.pImageHeaderContainer.hidden = true;
+    self.pImageContent.hidden = true;
+    if(m_hasImage)
+    {
+        self.pImageHeaderContainer.hidden = false;
+        self.pImageContent.hidden = false;
+        
+        self.pImageHeaderContainer.frame = CGRectMake(0.f, currentLabelY, m_labelsSectionWidth, m_headerLabelHeight + 2 * m_headerTextPadding);
+        
+        self.pImageHeaderLabel.frame = CGRectMake(m_headerTextPadding, m_headerTextPadding, m_labelsSectionWidth - m_headerTextPadding, m_headerLabelHeight);
+        self.pImageHeaderLabel.text = @"Image";
+        currentLabelY += m_labelYSpacing + self.pImageHeaderContainer.frame.size.height;
+        
+        m_maxImageWidth = m_labelsSectionWidth - m_headerTextPadding;
+        
+        const float widthRatio = m_maxImageWidth/self.pImageContent.image.size.width;
+        const float height = self.pImageContent.image.size.height * widthRatio;
+        
+        self.pImageContent.frame = CGRectMake(0, currentLabelY, m_maxImageWidth, height);
+        
+        currentLabelY += m_labelYSpacing + height;
+        m_scrollContentBottomMargin = 0;
+    }
     
-	[self.pLabelsContainer setContentSize:CGSizeMake(m_labelsSectionWidth, currentLabelY)];
+    m_scrollContentWidth = m_labelsSectionWidth;
+
     m_maxContentSize = currentLabelY;
+    [self.pLabelsContainer setContentSize:CGSizeMake(m_labelsSectionWidth, m_maxContentSize)];
 }
 
 - (void) setContent:(const ExampleApp::MyPins::MyPinModel*)pModel
 {
 	self.pTitleLabel.text = [NSString stringWithUTF8String:pModel->GetTitle().c_str()];
 
-	self.pDescriptionHeaderContainer.hidden = true;
-	self.pDescriptionContent.hidden = true;
-	self.pImageHeaderContainer.hidden = true;
-	self.pImageContent.hidden = true;
-    
-    self.pDescriptionHeaderContainer.hidden = false;
-    self.pDescriptionContent.hidden = false;
     self.pDescriptionContent.text = [NSString stringWithUTF8String: pModel->GetDescription().c_str()];
     
-    float textContentSize = self.pDescriptionHeaderContainer.bounds.size.height + self.pDescriptionContent.contentSize.height;
-    
-    self.pDescriptionContent.frame = CGRectMake(m_headerTextPadding, m_descriptionContentY, m_labelsSectionWidth - m_headerTextPadding, m_maxContentSize);
-    self.pLabelsContainer.contentSize = CGSizeMake(m_labelsSectionWidth, textContentSize);
-    [self.pLabelsContainer setContentOffset:CGPointMake(0,0) animated:NO];
+    m_hasImage = NO;
 
 	if(!pModel->GetImagePath().empty())
 	{
@@ -282,18 +296,14 @@
         NSString* libraryDirectory = [libraryPaths objectAtIndex:0];
         NSString* imageFilename = [NSString stringWithUTF8String: pModel->GetImagePath().c_str()];
         NSString* fullPathToImage  = [libraryDirectory stringByAppendingPathComponent: imageFilename];
-        
-        float imageContentHeaderOriginY = m_descriptionContentY + textContentSize;
-        
+
         self.pImageContent.image = [UIImage imageWithContentsOfFile: fullPathToImage];
-		self.pImageHeaderContainer.hidden = false;
-        self.pImageHeaderContainer.frame = CGRectMake(m_headerTextPadding, imageContentHeaderOriginY, m_labelsSectionWidth, 20.0f + 2 * m_headerTextPadding);
-        self.pImageContent.frame = CGRectMake(m_headerTextPadding, imageContentHeaderOriginY + m_headerLabelHeight + m_labelYSpacing, 0, 0);
-		self.pImageContent.hidden = false;
-        
-        [self resizeImageViewToFit:self.pImageContent.image.size.width :self.pImageContent.image.size.height];
+
+        m_hasImage = YES;
 	}
-    
+
+    [self setNeedsLayout];
+    [self layoutIfNeeded];
 }
 
 - (void) setFullyActive
@@ -367,17 +377,6 @@
     {
         [m_pController handleRemovePinButtonPressed];
     }
-}
-
-- (void) resizeImageViewToFit:(float)sourceImageWidth :(float)sourceImageHeight
-{
-    const float widthRatio = m_maxImageWidth/sourceImageWidth;
-    const float height = sourceImageHeight * widthRatio;
-    
-    CGRect frame = self.pImageContent.frame;
-    self.pImageContent.frame = CGRectMake(frame.origin.x, frame.origin.y, m_maxImageWidth, height);
-    
-    self.pLabelsContainer.contentSize = CGSizeMake(m_scrollContentWidth, self.pImageContent.frame.origin.y + self.pImageContent.frame.size.height + m_scrollContentBottomMargin);
 }
 
 @end

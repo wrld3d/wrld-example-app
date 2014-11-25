@@ -50,8 +50,8 @@
 		return;
 	}
 
+    [self.pMyPinDetailsView setContent:&myPinModel];
 	[self.pMyPinDetailsView setFullyActive];
-	[self.pMyPinDetailsView setContent:&myPinModel];
 }
 
 - (void) close

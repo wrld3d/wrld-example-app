@@ -22,6 +22,7 @@
     float m_headerLabelHeight;
     float m_headerTextPadding;
     float m_labelYSpacing;
+    bool m_hasImage;
 }
 
 - (id) initWithController:(MyPinDetailsViewController *)controller;
@@ -36,23 +37,25 @@
 
 - (void) setActiveStateToIntermediateValue:(float)activeState;
 
-- (void) resizeImageViewToFit:(float)sourceImageWidth :(float)sourceImageHeight;
-
 @property (nonatomic, retain) UIView* pCloseButtonContainer;
 @property (nonatomic, retain) UIButton* pCloseButton;
 @property (nonatomic, retain) UIButton* pRemovePinButton;
 @property (nonatomic, retain) UIView* pShadowContainer;
 @property (nonatomic, retain) UIView* pControlContainer;
 @property (nonatomic, retain) UIView* pHeadlineContainer;
+@property (nonatomic, retain) UIImageView* pHeadlineShadow;
 @property (nonatomic, retain) UIView* pContentContainer;
 @property (nonatomic, retain) UIScrollView* pLabelsContainer;
+@property (nonatomic, retain) UIImageView* pContentShadow;
 @property (nonatomic, retain) UIView* pCategoryIconContainer;
 @property (nonatomic, retain) UILabel* pTitleLabel;
 @property (nonatomic, retain) UIView* pDescriptionHeaderContainer;
 @property (nonatomic, retain) UILabel* pDescriptionHeaderLabel;
-@property (nonatomic, retain) UITextView* pDescriptionContent;
+@property (nonatomic, retain) UILabel* pDescriptionContent;
 @property (nonatomic, retain) UIView* pImageHeaderContainer;
 @property (nonatomic, retain) UILabel* pImageHeaderLabel;
 @property (nonatomic, retain) UIImageView* pImageContent;
+
+
 
 @end
