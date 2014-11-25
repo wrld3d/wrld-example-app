@@ -97,10 +97,9 @@ namespace
 		return pImageView;
 	}
 
-	void AddImageToParentView(UIView* pParentView,
+	UIImageView* AddImageToParentView(UIView* pParentView,
 	                          const std::string& fullName,
 	                          ExampleApp::Helpers::ImageHelpers::OffsetValue offsetInParent,
-	                          CGRect& out_imageFrame,
 	                          const std::string* fullHighlightableName=NULL)
 	{
 		UIImageView* pImageView = CreateImageView(pParentView, fullName, fullHighlightableName);
@@ -108,14 +107,13 @@ namespace
 		pImageView.frame = GetRect(pParentView, pImageView, offsetInParent);
 
 		[pParentView addSubview:pImageView];
-
-		out_imageFrame = pImageView.frame;
+        
+        return pImageView;
 	}
 
-	void AddImageToParentView(UIView* pParentView,
+	UIImageView* AddImageToParentView(UIView* pParentView,
 	                          const std::string& fullName,
 	                          float x, float y, float w, float h,
-	                          CGRect& out_imageFrame,
 	                          const std::string* fullHighlightableName=NULL)
 	{
 		UIImageView* pImageView = CreateImageView(pParentView, fullName, fullHighlightableName);
@@ -123,8 +121,8 @@ namespace
 		pImageView.frame = CGRectMake(x, y, w, h);
 
 		[pParentView addSubview:pImageView];
-
-		out_imageFrame = pImageView.frame;
+        
+        return pImageView;
 	}
 }
 
@@ -134,34 +132,28 @@ namespace ExampleApp
 	{
 		namespace ImageHelpers
 		{
-			CGRect AddPngImageToParentView(UIView* pParentView,
+			UIImageView* AddPngImageToParentView(UIView* pParentView,
 			                               const std::string& name,
 			                               OffsetValue offsetInParent)
 			{
 				std::string fullName = GetImageNameForDevice(name) + ".png";
-				CGRect imageFrame;
-				AddImageToParentView(pParentView, fullName, offsetInParent, imageFrame, NULL);
-				return imageFrame;
+				return AddImageToParentView(pParentView, fullName, offsetInParent, NULL);
 			}
 
-			CGRect AddPngImageToParentView(UIView* pParentView, const std::string& name, float x, float y, float w, float h)
+			UIImageView* AddPngImageToParentView(UIView* pParentView, const std::string& name, float x, float y, float w, float h)
 			{
 				std::string fullName = GetImageNameForDevice(name) + ".png";
-				CGRect imageFrame;
-				AddImageToParentView(pParentView, fullName, x, y, w, h, imageFrame, NULL);
-				return imageFrame;
+				return AddImageToParentView(pParentView, fullName, x, y, w, h, NULL);
 			}
 
-			CGRect AddPngHighlightedImageToParentView(UIView* pParentView,
+			UIImageView* AddPngHighlightedImageToParentView(UIView* pParentView,
 			        const std::string& name,
 			        const std::string& highlightedName,
 			        OffsetValue offsetInParent)
 			{
 				std::string fullName = GetImageNameForDevice(name) + ".png";
 				std::string fullHighlightedName = GetImageNameForDevice(highlightedName) + ".png";
-				CGRect imageFrame;
-				AddImageToParentView(pParentView, fullName, offsetInParent, imageFrame, &fullHighlightedName);
-				return imageFrame;
+				return AddImageToParentView(pParentView, fullName, offsetInParent, &fullHighlightedName);
 			}
 		}
 	}

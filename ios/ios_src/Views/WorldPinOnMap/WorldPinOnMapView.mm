@@ -129,9 +129,9 @@
 	const float arrowWidth = 16.f;
 	self.pArrowContainer.frame = CGRectMake(w/2.f - arrowWidth/2.f, y, arrowWidth, h);
 	ExampleApp::Helpers::ImageHelpers::OffsetValue offsetInParent = ExampleApp::Helpers::ImageHelpers::Below | ExampleApp::Helpers::ImageHelpers::Centre;
-	CGRect imgFrame = ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pArrowContainer, "arrow1", offsetInParent);
+	UIImageView* pImg = ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pArrowContainer, "arrow1", offsetInParent);
 
-	self.frame = CGRectMake(x, y, w, h + imgFrame.size.height);
+	self.frame = CGRectMake(x, y, w, h + pImg.frame.size.height);
 }
 
 - (void) setLabel:(std::string)name :(std::string)detail

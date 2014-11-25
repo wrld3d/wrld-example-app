@@ -29,11 +29,11 @@ namespace ExampleApp
 
 			typedef u32 OffsetValue;
 
-			CGRect AddPngImageToParentView(UIView* pParentView, const std::string& name, OffsetValue offsetInParent);
+			UIImageView* AddPngImageToParentView(UIView* pParentView, const std::string& name, OffsetValue offsetInParent);
 
-			CGRect AddPngImageToParentView(UIView* pParentView, const std::string& name, float x, float y, float w, float h);
+			UIImageView* AddPngImageToParentView(UIView* pParentView, const std::string& name, float x, float y, float w, float h);
 
-			CGRect AddPngHighlightedImageToParentView(UIView* pParentView, const std::string& name, const std::string& highlightedName, OffsetValue offsetInParent);
+			UIImageView* AddPngHighlightedImageToParentView(UIView* pParentView, const std::string& name, const std::string& highlightedName, OffsetValue offsetInParent);
 		}
 	}
 }
