@@ -36,7 +36,7 @@ public class MenuListAdapter extends BaseAdapter
 	private ValueAnimator m_expandContractAnim;
 	private boolean m_shouldAlignIconRight;
 	
-	private final float SubItemIndent = 13.0f;
+	private final float SubItemIndent = 12.0f;
 
 	public MenuListAdapter(Activity context,
 	                       final int groupViewId,
