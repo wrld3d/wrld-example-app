@@ -25,6 +25,8 @@ namespace ExampleApp
         class IMyPinSelectionHandlerFactory;
         class MyPinSelectionHandlerFactory;
         class MyPinSelectionHandler;
+        class MyPinSelectedMessageHandler;
+        class MyPinSelectedMessage;
 
         class MyPinAddedToMenuObserver;
         class MyPinRemovedFromMenuObserver;

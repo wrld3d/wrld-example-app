@@ -11,6 +11,7 @@
 #include "Menu.h"
 #include "UiToNativeMessageBus.h"
 #include "NativeToUiMessageBus.h"
+#include "CameraTransitions.h"
 
 namespace ExampleApp
 {
@@ -24,7 +25,8 @@ namespace ExampleApp
                          PersistentSettings::IPersistentSettingsModel& persistentSettings,
                          ExampleApp::Menu::IMenuViewModel& menuViewModel,
                          ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
-                         ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus);
+                         ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus,
+                         CameraTransitions::ICameraTransitionController& cameraTransitionController);
             
             ~MyPinsModule();
             
@@ -39,6 +41,7 @@ namespace ExampleApp
             MyPinSelectionHandlerFactory* m_pMyPinsSelectionHandlerFactory;
             MyPinAddedToMenuObserver* m_pMyPinAddedToMenuObserver;
             MyPinRemovedFromMenuObserver* m_pMyPinRemovedFromMenuObserver;
+            MyPinSelectedMessageHandler* m_pMyPinSelectedMessageHandler;
             
             Menu::IMenuModel* m_pMenuModel;
             Menu::IMenuOptionsModel* m_pMenuOptionsModel;

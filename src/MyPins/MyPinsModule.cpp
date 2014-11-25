@@ -13,6 +13,7 @@
 #include "MyPinSelectionHandlerFactory.h"
 #include "MyPinAddedToMenuObserver.h"
 #include "MyPinRemovedFromMenuObserver.h"
+#include "MyPinSelectedMessageHandler.h"
 
 namespace ExampleApp
 {
@@ -23,7 +24,8 @@ namespace ExampleApp
                                    PersistentSettings::IPersistentSettingsModel& persistentSettings,
                                    ExampleApp::Menu::IMenuViewModel& menuViewModel,
                                    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
-                                   ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus)
+                                   ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus,
+                                   CameraTransitions::ICameraTransitionController& cameraTransitionController)
         : m_pMyPinsRepository(NULL)
         , m_pMyPinsFileIO(NULL)
         , m_pMyPinsService(NULL)
@@ -58,12 +60,14 @@ namespace ExampleApp
                                                         *m_pMyPinsSelectionHandlerFactory,
                                                         worldPinsService,
                                                         platformAbstractions.GetWebLoadRequestFactory());
-            
+            m_pMyPinSelectedMessageHandler = Eegeo_NEW(MyPinSelectedMessageHandler)(cameraTransitionController,
+                                                                                    uiToNativeMessageBus);
             
         }
         
         MyPinsModule::~MyPinsModule()
         {
+            Eegeo_DELETE m_pMyPinSelectedMessageHandler;
             Eegeo_DELETE m_pMyPinsService;
 
             Eegeo_DELETE m_pMyPinRemovedFromMenuObserver;
