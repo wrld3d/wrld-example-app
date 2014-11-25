@@ -43,6 +43,7 @@
     if(m_pViewModel->TryAcquireReactorControl())
     {
         [self.pMyPinCreationDetailsView setFullyActive];
+        [self.pMyPinCreationDetailsView.pTitleText becomeFirstResponder];
     }
 }
 

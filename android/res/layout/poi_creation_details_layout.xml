@@ -38,6 +38,7 @@
                 android:layout_height="fill_parent"
                 android:background="@color/white"
                 android:hint="@string/poi_creation_details_title_hint"
+                android:textColorHint="@color/lightgrey"
                 android:imeOptions="actionDone"
                 android:inputType="text"
                 android:lines="0"
@@ -71,6 +72,7 @@
 		                android:layout_margin="10dp"
 		                android:gravity="top|left"
 		                android:hint="@string/poi_creation_details_description_hint"
+		                android:textColorHint="@color/lightgrey"
 		                android:imeOptions="actionDone"
 		                android:inputType="text"
 		                android:textSize="15.0dp" />
