@@ -24,6 +24,7 @@
 	        android:gravity="left|center_vertical"
 	        android:textAppearance="?android:attr/textAppearanceListItemSmall"
 	        android:textColor="@color/gold"
+	        android:singleLine="true"
 	        android:textSize="11.0dp" />
 	    
 	    <ImageView
