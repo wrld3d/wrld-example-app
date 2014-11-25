@@ -50,6 +50,54 @@
             
         </LinearLayout>
         
+         <!--  Share & T&C bar -->
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="25dp">
+	        
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@color/white"/>
+	        
+            <ToggleButton
+                android:id="@+id/poi_creation_details_share_togglebutton"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="2dp"
+                android:background="@drawable/check_button_states"
+                android:checked="true"
+                android:textOff=""
+                android:textOn="" />
+            
+            <TextView
+                android:id="@+id/my_pin_creation_details_share_text"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="35dp"
+                android:layout_marginTop="2dp"
+                android:gravity="center_vertical"
+                android:text="@string/poi_creation_details_share"
+                android:textColor="@color/grey"
+                android:textStyle="italic" />
+            
+            <TextView
+                android:id="@+id/poi_creation_details_terms_conditions_link"
+                android:layout_width="150dp"
+                android:layout_height="fill_parent"
+                android:layout_marginTop="3dp"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@id/my_pin_creation_details_share_text"
+                android:gravity="center_vertical"
+                android:text="@string/poi_creation_details_terms_conditions"
+                android:textColor="@color/darkgrey" 
+                android:textSize="10dp"/>
+            
+        </RelativeLayout>
+        
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="175dp">
@@ -92,55 +140,13 @@
 	        
 	        </ScrollView>
 	        
-	        <RelativeLayout
+           <RelativeLayout
 	            android:layout_width="fill_parent"
 	            android:layout_height="10dp"
 	            android:background="@drawable/shadow_03"/>
 	        
         </RelativeLayout>
-        
-        <!--  Share & T&C bar -->
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="20dp">
-	        
-            <RelativeLayout
-            	android:layout_width="fill_parent"
-            	android:layout_height="fill_parent"
-            	android:background="@color/white"/>
-	        
-            <ToggleButton
-                android:id="@+id/poi_creation_details_share_togglebutton"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginLeft="10dp"
-                android:background="@drawable/check_button_states"
-                android:checked="true"
-                android:textOff=""
-                android:textOn="" />
-            
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="35dp"
-                android:gravity="center_vertical"
-                android:text="@string/poi_creation_details_share"
-                android:textColor="@color/grey"
-                android:textStyle="italic" />
-            
-            <TextView
-                android:id="@+id/poi_creation_details_terms_conditions_link"
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="10dp"
-                android:gravity="center_vertical"
-                android:text="@string/poi_creation_details_terms_conditions"
-                android:textColor="@color/darkgrey" />
-            
-        </RelativeLayout>
-        
+       
         <!--  Button bar -->
         <RelativeLayout
             android:layout_width="fill_parent"

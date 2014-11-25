@@ -20,6 +20,10 @@
         m_stateChangeAnimationTimeSeconds = 0.2;
         m_imageAttached = NO;
         
+        m_controlContainerHeight = 0.f;
+        m_controlContainerWidth = 0.f;
+        m_yCursor = 0.f;
+        
         self.pControlContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         [self addSubview: self.pControlContainer];
         
@@ -127,28 +131,36 @@
 
     const bool useFullScreenSize = (boundsHeight < 600.f || boundsWidth < 400.f);
     const float boundsOccupyMultiplier = useFullScreenSize ? 0.9f : 0.6f;
-    const float controlContainerWidth = floorf(boundsWidth * boundsOccupyMultiplier);
-    const float controlContainerHeight = boundsHeight * boundsOccupyMultiplier;
-    const float controlContainerX = (boundsWidth * 0.5f) - (controlContainerWidth * 0.5f);
-    const float controlContainerY = (boundsHeight * 0.5f) - (controlContainerHeight * 0.5f);
+    m_controlContainerWidth = floorf(boundsWidth * boundsOccupyMultiplier);
+    m_controlContainerHeight = boundsHeight * boundsOccupyMultiplier;
+    const float controlContainerX = (boundsWidth * 0.5f) - (m_controlContainerWidth * 0.5f);
+    const float controlContainerY = (boundsHeight * 0.5f) - (m_controlContainerHeight * 0.5f);
 
-    self.pControlContainer.frame = CGRectMake(controlContainerX, controlContainerY, controlContainerWidth, controlContainerHeight);
+    self.pControlContainer.frame = CGRectMake(controlContainerX, controlContainerY, m_controlContainerWidth, m_controlContainerHeight);
     self.pControlContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::GoldTone;
     
-    const float titleContainerY = 10.f;
-    const float titleContainerWidth = controlContainerWidth;
+    [self layoutHeader];
+    [self layoutBody];
+    [self layoutFooter];
+
+    [self resizeImageViewToFit:self.pPlaceholderImage.size.width :self.pPlaceholderImage.size.height];
+}
+
+- (void) layoutHeader
+{
+    m_yCursor = 10.f;
+    const float titleContainerWidth = m_controlContainerWidth;
     const float titleContainerHeight = 70.f;
     
-    self.pTitleContainer.frame = CGRectMake(0, titleContainerY, titleContainerWidth, titleContainerHeight);
+    self.pTitleContainer.frame = CGRectMake(0, m_yCursor, titleContainerWidth, titleContainerHeight);
     self.pTitleContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::WhiteTone;
     
-    const float titleImageWidth = 70.f;
-    const float titleImageHeight = titleImageWidth;
-    self.pTitleImage.frame = CGRectMake(0, 0, titleImageWidth, titleImageHeight);
+    const float titleImageSize = self.pTitleContainer.frame.size.height;
+    self.pTitleImage.frame = CGRectMake(0, 0, titleImageSize, titleImageSize);
     self.pTitleImage.backgroundColor = ExampleApp::Helpers::ColorPalette::GoldTone;
     
     const float textPadding = 10.f;
-    const float titleTextX = titleImageWidth + textPadding;
+    const float titleTextX = titleImageSize + textPadding;
     self.pTitleText.frame = CGRectMake(titleTextX, 0, titleContainerWidth - titleTextX, titleContainerHeight);
     
     self.pTitleText.font = [UIFont systemFontOfSize:25.0f];
@@ -166,18 +178,62 @@
     self.pTitleText.returnKeyType = UIReturnKeyDone;
     [self.pTitleText setDelegate: self];
     
-    const float bodyContainerY = titleContainerY + titleContainerHeight;
-    const float bodyContainerHeight = controlContainerHeight - (2 * titleImageHeight);
-    const float bodyContainerWidth = controlContainerWidth;
+    m_yCursor += self.pTitleContainer.frame.size.height;
+}
+
+- (void) layoutBody
+{
+    const float bodyContainerY = m_yCursor;
+    const float bodyContainerHeight = m_controlContainerHeight - (2 * self.pTitleContainer.frame.size.height);
     
-    self.pBodyContainer.frame = CGRectMake(0, bodyContainerY, bodyContainerWidth, bodyContainerHeight);
+    self.pBodyContainer.frame = CGRectMake(0, bodyContainerY, m_controlContainerWidth, bodyContainerHeight);
     self.pBodyContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::WhiteTone;
-    self.pBodyScrollView.frame = CGRectMake(0, 0, bodyContainerWidth, bodyContainerHeight - 30.f);
+
+    const float shareBarY = 5.f;
+    const float checkboxSize = 30.f;
+    const float checkBoxX = 20.f;
+
+    self.pCheckbox.frame = CGRectMake(checkBoxX, shareBarY, checkboxSize, checkboxSize);
+    [self.pCheckbox setBackgroundImage:[UIImage imageNamed:@"button_checkbox_off.png"] forState:UIControlStateNormal];
+    [self.pCheckbox setBackgroundImage:[UIImage imageNamed:@"button_checkbox_on.png"] forState:UIControlStateSelected];
+    self.pCheckbox.selected = YES;
+    [self.pCheckbox addTarget:self action:@selector(onCheckboxPressed:) forControlEvents:UIControlEventTouchUpInside];
+    
+    const float shareLabelWidth = 45.f;
+    const float shareLabelHeight = 30.f;
+    const float shareLabelPadding = 5.f;
+    const float shareLabelX = checkBoxX + checkboxSize + shareLabelPadding;
+    
+    self.pShareLabel.frame = CGRectMake(shareLabelX, shareBarY, shareLabelWidth, shareLabelHeight);
+    self.pShareLabel.font = [UIFont italicSystemFontOfSize: 16.f];
+    self.pShareLabel.textColor = ExampleApp::Helpers::ColorPalette::GreyTone;
+    self.pShareLabel.text = @"Share";
+    
+    const float termsLabelWidth = 150.f;
+    const float termsLabelHeight = 30.f;
+    const float termsLabelX = shareLabelX + shareLabelWidth + 2.f;
+    self.pTermsLabel.frame = CGRectMake(termsLabelX, shareBarY + 2.f, termsLabelWidth, termsLabelHeight);
+    
+    self.pTermsLabel.text = @"(Terms & Conditions)";
+    self.pTermsLabel.font = [UIFont systemFontOfSize: 12.f];
+    self.pTermsLabel.textAlignment = NSTextAlignmentLeft;
+    self.pTermsLabel.textColor = ExampleApp::Helpers::ColorPalette::LinkTone;
+    UITapGestureRecognizer* urlTappedGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(userTappedOnLink:)];
+    [self.pTermsLabel setUserInteractionEnabled:YES];
+    [self.pTermsLabel addGestureRecognizer:urlTappedGesture];
+    
+    const float scrollBoxPadding = 5.f;
+    const float scrollViewY = shareBarY + checkboxSize + scrollBoxPadding;
+    self.pBodyScrollView.frame = CGRectMake(0, scrollViewY, m_controlContainerWidth, bodyContainerHeight);
+    
+    const float shadowHeight = 10.f;
+    self.pBodyShadow.frame = CGRectMake(0.f, scrollViewY, m_controlContainerWidth, shadowHeight);
+    [self.pBodyContainer bringSubviewToFront: self.pBodyShadow];
     
     const float poiDescriptionBoxX = 20.f;
     const float poiDescriptionBoxY = 20.f;
     const float poiDescriptionBoxHeight = 120.f;
-    const float poiDescriptionBoxWidth = bodyContainerWidth - (2 * poiDescriptionBoxX);
+    const float poiDescriptionBoxWidth = m_controlContainerWidth - (2 * poiDescriptionBoxX);
     self.pPoiDescriptionBox.frame = CGRectMake(poiDescriptionBoxX, poiDescriptionBoxY, poiDescriptionBoxWidth, poiDescriptionBoxHeight);
     self.pPoiDescriptionBox.font = [UIFont systemFontOfSize: 16.f];
     self.pPoiDescriptionBox.layer.cornerRadius = 8.f;
@@ -200,94 +256,61 @@
     
     const float poiImageY = poiDescriptionBoxHeight + poiDescriptionBoxY + 30.f;
     const float poiImageX = 20.f;
-    m_scrollContentWidth = bodyContainerWidth;
-    m_maxImageWidth = bodyContainerWidth - (2 * poiImageX);
+    m_maxImageWidth = m_controlContainerWidth - (2 * poiImageX);
     const float poiImageHeight = m_maxImageWidth * 0.75f;
     self.pPoiImage.frame = CGRectMake(poiImageX, poiImageY, m_maxImageWidth, poiImageHeight);
     self.pPoiImage.image = self.pPlaceholderImage;
     
     const float scrollHeight = poiDescriptionBoxHeight + poiImageHeight + m_scrollContentBottomMargin;
-    self.pBodyScrollView.contentSize = CGSizeMake(m_scrollContentWidth, scrollHeight);
-    
-    const float shadowHeight = 10.f;
-    self.pBodyShadow.frame = CGRectMake(0.f, 0.f, bodyContainerWidth, shadowHeight);
-    const float footerY = bodyContainerY + bodyContainerHeight;
-    const float footerHeight = 70.f;
-    const float footerWidth = controlContainerWidth;
-    
-    const float checkBoxWidth = 30.f;
-    const float checkBoxHeight = checkBoxWidth;
-    const float checkBoxX = 20.f;
-    const float checkBoxY = bodyContainerHeight - checkBoxHeight;
-    self.pCheckbox.frame = CGRectMake(checkBoxX, checkBoxY, checkBoxWidth, checkBoxHeight);
-    [self.pCheckbox setBackgroundImage:[UIImage imageNamed:@"button_checkbox_off.png"] forState:UIControlStateNormal];
-    [self.pCheckbox setBackgroundImage:[UIImage imageNamed:@"button_checkbox_on.png"] forState:UIControlStateSelected];
-    self.pCheckbox.selected = YES;
-    [self.pCheckbox addTarget:self action:@selector(onCheckboxPressed:) forControlEvents:UIControlEventTouchUpInside];
-    
-    const float shareLabelWidth = 100.f;
-    const float shareLabelHeight = 30.f;
-    const float shareLabelX = checkBoxX + checkBoxWidth + 5.f;
-    const float shareLabelY = bodyContainerHeight - shareLabelHeight;
+    self.pBodyScrollView.contentSize = CGSizeMake(m_controlContainerWidth, scrollHeight);
 
-    self.pShareLabel.frame = CGRectMake(shareLabelX, shareLabelY, shareLabelWidth, shareLabelHeight);
-    self.pShareLabel.font = [UIFont italicSystemFontOfSize: 16.f];
-    self.pShareLabel.textColor = ExampleApp::Helpers::ColorPalette::GreyTone;
-    self.pShareLabel.text = @"Share";
-    
-    const float termsLabelWidth = 150.f;
-    const float termsLabelHeight = 30.f;
-    const float termsLabelX = bodyContainerWidth - 20.f - termsLabelWidth;
-    const float termsLabelY = bodyContainerHeight - termsLabelHeight;
-    self.pTermsLabel.frame = CGRectMake(termsLabelX, termsLabelY, termsLabelWidth, termsLabelHeight);
-    self.pTermsLabel.text = @"Terms & Conditions";
-    self.pTermsLabel.font = [UIFont systemFontOfSize: 16.f];
-    self.pTermsLabel.textAlignment = NSTextAlignmentRight;
-    self.pTermsLabel.textColor = ExampleApp::Helpers::ColorPalette::LinkTone;
-    UITapGestureRecognizer* urlTappedGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(userTappedOnLink:)];
-    [self.pTermsLabel setUserInteractionEnabled:YES];
-    [self.pTermsLabel addGestureRecognizer:urlTappedGesture];
+    m_yCursor += self.pBodyContainer.frame.size.height;
+}
+
+- (void) layoutFooter
+{
+  
+    const float footerY = m_yCursor;
+    const float footerHeight = 70.f;
+    const float footerWidth = m_controlContainerWidth;
     
     self.pFooterContainer.frame = CGRectMake(0, footerY, footerWidth, footerHeight);
     self.pFooterContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::GoldTone;
-    self.pFooterShadow.frame = CGRectMake(0.f, 0.f, bodyContainerWidth, shadowHeight);
+    
+    const float shadowHeight = 10.f;
+    self.pFooterShadow.frame = CGRectMake(0.f, 0.f, m_controlContainerWidth, shadowHeight);
     
     const int numberOfButtons = 4;
-    const float buttonWidth = 70.f;
-    const float buttonHeight = footerHeight;
-    const float buttonPadding = (controlContainerWidth - (numberOfButtons * buttonWidth)) / (numberOfButtons + 1);
+    const float buttonSize = self.pFooterContainer.frame.size.height;
+    const float buttonPadding = (m_controlContainerWidth - (numberOfButtons * buttonSize)) / (numberOfButtons + 1);
     
     const float closeButtonX = buttonPadding;
-    self.pCloseButton.frame = CGRectMake(closeButtonX, 0, buttonWidth, buttonHeight);
+    self.pCloseButton.frame = CGRectMake(closeButtonX, 0, buttonSize, buttonSize);
     [self.pCloseButton setBackgroundImage:[UIImage imageNamed:@"button_close_off.png"] forState:UIControlStateNormal];
     [self.pCloseButton setBackgroundImage:[UIImage imageNamed:@"button_close_on.png"] forState:UIControlStateHighlighted];
     [self.pCloseButton addTarget:self action:@selector(onCloseButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     
-    const float cameraButtonX = buttonWidth + 2 * buttonPadding;
-    self.pCameraButton.frame = CGRectMake(cameraButtonX, 0, buttonWidth, buttonHeight);
+    const float cameraButtonX = buttonSize + 2 * buttonPadding;
+    self.pCameraButton.frame = CGRectMake(cameraButtonX, 0, buttonSize, buttonSize);
     [self.pCameraButton setBackgroundImage:[UIImage imageNamed:@"button_photo_off.png"] forState:UIControlStateNormal];
     [self.pCameraButton setBackgroundImage:[UIImage imageNamed:@"button_photo_on.png"] forState:UIControlStateHighlighted];
     [self.pCameraButton addTarget:self action:@selector(onCameraButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     
-    const float galleryButtonX = 2 * buttonWidth + 3 * buttonPadding;
-    self.pGalleryButton.frame = CGRectMake(galleryButtonX, 0, buttonWidth, buttonHeight);
+    const float galleryButtonX = 2 * buttonSize + 3 * buttonPadding;
+    self.pGalleryButton.frame = CGRectMake(galleryButtonX, 0, buttonSize, buttonSize);
     [self.pGalleryButton setBackgroundImage:[UIImage imageNamed:@"button_gallery_off.png"] forState:UIControlStateNormal];
     [self.pGalleryButton setBackgroundImage:[UIImage imageNamed:@"button_gallery_on.png"] forState:UIControlStateHighlighted];
     [self.pGalleryButton addTarget:self action:@selector(onGalleryButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     
-    const float confirmButtonX = 3 * buttonWidth + 4 * buttonPadding;
-    self.pConfirmButton.frame = CGRectMake(confirmButtonX, 0, buttonWidth, buttonHeight);
+    const float confirmButtonX = 3 * buttonSize + 4 * buttonPadding;
+    self.pConfirmButton.frame = CGRectMake(confirmButtonX, 0, buttonSize, buttonSize);
     [self.pConfirmButton setBackgroundImage:[UIImage imageNamed:@"button_ok_off.png"] forState:UIControlStateNormal];
     [self.pConfirmButton setBackgroundImage:[UIImage imageNamed:@"button_ok_on.png"] forState:UIControlStateHighlighted];
     [self.pConfirmButton addTarget:self action:@selector(onConfirmButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     
-    m_popoverX = bodyContainerWidth * 0.5f;
+    m_popoverX = m_controlContainerWidth * 0.5f;
     m_popoverY = footerY;
-    
-    [self resizeImageViewToFit:self.pPlaceholderImage.size.width :self.pPlaceholderImage.size.height];
 }
-
-
 
 - (void) resetView
 {
@@ -532,7 +555,7 @@
     CGRect frame = self.pPoiImage.frame;
     self.pPoiImage.frame = CGRectMake(frame.origin.x, frame.origin.y, m_maxImageWidth, height);
     
-    self.pBodyScrollView.contentSize = CGSizeMake(m_scrollContentWidth, self.pPoiImage.frame.origin.y + self.pPoiImage.frame.size.height + m_scrollContentBottomMargin);
+    self.pBodyScrollView.contentSize = CGSizeMake(m_controlContainerWidth, self.pPoiImage.frame.origin.y + self.pPoiImage.frame.size.height + m_scrollContentBottomMargin);
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
