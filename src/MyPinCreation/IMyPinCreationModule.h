@@ -6,6 +6,7 @@
 #include "Camera.h"
 #include "ScreenControlViewModelIncludes.h"
 #include "VectorMathDecl.h"
+#include "IOpenableControlViewModel.h"
 
 namespace ExampleApp
 {
@@ -23,6 +24,8 @@ namespace ExampleApp
             
             virtual ScreenControlViewModel::IScreenControlViewModel& GetInitiationScreenControlViewModel() const = 0;
             virtual ScreenControlViewModel::IScreenControlViewModel& GetConfirmationScreenControlViewModel() const = 0;
+
+            virtual OpenableControlViewModel::IOpenableControlViewModel& GetObservableOpenableControl() const = 0;
         };
     }
 }

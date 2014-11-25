@@ -47,7 +47,7 @@
 @property (nonatomic, retain) UIView* pContentContainer;
 @property (nonatomic, retain) UIScrollView* pLabelsContainer;
 @property (nonatomic, retain) UIImageView* pContentShadow;
-@property (nonatomic, retain) UIView* pCategoryIconContainer;
+@property (nonatomic, retain) UIView* pIconContainer;
 @property (nonatomic, retain) UILabel* pTitleLabel;
 @property (nonatomic, retain) UIView* pDescriptionHeaderContainer;
 @property (nonatomic, retain) UILabel* pDescriptionHeaderLabel;

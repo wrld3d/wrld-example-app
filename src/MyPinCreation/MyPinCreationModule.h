@@ -20,6 +20,7 @@
 #include "MyPinCreationViewSavePinHandler.h"
 #include "NativeToUiMessageBus.h"
 #include "UiToNativeMessageBus.h"
+#include "IReactionControllerModel.h"
 
 namespace ExampleApp
 {
@@ -34,8 +35,9 @@ namespace ExampleApp
                               ExampleApp::Menu::IMenuViewModel& secondaryMenuViewModel,
                               ExampleApp::Search::ISearchQueryPerformer& searchQueryPerformer,
                               ExampleApp::Menu::IMenuViewModel& searchResultMenuViewModel,
-                                ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus,
-                                ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus);
+                              ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus,
+                              ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
+                              ExampleApp::Reaction::IReactionControllerModel& reactionControllerModel);
             
             ~MyPinCreationModule();
             
@@ -46,6 +48,8 @@ namespace ExampleApp
             
             ScreenControlViewModel::IScreenControlViewModel& GetInitiationScreenControlViewModel() const;
             ScreenControlViewModel::IScreenControlViewModel& GetConfirmationScreenControlViewModel() const;
+
+            OpenableControlViewModel::IOpenableControlViewModel& GetObservableOpenableControl() const;
             
         private:
     

@@ -17,7 +17,7 @@ namespace ExampleApp
 			    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus
             )
     	{
-    		m_pInitiationViewController = Eegeo_NEW(MyPinCreationInitiationViewController)(nativeState, model, initiationViewModel, uiToNativeMessageBus);
+    		m_pInitiationViewController = Eegeo_NEW(MyPinCreationInitiationViewController)(nativeState, model, initiationViewModel, confirmationViewModel, uiToNativeMessageBus);
     		m_pConfirmationViewController = Eegeo_NEW(MyPinCreationConfirmationViewController)(nativeState, model, confirmationViewModel, detailsViewModel, uiToNativeMessageBus);
     	}
 

@@ -7,8 +7,11 @@ namespace ExampleApp
     namespace MyPinCreation
     {
         MyPinCreationConfirmationViewModel::MyPinCreationConfirmationViewModel(Eegeo::Helpers::TIdentity identity,
-                                                                           bool initiallyOnScreen)
+                                                                               bool initiallyOnScreen,
+                                                                               Reaction::IReactionControllerModel& reactionControllerModel)
+
         : m_screenControl(initiallyOnScreen, identity)
+        , m_openable(identity, reactionControllerModel)
         {
             
         }
@@ -16,6 +19,11 @@ namespace ExampleApp
         ScreenControlViewModel::IScreenControlViewModel& MyPinCreationConfirmationViewModel::GetScreenControlViewModel()
         {
             return m_screenControl;
+        }
+
+        OpenableControlViewModel::IOpenableControlViewModel& MyPinCreationConfirmationViewModel::GetOpenableControlViewModel()
+        {
+            return m_openable;
         }
         
         Eegeo::Helpers::TIdentity MyPinCreationConfirmationViewModel::GetIdentity() const
@@ -61,6 +69,16 @@ namespace ExampleApp
         float MyPinCreationConfirmationViewModel::OnScreenState() const
         {
             return m_screenControl.OnScreenState();
+        }
+
+        bool MyPinCreationConfirmationViewModel::TryOpen()
+        {
+            return m_openable.TryAcquireReactorControl();
+        }
+
+        void MyPinCreationConfirmationViewModel::Close()
+        {
+            m_openable.ReleaseReactorControl();
         }
     }
 }

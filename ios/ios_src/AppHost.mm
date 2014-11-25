@@ -229,6 +229,7 @@ void AppHost::CreateApplicationViewModules()
     
     m_pMyPinCreationInitiationViewModule = Eegeo_NEW(ExampleApp::MyPinCreation::MyPinCreationInitiationViewModule)(m_uiToNativeMessageBus,
                                                                                                                    app.MyPinCreationModule().GetMyPinCreationInitiationViewModel(),
+                                                                                                                   app.MyPinCreationModule().GetMyPinCreationConfirmationViewModel(),
                                                                                                                    *m_pScreenProperties);
     
     m_pMyPinCreationConfirmationViewModule = Eegeo_NEW(ExampleApp::MyPinCreation::MyPinCreationConfirmationViewModule)(m_uiToNativeMessageBus,

@@ -307,7 +307,8 @@ namespace ExampleApp
                                                                                            m_pSearchModule->GetSearchQueryPerformer(),
                                                                                            m_pSearchResultMenuModule->GetMenuViewModel(),
                                                                                            m_nativeToUiMessageBus,
-                                                                                           m_uiToNativeMessageBus);
+                                                                                           m_uiToNativeMessageBus,
+                                                                                           m_pReactionControllerModule->GetReactionControllerModel());
         
         m_pPoiRingModule = Eegeo_NEW(ExampleApp::MyPinCreation::PoiRing::PoiRingModule)(m_pMyPinCreationModule->GetMyPinCreationModel(),
                                                                                         m_platformAbstractions,
@@ -401,6 +402,7 @@ namespace ExampleApp
 		openables.push_back(&AboutPageModule().GetObservableOpenableControl());
         openables.push_back(&MyPinCreationDetailsModule().GetObservableOpenableControl());
         openables.push_back(&MyPinDetailsModule().GetObservableOpenableControl());
+        openables.push_back(&MyPinCreationModule().GetObservableOpenableControl());
 		return openables;
 	}
 

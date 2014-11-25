@@ -39,11 +39,13 @@
 
 		self.pCloseButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
 		[self.pCloseButton setBackgroundImage:[UIImage imageNamed:@"button_close_off.png"] forState:UIControlStateNormal];
+        [self.pCloseButton setBackgroundImage:[UIImage imageNamed:@"button_close_on.png"] forState:UIControlStateHighlighted];
         [self.pCloseButton addTarget:self action:@selector(onCloseButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 		[self.pCloseButtonContainer addSubview: self.pCloseButton];
         
         self.pRemovePinButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        [self.pRemovePinButton setBackgroundImage:[UIImage imageNamed:@"button_remove_pin.png"] forState:UIControlStateNormal];
+        [self.pRemovePinButton setBackgroundImage:[UIImage imageNamed:@"button_remove_pin_off.png"] forState:UIControlStateNormal];
+        [self.pRemovePinButton setBackgroundImage:[UIImage imageNamed:@"button_remove_pin_on.png"] forState:UIControlStateHighlighted];
         [self.pRemovePinButton addTarget:self action:@selector(onRemovePinButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         [self.pCloseButtonContainer addSubview: self.pRemovePinButton];
 
@@ -56,6 +58,8 @@
 		[self.pControlContainer addSubview: self.pHeadlineContainer];
         
         self.pHeadlineShadow = ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pHeadlineContainer, "shadow_03", 0.f, 0.f, 0.f, 0.f);
+        self.pIconContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        [self.pHeadlineContainer addSubview: self.pIconContainer];
 
 		self.pTitleLabel = [self createLabel :ExampleApp::Helpers::ColorPalette::MainHudColor :ExampleApp::Helpers::ColorPalette::WhiteTone];
 		self.pTitleLabel.textColor = ExampleApp::Helpers::ColorPalette::GoldTone;
@@ -130,6 +134,9 @@
 	[self.pTitleLabel removeFromSuperview];
 	[self.pTitleLabel release];
 
+    [self.pIconContainer removeFromSuperview];
+    [self.pIconContainer release];
+    
 	[self.pDescriptionHeaderLabel removeFromSuperview];
 	[self.pDescriptionHeaderLabel release];
 
@@ -224,10 +231,14 @@
                                              closeButtonSectionHeight,
                                              closeButtonSectionHeight);
 
+    
+    self.pIconContainer.frame = CGRectMake(0.f, 0.f, headlineHeight, headlineHeight);
+    ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pIconContainer, "icon_create_poi.png", ExampleApp::Helpers::ImageHelpers::Centre);
+    
 	const float titlePadding = 10.0f;
-	self.pTitleLabel.frame = CGRectMake(titlePadding,
+	self.pTitleLabel.frame = CGRectMake(headlineHeight + titlePadding,
 	                                    0.f,
-	                                    mainWindowWidth - titlePadding,
+	                                    mainWindowWidth - headlineHeight - titlePadding,
 	                                    headlineHeight);
 	self.pTitleLabel.font = [UIFont systemFontOfSize:24.0f];
 
@@ -245,7 +256,7 @@
     m_descriptionContentY = currentLabelY;
     self.pDescriptionContent.font = [UIFont systemFontOfSize: 16.f];
     self.pDescriptionContent.frame = CGRectMake(m_headerTextPadding, m_descriptionContentY, m_labelsSectionWidth - m_headerTextPadding, 0);
-    self.pDescriptionContent.lineBreakMode = UILineBreakModeWordWrap;
+    self.pDescriptionContent.lineBreakMode = NSLineBreakByWordWrapping;
     self.pDescriptionContent.numberOfLines = 0;
     [self.pDescriptionContent sizeToFit];
 
