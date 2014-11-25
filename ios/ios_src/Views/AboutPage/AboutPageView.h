@@ -38,5 +38,7 @@
 @property (nonatomic, retain) UILabel* pTitleLabel;
 @property (nonatomic, retain) UILabel* pDevelopedByLabel;
 @property (nonatomic, retain) UILabel* pTextContent;
+@property (nonatomic, retain) UIImageView* pContainerShadowTop;
+@property (nonatomic, retain) UIImageView* pContainerShadowBottom;
 
 @end

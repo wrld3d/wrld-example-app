@@ -54,9 +54,10 @@
 		[self.pLabelBack addSubview: self.pAddressLabel];
 
 		// poi arrow
-		self.pArrowContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        NSString* pImageString = [NSString stringWithUTF8String:"arrow1"];
+		self.pArrowContainer = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:pImageString]] autorelease];
+        self.pArrowContainer.contentMode = UIViewContentModeScaleToFill;
 		[self addSubview: self.pArrowContainer];
-
 	}
 
 	return self;
@@ -127,11 +128,9 @@
 	                                      labelVerticalSpace);
 
 	const float arrowWidth = 16.f;
-	self.pArrowContainer.frame = CGRectMake(w/2.f - arrowWidth/2.f, y, arrowWidth, h);
-	ExampleApp::Helpers::ImageHelpers::OffsetValue offsetInParent = ExampleApp::Helpers::ImageHelpers::Below | ExampleApp::Helpers::ImageHelpers::Centre;
-	UIImageView* pImg = ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pArrowContainer, "arrow1", offsetInParent);
+	self.pArrowContainer.frame = CGRectMake(w/2.f - arrowWidth/2.f, h, arrowWidth, arrowWidth);
 
-	self.frame = CGRectMake(x, y, w, h + pImg.frame.size.height);
+	self.frame = CGRectMake(x, y, w, h + arrowWidth);
 }
 
 - (void) setLabel:(std::string)name :(std::string)detail

@@ -43,6 +43,8 @@
 		self.pContentContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
 		self.pContentContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::MainHudColor;
 		[self.pControlContainer addSubview: self.pContentContainer];
+        
+        self.pContainerShadowBottom = ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pContentContainer, "shadow_03", 0.f, 0.f, 0, 0);
 
 		self.pLabelsContainer = [[[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
 		self.pLabelsContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::WhiteTone;
@@ -55,6 +57,8 @@
 		self.pTitleLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
 		self.pTitleLabel.textColor = ExampleApp::Helpers::ColorPalette::GoldTone;
 		[self.pHeadlineContainer addSubview: self.pTitleLabel];
+        
+        self.pContainerShadowTop = ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pContentContainer, "shadow_03", 0.f, 0.f, 0, 0);
 
 		self.pDevelopedByLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
 		self.pDevelopedByLabel.textColor = ExampleApp::Helpers::ColorPalette::DarkGreyTone;
@@ -94,6 +98,11 @@
 	[self.pLabelsContainer removeFromSuperview];
 	[self.pLabelsContainer release];
 
+    [self.pContainerShadowTop removeFromSuperview];
+    [self.pContainerShadowTop release];
+    [self.pContainerShadowBottom removeFromSuperview];
+    [self.pContainerShadowBottom release];
+    
 	[self.pContentContainer removeFromSuperview];
 	[self.pContentContainer release];
 
@@ -163,7 +172,7 @@
 	                               mainWindowWidth,
 	                               contentSectionHeight);
 
-	ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pContentContainer, "shadow_03", 0.f, 0.f, mainWindowWidth, shadowHeight);
+	self.pContainerShadowTop.frame = CGRectMake(0.f, 0.f, mainWindowWidth, shadowHeight);
 
 	const float labelsSectionOffsetX = 8.f;
 	const float labelsSectionWidth = mainWindowWidth - (2.f * labelsSectionOffsetX);
@@ -184,7 +193,7 @@
 	                                     closeButtonSectionHeight,
 	                                     closeButtonSectionHeight);
 
-	ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pContentContainer, "shadow_03", 0.f, contentSectionHeight, mainWindowWidth, shadowHeight);
+    self.pContainerShadowBottom.frame = CGRectMake(0.f, contentSectionHeight, mainWindowWidth, shadowHeight);
 
 	const float headlineWidth = mainWindowWidth - headlineMargin;
 

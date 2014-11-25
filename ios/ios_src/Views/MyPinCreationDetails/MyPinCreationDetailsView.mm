@@ -36,6 +36,8 @@
         self.pBodyContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         [self.pControlContainer addSubview: self.pBodyContainer];
         
+        self.pBodyShadow = ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pBodyContainer, "shadow_03", 0.f, 0.f, 0, 0);
+        
         self.pBodyScrollView = [[[UIScrollView alloc] initWithFrame: CGRectMake(0, 0, 0, 0)] autorelease];
         [self.pBodyContainer addSubview: self.pBodyScrollView];
         
@@ -62,7 +64,7 @@
         
         self.pFooterContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         [self.pControlContainer addSubview: self.pFooterContainer];
-        
+
         self.pCloseButton = [[[UIButton alloc] initWithFrame: CGRectMake(0, 0, 0, 0)] autorelease];
         [self.pFooterContainer addSubview: self.pCloseButton];
         
@@ -75,6 +77,8 @@
         self.pConfirmButton = [[[UIButton alloc] initWithFrame: CGRectMake(0, 0, 0, 0)] autorelease];
         [self.pFooterContainer addSubview: self.pConfirmButton];
         
+        self.pFooterShadow = ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pFooterContainer, "shadow_03", 0.f, 0.f, 0, 0);
+        
         m_usePopover = !App::IsDevicePhone();
         
         [self layoutSubviews];
@@ -86,9 +90,15 @@
 
 - (void)dealloc
 {
+    [self.pFooterShadow removeFromSuperview];
+    [self.pFooterShadow release];
+    
     [self.pFooterContainer removeFromSuperview];
     [self.pFooterContainer release];
 
+    [self.pBodyShadow removeFromSuperview];
+    [self.pBodyShadow release];
+    
     [self.pBodyContainer removeFromSuperview];
     [self.pBodyContainer release];
     
@@ -200,7 +210,7 @@
     self.pBodyScrollView.contentSize = CGSizeMake(m_scrollContentWidth, scrollHeight);
     
     const float shadowHeight = 10.f;
-    ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pBodyContainer, "shadow_03", 0.f, 0.f, bodyContainerWidth, shadowHeight);
+    self.pBodyShadow.frame = CGRectMake(0.f, 0.f, bodyContainerWidth, shadowHeight);
     const float footerY = bodyContainerY + bodyContainerHeight;
     const float footerHeight = 70.f;
     const float footerWidth = controlContainerWidth;
@@ -240,7 +250,7 @@
     
     self.pFooterContainer.frame = CGRectMake(0, footerY, footerWidth, footerHeight);
     self.pFooterContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::GoldTone;
-    ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pFooterContainer, "shadow_03", 0.f, 0.f, bodyContainerWidth, shadowHeight);
+    self.pFooterShadow.frame = CGRectMake(0.f, 0.f, bodyContainerWidth, shadowHeight);
     
     const int numberOfButtons = 4;
     const float buttonWidth = 70.f;
