@@ -11,13 +11,19 @@
 {
     __weak MyPinCreationDetailsViewController* m_pController;
     float m_stateChangeAnimationTimeSeconds;
+    
+    BOOL m_imageAttached;
+    float m_maxImageWidth;
+
+    BOOL m_usePopover;
     float m_popoverX;
     float m_popoverY;
-    float m_maxImageWidth;
-    float m_scrollContentWidth;
+
+    float m_controlContainerWidth;
+    float m_controlContainerHeight;
+    float m_yCursor;
+    
     float m_scrollContentBottomMargin;
-    BOOL m_imageAttached;
-    BOOL m_usePopover;
 }
 
 - (id) initWithController:(MyPinCreationDetailsViewController *)controller;

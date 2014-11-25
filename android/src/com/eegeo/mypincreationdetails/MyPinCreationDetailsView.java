@@ -86,7 +86,7 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
 		
 		m_termsAndConditionsLink.setClickable(true);
 		m_termsAndConditionsLink.setMovementMethod(LinkMovementMethod.getInstance());
-		String linkText = "<a href='" + TERMS_AND_CONDITIONS_LINK + "'>Terms & Conditions</a>";
+		String linkText = "<a href='" + TERMS_AND_CONDITIONS_LINK + "'>(Terms & Conditions)</a>";
 		m_termsAndConditionsLink.setText(Html.fromHtml(linkText));
 		
 		m_activity.getPhotoIntentDispatcher().addActivityIntentResultHandler(this);

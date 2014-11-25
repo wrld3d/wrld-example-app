@@ -17,7 +17,7 @@
     <string name="eegeo_logo">Eegeo company logo</string>
     
     <string name="pin_confirmation_title">Drag the marker to place your pin</string>
-    <string name="poi_creation_details_terms_conditions">Terms &amp; Conditions</string>
+    <string name="poi_creation_details_terms_conditions">(Terms &amp; Conditions)</string>
     <string name="poi_creation_details_share">Share</string>
     <string name="poi_creation_details_title_hint">Name your pin...</string>
     <string name="poi_creation_details_description_hint">Tell us about your Point of Interest...</string>
