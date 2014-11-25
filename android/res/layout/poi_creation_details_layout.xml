@@ -68,13 +68,13 @@
 		            <EditText
 		                android:id="@+id/poi_creation_details_description"
 		                android:layout_width="fill_parent"
-		                android:layout_height="80dp"
+		                android:layout_height="wrap_content"
 		                android:layout_margin="10dp"
 		                android:gravity="top|left"
 		                android:hint="@string/poi_creation_details_description_hint"
-		                android:textColorHint="@color/lightgrey"
 		                android:imeOptions="actionDone"
-		                android:inputType="text"
+		                android:inputType="text|textMultiLine"
+		                android:textColorHint="@color/lightgrey"
 		                android:textSize="15.0dp" />
 		            
 		            <ImageView
