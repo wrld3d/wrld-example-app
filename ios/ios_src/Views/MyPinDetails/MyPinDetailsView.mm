@@ -312,6 +312,8 @@
 
         m_hasImage = YES;
 	}
+    
+    self.pLabelsContainer.contentOffset = CGPointMake(0, 0);
 
     [self setNeedsLayout];
     [self layoutIfNeeded];
