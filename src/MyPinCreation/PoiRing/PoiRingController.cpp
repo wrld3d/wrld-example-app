@@ -14,6 +14,7 @@
 #include "EarthConstants.h"
 #include "TerrainHeightProvider.h"
 #include "TransformHelpers.h"
+#include "VectorMath.h"
 
 namespace ExampleApp
 {
@@ -52,6 +53,8 @@ namespace ExampleApp
             , m_easeDurationInSeconds(1.2f)
             , m_environmentFlatteningService(environmentFlatteningService)
             , m_terrainHeightProvider(terrainHeightProvider)
+            , m_iconPosition(Eegeo::dv3::Zero())
+            , m_iconSize(0.0f)
             {
                 
             }
@@ -90,14 +93,17 @@ namespace ExampleApp
                 float altitudeBasedScale = CalculateAltitudeBasedSphereScale(renderCamera.GetAltitude(), outerRingRadiusInMeters);
                 m_poiRingView.SetInnerSphereScale(altitudeBasedScale * transitionScale);
                 
-                Eegeo::dv3 iconPosition = m_pMyPinCreationModel.GetPosition();
-                Eegeo::dv3 scaledIconPosition = Eegeo::Rendering::EnvironmentFlatteningService::GetScaledPointEcef(
-                    iconPosition,
+                Eegeo::dv3 unflattenedIconPosition = m_pMyPinCreationModel.GetPosition();
+                Eegeo::dv3 iconPosition = Eegeo::Rendering::EnvironmentFlatteningService::GetScaledPointEcef(
+                    unflattenedIconPosition,
                     m_environmentFlatteningService.GetCurrentScale());
 
-                const float iconConstantScale = 0.002f;
-                const float iconScale = Eegeo::Helpers::TransformHelpers::ComputeModelScaleForConstantScreenSize(renderCamera, scaledIconPosition) * iconConstantScale;
-                m_poiRingView.AddIconSprite(renderCamera, scaledIconPosition, Eegeo::Max(iconScale * transitionScale, 0.0f));
+                const float iconConstantScale = 0.14f;
+                const float iconScale = Eegeo::Helpers::TransformHelpers::ComputeModelScaleForConstantScreenSize(renderCamera, iconPosition) * iconConstantScale;
+                m_iconSize = Eegeo::Max(iconScale * transitionScale, 0.0f);
+                m_poiRingView.AddIconSprite(renderCamera, iconPosition, m_iconSize);
+                
+                m_iconPosition = iconPosition + (Eegeo::dv3)renderCamera.GetModelMatrix().GetRow(1) * m_iconSize * 0.5f;
             }
             
             float PoiRingController::CalculateTransitionScale(float dt)
@@ -106,6 +112,12 @@ namespace ExampleApp
                 delta /= m_easeDurationInSeconds;
                 m_scaleInterpolationParam = Eegeo::Clamp(m_scaleInterpolationParam + delta, 0.f, 1.f);
                 return Eegeo::Helpers::MathsHelpers::PennerElasticEaseInOut(0.f, 1.f, m_scaleInterpolationParam);
+            }
+            
+            void PoiRingController::GetIconPositionAndSize(Eegeo::dv3& out_positionEcef, float& out_sizeMeters) const
+            {
+                out_positionEcef = m_iconPosition;
+                out_sizeMeters = m_iconSize;
             }
         }
     }
