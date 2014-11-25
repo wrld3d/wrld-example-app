@@ -28,6 +28,10 @@
 		189DD9B21A1F56F200299448 /* MyPinCreationConfirmationOpenableControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 189DD9AF1A1F56F200299448 /* MyPinCreationConfirmationOpenableControl.cpp */; };
 		18AB38FD192B729F00F15546 /* Main.m in Sources */ = {isa = PBXBuildFile; fileRef = 18AB38F5192B729F00F15546 /* Main.m */; };
 		18AB38FE192B729F00F15546 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18AB38F7192B729F00F15546 /* ViewController.mm */; };
+		18ADD8811A23A47D002745C4 /* MyPinSelectedMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18ADD87F1A23A47D002745C4 /* MyPinSelectedMessage.cpp */; };
+		18ADD8821A23A47D002745C4 /* MyPinSelectedMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18ADD87F1A23A47D002745C4 /* MyPinSelectedMessage.cpp */; };
+		18ADD8851A23AB1E002745C4 /* MyPinSelectedMessageHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18ADD8831A23AB1E002745C4 /* MyPinSelectedMessageHandler.cpp */; };
+		18ADD8861A23AB1E002745C4 /* MyPinSelectedMessageHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18ADD8831A23AB1E002745C4 /* MyPinSelectedMessageHandler.cpp */; };
 		18B5AAD519DC159000BA4A38 /* AboutPageModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18B5A9B319DC158F00BA4A38 /* AboutPageModel.cpp */; };
 		18B5AAD619DC159000BA4A38 /* AboutPageModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18B5A9B319DC158F00BA4A38 /* AboutPageModel.cpp */; };
 		18B5AAD719DC159000BA4A38 /* AboutPageModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18B5A9B519DC158F00BA4A38 /* AboutPageModule.cpp */; };
@@ -675,6 +679,10 @@
 		18AB38F5192B729F00F15546 /* Main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Main.m; sourceTree = "<group>"; };
 		18AB38F6192B729F00F15546 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		18AB38F7192B729F00F15546 /* ViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewController.mm; sourceTree = "<group>"; };
+		18ADD87F1A23A47D002745C4 /* MyPinSelectedMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MyPinSelectedMessage.cpp; sourceTree = "<group>"; };
+		18ADD8801A23A47D002745C4 /* MyPinSelectedMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPinSelectedMessage.h; sourceTree = "<group>"; };
+		18ADD8831A23AB1E002745C4 /* MyPinSelectedMessageHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MyPinSelectedMessageHandler.cpp; sourceTree = "<group>"; };
+		18ADD8841A23AB1E002745C4 /* MyPinSelectedMessageHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPinSelectedMessageHandler.h; sourceTree = "<group>"; };
 		18B5A9B219DC158F00BA4A38 /* AboutPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutPage.h; sourceTree = "<group>"; };
 		18B5A9B319DC158F00BA4A38 /* AboutPageModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AboutPageModel.cpp; sourceTree = "<group>"; };
 		18B5A9B419DC158F00BA4A38 /* AboutPageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutPageModel.h; sourceTree = "<group>"; };
@@ -2317,6 +2325,10 @@
 				56962CE91A1E662000D4355E /* MyPinRemovedFromMenuMessage.h */,
 				56962CEC1A1E669500D4355E /* MyPinRemovedFromMenuObserver.cpp */,
 				56962CED1A1E669500D4355E /* MyPinRemovedFromMenuObserver.h */,
+				18ADD87F1A23A47D002745C4 /* MyPinSelectedMessage.cpp */,
+				18ADD8801A23A47D002745C4 /* MyPinSelectedMessage.h */,
+				18ADD8831A23AB1E002745C4 /* MyPinSelectedMessageHandler.cpp */,
+				18ADD8841A23AB1E002745C4 /* MyPinSelectedMessageHandler.h */,
 			);
 			path = MyPins;
 			sourceTree = "<group>";
@@ -2862,6 +2874,7 @@
 				18B5AAEC19DC159000BA4A38 /* CompassScreenControl.cpp in Sources */,
 				18B5AB5C19DC159000BA4A38 /* SearchResultPoiModule.cpp in Sources */,
 				18B5AADE19DC159000BA4A38 /* CameraTransitionController.cpp in Sources */,
+				18ADD8861A23AB1E002745C4 /* MyPinSelectedMessageHandler.cpp in Sources */,
 				18B5AB2019DC159000BA4A38 /* OpenableControlViewModelBase.cpp in Sources */,
 				56962CE71A1E65EC00D4355E /* MyPinAddedToMenuObserver.cpp in Sources */,
 				18B5AB0A19DC159000BA4A38 /* MenuOptionsModel.cpp in Sources */,
@@ -2895,6 +2908,7 @@
 				18B5AAE619DC159000BA4A38 /* CategorySearchRepository.cpp in Sources */,
 				18B5AB2C19DC159000BA4A38 /* PrimaryMenuModule.cpp in Sources */,
 				18CCC9021A1523C500DC2D95 /* WeatherSelectedMessageHandler.cpp in Sources */,
+				18ADD8821A23A47D002745C4 /* MyPinSelectedMessage.cpp in Sources */,
 				56962CAF1A1BA8AE00D4355E /* MyPinDetailsModelSelectedMessage.cpp in Sources */,
 				5695FEF61A13C1DE00F1E6CE /* MyPinCreationDetailsViewController.mm in Sources */,
 				18CCC9061A1523C500DC2D95 /* WeatherMenuStateOption.cpp in Sources */,
@@ -3093,6 +3107,7 @@
 				18B5AAEB19DC159000BA4A38 /* CompassScreenControl.cpp in Sources */,
 				18B5AB5B19DC159000BA4A38 /* SearchResultPoiModule.cpp in Sources */,
 				18B5AADD19DC159000BA4A38 /* CameraTransitionController.cpp in Sources */,
+				18ADD8851A23AB1E002745C4 /* MyPinSelectedMessageHandler.cpp in Sources */,
 				18B5AB1F19DC159000BA4A38 /* OpenableControlViewModelBase.cpp in Sources */,
 				56962CE61A1E65EC00D4355E /* MyPinAddedToMenuObserver.cpp in Sources */,
 				18B5AB0919DC159000BA4A38 /* MenuOptionsModel.cpp in Sources */,
@@ -3126,6 +3141,7 @@
 				18B5AB0F19DC159000BA4A38 /* MenuSectionViewModel.cpp in Sources */,
 				18CCC8D11A1523A200DC2D95 /* SearchResultMenuSearchQueryRemovedMessageHandler.cpp in Sources */,
 				18B5AAE519DC159000BA4A38 /* CategorySearchRepository.cpp in Sources */,
+				18ADD8811A23A47D002745C4 /* MyPinSelectedMessage.cpp in Sources */,
 				18CCC9011A1523C500DC2D95 /* WeatherSelectedMessageHandler.cpp in Sources */,
 				5695FEF51A13C1DE00F1E6CE /* MyPinCreationDetailsViewController.mm in Sources */,
 				18CCC9051A1523C500DC2D95 /* WeatherMenuStateOption.cpp in Sources */,
@@ -3509,7 +3525,7 @@
 					"./../external/rapidjson/**",
 				);
 				INFOPLIST_FILE = "ExampleApp/ExampleApp-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Include\"",
@@ -3543,7 +3559,7 @@
 					"./../external/rapidjson/**",
 				);
 				INFOPLIST_FILE = "ExampleApp/ExampleApp-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Include\"",

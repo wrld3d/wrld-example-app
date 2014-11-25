@@ -296,7 +296,8 @@ namespace ExampleApp
                                                                       m_persistentSettings,
                                                                       m_pPrimaryMenuModule->GetPrimaryMenuViewModel(),
                                                                       m_uiToNativeMessageBus,
-                                                                      m_nativeToUiMessageBus);
+                                                                      m_nativeToUiMessageBus,
+                                                                      *m_pCameraTransitionController);
         
         m_pPrimaryMenuModule->AddMenuSection("My Pins", "place", m_pMyPinsModule->GetMyPinsMenuModel(), true);
         

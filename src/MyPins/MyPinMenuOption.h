@@ -6,8 +6,7 @@
 #include "IMenuOption.h"
 #include "MyPinModel.h"
 #include "UiToNativeMessageBus.h"
-#include "PlaceJumpsModel.h"
-#include "PlaceJumpSelectedMessage.h"
+#include "MyPinSelectedMessage.h"
 #include "IMenuViewModel.h"
 
 #include <string>
@@ -32,17 +31,7 @@ namespace ExampleApp
             void Select()
             {
                 m_menuViewModel.Close();
-                
-                std::string name = m_myPinModel.GetTitle();
-                std::string dummy = "";
-                
-                PlaceJumps::PlaceJumpModel placeJumpModel(name,
-                                                          m_myPinModel.GetLatLong(),
-                                                          0.f,
-                                                          1500.f,
-                                                          dummy);
-                
-                m_uiToNativeMessageBus.Publish(PlaceJumps::PlaceJumpSelectedMessage(placeJumpModel));
+                m_uiToNativeMessageBus.Publish(MyPinSelectedMessage(m_myPinModel));
             }
         private:
             MyPinModel m_myPinModel;
