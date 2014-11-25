@@ -90,7 +90,7 @@ namespace ExampleApp
                 m_pTerrainRayPicker = Eegeo_NEW(Eegeo::Resources::Terrain::Collision::TerrainRayPicker)(terrainModelModule.GetTerrainHeightProvider(),
                                                                                                         terrainModelModule.GetCollisionMeshResourceRepository());
                 
-                m_pPoiRingTouchController = Eegeo_NEW(PoiRingTouchController)(myPinCreationModel, *m_pTerrainRayPicker);
+                m_pPoiRingTouchController = Eegeo_NEW(PoiRingTouchController)(myPinCreationModel, *m_pTerrainRayPicker, *m_pPoiRingController);
             }
 
             PoiRingModule::~PoiRingModule()

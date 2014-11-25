@@ -6,6 +6,8 @@
 #include "IMyPinCreationModel.h"
 #include "GlobeCameraController.h"
 #include "EarthConstants.h"
+#include "IntersectionTests.h"
+#include "IPoiRingController.h"
 
 namespace ExampleApp
 {
@@ -14,9 +16,11 @@ namespace ExampleApp
         namespace PoiRing
         {
             PoiRingTouchController::PoiRingTouchController(IMyPinCreationModel& myPinCreationModel,
-                                                           Eegeo::Resources::Terrain::Collision::IRayPicker& rayPicker)
+                                                           Eegeo::Resources::Terrain::Collision::IRayPicker& rayPicker,
+                                                           const IPoiRingController& poiRingController)
             : m_myPinCreationModel(myPinCreationModel)
             , m_rayPicker(rayPicker)
+            , m_poiRingController(poiRingController)
             , m_isDragging(false)
             {
                 
@@ -38,6 +42,7 @@ namespace ExampleApp
                 Eegeo::dv3 rayOrigin = globeCameraController.ComputeNonFlattenedCameraPosition();
                 Eegeo::dv3 rayIntersectionPoint;
                 double intersectionParam;
+                
                 bool rayPick = m_rayPicker.TryGetRayIntersection(rayOrigin, rayDirection, rayIntersectionPoint, intersectionParam);
                 
                 if (rayPick)
@@ -46,8 +51,12 @@ namespace ExampleApp
                     float cameraAltitude = rayOrigin.Length() - Eegeo::Space::EarthConstants::Radius;
                     const float touchRadius = 100.f + cameraAltitude/20;
                     
+                    Eegeo::dv3 iconPosition;
+                    float iconSize;
+                    m_poiRingController.GetIconPositionAndSize(iconPosition, iconSize);
                     
-                    if ((rayIntersectionPoint - currentPosition).Length() < touchRadius)
+                    bool hitIcon = Eegeo::Geometry::IntersectionTests::TestRaySphere(rayOrigin, rayDirection, iconPosition, iconSize/2.0f);
+                    if ((rayIntersectionPoint - currentPosition).Length() < touchRadius || hitIcon)
                     {
                         m_isDragging = true;
                         return true;

@@ -58,7 +58,7 @@ namespace ExampleApp
                 m_iconRenderable.Reset();
                 m_iconRenderable.SetModelViewProjection(renderCamera.GetViewProjectionMatrix());
         
-                const float dimensionInMeters = 70.f * scale;
+                const float dimensionInMeters = scale;
                 
                 m_iconRenderable.AddSprite(renderCamera,
                                            position,

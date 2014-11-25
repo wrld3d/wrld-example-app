@@ -8,6 +8,7 @@
 #include "Camera.h"
 #include "Terrain.h"
 #include "EnvironmentFlatteningService.h"
+#include "VectorMathDecl.h"
 
 namespace ExampleApp
 {
@@ -25,6 +26,8 @@ namespace ExampleApp
             
                 void Update(float dt, const Eegeo::Camera::RenderCamera& renderCamera, const Eegeo::dv3& cameraEcefInterestPoint);
                 
+                void GetIconPositionAndSize(Eegeo::dv3& out_positionEcef, float& out_sizeMeters) const;
+                
             private:
                 Eegeo::Rendering::EnvironmentFlatteningService& m_environmentFlatteningService;
                 Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& m_terrainHeightProvider;
@@ -35,6 +38,8 @@ namespace ExampleApp
                 
                 float m_scaleInterpolationParam;
                 float m_easeDurationInSeconds;
+                Eegeo::dv3 m_iconPosition;
+                float m_iconSize;
                 
                 Eegeo::v3 CalculateQuadScreenSpaceTranslation(const Eegeo::Camera::RenderCamera& renderCamera) const;
                 float CalculateTransitionScale(float dt);
