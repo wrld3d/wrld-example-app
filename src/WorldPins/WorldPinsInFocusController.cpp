@@ -51,8 +51,18 @@ namespace ExampleApp
 				m_worldPinsService.GetPinEcefAndScreenLocations(*worldPinItemModel,
 				        ecefPinLocation,
 				        screenPinLocation);
-
-				Eegeo::v3 cameraLocal = (ecefPinLocation - renderCamera.GetEcefLocation()).ToSingle();
+                
+                Eegeo::v3 cameraLocal = (ecefPinLocation - renderCamera.GetEcefLocation()).ToSingle();
+                Eegeo::v3 cameraSurfaceNormal = cameraLocal.Norm();
+                
+                Eegeo::v3 upNormal = ecefPinLocation.Norm().ToSingle();
+                float dp = Eegeo::v3::Dot(cameraSurfaceNormal, upNormal);
+                
+                if(dp > 0.0f)
+                {
+                    continue;
+                }
+				
 				Eegeo::v3 screenPos;
 				renderCamera.Project(cameraLocal, screenPos);
 				screenPinLocation.Set(screenPos.GetX(), screenPos.GetY());
