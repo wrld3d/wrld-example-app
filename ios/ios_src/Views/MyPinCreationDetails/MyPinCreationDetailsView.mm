@@ -153,6 +153,12 @@
     
     self.pTitleText.font = [UIFont systemFontOfSize:25.0f];
     self.pTitleText.textColor = ExampleApp::Helpers::ColorPalette::GoldTone;
+    
+    if ([self.pTitleText respondsToSelector: @selector(setTintColor:)])
+    {
+        self.pTitleText.tintColor = ExampleApp::Helpers::ColorPalette::GoldTone;
+    }
+    
     self.pTitleText.placeholder = @"Name your pin...";
     self.pTitleText.textAlignment = NSTextAlignmentLeft;
     self.pTitleText.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
