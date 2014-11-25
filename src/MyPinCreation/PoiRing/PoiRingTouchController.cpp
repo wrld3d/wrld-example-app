@@ -5,6 +5,7 @@
 #include "RenderCamera.h"
 #include "IMyPinCreationModel.h"
 #include "GlobeCameraController.h"
+#include "EarthConstants.h"
 
 namespace ExampleApp
 {
@@ -42,7 +43,9 @@ namespace ExampleApp
                 if (rayPick)
                 {
                     const Eegeo::dv3& currentPosition = m_myPinCreationModel.GetPosition();
-                    const float touchRadius = 170.f;
+                    float cameraAltitude = rayOrigin.Length() - Eegeo::Space::EarthConstants::Radius;
+                    const float touchRadius = 100.f + cameraAltitude/20;
+                    
                     
                     if ((rayIntersectionPoint - currentPosition).Length() < touchRadius)
                     {
