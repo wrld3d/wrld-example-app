@@ -374,18 +374,48 @@
 
 - (void) onRemovePinButtonPressed:(UIButton *)sender
 {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Remove Pin"
-                                                    message:@"Are you sure you want to remove this pin?"
-                                                   delegate:self
-                                          cancelButtonTitle:@"No, keep it"
-                                          otherButtonTitles:@"Yes, delete it", nil];
+    NSString* alertTitle = @"Remove Pin";
+    NSString* alertMessage = @"Are you sure you want to remove this pin?";
+    NSString* keepButtonText = @"No, keep it";
+    NSString* deleteButtonText = @"Yes, delete it";
     
-    [alert show];
-    [alert release];
+    if([UIAlertController class])
+    {
+        UIAlertController* alert = [UIAlertController alertControllerWithTitle:alertTitle
+                                                                       message:alertMessage
+                                                                preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:keepButtonText
+                                                                style:UIAlertActionStyleDefault
+                                                              handler:^(UIAlertAction * action) {}];
+        
+        UIAlertAction* removePinAction = [UIAlertAction actionWithTitle:deleteButtonText
+                                                                  style:UIAlertActionStyleDefault
+                                                                handler: ^(UIAlertAction * action){
+                                                                   [m_pController handleRemovePinButtonPressed];
+                                                               }];
+        
+        [alert addAction:defaultAction];
+        [alert addAction:removePinAction];
+        [m_pController presentViewController:alert animated:YES completion:nil];
+    }
+    else
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:alertTitle
+                                                        message:alertMessage
+                                                       delegate:self
+                                              cancelButtonTitle:keepButtonText
+                                              otherButtonTitles:deleteButtonText, nil];
+        
+        [alert show];
+        [alert release];
+    }
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
+    alertView.delegate = nil;
+    
     if (buttonIndex == 1)
     {
         [m_pController handleRemovePinButtonPressed];
