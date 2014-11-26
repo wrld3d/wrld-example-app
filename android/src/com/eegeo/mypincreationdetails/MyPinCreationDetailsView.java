@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
@@ -37,6 +38,7 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
 	protected EditText m_description = null;
 	protected ToggleButton m_shouldShareButton = null;
 	protected TextView m_termsAndConditionsLink = null;
+	protected ScrollView m_scrollSection = null;
 	
 	private Uri m_currentImageUri = null;
 	private boolean m_awaitingIntentResponse;
@@ -81,6 +83,7 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
 		m_description = (EditText)m_view.findViewById(R.id.poi_creation_details_description);
 		m_shouldShareButton = (ToggleButton)m_view.findViewById(R.id.poi_creation_details_share_togglebutton);
 		m_termsAndConditionsLink = (TextView)m_view.findViewById(R.id.poi_creation_details_terms_conditions_link);
+		m_scrollSection = (ScrollView)m_view.findViewById(R.id.poi_creation_details_scroll_section);
 		
 		m_view.setVisibility(View.GONE);
 		
@@ -106,6 +109,8 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
 		m_currentImageUri = null;
 		
 		m_awaitingIntentResponse = false;;
+		
+		m_scrollSection.setScrollY(0);
 	}
 	
 	public void dismiss()

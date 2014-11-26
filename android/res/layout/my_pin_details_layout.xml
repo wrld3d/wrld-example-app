@@ -72,6 +72,7 @@
             <!--  Scrolling icontent -->
             
             <ScrollView
+                android:id="@+id/my_pin_details_scroll_section"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent">
             
@@ -114,15 +115,16 @@
                     android:text="@string/header_image"/>
                 
                 <ImageView
-	                android:id="@+id/my_pin_details_view_image"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"
-	                android:layout_margin="0dp"
-	                android:paddingTop="10dp"
-	                android:adjustViewBounds="true"
-	                android:contentDescription="@string/poi_creation_details_image"
-	                android:scaleType="fitCenter"
-	                android:src="@drawable/image_blank" />
+                    android:id="@+id/my_pin_details_view_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="0dp"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="@string/poi_creation_details_image"
+                    android:paddingTop="10dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/image_blank" />
                 
             </LinearLayout>
             </ScrollView>
