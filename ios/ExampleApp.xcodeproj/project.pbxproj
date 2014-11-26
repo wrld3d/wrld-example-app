@@ -491,6 +491,7 @@
 		5629250A1A15043300EA1B1F /* WorldPinsScaleController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 562925071A15043300EA1B1F /* WorldPinsScaleController.cpp */; };
 		5629250E1A16125000EA1B1F /* MyPinsRepositoryObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5629250C1A16125000EA1B1F /* MyPinsRepositoryObserver.cpp */; };
 		5629250F1A16125000EA1B1F /* MyPinsRepositoryObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5629250C1A16125000EA1B1F /* MyPinsRepositoryObserver.cpp */; };
+		5637B7071A261A5400181973 /* image_blank.png in Resources */ = {isa = PBXBuildFile; fileRef = 56FBCDED1A0BB5150026546E /* image_blank.png */; };
 		5637F1EE1A0CD51F0011B509 /* MyPinModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5637F1EC1A0CD51F0011B509 /* MyPinModel.cpp */; };
 		5637F1EF1A0CD51F0011B509 /* MyPinModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5637F1EC1A0CD51F0011B509 /* MyPinModel.cpp */; };
 		5637F1F71A0CDAFB0011B509 /* MyPinsService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5637F1F51A0CDAFB0011B509 /* MyPinsService.cpp */; };
@@ -612,6 +613,10 @@
 		56CF26881A24777100B30439 /* icon_create_poi.png in Resources */ = {isa = PBXBuildFile; fileRef = 56CF26861A24776600B30439 /* icon_create_poi.png */; };
 		56DDC0F51A1A47B90024B52E /* WorldPinInFocusScreenControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56DDC0F01A1A47B90024B52E /* WorldPinInFocusScreenControl.cpp */; };
 		56DDC0F61A1A47B90024B52E /* WorldPinInFocusViewModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56DDC0F21A1A47B90024B52E /* WorldPinInFocusViewModel.cpp */; };
+		56F28E821A261DA40061C7BF /* button_checkbox_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 56FBCDE71A0BB5150026546E /* button_checkbox_off.png */; };
+		56F28E831A261DA70061C7BF /* button_checkbox_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 56FBCDE81A0BB5150026546E /* button_checkbox_on.png */; };
+		56F28E841A261DA90061C7BF /* button_create_poi.png in Resources */ = {isa = PBXBuildFile; fileRef = 56FBCDE91A0BB5150026546E /* button_create_poi.png */; };
+		56F28E851A261DAD0061C7BF /* poi_marker.png in Resources */ = {isa = PBXBuildFile; fileRef = 56FBCDEE1A0BB5150026546E /* poi_marker.png */; };
 		56FBCDEF1A0BB5150026546E /* button_checkbox_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 56FBCDE71A0BB5150026546E /* button_checkbox_off.png */; };
 		56FBCDF01A0BB5150026546E /* button_checkbox_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 56FBCDE81A0BB5150026546E /* button_checkbox_on.png */; };
 		56FBCDF11A0BB5150026546E /* button_create_poi.png in Resources */ = {isa = PBXBuildFile; fileRef = 56FBCDE91A0BB5150026546E /* button_create_poi.png */; };
@@ -2725,10 +2730,12 @@
 				18B5AC9819DC15CD00BA4A38 /* icon1_autumn.png in Resources */,
 				18B5AC8019DC15CD00BA4A38 /* arrow1.png in Resources */,
 				56CF26881A24777100B30439 /* icon_create_poi.png in Resources */,
+				56F28E841A261DA90061C7BF /* button_create_poi.png in Resources */,
 				18B5AC9419DC15CD00BA4A38 /* icon0_search_icon.png in Resources */,
 				18B5ACCE19DC15CD00BA4A38 /* icon2_food.png in Resources */,
 				18B5AC9C19DC15CD00BA4A38 /* icon1_coffee.png in Resources */,
 				18B5ACA219DC15CD00BA4A38 /* icon1_dusk.png in Resources */,
+				56F28E851A261DAD0061C7BF /* poi_marker.png in Resources */,
 				5606E31819ED1B93009059D4 /* eegeo_logo@ipho.png in Resources */,
 				56A3DCEE1A239BD100110FDD /* button_remove_pin_on.png in Resources */,
 				56A3DCE81A239BD100110FDD /* button_photo_off.png in Resources */,
@@ -2740,6 +2747,7 @@
 				18B5ACB619DC15CD00BA4A38 /* icon1_place.png in Resources */,
 				18B5ACA819DC15CD00BA4A38 /* icon1_hotel.png in Resources */,
 				18B5ACC619DC15CD00BA4A38 /* icon1_winter.png in Resources */,
+				5637B7071A261A5400181973 /* image_blank.png in Resources */,
 				18B5AC8E19DC15CD00BA4A38 /* compass_lock.png in Resources */,
 				18B5ACC019DC15CD00BA4A38 /* icon1_summer.png in Resources */,
 				18B5AC8419DC15CD00BA4A38 /* button_close_on.png in Resources */,
@@ -2750,10 +2758,12 @@
 				18B5ACF819DC15CD00BA4A38 /* shadow_01.png in Resources */,
 				18B5ACD619DC15CD00BA4A38 /* icon2_park.png in Resources */,
 				18B5AC9A19DC15CD00BA4A38 /* icon1_bank.png in Resources */,
+				56F28E831A261DA70061C7BF /* button_checkbox_on.png in Resources */,
 				186D2936196D9E4B00E004E0 /* placeholder.pvr in Resources */,
 				186D2937196D9E4B00E004E0 /* FrankBold50_A8_icons_0.png in Resources */,
 				186D2938196D9E4B00E004E0 /* FrankBold50_A8_icons.fnt in Resources */,
 				18B5ACFA19DC15CD00BA4A38 /* shadow_03.png in Resources */,
+				56F28E821A261DA40061C7BF /* button_checkbox_off.png in Resources */,
 				18B5ACBA19DC15CD00BA4A38 /* icon1_search.png in Resources */,
 				18B5ACD419DC15CD00BA4A38 /* icon2_nightlife.png in Resources */,
 				18B5ACAE19DC15CD00BA4A38 /* icon1_night.png in Resources */,
@@ -3465,7 +3475,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -3494,7 +3504,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -3525,7 +3535,7 @@
 					"./../external/rapidjson/**",
 				);
 				INFOPLIST_FILE = "ExampleApp/ExampleApp-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Include\"",
@@ -3559,7 +3569,7 @@
 					"./../external/rapidjson/**",
 				);
 				INFOPLIST_FILE = "ExampleApp/ExampleApp-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Include\"",
