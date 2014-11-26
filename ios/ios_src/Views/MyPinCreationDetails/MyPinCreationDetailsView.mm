@@ -54,7 +54,6 @@
         self.pPoiImage = [[[UIImageView alloc] initWithFrame: CGRectMake(0, 0, 0, 0)] autorelease];
         [self.pBodyScrollView addSubview: self.pPoiImage];
         
-//        self.pPlaceholderImage = [[[UIImage alloc] initWithContentsOfFile: @"image_blank.png"] autorelease];
         self.pPlaceholderImage = [UIImage imageNamed: @"image_blank.png"];
      
         self.pCheckbox = [[[UIButton alloc] initWithFrame: CGRectMake(0, 0, 0, 0)] autorelease];
