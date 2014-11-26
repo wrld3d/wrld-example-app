@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.eegeo.mobileexampleapp.MainActivity;
@@ -26,6 +27,7 @@ public class MyPinDetailsView implements View.OnClickListener
 	private TextView m_descriptionHeader = null;
 	private ImageView m_imageView = null;
 	private TextView m_imageHeader = null;
+	private ScrollView m_scrollSection = null;
 	
 	private boolean m_handlingClick = false;
 
@@ -43,6 +45,7 @@ public class MyPinDetailsView implements View.OnClickListener
 		m_descriptionHeader = (TextView)m_view.findViewById(R.id.my_pin_details_view_description_header);
 		m_imageView = (ImageView)m_view.findViewById(R.id.my_pin_details_view_image);
 		m_imageHeader = (TextView)m_view.findViewById(R.id.my_pin_details_view_image_header);
+		m_scrollSection = (ScrollView)m_view.findViewById(R.id.my_pin_details_scroll_section);
 		
 		m_deleteButton.setOnClickListener(this);
 		m_closeButton.setOnClickListener(this);
@@ -58,6 +61,8 @@ public class MyPinDetailsView implements View.OnClickListener
 	public void display(final String title, final String description, final String imagePath)
 	{
 		m_titleView.setText(title);
+		
+		m_scrollSection.setScrollY(0);
 
 		if(!description.isEmpty())
 		{
