@@ -46,10 +46,8 @@ public class PhotoIntentDispatcher
 	
 	public void selectPhotoFromGallery()
 	{
-		Intent intent = new Intent();
-		intent.setType("image/*");
-		intent.setAction(Intent.ACTION_GET_CONTENT);
-		m_activity.startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_PHOTO_FROM_GALLERY);
+		Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+		m_activity.startActivityForResult(intent, SELECT_PHOTO_FROM_GALLERY);
 	}
 	
 	public void addActivityIntentResultHandler(IActivityIntentResultHandler handler)
