@@ -477,10 +477,6 @@
 		56070CCE1A1B6A2D00E3DFF6 /* WorldPinLostFocusMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56070CCC1A1B6A2D00E3DFF6 /* WorldPinLostFocusMessage.cpp */; };
 		56070CD01A1B6A4600E3DFF6 /* WorldPinInFocusObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56070CCF1A1B6A4600E3DFF6 /* WorldPinInFocusObserver.cpp */; };
 		56070CD11A1B6A4600E3DFF6 /* WorldPinInFocusObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56070CCF1A1B6A4600E3DFF6 /* WorldPinInFocusObserver.cpp */; };
-		561850D61A1F78F400B5B023 /* SearchResultsClearMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 561850D21A1F78F400B5B023 /* SearchResultsClearMessage.cpp */; };
-		561850D71A1F78F400B5B023 /* SearchResultsClearMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 561850D21A1F78F400B5B023 /* SearchResultsClearMessage.cpp */; };
-		561850D81A1F78F400B5B023 /* SearchResultsClearMessageHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 561850D41A1F78F400B5B023 /* SearchResultsClearMessageHandler.cpp */; };
-		561850D91A1F78F400B5B023 /* SearchResultsClearMessageHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 561850D41A1F78F400B5B023 /* SearchResultsClearMessageHandler.cpp */; };
 		562270E71A1A786C0025AB34 /* WorldPinOnMapView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 562270E01A1A786C0025AB34 /* WorldPinOnMapView.mm */; };
 		562270E81A1A786C0025AB34 /* WorldPinOnMapView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 562270E01A1A786C0025AB34 /* WorldPinOnMapView.mm */; };
 		562270E91A1A786C0025AB34 /* WorldPinOnMapViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 562270E21A1A786C0025AB34 /* WorldPinOnMapViewController.mm */; };
@@ -622,6 +618,8 @@
 		56FBCDF11A0BB5150026546E /* button_create_poi.png in Resources */ = {isa = PBXBuildFile; fileRef = 56FBCDE91A0BB5150026546E /* button_create_poi.png */; };
 		56FBCDF51A0BB5150026546E /* image_blank.png in Resources */ = {isa = PBXBuildFile; fileRef = 56FBCDED1A0BB5150026546E /* image_blank.png */; };
 		56FBCDF61A0BB5150026546E /* poi_marker.png in Resources */ = {isa = PBXBuildFile; fileRef = 56FBCDEE1A0BB5150026546E /* poi_marker.png */; };
+		7EA3FD051A2743BB008FA7AD /* WorldPinsVisibilityMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7EA3FD031A2743BB008FA7AD /* WorldPinsVisibilityMessage.cpp */; };
+		7EA3FD061A2743BB008FA7AD /* WorldPinsVisibilityMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7EA3FD031A2743BB008FA7AD /* WorldPinsVisibilityMessage.cpp */; };
 		7EE481EB16836F370006E99B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE481EA16836F370006E99B /* UIKit.framework */; };
 		7EE481ED16836F370006E99B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE481EC16836F370006E99B /* Foundation.framework */; };
 		7EE481F116836F370006E99B /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE481F016836F370006E99B /* CoreData.framework */; };
@@ -1163,10 +1161,6 @@
 		56070CC91A1B69D400E3DFF6 /* WorldPinGainedFocusMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WorldPinGainedFocusMessage.cpp; sourceTree = "<group>"; };
 		56070CCC1A1B6A2D00E3DFF6 /* WorldPinLostFocusMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WorldPinLostFocusMessage.cpp; sourceTree = "<group>"; };
 		56070CCF1A1B6A4600E3DFF6 /* WorldPinInFocusObserver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WorldPinInFocusObserver.cpp; sourceTree = "<group>"; };
-		561850D21A1F78F400B5B023 /* SearchResultsClearMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchResultsClearMessage.cpp; sourceTree = "<group>"; };
-		561850D31A1F78F400B5B023 /* SearchResultsClearMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultsClearMessage.h; sourceTree = "<group>"; };
-		561850D41A1F78F400B5B023 /* SearchResultsClearMessageHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchResultsClearMessageHandler.cpp; sourceTree = "<group>"; };
-		561850D51A1F78F400B5B023 /* SearchResultsClearMessageHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultsClearMessageHandler.h; sourceTree = "<group>"; };
 		562270DE1A1A786C0025AB34 /* IWorldPinOnMapViewModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IWorldPinOnMapViewModule.h; sourceTree = "<group>"; };
 		562270DF1A1A786C0025AB34 /* WorldPinOnMapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorldPinOnMapView.h; sourceTree = "<group>"; };
 		562270E01A1A786C0025AB34 /* WorldPinOnMapView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = WorldPinOnMapView.mm; sourceTree = "<group>"; };
@@ -1346,6 +1340,8 @@
 		56FBCDED1A0BB5150026546E /* image_blank.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = image_blank.png; sourceTree = "<group>"; };
 		56FBCDEE1A0BB5150026546E /* poi_marker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = poi_marker.png; sourceTree = "<group>"; };
 		7E75EE1D16848B8A00BCA283 /* libapps-on-maps-sim.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libapps-on-maps-sim.a"; path = "Include/libapps-on-maps-sim.a"; sourceTree = "<group>"; };
+		7EA3FD031A2743BB008FA7AD /* WorldPinsVisibilityMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WorldPinsVisibilityMessage.cpp; sourceTree = "<group>"; };
+		7EA3FD041A2743BB008FA7AD /* WorldPinsVisibilityMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorldPinsVisibilityMessage.h; sourceTree = "<group>"; };
 		7EE481E616836F370006E99B /* ExampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7EE481EA16836F370006E99B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		7EE481EC16836F370006E99B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -1774,10 +1770,6 @@
 		18B5AA5A19DC158F00BA4A38 /* Search */ = {
 			isa = PBXGroup;
 			children = (
-				561850D21A1F78F400B5B023 /* SearchResultsClearMessage.cpp */,
-				561850D31A1F78F400B5B023 /* SearchResultsClearMessage.h */,
-				561850D41A1F78F400B5B023 /* SearchResultsClearMessageHandler.cpp */,
-				561850D51A1F78F400B5B023 /* SearchResultsClearMessageHandler.h */,
 				18CCC8B31A15239600DC2D95 /* SearchQueryResponseReceivedMessage.cpp */,
 				18CCC8B41A15239600DC2D95 /* SearchQueryRemovedMessage.cpp */,
 				18CCC8B51A15239600DC2D95 /* SearchQueryPerformedMessage.cpp */,
@@ -1998,6 +1990,8 @@
 				562925081A15043300EA1B1F /* WorldPinsScaleController.h */,
 				18B5AAD319DC159000BA4A38 /* WorldPinsService.cpp */,
 				18B5AAD419DC159000BA4A38 /* WorldPinsService.h */,
+				7EA3FD031A2743BB008FA7AD /* WorldPinsVisibilityMessage.cpp */,
+				7EA3FD041A2743BB008FA7AD /* WorldPinsVisibilityMessage.h */,
 			);
 			path = WorldPins;
 			sourceTree = "<group>";
@@ -2894,6 +2888,7 @@
 				5695FEBC1A13C17800F1E6CE /* MyPinCreationModule.cpp in Sources */,
 				18B5AB2619DC159000BA4A38 /* PlaceJumpsModel.cpp in Sources */,
 				18B5AB2E19DC159000BA4A38 /* ScreenControlViewModelBase.cpp in Sources */,
+				7EA3FD061A2743BB008FA7AD /* WorldPinsVisibilityMessage.cpp in Sources */,
 				5629250A1A15043300EA1B1F /* WorldPinsScaleController.cpp in Sources */,
 				18B5AB5419DC159000BA4A38 /* SearchResultOnMapItemModel.cpp in Sources */,
 				18B5ABF719DC159B00BA4A38 /* iOSPersistentSettingsModel.mm in Sources */,
@@ -3044,11 +3039,9 @@
 				18B5AAF019DC159000BA4A38 /* CompassViewModel.cpp in Sources */,
 				5695FEC81A13C17800F1E6CE /* PoiRingView.cpp in Sources */,
 				5695FEF21A13C1DE00F1E6CE /* MyPinCreationConfirmationViewModule.mm in Sources */,
-				561850D91A1F78F400B5B023 /* SearchResultsClearMessageHandler.cpp in Sources */,
 				18B5AC0119DC159B00BA4A38 /* CompassViewController.mm in Sources */,
 				5695FEF01A13C1DE00F1E6CE /* MyPinCreationConfirmationViewController.mm in Sources */,
 				18CCC8A31A15236100DC2D95 /* MyPinCreationViewSavePinMessage.cpp in Sources */,
-				561850D71A1F78F400B5B023 /* SearchResultsClearMessage.cpp in Sources */,
 				56962CEF1A1E669500D4355E /* MyPinRemovedFromMenuObserver.cpp in Sources */,
 				18B5AAFC19DC159000BA4A38 /* InitialExperienceModel.cpp in Sources */,
 				18B5AB5619DC159000BA4A38 /* SearchResultOnMapModel.cpp in Sources */,
@@ -3127,6 +3120,7 @@
 				18B5AB7319DC159000BA4A38 /* WorldPinsFactory.cpp in Sources */,
 				5695FEBB1A13C17800F1E6CE /* MyPinCreationModule.cpp in Sources */,
 				18B5AC3619DC159B00BA4A38 /* SecondaryMenuView.mm in Sources */,
+				7EA3FD051A2743BB008FA7AD /* WorldPinsVisibilityMessage.cpp in Sources */,
 				56962CB21A1BA95500D4355E /* MyPinDetailsModelSelectedObserver.cpp in Sources */,
 				18B5AB2519DC159000BA4A38 /* PlaceJumpsModel.cpp in Sources */,
 				562925091A15043300EA1B1F /* WorldPinsScaleController.cpp in Sources */,
@@ -3277,11 +3271,9 @@
 				18B5AB5719DC159000BA4A38 /* SearchResultOnMapModule.cpp in Sources */,
 				18B5AC0E19DC159B00BA4A38 /* UIColors.mm in Sources */,
 				18B5AAEF19DC159000BA4A38 /* CompassViewModel.cpp in Sources */,
-				561850D81A1F78F400B5B023 /* SearchResultsClearMessageHandler.cpp in Sources */,
 				5695FEC71A13C17800F1E6CE /* PoiRingView.cpp in Sources */,
 				5695FEF11A13C1DE00F1E6CE /* MyPinCreationConfirmationViewModule.mm in Sources */,
 				18B5AC0019DC159B00BA4A38 /* CompassViewController.mm in Sources */,
-				561850D61A1F78F400B5B023 /* SearchResultsClearMessage.cpp in Sources */,
 				56962CEE1A1E669500D4355E /* MyPinRemovedFromMenuObserver.cpp in Sources */,
 				5695FEEF1A13C1DE00F1E6CE /* MyPinCreationConfirmationViewController.mm in Sources */,
 				18CCC8A21A15236100DC2D95 /* MyPinCreationViewSavePinMessage.cpp in Sources */,

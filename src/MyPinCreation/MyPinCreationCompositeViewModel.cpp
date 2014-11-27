@@ -6,7 +6,7 @@
 #include "IMenuViewModel.h"
 #include "ISearchResultMenuViewModel.h"
 #include "ISearchQueryPerformer.h"
-#include "SearchResultsClearMessage.h"
+#include "WorldPinsVisibilityMessage.h"
 
 namespace ExampleApp
 {
@@ -50,6 +50,8 @@ namespace ExampleApp
                     m_initiationViewModel.AddToScreen();
                     m_primaryMenuViewModel.AddToScreen();
                     m_secondaryMenuViewModel.AddToScreen();
+                    m_searchResultMenuViewModel.AddToScreen();
+                    m_uiToNativeMessageBus.Publish(WorldPins::WorldPinsVisibilityMessage(true));
                     
                     m_confirmationViewModel.RemoveFromScreen();
                     break;
@@ -62,7 +64,7 @@ namespace ExampleApp
                     m_primaryMenuViewModel.RemoveFromScreen();
                     m_secondaryMenuViewModel.RemoveFromScreen();
                     
-                    m_uiToNativeMessageBus.Publish(Search::SearchResultsClearMessage());
+                    m_uiToNativeMessageBus.Publish(WorldPins::WorldPinsVisibilityMessage(false));
                     m_searchResultMenuViewModel.RemoveFromScreen();
                     break;
                 }

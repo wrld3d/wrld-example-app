@@ -33,14 +33,16 @@ namespace ExampleApp
             
             m_pWorldPinsScaleController = Eegeo_NEW(WorldPinsScaleController)(*m_pWorldPinsRepository,
                                                                               *m_pWorldPinsService,
-                                                                              screenProperties);
+                                                                              screenProperties,
+                                                                              uiToNativeMessageBus);
             
             m_pWorldPinsInFocusViewModel = Eegeo_NEW(WorldPinInFocusViewModel)(identityProvider.GetNextIdentity(),
                                                                                *m_pWorldPinsService);
             
             m_pWorldPinsInFocusController = Eegeo_NEW(WorldPinsInFocusController)(*m_pWorldPinsRepository,
                                                                                   *m_pWorldPinsService,
-                                                                                  nativeToUiMessageBus);
+                                                                                  nativeToUiMessageBus,
+                                                                                  uiToNativeMessageBus);
             
             
             m_pWorldPinInFocusObserver = Eegeo_NEW(WorldPinInFocusObserver)(*m_pWorldPinsInFocusViewModel,

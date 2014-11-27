@@ -18,7 +18,7 @@
 #include "MyPinCreationViewSavePinMessage.h"
 #include "MyPinDetailsViewRemovePinMessage.h"
 #include "MyPinSelectedMessage.h"
-#include "SearchResultsClearMessage.h"
+#include "WorldPinsVisibilityMessage.h"
 
 namespace ExampleApp
 {
@@ -38,7 +38,7 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<MyPinCreation::MyPinCreationViewSavePinMessage>
             , public Eegeo::Messaging::CatalogBinding<MyPinDetails::MyPinDetailsViewRemovePinMessage>
             , public Eegeo::Messaging::CatalogBinding<MyPins::MyPinSelectedMessage>
-            , public Eegeo::Messaging::CatalogBinding<Search::SearchResultsClearMessage>
+            , public Eegeo::Messaging::CatalogBinding<WorldPins::WorldPinsVisibilityMessage>
 			, private Eegeo::NonCopyable
 		{
 

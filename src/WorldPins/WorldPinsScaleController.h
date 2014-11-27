@@ -10,6 +10,8 @@
 #include "Camera.h"
 #include "VectorMath.h"
 #include "Modality.h"
+#include "UiToNativeMessageBus.h"
+#include "ICallback.h"
 
 namespace ExampleApp
 {
@@ -22,17 +24,28 @@ namespace ExampleApp
 			IWorldPinsService& m_worldPinsService;
 			const Eegeo::Rendering::ScreenProperties& m_screenProperties;
 			float m_modality;
+            float m_visibilityScale;
+            float m_targetVisibilityScale;
+            const float m_visibilityAnimationDuration;
+            
+            ExampleAppMessaging::UiToNativeMessageBus& m_uiToNativeMessageBus;
+            Eegeo::Helpers::TCallback1<WorldPinsScaleController, const WorldPinsVisibilityMessage&> m_visibilityMessageHandlerBinding;
 
 		public:
 			WorldPinsScaleController(IWorldPinsRepository& worldPinsRepository,
                                      WorldPins::IWorldPinsService& worldPinsService,
-                                     const Eegeo::Rendering::ScreenProperties& screenProperties);
+                                     const Eegeo::Rendering::ScreenProperties& screenProperties,
+                                     ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus);
 
 			~WorldPinsScaleController();
 
             void Update(float deltaSeconds, const Eegeo::Camera::RenderCamera& renderCamera);
 
 			void SetModality(float modality);
+            
+            void Show();
+            void Hide();
+            
 
 		private:
             void UpdateWorldPin(WorldPins::WorldPinItemModel& worldPinItemModel,
@@ -42,6 +55,8 @@ namespace ExampleApp
 			void GetScreenLocation(const WorldPins::WorldPinItemModel& worldPinItemModel,
                                    Eegeo::v2& screenLocation,
                                    const Eegeo::Camera::RenderCamera& renderCamera) const;
+            
+            void HandleVisibilityChange(const WorldPinsVisibilityMessage& worldPinsVisibilityMessage);
 		};
 	}
 }

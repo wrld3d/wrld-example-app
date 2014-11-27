@@ -17,5 +17,6 @@ namespace ExampleApp
         class IWorldPinInFocusViewModel;
         class WorldPinInFocusViewModel;
         class IWorldPinsInFocusController;
+        class WorldPinsVisibilityMessage;
 	}
 }
