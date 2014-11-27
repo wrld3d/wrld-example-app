@@ -49,7 +49,7 @@ namespace ExampleApp
 			            m_pMaterial->GetShader().GetVertexAttributes());
 
 			m_pModalBackgroundRenderable = Eegeo_NEW(Eegeo::Rendering::Renderables::WorldMeshRenderable)(
-			                                   Eegeo::Rendering::LayerIds::ShadowOverlay, m_pMaterial, vertexBinding, pScreenQuad, Eegeo::dv3::Zero());
+			                                   Eegeo::Rendering::LayerIds::AfterAll, m_pMaterial, vertexBinding, pScreenQuad, Eegeo::dv3::Zero());
 			m_pModalBackgroundRenderable->SetModelViewProjection(Eegeo::m44::CreateIdentity());
 
 			m_baseAlpha = 0.46f;
