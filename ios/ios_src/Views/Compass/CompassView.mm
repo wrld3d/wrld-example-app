@@ -4,6 +4,7 @@
 #include "MathFunc.h"
 #include "UIColors.h"
 #include "ImageHelpers.h"
+#include "ScaleHelpers.h"
 
 @implementation CompassView
 
@@ -11,6 +12,7 @@
 {
 	if(self = [super init])
 	{
+        float iphoneTweakScale = ExampleApp::Helpers::ScaleHelpers::GetScaleTweakValue();
 		m_pController = controller;
 		m_stateChangeAnimationTimeSeconds = 0.2f;
 		m_pixelScale = 1.f;
@@ -20,7 +22,7 @@
 		m_lightColour = ExampleApp::Helpers::ColorPalette::WhiteTone;
 
 		//control positioning
-		m_width = 64 * m_pixelScale;
+		m_width = 64 * m_pixelScale * iphoneTweakScale;
 		m_height = m_width;
 		m_yPosActive = 16 * m_pixelScale;
 		m_yPosInactive = -m_height;
@@ -29,7 +31,7 @@
 		//outer shape shadow
 		self.pOuterShadowContainer = [[[UIView alloc] init] autorelease];
 		[self addSubview: self.pOuterShadowContainer];
-		ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pOuterShadowContainer, "compass_shadow", 8, 8, m_width, m_height);
+		ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pOuterShadowContainer, "compass_shadow", 8*iphoneTweakScale, 8*iphoneTweakScale, m_width, m_height);
 
 		//outer shape
 		self.pOuterShape = [[[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, m_width, m_height)] autorelease];
@@ -38,9 +40,9 @@
 		[self addSubview: self.pOuterShape];
 
 		//inner shape
-		const float innerWidth = 54 * m_pixelScale;
+		const float innerWidth = 54 * m_pixelScale * iphoneTweakScale;
 		const float innerHeight = innerWidth;
-		self.pInnerShape = [[[UIView alloc] initWithFrame:CGRectMake(5.f, 5.f, innerWidth, innerHeight)] autorelease];
+		self.pInnerShape = [[[UIView alloc] initWithFrame:CGRectMake(5.f * iphoneTweakScale, 5.f * iphoneTweakScale, innerWidth, innerHeight)] autorelease];
 		self.pInnerShape.layer.cornerRadius = innerWidth * 0.5;
 		self.pInnerShape.backgroundColor = m_darkColour;
 		[self addSubview: self.pInnerShape];
@@ -48,10 +50,10 @@
 		//compass point shadow
 		self.pPointShadowContainer = [[[UIView alloc] init] autorelease];
 		[self addSubview: self.pPointShadowContainer];
-		ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pPointShadowContainer, "compass_shadow", 0, 0, 12, 12);
+		ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pPointShadowContainer, "compass_shadow", 0, 0, 12 * iphoneTweakScale, 12 * iphoneTweakScale);
 
 		//compass point
-		float pointWidth = (12.f * m_pixelScale);
+		float pointWidth = (12.f * m_pixelScale) * iphoneTweakScale;
 		float pointHeight = pointWidth;
 		self.pPoint = [[[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, pointWidth, pointHeight)] autorelease];
 		self.pPoint.backgroundColor = m_lightColour;
@@ -61,7 +63,7 @@
 		//lock icon
 		self.pLockIconContainer = [[[UIView alloc] init] autorelease];
 		[self addSubview: self.pLockIconContainer];
-		ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pLockIconContainer, "compass_lock", 54, 0, 25, 25);
+		ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pLockIconContainer, "compass_lock", 54 * iphoneTweakScale, 0, 25 * iphoneTweakScale, 25 * iphoneTweakScale);
 		self.pLockIconContainer.alpha = 0.f;
 
 		m_compassPointNaturalOffsetX = (m_width / 2.f) - (pointWidth / 2.f);
@@ -132,7 +134,7 @@
 	const float sinTheta = (float)sin(theta);
 	const float cosTheta = (float)cos(theta);
 	const float x = 0.f;
-	const float y = -15.f;
+    const float y = -15.f * ExampleApp::Helpers::ScaleHelpers::GetScaleTweakValue();
 	const float newX = (x*cosTheta - y*sinTheta) + m_compassPointNaturalOffsetX;
 	const float newY = (y*cosTheta + x*sinTheta) + m_compassPointNaturalOffsetY;
 

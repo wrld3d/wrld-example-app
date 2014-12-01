@@ -2,6 +2,7 @@
 
 #include "FlattenButtonView.h"
 #include "MathFunc.h"
+#include "ScaleHelpers.h"
 
 @implementation FlattenButtonView
 
@@ -16,9 +17,11 @@
 		[self addTarget:self action:@selector(onClick:) forControlEvents:UIControlEventTouchUpInside];
 		[self setBackgroundImage:[UIImage imageNamed:@"button_streets_off.png"] forState:UIControlStateNormal];
 		[self setBackgroundImage:[UIImage imageNamed:@"button_streets_on.png"] forState:UIControlStateSelected];
-
-		m_width = 60 * m_pixelScale;
-		m_height = 60 * m_pixelScale;
+        
+        float iphoneTweakScale = ExampleApp::Helpers::ScaleHelpers::GetScaleTweakValue();
+        
+		m_width = 60 * m_pixelScale * iphoneTweakScale;
+		m_height = 60 * m_pixelScale * iphoneTweakScale;
 
 		m_xPosActive = 0;
 		m_xPosInactive = -m_width;
