@@ -54,9 +54,8 @@
         self.pPoiImage = [[[UIImageView alloc] initWithFrame: CGRectMake(0, 0, 0, 0)] autorelease];
         [self.pBodyScrollView addSubview: self.pPoiImage];
         
-        self.pPlaceholderImage = [[[UIImage alloc] init] autorelease];
         self.pPlaceholderImage = [UIImage imageNamed: @"image_blank.png"];
-        
+     
         self.pCheckbox = [[[UIButton alloc] initWithFrame: CGRectMake(0, 0, 0, 0)] autorelease];
         [self.pBodyContainer addSubview: self.pCheckbox];
         
@@ -269,7 +268,6 @@
 
 - (void) layoutFooter
 {
-  
     const float footerY = m_yCursor;
     const float footerHeight = 70.f;
     const float footerWidth = m_controlContainerWidth;
@@ -334,7 +332,7 @@
 
 -(void) onGalleryButtonPressed:(UIButton *)sender
 {
-    UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+    UIImagePickerController *imagePicker = [[[UIImagePickerController alloc] init] autorelease];
     
     imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     imagePicker.delegate=self;
@@ -364,6 +362,7 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(NSDictionary *)editingInfo
 {
     [self reinstateScreenRotations];
+    
     self.pPoiImage.image = image;
     [self resizeImageViewToFit:image.size.width :image.size.height];
     
@@ -423,9 +422,8 @@
     }
     
     
-    UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+    UIImagePickerController *imagePicker = [[[UIImagePickerController alloc] init] autorelease];
     
-
     imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
     imagePicker.delegate = self;
     imagePicker.allowsEditing = NO;
@@ -433,6 +431,8 @@
     imagePicker.navigationBarHidden = YES;
     
     [m_pController presentViewController:imagePicker animated:YES completion:nil];
+    
+//    [imagePicker release];
 }
 
 - (void) onConfirmButtonPressed:(UIButton *)sender

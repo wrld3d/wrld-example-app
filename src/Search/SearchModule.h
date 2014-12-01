@@ -14,7 +14,6 @@
 #include "UiToNativeMessageBus.h"
 #include "NativeToUiMessageBus.h"
 #include "SearchQueryObserver.h"
-#include "SearchResultsClearMessageHandler.h"
 
 namespace ExampleApp
 {
@@ -29,7 +28,6 @@ namespace ExampleApp
 			ISearchQueryPerformer* m_pSearchQueryPerformer;
 			ISearchRefreshService* m_pSearchRefreshService;
 			SearchQueryObserver* m_pSearchQueryObserver;
-			SearchResultsClearMessageHandler* m_pSearchResultsClearMessageHandler;
 
 		public:
 			SearchModule(const std::string& searchApiKey,

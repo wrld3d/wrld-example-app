@@ -104,6 +104,7 @@
             
 	        <!--  Scrolling details section -->
 	        <ScrollView
+	            	android:id="@+id/poi_creation_details_scroll_section"
 	                android:layout_width="fill_parent"
 	                android:layout_height="fill_parent"
 	                android:background="@color/white">

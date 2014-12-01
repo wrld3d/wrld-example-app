@@ -8,6 +8,7 @@
 #include "IRayPicker.h"
 #include "Camera.h"
 #include "GpsGlobeCameraController.h"
+#include "VectorMathDecl.h"
 
 namespace ExampleApp
 {
@@ -34,6 +35,8 @@ namespace ExampleApp
                 const IPoiRingController& m_poiRingController;
                 
                 bool m_isDragging;
+                
+                bool PerformRayPick(Eegeo::dv3& rayOrigin, Eegeo::dv3& rayDirection, Eegeo::dv3& out_rayIntersectionPoint, double& out_intersectionParam);
             };
         }
     }

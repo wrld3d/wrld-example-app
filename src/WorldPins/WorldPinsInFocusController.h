@@ -9,6 +9,8 @@
 #include "Location.h"
 #include "Camera.h"
 #include "NativeToUiMessageBus.h"
+#include "UiToNativeMessageBus.h"
+#include "ICallback.h"
 
 namespace ExampleApp
 {
@@ -22,12 +24,19 @@ namespace ExampleApp
             
             const IWorldPinsInFocusModel* m_pLastFocussedModel;
             
+            bool m_focusEnabled;
+            
             ExampleAppMessaging::NativeToUiMessageBus& m_nativeToUiMessageBus;
+            ExampleAppMessaging::UiToNativeMessageBus& m_uiToNativeMessageBus;
+            Eegeo::Helpers::TCallback1<WorldPinsInFocusController, const WorldPinsVisibilityMessage&> m_visibilityMessageHandlerBinding;
+            
+            void HandleVisibilityChange(const WorldPinsVisibilityMessage& worldPinsVisibilityMessage);
             
 		public:
 			WorldPinsInFocusController(IWorldPinsRepository& worldPinsRepository,
                                        IWorldPinsService& worldPinsService,
-                                       ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus);
+                                       ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus,
+                                       ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus);
 
 			~WorldPinsInFocusController();
 

@@ -8,6 +8,7 @@
 #include "ScreenProperties.h"
 #include "RenderCamera.h"
 #include "IWorldPinsRepository.h"
+#include "WorldPinsVisibilityMessage.h"
 
 namespace ExampleApp
 {
@@ -15,28 +16,43 @@ namespace ExampleApp
 	{
 		WorldPinsScaleController::WorldPinsScaleController(IWorldPinsRepository& worldPinsRepository,
                                                            WorldPins::IWorldPinsService& worldPinsService,
-                                                           const Eegeo::Rendering::ScreenProperties& screenProperties)
+                                                           const Eegeo::Rendering::ScreenProperties& screenProperties,
+                                                           ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus)
 			: m_worldPinsRepository(worldPinsRepository)
 			, m_worldPinsService(worldPinsService)
 			, m_screenProperties(screenProperties)
+            , m_uiToNativeMessageBus(uiToNativeMessageBus)
+            , m_visibilityMessageHandlerBinding(this, &WorldPinsScaleController::HandleVisibilityChange)
 			, m_modality(0.f)
+            , m_visibilityScale(0.f)
+            , m_targetVisibilityScale(1.f)
+            , m_visibilityAnimationDuration(0.2f)
 		{
-
+            m_uiToNativeMessageBus.Subscribe(m_visibilityMessageHandlerBinding);
 		}
 
 		WorldPinsScaleController::~WorldPinsScaleController()
 		{
-
+            m_uiToNativeMessageBus.Unsubscribe(m_visibilityMessageHandlerBinding);
 		}
 
         void WorldPinsScaleController::Update(float deltaSeconds, const Eegeo::Camera::RenderCamera& renderCamera)
 		{
+            if(m_visibilityScale < m_targetVisibilityScale)
+            {
+                m_visibilityScale = Eegeo::Min(m_visibilityScale + deltaSeconds/m_visibilityAnimationDuration, m_targetVisibilityScale);
+            }
+            else if(m_visibilityScale > m_targetVisibilityScale)
+            {
+                m_visibilityScale = Eegeo::Max(m_visibilityScale - deltaSeconds/m_visibilityAnimationDuration, m_targetVisibilityScale);
+            }
+            
             for(size_t i = 0; i < m_worldPinsRepository.GetItemCount(); ++i)
             {
                 WorldPinItemModel& worldPinItemModel = *m_worldPinsRepository.GetItemAtIndex(i);
 				UpdateWorldPin(worldPinItemModel, deltaSeconds, renderCamera);
 				const float globalScale = 1.f - m_modality;
-				float scale = globalScale  * worldPinItemModel.TransitionStateValue();
+				float scale = globalScale  * worldPinItemModel.TransitionStateValue() * m_visibilityScale;
 				m_worldPinsService.UpdatePinScale(worldPinItemModel, scale);
 			}
 		}
@@ -82,5 +98,27 @@ namespace ExampleApp
 			renderCamera.Project(cameraLocal, screenPos);
 			screenLocation.Set(screenPos.GetX(), screenPos.GetY());
 		}
+        
+        void WorldPinsScaleController::Show()
+        {
+            m_targetVisibilityScale = 1.0f;
+        }
+        
+        void WorldPinsScaleController::Hide()
+        {
+            m_targetVisibilityScale = 0.0f;
+        }
+        
+        void WorldPinsScaleController::HandleVisibilityChange(const WorldPinsVisibilityMessage &worldPinsVisibilityMessage)
+        {
+            if(worldPinsVisibilityMessage.ShouldSetVisible())
+            {
+                Show();
+            }
+            else
+            {
+                Hide();
+            }
+        }
 	}
 }
