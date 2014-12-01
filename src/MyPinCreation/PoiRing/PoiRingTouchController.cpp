@@ -43,8 +43,8 @@ namespace ExampleApp
                 Eegeo::dv3 rayIntersectionPoint;
                 double intersectionParam;
                 
-                bool rayPick = m_rayPicker.TryGetRayIntersection(rayOrigin, rayDirection, rayIntersectionPoint, intersectionParam);
-                
+                bool rayPick = PerformRayPick(rayOrigin, rayDirection, rayIntersectionPoint, intersectionParam);
+
                 if (rayPick)
                 {
                     const Eegeo::dv3& currentPosition = m_myPinCreationModel.GetPosition();
@@ -96,7 +96,7 @@ namespace ExampleApp
                     Eegeo::dv3 rayOrigin = globeCameraController.ComputeNonFlattenedCameraPosition();
                     Eegeo::dv3 rayIntersectionPoint;
                     double intersectionParam;
-                    bool rayPick = m_rayPicker.TryGetRayIntersection(rayOrigin, rayDirection, rayIntersectionPoint, intersectionParam);
+                    bool rayPick = PerformRayPick(rayOrigin, rayDirection, rayIntersectionPoint, intersectionParam);
                     
                     if (rayPick)
                     {
@@ -112,6 +112,21 @@ namespace ExampleApp
             bool PoiRingTouchController::IsDragging() const
             {
                 return m_isDragging && m_myPinCreationModel.GetCreationStage() == Ring;
+            }
+            
+            bool PoiRingTouchController::PerformRayPick(Eegeo::dv3 &rayOrigin, Eegeo::dv3 &rayDirection, Eegeo::dv3 &out_rayIntersectionPoint, double &out_intersectionParam)
+            {
+                bool rayPick = m_rayPicker.TryGetRayIntersection(rayOrigin, rayDirection, out_rayIntersectionPoint, out_intersectionParam);
+                if(!rayPick)
+                {
+                    rayPick = Eegeo::Geometry::IntersectionTests::GetRayEarthSphereIntersection(rayOrigin, rayDirection, out_rayIntersectionPoint, Eegeo::Space::EarthConstants::RadiusSquared);
+                    if(rayPick)
+                    {
+                        out_intersectionParam = (out_rayIntersectionPoint - rayOrigin).Length();
+                    }
+                }
+                
+                return rayPick;
             }
         }
     }
