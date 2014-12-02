@@ -37,11 +37,15 @@ void AppRunner::CreateAppHost()
 
 	if(m_pAppHost == NULL && m_displayService.IsDisplayAvailable())
 	{
+		const Eegeo::Rendering::ScreenProperties& screenProperties = Eegeo::Rendering::ScreenProperties::Make(
+				m_displayService.GetDisplayWidth(),
+				m_displayService.GetDisplayHeight(),
+				1.f,
+				m_pNativeState->deviceDpi);
 		m_pAppHost = Eegeo_NEW(AppHost)
 		             (
 		                 *m_pNativeState,
-		                 m_displayService.GetDisplayWidth(),
-		                 m_displayService.GetDisplayHeight(),
+		                 screenProperties,
 		                 m_displayService.GetDisplay(),
 		                 m_displayService.GetSharedSurface(),
 		                 m_displayService.GetResourceBuildSharedContext()
@@ -111,6 +115,12 @@ bool AppRunner::TryBindDisplay()
 		if(m_pAppHost != NULL)
 		{
 			m_pAppHost->SetSharedSurface(m_displayService.GetSharedSurface());
+			const Eegeo::Rendering::ScreenProperties& screenProperties = Eegeo::Rendering::ScreenProperties::Make(
+					m_displayService.GetDisplayWidth(),
+					m_displayService.GetDisplayHeight(),
+					1.f,
+					m_pNativeState->deviceDpi);
+			m_pAppHost->NotifyScreenPropertiesChanged(screenProperties);
 			m_pAppHost->SetViewportOffset(0, 0);
 		}
 
