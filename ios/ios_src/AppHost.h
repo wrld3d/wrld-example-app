@@ -46,10 +46,7 @@ public:
 	AppHost(
 	    ViewController& viewController,
 	    UIView* pView,
-	    float displayWidth,
-	    float displayHeight,
-	    float deviceDpi,
-	    float pixelScale
+        Eegeo::Rendering::ScreenProperties screenProperties
 	);
 	~AppHost();
 
@@ -61,13 +58,12 @@ public:
 	void OnPause();
 	void OnResume();
 
-	void SetViewportOffset(float x, float y);
+    void NotifyScreenPropertiesChanged(const Eegeo::Rendering::ScreenProperties& screenProperties);
 
 private:
 	UIView* m_pView;
 	ViewController& m_viewController;
 	Eegeo::Helpers::Jpeg::IJpegLoader* m_pJpegLoader;
-	Eegeo::Rendering::ScreenProperties* m_pScreenProperties;
 	Eegeo::iOS::iOSLocationService* m_piOSLocationService;
 	AppInputDelegate* m_pAppInputDelegate;
 	AppLocationDelegate* m_pAppLocationDelegate;
@@ -101,7 +97,7 @@ private:
 	ExampleApp::ExampleAppMessaging::UiToNativeMessageBus m_uiToNativeMessageBus;
 	ExampleApp::ExampleAppMessaging::NativeToUiMessageBus m_nativeToUiMessageBus;
 
-	void CreateApplicationViewModules();
+	void CreateApplicationViewModules(const Eegeo::Rendering::ScreenProperties& screenProperties);
 	void DestroyApplicationViewModules();
 };
 

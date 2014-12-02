@@ -60,6 +60,7 @@
 #include "PersistentSettings.h"
 #include "UiToNativeMessageBus.h"
 #include "NativeToUiMessageBus.h"
+#include "ScreenProperties.h"
 
 namespace ExampleApp
 {
@@ -73,6 +74,7 @@ namespace ExampleApp
 		Eegeo::Modules::IPlatformAbstractionModule& m_platformAbstractions;
 		Eegeo::Rendering::LoadingScreen* m_pLoadingScreen;
 		Eegeo::Blitter* m_pBlitter;
+        Eegeo::Rendering::ScreenProperties m_screenProperties;
 		bool m_initialisedApplicationViewState;
 		float m_pinDiameter;
 
@@ -124,7 +126,7 @@ namespace ExampleApp
 
 	public:
 		MobileExampleApp(Eegeo::Modules::IPlatformAbstractionModule& platformAbstractions,
-		                 Eegeo::Rendering::ScreenProperties& screenProperties,
+		                 Eegeo::Rendering::ScreenProperties screenProperties,
 		                 Eegeo::Location::ILocationService& locationService,
 		                 Eegeo::UI::NativeUIFactories& nativeUIFactories,
 		                 Eegeo::Config::PlatformConfig platformConfig,
@@ -269,6 +271,8 @@ namespace ExampleApp
 		void Update (float dt);
 
 		void Draw (float dt);
+        
+        void NotifyScreenPropertiesChanged(const Eegeo::Rendering::ScreenProperties& screenProperties);
 
 		bool IsRunning() const;
 

@@ -59,16 +59,12 @@ using namespace Eegeo::iOS;
 AppHost::AppHost(
     ViewController& viewController,
     UIView* pView,
-    float displayWidth,
-    float displayHeight,
-    float deviceDpi,
-    float pixelScale
+    Eegeo::Rendering::ScreenProperties screenProperties
 )
 
 	:m_pView(pView)
 	,m_viewController(viewController)
 	,m_pJpegLoader(NULL)
-	,m_pScreenProperties(NULL)
 	,m_piOSLocationService(NULL)
 	,m_iOSInputBoxFactory()
 	,m_iOSKeyboardInputFactory()
@@ -79,8 +75,6 @@ AppHost::AppHost(
 	,m_requestedApplicationInitialiseViewState(false)
 {
 	m_piOSLocationService = Eegeo_NEW(iOSLocationService)();
-
-	m_pScreenProperties = Eegeo_NEW(Eegeo::Rendering::ScreenProperties)(displayWidth, displayHeight, pixelScale, deviceDpi);
 
 	m_pJpegLoader = Eegeo_NEW(Eegeo::Helpers::Jpeg::JpegLoader)();
 
@@ -93,7 +87,7 @@ AppHost::AppHost(
 	m_pInitialExperienceModule = Eegeo_NEW(ExampleApp::InitialExperience::iOSInitialExperienceModule)(m_iOSPersistentSettingsModel);
 
 	m_pApp = Eegeo_NEW(ExampleApp::MobileExampleApp)(*m_piOSPlatformAbstractionModule,
-	         *m_pScreenProperties,
+	         screenProperties,
 	         *m_piOSLocationService,
 	         m_iOSNativeUIFactories,
 	         platformConfig,
@@ -103,9 +97,9 @@ AppHost::AppHost(
 	         m_uiToNativeMessageBus,
 	         m_nativeToUiMessageBus);
 
-	CreateApplicationViewModules();
+	CreateApplicationViewModules(screenProperties);
 
-	m_pAppInputDelegate = Eegeo_NEW(AppInputDelegate)(*m_pApp, m_viewController, displayWidth, displayHeight, pixelScale);
+	m_pAppInputDelegate = Eegeo_NEW(AppInputDelegate)(*m_pApp, m_viewController, screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight(), screenProperties.GetPixelScale());
 	m_pAppLocationDelegate = Eegeo_NEW(AppLocationDelegate)(*m_piOSLocationService, m_viewController);
 }
 
@@ -128,9 +122,6 @@ AppHost::~AppHost()
 	Eegeo_DELETE m_piOSLocationService;
 	m_piOSLocationService = NULL;
 
-	Eegeo_DELETE m_pScreenProperties;
-	m_pScreenProperties = NULL;
-
 	Eegeo_DELETE m_piOSPlatformAbstractionModule;
 	m_piOSPlatformAbstractionModule = NULL;
 
@@ -151,8 +142,10 @@ void AppHost::OnPause()
 	m_pApp->OnPause();
 }
 
-void AppHost::SetViewportOffset(float x, float y)
+
+void AppHost::NotifyScreenPropertiesChanged(const Eegeo::Rendering::ScreenProperties& screenProperties)
 {
+    m_pApp->NotifyScreenPropertiesChanged(screenProperties);
 }
 
 void AppHost::Update(float dt)
@@ -177,7 +170,7 @@ bool AppHost::IsRunning()
 	return m_pApp->IsRunning();
 }
 
-void AppHost::CreateApplicationViewModules()
+void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenProperties& screenProperties)
 {
 	ExampleApp::MobileExampleApp& app = *m_pApp;
 
@@ -186,12 +179,12 @@ void AppHost::CreateApplicationViewModules()
 
 	m_pPrimaryMenuViewModule = Eegeo_NEW(ExampleApp::PrimaryMenu::PrimaryMenuViewModule)(app.MyPinsModule().GetMyPinsMenuModel(),
 	                           app.PrimaryMenuModule().GetPrimaryMenuViewModel(),
-	                           *m_pScreenProperties,
+	                           screenProperties,
 	                           app.ModalityModule().GetModalityModel());
 
 	m_pSecondaryMenuViewModule = Eegeo_NEW(ExampleApp::SecondaryMenu::SecondaryMenuViewModule)(app.SecondaryMenuModule().GetSecondaryMenuModel(),
 	                             app.SecondaryMenuModule().GetSecondaryMenuViewModel(),
-	                             *m_pScreenProperties,
+	                             screenProperties,
 	                             app.ModalityModule().GetModalityModel(),
 	                             app.SearchModule().GetSearchQueryPerformer(),
 	                             m_nativeToUiMessageBus);
@@ -200,7 +193,7 @@ void AppHost::CreateApplicationViewModules()
 	                                app.SearchResultMenuModule().GetSearchResultMenuModel(),
 	                                app.SearchResultMenuModule().GetMenuViewModel(),
 	                                app.SearchResultMenuModule().GetSearchResultMenuViewModel(),
-	                                *m_pScreenProperties,
+	                                screenProperties,
 	                                app.ModalityModule().GetModalityModel(),
 	                                m_uiToNativeMessageBus,m_nativeToUiMessageBus);
 
@@ -208,7 +201,7 @@ void AppHost::CreateApplicationViewModules()
 
 	m_pFlattenButtonViewModule = Eegeo_NEW(ExampleApp::FlattenButton::FlattenButtonViewModule)(app.FlattenButtonModule().GetFlattenButtonModel(),
 	                             app.FlattenButtonModule().GetFlattenButtonViewModel(),
-	                             *m_pScreenProperties,
+	                             screenProperties,
 	                             m_uiToNativeMessageBus,
 	                             m_nativeToUiMessageBus);
 
@@ -216,11 +209,11 @@ void AppHost::CreateApplicationViewModules()
                                                                                            app.WorldPinsModule().GetScreenControlViewModel(),
                                                                                            app.ModalityModule().GetModalityModel(),
                                                                                            app.PinDiameter(),
-                                                                                           m_pScreenProperties->GetPixelScale());
+                                                                                           screenProperties.GetPixelScale());
 
 
 	m_pCompassViewModule = Eegeo_NEW(ExampleApp::Compass::CompassViewModule)(app.CompassModule().GetCompassViewModel(),
-	                       *m_pScreenProperties,
+	                       screenProperties,
 	                       m_uiToNativeMessageBus,
 	                       m_nativeToUiMessageBus);
 
@@ -230,13 +223,13 @@ void AppHost::CreateApplicationViewModules()
     m_pMyPinCreationInitiationViewModule = Eegeo_NEW(ExampleApp::MyPinCreation::MyPinCreationInitiationViewModule)(m_uiToNativeMessageBus,
                                                                                                                    app.MyPinCreationModule().GetMyPinCreationInitiationViewModel(),
                                                                                                                    app.MyPinCreationModule().GetMyPinCreationConfirmationViewModel(),
-                                                                                                                   *m_pScreenProperties);
+                                                                                                                   screenProperties);
     
     m_pMyPinCreationConfirmationViewModule = Eegeo_NEW(ExampleApp::MyPinCreation::MyPinCreationConfirmationViewModule)(m_uiToNativeMessageBus,
                                                                                                                        app.MyPinCreationModule().GetMyPinCreationConfirmationViewModel(),
                                                                                                                        app.MyPinCreationModule().GetMyPinCreationCompositeViewModel(),
                                                                                                                        app.MyPinCreationDetailsModule().GetMyPinCreationDetailsViewModel(),
-                                                                                                                       *m_pScreenProperties);
+                                                                                                                       screenProperties);
     
     m_pMyPinCreationDetailsViewModule = Eegeo_NEW(ExampleApp::MyPinCreationDetails::MyPinCreationDetailsViewModule)(m_uiToNativeMessageBus,
                                                                                                                     app.MyPinCreationDetailsModule().GetMyPinCreationDetailsViewModel());

@@ -31,18 +31,22 @@ AppRunner::~AppRunner()
 
 void AppRunner::CreateAppHost()
 {
-	if(m_pAppHost == NULL && m_displayService.IsDisplayAvailable())
-	{
-		m_pAppHost = Eegeo_NEW(AppHost)
-		             (
-		                 m_viewController,
-		                 m_pView,
-		                 m_displayService.GetDisplayWidth(),
-		                 m_displayService.GetDisplayHeight(),
-		                 m_displayService.GetDisplayDpi(),
-		                 m_displayService.GetPixelScale()
-		             );
-	}
+    if (m_pAppHost == NULL && m_displayService.IsDisplayAvailable())
+    {
+        const Eegeo::Rendering::ScreenProperties& screenProperties =
+        Eegeo::Rendering::ScreenProperties::Make(
+                                                 m_displayService.GetDisplayWidth(),
+                                                 m_displayService.GetDisplayHeight(),
+                                                 m_displayService.GetPixelScale(),
+                                                 m_displayService.GetDisplayDpi());
+        
+        m_pAppHost = Eegeo_NEW(AppHost)
+        (
+            m_viewController,
+            m_pView,
+            screenProperties
+        );
+    }
 }
 
 void AppRunner::Pause()
@@ -71,17 +75,7 @@ void AppRunner::ReleaseDisplay()
 
 bool AppRunner::TryBindDisplay()
 {
-	if(m_displayService.TryBindDisplay((GLKView&)*[&m_viewController view]))
-	{
-		if(m_pAppHost != NULL)
-		{
-			m_pAppHost->SetViewportOffset(0, 0);
-		}
-
-		return true;
-	}
-
-	return false;
+	return m_displayService.TryBindDisplay((GLKView&)*[&m_viewController view]);
 }
 
 void AppRunner::Update(float deltaSeconds)
@@ -96,6 +90,23 @@ void AppRunner::Update(float deltaSeconds)
 	}
 }
 
+void AppRunner::NotifyViewLayoutChanged()
+{
+    if (m_displayService.IsDisplayAvailable())
+    {
+        m_displayService.UpdateDisplayDimensions();
+        
+        const Eegeo::Rendering::ScreenProperties& screenProperties =
+        Eegeo::Rendering::ScreenProperties::Make(
+                                                 m_displayService.GetDisplayWidth(),
+                                                 m_displayService.GetDisplayHeight(),
+                                                 m_displayService.GetPixelScale(),
+                                                 m_displayService.GetDisplayDpi());
+        
+        m_pAppHost->NotifyScreenPropertiesChanged(screenProperties);
+    }
+}
+
 bool AppRunner::IsRunning()
 {
 	if(m_pAppHost == NULL)
@@ -108,12 +119,5 @@ bool AppRunner::IsRunning()
 
 bool AppRunner::ShouldAutoRotateToInterfaceOrientation(UIInterfaceOrientation interfaceOrientation)
 {
-	if (m_displayService.IsPortraitAspect())
-	{
-		return (interfaceOrientation == UIInterfaceOrientationPortrait);
-	}
-	else
-	{
-		return (interfaceOrientation == UIInterfaceOrientationLandscapeLeft || interfaceOrientation == UIInterfaceOrientationLandscapeRight);
-	}
+    return true;
 }

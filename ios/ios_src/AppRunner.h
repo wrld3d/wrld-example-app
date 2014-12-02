@@ -25,7 +25,10 @@ public:
 	void Resume();
 	void Update(float deltaSeconds);
 
-	bool ShouldAutoRotateToInterfaceOrientation(UIInterfaceOrientation interfaceOrientation);
+   
+    void NotifyViewLayoutChanged();
+    
+    bool ShouldAutoRotateToInterfaceOrientation(UIInterfaceOrientation interfaceOrientation);
 
 private:
 	ViewController& m_viewController;
