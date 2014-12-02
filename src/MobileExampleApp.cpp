@@ -454,7 +454,6 @@ namespace ExampleApp
 		m_pWorldPinsModule = Eegeo_NEW(ExampleApp::WorldPins::WorldPinsModule)(m_pPinsModule->GetRepository(),
                                                                                m_pPinsModule->GetController(),
                                                                                mapModule.GetEnvironmentFlatteningService(),
-                                                                               m_screenProperties,
                                                                                m_identityProvider,
                                                                                m_nativeToUiMessageBus,
                                                                                m_uiToNativeMessageBus);

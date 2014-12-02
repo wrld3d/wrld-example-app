@@ -16,11 +16,9 @@ namespace ExampleApp
 	{
 		WorldPinsScaleController::WorldPinsScaleController(IWorldPinsRepository& worldPinsRepository,
                                                            WorldPins::IWorldPinsService& worldPinsService,
-                                                           const Eegeo::Rendering::ScreenProperties& screenProperties,
                                                            ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus)
 			: m_worldPinsRepository(worldPinsRepository)
 			, m_worldPinsService(worldPinsService)
-			, m_screenProperties(screenProperties)
             , m_uiToNativeMessageBus(uiToNativeMessageBus)
             , m_visibilityMessageHandlerBinding(this, &WorldPinsScaleController::HandleVisibilityChange)
 			, m_modality(0.f)
@@ -71,8 +69,8 @@ namespace ExampleApp
 			Eegeo::v2 screenLocation;
 			GetScreenLocation(worldPinItemModel, screenLocation, renderCamera);
 
-			const float ratioX = screenLocation.GetX() / m_screenProperties.GetScreenWidth();
-			const float ratioY = screenLocation.GetY() / m_screenProperties.GetScreenHeight();
+			const float ratioX = screenLocation.GetX() / renderCamera.GetViewportWidth();
+			const float ratioY = screenLocation.GetY() / renderCamera.GetViewportHeight();
 			const bool shouldHide = (ratioX < 0.1f) || (ratioX > 0.9f) || (ratioY < 0.15f) || (ratioY > 0.9f);
 
 			if(shouldHide)

@@ -16,7 +16,6 @@ namespace ExampleApp
         WorldPinsModule::WorldPinsModule(Eegeo::Pins::PinRepository& pinRepository,
                                          Eegeo::Pins::PinController& pinController,
                                          const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
-                                         const Eegeo::Rendering::ScreenProperties& screenProperties,
                                          Eegeo::Helpers::IIdentityProvider& identityProvider,
                                          ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus,
                                          ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus)
@@ -33,7 +32,6 @@ namespace ExampleApp
             
             m_pWorldPinsScaleController = Eegeo_NEW(WorldPinsScaleController)(*m_pWorldPinsRepository,
                                                                               *m_pWorldPinsService,
-                                                                              screenProperties,
                                                                               uiToNativeMessageBus);
             
             m_pWorldPinsInFocusViewModel = Eegeo_NEW(WorldPinInFocusViewModel)(identityProvider.GetNextIdentity(),
