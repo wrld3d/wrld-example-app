@@ -6,6 +6,7 @@
 #include "GlobeCamera.h"
 #include "Location.h"
 #include "VectorMath.h"
+#include "Terrain.h"
 
 namespace ExampleApp
 {
@@ -16,7 +17,8 @@ namespace ExampleApp
 		public:
 
 			CameraTransitionController(Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& cameraController,
-			                           Eegeo::Location::NavigationService& navigationService);
+			                           Eegeo::Location::NavigationService& navigationService,
+                                       Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider);
 
 			void StartTransitionTo(Eegeo::dv3 newInterestPoint, double distanceFromInterest, bool jumpIfFar=true);
 			void StartTransitionTo(Eegeo::dv3 newInterestPoint, double distanceFromInterest, float newHeadingRadians, bool jumpIfFar=true);
@@ -34,6 +36,7 @@ namespace ExampleApp
 
 			Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& m_cameraController;
 			Eegeo::Location::NavigationService& m_navigationService;
+            Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& m_terrainHeightProvider;
 			Eegeo::dv3 m_startTransitionInterestPointEcef;
 			Eegeo::dv3 m_endTransitionInterestPointEcef;
 			double m_startInterestDistance;
