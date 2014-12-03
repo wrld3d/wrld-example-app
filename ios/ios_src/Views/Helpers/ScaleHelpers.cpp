@@ -12,7 +12,7 @@ namespace ExampleApp
             float GetScaleTweakValue()
             {
                 float iphoneTweakScale = 1.0f;
-                if (App::IsDevicePhone())
+                if (App::IsDeviceSmall())
                 {
                     iphoneTweakScale = 2.f/3.f;
                 }

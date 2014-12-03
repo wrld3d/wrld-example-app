@@ -87,7 +87,7 @@
         
         self.pFooterShadow = ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pFooterContainer, "shadow_03", 0.f, 0.f, 0, 0);
         
-        m_usePopover = !App::IsDevicePhone();
+        m_usePopover = !App::IsDeviceSmall();
         
         [self layoutSubviews];
         [self setTouchExclusivity: self];
@@ -243,7 +243,7 @@
     self.pPoiDescriptionBox.layer.borderWidth = 2.f;
     [self.pPoiDescriptionBox setDelegate: self];
     
-    if(App::IsDevicePhone())
+    if(App::IsDeviceSmall())
     {
         [self addDoneToolBarToKeyboard :self.pPoiDescriptionBox];
     }
