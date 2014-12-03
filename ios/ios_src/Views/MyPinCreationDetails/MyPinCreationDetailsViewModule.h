@@ -7,6 +7,7 @@
 #include "MyPinCreationDetails.h"
 #include "MyPinCreation.h"
 #include "UiToNativeMessageBus.h"
+#include "IConnectivityService.h"
 
 namespace ExampleApp
 {
@@ -16,7 +17,8 @@ namespace ExampleApp
         {
         public:
             MyPinCreationDetailsViewModule(ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
-                                           IMyPinCreationDetailsViewModel& myPinCreationDetailsViewModel);
+                                           IMyPinCreationDetailsViewModel& myPinCreationDetailsViewModel,
+                                           Eegeo::Web::IConnectivityService& connectivityService);
             
             ~MyPinCreationDetailsViewModule();
             

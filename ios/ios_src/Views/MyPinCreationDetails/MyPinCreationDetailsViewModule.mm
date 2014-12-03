@@ -8,10 +8,12 @@ namespace ExampleApp
     namespace MyPinCreationDetails
     {
         MyPinCreationDetailsViewModule::MyPinCreationDetailsViewModule(ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
-                                                                       IMyPinCreationDetailsViewModel& myPinCreationDetailsViewModel)
+                                                                       IMyPinCreationDetailsViewModel& myPinCreationDetailsViewModel,
+                                                                       Eegeo::Web::IConnectivityService& connectivityService)
         {
             m_pController = [[MyPinCreationDetailsViewController alloc] initWithParams:&uiToNativeMessageBus
-                                                                                      :&myPinCreationDetailsViewModel];
+                                                                                      :&myPinCreationDetailsViewModel
+                                                                                      :&connectivityService];
         }
         
         MyPinCreationDetailsViewModule::~MyPinCreationDetailsViewModule()

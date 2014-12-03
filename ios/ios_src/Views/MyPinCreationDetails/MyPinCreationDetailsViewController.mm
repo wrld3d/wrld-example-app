@@ -13,14 +13,17 @@
 
 - (id)initWithParams:(ExampleApp::ExampleAppMessaging::UiToNativeMessageBus*) pUiToNativeMessageBus
                     :(ExampleApp::MyPinCreationDetails::IMyPinCreationDetailsViewModel*)pViewModel
+                    :(Eegeo::Web::IConnectivityService*)pConnectivityService
 {
     if(self = [super init])
     {
         m_pUiToNativeMessageBus = pUiToNativeMessageBus;
         m_pViewModel = pViewModel;
-        m_pInterop = Eegeo_NEW(ExampleApp::MyPinCreationDetails::MyPinCreationDetailsViewControllerInterop)(self, *m_pViewModel);
+        m_pInterop = Eegeo_NEW(ExampleApp::MyPinCreationDetails::MyPinCreationDetailsViewControllerInterop)(self, *m_pViewModel, *pConnectivityService);
         
-        self.pMyPinCreationDetailsView = [[[MyPinCreationDetailsView alloc] initWithController:self] autorelease];
+        self.pMyPinCreationDetailsView = [[[MyPinCreationDetailsView alloc] initWithController: self
+                                                                        andNetworkConnectivity: pConnectivityService->HasConnectivity()] autorelease];
+        
         [self.pMyPinCreationDetailsView setFrame:[self view].bounds];
         self.view = self.pMyPinCreationDetailsView;
 
@@ -89,6 +92,12 @@
                                                                        shouldShare);
     
     m_pUiToNativeMessageBus->Publish(message);
+}
+
+- (void) setNetworkConnectivityState:(BOOL)hasConnectivity
+{
+    [self.pMyPinCreationDetailsView setHasNetworkConnectivity: hasConnectivity
+                                                             : m_pViewModel->IsOpen()];
 }
 
 @end
