@@ -88,6 +88,7 @@ AppHost::AppHost(
 	,m_pJpegLoader(NULL)
 	,m_pScreenProperties(NULL)
 	,m_pAndroidLocationService(NULL)
+	,m_pAndroidConnectivityService(NULL)
 	,m_nativeState(nativeState)
 	,m_androidInputBoxFactory(&nativeState)
 	,m_androidKeyboardInputFactory(&nativeState, m_inputHandler)
@@ -121,6 +122,7 @@ AppHost::AppHost(
 	Eegeo::AssertHandler::BreakOnAssert = true;
 
 	m_pAndroidLocationService = Eegeo_NEW(AndroidLocationService)(&nativeState);
+	m_pAndroidConnectivityService = Eegeo_NEW(AndroidConnectivityService)(&nativeState);
 
 	m_pScreenProperties = Eegeo_NEW(Eegeo::Rendering::ScreenProperties)(displayWidth, displayHeight, 1.0f, nativeState.deviceDpi);
 
@@ -194,6 +196,9 @@ AppHost::~AppHost()
 
 	Eegeo_DELETE m_pScreenProperties;
 	m_pScreenProperties = NULL;
+
+	Eegeo_DELETE m_pAndroidConnectivityService;
+	m_pAndroidConnectivityService = NULL;
 
 	Eegeo_DELETE m_pAndroidLocationService;
 	m_pAndroidLocationService = NULL;
@@ -427,7 +432,8 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
 								m_nativeState,
 								app.MyPinCreationModule().GetMyPinCreationModel(),
 								app.MyPinCreationDetailsModule().GetMyPinCreationDetailsViewModel(),
-								m_uiToNativeMessageBus
+								m_uiToNativeMessageBus,
+								*m_pAndroidConnectivityService
 							);
 
 	m_pMyPinDetailsViewModule = Eegeo_NEW(ExampleApp::MyPinDetails::MyPinDetailsViewModule)(

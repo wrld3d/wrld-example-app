@@ -16,19 +16,23 @@ namespace ExampleApp
             	AndroidNativeState& nativeState,
             	MyPinCreation::IMyPinCreationModel& model,
             	MyPinCreationDetails::IMyPinCreationDetailsViewModel& viewModel,
-				ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus
+				ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
+				Eegeo::Web::IConnectivityService& connectivityService
             )
     	: m_nativeState(nativeState)
     	, m_model(model)
     	, m_viewModel(viewModel)
     	, m_uiToNativeMessageBus(uiToNativeMessageBus)
+    	, m_connectivityService(connectivityService)
     	, m_pOpenedCallback(Eegeo_NEW(Eegeo::Helpers::TCallback0<MyPinCreationDetailsViewController>)(this, &MyPinCreationDetailsViewController::Open))
     	, m_pClosedCallback(Eegeo_NEW(Eegeo::Helpers::TCallback0<MyPinCreationDetailsViewController>)(this, &MyPinCreationDetailsViewController::Close))
+    	, m_networkStateChangedCallback(this, &MyPinCreationDetailsViewController::HandleNetworkStateChanged)
     	{
     		ASSERT_UI_THREAD
 
     		m_viewModel.InsertOpenedCallback(*m_pOpenedCallback);
     		m_viewModel.InsertClosedCallback(*m_pClosedCallback);
+    		m_connectivityService.RegisterConnectivityChangedCallback(m_networkStateChangedCallback);
 
 			AndroidSafeNativeThreadAttachment attached(m_nativeState);
 			JNIEnv* env = attached.envForThread;
@@ -48,6 +52,9 @@ namespace ExampleApp
 			);
 
 			m_uiView = env->NewGlobalRef(instance);
+
+			jmethodID setConnectivityMethod = env->GetMethodID(m_uiViewClass, "setHasNetworkConnectivity", "(Z)V");
+			env->CallVoidMethod(m_uiView, setConnectivityMethod, m_connectivityService.HasConnectivity());
     	}
 
     	MyPinCreationDetailsViewController::~MyPinCreationDetailsViewController()
@@ -56,6 +63,7 @@ namespace ExampleApp
 
     		m_viewModel.RemoveOpenedCallback(*m_pOpenedCallback);
     		m_viewModel.RemoveClosedCallback(*m_pClosedCallback);
+    		m_connectivityService.UnregisterConnectivityChangedCallback(m_networkStateChangedCallback);
 
 			Eegeo_DELETE m_pOpenedCallback;
 			Eegeo_DELETE m_pClosedCallback;
@@ -128,6 +136,15 @@ namespace ExampleApp
     				));
 
 			m_viewModel.Close();
+    	}
+
+    	void MyPinCreationDetailsViewController::HandleNetworkStateChanged(const bool& hasConnectivity)
+    	{
+    		AndroidSafeNativeThreadAttachment attached(m_nativeState);
+			JNIEnv* env = attached.envForThread;
+
+			jmethodID setConnectivityMethod = env->GetMethodID(m_uiViewClass, "setHasNetworkConnectivity", "(Z)V");
+			env->CallVoidMethod(m_uiView, setConnectivityMethod, hasConnectivity);
     	}
     }
 }

@@ -4,6 +4,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -12,6 +14,8 @@ import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -42,6 +46,7 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
 	
 	private Uri m_currentImageUri = null;
 	private boolean m_awaitingIntentResponse;
+	private boolean m_hasNetworkConnectivity = false;
 
 	private final int JPEG_QUALITY = 90;
 	private final String TERMS_AND_CONDITIONS_LINK = "http://sdk.eegeo.com";
@@ -82,6 +87,14 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
 		m_title = (EditText)m_view.findViewById(R.id.poi_creation_details_title);
 		m_description = (EditText)m_view.findViewById(R.id.poi_creation_details_description);
 		m_shouldShareButton = (ToggleButton)m_view.findViewById(R.id.poi_creation_details_share_togglebutton);
+		
+		m_shouldShareButton.setOnCheckedChangeListener(new OnCheckedChangeListener(){
+			@Override
+			public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
+				verifyShareSettingsValid();
+			}
+		});
+		
 		m_termsAndConditionsLink = (TextView)m_view.findViewById(R.id.poi_creation_details_terms_conditions_link);
 		m_scrollSection = (ScrollView)m_view.findViewById(R.id.poi_creation_details_scroll_section);
 		
@@ -106,9 +119,11 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
 		m_title.setText("");
 		m_description.setText("");
 		
+		m_shouldShareButton.setChecked(m_hasNetworkConnectivity);
+		
 		m_currentImageUri = null;
 		
-		m_awaitingIntentResponse = false;;
+		m_awaitingIntentResponse = false;
 		
 		m_scrollSection.setScrollY(0);
 	}
@@ -200,9 +215,6 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
 			{
 				e.printStackTrace();
 			}
-			
-			
-			
 		}
 		else if(requestCode == PhotoIntentDispatcher.SELECT_PHOTO_FROM_GALLERY && resultCode == MainActivity.RESULT_OK)
 		{
@@ -252,5 +264,36 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
 		return bitmap;
 	}
 	
+	private void verifyShareSettingsValid()
+	{
+		if (m_shouldShareButton.isChecked() && !m_hasNetworkConnectivity)
+		{
+			AlertDialog.Builder builder = new AlertDialog.Builder(m_activity);
+			builder.setTitle("No network connection")
+				   .setMessage("Pins cannot be shared when no network connection is available")
+			       .setCancelable(false)
+			       .setPositiveButton("Dismiss", new DialogInterface.OnClickListener() {
+			           public void onClick(DialogInterface dialog, int id) {
+			           }
+			       });
+			AlertDialog alert = builder.create();
+			alert.show();
+			
+			m_shouldShareButton.setChecked(false);
+		}
+	}
 	
+	public void setHasNetworkConnectivity(boolean hasNetworkConnectivity)
+	{
+		m_hasNetworkConnectivity = hasNetworkConnectivity;
+		
+		if (m_view.getVisibility() == View.VISIBLE)
+		{
+			verifyShareSettingsValid();
+		}
+		else
+		{
+			m_shouldShareButton.setChecked(m_hasNetworkConnectivity);
+		}
+	}
 }

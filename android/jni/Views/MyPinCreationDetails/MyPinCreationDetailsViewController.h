@@ -8,6 +8,7 @@
 #include "MyPinCreation.h"
 #include "ICallback.h"
 #include "UiToNativeMessageBus.h"
+#include "IConnectivityService.h"
 #include <string>
 
 namespace ExampleApp
@@ -21,7 +22,8 @@ namespace ExampleApp
 				AndroidNativeState& nativeState,
 	           	MyPinCreation::IMyPinCreationModel& model,
 	          	MyPinCreationDetails::IMyPinCreationDetailsViewModel& viewModel,
-				ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus
+				ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
+				Eegeo::Web::IConnectivityService& connectivityService
 			);
 			~MyPinCreationDetailsViewController();
 
@@ -45,10 +47,13 @@ namespace ExampleApp
 			MyPinCreation::IMyPinCreationModel& m_model;
 			MyPinCreationDetails::IMyPinCreationDetailsViewModel& m_viewModel;
 			ExampleAppMessaging::UiToNativeMessageBus& m_uiToNativeMessageBus;
+			Eegeo::Web::IConnectivityService& m_connectivityService;
 
 			Eegeo::Helpers::ICallback0* m_pOpenedCallback;
 			Eegeo::Helpers::ICallback0* m_pClosedCallback;
-		};
+			Eegeo::Helpers::TCallback1<MyPinCreationDetailsViewController, const bool&> m_networkStateChangedCallback;
 
+			void HandleNetworkStateChanged(const bool& hasConnectivity);
+		};
 	}
 }
