@@ -8,6 +8,7 @@
 #include "EarthConstants.h"
 #include "Quaternion.h"
 #include "NavigationService.h"
+#include "TerrainHeightProvider.h"
 
 namespace ExampleApp
 {
@@ -34,9 +35,11 @@ namespace ExampleApp
 		}
 
 		CameraTransitionController::CameraTransitionController(Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& cameraController,
-		        Eegeo::Location::NavigationService& navigationService)
+		        Eegeo::Location::NavigationService& navigationService,
+                Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider)
 			: m_cameraController(cameraController)
 			, m_navigationService(navigationService)
+            , m_terrainHeightProvider(terrainHeightProvider)
 			, m_transitionTime(0.f)
 			, m_transitionDuration(0.f)
 			, m_isTransitioning(false)
@@ -130,9 +133,13 @@ namespace ExampleApp
 
 			float interpolatedDistance = Eegeo::Math::Lerp(m_startInterestDistance, m_endInterestDistance, transitionParam);
 			Eegeo::dv3 interpolatedInterestPosition = Eegeo::dv3::Lerp(m_startTransitionInterestPointEcef, m_endTransitionInterestPointEcef, transitionParam);
-			if(interpolatedInterestPosition.LengthSq() < Eegeo::Space::EarthConstants::RadiusSquared)
+            float currentAssumedAltitude = 0;
+            
+            m_terrainHeightProvider.TryGetHeight(interpolatedInterestPosition, 0, currentAssumedAltitude);
+            
+			if(interpolatedInterestPosition.Length() < Eegeo::Space::EarthConstants::Radius + currentAssumedAltitude)
 			{
-				interpolatedInterestPosition = interpolatedInterestPosition.Norm() * Eegeo::Space::EarthConstants::Radius;
+				interpolatedInterestPosition = interpolatedInterestPosition.Norm() * (Eegeo::Space::EarthConstants::Radius + currentAssumedAltitude);
 			}
 
 			float interpolatedHeading = Eegeo::Math::Lerp<float>(m_startInterestHeading, m_endInterestHeading, transitionParam);

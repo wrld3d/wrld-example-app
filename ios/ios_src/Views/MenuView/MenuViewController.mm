@@ -352,6 +352,7 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 3;
         cell.selectionStyle = UITableViewCellSelectionStyleGray;
         
         UIImageView* pShadowView = [[[UIImageView alloc] initWithImage:self.pSubItemShadow] autorelease];
+        pShadowView.autoresizingMask = m_isRightMenu ? UIViewAutoresizingFlexibleRightMargin : UIViewAutoresizingFlexibleLeftMargin;
         pShadowView.tag = SubItemCellShadowViewTag;
         pShadowView.frame = CGRectMake(0, 0, cell.bounds.size.width, 32);
         [cell addSubview:pShadowView];
@@ -359,6 +360,7 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 3;
         UIImageView* pShadowFlippedView = [[[UIImageView alloc] initWithImage:self.pSubItemShadowFlipped] autorelease];
         pShadowFlippedView.tag = SubItemCellShadowFlippedViewTag;
         pShadowFlippedView.frame = CGRectMake(0, 0, cell.bounds.size.width, 32);
+        pShadowFlippedView.autoresizingMask = m_isRightMenu ? UIViewAutoresizingFlexibleRightMargin : UIViewAutoresizingFlexibleLeftMargin;
         [cell addSubview:pShadowFlippedView];
         
         UIImageView* pOpenableMenuArrowView = [[[UIImageView alloc] initWithImage:self.pOpenableMenuArrow] autorelease];

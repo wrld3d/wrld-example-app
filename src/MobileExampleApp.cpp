@@ -187,7 +187,7 @@ namespace ExampleApp
 
 		m_pGlobeCameraController->SetView(cameraInterestBasis, cameraControllerDistanceFromInterestPointMeters);
 
-		m_pCameraTransitionController = Eegeo_NEW(ExampleApp::CameraTransitions::CameraTransitionController)(*m_pGlobeCameraController, *m_pNavigationService);
+		m_pCameraTransitionController = Eegeo_NEW(ExampleApp::CameraTransitions::CameraTransitionController)(*m_pGlobeCameraController, *m_pNavigationService, terrainModelModule.GetTerrainHeightProvider());
 
 		CreateApplicationModelModules();
 
