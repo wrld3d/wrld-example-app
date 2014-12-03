@@ -173,7 +173,6 @@
     self.pTitleText.placeholder = @"Name your pin...";
     self.pTitleText.textAlignment = NSTextAlignmentLeft;
     self.pTitleText.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-    self.pTitleText.clearsOnBeginEditing = YES;
     self.pTitleText.returnKeyType = UIReturnKeyDone;
     [self.pTitleText setDelegate: self];
     
