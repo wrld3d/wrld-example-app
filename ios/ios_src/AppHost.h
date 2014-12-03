@@ -35,6 +35,7 @@
 #include "UiToNativeMessageBus.h"
 #include "NativeToUiMessageBus.h"
 #include "MyPinDetailsViewIncludes.h"
+#include "iOSConnectivityService.h"
 
 @class ViewController;
 class AppInputDelegate;
@@ -69,6 +70,7 @@ private:
 	Eegeo::Helpers::Jpeg::IJpegLoader* m_pJpegLoader;
 	Eegeo::Rendering::ScreenProperties* m_pScreenProperties;
 	Eegeo::iOS::iOSLocationService* m_piOSLocationService;
+    Eegeo::iOS::iOSConnectivityService* m_piOSConnectivityService;
 	AppInputDelegate* m_pAppInputDelegate;
 	AppLocationDelegate* m_pAppLocationDelegate;
 

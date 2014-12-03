@@ -9,7 +9,8 @@
 
 @implementation MyPinCreationDetailsView
 
-- (id)initWithController:(MyPinCreationDetailsViewController*)controller
+- (id) initWithController:(MyPinCreationDetailsViewController *)controller
+   andNetworkConnectivity:(BOOL) hasConnectivity
 {
     self = [super init];
     
@@ -23,6 +24,8 @@
         m_controlContainerHeight = 0.f;
         m_controlContainerWidth = 0.f;
         m_yCursor = 0.f;
+        
+        m_hasNetworkConnectivity = hasConnectivity;
         
         self.pControlContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         [self addSubview: self.pControlContainer];
@@ -57,6 +60,8 @@
         self.pPlaceholderImage = [UIImage imageNamed: @"image_blank.png"];
      
         self.pCheckbox = [[[UIButton alloc] initWithFrame: CGRectMake(0, 0, 0, 0)] autorelease];
+        self.pCheckbox.selected = m_hasNetworkConnectivity;
+        [self.pCheckbox addTarget:self action:@selector(onCheckboxPressed:) forControlEvents:UIControlEventTouchUpInside];
         [self.pBodyContainer addSubview: self.pCheckbox];
         
         self.pShareLabel = [[[UILabel alloc] initWithFrame: CGRectMake(0, 0, 0, 0)] autorelease];
@@ -195,8 +200,6 @@
     self.pCheckbox.frame = CGRectMake(checkBoxX, shareBarY, checkboxSize, checkboxSize);
     [self.pCheckbox setBackgroundImage:[UIImage imageNamed:@"button_checkbox_off.png"] forState:UIControlStateNormal];
     [self.pCheckbox setBackgroundImage:[UIImage imageNamed:@"button_checkbox_on.png"] forState:UIControlStateSelected];
-    self.pCheckbox.selected = YES;
-    [self.pCheckbox addTarget:self action:@selector(onCheckboxPressed:) forControlEvents:UIControlEventTouchUpInside];
     
     const float shareLabelWidth = 45.f;
     const float shareLabelHeight = 30.f;
@@ -319,7 +322,7 @@
     
     [self resizeImageViewToFit:self.pPlaceholderImage.size.width :self.pPlaceholderImage.size.height];
     
-    self.pCheckbox.selected = YES;
+    self.pCheckbox.selected = m_hasNetworkConnectivity;
     m_imageAttached = NO;
     [self.pBodyScrollView setContentOffset:
      CGPointMake(0, -self.pBodyScrollView.contentInset.top) animated:YES];
@@ -328,6 +331,7 @@
 - (void) onCheckboxPressed:(UIButton *) sender
 {
     [sender setSelected:!sender.selected];
+    [self verifyShareSettingsValid];
 }
 
 -(void) onGalleryButtonPressed:(UIButton *)sender
@@ -431,8 +435,6 @@
     imagePicker.navigationBarHidden = YES;
     
     [m_pController presentViewController:imagePicker animated:YES completion:nil];
-    
-//    [imagePicker release];
 }
 
 - (void) onConfirmButtonPressed:(UIButton *)sender
@@ -566,6 +568,36 @@
         return (newLength <= 100);
     }
     else return YES;
+}
+
+- (void) setHasNetworkConnectivity: (BOOL) hasNetworkConnectivity
+                                  : (BOOL) shouldVerifyShareSettings
+{
+    m_hasNetworkConnectivity = hasNetworkConnectivity;
+
+    if (shouldVerifyShareSettings)
+    {
+        [self verifyShareSettingsValid];
+    }
+    else
+    {
+        self.pCheckbox.selected = m_hasNetworkConnectivity;
+    }
+}
+
+- (void) verifyShareSettingsValid
+{
+    if (self.pCheckbox.selected && !m_hasNetworkConnectivity)
+    {
+        UIAlertView* alert = [[[UIAlertView alloc] initWithTitle: @"No network connection"
+                                                         message: @"Pins cannot be shared when no network connection is available"
+                                                        delegate: nil
+                                               cancelButtonTitle: @"Dismiss"
+                                               otherButtonTitles: nil] autorelease];
+        
+        [alert show];
+        self.pCheckbox.selected = NO;
+    }
 }
 
 @end
