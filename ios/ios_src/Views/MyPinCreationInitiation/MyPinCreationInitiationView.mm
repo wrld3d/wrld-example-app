@@ -4,6 +4,7 @@
 #include "MathFunc.h"
 #include "UIColors.h"
 #include "ImageHelpers.h"
+#include "ScaleHelpers.h"
 
 @implementation MyPinCreationInitiationView
 
@@ -17,7 +18,7 @@
         m_screenWidth = width/pixelScale;
         m_screenHeight = height/pixelScale;
         
-        m_width = 64 * m_pixelScale;
+        m_width = 64 * m_pixelScale * ExampleApp::Helpers::ScaleHelpers::GetScaleTweakValue();
         m_height = m_width;
         m_yPosBase = m_yPosActive = m_screenHeight - (16 * m_pixelScale) - m_height;;
         m_yPosActive = m_screenHeight - (16 * m_pixelScale) - m_height;

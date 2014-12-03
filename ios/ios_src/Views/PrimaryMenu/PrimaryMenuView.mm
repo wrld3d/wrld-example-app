@@ -7,6 +7,7 @@
 #include "CellConstants.h"
 
 #include "MenuViewControllerInterop.h"
+#include "ScaleHelpers.h"
 
 @implementation PrimaryMenuView
 
@@ -42,17 +43,19 @@
     self.pMenuContainer = [[[UIView alloc] initWithFrame:CGRectMake(m_mainContainerX, m_mainContainerY, m_mainContainerWidth, m_mainContainerHeight)] autorelease];
     self.pMenuContainer.backgroundColor = [UIColor clearColor];
     
+    float iphoneTweakScale = ExampleApp::Helpers::ScaleHelpers::GetScaleTweakValue();
+    
     m_dragTabX = m_mainContainerOnScreenWidth;
     m_dragTabY = m_mainContainerY + (0.f * m_pixelScale);
-    m_dragTabWidth = (64.f * m_pixelScale);
-    m_dragTabHeight = (64.f * m_pixelScale);
+    m_dragTabWidth = (64.f * m_pixelScale * iphoneTweakScale);
+    m_dragTabHeight = (64.f * m_pixelScale * iphoneTweakScale);
     self.pDragTab = [[[UIView alloc] initWithFrame:CGRectMake(m_dragTabX, m_dragTabY, m_dragTabWidth, m_dragTabHeight)] autorelease];
     self.pDragTab.backgroundColor = ExampleApp::Helpers::ColorPalette::GoldTone;
     
     const float menuHeaderStubX = m_mainContainerVisibleOnScreenWhenClosedX;
     const float menuHeaderStubY = m_mainContainerVisibleOnScreenWhenClosedY;
     const float menuHeaderStubWidth = m_mainContainerOnScreenWidth;
-    const float menuHeaderStubHeight = 64 * m_pixelScale;
+    const float menuHeaderStubHeight = 64 * m_pixelScale * iphoneTweakScale;
     self.pMenuHeaderStub = [[[UIView alloc] initWithFrame:CGRectMake(menuHeaderStubX, menuHeaderStubY, menuHeaderStubWidth, menuHeaderStubHeight)] autorelease];
     self.pMenuHeaderStub.backgroundColor = ExampleApp::Helpers::ColorPalette::WhiteTone;
     

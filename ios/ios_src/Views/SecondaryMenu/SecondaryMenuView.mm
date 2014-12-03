@@ -7,6 +7,7 @@
 #include "CellConstants.h"
 
 #include "MenuViewControllerInterop.h"
+#include "ScaleHelpers.h"
 
 @implementation SecondaryMenuView
 
@@ -42,17 +43,19 @@
 	self.pMenuContainer = [[[UIView alloc] initWithFrame:CGRectMake(m_mainContainerX, m_mainContainerY, m_mainContainerWidth, m_mainContainerHeight)] autorelease];
 	self.pMenuContainer.backgroundColor = [UIColor clearColor];
 
+    float iphoneTweakScale = ExampleApp::Helpers::ScaleHelpers::GetScaleTweakValue();
+    
 	m_dragTabY = m_mainContainerY + (0.f * m_pixelScale);
-	m_dragTabWidth = (64.f * m_pixelScale);
+	m_dragTabWidth = (64.f * m_pixelScale * iphoneTweakScale);
 	m_dragTabX = m_mainContainerX - m_dragTabWidth;
-	m_dragTabHeight = (64.f * m_pixelScale);
+	m_dragTabHeight = (64.f * m_pixelScale * iphoneTweakScale);
 	self.pDragTab = [[[UIView alloc] initWithFrame:CGRectMake(m_dragTabX, m_dragTabY, m_dragTabWidth, m_dragTabHeight)] autorelease];
 	self.pDragTab.backgroundColor = ExampleApp::Helpers::ColorPalette::GoldTone;
 
 	m_searchBoxContainerX = m_mainContainerVisibleOnScreenWhenClosedX;
 	m_searchBoxContainerY = m_mainContainerVisibleOnScreenWhenClosedY;
 	m_searchBoxContainerWidth = m_mainContainerOnScreenWidth;
-	m_searchBoxContainerHeight = 64 * m_pixelScale;
+	m_searchBoxContainerHeight = 64 * m_pixelScale * iphoneTweakScale;
 	self.pSearchEditBoxContainer = [[[UIView alloc] initWithFrame:CGRectMake(m_searchBoxContainerX, m_searchBoxContainerY, m_searchBoxContainerWidth, m_searchBoxContainerHeight)] autorelease];
 	self.pSearchEditBoxContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::WhiteTone;
 

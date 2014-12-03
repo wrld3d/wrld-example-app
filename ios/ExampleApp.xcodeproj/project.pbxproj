@@ -32,6 +32,8 @@
 		18ADD8821A23A47D002745C4 /* MyPinSelectedMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18ADD87F1A23A47D002745C4 /* MyPinSelectedMessage.cpp */; };
 		18ADD8851A23AB1E002745C4 /* MyPinSelectedMessageHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18ADD8831A23AB1E002745C4 /* MyPinSelectedMessageHandler.cpp */; };
 		18ADD8861A23AB1E002745C4 /* MyPinSelectedMessageHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18ADD8831A23AB1E002745C4 /* MyPinSelectedMessageHandler.cpp */; };
+		18ADD8891A2CD5CD002745C4 /* ScaleHelpers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18ADD8871A2CD5CD002745C4 /* ScaleHelpers.cpp */; };
+		18ADD88A1A2CD5CD002745C4 /* ScaleHelpers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18ADD8871A2CD5CD002745C4 /* ScaleHelpers.cpp */; };
 		18B5AAD519DC159000BA4A38 /* AboutPageModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18B5A9B319DC158F00BA4A38 /* AboutPageModel.cpp */; };
 		18B5AAD619DC159000BA4A38 /* AboutPageModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18B5A9B319DC158F00BA4A38 /* AboutPageModel.cpp */; };
 		18B5AAD719DC159000BA4A38 /* AboutPageModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18B5A9B519DC158F00BA4A38 /* AboutPageModule.cpp */; };
@@ -686,6 +688,8 @@
 		18ADD8801A23A47D002745C4 /* MyPinSelectedMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPinSelectedMessage.h; sourceTree = "<group>"; };
 		18ADD8831A23AB1E002745C4 /* MyPinSelectedMessageHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MyPinSelectedMessageHandler.cpp; sourceTree = "<group>"; };
 		18ADD8841A23AB1E002745C4 /* MyPinSelectedMessageHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPinSelectedMessageHandler.h; sourceTree = "<group>"; };
+		18ADD8871A2CD5CD002745C4 /* ScaleHelpers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ScaleHelpers.cpp; sourceTree = "<group>"; };
+		18ADD8881A2CD5CD002745C4 /* ScaleHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScaleHelpers.h; sourceTree = "<group>"; };
 		18B5A9B219DC158F00BA4A38 /* AboutPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutPage.h; sourceTree = "<group>"; };
 		18B5A9B319DC158F00BA4A38 /* AboutPageModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AboutPageModel.cpp; sourceTree = "<group>"; };
 		18B5A9B419DC158F00BA4A38 /* AboutPageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutPageModel.h; sourceTree = "<group>"; };
@@ -2107,6 +2111,8 @@
 				18B5ABA519DC159B00BA4A38 /* ImageHelpers.mm */,
 				18B5ABA619DC159B00BA4A38 /* UIColors.h */,
 				18B5ABA719DC159B00BA4A38 /* UIColors.mm */,
+				18ADD8871A2CD5CD002745C4 /* ScaleHelpers.cpp */,
+				18ADD8881A2CD5CD002745C4 /* ScaleHelpers.h */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -3099,6 +3105,7 @@
 				5695FECE1A13C17800F1E6CE /* MyPinCreationDetailsViewModel.cpp in Sources */,
 				18B5AB3A19DC159000BA4A38 /* SearchRefreshService.cpp in Sources */,
 				18CCC8EF1A1523B100DC2D95 /* SearchResultOnMapItemModelSelectedMessage.cpp in Sources */,
+				18ADD88A1A2CD5CD002745C4 /* ScaleHelpers.cpp in Sources */,
 				18CCC8CA1A1523A200DC2D95 /* SearchResultViewClearedObserver.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3331,6 +3338,7 @@
 				5695FECD1A13C17800F1E6CE /* MyPinCreationDetailsViewModel.cpp in Sources */,
 				18B5AB3919DC159000BA4A38 /* SearchRefreshService.cpp in Sources */,
 				18CCC8EE1A1523B100DC2D95 /* SearchResultOnMapItemModelSelectedMessage.cpp in Sources */,
+				18ADD8891A2CD5CD002745C4 /* ScaleHelpers.cpp in Sources */,
 				18CCC8C91A1523A200DC2D95 /* SearchResultViewClearedObserver.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
