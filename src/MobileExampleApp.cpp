@@ -307,6 +307,7 @@ namespace ExampleApp
                                                                                            m_pSecondaryMenuModule->GetSecondaryMenuViewModel(),
                                                                                            m_pSearchModule->GetSearchQueryPerformer(),
                                                                                            m_pSearchResultMenuModule->GetMenuViewModel(),
+                                                                                           m_pSearchModule->GetSearchRefreshService(),
                                                                                            m_nativeToUiMessageBus,
                                                                                            m_uiToNativeMessageBus,
                                                                                            m_pReactionControllerModule->GetReactionControllerModel());

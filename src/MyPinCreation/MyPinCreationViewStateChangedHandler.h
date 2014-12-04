@@ -5,6 +5,7 @@
 #include "IMyPinCreationModel.h"
 #include "UiToNativeMessageBus.h"
 #include "ICallback.h"
+#include "Search.h"
 #include "MyPinCreationViewStateChangedMessage.h"
 
 namespace ExampleApp
@@ -16,12 +17,14 @@ namespace ExampleApp
         public:
             
             MyPinCreationViewStateChangedHandler(IMyPinCreationModel& myPinCreationModel,
+                                                 Search::ISearchRefreshService& searchRefreshService,
                                                  ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus);
             
             ~MyPinCreationViewStateChangedHandler();
 
         private:
             IMyPinCreationModel& m_myPinCreationModel;
+            Search::ISearchRefreshService& m_searchRefreshService;
             ExampleAppMessaging::UiToNativeMessageBus& m_uiToNativeMessageBus;
             
             Eegeo::Helpers::TCallback1<MyPinCreationViewStateChangedHandler, const MyPinCreationViewStateChangedMessage&> m_handler;

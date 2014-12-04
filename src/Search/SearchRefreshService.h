@@ -32,6 +32,7 @@ namespace ExampleApp
 			float m_secondsSincePreviousRefresh;
 			bool m_cameraTransitioning;
 			Eegeo::dv3 m_previousQueryLocationEcef;
+            bool m_enabled;
 
 		public:
 			SearchRefreshService(ISearchService& searchService,
@@ -43,6 +44,8 @@ namespace ExampleApp
 			~SearchRefreshService();
 
 			void TryRefreshSearch(float deltaSeconds, const Eegeo::dv3& ecefLocation);
+            void SetEnabled(bool enabled);
+            const bool IsEnabled() const { return m_enabled; }
 
 		private:
 			void HandleSearchQueryIssued(const SearchQuery& query);
