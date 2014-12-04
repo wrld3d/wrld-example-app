@@ -27,6 +27,7 @@ namespace ExampleApp
 			, m_searchResultsExist(false)
 			, m_secondsSincePreviousRefresh(0.f)
 			, m_cameraTransitioning(false)
+            , m_enabled(true)
 		{
 			m_searchService.InsertOnPerformedQueryCallback(*m_pSearchResultQueryIssuedCallback);
 			m_searchService.InsertOnReceivedQueryResultsCallback(*m_pSearchResultResponseReceivedCallback);
@@ -43,9 +44,18 @@ namespace ExampleApp
 			Eegeo_DELETE m_pSearchResultQueryIssuedCallback;
 			Eegeo_DELETE m_pSearchQueryResultsClearedCallback;
 		}
+        
+        void SearchRefreshService::SetEnabled(bool enabled)
+        {
+            m_enabled = enabled;
+        }
 
 		void SearchRefreshService::TryRefreshSearch(float deltaSeconds, const Eegeo::dv3& ecefLocation)
 		{
+            if (!m_enabled)
+            {
+                return;
+            }
 			if(m_searchResultsExist)
 			{
 				m_secondsSincePreviousRefresh += deltaSeconds;

@@ -45,6 +45,7 @@ namespace ExampleApp
                                                  ExampleApp::Menu::IMenuViewModel& secondaryMenuViewModel,
                                                  ExampleApp::Search::ISearchQueryPerformer& searchQueryPerformer,
                                                  ExampleApp::Menu::IMenuViewModel& searchResultMenuViewModel,
+                                                 Search::ISearchRefreshService& searchRefreshService,
                                                  ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus,
                                                  ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
                                                  ExampleApp::Reaction::IReactionControllerModel& reactionControllerModel)
@@ -54,7 +55,7 @@ namespace ExampleApp
             
             m_pMyPinCreationModelObserver = Eegeo_NEW(MyPinCreationModelObserver)(*m_pMyPinCreationModel, nativeToUiMessageBus);
             
-            m_pMyPinCreationViewStateChangedHandler = Eegeo_NEW(MyPinCreationViewStateChangedHandler)(*m_pMyPinCreationModel, uiToNativeMessageBus);
+            m_pMyPinCreationViewStateChangedHandler = Eegeo_NEW(MyPinCreationViewStateChangedHandler)(*m_pMyPinCreationModel, searchRefreshService, uiToNativeMessageBus);
             
             m_pMyPinCreationViewSavePinHandler = Eegeo_NEW(MyPinCreationViewSavePinHandler)(*m_pMyPinCreationModel, uiToNativeMessageBus);
             

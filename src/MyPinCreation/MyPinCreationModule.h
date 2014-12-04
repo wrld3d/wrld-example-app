@@ -35,6 +35,7 @@ namespace ExampleApp
                               ExampleApp::Menu::IMenuViewModel& secondaryMenuViewModel,
                               ExampleApp::Search::ISearchQueryPerformer& searchQueryPerformer,
                               ExampleApp::Menu::IMenuViewModel& searchResultMenuViewModel,
+                              Search::ISearchRefreshService& searchRefreshService,
                               ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus,
                               ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
                               ExampleApp::Reaction::IReactionControllerModel& reactionControllerModel);
