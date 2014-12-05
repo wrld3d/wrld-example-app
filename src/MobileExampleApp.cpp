@@ -473,24 +473,26 @@ namespace ExampleApp
 
 	void MobileExampleApp::Update(float dt)
 	{
-		Eegeo::EegeoWorld& eegeoWorld = World();
+		Eegeo::EegeoWorld& eegeoWorld(World());
+        Eegeo::dv3 ecefInterestPoint(m_pGlobeCameraController->GetEcefInterestPoint());
+        Eegeo::Camera::RenderCamera& renderCamera(*m_pGlobeCameraController->GetCamera());
 
 		eegeoWorld.EarlyUpdate(dt);
 
 		m_pGlobeCameraController->Update(dt);
 		m_pCameraTransitionController->Update(dt);
         
-        m_pPoiRingModule->GetPoiRingController().Update(dt, *m_pGlobeCameraController->GetCamera(), m_pGlobeCameraController->GetEcefInterestPoint());
+        m_pPoiRingModule->GetPoiRingController().Update(dt, renderCamera, ecefInterestPoint);
 
-		eegeoWorld.Update(dt, *m_pGlobeCameraController->GetCamera(), m_pGlobeCameraController->GetEcefInterestPoint());
+		eegeoWorld.Update(dt, renderCamera, ecefInterestPoint);
 
-		m_pSearchModule->GetSearchRefreshService().TryRefreshSearch(dt, m_pGlobeCameraController->GetEcefInterestPoint());
+		m_pSearchModule->GetSearchRefreshService().TryRefreshSearch(dt, ecefInterestPoint);
 
-		m_pPinsModule->GetController().Update(dt, *m_pGlobeCameraController->GetCamera());
+		m_pPinsModule->GetController().Update(dt, renderCamera);
 
 		if(!eegeoWorld.Initialising())
 		{
-            WorldPinsModule().GetWorldPinsScaleController().Update(dt, *m_pGlobeCameraController->GetCamera());
+            WorldPinsModule().GetWorldPinsScaleController().Update(dt, renderCamera);
 			CompassModule().GetCompassUpdateController().Update(dt);
 		}
 
@@ -501,14 +503,16 @@ namespace ExampleApp
 
 	void MobileExampleApp::Draw (float dt)
 	{
-		Eegeo::EegeoWorld& eegeoWorld = World();
+        Eegeo::EegeoWorld& eegeoWorld = World();
+        Eegeo::dv3 ecefInterestPoint(m_pGlobeCameraController->GetEcefInterestPoint());
+        Eegeo::Camera::RenderCamera& renderCamera(*m_pGlobeCameraController->GetCamera());
 
 		if(!eegeoWorld.Initialising())
 		{
-            WorldPinsModule().GetWorldPinsInFocusController().Update(dt, m_pGlobeCameraController->GetEcefInterestPoint(), *m_pGlobeCameraController->GetCamera());
+            WorldPinsModule().GetWorldPinsInFocusController().Update(dt, ecefInterestPoint, renderCamera);
 		}
 
-		eegeoWorld.Draw(*m_pGlobeCameraController->GetCamera(), m_screenProperties);
+		eegeoWorld.Draw(renderCamera, m_screenProperties);
 
 		if (m_pLoadingScreen != NULL)
 		{
