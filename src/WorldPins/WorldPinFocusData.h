@@ -11,14 +11,14 @@ namespace ExampleApp
         struct WorldPinFocusData
         {
             WorldPinFocusData(const std::string& title, const std::string& subtitle)
-            : m_title(title)
-            , m_subtitle(subtitle)
+            : title(title)
+            , subtitle(subtitle)
             {
                 
             }
             
-            std::string m_title;
-            std::string m_subtitle;
+            std::string title;
+            std::string subtitle;
         };
     }
 }
