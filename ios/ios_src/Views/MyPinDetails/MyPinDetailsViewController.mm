@@ -66,11 +66,14 @@
 
 - (void) handleRemovePinButtonPressed
 {
-    const ExampleApp::MyPins::MyPinModel& myPinModel = m_pMyPinDetailsViewModel->GetMyPinModel();
-    ExampleApp::MyPinDetails::MyPinDetailsViewRemovePinMessage message(myPinModel.Identifier());
-    m_pUiToNativeMessageBus->Publish(message);
-    
-    m_pMyPinDetailsViewModel->Close();
+    if (m_pMyPinDetailsViewModel->IsOpen())
+    {
+        const ExampleApp::MyPins::MyPinModel& myPinModel = m_pMyPinDetailsViewModel->GetMyPinModel();
+        ExampleApp::MyPinDetails::MyPinDetailsViewRemovePinMessage message(myPinModel.Identifier());
+        m_pUiToNativeMessageBus->Publish(message);
+
+        m_pMyPinDetailsViewModel->Close();
+    }
 }
 
 @end

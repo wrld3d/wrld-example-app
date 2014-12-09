@@ -18,7 +18,7 @@ namespace ExampleApp
                                              const WorldPinFocusData& worldPinFocusData)
 			: m_id(id)
 			, m_pSelectionHandler(pSelectionHandler)
-            , m_focusModel(m_id, worldPinFocusData.m_title, worldPinFocusData.m_subtitle)
+            , m_focusModel(m_id, worldPinFocusData.title, worldPinFocusData.subtitle)
 			, m_transitionState(StableHidden)
 			, m_transitionStateValue(0.f)
 		{
