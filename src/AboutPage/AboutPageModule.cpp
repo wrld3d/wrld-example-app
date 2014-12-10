@@ -22,7 +22,7 @@ namespace
 	                                  "\nScott Murray"
 	                                  "\nMark Simpson"
 
-	                                  "\n\nJunior Software Engineer"
+	                                  "\n\nSoftware Engineer"
 	                                  "\nIan Hutchinson"
 
 	                                  "\n\nSenior Artists"
@@ -35,18 +35,15 @@ namespace
 	                                  "\n\nSenior System Tester"
 	                                  "\nRyan Reid"
 
-	                                  "\n\nSystem Tester"
-	                                  "\nMichael Celej"
-
 	                                  "\n\n\nEEGEO SAN FRANCISCO"
 	                                  "\n\nBusiness Development Director"
 	                                  "\nBart Denny"
 
 	                                  "\n\n\nEEGEO LONDON"
-	                                  "\n\nExecutive Chairman"
+	                                  "\n\nChief Executive Officer"
 	                                  "\nIan Hetherington"
 
-	                                  "\n\nChief Financial Officer"
+	                                  "\n\nChief Commercial Officer"
 	                                  "\nJeremy Copp\n"
 
 	                                  "\n\nSource data courtesy of:"
