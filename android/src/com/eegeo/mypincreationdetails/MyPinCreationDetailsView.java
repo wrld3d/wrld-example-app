@@ -7,11 +7,16 @@ import java.io.InputStream;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.net.Uri;
+import android.provider.MediaStore.Images;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -259,9 +264,69 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
 		
 		is = m_activity.getContentResolver().openInputStream(m_currentImageUri);
 		bitmap = BitmapFactory.decodeStream(is, null, bmOptions);
+		int finalWidth = bitmap.getWidth();
+		int finalHeight = bitmap.getHeight();
 		is.close();
 		
+		float rotation = getOrientationRotation();
+		Matrix mtx = new Matrix();
+		mtx.postRotate(rotation);
+		bitmap = Bitmap.createBitmap(bitmap, 0, 0, finalWidth, finalHeight, mtx, true);
 		return bitmap;
+	}
+	
+	private float getOrientationRotation()
+	{
+		float photoRotation = 0;
+		boolean hasRotation = false;
+		String[] projection = { Images.ImageColumns.ORIENTATION };
+		try 
+		{
+			Cursor cursor = m_activity.getContentResolver().query(m_currentImageUri, projection, null, null, null);
+			if(cursor.moveToFirst())
+			{
+				photoRotation = cursor.getInt(0);
+				hasRotation = true;
+			}
+		}
+		catch (Exception e)
+		{
+			Log.d("EEGEO", "Failed to fetch orientation data for " + m_currentImageUri.toString());
+		}
+		
+		if(!hasRotation)
+		{
+			ExifInterface exif;
+			try 
+			{
+				exif = new ExifInterface(m_currentImageUri.getPath());
+			} 
+			catch (IOException e) 
+			{
+				Log.d("EEGEO", "Failed to fetch exif interface for image " + m_currentImageUri.toString());
+				return photoRotation;
+			}
+			
+			int exifRotation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
+			
+			switch(exifRotation)
+			{
+				case ExifInterface.ORIENTATION_ROTATE_90:	
+					photoRotation = 90.0f;
+					break;
+				case ExifInterface.ORIENTATION_ROTATE_180:
+					photoRotation = 180.0f;
+					break;
+				case ExifInterface.ORIENTATION_ROTATE_270:
+					photoRotation = 270.0f;
+					break;
+				default:
+					break;
+				
+			}
+		}
+		
+		return photoRotation;
 	}
 	
 	private void verifyShareSettingsValid()
