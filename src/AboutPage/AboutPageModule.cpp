@@ -62,8 +62,12 @@ namespace
 	                                  "\n\nRLIS Discovery (rlisdiscovery.oregonmetro.gov)."
 	                                  "\n\nGeoBase Canadian Digital Elevation Data - GeoBase®."
 	                                  "\n\nCanVec LCC-2000	- Natural Resources Canada."
-	                                  "\n\nOpen Street Map Buildings & Structures © OpenStreetMap contributors - More information at http://sdk.eegeo.com/osm."
-	                                  ;
+	                                  "\n\nOpen Street Map Buildings & Structures © OpenStreetMap contributors - More information at http://sdk.eegeo.com/osm.\n"
+    
+                                      "\n\nFree and Open Source Software"
+                                      "\n\nThis app makes use of several pieces of free and open-source software, which we list at:"
+                                      "\nhttp://sdk.eegeo.com/legal"
+                                      "\n\nA big thanks to all the smart people behind these fantastic programs that have helped us to build this app.\n";
 }
 
 namespace ExampleApp
