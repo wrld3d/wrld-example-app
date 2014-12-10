@@ -76,7 +76,8 @@ namespace ExampleApp
 		AboutPageModule::AboutPageModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
 		                                 Reaction::IReactionControllerModel& reactionControllerModel)
 		{
-			m_pAboutPageModel = Eegeo_NEW(AboutPageModel)(EEGEO_PLATFORM_VERSION_NUMBER, EEGEO_PLATFORM_VERSION_HASH, AboutPageText);
+            std::string platformRuntimeArchitecture = (sizeof(void*) == 4) ? "32-bit" : "64-bit";
+			m_pAboutPageModel = Eegeo_NEW(AboutPageModel)(EEGEO_PLATFORM_VERSION_NUMBER, EEGEO_PLATFORM_VERSION_HASH, platformRuntimeArchitecture, AboutPageText);
 			m_pAboutPageViewModel = Eegeo_NEW(AboutPageViewModel)(identityProvider.GetNextIdentity(), reactionControllerModel);
 		}
 

@@ -236,6 +236,7 @@
 	content << pModel->GetAboutText()
 	        << "\n\nPlatform version: " + pModel->GetPlatformVersion()
 	        << "\nPlatform hash: " + pModel->GetPlatformHash()
+            << "\nPlatform runtime arch: " + pModel->GetPlatformArchitecture()
 	        << "\n\n";
 
 	self.pTextContent.text = [NSString stringWithUTF8String:content.str().c_str()];
