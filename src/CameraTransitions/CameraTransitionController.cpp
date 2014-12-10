@@ -47,7 +47,7 @@ namespace ExampleApp
 
 		}
 
-		void CameraTransitionController::StartTransitionTo(Eegeo::dv3 newInterestPoint, double distanceFromInterest, bool jumpIfFar)
+		void CameraTransitionController::StartTransitionTo(Eegeo::dv3 newInterestPoint, float distanceFromInterest, bool jumpIfFar)
 		{
 			const Eegeo::Space::EcefTangentBasis& cameraInterestBasis = m_cameraController.GetInterestBasis();
 
@@ -57,7 +57,7 @@ namespace ExampleApp
 			StartTransitionTo(newInterestPoint, distanceFromInterest, bearingRadians, jumpIfFar);
 		}
 
-		void CameraTransitionController::StartTransitionTo(Eegeo::dv3 newInterestPoint, double distanceFromInterest, float newHeadingRadians, bool jumpIfFar)
+		void CameraTransitionController::StartTransitionTo(Eegeo::dv3 newInterestPoint, float distanceFromInterest, float newHeadingRadians, bool jumpIfFar)
 		{
 			if(IsTransitioning())
 			{
@@ -91,18 +91,18 @@ namespace ExampleApp
 			const float CAMERA_TRANSITION_SPEED_IN_METERS_PER_SECOND = 1000.0f;
 			const float MIN_TRANSITION_TIME = 0.5f;
 			const float MAX_TRANSITION_TIME = 2.0f;
-			float distance = (m_endTransitionInterestPointEcef - m_startTransitionInterestPointEcef).Length();
+			float distance = (m_endTransitionInterestPointEcef - m_startTransitionInterestPointEcef).ToSingle().Length();
 
 			m_transitionDuration = Eegeo::Clamp(distance/CAMERA_TRANSITION_SPEED_IN_METERS_PER_SECOND, MIN_TRANSITION_TIME, MAX_TRANSITION_TIME);
 
 			m_isTransitioning = true;
 
-			if(abs(m_endInterestHeading - m_startInterestHeading) > M_PI)
+			if(std::abs(m_endInterestHeading - m_startInterestHeading) > Eegeo::Math::kPI)
 			{
 				if(m_endInterestHeading > m_startInterestHeading)
-					m_endInterestHeading -= M_2_PI;
+					m_endInterestHeading -= 2.f * Eegeo::Math::kPI;
 				else
-					m_startInterestHeading -= M_2_PI;
+					m_startInterestHeading -= 2.f * Eegeo::Math::kPI;
 			}
 		}
 
@@ -129,7 +129,7 @@ namespace ExampleApp
 			}
 
 			m_transitionTime += dt;
-			double transitionParam = Eegeo::Math::SmoothStep(0.f, 1.f, m_transitionTime / m_transitionDuration);
+			float transitionParam = Eegeo::Math::SmoothStep(0.f, 1.f, m_transitionTime / m_transitionDuration);
 
 			float interpolatedDistance = Eegeo::Math::Lerp(m_startInterestDistance, m_endInterestDistance, transitionParam);
 			Eegeo::dv3 interpolatedInterestPosition = Eegeo::dv3::Lerp(m_startTransitionInterestPointEcef, m_endTransitionInterestPointEcef, transitionParam);

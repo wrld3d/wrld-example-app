@@ -18,7 +18,7 @@
     {
         m_pController = controller;
         self.alpha = 0.f;
-        m_stateChangeAnimationTimeSeconds = 0.2;
+        m_stateChangeAnimationTimeSeconds = 0.2f;
         m_imageAttached = NO;
         
         m_controlContainerHeight = 0.f;
@@ -128,8 +128,8 @@
 
 - (void)layoutSubviews
 {
-    const float boundsWidth = self.superview.bounds.size.width;
-    const float boundsHeight = self.superview.bounds.size.height;
+    const float boundsWidth = static_cast<float>(self.superview.bounds.size.width);
+    const float boundsHeight = static_cast<float>(self.superview.bounds.size.height);
     
     m_scrollContentBottomMargin = 50;
 
@@ -159,7 +159,7 @@
     self.pTitleContainer.frame = CGRectMake(0, m_yCursor, titleContainerWidth, titleContainerHeight);
     self.pTitleContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::WhiteTone;
     
-    const float titleImageSize = self.pTitleContainer.frame.size.height;
+    const float titleImageSize = static_cast<float>(self.pTitleContainer.frame.size.height);
     self.pTitleImage.frame = CGRectMake(0, 0, titleImageSize, titleImageSize);
     self.pTitleImage.backgroundColor = ExampleApp::Helpers::ColorPalette::GoldTone;
     
@@ -187,7 +187,7 @@
 - (void) layoutBody
 {
     const float bodyContainerY = m_yCursor;
-    const float bodyContainerHeight = m_controlContainerHeight - (2 * self.pTitleContainer.frame.size.height);
+    const float bodyContainerHeight = m_controlContainerHeight - (2.f * static_cast<float>(self.pTitleContainer.frame.size.height));
     
     self.pBodyContainer.frame = CGRectMake(0, bodyContainerY, m_controlContainerWidth, bodyContainerHeight);
     self.pBodyContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::WhiteTone;
@@ -281,7 +281,7 @@
     self.pFooterShadow.frame = CGRectMake(0.f, 0.f, m_controlContainerWidth, shadowHeight);
     
     const int numberOfButtons = 4;
-    const float buttonSize = self.pFooterContainer.frame.size.height;
+    const float buttonSize = static_cast<float>(self.pFooterContainer.frame.size.height);
     const float buttonPadding = (m_controlContainerWidth - (numberOfButtons * buttonSize)) / (numberOfButtons + 1);
     
     const float closeButtonX = buttonPadding;
@@ -548,10 +548,10 @@
     }
 }
 
-- (void) resizeImageViewToFit:(float)sourceImageWidth :(float)sourceImageHeight
+- (void) resizeImageViewToFit:(CGFloat)sourceImageWidth :(CGFloat)sourceImageHeight
 {
-    const float widthRatio = m_maxImageWidth/sourceImageWidth;
-    const float height = sourceImageHeight * widthRatio;
+    const CGFloat widthRatio = m_maxImageWidth/sourceImageWidth;
+    const CGFloat height = sourceImageHeight * widthRatio;
     
     CGRect frame = self.pPoiImage.frame;
     self.pPoiImage.frame = CGRectMake(frame.origin.x, frame.origin.y, m_maxImageWidth, height);

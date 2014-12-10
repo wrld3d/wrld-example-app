@@ -48,7 +48,7 @@ namespace ExampleApp
                 if (rayPick)
                 {
                     const Eegeo::dv3& currentPosition = m_myPinCreationModel.GetPosition();
-                    float cameraAltitude = rayOrigin.Length() - Eegeo::Space::EarthConstants::Radius;
+                    float cameraAltitude = static_cast<float>(rayOrigin.Length() - Eegeo::Space::EarthConstants::Radius);
                     const float touchRadius = 100.f + cameraAltitude/20;
                     
                     Eegeo::dv3 iconPosition;

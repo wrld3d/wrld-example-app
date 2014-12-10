@@ -14,12 +14,12 @@ namespace
 	               UIView* pImageView,
 	               ExampleApp::Helpers::ImageHelpers::OffsetValue offsetInParent)
 	{
-		const float imgClipWidth = pImageView.frame.size.width > pParentView.frame.size.width ? pParentView.frame.size.width : pImageView.frame.size.width;
-		const float imgClipHeight = pImageView.frame.size.height > pParentView.frame.size.height ? pParentView.frame.size.height : pImageView.frame.size.height;
-		const float ratioX = imgClipWidth / pImageView.frame.size.width;
-		const float ratioY = imgClipHeight / pImageView.frame.size.height;
-		const float imgWidth = imgClipWidth * (ratioX > ratioY ? ratioY : 1.f);
-		const float imgHeight = imgClipHeight * (ratioY > ratioX ? ratioX : 1.f);
+		const CGFloat imgClipWidth = pImageView.frame.size.width > pParentView.frame.size.width ? pParentView.frame.size.width : pImageView.frame.size.width;
+		const CGFloat imgClipHeight = pImageView.frame.size.height > pParentView.frame.size.height ? pParentView.frame.size.height : pImageView.frame.size.height;
+		const CGFloat ratioX = imgClipWidth / pImageView.frame.size.width;
+		const CGFloat ratioY = imgClipHeight / pImageView.frame.size.height;
+		const CGFloat imgWidth = imgClipWidth * (ratioX > ratioY ? ratioY : 1.f);
+		const CGFloat imgHeight = imgClipHeight * (ratioY > ratioX ? ratioX : 1.f);
 
 		CGRect frame = pParentView.frame;
 

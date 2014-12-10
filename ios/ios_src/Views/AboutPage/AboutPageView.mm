@@ -20,7 +20,7 @@
 	{
 		m_pController = controller;
 		self.alpha = 0.f;
-		m_stateChangeAnimationTimeSeconds = 0.2;
+		m_stateChangeAnimationTimeSeconds = 0.2f;
 
 		self.pShadowContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
 		self.pShadowContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::BlackTone;
@@ -126,8 +126,8 @@
 {
 	self.alpha = 0.f;
 
-	const float boundsWidth = self.superview.bounds.size.width;
-	const float boundsHeight = self.superview.bounds.size.height;
+	const float boundsWidth = static_cast<float>(self.superview.bounds.size.width);
+	const float boundsHeight = static_cast<float>(self.superview.bounds.size.height);
 	const bool useFullScreenSize = (boundsHeight < 600.f || boundsWidth < 400.f);
 	const float boundsOccupyWidthMultiplier = useFullScreenSize ? 0.9f : ((2.f/3.f) * 0.6f);
 	const float boundsOccupyHeightMultiplier = useFullScreenSize ? 0.9f : ((2.f/3.f));
@@ -205,8 +205,8 @@
 
 	self.pTitleLabel.text = @"About this app...";
 
-	const float textWidth = self.pLabelsContainer.frame.size.width * 0.8f;
-	const float textContentX = ((self.pLabelsContainer.frame.size.width / 2) - (textWidth / 2)) + labelsSectionOffsetX;
+	const float textWidth = static_cast<float>(self.pLabelsContainer.frame.size.width) * 0.8f;
+	const float textContentX = ((static_cast<float>(self.pLabelsContainer.frame.size.width) / 2) - (textWidth / 2)) + labelsSectionOffsetX;
 	const float developedByY = 10.f;
 	const float developedByHeight = 16.f;
 
@@ -217,7 +217,7 @@
 	const float logoWidth = 140.f;
 	const float logoHeight = 52.f;
 	const float logoY = developedByY + developedByHeight;
-	const float logoX = (self.pLabelsContainer.frame.size.width / 2) - (logoWidth/2) + labelsSectionOffsetX;
+	const float logoX = (static_cast<float>(self.pLabelsContainer.frame.size.width) / 2) - (logoWidth/2) + labelsSectionOffsetX;
 
 	self.pLogoImage.frame = CGRectMake(logoX, logoY, logoWidth, logoHeight);
 
@@ -240,7 +240,7 @@
 
 	self.pTextContent.text = [NSString stringWithUTF8String:content.str().c_str()];
 	[self.pTextContent sizeToFit];
-	self.pLabelsContainer.contentSize = CGSizeMake(fmaxf(self.pTextContent.frame.size.width, self.pLogoImage.frame.size.width),
+	self.pLabelsContainer.contentSize = CGSizeMake(std::max(self.pTextContent.frame.size.width, self.pLogoImage.frame.size.width),
 	                                    self.pTextContent.frame.size.height + self.pLogoImage.frame.size.height + self.pDevelopedByLabel.frame.size.height);
 }
 

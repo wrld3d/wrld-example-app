@@ -27,7 +27,7 @@ namespace ExampleApp
 				const Eegeo::dv3 keyEcef = cellInfo.GetFaceCentreECEF();
 				const double distanceBetweenCellBoundingSphereAndVolumeSphere = (m_ecefCentre - keyEcef).Length();
 				const double cellWidth = key.WidthInMetres();
-				const double cellBoundingSphereRadius = sqrtf((cellWidth*cellWidth) + (cellWidth*cellWidth));
+				const double cellBoundingSphereRadius = std::sqrt((cellWidth*cellWidth) + (cellWidth*cellWidth));
 
 				if(distanceBetweenCellBoundingSphereAndVolumeSphere < (m_sphereVolumeRadius + cellBoundingSphereRadius))
 				{

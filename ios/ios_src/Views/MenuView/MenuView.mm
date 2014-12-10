@@ -103,7 +103,7 @@
 	self.hidden = false;
 	[self setOffscreenPartsHiddenState:false];
 
-	float newX = m_closedX + (abs(m_openX - m_closedX) * openState);
+	float newX = m_closedX + (std::abs(m_openX - m_closedX) * openState);
 	if(fabs(self.frame.origin.x - newX) < 0.01f)
 	{
 		return;
@@ -188,8 +188,8 @@
 
 - (float) animationValue
 {
-	CGFloat totalDistance = (m_animationEndPos - m_animationStartPos).Length();
-	CGFloat currentDistance = (m_animationEndPos - m_animationCurrentPos).Length();
+	float totalDistance = (m_animationEndPos - m_animationStartPos).Length();
+	float currentDistance = (m_animationEndPos - m_animationCurrentPos).Length();
 	float result = currentDistance/totalDistance;
 	result = Eegeo::Math::Clamp(result, 0.f, 1.f);
 
@@ -248,9 +248,9 @@
 
 	m_animationStartPos.y =
 	    m_animationCurrentPos.y =
-	        m_animationEndPos.y = f.origin.y;
+	        m_animationEndPos.y = static_cast<float>(f.origin.y);
 
-	m_animationCurrentPos.x = f.origin.x;
+	m_animationCurrentPos.x = static_cast<float>(f.origin.x);
 	m_animationEndPos.x = x;
 
 	m_animating = true;
@@ -279,9 +279,9 @@
 
 	m_animationStartPos.x =
 	    m_animationCurrentPos.x =
-	        m_animationEndPos.x = f.origin.x;
+	        m_animationEndPos.x = static_cast<float>(f.origin.x);
 
-	m_animationCurrentPos.y = f.origin.y;
+	m_animationCurrentPos.y = static_cast<float>(f.origin.y);
 	m_animationEndPos.y = y;
 
 	m_animating = true;
@@ -332,7 +332,7 @@
 {
     const float tableScreenY = m_mainContainerY + m_mainContainerOffscreenOffsetY + m_tableY;
     const float tableScreenSpace = m_screenHeight - tableScreenY;
-    m_tableHeight = fmin(tableScreenSpace, m_tableHeight);
+    m_tableHeight = std::min(tableScreenSpace, m_tableHeight);
     
     self.pTableviewContainer.frame = CGRectMake(m_tableX, m_tableY, m_tableWidth, m_tableHeight);
     self.pTableviewContainer.bounces = NO;

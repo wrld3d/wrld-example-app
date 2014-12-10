@@ -25,7 +25,7 @@
 {
 	m_pColour = ExampleApp::Helpers::ColorPalette::WhiteTone;
 
-	m_stateChangeAnimationTimeSeconds = 0.2;
+	m_stateChangeAnimationTimeSeconds = 0.2f;
 
 	m_mainContainerOffscreenOffsetX = (0.f * m_pixelScale);
 	m_mainContainerOffscreenOffsetY = (0.f * m_pixelScale);
@@ -54,7 +54,7 @@
 	m_tableY = m_tableOffsetIntoContainerY + m_mainContainerVisibleOnScreenWhenClosedY;
 	m_tableWidth = m_mainContainerOnScreenWidth - (2 * m_tableOffsetIntoContainerX);
 	m_tableHeight = m_mainContainerHeight - (2 * m_tableOffsetIntoContainerY) - m_tableOffsetIntoContainerY;
-	self.pTableview = [[[UITableView alloc] initWithFrame:CGRectMake(m_tableX, m_tableY, m_tableWidth, m_tableHeight) style:UITableViewStylePlain] autorelease];
+	self.pTableview = [[[CustomTableView alloc] initWithFrame:CGRectMake(m_tableX, m_tableY, m_tableWidth, m_tableHeight) style:UITableViewStylePlain] autorelease];
 	self.pTableview.backgroundColor = m_pColour;
 	self.pTableview.separatorStyle = UITableViewCellSeparatorStyleNone;
 
@@ -74,8 +74,8 @@
 	self.pCategory = [[[UIView alloc] initWithFrame:CGRectMake(m_dragTabX - categoryIconEdgeSize, m_dragTabY, categoryIconEdgeSize, categoryIconEdgeSize)] autorelease];
 
 	//spinner
-	const float spinnerSize = self.pDragTab.frame.size.height;
-	const float spinnerX = self.pDragTab.frame.size.width - spinnerSize;
+	const CGFloat spinnerSize = self.pDragTab.frame.size.height;
+	const CGFloat spinnerX = self.pDragTab.frame.size.width - spinnerSize;
 	CGRect spinnerFrame = CGRectMake(spinnerX, 0.f, spinnerSize, spinnerSize);
 	self.pSpinner = [[[UIActivityIndicatorView alloc] initWithFrame:spinnerFrame] autorelease];
 	[self.pSpinner startAnimating];
@@ -197,7 +197,7 @@
 		f.origin.y = m_closedX;
 	}
 
-	float normalisedDragState = -((self.frame.origin.y + (-m_closedY)) / (abs(m_openY - m_closedY)));
+	float normalisedDragState = -((static_cast<float>(self.frame.origin.y) + (-m_closedY)) / (std::abs(m_openY - m_closedY)));
 	normalisedDragState = Eegeo::Clamp(normalisedDragState, 0.f, 1.f);
 
 	[m_pMenuViewController handleDraggingViewInProgress:normalisedDragState];
@@ -213,7 +213,7 @@
 	const float threshold = (m_screenHeight - (m_mainContainerOnScreenHeight * yRatioForStateChange));
 	bool open = absolutePosition.y < threshold;
 
-	const float velocityMagitude = abs(absoluteVelocity.y);
+	const float velocityMagitude = std::abs(static_cast<float>(absoluteVelocity.y));
 	if(velocityMagitude > (200 * m_pixelScale))
 	{
 		open = absoluteVelocity.y < 0 ? true : false;

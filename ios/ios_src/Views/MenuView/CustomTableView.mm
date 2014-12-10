@@ -66,7 +66,7 @@
 	[self reloadData];
 
 	int count = 1;
-	float height = -1;
+	CGFloat height = -1;
 	float offset = 0.f;
 
 	for (NSIndexPath *indexPath in indexPaths)
@@ -132,7 +132,7 @@
 	{
 		UITableViewCell *cell = [self cellForRowAtIndexPath:indexPath];
 
-		height = cell.bounds.size.height;
+		height = static_cast<float>(cell.bounds.size.height);
 		[UIView setAnimationDuration: m_animationSpeed];
 		offset = (-height * count++);
 		cell.transform = CGAffineTransformMakeTranslation(0.f, offset);
@@ -148,9 +148,9 @@
 
 -(void)animateSubsequentSections:(NSIndexPath*) indexPath withOffset:(float) offset
 {
-	int numberOfSections = [self numberOfSections];
+	NSInteger numberOfSections = [self numberOfSections];
 
-	for (int i = indexPath.section + 1; i < numberOfSections; ++i)
+	for (NSInteger i = indexPath.section + 1; i < numberOfSections; ++i)
 	{
 		NSInteger numberOfRowsInSection = [self numberOfRowsInSection: i];
 
@@ -166,9 +166,9 @@
 
 -(void)relaxCells:(NSIndexPath*)indexPath :(CGAffineTransform)transform
 {
-	int numberOfSections = [self numberOfSections];
+	NSInteger numberOfSections = [self numberOfSections];
 
-	for (int i = indexPath.section + 1; i < numberOfSections; ++i)
+	for (NSInteger i = indexPath.section + 1; i < numberOfSections; ++i)
 	{
 		NSInteger numberOfRowsInSection = [self numberOfRowsInSection: i];
 

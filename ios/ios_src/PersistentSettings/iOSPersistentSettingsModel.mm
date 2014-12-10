@@ -44,7 +44,7 @@ namespace ExampleApp
 
 			if(value != nil)
 			{
-				out_value = [&m_userDefaults integerForKey:ToNSString(name)];
+				out_value = static_cast<int>([&m_userDefaults integerForKey:ToNSString(name)]);
 				return true;
 			}
 
