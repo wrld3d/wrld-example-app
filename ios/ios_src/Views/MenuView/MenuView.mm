@@ -334,9 +334,26 @@
     const float tableScreenSpace = m_screenHeight - tableScreenY;
     m_tableHeight = fmin(tableScreenSpace, m_tableHeight);
     
-    self.pTableviewContainer.frame = CGRectMake(m_tableX, m_tableY, m_tableWidth, m_tableHeight);
-    self.pTableviewContainer.bounces = NO;
-    [self.pTableviewContainer sizeToFit];
+
+    if ([self useSizeToFit])
+    {
+        self.pTableviewContainer.frame = CGRectMake(m_tableX, m_tableY, m_tableWidth, m_tableHeight);
+        [self.pTableviewContainer sizeToFit];
+    }
+    else //default:
+    {
+        const float realTableHeight =  (SECTION_HEADER_CELL_HEIGHT * numberOfSections) + (SUB_SECTION_CELL_HEIGHT * (numberOfCells));
+        self.pTableviewContainer.frame = CGRectMake(m_tableX, m_tableY, m_tableWidth, m_tableHeight);
+        self.pTableviewContainer.bounces = NO;
+        self.pTableviewContainer.contentSize = CGSizeMake(m_tableWidth, realTableHeight);
+        self.pTableview.bounces = NO;
+        self.pTableview.frame = CGRectMake(0.f, 0.f, m_tableWidth, realTableHeight);
+    }
+}
+
+- (bool) useSizeToFit
+{
+    return false;
 }
 
 @end
