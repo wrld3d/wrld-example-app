@@ -9,6 +9,7 @@
 #include "MyPinCreation.h"
 #include "MyPinCreationDetailsViewIncludes.h"
 #include "UiToNativeMessageBus.h"
+#include "IConnectivityService.h"
 
 namespace ExampleApp
 {
@@ -24,7 +25,8 @@ namespace ExampleApp
             	AndroidNativeState& nativeState,
             	MyPinCreation::IMyPinCreationModel& model,
             	MyPinCreationDetails::IMyPinCreationDetailsViewModel& viewModel,
-			    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus
+			    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
+			    Eegeo::Web::IConnectivityService& connectivityService
             );
 
             ~MyPinCreationDetailsViewModule();

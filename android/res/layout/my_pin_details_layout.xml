@@ -116,13 +116,12 @@
                 
                 <ImageView
                     android:id="@+id/my_pin_details_view_image"
-                    android:layout_width="wrap_content"
+                    android:layout_width="230dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_margin="0dp"
+                    android:layout_marginTop="10dp"
                     android:adjustViewBounds="true"
                     android:contentDescription="@string/poi_creation_details_image"
-                    android:paddingTop="10dp"
                     android:scaleType="fitCenter"
                     android:src="@drawable/image_blank" />
                 

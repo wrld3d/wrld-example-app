@@ -4,14 +4,23 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.net.Uri;
+import android.provider.MediaStore.Images;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -42,6 +51,8 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
 	
 	private Uri m_currentImageUri = null;
 	private boolean m_awaitingIntentResponse;
+	private boolean m_hasNetworkConnectivity = false;
+	private boolean m_showingNoNetworkDialog = false;
 
 	private final int JPEG_QUALITY = 90;
 	private final String TERMS_AND_CONDITIONS_LINK = "http://sdk.eegeo.com";
@@ -82,6 +93,14 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
 		m_title = (EditText)m_view.findViewById(R.id.poi_creation_details_title);
 		m_description = (EditText)m_view.findViewById(R.id.poi_creation_details_description);
 		m_shouldShareButton = (ToggleButton)m_view.findViewById(R.id.poi_creation_details_share_togglebutton);
+		
+		m_shouldShareButton.setOnCheckedChangeListener(new OnCheckedChangeListener(){
+			@Override
+			public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
+				verifyShareSettingsValid();
+			}
+		});
+		
 		m_termsAndConditionsLink = (TextView)m_view.findViewById(R.id.poi_creation_details_terms_conditions_link);
 		m_scrollSection = (ScrollView)m_view.findViewById(R.id.poi_creation_details_scroll_section);
 		
@@ -106,9 +125,11 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
 		m_title.setText("");
 		m_description.setText("");
 		
+		m_shouldShareButton.setChecked(m_hasNetworkConnectivity);
+		
 		m_currentImageUri = null;
 		
-		m_awaitingIntentResponse = false;;
+		m_awaitingIntentResponse = false;
 		
 		m_scrollSection.setScrollY(0);
 	}
@@ -200,9 +221,6 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
 			{
 				e.printStackTrace();
 			}
-			
-			
-			
 		}
 		else if(requestCode == PhotoIntentDispatcher.SELECT_PHOTO_FROM_GALLERY && resultCode == MainActivity.RESULT_OK)
 		{
@@ -247,10 +265,106 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
 		
 		is = m_activity.getContentResolver().openInputStream(m_currentImageUri);
 		bitmap = BitmapFactory.decodeStream(is, null, bmOptions);
+		int finalWidth = bitmap.getWidth();
+		int finalHeight = bitmap.getHeight();
 		is.close();
 		
+		float rotation = getOrientationRotation();
+		Matrix mtx = new Matrix();
+		mtx.postRotate(rotation);
+		bitmap = Bitmap.createBitmap(bitmap, 0, 0, finalWidth, finalHeight, mtx, true);
 		return bitmap;
 	}
 	
+	private float getOrientationRotation()
+	{
+		float photoRotation = 0;
+		boolean hasRotation = false;
+		String[] projection = { Images.ImageColumns.ORIENTATION };
+		try 
+		{
+			Cursor cursor = m_activity.getContentResolver().query(m_currentImageUri, projection, null, null, null);
+			if(cursor.moveToFirst())
+			{
+				photoRotation = cursor.getInt(0);
+				hasRotation = true;
+			}
+		}
+		catch (Exception e)
+		{
+			Log.d("EEGEO", "Failed to fetch orientation data for " + m_currentImageUri.toString());
+		}
+		
+		if(!hasRotation)
+		{
+			ExifInterface exif;
+			try 
+			{
+				exif = new ExifInterface(m_currentImageUri.getPath());
+			} 
+			catch (IOException e) 
+			{
+				Log.d("EEGEO", "Failed to fetch exif interface for image " + m_currentImageUri.toString());
+				return photoRotation;
+			}
+			
+			int exifRotation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
+			
+			switch(exifRotation)
+			{
+				case ExifInterface.ORIENTATION_ROTATE_90:	
+					photoRotation = 90.0f;
+					break;
+				case ExifInterface.ORIENTATION_ROTATE_180:
+					photoRotation = 180.0f;
+					break;
+				case ExifInterface.ORIENTATION_ROTATE_270:
+					photoRotation = 270.0f;
+					break;
+				default:
+					break;
+				
+			}
+		}
+		
+		return photoRotation;
+	}
 	
+	private void verifyShareSettingsValid()
+	{
+		if (m_shouldShareButton.isChecked() && !m_hasNetworkConnectivity)
+		{
+			if (!m_showingNoNetworkDialog)
+			{
+				AlertDialog.Builder builder = new AlertDialog.Builder(m_activity);
+				builder.setTitle("No network connection")
+					   .setMessage("Pins cannot be shared when no network connection is available")
+				       .setCancelable(false)
+				       .setPositiveButton("Dismiss", new DialogInterface.OnClickListener() {
+				           public void onClick(DialogInterface dialog, int id) {
+				        	   m_showingNoNetworkDialog = false;
+				           }
+				       });
+				AlertDialog alert = builder.create();
+				alert.show();
+				m_showingNoNetworkDialog = true;
+			}
+			
+			m_shouldShareButton.setChecked(false);
+		}
+	}
+	
+	public void setHasNetworkConnectivity(boolean hasNetworkConnectivity)
+	{
+		m_hasNetworkConnectivity = hasNetworkConnectivity;
+		
+		if (m_view.getVisibility() == View.VISIBLE)
+		{
+			verifyShareSettingsValid();
+		}
+		else
+		{
+			m_shouldShareButton.setChecked(m_hasNetworkConnectivity);
+		}
+	}
 }

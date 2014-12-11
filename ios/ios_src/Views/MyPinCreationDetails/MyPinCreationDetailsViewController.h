@@ -7,6 +7,7 @@
 #include "MyPinCreation.h"
 #include "MyPinCreationDetailsViewIncludes.h"
 #include "UiToNativeMessageBus.h"
+#include "IConnectivityService.h"
 
 @class MyPinCreationDetailsView;
 
@@ -18,7 +19,8 @@
 }
 
 - (id)initWithParams:(ExampleApp::ExampleAppMessaging::UiToNativeMessageBus*) pUiToNativeMessageBus
-                    :(ExampleApp::MyPinCreationDetails::IMyPinCreationDetailsViewModel*)pViewModel;
+                    :(ExampleApp::MyPinCreationDetails::IMyPinCreationDetailsViewModel*)pViewModel
+                    :(Eegeo::Web::IConnectivityService*)pConnectivityService;
 
 - (void) open;
 
@@ -30,6 +32,8 @@
                                    :(NSString*) description
                                    :(UIImage*)image
                                    :(BOOL)shouldShare;
+
+- (void) setNetworkConnectivityState: (BOOL) hasConnectivity;
 
 @property (nonatomic, retain) MyPinCreationDetailsView* pMyPinCreationDetailsView;
 

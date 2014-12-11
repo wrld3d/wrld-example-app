@@ -66,6 +66,7 @@ AppHost::AppHost(
 	,m_viewController(viewController)
 	,m_pJpegLoader(NULL)
 	,m_piOSLocationService(NULL)
+    ,m_piOSConnectivityService(NULL)
 	,m_iOSInputBoxFactory()
 	,m_iOSKeyboardInputFactory()
 	,m_iOSAlertBoxFactory()
@@ -75,6 +76,8 @@ AppHost::AppHost(
 	,m_requestedApplicationInitialiseViewState(false)
 {
 	m_piOSLocationService = Eegeo_NEW(iOSLocationService)();
+
+    m_piOSConnectivityService = Eegeo_NEW(iOSConnectivityService)();
 
 	m_pJpegLoader = Eegeo_NEW(Eegeo::Helpers::Jpeg::JpegLoader)();
 
@@ -128,6 +131,9 @@ AppHost::~AppHost()
 	Eegeo_DELETE m_pJpegLoader;
 	m_pJpegLoader = NULL;
 
+    Eegeo_DELETE m_piOSConnectivityService;
+    m_piOSConnectivityService = NULL;
+    
 	Eegeo::EffectHandler::Reset();
 	Eegeo::EffectHandler::Shutdown();
 }
@@ -232,7 +238,8 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
                                                                                                                        screenProperties);
     
     m_pMyPinCreationDetailsViewModule = Eegeo_NEW(ExampleApp::MyPinCreationDetails::MyPinCreationDetailsViewModule)(m_uiToNativeMessageBus,
-                                                                                                                    app.MyPinCreationDetailsModule().GetMyPinCreationDetailsViewModel());
+                                                                                                                    app.MyPinCreationDetailsModule().GetMyPinCreationDetailsViewModel(),
+                                                                                                                    *m_piOSConnectivityService);
     
     m_pMyPinDetailsViewModule = Eegeo_NEW(ExampleApp::MyPinDetails::MyPinDetailsViewModule)(m_uiToNativeMessageBus,
                                                                                             app.MyPinDetailsModule().GetMyPinDetailsViewModel());

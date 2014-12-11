@@ -79,7 +79,9 @@ namespace ExampleApp
         {
             Eegeo::Pins::Pin* pPin = m_pinRepository.GetPinById(pinItemModel.Id());
             Eegeo_ASSERT(pPin != NULL);
-            m_pinController.SetScaleForPin(*pPin, scale);
+            
+            float scaleWithTerrainHeight = pPin->HasTerrainHeight() ? scale : 0.f;
+            m_pinController.SetScaleForPin(*pPin, scaleWithTerrainHeight);
         }
         
         bool WorldPinsService::HandleTouchTap(const Eegeo::v2& screenTapPoint)

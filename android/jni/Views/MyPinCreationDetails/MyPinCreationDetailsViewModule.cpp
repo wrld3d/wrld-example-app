@@ -11,14 +11,16 @@ namespace ExampleApp
             	AndroidNativeState& nativeState,
             	MyPinCreation::IMyPinCreationModel& model,
             	MyPinCreationDetails::IMyPinCreationDetailsViewModel& viewModel,
-			    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus
+			    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
+			    Eegeo::Web::IConnectivityService& connectivityService
             )
     	{
     		m_pViewController = Eegeo_NEW(MyPinCreationDetailsViewController)(
     				nativeState,
     				model,
     				viewModel,
-    				uiToNativeMessageBus
+    				uiToNativeMessageBus,
+    				connectivityService
     			);
     	}
 

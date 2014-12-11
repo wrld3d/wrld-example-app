@@ -4,8 +4,11 @@ import java.io.File;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -29,6 +32,8 @@ public class MyPinDetailsView implements View.OnClickListener
 	private TextView m_imageHeader = null;
 	private ScrollView m_scrollSection = null;
 	
+	private float m_imageWidth;
+	
 	private boolean m_handlingClick = false;
 
 	public MyPinDetailsView(MainActivity activity, long nativeCallerPointer)
@@ -46,6 +51,8 @@ public class MyPinDetailsView implements View.OnClickListener
 		m_imageView = (ImageView)m_view.findViewById(R.id.my_pin_details_view_image);
 		m_imageHeader = (TextView)m_view.findViewById(R.id.my_pin_details_view_image_header);
 		m_scrollSection = (ScrollView)m_view.findViewById(R.id.my_pin_details_scroll_section);
+		
+		m_imageWidth = m_activity.dipAsPx(230);
 		
 		m_deleteButton.setOnClickListener(this);
 		m_closeButton.setOnClickListener(this);
@@ -78,12 +85,25 @@ public class MyPinDetailsView implements View.OnClickListener
 
 		if(!imagePath.isEmpty())
 		{
-			m_imageHeader.setVisibility(View.VISIBLE);
-			m_imageView.setVisibility(View.VISIBLE);
-			
 			String rootPath = m_activity.getFilesDir().getAbsolutePath();
 			File imageFile = new File(rootPath + File.separator + imagePath);
+			
+			BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+			bmOptions.inJustDecodeBounds = true;
+			BitmapFactory.decodeFile(imageFile.getAbsolutePath(), bmOptions);
+			int width = bmOptions.outWidth;
+			int height = bmOptions.outHeight;
+			float scaleRatio = m_imageWidth / (float)width;
+			float viewHeight = height * scaleRatio;
+			
+			LayoutParams layout = m_imageView.getLayoutParams();
+			layout.width = (int) m_imageWidth;
+			layout.height = (int) viewHeight;
 			m_imageView.setImageURI(Uri.fromFile(imageFile));
+			m_imageView.setLayoutParams(layout);
+			
+			m_imageHeader.setVisibility(View.VISIBLE);
+			m_imageView.setVisibility(View.VISIBLE);
 		}
 		else
 		{

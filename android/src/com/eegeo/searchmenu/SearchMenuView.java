@@ -153,6 +153,11 @@ public class SearchMenuView extends MenuView
 	@Override
 	public void animateToIntermediateOnScreenState(final float onScreenState)
 	{
+		if(m_animating)
+		{
+			return;
+		}
+		
 		int newYPx = m_offscreenYPx - (int)((Math.abs(m_closedYPx - m_offscreenYPx) * onScreenState) + 0.5f);
 
 		if(!m_dragInProgress && viewYPx() != newYPx)
@@ -165,6 +170,11 @@ public class SearchMenuView extends MenuView
 	@Override
 	public void animateToIntermediateOpenState(final float openState)
 	{
+		if(m_animating)
+		{
+			return;
+		}
+		
 		int viewYPx = viewYPx();
 		int newYPx = m_closedYPx + (int)(((m_openYPx - m_closedYPx) * openState) + 0.5f);
 

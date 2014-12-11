@@ -44,6 +44,7 @@
 #include "MyPinDetailsViewIncludes.h"
 #include "UiToNativeMessageBus.h"
 #include "NativeToUiMessageBus.h"
+#include "AndroidConnectivityService.h"
 
 class AppHost : protected Eegeo::NonCopyable
 {
@@ -84,6 +85,8 @@ private:
 	bool m_isPaused;
 	Eegeo::Helpers::Jpeg::IJpegLoader* m_pJpegLoader;
 	Eegeo::Android::AndroidLocationService* m_pAndroidLocationService;
+	Eegeo::Android::AndroidConnectivityService* m_pAndroidConnectivityService;
+
 	AndroidNativeState& m_nativeState;
 	AppInputDelegate* m_pAppInputDelegate;
 

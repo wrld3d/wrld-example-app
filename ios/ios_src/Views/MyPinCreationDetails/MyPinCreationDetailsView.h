@@ -24,9 +24,12 @@
     float m_yCursor;
     
     float m_scrollContentBottomMargin;
+    
+    BOOL m_hasNetworkConnectivity;
 }
 
-- (id) initWithController:(MyPinCreationDetailsViewController *)controller;
+- (id) initWithController:(MyPinCreationDetailsViewController *)controller
+   andNetworkConnectivity:(BOOL) hasConnectivity;
 
 - (BOOL) consumesTouch:(UITouch *)touch;
 
@@ -39,6 +42,9 @@
 - (void) addDoneToolBarToKeyboard:(UITextView *)textView;
 
 - (void) resizeImageViewToFit:(float)sourceImageWidth :(float)sourceImageHeight;
+
+- (void) setHasNetworkConnectivity:(BOOL) hasNetworkConnectivity
+                                  :(BOOL) shouldVerifyShareSettings;
 
 @property (nonatomic, retain) UIView* pControlContainer;
 
