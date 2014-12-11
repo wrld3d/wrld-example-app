@@ -1,6 +1,9 @@
 package com.eegeo.mypincreation;
 
+import android.animation.Animator;
+import android.animation.Animator.AnimatorListener;
 import android.view.View;
+import android.view.ViewPropertyAnimator;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.ToggleButton;
@@ -9,12 +12,13 @@ import com.eegeo.flattenbutton.FlattenButtonViewJniMethods;
 import com.eegeo.mobileexampleapp.MainActivity;
 import com.eegeo.mobileexampleapp.R;
 
-public class MyPinCreationButtonView implements View.OnClickListener 
+public class MyPinCreationButtonView implements View.OnClickListener, AnimatorListener 
 {	
 	protected MainActivity m_activity = null;
 	protected long m_nativeCallerPointer;
 	protected Button m_view = null;
 	
+	private ViewPropertyAnimator m_animator = null;
 	private float m_yPosActive;
 	private float m_yPosInactive;
 	
@@ -69,21 +73,34 @@ public class MyPinCreationButtonView implements View.OnClickListener
 		animateViewToY((int)m_yPosInactive);
 	}
 	
-	protected void animateViewToY(final int xAsPx)
+	protected void animateViewToY(final int yAsPx)
 	{
-		m_view.animate()
-			.y(xAsPx)
-			.setDuration(stateChangeAnimationTimeMilliseconds);
+		if(m_animator != null)
+		{
+			m_animator.cancel();
+			m_animator = null;
+		}
+		
+		m_animator = m_view.animate()
+					.y(yAsPx)
+					.setDuration(stateChangeAnimationTimeMilliseconds);
+		m_animator.setListener(this);
 	}
 	
 	public void animateToIntermediateOnScreenState(final float onScreenState)
 	{
-		int viewXPx = (int)m_view.getX();
-	    int newXPx = (int)(m_yPosInactive + (int)(((m_yPosActive - m_yPosInactive) * onScreenState) + 0.5f));
+		if(m_animator != null)
+		{
+			m_animator.cancel();
+			m_animator = null;
+		}
+		
+		int viewYPx = (int)m_view.getY();
+	    int newYPx = (int)(m_yPosInactive + (int)(((m_yPosActive - m_yPosInactive) * onScreenState) + 0.5f));
 	 
-	    if(viewXPx != newXPx) 
+	    if(viewYPx != newYPx) 
 	    {
-		    m_view.setY(newXPx);
+		    m_view.setY(newYPx);
 	    }
 	}
 	
@@ -92,6 +109,28 @@ public class MyPinCreationButtonView implements View.OnClickListener
 		final RelativeLayout uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
 		float verticalOffset = offsetButton ? offsetButtonWithSearchMenuPosition : offsetButtonPosition;
 		m_yPosActive = uiRoot.getHeight() - m_activity.dipAsPx(verticalOffset);
+	}
+
+	@Override
+	public void onAnimationCancel(Animator arg0) 
+	{
+		m_animator = null;
+	}
+
+	@Override
+	public void onAnimationEnd(Animator arg0) 
+	{
+		m_animator = null;
+	}
+
+	@Override
+	public void onAnimationRepeat(Animator arg0) 
+	{
+	}
+
+	@Override
+	public void onAnimationStart(Animator arg0) 
+	{
 	}
 }
 
