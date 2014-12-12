@@ -89,7 +89,7 @@ public class SearchMenuView extends MenuView
 		m_headerCategoryImage = (ImageView)m_view.findViewById(R.id.search_menu_header_category_icon);
 		m_headerText = (TextView)m_view.findViewById(R.id.search_menu_header_text);
 
-		m_menuItemSelectedListener = new SearchMenuItemSelectedListener(m_nativeCallerPointer);
+		m_menuItemSelectedListener = new SearchMenuItemSelectedListener(m_nativeCallerPointer, this);
 		m_list.setOnItemClickListener(m_menuItemSelectedListener);
 	}
 

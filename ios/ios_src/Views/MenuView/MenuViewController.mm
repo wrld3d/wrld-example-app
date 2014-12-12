@@ -248,6 +248,11 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 3;
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
 {
+    if([self.pMenuView isAnimating])
+    {
+        return NO;
+    }
+    
 	return !m_pModalityModel->IsModalEnabled() || m_pMenuViewModel->IsFullyOpen();
 }
 
@@ -407,6 +412,11 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 3;
 	{
 		return;
 	}
+    
+    if(_dragging)
+    {
+        return;
+    }
     
     const int indexPathSection = static_cast<int>(indexPath.section);
 
