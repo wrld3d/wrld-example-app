@@ -60,6 +60,7 @@ public class PrimaryMenuView extends MenuView
 
 		m_menuItemSelectedListener = new MenuItemSelectedListener(
 		    m_listAdapter,
+		    this,
 		    m_activity,
 		    m_nativeCallerPointer
 		);
