@@ -88,17 +88,18 @@ AppHost::AppHost(
 	Eegeo::Config::PlatformConfig platformConfig = Eegeo::iOS::iOSPlatformConfigBuilder(App::GetDevice(), App::IsDeviceMultiCore(), App::GetMajorSystemVersion()).Build();
 
 	m_pInitialExperienceModule = Eegeo_NEW(ExampleApp::InitialExperience::iOSInitialExperienceModule)(m_iOSPersistentSettingsModel);
-
-	m_pApp = Eegeo_NEW(ExampleApp::MobileExampleApp)(*m_piOSPlatformAbstractionModule,
-	         screenProperties,
-	         *m_piOSLocationService,
-	         m_iOSNativeUIFactories,
-	         platformConfig,
-	         *m_pJpegLoader,
-	         *m_pInitialExperienceModule,
-             m_iOSPersistentSettingsModel,
-	         m_uiToNativeMessageBus,
-	         m_nativeToUiMessageBus);
+    
+    m_pApp = Eegeo_NEW(ExampleApp::MobileExampleApp)(*m_piOSPlatformAbstractionModule,
+                                                     screenProperties,
+                                                     *m_piOSLocationService,
+                                                     m_iOSNativeUIFactories,
+                                                     platformConfig,
+                                                     *m_pJpegLoader,
+                                                     *m_pInitialExperienceModule,
+                                                     m_iOSPersistentSettingsModel,
+                                                     m_uiToNativeMessageBus,
+                                                     m_nativeToUiMessageBus,
+                                                     platformConfig);
 
 	CreateApplicationViewModules(screenProperties);
 

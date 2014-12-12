@@ -156,7 +156,8 @@ AppHost::AppHost(
 	         *m_pInitialExperienceModule,
 	         m_androidPersistentSettingsModel,
 	         m_uiToNativeMessageBus,
-	         m_nativeToUiMessageBus);
+	         m_nativeToUiMessageBus,
+	         platformConfig);
 
 	m_pModalBackgroundNativeViewModule = Eegeo_NEW(ExampleApp::ModalBackground::ModalBackgroundNativeViewModule)(
 	        m_pApp->World().GetRenderingModule(),

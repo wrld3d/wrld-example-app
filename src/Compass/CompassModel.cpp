@@ -82,7 +82,7 @@ namespace ExampleApp
 
 		float CompassModel::GetHeadingRadians() const
 		{
-			const Eegeo::Camera::RenderCamera& renderCamera = *m_cameraController.GetCamera();
+            Eegeo::Camera::RenderCamera renderCamera = m_cameraController.GetCamera();
 			const Eegeo::m44& cameraModelMatrix = renderCamera.GetModelMatrix();
 
 			const Eegeo::v3& viewDirection = cameraModelMatrix.GetRow(2);

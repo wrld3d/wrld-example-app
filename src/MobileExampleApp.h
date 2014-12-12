@@ -58,9 +58,12 @@
 #include "MyPins.h"
 #include "MyPinDetails.h"
 #include "PersistentSettings.h"
+#include "CameraFrustumStreamingVolume.h"
 #include "UiToNativeMessageBus.h"
 #include "NativeToUiMessageBus.h"
 #include "ScreenProperties.h"
+#include "CameraFrustumStreamingVolume.h"
+#include "PlatformConfig.h"
 
 namespace ExampleApp
 {
@@ -108,7 +111,7 @@ namespace ExampleApp
         ExampleApp::MyPinCreationDetails::IMyPinCreationDetailsModule* m_pMyPinCreationDetailsModule;
         ExampleApp::MyPins::IMyPinsModule* m_pMyPinsModule;
         ExampleApp::MyPinDetails::IMyPinDetailsModule* m_pMyPinDetailsModule;
-        
+        Eegeo::Streaming::CameraFrustumStreamingVolume* m_pStreamingVolume;
 		ExampleAppMessaging::UiToNativeMessageBus& m_uiToNativeMessageBus;
 		ExampleAppMessaging::NativeToUiMessageBus& m_nativeToUiMessageBus;
 
@@ -134,7 +137,8 @@ namespace ExampleApp
 		                 ExampleApp::InitialExperience::IInitialExperienceModule& initialExperienceModule,
                          ExampleApp::PersistentSettings::IPersistentSettingsModel& persistentSettings,
 		                 ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
-		                 ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus);
+                         ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus,
+                         Eegeo::Config::PlatformConfig& config);
 
 
 		~MobileExampleApp();
@@ -275,7 +279,10 @@ namespace ExampleApp
         void NotifyScreenPropertiesChanged(const Eegeo::Rendering::ScreenProperties& screenProperties);
 
 		bool IsRunning() const;
-
+        
+        Eegeo::Streaming::IStreamingVolume& GetUpdatedStreamingVolume(const Eegeo::Camera::CameraState& cameraState,
+                                                                      const Eegeo::Camera::RenderCamera& renderCamera);
+        
 		bool IsLoadingScreenComplete() const
 		{
 			return m_pLoadingScreen == NULL;
