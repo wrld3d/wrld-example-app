@@ -266,7 +266,7 @@ namespace
 	CGPoint position = [recognizer locationInView:m_pViewController.view];
 	position.x *= m_pixelScale;
 	position.y *= m_pixelScale;
-	data.point	= *(Eegeo::v2*)&position;
+	data.point	= CGPointToEegeoV2(position);
 
 	if(recognizer.state == UIGestureRecognizerStateBegan)
 	{
