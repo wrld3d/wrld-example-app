@@ -166,7 +166,10 @@ namespace ExampleApp
 		Eegeo::Camera::GlobeCamera::GlobeCameraTouchControllerConfiguration touchControllerConfig = Eegeo::Camera::GlobeCamera::GlobeCameraTouchControllerConfiguration::CreateDefault();
 		Eegeo::Camera::GlobeCamera::GlobeCameraControllerConfiguration globeCameraConfig = Eegeo::Camera::GlobeCamera::GlobeCameraControllerConfiguration::CreateDefault(useLowSpecSettings);
 
-		m_pGlobeCameraController = cameraControllerFactory.Create(gpsGlobeCameraConfig, touchControllerConfig, globeCameraConfig);
+		m_pGlobeCameraController = cameraControllerFactory.Create(gpsGlobeCameraConfig,
+                                                                  touchControllerConfig,
+                                                                  globeCameraConfig,
+                                                                  m_screenProperties);
 
         m_pCameraTouchController = &m_pGlobeCameraController->GetTouchController();
 
@@ -487,7 +490,7 @@ namespace ExampleApp
 
 		eegeoWorld.EarlyUpdate(dt);
 
-		m_pGlobeCameraController->Update(dt, m_screenProperties);
+		m_pGlobeCameraController->Update(dt);
         m_pCameraTransitionController->Update(dt);
         
         Eegeo::Camera::CameraState cameraState(m_pGlobeCameraController->GetCameraState());
@@ -556,6 +559,8 @@ namespace ExampleApp
         {
             m_pLoadingScreen->NotifyScreenDimensionsChanged(screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight());
         }
+        
+        m_pGlobeCameraController->UpdateScreenProperties(m_screenProperties);
     }
 
 	void MobileExampleApp::InitialiseApplicationViewState()
