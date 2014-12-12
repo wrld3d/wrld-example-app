@@ -52,6 +52,7 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
 	private Uri m_currentImageUri = null;
 	private boolean m_awaitingIntentResponse;
 	private boolean m_hasNetworkConnectivity = false;
+	private boolean m_showingNoNetworkDialog = false;
 
 	private final int JPEG_QUALITY = 90;
 	private final String TERMS_AND_CONDITIONS_LINK = "http://sdk.eegeo.com";
@@ -333,16 +334,21 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
 	{
 		if (m_shouldShareButton.isChecked() && !m_hasNetworkConnectivity)
 		{
-			AlertDialog.Builder builder = new AlertDialog.Builder(m_activity);
-			builder.setTitle("No network connection")
-				   .setMessage("Pins cannot be shared when no network connection is available")
-			       .setCancelable(false)
-			       .setPositiveButton("Dismiss", new DialogInterface.OnClickListener() {
-			           public void onClick(DialogInterface dialog, int id) {
-			           }
-			       });
-			AlertDialog alert = builder.create();
-			alert.show();
+			if (!m_showingNoNetworkDialog)
+			{
+				AlertDialog.Builder builder = new AlertDialog.Builder(m_activity);
+				builder.setTitle("No network connection")
+					   .setMessage("Pins cannot be shared when no network connection is available")
+				       .setCancelable(false)
+				       .setPositiveButton("Dismiss", new DialogInterface.OnClickListener() {
+				           public void onClick(DialogInterface dialog, int id) {
+				        	   m_showingNoNetworkDialog = false;
+				           }
+				       });
+				AlertDialog alert = builder.create();
+				alert.show();
+				m_showingNoNetworkDialog = true;
+			}
 			
 			m_shouldShareButton.setChecked(false);
 		}

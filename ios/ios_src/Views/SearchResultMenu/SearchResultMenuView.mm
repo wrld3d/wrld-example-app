@@ -222,4 +222,9 @@
 	[super animateToY:(open ? m_openY : m_closedY)];
 }
 
+- (bool) useSizeToFit
+{
+    return true;
+}
+
 @end
