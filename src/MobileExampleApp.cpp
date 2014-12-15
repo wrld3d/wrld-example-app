@@ -495,7 +495,7 @@ namespace ExampleApp
         m_pCameraTransitionController->Update(dt);
         
         Eegeo::Camera::CameraState cameraState(m_pGlobeCameraController->GetCameraState());
-        Eegeo::Camera::RenderCamera renderCamera(m_pGlobeCameraController->GetCamera());
+        Eegeo::Camera::RenderCamera renderCamera(m_pGlobeCameraController->GetRenderCamera());
         Eegeo::dv3 ecefInterestPoint(cameraState.InterestPointEcef());
         
         m_pPoiRingModule->GetPoiRingController().Update(dt, renderCamera, ecefInterestPoint);
@@ -530,7 +530,7 @@ namespace ExampleApp
         Eegeo::EegeoWorld& eegeoWorld = World();
         
         Eegeo::Camera::CameraState cameraState(m_pGlobeCameraController->GetCameraState());
-        Eegeo::Camera::RenderCamera renderCamera(m_pGlobeCameraController->GetCamera());
+        Eegeo::Camera::RenderCamera renderCamera(m_pGlobeCameraController->GetRenderCamera());
         Eegeo::dv3 ecefInterestPoint(cameraState.InterestPointEcef());
 
 		if(!eegeoWorld.Initialising())
@@ -754,7 +754,7 @@ namespace ExampleApp
         }
         
         MyPinCreation::PoiRing::IPoiRingTouchController& poiRingTouchController = m_pPoiRingModule->GetPoiRingTouchController();
-        if (!poiRingTouchController.HandleTouchDown(data, m_pGlobeCameraController->GetCamera(), m_pGlobeCameraController->GetGlobeCameraController()))
+        if (!poiRingTouchController.HandleTouchDown(data, m_pGlobeCameraController->GetRenderCamera(), m_pGlobeCameraController->GetGlobeCameraController()))
         {
             m_pCameraTouchController->Event_TouchDown(data);
         }
@@ -769,7 +769,7 @@ namespace ExampleApp
         }
         
         MyPinCreation::PoiRing::IPoiRingTouchController& poiRingTouchController = m_pPoiRingModule->GetPoiRingTouchController();
-        if (!poiRingTouchController.HandleTouchMove(data, m_pGlobeCameraController->GetCamera(), m_pGlobeCameraController->GetGlobeCameraController()))
+        if (!poiRingTouchController.HandleTouchMove(data, m_pGlobeCameraController->GetRenderCamera(), m_pGlobeCameraController->GetGlobeCameraController()))
         {
             m_pCameraTouchController->Event_TouchMove(data);
         }
