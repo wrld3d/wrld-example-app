@@ -44,7 +44,6 @@
 
 namespace ExampleApp
 {
-    const std::string ApiKey = "OBTAIN API_KEY FROM https://appstore.eegeo.com AND INSERT IT HERE";
     const std::string DecartaApiKey = "OBTAIN DECARTA SEARCH KEY AND INSERT IT HERE";
     
 	namespace
@@ -78,6 +77,7 @@ namespace ExampleApp
 	}
 
 	MobileExampleApp::MobileExampleApp(
+		const std::string& apiKey,
 	    Eegeo::Modules::IPlatformAbstractionModule& platformAbstractions,
 	    Eegeo::Rendering::ScreenProperties& screenProperties,
 	    Eegeo::Location::ILocationService& locationService,
@@ -131,7 +131,7 @@ namespace ExampleApp
 		m_pBlitter = Eegeo_NEW(Eegeo::Blitter)(1024 * 128, 1024 * 64, 1024 * 32, screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight());
 		m_pBlitter->Initialise();
 
-		m_pWorld = Eegeo_NEW(Eegeo::EegeoWorld)(ApiKey,
+		m_pWorld = Eegeo_NEW(Eegeo::EegeoWorld)(apiKey,
 		                                        m_platformAbstractions,
 		                                        jpegLoader,
 		                                        screenProperties,
