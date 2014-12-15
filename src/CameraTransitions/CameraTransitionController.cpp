@@ -10,6 +10,8 @@
 #include "NavigationService.h"
 #include "TerrainHeightProvider.h"
 
+#include <cmath>
+
 namespace ExampleApp
 {
 	namespace CameraTransitions
