@@ -496,7 +496,7 @@ namespace ExampleApp
         
         Eegeo::Camera::CameraState cameraState(m_pGlobeCameraController->GetCameraState());
         Eegeo::Camera::RenderCamera renderCamera(m_pGlobeCameraController->GetCamera());
-        Eegeo::dv3 ecefInterestPoint(cameraState.LocationEcef());
+        Eegeo::dv3 ecefInterestPoint(cameraState.InterestPointEcef());
         
         m_pPoiRingModule->GetPoiRingController().Update(dt, renderCamera, ecefInterestPoint);
         
@@ -531,7 +531,7 @@ namespace ExampleApp
         
         Eegeo::Camera::CameraState cameraState(m_pGlobeCameraController->GetCameraState());
         Eegeo::Camera::RenderCamera renderCamera(m_pGlobeCameraController->GetCamera());
-        Eegeo::dv3 ecefInterestPoint(cameraState.LocationEcef());
+        Eegeo::dv3 ecefInterestPoint(cameraState.InterestPointEcef());
 
 		if(!eegeoWorld.Initialising())
 		{
