@@ -64,6 +64,7 @@ namespace ExampleApp
 			loadingScreenConfig.fadeOutDurationSeconds = 1.5f;
 			loadingScreenConfig.screenWidth = screenProperties.GetScreenWidth();
 			loadingScreenConfig.screenHeight = screenProperties.GetScreenHeight();
+            loadingScreenConfig.loadingBarOffset = Eegeo::v2(0.5f, 0.1f);
 
 
 			Eegeo::Rendering::LoadingScreen* loadingScreen = Eegeo::Rendering::LoadingScreen::Create(
