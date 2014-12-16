@@ -27,7 +27,7 @@
 {
 	m_pColour = ExampleApp::Helpers::ColorPalette::WhiteTone;
 
-	m_stateChangeAnimationTimeSeconds = 0.2;
+	m_stateChangeAnimationTimeSeconds = 0.2f;
 
 	m_mainContainerOffscreenOffsetX = (0.f * m_pixelScale);
 	m_mainContainerOffscreenOffsetY = (0.f * m_pixelScale);
@@ -75,7 +75,7 @@
 	m_tableHeight = m_mainContainerHeight - m_searchBoxHeight;
 	const float tableScreenY = m_mainContainerY + m_mainContainerOffscreenOffsetY + m_tableY;
 	const float tableScreenSpace = m_screenHeight - tableScreenY;
-	m_tableHeight = fmin(tableScreenSpace, m_tableHeight);
+	m_tableHeight = std::min(tableScreenSpace, m_tableHeight);
 
 	const float realTableHeight =  (SECTION_HEADER_CELL_HEIGHT * numberOfSections) + (SUB_SECTION_CELL_HEIGHT * (numberOfCells));
 
@@ -181,7 +181,7 @@
 		f.origin.x = m_closedX;
 	}
 
-	float normalisedDragState = -((self.frame.origin.x + (-m_closedX)) / (abs(m_openX - m_closedX)));
+	float normalisedDragState = -((static_cast<float>(self.frame.origin.x) + (-m_closedX)) / (std::abs(m_openX - m_closedX)));
 	normalisedDragState = Eegeo::Clamp(normalisedDragState, 0.f, 1.f);
 
 	[m_pMenuViewController handleDraggingViewInProgress:normalisedDragState];
@@ -197,7 +197,7 @@
 	const float threshold = (m_screenWidth - (m_mainContainerOnScreenWidth * xRatioForStateChange));
 	bool open = absolutePosition.x < threshold;
 
-	const float velocityMagitude = abs(absoluteVelocity.x);
+	const float velocityMagitude = std::abs(static_cast<float>(absoluteVelocity.x));
 	if(velocityMagitude > (200 * m_pixelScale))
 	{
 		open = absoluteVelocity.x < 0 ? true : false;

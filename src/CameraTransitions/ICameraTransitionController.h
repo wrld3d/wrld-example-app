@@ -14,8 +14,8 @@ namespace ExampleApp
 
 			virtual ~ICameraTransitionController() {};
 
-			virtual void StartTransitionTo(Eegeo::dv3 newInterestPoint, double distanceFromInterest, bool jumpIfFar=true) = 0;
-			virtual void StartTransitionTo(Eegeo::dv3 newInterestPoint, double distanceFromInterest, float newHeadingRadians, bool jumpIfFar=true) = 0;
+			virtual void StartTransitionTo(Eegeo::dv3 newInterestPoint, float distanceFromInterest, bool jumpIfFar=true) = 0;
+			virtual void StartTransitionTo(Eegeo::dv3 newInterestPoint, float distanceFromInterest, float newHeadingRadians, bool jumpIfFar=true) = 0;
 			virtual void StopCurrentTransition() = 0;
 			virtual void Update(float dt) = 0;
 

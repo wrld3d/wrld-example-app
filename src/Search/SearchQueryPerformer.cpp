@@ -13,7 +13,7 @@ namespace
 	float GetSearchRadius(const Eegeo::Camera::RenderCamera& renderCamera)
 	{
 		const float SearchRadiusMax = 50000.f;
-		float radius = (renderCamera.GetAltitude() * tan(renderCamera.GetFOV()));
+		float radius = (renderCamera.GetAltitude() * Eegeo::Math::Tan(renderCamera.GetFOV()));
 		return Eegeo::Min(SearchRadiusMax, radius);
 	}
 }
@@ -94,7 +94,7 @@ namespace ExampleApp
 			std::map<SearchResultModel, size_t> currentRepoHash;
 			std::set<size_t> retainedResultIndices;
 			std::vector<SearchResultModel*> newResultTemporaryStorage;
-			const size_t topIndexBeforeAddingNewResult = m_searchResultsRepository.GetItemCount() - 1;
+			const int topIndexBeforeAddingNewResult = static_cast<int>(m_searchResultsRepository.GetItemCount()) - 1;
 
 			// First of all lets map the contents of the results repo so we can easily look results up later.
 			// Map the result to its index.

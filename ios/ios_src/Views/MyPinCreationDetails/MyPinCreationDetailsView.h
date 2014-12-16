@@ -41,7 +41,7 @@
 
 - (void) addDoneToolBarToKeyboard:(UITextView *)textView;
 
-- (void) resizeImageViewToFit:(float)sourceImageWidth :(float)sourceImageHeight;
+- (void) resizeImageViewToFit:(CGFloat)sourceImageWidth :(CGFloat)sourceImageHeight;
 
 - (void) setHasNetworkConnectivity:(BOOL) hasNetworkConnectivity
                                   :(BOOL) shouldVerifyShareSettings;

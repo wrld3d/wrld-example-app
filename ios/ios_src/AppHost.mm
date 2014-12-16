@@ -53,6 +53,7 @@
 #include "MyPinDetailsView.h"
 #include "IMyPinDetailsModule.h"
 #include "IMyPinsModule.h"
+#include "ApiKey.h"
 
 using namespace Eegeo::iOS;
 
@@ -81,25 +82,26 @@ AppHost::AppHost(
 
 	m_pJpegLoader = Eegeo_NEW(Eegeo::Helpers::Jpeg::JpegLoader)();
 
-	m_piOSPlatformAbstractionModule = Eegeo_NEW(Eegeo::iOS::iOSPlatformAbstractionModule)(*m_pJpegLoader);
+	m_piOSPlatformAbstractionModule = Eegeo_NEW(Eegeo::iOS::iOSPlatformAbstractionModule)(*m_pJpegLoader, ExampleApp::ApiKey);
 
 	Eegeo::EffectHandler::Initialise();
 
 	Eegeo::Config::PlatformConfig platformConfig = Eegeo::iOS::iOSPlatformConfigBuilder(App::GetDevice(), App::IsDeviceMultiCore(), App::GetMajorSystemVersion()).Build();
 
 	m_pInitialExperienceModule = Eegeo_NEW(ExampleApp::InitialExperience::iOSInitialExperienceModule)(m_iOSPersistentSettingsModel);
-    
-    m_pApp = Eegeo_NEW(ExampleApp::MobileExampleApp)(*m_piOSPlatformAbstractionModule,
-                                                     screenProperties,
-                                                     *m_piOSLocationService,
-                                                     m_iOSNativeUIFactories,
-                                                     platformConfig,
-                                                     *m_pJpegLoader,
-                                                     *m_pInitialExperienceModule,
-                                                     m_iOSPersistentSettingsModel,
-                                                     m_uiToNativeMessageBus,
-                                                     m_nativeToUiMessageBus,
-                                                     platformConfig);
+
+	m_pApp = Eegeo_NEW(ExampleApp::MobileExampleApp)(
+	         ExampleApp::ApiKey,
+	         *m_piOSPlatformAbstractionModule,
+	         screenProperties,
+	         *m_piOSLocationService,
+	         m_iOSNativeUIFactories,
+	         platformConfig,
+	         *m_pJpegLoader,
+	         *m_pInitialExperienceModule,
+             m_iOSPersistentSettingsModel,
+	         m_uiToNativeMessageBus,
+	         m_nativeToUiMessageBus);
 
 	CreateApplicationViewModules(screenProperties);
 

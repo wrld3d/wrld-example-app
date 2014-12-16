@@ -57,7 +57,7 @@ UIViewController* m_pUIViewController;
 {
 	if (newHeading.headingAccuracy >= 0)
 	{
-		float heading = newHeading.trueHeading;
+		float heading = static_cast<float>(newHeading.trueHeading);
 
 		if (m_pUIViewController.interfaceOrientation == UIInterfaceOrientationLandscapeLeft)
 		{

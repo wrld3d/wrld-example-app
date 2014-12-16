@@ -26,22 +26,22 @@ bool GlDisplayService::IsDisplayAvailable() const
 	return m_displayBound;
 }
 
-int GlDisplayService::GetDisplayWidth() const
+float GlDisplayService::GetDisplayWidth() const
 {
 	return m_displayWidth;
 }
 
-int GlDisplayService::GetDisplayHeight() const
+float GlDisplayService::GetDisplayHeight() const
 {
 	return m_displayHeight;
 }
 
-int GlDisplayService::GetDisplayDpi() const
+float GlDisplayService::GetDisplayDpi() const
 {
 	return m_displayDpi;
 }
 
-int GlDisplayService::GetPixelScale() const
+float GlDisplayService::GetPixelScale() const
 {
 	return m_pixelScale;
 }
@@ -100,7 +100,7 @@ void GlDisplayService::UpdateDisplayDimensions()
     UIScreen* screen = [UIScreen mainScreen];
     if ([screen respondsToSelector: @selector(scale)])
     {
-        m_pixelScale = screen.scale;
+        m_pixelScale = static_cast<float>(screen.scale);
     }
     else
     {
@@ -128,8 +128,8 @@ void GlDisplayService::UpdateDisplayDimensions()
         std::swap(screenBounds.width, screenBounds.height);
     }
     
-    m_displayWidth = screenBounds.width * m_pixelScale;
-    m_displayHeight = screenBounds.height * m_pixelScale;
+    m_displayWidth = static_cast<float>(screenBounds.width * m_pixelScale);
+    m_displayHeight = static_cast<float>(screenBounds.height * m_pixelScale);
     m_displayDpi = App::GetDeviceDpi() * m_pixelScale;
 }
 

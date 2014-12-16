@@ -47,7 +47,6 @@
 
 namespace ExampleApp
 {
-    const std::string ApiKey = "OBTAIN API_KEY FROM https://appstore.eegeo.com AND INSERT IT HERE";
     const std::string DecartaApiKey = "OBTAIN DECARTA SEARCH KEY AND INSERT IT HERE";
     
 	namespace
@@ -81,63 +80,64 @@ namespace ExampleApp
 		}
 	}
     
-    MobileExampleApp::MobileExampleApp(
-                                       Eegeo::Modules::IPlatformAbstractionModule& platformAbstractions,
-                                       Eegeo::Rendering::ScreenProperties screenProperties,
-                                       Eegeo::Location::ILocationService& locationService,
-                                       Eegeo::UI::NativeUIFactories& nativeUIFactories,
-                                       Eegeo::Config::PlatformConfig platformConfig,
-                                       Eegeo::Helpers::Jpeg::IJpegLoader& jpegLoader,
-                                       ExampleApp::InitialExperience::IInitialExperienceModule& initialExperienceModule,
-                                       ExampleApp::PersistentSettings::IPersistentSettingsModel& persistentSettings,
-                                       ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
-                                       ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus,
-                                       Eegeo::Config::PlatformConfig& config)
-    : m_pGlobeCameraController(NULL)
-    , m_pCameraTouchController(NULL)
-    , m_pWorld(NULL)
-    , m_pNavigationService(NULL)
-    , m_platformAbstractions(platformAbstractions)
-    , m_pLoadingScreen(NULL)
-    , m_pBlitter(NULL)
-    , m_screenProperties(screenProperties)
-    , m_initialisedApplicationViewState(false)
-    , m_pinDiameter(50.f)
-    , m_pCameraTransitionController(NULL)
-    , m_pPrimaryMenuModule(NULL)
-    , m_pSecondaryMenuModule(NULL)
-    , m_pSearchResultMenuModule(NULL)
-    , m_pModalityModule(NULL)
-    , m_pCategorySearchModule(NULL)
-    , m_pFlattenButtonModule(NULL)
-    , m_pSearchModule(NULL)
-    , m_pPinIconsTexturePageLayout(NULL)
-    , m_pPinsModule(NULL)
-    , m_pWorldPinsModule(NULL)
-    , m_pSearchResultOnMapModule(NULL)
-    , m_pReactionModelModule(NULL)
-    , m_pReactionControllerModule(NULL)
-    , m_pSearchResultPoiModule(NULL)
-    , m_pPlaceJumpsModule(NULL)
-    , m_pWeatherMenuModule(NULL)
-    , m_pCompassModule(NULL)
-    , m_pWorldAreaLoaderModule(NULL)
-    , m_pAboutPageModule(NULL)
-    , m_initialExperienceModule(initialExperienceModule)
-    , m_uiToNativeMessageBus(uiToNativeMessageBus)
-    , m_nativeToUiMessageBus(nativeToUiMessageBus)
-    , m_persistentSettings(persistentSettings)
-    , m_pMyPinCreationModule(NULL)
-    , m_pPoiRingModule(NULL)
-    , m_pMyPinCreationDetailsModule(NULL)
-    , m_pMyPinsModule(NULL)
-    , m_pMyPinDetailsModule(NULL)
-    , m_pStreamingVolume(NULL)
+	MobileExampleApp::MobileExampleApp(
+		const std::string& apiKey,
+	    Eegeo::Modules::IPlatformAbstractionModule& platformAbstractions,
+	    Eegeo::Rendering::ScreenProperties screenProperties,
+	    Eegeo::Location::ILocationService& locationService,
+	    Eegeo::UI::NativeUIFactories& nativeUIFactories,
+	    Eegeo::Config::PlatformConfig platformConfig,
+	    Eegeo::Helpers::Jpeg::IJpegLoader& jpegLoader,
+	    ExampleApp::InitialExperience::IInitialExperienceModule& initialExperienceModule,
+        ExampleApp::PersistentSettings::IPersistentSettingsModel& persistentSettings,
+	    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
+        ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus)
+		: m_pGlobeCameraController(NULL)
+		, m_pCameraTouchController(NULL)
+        , m_pWorld(NULL)
+		, m_pNavigationService(NULL)
+		, m_platformAbstractions(platformAbstractions)
+		, m_pLoadingScreen(NULL)
+        , m_pBlitter(NULL)
+        , m_screenProperties(screenProperties)
+		, m_initialisedApplicationViewState(false)
+        , m_pinDiameter(50.f)
+		, m_pCameraTransitionController(NULL)
+		, m_pPrimaryMenuModule(NULL)
+		, m_pSecondaryMenuModule(NULL)
+		, m_pSearchResultMenuModule(NULL)
+		, m_pModalityModule(NULL)
+		, m_pCategorySearchModule(NULL)
+		, m_pFlattenButtonModule(NULL)
+		, m_pSearchModule(NULL)
+		, m_pPinIconsTexturePageLayout(NULL)
+		, m_pPinsModule(NULL)
+		, m_pWorldPinsModule(NULL)
+		, m_pSearchResultOnMapModule(NULL)
+		, m_pReactionModelModule(NULL)
+		, m_pReactionControllerModule(NULL)
+		, m_pSearchResultPoiModule(NULL)
+		, m_pPlaceJumpsModule(NULL)
+		, m_pWeatherMenuModule(NULL)
+		, m_pCompassModule(NULL)
+		, m_pWorldAreaLoaderModule(NULL)
+		, m_pAboutPageModule(NULL)
+		, m_initialExperienceModule(initialExperienceModule)
+		, m_uiToNativeMessageBus(uiToNativeMessageBus)
+		, m_nativeToUiMessageBus(nativeToUiMessageBus)
+        , m_persistentSettings(persistentSettings)
+        , m_pMyPinCreationModule(NULL)
+        , m_pPoiRingModule(NULL)
+        , m_pMyPinCreationDetailsModule(NULL)
+        , m_pMyPinsModule(NULL)
+        , m_pMyPinDetailsModule(NULL)
 	{
+        Eegeo::TtyHandler::TtyEnabled = true;
+
 		m_pBlitter = Eegeo_NEW(Eegeo::Blitter)(1024 * 128, 1024 * 64, 1024 * 32);
 		m_pBlitter->Initialise();
 
-		m_pWorld = Eegeo_NEW(Eegeo::EegeoWorld)(ApiKey,
+		m_pWorld = Eegeo_NEW(Eegeo::EegeoWorld)(apiKey,
 		                                        m_platformAbstractions,
 		                                        jpegLoader,
 		                                        screenProperties,
@@ -180,7 +180,7 @@ namespace ExampleApp
 
 		float interestPointLatitudeDegrees = 37.7858f;
 		float interestPointLongitudeDegrees = -122.401f;
-		float interestPointAltitudeMeters = 2.7;
+		float interestPointAltitudeMeters = 2.7f;
 
 		Eegeo::Space::LatLongAltitude location = Eegeo::Space::LatLongAltitude::FromDegrees(interestPointLatitudeDegrees,
 		        interestPointLongitudeDegrees,
@@ -201,7 +201,7 @@ namespace ExampleApp
         m_pLoadingScreen = CreateLoadingScreen(screenProperties, m_pWorld->GetRenderingModule(), m_pWorld->GetPlatformAbstractionModule());
         
         m_pStreamingVolume = Eegeo_NEW(Eegeo::Streaming::CameraFrustumStreamingVolume)(mapModule.GetResourceCeilingProvider(),
-                                                                                       Eegeo::Config::LodRefinementConfig::GetLodRefinementAltitudesForDeviceSpec(config.PerformanceConfig.DeviceSpecification),
+                                                                                       Eegeo::Config::LodRefinementConfig::GetLodRefinementAltitudesForDeviceSpec(platformConfig.PerformanceConfig.DeviceSpecification),
                                                                                        Eegeo::Streaming::QuadTreeCube::MAX_DEPTH_TO_VISIT,
                                                                                        mapModule.GetEnvironmentFlatteningService());
 	}
@@ -443,8 +443,8 @@ namespace ExampleApp
 		int numberOfTilesAlongEachAxisOfTexturePage = 4;
 		m_pPinIconsTexturePageLayout = Eegeo_NEW(Eegeo::Rendering::RegularTexturePageLayout)(numberOfTilesAlongEachAxisOfTexturePage);
 
-		int spriteWidth = m_pinDiameter;
-		int spriteHeight = m_pinDiameter;
+		float spriteWidth = m_pinDiameter;
+		float spriteHeight = m_pinDiameter;
 
 		Eegeo::Modules::Core::RenderingModule& renderingModule = world.GetRenderingModule();
 		Eegeo::Modules::Map::Layers::TerrainModelModule& terrainModelModule = world.GetTerrainModelModule();

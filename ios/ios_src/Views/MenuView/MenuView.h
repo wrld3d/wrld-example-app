@@ -63,6 +63,8 @@
 	bool m_isFirstAnimationCeremony;
 }
 
+- (bool) useSizeToFit;
+
 - (id) initWithDimensions:(float)width :(float)height :(float)pixelScale;
 
 - (id) setController:(MenuViewController *)controller;

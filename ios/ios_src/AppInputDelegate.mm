@@ -3,6 +3,8 @@
 #include "AppInputDelegate.h"
 #include "ViewController.h"
 
+#include <algorithm>
+
 @implementation AppInputDelegateGestureListener
 
 ViewController* m_pViewController;
@@ -76,11 +78,11 @@ UILongPressGestureRecognizer* gestureTouch;
 -(void)gestureRotation_Callback:(UIRotationGestureRecognizer*)recognizer
 {
 	AppInterface::RotateData data;
-
-	data.rotation	= recognizer.rotation;
-	data.numTouches	= recognizer.numberOfTouches;
-	data.velocity = recognizer.velocity;
-
+    
+	data.rotation	= static_cast<float>(recognizer.rotation);
+	data.numTouches	= static_cast<int>(recognizer.numberOfTouches);
+	data.velocity = static_cast<float>(recognizer.velocity);
+    
 	if (recognizer.state == UIGestureRecognizerStateBegan)
 	{
 		m_pAppInputDelegate->Event_TouchRotate_Start (data);
@@ -95,6 +97,14 @@ UILongPressGestureRecognizer* gestureTouch;
 	}
 }
 
+namespace
+{
+    Eegeo::v2 CGPointToEegeoV2(const CGPoint& p)
+    {
+        return Eegeo::v2(static_cast<float>(p.x), static_cast<float>(p.y));
+    }
+}
+
 -(void)gesturePinch_Callback:(UIPinchGestureRecognizer*)recognizer
 {
 	float dist;
@@ -104,10 +114,10 @@ UILongPressGestureRecognizer* gestureTouch;
 	{
 		CGPoint point0 = [recognizer locationOfTouch:0 inView:m_pViewController.view];
 		CGPoint point1 = [recognizer locationOfTouch:1 inView:m_pViewController.view];
-
-		Eegeo::v2 p0(point0.x, point0.y);
-		Eegeo::v2 p1(point1.x, point1.y);
-
+        
+		Eegeo::v2 p0(CGPointToEegeoV2(point0));
+		Eegeo::v2 p1(CGPointToEegeoV2(point1));
+        
 		Eegeo::v2 v2Dist = Eegeo::v2::Sub(p0, p1);
 
 		dist = v2Dist.Length();
@@ -137,14 +147,14 @@ UILongPressGestureRecognizer* gestureTouch;
 	else if (recognizer.state == UIGestureRecognizerStateChanged)
 	{
 		float delta = (m_previousDist-dist);
-		float majorScreenDimension = fmaxf(m_screenHeight, m_screenWidth);
+		float majorScreenDimension = std::max(m_screenHeight, m_screenWidth);
 		data.scale = delta/majorScreenDimension;
 		m_pAppInputDelegate->Event_TouchPinch (data);
 		m_previousDist = dist;
 	}
 	else if (recognizer.state == UIGestureRecognizerStateEnded)
 	{
-		data.scale	= recognizer.scale;
+		data.scale	= static_cast<float>(recognizer.scale);
 		m_pAppInputDelegate->Event_TouchPinch_End (data);
 	}
 
@@ -170,7 +180,7 @@ UILongPressGestureRecognizer* gestureTouch;
 		CGPoint extents = extentsMax;
 		extents.x -= extentsMin.x;
 		extents.y -= extentsMin.y;
-		touchExtents = *(Eegeo::v2*)&extents;
+		touchExtents = CGPointToEegeoV2(extents);
 	}
 	return touchExtents;
 }
@@ -189,14 +199,14 @@ UILongPressGestureRecognizer* gestureTouch;
 	velocity.y *= m_pixelScale;
 
 	AppInterface::PanData data;
-
-	data.pointRelative	= *(Eegeo::v2*)&position;
-	float majorScreenDimension = fmaxf(m_screenHeight, m_screenWidth);
+    
+	data.pointRelative = CGPointToEegeoV2(position);
+    float majorScreenDimension = std::max(m_screenHeight, m_screenWidth);
 	data.pointRelativeNormalized = (data.pointRelative)/majorScreenDimension;
-	data.pointAbsolute	= *(Eegeo::v2*)&positionAbs;
-	data.velocity	= *(Eegeo::v2*)&velocity;
+	data.pointAbsolute = CGPointToEegeoV2(positionAbs);
+	data.velocity = CGPointToEegeoV2(velocity);
 	data.majorScreenDimension = majorScreenDimension;
-	data.numTouches = recognizer.numberOfTouches;
+	data.numTouches = static_cast<int>(recognizer.numberOfTouches);
 	data.touchExtents = [self getGestureTouchExtents :recognizer];
 
 	if (recognizer.state == UIGestureRecognizerStateBegan)
@@ -223,9 +233,9 @@ UILongPressGestureRecognizer* gestureTouch;
 		position.y *= m_pixelScale;
 
 		AppInterface::TapData data;
-
-		data.point	= *(Eegeo::v2*)&position;
-
+        
+		data.point = CGPointToEegeoV2(position);
+        
 		m_pAppInputDelegate->Event_TouchTap (data);
 
 	}
@@ -241,9 +251,9 @@ UILongPressGestureRecognizer* gestureTouch;
 		position.y *= m_pixelScale;
 
 		AppInterface::TapData data;
-
-		data.point	= *(Eegeo::v2*)&position;
-
+        
+		data.point = CGPointToEegeoV2(position);
+        
 		m_pAppInputDelegate->Event_TouchDoubleTap (data);
 
 	}
@@ -256,7 +266,7 @@ UILongPressGestureRecognizer* gestureTouch;
 	CGPoint position = [recognizer locationInView:m_pViewController.view];
 	position.x *= m_pixelScale;
 	position.y *= m_pixelScale;
-	data.point	= *(Eegeo::v2*)&position;
+	data.point	= CGPointToEegeoV2(position);
 
 	if(recognizer.state == UIGestureRecognizerStateBegan)
 	{

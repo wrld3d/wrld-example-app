@@ -128,7 +128,8 @@ namespace ExampleApp
 		void InitialisePinsModules(Eegeo::Modules::Map::MapModule& mapModule, Eegeo::EegeoWorld& world);
 
 	public:
-		MobileExampleApp(Eegeo::Modules::IPlatformAbstractionModule& platformAbstractions,
+		MobileExampleApp(const std::string& apiKey,
+                         Eegeo::Modules::IPlatformAbstractionModule& platformAbstractions,
 		                 Eegeo::Rendering::ScreenProperties screenProperties,
 		                 Eegeo::Location::ILocationService& locationService,
 		                 Eegeo::UI::NativeUIFactories& nativeUIFactories,
@@ -137,8 +138,7 @@ namespace ExampleApp
 		                 ExampleApp::InitialExperience::IInitialExperienceModule& initialExperienceModule,
                          ExampleApp::PersistentSettings::IPersistentSettingsModel& persistentSettings,
 		                 ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
-                         ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus,
-                         Eegeo::Config::PlatformConfig& config);
+                         ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus);
 
 
 		~MobileExampleApp();

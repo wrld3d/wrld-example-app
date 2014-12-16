@@ -20,7 +20,7 @@
 	{
 		m_pController = controller;
 		self.alpha = 0.f;
-		m_stateChangeAnimationTimeSeconds = 0.2;
+		m_stateChangeAnimationTimeSeconds = 0.2f;
         m_labelsSectionWidth = 0.f;
         m_maxContentSize = 0.f;
 
@@ -163,8 +163,8 @@
 {
 	self.alpha = 0.f;
 
-	const float boundsWidth = self.superview.bounds.size.width;
-	const float boundsHeight = self.superview.bounds.size.height;
+	const float boundsWidth = static_cast<float>(self.superview.bounds.size.width);
+	const float boundsHeight = static_cast<float>(self.superview.bounds.size.height);
 	const bool useFullScreenSize = (boundsHeight < 600.f || boundsWidth < 400.f);
 	const float boundsOccupyMultiplier = useFullScreenSize ? 0.9f : 0.5f;
 	const float mainWindowWidth = boundsWidth * boundsOccupyMultiplier;
@@ -278,8 +278,8 @@
         
         m_maxImageWidth = m_labelsSectionWidth - m_headerTextPadding;
         
-        const float widthRatio = m_maxImageWidth/self.pImageContent.image.size.width;
-        const float height = self.pImageContent.image.size.height * widthRatio;
+        const CGFloat widthRatio = m_maxImageWidth/self.pImageContent.image.size.width;
+        const CGFloat height = self.pImageContent.image.size.height * widthRatio;
         
         self.pImageContent.frame = CGRectMake(0, currentLabelY, m_maxImageWidth, height);
         

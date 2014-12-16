@@ -15,7 +15,7 @@
 		m_pController = controller;
 		[self setBackgroundColor: ExampleApp::Helpers::ColorPalette::ModalBackgroundColor];
 		self.alpha = 0.f;
-		m_stateChangeAnimationTimeSeconds = 0.2;
+		m_stateChangeAnimationTimeSeconds = 0.2f;
 	}
 
 	return self;

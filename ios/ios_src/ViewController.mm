@@ -27,7 +27,7 @@ using namespace Eegeo::iOS;
 	}
 
 	m_previousTimestamp = CFAbsoluteTimeGetCurrent();
-	self.preferredFramesPerSecond = 30.0f;
+	self.preferredFramesPerSecond = 30;
 	m_pAppRunner = NULL;
 }
 
@@ -65,7 +65,7 @@ using namespace Eegeo::iOS;
 
 	CFTimeInterval timeNow = CFAbsoluteTimeGetCurrent();
 	CFTimeInterval frameDuration = timeNow - m_previousTimestamp;
-	m_pAppRunner->Update(frameDuration);
+	m_pAppRunner->Update(static_cast<float>(frameDuration));
 
 	const GLenum discards[]  = {GL_DEPTH_ATTACHMENT, GL_STENCIL_ATTACHMENT};
 	Eegeo_GL(glDiscardFramebufferEXT(GL_READ_FRAMEBUFFER_APPLE, 2, discards));
