@@ -44,7 +44,6 @@
 
 namespace ExampleApp
 {
-    const std::string ApiKey = "OBTAIN API_KEY FROM https://appstore.eegeo.com AND INSERT IT HERE";
     const std::string DecartaApiKey = "OBTAIN DECARTA SEARCH KEY AND INSERT IT HERE";
     
 	namespace
@@ -79,6 +78,7 @@ namespace ExampleApp
 	}
 
 	MobileExampleApp::MobileExampleApp(
+		const std::string& apiKey,
 	    Eegeo::Modules::IPlatformAbstractionModule& platformAbstractions,
 	    Eegeo::Rendering::ScreenProperties screenProperties,
 	    Eegeo::Location::ILocationService& locationService,
@@ -129,10 +129,12 @@ namespace ExampleApp
         , m_pMyPinsModule(NULL)
         , m_pMyPinDetailsModule(NULL)
 	{
+        Eegeo::TtyHandler::TtyEnabled = true;
+
 		m_pBlitter = Eegeo_NEW(Eegeo::Blitter)(1024 * 128, 1024 * 64, 1024 * 32);
 		m_pBlitter->Initialise();
 
-		m_pWorld = Eegeo_NEW(Eegeo::EegeoWorld)(ApiKey,
+		m_pWorld = Eegeo_NEW(Eegeo::EegeoWorld)(apiKey,
 		                                        m_platformAbstractions,
 		                                        jpegLoader,
 		                                        screenProperties,
@@ -175,7 +177,7 @@ namespace ExampleApp
 
 		float interestPointLatitudeDegrees = 37.7858f;
 		float interestPointLongitudeDegrees = -122.401f;
-		float interestPointAltitudeMeters = 2.7;
+		float interestPointAltitudeMeters = 2.7f;
 
 		Eegeo::Space::LatLongAltitude location = Eegeo::Space::LatLongAltitude::FromDegrees(interestPointLatitudeDegrees,
 		        interestPointLongitudeDegrees,
@@ -431,8 +433,8 @@ namespace ExampleApp
 		int numberOfTilesAlongEachAxisOfTexturePage = 4;
 		m_pPinIconsTexturePageLayout = Eegeo_NEW(Eegeo::Rendering::RegularTexturePageLayout)(numberOfTilesAlongEachAxisOfTexturePage);
 
-		int spriteWidth = m_pinDiameter;
-		int spriteHeight = m_pinDiameter;
+		float spriteWidth = m_pinDiameter;
+		float spriteHeight = m_pinDiameter;
 
 		Eegeo::Modules::Core::RenderingModule& renderingModule = world.GetRenderingModule();
 		Eegeo::Modules::Map::Layers::TerrainModelModule& terrainModelModule = world.GetTerrainModelModule();

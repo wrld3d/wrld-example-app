@@ -248,6 +248,11 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 3;
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
 {
+    if([self.pMenuView isAnimating])
+    {
+        return NO;
+    }
+    
 	return !m_pModalityModel->IsModalEnabled() || m_pMenuViewModel->IsFullyOpen();
 }
 
@@ -292,7 +297,7 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 3;
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-	return m_pMenuViewModel->GetMenuSection(section).Size();
+	return m_pMenuViewModel->GetMenuSection(static_cast<int>(section)).Size();
 }
 
 - (void) populateCellWithJson:(std::string)json :(UITableViewCell*)cell :(const bool)isHeader
@@ -336,7 +341,7 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 3;
 {
     std::stringstream ss;
     
-    ExampleApp::Menu::IMenuSectionViewModel& section = m_pMenuViewModel->GetMenuSection(indexPath.section);
+    ExampleApp::Menu::IMenuSectionViewModel& section = m_pMenuViewModel->GetMenuSection(static_cast<int>(indexPath.section));
     const NSInteger index = section.IsExpandable() ? indexPath.row - 1 : indexPath.row;
     const bool isExpandableHeader = section.IsExpandable() && indexPath.row == 0;
     const bool isLastExpandableSection = section.IsExpandable() && indexPath.section == m_pMenuViewModel->SectionsCount() - 1;
@@ -366,7 +371,7 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 3;
         UIImageView* pOpenableMenuArrowView = [[[UIImageView alloc] initWithImage:self.pOpenableMenuArrow] autorelease];
         pOpenableMenuArrowView.tag = SubItemCellOpenableMenuArrowTag;
         
-        const float tableWidth = self.pMenuView.pTableview.bounds.size.width;
+        const float tableWidth = static_cast<float>(self.pMenuView.pTableview.bounds.size.width);
         const float openableArrowX = m_isRightMenu ? (tableWidth - 20.f) : 0.f;
         pOpenableMenuArrowView.frame = CGRectMake(openableArrowX, (SECTION_HEADER_CELL_HEIGHT*0.5f) - 8.f, 16.f, 16.f);
         [cell addSubview:pOpenableMenuArrowView];
@@ -391,7 +396,7 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 3;
     }
     else
     {
-        ExampleApp::Menu::MenuItemModel item = section.GetItemAtIndex(index);
+        ExampleApp::Menu::MenuItemModel item = section.GetItemAtIndex(static_cast<int>(index));
         std::string json = item.SerializeJson();
         [self populateCellWithJson :json :cell :isHeader];
     }
@@ -407,8 +412,15 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 3;
 	{
 		return;
 	}
+    
+    if(_dragging)
+    {
+        return;
+    }
+    
+    const int indexPathSection = static_cast<int>(indexPath.section);
 
-	ExampleApp::Menu::IMenuSectionViewModel& section = m_pMenuViewModel->GetMenuSection(indexPath.section);
+	ExampleApp::Menu::IMenuSectionViewModel& section = m_pMenuViewModel->GetMenuSection(indexPathSection);
 
 	if(section.IsExpandable() && indexPath.row == 0)
 	{
@@ -420,12 +432,12 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 3;
 		if(section.IsExpanded())
 		{
 			rows = section.Size();
-			m_pMenuViewModel->GetMenuSection(indexPath.section).Contract();
+			m_pMenuViewModel->GetMenuSection(indexPathSection).Contract();
 			[self showOpenableArrowClosed:cell];
 		}
 		else
 		{
-			m_pMenuViewModel->GetMenuSection(indexPath.section).Expand();
+			m_pMenuViewModel->GetMenuSection(indexPathSection).Expand();
 			rows = section.Size();
 			[self showOpenableArrowOpen:cell];
 		}
@@ -449,7 +461,7 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 3;
 	else
 	{
 		NSInteger index = section.IsExpandable() ? indexPath.row - 1 : indexPath.row;
-		ExampleApp::Menu::MenuItemModel item = section.GetItemAtIndex(index);
+		ExampleApp::Menu::MenuItemModel item = section.GetItemAtIndex(static_cast<int>(index));
 		item.Select();
 	}
 }
@@ -462,7 +474,7 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 3;
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	ExampleApp::Menu::IMenuSectionViewModel& section = m_pMenuViewModel->GetMenuSection(indexPath.section);
+	ExampleApp::Menu::IMenuSectionViewModel& section = m_pMenuViewModel->GetMenuSection(static_cast<int>(indexPath.section));
 	UIImageView *shadow = (UIImageView*)[cell viewWithTag:SubItemCellShadowViewTag];
 	UIImageView *shadowFlipped = (UIImageView*)[cell viewWithTag:SubItemCellShadowFlippedViewTag];
 	UIImageView *openableArrow = (UIImageView*)[cell viewWithTag:SubItemCellOpenableMenuArrowTag];
@@ -539,7 +551,7 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 3;
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	ExampleApp::Menu::IMenuSectionViewModel& section = m_pMenuViewModel->GetMenuSection(indexPath.section);
+	ExampleApp::Menu::IMenuSectionViewModel& section = m_pMenuViewModel->GetMenuSection(static_cast<int>(indexPath.section));
 
 	if(section.IsExpandable() && indexPath.row != 0)
 	{

@@ -117,11 +117,11 @@ CGFloat const SearchResultRowHeight = 53.0f;
 	{
 		cell = [[[CustomTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
 		cell.selectionStyle = UITableViewCellSelectionStyleGray;
-		[cell initCell: self.pMenuView.pTableview.bounds.size.width :tableView];
+		[cell initCell: static_cast<float>(self.pMenuView.pTableview.bounds.size.width) :tableView];
 	}
 
-	ExampleApp::Menu::IMenuSectionViewModel& section = m_pMenuViewModel->GetMenuSection(indexPath.section);
-	NSInteger index = section.IsExpandable() ? indexPath.row - 1 : indexPath.row;
+	ExampleApp::Menu::IMenuSectionViewModel& section = m_pMenuViewModel->GetMenuSection(static_cast<int>(indexPath.section));
+	int index = static_cast<int>(section.IsExpandable() ? indexPath.row - 1 : indexPath.row);
 
 	if(section.IsExpandable() && indexPath.row == 0)
 	{

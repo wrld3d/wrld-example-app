@@ -20,7 +20,7 @@
 	{
 		m_pController = controller;
 		self.alpha = 0.f;
-		m_stateChangeAnimationTimeSeconds = 0.2;
+		m_stateChangeAnimationTimeSeconds = 0.2f;
 
 		self.pShadowContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
 		self.pShadowContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::BlackTone;
@@ -171,8 +171,8 @@
 {
 	self.alpha = 0.f;
 
-	const float boundsWidth = self.superview.bounds.size.width;
-	const float boundsHeight = self.superview.bounds.size.height;
+	const float boundsWidth = static_cast<float>(self.superview.bounds.size.width);
+	const float boundsHeight = static_cast<float>(self.superview.bounds.size.height);
 	const bool useFullScreenSize = (boundsHeight < 600.f || boundsWidth < 400.f);
 	const float boundsOccupyMultiplier = useFullScreenSize ? 0.9f : 0.5f;
 	const float mainWindowWidth = boundsWidth * boundsOccupyMultiplier;

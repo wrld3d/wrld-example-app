@@ -125,7 +125,8 @@ namespace ExampleApp
 		void InitialisePinsModules(Eegeo::Modules::Map::MapModule& mapModule, Eegeo::EegeoWorld& world);
 
 	public:
-		MobileExampleApp(Eegeo::Modules::IPlatformAbstractionModule& platformAbstractions,
+		MobileExampleApp(const std::string& apiKey,
+                         Eegeo::Modules::IPlatformAbstractionModule& platformAbstractions,
 		                 Eegeo::Rendering::ScreenProperties screenProperties,
 		                 Eegeo::Location::ILocationService& locationService,
 		                 Eegeo::UI::NativeUIFactories& nativeUIFactories,

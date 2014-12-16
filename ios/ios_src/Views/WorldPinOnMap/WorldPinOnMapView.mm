@@ -15,7 +15,7 @@
 	{
 		self.alpha = 0.f;
 		m_pController = controller;
-		m_stateChangeAnimationTimeSeconds = 0.2;
+		m_stateChangeAnimationTimeSeconds = 0.2f;
 
 		// shadow
 		self.pMainControlShadowContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
@@ -106,7 +106,7 @@
 	self.pMainControlShadowContainer.frame = CGRectMake(x + 2.f, y + 2.f, w, h);
 
 	const float labelContainerOffsetY = 6.f;
-	const float labelContainerHeight = self.pMainControlContainer.frame.size.height - labelContainerOffsetY;
+	const CGFloat labelContainerHeight = self.pMainControlContainer.frame.size.height - labelContainerOffsetY;
 
 	self.pTopStrip.frame =  CGRectMake(0.f, 0.f, w, labelContainerOffsetY);
 	self.pLabelBack.frame = CGRectMake(0.f, labelContainerOffsetY, w, labelContainerHeight);

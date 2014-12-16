@@ -75,7 +75,7 @@
 
 - (void) setOnScreenStateToIntermediateValue:(float)onScreenState
 {
-	float newX = m_xPosInactive + abs(m_xPosActive - m_xPosInactive) * onScreenState;
+	float newX = m_xPosInactive + std::abs(m_xPosActive - m_xPosInactive) * onScreenState;
 
 	self.hidden = false;
 	CGRect f = self.frame;

@@ -72,6 +72,7 @@
 #include "AndroidAppThreadAssertionMacros.h"
 #include "SearchResultRepositoryObserver.h"
 #include "IMyPinsModule.h"
+#include "ApiKey.h"
 
 using namespace Eegeo::Android;
 using namespace Eegeo::Android::Input;
@@ -133,6 +134,7 @@ AppHost::AppHost(
 	        display,
 	        resourceBuildShareContext,
 	        shareSurface,
+	        ExampleApp::ApiKey,
 	        customApplicationAssetDirectories);
 
 	Eegeo::EffectHandler::Initialise();
@@ -147,7 +149,9 @@ AppHost::AppHost(
 	                                 m_androidPersistentSettingsModel
 	                             );
 
-	m_pApp = Eegeo_NEW(ExampleApp::MobileExampleApp)(*m_pAndroidPlatformAbstractionModule,
+	m_pApp = Eegeo_NEW(ExampleApp::MobileExampleApp)(
+	         ExampleApp::ApiKey,
+	         *m_pAndroidPlatformAbstractionModule,
 	         screenProperties,
 	         *m_pAndroidLocationService,
 	         m_androidNativeUIFactories,

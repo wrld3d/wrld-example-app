@@ -74,6 +74,7 @@ public class SecondaryMenuView extends MenuView implements TextView.OnEditorActi
 
 		m_menuItemSelectedListener = new MenuItemSelectedListener(
 		    m_listAdapter,
+		    this,
 		    m_activity,
 		    m_nativeCallerPointer
 		);

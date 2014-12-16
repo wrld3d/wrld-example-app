@@ -19,16 +19,16 @@ public:
 
 	bool IsDisplayAvailable() const;
 	bool IsPortraitAspect() const;
-	int GetDisplayWidth() const;
-	int GetDisplayHeight() const;
-	int GetDisplayDpi() const;
-	int GetPixelScale() const;
+	float GetDisplayWidth() const;
+	float GetDisplayHeight() const;
+	float GetDisplayDpi() const;
+	float GetPixelScale() const;
 
 private:
-	int m_displayWidth;
-	int m_displayHeight;
-	int m_displayDpi;
-	int m_pixelScale;
+	float m_displayWidth;
+	float m_displayHeight;
+	float m_displayDpi;
+	float m_pixelScale;
 	bool m_displayBound;
 	bool m_isPortraitAspect;
 };

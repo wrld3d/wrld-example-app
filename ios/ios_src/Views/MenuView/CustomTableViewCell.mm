@@ -32,7 +32,7 @@
 	self.contentView.backgroundColor = [UIColor whiteColor];
 
 	CGRect imageFrame = self.imageView.frame;
-	const float initialImageX = imageFrame.origin.x;
+	const float initialImageX = static_cast<float>(imageFrame.origin.x);
 	imageFrame.origin.x = m_rightAlignImage ? (r.size.width - imageFrame.size.width) : 0.f;
 	self.imageView.frame = imageFrame;
 
@@ -42,7 +42,7 @@
 
 	if(!m_rightAlignImage)
 	{
-		const float delta = (imageFrame.origin.x - initialImageX);
+		const float delta = static_cast<float>(imageFrame.origin.x - initialImageX);
 
 		CGRect labelFrame = self.textLabel.frame;
 		labelFrame.origin.x += delta;
@@ -54,9 +54,9 @@
 	}
 }
 
-- (void)initCell:(float)initialWidth :(UITableView*)tableView;
+- (void)initCell:(CGFloat)initialWidth :(UITableView*)tableView;
 {
-	m_initialWidth = initialWidth;
+	m_initialWidth = static_cast<float>(initialWidth);
 	m_tableView = tableView;
 }
 

@@ -15,7 +15,7 @@
 
 - (void)setAlignInfo:(bool)rightAlignFrame :(bool)rightAlignImage :(bool)isHeader;
 
-- (void)initCell:(float)initialWidth :(UITableView*)tableView;
+- (void)initCell:(CGFloat)initialWidth :(UITableView*)tableView;
 
 - (void)layoutSubviews;
 

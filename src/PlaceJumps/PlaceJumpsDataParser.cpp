@@ -28,8 +28,8 @@ namespace ExampleApp
 					std::string name = jsonValue["Name"].GetString();
 					double latitude = jsonValue["Latitude"].GetDouble();
 					double longitude = jsonValue["Longitude"].GetDouble();
-					float headingDegrees = jsonValue["HeadingDegrees"].GetDouble();
-					float distance = jsonValue["Distance"].GetDouble();
+					float headingDegrees = static_cast<float>(jsonValue["HeadingDegrees"].GetDouble());
+					float distance = static_cast<float>(jsonValue["Distance"].GetDouble());
 					Eegeo_ASSERT(jsonValue.HasMember("Icon"), "Placejump definition error: Place %s has no icon defined.", name.c_str());
 
 					std::string icon = jsonValue["Icon"].GetString();

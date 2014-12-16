@@ -35,7 +35,7 @@
 
 		//outer shape
 		self.pOuterShape = [[[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, m_width, m_height)] autorelease];
-		self.pOuterShape.layer.cornerRadius = m_width * 0.5;
+		self.pOuterShape.layer.cornerRadius = m_width * 0.5f;
 		self.pOuterShape.backgroundColor = m_lightColour;
 		[self addSubview: self.pOuterShape];
 
@@ -43,7 +43,7 @@
 		const float innerWidth = 54 * m_pixelScale * iphoneTweakScale;
 		const float innerHeight = innerWidth;
 		self.pInnerShape = [[[UIView alloc] initWithFrame:CGRectMake(5.f * iphoneTweakScale, 5.f * iphoneTweakScale, innerWidth, innerHeight)] autorelease];
-		self.pInnerShape.layer.cornerRadius = innerWidth * 0.5;
+		self.pInnerShape.layer.cornerRadius = innerWidth * 0.5f;
 		self.pInnerShape.backgroundColor = m_darkColour;
 		[self addSubview: self.pInnerShape];
 
@@ -57,7 +57,7 @@
 		float pointHeight = pointWidth;
 		self.pPoint = [[[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, pointWidth, pointHeight)] autorelease];
 		self.pPoint.backgroundColor = m_lightColour;
-		self.pPoint.layer.cornerRadius = pointWidth * 0.5;
+		self.pPoint.layer.cornerRadius = pointWidth * 0.5f;
 		[self addSubview: self.pPoint];
 
 		//lock icon

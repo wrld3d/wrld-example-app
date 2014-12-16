@@ -8,9 +8,11 @@ namespace ExampleApp
 	{
 		AboutPageModel::AboutPageModel(const std::string& platformVersion,
 		                               const std::string& platformHash,
+                                       const std::string& platformArchitecture,
 		                               const std::string& aboutText)
 			: m_platformVersion(platformVersion)
 			, m_platformHash(platformHash)
+            , m_platformArchitecture(platformArchitecture)
 			, m_aboutText(aboutText)
 		{
 
@@ -30,6 +32,11 @@ namespace ExampleApp
 		{
 			return m_platformHash;
 		}
+        
+        const std::string& AboutPageModel::GetPlatformArchitecture() const
+        {
+            return m_platformArchitecture;
+        }
 
 		const std::string& AboutPageModel::GetAboutText() const
 		{

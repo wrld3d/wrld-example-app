@@ -80,7 +80,7 @@
     
     if (image)
     {
-        NSData* imageData = UIImageJPEGRepresentation(image, 0.9);
+        NSData* imageData = UIImageJPEGRepresentation(image, 0.9f);
         imageDataBytes = (Byte*) [imageData bytes];
         imageSize = [imageData length] / sizeof(Byte);
     }

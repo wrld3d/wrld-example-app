@@ -51,6 +51,7 @@ public abstract class MenuView implements View.OnTouchListener, View.OnClickList
 
 	protected int m_dragThresholdPx;
 
+	protected boolean m_dragAnchorSet = false;
 	protected boolean m_canBeginDrag = false;
 
 	protected boolean m_animating = false;
@@ -81,6 +82,11 @@ public abstract class MenuView implements View.OnTouchListener, View.OnClickList
 	public boolean isAnimating()
 	{
 		return m_animating;
+	}
+	
+	public boolean isDragging()
+	{
+		return m_dragInProgress;
 	}
 
 	public void updateAnimation(final float deltaSeconds)
@@ -282,7 +288,6 @@ public abstract class MenuView implements View.OnTouchListener, View.OnClickList
 		m_dragInProgress = true;
 		m_dragStartPosXPx = xPx;
 		m_controlStartPosXPx = viewXPx();
-		log("ACTION_DOWN", "x: " + Integer.toString(xPx));
 
 		MenuViewJniMethods.ViewDragStarted(m_nativeCallerPointer);
 	}
@@ -293,13 +298,19 @@ public abstract class MenuView implements View.OnTouchListener, View.OnClickList
 
 	public void onClick(View view)
 	{
+		if(m_animating)
+		{
+			return;
+		}
+		
 		MenuViewJniMethods.ViewClicked(m_nativeCallerPointer);
 	}
 
 	public boolean onTouch(View view, MotionEvent event)
 	{
-		if(!canInteract())
+		if(m_animating || !canInteract())
 		{
+			m_dragAnchorSet = false;
 			return true;
 		}
 
@@ -316,6 +327,7 @@ public abstract class MenuView implements View.OnTouchListener, View.OnClickList
 		case MotionEvent.ACTION_DOWN:
 			m_touchAnchorXPx = xPx;
 			m_touchAnchorYPx = yPx;
+			m_dragAnchorSet = true;
 			break;
 		case MotionEvent.ACTION_UP:
 			m_canBeginDrag = false;
@@ -323,10 +335,11 @@ public abstract class MenuView implements View.OnTouchListener, View.OnClickList
 			{
 				handleDragFinish(xPx, yPx);
 			}
-			else
+			else if(m_dragAnchorSet)
 			{
 				view.performClick();
 			}
+			m_dragAnchorSet = false;
 			break;
 		case MotionEvent.ACTION_MOVE:
 
@@ -334,7 +347,7 @@ public abstract class MenuView implements View.OnTouchListener, View.OnClickList
 			{
 				handleDragUpdate(xPx, yPx);
 			}
-			else if(m_canBeginDrag)
+			else if(m_canBeginDrag && m_dragAnchorSet)
 			{
 				double mag = Math.sqrt((m_touchAnchorXPx - xPx)*(m_touchAnchorXPx - xPx) + (m_touchAnchorYPx - yPx)*(m_touchAnchorYPx - yPx));
 				if(mag >= m_dragThresholdPx)

@@ -20,8 +20,8 @@ namespace ExampleApp
 			                           Eegeo::Location::NavigationService& navigationService,
                                        Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider);
 
-			void StartTransitionTo(Eegeo::dv3 newInterestPoint, double distanceFromInterest, bool jumpIfFar=true);
-			void StartTransitionTo(Eegeo::dv3 newInterestPoint, double distanceFromInterest, float newHeadingRadians, bool jumpIfFar=true);
+			void StartTransitionTo(Eegeo::dv3 newInterestPoint, float distanceFromInterest, bool jumpIfFar=true);
+			void StartTransitionTo(Eegeo::dv3 newInterestPoint, float distanceFromInterest, float newHeadingRadians, bool jumpIfFar=true);
 			void StopCurrentTransition();
 			void Update(float dt);
 
@@ -39,8 +39,8 @@ namespace ExampleApp
             Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& m_terrainHeightProvider;
 			Eegeo::dv3 m_startTransitionInterestPointEcef;
 			Eegeo::dv3 m_endTransitionInterestPointEcef;
-			double m_startInterestDistance;
-			double m_endInterestDistance;
+			float m_startInterestDistance;
+			float m_endInterestDistance;
 			float m_startInterestHeading;
 			float m_endInterestHeading;
 			float m_transitionTime;

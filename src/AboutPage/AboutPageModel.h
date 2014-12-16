@@ -14,11 +14,13 @@ namespace ExampleApp
 		{
 			std::string m_platformVersion;
 			std::string m_platformHash;
+            std::string m_platformArchitecture;
 			std::string m_aboutText;
 
 		public:
 			AboutPageModel(const std::string& platformVersion,
 			               const std::string& platformHash,
+                           const std::string& m_platformArchitecture,
 			               const std::string& aboutText);
 
 			~AboutPageModel();
@@ -26,6 +28,8 @@ namespace ExampleApp
 			const std::string& GetPlatformVersion() const;
 
 			const std::string& GetPlatformHash() const;
+            
+            const std::string& GetPlatformArchitecture() const;
 
 			const std::string& GetAboutText() const;
 		};
