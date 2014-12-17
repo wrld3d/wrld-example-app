@@ -27,7 +27,7 @@
         [self.pMyPinCreationDetailsView setFrame:[self view].bounds];
         self.view = self.pMyPinCreationDetailsView;
 
-        [self close];
+        [self.pMyPinCreationDetailsView setFullyInactive];
     }
     
     return self;
@@ -53,14 +53,14 @@
 - (void) close
 {
     [self.pMyPinCreationDetailsView setFullyInactive];
+    
+    ExampleApp::MyPinCreation::MyPinCreationViewStateChangedMessage message(ExampleApp::MyPinCreation::Inactive);
+    m_pUiToNativeMessageBus->Publish(message);
 }
 
 - (void) handleClosedButtonPressed
 {
     m_pViewModel->Close();
-    
-    ExampleApp::MyPinCreation::MyPinCreationViewStateChangedMessage message(ExampleApp::MyPinCreation::Inactive);
-    m_pUiToNativeMessageBus->Publish(message);
 }
 
 - (void) handleConfirmButtonPressed:(NSString*) title
