@@ -79,10 +79,18 @@ void AppRunner::ActivateSurface()
 {
 	ASSERT_NATIVE_THREAD
 
-	ReleaseDisplay();
+	bool pauseResume = (m_pAppHost != NULL);
+	if (pauseResume)
+	{
+		Pause();
+	}
 	bool displayBound = TryBindDisplay();
 	Eegeo_ASSERT(displayBound, "Failed to bind display");
 	CreateAppHost();
+	if (pauseResume)
+	{
+		Resume();
+	}
 }
 
 void AppRunner::HandleTouchEvent(const Eegeo::Android::Input::TouchInputEvent& event)
