@@ -12,6 +12,7 @@ AppRunner::AppRunner
 	: m_pNativeState(pNativeState)
 	, m_pAppHost(NULL)
 	, m_updatingNative(true)
+	, m_isPaused(false)
 {
 	ASSERT_NATIVE_THREAD
 
@@ -57,9 +58,10 @@ void AppRunner::Pause()
 {
 	ASSERT_NATIVE_THREAD
 
-	if(m_pAppHost != NULL)
+	if(m_pAppHost != NULL && !m_isPaused)
 	{
 		m_pAppHost->OnPause();
+		m_isPaused = true;
 	}
 
 	ReleaseDisplay();
@@ -69,28 +71,23 @@ void AppRunner::Resume()
 {
 	ASSERT_NATIVE_THREAD
 
-	if(m_pAppHost != NULL)
+	if(m_pAppHost != NULL && m_isPaused)
 	{
 		m_pAppHost->OnResume();
 	}
+
+	m_isPaused = false;
 }
 
 void AppRunner::ActivateSurface()
 {
 	ASSERT_NATIVE_THREAD
 
-	bool pauseResume = (m_pAppHost != NULL);
-	if (pauseResume)
-	{
-		Pause();
-	}
+	Pause();
 	bool displayBound = TryBindDisplay();
 	Eegeo_ASSERT(displayBound, "Failed to bind display");
 	CreateAppHost();
-	if (pauseResume)
-	{
-		Resume();
-	}
+	Resume();
 }
 
 void AppRunner::HandleTouchEvent(const Eegeo::Android::Input::TouchInputEvent& event)
