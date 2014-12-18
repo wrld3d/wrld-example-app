@@ -84,6 +84,11 @@ public class WorldPinOnMapView implements View.OnClickListener
 
 	public void onClick(View view)
 	{
+		if(!m_view.isEnabled() || m_view.getAlpha() != 1.0f)
+		{
+			return;
+		}
+		
 		WorldPinOnMapViewJniMethods.HandleClick(m_nativeCallerPointer);
 	}
 

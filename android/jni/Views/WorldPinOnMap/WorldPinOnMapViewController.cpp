@@ -84,9 +84,12 @@ namespace ExampleApp
 		{
 			ASSERT_UI_THREAD
 
-			if(m_worldPinInFocusViewModel.IsOpen())
+			if(!m_modalityModel.IsModalEnabled())
 			{
-				m_worldPinInFocusViewModel.SelectFocussedResult();
+				if(m_worldPinInFocusViewModel.IsOpen())
+				{
+					m_worldPinInFocusViewModel.SelectFocussedResult();
+				}
 			}
 		}
 
