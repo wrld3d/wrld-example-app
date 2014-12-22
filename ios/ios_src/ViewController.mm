@@ -34,10 +34,16 @@ using namespace Eegeo::iOS;
 - (void)onPause
 {
     m_pAppRunner->Pause();
+    
+    GLKView* glkView = (GLKView *)self.view;
+    glkView.context = nil;
 }
 
 - (void)onResume
 {
+    GLKView* glkView = (GLKView *)self.view;
+    glkView.context = [EAGLContext currentContext];
+    
     m_pAppRunner->Resume();
 }
 

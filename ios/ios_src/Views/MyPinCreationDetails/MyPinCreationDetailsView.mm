@@ -133,7 +133,7 @@
     
     m_scrollContentBottomMargin = 50;
 
-    const bool useFullScreenSize = (boundsHeight < 600.f || boundsWidth < 400.f);
+    const bool useFullScreenSize = App::IsDeviceSmall();
     const float boundsOccupyMultiplier = useFullScreenSize ? 0.9f : 0.6f;
     m_controlContainerWidth = floorf(boundsWidth * boundsOccupyMultiplier);
     m_controlContainerHeight = boundsHeight * boundsOccupyMultiplier;

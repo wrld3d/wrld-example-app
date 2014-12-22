@@ -9,6 +9,7 @@ import android.os.SystemClock;
 import android.util.DisplayMetrics;
 import android.view.SurfaceHolder;
 import android.app.Activity;
+import android.content.Intent;
 
 
 public class BackgroundThreadActivity extends MainActivity
@@ -28,7 +29,13 @@ public class BackgroundThreadActivity extends MainActivity
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-
+		
+	    if ((getIntent().getFlags() & Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT) != 0)
+	    {
+	        finish();
+	        return;
+	    }
+		
 		setContentView(R.layout.activity_main);
 
 		m_surfaceView = (EegeoSurfaceView)findViewById(R.id.surface);
@@ -103,6 +110,11 @@ public class BackgroundThreadActivity extends MainActivity
 	protected void onDestroy()
 	{
 		super.onDestroy();
+		
+		if (m_threadedRunner == null)
+		{
+			return;
+		}
 
 		runOnNativeThread(new Runnable()
 		{
