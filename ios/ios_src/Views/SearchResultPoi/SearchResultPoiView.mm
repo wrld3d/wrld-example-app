@@ -8,6 +8,7 @@
 #include "ImageHelpers.h"
 #include "IconResources.h"
 #include "StringHelpers.h"
+#include "App.h"
 #import "UIView+TouchExclusivity.h"
 
 @implementation SearchResultPoiView
@@ -173,7 +174,7 @@
 
 	const float boundsWidth = static_cast<float>(self.superview.bounds.size.width);
 	const float boundsHeight = static_cast<float>(self.superview.bounds.size.height);
-	const bool useFullScreenSize = (boundsHeight < 600.f || boundsWidth < 400.f);
+	const bool useFullScreenSize = App::IsDeviceSmall();
 	const float boundsOccupyMultiplier = useFullScreenSize ? 0.9f : 0.5f;
 	const float mainWindowWidth = boundsWidth * boundsOccupyMultiplier;
 	const float mainWindowHeight = boundsHeight * boundsOccupyMultiplier;
