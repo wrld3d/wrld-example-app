@@ -5,10 +5,10 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TestCustomView">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AboutPageView">
             <connections>
-                <outlet property="pCloseButton" destination="dom-pt-WQG" id="2kJ-Jz-Ikv"/>
-                <outlet property="pTextContent" destination="Ffy-Vl-2zn" id="JUJ-1y-pbK"/>
+                <outlet property="pCloseButton" destination="dom-pt-WQG" id="YG1-Km-m6I"/>
+                <outlet property="pTextContent" destination="Ffy-Vl-2zn" id="Zed-eZ-fKf"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>

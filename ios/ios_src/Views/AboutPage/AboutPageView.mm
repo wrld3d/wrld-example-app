@@ -22,10 +22,8 @@
 		m_pController = controller;
 		self.alpha = 0.f;
 		m_stateChangeAnimationTimeSeconds = 0.2f;
-        self.translatesAutoresizingMaskIntoConstraints = NO;
         
-        self.pTestCustomView = [[[TestCustomView alloc] initWithFrame:CGRectZero] autorelease];
-        [self addSubview: self.pTestCustomView];
+        [self initNib];
 	}
 
 	return self;
@@ -33,12 +31,40 @@
 
 - (void)dealloc
 {
-    [self.pTestCustomView removeFromSuperview];
-    [self.pTestCustomView release];
-
 	[self removeFromSuperview];
 	[super dealloc];
 }
+
+- (UIView*)findView:(NSArray*)objects
+{
+    for (id object in objects)
+    {
+        if ([object isKindOfClass:[UIView class]])
+        {
+            return object;
+        }
+    }
+    return nil;
+}
+
+- (void)initNib
+{
+    NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"TestCustomView" owner:self options:nil];
+    UIView *containerView = [self findView:objects];
+    [self addSubview:containerView];
+    
+    self.translatesAutoresizingMaskIntoConstraints = NO;
+    containerView.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    
+    NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(self, containerView);
+    
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[containerView]-0-|" options:0 metrics: 0 views:viewsDictionary]];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[containerView]-0-|" options:0 metrics: 0 views:viewsDictionary]];
+    
+    [self setNeedsUpdateConstraints];
+}
+
 
 - (void)layoutSubviews
 {
@@ -53,17 +79,15 @@
 	const float mainWindowHeight = boundsHeight * boundsOccupyHeightMultiplier;
 	const float mainWindowX = (boundsWidth * 0.5f) - (mainWindowWidth * 0.5f);
 	const float mainWindowY = (boundsHeight * 0.5f) - (mainWindowHeight * 0.5f);
+    
+    self.translatesAutoresizingMaskIntoConstraints = YES;
 
 	self.frame = CGRectMake(mainWindowX,
 	                        mainWindowY,
 	                        mainWindowWidth,
 	                        mainWindowHeight);
     
-    self.pTestCustomView.pTextContent.numberOfLines = 0;
-    
-    self.pTestCustomView.frame = CGRectMake(0.f, 0.f, mainWindowWidth, mainWindowHeight);
-    
-    
+    [super layoutSubviews];
 }
 
 - (void) setContent:(const ExampleApp::AboutPage::IAboutPageModel*)pModel
@@ -75,8 +99,9 @@
             << "\nPlatform runtime arch: " + pModel->GetPlatformArchitecture()
 	        << "\n\n";
 
-	self.pTestCustomView.pTextContent.text = [NSString stringWithUTF8String:content.str().c_str()];
-	[self.pTestCustomView.pTextContent sizeToFit];
+	self.pTextContent.text = [NSString stringWithUTF8String:content.str().c_str()];
+    self.pTextContent.numberOfLines = 0;
+	[self.pTextContent sizeToFit];
 }
 
 - (void) setFullyActive

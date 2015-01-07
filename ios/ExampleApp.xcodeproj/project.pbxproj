@@ -637,10 +637,8 @@
 		7EE48258168477CB0006E99B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE48257168477CB0006E99B /* libz.dylib */; };
 		7EF5D8651737F9A40049D787 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EF5D8641737F9A40049D787 /* CoreLocation.framework */; };
 		E016040E19EEC26E0029A035 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E016040D19EEC26E0029A035 /* Images.xcassets */; };
-		E0A1DB7A1A5B05FE001E1613 /* TestCustomView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E0A1DB791A5B05FE001E1613 /* TestCustomView.xib */; };
-		E0A1DB7B1A5B05FE001E1613 /* TestCustomView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E0A1DB791A5B05FE001E1613 /* TestCustomView.xib */; };
-		E0A1DB7D1A5BF333001E1613 /* TestCustomView.m in Sources */ = {isa = PBXBuildFile; fileRef = E0A1DB7C1A5BF333001E1613 /* TestCustomView.m */; };
-		E0A1DB7E1A5BF333001E1613 /* TestCustomView.m in Sources */ = {isa = PBXBuildFile; fileRef = E0A1DB7C1A5BF333001E1613 /* TestCustomView.m */; };
+		E0A1DB7A1A5B05FE001E1613 /* AboutPageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E0A1DB791A5B05FE001E1613 /* AboutPageView.xib */; };
+		E0A1DB7B1A5B05FE001E1613 /* AboutPageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E0A1DB791A5B05FE001E1613 /* AboutPageView.xib */; };
 		E0DD09F319EED4AF008BD39D /* SplashScreen.png in Resources */ = {isa = PBXBuildFile; fileRef = E0DD09F219EED4AF008BD39D /* SplashScreen.png */; };
 /* End PBXBuildFile section */
 
@@ -1371,9 +1369,7 @@
 		7EF5D8641737F9A40049D787 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		99DE1AF9937DE3414FC5407B /* ApiKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApiKey.h; sourceTree = "<group>"; };
 		E016040D19EEC26E0029A035 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		E0A1DB791A5B05FE001E1613 /* TestCustomView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TestCustomView.xib; sourceTree = "<group>"; };
-		E0A1DB7C1A5BF333001E1613 /* TestCustomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestCustomView.m; sourceTree = "<group>"; };
-		E0A1DB7F1A5BF7BE001E1613 /* TestCustomView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestCustomView.h; sourceTree = "<group>"; };
+		E0A1DB791A5B05FE001E1613 /* AboutPageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutPageView.xib; sourceTree = "<group>"; };
 		E0DD09F219EED4AF008BD39D /* SplashScreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SplashScreen.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1459,8 +1455,6 @@
 				18B5AABA19DC158F00BA4A38 /* WorldAreaLoader */,
 				18B5AAC519DC158F00BA4A38 /* WorldPins */,
 				99DE1AF9937DE3414FC5407B /* ApiKey.h */,
-				E0A1DB7C1A5BF333001E1613 /* TestCustomView.m */,
-				E0A1DB7F1A5BF7BE001E1613 /* TestCustomView.h */,
 			);
 			name = src;
 			path = ../../src;
@@ -2576,7 +2570,7 @@
 				7EE481F416836F370006E99B /* ExampleApp-Info.plist */,
 				7EE481F516836F370006E99B /* InfoPlist.strings */,
 				7EE481FA16836F370006E99B /* ExampleApp-Prefix.pch */,
-				E0A1DB791A5B05FE001E1613 /* TestCustomView.xib */,
+				E0A1DB791A5B05FE001E1613 /* AboutPageView.xib */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -2795,7 +2789,7 @@
 				18B5AC8819DC15CD00BA4A38 /* button_streets_on.png in Resources */,
 				18B5AC9219DC15CD00BA4A38 /* icon0_me_icon.png in Resources */,
 				18B5ACB219DC15CD00BA4A38 /* icon1_overcast.png in Resources */,
-				E0A1DB7B1A5B05FE001E1613 /* TestCustomView.xib in Resources */,
+				E0A1DB7B1A5B05FE001E1613 /* AboutPageView.xib in Resources */,
 				18B5ACD219DC15CD00BA4A38 /* icon2_misc.png in Resources */,
 				18B5ACD019DC15CD00BA4A38 /* icon2_hotel.png in Resources */,
 				56A3DCE61A239BD100110FDD /* button_ok_on.png in Resources */,
@@ -2878,7 +2872,7 @@
 				18B5ACC119DC15CD00BA4A38 /* icon1_sunny.png in Resources */,
 				18B5AC9D19DC15CD00BA4A38 /* icon1_dawn.png in Resources */,
 				18B5AC8719DC15CD00BA4A38 /* button_streets_on.png in Resources */,
-				E0A1DB7A1A5B05FE001E1613 /* TestCustomView.xib in Resources */,
+				E0A1DB7A1A5B05FE001E1613 /* AboutPageView.xib in Resources */,
 				18B5AC9119DC15CD00BA4A38 /* icon0_me_icon.png in Resources */,
 				18B5ACB119DC15CD00BA4A38 /* icon1_overcast.png in Resources */,
 				18B5ACD119DC15CD00BA4A38 /* icon2_misc.png in Resources */,
@@ -3100,7 +3094,6 @@
 				18CCC88F1A15233700DC2D95 /* FlattenButtonModelStateChangedObserver.cpp in Sources */,
 				18B5AB7619DC159000BA4A38 /* WorldPinsModule.cpp in Sources */,
 				565F758F1A1A390B00AD3DE9 /* WorldPinsInFocusModel.cpp in Sources */,
-				E0A1DB7E1A5BF333001E1613 /* TestCustomView.m in Sources */,
 				18CCC9041A1523C500DC2D95 /* WeatherSelectedMessage.cpp in Sources */,
 				18CCC88B1A15233700DC2D95 /* FlattenButtonViewStateChangedObserver.cpp in Sources */,
 				18B5AAD619DC159000BA4A38 /* AboutPageModel.cpp in Sources */,
@@ -3334,7 +3327,6 @@
 				18B5AB0B19DC159000BA4A38 /* MenuScreenControl.cpp in Sources */,
 				18B5AB1119DC159000BA4A38 /* MenuViewModel.cpp in Sources */,
 				18CCC88E1A15233700DC2D95 /* FlattenButtonModelStateChangedObserver.cpp in Sources */,
-				E0A1DB7D1A5BF333001E1613 /* TestCustomView.m in Sources */,
 				18B5AB7519DC159000BA4A38 /* WorldPinsModule.cpp in Sources */,
 				18CCC9031A1523C500DC2D95 /* WeatherSelectedMessage.cpp in Sources */,
 				18CCC88A1A15233700DC2D95 /* FlattenButtonViewStateChangedObserver.cpp in Sources */,

@@ -25,7 +25,6 @@
 		m_pInterop = Eegeo_NEW(ExampleApp::AboutPage::AboutPageViewControllerInterop)(self, *m_pAboutPageViewModel);
 
 		self.pAboutPageView = [[[AboutPageView alloc] initWithController:self] autorelease];
-		[self.pAboutPageView setFrame:[self view].bounds];
 		self.view = self.pAboutPageView;
 
 		if(m_pAboutPageViewModel->IsOpen())
@@ -35,7 +34,7 @@
 
 		_tapGestureRecogniser = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(_tapTabGesture:)];
 		[_tapGestureRecogniser setDelegate:self];
-		[[[self.pAboutPageView pTestCustomView] pCloseButton] addGestureRecognizer: _tapGestureRecogniser];
+		[[self.pAboutPageView pCloseButton] addGestureRecognizer: _tapGestureRecogniser];
 	}
 
 	return self;
