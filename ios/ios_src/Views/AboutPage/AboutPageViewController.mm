@@ -35,7 +35,7 @@
 
 		_tapGestureRecogniser = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(_tapTabGesture:)];
 		[_tapGestureRecogniser setDelegate:self];
-		[[self.pAboutPageView pCloseButton] addGestureRecognizer: _tapGestureRecogniser];
+		[[[self.pAboutPageView pTestCustomView] pCloseButton] addGestureRecognizer: _tapGestureRecogniser];
 	}
 
 	return self;

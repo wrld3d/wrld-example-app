@@ -5,6 +5,7 @@
 #import <UIKit/UIKit.h>
 #include "AboutPage.h"
 #include "AppRunner.h"
+#include "TestCustomView.h"
 
 @class AboutPageView;
 @class AboutPageViewController;
@@ -27,18 +28,6 @@
 
 - (void) setActiveStateToIntermediateValue:(float)activeState;
 
-@property (nonatomic, retain) UIView* pCloseButtonContainer;
-@property (nonatomic, retain) UIButton* pCloseButton;
-@property (nonatomic, retain) UIView* pShadowContainer;
-@property (nonatomic, retain) UIView* pControlContainer;
-@property (nonatomic, retain) UIView* pHeadlineContainer;
-@property (nonatomic, retain) UIView* pContentContainer;
-@property (nonatomic, retain) UIScrollView* pLabelsContainer;
-@property (nonatomic, retain) UIImageView* pLogoImage;
-@property (nonatomic, retain) UILabel* pTitleLabel;
-@property (nonatomic, retain) UILabel* pDevelopedByLabel;
-@property (nonatomic, retain) UILabel* pTextContent;
-@property (nonatomic, retain) UIImageView* pContainerShadowTop;
-@property (nonatomic, retain) UIImageView* pContainerShadowBottom;
+@property (nonatomic, retain) TestCustomView* pTestCustomView;
 
 @end
