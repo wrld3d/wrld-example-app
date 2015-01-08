@@ -33,13 +33,23 @@ namespace ExampleApp
                     return lowAltitudeSphereScale + (((altitude - minAltitude)/maxAltitude) * (highAltitudeSphereScale - lowAltitudeSphereScale));
                 }
                 
-                float CalculateAltitudeBasedIconScale(float altitude)
+                bool RingIsOnScreen(const Eegeo::Camera::RenderCamera& renderCamera, const Eegeo::dv3& position, float radius)
                 {
-                    const float minAltitude = 500.f;
-                    const float maxAltitude = 18000.f;
-                    const float lowAltitudeIconScale = 1.f;
-                    const float highAltitudeIconScale = 10.f;
-                    return lowAltitudeIconScale + (((altitude - minAltitude)/maxAltitude) * (highAltitudeIconScale - lowAltitudeIconScale));
+                    const Eegeo::Geometry::Frustum& frustum = renderCamera.GetFrustum();
+                    const Eegeo::dv3 cameraRelativePosition = position - renderCamera.GetEcefLocation();
+                    
+                    for (int i = 0; i < Eegeo::Geometry::Frustum::PLANES_COUNT; ++i)
+                    {
+                        const Eegeo::Geometry::Plane& p = frustum.planes[i];
+                        double signedDist = p.a * cameraRelativePosition.GetX() + p.b * cameraRelativePosition.GetY() + p.c * cameraRelativePosition.GetZ() + p.d;
+                        
+                        if (signedDist < -radius)
+                        {
+                            return false;
+                        }
+                    }
+                    
+                    return true;
                 }
             }
             
@@ -61,9 +71,17 @@ namespace ExampleApp
             
             void PoiRingController::Update(float dt, const Eegeo::Camera::RenderCamera& renderCamera, const Eegeo::dv3& cameraEcefInterestPoint)
             {
-                m_poiRingView.SetShouldRenderRing(m_scaleInterpolationParam > 0.f);
+                const float outerRingRadiusInMeters = 120.f;
+                const bool ringIsOnScreen = RingIsOnScreen(renderCamera, m_pMyPinCreationModel.GetPosition(), outerRingRadiusInMeters * m_scaleInterpolationParam);
                 
-                if (m_pMyPinCreationModel.GetCreationStage() == Inactive && m_scaleInterpolationParam < 0.01f)
+                m_poiRingView.SetShouldRenderRing(m_scaleInterpolationParam > 0.f && ringIsOnScreen);
+                
+                if (m_pMyPinCreationModel.GetCreationStage() == Inactive && !ringIsOnScreen)
+                {
+                    m_scaleInterpolationParam = 0.f;
+                }
+                
+                if (m_scaleInterpolationParam < 0.01f)
                 {
                     m_pMyPinCreationModel.SetPosition(cameraEcefInterestPoint);
                 }
@@ -80,7 +98,6 @@ namespace ExampleApp
                 Eegeo::m44 sphereTransformMatrix;
                 
                 const float transitionScale = CalculateTransitionScale(dt);
-                const float outerRingRadiusInMeters = 120.f;
                 sphereTransformMatrix.Scale(outerRingRadiusInMeters * transitionScale);
                 
                 Eegeo::dv3 scaledPoint = Eegeo::Rendering::EnvironmentFlatteningService::GetScaledPointEcef(m_pMyPinCreationModel.GetPosition(), m_environmentFlatteningService.GetCurrentScale());
