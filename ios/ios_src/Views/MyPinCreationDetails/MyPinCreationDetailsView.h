@@ -26,6 +26,8 @@
     float m_scrollContentBottomMargin;
     
     BOOL m_hasNetworkConnectivity;
+    
+    int m_maxNumberOfCharactersInDescription;
 }
 
 - (id) initWithController:(MyPinCreationDetailsViewController *)controller

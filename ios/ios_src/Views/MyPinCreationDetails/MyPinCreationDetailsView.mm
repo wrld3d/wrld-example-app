@@ -27,6 +27,8 @@
         
         m_hasNetworkConnectivity = hasConnectivity;
         
+        m_maxNumberOfCharactersInDescription = 10000;
+        
         self.pControlContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         [self addSubview: self.pControlContainer];
         
@@ -567,6 +569,24 @@
         return (newLength <= 100);
     }
     else return YES;
+}
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range
+ replacementText:(NSString *)text
+{
+    if (textView.text.length + (text.length - range.length) <= m_maxNumberOfCharactersInDescription)
+    {
+        return YES;
+    }
+    
+    int remainingNumberOfCharactersInDescription = m_maxNumberOfCharactersInDescription - textView.text.length;
+    NSString* partialText = [text substringToIndex: remainingNumberOfCharactersInDescription + range.length];
+    
+    NSMutableString* mutableDescriptionText = [NSMutableString stringWithFormat: @"%@", textView.text];
+    [mutableDescriptionText replaceCharactersInRange: range withString: partialText];
+    textView.text = mutableDescriptionText;
+    
+    return NO;
 }
 
 - (void) setHasNetworkConnectivity: (BOOL) hasNetworkConnectivity
