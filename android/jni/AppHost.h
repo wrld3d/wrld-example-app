@@ -51,8 +51,7 @@ class AppHost : protected Eegeo::NonCopyable
 public:
 	AppHost(
 	    AndroidNativeState& nativeState,
-	    float displayWidth,
-	    float displayHeight,
+	    Eegeo::Rendering::ScreenProperties screenProperties,
 	    EGLDisplay display,
 	    EGLSurface shareSurface,
 	    EGLContext resourceBuildShareContext
@@ -71,6 +70,8 @@ public:
 	void OnPause();
 	void OnResume();
 
+	void NotifyScreenPropertiesChanged(const Eegeo::Rendering::ScreenProperties& screenProperties);
+
 	void HandleTouchInputEvent(const Eegeo::Android::Input::TouchInputEvent& event);
 
 	void SetEnvironmentFlatten(bool flattenState);
@@ -83,7 +84,6 @@ public:
 private:
 	bool m_isPaused;
 	Eegeo::Helpers::Jpeg::IJpegLoader* m_pJpegLoader;
-	Eegeo::Rendering::ScreenProperties* m_pScreenProperties;
 	Eegeo::Android::AndroidLocationService* m_pAndroidLocationService;
 	Eegeo::Android::AndroidConnectivityService* m_pAndroidConnectivityService;
 

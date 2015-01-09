@@ -79,15 +79,13 @@ using namespace Eegeo::Android::Input;
 
 AppHost::AppHost(
     AndroidNativeState& nativeState,
-    float displayWidth,
-    float displayHeight,
+    Eegeo::Rendering::ScreenProperties screenProperties,
     EGLDisplay display,
     EGLSurface shareSurface,
     EGLContext resourceBuildShareContext
 )
 	:m_isPaused(false)
 	,m_pJpegLoader(NULL)
-	,m_pScreenProperties(NULL)
 	,m_pAndroidLocationService(NULL)
 	,m_pAndroidConnectivityService(NULL)
 	,m_nativeState(nativeState)
@@ -125,8 +123,6 @@ AppHost::AppHost(
 	m_pAndroidLocationService = Eegeo_NEW(AndroidLocationService)(&nativeState);
 	m_pAndroidConnectivityService = Eegeo_NEW(AndroidConnectivityService)(&nativeState);
 
-	m_pScreenProperties = Eegeo_NEW(Eegeo::Rendering::ScreenProperties)(displayWidth, displayHeight, 1.0f, nativeState.deviceDpi);
-
 	m_pJpegLoader = Eegeo_NEW(Eegeo::Helpers::Jpeg::JpegLoader)();
 
 	std::set<std::string> customApplicationAssetDirectories;
@@ -146,7 +142,7 @@ AppHost::AppHost(
 	std::string deviceModel = std::string(nativeState.deviceModel, strlen(nativeState.deviceModel));
 	Eegeo::Config::PlatformConfig platformConfig = Eegeo::Android::AndroidPlatformConfigBuilder(deviceModel).Build();
 
-	m_pInputProcessor = Eegeo_NEW(Eegeo::Android::Input::AndroidInputProcessor)(&m_inputHandler, m_pScreenProperties->GetScreenWidth(), m_pScreenProperties->GetScreenHeight());
+	m_pInputProcessor = Eegeo_NEW(Eegeo::Android::Input::AndroidInputProcessor)(&m_inputHandler, screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight());
 
 	m_pInitialExperienceModule = Eegeo_NEW(ExampleApp::InitialExperience::AndroidInitialExperienceModule)(
 	                                 m_nativeState,
@@ -154,9 +150,9 @@ AppHost::AppHost(
 	                             );
 
 	m_pApp = Eegeo_NEW(ExampleApp::MobileExampleApp)(
-			ExampleApp::ApiKey,
-			*m_pAndroidPlatformAbstractionModule,
-	         *m_pScreenProperties,
+	         ExampleApp::ApiKey,
+	         *m_pAndroidPlatformAbstractionModule,
+	         screenProperties,
 	         *m_pAndroidLocationService,
 	         m_androidNativeUIFactories,
 	         platformConfig,
@@ -198,9 +194,6 @@ AppHost::~AppHost()
 	Eegeo_DELETE m_pJpegLoader;
 	m_pJpegLoader = NULL;
 
-	Eegeo_DELETE m_pScreenProperties;
-	m_pScreenProperties = NULL;
-
 	Eegeo_DELETE m_pAndroidConnectivityService;
 	m_pAndroidConnectivityService = NULL;
 
@@ -223,6 +216,11 @@ void AppHost::OnPause()
 	m_isPaused = true;
 	m_pApp->OnPause();
 	m_pAndroidLocationService->StopListening();
+}
+
+void AppHost::NotifyScreenPropertiesChanged(const Eegeo::Rendering::ScreenProperties& screenProperties)
+{
+    m_pApp->NotifyScreenPropertiesChanged(screenProperties);
 }
 
 void AppHost::SetSharedSurface(EGLSurface sharedSurface)

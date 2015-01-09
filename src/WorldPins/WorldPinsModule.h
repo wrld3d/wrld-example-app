@@ -34,7 +34,6 @@ namespace ExampleApp
             WorldPinsModule(Eegeo::Pins::PinRepository& pinRepository,
                             Eegeo::Pins::PinController& pinController,
                             const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
-                            const Eegeo::Rendering::ScreenProperties& screenProperties,
                             Eegeo::Helpers::IIdentityProvider& identityProvider,
                             ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus,
                             ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus);

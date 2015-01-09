@@ -29,6 +29,7 @@ private:
 	AndroidNativeState* m_pNativeState;
 	AppHost* m_pAppHost;
 	bool m_updatingNative;
+	bool m_isPaused;
 
 	GlDisplayService m_displayService;
 	void ReleaseDisplay();

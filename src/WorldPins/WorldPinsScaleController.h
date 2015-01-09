@@ -22,7 +22,6 @@ namespace ExampleApp
 		private:
             IWorldPinsRepository& m_worldPinsRepository;
 			IWorldPinsService& m_worldPinsService;
-			const Eegeo::Rendering::ScreenProperties& m_screenProperties;
 			float m_modality;
             float m_visibilityScale;
             float m_targetVisibilityScale;
@@ -34,7 +33,6 @@ namespace ExampleApp
 		public:
 			WorldPinsScaleController(IWorldPinsRepository& worldPinsRepository,
                                      WorldPins::IWorldPinsService& worldPinsService,
-                                     const Eegeo::Rendering::ScreenProperties& screenProperties,
                                      ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus);
 
 			~WorldPinsScaleController();

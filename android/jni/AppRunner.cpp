@@ -12,6 +12,7 @@ AppRunner::AppRunner
 	: m_pNativeState(pNativeState)
 	, m_pAppHost(NULL)
 	, m_updatingNative(true)
+	, m_isPaused(false)
 {
 	ASSERT_NATIVE_THREAD
 
@@ -37,11 +38,15 @@ void AppRunner::CreateAppHost()
 
 	if(m_pAppHost == NULL && m_displayService.IsDisplayAvailable())
 	{
+		const Eegeo::Rendering::ScreenProperties& screenProperties = Eegeo::Rendering::ScreenProperties::Make(
+				m_displayService.GetDisplayWidth(),
+				m_displayService.GetDisplayHeight(),
+				1.f,
+				m_pNativeState->deviceDpi);
 		m_pAppHost = Eegeo_NEW(AppHost)
 		             (
 		                 *m_pNativeState,
-		                 m_displayService.GetDisplayWidth(),
-		                 m_displayService.GetDisplayHeight(),
+		                 screenProperties,
 		                 m_displayService.GetDisplay(),
 		                 m_displayService.GetSharedSurface(),
 		                 m_displayService.GetResourceBuildSharedContext()
@@ -53,9 +58,10 @@ void AppRunner::Pause()
 {
 	ASSERT_NATIVE_THREAD
 
-	if(m_pAppHost != NULL)
+	if(m_pAppHost != NULL && !m_isPaused)
 	{
 		m_pAppHost->OnPause();
+		m_isPaused = true;
 	}
 
 	ReleaseDisplay();
@@ -65,20 +71,23 @@ void AppRunner::Resume()
 {
 	ASSERT_NATIVE_THREAD
 
-	if(m_pAppHost != NULL)
+	if(m_pAppHost != NULL && m_isPaused)
 	{
 		m_pAppHost->OnResume();
 	}
+
+	m_isPaused = false;
 }
 
 void AppRunner::ActivateSurface()
 {
 	ASSERT_NATIVE_THREAD
 
-	ReleaseDisplay();
+	Pause();
 	bool displayBound = TryBindDisplay();
 	Eegeo_ASSERT(displayBound, "Failed to bind display");
 	CreateAppHost();
+	Resume();
 }
 
 void AppRunner::HandleTouchEvent(const Eegeo::Android::Input::TouchInputEvent& event)
@@ -111,6 +120,12 @@ bool AppRunner::TryBindDisplay()
 		if(m_pAppHost != NULL)
 		{
 			m_pAppHost->SetSharedSurface(m_displayService.GetSharedSurface());
+			const Eegeo::Rendering::ScreenProperties& screenProperties = Eegeo::Rendering::ScreenProperties::Make(
+					m_displayService.GetDisplayWidth(),
+					m_displayService.GetDisplayHeight(),
+					1.f,
+					m_pNativeState->deviceDpi);
+			m_pAppHost->NotifyScreenPropertiesChanged(screenProperties);
 			m_pAppHost->SetViewportOffset(0, 0);
 		}
 
@@ -129,7 +144,7 @@ void AppRunner::UpdateNative(float deltaSeconds)
 		m_pAppHost->Update(deltaSeconds);
 
 		Eegeo_GL(eglSwapBuffers(m_displayService.GetDisplay(), m_displayService.GetSurface()));
-		Eegeo_GL(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT));
+		Eegeo::Helpers::GLHelpers::ClearBuffers();
 
 		m_pAppHost->Draw(deltaSeconds);
 	}

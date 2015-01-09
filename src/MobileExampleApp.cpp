@@ -60,6 +60,7 @@ namespace ExampleApp
 			loadingScreenConfig.fadeOutDurationSeconds = 1.5f;
 			loadingScreenConfig.screenWidth = screenProperties.GetScreenWidth();
 			loadingScreenConfig.screenHeight = screenProperties.GetScreenHeight();
+            loadingScreenConfig.loadingBarOffset = Eegeo::v2(0.5f, 0.1f);
 
 
 			Eegeo::Rendering::LoadingScreen* loadingScreen = Eegeo::Rendering::LoadingScreen::Create(
@@ -79,7 +80,7 @@ namespace ExampleApp
 	MobileExampleApp::MobileExampleApp(
 		const std::string& apiKey,
 	    Eegeo::Modules::IPlatformAbstractionModule& platformAbstractions,
-	    Eegeo::Rendering::ScreenProperties& screenProperties,
+	    Eegeo::Rendering::ScreenProperties screenProperties,
 	    Eegeo::Location::ILocationService& locationService,
 	    Eegeo::UI::NativeUIFactories& nativeUIFactories,
 	    Eegeo::Config::PlatformConfig platformConfig,
@@ -90,12 +91,14 @@ namespace ExampleApp
 	    ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus)
 		: m_pGlobeCameraController(NULL)
 		, m_pCameraTouchController(NULL)
+        , m_pWorld(NULL)
 		, m_pNavigationService(NULL)
-		, m_pWorld(NULL)
 		, m_platformAbstractions(platformAbstractions)
 		, m_pLoadingScreen(NULL)
-		, m_pinDiameter(50.f)
+        , m_pBlitter(NULL)
+        , m_screenProperties(screenProperties)
 		, m_initialisedApplicationViewState(false)
+        , m_pinDiameter(50.f)
 		, m_pCameraTransitionController(NULL)
 		, m_pPrimaryMenuModule(NULL)
 		, m_pSecondaryMenuModule(NULL)
@@ -117,7 +120,6 @@ namespace ExampleApp
 		, m_pWorldAreaLoaderModule(NULL)
 		, m_pAboutPageModule(NULL)
 		, m_initialExperienceModule(initialExperienceModule)
-		, m_pBlitter(NULL)
 		, m_uiToNativeMessageBus(uiToNativeMessageBus)
 		, m_nativeToUiMessageBus(nativeToUiMessageBus)
         , m_persistentSettings(persistentSettings)
@@ -128,7 +130,8 @@ namespace ExampleApp
         , m_pMyPinDetailsModule(NULL)
 	{
         Eegeo::TtyHandler::TtyEnabled = true;
-		m_pBlitter = Eegeo_NEW(Eegeo::Blitter)(1024 * 128, 1024 * 64, 1024 * 32, screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight());
+
+		m_pBlitter = Eegeo_NEW(Eegeo::Blitter)(1024 * 128, 1024 * 64, 1024 * 32);
 		m_pBlitter->Initialise();
 
 		m_pWorld = Eegeo_NEW(Eegeo::EegeoWorld)(apiKey,
@@ -455,7 +458,6 @@ namespace ExampleApp
 		m_pWorldPinsModule = Eegeo_NEW(ExampleApp::WorldPins::WorldPinsModule)(m_pPinsModule->GetRepository(),
                                                                                m_pPinsModule->GetController(),
                                                                                mapModule.GetEnvironmentFlatteningService(),
-                                                                               world.GetScreenProperties(),
                                                                                m_identityProvider,
                                                                                m_nativeToUiMessageBus,
                                                                                m_uiToNativeMessageBus);
@@ -475,24 +477,26 @@ namespace ExampleApp
 
 	void MobileExampleApp::Update(float dt)
 	{
-		Eegeo::EegeoWorld& eegeoWorld = World();
+		Eegeo::EegeoWorld& eegeoWorld(World());
+        Eegeo::dv3 ecefInterestPoint(m_pGlobeCameraController->GetEcefInterestPoint());
+        Eegeo::Camera::RenderCamera& renderCamera(*m_pGlobeCameraController->GetCamera());
 
 		eegeoWorld.EarlyUpdate(dt);
 
 		m_pGlobeCameraController->Update(dt);
 		m_pCameraTransitionController->Update(dt);
         
-        m_pPoiRingModule->GetPoiRingController().Update(dt, *m_pGlobeCameraController->GetCamera(), m_pGlobeCameraController->GetEcefInterestPoint());
+        m_pPoiRingModule->GetPoiRingController().Update(dt, renderCamera, ecefInterestPoint);
 
-		eegeoWorld.Update(dt, *m_pGlobeCameraController->GetCamera(), m_pGlobeCameraController->GetEcefInterestPoint());
+		eegeoWorld.Update(dt, renderCamera, ecefInterestPoint);
 
-		m_pSearchModule->GetSearchRefreshService().TryRefreshSearch(dt, m_pGlobeCameraController->GetEcefInterestPoint());
+		m_pSearchModule->GetSearchRefreshService().TryRefreshSearch(dt, ecefInterestPoint);
 
-		m_pPinsModule->GetController().Update(dt, *m_pGlobeCameraController->GetCamera());
+		m_pPinsModule->GetController().Update(dt, renderCamera);
 
 		if(!eegeoWorld.Initialising())
 		{
-            WorldPinsModule().GetWorldPinsScaleController().Update(dt, *m_pGlobeCameraController->GetCamera());
+            WorldPinsModule().GetWorldPinsScaleController().Update(dt, renderCamera);
 			CompassModule().GetCompassUpdateController().Update(dt);
 		}
 
@@ -503,20 +507,32 @@ namespace ExampleApp
 
 	void MobileExampleApp::Draw (float dt)
 	{
-		Eegeo::EegeoWorld& eegeoWorld = World();
+        Eegeo::EegeoWorld& eegeoWorld = World();
+        Eegeo::dv3 ecefInterestPoint(m_pGlobeCameraController->GetEcefInterestPoint());
+        Eegeo::Camera::RenderCamera& renderCamera(*m_pGlobeCameraController->GetCamera());
 
 		if(!eegeoWorld.Initialising())
 		{
-            WorldPinsModule().GetWorldPinsInFocusController().Update(dt, m_pGlobeCameraController->GetEcefInterestPoint(), *m_pGlobeCameraController->GetCamera());
+            WorldPinsModule().GetWorldPinsInFocusController().Update(dt, ecefInterestPoint, renderCamera);
 		}
 
-		eegeoWorld.Draw(*m_pGlobeCameraController->GetCamera());
+		eegeoWorld.Draw(renderCamera, m_screenProperties);
 
 		if (m_pLoadingScreen != NULL)
 		{
 			m_pLoadingScreen->Draw();
 		}
 	}
+    
+    void MobileExampleApp::NotifyScreenPropertiesChanged(const Eegeo::Rendering::ScreenProperties& screenProperties)
+    {
+        m_screenProperties = screenProperties;
+        m_pGlobeCameraController->GetCamera()->SetViewport(0.f, 0.f, screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight());
+        if (m_pLoadingScreen != NULL)
+        {
+            m_pLoadingScreen->NotifyScreenDimensionsChanged(screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight());
+        }
+    }
 
 	void MobileExampleApp::InitialiseApplicationViewState()
 	{
