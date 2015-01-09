@@ -124,7 +124,8 @@
 		                android:imeOptions="actionDone"
 		                android:inputType="text|textMultiLine"
 		                android:textColorHint="@color/lightgrey"
-		                android:textSize="15.0dp" />
+		                android:textSize="15.0dp"
+		                android:maxLength="10000" />
 		            
 		            <ImageView
 		                android:id="@+id/poi_creation_details_image"
