@@ -87,6 +87,8 @@ AppHost::AppHost(
 	Eegeo::EffectHandler::Initialise();
 
 	Eegeo::Config::PlatformConfig platformConfig = Eegeo::iOS::iOSPlatformConfigBuilder(App::GetDevice(), App::IsDeviceMultiCore(), App::GetMajorSystemVersion()).Build();
+    
+    platformConfig.OptionsConfig.StartMapModuleAutomatically = false;
 
 	m_pInitialExperienceModule = Eegeo_NEW(ExampleApp::InitialExperience::iOSInitialExperienceModule)(m_iOSPersistentSettingsModel);
 
@@ -159,6 +161,12 @@ void AppHost::NotifyScreenPropertiesChanged(const Eegeo::Rendering::ScreenProper
 
 void AppHost::Update(float dt)
 {
+    Eegeo::Modules::Map::MapModule& mapModule = m_pApp->World().GetMapModule();
+    if (!mapModule.IsRunning() && m_pAppLocationDelegate->HasReceivedPermissionResponse())
+    {
+        mapModule.Start();
+    }
+    
 	if(m_pApp->IsLoadingScreenComplete() && !m_requestedApplicationInitialiseViewState)
 	{
 		m_requestedApplicationInitialiseViewState = true;
