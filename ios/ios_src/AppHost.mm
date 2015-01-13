@@ -250,7 +250,8 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
     
     m_pMyPinCreationDetailsViewModule = Eegeo_NEW(ExampleApp::MyPinCreationDetails::MyPinCreationDetailsViewModule)(m_uiToNativeMessageBus,
                                                                                                                     app.MyPinCreationDetailsModule().GetMyPinCreationDetailsViewModel(),
-                                                                                                                    *m_piOSConnectivityService);
+                                                                                                                    *m_piOSConnectivityService,
+                                                                                                                    &m_viewController);
     
     m_pMyPinDetailsViewModule = Eegeo_NEW(ExampleApp::MyPinDetails::MyPinDetailsViewModule)(m_uiToNativeMessageBus,
                                                                                             app.MyPinDetailsModule().GetMyPinDetailsViewModel());

@@ -18,7 +18,8 @@ namespace ExampleApp
         public:
             MyPinCreationDetailsViewModule(ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
                                            IMyPinCreationDetailsViewModel& myPinCreationDetailsViewModel,
-                                           Eegeo::Web::IConnectivityService& connectivityService);
+                                           Eegeo::Web::IConnectivityService& connectivityService,
+                                           UIViewController* rootViewController);
             
             ~MyPinCreationDetailsViewModule();
             
