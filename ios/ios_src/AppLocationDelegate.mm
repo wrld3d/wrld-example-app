@@ -47,28 +47,28 @@ AppLocationDelegate* m_pAppLocationDelegate;
     }
 }
 
-- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
     if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusNotDetermined)
     {
         return;
     }
     
-	CLLocation *currentLocation = newLocation;
-
-	if (currentLocation != nil)
-	{
-		double latDegrees = currentLocation.coordinate.latitude;
-		double lonDegrees = currentLocation.coordinate.longitude;
-		double altitudeMeters = currentLocation.altitude;
-		double accuracyMeters = currentLocation.horizontalAccuracy;
-		m_piOSLocationService->UpdateLocation(latDegrees, lonDegrees, altitudeMeters);
-		m_piOSLocationService->UpdateHorizontalAccuracy(accuracyMeters);
-	}
-	else
-	{
-		m_piOSLocationService->FailedToGetLocation();
-	}
+    CLLocation *currentLocation = [locations lastObject];
+    
+    if (currentLocation != nil)
+    {
+        double latDegrees = currentLocation.coordinate.latitude;
+        double lonDegrees = currentLocation.coordinate.longitude;
+        double altitudeMeters = currentLocation.altitude;
+        double accuracyMeters = currentLocation.horizontalAccuracy;
+        m_piOSLocationService->UpdateLocation(latDegrees, lonDegrees, altitudeMeters);
+        m_piOSLocationService->UpdateHorizontalAccuracy(accuracyMeters);
+    }
+    else
+    {
+        m_piOSLocationService->FailedToGetLocation();
+    }
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateHeading:(CLHeading *)newHeading
