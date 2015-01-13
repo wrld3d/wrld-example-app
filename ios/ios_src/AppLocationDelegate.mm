@@ -49,11 +49,6 @@ AppLocationDelegate* m_pAppLocationDelegate;
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
-    if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusNotDetermined)
-    {
-        return;
-    }
-    
     CLLocation *currentLocation = [locations lastObject];
     
     if (currentLocation != nil)
@@ -73,11 +68,6 @@ AppLocationDelegate* m_pAppLocationDelegate;
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateHeading:(CLHeading *)newHeading
 {
-    if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusNotDetermined)
-    {
-        return;
-    }
-    
 	if (newHeading.headingAccuracy >= 0)
 	{
 		float heading = static_cast<float>(newHeading.trueHeading);
