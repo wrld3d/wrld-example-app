@@ -81,7 +81,7 @@ namespace ExampleApp
                     m_scaleInterpolationParam = 0.f;
                 }
                 
-                if (m_scaleInterpolationParam < 0.01f)
+                if (m_scaleInterpolationParam < 0.01f && m_pMyPinCreationModel.GetCreationStage() != Details)
                 {
                     m_pMyPinCreationModel.SetPosition(cameraEcefInterestPoint);
                 }
