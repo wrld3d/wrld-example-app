@@ -56,7 +56,7 @@ namespace ExampleApp
 		        bool isCategory,
 		        Eegeo::Space::LatLongAltitude& location)
 		{
-			const float radius = GetSearchRadius(*m_cameraController.GetCamera());
+			const float radius = GetSearchRadius(m_cameraController.GetRenderCamera());
 			m_hasQuery = true;
 			SearchQuery searchQuery(query, isCategory, location, radius);
 			m_previousQuery = searchQuery;

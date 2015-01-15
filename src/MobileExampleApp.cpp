@@ -41,6 +41,9 @@
 #include "IWorldPinsInFocusController.h"
 #include "IWorldPinsScaleController.h"
 #include "MyPinDetailsModule.h"
+#include "QuadTreeCube.h"
+#include "LodRefinementConfig.h"
+#include "StreamingVolumeController.h"
 
 namespace ExampleApp
 {
@@ -76,7 +79,7 @@ namespace ExampleApp
 			return loadingScreen;
 		}
 	}
-
+    
 	MobileExampleApp::MobileExampleApp(
 		const std::string& apiKey,
 	    Eegeo::Modules::IPlatformAbstractionModule& platformAbstractions,
@@ -88,7 +91,7 @@ namespace ExampleApp
 	    ExampleApp::InitialExperience::IInitialExperienceModule& initialExperienceModule,
         ExampleApp::PersistentSettings::IPersistentSettingsModel& persistentSettings,
 	    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
-	    ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus)
+        ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus)
 		: m_pGlobeCameraController(NULL)
 		, m_pCameraTouchController(NULL)
         , m_pWorld(NULL)
@@ -164,12 +167,12 @@ namespace ExampleApp
 		Eegeo::Camera::GlobeCamera::GlobeCameraTouchControllerConfiguration touchControllerConfig = Eegeo::Camera::GlobeCamera::GlobeCameraTouchControllerConfiguration::CreateDefault();
 		Eegeo::Camera::GlobeCamera::GlobeCameraControllerConfiguration globeCameraConfig = Eegeo::Camera::GlobeCamera::GlobeCameraControllerConfiguration::CreateDefault(useLowSpecSettings);
 
-		m_pGlobeCameraController = cameraControllerFactory.Create(gpsGlobeCameraConfig, touchControllerConfig, globeCameraConfig);
+		m_pGlobeCameraController = cameraControllerFactory.Create(gpsGlobeCameraConfig,
+                                                                  touchControllerConfig,
+                                                                  globeCameraConfig,
+                                                                  m_screenProperties);
 
-		m_pCameraTouchController = &m_pGlobeCameraController->GetTouchController();
-
-		Eegeo::Camera::RenderCamera* renderCamera = m_pGlobeCameraController->GetCamera();
-		renderCamera->SetViewport(0.f, 0.f, screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight());
+        m_pCameraTouchController = &m_pGlobeCameraController->GetTouchController();
 
 		Eegeo::Camera::GlobeCamera::GlobeCameraTouchSettings touchSettings = m_pGlobeCameraController->GetGlobeCameraController().GetTouchSettings();
 		touchSettings.TiltEnabled = true;
@@ -195,11 +198,18 @@ namespace ExampleApp
 
 		CreateApplicationModelModules();
 
-		m_pLoadingScreen = CreateLoadingScreen(screenProperties, m_pWorld->GetRenderingModule(), m_pWorld->GetPlatformAbstractionModule());
+        m_pLoadingScreen = CreateLoadingScreen(screenProperties, m_pWorld->GetRenderingModule(), m_pWorld->GetPlatformAbstractionModule());
+        
+        m_pStreamingVolume = Eegeo_NEW(Eegeo::Streaming::CameraFrustumStreamingVolume)(mapModule.GetResourceCeilingProvider(),
+                                                                                       Eegeo::Config::LodRefinementConfig::GetLodRefinementAltitudesForDeviceSpec(platformConfig.PerformanceConfig.DeviceSpecification),
+                                                                                       Eegeo::Streaming::QuadTreeCube::MAX_DEPTH_TO_VISIT,
+                                                                                       mapModule.GetEnvironmentFlatteningService());
 	}
 
 	MobileExampleApp::~MobileExampleApp()
 	{
+        Eegeo_DELETE m_pStreamingVolume;
+        
 		DestroyApplicationModelModules();
 
 		Eegeo_DELETE m_pCameraTransitionController;
@@ -478,17 +488,27 @@ namespace ExampleApp
 	void MobileExampleApp::Update(float dt)
 	{
 		Eegeo::EegeoWorld& eegeoWorld(World());
-        Eegeo::dv3 ecefInterestPoint(m_pGlobeCameraController->GetEcefInterestPoint());
-        Eegeo::Camera::RenderCamera& renderCamera(*m_pGlobeCameraController->GetCamera());
 
 		eegeoWorld.EarlyUpdate(dt);
 
 		m_pGlobeCameraController->Update(dt);
-		m_pCameraTransitionController->Update(dt);
+        m_pCameraTransitionController->Update(dt);
+        
+        Eegeo::Camera::CameraState cameraState(m_pGlobeCameraController->GetCameraState());
+        Eegeo::Camera::RenderCamera renderCamera(m_pGlobeCameraController->GetRenderCamera());
+        Eegeo::dv3 ecefInterestPoint(cameraState.InterestPointEcef());
         
         m_pPoiRingModule->GetPoiRingController().Update(dt, renderCamera, ecefInterestPoint);
-
-		eegeoWorld.Update(dt, renderCamera, ecefInterestPoint);
+        
+        Eegeo::EegeoUpdateParameters updateParameters(dt,
+                                                      cameraState.LocationEcef(),
+                                                      cameraState.InterestPointEcef(),
+                                                      cameraState.ViewMatrix(),
+                                                      cameraState.ProjectionMatrix(),
+                                                      GetUpdatedStreamingVolume(cameraState, renderCamera),
+                                                      m_screenProperties);
+    
+		eegeoWorld.Update(updateParameters);
 
 		m_pSearchModule->GetSearchRefreshService().TryRefreshSearch(dt, ecefInterestPoint);
 
@@ -508,15 +528,23 @@ namespace ExampleApp
 	void MobileExampleApp::Draw (float dt)
 	{
         Eegeo::EegeoWorld& eegeoWorld = World();
-        Eegeo::dv3 ecefInterestPoint(m_pGlobeCameraController->GetEcefInterestPoint());
-        Eegeo::Camera::RenderCamera& renderCamera(*m_pGlobeCameraController->GetCamera());
+        
+        Eegeo::Camera::CameraState cameraState(m_pGlobeCameraController->GetCameraState());
+        Eegeo::Camera::RenderCamera renderCamera(m_pGlobeCameraController->GetRenderCamera());
+        Eegeo::dv3 ecefInterestPoint(cameraState.InterestPointEcef());
 
 		if(!eegeoWorld.Initialising())
 		{
             WorldPinsModule().GetWorldPinsInFocusController().Update(dt, ecefInterestPoint, renderCamera);
-		}
+        }
+        
+        Eegeo::EegeoDrawParameters drawParameters(cameraState.LocationEcef(),
+                                                  cameraState.InterestPointEcef(),
+                                                  cameraState.ViewMatrix(),
+                                                  cameraState.ProjectionMatrix(),
+                                                  m_screenProperties);
 
-		eegeoWorld.Draw(renderCamera, m_screenProperties);
+		eegeoWorld.Draw(drawParameters);
 
 		if (m_pLoadingScreen != NULL)
 		{
@@ -527,11 +555,13 @@ namespace ExampleApp
     void MobileExampleApp::NotifyScreenPropertiesChanged(const Eegeo::Rendering::ScreenProperties& screenProperties)
     {
         m_screenProperties = screenProperties;
-        m_pGlobeCameraController->GetCamera()->SetViewport(0.f, 0.f, screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight());
+        
         if (m_pLoadingScreen != NULL)
         {
             m_pLoadingScreen->NotifyScreenDimensionsChanged(screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight());
         }
+        
+        m_pGlobeCameraController->UpdateScreenProperties(m_screenProperties);
     }
 
 	void MobileExampleApp::InitialiseApplicationViewState()
@@ -583,7 +613,23 @@ namespace ExampleApp
 	{
 		return !m_pWorld->Initialising();
 	}
-
+    
+    Eegeo::Streaming::IStreamingVolume& MobileExampleApp::GetUpdatedStreamingVolume(const Eegeo::Camera::CameraState& cameraState,
+                                                                                    const Eegeo::Camera::RenderCamera& renderCamera)
+    {
+        std::vector<Eegeo::Geometry::Plane> frustumPlanes(Eegeo::Geometry::Frustum::PLANES_COUNT);
+        BuildFrustumPlanesFromViewProjection(frustumPlanes, renderCamera.GetViewProjectionMatrix());
+        const double d = renderCamera.GetAltitude() * Eegeo::Streaming::StreamingVolumeController::CAMERA_ALTITUDE_TO_FAR_PLANE_DISTANCE_MULTIPLIER;
+        const double cameraFarPlaneD = fmin(fmax(d, Eegeo::Streaming::StreamingVolumeController::MIN_STREAMING_FAR_PLANE_DISTANCE),
+                                            frustumPlanes[Eegeo::Geometry::Frustum::PLANE_FAR].d);
+        frustumPlanes[Eegeo::Geometry::Frustum::PLANE_FAR].d = static_cast<float>(cameraFarPlaneD);
+        
+        m_pStreamingVolume->updateStreamingVolume(renderCamera.GetEcefLocation(), frustumPlanes, renderCamera.GetFOV());
+        m_pStreamingVolume->ResetVolume(cameraState.InterestPointEcef());
+        return *m_pStreamingVolume;
+    }
+    
+    
     void MobileExampleApp::Event_TouchRotate(const AppInterface::RotateData& data)
     {
         if(World().Initialising())
@@ -708,7 +754,7 @@ namespace ExampleApp
         }
         
         MyPinCreation::PoiRing::IPoiRingTouchController& poiRingTouchController = m_pPoiRingModule->GetPoiRingTouchController();
-        if (!poiRingTouchController.HandleTouchDown(data, *m_pGlobeCameraController->GetCamera(), m_pGlobeCameraController->GetGlobeCameraController()))
+        if (!poiRingTouchController.HandleTouchDown(data, m_pGlobeCameraController->GetRenderCamera(), m_pGlobeCameraController->GetGlobeCameraController()))
         {
             m_pCameraTouchController->Event_TouchDown(data);
         }
@@ -723,7 +769,7 @@ namespace ExampleApp
         }
         
         MyPinCreation::PoiRing::IPoiRingTouchController& poiRingTouchController = m_pPoiRingModule->GetPoiRingTouchController();
-        if (!poiRingTouchController.HandleTouchMove(data, *m_pGlobeCameraController->GetCamera(), m_pGlobeCameraController->GetGlobeCameraController()))
+        if (!poiRingTouchController.HandleTouchMove(data, m_pGlobeCameraController->GetRenderCamera(), m_pGlobeCameraController->GetGlobeCameraController()))
         {
             m_pCameraTouchController->Event_TouchMove(data);
         }
