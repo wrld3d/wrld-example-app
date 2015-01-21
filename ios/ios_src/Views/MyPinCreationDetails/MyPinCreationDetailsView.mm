@@ -93,6 +93,11 @@
         
         [self layoutSubviews];
         [self setTouchExclusivity: self];
+        
+        [[NSNotificationCenter defaultCenter] addObserver: self
+                                                 selector: @selector(onPause)
+                                                     name: @"handlePause"
+                                                   object: nil];
     }
     
     return self;
@@ -100,6 +105,10 @@
 
 - (void)dealloc
 {
+    [[NSNotificationCenter defaultCenter] removeObserver: self
+                                                    name: @"handlePause"
+                                                  object: nil];
+    
     [self.pFooterShadow removeFromSuperview];
     [self.pFooterShadow release];
     
@@ -617,6 +626,15 @@
         [alert show];
         self.pCheckbox.selected = NO;
     }
+}
+
+- (void)onPause
+{
+    if(m_usePopover)
+    {
+        [self.pPopover dismissPopoverAnimated: YES];
+    }
+    [m_pController dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end
