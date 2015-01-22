@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -7,28 +7,34 @@
 #include "IPrimaryMenuViewModule.h"
 #include "Rendering.h"
 #include "Modality.h"
+#include "MenuController.h"
+#include "CustomTableDataProvider.h"
 
 namespace ExampleApp
 {
-	namespace PrimaryMenu
-	{
-		class PrimaryMenuViewModule: public IPrimaryMenuViewModule, private Eegeo::NonCopyable
-		{
-		private:
-			MenuViewController* m_pMenuViewController;
-			PrimaryMenuView* m_pView;
+    namespace PrimaryMenu
+    {
+        namespace View
+        {
+            class PrimaryMenuViewModule: public IPrimaryMenuViewModule, private Eegeo::NonCopyable
+            {
+            private:
+                Menu::View::MenuController* m_pController;
+                PrimaryMenuView* m_pView;
+                CustomTableDataProvider* m_pDataProvider;
 
-		public:
-			PrimaryMenuViewModule(Menu::IMenuModel& primaryMenuModel,
-			                      Menu::IMenuViewModel& primaryMenuViewModel,
-			                      const Eegeo::Rendering::ScreenProperties& screenProperties,
-			                      Modality::IModalityModel& modalityModel);
+            public:
+                PrimaryMenuViewModule(Menu::View::IMenuModel& primaryMenuModel,
+                                      Menu::View::IMenuViewModel& primaryMenuViewModel,
+                                      const Eegeo::Rendering::ScreenProperties& screenProperties,
+                                      Modality::View::IModalityModel& modalityModel);
 
-			~PrimaryMenuViewModule();
+                ~PrimaryMenuViewModule();
 
-			MenuViewController& GetPrimaryMenuViewController() const;
+                Menu::View::MenuController& GetMenuController() const;
 
-			PrimaryMenuView& GetPrimaryMenuView() const;
-		};
-	}
+                PrimaryMenuView& GetPrimaryMenuView() const;
+            };
+        }
+    }
 }

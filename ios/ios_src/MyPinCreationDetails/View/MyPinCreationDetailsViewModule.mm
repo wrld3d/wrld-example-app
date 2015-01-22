@@ -1,38 +1,42 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "MyPinCreationDetailsViewModule.h"
-#include "MyPinCreationDetailsViewController.h"
+#include "MyPinCreationDetailsView.h"
+#include "MyPinCreationDetailsController.h"
+#include "ScreenProperties.h"
 
 namespace ExampleApp
 {
     namespace MyPinCreationDetails
     {
-        MyPinCreationDetailsViewModule::MyPinCreationDetailsViewModule(ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
-                                                                       IMyPinCreationDetailsViewModel& myPinCreationDetailsViewModel,
-                                                                       Eegeo::Web::IConnectivityService& connectivityService,
-                                                                       UIViewController* rootViewController)
+        namespace View
         {
-            m_pController = [[MyPinCreationDetailsViewController alloc] initWithParams:&uiToNativeMessageBus
-                                                                                      :&myPinCreationDetailsViewModel
-                                                                                      :&connectivityService];
-            
-            [rootViewController addChildViewController: m_pController];
-        }
-        
-        MyPinCreationDetailsViewModule::~MyPinCreationDetailsViewModule()
-        {
-            [m_pController removeFromParentViewController];
-            [m_pController release];
-        }
-        
-        MyPinCreationDetailsViewController& MyPinCreationDetailsViewModule::GetMyPinCreationDetailsViewController() const
-        {
-            return *m_pController;
-        }
-        
-        MyPinCreationDetailsView& MyPinCreationDetailsViewModule::GetMyPinCreationDetailsView() const
-        {
-            return *[m_pController pMyPinCreationDetailsView];
+            MyPinCreationDetailsViewModule::MyPinCreationDetailsViewModule(ExampleAppMessaging::TMessageBus& messageBus,
+                    IMyPinCreationDetailsViewModel& myPinCreationDetailsViewModel,
+                    const Eegeo::Rendering::ScreenProperties& screenProperties,
+                    Eegeo::Web::IConnectivityService& connectivityService)
+            {
+                m_pView = [[MyPinCreationDetailsView alloc] initWithParams:screenProperties.GetScreenWidth() :screenProperties.GetScreenHeight()];
+
+                m_pController = Eegeo_NEW(MyPinCreationDetailsController)(*[m_pView getInterop], myPinCreationDetailsViewModel, connectivityService, messageBus);
+            }
+
+            MyPinCreationDetailsViewModule::~MyPinCreationDetailsViewModule()
+            {
+                Eegeo_DELETE m_pController;
+
+                [m_pView release];
+            }
+
+            MyPinCreationDetailsController& MyPinCreationDetailsViewModule::GetMyPinCreationDetailsController() const
+            {
+                return *m_pController;
+            }
+
+            MyPinCreationDetailsView& MyPinCreationDetailsViewModule::GetMyPinCreationDetailsView() const
+            {
+                return *m_pView;
+            }
         }
     }
 }

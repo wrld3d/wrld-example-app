@@ -1,46 +1,44 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
-#include "AndroidNativeState.h"
 #include "WorldPinOnMapViewModule.h"
-#include "IWorldPinInFocusViewModel.h"
-#include "WorldPinOnMapViewController.h"
+#include "WorldPinOnMapView.h"
+#include "WorldPinOnMapController.h"
 #include "AndroidAppThreadAssertionMacros.h"
 
 namespace ExampleApp
 {
-	namespace WorldPins
-	{
-		WorldPinOnMapViewModule::WorldPinOnMapViewModule(
-		    AndroidNativeState& nativeState,
-		    IWorldPinInFocusViewModel& worldPinInFocusViewModel,
-		    ScreenControlViewModel::IScreenControlViewModel& worldPinOnMapInFocusScreenControlViewModel,
-		    Modality::IModalityModel& modalityModel,
-		    float pinDiameter
-		)
-		{
-			ASSERT_UI_THREAD
+    namespace WorldPins
+    {
+        namespace View
+        {
+            WorldPinOnMapViewModule::WorldPinOnMapViewModule(
+                AndroidNativeState& nativeState,
+                IWorldPinInFocusViewModel& worldPinInFocusViewModel,
+                ScreenControl::View::IScreenControlViewModel& worldPinOnMapInFocusScreenControlViewModel,
+                Modality::View::IModalityModel& modalityModel,
+                float pinDiameter
+            )
+            {
+                ASSERT_UI_THREAD
 
-			m_pWorldPinOnMapViewController = Eegeo_NEW(WorldPinOnMapViewController)(
-			        nativeState,
-			        worldPinInFocusViewModel,
-			        worldPinOnMapInFocusScreenControlViewModel,
-			        modalityModel,
-			        pinDiameter
-			                                     );
-		}
+                m_pView = Eegeo_NEW(WorldPinOnMapView)(nativeState, pinDiameter);
+                m_pController = Eegeo_NEW(WorldPinOnMapController)(*m_pView, worldPinInFocusViewModel, worldPinOnMapInFocusScreenControlViewModel, modalityModel);
+            }
 
-		WorldPinOnMapViewModule::~WorldPinOnMapViewModule()
-		{
-			ASSERT_UI_THREAD
+            WorldPinOnMapViewModule::~WorldPinOnMapViewModule()
+            {
+                ASSERT_UI_THREAD
 
-			Eegeo_DELETE m_pWorldPinOnMapViewController;
-		}
+                Eegeo_DELETE m_pController;
+                Eegeo_DELETE m_pView;
+            }
 
-		WorldPinOnMapViewController& WorldPinOnMapViewModule::GetWorldPinOnMapViewController() const
-		{
-			ASSERT_UI_THREAD
+            WorldPinOnMapController& WorldPinOnMapViewModule::GetWorldPinOnMapController() const
+            {
+                ASSERT_UI_THREAD
 
-			return *m_pWorldPinOnMapViewController;
-		}
-	}
+                return *m_pController;
+            }
+        }
+    }
 }

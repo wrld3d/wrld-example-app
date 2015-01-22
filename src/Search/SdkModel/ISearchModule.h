@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -6,20 +6,23 @@
 
 namespace ExampleApp
 {
-	namespace Search
-	{
-		class ISearchModule
-		{
-		public:
-			virtual ~ISearchModule() { }
+    namespace Search
+    {
+        namespace SdkModel
+        {
+            class ISearchModule
+            {
+            public:
+                virtual ~ISearchModule() { }
 
-			virtual ISearchService& GetSearchService() const = 0;
+                virtual ISearchService& GetSearchService() const = 0;
 
-			virtual ISearchResultRepository& GetSearchResultRepository() const = 0;
+                virtual ISearchResultRepository& GetSearchResultRepository() const = 0;
 
-			virtual ISearchQueryPerformer& GetSearchQueryPerformer() const = 0;
+                virtual ISearchQueryPerformer& GetSearchQueryPerformer() const = 0;
 
-			virtual ISearchRefreshService& GetSearchRefreshService() const = 0;
-		};
-	}
+                virtual ISearchRefreshService& GetSearchRefreshService() const = 0;
+            };
+        }
+    }
 }

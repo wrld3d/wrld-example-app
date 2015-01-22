@@ -1,37 +1,45 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #import "CompassViewModule.h"
 #include "RenderContext.h"
 #include "CompassView.h"
+#include "ScreenProperties.h"
+#include "CompassViewInterop.h"
 
 namespace ExampleApp
 {
-	namespace Compass
-	{
-		CompassViewModule::CompassViewModule(ICompassViewModel& viewModel,
-		                                     const Eegeo::Rendering::ScreenProperties& screenProperties,
-		                                     ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
-		                                     ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus)
-		{
-			m_pController = [[CompassViewController alloc] initWithParams:&viewModel
-			                 :&screenProperties
-			                 :&uiToNativeMessageBus
-			                 :&nativeToUiMessageBus];
-		}
+    namespace Compass
+    {
+        namespace View
+        {
+            CompassViewModule::CompassViewModule(ICompassViewModel& viewModel,
+                                                 const Eegeo::Rendering::ScreenProperties& screenProperties,
+                                                 ExampleAppMessaging::TMessageBus& messageBus)
+            {
 
-		CompassViewModule::~CompassViewModule()
-		{
-			[m_pController release];
-		}
+                m_pView = [[[CompassView alloc] initWithParams
+                            :screenProperties.GetScreenWidth()
+                            :screenProperties.GetScreenHeight()
+                            :screenProperties.GetPixelScale()] autorelease];
 
-		CompassViewController& CompassViewModule::GetCompassViewController() const
-		{
-			return *m_pController;
-		}
+                m_pController = Eegeo_NEW(CompassController)(*[m_pView getInterop], viewModel, messageBus);
+            }
 
-		CompassView& CompassViewModule::GetCompassView() const
-		{
-			return *[m_pController pCompassView];
-		}
-	}
+            CompassViewModule::~CompassViewModule()
+            {
+                [m_pView release];
+                Eegeo_DELETE m_pController;
+            }
+
+            CompassController& CompassViewModule::GetCompassController() const
+            {
+                return *m_pController;
+            }
+
+            CompassView& CompassViewModule::GetCompassView() const
+            {
+                return *m_pView;
+            }
+        }
+    }
 }

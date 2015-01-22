@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -7,20 +7,23 @@
 
 namespace ExampleApp
 {
-	namespace SearchResultMenu
-	{
-		class ISearchResultMenuModule
-		{
-		public:
-			virtual ~ISearchResultMenuModule() { }
+    namespace SearchResultMenu
+    {
+        namespace SdkModel
+        {
+            class ISearchResultMenuModule
+            {
+            public:
+                virtual ~ISearchResultMenuModule() { }
 
-			virtual Menu::IMenuOptionsModel& GetSearchResultMenuOptionsModel() const = 0;
+                virtual Menu::View::IMenuOptionsModel& GetSearchResultMenuOptionsModel() const = 0;
 
-			virtual Menu::IMenuModel& GetSearchResultMenuModel() const = 0;
+                virtual Menu::View::IMenuModel& GetSearchResultMenuModel() const = 0;
 
-			virtual Menu::IMenuViewModel& GetMenuViewModel() const = 0;
+                virtual Menu::View::IMenuViewModel& GetMenuViewModel() const = 0;
 
-			virtual ISearchResultMenuViewModel& GetSearchResultMenuViewModel() const = 0;
-		};
-	}
+                virtual View::ISearchResultMenuViewModel& GetSearchResultMenuViewModel() const = 0;
+            };
+        }
+    }
 }

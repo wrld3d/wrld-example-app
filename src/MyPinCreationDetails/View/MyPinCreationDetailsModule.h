@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -11,21 +11,24 @@ namespace ExampleApp
 {
     namespace MyPinCreationDetails
     {
-        class MyPinCreationDetailsModule : public IMyPinCreationDetailsModule
+        namespace View
         {
-        public:
-            MyPinCreationDetailsModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
-                                       Reaction::IReactionControllerModel& reactionControllerModel);
-            
-            ~MyPinCreationDetailsModule();
-            
-            IMyPinCreationDetailsViewModel& GetMyPinCreationDetailsViewModel() const;
-            
-            OpenableControlViewModel::IOpenableControlViewModel& GetObservableOpenableControl() const;
-            
-        private:
-            MyPinCreationDetailsViewModel* m_pMyPinCreationDetailsViewModel;
-            
-        };
+            class MyPinCreationDetailsModule : public IMyPinCreationDetailsModule
+            {
+            public:
+                MyPinCreationDetailsModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
+                                           Reaction::View::IReactionControllerModel& reactionControllerModel);
+
+                ~MyPinCreationDetailsModule();
+
+                IMyPinCreationDetailsViewModel& GetMyPinCreationDetailsViewModel() const;
+
+                OpenableControl::View::IOpenableControlViewModel& GetObservableOpenableControl() const;
+
+            private:
+                MyPinCreationDetailsViewModel* m_pMyPinCreationDetailsViewModel;
+
+            };
+        }
     }
 }

@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -15,44 +15,47 @@ namespace ExampleApp
 {
     namespace MyPinCreation
     {
-        class MyPinCreationConfirmationViewModel : public IMyPinCreationConfirmationViewModel, private Eegeo::NonCopyable
+        namespace View
         {
-        public:
-            
-            MyPinCreationConfirmationViewModel(Eegeo::Helpers::TIdentity identity,
-                                               bool isInitiallyOnScreen,
-                                               Reaction::IReactionControllerModel& reactionControllerModel);
+            class MyPinCreationConfirmationViewModel : public IMyPinCreationConfirmationViewModel, private Eegeo::NonCopyable
+            {
+            public:
 
-            
-            Eegeo::Helpers::TIdentity GetIdentity() const;
-            
-            void AddToScreen();
-            
-            void RemoveFromScreen();
-            
-            void UpdateOnScreenState(float onScreenState);
-            
-            void InsertOnScreenStateChangedCallback(Eegeo::Helpers::ICallback2<ScreenControlViewModel::IScreenControlViewModel&, float>& callback);
-            
-            void RemoveOnScreenStateChangedCallback(Eegeo::Helpers::ICallback2<ScreenControlViewModel::IScreenControlViewModel&, float>& callback);
-            
-            bool IsFullyOffScreen() const;
-            
-            bool IsFullyOnScreen() const;
-            
-            float OnScreenState() const;
-            
-            ScreenControlViewModel::IScreenControlViewModel& GetScreenControlViewModel();
+                MyPinCreationConfirmationViewModel(Eegeo::Helpers::TIdentity identity,
+                                                   bool isInitiallyOnScreen,
+                                                   Reaction::View::IReactionControllerModel& reactionControllerModel);
 
-            OpenableControlViewModel::IOpenableControlViewModel& GetOpenableControlViewModel();
 
-            bool TryOpen();
-            
-            void Close();
-            
-        private:
-            MyPinCreationScreenControl m_screenControl;
-            MyPinCreationConfirmationOpenableControl m_openable;
-        };
+                Eegeo::Helpers::TIdentity GetIdentity() const;
+
+                void AddToScreen();
+
+                void RemoveFromScreen();
+
+                void UpdateOnScreenState(float onScreenState);
+
+                void InsertOnScreenStateChangedCallback(Eegeo::Helpers::ICallback2<ScreenControl::View::IScreenControlViewModel&, float>& callback);
+
+                void RemoveOnScreenStateChangedCallback(Eegeo::Helpers::ICallback2<ScreenControl::View::IScreenControlViewModel&, float>& callback);
+
+                bool IsFullyOffScreen() const;
+
+                bool IsFullyOnScreen() const;
+
+                float OnScreenState() const;
+
+                ScreenControl::View::IScreenControlViewModel& GetScreenControlViewModel();
+
+                OpenableControl::View::IOpenableControlViewModel& GetOpenableControlViewModel();
+
+                bool TryOpen();
+
+                void Close();
+
+            private:
+                MyPinCreationScreenControl m_screenControl;
+                MyPinCreationConfirmationOpenableControl m_openable;
+            };
+        }
     }
 }

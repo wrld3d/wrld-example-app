@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -8,31 +8,34 @@
 
 namespace ExampleApp
 {
-	namespace Menu
-	{
-		class IMenuSectionViewModel
-		{
-		public:
+    namespace Menu
+    {
+        namespace View
+        {
+            class IMenuSectionViewModel
+            {
+            public:
 
-			virtual ~IMenuSectionViewModel() {};
+                virtual ~IMenuSectionViewModel() {};
 
-			virtual const std::string& Name() const = 0;
+                virtual const std::string& Name() const = 0;
 
-			virtual const std::string& Icon() const = 0;
+                virtual const std::string& Icon() const = 0;
 
-			virtual std::string SerializeJson() const = 0;
+                virtual std::string SerializeJson() const = 0;
 
-			virtual size_t Size() const = 0;
+                virtual size_t Size() const = 0;
 
-			virtual size_t GetTotalItemCount() const = 0;
+                virtual size_t GetTotalItemCount() const = 0;
 
-			virtual MenuItemModel GetItemAtIndex(int index) const = 0;
+                virtual MenuItemModel GetItemAtIndex(int index) const = 0;
 
-			virtual bool IsExpanded() const = 0;
-			virtual bool IsExpandable() const = 0;
+                virtual bool IsExpanded() const = 0;
+                virtual bool IsExpandable() const = 0;
 
-			virtual void Expand() = 0;
-			virtual void Contract() = 0;
-		};
-	}
+                virtual void Expand() = 0;
+                virtual void Contract() = 0;
+            };
+        }
+    }
 }

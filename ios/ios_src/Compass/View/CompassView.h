@@ -1,36 +1,39 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
 #import <UIKit/UIKit.h>
-#include "CompassViewController.h"
+#include "CompassViewIncludes.h"
 
 @class CompassView;
 
-@interface CompassView : UIView
+@interface CompassView : UIView <UIGestureRecognizerDelegate>
 {
-	__weak CompassViewController* m_pController;
+    ExampleApp::Compass::View::CompassViewInterop* m_pInterop;
+    UITapGestureRecognizer* m_tapGestureRecogniser;
 
-	UIColor* m_darkColour;
-	UIColor* m_lightColour;
+    UIColor* m_darkColour;
+    UIColor* m_lightColour;
 
-	float m_width;
-	float m_height;
+    float m_width;
+    float m_height;
 
-	float m_screenWidth;
-	float m_screenHeight;
-	float m_pixelScale;
+    float m_screenWidth;
+    float m_screenHeight;
+    float m_pixelScale;
 
-	float m_yPosActive;
-	float m_yPosInactive;
+    float m_yPosActive;
+    float m_yPosInactive;
 
-	float m_stateChangeAnimationTimeSeconds;
+    float m_stateChangeAnimationTimeSeconds;
 
-	float m_compassPointNaturalOffsetX;
-	float m_compassPointNaturalOffsetY;
+    float m_compassPointNaturalOffsetX;
+    float m_compassPointNaturalOffsetY;
 }
 
-- (id) initWithParams:(CompassViewController *)controller :(float)width :(float)height :(float)pixelScale;
+- (id) initWithParams:(float)width :(float)height :(float)pixelScale;
+
+- (ExampleApp::Compass::View::CompassViewInterop*) getInterop;
 
 - (BOOL) consumesTouch:(UITouch *)touch;
 

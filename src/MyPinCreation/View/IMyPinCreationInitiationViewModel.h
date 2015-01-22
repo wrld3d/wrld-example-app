@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -8,14 +8,17 @@ namespace ExampleApp
 {
     namespace MyPinCreation
     {
-        class IMyPinCreationInitiationViewModel : public ScreenControlViewModel::IScreenControlViewModel
+        namespace View
         {
-        public:
-            
-            virtual ~IMyPinCreationInitiationViewModel() { }
-            
-            virtual bool ShouldOffsetViewButton() const = 0;
-            virtual void SetShouldOffsetViewButton(bool shouldOffset) = 0;
-        };
+            class IMyPinCreationInitiationViewModel : public ScreenControl::View::IScreenControlViewModel
+            {
+            public:
+
+                virtual ~IMyPinCreationInitiationViewModel() { }
+
+                virtual bool ShouldOffsetViewButton() const = 0;
+                virtual void SetShouldOffsetViewButton(bool shouldOffset) = 0;
+            };
+        }
     }
 }

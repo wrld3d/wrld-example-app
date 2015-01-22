@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -9,28 +9,30 @@
 #include "IPlaceJumpsModel.h"
 #include "Logger.h"
 #include "IMenuViewModel.h"
-#include "UiToNativeMessageBus.h"
+#include "BidirectionalBus.h"
 #include "PlaceJumpSelectedMessage.h"
 
 namespace ExampleApp
 {
-	namespace PlaceJumps
-	{
-		class PlaceJumpMenuOption : public Menu::IMenuOption
-		{
-		public:
-			PlaceJumpMenuOption(PlaceJumpModel jumpModel,
-			                    ExampleApp::Menu::IMenuViewModel& menuViewModel,
-			                    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus);
+    namespace PlaceJumps
+    {
+        namespace View
+        {
+            class PlaceJumpMenuOption : public Menu::View::IMenuOption
+            {
+            public:
+                PlaceJumpMenuOption(PlaceJumpModel jumpModel,
+                                    Menu::View::IMenuViewModel& menuViewModel,
+                                    ExampleAppMessaging::TMessageBus& messageBus);
 
-			void Select();
+                void Select();
 
-		private:
+            private:
 
-			PlaceJumpModel m_jumpModel;
-			ExampleApp::Menu::IMenuViewModel& m_menuViewModel;
-			ExampleAppMessaging::UiToNativeMessageBus& m_uiToNativeMessageBus;
-		};
-
-	}
+                PlaceJumpModel m_jumpModel;
+                Menu::View::IMenuViewModel& m_menuViewModel;
+                ExampleAppMessaging::TMessageBus& m_messageBus;
+            };
+        }
+    }
 }

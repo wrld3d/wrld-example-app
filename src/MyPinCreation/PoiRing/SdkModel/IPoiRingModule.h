@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -10,16 +10,19 @@ namespace ExampleApp
     {
         namespace PoiRing
         {
-            class IPoiRingModule
+            namespace SdkModel
             {
-            public:
-                virtual ~IPoiRingModule(){ }
-                
-                virtual IPoiRingController& GetPoiRingController() const = 0;
-                virtual IPoiRingTouchController& GetPoiRingTouchController() const = 0;
+                class IPoiRingModule
+                {
+                public:
+                    virtual ~IPoiRingModule() { }
 
-                
-            };
+                    virtual IPoiRingController& GetPoiRingController() const = 0;
+                    virtual IPoiRingTouchController& GetPoiRingTouchController() const = 0;
+
+
+                };
+            }
         }
     }
 }

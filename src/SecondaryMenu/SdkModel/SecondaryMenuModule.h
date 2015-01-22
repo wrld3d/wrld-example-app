@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -11,36 +11,39 @@
 #include "Reaction.h"
 #include "Search.h"
 #include "SecondaryMenu.h"
-#include "UiToNativeMessageBus.h"
+#include "BidirectionalBus.h"
 
 namespace ExampleApp
 {
-	namespace SecondaryMenu
-	{
-		class SecondaryMenuModule: public ISecondaryMenuModule, private Eegeo::NonCopyable
-		{
-		private:
-			Menu::IMenuModel* m_pModel;
-			Menu::IMenuOptionsModel* m_pMenuOptionsModel;
-			Menu::IMenuViewModel* m_pViewModel;
-			std::vector<Menu::IMenuSectionViewModel*> m_sections;
-			PerformedSearchMessageHandler* m_pPerformedSearchMessageHandler;
+    namespace SecondaryMenu
+    {
+        namespace SdkModel
+        {
+            class SecondaryMenuModule: public ISecondaryMenuModule, private Eegeo::NonCopyable
+            {
+            private:
+                Menu::View::IMenuModel* m_pModel;
+                Menu::View::IMenuOptionsModel* m_pMenuOptionsModel;
+                Menu::View::IMenuViewModel* m_pViewModel;
+                std::vector<Menu::View::IMenuSectionViewModel*> m_sections;
+                PerformedSearchMessageHandler* m_pPerformedSearchMessageHandler;
 
-		public:
-			SecondaryMenuModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
-			                    Reaction::IReactionControllerModel& reactionControllerModel,
-			                    Search::ISearchQueryPerformer& searchQueryPerformer,
-			                    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus);
+            public:
+                SecondaryMenuModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
+                                    Reaction::View::IReactionControllerModel& reactionControllerModel,
+                                    Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
+                                    ExampleAppMessaging::TMessageBus& messageBus);
 
-			~SecondaryMenuModule();
+                ~SecondaryMenuModule();
 
-			void AddMenuSection(const std::string& name, const std::string& icon, Menu::IMenuModel& menuModel, bool isExpandable);
+                void AddMenuSection(const std::string& name, const std::string& icon, Menu::View::IMenuModel& menuModel, bool isExpandable);
 
-			Menu::IMenuModel& GetSecondaryMenuModel() const;
+                Menu::View::IMenuModel& GetSecondaryMenuModel() const;
 
-			Menu::IMenuOptionsModel& GetSecondaryMenuOptionsModel() const;
+                Menu::View::IMenuOptionsModel& GetSecondaryMenuOptionsModel() const;
 
-			Menu::IMenuViewModel& GetSecondaryMenuViewModel() const;
-		};
-	}
+                Menu::View::IMenuViewModel& GetSecondaryMenuViewModel() const;
+            };
+        }
+    }
 }

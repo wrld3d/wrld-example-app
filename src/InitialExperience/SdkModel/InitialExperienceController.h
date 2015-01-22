@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -8,18 +8,21 @@
 
 namespace ExampleApp
 {
-	namespace InitialExperience
-	{
-		class InitialExperienceController : public IInitialExperienceController, private Eegeo::NonCopyable
-		{
-			IInitialExperienceModel& m_initialExperienceModel;
+    namespace InitialExperience
+    {
+        namespace SdkModel
+        {
+            class InitialExperienceController : public IInitialExperienceController, private Eegeo::NonCopyable
+            {
+                IInitialExperienceModel& m_initialExperienceModel;
 
-		public:
-			InitialExperienceController(IInitialExperienceModel& initialExperienceModel);
+            public:
+                InitialExperienceController(IInitialExperienceModel& initialExperienceModel);
 
-			~InitialExperienceController();
+                ~InitialExperienceController();
 
-			void Update(float deltaSeconds);
-		};
-	}
+                void Update(float deltaSeconds);
+            };
+        }
+    }
 }

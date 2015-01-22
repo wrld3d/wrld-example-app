@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -9,12 +9,15 @@ namespace ExampleApp
 {
     namespace MyPins
     {
-        class IMyPinsModule
+        namespace SdkModel
         {
-        public:
-            virtual ~IMyPinsModule() { }
-            virtual IMyPinsService& GetMyPinsService() const = 0;
-            virtual Menu::IMenuModel& GetMyPinsMenuModel() const = 0;
-        };
+            class IMyPinsModule
+            {
+            public:
+                virtual ~IMyPinsModule() { }
+                virtual IMyPinsService& GetMyPinsService() const = 0;
+                virtual Menu::View::IMenuModel& GetMyPinsMenuModel() const = 0;
+            };
+        }
     }
 }

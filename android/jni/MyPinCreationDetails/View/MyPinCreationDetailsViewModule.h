@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -8,28 +8,31 @@
 #include "MyPinCreationDetails.h"
 #include "MyPinCreation.h"
 #include "MyPinCreationDetailsViewIncludes.h"
-#include "UiToNativeMessageBus.h"
+#include "BidirectionalBus.h"
 #include "IConnectivityService.h"
 
 namespace ExampleApp
 {
     namespace MyPinCreationDetails
     {
-    	class MyPinCreationDetailsViewModule : public IMyPinCreationDetailsViewModule, private Eegeo::NonCopyable
+        namespace View
         {
-        private:
-    		MyPinCreationDetailsViewController* m_pViewController;
+            class MyPinCreationDetailsViewModule : public IMyPinCreationDetailsViewModule, private Eegeo::NonCopyable
+            {
+            private:
+                MyPinCreationDetailsView* m_pView;
+                MyPinCreationDetailsController* m_pController;
 
-        public:
-    		MyPinCreationDetailsViewModule(
-            	AndroidNativeState& nativeState,
-            	MyPinCreation::IMyPinCreationModel& model,
-            	MyPinCreationDetails::IMyPinCreationDetailsViewModel& viewModel,
-			    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
-			    Eegeo::Web::IConnectivityService& connectivityService
-            );
+            public:
+                MyPinCreationDetailsViewModule(
+                    AndroidNativeState& nativeState,
+                    MyPinCreationDetails::View::IMyPinCreationDetailsViewModel& viewModel,
+                    Eegeo::Web::IConnectivityService& connectivityService,
+                    ExampleAppMessaging::TMessageBus& messageBus
+                );
 
-            ~MyPinCreationDetailsViewModule();
-        };
+                ~MyPinCreationDetailsViewModule();
+            };
+        }
     }
 }

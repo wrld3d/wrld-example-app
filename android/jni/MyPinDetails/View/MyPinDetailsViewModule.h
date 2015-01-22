@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -6,25 +6,28 @@
 #include "MyPinDetailsViewIncludes.h"
 #include "AndroidNativeState.h"
 #include "MyPinDetails.h"
-#include "UiToNativeMessageBus.h"
+#include "BidirectionalBus.h"
 
 namespace ExampleApp
 {
     namespace MyPinDetails
     {
-		class MyPinDetailsViewModule : public IMyPinDetailsViewModule
-		{
-		public:
-			MyPinDetailsViewModule(
-					AndroidNativeState& nativeState,
-    				IMyPinDetailsViewModel& myPinDetailsViewModel,
-    			    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus);
-			~MyPinDetailsViewModule();
+        namespace View
+        {
+            class MyPinDetailsViewModule : public IMyPinDetailsViewModule
+            {
+            public:
+                MyPinDetailsViewModule(
+                    AndroidNativeState& nativeState,
+                    IMyPinDetailsViewModel& viewModel,
+                    ExampleAppMessaging::TMessageBus& messageBus);
+                ~MyPinDetailsViewModule();
 
-		private:
+            private:
 
-			MyPinDetailsViewController* m_pViewController;
-
-		};
+                MyPinDetailsView* m_pView;
+                MyPinDetailsController* m_pController;
+            };
+        }
     }
 }

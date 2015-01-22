@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -12,53 +12,56 @@
 
 namespace ExampleApp
 {
-	namespace WorldPins
-	{
-		class WorldPinInFocusViewModel : public IWorldPinInFocusViewModel, private Eegeo::NonCopyable
-		{
-			bool m_isOpen;
-			Eegeo::v2 m_screenPos;
-			WorldPinsInFocusModel m_worldPinInFocusModel;
-			Eegeo::Helpers::CallbackCollection0 m_openedCallbacks;
-			Eegeo::Helpers::CallbackCollection0 m_closedCallbacks;
-			Eegeo::Helpers::CallbackCollection0 m_updateCallbacks;
-			WorldPinInFocusScreenControl m_screenControl;
-            IWorldPinsService& m_worldPinsService;
+    namespace WorldPins
+    {
+        namespace View
+        {
+            class WorldPinInFocusViewModel : public IWorldPinInFocusViewModel, private Eegeo::NonCopyable
+            {
+                bool m_isOpen;
+                Eegeo::v2 m_screenPos;
+                SdkModel::WorldPinsInFocusModel m_worldPinInFocusModel;
+                Eegeo::Helpers::CallbackCollection0 m_openedCallbacks;
+                Eegeo::Helpers::CallbackCollection0 m_closedCallbacks;
+                Eegeo::Helpers::CallbackCollection0 m_updateCallbacks;
+                WorldPinInFocusScreenControl m_screenControl;
+                SdkModel::IWorldPinsService& m_worldPinsService;
 
-		public:
-			WorldPinInFocusViewModel(Eegeo::Helpers::TIdentity identity,
-                                     IWorldPinsService& worldPinsService);
+            public:
+                WorldPinInFocusViewModel(Eegeo::Helpers::TIdentity identity,
+                                         SdkModel::IWorldPinsService& worldPinsService);
 
-			~WorldPinInFocusViewModel();
+                ~WorldPinInFocusViewModel();
 
-			const WorldPinsInFocusModel& GetWorldPinsInFocusModel() const;
+                const SdkModel::WorldPinsInFocusModel& GetWorldPinsInFocusModel() const;
 
-			bool IsOpen() const;
+                bool IsOpen() const;
 
-			const Eegeo::v2& ScreenLocation() const;
+                const Eegeo::v2& ScreenLocation() const;
 
-			void SelectFocussedResult();
+                void SelectFocussedResult();
 
-			void Open(const WorldPinsInFocusModel& worldPinInFocusModel, const Eegeo::v2& screenPos);
+                void Open(const SdkModel::WorldPinsInFocusModel& worldPinInFocusModel, const Eegeo::v2& screenPos);
 
-			void Close();
+                void Close();
 
-			void UpdateScreenLocation(const Eegeo::v2& screenPos);
+                void UpdateScreenLocation(const Eegeo::v2& screenPos);
 
-			ScreenControlViewModel::IScreenControlViewModel& GetScreenControlViewModel();
+                ScreenControl::View::IScreenControlViewModel& GetScreenControlViewModel();
 
-			void InsertOpenedCallback(Eegeo::Helpers::ICallback0& openedCallback);
+                void InsertOpenedCallback(Eegeo::Helpers::ICallback0& openedCallback);
 
-			void RemoveOpenedCallback(Eegeo::Helpers::ICallback0& openedCallback);
+                void RemoveOpenedCallback(Eegeo::Helpers::ICallback0& openedCallback);
 
-			void InsertClosedCallback(Eegeo::Helpers::ICallback0& closedCallback);
+                void InsertClosedCallback(Eegeo::Helpers::ICallback0& closedCallback);
 
-			void RemoveClosedCallback(Eegeo::Helpers::ICallback0& closedCallback);
+                void RemoveClosedCallback(Eegeo::Helpers::ICallback0& closedCallback);
 
-			void InsertUpdateCallback(Eegeo::Helpers::ICallback0& updateCallback);
+                void InsertUpdateCallback(Eegeo::Helpers::ICallback0& updateCallback);
 
-			void RemoveUpdateCallback(Eegeo::Helpers::ICallback0& updateCallback);
+                void RemoveUpdateCallback(Eegeo::Helpers::ICallback0& updateCallback);
 
-		};
-	}
+            };
+        }
+    }
 }

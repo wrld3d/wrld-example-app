@@ -1,9 +1,9 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
 #include "Types.h"
-#include "NativeToUiMessageBus.h"
+#include "BidirectionalBus.h"
 #include "ICallback.h"
 #include "IFlattenButtonModel.h"
 #include "FlattenButtonViewStateChangedObserver.h"
@@ -11,21 +11,24 @@
 
 namespace ExampleApp
 {
-	namespace FlattenButton
-	{
-		class FlattenButtonModelStateChangedObserver
-		{
-			IFlattenButtonModel& m_flattenButtonModel;
-			ExampleAppMessaging::NativeToUiMessageBus& m_nativeToUiMessageBus;
-			Eegeo::Helpers::TCallback0<FlattenButtonModelStateChangedObserver> m_flattenStateChangedCallback;
+    namespace FlattenButton
+    {
+        namespace SdkModel
+        {
+            class FlattenButtonModelStateChangedObserver
+            {
+                IFlattenButtonModel& m_flattenButtonModel;
+                ExampleAppMessaging::TMessageBus& m_messageBus;
+                Eegeo::Helpers::TCallback0<FlattenButtonModelStateChangedObserver> m_flattenStateChangedCallback;
 
-			void HandleFlattenStateChanged();
+                void HandleFlattenStateChanged();
 
-		public:
-			FlattenButtonModelStateChangedObserver(IFlattenButtonModel& flattenButtonModel,
-			                                       ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus);
+            public:
+                FlattenButtonModelStateChangedObserver(IFlattenButtonModel& flattenButtonModel,
+                                                       ExampleAppMessaging::TMessageBus& messageBus);
 
-			~FlattenButtonModelStateChangedObserver();
-		};
-	}
+                ~FlattenButtonModelStateChangedObserver();
+            };
+        }
+    }
 }

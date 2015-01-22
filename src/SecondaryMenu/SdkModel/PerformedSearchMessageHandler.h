@@ -1,31 +1,34 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
 #include "Types.h"
-#include "UiToNativeMessageBus.h"
+#include "BidirectionalBus.h"
 #include "ICallback.h"
 #include "PerformedSearchMessage.h"
 #include "ISearchQueryPerformer.h"
 
 namespace ExampleApp
 {
-	namespace SecondaryMenu
-	{
-		class PerformedSearchMessageHandler : private Eegeo::NonCopyable
-		{
-			Search::ISearchQueryPerformer& m_searchQueryPerformer;
-			ExampleAppMessaging::UiToNativeMessageBus& m_uiToNativeMessageBus;
-			Eegeo::Helpers::TCallback1<PerformedSearchMessageHandler, const PerformedSearchMessage&> m_handlePerformedSearchMessageBinding;
+    namespace SecondaryMenu
+    {
+        namespace SdkModel
+        {
+            class PerformedSearchMessageHandler : private Eegeo::NonCopyable
+            {
+                Search::SdkModel::ISearchQueryPerformer& m_searchQueryPerformer;
+                ExampleAppMessaging::TMessageBus& m_messageBus;
+                Eegeo::Helpers::TCallback1<PerformedSearchMessageHandler, const PerformedSearchMessage&> m_handlePerformedSearchMessageBinding;
 
-			void HandleReceivedPerformedSearchMessage(const PerformedSearchMessage& message);
+                void OnPerformedSearchMessage(const PerformedSearchMessage& message);
 
-		public:
-			PerformedSearchMessageHandler(
-			    Search::ISearchQueryPerformer& searchQueryPerformer,
-			    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus);
+            public:
+                PerformedSearchMessageHandler(
+                    Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
+                    ExampleAppMessaging::TMessageBus& messageBus);
 
-			~PerformedSearchMessageHandler();
-		};
-	}
+                ~PerformedSearchMessageHandler();
+            };
+        }
+    }
 }

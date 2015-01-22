@@ -1,22 +1,26 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
 #import <UIKit/UIKit.h>
 #include "AppRunner.h"
-#include "MenuViewController.h"
 #include "MenuView.h"
+#include "SearchResultMenuViewInterop.h"
 
 @class SearchResultMenuView;
 
-@interface SearchResultMenuView : MenuView
+@interface SearchResultMenuView : MenuView<UIGestureRecognizerDelegate>
 {
-	__weak MenuViewController* m_pController;
+    ExampleApp::SearchResultMenu::View::SearchResultMenuViewInterop* m_pSearchInterop;
 }
 
-- (id) setController:(MenuViewController *)controller;
+- (void)initialiseViews:(size_t)numberOfSections numberOfCells:(size_t)numberOfCells;
+
+- (ExampleApp::SearchResultMenu::View::SearchResultMenuViewInterop*) getSearchInterop;
 
 - (void) updateViewForQuery:(std::string)searchText :(bool)queryPending :(size_t)numResults;
+
+- (void) onClearPressed:(UIButton *) sender;
 
 @property (nonatomic, retain) UIView* pCategory;
 @property (nonatomic, retain) UILabel* pHeading;

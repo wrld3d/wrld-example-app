@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -8,17 +8,20 @@
 
 namespace ExampleApp
 {
-	namespace SearchResultPoi
-	{
-		class SearchResultPoiOpenableControl : public OpenableControlViewModel::OpenableControlViewModelBase, private Eegeo::NonCopyable
-		{
-			Eegeo::Helpers::TIdentity m_identity;
+    namespace SearchResultPoi
+    {
+        namespace View
+        {
+            class SearchResultPoiOpenableControl : public OpenableControl::View::OpenableControlViewModelBase, private Eegeo::NonCopyable
+            {
+                Eegeo::Helpers::TIdentity m_identity;
 
-		public:
-			SearchResultPoiOpenableControl(Eegeo::Helpers::TIdentity identity,
-			                               Reaction::IReactionControllerModel& reactionControllerModel);
+            public:
+                SearchResultPoiOpenableControl(Eegeo::Helpers::TIdentity identity,
+                                               Reaction::View::IReactionControllerModel& reactionControllerModel);
 
-			Eegeo::Helpers::TIdentity GetIdentity() const;
-		};
-	}
+                Eegeo::Helpers::TIdentity GetIdentity() const;
+            };
+        }
+    }
 }

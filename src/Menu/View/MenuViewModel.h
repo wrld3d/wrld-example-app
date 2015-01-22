@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -6,6 +6,7 @@
 #include "IMenuViewModel.h"
 #include "OpenableControlViewModelBase.h"
 #include "ScreenControlViewModelBase.h"
+#include "IMenuSectionViewModel.h"
 #include "IIdentity.h"
 #include "MenuOpenableControl.h"
 #include "MenuScreenControl.h"
@@ -16,70 +17,78 @@
 
 namespace ExampleApp
 {
-	namespace Menu
-	{
-		class MenuViewModel : public IMenuViewModel, private Eegeo::NonCopyable
-		{
-			Eegeo::Helpers::TIdentity m_identity;
-			MenuOpenableControl m_openViewModel;
-			MenuScreenControl m_screenViewModel;
-			MenuSectionsViewModel m_sectionsViewModel;
+    namespace Menu
+    {
+        namespace View
+        {
+            class MenuViewModel : public IMenuViewModel, private Eegeo::NonCopyable
+            {
+                Eegeo::Helpers::TIdentity m_identity;
+                MenuOpenableControl m_openViewModel;
+                MenuScreenControl m_screenViewModel;
+                MenuSectionsViewModel m_sectionsViewModel;
 
-		public:
-			MenuViewModel(bool isInitiallyOnScreen,
-			              Eegeo::Helpers::TIdentity identity,
-			              Reaction::IReactionControllerModel& reactionControllerModel);
+            public:
+                MenuViewModel(bool isInitiallyOnScreen,
+                              Eegeo::Helpers::TIdentity identity,
+                              Reaction::View::IReactionControllerModel& reactionControllerModel);
 
-			Eegeo::Helpers::TIdentity GetIdentity() const;
+                Eegeo::Helpers::TIdentity GetIdentity() const;
 
-			void AddToScreen();
+                void AddToScreen();
 
-			void RemoveFromScreen();
+                void RemoveFromScreen();
 
-			void UpdateOnScreenState(float onScreenState);
+                void UpdateOnScreenState(float onScreenState);
 
-			void InsertOnScreenStateChangedCallback(Eegeo::Helpers::ICallback2<ScreenControlViewModel::IScreenControlViewModel&, float>& callback);
+                void InsertOnScreenStateChangedCallback(Eegeo::Helpers::ICallback2<ScreenControl::View::IScreenControlViewModel&, float>& callback);
 
-			void RemoveOnScreenStateChangedCallback(Eegeo::Helpers::ICallback2<ScreenControlViewModel::IScreenControlViewModel&, float>& callback);
+                void RemoveOnScreenStateChangedCallback(Eegeo::Helpers::ICallback2<ScreenControl::View::IScreenControlViewModel&, float>& callback);
 
-			bool IsFullyOffScreen() const;
+                bool IsFullyOffScreen() const;
 
-			bool IsFullyOnScreen() const;
+                bool IsFullyOnScreen() const;
 
-			float OnScreenState() const;
+                float OnScreenState() const;
 
-			bool HasReactorControl() const;
+                bool HasReactorControl() const;
 
-			bool TryAcquireReactorControl();
+                bool TryAcquireReactorControl();
 
-			void ReleaseReactorControl();
+                void ReleaseReactorControl();
 
-			bool Open();
+                bool Open();
 
-			bool Close();
+                bool Close();
 
-			void UpdateOpenState(float openState);
+                void UpdateOpenState(float openState);
 
-			void InsertOpenStateChangedCallback(Eegeo::Helpers::ICallback2<OpenableControlViewModel::IOpenableControlViewModel&, float>& callback);
+                void InsertOpenStateChangedCallback(Eegeo::Helpers::ICallback2<OpenableControl::View::IOpenableControlViewModel&, float>& callback);
 
-			void RemoveOpenStateChangedCallback(Eegeo::Helpers::ICallback2<OpenableControlViewModel::IOpenableControlViewModel&, float>& callback);
+                void RemoveOpenStateChangedCallback(Eegeo::Helpers::ICallback2<OpenableControl::View::IOpenableControlViewModel&, float>& callback);
 
-			bool IsFullyOpen() const;
+                bool IsFullyOpen() const;
 
-			bool IsFullyClosed() const;
+                bool IsFullyClosed() const;
 
-			float OpenState() const;
+                float OpenState() const;
 
-			void AddSection(IMenuSectionViewModel& section);
-			void RemoveSection(IMenuSectionViewModel& section);
+                void AddSection(IMenuSectionViewModel& section);
+                void RemoveSection(IMenuSectionViewModel& section);
 
-			size_t SectionsCount() const
-			{
-				return m_sectionsViewModel.SectionsCount();
-			}
+                size_t SectionsCount() const
+                {
+                    return m_sectionsViewModel.SectionsCount();
+                }
 
-			IMenuSectionViewModel& GetMenuSection(int index) const;
+                size_t NumberOfCells() const
+                {
+                    return m_sectionsViewModel.NumberOfCells();
+                }
 
-		};
-	}
+                IMenuSectionViewModel& GetMenuSection(int index) const;
+
+            };
+        }
+    }
 }

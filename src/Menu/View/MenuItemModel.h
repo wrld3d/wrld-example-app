@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -7,62 +7,65 @@
 
 namespace ExampleApp
 {
-	namespace Menu
-	{
-		class MenuItemModel
-		{
-		private:
-			std::string m_identifier;
-			std::string m_name;
-			std::string m_details;
-			std::string m_icon;
-			IMenuOption* m_pOption;
+    namespace Menu
+    {
+        namespace View
+        {
+            class MenuItemModel
+            {
+            private:
+                std::string m_identifier;
+                std::string m_name;
+                std::string m_details;
+                std::string m_icon;
+                IMenuOption* m_pOption;
 
-		public:
-			MenuItemModel(const std::string& identifier,
-			              const std::string& name,
-			              const std::string& details,
-			              const std::string& icon,
-			              IMenuOption* pOption);
+            public:
+                MenuItemModel(const std::string& identifier,
+                              const std::string& name,
+                              const std::string& details,
+                              const std::string& icon,
+                              IMenuOption* pOption);
 
-			~MenuItemModel();
+                ~MenuItemModel();
 
-			const std::string& Identifier() const;
+                const std::string& Identifier() const;
 
-			const std::string& Name() const;
+                const std::string& Name() const;
 
-			const std::string& Details() const;
+                const std::string& Details() const;
 
-			const std::string& Icon() const;
+                const std::string& Icon() const;
 
-			std::string SerializeJson() const;
+                std::string SerializeJson() const;
 
-			void Select();
-		};
+                void Select();
+            };
 
-		inline bool operator==(const MenuItemModel& lhs, const MenuItemModel& rhs)
-		{
-			return lhs.Identifier() == rhs.Identifier();
-		}
-		inline bool operator!=(const MenuItemModel& lhs, const MenuItemModel& rhs)
-		{
-			return !operator==(lhs,rhs);
-		}
-		inline bool operator< (const MenuItemModel& lhs, const MenuItemModel& rhs)
-		{
-			return lhs.Identifier() < rhs.Identifier();
-		}
-		inline bool operator> (const MenuItemModel& lhs, const MenuItemModel& rhs)
-		{
-			return  operator< (rhs,lhs);
-		}
-		inline bool operator<=(const MenuItemModel& lhs, const MenuItemModel& rhs)
-		{
-			return !operator> (lhs,rhs);
-		}
-		inline bool operator>=(const MenuItemModel& lhs, const MenuItemModel& rhs)
-		{
-			return !operator< (lhs,rhs);
-		}
-	}
+            inline bool operator==(const MenuItemModel& lhs, const MenuItemModel& rhs)
+            {
+                return lhs.Identifier() == rhs.Identifier();
+            }
+            inline bool operator!=(const MenuItemModel& lhs, const MenuItemModel& rhs)
+            {
+                return !operator==(lhs,rhs);
+            }
+            inline bool operator< (const MenuItemModel& lhs, const MenuItemModel& rhs)
+            {
+                return lhs.Identifier() < rhs.Identifier();
+            }
+            inline bool operator> (const MenuItemModel& lhs, const MenuItemModel& rhs)
+            {
+                return  operator< (rhs,lhs);
+            }
+            inline bool operator<=(const MenuItemModel& lhs, const MenuItemModel& rhs)
+            {
+                return !operator> (lhs,rhs);
+            }
+            inline bool operator>=(const MenuItemModel& lhs, const MenuItemModel& rhs)
+            {
+                return !operator< (lhs,rhs);
+            }
+        }
+    }
 }

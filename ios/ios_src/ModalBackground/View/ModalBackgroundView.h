@@ -1,20 +1,22 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
 #import <UIKit/UIKit.h>
 #include "AppRunner.h"
-#include "ModalBackgroundViewController.h"
+#include "ModalBackgroundViewIncludes.h"
 
 @class ModalBackgroundView;
 
 @interface ModalBackgroundView : UIView
 {
-	__weak ModalBackgroundViewController* m_pController;
-	float m_stateChangeAnimationTimeSeconds;
+    ExampleApp::ModalBackground::View::ModalBackgroundViewInterop* m_pInterop;
+    float m_stateChangeAnimationTimeSeconds;
 }
 
-- (id) initWithController:(ModalBackgroundViewController *)controller;
+- (id)initWithParams:(float)screenWidth :(float)screenHeight;
+
+- (ExampleApp::ModalBackground::View::ModalBackgroundViewInterop*) getInterop;
 
 - (BOOL) consumesTouch:(UITouch *)touch;
 

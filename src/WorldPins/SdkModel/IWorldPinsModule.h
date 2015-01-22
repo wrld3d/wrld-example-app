@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -9,22 +9,25 @@ namespace ExampleApp
 {
     namespace WorldPins
     {
-        class IWorldPinsModule
+        namespace SdkModel
         {
-        public:
-            virtual ~IWorldPinsModule() { }
-            
-            virtual IWorldPinsService& GetWorldPinsService() const = 0;
-            
-            virtual IWorldPinsFactory& GetWorldPinsFactory() const = 0;
-            
-            virtual IWorldPinsScaleController& GetWorldPinsScaleController() const = 0;
-            
-            virtual IWorldPinInFocusViewModel& GetWorldPinInFocusViewModel() const = 0;
+            class IWorldPinsModule
+            {
+            public:
+                virtual ~IWorldPinsModule() { }
 
-            virtual IWorldPinsInFocusController& GetWorldPinsInFocusController() const = 0;
-            
-            virtual ScreenControlViewModel::IScreenControlViewModel& GetScreenControlViewModel() const = 0;
-        };
+                virtual IWorldPinsService& GetWorldPinsService() const = 0;
+
+                virtual IWorldPinsFactory& GetWorldPinsFactory() const = 0;
+
+                virtual IWorldPinsScaleController& GetWorldPinsScaleController() const = 0;
+
+                virtual View::IWorldPinInFocusViewModel& GetWorldPinInFocusViewModel() const = 0;
+
+                virtual IWorldPinsInFocusController& GetWorldPinsInFocusController() const = 0;
+
+                virtual ScreenControl::View::IScreenControlViewModel& GetScreenControlViewModel() const = 0;
+            };
+        }
     }
 }

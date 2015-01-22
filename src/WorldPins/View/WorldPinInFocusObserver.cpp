@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "WorldPinInFocusObserver.h"
 
@@ -6,40 +6,43 @@ namespace ExampleApp
 {
     namespace WorldPins
     {
-        WorldPinInFocusObserver::WorldPinInFocusObserver(IWorldPinInFocusViewModel& worldPinInFocusViewModel,
-                                                         ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus)
-        : m_worldPinInFocusViewModel(worldPinInFocusViewModel)
-        , m_nativeToUiMessageBus(nativeToUiMessageBus)
-        , m_gainedFocusHandler(this, &WorldPinInFocusObserver::HandleReceivedWorldPinGainedFocusMessage)
-        , m_lostFocusHandler(this, &WorldPinInFocusObserver::HandleReceivedWorldPinLostFocusMessage)
-        , m_focusScreenLocationUpdatedHandler(this, &WorldPinInFocusObserver::HandleReceivedWorldPinInFocusChangedLocationMessage)
+        namespace View
         {
-            m_nativeToUiMessageBus.Subscribe(m_gainedFocusHandler);
-            m_nativeToUiMessageBus.Subscribe(m_lostFocusHandler);
-            m_nativeToUiMessageBus.Subscribe(m_focusScreenLocationUpdatedHandler);
-        }
-        
-        WorldPinInFocusObserver::~WorldPinInFocusObserver()
-        {
-            m_nativeToUiMessageBus.Unsubscribe(m_gainedFocusHandler);
-            m_nativeToUiMessageBus.Unsubscribe(m_lostFocusHandler);
-            m_nativeToUiMessageBus.Unsubscribe(m_focusScreenLocationUpdatedHandler);
-        }
-        
-        void WorldPinInFocusObserver::HandleReceivedWorldPinGainedFocusMessage(const WorldPinGainedFocusMessage& message)
-        {
-            m_worldPinInFocusViewModel.Open(message.FocussedModel(), message.ScreenLocation());
-            
-        }
-        
-        void WorldPinInFocusObserver::HandleReceivedWorldPinLostFocusMessage(const WorldPinLostFocusMessage& message)
-        {
-            m_worldPinInFocusViewModel.Close();
-        }
-        
-        void WorldPinInFocusObserver::HandleReceivedWorldPinInFocusChangedLocationMessage(const WorldPinInFocusChangedLocationMessage& message)
-        {
-            m_worldPinInFocusViewModel.UpdateScreenLocation(message.ScreenLocation());
+            WorldPinInFocusObserver::WorldPinInFocusObserver(IWorldPinInFocusViewModel& worldPinInFocusViewModel,
+                    ExampleAppMessaging::TMessageBus& messageBus)
+                : m_worldPinInFocusViewModel(worldPinInFocusViewModel)
+                , m_messageBus(messageBus)
+                , m_gainedFocusHandler(this, &WorldPinInFocusObserver::OnWorldPinGainedFocusMessage)
+                , m_lostFocusHandler(this, &WorldPinInFocusObserver::OnWorldPinLostFocusMessage)
+                , m_focusScreenLocationUpdatedHandler(this, &WorldPinInFocusObserver::OnWorldPinInFocusChangedLocationMessage)
+            {
+                m_messageBus.SubscribeUi(m_gainedFocusHandler);
+                m_messageBus.SubscribeUi(m_lostFocusHandler);
+                m_messageBus.SubscribeUi(m_focusScreenLocationUpdatedHandler);
+            }
+
+            WorldPinInFocusObserver::~WorldPinInFocusObserver()
+            {
+                m_messageBus.UnsubscribeUi(m_gainedFocusHandler);
+                m_messageBus.UnsubscribeUi(m_lostFocusHandler);
+                m_messageBus.UnsubscribeUi(m_focusScreenLocationUpdatedHandler);
+            }
+
+            void WorldPinInFocusObserver::OnWorldPinGainedFocusMessage(const WorldPinGainedFocusMessage& message)
+            {
+                m_worldPinInFocusViewModel.Open(message.FocussedModel(), message.ScreenLocation());
+
+            }
+
+            void WorldPinInFocusObserver::OnWorldPinLostFocusMessage(const WorldPinLostFocusMessage& message)
+            {
+                m_worldPinInFocusViewModel.Close();
+            }
+
+            void WorldPinInFocusObserver::OnWorldPinInFocusChangedLocationMessage(const WorldPinInFocusChangedLocationMessage& message)
+            {
+                m_worldPinInFocusViewModel.UpdateScreenLocation(message.ScreenLocation());
+            }
         }
     }
 }

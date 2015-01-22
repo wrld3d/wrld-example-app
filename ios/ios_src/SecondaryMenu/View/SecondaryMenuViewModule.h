@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -8,32 +8,35 @@
 #include "Rendering.h"
 #include "Modality.h"
 #include "Search.h"
-#include "NativeToUiMessageBus.h"
+#include "BidirectionalBus.h"
+#include "SecondaryMenuController.h"
+#include "CustomTableDataProvider.h"
 
 namespace ExampleApp
 {
-	namespace SecondaryMenu
-	{
-		class SecondaryMenuViewModule: public ISecondaryMenuViewModule, private Eegeo::NonCopyable
-		{
-		private:
-			MenuViewController* m_pMenuViewController;
-			SearchViewController* m_pSearchViewController;
-			SecondaryMenuView* m_pView;
+    namespace SecondaryMenu
+    {
+        namespace View
+        {
+            class SecondaryMenuViewModule: public ISecondaryMenuViewModule, private Eegeo::NonCopyable
+            {
+            private:
+                SecondaryMenuController* m_pController;
+                SecondaryMenuView* m_pView;
+                CustomTableDataProvider* m_pDataProvider;
 
-		public:
-			SecondaryMenuViewModule(Menu::IMenuModel& secondaryMenuModel,
-			                        Menu::IMenuViewModel& secondaryMenuViewModel,
-			                        const Eegeo::Rendering::ScreenProperties& screenProperties,
-			                        Modality::IModalityModel& modalityModel,
-			                        Search::ISearchQueryPerformer& searchQueryPerformer,
-			                        ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus);
+            public:
+                SecondaryMenuViewModule(Menu::View::IMenuModel& secondaryMenuModel,
+                                        Menu::View::IMenuViewModel& secondaryMenuViewModel,
+                                        const Eegeo::Rendering::ScreenProperties& screenProperties,
+                                        ExampleAppMessaging::TMessageBus& messageBus);
 
-			~SecondaryMenuViewModule();
+                ~SecondaryMenuViewModule();
 
-			MenuViewController& GetSecondaryMenuViewController() const;
+                Menu::View::MenuController& GetMenuController() const;
 
-			SecondaryMenuView& GetSecondaryMenuView() const;
-		};
-	}
+                SecondaryMenuView& GetSecondaryMenuView() const;
+            };
+        }
+    }
 }

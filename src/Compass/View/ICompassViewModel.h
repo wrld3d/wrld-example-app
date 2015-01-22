@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -7,18 +7,15 @@
 
 namespace ExampleApp
 {
-	namespace Compass
-	{
-		class ICompassViewModel : public ScreenControlViewModel::IScreenControlViewModel
-		{
-		public:
-			virtual ~ICompassViewModel() { }
-
-			//virtual void UpdateHeadingAngleRadians(float headingRadians) = 0;
-
-			//virtual void InsertUpdateCallback(Eegeo::Helpers::ICallback1<float>& updateCallback) = 0;
-
-			//virtual void RemoveUpdateCallback(Eegeo::Helpers::ICallback1<float>& updateCallback) = 0;
-		};
-	}
+    namespace Compass
+    {
+        namespace View
+        {
+            class ICompassViewModel : public ScreenControl::View::IScreenControlViewModel
+            {
+            public:
+                virtual ~ICompassViewModel() { }
+            };
+        }
+    }
 }

@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include <vector>
 #include <string>
@@ -9,16 +9,19 @@
 
 namespace ExampleApp
 {
-	namespace CategorySearch
-	{
-		class CategorySearchRepository : public ICategorySearchRepository, private Eegeo::NonCopyable
-		{
-			std::vector<CategorySearchModel> m_models;
+    namespace CategorySearch
+    {
+        namespace View
+        {
+            class CategorySearchRepository : public ICategorySearchRepository, private Eegeo::NonCopyable
+            {
+                std::vector<CategorySearchModel> m_models;
 
-		public:
-			CategorySearchRepository(const std::vector<CategorySearchModel>& models);
+            public:
+                CategorySearchRepository(const std::vector<CategorySearchModel>& models);
 
-			bool TryGetCategorySearchNameByQuery(const std::string& query, std::string& out_name) const;
-		};
-	}
+                bool TryGetCategorySearchNameByQuery(const std::string& query, std::string& out_name) const;
+            };
+        }
+    }
 }

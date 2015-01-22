@@ -1,19 +1,24 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
+#include "Compass.h"
+
 namespace ExampleApp
 {
-	namespace Compass
-	{
-		class ICompassViewModule
-		{
-		public:
+    namespace Compass
+    {
+        namespace View
+        {
+            class ICompassViewModule
+            {
+            public:
 
-			virtual ~ICompassViewModule() { }
+                virtual ~ICompassViewModule() { }
 
-			virtual CompassViewController& GetCompassViewController() const = 0;
-			virtual CompassView& GetCompassView() const = 0;
-		};
-	}
+                virtual CompassController& GetCompassController() const = 0;
+                virtual CompassView& GetCompassView() const = 0;
+            };
+        }
+    }
 }

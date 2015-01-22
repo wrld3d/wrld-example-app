@@ -1,30 +1,32 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
 #import <UIKit/UIKit.h>
-#include "MyPinCreationConfirmationViewController.h"
+#include "MyPinCreationConfirmationViewIncludes.h"
 
 @class MyPinCreationConfirmationView;
 
 @interface MyPinCreationConfirmationView : UIView
 {
-    __weak MyPinCreationConfirmationViewController* m_pController;
-    
+    ExampleApp::MyPinCreation::View::MyPinCreationConfirmationViewInterop* m_pInterop;
+
     float m_width;
     float m_height;
-    
+
     float m_screenWidth;
     float m_screenHeight;
     float m_pixelScale;
-    
+
     float m_yPosActive;
     float m_yPosInactive;
-    
+
     float m_stateChangeAnimationTimeSeconds;
 }
 
-- (id) initWithParams:(MyPinCreationConfirmationViewController *)controller :(float)width :(float)height :(float)pixelScale;
+- (id) initWithParams:(float)width :(float)height :(float)pixelScale;
+
+- (ExampleApp::MyPinCreation::View::MyPinCreationConfirmationViewInterop*) getInterop;
 
 - (BOOL)consumesTouch:(UITouch *)touch;
 

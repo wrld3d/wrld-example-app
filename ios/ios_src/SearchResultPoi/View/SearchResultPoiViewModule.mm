@@ -1,31 +1,37 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "SearchResultPoiViewModule.h"
 #include "ISearchResultPoiViewModel.h"
-#include "SearchResultPoiViewController.h"
+#include "SearchResultPoiView.h"
+#include "SearchResultPoiController.h"
 
 namespace ExampleApp
 {
-	namespace SearchResultPoi
-	{
-		SearchResultPoiViewModule::SearchResultPoiViewModule(ISearchResultPoiViewModel& searchResultPoiViewModel)
-		{
-			m_pSearchResultPoiViewController = [[SearchResultPoiViewController alloc] initWithParams :&searchResultPoiViewModel];
-		}
+    namespace SearchResultPoi
+    {
+        namespace View
+        {
+            SearchResultPoiViewModule::SearchResultPoiViewModule(ISearchResultPoiViewModel& searchResultPoiViewModel)
+            {
+                m_pView = [[SearchResultPoiView alloc] initWithoutParams];
+                m_pController = Eegeo_NEW(SearchResultPoiController)(*[m_pView getInterop], searchResultPoiViewModel);
+            }
 
-		SearchResultPoiViewModule::~SearchResultPoiViewModule()
-		{
-			[m_pSearchResultPoiViewController release];
-		}
+            SearchResultPoiViewModule::~SearchResultPoiViewModule()
+            {
+                Eegeo_DELETE m_pController;
+                [m_pView release];
+            }
 
-		SearchResultPoiViewController& SearchResultPoiViewModule::GetSearchResultPoiViewController() const
-		{
-			return *m_pSearchResultPoiViewController;
-		}
+            SearchResultPoiController& SearchResultPoiViewModule::GetController() const
+            {
+                return *m_pController;
+            }
 
-		SearchResultPoiView& SearchResultPoiViewModule::GetSearchResultPoiView() const
-		{
-			return *[m_pSearchResultPoiViewController pSearchResultPoiView];
-		}
-	}
+            SearchResultPoiView& SearchResultPoiViewModule::GetView() const
+            {
+                return *m_pView;
+            }
+        }
+    }
 }

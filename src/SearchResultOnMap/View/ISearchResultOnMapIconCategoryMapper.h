@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -6,14 +6,17 @@
 
 namespace ExampleApp
 {
-	namespace SearchResultOnMap
-	{
-		class ISearchResultOnMapIconCategoryMapper
-		{
-		public:
-			virtual ~ISearchResultOnMapIconCategoryMapper() { }
+    namespace SearchResultOnMap
+    {
+        namespace View
+        {
+            class ISearchResultOnMapIconCategoryMapper
+            {
+            public:
+                virtual ~ISearchResultOnMapIconCategoryMapper() { }
 
-			virtual int GetIconIndexFromSearchResult(const Search::SearchResultModel& searchResultModel) const = 0;
-		};
-	}
+                virtual int GetIconIndexFromSearchResult(const Search::SdkModel::SearchResultModel& searchResultModel) const = 0;
+            };
+        }
+    }
 }

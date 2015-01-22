@@ -1,19 +1,25 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
+
+#include "MyPinCreation.h"
+#include "MyPinCreationInitiationViewIncludes.h"
 
 namespace ExampleApp
 {
     namespace MyPinCreation
     {
-        class IMyPinCreationInitiationViewModule
+        namespace View
         {
-        public:
-            
-            virtual ~IMyPinCreationInitiationViewModule() { }
-            
-            virtual MyPinCreationInitiationViewController& GetMyPinCreationInitiationViewController() const = 0;
-            virtual MyPinCreationInitiationView& GetMyPinCreationInitiationView() const = 0;
-        };
+            class IMyPinCreationInitiationViewModule
+            {
+            public:
+
+                virtual ~IMyPinCreationInitiationViewModule() { }
+
+                virtual MyPinCreationInitiationController& GetMyPinCreationInitiationController() const = 0;
+                virtual MyPinCreationInitiationView& GetMyPinCreationInitiationView() const = 0;
+            };
+        }
     }
 }

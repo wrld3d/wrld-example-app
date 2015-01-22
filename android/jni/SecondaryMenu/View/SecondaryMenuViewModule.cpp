@@ -1,48 +1,60 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "AndroidNativeState.h"
 #include "Menu.h"
 #include "SecondaryMenuViewModule.h"
-#include "SecondaryMenuViewController.h"
+#include "SecondaryMenuController.h"
+#include "SecondaryMenuView.h"
 #include "AndroidAppThreadAssertionMacros.h"
 
 namespace ExampleApp
 {
-	namespace SecondaryMenu
-	{
-		SecondaryMenuViewModule::SecondaryMenuViewModule(
-		    const std::string& viewName,
-		    AndroidNativeState& nativeState,
-		    Menu::IMenuModel& menuModel,
-		    Menu::IMenuViewModel& menuViewModel,
-		    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
-		    ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus
-		)
-		{
-			ASSERT_UI_THREAD
+    namespace SecondaryMenu
+    {
+        namespace View
+        {
+            SecondaryMenuViewModule::SecondaryMenuViewModule(
+                const std::string& viewName,
+                AndroidNativeState& nativeState,
+                Menu::View::IMenuModel& menuModel,
+                Menu::View::IMenuViewModel& menuViewModel,
+                ExampleAppMessaging::TMessageBus& messageBus
+            )
+            {
+                ASSERT_UI_THREAD
 
-			m_pMenuViewController = Eegeo_NEW(SecondaryMenuViewController)(
-			                            viewName,
-			                            nativeState,
-			                            menuModel,
-			                            menuViewModel,
-			                            uiToNativeMessageBus,
-			                            nativeToUiMessageBus
-			                        );
-		}
+                SecondaryMenuView* view = Eegeo_NEW(SecondaryMenuView)(nativeState, viewName);
+                m_pView = view;
 
-		SecondaryMenuViewModule::~SecondaryMenuViewModule()
-		{
-			ASSERT_UI_THREAD
+                m_pController = Eegeo_NEW(SecondaryMenuController)(
+                                    *view,
+                                    *view,
+                                    menuModel,
+                                    menuViewModel,
+                                    messageBus
+                                );
+            }
 
-			Eegeo_DELETE m_pMenuViewController;
-		}
+            SecondaryMenuViewModule::~SecondaryMenuViewModule()
+            {
+                ASSERT_UI_THREAD
 
-		Menu::IMenuViewController& SecondaryMenuViewModule::GetMenuViewController() const
-		{
-			ASSERT_UI_THREAD
+                Eegeo_DELETE m_pController;
+                Eegeo_DELETE m_pView;
+            }
 
-			return *m_pMenuViewController;
-		}
-	}
+            Menu::View::MenuController& SecondaryMenuViewModule::GetMenuController() const
+            {
+                ASSERT_UI_THREAD
+
+                return *m_pController;
+            }
+
+            Menu::View::IMenuView& SecondaryMenuViewModule::GetMenuView() const
+            {
+                ASSERT_UI_THREAD
+                return *m_pView;
+            }
+        }
+    }
 }

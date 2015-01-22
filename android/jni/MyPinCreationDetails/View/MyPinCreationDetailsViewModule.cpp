@@ -1,32 +1,36 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "MyPinCreationDetailsViewModule.h"
-#include "MyPinCreationDetailsViewController.h"
+#include "MyPinCreationDetailsView.h"
+#include "MyPinCreationDetailsController.h"
 
 namespace ExampleApp
 {
     namespace MyPinCreationDetails
     {
-    	MyPinCreationDetailsViewModule::MyPinCreationDetailsViewModule(
-            	AndroidNativeState& nativeState,
-            	MyPinCreation::IMyPinCreationModel& model,
-            	MyPinCreationDetails::IMyPinCreationDetailsViewModel& viewModel,
-			    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
-			    Eegeo::Web::IConnectivityService& connectivityService
+        namespace View
+        {
+            MyPinCreationDetailsViewModule::MyPinCreationDetailsViewModule(
+                AndroidNativeState& nativeState,
+                MyPinCreationDetails::View::IMyPinCreationDetailsViewModel& viewModel,
+                Eegeo::Web::IConnectivityService& connectivityService,
+                ExampleAppMessaging::TMessageBus& messageBus
             )
-    	{
-    		m_pViewController = Eegeo_NEW(MyPinCreationDetailsViewController)(
-    				nativeState,
-    				model,
-    				viewModel,
-    				uiToNativeMessageBus,
-    				connectivityService
-    			);
-    	}
+            {
+                m_pView = Eegeo_NEW(MyPinCreationDetailsView)(nativeState);
 
-    	MyPinCreationDetailsViewModule::~MyPinCreationDetailsViewModule()
-    	{
-    		Eegeo_DELETE m_pViewController;
-    	}
+                m_pController = Eegeo_NEW(MyPinCreationDetailsController)(*m_pView,
+                                viewModel,
+                                connectivityService,
+                                messageBus
+                                                                         );
+            }
+
+            MyPinCreationDetailsViewModule::~MyPinCreationDetailsViewModule()
+            {
+                Eegeo_DELETE m_pController;
+                Eegeo_DELETE m_pView;
+            }
+        }
     }
 }

@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "MyPinCreationCompositeViewModel.h"
 #include "IMyPinCreationInitiationViewModel.h"
@@ -12,59 +12,57 @@ namespace ExampleApp
 {
     namespace MyPinCreation
     {
-        MyPinCreationCompositeViewModel::MyPinCreationCompositeViewModel(ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus,
-        															 ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
-                                                                     IMyPinCreationInitiationViewModel& initiationViewModel,
-                                                                     IMyPinCreationConfirmationViewModel& confirmationViewModel,
-                                                                     ExampleApp::Menu::IMenuViewModel& primaryMenuViewModel,
-                                                                     ExampleApp::Menu::IMenuViewModel& secondaryMenuViewModel,
-                                                                     ExampleApp::Search::ISearchQueryPerformer& searchQueryPerformer,
-                                                                     ExampleApp::Menu::IMenuViewModel& searchResultMenuViewModel)
-        : m_stateChangeHandler(this, &MyPinCreationCompositeViewModel::OnPoiRingStateChanged)
-        , m_searchResultMenuStateChangedCallback(this, &MyPinCreationCompositeViewModel::HandleSearchResultMenuStateChanged)
-        , m_nativeToUiMessageBus(nativeToUiMessageBus)
-        , m_uiToNativeMessageBus(uiToNativeMessageBus)
-        , m_initiationViewModel(initiationViewModel)
-        , m_confirmationViewModel(confirmationViewModel)
-        , m_primaryMenuViewModel(primaryMenuViewModel)
-        , m_secondaryMenuViewModel(secondaryMenuViewModel)
-        , m_searchQueryPerformer(searchQueryPerformer)
-        , m_searchResultMenuViewModel(searchResultMenuViewModel)
+        namespace View
         {
-            m_nativeToUiMessageBus.Subscribe(m_stateChangeHandler);
-            m_searchResultMenuViewModel.InsertOnScreenStateChangedCallback(m_searchResultMenuStateChangedCallback);
-        }
-        
-        MyPinCreationCompositeViewModel::~MyPinCreationCompositeViewModel()
-        {
-            m_nativeToUiMessageBus.Unsubscribe(m_stateChangeHandler);
-            m_searchResultMenuViewModel.RemoveOnScreenStateChangedCallback(m_searchResultMenuStateChangedCallback);
-        }
-        
-        void MyPinCreationCompositeViewModel::OnPoiRingStateChanged(const ExampleApp::MyPinCreation::MyPinCreationStateChangedMessage &message)
-        {
-            switch (message.GetMyPinCreationStage())
+            MyPinCreationCompositeViewModel::MyPinCreationCompositeViewModel(ExampleAppMessaging::TMessageBus& messageBus,
+                    IMyPinCreationInitiationViewModel& initiationViewModel,
+                    IMyPinCreationConfirmationViewModel& confirmationViewModel,
+                    ExampleApp::Menu::View::IMenuViewModel& primaryMenuViewModel,
+                    ExampleApp::Menu::View::IMenuViewModel& secondaryMenuViewModel,
+                    ExampleApp::Menu::View::IMenuViewModel& searchResultMenuViewModel)
+                : m_stateChangeHandler(this, &MyPinCreationCompositeViewModel::OnPoiRingStateChangedMessage)
+                , m_searchResultMenuStateChangedCallback(this, &MyPinCreationCompositeViewModel::HandleSearchResultMenuStateChanged)
+                , m_messageBus(messageBus)
+                , m_initiationViewModel(initiationViewModel)
+                , m_confirmationViewModel(confirmationViewModel)
+                , m_primaryMenuViewModel(primaryMenuViewModel)
+                , m_secondaryMenuViewModel(secondaryMenuViewModel)
+                , m_searchResultMenuViewModel(searchResultMenuViewModel)
             {
+                m_messageBus.SubscribeUi(m_stateChangeHandler);
+                m_searchResultMenuViewModel.InsertOnScreenStateChangedCallback(m_searchResultMenuStateChangedCallback);
+            }
+
+            MyPinCreationCompositeViewModel::~MyPinCreationCompositeViewModel()
+            {
+                m_messageBus.UnsubscribeUi(m_stateChangeHandler);
+                m_searchResultMenuViewModel.RemoveOnScreenStateChangedCallback(m_searchResultMenuStateChangedCallback);
+            }
+
+            void MyPinCreationCompositeViewModel::OnPoiRingStateChangedMessage(const ExampleApp::MyPinCreation::MyPinCreationStateChangedMessage &message)
+            {
+                switch (message.GetMyPinCreationStage())
+                {
                 case Inactive:
                 {
                     m_initiationViewModel.AddToScreen();
                     m_primaryMenuViewModel.AddToScreen();
                     m_secondaryMenuViewModel.AddToScreen();
                     m_searchResultMenuViewModel.AddToScreen();
-                    m_uiToNativeMessageBus.Publish(WorldPins::WorldPinsVisibilityMessage(true));
-                    
+                    m_messageBus.Publish(WorldPins::WorldPinsVisibilityMessage(true));
+
                     m_confirmationViewModel.RemoveFromScreen();
                     break;
                 }
                 case Ring:
                 {
                     m_confirmationViewModel.AddToScreen();
-                    
+
                     m_initiationViewModel.RemoveFromScreen();
                     m_primaryMenuViewModel.RemoveFromScreen();
                     m_secondaryMenuViewModel.RemoveFromScreen();
-                    
-                    m_uiToNativeMessageBus.Publish(WorldPins::WorldPinsVisibilityMessage(false));
+
+                    m_messageBus.Publish(WorldPins::WorldPinsVisibilityMessage(false));
                     m_searchResultMenuViewModel.RemoveFromScreen();
                     break;
                 }
@@ -72,28 +70,29 @@ namespace ExampleApp
                 {
                     break;
                 }
-                    
+
                 default:
                 {
                     Eegeo_ASSERT(false, "Invalid MyPinCreationStage");
                 }
-        
+
+                }
             }
-        }
-        
-        void MyPinCreationCompositeViewModel::HandleSearchResultMenuStateChanged(ScreenControlViewModel::IScreenControlViewModel& viewModel, float& onScreenState)
-        {
-            if (viewModel.IsFullyOnScreen())
+
+            void MyPinCreationCompositeViewModel::HandleSearchResultMenuStateChanged(ScreenControl::View::IScreenControlViewModel& viewModel, float& onScreenState)
             {
-                m_initiationViewModel.SetShouldOffsetViewButton(true);
-                m_initiationViewModel.AddToScreen();
-            }
-            else
-            {
-                m_initiationViewModel.SetShouldOffsetViewButton(false);
-                if (m_initiationViewModel.IsFullyOnScreen())
+                if (viewModel.IsFullyOnScreen())
                 {
+                    m_initiationViewModel.SetShouldOffsetViewButton(true);
                     m_initiationViewModel.AddToScreen();
+                }
+                else
+                {
+                    m_initiationViewModel.SetShouldOffsetViewButton(false);
+                    if (m_initiationViewModel.IsFullyOnScreen())
+                    {
+                        m_initiationViewModel.AddToScreen();
+                    }
                 }
             }
         }

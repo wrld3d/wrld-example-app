@@ -1,27 +1,30 @@
-//  Copyright (c) 2014 eeGeo. All rights reserved.
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "SearchResultViewClearedObserver.h"
 
 namespace ExampleApp
 {
-	namespace SearchResultMenu
-	{
-		SearchResultViewClearedObserver::SearchResultViewClearedObserver(Search::ISearchQueryPerformer& searchQueryPerformer,
-										ExampleApp::ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus)
-			: m_searchQueryPerformer(searchQueryPerformer)
-			, m_uiToNativeMessageBus(uiToNativeMessageBus)
-			, m_handler(this, &SearchResultViewClearedObserver::OnSearchResultViewCleared)
-		{
-			m_uiToNativeMessageBus.Subscribe(m_handler);
-		}
+    namespace SearchResultMenu
+    {
+        namespace SdkModel
+        {
+            SearchResultViewClearedObserver::SearchResultViewClearedObserver(Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
+                    ExampleAppMessaging::TMessageBus& messageBus)
+                : m_searchQueryPerformer(searchQueryPerformer)
+                , m_messageBus(messageBus)
+                , m_handler(this, &SearchResultViewClearedObserver::OnSearchResultViewClearedMessage)
+            {
+                m_messageBus.SubscribeNative(m_handler);
+            }
 
-		SearchResultViewClearedObserver::~SearchResultViewClearedObserver()
-		{
-			m_uiToNativeMessageBus.Unsubscribe(m_handler);
-		}
-		void SearchResultViewClearedObserver::OnSearchResultViewCleared(const SearchResultViewClearedMessage& message)
-		{
-			m_searchQueryPerformer.RemoveSearchQueryResults();
-		}
-	}
+            SearchResultViewClearedObserver::~SearchResultViewClearedObserver()
+            {
+                m_messageBus.UnsubscribeNative(m_handler);
+            }
+            void SearchResultViewClearedObserver::OnSearchResultViewClearedMessage(const SearchResultViewClearedMessage& message)
+            {
+                m_searchQueryPerformer.RemoveSearchQueryResults();
+            }
+        }
+    }
 }

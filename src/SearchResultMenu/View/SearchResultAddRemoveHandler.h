@@ -1,10 +1,9 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
 #include "Types.h"
-#include "NativeToUiMessageBus.h"
-#include "UiToNativeMessageBus.h"
+#include "BidirectionalBus.h"
 #include "ICallback.h"
 #include "SearchResultMenuItemSelectedMessage.h"
 #include "IMenuOptionsModel.h"
@@ -16,30 +15,31 @@
 
 namespace ExampleApp
 {
-	namespace SearchResultMenu
-	{
-		class SearchResultAddRemoveHandler : private Eegeo::NonCopyable
-		{
-			Menu::IMenuOptionsModel& m_menuOptions;
-			Menu::IMenuViewModel& m_menuViewModel;
-			ExampleAppMessaging::NativeToUiMessageBus& m_nativeToUiMessageBus;
-			ExampleAppMessaging::UiToNativeMessageBus& m_uiToNativeMessageBus;
+    namespace SearchResultMenu
+    {
+        namespace View
+        {
+            class SearchResultAddRemoveHandler : private Eegeo::NonCopyable
+            {
+                Menu::View::IMenuOptionsModel& m_menuOptions;
+                Menu::View::IMenuViewModel& m_menuViewModel;
+                ExampleAppMessaging::TMessageBus& m_messageBus;
 
-			Eegeo::Helpers::TCallback1<SearchResultAddRemoveHandler, const SearchResultAddedMessage&> m_handleSearchResultAddedMessageBinding;
-			Eegeo::Helpers::TCallback1<SearchResultAddRemoveHandler, const SearchResultRemovedMessage&> m_handleSearchResultRemovedMessageBinding;
+                Eegeo::Helpers::TCallback1<SearchResultAddRemoveHandler, const SearchResultAddedMessage&> m_handleSearchResultAddedMessageBinding;
+                Eegeo::Helpers::TCallback1<SearchResultAddRemoveHandler, const SearchResultRemovedMessage&> m_handleSearchResultRemovedMessageBinding;
 
-			void HandleSearchResultAddedMessage(const SearchResultAddedMessage& message);
+                void OnSearchResultAddedMessage(const SearchResultAddedMessage& message);
 
-			void HandleSearchResultRemovedMessage(const SearchResultRemovedMessage& message);
+                void OnSearchResultRemovedMessage(const SearchResultRemovedMessage& message);
 
-		public:
-			SearchResultAddRemoveHandler(
-			    Menu::IMenuOptionsModel& menuOptions,
-			    Menu::IMenuViewModel& menuViewModel,
-			    ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus,
-			    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus);
+            public:
+                SearchResultAddRemoveHandler(
+                    Menu::View::IMenuOptionsModel& menuOptions,
+                    Menu::View::IMenuViewModel& menuViewModel,
+                    ExampleAppMessaging::TMessageBus& messageBus);
 
-			~SearchResultAddRemoveHandler();
-		};
-	}
+                ~SearchResultAddRemoveHandler();
+            };
+        }
+    }
 }

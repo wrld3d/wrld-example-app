@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -18,49 +18,50 @@
 #include "MyPinCreationModelObserver.h"
 #include "MyPinCreationViewStateChangedHandler.h"
 #include "MyPinCreationViewSavePinHandler.h"
-#include "NativeToUiMessageBus.h"
-#include "UiToNativeMessageBus.h"
+#include "BidirectionalBus.h"
 #include "IReactionControllerModel.h"
 
 namespace ExampleApp
 {
     namespace MyPinCreation
     {
-        class MyPinCreationModule : public IMyPinCreationModule
+        namespace SdkModel
         {
-        public:
-            MyPinCreationModule(MyPins::IMyPinsService& myPinsService,
-                              Eegeo::Helpers::IIdentityProvider& identityProvider,
-                              ExampleApp::Menu::IMenuViewModel& primaryMenuViewModel,
-                              ExampleApp::Menu::IMenuViewModel& secondaryMenuViewModel,
-                              ExampleApp::Search::ISearchQueryPerformer& searchQueryPerformer,
-                              ExampleApp::Menu::IMenuViewModel& searchResultMenuViewModel,
-                              Search::ISearchRefreshService& searchRefreshService,
-                              ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus,
-                              ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
-                              ExampleApp::Reaction::IReactionControllerModel& reactionControllerModel);
-            
-            ~MyPinCreationModule();
-            
-            IMyPinCreationModel& GetMyPinCreationModel() const;
-            IMyPinCreationInitiationViewModel& GetMyPinCreationInitiationViewModel() const;
-            IMyPinCreationConfirmationViewModel& GetMyPinCreationConfirmationViewModel() const;
-            IMyPinCreationCompositeViewModel& GetMyPinCreationCompositeViewModel() const;
-            
-            ScreenControlViewModel::IScreenControlViewModel& GetInitiationScreenControlViewModel() const;
-            ScreenControlViewModel::IScreenControlViewModel& GetConfirmationScreenControlViewModel() const;
+            class MyPinCreationModule : public IMyPinCreationModule
+            {
+            public:
+                MyPinCreationModule(MyPins::SdkModel::IMyPinsService& myPinsService,
+                                    Eegeo::Helpers::IIdentityProvider& identityProvider,
+                                    ExampleApp::Menu::View::IMenuViewModel& primaryMenuViewModel,
+                                    ExampleApp::Menu::View::IMenuViewModel& secondaryMenuViewModel,
+                                    Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
+                                    ExampleApp::Menu::View::IMenuViewModel& searchResultMenuViewModel,
+                                    Search::SdkModel::ISearchRefreshService& searchRefreshService,
+                                    ExampleAppMessaging::TMessageBus& messageBus,
+                                    Reaction::View::IReactionControllerModel& reactionControllerModel);
 
-            OpenableControlViewModel::IOpenableControlViewModel& GetObservableOpenableControl() const;
-            
-        private:
-    
-            MyPinCreationModel* m_pMyPinCreationModel;
-            MyPinCreationInitiationViewModel* m_pMyPinCreationInitiationViewModel;
-            MyPinCreationConfirmationViewModel* m_pMyPinCreationConfirmationViewModel;
-            MyPinCreationCompositeViewModel* m_pMyPinCreationCompositeViewModel;
-            MyPinCreationModelObserver* m_pMyPinCreationModelObserver;
-            MyPinCreationViewStateChangedHandler* m_pMyPinCreationViewStateChangedHandler;
-            MyPinCreationViewSavePinHandler* m_pMyPinCreationViewSavePinHandler;
-        };
+                ~MyPinCreationModule();
+
+                IMyPinCreationModel& GetMyPinCreationModel() const;
+                View::IMyPinCreationInitiationViewModel& GetMyPinCreationInitiationViewModel() const;
+                View::IMyPinCreationConfirmationViewModel& GetMyPinCreationConfirmationViewModel() const;
+                View::IMyPinCreationCompositeViewModel& GetMyPinCreationCompositeViewModel() const;
+
+                ScreenControl::View::IScreenControlViewModel& GetInitiationScreenControlViewModel() const;
+                ScreenControl::View::IScreenControlViewModel& GetConfirmationScreenControlViewModel() const;
+
+                OpenableControl::View::IOpenableControlViewModel& GetObservableOpenableControl() const;
+
+            private:
+
+                MyPinCreationModel* m_pMyPinCreationModel;
+                View::MyPinCreationInitiationViewModel* m_pMyPinCreationInitiationViewModel;
+                View::MyPinCreationConfirmationViewModel* m_pMyPinCreationConfirmationViewModel;
+                View::MyPinCreationCompositeViewModel* m_pMyPinCreationCompositeViewModel;
+                MyPinCreationModelObserver* m_pMyPinCreationModelObserver;
+                MyPinCreationViewStateChangedHandler* m_pMyPinCreationViewStateChangedHandler;
+                MyPinCreationViewSavePinHandler* m_pMyPinCreationViewSavePinHandler;
+            };
+        }
     }
 }

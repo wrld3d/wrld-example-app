@@ -1,33 +1,42 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "MyPinDetailsViewModule.h"
 #include "IMyPinDetailsViewModel.h"
-#include "MyPinDetailsViewController.h"
+#include "MyPinDetailsController.h"
+#include "MyPinDetailsVIew.h"
+#include "ScreenProperties.h"
+#include "MyPinDetailsViewInterop.h"
 
 namespace ExampleApp
 {
-	namespace MyPinDetails
-	{
-		MyPinDetailsViewModule::MyPinDetailsViewModule(ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
-                                                       IMyPinDetailsViewModel& MyPinDetailsViewModel)
-		{
-			m_pMyPinDetailsViewController = [[MyPinDetailsViewController alloc] initWithParams :&uiToNativeMessageBus
-                                                                                               :&MyPinDetailsViewModel];
-		}
+    namespace MyPinDetails
+    {
+        namespace View
+        {
+            MyPinDetailsViewModule::MyPinDetailsViewModule(ExampleAppMessaging::TMessageBus& messageBus,
+                    IMyPinDetailsViewModel& viewModel, const Eegeo::Rendering::ScreenProperties& screenProperties)
+            {
+                m_pView = [[MyPinDetailsView alloc] initWithParams:screenProperties.GetScreenWidth() :screenProperties.GetScreenHeight()];
 
-		MyPinDetailsViewModule::~MyPinDetailsViewModule()
-		{
-			[m_pMyPinDetailsViewController release];
-		}
+                m_pController = Eegeo_NEW(MyPinDetailsController)(*[m_pView getInterop], viewModel, messageBus);
+            }
 
-		MyPinDetailsViewController& MyPinDetailsViewModule::GetMyPinDetailsViewController() const
-		{
-			return *m_pMyPinDetailsViewController;
-		}
+            MyPinDetailsViewModule::~MyPinDetailsViewModule()
+            {
+                Eegeo_DELETE m_pController;
 
-		MyPinDetailsView& MyPinDetailsViewModule::GetMyPinDetailsView() const
-		{
-			return *[m_pMyPinDetailsViewController pMyPinDetailsView];
-		}
-	}
+                [m_pView release];
+            }
+
+            MyPinDetailsController& MyPinDetailsViewModule::GetMyPinDetailsController() const
+            {
+                return *m_pController;
+            }
+
+            MyPinDetailsView& MyPinDetailsViewModule::GetMyPinDetailsView() const
+            {
+                return *m_pView;
+            }
+        }
+    }
 }

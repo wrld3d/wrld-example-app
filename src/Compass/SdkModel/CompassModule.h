@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -11,40 +11,40 @@
 #include "Location.h"
 #include "CompassModeObserver.h"
 #include "CompassViewCycledObserver.h"
-#include "NativeToUiMessageBus.h"
-#include "UiToNativeMessageBus.h"
+#include "BidirectionalBus.h"
 
 namespace ExampleApp
 {
-	namespace Compass
-	{
-		class CompassModule : public ICompassModule, private Eegeo::NonCopyable
-		{
-		private:
-			CompassViewModel* m_pViewModel;
-			ICompassModel* m_pModel;
-			ICompassUpdateController* m_pCompassUpdateController;
-			CompassModeObserver* m_pCompassModeObserver;
-			CompassViewCycledObserver* m_pCompassViewCycledObserver;
+    namespace Compass
+    {
+        namespace SdkModel
+        {
+            class CompassModule : public ICompassModule, private Eegeo::NonCopyable
+            {
+            private:
+                View::CompassViewModel* m_pViewModel;
+                ICompassModel* m_pModel;
+                ICompassUpdateController* m_pCompassUpdateController;
+                CompassModeObserver* m_pCompassModeObserver;
+                CompassViewCycledObserver* m_pCompassViewCycledObserver;
 
-		public:
-			CompassModule(Eegeo::Location::NavigationService& navigationService,
-			              Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& cameraController,
-			              Eegeo::Helpers::IIdentityProvider& identityProvider,
-			              ExampleApp::ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
-			              ExampleApp::ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus
-			             );
+            public:
+                CompassModule(Eegeo::Location::NavigationService& navigationService,
+                              Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& cameraController,
+                              Eegeo::Helpers::IIdentityProvider& identityProvider,
+                              ExampleAppMessaging::TMessageBus& messageBus
+                             );
 
-			~CompassModule();
+                ~CompassModule();
 
-			ICompassModel& GetCompassModel() const;
+                ICompassModel& GetCompassModel() const;
 
-			ICompassViewModel& GetCompassViewModel() const;
+                View::ICompassViewModel& GetCompassViewModel() const;
 
-			ICompassUpdateController& GetCompassUpdateController() const;
+                ICompassUpdateController& GetCompassUpdateController() const;
 
-			ScreenControlViewModel::IScreenControlViewModel& GetScreenControlViewModel() const;
-		};
-
-	}
+                ScreenControl::View::IScreenControlViewModel& GetScreenControlViewModel() const;
+            };
+        }
+    }
 }

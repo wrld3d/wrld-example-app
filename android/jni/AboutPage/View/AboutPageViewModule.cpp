@@ -1,41 +1,46 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "AboutPageViewModule.h"
 #include "AboutPage.h"
-#include "AboutPageViewController.h"
+#include "AboutPageView.h"
+#include "AboutPageController.h"
 #include "AndroidAppThreadAssertionMacros.h"
 
 namespace ExampleApp
 {
-	namespace AboutPage
-	{
-		AboutPageViewModule::AboutPageViewModule(
-		    AndroidNativeState& nativeState,
-		    AboutPage::IAboutPageModel& aboutPageModel,
-		    AboutPage::IAboutPageViewModel& aboutPageViewModel
-		)
-		{
-			ASSERT_UI_THREAD
+    namespace AboutPage
+    {
+        namespace View
+        {
+            AboutPageViewModule::AboutPageViewModule(
+                AndroidNativeState& nativeState,
+                IAboutPageViewModel& aboutPageViewModel
+            )
+            {
+                ASSERT_UI_THREAD
+                m_pView = Eegeo_NEW(AboutPageView)(nativeState);
+                m_pController = Eegeo_NEW(AboutPageController)(*m_pView, aboutPageViewModel);
+            }
 
-			m_pAboutPageViewController = Eegeo_NEW(AboutPageViewController)(
-			                                 nativeState,
-			                                 aboutPageModel,
-			                                 aboutPageViewModel
-			                             );
-		}
+            AboutPageViewModule::~AboutPageViewModule()
+            {
+                ASSERT_UI_THREAD
 
-		AboutPageViewModule::~AboutPageViewModule()
-		{
-			ASSERT_UI_THREAD
+                Eegeo_DELETE(m_pController);
+                Eegeo_DELETE(m_pView);
+            }
 
-			Eegeo_DELETE(m_pAboutPageViewController);
-		}
+            AboutPageController& AboutPageViewModule::GetAboutPageController() const
+            {
+                ASSERT_UI_THREAD
+                return *m_pController;
+            }
 
-		IAboutPageViewController& AboutPageViewModule::GetAboutPageViewController() const
-		{
-			ASSERT_UI_THREAD
-
-			return *m_pAboutPageViewController;
-		}
-	}
+            AboutPageView& AboutPageViewModule::GetAboutPageView() const
+            {
+                ASSERT_UI_THREAD
+                return *m_pView;
+            }
+        }
+    }
 }

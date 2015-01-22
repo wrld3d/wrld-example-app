@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -8,18 +8,21 @@
 
 namespace ExampleApp
 {
-	namespace WorldAreaLoader
-	{
-		class WorldAreaLoaderModule : public IWorldAreaLoaderModule
-		{
-			IWorldAreaLoaderModel* m_pWorldAreaLoaderModel;
+    namespace WorldAreaLoader
+    {
+        namespace SdkModel
+        {
+            class WorldAreaLoaderModule : public IWorldAreaLoaderModule
+            {
+                IWorldAreaLoaderModel* m_pWorldAreaLoaderModel;
 
-		public:
-			WorldAreaLoaderModule(Eegeo::Web::PrecacheService& precacheService);
+            public:
+                WorldAreaLoaderModule(Eegeo::Web::PrecacheService& precacheService);
 
-			~WorldAreaLoaderModule();
+                ~WorldAreaLoaderModule();
 
-			IWorldAreaLoaderModel& GetWorldAreaLoaderModel() const;
-		};
-	}
+                IWorldAreaLoaderModel& GetWorldAreaLoaderModel() const;
+            };
+        }
+    }
 }

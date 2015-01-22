@@ -1,21 +1,25 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
 #include "MyPinDetailsViewIncludes.h"
+#include "MyPinDetails.h"
 
 namespace ExampleApp
 {
-	namespace MyPinDetails
-	{
-		class IMyPinDetailsViewModule
-		{
-		public:
-			virtual ~IMyPinDetailsViewModule() { }
+    namespace MyPinDetails
+    {
+        namespace View
+        {
+            class IMyPinDetailsViewModule
+            {
+            public:
+                virtual ~IMyPinDetailsViewModule() { }
 
-			virtual MyPinDetailsViewController& GetMyPinDetailsViewController() const = 0;
+                virtual MyPinDetailsController& GetMyPinDetailsController() const = 0;
 
-			virtual MyPinDetailsView& GetMyPinDetailsView() const = 0;
-		};
-	}
+                virtual MyPinDetailsView& GetMyPinDetailsView() const = 0;
+            };
+        }
+    }
 }

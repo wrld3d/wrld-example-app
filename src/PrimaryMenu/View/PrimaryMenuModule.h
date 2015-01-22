@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -16,31 +16,34 @@ namespace ExampleApp
 {
     namespace PrimaryMenu
     {
-        class PrimaryMenuModule: public IPrimaryMenuModule, private Eegeo::NonCopyable
+        namespace View
         {
-        private:
-            Menu::IMenuModel* m_pModel;
-            Menu::IMenuOptionsModel* m_pMenuOptionsModel;
-            Menu::IMenuViewModel* m_pViewModel;
-            
-            std::vector<Menu::IMenuSectionViewModel*> m_sections;
-            
-            Menu::IMenuSectionViewModel* m_pMenuSectionMisc;
-            
-        public:
-            PrimaryMenuModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
-                              AboutPage::IAboutPageViewModel& aboutPageViewModel,
-                              Reaction::IReactionControllerModel& reactionControllerModel);
-            
-            ~PrimaryMenuModule();
-            
-            void AddMenuSection(const std::string& name, const std::string& icon, Menu::IMenuModel& menuModel, bool isExpandable);
-            
-            Menu::IMenuModel& GetPrimaryMenuModel() const;
-            
-            Menu::IMenuOptionsModel& GetPrimaryMenuOptionsModel() const;
-            
-            Menu::IMenuViewModel& GetPrimaryMenuViewModel() const;
-        };
+            class PrimaryMenuModule: public IPrimaryMenuModule, private Eegeo::NonCopyable
+            {
+            private:
+                Menu::View::IMenuModel* m_pModel;
+                Menu::View::IMenuOptionsModel* m_pMenuOptionsModel;
+                Menu::View::IMenuViewModel* m_pViewModel;
+
+                std::vector<Menu::View::IMenuSectionViewModel*> m_sections;
+
+                Menu::View::IMenuSectionViewModel* m_pMenuSectionMisc;
+
+            public:
+                PrimaryMenuModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
+                                  AboutPage::View::IAboutPageViewModel& aboutPageViewModel,
+                                  Reaction::View::IReactionControllerModel& reactionControllerModel);
+
+                ~PrimaryMenuModule();
+
+                void AddMenuSection(const std::string& name, const std::string& icon, Menu::View::IMenuModel& menuModel, bool isExpandable);
+
+                Menu::View::IMenuModel& GetPrimaryMenuModel() const;
+
+                Menu::View::IMenuOptionsModel& GetPrimaryMenuOptionsModel() const;
+
+                Menu::View::IMenuViewModel& GetPrimaryMenuViewModel() const;
+            };
+        }
     }
 }

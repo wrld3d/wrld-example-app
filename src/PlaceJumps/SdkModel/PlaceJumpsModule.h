@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -10,41 +10,43 @@
 #include "IFileIO.h"
 #include "GlobeCamera.h"
 #include "Compass.h"
-#include "UiToNativeMessageBus.h"
+#include "BidirectionalBus.h"
 #include "PlaceJumpSelectedMessageHandler.h"
 
 namespace ExampleApp
 {
-	namespace PlaceJumps
-	{
+    namespace PlaceJumps
+    {
+        namespace SdkModel
+        {
+            class PlaceJumpsModule : public IPlaceJumpsModule, private Eegeo::NonCopyable
+            {
+            public:
 
-		class PlaceJumpsModule : public IPlaceJumpsModule, private Eegeo::NonCopyable
-		{
-		public:
+                PlaceJumpsModule(Eegeo::Helpers::IFileIO& fileIO,
+                                 Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& camera,
+                                 Compass::SdkModel::ICompassModel& compassModel,
+                                 Menu::View::IMenuViewModel& menuViewModel,
+                                 ExampleAppMessaging::TMessageBus& messageBus);
 
-			PlaceJumpsModule(Eegeo::Helpers::IFileIO& fileIO,
-			                 Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& camera,
-			                 Compass::ICompassModel& compassModel,
-			                 ExampleApp::Menu::IMenuViewModel& menuViewModel,
-			                 ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus);
+                ~PlaceJumpsModule();
 
-			~PlaceJumpsModule();
+                Menu::View::IMenuModel& GetPlaceJumpsMenuModel() const
+                {
+                    return *m_pMenuModel;
+                }
+                IPlaceJumpController& GetPlaceJumpController() const
+                {
+                    return *m_pJumpController;
+                }
 
-			Menu::IMenuModel& GetPlaceJumpsMenuModel() const
-			{
-				return *m_pMenuModel;
-			}
-			IPlaceJumpController& GetPlaceJumpController() const
-			{
-				return *m_pJumpController;
-			}
+            private:
 
-		private:
-
-			Menu::IMenuModel* m_pMenuModel;
-			Menu::IMenuOptionsModel* m_pMenuOptionsModel;
-			IPlaceJumpController* m_pJumpController;
-			PlaceJumpSelectedMessageHandler* m_pPlaceJumpSelectedMessageHandler;
-		};
-	}
+                Menu::View::IMenuModel* m_pMenuModel;
+                Menu::View::IMenuOptionsModel* m_pMenuOptionsModel;
+                IPlaceJumpController* m_pJumpController;
+                PlaceJumpSelectedMessageHandler* m_pPlaceJumpSelectedMessageHandler;
+            };
+        }
+    }
 }

@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -8,14 +8,17 @@
 
 namespace ExampleApp
 {
-	namespace SearchResultOnMap
-	{
-		class ISearchResultOnMapModule
-		{
-		public:
-			virtual ~ISearchResultOnMapModule() { }
+    namespace SearchResultOnMap
+    {
+        namespace SdkModel
+        {
+            class ISearchResultOnMapModule
+            {
+            public:
+                virtual ~ISearchResultOnMapModule() { }
 
-			virtual ISearchResultOnMapModel& GetSearchResultOnMapModel() const = 0;
-		};
-	}
+                virtual ISearchResultOnMapModel& GetSearchResultOnMapModel() const = 0;
+            };
+        }
+    }
 }

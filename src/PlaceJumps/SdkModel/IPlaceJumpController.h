@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -8,14 +8,17 @@
 
 namespace ExampleApp
 {
-	namespace PlaceJumps
-	{
-		class IPlaceJumpController
-		{
-		public:
-			virtual ~IPlaceJumpController() { }
+    namespace PlaceJumps
+    {
+        namespace SdkModel
+        {
+            class IPlaceJumpController
+            {
+            public:
+                virtual ~IPlaceJumpController() { }
 
-			virtual void JumpTo(IPlaceJumpModel& jumpModel) = 0;
-		};
-	}
+                virtual void JumpTo(View::IPlaceJumpModel& jumpModel) = 0;
+            };
+        }
+    }
 }

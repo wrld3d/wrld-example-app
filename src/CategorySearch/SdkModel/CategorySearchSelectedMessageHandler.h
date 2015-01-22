@@ -1,30 +1,33 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
 #include "Types.h"
-#include "UiToNativeMessageBus.h"
+#include "BidirectionalBus.h"
 #include "ISearchQueryPerformer.h"
 #include "ICallback.h"
 
 namespace ExampleApp
 {
-	namespace CategorySearch
-	{
-		class CategorySearchSelectedMessageHandler : private Eegeo::NonCopyable
-		{
-			Search::ISearchQueryPerformer& m_searchQueryPerformer;
-			ExampleAppMessaging::UiToNativeMessageBus& m_uiToNativeMessageBus;
-			Eegeo::Helpers::TCallback1<CategorySearchSelectedMessageHandler, const CategorySearchSelectedMessage&> m_handlerBinding;
+    namespace CategorySearch
+    {
+        namespace SdkModel
+        {
+            class CategorySearchSelectedMessageHandler : private Eegeo::NonCopyable
+            {
+                Search::SdkModel::ISearchQueryPerformer& m_searchQueryPerformer;
+                ExampleAppMessaging::TMessageBus& m_messageBus;
+                Eegeo::Helpers::TCallback1<CategorySearchSelectedMessageHandler, const CategorySearchSelectedMessage&> m_handlerBinding;
 
-			void HandleReceivedCategorySearchSelectedMessage(const CategorySearchSelectedMessage& message);
+                void OnCategorySearchSelectedMessage(const CategorySearchSelectedMessage& message);
 
-		public:
-			CategorySearchSelectedMessageHandler(
-			    Search::ISearchQueryPerformer& searchQueryPerformer,
-			    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus);
+            public:
+                CategorySearchSelectedMessageHandler(
+                    Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
+                    ExampleAppMessaging::TMessageBus& messageBus);
 
-			~CategorySearchSelectedMessageHandler();
-		};
-	}
+                ~CategorySearchSelectedMessageHandler();
+            };
+        }
+    }
 }

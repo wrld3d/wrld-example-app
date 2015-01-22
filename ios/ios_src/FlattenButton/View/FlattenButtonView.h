@@ -1,31 +1,31 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
 #import <UIKit/UIKit.h>
-#include "FlattenButtonViewController.h"
+#include "FlattenButtonViewIncludes.h"
 
 @class FlattenButtonView;
 
 @interface FlattenButtonView : UIButton
 {
-	__weak FlattenButtonViewController* m_pController;
-	UIColor* m_pColour;
+    ExampleApp::FlattenButton::View::FlattenButtonViewInterop* m_pInterop;
+    UIColor* m_pColour;
 
-	float m_width;
-	float m_height;
+    float m_width;
+    float m_height;
 
-	float m_screenWidth;
-	float m_screenHeight;
-	float m_pixelScale;
+    float m_screenWidth;
+    float m_screenHeight;
+    float m_pixelScale;
 
-	float m_xPosActive;
-	float m_xPosInactive;
+    float m_xPosActive;
+    float m_xPosInactive;
 
-	float m_stateChangeAnimationTimeSeconds;
+    float m_stateChangeAnimationTimeSeconds;
 }
 
-- (id) setController:(FlattenButtonViewController *)controller;
+- (ExampleApp::FlattenButton::View::FlattenButtonViewInterop*) getInterop;
 
 - (id) initWithDimensions:(float)width :(float)height :(float)pixelScale;
 

@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -9,20 +9,23 @@
 
 namespace ExampleApp
 {
-	namespace PlaceJumps
-	{
-		class PlaceJumpController : public IPlaceJumpController
-		{
-		public:
-			PlaceJumpController(Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& globeCameraController,
-			                    Compass::ICompassModel& compassModel);
+    namespace PlaceJumps
+    {
+        namespace SdkModel
+        {
+            class PlaceJumpController : public IPlaceJumpController
+            {
+            public:
+                PlaceJumpController(Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& globeCameraController,
+                                    Compass::SdkModel::ICompassModel& compassModel);
 
-			void JumpTo(IPlaceJumpModel& jumpModel);
+                void JumpTo(View::IPlaceJumpModel& jumpModel);
 
-		private:
-			Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& m_cameraController;
-			Compass::ICompassModel& m_compassModel;
-		};
+            private:
+                Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& m_cameraController;
+                Compass::SdkModel::ICompassModel& m_compassModel;
+            };
+        }
 
-	}
+    }
 }

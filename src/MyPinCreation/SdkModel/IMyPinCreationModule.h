@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -12,20 +12,23 @@ namespace ExampleApp
 {
     namespace MyPinCreation
     {
-        class IMyPinCreationModule
+        namespace SdkModel
         {
-        public:
-            virtual ~IMyPinCreationModule(){}
-            
-            virtual IMyPinCreationModel& GetMyPinCreationModel() const = 0;
-            virtual IMyPinCreationInitiationViewModel& GetMyPinCreationInitiationViewModel() const = 0;
-            virtual IMyPinCreationConfirmationViewModel& GetMyPinCreationConfirmationViewModel() const = 0;
-            virtual IMyPinCreationCompositeViewModel& GetMyPinCreationCompositeViewModel() const = 0;
-            
-            virtual ScreenControlViewModel::IScreenControlViewModel& GetInitiationScreenControlViewModel() const = 0;
-            virtual ScreenControlViewModel::IScreenControlViewModel& GetConfirmationScreenControlViewModel() const = 0;
+            class IMyPinCreationModule
+            {
+            public:
+                virtual ~IMyPinCreationModule() {}
 
-            virtual OpenableControlViewModel::IOpenableControlViewModel& GetObservableOpenableControl() const = 0;
-        };
+                virtual IMyPinCreationModel& GetMyPinCreationModel() const = 0;
+                virtual View::IMyPinCreationInitiationViewModel& GetMyPinCreationInitiationViewModel() const = 0;
+                virtual View::IMyPinCreationConfirmationViewModel& GetMyPinCreationConfirmationViewModel() const = 0;
+                virtual View::IMyPinCreationCompositeViewModel& GetMyPinCreationCompositeViewModel() const = 0;
+
+                virtual ScreenControl::View::IScreenControlViewModel& GetInitiationScreenControlViewModel() const = 0;
+                virtual ScreenControl::View::IScreenControlViewModel& GetConfirmationScreenControlViewModel() const = 0;
+
+                virtual OpenableControl::View::IOpenableControlViewModel& GetObservableOpenableControl() const = 0;
+            };
+        }
     }
 }

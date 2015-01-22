@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -11,8 +11,7 @@
 #include "Reaction.h"
 #include "SearchResultMenuViewModel.h"
 #include "SearchResultMenuItemSelectedMessageHandler.h"
-#include "UiToNativeMessageBus.h"
-#include "NativeToUiMessageBus.h"
+#include "BidirectionalBus.h"
 #include "SearchResultRepositoryObserver.h"
 #include "SearchResultAddRemoveHandler.h"
 #include "SearchResultMenuSearchQueryPerformedMessageHandler.h"
@@ -21,44 +20,44 @@
 
 namespace ExampleApp
 {
-	namespace SearchResultMenu
-	{
-		class SearchResultMenuModule: public ISearchResultMenuModule, private Eegeo::NonCopyable
-		{
-		private:
-			Menu::IMenuModel* m_pModel;
-			Menu::IMenuOptionsModel* m_pMenuOptionsModel;
-			SearchResultMenuViewModel* m_pViewModel;
-			SearchResultRepositoryObserver* m_pSearchResultRepositoryObserver;
-			Menu::IMenuSectionViewModel* m_pMenuSection;
-			SearchResultMenuItemSelectedMessageHandler* m_pSearchResultMenuItemSelectedMessageHandler;
-			SearchResultAddRemoveHandler* m_pSearchResultAddRemoveHandler;
-			SearchResultMenuSearchQueryPerformedMessageHandler* m_pSearchResultMenuSearchQueryPerformedMessageHandler;
-			SearchResultMenuSearchQueryRemovedMessageHandler* m_pSearchResultMenuSearchQueryRemovedMessageHandler;
-			SearchResultViewClearedObserver* m_pSearchResultViewClearedObserver;
+    namespace SearchResultMenu
+    {
+        namespace SdkModel
+        {
+            class SearchResultMenuModule: public ISearchResultMenuModule, private Eegeo::NonCopyable
+            {
+            private:
+                Menu::View::IMenuModel* m_pModel;
+                Menu::View::IMenuOptionsModel* m_pMenuOptionsModel;
+                View::SearchResultMenuViewModel* m_pViewModel;
+                View::SearchResultRepositoryObserver* m_pSearchResultRepositoryObserver;
+                Menu::View::IMenuSectionViewModel* m_pMenuSection;
+                SearchResultMenuItemSelectedMessageHandler* m_pSearchResultMenuItemSelectedMessageHandler;
+                View::SearchResultAddRemoveHandler* m_pSearchResultAddRemoveHandler;
+                View::SearchResultMenuSearchQueryPerformedMessageHandler* m_pSearchResultMenuSearchQueryPerformedMessageHandler;
+                View::SearchResultMenuSearchQueryRemovedMessageHandler* m_pSearchResultMenuSearchQueryRemovedMessageHandler;
+                SearchResultViewClearedObserver* m_pSearchResultViewClearedObserver;
 
-		public:
-			SearchResultMenuModule(
-			    Search::ISearchResultRepository& searchResultRepository,
-			    Search::ISearchQueryPerformer& queryPerformer,
-			    Eegeo::Helpers::IIdentityProvider& identityProvider,
-			    CameraTransitions::ICameraTransitionController& cameraTransitionController,
-			    Reaction::IReactionControllerModel& reactionControllerModel,
-			    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
-			    ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus
-			);
+            public:
+                SearchResultMenuModule(
+                    Search::SdkModel::ISearchResultRepository& searchResultRepository,
+                    Search::SdkModel::ISearchQueryPerformer& queryPerformer,
+                    Eegeo::Helpers::IIdentityProvider& identityProvider,
+                    CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
+                    Reaction::View::IReactionControllerModel& reactionControllerModel,
+                    ExampleAppMessaging::TMessageBus& messageBus
+                );
 
-			~SearchResultMenuModule();
+                ~SearchResultMenuModule();
 
-			Menu::IMenuOptionsModel& GetSearchResultMenuOptionsModel() const;
+                Menu::View::IMenuOptionsModel& GetSearchResultMenuOptionsModel() const;
 
-			Menu::IMenuModel& GetSearchResultMenuModel() const;
+                Menu::View::IMenuModel& GetSearchResultMenuModel() const;
 
-			ISearchResultMenuModel& GetSearchResultModel() const;
+                Menu::View::IMenuViewModel& GetMenuViewModel() const;
 
-			Menu::IMenuViewModel& GetMenuViewModel() const;
-
-			ISearchResultMenuViewModel& GetSearchResultMenuViewModel() const;
-		};
-	}
+                View::ISearchResultMenuViewModel& GetSearchResultMenuViewModel() const;
+            };
+        }
+    }
 }

@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -7,16 +7,19 @@
 
 namespace ExampleApp
 {
-	namespace FlattenButton
-	{
-		class FlattenButtonScreenControl : public ScreenControlViewModel::ScreenControlViewModelBase, private Eegeo::NonCopyable
-		{
-			Eegeo::Helpers::TIdentity m_identity;
+    namespace FlattenButton
+    {
+        namespace View
+        {
+            class FlattenButtonScreenControl : public ScreenControl::View::ScreenControlViewModelBase, private Eegeo::NonCopyable
+            {
+                Eegeo::Helpers::TIdentity m_identity;
 
-		public:
-			FlattenButtonScreenControl(bool initiallyOnScreen, Eegeo::Helpers::TIdentity identity);
+            public:
+                FlattenButtonScreenControl(bool initiallyOnScreen, Eegeo::Helpers::TIdentity identity);
 
-			Eegeo::Helpers::TIdentity GetIdentity() const;
-		};
-	}
+                Eegeo::Helpers::TIdentity GetIdentity() const;
+            };
+        }
+    }
 }

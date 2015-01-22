@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -7,15 +7,18 @@
 
 namespace ExampleApp
 {
-	namespace PlaceJumps
-	{
-		class IPlaceJumpsModule
-		{
-		public:
-			virtual ~IPlaceJumpsModule() { }
+    namespace PlaceJumps
+    {
+        namespace SdkModel
+        {
+            class IPlaceJumpsModule
+            {
+            public:
+                virtual ~IPlaceJumpsModule() { }
 
-			virtual Menu::IMenuModel& GetPlaceJumpsMenuModel() const = 0;
-			virtual IPlaceJumpController& GetPlaceJumpController() const = 0;
-		};
-	}
+                virtual Menu::View::IMenuModel& GetPlaceJumpsMenuModel() const = 0;
+                virtual IPlaceJumpController& GetPlaceJumpController() const = 0;
+            };
+        }
+    }
 }

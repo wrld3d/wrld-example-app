@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -9,23 +9,26 @@
 @class AboutPageView;
 @class AboutPageViewController;
 
-@interface AboutPageView : UIView
+@interface AboutPageView : UIView <UIGestureRecognizerDelegate>
 {
-	__weak AboutPageViewController* m_pController;
-	float m_stateChangeAnimationTimeSeconds;
+    ExampleApp::AboutPage::View::AboutPageViewInterop* m_pInterop;
+    UITapGestureRecognizer* m_tapGestureRecogniser;
+    float m_stateChangeAnimationTimeSeconds;
 }
 
-- (id) initWithController:(AboutPageViewController *)controller;
+- (id) initView;
 
 - (BOOL) consumesTouch:(UITouch *)touch;
 
-- (void) setContent:(const ExampleApp::AboutPage::IAboutPageModel*)pModel;
+- (void) setContent:(const std::string*)content;
 
 - (void) setFullyActive;
 
 - (void) setFullyInactive;
 
 - (void) setActiveStateToIntermediateValue:(float)activeState;
+
+- (ExampleApp::AboutPage::View::AboutPageViewInterop*) getInterop;
 
 @property (nonatomic, retain) UIView* pCloseButtonContainer;
 @property (nonatomic, retain) UIButton* pCloseButton;

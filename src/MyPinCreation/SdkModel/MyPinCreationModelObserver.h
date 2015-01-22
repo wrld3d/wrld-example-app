@@ -1,9 +1,9 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
 #include "Types.h"
-#include "NativeToUiMessageBus.h"
+#include "BidirectionalBus.h"
 #include "ICallback.h"
 #include "IMyPinCreationModel.h"
 
@@ -11,21 +11,24 @@ namespace ExampleApp
 {
     namespace MyPinCreation
     {
-        class MyPinCreationModelObserver : public Eegeo::NonCopyable
+        namespace SdkModel
         {
-        public:
-            MyPinCreationModelObserver(IMyPinCreationModel& myPinCreationModel,
-                                       ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus);
-            
-            ~MyPinCreationModelObserver();
-        
-        private:
-            IMyPinCreationModel& m_myPinCreationModel;
-            ExampleAppMessaging::NativeToUiMessageBus& m_nativeToUiMessageBus;
-            
-            Eegeo::Helpers::TCallback1<MyPinCreationModelObserver, MyPinCreationStage> m_callback;
-            
-            void HandlePoiCreationModelStateChange(MyPinCreationStage& stage);
-        };
+            class MyPinCreationModelObserver : public Eegeo::NonCopyable
+            {
+            public:
+                MyPinCreationModelObserver(IMyPinCreationModel& myPinCreationModel,
+                                           ExampleAppMessaging::TMessageBus& messageBus);
+
+                ~MyPinCreationModelObserver();
+
+            private:
+                IMyPinCreationModel& m_myPinCreationModel;
+                ExampleAppMessaging::TMessageBus& m_messageBus;
+
+                Eegeo::Helpers::TCallback1<MyPinCreationModelObserver, MyPinCreationStage> m_callback;
+
+                void HandlePoiCreationModelStateChange(MyPinCreationStage& stage);
+            };
+        }
     }
 }

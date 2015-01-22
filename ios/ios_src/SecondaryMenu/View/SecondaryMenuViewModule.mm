@@ -1,56 +1,58 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "SecondaryMenuViewModule.h"
-#include "IMenuModel.h"
-#include "IMenuViewModel.h"
-#include "MenuViewController.h"
-#include "SearchViewController.h"
 #include "SecondaryMenuView.h"
 #include "ScreenProperties.h"
+#include "MenuViewInterop.h"
+#include "SecondaryMenuViewInterop.h"
 
 namespace ExampleApp
 {
-	namespace SecondaryMenu
-	{
-		SecondaryMenuViewModule::SecondaryMenuViewModule(Menu::IMenuModel& secondaryMenuModel,
-		        Menu::IMenuViewModel& secondaryMenuViewModel,
-		        const Eegeo::Rendering::ScreenProperties& screenProperties,
-		        Modality::IModalityModel& modalityModel,
-		        Search::ISearchQueryPerformer& searchQueryPerformer,
-		        ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus)
-		{
-			m_pView = [[SecondaryMenuView alloc] initWithDimensions
-			           :screenProperties.GetScreenWidth()
-			           :screenProperties.GetScreenHeight()
-			           :screenProperties.GetPixelScale()];
+    namespace SecondaryMenu
+    {
+        namespace View
+        {
+            SecondaryMenuViewModule::SecondaryMenuViewModule(Menu::View::IMenuModel& secondaryMenuModel,
+                    Menu::View::IMenuViewModel& secondaryMenuViewModel,
+                    const Eegeo::Rendering::ScreenProperties& screenProperties,
+                    ExampleAppMessaging::TMessageBus& messageBus)
+            {
+                m_pDataProvider = [CustomTableDataProvider alloc];
 
-			m_pMenuViewController = [[MenuViewController alloc] initWithParams:&secondaryMenuModel
-			                         :&secondaryMenuViewModel
-			                         :m_pView
-			                         :&modalityModel
-			                         :true];
+                m_pView = [[SecondaryMenuView alloc] initWithParams
+                           :screenProperties.GetScreenWidth()
+                           :screenProperties.GetScreenHeight()
+                           :screenProperties.GetPixelScale()
+                           :true
+                           :secondaryMenuViewModel.SectionsCount()
+                           :secondaryMenuViewModel.NumberOfCells()
+                           :m_pDataProvider];
 
-			m_pSearchViewController = [[SearchViewController alloc] initWithParams:[m_pView pSearchEditBox]
-			                           :&searchQueryPerformer
-			                           :&nativeToUiMessageBus
-			                           :&secondaryMenuViewModel];
-		}
+                m_pController = Eegeo_NEW(SecondaryMenuController)( *[m_pView getSecondaryMenuInterop],
+                                *[m_pView getInterop],
+                                secondaryMenuModel,
+                                secondaryMenuViewModel,
+                                messageBus
+                                                                  );
+            }
 
-		SecondaryMenuViewModule::~SecondaryMenuViewModule()
-		{
-			[m_pSearchViewController release];
-			[m_pMenuViewController release];
-			[m_pView release];
-		}
+            SecondaryMenuViewModule::~SecondaryMenuViewModule()
+            {
 
-		MenuViewController& SecondaryMenuViewModule::GetSecondaryMenuViewController() const
-		{
-			return *m_pMenuViewController;
-		}
+                Eegeo_DELETE m_pController;
+                [m_pView release];
+                [m_pDataProvider release];
+            }
 
-		SecondaryMenuView& SecondaryMenuViewModule::GetSecondaryMenuView() const
-		{
-			return *m_pView;
-		}
-	}
+            Menu::View::MenuController& SecondaryMenuViewModule::GetMenuController() const
+            {
+                return *m_pController;
+            }
+
+            SecondaryMenuView& SecondaryMenuViewModule::GetSecondaryMenuView() const
+            {
+                return *m_pView;
+            }
+        }
+    }
 }

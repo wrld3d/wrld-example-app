@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -6,40 +6,40 @@
 
 extern "C"
 {
-	JNIEXPORT void JNICALL Java_com_eegeo_menu_MenuViewJniMethods_ViewClicked(
-	    JNIEnv* jenv, jobject obj,
-	    jlong nativeObjectPtr);
+    JNIEXPORT void JNICALL Java_com_eegeo_menu_MenuViewJniMethods_ViewClicked(
+        JNIEnv* jenv, jobject obj,
+        jlong nativeObjectPtr);
 
-	JNIEXPORT void JNICALL Java_com_eegeo_menu_MenuViewJniMethods_ViewOpenCompleted(
-	    JNIEnv* jenv, jobject obj,
-	    jlong nativeObjectPtr);
+    JNIEXPORT void JNICALL Java_com_eegeo_menu_MenuViewJniMethods_ViewOpenCompleted(
+        JNIEnv* jenv, jobject obj,
+        jlong nativeObjectPtr);
 
-	JNIEXPORT void JNICALL Java_com_eegeo_menu_MenuViewJniMethods_ViewCloseCompleted(
-	    JNIEnv* jenv, jobject obj,
-	    jlong nativeObjectPtr);
+    JNIEXPORT void JNICALL Java_com_eegeo_menu_MenuViewJniMethods_ViewCloseCompleted(
+        JNIEnv* jenv, jobject obj,
+        jlong nativeObjectPtr);
 
-	JNIEXPORT void JNICALL Java_com_eegeo_menu_MenuViewJniMethods_ViewDragStarted(
-	    JNIEnv* jenv, jobject obj,
-	    jlong nativeObjectPtr);
+    JNIEXPORT void JNICALL Java_com_eegeo_menu_MenuViewJniMethods_ViewDragStarted(
+        JNIEnv* jenv, jobject obj,
+        jlong nativeObjectPtr);
 
-	JNIEXPORT void JNICALL Java_com_eegeo_menu_MenuViewJniMethods_ViewDragInProgress(
-	    JNIEnv* jenv, jobject obj,
-	    jlong nativeObjectPtr,
-	    jfloat normalisedDragState);
+    JNIEXPORT void JNICALL Java_com_eegeo_menu_MenuViewJniMethods_ViewDragInProgress(
+        JNIEnv* jenv, jobject obj,
+        jlong nativeObjectPtr,
+        jfloat normalisedDragState);
 
-	JNIEXPORT void JNICALL Java_com_eegeo_menu_MenuViewJniMethods_ViewDragCompleted(
-	    JNIEnv* jenv, jobject obj,
-	    jlong nativeObjectPtr);
+    JNIEXPORT void JNICALL Java_com_eegeo_menu_MenuViewJniMethods_ViewDragCompleted(
+        JNIEnv* jenv, jobject obj,
+        jlong nativeObjectPtr);
 
-	JNIEXPORT void JNICALL Java_com_eegeo_menu_MenuViewJniMethods_SelectedItem(
-	    JNIEnv* jenv, jobject obj,
-	    jlong nativeObjectPtr,
-	    jstring selectedItem,
-	    jint index);
+    JNIEXPORT void JNICALL Java_com_eegeo_menu_MenuViewJniMethods_SelectedItem(
+        JNIEnv* jenv, jobject obj,
+        jlong nativeObjectPtr,
+        jint sectionIndex,
+        jint itemIndex);
 
-	JNIEXPORT bool JNICALL Java_com_eegeo_menu_MenuViewJniMethods_TryBeginDrag(
-	    JNIEnv* jenv, jobject obj,
-	    jlong nativeObjectPtr);
+    JNIEXPORT bool JNICALL Java_com_eegeo_menu_MenuViewJniMethods_TryBeginDrag(
+        JNIEnv* jenv, jobject obj,
+        jlong nativeObjectPtr);
 }
 
 

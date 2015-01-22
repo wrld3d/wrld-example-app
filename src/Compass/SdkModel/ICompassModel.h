@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -8,32 +8,34 @@
 
 namespace ExampleApp
 {
-	namespace Compass
-	{
-		class ICompassModel
-		{
-		public:
+    namespace Compass
+    {
+        namespace SdkModel
+        {
+            class ICompassModel
+            {
+            public:
 
-			virtual ~ICompassModel() {}
+                virtual ~ICompassModel() {}
 
-			virtual bool GetGpsModeActive() const = 0;
+                virtual bool GetGpsModeActive() const = 0;
 
-			virtual GpsMode::Values GetGpsMode() const = 0;
+                virtual GpsMode::Values GetGpsMode() const = 0;
 
-			virtual float GetHeadingRadians() const = 0;
+                virtual float GetHeadingRadians() const = 0;
 
-			virtual float GetHeadingDegrees() const = 0;
+                virtual float GetHeadingDegrees() const = 0;
 
-			virtual void TryUpdateToNavigationServiceGpsMode(Eegeo::Location::NavigationService::GpsMode value) = 0;
+                virtual void TryUpdateToNavigationServiceGpsMode(Eegeo::Location::NavigationService::GpsMode value) = 0;
 
-			virtual void DisableGpsMode() = 0;
+                virtual void DisableGpsMode() = 0;
 
-			virtual void CycleToNextGpsMode() = 0;
+                virtual void CycleToNextGpsMode() = 0;
 
-			virtual void InsertGpsModeChangedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
+                virtual void InsertGpsModeChangedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
 
-			virtual void RemoveGpsModeChangedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
-		};
-
-	}
+                virtual void RemoveGpsModeChangedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
+            };
+        }
+    }
 }

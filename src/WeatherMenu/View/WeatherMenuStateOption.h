@@ -1,29 +1,32 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
 #include "IMenuOption.h"
 #include "WeatherMenuStateModel.h"
-#include "UiToNativeMessageBus.h"
+#include "BidirectionalBus.h"
 #include "WeatherSelectedMessage.h"
 
 namespace ExampleApp
 {
-	namespace WeatherMenu
-	{
-		class WeatherMenuStateOption : public Menu::IMenuOption
-		{
-		public:
-			WeatherMenuStateOption(
-			    WeatherMenuStateModel& weatherStateModel,
-			    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus);
+    namespace WeatherMenu
+    {
+        namespace View
+        {
+            class WeatherMenuStateOption : public Menu::View::IMenuOption
+            {
+            public:
+                WeatherMenuStateOption(
+                    SdkModel::WeatherMenuStateModel& weatherStateModel,
+                    ExampleAppMessaging::TMessageBus& messageBus);
 
-			void Select();
+                void Select();
 
-		private:
+            private:
 
-			WeatherMenuStateModel m_weatherStateModel;
-			ExampleAppMessaging::UiToNativeMessageBus& m_uiToNativeMessageBus;
-		};
-	}
+                SdkModel::WeatherMenuStateModel m_weatherStateModel;
+                ExampleAppMessaging::TMessageBus& m_messageBus;
+            };
+        }
+    }
 }

@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -10,31 +10,34 @@
 #include "MenuViewIncludes.h"
 #include "IMenuViewModule.h"
 #include "Search.h"
-#include "UiToNativeMessageBus.h"
-#include "NativeToUiMessageBus.h"
+#include "BidirectionalBus.h"
 
 namespace ExampleApp
 {
-	namespace SecondaryMenu
-	{
-		class SecondaryMenuViewModule: public Menu::IMenuViewModule, private Eegeo::NonCopyable
-		{
-		private:
-			Menu::IMenuViewController* m_pMenuViewController;
+    namespace SecondaryMenu
+    {
+        namespace View
+        {
+            class SecondaryMenuViewModule: public Menu::View::IMenuViewModule, private Eegeo::NonCopyable
+            {
+            private:
+                Menu::View::MenuView* m_pView;
+                Menu::View::MenuController* m_pController;
 
-		public:
-			SecondaryMenuViewModule(
-			    const std::string& viewName,
-			    AndroidNativeState& nativeState,
-			    Menu::IMenuModel& menuModelModel,
-			    Menu::IMenuViewModel& menuViewModel,
-			    ExampleAppMessaging::UiToNativeMessageBus& messageBus,
-			    ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus
-			);
+            public:
+                SecondaryMenuViewModule(
+                    const std::string& viewName,
+                    AndroidNativeState& nativeState,
+                    Menu::View::IMenuModel& menuModelModel,
+                    Menu::View::IMenuViewModel& menuViewModel,
+                    ExampleAppMessaging::TMessageBus& messageBus
+                );
 
-			~SecondaryMenuViewModule();
+                ~SecondaryMenuViewModule();
 
-			Menu::IMenuViewController& GetMenuViewController() const;
-		};
-	}
+                Menu::View::MenuController& GetMenuController() const;
+                Menu::View::IMenuView& GetMenuView() const;
+            };
+        }
+    }
 }

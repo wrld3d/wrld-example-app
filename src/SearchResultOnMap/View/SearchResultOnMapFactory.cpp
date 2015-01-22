@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "SearchResultOnMapFactory.h"
 #include "SearchResultOnMapItemModel.h"
@@ -6,23 +6,26 @@
 
 namespace ExampleApp
 {
-	namespace SearchResultOnMap
-	{
-		SearchResultOnMapFactory::SearchResultOnMapFactory(ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus)
-			: m_nativeToUiMessageBus(nativeToUiMessageBus)
-		{
+    namespace SearchResultOnMap
+    {
+        namespace View
+        {
+            SearchResultOnMapFactory::SearchResultOnMapFactory(ExampleAppMessaging::TMessageBus& messageBus)
+                : m_messageBus(messageBus)
+            {
 
-		}
+            }
 
-		SearchResultOnMapFactory::~SearchResultOnMapFactory()
-		{
+            SearchResultOnMapFactory::~SearchResultOnMapFactory()
+            {
 
-		}
+            }
 
-		SearchResultOnMapItemModel* SearchResultOnMapFactory::CreateSearchResultOnMapItemModel(Search::SearchResultModel& searchResultModel) const
-		{
-			return Eegeo_NEW(SearchResultOnMapItemModel(searchResultModel,
-			                 m_nativeToUiMessageBus));
-		}
-	}
+            SearchResultOnMapItemModel* SearchResultOnMapFactory::CreateSearchResultOnMapItemModel(Search::SdkModel::SearchResultModel& searchResultModel) const
+            {
+                return Eegeo_NEW(SearchResultOnMapItemModel(searchResultModel,
+                                 m_messageBus));
+            }
+        }
+    }
 }

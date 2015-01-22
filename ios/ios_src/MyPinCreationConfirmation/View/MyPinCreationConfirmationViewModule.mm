@@ -1,39 +1,46 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #import "MyPinCreationConfirmationViewModule.h"
 #include "RenderContext.h"
 #include "MyPinCreationConfirmationView.h"
+#include "MyPinCreationConfirmationController.h"
+#include "MyPinCreationConfirmationViewInterop.h"
+#include "ScreenProperties.h"
 
 namespace ExampleApp
 {
     namespace MyPinCreation
     {
-        MyPinCreationConfirmationViewModule::MyPinCreationConfirmationViewModule(ExampleApp::ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
-                                                                                 IMyPinCreationConfirmationViewModel& viewModel,
-                                                                                 IMyPinCreationCompositeViewModel& compositeViewModel,
-                                                                                 MyPinCreationDetails::IMyPinCreationDetailsViewModel& MyPinCreationDetailsViewModel,
-                                                                                 const Eegeo::Rendering::ScreenProperties& screenProperties)
+        namespace View
         {
-            m_pController = [[MyPinCreationConfirmationViewController alloc] initWithParams:&uiToNativeMessageBus
-                                                                                           :&viewModel
-                                                                                           :&compositeViewModel
-                                                                                           :&MyPinCreationDetailsViewModel
-                                                                                           :&screenProperties];
-        }
-        
-        MyPinCreationConfirmationViewModule::~MyPinCreationConfirmationViewModule()
-        {
-            [m_pController release];
-        }
-        
-        MyPinCreationConfirmationViewController& MyPinCreationConfirmationViewModule::GetMyPinCreationConfirmationViewController() const
-        {
-            return *m_pController;
-        }
-        
-        MyPinCreationConfirmationView& MyPinCreationConfirmationViewModule::GetMyPinCreationConfirmationView() const
-        {
-            return *[m_pController pMyPinCreationConfirmationView];
+            MyPinCreationConfirmationViewModule::MyPinCreationConfirmationViewModule(
+                ExampleApp::ExampleAppMessaging::TMessageBus& messageBus,
+                IMyPinCreationConfirmationViewModel& viewModel,
+                IMyPinCreationCompositeViewModel& compositeViewModel,
+                MyPinCreationDetails::View::IMyPinCreationDetailsViewModel& detailsViewModel,
+                const Eegeo::Rendering::ScreenProperties& screenProperties)
+            {
+                m_pView = [[MyPinCreationConfirmationView alloc] initWithParams: screenProperties.GetScreenWidth(): screenProperties.GetScreenHeight(): screenProperties.GetPixelScale()];
+
+                m_pController = Eegeo_NEW(MyPinCreationConfirmationController)(viewModel, *[m_pView getInterop], detailsViewModel, messageBus);
+            }
+
+            MyPinCreationConfirmationViewModule::~MyPinCreationConfirmationViewModule()
+            {
+                Eegeo_DELETE m_pController;
+
+                [m_pView release];
+            }
+
+            MyPinCreationConfirmationController& MyPinCreationConfirmationViewModule::GetMyPinCreationConfirmationController() const
+            {
+                return *m_pController;
+            }
+
+            MyPinCreationConfirmationView& MyPinCreationConfirmationViewModule::GetMyPinCreationConfirmationView() const
+            {
+                return *m_pView;
+            }
         }
     }
 }

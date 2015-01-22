@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -12,79 +12,82 @@
 
 namespace ExampleApp
 {
-	namespace WorldPins
-	{
-		class WorldPinItemModel
-		{
-			enum TransitionState
-			{
-				StableHidden,
-				TransitionToVisible,
-				StableVisible,
-				TransitionToHidden
-			};
+    namespace WorldPins
+    {
+        namespace SdkModel
+        {
+            class WorldPinItemModel
+            {
+                enum TransitionState
+                {
+                    StableHidden,
+                    TransitionToVisible,
+                    StableVisible,
+                    TransitionToHidden
+                };
 
-		public:
-			typedef Eegeo::Pins::TPinId WorldPinItemModelId;
+            public:
+                typedef Eegeo::Pins::TPinId WorldPinItemModelId;
 
-		private:
-			WorldPinItemModelId m_id;
-			IWorldPinSelectionHandler* m_pSelectionHandler;
-            WorldPinsInFocusModel m_focusModel;
-			TransitionState m_transitionState;
-			float m_transitionStateValue;
+            private:
+                WorldPinItemModelId m_id;
+                IWorldPinSelectionHandler* m_pSelectionHandler;
+                WorldPinsInFocusModel m_focusModel;
+                TransitionState m_transitionState;
+                float m_transitionStateValue;
 
-		public:
-			WorldPinItemModel(const WorldPinItemModelId& id,
-			                  IWorldPinSelectionHandler* pSelectionHandler,
-                              const WorldPinFocusData& worldPinFocusData);
+            public:
+                WorldPinItemModel(const WorldPinItemModelId& id,
+                                  IWorldPinSelectionHandler* pSelectionHandler,
+                                  const WorldPinFocusData& worldPinFocusData);
 
-			~WorldPinItemModel();
+                ~WorldPinItemModel();
 
-			const WorldPinItemModelId& Id() const;
+                const WorldPinItemModelId& Id() const;
 
-			void Select();
+                void Select();
 
-			bool IsHidden() const;
+                bool IsHidden() const;
 
-			bool IsVisible() const;
+                bool IsVisible() const;
 
-			bool IsTransitioning() const;
+                bool IsTransitioning() const;
 
-			float TransitionStateValue() const;
+                float TransitionStateValue() const;
 
-			void Hide();
+                void Hide();
 
-			void Show();
+                void Show();
 
-			void Update(float deltaSeconds);
-    
-            const IWorldPinsInFocusModel& GetInFocusModel() const;
-		};
+                void Update(float deltaSeconds);
 
-		inline bool operator==(const WorldPinItemModel& lhs, const WorldPinItemModel& rhs)
-		{
-			return lhs.Id() == rhs.Id();
-		}
-		inline bool operator!=(const WorldPinItemModel& lhs, const WorldPinItemModel& rhs)
-		{
-			return !operator==(lhs,rhs);
-		}
-		inline bool operator< (const WorldPinItemModel& lhs, const WorldPinItemModel& rhs)
-		{
-			return lhs.Id() < rhs.Id();
-		}
-		inline bool operator> (const WorldPinItemModel& lhs, const WorldPinItemModel& rhs)
-		{
-			return  operator< (rhs,lhs);
-		}
-		inline bool operator<=(const WorldPinItemModel& lhs, const WorldPinItemModel& rhs)
-		{
-			return !operator> (lhs,rhs);
-		}
-		inline bool operator>=(const WorldPinItemModel& lhs, const WorldPinItemModel& rhs)
-		{
-			return !operator< (lhs,rhs);
-		}
-	}
+                const IWorldPinsInFocusModel& GetInFocusModel() const;
+            };
+
+            inline bool operator==(const WorldPinItemModel& lhs, const WorldPinItemModel& rhs)
+            {
+                return lhs.Id() == rhs.Id();
+            }
+            inline bool operator!=(const WorldPinItemModel& lhs, const WorldPinItemModel& rhs)
+            {
+                return !operator==(lhs,rhs);
+            }
+            inline bool operator< (const WorldPinItemModel& lhs, const WorldPinItemModel& rhs)
+            {
+                return lhs.Id() < rhs.Id();
+            }
+            inline bool operator> (const WorldPinItemModel& lhs, const WorldPinItemModel& rhs)
+            {
+                return  operator< (rhs,lhs);
+            }
+            inline bool operator<=(const WorldPinItemModel& lhs, const WorldPinItemModel& rhs)
+            {
+                return !operator> (lhs,rhs);
+            }
+            inline bool operator>=(const WorldPinItemModel& lhs, const WorldPinItemModel& rhs)
+            {
+                return !operator< (lhs,rhs);
+            }
+        }
+    }
 }

@@ -1,14 +1,17 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
 namespace ExampleApp
 {
-	namespace InitialExperience
-	{
-		class IInitialExperienceModule;
-		class IInitialExperienceModel;
-		class IInitialExperienceStep;
-		class IInitialExperienceController;
-	}
+    namespace InitialExperience
+    {
+        namespace SdkModel
+        {
+            class IInitialExperienceModule;
+            class IInitialExperienceModel;
+            class IInitialExperienceStep;
+            class IInitialExperienceController;
+        }
+    }
 }

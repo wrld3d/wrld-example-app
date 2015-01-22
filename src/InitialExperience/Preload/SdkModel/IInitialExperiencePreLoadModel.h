@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -6,17 +6,20 @@
 
 namespace ExampleApp
 {
-	namespace InitialExperience
-	{
-		namespace PreLoad
-		{
-			class IInitialExperiencePreLoadModel : public IInitialExperienceStep
-			{
-			public:
-				virtual ~IInitialExperiencePreLoadModel() { }
+    namespace InitialExperience
+    {
+        namespace PreLoad
+        {
+            namespace SdkModel
+            {
+                class IInitialExperiencePreLoadModel : public InitialExperience::SdkModel::IInitialExperienceStep
+                {
+                public:
+                    virtual ~IInitialExperiencePreLoadModel() { }
 
-				virtual void ShowOptions() = 0;
-			};
-		}
-	}
+                    virtual void ShowOptions() = 0;
+                };
+            }
+        }
+    }
 }

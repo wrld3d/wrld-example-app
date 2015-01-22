@@ -1,14 +1,16 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
 @class PrimaryMenuView;
-@class MenuViewController;
 
 namespace ExampleApp
 {
-	namespace PrimaryMenu
-	{
-		class IPrimaryMenuViewModule;
-	}
+    namespace PrimaryMenu
+    {
+        namespace View
+        {
+            class IPrimaryMenuViewModule;
+        }
+    }
 }

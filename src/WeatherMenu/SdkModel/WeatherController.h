@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -9,28 +9,31 @@
 
 namespace ExampleApp
 {
-	namespace WeatherMenu
-	{
-		class WeatherController : public IWeatherController
-		{
-		public:
+    namespace WeatherMenu
+    {
+        namespace SdkModel
+        {
+            class WeatherController : public IWeatherController
+            {
+            public:
 
-			WeatherController(Eegeo::Resources::CityThemes::ICityThemesService& themesService,
-			                  Eegeo::Resources::CityThemes::ICityThemesUpdater& themesUpdater);
+                WeatherController(Eegeo::Resources::CityThemes::ICityThemesService& themesService,
+                                  Eegeo::Resources::CityThemes::ICityThemesUpdater& themesUpdater);
 
-			void SetWeather(const std::string& weather);
-			void SetTime(const std::string& time);
-			void SetSeason(const std::string& season);
-			void Refresh();
+                void SetWeather(const std::string& weather);
+                void SetTime(const std::string& time);
+                void SetSeason(const std::string& season);
+                void Refresh();
 
-		private:
+            private:
 
-			std::string m_currentWeather;
-			std::string m_currentTime;
-			std::string m_currentSeason;
+                std::string m_currentWeather;
+                std::string m_currentTime;
+                std::string m_currentSeason;
 
-			Eegeo::Resources::CityThemes::ICityThemesService& m_themesService;
-			Eegeo::Resources::CityThemes::ICityThemesUpdater& m_themesUpdater;
-		};
-	}
+                Eegeo::Resources::CityThemes::ICityThemesService& m_themesService;
+                Eegeo::Resources::CityThemes::ICityThemesUpdater& m_themesUpdater;
+            };
+        }
+    }
 }

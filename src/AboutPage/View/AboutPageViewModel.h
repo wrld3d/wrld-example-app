@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -7,39 +7,56 @@
 #include "CallbackCollection.h"
 #include "AboutPageOpenableControl.h"
 #include "Reaction.h"
+#include "AboutPage.h"
 
 namespace ExampleApp
 {
-	namespace AboutPage
-	{
-		class AboutPageViewModel : public IAboutPageViewModel, private Eegeo::NonCopyable
-		{
-			Eegeo::Helpers::CallbackCollection0 m_openedCallbacks;
-			Eegeo::Helpers::CallbackCollection0 m_closedCallbacks;
-			AboutPageOpenableControl m_openable;
+    namespace AboutPage
+    {
+        namespace View
+        {
+            class AboutPageViewModel : public IAboutPageViewModel, private Eegeo::NonCopyable
+            {
+                Eegeo::Helpers::CallbackCollection0 m_openedCallbacks;
+                Eegeo::Helpers::CallbackCollection0 m_closedCallbacks;
+                AboutPageOpenableControl m_openable;
 
-		public:
-			AboutPageViewModel(Eegeo::Helpers::TIdentity identity, Reaction::IReactionControllerModel& reactionControllerModel);
+                const std::string m_platformVersion;
+                const std::string m_platformHash;
+                const std::string m_platformArchitecture;
+                const std::string m_aboutText;
 
-			~AboutPageViewModel();
+            public:
+                AboutPageViewModel(
+                    Eegeo::Helpers::TIdentity identity,
+                    Reaction::View::IReactionControllerModel& reactionControllerModel,
+                    const std::string& platformVersion,
+                    const std::string& platformHash,
+                    const std::string& platformArchitecture,
+                    const std::string& aboutText);
 
-			bool TryAcquireReactorControl();
+                ~AboutPageViewModel();
 
-			bool IsOpen() const;
+                bool TryAcquireReactorControl();
 
-			void Open();
+                bool IsOpen() const;
 
-			void Close();
+                void Open();
 
-			OpenableControlViewModel::IOpenableControlViewModel& GetOpenableControl();
+                void Close();
 
-			void InsertOpenedCallback(Eegeo::Helpers::ICallback0& openedCallback);
+                const std::string GetContent() const;
 
-			void RemoveOpenedCallback(Eegeo::Helpers::ICallback0& openedCallback);
+                OpenableControl::View::IOpenableControlViewModel& GetOpenableControl();
 
-			void InsertClosedCallback(Eegeo::Helpers::ICallback0& closedCallback);
+                void InsertOpenedCallback(Eegeo::Helpers::ICallback0& openedCallback);
 
-			void RemoveClosedCallback(Eegeo::Helpers::ICallback0& closedCallback);
-		};
-	}
+                void RemoveOpenedCallback(Eegeo::Helpers::ICallback0& openedCallback);
+
+                void InsertClosedCallback(Eegeo::Helpers::ICallback0& closedCallback);
+
+                void RemoveClosedCallback(Eegeo::Helpers::ICallback0& closedCallback);
+            };
+        }
+    }
 }

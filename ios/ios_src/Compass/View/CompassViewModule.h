@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -7,29 +7,32 @@
 #include "Rendering.h"
 #include "Compass.h"
 #include "ICompassViewModule.h"
-#include "NativeToUiMessageBus.h"
-#include "UiToNativeMessageBus.h"
+#include "BidirectionalBus.h"
+#include "CompassController.h"
 
 namespace ExampleApp
 {
-	namespace Compass
-	{
-		class CompassViewModule: public ICompassViewModule, private Eegeo::NonCopyable
-		{
-		private:
-			CompassViewController* m_pController;
+    namespace Compass
+    {
+        namespace View
+        {
+            class CompassViewModule: public ICompassViewModule, private Eegeo::NonCopyable
+            {
+            private:
+                CompassController* m_pController;
+                CompassView* m_pView;
 
-		public:
-			CompassViewModule(ICompassViewModel& viewModel,
-			                  const Eegeo::Rendering::ScreenProperties& screenProperties,
-			                  ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
-			                  ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus);
+            public:
+                CompassViewModule(ICompassViewModel& viewModel,
+                                  const Eegeo::Rendering::ScreenProperties& screenProperties,
+                                  ExampleAppMessaging::TMessageBus& messageBus);
 
-			~CompassViewModule();
+                ~CompassViewModule();
 
-			CompassViewController& GetCompassViewController() const;
+                CompassController& GetCompassController() const;
 
-			CompassView& GetCompassView() const;
-		};
-	}
+                CompassView& GetCompassView() const;
+            };
+        }
+    }
 }

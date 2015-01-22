@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -9,18 +9,21 @@ namespace ExampleApp
 {
     namespace PrimaryMenu
     {
-        class IPrimaryMenuModule
+        namespace View
         {
-        public:
-            virtual ~IPrimaryMenuModule() { }
-            
-            virtual Menu::IMenuModel& GetPrimaryMenuModel() const = 0;
-            
-            virtual void AddMenuSection(const std::string& name, const std::string& icon, Menu::IMenuModel& menuModel, bool isExpandable) = 0;
-            
-            virtual Menu::IMenuOptionsModel& GetPrimaryMenuOptionsModel() const = 0;
-            
-            virtual Menu::IMenuViewModel& GetPrimaryMenuViewModel() const = 0;
-        };
+            class IPrimaryMenuModule
+            {
+            public:
+                virtual ~IPrimaryMenuModule() { }
+
+                virtual Menu::View::IMenuModel& GetPrimaryMenuModel() const = 0;
+
+                virtual void AddMenuSection(const std::string& name, const std::string& icon, Menu::View::IMenuModel& menuModel, bool isExpandable) = 0;
+
+                virtual Menu::View::IMenuOptionsModel& GetPrimaryMenuOptionsModel() const = 0;
+
+                virtual Menu::View::IMenuViewModel& GetPrimaryMenuViewModel() const = 0;
+            };
+        }
     }
 }

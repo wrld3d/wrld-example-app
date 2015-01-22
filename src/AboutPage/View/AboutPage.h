@@ -1,13 +1,17 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
 namespace ExampleApp
 {
-	namespace AboutPage
-	{
-		class IAboutPageModule;
-		class IAboutPageModel;
-		class IAboutPageViewModel;
-	}
+    namespace AboutPage
+    {
+        namespace View
+        {
+            class IAboutPageModule;
+            class IAboutPageViewModel;
+            class IAboutPageView;
+            class AboutPageController;
+        }
+    }
 }

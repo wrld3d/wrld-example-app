@@ -1,18 +1,20 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
 #import <UIKit/UIKit.h>
 #include "AppRunner.h"
 #include "MyPinModel.h"
+#include "MyPinDetailsViewIncludes.h"
 
 @class MyPinDetailsView;
-@class MyPinDetailsViewController;
 
 @interface MyPinDetailsView : UIView <UIAlertViewDelegate>
 {
-	__weak MyPinDetailsViewController* m_pController;
-	float m_stateChangeAnimationTimeSeconds;
+    ExampleApp::MyPinDetails::View::MyPinDetailsViewInterop* m_pInterop;
+    UIViewController* m_pController;
+
+    float m_stateChangeAnimationTimeSeconds;
     float m_labelsSectionWidth;
     float m_maxContentSize;
     float m_descriptionContentY;
@@ -25,11 +27,13 @@
     bool m_hasImage;
 }
 
-- (id) initWithController:(MyPinDetailsViewController *)controller;
+- (id)initWithParams:(float)screenWidth :(float)screenHeight;
+
+- (ExampleApp::MyPinDetails::View::MyPinDetailsViewInterop*) getInterop;
 
 - (BOOL) consumesTouch:(UITouch *)touch;
 
-- (void) setContent:(const ExampleApp::MyPins::MyPinModel*)pModel;
+- (void) setContent:(const ExampleApp::MyPins::SdkModel::MyPinModel*)pModel;
 
 - (void) setFullyActive;
 

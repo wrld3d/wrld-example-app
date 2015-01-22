@@ -1,33 +1,35 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
 #include "Types.h"
 #include "ICallback.h"
 #include "Menu.h"
-#include "UiToNativeMessageBus.h"
-#include "NativeToUiMessageBus.h"
+#include "BidirectionalBus.h"
 #include "MyPinRemovedFromMenuMessage.h"
 
 namespace ExampleApp
 {
     namespace MyPins
     {
-        class MyPinRemovedFromMenuObserver
+        namespace View
         {
-        public:
-            MyPinRemovedFromMenuObserver(Menu::IMenuOptionsModel& menuOptionsModel,
-                                         ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus);
-            
-            ~MyPinRemovedFromMenuObserver();
-            
-        private:
-            Menu::IMenuOptionsModel& m_menuOptionsModel;
-            ExampleAppMessaging::NativeToUiMessageBus& m_nativeToUiMessageBus;
-            
-            Eegeo::Helpers::TCallback1<MyPinRemovedFromMenuObserver, const MyPinRemovedFromMenuMessage&> m_handlerBinding;
-            
-            void HandleReceivedMyRemovedFromMenuMessage(const MyPinRemovedFromMenuMessage& message);
-        };
+            class MyPinRemovedFromMenuObserver
+            {
+            public:
+                MyPinRemovedFromMenuObserver(Menu::View::IMenuOptionsModel& menuOptionsModel,
+                                             ExampleAppMessaging::TMessageBus& messageBus);
+
+                ~MyPinRemovedFromMenuObserver();
+
+            private:
+                Menu::View::IMenuOptionsModel& m_menuOptionsModel;
+                ExampleAppMessaging::TMessageBus& m_messageBus;
+
+                Eegeo::Helpers::TCallback1<MyPinRemovedFromMenuObserver, const MyPinRemovedFromMenuMessage&> m_handlerBinding;
+
+                void OnMyRemovedFromMenuMessage(const MyPinRemovedFromMenuMessage& message);
+            };
+        }
     }
 }

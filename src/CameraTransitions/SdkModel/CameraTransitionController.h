@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -10,42 +10,45 @@
 
 namespace ExampleApp
 {
-	namespace CameraTransitions
-	{
-		class CameraTransitionController : public ICameraTransitionController
-		{
-		public:
+    namespace CameraTransitions
+    {
+        namespace SdkModel
+        {
+            class CameraTransitionController : public ICameraTransitionController
+            {
+            public:
 
-			CameraTransitionController(Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& cameraController,
-			                           Eegeo::Location::NavigationService& navigationService,
-                                       Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider);
+                CameraTransitionController(Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& cameraController,
+                                           Eegeo::Location::NavigationService& navigationService,
+                                           Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider);
 
-			void StartTransitionTo(Eegeo::dv3 newInterestPoint, float distanceFromInterest, bool jumpIfFar=true);
-			void StartTransitionTo(Eegeo::dv3 newInterestPoint, float distanceFromInterest, float newHeadingRadians, bool jumpIfFar=true);
-			void StopCurrentTransition();
-			void Update(float dt);
+                void StartTransitionTo(Eegeo::dv3 newInterestPoint, float distanceFromInterest, bool jumpIfFar=true);
+                void StartTransitionTo(Eegeo::dv3 newInterestPoint, float distanceFromInterest, float newHeadingRadians, bool jumpIfFar=true);
+                void StopCurrentTransition();
+                void Update(float dt);
 
-			const bool IsTransitioning() const
-			{
-				return m_isTransitioning;
-			}
+                const bool IsTransitioning() const
+                {
+                    return m_isTransitioning;
+                }
 
-		private:
+            private:
 
-			bool ShouldJumpTo(Eegeo::dv3& newInterestPoint);
+                bool ShouldJumpTo(Eegeo::dv3& newInterestPoint);
 
-			Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& m_cameraController;
-			Eegeo::Location::NavigationService& m_navigationService;
-            Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& m_terrainHeightProvider;
-			Eegeo::dv3 m_startTransitionInterestPointEcef;
-			Eegeo::dv3 m_endTransitionInterestPointEcef;
-			float m_startInterestDistance;
-			float m_endInterestDistance;
-			float m_startInterestHeading;
-			float m_endInterestHeading;
-			float m_transitionTime;
-			float m_transitionDuration;
-			bool m_isTransitioning;
-		};
-	}
+                Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& m_cameraController;
+                Eegeo::Location::NavigationService& m_navigationService;
+                Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& m_terrainHeightProvider;
+                Eegeo::dv3 m_startTransitionInterestPointEcef;
+                Eegeo::dv3 m_endTransitionInterestPointEcef;
+                float m_startInterestDistance;
+                float m_endInterestDistance;
+                float m_startInterestHeading;
+                float m_endInterestHeading;
+                float m_transitionTime;
+                float m_transitionDuration;
+                bool m_isTransitioning;
+            };
+        }
+    }
 }

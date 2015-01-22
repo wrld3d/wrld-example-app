@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -10,33 +10,36 @@
 
 namespace ExampleApp
 {
-	namespace InitialExperience
-	{
-		class InitialExperienceModuleBase : public IInitialExperienceModule
-		{
-			IInitialExperienceModel* m_pInitialExperienceModel;
-			IInitialExperienceController* m_pInitialExperienceController;
+    namespace InitialExperience
+    {
+        namespace SdkModel
+        {
+            class InitialExperienceModuleBase : public IInitialExperienceModule
+            {
+                IInitialExperienceModel* m_pInitialExperienceModel;
+                IInitialExperienceController* m_pInitialExperienceController;
 
-			PersistentSettings::IPersistentSettingsModel& m_persistentSettings;
+                PersistentSettings::IPersistentSettingsModel& m_persistentSettings;
 
-		public:
-			InitialExperienceModuleBase(PersistentSettings::IPersistentSettingsModel& persistentSettings);
+            public:
+                InitialExperienceModuleBase(PersistentSettings::IPersistentSettingsModel& persistentSettings);
 
-			~InitialExperienceModuleBase();
+                ~InitialExperienceModuleBase();
 
-			void InitialiseWithApplicationModels(WorldAreaLoader::IWorldAreaLoaderModel& worldAreaLoaderModel);
+                void InitialiseWithApplicationModels(WorldAreaLoader::SdkModel::IWorldAreaLoaderModel& worldAreaLoaderModel);
 
-			void TearDown();
+                void TearDown();
 
-			IInitialExperienceModel& GetInitialExperienceModel() const;
+                IInitialExperienceModel& GetInitialExperienceModel() const;
 
-			IInitialExperienceController& GetInitialExperienceController() const;
+                IInitialExperienceController& GetInitialExperienceController() const;
 
-		protected:
+            protected:
 
-			PersistentSettings::IPersistentSettingsModel& GetPersistentSettings() const;
+                PersistentSettings::IPersistentSettingsModel& GetPersistentSettings() const;
 
-			virtual std::vector<IInitialExperienceStep*> CreateSteps(WorldAreaLoader::IWorldAreaLoaderModel &worldAreaLoaderModel) const = 0;
-		};
-	}
+                virtual std::vector<IInitialExperienceStep*> CreateSteps(WorldAreaLoader::SdkModel::IWorldAreaLoaderModel &worldAreaLoaderModel) const = 0;
+            };
+        }
+    }
 }

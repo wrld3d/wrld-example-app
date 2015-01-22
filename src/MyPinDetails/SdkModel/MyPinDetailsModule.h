@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -8,33 +8,34 @@
 #include "MyPinDetailsViewModel.h"
 #include "IIdentity.h"
 #include "Reaction.h"
-#include "NativeToUiMessageBus.h"
-#include "UiToNativeMessageBus.h"
+#include "BidirectionalBus.h"
 #include "MyPinDetailsViewRemovePinHandler.h"
 
 namespace ExampleApp
 {
-	namespace MyPinDetails
-	{
-		class MyPinDetailsModule: public IMyPinDetailsModule, private Eegeo::NonCopyable
-		{
-		private:
-			MyPinDetailsViewModel* m_pMyPinDetailsViewModel;
-            MyPinDetailsModelSelectedObserver* m_pMyPinDetailsModelSelectedObserver;
-            MyPinDetailsViewRemovePinHandler* m_pMyPinDetailsViewRemovePinHandler;
-            
-		public:
-			MyPinDetailsModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
-                               Reaction::IReactionControllerModel& reactionControllerModel,
-                               MyPins::IMyPinsService& myPinsService,
-                               ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus,
-                               ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus);
+    namespace MyPinDetails
+    {
+        namespace SdkModel
+        {
+            class MyPinDetailsModule: public IMyPinDetailsModule, private Eegeo::NonCopyable
+            {
+            private:
+                View::MyPinDetailsViewModel* m_pMyPinDetailsViewModel;
+                View::MyPinDetailsModelSelectedObserver* m_pMyPinDetailsModelSelectedObserver;
+                MyPinDetailsViewRemovePinHandler* m_pMyPinDetailsViewRemovePinHandler;
 
-			~MyPinDetailsModule();
+            public:
+                MyPinDetailsModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
+                                   Reaction::View::IReactionControllerModel& reactionControllerModel,
+                                   MyPins::SdkModel::IMyPinsService& myPinsService,
+                                   ExampleAppMessaging::TMessageBus& messageBus);
 
-			IMyPinDetailsViewModel& GetMyPinDetailsViewModel() const;
+                ~MyPinDetailsModule();
 
-			OpenableControlViewModel::IOpenableControlViewModel& GetObservableOpenableControl() const;
-		};
-	}
+                View::IMyPinDetailsViewModel& GetMyPinDetailsViewModel() const;
+
+                OpenableControl::View::IOpenableControlViewModel& GetObservableOpenableControl() const;
+            };
+        }
+    }
 }

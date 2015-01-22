@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -8,19 +8,22 @@
 
 namespace ExampleApp
 {
-	namespace Reaction
-	{
-		class ReactionControllerModule: public IReactionControllerModule, private Eegeo::NonCopyable
-		{
-		private:
-			IReactionControllerModel* m_pReactionControllerModel;
+    namespace Reaction
+    {
+        namespace View
+        {
+            class ReactionControllerModule: public IReactionControllerModule, private Eegeo::NonCopyable
+            {
+            private:
+                IReactionControllerModel* m_pReactionControllerModel;
 
-		public:
-			ReactionControllerModule();
+            public:
+                ReactionControllerModule();
 
-			~ReactionControllerModule();
+                ~ReactionControllerModule();
 
-			IReactionControllerModel& GetReactionControllerModel() const;
-		};
-	}
+                IReactionControllerModel& GetReactionControllerModel() const;
+            };
+        }
+    }
 }

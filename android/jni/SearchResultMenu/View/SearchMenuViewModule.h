@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -12,33 +12,36 @@
 #include "Search.h"
 #include "CategorySearch.h"
 #include "SearchResultMenu.h"
-#include "NativeToUiMessageBus.h"
-#include "UiToNativeMessageBus.h"
+#include "BidirectionalBus.h"
 
 namespace ExampleApp
 {
-	namespace SearchMenu
-	{
-		class SearchMenuViewModule: public Menu::IMenuViewModule, private Eegeo::NonCopyable
-		{
-		private:
-			Menu::IMenuViewController* m_pMenuViewController;
+    namespace SearchResultMenu
+    {
+        namespace View
+        {
+            class SearchMenuViewModule: public Menu::View::IMenuViewModule, private Eegeo::NonCopyable
+            {
+            private:
+                Menu::View::MenuController* m_pController;
+                Menu::View::MenuView* m_pView;
 
-		public:
-			SearchMenuViewModule(
-			    const std::string& viewName,
-			    AndroidNativeState& nativeState,
-			    Menu::IMenuModel& menuModelModel,
-			    Menu::IMenuViewModel& menuViewModel,
-			    CategorySearch::ICategorySearchRepository& categorySearchRepository,
-			    SearchResultMenu::ISearchResultMenuViewModel& searchResultMenuViewModel,
-			    ExampleApp::ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
-			    ExampleApp::ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus
-			);
+            public:
+                SearchMenuViewModule(
+                    const std::string& viewName,
+                    AndroidNativeState& nativeState,
+                    Menu::View::IMenuModel& menuModelModel,
+                    Menu::View::IMenuViewModel& menuViewModel,
+                    CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
+                    ISearchResultMenuViewModel& searchResultMenuViewModel,
+                    ExampleAppMessaging::TMessageBus& messageBus
+                );
 
-			~SearchMenuViewModule();
+                ~SearchMenuViewModule();
 
-			Menu::IMenuViewController& GetMenuViewController() const;
-		};
-	}
+                Menu::View::MenuController& GetMenuController() const;
+                Menu::View::IMenuView& GetMenuView() const;
+            };
+        }
+    }
 }

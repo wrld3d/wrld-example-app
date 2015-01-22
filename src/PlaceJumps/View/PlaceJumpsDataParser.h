@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -10,11 +10,14 @@
 
 namespace ExampleApp
 {
-	namespace PlaceJumps
-	{
-		namespace PlaceJumpsDataParser
-		{
-			bool ParsePlaceJumps(const std::string& json, std::vector<PlaceJumpModel>&  out_placeJumpModel);
-		}
-	}
+    namespace PlaceJumps
+    {
+        namespace View
+        {
+            namespace PlaceJumpsDataParser
+            {
+                bool ParsePlaceJumps(const std::string& json, std::vector<PlaceJumpModel>&  out_placeJumpModel);
+            }
+        }
+    }
 }

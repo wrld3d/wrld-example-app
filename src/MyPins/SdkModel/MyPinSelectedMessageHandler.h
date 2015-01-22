@@ -1,9 +1,9 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 #include "MyPins.h"
 #include "Types.h"
-#include "UiToNativeMessageBus.h"
+#include "BidirectionalBus.h"
 #include "IPlaceJumpController.h"
 #include "ICallback.h"
 #include "MyPinSelectedMessage.h"
@@ -13,20 +13,23 @@ namespace ExampleApp
 {
     namespace MyPins
     {
-        class MyPinSelectedMessageHandler
+        namespace SdkModel
         {
-            CameraTransitions::ICameraTransitionController& m_cameraTransitionController;
-            ExampleAppMessaging::UiToNativeMessageBus& m_uiToNativeMessageBus;
-            Eegeo::Helpers::TCallback1<MyPinSelectedMessageHandler, const MyPinSelectedMessage&> m_handlerBinding;
-            
-            void HandleReceivedMyPinSelectedMessage(const MyPinSelectedMessage& message);
-            
-        public:
-            MyPinSelectedMessageHandler(CameraTransitions::ICameraTransitionController& cameraTransitionController,
-                                            ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus);
-            
-            ~MyPinSelectedMessageHandler();
+            class MyPinSelectedMessageHandler
+            {
+                CameraTransitions::SdkModel::ICameraTransitionController& m_cameraTransitionController;
+                ExampleAppMessaging::TMessageBus& m_messageBus;
+                Eegeo::Helpers::TCallback1<MyPinSelectedMessageHandler, const MyPinSelectedMessage&> m_handlerBinding;
 
-        };
+                void OnMyPinSelectedMessage(const MyPinSelectedMessage& message);
+
+            public:
+                MyPinSelectedMessageHandler(CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
+                                            ExampleAppMessaging::TMessageBus& messageBus);
+
+                ~MyPinSelectedMessageHandler();
+
+            };
+        }
     }
 }

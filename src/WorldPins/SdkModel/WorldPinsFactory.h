@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -10,19 +10,22 @@
 
 namespace ExampleApp
 {
-	namespace WorldPins
-	{
-		class WorldPinsFactory : public IWorldPinsFactory, private Eegeo::NonCopyable
-		{
-			WorldPinItemModel::WorldPinItemModelId m_lastId;
+    namespace WorldPins
+    {
+        namespace SdkModel
+        {
+            class WorldPinsFactory : public IWorldPinsFactory, private Eegeo::NonCopyable
+            {
+                WorldPinItemModel::WorldPinItemModelId m_lastId;
 
-		public:
-			WorldPinsFactory();
+            public:
+                WorldPinsFactory();
 
-			~WorldPinsFactory();
+                ~WorldPinsFactory();
 
-			virtual Eegeo::Pins::Pin* CreatePin(const Eegeo::Space::LatLong& location,
-			                                    int iconIndex);
-		};
-	}
+                virtual Eegeo::Pins::Pin* CreatePin(const Eegeo::Space::LatLong& location,
+                                                    int iconIndex);
+            };
+        }
+    }
 }

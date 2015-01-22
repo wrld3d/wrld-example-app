@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -7,33 +7,36 @@
 #include "Menu.h"
 #include "Helpers.h"
 #include "CityThemes.h"
-#include "UiToNativeMessageBus.h"
+#include "BidirectionalBus.h"
 #include "WeatherSelectedMessageHandler.h"
 
 namespace ExampleApp
 {
-	namespace WeatherMenu
-	{
-		class WeatherMenuModule : public IWeatherMenuModule
-		{
-		public:
-			WeatherMenuModule(Eegeo::Helpers::IFileIO& fileio,
-			                  Eegeo::Resources::CityThemes::ICityThemesService& themesService,
-			                  Eegeo::Resources::CityThemes::ICityThemesUpdater& themesUpdater,
-			                  ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus);
+    namespace WeatherMenu
+    {
+        namespace SdkModel
+        {
+            class WeatherMenuModule : public IWeatherMenuModule
+            {
+            public:
+                WeatherMenuModule(Eegeo::Helpers::IFileIO& fileio,
+                                  Eegeo::Resources::CityThemes::ICityThemesService& themesService,
+                                  Eegeo::Resources::CityThemes::ICityThemesUpdater& themesUpdater,
+                                  ExampleAppMessaging::TMessageBus& messageBus);
 
-			~WeatherMenuModule();
+                ~WeatherMenuModule();
 
-			Menu::IMenuModel& GetWeatherMenuModel() const
-			{
-				return *m_pMenuModel;
-			}
-		private:
+                Menu::View::IMenuModel& GetWeatherMenuModel() const
+                {
+                    return *m_pMenuModel;
+                }
+            private:
 
-			Menu::IMenuModel* m_pMenuModel;
-			Menu::IMenuOptionsModel* m_pMenuOptionsModel;
-			IWeatherController* m_pWeatherController;
-			WeatherSelectedMessageHandler* m_pWeatherSelectedMessageHandler;
-		};
-	}
+                Menu::View::IMenuModel* m_pMenuModel;
+                Menu::View::IMenuOptionsModel* m_pMenuOptionsModel;
+                IWeatherController* m_pWeatherController;
+                WeatherSelectedMessageHandler* m_pWeatherSelectedMessageHandler;
+            };
+        }
+    }
 }

@@ -1,39 +1,52 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "AndroidNativeState.h"
 #include "Menu.h"
 #include "MenuViewModule.h"
-#include "MenuViewController.h"
+#include "MenuController.h"
+#include "MenuView.h"
 #include "AndroidAppThreadAssertionMacros.h"
 
 namespace ExampleApp
 {
-	namespace Menu
-	{
-		MenuViewModule::MenuViewModule(
-		    const std::string& viewName,
-		    AndroidNativeState& nativeState,
-		    Menu::IMenuModel& menuModel,
-		    Menu::IMenuViewModel& menuViewModel
-		)
-		{
-			ASSERT_UI_THREAD
+    namespace Menu
+    {
+        namespace View
+        {
+            MenuViewModule::MenuViewModule(
+                const std::string& viewName,
+                AndroidNativeState& nativeState,
+                IMenuModel& menuModel,
+                IMenuViewModel& menuViewModel
+            )
+            {
+                ASSERT_UI_THREAD
 
-			m_pMenuViewController = Eegeo_NEW(MenuViewController)(viewName, nativeState, menuModel, menuViewModel);
-		}
+                m_pView = Eegeo_NEW(MenuView)(nativeState, viewName);
+                m_pController = Eegeo_NEW(MenuController)(menuModel, menuViewModel, *m_pView);
+            }
 
-		MenuViewModule::~MenuViewModule()
-		{
-			ASSERT_UI_THREAD
+            MenuViewModule::~MenuViewModule()
+            {
+                ASSERT_UI_THREAD
 
-			Eegeo_DELETE m_pMenuViewController;
-		}
+                Eegeo_DELETE m_pController;
+                Eegeo_DELETE m_pView;
+            }
 
-		IMenuViewController& MenuViewModule::GetMenuViewController() const
-		{
-			ASSERT_UI_THREAD
+            MenuController& MenuViewModule::GetMenuController() const
+            {
+                ASSERT_UI_THREAD
 
-			return *m_pMenuViewController;
-		}
-	}
+                return *m_pController;
+            }
+
+            IMenuView& MenuViewModule::GetMenuView() const
+            {
+                ASSERT_UI_THREAD
+
+                return *m_pView;
+            }
+        }
+    }
 }

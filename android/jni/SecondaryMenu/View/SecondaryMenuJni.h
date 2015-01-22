@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -6,9 +6,9 @@
 
 extern "C"
 {
-	JNIEXPORT void JNICALL Java_com_eegeo_secondarymenu_SecondaryMenuViewJniMethods_PerformSearchQuery(
-	    JNIEnv* jenv, jobject obj,
-	    jlong nativeObjectPtr,
-	    jstring searchQuery);
+    JNIEXPORT void JNICALL Java_com_eegeo_secondarymenu_SecondaryMenuViewJniMethods_PerformSearchQuery(
+        JNIEnv* jenv, jobject obj,
+        jlong nativeObjectPtr,
+        jstring searchQuery);
 }
 

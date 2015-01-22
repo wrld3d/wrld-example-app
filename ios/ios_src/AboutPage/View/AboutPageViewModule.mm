@@ -1,33 +1,38 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "AboutPageViewModule.h"
 #include "IAboutPageViewModel.h"
-#include "AboutPageViewController.h"
+#include "AboutPageView.h"
+#include "AboutPageController.h"
+#include "AboutPageViewInterop.h"
 
 namespace ExampleApp
 {
-	namespace AboutPage
-	{
-		AboutPageViewModule::AboutPageViewModule(IAboutPageModel& aboutPageModel,
-		        IAboutPageViewModel& aboutPageViewModel)
-		{
-			m_pAboutPageViewController = [[AboutPageViewController alloc] initWithParams :&aboutPageModel
-			                              :&aboutPageViewModel];
-		}
+    namespace AboutPage
+    {
+        namespace View
+        {
+            AboutPageViewModule::AboutPageViewModule(IAboutPageViewModel& aboutPageViewModel)
+            {
+                m_pView = [[AboutPageView alloc] initView];
+                m_pController = Eegeo_NEW(AboutPageController)(*[m_pView getInterop], aboutPageViewModel);
+            }
 
-		AboutPageViewModule::~AboutPageViewModule()
-		{
-			[m_pAboutPageViewController release];
-		}
+            AboutPageViewModule::~AboutPageViewModule()
+            {
+                Eegeo_DELETE m_pController;
+                [m_pView release];
+            }
 
-		AboutPageViewController& AboutPageViewModule::GetAboutPageViewController() const
-		{
-			return *m_pAboutPageViewController;
-		}
+            AboutPageController& AboutPageViewModule::GetAboutPageController() const
+            {
+                return *m_pController;
+            }
 
-		AboutPageView& AboutPageViewModule::GetAboutPageView() const
-		{
-			return *[m_pAboutPageViewController pAboutPageView];
-		}
-	}
+            AboutPageView& AboutPageViewModule::GetAboutPageView() const
+            {
+                return *m_pView;
+            }
+        }
+    }
 }

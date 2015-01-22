@@ -1,52 +1,63 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "AndroidNativeState.h"
 #include "Menu.h"
 #include "SearchMenuViewModule.h"
-#include "SearchMenuViewController.h"
+#include "SearchResultMenuController.h"
+#include "SearchMenuView.h"
 #include "AndroidAppThreadAssertionMacros.h"
 
 namespace ExampleApp
 {
-	namespace SearchMenu
-	{
-		SearchMenuViewModule::SearchMenuViewModule(
-		    const std::string& viewName,
-		    AndroidNativeState& nativeState,
-		    Menu::IMenuModel& menuModel,
-		    Menu::IMenuViewModel& menuViewModel,
-		    CategorySearch::ICategorySearchRepository& categorySearchRepository,
-		    SearchResultMenu::ISearchResultMenuViewModel& searchResultMenuViewModel,
-		    ExampleApp::ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
-		    ExampleApp::ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus
-		)
-		{
-			ASSERT_UI_THREAD
+    namespace SearchResultMenu
+    {
+        namespace View
+        {
+            SearchMenuViewModule::SearchMenuViewModule(
+                const std::string& viewName,
+                AndroidNativeState& nativeState,
+                Menu::View::IMenuModel& menuModel,
+                Menu::View::IMenuViewModel& menuViewModel,
+                CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
+                ISearchResultMenuViewModel& searchResultMenuViewModel,
+                ExampleAppMessaging::TMessageBus& messageBus
+            )
+            {
+                ASSERT_UI_THREAD
 
-			m_pMenuViewController = Eegeo_NEW(SearchMenuViewController)(
-			                            viewName,
-			                            nativeState,
-			                            menuModel,
-			                            menuViewModel,
-			                            categorySearchRepository,
-			                            searchResultMenuViewModel,
-			                            uiToNativeMessageBus,
-			                            nativeToUiMessageBus
-			                        );
-		}
+                SearchMenuView* view = Eegeo_NEW(SearchMenuView)(nativeState, viewName);
+                m_pView = view;
 
-		SearchMenuViewModule::~SearchMenuViewModule()
-		{
-			ASSERT_UI_THREAD
+                m_pController = Eegeo_NEW(SearchResultMenu::View::SearchResultMenuController)(
+                                    *view,
+                                    *view,
+                                    menuModel,
+                                    menuViewModel,
+                                    categorySearchRepository,
+                                    searchResultMenuViewModel,
+                                    messageBus
+                                );
+            }
 
-			Eegeo_DELETE m_pMenuViewController;
-		}
+            SearchMenuViewModule::~SearchMenuViewModule()
+            {
+                ASSERT_UI_THREAD
 
-		Menu::IMenuViewController& SearchMenuViewModule::GetMenuViewController() const
-		{
-			ASSERT_UI_THREAD
+                Eegeo_DELETE m_pController;
+                Eegeo_DELETE m_pView;
+            }
 
-			return *m_pMenuViewController;
-		}
-	}
+            Menu::View::MenuController& SearchMenuViewModule::GetMenuController() const
+            {
+                ASSERT_UI_THREAD
+                return *m_pController;
+            }
+
+            Menu::View::IMenuView& SearchMenuViewModule::GetMenuView() const
+            {
+                ASSERT_UI_THREAD
+                return *m_pView;
+            }
+        }
+    }
 }

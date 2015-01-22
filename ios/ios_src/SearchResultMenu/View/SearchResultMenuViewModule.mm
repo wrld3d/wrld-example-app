@@ -1,55 +1,67 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "SearchResultMenuViewModule.h"
 #include "IMenuModel.h"
 #include "IMenuViewModel.h"
-#include "SearchResultMenuViewController.h"
 #include "SearchResultMenuView.h"
 #include "ScreenProperties.h"
+#include "MenuView.h"
+#include "MenuController.h"
+#include "SearchResultMenuController.h"
+#include "SearchResultMenuViewInterop.h"
+#include "MenuViewInterop.h"
 
 namespace ExampleApp
 {
-	namespace SearchResultMenu
-	{
-		SearchResultMenuViewModule::SearchResultMenuViewModule(CategorySearch::ICategorySearchRepository& categorySearchRepository,
-		        Menu::IMenuModel& searchResultMenuModel,
-		        Menu::IMenuViewModel& menuViewModel,
-		        SearchResultMenu::ISearchResultMenuViewModel& searchResultMenuViewModel,
-		        const Eegeo::Rendering::ScreenProperties& screenProperties,
-		        Modality::IModalityModel& modalityModel,
-		        ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
-		        ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus)
-		{
-			m_pView = [[SearchResultMenuView alloc]  initWithDimensions
-			           :screenProperties.GetScreenWidth()
-			           :screenProperties.GetScreenHeight()
-			           :screenProperties.GetPixelScale()];
+    namespace SearchResultMenu
+    {
+        namespace View
+        {
+            SearchResultMenuViewModule::SearchResultMenuViewModule(CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
+                    Menu::View::IMenuModel& searchResultMenuModel,
+                    Menu::View::IMenuViewModel& menuViewModel,
+                    ISearchResultMenuViewModel& searchResultMenuViewModel,
+                    const Eegeo::Rendering::ScreenProperties& screenProperties,
+                    ExampleAppMessaging::TMessageBus& messageBus)
+            {
+                m_pDataProvider = [SearchResultMenuDataProvider alloc];
 
-			m_pMenuViewController = [[SearchResultMenuViewController alloc] initWithParams
-			                         :&categorySearchRepository
-			                         :&searchResultMenuModel
-			                         :&menuViewModel
-			                         :&searchResultMenuViewModel
-			                         :m_pView
-			                         :&modalityModel
-			                         :&uiToNativeMessageBus
-			                         :&nativeToUiMessageBus];
-		}
+                m_pView = [[SearchResultMenuView alloc]  initWithParams
+                           :screenProperties.GetScreenWidth()
+                           :screenProperties.GetScreenHeight()
+                           :screenProperties.GetPixelScale()
+                           :false
+                           :menuViewModel.SectionsCount()
+                           :menuViewModel.NumberOfCells()
+                           :m_pDataProvider];
 
-		SearchResultMenuViewModule::~SearchResultMenuViewModule()
-		{
-			[m_pMenuViewController release];
-			[m_pView release];
-		}
+                m_pController =  Eegeo_NEW(SearchResultMenuController)(*[m_pView getSearchInterop],
+                                 *[m_pView getInterop],
+                                 searchResultMenuModel,
+                                 menuViewModel,
+                                 categorySearchRepository,
+                                 searchResultMenuViewModel,
+                                 messageBus
+                                                                      );
 
-		MenuViewController& SearchResultMenuViewModule::GetSearchResultMenuViewController() const
-		{
-			return *m_pMenuViewController;
-		}
+            }
 
-		SearchResultMenuView& SearchResultMenuViewModule::GetSearchResultMenuView() const
-		{
-			return *m_pView;
-		}
-	}
+            SearchResultMenuViewModule::~SearchResultMenuViewModule()
+            {
+                Eegeo_DELETE m_pController;
+                [m_pView release];
+                [m_pDataProvider release];
+            }
+
+            Menu::View::MenuController& SearchResultMenuViewModule::GetMenuController() const
+            {
+                return *m_pController;
+            }
+
+            SearchResultMenuView& SearchResultMenuViewModule::GetSearchResultMenuView() const
+            {
+                return *m_pView;
+            }
+        }
+    }
 }

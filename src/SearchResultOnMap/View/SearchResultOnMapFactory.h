@@ -1,26 +1,29 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
 #include "Types.h"
 #include "ISearchResultOnMapFactory.h"
 #include "SearchResultPoi.h"
-#include "NativeToUiMessageBus.h"
+#include "BidirectionalBus.h"
 
 namespace ExampleApp
 {
-	namespace SearchResultOnMap
-	{
-		class SearchResultOnMapFactory : public ISearchResultOnMapFactory, private Eegeo::NonCopyable
-		{
-			ExampleAppMessaging::NativeToUiMessageBus& m_nativeToUiMessageBus;
+    namespace SearchResultOnMap
+    {
+        namespace View
+        {
+            class SearchResultOnMapFactory : public ISearchResultOnMapFactory, private Eegeo::NonCopyable
+            {
+                ExampleAppMessaging::TMessageBus& m_messageBus;
 
-		public:
-			SearchResultOnMapFactory(ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus);
+            public:
+                SearchResultOnMapFactory(ExampleAppMessaging::TMessageBus& messageBus);
 
-			~SearchResultOnMapFactory();
+                ~SearchResultOnMapFactory();
 
-			SearchResultOnMapItemModel* CreateSearchResultOnMapItemModel(Search::SearchResultModel& searchResultModel) const;
-		};
-	}
+                SearchResultOnMapItemModel* CreateSearchResultOnMapItemModel(Search::SdkModel::SearchResultModel& searchResultModel) const;
+            };
+        }
+    }
 }

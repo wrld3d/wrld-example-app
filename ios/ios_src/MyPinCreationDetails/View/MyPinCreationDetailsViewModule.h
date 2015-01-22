@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -6,28 +6,33 @@
 #include "MyPinCreationDetailsViewIncludes.h"
 #include "MyPinCreationDetails.h"
 #include "MyPinCreation.h"
-#include "UiToNativeMessageBus.h"
+#include "BidirectionalBus.h"
+#include "Rendering.h"
 #include "IConnectivityService.h"
 
 namespace ExampleApp
 {
     namespace MyPinCreationDetails
     {
-        class MyPinCreationDetailsViewModule : public IMyPinCreationDetailsViewModule
+        namespace View
         {
-        public:
-            MyPinCreationDetailsViewModule(ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
-                                           IMyPinCreationDetailsViewModel& myPinCreationDetailsViewModel,
-                                           Eegeo::Web::IConnectivityService& connectivityService,
-                                           UIViewController* rootViewController);
-            
-            ~MyPinCreationDetailsViewModule();
-            
-            MyPinCreationDetailsViewController& GetMyPinCreationDetailsViewController() const;
-            MyPinCreationDetailsView& GetMyPinCreationDetailsView() const;
-        
-        private:
-            MyPinCreationDetailsViewController* m_pController;
-        };
+            class MyPinCreationDetailsViewModule : public IMyPinCreationDetailsViewModule
+            {
+            public:
+                MyPinCreationDetailsViewModule(ExampleAppMessaging::TMessageBus& messageBus,
+                                               IMyPinCreationDetailsViewModel& myPinCreationDetailsViewModel,
+                                               const Eegeo::Rendering::ScreenProperties& screenProperties,
+                                               Eegeo::Web::IConnectivityService& connectivityService);
+
+                ~MyPinCreationDetailsViewModule();
+
+                MyPinCreationDetailsController& GetMyPinCreationDetailsController() const;
+                MyPinCreationDetailsView& GetMyPinCreationDetailsView() const;
+
+            private:
+                MyPinCreationDetailsView* m_pView;
+                MyPinCreationDetailsController* m_pController;
+            };
+        }
     }
 }

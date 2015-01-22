@@ -1,29 +1,32 @@
-//  Copyright (c) 2014 eeGeo. All rights reserved.
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "CompassViewCycledObserver.h"
 
 namespace ExampleApp
 {
-	namespace Compass
-	{
-		CompassViewCycledObserver::CompassViewCycledObserver(ICompassModel& model,
-								  ExampleApp::ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus
-								 )
-			: m_model(model)
-			, m_uiToNativeMessageBus(uiToNativeMessageBus)
-			, m_handler(this, &CompassViewCycledObserver::OnCompassCycled)
-		{
-			m_uiToNativeMessageBus.Subscribe(m_handler);
-		}
+    namespace Compass
+    {
+        namespace SdkModel
+        {
+            CompassViewCycledObserver::CompassViewCycledObserver(ICompassModel& model,
+                    ExampleAppMessaging::TMessageBus& messageBus
+                                                                )
+                : m_model(model)
+                , m_messageBus(messageBus)
+                , m_handler(this, &CompassViewCycledObserver::OnCompassViewCycledMessage)
+            {
+                m_messageBus.SubscribeNative(m_handler);
+            }
 
-		CompassViewCycledObserver::~CompassViewCycledObserver()
-		{
-			m_uiToNativeMessageBus.Unsubscribe(m_handler);
-		}
+            CompassViewCycledObserver::~CompassViewCycledObserver()
+            {
+                m_messageBus.UnsubscribeNative(m_handler);
+            }
 
-		void CompassViewCycledObserver::OnCompassCycled(const CompassViewCycledMessage& message)
-		{
-			m_model.CycleToNextGpsMode();
-		}
-	}
+            void CompassViewCycledObserver::OnCompassViewCycledMessage(const CompassViewCycledMessage& message)
+            {
+                m_model.CycleToNextGpsMode();
+            }
+        }
+    }
 }

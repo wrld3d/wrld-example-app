@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -10,34 +10,37 @@
 #include "Rendering.h"
 #include "Modality.h"
 #include "SearchResultMenu.h"
-#include "UiToNativeMessageBus.h"
-#include "NativeToUiMessageBus.h"
+#include "SearchResultMenuViewIncludes.h"
+#include "BidirectionalBus.h"
+#include "SearchResultMenuDataProvider.h"
 
 namespace ExampleApp
 {
-	namespace SearchResultMenu
-	{
-		class SearchResultMenuViewModule: public ISearchResultMenuViewModule, private Eegeo::NonCopyable
-		{
-		private:
-			SearchResultMenuViewController* m_pMenuViewController;
-			SearchResultMenuView* m_pView;
+    namespace SearchResultMenu
+    {
+        namespace View
+        {
+            class SearchResultMenuViewModule: public ISearchResultMenuViewModule, private Eegeo::NonCopyable
+            {
+            private:
+                SearchResultMenuController* m_pController;
+                SearchResultMenuView* m_pView;
+                SearchResultMenuDataProvider* m_pDataProvider;
 
-		public:
-			SearchResultMenuViewModule(CategorySearch::ICategorySearchRepository& categorySearchRepository,
-			                           Menu::IMenuModel& searchResultMenuModel,
-			                           Menu::IMenuViewModel& menuViewModel,
-			                           SearchResultMenu::ISearchResultMenuViewModel& searchResultMenuViewModel,
-			                           const Eegeo::Rendering::ScreenProperties& screenProperties,
-			                           Modality::IModalityModel& modalityModel,
-			                           ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
-			                           ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus);
+            public:
+                SearchResultMenuViewModule(CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
+                                           Menu::View::IMenuModel& searchResultMenuModel,
+                                           Menu::View::IMenuViewModel& menuViewModel,
+                                           ISearchResultMenuViewModel& searchResultMenuViewModel,
+                                           const Eegeo::Rendering::ScreenProperties& screenProperties,
+                                           ExampleAppMessaging::TMessageBus& messageBus);
 
-			~SearchResultMenuViewModule();
+                ~SearchResultMenuViewModule();
 
-			MenuViewController& GetSearchResultMenuViewController() const;
+                Menu::View::MenuController& GetMenuController() const;
 
-			SearchResultMenuView& GetSearchResultMenuView() const;
-		};
-	}
+                SearchResultMenuView& GetSearchResultMenuView() const;
+            };
+        }
+    }
 }

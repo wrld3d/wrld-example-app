@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -8,15 +8,18 @@
 
 namespace ExampleApp
 {
-	namespace WorldPins
-	{
-		class IWorldPinsFactory
-		{
-		public:
-			virtual ~IWorldPinsFactory() { }
+    namespace WorldPins
+    {
+        namespace SdkModel
+        {
+            class IWorldPinsFactory
+            {
+            public:
+                virtual ~IWorldPinsFactory() { }
 
-			virtual Eegeo::Pins::Pin* CreatePin(const Eegeo::Space::LatLong& location,
-			                                    int iconIndex) = 0;
-		};
-	}
+                virtual Eegeo::Pins::Pin* CreatePin(const Eegeo::Space::LatLong& location,
+                                                    int iconIndex) = 0;
+            };
+        }
+    }
 }

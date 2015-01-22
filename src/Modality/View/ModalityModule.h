@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -8,27 +8,30 @@
 #include "IModalityModule.h"
 #include "IMenuViewModel.h"
 #include "IOpenableControlViewModel.h"
-#include "UiToNativeMessageBus.h"
+#include "BidirectionalBus.h"
 #include "ModalityObserver.h"
 
 namespace ExampleApp
 {
-	namespace Modality
-	{
-		class ModalityModule: public IModalityModule, private Eegeo::NonCopyable
-		{
-		private:
-			IModalityController* m_pController;
-			IModalityModel* m_pModel;
-			ModalityObserver* m_pModalityObserver;
+    namespace Modality
+    {
+        namespace View
+        {
+            class ModalityModule: public IModalityModule, private Eegeo::NonCopyable
+            {
+            private:
+                IModalityController* m_pController;
+                IModalityModel* m_pModel;
+                ModalityObserver* m_pModalityObserver;
 
-		public:
-			ModalityModule(ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
-			               const std::vector<OpenableControlViewModel::IOpenableControlViewModel*>& viewModels);
+            public:
+                ModalityModule(ExampleAppMessaging::TMessageBus& messageBus,
+                               const std::vector<OpenableControl::View::IOpenableControlViewModel*>& viewModels);
 
-			~ModalityModule();
+                ~ModalityModule();
 
-			IModalityModel& GetModalityModel() const;
-		};
-	}
+                IModalityModel& GetModalityModel() const;
+            };
+        }
+    }
 }

@@ -1,31 +1,35 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "ModalBackgroundViewModule.h"
 #include "IModalityModel.h"
-#include "ModalBackgroundViewController.h"
+#include "ModalBackgroundView.h"
+#include "ModalBackgroundController.h"
+#include "IModalBackgroundView.h"
+#include "ModalBackgroundViewInterop.h"
+#include "ScreenProperties.h"
 
 namespace ExampleApp
 {
-	namespace ModalBackground
-	{
-		ModalBackgroundViewModule::ModalBackgroundViewModule(Modality::IModalityModel& modalityModel)
-		{
-			m_pModalBackgroundViewController = [[ModalBackgroundViewController alloc] initWithParams :&modalityModel];
-		}
+    namespace ModalBackground
+    {
+        namespace View
+        {
+            ModalBackgroundViewModule::ModalBackgroundViewModule(Modality::View::IModalityModel& modalityModel, const Eegeo::Rendering::ScreenProperties& screenProperties)
+            {
+                m_pView = [[ModalBackgroundView alloc] initWithParams:screenProperties.GetScreenWidth() :screenProperties.GetScreenHeight()];
+                m_pController = Eegeo_NEW(Modality::View::ModalBackgroundController)(*[m_pView getInterop], modalityModel);
+            }
 
-		ModalBackgroundViewModule::~ModalBackgroundViewModule()
-		{
-			[m_pModalBackgroundViewController release];
-		}
+            ModalBackgroundViewModule::~ModalBackgroundViewModule()
+            {
+                Eegeo_DELETE m_pController;
+                [m_pView release];
+            }
 
-		ModalBackgroundViewController& ModalBackgroundViewModule::GetModalBackgroundViewController() const
-		{
-			return *m_pModalBackgroundViewController;
-		}
-
-		ModalBackgroundView& ModalBackgroundViewModule::GetModalBackgroundView() const
-		{
-			return *[m_pModalBackgroundViewController pModalBackgroundView];
-		}
-	}
+            ModalBackgroundView& ModalBackgroundViewModule::GetModalBackgroundView()
+            {
+                return *m_pView;
+            }
+        }
+    }
 }

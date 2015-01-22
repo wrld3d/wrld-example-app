@@ -1,32 +1,35 @@
-//  Copyright (c) 2014 eeGeo. All rights reserved.
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
 #include "Types.h"
-#include "UiToNativeMessageBus.h"
+#include "BidirectionalBus.h"
 #include "CompassViewCycledMessage.h"
 #include "ICompassModel.h"
 #include "ICallback.h"
 
 namespace ExampleApp
 {
-	namespace Compass
-	{
-		class CompassViewCycledObserver : private Eegeo::NonCopyable
-		{
-		private:
-			ExampleApp::ExampleAppMessaging::UiToNativeMessageBus& m_uiToNativeMessageBus;
-			ICompassModel& m_model;
-			Eegeo::Helpers::TCallback1<CompassViewCycledObserver, const CompassViewCycledMessage&> m_handler;
+    namespace Compass
+    {
+        namespace SdkModel
+        {
+            class CompassViewCycledObserver : private Eegeo::NonCopyable
+            {
+            private:
+                ExampleAppMessaging::TMessageBus& m_messageBus;
+                ICompassModel& m_model;
+                Eegeo::Helpers::TCallback1<CompassViewCycledObserver, const CompassViewCycledMessage&> m_handler;
 
-			void OnCompassCycled(const CompassViewCycledMessage& message);
+                void OnCompassViewCycledMessage(const CompassViewCycledMessage& message);
 
-		public:
-			CompassViewCycledObserver(ICompassModel& model,
-			                          ExampleApp::ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus
-			                         );
+            public:
+                CompassViewCycledObserver(ICompassModel& model,
+                                          ExampleAppMessaging::TMessageBus& messageBus
+                                         );
 
-			~CompassViewCycledObserver();
-		};
-	}
+                ~CompassViewCycledObserver();
+            };
+        }
+    }
 }

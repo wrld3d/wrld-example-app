@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -8,13 +8,19 @@
 
 namespace ExampleApp
 {
-        class MyPinCreationConfirmationOpenableControl : public OpenableControlViewModel::OpenableControlViewModelBase, private Eegeo::NonCopyable
+    namespace MyPinCreation
+    {
+        namespace View
         {
-            Eegeo::Helpers::TIdentity m_identity;
+            class MyPinCreationConfirmationOpenableControl : public OpenableControl::View::OpenableControlViewModelBase, private Eegeo::NonCopyable
+            {
+                Eegeo::Helpers::TIdentity m_identity;
 
-        public:
-            MyPinCreationConfirmationOpenableControl(Eegeo::Helpers::TIdentity identity, Reaction::IReactionControllerModel& reactionControllerModel);
+            public:
+                MyPinCreationConfirmationOpenableControl(Eegeo::Helpers::TIdentity identity, Reaction::View::IReactionControllerModel& reactionControllerModel);
 
-            Eegeo::Helpers::TIdentity GetIdentity() const;
-        };
+                Eegeo::Helpers::TIdentity GetIdentity() const;
+            };
+        }
+    }
 }

@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -8,15 +8,18 @@
 
 namespace ExampleApp
 {
-	namespace Search
-	{
-		class ISearchResultParser
-		{
-		public:
-			virtual ~ISearchResultParser() { }
+    namespace Search
+    {
+        namespace SdkModel
+        {
+            class ISearchResultParser
+            {
+            public:
+                virtual ~ISearchResultParser() { }
 
-			virtual void ParseSearchResults(const std::string& serialized,
-			                                std::vector<SearchResultModel>& out_results) = 0;
-		};
-	}
+                virtual void ParseSearchResults(const std::string& serialized,
+                                                std::vector<SearchResultModel>& out_results) = 0;
+            };
+        }
+    }
 }

@@ -1,81 +1,69 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "CompassViewModel.h"
 
 namespace ExampleApp
 {
-	namespace Compass
-	{
-		CompassViewModel::CompassViewModel(Eegeo::Helpers::TIdentity identity,
-		                                   bool initiallyOnScreen)
-			: m_screenControl(initiallyOnScreen, identity)
-		{
+    namespace Compass
+    {
+        namespace View
+        {
+            CompassViewModel::CompassViewModel(Eegeo::Helpers::TIdentity identity,
+                                               bool initiallyOnScreen)
+                : m_screenControl(initiallyOnScreen, identity)
+            {
 
-		}
+            }
 
-		/*void CompassViewModel::UpdateHeadingAngleRadians(float headingRadians)
-		{
-		    m_updateCallbacks.ExecuteCallbacks(headingRadians);
-		}
+            ScreenControl::View::IScreenControlViewModel& CompassViewModel::GetScreenControlViewModel()
+            {
+                return m_screenControl;
+            }
 
-		void CompassViewModel::InsertUpdateCallback(Eegeo::Helpers::ICallback1<float>& updateCallback)
-		{
-		    m_updateCallbacks.AddCallback(updateCallback);
-		}
+            Eegeo::Helpers::TIdentity CompassViewModel::GetIdentity() const
+            {
+                return m_screenControl.GetIdentity();
+            }
 
-		void CompassViewModel::RemoveUpdateCallback(Eegeo::Helpers::ICallback1<float>& updateCallback)
-		{
-		    m_updateCallbacks.RemoveCallback(updateCallback);
-		}*/
+            void CompassViewModel::AddToScreen()
+            {
+                m_screenControl.AddToScreen();
+            }
 
-		ScreenControlViewModel::IScreenControlViewModel& CompassViewModel::GetScreenControlViewModel()
-		{
-			return m_screenControl;
-		}
+            void CompassViewModel::RemoveFromScreen()
+            {
+                m_screenControl.RemoveFromScreen();
+            }
 
-		Eegeo::Helpers::TIdentity CompassViewModel::GetIdentity() const
-		{
-			return m_screenControl.GetIdentity();
-		}
+            void CompassViewModel::UpdateOnScreenState(float onScreenState)
+            {
+                m_screenControl.UpdateOnScreenState(onScreenState);
+            }
 
-		void CompassViewModel::AddToScreen()
-		{
-			m_screenControl.AddToScreen();
-		}
+            void CompassViewModel::InsertOnScreenStateChangedCallback(Eegeo::Helpers::ICallback2<ScreenControl::View::IScreenControlViewModel&, float>& callback)
+            {
+                m_screenControl.InsertOnScreenStateChangedCallback(callback);
+            }
 
-		void CompassViewModel::RemoveFromScreen()
-		{
-			m_screenControl.RemoveFromScreen();
-		}
+            void CompassViewModel::RemoveOnScreenStateChangedCallback(Eegeo::Helpers::ICallback2<ScreenControl::View::IScreenControlViewModel&, float>& callback)
+            {
+                m_screenControl.RemoveOnScreenStateChangedCallback(callback);
+            }
 
-		void CompassViewModel::UpdateOnScreenState(float onScreenState)
-		{
-			m_screenControl.UpdateOnScreenState(onScreenState);
-		}
+            bool CompassViewModel::IsFullyOffScreen() const
+            {
+                return m_screenControl.IsFullyOffScreen();
+            }
 
-		void CompassViewModel::InsertOnScreenStateChangedCallback(Eegeo::Helpers::ICallback2<ScreenControlViewModel::IScreenControlViewModel&, float>& callback)
-		{
-			m_screenControl.InsertOnScreenStateChangedCallback(callback);
-		}
+            bool CompassViewModel::IsFullyOnScreen() const
+            {
+                return m_screenControl.IsFullyOnScreen();
+            }
 
-		void CompassViewModel::RemoveOnScreenStateChangedCallback(Eegeo::Helpers::ICallback2<ScreenControlViewModel::IScreenControlViewModel&, float>& callback)
-		{
-			m_screenControl.RemoveOnScreenStateChangedCallback(callback);
-		}
-
-		bool CompassViewModel::IsFullyOffScreen() const
-		{
-			return m_screenControl.IsFullyOffScreen();
-		}
-
-		bool CompassViewModel::IsFullyOnScreen() const
-		{
-			return m_screenControl.IsFullyOnScreen();
-		}
-
-		float CompassViewModel::OnScreenState() const
-		{
-			return m_screenControl.OnScreenState();
-		}
-	}
+            float CompassViewModel::OnScreenState() const
+            {
+                return m_screenControl.OnScreenState();
+            }
+        }
+    }
 }

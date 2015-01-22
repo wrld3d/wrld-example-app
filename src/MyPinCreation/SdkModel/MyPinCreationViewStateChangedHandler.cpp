@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "MyPinCreationViewStateChangedHandler.h"
 #include "ISearchRefreshService.h"
@@ -7,26 +7,30 @@ namespace ExampleApp
 {
     namespace MyPinCreation
     {
-		MyPinCreationViewStateChangedHandler::MyPinCreationViewStateChangedHandler(IMyPinCreationModel& myPinCreationModel,
-                                                 Search::ISearchRefreshService& searchRefreshService,
-											     ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus)
-		: m_myPinCreationModel(myPinCreationModel)
-        , m_searchRefreshService(searchRefreshService)
-		, m_uiToNativeMessageBus(uiToNativeMessageBus)
-		, m_handler(this, &MyPinCreationViewStateChangedHandler::OnMyPinCreationViewStateChangedMessageReceived)
-		{
-			m_uiToNativeMessageBus.Subscribe(m_handler);
-		}
+        namespace SdkModel
+        {
+            MyPinCreationViewStateChangedHandler::MyPinCreationViewStateChangedHandler(
+                IMyPinCreationModel& myPinCreationModel,
+                Search::SdkModel::ISearchRefreshService& searchRefreshService,
+                ExampleAppMessaging::TMessageBus& messageBus)
+                : m_myPinCreationModel(myPinCreationModel)
+                , m_searchRefreshService(searchRefreshService)
+                , m_messageBus(messageBus)
+                , m_handler(this, &MyPinCreationViewStateChangedHandler::OnMyPinCreationViewStateChangedMessage)
+            {
+                m_messageBus.SubscribeNative(m_handler);
+            }
 
-		MyPinCreationViewStateChangedHandler::~MyPinCreationViewStateChangedHandler()
-		{
-			m_uiToNativeMessageBus.Unsubscribe(m_handler);
-		}
+            MyPinCreationViewStateChangedHandler::~MyPinCreationViewStateChangedHandler()
+            {
+                m_messageBus.UnsubscribeNative(m_handler);
+            }
 
-		void MyPinCreationViewStateChangedHandler::OnMyPinCreationViewStateChangedMessageReceived(const MyPinCreationViewStateChangedMessage& message)
-		{
-			m_myPinCreationModel.SetCreationStage(message.GetMyPinCreationStage());
-            m_searchRefreshService.SetEnabled(message.GetMyPinCreationStage() == MyPinCreation::Inactive);
-		}
+            void MyPinCreationViewStateChangedHandler::OnMyPinCreationViewStateChangedMessage(const MyPinCreationViewStateChangedMessage& message)
+            {
+                m_myPinCreationModel.SetCreationStage(message.GetMyPinCreationStage());
+                m_searchRefreshService.SetEnabled(message.GetMyPinCreationStage() == MyPinCreation::Inactive);
+            }
+        }
     }
 }

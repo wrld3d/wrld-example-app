@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -12,39 +12,44 @@
 
 namespace ExampleApp
 {
-	namespace SearchResultOnMap
-	{
-		class SearchResultOnMapModel : public ISearchResultOnMapModel, private Eegeo::NonCopyable
-		{
-		public:
-			typedef std::map<Search::SearchResultModel*, ExampleApp::WorldPins::WorldPinItemModel*>::iterator mapIt;
+    namespace SearchResultOnMap
+    {
+        namespace SdkModel
+        {
+            class SearchResultOnMapModel : public ISearchResultOnMapModel, private Eegeo::NonCopyable
+            {
+            public:
 
-		private:
-			std::map<Search::SearchResultModel*, ExampleApp::WorldPins::WorldPinItemModel*> m_searchResultsToPinModel;
+                typedef std::map<Search::SdkModel::SearchResultModel*, ExampleApp::WorldPins::SdkModel::WorldPinItemModel*>::iterator mapIt;
 
-			Search::ISearchResultRepository& m_searchResultRepository;
-			ISearchResultOnMapIconCategoryMapper& m_searchResultOnMapIconCategoryMapper;
-			ISearchResultOnMapFactory& m_searchResultOnMapFactory;
-			WorldPins::IWorldPinsService& m_worldPinsService;
-			Eegeo::Helpers::ICallback1<Search::SearchResultModel*>* m_pSearchResultAddedCallback;
-			Eegeo::Helpers::ICallback1<Search::SearchResultModel*>* m_pSearchResultRemovedCallback;
+            private:
+                std::map<Search::SdkModel::SearchResultModel*, ExampleApp::WorldPins::SdkModel::WorldPinItemModel*> m_searchResultsToPinModel;
 
-		public:
-			SearchResultOnMapModel(WorldPins::IWorldPinsService& worldPinsService,
-			                       ISearchResultOnMapFactory& searchResultOnMapFactory,
-			                       ISearchResultOnMapIconCategoryMapper& searchResultOnMapIconCategoryMapper,
-			                       Search::ISearchResultRepository& searchResultRepository);
+                Search::SdkModel::ISearchResultRepository& m_searchResultRepository;
+                View::ISearchResultOnMapIconCategoryMapper& m_searchResultOnMapIconCategoryMapper;
+                View::ISearchResultOnMapFactory& m_searchResultOnMapFactory;
 
-			~SearchResultOnMapModel();
+                WorldPins::SdkModel::IWorldPinsService& m_worldPinsService;
+                Eegeo::Helpers::ICallback1<Search::SdkModel::SearchResultModel*>* m_pSearchResultAddedCallback;
+                Eegeo::Helpers::ICallback1<Search::SdkModel::SearchResultModel*>* m_pSearchResultRemovedCallback;
 
-			mapIt begin();
+            public:
+                SearchResultOnMapModel(WorldPins::SdkModel::IWorldPinsService& worldPinsService,
+                                       View::ISearchResultOnMapFactory& searchResultOnMapFactory,
+                                       View::ISearchResultOnMapIconCategoryMapper& searchResultOnMapIconCategoryMapper,
+                                       Search::SdkModel::ISearchResultRepository& searchResultRepository);
 
-			mapIt end();
+                ~SearchResultOnMapModel();
 
-		private:
-			void AddSearchResult(Search::SearchResultModel*& pSearchResultModel);
+                mapIt begin();
 
-			void RemoveSearchResult(Search::SearchResultModel*& pSearchResultModel);
-		};
-	}
+                mapIt end();
+
+            private:
+                void AddSearchResult(Search::SdkModel::SearchResultModel*& pSearchResultModel);
+
+                void RemoveSearchResult(Search::SdkModel::SearchResultModel*& pSearchResultModel);
+            };
+        }
+    }
 }

@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -14,31 +14,33 @@
 #include "Rendering.h"
 #include "Camera.h"
 #include "SearchResultOnMapItemModelSelectedObserver.h"
-#include "UiToNativeMessageBus.h"
-#include "NativeToUiMessageBus.h"
+#include "BidirectionalBus.h"
 
 namespace ExampleApp
 {
-	namespace SearchResultOnMap
-	{
-		class SearchResultOnMapModule: public ISearchResultOnMapModule, private Eegeo::NonCopyable
-		{
-		private:
-			ISearchResultOnMapModel* m_pSearchResultOnMapModel;
-			ISearchResultOnMapFactory* m_pSearchResultOnMapFactory;
-			ISearchResultOnMapIconCategoryMapper* m_pSearchResultOnMapIconCategoryMapper;
-			SearchResultOnMapItemModelSelectedObserver* m_pSearchResultOnMapItemModelSelectedObserver;
+    namespace SearchResultOnMap
+    {
+        namespace SdkModel
+        {
+            class SearchResultOnMapModule: public ISearchResultOnMapModule, private Eegeo::NonCopyable
+            {
+            private:
+                ISearchResultOnMapModel* m_pSearchResultOnMapModel;
+                View::ISearchResultOnMapFactory* m_pSearchResultOnMapFactory;
+                View::ISearchResultOnMapIconCategoryMapper* m_pSearchResultOnMapIconCategoryMapper;
+                View::SearchResultOnMapItemModelSelectedObserver* m_pSearchResultOnMapItemModelSelectedObserver;
 
-		public:
-			SearchResultOnMapModule(Search::ISearchResultRepository& searchResultRepository,
-			                        SearchResultPoi::ISearchResultPoiViewModel& searchResultPoiViewModel,
-			                        WorldPins::IWorldPinsService& worldPinsService,
-			                        ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus);
+            public:
+                SearchResultOnMapModule(Search::SdkModel::ISearchResultRepository& searchResultRepository,
+                                        SearchResultPoi::View::ISearchResultPoiViewModel& searchResultPoiViewModel,
+                                        WorldPins::SdkModel::IWorldPinsService& worldPinsService,
+                                        ExampleAppMessaging::TMessageBus& messageBus);
 
-			~SearchResultOnMapModule();
+                ~SearchResultOnMapModule();
 
-			ISearchResultOnMapModel& GetSearchResultOnMapModel() const;
+                ISearchResultOnMapModel& GetSearchResultOnMapModel() const;
 
-		};
-	}
+            };
+        }
+    }
 }

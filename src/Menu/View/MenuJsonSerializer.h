@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -8,37 +8,40 @@
 
 namespace ExampleApp
 {
-	namespace Menu
-	{
-		template <typename TMenuItem>
-		std::string SerialiseMenuItemToJson(const TMenuItem& menuItem)
-		{
-			rapidjson::StringBuffer stringBuffer;
-			rapidjson::Writer<rapidjson::StringBuffer> writer = rapidjson::Writer<rapidjson::StringBuffer>(stringBuffer);
+    namespace Menu
+    {
+        namespace View
+        {
+            template <typename TMenuItem>
+            std::string SerialiseMenuItemToJson(const TMenuItem& menuItem)
+            {
+                rapidjson::StringBuffer stringBuffer;
+                rapidjson::Writer<rapidjson::StringBuffer> writer = rapidjson::Writer<rapidjson::StringBuffer>(stringBuffer);
 
-			writer.StartObject();
+                writer.StartObject();
 
-			if(!menuItem.Name().empty())
-			{
-				writer.String("name");
-				writer.String(menuItem.Name().c_str(), static_cast<rapidjson::SizeType>(menuItem.Name().size()));
-			}
+                if(!menuItem.Name().empty())
+                {
+                    writer.String("name");
+                    writer.String(menuItem.Name().c_str(), static_cast<rapidjson::SizeType>(menuItem.Name().size()));
+                }
 
-			if(!menuItem.Details().empty())
-			{
-				writer.String("details");
-				writer.String(menuItem.Details().c_str(), static_cast<rapidjson::SizeType>(menuItem.Details().size()));
-			}
+                if(!menuItem.Details().empty())
+                {
+                    writer.String("details");
+                    writer.String(menuItem.Details().c_str(), static_cast<rapidjson::SizeType>(menuItem.Details().size()));
+                }
 
-			if(!menuItem.Icon().empty())
-			{
-				writer.String("icon");
-				writer.String(menuItem.Icon().c_str(), static_cast<rapidjson::SizeType>(menuItem.Icon().size()));
-			}
+                if(!menuItem.Icon().empty())
+                {
+                    writer.String("icon");
+                    writer.String(menuItem.Icon().c_str(), static_cast<rapidjson::SizeType>(menuItem.Icon().size()));
+                }
 
-			writer.EndObject();
+                writer.EndObject();
 
-			return std::string(stringBuffer.GetString(), stringBuffer.GetSize());
-		}
-	}
+                return std::string(stringBuffer.GetString(), stringBuffer.GetSize());
+            }
+        }
+    }
 }

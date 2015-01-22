@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -9,23 +9,26 @@
 
 namespace ExampleApp
 {
-	namespace InitialExperience
-	{
-		class AndroidInitialExperienceModule : public InitialExperienceModuleBase, private Eegeo::NonCopyable
-		{
-			AndroidNativeState& m_nativeState;
+    namespace InitialExperience
+    {
+        namespace SdkModel
+        {
+            class AndroidInitialExperienceModule : public InitialExperienceModuleBase, private Eegeo::NonCopyable
+            {
+                AndroidNativeState& m_nativeState;
 
-		public:
-			AndroidInitialExperienceModule(
-			    AndroidNativeState& m_nativeState,
-			    PersistentSettings::IPersistentSettingsModel& persistentSettings
-			);
+            public:
+                AndroidInitialExperienceModule(
+                    AndroidNativeState& m_nativeState,
+                    PersistentSettings::IPersistentSettingsModel& persistentSettings
+                );
 
-			~AndroidInitialExperienceModule();
+                ~AndroidInitialExperienceModule();
 
-		protected:
+            protected:
 
-			std::vector<IInitialExperienceStep*> CreateSteps(WorldAreaLoader::IWorldAreaLoaderModel& worldAreaLoaderModel) const;
-		};
-	}
+                std::vector<IInitialExperienceStep*> CreateSteps(WorldAreaLoader::SdkModel::IWorldAreaLoaderModel& worldAreaLoaderModel) const;
+            };
+        }
+    }
 }

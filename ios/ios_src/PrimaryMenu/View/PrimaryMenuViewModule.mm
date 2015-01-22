@@ -1,48 +1,57 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "PrimaryMenuViewModule.h"
 #include "MenuModel.h"
 #include "MenuViewModel.h"
-#include "MenuViewController.h"
 #include "PrimaryMenuView.h"
 #include "ScreenProperties.h"
+#include "MenuController.h"
+#include "MenuViewInterop.h"
 
 namespace ExampleApp
 {
-	namespace PrimaryMenu
-	{
-		PrimaryMenuViewModule::PrimaryMenuViewModule(Menu::IMenuModel& primaryMenuModel,
-		        Menu::MenuViewModel::IMenuViewModel& primaryMenuViewModel,
-		        const Eegeo::Rendering::ScreenProperties& screenProperties,
-		        Modality::IModalityModel& modalitydModel)
-		{
-			m_pView = [[PrimaryMenuView alloc] initWithDimensions
-			           :screenProperties.GetScreenWidth()
-			           :screenProperties.GetScreenHeight()
-			           :screenProperties.GetPixelScale()
-			          ];
+    namespace PrimaryMenu
+    {
+        namespace View
+        {
+            PrimaryMenuViewModule::PrimaryMenuViewModule(Menu::View::IMenuModel& primaryMenuModel,
+                    Menu::View::MenuViewModel::IMenuViewModel& primaryMenuViewModel,
+                    const Eegeo::Rendering::ScreenProperties& screenProperties,
+                    Modality::View::IModalityModel& modalitydModel)
+            {
+                m_pDataProvider = [CustomTableDataProvider alloc];
 
-			m_pMenuViewController = [[MenuViewController alloc] initWithParams:&primaryMenuModel
-			                         :&primaryMenuViewModel
-			                         :m_pView
-			                         :&modalitydModel
-			                         :false];
-		}
+                m_pView = [[PrimaryMenuView alloc] initWithParams
+                           :screenProperties.GetScreenWidth()
+                           :screenProperties.GetScreenHeight()
+                           :screenProperties.GetPixelScale()
+                           :false
+                           :primaryMenuViewModel.SectionsCount()
+                           :primaryMenuViewModel.NumberOfCells()
+                           :m_pDataProvider
+                          ];
 
-		PrimaryMenuViewModule::~PrimaryMenuViewModule()
-		{
-			[m_pMenuViewController release];
-			[m_pView release];
-		}
+                m_pController = Eegeo_NEW(Menu::View::MenuController)(primaryMenuModel,
+                                primaryMenuViewModel,
+                                *[m_pView getInterop]);
+            }
 
-		MenuViewController& PrimaryMenuViewModule::GetPrimaryMenuViewController() const
-		{
-			return *m_pMenuViewController;
-		}
+            PrimaryMenuViewModule::~PrimaryMenuViewModule()
+            {
+                Eegeo_DELETE m_pController;
+                [m_pView release];
+                [m_pDataProvider release];
+            }
 
-		PrimaryMenuView& PrimaryMenuViewModule::GetPrimaryMenuView() const
-		{
-			return *m_pView;
-		}
-	}
+            Menu::View::MenuController& PrimaryMenuViewModule::GetMenuController() const
+            {
+                return *m_pController;
+            }
+
+            PrimaryMenuView& PrimaryMenuViewModule::GetPrimaryMenuView() const
+            {
+                return *m_pView;
+            }
+        }
+    }
 }

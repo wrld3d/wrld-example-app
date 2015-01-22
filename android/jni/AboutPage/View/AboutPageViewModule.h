@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -10,23 +10,27 @@
 
 namespace ExampleApp
 {
-	namespace AboutPage
-	{
-		class AboutPageViewModule: public IAboutPageViewModule, private Eegeo::NonCopyable
-		{
-		private:
-			AboutPage::IAboutPageViewController* m_pAboutPageViewController;
+    namespace AboutPage
+    {
+        namespace View
+        {
+            class AboutPageViewModule: public IAboutPageViewModule, private Eegeo::NonCopyable
+            {
+            private:
+                AboutPageView* m_pView;
+                AboutPageController* m_pController;
 
-		public:
-			AboutPageViewModule(
-			    AndroidNativeState& nativeState,
-			    AboutPage::IAboutPageModel& aboutPageModel,
-			    AboutPage::IAboutPageViewModel& aboutPageViewModel
-			);
+            public:
+                AboutPageViewModule(
+                    AndroidNativeState& nativeState,
+                    IAboutPageViewModel& aboutPageViewModel
+                );
 
-			~AboutPageViewModule();
+                ~AboutPageViewModule();
 
-			IAboutPageViewController& GetAboutPageViewController() const;
-		};
-	}
+                AboutPageController& GetAboutPageController() const;
+                AboutPageView& GetAboutPageView() const;
+            };
+        }
+    }
 }

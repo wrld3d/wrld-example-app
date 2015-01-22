@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -11,42 +11,43 @@
 #include "UrlHelpers.h"
 #include "GlobeCameraController.h"
 #include "CameraTransitions.h"
-#include "UiToNativeMessageBus.h"
-#include "NativeToUiMessageBus.h"
+#include "BidirectionalBus.h"
 #include "SearchQueryObserver.h"
 
 namespace ExampleApp
 {
-	namespace Search
-	{
-		class SearchModule : public ISearchModule, private Eegeo::NonCopyable
-		{
-		private:
-			ISearchResultRepository* m_pSearchResultRepository;
-			Search::ISearchService* m_pSearchService;
-			ISearchResultParser* m_pSearchResultParser;
-			ISearchQueryPerformer* m_pSearchQueryPerformer;
-			ISearchRefreshService* m_pSearchRefreshService;
-			SearchQueryObserver* m_pSearchQueryObserver;
+    namespace Search
+    {
+        namespace SdkModel
+        {
+            class SearchModule : public ISearchModule, private Eegeo::NonCopyable
+            {
+            private:
+                ISearchResultRepository* m_pSearchResultRepository;
+                ISearchService* m_pSearchService;
+                ISearchResultParser* m_pSearchResultParser;
+                ISearchQueryPerformer* m_pSearchQueryPerformer;
+                ISearchRefreshService* m_pSearchRefreshService;
+                SearchQueryObserver* m_pSearchQueryObserver;
 
-		public:
-			SearchModule(const std::string& searchApiKey,
-			             Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory,
-			             Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder,
-			             Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& cameraController,
-			             CameraTransitions::ICameraTransitionController& cameraTransitionsController,
-			             ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
-			             ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus);
+            public:
+                SearchModule(const std::string& searchApiKey,
+                             Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory,
+                             Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder,
+                             Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& cameraController,
+                             CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionsController,
+                             ExampleAppMessaging::TMessageBus& messageBus);
 
-			~SearchModule();
+                ~SearchModule();
 
-			ISearchService& GetSearchService() const;
+                ISearchService& GetSearchService() const;
 
-			ISearchResultRepository& GetSearchResultRepository() const;
+                ISearchResultRepository& GetSearchResultRepository() const;
 
-			ISearchQueryPerformer& GetSearchQueryPerformer() const;
+                ISearchQueryPerformer& GetSearchQueryPerformer() const;
 
-			ISearchRefreshService& GetSearchRefreshService() const;
-		};
-	}
+                ISearchRefreshService& GetSearchRefreshService() const;
+            };
+        }
+    }
 }

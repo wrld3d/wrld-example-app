@@ -1,17 +1,19 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
 #import <UIKit/UIKit.h>
-#include "MyPinCreationDetailsViewController.h"
+#include "MyPinCreationDetailsViewInterop.h"
 
 @class MyPinCreationDetailsView;
 
 @interface MyPinCreationDetailsView : UIView <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextViewDelegate, UITextFieldDelegate, UIPopoverControllerDelegate>
 {
-    __weak MyPinCreationDetailsViewController* m_pController;
+    ExampleApp::MyPinCreationDetails::View::MyPinCreationDetailsViewInterop* m_pInterop;
+    UIViewController* m_pController;
+
     float m_stateChangeAnimationTimeSeconds;
-    
+
     BOOL m_imageAttached;
     float m_maxImageWidth;
 
@@ -22,16 +24,22 @@
     float m_controlContainerWidth;
     float m_controlContainerHeight;
     float m_yCursor;
-    
+
     float m_scrollContentBottomMargin;
-    
+
+    Byte* m_pImageDataBytes;
+    size_t m_imageSize;
     BOOL m_hasNetworkConnectivity;
-    
+
     int m_maxNumberOfCharactersInDescription;
 }
 
-- (id) initWithController:(MyPinCreationDetailsViewController *)controller
-   andNetworkConnectivity:(BOOL) hasConnectivity;
+- (id) initWithParams:(float)width :(float)height;
+
+- (ExampleApp::MyPinCreationDetails::View::MyPinCreationDetailsViewInterop*)getInterop;
+
+- (Byte*)getImageBuffer;
+- (size_t)getImageSize;
 
 - (BOOL) consumesTouch:(UITouch *)touch;
 
@@ -46,7 +54,7 @@
 - (void) resizeImageViewToFit:(CGFloat)sourceImageWidth :(CGFloat)sourceImageHeight;
 
 - (void) setHasNetworkConnectivity:(BOOL) hasNetworkConnectivity
-                                  :(BOOL) shouldVerifyShareSettings;
+    :(BOOL) shouldVerifyShareSettings;
 
 @property (nonatomic, retain) UIView* pControlContainer;
 

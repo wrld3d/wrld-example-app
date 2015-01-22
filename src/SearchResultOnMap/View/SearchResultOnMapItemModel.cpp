@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "SearchResultOnMapItemModel.h"
 #include "SearchResultModel.h"
@@ -8,24 +8,27 @@
 
 namespace ExampleApp
 {
-	namespace SearchResultOnMap
-	{
-		SearchResultOnMapItemModel::SearchResultOnMapItemModel(Search::SearchResultModel& searchResultModel,
-		        ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus)
-			: m_searchResultModel(searchResultModel)
-			, m_nativeToUiMessageBus(nativeToUiMessageBus)
-		{
+    namespace SearchResultOnMap
+    {
+        namespace View
+        {
+            SearchResultOnMapItemModel::SearchResultOnMapItemModel(Search::SdkModel::SearchResultModel& searchResultModel,
+                    ExampleAppMessaging::TMessageBus& messageBus)
+                : m_searchResultModel(searchResultModel)
+                , m_messageBus(messageBus)
+            {
 
-		}
+            }
 
-		SearchResultOnMapItemModel::~SearchResultOnMapItemModel()
-		{
+            SearchResultOnMapItemModel::~SearchResultOnMapItemModel()
+            {
 
-		}
+            }
 
-		void SearchResultOnMapItemModel::SelectPin()
-		{
-			m_nativeToUiMessageBus.Publish(SearchResultOnMapItemModelSelectedMessage(m_searchResultModel));
-		}
-	}
+            void SearchResultOnMapItemModel::SelectPin()
+            {
+                m_messageBus.Publish(SearchResultOnMapItemModelSelectedMessage(m_searchResultModel));
+            }
+        }
+    }
 }

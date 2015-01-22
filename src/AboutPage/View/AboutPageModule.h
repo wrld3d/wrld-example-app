@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -11,24 +11,24 @@
 
 namespace ExampleApp
 {
-	namespace AboutPage
-	{
-		class AboutPageModule : public IAboutPageModule, private Eegeo::NonCopyable
-		{
-			IAboutPageModel* m_pAboutPageModel;
-			AboutPageViewModel* m_pAboutPageViewModel;
+    namespace AboutPage
+    {
+        namespace View
+        {
+            class AboutPageModule : public IAboutPageModule, private Eegeo::NonCopyable
+            {
+                AboutPageViewModel* m_pAboutPageViewModel;
 
-		public:
-			AboutPageModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
-			                Reaction::IReactionControllerModel& reactionControllerModel);
+            public:
+                AboutPageModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
+                                Reaction::View::IReactionControllerModel& reactionControllerModel);
 
-			~AboutPageModule();
+                ~AboutPageModule();
 
-			IAboutPageModel& GetAboutPageModel() const;
+                IAboutPageViewModel& GetAboutPageViewModel() const;
 
-			IAboutPageViewModel& GetAboutPageViewModel() const;
-
-			OpenableControlViewModel::IOpenableControlViewModel& GetObservableOpenableControl() const;
-		};
-	}
+                OpenableControl::View::IOpenableControlViewModel& GetObservableOpenableControl() const;
+            };
+        }
+    }
 }

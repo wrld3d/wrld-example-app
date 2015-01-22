@@ -1,30 +1,33 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
 #include "Types.h"
-#include "UiToNativeMessageBus.h"
+#include "BidirectionalBus.h"
 #include "ICallback.h"
 #include "ModalityChangedMessage.h"
 #include "IWorldPinsScaleController.h"
 
 namespace ExampleApp
 {
-	namespace WorldPins
-	{
-		class WorldPinsModalityObserver : private Eegeo::NonCopyable
-		{
-			WorldPins::IWorldPinsScaleController& m_worldPinsScaleController;
-			ExampleAppMessaging::UiToNativeMessageBus& m_messageBus;
-			Eegeo::Helpers::TCallback1<WorldPinsModalityObserver, const Modality::ModalityChangedMessage&> m_handlerBinding;
+    namespace WorldPins
+    {
+        namespace SdkModel
+        {
+            class WorldPinsModalityObserver : private Eegeo::NonCopyable
+            {
+                IWorldPinsScaleController& m_worldPinsScaleController;
+                ExampleAppMessaging::TMessageBus& m_messageBus;
+                Eegeo::Helpers::TCallback1<WorldPinsModalityObserver, const Modality::ModalityChangedMessage&> m_handlerBinding;
 
-            void HandleReceivedModalityChangedMessage(const Modality::ModalityChangedMessage& message);
+                void OnModalityChangedMessage(const Modality::ModalityChangedMessage& message);
 
-		public:
-			WorldPinsModalityObserver(WorldPins::IWorldPinsScaleController& worldPinsScaleController,
-                                      ExampleAppMessaging::UiToNativeMessageBus& messageBus);
+            public:
+                WorldPinsModalityObserver(IWorldPinsScaleController& worldPinsScaleController,
+                                          ExampleAppMessaging::TMessageBus& messageBus);
 
-            ~WorldPinsModalityObserver();
-		};
-	}
+                ~WorldPinsModalityObserver();
+            };
+        }
+    }
 }

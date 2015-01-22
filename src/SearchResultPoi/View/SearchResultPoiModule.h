@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -11,22 +11,25 @@
 
 namespace ExampleApp
 {
-	namespace SearchResultPoi
-	{
-		class SearchResultPoiModule: public ISearchResultPoiModule, private Eegeo::NonCopyable
-		{
-		private:
-			SearchResultPoiViewModel* m_pSearchResultPoiViewModel;
+    namespace SearchResultPoi
+    {
+        namespace View
+        {
+            class SearchResultPoiModule: public ISearchResultPoiModule, private Eegeo::NonCopyable
+            {
+            private:
+                SearchResultPoiViewModel* m_pSearchResultPoiViewModel;
 
-		public:
-			SearchResultPoiModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
-			                      Reaction::IReactionControllerModel& reactionControllerModel);
+            public:
+                SearchResultPoiModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
+                                      Reaction::View::IReactionControllerModel& reactionControllerModel);
 
-			~SearchResultPoiModule();
+                ~SearchResultPoiModule();
 
-			ISearchResultPoiViewModel& GetSearchResultPoiViewModel() const;
+                ISearchResultPoiViewModel& GetSearchResultPoiViewModel() const;
 
-			OpenableControlViewModel::IOpenableControlViewModel& GetObservableOpenableControl() const;
-		};
-	}
+                OpenableControl::View::IOpenableControlViewModel& GetObservableOpenableControl() const;
+            };
+        }
+    }
 }

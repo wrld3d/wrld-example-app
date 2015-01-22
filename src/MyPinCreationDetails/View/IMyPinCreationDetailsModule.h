@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -9,14 +9,17 @@ namespace ExampleApp
 {
     namespace MyPinCreationDetails
     {
-        class IMyPinCreationDetailsModule
+        namespace View
         {
-        public:
-            ~IMyPinCreationDetailsModule(){ }
-            
-            virtual IMyPinCreationDetailsViewModel& GetMyPinCreationDetailsViewModel() const = 0;
-            
-            virtual OpenableControlViewModel::IOpenableControlViewModel& GetObservableOpenableControl() const = 0;
-        };
+            class IMyPinCreationDetailsModule
+            {
+            public:
+                ~IMyPinCreationDetailsModule() { }
+
+                virtual IMyPinCreationDetailsViewModel& GetMyPinCreationDetailsViewModel() const = 0;
+
+                virtual OpenableControl::View::IOpenableControlViewModel& GetObservableOpenableControl() const = 0;
+            };
+        }
     }
 }

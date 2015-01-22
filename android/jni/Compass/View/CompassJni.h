@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -6,8 +6,8 @@
 
 extern "C"
 {
-	JNIEXPORT void JNICALL Java_com_eegeo_compass_CompassViewJniMethods_HandleClick(
-	    JNIEnv* jenv, jobject obj,
-	    jlong nativeObjectPtr);
+    JNIEXPORT void JNICALL Java_com_eegeo_compass_CompassViewJniMethods_HandleClick(
+        JNIEnv* jenv, jobject obj,
+        jlong nativeObjectPtr);
 }
 

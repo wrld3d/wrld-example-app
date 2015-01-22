@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -12,25 +12,28 @@
 
 namespace ExampleApp
 {
-	namespace Modality
-	{
-		class ModalityController : public IModalityController, private Eegeo::NonCopyable
-		{
-			IModalityModel& m_modalityModel;
-			std::vector<OpenableControlViewModel::IOpenableControlViewModel*> m_viewModels;
-			Eegeo::Helpers::ICallback2<OpenableControlViewModel::IOpenableControlViewModel&, float>* m_pMenuOpenStateChangedCallback;
+    namespace Modality
+    {
+        namespace View
+        {
+            class ModalityController : public IModalityController, private Eegeo::NonCopyable
+            {
+                IModalityModel& m_modalityModel;
+                std::vector<OpenableControl::View::IOpenableControlViewModel*> m_viewModels;
+                Eegeo::Helpers::ICallback2<OpenableControl::View::IOpenableControlViewModel&, float>* m_pMenuOpenStateChangedCallback;
 
-		public:
-			ModalityController(IModalityModel& modalityModel,
-			                   const std::vector<OpenableControlViewModel::IOpenableControlViewModel*>& viewModels);
+            public:
+                ModalityController(IModalityModel& modalityModel,
+                                   const std::vector<OpenableControl::View::IOpenableControlViewModel*>& viewModels);
 
-			~ModalityController();
+                ~ModalityController();
 
-		private:
+            private:
 
-			float GetModality() const;
+                float GetModality() const;
 
-			void MenuOpenStateChangeHandler(OpenableControlViewModel::IOpenableControlViewModel& viewModel, float& openState);
-		};
-	}
+                void MenuOpenStateChangeHandler(OpenableControl::View::IOpenableControlViewModel& viewModel, float& openState);
+            };
+        }
+    }
 }

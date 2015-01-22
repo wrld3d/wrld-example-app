@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -10,18 +10,21 @@
 
 namespace ExampleApp
 {
-	namespace SearchResultOnMap
-	{
-		class SearchResultOnMapIconCategoryMapper : public ISearchResultOnMapIconCategoryMapper, private Eegeo::NonCopyable
-		{
-			std::map<std::string, int> m_categoryToIconIndex;
+    namespace SearchResultOnMap
+    {
+        namespace View
+        {
+            class SearchResultOnMapIconCategoryMapper : public ISearchResultOnMapIconCategoryMapper, private Eegeo::NonCopyable
+            {
+                std::map<std::string, int> m_categoryToIconIndex;
 
-		public:
-			SearchResultOnMapIconCategoryMapper();
+            public:
+                SearchResultOnMapIconCategoryMapper();
 
-			~SearchResultOnMapIconCategoryMapper();
+                ~SearchResultOnMapIconCategoryMapper();
 
-			int GetIconIndexFromSearchResult(const Search::SearchResultModel& searchResultModel) const;
-		};
-	}
+                int GetIconIndexFromSearchResult(const Search::SdkModel::SearchResultModel& searchResultModel) const;
+            };
+        }
+    }
 }

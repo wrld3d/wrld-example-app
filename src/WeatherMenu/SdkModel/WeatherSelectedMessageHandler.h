@@ -1,31 +1,34 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
 #include "Types.h"
-#include "UiToNativeMessageBus.h"
+#include "BidirectionalBus.h"
 #include "IWeatherController.h"
 #include "ICallback.h"
 #include "WeatherSelectedMessage.h"
 
 namespace ExampleApp
 {
-	namespace WeatherMenu
-	{
-		class WeatherSelectedMessageHandler : private Eegeo::NonCopyable
-		{
-			IWeatherController& m_weatherController;
-			ExampleAppMessaging::UiToNativeMessageBus& m_uiToNativeMessageBus;
-			Eegeo::Helpers::TCallback1<WeatherSelectedMessageHandler, const WeatherSelectedMessage&> m_handlerBinding;
+    namespace WeatherMenu
+    {
+        namespace SdkModel
+        {
+            class WeatherSelectedMessageHandler : private Eegeo::NonCopyable
+            {
+                IWeatherController& m_weatherController;
+                ExampleAppMessaging::TMessageBus& m_messageBus;
+                Eegeo::Helpers::TCallback1<WeatherSelectedMessageHandler, const WeatherSelectedMessage&> m_handlerBinding;
 
-			void HandleReceivedWeatherSelectedMessage(const WeatherSelectedMessage& message);
+                void OnWeatherSelectedMessage(const WeatherSelectedMessage& message);
 
-		public:
-			WeatherSelectedMessageHandler(
-			    IWeatherController& weatherController,
-			    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus);
+            public:
+                WeatherSelectedMessageHandler(
+                    IWeatherController& weatherController,
+                    ExampleAppMessaging::TMessageBus& messageBus);
 
-			~WeatherSelectedMessageHandler();
-		};
-	}
+                ~WeatherSelectedMessageHandler();
+            };
+        }
+    }
 }

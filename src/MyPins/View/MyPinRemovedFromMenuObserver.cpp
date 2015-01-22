@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "MyPinRemovedFromMenuObserver.h"
 #include "IMenuOptionsModel.h"
@@ -8,25 +8,27 @@ namespace ExampleApp
 {
     namespace MyPins
     {
-       
-        MyPinRemovedFromMenuObserver::MyPinRemovedFromMenuObserver(Menu::IMenuOptionsModel& menuOptionsModel,
-                                     ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus)
-        : m_menuOptionsModel(menuOptionsModel)
-        , m_nativeToUiMessageBus(nativeToUiMessageBus)
-        , m_handlerBinding(this, &MyPinRemovedFromMenuObserver::HandleReceivedMyRemovedFromMenuMessage)
+        namespace View
         {
-            m_nativeToUiMessageBus.Subscribe(m_handlerBinding);
-        }
-        
-        MyPinRemovedFromMenuObserver::~MyPinRemovedFromMenuObserver()
-        {
-            m_nativeToUiMessageBus.Unsubscribe(m_handlerBinding);
-        }
-    
-        void MyPinRemovedFromMenuObserver::HandleReceivedMyRemovedFromMenuMessage(const MyPinRemovedFromMenuMessage& message)
-        {
-            MyPinModel* myPinModel = message.GetMyPinModel();
-            m_menuOptionsModel.RemoveItem(ConvertModelDetailToString(myPinModel->Identifier()));
+            MyPinRemovedFromMenuObserver::MyPinRemovedFromMenuObserver(Menu::View::IMenuOptionsModel& menuOptionsModel,
+                    ExampleAppMessaging::TMessageBus& messageBus)
+                : m_menuOptionsModel(menuOptionsModel)
+                , m_messageBus(messageBus)
+                , m_handlerBinding(this, &MyPinRemovedFromMenuObserver::OnMyRemovedFromMenuMessage)
+            {
+                m_messageBus.SubscribeUi(m_handlerBinding);
+            }
+
+            MyPinRemovedFromMenuObserver::~MyPinRemovedFromMenuObserver()
+            {
+                m_messageBus.UnsubscribeUi(m_handlerBinding);
+            }
+
+            void MyPinRemovedFromMenuObserver::OnMyRemovedFromMenuMessage(const MyPinRemovedFromMenuMessage& message)
+            {
+                SdkModel::MyPinModel* myPinModel = message.GetMyPinModel();
+                m_menuOptionsModel.RemoveItem(ConvertModelDetailToString(myPinModel->Identifier()));
+            }
         }
     }
 }

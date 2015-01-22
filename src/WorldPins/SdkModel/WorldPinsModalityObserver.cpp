@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "WorldPinsModalityObserver.h"
 
@@ -6,23 +6,26 @@ namespace ExampleApp
 {
     namespace WorldPins
     {
-        WorldPinsModalityObserver::WorldPinsModalityObserver(WorldPins::IWorldPinsScaleController& worldPinsScaleController,
-                                                             ExampleAppMessaging::UiToNativeMessageBus& messageBus)
-        : m_worldPinsScaleController(worldPinsScaleController)
-        , m_messageBus(messageBus)
-        , m_handlerBinding(this, &WorldPinsModalityObserver::HandleReceivedModalityChangedMessage)
+        namespace SdkModel
         {
-            m_messageBus.Subscribe(m_handlerBinding);
-        }
-        
-        WorldPinsModalityObserver::~WorldPinsModalityObserver()
-        {
-            m_messageBus.Unsubscribe(m_handlerBinding);
-        }
-        
-        void WorldPinsModalityObserver::HandleReceivedModalityChangedMessage(const Modality::ModalityChangedMessage &message)
-        {
-            m_worldPinsScaleController.SetModality(message.Modality());
+            WorldPinsModalityObserver::WorldPinsModalityObserver(WorldPins::SdkModel::IWorldPinsScaleController& worldPinsScaleController,
+                    ExampleAppMessaging::TMessageBus& messageBus)
+                : m_worldPinsScaleController(worldPinsScaleController)
+                , m_messageBus(messageBus)
+                , m_handlerBinding(this, &WorldPinsModalityObserver::OnModalityChangedMessage)
+            {
+                m_messageBus.SubscribeNative(m_handlerBinding);
+            }
+
+            WorldPinsModalityObserver::~WorldPinsModalityObserver()
+            {
+                m_messageBus.UnsubscribeNative(m_handlerBinding);
+            }
+
+            void WorldPinsModalityObserver::OnModalityChangedMessage(const Modality::ModalityChangedMessage &message)
+            {
+                m_worldPinsScaleController.SetModality(message.Modality());
+            }
         }
     }
 }

@@ -1,9 +1,9 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
 #include "IMyPinCreationModel.h"
-#include "UiToNativeMessageBus.h"
+#include "BidirectionalBus.h"
 #include "ICallback.h"
 #include "MyPinCreationViewSavePinMessage.h"
 
@@ -11,22 +11,25 @@ namespace ExampleApp
 {
     namespace MyPinCreation
     {
-        class MyPinCreationViewSavePinHandler
+        namespace SdkModel
         {
-        public:
-            
-            MyPinCreationViewSavePinHandler(IMyPinCreationModel& myPinCreationModel,
-                                            ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus);
-            
-            ~MyPinCreationViewSavePinHandler();
-            
-        private:
-            IMyPinCreationModel& m_myPinCreationModel;
-            ExampleAppMessaging::UiToNativeMessageBus& m_uiToNativeMessageBus;
-            
-            Eegeo::Helpers::TCallback1<MyPinCreationViewSavePinHandler, const MyPinCreationViewSavePinMessage&> m_handler;
-            
-            void OnMyPinCreationViewSavePinMessageReceived(const MyPinCreationViewSavePinMessage& message);
-        };
+            class MyPinCreationViewSavePinHandler
+            {
+            public:
+
+                MyPinCreationViewSavePinHandler(IMyPinCreationModel& myPinCreationModel,
+                                                ExampleAppMessaging::TMessageBus& messageBus);
+
+                ~MyPinCreationViewSavePinHandler();
+
+            private:
+                IMyPinCreationModel& m_myPinCreationModel;
+                ExampleAppMessaging::TMessageBus& m_messageBus;
+
+                Eegeo::Helpers::TCallback1<MyPinCreationViewSavePinHandler, const MyPinCreationViewSavePinMessage&> m_handler;
+
+                void OnMyPinCreationViewSavePinMessageMessage(const MyPinCreationViewSavePinMessage& message);
+            };
+        }
     }
 }

@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -7,18 +7,21 @@
 
 namespace ExampleApp
 {
-	namespace FlattenButton
-	{
-		class IFlattenButtonModule
-		{
-		public:
-			virtual ~IFlattenButtonModule() { }
+    namespace FlattenButton
+    {
+        namespace SdkModel
+        {
+            class IFlattenButtonModule
+            {
+            public:
+                virtual ~IFlattenButtonModule() { }
 
-			virtual IFlattenButtonModel& GetFlattenButtonModel() const = 0;
+                virtual IFlattenButtonModel& GetFlattenButtonModel() const = 0;
 
-			virtual IFlattenButtonViewModel& GetFlattenButtonViewModel() const = 0;
+                virtual View::IFlattenButtonViewModel& GetFlattenButtonViewModel() const = 0;
 
-			virtual ScreenControlViewModel::IScreenControlViewModel& GetScreenControlViewModel() const = 0;
-		};
-	}
+                virtual ScreenControl::View::IScreenControlViewModel& GetScreenControlViewModel() const = 0;
+            };
+        }
+    }
 }

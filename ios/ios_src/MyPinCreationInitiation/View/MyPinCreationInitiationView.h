@@ -1,31 +1,33 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
 #import <UIKit/UIKit.h>
-#include "MyPinCreationInitiationViewController.h"
+#include "MyPinCreationInitiationViewIncludes.h"
 
 @class MyPinCreationInitiationView;
 
 @interface MyPinCreationInitiationView : UIView
 {
-    __weak MyPinCreationInitiationViewController* m_pController;
-    
+    ExampleApp::MyPinCreation::View::MyPinCreationInitiationViewInterop* m_pInterop;
+
     float m_width;
     float m_height;
-    
+
     float m_screenWidth;
     float m_screenHeight;
     float m_pixelScale;
-    
+
     float m_yPosActive;
     float m_yPosInactive;
     float m_yPosBase;
-    
+
     float m_stateChangeAnimationTimeSeconds;
 }
 
-- (id) initWithParams:(MyPinCreationInitiationViewController *)controller :(float)width :(float)height :(float)pixelScale;
+- (id) initWithParams:(float)width :(float)height :(float)pixelScale;
+
+- (ExampleApp::MyPinCreation::View::MyPinCreationInitiationViewInterop*) getInterop;
 
 - (BOOL)consumesTouch:(UITouch *)touch;
 

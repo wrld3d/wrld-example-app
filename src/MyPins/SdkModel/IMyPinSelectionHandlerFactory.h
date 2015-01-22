@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -8,11 +8,14 @@ namespace ExampleApp
 {
     namespace MyPins
     {
-        class IMyPinSelectionHandlerFactory
+        namespace SdkModel
         {
-        public:
-            virtual ~IMyPinSelectionHandlerFactory() {}
-            virtual MyPinSelectionHandler* CreateMyPinSelectionHandler(MyPinModel& myPinModel) const = 0;
-        };
+            class IMyPinSelectionHandlerFactory
+            {
+            public:
+                virtual ~IMyPinSelectionHandlerFactory() {}
+                virtual MyPinSelectionHandler* CreateMyPinSelectionHandler(MyPinModel& myPinModel) const = 0;
+            };
+        }
     }
 }

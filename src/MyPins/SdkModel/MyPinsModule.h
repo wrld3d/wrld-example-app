@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -9,42 +9,46 @@
 #include "PersistentSettings.h"
 #include "Modules.h"
 #include "Menu.h"
-#include "UiToNativeMessageBus.h"
-#include "NativeToUiMessageBus.h"
+#include "BidirectionalBus.h"
 #include "CameraTransitions.h"
 
 namespace ExampleApp
 {
     namespace MyPins
     {
-        class MyPinsModule : public IMyPinsModule
+        namespace SdkModel
         {
-        public:
-            MyPinsModule(WorldPins::IWorldPinsService& worldPinsService,
-                         Eegeo::Modules::IPlatformAbstractionModule& platformAbstractions,
-                         PersistentSettings::IPersistentSettingsModel& persistentSettings,
-                         ExampleApp::Menu::IMenuViewModel& menuViewModel,
-                         ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
-                         ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus,
-                         CameraTransitions::ICameraTransitionController& cameraTransitionController);
-            
-            ~MyPinsModule();
-            
-            IMyPinsService& GetMyPinsService() const;
-            Menu::IMenuModel& GetMyPinsMenuModel() const { return *m_pMenuModel; }
-            
-        private:
-            MyPinsRepository* m_pMyPinsRepository;
-            MyPinsFileIO* m_pMyPinsFileIO;
-            MyPinsService* m_pMyPinsService;
-            MyPinsRepositoryObserver* m_pMyPinsRepositoryObserver;
-            MyPinSelectionHandlerFactory* m_pMyPinsSelectionHandlerFactory;
-            MyPinAddedToMenuObserver* m_pMyPinAddedToMenuObserver;
-            MyPinRemovedFromMenuObserver* m_pMyPinRemovedFromMenuObserver;
-            MyPinSelectedMessageHandler* m_pMyPinSelectedMessageHandler;
-            
-            Menu::IMenuModel* m_pMenuModel;
-            Menu::IMenuOptionsModel* m_pMenuOptionsModel;
-        };
+            class MyPinsModule : public IMyPinsModule
+            {
+            public:
+                MyPinsModule(WorldPins::SdkModel::IWorldPinsService& worldPinsService,
+                             Eegeo::Modules::IPlatformAbstractionModule& platformAbstractions,
+                             PersistentSettings::IPersistentSettingsModel& persistentSettings,
+                             Menu::View::IMenuViewModel& menuViewModel,
+                             ExampleAppMessaging::TMessageBus& messageBus,
+                             CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController);
+
+                ~MyPinsModule();
+
+                IMyPinsService& GetMyPinsService() const;
+                Menu::View::IMenuModel& GetMyPinsMenuModel() const
+                {
+                    return *m_pMenuModel;
+                }
+
+            private:
+                MyPinsRepository* m_pMyPinsRepository;
+                MyPinsFileIO* m_pMyPinsFileIO;
+                MyPinsService* m_pMyPinsService;
+                MyPinsRepositoryObserver* m_pMyPinsRepositoryObserver;
+                MyPinSelectionHandlerFactory* m_pMyPinsSelectionHandlerFactory;
+                View::MyPinAddedToMenuObserver* m_pMyPinAddedToMenuObserver;
+                View::MyPinRemovedFromMenuObserver* m_pMyPinRemovedFromMenuObserver;
+                MyPinSelectedMessageHandler* m_pMyPinSelectedMessageHandler;
+
+                Menu::View::IMenuModel* m_pMenuModel;
+                Menu::View::IMenuOptionsModel* m_pMenuOptionsModel;
+            };
+        }
     }
 }

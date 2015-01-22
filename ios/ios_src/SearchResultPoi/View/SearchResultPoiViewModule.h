@@ -1,28 +1,33 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
 #include "Types.h"
 #include "SearchResultPoi.h"
 #include "ISearchResultPoiViewModule.h"
+#include "SearchResultPoiController.h"
 
 namespace ExampleApp
 {
-	namespace SearchResultPoi
-	{
-		class SearchResultPoiViewModule: public ISearchResultPoiViewModule, private Eegeo::NonCopyable
-		{
-		private:
-			SearchResultPoiViewController* m_pSearchResultPoiViewController;
+    namespace SearchResultPoi
+    {
+        namespace View
+        {
+            class SearchResultPoiViewModule: public ISearchResultPoiViewModule, private Eegeo::NonCopyable
+            {
+            private:
+                SearchResultPoiView* m_pView;
+                SearchResultPoiController* m_pController;
 
-		public:
-			SearchResultPoiViewModule(ISearchResultPoiViewModel& searchResultPoiViewModel);
+            public:
+                SearchResultPoiViewModule(ISearchResultPoiViewModel& searchResultPoiViewModel);
 
-			~SearchResultPoiViewModule();
+                ~SearchResultPoiViewModule();
 
-			SearchResultPoiViewController& GetSearchResultPoiViewController() const;
+                SearchResultPoiController& GetController() const;
 
-			SearchResultPoiView& GetSearchResultPoiView() const;
-		};
-	}
+                SearchResultPoiView& GetView() const;
+            };
+        }
+    }
 }

@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -12,45 +12,40 @@
 
 namespace ExampleApp
 {
-	namespace Compass
-	{
-		class CompassViewModel : public ICompassViewModel, private Eegeo::NonCopyable
-		{
-		public:
+    namespace Compass
+    {
+        namespace View
+        {
+            class CompassViewModel : public ICompassViewModel, private Eegeo::NonCopyable
+            {
+            public:
 
-			CompassViewModel(Eegeo::Helpers::TIdentity identity,
-			                 bool isInitiallyOnScreen);
+                CompassViewModel(Eegeo::Helpers::TIdentity identity,
+                                 bool isInitiallyOnScreen);
 
-			/*void UpdateHeadingAngleRadians(float headingRadians);
+                Eegeo::Helpers::TIdentity GetIdentity() const;
 
-			void InsertUpdateCallback(Eegeo::Helpers::ICallback1<float>& updateCallback);
+                void AddToScreen();
 
-			void RemoveUpdateCallback(Eegeo::Helpers::ICallback1<float>& updateCallback);*/
+                void RemoveFromScreen();
 
-			Eegeo::Helpers::TIdentity GetIdentity() const;
+                void UpdateOnScreenState(float onScreenState);
 
-			void AddToScreen();
+                void InsertOnScreenStateChangedCallback(Eegeo::Helpers::ICallback2<ScreenControl::View::IScreenControlViewModel&, float>& callback);
 
-			void RemoveFromScreen();
+                void RemoveOnScreenStateChangedCallback(Eegeo::Helpers::ICallback2<ScreenControl::View::IScreenControlViewModel&, float>& callback);
 
-			void UpdateOnScreenState(float onScreenState);
+                bool IsFullyOffScreen() const;
 
-			void InsertOnScreenStateChangedCallback(Eegeo::Helpers::ICallback2<ScreenControlViewModel::IScreenControlViewModel&, float>& callback);
+                bool IsFullyOnScreen() const;
 
-			void RemoveOnScreenStateChangedCallback(Eegeo::Helpers::ICallback2<ScreenControlViewModel::IScreenControlViewModel&, float>& callback);
+                float OnScreenState() const;
 
-			bool IsFullyOffScreen() const;
+                ScreenControl::View::IScreenControlViewModel& GetScreenControlViewModel();
 
-			bool IsFullyOnScreen() const;
-
-			float OnScreenState() const;
-
-			ScreenControlViewModel::IScreenControlViewModel& GetScreenControlViewModel();
-
-		private:
-			//ICompassModel& m_model;
-			CompassScreenControl m_screenControl;
-			//Eegeo::Helpers::CallbackCollection1<float> m_updateCallbacks;
-		};
-	}
+            private:
+                CompassScreenControl m_screenControl;
+            };
+        }
+    }
 }

@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -13,49 +13,52 @@
 
 namespace ExampleApp
 {
-	namespace WorldPins
-	{
-		class WorldPinsService : public IWorldPinsService, private Eegeo::NonCopyable
-		{
-			typedef std::map<WorldPinItemModel::WorldPinItemModelId, IWorldPinSelectionHandler*>::iterator mapIt;
+    namespace WorldPins
+    {
+        namespace SdkModel
+        {
+            class WorldPinsService : public IWorldPinsService, private Eegeo::NonCopyable
+            {
+                typedef std::map<WorldPinItemModel::WorldPinItemModelId, IWorldPinSelectionHandler*>::iterator mapIt;
 
-			std::map<WorldPinItemModel::WorldPinItemModelId, IWorldPinSelectionHandler*> m_pinsToSelectionHandlers;
+                std::map<WorldPinItemModel::WorldPinItemModelId, IWorldPinSelectionHandler*> m_pinsToSelectionHandlers;
 
-			IWorldPinsRepository& m_worldPinsRepository;
-			IWorldPinsFactory& m_worldPinsFactory;
-			Eegeo::Pins::PinRepository& m_pinRepository;
-			Eegeo::Pins::PinController& m_pinController;
-			const Eegeo::Rendering::EnvironmentFlatteningService& m_environmentFlatteningService;
+                IWorldPinsRepository& m_worldPinsRepository;
+                IWorldPinsFactory& m_worldPinsFactory;
+                Eegeo::Pins::PinRepository& m_pinRepository;
+                Eegeo::Pins::PinController& m_pinController;
+                const Eegeo::Rendering::EnvironmentFlatteningService& m_environmentFlatteningService;
 
-		public:
-			WorldPinsService(IWorldPinsRepository& worldPinsRepository,
-			                 IWorldPinsFactory& worldPinsFactory,
-			                 Eegeo::Pins::PinRepository& pinRepository,
-			                 Eegeo::Pins::PinController& pinController,
-			                 const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService);
+            public:
+                WorldPinsService(IWorldPinsRepository& worldPinsRepository,
+                                 IWorldPinsFactory& worldPinsFactory,
+                                 Eegeo::Pins::PinRepository& pinRepository,
+                                 Eegeo::Pins::PinController& pinController,
+                                 const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService);
 
-			~WorldPinsService();
+                ~WorldPinsService();
 
-			WorldPinItemModel* AddPin(IWorldPinSelectionHandler* pSelectionHandler,
-                                      const WorldPinFocusData& worldPinFocusData,
-                                      const Eegeo::Space::LatLong& location,
-                                      int iconIndex);
+                WorldPinItemModel* AddPin(IWorldPinSelectionHandler* pSelectionHandler,
+                                          const WorldPinFocusData& worldPinFocusData,
+                                          const Eegeo::Space::LatLong& location,
+                                          int iconIndex);
 
-			void RemovePin(WorldPinItemModel* pinItemModel);
+                void RemovePin(WorldPinItemModel* pinItemModel);
 
-			void UpdatePinScale(const WorldPinItemModel& pinItemModel, float scale);
+                void UpdatePinScale(const WorldPinItemModel& pinItemModel, float scale);
 
-			bool HandleTouchTap(const Eegeo::v2& screenTapPoint);
+                bool HandleTouchTap(const Eegeo::v2& screenTapPoint);
 
-			void GetPinEcefAndScreenLocations(const WorldPinItemModel& pinItemModel,
-			                                  Eegeo::dv3& ecefLocation,
-			                                  Eegeo::v2& screenLocation) const;
-            
-            IWorldPinSelectionHandler* GetSelectionHandlerForPin(WorldPinItemModel::WorldPinItemModelId worldPinItemModelId);
+                void GetPinEcefAndScreenLocations(const WorldPinItemModel& pinItemModel,
+                                                  Eegeo::dv3& ecefLocation,
+                                                  Eegeo::v2& screenLocation) const;
 
-		private:
-			void ErasePin(const WorldPinItemModel::WorldPinItemModelId& id);
+                IWorldPinSelectionHandler* GetSelectionHandlerForPin(WorldPinItemModel::WorldPinItemModelId worldPinItemModelId);
 
-		};
-	}
+            private:
+                void ErasePin(const WorldPinItemModel::WorldPinItemModelId& id);
+
+            };
+        }
+    }
 }

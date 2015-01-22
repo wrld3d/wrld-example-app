@@ -1,31 +1,34 @@
-//  Copyright (c) 2014 eeGeo. All rights reserved.
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
 #include "Types.h"
-#include "NativeToUiMessageBus.h"
+#include "BidirectionalBus.h"
 #include "ICompassModel.h"
 #include "ICallback.h"
 #include "CompassModeChangedMessage.h"
 
 namespace ExampleApp
 {
-	namespace Compass
-	{
-		class CompassModeObserver : private Eegeo::NonCopyable
-		{
-		private:
-			ICompassModel& m_model;
-			ExampleApp::ExampleAppMessaging::NativeToUiMessageBus& m_nativeToUiMessageBus;
-			Eegeo::Helpers::TCallback0<CompassModeObserver> m_callback;
+    namespace Compass
+    {
+        namespace SdkModel
+        {
+            class CompassModeObserver : private Eegeo::NonCopyable
+            {
+            private:
+                ICompassModel& m_model;
+                ExampleAppMessaging::TMessageBus& m_messageBus;
+                Eegeo::Helpers::TCallback0<CompassModeObserver> m_callback;
 
-			void OnGpsModeChanged();
+                void OnGpsModeChanged();
 
-		public:
-			CompassModeObserver(ICompassModel& model,
-			                    ExampleApp::ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus);
+            public:
+                CompassModeObserver(ICompassModel& model,
+                                    ExampleAppMessaging::TMessageBus& messageBus);
 
-			~CompassModeObserver();
-		};
-	}
+                ~CompassModeObserver();
+            };
+        }
+    }
 }

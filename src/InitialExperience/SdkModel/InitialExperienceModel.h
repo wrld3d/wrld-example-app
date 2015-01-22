@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -8,27 +8,30 @@
 
 namespace ExampleApp
 {
-	namespace InitialExperience
-	{
-		class InitialExperienceModel : public IInitialExperienceModel, private Eegeo::NonCopyable
-		{
-			size_t m_currentStepIndex;
-			std::vector<IInitialExperienceStep*> m_steps;
+    namespace InitialExperience
+    {
+        namespace SdkModel
+        {
+            class InitialExperienceModel : public IInitialExperienceModel, private Eegeo::NonCopyable
+            {
+                size_t m_currentStepIndex;
+                std::vector<IInitialExperienceStep*> m_steps;
 
-		public:
-			InitialExperienceModel(const std::vector<IInitialExperienceStep*>& initialExperienceSteps);
+            public:
+                InitialExperienceModel(const std::vector<IInitialExperienceStep*>& initialExperienceSteps);
 
-			~InitialExperienceModel();
+                ~InitialExperienceModel();
 
-			bool HasCompletedInitialExperience() const;
+                bool HasCompletedInitialExperience() const;
 
-			void DoNextPartOfInitialExperience();
+                void DoNextPartOfInitialExperience();
 
-			void UpdateCurrentStep(float deltaSeconds);
+                void UpdateCurrentStep(float deltaSeconds);
 
-		private:
-			IInitialExperienceStep& GetCurrentStep();
+            private:
+                IInitialExperienceStep& GetCurrentStep();
 
-		};
-	}
+            };
+        }
+    }
 }

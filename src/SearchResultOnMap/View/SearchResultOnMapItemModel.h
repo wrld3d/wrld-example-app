@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -6,24 +6,27 @@
 #include "IWorldPinSelectionHandler.h"
 #include "Search.h"
 #include "SearchResultPoi.h"
-#include "NativeToUiMessageBus.h"
+#include "BidirectionalBus.h"
 
 namespace ExampleApp
 {
-	namespace SearchResultOnMap
-	{
-		class SearchResultOnMapItemModel : public WorldPins::IWorldPinSelectionHandler, private Eegeo::NonCopyable
-		{
-			Search::SearchResultModel& m_searchResultModel;
-			ExampleAppMessaging::NativeToUiMessageBus& m_nativeToUiMessageBus;
+    namespace SearchResultOnMap
+    {
+        namespace View
+        {
+            class SearchResultOnMapItemModel : public WorldPins::SdkModel::IWorldPinSelectionHandler, private Eegeo::NonCopyable
+            {
+                Search::SdkModel::SearchResultModel& m_searchResultModel;
+                ExampleAppMessaging::TMessageBus& m_messageBus;
 
-		public:
-			SearchResultOnMapItemModel(Search::SearchResultModel& searchResultModel,
-			                           ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus);
+            public:
+                SearchResultOnMapItemModel(Search::SdkModel::SearchResultModel& searchResultModel,
+                                           ExampleAppMessaging::TMessageBus& messageBus);
 
-			~SearchResultOnMapItemModel();
+                ~SearchResultOnMapItemModel();
 
-			void SelectPin();
-		};
-	}
+                void SelectPin();
+            };
+        }
+    }
 }

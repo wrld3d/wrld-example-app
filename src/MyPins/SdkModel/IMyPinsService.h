@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -12,19 +12,22 @@ namespace ExampleApp
 {
     namespace MyPins
     {
-        class IMyPinsService
+        namespace SdkModel
         {
-        public:
-            virtual ~IMyPinsService() {}
-            
-            virtual void RemovePinWithId(const int myPinId) = 0;
-            
-            virtual void SavePin(const std::string& title,
-                                 const std::string& description,
-                                 const Eegeo::Space::LatLong& latLong,
-                                 Byte* imageData,
-                                 size_t imageSize,
-                                 bool shouldShare) = 0;
-        };
+            class IMyPinsService
+            {
+            public:
+                virtual ~IMyPinsService() {}
+
+                virtual void RemovePinWithId(const int myPinId) = 0;
+
+                virtual void SavePin(const std::string& title,
+                                     const std::string& description,
+                                     const Eegeo::Space::LatLong& latLong,
+                                     Byte* imageData,
+                                     size_t imageSize,
+                                     bool shouldShare) = 0;
+            };
+        }
     }
 }

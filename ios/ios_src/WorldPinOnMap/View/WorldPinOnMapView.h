@@ -1,21 +1,26 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
 #import <UIKit/UIKit.h>
 #include <string>
 #include "AppRunner.h"
+#include "WorldPinOnMapViewIncludes.h"
 
 @class WorldPinOnMapView;
-@class WorldPinOnMapViewController;
 
-@interface WorldPinOnMapView : UIView
+@interface WorldPinOnMapView : UIView <UIGestureRecognizerDelegate>
 {
-	__weak WorldPinOnMapViewController* m_pController;
-	float m_stateChangeAnimationTimeSeconds;
+    ExampleApp::WorldPins::View::WorldPinOnMapViewInterop* m_pInterop;
+    UITapGestureRecognizer* m_tapGestureRecogniser;
+    float m_stateChangeAnimationTimeSeconds;
+    float m_pinOffset;
+    float m_pixelScale;
 }
 
-- (id) initWithController:(WorldPinOnMapViewController *)controller;
+- (id) initWithParams:(float)pinDiameter :(float)pixelScale;
+
+- (ExampleApp::WorldPins::View::WorldPinOnMapViewInterop*) getInterop;
 
 - (BOOL) consumesTouch:(UITouch *)touch;
 

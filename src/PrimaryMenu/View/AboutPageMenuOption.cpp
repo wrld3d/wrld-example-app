@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "AboutPageMenuOption.h"
 #include "IAboutPageViewModel.h"
@@ -6,28 +6,28 @@
 
 namespace ExampleApp
 {
-	namespace PrimaryMenu
-	{
-		namespace Options
-		{
-			AboutPageMenuOption::AboutPageMenuOption(Menu::IMenuViewModel& aboutOptionContainerMenu,
-			        AboutPage::IAboutPageViewModel& aboutPageViewModel)
-				: m_aboutOptionContainerMenu(aboutOptionContainerMenu)
-				, m_aboutPageViewModel(aboutPageViewModel)
-			{
+    namespace PrimaryMenu
+    {
+        namespace View
+        {
+            AboutPageMenuOption::AboutPageMenuOption(Menu::View::IMenuViewModel& aboutOptionContainerMenu,
+                    AboutPage::View::IAboutPageViewModel& aboutPageViewModel)
+                : m_aboutOptionContainerMenu(aboutOptionContainerMenu)
+                , m_aboutPageViewModel(aboutPageViewModel)
+            {
 
-			}
+            }
 
-			AboutPageMenuOption::~AboutPageMenuOption()
-			{
+            AboutPageMenuOption::~AboutPageMenuOption()
+            {
 
-			}
+            }
 
-			void AboutPageMenuOption::Select()
-			{
-				m_aboutOptionContainerMenu.Close();
-				m_aboutPageViewModel.Open();
-			}
-		}
-	}
+            void AboutPageMenuOption::Select()
+            {
+                m_aboutOptionContainerMenu.Close();
+                m_aboutPageViewModel.Open();
+            }
+        }
+    }
 }

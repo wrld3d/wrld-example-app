@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "MyPinDetailsModelSelectedObserver.h"
 
@@ -6,25 +6,28 @@ namespace ExampleApp
 {
     namespace MyPinDetails
     {
-        MyPinDetailsModelSelectedObserver::MyPinDetailsModelSelectedObserver(MyPinDetails::IMyPinDetailsViewModel& myPinDetailsViewModel,
-                                                                             ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus)
-        : m_myPinDetailsViewModel(myPinDetailsViewModel)
-        , m_nativeToUiMessageBus(nativeToUiMessageBus)
-        , m_handlerBinding(this, &MyPinDetailsModelSelectedObserver::HandleReceivedMyPinDetailsModelSelectedMessage)
+        namespace View
         {
-            m_nativeToUiMessageBus.Subscribe(m_handlerBinding);
-        }
-        
-        MyPinDetailsModelSelectedObserver::~MyPinDetailsModelSelectedObserver()
-        {
-            m_nativeToUiMessageBus.Unsubscribe(m_handlerBinding);
-        }
-        
-        void MyPinDetailsModelSelectedObserver::HandleReceivedMyPinDetailsModelSelectedMessage(const MyPinDetailsModelSelectedMessage& message)
-        {
-            if (!m_myPinDetailsViewModel.IsOpen())
+            MyPinDetailsModelSelectedObserver::MyPinDetailsModelSelectedObserver(IMyPinDetailsViewModel& myPinDetailsViewModel,
+                    ExampleAppMessaging::TMessageBus& messageBus)
+                : m_myPinDetailsViewModel(myPinDetailsViewModel)
+                , m_messageBus(messageBus)
+                , m_handlerBinding(this, &MyPinDetailsModelSelectedObserver::OnMyPinDetailsModelSelectedMessage)
             {
-                m_myPinDetailsViewModel.Open(message.GetModel());
+                m_messageBus.SubscribeUi(m_handlerBinding);
+            }
+
+            MyPinDetailsModelSelectedObserver::~MyPinDetailsModelSelectedObserver()
+            {
+                m_messageBus.UnsubscribeUi(m_handlerBinding);
+            }
+
+            void MyPinDetailsModelSelectedObserver::OnMyPinDetailsModelSelectedMessage(const MyPinDetailsModelSelectedMessage& message)
+            {
+                if (!m_myPinDetailsViewModel.IsOpen())
+                {
+                    m_myPinDetailsViewModel.Open(message.GetModel());
+                }
             }
         }
     }

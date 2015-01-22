@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "MyPinDetailsModule.h"
 #include "MyPinDetailsViewModel.h"
@@ -6,38 +6,40 @@
 
 namespace ExampleApp
 {
-	namespace MyPinDetails
-	{
-		MyPinDetailsModule::MyPinDetailsModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
-                                               Reaction::IReactionControllerModel& reactionControllerModel,
-                                               MyPins::IMyPinsService& myPinsService,
-                                               ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus,
-                                               ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus)
-		{
-			m_pMyPinDetailsViewModel = Eegeo_NEW(MyPinDetailsViewModel)(identityProvider.GetNextIdentity(),
-			                              reactionControllerModel);
-            
-            m_pMyPinDetailsModelSelectedObserver = Eegeo_NEW(MyPinDetailsModelSelectedObserver)(*m_pMyPinDetailsViewModel,
-                                                                                                nativeToUiMessageBus);
-            
-            m_pMyPinDetailsViewRemovePinHandler = Eegeo_NEW(MyPinDetailsViewRemovePinHandler)(myPinsService,
-                                                                                              uiToNativeMessageBus);
-		}
+    namespace MyPinDetails
+    {
+        namespace SdkModel
+        {
+            MyPinDetailsModule::MyPinDetailsModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
+                                                   Reaction::View::IReactionControllerModel& reactionControllerModel,
+                                                   MyPins::SdkModel::IMyPinsService& myPinsService,
+                                                   ExampleAppMessaging::TMessageBus& messageBus)
+            {
+                m_pMyPinDetailsViewModel = Eegeo_NEW(MyPinDetails::View::MyPinDetailsViewModel)(identityProvider.GetNextIdentity(),
+                                           reactionControllerModel);
 
-		MyPinDetailsModule::~MyPinDetailsModule()
-		{
-            Eegeo_DELETE m_pMyPinDetailsModelSelectedObserver;
-			Eegeo_DELETE m_pMyPinDetailsViewModel;
-		}
+                m_pMyPinDetailsModelSelectedObserver = Eegeo_NEW(MyPinDetails::View::MyPinDetailsModelSelectedObserver)(*m_pMyPinDetailsViewModel,
+                                                       messageBus);
 
-		IMyPinDetailsViewModel& MyPinDetailsModule::GetMyPinDetailsViewModel() const
-		{
-			return *m_pMyPinDetailsViewModel;
-		}
+                m_pMyPinDetailsViewRemovePinHandler = Eegeo_NEW(MyPinDetailsViewRemovePinHandler)(myPinsService,
+                                                      messageBus);
+            }
 
-		OpenableControlViewModel::IOpenableControlViewModel& MyPinDetailsModule::GetObservableOpenableControl() const
-		{
-			return m_pMyPinDetailsViewModel->GetOpenableControl();
-		}
-	}
+            MyPinDetailsModule::~MyPinDetailsModule()
+            {
+                Eegeo_DELETE m_pMyPinDetailsModelSelectedObserver;
+                Eegeo_DELETE m_pMyPinDetailsViewModel;
+            }
+
+            MyPinDetails::View::IMyPinDetailsViewModel& MyPinDetailsModule::GetMyPinDetailsViewModel() const
+            {
+                return *m_pMyPinDetailsViewModel;
+            }
+
+            OpenableControl::View::IOpenableControlViewModel& MyPinDetailsModule::GetObservableOpenableControl() const
+            {
+                return m_pMyPinDetailsViewModel->GetOpenableControl();
+            }
+        }
+    }
 }

@@ -1,25 +1,27 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
 #import <UIKit/UIKit.h>
 #include "AppRunner.h"
 #include "SearchResultModel.h"
+#include "SearchResultPoiViewInterop.h"
 
 @class SearchResultPoiView;
-@class SearchResultPoiViewController;
 
 @interface SearchResultPoiView : UIView
 {
-	__weak SearchResultPoiViewController* m_pController;
-	float m_stateChangeAnimationTimeSeconds;
+    float m_stateChangeAnimationTimeSeconds;
+    ExampleApp::SearchResultPoi::View::SearchResultPoiViewInterop* m_pInterop;
 }
 
-- (id) initWithController:(SearchResultPoiViewController *)controller;
+- (id) initWithoutParams;
+
+- (ExampleApp::SearchResultPoi::View::SearchResultPoiViewInterop*) getInterop;
 
 - (BOOL) consumesTouch:(UITouch *)touch;
 
-- (void) setContent:(const ExampleApp::Search::SearchResultModel*)pModel;
+- (void) setContent:(const ExampleApp::Search::SdkModel::SearchResultModel*)pModel;
 
 - (void) setFullyActive;
 

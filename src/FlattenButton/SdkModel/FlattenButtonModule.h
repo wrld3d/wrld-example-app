@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -10,35 +10,35 @@
 #include "FlattenButtonViewModel.h"
 #include "FlattenButtonViewStateChangedObserver.h"
 #include "FlattenButtonModelStateChangedObserver.h"
-#include "UiToNativeMessageBus.h"
-#include "NativeToUiMessageBus.h"
+#include "BidirectionalBus.h"
 
 namespace ExampleApp
 {
-	namespace FlattenButton
-	{
-		class FlattenButtonModule : public IFlattenButtonModule, private Eegeo::NonCopyable
-		{
-		private:
-			FlattenButtonViewModel* m_pViewModel;
-			IFlattenButtonModel* m_pModel;
-			FlattenButtonViewStateChangedObserver* m_pFlattenButtonViewStateChangedObserver;
-			FlattenButtonModelStateChangedObserver* m_pFlattenButtonModelStateChangedObserver;
+    namespace FlattenButton
+    {
+        namespace SdkModel
+        {
+            class FlattenButtonModule : public IFlattenButtonModule, private Eegeo::NonCopyable
+            {
+            private:
+                View::FlattenButtonViewModel* m_pViewModel;
+                IFlattenButtonModel* m_pModel;
+                FlattenButtonViewStateChangedObserver* m_pFlattenButtonViewStateChangedObserver;
+                FlattenButtonModelStateChangedObserver* m_pFlattenButtonModelStateChangedObserver;
 
-		public:
-			FlattenButtonModule(Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
-			                    Eegeo::Helpers::IIdentityProvider& identityProvider,
-			                    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
-			                    ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus);
+            public:
+                FlattenButtonModule(Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
+                                    Eegeo::Helpers::IIdentityProvider& identityProvider,
+                                    ExampleAppMessaging::TMessageBus& messageBus);
 
-			~FlattenButtonModule();
+                ~FlattenButtonModule();
 
-			IFlattenButtonModel& GetFlattenButtonModel() const;
+                IFlattenButtonModel& GetFlattenButtonModel() const;
 
-			IFlattenButtonViewModel& GetFlattenButtonViewModel() const;
+                View::IFlattenButtonViewModel& GetFlattenButtonViewModel() const;
 
-			ScreenControlViewModel::IScreenControlViewModel& GetScreenControlViewModel() const;
-		};
-
-	}
+                ScreenControl::View::IScreenControlViewModel& GetScreenControlViewModel() const;
+            };
+        }
+    }
 }

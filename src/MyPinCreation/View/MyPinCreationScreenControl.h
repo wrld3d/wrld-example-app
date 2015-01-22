@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -9,14 +9,17 @@ namespace ExampleApp
 {
     namespace MyPinCreation
     {
-        class MyPinCreationScreenControl : public ScreenControlViewModel::ScreenControlViewModelBase, private Eegeo::NonCopyable
+        namespace View
         {
-            Eegeo::Helpers::TIdentity m_identity;
-            
-        public:
-            MyPinCreationScreenControl(bool initiallyOnScreen, Eegeo::Helpers::TIdentity identity);
-            
-            Eegeo::Helpers::TIdentity GetIdentity() const;
-        };
+            class MyPinCreationScreenControl : public ScreenControl::View::ScreenControlViewModelBase, private Eegeo::NonCopyable
+            {
+                Eegeo::Helpers::TIdentity m_identity;
+
+            public:
+                MyPinCreationScreenControl(bool initiallyOnScreen, Eegeo::Helpers::TIdentity identity);
+
+                Eegeo::Helpers::TIdentity GetIdentity() const;
+            };
+        }
     }
 }

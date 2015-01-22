@@ -1,48 +1,48 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include <string>
 #include "MenuJni.h"
-#include "MenuViewController.h"
+#include "MenuView.h"
 #include "AndroidAppThreadAssertionMacros.h"
 
 JNIEXPORT void JNICALL Java_com_eegeo_menu_MenuViewJniMethods_ViewClicked(
     JNIEnv* jenv, jobject obj,
     jlong nativeObjectPtr)
 {
-	ASSERT_UI_THREAD
+    ASSERT_UI_THREAD
 
-	ExampleApp::Menu::MenuViewController* pController = reinterpret_cast<ExampleApp::Menu::MenuViewController*>(nativeObjectPtr);
-	pController->HandleViewClicked();
+    ExampleApp::Menu::View::MenuView* pView = reinterpret_cast<ExampleApp::Menu::View::MenuView*>(nativeObjectPtr);
+    pView->HandleViewClicked();
 }
 
 JNIEXPORT void JNICALL Java_com_eegeo_menu_MenuViewJniMethods_ViewOpenCompleted(
     JNIEnv* jenv, jobject obj,
     jlong nativeObjectPtr)
 {
-	ASSERT_UI_THREAD
+    ASSERT_UI_THREAD
 
-	ExampleApp::Menu::MenuViewController* pController = reinterpret_cast<ExampleApp::Menu::MenuViewController*>(nativeObjectPtr);
-	pController->HandleViewOpenCompleted();
+    ExampleApp::Menu::View::MenuView* pView = reinterpret_cast<ExampleApp::Menu::View::MenuView*>(nativeObjectPtr);
+    pView->HandleViewOpenCompleted();
 }
 
 JNIEXPORT void JNICALL Java_com_eegeo_menu_MenuViewJniMethods_ViewCloseCompleted(
     JNIEnv* jenv, jobject obj,
     jlong nativeObjectPtr)
 {
-	ASSERT_UI_THREAD
+    ASSERT_UI_THREAD
 
-	ExampleApp::Menu::MenuViewController* pController = reinterpret_cast<ExampleApp::Menu::MenuViewController*>(nativeObjectPtr);
-	pController->HandleViewCloseCompleted();
+    ExampleApp::Menu::View::MenuView* pView = reinterpret_cast<ExampleApp::Menu::View::MenuView*>(nativeObjectPtr);
+    pView->HandleViewCloseCompleted();
 }
 
 JNIEXPORT void JNICALL Java_com_eegeo_menu_MenuViewJniMethods_ViewDragStarted(
     JNIEnv* jenv, jobject obj,
     jlong nativeObjectPtr)
 {
-	ASSERT_UI_THREAD
+    ASSERT_UI_THREAD
 
-	ExampleApp::Menu::MenuViewController* pController = reinterpret_cast<ExampleApp::Menu::MenuViewController*>(nativeObjectPtr);
-	pController->HandleDraggingViewStarted();
+    ExampleApp::Menu::View::MenuView* pView = reinterpret_cast<ExampleApp::Menu::View::MenuView*>(nativeObjectPtr);
+    pView->HandleDraggingViewStarted();
 }
 
 JNIEXPORT void JNICALL Java_com_eegeo_menu_MenuViewJniMethods_ViewDragInProgress(
@@ -50,46 +50,42 @@ JNIEXPORT void JNICALL Java_com_eegeo_menu_MenuViewJniMethods_ViewDragInProgress
     jlong nativeObjectPtr,
     jfloat normalisedDragState)
 {
-	ASSERT_UI_THREAD
+    ASSERT_UI_THREAD
 
-	ExampleApp::Menu::MenuViewController* pController = reinterpret_cast<ExampleApp::Menu::MenuViewController*>(nativeObjectPtr);
-	pController->HandleDraggingViewInProgress(normalisedDragState);
+    ExampleApp::Menu::View::MenuView* pView = reinterpret_cast<ExampleApp::Menu::View::MenuView*>(nativeObjectPtr);
+    pView->HandleDraggingViewInProgress(normalisedDragState);
 }
 
 JNIEXPORT void JNICALL Java_com_eegeo_menu_MenuViewJniMethods_ViewDragCompleted(
     JNIEnv* jenv, jobject obj,
     jlong nativeObjectPtr)
 {
-	ASSERT_UI_THREAD
+    ASSERT_UI_THREAD
 
-	ExampleApp::Menu::MenuViewController* pController = reinterpret_cast<ExampleApp::Menu::MenuViewController*>(nativeObjectPtr);
-	pController->HandleDraggingViewCompleted();
+    ExampleApp::Menu::View::MenuView* pView = reinterpret_cast<ExampleApp::Menu::View::MenuView*>(nativeObjectPtr);
+    pView->HandleDraggingViewCompleted();
 }
 
 JNIEXPORT void JNICALL Java_com_eegeo_menu_MenuViewJniMethods_SelectedItem(
     JNIEnv* jenv, jobject obj,
     jlong nativeObjectPtr,
-    jstring selectedItem,
-    jint index)
+    jint sectionIndex,
+    jint itemIndex)
 {
-	ASSERT_UI_THREAD
+    ASSERT_UI_THREAD
 
-	const char* chars = jenv->GetStringUTFChars(selectedItem, 0);
-	std::string selection = chars;
-	jenv->ReleaseStringUTFChars(selectedItem, chars);
-
-	ExampleApp::Menu::MenuViewController* pController = reinterpret_cast<ExampleApp::Menu::MenuViewController*>(nativeObjectPtr);
-	pController->HandleItemSelected(selection, index);
+    ExampleApp::Menu::View::MenuView* pView = reinterpret_cast<ExampleApp::Menu::View::MenuView*>(nativeObjectPtr);
+    pView->HandleItemSelected(sectionIndex, itemIndex);
 }
 
 JNIEXPORT bool JNICALL Java_com_eegeo_menu_MenuViewJniMethods_TryBeginDrag(
     JNIEnv* jenv, jobject obj,
     jlong nativeObjectPtr)
 {
-	ASSERT_UI_THREAD
+    ASSERT_UI_THREAD
 
-	ExampleApp::Menu::MenuViewController* pController = reinterpret_cast<ExampleApp::Menu::MenuViewController*>(nativeObjectPtr);
-	return pController->TryBeginDrag();
+    ExampleApp::Menu::View::MenuView* pView = reinterpret_cast<ExampleApp::Menu::View::MenuView*>(nativeObjectPtr);
+    return pView->CallBeginDrag();
 }
 
 

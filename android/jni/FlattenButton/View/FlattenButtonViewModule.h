@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -7,27 +7,30 @@
 #include "Types.h"
 #include "FLattenButton.h"
 #include "FlattenButtonViewIncludes.h"
-#include "UiToNativeMessageBus.h"
-#include "NativeToUiMessageBus.h"
+#include "FlattenButtonView.h"
+#include "FlattenButtonController.h"
 
 namespace ExampleApp
 {
-	namespace FlattenButton
-	{
-		class FlattenButtonViewModule: public IFlattenButtonViewModule, private Eegeo::NonCopyable
-		{
-		private:
-			FlattenButtonViewController* m_pController;
+    namespace FlattenButton
+    {
+        namespace View
+        {
+            class FlattenButtonViewModule: public IFlattenButtonViewModule, private Eegeo::NonCopyable
+            {
+            private:
+                FlattenButtonView* m_pView;
+                FlattenButtonController* m_pController;
 
-		public:
-			FlattenButtonViewModule(
-			    AndroidNativeState& nativeState,
-			    FlattenButton::IFlattenButtonViewModel& viewModel,
-			    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
-			    ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus
-			);
+            public:
+                FlattenButtonViewModule(
+                    AndroidNativeState& nativeState,
+                    IFlattenButtonViewModel& viewModel,
+                    ExampleAppMessaging::TMessageBus& messageBus
+                );
 
-			~FlattenButtonViewModule();
-		};
-	}
+                ~FlattenButtonViewModule();
+            };
+        }
+    }
 }

@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -7,30 +7,33 @@
 #include "Search.h"
 #include "Menu.h"
 #include "CategorySearchSelectedMessageHandler.h"
-#include "UiToNativeMessageBus.h"
+#include "BidirectionalBus.h"
 
 namespace ExampleApp
 {
-	namespace CategorySearch
-	{
-		class CategorySearchModule : public ICategorySearchModule, private Eegeo::NonCopyable
-		{
-		public:
-			CategorySearchModule(Search::ISearchQueryPerformer& searchQueryPerformer,
-			                     ExampleApp::Menu::IMenuViewModel& menuViewModel,
-			                     ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus);
+    namespace CategorySearch
+    {
+        namespace SdkModel
+        {
+            class CategorySearchModule : public ICategorySearchModule, private Eegeo::NonCopyable
+            {
+            public:
+                CategorySearchModule(Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
+                                     Menu::View::IMenuViewModel& menuViewModel,
+                                     ExampleAppMessaging::TMessageBus& messageBus);
 
-			~CategorySearchModule();
+                ~CategorySearchModule();
 
-			Menu::IMenuModel& GetCategorySearchMenuModel() const;
+                Menu::View::IMenuModel& GetCategorySearchMenuModel() const;
 
-			ICategorySearchRepository& GetCategorySearchRepository() const;
+                View::ICategorySearchRepository& GetCategorySearchRepository() const;
 
-		private:
-			Menu::IMenuModel* m_pMenuModel;
-			Menu::IMenuOptionsModel* m_pMenuOptionsModel;
-			ICategorySearchRepository* m_pCategorySearchRepository;
-			CategorySearchSelectedMessageHandler* m_pCategorySearchSelectedMessageHandler;
-		};
-	}
+            private:
+                Menu::View::IMenuModel* m_pMenuModel;
+                Menu::View::IMenuOptionsModel* m_pMenuOptionsModel;
+                View::ICategorySearchRepository* m_pCategorySearchRepository;
+                CategorySearchSelectedMessageHandler* m_pCategorySearchSelectedMessageHandler;
+            };
+        }
+    }
 }

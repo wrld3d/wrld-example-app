@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "MyPinCreationModule.h"
 
@@ -39,85 +39,85 @@ namespace ExampleApp
 {
     namespace MyPinCreation
     {
-        MyPinCreationModule::MyPinCreationModule(MyPins::IMyPinsService& myPinsService,
-                                                 Eegeo::Helpers::IIdentityProvider& identityProvider,
-                                                 ExampleApp::Menu::IMenuViewModel& primaryMenuViewModel,
-                                                 ExampleApp::Menu::IMenuViewModel& secondaryMenuViewModel,
-                                                 ExampleApp::Search::ISearchQueryPerformer& searchQueryPerformer,
-                                                 ExampleApp::Menu::IMenuViewModel& searchResultMenuViewModel,
-                                                 Search::ISearchRefreshService& searchRefreshService,
-                                                 ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus,
-                                                 ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
-                                                 ExampleApp::Reaction::IReactionControllerModel& reactionControllerModel)
+        namespace SdkModel
         {
-            
-            m_pMyPinCreationModel = Eegeo_NEW(MyPinCreationModel)(myPinsService);
-            
-            m_pMyPinCreationModelObserver = Eegeo_NEW(MyPinCreationModelObserver)(*m_pMyPinCreationModel, nativeToUiMessageBus);
-            
-            m_pMyPinCreationViewStateChangedHandler = Eegeo_NEW(MyPinCreationViewStateChangedHandler)(*m_pMyPinCreationModel, searchRefreshService, uiToNativeMessageBus);
-            
-            m_pMyPinCreationViewSavePinHandler = Eegeo_NEW(MyPinCreationViewSavePinHandler)(*m_pMyPinCreationModel, uiToNativeMessageBus);
-            
-            m_pMyPinCreationInitiationViewModel = Eegeo_NEW(MyPinCreationInitiationViewModel)(identityProvider.GetNextIdentity(),
-                                                                                              false);
-            
-            m_pMyPinCreationConfirmationViewModel = Eegeo_NEW(MyPinCreationConfirmationViewModel)(identityProvider.GetNextIdentity(),
-                                                                                                  false,
-                                                                                                  reactionControllerModel);
-            
-            m_pMyPinCreationCompositeViewModel = Eegeo_NEW(MyPinCreationCompositeViewModel)(nativeToUiMessageBus,
-            																				uiToNativeMessageBus,
-                                                                                            *m_pMyPinCreationInitiationViewModel,
-                                                                                            *m_pMyPinCreationConfirmationViewModel,
-                                                                                            primaryMenuViewModel,
-                                                                                            secondaryMenuViewModel,
-                                                                                            searchQueryPerformer,
-                                                                                            searchResultMenuViewModel);
-            
-        }
-        
-        MyPinCreationModule::~MyPinCreationModule()
-        {
-            Eegeo_DELETE m_pMyPinCreationCompositeViewModel;
-            Eegeo_DELETE m_pMyPinCreationConfirmationViewModel;
-            Eegeo_DELETE m_pMyPinCreationInitiationViewModel;
-            Eegeo_DELETE m_pMyPinCreationModel;
-        }
-        
-        IMyPinCreationModel& MyPinCreationModule::GetMyPinCreationModel() const
-        {
-            return *m_pMyPinCreationModel;
-        }
-        
-        IMyPinCreationInitiationViewModel& MyPinCreationModule::GetMyPinCreationInitiationViewModel() const
-        {
-            return *m_pMyPinCreationInitiationViewModel;
-        }
-        
-        IMyPinCreationConfirmationViewModel& MyPinCreationModule::GetMyPinCreationConfirmationViewModel() const
-        {
-            return *m_pMyPinCreationConfirmationViewModel;
-        }
-        
-        IMyPinCreationCompositeViewModel& MyPinCreationModule::GetMyPinCreationCompositeViewModel() const
-        {
-            return *m_pMyPinCreationCompositeViewModel;
-        }
-        
-        ScreenControlViewModel::IScreenControlViewModel& MyPinCreationModule::GetInitiationScreenControlViewModel() const
-        {
-            return m_pMyPinCreationInitiationViewModel->GetScreenControlViewModel();
-        }
-        
-        ScreenControlViewModel::IScreenControlViewModel& MyPinCreationModule::GetConfirmationScreenControlViewModel() const
-        {
-            return m_pMyPinCreationConfirmationViewModel->GetScreenControlViewModel();
-        }
+            MyPinCreationModule::MyPinCreationModule(MyPins::SdkModel::IMyPinsService& myPinsService,
+                    Eegeo::Helpers::IIdentityProvider& identityProvider,
+                    ExampleApp::Menu::View::IMenuViewModel& primaryMenuViewModel,
+                    ExampleApp::Menu::View::IMenuViewModel& secondaryMenuViewModel,
+                    Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
+                    ExampleApp::Menu::View::IMenuViewModel& searchResultMenuViewModel,
+                    Search::SdkModel::ISearchRefreshService& searchRefreshService,
+                    ExampleAppMessaging::TMessageBus& messageBus,
+                    Reaction::View::IReactionControllerModel& reactionControllerModel)
+            {
 
-        OpenableControlViewModel::IOpenableControlViewModel& MyPinCreationModule::GetObservableOpenableControl() const
-        {
-            return m_pMyPinCreationConfirmationViewModel->GetOpenableControlViewModel();
+                m_pMyPinCreationModel = Eegeo_NEW(MyPinCreationModel)(myPinsService);
+
+                m_pMyPinCreationModelObserver = Eegeo_NEW(MyPinCreationModelObserver)(*m_pMyPinCreationModel, messageBus);
+
+                m_pMyPinCreationViewStateChangedHandler = Eegeo_NEW(MyPinCreationViewStateChangedHandler)(*m_pMyPinCreationModel, searchRefreshService, messageBus);
+
+                m_pMyPinCreationViewSavePinHandler = Eegeo_NEW(MyPinCreationViewSavePinHandler)(*m_pMyPinCreationModel, messageBus);
+
+                m_pMyPinCreationInitiationViewModel = Eegeo_NEW(View::MyPinCreationInitiationViewModel)(identityProvider.GetNextIdentity(),
+                                                      false);
+
+                m_pMyPinCreationConfirmationViewModel = Eegeo_NEW(View::MyPinCreationConfirmationViewModel)(identityProvider.GetNextIdentity(),
+                                                        false,
+                                                        reactionControllerModel);
+
+                m_pMyPinCreationCompositeViewModel = Eegeo_NEW(View::MyPinCreationCompositeViewModel)(messageBus,
+                                                     *m_pMyPinCreationInitiationViewModel,
+                                                     *m_pMyPinCreationConfirmationViewModel,
+                                                     primaryMenuViewModel,
+                                                     secondaryMenuViewModel,
+                                                     searchResultMenuViewModel);
+
+            }
+
+            MyPinCreationModule::~MyPinCreationModule()
+            {
+                Eegeo_DELETE m_pMyPinCreationCompositeViewModel;
+                Eegeo_DELETE m_pMyPinCreationConfirmationViewModel;
+                Eegeo_DELETE m_pMyPinCreationInitiationViewModel;
+                Eegeo_DELETE m_pMyPinCreationModel;
+            }
+
+            IMyPinCreationModel& MyPinCreationModule::GetMyPinCreationModel() const
+            {
+                return *m_pMyPinCreationModel;
+            }
+
+            View::IMyPinCreationInitiationViewModel& MyPinCreationModule::GetMyPinCreationInitiationViewModel() const
+            {
+                return *m_pMyPinCreationInitiationViewModel;
+            }
+
+            View::IMyPinCreationConfirmationViewModel& MyPinCreationModule::GetMyPinCreationConfirmationViewModel() const
+            {
+                return *m_pMyPinCreationConfirmationViewModel;
+            }
+
+            View::IMyPinCreationCompositeViewModel& MyPinCreationModule::GetMyPinCreationCompositeViewModel() const
+            {
+                return *m_pMyPinCreationCompositeViewModel;
+            }
+
+            ScreenControl::View::IScreenControlViewModel& MyPinCreationModule::GetInitiationScreenControlViewModel() const
+            {
+                return m_pMyPinCreationInitiationViewModel->GetScreenControlViewModel();
+            }
+
+            ScreenControl::View::IScreenControlViewModel& MyPinCreationModule::GetConfirmationScreenControlViewModel() const
+            {
+                return m_pMyPinCreationConfirmationViewModel->GetScreenControlViewModel();
+            }
+
+            OpenableControl::View::IOpenableControlViewModel& MyPinCreationModule::GetObservableOpenableControl() const
+            {
+                return m_pMyPinCreationConfirmationViewModel->GetOpenableControlViewModel();
+            }
         }
     }
 }

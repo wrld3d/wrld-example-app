@@ -1,35 +1,38 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "FlattenButtonViewModule.h"
-#include "FlattenButtonViewController.h"
 #include "AndroidAppThreadAssertionMacros.h"
 
 namespace ExampleApp
 {
-	namespace FlattenButton
-	{
-		FlattenButtonViewModule::FlattenButtonViewModule(
-		    AndroidNativeState& nativeState,
-		    FlattenButton::IFlattenButtonViewModel& viewModel,
-		    ExampleAppMessaging::UiToNativeMessageBus& uiToNativeMessageBus,
-		    ExampleAppMessaging::NativeToUiMessageBus& nativeToUiMessageBus
-		)
-		{
-			ASSERT_UI_THREAD
+    namespace FlattenButton
+    {
+        namespace View
+        {
+            FlattenButtonViewModule::FlattenButtonViewModule(
+                AndroidNativeState& nativeState,
+                IFlattenButtonViewModel& viewModel,
+                ExampleAppMessaging::TMessageBus& messageBus
+            )
+            {
+                ASSERT_UI_THREAD
 
-			m_pController = Eegeo_NEW(FlattenButtonViewController)(
-			                    nativeState,
-			                    viewModel,
-			                    uiToNativeMessageBus,
-			                    nativeToUiMessageBus
-			                );
-		}
+                m_pView = Eegeo_NEW(FlattenButtonView)(nativeState);
 
-		FlattenButtonViewModule::~FlattenButtonViewModule()
-		{
-			ASSERT_UI_THREAD
+                m_pController = Eegeo_NEW(FlattenButtonController)(
+                                    viewModel,
+                                    *m_pView,
+                                    messageBus
+                                );
 
-			Eegeo_DELETE m_pController;
-		}
-	}
+            }
+
+            FlattenButtonViewModule::~FlattenButtonViewModule()
+            {
+                ASSERT_UI_THREAD
+                Eegeo_DELETE m_pController;
+                Eegeo_DELETE m_pView;
+            }
+        }
+    }
 }
