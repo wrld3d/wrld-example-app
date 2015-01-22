@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 #include "MyPins.h"
@@ -9,12 +9,12 @@ namespace ExampleApp
     {
         class MyPinSelectedMessage
         {
-            const MyPinModel& m_myPinModel;
-            
+            const SdkModel::MyPinModel& m_myPinModel;
+
         public:
-            MyPinSelectedMessage(const MyPinModel& myPinModel);
-            
-            const MyPinModel& Model() const;
+            MyPinSelectedMessage(const SdkModel::MyPinModel& myPinModel);
+
+            const SdkModel::MyPinModel& Model() const;
         };
     }
 }

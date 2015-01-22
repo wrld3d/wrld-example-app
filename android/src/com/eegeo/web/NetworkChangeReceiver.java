@@ -1,3 +1,5 @@
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
+
 package com.eegeo.web;
 
 import android.content.BroadcastReceiver;
@@ -9,18 +11,18 @@ import com.eegeo.web.ConnectivityServiceJniMethods;
 
 public class NetworkChangeReceiver extends BroadcastReceiver
 {
-	public static String NETWORK_STATUS_CHANGED_INTENT = "com.eegeo.web.NETWORK_STATUS_CHANGED";
-	protected long m_nativeCallerPointer;
+    public static String NETWORK_STATUS_CHANGED_INTENT = "com.eegeo.web.NETWORK_STATUS_CHANGED";
+    protected long m_nativeCallerPointer;
 
-	public NetworkChangeReceiver(long nativeCallerPointer)
-	{
-		m_nativeCallerPointer = nativeCallerPointer;
-	}
-	
-	@Override
-	public void onReceive(Context context, Intent intent) 
-	{
-		int networkStatus = ConnectivityQuerier.getConnectivityStatus(context);
-		ConnectivityServiceJniMethods.SetConnectivityType(m_nativeCallerPointer, networkStatus);
-	}
+    public NetworkChangeReceiver(long nativeCallerPointer)
+    {
+        m_nativeCallerPointer = nativeCallerPointer;
+    }
+
+    @Override
+    public void onReceive(Context context, Intent intent)
+    {
+        int networkStatus = ConnectivityQuerier.getConnectivityStatus(context);
+        ConnectivityServiceJniMethods.SetConnectivityType(m_nativeCallerPointer, networkStatus);
+    }
 }

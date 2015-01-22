@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "AppLocationDelegate.h"
 #include "ViewController.h"
@@ -14,28 +14,28 @@ AppLocationDelegate* m_pAppLocationDelegate;
     :(UIViewController*)pViewController
     :(AppLocationDelegate*)pAppLocationDelegate
 {
-	m_piOSLocationService = piOSLocationService;
-	m_pUIViewController = pViewController;
+    m_piOSLocationService = piOSLocationService;
+    m_pUIViewController = pViewController;
     m_pAppLocationDelegate = pAppLocationDelegate;
 
-	m_pLocationManager = [[CLLocationManager alloc] init];
-	m_pLocationManager.delegate = self;
-	m_pLocationManager.desiredAccuracy = kCLLocationAccuracyBest;
-	m_pLocationManager.headingFilter = kCLHeadingFilterNone;
+    m_pLocationManager = [[CLLocationManager alloc] init];
+    m_pLocationManager.delegate = self;
+    m_pLocationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    m_pLocationManager.headingFilter = kCLHeadingFilterNone;
 
-	if([m_pLocationManager respondsToSelector:@selector(requestWhenInUseAuthorization)])
-	{
-		[m_pLocationManager requestWhenInUseAuthorization];
-	}
+    if([m_pLocationManager respondsToSelector:@selector(requestWhenInUseAuthorization)])
+    {
+        [m_pLocationManager requestWhenInUseAuthorization];
+    }
 
-	[m_pLocationManager startUpdatingLocation];
-	[m_pLocationManager startUpdatingHeading];
+    [m_pLocationManager startUpdatingLocation];
+    [m_pLocationManager startUpdatingHeading];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
-	m_piOSLocationService->FailedToGetLocation();
-	m_piOSLocationService->FailedToGetHeading();
+    m_piOSLocationService->FailedToGetLocation();
+    m_piOSLocationService->FailedToGetHeading();
 }
 
 
@@ -50,7 +50,7 @@ AppLocationDelegate* m_pAppLocationDelegate;
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
     CLLocation *currentLocation = [locations lastObject];
-    
+
     if (currentLocation != nil)
     {
         double latDegrees = currentLocation.coordinate.latitude;
@@ -68,50 +68,50 @@ AppLocationDelegate* m_pAppLocationDelegate;
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateHeading:(CLHeading *)newHeading
 {
-	if (newHeading.headingAccuracy >= 0)
-	{
-		float heading = static_cast<float>(newHeading.trueHeading);
+    if (newHeading.headingAccuracy >= 0)
+    {
+        float heading = static_cast<float>(newHeading.trueHeading);
 
-		if (m_pUIViewController.interfaceOrientation == UIInterfaceOrientationLandscapeLeft)
-		{
-			heading -= 90.f;
-		}
-		else if (m_pUIViewController.interfaceOrientation == UIInterfaceOrientationLandscapeRight)
-		{
-			heading += 90.f;
-		}
-		else if (m_pUIViewController.interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown)
-		{
-			heading += 180.f;
-		}
-		else
-		{
-			heading += 0.f;
-		}
+        if (m_pUIViewController.interfaceOrientation == UIInterfaceOrientationLandscapeLeft)
+        {
+            heading -= 90.f;
+        }
+        else if (m_pUIViewController.interfaceOrientation == UIInterfaceOrientationLandscapeRight)
+        {
+            heading += 90.f;
+        }
+        else if (m_pUIViewController.interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown)
+        {
+            heading += 180.f;
+        }
+        else
+        {
+            heading += 0.f;
+        }
 
-		heading = fmodf((heading + 360.f), 360.f);
-		m_piOSLocationService->UpdateHeading(heading);
-	}
-	else
-	{
-		m_piOSLocationService->FailedToGetHeading();
-	}
+        heading = fmodf((heading + 360.f), 360.f);
+        m_piOSLocationService->UpdateHeading(heading);
+    }
+    else
+    {
+        m_piOSLocationService->FailedToGetHeading();
+    }
 }
 
 @end
 
 AppLocationDelegate::AppLocationDelegate(Eegeo::iOS::iOSLocationService& iOSLocationService,
-                                         UIViewController& viewController)
-: m_receivedPermissionResponse(false)
+        UIViewController& viewController)
+    : m_receivedPermissionResponse(false)
 {
-	m_pAppLocationDelegateLocationListener = [[AppLocationDelegateLocationListener alloc] init];
-	[m_pAppLocationDelegateLocationListener start:&iOSLocationService :&viewController: this];
+    m_pAppLocationDelegateLocationListener = [[AppLocationDelegateLocationListener alloc] init];
+    [m_pAppLocationDelegateLocationListener start:&iOSLocationService :&viewController: this];
 }
 
 AppLocationDelegate::~AppLocationDelegate()
 {
-	[m_pAppLocationDelegateLocationListener release];
-	m_pAppLocationDelegateLocationListener = nil;
+    [m_pAppLocationDelegateLocationListener release];
+    m_pAppLocationDelegateLocationListener = nil;
 }
 
 void AppLocationDelegate::NotifyReceivedPermissionResponse()

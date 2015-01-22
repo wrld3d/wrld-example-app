@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "MyPinRemovedFromMenuMessage.h"
 
@@ -6,13 +6,13 @@ namespace ExampleApp
 {
     namespace MyPins
     {
-        MyPinRemovedFromMenuMessage::MyPinRemovedFromMenuMessage(MyPinModel* myPinModel)
-        : m_pMyPinModel(myPinModel)
+        MyPinRemovedFromMenuMessage::MyPinRemovedFromMenuMessage(SdkModel::MyPinModel* myPinModel)
+            : m_pMyPinModel(myPinModel)
         {
-            
+
         }
-            
-        MyPinModel* MyPinRemovedFromMenuMessage::GetMyPinModel() const
+
+        SdkModel::MyPinModel* MyPinRemovedFromMenuMessage::GetMyPinModel() const
         {
             return m_pMyPinModel;
         }

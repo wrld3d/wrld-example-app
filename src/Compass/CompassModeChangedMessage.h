@@ -1,4 +1,4 @@
-//  Copyright (c) 2014 eeGeo. All rights reserved.
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -6,17 +6,17 @@
 
 namespace ExampleApp
 {
-	namespace Compass
-	{
-		class CompassModeChangedMessage
-		{
-		private:
-			GpsMode::Values m_mode;
+    namespace Compass
+    {
+        class CompassModeChangedMessage
+        {
+        private:
+            GpsMode::Values m_mode;
 
-		public:
-			CompassModeChangedMessage(GpsMode::Values mode);
+        public:
+            CompassModeChangedMessage(GpsMode::Values mode);
 
-			GpsMode::Values GetMode() const;
-		};
-	}
+            GpsMode::Values GetMode() const;
+        };
+    }
 }

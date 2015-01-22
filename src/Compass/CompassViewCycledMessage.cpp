@@ -1,10 +1,10 @@
-//  Copyright (c) 2014 eeGeo. All rights reserved.
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "CompassViewCycledMessage.h"
 
 namespace ExampleApp
 {
-	namespace Compass
-	{
-	}
+    namespace Compass
+    {
+    }
 }

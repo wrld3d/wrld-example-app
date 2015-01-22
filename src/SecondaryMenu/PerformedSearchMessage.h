@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -6,19 +6,19 @@
 
 namespace ExampleApp
 {
-	namespace SecondaryMenu
-	{
-		class PerformedSearchMessage
-		{
-			std::string m_searchQuery;
-			bool m_isCategory;
+    namespace SecondaryMenu
+    {
+        class PerformedSearchMessage
+        {
+            std::string m_searchQuery;
+            bool m_isCategory;
 
-		public:
-			PerformedSearchMessage(const std::string& searchQuery, bool isCategory);
+        public:
+            PerformedSearchMessage(const std::string& searchQuery, bool isCategory);
 
-			const std::string& SearchQuery() const;
+            const std::string& SearchQuery() const;
 
-			bool IsCategory() const;
-		};
-	}
+            bool IsCategory() const;
+        };
+    }
 }

@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -10,9 +10,12 @@ namespace ExampleApp
         {
         public:
             WorldPinsVisibilityMessage(bool setVisible);
-            
-            const bool ShouldSetVisible() const { return m_setVisible; }
-            
+
+            const bool ShouldSetVisible() const
+            {
+                return m_setVisible;
+            }
+
         private:
             bool m_setVisible;
         };

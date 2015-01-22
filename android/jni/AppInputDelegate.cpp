@@ -1,10 +1,10 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "AppInputDelegate.h"
 #include "AndroidAppThreadAssertionMacros.h"
 
 AppInputDelegate::AppInputDelegate(ExampleApp::MobileExampleApp& exampleApp)
-	:m_exampleApp(exampleApp)
+    :m_exampleApp(exampleApp)
 {
 
 }
@@ -16,99 +16,99 @@ AppInputDelegate::~AppInputDelegate()
 
 void AppInputDelegate::Event_TouchRotate(const AppInterface::RotateData& data)
 {
-	ASSERT_NATIVE_THREAD
+    ASSERT_NATIVE_THREAD
 
-	m_exampleApp.Event_TouchRotate(data);
+    m_exampleApp.Event_TouchRotate(data);
 }
 
 void AppInputDelegate::Event_TouchRotate_Start(const AppInterface::RotateData& data)
 {
-	ASSERT_NATIVE_THREAD
+    ASSERT_NATIVE_THREAD
 
-	m_exampleApp.Event_TouchRotate_Start(data);
+    m_exampleApp.Event_TouchRotate_Start(data);
 }
 
 void AppInputDelegate::Event_TouchRotate_End(const AppInterface::RotateData& data)
 {
-	ASSERT_NATIVE_THREAD
+    ASSERT_NATIVE_THREAD
 
-	m_exampleApp.Event_TouchRotate_End(data);
+    m_exampleApp.Event_TouchRotate_End(data);
 }
 
 void AppInputDelegate::Event_TouchPinch(const AppInterface::PinchData& data)
 {
-	ASSERT_NATIVE_THREAD
+    ASSERT_NATIVE_THREAD
 
-	m_exampleApp.Event_TouchPinch(data);
+    m_exampleApp.Event_TouchPinch(data);
 }
 
 void AppInputDelegate::Event_TouchPinch_Start(const AppInterface::PinchData& data)
 {
-	ASSERT_NATIVE_THREAD
+    ASSERT_NATIVE_THREAD
 
-	m_exampleApp.Event_TouchPinch_Start(data);
+    m_exampleApp.Event_TouchPinch_Start(data);
 }
 
 void AppInputDelegate::Event_TouchPinch_End(const AppInterface::PinchData& data)
 {
-	ASSERT_NATIVE_THREAD
+    ASSERT_NATIVE_THREAD
 
-	m_exampleApp.Event_TouchPinch_End(data);
+    m_exampleApp.Event_TouchPinch_End(data);
 }
 
 void AppInputDelegate::Event_TouchPan(const AppInterface::PanData& data)
 {
-	ASSERT_NATIVE_THREAD
+    ASSERT_NATIVE_THREAD
 
-	m_exampleApp.Event_TouchPan(data);
+    m_exampleApp.Event_TouchPan(data);
 }
 
 void AppInputDelegate::Event_TouchPan_Start(const AppInterface::PanData& data)
 {
-	ASSERT_NATIVE_THREAD
+    ASSERT_NATIVE_THREAD
 
-	m_exampleApp.Event_TouchPan_Start(data);
+    m_exampleApp.Event_TouchPan_Start(data);
 }
 
 void AppInputDelegate::Event_TouchPan_End(const AppInterface::PanData& data)
 {
-	ASSERT_NATIVE_THREAD
+    ASSERT_NATIVE_THREAD
 
-	m_exampleApp.Event_TouchPan_End(data);
+    m_exampleApp.Event_TouchPan_End(data);
 }
 
 void AppInputDelegate::Event_TouchTap(const AppInterface::TapData& data)
 {
-	ASSERT_NATIVE_THREAD
+    ASSERT_NATIVE_THREAD
 
-	m_exampleApp.Event_TouchTap(data);
+    m_exampleApp.Event_TouchTap(data);
 }
 
 void AppInputDelegate::Event_TouchDoubleTap(const AppInterface::TapData& data)
 {
-	ASSERT_NATIVE_THREAD
+    ASSERT_NATIVE_THREAD
 
-	m_exampleApp.Event_TouchDoubleTap(data);
+    m_exampleApp.Event_TouchDoubleTap(data);
 }
 
 void AppInputDelegate::Event_TouchDown(const AppInterface::TouchData& data)
 {
-	ASSERT_NATIVE_THREAD
+    ASSERT_NATIVE_THREAD
 
-	m_exampleApp.Event_TouchDown(data);
+    m_exampleApp.Event_TouchDown(data);
 }
 
 void AppInputDelegate::Event_TouchMove(const AppInterface::TouchData& data)
 {
-	ASSERT_NATIVE_THREAD
+    ASSERT_NATIVE_THREAD
 
-	m_exampleApp.Event_TouchMove(data);
+    m_exampleApp.Event_TouchMove(data);
 }
 
 void AppInputDelegate::Event_TouchUp(const AppInterface::TouchData& data)
 {
-	ASSERT_NATIVE_THREAD
+    ASSERT_NATIVE_THREAD
 
-	m_exampleApp.Event_TouchUp(data);
+    m_exampleApp.Event_TouchUp(data);
 }
 

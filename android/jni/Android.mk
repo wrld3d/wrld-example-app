@@ -12,7 +12,7 @@ LOCAL_LDLIBS    := -llog -landroid -lEGL -lGLESv2 -L./libs/ -lpng -lz -lm -L./li
 LOCAL_STATIC_LIBRARIES := android_native_app_glue native-activity-lib 
 
 LOCAL_CFLAGS += -march=armv6 -marm -mfloat-abi=softfp -mfpu=vfp
-LOCAL_CFLAGS += -Wall -Wno-unknown-pragmas -Wno-sign-compare -Wno-format-security
+LOCAL_CFLAGS += -Wall -Wno-unknown-pragmas -Wno-sign-compare -Wno-format-security -Wno-reorder
 #LOCAL_CFLAGS += -Werror
 
 ifdef COMPILE_CPP_11

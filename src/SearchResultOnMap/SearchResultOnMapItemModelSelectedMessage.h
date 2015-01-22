@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -6,17 +6,17 @@
 
 namespace ExampleApp
 {
-	namespace SearchResultOnMap
-	{
-		class SearchResultOnMapItemModelSelectedMessage
-		{
-		private:
-			Search::SearchResultModel m_model;
+    namespace SearchResultOnMap
+    {
+        class SearchResultOnMapItemModelSelectedMessage
+        {
+        private:
+            Search::SdkModel::SearchResultModel m_model;
 
-		public:
-			SearchResultOnMapItemModelSelectedMessage(const Search::SearchResultModel& model);
+        public:
+            SearchResultOnMapItemModelSelectedMessage(const Search::SdkModel::SearchResultModel& model);
 
-			const Search::SearchResultModel& GetModel() const;
-		};
-	}
+            const Search::SdkModel::SearchResultModel& GetModel() const;
+        };
+    }
 }

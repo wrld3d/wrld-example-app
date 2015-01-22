@@ -1,4 +1,4 @@
-//Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 package com.eegeo.mobileexampleapp;
 
@@ -14,301 +14,301 @@ import android.content.Intent;
 
 public class BackgroundThreadActivity extends MainActivity
 {
-	private EegeoSurfaceView m_surfaceView;
-	private SurfaceHolder m_surfaceHolder;
-	private long m_nativeAppWindowPtr;
-	private ThreadedUpdateRunner m_threadedRunner;
-	private Thread m_updater;
+    private EegeoSurfaceView m_surfaceView;
+    private SurfaceHolder m_surfaceHolder;
+    private long m_nativeAppWindowPtr;
+    private ThreadedUpdateRunner m_threadedRunner;
+    private Thread m_updater;
 
-	static
-	{
-		System.loadLibrary("native-activity");
-	}
+    static
+    {
+        System.loadLibrary("native-activity");
+    }
 
-	@Override
-	public void onCreate(Bundle savedInstanceState)
-	{
-		super.onCreate(savedInstanceState);
-		
-	    if ((getIntent().getFlags() & Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT) != 0)
-	    {
-	        finish();
-	        return;
-	    }
-		
-		setContentView(R.layout.activity_main);
+    @Override
+    public void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
 
-		m_surfaceView = (EegeoSurfaceView)findViewById(R.id.surface);
-		m_surfaceView.getHolder().addCallback(this);
-		m_surfaceView.setActivity(this);
+        if ((getIntent().getFlags() & Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT) != 0)
+        {
+            finish();
+            return;
+        }
 
-		DisplayMetrics dm = getResources().getDisplayMetrics();
-		final float dpi = dm.ydpi;
-		final Activity activity = this;
+        setContentView(R.layout.activity_main);
 
-		m_threadedRunner = new ThreadedUpdateRunner(false);
-		m_updater = new Thread(m_threadedRunner);
-		m_updater.start();
+        m_surfaceView = (EegeoSurfaceView)findViewById(R.id.surface);
+        m_surfaceView.getHolder().addCallback(this);
+        m_surfaceView.setActivity(this);
 
-		m_threadedRunner.blockUntilThreadStartedRunning();
+        DisplayMetrics dm = getResources().getDisplayMetrics();
+        final float dpi = dm.ydpi;
+        final Activity activity = this;
 
-		runOnNativeThread(new Runnable()
-		{
-			public void run()
-			{
-				m_nativeAppWindowPtr = NativeJniCalls.createNativeCode(activity, getAssets(), dpi);
+        m_threadedRunner = new ThreadedUpdateRunner(false);
+        m_updater = new Thread(m_threadedRunner);
+        m_updater.start();
 
-				if(m_nativeAppWindowPtr == 0)
-				{
-					throw new RuntimeException("Failed to start native code.");
-				}
-			}
-		});
-	}
+        m_threadedRunner.blockUntilThreadStartedRunning();
 
-	public void runOnNativeThread(Runnable runnable)
-	{
-		m_threadedRunner.postTo(runnable);
-	}
+        runOnNativeThread(new Runnable()
+        {
+            public void run()
+            {
+                m_nativeAppWindowPtr = NativeJniCalls.createNativeCode(activity, getAssets(), dpi);
 
-	@Override
-	protected void onResume()
-	{
-		super.onResume();
+                if(m_nativeAppWindowPtr == 0)
+                {
+                    throw new RuntimeException("Failed to start native code.");
+                }
+            }
+        });
+    }
 
-		runOnNativeThread(new Runnable()
-		{
-			public void run()
-			{
-				NativeJniCalls.resumeNativeCode();
-				m_threadedRunner.start();
+    public void runOnNativeThread(Runnable runnable)
+    {
+        m_threadedRunner.postTo(runnable);
+    }
 
-				if(m_surfaceHolder != null && m_surfaceHolder.getSurface() != null)
-				{
-					NativeJniCalls.setNativeSurface(m_surfaceHolder.getSurface());
-				}
-			}
-		});
-	}
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
 
-	@Override
-	protected void onPause()
-	{
-		super.onPause();
+        runOnNativeThread(new Runnable()
+        {
+            public void run()
+            {
+                NativeJniCalls.resumeNativeCode();
+                m_threadedRunner.start();
 
-		runOnNativeThread(new Runnable()
-		{
-			public void run()
-			{
-				m_threadedRunner.stop();
-				NativeJniCalls.pauseNativeCode();
-			}
-		});
-	}
+                if(m_surfaceHolder != null && m_surfaceHolder.getSurface() != null)
+                {
+                    NativeJniCalls.setNativeSurface(m_surfaceHolder.getSurface());
+                }
+            }
+        });
+    }
 
-	@Override
-	protected void onDestroy()
-	{
-		super.onDestroy();
-		
-		if (m_threadedRunner == null)
-		{
-			return;
-		}
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
 
-		runOnNativeThread(new Runnable()
-		{
-			public void run()
-			{
-				NativeJniCalls.stopUpdatingNativeCode();
-				m_threadedRunner.flagUpdatingNativeCodeStopped();
-			}
-		});
+        runOnNativeThread(new Runnable()
+        {
+            public void run()
+            {
+                m_threadedRunner.stop();
+                NativeJniCalls.pauseNativeCode();
+            }
+        });
+    }
 
-		m_threadedRunner.blockUntilThreadHasStoppedUpdatingPlatform();
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
 
-		NativeJniCalls.destroyApplicationUi();
+        if (m_threadedRunner == null)
+        {
+            return;
+        }
 
-		runOnNativeThread(new Runnable()
-		{
-			public void run()
-			{
-				m_threadedRunner.stop();
-				NativeJniCalls.destroyNativeCode();
-				m_threadedRunner.destroyed();
-			}
-		});
+        runOnNativeThread(new Runnable()
+        {
+            public void run()
+            {
+                NativeJniCalls.stopUpdatingNativeCode();
+                m_threadedRunner.flagUpdatingNativeCodeStopped();
+            }
+        });
 
-		m_threadedRunner.blockUntilThreadHasDestroyedPlatform();
+        m_threadedRunner.blockUntilThreadHasStoppedUpdatingPlatform();
 
-		m_nativeAppWindowPtr = 0;
-	}
+        NativeJniCalls.destroyApplicationUi();
 
-	@Override
-	public void onBackPressed()
-	{
-		moveTaskToBack(true);
-	}
+        runOnNativeThread(new Runnable()
+        {
+            public void run()
+            {
+                m_threadedRunner.stop();
+                NativeJniCalls.destroyNativeCode();
+                m_threadedRunner.destroyed();
+            }
+        });
 
-	@Override
-	public void surfaceCreated(SurfaceHolder holder)
-	{
-		//nothing to do
-	}
+        m_threadedRunner.blockUntilThreadHasDestroyedPlatform();
 
-	@Override
-	public void surfaceDestroyed(SurfaceHolder holder)
-	{
-		runOnNativeThread(new Runnable()
-		{
-			public void run()
-			{
-				m_threadedRunner.stop();
-			}
-		});
-	}
+        m_nativeAppWindowPtr = 0;
+    }
 
-	@Override
-	public void surfaceChanged(SurfaceHolder holder, int format, int width, int height)
-	{
-		final SurfaceHolder h = holder;
+    @Override
+    public void onBackPressed()
+    {
+        moveTaskToBack(true);
+    }
 
-		runOnNativeThread(new Runnable()
-		{
-			public void run()
-			{
-				m_surfaceHolder = h;
-				if(m_surfaceHolder != null)
-				{
-					NativeJniCalls.setNativeSurface(m_surfaceHolder.getSurface());
-					m_threadedRunner.start();
-				}
-			}
-		});
-	}
+    @Override
+    public void surfaceCreated(SurfaceHolder holder)
+    {
+        //nothing to do
+    }
 
-	public void dispatchRevealUiMessageToUiThreadFromNativeThread(final long nativeCallerPointer)
-	{
-		runOnUiThread(new Runnable()
-		{
-			public void run()
-			{
-				NativeJniCalls.revealApplicationUi(nativeCallerPointer);
-			}
-		});
-	}
+    @Override
+    public void surfaceDestroyed(SurfaceHolder holder)
+    {
+        runOnNativeThread(new Runnable()
+        {
+            public void run()
+            {
+                m_threadedRunner.stop();
+            }
+        });
+    }
 
-	public void dispatchUiCreatedMessageToNativeThreadFromUiThread(final long nativeCallerPointer)
-	{
-		runOnNativeThread(new Runnable()
-		{
-			public void run()
-			{
-				NativeJniCalls.handleApplicationUiCreatedOnNativeThread(nativeCallerPointer);
-			}
-		});
-	}
+    @Override
+    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height)
+    {
+        final SurfaceHolder h = holder;
 
-	private class ThreadedUpdateRunner implements Runnable
-	{
-		private long m_endOfLastFrameNano;
-		private boolean m_running;
-		private Handler m_nativeThreadHandler;
-		private float m_frameThrottleDelaySeconds;
-		private boolean m_destroyed;
-		private boolean m_stoppedUpdatingPlatformBeforeTeardown;
+        runOnNativeThread(new Runnable()
+        {
+            public void run()
+            {
+                m_surfaceHolder = h;
+                if(m_surfaceHolder != null)
+                {
+                    NativeJniCalls.setNativeSurface(m_surfaceHolder.getSurface());
+                    m_threadedRunner.start();
+                }
+            }
+        });
+    }
 
-		public ThreadedUpdateRunner(boolean running)
-		{
-			m_endOfLastFrameNano = System.nanoTime();
-			m_running = false;
-			m_destroyed = false;
-			m_stoppedUpdatingPlatformBeforeTeardown = false;
+    public void dispatchRevealUiMessageToUiThreadFromNativeThread(final long nativeCallerPointer)
+    {
+        runOnUiThread(new Runnable()
+        {
+            public void run()
+            {
+                NativeJniCalls.revealApplicationUi(nativeCallerPointer);
+            }
+        });
+    }
 
-			float targetFramesPerSecond = 30.f;
-			m_frameThrottleDelaySeconds = 1.f/targetFramesPerSecond;
-		}
+    public void dispatchUiCreatedMessageToNativeThreadFromUiThread(final long nativeCallerPointer)
+    {
+        runOnNativeThread(new Runnable()
+        {
+            public void run()
+            {
+                NativeJniCalls.handleApplicationUiCreatedOnNativeThread(nativeCallerPointer);
+            }
+        });
+    }
 
-		synchronized void blockUntilThreadStartedRunning()
-		{
-			while(m_nativeThreadHandler == null);
-		}
+    private class ThreadedUpdateRunner implements Runnable
+    {
+        private long m_endOfLastFrameNano;
+        private boolean m_running;
+        private Handler m_nativeThreadHandler;
+        private float m_frameThrottleDelaySeconds;
+        private boolean m_destroyed;
+        private boolean m_stoppedUpdatingPlatformBeforeTeardown;
 
-		synchronized void blockUntilThreadHasDestroyedPlatform()
-		{
-			while(!m_destroyed);
-		}
+        public ThreadedUpdateRunner(boolean running)
+        {
+            m_endOfLastFrameNano = System.nanoTime();
+            m_running = false;
+            m_destroyed = false;
+            m_stoppedUpdatingPlatformBeforeTeardown = false;
 
-		synchronized void blockUntilThreadHasStoppedUpdatingPlatform()
-		{
-			while(!m_stoppedUpdatingPlatformBeforeTeardown);
-		}
+            float targetFramesPerSecond = 30.f;
+            m_frameThrottleDelaySeconds = 1.f/targetFramesPerSecond;
+        }
 
-		public void postTo(Runnable runnable)
-		{
-			m_nativeThreadHandler.post(runnable);
-		}
+        synchronized void blockUntilThreadStartedRunning()
+        {
+            while(m_nativeThreadHandler == null);
+        }
 
-		public void start()
-		{
-			m_running = true;
-		}
+        synchronized void blockUntilThreadHasDestroyedPlatform()
+        {
+            while(!m_destroyed);
+        }
 
-		public void stop()
-		{
-			m_running = false;
-		}
+        synchronized void blockUntilThreadHasStoppedUpdatingPlatform()
+        {
+            while(!m_stoppedUpdatingPlatformBeforeTeardown);
+        }
 
-		public void destroyed()
-		{
-			m_destroyed = true;
-		}
+        public void postTo(Runnable runnable)
+        {
+            m_nativeThreadHandler.post(runnable);
+        }
 
-		void flagUpdatingNativeCodeStopped()
-		{
-			m_stoppedUpdatingPlatformBeforeTeardown = true;
-		}
+        public void start()
+        {
+            m_running = true;
+        }
 
-		public void run()
-		{
-			Looper.prepare();
-			m_nativeThreadHandler = new Handler();
+        public void stop()
+        {
+            m_running = false;
+        }
 
-			runOnNativeThread(new Runnable()
-			{
-				public void run()
-				{
-					long timeNowNano = System.nanoTime();
-					long nanoDelta = timeNowNano - m_endOfLastFrameNano;
-					final float deltaSeconds = (float)((double)nanoDelta / 1e9);
+        public void destroyed()
+        {
+            m_destroyed = true;
+        }
 
-					if(deltaSeconds > m_frameThrottleDelaySeconds)
-					{
-						if(m_running)
-						{
-							NativeJniCalls.updateNativeCode(deltaSeconds);
+        void flagUpdatingNativeCodeStopped()
+        {
+            m_stoppedUpdatingPlatformBeforeTeardown = true;
+        }
 
-							runOnUiThread(new Runnable()
-							{
-								public void run()
-								{
-									NativeJniCalls.updateUiViewCode(deltaSeconds);
-								}
-							});
-						}
-						else
-						{
-							SystemClock.sleep(200);
-						}
+        public void run()
+        {
+            Looper.prepare();
+            m_nativeThreadHandler = new Handler();
 
-						m_endOfLastFrameNano = timeNowNano;
-					}
+            runOnNativeThread(new Runnable()
+            {
+                public void run()
+                {
+                    long timeNowNano = System.nanoTime();
+                    long nanoDelta = timeNowNano - m_endOfLastFrameNano;
+                    final float deltaSeconds = (float)((double)nanoDelta / 1e9);
 
-					runOnNativeThread(this);
-				}
-			});
+                    if(deltaSeconds > m_frameThrottleDelaySeconds)
+                    {
+                        if(m_running)
+                        {
+                            NativeJniCalls.updateNativeCode(deltaSeconds);
 
-			Looper.loop();
-		}
-	}
+                            runOnUiThread(new Runnable()
+                            {
+                                public void run()
+                                {
+                                    NativeJniCalls.updateUiViewCode(deltaSeconds);
+                                }
+                            });
+                        }
+                        else
+                        {
+                            SystemClock.sleep(200);
+                        }
+
+                        m_endOfLastFrameNano = timeNowNano;
+                    }
+
+                    runOnNativeThread(this);
+                }
+            });
+
+            Looper.loop();
+        }
+    }
 }

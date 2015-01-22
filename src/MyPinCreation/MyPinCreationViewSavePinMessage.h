@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -17,19 +17,19 @@ namespace ExampleApp
                                             Byte* pImageData,
                                             size_t imageSize,
                                             bool shouldShare);
-            
+
             ~MyPinCreationViewSavePinMessage();
-            
+
             const std::string& GetTitle() const;
-            
+
             const std::string& GetDescription() const;
-            
+
             Byte* GetImageData() const;
-            
+
             size_t GetImageSize() const;
-            
+
             bool GetShouldShare() const;
-            
+
         private:
             std::string m_title;
             std::string m_description;

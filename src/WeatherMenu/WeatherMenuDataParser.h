@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -11,11 +11,11 @@
 
 namespace ExampleApp
 {
-	namespace WeatherMenu
-	{
-		namespace WeatherMenuDataParser
-		{
-			bool ParseWeatherStates(const std::string& json, std::vector<WeatherMenuStateModel>&  out_weatherStates);
-		}
-	}
+    namespace WeatherMenu
+    {
+        namespace WeatherMenuDataParser
+        {
+            bool ParseWeatherStates(const std::string& json, std::vector<SdkModel::WeatherMenuStateModel>&  out_weatherStates);
+        }
+    }
 }

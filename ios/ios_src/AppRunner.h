@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -13,32 +13,32 @@
 class AppRunner : Eegeo::NonCopyable
 {
 public:
-	AppRunner(
-	    ViewController& pViewController,
-	    UIView* pView
-	);
-	~AppRunner();
+    AppRunner(
+        ViewController& pViewController,
+        UIView* pView
+    );
+    ~AppRunner();
 
-	bool IsRunning();
+    bool IsRunning();
 
-	void Pause();
-	void Resume();
-	void Update(float deltaSeconds);
+    void Pause();
+    void Resume();
+    void Update(float deltaSeconds);
 
-   
+
     void NotifyViewLayoutChanged();
-    
+
     bool ShouldAutoRotateToInterfaceOrientation(UIInterfaceOrientation interfaceOrientation);
 
 private:
-	ViewController& m_viewController;
-	UIView* m_pView;
+    ViewController& m_viewController;
+    UIView* m_pView;
 
-	GlDisplayService m_displayService;
-	void ReleaseDisplay();
-	bool TryBindDisplay();
+    GlDisplayService m_displayService;
+    void ReleaseDisplay();
+    bool TryBindDisplay();
 
-	AppHost* m_pAppHost;
-	void CreateAppHost();
+    AppHost* m_pAppHost;
+    void CreateAppHost();
 };
 

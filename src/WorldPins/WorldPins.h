@@ -1,22 +1,32 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
 namespace ExampleApp
 {
-	namespace WorldPins
-	{
-		class WorldPinItemModel;
-		class IWorldPinsModule;
-		class IWorldPinsFactory;
-		class IWorldPinsService;
-		class IWorldPinsRepository;
-		class IWorldPinSelectionHandler;
-        class IWorldPinsScaleController;
-        class IWorldPinsInFocusModel;
-        class IWorldPinInFocusViewModel;
-        class WorldPinInFocusViewModel;
-        class IWorldPinsInFocusController;
+    namespace WorldPins
+    {
+        namespace SdkModel
+        {
+            class WorldPinItemModel;
+            class IWorldPinsModule;
+            class IWorldPinsFactory;
+            class IWorldPinsService;
+            class IWorldPinsRepository;
+            class IWorldPinSelectionHandler;
+            class IWorldPinsScaleController;
+            class IWorldPinsInFocusModel;
+            class IWorldPinsInFocusController;
+        }
+
+        namespace View
+        {
+            class IWorldPinInFocusViewModel;
+            class WorldPinInFocusViewModel;
+            class IWorldPinOnMapView;
+            class WorldPinOnMapController;
+        }
+
         class WorldPinsVisibilityMessage;
-	}
+    }
 }

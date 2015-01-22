@@ -106,32 +106,6 @@
                     android:gravity="center"
                     android:layout_marginBottom="5dp"/>
                 
-                 <!--  Platform version  -->
-                
-                <TextView
-                    android:id="@+id/about_page_view_platform_version"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    android:textColor="@color/darkgrey"
-                    android:textSize="12dp"
-                    android:paddingLeft="3dp"
-                    android:gravity="center"
-                    android:layout_marginBottom="5dp"/>
-                
-                 <!--  Platform hash  -->
-                
-                <TextView
-                    android:id="@+id/about_page_view_platform_hash"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:linksClickable="true"
-                    android:padding="5dp"
-                    android:paddingLeft="3dp"
-                    android:textColor="@color/darkgrey"
-                    android:gravity="center"
-                    android:textSize="12dp" />
-                
             </LinearLayout>
             </ScrollView>
             

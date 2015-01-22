@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -7,14 +7,14 @@
 
 namespace ExampleApp
 {
-	namespace MyPins
-	{
-		template<typename T>
-		std::string ConvertModelDetailToString(const T& detail)
-		{
-			std::stringstream ss;
-			ss << detail;
-			return ss.str();
-		}
-	}
+    namespace MyPins
+    {
+        template<typename T>
+        std::string ConvertModelDetailToString(const T& detail)
+        {
+            std::stringstream ss;
+            ss << detail;
+            return ss.str();
+        }
+    }
 }

@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -6,18 +6,18 @@
 
 namespace ExampleApp
 {
-	namespace CategorySearch
-	{
-		class CategorySearchSelectedMessage
-		{
-			std::string m_category;
+    namespace CategorySearch
+    {
+        class CategorySearchSelectedMessage
+        {
+            std::string m_category;
 
-		public:
-			CategorySearchSelectedMessage(
-			    const std::string& category
-			);
+        public:
+            CategorySearchSelectedMessage(
+                const std::string& category
+            );
 
-			const std::string& Category() const;
-		};
-	}
+            const std::string& Category() const;
+        };
+    }
 }

@@ -10,22 +10,18 @@
 	<string>ExampleApp</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>0BEEF05FB84CA3A625462C31AD691D8BB4DA4A5F</key>
-		<string>github.com:eegeo/eegeo-mobile.git</string>
 		<key>8D4B28E5436597A332526FFF1A75CA0914F3E234</key>
-		<string>ssh://github.com/eegeo/mobile-sdk-harness.git</string>
+		<string>github.com:eegeo/mobile-example-app.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>ios/ExampleApp.xcodeproj/project.xcworkspace</string>
+	<string>ios/ExampleApp.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>0BEEF05FB84CA3A625462C31AD691D8BB4DA4A5F</key>
-		<string>../../../../eegeo-mobile</string>
 		<key>8D4B28E5436597A332526FFF1A75CA0914F3E234</key>
 		<string>../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>ssh://github.com/eegeo/mobile-sdk-harness.git</string>
+	<string>github.com:eegeo/mobile-example-app.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
@@ -36,17 +32,9 @@
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>0BEEF05FB84CA3A625462C31AD691D8BB4DA4A5F</string>
-			<key>IDESourceControlWCCName</key>
-			<string>eegeo-mobile</string>
-		</dict>
-		<dict>
-			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
-			<string>public.vcs.git</string>
-			<key>IDESourceControlWCCIdentifierKey</key>
 			<string>8D4B28E5436597A332526FFF1A75CA0914F3E234</string>
 			<key>IDESourceControlWCCName</key>
-			<string>mobile-sdk-harness</string>
+			<string>mobile-example-app</string>
 		</dict>
 	</array>
 </dict>

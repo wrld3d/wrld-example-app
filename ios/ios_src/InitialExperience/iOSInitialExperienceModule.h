@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -10,18 +10,18 @@
 
 namespace ExampleApp
 {
-	namespace InitialExperience
-	{
-		class iOSInitialExperienceModule : public InitialExperienceModuleBase, private Eegeo::NonCopyable
-		{
-		public:
-			iOSInitialExperienceModule(PersistentSettings::IPersistentSettingsModel& persistentSettings);
+    namespace InitialExperience
+    {
+        class iOSInitialExperienceModule : public SdkModel::InitialExperienceModuleBase, private Eegeo::NonCopyable
+        {
+        public:
+            iOSInitialExperienceModule(PersistentSettings::IPersistentSettingsModel& persistentSettings);
 
-			~iOSInitialExperienceModule();
+            ~iOSInitialExperienceModule();
 
-		protected:
+        protected:
 
-			std::vector<IInitialExperienceStep*> CreateSteps(WorldAreaLoader::IWorldAreaLoaderModel& worldAreaLoaderModel) const;
-		};
-	}
+            std::vector<SdkModel::IInitialExperienceStep*> CreateSteps(WorldAreaLoader::SdkModel::IWorldAreaLoaderModel& worldAreaLoaderModel) const;
+        };
+    }
 }

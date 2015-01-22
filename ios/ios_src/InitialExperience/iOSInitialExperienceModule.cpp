@@ -1,33 +1,33 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "iOSInitialExperienceModule.h"
 #include "iOSInitialExperiencePreLoadModel.h"
 
 namespace ExampleApp
 {
-	namespace InitialExperience
-	{
-		iOSInitialExperienceModule::iOSInitialExperienceModule(PersistentSettings::IPersistentSettingsModel& persistentSettings)
-			:InitialExperienceModuleBase(persistentSettings)
-		{
+    namespace InitialExperience
+    {
+        iOSInitialExperienceModule::iOSInitialExperienceModule(PersistentSettings::IPersistentSettingsModel& persistentSettings)
+            :InitialExperienceModuleBase(persistentSettings)
+        {
 
-		}
+        }
 
-		iOSInitialExperienceModule::~iOSInitialExperienceModule()
-		{
+        iOSInitialExperienceModule::~iOSInitialExperienceModule()
+        {
 
-		}
+        }
 
-		std::vector<IInitialExperienceStep*> iOSInitialExperienceModule::CreateSteps(WorldAreaLoader::IWorldAreaLoaderModel& worldAreaLoaderModel) const
-		{
-			std::vector<IInitialExperienceStep*> steps;
+        std::vector<SdkModel::IInitialExperienceStep*> iOSInitialExperienceModule::CreateSteps(WorldAreaLoader::SdkModel::IWorldAreaLoaderModel& worldAreaLoaderModel) const
+        {
+            std::vector<SdkModel::IInitialExperienceStep*> steps;
 
-			IInitialExperienceStep* pWorldAreaLoaderStep = Eegeo_NEW(PreLoad::iOSInitialExperiencePreLoadModel)(worldAreaLoaderModel,
-			        GetPersistentSettings());
+            SdkModel::IInitialExperienceStep* pWorldAreaLoaderStep = Eegeo_NEW(PreLoad::iOSInitialExperiencePreLoadModel)(worldAreaLoaderModel,
+                    GetPersistentSettings());
 
-			steps.push_back(pWorldAreaLoaderStep);
+            steps.push_back(pWorldAreaLoaderStep);
 
-			return steps;
-		}
-	}
+            return steps;
+        }
+    }
 }

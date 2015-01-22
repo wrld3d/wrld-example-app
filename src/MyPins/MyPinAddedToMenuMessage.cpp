@@ -1,20 +1,20 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "MyPinAddedToMenuMessage.h"
 
 namespace ExampleApp
 {
-	namespace MyPins
-	{
-		MyPinAddedToMenuMessage::MyPinAddedToMenuMessage(MyPinModel* myPinModel)
-		: m_pMyPinModel(myPinModel)
-		{
+    namespace MyPins
+    {
+        MyPinAddedToMenuMessage::MyPinAddedToMenuMessage(SdkModel::MyPinModel* myPinModel)
+            : m_pMyPinModel(myPinModel)
+        {
 
-		}
+        }
 
-		MyPinModel* MyPinAddedToMenuMessage::GetMyPinModel() const
-		{
-			return m_pMyPinModel;
-		}
-	}
+        SdkModel::MyPinModel* MyPinAddedToMenuMessage::GetMyPinModel() const
+        {
+            return m_pMyPinModel;
+        }
+    }
 }

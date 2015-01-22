@@ -1,21 +1,21 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "SearchResultAddedMessage.h"
 
 namespace ExampleApp
 {
-	namespace SearchResultMenu
-	{
-		SearchResultAddedMessage::SearchResultAddedMessage(
-			const Search::SearchResultModel& model
-		)
-			: m_model(model)
-		{
-		}
+    namespace SearchResultMenu
+    {
+        SearchResultAddedMessage::SearchResultAddedMessage(
+            const Search::SdkModel::SearchResultModel& model
+        )
+            : m_model(model)
+        {
+        }
 
-		const Search::SearchResultModel& SearchResultAddedMessage::Model() const
-		{
-			return m_model;
-		}
-	}
+        const Search::SdkModel::SearchResultModel& SearchResultAddedMessage::Model() const
+        {
+            return m_model;
+        }
+    }
 }

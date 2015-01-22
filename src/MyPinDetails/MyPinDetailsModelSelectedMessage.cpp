@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "MyPinDetailsModelSelectedMessage.h"
 
@@ -6,13 +6,13 @@ namespace ExampleApp
 {
     namespace MyPinDetails
     {
-        MyPinDetailsModelSelectedMessage::MyPinDetailsModelSelectedMessage(const MyPins::MyPinModel& model)
-        : m_model(model)
+        MyPinDetailsModelSelectedMessage::MyPinDetailsModelSelectedMessage(const MyPins::SdkModel::MyPinModel& model)
+            : m_model(model)
         {
-            
+
         }
-            
-        const MyPins::MyPinModel& MyPinDetailsModelSelectedMessage::GetModel() const
+
+        const MyPins::SdkModel::MyPinModel& MyPinDetailsModelSelectedMessage::GetModel() const
         {
             return m_model;
         }

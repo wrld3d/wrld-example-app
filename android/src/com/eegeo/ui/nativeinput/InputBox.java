@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 package com.eegeo.ui.nativeinput;
 
@@ -11,73 +11,73 @@ import android.widget.EditText;
 
 public class InputBox
 {
-	public static String text()
-	{
-		return ms_text;
-	}
+    public static String text()
+    {
+        return ms_text;
+    }
 
-	private static String ms_text = "";
-	private static AlertDialog m_inputBox = null;
+    private static String ms_text = "";
+    private static AlertDialog m_inputBox = null;
 
-	public native static void callback(int ptr);
+    public native static void callback(int ptr);
 
-	public static void close()
-	{
-		if(m_inputBox!=null)
-		{
-			m_inputBox.dismiss();
-			m_inputBox = null;
-		}
-	}
+    public static void close()
+    {
+        if(m_inputBox!=null)
+        {
+            m_inputBox.dismiss();
+            m_inputBox = null;
+        }
+    }
 
-	public static void popUpBox(
-	    final Activity a,
-	    final String title,
-	    final String message,
-	    final String button,
-	    final String intitialContent,
-	    final boolean initialContentIsPlaceholder,
-	    final int ptr)
-	{
-		try
-		{
-			AlertDialog.Builder builder = new AlertDialog.Builder(a);
-			builder.setTitle(title);
-			builder.setMessage(message);
+    public static void popUpBox(
+        final Activity a,
+        final String title,
+        final String message,
+        final String button,
+        final String intitialContent,
+        final boolean initialContentIsPlaceholder,
+        final int ptr)
+    {
+        try
+        {
+            AlertDialog.Builder builder = new AlertDialog.Builder(a);
+            builder.setTitle(title);
+            builder.setMessage(message);
 
-			final EditText input = new EditText(a);
+            final EditText input = new EditText(a);
 
-			input.setInputType(InputType.TYPE_CLASS_TEXT);
+            input.setInputType(InputType.TYPE_CLASS_TEXT);
 
-			if(initialContentIsPlaceholder)
-			{
-				input.setHint(intitialContent);
-			}
-			else
-			{
-				input.setText(intitialContent);
-			}
+            if(initialContentIsPlaceholder)
+            {
+                input.setHint(intitialContent);
+            }
+            else
+            {
+                input.setText(intitialContent);
+            }
 
-			builder.setView(input);
-			builder.setCancelable(false);
+            builder.setView(input);
+            builder.setCancelable(false);
 
-			// Set up the buttons
-			builder.setPositiveButton(button, new DialogInterface.OnClickListener()
-			{
-				@Override
-				public void onClick(DialogInterface dialog, int which)
-				{
-					ms_text = input.getText().toString();
-					callback(ptr);
-					m_inputBox = null;
-				}
-			});
+            // Set up the buttons
+            builder.setPositiveButton(button, new DialogInterface.OnClickListener()
+            {
+                @Override
+                public void onClick(DialogInterface dialog, int which)
+                {
+                    ms_text = input.getText().toString();
+                    callback(ptr);
+                    m_inputBox = null;
+                }
+            });
 
-			m_inputBox = builder.show();
-		}
-		catch (Exception e)
-		{
-			Log.v("InputBox", e.getMessage() == null ? "Error, but no message?!" : e.getMessage());
-		}
-	}
+            m_inputBox = builder.show();
+        }
+        catch (Exception e)
+        {
+            Log.v("InputBox", e.getMessage() == null ? "Error, but no message?!" : e.getMessage());
+        }
+    }
 }

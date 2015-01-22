@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -6,16 +6,16 @@
 
 namespace ExampleApp
 {
-	namespace PlaceJumps
-	{
-		class PlaceJumpSelectedMessage
-		{
-			PlaceJumpModel m_placeJumpModel;
+    namespace PlaceJumps
+    {
+        class PlaceJumpSelectedMessage
+        {
+            View::PlaceJumpModel m_placeJumpModel;
 
-		public:
-			PlaceJumpSelectedMessage(const PlaceJumpModel& placeJumpModel);
+        public:
+            PlaceJumpSelectedMessage(const View::PlaceJumpModel& placeJumpModel);
 
-			const PlaceJumpModel& Model() const;
-		};
-	}
+            const View::PlaceJumpModel& Model() const;
+        };
+    }
 }

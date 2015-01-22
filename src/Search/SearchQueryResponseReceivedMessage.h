@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -8,21 +8,21 @@
 
 namespace ExampleApp
 {
-	namespace Search
-	{
-		class SearchQueryResponseReceivedMessage
-		{
-		private:
-			const Search::SearchQuery m_query;
-			const std::vector<SearchResultModel> m_results;
+    namespace Search
+    {
+        class SearchQueryResponseReceivedMessage
+        {
+        private:
+            const SdkModel::SearchQuery m_query;
+            const std::vector<SdkModel::SearchResultModel> m_results;
 
-		public:
-			SearchQueryResponseReceivedMessage(const Search::SearchQuery& query,
-			                                   const std::vector<SearchResultModel>& results);
+        public:
+            SearchQueryResponseReceivedMessage(const SdkModel::SearchQuery& query,
+                                               const std::vector<SdkModel::SearchResultModel>& results);
 
-			const Search::SearchQuery GetQuery() const;
+            const SdkModel::SearchQuery GetQuery() const;
 
-			const std::vector<SearchResultModel>& GetResults() const;
-		};
-	}
+            const std::vector<SdkModel::SearchResultModel>& GetResults() const;
+        };
+    }
 }

@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -6,16 +6,16 @@
 
 namespace ExampleApp
 {
-	namespace Search
-	{
-		class SearchQueryPerformedMessage
-		{
-			SearchQuery m_query;
+    namespace Search
+    {
+        class SearchQueryPerformedMessage
+        {
+            SdkModel::SearchQuery m_query;
 
-		public:
-			SearchQueryPerformedMessage(const SearchQuery& searchQuery);
+        public:
+            SearchQueryPerformedMessage(const SdkModel::SearchQuery& searchQuery);
 
-			const SearchQuery& Query() const;
-		};
-	}
+            const SdkModel::SearchQuery& Query() const;
+        };
+    }
 }

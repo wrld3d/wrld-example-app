@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -7,18 +7,18 @@
 
 namespace ExampleApp
 {
-	namespace WorldPins
-	{
-		class WorldPinGainedFocusMessage
-		{
-            WorldPinsInFocusModel m_focussedModel;
-			Eegeo::v2 m_screenLocation;
+    namespace WorldPins
+    {
+        class WorldPinGainedFocusMessage
+        {
+            SdkModel::WorldPinsInFocusModel m_focussedModel;
+            Eegeo::v2 m_screenLocation;
 
-		public:
-            WorldPinGainedFocusMessage(const WorldPinsInFocusModel& focussedModel, const Eegeo::v2& screenLocation);
+        public:
+            WorldPinGainedFocusMessage(const SdkModel::WorldPinsInFocusModel& focussedModel, const Eegeo::v2& screenLocation);
 
-            const WorldPinsInFocusModel& FocussedModel() const;
+            const SdkModel::WorldPinsInFocusModel& FocussedModel() const;
             const Eegeo::v2& ScreenLocation() const;
-		};
-	}
+        };
+    }
 }

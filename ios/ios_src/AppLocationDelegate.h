@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -15,15 +15,15 @@
 
 class AppLocationDelegate : protected Eegeo::NonCopyable
 {
-	AppLocationDelegateLocationListener* m_pAppLocationDelegateLocationListener;
+    AppLocationDelegateLocationListener* m_pAppLocationDelegateLocationListener;
     bool m_receivedPermissionResponse;
 public:
-	AppLocationDelegate(Eegeo::iOS::iOSLocationService& iOSLocationService,
-	                    UIViewController& viewController);
+    AppLocationDelegate(Eegeo::iOS::iOSLocationService& iOSLocationService,
+                        UIViewController& viewController);
 
-	~AppLocationDelegate();
-    
+    ~AppLocationDelegate();
+
     void NotifyReceivedPermissionResponse();
-    
+
     bool HasReceivedPermissionResponse() const;
 };

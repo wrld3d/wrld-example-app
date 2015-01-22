@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -6,18 +6,18 @@
 
 namespace ExampleApp
 {
-	namespace SearchResultMenu
-	{
-		class SearchResultAddedMessage
-		{
-			Search::SearchResultModel m_model;
+    namespace SearchResultMenu
+    {
+        class SearchResultAddedMessage
+        {
+            Search::SdkModel::SearchResultModel m_model;
 
-		public:
-			SearchResultAddedMessage(
-			    const Search::SearchResultModel& model
-			);
+        public:
+            SearchResultAddedMessage(
+                const Search::SdkModel::SearchResultModel& model
+            );
 
-			const Search::SearchResultModel& Model() const;
-		};
-	}
+            const Search::SdkModel::SearchResultModel& Model() const;
+        };
+    }
 }

@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -12,55 +12,55 @@
 
 @interface MenuView : UIView
 {
-	__weak MenuViewController* m_pMenuViewController;
-	UIColor* m_pColour;
+    __weak MenuViewController* m_pMenuViewController;
+    UIColor* m_pColour;
 
-	float m_screenWidth;
-	float m_screenHeight;
-	float m_pixelScale;
+    float m_screenWidth;
+    float m_screenHeight;
+    float m_pixelScale;
 
-	float m_stateChangeAnimationTimeSeconds;
-	float m_offscreenX, m_offscreenY;
-	float m_closedX, m_closedY;
-	float m_openX, m_openY;
+    float m_stateChangeAnimationTimeSeconds;
+    float m_offscreenX, m_offscreenY;
+    float m_closedX, m_closedY;
+    float m_openX, m_openY;
 
-	float m_mainContainerVisibleOnScreenWhenClosedX;
-	float m_mainContainerVisibleOnScreenWhenClosedY;
-	float m_mainContainerOffscreenOffsetX;
-	float m_mainContainerOffscreenOffsetY;
-	float m_mainContainerX;
-	float m_mainContainerY;
-	float m_mainContainerOnScreenWidth;
-	float m_mainContainerOnScreenHeight;
-	float m_mainContainerWidth;
-	float m_mainContainerHeight;
+    float m_mainContainerVisibleOnScreenWhenClosedX;
+    float m_mainContainerVisibleOnScreenWhenClosedY;
+    float m_mainContainerOffscreenOffsetX;
+    float m_mainContainerOffscreenOffsetY;
+    float m_mainContainerX;
+    float m_mainContainerY;
+    float m_mainContainerOnScreenWidth;
+    float m_mainContainerOnScreenHeight;
+    float m_mainContainerWidth;
+    float m_mainContainerHeight;
 
-	float m_dragTabX;
-	float m_dragTabY;
-	float m_dragTabWidth;
-	float m_dragTabHeight;
+    float m_dragTabX;
+    float m_dragTabY;
+    float m_dragTabWidth;
+    float m_dragTabHeight;
 
-	float m_searchBoxOffsetIntoContainer;
-	float m_searchBoxX;
-	float m_searchBoxY;
-	float m_searchBoxWidth;
-	float m_searchBoxHeight;
+    float m_searchBoxOffsetIntoContainer;
+    float m_searchBoxX;
+    float m_searchBoxY;
+    float m_searchBoxWidth;
+    float m_searchBoxHeight;
 
-	float m_tableOffsetIntoContainerX;
-	float m_tableOffsetIntoContainerY;
-	float m_tableX;
-	float m_tableY;
-	float m_tableWidth;
-	float m_tableHeight;
+    float m_tableOffsetIntoContainerX;
+    float m_tableOffsetIntoContainerY;
+    float m_tableX;
+    float m_tableY;
+    float m_tableWidth;
+    float m_tableHeight;
 
-	CGPoint m_dragStartPos;
-	CGPoint m_controlStartPos;
+    CGPoint m_dragStartPos;
+    CGPoint m_controlStartPos;
 
-	bool m_animating;
-	Eegeo::v2 m_animationStartPos;
-	Eegeo::v2 m_animationCurrentPos;
-	Eegeo::v2 m_animationEndPos;
-	bool m_isFirstAnimationCeremony;
+    bool m_animating;
+    Eegeo::v2 m_animationStartPos;
+    Eegeo::v2 m_animationCurrentPos;
+    Eegeo::v2 m_animationEndPos;
+    bool m_isFirstAnimationCeremony;
 }
 
 - (bool) useSizeToFit;

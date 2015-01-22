@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -6,16 +6,16 @@
 
 namespace ExampleApp
 {
-	namespace WeatherMenu
-	{
-		class WeatherSelectedMessage
-		{
-			WeatherMenuStateModel m_weatherStateModel;
+    namespace WeatherMenu
+    {
+        class WeatherSelectedMessage
+        {
+            SdkModel::WeatherMenuStateModel m_weatherStateModel;
 
-		public:
-			WeatherSelectedMessage(const WeatherMenuStateModel& weatherStateModel);
+        public:
+            WeatherSelectedMessage(const SdkModel::WeatherMenuStateModel& weatherStateModel);
 
-			const WeatherMenuStateModel& Model() const;
-		};
-	}
+            const SdkModel::WeatherMenuStateModel& Model() const;
+        };
+    }
 }

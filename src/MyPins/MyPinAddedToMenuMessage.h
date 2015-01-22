@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -6,16 +6,16 @@
 
 namespace ExampleApp
 {
-	namespace MyPins
-	{
-		class MyPinAddedToMenuMessage
-		{
-		public:
-			MyPinAddedToMenuMessage(MyPinModel* myPinModel);
+    namespace MyPins
+    {
+        class MyPinAddedToMenuMessage
+        {
+        public:
+            MyPinAddedToMenuMessage(SdkModel::MyPinModel* myPinModel);
 
-			MyPinModel* GetMyPinModel() const;
-		private:
-			MyPinModel* m_pMyPinModel;
-		};
-	}
+            SdkModel::MyPinModel* GetMyPinModel() const;
+        private:
+            SdkModel::MyPinModel* m_pMyPinModel;
+        };
+    }
 }

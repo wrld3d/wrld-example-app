@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -6,16 +6,16 @@
 
 namespace ExampleApp
 {
-	namespace WorldPins
-	{
-		class WorldPinInFocusChangedLocationMessage
-		{
-			Eegeo::v2 m_screenLocation;
+    namespace WorldPins
+    {
+        class WorldPinInFocusChangedLocationMessage
+        {
+            Eegeo::v2 m_screenLocation;
 
-		public:
+        public:
             WorldPinInFocusChangedLocationMessage(const Eegeo::v2& screenLocation);
 
             const Eegeo::v2& ScreenLocation() const;
-		};
-	}
+        };
+    }
 }
