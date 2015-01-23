@@ -58,6 +58,7 @@ public class MyPinCreationConfirmationView implements View.OnClickListener
 
     public void animateToActive()
     {
+    	m_view.setEnabled(true);
         animateViewToY((int)m_yPosActive);
     }
 
@@ -87,13 +88,20 @@ public class MyPinCreationConfirmationView implements View.OnClickListener
     @Override
     public void onClick(final View view)
     {
+    	if(m_view.isEnabled())
+    	{
+    		return;
+    	}
+    	
         if(view == m_closeButton)
         {
             MyPinCreationJniMethods.ConfirmationCancelButtonPressed(m_nativeCallerPointer);
+            m_view.setEnabled(false);
         }
         else if(view == m_confirmButton)
         {
             MyPinCreationJniMethods.ConfirmationOkButtonPressed(m_nativeCallerPointer);
+            m_view.setEnabled(false);
         }
     }
 }
