@@ -144,6 +144,7 @@
 		226BEBCF1A38A2AC00569A55 /* PrimaryMenuView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 226BEBCA1A38A2AB00569A55 /* PrimaryMenuView.mm */; };
 		226BEBD01A38A2AC00569A55 /* PrimaryMenuViewModule.mm in Sources */ = {isa = PBXBuildFile; fileRef = 226BEBCD1A38A2AC00569A55 /* PrimaryMenuViewModule.mm */; };
 		226BEBD11A38A2AC00569A55 /* PrimaryMenuViewModule.mm in Sources */ = {isa = PBXBuildFile; fileRef = 226BEBCD1A38A2AC00569A55 /* PrimaryMenuViewModule.mm */; };
+		22C72D0D1A726DAE00AB53FD /* AboutPageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22C72D0C1A726DAE00AB53FD /* AboutPageView.xib */; };
 		5606E31719ED1B93009059D4 /* eegeo_logo@ipho.png in Resources */ = {isa = PBXBuildFile; fileRef = 5606E31619ED1B93009059D4 /* eegeo_logo@ipho.png */; };
 		5606E31819ED1B93009059D4 /* eegeo_logo@ipho.png in Resources */ = {isa = PBXBuildFile; fileRef = 5606E31619ED1B93009059D4 /* eegeo_logo@ipho.png */; };
 		5637B7071A261A5400181973 /* image_blank.png in Resources */ = {isa = PBXBuildFile; fileRef = 56FBCDED1A0BB5150026546E /* image_blank.png */; };
@@ -744,6 +745,7 @@
 		226BEBCB1A38A2AB00569A55 /* PrimaryMenuViewIncludes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrimaryMenuViewIncludes.h; sourceTree = "<group>"; };
 		226BEBCC1A38A2AC00569A55 /* PrimaryMenuViewModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrimaryMenuViewModule.h; sourceTree = "<group>"; };
 		226BEBCD1A38A2AC00569A55 /* PrimaryMenuViewModule.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PrimaryMenuViewModule.mm; sourceTree = "<group>"; };
+		22C72D0C1A726DAE00AB53FD /* AboutPageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutPageView.xib; sourceTree = "<group>"; };
 		5606E31619ED1B93009059D4 /* eegeo_logo@ipho.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "eegeo_logo@ipho.png"; sourceTree = "<group>"; };
 		5675901D19F53C7A00C4599E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		56A3DCD71A239BD000110FDD /* button_gallery_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_gallery_off.png; sourceTree = "<group>"; };
@@ -1418,7 +1420,6 @@
 		7EE48255168477A80006E99B /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		7EE48257168477CB0006E99B /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		7EF5D8641737F9A40049D787 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		99DE1AF9937DE3414FC5407B /* ApiKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApiKey.h; sourceTree = "<group>"; };
 		E016040D19EEC26E0029A035 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		E0DD09F219EED4AF008BD39D /* SplashScreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SplashScreen.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -3059,6 +3060,7 @@
 		7EE481F316836F370006E99B /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				22C72D0C1A726DAE00AB53FD /* AboutPageView.xib */,
 				7EE4820F168371460006E99B /* MainStoryboard_iPad.storyboard */,
 				7EE4820C1683713B0006E99B /* MainStoryboard_iPhone.storyboard */,
 				7EE481F416836F370006E99B /* ExampleApp-Info.plist */,
@@ -3189,6 +3191,11 @@
 			attributes = {
 				LastUpgradeCheck = 0600;
 				ORGANIZATIONNAME = eeGeo;
+				TargetAttributes = {
+					7EE481E516836F370006E99B = {
+						DevelopmentTeam = QBCVJ28BRW;
+					};
+				};
 			};
 			buildConfigurationList = 7EE481E016836F360006E99B /* Build configuration list for PBXProject "ExampleApp" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -3328,6 +3335,7 @@
 				56FBCDEF1A0BB5150026546E /* button_checkbox_off.png in Resources */,
 				18B5AC8B19DC15CD00BA4A38 /* buttonsmall_close_on.png in Resources */,
 				56A3DCED1A239BD100110FDD /* button_remove_pin_on.png in Resources */,
+				22C72D0D1A726DAE00AB53FD /* AboutPageView.xib in Resources */,
 				56FBCDF01A0BB5150026546E /* button_checkbox_on.png in Resources */,
 				18B5ACB519DC15CD00BA4A38 /* icon1_place.png in Resources */,
 				18B5ACA719DC15CD00BA4A38 /* icon1_hotel.png in Resources */,
