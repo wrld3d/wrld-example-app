@@ -61,6 +61,7 @@
     self.pSearchEditBox = [[[UITextField alloc] initWithFrame:CGRectMake(m_searchBoxX, m_searchBoxY, m_searchBoxWidth, m_searchBoxHeight)] autorelease];
     self.pSearchEditBox.text = @"";
     self.pSearchEditBox.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+    self.pSearchEditBox.clearButtonMode = UITextFieldViewModeAlways;
 
     m_tableOffsetIntoContainerX = m_tableOffsetIntoContainerY = m_mainContainerVisibleOnScreenWhenClosedX;
     m_tableX = m_tableOffsetIntoContainerX;
