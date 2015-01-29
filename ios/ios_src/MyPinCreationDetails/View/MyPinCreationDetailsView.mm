@@ -9,7 +9,7 @@
 
 @implementation MyPinCreationDetailsView
 
-- (id)initWithParams:(float)width :(float)height
+- (id)initWithParams:(float)width :(float)height :(UIViewController*) rootViewController
 {
     self = [super init];
 
@@ -20,8 +20,7 @@
         m_imageAttached = NO;
 
         m_pInterop = new ExampleApp::MyPinCreationDetails::View::MyPinCreationDetailsViewInterop(self);
-        m_pController = [UIViewController alloc];
-        [m_pController setView:self];
+        m_pRootViewController = rootViewController;
 
         m_controlContainerHeight = 0.f;
         m_controlContainerWidth = 0.f;
@@ -139,7 +138,6 @@
     [self.pControlContainer removeFromSuperview];
     [self.pControlContainer release];
 
-    [m_pController release];
     delete m_pInterop;
 
     [self removeFromSuperview];
@@ -391,16 +389,12 @@
     }
     else
     {
-        [m_pController presentViewController:imagePicker animated:YES completion:nil];
+        [m_pRootViewController presentViewController:imagePicker animated:YES completion:nil];
     }
-
-    [self prohibitScreenRotations];
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(NSDictionary *)editingInfo
 {
-    [self reinstateScreenRotations];
-
     self.pPoiImage.image = image;
     [self resizeImageViewToFit:image.size.width :image.size.height];
 
@@ -414,8 +408,6 @@
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
-    [self reinstateScreenRotations];
-
     if(m_usePopover)
     {
         [self.pPopover dismissPopoverAnimated: YES];
@@ -428,25 +420,8 @@
     m_pInterop->OnDismissed();
 }
 
-- (void) prohibitScreenRotations
-{
-    UIDevice* currentDevice = [UIDevice currentDevice];
-
-    while ([currentDevice isGeneratingDeviceOrientationNotifications])
-    {
-        [currentDevice endGeneratingDeviceOrientationNotifications];
-    }
-}
-
-- (void) reinstateScreenRotations
-{
-    [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
-}
-
 - (void) onCameraButtonPressed:(UIButton *)sender
 {
-    [self prohibitScreenRotations];
-
     if ([UIImagePickerController isSourceTypeAvailable: UIImagePickerControllerSourceTypeCamera] == NO)
     {
         UIAlertView* noCameraAlert = [[UIAlertView alloc] initWithTitle: @"No Camera!"
@@ -468,7 +443,7 @@
     imagePicker.showsCameraControls = YES;
     imagePicker.navigationBarHidden = YES;
 
-    [m_pController presentViewController:imagePicker animated:YES completion:nil];
+    [m_pRootViewController presentViewController:imagePicker animated:YES completion:nil];
 }
 
 - (void) onConfirmButtonPressed:(UIButton *)sender
@@ -494,7 +469,6 @@
     {
         [self.pPopover dismissPopoverAnimated: YES];
     }
-    [self reinstateScreenRotations];
     return YES;
 }
 
@@ -667,7 +641,7 @@
     {
         [self.pPopover dismissPopoverAnimated: YES];
     }
-    [m_pController dismissViewControllerAnimated:YES completion:nil];
+    [m_pRootViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

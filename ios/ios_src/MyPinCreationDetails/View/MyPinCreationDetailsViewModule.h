@@ -22,7 +22,8 @@ namespace ExampleApp
                 MyPinCreationDetailsViewModule(ExampleAppMessaging::TMessageBus& messageBus,
                                                IMyPinCreationDetailsViewModel& myPinCreationDetailsViewModel,
                                                const Eegeo::Rendering::ScreenProperties& screenProperties,
-                                               Eegeo::Web::IConnectivityService& connectivityService);
+                                               Eegeo::Web::IConnectivityService& connectivityService,
+                                               UIViewController* rootViewController);
 
                 ~MyPinCreationDetailsViewModule();
 

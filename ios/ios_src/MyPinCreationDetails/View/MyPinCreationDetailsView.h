@@ -10,7 +10,7 @@
 @interface MyPinCreationDetailsView : UIView <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextViewDelegate, UITextFieldDelegate, UIPopoverControllerDelegate>
 {
     ExampleApp::MyPinCreationDetails::View::MyPinCreationDetailsViewInterop* m_pInterop;
-    UIViewController* m_pController;
+    UIViewController* m_pRootViewController;
 
     float m_stateChangeAnimationTimeSeconds;
 
@@ -34,7 +34,7 @@
     int m_maxNumberOfCharactersInDescription;
 }
 
-- (id) initWithParams:(float)width :(float)height;
+- (id) initWithParams:(float)width :(float)height :(UIViewController*) rootViewController;
 
 - (ExampleApp::MyPinCreationDetails::View::MyPinCreationDetailsViewInterop*)getInterop;
 

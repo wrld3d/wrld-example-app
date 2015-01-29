@@ -12,11 +12,14 @@ namespace ExampleApp
         namespace View
         {
             MyPinCreationDetailsViewModule::MyPinCreationDetailsViewModule(ExampleAppMessaging::TMessageBus& messageBus,
-                    IMyPinCreationDetailsViewModel& myPinCreationDetailsViewModel,
-                    const Eegeo::Rendering::ScreenProperties& screenProperties,
-                    Eegeo::Web::IConnectivityService& connectivityService)
+                                                                           IMyPinCreationDetailsViewModel& myPinCreationDetailsViewModel,
+                                                                           const Eegeo::Rendering::ScreenProperties& screenProperties,
+                                                                           Eegeo::Web::IConnectivityService& connectivityService,
+                                                                           UIViewController* rootViewController)
             {
-                m_pView = [[MyPinCreationDetailsView alloc] initWithParams:screenProperties.GetScreenWidth() :screenProperties.GetScreenHeight()];
+                m_pView = [[MyPinCreationDetailsView alloc] initWithParams: screenProperties.GetScreenWidth()
+                                                                          : screenProperties.GetScreenHeight()
+                                                                          : rootViewController];
 
                 m_pController = Eegeo_NEW(MyPinCreationDetailsController)(*[m_pView getInterop], myPinCreationDetailsViewModel, connectivityService, messageBus);
             }
