@@ -27,7 +27,7 @@ namespace ExampleApp
                     m_view.ShowGpsCompassModeView();
                     break;
                 case GpsMode::GpsMode_Max:
-                    Eegeo_ASSERT("Invalid gps mode");
+                    Eegeo_ASSERT(false, "Invalid gps mode");
                     break;
                 }
             }
