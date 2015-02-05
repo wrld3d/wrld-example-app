@@ -19,6 +19,7 @@ public class MyPinCreationConfirmationView implements View.OnClickListener
 
     private float m_yPosActive;
     private float m_yPosInactive;
+    private boolean m_canProcessButtons;
 
     private final long m_stateChangeAnimationTimeMilliseconds = 200;
 
@@ -26,6 +27,7 @@ public class MyPinCreationConfirmationView implements View.OnClickListener
     {
         m_activity = activity;
         m_nativeCallerPointer = nativeCallerPointer;
+        m_canProcessButtons = true;
 
         createView();
     }
@@ -58,7 +60,7 @@ public class MyPinCreationConfirmationView implements View.OnClickListener
 
     public void animateToActive()
     {
-    	m_view.setEnabled(true);
+    	m_canProcessButtons = true;
         animateViewToY((int)m_yPosActive);
     }
 
@@ -83,12 +85,17 @@ public class MyPinCreationConfirmationView implements View.OnClickListener
         {
             m_view.setY(newXPx);
         }
+        
+        if(onScreenState == 1.0f)
+        {
+        	m_canProcessButtons = true;
+        }
     }
 
     @Override
     public void onClick(final View view)
     {
-    	if(m_view.isEnabled())
+    	if(!m_canProcessButtons)
     	{
     		return;
     	}
@@ -96,12 +103,13 @@ public class MyPinCreationConfirmationView implements View.OnClickListener
         if(view == m_closeButton)
         {
             MyPinCreationJniMethods.ConfirmationCancelButtonPressed(m_nativeCallerPointer);
-            m_view.setEnabled(false);
+            
         }
         else if(view == m_confirmButton)
         {
             MyPinCreationJniMethods.ConfirmationOkButtonPressed(m_nativeCallerPointer);
-            m_view.setEnabled(false);
         }
+        
+        m_canProcessButtons = false;
     }
 }
