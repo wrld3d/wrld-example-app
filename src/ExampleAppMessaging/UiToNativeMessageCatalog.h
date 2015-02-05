@@ -19,6 +19,7 @@
 #include "MyPinSelectedMessage.h"
 #include "WorldPinsVisibilityMessage.h"
 #include "UpdateNativeModalBackgroundMessage.h"
+#include "GpsMarkerVisibilityMessage.h"
 
 namespace ExampleApp
 {
@@ -40,6 +41,7 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<MyPinDetails::MyPinDetailsViewRemovePinMessage>
             , public Eegeo::Messaging::CatalogBinding<MyPins::MyPinSelectedMessage>
             , public Eegeo::Messaging::CatalogBinding<WorldPins::WorldPinsVisibilityMessage>
+            , public Eegeo::Messaging::CatalogBinding<GpsMarker::GpsMarkerVisibilityMessage>
             , private Eegeo::NonCopyable
         {
 

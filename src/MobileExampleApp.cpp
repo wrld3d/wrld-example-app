@@ -44,6 +44,8 @@
 #include "QuadTreeCube.h"
 #include "LodRefinementConfig.h"
 #include "StreamingVolumeController.h"
+#include "GpsMarkerModule.h"
+#include "IGpsMarkerController.h"
 #include "ApiKey.h"
 
 namespace ExampleApp
@@ -113,6 +115,7 @@ namespace ExampleApp
         , m_pPlaceJumpsModule(NULL)
         , m_pWeatherMenuModule(NULL)
         , m_pCompassModule(NULL)
+        , m_pGpsMarkerModule(NULL)
         , m_pWorldAreaLoaderModule(NULL)
         , m_pAboutPageModule(NULL)
         , m_initialExperienceModule(initialExperienceModule)
@@ -234,6 +237,12 @@ namespace ExampleApp
                            *m_pGlobeCameraController,
                            m_identityProvider,
                            m_messageBus);
+        
+        m_pGpsMarkerModule = Eegeo_NEW(ExampleApp::GpsMarker::SdkModel::GpsMarkerModule)(m_pWorld->GetRenderingModule(),
+                                                                                         m_platformAbstractions,
+                                                                                         m_pWorld->GetLocationService(),
+                                                                                         m_pWorld->GetTerrainModelModule(),
+                                                                                         m_messageBus);
 
         Eegeo::Modules::Map::CityThemesModule& cityThemesModule = world.GetCityThemesModule();
 
@@ -381,6 +390,8 @@ namespace ExampleApp
         Eegeo_DELETE m_pFlattenButtonModule;
 
         Eegeo_DELETE m_pWeatherMenuModule;
+        
+        Eegeo_DELETE m_pGpsMarkerModule;
 
         Eegeo_DELETE m_pCompassModule;
 
@@ -502,6 +513,7 @@ namespace ExampleApp
             WorldPinsModule().GetWorldPinsScaleController().Update(dt, renderCamera);
             CompassModule().GetCompassUpdateController().Update(dt);
             CompassModule().GetCompassUpdateController().Update(dt);
+            m_pGpsMarkerModule->GetGpsMarkerController().Update(dt, renderCamera);
         }
 
         m_pNavigationService->Update(dt);

@@ -63,6 +63,7 @@
 #include "ScreenProperties.h"
 #include "CameraFrustumStreamingVolume.h"
 #include "PlatformConfig.h"
+#include "GpsMarker.h"
 
 namespace ExampleApp
 {
@@ -102,6 +103,7 @@ namespace ExampleApp
         ExampleApp::PlaceJumps::SdkModel::IPlaceJumpsModule* m_pPlaceJumpsModule;
         ExampleApp::WeatherMenu::SdkModel::IWeatherMenuModule* m_pWeatherMenuModule;
         ExampleApp::Compass::SdkModel::ICompassModule* m_pCompassModule;
+        ExampleApp::GpsMarker::SdkModel::IGpsMarkerModule* m_pGpsMarkerModule;
         ExampleApp::WorldAreaLoader::SdkModel::IWorldAreaLoaderModule* m_pWorldAreaLoaderModule;
         ExampleApp::AboutPage::View::IAboutPageModule* m_pAboutPageModule;
         ExampleApp::InitialExperience::SdkModel::IInitialExperienceModule& m_initialExperienceModule;

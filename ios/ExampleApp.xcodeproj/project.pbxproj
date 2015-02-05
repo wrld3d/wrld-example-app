@@ -646,6 +646,18 @@
 		7E3B8B341A385F110023C94E /* WorldPinOnMapViewInterop.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B8AC21A385F110023C94E /* WorldPinOnMapViewInterop.mm */; };
 		7E3B8B351A385F110023C94E /* WorldPinOnMapViewModule.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B8AC41A385F110023C94E /* WorldPinOnMapViewModule.mm */; };
 		7E3B8B361A385F110023C94E /* WorldPinOnMapViewModule.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B8AC41A385F110023C94E /* WorldPinOnMapViewModule.mm */; };
+		7E8F03D61A822E820056F229 /* GpsMarkerModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E8F03D41A822E820056F229 /* GpsMarkerModule.cpp */; };
+		7E8F03D71A822E820056F229 /* GpsMarkerModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E8F03D41A822E820056F229 /* GpsMarkerModule.cpp */; };
+		7E8F03DA1A822E9A0056F229 /* GpsMarkerModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E8F03D81A822E9A0056F229 /* GpsMarkerModel.cpp */; };
+		7E8F03DB1A822E9A0056F229 /* GpsMarkerModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E8F03D81A822E9A0056F229 /* GpsMarkerModel.cpp */; };
+		7E8F03DF1A82374F0056F229 /* GpsMarkerView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E8F03DD1A82374F0056F229 /* GpsMarkerView.cpp */; };
+		7E8F03E01A82374F0056F229 /* GpsMarkerView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E8F03DD1A82374F0056F229 /* GpsMarkerView.cpp */; };
+		7E8F03E51A82401B0056F229 /* GpsMarkerController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E8F03E31A82401B0056F229 /* GpsMarkerController.cpp */; };
+		7E8F03E61A82401B0056F229 /* GpsMarkerController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E8F03E31A82401B0056F229 /* GpsMarkerController.cpp */; };
+		7E8F03EA1A8260B40056F229 /* gps_marker.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E8F03E91A8260B40056F229 /* gps_marker.png */; };
+		7E8F03EB1A8260B40056F229 /* gps_marker.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E8F03E91A8260B40056F229 /* gps_marker.png */; };
+		7E8F03EE1A827FAB0056F229 /* GpsMarkerVisibilityMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E8F03EC1A827FAB0056F229 /* GpsMarkerVisibilityMessage.cpp */; };
+		7E8F03EF1A827FAB0056F229 /* GpsMarkerVisibilityMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E8F03EC1A827FAB0056F229 /* GpsMarkerVisibilityMessage.cpp */; };
 		7EE481EB16836F370006E99B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE481EA16836F370006E99B /* UIKit.framework */; };
 		7EE481ED16836F370006E99B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE481EC16836F370006E99B /* Foundation.framework */; };
 		7EE481F116836F370006E99B /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE481F016836F370006E99B /* CoreData.framework */; };
@@ -1399,6 +1411,20 @@
 		7E3B8AC31A385F110023C94E /* WorldPinOnMapViewModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorldPinOnMapViewModule.h; sourceTree = "<group>"; };
 		7E3B8AC41A385F110023C94E /* WorldPinOnMapViewModule.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = WorldPinOnMapViewModule.mm; sourceTree = "<group>"; };
 		7E75EE1D16848B8A00BCA283 /* libapps-on-maps-sim.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libapps-on-maps-sim.a"; path = "Include/libapps-on-maps-sim.a"; sourceTree = "<group>"; };
+		7E8F03D41A822E820056F229 /* GpsMarkerModule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GpsMarkerModule.cpp; sourceTree = "<group>"; };
+		7E8F03D51A822E820056F229 /* GpsMarkerModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GpsMarkerModule.h; sourceTree = "<group>"; };
+		7E8F03D81A822E9A0056F229 /* GpsMarkerModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GpsMarkerModel.cpp; sourceTree = "<group>"; };
+		7E8F03D91A822E9A0056F229 /* GpsMarkerModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GpsMarkerModel.h; sourceTree = "<group>"; };
+		7E8F03DD1A82374F0056F229 /* GpsMarkerView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GpsMarkerView.cpp; sourceTree = "<group>"; };
+		7E8F03DE1A82374F0056F229 /* GpsMarkerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GpsMarkerView.h; sourceTree = "<group>"; };
+		7E8F03E21A823FA70056F229 /* IGpsMarkerController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IGpsMarkerController.h; sourceTree = "<group>"; };
+		7E8F03E31A82401B0056F229 /* GpsMarkerController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GpsMarkerController.cpp; sourceTree = "<group>"; };
+		7E8F03E41A82401B0056F229 /* GpsMarkerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GpsMarkerController.h; sourceTree = "<group>"; };
+		7E8F03E71A8240B50056F229 /* GpsMarker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GpsMarker.h; sourceTree = "<group>"; };
+		7E8F03E81A8242180056F229 /* IGpsMarkerModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IGpsMarkerModule.h; sourceTree = "<group>"; };
+		7E8F03E91A8260B40056F229 /* gps_marker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gps_marker.png; sourceTree = "<group>"; };
+		7E8F03EC1A827FAB0056F229 /* GpsMarkerVisibilityMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GpsMarkerVisibilityMessage.cpp; sourceTree = "<group>"; };
+		7E8F03ED1A827FAB0056F229 /* GpsMarkerVisibilityMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GpsMarkerVisibilityMessage.h; sourceTree = "<group>"; };
 		7EE481E616836F370006E99B /* ExampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7EE481EA16836F370006E99B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		7EE481EC16836F370006E99B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -1418,7 +1444,6 @@
 		7EE48255168477A80006E99B /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		7EE48257168477CB0006E99B /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		7EF5D8641737F9A40049D787 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		99DE1AF9937DE3414FC5407B /* ApiKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApiKey.h; sourceTree = "<group>"; };
 		E016040D19EEC26E0029A035 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		E0DD09F219EED4AF008BD39D /* SplashScreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SplashScreen.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1477,6 +1502,7 @@
 				7E3B86711A385A280023C94E /* CameraTransitions */,
 				7E3B86771A385A280023C94E /* CategorySearch */,
 				7E3B86891A385A280023C94E /* Compass */,
+				7E8F03D21A822E820056F229 /* GpsMarker */,
 				7E3B86A91A385A290023C94E /* ExampleAppMessaging */,
 				7E3B86AD1A385A290023C94E /* FlattenButton */,
 				7E3B86C71A385A290023C94E /* InitialExperience */,
@@ -3002,6 +3028,34 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		7E8F03D21A822E820056F229 /* GpsMarker */ = {
+			isa = PBXGroup;
+			children = (
+				7E8F03E71A8240B50056F229 /* GpsMarker.h */,
+				7E8F03D31A822E820056F229 /* SdkModel */,
+				7E8F03EC1A827FAB0056F229 /* GpsMarkerVisibilityMessage.cpp */,
+				7E8F03ED1A827FAB0056F229 /* GpsMarkerVisibilityMessage.h */,
+			);
+			path = GpsMarker;
+			sourceTree = "<group>";
+		};
+		7E8F03D31A822E820056F229 /* SdkModel */ = {
+			isa = PBXGroup;
+			children = (
+				7E8F03E81A8242180056F229 /* IGpsMarkerModule.h */,
+				7E8F03D41A822E820056F229 /* GpsMarkerModule.cpp */,
+				7E8F03D51A822E820056F229 /* GpsMarkerModule.h */,
+				7E8F03E21A823FA70056F229 /* IGpsMarkerController.h */,
+				7E8F03E31A82401B0056F229 /* GpsMarkerController.cpp */,
+				7E8F03E41A82401B0056F229 /* GpsMarkerController.h */,
+				7E8F03D81A822E9A0056F229 /* GpsMarkerModel.cpp */,
+				7E8F03D91A822E9A0056F229 /* GpsMarkerModel.h */,
+				7E8F03DD1A82374F0056F229 /* GpsMarkerView.cpp */,
+				7E8F03DE1A82374F0056F229 /* GpsMarkerView.h */,
+			);
+			path = SdkModel;
+			sourceTree = "<group>";
+		};
 		7EE481DB16836F360006E99B = {
 			isa = PBXGroup;
 			children = (
@@ -3071,6 +3125,7 @@
 		7EE4825B16847E7C0006E99B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				7E8F03E91A8260B40056F229 /* gps_marker.png */,
 				56CF26861A24776600B30439 /* icon_create_poi.png */,
 				56A3DCD71A239BD000110FDD /* button_gallery_off.png */,
 				56A3DCD81A239BD000110FDD /* button_gallery_on.png */,
@@ -3257,6 +3312,7 @@
 				18B5ACF819DC15CD00BA4A38 /* shadow_01.png in Resources */,
 				18B5ACD619DC15CD00BA4A38 /* icon2_park.png in Resources */,
 				18B5AC9A19DC15CD00BA4A38 /* icon1_bank.png in Resources */,
+				7E8F03EB1A8260B40056F229 /* gps_marker.png in Resources */,
 				56F28E831A261DA70061C7BF /* button_checkbox_on.png in Resources */,
 				186D2936196D9E4B00E004E0 /* placeholder.pvr in Resources */,
 				186D2937196D9E4B00E004E0 /* FrankBold50_A8_icons_0.png in Resources */,
@@ -3339,6 +3395,7 @@
 				18B5ACBF19DC15CD00BA4A38 /* icon1_summer.png in Resources */,
 				18B5AC8319DC15CD00BA4A38 /* button_close_on.png in Resources */,
 				180E99FA19E67E64007D63FD /* arrow2.png in Resources */,
+				7E8F03EA1A8260B40056F229 /* gps_marker.png in Resources */,
 				18B5ACFE19DC160E00BA4A38 /* SearchResultOnMap in Resources */,
 				18B5ACF719DC15CD00BA4A38 /* shadow_01.png in Resources */,
 				18B5ACD519DC15CD00BA4A38 /* icon2_park.png in Resources */,
@@ -3396,6 +3453,7 @@
 				7E3B88B31A385A290023C94E /* CategorySearchModule.cpp in Sources */,
 				7E3B8B321A385F110023C94E /* WorldPinOnMapView.mm in Sources */,
 				7E3B8B361A385F110023C94E /* WorldPinOnMapViewModule.mm in Sources */,
+				7E8F03E61A82401B0056F229 /* GpsMarkerController.cpp in Sources */,
 				7E3B89C91A385A290023C94E /* SearchResultOnMapItemModel.cpp in Sources */,
 				7E3B88C51A385A290023C94E /* CompassModeObserver.cpp in Sources */,
 				7E3B89331A385A290023C94E /* MyPinCreationInitiationViewModel.cpp in Sources */,
@@ -3444,6 +3502,7 @@
 				7E3B89191A385A290023C94E /* PoiRingRenderable.cpp in Sources */,
 				7E3B88D31A385A290023C94E /* FlattenButtonModelStateChangedMessage.cpp in Sources */,
 				7E3B8AD81A385F110023C94E /* CompassViewModule.mm in Sources */,
+				7E8F03DB1A822E9A0056F229 /* GpsMarkerModel.cpp in Sources */,
 				7E3B893D1A385A290023C94E /* MyPinCreationDetailsViewModel.cpp in Sources */,
 				7E3B8AFC1A385F110023C94E /* ModalBackgroundViewModule.mm in Sources */,
 				7E3B8B341A385F110023C94E /* WorldPinOnMapViewInterop.mm in Sources */,
@@ -3559,6 +3618,7 @@
 				7E3B8AF61A385F110023C94E /* MenuView.mm in Sources */,
 				7E3B8ACC1A385F110023C94E /* AppHost.mm in Sources */,
 				7E3B89771A385A290023C94E /* PlaceJumpsModel.cpp in Sources */,
+				7E8F03E01A82374F0056F229 /* GpsMarkerView.cpp in Sources */,
 				7E3B88DB1A385A290023C94E /* FlattenButtonModule.cpp in Sources */,
 				7E3B89211A385A290023C94E /* MyPinCreationModelObserver.cpp in Sources */,
 				7E3B8AFA1A385F110023C94E /* ModalBackgroundViewInterop.mm in Sources */,
@@ -3581,6 +3641,7 @@
 				7E3B89811A385A290023C94E /* ReactionModel.cpp in Sources */,
 				7E3B89651A385A290023C94E /* MyPinAddedToMenuObserver.cpp in Sources */,
 				7E3B89B31A385A290023C94E /* SearchResultItemModel.cpp in Sources */,
+				7E8F03EF1A827FAB0056F229 /* GpsMarkerVisibilityMessage.cpp in Sources */,
 				7E3B89411A385A290023C94E /* MyPinDetailsViewRemovePinMessage.cpp in Sources */,
 				7E3B896B1A385A290023C94E /* PlaceJumpSelectedMessage.cpp in Sources */,
 				7E3B8B301A385F110023C94E /* UIView+TouchExclusivity.m in Sources */,
@@ -3592,6 +3653,7 @@
 				7E3B89E31A385A290023C94E /* WeatherMenuModule.cpp in Sources */,
 				7E3B89A51A385A290023C94E /* SearchResultMenuModule.cpp in Sources */,
 				7E3B8B161A385F110023C94E /* iOSPersistentSettingsModel.mm in Sources */,
+				7E8F03D71A822E820056F229 /* GpsMarkerModule.cpp in Sources */,
 				7E3B88AB1A385A290023C94E /* AboutPageOpenableControl.cpp in Sources */,
 				7E3B8B2A1A385F110023C94E /* SecondaryMenuView.mm in Sources */,
 				7E3B8B0A1A385F110023C94E /* MyPinCreationInitiationView.mm in Sources */,
@@ -3641,6 +3703,7 @@
 				7E3B88B21A385A290023C94E /* CategorySearchModule.cpp in Sources */,
 				7E3B8B311A385F110023C94E /* WorldPinOnMapView.mm in Sources */,
 				7E3B8B351A385F110023C94E /* WorldPinOnMapViewModule.mm in Sources */,
+				7E8F03E51A82401B0056F229 /* GpsMarkerController.cpp in Sources */,
 				7E3B89C81A385A290023C94E /* SearchResultOnMapItemModel.cpp in Sources */,
 				7E3B88C41A385A290023C94E /* CompassModeObserver.cpp in Sources */,
 				7E3B89321A385A290023C94E /* MyPinCreationInitiationViewModel.cpp in Sources */,
@@ -3689,6 +3752,7 @@
 				7E3B89181A385A290023C94E /* PoiRingRenderable.cpp in Sources */,
 				7E3B88D21A385A290023C94E /* FlattenButtonModelStateChangedMessage.cpp in Sources */,
 				7E3B8AD71A385F110023C94E /* CompassViewModule.mm in Sources */,
+				7E8F03DA1A822E9A0056F229 /* GpsMarkerModel.cpp in Sources */,
 				7E3B893C1A385A290023C94E /* MyPinCreationDetailsViewModel.cpp in Sources */,
 				7E3B8AFB1A385F110023C94E /* ModalBackgroundViewModule.mm in Sources */,
 				7E3B8B331A385F110023C94E /* WorldPinOnMapViewInterop.mm in Sources */,
@@ -3804,6 +3868,7 @@
 				7E3B8AF51A385F110023C94E /* MenuView.mm in Sources */,
 				7E3B8ACB1A385F110023C94E /* AppHost.mm in Sources */,
 				7E3B89761A385A290023C94E /* PlaceJumpsModel.cpp in Sources */,
+				7E8F03DF1A82374F0056F229 /* GpsMarkerView.cpp in Sources */,
 				7E3B88DA1A385A290023C94E /* FlattenButtonModule.cpp in Sources */,
 				7E3B89201A385A290023C94E /* MyPinCreationModelObserver.cpp in Sources */,
 				7E3B8AF91A385F110023C94E /* ModalBackgroundViewInterop.mm in Sources */,
@@ -3826,6 +3891,7 @@
 				7E3B89801A385A290023C94E /* ReactionModel.cpp in Sources */,
 				7E3B89641A385A290023C94E /* MyPinAddedToMenuObserver.cpp in Sources */,
 				7E3B89B21A385A290023C94E /* SearchResultItemModel.cpp in Sources */,
+				7E8F03EE1A827FAB0056F229 /* GpsMarkerVisibilityMessage.cpp in Sources */,
 				7E3B89401A385A290023C94E /* MyPinDetailsViewRemovePinMessage.cpp in Sources */,
 				7E3B896A1A385A290023C94E /* PlaceJumpSelectedMessage.cpp in Sources */,
 				7E3B8B2F1A385F110023C94E /* UIView+TouchExclusivity.m in Sources */,
@@ -3837,6 +3903,7 @@
 				7E3B89E21A385A290023C94E /* WeatherMenuModule.cpp in Sources */,
 				7E3B89A41A385A290023C94E /* SearchResultMenuModule.cpp in Sources */,
 				7E3B8B151A385F110023C94E /* iOSPersistentSettingsModel.mm in Sources */,
+				7E8F03D61A822E820056F229 /* GpsMarkerModule.cpp in Sources */,
 				7E3B88AA1A385A290023C94E /* AboutPageOpenableControl.cpp in Sources */,
 				7E3B8B291A385F110023C94E /* SecondaryMenuView.mm in Sources */,
 				7E3B8B091A385F110023C94E /* MyPinCreationInitiationView.mm in Sources */,
