@@ -51,6 +51,13 @@ fi
 echo "Updating $p platform..."
 rm -rf $includeDestination
 curl $baseUrl$srcPackageName > ./$destPackageName
+
+statuscode=$?
+if [ $statuscode -ne 0 ] ; then
+    echo "Failed to download sdk package ${baseUrl}${srcPackageName}" >&2
+    exit $statuscode
+fi    
+
 tar -zxvf $destPackageName
 rm -f ./$destPackageName
 platformVersion=`cat ./$sdkDestination/version.txt`

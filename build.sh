@@ -33,6 +33,11 @@ if [ $p == "ios" ]; then
     rm -rf "./ios/Include"
     rm -rf "./ios/build"
     ./update.platform.sh $allArguments
+
+    if [ $? -ne 0 ] ; then
+        exit $?
+    fi    
+    
     pushd ios
     ./build.sh $allArguments
     resultcode=$?
@@ -43,6 +48,11 @@ elif [ $p == "android" ]; then
     rm -rf "./android/obj"
     rm -rf "./android/bin"
     ./update.platform.sh $allArguments
+
+    if [ $? -ne 0 ] ; then
+        exit $?
+    fi
+    
     pushd android
     ./build.sh $allArguments
     resultcode=$?
