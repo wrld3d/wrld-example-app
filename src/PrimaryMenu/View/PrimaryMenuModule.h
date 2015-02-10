@@ -7,6 +7,7 @@
 #include "IIdentity.h"
 #include "PlaceJumps.h"
 #include "AboutPage.h"
+#include "Options.h"
 #include "Reaction.h"
 
 #include <vector>
@@ -32,6 +33,7 @@ namespace ExampleApp
             public:
                 PrimaryMenuModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
                                   AboutPage::View::IAboutPageViewModel& aboutPageViewModel,
+                                  Options::View::IOptionsViewModel& optionsViewModel,
                                   Reaction::View::IReactionControllerModel& reactionControllerModel);
 
                 ~PrimaryMenuModule();

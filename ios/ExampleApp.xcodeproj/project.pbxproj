@@ -7,6 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		18096F4D1A7B7F39006A6438 /* StreamOverWifiOnlyChangedMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18096F4C1A7B7F39006A6438 /* StreamOverWifiOnlyChangedMessage.cpp */; };
+		18096F4E1A7B7F39006A6438 /* StreamOverWifiOnlyChangedMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18096F4C1A7B7F39006A6438 /* StreamOverWifiOnlyChangedMessage.cpp */; };
+		18096F501A7B7F48006A6438 /* CacheEnabledChangedMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18096F4F1A7B7F48006A6438 /* CacheEnabledChangedMessage.cpp */; };
+		18096F511A7B7F48006A6438 /* CacheEnabledChangedMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18096F4F1A7B7F48006A6438 /* CacheEnabledChangedMessage.cpp */; };
+		18096F531A7B7F56006A6438 /* ClearCacheMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18096F521A7B7F56006A6438 /* ClearCacheMessage.cpp */; };
+		18096F541A7B7F56006A6438 /* ClearCacheMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18096F521A7B7F56006A6438 /* ClearCacheMessage.cpp */; };
+		18096F581A7B8DC7006A6438 /* OptionsModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18096F561A7B8DC7006A6438 /* OptionsModule.cpp */; };
+		18096F591A7B8DC7006A6438 /* OptionsModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18096F561A7B8DC7006A6438 /* OptionsModule.cpp */; };
+		18096F5D1A7B8FE2006A6438 /* StreamOverWifiOnlyChangedMessageHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18096F5B1A7B8FE2006A6438 /* StreamOverWifiOnlyChangedMessageHandler.cpp */; };
+		18096F5E1A7B8FE2006A6438 /* StreamOverWifiOnlyChangedMessageHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18096F5B1A7B8FE2006A6438 /* StreamOverWifiOnlyChangedMessageHandler.cpp */; };
+		18096F611A7B8FEF006A6438 /* CacheEnabledChangedMessageHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18096F5F1A7B8FEF006A6438 /* CacheEnabledChangedMessageHandler.cpp */; };
+		18096F621A7B8FEF006A6438 /* CacheEnabledChangedMessageHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18096F5F1A7B8FEF006A6438 /* CacheEnabledChangedMessageHandler.cpp */; };
+		18096F741A7BD4B1006A6438 /* PlatformAbstractionsFacade.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18096F721A7BD4B1006A6438 /* PlatformAbstractionsFacade.cpp */; };
+		18096F751A7BD4B1006A6438 /* PlatformAbstractionsFacade.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18096F721A7BD4B1006A6438 /* PlatformAbstractionsFacade.cpp */; };
+		18096F841A7F90A1006A6438 /* ExampleAppCustomWebLoadRequestFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18096F801A7F90A1006A6438 /* ExampleAppCustomWebLoadRequestFactory.cpp */; };
+		18096F851A7F90A1006A6438 /* ExampleAppCustomWebLoadRequestFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18096F801A7F90A1006A6438 /* ExampleAppCustomWebLoadRequestFactory.cpp */; };
+		18096F911A7FA703006A6438 /* NetworkCapabilities.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18096F8F1A7FA703006A6438 /* NetworkCapabilities.cpp */; };
+		18096F921A7FA703006A6438 /* NetworkCapabilities.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18096F8F1A7FA703006A6438 /* NetworkCapabilities.cpp */; };
 		180E99FA19E67E64007D63FD /* arrow2.png in Resources */ = {isa = PBXBuildFile; fileRef = 180E99F919E67E64007D63FD /* arrow2.png */; };
 		180E99FB19E67E64007D63FD /* arrow2.png in Resources */ = {isa = PBXBuildFile; fileRef = 180E99F919E67E64007D63FD /* arrow2.png */; };
 		182E453B18C92FA900F9DD92 /* libapps-on-maps-sim.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E75EE1D16848B8A00BCA283 /* libapps-on-maps-sim.a */; };
@@ -16,6 +34,33 @@
 		186D2938196D9E4B00E004E0 /* FrankBold50_A8_icons.fnt in Resources */ = {isa = PBXBuildFile; fileRef = 18D1D344194A057200FAA1B9 /* FrankBold50_A8_icons.fnt */; };
 		189B246819F93547006DD887 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E016040D19EEC26E0029A035 /* Images.xcassets */; };
 		189B246919F9355A006DD887 /* SplashScreen.png in Resources */ = {isa = PBXBuildFile; fileRef = E0DD09F219EED4AF008BD39D /* SplashScreen.png */; };
+		18B22B0C1A7A8B3400DDBFA2 /* OptionsController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18B22B041A7A8B3400DDBFA2 /* OptionsController.cpp */; };
+		18B22B0D1A7A8B3400DDBFA2 /* OptionsController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18B22B041A7A8B3400DDBFA2 /* OptionsController.cpp */; };
+		18B22B101A7A8B3400DDBFA2 /* OptionsOpenableControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18B22B081A7A8B3400DDBFA2 /* OptionsOpenableControl.cpp */; };
+		18B22B111A7A8B3400DDBFA2 /* OptionsOpenableControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18B22B081A7A8B3400DDBFA2 /* OptionsOpenableControl.cpp */; };
+		18B22B121A7A8B3400DDBFA2 /* OptionsViewModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18B22B0A1A7A8B3400DDBFA2 /* OptionsViewModel.cpp */; };
+		18B22B131A7A8B3400DDBFA2 /* OptionsViewModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18B22B0A1A7A8B3400DDBFA2 /* OptionsViewModel.cpp */; };
+		18B22B161A7A8D9A00DDBFA2 /* OptionsMenuOption.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18B22B151A7A8D9A00DDBFA2 /* OptionsMenuOption.cpp */; };
+		18B22B171A7A8D9A00DDBFA2 /* OptionsMenuOption.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18B22B151A7A8D9A00DDBFA2 /* OptionsMenuOption.cpp */; };
+		18B22B331A7A937D00DDBFA2 /* OptionsViewInterop.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18B22B2D1A7A937D00DDBFA2 /* OptionsViewInterop.mm */; };
+		18B22B341A7A937D00DDBFA2 /* OptionsViewInterop.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18B22B2D1A7A937D00DDBFA2 /* OptionsViewInterop.mm */; };
+		18B22B351A7A937D00DDBFA2 /* OptionsViewModule.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18B22B2F1A7A937D00DDBFA2 /* OptionsViewModule.mm */; };
+		18B22B361A7A937D00DDBFA2 /* OptionsViewModule.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18B22B2F1A7A937D00DDBFA2 /* OptionsViewModule.mm */; };
+		18B22B371A7A937D00DDBFA2 /* OptionsView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18B22B321A7A937D00DDBFA2 /* OptionsView.mm */; };
+		18B22B381A7A937D00DDBFA2 /* OptionsView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18B22B321A7A937D00DDBFA2 /* OptionsView.mm */; };
+		18B22B3A1A7A9C7300DDBFA2 /* icon1_options.png in Resources */ = {isa = PBXBuildFile; fileRef = 18B22B391A7A9C7300DDBFA2 /* icon1_options.png */; };
+		18B22B3F1A7AA0BC00DDBFA2 /* UILabelledCheckboxView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18B22B3E1A7AA0BC00DDBFA2 /* UILabelledCheckboxView.mm */; };
+		18B22B401A7AA0BC00DDBFA2 /* UILabelledCheckboxView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18B22B3E1A7AA0BC00DDBFA2 /* UILabelledCheckboxView.mm */; };
+		18B44CDE1A83B64200FDFD8A /* CompletedCacheClearMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18B44CDC1A83B64200FDFD8A /* CompletedCacheClearMessage.cpp */; };
+		18B44CDF1A83B64200FDFD8A /* CompletedCacheClearMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18B44CDC1A83B64200FDFD8A /* CompletedCacheClearMessage.cpp */; };
+		18B44CE21A83B6C900FDFD8A /* CompletedCacheClearMessageHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18B44CE01A83B6C900FDFD8A /* CompletedCacheClearMessageHandler.cpp */; };
+		18B44CE31A83B6C900FDFD8A /* CompletedCacheClearMessageHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18B44CE01A83B6C900FDFD8A /* CompletedCacheClearMessageHandler.cpp */; };
+		18B44CE71A83C77800FDFD8A /* ClearCacheMessageHandler.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18B44CE61A83C77800FDFD8A /* ClearCacheMessageHandler.mm */; };
+		18B44CE81A83C77800FDFD8A /* ClearCacheMessageHandler.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18B44CE61A83C77800FDFD8A /* ClearCacheMessageHandler.mm */; };
+		18B44CEB1A83D3CF00FDFD8A /* OptionsCacheClearSubView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18B44CE91A83D3CF00FDFD8A /* OptionsCacheClearSubView.mm */; };
+		18B44CEC1A83D3CF00FDFD8A /* OptionsCacheClearSubView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18B44CE91A83D3CF00FDFD8A /* OptionsCacheClearSubView.mm */; };
+		18B44CF01A88D4B400FDFD8A /* CacheClearBackgroundTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18B44CEE1A88D4B400FDFD8A /* CacheClearBackgroundTask.cpp */; };
+		18B44CF11A88D4B400FDFD8A /* CacheClearBackgroundTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18B44CEE1A88D4B400FDFD8A /* CacheClearBackgroundTask.cpp */; };
 		18B5AC7F19DC15CD00BA4A38 /* arrow1.png in Resources */ = {isa = PBXBuildFile; fileRef = 18B5AC3E19DC15CD00BA4A38 /* arrow1.png */; };
 		18B5AC8019DC15CD00BA4A38 /* arrow1.png in Resources */ = {isa = PBXBuildFile; fileRef = 18B5AC3E19DC15CD00BA4A38 /* arrow1.png */; };
 		18B5AC8119DC15CD00BA4A38 /* button_close_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 18B5AC3F19DC15CD00BA4A38 /* button_close_off.png */; };
@@ -677,7 +722,62 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		18096F491A7B7F00006A6438 /* StreamOverWifiOnlyChangedMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StreamOverWifiOnlyChangedMessage.h; sourceTree = "<group>"; };
+		18096F4A1A7B7F18006A6438 /* CacheEnabledChangedMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CacheEnabledChangedMessage.h; sourceTree = "<group>"; };
+		18096F4B1A7B7F2A006A6438 /* ClearCacheMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ClearCacheMessage.h; sourceTree = "<group>"; };
+		18096F4C1A7B7F39006A6438 /* StreamOverWifiOnlyChangedMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StreamOverWifiOnlyChangedMessage.cpp; sourceTree = "<group>"; };
+		18096F4F1A7B7F48006A6438 /* CacheEnabledChangedMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CacheEnabledChangedMessage.cpp; sourceTree = "<group>"; };
+		18096F521A7B7F56006A6438 /* ClearCacheMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ClearCacheMessage.cpp; sourceTree = "<group>"; };
+		18096F561A7B8DC7006A6438 /* OptionsModule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OptionsModule.cpp; sourceTree = "<group>"; };
+		18096F571A7B8DC7006A6438 /* OptionsModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OptionsModule.h; sourceTree = "<group>"; };
+		18096F5A1A7B8E62006A6438 /* IOptionsModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IOptionsModule.h; sourceTree = "<group>"; };
+		18096F5B1A7B8FE2006A6438 /* StreamOverWifiOnlyChangedMessageHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StreamOverWifiOnlyChangedMessageHandler.cpp; sourceTree = "<group>"; };
+		18096F5C1A7B8FE2006A6438 /* StreamOverWifiOnlyChangedMessageHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StreamOverWifiOnlyChangedMessageHandler.h; sourceTree = "<group>"; };
+		18096F5F1A7B8FEF006A6438 /* CacheEnabledChangedMessageHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CacheEnabledChangedMessageHandler.cpp; sourceTree = "<group>"; };
+		18096F601A7B8FEF006A6438 /* CacheEnabledChangedMessageHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CacheEnabledChangedMessageHandler.h; sourceTree = "<group>"; };
+		18096F681A7BA581006A6438 /* OptionsSdkIncludes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OptionsSdkIncludes.h; sourceTree = "<group>"; };
+		18096F721A7BD4B1006A6438 /* PlatformAbstractionsFacade.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PlatformAbstractionsFacade.cpp; sourceTree = "<group>"; };
+		18096F761A7BD5D4006A6438 /* PlatformAbstractionsFacade.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlatformAbstractionsFacade.h; sourceTree = "<group>"; };
+		18096F801A7F90A1006A6438 /* ExampleAppCustomWebLoadRequestFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ExampleAppCustomWebLoadRequestFactory.cpp; sourceTree = "<group>"; };
+		18096F811A7F90A1006A6438 /* ExampleAppCustomWebLoadRequestFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExampleAppCustomWebLoadRequestFactory.h; sourceTree = "<group>"; };
+		18096F821A7F90A1006A6438 /* INetworkCapabilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = INetworkCapabilities.h; sourceTree = "<group>"; };
+		18096F831A7F90A1006A6438 /* NetIncludes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetIncludes.h; sourceTree = "<group>"; };
+		18096F8F1A7FA703006A6438 /* NetworkCapabilities.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NetworkCapabilities.cpp; sourceTree = "<group>"; };
+		18096F901A7FA703006A6438 /* NetworkCapabilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkCapabilities.h; sourceTree = "<group>"; };
 		180E99F919E67E64007D63FD /* arrow2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow2.png; sourceTree = "<group>"; };
+		18B22B011A7A8B3400DDBFA2 /* IOptionsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IOptionsView.h; sourceTree = "<group>"; };
+		18B22B021A7A8B3400DDBFA2 /* IOptionsViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IOptionsViewModel.h; sourceTree = "<group>"; };
+		18B22B031A7A8B3400DDBFA2 /* Options.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Options.h; sourceTree = "<group>"; };
+		18B22B041A7A8B3400DDBFA2 /* OptionsController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OptionsController.cpp; sourceTree = "<group>"; };
+		18B22B051A7A8B3400DDBFA2 /* OptionsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OptionsController.h; sourceTree = "<group>"; };
+		18B22B081A7A8B3400DDBFA2 /* OptionsOpenableControl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OptionsOpenableControl.cpp; sourceTree = "<group>"; };
+		18B22B091A7A8B3400DDBFA2 /* OptionsOpenableControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OptionsOpenableControl.h; sourceTree = "<group>"; };
+		18B22B0A1A7A8B3400DDBFA2 /* OptionsViewModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OptionsViewModel.cpp; sourceTree = "<group>"; };
+		18B22B0B1A7A8B3400DDBFA2 /* OptionsViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OptionsViewModel.h; sourceTree = "<group>"; };
+		18B22B141A7A8D8700DDBFA2 /* OptionsMenuOption.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OptionsMenuOption.h; sourceTree = "<group>"; };
+		18B22B151A7A8D9A00DDBFA2 /* OptionsMenuOption.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OptionsMenuOption.cpp; sourceTree = "<group>"; };
+		18B22B181A7A901D00DDBFA2 /* ApiKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApiKey.h; sourceTree = "<group>"; };
+		18B22B2B1A7A937D00DDBFA2 /* OptionsViewIncludes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OptionsViewIncludes.h; sourceTree = "<group>"; };
+		18B22B2C1A7A937D00DDBFA2 /* OptionsViewInterop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OptionsViewInterop.h; sourceTree = "<group>"; };
+		18B22B2D1A7A937D00DDBFA2 /* OptionsViewInterop.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OptionsViewInterop.mm; sourceTree = "<group>"; };
+		18B22B2E1A7A937D00DDBFA2 /* OptionsViewModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OptionsViewModule.h; sourceTree = "<group>"; };
+		18B22B2F1A7A937D00DDBFA2 /* OptionsViewModule.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OptionsViewModule.mm; sourceTree = "<group>"; };
+		18B22B301A7A937D00DDBFA2 /* IOptionsViewModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IOptionsViewModule.h; sourceTree = "<group>"; };
+		18B22B311A7A937D00DDBFA2 /* OptionsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OptionsView.h; sourceTree = "<group>"; };
+		18B22B321A7A937D00DDBFA2 /* OptionsView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OptionsView.mm; sourceTree = "<group>"; };
+		18B22B391A7A9C7300DDBFA2 /* icon1_options.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon1_options.png; sourceTree = "<group>"; };
+		18B22B3D1A7A9FA800DDBFA2 /* UILabelledCheckboxView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UILabelledCheckboxView.h; sourceTree = "<group>"; };
+		18B22B3E1A7AA0BC00DDBFA2 /* UILabelledCheckboxView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UILabelledCheckboxView.mm; sourceTree = "<group>"; };
+		18B44CDC1A83B64200FDFD8A /* CompletedCacheClearMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CompletedCacheClearMessage.cpp; sourceTree = "<group>"; };
+		18B44CDD1A83B64200FDFD8A /* CompletedCacheClearMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompletedCacheClearMessage.h; sourceTree = "<group>"; };
+		18B44CE01A83B6C900FDFD8A /* CompletedCacheClearMessageHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CompletedCacheClearMessageHandler.cpp; sourceTree = "<group>"; };
+		18B44CE11A83B6C900FDFD8A /* CompletedCacheClearMessageHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompletedCacheClearMessageHandler.h; sourceTree = "<group>"; };
+		18B44CE51A83C77800FDFD8A /* ClearCacheMessageHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClearCacheMessageHandler.h; sourceTree = "<group>"; };
+		18B44CE61A83C77800FDFD8A /* ClearCacheMessageHandler.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ClearCacheMessageHandler.mm; sourceTree = "<group>"; };
+		18B44CE91A83D3CF00FDFD8A /* OptionsCacheClearSubView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OptionsCacheClearSubView.mm; sourceTree = "<group>"; };
+		18B44CEA1A83D3CF00FDFD8A /* OptionsCacheClearSubView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OptionsCacheClearSubView.h; sourceTree = "<group>"; };
+		18B44CEE1A88D4B400FDFD8A /* CacheClearBackgroundTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CacheClearBackgroundTask.cpp; sourceTree = "<group>"; };
+		18B44CEF1A88D4B400FDFD8A /* CacheClearBackgroundTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CacheClearBackgroundTask.h; sourceTree = "<group>"; };
 		18B5AC3E19DC15CD00BA4A38 /* arrow1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow1.png; sourceTree = "<group>"; };
 		18B5AC3F19DC15CD00BA4A38 /* button_close_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_close_off.png; sourceTree = "<group>"; };
 		18B5AC4019DC15CD00BA4A38 /* button_close_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_close_on.png; sourceTree = "<group>"; };
@@ -1495,9 +1595,43 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		18096F551A7B89A1006A6438 /* SdkModel */ = {
+			isa = PBXGroup;
+			children = (
+				18096F5B1A7B8FE2006A6438 /* StreamOverWifiOnlyChangedMessageHandler.cpp */,
+				18096F5C1A7B8FE2006A6438 /* StreamOverWifiOnlyChangedMessageHandler.h */,
+				18096F5F1A7B8FEF006A6438 /* CacheEnabledChangedMessageHandler.cpp */,
+				18096F601A7B8FEF006A6438 /* CacheEnabledChangedMessageHandler.h */,
+				18096F681A7BA581006A6438 /* OptionsSdkIncludes.h */,
+			);
+			path = SdkModel;
+			sourceTree = "<group>";
+		};
+		18096F781A7F84DA006A6438 /* Net */ = {
+			isa = PBXGroup;
+			children = (
+				18096F7F1A7F90A1006A6438 /* SdkModel */,
+			);
+			path = Net;
+			sourceTree = "<group>";
+		};
+		18096F7F1A7F90A1006A6438 /* SdkModel */ = {
+			isa = PBXGroup;
+			children = (
+				18096F801A7F90A1006A6438 /* ExampleAppCustomWebLoadRequestFactory.cpp */,
+				18096F811A7F90A1006A6438 /* ExampleAppCustomWebLoadRequestFactory.h */,
+				18096F821A7F90A1006A6438 /* INetworkCapabilities.h */,
+				18096F8F1A7FA703006A6438 /* NetworkCapabilities.cpp */,
+				18096F901A7FA703006A6438 /* NetworkCapabilities.h */,
+				18096F831A7F90A1006A6438 /* NetIncludes.h */,
+			);
+			path = SdkModel;
+			sourceTree = "<group>";
+		};
 		18143846192B6E4500BCDF2E /* src */ = {
 			isa = PBXGroup;
 			children = (
+				18B22B181A7A901D00DDBFA2 /* ApiKey.h */,
 				7E3B86631A385A280023C94E /* AboutPage */,
 				7E3B86711A385A280023C94E /* CameraTransitions */,
 				7E3B86771A385A280023C94E /* CategorySearch */,
@@ -1515,9 +1649,13 @@
 				7E3B87491A385A290023C94E /* MyPinCreationDetails */,
 				7E3B87571A385A290023C94E /* MyPinDetails */,
 				7E3B876E1A385A290023C94E /* MyPins */,
+				18096F781A7F84DA006A6438 /* Net */,
 				7E3B87931A385A290023C94E /* OpenableControl */,
+				18B22AFE1A7A8B3400DDBFA2 /* Options */,
 				7E3B87991A385A290023C94E /* PersistentSettings */,
 				7E3B879C1A385A290023C94E /* PlaceJumps */,
+				18096F721A7BD4B1006A6438 /* PlatformAbstractionsFacade.cpp */,
+				18096F761A7BD5D4006A6438 /* PlatformAbstractionsFacade.h */,
 				7E3B87B11A385A290023C94E /* PrimaryMenu */,
 				7E3B87B91A385A290023C94E /* Reaction */,
 				7E3B87C81A385A290023C94E /* Repository */,
@@ -1534,6 +1672,81 @@
 			);
 			name = src;
 			path = ../../src;
+			sourceTree = "<group>";
+		};
+		18B22AFE1A7A8B3400DDBFA2 /* Options */ = {
+			isa = PBXGroup;
+			children = (
+				18096F551A7B89A1006A6438 /* SdkModel */,
+				18B22AFF1A7A8B3400DDBFA2 /* View */,
+				18096F5A1A7B8E62006A6438 /* IOptionsModule.h */,
+				18096F561A7B8DC7006A6438 /* OptionsModule.cpp */,
+				18096F571A7B8DC7006A6438 /* OptionsModule.h */,
+				18096F4C1A7B7F39006A6438 /* StreamOverWifiOnlyChangedMessage.cpp */,
+				18096F491A7B7F00006A6438 /* StreamOverWifiOnlyChangedMessage.h */,
+				18096F4F1A7B7F48006A6438 /* CacheEnabledChangedMessage.cpp */,
+				18096F4A1A7B7F18006A6438 /* CacheEnabledChangedMessage.h */,
+				18096F521A7B7F56006A6438 /* ClearCacheMessage.cpp */,
+				18096F4B1A7B7F2A006A6438 /* ClearCacheMessage.h */,
+				18B44CDC1A83B64200FDFD8A /* CompletedCacheClearMessage.cpp */,
+				18B44CDD1A83B64200FDFD8A /* CompletedCacheClearMessage.h */,
+			);
+			path = Options;
+			sourceTree = "<group>";
+		};
+		18B22AFF1A7A8B3400DDBFA2 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				18B44CE01A83B6C900FDFD8A /* CompletedCacheClearMessageHandler.cpp */,
+				18B44CE11A83B6C900FDFD8A /* CompletedCacheClearMessageHandler.h */,
+				18B22B011A7A8B3400DDBFA2 /* IOptionsView.h */,
+				18B22B021A7A8B3400DDBFA2 /* IOptionsViewModel.h */,
+				18B22B031A7A8B3400DDBFA2 /* Options.h */,
+				18B22B041A7A8B3400DDBFA2 /* OptionsController.cpp */,
+				18B22B051A7A8B3400DDBFA2 /* OptionsController.h */,
+				18B22B081A7A8B3400DDBFA2 /* OptionsOpenableControl.cpp */,
+				18B22B091A7A8B3400DDBFA2 /* OptionsOpenableControl.h */,
+				18B22B0A1A7A8B3400DDBFA2 /* OptionsViewModel.cpp */,
+				18B22B0B1A7A8B3400DDBFA2 /* OptionsViewModel.h */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		18B22B291A7A937D00DDBFA2 /* Options */ = {
+			isa = PBXGroup;
+			children = (
+				18B44CE41A83C77800FDFD8A /* SdkModel */,
+				18B22B2A1A7A937D00DDBFA2 /* View */,
+			);
+			path = Options;
+			sourceTree = "<group>";
+		};
+		18B22B2A1A7A937D00DDBFA2 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				18B22B2B1A7A937D00DDBFA2 /* OptionsViewIncludes.h */,
+				18B22B2C1A7A937D00DDBFA2 /* OptionsViewInterop.h */,
+				18B22B2D1A7A937D00DDBFA2 /* OptionsViewInterop.mm */,
+				18B22B2E1A7A937D00DDBFA2 /* OptionsViewModule.h */,
+				18B22B2F1A7A937D00DDBFA2 /* OptionsViewModule.mm */,
+				18B22B301A7A937D00DDBFA2 /* IOptionsViewModule.h */,
+				18B22B311A7A937D00DDBFA2 /* OptionsView.h */,
+				18B22B321A7A937D00DDBFA2 /* OptionsView.mm */,
+				18B44CEA1A83D3CF00FDFD8A /* OptionsCacheClearSubView.h */,
+				18B44CE91A83D3CF00FDFD8A /* OptionsCacheClearSubView.mm */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		18B44CE41A83C77800FDFD8A /* SdkModel */ = {
+			isa = PBXGroup;
+			children = (
+				18B44CE51A83C77800FDFD8A /* ClearCacheMessageHandler.h */,
+				18B44CE61A83C77800FDFD8A /* ClearCacheMessageHandler.mm */,
+				18B44CEF1A88D4B400FDFD8A /* CacheClearBackgroundTask.h */,
+				18B44CEE1A88D4B400FDFD8A /* CacheClearBackgroundTask.cpp */,
+			);
+			path = SdkModel;
 			sourceTree = "<group>";
 		};
 		18D1D363194A0EA000FAA1B9 /* platform_assets */ = {
@@ -2184,6 +2397,8 @@
 				7E3B87B61A385A290023C94E /* PrimaryMenu.h */,
 				7E3B87B71A385A290023C94E /* PrimaryMenuModule.cpp */,
 				7E3B87B81A385A290023C94E /* PrimaryMenuModule.h */,
+				18B22B151A7A8D9A00DDBFA2 /* OptionsMenuOption.cpp */,
+				18B22B141A7A8D8700DDBFA2 /* OptionsMenuOption.h */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2640,6 +2855,7 @@
 				7E3B8A6C1A385F100023C94E /* MyPinCreationDetails */,
 				7E3B8A761A385F100023C94E /* MyPinCreationInitiation */,
 				7E3B8A801A385F100023C94E /* MyPinDetails */,
+				18B22B291A7A937D00DDBFA2 /* Options */,
 				7E3B8A8A1A385F100023C94E /* PersistentSettings */,
 				7E3B8A8D1A385F100023C94E /* PrimaryMenu */,
 				7E3B8A951A385F100023C94E /* SearchResultMenu */,
@@ -3001,6 +3217,8 @@
 			children = (
 				7E3B8AB91A385F110023C94E /* UIView+TouchExclusivity.h */,
 				7E3B8ABA1A385F110023C94E /* UIView+TouchExclusivity.m */,
+				18B22B3D1A7A9FA800DDBFA2 /* UILabelledCheckboxView.h */,
+				18B22B3E1A7AA0BC00DDBFA2 /* UILabelledCheckboxView.mm */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -3129,6 +3347,7 @@
 				56CF26861A24776600B30439 /* icon_create_poi.png */,
 				56A3DCD71A239BD000110FDD /* button_gallery_off.png */,
 				56A3DCD81A239BD000110FDD /* button_gallery_on.png */,
+				18B22B391A7A9C7300DDBFA2 /* icon1_options.png */,
 				56A3DCD91A239BD000110FDD /* button_ok_off.png */,
 				56A3DCDA1A239BD000110FDD /* button_ok_on.png */,
 				56A3DCDB1A239BD000110FDD /* button_photo_off.png */,
@@ -3351,6 +3570,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18B22B3A1A7A9C7300DDBFA2 /* icon1_options.png in Resources */,
 				18B5ACB319DC15CD00BA4A38 /* icon1_park.png in Resources */,
 				18B5AC9519DC15CD00BA4A38 /* icon1_arts.png in Resources */,
 				18B5AC8F19DC15CD00BA4A38 /* compass_shadow.png in Resources */,
@@ -3441,6 +3661,7 @@
 				7E3B8A071A385A290023C94E /* WorldPinInFocusViewModel.cpp in Sources */,
 				7E3B89231A385A290023C94E /* MyPinCreationModule.cpp in Sources */,
 				7E3B88A71A385A290023C94E /* AboutPageController.cpp in Sources */,
+				18096F4E1A7B7F39006A6438 /* StreamOverWifiOnlyChangedMessage.cpp in Sources */,
 				7E3B8AD21A385F110023C94E /* AppRunner.mm in Sources */,
 				7E3B897D1A385A290023C94E /* ReactionControllerModel.cpp in Sources */,
 				7E3B89C31A385A290023C94E /* SearchResultOnMapItemModelSelectedMessage.cpp in Sources */,
@@ -3449,13 +3670,17 @@
 				7E3B8AD01A385F110023C94E /* AppLocationDelegate.mm in Sources */,
 				7E3B89EF1A385A290023C94E /* WorldAreaLoaderModel.cpp in Sources */,
 				7E3B89351A385A290023C94E /* MyPinCreationScreenControl.cpp in Sources */,
+				18B44CDF1A83B64200FDFD8A /* CompletedCacheClearMessage.cpp in Sources */,
 				7E3B89B71A385A290023C94E /* SearchResultMenuSearchQueryPerformedMessageHandler.cpp in Sources */,
 				7E3B88B31A385A290023C94E /* CategorySearchModule.cpp in Sources */,
+				18B22B401A7AA0BC00DDBFA2 /* UILabelledCheckboxView.mm in Sources */,
 				7E3B8B321A385F110023C94E /* WorldPinOnMapView.mm in Sources */,
 				7E3B8B361A385F110023C94E /* WorldPinOnMapViewModule.mm in Sources */,
+				18B44CE31A83B6C900FDFD8A /* CompletedCacheClearMessageHandler.cpp in Sources */,
 				7E8F03E61A82401B0056F229 /* GpsMarkerController.cpp in Sources */,
 				7E3B89C91A385A290023C94E /* SearchResultOnMapItemModel.cpp in Sources */,
 				7E3B88C51A385A290023C94E /* CompassModeObserver.cpp in Sources */,
+				18B22B0D1A7A8B3400DDBFA2 /* OptionsController.cpp in Sources */,
 				7E3B89331A385A290023C94E /* MyPinCreationInitiationViewModel.cpp in Sources */,
 				7E3B88C31A385A290023C94E /* CompassModel.cpp in Sources */,
 				7E3B895D1A385A290023C94E /* MyPinsFileIO.cpp in Sources */,
@@ -3472,6 +3697,7 @@
 				7E3B89531A385A290023C94E /* MyPinSelectedMessage.cpp in Sources */,
 				7E3B89B11A385A290023C94E /* SearchResultAddRemoveHandler.cpp in Sources */,
 				7E3B8A051A385A290023C94E /* WorldPinInFocusScreenControl.cpp in Sources */,
+				18B22B171A7A8D9A00DDBFA2 /* OptionsMenuOption.cpp in Sources */,
 				7E3B893F1A385A290023C94E /* MyPinDetailsModelSelectedMessage.cpp in Sources */,
 				7E3B89DB1A385A290023C94E /* SecondaryMenuController.cpp in Sources */,
 				7E3B89471A385A290023C94E /* MyPinDetailsController.cpp in Sources */,
@@ -3511,15 +3737,20 @@
 				7E3B8ADC1A385F110023C94E /* FlattenButtonViewInterop.mm in Sources */,
 				7E3B891B1A385A290023C94E /* PoiRingTouchController.cpp in Sources */,
 				7E3B8AE61A385F110023C94E /* ScaleHelpers.cpp in Sources */,
+				18B22B131A7A8B3400DDBFA2 /* OptionsViewModel.cpp in Sources */,
 				7E3B8ACE1A385F110023C94E /* AppInputDelegate.mm in Sources */,
 				7E3B8ADA1A385F110023C94E /* FlattenButtonView.mm in Sources */,
 				7E3B88B71A385A290023C94E /* CategorySearchMenuOption.cpp in Sources */,
+				18096F621A7B8FEF006A6438 /* CacheEnabledChangedMessageHandler.cpp in Sources */,
 				7E3B88D71A385A290023C94E /* FlattenButtonModel.cpp in Sources */,
 				7E3B89CD1A385A290023C94E /* SearchResultPoiController.cpp in Sources */,
 				7E3B8B1E1A385F110023C94E /* SearchResultMenuView.mm in Sources */,
 				7E3B899B1A385A290023C94E /* SearchQueryRemovedMessage.cpp in Sources */,
+				18B44CF11A88D4B400FDFD8A /* CacheClearBackgroundTask.cpp in Sources */,
 				7E3B8B081A385F110023C94E /* MyPinCreationDetailsViewModule.mm in Sources */,
 				7E3B88B51A385A290023C94E /* CategorySearchSelectedMessageHandler.cpp in Sources */,
+				18096F511A7B7F48006A6438 /* CacheEnabledChangedMessage.cpp in Sources */,
+				18096F751A7BD4B1006A6438 /* PlatformAbstractionsFacade.cpp in Sources */,
 				7E3B89AB1A385A290023C94E /* SearchResultMenuItemSelectedMessage.cpp in Sources */,
 				7E3B89C71A385A290023C94E /* SearchResultOnMapIconCategoryMapper.cpp in Sources */,
 				7E3B89291A385A290023C94E /* MyPinCreationCompositeViewModel.cpp in Sources */,
@@ -3535,6 +3766,7 @@
 				7E3B88F31A385A290023C94E /* MenuOpenableControl.cpp in Sources */,
 				7E3B8B0E1A385F110023C94E /* MyPinCreationInitiationViewModule.mm in Sources */,
 				7E3B89D51A385A290023C94E /* PerformedSearchMessage.cpp in Sources */,
+				18096F591A7B8DC7006A6438 /* OptionsModule.cpp in Sources */,
 				7E3B88DF1A385A290023C94E /* FlattenButtonController.cpp in Sources */,
 				7E3B8AF41A385F110023C94E /* CustomTableViewCell.mm in Sources */,
 				7E3B8B201A385F110023C94E /* SearchResultMenuViewModule.mm in Sources */,
@@ -3551,6 +3783,7 @@
 				7E3B891F1A385A290023C94E /* MyPinCreationModel.cpp in Sources */,
 				7E3B89DF1A385A290023C94E /* ViewControllerUpdaterModule.cpp in Sources */,
 				7E3B894F1A385A290023C94E /* MyPinAddedToMenuMessage.cpp in Sources */,
+				18B22B381A7A937D00DDBFA2 /* OptionsView.mm in Sources */,
 				7E3B892F1A385A290023C94E /* MyPinCreationConfirmationViewModel.cpp in Sources */,
 				7E3B8AEC1A385F110023C94E /* iOSInitialExperiencePreLoadModel.mm in Sources */,
 				7E3B89131A385A290023C94E /* MyPinCreationViewStateChangedMessage.cpp in Sources */,
@@ -3560,6 +3793,7 @@
 				7E3B88FF1A385A290023C94E /* MobileExampleApp.cpp in Sources */,
 				7E3B8B2E1A385F110023C94E /* ViewController.mm in Sources */,
 				7E3B89D11A385A290023C94E /* SearchResultPoiOpenableControl.cpp in Sources */,
+				18B22B111A7A8B3400DDBFA2 /* OptionsOpenableControl.cpp in Sources */,
 				7E3B89931A385A290023C94E /* SearchQueryPerformer.cpp in Sources */,
 				7E3B89AD1A385A290023C94E /* SearchResultRemovedMessage.cpp in Sources */,
 				7E3B89271A385A290023C94E /* MyPinCreationViewStateChangedHandler.cpp in Sources */,
@@ -3600,6 +3834,7 @@
 				7E3B897B1A385A290023C94E /* PrimaryMenuModule.cpp in Sources */,
 				7E3B89F71A385A290023C94E /* WorldPinsInFocusController.cpp in Sources */,
 				7E3B89E91A385A290023C94E /* WeatherMenuStateOption.cpp in Sources */,
+				18096F851A7F90A1006A6438 /* ExampleAppCustomWebLoadRequestFactory.cpp in Sources */,
 				7E3B88CD1A385A290023C94E /* CompassController.cpp in Sources */,
 				7E3B899D1A385A290023C94E /* SearchQueryResponseReceivedMessage.cpp in Sources */,
 				7E3B89951A385A290023C94E /* SearchRefreshService.cpp in Sources */,
@@ -3615,6 +3850,7 @@
 				7E3B89A71A385A290023C94E /* SearchResultViewClearedObserver.cpp in Sources */,
 				7E3B89911A385A290023C94E /* SearchQueryObserver.cpp in Sources */,
 				7E3B89E51A385A290023C94E /* WeatherMenuStateModel.cpp in Sources */,
+				18096F921A7FA703006A6438 /* NetworkCapabilities.cpp in Sources */,
 				7E3B8AF61A385F110023C94E /* MenuView.mm in Sources */,
 				7E3B8ACC1A385F110023C94E /* AppHost.mm in Sources */,
 				7E3B89771A385A290023C94E /* PlaceJumpsModel.cpp in Sources */,
@@ -3635,7 +3871,9 @@
 				7E3B8AE01A385F110023C94E /* GlDisplayService.mm in Sources */,
 				7E3B89071A385A290023C94E /* ModalityController.cpp in Sources */,
 				7E3B89DD1A385A290023C94E /* ViewControllerUpdaterModel.cpp in Sources */,
+				18B44CE81A83C77800FDFD8A /* ClearCacheMessageHandler.mm in Sources */,
 				7E3B89F31A385A290023C94E /* WorldPinItemModel.cpp in Sources */,
+				18B22B361A7A937D00DDBFA2 /* OptionsViewModule.mm in Sources */,
 				7E3B88EB1A385A290023C94E /* InitialExperienceModel.cpp in Sources */,
 				7E3B89391A385A290023C94E /* MyPinCreationDetailsModule.cpp in Sources */,
 				7E3B89811A385A290023C94E /* ReactionModel.cpp in Sources */,
@@ -3661,6 +3899,8 @@
 				7E3B89C51A385A290023C94E /* SearchResultOnMapFactory.cpp in Sources */,
 				7E3B890B1A385A290023C94E /* ModalityModule.cpp in Sources */,
 				7E3B88A91A385A290023C94E /* AboutPageModule.cpp in Sources */,
+				18B44CEC1A83D3CF00FDFD8A /* OptionsCacheClearSubView.mm in Sources */,
+				18096F541A7B7F56006A6438 /* ClearCacheMessage.cpp in Sources */,
 				7E3B89A91A385A290023C94E /* SearchResultAddedMessage.cpp in Sources */,
 				7E3B89151A385A290023C94E /* PoiRingController.cpp in Sources */,
 				7E3B895B1A385A290023C94E /* MyPinSelectionHandlerFactory.cpp in Sources */,
@@ -3668,7 +3908,9 @@
 				7E3B89CB1A385A290023C94E /* SearchResultOnMapItemModelSelectedObserver.cpp in Sources */,
 				7E3B8B101A385F110023C94E /* MyPinDetailsView.mm in Sources */,
 				7E3B88CB1A385A290023C94E /* CompassViewCycledObserver.cpp in Sources */,
+				18B22B341A7A937D00DDBFA2 /* OptionsViewInterop.mm in Sources */,
 				7E3B895F1A385A290023C94E /* MyPinsModule.cpp in Sources */,
+				18096F5E1A7B8FE2006A6438 /* StreamOverWifiOnlyChangedMessageHandler.cpp in Sources */,
 				7E3B89011A385A290023C94E /* ModalityChangedMessage.cpp in Sources */,
 				7E3B89A31A385A290023C94E /* SearchResultMenuItemSelectedMessageHandler.cpp in Sources */,
 				7E3B892B1A385A290023C94E /* MyPinCreationConfirmationController.cpp in Sources */,
@@ -3691,6 +3933,7 @@
 				7E3B8A061A385A290023C94E /* WorldPinInFocusViewModel.cpp in Sources */,
 				7E3B89221A385A290023C94E /* MyPinCreationModule.cpp in Sources */,
 				7E3B88A61A385A290023C94E /* AboutPageController.cpp in Sources */,
+				18096F4D1A7B7F39006A6438 /* StreamOverWifiOnlyChangedMessage.cpp in Sources */,
 				7E3B8AD11A385F110023C94E /* AppRunner.mm in Sources */,
 				7E3B897C1A385A290023C94E /* ReactionControllerModel.cpp in Sources */,
 				7E3B89C21A385A290023C94E /* SearchResultOnMapItemModelSelectedMessage.cpp in Sources */,
@@ -3699,13 +3942,17 @@
 				7E3B8ACF1A385F110023C94E /* AppLocationDelegate.mm in Sources */,
 				7E3B89EE1A385A290023C94E /* WorldAreaLoaderModel.cpp in Sources */,
 				7E3B89341A385A290023C94E /* MyPinCreationScreenControl.cpp in Sources */,
+				18B44CDE1A83B64200FDFD8A /* CompletedCacheClearMessage.cpp in Sources */,
 				7E3B89B61A385A290023C94E /* SearchResultMenuSearchQueryPerformedMessageHandler.cpp in Sources */,
 				7E3B88B21A385A290023C94E /* CategorySearchModule.cpp in Sources */,
+				18B22B3F1A7AA0BC00DDBFA2 /* UILabelledCheckboxView.mm in Sources */,
 				7E3B8B311A385F110023C94E /* WorldPinOnMapView.mm in Sources */,
 				7E3B8B351A385F110023C94E /* WorldPinOnMapViewModule.mm in Sources */,
+				18B44CE21A83B6C900FDFD8A /* CompletedCacheClearMessageHandler.cpp in Sources */,
 				7E8F03E51A82401B0056F229 /* GpsMarkerController.cpp in Sources */,
 				7E3B89C81A385A290023C94E /* SearchResultOnMapItemModel.cpp in Sources */,
 				7E3B88C41A385A290023C94E /* CompassModeObserver.cpp in Sources */,
+				18B22B0C1A7A8B3400DDBFA2 /* OptionsController.cpp in Sources */,
 				7E3B89321A385A290023C94E /* MyPinCreationInitiationViewModel.cpp in Sources */,
 				7E3B88C21A385A290023C94E /* CompassModel.cpp in Sources */,
 				7E3B895C1A385A290023C94E /* MyPinsFileIO.cpp in Sources */,
@@ -3722,6 +3969,7 @@
 				7E3B89521A385A290023C94E /* MyPinSelectedMessage.cpp in Sources */,
 				7E3B89B01A385A290023C94E /* SearchResultAddRemoveHandler.cpp in Sources */,
 				7E3B8A041A385A290023C94E /* WorldPinInFocusScreenControl.cpp in Sources */,
+				18B22B161A7A8D9A00DDBFA2 /* OptionsMenuOption.cpp in Sources */,
 				7E3B893E1A385A290023C94E /* MyPinDetailsModelSelectedMessage.cpp in Sources */,
 				7E3B89DA1A385A290023C94E /* SecondaryMenuController.cpp in Sources */,
 				7E3B89461A385A290023C94E /* MyPinDetailsController.cpp in Sources */,
@@ -3761,15 +4009,20 @@
 				7E3B8ADB1A385F110023C94E /* FlattenButtonViewInterop.mm in Sources */,
 				7E3B891A1A385A290023C94E /* PoiRingTouchController.cpp in Sources */,
 				7E3B8AE51A385F110023C94E /* ScaleHelpers.cpp in Sources */,
+				18B22B121A7A8B3400DDBFA2 /* OptionsViewModel.cpp in Sources */,
 				7E3B8ACD1A385F110023C94E /* AppInputDelegate.mm in Sources */,
 				7E3B8AD91A385F110023C94E /* FlattenButtonView.mm in Sources */,
 				7E3B88B61A385A290023C94E /* CategorySearchMenuOption.cpp in Sources */,
+				18096F611A7B8FEF006A6438 /* CacheEnabledChangedMessageHandler.cpp in Sources */,
 				7E3B88D61A385A290023C94E /* FlattenButtonModel.cpp in Sources */,
 				7E3B89CC1A385A290023C94E /* SearchResultPoiController.cpp in Sources */,
 				7E3B8B1D1A385F110023C94E /* SearchResultMenuView.mm in Sources */,
 				7E3B899A1A385A290023C94E /* SearchQueryRemovedMessage.cpp in Sources */,
+				18B44CF01A88D4B400FDFD8A /* CacheClearBackgroundTask.cpp in Sources */,
 				7E3B8B071A385F110023C94E /* MyPinCreationDetailsViewModule.mm in Sources */,
 				7E3B88B41A385A290023C94E /* CategorySearchSelectedMessageHandler.cpp in Sources */,
+				18096F501A7B7F48006A6438 /* CacheEnabledChangedMessage.cpp in Sources */,
+				18096F741A7BD4B1006A6438 /* PlatformAbstractionsFacade.cpp in Sources */,
 				7E3B89AA1A385A290023C94E /* SearchResultMenuItemSelectedMessage.cpp in Sources */,
 				7E3B89C61A385A290023C94E /* SearchResultOnMapIconCategoryMapper.cpp in Sources */,
 				7E3B89281A385A290023C94E /* MyPinCreationCompositeViewModel.cpp in Sources */,
@@ -3785,6 +4038,7 @@
 				7E3B88F21A385A290023C94E /* MenuOpenableControl.cpp in Sources */,
 				7E3B8B0D1A385F110023C94E /* MyPinCreationInitiationViewModule.mm in Sources */,
 				7E3B89D41A385A290023C94E /* PerformedSearchMessage.cpp in Sources */,
+				18096F581A7B8DC7006A6438 /* OptionsModule.cpp in Sources */,
 				7E3B88DE1A385A290023C94E /* FlattenButtonController.cpp in Sources */,
 				7E3B8AF31A385F110023C94E /* CustomTableViewCell.mm in Sources */,
 				7E3B8B1F1A385F110023C94E /* SearchResultMenuViewModule.mm in Sources */,
@@ -3801,6 +4055,7 @@
 				7E3B891E1A385A290023C94E /* MyPinCreationModel.cpp in Sources */,
 				7E3B89DE1A385A290023C94E /* ViewControllerUpdaterModule.cpp in Sources */,
 				7E3B894E1A385A290023C94E /* MyPinAddedToMenuMessage.cpp in Sources */,
+				18B22B371A7A937D00DDBFA2 /* OptionsView.mm in Sources */,
 				7E3B892E1A385A290023C94E /* MyPinCreationConfirmationViewModel.cpp in Sources */,
 				7E3B8AEB1A385F110023C94E /* iOSInitialExperiencePreLoadModel.mm in Sources */,
 				7E3B89121A385A290023C94E /* MyPinCreationViewStateChangedMessage.cpp in Sources */,
@@ -3810,6 +4065,7 @@
 				7E3B88FE1A385A290023C94E /* MobileExampleApp.cpp in Sources */,
 				7E3B8B2D1A385F110023C94E /* ViewController.mm in Sources */,
 				7E3B89D01A385A290023C94E /* SearchResultPoiOpenableControl.cpp in Sources */,
+				18B22B101A7A8B3400DDBFA2 /* OptionsOpenableControl.cpp in Sources */,
 				7E3B89921A385A290023C94E /* SearchQueryPerformer.cpp in Sources */,
 				7E3B89AC1A385A290023C94E /* SearchResultRemovedMessage.cpp in Sources */,
 				7E3B89261A385A290023C94E /* MyPinCreationViewStateChangedHandler.cpp in Sources */,
@@ -3850,6 +4106,7 @@
 				7E3B897A1A385A290023C94E /* PrimaryMenuModule.cpp in Sources */,
 				7E3B89F61A385A290023C94E /* WorldPinsInFocusController.cpp in Sources */,
 				7E3B89E81A385A290023C94E /* WeatherMenuStateOption.cpp in Sources */,
+				18096F841A7F90A1006A6438 /* ExampleAppCustomWebLoadRequestFactory.cpp in Sources */,
 				7E3B88CC1A385A290023C94E /* CompassController.cpp in Sources */,
 				7E3B899C1A385A290023C94E /* SearchQueryResponseReceivedMessage.cpp in Sources */,
 				7E3B89941A385A290023C94E /* SearchRefreshService.cpp in Sources */,
@@ -3865,6 +4122,7 @@
 				7E3B89A61A385A290023C94E /* SearchResultViewClearedObserver.cpp in Sources */,
 				7E3B89901A385A290023C94E /* SearchQueryObserver.cpp in Sources */,
 				7E3B89E41A385A290023C94E /* WeatherMenuStateModel.cpp in Sources */,
+				18096F911A7FA703006A6438 /* NetworkCapabilities.cpp in Sources */,
 				7E3B8AF51A385F110023C94E /* MenuView.mm in Sources */,
 				7E3B8ACB1A385F110023C94E /* AppHost.mm in Sources */,
 				7E3B89761A385A290023C94E /* PlaceJumpsModel.cpp in Sources */,
@@ -3885,7 +4143,9 @@
 				7E3B8ADF1A385F110023C94E /* GlDisplayService.mm in Sources */,
 				7E3B89061A385A290023C94E /* ModalityController.cpp in Sources */,
 				7E3B89DC1A385A290023C94E /* ViewControllerUpdaterModel.cpp in Sources */,
+				18B44CE71A83C77800FDFD8A /* ClearCacheMessageHandler.mm in Sources */,
 				7E3B89F21A385A290023C94E /* WorldPinItemModel.cpp in Sources */,
+				18B22B351A7A937D00DDBFA2 /* OptionsViewModule.mm in Sources */,
 				7E3B88EA1A385A290023C94E /* InitialExperienceModel.cpp in Sources */,
 				7E3B89381A385A290023C94E /* MyPinCreationDetailsModule.cpp in Sources */,
 				7E3B89801A385A290023C94E /* ReactionModel.cpp in Sources */,
@@ -3911,6 +4171,8 @@
 				7E3B89C41A385A290023C94E /* SearchResultOnMapFactory.cpp in Sources */,
 				7E3B890A1A385A290023C94E /* ModalityModule.cpp in Sources */,
 				7E3B88A81A385A290023C94E /* AboutPageModule.cpp in Sources */,
+				18B44CEB1A83D3CF00FDFD8A /* OptionsCacheClearSubView.mm in Sources */,
+				18096F531A7B7F56006A6438 /* ClearCacheMessage.cpp in Sources */,
 				7E3B89A81A385A290023C94E /* SearchResultAddedMessage.cpp in Sources */,
 				7E3B89141A385A290023C94E /* PoiRingController.cpp in Sources */,
 				7E3B895A1A385A290023C94E /* MyPinSelectionHandlerFactory.cpp in Sources */,
@@ -3918,7 +4180,9 @@
 				7E3B89CA1A385A290023C94E /* SearchResultOnMapItemModelSelectedObserver.cpp in Sources */,
 				7E3B8B0F1A385F110023C94E /* MyPinDetailsView.mm in Sources */,
 				7E3B88CA1A385A290023C94E /* CompassViewCycledObserver.cpp in Sources */,
+				18B22B331A7A937D00DDBFA2 /* OptionsViewInterop.mm in Sources */,
 				7E3B895E1A385A290023C94E /* MyPinsModule.cpp in Sources */,
+				18096F5D1A7B8FE2006A6438 /* StreamOverWifiOnlyChangedMessageHandler.cpp in Sources */,
 				7E3B89001A385A290023C94E /* ModalityChangedMessage.cpp in Sources */,
 				7E3B89A21A385A290023C94E /* SearchResultMenuItemSelectedMessageHandler.cpp in Sources */,
 				7E3B892A1A385A290023C94E /* MyPinCreationConfirmationController.cpp in Sources */,

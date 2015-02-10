@@ -2,6 +2,11 @@
 <resources>
     <string name="about_page_title">About this app...</string>
     
+    <string name="options_title">Options</string>
+    <string name="options_view_stream_wifi_only_togglebutton_text">Stream over Wi-fi only</string>
+    <string name="options_view_cache_enabled_togglebutton_text">Enable data caching on device</string>
+    <string name="options_view_clear_cache_button_text">Clear cached map data</string>
+    
     <string name="header_address">Address</string>
     <string name="header_phone">Phone</string>
     <string name="header_web">Web</string>

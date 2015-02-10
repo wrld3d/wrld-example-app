@@ -47,6 +47,7 @@
 #include "GpsMarkerModule.h"
 #include "IGpsMarkerController.h"
 #include "ApiKey.h"
+#include "INetworkCapabilities.h"
 
 namespace ExampleApp
 {
@@ -88,12 +89,13 @@ namespace ExampleApp
         Eegeo::Helpers::Jpeg::IJpegLoader& jpegLoader,
         ExampleApp::InitialExperience::SdkModel::IInitialExperienceModule& initialExperienceModule,
         ExampleApp::PersistentSettings::IPersistentSettingsModel& persistentSettings,
-        ExampleAppMessaging::TMessageBus& messageBus)
+        ExampleAppMessaging::TMessageBus& messageBus,
+        Net::SdkModel::INetworkCapabilities& networkCapabilities)
         : m_pGlobeCameraController(NULL)
         , m_pCameraTouchController(NULL)
         , m_pNavigationService(NULL)
         , m_pWorld(NULL)
-        , m_platformAbstractions(platformAbstractions)
+        , m_platformAbstractions(platformAbstractions, networkCapabilities)
         , m_pLoadingScreen(NULL)
         , m_pinDiameter(50.f)
         , m_initialisedApplicationViewState(false)
@@ -127,9 +129,10 @@ namespace ExampleApp
         , m_pMyPinCreationDetailsModule(NULL)
         , m_pMyPinsModule(NULL)
         , m_pMyPinDetailsModule(NULL)
+        , m_pOptionsModule(NULL)
         , m_screenProperties(screenProperties)
+        , m_networkCapabilities(networkCapabilities)
     {
-
         m_pBlitter = Eegeo_NEW(Eegeo::Blitter)(1024 * 128, 1024 * 64, 1024 * 32);
         m_pBlitter->Initialise();
 
@@ -211,7 +214,7 @@ namespace ExampleApp
         Eegeo_DELETE m_pLoadingScreen;
 
         Eegeo_DELETE m_pWorld;
-
+        
         m_pBlitter->Shutdown();
         Eegeo_DELETE m_pBlitter;
         m_pBlitter = NULL;
@@ -224,7 +227,12 @@ namespace ExampleApp
         m_pReactionControllerModule = Eegeo_NEW(Reaction::View::ReactionControllerModule)();
 
         m_pAboutPageModule = Eegeo_NEW(ExampleApp::AboutPage::View::AboutPageModule)(m_identityProvider,
-                             m_pReactionControllerModule->GetReactionControllerModel());
+                                                                                     m_pReactionControllerModule->GetReactionControllerModel());
+        
+        m_pOptionsModule = Eegeo_NEW(ExampleApp::Options::OptionsModule)(m_identityProvider,
+                                                                         m_pReactionControllerModule->GetReactionControllerModel(),
+                                                                         m_messageBus,
+                                                                         m_networkCapabilities);
 
         m_pSearchModule = Eegeo_NEW(Search::SdkModel::SearchModule)(DecartaApiKey,
                           m_platformAbstractions.GetWebLoadRequestFactory(),
@@ -250,10 +258,11 @@ namespace ExampleApp
                                cityThemesModule.GetCityThemesService(),
                                cityThemesModule.GetCityThemesUpdater(),
                                m_messageBus);
-
+        
         m_pPrimaryMenuModule = Eegeo_NEW(ExampleApp::PrimaryMenu::View::PrimaryMenuModule)(m_identityProvider,
-                               AboutPageModule().GetAboutPageViewModel(),
-                               m_pReactionControllerModule->GetReactionControllerModel());
+                                                                                           AboutPageModule().GetAboutPageViewModel(),
+                                                                                           OptionsModule().GetOptionsViewModel(),
+                                                                                           m_pReactionControllerModule->GetReactionControllerModel());
 
         m_pSecondaryMenuModule = Eegeo_NEW(ExampleApp::SecondaryMenu::SdkModel::SecondaryMenuModule)(m_identityProvider,
                                  m_pReactionControllerModule->GetReactionControllerModel(),
@@ -397,6 +406,8 @@ namespace ExampleApp
 
         Eegeo_DELETE m_pSearchModule;
 
+        Eegeo_DELETE m_pOptionsModule;
+        
         Eegeo_DELETE m_pAboutPageModule;
 
         Eegeo_DELETE m_pReactionControllerModule;
@@ -413,6 +424,7 @@ namespace ExampleApp
         openables.push_back(&MyPinCreationDetailsModule().GetObservableOpenableControl());
         openables.push_back(&MyPinDetailsModule().GetObservableOpenableControl());
         openables.push_back(&MyPinCreationModule().GetObservableOpenableControl());
+        openables.push_back(&OptionsModule().GetObservableOpenableControl());
         return openables;
     }
 

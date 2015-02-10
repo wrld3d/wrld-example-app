@@ -56,6 +56,9 @@
 #include "IMyPinsModule.h"
 #include "ApiKey.h"
 #include "ModalBackgroundViewModule.h"
+#include "OptionsViewModule.h"
+#include "OptionsView.h"
+#include "NetworkCapabilities.h"
 
 using namespace Eegeo::iOS;
 
@@ -92,7 +95,12 @@ AppHost::AppHost(
     platformConfig.OptionsConfig.StartMapModuleAutomatically = false;
 
     m_pInitialExperienceModule = Eegeo_NEW(ExampleApp::InitialExperience::iOSInitialExperienceModule)(m_iOSPersistentSettingsModel);
-
+    
+    const bool initiallyOnlyStreamOverWifi = false;
+    m_pNetworkCapabilities = Eegeo_NEW(ExampleApp::Net::SdkModel::NetworkCapabilities)(*m_piOSConnectivityService,
+                                                                                       m_piOSPlatformAbstractionModule->GetHttpCache(),
+                                                                                       initiallyOnlyStreamOverWifi);
+    
     m_pApp = Eegeo_NEW(ExampleApp::MobileExampleApp)(ExampleApp::ApiKey,
              *m_piOSPlatformAbstractionModule,
              screenProperties,
@@ -102,7 +110,8 @@ AppHost::AppHost(
              *m_pJpegLoader,
              *m_pInitialExperienceModule,
              m_iOSPersistentSettingsModel,
-             m_messageBus);
+             m_messageBus,
+             *m_pNetworkCapabilities);
 
     CreateApplicationViewModules(screenProperties);
 
@@ -122,6 +131,9 @@ AppHost::~AppHost()
 
     Eegeo_DELETE m_pApp;
     m_pApp = NULL;
+    
+    Eegeo_DELETE m_pNetworkCapabilities;
+    m_pNetworkCapabilities = NULL;
 
     Eegeo_DELETE m_pInitialExperienceModule;
     m_pInitialExperienceModule = NULL;
@@ -232,6 +244,11 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
                            m_messageBus);
 
     m_pAboutPageViewModule = Eegeo_NEW(ExampleApp::AboutPage::View::AboutPageViewModule)(app.AboutPageModule().GetAboutPageViewModel());
+    
+    m_pOptionsViewModule = Eegeo_NEW(ExampleApp::Options::View::OptionsViewModule)(app.OptionsModule().GetOptionsViewModel(),
+                                                                                   m_piOSPlatformAbstractionModule->GetiOSHttpCache(),
+                                                                                   m_messageBus,
+                                                                                   app.World().GetWorkPool());
 
     m_pMyPinCreationInitiationViewModule = Eegeo_NEW(ExampleApp::MyPinCreation::View::MyPinCreationInitiationViewModule)(m_messageBus,
                                            app.MyPinCreationModule().GetMyPinCreationInitiationViewModel(),
@@ -275,6 +292,7 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
     // Pop-up layer.
     [m_pView addSubview: &m_pSearchResultPoiViewModule->GetView()];
     [m_pView addSubview: &m_pAboutPageViewModule->GetAboutPageView()];
+    [m_pView addSubview: &m_pOptionsViewModule->GetOptionsView()];
     [m_pView addSubview: &m_pMyPinCreationDetailsViewModule->GetMyPinCreationDetailsView()];
     [m_pView addSubview: &m_pMyPinDetailsViewModule->GetMyPinDetailsView()];
 
@@ -310,6 +328,7 @@ void AppHost::DestroyApplicationViewModules()
     [&m_pMyPinCreationDetailsViewModule->GetMyPinCreationDetailsView() removeFromSuperview];
     [&m_pSearchResultPoiViewModule->GetView() removeFromSuperview];
     [&m_pAboutPageViewModule->GetAboutPageView() removeFromSuperview];
+    [&m_pOptionsViewModule->GetOptionsView() removeFromSuperview];
 
     Eegeo_DELETE m_pViewControllerUpdaterModule;
 
@@ -320,7 +339,9 @@ void AppHost::DestroyApplicationViewModules()
     Eegeo_DELETE m_pMyPinCreationConfirmationViewModule;
 
     Eegeo_DELETE m_pViewControllerUpdaterModule;
-
+    
+    Eegeo_DELETE m_pOptionsViewModule;
+    
     Eegeo_DELETE m_pAboutPageViewModule;
 
     Eegeo_DELETE m_pCompassViewModule;

@@ -44,6 +44,8 @@
 #include "MyPinDetailsViewIncludes.h"
 #include "BidirectionalBus.h"
 #include "AndroidConnectivityService.h"
+#include "OptionsViewIncludes.h"
+#include "NetIncludes.h"
 
 class AppHost : protected Eegeo::NonCopyable
 {
@@ -113,6 +115,8 @@ private:
     ExampleApp::MyPinCreation::View::IMyPinCreationViewModule* m_pMyPinCreationViewModule;
     ExampleApp::MyPinCreationDetails::View::IMyPinCreationDetailsViewModule* m_pMyPinCreationDetailsViewModule;
     ExampleApp::MyPinDetails::View::IMyPinDetailsViewModule* m_pMyPinDetailsViewModule;
+    ExampleApp::Options::View::IOptionsViewModule* m_pOptionsViewModule;
+    ExampleApp::Net::SdkModel::INetworkCapabilities* m_pNetworkCapabilities;
 
     ExampleApp::MobileExampleApp* m_pApp;
 

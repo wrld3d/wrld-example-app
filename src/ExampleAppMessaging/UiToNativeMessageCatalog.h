@@ -19,6 +19,9 @@
 #include "MyPinSelectedMessage.h"
 #include "WorldPinsVisibilityMessage.h"
 #include "UpdateNativeModalBackgroundMessage.h"
+#include "StreamOverWifiOnlyChangedMessage.h"
+#include "CacheEnabledChangedMessage.h"
+#include "ClearCacheMessage.h"
 #include "GpsMarkerVisibilityMessage.h"
 
 namespace ExampleApp
@@ -41,6 +44,9 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<MyPinDetails::MyPinDetailsViewRemovePinMessage>
             , public Eegeo::Messaging::CatalogBinding<MyPins::MyPinSelectedMessage>
             , public Eegeo::Messaging::CatalogBinding<WorldPins::WorldPinsVisibilityMessage>
+            , public Eegeo::Messaging::CatalogBinding<Options::StreamOverWifiOnlyChangedMessage>
+            , public Eegeo::Messaging::CatalogBinding<Options::CacheEnabledChangedMessage>
+            , public Eegeo::Messaging::CatalogBinding<Options::ClearCacheMessage>
             , public Eegeo::Messaging::CatalogBinding<GpsMarker::GpsMarkerVisibilityMessage>
             , private Eegeo::NonCopyable
         {
