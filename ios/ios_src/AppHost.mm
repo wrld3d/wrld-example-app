@@ -96,10 +96,9 @@ AppHost::AppHost(
 
     m_pInitialExperienceModule = Eegeo_NEW(ExampleApp::InitialExperience::iOSInitialExperienceModule)(m_iOSPersistentSettingsModel);
     
-    const bool initiallyOnlyStreamOverWifi = false;
     m_pNetworkCapabilities = Eegeo_NEW(ExampleApp::Net::SdkModel::NetworkCapabilities)(*m_piOSConnectivityService,
                                                                                        m_piOSPlatformAbstractionModule->GetHttpCache(),
-                                                                                       initiallyOnlyStreamOverWifi);
+                                                                                       m_iOSPersistentSettingsModel);
     
     m_pApp = Eegeo_NEW(ExampleApp::MobileExampleApp)(ExampleApp::ApiKey,
              *m_piOSPlatformAbstractionModule,

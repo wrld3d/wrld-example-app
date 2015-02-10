@@ -151,11 +151,10 @@ AppHost::AppHost(
                                      m_androidPersistentSettingsModel
                                  );
 
-    const bool initiallyOnlyStreamOverWifi = false;
     m_pNetworkCapabilities = Eegeo_NEW(ExampleApp::Net::SdkModel::NetworkCapabilities)(
     		*m_pAndroidConnectivityService,
     		m_pAndroidPlatformAbstractionModule->GetHttpCache(),
-    		initiallyOnlyStreamOverWifi);
+    		m_androidPersistentSettingsModel);
 
     m_pApp = Eegeo_NEW(ExampleApp::MobileExampleApp)(
                  ExampleApp::ApiKey,

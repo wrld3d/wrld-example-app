@@ -6,6 +6,7 @@
 #include "INetworkCapabilities.h"
 #include "IConnectivityService.h"
 #include "IHttpCache.h"
+#include "PersistentSettings.h"
 
 namespace ExampleApp
 {
@@ -17,12 +18,13 @@ namespace ExampleApp
             {
                 Eegeo::Web::IConnectivityService& m_connectivityService;
                 Eegeo::Helpers::IHttpCache& m_httpCache;
+                PersistentSettings::IPersistentSettingsModel& m_persistentSettings;
                 bool m_streamOverWifiOnly;
                 
             public:
                 NetworkCapabilities(Eegeo::Web::IConnectivityService& connectivityService,
                                     Eegeo::Helpers::IHttpCache& httpCache,
-                                    bool streamOverWifiOnly);
+                                    PersistentSettings::IPersistentSettingsModel& persistentSettings);
                 
                 bool StreamOverWifiOnly() const;
                 
