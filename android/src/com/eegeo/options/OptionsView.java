@@ -90,7 +90,9 @@ public class OptionsView
     {
         View.OnClickListener streamOverWifiClickListener = new View.OnClickListener() {
 			public void onClick(View arg0) {
-				m_streamOverWifiButton.setChecked(!m_streamOverWifiButton.isChecked());
+				if(!(arg0 instanceof ToggleButton)) {
+					m_streamOverWifiButton.setChecked(!m_streamOverWifiButton.isChecked());
+				}
 				OptionsViewJniMethods.StreamOverWifiToggled(m_nativeCallerPointer);
 			}
         };
@@ -105,7 +107,9 @@ public class OptionsView
     {
         View.OnClickListener dataCachingButtonClickListener = new View.OnClickListener() {
 			public void onClick(View arg0) {
-				m_dataCachingButton.setChecked(!m_dataCachingButton.isChecked());
+				if(!(arg0 instanceof ToggleButton)) {
+					m_dataCachingButton.setChecked(!m_dataCachingButton.isChecked());
+				}
 				OptionsViewJniMethods.CachingEnabledToggled(m_nativeCallerPointer);
 			}
 		};
