@@ -97,7 +97,7 @@
 		                     android:layout_gravity="center_vertical"
 		                     android:gravity="center_vertical"
 		                     android:text="@string/options_view_stream_wifi_only_togglebutton_text"
-		                     android:textColor="@color/black"
+		                     android:textColor="@color/darkgrey"
 		                     android:textSize="14dp" />
 	            	</LinearLayout>
 	            	
@@ -126,7 +126,7 @@
 							android:layout_gravity="center_vertical"
 							android:gravity="center_vertical"
 							android:text="@string/options_view_cache_enabled_togglebutton_text"
-							android:textColor="@color/black"
+							android:textColor="@color/darkgrey"
 							android:textSize="14dp" />
 	            	</LinearLayout>
 	            	
@@ -152,7 +152,7 @@
 							android:layout_gravity="center_vertical"
 							android:gravity="center_vertical"
 							android:text="@string/options_view_clear_cache_button_text"
-							android:textColor="@color/black"
+							android:textColor="@color/darkgrey"
 							android:textSize="14dp" />
 	            	</LinearLayout>
 	              
