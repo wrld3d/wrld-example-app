@@ -48,12 +48,16 @@
                 android:textSize="18dp" />
             
         </RelativeLayout>
-
+        
         <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="195dp"
-            android:background="@color/white">
+            android:layout_height="195dp">
             
+	        <RelativeLayout
+	            android:layout_width="fill_parent"
+	            android:layout_height="195dp"
+	            android:background="@color/white"/>
+        
             <RelativeLayout
                 android:layout_width="fill_parent"
                 android:layout_height="10dp"
