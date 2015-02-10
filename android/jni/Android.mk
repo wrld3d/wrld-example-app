@@ -8,15 +8,15 @@ include $(PREBUILT_STATIC_LIBRARY)
 include $(CLEAR_VARS)
 
 LOCAL_MODULE := native-activity
-LOCAL_LDLIBS    := -llog -landroid -lEGL -lGLESv2 -L./libs/ -lpng -lz -lm -L./libs/ -lcrypto -L./libs/ -lssl -L./libs/ -lcurl -L./libs/ -lcares -L./libs/ -lsimd -L./libs/ -lmyjpeg -L./libs/ -lhttpxx-lib
-LOCAL_STATIC_LIBRARIES := android_native_app_glue native-activity-lib 
+LOCAL_LDLIBS    := -llog -landroid -lEGL -lGLESv2 -L./libs/ -lpng -lz -lm -lcrypto -lssl -lcurl -lcares -lsimd -lmyjpeg -lhttpxx-lib
+LOCAL_LDLIBS += -fuse-ld=bfd
+LOCAL_STATIC_LIBRARIES := native-activity-lib 
 
 LOCAL_CFLAGS += -march=armv6 -marm -mfloat-abi=softfp -mfpu=vfp
 LOCAL_CFLAGS += -Wall -Wno-unknown-pragmas -Wno-sign-compare -Wno-format-security -Wno-reorder
 #LOCAL_CFLAGS += -Werror
 
 ifdef COMPILE_CPP_11
-  LOCAL_LDLIBS += -fuse-ld=bfd
   LOCAL_CPPFLAGS += -DCOMPILE_CPP_11=1 -std=c++11
 endif
 
