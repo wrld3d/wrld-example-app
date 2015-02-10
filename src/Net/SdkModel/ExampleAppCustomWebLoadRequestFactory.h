@@ -75,7 +75,7 @@ namespace ExampleApp
                     std::string m_url;
                     bool m_post;
                     TResourceData m_empty;
-                    void* m_userData;
+                    void* m_pUserData;
                     Eegeo::Web::IWebLoadRequestCompletionCallback& m_callback;
                     bool m_cancelled;
                     
@@ -88,7 +88,7 @@ namespace ExampleApp
                     ,m_url(url)
                     ,m_post(post)
                     ,m_callback(callback)
-                    ,m_userData(userData)
+                    ,m_pUserData(userData)
                     ,m_cancelled(false)
                     {
                         
