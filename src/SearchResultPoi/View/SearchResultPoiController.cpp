@@ -34,7 +34,7 @@ namespace ExampleApp
             SearchResultPoiController::~SearchResultPoiController()
             {
                 m_viewModel.RemoveClosedCallback(m_viewClosedCallback);
-                m_viewModel.RemoveClosedCallback(m_viewOpenedCallback);
+                m_viewModel.RemoveOpenedCallback(m_viewOpenedCallback);
                 m_view.RemoveClosedCallback(m_closeButtonCallback);
             }
 

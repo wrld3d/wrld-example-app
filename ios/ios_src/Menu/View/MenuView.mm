@@ -79,7 +79,6 @@
 - (void)dealloc
 {
     Eegeo_DELETE m_pInterop;
-    [m_pDataProvider release];
     [super dealloc];
 }
 

@@ -14,7 +14,7 @@ namespace ExampleApp
             class IMyPinCreationDetailsModule
             {
             public:
-                ~IMyPinCreationDetailsModule() { }
+                virtual ~IMyPinCreationDetailsModule() { }
 
                 virtual IMyPinCreationDetailsViewModel& GetMyPinCreationDetailsViewModel() const = 0;
 

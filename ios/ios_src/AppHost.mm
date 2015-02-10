@@ -336,8 +336,6 @@ void AppHost::DestroyApplicationViewModules()
     Eegeo_DELETE m_pMyPinCreationDetailsViewModule;
 
     Eegeo_DELETE m_pMyPinCreationConfirmationViewModule;
-
-    Eegeo_DELETE m_pViewControllerUpdaterModule;
     
     Eegeo_DELETE m_pOptionsViewModule;
     

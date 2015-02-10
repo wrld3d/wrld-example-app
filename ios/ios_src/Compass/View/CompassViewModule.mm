@@ -17,18 +17,18 @@ namespace ExampleApp
                                                  ExampleAppMessaging::TMessageBus& messageBus)
             {
 
-                m_pView = [[[CompassView alloc] initWithParams
+                m_pView = [[CompassView alloc] initWithParams
                             :screenProperties.GetScreenWidth()
                             :screenProperties.GetScreenHeight()
-                            :screenProperties.GetPixelScale()] autorelease];
+                            :screenProperties.GetPixelScale()];
 
                 m_pController = Eegeo_NEW(CompassController)(*[m_pView getInterop], viewModel, messageBus);
             }
 
             CompassViewModule::~CompassViewModule()
             {
-                [m_pView release];
                 Eegeo_DELETE m_pController;
+                [m_pView release];
             }
 
             CompassController& CompassViewModule::GetCompassController() const

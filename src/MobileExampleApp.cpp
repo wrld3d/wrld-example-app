@@ -193,7 +193,7 @@ namespace ExampleApp
         m_pCameraTransitionController = Eegeo_NEW(ExampleApp::CameraTransitions::SdkModel::CameraTransitionController)(*m_pGlobeCameraController, *m_pNavigationService, terrainModelModule.GetTerrainHeightProvider());
 
         CreateApplicationModelModules();
-
+        
         m_pLoadingScreen = CreateLoadingScreen(screenProperties, m_pWorld->GetRenderingModule(), m_pWorld->GetPlatformAbstractionModule());
 
         m_pStreamingVolume = Eegeo_NEW(Eegeo::Streaming::CameraFrustumStreamingVolume)(mapModule.GetResourceCeilingProvider(),
@@ -362,23 +362,25 @@ namespace ExampleApp
 
     void MobileExampleApp::DestroyApplicationModelModules()
     {
+        m_initialExperienceModule.TearDown();
+        
+        Eegeo_DELETE m_pWorldAreaLoaderModule;
+        
+        Eegeo_DELETE m_pReactionModelModule;
+        
+        Eegeo_DELETE m_pModalityModule;
+        
         Eegeo_DELETE m_pMyPinDetailsModule;
-
-        Eegeo_DELETE m_pMyPinCreationModule;
-
+        
+        Eegeo_DELETE m_pMyPinCreationDetailsModule;
+        
         Eegeo_DELETE m_pPoiRingModule;
+        
+        Eegeo_DELETE m_pMyPinCreationModule;
 
         Eegeo_DELETE m_pMyPinsModule;
 
-        m_initialExperienceModule.TearDown();
-
-        Eegeo_DELETE m_pWorldAreaLoaderModule;
-
-        Eegeo_DELETE m_pReactionModelModule;
-
         Eegeo_DELETE m_pSearchResultMenuModule;
-
-        Eegeo_DELETE m_pModalityModule;
 
         Eegeo_DELETE m_pSearchResultOnMapModule;
 
