@@ -34,6 +34,7 @@
 		186D2938196D9E4B00E004E0 /* FrankBold50_A8_icons.fnt in Resources */ = {isa = PBXBuildFile; fileRef = 18D1D344194A057200FAA1B9 /* FrankBold50_A8_icons.fnt */; };
 		189B246819F93547006DD887 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E016040D19EEC26E0029A035 /* Images.xcassets */; };
 		189B246919F9355A006DD887 /* SplashScreen.png in Resources */ = {isa = PBXBuildFile; fileRef = E0DD09F219EED4AF008BD39D /* SplashScreen.png */; };
+		18A1B0751A8A1EE1004C928E /* icon1_options.png in Resources */ = {isa = PBXBuildFile; fileRef = 18B22B391A7A9C7300DDBFA2 /* icon1_options.png */; };
 		18B22B0C1A7A8B3400DDBFA2 /* OptionsController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18B22B041A7A8B3400DDBFA2 /* OptionsController.cpp */; };
 		18B22B0D1A7A8B3400DDBFA2 /* OptionsController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18B22B041A7A8B3400DDBFA2 /* OptionsController.cpp */; };
 		18B22B101A7A8B3400DDBFA2 /* OptionsOpenableControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18B22B081A7A8B3400DDBFA2 /* OptionsOpenableControl.cpp */; };
@@ -3487,6 +3488,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18A1B0751A8A1EE1004C928E /* icon1_options.png in Resources */,
 				189B246919F9355A006DD887 /* SplashScreen.png in Resources */,
 				189B246819F93547006DD887 /* Images.xcassets in Resources */,
 				56A8DF7E19FEA977009DC352 /* Geosphere_01.pod in Resources */,
