@@ -105,7 +105,7 @@ namespace ExampleApp
                     virtual std::string HttpMethod() const { return m_post ? "POST" :"GET"; }
                     virtual int HttpStatusCode() const { return -1; };
                     virtual std::string GetUrl() const { return m_url; }
-                    virtual void* GetUserData() const { return m_userData; }
+                    virtual void* GetUserData() const { return m_pUserData; }
                     virtual const TResourceData& GetHeaderData() const { return m_empty; }
                     virtual const TResourceData& GetResourceData() const { return m_empty; }
                     virtual const TResourceData* TransferResourceDataOwnership() { return Eegeo_NEW(TResourceData); }
