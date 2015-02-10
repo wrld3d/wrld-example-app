@@ -184,7 +184,6 @@
                                             contentSectionHeight - messagePadding);
     
     self.pMessageContent.textAlignment = NSTextAlignmentCenter;
-    self.pMessageContent.contentMode = UIControlContentVerticalAlignmentCenter;
     self.pMessageContent.userInteractionEnabled = NO;
     self.pMessageContent.font = [UIFont systemFontOfSize:18.0f];
     
