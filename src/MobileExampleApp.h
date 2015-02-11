@@ -81,6 +81,7 @@ namespace ExampleApp
         Eegeo::Blitter* m_pBlitter;
         Eegeo::Rendering::ScreenProperties m_screenProperties;
         bool m_initialisedApplicationViewState;
+        bool m_setFlurryLocation;
         float m_pinDiameter;
 
         CameraTransitions::SdkModel::ICameraTransitionController* m_pCameraTransitionController;

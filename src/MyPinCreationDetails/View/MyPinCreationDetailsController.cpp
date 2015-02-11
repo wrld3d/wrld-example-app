@@ -5,6 +5,7 @@
 #include "IMyPinCreationDetailsViewModel.h"
 #include "MyPinCreationViewStateChangedMessage.h"
 #include "MyPinCreationViewSavePinMessage.h"
+#include "FlurryWrapper.h"
 #include <string>
 
 namespace ExampleApp
@@ -55,12 +56,14 @@ namespace ExampleApp
             {
                 if(m_viewModel.TryAcquireReactorControl())
                 {
+                    FLURRY_BEGIN_TIMED_EVENT("MyPinCreationDetailsDialogue");
                     m_view.Open();
                 }
             }
 
             void MyPinCreationDetailsController::OnClosed()
             {
+                FLURRY_END_TIMED_EVENT("MyPinCreationDetailsDialogue");
                 m_view.Close();
             }
 
@@ -81,6 +84,10 @@ namespace ExampleApp
                         shouldShare);
 
                 m_messageBus.Publish(message);
+
+                FLURRY_SET_EVENT("MyPinCreationDetails: Confirmed",
+                				 "Image", imageDataBytes ? "yes" : "no",
+                				 "Shared", shouldShare ? "yes" : "no");
             }
 
             void MyPinCreationDetailsController::OnDismissed()

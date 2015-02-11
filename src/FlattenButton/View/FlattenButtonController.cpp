@@ -1,6 +1,7 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "FlattenButtonController.h"
+#include "FlurryWrapper.h"
 
 namespace ExampleApp
 {
@@ -10,6 +11,7 @@ namespace ExampleApp
         {
             void FlattenButtonController::OnToggleButton(bool& toggle)
             {
+                FLURRY_SET_EVENT("UIItem: Flatten Button", "State", toggle ? "flattened" : "unflattened");
                 m_messageBus.Publish(FlattenButtonViewStateChangedMessage(toggle));
             }
 

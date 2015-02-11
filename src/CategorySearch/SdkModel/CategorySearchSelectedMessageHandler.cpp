@@ -1,6 +1,7 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "CategorySearchSelectedMessageHandler.h"
+#include "FlurryWrapper.h"
 
 namespace ExampleApp
 {
@@ -10,6 +11,7 @@ namespace ExampleApp
         {
             void CategorySearchSelectedMessageHandler::OnCategorySearchSelectedMessage(const CategorySearchSelectedMessage& message)
             {
+                FLURRY_SET_EVENT("Category Search", "Category", message.Category().c_str());
                 m_searchQueryPerformer.PerformSearchQuery(message.Category(), true);
             }
 

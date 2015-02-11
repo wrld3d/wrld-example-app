@@ -48,6 +48,7 @@
 #include "IGpsMarkerController.h"
 #include "ApiKey.h"
 #include "INetworkCapabilities.h"
+#include "FlurryWrapper.h"
 
 namespace ExampleApp
 {
@@ -132,7 +133,10 @@ namespace ExampleApp
         , m_pOptionsModule(NULL)
         , m_screenProperties(screenProperties)
         , m_networkCapabilities(networkCapabilities)
+        , m_setFlurryLocation(false)
     {
+        FLURRY_BEGIN(FlurryApiKey.c_str(), EEGEO_PLATFORM_VERSION_NUMBER);
+
         m_pBlitter = Eegeo_NEW(Eegeo::Blitter)(1024 * 128, 1024 * 64, 1024 * 32);
         m_pBlitter->Initialise();
 
@@ -528,6 +532,17 @@ namespace ExampleApp
             CompassModule().GetCompassUpdateController().Update(dt);
             CompassModule().GetCompassUpdateController().Update(dt);
             m_pGpsMarkerModule->GetGpsMarkerController().Update(dt, renderCamera);
+            
+            if (!m_setFlurryLocation)
+            {
+                Eegeo::dv3 gpsLocation;
+                if(m_pNavigationService->TryGetGpsLocationOnTerrain(gpsLocation))
+                {
+                    Eegeo::Space::LatLong ll = Eegeo::Space::LatLong::FromECEF(gpsLocation);
+                    FLURRY_SET_POSITION(ll.GetLatitudeInDegrees(), ll.GetLongitudeInDegrees(), 0.f, 0.f);
+                    m_setFlurryLocation = true;
+                }
+            }
         }
 
         m_pNavigationService->Update(dt);

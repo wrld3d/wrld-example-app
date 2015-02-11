@@ -75,6 +75,7 @@
 #include "OptionsViewModule.h"
 #include "OptionsView.h"
 #include "NetworkCapabilities.h"
+#include "FlurryWrapper.h"
 
 using namespace Eegeo::Android;
 using namespace Eegeo::Android::Input;
@@ -116,6 +117,10 @@ AppHost::AppHost(
     ,m_pViewControllerUpdaterModule(NULL)
 {
     ASSERT_NATIVE_THREAD
+
+#if (FLURRY_ENABLED)
+    ExampleApp::FlurryWrapper::InitialiseJavaInterface(&nativeState);
+#endif
 
     Eegeo_ASSERT(resourceBuildShareContext != EGL_NO_CONTEXT);
 

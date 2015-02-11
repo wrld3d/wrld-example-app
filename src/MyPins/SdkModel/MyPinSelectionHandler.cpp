@@ -2,6 +2,7 @@
 
 #include "MyPinSelectionHandler.h"
 #include "MyPinDetailsModelSelectedMessage.h"
+#include "FlurryWrapper.h"
 
 namespace ExampleApp
 {
@@ -19,6 +20,7 @@ namespace ExampleApp
 
             void MyPinSelectionHandler::SelectPin()
             {
+                FLURRY_SET_EVENT("Selected MyPin", "Name", m_myPinModel.GetTitle().c_str());
                 m_messageBus.Publish(MyPinDetails::MyPinDetailsModelSelectedMessage(m_myPinModel));
             }
         }

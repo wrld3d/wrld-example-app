@@ -1,6 +1,7 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "WeatherMenuStateOption.h"
+#include "FlurryWrapper.h"
 
 namespace ExampleApp
 {
@@ -18,6 +19,7 @@ namespace ExampleApp
 
             void WeatherMenuStateOption::Select()
             {
+                FLURRY_SET_EVENT("UIItem: Weather", "Name", m_weatherStateModel.GetName().c_str());
                 m_messageBus.Publish(WeatherSelectedMessage(m_weatherStateModel));
             }
         }

@@ -24,6 +24,7 @@ namespace ExampleApp
                 GpsMode::Values m_gpsMode;
                 std::map<Eegeo::Location::NavigationService::GpsMode, GpsMode::Values> m_compassGpsModeToNavigationGpsMode;
                 std::map<GpsMode::Values, Eegeo::Location::NavigationService::GpsMode> m_navigationGpsModeToCompassGpsMode;
+                std::map<GpsMode::Values, const char*> m_gpsModeToString;
 
             public:
 

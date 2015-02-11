@@ -5,6 +5,7 @@
 #include "IMyPinCreationConfirmationView.h"
 #include "IMyPinCreationDetailsViewModel.h"
 #include "ApplyScreenControl.h"
+#include "FlurryWrapper.h"
 
 namespace ExampleApp
 {
@@ -43,6 +44,7 @@ namespace ExampleApp
 
             void MyPinCreationConfirmationController::OnConfirmed()
             {
+                FLURRY_SET_EVENT("PinCreationConfirmation: Confirmed");
                 m_viewModel.Close();
                 m_messageBus.Publish(ExampleApp::MyPinCreation::MyPinCreationViewStateChangedMessage(ExampleApp::MyPinCreation::Details));
                 m_viewModel.RemoveFromScreen();
@@ -51,6 +53,7 @@ namespace ExampleApp
 
             void MyPinCreationConfirmationController::OnDismissed()
             {
+                FLURRY_SET_EVENT("PinCreationConfirmation: Cancelled");
                 m_viewModel.Close();
                 m_messageBus.Publish(ExampleApp::MyPinCreation::MyPinCreationViewStateChangedMessage(ExampleApp::MyPinCreation::Inactive));
             }

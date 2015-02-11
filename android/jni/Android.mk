@@ -2,13 +2,13 @@ LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
 LOCAL_MODULE := native-activity-lib
-LOCAL_SRC_FILES := ./../libs/libnative-activity-lib.a
+LOCAL_SRC_FILES := ./../libs/eegeo/libnative-activity-lib.a
 include $(PREBUILT_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
 
 LOCAL_MODULE := native-activity
-LOCAL_LDLIBS    := -llog -landroid -lEGL -lGLESv2 -L./libs/ -lpng -lz -lm -lcrypto -lssl -lcurl -lcares -lsimd -lmyjpeg -lhttpxx-lib
+LOCAL_LDLIBS    := -llog -landroid -lEGL -lGLESv2 -L./libs/eegeo/ -lpng -lz -lm -lcrypto -lssl -lcurl -lcares -lsimd -lmyjpeg -lhttpxx-lib
 LOCAL_LDLIBS += -fuse-ld=bfd
 LOCAL_STATIC_LIBRARIES := native-activity-lib 
 
@@ -31,7 +31,7 @@ ifeq ($(os_name),Darwin)
 	shared_example_cpp_files := $(shell cd jni; find ./../../src/ -type f  -iname "*.cpp")
 	LOCAL_SRC_FILES += $(shared_example_cpp_files:$(LOCAL_PATH)/%=%)
 
-	platformincludes := $(shell find ./libs/platform -type d ! -path "*/OSX/*" ! -path "*/iOS/*")
+	platformincludes := $(shell find ./libs/eegeo/platform -type d ! -path "*/OSX/*" ! -path "*/iOS/*")
 	LOCAL_C_INCLUDES += $(platformincludes:$(LOCAL_PATH)/%=%)
 
 	exampleincludes := $(shell find ./libs/../../src -type d)
@@ -49,7 +49,7 @@ else
     shared_example_cpp_files := $(shell cd jni\..\..\src\ && dir /a-d /b /s *.cpp)
 	LOCAL_SRC_FILES += $(shared_example_cpp_files:$(LOCAL_PATH)/%=%)
 	
-	platformincludes := $(shell dir .\libs\platform /ad-h /s /b)
+	platformincludes := $(shell dir .\libs\eegeo\platform /ad-h /s /b)
 	LOCAL_C_INCLUDES += $(platformincludes:$(LOCAL_PATH)/%=%)
 	LOCAL_C_INCLUDES += ./libs/platform 
 
@@ -58,13 +58,13 @@ else
 	LOCAL_C_INCLUDES += .\libs\..\..\src
 endif 
 
-LOCAL_C_INCLUDES += ./libs/png
-LOCAL_C_INCLUDES += ./libs/curl 
-LOCAL_C_INCLUDES += ./libs/jpeg  
-LOCAL_C_INCLUDES += ./libs/httpxx/code
+LOCAL_C_INCLUDES += ./libs/eegeo/png
+LOCAL_C_INCLUDES += ./libs/eegeo/curl 
+LOCAL_C_INCLUDES += ./libs/eegeo/jpeg  
+LOCAL_C_INCLUDES += ./libs/eegeo/httpxx/code
 LOCAL_C_INCLUDES += ./../external/rapidjson/
 LOCAL_C_INCLUDES += ./../external/rapidjson/internal
-LOCAL_C_INCLUDES += ./libs/httpxx/libs/http-parser
+LOCAL_C_INCLUDES += ./libs/eegeo/httpxx/libs/http-parser
 
 include $(BUILD_SHARED_LIBRARY)
 

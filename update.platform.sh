@@ -34,11 +34,11 @@ fi
 
 if [ "$p" == "ios" ]; then
    srcPackageName="sdk.package.ios"
-   includeDestination="./ios/Include"
+   includeDestination="./ios/Include/eegeo"
    sdkDestination="sdk.package"
 elif [ "$p" == "android" ]; then
    srcPackageName="sdk.package.android"
-   includeDestination="./android/libs"
+   includeDestination="./android/libs/eegeo"
    sdkDestination="sdk.package.android"
 fi
 

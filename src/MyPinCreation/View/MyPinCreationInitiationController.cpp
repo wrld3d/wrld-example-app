@@ -7,6 +7,7 @@
 #include "ApplyScreenControl.h"
 #include "MyPinCreationViewStateChangedMessage.h"
 #include "MyPinCreationStage.h"
+#include "FlurryWrapper.h"
 
 namespace ExampleApp
 {
@@ -40,6 +41,7 @@ namespace ExampleApp
             {
                 if(m_confirmationViewModel.TryOpen())
                 {
+                    FLURRY_SET_EVENT("UIItem: MyPinCreation");
                     MyPinCreationViewStateChangedMessage message(ExampleApp::MyPinCreation::Ring);
                     m_messageBus.Publish(message);
                 }

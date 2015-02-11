@@ -29,6 +29,7 @@ iOS
 
 Android
 =======
+Note - In order to run, your version of Android Developer Tools must be >= 22.6
 
 * Install the Android SDK and NDK
 * Run ./update.platform.sh -p android to get the latest platform libraries and headers.
