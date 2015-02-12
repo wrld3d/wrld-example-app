@@ -35,6 +35,8 @@
 #include "BidirectionalBus.h"
 #include "MyPinDetailsViewIncludes.h"
 #include "iOSConnectivityService.h"
+#include "OptionsViewIncludes.h"
+#include "NetIncludes.h"
 
 @class ViewController;
 class AppInputDelegate;
@@ -91,6 +93,8 @@ private:
     ExampleApp::MyPinCreation::View::IMyPinCreationConfirmationViewModule* m_pMyPinCreationConfirmationViewModule;
     ExampleApp::MyPinCreationDetails::View::IMyPinCreationDetailsViewModule* m_pMyPinCreationDetailsViewModule;
     ExampleApp::MyPinDetails::View::IMyPinDetailsViewModule* m_pMyPinDetailsViewModule;
+    ExampleApp::Options::View::IOptionsViewModule* m_pOptionsViewModule;
+    ExampleApp::Net::SdkModel::INetworkCapabilities* m_pNetworkCapabilities;
 
     ExampleApp::MobileExampleApp* m_pApp;
     bool m_requestedApplicationInitialiseViewState;

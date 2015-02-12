@@ -48,6 +48,8 @@
 #include "IGpsMarkerController.h"
 #include "InitialExperienceDialogsModule.h"
 #include "ApiKey.h"
+#include "INetworkCapabilities.h"
+#include "FlurryWrapper.h"
 
 namespace ExampleApp
 {
@@ -89,12 +91,13 @@ namespace ExampleApp
         Eegeo::Helpers::Jpeg::IJpegLoader& jpegLoader,
         ExampleApp::InitialExperience::SdkModel::IInitialExperienceModule& initialExperienceModule,
         ExampleApp::PersistentSettings::IPersistentSettingsModel& persistentSettings,
-        ExampleAppMessaging::TMessageBus& messageBus)
+        ExampleAppMessaging::TMessageBus& messageBus,
+        Net::SdkModel::INetworkCapabilities& networkCapabilities)
         : m_pGlobeCameraController(NULL)
         , m_pCameraTouchController(NULL)
         , m_pNavigationService(NULL)
         , m_pWorld(NULL)
-        , m_platformAbstractions(platformAbstractions)
+        , m_platformAbstractions(platformAbstractions, networkCapabilities)
         , m_pLoadingScreen(NULL)
         , m_pinDiameter(50.f)
         , m_initialisedApplicationViewState(false)
@@ -129,8 +132,12 @@ namespace ExampleApp
         , m_pMyPinsModule(NULL)
         , m_pMyPinDetailsModule(NULL)
     	, m_pInitialExperienceDialogsModule(NULL)
+        , m_pOptionsModule(NULL)
         , m_screenProperties(screenProperties)
+        , m_networkCapabilities(networkCapabilities)
+        , m_setFlurryLocation(false)
     {
+        FLURRY_BEGIN(FlurryApiKey.c_str(), EEGEO_PLATFORM_VERSION_NUMBER);
 
         m_pBlitter = Eegeo_NEW(Eegeo::Blitter)(1024 * 128, 1024 * 64, 1024 * 32);
         m_pBlitter->Initialise();
@@ -192,7 +199,7 @@ namespace ExampleApp
         m_pCameraTransitionController = Eegeo_NEW(ExampleApp::CameraTransitions::SdkModel::CameraTransitionController)(*m_pGlobeCameraController, *m_pNavigationService, terrainModelModule.GetTerrainHeightProvider());
 
         CreateApplicationModelModules();
-
+        
         m_pLoadingScreen = CreateLoadingScreen(screenProperties, m_pWorld->GetRenderingModule(), m_pWorld->GetPlatformAbstractionModule());
 
         m_pStreamingVolume = Eegeo_NEW(Eegeo::Streaming::CameraFrustumStreamingVolume)(mapModule.GetResourceCeilingProvider(),
@@ -213,7 +220,7 @@ namespace ExampleApp
         Eegeo_DELETE m_pLoadingScreen;
 
         Eegeo_DELETE m_pWorld;
-
+        
         m_pBlitter->Shutdown();
         Eegeo_DELETE m_pBlitter;
         m_pBlitter = NULL;
@@ -226,7 +233,12 @@ namespace ExampleApp
         m_pReactionControllerModule = Eegeo_NEW(Reaction::View::ReactionControllerModule)();
 
         m_pAboutPageModule = Eegeo_NEW(ExampleApp::AboutPage::View::AboutPageModule)(m_identityProvider,
-                             m_pReactionControllerModule->GetReactionControllerModel());
+                                                                                     m_pReactionControllerModule->GetReactionControllerModel());
+        
+        m_pOptionsModule = Eegeo_NEW(ExampleApp::Options::OptionsModule)(m_identityProvider,
+                                                                         m_pReactionControllerModule->GetReactionControllerModel(),
+                                                                         m_messageBus,
+                                                                         m_networkCapabilities);
 
         m_pSearchModule = Eegeo_NEW(Search::SdkModel::SearchModule)(DecartaApiKey,
                           m_platformAbstractions.GetWebLoadRequestFactory(),
@@ -252,10 +264,11 @@ namespace ExampleApp
                                cityThemesModule.GetCityThemesService(),
                                cityThemesModule.GetCityThemesUpdater(),
                                m_messageBus);
-
+        
         m_pPrimaryMenuModule = Eegeo_NEW(ExampleApp::PrimaryMenu::View::PrimaryMenuModule)(m_identityProvider,
-                               AboutPageModule().GetAboutPageViewModel(),
-                               m_pReactionControllerModule->GetReactionControllerModel());
+                                                                                           AboutPageModule().GetAboutPageViewModel(),
+                                                                                           OptionsModule().GetOptionsViewModel(),
+                                                                                           m_pReactionControllerModule->GetReactionControllerModel());
 
         m_pSecondaryMenuModule = Eegeo_NEW(ExampleApp::SecondaryMenu::SdkModel::SecondaryMenuModule)(m_identityProvider,
                                  m_pReactionControllerModule->GetReactionControllerModel(),
@@ -359,23 +372,25 @@ namespace ExampleApp
     {
     	Eegeo_DELETE m_pInitialExperienceDialogsModule;
 
+        m_initialExperienceModule.TearDown();
+        
+        Eegeo_DELETE m_pWorldAreaLoaderModule;
+        
+        Eegeo_DELETE m_pReactionModelModule;
+        
+        Eegeo_DELETE m_pModalityModule;
+        
         Eegeo_DELETE m_pMyPinDetailsModule;
-
-        Eegeo_DELETE m_pMyPinCreationModule;
-
+        
+        Eegeo_DELETE m_pMyPinCreationDetailsModule;
+        
         Eegeo_DELETE m_pPoiRingModule;
+        
+        Eegeo_DELETE m_pMyPinCreationModule;
 
         Eegeo_DELETE m_pMyPinsModule;
 
-        m_initialExperienceModule.TearDown();
-
-        Eegeo_DELETE m_pWorldAreaLoaderModule;
-
-        Eegeo_DELETE m_pReactionModelModule;
-
         Eegeo_DELETE m_pSearchResultMenuModule;
-
-        Eegeo_DELETE m_pModalityModule;
 
         Eegeo_DELETE m_pSearchResultOnMapModule;
 
@@ -403,6 +418,8 @@ namespace ExampleApp
 
         Eegeo_DELETE m_pSearchModule;
 
+        Eegeo_DELETE m_pOptionsModule;
+        
         Eegeo_DELETE m_pAboutPageModule;
 
         Eegeo_DELETE m_pReactionControllerModule;
@@ -419,6 +436,7 @@ namespace ExampleApp
         openables.push_back(&MyPinCreationDetailsModule().GetObservableOpenableControl());
         openables.push_back(&MyPinDetailsModule().GetObservableOpenableControl());
         openables.push_back(&MyPinCreationModule().GetObservableOpenableControl());
+        openables.push_back(&OptionsModule().GetObservableOpenableControl());
         return openables;
     }
 
@@ -526,6 +544,17 @@ namespace ExampleApp
             {
                 InitialExperience::SdkModel::IInitialExperienceController& initialExperienceController = m_initialExperienceModule.GetInitialExperienceController();
                 initialExperienceController.Update(dt);
+            }
+  
+            if (!m_setFlurryLocation)
+            {
+                Eegeo::dv3 gpsLocation;
+                if(m_pNavigationService->TryGetGpsLocationOnTerrain(gpsLocation))
+                {
+                    Eegeo::Space::LatLong ll = Eegeo::Space::LatLong::FromECEF(gpsLocation);
+                    FLURRY_SET_POSITION(ll.GetLatitudeInDegrees(), ll.GetLongitudeInDegrees(), 0.f, 0.f);
+                    m_setFlurryLocation = true;
+                }
             }
         }
 

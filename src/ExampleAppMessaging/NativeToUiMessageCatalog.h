@@ -21,6 +21,7 @@
 #include "MyPinAddedToMenuMessage.h"
 #include "MyPinRemovedFromMenuMessage.h"
 #include "ShowInitialExperienceDialogMessage.h"
+#include "CompletedCacheClearMessage.h"
 
 namespace ExampleApp
 {
@@ -44,6 +45,7 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<MyPins::MyPinAddedToMenuMessage>
             , public Eegeo::Messaging::CatalogBinding<MyPins::MyPinRemovedFromMenuMessage>
         	, public Eegeo::Messaging::CatalogBinding<InitialExperience::Dialogs::ShowInitialExperienceDialogMessage>
+            , public Eegeo::Messaging::CatalogBinding<Options::CompletedCacheClearMessage>
             , private Eegeo::NonCopyable
         {
 

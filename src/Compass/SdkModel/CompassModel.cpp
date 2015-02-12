@@ -7,6 +7,7 @@
 #include "RenderCamera.h"
 #include "VectorMath.h"
 #include "NavigationService.h"
+#include "FlurryWrapper.h"
 
 namespace ExampleApp
 {
@@ -26,6 +27,10 @@ namespace ExampleApp
                 m_navigationGpsModeToCompassGpsMode[GpsMode::GpsDisabled] = Eegeo::Location::NavigationService::GpsModeOff;
                 m_navigationGpsModeToCompassGpsMode[GpsMode::GpsFollow] = Eegeo::Location::NavigationService::GpsModeFollow;
                 m_navigationGpsModeToCompassGpsMode[GpsMode::GpsCompassMode] = Eegeo::Location::NavigationService::GpsModeCompass;
+                
+                m_gpsModeToString[GpsMode::GpsDisabled] = "GpsDisabled";
+                m_gpsModeToString[GpsMode::GpsFollow] = "GpsFollow";
+                m_gpsModeToString[GpsMode::GpsCompassMode] = "GpsCompassMode";
             }
 
             CompassModel::~CompassModel()
@@ -79,6 +84,9 @@ namespace ExampleApp
             {
                 m_gpsMode = gpsMode;
                 m_navigationService.SetGpsMode(m_navigationGpsModeToCompassGpsMode[gpsMode]);
+                
+                FLURRY_SET_EVENT("SetGpsMode", "GpsMode", m_gpsModeToString[m_gpsMode]);
+            
                 m_gpsModeChangedCallbacks.ExecuteCallbacks();
             }
 

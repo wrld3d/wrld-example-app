@@ -88,10 +88,10 @@ namespace ExampleApp
 
                 std::string url = ss.str();
                 EXAMPLE_LOG("Search Request: %s\n", url.c_str());
+                
+                ExecuteQueryPerformedCallbacks(searchQuery);
 
                 IssueRequest(url, searchQuery);
-
-                ExecuteQueryPerformedCallbacks(searchQuery);
             }
 
             void DecartaSearchService::IssueRequest(const std::string queryUrl, const SdkModel::SearchQuery& query)

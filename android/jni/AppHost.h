@@ -45,6 +45,8 @@
 #include "BidirectionalBus.h"
 #include "AndroidConnectivityService.h"
 #include "InitialExperienceDialogsViewIncludes.h"
+#include "OptionsViewIncludes.h"
+#include "NetIncludes.h"
 
 class AppHost : protected Eegeo::NonCopyable
 {
@@ -115,6 +117,8 @@ private:
     ExampleApp::MyPinCreationDetails::View::IMyPinCreationDetailsViewModule* m_pMyPinCreationDetailsViewModule;
     ExampleApp::MyPinDetails::View::IMyPinDetailsViewModule* m_pMyPinDetailsViewModule;
     ExampleApp::InitialExperience::Dialogs::View::InitialExperienceDialogsViewModule* m_pInitialExperienceDialogsViewModule; // TODO: Interface.
+    ExampleApp::Options::View::IOptionsViewModule* m_pOptionsViewModule;
+    ExampleApp::Net::SdkModel::INetworkCapabilities* m_pNetworkCapabilities;
 
     ExampleApp::MobileExampleApp* m_pApp;
 

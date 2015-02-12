@@ -1,6 +1,7 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "SearchResultPoiController.h"
+#include "FlurryWrapper.h"
 
 namespace ExampleApp
 {
@@ -18,7 +19,14 @@ namespace ExampleApp
                     }
                     return;
                 }
-                m_view.Show(m_viewModel.GetSearchResultModel());
+                
+                const Search::SdkModel::SearchResultModel& searchResultModel = m_viewModel.GetSearchResultModel();
+                FLURRY_SET_EVENT("Opened POI",
+                                 "Title", searchResultModel.GetTitle().c_str(),
+                                 "Category", searchResultModel.GetCategory().c_str(),
+                                 "Vicinity", searchResultModel.GetVicinity().c_str());
+                
+                m_view.Show(searchResultModel);
             }
 
             void SearchResultPoiController::OnViewClosed()
@@ -34,7 +42,7 @@ namespace ExampleApp
             SearchResultPoiController::~SearchResultPoiController()
             {
                 m_viewModel.RemoveClosedCallback(m_viewClosedCallback);
-                m_viewModel.RemoveClosedCallback(m_viewOpenedCallback);
+                m_viewModel.RemoveOpenedCallback(m_viewOpenedCallback);
                 m_view.RemoveClosedCallback(m_closeButtonCallback);
             }
 

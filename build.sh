@@ -30,7 +30,7 @@ fi
 
 if [ $p == "ios" ]; then
     echo "Building iOS examples..."
-    rm -rf "./ios/Include"
+    rm -rf "./ios/Include/eegeo"
     rm -rf "./ios/build"
     ./update.platform.sh $allArguments
 
@@ -44,7 +44,7 @@ if [ $p == "ios" ]; then
     popd
 elif [ $p == "android" ]; then
     echo "Building Android examples..."
-    rm -rf "./android/libs"
+    rm -rf "./android/libs/eegeo"
     rm -rf "./android/obj"
     rm -rf "./android/bin"
     ./update.platform.sh $allArguments

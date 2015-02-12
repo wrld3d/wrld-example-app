@@ -74,6 +74,10 @@
 #include "IMyPinsModule.h"
 #include "IInitialExperienceDialogsModule.h"
 #include "ApiKey.h"
+#include "OptionsViewModule.h"
+#include "OptionsView.h"
+#include "NetworkCapabilities.h"
+#include "FlurryWrapper.h"
 
 using namespace Eegeo::Android;
 using namespace Eegeo::Android::Input;
@@ -117,6 +121,10 @@ AppHost::AppHost(
 {
     ASSERT_NATIVE_THREAD
 
+#if (FLURRY_ENABLED)
+    ExampleApp::FlurryWrapper::InitialiseJavaInterface(&nativeState);
+#endif
+
     Eegeo_ASSERT(resourceBuildShareContext != EGL_NO_CONTEXT);
 
     Eegeo::TtyHandler::TtyEnabled = true;
@@ -152,6 +160,11 @@ AppHost::AppHost(
                                      m_messageBus
                                  );
 
+    m_pNetworkCapabilities = Eegeo_NEW(ExampleApp::Net::SdkModel::NetworkCapabilities)(
+    		*m_pAndroidConnectivityService,
+    		m_pAndroidPlatformAbstractionModule->GetHttpCache(),
+    		m_androidPersistentSettingsModel);
+
     m_pApp = Eegeo_NEW(ExampleApp::MobileExampleApp)(
                  ExampleApp::ApiKey,
                  *m_pAndroidPlatformAbstractionModule,
@@ -162,7 +175,8 @@ AppHost::AppHost(
                  *m_pJpegLoader,
                  *m_pInitialExperienceModule,
                  m_androidPersistentSettingsModel,
-                 m_messageBus);
+                 m_messageBus,
+                 *m_pNetworkCapabilities);
 
     m_pModalBackgroundNativeViewModule = Eegeo_NEW(ExampleApp::ModalBackground::SdkModel::ModalBackgroundNativeViewModule)(
             m_pApp->World().GetRenderingModule(),
@@ -185,6 +199,15 @@ AppHost::~AppHost()
 
     Eegeo_DELETE m_pApp;
     m_pApp = NULL;
+
+    Eegeo_DELETE m_pNetworkCapabilities;
+    m_pNetworkCapabilities = NULL;
+
+    Eegeo_DELETE m_pInitialExperienceModule;
+    m_pInitialExperienceModule = NULL;
+
+    Eegeo_DELETE m_pInputProcessor;
+    m_pInputProcessor = NULL;
 
     Eegeo::EffectHandler::Reset();
     Eegeo::EffectHandler::Shutdown();
@@ -426,6 +449,12 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
                                  app.AboutPageModule().GetAboutPageViewModel()
                              );
 
+    m_pOptionsViewModule = Eegeo_NEW(ExampleApp::Options::View::OptionsViewModule)(
+    		m_nativeState,
+    		app.OptionsModule().GetOptionsViewModel(),
+    		m_pAndroidPlatformAbstractionModule->GetAndroidHttpCache(),
+    		m_messageBus);
+
     m_pMyPinCreationDetailsViewModule = Eegeo_NEW(ExampleApp::MyPinCreationDetails::View::MyPinCreationDetailsViewModule)(
                                             m_nativeState,
                                             app.MyPinCreationDetailsModule().GetMyPinCreationDetailsViewModel(),
@@ -470,6 +499,8 @@ void AppHost::DestroyApplicationViewModulesFromUiThread()
         Eegeo_DELETE m_pFlattenButtonViewModule;
 
         Eegeo_DELETE m_pMyPinCreationViewModule;
+
+        Eegeo_DELETE m_pOptionsViewModule;
 
         Eegeo_DELETE m_pAboutPageViewModule;
 

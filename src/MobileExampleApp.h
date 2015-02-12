@@ -61,8 +61,10 @@
 #include "BidirectionalBus.h"
 #include "CameraFrustumStreamingVolume.h"
 #include "ScreenProperties.h"
-#include "CameraFrustumStreamingVolume.h"
 #include "PlatformConfig.h"
+#include "OptionsModule.h"
+#include "PlatformAbstractionsFacade.h"
+#include "NetIncludes.h"
 #include "GpsMarker.h"
 #include "InitialExperienceDialogs.h"
 
@@ -75,11 +77,12 @@ namespace ExampleApp
         Eegeo::ITouchController* m_pCameraTouchController;
         Eegeo::EegeoWorld* m_pWorld;
         Eegeo::Location::NavigationService* m_pNavigationService;
-        Eegeo::Modules::IPlatformAbstractionModule& m_platformAbstractions;
+        PlatformAbstractionsFacade m_platformAbstractions;
         Eegeo::Rendering::LoadingScreen* m_pLoadingScreen;
         Eegeo::Blitter* m_pBlitter;
         Eegeo::Rendering::ScreenProperties m_screenProperties;
         bool m_initialisedApplicationViewState;
+        bool m_setFlurryLocation;
         float m_pinDiameter;
 
         CameraTransitions::SdkModel::ICameraTransitionController* m_pCameraTransitionController;
@@ -114,9 +117,10 @@ namespace ExampleApp
         ExampleApp::MyPinCreationDetails::View::IMyPinCreationDetailsModule* m_pMyPinCreationDetailsModule;
         ExampleApp::MyPins::SdkModel::IMyPinsModule* m_pMyPinsModule;
         ExampleApp::MyPinDetails::SdkModel::IMyPinDetailsModule* m_pMyPinDetailsModule;
-
+        ExampleApp::Options::IOptionsModule* m_pOptionsModule;
         Eegeo::Streaming::CameraFrustumStreamingVolume* m_pStreamingVolume;
         ExampleAppMessaging::TMessageBus& m_messageBus;
+        Net::SdkModel::INetworkCapabilities& m_networkCapabilities;
 
         void CreateApplicationModelModules();
 
@@ -140,7 +144,8 @@ namespace ExampleApp
                          Eegeo::Helpers::Jpeg::IJpegLoader& jpegLoader,
                          ExampleApp::InitialExperience::SdkModel::IInitialExperienceModule& initialExperienceModule,
                          ExampleApp::PersistentSettings::IPersistentSettingsModel& persistentSettings,
-                         ExampleAppMessaging::TMessageBus& messageBus);
+                         ExampleAppMessaging::TMessageBus& messageBus,
+                         ExampleApp::Net::SdkModel::INetworkCapabilities& networkCapabilities);
 
 
         ~MobileExampleApp();
@@ -268,6 +273,11 @@ namespace ExampleApp
         const ExampleApp::MyPinDetails::SdkModel::IMyPinDetailsModule& MyPinDetailsModule() const
         {
             return *m_pMyPinDetailsModule;
+        }
+        
+        const ExampleApp::Options::IOptionsModule& OptionsModule() const
+        {
+            return *m_pOptionsModule;
         }
 
         const ExampleApp::InitialExperience::Dialogs::View::IInitialExperienceDialogsModule& InitialExperienceDialogsModule() const

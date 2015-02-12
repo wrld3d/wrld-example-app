@@ -7,6 +7,7 @@
 #include "MenuSectionViewModel.h"
 #include "IPlaceJumpsModule.h"
 #include "AboutPageMenuOption.h"
+#include "OptionsMenuOption.h"
 
 namespace ExampleApp
 {
@@ -16,6 +17,7 @@ namespace ExampleApp
         {
             PrimaryMenuModule::PrimaryMenuModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
                                                  AboutPage::View::IAboutPageViewModel& aboutPageViewModel,
+                                                 Options::View::IOptionsViewModel& optionsViewModel,
                                                  Reaction::View::IReactionControllerModel& reactionControllerModel)
             {
                 m_pModel = Eegeo_NEW(Menu::View::MenuModel)();
@@ -25,8 +27,9 @@ namespace ExampleApp
                                identityProvider.GetNextIdentity(),
                                reactionControllerModel);
 
-                m_pMenuOptionsModel->AddItem("About", "About", "", "misc", Eegeo_NEW(AboutPageMenuOption)(*m_pViewModel,
-                                             aboutPageViewModel));
+                m_pMenuOptionsModel->AddItem("About", "About", "", "misc", Eegeo_NEW(AboutPageMenuOption)(*m_pViewModel, aboutPageViewModel));
+                
+                m_pMenuOptionsModel->AddItem("Options", "Options", "", "options", Eegeo_NEW(OptionsMenuOption)(*m_pViewModel, optionsViewModel));
 
                 m_pMenuSectionMisc = Eegeo_NEW(Menu::View::MenuSectionViewModel)("Misc", "misc", *m_pModel, false);
 

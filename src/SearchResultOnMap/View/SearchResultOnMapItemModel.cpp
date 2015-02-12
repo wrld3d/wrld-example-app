@@ -5,6 +5,7 @@
 #include "ISearchResultPoiViewModel.h"
 #include "Logger.h"
 #include "SearchResultOnMapItemModelSelectedMessage.h"
+#include "FlurryWrapper.h"
 
 namespace ExampleApp
 {
@@ -27,6 +28,7 @@ namespace ExampleApp
 
             void SearchResultOnMapItemModel::SelectPin()
             {
+                FLURRY_SET_EVENT("Pin Selected", "Name", m_searchResultModel.GetTitle().c_str());
                 m_messageBus.Publish(SearchResultOnMapItemModelSelectedMessage(m_searchResultModel));
             }
         }
