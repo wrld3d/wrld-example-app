@@ -46,6 +46,7 @@
 #include "StreamingVolumeController.h"
 #include "GpsMarkerModule.h"
 #include "IGpsMarkerController.h"
+#include "InitialExperienceDialogsModule.h"
 #include "ApiKey.h"
 
 namespace ExampleApp
@@ -127,6 +128,7 @@ namespace ExampleApp
         , m_pMyPinCreationDetailsModule(NULL)
         , m_pMyPinsModule(NULL)
         , m_pMyPinDetailsModule(NULL)
+    	, m_pInitialExperienceDialogsModule(NULL)
         , m_screenProperties(screenProperties)
     {
 
@@ -336,6 +338,8 @@ namespace ExampleApp
                                 m_pMyPinsModule->GetMyPinsService(),
                                 m_messageBus);
 
+        m_pInitialExperienceDialogsModule = Eegeo_NEW(ExampleApp::InitialExperience::Dialogs::View::InitialExperienceDialogsModule)();
+
         std::vector<ScreenControl::View::IScreenControlViewModel*> reactors(GetReactorControls());
         std::vector<ExampleApp::OpenableControl::View::IOpenableControlViewModel*> openables(GetOpenableControls());
 
@@ -353,6 +357,8 @@ namespace ExampleApp
 
     void MobileExampleApp::DestroyApplicationModelModules()
     {
+    	Eegeo_DELETE m_pInitialExperienceDialogsModule;
+
         Eegeo_DELETE m_pMyPinDetailsModule;
 
         Eegeo_DELETE m_pMyPinCreationModule;
@@ -514,6 +520,13 @@ namespace ExampleApp
             CompassModule().GetCompassUpdateController().Update(dt);
             CompassModule().GetCompassUpdateController().Update(dt);
             m_pGpsMarkerModule->GetGpsMarkerController().Update(dt, renderCamera);
+
+            InitialExperience::SdkModel::IInitialExperienceModel& initialExperienceModel = m_initialExperienceModule.GetInitialExperienceModel();
+            if(!initialExperienceModel.HasCompletedInitialExperience())
+            {
+                InitialExperience::SdkModel::IInitialExperienceController& initialExperienceController = m_initialExperienceModule.GetInitialExperienceController();
+                initialExperienceController.Update(dt);
+            }
         }
 
         m_pNavigationService->Update(dt);
@@ -595,13 +608,6 @@ namespace ExampleApp
         {
             Eegeo_DELETE m_pLoadingScreen;
             m_pLoadingScreen = NULL;
-
-            InitialExperience::SdkModel::IInitialExperienceModel& initialExperienceModel = m_initialExperienceModule.GetInitialExperienceModel();
-            if(!initialExperienceModel.HasCompletedInitialExperience())
-            {
-                InitialExperience::SdkModel::IInitialExperienceController& initialExperienceController = m_initialExperienceModule.GetInitialExperienceController();
-                initialExperienceController.Update(dt);
-            }
         }
     }
 

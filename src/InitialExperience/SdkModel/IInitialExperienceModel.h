@@ -16,6 +16,8 @@ namespace ExampleApp
                 virtual ~IInitialExperienceModel() {}
 
                 virtual bool HasCompletedInitialExperience() const = 0;
+                virtual bool HasStartedInitialExperience() const = 0;
+                virtual bool HasCompletedCurrentStep() const = 0;
 
                 virtual void DoNextPartOfInitialExperience() = 0;
 

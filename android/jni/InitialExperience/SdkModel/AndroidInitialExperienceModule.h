@@ -6,6 +6,7 @@
 #include "AndroidNativeState.h"
 #include "InitialExperienceModuleBase.h"
 #include "Types.h"
+#include "BidirectionalBus.h"
 
 namespace ExampleApp
 {
@@ -16,11 +17,13 @@ namespace ExampleApp
             class AndroidInitialExperienceModule : public InitialExperienceModuleBase, private Eegeo::NonCopyable
             {
                 AndroidNativeState& m_nativeState;
+                ExampleAppMessaging::TMessageBus& m_messageBus;
 
             public:
                 AndroidInitialExperienceModule(
                     AndroidNativeState& m_nativeState,
-                    PersistentSettings::IPersistentSettingsModel& persistentSettings
+                    PersistentSettings::IPersistentSettingsModel& persistentSettings,
+                    ExampleAppMessaging::TMessageBus& messageBus
                 );
 
                 ~AndroidInitialExperienceModule();

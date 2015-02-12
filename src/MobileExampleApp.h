@@ -64,6 +64,7 @@
 #include "CameraFrustumStreamingVolume.h"
 #include "PlatformConfig.h"
 #include "GpsMarker.h"
+#include "InitialExperienceDialogs.h"
 
 namespace ExampleApp
 {
@@ -107,11 +108,13 @@ namespace ExampleApp
         ExampleApp::WorldAreaLoader::SdkModel::IWorldAreaLoaderModule* m_pWorldAreaLoaderModule;
         ExampleApp::AboutPage::View::IAboutPageModule* m_pAboutPageModule;
         ExampleApp::InitialExperience::SdkModel::IInitialExperienceModule& m_initialExperienceModule;
+        ExampleApp::InitialExperience::Dialogs::View::IInitialExperienceDialogsModule* m_pInitialExperienceDialogsModule;
         ExampleApp::MyPinCreation::PoiRing::SdkModel::IPoiRingModule* m_pPoiRingModule;
         ExampleApp::MyPinCreation::SdkModel::IMyPinCreationModule* m_pMyPinCreationModule;
         ExampleApp::MyPinCreationDetails::View::IMyPinCreationDetailsModule* m_pMyPinCreationDetailsModule;
         ExampleApp::MyPins::SdkModel::IMyPinsModule* m_pMyPinsModule;
         ExampleApp::MyPinDetails::SdkModel::IMyPinDetailsModule* m_pMyPinDetailsModule;
+
         Eegeo::Streaming::CameraFrustumStreamingVolume* m_pStreamingVolume;
         ExampleAppMessaging::TMessageBus& m_messageBus;
 
@@ -265,6 +268,11 @@ namespace ExampleApp
         const ExampleApp::MyPinDetails::SdkModel::IMyPinDetailsModule& MyPinDetailsModule() const
         {
             return *m_pMyPinDetailsModule;
+        }
+
+        const ExampleApp::InitialExperience::Dialogs::View::IInitialExperienceDialogsModule& InitialExperienceDialogsModule() const
+        {
+        	return *m_pInitialExperienceDialogsModule;
         }
 
         void OnPause();

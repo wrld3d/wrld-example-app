@@ -67,10 +67,12 @@
 #include "MyPinCreationDetailsViewModule.h"
 #include "MyPinDetailsViewModule.h"
 #include "IMyPinDetailsModule.h"
+#include "InitialExperienceDialogsViewModule.h"
 #include "Logger.h"
 #include "AndroidAppThreadAssertionMacros.h"
 #include "SearchResultRepositoryObserver.h"
 #include "IMyPinsModule.h"
+#include "IInitialExperienceDialogsModule.h"
 #include "ApiKey.h"
 
 using namespace Eegeo::Android;
@@ -111,6 +113,7 @@ AppHost::AppHost(
     ,m_requestedApplicationInitialiseViewState(false)
     ,m_uiCreatedMessageReceivedOnNativeThread(false)
     ,m_pViewControllerUpdaterModule(NULL)
+	,m_pInitialExperienceDialogsViewModule(NULL)
 {
     ASSERT_NATIVE_THREAD
 
@@ -145,7 +148,8 @@ AppHost::AppHost(
 
     m_pInitialExperienceModule = Eegeo_NEW(ExampleApp::InitialExperience::SdkModel::AndroidInitialExperienceModule)(
                                      m_nativeState,
-                                     m_androidPersistentSettingsModel
+                                     m_androidPersistentSettingsModel,
+                                     m_messageBus
                                  );
 
     m_pApp = Eegeo_NEW(ExampleApp::MobileExampleApp)(
@@ -435,6 +439,13 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
                                     m_messageBus
                                 );
 
+    // Initial UX layer
+    m_pInitialExperienceDialogsViewModule = Eegeo_NEW(ExampleApp::InitialExperience::Dialogs::View::InitialExperienceDialogsViewModule)(
+									m_nativeState,
+									app.InitialExperienceDialogsModule().GetDialogsViewModel(),
+									m_messageBus
+								);
+
     m_pViewControllerUpdaterModule = Eegeo_NEW(ExampleApp::ViewControllerUpdater::View::ViewControllerUpdaterModule);
 
     ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModel& viewControllerUpdaterModel = m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel();
@@ -475,6 +486,8 @@ void AppHost::DestroyApplicationViewModulesFromUiThread()
         Eegeo_DELETE m_pPrimaryMenuViewModule;
 
         Eegeo_DELETE m_pCompassViewModule;
+
+        Eegeo_DELETE m_pInitialExperienceDialogsViewModule;
     }
     m_createdUIModules = false;
 }

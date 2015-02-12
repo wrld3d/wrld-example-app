@@ -44,6 +44,7 @@
 #include "MyPinDetailsViewIncludes.h"
 #include "BidirectionalBus.h"
 #include "AndroidConnectivityService.h"
+#include "InitialExperienceDialogsViewIncludes.h"
 
 class AppHost : protected Eegeo::NonCopyable
 {
@@ -113,6 +114,7 @@ private:
     ExampleApp::MyPinCreation::View::IMyPinCreationViewModule* m_pMyPinCreationViewModule;
     ExampleApp::MyPinCreationDetails::View::IMyPinCreationDetailsViewModule* m_pMyPinCreationDetailsViewModule;
     ExampleApp::MyPinDetails::View::IMyPinDetailsViewModule* m_pMyPinDetailsViewModule;
+    ExampleApp::InitialExperience::Dialogs::View::InitialExperienceDialogsViewModule* m_pInitialExperienceDialogsViewModule; // TODO: Interface.
 
     ExampleApp::MobileExampleApp* m_pApp;
 

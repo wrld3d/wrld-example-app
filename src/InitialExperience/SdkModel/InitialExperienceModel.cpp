@@ -12,6 +12,7 @@ namespace ExampleApp
             InitialExperienceModel::InitialExperienceModel(const std::vector<IInitialExperienceStep*>& initialExperienceSteps)
                 : m_currentStepIndex(0)
                 , m_steps(initialExperienceSteps)
+            	, m_started(false)
             {
             }
 
@@ -31,6 +32,16 @@ namespace ExampleApp
                 return m_currentStepIndex >= m_steps.size();
             }
 
+            bool InitialExperienceModel::HasStartedInitialExperience() const
+            {
+            	return m_started;
+            }
+
+            bool InitialExperienceModel::HasCompletedCurrentStep() const
+            {
+            	return HasCompletedInitialExperience() ? false : m_steps[m_currentStepIndex]->HasCompleted();
+            }
+
             void InitialExperienceModel::DoNextPartOfInitialExperience()
             {
                 Eegeo_ASSERT(!HasCompletedInitialExperience(), "No more steps in initial experience to do.\n");
@@ -39,12 +50,11 @@ namespace ExampleApp
                 {
                     IInitialExperienceStep& step = GetCurrentStep();
 
-                    if(!step.HasCompleted())
+                    bool haveStartedPreviouslyButNotCompleted = (!m_started && step.HasStarted() && !step.HasCompleted()); // Might be pointless.
+                    if(!step.HasCompleted() | haveStartedPreviouslyButNotCompleted )
                     {
-                        if(!step.HasStarted())
-                        {
-                            step.PerformInitialExperience();
-                        }
+						step.PerformInitialExperience();
+						m_started = true;
                         break;
                     }
 
