@@ -51,7 +51,7 @@ else
 	
 	platformincludes := $(shell dir .\libs\eegeo\platform /ad-h /s /b)
 	LOCAL_C_INCLUDES += $(platformincludes:$(LOCAL_PATH)/%=%)
-	LOCAL_C_INCLUDES += ./libs/platform 
+	LOCAL_C_INCLUDES += ./libs/eegeo/platform 
 
 	exampleincludes := $(shell dir .\libs\..\..\src /ad-h /s /b)
 	LOCAL_C_INCLUDES += $(exampleincludes:$(LOCAL_PATH)/%=%)
