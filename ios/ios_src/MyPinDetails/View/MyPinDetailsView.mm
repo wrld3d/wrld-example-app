@@ -313,11 +313,11 @@
 
     m_hasImage = NO;
 
-    if(!pModel->GetImagePath().empty())
+    if(!pModel->GetTypeMetadata().empty())
     {
         NSArray* libraryPaths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
         NSString* libraryDirectory = [libraryPaths objectAtIndex:0];
-        NSString* imageFilename = [NSString stringWithUTF8String: pModel->GetImagePath().c_str()];
+        NSString* imageFilename = [NSString stringWithUTF8String: pModel->GetTypeMetadata().c_str()];
         NSString* fullPathToImage  = [libraryDirectory stringByAppendingPathComponent: imageFilename];
 
         self.pImageContent.image = [UIImage imageWithContentsOfFile: fullPathToImage];

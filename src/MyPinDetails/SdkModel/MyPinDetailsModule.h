@@ -10,6 +10,7 @@
 #include "Reaction.h"
 #include "BidirectionalBus.h"
 #include "MyPinDetailsViewRemovePinHandler.h"
+#include "SearchResultPoi.h"
 
 namespace ExampleApp
 {
@@ -21,6 +22,7 @@ namespace ExampleApp
             {
             private:
                 View::MyPinDetailsViewModel* m_pMyPinDetailsViewModel;
+                View::IMyPinDetailsDisplayService* m_pMyPinDetailsDisplayService;
                 View::MyPinDetailsModelSelectedObserver* m_pMyPinDetailsModelSelectedObserver;
                 MyPinDetailsViewRemovePinHandler* m_pMyPinDetailsViewRemovePinHandler;
 
@@ -28,6 +30,7 @@ namespace ExampleApp
                 MyPinDetailsModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
                                    Reaction::View::IReactionControllerModel& reactionControllerModel,
                                    MyPins::SdkModel::IMyPinsService& myPinsService,
+                                   SearchResultPoi::View::ISearchResultPoiViewModel& searchResultPoiViewModel,
                                    ExampleAppMessaging::TMessageBus& messageBus);
 
                 ~MyPinDetailsModule();

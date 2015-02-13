@@ -8,6 +8,19 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
+            SearchResultModel::SearchResultModel()
+            : m_identifier("")
+            , m_title("")
+            , m_location(Eegeo::Space::LatLong(0.f, 0.f))
+            , m_phone("")
+            , m_address("")
+            , m_webUrl("")
+            , m_category("")
+            , m_vicinity("")
+            {
+                
+            }
+            
             SearchResultModel::SearchResultModel(const std::string& identifier,
                                                  const std::string& title,
                                                  const Eegeo::Space::LatLong& location,
@@ -87,6 +100,11 @@ namespace ExampleApp
                 {
                     return false;
                 }
+            }
+            
+            const bool operator== (const SearchResultModel& a, const SearchResultModel& b)
+            {
+                return (a.GetTitle() == b.GetTitle() && a.GetAddress() == b.GetAddress());
             }
         }
     }

@@ -15,6 +15,8 @@
 #include "Camera.h"
 #include "SearchResultOnMapItemModelSelectedObserver.h"
 #include "BidirectionalBus.h"
+#include "CategorySearch.h"
+#include "MyPins.h"
 
 namespace ExampleApp
 {
@@ -26,14 +28,16 @@ namespace ExampleApp
             {
             private:
                 ISearchResultOnMapModel* m_pSearchResultOnMapModel;
+                ISearchResultOnMapMyPinsService* m_pSearchResultOnMapMyPinsService;
                 View::ISearchResultOnMapFactory* m_pSearchResultOnMapFactory;
-                View::ISearchResultOnMapIconCategoryMapper* m_pSearchResultOnMapIconCategoryMapper;
                 View::SearchResultOnMapItemModelSelectedObserver* m_pSearchResultOnMapItemModelSelectedObserver;
 
             public:
                 SearchResultOnMapModule(Search::SdkModel::ISearchResultRepository& searchResultRepository,
                                         SearchResultPoi::View::ISearchResultPoiViewModel& searchResultPoiViewModel,
                                         WorldPins::SdkModel::IWorldPinsService& worldPinsService,
+                                        MyPins::SdkModel::IMyPinsRepository& myPinsRepository,
+                                        CategorySearch::ISearchResultIconCategoryMapper& searchResultOnMapIconCategoryMapper,
                                         ExampleAppMessaging::TMessageBus& messageBus);
 
                 ~SearchResultOnMapModule();

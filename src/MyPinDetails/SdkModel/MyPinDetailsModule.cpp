@@ -3,6 +3,7 @@
 #include "MyPinDetailsModule.h"
 #include "MyPinDetailsViewModel.h"
 #include "MyPinDetailsModelSelectedObserver.h"
+#include "MyPinDetailsDisplayService.h"
 
 namespace ExampleApp
 {
@@ -13,12 +14,16 @@ namespace ExampleApp
             MyPinDetailsModule::MyPinDetailsModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
                                                    Reaction::View::IReactionControllerModel& reactionControllerModel,
                                                    MyPins::SdkModel::IMyPinsService& myPinsService,
+                                                   SearchResultPoi::View::ISearchResultPoiViewModel& searchResultPoiViewModel,
                                                    ExampleAppMessaging::TMessageBus& messageBus)
             {
                 m_pMyPinDetailsViewModel = Eegeo_NEW(MyPinDetails::View::MyPinDetailsViewModel)(identityProvider.GetNextIdentity(),
                                            reactionControllerModel);
-
-                m_pMyPinDetailsModelSelectedObserver = Eegeo_NEW(MyPinDetails::View::MyPinDetailsModelSelectedObserver)(*m_pMyPinDetailsViewModel,
+                
+                m_pMyPinDetailsDisplayService = Eegeo_NEW(View::MyPinDetailsDisplayService)(*m_pMyPinDetailsViewModel,
+                                                                                            searchResultPoiViewModel);
+                
+                m_pMyPinDetailsModelSelectedObserver = Eegeo_NEW(MyPinDetails::View::MyPinDetailsModelSelectedObserver)(*m_pMyPinDetailsDisplayService,
                                                        messageBus);
 
                 m_pMyPinDetailsViewRemovePinHandler = Eegeo_NEW(MyPinDetailsViewRemovePinHandler)(myPinsService,
@@ -27,7 +32,9 @@ namespace ExampleApp
 
             MyPinDetailsModule::~MyPinDetailsModule()
             {
+                Eegeo_DELETE m_pMyPinDetailsViewRemovePinHandler;
                 Eegeo_DELETE m_pMyPinDetailsModelSelectedObserver;
+                Eegeo_DELETE m_pMyPinDetailsDisplayService;
                 Eegeo_DELETE m_pMyPinDetailsViewModel;
             }
 

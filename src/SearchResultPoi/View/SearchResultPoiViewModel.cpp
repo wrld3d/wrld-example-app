@@ -11,7 +11,7 @@ namespace ExampleApp
         {
             SearchResultPoiViewModel::SearchResultPoiViewModel(Eegeo::Helpers::TIdentity identity,
                     Reaction::View::IReactionControllerModel& reactionControllerModel)
-                : m_searchResultModel("", "", Eegeo::Space::LatLong(0.f, 0.f), "", "", "", "", "")
+                : m_searchResultModel()
                 , m_openable(identity, reactionControllerModel)
             {
 
@@ -32,18 +32,32 @@ namespace ExampleApp
                 Eegeo_ASSERT(IsOpen(), "Cannot read SearchResultModel when view model is not open.\n");
                 return m_searchResultModel;
             }
+            
+            bool SearchResultPoiViewModel::IsPinned() const
+            {
+                Eegeo_ASSERT(IsOpen(), "Cannot read IsPinned when view model is not open.\n");
+                return m_isPinned;
+            }
+            
+            void SearchResultPoiViewModel::ToggleIsPinned()
+            {
+                Eegeo_ASSERT(IsOpen(), "Cannot toggle IsPinned when view model is not open.\n");
+                m_isPinned = !m_isPinned;
+            }
 
             bool SearchResultPoiViewModel::IsOpen() const
             {
                 return m_openable.IsFullyOpen();
             }
 
-            void SearchResultPoiViewModel::Open(const Search::SdkModel::SearchResultModel& searchResultModel)
+            void SearchResultPoiViewModel::Open(const Search::SdkModel::SearchResultModel& searchResultModel,
+                                                bool isPinned)
             {
                 Eegeo_ASSERT(!IsOpen(), "Cannot open SearchResultPoiViewModel when already open.\n");
                 if(m_openable.Open())
                 {
                     m_searchResultModel = searchResultModel;
+                    m_isPinned = isPinned;
                     m_openedCallbacks.ExecuteCallbacks();
                 }
             }

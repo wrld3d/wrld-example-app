@@ -16,11 +16,11 @@ namespace ExampleApp
         {
             class SearchResultOnMapItemModel : public WorldPins::SdkModel::IWorldPinSelectionHandler, private Eegeo::NonCopyable
             {
-                Search::SdkModel::SearchResultModel& m_searchResultModel;
+                Search::SdkModel::SearchResultModel m_searchResultModel;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
 
             public:
-                SearchResultOnMapItemModel(Search::SdkModel::SearchResultModel& searchResultModel,
+                SearchResultOnMapItemModel(const Search::SdkModel::SearchResultModel& searchResultModel,
                                            ExampleAppMessaging::TMessageBus& messageBus);
 
                 ~SearchResultOnMapItemModel();

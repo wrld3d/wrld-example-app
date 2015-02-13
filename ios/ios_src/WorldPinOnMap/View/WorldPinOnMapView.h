@@ -26,7 +26,7 @@
 
 - (void) setLabel:(std::string)name :(std::string)detail;
 
-- (void) setFullyActive;
+- (void) setFullyActive :(float)modality;
 
 - (void) setFullyInactive;
 

@@ -23,6 +23,7 @@
 #include "CacheEnabledChangedMessage.h"
 #include "ClearCacheMessage.h"
 #include "GpsMarkerVisibilityMessage.h"
+#include "SearchResultPoiPinToggledMessage.h"
 
 namespace ExampleApp
 {
@@ -48,6 +49,7 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<Options::CacheEnabledChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<Options::ClearCacheMessage>
             , public Eegeo::Messaging::CatalogBinding<GpsMarker::GpsMarkerVisibilityMessage>
+            , public Eegeo::Messaging::CatalogBinding<SearchResultPoi::SearchResultPoiPinToggledMessage>
             , private Eegeo::NonCopyable
         {
 

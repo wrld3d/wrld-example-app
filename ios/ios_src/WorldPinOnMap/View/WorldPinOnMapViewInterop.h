@@ -23,7 +23,7 @@ namespace ExampleApp
                 {
                 }
 
-                void Open(const std::string& title, const std::string& subtitle);
+                void Open(const std::string& title, const std::string& subtitle, float modality);
                 void Close();
                 void UpdateScreenLocation(float posX, float posY);
                 void UpdateScreenState(float screenState);

@@ -12,10 +12,11 @@ namespace ExampleApp
             {
             }
 
-            void SearchResultPoiViewInterop::Show(const Search::SdkModel::SearchResultModel model)
+            void SearchResultPoiViewInterop::Show(const Search::SdkModel::SearchResultModel model,
+                                                  bool isPinned)
             {
                 [m_pView setFullyActive];
-                [m_pView setContent:&model];
+                [m_pView setContent:&model :isPinned];
             }
 
             void SearchResultPoiViewInterop::Hide()
@@ -36,6 +37,21 @@ namespace ExampleApp
             void SearchResultPoiViewInterop::HandleCloseClicked()
             {
                 m_closeClickedCallbacks.ExecuteCallbacks();
+            }
+            
+            void SearchResultPoiViewInterop::InsertTogglePinnedCallback(Eegeo::Helpers::ICallback1<Search::SdkModel::SearchResultModel>& callback)
+            {
+                m_togglePinClickedCallbacks.AddCallback(callback);
+            }
+            
+            void SearchResultPoiViewInterop::RemoveTogglePinnedCallback(Eegeo::Helpers::ICallback1<Search::SdkModel::SearchResultModel>& callback)
+            {
+                m_togglePinClickedCallbacks.RemoveCallback(callback);
+            }
+            
+            void SearchResultPoiViewInterop::HandlePinToggleClicked(Search::SdkModel::SearchResultModel& searchResultModel)
+            {
+                m_togglePinClickedCallbacks.ExecuteCallbacks(searchResultModel);
             }
         }
     }

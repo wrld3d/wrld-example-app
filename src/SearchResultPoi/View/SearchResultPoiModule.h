@@ -8,6 +8,10 @@
 #include "SearchResultPoiViewModel.h"
 #include "IIdentity.h"
 #include "Reaction.h"
+#include "SearchResultPoiPinToggledMessageHandler.h"
+#include "MyPins.h"
+#include "BidirectionalBus.h"
+#include "CategorySearch.h"
 
 namespace ExampleApp
 {
@@ -18,11 +22,17 @@ namespace ExampleApp
             class SearchResultPoiModule: public ISearchResultPoiModule, private Eegeo::NonCopyable
             {
             private:
+                SdkModel::ISearchResultPoiMyPinService* m_pSearchResultPoiMyPinService;
                 SearchResultPoiViewModel* m_pSearchResultPoiViewModel;
+                SdkModel::SearchResultPoiPinToggledMessageHandler* m_pSearchResultPoiPinToggledMessageHandler;
 
             public:
                 SearchResultPoiModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
-                                      Reaction::View::IReactionControllerModel& reactionControllerModel);
+                                      Reaction::View::IReactionControllerModel& reactionControllerModel,
+                                      MyPins::SdkModel::IMyPinsService& myPinsService,
+                                      MyPins::SdkModel::IMyPinsRepository& myPinsRepository,
+                                      CategorySearch::ISearchResultIconCategoryMapper& searchResultIconCategoryMapper,
+                                      ExampleAppMessaging::TMessageBus& messageBus);
 
                 ~SearchResultPoiModule();
 

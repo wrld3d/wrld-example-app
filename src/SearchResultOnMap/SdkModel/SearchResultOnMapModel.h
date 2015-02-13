@@ -3,9 +3,11 @@
 #pragma once
 
 #include <map>
+#include <set>
 #include "Types.h"
 #include "ISearchResultOnMapModel.h"
 #include "SearchResultOnMap.h"
+#include "CategorySearch.h"
 #include "Search.h"
 #include "WorldPins.h"
 #include "ICallback.h"
@@ -20,23 +22,31 @@ namespace ExampleApp
             {
             public:
 
-                typedef std::map<Search::SdkModel::SearchResultModel*, ExampleApp::WorldPins::SdkModel::WorldPinItemModel*>::iterator mapIt;
+                typedef std::map<Search::SdkModel::SearchResultModel, ExampleApp::WorldPins::SdkModel::WorldPinItemModel*>::iterator mapIt;
 
             private:
-                std::map<Search::SdkModel::SearchResultModel*, ExampleApp::WorldPins::SdkModel::WorldPinItemModel*> m_searchResultsToPinModel;
+                typedef std::set<Search::SdkModel::SearchResultModel>::iterator setIt;
+                
+                std::map<Search::SdkModel::SearchResultModel, ExampleApp::WorldPins::SdkModel::WorldPinItemModel*> m_searchResultsToPinModel;
+                std::set<Search::SdkModel::SearchResultModel> m_activeSearchResults;
+                std::set<Search::SdkModel::SearchResultModel> m_hiddenSearchResultsDueToMyPins;
+                
+                Eegeo::Helpers::TCallback1<SearchResultOnMapModel, Search::SdkModel::SearchResultModel*> m_searchResultAddedCallback;
+                Eegeo::Helpers::TCallback1<SearchResultOnMapModel, Search::SdkModel::SearchResultModel*> m_searchResultRemovedCallback;
+                Eegeo::Helpers::TCallback1<SearchResultOnMapModel, Search::SdkModel::SearchResultModel> m_searchResultPinnedCallback;
+                Eegeo::Helpers::TCallback1<SearchResultOnMapModel, Search::SdkModel::SearchResultModel> m_searchResultUnpinnedCallback;
 
+                ISearchResultOnMapMyPinsService& m_searchResultOnMapMyPinsService;
                 Search::SdkModel::ISearchResultRepository& m_searchResultRepository;
-                View::ISearchResultOnMapIconCategoryMapper& m_searchResultOnMapIconCategoryMapper;
+                CategorySearch::ISearchResultIconCategoryMapper& m_searchResultIconCategoryMapper;
                 View::ISearchResultOnMapFactory& m_searchResultOnMapFactory;
-
                 WorldPins::SdkModel::IWorldPinsService& m_worldPinsService;
-                Eegeo::Helpers::ICallback1<Search::SdkModel::SearchResultModel*>* m_pSearchResultAddedCallback;
-                Eegeo::Helpers::ICallback1<Search::SdkModel::SearchResultModel*>* m_pSearchResultRemovedCallback;
 
             public:
                 SearchResultOnMapModel(WorldPins::SdkModel::IWorldPinsService& worldPinsService,
                                        View::ISearchResultOnMapFactory& searchResultOnMapFactory,
-                                       View::ISearchResultOnMapIconCategoryMapper& searchResultOnMapIconCategoryMapper,
+                                       ISearchResultOnMapMyPinsService& searchResultOnMapMyPinsService,
+                                       CategorySearch::ISearchResultIconCategoryMapper& searchResultIconCategoryMapper,
                                        Search::SdkModel::ISearchResultRepository& searchResultRepository);
 
                 ~SearchResultOnMapModel();
@@ -46,9 +56,17 @@ namespace ExampleApp
                 mapIt end();
 
             private:
-                void AddSearchResult(Search::SdkModel::SearchResultModel*& pSearchResultModel);
+                void AddSearchResultOnMap(Search::SdkModel::SearchResultModel& searchResultModel);
+                
+                void RemoveSearchResultOnMap(Search::SdkModel::SearchResultModel& searchResultModel);
+                
+                void HandleAddedSearchResult(Search::SdkModel::SearchResultModel*& pSearchResultModel);
 
-                void RemoveSearchResult(Search::SdkModel::SearchResultModel*& pSearchResultModel);
+                void HandleRemovedSearchResult(Search::SdkModel::SearchResultModel*& pSearchResultModel);
+                
+                void HandleSearchResultPinned(Search::SdkModel::SearchResultModel& searchResultModel);
+                
+                void HandleSearchResultUnpinned(Search::SdkModel::SearchResultModel& searchResultModel);
             };
         }
     }

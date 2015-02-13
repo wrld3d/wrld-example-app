@@ -21,7 +21,7 @@ namespace ExampleApp
                 std::string m_webUrl;
                 std::string m_category;
                 std::string m_vicinity;
-
+                
             public:
                 SearchResultModel(const std::string& identifier,
                                   const std::string& title,
@@ -31,6 +31,8 @@ namespace ExampleApp
                                   const std::string& webUrl,
                                   const std::string& category,
                                   const std::string& vicinity);
+                
+                SearchResultModel();
 
                 ~SearchResultModel();
 
@@ -52,6 +54,12 @@ namespace ExampleApp
             };
 
             const bool operator< (const SearchResultModel& a, const SearchResultModel& b);
+            
+            const bool operator== (const SearchResultModel& a, const SearchResultModel& b);
+            
+            std::string SerializeToJson(const SearchResultModel& searchResult);
+            
+            SearchResultModel DeserializeFromJson(const std::string& searchResultJson);
         }
     }
 }

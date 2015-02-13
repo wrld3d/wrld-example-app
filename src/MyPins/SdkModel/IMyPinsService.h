@@ -7,6 +7,7 @@
 #include "Space.h"
 #include "VectorMath.h"
 #include "Types.h"
+#include "Search.h"
 
 namespace ExampleApp
 {
@@ -21,12 +22,16 @@ namespace ExampleApp
 
                 virtual void RemovePinWithId(const int myPinId) = 0;
 
-                virtual void SavePin(const std::string& title,
-                                     const std::string& description,
-                                     const Eegeo::Space::LatLong& latLong,
-                                     Byte* imageData,
-                                     size_t imageSize,
-                                     bool shouldShare) = 0;
+                virtual void SaveUserCreatedPoiPin(const std::string& title,
+                                                   const std::string& description,
+                                                   const Eegeo::Space::LatLong& latLong,
+                                                   Byte* imageData,
+                                                   size_t imageSize,
+                                                   bool shouldShare) = 0;
+                
+                
+                virtual void SaveSearchResultPoiPin(const Search::SdkModel::SearchResultModel& searchResult,
+                                                    int pinIconIndex) = 0;
             };
         }
     }

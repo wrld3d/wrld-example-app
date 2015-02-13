@@ -163,6 +163,26 @@
 		18D1D354194A057200FAA1B9 /* FrankBold50_A8_icons_0.png in Resources */ = {isa = PBXBuildFile; fileRef = 18D1D343194A057200FAA1B9 /* FrankBold50_A8_icons_0.png */; };
 		18D1D355194A057200FAA1B9 /* FrankBold50_A8_icons.fnt in Resources */ = {isa = PBXBuildFile; fileRef = 18D1D344194A057200FAA1B9 /* FrankBold50_A8_icons.fnt */; };
 		18D1D35B194A057200FAA1B9 /* placeholder.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 18D1D34A194A057200FAA1B9 /* placeholder.pvr */; };
+		18E1027A1A8B64470011A18C /* SerializeSearchResultModelToJson.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18E102791A8B64470011A18C /* SerializeSearchResultModelToJson.cpp */; };
+		18E1027B1A8B64470011A18C /* SerializeSearchResultModelToJson.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18E102791A8B64470011A18C /* SerializeSearchResultModelToJson.cpp */; };
+		18E102801A8B84FF0011A18C /* SearchResultPoiPinToggledMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18E1027E1A8B84FF0011A18C /* SearchResultPoiPinToggledMessage.cpp */; };
+		18E102811A8B84FF0011A18C /* SearchResultPoiPinToggledMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18E1027E1A8B84FF0011A18C /* SearchResultPoiPinToggledMessage.cpp */; };
+		18E102841A8B85710011A18C /* SearchResultPoiPinToggledMessageHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18E102831A8B85710011A18C /* SearchResultPoiPinToggledMessageHandler.cpp */; };
+		18E102851A8B85710011A18C /* SearchResultPoiPinToggledMessageHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18E102831A8B85710011A18C /* SearchResultPoiPinToggledMessageHandler.cpp */; };
+		18E102881A8B97F00011A18C /* MyPinDetailsDisplayService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18E102861A8B97F00011A18C /* MyPinDetailsDisplayService.cpp */; };
+		18E102891A8B97F00011A18C /* MyPinDetailsDisplayService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18E102861A8B97F00011A18C /* MyPinDetailsDisplayService.cpp */; };
+		18E1028D1A8BA12C0011A18C /* SearchResultPoiMyPinService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18E1028B1A8BA12C0011A18C /* SearchResultPoiMyPinService.cpp */; };
+		18E1028E1A8BA12C0011A18C /* SearchResultPoiMyPinService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18E1028B1A8BA12C0011A18C /* SearchResultPoiMyPinService.cpp */; };
+		18E102931A8BA63C0011A18C /* SearchResultIconCategoryMapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18E102911A8BA63C0011A18C /* SearchResultIconCategoryMapper.cpp */; };
+		18E102941A8BA63C0011A18C /* SearchResultIconCategoryMapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18E102911A8BA63C0011A18C /* SearchResultIconCategoryMapper.cpp */; };
+		18E102981A8CC61C0011A18C /* SearchResultOnMapMyPinsService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18E102961A8CC61C0011A18C /* SearchResultOnMapMyPinsService.cpp */; };
+		18E102991A8CC61C0011A18C /* SearchResultOnMapMyPinsService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18E102961A8CC61C0011A18C /* SearchResultOnMapMyPinsService.cpp */; };
+		18E1029C1A8CCA680011A18C /* MyPinsSearchResultExtensions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18E1029A1A8CCA680011A18C /* MyPinsSearchResultExtensions.cpp */; };
+		18E1029D1A8CCA680011A18C /* MyPinsSearchResultExtensions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18E1029A1A8CCA680011A18C /* MyPinsSearchResultExtensions.cpp */; };
+		18E102A11A8D0C2A0011A18C /* button_add_pin_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 18E1029F1A8D0C2A0011A18C /* button_add_pin_off.png */; };
+		18E102A21A8D0C2A0011A18C /* button_add_pin_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 18E1029F1A8D0C2A0011A18C /* button_add_pin_off.png */; };
+		18E102A31A8D0C2A0011A18C /* button_add_pin_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 18E102A01A8D0C2A0011A18C /* button_add_pin_on.png */; };
+		18E102A41A8D0C2A0011A18C /* button_add_pin_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 18E102A01A8D0C2A0011A18C /* button_add_pin_on.png */; };
 		222E068C1948B08B0004FFD9 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EF5D8641737F9A40049D787 /* CoreLocation.framework */; };
 		222E068D1948B08B0004FFD9 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE48257168477CB0006E99B /* libz.dylib */; };
 		222E068E1948B08B0004FFD9 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE48255168477A80006E99B /* MobileCoreServices.framework */; };
@@ -515,8 +535,6 @@
 		7E3B89C31A385A290023C94E /* SearchResultOnMapItemModelSelectedMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B88251A385A290023C94E /* SearchResultOnMapItemModelSelectedMessage.cpp */; };
 		7E3B89C41A385A290023C94E /* SearchResultOnMapFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B882A1A385A290023C94E /* SearchResultOnMapFactory.cpp */; };
 		7E3B89C51A385A290023C94E /* SearchResultOnMapFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B882A1A385A290023C94E /* SearchResultOnMapFactory.cpp */; };
-		7E3B89C61A385A290023C94E /* SearchResultOnMapIconCategoryMapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B882C1A385A290023C94E /* SearchResultOnMapIconCategoryMapper.cpp */; };
-		7E3B89C71A385A290023C94E /* SearchResultOnMapIconCategoryMapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B882C1A385A290023C94E /* SearchResultOnMapIconCategoryMapper.cpp */; };
 		7E3B89C81A385A290023C94E /* SearchResultOnMapItemModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B882E1A385A290023C94E /* SearchResultOnMapItemModel.cpp */; };
 		7E3B89C91A385A290023C94E /* SearchResultOnMapItemModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B882E1A385A290023C94E /* SearchResultOnMapItemModel.cpp */; };
 		7E3B89CA1A385A290023C94E /* SearchResultOnMapItemModelSelectedObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B88301A385A290023C94E /* SearchResultOnMapItemModelSelectedObserver.cpp */; };
@@ -849,6 +867,28 @@
 		18D1D36D194A0F7D00FAA1B9 /* Default-Portrait~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait~ipad.png"; sourceTree = "<group>"; };
 		18D1D36E194A0F7D00FAA1B9 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		18D1D36F194A0F7D00FAA1B9 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		18E102791A8B64470011A18C /* SerializeSearchResultModelToJson.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SerializeSearchResultModelToJson.cpp; sourceTree = "<group>"; };
+		18E1027C1A8B6A970011A18C /* MyPinsSemanticPinType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyPinsSemanticPinType.h; sourceTree = "<group>"; };
+		18E1027E1A8B84FF0011A18C /* SearchResultPoiPinToggledMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchResultPoiPinToggledMessage.cpp; sourceTree = "<group>"; };
+		18E1027F1A8B84FF0011A18C /* SearchResultPoiPinToggledMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultPoiPinToggledMessage.h; sourceTree = "<group>"; };
+		18E102821A8B85610011A18C /* SearchResultPoiPinToggledMessageHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultPoiPinToggledMessageHandler.h; sourceTree = "<group>"; };
+		18E102831A8B85710011A18C /* SearchResultPoiPinToggledMessageHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchResultPoiPinToggledMessageHandler.cpp; sourceTree = "<group>"; };
+		18E102861A8B97F00011A18C /* MyPinDetailsDisplayService.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MyPinDetailsDisplayService.cpp; sourceTree = "<group>"; };
+		18E102871A8B97F00011A18C /* MyPinDetailsDisplayService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPinDetailsDisplayService.h; sourceTree = "<group>"; };
+		18E1028A1A8B98650011A18C /* IMyPinDetailsDisplayService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IMyPinDetailsDisplayService.h; sourceTree = "<group>"; };
+		18E1028B1A8BA12C0011A18C /* SearchResultPoiMyPinService.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchResultPoiMyPinService.cpp; sourceTree = "<group>"; };
+		18E1028C1A8BA12C0011A18C /* SearchResultPoiMyPinService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultPoiMyPinService.h; sourceTree = "<group>"; };
+		18E1028F1A8BA1D20011A18C /* ISearchResultPoiMyPinService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISearchResultPoiMyPinService.h; sourceTree = "<group>"; };
+		18E102901A8BA63C0011A18C /* ISearchResultIconCategoryMapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISearchResultIconCategoryMapper.h; sourceTree = "<group>"; };
+		18E102911A8BA63C0011A18C /* SearchResultIconCategoryMapper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchResultIconCategoryMapper.cpp; sourceTree = "<group>"; };
+		18E102921A8BA63C0011A18C /* SearchResultIconCategoryMapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultIconCategoryMapper.h; sourceTree = "<group>"; };
+		18E102951A8CBD550011A18C /* ISearchResultOnMapMyPinsService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISearchResultOnMapMyPinsService.h; sourceTree = "<group>"; };
+		18E102961A8CC61C0011A18C /* SearchResultOnMapMyPinsService.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchResultOnMapMyPinsService.cpp; sourceTree = "<group>"; };
+		18E102971A8CC61C0011A18C /* SearchResultOnMapMyPinsService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultOnMapMyPinsService.h; sourceTree = "<group>"; };
+		18E1029A1A8CCA680011A18C /* MyPinsSearchResultExtensions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MyPinsSearchResultExtensions.cpp; sourceTree = "<group>"; };
+		18E1029B1A8CCA680011A18C /* MyPinsSearchResultExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPinsSearchResultExtensions.h; sourceTree = "<group>"; };
+		18E1029F1A8D0C2A0011A18C /* button_add_pin_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_add_pin_off.png; sourceTree = "<group>"; };
+		18E102A01A8D0C2A0011A18C /* button_add_pin_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_add_pin_on.png; sourceTree = "<group>"; };
 		222E06C91948B08B0004FFD9 /* ExampleAppCpp11.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExampleAppCpp11.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		222E06CB1948B0B70004FFD9 /* libapps-on-maps-cpp11-sim.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libapps-on-maps-cpp11-sim.a"; path = "Include/libapps-on-maps-cpp11-sim.a"; sourceTree = "<group>"; };
 		222E06CC1948B0B70004FFD9 /* libapps-on-maps-cpp11.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libapps-on-maps-cpp11.a"; path = "Include/libapps-on-maps-cpp11.a"; sourceTree = "<group>"; };
@@ -1281,11 +1321,8 @@
 		7E3B88251A385A290023C94E /* SearchResultOnMapItemModelSelectedMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchResultOnMapItemModelSelectedMessage.cpp; sourceTree = "<group>"; };
 		7E3B88261A385A290023C94E /* SearchResultOnMapItemModelSelectedMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultOnMapItemModelSelectedMessage.h; sourceTree = "<group>"; };
 		7E3B88281A385A290023C94E /* ISearchResultOnMapFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISearchResultOnMapFactory.h; sourceTree = "<group>"; };
-		7E3B88291A385A290023C94E /* ISearchResultOnMapIconCategoryMapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISearchResultOnMapIconCategoryMapper.h; sourceTree = "<group>"; };
 		7E3B882A1A385A290023C94E /* SearchResultOnMapFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchResultOnMapFactory.cpp; sourceTree = "<group>"; };
 		7E3B882B1A385A290023C94E /* SearchResultOnMapFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultOnMapFactory.h; sourceTree = "<group>"; };
-		7E3B882C1A385A290023C94E /* SearchResultOnMapIconCategoryMapper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchResultOnMapIconCategoryMapper.cpp; sourceTree = "<group>"; };
-		7E3B882D1A385A290023C94E /* SearchResultOnMapIconCategoryMapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultOnMapIconCategoryMapper.h; sourceTree = "<group>"; };
 		7E3B882E1A385A290023C94E /* SearchResultOnMapItemModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchResultOnMapItemModel.cpp; sourceTree = "<group>"; };
 		7E3B882F1A385A290023C94E /* SearchResultOnMapItemModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultOnMapItemModel.h; sourceTree = "<group>"; };
 		7E3B88301A385A290023C94E /* SearchResultOnMapItemModelSelectedObserver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchResultOnMapItemModelSelectedObserver.cpp; sourceTree = "<group>"; };
@@ -1800,6 +1837,18 @@
 			path = Icons;
 			sourceTree = "<group>";
 		};
+		18E1027D1A8B84DE0011A18C /* SdkModel */ = {
+			isa = PBXGroup;
+			children = (
+				18E102831A8B85710011A18C /* SearchResultPoiPinToggledMessageHandler.cpp */,
+				18E102821A8B85610011A18C /* SearchResultPoiPinToggledMessageHandler.h */,
+				18E1028F1A8BA1D20011A18C /* ISearchResultPoiMyPinService.h */,
+				18E1028B1A8BA12C0011A18C /* SearchResultPoiMyPinService.cpp */,
+				18E1028C1A8BA12C0011A18C /* SearchResultPoiMyPinService.h */,
+			);
+			path = SdkModel;
+			sourceTree = "<group>";
+		};
 		7E3B86631A385A280023C94E /* AboutPage */ = {
 			isa = PBXGroup;
 			children = (
@@ -1852,6 +1901,9 @@
 				7E3B86781A385A280023C94E /* CategorySearch.h */,
 				7E3B86791A385A280023C94E /* CategorySearchSelectedMessage.cpp */,
 				7E3B867A1A385A280023C94E /* CategorySearchSelectedMessage.h */,
+				18E102901A8BA63C0011A18C /* ISearchResultIconCategoryMapper.h */,
+				18E102911A8BA63C0011A18C /* SearchResultIconCategoryMapper.cpp */,
+				18E102921A8BA63C0011A18C /* SearchResultIconCategoryMapper.h */,
 				7E3B867B1A385A280023C94E /* SdkModel */,
 				7E3B86811A385A280023C94E /* View */,
 			);
@@ -2262,10 +2314,13 @@
 		7E3B87631A385A290023C94E /* View */ = {
 			isa = PBXGroup;
 			children = (
+				18E1028A1A8B98650011A18C /* IMyPinDetailsDisplayService.h */,
 				7E3B87641A385A290023C94E /* IMyPinDetailsView.h */,
 				7E3B87651A385A290023C94E /* IMyPinDetailsViewModel.h */,
 				7E3B87661A385A290023C94E /* MyPinDetailsController.cpp */,
 				7E3B87671A385A290023C94E /* MyPinDetailsController.h */,
+				18E102861A8B97F00011A18C /* MyPinDetailsDisplayService.cpp */,
+				18E102871A8B97F00011A18C /* MyPinDetailsDisplayService.h */,
 				7E3B87681A385A290023C94E /* MyPinDetailsModelSelectedObserver.cpp */,
 				7E3B87691A385A290023C94E /* MyPinDetailsModelSelectedObserver.h */,
 				7E3B876A1A385A290023C94E /* MyPinDetailsOpenableControl.cpp */,
@@ -2315,6 +2370,9 @@
 				7E3B87881A385A290023C94E /* MyPinsRepository.h */,
 				7E3B87891A385A290023C94E /* MyPinsRepositoryObserver.cpp */,
 				7E3B878A1A385A290023C94E /* MyPinsRepositoryObserver.h */,
+				18E1029A1A8CCA680011A18C /* MyPinsSearchResultExtensions.cpp */,
+				18E1029B1A8CCA680011A18C /* MyPinsSearchResultExtensions.h */,
+				18E1027C1A8B6A970011A18C /* MyPinsSemanticPinType.h */,
 				7E3B878B1A385A290023C94E /* MyPinsService.cpp */,
 				7E3B878C1A385A290023C94E /* MyPinsService.h */,
 			);
@@ -2536,6 +2594,7 @@
 				7E3B87E91A385A290023C94E /* SearchRefreshService.h */,
 				7E3B87EA1A385A290023C94E /* SearchServiceBase.cpp */,
 				7E3B87EB1A385A290023C94E /* SearchServiceBase.h */,
+				18E102791A8B64470011A18C /* SerializeSearchResultModelToJson.cpp */,
 			);
 			path = SdkModel;
 			sourceTree = "<group>";
@@ -2612,10 +2671,13 @@
 			children = (
 				7E3B881E1A385A290023C94E /* ISearchResultOnMapModel.h */,
 				7E3B881F1A385A290023C94E /* ISearchResultOnMapModule.h */,
+				18E102951A8CBD550011A18C /* ISearchResultOnMapMyPinsService.h */,
 				7E3B88201A385A290023C94E /* SearchResultOnMapModel.cpp */,
 				7E3B88211A385A290023C94E /* SearchResultOnMapModel.h */,
 				7E3B88221A385A290023C94E /* SearchResultOnMapModule.cpp */,
 				7E3B88231A385A290023C94E /* SearchResultOnMapModule.h */,
+				18E102961A8CC61C0011A18C /* SearchResultOnMapMyPinsService.cpp */,
+				18E102971A8CC61C0011A18C /* SearchResultOnMapMyPinsService.h */,
 			);
 			path = SdkModel;
 			sourceTree = "<group>";
@@ -2624,11 +2686,8 @@
 			isa = PBXGroup;
 			children = (
 				7E3B88281A385A290023C94E /* ISearchResultOnMapFactory.h */,
-				7E3B88291A385A290023C94E /* ISearchResultOnMapIconCategoryMapper.h */,
 				7E3B882A1A385A290023C94E /* SearchResultOnMapFactory.cpp */,
 				7E3B882B1A385A290023C94E /* SearchResultOnMapFactory.h */,
-				7E3B882C1A385A290023C94E /* SearchResultOnMapIconCategoryMapper.cpp */,
-				7E3B882D1A385A290023C94E /* SearchResultOnMapIconCategoryMapper.h */,
 				7E3B882E1A385A290023C94E /* SearchResultOnMapItemModel.cpp */,
 				7E3B882F1A385A290023C94E /* SearchResultOnMapItemModel.h */,
 				7E3B88301A385A290023C94E /* SearchResultOnMapItemModelSelectedObserver.cpp */,
@@ -2640,8 +2699,11 @@
 		7E3B88321A385A290023C94E /* SearchResultPoi */ = {
 			isa = PBXGroup;
 			children = (
-				7E3B88331A385A290023C94E /* SearchResultPoi.h */,
+				18E1027D1A8B84DE0011A18C /* SdkModel */,
 				7E3B88341A385A290023C94E /* View */,
+				7E3B88331A385A290023C94E /* SearchResultPoi.h */,
+				18E1027E1A8B84FF0011A18C /* SearchResultPoiPinToggledMessage.cpp */,
+				18E1027F1A8B84FF0011A18C /* SearchResultPoiPinToggledMessage.h */,
 			);
 			path = SearchResultPoi;
 			sourceTree = "<group>";
@@ -3383,6 +3445,8 @@
 				56A3DCDA1A239BD000110FDD /* button_ok_on.png */,
 				56A3DCDB1A239BD000110FDD /* button_photo_off.png */,
 				56A3DCDC1A239BD000110FDD /* button_photo_on.png */,
+				18E1029F1A8D0C2A0011A18C /* button_add_pin_off.png */,
+				18E102A01A8D0C2A0011A18C /* button_add_pin_on.png */,
 				56A3DCDD1A239BD000110FDD /* button_remove_pin_off.png */,
 				56A3DCDE1A239BD100110FDD /* button_remove_pin_on.png */,
 				56FBCDE71A0BB5150026546E /* button_checkbox_off.png */,
@@ -3534,6 +3598,7 @@
 				18B5ACA619DC15CD00BA4A38 /* icon1_food.png in Resources */,
 				18B5AC8A19DC15CD00BA4A38 /* buttonsmall_close_off.png in Resources */,
 				18B5ACF619DC15CD00BA4A38 /* shadow_01_flip.png in Resources */,
+				18E102A21A8D0C2A0011A18C /* button_add_pin_off.png in Resources */,
 				18B5ACC419DC15CD00BA4A38 /* icon1_weather.png in Resources */,
 				18B5ACB019DC15CD00BA4A38 /* icon1_nightlife.png in Resources */,
 				18B5ACF219DC15CD00BA4A38 /* placejumps.json in Resources */,
@@ -3567,6 +3632,7 @@
 				56A3DCEA1A239BD100110FDD /* button_photo_on.png in Resources */,
 				18B5ACF819DC15CD00BA4A38 /* shadow_01.png in Resources */,
 				18B5ACD619DC15CD00BA4A38 /* icon2_park.png in Resources */,
+				18E102A41A8D0C2A0011A18C /* button_add_pin_on.png in Resources */,
 				18B5AC9A19DC15CD00BA4A38 /* icon1_bank.png in Resources */,
 				7E8F03EB1A8260B40056F229 /* gps_marker.png in Resources */,
 				56F28E831A261DA70061C7BF /* button_checkbox_on.png in Resources */,
@@ -3618,6 +3684,7 @@
 				18B5ACAF19DC15CD00BA4A38 /* icon1_nightlife.png in Resources */,
 				56A3DCE71A239BD100110FDD /* button_photo_off.png in Resources */,
 				56FBCDF61A0BB5150026546E /* poi_marker.png in Resources */,
+				18E102A11A8D0C2A0011A18C /* button_add_pin_off.png in Resources */,
 				18B5ACF119DC15CD00BA4A38 /* placejumps.json in Resources */,
 				7EE481F716836F370006E99B /* InfoPlist.strings in Resources */,
 				7EE4820E1683713B0006E99B /* MainStoryboard_iPhone.storyboard in Resources */,
@@ -3651,6 +3718,7 @@
 				18B5AC8D19DC15CD00BA4A38 /* compass_lock.png in Resources */,
 				18B5ACBF19DC15CD00BA4A38 /* icon1_summer.png in Resources */,
 				18B5AC8319DC15CD00BA4A38 /* button_close_on.png in Resources */,
+				18E102A31A8D0C2A0011A18C /* button_add_pin_on.png in Resources */,
 				180E99FA19E67E64007D63FD /* arrow2.png in Resources */,
 				7E8F03EA1A8260B40056F229 /* gps_marker.png in Resources */,
 				18B5ACFE19DC160E00BA4A38 /* SearchResultOnMap in Resources */,
@@ -3722,6 +3790,7 @@
 				7E3B88C31A385A290023C94E /* CompassModel.cpp in Sources */,
 				7E3B895D1A385A290023C94E /* MyPinsFileIO.cpp in Sources */,
 				7E3B89551A385A290023C94E /* MyPinModel.cpp in Sources */,
+				18E102991A8CC61C0011A18C /* SearchResultOnMapMyPinsService.cpp in Sources */,
 				7E3B8A111A385A290023C94E /* WorldPinsVisibilityMessage.cpp in Sources */,
 				7E3B89571A385A290023C94E /* MyPinSelectedMessageHandler.cpp in Sources */,
 				7E3B8AF81A385F110023C94E /* ModalBackgroundView.mm in Sources */,
@@ -3780,6 +3849,8 @@
 				7E3B88B71A385A290023C94E /* CategorySearchMenuOption.cpp in Sources */,
 				18096F621A7B8FEF006A6438 /* CacheEnabledChangedMessageHandler.cpp in Sources */,
 				7E3B88D71A385A290023C94E /* FlattenButtonModel.cpp in Sources */,
+				18E102941A8BA63C0011A18C /* SearchResultIconCategoryMapper.cpp in Sources */,
+				18E1027B1A8B64470011A18C /* SerializeSearchResultModelToJson.cpp in Sources */,
 				7E3B89CD1A385A290023C94E /* SearchResultPoiController.cpp in Sources */,
 				7E3B8B1E1A385F110023C94E /* SearchResultMenuView.mm in Sources */,
 				7E3B899B1A385A290023C94E /* SearchQueryRemovedMessage.cpp in Sources */,
@@ -3789,7 +3860,6 @@
 				18096F511A7B7F48006A6438 /* CacheEnabledChangedMessage.cpp in Sources */,
 				18096F751A7BD4B1006A6438 /* PlatformAbstractionsFacade.cpp in Sources */,
 				7E3B89AB1A385A290023C94E /* SearchResultMenuItemSelectedMessage.cpp in Sources */,
-				7E3B89C71A385A290023C94E /* SearchResultOnMapIconCategoryMapper.cpp in Sources */,
 				7E3B89291A385A290023C94E /* MyPinCreationCompositeViewModel.cpp in Sources */,
 				7E3B89731A385A290023C94E /* PlaceJumpMenuOption.cpp in Sources */,
 				7E3B89111A385A290023C94E /* MyPinCreationViewSavePinMessage.cpp in Sources */,
@@ -3809,6 +3879,7 @@
 				7E3B8B201A385F110023C94E /* SearchResultMenuViewModule.mm in Sources */,
 				7E3B88C11A385A290023C94E /* CompassViewCycledMessage.cpp in Sources */,
 				7E3B89611A385A290023C94E /* MyPinsRepositoryObserver.cpp in Sources */,
+				18E102811A8B84FF0011A18C /* SearchResultPoiPinToggledMessage.cpp in Sources */,
 				7E3B88F11A385A290023C94E /* MenuItemModel.cpp in Sources */,
 				7E3B89B51A385A290023C94E /* SearchResultMenuController.cpp in Sources */,
 				7E3B898D1A385A290023C94E /* SearchModule.cpp in Sources */,
@@ -3831,6 +3902,7 @@
 				7E3B8B2E1A385F110023C94E /* ViewController.mm in Sources */,
 				7E3B89D11A385A290023C94E /* SearchResultPoiOpenableControl.cpp in Sources */,
 				18B22B111A7A8B3400DDBFA2 /* OptionsOpenableControl.cpp in Sources */,
+				18E1029D1A8CCA680011A18C /* MyPinsSearchResultExtensions.cpp in Sources */,
 				7E3B89931A385A290023C94E /* SearchQueryPerformer.cpp in Sources */,
 				7E3B89AD1A385A290023C94E /* SearchResultRemovedMessage.cpp in Sources */,
 				7E3B89271A385A290023C94E /* MyPinCreationViewStateChangedHandler.cpp in Sources */,
@@ -3877,6 +3949,7 @@
 				7E3B89951A385A290023C94E /* SearchRefreshService.cpp in Sources */,
 				7E3B88B91A385A290023C94E /* CategorySearchModel.cpp in Sources */,
 				7E3B89631A385A290023C94E /* MyPinsService.cpp in Sources */,
+				18E102851A8B85710011A18C /* SearchResultPoiPinToggledMessageHandler.cpp in Sources */,
 				7E3B8AF01A385F110023C94E /* CustomTableDataProvider.mm in Sources */,
 				7E3B898F1A385A290023C94E /* SearchQuery.cpp in Sources */,
 				7E3B89851A385A290023C94E /* ApplyScreenControl.cpp in Sources */,
@@ -3898,6 +3971,7 @@
 				7E3B89971A385A290023C94E /* SearchServiceBase.cpp in Sources */,
 				7E3B8B061A385F110023C94E /* MyPinCreationDetailsViewInterop.mm in Sources */,
 				7E3B89171A385A290023C94E /* PoiRingModule.cpp in Sources */,
+				18E1028E1A8BA12C0011A18C /* SearchResultPoiMyPinService.cpp in Sources */,
 				7E3B89251A385A290023C94E /* MyPinCreationViewSavePinHandler.cpp in Sources */,
 				7E3B88E91A385A290023C94E /* InitialExperienceController.cpp in Sources */,
 				7E3B89711A385A290023C94E /* PlaceJumpsModule.cpp in Sources */,
@@ -3912,6 +3986,7 @@
 				7E3B89F31A385A290023C94E /* WorldPinItemModel.cpp in Sources */,
 				18B22B361A7A937D00DDBFA2 /* OptionsViewModule.mm in Sources */,
 				7E3B88EB1A385A290023C94E /* InitialExperienceModel.cpp in Sources */,
+				18E102891A8B97F00011A18C /* MyPinDetailsDisplayService.cpp in Sources */,
 				7E3B89391A385A290023C94E /* MyPinCreationDetailsModule.cpp in Sources */,
 				7E3B89811A385A290023C94E /* ReactionModel.cpp in Sources */,
 				7E3B89651A385A290023C94E /* MyPinAddedToMenuObserver.cpp in Sources */,
@@ -3995,6 +4070,7 @@
 				7E3B88C21A385A290023C94E /* CompassModel.cpp in Sources */,
 				7E3B895C1A385A290023C94E /* MyPinsFileIO.cpp in Sources */,
 				7E3B89541A385A290023C94E /* MyPinModel.cpp in Sources */,
+				18E102981A8CC61C0011A18C /* SearchResultOnMapMyPinsService.cpp in Sources */,
 				7E3B8A101A385A290023C94E /* WorldPinsVisibilityMessage.cpp in Sources */,
 				7E3B89561A385A290023C94E /* MyPinSelectedMessageHandler.cpp in Sources */,
 				7E3B8AF71A385F110023C94E /* ModalBackgroundView.mm in Sources */,
@@ -4053,6 +4129,8 @@
 				7E3B88B61A385A290023C94E /* CategorySearchMenuOption.cpp in Sources */,
 				18096F611A7B8FEF006A6438 /* CacheEnabledChangedMessageHandler.cpp in Sources */,
 				7E3B88D61A385A290023C94E /* FlattenButtonModel.cpp in Sources */,
+				18E102931A8BA63C0011A18C /* SearchResultIconCategoryMapper.cpp in Sources */,
+				18E1027A1A8B64470011A18C /* SerializeSearchResultModelToJson.cpp in Sources */,
 				7E3B89CC1A385A290023C94E /* SearchResultPoiController.cpp in Sources */,
 				7E3B8B1D1A385F110023C94E /* SearchResultMenuView.mm in Sources */,
 				7E3B899A1A385A290023C94E /* SearchQueryRemovedMessage.cpp in Sources */,
@@ -4062,7 +4140,6 @@
 				18096F501A7B7F48006A6438 /* CacheEnabledChangedMessage.cpp in Sources */,
 				18096F741A7BD4B1006A6438 /* PlatformAbstractionsFacade.cpp in Sources */,
 				7E3B89AA1A385A290023C94E /* SearchResultMenuItemSelectedMessage.cpp in Sources */,
-				7E3B89C61A385A290023C94E /* SearchResultOnMapIconCategoryMapper.cpp in Sources */,
 				7E3B89281A385A290023C94E /* MyPinCreationCompositeViewModel.cpp in Sources */,
 				7E3B89721A385A290023C94E /* PlaceJumpMenuOption.cpp in Sources */,
 				7E3B89101A385A290023C94E /* MyPinCreationViewSavePinMessage.cpp in Sources */,
@@ -4082,6 +4159,7 @@
 				7E3B8B1F1A385F110023C94E /* SearchResultMenuViewModule.mm in Sources */,
 				7E3B88C01A385A290023C94E /* CompassViewCycledMessage.cpp in Sources */,
 				7E3B89601A385A290023C94E /* MyPinsRepositoryObserver.cpp in Sources */,
+				18E102801A8B84FF0011A18C /* SearchResultPoiPinToggledMessage.cpp in Sources */,
 				7E3B88F01A385A290023C94E /* MenuItemModel.cpp in Sources */,
 				7E3B89B41A385A290023C94E /* SearchResultMenuController.cpp in Sources */,
 				7E3B898C1A385A290023C94E /* SearchModule.cpp in Sources */,
@@ -4104,6 +4182,7 @@
 				7E3B8B2D1A385F110023C94E /* ViewController.mm in Sources */,
 				7E3B89D01A385A290023C94E /* SearchResultPoiOpenableControl.cpp in Sources */,
 				18B22B101A7A8B3400DDBFA2 /* OptionsOpenableControl.cpp in Sources */,
+				18E1029C1A8CCA680011A18C /* MyPinsSearchResultExtensions.cpp in Sources */,
 				7E3B89921A385A290023C94E /* SearchQueryPerformer.cpp in Sources */,
 				7E3B89AC1A385A290023C94E /* SearchResultRemovedMessage.cpp in Sources */,
 				7E3B89261A385A290023C94E /* MyPinCreationViewStateChangedHandler.cpp in Sources */,
@@ -4150,6 +4229,7 @@
 				7E3B89941A385A290023C94E /* SearchRefreshService.cpp in Sources */,
 				7E3B88B81A385A290023C94E /* CategorySearchModel.cpp in Sources */,
 				7E3B89621A385A290023C94E /* MyPinsService.cpp in Sources */,
+				18E102841A8B85710011A18C /* SearchResultPoiPinToggledMessageHandler.cpp in Sources */,
 				7E3B8AEF1A385F110023C94E /* CustomTableDataProvider.mm in Sources */,
 				7E3B898E1A385A290023C94E /* SearchQuery.cpp in Sources */,
 				7E3B89841A385A290023C94E /* ApplyScreenControl.cpp in Sources */,
@@ -4172,6 +4252,7 @@
 				56E63C721A7AAE1F00A5122E /* FlurryWrapper.mm in Sources */,
 				7E3B8B051A385F110023C94E /* MyPinCreationDetailsViewInterop.mm in Sources */,
 				7E3B89161A385A290023C94E /* PoiRingModule.cpp in Sources */,
+				18E1028D1A8BA12C0011A18C /* SearchResultPoiMyPinService.cpp in Sources */,
 				7E3B89241A385A290023C94E /* MyPinCreationViewSavePinHandler.cpp in Sources */,
 				7E3B88E81A385A290023C94E /* InitialExperienceController.cpp in Sources */,
 				7E3B89701A385A290023C94E /* PlaceJumpsModule.cpp in Sources */,
@@ -4186,6 +4267,7 @@
 				7E3B89F21A385A290023C94E /* WorldPinItemModel.cpp in Sources */,
 				18B22B351A7A937D00DDBFA2 /* OptionsViewModule.mm in Sources */,
 				7E3B88EA1A385A290023C94E /* InitialExperienceModel.cpp in Sources */,
+				18E102881A8B97F00011A18C /* MyPinDetailsDisplayService.cpp in Sources */,
 				7E3B89381A385A290023C94E /* MyPinCreationDetailsModule.cpp in Sources */,
 				7E3B89801A385A290023C94E /* ReactionModel.cpp in Sources */,
 				7E3B89641A385A290023C94E /* MyPinAddedToMenuObserver.cpp in Sources */,
