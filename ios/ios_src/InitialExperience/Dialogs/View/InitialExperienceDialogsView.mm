@@ -128,15 +128,20 @@
     
     const bool useSmallScreen = App::IsDeviceSmall();
     
-    m_borderMargin = useSmallScreen ? 0 : 64;
+    m_borderMargin = useSmallScreen ? 20 : 64;
     const float arrowWidth = 10;
-    m_arrowLength = useSmallScreen ?  30 : 70;
+    m_arrowLength = useSmallScreen ?  20 : 70;
 
     const float closeButtonSectionHeight = 50.f;
     const float shadowHeight = 10.f;
     
     const float dialogHeight = 90;
-    const float dialogWidth = (m_screenWidth - 2 * (m_arrowLength + m_borderMargin))/2;
+    float dialogWidth = (m_screenWidth - 2 * (m_arrowLength + m_borderMargin));
+    if(!useSmallScreen)
+    {
+        dialogWidth /= 2;
+    }
+    
     m_dialogContainerWidth = dialogWidth + 2 * m_arrowLength;
     m_dialogContainerHeight = dialogHeight + closeButtonSectionHeight + (2 * m_arrowLength);
     
@@ -152,7 +157,7 @@
     self.pTitleLabel.font = [UIFont systemFontOfSize:20.f];
     self.pTitleLabel.numberOfLines = 1;
     self.pTitleLabel.frame = CGRectMake(10, 10, dialogWidth - 10, 20);
-    self.pDescriptionLabel.font = [UIFont systemFontOfSize:15.f];
+    self.pDescriptionLabel.font = useSmallScreen ? [UIFont systemFontOfSize:12.f] : [UIFont systemFontOfSize:15.f];
     self.pDescriptionLabel.frame = CGRectMake(10, 30, dialogWidth - 20, 50);
     self.pDescriptionLabel.dataDetectorTypes = UIDataDetectorTypeLink;
     
@@ -177,6 +182,8 @@
     [self.pArrowUp setHidden:YES];
     [self.pArrowDown setHidden:YES];
     
+    const bool useSmallScreen = App::IsDeviceSmall();
+    
     CGPoint anchor = CGPointMake(0.5f, 0.5f);
     
     switch(dialogType)
@@ -184,31 +191,42 @@
         case ExampleApp::InitialExperience::Dialogs::InitialExperienceDialogType::SearchMenu:
             [self.pArrowRight setHidden:NO];
             anchor = CGPointMake(1.0f, 0.5f);
-            m_dialogPosition = CGPointMake(m_screenWidth - (m_dialogContainerWidth + m_borderMargin), m_borderMargin - m_arrowLength*1.5f);
+            m_dialogPosition = useSmallScreen
+                ? CGPointMake(-m_arrowLength, 0)
+                : CGPointMake(m_screenWidth - (m_dialogContainerWidth + m_borderMargin), m_borderMargin - m_arrowLength*1.5f);
             break;
             
         case ExampleApp::InitialExperience::Dialogs::InitialExperienceDialogType::PrimaryMenu:
             [self.pArrowLeft setHidden:NO];
             anchor = CGPointMake(0.0f, 0.5f);
-            m_dialogPosition = CGPointMake(m_borderMargin, m_borderMargin - m_arrowLength*1.5f);
+            m_dialogPosition = useSmallScreen
+                ? CGPointMake(m_screenWidth - m_dialogContainerWidth + m_arrowLength, 0)
+                : CGPointMake(m_borderMargin, m_borderMargin - m_arrowLength*1.5f);
             break;
             
         case ExampleApp::InitialExperience::Dialogs::InitialExperienceDialogType::Compass:
             [self.pArrowUp setHidden:NO];
             anchor = CGPointMake(0.5f, 0.0f);
-            m_dialogPosition = CGPointMake(m_screenWidth/2 - m_dialogContainerWidth/2, m_borderMargin*1.5f);
+            m_dialogPosition = useSmallScreen
+                ? CGPointMake(m_screenWidth/2 - m_dialogContainerWidth/2, m_borderMargin*3.0f)
+                : CGPointMake(m_screenWidth/2 - m_dialogContainerWidth/2, m_borderMargin*1.5f);
             break;
             
         case ExampleApp::InitialExperience::Dialogs::InitialExperienceDialogType::PinCreation:
             [self.pArrowDown setHidden:NO];
             anchor = CGPointMake(0.5f, 1.0f);
-            m_dialogPosition = CGPointMake(m_screenWidth/2 - m_dialogContainerWidth/2, m_screenHeight - (m_dialogContainerHeight + (m_borderMargin*1.5f)));
+            
+            m_dialogPosition = useSmallScreen
+                ? CGPointMake(m_screenWidth/2 - m_dialogContainerWidth/2, m_screenHeight - (m_dialogContainerHeight + (m_borderMargin*3.0f)))
+                : CGPointMake(m_screenWidth/2 - m_dialogContainerWidth/2, m_screenHeight - (m_dialogContainerHeight + (m_borderMargin*1.5f)));
             break;
             
         case ExampleApp::InitialExperience::Dialogs::InitialExperienceDialogType::Flatten:
             [self.pArrowLeft setHidden:NO];
             anchor = CGPointMake(0.0f, 0.5f);
-            m_dialogPosition = CGPointMake(m_borderMargin, m_screenHeight/2 - m_dialogContainerHeight*0.5f);
+            m_dialogPosition = useSmallScreen
+                ? CGPointMake(m_screenWidth - m_dialogContainerWidth + m_arrowLength, m_screenHeight/2 - m_dialogContainerHeight*0.5f)
+                : CGPointMake(m_borderMargin, m_screenHeight/2 - m_dialogContainerHeight*0.5f);
             break;
             
         case ExampleApp::InitialExperience::Dialogs::InitialExperienceDialogType::SourceCode:
