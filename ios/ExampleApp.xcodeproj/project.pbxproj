@@ -711,6 +711,34 @@
 		7E8F03EB1A8260B40056F229 /* gps_marker.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E8F03E91A8260B40056F229 /* gps_marker.png */; };
 		7E8F03EE1A827FAB0056F229 /* GpsMarkerVisibilityMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E8F03EC1A827FAB0056F229 /* GpsMarkerVisibilityMessage.cpp */; };
 		7E8F03EF1A827FAB0056F229 /* GpsMarkerVisibilityMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E8F03EC1A827FAB0056F229 /* GpsMarkerVisibilityMessage.cpp */; };
+		7E9B7F1E1A8D01F900C6F2E3 /* InitialExperienceDialogDismissedMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E9B7F091A8D01F900C6F2E3 /* InitialExperienceDialogDismissedMessage.cpp */; };
+		7E9B7F1F1A8D01F900C6F2E3 /* InitialExperienceDialogDismissedMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E9B7F091A8D01F900C6F2E3 /* InitialExperienceDialogDismissedMessage.cpp */; };
+		7E9B7F201A8D01F900C6F2E3 /* InitialExperienceDialogStep.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E9B7F0E1A8D01F900C6F2E3 /* InitialExperienceDialogStep.cpp */; };
+		7E9B7F211A8D01F900C6F2E3 /* InitialExperienceDialogStep.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E9B7F0E1A8D01F900C6F2E3 /* InitialExperienceDialogStep.cpp */; };
+		7E9B7F221A8D01F900C6F2E3 /* InitialExperienceDialogStepsFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E9B7F101A8D01F900C6F2E3 /* InitialExperienceDialogStepsFactory.cpp */; };
+		7E9B7F231A8D01F900C6F2E3 /* InitialExperienceDialogStepsFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E9B7F101A8D01F900C6F2E3 /* InitialExperienceDialogStepsFactory.cpp */; };
+		7E9B7F241A8D01F900C6F2E3 /* ShowInitialExperienceDialogMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E9B7F121A8D01F900C6F2E3 /* ShowInitialExperienceDialogMessage.cpp */; };
+		7E9B7F251A8D01F900C6F2E3 /* ShowInitialExperienceDialogMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E9B7F121A8D01F900C6F2E3 /* ShowInitialExperienceDialogMessage.cpp */; };
+		7E9B7F261A8D01F900C6F2E3 /* InitialExperienceDialogsController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E9B7F181A8D01F900C6F2E3 /* InitialExperienceDialogsController.cpp */; };
+		7E9B7F271A8D01F900C6F2E3 /* InitialExperienceDialogsController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E9B7F181A8D01F900C6F2E3 /* InitialExperienceDialogsController.cpp */; };
+		7E9B7F281A8D01F900C6F2E3 /* InitialExperienceDialogsModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E9B7F1A1A8D01F900C6F2E3 /* InitialExperienceDialogsModule.cpp */; };
+		7E9B7F291A8D01F900C6F2E3 /* InitialExperienceDialogsModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E9B7F1A1A8D01F900C6F2E3 /* InitialExperienceDialogsModule.cpp */; };
+		7E9B7F2A1A8D01F900C6F2E3 /* InitialExperienceDialogsViewModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E9B7F1C1A8D01F900C6F2E3 /* InitialExperienceDialogsViewModel.cpp */; };
+		7E9B7F2B1A8D01F900C6F2E3 /* InitialExperienceDialogsViewModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E9B7F1C1A8D01F900C6F2E3 /* InitialExperienceDialogsViewModel.cpp */; };
+		7E9B7F341A8D02A900C6F2E3 /* InitialExperienceDialogsViewModule.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7E9B7F321A8D02A900C6F2E3 /* InitialExperienceDialogsViewModule.mm */; };
+		7E9B7F351A8D02A900C6F2E3 /* InitialExperienceDialogsViewModule.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7E9B7F321A8D02A900C6F2E3 /* InitialExperienceDialogsViewModule.mm */; };
+		7E9B7F3A1A8D069300C6F2E3 /* InitialExperienceDialogsViewInterop.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7E9B7F381A8D069300C6F2E3 /* InitialExperienceDialogsViewInterop.mm */; };
+		7E9B7F3B1A8D069300C6F2E3 /* InitialExperienceDialogsViewInterop.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7E9B7F381A8D069300C6F2E3 /* InitialExperienceDialogsViewInterop.mm */; };
+		7E9B7F3E1A8D096200C6F2E3 /* InitialExperienceDialogsView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7E9B7F3C1A8D096200C6F2E3 /* InitialExperienceDialogsView.mm */; };
+		7E9B7F3F1A8D096200C6F2E3 /* InitialExperienceDialogsView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7E9B7F3C1A8D096200C6F2E3 /* InitialExperienceDialogsView.mm */; };
+		7E9B7F441A8E25E400C6F2E3 /* arrow3_down.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E9B7F401A8E25E400C6F2E3 /* arrow3_down.png */; };
+		7E9B7F451A8E25E400C6F2E3 /* arrow3_down.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E9B7F401A8E25E400C6F2E3 /* arrow3_down.png */; };
+		7E9B7F461A8E25E400C6F2E3 /* arrow3_left.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E9B7F411A8E25E400C6F2E3 /* arrow3_left.png */; };
+		7E9B7F471A8E25E400C6F2E3 /* arrow3_left.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E9B7F411A8E25E400C6F2E3 /* arrow3_left.png */; };
+		7E9B7F481A8E25E400C6F2E3 /* arrow3_right.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E9B7F421A8E25E400C6F2E3 /* arrow3_right.png */; };
+		7E9B7F491A8E25E400C6F2E3 /* arrow3_right.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E9B7F421A8E25E400C6F2E3 /* arrow3_right.png */; };
+		7E9B7F4A1A8E25E400C6F2E3 /* arrow3_up.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E9B7F431A8E25E400C6F2E3 /* arrow3_up.png */; };
+		7E9B7F4B1A8E25E400C6F2E3 /* arrow3_up.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E9B7F431A8E25E400C6F2E3 /* arrow3_up.png */; };
 		7EE481EB16836F370006E99B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE481EA16836F370006E99B /* UIKit.framework */; };
 		7EE481ED16836F370006E99B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE481EC16836F370006E99B /* Foundation.framework */; };
 		7EE481F116836F370006E99B /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE481F016836F370006E99B /* CoreData.framework */; };
@@ -1542,6 +1570,37 @@
 		7E8F03E91A8260B40056F229 /* gps_marker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gps_marker.png; sourceTree = "<group>"; };
 		7E8F03EC1A827FAB0056F229 /* GpsMarkerVisibilityMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GpsMarkerVisibilityMessage.cpp; sourceTree = "<group>"; };
 		7E8F03ED1A827FAB0056F229 /* GpsMarkerVisibilityMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GpsMarkerVisibilityMessage.h; sourceTree = "<group>"; };
+		7E9B7F091A8D01F900C6F2E3 /* InitialExperienceDialogDismissedMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InitialExperienceDialogDismissedMessage.cpp; sourceTree = "<group>"; };
+		7E9B7F0A1A8D01F900C6F2E3 /* InitialExperienceDialogDismissedMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InitialExperienceDialogDismissedMessage.h; sourceTree = "<group>"; };
+		7E9B7F0B1A8D01F900C6F2E3 /* InitialExperienceDialogs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InitialExperienceDialogs.h; sourceTree = "<group>"; };
+		7E9B7F0C1A8D01F900C6F2E3 /* InitialExperienceDialogType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InitialExperienceDialogType.h; sourceTree = "<group>"; };
+		7E9B7F0E1A8D01F900C6F2E3 /* InitialExperienceDialogStep.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InitialExperienceDialogStep.cpp; sourceTree = "<group>"; };
+		7E9B7F0F1A8D01F900C6F2E3 /* InitialExperienceDialogStep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InitialExperienceDialogStep.h; sourceTree = "<group>"; };
+		7E9B7F101A8D01F900C6F2E3 /* InitialExperienceDialogStepsFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InitialExperienceDialogStepsFactory.cpp; sourceTree = "<group>"; };
+		7E9B7F111A8D01F900C6F2E3 /* InitialExperienceDialogStepsFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InitialExperienceDialogStepsFactory.h; sourceTree = "<group>"; };
+		7E9B7F121A8D01F900C6F2E3 /* ShowInitialExperienceDialogMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ShowInitialExperienceDialogMessage.cpp; sourceTree = "<group>"; };
+		7E9B7F131A8D01F900C6F2E3 /* ShowInitialExperienceDialogMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShowInitialExperienceDialogMessage.h; sourceTree = "<group>"; };
+		7E9B7F151A8D01F900C6F2E3 /* IInitialExperienceDialogsModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IInitialExperienceDialogsModule.h; sourceTree = "<group>"; };
+		7E9B7F161A8D01F900C6F2E3 /* IInitialExperienceDialogsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IInitialExperienceDialogsView.h; sourceTree = "<group>"; };
+		7E9B7F171A8D01F900C6F2E3 /* IInitialExperienceDialogsViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IInitialExperienceDialogsViewModel.h; sourceTree = "<group>"; };
+		7E9B7F181A8D01F900C6F2E3 /* InitialExperienceDialogsController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InitialExperienceDialogsController.cpp; sourceTree = "<group>"; };
+		7E9B7F191A8D01F900C6F2E3 /* InitialExperienceDialogsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InitialExperienceDialogsController.h; sourceTree = "<group>"; };
+		7E9B7F1A1A8D01F900C6F2E3 /* InitialExperienceDialogsModule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InitialExperienceDialogsModule.cpp; sourceTree = "<group>"; };
+		7E9B7F1B1A8D01F900C6F2E3 /* InitialExperienceDialogsModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InitialExperienceDialogsModule.h; sourceTree = "<group>"; };
+		7E9B7F1C1A8D01F900C6F2E3 /* InitialExperienceDialogsViewModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InitialExperienceDialogsViewModel.cpp; sourceTree = "<group>"; };
+		7E9B7F1D1A8D01F900C6F2E3 /* InitialExperienceDialogsViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InitialExperienceDialogsViewModel.h; sourceTree = "<group>"; };
+		7E9B7F321A8D02A900C6F2E3 /* InitialExperienceDialogsViewModule.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = InitialExperienceDialogsViewModule.mm; sourceTree = "<group>"; };
+		7E9B7F331A8D02A900C6F2E3 /* InitialExperienceDialogsViewModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InitialExperienceDialogsViewModule.h; sourceTree = "<group>"; };
+		7E9B7F361A8D03FE00C6F2E3 /* InitialExperienceDialogsViewIncludes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InitialExperienceDialogsViewIncludes.h; sourceTree = "<group>"; };
+		7E9B7F371A8D047F00C6F2E3 /* IInitialExperienceDialogsViewModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IInitialExperienceDialogsViewModule.h; sourceTree = "<group>"; };
+		7E9B7F381A8D069300C6F2E3 /* InitialExperienceDialogsViewInterop.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = InitialExperienceDialogsViewInterop.mm; sourceTree = "<group>"; };
+		7E9B7F391A8D069300C6F2E3 /* InitialExperienceDialogsViewInterop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InitialExperienceDialogsViewInterop.h; sourceTree = "<group>"; };
+		7E9B7F3C1A8D096200C6F2E3 /* InitialExperienceDialogsView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = InitialExperienceDialogsView.mm; sourceTree = "<group>"; };
+		7E9B7F3D1A8D096200C6F2E3 /* InitialExperienceDialogsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InitialExperienceDialogsView.h; sourceTree = "<group>"; };
+		7E9B7F401A8E25E400C6F2E3 /* arrow3_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow3_down.png; sourceTree = "<group>"; };
+		7E9B7F411A8E25E400C6F2E3 /* arrow3_left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow3_left.png; sourceTree = "<group>"; };
+		7E9B7F421A8E25E400C6F2E3 /* arrow3_right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow3_right.png; sourceTree = "<group>"; };
+		7E9B7F431A8E25E400C6F2E3 /* arrow3_up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow3_up.png; sourceTree = "<group>"; };
 		7EE481E616836F370006E99B /* ExampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7EE481EA16836F370006E99B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		7EE481EC16836F370006E99B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -1995,6 +2054,7 @@
 		7E3B86C71A385A290023C94E /* InitialExperience */ = {
 			isa = PBXGroup;
 			children = (
+				7E9B7F081A8D01F900C6F2E3 /* Dialogs */,
 				7E3B86C81A385A290023C94E /* Preload */,
 				7E3B86CF1A385A290023C94E /* SdkModel */,
 			);
@@ -2979,9 +3039,10 @@
 		7E3B8A441A385F100023C94E /* InitialExperience */ = {
 			isa = PBXGroup;
 			children = (
+				7E3B8A471A385F100023C94E /* Preload */,
+				7E9B7F301A8D02A900C6F2E3 /* Dialogs */,
 				7E3B8A451A385F100023C94E /* iOSInitialExperienceModule.cpp */,
 				7E3B8A461A385F100023C94E /* iOSInitialExperienceModule.h */,
-				7E3B8A471A385F100023C94E /* Preload */,
 			);
 			path = InitialExperience;
 			sourceTree = "<group>";
@@ -3297,6 +3358,71 @@
 			path = SdkModel;
 			sourceTree = "<group>";
 		};
+		7E9B7F081A8D01F900C6F2E3 /* Dialogs */ = {
+			isa = PBXGroup;
+			children = (
+				7E9B7F0B1A8D01F900C6F2E3 /* InitialExperienceDialogs.h */,
+				7E9B7F0C1A8D01F900C6F2E3 /* InitialExperienceDialogType.h */,
+				7E9B7F091A8D01F900C6F2E3 /* InitialExperienceDialogDismissedMessage.cpp */,
+				7E9B7F0A1A8D01F900C6F2E3 /* InitialExperienceDialogDismissedMessage.h */,
+				7E9B7F121A8D01F900C6F2E3 /* ShowInitialExperienceDialogMessage.cpp */,
+				7E9B7F131A8D01F900C6F2E3 /* ShowInitialExperienceDialogMessage.h */,
+				7E9B7F0D1A8D01F900C6F2E3 /* SdkModel */,
+				7E9B7F141A8D01F900C6F2E3 /* View */,
+			);
+			path = Dialogs;
+			sourceTree = "<group>";
+		};
+		7E9B7F0D1A8D01F900C6F2E3 /* SdkModel */ = {
+			isa = PBXGroup;
+			children = (
+				7E9B7F0E1A8D01F900C6F2E3 /* InitialExperienceDialogStep.cpp */,
+				7E9B7F0F1A8D01F900C6F2E3 /* InitialExperienceDialogStep.h */,
+				7E9B7F101A8D01F900C6F2E3 /* InitialExperienceDialogStepsFactory.cpp */,
+				7E9B7F111A8D01F900C6F2E3 /* InitialExperienceDialogStepsFactory.h */,
+			);
+			path = SdkModel;
+			sourceTree = "<group>";
+		};
+		7E9B7F141A8D01F900C6F2E3 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				7E9B7F151A8D01F900C6F2E3 /* IInitialExperienceDialogsModule.h */,
+				7E9B7F161A8D01F900C6F2E3 /* IInitialExperienceDialogsView.h */,
+				7E9B7F171A8D01F900C6F2E3 /* IInitialExperienceDialogsViewModel.h */,
+				7E9B7F181A8D01F900C6F2E3 /* InitialExperienceDialogsController.cpp */,
+				7E9B7F191A8D01F900C6F2E3 /* InitialExperienceDialogsController.h */,
+				7E9B7F1A1A8D01F900C6F2E3 /* InitialExperienceDialogsModule.cpp */,
+				7E9B7F1B1A8D01F900C6F2E3 /* InitialExperienceDialogsModule.h */,
+				7E9B7F1C1A8D01F900C6F2E3 /* InitialExperienceDialogsViewModel.cpp */,
+				7E9B7F1D1A8D01F900C6F2E3 /* InitialExperienceDialogsViewModel.h */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		7E9B7F301A8D02A900C6F2E3 /* Dialogs */ = {
+			isa = PBXGroup;
+			children = (
+				7E9B7F311A8D02A900C6F2E3 /* View */,
+			);
+			path = Dialogs;
+			sourceTree = "<group>";
+		};
+		7E9B7F311A8D02A900C6F2E3 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				7E9B7F371A8D047F00C6F2E3 /* IInitialExperienceDialogsViewModule.h */,
+				7E9B7F321A8D02A900C6F2E3 /* InitialExperienceDialogsViewModule.mm */,
+				7E9B7F331A8D02A900C6F2E3 /* InitialExperienceDialogsViewModule.h */,
+				7E9B7F361A8D03FE00C6F2E3 /* InitialExperienceDialogsViewIncludes.h */,
+				7E9B7F381A8D069300C6F2E3 /* InitialExperienceDialogsViewInterop.mm */,
+				7E9B7F391A8D069300C6F2E3 /* InitialExperienceDialogsViewInterop.h */,
+				7E9B7F3C1A8D096200C6F2E3 /* InitialExperienceDialogsView.mm */,
+				7E9B7F3D1A8D096200C6F2E3 /* InitialExperienceDialogsView.h */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		7EE481DB16836F360006E99B = {
 			isa = PBXGroup;
 			children = (
@@ -3374,6 +3500,10 @@
 		7EE4825B16847E7C0006E99B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				7E9B7F401A8E25E400C6F2E3 /* arrow3_down.png */,
+				7E9B7F411A8E25E400C6F2E3 /* arrow3_left.png */,
+				7E9B7F421A8E25E400C6F2E3 /* arrow3_right.png */,
+				7E9B7F431A8E25E400C6F2E3 /* arrow3_up.png */,
 				7E8F03E91A8260B40056F229 /* gps_marker.png */,
 				56CF26861A24776600B30439 /* icon_create_poi.png */,
 				56A3DCD71A239BD000110FDD /* button_gallery_off.png */,
@@ -3569,6 +3699,7 @@
 				18B5ACD619DC15CD00BA4A38 /* icon2_park.png in Resources */,
 				18B5AC9A19DC15CD00BA4A38 /* icon1_bank.png in Resources */,
 				7E8F03EB1A8260B40056F229 /* gps_marker.png in Resources */,
+				7E9B7F491A8E25E400C6F2E3 /* arrow3_right.png in Resources */,
 				56F28E831A261DA70061C7BF /* button_checkbox_on.png in Resources */,
 				186D2936196D9E4B00E004E0 /* placeholder.pvr in Resources */,
 				186D2937196D9E4B00E004E0 /* FrankBold50_A8_icons_0.png in Resources */,
@@ -3580,11 +3711,14 @@
 				18B5ACAE19DC15CD00BA4A38 /* icon1_night.png in Resources */,
 				56A3DCE21A239BD100110FDD /* button_gallery_on.png in Resources */,
 				18B5AC8619DC15CD00BA4A38 /* button_streets_off.png in Resources */,
+				7E9B7F451A8E25E400C6F2E3 /* arrow3_down.png in Resources */,
 				18B5ACFC19DC15CD00BA4A38 /* weatherstates.json in Resources */,
 				18B5ACA019DC15CD00BA4A38 /* icon1_day.png in Resources */,
 				18B5ACC819DC15CD00BA4A38 /* icon2_arts.png in Resources */,
 				222E06991948B08B0004FFD9 /* InfoPlist.strings in Resources */,
 				18B5ACAC19DC15CD00BA4A38 /* icon1_misc.png in Resources */,
+				7E9B7F471A8E25E400C6F2E3 /* arrow3_left.png in Resources */,
+				7E9B7F4B1A8E25E400C6F2E3 /* arrow3_up.png in Resources */,
 				222E069A1948B08B0004FFD9 /* MainStoryboard_iPhone.storyboard in Resources */,
 				56A3DCE41A239BD100110FDD /* button_ok_off.png in Resources */,
 				18B5ACB819DC15CD00BA4A38 /* icon1_rainy.png in Resources */,
@@ -3653,6 +3787,7 @@
 				18B5AC8319DC15CD00BA4A38 /* button_close_on.png in Resources */,
 				180E99FA19E67E64007D63FD /* arrow2.png in Resources */,
 				7E8F03EA1A8260B40056F229 /* gps_marker.png in Resources */,
+				7E9B7F481A8E25E400C6F2E3 /* arrow3_right.png in Resources */,
 				18B5ACFE19DC160E00BA4A38 /* SearchResultOnMap in Resources */,
 				18B5ACF719DC15CD00BA4A38 /* shadow_01.png in Resources */,
 				18B5ACD519DC15CD00BA4A38 /* icon2_park.png in Resources */,
@@ -3664,11 +3799,14 @@
 				18B5ACD319DC15CD00BA4A38 /* icon2_nightlife.png in Resources */,
 				18B5ACAD19DC15CD00BA4A38 /* icon1_night.png in Resources */,
 				18B5AC8519DC15CD00BA4A38 /* button_streets_off.png in Resources */,
+				7E9B7F441A8E25E400C6F2E3 /* arrow3_down.png in Resources */,
 				18B5ACFB19DC15CD00BA4A38 /* weatherstates.json in Resources */,
 				18B5AC9F19DC15CD00BA4A38 /* icon1_day.png in Resources */,
 				18B5ACC719DC15CD00BA4A38 /* icon2_arts.png in Resources */,
 				18D1D355194A057200FAA1B9 /* FrankBold50_A8_icons.fnt in Resources */,
 				56A3DCDF1A239BD100110FDD /* button_gallery_off.png in Resources */,
+				7E9B7F461A8E25E400C6F2E3 /* arrow3_left.png in Resources */,
+				7E9B7F4A1A8E25E400C6F2E3 /* arrow3_up.png in Resources */,
 				56A3DCE51A239BD100110FDD /* button_ok_on.png in Resources */,
 				18B5ACAB19DC15CD00BA4A38 /* icon1_misc.png in Resources */,
 				18D1D354194A057200FAA1B9 /* FrankBold50_A8_icons_0.png in Resources */,
@@ -3697,6 +3835,7 @@
 				7E3B894D1A385A290023C94E /* MyPinDetailsViewModel.cpp in Sources */,
 				7E3B8A071A385A290023C94E /* WorldPinInFocusViewModel.cpp in Sources */,
 				7E3B89231A385A290023C94E /* MyPinCreationModule.cpp in Sources */,
+				7E9B7F251A8D01F900C6F2E3 /* ShowInitialExperienceDialogMessage.cpp in Sources */,
 				7E3B88A71A385A290023C94E /* AboutPageController.cpp in Sources */,
 				18096F4E1A7B7F39006A6438 /* StreamOverWifiOnlyChangedMessage.cpp in Sources */,
 				7E3B8AD21A385F110023C94E /* AppRunner.mm in Sources */,
@@ -3710,6 +3849,7 @@
 				18B44CDF1A83B64200FDFD8A /* CompletedCacheClearMessage.cpp in Sources */,
 				7E3B89B71A385A290023C94E /* SearchResultMenuSearchQueryPerformedMessageHandler.cpp in Sources */,
 				7E3B88B31A385A290023C94E /* CategorySearchModule.cpp in Sources */,
+				7E9B7F271A8D01F900C6F2E3 /* InitialExperienceDialogsController.cpp in Sources */,
 				18B22B401A7AA0BC00DDBFA2 /* UILabelledCheckboxView.mm in Sources */,
 				7E3B8B321A385F110023C94E /* WorldPinOnMapView.mm in Sources */,
 				7E3B8B361A385F110023C94E /* WorldPinOnMapViewModule.mm in Sources */,
@@ -3721,6 +3861,7 @@
 				7E3B89331A385A290023C94E /* MyPinCreationInitiationViewModel.cpp in Sources */,
 				7E3B88C31A385A290023C94E /* CompassModel.cpp in Sources */,
 				7E3B895D1A385A290023C94E /* MyPinsFileIO.cpp in Sources */,
+				7E9B7F3B1A8D069300C6F2E3 /* InitialExperienceDialogsViewInterop.mm in Sources */,
 				7E3B89551A385A290023C94E /* MyPinModel.cpp in Sources */,
 				7E3B8A111A385A290023C94E /* WorldPinsVisibilityMessage.cpp in Sources */,
 				7E3B89571A385A290023C94E /* MyPinSelectedMessageHandler.cpp in Sources */,
@@ -3753,6 +3894,7 @@
 				226BEBD11A38A2AC00569A55 /* PrimaryMenuViewModule.mm in Sources */,
 				7E3B88DD1A385A290023C94E /* FlattenButtonViewStateChangedObserver.cpp in Sources */,
 				7E3B8B261A385F110023C94E /* SearchResultPoiViewInterop.mm in Sources */,
+				7E9B7F3F1A8D096200C6F2E3 /* InitialExperienceDialogsView.mm in Sources */,
 				7E3B8A0D1A385A290023C94E /* WorldPinInFocusChangedLocationMessage.cpp in Sources */,
 				7E3B89FB1A385A290023C94E /* WorldPinsModalityObserver.cpp in Sources */,
 				7E3B89E71A385A290023C94E /* WeatherSelectedMessageHandler.cpp in Sources */,
@@ -3762,6 +3904,7 @@
 				7E3B89F11A385A290023C94E /* WorldAreaLoaderModule.cpp in Sources */,
 				7E3B8A011A385A290023C94E /* WorldPinsService.cpp in Sources */,
 				7E3B8ACA1A385F110023C94E /* AboutPageViewModule.mm in Sources */,
+				7E9B7F291A8D01F900C6F2E3 /* InitialExperienceDialogsModule.cpp in Sources */,
 				7E3B89191A385A290023C94E /* PoiRingRenderable.cpp in Sources */,
 				7E3B88D31A385A290023C94E /* FlattenButtonModelStateChangedMessage.cpp in Sources */,
 				7E3B8AD81A385F110023C94E /* CompassViewModule.mm in Sources */,
@@ -3791,6 +3934,7 @@
 				7E3B89AB1A385A290023C94E /* SearchResultMenuItemSelectedMessage.cpp in Sources */,
 				7E3B89C71A385A290023C94E /* SearchResultOnMapIconCategoryMapper.cpp in Sources */,
 				7E3B89291A385A290023C94E /* MyPinCreationCompositeViewModel.cpp in Sources */,
+				7E9B7F231A8D01F900C6F2E3 /* InitialExperienceDialogStepsFactory.cpp in Sources */,
 				7E3B89731A385A290023C94E /* PlaceJumpMenuOption.cpp in Sources */,
 				7E3B89111A385A290023C94E /* MyPinCreationViewSavePinMessage.cpp in Sources */,
 				7E3B89491A385A290023C94E /* MyPinDetailsModelSelectedObserver.cpp in Sources */,
@@ -3811,6 +3955,7 @@
 				7E3B89611A385A290023C94E /* MyPinsRepositoryObserver.cpp in Sources */,
 				7E3B88F11A385A290023C94E /* MenuItemModel.cpp in Sources */,
 				7E3B89B51A385A290023C94E /* SearchResultMenuController.cpp in Sources */,
+				7E9B7F351A8D02A900C6F2E3 /* InitialExperienceDialogsViewModule.mm in Sources */,
 				7E3B898D1A385A290023C94E /* SearchModule.cpp in Sources */,
 				7E3B89371A385A290023C94E /* MyPinCreationDetailsController.cpp in Sources */,
 				7E3B88ED1A385A290023C94E /* InitialExperienceModuleBase.cpp in Sources */,
@@ -3840,9 +3985,11 @@
 				7E3B88BB1A385A290023C94E /* CategorySearchRepository.cpp in Sources */,
 				7E3B88C71A385A290023C94E /* CompassModule.cpp in Sources */,
 				7E3B8AEE1A385F110023C94E /* Main.m in Sources */,
+				7E9B7F211A8D01F900C6F2E3 /* InitialExperienceDialogStep.cpp in Sources */,
 				7E3B89FF1A385A290023C94E /* WorldPinsScaleController.cpp in Sources */,
 				7E3B89D71A385A290023C94E /* PerformedSearchMessageHandler.cpp in Sources */,
 				7E3B894B1A385A290023C94E /* MyPinDetailsOpenableControl.cpp in Sources */,
+				7E9B7F2B1A8D01F900C6F2E3 /* InitialExperienceDialogsViewModel.cpp in Sources */,
 				7E3B89CF1A385A290023C94E /* SearchResultPoiModule.cpp in Sources */,
 				7E3B8AE21A385F110023C94E /* IconResources.cpp in Sources */,
 				7E3B8A031A385A290023C94E /* WorldPinInFocusObserver.cpp in Sources */,
@@ -3933,6 +4080,7 @@
 				7E3B8B2A1A385F110023C94E /* SecondaryMenuView.mm in Sources */,
 				7E3B8B0A1A385F110023C94E /* MyPinCreationInitiationView.mm in Sources */,
 				7E3B8B0C1A385F110023C94E /* MyPinCreationInitiationViewInterop.mm in Sources */,
+				7E9B7F1F1A8D01F900C6F2E3 /* InitialExperienceDialogDismissedMessage.cpp in Sources */,
 				7E3B89C51A385A290023C94E /* SearchResultOnMapFactory.cpp in Sources */,
 				7E3B890B1A385A290023C94E /* ModalityModule.cpp in Sources */,
 				7E3B88A91A385A290023C94E /* AboutPageModule.cpp in Sources */,
@@ -3970,6 +4118,7 @@
 				7E3B894C1A385A290023C94E /* MyPinDetailsViewModel.cpp in Sources */,
 				7E3B8A061A385A290023C94E /* WorldPinInFocusViewModel.cpp in Sources */,
 				7E3B89221A385A290023C94E /* MyPinCreationModule.cpp in Sources */,
+				7E9B7F241A8D01F900C6F2E3 /* ShowInitialExperienceDialogMessage.cpp in Sources */,
 				7E3B88A61A385A290023C94E /* AboutPageController.cpp in Sources */,
 				18096F4D1A7B7F39006A6438 /* StreamOverWifiOnlyChangedMessage.cpp in Sources */,
 				7E3B8AD11A385F110023C94E /* AppRunner.mm in Sources */,
@@ -3983,6 +4132,7 @@
 				18B44CDE1A83B64200FDFD8A /* CompletedCacheClearMessage.cpp in Sources */,
 				7E3B89B61A385A290023C94E /* SearchResultMenuSearchQueryPerformedMessageHandler.cpp in Sources */,
 				7E3B88B21A385A290023C94E /* CategorySearchModule.cpp in Sources */,
+				7E9B7F261A8D01F900C6F2E3 /* InitialExperienceDialogsController.cpp in Sources */,
 				18B22B3F1A7AA0BC00DDBFA2 /* UILabelledCheckboxView.mm in Sources */,
 				7E3B8B311A385F110023C94E /* WorldPinOnMapView.mm in Sources */,
 				7E3B8B351A385F110023C94E /* WorldPinOnMapViewModule.mm in Sources */,
@@ -3994,6 +4144,7 @@
 				7E3B89321A385A290023C94E /* MyPinCreationInitiationViewModel.cpp in Sources */,
 				7E3B88C21A385A290023C94E /* CompassModel.cpp in Sources */,
 				7E3B895C1A385A290023C94E /* MyPinsFileIO.cpp in Sources */,
+				7E9B7F3A1A8D069300C6F2E3 /* InitialExperienceDialogsViewInterop.mm in Sources */,
 				7E3B89541A385A290023C94E /* MyPinModel.cpp in Sources */,
 				7E3B8A101A385A290023C94E /* WorldPinsVisibilityMessage.cpp in Sources */,
 				7E3B89561A385A290023C94E /* MyPinSelectedMessageHandler.cpp in Sources */,
@@ -4026,6 +4177,7 @@
 				226BEBD01A38A2AC00569A55 /* PrimaryMenuViewModule.mm in Sources */,
 				7E3B88DC1A385A290023C94E /* FlattenButtonViewStateChangedObserver.cpp in Sources */,
 				7E3B8B251A385F110023C94E /* SearchResultPoiViewInterop.mm in Sources */,
+				7E9B7F3E1A8D096200C6F2E3 /* InitialExperienceDialogsView.mm in Sources */,
 				7E3B8A0C1A385A290023C94E /* WorldPinInFocusChangedLocationMessage.cpp in Sources */,
 				7E3B89FA1A385A290023C94E /* WorldPinsModalityObserver.cpp in Sources */,
 				7E3B89E61A385A290023C94E /* WeatherSelectedMessageHandler.cpp in Sources */,
@@ -4035,6 +4187,7 @@
 				7E3B89F01A385A290023C94E /* WorldAreaLoaderModule.cpp in Sources */,
 				7E3B8A001A385A290023C94E /* WorldPinsService.cpp in Sources */,
 				7E3B8AC91A385F110023C94E /* AboutPageViewModule.mm in Sources */,
+				7E9B7F281A8D01F900C6F2E3 /* InitialExperienceDialogsModule.cpp in Sources */,
 				7E3B89181A385A290023C94E /* PoiRingRenderable.cpp in Sources */,
 				7E3B88D21A385A290023C94E /* FlattenButtonModelStateChangedMessage.cpp in Sources */,
 				7E3B8AD71A385F110023C94E /* CompassViewModule.mm in Sources */,
@@ -4064,6 +4217,7 @@
 				7E3B89AA1A385A290023C94E /* SearchResultMenuItemSelectedMessage.cpp in Sources */,
 				7E3B89C61A385A290023C94E /* SearchResultOnMapIconCategoryMapper.cpp in Sources */,
 				7E3B89281A385A290023C94E /* MyPinCreationCompositeViewModel.cpp in Sources */,
+				7E9B7F221A8D01F900C6F2E3 /* InitialExperienceDialogStepsFactory.cpp in Sources */,
 				7E3B89721A385A290023C94E /* PlaceJumpMenuOption.cpp in Sources */,
 				7E3B89101A385A290023C94E /* MyPinCreationViewSavePinMessage.cpp in Sources */,
 				7E3B89481A385A290023C94E /* MyPinDetailsModelSelectedObserver.cpp in Sources */,
@@ -4084,6 +4238,7 @@
 				7E3B89601A385A290023C94E /* MyPinsRepositoryObserver.cpp in Sources */,
 				7E3B88F01A385A290023C94E /* MenuItemModel.cpp in Sources */,
 				7E3B89B41A385A290023C94E /* SearchResultMenuController.cpp in Sources */,
+				7E9B7F341A8D02A900C6F2E3 /* InitialExperienceDialogsViewModule.mm in Sources */,
 				7E3B898C1A385A290023C94E /* SearchModule.cpp in Sources */,
 				7E3B89361A385A290023C94E /* MyPinCreationDetailsController.cpp in Sources */,
 				7E3B88EC1A385A290023C94E /* InitialExperienceModuleBase.cpp in Sources */,
@@ -4113,9 +4268,11 @@
 				7E3B88BA1A385A290023C94E /* CategorySearchRepository.cpp in Sources */,
 				7E3B88C61A385A290023C94E /* CompassModule.cpp in Sources */,
 				7E3B8AED1A385F110023C94E /* Main.m in Sources */,
+				7E9B7F201A8D01F900C6F2E3 /* InitialExperienceDialogStep.cpp in Sources */,
 				7E3B89FE1A385A290023C94E /* WorldPinsScaleController.cpp in Sources */,
 				7E3B89D61A385A290023C94E /* PerformedSearchMessageHandler.cpp in Sources */,
 				7E3B894A1A385A290023C94E /* MyPinDetailsOpenableControl.cpp in Sources */,
+				7E9B7F2A1A8D01F900C6F2E3 /* InitialExperienceDialogsViewModel.cpp in Sources */,
 				7E3B89CE1A385A290023C94E /* SearchResultPoiModule.cpp in Sources */,
 				7E3B8AE11A385F110023C94E /* IconResources.cpp in Sources */,
 				7E3B8A021A385A290023C94E /* WorldPinInFocusObserver.cpp in Sources */,
@@ -4206,6 +4363,7 @@
 				7E3B88AA1A385A290023C94E /* AboutPageOpenableControl.cpp in Sources */,
 				7E3B8B291A385F110023C94E /* SecondaryMenuView.mm in Sources */,
 				7E3B8B091A385F110023C94E /* MyPinCreationInitiationView.mm in Sources */,
+				7E9B7F1E1A8D01F900C6F2E3 /* InitialExperienceDialogDismissedMessage.cpp in Sources */,
 				7E3B8B0B1A385F110023C94E /* MyPinCreationInitiationViewInterop.mm in Sources */,
 				7E3B89C41A385A290023C94E /* SearchResultOnMapFactory.cpp in Sources */,
 				7E3B890A1A385A290023C94E /* ModalityModule.cpp in Sources */,

@@ -59,6 +59,9 @@
 #include "OptionsViewModule.h"
 #include "OptionsView.h"
 #include "NetworkCapabilities.h"
+#include "InitialExperienceDialogsViewModule.h"
+#include "InitialExperienceDialogsModule.h"
+#include "InitialExperienceDialogsView.h"
 
 using namespace Eegeo::iOS;
 
@@ -94,7 +97,7 @@ AppHost::AppHost(
     Eegeo::Config::PlatformConfig platformConfig = Eegeo::iOS::iOSPlatformConfigBuilder(App::GetDevice(), App::IsDeviceMultiCore(), App::GetMajorSystemVersion()).Build();
     platformConfig.OptionsConfig.StartMapModuleAutomatically = false;
 
-    m_pInitialExperienceModule = Eegeo_NEW(ExampleApp::InitialExperience::iOSInitialExperienceModule)(m_iOSPersistentSettingsModel);
+    m_pInitialExperienceModule = Eegeo_NEW(ExampleApp::InitialExperience::iOSInitialExperienceModule)(m_iOSPersistentSettingsModel, m_messageBus);
     
     m_pNetworkCapabilities = Eegeo_NEW(ExampleApp::Net::SdkModel::NetworkCapabilities)(*m_piOSConnectivityService,
                                                                                        m_piOSPlatformAbstractionModule->GetHttpCache(),
@@ -270,6 +273,8 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
     m_pMyPinDetailsViewModule = Eegeo_NEW(ExampleApp::MyPinDetails::View::MyPinDetailsViewModule)(m_messageBus,
                                 app.MyPinDetailsModule().GetMyPinDetailsViewModel(),
                                 screenProperties);
+    
+    m_pInitialExperienceDialogsViewModule = Eegeo_NEW(ExampleApp::InitialExperience::Dialogs::View::InitialExperienceDialogsViewModule)(app.InitialExperienceDialogsModule().GetDialogsViewModel() ,m_messageBus);
 
     // 3d map view layer.
     [m_pView addSubview: &m_pWorldPinOnMapViewModule->GetWorldPinOnMapView()];
@@ -294,6 +299,9 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
     [m_pView addSubview: &m_pOptionsViewModule->GetOptionsView()];
     [m_pView addSubview: &m_pMyPinCreationDetailsViewModule->GetMyPinCreationDetailsView()];
     [m_pView addSubview: &m_pMyPinDetailsViewModule->GetMyPinDetailsView()];
+    
+    // Initial experience layer
+    [m_pView addSubview: &m_pInitialExperienceDialogsViewModule->GetDialogsView()];
 
     m_pViewControllerUpdaterModule = Eegeo_NEW(ExampleApp::ViewControllerUpdater::View::ViewControllerUpdaterModule);
     ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModel& viewControllerUpdaterModel = m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel();
@@ -328,6 +336,9 @@ void AppHost::DestroyApplicationViewModules()
     [&m_pSearchResultPoiViewModule->GetView() removeFromSuperview];
     [&m_pAboutPageViewModule->GetAboutPageView() removeFromSuperview];
     [&m_pOptionsViewModule->GetOptionsView() removeFromSuperview];
+    
+    // Initial experience layer
+    [&m_pInitialExperienceDialogsViewModule->GetDialogsView() removeFromSuperview];
 
     Eegeo_DELETE m_pViewControllerUpdaterModule;
 
@@ -356,5 +367,7 @@ void AppHost::DestroyApplicationViewModules()
     Eegeo_DELETE m_pPrimaryMenuViewModule;
 
     Eegeo_DELETE m_pFlattenButtonViewModule;
+    
+    Eegeo_DELETE m_pInitialExperienceDialogsViewModule;
 }
 
