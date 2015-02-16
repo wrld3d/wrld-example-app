@@ -36,6 +36,7 @@
 #include "MyPinDetailsViewIncludes.h"
 #include "iOSConnectivityService.h"
 #include "OptionsViewIncludes.h"
+#include "InitialExperienceDialogsViewIncludes.h"
 #include "NetIncludes.h"
 
 @class ViewController;
@@ -94,6 +95,7 @@ private:
     ExampleApp::MyPinCreationDetails::View::IMyPinCreationDetailsViewModule* m_pMyPinCreationDetailsViewModule;
     ExampleApp::MyPinDetails::View::IMyPinDetailsViewModule* m_pMyPinDetailsViewModule;
     ExampleApp::Options::View::IOptionsViewModule* m_pOptionsViewModule;
+    ExampleApp::InitialExperience::Dialogs::View::IInitialExperienceDialogsViewModule* m_pInitialExperienceDialogsViewModule;
     ExampleApp::Net::SdkModel::INetworkCapabilities* m_pNetworkCapabilities;
 
     ExampleApp::MobileExampleApp* m_pApp;

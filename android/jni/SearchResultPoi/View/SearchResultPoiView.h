@@ -18,15 +18,17 @@ namespace ExampleApp
             private:
                 AndroidNativeState& m_nativeState;
                 Eegeo::Helpers::CallbackCollection0 m_closedCallbacks;
+                Eegeo::Helpers::CallbackCollection1<Search::SdkModel::SearchResultModel> m_togglePinClickedCallbacks;
 
                 jclass m_uiViewClass;
                 jobject m_uiView;
+                Search::SdkModel::SearchResultModel m_model;
             public:
                 SearchResultPoiView(AndroidNativeState& nativeState);
 
                 ~SearchResultPoiView();
 
-                void Show(const Search::SdkModel::SearchResultModel model);
+                void Show(const Search::SdkModel::SearchResultModel model, bool isPinned);
 
                 void Hide();
 
@@ -35,6 +37,12 @@ namespace ExampleApp
                 void RemoveClosedCallback(Eegeo::Helpers::ICallback0& callback);
 
                 void HandleCloseClicked();
+
+                void InsertTogglePinnedCallback(Eegeo::Helpers::ICallback1<Search::SdkModel::SearchResultModel>& callback);
+
+                void RemoveTogglePinnedCallback(Eegeo::Helpers::ICallback1<Search::SdkModel::SearchResultModel>& callback);
+
+                void HandlePinToggleClicked();
             };
         }
     }

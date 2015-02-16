@@ -46,9 +46,11 @@ namespace ExampleApp
                 env->DeleteGlobalRef(m_uiViewClass);
             }
 
-            void SearchResultPoiView::Show(const Search::SdkModel::SearchResultModel model)
+            void SearchResultPoiView::Show(const Search::SdkModel::SearchResultModel model, bool isPinned)
             {
                 ASSERT_UI_THREAD
+
+                m_model = model;
 
                 AndroidSafeNativeThreadAttachment attached(m_nativeState);
                 JNIEnv* env = attached.envForThread;
@@ -59,8 +61,8 @@ namespace ExampleApp
                 jstring urlStr = env->NewStringUTF(model.GetWebUrl().c_str());
                 jstring categoryStr = env->NewStringUTF(model.GetCategory().c_str());
 
-                jmethodID displayPoiInfo = env->GetMethodID(m_uiViewClass, "displayPoiInfo", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V");
-                env->CallVoidMethod(m_uiView, displayPoiInfo, titleStr, addressStr, phoneStr, urlStr, categoryStr);
+                jmethodID displayPoiInfo = env->GetMethodID(m_uiViewClass, "displayPoiInfo", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)V");
+                env->CallVoidMethod(m_uiView, displayPoiInfo, titleStr, addressStr, phoneStr, urlStr, categoryStr, isPinned);
 
                 env->DeleteLocalRef(urlStr);
                 env->DeleteLocalRef(phoneStr);
@@ -99,6 +101,27 @@ namespace ExampleApp
                 ASSERT_UI_THREAD
 
                 m_closedCallbacks.ExecuteCallbacks();
+            }
+
+            void SearchResultPoiView::InsertTogglePinnedCallback(Eegeo::Helpers::ICallback1<Search::SdkModel::SearchResultModel>& callback)
+            {
+                ASSERT_UI_THREAD
+
+                m_togglePinClickedCallbacks.AddCallback(callback);
+            }
+
+            void SearchResultPoiView::RemoveTogglePinnedCallback(Eegeo::Helpers::ICallback1<Search::SdkModel::SearchResultModel>& callback)
+            {
+                ASSERT_UI_THREAD
+
+                m_togglePinClickedCallbacks.RemoveCallback(callback);
+            }
+
+            void SearchResultPoiView::HandlePinToggleClicked()
+            {
+                ASSERT_UI_THREAD
+
+                m_togglePinClickedCallbacks.ExecuteCallbacks(m_model);
             }
         }
     }

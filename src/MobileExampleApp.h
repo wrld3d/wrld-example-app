@@ -66,6 +66,7 @@
 #include "PlatformAbstractionsFacade.h"
 #include "NetIncludes.h"
 #include "GpsMarker.h"
+#include "InitialExperienceDialogs.h"
 
 namespace ExampleApp
 {
@@ -110,6 +111,7 @@ namespace ExampleApp
         ExampleApp::WorldAreaLoader::SdkModel::IWorldAreaLoaderModule* m_pWorldAreaLoaderModule;
         ExampleApp::AboutPage::View::IAboutPageModule* m_pAboutPageModule;
         ExampleApp::InitialExperience::SdkModel::IInitialExperienceModule& m_initialExperienceModule;
+        ExampleApp::InitialExperience::Dialogs::View::IInitialExperienceDialogsModule* m_pInitialExperienceDialogsModule;
         ExampleApp::MyPinCreation::PoiRing::SdkModel::IPoiRingModule* m_pPoiRingModule;
         ExampleApp::MyPinCreation::SdkModel::IMyPinCreationModule* m_pMyPinCreationModule;
         ExampleApp::MyPinCreationDetails::View::IMyPinCreationDetailsModule* m_pMyPinCreationDetailsModule;
@@ -276,6 +278,11 @@ namespace ExampleApp
         const ExampleApp::Options::IOptionsModule& OptionsModule() const
         {
             return *m_pOptionsModule;
+        }
+
+        const ExampleApp::InitialExperience::Dialogs::View::IInitialExperienceDialogsModule& InitialExperienceDialogsModule() const
+        {
+        	return *m_pInitialExperienceDialogsModule;
         }
 
         void OnPause();

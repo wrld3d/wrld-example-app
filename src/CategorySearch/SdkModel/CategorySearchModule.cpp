@@ -9,6 +9,7 @@
 #include "MenuModel.h"
 #include "MenuOptionsModel.h"
 #include "CategorySearchSelectedMessageHandler.h"
+#include "SearchResultIconCategoryMapper.h"
 
 namespace
 {
@@ -60,10 +61,13 @@ namespace ExampleApp
                             searchQueryPerformer,
                             messageBus
                         );
+                
+                m_pSearchResultIconCategoryMapper = Eegeo_NEW(SearchResultIconCategoryMapper)();
             }
 
             CategorySearchModule::~CategorySearchModule()
             {
+                Eegeo_DELETE m_pSearchResultIconCategoryMapper;
                 Eegeo_DELETE m_pCategorySearchSelectedMessageHandler;
                 Eegeo_DELETE m_pMenuOptionsModel;
                 Eegeo_DELETE m_pMenuModel;
@@ -78,6 +82,11 @@ namespace ExampleApp
             View::ICategorySearchRepository& CategorySearchModule::GetCategorySearchRepository() const
             {
                 return *m_pCategorySearchRepository;
+            }
+            
+            ISearchResultIconCategoryMapper& CategorySearchModule::GetSearchResultIconCategoryMapper() const
+            {
+                return *m_pSearchResultIconCategoryMapper;
             }
         }
     }

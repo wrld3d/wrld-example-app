@@ -24,13 +24,15 @@ namespace ExampleApp
             {
                 if(!m_initialExperienceModel.HasCompletedInitialExperience())
                 {
-                    m_initialExperienceModel.DoNextPartOfInitialExperience();
-
-                    if(!m_initialExperienceModel.HasCompletedInitialExperience())
-                    {
-                        m_initialExperienceModel.UpdateCurrentStep(deltaSeconds);
-                    }
-                }
+                	if(m_initialExperienceModel.HasCompletedCurrentStep() || !m_initialExperienceModel.HasStartedInitialExperience())
+                	{
+                		m_initialExperienceModel.DoNextPartOfInitialExperience();
+                	}
+                	else
+                	{
+                		m_initialExperienceModel.UpdateCurrentStep(deltaSeconds);
+                	}
+			    }
             }
         }
     };

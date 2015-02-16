@@ -2,6 +2,9 @@
 
 #include "AndroidInitialExperienceModule.h"
 #include "AndroidInitialExperiencePreLoadModel.h"
+#include "InitialExperienceDialogStep.h"
+#include "InitialExperienceDialogType.h"
+#include "InitialExperienceDialogStepsFactory.h"
 
 namespace ExampleApp
 {
@@ -11,10 +14,12 @@ namespace ExampleApp
         {
             AndroidInitialExperienceModule::AndroidInitialExperienceModule(
                 AndroidNativeState& nativeState,
-                PersistentSettings::IPersistentSettingsModel& persistentSettings
+                PersistentSettings::IPersistentSettingsModel& persistentSettings,
+                ExampleAppMessaging::TMessageBus& messageBus
             )
                 : InitialExperienceModuleBase(persistentSettings)
                 , m_nativeState(nativeState)
+            	, m_messageBus(messageBus)
             {
 
             }
@@ -35,6 +40,8 @@ namespace ExampleApp
                         );
 
                 steps.push_back(pWorldAreaLoaderStep);
+
+                Dialogs::SdkModel::InitialExperienceDialogStepsFactory::AddInitialExperienceDialogSteps(m_messageBus, GetPersistentSettings(), steps);
 
                 return steps;
             }

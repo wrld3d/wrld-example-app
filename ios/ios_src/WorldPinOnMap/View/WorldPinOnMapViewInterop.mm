@@ -23,9 +23,11 @@ namespace ExampleApp
                 m_selectedCallbacks.RemoveCallback(callback);
             }
 
-            void WorldPinOnMapViewInterop::Open(const std::string& title, const std::string& subtitle)
+            void WorldPinOnMapViewInterop::Open(const std::string& title,
+                                                const std::string& subtitle,
+                                                float modality)
             {
-                [m_pView setFullyActive];
+                [m_pView setFullyActive:modality];
                 [m_pView setLabel:title :subtitle];
             }
 

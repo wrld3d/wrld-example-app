@@ -17,6 +17,7 @@ namespace ExampleApp
                 virtual ~IMyPinsModule() { }
                 virtual IMyPinsService& GetMyPinsService() const = 0;
                 virtual Menu::View::IMenuModel& GetMyPinsMenuModel() const = 0;
+                virtual IMyPinsRepository& GetMyPinsRepository() const = 0;
             };
         }
     }

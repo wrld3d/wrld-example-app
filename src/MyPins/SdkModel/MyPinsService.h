@@ -10,6 +10,7 @@
 #include "Web.h"
 #include "WebLoadRequestCompletionCallback.h"
 #include "Menu.h"
+#include "Search.h"
 
 namespace ExampleApp
 {
@@ -28,16 +29,17 @@ namespace ExampleApp
 
 
                 void RemovePinWithId(const int myPinId);
-
-                void SavePin(const std::string& title,
-                             const std::string& description,
-                             const Eegeo::Space::LatLong& latLong,
-                             Byte* imageData,
-                             size_t imageSize,
-                             bool shouldShare);
-
-
-
+                
+                void SaveUserCreatedPoiPin(const std::string& title,
+                                           const std::string& description,
+                                           const Eegeo::Space::LatLong& latLong,
+                                           Byte* imageData,
+                                           size_t imageSize,
+                                           bool shouldShare);
+                
+                void SaveSearchResultPoiPin(const Search::SdkModel::SearchResultModel& searchResult,
+                                            int pinIconIndex);
+                
             private:
                 IMyPinsRepository& m_myPinsRepository;
                 MyPinsFileIO& m_myPinsFileIO;
@@ -60,6 +62,8 @@ namespace ExampleApp
                 void SubmitPinToWebService(const MyPinModel& myPinModel);
 
                 MyPinModel* GetPinWithId(int pinId);
+                
+                void CleanUpMyPinMetadata(const MyPinModel& myPinModel);
             };
         }
     }

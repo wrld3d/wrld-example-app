@@ -2,6 +2,7 @@
 
 #include "SearchResultPoiModule.h"
 #include "SearchResultPoiViewModel.h"
+#include "SearchResultPoiMyPinService.h"
 
 namespace ExampleApp
 {
@@ -10,14 +11,27 @@ namespace ExampleApp
         namespace View
         {
             SearchResultPoiModule::SearchResultPoiModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
-                    Reaction::View::IReactionControllerModel& reactionControllerModel)
+                                                         Reaction::View::IReactionControllerModel& reactionControllerModel,
+                                                         MyPins::SdkModel::IMyPinsService& myPinsService,
+                                                         MyPins::SdkModel::IMyPinsRepository& myPinsRepository,
+                                                         CategorySearch::ISearchResultIconCategoryMapper& searchResultIconCategoryMapper,
+                                                         ExampleAppMessaging::TMessageBus& messageBus)
             {
                 m_pSearchResultPoiViewModel = Eegeo_NEW(SearchResultPoiViewModel)(identityProvider.GetNextIdentity(),
-                                              reactionControllerModel);
+                                                                                  reactionControllerModel);
+                
+                m_pSearchResultPoiMyPinService = Eegeo_NEW(SdkModel::SearchResultPoiMyPinService)(myPinsService,
+                                                                                                  myPinsRepository,
+                                                                                                  searchResultIconCategoryMapper);
+                
+                m_pSearchResultPoiPinToggledMessageHandler = Eegeo_NEW(SdkModel::SearchResultPoiPinToggledMessageHandler)(*m_pSearchResultPoiMyPinService,
+                                                                                                                          messageBus);
             }
 
             SearchResultPoiModule::~SearchResultPoiModule()
             {
+                Eegeo_DELETE m_pSearchResultPoiPinToggledMessageHandler;
+                Eegeo_DELETE m_pSearchResultPoiMyPinService;
                 Eegeo_DELETE m_pSearchResultPoiViewModel;
             }
 

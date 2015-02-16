@@ -17,5 +17,7 @@ namespace ExampleApp
             class ICategorySearchRepository;
             class CategorySearchMenuOption;
         }
+        
+        class ISearchResultIconCategoryMapper;
     }
 }

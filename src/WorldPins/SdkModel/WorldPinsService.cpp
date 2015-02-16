@@ -69,7 +69,7 @@ namespace ExampleApp
             {
                 Eegeo::Pins::Pin* pPin = m_pinRepository.GetPinById(pinItemModel->Id());
 
-                Eegeo_TTY("Pin removed\n");
+                //EXAMPLE_LOG("Pin removed\n");
                 m_pinRepository.RemovePin(*pPin);
                 ErasePin(pinItemModel->Id());
 

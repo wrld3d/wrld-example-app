@@ -27,12 +27,15 @@ namespace ExampleApp
                 Menu::View::IMenuModel& GetCategorySearchMenuModel() const;
 
                 View::ICategorySearchRepository& GetCategorySearchRepository() const;
+                
+                ISearchResultIconCategoryMapper& GetSearchResultIconCategoryMapper() const;
 
             private:
                 Menu::View::IMenuModel* m_pMenuModel;
                 Menu::View::IMenuOptionsModel* m_pMenuOptionsModel;
                 View::ICategorySearchRepository* m_pCategorySearchRepository;
                 CategorySearchSelectedMessageHandler* m_pCategorySearchSelectedMessageHandler;
+                ISearchResultIconCategoryMapper* m_pSearchResultIconCategoryMapper;
             };
         }
     }

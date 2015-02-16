@@ -87,6 +87,11 @@ namespace ExampleApp
             {
                 return *m_pMyPinsService;
             }
+            
+            IMyPinsRepository& MyPinsModule::GetMyPinsRepository() const
+            {
+                return *m_pMyPinsRepository;
+            }
         }
     }
 }

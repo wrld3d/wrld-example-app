@@ -4,6 +4,7 @@
 #include "LatLongAltitude.h"
 #include "IPersistentSettingsModel.h"
 #include "MyPinModel.h"
+#include "MyPinsSemanticPinType.h"
 
 #include "document.h"
 #include "writer.h"
@@ -123,7 +124,9 @@ namespace ExampleApp
                     valueObject.AddMember("id", pinModel.Identifier(), allocator);
                     valueObject.AddMember("title", pinModel.GetTitle().c_str(), allocator);
                     valueObject.AddMember("description", pinModel.GetDescription().c_str(), allocator);
-                    valueObject.AddMember("image", pinModel.GetImagePath().c_str(), allocator);
+                    valueObject.AddMember("icon", pinModel.GetSdkMapPinIconIndexIcon(), allocator);
+                    valueObject.AddMember("type", static_cast<int>(pinModel.GetSemanticPinType()), allocator);
+                    valueObject.AddMember("metadata", pinModel.GetTypeMetadata().c_str(), allocator);
                     valueObject.AddMember("latitude", latLong.GetLatitudeInDegrees(), allocator);
                     valueObject.AddMember("longitude", latLong.GetLongitudeInDegrees(), allocator);
 
@@ -172,7 +175,9 @@ namespace ExampleApp
                     valueObject.AddMember("id", pinModel->Identifier(), allocator);
                     valueObject.AddMember("title", pinModel->GetTitle().c_str(), allocator);
                     valueObject.AddMember("description", pinModel->GetDescription().c_str(), allocator);
-                    valueObject.AddMember("image", pinModel->GetImagePath().c_str(), allocator);
+                    valueObject.AddMember("icon", pinModel->GetSdkMapPinIconIndexIcon(), allocator);
+                    valueObject.AddMember("type", static_cast<int>(pinModel->GetSemanticPinType()), allocator);
+                    valueObject.AddMember("metadata", pinModel->GetTypeMetadata().c_str(), allocator);
                     valueObject.AddMember("latitude", latLong.GetLatitudeInDegrees(), allocator);
                     valueObject.AddMember("longitude", latLong.GetLongitudeInDegrees(), allocator);
 
@@ -219,19 +224,23 @@ namespace ExampleApp
                         int pinId = entry["id"].GetInt();
                         std::string title = entry["title"].GetString();
                         std::string description = entry["description"].GetString();
-                        std::string image = entry["image"].GetString();
+                        int sdkMapPinIconIndex = entry["icon"].GetInt();
                         double latitude = entry["latitude"].GetDouble();
                         double longitude = entry["longitude"].GetDouble();
-
+                        MyPinsSemanticPinType semanticPinType = static_cast<MyPinsSemanticPinType>(entry["type"].GetInt());
+                        std::string pinTypeMetadata = entry["metadata"].GetString();
+                        
                         out_pinModels.push_back(Eegeo_NEW(MyPinModel)(pinId,
-                                                title,
-                                                description,
-                                                image,
-                                                Eegeo::Space::LatLong::FromDegrees(latitude, longitude)));
+                                                                      title,
+                                                                      description,
+                                                                      sdkMapPinIconIndex,
+                                                                      Eegeo::Space::LatLong::FromDegrees(latitude, longitude),
+                                                                      semanticPinType,
+                                                                      pinTypeMetadata));
                     }
                 }
             }
-
+            
             bool MyPinsFileIO::WriteJsonToDisk(const std::string &jsonString)
             {
                 m_fileIO.DeleteFile(MyPinsDataFilename);

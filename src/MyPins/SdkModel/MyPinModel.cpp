@@ -1,7 +1,6 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "MyPinModel.h"
-#include "Logger.h"
 
 namespace ExampleApp
 {
@@ -17,17 +16,21 @@ namespace ExampleApp
             }
 
             MyPinModel::MyPinModel(int modelId,
-                                   std::string title,
-                                   std::string description,
-                                   std::string imagePath,
-                                   Eegeo::Space::LatLong latLong)
-                : m_modelId(modelId)
-                , m_title(title)
-                , m_description(description)
-                , m_imagePath(imagePath)
-                , m_latLong(latLong)
+                                   const std::string& title,
+                                   const std::string& description,
+                                   int sdkMapPinIconIndex,
+                                   const Eegeo::Space::LatLong& latLong,
+                                   const MyPinsSemanticPinType& semanticPinType,
+                                   const std::string& pinTypeMetadata)
+            : m_modelId(modelId)
+            , m_title(title)
+            , m_description(description)
+            , m_sdkMapPinIconIndex(sdkMapPinIconIndex)
+            , m_latLong(latLong)
+            , m_semanticPinType(semanticPinType)
+            , m_pinTypeMetadata(pinTypeMetadata)
             {
-
+                
             }
         }
     }

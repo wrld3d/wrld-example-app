@@ -6,6 +6,7 @@
 #include "SearchResultPoi.h"
 #include "ISearchResultPoiViewModule.h"
 #include "SearchResultPoiController.h"
+#include "BidirectionalBus.h"
 
 namespace ExampleApp
 {
@@ -20,7 +21,8 @@ namespace ExampleApp
                 SearchResultPoiController* m_pController;
 
             public:
-                SearchResultPoiViewModule(ISearchResultPoiViewModel& searchResultPoiViewModel);
+                SearchResultPoiViewModule(ISearchResultPoiViewModel& searchResultPoiViewModel,
+                                          ExampleAppMessaging::TMessageBus& messageBus);
 
                 ~SearchResultPoiViewModule();
 

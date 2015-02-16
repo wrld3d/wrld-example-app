@@ -86,7 +86,7 @@ namespace ExampleApp
 
                 jstring titleStr = env->NewStringUTF(myPinModel.GetTitle().c_str());
                 jstring descriptionStr = env->NewStringUTF(myPinModel.GetDescription().c_str());
-                jstring imageStr = env->NewStringUTF(myPinModel.GetImagePath().c_str());
+                jstring imageStr = env->NewStringUTF(myPinModel.GetTypeMetadata().c_str());
 
                 jmethodID showDetailsMethod = env->GetMethodID(m_uiViewClass, "display", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V");
                 env->CallVoidMethod(m_uiView, showDetailsMethod, titleStr, descriptionStr, imageStr);

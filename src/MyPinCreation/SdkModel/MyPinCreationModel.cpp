@@ -70,12 +70,12 @@ namespace ExampleApp
                                              size_t imageSize,
                                              bool shouldShare)
             {
-                m_myPinsService.SavePin(title,
-                                        description,
-                                        Eegeo::Space::LatLong::FromECEF(m_position),
-                                        imageData,
-                                        imageSize,
-                                        shouldShare);
+                m_myPinsService.SaveUserCreatedPoiPin(title,
+                                                      description,
+                                                      Eegeo::Space::LatLong::FromECEF(m_position),
+                                                      imageData,
+                                                      imageSize,
+                                                      shouldShare);
 
                 SetCreationStage(Inactive);
             }

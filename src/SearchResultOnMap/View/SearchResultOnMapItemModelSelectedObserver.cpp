@@ -26,7 +26,7 @@ namespace ExampleApp
             {
                 if(!m_searchResultPoiViewModel.IsOpen())
                 {
-                    m_searchResultPoiViewModel.Open(message.GetModel());
+                    m_searchResultPoiViewModel.Open(message.GetModel(), false);
                 }
             }
         }

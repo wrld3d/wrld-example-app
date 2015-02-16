@@ -17,6 +17,7 @@ namespace ExampleApp
             class MyPinDetailsModelSelectedObserver;
             class IMyPinDetailsView;
             class MyPinDetailsController;
+            class IMyPinDetailsDisplayService;
         }
     }
 }

@@ -7,6 +7,7 @@
 #include "InitialExperienceModuleBase.h"
 #include "InitialExperience.h"
 #include "PersistentSettings.h"
+#include "BidirectionalBus.h"
 
 namespace ExampleApp
 {
@@ -15,13 +16,16 @@ namespace ExampleApp
         class iOSInitialExperienceModule : public SdkModel::InitialExperienceModuleBase, private Eegeo::NonCopyable
         {
         public:
-            iOSInitialExperienceModule(PersistentSettings::IPersistentSettingsModel& persistentSettings);
+            iOSInitialExperienceModule(PersistentSettings::IPersistentSettingsModel& persistentSettings,
+                                       ExampleAppMessaging::TMessageBus& messageBus);
 
             ~iOSInitialExperienceModule();
 
         protected:
 
             std::vector<SdkModel::IInitialExperienceStep*> CreateSteps(WorldAreaLoader::SdkModel::IWorldAreaLoaderModel& worldAreaLoaderModel) const;
+            
+            ExampleAppMessaging::TMessageBus& m_messageBus;
         };
     }
 }

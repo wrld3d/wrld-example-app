@@ -11,15 +11,20 @@ namespace ExampleApp
     {
         namespace View
         {
-            SearchResultPoiViewModule::SearchResultPoiViewModule(ISearchResultPoiViewModel& searchResultPoiViewModel)
+            SearchResultPoiViewModule::SearchResultPoiViewModule(ISearchResultPoiViewModel& searchResultPoiViewModel,
+                                                                 ExampleAppMessaging::TMessageBus& messageBus)
             {
                 m_pView = [[SearchResultPoiView alloc] initWithoutParams];
-                m_pController = Eegeo_NEW(SearchResultPoiController)(*[m_pView getInterop], searchResultPoiViewModel);
+                
+                m_pController = Eegeo_NEW(SearchResultPoiController)(*[m_pView getInterop],
+                                                                     searchResultPoiViewModel,
+                                                                     messageBus);
             }
 
             SearchResultPoiViewModule::~SearchResultPoiViewModule()
             {
                 Eegeo_DELETE m_pController;
+                
                 [m_pView release];
             }
 

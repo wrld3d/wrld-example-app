@@ -13,7 +13,7 @@ namespace ExampleApp
     {
         namespace View
         {
-            SearchResultOnMapItemModel::SearchResultOnMapItemModel(Search::SdkModel::SearchResultModel& searchResultModel,
+            SearchResultOnMapItemModel::SearchResultOnMapItemModel(const Search::SdkModel::SearchResultModel& searchResultModel,
                     ExampleAppMessaging::TMessageBus& messageBus)
                 : m_searchResultModel(searchResultModel)
                 , m_messageBus(messageBus)

@@ -13,7 +13,6 @@
 
 @interface SearchResultPoiView()<UIGestureRecognizerDelegate>
 {
-    UITapGestureRecognizer* _tapGestureRecogniser;
 }
 @end
 
@@ -25,6 +24,11 @@
 
     if(self)
     {
+        self->m_pRemovePinButtonBackgroundImage = [[UIImage imageNamed:@"button_remove_pin_off.png"] retain];
+        self->m_pRemovePinHighlightButtonBackgroundImage = [[UIImage imageNamed:@"button_remove_pin_on.png"] retain];
+        self->m_pAddPinButtonBackgroundImage = [[UIImage imageNamed:@"button_add_pin_off.png"] retain];
+        self->m_pAddPinHighlightButtonBackgroundImage = [[UIImage imageNamed:@"button_add_pin_on.png"] retain];
+        
         m_pInterop = Eegeo_NEW(ExampleApp::SearchResultPoi::View::SearchResultPoiViewInterop)(self);
         self.alpha = 0.f;
         m_stateChangeAnimationTimeSeconds = 0.2f;
@@ -45,7 +49,12 @@
         self.pCloseButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         [self.pCloseButton setBackgroundImage:[UIImage imageNamed:@"button_close_off.png"] forState:UIControlStateNormal];
         [self.pCloseButton setBackgroundImage:[UIImage imageNamed:@"button_close_on.png"] forState:UIControlStateHighlighted];
+        [self.pCloseButton addTarget:self action:@selector(handleClosedButtonSelected) forControlEvents:UIControlEventTouchUpInside];
         [self.pCloseButtonContainer addSubview: self.pCloseButton];
+        
+        self.pPinButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        [self.pPinButton addTarget:self action:@selector(handlePinButtonSelected) forControlEvents:UIControlEventTouchUpInside];
+        [self.pCloseButtonContainer addSubview: self.pPinButton];
 
         self.pContentContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         self.pContentContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::WhiteTone;
@@ -109,10 +118,6 @@
         [self.pLabelsContainer addSubview: self.pWebContent];
 
         [self setTouchExclusivity: self];
-
-        _tapGestureRecogniser = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(_tapTabGesture:)] autorelease];
-        [_tapGestureRecogniser setDelegate:self];
-        [self.pCloseButton addGestureRecognizer: _tapGestureRecogniser];
     }
 
     return self;
@@ -122,6 +127,9 @@
 {
     [self.pCloseButton removeFromSuperview];
     [self.pCloseButton release];
+    
+    [self.pPinButton removeFromSuperview];
+    [self.pPinButton release];
 
     [self.pCloseButtonContainer removeFromSuperview];
     [self.pCloseButtonContainer release];
@@ -173,7 +181,12 @@
 
     [self.pWebContent removeFromSuperview];
     [self.pWebContent release];
-
+    
+    [self->m_pRemovePinButtonBackgroundImage release];
+    [self->m_pRemovePinHighlightButtonBackgroundImage release];
+    [self->m_pAddPinButtonBackgroundImage release];
+    [self->m_pAddPinHighlightButtonBackgroundImage release];
+    
     Eegeo_DELETE m_pInterop;
     [self removeFromSuperview];
     [super dealloc];
@@ -245,7 +258,12 @@
                                          0.f,
                                          closeButtonSectionHeight,
                                          closeButtonSectionHeight);
-
+    
+    self.pPinButton.frame = CGRectMake(0.f,
+                                       0.f,
+                                       closeButtonSectionHeight,
+                                       closeButtonSectionHeight);
+    
     self.pCategoryIconContainer.frame = CGRectMake(0.f, 0.f, headlineHeight, headlineHeight);
     const float titlePadding = 10.0f;
     self.pTitleLabel.frame = CGRectMake(headlineHeight + titlePadding,
@@ -296,8 +314,15 @@
     [self.pLabelsContainer setContentSize:CGSizeMake(labelsSectionWidth, currentLabelY)];
 }
 
-- (void) setContent:(const ExampleApp::Search::SdkModel::SearchResultModel*)pModel
+- (void) setContent:(const ExampleApp::Search::SdkModel::SearchResultModel*)pModel :(bool)isPinned
 {
+    Eegeo_ASSERT(pModel != NULL);
+    
+    m_model = *pModel;
+    m_isPinned = isPinned;
+    
+    [self updatePinnedButtonState];
+    
     self.pTitleLabel.text = [NSString stringWithUTF8String:pModel->GetTitle().c_str()];
 
     [self.pCategoryIconContainer.subviews makeObjectsPerformSelector: @selector(removeFromSuperview)];
@@ -430,9 +455,30 @@
     [alert release];
 }
 
-- (void)_tapTabGesture:(UITapGestureRecognizer *)recognizer
+- (void) handleClosedButtonSelected
 {
     m_pInterop->HandleCloseClicked();
+}
+
+- (void) handlePinButtonSelected
+{
+    m_isPinned = !m_isPinned;
+    m_pInterop->HandlePinToggleClicked(m_model);
+    [self updatePinnedButtonState];
+}
+
+- (void) updatePinnedButtonState
+{
+    if(m_isPinned)
+    {
+        [self.pPinButton setBackgroundImage:self->m_pRemovePinButtonBackgroundImage forState:UIControlStateNormal];
+        [self.pPinButton setBackgroundImage:self->m_pRemovePinHighlightButtonBackgroundImage forState:UIControlStateHighlighted];
+    }
+    else
+    {
+        [self.pPinButton setBackgroundImage:self->m_pAddPinButtonBackgroundImage forState:UIControlStateNormal];
+        [self.pPinButton setBackgroundImage:self->m_pAddPinHighlightButtonBackgroundImage forState:UIControlStateHighlighted];
+    }
 }
 
 @end
