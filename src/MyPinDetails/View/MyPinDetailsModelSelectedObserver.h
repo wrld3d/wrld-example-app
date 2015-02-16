@@ -6,7 +6,7 @@
 #include "BidirectionalBus.h"
 #include "ICallback.h"
 #include "MyPinDetailsModelSelectedMessage.h"
-#include "IMyPinDetailsViewModel.h"
+#include "MyPinDetails.h"
 
 namespace ExampleApp
 {
@@ -16,14 +16,14 @@ namespace ExampleApp
         {
             class MyPinDetailsModelSelectedObserver : private Eegeo::NonCopyable
             {
-                IMyPinDetailsViewModel& m_myPinDetailsViewModel;
+                IMyPinDetailsDisplayService& m_myPinDetailsDisplayService;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 Eegeo::Helpers::TCallback1<MyPinDetailsModelSelectedObserver, const MyPinDetailsModelSelectedMessage&> m_handlerBinding;
 
                 void OnMyPinDetailsModelSelectedMessage(const MyPinDetailsModelSelectedMessage& message);
 
             public:
-                MyPinDetailsModelSelectedObserver(IMyPinDetailsViewModel& myPinDetailsViewModel,
+                MyPinDetailsModelSelectedObserver(IMyPinDetailsDisplayService& myPinDetailsDisplayService,
                                                   ExampleAppMessaging::TMessageBus& messageBus);
 
                 ~MyPinDetailsModelSelectedObserver();

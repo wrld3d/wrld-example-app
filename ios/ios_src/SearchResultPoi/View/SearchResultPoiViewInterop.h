@@ -17,11 +17,13 @@ namespace ExampleApp
             private:
                 SearchResultPoiView* m_pView;
                 Eegeo::Helpers::CallbackCollection0 m_closeClickedCallbacks;
+                Eegeo::Helpers::CallbackCollection1<Search::SdkModel::SearchResultModel> m_togglePinClickedCallbacks;
 
             public:
                 SearchResultPoiViewInterop(SearchResultPoiView* pView);
 
-                void Show(const Search::SdkModel::SearchResultModel model);
+                void Show(const Search::SdkModel::SearchResultModel model,
+                          bool isPinned);
 
                 void Hide();
 
@@ -30,6 +32,12 @@ namespace ExampleApp
                 void RemoveClosedCallback(Eegeo::Helpers::ICallback0& callback);
 
                 void HandleCloseClicked();
+                
+                void InsertTogglePinnedCallback(Eegeo::Helpers::ICallback1<Search::SdkModel::SearchResultModel>& callback);
+                
+                void RemoveTogglePinnedCallback(Eegeo::Helpers::ICallback1<Search::SdkModel::SearchResultModel>& callback);
+                
+                void HandlePinToggleClicked(Search::SdkModel::SearchResultModel& searchResultModel);
             };
         }
     }

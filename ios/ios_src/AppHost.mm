@@ -227,7 +227,8 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
                                     screenProperties,
                                     m_messageBus);
 
-    m_pSearchResultPoiViewModule = Eegeo_NEW(ExampleApp::SearchResultPoi::View::SearchResultPoiViewModule)(app.SearchResultPoiModule().GetSearchResultPoiViewModel());
+    m_pSearchResultPoiViewModule = Eegeo_NEW(ExampleApp::SearchResultPoi::View::SearchResultPoiViewModule)(app.SearchResultPoiModule().GetSearchResultPoiViewModel(),
+                                                                                                           m_messageBus);
 
     m_pFlattenButtonViewModule = Eegeo_NEW(ExampleApp::FlattenButton::View::FlattenButtonViewModule)(
                                      app.FlattenButtonModule().GetFlattenButtonViewModel(),

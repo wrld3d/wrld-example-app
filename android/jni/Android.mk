@@ -7,6 +7,10 @@ include $(PREBUILT_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
 
+ifneq ($(os_name),Darwin)    
+    LOCAL_SHORT_COMMANDS := true    
+endif
+
 LOCAL_MODULE := native-activity
 LOCAL_LDLIBS    := -llog -landroid -lEGL -lGLESv2 -L./libs/eegeo/ -lpng -lz -lm -lcrypto -lssl -lcurl -lcares -lsimd -lmyjpeg -lhttpxx-lib
 LOCAL_LDLIBS += -fuse-ld=bfd

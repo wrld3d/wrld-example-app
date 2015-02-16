@@ -19,6 +19,8 @@ namespace ExampleApp
                 virtual Menu::View::IMenuModel& GetCategorySearchMenuModel() const = 0;
 
                 virtual View::ICategorySearchRepository& GetCategorySearchRepository() const = 0;
+                
+                virtual ISearchResultIconCategoryMapper& GetSearchResultIconCategoryMapper() const = 0;
             };
         }
     }

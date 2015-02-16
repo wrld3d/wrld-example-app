@@ -297,31 +297,35 @@ namespace ExampleApp
                                  m_messageBus);
 
         InitialisePinsModules(mapModule, world);
-
-        m_pSearchResultPoiModule = Eegeo_NEW(ExampleApp::SearchResultPoi::View::SearchResultPoiModule)(m_identityProvider,
-                                   m_pReactionControllerModule->GetReactionControllerModel());
-
-        m_pSearchResultMenuModule = Eegeo_NEW(SearchResultMenu::SdkModel::SearchResultMenuModule)(
-                                        m_pSearchModule->GetSearchResultRepository(),
-                                        m_pSearchModule->GetSearchQueryPerformer(),
-                                        m_identityProvider,
-                                        *m_pCameraTransitionController,
-                                        m_pReactionControllerModule->GetReactionControllerModel(),
-                                        m_messageBus
-                                    );
-
-        m_pSearchResultOnMapModule = Eegeo_NEW(SearchResultOnMap::SdkModel::SearchResultOnMapModule)(m_pSearchModule->GetSearchResultRepository(),
-                                     m_pSearchResultPoiModule->GetSearchResultPoiViewModel(),
-                                     m_pWorldPinsModule->GetWorldPinsService(),
-                                     m_messageBus);
-
+        
         m_pMyPinsModule = Eegeo_NEW(ExampleApp::MyPins::SdkModel::MyPinsModule)(m_pWorldPinsModule->GetWorldPinsService(),
-                          m_platformAbstractions,
-                          m_persistentSettings,
-                          m_pPrimaryMenuModule->GetPrimaryMenuViewModel(),
-                          m_messageBus,
-                          *m_pCameraTransitionController);
-
+                                                                                m_platformAbstractions,
+                                                                                m_persistentSettings,
+                                                                                m_pPrimaryMenuModule->GetPrimaryMenuViewModel(),
+                                                                                m_messageBus,
+                                                                                *m_pCameraTransitionController);
+        
+        m_pSearchResultPoiModule = Eegeo_NEW(ExampleApp::SearchResultPoi::View::SearchResultPoiModule)(m_identityProvider,
+                                                                                                       m_pReactionControllerModule->GetReactionControllerModel(),
+                                                                                                       m_pMyPinsModule->GetMyPinsService(),
+                                                                                                       m_pMyPinsModule->GetMyPinsRepository(),
+                                                                                                       m_pCategorySearchModule->GetSearchResultIconCategoryMapper(),
+                                                                                                       m_messageBus);
+        
+        m_pSearchResultMenuModule = Eegeo_NEW(SearchResultMenu::SdkModel::SearchResultMenuModule)(m_pSearchModule->GetSearchResultRepository(),
+                                                                                                  m_pSearchModule->GetSearchQueryPerformer(),
+                                                                                                  m_identityProvider,
+                                                                                                  *m_pCameraTransitionController,
+                                                                                                  m_pReactionControllerModule->GetReactionControllerModel(),
+                                                                                                  m_messageBus);
+        
+        m_pSearchResultOnMapModule = Eegeo_NEW(SearchResultOnMap::SdkModel::SearchResultOnMapModule)(m_pSearchModule->GetSearchResultRepository(),
+                                                                                                     m_pSearchResultPoiModule->GetSearchResultPoiViewModel(),
+                                                                                                     m_pWorldPinsModule->GetWorldPinsService(),
+                                                                                                     m_pMyPinsModule->GetMyPinsRepository(),
+                                                                                                     m_pCategorySearchModule->GetSearchResultIconCategoryMapper(),
+                                                                                                     m_messageBus);
+        
         m_pPrimaryMenuModule->AddMenuSection("My Pins", "place", m_pMyPinsModule->GetMyPinsMenuModel(), true);
 
         m_pMyPinCreationModule = Eegeo_NEW(ExampleApp::MyPinCreation::SdkModel::MyPinCreationModule)(m_pMyPinsModule->GetMyPinsService(),
@@ -347,9 +351,10 @@ namespace ExampleApp
                                         m_pReactionControllerModule->GetReactionControllerModel());
 
         m_pMyPinDetailsModule = Eegeo_NEW(ExampleApp::MyPinDetails::SdkModel::MyPinDetailsModule)(m_identityProvider,
-                                m_pReactionControllerModule->GetReactionControllerModel(),
-                                m_pMyPinsModule->GetMyPinsService(),
-                                m_messageBus);
+                                                                                                  m_pReactionControllerModule->GetReactionControllerModel(),
+                                                                                                  m_pMyPinsModule->GetMyPinsService(),
+                                                                                                  m_pSearchResultPoiModule->GetSearchResultPoiViewModel(),
+                                                                                                  m_messageBus);
 
         m_pInitialExperienceDialogsModule = Eegeo_NEW(ExampleApp::InitialExperience::Dialogs::View::InitialExperienceDialogsModule)();
 
@@ -388,13 +393,13 @@ namespace ExampleApp
         
         Eegeo_DELETE m_pMyPinCreationModule;
 
-        Eegeo_DELETE m_pMyPinsModule;
-
         Eegeo_DELETE m_pSearchResultMenuModule;
 
         Eegeo_DELETE m_pSearchResultOnMapModule;
 
         Eegeo_DELETE m_pSearchResultPoiModule;
+        
+        Eegeo_DELETE m_pMyPinsModule;
 
         Eegeo_DELETE m_pWorldPinsModule;
 

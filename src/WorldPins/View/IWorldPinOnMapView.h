@@ -16,7 +16,9 @@ namespace ExampleApp
             public:
                 virtual ~IWorldPinOnMapView() {};
 
-                virtual void Open(const std::string& title, const std::string& subtitle) = 0;
+                virtual void Open(const std::string& title,
+                                  const std::string& subtitle,
+                                  float modality) = 0;
                 virtual void Close() = 0;
                 virtual void UpdateScreenLocation(float posX, float posY) = 0;
                 virtual void UpdateScreenState(float screenState) = 0;

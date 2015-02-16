@@ -5,8 +5,7 @@
 #include <string>
 #include "LatLongAltitude.h"
 #include "Types.h"
-#include "Pins.h"
-#include "IWorldPinSelectionHandler.h"
+#include "MyPinsSemanticPinType.h"
 
 namespace ExampleApp
 {
@@ -20,34 +19,52 @@ namespace ExampleApp
                 int m_modelId;
                 std::string m_title;
                 std::string m_description;
-                std::string m_imagePath;
+                int m_sdkMapPinIconIndex;
                 Eegeo::Space::LatLong m_latLong;
+                MyPinsSemanticPinType m_semanticPinType;
+                std::string m_pinTypeMetadata;
 
             public:
                 MyPinModel();
 
                 MyPinModel(int modelId,
-                           std::string title,
-                           std::string description,
-                           std::string imagePath,
-                           Eegeo::Space::LatLong latLong);
+                           const std::string& title,
+                           const std::string& description,
+                           int sdkMapPinIconIndex,
+                           const Eegeo::Space::LatLong& latLong,
+                           const MyPinsSemanticPinType& semanticPinType,
+                           const std::string& pinTypeMetadata);
 
                 int Identifier() const
                 {
                     return m_modelId;
                 }
+                
                 const std::string& GetTitle() const
                 {
                     return m_title;
                 }
+                
                 const std::string& GetDescription() const
                 {
                     return m_description;
                 }
-                const std::string& GetImagePath() const
+                
+                int GetSdkMapPinIconIndexIcon() const
                 {
-                    return m_imagePath;
+                    return m_sdkMapPinIconIndex;
                 }
+                
+                const MyPinsSemanticPinType& GetSemanticPinType() const
+                {
+                    return m_semanticPinType;
+                }
+                
+                const std::string& GetTypeMetadata() const
+                {
+                    return m_pinTypeMetadata;
+                }
+                
                 const Eegeo::Space::LatLong& GetLatLong() const
                 {
                     return m_latLong;
@@ -58,22 +75,27 @@ namespace ExampleApp
             {
                 return lhs.Identifier() == rhs.Identifier();
             }
+            
             inline bool operator!=(const MyPinModel& lhs, const MyPinModel& rhs)
             {
                 return !operator==(lhs,rhs);
             }
+            
             inline bool operator< (const MyPinModel& lhs, const MyPinModel& rhs)
             {
                 return lhs.Identifier() < rhs.Identifier();
             }
+            
             inline bool operator> (const MyPinModel& lhs, const MyPinModel& rhs)
             {
                 return  operator< (rhs,lhs);
             }
+            
             inline bool operator<=(const MyPinModel& lhs, const MyPinModel& rhs)
             {
                 return !operator> (lhs,rhs);
             }
+            
             inline bool operator>=(const MyPinModel& lhs, const MyPinModel& rhs)
             {
                 return !operator< (lhs,rhs);

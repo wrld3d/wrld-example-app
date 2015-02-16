@@ -10,11 +10,11 @@ namespace ExampleApp
         {
             class ISearchResultOnMapModule;
             class ISearchResultOnMapModel;
+            class ISearchResultOnMapMyPinsService;
         }
 
         namespace View
         {
-            class ISearchResultOnMapIconCategoryMapper;
             class ISearchResultOnMapFactory;
             class SearchResultOnMapItemModel;
         }

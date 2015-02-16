@@ -14,12 +14,13 @@ namespace ExampleApp
         {
             SearchResultPoiViewModule::SearchResultPoiViewModule(
                 AndroidNativeState& nativeState,
-                ISearchResultPoiViewModel& searchResultPoiViewModel
+                ISearchResultPoiViewModel& searchResultPoiViewModel,
+                ExampleAppMessaging::TMessageBus& messageBus
             )
             {
                 ASSERT_UI_THREAD
                 m_pView = Eegeo_NEW(SearchResultPoiView)(nativeState);
-                m_pController = Eegeo_NEW(SearchResultPoiController)(*m_pView, searchResultPoiViewModel);
+                m_pController = Eegeo_NEW(SearchResultPoiController)(*m_pView, searchResultPoiViewModel, messageBus);
             }
 
             SearchResultPoiViewModule::~SearchResultPoiViewModule()

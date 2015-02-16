@@ -4,8 +4,8 @@
 #include "Search.h"
 #include "SearchResultOnMap.h"
 #include "SearchResultOnMapFactory.h"
-#include "SearchResultOnMapIconCategoryMapper.h"
 #include "SearchResultOnMapModel.h"
+#include "SearchResultOnMapMyPinsService.h"
 #include "IIdentity.h"
 
 namespace ExampleApp
@@ -15,19 +15,22 @@ namespace ExampleApp
         namespace SdkModel
         {
             SearchResultOnMapModule::SearchResultOnMapModule(Search::SdkModel::ISearchResultRepository& searchResultRepository,
-                    SearchResultPoi::View::ISearchResultPoiViewModel& searchResultPoiViewModel,
-                    WorldPins::SdkModel::IWorldPinsService& worldPinsService,
-                    ExampleAppMessaging::TMessageBus& messageBus)
+                                                             SearchResultPoi::View::ISearchResultPoiViewModel& searchResultPoiViewModel,
+                                                             WorldPins::SdkModel::IWorldPinsService& worldPinsService,
+                                                             MyPins::SdkModel::IMyPinsRepository& myPinsRepository,
+                                                             CategorySearch::ISearchResultIconCategoryMapper& searchResultOnMapIconCategoryMapper,
+                                                             ExampleAppMessaging::TMessageBus& messageBus)
             {
-                m_pSearchResultOnMapIconCategoryMapper = Eegeo_NEW(View::SearchResultOnMapIconCategoryMapper);
-
                 m_pSearchResultOnMapFactory = Eegeo_NEW(View::SearchResultOnMapFactory)(messageBus);
-
+                
+                m_pSearchResultOnMapMyPinsService = Eegeo_NEW(SearchResultOnMapMyPinsService)(myPinsRepository);
+                
                 SearchResultOnMapModel* pSearchResultOnMapModel = Eegeo_NEW(SearchResultOnMapModel)(worldPinsService,
-                        *m_pSearchResultOnMapFactory,
-                        *m_pSearchResultOnMapIconCategoryMapper,
-                        searchResultRepository);
-
+                                                                                                    *m_pSearchResultOnMapFactory,
+                                                                                                    *m_pSearchResultOnMapMyPinsService,
+                                                                                                    searchResultOnMapIconCategoryMapper,
+                                                                                                    searchResultRepository);
+                
                 m_pSearchResultOnMapModel = pSearchResultOnMapModel;
 
                 m_pSearchResultOnMapItemModelSelectedObserver = Eegeo_NEW(View::SearchResultOnMapItemModelSelectedObserver)(searchResultPoiViewModel,
@@ -38,8 +41,8 @@ namespace ExampleApp
             {
                 Eegeo_DELETE m_pSearchResultOnMapItemModelSelectedObserver;
                 Eegeo_DELETE m_pSearchResultOnMapModel;
+                Eegeo_DELETE m_pSearchResultOnMapMyPinsService;
                 Eegeo_DELETE m_pSearchResultOnMapFactory;
-                Eegeo_DELETE m_pSearchResultOnMapIconCategoryMapper;
             }
 
             ISearchResultOnMapModel& SearchResultOnMapModule::GetSearchResultOnMapModel() const

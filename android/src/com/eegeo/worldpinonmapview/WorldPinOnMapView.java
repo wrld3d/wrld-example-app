@@ -48,13 +48,13 @@ public class WorldPinOnMapView implements View.OnClickListener
         m_uiRoot.removeView(m_view);
     }
 
-    public void show(final String title, final String details)
+    public void show(final String title, final String details, final float modality)
     {
         m_view.setEnabled(true);
         m_titleView.setText(title);
         m_detailsView.setText(details);
         m_view.setVisibility(View.VISIBLE);
-        animateToAlpha(1.0f);
+        animateToAlpha(1.f - modality);
     }
 
     public void updateScreenLocation(final float x, final float y)

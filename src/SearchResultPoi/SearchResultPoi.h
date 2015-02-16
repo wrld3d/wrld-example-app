@@ -6,6 +6,11 @@ namespace ExampleApp
 {
     namespace SearchResultPoi
     {
+        namespace SdkModel
+        {
+            class ISearchResultPoiMyPinService;
+        }
+        
         namespace View
         {
             class ISearchResultPoiModule;

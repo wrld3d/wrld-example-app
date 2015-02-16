@@ -31,6 +31,9 @@ namespace ExampleApp
                 ~MyPinsModule();
 
                 IMyPinsService& GetMyPinsService() const;
+                
+                IMyPinsRepository& GetMyPinsRepository() const;
+                
                 Menu::View::IMenuModel& GetMyPinsMenuModel() const
                 {
                     return *m_pMenuModel;

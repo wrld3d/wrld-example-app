@@ -12,7 +12,15 @@
 @interface SearchResultPoiView : UIView
 {
     float m_stateChangeAnimationTimeSeconds;
+    ExampleApp::Search::SdkModel::SearchResultModel m_model;
     ExampleApp::SearchResultPoi::View::SearchResultPoiViewInterop* m_pInterop;
+    
+    bool m_isPinned;
+    
+    UIImage* m_pRemovePinButtonBackgroundImage;
+    UIImage* m_pRemovePinHighlightButtonBackgroundImage;
+    UIImage* m_pAddPinButtonBackgroundImage;
+    UIImage* m_pAddPinHighlightButtonBackgroundImage;
 }
 
 - (id) initWithoutParams;
@@ -21,7 +29,7 @@
 
 - (BOOL) consumesTouch:(UITouch *)touch;
 
-- (void) setContent:(const ExampleApp::Search::SdkModel::SearchResultModel*)pModel;
+- (void) setContent:(const ExampleApp::Search::SdkModel::SearchResultModel*)pModel :(bool)isPinned;
 
 - (void) setFullyActive;
 
@@ -31,6 +39,7 @@
 
 @property (nonatomic, retain) UIView* pCloseButtonContainer;
 @property (nonatomic, retain) UIButton* pCloseButton;
+@property (nonatomic, retain) UIButton* pPinButton;
 @property (nonatomic, retain) UIView* pShadowContainer;
 @property (nonatomic, retain) UIView* pControlContainer;
 @property (nonatomic, retain) UIView* pHeadlineContainer;

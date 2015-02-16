@@ -154,10 +154,10 @@
     self.pAddressLabel.text = [NSString stringWithUTF8String:detail.c_str()];
 }
 
-- (void) setFullyActive
+- (void) setFullyActive :(float)modality
 {
     self.userInteractionEnabled = YES;
-    [self animateToAlpha:1.f];
+    [self animateToAlpha:(1.f - modality)];
 }
 
 - (void) setFullyInactive

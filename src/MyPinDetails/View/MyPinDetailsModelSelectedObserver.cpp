@@ -1,6 +1,7 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "MyPinDetailsModelSelectedObserver.h"
+#include "IMyPinDetailsDisplayService.h"
 
 namespace ExampleApp
 {
@@ -8,9 +9,9 @@ namespace ExampleApp
     {
         namespace View
         {
-            MyPinDetailsModelSelectedObserver::MyPinDetailsModelSelectedObserver(IMyPinDetailsViewModel& myPinDetailsViewModel,
-                    ExampleAppMessaging::TMessageBus& messageBus)
-                : m_myPinDetailsViewModel(myPinDetailsViewModel)
+            MyPinDetailsModelSelectedObserver::MyPinDetailsModelSelectedObserver(IMyPinDetailsDisplayService& myPinDetailsDisplayService,
+                                                                                 ExampleAppMessaging::TMessageBus& messageBus)
+                : m_myPinDetailsDisplayService(myPinDetailsDisplayService)
                 , m_messageBus(messageBus)
                 , m_handlerBinding(this, &MyPinDetailsModelSelectedObserver::OnMyPinDetailsModelSelectedMessage)
             {
@@ -24,10 +25,7 @@ namespace ExampleApp
 
             void MyPinDetailsModelSelectedObserver::OnMyPinDetailsModelSelectedMessage(const MyPinDetailsModelSelectedMessage& message)
             {
-                if (!m_myPinDetailsViewModel.IsOpen())
-                {
-                    m_myPinDetailsViewModel.Open(message.GetModel());
-                }
+                m_myPinDetailsDisplayService.DisplayPinDetails(message.GetModel());
             }
         }
     }

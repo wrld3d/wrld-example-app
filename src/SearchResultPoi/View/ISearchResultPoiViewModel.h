@@ -17,12 +17,17 @@ namespace ExampleApp
                 virtual ~ISearchResultPoiViewModel() { }
 
                 virtual const Search::SdkModel::SearchResultModel& GetSearchResultModel() const = 0;
+                
+                virtual bool IsPinned() const = 0;
 
+                virtual void ToggleIsPinned() = 0;
+                
                 virtual bool TryAcquireReactorControl() = 0;
 
                 virtual bool IsOpen() const = 0;
 
-                virtual void Open(const Search::SdkModel::SearchResultModel& searchResultModel) = 0;
+                virtual void Open(const Search::SdkModel::SearchResultModel& searchResultModel,
+                                  bool isPinned) = 0;
 
                 virtual void Close() = 0;
 

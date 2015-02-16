@@ -24,6 +24,7 @@
 #include "ClearCacheMessage.h"
 #include "GpsMarkerVisibilityMessage.h"
 #include "InitialExperienceDialogDismissedMessage.h"
+#include "SearchResultPoiPinToggledMessage.h"
 
 namespace ExampleApp
 {
@@ -50,6 +51,7 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<Options::ClearCacheMessage>
             , public Eegeo::Messaging::CatalogBinding<GpsMarker::GpsMarkerVisibilityMessage>
         	, public Eegeo::Messaging::CatalogBinding<InitialExperience::Dialogs::InitialExperienceDialogDismissedMessage>
+            , public Eegeo::Messaging::CatalogBinding<SearchResultPoi::SearchResultPoiPinToggledMessage>
             , private Eegeo::NonCopyable
         {
 
