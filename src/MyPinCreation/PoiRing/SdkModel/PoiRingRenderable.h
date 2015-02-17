@@ -47,6 +47,8 @@ namespace ExampleApp
                     void RenderClearStencil(Eegeo::Rendering::GLState& glState) const;
                     void RenderSpheres(Eegeo::Rendering::GLState& glState) const;
                     void RenderRingEffects(Eegeo::Rendering::GLState& glState) const;
+                    void RenderFullScreenQuad(Eegeo::Rendering::GLState &glState, int palleteId) const;
+                    void SetupSphereState(Eegeo::Rendering::GLState &glState, u32 resourceMask) const;
                 };
             }
         }

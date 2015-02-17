@@ -14,6 +14,8 @@
 #include "VertexBindingPool.h"
 #include "Mesh.h"
 #include "WorldMeshRenderable.h"
+#include "ModelMaterial.h"
+#include "StencilLayersController.h"
 
 namespace ExampleApp
 {
@@ -27,7 +29,7 @@ namespace ExampleApp
                                                      Eegeo::Helpers::IFileIO& fileIO,
                                                      Eegeo::Rendering::AsyncTexturing::IAsyncTextureRequestor& textureRequestor,
                                                      Eegeo::Lighting::GlobalFogging& globalFogging)
-                    : Eegeo::Rendering::RenderableBase(Eegeo::Rendering::LayerIds::AfterAll,
+                    : Eegeo::Rendering::RenderableBase(Eegeo::Rendering::LayerIds::BeforeWorldTranslucency,
                                                        Eegeo::dv3::Zero(),
                                                        &renderingModule.GetNullMaterial())
                     , m_fogging(globalFogging)
@@ -76,59 +78,158 @@ namespace ExampleApp
                     //       at https://github.com/eegeo/mobile-sdk-harness for correct usage.
                     RenderClearStencil(glState);
                     RenderSpheres(glState);
-                    RenderRingEffects(glState);
+                    //RenderRingEffects(glState);
                 }
 
                 void PoiRingRenderable::RenderClearStencil(Eegeo::Rendering::GLState& glState) const
                 {
-                    m_pColorMaterial->SetState(glState);
-
-                    glState.DepthMask(GL_FALSE);
-                    glState.DepthTest.Enable();
-                    glState.DepthFunc(GL_ALWAYS);
-                    glState.ColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
-                    glState.Blend.Disable();
-                    glState.StencilTest.Enable();
-                    glState.StencilFunc(GL_ALWAYS, 0, 0xFF);
-                    glState.StencilOp(GL_REPLACE, GL_REPLACE, GL_REPLACE);
-
-                    m_pQuadRenderable->Render(glState);
+                    glStencilMask(Eegeo::Rendering::StencilMapLayerMask::UserArea);
+                    glClearStencil(0);
+                    glClear(GL_STENCIL_BUFFER_BIT);
+                    glStencilMask(0xffffffff);
                 }
 
-                void PoiRingRenderable::RenderSpheres(Eegeo::Rendering::GLState &glState) const
+                void PoiRingRenderable::SetupSphereState(Eegeo::Rendering::GLState &glState, u32 resourceMask) const
                 {
                     glState.BindTexture2D(0);
                     glState.ColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
-
+                    
                     glState.DepthMask(GL_FALSE);
                     glState.DepthTest.Enable();
                     glState.DepthFunc(GL_LESS);
-
-                    glState.CullFace.Disable();
-
+                    
                     glState.StencilTest.Enable();
-                    glState.StencilFunc(GL_ALWAYS, 1, 0xFF);
-                    glState.StencilOpSeparate(GL_FRONT, GL_KEEP, GL_KEEP, GL_INCR_WRAP);
-                    glState.StencilOpSeparate(GL_BACK, GL_KEEP, GL_KEEP, GL_DECR_WRAP);
+                    
+                    glState.CullFace.Disable();
+                    // use bottom bitplane of stencil to represent inside / outside volume
+                    
+                    glStencilMask(Eegeo::Rendering::StencilMapLayerMask::UserArea);
+                    
+                    glState.StencilFunc(GL_NOTEQUAL, 0, resourceMask); // only write if masked resource already written in high stencil bitplanes
+                    glState.StencilOpSeparate(GL_FRONT, GL_KEEP, GL_KEEP, GL_INCR);
+                    glState.StencilOpSeparate(GL_BACK, GL_KEEP, GL_KEEP, GL_DECR);
+                }
 
+                
+                
+                void PoiRingRenderable::RenderSpheres(Eegeo::Rendering::GLState &glState) const
+                {
+                    const u32 mapLayerMask = Eegeo::Rendering::StencilMapLayerMask::Buildings | Eegeo::Rendering::StencilMapLayerMask::Transport;
+                    SetupSphereState(glState, mapLayerMask);
+                    
                     m_pSphere->Draw(glState, m_fogging);
+                    
+                    RenderFullScreenQuad(glState, 0);
+                    
 
-                    Eegeo::Node* pRoot = m_pSphere->GetRootNode();
-                    const Eegeo::m44& originalLocalMatrix = pRoot->GetLocalMatrix();
-                    const Eegeo::v4& originalCameraRelativePosition = originalLocalMatrix.GetRow(3);
+                    
+//                    Eegeo::Node* pRoot = m_pSphere->GetRootNode();
+//                    const Eegeo::m44& originalLocalMatrix = pRoot->GetLocalMatrix();
+//                    const Eegeo::v4 originalCameraRelativePosition = originalLocalMatrix.GetRow(3);
+//
+//                    Eegeo::m44 transform = originalLocalMatrix;
+//                    
+//                    Eegeo::v4  temp = originalCameraRelativePosition + Eegeo::v4(-20.f, 120.f, 120.f, 0.0f);
+//                    transform.SetRow(3, temp);
+//                    SetSphereMvp(transform);
+//
+//                    RenderClearStencil(glState);
+//                    SetupSphereState(glState, mapLayerMask);
+//                    m_pSphere->Draw(glState, m_fogging);
+//                    RenderFullScreenQuad(glState, 1);
+//
+//
+//
+//                    temp = originalCameraRelativePosition + Eegeo::v4(30.f, -170.f, -160.f, 0.0f);
+//                    transform.SetRow(3, temp);
+//                    SetSphereMvp(transform);
+//                    
+//                    RenderClearStencil(glState);
+//                    SetupSphereState(glState, mapLayerMask);
+//                    m_pSphere->Draw(glState, m_fogging);
+//                    RenderFullScreenQuad(glState, 2);
 
-                    Eegeo::m44 transform;
-                    transform.Scale(m_innerSphereScale);
-                    transform.SetRow(3, originalCameraRelativePosition);
-
-                    SetSphereMvp(transform);
-                    m_pSphere->Draw(glState, m_fogging);
+                }
+                
+                void PoiRingRenderable::RenderFullScreenQuad(Eegeo::Rendering::GLState &glState, int palleteId) const
+                {
+                    glState.UseProgram(0);
+                    glState.BindTexture2D(0);
+                    m_pColorMaterial->SetState(glState);
+                    
+                    glState.CullFace.Enable();
+                    //glStencilMask(0xffffffff);
+                    glState.DepthTest.Disable();
+                    glState.StencilTest.Enable();
+                    glState.StencilFunc(GL_NOTEQUAL, 0, Eegeo::Rendering::StencilMapLayerMask::UserArea);
+                    
+                    glState.StencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
+                    glState.ColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
+                    glState.Blend.Enable();
+                    glState.BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+                    glState.BlendEquation(GL_FUNC_ADD);
+                    
+                    Eegeo::v4 fillColortest;
+                    if (palleteId == 0)
+                    {
+                        fillColortest = Eegeo::v4(1.f, 0.0f, 0.0f, 0.5f);
+                    }
+                    else if (palleteId == 1)
+                    {
+                        fillColortest = Eegeo::v4(0.f, 1.0f, 0.0f, 0.5f);
+                    }
+                    else if (palleteId == 2)
+                    {
+                        fillColortest = Eegeo::v4(0.f, 0.0f, 1.0f, 0.5f);
+                    }
+                    else if (palleteId == 3)
+                    {
+                        fillColortest = Eegeo::v4(1.f, 1.0f, 0.0f, 0.5f);
+                    }
+                    else if (palleteId == 4)
+                    {
+                        fillColortest = Eegeo::v4(0.f, 1.0f, 1.0f, 0.5f);
+                    }
+                    else if (palleteId == 5)
+                    {
+                        fillColortest = Eegeo::v4(0.f, 1.0f, 1.0f, 0.5f);
+                    }
+                    
+                    m_pColorMaterial->SetColor(fillColortest);
+                    
+                    m_pQuadRenderable->Render(glState);
+                    
+                    glState.DepthTest.Enable();
                 }
 
                 void PoiRingRenderable::RenderRingEffects(Eegeo::Rendering::GLState &glState) const
                 {
-                    m_pColorMaterial->SetState(glState);
 
+                    // draw current stencil buffer
+                    m_pColorMaterial->SetState(glState);
+                                        glState.StencilTest.Enable();
+                                        glState.DepthTest.Disable();
+                                        //glState.StencilFunc(GL_NOTEQUAL, 0, 0x7F);
+                                        glState.StencilFunc(GL_EQUAL, 2, 0x1F);
+
+                                        //glState.StencilFunc(GL_LESS, 0x80, 0xFF);
+                                        glState.StencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
+                                        glState.ColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
+                                        glState.Blend.Enable();
+                                        glState.BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+                                        glState.BlendEquation(GL_FUNC_ADD);
+                    
+                    
+                                        Eegeo::v4 fillColortest = Eegeo::v4(0.2f, 0.0f, 1.0f, 0.5f);
+                                        m_pColorMaterial->SetColor(fillColortest);
+                                        m_pQuadRenderable->Render(glState);
+
+                                        glState.DepthTest.Enable();
+                    
+                    return;
+                    
+                    m_pColorMaterial->SetState(glState);
+                    
                     Eegeo::v4 ringColor = Eegeo::v4(1.f, 1.f, 1.f, 0.9f);
                     m_pColorMaterial->SetColor(ringColor);
 
