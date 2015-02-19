@@ -2,6 +2,7 @@
 
 #include "FlattenButtonModel.h"
 #include "EnvironmentFlatteningService.h"
+#include "IWeatherController.h"
 
 namespace ExampleApp
 {
@@ -9,9 +10,11 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            FlattenButtonModel::FlattenButtonModel(Eegeo::Rendering::EnvironmentFlatteningService& flatteningService)
+            FlattenButtonModel::FlattenButtonModel(Eegeo::Rendering::EnvironmentFlatteningService& flatteningService,
+                                                   WeatherMenu::SdkModel::IWeatherController& weatherController)
                 : m_environmentFlattening(flatteningService)
                 , m_pFlatteningModelChangedCallback(Eegeo_NEW(Eegeo::Helpers::TCallback0<FlattenButtonModel>)(this, &FlattenButtonModel::HandleModelChanged))
+                , m_weatherController(weatherController)
             {
                 m_environmentFlattening.InsertChangedCallback(*m_pFlatteningModelChangedCallback);
             }
@@ -34,6 +37,8 @@ namespace ExampleApp
                     return;
                 }
                 m_environmentFlattening.SetIsFlattened(true);
+                m_weatherController.SetExplicitState("MapMode");
+                m_weatherController.Refresh();
                 m_changedCallbacks.ExecuteCallbacks();
             }
 
@@ -43,6 +48,8 @@ namespace ExampleApp
                 {
                     return;
                 }
+                m_weatherController.SetExplicitState("");
+                m_weatherController.Refresh();
                 m_environmentFlattening.SetIsFlattened(false);
                 m_changedCallbacks.ExecuteCallbacks();
             }

@@ -30,6 +30,12 @@ namespace ExampleApp
                 {
                     return *m_pMenuModel;
                 }
+                
+                IWeatherController& GetWeatherController() const
+                {
+                    return *m_pWeatherController;
+                }
+                
             private:
 
                 Menu::View::IMenuModel* m_pMenuModel;

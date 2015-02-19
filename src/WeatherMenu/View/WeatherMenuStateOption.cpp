@@ -2,6 +2,7 @@
 
 #include "WeatherMenuStateOption.h"
 #include "FlurryWrapper.h"
+#include "FlattenButtonViewStateChangedMessage.h"
 
 namespace ExampleApp
 {
@@ -20,7 +21,9 @@ namespace ExampleApp
             void WeatherMenuStateOption::Select()
             {
                 FLURRY_SET_EVENT("UIItem: Weather", "Name", m_weatherStateModel.GetName().c_str());
+                m_messageBus.Publish(FlattenButton::FlattenButtonViewStateChangedMessage(false));
                 m_messageBus.Publish(WeatherSelectedMessage(m_weatherStateModel));
+                
             }
         }
     }

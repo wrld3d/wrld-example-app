@@ -16,7 +16,7 @@ namespace ExampleApp
             {
             public:
 
-                WeatherMenuStateModel(std::string name, std::string time, std::string weather, std::string season, std::string icon);
+                WeatherMenuStateModel(std::string name, std::string time, std::string weather, std::string season, std::string icon, std::string explicitState);
 
                 const bool HasTimeState() const
                 {
@@ -29,6 +29,10 @@ namespace ExampleApp
                 const bool HasSeasonState() const
                 {
                     return !m_seasonState.empty();
+                }
+                const bool HasExplicitState() const
+                {
+                    return !m_explicitState.empty();
                 }
 
                 const std::string& GetName() const
@@ -51,6 +55,10 @@ namespace ExampleApp
                 {
                     return m_icon;
                 }
+                const std::string& GetExplicitState() const
+                {
+                    return m_explicitState;
+                }
 
             private:
 
@@ -58,6 +66,7 @@ namespace ExampleApp
                 std::string m_timeState;
                 std::string m_weatherState;
                 std::string m_seasonState;
+                std::string m_explicitState;
                 std::string m_icon;;
             };
         }

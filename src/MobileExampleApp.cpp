@@ -293,6 +293,7 @@ namespace ExampleApp
         Eegeo::Modules::Map::MapModule& mapModule = world.GetMapModule();
 
         m_pFlattenButtonModule = Eegeo_NEW(ExampleApp::FlattenButton::SdkModel::FlattenButtonModule)(mapModule.GetEnvironmentFlatteningService(),
+                                 m_pWeatherMenuModule->GetWeatherController(),
                                  m_identityProvider,
                                  m_messageBus);
 

@@ -16,6 +16,7 @@ namespace ExampleApp
                 : m_currentWeather("Default")
                 , m_currentTime("Day")
                 , m_currentSeason("Summer")
+                , m_currentExplicitState("")
                 , m_themesService(themesService)
                 , m_themesUpdater(themesUpdater)
             {
@@ -35,13 +36,18 @@ namespace ExampleApp
             {
                 m_currentSeason = season;
             }
+            
+            void WeatherController::SetExplicitState(const std::string &state)
+            {
+                m_currentExplicitState = state;
+            }
 
             void WeatherController::Refresh()
             {
                 EXAMPLE_LOG("Changing season to: %s\n", m_currentSeason.c_str());
                 m_themesUpdater.SetThemeMustContain(m_currentSeason);
 
-                std::string themeStateName = m_currentTime + m_currentWeather;
+                std::string themeStateName = m_currentExplicitState.empty() ? m_currentTime + m_currentWeather : m_currentExplicitState;
                 EXAMPLE_LOG("Changing state to: %s\n", themeStateName.c_str());
                 m_themesService.RequestTransitionToState(themeStateName, 1);
             }

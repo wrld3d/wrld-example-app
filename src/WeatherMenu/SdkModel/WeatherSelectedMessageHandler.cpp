@@ -24,7 +24,9 @@ namespace ExampleApp
                 {
                     m_weatherController.SetSeason(model.GetSeasonState());
                 }
-
+                
+                m_weatherController.SetExplicitState(model.GetExplicitState());
+                
                 m_weatherController.Refresh();
             }
 

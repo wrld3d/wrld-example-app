@@ -11,6 +11,7 @@
 #include "FlattenButtonViewStateChangedObserver.h"
 #include "FlattenButtonModelStateChangedObserver.h"
 #include "BidirectionalBus.h"
+#include "WeatherMenu.h"
 
 namespace ExampleApp
 {
@@ -28,6 +29,7 @@ namespace ExampleApp
 
             public:
                 FlattenButtonModule(Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
+                                    WeatherMenu::SdkModel::IWeatherController& weatherController,
                                     Eegeo::Helpers::IIdentityProvider& identityProvider,
                                     ExampleAppMessaging::TMessageBus& messageBus);
 

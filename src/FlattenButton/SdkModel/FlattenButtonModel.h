@@ -6,6 +6,7 @@
 #include "IFlattenButtonModel.h"
 #include "Rendering.h"
 #include "CallbackCollection.h"
+#include "WeatherMenu.h"
 
 namespace ExampleApp
 {
@@ -18,10 +19,12 @@ namespace ExampleApp
                 Eegeo::Rendering::EnvironmentFlatteningService& m_environmentFlattening;
                 Eegeo::Helpers::CallbackCollection0 m_changedCallbacks;
                 Eegeo::Helpers::ICallback0* m_pFlatteningModelChangedCallback;
+                WeatherMenu::SdkModel::IWeatherController& m_weatherController;
 
             public:
 
-                FlattenButtonModel(Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService);
+                FlattenButtonModel(Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
+                                   WeatherMenu::SdkModel::IWeatherController& weatherController);
 
                 ~FlattenButtonModel();
 

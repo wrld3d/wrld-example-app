@@ -32,8 +32,10 @@ namespace ExampleApp
 
                     Eegeo_ASSERT(jsonValue.HasMember("Icon"), "Weather configuration error: State %s has no icon defined.", name.c_str());
                     std::string icon = jsonValue["Icon"].GetString();
+                    
+                    std::string state = jsonValue.HasMember("State") ? jsonValue["State"].GetString() : "";
 
-                    SdkModel::WeatherMenuStateModel weatherState(name, time, weather, season, icon);
+                    SdkModel::WeatherMenuStateModel weatherState(name, time, weather, season, icon, state);
                     out_weatherStates.push_back(weatherState);
                 }
 
