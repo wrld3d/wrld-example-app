@@ -26,41 +26,32 @@ endif
 
 os_name:=$(shell uname -s)
 
+get_android_cpp_files_cmd := cd jni; find ./ -type f  -iname "*.cpp"
+get_android_includes_cmd  := find ./jni -type d
+get_shared_cpp_files_cmd  := cd jni; find ./../../src/ -type f  -iname "*.cpp"
+get_shared_includes_cmd   := find ./libs/../../src -type d
+get_platform_includes_cmd := find ./libs/eegeo/platform -type d ! -path "*/OSX/*" ! -path "*/iOS/*"
+
+
 ifeq ($(os_name),Darwin)
-	android_specific_cpp_files := $(shell cd jni; find ./ -type f  -iname "*.cpp")
-	LOCAL_SRC_FILES := $(android_specific_cpp_files:$(LOCAL_PATH)/%=%)
-	android_specific_includes := $(shell find ./jni -type d)
-	LOCAL_C_INCLUDES := $(android_specific_includes:$(LOCAL_PATH)/%=%)
-
-	shared_example_cpp_files := $(shell cd jni; find ./../../src/ -type f  -iname "*.cpp")
-	LOCAL_SRC_FILES += $(shared_example_cpp_files:$(LOCAL_PATH)/%=%)
-
-	platformincludes := $(shell find ./libs/eegeo/platform -type d ! -path "*/OSX/*" ! -path "*/iOS/*")
-	LOCAL_C_INCLUDES += $(platformincludes:$(LOCAL_PATH)/%=%)
-
-	exampleincludes := $(shell find ./libs/../../src -type d)
-	LOCAL_C_INCLUDES += $(exampleincludes:$(LOCAL_PATH)/%=%)
-
+	cppfiles := ${shell ${get_android_cpp_files_cmd}}
+	cppfiles += ${shell ${get_shared_cpp_files_cmd}}
+	
+	includes := ${shell ${get_android_includes_cmd}}
+	includes += ${shell ${get_shared_includes_cmd}}
+	includes += ${shell ${get_platform_includes_cmd}}
 else
 	# assume windows if not specified for now (due to no uname)
+	cppfiles := ${shell sh -c '${get_android_cpp_files_cmd}'}
+	cppfiles += ${shell sh -c '${get_shared_cpp_files_cmd}'}
 	
-	android_specific_includes := $(shell dir jni /ad-h /s /b)
-	LOCAL_C_INCLUDES := $(android_specific_includes:$(LOCAL_PATH)/%=%)
-	
-	android_specific_cpp_files := $(shell cd jni && dir /a-d /b /s *.cpp)
-	LOCAL_SRC_FILES := $(android_specific_cpp_files:$(LOCAL_PATH)/%=%)
-    
-    shared_example_cpp_files := $(shell cd jni\..\..\src\ && dir /a-d /b /s *.cpp)
-	LOCAL_SRC_FILES += $(shared_example_cpp_files:$(LOCAL_PATH)/%=%)
-	
-	platformincludes := $(shell dir .\libs\eegeo\platform /ad-h /s /b)
-	LOCAL_C_INCLUDES += $(platformincludes:$(LOCAL_PATH)/%=%)
-	LOCAL_C_INCLUDES += ./libs/eegeo/platform 
-
-	exampleincludes := $(shell dir .\libs\..\..\src /ad-h /s /b)
-	LOCAL_C_INCLUDES += $(exampleincludes:$(LOCAL_PATH)/%=%)
-	LOCAL_C_INCLUDES += .\libs\..\..\src
+	includes := ${shell sh -c '${get_android_includes_cmd}'}
+	includes += ${shell sh -c '${get_shared_includes_cmd}'}
+	includes += ${shell sh -c '${get_platform_includes_cmd}'}
 endif 
+
+LOCAL_SRC_FILES := $(cppfiles:$(LOCAL_PATH)/%=%)
+LOCAL_C_INCLUDES := $(includes:$(LOCAL_PATH)/%=%)
 
 LOCAL_C_INCLUDES += ./libs/eegeo/png
 LOCAL_C_INCLUDES += ./libs/eegeo/curl 
