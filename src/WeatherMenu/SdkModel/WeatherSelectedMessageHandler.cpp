@@ -22,12 +22,13 @@ namespace ExampleApp
                 }
                 if(model.HasSeasonState())
                 {
-                    m_weatherController.SetSeason(model.GetSeasonState());
+                    m_weatherController.SetTheme(model.GetSeasonState());
                 }
-                
-                m_weatherController.SetExplicitState(model.GetExplicitState());
-                
-                m_weatherController.Refresh();
+
+                if(model.HasExplicitState())
+                {
+                    m_weatherController.SetState(model.GetExplicitState());
+                }
             }
 
             WeatherSelectedMessageHandler::WeatherSelectedMessageHandler(

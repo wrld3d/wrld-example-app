@@ -22,16 +22,19 @@ namespace ExampleApp
 
                 void SetWeather(const std::string& weather);
                 void SetTime(const std::string& time);
-                void SetSeason(const std::string& season);
-                void SetExplicitState(const std::string& currentState);
-                void Refresh();
+                void SetTheme(const std::string& season);
+                void SetState(const std::string& currentState);
+                const std::string& GetState() const { return m_currentState; }
 
             private:
 
+                void RefreshTheme();
+                
                 std::string m_currentWeather;
                 std::string m_currentTime;
-                std::string m_currentSeason;
-                std::string m_currentExplicitState;
+                
+                std::string m_currentTheme;
+                std::string m_currentState;
 
                 Eegeo::Resources::CityThemes::ICityThemesService& m_themesService;
                 Eegeo::Resources::CityThemes::ICityThemesUpdater& m_themesUpdater;

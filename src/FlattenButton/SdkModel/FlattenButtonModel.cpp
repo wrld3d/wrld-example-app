@@ -15,6 +15,7 @@ namespace ExampleApp
                 : m_environmentFlattening(flatteningService)
                 , m_pFlatteningModelChangedCallback(Eegeo_NEW(Eegeo::Helpers::TCallback0<FlattenButtonModel>)(this, &FlattenButtonModel::HandleModelChanged))
                 , m_weatherController(weatherController)
+                , m_previousThemeState("")
             {
                 m_environmentFlattening.InsertChangedCallback(*m_pFlatteningModelChangedCallback);
             }
@@ -37,8 +38,8 @@ namespace ExampleApp
                     return;
                 }
                 m_environmentFlattening.SetIsFlattened(true);
-                m_weatherController.SetExplicitState("MapMode");
-                m_weatherController.Refresh();
+                m_previousThemeState = m_weatherController.GetState();
+                m_weatherController.SetState("MapMode");
                 m_changedCallbacks.ExecuteCallbacks();
             }
 
@@ -48,8 +49,7 @@ namespace ExampleApp
                 {
                     return;
                 }
-                m_weatherController.SetExplicitState("");
-                m_weatherController.Refresh();
+                m_weatherController.SetState(m_previousThemeState);
                 m_environmentFlattening.SetIsFlattened(false);
                 m_changedCallbacks.ExecuteCallbacks();
             }

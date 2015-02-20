@@ -17,9 +17,9 @@ namespace ExampleApp
 
                 virtual void SetWeather(const std::string& weather) = 0;
                 virtual void SetTime(const std::string& time) = 0;
-                virtual void SetSeason(const std::string& season) = 0;
-                virtual void SetExplicitState(const std::string& state) = 0;
-                virtual void Refresh() = 0;
+                virtual void SetTheme(const std::string& season) = 0;
+                virtual void SetState(const std::string& state) = 0;
+                virtual const std::string& GetState() const = 0;
             };
         }
     }

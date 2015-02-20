@@ -7,6 +7,7 @@
 #include "Rendering.h"
 #include "CallbackCollection.h"
 #include "WeatherMenu.h"
+#include <string>
 
 namespace ExampleApp
 {
@@ -20,6 +21,7 @@ namespace ExampleApp
                 Eegeo::Helpers::CallbackCollection0 m_changedCallbacks;
                 Eegeo::Helpers::ICallback0* m_pFlatteningModelChangedCallback;
                 WeatherMenu::SdkModel::IWeatherController& m_weatherController;
+                std::string m_previousThemeState;
 
             public:
 
