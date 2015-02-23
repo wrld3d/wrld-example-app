@@ -33,15 +33,19 @@
 #include "StreamingModule.h"
 #include "EnvironmentCharacterSet.h"
 #include "Blitter.h"
+#include "GlobeCameraJumpController.h"
+#include "ResourceNodeCache.h"
 
+#include "IRouteCreator.h"
+#include "FrustumStreamingVolume.h"
 
 namespace ExampleApp
 {
-    const std::string ApiKey = "OBTAIN API_KEY FROM https://appstore.eegeo.com AND INSERT IT HERE";
+    const std::string ApiKey = "a70e18bedb65b0ae080e2b7acb949221";
     const std::string DecartaApiKey = "OBTAIN DECARTA SEARCH KEY AND INSERT IT HERE";
     
     namespace
-    {
+    {       
         Eegeo::Rendering::LoadingScreen* CreateLoadingScreen(const Eegeo::Rendering::ScreenProperties& screenProperties,
                                                              const Eegeo::Modules::Core::RenderingModule& renderingModule,
                                                              const Eegeo::Modules::IPlatformAbstractionModule& platformAbstractionModule)
@@ -77,7 +81,8 @@ namespace ExampleApp
                                        Eegeo::UI::NativeUIFactories& nativeUIFactories,
                                        Eegeo::Config::PlatformConfig platformConfig,
                                        Eegeo::Helpers::Jpeg::IJpegLoader& jpegLoader,
-                                       ExampleApp::InitialExperience::IInitialExperienceModule& initialExperienceModule)
+                                       ExampleApp::InitialExperience::IInitialExperienceModule& initialExperienceModule,
+                                       Eegeo::Debug::IMemoryStats& memoryStats)
     : m_pGlobeCameraController(NULL)
     , m_pCameraTouchController(NULL)
     , m_pNavigationService(NULL)
@@ -174,12 +179,42 @@ namespace ExampleApp
         CreateApplicationModelModules();
         
         m_pLoadingScreen = CreateLoadingScreen(screenProperties, m_pWorld->GetRenderingModule(), m_pWorld->GetPlatformAbstractionModule());
+        
+        m_pDebugStats = Eegeo_NEW(Eegeo::Debug::DebugStats)(&memoryStats,
+                                                            GetCameraController(),
+                                                            *(GetCameraController().GetCamera()),
+                                                            &(m_pWorld->GetFrameTimer()),
+                                                            &(m_pWorld->GetStreamingModule().GetResourceNodeCache())
+                                                            );
+        
+        m_pGlobeCameraJumpController = Eegeo_NEW(Eegeo::Camera::GlobeCamera::GlobeCameraJumpController)(GetCameraController());
+       
+        m_pCommandServerModule = Eegeo::Debug::DebugServer::CommandServerModule::BuildDefault();
+        
+        m_pFrustumVolumeProvider = Eegeo_NEW(FrustumVolumeProvider)(m_pWorld->GetStreamingModule().GetStreamingVolumeController(), *GetCameraController().GetCamera());
+        m_pStubRouteCreator = Eegeo_NEW(StubRouteCreator);
+        
+        m_pDefaultCommandsModule = Eegeo_NEW(Eegeo::Debug::DebugServer::DefaultCommandsModule)(
+                                            *m_pWorld,
+                                            *m_pDebugStats,
+                                            GetCameraController().GetGlobeCameraController(),
+                                            *m_pGlobeCameraJumpController,
+                                            *m_pFrustumVolumeProvider,
+                                            *m_pStubRouteCreator,
+                                            m_pCommandServerModule->GetCommandRegistry());
     }
     
     
     MobileExampleApp::~MobileExampleApp()
     {
         DestroyApplicationModelModules();
+
+        Eegeo_DELETE m_pDefaultCommandsModule;
+        Eegeo_DELETE m_pFrustumVolumeProvider;
+        Eegeo_DELETE m_pStubRouteCreator;
+        Eegeo_DELETE m_pCommandServerModule;
+        Eegeo_DELETE m_pGlobeCameraJumpController;
+        Eegeo_DELETE m_pDebugStats;
         
         Eegeo_DELETE m_pCameraTransitionController;
         Eegeo_DELETE m_pNavigationService;
@@ -383,12 +418,15 @@ namespace ExampleApp
     
     void MobileExampleApp::OnPause()
     {
+        m_pCommandServerModule->GetTcpListener().StopListening();
         Eegeo::EegeoWorld& eegeoWorld = World();
         eegeoWorld.OnPause();
     }
     
     void MobileExampleApp::OnResume()
     {
+        m_pCommandServerModule->GetTcpListener().StartListening(Eegeo::Debug::DebugServer::CommandServerModule::DefaultPort);
+        
         Eegeo::EegeoWorld& eegeoWorld = World();
         eegeoWorld.OnResume();
     }
@@ -396,6 +434,8 @@ namespace ExampleApp
     void MobileExampleApp::Update (float dt)
     {
         Eegeo::EegeoWorld& eegeoWorld = World();
+        
+        m_pCommandServerModule->Update();
         
         if(!eegeoWorld.Initialising())
         {

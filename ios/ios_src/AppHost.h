@@ -15,6 +15,7 @@
 #include "AppInputDelegate.h"
 #include "AppLocationDelegate.h"
 #include "Modules.h"
+#include "iOSMemoryStats.h"
 #include <vector>
 
 #include "MobileExampleApp.h"
@@ -60,17 +61,19 @@ public:
     
 private:
     UIView* m_pView;
+    Eegeo::iOS::iOSMemoryStats* m_pMemoryStats;
     ViewController& m_viewController;
     Eegeo::Helpers::Jpeg::IJpegLoader* m_pJpegLoader;
     Eegeo::Rendering::ScreenProperties* m_pScreenProperties;
 	Eegeo::iOS::iOSLocationService* m_piOSLocationService;
-	AppInputDelegate* m_pAppInputDelegate;
+        AppInputDelegate* m_pAppInputDelegate;
     AppLocationDelegate* m_pAppLocationDelegate;
     
 	Eegeo::UI::NativeInput::iOS::iOSInputBoxFactory m_iOSInputBoxFactory;
 	Eegeo::UI::NativeInput::iOS::iOSKeyboardInputFactory m_iOSKeyboardInputFactory;
 	Eegeo::UI::NativeAlerts::iOS::iOSAlertBoxFactory m_iOSAlertBoxFactory;
 	Eegeo::UI::NativeUIFactories m_iOSNativeUIFactories;
+    
     Eegeo::iOS::iOSPlatformAbstractionModule* m_piOSPlatformAbstractionModule;
     
     ExampleApp::PrimaryMenu::IPrimaryMenuViewModule* m_pPrimaryMenuViewModule;

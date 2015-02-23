@@ -6,6 +6,7 @@ Include
 *.idea
 *xcuserdatadbin
 bin
+EndToEndResults/
 gen
 obj
 libs

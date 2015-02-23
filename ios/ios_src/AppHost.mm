@@ -42,6 +42,10 @@
 #include "AboutPageViewModule.h"
 #include "AboutPageView.h"
 #include "CategorySearchModule.h"
+#include "DefaultCommandsModule.h"
+#include "DebugStats.h"
+#include "iOSMemoryStats.h"
+#include "GpsGlobeCameraController.h"
 
 using namespace Eegeo::iOS;
 
@@ -65,6 +69,7 @@ AppHost::AppHost(
 ,m_iOSNativeUIFactories(m_iOSAlertBoxFactory, m_iOSInputBoxFactory, m_iOSKeyboardInputFactory)
 ,m_piOSPlatformAbstractionModule(NULL)
 ,m_pApp(NULL)
+,m_pMemoryStats(NULL)
 {
     m_piOSLocationService = Eegeo_NEW(iOSLocationService)();
     
@@ -80,13 +85,16 @@ AppHost::AppHost(
     
     m_pInitialExperienceModule = Eegeo_NEW(ExampleApp::InitialExperience::iOSInitialExperienceModule)(m_iOSPersistentSettingsModel);
     
+    m_pMemoryStats = Eegeo_NEW(Eegeo::iOS::iOSMemoryStats);
+    
     m_pApp = Eegeo_NEW(ExampleApp::MobileExampleApp)(*m_piOSPlatformAbstractionModule,
                                                      *m_pScreenProperties,
                                                      *m_piOSLocationService,
                                                      m_iOSNativeUIFactories,
                                                      platformConfig,
                                                      *m_pJpegLoader,
-                                                     *m_pInitialExperienceModule);
+                                                     *m_pInitialExperienceModule,
+                                                     *m_pMemoryStats);
     
     
     CreateApplicationViewModules();
@@ -94,6 +102,9 @@ AppHost::AppHost(
     m_pAppInputDelegate = Eegeo_NEW(AppInputDelegate)(*m_pApp, m_viewController, displayWidth, displayHeight, pixelScale);
     m_pAppLocationDelegate = Eegeo_NEW(AppLocationDelegate)(*m_piOSLocationService, m_viewController);
 }
+
+
+
 
 AppHost::~AppHost()
 {
@@ -107,6 +118,9 @@ AppHost::~AppHost()
     
     Eegeo_DELETE m_pApp;
     m_pApp = NULL;
+    
+    Eegeo_DELETE m_pMemoryStats;
+    m_pMemoryStats = NULL;
     
     Eegeo_DELETE m_pInitialExperienceModule;
     m_pInitialExperienceModule = NULL;

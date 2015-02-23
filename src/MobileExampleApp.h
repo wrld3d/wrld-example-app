@@ -53,12 +53,80 @@
 #include "WorldAreaLoader.h"
 #include "InitialExperience.h"
 #include "IInitialExperienceModule.h"
+#include "CommandServerModule.h"
+#include "DefaultCommandsModule.h"
+#include "DebugStats.h"
+#include "IMemoryStats.h"
+
+
+// TODO: Remove
+#include "IRouteCreator.h"
+#include "IFrustumVolumeProvider.h"
+#include "FrustumStreamingVolume.h"
+#include "RenderCamera.h"
 
 namespace ExampleApp
 {
+    /*
+    DefaultCommandsModule(EegeoWorld& world,
+                          Debug::IDebugStats& debugStats,
+                          Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController,
+                          Eegeo::Camera::ICameraJumpController& cameraJumpController,
+                          Eegeo::Streaming::IFrustumVolumeProvider& frustumVolumeProvider,
+                          Eegeo::Routes::IRouteCreator& routeCreator,
+                          Commands::CommandRegistry& commandRegistry)*/
+    
+    // TODO: Remove
+
+    class StubRouteCreator : public Eegeo::Routes::IRouteCreator
+    {
+    public:
+        void CreateRoute(const Eegeo::Space::LatLongAltitude& start, const Eegeo::Space::LatLongAltitude& end)
+        {
+        }
+        
+        void CreateRoute(const Eegeo::Space::LatLongAltitude& start, const Eegeo::Space::LatLongAltitude& end, Eegeo::Routes::RouteType::Values routeType)
+        {
+        }
+    };
+    
+    class FrustumVolumeProvider : public Eegeo::Streaming::IFrustumVolumeProvider
+    {
+    private:
+        Eegeo::Streaming::StreamingVolumeController& m_streamingVolumeController;
+        Eegeo::Camera::RenderCamera& m_renderCamera;
+        
+    public:
+        FrustumVolumeProvider(Eegeo::Streaming::StreamingVolumeController& streamingVolumeController,
+                              Eegeo::Camera::RenderCamera& renderCamera)
+        : m_streamingVolumeController(streamingVolumeController)
+        , m_renderCamera(renderCamera)
+        {
+        }
+        
+        Eegeo::Streaming::FrustumStreamingVolume BuildFrustumVolume()
+        {
+            Eegeo::Geometry::Frustum frustum;
+            m_streamingVolumeController.updateStreamingFrustum(frustum,
+                                                               m_renderCamera.GetViewProjectionMatrix(),
+                                                               m_renderCamera.GetEcefLocation());
+            Eegeo::Streaming::FrustumStreamingVolume frustumStreamingVolume(frustum,
+                                                                            m_renderCamera.GetEcefLocation());
+            return frustumStreamingVolume;
+        }
+    };
+    
     class MobileExampleApp : private Eegeo::NonCopyable
     {
     private:
+        Eegeo::Debug::DebugServer::CommandServerModule* m_pCommandServerModule;
+        Eegeo::Debug::DebugServer::DefaultCommandsModule* m_pDefaultCommandsModule;
+        Eegeo::Debug::DebugStats* m_pDebugStats;
+        
+        FrustumVolumeProvider* m_pFrustumVolumeProvider;
+        StubRouteCreator* m_pStubRouteCreator;
+
+        Eegeo::Camera::GlobeCamera::GlobeCameraJumpController* m_pGlobeCameraJumpController;
         Eegeo::Camera::GlobeCamera::GpsGlobeCameraController* m_pGlobeCameraController;
         Eegeo::ITouchController* m_pCameraTouchController;
         Eegeo::EegeoWorld* m_pWorld;
@@ -115,7 +183,8 @@ namespace ExampleApp
                          Eegeo::UI::NativeUIFactories& nativeUIFactories,
                          Eegeo::Config::PlatformConfig platformConfig,
                          Eegeo::Helpers::Jpeg::IJpegLoader& jpegLoader,
-                         ExampleApp::InitialExperience::IInitialExperienceModule& initialExperienceModule);
+                         ExampleApp::InitialExperience::IInitialExperienceModule& initialExperienceModule,
+                         Eegeo::Debug::IMemoryStats& memoryStats);
         
         
         ~MobileExampleApp();
