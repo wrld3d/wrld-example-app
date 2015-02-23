@@ -34,11 +34,11 @@ fi
 
 if [ "$p" == "ios" ]; then
    srcPackageName="sdk.package.ios"
-   includeDestination="./ios/Include"
+   includeDestination="./ios/Include/eegeo"
    sdkDestination="sdk.package"
 elif [ "$p" == "android" ]; then
    srcPackageName="sdk.package.android"
-   includeDestination="./android/libs"
+   includeDestination="./android/libs/eegeo"
    sdkDestination="sdk.package.android"
 fi
 
@@ -51,6 +51,13 @@ fi
 echo "Updating $p platform..."
 rm -rf $includeDestination
 curl $baseUrl$srcPackageName > ./$destPackageName
+
+statuscode=$?
+if [ $statuscode -ne 0 ] ; then
+    echo "Failed to download sdk package ${baseUrl}${srcPackageName}" >&2
+    exit $statuscode
+fi    
+
 tar -zxvf $destPackageName
 rm -f ./$destPackageName
 platformVersion=`cat ./$sdkDestination/version.txt`

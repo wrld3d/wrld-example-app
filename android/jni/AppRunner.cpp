@@ -1,116 +1,179 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "AppRunner.h"
 #include "Graphics.h"
 #include "AndroidThreadHelper.h"
+#include "AndroidAppThreadAssertionMacros.h"
 
 AppRunner::AppRunner
 (
     AndroidNativeState* pNativeState
 )
-	: m_pNativeState(pNativeState)
-	, m_pAppHost(NULL)
+    : m_pNativeState(pNativeState)
+    , m_pAppHost(NULL)
+    , m_updatingNative(true)
+    , m_isPaused(false)
 {
-	Eegeo::Helpers::ThreadHelpers::SetThisThreadAsMainThread();
+    ASSERT_NATIVE_THREAD
+
+    Eegeo::Helpers::ThreadHelpers::SetThisThreadAsMainThread();
 }
 
 AppRunner::~AppRunner()
 {
-	bool destroyEGL = true;
-	m_displayService.ReleaseDisplay(destroyEGL);
+    ASSERT_NATIVE_THREAD
 
-	if(m_pAppHost != NULL)
-	{
-		Eegeo_DELETE(m_pAppHost);
-	}
+    bool destroyEGL = true;
+    m_displayService.ReleaseDisplay(destroyEGL);
+
+    if(m_pAppHost != NULL)
+    {
+        Eegeo_DELETE(m_pAppHost);
+    }
 }
 
 void AppRunner::CreateAppHost()
 {
-	if(m_pAppHost == NULL && m_displayService.IsDisplayAvailable())
-	{
-		m_pAppHost = Eegeo_NEW(AppHost)
-		             (
-		                 *m_pNativeState,
-		                 m_displayService.GetDisplayWidth(),
-		                 m_displayService.GetDisplayHeight(),
-		                 m_displayService.GetDisplay(),
-		                 m_displayService.GetSharedSurface(),
-		                 m_displayService.GetResourceBuildSharedContext()
-		             );
-	}
+    ASSERT_NATIVE_THREAD
+
+    if(m_pAppHost == NULL && m_displayService.IsDisplayAvailable())
+    {
+        const Eegeo::Rendering::ScreenProperties& screenProperties = Eegeo::Rendering::ScreenProperties::Make(
+                    m_displayService.GetDisplayWidth(),
+                    m_displayService.GetDisplayHeight(),
+                    1.f,
+                    m_pNativeState->deviceDpi);
+        m_pAppHost = Eegeo_NEW(AppHost)
+                     (
+                         *m_pNativeState,
+                         screenProperties,
+                         m_displayService.GetDisplay(),
+                         m_displayService.GetSharedSurface(),
+                         m_displayService.GetResourceBuildSharedContext()
+                     );
+    }
 }
 
 void AppRunner::Pause()
 {
-	if(m_pAppHost != NULL)
-	{
-		m_pAppHost->OnPause();
-	}
+    ASSERT_NATIVE_THREAD
 
-	ReleaseDisplay();
+    if(m_pAppHost != NULL && !m_isPaused)
+    {
+        m_pAppHost->OnPause();
+        m_isPaused = true;
+    }
+
+    ReleaseDisplay();
 }
 
 void AppRunner::Resume()
 {
-	if(m_pAppHost != NULL)
-	{
-		m_pAppHost->OnResume();
-	}
+    ASSERT_NATIVE_THREAD
+
+    if(m_pAppHost != NULL && m_isPaused)
+    {
+        m_pAppHost->OnResume();
+    }
+
+    m_isPaused = false;
 }
 
 void AppRunner::ActivateSurface()
 {
-	ReleaseDisplay();
-	bool displayBound = TryBindDisplay();
-	Eegeo_ASSERT(displayBound, "Failed to bind display");
-	CreateAppHost();
+    ASSERT_NATIVE_THREAD
+
+    Pause();
+    bool displayBound = TryBindDisplay();
+    Eegeo_ASSERT(displayBound, "Failed to bind display");
+    CreateAppHost();
+    Resume();
 }
 
 void AppRunner::HandleTouchEvent(const Eegeo::Android::Input::TouchInputEvent& event)
 {
-	if(m_pAppHost != NULL)
-	{
-		m_pAppHost->HandleTouchInputEvent(event);
-	}
+    ASSERT_NATIVE_THREAD
+
+    if(m_pAppHost != NULL)
+    {
+        m_pAppHost->HandleTouchInputEvent(event);
+    }
 }
 
 void AppRunner::ReleaseDisplay()
 {
-	if(m_displayService.IsDisplayAvailable())
-	{
-		const bool teardownEGL = false;
-		m_displayService.ReleaseDisplay(teardownEGL);
-	}
+    ASSERT_NATIVE_THREAD
+
+    if(m_displayService.IsDisplayAvailable())
+    {
+        const bool teardownEGL = false;
+        m_displayService.ReleaseDisplay(teardownEGL);
+    }
 }
 
 bool AppRunner::TryBindDisplay()
 {
-	if(m_displayService.TryBindDisplay(*(m_pNativeState->window)))
-	{
-		if(m_pAppHost != NULL)
-		{
-			m_pAppHost->SetSharedSurface(m_displayService.GetSharedSurface());
-			m_pAppHost->SetViewportOffset(0, 0);
-		}
+    ASSERT_NATIVE_THREAD
 
-		return true;
-	}
+    if(m_displayService.TryBindDisplay(*(m_pNativeState->window)))
+    {
+        if(m_pAppHost != NULL)
+        {
+            m_pAppHost->SetSharedSurface(m_displayService.GetSharedSurface());
+            const Eegeo::Rendering::ScreenProperties& screenProperties = Eegeo::Rendering::ScreenProperties::Make(
+                        m_displayService.GetDisplayWidth(),
+                        m_displayService.GetDisplayHeight(),
+                        1.f,
+                        m_pNativeState->deviceDpi);
+            m_pAppHost->NotifyScreenPropertiesChanged(screenProperties);
+            m_pAppHost->SetViewportOffset(0, 0);
+        }
 
-	return false;
+        return true;
+    }
+
+    return false;
 }
 
-void AppRunner::Update(float deltaSeconds)
+void AppRunner::UpdateNative(float deltaSeconds)
 {
-	if(m_pAppHost != NULL && m_displayService.IsDisplayAvailable())
-	{
-		m_pAppHost->Update(deltaSeconds);
+    ASSERT_NATIVE_THREAD
 
-		Eegeo_GL(eglSwapBuffers(m_displayService.GetDisplay(), m_displayService.GetSurface()));
-		Eegeo_GL(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT));
+    if(m_updatingNative && m_pAppHost != NULL && m_displayService.IsDisplayAvailable())
+    {
+        m_pAppHost->Update(deltaSeconds);
 
-		m_pAppHost->Draw(deltaSeconds);
-	}
+        Eegeo_GL(eglSwapBuffers(m_displayService.GetDisplay(), m_displayService.GetSurface()));
+        Eegeo::Helpers::GLHelpers::ClearBuffers();
+
+        m_pAppHost->Draw(deltaSeconds);
+    }
 }
 
+void AppRunner::UpdateUiViews(float deltaSeconds)
+{
+    ASSERT_UI_THREAD
 
+    if(m_pAppHost != NULL)
+    {
+        m_pAppHost->UpdateUiViewsFromUiThread(deltaSeconds);
+    }
+}
+
+void AppRunner::StopUpdatingNativeBeforeTeardown()
+{
+    ASSERT_NATIVE_THREAD
+
+    Eegeo_ASSERT(m_updatingNative, "Should only call StopUpdatingNativeBeforeTeardown once, before teardown.\n");
+    m_updatingNative = false;
+}
+
+void AppRunner::DestroyApplicationUi()
+{
+    ASSERT_UI_THREAD
+
+    if(m_pAppHost != NULL)
+    {
+        m_pAppHost->DestroyUiFromUiThread();
+    }
+}

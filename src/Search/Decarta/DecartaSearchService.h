@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -16,34 +16,34 @@ namespace ExampleApp
     {
         namespace Decarta
         {
-            class DecartaSearchService : public SearchServiceBase, private Eegeo::NonCopyable
+            class DecartaSearchService : public SdkModel::SearchServiceBase, private Eegeo::NonCopyable
             {
             private:
                 std::string m_decartaApiKey;
-                ISearchResultParser& m_parser;
+                SdkModel::ISearchResultParser& m_parser;
                 Eegeo::Web::IWebLoadRequestFactory& m_webRequestFactory;
                 Eegeo::Helpers::UrlHelpers::IUrlEncoder& m_urlEncoder;
                 Eegeo::Web::IWebLoadRequestCompletionCallback* m_pPoiSearchCallback;
                 Eegeo::Web::IWebLoadRequest* m_pCurrentRequest;
-                
+
             public:
                 DecartaSearchService(const std::string& decartaApiKey,
-                                     ISearchResultParser& parser,
+                                     SdkModel::ISearchResultParser& parser,
                                      Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder,
                                      Eegeo::Web::IWebLoadRequestFactory& webRequestFactory);
-                
+
                 ~DecartaSearchService();
-                
+
                 void CancelInFlightQueries();
-                
-                void PerformLocationQuerySearch(const SearchQuery& query);
-                
+
+                void PerformLocationQuerySearch(const SdkModel::SearchQuery& query);
+
             private:
-                
-                void IssueRequest(const std::string queryUrl, const SearchQuery& query);
-                
+
+                void IssueRequest(const std::string queryUrl, const SdkModel::SearchQuery& query);
+
                 void HandleSearchResponse(Eegeo::Web::IWebLoadRequest& webLoadRequest);
-                
+
                 void EncodeApiQueryIntoStringStream(const std::string& query,
                                                     const std::string& apiPoint,
                                                     std::stringstream& out_stream);

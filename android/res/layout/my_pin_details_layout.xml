@@ -1,0 +1,163 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:id="@+id/my_pin_details_view">
+
+    <!-- Shadow -->
+    <RelativeLayout
+        android:layout_width="250dp"
+        android:layout_height="295dp"
+        android:layout_alignLeft="@+id/my_pin_details_view_container"
+        android:layout_alignTop="@+id/my_pin_details_view_container"
+        android:layout_centerInParent="false"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
+        android:background="@color/black"
+        android:alpha="0.1" />
+    
+      <RelativeLayout
+        android:layout_width="250dip"
+        android:layout_height="295dip"
+        android:layout_centerInParent="true"
+        android:background="@color/gold"/>
+      
+    <LinearLayout
+    	android:id="@+id/my_pin_details_view_container"
+	    android:layout_width="250dip"
+	    android:layout_height="295dip"
+	    android:layout_centerInParent="true"
+	    android:orientation="vertical">
+		    
+        <!-- Title bar -->
+        <RelativeLayout 
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:background="@color/white">
+            
+            <ImageView
+                android:id="@+id/my_pin_details_icon"
+                android:contentDescription="@string/my_pin_details_icon"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/icon_create_poi" />
+            
+            <TextView
+                android:id="@+id/my_pin_details_view_title"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:layout_margin="5dp"
+                android:layout_toRightOf="@id/my_pin_details_icon"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:singleLine="true"
+                android:textColor="@color/gold"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+            
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="190dp"
+            android:background="@color/white">
+            
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="10dp"
+                android:scaleType="fitXY"
+                android:background="@drawable/shadow_03" />
+            
+            <!--  Scrolling icontent -->
+            
+            <ScrollView
+                android:id="@+id/my_pin_details_scroll_section"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+            
+            <LinearLayout 
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:orientation="vertical">
+                
+                <!--  Description  -->
+                <TextView
+                    android:id="@+id/my_pin_details_view_description_header"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="12dp"
+                    android:paddingLeft="3dp"
+                    android:background="@color/gold"
+                    android:text="@string/header_description"/>
+                
+                <TextView
+                    android:id="@+id/my_pin_details_view_description"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:padding="5dp"
+                    android:paddingLeft="3dp"
+                    android:textColor="@color/darkgrey"
+                    android:textSize="12dp" />
+                
+                 <!--  Image  -->
+                <TextView
+                    android:id="@+id/my_pin_details_view_image_header"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="12dp"
+                    android:paddingLeft="3dp"
+                    android:background="@color/gold"
+                    android:text="@string/header_image"/>
+                
+                <ImageView
+                    android:id="@+id/my_pin_details_view_image"
+                    android:layout_width="230dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="@string/poi_creation_details_image"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/image_blank" />
+                
+            </LinearLayout>
+            </ScrollView>
+        </RelativeLayout>
+        
+        <!--  Bottom bar with close button -->
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="55dp">
+ 
+         <Button
+             android:id="@+id/my_pin_details_view_delete_button"
+             android:layout_width="55dp"
+             android:layout_height="55dp"
+             android:layout_alignParentBottom="true"
+             android:layout_alignParentLeft="true"
+             android:background="@drawable/button_remove_pin_states" />
+            
+         <Button
+             android:id="@+id/my_pin_details_view_close_button"
+             android:layout_width="55dp"
+             android:layout_height="55dp"
+             android:layout_alignParentBottom="true"
+             android:layout_alignParentRight="true"
+             android:background="@drawable/button_close_states" />
+         
+         <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="10dp"
+                android:scaleType="fitXY"
+                android:background="@drawable/shadow_03" />
+         
+         </RelativeLayout>
+	        
+	</LinearLayout>
+</RelativeLayout>

@@ -1,0 +1,647 @@
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
+
+#include "MyPinCreationDetailsView.h"
+#include "UIColors.h"
+#include "ImageHelpers.h"
+#include "App.h"
+#import "UIView+TouchExclusivity.h"
+#import <QuartzCore/QuartzCore.h>
+
+@implementation MyPinCreationDetailsView
+
+- (id)initWithParams:(float)width :(float)height :(UIViewController*) rootViewController
+{
+    self = [super init];
+
+    if(self)
+    {
+        self.alpha = 0.f;
+        m_stateChangeAnimationTimeSeconds = 0.2f;
+        m_imageAttached = NO;
+
+        m_pInterop = new ExampleApp::MyPinCreationDetails::View::MyPinCreationDetailsViewInterop(self);
+        m_pRootViewController = rootViewController;
+
+        m_controlContainerHeight = 0.f;
+        m_controlContainerWidth = 0.f;
+        m_yCursor = 0.f;
+
+        m_pImageDataBytes = NULL;
+        m_imageSize = 0;
+
+        [self setFrame:CGRectMake(0, 0, width, height)];
+        m_hasNetworkConnectivity = true;
+
+        m_maxNumberOfCharactersInDescription = 10000;
+
+        self.pControlContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        [self addSubview: self.pControlContainer];
+
+        self.pTitleContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        [self.pControlContainer addSubview: self.pTitleContainer];
+
+        self.pTitleImage = [[[UIImageView alloc] initWithFrame: CGRectMake(0, 0, 0, 0)] autorelease];
+        self.pTitleImage.image = [UIImage imageNamed: @"button_create_poi.png"];
+        [self.pTitleContainer addSubview: self.pTitleImage];
+
+        self.pTitleText = [[[UITextField alloc] initWithFrame: CGRectMake(0, 0, 0, 0)] autorelease];
+        [self.pTitleContainer addSubview: self.pTitleText];
+
+        self.pBodyContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        [self.pControlContainer addSubview: self.pBodyContainer];
+
+        self.pBodyShadow = ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pBodyContainer, "shadow_03", 0.f, 0.f, 0, 0);
+
+        self.pBodyScrollView = [[[UIScrollView alloc] initWithFrame: CGRectMake(0, 0, 0, 0)] autorelease];
+        [self.pBodyContainer addSubview: self.pBodyScrollView];
+
+        self.pPoiDescriptionBox = [[[UITextView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        [self.pBodyScrollView addSubview: self.pPoiDescriptionBox];
+
+        self.pDescriptionPlaceholder = [[[UILabel alloc] initWithFrame: CGRectMake(0, 0, 0, 0)] autorelease];
+        [self.pPoiDescriptionBox addSubview: self.pDescriptionPlaceholder];
+
+        self.pPoiImage = [[[UIImageView alloc] initWithFrame: CGRectMake(0, 0, 0, 0)] autorelease];
+        [self.pBodyScrollView addSubview: self.pPoiImage];
+
+        self.pPlaceholderImage = [UIImage imageNamed: @"image_blank.png"];
+
+        self.pCheckbox = [[[UIButton alloc] initWithFrame: CGRectMake(0, 0, 0, 0)] autorelease];
+        self.pCheckbox.selected = m_hasNetworkConnectivity;
+        [self.pCheckbox addTarget:self action:@selector(onCheckboxPressed:) forControlEvents:UIControlEventTouchUpInside];
+        [self.pBodyContainer addSubview: self.pCheckbox];
+
+        self.pShareLabel = [[[UILabel alloc] initWithFrame: CGRectMake(0, 0, 0, 0)] autorelease];
+        [self.pBodyContainer addSubview: self.pShareLabel];
+
+        self.pTermsLabel = [[[UILabel alloc] initWithFrame: CGRectMake(0, 0, 0, 0)] autorelease];
+        [self.pBodyContainer addSubview: self.pTermsLabel];
+
+        self.pFooterContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        [self.pControlContainer addSubview: self.pFooterContainer];
+
+        self.pCloseButton = [[[UIButton alloc] initWithFrame: CGRectMake(0, 0, 0, 0)] autorelease];
+        [self.pFooterContainer addSubview: self.pCloseButton];
+
+        self.pCameraButton = [[[UIButton alloc] initWithFrame: CGRectMake(0, 0, 0, 0)] autorelease];
+        [self.pFooterContainer addSubview: self.pCameraButton];
+
+        self.pGalleryButton = [[[UIButton alloc] initWithFrame: CGRectMake(0, 0, 0, 0)] autorelease];
+        [self.pFooterContainer addSubview: self.pGalleryButton];
+
+        self.pConfirmButton = [[[UIButton alloc] initWithFrame: CGRectMake(0, 0, 0, 0)] autorelease];
+        [self.pFooterContainer addSubview: self.pConfirmButton];
+
+        self.pFooterShadow = ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pFooterContainer, "shadow_03", 0.f, 0.f, 0, 0);
+
+        m_usePopover = !App::IsDeviceSmall();
+
+        [self layoutSubviews];
+        [self setTouchExclusivity: self];
+
+        [[NSNotificationCenter defaultCenter] addObserver: self
+         selector: @selector(onPause)
+         name: @"handlePause"
+         object: nil];
+    }
+
+    return self;
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver: self
+     name: @"handlePause"
+     object: nil];
+
+    [self.pFooterShadow removeFromSuperview];
+    [self.pFooterShadow release];
+
+    [self.pFooterContainer removeFromSuperview];
+    [self.pFooterContainer release];
+
+    [self.pBodyShadow removeFromSuperview];
+    [self.pBodyShadow release];
+
+    [self.pBodyContainer removeFromSuperview];
+    [self.pBodyContainer release];
+
+    [self.pTitleText removeFromSuperview];
+    [self.pTitleText release];
+
+    [self.pTitleImage removeFromSuperview];
+    [self.pTitleImage release];
+
+    [self.pTitleContainer removeFromSuperview];
+    [self.pTitleContainer release];
+
+    [self.pControlContainer removeFromSuperview];
+    [self.pControlContainer release];
+
+    delete m_pInterop;
+
+    [self removeFromSuperview];
+    [super dealloc];
+}
+
+- (ExampleApp::MyPinCreationDetails::View::MyPinCreationDetailsViewInterop*)getInterop
+{
+    return m_pInterop;
+}
+
+- (Byte*)getImageBuffer
+{
+    return m_pImageDataBytes;
+}
+
+- (size_t)getImageSize;
+{
+    return m_imageSize;
+}
+
+- (void)layoutSubviews
+{
+    const float boundsWidth = static_cast<float>(self.superview.bounds.size.width);
+    const float boundsHeight = static_cast<float>(self.superview.bounds.size.height);
+
+    m_scrollContentBottomMargin = 50;
+
+    const bool useFullScreenSize = App::IsDeviceSmall();
+    const float boundsOccupyMultiplier = useFullScreenSize ? 0.9f : 0.6f;
+    m_controlContainerWidth = floorf(boundsWidth * boundsOccupyMultiplier);
+    m_controlContainerHeight = boundsHeight * boundsOccupyMultiplier;
+    const float controlContainerX = (boundsWidth * 0.5f) - (m_controlContainerWidth * 0.5f);
+    const float controlContainerY = (boundsHeight * 0.5f) - (m_controlContainerHeight * 0.5f);
+
+    self.pControlContainer.frame = CGRectMake(controlContainerX, controlContainerY, m_controlContainerWidth, m_controlContainerHeight);
+    self.pControlContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::GoldTone;
+
+    [self layoutHeader];
+    [self layoutBody];
+    [self layoutFooter];
+
+    [self resizeImageViewToFit:self.pPlaceholderImage.size.width :self.pPlaceholderImage.size.height];
+}
+
+- (void) layoutHeader
+{
+    m_yCursor = 10.f;
+    const float titleContainerWidth = m_controlContainerWidth;
+    const float titleContainerHeight = 70.f;
+
+    self.pTitleContainer.frame = CGRectMake(0, m_yCursor, titleContainerWidth, titleContainerHeight);
+    self.pTitleContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::WhiteTone;
+
+    const float titleImageSize = static_cast<float>(self.pTitleContainer.frame.size.height);
+    self.pTitleImage.frame = CGRectMake(0, 0, titleImageSize, titleImageSize);
+    self.pTitleImage.backgroundColor = ExampleApp::Helpers::ColorPalette::GoldTone;
+
+    const float textPadding = 10.f;
+    const float titleTextX = titleImageSize + textPadding;
+    self.pTitleText.frame = CGRectMake(titleTextX, 0, titleContainerWidth - titleTextX, titleContainerHeight);
+
+    self.pTitleText.font = [UIFont systemFontOfSize:25.0f];
+    self.pTitleText.textColor = ExampleApp::Helpers::ColorPalette::GoldTone;
+
+    if ([self.pTitleText respondsToSelector: @selector(setTintColor:)])
+    {
+        self.pTitleText.tintColor = ExampleApp::Helpers::ColorPalette::GoldTone;
+    }
+
+    self.pTitleText.placeholder = @"Name your pin...";
+    self.pTitleText.textAlignment = NSTextAlignmentLeft;
+    self.pTitleText.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+    self.pTitleText.returnKeyType = UIReturnKeyDone;
+    [self.pTitleText setDelegate: self];
+
+    m_yCursor += self.pTitleContainer.frame.size.height;
+}
+
+- (void) layoutBody
+{
+    const float bodyContainerY = m_yCursor;
+    const float bodyContainerHeight = m_controlContainerHeight - (2.f * static_cast<float>(self.pTitleContainer.frame.size.height));
+
+    self.pBodyContainer.frame = CGRectMake(0, bodyContainerY, m_controlContainerWidth, bodyContainerHeight);
+    self.pBodyContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::WhiteTone;
+
+    const float shareBarY = 5.f;
+    const float checkboxSize = 30.f;
+    const float checkBoxX = 20.f;
+
+    self.pCheckbox.frame = CGRectMake(checkBoxX, shareBarY, checkboxSize, checkboxSize);
+    [self.pCheckbox setBackgroundImage:[UIImage imageNamed:@"button_checkbox_off.png"] forState:UIControlStateNormal];
+    [self.pCheckbox setBackgroundImage:[UIImage imageNamed:@"button_checkbox_on.png"] forState:UIControlStateSelected];
+
+    const float shareLabelWidth = 45.f;
+    const float shareLabelHeight = 30.f;
+    const float shareLabelPadding = 5.f;
+    const float shareLabelX = checkBoxX + checkboxSize + shareLabelPadding;
+
+    self.pShareLabel.frame = CGRectMake(shareLabelX, shareBarY, shareLabelWidth, shareLabelHeight);
+    self.pShareLabel.font = [UIFont italicSystemFontOfSize: 16.f];
+    self.pShareLabel.textColor = ExampleApp::Helpers::ColorPalette::GreyTone;
+    self.pShareLabel.text = @"Share";
+
+    const float termsLabelWidth = 150.f;
+    const float termsLabelHeight = 30.f;
+    const float termsLabelX = shareLabelX + shareLabelWidth + 2.f;
+    self.pTermsLabel.frame = CGRectMake(termsLabelX, shareBarY + 2.f, termsLabelWidth, termsLabelHeight);
+
+    self.pTermsLabel.text = @"(Terms & Conditions)";
+    self.pTermsLabel.font = [UIFont systemFontOfSize: 12.f];
+    self.pTermsLabel.textAlignment = NSTextAlignmentLeft;
+    self.pTermsLabel.textColor = ExampleApp::Helpers::ColorPalette::LinkTone;
+    UITapGestureRecognizer* urlTappedGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(userTappedOnLink:)];
+    [self.pTermsLabel setUserInteractionEnabled:YES];
+    [self.pTermsLabel addGestureRecognizer:urlTappedGesture];
+
+    const float scrollBoxPadding = 5.f;
+    const float scrollViewY = shareBarY + checkboxSize + scrollBoxPadding;
+    self.pBodyScrollView.frame = CGRectMake(0, scrollViewY, m_controlContainerWidth, bodyContainerHeight);
+
+    const float shadowHeight = 10.f;
+    self.pBodyShadow.frame = CGRectMake(0.f, scrollViewY, m_controlContainerWidth, shadowHeight);
+    [self.pBodyContainer bringSubviewToFront: self.pBodyShadow];
+
+    const float poiDescriptionBoxX = 20.f;
+    const float poiDescriptionBoxY = 20.f;
+    const float poiDescriptionBoxHeight = 120.f;
+    const float poiDescriptionBoxWidth = m_controlContainerWidth - (2 * poiDescriptionBoxX);
+    self.pPoiDescriptionBox.frame = CGRectMake(poiDescriptionBoxX, poiDescriptionBoxY, poiDescriptionBoxWidth, poiDescriptionBoxHeight);
+    self.pPoiDescriptionBox.font = [UIFont systemFontOfSize: 16.f];
+    self.pPoiDescriptionBox.layer.cornerRadius = 8.f;
+    self.pPoiDescriptionBox.layer.masksToBounds = YES;
+    self.pPoiDescriptionBox.layer.borderColor = [ExampleApp::Helpers::ColorPalette::GoldTone CGColor];
+    self.pPoiDescriptionBox.layer.borderWidth = 2.f;
+    [self.pPoiDescriptionBox setDelegate: self];
+
+    if(App::IsDeviceSmall())
+    {
+        [self addDoneToolBarToKeyboard :self.pPoiDescriptionBox];
+    }
+
+    const float placeholderTextOffset = 8.f;
+    self.pDescriptionPlaceholder.frame = CGRectMake(placeholderTextOffset, 2.f, poiDescriptionBoxWidth - placeholderTextOffset, 30.f);
+    self.pDescriptionPlaceholder.hidden = NO;
+    self.pDescriptionPlaceholder.font = [UIFont systemFontOfSize: 16.f];
+    self.pDescriptionPlaceholder.textColor = ExampleApp::Helpers::ColorPalette::GreyTone;
+    self.pDescriptionPlaceholder.text = @"Tell us about your Point of Interest...";
+
+    const float poiImageY = poiDescriptionBoxHeight + poiDescriptionBoxY + 30.f;
+    const float poiImageX = 20.f;
+    m_maxImageWidth = m_controlContainerWidth - (2 * poiImageX);
+    const float poiImageHeight = m_maxImageWidth * 0.75f;
+    self.pPoiImage.frame = CGRectMake(poiImageX, poiImageY, m_maxImageWidth, poiImageHeight);
+    self.pPoiImage.image = self.pPlaceholderImage;
+
+    const float scrollHeight = poiDescriptionBoxHeight + poiImageHeight + m_scrollContentBottomMargin;
+    self.pBodyScrollView.contentSize = CGSizeMake(m_controlContainerWidth, scrollHeight);
+
+    m_yCursor += self.pBodyContainer.frame.size.height;
+}
+
+- (void) layoutFooter
+{
+    const float footerY = m_yCursor;
+    const float footerHeight = 70.f;
+    const float footerWidth = m_controlContainerWidth;
+
+    self.pFooterContainer.frame = CGRectMake(0, footerY, footerWidth, footerHeight);
+    self.pFooterContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::GoldTone;
+
+    const float shadowHeight = 10.f;
+    self.pFooterShadow.frame = CGRectMake(0.f, 0.f, m_controlContainerWidth, shadowHeight);
+
+    const int numberOfButtons = 4;
+    const float buttonSize = static_cast<float>(self.pFooterContainer.frame.size.height);
+    const float buttonPadding = (m_controlContainerWidth - (numberOfButtons * buttonSize)) / (numberOfButtons + 1);
+
+    const float closeButtonX = buttonPadding;
+    self.pCloseButton.frame = CGRectMake(closeButtonX, 0, buttonSize, buttonSize);
+    [self.pCloseButton setBackgroundImage:[UIImage imageNamed:@"button_close_off.png"] forState:UIControlStateNormal];
+    [self.pCloseButton setBackgroundImage:[UIImage imageNamed:@"button_close_on.png"] forState:UIControlStateHighlighted];
+    [self.pCloseButton addTarget:self action:@selector(onCloseButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+
+    const float cameraButtonX = buttonSize + 2 * buttonPadding;
+    self.pCameraButton.frame = CGRectMake(cameraButtonX, 0, buttonSize, buttonSize);
+    [self.pCameraButton setBackgroundImage:[UIImage imageNamed:@"button_photo_off.png"] forState:UIControlStateNormal];
+    [self.pCameraButton setBackgroundImage:[UIImage imageNamed:@"button_photo_on.png"] forState:UIControlStateHighlighted];
+    [self.pCameraButton addTarget:self action:@selector(onCameraButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+
+    const float galleryButtonX = 2 * buttonSize + 3 * buttonPadding;
+    self.pGalleryButton.frame = CGRectMake(galleryButtonX, 0, buttonSize, buttonSize);
+    [self.pGalleryButton setBackgroundImage:[UIImage imageNamed:@"button_gallery_off.png"] forState:UIControlStateNormal];
+    [self.pGalleryButton setBackgroundImage:[UIImage imageNamed:@"button_gallery_on.png"] forState:UIControlStateHighlighted];
+    [self.pGalleryButton addTarget:self action:@selector(onGalleryButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+
+    const float confirmButtonX = 3 * buttonSize + 4 * buttonPadding;
+    self.pConfirmButton.frame = CGRectMake(confirmButtonX, 0, buttonSize, buttonSize);
+    [self.pConfirmButton setBackgroundImage:[UIImage imageNamed:@"button_ok_off.png"] forState:UIControlStateNormal];
+    [self.pConfirmButton setBackgroundImage:[UIImage imageNamed:@"button_ok_on.png"] forState:UIControlStateHighlighted];
+    [self.pConfirmButton addTarget:self action:@selector(onConfirmButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+
+    m_popoverX = m_controlContainerWidth * 0.5f;
+    m_popoverY = footerY;
+}
+
+- (void) resetView
+{
+    self.pTitleText.text = @"";
+    self.pPoiDescriptionBox.text = @"";
+    self.pDescriptionPlaceholder.hidden = NO;
+    self.pPoiImage.image = self.pPlaceholderImage;
+
+    [self resizeImageViewToFit:self.pPlaceholderImage.size.width :self.pPlaceholderImage.size.height];
+
+    self.pCheckbox.selected = m_hasNetworkConnectivity;
+    m_imageAttached = NO;
+    [self.pBodyScrollView setContentOffset:
+     CGPointMake(0, -self.pBodyScrollView.contentInset.top) animated:YES];
+}
+
+- (void) onCheckboxPressed:(UIButton *) sender
+{
+    [sender setSelected:!sender.selected];
+    [self verifyShareSettingsValid];
+}
+
+-(void) onGalleryButtonPressed:(UIButton *)sender
+{
+    UIImagePickerController *imagePicker = [[[UIImagePickerController alloc] init] autorelease];
+
+    imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    imagePicker.delegate=self;
+    imagePicker.allowsEditing = NO;
+
+    if(m_usePopover)
+    {
+        self.pPopover = [[UIPopoverController alloc] initWithContentViewController:imagePicker];
+
+        CGRect popoverRect = CGRectMake(m_popoverX, m_popoverY, 1.f, 1.f);
+
+        [self.pPopover presentPopoverFromRect:popoverRect
+         inView:self.pControlContainer
+         permittedArrowDirections:UIPopoverArrowDirectionDown
+         animated:YES];
+
+        [self.pPopover setDelegate: self];
+    }
+    else
+    {
+        [m_pRootViewController presentViewController:imagePicker animated:YES completion:nil];
+    }
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(NSDictionary *)editingInfo
+{
+    self.pPoiImage.image = image;
+    [self resizeImageViewToFit:image.size.width :image.size.height];
+
+    m_imageAttached = YES;
+    if(m_usePopover)
+    {
+        [self.pPopover dismissPopoverAnimated: YES];
+    }
+    [picker dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    if(m_usePopover)
+    {
+        [self.pPopover dismissPopoverAnimated: YES];
+    }
+    [picker dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void) onCloseButtonPressed:(UIButton *)sender
+{
+    m_pInterop->OnDismissed();
+}
+
+- (void) onCameraButtonPressed:(UIButton *)sender
+{
+    if ([UIImagePickerController isSourceTypeAvailable: UIImagePickerControllerSourceTypeCamera] == NO)
+    {
+        UIAlertView* noCameraAlert = [[UIAlertView alloc] initWithTitle: @"No Camera!"
+                                      message: @"This device has no available camera"
+                                      delegate: nil
+                                      cancelButtonTitle: @"Dismiss"
+                                      otherButtonTitles: nil];
+
+        [noCameraAlert show];
+        return;
+    }
+
+
+    UIImagePickerController *imagePicker = [[[UIImagePickerController alloc] init] autorelease];
+
+    imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+    imagePicker.delegate = self;
+    imagePicker.allowsEditing = NO;
+    imagePicker.showsCameraControls = YES;
+    imagePicker.navigationBarHidden = YES;
+
+    [m_pRootViewController presentViewController:imagePicker animated:YES completion:nil];
+}
+
+- (void) onConfirmButtonPressed:(UIButton *)sender
+{
+    UIImage* imageToSend = m_imageAttached ? self.pPoiImage.image : nil;
+
+    m_pImageDataBytes = NULL;
+    m_imageSize = 0;
+
+    if (imageToSend)
+    {
+        NSData* imageData = UIImageJPEGRepresentation(imageToSend, 0.9f);
+        m_pImageDataBytes = (Byte*) [imageData bytes];
+        m_imageSize = [imageData length] / sizeof(Byte);
+    }
+
+    m_pInterop->OnConfirmed();
+}
+
+- (BOOL)popoverControllerShouldDismissPopover:(UIPopoverController *)popoverController
+{
+    if(m_usePopover)
+    {
+        [self.pPopover dismissPopoverAnimated: YES];
+    }
+    return YES;
+}
+
+- (void)textViewDidBeginEditing:(UITextView *)textView
+{
+    self.pDescriptionPlaceholder.hidden = ([textView.text length] > 0);
+}
+
+- (void)textViewDidChange:(UITextView *)textView
+{
+    self.pDescriptionPlaceholder.hidden = ([textView.text length] > 0);
+}
+
+- (void)textViewDidEndEditing:(UITextView *)textView
+{
+    self.pDescriptionPlaceholder.hidden = ([textView.text length] > 0);
+}
+
+- (void) setFullyActive
+{
+    if(self.alpha == 1.f)
+    {
+        return;
+    }
+
+    [self animateToAlpha:1.f];
+}
+
+- (void) setFullyInactive
+{
+    if(self.alpha == 0.f)
+    {
+        return;
+    }
+
+    [self animateToAlpha:0.f];
+}
+
+- (void) setActiveStateToIntermediateValue:(float)openState
+{
+    self.alpha = openState;
+}
+
+- (BOOL)consumesTouch:(UITouch *)touch
+{
+    return self.alpha > 0.f;
+}
+
+- (void) animateToAlpha:(float)alpha
+{
+    [UIView animateWithDuration:m_stateChangeAnimationTimeSeconds
+     animations:^
+    {
+        self.alpha = alpha;
+    }
+    completion:^(BOOL finished)
+    {
+        if (self.alpha < 0.1f)
+        {
+            [self resetView];
+        }
+    }];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    return YES;
+}
+
+-(void)addDoneToolBarToKeyboard:(UITextView *)textView
+{
+    UIToolbar* doneToolbar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, 320, 50)];
+    doneToolbar.barStyle = UIBarStyleBlackTranslucent;
+    doneToolbar.items = [NSArray arrayWithObjects:
+                         [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
+                         [[UIBarButtonItem alloc]initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(doneButtonClickedDismissKeyboard)],
+                         nil];
+    [doneToolbar sizeToFit];
+    textView.inputAccessoryView = doneToolbar;
+}
+
+-(void)doneButtonClickedDismissKeyboard
+{
+    [self.pPoiDescriptionBox resignFirstResponder];
+}
+
+- (void) userTappedOnLink:(UITapGestureRecognizer *)recognizer
+{
+    NSString * webUrlString = @"http://sdk.eegeo.com";
+    NSURL *url = [NSURL URLWithString:webUrlString];
+    if (![[UIApplication sharedApplication] openURL:url])
+    {
+        NSLog(@"%@%@",@"Failed to open url:",[url description]);
+    }
+}
+
+- (void) resizeImageViewToFit:(CGFloat)sourceImageWidth :(CGFloat)sourceImageHeight
+{
+    const CGFloat widthRatio = m_maxImageWidth/sourceImageWidth;
+    const CGFloat height = sourceImageHeight * widthRatio;
+
+    CGRect frame = self.pPoiImage.frame;
+    self.pPoiImage.frame = CGRectMake(frame.origin.x, frame.origin.y, m_maxImageWidth, height);
+
+    self.pBodyScrollView.contentSize = CGSizeMake(m_controlContainerWidth, self.pPoiImage.frame.origin.y + self.pPoiImage.frame.size.height + m_scrollContentBottomMargin);
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if(textField == self.pTitleText)
+    {
+        NSUInteger newLength  = [textField.text length] + [string length] - range.length;
+        return (newLength <= 100);
+    }
+    else return YES;
+}
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range
+    replacementText:(NSString *)text
+{
+    if (textView.text.length + (text.length - range.length) <= m_maxNumberOfCharactersInDescription)
+    {
+        return YES;
+    }
+
+    int remainingNumberOfCharactersInDescription = m_maxNumberOfCharactersInDescription - textView.text.length;
+    NSString* partialText = [text substringToIndex: remainingNumberOfCharactersInDescription + range.length];
+
+    NSMutableString* mutableDescriptionText = [NSMutableString stringWithFormat: @"%@", textView.text];
+    [mutableDescriptionText replaceCharactersInRange: range withString: partialText];
+    textView.text = mutableDescriptionText;
+
+    return NO;
+}
+
+- (void) setHasNetworkConnectivity: (BOOL) hasNetworkConnectivity
+    : (BOOL) shouldVerifyShareSettings
+{
+    m_hasNetworkConnectivity = hasNetworkConnectivity;
+
+    if (shouldVerifyShareSettings)
+    {
+        [self verifyShareSettingsValid];
+    }
+    else
+    {
+        self.pCheckbox.selected = m_hasNetworkConnectivity;
+    }
+}
+
+- (void) verifyShareSettingsValid
+{
+    if (self.pCheckbox.selected && !m_hasNetworkConnectivity)
+    {
+        UIAlertView* alert = [[[UIAlertView alloc] initWithTitle: @"No network connection"
+                               message: @"Pins cannot be shared when no network connection is available"
+                               delegate: nil
+                               cancelButtonTitle: @"Dismiss"
+                               otherButtonTitles: nil] autorelease];
+
+        [alert show];
+        self.pCheckbox.selected = NO;
+    }
+}
+
+- (void)onPause
+{
+    if(m_usePopover)
+    {
+        [self.pPopover dismissPopoverAnimated: YES];
+    }
+    [m_pRootViewController dismissViewControllerAnimated:YES completion:nil];
+}
+
+@end

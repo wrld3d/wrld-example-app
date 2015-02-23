@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -6,13 +6,17 @@ namespace ExampleApp
 {
     namespace SearchResultOnMap
     {
-        class ISearchResultOnMapIconCategoryMapper;
-        class ISearchResultOnMapInFocusViewModel;
-        class ISearchResultOnMapInFocusController;
-        class ISearchResultOnMapScaleController;
-        class ISearchResultOnMapFactory;
-        class ISearchResultOnMapModule;
-        class ISearchResultOnMapModel;
-        class SearchResultOnMapItemModel;
+        namespace SdkModel
+        {
+            class ISearchResultOnMapModule;
+            class ISearchResultOnMapModel;
+            class ISearchResultOnMapMyPinsService;
+        }
+
+        namespace View
+        {
+            class ISearchResultOnMapFactory;
+            class SearchResultOnMapItemModel;
+        }
     }
 }

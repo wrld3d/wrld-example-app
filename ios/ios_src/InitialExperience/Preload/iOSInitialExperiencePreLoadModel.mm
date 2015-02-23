@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include <string>
 #import <UIKit/UIKit.h>
@@ -32,30 +32,30 @@ namespace ExampleApp
     if(self = [super init])
     {
         self->m_pInitialExperiencePreLoadModel = pInitialExperiencePreLoadModel;
-        
+
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Pre-load San Francisco?"
-                                                        message:@"Select 'Yes' to pre-load data for the city of San Francisco. This message will not appear again."
-                                                       delegate:self
-                                              cancelButtonTitle:@"No"
-                                              otherButtonTitles:@"Yes", nil];
-        
-        
+                              message:@"Select 'Yes' to pre-load data for the city of San Francisco. This message will not appear again."
+                              delegate:self
+                              cancelButtonTitle:@"No"
+                              otherButtonTitles:@"Yes", nil];
+
+
         [alert show];
         [alert release];
     }
-    
+
     return self;
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     bool shouldPreload = false;
-    
+
     if (buttonIndex == 1)
     {
         shouldPreload = true;
     }
-    
+
     m_pInitialExperiencePreLoadModel->HandleDismiss(shouldPreload);
 }
 
@@ -68,19 +68,19 @@ namespace ExampleApp
     {
         namespace PreLoad
         {
-            iOSInitialExperiencePreLoadModel::iOSInitialExperiencePreLoadModel(WorldAreaLoader::IWorldAreaLoaderModel& worldAreaLoaderModel,
-                                                                               PersistentSettings::IPersistentSettingsModel& persistentSettings)
-            : InitialExperiencePreLoadModelBase(worldAreaLoaderModel, persistentSettings)
-            , m_pAlertListener(NULL)
+            iOSInitialExperiencePreLoadModel::iOSInitialExperiencePreLoadModel(WorldAreaLoader::SdkModel::IWorldAreaLoaderModel& worldAreaLoaderModel,
+                    PersistentSettings::IPersistentSettingsModel& persistentSettings)
+                : InitialExperiencePreLoadModelBase(worldAreaLoaderModel, persistentSettings)
+                , m_pAlertListener(NULL)
             {
-                
+
             }
-            
+
             iOSInitialExperiencePreLoadModel::~iOSInitialExperiencePreLoadModel()
             {
                 DestroyAlertListener();
             }
-            
+
             void iOSInitialExperiencePreLoadModel::DestroyAlertListener()
             {
                 if(m_pAlertListener != NULL)
@@ -90,11 +90,11 @@ namespace ExampleApp
                     m_pAlertListener = NULL;
                 }
             }
-            
+
             void iOSInitialExperiencePreLoadModel::HandleDismiss(bool shouldPreload)
             {
                 DestroyAlertListener();
-                
+
                 if(shouldPreload)
                 {
                     PrecacheRegion();
@@ -104,7 +104,7 @@ namespace ExampleApp
                     Complete();
                 }
             }
-            
+
             void iOSInitialExperiencePreLoadModel::ShowOptions()
             {
                 m_pAlertListener = [[PreLoadModelListener alloc] initWithParams:this];

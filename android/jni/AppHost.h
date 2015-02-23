@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -36,72 +36,104 @@
 #include "ModalBackgroundViewIncludes.h"
 #include "FlattenButtonViewIncludes.h"
 #include "SearchResultPoiViewIncludes.h"
-#include "SearchResultOnMapViewIncludes.h"
+#include "WorldPinOnMapViewIncludes.h"
 #include "CompassViewIncludes.h"
 #include "AboutPageViewIncludes.h"
+#include "MyPinCreationViewIncludes.h"
+#include "MyPinCreationDetailsViewIncludes.h"
+#include "MyPinDetailsViewIncludes.h"
+#include "BidirectionalBus.h"
+#include "AndroidConnectivityService.h"
+#include "InitialExperienceDialogsViewIncludes.h"
+#include "OptionsViewIncludes.h"
+#include "NetIncludes.h"
 
 class AppHost : protected Eegeo::NonCopyable
 {
 public:
-	AppHost(
-	    AndroidNativeState& nativeState,
-	    float displayWidth,
-	    float displayHeight,
-	    EGLDisplay display,
-	    EGLSurface shareSurface,
-	    EGLContext resourceBuildShareContext
-	);
-	~AppHost();
+    AppHost(
+        AndroidNativeState& nativeState,
+        Eegeo::Rendering::ScreenProperties screenProperties,
+        EGLDisplay display,
+        EGLSurface shareSurface,
+        EGLContext resourceBuildShareContext
+    );
+    ~AppHost();
 
-	void Update(float dt);
-	void Draw(float dt);
+    void Update(float dt);
+    void Draw(float dt);
 
-	void OnPause();
-	void OnResume();
+    void CreateUiFromUiThread();
+    void RevealUiFromUiThread();
+    void UpdateUiViewsFromUiThread(float deltaSeconds);
+    void DestroyUiFromUiThread();
+    void HandleApplicationUiCreatedOnNativeThread();
 
-	void HandleTouchInputEvent(const Eegeo::Android::Input::TouchInputEvent& event);
+    void OnPause();
+    void OnResume();
 
-	void SetEnvironmentFlatten(bool flattenState);
-	void SetCameraLocation(const Eegeo::Space::LatLongAltitude& interestPoint, double distanceToInterestPoint, double orientationInDegrees);
-	void SendCameraLocationToGUI();
+    void NotifyScreenPropertiesChanged(const Eegeo::Rendering::ScreenProperties& screenProperties);
 
-	void SetSharedSurface(EGLSurface sharedSurface);
-	void SetViewportOffset(float x, float y);
+    void HandleTouchInputEvent(const Eegeo::Android::Input::TouchInputEvent& event);
+
+    void SetEnvironmentFlatten(bool flattenState);
+    void SetCameraLocation(const Eegeo::Space::LatLongAltitude& interestPoint, double distanceToInterestPoint, double orientationInDegrees);
+    void SendCameraLocationToGUI();
+
+    void SetSharedSurface(EGLSurface sharedSurface);
+    void SetViewportOffset(float x, float y);
 
 private:
-	bool m_isPaused;
+    bool m_isPaused;
     Eegeo::Helpers::Jpeg::IJpegLoader* m_pJpegLoader;
-	Eegeo::Rendering::ScreenProperties* m_pScreenProperties;
-	Eegeo::Android::AndroidLocationService* m_pAndroidLocationService;
-	AndroidNativeState& m_nativeState;
-	AppInputDelegate* m_pAppInputDelegate;
+    Eegeo::Android::AndroidLocationService* m_pAndroidLocationService;
+    Eegeo::Android::AndroidConnectivityService* m_pAndroidConnectivityService;
 
-	Eegeo::Android::Input::AndroidInputHandler m_inputHandler;
-	Eegeo::UI::NativeInput::Android::AndroidInputBoxFactory m_androidInputBoxFactory;
-	Eegeo::UI::NativeInput::Android::AndroidKeyboardInputFactory m_androidKeyboardInputFactory;
-	Eegeo::UI::NativeAlerts::Android::AndroidAlertBoxFactory m_androidAlertBoxFactory;
-	Eegeo::UI::NativeUIFactories m_androidNativeUIFactories;
+    AndroidNativeState& m_nativeState;
+    AppInputDelegate* m_pAppInputDelegate;
 
-	Eegeo::Android::Input::AndroidInputProcessor* m_pInputProcessor;
+    Eegeo::Android::Input::AndroidInputHandler m_inputHandler;
+    Eegeo::UI::NativeInput::Android::AndroidInputBoxFactory m_androidInputBoxFactory;
+    Eegeo::UI::NativeInput::Android::AndroidKeyboardInputFactory m_androidKeyboardInputFactory;
+    Eegeo::UI::NativeAlerts::Android::AndroidAlertBoxFactory m_androidAlertBoxFactory;
+    Eegeo::UI::NativeUIFactories m_androidNativeUIFactories;
 
-	Eegeo::Android::AndroidPlatformAbstractionModule* m_pAndroidPlatformAbstractionModule;
-	ExampleApp::ViewControllerUpdater::IViewControllerUpdaterModule* m_pViewControllerUpdaterModule;
-    ExampleApp::Menu::IMenuViewModule* m_pPrimaryMenuViewModule;
-    ExampleApp::Menu::IMenuViewModule* m_pSecondaryMenuViewModule;
-    ExampleApp::Menu::IMenuViewModule* m_pSearchResultMenuViewModule;
-    ExampleApp::ModalBackground::IModalBackgroundViewModule* m_pModalBackgroundViewModule;
-    ExampleApp::FlattenButton::IFlattenButtonViewModule* m_pFlattenButtonViewModule;
-    ExampleApp::SearchResultPoi::ISearchResultPoiViewModule* m_pSearchResultPoiViewModule;
-    ExampleApp::SearchResultOnMap::ISearchResultOnMapViewModule* m_pSearchResultOnMapViewModule;
-    ExampleApp::AboutPage::IAboutPageViewModule* m_pAboutPageViewModule;
-    ExampleApp::Compass::ICompassViewModule* m_pCompassViewModule;
+    Eegeo::Android::Input::AndroidInputProcessor* m_pInputProcessor;
+
+    ExampleApp::ModalBackground::SdkModel::IModalBackgroundNativeViewModule* m_pModalBackgroundNativeViewModule;
+
+
+    Eegeo::Android::AndroidPlatformAbstractionModule* m_pAndroidPlatformAbstractionModule;
+    ExampleApp::Menu::View::IMenuViewModule* m_pPrimaryMenuViewModule;
+    ExampleApp::Menu::View::IMenuViewModule* m_pSecondaryMenuViewModule;
+    ExampleApp::Menu::View::IMenuViewModule* m_pSearchResultMenuViewModule;
+    ExampleApp::ModalBackground::View::IModalBackgroundViewModule* m_pModalBackgroundViewModule;
+    ExampleApp::FlattenButton::View::IFlattenButtonViewModule* m_pFlattenButtonViewModule;
+    ExampleApp::SearchResultPoi::View::ISearchResultPoiViewModule* m_pSearchResultPoiViewModule;
+    ExampleApp::WorldPins::View::IWorldPinOnMapViewModule* m_pWorldPinOnMapViewModule;
+    ExampleApp::AboutPage::View::IAboutPageViewModule* m_pAboutPageViewModule;
+    ExampleApp::Compass::View::ICompassViewModule* m_pCompassViewModule;
+    ExampleApp::MyPinCreation::View::IMyPinCreationViewModule* m_pMyPinCreationViewModule;
+    ExampleApp::MyPinCreationDetails::View::IMyPinCreationDetailsViewModule* m_pMyPinCreationDetailsViewModule;
+    ExampleApp::MyPinDetails::View::IMyPinDetailsViewModule* m_pMyPinDetailsViewModule;
+    ExampleApp::InitialExperience::Dialogs::View::InitialExperienceDialogsViewModule* m_pInitialExperienceDialogsViewModule; // TODO: Interface.
+    ExampleApp::Options::View::IOptionsViewModule* m_pOptionsViewModule;
+    ExampleApp::Net::SdkModel::INetworkCapabilities* m_pNetworkCapabilities;
 
     ExampleApp::MobileExampleApp* m_pApp;
 
     ExampleApp::PersistentSettings::AndroidPersistentSettingsModel m_androidPersistentSettingsModel;
-    ExampleApp::InitialExperience::IInitialExperienceModule* m_pInitialExperienceModule;
+    ExampleApp::InitialExperience::SdkModel::IInitialExperienceModule* m_pInitialExperienceModule;
 
-    void CreateApplicationViewModules();
-    void DestroyApplicationViewModules();
+    bool m_createdUIModules;
+    bool m_requestedApplicationInitialiseViewState;
+    bool m_uiCreatedMessageReceivedOnNativeThread;
+    ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModule* m_pViewControllerUpdaterModule;
+
+    ExampleApp::ExampleAppMessaging::TMessageBus m_messageBus;
+
+    void DispatchRevealUiMessageToUiThreadFromNativeThread();
+    void DispatchUiCreatedMessageToNativeThreadFromUiThread();
+    void CreateApplicationViewModulesFromUiThread();
+    void DestroyApplicationViewModulesFromUiThread();
 };
-

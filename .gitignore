@@ -1,5 +1,4 @@
 build
-Include
 **/project.xcworkspace/contents.xcworkspacedata
 .DS_Store
 **/project.xcworkspace/xcuserdata/
@@ -9,8 +8,9 @@ bin
 EndToEndResults/
 gen
 obj
-libs
-Include
+**/libs/eegeo/
+**/libs/armeabi/
+**/Include/eegeo/
 .DS_Store
 .classpath
 .cproject

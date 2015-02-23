@@ -1,23 +1,25 @@
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
+
 package com.eegeo.menu;
 
 import android.animation.ValueAnimator;
 
-public class MenuSectionAnimatorUpdateListener implements ValueAnimator.AnimatorUpdateListener 
+public class MenuSectionAnimatorUpdateListener implements ValueAnimator.AnimatorUpdateListener
 {
-	private MenuListAdapter m_adapter;
-	private String m_groupName;
-	
-	public MenuSectionAnimatorUpdateListener(MenuListAdapter adapter, String groupName)
-	{
-		m_adapter = adapter;
-		m_groupName = groupName;
-	}
+    private MenuListAdapter m_adapter;
+    private String m_groupName;
 
-	@Override
-	public void onAnimationUpdate(ValueAnimator animator) 
-	{
-		int size = (Integer)animator.getAnimatedValue();
-		m_adapter.setAnimatedGroupSize(m_groupName, size);
-	}
-	
+    public MenuSectionAnimatorUpdateListener(MenuListAdapter adapter, String groupName)
+    {
+        m_adapter = adapter;
+        m_groupName = groupName;
+    }
+
+    @Override
+    public void onAnimationUpdate(ValueAnimator animator)
+    {
+        int size = (Integer)animator.getAnimatedValue();
+        m_adapter.setAnimatedGroupSize(m_groupName, size);
+    }
+
 }

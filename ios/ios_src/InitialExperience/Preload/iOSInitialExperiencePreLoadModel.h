@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -11,22 +11,22 @@ namespace ExampleApp
     {
         namespace PreLoad
         {
-            class iOSInitialExperiencePreLoadModel : public InitialExperiencePreLoadModelBase
+            class iOSInitialExperiencePreLoadModel : public SdkModel::InitialExperiencePreLoadModelBase
             {
                 void* m_pAlertListener;
-                
+
                 void DestroyAlertListener();
-                
+
             public:
-                iOSInitialExperiencePreLoadModel(WorldAreaLoader::IWorldAreaLoaderModel& worldAreaLoaderModel,
+                iOSInitialExperiencePreLoadModel(WorldAreaLoader::SdkModel::IWorldAreaLoaderModel& worldAreaLoaderModel,
                                                  PersistentSettings::IPersistentSettingsModel& persistentSettings);
-                
+
                 ~iOSInitialExperiencePreLoadModel();
-                
+
                 void HandleDismiss(bool shouldPreload);
-                
+
             protected:
-                
+
                 void ShowOptions();
             };
         }

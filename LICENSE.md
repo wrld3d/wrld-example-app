@@ -30,3 +30,9 @@ The SDK may only be used to evaluate suitability to the writing of applications 
 Data contained within the SDK may be protected by intellectual property rights which are owned by 3rd parties that provide the data (or by other persons or companies on their behalf). Use of the SDK may be subject to additional Terms of Service. It may not modify, rent, lease, loan, sell, distribute or create derivative works based on this data (either in whole or in part) unless allowed by the relevant Terms of Service.
 
 Neither Party will have any rights to any materials, feature or technology provided by the other except as expressly provided in this LOA. 
+
+FREE AND OPEN SOURCE SOFTWARE LICENSES:
+---------------------------------------
+
+The eeGeo Platform makes use of several pieces of free and open-source software,
+ a list of which is available at http://sdk.eegeo.com/legal

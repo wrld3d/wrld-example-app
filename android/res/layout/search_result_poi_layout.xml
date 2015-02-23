@@ -154,6 +154,16 @@
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="55dp">
+            
+         <ToggleButton
+             android:id="@+id/search_result_poi_view_toggle_pinned_button"
+             android:layout_width="55dp"
+             android:layout_height="55dp"
+             android:layout_alignParentBottom="true"
+             android:layout_alignParentLeft="true"
+             android:background="@drawable/button_toggle_pinned_states"
+             android:textOff=""
+             android:textOn="" />
  
          <Button
              android:id="@+id/search_result_poi_view_close_button"

@@ -1,0 +1,60 @@
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
+
+#pragma once
+
+#import <UIKit/UIKit.h>
+#include "AppRunner.h"
+#include "SearchResultModel.h"
+#include "SearchResultPoiViewInterop.h"
+
+@class SearchResultPoiView;
+
+@interface SearchResultPoiView : UIView
+{
+    float m_stateChangeAnimationTimeSeconds;
+    ExampleApp::Search::SdkModel::SearchResultModel m_model;
+    ExampleApp::SearchResultPoi::View::SearchResultPoiViewInterop* m_pInterop;
+    
+    bool m_isPinned;
+    
+    UIImage* m_pRemovePinButtonBackgroundImage;
+    UIImage* m_pRemovePinHighlightButtonBackgroundImage;
+    UIImage* m_pAddPinButtonBackgroundImage;
+    UIImage* m_pAddPinHighlightButtonBackgroundImage;
+}
+
+- (id) initWithoutParams;
+
+- (ExampleApp::SearchResultPoi::View::SearchResultPoiViewInterop*) getInterop;
+
+- (BOOL) consumesTouch:(UITouch *)touch;
+
+- (void) setContent:(const ExampleApp::Search::SdkModel::SearchResultModel*)pModel :(bool)isPinned;
+
+- (void) setFullyActive;
+
+- (void) setFullyInactive;
+
+- (void) setActiveStateToIntermediateValue:(float)activeState;
+
+@property (nonatomic, retain) UIView* pCloseButtonContainer;
+@property (nonatomic, retain) UIButton* pCloseButton;
+@property (nonatomic, retain) UIButton* pPinButton;
+@property (nonatomic, retain) UIView* pShadowContainer;
+@property (nonatomic, retain) UIView* pControlContainer;
+@property (nonatomic, retain) UIView* pHeadlineContainer;
+@property (nonatomic, retain) UIView* pContentContainer;
+@property (nonatomic, retain) UIScrollView* pLabelsContainer;
+@property (nonatomic, retain) UIView* pCategoryIconContainer;
+@property (nonatomic, retain) UILabel* pTitleLabel;
+@property (nonatomic, retain) UIView* pAddressHeaderContainer;
+@property (nonatomic, retain) UILabel* pAddressHeaderLabel;
+@property (nonatomic, retain) UILabel* pAddressContent;
+@property (nonatomic, retain) UIView* pPhoneHeaderContainer;
+@property (nonatomic, retain) UILabel* pPhoneHeaderLabel;
+@property (nonatomic, retain) UILabel* pPhoneContent;
+@property (nonatomic, retain) UIView* pWebHeaderContainer;
+@property (nonatomic, retain) UILabel* pWebHeaderLabel;
+@property (nonatomic, retain) UILabel* pWebContent;
+
+@end

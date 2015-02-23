@@ -1,3 +1,5 @@
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
+
 package com.eegeo.menu;
 
 import android.view.View;
@@ -8,39 +10,36 @@ import com.eegeo.mobileexampleapp.INativeMessageRunner;
 
 public class MenuItemSelectedListener implements OnItemClickListener
 {
-	private final INativeMessageRunner m_nativeMessageRunner;
-	private final long m_nativeCallerPointer;
-	private MenuListAdapter m_adapter;
-	
-	public MenuItemSelectedListener(
-			MenuListAdapter adapter,
-			INativeMessageRunner nativeMessageRunner,
-			long nativeCallerPointer)
-	{
-		m_adapter = adapter;
-		m_nativeMessageRunner = nativeMessageRunner;
-		m_nativeCallerPointer = nativeCallerPointer;
-	}
+    private final INativeMessageRunner m_nativeMessageRunner;
+    private final long m_nativeCallerPointer;
+    private MenuListAdapter m_adapter;
+    private final MenuView m_menuView;
 
-	@Override
-	public void onItemClick (AdapterView<?> parent, View itemClicked, int position, long id)
-	{
-		if(m_adapter.isAnimating())
-		{
-			return;
-		}
-		
-		final String selection = (String)parent.getAdapter().getItem(position);
-		final int index = position;
-        																																		
-		m_nativeMessageRunner.runOnNativeThread(new Runnable()
-		{
-			public void run()
-			{
-				MenuViewJniMethods.SelectedItem(m_nativeCallerPointer, selection, index);
-			}
-		});
-	}
+    public MenuItemSelectedListener(
+        MenuListAdapter adapter,
+        MenuView menuView,
+        INativeMessageRunner nativeMessageRunner,
+        long nativeCallerPointer)
+    {
+        m_adapter = adapter;
+        m_menuView = menuView;
+        m_nativeMessageRunner = nativeMessageRunner;
+        m_nativeCallerPointer = nativeCallerPointer;
+    }
+
+    @Override
+    public void onItemClick (AdapterView<?> parent, View itemClicked, int position, long id)
+    {
+        if(m_adapter.isAnimating() || m_menuView.isAnimating() || m_menuView.isDragging())
+        {
+            return;
+        }
+
+        final int sectionIndex = m_adapter.getSectionIndex(position);
+        final int childIndex = m_adapter.getItemIndex(position);
+
+        MenuViewJniMethods.SelectedItem(m_nativeCallerPointer, sectionIndex, childIndex);
+    }
 }
 
 

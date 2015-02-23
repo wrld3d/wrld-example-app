@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2014), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -13,12 +13,12 @@ namespace ExampleApp
     {
         class AndroidPersistentSettingsModel : public IPersistentSettingsModel, private Eegeo::NonCopyable
         {
-    		AndroidNativeState& m_nativeState;
-    		jclass m_jniApiClass;
-    		jobject m_jniApiInstance;
+            AndroidNativeState& m_nativeState;
+            jclass m_jniApiClass;
+            jobject m_jniApiInstance;
 
         public:
-        	AndroidPersistentSettingsModel(AndroidNativeState& nativeState);
+            AndroidPersistentSettingsModel(AndroidNativeState& nativeState);
 
             ~AndroidPersistentSettingsModel();
 
