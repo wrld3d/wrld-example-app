@@ -21,7 +21,7 @@
        
         <activity android:name=".BackgroundThreadActivity"
                   android:label="eeGeo Example"
-                  android:configChanges="orientation|keyboardHidden|screenSize"
+                  android:configChanges="orientation|keyboardHidden|screenSize|fontScale"
                   android:screenOrientation="landscape"
                   android:windowSoftInputMode="adjustPan"
               	  android:launchMode="standard"
