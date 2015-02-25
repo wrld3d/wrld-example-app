@@ -65,6 +65,9 @@ namespace ExampleApp
             {
                 FLURRY_END_TIMED_EVENT("MyPinCreationDetailsDialogue");
                 m_view.Close();
+                
+                ExampleApp::MyPinCreation::MyPinCreationViewStateChangedMessage message(ExampleApp::MyPinCreation::Inactive);
+                m_messageBus.Publish(message);
             }
 
             void MyPinCreationDetailsController::OnConfirmed()
@@ -93,9 +96,6 @@ namespace ExampleApp
             void MyPinCreationDetailsController::OnDismissed()
             {
                 m_viewModel.Close();
-
-                ExampleApp::MyPinCreation::MyPinCreationViewStateChangedMessage message(ExampleApp::MyPinCreation::Inactive);
-                m_messageBus.Publish(message);
             }
 
             void MyPinCreationDetailsController::OnNetworkStateChanged(const bool &hasConnectivity)
