@@ -228,6 +228,11 @@
     m_pInterop->HandleDraggingViewCompleted();
 }
 
+// Empty implementation because we don't want to dynamically refresh the table heights for this menu - we're always scrolling within a constant space
+- (void) refreshTableHeights: (size_t)numberOfSections numberOfCells:(size_t)numberOfCells
+{
+    
+}
 
 /*
 - (UITableViewCell *)tableView:(UITableView*)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
