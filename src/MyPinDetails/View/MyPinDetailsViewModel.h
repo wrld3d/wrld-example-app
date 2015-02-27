@@ -17,7 +17,10 @@ namespace ExampleApp
         {
             class MyPinDetailsViewModel : public IMyPinDetailsViewModel, private Eegeo::NonCopyable
             {
-                MyPins::SdkModel::MyPinModel m_myPinModel;
+                MyPins::SdkModel::MyPinModel::TPinIdType m_id;
+                std::string m_title;
+                std::string m_description;
+                std::string m_imagePath;
                 Eegeo::Helpers::CallbackCollection0 m_openedCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_closedCallbacks;
                 MyPinDetailsOpenableControl m_openable;
@@ -27,14 +30,23 @@ namespace ExampleApp
                                       Reaction::View::IReactionControllerModel& reactionControllerModel);
 
                 ~MyPinDetailsViewModel();
-
-                const MyPins::SdkModel::MyPinModel& GetMyPinModel() const;
+                
+                MyPins::SdkModel::MyPinModel::TPinIdType GetMyPinId() const;
+                
+                const std::string& GetMyPinTitle() const;
+                
+                const std::string& GetMyPinDescription() const;
+                
+                const std::string& GetImagePath() const;
 
                 bool TryAcquireReactorControl();
 
                 bool IsOpen() const;
 
-                void Open(const MyPins::SdkModel::MyPinModel& myPinModel);
+                void Open(MyPins::SdkModel::MyPinModel::TPinIdType pinId,
+                          const std::string& title,
+                          const std::string& description,
+                          const std::string& imagePath);
 
                 void Close();
 

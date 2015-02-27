@@ -3,6 +3,7 @@
 #pragma once
 
 #include "MyPins.h"
+#include "MyPinModel.h"
 
 namespace ExampleApp
 {
@@ -11,11 +12,11 @@ namespace ExampleApp
         class MyPinRemovedFromMenuMessage
         {
         public:
-            MyPinRemovedFromMenuMessage(SdkModel::MyPinModel* myPinModel);
+            MyPinRemovedFromMenuMessage(SdkModel::MyPinModel::TPinIdType myPinId);
 
-            SdkModel::MyPinModel* GetMyPinModel() const;
+            SdkModel::MyPinModel::TPinIdType GetMyPinId() const;
         private:
-            SdkModel::MyPinModel* m_pMyPinModel;
+            SdkModel::MyPinModel::TPinIdType m_myPinId;
         };
     }
 }

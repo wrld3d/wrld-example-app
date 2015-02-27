@@ -7,6 +7,7 @@
 #include "DecartaSearchJsonParser.h"
 #include "LatLongAltitude.h"
 #include "SearchResultModel.h"
+#include "TimeHelpers.h"
 
 using namespace rapidjson;
 
@@ -35,7 +36,7 @@ namespace ExampleApp
         namespace Decarta
         {
             void DecartaSearchJsonParser::ParseSearchResults(const std::string& serialized,
-                    std::vector<SdkModel::SearchResultModel>& out_results)
+                                                             std::vector<SdkModel::SearchResultModel>& out_results)
             {
                 Document document;
 
@@ -122,14 +123,21 @@ namespace ExampleApp
                                 ss << "_" << i;
                                 entry.uniqueId = ss.str();
 
-                                SdkModel::SearchResultModel result(entry.uniqueId,
+                                SdkModel::SearchResultModel result(SdkModel::SearchResultModel::CurrentVersion,
+                                                                   entry.uniqueId,
                                                                    entry.name,
                                                                    entry.location,
                                                                    entry.phone,
                                                                    entry.address,
                                                                    entry.webUrl,
                                                                    entry.category,
-                                                                   entry.vicinity);
+                                                                   std::vector<std::string>(),
+                                                                   entry.vicinity,
+                                                                   "DeCarta",
+                                                                   "",
+                                                                   "",
+                                                                   std::vector<std::string>(),
+                                                                   Eegeo::Helpers::Time::MillisecondsSinceEpoch());
 
                                 out_results.push_back(result);
                             }

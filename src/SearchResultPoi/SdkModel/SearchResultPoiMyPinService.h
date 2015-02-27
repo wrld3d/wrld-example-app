@@ -6,6 +6,7 @@
 #include "ISearchResultPoiMyPinService.h"
 #include "SearchResultModel.h"
 #include "MyPins.h"
+#include "Search.h"
 #include "CategorySearch.h"
 
 namespace ExampleApp
@@ -17,12 +18,12 @@ namespace ExampleApp
             class SearchResultPoiMyPinService : public ISearchResultPoiMyPinService, private Eegeo::NonCopyable
             {
                 MyPins::SdkModel::IMyPinsService& m_myPinsService;
-                MyPins::SdkModel::IMyPinsRepository& m_myPinsRepository;
+                Search::SdkModel::MyPins::ISearchResultMyPinsService& m_searchResultMyPinsService;
                 CategorySearch::ISearchResultIconCategoryMapper& m_searchResultIconCategoryMapper;
                 
             public:
                 SearchResultPoiMyPinService(MyPins::SdkModel::IMyPinsService& myPinsService,
-                                            MyPins::SdkModel::IMyPinsRepository& myPinsRepository,
+                                            Search::SdkModel::MyPins::ISearchResultMyPinsService& searchResultMyPinsService,
                                             CategorySearch::ISearchResultIconCategoryMapper& searchResultIconCategoryMapper);
                 
                 ~SearchResultPoiMyPinService();

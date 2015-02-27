@@ -21,7 +21,7 @@ namespace ExampleApp
                 SearchMenuView(AndroidNativeState& nativeState,
                                const std::string& viewClassName);
 
-                void SetHeader(const std::string& header, bool queryPending, int numResult);
+                void SetHeader(const std::string& header, bool queryPending, size_t numResult);
 
                 void HandleSearchClosed();
 

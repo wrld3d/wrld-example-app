@@ -8,27 +8,28 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
+            const int MyPinModel::CurrentVersion = 1;
+            
             MyPinModel::MyPinModel()
-                : m_modelId(-1)
+                : m_version(-1)
+                , m_modelId(-1)
                 , m_latLong(0.0, 0.0)
             {
 
             }
 
-            MyPinModel::MyPinModel(int modelId,
+            MyPinModel::MyPinModel(int version,
+                                   int modelId,
                                    const std::string& title,
                                    const std::string& description,
                                    int sdkMapPinIconIndex,
-                                   const Eegeo::Space::LatLong& latLong,
-                                   const MyPinsSemanticPinType& semanticPinType,
-                                   const std::string& pinTypeMetadata)
-            : m_modelId(modelId)
+                                   const Eegeo::Space::LatLong& latLong)
+            : m_version(version)
+            , m_modelId(modelId)
             , m_title(title)
             , m_description(description)
             , m_sdkMapPinIconIndex(sdkMapPinIconIndex)
             , m_latLong(latLong)
-            , m_semanticPinType(semanticPinType)
-            , m_pinTypeMetadata(pinTypeMetadata)
             {
                 
             }

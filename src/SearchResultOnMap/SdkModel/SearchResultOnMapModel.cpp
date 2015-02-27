@@ -8,7 +8,7 @@
 #include "SearchResultModel.h"
 #include "ISearchResultIconCategoryMapper.h"
 #include "WorldPinFocusData.h"
-#include "ISearchResultOnMapMyPinsService.h"
+#include "ISearchResultMyPinsService.h"
 #include "Logger.h"
 
 using ExampleApp::Search::SdkModel::SearchResultModel;
@@ -21,7 +21,7 @@ namespace ExampleApp
         {
             SearchResultOnMapModel::SearchResultOnMapModel(WorldPins::SdkModel::IWorldPinsService& worldPinsService,
                                                            View::ISearchResultOnMapFactory& searchResultOnMapFactory,
-                                                           ISearchResultOnMapMyPinsService& searchResultOnMapMyPinsService,
+                                                           Search::SdkModel::MyPins::ISearchResultMyPinsService& searchResultOnMapMyPinsService,
                                                            CategorySearch::ISearchResultIconCategoryMapper& searchResultIconCategoryMapper,
                                                            Search::SdkModel::ISearchResultRepository& searchResultRepository)
             : m_searchResultRepository(searchResultRepository)
@@ -147,6 +147,7 @@ namespace ExampleApp
                 WorldPins::SdkModel::WorldPinFocusData worldPinFocusData(searchResultModel.GetTitle(), searchResultModel.GetAddress());
                 
                 ExampleApp::WorldPins::SdkModel::WorldPinItemModel *pinItemModel = m_worldPinsService.AddPin(pSearchResultOnMapItemModel,
+                                                                                                             NULL,
                                                                                                              worldPinFocusData,
                                                                                                              searchResultModel.GetLocation(),
                                                                                                              pinIconIndex);

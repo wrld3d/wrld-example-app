@@ -5,7 +5,6 @@
 #include <string>
 #include "LatLongAltitude.h"
 #include "Types.h"
-#include "MyPinsSemanticPinType.h"
 
 namespace ExampleApp
 {
@@ -15,26 +14,34 @@ namespace ExampleApp
         {
             class MyPinModel
             {
+            public:
+                typedef int TPinIdType;
+            
             private:
-                int m_modelId;
+                int m_version;
+                TPinIdType m_modelId;
                 std::string m_title;
                 std::string m_description;
                 int m_sdkMapPinIconIndex;
                 Eegeo::Space::LatLong m_latLong;
-                MyPinsSemanticPinType m_semanticPinType;
-                std::string m_pinTypeMetadata;
 
             public:
+                const static int CurrentVersion;
+                
                 MyPinModel();
 
-                MyPinModel(int modelId,
+                MyPinModel(int version,
+                           TPinIdType modelId,
                            const std::string& title,
                            const std::string& description,
                            int sdkMapPinIconIndex,
-                           const Eegeo::Space::LatLong& latLong,
-                           const MyPinsSemanticPinType& semanticPinType,
-                           const std::string& pinTypeMetadata);
-
+                           const Eegeo::Space::LatLong& latLong);
+                
+                int Version() const
+                {
+                    return m_version;
+                }
+                
                 int Identifier() const
                 {
                     return m_modelId;
@@ -53,16 +60,6 @@ namespace ExampleApp
                 int GetSdkMapPinIconIndexIcon() const
                 {
                     return m_sdkMapPinIconIndex;
-                }
-                
-                const MyPinsSemanticPinType& GetSemanticPinType() const
-                {
-                    return m_semanticPinType;
-                }
-                
-                const std::string& GetTypeMetadata() const
-                {
-                    return m_pinTypeMetadata;
                 }
                 
                 const Eegeo::Space::LatLong& GetLatLong() const

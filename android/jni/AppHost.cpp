@@ -78,6 +78,8 @@
 #include "OptionsView.h"
 #include "NetworkCapabilities.h"
 #include "FlurryWrapper.h"
+#include "AndroidYelpSearchServiceModule.h"
+#include "DecartaSearchServiceModule.h"
 
 using namespace Eegeo::Android;
 using namespace Eegeo::Android::Input;
@@ -117,6 +119,7 @@ AppHost::AppHost(
     ,m_requestedApplicationInitialiseViewState(false)
     ,m_uiCreatedMessageReceivedOnNativeThread(false)
     ,m_pViewControllerUpdaterModule(NULL)
+	,m_pSearchServiceModule(NULL)
 	,m_pInitialExperienceDialogsViewModule(NULL)
 {
     ASSERT_NATIVE_THREAD
@@ -165,6 +168,23 @@ AppHost::AppHost(
     		m_pAndroidPlatformAbstractionModule->GetHttpCache(),
     		m_androidPersistentSettingsModel);
 
+    const bool useYelp = true;
+    if(useYelp)
+    {
+        m_pSearchServiceModule = Eegeo_NEW(ExampleApp::Search::Yelp::AndroidYelpSearchServiceModule)(
+        		nativeState,
+        		m_pAndroidPlatformAbstractionModule->GetWebLoadRequestFactory(),
+        		*m_pNetworkCapabilities,
+        		m_pAndroidPlatformAbstractionModule->GetUrlEncoder()
+        );
+    }
+    else
+    {
+        m_pSearchServiceModule = Eegeo_NEW(ExampleApp::Search::Decarta::DecartaSearchServiceModule)(
+        		m_pAndroidPlatformAbstractionModule->GetWebLoadRequestFactory(),
+        		m_pAndroidPlatformAbstractionModule->GetUrlEncoder());
+    }
+
     m_pApp = Eegeo_NEW(ExampleApp::MobileExampleApp)(
                  ExampleApp::ApiKey,
                  *m_pAndroidPlatformAbstractionModule,
@@ -176,7 +196,9 @@ AppHost::AppHost(
                  *m_pInitialExperienceModule,
                  m_androidPersistentSettingsModel,
                  m_messageBus,
-                 *m_pNetworkCapabilities);
+                 m_sdkDomainEventBus,
+                 *m_pNetworkCapabilities,
+                 *m_pSearchServiceModule);
 
     m_pModalBackgroundNativeViewModule = Eegeo_NEW(ExampleApp::ModalBackground::SdkModel::ModalBackgroundNativeViewModule)(
             m_pApp->World().GetRenderingModule(),
@@ -199,6 +221,9 @@ AppHost::~AppHost()
 
     Eegeo_DELETE m_pApp;
     m_pApp = NULL;
+
+    Eegeo_DELETE m_pSearchServiceModule;
+    m_pSearchServiceModule = NULL;
 
     Eegeo_DELETE m_pNetworkCapabilities;
     m_pNetworkCapabilities = NULL;

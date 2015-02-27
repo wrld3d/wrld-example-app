@@ -35,8 +35,8 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<SearchResultOnMapModel, Search::SdkModel::SearchResultModel*> m_searchResultRemovedCallback;
                 Eegeo::Helpers::TCallback1<SearchResultOnMapModel, Search::SdkModel::SearchResultModel> m_searchResultPinnedCallback;
                 Eegeo::Helpers::TCallback1<SearchResultOnMapModel, Search::SdkModel::SearchResultModel> m_searchResultUnpinnedCallback;
-
-                ISearchResultOnMapMyPinsService& m_searchResultOnMapMyPinsService;
+                
+                Search::SdkModel::MyPins::ISearchResultMyPinsService& m_searchResultOnMapMyPinsService;
                 Search::SdkModel::ISearchResultRepository& m_searchResultRepository;
                 CategorySearch::ISearchResultIconCategoryMapper& m_searchResultIconCategoryMapper;
                 View::ISearchResultOnMapFactory& m_searchResultOnMapFactory;
@@ -45,7 +45,7 @@ namespace ExampleApp
             public:
                 SearchResultOnMapModel(WorldPins::SdkModel::IWorldPinsService& worldPinsService,
                                        View::ISearchResultOnMapFactory& searchResultOnMapFactory,
-                                       ISearchResultOnMapMyPinsService& searchResultOnMapMyPinsService,
+                                       Search::SdkModel::MyPins::ISearchResultMyPinsService& searchResultOnMapMyPinsService,
                                        CategorySearch::ISearchResultIconCategoryMapper& searchResultIconCategoryMapper,
                                        Search::SdkModel::ISearchResultRepository& searchResultRepository);
 

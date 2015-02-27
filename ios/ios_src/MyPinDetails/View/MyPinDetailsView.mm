@@ -305,19 +305,18 @@
     [self.pLabelsContainer setContentSize:CGSizeMake(m_labelsSectionWidth, m_maxContentSize)];
 }
 
-- (void) setContent:(const ExampleApp::MyPins::SdkModel::MyPinModel*)pModel
+- (void) setContent:(const std::string&)title :(const std::string&)description :(const std::string&)imagePath
 {
-    self.pTitleLabel.text = [NSString stringWithUTF8String:pModel->GetTitle().c_str()];
-
-    self.pDescriptionContent.text = [NSString stringWithUTF8String: pModel->GetDescription().c_str()];
+    self.pTitleLabel.text = [NSString stringWithUTF8String:title.c_str()];
+    self.pDescriptionContent.text = [NSString stringWithUTF8String: description.c_str()];
 
     m_hasImage = NO;
 
-    if(!pModel->GetTypeMetadata().empty())
+    if(!imagePath.empty())
     {
         NSArray* libraryPaths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
         NSString* libraryDirectory = [libraryPaths objectAtIndex:0];
-        NSString* imageFilename = [NSString stringWithUTF8String: pModel->GetTypeMetadata().c_str()];
+        NSString* imageFilename = [NSString stringWithUTF8String: imagePath.c_str()];
         NSString* fullPathToImage  = [libraryDirectory stringByAppendingPathComponent: imageFilename];
 
         self.pImageContent.image = [UIImage imageWithContentsOfFile: fullPathToImage];

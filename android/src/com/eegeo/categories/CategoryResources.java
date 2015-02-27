@@ -20,6 +20,10 @@ public class CategoryResources
     private static String getCategoryMatch(String category)
     {
         category = category.toLowerCase(Locale.getDefault());
+        if(category.contains("around me"))
+        {
+        	return "aroundme";
+        }
         if(category.contains("caf\u00e9") || category.contains("cafe") || category.contains("coffee"))
         {
             return "coffee";

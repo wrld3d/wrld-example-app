@@ -7,8 +7,6 @@
 #include "MyPins.h"
 #include "IMyPinsService.h"
 #include "WorldPins.h"
-#include "Web.h"
-#include "WebLoadRequestCompletionCallback.h"
 #include "Menu.h"
 #include "Search.h"
 
@@ -24,8 +22,10 @@ namespace ExampleApp
                 MyPinsService(IMyPinsRepository& myPinsRepository,
                               MyPinsFileIO& myPinsFileIO,
                               IMyPinSelectionHandlerFactory& myPinSelectionHandlerFactory,
-                              WorldPins::SdkModel::IWorldPinsService& worldPinsService,
-                              Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory);
+                              IMyPinVisibilityStateChangedHandlerFactory& myPinVisibilityStateChangedHandlerFactory,
+                              IMyPinBoundObjectFactory& myPinBoundObjectFactory,
+                              IMyPinBoundObjectRepository& myPinBoundObjectRepository,
+                              WorldPins::SdkModel::IWorldPinsService& worldPinsService);
 
 
                 void RemovePinWithId(const int myPinId);
@@ -44,15 +44,12 @@ namespace ExampleApp
                 IMyPinsRepository& m_myPinsRepository;
                 MyPinsFileIO& m_myPinsFileIO;
                 IMyPinSelectionHandlerFactory& m_myPinSelectionHandlerFactory;
-
+                IMyPinVisibilityStateChangedHandlerFactory& m_myPinVisibilityStateChangedHandlerFactory;
+                IMyPinBoundObjectFactory& m_myPinBoundObjectFactory;
+                IMyPinBoundObjectRepository& m_myPinBoundObjectRepository;
                 WorldPins::SdkModel::IWorldPinsService& m_worldPinsService;
 
-                Eegeo::Web::IWebLoadRequestFactory& m_webLoadRequestFactory;
-
-                Eegeo::Web::TWebLoadRequestCompletionCallback<ExampleApp::MyPins::SdkModel::MyPinsService> m_webRequestCompleteCallback;
-                void WebRequestCompleteCallback(Eegeo::Web::IWebLoadRequest& webLoadRequest);
-
-                unsigned int m_lastIdUsed;
+                MyPinModel::TPinIdType m_lastIdUsed;
 
                 typedef std::map<MyPinModel*, WorldPins::SdkModel::WorldPinItemModel*> TMyPinToWorldPinMap;
                 TMyPinToWorldPinMap m_myPinToWorldPinMap;
@@ -62,8 +59,6 @@ namespace ExampleApp
                 void SubmitPinToWebService(const MyPinModel& myPinModel);
 
                 MyPinModel* GetPinWithId(int pinId);
-                
-                void CleanUpMyPinMetadata(const MyPinModel& myPinModel);
             };
         }
     }

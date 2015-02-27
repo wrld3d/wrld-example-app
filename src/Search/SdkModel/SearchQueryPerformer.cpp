@@ -118,14 +118,21 @@ namespace ExampleApp
 
                     if(mapIt == currentRepoHash.end())
                     {
-                        SearchResultModel* pItem = Eegeo_NEW(SearchResultModel)(it->GetIdentifier(),
-                                                   it->GetTitle(),
-                                                   it->GetLocation(),
-                                                   it->GetPhone(),
-                                                   it->GetAddress(),
-                                                   it->GetWebUrl(),
-                                                   it->GetCategory(),
-                                                   it->GetVicinity());
+                        SearchResultModel* pItem = Eegeo_NEW(SearchResultModel)(it->GetVersion(),
+                                                                                it->GetIdentifier(),
+                                                                                it->GetTitle(),
+                                                                                it->GetLocation(),
+                                                                                it->GetPhone(),
+                                                                                it->GetAddress(),
+                                                                                it->GetWebUrl(),
+                                                                                it->GetCategory(),
+                                                                                it->GetHumanReadableCategories(),
+                                                                                it->GetVicinity(),
+                                                                                it->GetVendor(),
+                                                                                it->GetImageUrl(),
+                                                                                it->GetRatingImageUrl(),
+                                                                                it->GetReviews(),
+                                                                                it->GetCreationTimestamp());
 
                         newResultTemporaryStorage.push_back(pItem);
                     }

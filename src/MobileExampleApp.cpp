@@ -50,6 +50,7 @@
 #include "ApiKey.h"
 #include "INetworkCapabilities.h"
 #include "FlurryWrapper.h"
+#include "ISearchServiceModule.h"
 
 namespace ExampleApp
 {
@@ -92,7 +93,9 @@ namespace ExampleApp
         ExampleApp::InitialExperience::SdkModel::IInitialExperienceModule& initialExperienceModule,
         ExampleApp::PersistentSettings::IPersistentSettingsModel& persistentSettings,
         ExampleAppMessaging::TMessageBus& messageBus,
-        Net::SdkModel::INetworkCapabilities& networkCapabilities)
+        ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
+        Net::SdkModel::INetworkCapabilities& networkCapabilities,
+        ExampleApp::Search::SdkModel::ISearchServiceModule& searchServiceModule)
         : m_pGlobeCameraController(NULL)
         , m_pCameraTouchController(NULL)
         , m_pNavigationService(NULL)
@@ -125,6 +128,7 @@ namespace ExampleApp
         , m_initialExperienceModule(initialExperienceModule)
         , m_pBlitter(NULL)
         , m_messageBus(messageBus)
+        , m_sdkDomainEventBus(sdkModelDomainEventBus)
         , m_persistentSettings(persistentSettings)
         , m_pMyPinCreationModule(NULL)
         , m_pPoiRingModule(NULL)
@@ -136,6 +140,7 @@ namespace ExampleApp
         , m_screenProperties(screenProperties)
         , m_networkCapabilities(networkCapabilities)
         , m_setFlurryLocation(false)
+        , m_searchServiceModule(searchServiceModule)
     {
         FLURRY_BEGIN(FlurryApiKey.c_str(), EEGEO_PLATFORM_VERSION_NUMBER);
 
@@ -239,13 +244,12 @@ namespace ExampleApp
                                                                          m_pReactionControllerModule->GetReactionControllerModel(),
                                                                          m_messageBus,
                                                                          m_networkCapabilities);
-
-        m_pSearchModule = Eegeo_NEW(Search::SdkModel::SearchModule)(DecartaApiKey,
-                          m_platformAbstractions.GetWebLoadRequestFactory(),
-                          m_platformAbstractions.GetUrlEncoder(),
-                          *m_pGlobeCameraController,
-                          *m_pCameraTransitionController,
-                          m_messageBus);
+        
+        m_pSearchModule = Eegeo_NEW(Search::SdkModel::SearchModule)(m_searchServiceModule.GetSearchService(),
+                                                                    *m_pGlobeCameraController,
+                                                                    *m_pCameraTransitionController,
+                                                                    m_messageBus,
+                                                                    m_sdkDomainEventBus);
 
         m_pCompassModule = Eegeo_NEW(ExampleApp::Compass::SdkModel::CompassModule)(*m_pNavigationService,
                            *m_pGlobeCameraController,
@@ -282,6 +286,7 @@ namespace ExampleApp
                               m_messageBus);
 
         m_pCategorySearchModule = Eegeo_NEW(ExampleApp::CategorySearch::SdkModel::CategorySearchModule(
+                                                m_searchServiceModule.GetCategorySearchModels(),
                                                 SearchModule().GetSearchQueryPerformer(),
                                                 m_pSecondaryMenuModule->GetSecondaryMenuViewModel(),
                                                 m_messageBus));
@@ -304,13 +309,17 @@ namespace ExampleApp
                                                                                 m_persistentSettings,
                                                                                 m_pPrimaryMenuModule->GetPrimaryMenuViewModel(),
                                                                                 m_messageBus,
-                                                                                *m_pCameraTransitionController);
+                                                                                m_sdkDomainEventBus,
+                                                                                *m_pCameraTransitionController,
+                                                                                m_pCategorySearchModule->GetCategorySearchRepository(),
+                                                                                m_pSearchModule->GetMyPinsSearchResultRefreshService());
         
         m_pSearchResultPoiModule = Eegeo_NEW(ExampleApp::SearchResultPoi::View::SearchResultPoiModule)(m_identityProvider,
                                                                                                        m_pReactionControllerModule->GetReactionControllerModel(),
                                                                                                        m_pMyPinsModule->GetMyPinsService(),
-                                                                                                       m_pMyPinsModule->GetMyPinsRepository(),
+                                                                                                       m_pSearchModule->GetSearchResultMyPinsService(),
                                                                                                        m_pCategorySearchModule->GetSearchResultIconCategoryMapper(),
+                                                                                                       world.GetPlatformAbstractionModule().GetWebLoadRequestFactory(),
                                                                                                        m_messageBus);
         
         m_pSearchResultMenuModule = Eegeo_NEW(SearchResultMenu::SdkModel::SearchResultMenuModule)(m_pSearchModule->GetSearchResultRepository(),
@@ -323,8 +332,8 @@ namespace ExampleApp
         m_pSearchResultOnMapModule = Eegeo_NEW(SearchResultOnMap::SdkModel::SearchResultOnMapModule)(m_pSearchModule->GetSearchResultRepository(),
                                                                                                      m_pSearchResultPoiModule->GetSearchResultPoiViewModel(),
                                                                                                      m_pWorldPinsModule->GetWorldPinsService(),
-                                                                                                     m_pMyPinsModule->GetMyPinsRepository(),
                                                                                                      m_pCategorySearchModule->GetSearchResultIconCategoryMapper(),
+                                                                                                     m_pSearchModule->GetSearchResultMyPinsService(),
                                                                                                      m_messageBus);
         
         m_pPrimaryMenuModule->AddMenuSection("My Pins", "place", m_pMyPinsModule->GetMyPinsMenuModel(), true);

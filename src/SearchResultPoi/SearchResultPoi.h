@@ -9,6 +9,7 @@ namespace ExampleApp
         namespace SdkModel
         {
             class ISearchResultPoiMyPinService;
+            class ISearchResultPoiViewImageFetcher;
         }
         
         namespace View

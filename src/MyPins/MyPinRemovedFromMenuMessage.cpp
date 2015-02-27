@@ -6,15 +6,15 @@ namespace ExampleApp
 {
     namespace MyPins
     {
-        MyPinRemovedFromMenuMessage::MyPinRemovedFromMenuMessage(SdkModel::MyPinModel* myPinModel)
-            : m_pMyPinModel(myPinModel)
+        MyPinRemovedFromMenuMessage::MyPinRemovedFromMenuMessage(SdkModel::MyPinModel::TPinIdType myPinId)
+            : m_myPinId(myPinId)
         {
 
         }
 
-        SdkModel::MyPinModel* MyPinRemovedFromMenuMessage::GetMyPinModel() const
+        SdkModel::MyPinModel::TPinIdType MyPinRemovedFromMenuMessage::GetMyPinId() const
         {
-            return m_pMyPinModel;
+            return m_myPinId;
         }
     }
 }

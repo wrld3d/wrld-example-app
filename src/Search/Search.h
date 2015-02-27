@@ -8,11 +8,18 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
+            namespace MyPins
+            {
+                class ISearchResultMyPinsService;
+                class IMyPinsSearchResultRefreshService;
+            }
+            
             class ISearchQueryPerformer;
             class ISearchRefreshService;
             class ISearchResultParser;
             class ISearchModule;
             class ISearchService;
+            class ISearchServiceModule;
             class SearchQuery;
             class ISearchResultRepository;
             class SearchResultModel;

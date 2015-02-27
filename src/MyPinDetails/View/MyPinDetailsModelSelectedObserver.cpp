@@ -13,19 +13,30 @@ namespace ExampleApp
                                                                                  ExampleAppMessaging::TMessageBus& messageBus)
                 : m_myPinDetailsDisplayService(myPinDetailsDisplayService)
                 , m_messageBus(messageBus)
-                , m_handlerBinding(this, &MyPinDetailsModelSelectedObserver::OnMyPinDetailsModelSelectedMessage)
+                , m_userCreatedBinding(this, &MyPinDetailsModelSelectedObserver::OnUserCreatedMyPinDetailsModelSelectedMessage)
+                , m_searchResultBinding(this, &MyPinDetailsModelSelectedObserver::OnSearchResultMyPinDetailsModelSelectedMessage)
             {
-                m_messageBus.SubscribeUi(m_handlerBinding);
+                m_messageBus.SubscribeUi(m_userCreatedBinding);
+                m_messageBus.SubscribeUi(m_searchResultBinding);
             }
 
             MyPinDetailsModelSelectedObserver::~MyPinDetailsModelSelectedObserver()
             {
-                m_messageBus.UnsubscribeUi(m_handlerBinding);
+                m_messageBus.UnsubscribeUi(m_searchResultBinding);
+                m_messageBus.UnsubscribeUi(m_userCreatedBinding);
             }
-
-            void MyPinDetailsModelSelectedObserver::OnMyPinDetailsModelSelectedMessage(const MyPinDetailsModelSelectedMessage& message)
+            
+            void MyPinDetailsModelSelectedObserver::OnUserCreatedMyPinDetailsModelSelectedMessage(const UserCreatedMyPinDetailsModelSelectedMessage& message)
             {
-                m_myPinDetailsDisplayService.DisplayPinDetails(message.GetModel());
+                m_myPinDetailsDisplayService.DisplayUserCreatedMyPinDetails(message.GetMyPinId(),
+                                                                            message.GetMyPinTitle(),
+                                                                            message.GetMyPinDescription(),
+                                                                            message.GetImagePath());
+            }
+            
+            void MyPinDetailsModelSelectedObserver::OnSearchResultMyPinDetailsModelSelectedMessage(const SearchResultMyPinDetailsModelSelectedMessage& message)
+            {
+                m_myPinDetailsDisplayService.DisplaySearchResultMyPinDetails(message.GetSearchResultModel());
             }
         }
     }

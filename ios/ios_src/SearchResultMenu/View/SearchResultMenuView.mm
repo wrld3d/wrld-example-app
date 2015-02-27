@@ -139,7 +139,7 @@
     [super dealloc];
 }
 
-- (void) updateViewForQuery:(std::string)searchText :(bool)queryPending :(size_t)numResults
+- (void) updateViewForQuery:(const std::string&)searchText :(bool)queryPending :(size_t)numResults
 {
     if(queryPending)
     {

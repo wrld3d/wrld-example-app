@@ -2,9 +2,9 @@
 
 #pragma once
 
+#include "SearchResultPoiViewContainer.h"
 #include "ISearchResultPoiView.h"
 #include "CallbackCollection.h"
-#include "SearchResultPoiView.h"
 
 namespace ExampleApp
 {
@@ -15,17 +15,21 @@ namespace ExampleApp
             class SearchResultPoiViewInterop : public ISearchResultPoiView
             {
             private:
-                SearchResultPoiView* m_pView;
+                SearchResultPoiViewContainer* m_pView;
                 Eegeo::Helpers::CallbackCollection0 m_closeClickedCallbacks;
                 Eegeo::Helpers::CallbackCollection1<Search::SdkModel::SearchResultModel> m_togglePinClickedCallbacks;
 
             public:
-                SearchResultPoiViewInterop(SearchResultPoiView* pView);
+                SearchResultPoiViewInterop(SearchResultPoiViewContainer* pView);
 
                 void Show(const Search::SdkModel::SearchResultModel model,
                           bool isPinned);
 
                 void Hide();
+                
+                void UpdateImage(const std::string& url,
+                                 bool hasImage,
+                                 const std::vector<Byte>* pImageBytes);
 
                 void InsertClosedCallback(Eegeo::Helpers::ICallback0& callback);
 

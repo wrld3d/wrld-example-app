@@ -25,7 +25,7 @@ namespace ExampleApp
                 {
                 }
 
-                void SetHeader(const std::string& header, bool queryPending, int numResult)
+                void SetHeader(const std::string& header, bool queryPending, size_t numResult)
                 {
                     [m_pView updateViewForQuery :header :queryPending :numResult];
                 }

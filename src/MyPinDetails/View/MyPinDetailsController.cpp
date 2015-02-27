@@ -44,7 +44,9 @@ namespace ExampleApp
             {
                 if(m_viewModel.TryAcquireReactorControl())
                 {
-                    m_view.OpenWithModel(m_viewModel.GetMyPinModel());
+                    m_view.OpenWithModel(m_viewModel.GetMyPinTitle(),
+                                         m_viewModel.GetMyPinDescription(),
+                                         m_viewModel.GetImagePath());
                 }
                 else
                 {
@@ -66,8 +68,7 @@ namespace ExampleApp
             {
                 if(m_viewModel.IsOpen())
                 {
-                    const ExampleApp::MyPins::SdkModel::MyPinModel& myPinModel = m_viewModel.GetMyPinModel();
-                    ExampleApp::MyPinDetails::MyPinDetailsViewRemovePinMessage message(myPinModel.Identifier());
+                    ExampleApp::MyPinDetails::MyPinDetailsViewRemovePinMessage message(m_viewModel.GetMyPinId());
                     m_messageBus.Publish(message);
 
                     m_viewModel.Close();

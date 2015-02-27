@@ -59,6 +59,8 @@
 #include "OptionsViewModule.h"
 #include "OptionsView.h"
 #include "NetworkCapabilities.h"
+#include "iOSYelpSearchServiceModule.h"
+#include "DecartaSearchServiceModule.h"
 #include "InitialExperienceDialogsViewModule.h"
 #include "InitialExperienceDialogsModule.h"
 #include "InitialExperienceDialogsView.h"
@@ -83,6 +85,7 @@ AppHost::AppHost(
     ,m_piOSPlatformAbstractionModule(NULL)
     ,m_pApp(NULL)
     ,m_requestedApplicationInitialiseViewState(false)
+    ,m_pSearchServiceModule(NULL)
 {
     m_piOSLocationService = Eegeo_NEW(iOSLocationService)();
 
@@ -103,6 +106,19 @@ AppHost::AppHost(
                                                                                        m_piOSPlatformAbstractionModule->GetHttpCache(),
                                                                                        m_iOSPersistentSettingsModel);
     
+    const bool useYelp = true;
+    if(useYelp)
+    {
+        m_pSearchServiceModule = Eegeo_NEW(ExampleApp::Search::Yelp::iOSYelpSearchServiceModule)(m_piOSPlatformAbstractionModule->GetWebLoadRequestFactory(),
+                                                                                                 *m_pNetworkCapabilities,
+                                                                                                 m_piOSPlatformAbstractionModule->GetUrlEncoder());
+    }
+    else
+    {   
+        m_pSearchServiceModule = Eegeo_NEW(ExampleApp::Search::Decarta::DecartaSearchServiceModule)(m_piOSPlatformAbstractionModule->GetWebLoadRequestFactory(),
+                                                                                                    m_piOSPlatformAbstractionModule->GetUrlEncoder());
+    }
+    
     m_pApp = Eegeo_NEW(ExampleApp::MobileExampleApp)(ExampleApp::ApiKey,
              *m_piOSPlatformAbstractionModule,
              screenProperties,
@@ -113,7 +129,9 @@ AppHost::AppHost(
              *m_pInitialExperienceModule,
              m_iOSPersistentSettingsModel,
              m_messageBus,
-             *m_pNetworkCapabilities);
+             m_sdkModelDomainEventBus,
+             *m_pNetworkCapabilities,
+             *m_pSearchServiceModule);
 
     CreateApplicationViewModules(screenProperties);
 
@@ -133,6 +151,9 @@ AppHost::~AppHost()
 
     Eegeo_DELETE m_pApp;
     m_pApp = NULL;
+    
+    Eegeo_DELETE m_pSearchServiceModule;
+    m_pSearchServiceModule = NULL;
     
     Eegeo_DELETE m_pNetworkCapabilities;
     m_pNetworkCapabilities = NULL;

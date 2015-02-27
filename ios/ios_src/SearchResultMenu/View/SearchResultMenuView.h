@@ -18,7 +18,7 @@
 
 - (ExampleApp::SearchResultMenu::View::SearchResultMenuViewInterop*) getSearchInterop;
 
-- (void) updateViewForQuery:(std::string)searchText :(bool)queryPending :(size_t)numResults;
+- (void) updateViewForQuery:(const std::string&)searchText :(bool)queryPending :(size_t)numResults;
 
 - (void) onClearPressed:(UIButton *) sender;
 

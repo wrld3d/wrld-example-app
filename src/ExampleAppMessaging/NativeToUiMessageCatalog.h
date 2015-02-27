@@ -17,11 +17,13 @@
 #include "WorldPinInFocusChangedLocationMessage.h"
 #include "MyPinCreationStateChangedMessage.h"
 #include "SearchResultOnMapItemModelSelectedMessage.h"
-#include "MyPinDetailsModelSelectedMessage.h"
+#include "UserCreatedMyPinDetailsModelSelectedMessage.h"
+#include "SearchResultMyPinDetailsModelSelectedMessage.h"
 #include "MyPinAddedToMenuMessage.h"
 #include "MyPinRemovedFromMenuMessage.h"
 #include "ShowInitialExperienceDialogMessage.h"
 #include "CompletedCacheClearMessage.h"
+#include "SearchResultPoiViewImageDownloadCompletedMessage.h"
 
 namespace ExampleApp
 {
@@ -41,11 +43,13 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<WorldPins::WorldPinInFocusChangedLocationMessage>
             , public Eegeo::Messaging::CatalogBinding<MyPinCreation::MyPinCreationStateChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<SearchResultOnMap::SearchResultOnMapItemModelSelectedMessage>
-            , public Eegeo::Messaging::CatalogBinding<MyPinDetails::MyPinDetailsModelSelectedMessage>
+            , public Eegeo::Messaging::CatalogBinding<MyPinDetails::UserCreatedMyPinDetailsModelSelectedMessage>
+            , public Eegeo::Messaging::CatalogBinding<MyPinDetails::SearchResultMyPinDetailsModelSelectedMessage>
             , public Eegeo::Messaging::CatalogBinding<MyPins::MyPinAddedToMenuMessage>
             , public Eegeo::Messaging::CatalogBinding<MyPins::MyPinRemovedFromMenuMessage>
         	, public Eegeo::Messaging::CatalogBinding<InitialExperience::Dialogs::ShowInitialExperienceDialogMessage>
             , public Eegeo::Messaging::CatalogBinding<Options::CompletedCacheClearMessage>
+            , public Eegeo::Messaging::CatalogBinding<SearchResultPoi::SearchResultPoiViewImageDownloadCompletedMessage>
             , private Eegeo::NonCopyable
         {
 

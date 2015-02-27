@@ -67,6 +67,7 @@
 #include "NetIncludes.h"
 #include "GpsMarker.h"
 #include "InitialExperienceDialogs.h"
+#include "SdkModelDomainEventBus.h"
 
 namespace ExampleApp
 {
@@ -120,7 +121,9 @@ namespace ExampleApp
         ExampleApp::Options::IOptionsModule* m_pOptionsModule;
         Eegeo::Streaming::CameraFrustumStreamingVolume* m_pStreamingVolume;
         ExampleAppMessaging::TMessageBus& m_messageBus;
+        ExampleAppMessaging::TSdkModelDomainEventBus& m_sdkDomainEventBus;
         Net::SdkModel::INetworkCapabilities& m_networkCapabilities;
+        Search::SdkModel::ISearchServiceModule& m_searchServiceModule;
 
         void CreateApplicationModelModules();
 
@@ -145,8 +148,9 @@ namespace ExampleApp
                          ExampleApp::InitialExperience::SdkModel::IInitialExperienceModule& initialExperienceModule,
                          ExampleApp::PersistentSettings::IPersistentSettingsModel& persistentSettings,
                          ExampleAppMessaging::TMessageBus& messageBus,
-                         ExampleApp::Net::SdkModel::INetworkCapabilities& networkCapabilities);
-
+                         ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
+                         ExampleApp::Net::SdkModel::INetworkCapabilities& networkCapabilities,
+                         ExampleApp::Search::SdkModel::ISearchServiceModule& searchServiceModule);
 
         ~MobileExampleApp();
 

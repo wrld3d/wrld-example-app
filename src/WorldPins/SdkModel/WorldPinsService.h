@@ -19,9 +19,14 @@ namespace ExampleApp
         {
             class WorldPinsService : public IWorldPinsService, private Eegeo::NonCopyable
             {
-                typedef std::map<WorldPinItemModel::WorldPinItemModelId, IWorldPinSelectionHandler*>::iterator mapIt;
+                typedef std::map<WorldPinItemModel::WorldPinItemModelId, IWorldPinSelectionHandler*> TPinToSelectionHandlerMap;
+                typedef TPinToSelectionHandlerMap::iterator TPinToSelectionHandlerMapIt;
+                
+                typedef std::map<WorldPinItemModel::WorldPinItemModelId, IWorldPinVisibilityStateChangedHandler*> TPinToVisiblityHandlerMap;
+                typedef TPinToVisiblityHandlerMap::iterator TPinToVisiblityHandlerMapIt;
 
-                std::map<WorldPinItemModel::WorldPinItemModelId, IWorldPinSelectionHandler*> m_pinsToSelectionHandlers;
+                TPinToSelectionHandlerMap m_pinsToSelectionHandlers;
+                TPinToVisiblityHandlerMap m_pinsToVisbilityChangedHandlers;
 
                 IWorldPinsRepository& m_worldPinsRepository;
                 IWorldPinsFactory& m_worldPinsFactory;
@@ -39,6 +44,7 @@ namespace ExampleApp
                 ~WorldPinsService();
 
                 WorldPinItemModel* AddPin(IWorldPinSelectionHandler* pSelectionHandler,
+                                          IWorldPinVisibilityStateChangedHandler* pVisibilityStateChangedHandler,
                                           const WorldPinFocusData& worldPinFocusData,
                                           const Eegeo::Space::LatLong& location,
                                           int iconIndex);

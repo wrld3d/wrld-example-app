@@ -10,19 +10,33 @@ namespace ExampleApp
         SearchResultIconCategoryMapper::SearchResultIconCategoryMapper()
         {
             m_categoryToIconIndex["caf\u00E9/pub"] = 1;
+            m_categoryToIconIndex["coffee"] = 1;
+            
             m_categoryToIconIndex["restaurant"] = 2;
+            m_categoryToIconIndex["restaurants"] = 2;
             m_categoryToIconIndex["fast food"] = 2;
+            m_categoryToIconIndex["food"] = 2;
+            
             m_categoryToIconIndex["night life"] = 3;
+            m_categoryToIconIndex["nightlife"] = 3;
             m_categoryToIconIndex["nightlife"] = 3;
             
             m_categoryToIconIndex["park"] = 4;
+            m_categoryToIconIndex["parks"] = 4;
+            
             m_categoryToIconIndex["theatre"] = 5;
             m_categoryToIconIndex["theater"] = 5;
+            
             m_categoryToIconIndex["hotel"] = 6;
+            m_categoryToIconIndex["hotels"] = 6;
             m_categoryToIconIndex["hotel/motel"] = 6;
+            
             m_categoryToIconIndex["bank"] = 7;
+            m_categoryToIconIndex["banks"] = 7;
             
             m_categoryToIconIndex["museum"] = 8;
+            m_categoryToIconIndex["museums"] = 8;
+            m_categoryToIconIndex["arts"] = 8;
         }
         
         SearchResultIconCategoryMapper::~SearchResultIconCategoryMapper()

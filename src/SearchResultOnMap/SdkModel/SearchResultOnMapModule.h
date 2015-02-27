@@ -28,7 +28,6 @@ namespace ExampleApp
             {
             private:
                 ISearchResultOnMapModel* m_pSearchResultOnMapModel;
-                ISearchResultOnMapMyPinsService* m_pSearchResultOnMapMyPinsService;
                 View::ISearchResultOnMapFactory* m_pSearchResultOnMapFactory;
                 View::SearchResultOnMapItemModelSelectedObserver* m_pSearchResultOnMapItemModelSelectedObserver;
 
@@ -36,8 +35,8 @@ namespace ExampleApp
                 SearchResultOnMapModule(Search::SdkModel::ISearchResultRepository& searchResultRepository,
                                         SearchResultPoi::View::ISearchResultPoiViewModel& searchResultPoiViewModel,
                                         WorldPins::SdkModel::IWorldPinsService& worldPinsService,
-                                        MyPins::SdkModel::IMyPinsRepository& myPinsRepository,
                                         CategorySearch::ISearchResultIconCategoryMapper& searchResultOnMapIconCategoryMapper,
+                                        Search::SdkModel::MyPins::ISearchResultMyPinsService& searchResultMyPinsService,
                                         ExampleAppMessaging::TMessageBus& messageBus);
 
                 ~SearchResultOnMapModule();

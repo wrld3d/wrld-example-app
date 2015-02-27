@@ -38,6 +38,8 @@
 #include "OptionsViewIncludes.h"
 #include "InitialExperienceDialogsViewIncludes.h"
 #include "NetIncludes.h"
+#include "Search.h"
+#include "SdkModelDomainEventBus.h"
 
 @class ViewController;
 class AppInputDelegate;
@@ -97,11 +99,13 @@ private:
     ExampleApp::Options::View::IOptionsViewModule* m_pOptionsViewModule;
     ExampleApp::InitialExperience::Dialogs::View::IInitialExperienceDialogsViewModule* m_pInitialExperienceDialogsViewModule;
     ExampleApp::Net::SdkModel::INetworkCapabilities* m_pNetworkCapabilities;
+    ExampleApp::Search::SdkModel::ISearchServiceModule* m_pSearchServiceModule;
 
     ExampleApp::MobileExampleApp* m_pApp;
     bool m_requestedApplicationInitialiseViewState;
 
     ExampleApp::ExampleAppMessaging::TMessageBus m_messageBus;
+    ExampleApp::ExampleAppMessaging::TSdkModelDomainEventBus m_sdkModelDomainEventBus;
 
     void CreateApplicationViewModules(const Eegeo::Rendering::ScreenProperties& screenProperties);
     void DestroyApplicationViewModules();

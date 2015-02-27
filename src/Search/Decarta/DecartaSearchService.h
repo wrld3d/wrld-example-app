@@ -37,6 +37,9 @@ namespace ExampleApp
                 void CancelInFlightQueries();
 
                 void PerformLocationQuerySearch(const SdkModel::SearchQuery& query);
+                
+                void PerformIdentitySearch(const std::string& searchResultIdentifier,
+                                           Eegeo::Helpers::ICallback1<const SdkModel::IdentitySearchCallbackData&>& callback);
 
             private:
 

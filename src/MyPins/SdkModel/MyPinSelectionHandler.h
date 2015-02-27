@@ -16,11 +16,11 @@ namespace ExampleApp
             {
             private:
                 MyPinModel& m_myPinModel;
-                ExampleAppMessaging::TMessageBus& m_messageBus;
+                MyPins::SdkModel::IMyPinBoundObjectRepository& m_myPinBoundObjectRepository;
 
             public:
                 MyPinSelectionHandler(MyPinModel& myPinModel,
-                                      ExampleAppMessaging::TMessageBus& messageBus);
+                                      MyPins::SdkModel::IMyPinBoundObjectRepository& myPinBoundObjectRepository);
 
                 void SelectPin();
             };

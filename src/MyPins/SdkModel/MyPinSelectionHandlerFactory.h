@@ -15,10 +15,10 @@ namespace ExampleApp
             class MyPinSelectionHandlerFactory : public IMyPinSelectionHandlerFactory
             {
             private:
-                ExampleAppMessaging::TMessageBus& m_messageBus;
+                MyPins::SdkModel::IMyPinBoundObjectRepository& m_myPinBoundObjectRepository;
 
             public:
-                MyPinSelectionHandlerFactory(ExampleAppMessaging::TMessageBus& messageBus);
+                MyPinSelectionHandlerFactory(MyPins::SdkModel::IMyPinBoundObjectRepository& myPinBoundObjectRepository);
 
                 MyPinSelectionHandler* CreateMyPinSelectionHandler(MyPinModel& myPinModel) const;
             };

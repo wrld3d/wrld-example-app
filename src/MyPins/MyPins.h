@@ -28,6 +28,14 @@ namespace ExampleApp
             class MyPinSelectionHandlerFactory;
             class MyPinSelectionHandler;
             class MyPinSelectedMessageHandler;
+            
+            class IMyPinVisibilityStateChangedHandlerFactory;
+            class MyPinVisibilityStateChangedHandlerFactory;
+            class MyPinVisibilityStateChangedHandler;
+            
+            class IMyPinBoundObject;
+            class IMyPinBoundObjectFactory;
+            class IMyPinBoundObjectRepository;
         }
 
         namespace View

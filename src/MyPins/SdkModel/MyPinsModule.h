@@ -10,7 +10,10 @@
 #include "Modules.h"
 #include "Menu.h"
 #include "BidirectionalBus.h"
+#include "SdkModelDomainEventBus.h"
 #include "CameraTransitions.h"
+#include "CategorySearch.h"
+#include "Search.h"
 
 namespace ExampleApp
 {
@@ -26,13 +29,14 @@ namespace ExampleApp
                              PersistentSettings::IPersistentSettingsModel& persistentSettings,
                              Menu::View::IMenuViewModel& menuViewModel,
                              ExampleAppMessaging::TMessageBus& messageBus,
-                             CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController);
+                             ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
+                             CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
+                             CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
+                             Search::SdkModel::MyPins::IMyPinsSearchResultRefreshService& myPinsSearchResultRefreshService);
 
                 ~MyPinsModule();
 
                 IMyPinsService& GetMyPinsService() const;
-                
-                IMyPinsRepository& GetMyPinsRepository() const;
                 
                 Menu::View::IMenuModel& GetMyPinsMenuModel() const
                 {
@@ -44,7 +48,11 @@ namespace ExampleApp
                 MyPinsFileIO* m_pMyPinsFileIO;
                 MyPinsService* m_pMyPinsService;
                 MyPinsRepositoryObserver* m_pMyPinsRepositoryObserver;
+                IMyPinBoundObjectFactory* m_pMyPinBoundObjectFactory;
+                IMyPinBoundObjectRepository* m_pMyPinBoundObjectRepository;
+                
                 MyPinSelectionHandlerFactory* m_pMyPinsSelectionHandlerFactory;
+                MyPinVisibilityStateChangedHandlerFactory* m_pMyPinVisibilityStateChangedHandlerFactory;
                 View::MyPinAddedToMenuObserver* m_pMyPinAddedToMenuObserver;
                 View::MyPinRemovedFromMenuObserver* m_pMyPinRemovedFromMenuObserver;
                 MyPinSelectedMessageHandler* m_pMyPinSelectedMessageHandler;

@@ -19,7 +19,11 @@ namespace ExampleApp
             std::string GetCategoryMatch(std::string category)
             {
                 std::transform(category.begin(), category.end(), category.begin(), ::tolower);
-
+                
+                if(Contains(category, "around me"))
+                {
+                    return "aroundme";
+                }
                 if(Contains(category, "caf\xc3\xa9") || Contains(category, "cafe") || Contains(category, "coffee"))
                 {
                     return "coffee";

@@ -77,16 +77,19 @@ namespace ExampleApp
                 m_removePinCallbacks.RemoveCallback(callback);
             }
 
-            void MyPinDetailsView::OpenWithModel(const MyPins::SdkModel::MyPinModel& myPinModel)
+            void MyPinDetailsView::OpenWithModel(
+            		const std::string& title,
+                    const std::string& description,
+                    const std::string& imagePath)
             {
                 ASSERT_UI_THREAD
 
                 AndroidSafeNativeThreadAttachment attached(m_nativeState);
                 JNIEnv* env = attached.envForThread;
 
-                jstring titleStr = env->NewStringUTF(myPinModel.GetTitle().c_str());
-                jstring descriptionStr = env->NewStringUTF(myPinModel.GetDescription().c_str());
-                jstring imageStr = env->NewStringUTF(myPinModel.GetTypeMetadata().c_str());
+                jstring titleStr = env->NewStringUTF(title.c_str());
+                jstring descriptionStr = env->NewStringUTF(title.c_str());
+                jstring imageStr = env->NewStringUTF(imagePath.c_str());
 
                 jmethodID showDetailsMethod = env->GetMethodID(m_uiViewClass, "display", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V");
                 env->CallVoidMethod(m_uiView, showDetailsMethod, titleStr, descriptionStr, imageStr);

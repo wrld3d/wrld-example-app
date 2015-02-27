@@ -9,9 +9,11 @@ namespace ExampleApp
     {
         namespace View
         {
-            void MyPinDetailsViewInterop::OpenWithModel(const MyPins::SdkModel::MyPinModel &myPinModel)
+            void MyPinDetailsViewInterop::OpenWithModel(const std::string& title,
+                                                        const std::string& description,
+                                                        const std::string& imagePath)
             {
-                [m_pView setContent:&myPinModel];
+                [m_pView setContent :title :description :imagePath];
                 [m_pView setFullyActive];
             }
 

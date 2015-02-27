@@ -33,7 +33,7 @@
 
 - (BOOL) consumesTouch:(UITouch *)touch;
 
-- (void) setContent:(const ExampleApp::MyPins::SdkModel::MyPinModel*)pModel;
+- (void) setContent:(const std::string&)title :(const std::string&)description :(const std::string&)imagePath;
 
 - (void) setFullyActive;
 

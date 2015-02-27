@@ -47,6 +47,8 @@
 #include "InitialExperienceDialogsViewIncludes.h"
 #include "OptionsViewIncludes.h"
 #include "NetIncludes.h"
+#include "Search.h"
+#include "SdkModelDomainEventBus.h"
 
 class AppHost : protected Eegeo::NonCopyable
 {
@@ -119,6 +121,7 @@ private:
     ExampleApp::InitialExperience::Dialogs::View::InitialExperienceDialogsViewModule* m_pInitialExperienceDialogsViewModule; // TODO: Interface.
     ExampleApp::Options::View::IOptionsViewModule* m_pOptionsViewModule;
     ExampleApp::Net::SdkModel::INetworkCapabilities* m_pNetworkCapabilities;
+    ExampleApp::Search::SdkModel::ISearchServiceModule* m_pSearchServiceModule;
 
     ExampleApp::MobileExampleApp* m_pApp;
 
@@ -131,6 +134,7 @@ private:
     ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModule* m_pViewControllerUpdaterModule;
 
     ExampleApp::ExampleAppMessaging::TMessageBus m_messageBus;
+    ExampleApp::ExampleAppMessaging::TSdkModelDomainEventBus m_sdkDomainEventBus;
 
     void DispatchRevealUiMessageToUiThreadFromNativeThread();
     void DispatchUiCreatedMessageToNativeThreadFromUiThread();

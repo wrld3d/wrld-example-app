@@ -9,15 +9,15 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            MyPinSelectionHandlerFactory::MyPinSelectionHandlerFactory(ExampleAppMessaging::TMessageBus& messageBus)
-                : m_messageBus(messageBus)
+            MyPinSelectionHandlerFactory::MyPinSelectionHandlerFactory(MyPins::SdkModel::IMyPinBoundObjectRepository& myPinBoundObjectRepository)
+            : m_myPinBoundObjectRepository(myPinBoundObjectRepository)
             {
-
+                
             }
-
+            
             MyPinSelectionHandler* MyPinSelectionHandlerFactory::CreateMyPinSelectionHandler(MyPinModel& myPinModel) const
             {
-                return Eegeo_NEW(MyPinSelectionHandler)(myPinModel, m_messageBus);
+                return Eegeo_NEW(MyPinSelectionHandler)(myPinModel, m_myPinBoundObjectRepository);
             }
         }
     }

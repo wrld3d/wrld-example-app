@@ -4,6 +4,7 @@
 
 #include "SearchResultPoiViewIncludes.h"
 #include "SearchResultPoi.h"
+#include "SearchResultPoiViewContainer.h"
 
 namespace ExampleApp
 {
@@ -18,7 +19,7 @@ namespace ExampleApp
 
                 virtual SearchResultPoiController& GetController() const = 0;
 
-                virtual SearchResultPoiView& GetView() const = 0;
+                virtual SearchResultPoiViewContainer& GetView() const = 0;
             };
         }
     }

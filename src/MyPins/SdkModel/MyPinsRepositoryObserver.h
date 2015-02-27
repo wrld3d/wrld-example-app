@@ -19,6 +19,7 @@ namespace ExampleApp
                 typedef MyPinModel* TModel;
 
                 MyPinsRepositoryObserver(MyPinsRepository& myPinsRepository,
+                                         IMyPinBoundObjectRepository& myPinBoundObjectRepository,
                                          MyPinsFileIO& myPinsFileIO,
                                          ExampleAppMessaging::TMessageBus& messageBus);
 
@@ -26,6 +27,7 @@ namespace ExampleApp
 
             private:
                 MyPinsRepository& m_myPinsRepository;
+                IMyPinBoundObjectRepository& m_myPinBoundObjectRepository;
                 MyPinsFileIO& m_myPinsFileIO;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
 

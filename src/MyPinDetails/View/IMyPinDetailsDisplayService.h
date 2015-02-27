@@ -2,7 +2,10 @@
 
 #pragma once
 
+#include <string>
 #include "MyPins.h"
+#include "Search.h"
+#include "MyPinModel.h"
 
 namespace ExampleApp
 {
@@ -15,7 +18,12 @@ namespace ExampleApp
             public:
                 virtual ~IMyPinDetailsDisplayService() { }
                 
-                virtual void DisplayPinDetails(const MyPins::SdkModel::MyPinModel& myPinModel) = 0;
+                virtual void DisplayUserCreatedMyPinDetails(MyPins::SdkModel::MyPinModel::TPinIdType pinId,
+                                                            const std::string& title,
+                                                            const std::string& description,
+                                                            const std::string& imagePath) = 0;
+                
+                virtual void DisplaySearchResultMyPinDetails(const Search::SdkModel::SearchResultModel& searchResultModel) = 0;
             };
         }
     }

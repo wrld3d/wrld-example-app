@@ -1,0 +1,263 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:id="@+id/search_result_poi_view">
+
+    <RelativeLayout
+	    android:layout_width="348px"
+        android:layout_height="500dp"
+	    android:id="@+id/search_result_poi_view_container"
+        android:layout_centerInParent="true">
+        
+	    <RelativeLayout
+		    android:layout_width="fill_parent"
+	        android:layout_height="fill_parent"
+	        android:layout_centerInParent="true"
+	        android:background="@color/gold"/>
+	      
+	    <LinearLayout
+		    android:layout_width="fill_parent"
+	        android:layout_height="fill_parent"
+		    android:layout_centerInParent="true"
+		    android:orientation="vertical">
+			    
+	        <!-- Title bar -->
+	        <RelativeLayout 
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:background="@color/white">
+	            
+	            <ImageView
+	                android:id="@+id/search_result_poi_view_category_icon"
+	                android:contentDescription="@string/eegeo_logo"
+	                android:layout_width="30dp"
+	                android:layout_height="30dp"
+	                android:scaleType="fitXY"
+	                android:src="@drawable/eegeo_logo" />
+	            
+	            <TextView
+	                android:id="@+id/search_result_poi_view_title"
+	                android:layout_width="200dp"
+	                android:layout_height="30dp"
+	                android:layout_toRightOf="@id/search_result_poi_view_category_icon"
+	                android:gravity="center_vertical"
+	                android:singleLine="true"
+	                android:ellipsize="end"
+	                android:textColor="@color/gold"
+	                android:textSize="12dp"
+	                android:textStyle="bold"/>
+	            
+	        </RelativeLayout>
+	
+	        <RelativeLayout
+	            android:id="@+id/search_result_poi_view_title_scrolling_content"
+	            android:layout_width="fill_parent"
+	            android:layout_height="420dp"
+	            android:background="@color/white">
+	            
+	            <RelativeLayout
+	                android:layout_width="fill_parent"
+	                android:layout_height="10dp"
+	                android:scaleType="fitXY"
+	                android:background="@drawable/shadow_03" />
+	            
+	            <!--  Scrolling icontent -->
+	            
+	            <ScrollView
+	                android:layout_width="fill_parent"
+	                android:layout_height="fill_parent">
+	            
+	            <LinearLayout 
+	                android:layout_width="fill_parent"
+	                android:layout_height="wrap_content"
+	                android:orientation="vertical">
+	                
+	                 <!--  Preview Image -->
+	                <RelativeLayout 
+		                android:layout_width="fill_parent"
+		                android:layout_height="wrap_content">
+						<ProgressBar
+						    android:id="@+id/search_result_poi_view_image_progress"
+						    style="@android:style/Widget.ProgressBar.Small"
+						    android:layout_width="wrap_content"
+						    android:layout_height="wrap_content"
+						    android:layout_centerHorizontal="true"
+						    android:layout_centerVertical="true" />
+	                </RelativeLayout>
+	                
+	                <ImageView
+	                    android:id="@+id/search_result_poi_view_image"
+	                    android:layout_width="fill_parent"
+	                    android:layout_height="wrap_content"/>
+	                
+	                <!--  Ratings  -->
+	                <ImageView
+	                    android:id="@+id/search_result_poi_view_rating_image"
+	                    android:layout_width="fill_parent"
+	                    android:layout_height="wrap_content"
+	                    android:padding="5dp"/>
+	                
+	                 <!--  Phone  -->
+	                <TextView
+	                    android:id="@+id/search_result_poi_view_phone_header"
+	                    android:layout_width="fill_parent"
+	                    android:layout_height="wrap_content"
+	                    android:textColor="@color/white"
+	                    android:textSize="12dp"
+	                    android:paddingLeft="3dp"
+	                    android:background="@color/gold"
+	                    android:text="@string/header_phone"/>
+	                
+	                <TextView
+	                    android:id="@+id/search_result_poi_view_phone"
+	                    android:layout_width="fill_parent"
+	                    android:layout_height="wrap_content"
+	                    android:layout_marginBottom="5dp"
+	                    android:padding="5dp"
+	                    android:paddingLeft="3dp"
+	                    android:textColor="@color/darkgrey"
+	                    android:textSize="12dp" />
+	                
+	                 <!--  Web  -->
+	                <TextView
+	                    android:id="@+id/search_result_poi_view_web_header"
+	                    android:layout_width="fill_parent"
+	                    android:layout_height="wrap_content"
+	                    android:textColor="@color/white"
+	                    android:textSize="12dp"
+	                    android:paddingLeft="3dp"
+	                    android:background="@color/gold"
+	                    android:text="@string/header_web"/>
+	
+	                <RelativeLayout 
+	                    android:paddingLeft="3dp"
+	                    android:paddingTop="5dp"
+	                    android:paddingBottom="5dp"
+		                android:layout_width="fill_parent"
+		                android:layout_height="wrap_content">
+		                
+		                <Button
+		                    android:id="@+id/search_result_poi_view_web_vendor_link_style"
+		                    android:layout_width="wrap_content"
+		                    android:layout_height="wrap_content"
+		                    android:layout_centerInParent="true"
+		                    android:background="@drawable/reviews_from_yelp_red"/>
+	                </RelativeLayout>
+	                
+	                <!--  Address  -->
+	                <TextView
+	                    android:id="@+id/search_result_poi_view_address_header"
+	                    android:layout_width="fill_parent"
+	                    android:layout_height="wrap_content"
+	                    android:textColor="@color/white"
+	                    android:textSize="12dp"
+	                    android:paddingLeft="3dp"
+	                    android:background="@color/gold"
+	                    android:text="@string/header_address"/>
+	                
+	                <TextView
+	                    android:id="@+id/search_result_poi_view_address"
+	                    android:layout_width="fill_parent"
+	                    android:layout_height="wrap_content"
+	                    android:layout_marginBottom="5dp"
+	                    android:padding="5dp"
+	                    android:paddingLeft="3dp"
+	                    android:textColor="@color/darkgrey"
+	                    android:textSize="12dp" />
+	                
+	                <!--  Categories  -->
+	                <TextView
+	                    android:id="@+id/search_result_poi_view_categories_header"
+	                    android:layout_width="fill_parent"
+	                    android:layout_height="wrap_content"
+	                    android:textColor="@color/white"
+	                    android:textSize="12dp"
+	                    android:paddingLeft="3dp"
+	                    android:background="@color/gold"
+	                    android:text="@string/header_categories"/>
+	                
+	                <TextView
+	                    android:id="@+id/search_result_poi_view_categories"
+	                    android:layout_width="fill_parent"
+	                    android:layout_height="wrap_content"
+	                    android:layout_marginBottom="5dp"
+	                    android:padding="5dp"
+	                    android:paddingLeft="3dp"
+	                    android:textColor="@color/darkgrey"
+	                    android:textSize="12dp" />
+	                
+	                <!--  Reviews  -->
+	                <TextView
+	                    android:id="@+id/search_result_poi_view_reviews_header"
+	                    android:layout_width="fill_parent"
+	                    android:layout_height="wrap_content"
+	                    android:textColor="@color/white"
+	                    android:textSize="12dp"
+	                    android:paddingLeft="3dp"
+	                    android:background="@color/gold"
+	                    android:text="@string/header_reviews"/>
+	                
+	                <TextView
+	                    android:id="@+id/search_result_poi_view_reviews"
+	                    android:layout_width="fill_parent"
+	                    android:layout_height="wrap_content"
+	                    android:layout_marginBottom="5dp"
+	                    android:padding="5dp"
+	                    android:paddingLeft="3dp"
+	                    android:textColor="@color/darkgrey"
+	                    android:textSize="12dp" />
+	                
+	            </LinearLayout>
+	            </ScrollView>
+	        </RelativeLayout>
+	        
+	        <!--  Bottom bar with close button -->
+	
+	        <RelativeLayout
+	            android:layout_width="fill_parent"
+	            android:layout_height="55dp">
+	            
+	         <ToggleButton
+	             android:id="@+id/search_result_poi_view_toggle_pinned_button"
+	             android:layout_width="55dp"
+	             android:layout_height="55dp"
+	             android:layout_alignParentBottom="true"
+	             android:layout_alignParentLeft="true"
+	             android:background="@drawable/button_toggle_pinned_states"
+	             android:textOff=""
+	             android:textOn="" />
+	 
+	         <Button
+	             android:id="@+id/search_result_poi_view_close_button"
+	             android:layout_width="55dp"
+	             android:layout_height="55dp"
+	             android:layout_alignParentBottom="true"
+	             android:layout_alignParentRight="true"
+	             android:background="@drawable/button_close_states" />
+	         
+	         <ImageView
+				android:id="@+id/search_result_poi_view_vendor_branding"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_centerVertical="true"
+	            android:layout_centerHorizontal="true"
+	            android:padding="10dp"
+				android:dither="true"
+	    		android:antialias="true"
+	    		android:contentDescription="Yelp"
+	    		android:src="@drawable/yelp_logo_100x50"
+	    		android:adjustViewBounds="true"
+				android:scaleType="fitCenter" />
+	         
+	         <RelativeLayout
+	                android:layout_width="fill_parent"
+	                android:layout_height="10dp"
+	                android:scaleType="fitXY"
+	                android:background="@drawable/shadow_03" />
+	         
+	         </RelativeLayout>
+		        
+		</LinearLayout>
+	</RelativeLayout>
+</RelativeLayout>
