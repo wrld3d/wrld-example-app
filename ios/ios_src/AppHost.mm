@@ -86,6 +86,7 @@ AppHost::AppHost(
     ,m_pApp(NULL)
     ,m_requestedApplicationInitialiseViewState(false)
     ,m_pSearchServiceModule(NULL)
+    ,m_failAlertHandler(this, &AppHost::HandleStartupFailure)
 {
     m_piOSLocationService = Eegeo_NEW(iOSLocationService)();
 
@@ -131,7 +132,8 @@ AppHost::AppHost(
              m_messageBus,
              m_sdkModelDomainEventBus,
              *m_pNetworkCapabilities,
-             *m_pSearchServiceModule);
+             *m_pSearchServiceModule,
+             *this);
 
     CreateApplicationViewModules(screenProperties);
 
@@ -391,5 +393,30 @@ void AppHost::DestroyApplicationViewModules()
     Eegeo_DELETE m_pFlattenButtonViewModule;
     
     Eegeo_DELETE m_pInitialExperienceDialogsViewModule;
+}
+
+void AppHost::HandleFailureToProvideWorkingApiKey()
+{
+    m_iOSAlertBoxFactory.CreateSingleOptionAlertBox
+    (
+     "Bad API Key",
+     "You must provide a valid API key to the constructor of EegeoWorld. See the readme file for details.",
+     m_failAlertHandler
+     );
+}
+
+void AppHost::HandleFailureToDownloadBootstrapResources()
+{
+    std::string message =
+        m_pNetworkCapabilities->StreamOverWifiOnly()
+        ? "Unable to download required data! Please ensure you have a Wi-fi connection the next time you attempt to run this application."
+        : "Unable to download required data! Please ensure you have an Internet connection the next time you attempt to run this application.";
+
+    m_iOSAlertBoxFactory.CreateSingleOptionAlertBox("Error", message, m_failAlertHandler);
+}
+
+void AppHost::HandleStartupFailure()
+{
+    exit(1);
 }
 

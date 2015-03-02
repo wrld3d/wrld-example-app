@@ -52,6 +52,7 @@
 #include "FlurryWrapper.h"
 #include "ISearchServiceModule.h"
 #include "IMyPinsService.h"
+#include "IEegeoErrorHandler.h"
 
 namespace ExampleApp
 {
@@ -96,7 +97,8 @@ namespace ExampleApp
         ExampleAppMessaging::TMessageBus& messageBus,
         ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
         Net::SdkModel::INetworkCapabilities& networkCapabilities,
-        ExampleApp::Search::SdkModel::ISearchServiceModule& searchServiceModule)
+        ExampleApp::Search::SdkModel::ISearchServiceModule& searchServiceModule,
+        Eegeo::IEegeoErrorHandler& errorHandler)
         : m_pGlobeCameraController(NULL)
         , m_pCameraTouchController(NULL)
         , m_pNavigationService(NULL)
@@ -147,7 +149,7 @@ namespace ExampleApp
 
         m_pBlitter = Eegeo_NEW(Eegeo::Blitter)(1024 * 128, 1024 * 64, 1024 * 32);
         m_pBlitter->Initialise();
-
+        
         m_pWorld = Eegeo_NEW(Eegeo::EegeoWorld)(apiKey,
                                                 m_platformAbstractions,
                                                 jpegLoader,
@@ -157,7 +159,11 @@ namespace ExampleApp
                                                 nativeUIFactories,
                                                 Eegeo::EnvironmentCharacterSet::Latin,
                                                 platformConfig,
-                                                NULL);
+                                                NULL,
+                                                "http://cdn1.eegeo.com/coverage-trees/v493/manifest.txt.gz",
+                                                "http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v272/manifest.txt.gz",
+                                                &errorHandler
+                                                );
 
         Eegeo::Modules::Map::Layers::TerrainModelModule& terrainModelModule = m_pWorld->GetTerrainModelModule();
         Eegeo::Modules::Map::MapModule& mapModule = m_pWorld->GetMapModule();
@@ -677,7 +683,6 @@ namespace ExampleApp
         m_pStreamingVolume->ResetVolume(cameraState.InterestPointEcef());
         return *m_pStreamingVolume;
     }
-
 
     void MobileExampleApp::Event_TouchRotate(const AppInterface::RotateData& data)
     {

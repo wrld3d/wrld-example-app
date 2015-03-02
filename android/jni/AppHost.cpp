@@ -121,6 +121,7 @@ AppHost::AppHost(
     ,m_pViewControllerUpdaterModule(NULL)
 	,m_pSearchServiceModule(NULL)
 	,m_pInitialExperienceDialogsViewModule(NULL)
+	,m_failAlertHandler(this, &AppHost::HandleStartupFailure)
 {
     ASSERT_NATIVE_THREAD
 
@@ -198,7 +199,8 @@ AppHost::AppHost(
                  m_messageBus,
                  m_sdkDomainEventBus,
                  *m_pNetworkCapabilities,
-                 *m_pSearchServiceModule);
+                 *m_pSearchServiceModule,
+                 *this);
 
     m_pModalBackgroundNativeViewModule = Eegeo_NEW(ExampleApp::ModalBackground::SdkModel::ModalBackgroundNativeViewModule)(
             m_pApp->World().GetRenderingModule(),
@@ -548,3 +550,29 @@ void AppHost::DestroyApplicationViewModulesFromUiThread()
     }
     m_createdUIModules = false;
 }
+
+void AppHost::HandleFailureToProvideWorkingApiKey()
+{
+	m_androidAlertBoxFactory.CreateSingleOptionAlertBox
+    (
+	"Bad API Key",
+	"You must provide a valid API key to the constructor of EegeoWorld. See the readme file for details.",
+	m_failAlertHandler
+    );
+}
+
+void AppHost::HandleFailureToDownloadBootstrapResources()
+{
+	std::string message =
+			m_pNetworkCapabilities->StreamOverWifiOnly()
+			? "Unable to download required data! Please ensure you have a Wi-fi connection the next time you attempt to run this application."
+			: "Unable to download required data! Please ensure you have an Internet connection the next time you attempt to run this application.";
+
+	m_androidAlertBoxFactory.CreateSingleOptionAlertBox("Error", message, m_failAlertHandler);
+}
+
+void AppHost::HandleStartupFailure()
+{
+	exit(1);
+}
+

@@ -150,7 +150,8 @@ namespace ExampleApp
                          ExampleAppMessaging::TMessageBus& messageBus,
                          ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
                          ExampleApp::Net::SdkModel::INetworkCapabilities& networkCapabilities,
-                         ExampleApp::Search::SdkModel::ISearchServiceModule& searchServiceModule);
+                         ExampleApp::Search::SdkModel::ISearchServiceModule& searchServiceModule,
+                         Eegeo::IEegeoErrorHandler& errorHandler);
 
         ~MobileExampleApp();
 

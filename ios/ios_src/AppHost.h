@@ -40,12 +40,14 @@
 #include "NetIncludes.h"
 #include "Search.h"
 #include "SdkModelDomainEventBus.h"
+#include "IEegeoErrorHandler.h"
+#include "ISingleOptionAlertBoxDismissedHandler.h"
 
 @class ViewController;
 class AppInputDelegate;
 class AppLocationDelegate;
 
-class AppHost : protected Eegeo::NonCopyable
+class AppHost : public Eegeo::IEegeoErrorHandler, protected Eegeo::NonCopyable
 {
 public:
     AppHost(
@@ -64,6 +66,10 @@ public:
     void OnResume();
 
     void NotifyScreenPropertiesChanged(const Eegeo::Rendering::ScreenProperties& screenProperties);
+    
+    void HandleFailureToProvideWorkingApiKey();
+    
+    void HandleFailureToDownloadBootstrapResources();
 
 private:
     UIView* m_pView;
@@ -106,8 +112,12 @@ private:
 
     ExampleApp::ExampleAppMessaging::TMessageBus m_messageBus;
     ExampleApp::ExampleAppMessaging::TSdkModelDomainEventBus m_sdkModelDomainEventBus;
+    
+    Eegeo::UI::NativeAlerts::TSingleOptionAlertBoxDismissedHandler<AppHost> m_failAlertHandler;
 
     void CreateApplicationViewModules(const Eegeo::Rendering::ScreenProperties& screenProperties);
     void DestroyApplicationViewModules();
+    
+    void HandleStartupFailure();
 };
 

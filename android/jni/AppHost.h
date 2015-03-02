@@ -49,8 +49,10 @@
 #include "NetIncludes.h"
 #include "Search.h"
 #include "SdkModelDomainEventBus.h"
+#include "IEegeoErrorHandler.h"
+#include "ISingleOptionAlertBoxDismissedHandler.h"
 
-class AppHost : protected Eegeo::NonCopyable
+class AppHost : public Eegeo::IEegeoErrorHandler, protected Eegeo::NonCopyable
 {
 public:
     AppHost(
@@ -75,6 +77,10 @@ public:
     void OnResume();
 
     void NotifyScreenPropertiesChanged(const Eegeo::Rendering::ScreenProperties& screenProperties);
+
+    void HandleFailureToProvideWorkingApiKey();
+
+    void HandleFailureToDownloadBootstrapResources();
 
     void HandleTouchInputEvent(const Eegeo::Android::Input::TouchInputEvent& event);
 
@@ -135,9 +141,12 @@ private:
 
     ExampleApp::ExampleAppMessaging::TMessageBus m_messageBus;
     ExampleApp::ExampleAppMessaging::TSdkModelDomainEventBus m_sdkDomainEventBus;
+    Eegeo::UI::NativeAlerts::TSingleOptionAlertBoxDismissedHandler<AppHost> m_failAlertHandler;
 
     void DispatchRevealUiMessageToUiThreadFromNativeThread();
     void DispatchUiCreatedMessageToNativeThreadFromUiThread();
     void CreateApplicationViewModulesFromUiThread();
     void DestroyApplicationViewModulesFromUiThread();
+
+    void HandleStartupFailure();
 };
