@@ -128,9 +128,12 @@ namespace ExampleApp
     			AndroidSafeNativeThreadAttachment attached(m_nativeState);
     			JNIEnv* env = attached.envForThread;
 
-    			unsigned int imgSize = pImageBytes->size();
+    			unsigned int imgSize = hasImage ? pImageBytes->size() : 0;
     			jbyteArray imgArr = env->NewByteArray(imgSize);
-    			env->SetByteArrayRegion(imgArr,0,imgSize, (jbyte*)(&(pImageBytes->at(0))));
+    			if(imgSize)
+    			{
+    				env->SetByteArrayRegion(imgArr,0,imgSize, (jbyte*)(&(pImageBytes->at(0))));
+    			}
                 jstring urlStr = env->NewStringUTF(url.c_str());
 
     			jmethodID updateImageData = env->GetMethodID(m_uiViewClass, "updateImageData", "(Ljava/lang/String;Z[B)V");

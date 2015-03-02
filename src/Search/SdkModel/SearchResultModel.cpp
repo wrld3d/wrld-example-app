@@ -163,6 +163,10 @@ namespace ExampleApp
                 {
                     return true;
                 }
+                else if (a.GetTitle() == b.GetTitle() && a.GetAddress() == b.GetAddress() && a.GetIdentifier() < b.GetIdentifier())
+                {
+                    return true;
+                }
                 else
                 {
                     return false;
@@ -171,7 +175,7 @@ namespace ExampleApp
             
             const bool operator== (const SearchResultModel& a, const SearchResultModel& b)
             {
-                return (a.GetTitle() == b.GetTitle() && a.GetAddress() == b.GetAddress());
+                return (a.GetTitle() == b.GetTitle() && a.GetAddress() == b.GetAddress() && a.GetIdentifier() == b.GetIdentifier());
             }
         }
     }

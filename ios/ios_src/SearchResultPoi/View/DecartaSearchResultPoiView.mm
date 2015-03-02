@@ -436,7 +436,7 @@
 
 - (void) handleLinkClicked
 {
-    NSString * webUrlString = [self.pGenericWebLinkContent.text containsString:@"http"]
+    NSString * webUrlString = ([self.pGenericWebLinkContent.text rangeOfString:@"http"].location != NSNotFound)
     ? self.pGenericWebLinkContent.text
     : [NSString stringWithFormat:@"http://%@", self.pGenericWebLinkContent.text];
     

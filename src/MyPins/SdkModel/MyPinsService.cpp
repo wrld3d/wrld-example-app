@@ -43,10 +43,14 @@ namespace ExampleApp
                 , m_worldPinsService(worldPinsService)
                 , m_lastIdUsed(m_myPinsFileIO.GetLastIdWrittenToDisk())
             {
+            }
+            
+            void MyPinsService::LoadAllPinsFromDisk()
+            {
                 std::vector<std::pair<MyPinModel*, IMyPinBoundObject*> > pinModelBindings;
                 
                 m_myPinsFileIO.LoadPinModelsFromDisk(pinModelBindings);
-
+                
                 for (std::vector<std::pair<MyPinModel*, IMyPinBoundObject*> >::iterator it = pinModelBindings.begin();
                      it != pinModelBindings.end();
                      ++it)

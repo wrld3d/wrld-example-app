@@ -51,6 +51,7 @@
 #include "INetworkCapabilities.h"
 #include "FlurryWrapper.h"
 #include "ISearchServiceModule.h"
+#include "IMyPinsService.h"
 
 namespace ExampleApp
 {
@@ -652,6 +653,8 @@ namespace ExampleApp
         {
             Eegeo_DELETE m_pLoadingScreen;
             m_pLoadingScreen = NULL;
+            
+            MyPinsModule().GetMyPinsService().LoadAllPinsFromDisk();
         }
     }
 

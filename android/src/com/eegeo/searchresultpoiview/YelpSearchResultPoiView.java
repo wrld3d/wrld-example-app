@@ -284,6 +284,7 @@ public class YelpSearchResultPoiView
     private void handleCloseClicked()
     {
         m_view.setEnabled(false);
+        m_togglePinnedButton.setOnClickListener(null);
 
         SearchResultPoiViewJniMethods.CloseButtonClicked(m_nativeCallerPointer);
     }

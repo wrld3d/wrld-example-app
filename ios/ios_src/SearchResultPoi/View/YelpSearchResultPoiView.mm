@@ -674,8 +674,8 @@ const float RatingImageHeight = 30.f;
 - (void) handleLinkClicked
 {
     NSString* preFormattedUrlString = [NSString stringWithUTF8String:m_model.GetWebUrl().c_str()];
-    
-    NSString* webUrlString = [preFormattedUrlString containsString:@"http"]
+        
+    NSString* webUrlString = ([preFormattedUrlString rangeOfString:@"http"].location != NSNotFound)
     ? preFormattedUrlString
     : [NSString stringWithFormat:@"http://%@", preFormattedUrlString];
     

@@ -26,7 +26,8 @@ namespace ExampleApp
                               IMyPinBoundObjectFactory& myPinBoundObjectFactory,
                               IMyPinBoundObjectRepository& myPinBoundObjectRepository,
                               WorldPins::SdkModel::IWorldPinsService& worldPinsService);
-
+                
+                void LoadAllPinsFromDisk();
 
                 void RemovePinWithId(const int myPinId);
                 

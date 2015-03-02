@@ -109,19 +109,29 @@ public class AndroidYelpSearchQuery
     private class PerformRequestTask extends AsyncTask<OAuthRequest, Void, String> 
     {
     	boolean m_isBusiness;
+    	boolean m_success;
     	
     	public PerformRequestTask(boolean isBusiness)
     	{
+    		m_success = true;
     		m_isBusiness = isBusiness;
     	}
     	
     	@Override
     	protected String doInBackground(OAuthRequest... requests) 
     	{
-    		OAuthRequest request = requests[0];
-            m_service.signRequest(m_accessToken, request);
-            Response response = request.send();
-            return response.getBody();
+    		try
+    		{
+	    		OAuthRequest request = requests[0];
+	            m_service.signRequest(m_accessToken, request);
+	            Response response = request.send();
+	            return response.getBody();
+    		}
+    		catch(Exception e)
+    		{
+    			m_success = false;
+	            return "";
+    		}
     	}
     	
     	@Override
@@ -129,7 +139,7 @@ public class AndroidYelpSearchQuery
     	{
     		m_mainActivity.runOnNativeThread(new Runnable() {
 				public void run() {
-		    		handleQueryResponse(true, m_isBusiness, searchResponseJSON);
+		    		handleQueryResponse(m_success, m_isBusiness, searchResponseJSON);
 				}
     		});
     	}
