@@ -28,11 +28,11 @@ namespace ExampleApp
                                  "Category", searchResultModel.GetCategory().c_str(),
                                  "Vicinity", searchResultModel.GetVicinity().c_str());
                 
+                m_view.Show(searchResultModel, m_viewModel.IsPinned());
+                
                 m_messageBus.Publish(SearchResultPoiViewOpenedMessage(searchResultModel.GetImageUrl(),
                                                                       searchResultModel.GetRatingImageUrl()));
                 
-                
-                m_view.Show(searchResultModel, m_viewModel.IsPinned());
             }
 
             void SearchResultPoiController::OnViewClosed()
