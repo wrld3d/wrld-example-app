@@ -21,14 +21,14 @@ namespace ExampleApp
             }
             
             UserCreatedPinBoundObject::UserCreatedPinBoundObject(MyPinModel::TPinIdType pinId,
-                                                                 Byte* imageData,
+                                                                 Byte* pImageData,
                                                                  size_t imageSize,
                                                                  bool share,
                                                                  MyPinsFileIO& myPinsFileIO,
                                                                  ExampleAppMessaging::TMessageBus& messageBus,
                                                                  Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory)
             : m_pinId(pinId)
-            , m_imageData(imageData)
+            , m_pImageData(pImageData)
             , m_imageSize(imageSize)
             , m_share(share)
             , m_imagePath("")
@@ -46,7 +46,7 @@ namespace ExampleApp
                                                                  ExampleAppMessaging::TMessageBus& messageBus,
                                                                  Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory)
             : m_pinId(pinId)
-            , m_imageData(NULL)
+            , m_pImageData(NULL)
             , m_imageSize(0)
             , m_share(false)
             , m_imagePath(imagePath)
@@ -65,9 +65,9 @@ namespace ExampleApp
             
             void UserCreatedPinBoundObject::HandlePinCreated(const MyPinModel& pinModel)
             {
-                if (m_imageData != NULL)
+                if (m_pImageData != NULL)
                 {
-                    m_myPinsFileIO.TryCacheImageToDisk(m_imageData, m_imageSize, m_pinId, m_imagePath);
+                    m_myPinsFileIO.TryCacheImageToDisk(m_pImageData, m_imageSize, m_pinId, m_imagePath);
                 }
                 
                 m_myPinsFileIO.SavePinModelToDisk(pinModel);

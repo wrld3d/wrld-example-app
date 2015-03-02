@@ -19,7 +19,7 @@ namespace ExampleApp
             class UserCreatedPinBoundObject : public IMyPinBoundObject, private Eegeo::NonCopyable
             {
                 MyPinModel::TPinIdType m_pinId;
-                Byte* m_imageData;
+                Byte* m_pImageData;
                 size_t m_imageSize;
                 bool m_share;
                 std::string m_imagePath;
