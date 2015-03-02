@@ -9,6 +9,7 @@
 #include "IconResources.h"
 #include "StringHelpers.h"
 #include "MyPinDetailsViewInterop.h"
+#import "UIView+TouchExclusivity.h"
 #include "App.h"
 
 @implementation MyPinDetailsView
@@ -44,13 +45,13 @@
         self.pCloseButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         [self.pCloseButton setBackgroundImage:[UIImage imageNamed:@"button_close_off.png"] forState:UIControlStateNormal];
         [self.pCloseButton setBackgroundImage:[UIImage imageNamed:@"button_close_on.png"] forState:UIControlStateHighlighted];
-        [self.pCloseButton addTarget:self action:@selector(onCloseButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        [self.pCloseButton addTarget:self action:@selector(onCloseButtonPressed) forControlEvents:UIControlEventTouchUpInside];
         [self.pCloseButtonContainer addSubview: self.pCloseButton];
 
         self.pRemovePinButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         [self.pRemovePinButton setBackgroundImage:[UIImage imageNamed:@"button_remove_pin_off.png"] forState:UIControlStateNormal];
         [self.pRemovePinButton setBackgroundImage:[UIImage imageNamed:@"button_remove_pin_on.png"] forState:UIControlStateHighlighted];
-        [self.pRemovePinButton addTarget:self action:@selector(onRemovePinButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        [self.pRemovePinButton addTarget:self action:@selector(onRemovePinButtonPressed) forControlEvents:UIControlEventTouchUpInside];
         [self.pCloseButtonContainer addSubview: self.pRemovePinButton];
 
         self.pContentContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
@@ -96,7 +97,9 @@
         self.pImageContent.image = [UIImage imageNamed: @"image_blank.png"];
 
         [self.pLabelsContainer addSubview: self.pImageContent];
-
+        
+        [self setTouchExclusivity: self];
+        
         self.pContentShadow = ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pContentContainer, "shadow_03", 0.f, 0.f, 0.f, 0.f);
     }
 
@@ -380,12 +383,12 @@
     return pLabel;
 }
 
-- (void) onCloseButtonPressed:(UIButton *)sender
+- (void) onCloseButtonPressed
 {
     m_pInterop->OnDismiss();
 }
 
-- (void) onRemovePinButtonPressed:(UIButton *)sender
+- (void) onRemovePinButtonPressed
 {
     NSString* alertTitle = @"Remove Pin";
     NSString* alertMessage = @"Are you sure you want to remove this pin?";

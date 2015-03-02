@@ -6,6 +6,7 @@
 #include "ImageHelpers.h"
 #include "IconResources.h"
 #include "OptionsCacheClearSubView.h"
+#import "UIView+TouchExclusivity.h"
 #include "App.h"
 
 @implementation OptionsCacheClearSubView
@@ -71,6 +72,8 @@
         [self.pHeadlineContainer addSubview: self.pTitleLabel];
         
         self.pContainerShadowTop = ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pContentContainer, "shadow_03", 0.f, 0.f, 0, 0);
+        
+        [self setTouchExclusivity:self];
         
         [self resetState];
     }

@@ -12,8 +12,8 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.text.util.Linkify;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -100,6 +100,8 @@ public class YelpSearchResultPoiView implements View.OnClickListener
 		m_poiRatingImage = (ImageView)m_view.findViewById(R.id.search_result_poi_view_rating_image);
         m_vendorBranding = m_view.findViewById(R.id.search_result_poi_view_vendor_branding);
 
+        m_activity.recursiveDisableSplitMotionEvents((ViewGroup)m_view);
+        
         m_view.setVisibility(View.GONE);
         m_uiRoot.addView(m_view);
         

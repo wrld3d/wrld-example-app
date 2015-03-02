@@ -8,6 +8,7 @@
 #include "ImageHelpers.h"
 #include "IconResources.h"
 #include "OptionsViewInterop.h"
+#import "UIView+TouchExclusivity.h"
 #include "App.h"
 
 @implementation OptionsView
@@ -94,6 +95,7 @@
         
         [self.pOptionsContainer addSubview: self.pClearCacheButton];
         
+        [self setTouchExclusivity:self];
         
         self.pOptionsCacheClearSubView = [[[OptionsCacheClearSubView alloc] init] autorelease];
     }

@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.view.SurfaceHolder;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
@@ -47,6 +49,21 @@ public abstract class MainActivity extends Activity implements SurfaceHolder.Cal
         InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(binder, 0);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+    }
+    
+    public void recursiveDisableSplitMotionEvents(ViewGroup group)
+    {
+    	group.setMotionEventSplittingEnabled(false);
+    	
+    	for(int i = 0; i < group.getChildCount(); i++) 
+    	{
+    		View child = group.getChildAt(i);
+    	
+    		if(child instanceof ViewGroup) 
+    		{
+    			recursiveDisableSplitMotionEvents((ViewGroup)child);
+    		}
+    	}
     }
 
     @Override
