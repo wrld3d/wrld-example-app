@@ -220,7 +220,6 @@
                                         headlineWidth,
                                         headlineHeight);
     self.pTitleLabel.font = [UIFont systemFontOfSize:18.0f];
-    self.pTitleLabel.text = @"Warning";
 }
 
 - (bool) isDisplayed
@@ -242,6 +241,7 @@
     
     [pConfirmedHandlerInstance.superview addSubview:self];
     
+    self.pTitleLabel.text = @"Warning";
     self.pMessageContent.text = @"Are you sure you want to remove all stored data?";
 }
 
