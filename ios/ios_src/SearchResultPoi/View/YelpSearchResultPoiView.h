@@ -14,6 +14,8 @@
 
 @interface YelpSearchResultPoiView : UIView<SearchResultPoiView>
 {
+    UIViewController* m_pController;
+    
     float m_stateChangeAnimationTimeSeconds;
     ExampleApp::Search::SdkModel::SearchResultModel m_model;
     ExampleApp::SearchResultPoi::View::SearchResultPoiViewInterop* m_pInterop;

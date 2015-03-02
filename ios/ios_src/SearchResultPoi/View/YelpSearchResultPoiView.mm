@@ -19,6 +19,8 @@
 
 const float RatingImageWidth = 100.f;
 const float RatingImageHeight = 30.f;
+const int PhoneAlertViewTag = 1;
+const int DeletePinAlertViewTag = 2;
 
 @implementation YelpSearchResultPoiView
 
@@ -28,6 +30,9 @@ const float RatingImageHeight = 30.f;
     
     if(self)
     {
+        m_pController = [UIViewController alloc];
+        [m_pController setView:self];
+        
         self->m_pRemovePinButtonBackgroundImage = [[UIImage imageNamed:@"button_remove_pin_off.png"] retain];
         self->m_pRemovePinHighlightButtonBackgroundImage = [[UIImage imageNamed:@"button_remove_pin_on.png"] retain];
         self->m_pAddPinButtonBackgroundImage = [[UIImage imageNamed:@"button_add_pin_off.png"] retain];
@@ -251,6 +256,7 @@ const float RatingImageHeight = 30.f;
     [self->m_pAddPinButtonBackgroundImage release];
     [self->m_pAddPinHighlightButtonBackgroundImage release];
     
+    [m_pController release];
     [self removeFromSuperview];
     [super dealloc];
 }
@@ -690,7 +696,7 @@ const float RatingImageHeight = 30.f;
 {
     switch (alertView.tag)
     {
-        case 1:
+        case PhoneAlertViewTag:
             if (buttonIndex == 1)
             {
                 NSString * phoneUrlString = [NSString stringWithFormat:@"tel://%@", self.pPhoneContent.text];
@@ -701,6 +707,15 @@ const float RatingImageHeight = 30.f;
                 }
             }
             break;
+        case DeletePinAlertViewTag:
+        {
+            alertView.delegate = nil;
+            
+            if (buttonIndex == 1)
+            {
+                [self togglePinState];
+            }
+        }break;
         default:
             break;
     }
@@ -710,7 +725,7 @@ const float RatingImageHeight = 30.f;
 {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:[NSString stringWithFormat:@"Call %@?", self.pPhoneContent.text] delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Call", nil];
     [alert show];
-    alert.tag = 1;
+    alert.tag = PhoneAlertViewTag;
     [alert release];
 }
 
@@ -720,6 +735,18 @@ const float RatingImageHeight = 30.f;
 }
 
 - (void) handlePinButtonSelected
+{
+    if(m_isPinned)
+    {
+        [self performPinRemoveWarningCeremony];
+    }
+    else
+    {
+        [self togglePinState];
+    }
+}
+
+- (void) togglePinState
 {
     m_isPinned = !m_isPinned;
     m_pInterop->HandlePinToggleClicked(m_model);
@@ -737,6 +764,48 @@ const float RatingImageHeight = 30.f;
     {
         [self.pPinButton setBackgroundImage:self->m_pAddPinButtonBackgroundImage forState:UIControlStateNormal];
         [self.pPinButton setBackgroundImage:self->m_pAddPinHighlightButtonBackgroundImage forState:UIControlStateHighlighted];
+    }
+}
+
+- (void) performPinRemoveWarningCeremony
+{
+    NSString* alertTitle = @"Remove Pin";
+    NSString* alertMessage = @"Are you sure you want to remove this pin?";
+    NSString* keepButtonText = @"No, keep it";
+    NSString* deleteButtonText = @"Yes, delete it";
+    
+    if([UIAlertController class])
+    {
+        UIAlertController* alert = [UIAlertController alertControllerWithTitle:alertTitle
+                                                                       message:alertMessage
+                                                                preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:keepButtonText
+                                                                style:UIAlertActionStyleDefault
+                                                              handler:^(UIAlertAction * action) {}];
+        
+        UIAlertAction* removePinAction = [UIAlertAction actionWithTitle:deleteButtonText
+                                                                  style:UIAlertActionStyleDefault
+                                                                handler: ^(UIAlertAction * action)
+                                          {
+                                              [self togglePinState];
+                                          }];
+        
+        [alert addAction:defaultAction];
+        [alert addAction:removePinAction];
+        [m_pController presentViewController:alert animated:YES completion:nil];
+    }
+    else
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:alertTitle
+                                                        message:alertMessage
+                                                       delegate:self
+                                              cancelButtonTitle:keepButtonText
+                                              otherButtonTitles:deleteButtonText, nil];
+        
+        [alert show];
+        alert.tag = DeletePinAlertViewTag;
+        [alert release];
     }
 }
 

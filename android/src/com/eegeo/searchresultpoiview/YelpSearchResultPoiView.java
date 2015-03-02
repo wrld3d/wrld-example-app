@@ -4,6 +4,8 @@ package com.eegeo.searchresultpoiview;
 
 import java.util.regex.Pattern;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -22,7 +24,7 @@ import com.eegeo.mobileexampleapp.MainActivity;
 import com.eegeo.mobileexampleapp.R;
 import com.eegeo.categories.CategoryResources;
 
-public class YelpSearchResultPoiView 
+public class YelpSearchResultPoiView implements View.OnClickListener 
 {
     protected MainActivity m_activity = null;
     protected long m_nativeCallerPointer;
@@ -51,6 +53,8 @@ public class YelpSearchResultPoiView
 	private String m_url;
 	private String m_poiImageUrl;
 	private String m_poiRatingUrl;
+
+    private boolean m_handlingClick = false;
 
     public YelpSearchResultPoiView(MainActivity activity, long nativeCallerPointer)
     {
@@ -99,23 +103,9 @@ public class YelpSearchResultPoiView
         m_view.setVisibility(View.GONE);
         m_uiRoot.addView(m_view);
         
-        m_closeButton.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View arg0) {
-				handleCloseClicked();
-			}
-        });
-
-        m_togglePinnedButton.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View arg0) {
-				handleTogglePinnedClicked();
-			}
-        });
-        
-        m_webVendorStyleLinkButton.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View arg0) {
-				handleWebLinkButtonClicked();
-			}
-		});
+        m_closeButton.setOnClickListener(this);
+        m_togglePinnedButton.setOnClickListener(this);
+        m_webVendorStyleLinkButton.setOnClickListener(this);
     }
 
     public void destroy()
@@ -232,6 +222,30 @@ public class YelpSearchResultPoiView
     	
         m_view.setVisibility(View.VISIBLE);
         m_view.requestFocus();
+
+        m_handlingClick = false;
+    }
+
+    public void onClick(View view)
+    {
+        if(m_handlingClick)
+        {
+            return;
+        }
+        m_handlingClick = true;
+
+        if(view == m_closeButton)
+        {
+			handleCloseClicked();
+        }
+        else if(view == m_togglePinnedButton)
+        {
+			handleTogglePinnedClicked();
+        }
+        else if(view == m_webVendorStyleLinkButton) 
+        {
+			handleWebLinkButtonClicked();
+		}
     }
 
     public void dismissPoiInfo()
@@ -291,7 +305,19 @@ public class YelpSearchResultPoiView
 
     private void handleTogglePinnedClicked()
     {
-        SearchResultPoiViewJniMethods.TogglePinnedButtonClicked(m_nativeCallerPointer);
+    	// Undo the toggle which occurred on this click, we will redo it manually if confirmed.
+    	m_togglePinnedButton.setChecked(!m_togglePinnedButton.isChecked());
+		
+    	if(m_togglePinnedButton.isChecked())
+    	{
+    		showRemovePinDialog();
+    	}
+    	else
+    	{
+    		SearchResultPoiViewJniMethods.TogglePinnedButtonClicked(m_nativeCallerPointer);
+            m_handlingClick = false;
+            m_togglePinnedButton.setChecked(true);
+    	}
     }
     
     private void handleWebLinkButtonClicked()
@@ -299,6 +325,7 @@ public class YelpSearchResultPoiView
     	final Uri uri = Uri.parse(m_url);
     	final Intent browserIntent = new Intent(Intent.ACTION_VIEW, uri);
     	m_activity.startActivity(browserIntent);
+        m_handlingClick = false;
     }
 	
 	public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight)
@@ -323,4 +350,41 @@ public class YelpSearchResultPoiView
 	    
 	    return inSampleSize;
 	}
+	
+	private void showRemovePinDialog()
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(m_activity);
+        builder.setTitle("Remove Pin")
+        .setMessage("Are you sure you want to remove this pin?")
+        .setPositiveButton("Yes,  delete it", new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int id)
+            {
+        		SearchResultPoiViewJniMethods.TogglePinnedButtonClicked(m_nativeCallerPointer);
+                m_handlingClick = false;
+                m_togglePinnedButton.setChecked(false);
+            }
+        })
+        .setNegativeButton("No,  keep it", new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+            	m_togglePinnedButton.setChecked(true);
+                m_handlingClick = false;
+            }
+        })
+        .setOnCancelListener(new DialogInterface.OnCancelListener()
+        {
+            @Override
+            public void onCancel(DialogInterface dialog)
+            {
+            	m_togglePinnedButton.setChecked(true);
+                m_handlingClick = false;
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
 }
