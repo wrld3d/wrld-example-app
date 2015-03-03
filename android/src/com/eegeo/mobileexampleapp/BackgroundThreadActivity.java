@@ -10,6 +10,7 @@ import android.util.DisplayMetrics;
 import android.view.SurfaceHolder;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 
 
 public class BackgroundThreadActivity extends MainActivity
@@ -35,6 +36,8 @@ public class BackgroundThreadActivity extends MainActivity
             finish();
             return;
         }
+        
+        setDisplayOrientationBasedOnDeviceProperties();
 
         setContentView(R.layout.activity_main);
 
@@ -207,6 +210,19 @@ public class BackgroundThreadActivity extends MainActivity
                 NativeJniCalls.handleApplicationUiCreatedOnNativeThread(nativeCallerPointer);
             }
         });
+    }
+    
+    private void setDisplayOrientationBasedOnDeviceProperties()
+    {
+    	// Technique based on http://stackoverflow.com/a/9308284 using res/values configuration.
+        if(getResources().getBoolean(R.bool.isPhone))
+        {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
+        }
+        else
+        {
+        	setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+        }
     }
 
     private class ThreadedUpdateRunner implements Runnable
