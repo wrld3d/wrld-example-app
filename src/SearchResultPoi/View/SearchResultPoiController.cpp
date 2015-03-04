@@ -1,7 +1,6 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "SearchResultPoiController.h"
-#include "FlurryWrapper.h"
 #include "SearchResultPoiViewOpenedMessage.h"
 
 namespace ExampleApp
@@ -23,10 +22,10 @@ namespace ExampleApp
                 
                 const Search::SdkModel::SearchResultModel& searchResultModel = m_viewModel.GetSearchResultModel();
                 
-                FLURRY_SET_EVENT("Opened POI",
-                                 "Title", searchResultModel.GetTitle().c_str(),
-                                 "Category", searchResultModel.GetCategory().c_str(),
-                                 "Vicinity", searchResultModel.GetVicinity().c_str());
+                m_metricsService.SetEvent("Opened POI",
+                                          "Title", searchResultModel.GetTitle().c_str(),
+                                          "Category", searchResultModel.GetCategory().c_str(),
+                                          "Vicinity", searchResultModel.GetVicinity().c_str());
                 
                 m_view.Show(searchResultModel, m_viewModel.IsPinned());
                 
@@ -74,10 +73,12 @@ namespace ExampleApp
 
             SearchResultPoiController::SearchResultPoiController(ISearchResultPoiView& view,
                                                                  ISearchResultPoiViewModel& viewModel,
-                                                                 ExampleAppMessaging::TMessageBus& messageBus)
+                                                                 ExampleAppMessaging::TMessageBus& messageBus,
+                                                                 Metrics::IMetricsService& metricsService)
                 : m_view(view)
                 , m_viewModel(viewModel)
                 , m_messageBus(messageBus)
+                , m_metricsService(metricsService)
                 , m_viewOpenedCallback(this, &SearchResultPoiController::OnViewOpened)
                 , m_viewClosedCallback(this, &SearchResultPoiController::OnViewClosed)
                 , m_closeButtonCallback(this, &SearchResultPoiController::OnCloseButtonClicked)

@@ -20,7 +20,8 @@ namespace ExampleApp
             CategorySearchModule::CategorySearchModule(const std::vector<CategorySearch::View::CategorySearchModel>& categorySearchModels,
                                                        Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
                                                        Menu::View::IMenuViewModel& menuViewModel,
-                                                       ExampleAppMessaging::TMessageBus& messageBus)
+                                                       ExampleAppMessaging::TMessageBus& messageBus,
+                                                       Metrics::IMetricsService& metricsService)
             {
                 m_pMenuModel = Eegeo_NEW(Menu::View::MenuModel)();
                 m_pMenuOptionsModel = Eegeo_NEW(Menu::View::MenuOptionsModel)(*m_pMenuModel);
@@ -41,7 +42,8 @@ namespace ExampleApp
 
                 m_pCategorySearchSelectedMessageHandler = Eegeo_NEW(CategorySearchSelectedMessageHandler)(
                             searchQueryPerformer,
-                            messageBus
+                            messageBus,
+                            metricsService
                         );
                 
                 m_pSearchResultIconCategoryMapper = Eegeo_NEW(SearchResultIconCategoryMapper)();

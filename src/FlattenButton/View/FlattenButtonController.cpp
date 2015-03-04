@@ -1,7 +1,6 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "FlattenButtonController.h"
-#include "FlurryWrapper.h"
 
 namespace ExampleApp
 {
@@ -11,7 +10,7 @@ namespace ExampleApp
         {
             void FlattenButtonController::OnToggleButton(bool& toggle)
             {
-                FLURRY_SET_EVENT("UIItem: Flatten Button", "State", toggle ? "flattened" : "unflattened");
+                m_metricsService.SetEvent("UIItem: Flatten Button", "State", toggle ? "flattened" : "unflattened");
                 m_messageBus.Publish(FlattenButtonViewStateChangedMessage(toggle));
             }
 
@@ -28,11 +27,13 @@ namespace ExampleApp
             FlattenButtonController::FlattenButtonController(
                 IFlattenButtonViewModel& viewModel,
                 IFlattenButtonView& view,
-                ExampleAppMessaging::TMessageBus& messageBus
+                ExampleAppMessaging::TMessageBus& messageBus,
+                Metrics::IMetricsService& metricsService
             )
                 : m_viewModel(viewModel)
                 , m_view(view)
                 , m_messageBus(messageBus)
+                , m_metricsService(metricsService)
                 , m_stateChangeHandler(this, &FlattenButtonController::OnFlattenButtonModelStateChangedMessage)
                 , m_toggledCallback(this, &FlattenButtonController::OnToggleButton)
                 , m_viewStateCallback(this, &FlattenButtonController::OnViewStateChangeScreenControl)

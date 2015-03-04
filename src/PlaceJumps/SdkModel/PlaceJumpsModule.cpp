@@ -22,7 +22,8 @@ namespace ExampleApp
                                                Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& controller,
                                                Compass::SdkModel::ICompassModel& compassModel,
                                                Menu::View::IMenuViewModel& menuViewModel,
-                                               ExampleAppMessaging::TMessageBus& messageBus)
+                                               ExampleAppMessaging::TMessageBus& messageBus,
+                                               Metrics::IMetricsService& metricsService)
             {
                 m_pJumpController = Eegeo_NEW(PlaceJumpController)(controller, compassModel);
 
@@ -52,7 +53,7 @@ namespace ExampleApp
                     View::PlaceJumpModel& jump = *it;
                     m_pMenuOptionsModel->AddItem(jump.GetName(),
                                                  jump.GetName(), "", jump.GetIcon(),
-                                                 Eegeo_NEW(View::PlaceJumpMenuOption)(jump, menuViewModel, messageBus));
+                                                 Eegeo_NEW(View::PlaceJumpMenuOption)(jump, menuViewModel, messageBus, metricsService));
                 }
 
                 m_pPlaceJumpSelectedMessageHandler = Eegeo_NEW(PlaceJumpSelectedMessageHandler)(*m_pJumpController, messageBus);

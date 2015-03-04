@@ -12,6 +12,7 @@
 #include "Search.h"
 #include "SecondaryMenu.h"
 #include "BidirectionalBus.h"
+#include "IMetricsService.h"
 
 namespace ExampleApp
 {
@@ -32,7 +33,8 @@ namespace ExampleApp
                 SecondaryMenuModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
                                     Reaction::View::IReactionControllerModel& reactionControllerModel,
                                     Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
-                                    ExampleAppMessaging::TMessageBus& messageBus);
+                                    ExampleAppMessaging::TMessageBus& messageBus,
+                                    Metrics::IMetricsService& metricsService);
 
                 ~SecondaryMenuModule();
 

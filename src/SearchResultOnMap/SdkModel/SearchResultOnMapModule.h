@@ -17,6 +17,7 @@
 #include "BidirectionalBus.h"
 #include "CategorySearch.h"
 #include "MyPins.h"
+#include "IMetricsService.h"
 
 namespace ExampleApp
 {
@@ -37,7 +38,8 @@ namespace ExampleApp
                                         WorldPins::SdkModel::IWorldPinsService& worldPinsService,
                                         CategorySearch::ISearchResultIconCategoryMapper& searchResultOnMapIconCategoryMapper,
                                         Search::SdkModel::MyPins::ISearchResultMyPinsService& searchResultMyPinsService,
-                                        ExampleAppMessaging::TMessageBus& messageBus);
+                                        ExampleAppMessaging::TMessageBus& messageBus,
+                                        Metrics::IMetricsService& metricsService);
 
                 ~SearchResultOnMapModule();
 

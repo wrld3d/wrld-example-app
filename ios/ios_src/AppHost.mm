@@ -86,6 +86,7 @@ AppHost::AppHost(
     ,m_pApp(NULL)
     ,m_requestedApplicationInitialiseViewState(false)
     ,m_pSearchServiceModule(NULL)
+    ,m_piOSFlurryMetricsService(NULL)
     ,m_failAlertHandler(this, &AppHost::HandleStartupFailure)
 {
     m_piOSLocationService = Eegeo_NEW(iOSLocationService)();
@@ -120,6 +121,8 @@ AppHost::AppHost(
                                                                                                     m_piOSPlatformAbstractionModule->GetUrlEncoder());
     }
     
+    m_piOSFlurryMetricsService = Eegeo_NEW(ExampleApp::Metrics::iOSFlurryMetricsService)();
+    
     m_pApp = Eegeo_NEW(ExampleApp::MobileExampleApp)(ExampleApp::ApiKey,
              *m_piOSPlatformAbstractionModule,
              screenProperties,
@@ -133,6 +136,7 @@ AppHost::AppHost(
              m_sdkModelDomainEventBus,
              *m_pNetworkCapabilities,
              *m_pSearchServiceModule,
+             *m_piOSFlurryMetricsService,
              *this);
 
     CreateApplicationViewModules(screenProperties);
@@ -153,6 +157,9 @@ AppHost::~AppHost()
 
     Eegeo_DELETE m_pApp;
     m_pApp = NULL;
+    
+    Eegeo_DELETE m_piOSFlurryMetricsService;
+    m_piOSFlurryMetricsService = NULL;
     
     Eegeo_DELETE m_pSearchServiceModule;
     m_pSearchServiceModule = NULL;
@@ -251,12 +258,14 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
                                     m_messageBus);
 
     m_pSearchResultPoiViewModule = Eegeo_NEW(ExampleApp::SearchResultPoi::View::SearchResultPoiViewModule)(app.SearchResultPoiModule().GetSearchResultPoiViewModel(),
-                                                                                                           m_messageBus);
+                                                                                                           m_messageBus,
+                                                                                                           *m_piOSFlurryMetricsService);
 
     m_pFlattenButtonViewModule = Eegeo_NEW(ExampleApp::FlattenButton::View::FlattenButtonViewModule)(
                                      app.FlattenButtonModule().GetFlattenButtonViewModel(),
                                      screenProperties,
-                                     m_messageBus);
+                                     m_messageBus,
+                                     *m_piOSFlurryMetricsService);
 
     m_pWorldPinOnMapViewModule = Eegeo_NEW(ExampleApp::WorldPins::View::WorldPinOnMapViewModule)(app.WorldPinsModule().GetWorldPinInFocusViewModel(),
                                  app.WorldPinsModule().GetScreenControlViewModel(),
@@ -269,7 +278,7 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
                            screenProperties,
                            m_messageBus);
 
-    m_pAboutPageViewModule = Eegeo_NEW(ExampleApp::AboutPage::View::AboutPageViewModule)(app.AboutPageModule().GetAboutPageViewModel());
+    m_pAboutPageViewModule = Eegeo_NEW(ExampleApp::AboutPage::View::AboutPageViewModule)(app.AboutPageModule().GetAboutPageViewModel(), *m_piOSFlurryMetricsService);
     
     m_pOptionsViewModule = Eegeo_NEW(ExampleApp::Options::View::OptionsViewModule)(app.OptionsModule().GetOptionsViewModel(),
                                                                                    m_piOSPlatformAbstractionModule->GetiOSHttpCache(),
@@ -279,19 +288,22 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
     m_pMyPinCreationInitiationViewModule = Eegeo_NEW(ExampleApp::MyPinCreation::View::MyPinCreationInitiationViewModule)(m_messageBus,
                                            app.MyPinCreationModule().GetMyPinCreationInitiationViewModel(),
                                            app.MyPinCreationModule().GetMyPinCreationConfirmationViewModel(),
-                                           screenProperties);
+                                           screenProperties,
+                                           *m_piOSFlurryMetricsService);
 
     m_pMyPinCreationConfirmationViewModule = Eegeo_NEW(ExampleApp::MyPinCreation::View::MyPinCreationConfirmationViewModule)(m_messageBus,
             app.MyPinCreationModule().GetMyPinCreationConfirmationViewModel(),
             app.MyPinCreationModule().GetMyPinCreationCompositeViewModel(),
             app.MyPinCreationDetailsModule().GetMyPinCreationDetailsViewModel(),
-            screenProperties);
+            screenProperties,
+                                                                                                                             *m_piOSFlurryMetricsService);
 
     m_pMyPinCreationDetailsViewModule = Eegeo_NEW(ExampleApp::MyPinCreationDetails::View::MyPinCreationDetailsViewModule)(
                                             m_messageBus,
                                             app.MyPinCreationDetailsModule().GetMyPinCreationDetailsViewModel(),
                                             screenProperties,
                                             *m_piOSConnectivityService,
+                                            *m_piOSFlurryMetricsService,
                                                                                                                           &m_viewController);
 
     m_pMyPinDetailsViewModule = Eegeo_NEW(ExampleApp::MyPinDetails::View::MyPinDetailsViewModule)(m_messageBus,

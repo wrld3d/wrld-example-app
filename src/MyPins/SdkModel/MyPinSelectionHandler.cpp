@@ -2,7 +2,6 @@
 
 #include "MyPinSelectionHandler.h"
 #include "IMyPinBoundObjectRepository.h"
-#include "FlurryWrapper.h"
 #include "IMyPinBoundObject.h"
 
 namespace ExampleApp
@@ -12,16 +11,18 @@ namespace ExampleApp
         namespace SdkModel
         {
             MyPinSelectionHandler::MyPinSelectionHandler(MyPinModel& myPinModel,
-                                                         MyPins::SdkModel::IMyPinBoundObjectRepository& myPinBoundObjectRepository)
+                                                         MyPins::SdkModel::IMyPinBoundObjectRepository& myPinBoundObjectRepository,
+                                                         Metrics::IMetricsService& metricsService)
                 : m_myPinModel(myPinModel)
                 , m_myPinBoundObjectRepository(myPinBoundObjectRepository)
+                , m_metricsService(metricsService)
             {
 
             }
 
             void MyPinSelectionHandler::SelectPin()
             {
-                FLURRY_SET_EVENT("Selected MyPin", "Name", m_myPinModel.GetTitle().c_str());
+                m_metricsService.SetEvent("Selected MyPin", "Name", m_myPinModel.GetTitle().c_str());
                 IMyPinBoundObject& myPinBoundObject(m_myPinBoundObjectRepository.GetBoundObjectForPin(m_myPinModel));
                 myPinBoundObject.HandlePinSelected(m_myPinModel);
             }

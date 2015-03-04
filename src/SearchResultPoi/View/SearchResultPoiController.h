@@ -9,6 +9,7 @@
 #include "BidirectionalBus.h"
 #include "SearchResultModel.h"
 #include "SearchResultPoiViewImageDownloadCompletedMessage.h"
+#include "IMetricsService.h"
 
 namespace ExampleApp
 {
@@ -22,6 +23,8 @@ namespace ExampleApp
                 ISearchResultPoiView& m_view;
                 ISearchResultPoiViewModel& m_viewModel;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
+                
+                Metrics::IMetricsService& m_metricsService;
 
                 Eegeo::Helpers::TCallback0<SearchResultPoiController> m_viewOpenedCallback;
                 Eegeo::Helpers::TCallback0<SearchResultPoiController> m_viewClosedCallback;
@@ -42,7 +45,8 @@ namespace ExampleApp
             public:
                 SearchResultPoiController(ISearchResultPoiView& view,
                                           ISearchResultPoiViewModel& viewModel,
-                                          ExampleAppMessaging::TMessageBus& messageBus);
+                                          ExampleAppMessaging::TMessageBus& messageBus,
+                                          Metrics::IMetricsService& metricsService);
 
                 ~SearchResultPoiController();
             };

@@ -10,6 +10,7 @@
 #include "MyPinCreationDetailsViewIncludes.h"
 #include "BidirectionalBus.h"
 #include "IConnectivityService.h"
+#include "IMetricsService.h"
 
 namespace ExampleApp
 {
@@ -28,7 +29,8 @@ namespace ExampleApp
                     AndroidNativeState& nativeState,
                     MyPinCreationDetails::View::IMyPinCreationDetailsViewModel& viewModel,
                     Eegeo::Web::IConnectivityService& connectivityService,
-                    ExampleAppMessaging::TMessageBus& messageBus
+                    ExampleAppMessaging::TMessageBus& messageBus,
+                    Metrics::IMetricsService& metricsService
                 );
 
                 ~MyPinCreationDetailsViewModule();

@@ -77,7 +77,6 @@
 #include "OptionsViewModule.h"
 #include "OptionsView.h"
 #include "NetworkCapabilities.h"
-#include "FlurryWrapper.h"
 #include "AndroidYelpSearchServiceModule.h"
 #include "DecartaSearchServiceModule.h"
 
@@ -120,14 +119,11 @@ AppHost::AppHost(
     ,m_uiCreatedMessageReceivedOnNativeThread(false)
     ,m_pViewControllerUpdaterModule(NULL)
 	,m_pSearchServiceModule(NULL)
+	,m_pAndroidFlurryMetricsService(NULL)
 	,m_pInitialExperienceDialogsViewModule(NULL)
 	,m_failAlertHandler(this, &AppHost::HandleStartupFailure)
 {
     ASSERT_NATIVE_THREAD
-
-#if (FLURRY_ENABLED)
-    ExampleApp::FlurryWrapper::InitialiseJavaInterface(&nativeState);
-#endif
 
     Eegeo_ASSERT(resourceBuildShareContext != EGL_NO_CONTEXT);
 
@@ -186,6 +182,8 @@ AppHost::AppHost(
         		m_pAndroidPlatformAbstractionModule->GetUrlEncoder());
     }
 
+    m_pAndroidFlurryMetricsService = Eegeo_NEW(ExampleApp::Metrics::AndroidFlurryMetricsService)(&m_nativeState);
+
     m_pApp = Eegeo_NEW(ExampleApp::MobileExampleApp)(
                  ExampleApp::ApiKey,
                  *m_pAndroidPlatformAbstractionModule,
@@ -200,6 +198,7 @@ AppHost::AppHost(
                  m_sdkDomainEventBus,
                  *m_pNetworkCapabilities,
                  *m_pSearchServiceModule,
+                 *m_pAndroidFlurryMetricsService,
                  *this);
 
     m_pModalBackgroundNativeViewModule = Eegeo_NEW(ExampleApp::ModalBackground::SdkModel::ModalBackgroundNativeViewModule)(
@@ -223,6 +222,9 @@ AppHost::~AppHost()
 
     Eegeo_DELETE m_pApp;
     m_pApp = NULL;
+
+    Eegeo_DELETE m_pAndroidFlurryMetricsService;
+    m_pAndroidFlurryMetricsService = NULL;
 
     Eegeo_DELETE m_pSearchServiceModule;
     m_pSearchServiceModule = NULL;
@@ -414,7 +416,8 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
     m_pFlattenButtonViewModule = Eegeo_NEW(ExampleApp::FlattenButton::View::FlattenButtonViewModule)(
                                      m_nativeState,
                                      app.FlattenButtonModule().GetFlattenButtonViewModel(),
-                                     m_messageBus
+                                     m_messageBus,
+                                     *m_pAndroidFlurryMetricsService
                                  );
 
     m_pMyPinCreationViewModule = Eegeo_NEW(ExampleApp::MyPinCreation::View::MyPinCreationViewModule)(
@@ -422,7 +425,8 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
                                      app.MyPinCreationModule().GetMyPinCreationInitiationViewModel(),
                                      app.MyPinCreationModule().GetMyPinCreationConfirmationViewModel(),
                                      app.MyPinCreationDetailsModule().GetMyPinCreationDetailsViewModel(),
-                                     m_messageBus
+                                     m_messageBus,
+                                     *m_pAndroidFlurryMetricsService
                                  );
 
 
@@ -469,13 +473,16 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
     m_pSearchResultPoiViewModule = Eegeo_NEW(ExampleApp::SearchResultPoi::View::SearchResultPoiViewModule)(
                                        m_nativeState,
                                        app.SearchResultPoiModule().GetSearchResultPoiViewModel(),
-                                       m_messageBus
+                                       m_messageBus,
+                                       *m_pAndroidFlurryMetricsService
                                    );
 
     m_pAboutPageViewModule = Eegeo_NEW(ExampleApp::AboutPage::View::AboutPageViewModule)(
                                  m_nativeState,
-                                 app.AboutPageModule().GetAboutPageViewModel()
+                                 app.AboutPageModule().GetAboutPageViewModel(),
+                                 *m_pAndroidFlurryMetricsService
                              );
+
 
     m_pOptionsViewModule = Eegeo_NEW(ExampleApp::Options::View::OptionsViewModule)(
     		m_nativeState,
@@ -487,7 +494,8 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
                                             m_nativeState,
                                             app.MyPinCreationDetailsModule().GetMyPinCreationDetailsViewModel(),
                                             *m_pAndroidConnectivityService,
-                                            m_messageBus
+                                            m_messageBus,
+                                            *m_pAndroidFlurryMetricsService
                                         );
 
     m_pMyPinDetailsViewModule = Eegeo_NEW(ExampleApp::MyPinDetails::View::MyPinDetailsViewModule)(

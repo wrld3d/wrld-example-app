@@ -9,6 +9,7 @@
 #include "CategorySearchSelectedMessageHandler.h"
 #include "BidirectionalBus.h"
 #include "CategorySearchModel.h"
+#include "IMetricsService.h"
 
 namespace ExampleApp
 {
@@ -22,7 +23,8 @@ namespace ExampleApp
                 CategorySearchModule(const std::vector<CategorySearch::View::CategorySearchModel>& categorySearchModels,
                                      Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
                                      Menu::View::IMenuViewModel& menuViewModel,
-                                     ExampleAppMessaging::TMessageBus& messageBus);
+                                     ExampleAppMessaging::TMessageBus& messageBus,
+                                     Metrics::IMetricsService& metricsService);
 
                 ~CategorySearchModule();
 

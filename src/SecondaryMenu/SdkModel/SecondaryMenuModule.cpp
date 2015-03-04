@@ -16,7 +16,8 @@ namespace ExampleApp
             SecondaryMenuModule::SecondaryMenuModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
                     Reaction::View::IReactionControllerModel& reactionControllerModel,
                     Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
-                    ExampleAppMessaging::TMessageBus& messageBus)
+                    ExampleAppMessaging::TMessageBus& messageBus,
+                    Metrics::IMetricsService& metricsService)
             {
                 m_pModel = Eegeo_NEW(Menu::View::MenuModel)();
                 m_pMenuOptionsModel = Eegeo_NEW(Menu::View::MenuOptionsModel)(*m_pModel);
@@ -29,7 +30,8 @@ namespace ExampleApp
 
                 m_pPerformedSearchMessageHandler = Eegeo_NEW(PerformedSearchMessageHandler)(
                                                        searchQueryPerformer,
-                                                       messageBus
+                                                       messageBus,
+                                                       metricsService
                                                    );
             }
 

@@ -68,6 +68,7 @@
 #include "GpsMarker.h"
 #include "InitialExperienceDialogs.h"
 #include "SdkModelDomainEventBus.h"
+#include "IMetricsService.h"
 
 namespace ExampleApp
 {
@@ -83,12 +84,14 @@ namespace ExampleApp
         Eegeo::Blitter* m_pBlitter;
         Eegeo::Rendering::ScreenProperties m_screenProperties;
         bool m_initialisedApplicationViewState;
-        bool m_setFlurryLocation;
+        bool m_setMetricsLocation;
         float m_pinDiameter;
 
         CameraTransitions::SdkModel::ICameraTransitionController* m_pCameraTransitionController;
 
         ExampleApp::PersistentSettings::IPersistentSettingsModel& m_persistentSettings;
+        ExampleApp::Metrics::IMetricsService& m_metricsService;
+        
         Eegeo::Helpers::IdentityProvider m_identityProvider;
         ExampleApp::PrimaryMenu::View::IPrimaryMenuModule* m_pPrimaryMenuModule;
         ExampleApp::SecondaryMenu::SdkModel::ISecondaryMenuModule* m_pSecondaryMenuModule;
@@ -151,6 +154,7 @@ namespace ExampleApp
                          ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
                          ExampleApp::Net::SdkModel::INetworkCapabilities& networkCapabilities,
                          ExampleApp::Search::SdkModel::ISearchServiceModule& searchServiceModule,
+                         ExampleApp::Metrics::IMetricsService& metricsService,
                          Eegeo::IEegeoErrorHandler& errorHandler);
 
         ~MobileExampleApp();

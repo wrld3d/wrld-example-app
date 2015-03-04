@@ -15,13 +15,14 @@ namespace ExampleApp
                                                                            IMyPinCreationDetailsViewModel& myPinCreationDetailsViewModel,
                                                                            const Eegeo::Rendering::ScreenProperties& screenProperties,
                                                                            Eegeo::Web::IConnectivityService& connectivityService,
+                                                                           Metrics::IMetricsService& metricsService,
                                                                            UIViewController* rootViewController)
             {
                 m_pView = [[MyPinCreationDetailsView alloc] initWithParams: screenProperties.GetScreenWidth()
                                                                           : screenProperties.GetScreenHeight()
                                                                           : rootViewController];
 
-                m_pController = Eegeo_NEW(MyPinCreationDetailsController)(*[m_pView getInterop], myPinCreationDetailsViewModel, connectivityService, messageBus);
+                m_pController = Eegeo_NEW(MyPinCreationDetailsController)(*[m_pView getInterop], myPinCreationDetailsViewModel, connectivityService, messageBus, metricsService);
             }
 
             MyPinCreationDetailsViewModule::~MyPinCreationDetailsViewModule()

@@ -5,7 +5,6 @@
 #include "ISearchResultPoiViewModel.h"
 #include "Logger.h"
 #include "SearchResultOnMapItemModelSelectedMessage.h"
-#include "FlurryWrapper.h"
 
 namespace ExampleApp
 {
@@ -14,9 +13,11 @@ namespace ExampleApp
         namespace View
         {
             SearchResultOnMapItemModel::SearchResultOnMapItemModel(const Search::SdkModel::SearchResultModel& searchResultModel,
-                    ExampleAppMessaging::TMessageBus& messageBus)
+                    ExampleAppMessaging::TMessageBus& messageBus,
+                    Metrics::IMetricsService& metricsService)
                 : m_searchResultModel(searchResultModel)
                 , m_messageBus(messageBus)
+                , m_metricsService(metricsService)
             {
 
             }
@@ -28,7 +29,7 @@ namespace ExampleApp
 
             void SearchResultOnMapItemModel::SelectPin()
             {
-                FLURRY_SET_EVENT("Pin Selected", "Name", m_searchResultModel.GetTitle().c_str());
+                m_metricsService.SetEvent("Pin Selected", "Name", m_searchResultModel.GetTitle().c_str());
                 m_messageBus.Publish(SearchResultOnMapItemModelSelectedMessage(m_searchResultModel));
             }
         }

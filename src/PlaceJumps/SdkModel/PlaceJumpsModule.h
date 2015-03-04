@@ -12,6 +12,7 @@
 #include "Compass.h"
 #include "BidirectionalBus.h"
 #include "PlaceJumpSelectedMessageHandler.h"
+#include "IMetricsService.h"
 
 namespace ExampleApp
 {
@@ -27,7 +28,8 @@ namespace ExampleApp
                                  Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& camera,
                                  Compass::SdkModel::ICompassModel& compassModel,
                                  Menu::View::IMenuViewModel& menuViewModel,
-                                 ExampleAppMessaging::TMessageBus& messageBus);
+                                 ExampleAppMessaging::TMessageBus& messageBus,
+                                 Metrics::IMetricsService& metricsService);
 
                 ~PlaceJumpsModule();
 

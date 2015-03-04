@@ -19,9 +19,10 @@ namespace ExampleApp
                                                              WorldPins::SdkModel::IWorldPinsService& worldPinsService,
                                                              CategorySearch::ISearchResultIconCategoryMapper& searchResultOnMapIconCategoryMapper,
                                                              Search::SdkModel::MyPins::ISearchResultMyPinsService& searchResultMyPinsService,
-                                                             ExampleAppMessaging::TMessageBus& messageBus)
+                                                             ExampleAppMessaging::TMessageBus& messageBus,
+                                                             Metrics::IMetricsService& metricsService)
             {
-                m_pSearchResultOnMapFactory = Eegeo_NEW(View::SearchResultOnMapFactory)(messageBus);
+                m_pSearchResultOnMapFactory = Eegeo_NEW(View::SearchResultOnMapFactory)(messageBus, metricsService);
                 
                 m_pSearchResultOnMapModel = Eegeo_NEW(SearchResultOnMapModel)(worldPinsService,
                                                                               *m_pSearchResultOnMapFactory,

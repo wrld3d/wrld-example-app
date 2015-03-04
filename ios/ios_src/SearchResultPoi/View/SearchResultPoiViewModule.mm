@@ -14,13 +14,15 @@ namespace ExampleApp
         namespace View
         {
             SearchResultPoiViewModule::SearchResultPoiViewModule(ISearchResultPoiViewModel& searchResultPoiViewModel,
-                                                                 ExampleAppMessaging::TMessageBus& messageBus)
+                                                                 ExampleAppMessaging::TMessageBus& messageBus,
+                                                                 Metrics::IMetricsService& metricsService)
             {
                 m_pView = [[SearchResultPoiViewContainer alloc] initWithoutParams];
                 
                 m_pController = Eegeo_NEW(SearchResultPoiController)(*[m_pView getInterop],
                                                                      searchResultPoiViewModel,
-                                                                     messageBus);
+                                                                     messageBus,
+                                                                     metricsService);
             }
 
             SearchResultPoiViewModule::~SearchResultPoiViewModule()

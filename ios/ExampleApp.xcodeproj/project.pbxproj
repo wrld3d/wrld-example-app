@@ -336,10 +336,11 @@
 		56A3DCEE1A239BD100110FDD /* button_remove_pin_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 56A3DCDE1A239BD100110FDD /* button_remove_pin_on.png */; };
 		56A8DF7D19FEA977009DC352 /* Geosphere_01.pod in Resources */ = {isa = PBXBuildFile; fileRef = 56A8DF7A19FEA977009DC352 /* Geosphere_01.pod */; };
 		56A8DF7E19FEA977009DC352 /* Geosphere_01.pod in Resources */ = {isa = PBXBuildFile; fileRef = 56A8DF7A19FEA977009DC352 /* Geosphere_01.pod */; };
+		56AC9BFC1AA6076D00E603C4 /* iOSFlurryMetricsService.mm in Sources */ = {isa = PBXBuildFile; fileRef = 56AC9BFB1AA6076D00E603C4 /* iOSFlurryMetricsService.mm */; };
+		56AC9BFD1AA6076D00E603C4 /* iOSFlurryMetricsService.mm in Sources */ = {isa = PBXBuildFile; fileRef = 56AC9BFB1AA6076D00E603C4 /* iOSFlurryMetricsService.mm */; };
 		56BFB0C31A8B73ED00572C99 /* libturbojpeg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 56D620D91A8B641200828A9E /* libturbojpeg.a */; };
 		56BFB0C81A8B76D200572C99 /* libapps-on-maps-cpp11-sim.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 56BFB0C41A8B73ED00572C99 /* libapps-on-maps-cpp11-sim.a */; };
 		56BFB0CA1A8B76D200572C99 /* libapps-on-maps-cpp11.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 56BFB0C91A8B76D200572C99 /* libapps-on-maps-cpp11.a */; };
-		56BFB0CB1A8B76FB00572C99 /* FlurryWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 56E63C711A7AAE1F00A5122E /* FlurryWrapper.mm */; };
 		56BFB0CC1A8B7BDC00572C99 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5633F8EC1A7928C500D69813 /* Security.framework */; };
 		56BFB0CD1A8B7BF800572C99 /* libFlurry_6.0.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5633F8EA1A79289500D69813 /* libFlurry_6.0.0.a */; };
 		56CF26871A24776600B30439 /* icon_create_poi.png in Resources */ = {isa = PBXBuildFile; fileRef = 56CF26861A24776600B30439 /* icon_create_poi.png */; };
@@ -347,7 +348,6 @@
 		56D620DA1A8B641200828A9E /* libapps-on-maps-sim.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 56D620D71A8B641200828A9E /* libapps-on-maps-sim.a */; };
 		56D620DB1A8B641200828A9E /* libapps-on-maps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 56D620D81A8B641200828A9E /* libapps-on-maps.a */; };
 		56D620DC1A8B641200828A9E /* libturbojpeg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 56D620D91A8B641200828A9E /* libturbojpeg.a */; };
-		56E63C721A7AAE1F00A5122E /* FlurryWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 56E63C711A7AAE1F00A5122E /* FlurryWrapper.mm */; };
 		56F28E821A261DA40061C7BF /* button_checkbox_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 56FBCDE71A0BB5150026546E /* button_checkbox_off.png */; };
 		56F28E831A261DA70061C7BF /* button_checkbox_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 56FBCDE81A0BB5150026546E /* button_checkbox_on.png */; };
 		56F28E841A261DA90061C7BF /* button_create_poi.png in Resources */ = {isa = PBXBuildFile; fileRef = 56FBCDE91A0BB5150026546E /* button_create_poi.png */; };
@@ -1173,6 +1173,9 @@
 		56A3DCDD1A239BD000110FDD /* button_remove_pin_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_remove_pin_off.png; sourceTree = "<group>"; };
 		56A3DCDE1A239BD100110FDD /* button_remove_pin_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_remove_pin_on.png; sourceTree = "<group>"; };
 		56A8DF7A19FEA977009DC352 /* Geosphere_01.pod */ = {isa = PBXFileReference; lastKnownFileType = file; path = Geosphere_01.pod; sourceTree = "<group>"; };
+		56AC9BFA1AA6076D00E603C4 /* iOSFlurryMetricsService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iOSFlurryMetricsService.h; sourceTree = "<group>"; };
+		56AC9BFB1AA6076D00E603C4 /* iOSFlurryMetricsService.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = iOSFlurryMetricsService.mm; sourceTree = "<group>"; };
+		56AC9BFF1AA6079000E603C4 /* IMetricsService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMetricsService.h; sourceTree = "<group>"; };
 		56BFB0C41A8B73ED00572C99 /* libapps-on-maps-cpp11-sim.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libapps-on-maps-cpp11-sim.a"; path = "Include/eegeo/libapps-on-maps-cpp11-sim.a"; sourceTree = "<group>"; };
 		56BFB0C51A8B73ED00572C99 /* libsdk-extensions-sqlite-cpp11-sim.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libsdk-extensions-sqlite-cpp11-sim.a"; path = "Include/eegeo/libsdk-extensions-sqlite-cpp11-sim.a"; sourceTree = "<group>"; };
 		56BFB0C91A8B76D200572C99 /* libapps-on-maps-cpp11.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libapps-on-maps-cpp11.a"; path = "Include/eegeo/libapps-on-maps-cpp11.a"; sourceTree = "<group>"; };
@@ -1180,8 +1183,6 @@
 		56D620D71A8B641200828A9E /* libapps-on-maps-sim.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libapps-on-maps-sim.a"; path = "Include/eegeo/libapps-on-maps-sim.a"; sourceTree = "<group>"; };
 		56D620D81A8B641200828A9E /* libapps-on-maps.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libapps-on-maps.a"; path = "Include/eegeo/libapps-on-maps.a"; sourceTree = "<group>"; };
 		56D620D91A8B641200828A9E /* libturbojpeg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libturbojpeg.a; path = Include/eegeo/libturbojpeg.a; sourceTree = "<group>"; };
-		56E63C711A7AAE1F00A5122E /* FlurryWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = FlurryWrapper.mm; sourceTree = "<group>"; };
-		56E63C731A7AAE2E00A5122E /* FlurryWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlurryWrapper.h; sourceTree = "<group>"; };
 		56FBCDE71A0BB5150026546E /* button_checkbox_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_checkbox_off.png; sourceTree = "<group>"; };
 		56FBCDE81A0BB5150026546E /* button_checkbox_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_checkbox_on.png; sourceTree = "<group>"; };
 		56FBCDE91A0BB5150026546E /* button_create_poi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_create_poi.png; sourceTree = "<group>"; };
@@ -1976,8 +1977,8 @@
 		18143846192B6E4500BCDF2E /* src */ = {
 			isa = PBXGroup;
 			children = (
+				56AC9BFE1AA6079000E603C4 /* Metrics */,
 				18B22B181A7A901D00DDBFA2 /* ApiKey.h */,
-				56E63C731A7AAE2E00A5122E /* FlurryWrapper.h */,
 				7E3B86631A385A280023C94E /* AboutPage */,
 				7E3B86711A385A280023C94E /* CameraTransitions */,
 				7E3B86771A385A280023C94E /* CategorySearch */,
@@ -2284,6 +2285,23 @@
 				18FB64961A938A54005A9411 /* yelp_logo_100x50.png */,
 			);
 			path = Yelp;
+			sourceTree = "<group>";
+		};
+		56AC9BF91AA6076D00E603C4 /* Metrics */ = {
+			isa = PBXGroup;
+			children = (
+				56AC9BFA1AA6076D00E603C4 /* iOSFlurryMetricsService.h */,
+				56AC9BFB1AA6076D00E603C4 /* iOSFlurryMetricsService.mm */,
+			);
+			path = Metrics;
+			sourceTree = "<group>";
+		};
+		56AC9BFE1AA6079000E603C4 /* Metrics */ = {
+			isa = PBXGroup;
+			children = (
+				56AC9BFF1AA6079000E603C4 /* IMetricsService.h */,
+			);
+			path = Metrics;
 			sourceTree = "<group>";
 		};
 		7E3B86631A385A280023C94E /* AboutPage */ = {
@@ -3391,7 +3409,7 @@
 		7E3B8A121A385F100023C94E /* ios_src */ = {
 			isa = PBXGroup;
 			children = (
-				56E63C711A7AAE1F00A5122E /* FlurryWrapper.mm */,
+				56AC9BF91AA6076D00E603C4 /* Metrics */,
 				7E3B8A131A385F100023C94E /* AboutPage */,
 				7E3B8A1D1A385F100023C94E /* AppHost.h */,
 				7E3B8A1E1A385F100023C94E /* AppHost.mm */,
@@ -4340,6 +4358,7 @@
 				7E3B897D1A385A290023C94E /* ReactionControllerModel.cpp in Sources */,
 				7E3B89C31A385A290023C94E /* SearchResultOnMapItemModelSelectedMessage.cpp in Sources */,
 				18FE3BCF1A9CA4DF002D61C4 /* SortedMenuModel.cpp in Sources */,
+				56AC9BFD1AA6076D00E603C4 /* iOSFlurryMetricsService.mm in Sources */,
 				7E3B88D91A385A290023C94E /* FlattenButtonModelStateChangedObserver.cpp in Sources */,
 				7E3B8AD61A385F110023C94E /* CompassViewInterop.mm in Sources */,
 				18FB64531A9240FC005A9411 /* NSMutableURLRequest+Parameters.m in Sources */,
@@ -4646,7 +4665,6 @@
 				7E3B89CB1A385A290023C94E /* SearchResultOnMapItemModelSelectedObserver.cpp in Sources */,
 				7E3B8B101A385F110023C94E /* MyPinDetailsView.mm in Sources */,
 				7E3B88CB1A385A290023C94E /* CompassViewCycledObserver.cpp in Sources */,
-				56BFB0CB1A8B76FB00572C99 /* FlurryWrapper.mm in Sources */,
 				18B22B341A7A937D00DDBFA2 /* OptionsViewInterop.mm in Sources */,
 				7E3B895F1A385A290023C94E /* MyPinsModule.cpp in Sources */,
 				1878531E1A9CD0A90001889C /* GeoNamesSearchResultPoiView.mm in Sources */,
@@ -4679,6 +4697,7 @@
 				7E3B897C1A385A290023C94E /* ReactionControllerModel.cpp in Sources */,
 				7E3B89C21A385A290023C94E /* SearchResultOnMapItemModelSelectedMessage.cpp in Sources */,
 				18FE3BCE1A9CA4DF002D61C4 /* SortedMenuModel.cpp in Sources */,
+				56AC9BFC1AA6076D00E603C4 /* iOSFlurryMetricsService.mm in Sources */,
 				7E3B88D81A385A290023C94E /* FlattenButtonModelStateChangedObserver.cpp in Sources */,
 				7E3B8AD51A385F110023C94E /* CompassViewInterop.mm in Sources */,
 				18FB64521A9240FC005A9411 /* NSMutableURLRequest+Parameters.m in Sources */,
@@ -4922,7 +4941,6 @@
 				7E3B89201A385A290023C94E /* MyPinCreationModelObserver.cpp in Sources */,
 				7E3B8AF91A385F110023C94E /* ModalBackgroundViewInterop.mm in Sources */,
 				7E3B89961A385A290023C94E /* SearchServiceBase.cpp in Sources */,
-				56E63C721A7AAE1F00A5122E /* FlurryWrapper.mm in Sources */,
 				7E3B8B051A385F110023C94E /* MyPinCreationDetailsViewInterop.mm in Sources */,
 				7E3B89161A385A290023C94E /* PoiRingModule.cpp in Sources */,
 				18E1028D1A8BA12C0011A18C /* SearchResultPoiMyPinService.cpp in Sources */,

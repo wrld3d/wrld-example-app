@@ -12,6 +12,7 @@
 #include "CompassModeObserver.h"
 #include "CompassViewCycledObserver.h"
 #include "BidirectionalBus.h"
+#include "IMetricsService.h"
 
 namespace ExampleApp
 {
@@ -32,7 +33,8 @@ namespace ExampleApp
                 CompassModule(Eegeo::Location::NavigationService& navigationService,
                               Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& cameraController,
                               Eegeo::Helpers::IIdentityProvider& identityProvider,
-                              ExampleAppMessaging::TMessageBus& messageBus
+                              ExampleAppMessaging::TMessageBus& messageBus,
+                              Metrics::IMetricsService& metricsService
                              );
 
                 ~CompassModule();

@@ -51,6 +51,7 @@
 #include "SdkModelDomainEventBus.h"
 #include "IEegeoErrorHandler.h"
 #include "ISingleOptionAlertBoxDismissedHandler.h"
+#include "AndroidFlurryMetricsService.h"
 
 class AppHost : public Eegeo::IEegeoErrorHandler, protected Eegeo::NonCopyable
 {
@@ -128,6 +129,7 @@ private:
     ExampleApp::Options::View::IOptionsViewModule* m_pOptionsViewModule;
     ExampleApp::Net::SdkModel::INetworkCapabilities* m_pNetworkCapabilities;
     ExampleApp::Search::SdkModel::ISearchServiceModule* m_pSearchServiceModule;
+    ExampleApp::Metrics::AndroidFlurryMetricsService* m_pAndroidFlurryMetricsService;
 
     ExampleApp::MobileExampleApp* m_pApp;
 

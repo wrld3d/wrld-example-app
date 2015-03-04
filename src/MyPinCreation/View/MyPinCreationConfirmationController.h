@@ -8,6 +8,7 @@
 #include "ICallback.h"
 #include "IScreenControlViewModel.h"
 #include "BidirectionalBus.h"
+#include "IMetricsService.h"
 
 namespace ExampleApp
 {
@@ -22,7 +23,9 @@ namespace ExampleApp
                 MyPinCreationConfirmationController(IMyPinCreationConfirmationViewModel& viewModel,
                                                     IMyPinCreationConfirmationView& view,
                                                     MyPinCreationDetails::View::IMyPinCreationDetailsViewModel& detailsViewModel,
-                                                    ExampleAppMessaging::TMessageBus& messageBus);
+                                                    ExampleAppMessaging::TMessageBus& messageBus,
+                                                    Metrics::IMetricsService& metricsService);
+                
                 ~MyPinCreationConfirmationController();
 
             private:
@@ -39,6 +42,8 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback2<MyPinCreationConfirmationController, ScreenControl::View::IScreenControlViewModel&, float> m_viewStateCallback;
                 Eegeo::Helpers::TCallback0<MyPinCreationConfirmationController> m_dismissedCallback;
                 Eegeo::Helpers::TCallback0<MyPinCreationConfirmationController> m_confirmedCallback;
+                
+                Metrics::IMetricsService& m_metricsService;
             };
         }
     }

@@ -6,6 +6,7 @@
 #include "BidirectionalBus.h"
 #include "ISearchQueryPerformer.h"
 #include "ICallback.h"
+#include "IMetricsService.h"
 
 namespace ExampleApp
 {
@@ -18,13 +19,16 @@ namespace ExampleApp
                 Search::SdkModel::ISearchQueryPerformer& m_searchQueryPerformer;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 Eegeo::Helpers::TCallback1<CategorySearchSelectedMessageHandler, const CategorySearchSelectedMessage&> m_handlerBinding;
+                
+                Metrics::IMetricsService& m_metricsService;
 
                 void OnCategorySearchSelectedMessage(const CategorySearchSelectedMessage& message);
 
             public:
                 CategorySearchSelectedMessageHandler(
                     Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
-                    ExampleAppMessaging::TMessageBus& messageBus);
+                    ExampleAppMessaging::TMessageBus& messageBus,
+                    Metrics::IMetricsService& metricsService);
 
                 ~CategorySearchSelectedMessageHandler();
             };

@@ -14,6 +14,7 @@
 #include "CameraTransitions.h"
 #include "CategorySearch.h"
 #include "Search.h"
+#include "IMetricsService.h"
 
 namespace ExampleApp
 {
@@ -32,7 +33,8 @@ namespace ExampleApp
                              ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
                              CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
                              CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
-                             Search::SdkModel::MyPins::IMyPinsSearchResultRefreshService& myPinsSearchResultRefreshService);
+                             Search::SdkModel::MyPins::IMyPinsSearchResultRefreshService& myPinsSearchResultRefreshService,
+                             Metrics::IMetricsService& metricsService);
 
                 ~MyPinsModule();
 

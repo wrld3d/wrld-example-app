@@ -7,6 +7,7 @@
 #include "AboutPage.h"
 #include "AboutPageViewIncludes.h"
 #include "IAboutPageViewModule.h"
+#include "IMetricsService.h"
 
 namespace ExampleApp
 {
@@ -23,7 +24,8 @@ namespace ExampleApp
             public:
                 AboutPageViewModule(
                     AndroidNativeState& nativeState,
-                    IAboutPageViewModel& aboutPageViewModel
+                    IAboutPageViewModel& aboutPageViewModel,
+                    Metrics::IMetricsService& metricsService
                 );
 
                 ~AboutPageViewModule();

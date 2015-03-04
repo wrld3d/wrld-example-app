@@ -9,6 +9,7 @@
 #include "MyPinCreationDetails.h"
 #include "MyPinCreationViewIncludes.h"
 #include "BidirectionalBus.h"
+#include "IMetricsService.h"
 
 namespace ExampleApp
 {
@@ -31,7 +32,8 @@ namespace ExampleApp
                     IMyPinCreationInitiationViewModel& initiationViewModel,
                     IMyPinCreationConfirmationViewModel& confirmationViewModel,
                     MyPinCreationDetails::View::IMyPinCreationDetailsViewModel& detailsViewModel,
-                    ExampleAppMessaging::TMessageBus& messageBus
+                    ExampleAppMessaging::TMessageBus& messageBus,
+                    Metrics::IMetricsService& metricsService
                 );
 
                 ~MyPinCreationViewModule();

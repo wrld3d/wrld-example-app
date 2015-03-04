@@ -7,6 +7,7 @@
 #include "IFlattenButtonView.h"
 #include "IFlattenButtonViewModel.h"
 #include "ApplyScreenControl.h"
+#include "IMetricsService.h"
 
 namespace ExampleApp
 {
@@ -25,6 +26,7 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<FlattenButtonController, bool> m_toggledCallback;
                 Eegeo::Helpers::TCallback2<FlattenButtonController, ScreenControl::View::IScreenControlViewModel&, float> m_viewStateCallback;
 
+                Metrics::IMetricsService& m_metricsService;
 
                 void OnToggleButton(bool& toggle);
 
@@ -36,7 +38,8 @@ namespace ExampleApp
                 FlattenButtonController(
                     IFlattenButtonViewModel& viewModel,
                     IFlattenButtonView& view,
-                    ExampleAppMessaging::TMessageBus& messageBus
+                    ExampleAppMessaging::TMessageBus& messageBus,
+                    Metrics::IMetricsService& metricsService
                 );
 
                 ~FlattenButtonController();

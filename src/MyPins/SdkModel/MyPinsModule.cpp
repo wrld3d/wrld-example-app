@@ -34,7 +34,8 @@ namespace ExampleApp
                                        ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
                                        CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
                                        CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
-                                       Search::SdkModel::MyPins::IMyPinsSearchResultRefreshService& myPinsSearchResultRefreshService)
+                                       Search::SdkModel::MyPins::IMyPinsSearchResultRefreshService& myPinsSearchResultRefreshService,
+                                       Metrics::IMetricsService& metricsService)
                 : m_pMyPinsRepository(NULL)
                 , m_pMyPinsFileIO(NULL)
                 , m_pMyPinsService(NULL)
@@ -55,7 +56,7 @@ namespace ExampleApp
                                                                                 myPinsSearchResultRefreshService,
                                                                                 platformAbstractions.GetWebLoadRequestFactory());
 
-                m_pMyPinsSelectionHandlerFactory = Eegeo_NEW(MyPinSelectionHandlerFactory)(*m_pMyPinBoundObjectRepository);
+                m_pMyPinsSelectionHandlerFactory = Eegeo_NEW(MyPinSelectionHandlerFactory)(*m_pMyPinBoundObjectRepository, metricsService);
                 
                 m_pMyPinVisibilityStateChangedHandlerFactory = Eegeo_NEW(MyPinVisibilityStateChangedHandlerFactory)(*m_pMyPinBoundObjectRepository, messageBus);
 

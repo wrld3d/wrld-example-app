@@ -6,6 +6,7 @@
 #include "ISearchResultOnMapFactory.h"
 #include "SearchResultPoi.h"
 #include "BidirectionalBus.h"
+#include "IMetricsService.h"
 
 namespace ExampleApp
 {
@@ -16,9 +17,11 @@ namespace ExampleApp
             class SearchResultOnMapFactory : public ISearchResultOnMapFactory, private Eegeo::NonCopyable
             {
                 ExampleAppMessaging::TMessageBus& m_messageBus;
+                
+                Metrics::IMetricsService& m_metricsService;
 
             public:
-                SearchResultOnMapFactory(ExampleAppMessaging::TMessageBus& messageBus);
+                SearchResultOnMapFactory(ExampleAppMessaging::TMessageBus& messageBus, Metrics::IMetricsService& metricsService);
 
                 ~SearchResultOnMapFactory();
 

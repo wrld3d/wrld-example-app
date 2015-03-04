@@ -8,6 +8,7 @@
 #include "SearchResultPoiViewIncludes.h"
 #include "ISearchResultPoiViewModule.h"
 #include "BidirectionalBus.h"
+#include "IMetricsService.h"
 
 namespace ExampleApp
 {
@@ -25,7 +26,8 @@ namespace ExampleApp
                 SearchResultPoiViewModule(
                     AndroidNativeState& nativeState,
                     ISearchResultPoiViewModel& searchResultPoiViewModel,
-                    ExampleAppMessaging::TMessageBus& messageBus
+                    ExampleAppMessaging::TMessageBus& messageBus,
+                    Metrics::IMetricsService& metricsService
                 );
 
                 ~SearchResultPoiViewModule();

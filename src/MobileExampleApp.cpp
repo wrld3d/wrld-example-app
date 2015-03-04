@@ -49,7 +49,6 @@
 #include "InitialExperienceDialogsModule.h"
 #include "ApiKey.h"
 #include "INetworkCapabilities.h"
-#include "FlurryWrapper.h"
 #include "ISearchServiceModule.h"
 #include "IMyPinsService.h"
 #include "IEegeoErrorHandler.h"
@@ -98,6 +97,7 @@ namespace ExampleApp
         ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
         Net::SdkModel::INetworkCapabilities& networkCapabilities,
         ExampleApp::Search::SdkModel::ISearchServiceModule& searchServiceModule,
+        ExampleApp::Metrics::IMetricsService& metricsService,
         Eegeo::IEegeoErrorHandler& errorHandler)
         : m_pGlobeCameraController(NULL)
         , m_pCameraTouchController(NULL)
@@ -142,10 +142,11 @@ namespace ExampleApp
         , m_pOptionsModule(NULL)
         , m_screenProperties(screenProperties)
         , m_networkCapabilities(networkCapabilities)
-        , m_setFlurryLocation(false)
+        , m_setMetricsLocation(false)
         , m_searchServiceModule(searchServiceModule)
+        , m_metricsService(metricsService)
     {
-        FLURRY_BEGIN(FlurryApiKey.c_str(), EEGEO_PLATFORM_VERSION_NUMBER);
+        m_metricsService.BeginSession(ExampleApp::FlurryApiKey, EEGEO_PLATFORM_VERSION_NUMBER);
 
         m_pBlitter = Eegeo_NEW(Eegeo::Blitter)(1024 * 128, 1024 * 64, 1024 * 32);
         m_pBlitter->Initialise();
@@ -261,7 +262,8 @@ namespace ExampleApp
         m_pCompassModule = Eegeo_NEW(ExampleApp::Compass::SdkModel::CompassModule)(*m_pNavigationService,
                            *m_pGlobeCameraController,
                            m_identityProvider,
-                           m_messageBus);
+                           m_messageBus,
+                           m_metricsService);
         
         m_pGpsMarkerModule = Eegeo_NEW(ExampleApp::GpsMarker::SdkModel::GpsMarkerModule)(m_pWorld->GetRenderingModule(),
                                                                                          m_platformAbstractions,
@@ -274,7 +276,8 @@ namespace ExampleApp
         m_pWeatherMenuModule = Eegeo_NEW(ExampleApp::WeatherMenu::SdkModel::WeatherMenuModule)(m_platformAbstractions.GetFileIO(),
                                cityThemesModule.GetCityThemesService(),
                                cityThemesModule.GetCityThemesUpdater(),
-                               m_messageBus);
+                               m_messageBus,
+                               m_metricsService);
         
         m_pPrimaryMenuModule = Eegeo_NEW(ExampleApp::PrimaryMenu::View::PrimaryMenuModule)(m_identityProvider,
                                                                                            AboutPageModule().GetAboutPageViewModel(),
@@ -284,19 +287,22 @@ namespace ExampleApp
         m_pSecondaryMenuModule = Eegeo_NEW(ExampleApp::SecondaryMenu::SdkModel::SecondaryMenuModule)(m_identityProvider,
                                  m_pReactionControllerModule->GetReactionControllerModel(),
                                  m_pSearchModule->GetSearchQueryPerformer(),
-                                 m_messageBus);
+                                 m_messageBus,
+                                 m_metricsService);
 
         m_pPlaceJumpsModule = Eegeo_NEW(PlaceJumps::SdkModel::PlaceJumpsModule)(m_platformAbstractions.GetFileIO(),
                               GetCameraController(),
                               m_pCompassModule->GetCompassModel(),
                               m_pSecondaryMenuModule->GetSecondaryMenuViewModel(),
-                              m_messageBus);
+                              m_messageBus,
+                              m_metricsService);
 
         m_pCategorySearchModule = Eegeo_NEW(ExampleApp::CategorySearch::SdkModel::CategorySearchModule(
                                                 m_searchServiceModule.GetCategorySearchModels(),
                                                 SearchModule().GetSearchQueryPerformer(),
                                                 m_pSecondaryMenuModule->GetSecondaryMenuViewModel(),
-                                                m_messageBus));
+                                                m_messageBus,
+                                                m_metricsService));
 
         m_pSecondaryMenuModule->AddMenuSection("Search", "place", m_pCategorySearchModule->GetCategorySearchMenuModel(), true);
         m_pSecondaryMenuModule->AddMenuSection("Weather", "weather", m_pWeatherMenuModule->GetWeatherMenuModel(), true);
@@ -319,7 +325,8 @@ namespace ExampleApp
                                                                                 m_sdkDomainEventBus,
                                                                                 *m_pCameraTransitionController,
                                                                                 m_pCategorySearchModule->GetCategorySearchRepository(),
-                                                                                m_pSearchModule->GetMyPinsSearchResultRefreshService());
+                                                                                m_pSearchModule->GetMyPinsSearchResultRefreshService(),
+                                                                                m_metricsService);
         
         m_pSearchResultPoiModule = Eegeo_NEW(ExampleApp::SearchResultPoi::View::SearchResultPoiModule)(m_identityProvider,
                                                                                                        m_pReactionControllerModule->GetReactionControllerModel(),
@@ -341,7 +348,8 @@ namespace ExampleApp
                                                                                                      m_pWorldPinsModule->GetWorldPinsService(),
                                                                                                      m_pCategorySearchModule->GetSearchResultIconCategoryMapper(),
                                                                                                      m_pSearchModule->GetSearchResultMyPinsService(),
-                                                                                                     m_messageBus);
+                                                                                                     m_messageBus,
+                                                                                                     m_metricsService);
         
         m_pPrimaryMenuModule->AddMenuSection("My Pins", "place", m_pMyPinsModule->GetMyPinsMenuModel(), true);
 
@@ -568,14 +576,14 @@ namespace ExampleApp
                 initialExperienceController.Update(dt);
             }
   
-            if (!m_setFlurryLocation)
+            if (!m_setMetricsLocation)
             {
                 Eegeo::dv3 gpsLocation;
                 if(m_pNavigationService->TryGetGpsLocationOnTerrain(gpsLocation))
                 {
                     Eegeo::Space::LatLong ll = Eegeo::Space::LatLong::FromECEF(gpsLocation);
-                    FLURRY_SET_POSITION(ll.GetLatitudeInDegrees(), ll.GetLongitudeInDegrees(), 0.f, 0.f);
-                    m_setFlurryLocation = true;
+                    m_metricsService.SetPosition(ll.GetLatitudeInDegrees(), ll.GetLongitudeInDegrees(), 0.f, 0.f);
+                    m_setMetricsLocation = true;
                 }
             }
         }

@@ -42,6 +42,7 @@
 #include "SdkModelDomainEventBus.h"
 #include "IEegeoErrorHandler.h"
 #include "ISingleOptionAlertBoxDismissedHandler.h"
+#include "iOSFlurryMetricsService.h"
 
 @class ViewController;
 class AppInputDelegate;
@@ -106,6 +107,7 @@ private:
     ExampleApp::InitialExperience::Dialogs::View::IInitialExperienceDialogsViewModule* m_pInitialExperienceDialogsViewModule;
     ExampleApp::Net::SdkModel::INetworkCapabilities* m_pNetworkCapabilities;
     ExampleApp::Search::SdkModel::ISearchServiceModule* m_pSearchServiceModule;
+    ExampleApp::Metrics::iOSFlurryMetricsService* m_piOSFlurryMetricsService;
 
     ExampleApp::MobileExampleApp* m_pApp;
     bool m_requestedApplicationInitialiseViewState;

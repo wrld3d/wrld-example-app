@@ -9,6 +9,7 @@
 #include "FlattenButtonViewIncludes.h"
 #include "FlattenButtonView.h"
 #include "FlattenButtonController.h"
+#include "IMetricsService.h"
 
 namespace ExampleApp
 {
@@ -26,7 +27,8 @@ namespace ExampleApp
                 FlattenButtonViewModule(
                     AndroidNativeState& nativeState,
                     IFlattenButtonViewModel& viewModel,
-                    ExampleAppMessaging::TMessageBus& messageBus
+                    ExampleAppMessaging::TMessageBus& messageBus,
+                    Metrics::IMetricsService& metricsService
                 );
 
                 ~FlattenButtonViewModule();

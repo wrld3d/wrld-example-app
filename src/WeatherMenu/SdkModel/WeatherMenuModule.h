@@ -9,6 +9,7 @@
 #include "CityThemes.h"
 #include "BidirectionalBus.h"
 #include "WeatherSelectedMessageHandler.h"
+#include "IMetricsService.h"
 
 namespace ExampleApp
 {
@@ -22,7 +23,8 @@ namespace ExampleApp
                 WeatherMenuModule(Eegeo::Helpers::IFileIO& fileio,
                                   Eegeo::Resources::CityThemes::ICityThemesService& themesService,
                                   Eegeo::Resources::CityThemes::ICityThemesUpdater& themesUpdater,
-                                  ExampleAppMessaging::TMessageBus& messageBus);
+                                  ExampleAppMessaging::TMessageBus& messageBus,
+                                  Metrics::IMetricsService& metricsService);
 
                 ~WeatherMenuModule();
 

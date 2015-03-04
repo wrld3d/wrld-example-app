@@ -18,11 +18,12 @@ namespace ExampleApp
                 IMyPinCreationConfirmationViewModel& viewModel,
                 IMyPinCreationCompositeViewModel& compositeViewModel,
                 MyPinCreationDetails::View::IMyPinCreationDetailsViewModel& detailsViewModel,
-                const Eegeo::Rendering::ScreenProperties& screenProperties)
+                const Eegeo::Rendering::ScreenProperties& screenProperties,
+                Metrics::IMetricsService& metricsService)
             {
                 m_pView = [[MyPinCreationConfirmationView alloc] initWithParams: screenProperties.GetScreenWidth(): screenProperties.GetScreenHeight(): screenProperties.GetPixelScale()];
 
-                m_pController = Eegeo_NEW(MyPinCreationConfirmationController)(viewModel, *[m_pView getInterop], detailsViewModel, messageBus);
+                m_pController = Eegeo_NEW(MyPinCreationConfirmationController)(viewModel, *[m_pView getInterop], detailsViewModel, messageBus, metricsService);
             }
 
             MyPinCreationConfirmationViewModule::~MyPinCreationConfirmationViewModule()
