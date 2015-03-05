@@ -89,6 +89,8 @@ AppHost::AppHost(
     ,m_piOSFlurryMetricsService(NULL)
     ,m_failAlertHandler(this, &AppHost::HandleStartupFailure)
 {
+    Eegeo::TtyHandler::TtyEnabled = true;
+    
     m_piOSLocationService = Eegeo_NEW(iOSLocationService)();
 
     m_piOSConnectivityService = Eegeo_NEW(iOSConnectivityService)();
