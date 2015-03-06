@@ -22,7 +22,7 @@ namespace ExampleApp
                 {
                 public:
                     PoiRingTouchController(MyPinCreation::SdkModel::IMyPinCreationModel& myPinCreationModel,
-                                           Eegeo::Resources::Terrain::Collision::IRayPicker& rayPicker,
+                                           Eegeo::Collision::IRayPicker& rayPicker,
                                            const IPoiRingController& poiRingController);
 
                     bool HandleTouchDown(const AppInterface::TouchData& data, const Eegeo::Camera::RenderCamera& renderCamera, Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController);
@@ -33,7 +33,7 @@ namespace ExampleApp
 
                 private:
                     MyPinCreation::SdkModel::IMyPinCreationModel& m_myPinCreationModel;
-                    Eegeo::Resources::Terrain::Collision::IRayPicker& m_rayPicker;
+                    Eegeo::Collision::IRayPicker& m_rayPicker;
                     const IPoiRingController& m_poiRingController;
 
                     bool m_isDragging;

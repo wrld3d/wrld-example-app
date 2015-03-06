@@ -18,7 +18,7 @@ namespace ExampleApp
             namespace SdkModel
             {
                 PoiRingTouchController::PoiRingTouchController(MyPinCreation::SdkModel::IMyPinCreationModel& myPinCreationModel,
-                        Eegeo::Resources::Terrain::Collision::IRayPicker& rayPicker,
+                        Eegeo::Collision::IRayPicker& rayPicker,
                         const IPoiRingController& poiRingController)
                     : m_myPinCreationModel(myPinCreationModel)
                     , m_rayPicker(rayPicker)
