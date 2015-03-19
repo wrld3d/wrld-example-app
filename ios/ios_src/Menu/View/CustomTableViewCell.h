@@ -10,11 +10,17 @@
     bool m_rightAlignFrame;
     bool m_rightAlignImage;
     bool m_isHeader;
+    NSString* m_headerBackgroundImage;
+    NSString* m_subMenuBackgroundImage;
     float m_initialWidth;
     CustomTableView* m_tableView;
 }
 
-- (void)setAlignInfo:(bool)rightAlignFrame :(bool)rightAlignImage :(bool)isHeader;
+- (void)setAlignInfo:(bool)rightAlignFrame
+                    :(bool)rightAlignImage
+                    :(bool)isHeader
+                    :(NSString*)headerBackgroundImage
+                    :(NSString*)subMenuBackgroundImage;
 
 - (void)initCell:(CGFloat)initialWidth :(CustomTableView*)tableView;
 

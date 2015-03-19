@@ -78,9 +78,6 @@
 @property (nonatomic, retain) UIButton* pGalleryButton;
 @property (nonatomic, retain) UIButton* pConfirmButton;
 
-@property (nonatomic, retain) UIImageView* pBodyShadow;
-@property (nonatomic, retain) UIImageView* pFooterShadow;
-
 @property (nonatomic, retain) UIPopoverController* pPopover;
 
 @end

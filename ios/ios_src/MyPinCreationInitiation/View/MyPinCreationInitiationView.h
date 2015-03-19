@@ -39,8 +39,6 @@
 
 - (void) animateToY:(float)y;
 
-- (void) shouldOffsetButton:(bool)shouldOffset;
-
 @property (nonatomic, retain) UIButton* pPoiCreateButton;
 
 @end

@@ -42,14 +42,11 @@
 
 @property (nonatomic, retain) UIView* pCloseButtonContainer;
 @property (nonatomic, retain) UIButton* pCloseButton;
-@property (nonatomic, retain) UIView* pShadowContainer;
 @property (nonatomic, retain) UIView* pControlContainer;
 @property (nonatomic, retain) UIView* pHeadlineContainer;
 @property (nonatomic, retain) UIView* pContentContainer;
 @property (nonatomic, retain) UIScrollView* pOptionsContainer;
 @property (nonatomic, retain) UILabel* pTitleLabel;
-@property (nonatomic, retain) UIImageView* pContainerShadowTop;
-@property (nonatomic, retain) UIImageView* pContainerShadowBottom;
 @property (nonatomic, retain) UILabelledCheckboxView* pWifiOnlyCheckbox;
 @property (nonatomic, retain) UILabelledCheckboxView* pCacheEnabledCheckbox;
 @property (nonatomic, retain) UILabelledCheckboxView* pClearCacheButton;

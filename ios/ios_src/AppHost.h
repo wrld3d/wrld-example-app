@@ -20,7 +20,6 @@
 #include "InitialExperience.h"
 #include "iOSPersistentSettingsModel.h"
 #include "ViewControllerUpdater.h"
-#include "PrimaryMenuViewIncludes.h"
 #include "SecondaryMenuViewIncludes.h"
 #include "SearchResultMenuViewModule.h"
 #include "ModalBackgroundViewIncludes.h"
@@ -36,6 +35,7 @@
 #include "MyPinDetailsViewIncludes.h"
 #include "iOSConnectivityService.h"
 #include "OptionsViewIncludes.h"
+#include "WatermarkViewIncludes.h"
 #include "InitialExperienceDialogsViewIncludes.h"
 #include "NetIncludes.h"
 #include "Search.h"
@@ -87,7 +87,6 @@ private:
     Eegeo::UI::NativeUIFactories m_iOSNativeUIFactories;
     Eegeo::iOS::iOSPlatformAbstractionModule* m_piOSPlatformAbstractionModule;
 
-    ExampleApp::PrimaryMenu::View::IPrimaryMenuViewModule* m_pPrimaryMenuViewModule;
     ExampleApp::SecondaryMenu::View::ISecondaryMenuViewModule* m_pSecondaryMenuViewModule;
     ExampleApp::SearchResultMenu::View::ISearchResultMenuViewModule* m_pSearchResultMenuViewModule;
     ExampleApp::ModalBackground::View::IModalBackgroundViewModule* m_pModalBackgroundViewModule;
@@ -104,6 +103,7 @@ private:
     ExampleApp::MyPinCreationDetails::View::IMyPinCreationDetailsViewModule* m_pMyPinCreationDetailsViewModule;
     ExampleApp::MyPinDetails::View::IMyPinDetailsViewModule* m_pMyPinDetailsViewModule;
     ExampleApp::Options::View::IOptionsViewModule* m_pOptionsViewModule;
+    ExampleApp::Watermark::View::IWatermarkViewModule* m_pWatermarkViewModule;
     ExampleApp::InitialExperience::Dialogs::View::IInitialExperienceDialogsViewModule* m_pInitialExperienceDialogsViewModule;
     ExampleApp::Net::SdkModel::INetworkCapabilities* m_pNetworkCapabilities;
     ExampleApp::Search::SdkModel::ISearchServiceModule* m_pSearchServiceModule;

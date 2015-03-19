@@ -5,7 +5,7 @@ package com.eegeo.persistentstate;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.eegeo.mobileexampleapp.MainActivity;
+import com.eegeo.entrypointinfrastructure.MainActivity;
 
 public class PersistentState
 {

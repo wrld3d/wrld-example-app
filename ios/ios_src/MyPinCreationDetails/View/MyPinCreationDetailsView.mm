@@ -41,7 +41,7 @@
         [self.pControlContainer addSubview: self.pTitleContainer];
 
         self.pTitleImage = [[[UIImageView alloc] initWithFrame: CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pTitleImage.image = [UIImage imageNamed: @"button_create_poi.png"];
+        self.pTitleImage.image = ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_create_poi");
         [self.pTitleContainer addSubview: self.pTitleImage];
 
         self.pTitleText = [[[UITextField alloc] initWithFrame: CGRectMake(0, 0, 0, 0)] autorelease];
@@ -49,8 +49,6 @@
 
         self.pBodyContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         [self.pControlContainer addSubview: self.pBodyContainer];
-
-        self.pBodyShadow = ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pBodyContainer, "shadow_03", 0.f, 0.f, 0, 0);
 
         self.pBodyScrollView = [[[UIScrollView alloc] initWithFrame: CGRectMake(0, 0, 0, 0)] autorelease];
         [self.pBodyContainer addSubview: self.pBodyScrollView];
@@ -64,7 +62,7 @@
         self.pPoiImage = [[[UIImageView alloc] initWithFrame: CGRectMake(0, 0, 0, 0)] autorelease];
         [self.pBodyScrollView addSubview: self.pPoiImage];
 
-        self.pPlaceholderImage = [UIImage imageNamed: @"image_blank.png"];
+        self.pPlaceholderImage = ExampleApp::Helpers::ImageHelpers::LoadImage(@"image_blank");
 
         self.pCheckbox = [[[UIButton alloc] initWithFrame: CGRectMake(0, 0, 0, 0)] autorelease];
         self.pCheckbox.selected = m_hasNetworkConnectivity;
@@ -92,8 +90,6 @@
         self.pConfirmButton = [[[UIButton alloc] initWithFrame: CGRectMake(0, 0, 0, 0)] autorelease];
         [self.pFooterContainer addSubview: self.pConfirmButton];
 
-        self.pFooterShadow = ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pFooterContainer, "shadow_03", 0.f, 0.f, 0, 0);
-
         m_usePopover = !App::IsDeviceSmall();
 
         [self layoutSubviews];
@@ -114,14 +110,8 @@
      name: @"handlePause"
      object: nil];
 
-    [self.pFooterShadow removeFromSuperview];
-    [self.pFooterShadow release];
-
     [self.pFooterContainer removeFromSuperview];
     [self.pFooterContainer release];
-
-    [self.pBodyShadow removeFromSuperview];
-    [self.pBodyShadow release];
 
     [self.pBodyContainer removeFromSuperview];
     [self.pBodyContainer release];
@@ -194,7 +184,7 @@
 
     const float titleImageSize = static_cast<float>(self.pTitleContainer.frame.size.height);
     self.pTitleImage.frame = CGRectMake(0, 0, titleImageSize, titleImageSize);
-    self.pTitleImage.backgroundColor = ExampleApp::Helpers::ColorPalette::GoldTone;
+    self.pTitleImage.backgroundColor = ExampleApp::Helpers::ColorPalette::WhiteTone;
 
     const float textPadding = 10.f;
     const float titleTextX = titleImageSize + textPadding;
@@ -226,12 +216,12 @@
     self.pBodyContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::WhiteTone;
 
     const float shareBarY = 5.f;
-    const float checkboxSize = 30.f;
+    const float checkboxSize = 20.f;
     const float checkBoxX = 20.f;
 
-    self.pCheckbox.frame = CGRectMake(checkBoxX, shareBarY, checkboxSize, checkboxSize);
-    [self.pCheckbox setBackgroundImage:[UIImage imageNamed:@"button_checkbox_off.png"] forState:UIControlStateNormal];
-    [self.pCheckbox setBackgroundImage:[UIImage imageNamed:@"button_checkbox_on.png"] forState:UIControlStateSelected];
+    self.pCheckbox.frame = CGRectMake(checkBoxX, shareBarY + 5.f, checkboxSize, checkboxSize);
+    [self.pCheckbox setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_checkbox_off") forState:UIControlStateNormal];
+    [self.pCheckbox setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_checkbox_on") forState:UIControlStateSelected];
 
     const float shareLabelWidth = 45.f;
     const float shareLabelHeight = 30.f;
@@ -259,10 +249,6 @@
     const float scrollBoxPadding = 5.f;
     const float scrollViewY = shareBarY + checkboxSize + scrollBoxPadding;
     self.pBodyScrollView.frame = CGRectMake(0, scrollViewY, m_controlContainerWidth, bodyContainerHeight);
-
-    const float shadowHeight = 10.f;
-    self.pBodyShadow.frame = CGRectMake(0.f, scrollViewY, m_controlContainerWidth, shadowHeight);
-    [self.pBodyContainer bringSubviewToFront: self.pBodyShadow];
 
     const float poiDescriptionBoxX = 20.f;
     const float poiDescriptionBoxY = 20.f;
@@ -304,14 +290,11 @@
 - (void) layoutFooter
 {
     const float footerY = m_yCursor;
-    const float footerHeight = 70.f;
+    const float footerHeight = 80.f;
     const float footerWidth = m_controlContainerWidth;
 
     self.pFooterContainer.frame = CGRectMake(0, footerY, footerWidth, footerHeight);
     self.pFooterContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::GoldTone;
-
-    const float shadowHeight = 10.f;
-    self.pFooterShadow.frame = CGRectMake(0.f, 0.f, m_controlContainerWidth, shadowHeight);
 
     const int numberOfButtons = 4;
     const float buttonSize = static_cast<float>(self.pFooterContainer.frame.size.height);
@@ -319,26 +302,26 @@
 
     const float closeButtonX = buttonPadding;
     self.pCloseButton.frame = CGRectMake(closeButtonX, 0, buttonSize, buttonSize);
-    [self.pCloseButton setBackgroundImage:[UIImage imageNamed:@"button_close_off.png"] forState:UIControlStateNormal];
-    [self.pCloseButton setBackgroundImage:[UIImage imageNamed:@"button_close_on.png"] forState:UIControlStateHighlighted];
+    [self.pCloseButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_close_off") forState:UIControlStateNormal];
+    [self.pCloseButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_close_on") forState:UIControlStateHighlighted];
     [self.pCloseButton addTarget:self action:@selector(onCloseButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 
     const float cameraButtonX = buttonSize + 2 * buttonPadding;
     self.pCameraButton.frame = CGRectMake(cameraButtonX, 0, buttonSize, buttonSize);
-    [self.pCameraButton setBackgroundImage:[UIImage imageNamed:@"button_photo_off.png"] forState:UIControlStateNormal];
-    [self.pCameraButton setBackgroundImage:[UIImage imageNamed:@"button_photo_on.png"] forState:UIControlStateHighlighted];
+    [self.pCameraButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_photo_off") forState:UIControlStateNormal];
+    [self.pCameraButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_photo_on") forState:UIControlStateHighlighted];
     [self.pCameraButton addTarget:self action:@selector(onCameraButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 
     const float galleryButtonX = 2 * buttonSize + 3 * buttonPadding;
     self.pGalleryButton.frame = CGRectMake(galleryButtonX, 0, buttonSize, buttonSize);
-    [self.pGalleryButton setBackgroundImage:[UIImage imageNamed:@"button_gallery_off.png"] forState:UIControlStateNormal];
-    [self.pGalleryButton setBackgroundImage:[UIImage imageNamed:@"button_gallery_on.png"] forState:UIControlStateHighlighted];
+    [self.pGalleryButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_gallery_off") forState:UIControlStateNormal];
+    [self.pGalleryButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_gallery_on") forState:UIControlStateHighlighted];
     [self.pGalleryButton addTarget:self action:@selector(onGalleryButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 
     const float confirmButtonX = 3 * buttonSize + 4 * buttonPadding;
     self.pConfirmButton.frame = CGRectMake(confirmButtonX, 0, buttonSize, buttonSize);
-    [self.pConfirmButton setBackgroundImage:[UIImage imageNamed:@"button_ok_off.png"] forState:UIControlStateNormal];
-    [self.pConfirmButton setBackgroundImage:[UIImage imageNamed:@"button_ok_on.png"] forState:UIControlStateHighlighted];
+    [self.pConfirmButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_ok_off") forState:UIControlStateNormal];
+    [self.pConfirmButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_ok_on") forState:UIControlStateHighlighted];
     [self.pConfirmButton addTarget:self action:@selector(onConfirmButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 
     m_popoverX = m_controlContainerWidth * 0.5f;

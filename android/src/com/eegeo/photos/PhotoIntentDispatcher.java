@@ -15,7 +15,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 
 import com.eegeo.helpers.IActivityIntentResultHandler;
-import com.eegeo.mobileexampleapp.MainActivity;
+import com.eegeo.entrypointinfrastructure.MainActivity;
 
 // This class handles the dispatching of intents related to fetching an image via photo or gallery selection.
 public class PhotoIntentDispatcher

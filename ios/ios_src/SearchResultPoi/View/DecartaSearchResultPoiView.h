@@ -46,7 +46,6 @@
 @property (nonatomic, retain) UIView* pCloseButtonContainer;
 @property (nonatomic, retain) UIButton* pCloseButton;
 @property (nonatomic, retain) UIButton* pPinButton;
-@property (nonatomic, retain) UIView* pShadowContainer;
 @property (nonatomic, retain) UIView* pControlContainer;
 @property (nonatomic, retain) UIView* pHeadlineContainer;
 @property (nonatomic, retain) UIView* pContentContainer;

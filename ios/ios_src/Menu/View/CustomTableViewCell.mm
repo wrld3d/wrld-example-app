@@ -2,9 +2,32 @@
 
 #include "CustomTableViewCell.h"
 #include "UIColors.h"
+#include "ImageHelpers.h"
+
+const float SubViewInset = 22.f;
 
 @implementation CustomTableViewCell
+{
+    UIView* pCustomSeparatorContainer;
+}
 
+-(void) setBackgroundPresentation
+{
+    if(m_isHeader)
+    {
+        if(m_headerBackgroundImage != nil)
+        {
+            self.contentView.backgroundColor = [UIColor colorWithPatternImage:ExampleApp::Helpers::ImageHelpers::LoadImage(m_headerBackgroundImage)];
+        }
+    }
+    else
+    {
+        if(m_subMenuBackgroundImage != nil)
+        {
+            self.contentView.backgroundColor = [UIColor colorWithPatternImage:ExampleApp::Helpers::ImageHelpers::LoadImage(m_subMenuBackgroundImage)];
+        }
+    }
+}
 
 - (void)layoutSubviews
 {
@@ -14,9 +37,9 @@
 
     if(!m_isHeader)
     {
-        r = CGRectMake(m_rightAlignFrame ? 22.f : 0.f,
+        r = CGRectMake(m_rightAlignFrame ? SubViewInset : 0.f,
                        r.origin.y,
-                       m_initialWidth - 22.f,
+                       m_initialWidth - SubViewInset,
                        r.size.height);
     }
     else
@@ -28,8 +51,8 @@
     }
 
     self.contentView.frame = r;
+    self->pCustomSeparatorContainer.frame = r;
     self.backgroundColor = [UIColor clearColor];
-    self.contentView.backgroundColor = [UIColor whiteColor];
 
     CGRect imageFrame = self.imageView.frame;
     const float initialImageX = static_cast<float>(imageFrame.origin.x);
@@ -52,19 +75,30 @@
         detailFrame.origin.x += delta;
         self.detailTextLabel.frame = detailFrame;
     }
+    
+    [self insertSeparators :r :imageFrame];
+    [self setBackgroundPresentation];
 }
 
 - (void)initCell:(CGFloat)initialWidth :(CustomTableView*)tableView;
 {
     m_initialWidth = static_cast<float>(initialWidth);
     m_tableView = tableView;
+    self->pCustomSeparatorContainer = [[UIView alloc]  initWithFrame:CGRectMake(0,0,0,0)];
+    [self addSubview:self->pCustomSeparatorContainer];
 }
 
-- (void)setAlignInfo:(bool)rightAlignFrame :(bool)rightAlignImage :(bool)isHeader
+- (void)setAlignInfo:(bool)rightAlignFrame
+                    :(bool)rightAlignImage
+                    :(bool)isHeader
+                    :(NSString*)headerBackgroundImage
+                    :(NSString*)subMenuBackgroundImage
 {
     m_rightAlignFrame = rightAlignFrame;
     m_rightAlignImage = rightAlignImage;
     m_isHeader = isHeader;
+    m_headerBackgroundImage = headerBackgroundImage;
+    m_subMenuBackgroundImage = subMenuBackgroundImage;
 }
 
 - (BOOL)canInteract
@@ -84,7 +118,7 @@
 {
     if(![self canInteract])
     {
-        [self.contentView setBackgroundColor: [UIColor whiteColor]];
+        [self setBackgroundPresentation];
         return;
     }
 
@@ -94,7 +128,7 @@
     }
     else
     {
-        [self.contentView setBackgroundColor: [UIColor whiteColor]];
+        [self setBackgroundPresentation];
     }
 }
 
@@ -102,7 +136,7 @@
 {
     if(![self canInteract])
     {
-        [self.contentView setBackgroundColor: [UIColor whiteColor]];
+        [self setBackgroundPresentation];
         return;
     }
 
@@ -112,7 +146,69 @@
     }
     else
     {
-        [self.contentView setBackgroundColor: [UIColor whiteColor]];
+        [self setBackgroundPresentation];
+    }
+}
+
+- (void)insertSeparators:(CGRect)cellFrame :(CGRect)imageFrame
+{
+    if([self->pCustomSeparatorContainer subviews] != nil) {
+        for (UIView *subview in [self->pCustomSeparatorContainer subviews]) {
+            [subview removeFromSuperview];
+        }
+    }
+    
+    NSIndexPath* indexPath = [m_tableView indexPathForCell:self];
+    
+    const bool isTop = indexPath.row == 0;
+    const bool isBottom = indexPath.row == [m_tableView numberOfRowsInSection:indexPath.section] - 1;
+    
+    if(!m_isHeader)
+    {
+        if(!isBottom)
+        {
+            CGFloat separatorY      = cellFrame.size.height;
+            CGFloat separatorHeight = (1.f / [UIScreen mainScreen].scale);
+            CGFloat separatorWidth  = cellFrame.size.width - imageFrame.size.width;
+            CGFloat separatorInset  = m_rightAlignImage ? 0.f : imageFrame.size.width;
+            
+            UIImageView* separator = [[[UIImageView alloc] initWithFrame:CGRectMake(separatorInset,
+                                                                                    separatorY,
+                                                                                    separatorWidth,
+                                                                                    separatorHeight)] autorelease];
+            
+            separator.backgroundColor = ExampleApp::Helpers::ColorPalette::MenuSeparatorSubMenuColor;
+            [self->pCustomSeparatorContainer addSubview: separator];
+        }
+    }
+    else
+    {
+        CGFloat topSeparatorY       = 0.f;
+        CGFloat bottomSeparatorY    = cellFrame.size.height;
+        CGFloat separatorHeight     = (1.f / [UIScreen mainScreen].scale);
+        CGFloat separatorWidth      = cellFrame.size.width - SubViewInset;
+        CGFloat separatorInset      = m_rightAlignImage ? 0.f : cellFrame.origin.x + SubViewInset;
+        
+        if(!isTop)
+        {
+            UIImageView* topSeparator = [[[UIImageView alloc] initWithFrame:CGRectMake(separatorInset,
+                                                                                       topSeparatorY,
+                                                                                       separatorWidth,
+                                                                                       separatorHeight)] autorelease];
+            
+            topSeparator.backgroundColor = ExampleApp::Helpers::ColorPalette::MenuSeparatorHeaderColor;
+            
+            [self->pCustomSeparatorContainer addSubview: topSeparator];
+        }
+        
+        UIImageView* bottomSeparator = [[[UIImageView alloc] initWithFrame:CGRectMake(separatorInset,
+                                                                                      bottomSeparatorY,
+                                                                                      separatorWidth,
+                                                                                      separatorHeight)] autorelease];
+        
+        bottomSeparator.backgroundColor = ExampleApp::Helpers::ColorPalette::MenuSeparatorHeaderColor;
+        
+        [self->pCustomSeparatorContainer addSubview: bottomSeparator];
     }
 }
 

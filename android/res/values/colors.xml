@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="gold">#ec8e1e</color>
+    <color name="gold">#1e7bc3</color>
     <color name="olive">#94a847</color>
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
@@ -8,4 +8,6 @@
     <color name="grey">#aaaaaa</color>
     <color name="lightgrey">#cccccc</color>
     <color name="blue">#291e9a</color>
+    <color name="menu_separator">#b1cce1</color>
+    <color name="submenu_separator">#c6cecf</color>
 </resources>

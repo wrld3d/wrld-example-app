@@ -20,8 +20,6 @@
 #include "JpegLoader.h"
 #include "iOSPlatformAbstractionModule.h"
 #include "ViewController.h"
-#include "PrimaryMenuViewModule.h"
-#include "PrimaryMenuView.h"
 #include "SecondaryMenuViewModule.h"
 #include "SecondaryMenuView.h"
 #include "ModalBackgroundView.h"
@@ -58,12 +56,16 @@
 #include "ModalBackgroundViewModule.h"
 #include "OptionsViewModule.h"
 #include "OptionsView.h"
+#include "WatermarkViewModule.h"
+#include "WatermarkView.h"
 #include "NetworkCapabilities.h"
 #include "iOSYelpSearchServiceModule.h"
 #include "DecartaSearchServiceModule.h"
 #include "InitialExperienceDialogsViewModule.h"
 #include "InitialExperienceDialogsModule.h"
 #include "InitialExperienceDialogsView.h"
+#include "ApplicationConfigurationModule.h"
+#include "IApplicationConfigurationService.h"
 
 using namespace Eegeo::iOS;
 
@@ -125,6 +127,9 @@ AppHost::AppHost(
     
     m_piOSFlurryMetricsService = Eegeo_NEW(ExampleApp::Metrics::iOSFlurryMetricsService)();
     
+    typedef ExampleApp::ApplicationConfig::SdkModel::ApplicationConfigurationModule ApplicationConfigurationModule;
+    ApplicationConfigurationModule applicationConfigurationModule(m_piOSPlatformAbstractionModule->GetFileIO());
+    
     m_pApp = Eegeo_NEW(ExampleApp::MobileExampleApp)(ExampleApp::ApiKey,
              *m_piOSPlatformAbstractionModule,
              screenProperties,
@@ -139,6 +144,7 @@ AppHost::AppHost(
              *m_pNetworkCapabilities,
              *m_pSearchServiceModule,
              *m_piOSFlurryMetricsService,
+             applicationConfigurationModule.GetApplicationConfigurationService().LoadConfiguration("ApplicationConfigs/standard_config.json"),
              *this);
 
     CreateApplicationViewModules(screenProperties);
@@ -238,14 +244,13 @@ bool AppHost::IsRunning()
 void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenProperties& screenProperties)
 {
     ExampleApp::MobileExampleApp& app = *m_pApp;
+    
+    m_pWatermarkViewModule = Eegeo_NEW(ExampleApp::Watermark::View::WatermarkViewModule)(app.WatermarkModule().GetWatermarkViewModel(),
+                                                                                         screenProperties,
+                                                                                         m_messageBus,
+                                                                                         *m_piOSFlurryMetricsService);
 
     m_pModalBackgroundViewModule = Eegeo_NEW(ExampleApp::ModalBackground::View::ModalBackgroundViewModule)(app.ModalityModule().GetModalityModel(), screenProperties);
-
-
-    m_pPrimaryMenuViewModule = Eegeo_NEW(ExampleApp::PrimaryMenu::View::PrimaryMenuViewModule)(app.MyPinsModule().GetMyPinsMenuModel(),
-                               app.PrimaryMenuModule().GetPrimaryMenuViewModel(),
-                               screenProperties,
-                               app.ModalityModule().GetModalityModel());
 
     m_pSecondaryMenuViewModule = Eegeo_NEW(ExampleApp::SecondaryMenu::View::SecondaryMenuViewModule)(app.SecondaryMenuModule().GetSecondaryMenuModel(),
                                  app.SecondaryMenuModule().GetSecondaryMenuViewModel(),
@@ -318,6 +323,7 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
     [m_pView addSubview: &m_pWorldPinOnMapViewModule->GetWorldPinOnMapView()];
 
     // HUD behind modal background layer.
+    [m_pView addSubview: &m_pWatermarkViewModule->GetWatermarkView()];
     [m_pView addSubview: &m_pFlattenButtonViewModule->GetFlattenButtonView()];
     [m_pView addSubview: &m_pCompassViewModule->GetCompassView()];
     [m_pView addSubview: &m_pMyPinCreationInitiationViewModule->GetMyPinCreationInitiationView()];
@@ -327,7 +333,6 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
     [m_pView addSubview: &m_pModalBackgroundViewModule->GetModalBackgroundView()];
 
     // Menus & HUD layer.
-    [m_pView addSubview: &m_pPrimaryMenuViewModule->GetPrimaryMenuView()];
     [m_pView addSubview: &m_pSecondaryMenuViewModule->GetSecondaryMenuView()];
     [m_pView addSubview: &m_pSearchResultMenuViewModule->GetSearchResultMenuView()];
 
@@ -344,7 +349,6 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
     m_pViewControllerUpdaterModule = Eegeo_NEW(ExampleApp::ViewControllerUpdater::View::ViewControllerUpdaterModule);
     ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModel& viewControllerUpdaterModel = m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel();
 
-    viewControllerUpdaterModel.AddUpdateableObject(m_pPrimaryMenuViewModule->GetMenuController());
     viewControllerUpdaterModel.AddUpdateableObject(m_pSecondaryMenuViewModule->GetMenuController());
     viewControllerUpdaterModel.AddUpdateableObject(m_pSearchResultMenuViewModule->GetMenuController());
 }
@@ -355,6 +359,7 @@ void AppHost::DestroyApplicationViewModules()
     [&m_pWorldPinOnMapViewModule->GetWorldPinOnMapView() removeFromSuperview];
 
     // HUD behind modal background layer.
+    [&m_pWatermarkViewModule->GetWatermarkView() removeFromSuperview];
     [&m_pFlattenButtonViewModule->GetFlattenButtonView() removeFromSuperview];
     [&m_pCompassViewModule->GetCompassView() removeFromSuperview];
     [&m_pMyPinCreationInitiationViewModule->GetMyPinCreationInitiationView() removeFromSuperview];
@@ -364,7 +369,6 @@ void AppHost::DestroyApplicationViewModules()
     [&m_pModalBackgroundViewModule->GetModalBackgroundView() removeFromSuperview];
 
     // Menus & HUD layer.
-    [&m_pPrimaryMenuViewModule->GetPrimaryMenuView() removeFromSuperview];
     [&m_pSecondaryMenuViewModule->GetSecondaryMenuView() removeFromSuperview];
     [&m_pSearchResultMenuViewModule->GetSearchResultMenuView() removeFromSuperview];
 
@@ -402,11 +406,11 @@ void AppHost::DestroyApplicationViewModules()
 
     Eegeo_DELETE m_pSecondaryMenuViewModule;
 
-    Eegeo_DELETE m_pPrimaryMenuViewModule;
-
     Eegeo_DELETE m_pFlattenButtonViewModule;
     
     Eegeo_DELETE m_pInitialExperienceDialogsViewModule;
+    
+    Eegeo_DELETE m_pWatermarkViewModule;
 }
 
 void AppHost::HandleFailureToProvideWorkingApiKey()

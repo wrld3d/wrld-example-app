@@ -8,8 +8,6 @@ namespace ExampleApp
     {
         namespace ColorPalette
         {
-            extern UIColor* MainHudColor;
-            extern UIColor* ModalBackgroundColor;
             extern UIColor* OliveTone;
             extern UIColor* WhiteTone;
             extern UIColor* BlackTone;
@@ -17,7 +15,15 @@ namespace ExampleApp
             extern UIColor* GreyTone;
             extern UIColor* GoldTone;
             extern UIColor* LightGreyTone;
+            
+            extern UIColor* MainHudColor;
+            extern UIColor* ModalBackgroundColor;
             extern UIColor* LinkTone;
+            extern UIColor* UiTextHeaderColour;
+            extern UIColor* UiTextCopyColour;
+            extern UIColor* UiBaseColour;
+            extern UIColor* MenuSeparatorHeaderColor;
+            extern UIColor* MenuSeparatorSubMenuColor;
         }
     }
 }

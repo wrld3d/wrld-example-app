@@ -43,7 +43,6 @@ namespace ExampleApp
         {
             MyPinCreationModule::MyPinCreationModule(MyPins::SdkModel::IMyPinsService& myPinsService,
                     Eegeo::Helpers::IIdentityProvider& identityProvider,
-                    ExampleApp::Menu::View::IMenuViewModel& primaryMenuViewModel,
                     ExampleApp::Menu::View::IMenuViewModel& secondaryMenuViewModel,
                     Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
                     ExampleApp::Menu::View::IMenuViewModel& searchResultMenuViewModel,
@@ -70,7 +69,6 @@ namespace ExampleApp
                 m_pMyPinCreationCompositeViewModel = Eegeo_NEW(View::MyPinCreationCompositeViewModel)(messageBus,
                                                      *m_pMyPinCreationInitiationViewModel,
                                                      *m_pMyPinCreationConfirmationViewModel,
-                                                     primaryMenuViewModel,
                                                      secondaryMenuViewModel,
                                                      searchResultMenuViewModel);
 

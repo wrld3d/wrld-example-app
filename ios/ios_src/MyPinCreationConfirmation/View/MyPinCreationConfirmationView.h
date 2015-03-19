@@ -38,7 +38,6 @@
 
 - (void) animateToY:(float)y;
 
-@property(nonatomic, retain) UIView* pTitleBar;
 @property(nonatomic, retain) UILabel* pTitleBarText;
 @property(nonatomic, retain) UIView* pMainSection;
 @property(nonatomic, retain) UIButton* pCancelButton;

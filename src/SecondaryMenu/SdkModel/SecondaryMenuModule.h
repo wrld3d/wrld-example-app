@@ -12,6 +12,8 @@
 #include "Search.h"
 #include "SecondaryMenu.h"
 #include "BidirectionalBus.h"
+#include "AboutPage.h"
+#include "Options.h"
 #include "IMetricsService.h"
 
 namespace ExampleApp
@@ -28,18 +30,26 @@ namespace ExampleApp
                 Menu::View::IMenuViewModel* m_pViewModel;
                 std::vector<Menu::View::IMenuSectionViewModel*> m_sections;
                 PerformedSearchMessageHandler* m_pPerformedSearchMessageHandler;
+                Menu::View::IMenuModel* m_pSettingsModel;
+                Menu::View::IMenuOptionsModel* m_pSettingsMenuOptionsModel;
 
             public:
                 SecondaryMenuModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
                                     Reaction::View::IReactionControllerModel& reactionControllerModel,
                                     Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
                                     ExampleAppMessaging::TMessageBus& messageBus,
+                                    AboutPage::View::IAboutPageViewModel& aboutPageViewModel,
+                                    Options::View::IOptionsViewModel& optionsViewModel,
                                     Metrics::IMetricsService& metricsService);
 
                 ~SecondaryMenuModule();
 
-                void AddMenuSection(const std::string& name, const std::string& icon, Menu::View::IMenuModel& menuModel, bool isExpandable);
-
+                void AddMenuSection(const std::string& name,
+                                    Menu::View::IMenuModel& menuModel,
+                                    bool isExpandable);
+                
+                Menu::View::IMenuModel& GetSettingsMenuModel() const;
+                
                 Menu::View::IMenuModel& GetSecondaryMenuModel() const;
 
                 Menu::View::IMenuOptionsModel& GetSecondaryMenuOptionsModel() const;

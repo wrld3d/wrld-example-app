@@ -50,8 +50,6 @@ namespace ExampleApp
 
             void MyPinCreationInitiationController::OnViewStateChangeScreenControl(ScreenControl::View::IScreenControlViewModel &viewModel, float &state)
             {
-                m_view.ShouldOffsetButton(m_viewModel.ShouldOffsetViewButton());
-
                 ScreenControl::View::Apply(m_viewModel, m_view);
             }
         }

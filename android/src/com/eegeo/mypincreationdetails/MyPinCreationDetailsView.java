@@ -31,7 +31,7 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.eegeo.helpers.IActivityIntentResultHandler;
-import com.eegeo.mobileexampleapp.MainActivity;
+import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.mobileexampleapp.R;
 import com.eegeo.photos.PhotoIntentDispatcher;
 
@@ -93,7 +93,7 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
         m_selectFromGalleryButton = (Button)m_view.findViewById(R.id.poi_creation_details_button_gallery);
         m_selectFromGalleryButton.setOnClickListener(this);
         m_poiImage = (ImageView)m_view.findViewById(R.id.poi_creation_details_image);
-        m_title = (EditText)m_view.findViewById(R.id.poi_creation_details_title);
+        m_title = (EditText)m_view.findViewById(R.id.poi_creation_details_title_edit_text);
         m_description = (EditText)m_view.findViewById(R.id.poi_creation_details_description);
         m_shouldShareButton = (ToggleButton)m_view.findViewById(R.id.poi_creation_details_share_togglebutton);
 

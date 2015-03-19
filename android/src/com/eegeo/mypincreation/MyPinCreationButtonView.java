@@ -9,7 +9,7 @@ import android.view.ViewPropertyAnimator;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 
-import com.eegeo.mobileexampleapp.MainActivity;
+import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.mobileexampleapp.R;
 
 public class MyPinCreationButtonView implements View.OnClickListener, AnimatorListener
@@ -23,8 +23,6 @@ public class MyPinCreationButtonView implements View.OnClickListener, AnimatorLi
     private float m_yPosInactive;
 
     private final long stateChangeAnimationTimeMilliseconds = 200;
-    private final float offsetButtonPosition = 45;
-    private final float offsetButtonWithSearchMenuPosition = 85;
 
     public MyPinCreationButtonView(MainActivity activity, long nativeCallerPointer)
     {
@@ -48,12 +46,26 @@ public class MyPinCreationButtonView implements View.OnClickListener, AnimatorLi
 
         m_view.setOnClickListener(this);
 
-        m_yPosActive = uiRoot.getHeight() - m_activity.dipAsPx(45);
-        m_yPosInactive = uiRoot.getHeight();
+        m_view.addOnLayoutChangeListener(new View.OnLayoutChangeListener() 
+        {
+			@Override
+			public void onLayoutChange(View v, int left, int top, int right,
+					int bottom, int oldLeft, int oldTop, int oldRight,
+					int oldBottom) 
+			{   
+		        final float screenHeight = uiRoot.getHeight();
+		        final float screenWidth = uiRoot.getWidth();
+		        final float viewHeight = m_view.getHeight();
 
-        m_view.setX(uiRoot.getWidth()*0.5f - m_activity.dipAsPx(20));
-        m_view.setY(m_yPosInactive);
-
+		        m_yPosActive = (screenHeight - viewHeight) - m_activity.dipAsPx(8.f);
+		        m_yPosInactive = screenHeight + viewHeight;
+		                
+		        m_view.setX((screenWidth * 0.5f) + m_activity.dipAsPx(48));
+		        m_view.setY(m_yPosInactive);
+		        m_view.removeOnLayoutChangeListener(this);
+			}
+        });
+        
         uiRoot.addView(m_view);
     }
 
@@ -102,13 +114,6 @@ public class MyPinCreationButtonView implements View.OnClickListener, AnimatorLi
         {
             m_view.setY(newYPx);
         }
-    }
-
-    public void shouldOffsetButton(final boolean offsetButton)
-    {
-        final RelativeLayout uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
-        float verticalOffset = offsetButton ? offsetButtonWithSearchMenuPosition : offsetButtonPosition;
-        m_yPosActive = uiRoot.getHeight() - m_activity.dipAsPx(verticalOffset);
     }
 
     @Override

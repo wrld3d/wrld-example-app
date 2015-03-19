@@ -2,7 +2,7 @@
 
 package com.eegeo.flattenbutton;
 
-import com.eegeo.mobileexampleapp.MainActivity;
+import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.mobileexampleapp.R;
 
 import android.view.View;
@@ -15,8 +15,8 @@ public class FlattenButtonView implements View.OnClickListener
     protected long m_nativeCallerPointer;
     protected ToggleButton m_view = null;
 
-    private float m_xPosActive;
-    private float m_xPosInactive;
+    private float m_yPosActive;
+    private float m_yPosInactive;
 
     private final long m_stateChangeAnimationTimeMilliseconds = 200;
 
@@ -29,13 +29,28 @@ public class FlattenButtonView implements View.OnClickListener
         m_view = (ToggleButton)m_activity.getLayoutInflater().inflate(R.layout.flatten_button_layout, uiRoot, false);
 
         m_view.setOnClickListener(this);
+        
+        m_view.addOnLayoutChangeListener(new View.OnLayoutChangeListener() 
+        {
+			@Override
+			public void onLayoutChange(View v, int left, int top, int right,
+					int bottom, int oldLeft, int oldTop, int oldRight,
+					int oldBottom) 
+			{   
+		        final float screenHeight = uiRoot.getHeight();
+		        final float screenWidth = uiRoot.getWidth();
+		        final float viewHeight = m_view.getHeight();
+		        final float viewWidth = m_view.getWidth();
 
-        m_xPosActive = 0.0f;
-        m_xPosInactive = -m_activity.dipAsPx(40);
-
-        m_view.setX(m_xPosInactive);
-        m_view.setY(uiRoot.getHeight()*0.5f - m_activity.dipAsPx(20));
-
+		        m_yPosActive = (screenHeight - viewHeight) - m_activity.dipAsPx(8.f);
+		        m_yPosInactive = screenHeight + viewHeight;
+		                
+		        m_view.setX(((screenWidth * 0.5f) - (viewWidth)) - m_activity.dipAsPx(48));
+		        m_view.setY(m_yPosInactive);
+		        m_view.removeOnLayoutChangeListener(this);
+			}
+        });
+        
         uiRoot.addView(m_view);
     }
 
@@ -59,29 +74,29 @@ public class FlattenButtonView implements View.OnClickListener
 
     public void animateToActive()
     {
-        animateViewToX((int)m_xPosActive);
+        animateViewToY((int)m_yPosActive);
     }
 
     public void animateToInactive()
     {
-        animateViewToX((int)m_xPosInactive);
+        animateViewToY((int)m_yPosInactive);
     }
 
-    protected void animateViewToX(final int xAsPx)
+    protected void animateViewToY(final int yAsPx)
     {
         m_view.animate()
-        .x(xAsPx)
+        .y(yAsPx)
         .setDuration(m_stateChangeAnimationTimeMilliseconds);
     }
 
     public void animateToIntermediateOnScreenState(final float onScreenState)
     {
-        int viewXPx = (int)m_view.getX();
-        int newXPx = (int)(m_xPosInactive + (int)(((m_xPosActive - m_xPosInactive) * onScreenState) + 0.5f));
+        int viewYPx = (int)m_view.getY();
+        int newYPx = (int)(m_yPosInactive + (int)(((m_yPosActive - m_yPosInactive) * onScreenState) + 0.5f));
 
-        if(viewXPx != newXPx)
+        if(viewYPx != newYPx)
         {
-            m_view.setX(newXPx);
+            m_view.setY(newYPx);
         }
     }
 }

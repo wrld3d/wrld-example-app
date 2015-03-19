@@ -15,12 +15,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-import com.eegeo.mobileexampleapp.MainActivity;
+import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.mobileexampleapp.R;
 import com.eegeo.categories.CategoryResources;
 
@@ -31,7 +30,6 @@ public class YelpSearchResultPoiView implements View.OnClickListener
     private View m_view = null;
     private RelativeLayout m_uiRoot = null;
 
-    private View m_container = null;
     private View m_closeButton = null;
     private ToggleButton m_togglePinnedButton = null;
     private View m_vendorBranding = null;
@@ -64,23 +62,6 @@ public class YelpSearchResultPoiView implements View.OnClickListener
         m_uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
         m_view = m_activity.getLayoutInflater().inflate(R.layout.search_result_poi_yelp_layout, m_uiRoot, false);
 
-        final int boundsWidth = m_uiRoot.getWidth();
-        final int boundsHeight = m_uiRoot.getHeight();
-        final float boundsOccupyMultiplierHeight = 0.9f;
-        final int mainWindowWidth = (int)Math.min(boundsWidth, 348.f);
-        final int mainWindowHeight = (int)(boundsHeight * boundsOccupyMultiplierHeight);
-        final int mainWindowX = (int)((boundsWidth * 0.5f) - (mainWindowWidth * 0.5f));
-        final int mainWindowY = (int)((boundsHeight * 0.5f) - (mainWindowHeight * 0.5f));
-        
-        m_container = m_view.findViewById(R.id.search_result_poi_view_container);
-        m_container.setX(mainWindowX);
-        m_container.setY(mainWindowY);
-        m_container.setLayoutParams(new RelativeLayout.LayoutParams(mainWindowWidth, mainWindowHeight));
-        
-        View scrollingContent = m_view.findViewById(R.id.search_result_poi_view_title_scrolling_content);
-        final int availableScrollingContentHeight = mainWindowHeight - (m_activity.dipAsPx(30 + 55));
-        scrollingContent.setLayoutParams(new LinearLayout.LayoutParams(mainWindowWidth, availableScrollingContentHeight));
-        
         m_closeButton = m_view.findViewById(R.id.search_result_poi_view_close_button);
         m_togglePinnedButton = (ToggleButton)m_view.findViewById(R.id.search_result_poi_view_toggle_pinned_button);
         m_titleView = (TextView)m_view.findViewById(R.id.search_result_poi_view_title);
@@ -267,14 +248,12 @@ public class YelpSearchResultPoiView implements View.OnClickListener
 				
 			    BitmapFactory.Options bmOptions = new BitmapFactory.Options();
 			    bmOptions.inJustDecodeBounds = true;
-			    int scaleFactor = calculateInSampleSize(bmOptions, m_uiRoot.getWidth(), m_uiRoot.getHeight());
-			    
 			    bmOptions.inJustDecodeBounds = false;
-			    bmOptions.inSampleSize = scaleFactor;
 			    bmOptions.inPurgeable = true;
-			    
-			    Bitmap poiBitmap = BitmapFactory.decodeByteArray(imgData, 0, imgData.length, bmOptions);
-			    m_poiImage.setImageBitmap(poiBitmap);
+				
+				int size = m_activity.dipAsPx(280);
+				Bitmap poiBitmap = BitmapFactory.decodeByteArray(imgData, 0, imgData.length, bmOptions);
+				m_poiImage.setImageBitmap(Bitmap.createScaledBitmap(poiBitmap, size, size, false));
 			}
 		}
 		else if(url.equals(m_poiRatingUrl))

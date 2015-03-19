@@ -2,6 +2,7 @@
 
 #import "UILabelledCheckboxView.h"
 #include "UIColors.h"
+#include "ImageHelpers.h"
 
 @implementation UILabelledCheckboxView
 
@@ -29,8 +30,8 @@
         self.pLabel = [[[UILabel alloc] initWithFrame: CGRectMake(labelX, 0.f, 0.f, checkboxSize)] autorelease];
         [self addSubview:self.pLabel];
         
-        [self.pCheckbox setBackgroundImage:[UIImage imageNamed:[NSString stringWithUTF8String:checkedAsset]] forState:UIControlStateNormal];
-        [self.pCheckbox setBackgroundImage:[UIImage imageNamed:[NSString stringWithUTF8String:uncheckedAsset]] forState:UIControlStateSelected];
+        [self.pCheckbox setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(checkedAsset) forState:UIControlStateNormal];
+        [self.pCheckbox setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(uncheckedAsset) forState:UIControlStateSelected];
         
         self.pLabel.font = [UIFont systemFontOfSize: 16.f];
         self.pLabel.textColor = ExampleApp::Helpers::ColorPalette::GreyTone;

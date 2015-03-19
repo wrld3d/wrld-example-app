@@ -14,11 +14,6 @@ namespace ExampleApp
                 m_callbacks.ExecuteCallbacks();
             }
 
-            void MyPinCreationInitiationViewInterop::ShouldOffsetButton(bool shouldOffset)
-            {
-                [m_pView shouldOffsetButton:shouldOffset];
-            }
-
             void MyPinCreationInitiationViewInterop::SetOnScreenStateToIntermediateValue(float value)
             {
                 [m_pView setOnScreenStateToIntermediateValue:value];

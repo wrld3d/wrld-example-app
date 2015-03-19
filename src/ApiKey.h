@@ -14,7 +14,7 @@ namespace ExampleApp
     static const std::string YelpConsumerSecret = "OBTAIN YELP CONSUMER SECRET AND INSERT IT HERE";
     static const std::string YelpOAuthToken = "OBTAIN YELP OAUTH TOKEN AND INSERT IT HERE";
     static const std::string YelpOAuthTokenSecret = "OBTAIN YELP OAUTH TOKEN SECRET AND INSERT IT HERE";
-
+    
     //! Optional: You may wish to obtain a geonames account key from http://www.geonames.org/export/web-services.html for address/place search provision
     static const std::string GeoNamesUserName = "OBTAIN GEONAMES USERNAME AND INSERT IT HERE";
     

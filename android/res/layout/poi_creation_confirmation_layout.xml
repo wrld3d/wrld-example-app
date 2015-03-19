@@ -1,50 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/poi_creation_confirmation_main"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical" >
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" >
    	
-    <!--  Title bar -->
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="20dp"
-        android:gravity="center"
-        android:background="@color/white"
-        android:clickable="true"
-        android:text="@string/pin_confirmation_title"
-        android:textColor="@color/darkgrey"
-        android:textSize="14dp" />
-    
-    <!--  Button bar -->
-    <RelativeLayout 
-        android:layout_width="fill_parent"
-        android:layout_height="55dp">
-        
-        <RelativeLayout 
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:clickable="true"
-        android:background="@color/gold"/>
+    <LinearLayout 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
         
         <Button
             android:id="@+id/poi_creation_confirmation_close_button"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
-            android:background="@drawable/button_close_states" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_pin_close_states" />
+	        
+        <RelativeLayout
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+            android:background="@drawable/place_pin_background">
+            
+		    <TextView
+		        android:layout_width="wrap_content"
+		        android:layout_height="40dp"
+		        android:gravity="center"
+	            android:layout_centerInParent="true"
+		        android:clickable="true"
+		        android:text="@string/pin_confirmation_title"
+		        android:textColor="@color/darkgrey"
+		        android:textSize="14dp" />
+	    </RelativeLayout>
         
         <Button
             android:id="@+id/poi_creation_confirmation_ok_button"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
-            android:layout_alignParentRight="true"
-            android:background="@drawable/button_ok_states" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_pin_ok_states" />
         
-        <RelativeLayout
-        	android:layout_width="fill_parent"
-        	android:layout_height="10dp"
-        	android:background="@drawable/shadow_03"/>
-        
-    </RelativeLayout>
+    </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>

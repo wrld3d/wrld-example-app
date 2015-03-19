@@ -6,18 +6,24 @@
 #include "MenuView.h"
 #include "MenuItemModel.h"
 #include "IconResources.h"
-
-
+#include "ImageHelpers.h"
+#include "CellConstants.h"
+#include "App.h"
 #include <sstream>
 
 @implementation SearchResultMenuDataProvider
 
-CGFloat const SearchResultRowHeight = 53.0f;
+CGFloat const SearchResultRowHeight = SECTION_HEADER_CELL_HEIGHT;
 
 - (void) setCellAlignInfo:(CustomTableViewCell*)cell :(bool)isHeader
 {
     bool isRightMenu = [m_pView isRightMenu];
-    [cell setAlignInfo :isRightMenu :false :isHeader];
+    
+    [cell setAlignInfo :isRightMenu
+                       :false
+                       :isHeader
+                       :App::IsDeviceSmall() ? @"search_result_background_small" : @"search_result_background"
+                       :@""];
 }
 
 - (UITableViewCell *)tableView:(UITableView*)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -54,9 +60,9 @@ CGFloat const SearchResultRowHeight = 53.0f;
         cell.textLabel.text = [NSString stringWithUTF8String:name.c_str()];
         cell.detailTextLabel.text = [NSString stringWithUTF8String:details.c_str()];
         cell.detailTextLabel.textColor = ExampleApp::Helpers::ColorPalette::DarkGreyTone;
-
+        
         std::string iconResourceName = ExampleApp::Helpers::IconResources::GetSearchResultIconPathForResourceName(icon);
-        cell.imageView.image = [UIImage imageNamed: [NSString stringWithUTF8String:iconResourceName.c_str()]];
+        cell.imageView.image = ExampleApp::Helpers::ImageHelpers::LoadImage(iconResourceName);
         cell.imageView.contentMode = UIViewContentModeScaleToFill;
     }
 
@@ -70,7 +76,7 @@ CGFloat const SearchResultRowHeight = 53.0f;
 
 - (float)getTextLabelFontSize:(bool)headline
 {
-    return 16.f;
+    return 12.f;
 }
 
 @end

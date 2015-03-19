@@ -25,13 +25,10 @@
 @property (nonatomic, retain) UIView* pOptionButtonsContainer;
 @property (nonatomic, retain) UIButton* pCloseButton;
 @property (nonatomic, retain) UIButton* pConfirmButton;
-@property (nonatomic, retain) UIView* pShadowContainer;
 @property (nonatomic, retain) UIView* pControlContainer;
 @property (nonatomic, retain) UIView* pHeadlineContainer;
 @property (nonatomic, retain) UIView* pContentContainer;
 @property (nonatomic, retain) UILabel* pTitleLabel;
-@property (nonatomic, retain) UIImageView* pContainerShadowTop;
-@property (nonatomic, retain) UIImageView* pContainerShadowBottom;
 @property (nonatomic, retain) UILabel* pMessageContent;
 @property (nonatomic, retain) UIActivityIndicatorView* pSpinner;
 

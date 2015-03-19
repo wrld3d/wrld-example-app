@@ -4,16 +4,16 @@ package com.eegeo.mypincreation;
 
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import com.eegeo.mobileexampleapp.MainActivity;
+
+import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.mobileexampleapp.R;
 
 public class MyPinCreationConfirmationView implements View.OnClickListener
 {
     protected MainActivity m_activity = null;
     protected long m_nativeCallerPointer;
-    protected LinearLayout m_view = null;
+    protected View m_view = null;
     protected Button m_closeButton = null;
     protected Button m_confirmButton = null;
 
@@ -42,19 +42,33 @@ public class MyPinCreationConfirmationView implements View.OnClickListener
     private void createView()
     {
         final RelativeLayout uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
-        m_view = (LinearLayout)m_activity.getLayoutInflater().inflate(R.layout.poi_creation_confirmation_layout, uiRoot, false);
+        m_view = m_activity.getLayoutInflater().inflate(R.layout.poi_creation_confirmation_layout, uiRoot, false);
 
         m_closeButton = (Button)m_view.findViewById(R.id.poi_creation_confirmation_close_button);
         m_closeButton.setOnClickListener(this);
         m_confirmButton = (Button)m_view.findViewById(R.id.poi_creation_confirmation_ok_button);
         m_confirmButton.setOnClickListener(this);
-
-        m_yPosActive = uiRoot.getHeight() - m_activity.dipAsPx(75);
-        m_yPosInactive = uiRoot.getHeight();
-
-        m_view.setX(0);
-        m_view.setY(m_yPosInactive);
-
+        m_view.addOnLayoutChangeListener(new View.OnLayoutChangeListener() 
+        {
+			@Override
+			public void onLayoutChange(View v, int left, int top, int right,
+					int bottom, int oldLeft, int oldTop, int oldRight,
+					int oldBottom) 
+			{   
+		        final float screenHeight = uiRoot.getHeight();
+		        final float screenWidth = uiRoot.getWidth();
+		        final float controlWidth = m_view.getWidth();
+		        final float controlHeight = m_view.getHeight();
+		        
+		        m_yPosActive = screenHeight - controlHeight;
+		        m_yPosInactive = screenHeight;
+		
+		        m_view.setX((screenWidth * 0.5f) - (controlWidth * 0.5f));
+		        m_view.setY(m_yPosInactive);
+		        m_view.removeOnLayoutChangeListener(this);
+			}
+        });
+        
         uiRoot.addView(m_view);
     }
 

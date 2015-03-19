@@ -33,19 +33,14 @@ const int DeletePinAlertViewTag = 2;
         m_pController = [UIViewController alloc];
         [m_pController setView:self];
         
-        self->m_pRemovePinButtonBackgroundImage = [[UIImage imageNamed:@"button_remove_pin_off.png"] retain];
-        self->m_pRemovePinHighlightButtonBackgroundImage = [[UIImage imageNamed:@"button_remove_pin_on.png"] retain];
-        self->m_pAddPinButtonBackgroundImage = [[UIImage imageNamed:@"button_add_pin_off.png"] retain];
-        self->m_pAddPinHighlightButtonBackgroundImage = [[UIImage imageNamed:@"button_add_pin_on.png"] retain];
+        self->m_pRemovePinButtonBackgroundImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_remove_pin_off") retain];
+        self->m_pRemovePinHighlightButtonBackgroundImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_remove_pin_on") retain];
+        self->m_pAddPinButtonBackgroundImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_add_pin_off") retain];
+        self->m_pAddPinHighlightButtonBackgroundImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_add_pin_on") retain];
         
         m_pInterop = pInterop;
         self.alpha = 0.f;
         m_stateChangeAnimationTimeSeconds = 0.2f;
-        
-        self.pShadowContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pShadowContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::BlackTone;
-        self.pShadowContainer.alpha = 0.1f;
-        [self addSubview: self.pShadowContainer];
         
         self.pControlContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         self.pControlContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::MainHudColor;
@@ -56,8 +51,8 @@ const int DeletePinAlertViewTag = 2;
         [self.pControlContainer addSubview: self.pCloseButtonContainer];
         
         self.pCloseButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        [self.pCloseButton setBackgroundImage:[UIImage imageNamed:@"button_close_off.png"] forState:UIControlStateNormal];
-        [self.pCloseButton setBackgroundImage:[UIImage imageNamed:@"button_close_on.png"] forState:UIControlStateHighlighted];
+        [self.pCloseButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_close_off") forState:UIControlStateNormal];
+        [self.pCloseButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_close_on") forState:UIControlStateHighlighted];
         [self.pCloseButton addTarget:self action:@selector(handleClosedButtonSelected) forControlEvents:UIControlEventTouchUpInside];
         [self.pCloseButtonContainer addSubview: self.pCloseButton];
         
@@ -179,9 +174,6 @@ const int DeletePinAlertViewTag = 2;
     [self.pCloseButtonContainer removeFromSuperview];
     [self.pCloseButtonContainer release];
     
-    [self.pShadowContainer removeFromSuperview];
-    [self.pShadowContainer release];
-    
     [self.pControlContainer removeFromSuperview];
     [self.pControlContainer release];
     
@@ -281,24 +273,15 @@ const int DeletePinAlertViewTag = 2;
                                               mainWindowWidth,
                                               mainWindowHeight);
     
-    self.pShadowContainer.frame = CGRectMake(2.f,
-                                             2.f,
-                                             mainWindowWidth,
-                                             mainWindowHeight);
-    
     const float headlineHeight = 50.f;
     const float closeButtonSectionHeight = 80.f;
     const float closeButtonSectionOffsetY = mainWindowHeight - closeButtonSectionHeight;
     const float contentSectionHeight = mainWindowHeight - (closeButtonSectionHeight + headlineHeight);
-    const float shadowHeight = 10.f;
     
     self.pHeadlineContainer.frame = CGRectMake(0.f,
                                                0.f,
                                                mainWindowWidth,
                                                headlineHeight);
-    
-    ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pHeadlineContainer, "shadow_03", 0.f, headlineHeight, mainWindowWidth, shadowHeight);
-    
     
     self.pContentContainer.frame = CGRectMake(0.f,
                                               headlineHeight,
@@ -319,8 +302,6 @@ const int DeletePinAlertViewTag = 2;
                                                   mainWindowWidth,
                                                   closeButtonSectionHeight);
     
-    ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pContentContainer, "shadow_03", 0.f, contentSectionHeight, mainWindowWidth, shadowHeight);
-    
     self.pCloseButton.frame = CGRectMake(mainWindowWidth - closeButtonSectionHeight,
                                          0.f,
                                          closeButtonSectionHeight,
@@ -339,7 +320,7 @@ const int DeletePinAlertViewTag = 2;
                                         headlineHeight);
     self.pTitleLabel.font = [UIFont systemFontOfSize:24.0f];
     
-    self->m_pVendorBrandingImage = [[UIImage imageNamed:@"yelp_logo_100x50.png"] retain];
+    self->m_pVendorBrandingImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"yelp_logo_100x50", true) retain];
     self.pVendorBrandingImageContainer = [[[UIImageView alloc] initWithImage:self->m_pVendorBrandingImage] autorelease];
     [self.pCloseButtonContainer addSubview:self.pVendorBrandingImageContainer];
     
@@ -408,7 +389,7 @@ const int DeletePinAlertViewTag = 2;
         currentLabelY += labelYSpacing + self.pWebHeaderContainer.frame.size.height;
         
         self.pWebHeaderContainer.hidden = false;
-        UIImage* pButtonImage = [UIImage imageNamed:@"reviewsFromYelpRED.gif"];
+        UIImage* pButtonImage = ExampleApp::Helpers::ImageHelpers::LoadImage(@"reviewsFromYelpRED.gif", true);
         const CGFloat buttonX = (self.pCloseButtonContainer.frame.size.width * 0.5f - pButtonImage.size.width * 0.5f);
         self.pVendorWebLinkButton = [[[UIButton alloc] initWithFrame:CGRectMake(buttonX,
                                                                                 currentLabelY,

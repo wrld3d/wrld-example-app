@@ -20,7 +20,8 @@
     CGFloat m_screenHeight;
     CGFloat m_dialogContainerWidth;
     CGFloat m_dialogContainerHeight;
-    CGFloat m_borderMargin;
+    CGFloat m_borderMarginX;
+    CGFloat m_borderMarginY;
     CGFloat m_arrowLength;
     CGPoint m_dialogPosition;
 }
@@ -48,7 +49,5 @@
 @property (nonatomic, retain) UITextView* pDescriptionLabel;
 @property (nonatomic, retain) UIView* pCloseButtonContainer;
 @property (nonatomic, retain) UIButton* pCloseButton;
-@property (nonatomic, retain) UIImageView* pCloseButtonContainerShadow;
-@property (nonatomic, retain) UIImageView* pDialogShadow;
 
 @end

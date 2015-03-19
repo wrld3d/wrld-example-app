@@ -23,6 +23,28 @@ namespace ExampleApp
             {
                 ScreenControl::View::Apply(m_viewModel, m_view);
             }
+            
+            void FlattenButtonController::OnMyPinCreationStateChangedMessage(const MyPinCreation::MyPinCreationStateChangedMessage& message)
+            {
+                switch (message.GetMyPinCreationStage())
+                {
+                    case MyPinCreation::Inactive:
+                    {
+                        m_viewModel.AddToScreen();
+                    }break;
+                    case MyPinCreation::Ring:
+                    {
+                        m_viewModel.RemoveFromScreen();
+                    }break;
+                    case MyPinCreation::Details:
+                    {
+                    }break;
+                    default:
+                    {
+                        Eegeo_ASSERT(false, "Unknown MyPinCreationStage");
+                    }
+                }
+            }
 
             FlattenButtonController::FlattenButtonController(
                 IFlattenButtonViewModel& viewModel,
@@ -37,14 +59,17 @@ namespace ExampleApp
                 , m_stateChangeHandler(this, &FlattenButtonController::OnFlattenButtonModelStateChangedMessage)
                 , m_toggledCallback(this, &FlattenButtonController::OnToggleButton)
                 , m_viewStateCallback(this, &FlattenButtonController::OnViewStateChangeScreenControl)
+                , m_myPinCreationStateChangedMessageHandler(this, &FlattenButtonController::OnMyPinCreationStateChangedMessage)
             {
                 m_view.InsertToggleCallback(m_toggledCallback);
                 m_viewModel.InsertOnScreenStateChangedCallback(m_viewStateCallback);
                 m_messageBus.SubscribeUi(m_stateChangeHandler);
+                m_messageBus.SubscribeUi(m_myPinCreationStateChangedMessageHandler);
             }
 
             FlattenButtonController::~FlattenButtonController()
             {
+                m_messageBus.UnsubscribeUi(m_myPinCreationStateChangedMessageHandler);
                 m_messageBus.UnsubscribeUi(m_stateChangeHandler);
                 m_viewModel.RemoveOnScreenStateChangedCallback(m_viewStateCallback);
                 m_view.RemoveToggleCallback(m_toggledCallback);

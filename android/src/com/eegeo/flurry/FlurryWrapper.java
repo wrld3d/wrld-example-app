@@ -3,7 +3,7 @@ package com.eegeo.flurry;
 import java.util.Map;
 import java.util.HashMap;
 
-import com.eegeo.mobileexampleapp.MainActivity;
+import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.flurry.android.FlurryAgent;
 
 public class FlurryWrapper 

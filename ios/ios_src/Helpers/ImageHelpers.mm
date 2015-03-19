@@ -4,10 +4,34 @@
 
 namespace
 {
-    std::string GetImageNameForDevice(const std::string& name)
+    NSString* GetImageScaleSuffix()
     {
-        // todo: either return name of normal or high res image for retina or non retina
-        return name;
+        // This is not strictly neccessary for images loaded with [UIImage imageNamed:], but is done
+        // so we have a consistent way to get the right texture name for non UIKit textures like the
+        // 3D pins, GPS marker, POI marker, etc.
+        
+        int scale = 1;
+        UIScreen* screen = [UIScreen mainScreen];
+        if ([screen respondsToSelector: @selector(scale)])
+        {
+            scale = static_cast<int>(screen.scale);
+        }
+        
+        if(scale == 2)
+        {
+            return @"@2x";
+        }
+        else if(scale == 3)
+        {
+            return @"@3x";
+        }
+        
+        return @"";
+    }
+    
+    NSString* GetImageNameForDevice(const NSString* name)
+    {
+        return [NSString stringWithFormat:@"%@%@", name, GetImageScaleSuffix()];
     }
 
     CGRect GetRect(UIView* pParentView,
@@ -72,17 +96,14 @@ namespace
                                  const std::string& fullName,
                                  const std::string* fullHighlightableName=NULL)
     {
-        NSString* pNameString = [NSString stringWithUTF8String:fullName.c_str()];
-
-        UIImage* pImage = [UIImage imageNamed:pNameString];
-
+        UIImage* pImage = ExampleApp::Helpers::ImageHelpers::LoadImage(fullName);
+        
         UIImageView* pImageView;
 
         const bool useHighlight = fullHighlightableName != NULL;
         if(useHighlight)
         {
-            NSString* pHighlightNameString = [NSString stringWithUTF8String:fullHighlightableName->c_str()];
-            UIImage* pHighlightImage = [UIImage imageNamed:pHighlightNameString];
+            UIImage* pHighlightImage = ExampleApp::Helpers::ImageHelpers::LoadImage(*fullHighlightableName);
             pImageView = [[UIImageView alloc] initWithImage:pImage highlightedImage:pHighlightImage];
             pImageView.userInteractionEnabled = true;
 
@@ -136,14 +157,12 @@ namespace ExampleApp
                                                  const std::string& name,
                                                  OffsetValue offsetInParent)
             {
-                std::string fullName = GetImageNameForDevice(name) + ".png";
-                return AddImageToParentView(pParentView, fullName, offsetInParent, NULL);
+                return AddImageToParentView(pParentView, name, offsetInParent, NULL);
             }
 
             UIImageView* AddPngImageToParentView(UIView* pParentView, const std::string& name, float x, float y, float w, float h)
             {
-                std::string fullName = GetImageNameForDevice(name) + ".png";
-                return AddImageToParentView(pParentView, fullName, x, y, w, h, NULL);
+                return AddImageToParentView(pParentView, name, x, y, w, h, NULL);
             }
 
             UIImageView* AddPngHighlightedImageToParentView(UIView* pParentView,
@@ -151,9 +170,37 @@ namespace ExampleApp
                     const std::string& highlightedName,
                     OffsetValue offsetInParent)
             {
-                std::string fullName = GetImageNameForDevice(name) + ".png";
-                std::string fullHighlightedName = GetImageNameForDevice(highlightedName) + ".png";
-                return AddImageToParentView(pParentView, fullName, offsetInParent, &fullHighlightedName);
+                return AddImageToParentView(pParentView, name, offsetInParent, &highlightedName);
+            }
+            
+            std::string GetImageNameForDevice(const std::string& name,
+                                              const std::string& ext)
+            {
+                NSString* nsStrName = [NSString stringWithUTF8String:name.c_str()];
+                NSString* nsStrDeviceName = ::GetImageNameForDevice(nsStrName);
+                std::string result = [nsStrDeviceName UTF8String];
+                return result + ext;
+            }
+            
+            UIImage* LoadImage(const std::string& name, bool permitFallbackToNonNativeResolution)
+            {
+                NSString* nsStrName = [NSString stringWithUTF8String:name.c_str()];
+                return LoadImage(nsStrName, permitFallbackToNonNativeResolution);
+            }
+            
+            UIImage* LoadImage(const NSString* name, bool permitFallbackToNonNativeResolution)
+            {
+                // Uncomment to validate image asset exists at native resolution; this is useful when debugging to detect
+                // if iOS is silently falling back to an inappropriate image.
+                const bool validateImageExists = false;
+                
+                if(validateImageExists && !permitFallbackToNonNativeResolution)
+                {
+                    UIImage* pImg = [UIImage imageNamed: ::GetImageNameForDevice(name)];
+                    Eegeo_ASSERT(pImg != nil, "Missing image asset %s for current device resolution.\n", [name UTF8String]);
+                }
+                
+                return [UIImage imageNamed: [NSString stringWithFormat:@"%@", name]];
             }
         }
     }

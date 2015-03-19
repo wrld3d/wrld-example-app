@@ -18,7 +18,6 @@ namespace ExampleApp
             MyPinCreationCompositeViewModel::MyPinCreationCompositeViewModel(ExampleAppMessaging::TMessageBus& messageBus,
                     IMyPinCreationInitiationViewModel& initiationViewModel,
                     IMyPinCreationConfirmationViewModel& confirmationViewModel,
-                    ExampleApp::Menu::View::IMenuViewModel& primaryMenuViewModel,
                     ExampleApp::Menu::View::IMenuViewModel& secondaryMenuViewModel,
                     ExampleApp::Menu::View::IMenuViewModel& searchResultMenuViewModel)
                 : m_stateChangeHandler(this, &MyPinCreationCompositeViewModel::OnPoiRingStateChangedMessage)
@@ -26,7 +25,6 @@ namespace ExampleApp
                 , m_messageBus(messageBus)
                 , m_initiationViewModel(initiationViewModel)
                 , m_confirmationViewModel(confirmationViewModel)
-                , m_primaryMenuViewModel(primaryMenuViewModel)
                 , m_secondaryMenuViewModel(secondaryMenuViewModel)
                 , m_searchResultMenuViewModel(searchResultMenuViewModel)
             {
@@ -47,7 +45,6 @@ namespace ExampleApp
                 case Inactive:
                 {
                     m_initiationViewModel.AddToScreen();
-                    m_primaryMenuViewModel.AddToScreen();
                     m_secondaryMenuViewModel.AddToScreen();
                     m_searchResultMenuViewModel.AddToScreen();
                     m_messageBus.Publish(WorldPins::WorldPinsVisibilityMessage(true));
@@ -61,7 +58,6 @@ namespace ExampleApp
                     m_confirmationViewModel.AddToScreen();
 
                     m_initiationViewModel.RemoveFromScreen();
-                    m_primaryMenuViewModel.RemoveFromScreen();
                     m_secondaryMenuViewModel.RemoveFromScreen();
 
                     m_messageBus.Publish(WorldPins::WorldPinsVisibilityMessage(false));
