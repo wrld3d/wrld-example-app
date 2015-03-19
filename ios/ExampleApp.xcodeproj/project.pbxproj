@@ -402,6 +402,7 @@
 		18FB64B21A94D504005A9411 /* SearchResultPoiViewImageFetcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18FB64AD1A94D504005A9411 /* SearchResultPoiViewImageFetcher.cpp */; };
 		18FB64B31A94D504005A9411 /* SearchResultPoiViewOpenedMessageHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18FB64AF1A94D504005A9411 /* SearchResultPoiViewOpenedMessageHandler.cpp */; };
 		18FB64B41A94D504005A9411 /* SearchResultPoiViewOpenedMessageHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18FB64AF1A94D504005A9411 /* SearchResultPoiViewOpenedMessageHandler.cpp */; };
+		18FD9FA11ABB4A0C009F4085 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5675901D19F53C7A00C4599E /* QuartzCore.framework */; };
 		18FE20DB1AA9B2C200ACE28A /* button_close_place_pin_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18FE20CD1AA9B2C200ACE28A /* button_close_place_pin_off@2x.png */; };
 		18FE20DC1AA9B2C200ACE28A /* button_close_place_pin_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18FE20CD1AA9B2C200ACE28A /* button_close_place_pin_off@2x.png */; };
 		18FE20DD1AA9B2C200ACE28A /* button_close_place_pin_off@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18FE20CE1AA9B2C200ACE28A /* button_close_place_pin_off@3x.png */; };
@@ -2372,21 +2373,22 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				56BFB0CD1A8B7BF800572C99 /* libFlurry_6.0.0.a in Frameworks */,
-				56BFB0CC1A8B7BDC00572C99 /* Security.framework in Frameworks */,
-				56BFB0CA1A8B76D200572C99 /* libapps-on-maps-cpp11.a in Frameworks */,
 				56BFB0C81A8B76D200572C99 /* libapps-on-maps-cpp11-sim.a in Frameworks */,
+				56BFB0CA1A8B76D200572C99 /* libapps-on-maps-cpp11.a in Frameworks */,
 				56BFB0C31A8B73ED00572C99 /* libturbojpeg.a in Frameworks */,
+				56BFB0CC1A8B7BDC00572C99 /* Security.framework in Frameworks */,
+				56BFB0CD1A8B7BF800572C99 /* libFlurry_6.0.0.a in Frameworks */,
+				222E068F1948B08B0004FFD9 /* SystemConfiguration.framework in Frameworks */,
+				222E06951948B08B0004FFD9 /* CoreGraphics.framework in Frameworks */,
+				18FD9FA11ABB4A0C009F4085 /* QuartzCore.framework in Frameworks */,
 				222E068C1948B08B0004FFD9 /* CoreLocation.framework in Frameworks */,
 				222E068D1948B08B0004FFD9 /* libz.dylib in Frameworks */,
 				222E068E1948B08B0004FFD9 /* MobileCoreServices.framework in Frameworks */,
-				222E068F1948B08B0004FFD9 /* SystemConfiguration.framework in Frameworks */,
 				222E06901948B08B0004FFD9 /* CFNetwork.framework in Frameworks */,
 				222E06911948B08B0004FFD9 /* GLKit.framework in Frameworks */,
 				222E06921948B08B0004FFD9 /* OpenGLES.framework in Frameworks */,
 				222E06931948B08B0004FFD9 /* UIKit.framework in Frameworks */,
 				222E06941948B08B0004FFD9 /* Foundation.framework in Frameworks */,
-				222E06951948B08B0004FFD9 /* CoreGraphics.framework in Frameworks */,
 				222E06961948B08B0004FFD9 /* CoreData.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
