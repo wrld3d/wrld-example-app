@@ -15,8 +15,12 @@ namespace ExampleApp
             public:
                 virtual ~ISecondaryMenuModule() { }
 
-                virtual void AddMenuSection(const std::string& name, const std::string& icon, Menu::View::IMenuModel& menuModel, bool isExpandable) = 0;
-
+                virtual void AddMenuSection(const std::string& name,
+                                            Menu::View::IMenuModel& menuModel,
+                                            bool isExpandable) = 0;
+                
+                virtual Menu::View::IMenuModel& GetSettingsMenuModel() const = 0;
+                
                 virtual Menu::View::IMenuModel& GetSecondaryMenuModel() const = 0;
 
                 virtual Menu::View::IMenuOptionsModel& GetSecondaryMenuOptionsModel() const = 0;

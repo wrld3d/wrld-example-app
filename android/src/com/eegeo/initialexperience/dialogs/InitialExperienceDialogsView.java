@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.eegeo.mobileexampleapp.MainActivity;
+import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.mobileexampleapp.R;
 
 public class InitialExperienceDialogsView implements View.OnClickListener, AnimationListener
@@ -109,6 +109,8 @@ public class InitialExperienceDialogsView implements View.OnClickListener, Anima
     	float animationAnchorX = 0.0f;
     	float animationAnchorY = 0.0f;
     	
+    	LinearLayout.LayoutParams downArrowLayout = null;
+    	
     	switch(step)
     	{
     	case SearchMenu:
@@ -128,28 +130,36 @@ public class InitialExperienceDialogsView implements View.OnClickListener, Anima
     		break;
     		
     	case Compass:
-    		m_arrowUp.setVisibility(View.VISIBLE);
+    		m_arrowDown.setVisibility(View.VISIBLE);
+    		layout.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
     		layout.addRule(RelativeLayout.CENTER_HORIZONTAL);
-    		layout.setMargins(m_activity.dipAsPx(0), m_activity.dipAsPx(70), m_activity.dipAsPx(0), m_activity.dipAsPx(0));
+    		layout.setMargins(m_activity.dipAsPx(0), m_activity.dipAsPx(0), m_activity.dipAsPx(0), m_activity.dipAsPx(90));
     		animationAnchorX = 0.5f;
-    		animationAnchorY = 0.0f;
+    		animationAnchorY = 1.0f;
     		break;
     		
     	case PinCreation:
     		m_arrowDown.setVisibility(View.VISIBLE);
     		layout.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
     		layout.addRule(RelativeLayout.CENTER_HORIZONTAL);
-    		layout.setMargins(m_activity.dipAsPx(0), m_activity.dipAsPx(0), m_activity.dipAsPx(0), m_activity.dipAsPx(50));
+    		layout.setMargins(m_activity.dipAsPx(0), m_activity.dipAsPx(0), m_activity.dipAsPx(0), m_activity.dipAsPx(90));
+    		downArrowLayout = (LinearLayout.LayoutParams)m_arrowDown.getLayoutParams();
+    		downArrowLayout.leftMargin = m_activity.dipAsPx(48 + 32);
+    		m_arrowDown.setLayoutParams(downArrowLayout);
     		animationAnchorX = 0.5f;
     		animationAnchorY = 1.0f;
     		break;
     		
     	case Flatten:
-    		m_arrowLeft.setVisibility(View.VISIBLE);
-    		layout.addRule(RelativeLayout.CENTER_VERTICAL);
-    		layout.setMargins(m_activity.dipAsPx(40), m_activity.dipAsPx(0), m_activity.dipAsPx(0), m_activity.dipAsPx(0));
-    		animationAnchorX = 0.0f;
-    		animationAnchorY = 0.5f;
+    		m_arrowDown.setVisibility(View.VISIBLE);
+    		layout.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+    		layout.addRule(RelativeLayout.CENTER_HORIZONTAL);
+    		layout.setMargins(m_activity.dipAsPx(0), m_activity.dipAsPx(0), m_activity.dipAsPx(0), m_activity.dipAsPx(90));
+    		downArrowLayout = (LinearLayout.LayoutParams)m_arrowDown.getLayoutParams();
+    		downArrowLayout.leftMargin = -m_activity.dipAsPx(48 + 32);
+    		m_arrowDown.setLayoutParams(downArrowLayout);
+    		animationAnchorX = 0.5f;
+    		animationAnchorY = 1.0f;
     		break;
     		
     	case SourceCode:

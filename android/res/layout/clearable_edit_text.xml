@@ -1,0 +1,25 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+	
+	<EditText
+		android:id="@+id/clearable_edit"
+		            android:inputType="text"
+		            android:textColor="@color/black"
+					android:layout_width="fill_parent"
+					android:layout_height="fill_parent"
+					android:paddingRight="30dp"
+					android:textSize="12.0dp"
+			    	android:imeOptions="actionGo"/>
+	<Button
+	    android:id="@+id/clearable_button_clear"
+	    android:layout_width="24dp"
+	    android:layout_height="24dp"
+	    android:layout_alignParentRight="true"
+	    android:layout_marginRight="5dip"
+	    android:background="@drawable/ic_clear_search_api_holo_light"
+	    android:gravity="center_vertical" 
+	    android:layout_centerVertical="true"/>
+	
+
+</RelativeLayout>

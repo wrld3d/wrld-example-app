@@ -2,6 +2,11 @@
 
 package com.eegeo.mobileexampleapp;
 
+import com.eegeo.entrypointinfrastructure.EegeoSurfaceView;
+import com.eegeo.entrypointinfrastructure.MainActivity;
+import com.eegeo.entrypointinfrastructure.NativeJniCalls;
+import com.eegeo.mobileexampleapp.R;
+
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -47,6 +52,7 @@ public class BackgroundThreadActivity extends MainActivity
 
         DisplayMetrics dm = getResources().getDisplayMetrics();
         final float dpi = dm.ydpi;
+        final int density = dm.densityDpi;
         final Activity activity = this;
 
         m_threadedRunner = new ThreadedUpdateRunner(false);
@@ -59,7 +65,7 @@ public class BackgroundThreadActivity extends MainActivity
         {
             public void run()
             {
-                m_nativeAppWindowPtr = NativeJniCalls.createNativeCode(activity, getAssets(), dpi);
+                m_nativeAppWindowPtr = NativeJniCalls.createNativeCode(activity, getAssets(), dpi, density);
 
                 if(m_nativeAppWindowPtr == 0)
                 {

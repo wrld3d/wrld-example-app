@@ -8,6 +8,8 @@
 
 @implementation InitialExperienceDialogsView
 
+const float arrowWidth = 10;
+
 - (id) initView
 {
     self = [super init];
@@ -44,17 +46,13 @@
         [self.pDialogTextboxContainer addSubview: self.pDescriptionLabel];
         
         self.pCloseButtonContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pCloseButtonContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::GoldTone;
+        self.pCloseButtonContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::WhiteTone;
         [self.pDialogContainer addSubview: self.pCloseButtonContainer];
         
         self.pCloseButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        [self.pCloseButton setBackgroundImage:[UIImage imageNamed:@"button_close_off.png"] forState:UIControlStateNormal];
-        [self.pCloseButton setBackgroundImage:[UIImage imageNamed:@"button_close_on.png"] forState:UIControlStateHighlighted];
+        [self.pCloseButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"buttonsmall_close_off") forState:UIControlStateNormal];
+        [self.pCloseButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"buttonsmall_close_on") forState:UIControlStateHighlighted];
         [self.pCloseButtonContainer addSubview: self.pCloseButton];
-        
-        self.pCloseButtonContainerShadow = ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pDialogContainer, "shadow_03", 0.f, 0.f, 0, 0);
-        
-        self.pDialogShadow = ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pDialogContainer, "shadow_01", 0.f, 0.f, 0, 0);
         
         m_tapGestureRecogniser = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(_tapTabGesture:)];
         [m_tapGestureRecogniser setDelegate:self];
@@ -72,12 +70,6 @@
 - (void)dealloc
 {
     [m_tapGestureRecogniser release];
-    
-    [self.pDialogShadow removeFromSuperview];
-    [self.pDialogShadow release];
-    
-    [self.pCloseButtonContainerShadow removeFromSuperview];
-    [self.pCloseButtonContainerShadow release];
     
     [self.pCloseButton removeFromSuperview];
     [self.pCloseButton release];
@@ -128,15 +120,14 @@
     
     const bool useSmallScreen = App::IsDeviceSmall();
     
-    m_borderMargin = useSmallScreen ? 20 : 64;
-    const float arrowWidth = 10;
+    m_borderMarginX = useSmallScreen ? 20 : 64;
+    m_borderMarginY = useSmallScreen ? 30 : 64;
     m_arrowLength = useSmallScreen ?  20 : 70;
 
-    const float closeButtonSectionHeight = 50.f;
-    const float shadowHeight = 10.f;
+    const float closeButtonSectionHeight = 20.f;
     
-    const float dialogHeight = 90;
-    float dialogWidth = (m_screenWidth - 2 * (m_arrowLength + m_borderMargin));
+    const float dialogHeight = 110;
+    float dialogWidth = (m_screenWidth - 2 * (m_arrowLength + m_borderMarginX));
     if(!useSmallScreen)
     {
         dialogWidth /= 2;
@@ -147,25 +138,17 @@
     
     [self.pDialogContainer setFrame:CGRectMake(m_dialogPosition.x, m_dialogPosition.y, m_dialogContainerWidth, m_dialogContainerHeight)];
     
-    [self.pArrowLeft setFrame:CGRectMake(0, m_dialogContainerHeight/2 - arrowWidth/2, m_arrowLength, arrowWidth)];
-    [self.pArrowRight setFrame:CGRectMake(m_dialogContainerWidth-m_arrowLength, m_dialogContainerHeight/2 - arrowWidth/2, m_arrowLength, arrowWidth)];
-    [self.pArrowUp setFrame:CGRectMake(m_dialogContainerWidth/2 - arrowWidth/2, 0, arrowWidth, m_arrowLength)];
-    [self.pArrowDown setFrame:CGRectMake(m_dialogContainerWidth/2 - arrowWidth/2, m_dialogContainerHeight-m_arrowLength, arrowWidth, m_arrowLength)];
-    
     [self.pDialogContainer setAlpha:m_visible ? 1.0f : 0.0f];
     [self.pDialogTextboxContainer setFrame:CGRectMake(m_arrowLength, m_arrowLength, dialogWidth, dialogHeight)];
     self.pTitleLabel.font = [UIFont systemFontOfSize:20.f];
     self.pTitleLabel.numberOfLines = 1;
     self.pTitleLabel.frame = CGRectMake(10, 10, dialogWidth - 10, 20);
     self.pDescriptionLabel.font = useSmallScreen ? [UIFont systemFontOfSize:12.f] : [UIFont systemFontOfSize:15.f];
-    self.pDescriptionLabel.frame = CGRectMake(10, 30, dialogWidth - 20, 50);
+    self.pDescriptionLabel.frame = CGRectMake(10, 30, dialogWidth - 20, 70);
     self.pDescriptionLabel.dataDetectorTypes = UIDataDetectorTypeLink;
     
     self.pCloseButtonContainer.frame = CGRectMake(m_arrowLength, m_arrowLength+dialogHeight, dialogWidth, closeButtonSectionHeight);
-    self.pCloseButtonContainerShadow.frame = CGRectMake(m_arrowLength, m_arrowLength + dialogHeight, dialogWidth, shadowHeight);
     self.pCloseButton.frame = CGRectMake(dialogWidth-closeButtonSectionHeight, 0, closeButtonSectionHeight, closeButtonSectionHeight);
-    
-    self.pDialogShadow.frame = CGRectMake(m_arrowLength, m_arrowLength+dialogHeight+closeButtonSectionHeight, dialogWidth, shadowHeight);
 }
 
 - (BOOL) consumesTouch:(UITouch *)touch
@@ -177,6 +160,11 @@
                    :(const std::string *)title
                    :(const std::string *)description
 {
+    [self.pArrowLeft setFrame:CGRectMake(0, m_dialogContainerHeight/2 - arrowWidth/2, m_arrowLength, arrowWidth)];
+    [self.pArrowRight setFrame:CGRectMake(m_dialogContainerWidth-m_arrowLength, m_dialogContainerHeight/2 - arrowWidth/2, m_arrowLength, arrowWidth)];
+    [self.pArrowUp setFrame:CGRectMake(m_dialogContainerWidth/2 - arrowWidth/2, 0, arrowWidth, m_arrowLength)];
+    [self.pArrowDown setFrame:CGRectMake(m_dialogContainerWidth/2 - arrowWidth/2, m_dialogContainerHeight-m_arrowLength, arrowWidth, m_arrowLength)];
+    
     [self.pArrowLeft setHidden:YES];
     [self.pArrowRight setHidden:YES];
     [self.pArrowUp setHidden:YES];
@@ -185,52 +173,82 @@
     const bool useSmallScreen = App::IsDeviceSmall();
     
     CGPoint anchor = CGPointMake(0.5f, 0.5f);
+
+    // half-compass + spacing + half-control
+    const float bottomButtonCentreOffsets(40.f + 8.f + 32.f);
     
     switch(dialogType)
     {
-        case ExampleApp::InitialExperience::Dialogs::InitialExperienceDialogType::SearchMenu:
+        case ExampleApp::InitialExperience::Dialogs::InitialExperienceDialogType::MainMenu:
             [self.pArrowRight setHidden:NO];
             anchor = CGPointMake(1.0f, 0.5f);
             m_dialogPosition = useSmallScreen
                 ? CGPointMake(-m_arrowLength, 0)
-                : CGPointMake(m_screenWidth - (m_dialogContainerWidth + m_borderMargin), m_borderMargin - m_arrowLength*1.5f);
+                : CGPointMake(m_screenWidth - (m_dialogContainerWidth + m_borderMarginY), m_borderMarginY - m_arrowLength*1.5f);
             break;
             
-        case ExampleApp::InitialExperience::Dialogs::InitialExperienceDialogType::PrimaryMenu:
+        case ExampleApp::InitialExperience::Dialogs::InitialExperienceDialogType::SearchResultMenu:
             [self.pArrowLeft setHidden:NO];
             anchor = CGPointMake(0.0f, 0.5f);
             m_dialogPosition = useSmallScreen
                 ? CGPointMake(m_screenWidth - m_dialogContainerWidth + m_arrowLength, 0)
-                : CGPointMake(m_borderMargin, m_borderMargin - m_arrowLength*1.5f);
+                : CGPointMake(m_borderMarginY, m_borderMarginY - m_arrowLength*1.5f);
             break;
             
         case ExampleApp::InitialExperience::Dialogs::InitialExperienceDialogType::Compass:
-            [self.pArrowUp setHidden:NO];
-            anchor = CGPointMake(0.5f, 0.0f);
+            [self.pArrowDown setHidden:NO];
+            anchor = CGPointMake(0.5f, 1.0f);
+            
             m_dialogPosition = useSmallScreen
-                ? CGPointMake(m_screenWidth/2 - m_dialogContainerWidth/2, m_borderMargin*3.0f)
-                : CGPointMake(m_screenWidth/2 - m_dialogContainerWidth/2, m_borderMargin*1.5f);
+                ? CGPointMake(m_screenWidth/2 - m_dialogContainerWidth/2,
+                              m_screenHeight - (m_dialogContainerHeight + (m_borderMarginY*3.0f)))
+                : CGPointMake(m_screenWidth/2 - m_dialogContainerWidth/2,
+                              m_screenHeight - (m_dialogContainerHeight + (m_borderMarginY*1.5f)));
             break;
             
         case ExampleApp::InitialExperience::Dialogs::InitialExperienceDialogType::PinCreation:
             [self.pArrowDown setHidden:NO];
             anchor = CGPointMake(0.5f, 1.0f);
             
-            m_dialogPosition = useSmallScreen
-                ? CGPointMake(m_screenWidth/2 - m_dialogContainerWidth/2, m_screenHeight - (m_dialogContainerHeight + (m_borderMargin*3.0f)))
-                : CGPointMake(m_screenWidth/2 - m_dialogContainerWidth/2, m_screenHeight - (m_dialogContainerHeight + (m_borderMargin*1.5f)));
+            if(useSmallScreen)
+            {
+                m_dialogPosition = CGPointMake((m_screenWidth/2 - m_dialogContainerWidth/2),
+                                               m_screenHeight - (m_dialogContainerHeight + (m_borderMarginY*3.0f)));
+                
+                [self.pArrowDown setFrame:CGRectMake((m_dialogContainerWidth/2 - arrowWidth/2) + bottomButtonCentreOffsets,
+                                                     m_dialogContainerHeight-m_arrowLength, arrowWidth, m_arrowLength)];
+            }
+            else
+            {
+                m_dialogPosition = CGPointMake((m_screenWidth/2 - m_dialogContainerWidth/2) + bottomButtonCentreOffsets,
+                                               m_screenHeight - (m_dialogContainerHeight + (m_borderMarginY*1.5f)));
+                
+            }
             break;
             
         case ExampleApp::InitialExperience::Dialogs::InitialExperienceDialogType::Flatten:
-            [self.pArrowLeft setHidden:NO];
-            anchor = CGPointMake(0.0f, 0.5f);
-            m_dialogPosition = useSmallScreen
-                ? CGPointMake(m_screenWidth - m_dialogContainerWidth + m_arrowLength, m_screenHeight/2 - m_dialogContainerHeight*0.5f)
-                : CGPointMake(m_borderMargin, m_screenHeight/2 - m_dialogContainerHeight*0.5f);
+            [self.pArrowDown setHidden:NO];
+            anchor = CGPointMake(0.5f, 1.0f);
+            
+            if(useSmallScreen)
+            {
+                m_dialogPosition = CGPointMake((m_screenWidth/2 - m_dialogContainerWidth/2),
+                                               m_screenHeight - (m_dialogContainerHeight + (m_borderMarginY*3.0f)));
+                
+                [self.pArrowDown setFrame:CGRectMake((m_dialogContainerWidth/2 - arrowWidth/2) - bottomButtonCentreOffsets,
+                                                     m_dialogContainerHeight-m_arrowLength, arrowWidth, m_arrowLength)];
+            }
+            else
+            {
+                m_dialogPosition = CGPointMake((m_screenWidth/2 - m_dialogContainerWidth/2) - bottomButtonCentreOffsets,
+                                               m_screenHeight - (m_dialogContainerHeight + (m_borderMarginY*1.5f)));
+                
+            }
             break;
             
         case ExampleApp::InitialExperience::Dialogs::InitialExperienceDialogType::SourceCode:
-            m_dialogPosition = CGPointMake(m_screenWidth/2 - m_dialogContainerWidth/2, m_screenHeight/2 - m_dialogContainerHeight/2);
+            m_dialogPosition = CGPointMake(m_screenWidth/2 - m_dialogContainerWidth/2,
+                                           m_screenHeight/2 - m_dialogContainerHeight/2);
             break;
             
         default:

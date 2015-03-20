@@ -4,48 +4,26 @@
     android:layout_width="wrap_content">
     
     <RelativeLayout 
-        android:layout_height="64dp"
-    	android:layout_width="64dp"
-    	android:layout_marginLeft="8dp"
-    	android:layout_marginTop="8dp"
-    	android:background="@drawable/compass_shadow"/>
-    
-    <ImageView
-        android:id="@+id/compass_lock"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_marginLeft="54dp"
-        android:src="@drawable/compass_lock"
-        android:contentDescription="@string/content_desc_compass_lock" />
-    
-    <RelativeLayout 
         android:id="@+id/compass_outer_shape"
-        android:layout_height="64dp"
-    	android:layout_width="64dp"
-    	android:background="@drawable/compass_circle_shape" >
+        android:layout_height="wrap_content"
+    	android:layout_width="wrap_content"
+    	android:background="@drawable/compass" >
     </RelativeLayout>
-
-    <RelativeLayout
-	    android:id="@+id/compass_inner_shape"
-	    android:layout_height="54dp"
-	    android:layout_width="54dp" 
-	    android:layout_marginLeft="5dp"
-	    android:layout_marginTop="5dp"
-	    android:background="@drawable/compass_circle_shape">
-	</RelativeLayout>
-    
-    <RelativeLayout
-    	android:id="@+id/compass_arrow_shape_shadow"
-        android:layout_height="12dp"
-        android:layout_width="12dp"
-        android:background="@drawable/compass_shadow"/>
     
     <RelativeLayout
 	    android:id="@+id/compass_arrow_shape"
-	    android:layout_height="12dp"
-	    android:layout_width="12dp" 
+	    android:layout_height="wrap_content"
+	    android:layout_width="wrap_content" 
 	    android:layout_centerInParent="true"
-	    android:background="@drawable/compass_circle_shape">
+	    android:background="@drawable/compass_point">
 	</RelativeLayout>
+	
+    <ImageView
+	    android:id="@+id/compass_inner_shape"
+	    android:layout_height="20dp"
+	    android:layout_width="20dp" 
+	    android:contentDescription=""
+	    android:layout_centerInParent="true">
+	</ImageView>
 
 </RelativeLayout>

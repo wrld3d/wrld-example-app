@@ -9,14 +9,12 @@
 #include "document.h"
 #include "MenuViewInterop.h"
 #include "MenuSectionViewModel.h"
-
+#include "ImageHelpers.h"
 #include <sstream>
 
 @implementation CustomTableDataProvider
 
-NSInteger const SubItemCellShadowViewTag = 1;
-NSInteger const SubItemCellShadowFlippedViewTag = 2;
-NSInteger const SubItemCellOpenableMenuArrowTag = 3;
+NSInteger const SubItemCellOpenableMenuArrowTag = 1;
 
 - (size_t)getTotalNumberOfCellsInTableView
 {
@@ -37,8 +35,6 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 3;
 
 - (void)dealloc
 {
-    [self.pSubItemShadow release];
-    [self.pSubItemShadowFlipped release];
     [self.pOpenableMenuArrow release];
     [super dealloc];
 }
@@ -51,9 +47,7 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 3;
     [tableView setDataSource:self];
     [tableView setDelegate:self];
 
-    self.pSubItemShadow = [UIImage imageNamed:@"shadow_01"];
-    self.pSubItemShadowFlipped = [UIImage imageNamed:@"shadow_01_flip"];
-    self.pOpenableMenuArrow = [UIImage imageNamed:@"arrow2"];
+    self.pOpenableMenuArrow = ExampleApp::Helpers::ImageHelpers::LoadImage(@"sub_menu_arrow");
     return self;
 }
 
@@ -64,37 +58,26 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 3;
     const ExampleApp::Menu::View::IMenuSectionViewModel& section = *m_currentSections.at(indexPath.section);
     const NSInteger index = section.IsExpandable() ? indexPath.row - 1 : indexPath.row;
     const bool isExpandableHeader = section.IsExpandable() && indexPath.row == 0;
-    const bool isLastExpandableSection = section.IsExpandable() && indexPath.section == m_currentSections.size() - 1;
-    const bool flippedShadowIsVisible = !isLastExpandableSection;
 
     static NSString *CellIdentifier = @"cell";
 
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if(cell == nil)
     {
-        bool isRightMenu = [m_pView isRightMenu];
         cell = [[[CustomTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
         [(CustomTableViewCell*)cell initCell: m_pView.pTableview.bounds.size.width :(CustomTableView*)tableView];
         cell.selectionStyle = UITableViewCellSelectionStyleGray;
-
-        UIImageView* pShadowView = [[[UIImageView alloc] initWithImage:self.pSubItemShadow] autorelease];
-        pShadowView.autoresizingMask = isRightMenu ? UIViewAutoresizingFlexibleRightMargin : UIViewAutoresizingFlexibleLeftMargin;
-        pShadowView.tag = SubItemCellShadowViewTag;
-        pShadowView.frame = CGRectMake(0, 0, cell.bounds.size.width, 32);
-        [cell addSubview:pShadowView];
-
-        UIImageView* pShadowFlippedView = [[[UIImageView alloc] initWithImage:self.pSubItemShadowFlipped] autorelease];
-        pShadowFlippedView.tag = SubItemCellShadowFlippedViewTag;
-        pShadowFlippedView.frame = CGRectMake(0, 0, cell.bounds.size.width, 32);
-        pShadowFlippedView.autoresizingMask = isRightMenu ? UIViewAutoresizingFlexibleRightMargin : UIViewAutoresizingFlexibleLeftMargin;
-        [cell addSubview:pShadowFlippedView];
 
         UIImageView* pOpenableMenuArrowView = [[[UIImageView alloc] initWithImage:self.pOpenableMenuArrow] autorelease];
         pOpenableMenuArrowView.tag = SubItemCellOpenableMenuArrowTag;
 
         const float tableWidth = m_pView.pTableview.bounds.size.width;
         const float openableArrowX = [m_pView isRightMenu] ? (tableWidth - 20.f) : 0.f;
-        pOpenableMenuArrowView.frame = CGRectMake(openableArrowX, (SECTION_HEADER_CELL_HEIGHT*0.5f) - 8.f, 16.f, 16.f);
+        pOpenableMenuArrowView.frame = CGRectMake(openableArrowX,
+                                                  (SECTION_HEADER_CELL_HEIGHT*0.5f) - 8.f,
+                                                  pOpenableMenuArrowView.frame.size.width,
+                                                  pOpenableMenuArrowView.frame.size.height);
+        
         [cell addSubview:pOpenableMenuArrowView];
 
         if ([cell respondsToSelector:@selector(layoutMargins)])
@@ -107,8 +90,6 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 3;
             [cell setSeparatorInset:UIEdgeInsetsZero];
         }
     }
-
-    [self setFlippedShadowVisibility: (CustomTableViewCell*) cell : flippedShadowIsVisible];
 
     const bool isHeader = isExpandableHeader | !section.IsExpandable();
 
@@ -184,8 +165,6 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 3;
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     ExampleApp::Menu::View::IMenuSectionViewModel& section = *m_currentSections.at(indexPath.section);
-    UIImageView *shadow = (UIImageView*)[cell viewWithTag:SubItemCellShadowViewTag];
-    UIImageView *shadowFlipped = (UIImageView*)[cell viewWithTag:SubItemCellShadowFlippedViewTag];
     UIImageView *openableArrow = (UIImageView*)[cell viewWithTag:SubItemCellOpenableMenuArrowTag];
 
     CustomTableViewCell* customCell = (CustomTableViewCell*)cell;
@@ -195,11 +174,6 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 3;
         cell.textLabel.font = [UIFont systemFontOfSize:[self getTextLabelFontSize:false]];
         cell.indentationLevel = 0;
 
-        BOOL isFirstChild = indexPath.row == 1;
-        BOOL isLastChild = indexPath.row == [tableView numberOfRowsInSection:indexPath.section] - 1;
-
-        shadow.hidden = !isFirstChild;
-        shadowFlipped.hidden = !isLastChild;
         openableArrow.hidden = true;
         [self setCellAlignInfo:customCell:false];
     }
@@ -207,8 +181,6 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 3;
     {
         cell.textLabel.font = [UIFont systemFontOfSize:[self getTextLabelFontSize:true]];
         cell.indentationLevel = 0;
-        shadow.hidden = true;
-        shadowFlipped.hidden = true;
         openableArrow.hidden = !section.IsExpandable();
 
         if(section.IsExpanded())
@@ -223,7 +195,7 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 3;
         [self setCellAlignInfo:customCell:true];
     }
 
-    cell.textLabel.textColor = ExampleApp::Helpers::ColorPalette::GoldTone;
+    cell.textLabel.textColor = ExampleApp::Helpers::ColorPalette::UiTextHeaderColour;
     [cell setBackgroundColor:ExampleApp::Helpers::ColorPalette::WhiteTone];
 }
 
@@ -247,11 +219,19 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 3;
     if (!document.Parse<0>(json.c_str()).HasParseError())
     {
         std::string name = document["name"].GetString();
-        std::string icon = document["icon"].GetString();
-        std::string iconResourceName = ExampleApp::Helpers::IconResources::GetSmallIconPathForResourceName(icon);
-
-        cell.imageView.image = [UIImage imageNamed: [NSString stringWithUTF8String:iconResourceName.c_str()]];
-        cell.imageView.contentMode = UIViewContentModeScaleToFill;
+        
+        if(document.HasMember("icon"))
+        {
+            std::string icon = document["icon"].GetString();
+            std::string iconResourceName = ExampleApp::Helpers::IconResources::GetSmallIconPathForResourceName(icon);
+            
+            cell.imageView.image = ExampleApp::Helpers::ImageHelpers::LoadImage(iconResourceName);
+            cell.imageView.contentMode = UIViewContentModeScaleToFill;
+        }
+        else
+        {
+            cell.imageView.image = nil;
+        }
 
         if ([m_pView isRightMenu])
         {
@@ -270,7 +250,7 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 3;
             subLabel.backgroundColor = [UIColor clearColor];
             subLabel.textAlignment = NSTextAlignmentRight;
             subLabel.text = [NSString stringWithUTF8String:name.c_str()];
-            subLabel.textColor = ExampleApp::Helpers::ColorPalette::GoldTone;
+            subLabel.textColor = ExampleApp::Helpers::ColorPalette::UiTextHeaderColour;
             subLabel.highlightedTextColor = ExampleApp::Helpers::ColorPalette::WhiteTone;
             subLabel.font = [UIFont systemFontOfSize: [self getTextLabelFontSize: isHeader]];
             [cell.contentView addSubview: subLabel];
@@ -286,7 +266,7 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 3;
 - (void) setCellAlignInfo:(CustomTableViewCell*)cell :(bool)isHeader
 {
     bool isRightMenu = [m_pView isRightMenu];
-    [cell setAlignInfo :isRightMenu :!isRightMenu :isHeader];
+    [cell setAlignInfo :isRightMenu :!isRightMenu :isHeader :@"menu_background1" :@"menu_background2"];
 }
 
 
@@ -300,13 +280,6 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 3;
     return m_currentSections.at(section)->Size();
 }
 
-- (void) setFlippedShadowVisibility: (CustomTableViewCell*)cell :(BOOL) flippedShadowIsVisible
-{
-    UIImageView *shadow = (UIImageView*) [cell viewWithTag: SubItemCellShadowFlippedViewTag];
-    CGFloat alpha = flippedShadowIsVisible ? 1.f : 0.f;
-    shadow.alpha = alpha;
-}
-
 - (CGAffineTransform)computeOpenableArrowTransform:(float)degrees
 {
     return CGAffineTransformRotate(CGAffineTransformIdentity, Eegeo::Math::Deg2Rad(degrees));
@@ -314,7 +287,7 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 3;
 
 - (void)showOpenableArrowClosed:(UITableViewCell *)cell
 {
-    const float angle = [m_pView isRightMenu] ? 180.f : 0.f;
+    const float angle = [m_pView isRightMenu] ? 0.f : 180.f;
     UIImageView *openableArrow = (UIImageView*)[cell viewWithTag:SubItemCellOpenableMenuArrowTag];
     openableArrow.transform = [self computeOpenableArrowTransform:angle];
 }
@@ -322,6 +295,6 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 3;
 - (void)showOpenableArrowOpen:(UITableViewCell *)cell
 {
     UIImageView *openableArrow = (UIImageView*)[cell viewWithTag:SubItemCellOpenableMenuArrowTag];
-    openableArrow.transform = [self computeOpenableArrowTransform:90.f];
+    openableArrow.transform = [self computeOpenableArrowTransform:270.f];
 }
 @end;

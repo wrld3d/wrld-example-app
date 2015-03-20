@@ -5,7 +5,6 @@
 #include "UIColors.h"
 #include "ImageHelpers.h"
 #include "MyPinCreationInitiationViewInterop.h"
-#include "ScaleHelpers.h"
 
 @implementation MyPinCreationInitiationView
 
@@ -25,17 +24,16 @@
 
         m_pInterop = new ExampleApp::MyPinCreation::View::MyPinCreationInitiationViewInterop(self);
 
-        m_width = 64 * m_pixelScale * ExampleApp::Helpers::ScaleHelpers::GetScaleTweakValue();
+        m_width = 64 * m_pixelScale;
         m_height = m_width;
-        m_yPosBase = m_yPosActive = m_screenHeight - (16 * m_pixelScale) - m_height;;
-        m_yPosActive = m_screenHeight - (16 * m_pixelScale) - m_height;
+        m_yPosBase = m_yPosActive = m_screenHeight - (8 * m_pixelScale) - m_height;
         m_yPosInactive = m_screenHeight + m_height;
-        self.frame = CGRectMake(((m_screenWidth * 0.5f) - (m_width * 0.5f)), m_yPosInactive, m_width, m_height);
+        self.frame = CGRectMake(((m_screenWidth * 0.5f) + (m_width*0.5f) + 16.f), m_yPosInactive, m_width, m_height);
 
         self.pPoiCreateButton = [[[UIButton alloc] initWithFrame: CGRectMake(0, 0, 0, 0)] autorelease];
         [self addSubview: self.pPoiCreateButton];
 
-        [self.pPoiCreateButton setBackgroundImage:[UIImage imageNamed:@"button_create_poi.png"] forState:UIControlStateNormal];
+        [self.pPoiCreateButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_create_poi") forState:UIControlStateNormal];
         self.pPoiCreateButton.frame = CGRectMake(0.f, 0.f, m_width, m_height);
         [self.pPoiCreateButton addTarget:self action:@selector(onClick:) forControlEvents:UIControlEventTouchUpInside];
     }
@@ -119,12 +117,6 @@
         self.hidden = (y == m_yPosInactive);
     }
     ];
-}
-
-- (void) shouldOffsetButton:(bool)shouldOffset
-{
-    float offset = shouldOffset ? 36.f : 0;
-    m_yPosActive = m_yPosBase - offset;
 }
 
 @end

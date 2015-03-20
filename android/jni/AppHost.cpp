@@ -27,7 +27,6 @@
 #include "EnvironmentFlatteningService.h"
 #include "TtyHandler.h"
 #include "MenuViewModule.h"
-#include "PrimaryMenuModule.h"
 #include "SecondaryMenuModule.h"
 #include "ModalityModule.h"
 #include "ModalBackgroundViewModule.h"
@@ -76,9 +75,13 @@
 #include "ApiKey.h"
 #include "OptionsViewModule.h"
 #include "OptionsView.h"
+#include "WatermarkViewModule.h"
+#include "WatermarkView.h"
 #include "NetworkCapabilities.h"
 #include "AndroidYelpSearchServiceModule.h"
 #include "DecartaSearchServiceModule.h"
+#include "ApplicationConfigurationModule.h"
+#include "IApplicationConfigurationService.h"
 
 using namespace Eegeo::Android;
 using namespace Eegeo::Android::Input;
@@ -101,7 +104,6 @@ AppHost::AppHost(
     ,m_androidNativeUIFactories(m_androidAlertBoxFactory, m_androidInputBoxFactory, m_androidKeyboardInputFactory)
     ,m_pInputProcessor(NULL)
     ,m_pAndroidPlatformAbstractionModule(NULL)
-    ,m_pPrimaryMenuViewModule(NULL)
     ,m_pSecondaryMenuViewModule(NULL)
     ,m_pSearchResultMenuViewModule(NULL)
     ,m_pModalBackgroundViewModule(NULL)
@@ -137,6 +139,7 @@ AppHost::AppHost(
 
     std::set<std::string> customApplicationAssetDirectories;
     customApplicationAssetDirectories.insert("SearchResultOnMap");
+    customApplicationAssetDirectories.insert("ApplicationConfigs");
 
     m_pAndroidPlatformAbstractionModule = Eegeo_NEW(Eegeo::Android::AndroidPlatformAbstractionModule)(
             nativeState,
@@ -184,6 +187,9 @@ AppHost::AppHost(
 
     m_pAndroidFlurryMetricsService = Eegeo_NEW(ExampleApp::Metrics::AndroidFlurryMetricsService)(&m_nativeState);
 
+    typedef ExampleApp::ApplicationConfig::SdkModel::ApplicationConfigurationModule ApplicationConfigurationModule;
+    ApplicationConfigurationModule applicationConfigurationModule(m_pAndroidPlatformAbstractionModule->GetFileIO());
+
     m_pApp = Eegeo_NEW(ExampleApp::MobileExampleApp)(
                  ExampleApp::ApiKey,
                  *m_pAndroidPlatformAbstractionModule,
@@ -199,6 +205,7 @@ AppHost::AppHost(
                  *m_pNetworkCapabilities,
                  *m_pSearchServiceModule,
                  *m_pAndroidFlurryMetricsService,
+                 applicationConfigurationModule.GetApplicationConfigurationService().LoadConfiguration("ApplicationConfigs/standard_config.json"),
                  *this);
 
     m_pModalBackgroundNativeViewModule = Eegeo_NEW(ExampleApp::ModalBackground::SdkModel::ModalBackgroundNativeViewModule)(
@@ -403,6 +410,13 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
     m_createdUIModules = true;
     ExampleApp::MobileExampleApp& app = *m_pApp;
 
+    m_pWatermarkViewModule = Eegeo_NEW(ExampleApp::Watermark::View::WatermarkViewModule)(
+		m_nativeState,
+		app.WatermarkModule().GetWatermarkViewModel(),
+		m_messageBus,
+		*m_pAndroidFlurryMetricsService
+    );
+
     // 3d map view layer.
     m_pWorldPinOnMapViewModule = Eegeo_NEW(ExampleApp::WorldPins::View::WorldPinOnMapViewModule)(
                                      m_nativeState,
@@ -442,14 +456,6 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
                                        app.ModalityModule().GetModalityModel(),
                                        m_messageBus
                                    );
-
-    // Menus & HUD layer.
-    m_pPrimaryMenuViewModule = Eegeo_NEW(ExampleApp::Menu::View::MenuViewModule)(
-                                   "com/eegeo/primarymenu/PrimaryMenuView",
-                                   m_nativeState,
-                                   app.MyPinsModule().GetMyPinsMenuModel(),
-                                   app.PrimaryMenuModule().GetPrimaryMenuViewModel()
-                               );
 
     m_pSecondaryMenuViewModule = Eegeo_NEW(ExampleApp::SecondaryMenu::View::SecondaryMenuViewModule)(
                                      "com/eegeo/secondarymenu/SecondaryMenuView",
@@ -515,7 +521,6 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
 
     ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModel& viewControllerUpdaterModel = m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel();
 
-    viewControllerUpdaterModel.AddUpdateableObject(m_pPrimaryMenuViewModule->GetMenuController());
     viewControllerUpdaterModel.AddUpdateableObject(m_pSecondaryMenuViewModule->GetMenuController());
     viewControllerUpdaterModel.AddUpdateableObject(m_pSearchResultMenuViewModule->GetMenuController());
 }
@@ -550,11 +555,11 @@ void AppHost::DestroyApplicationViewModulesFromUiThread()
 
         Eegeo_DELETE m_pSecondaryMenuViewModule;
 
-        Eegeo_DELETE m_pPrimaryMenuViewModule;
-
         Eegeo_DELETE m_pCompassViewModule;
 
         Eegeo_DELETE m_pInitialExperienceDialogsViewModule;
+
+        Eegeo_DELETE m_pWatermarkViewModule;
     }
     m_createdUIModules = false;
 }

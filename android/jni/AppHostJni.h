@@ -6,11 +6,11 @@
 
 extern "C"
 {
-    JNIEXPORT void JNICALL Java_com_eegeo_mobileexampleapp_NativeJniCalls_revealApplicationUi(
+    JNIEXPORT void JNICALL Java_com_eegeo_entrypointinfrastructure_NativeJniCalls_revealApplicationUi(
         JNIEnv* jenv, jobject obj,
         jlong nativeObjectPtr);
 
-    JNIEXPORT void JNICALL Java_com_eegeo_mobileexampleapp_NativeJniCalls_handleApplicationUiCreatedOnNativeThread(
+    JNIEXPORT void JNICALL Java_com_eegeo_entrypointinfrastructure_NativeJniCalls_handleApplicationUiCreatedOnNativeThread(
         JNIEnv* jenv, jobject obj,
         jlong nativeObjectPtr);
 }

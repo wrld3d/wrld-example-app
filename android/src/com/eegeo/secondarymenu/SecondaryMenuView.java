@@ -8,13 +8,13 @@ import java.util.List;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 
-import com.eegeo.mobileexampleapp.MainActivity;
+import com.eegeo.entrypointinfrastructure.MainActivity;
+import com.eegeo.helpers.ClearableEditText;
 import com.eegeo.mobileexampleapp.R;
 import com.eegeo.menu.MenuItemSelectedListener;
 import com.eegeo.menu.MenuListAdapter;
@@ -25,7 +25,8 @@ public class SecondaryMenuView extends MenuView implements TextView.OnEditorActi
 {
     private int m_screenWidthPx;
     private int m_mainContainerOnScreenWidthPx;
-    private EditText m_editText;
+    private ClearableEditText m_editText;
+    private View m_dragInteractionDirectionArrow;
 
     protected MenuListAdapter m_listAdapter = null;
 
@@ -39,13 +40,14 @@ public class SecondaryMenuView extends MenuView implements TextView.OnEditorActi
     {
         final RelativeLayout uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
         m_view = m_activity.getLayoutInflater().inflate(R.layout.secondary_menu_layout, uiRoot, false);
-
+        m_dragInteractionDirectionArrow = m_view.findViewById(R.id.secondary_menu_drag_interaction_arrow);
+        
         m_list = (ListView)m_view.findViewById(R.id.secondary_menu_item_list);
         m_dragTabView = m_view.findViewById(R.id.secondary_menu_drag_tab_view);
         m_dragTabView.setOnClickListener(this);
         m_dragTabView.setOnTouchListener(this);
 
-        m_editText = (EditText)m_view.findViewById(R.id.secondary_menu_view_search_edit_text_view);
+        m_editText = (ClearableEditText)m_view.findViewById(R.id.secondary_menu_view_search_edit_text_view);
         m_editText.setImeActionLabel("Search", KeyEvent.KEYCODE_ENTER);
         m_editText.setOnEditorActionListener(this);
 
@@ -69,7 +71,14 @@ public class SecondaryMenuView extends MenuView implements TextView.OnEditorActi
         m_view.setX(m_offscreenXPx);
         uiRoot.addView(m_view);
 
-        m_listAdapter = new MenuListAdapter(m_activity, R.layout.menu_list_item, R.layout.menu_list_subitem, false);
+        m_listAdapter = new MenuListAdapter(
+        		m_activity, 
+        		R.layout.menu_list_item, 
+        		R.layout.menu_list_subitem, 
+        		false,
+        		R.drawable.menu_header_item_selected_states, 
+        		R.drawable.menu_sub_item_selected_states);
+        
         m_list.setAdapter(m_listAdapter);
 
         m_menuItemSelectedListener = new MenuItemSelectedListener(
@@ -140,11 +149,13 @@ public class SecondaryMenuView extends MenuView implements TextView.OnEditorActi
         if(newXPx < (m_screenWidthPx - m_totalWidthPx))
         {
             newXPx = m_screenWidthPx - m_totalWidthPx;
+            showInteractionArrowOpen();
         }
 
         if(newXPx > m_closedXPx)
         {
             newXPx = m_closedXPx;
+            showInteractionArrowClosed();
         }
 
         float normalisedDragState = Math.abs(newXPx + (-m_closedXPx)) / (Math.abs(m_openXPx - m_closedXPx));
@@ -162,5 +173,29 @@ public class SecondaryMenuView extends MenuView implements TextView.OnEditorActi
                                    HashMap<String, List<String>> groupToChildrenMap)
     {
         m_listAdapter.setData(groups, groupsExpandable, groupToChildrenMap);
+    }
+
+    @Override
+    public void animateToClosedOnScreen()
+    {
+    	showInteractionArrowClosed();
+    	super.animateToClosedOnScreen();
+    }
+
+    @Override
+    public void animateToOpenOnScreen()
+    {
+    	showInteractionArrowOpen();
+    	super.animateToOpenOnScreen();
+    }
+    
+    void showInteractionArrowOpen()
+    {
+    	m_dragInteractionDirectionArrow.setRotation(180);
+    }
+    
+    void showInteractionArrowClosed()
+    {
+    	m_dragInteractionDirectionArrow.setRotation(0);
     }
 }

@@ -6,7 +6,6 @@
 #include "CellConstants.h"
 #include "SecondaryMenuViewInterop.h"
 #include "MenuViewInterop.h"
-#include "ScaleHelpers.h"
 
 @implementation SecondaryMenuView
 
@@ -37,21 +36,19 @@
     self.pMenuContainer = [[[UIView alloc] initWithFrame:CGRectMake(m_mainContainerX, m_mainContainerY, m_mainContainerWidth, m_mainContainerHeight)] autorelease];
     self.pMenuContainer.backgroundColor = [UIColor clearColor];
 
-    float iphoneTweakScale = ExampleApp::Helpers::ScaleHelpers::GetScaleTweakValue();
-
     m_dragTabY = m_mainContainerY + (0.f * m_pixelScale);
-    m_dragTabWidth = (64.f * m_pixelScale * iphoneTweakScale);
+    m_dragTabWidth = (50.f * m_pixelScale);
     m_dragTabX = m_mainContainerX - m_dragTabWidth;
-    m_dragTabHeight = (64.f * m_pixelScale * iphoneTweakScale);
+    m_dragTabHeight = (50.f * m_pixelScale);
     self.pDragTab = [[[UIView alloc] initWithFrame:CGRectMake(m_dragTabX, m_dragTabY, m_dragTabWidth, m_dragTabHeight)] autorelease];
-    self.pDragTab.backgroundColor = ExampleApp::Helpers::ColorPalette::GoldTone;
+    self.pDragTab.backgroundColor = [UIColor colorWithPatternImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"menu_button")];
 
     m_searchBoxContainerX = m_mainContainerVisibleOnScreenWhenClosedX;
     m_searchBoxContainerY = m_mainContainerVisibleOnScreenWhenClosedY;
     m_searchBoxContainerWidth = m_mainContainerOnScreenWidth;
-    m_searchBoxContainerHeight = 64 * m_pixelScale * iphoneTweakScale;
+    m_searchBoxContainerHeight = 50 * m_pixelScale;
     self.pSearchEditBoxContainer = [[[UIView alloc] initWithFrame:CGRectMake(m_searchBoxContainerX, m_searchBoxContainerY, m_searchBoxContainerWidth, m_searchBoxContainerHeight)] autorelease];
-    self.pSearchEditBoxContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::WhiteTone;
+    self.pSearchEditBoxContainer.backgroundColor = [UIColor colorWithPatternImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"menu_bar")];
 
     m_searchBoxOffsetIntoContainer = m_searchBoxContainerWidth*0.05f;
     m_searchBoxX = m_searchBoxOffsetIntoContainer;
@@ -86,8 +83,9 @@
     self.pTableview.backgroundColor = [UIColor clearColor];
     self.pTableview.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.pTableview.bounces = NO;
-    self.pTableview.scrollEnabled = NO;
-
+    
+    self.pTableview.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    
     m_offscreenX = m_dragTabWidth + m_mainContainerVisibleOnScreenWhenClosedX;
     m_openX = -(m_mainContainerOnScreenWidth - m_mainContainerVisibleOnScreenWhenClosedX);
     m_closedX = (0.f * m_pixelScale);
@@ -100,13 +98,7 @@
     [self.pTableviewContainer addSubview:self.pTableview];
     [self.pMenuContainer addSubview:self.pTableviewContainer];
 
-    ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pDragTab, "icon0_search_icon", ExampleApp::Helpers::ImageHelpers::Centre);
-
-    ExampleApp::Helpers::ImageHelpers::OffsetValue tabShadowOffset = ExampleApp::Helpers::ImageHelpers::Centre | ExampleApp::Helpers::ImageHelpers::Below;
-    ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pDragTab, "shadow_01", tabShadowOffset);
-
-    ExampleApp::Helpers::ImageHelpers::OffsetValue menuShadowOffset = ExampleApp::Helpers::ImageHelpers::Centre | ExampleApp::Helpers::ImageHelpers::Top;
-    ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pTableview, "shadow_03", menuShadowOffset);
+    ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pDragTab, "Arrow", ExampleApp::Helpers::ImageHelpers::Centre);
 
     self.pSearchEditBox.borderStyle = UITextBorderStyleRoundedRect;
     self.pSearchEditBox.returnKeyType = UIReturnKeySearch;
@@ -189,11 +181,13 @@
     if(f.origin.x < -m_mainContainerOnScreenWidth)
     {
         f.origin.x = (-m_mainContainerOnScreenWidth);
+        [self showOpenableArrowOpen];
     }
 
     if(f.origin.x > m_closedX)
     {
         f.origin.x = m_closedX;
+        [self showOpenableArrowClosed];
     }
 
     float normalisedDragState = -((static_cast<float>(self.frame.origin.x) + (-m_closedX)) / (std::abs(m_openX - m_closedX)));
@@ -282,6 +276,37 @@
 
     std::string searchString = [self.pSearchEditBox.text UTF8String];
     m_pSecondaryMenuInterop->SearchPerformed(searchString);
+}
+
+- (CGAffineTransform)computeOpenableArrowTransform:(float)degrees
+{
+    return CGAffineTransformRotate(CGAffineTransformIdentity, Eegeo::Math::Deg2Rad(degrees));
+}
+
+- (void) animateToClosedOnScreen
+{
+    [super animateToClosedOnScreen];
+    [self showOpenableArrowClosed];
+}
+
+- (void) animateToOpenOnScreen
+{
+    [super animateToOpenOnScreen];
+    [self showOpenableArrowOpen];
+}
+
+- (void)showOpenableArrowClosed
+{
+    const float angle = 0.f;
+    UIImageView *openableArrow = (UIImageView*)self.pDragTab.subviews[0];
+    openableArrow.transform = [self computeOpenableArrowTransform:angle];
+}
+
+- (void)showOpenableArrowOpen
+{
+    const float angle = 180.f;
+    UIImageView *openableArrow = (UIImageView*)self.pDragTab.subviews[0];
+    openableArrow.transform = [self computeOpenableArrowTransform:angle];
 }
 
 @end

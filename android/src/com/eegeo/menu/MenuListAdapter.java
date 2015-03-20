@@ -9,6 +9,7 @@ import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.mobileexampleapp.R;
 import com.eegeo.categories.CategoryResources;
 
@@ -27,23 +28,26 @@ import android.widget.TextView;
 
 public class MenuListAdapter extends BaseAdapter
 {
-
-    private Activity m_context;
+    private MainActivity m_context;
     private List<String> m_groups;
     private List<Boolean> m_groupsExpandable;
     private HashMap<String, List<String>> m_groupToChildrenMap;
     private int m_groupViewId;
     private int m_childViewId;
+    private int m_menuBackgroundId;
+    private int m_subMenuBackgroundId;
     private HashMap<String, Integer> m_animatedSizesMap;
     private ValueAnimator m_expandContractAnim;
     private boolean m_shouldAlignIconRight;
 
-    private final float SubItemIndent = 12.0f;
-
-    public MenuListAdapter(Activity context,
+    private final float SubItemIndent = 22.0f;
+    
+    public MenuListAdapter(MainActivity context,
                            final int groupViewId,
                            final int childViewId,
-                           final boolean shouldAlignIconRight)
+                           final boolean shouldAlignIconRight,
+                           final int menuBackgroundId,
+                           final int subMenuBackgroundId)
     {
         m_context = context;
 
@@ -56,6 +60,8 @@ public class MenuListAdapter extends BaseAdapter
         m_groupToChildrenMap = new HashMap<String, List<String>>();
 
         m_shouldAlignIconRight = shouldAlignIconRight;
+        m_menuBackgroundId = menuBackgroundId;
+        m_subMenuBackgroundId = subMenuBackgroundId;
     }
 
     public boolean isAnimating()
@@ -264,8 +270,10 @@ public class MenuListAdapter extends BaseAdapter
     public View getView(int index, View reusableView, ViewGroup parent)
     {
         final String json = (String)getItem(index);
+        
+        final boolean isHeader = isHeader(index);
 
-        final int viewId = isHeader(index) ? m_groupViewId : m_childViewId;
+        final int viewId = isHeader ? m_groupViewId : m_childViewId;
         if(reusableView == null || (Integer)reusableView.getTag() != viewId)
         {
             LayoutInflater inflater = (LayoutInflater)m_context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -280,16 +288,25 @@ public class MenuListAdapter extends BaseAdapter
             TextView nameLabel = (TextView)reusableView.findViewById(R.id.menu_list_item_name);
             nameLabel.setText(data.getString("name"));
 
-            ImageView icon = (ImageView)reusableView.findViewById(R.id.menu_list_item_icon);
-            icon.setImageResource(CategoryResources.getSmallIconForResourceName(m_context, data.getString("icon")));
+            int margin = 0;
+            ImageView icon = null;
+            
+            if(!isHeader)
+            {
+            	icon = (ImageView)reusableView.findViewById(R.id.menu_list_item_icon);
+            	icon.setImageResource(CategoryResources.getSmallIconForResourceName(m_context, data.getString("icon")));
 
-            int margin = icon.getLayoutParams().width + 10;
+            	margin = icon.getLayoutParams().width + 10;
+            }
 
             if (m_shouldAlignIconRight)
             {
-                RelativeLayout.LayoutParams iconParams = new RelativeLayout.LayoutParams(icon.getLayoutParams());
-                iconParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, RelativeLayout.TRUE);
-                icon.setLayoutParams(iconParams);
+                if(icon != null)
+                {
+	                RelativeLayout.LayoutParams iconParams = new RelativeLayout.LayoutParams(icon.getLayoutParams());
+	                iconParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, RelativeLayout.TRUE);
+	                icon.setLayoutParams(iconParams);
+                }
 
                 RelativeLayout.LayoutParams textParams = new RelativeLayout.LayoutParams(nameLabel.getLayoutParams());
                 nameLabel.setGravity(Gravity.CENTER_VERTICAL|Gravity.RIGHT);
@@ -299,29 +316,11 @@ public class MenuListAdapter extends BaseAdapter
         }
         catch(JSONException e)
         {
-            Log.e("Eegeo", "Failed to read json data object: " + e.getMessage());
+            Log.e("Eegeo", "MenuListAdapter: Failed to read json data object: " + e.getMessage());
         }
 
-        if(viewId == m_childViewId)
+        if(!isHeader)
         {
-            RelativeLayout shadow = (RelativeLayout)reusableView.findViewById(R.id.menu_list_item_shadow);
-            int childPlaceInView = getPlaceInGroup(index);
-            String groupName = getGroupIndexBelongsTo(index);
-            if(childPlaceInView == 1)
-            {
-                shadow.setVisibility(View.VISIBLE);
-                shadow.setBackgroundResource(R.drawable.shadow_01);
-            }
-            else if(childPlaceInView == m_animatedSizesMap.get(groupName)-1 && groupName != m_groups.get(m_groups.size()-1))
-            {
-                shadow.setVisibility(View.VISIBLE);
-                shadow.setBackgroundResource(R.drawable.shadow_01_flip);
-            }
-            else
-            {
-                shadow.setVisibility(View.INVISIBLE);
-            }
-
             float scale = m_context.getResources().getDisplayMetrics().density;
             reusableView.setPadding(
                 !m_shouldAlignIconRight ? (int)(SubItemIndent * scale + 0.5f) : 0,
@@ -341,18 +340,20 @@ public class MenuListAdapter extends BaseAdapter
                 if(m_shouldAlignIconRight)
                 {
                     openableArrowParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
-                    openableArrow.setRotation(0);
+                    openableArrow.setRotation(180);
+                    openableArrowParams.leftMargin = m_context.dipAsPx(20);
                 }
                 else
                 {
                     openableArrowParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, RelativeLayout.TRUE);
-                    openableArrow.setRotation(180);
+                    openableArrow.setRotation(0);
+                    openableArrowParams.rightMargin = m_context.dipAsPx(20);
                 }
 
                 String groupName = m_groups.get(groupIndex);
                 if(m_animatedSizesMap.get(groupName) > 1)
                 {
-                    openableArrow.setRotation(90);
+                    openableArrow.setRotation(270);
                 }
 
                 openableArrowParams.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
@@ -363,14 +364,35 @@ public class MenuListAdapter extends BaseAdapter
                 openableArrow.setVisibility(View.GONE);
             }
         }
+        
+        View backgroundContainer = reusableView.findViewById(R.id.menu_list_item_background_container);
+        if(isHeader)
+        {
+        	backgroundContainer.setBackgroundDrawable(m_context.getResources().getDrawable(m_menuBackgroundId));
+        }
+        else
+        {
+        	backgroundContainer.setBackgroundDrawable(m_context.getResources().getDrawable(m_subMenuBackgroundId));	
+        }
+        
 
+        View dividerContainer = reusableView.findViewById(R.id.menu_list_divider_container);
+        RelativeLayout.LayoutParams dividerContainerParams = new RelativeLayout.LayoutParams(dividerContainer.getLayoutParams());
+        if(isHeader)
+        {
+        	dividerContainer.setBackgroundColor(m_context.getResources().getColor(R.color.menu_separator));
+        	dividerContainerParams.leftMargin = m_context.dipAsPx(22);
+        }
+        else
+        {
+        	dividerContainer.setBackgroundColor(m_context.getResources().getColor(R.color.submenu_separator));
+        	dividerContainerParams.leftMargin = m_context.dipAsPx(36);
+        }
+        dividerContainerParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE);
+        dividerContainer.setLayoutParams(dividerContainerParams);
+        
+        
         return reusableView;
-    }
-
-    private String getGroupIndexBelongsTo(int index)
-    {
-        int groupIndex = getGroupIndexForViewIndex(index);
-        return groupIndex == -1 ? "" : m_groups.get(groupIndex);
     }
 
     private int getGroupIndexForViewIndex(int index)

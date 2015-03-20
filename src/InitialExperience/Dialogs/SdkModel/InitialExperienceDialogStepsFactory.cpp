@@ -18,8 +18,8 @@ namespace ExampleApp
 						PersistentSettings::IPersistentSettingsModel& persistentSettings,
 						std::vector<InitialExperience::SdkModel::IInitialExperienceStep*>& out_steps)
 					{
-						out_steps.push_back(Eegeo_NEW(Dialogs::SdkModel::InitialExperienceDialogStep)(Dialogs::InitialExperienceDialogType::SearchMenu, messageBus, persistentSettings));
-						out_steps.push_back(Eegeo_NEW(Dialogs::SdkModel::InitialExperienceDialogStep)(Dialogs::InitialExperienceDialogType::PrimaryMenu, messageBus, persistentSettings));
+						out_steps.push_back(Eegeo_NEW(Dialogs::SdkModel::InitialExperienceDialogStep)(Dialogs::InitialExperienceDialogType::MainMenu, messageBus, persistentSettings));
+						out_steps.push_back(Eegeo_NEW(Dialogs::SdkModel::InitialExperienceDialogStep)(Dialogs::InitialExperienceDialogType::SearchResultMenu, messageBus, persistentSettings));
 						out_steps.push_back(Eegeo_NEW(Dialogs::SdkModel::InitialExperienceDialogStep)(Dialogs::InitialExperienceDialogType::Compass, messageBus, persistentSettings));
 						out_steps.push_back(Eegeo_NEW(Dialogs::SdkModel::InitialExperienceDialogStep)(Dialogs::InitialExperienceDialogType::PinCreation, messageBus, persistentSettings));
 						out_steps.push_back(Eegeo_NEW(Dialogs::SdkModel::InitialExperienceDialogStep)(Dialogs::InitialExperienceDialogType::Flatten, messageBus, persistentSettings));

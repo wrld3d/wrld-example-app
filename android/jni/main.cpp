@@ -10,6 +10,7 @@
 #include "main.h"
 #include "Logger.h"
 #include "AndroidAppThreadAssertions.h"
+#include "AndroidImagePathHelpers.h"
 
 using namespace Eegeo::Android;
 using namespace Eegeo::Android::Input;
@@ -39,16 +40,22 @@ JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM* vm, void* pvt)
 }
 
 //lifecycle
-JNIEXPORT long JNICALL Java_com_eegeo_mobileexampleapp_NativeJniCalls_createNativeCode(JNIEnv* jenv, jobject obj, jobject activity, jobject assetManager, jfloat dpi)
+JNIEXPORT long JNICALL Java_com_eegeo_entrypointinfrastructure_NativeJniCalls_createNativeCode(
+		JNIEnv* jenv, jobject obj,
+		jobject activity,
+		jobject assetManager,
+		jfloat dpi,
+		jint density)
 {
     EXAMPLE_LOG("startNativeCode\n");
 
     ExampleApp::AndroidAppThreadAssertions::NominateCurrentlyRunningThreadAsNativeThread();
+    ExampleApp::Helpers::ImageHelpers::SetDeviceDensity(density);
 
     g_nativeState.javaMainThread = pthread_self();
     g_nativeState.mainThreadEnv = jenv;
     g_nativeState.activity = jenv->NewGlobalRef(activity);
-    g_nativeState.activityClass = (jclass)jenv->NewGlobalRef(jenv->FindClass("com/eegeo/mobileexampleapp/MainActivity"));
+    g_nativeState.activityClass = (jclass)jenv->NewGlobalRef(jenv->FindClass("com/eegeo/entrypointinfrastructure/MainActivity"));
     g_nativeState.deviceDpi = dpi;
 
     jmethodID getClassLoader = jenv->GetMethodID(g_nativeState.activityClass,"getClassLoader", "()Ljava/lang/ClassLoader;");
@@ -76,12 +83,12 @@ JNIEXPORT long JNICALL Java_com_eegeo_mobileexampleapp_NativeJniCalls_createNati
     return ((long)g_pAppRunner);
 }
 
-JNIEXPORT void JNICALL Java_com_eegeo_mobileexampleapp_NativeJniCalls_stopUpdatingNativeCode(JNIEnv* jenv, jobject obj)
+JNIEXPORT void JNICALL Java_com_eegeo_entrypointinfrastructure_NativeJniCalls_stopUpdatingNativeCode(JNIEnv* jenv, jobject obj)
 {
     g_pAppRunner->StopUpdatingNativeBeforeTeardown();
 }
 
-JNIEXPORT void JNICALL Java_com_eegeo_mobileexampleapp_NativeJniCalls_destroyNativeCode(JNIEnv* jenv, jobject obj)
+JNIEXPORT void JNICALL Java_com_eegeo_entrypointinfrastructure_NativeJniCalls_destroyNativeCode(JNIEnv* jenv, jobject obj)
 {
     EXAMPLE_LOG("stopNativeCode()\n");
 
@@ -97,32 +104,32 @@ JNIEXPORT void JNICALL Java_com_eegeo_mobileexampleapp_NativeJniCalls_destroyNat
     ExampleApp::AndroidAppThreadAssertions::RemoveNominationForNativeThread();
 }
 
-JNIEXPORT void JNICALL Java_com_eegeo_mobileexampleapp_NativeJniCalls_pauseNativeCode(JNIEnv* jenv, jobject obj)
+JNIEXPORT void JNICALL Java_com_eegeo_entrypointinfrastructure_NativeJniCalls_pauseNativeCode(JNIEnv* jenv, jobject obj)
 {
     g_pAppRunner->Pause();
 }
 
-JNIEXPORT void JNICALL Java_com_eegeo_mobileexampleapp_NativeJniCalls_resumeNativeCode(JNIEnv* jenv, jobject obj)
+JNIEXPORT void JNICALL Java_com_eegeo_entrypointinfrastructure_NativeJniCalls_resumeNativeCode(JNIEnv* jenv, jobject obj)
 {
     g_pAppRunner->Resume();
 }
 
-JNIEXPORT void JNICALL Java_com_eegeo_mobileexampleapp_NativeJniCalls_updateNativeCode(JNIEnv* jenv, jobject obj, jfloat deltaSeconds)
+JNIEXPORT void JNICALL Java_com_eegeo_entrypointinfrastructure_NativeJniCalls_updateNativeCode(JNIEnv* jenv, jobject obj, jfloat deltaSeconds)
 {
     g_pAppRunner->UpdateNative((float)deltaSeconds);
 }
 
-JNIEXPORT void JNICALL Java_com_eegeo_mobileexampleapp_NativeJniCalls_updateUiViewCode(JNIEnv* jenv, jobject obj, jfloat deltaSeconds)
+JNIEXPORT void JNICALL Java_com_eegeo_entrypointinfrastructure_NativeJniCalls_updateUiViewCode(JNIEnv* jenv, jobject obj, jfloat deltaSeconds)
 {
     g_pAppRunner->UpdateUiViews((float)deltaSeconds);
 }
 
-JNIEXPORT void JNICALL Java_com_eegeo_mobileexampleapp_NativeJniCalls_destroyApplicationUi(JNIEnv* jenv, jobject obj)
+JNIEXPORT void JNICALL Java_com_eegeo_entrypointinfrastructure_NativeJniCalls_destroyApplicationUi(JNIEnv* jenv, jobject obj)
 {
     g_pAppRunner->DestroyApplicationUi();
 }
 
-JNIEXPORT void JNICALL Java_com_eegeo_mobileexampleapp_NativeJniCalls_setNativeSurface(JNIEnv* jenv, jobject obj, jobject surface)
+JNIEXPORT void JNICALL Java_com_eegeo_entrypointinfrastructure_NativeJniCalls_setNativeSurface(JNIEnv* jenv, jobject obj, jobject surface)
 {
     if(g_nativeState.window != NULL)
     {
@@ -141,7 +148,7 @@ JNIEXPORT void JNICALL Java_com_eegeo_mobileexampleapp_NativeJniCalls_setNativeS
     }
 }
 
-JNIEXPORT void JNICALL Java_com_eegeo_mobileexampleapp_EegeoSurfaceView_processNativePointerDown(JNIEnv* jenv, jobject obj,
+JNIEXPORT void JNICALL Java_com_eegeo_entrypointinfrastructure_EegeoSurfaceView_processNativePointerDown(JNIEnv* jenv, jobject obj,
         jint primaryActionIndex,
         jint primaryActionIdentifier,
         jint numPointers,
@@ -155,7 +162,7 @@ JNIEXPORT void JNICALL Java_com_eegeo_mobileexampleapp_EegeoSurfaceView_processN
     g_pAppRunner->HandleTouchEvent(event);
 }
 
-JNIEXPORT void JNICALL Java_com_eegeo_mobileexampleapp_EegeoSurfaceView_processNativePointerUp(JNIEnv* jenv, jobject obj,
+JNIEXPORT void JNICALL Java_com_eegeo_entrypointinfrastructure_EegeoSurfaceView_processNativePointerUp(JNIEnv* jenv, jobject obj,
         jint primaryActionIndex,
         jint primaryActionIdentifier,
         jint numPointers,
@@ -169,7 +176,7 @@ JNIEXPORT void JNICALL Java_com_eegeo_mobileexampleapp_EegeoSurfaceView_processN
     g_pAppRunner->HandleTouchEvent(event);
 }
 
-JNIEXPORT void JNICALL Java_com_eegeo_mobileexampleapp_EegeoSurfaceView_processNativePointerMove(JNIEnv* jenv, jobject obj,
+JNIEXPORT void JNICALL Java_com_eegeo_entrypointinfrastructure_EegeoSurfaceView_processNativePointerMove(JNIEnv* jenv, jobject obj,
         jint primaryActionIndex,
         jint primaryActionIdentifier,
         jint numPointers,

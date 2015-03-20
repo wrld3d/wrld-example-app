@@ -28,12 +28,7 @@
         m_stateChangeAnimationTimeSeconds = 0.2f;
         m_labelsSectionWidth = 0.f;
         m_maxContentSize = 0.f;
-
-        self.pShadowContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pShadowContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::BlackTone;
-        self.pShadowContainer.alpha = 0.1f;
-        [self addSubview: self.pShadowContainer];
-
+        
         self.pControlContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         self.pControlContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::MainHudColor;
         [self addSubview: self.pControlContainer];
@@ -43,14 +38,14 @@
         [self.pControlContainer addSubview: self.pCloseButtonContainer];
 
         self.pCloseButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        [self.pCloseButton setBackgroundImage:[UIImage imageNamed:@"button_close_off.png"] forState:UIControlStateNormal];
-        [self.pCloseButton setBackgroundImage:[UIImage imageNamed:@"button_close_on.png"] forState:UIControlStateHighlighted];
+        [self.pCloseButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage("button_close_off") forState:UIControlStateNormal];
+        [self.pCloseButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_close_on") forState:UIControlStateHighlighted];
         [self.pCloseButton addTarget:self action:@selector(onCloseButtonPressed) forControlEvents:UIControlEventTouchUpInside];
         [self.pCloseButtonContainer addSubview: self.pCloseButton];
 
         self.pRemovePinButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        [self.pRemovePinButton setBackgroundImage:[UIImage imageNamed:@"button_remove_pin_off.png"] forState:UIControlStateNormal];
-        [self.pRemovePinButton setBackgroundImage:[UIImage imageNamed:@"button_remove_pin_on.png"] forState:UIControlStateHighlighted];
+        [self.pRemovePinButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_remove_pin_off") forState:UIControlStateNormal];
+        [self.pRemovePinButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_remove_pin_on") forState:UIControlStateHighlighted];
         [self.pRemovePinButton addTarget:self action:@selector(onRemovePinButtonPressed) forControlEvents:UIControlEventTouchUpInside];
         [self.pCloseButtonContainer addSubview: self.pRemovePinButton];
 
@@ -62,7 +57,6 @@
         self.pHeadlineContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::MainHudColor;
         [self.pControlContainer addSubview: self.pHeadlineContainer];
 
-        self.pHeadlineShadow = ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pHeadlineContainer, "shadow_03", 0.f, 0.f, 0.f, 0.f);
         self.pIconContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         [self.pHeadlineContainer addSubview: self.pIconContainer];
 
@@ -94,13 +88,11 @@
         [self.pImageHeaderContainer addSubview: self.pImageHeaderLabel];
 
         self.pImageContent = [[[UIImageView alloc] initWithFrame: CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pImageContent.image = [UIImage imageNamed: @"image_blank.png"];
+        self.pImageContent.image = ExampleApp::Helpers::ImageHelpers::LoadImage(@"image_blank");
 
         [self.pLabelsContainer addSubview: self.pImageContent];
         
         [self setTouchExclusivity: self];
-        
-        self.pContentShadow = ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pContentContainer, "shadow_03", 0.f, 0.f, 0.f, 0.f);
     }
 
     return self;
@@ -117,23 +109,14 @@
     [self.pCloseButtonContainer removeFromSuperview];
     [self.pCloseButtonContainer release];
 
-    [self.pShadowContainer removeFromSuperview];
-    [self.pShadowContainer release];
-
     [self.pControlContainer removeFromSuperview];
     [self.pControlContainer release];
-
-    [self.pHeadlineShadow removeFromSuperview];
-    [self.pHeadlineShadow release];
 
     [self.pHeadlineContainer removeFromSuperview];
     [self.pHeadlineContainer release];
 
     [self.pLabelsContainer removeFromSuperview];
     [self.pLabelsContainer release];
-
-    [self.pContentShadow removeFromSuperview];
-    [self.pContentShadow release];
 
     [self.pContentContainer removeFromSuperview];
     [self.pContentContainer release];
@@ -196,23 +179,16 @@
                                    0.f,
                                    mainWindowWidth,
                                    mainWindowHeight);
-
-    self.pShadowContainer.frame = CGRectMake(2.f,
-                                  2.f,
-                                  mainWindowWidth,
-                                  mainWindowHeight);
+    
     const float headlineHeight = 50.f;
     const float closeButtonSectionHeight = 80.f;
     const float closeButtonSectionOffsetY = mainWindowHeight - closeButtonSectionHeight;
     const float contentSectionHeight = mainWindowHeight - (closeButtonSectionHeight + headlineHeight);
-    const float shadowHeight = 10.f;
 
     self.pHeadlineContainer.frame = CGRectMake(0.f,
                                     0.f,
                                     mainWindowWidth,
                                     headlineHeight);
-
-    self.pHeadlineShadow.frame = CGRectMake(0.f, headlineHeight, mainWindowWidth, shadowHeight);
 
 
     self.pContentContainer.frame = CGRectMake(0.f,
@@ -234,8 +210,6 @@
                                        mainWindowWidth,
                                        closeButtonSectionHeight);
 
-    self.pContentShadow.frame = CGRectMake(0.f, contentSectionHeight, mainWindowWidth, shadowHeight);
-
     self.pCloseButton.frame = CGRectMake(mainWindowWidth - closeButtonSectionHeight,
                                          0.f,
                                          closeButtonSectionHeight,
@@ -248,7 +222,7 @@
 
 
     self.pIconContainer.frame = CGRectMake(0.f, 0.f, headlineHeight, headlineHeight);
-    ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pIconContainer, "icon_create_poi.png", ExampleApp::Helpers::ImageHelpers::Centre);
+    ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pIconContainer, "icon_create_poi", ExampleApp::Helpers::ImageHelpers::Centre);
 
     const float titlePadding = 10.0f;
     self.pTitleLabel.frame = CGRectMake(headlineHeight + titlePadding,

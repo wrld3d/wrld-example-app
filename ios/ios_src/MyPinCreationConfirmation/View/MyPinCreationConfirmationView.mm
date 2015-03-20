@@ -23,59 +23,54 @@
         m_screenHeight = height/pixelScale;
 
         m_pInterop = new ExampleApp::MyPinCreation::View::MyPinCreationConfirmationViewInterop(self);
-
-        const float containerWidth = m_screenWidth;
-        const float containerHeight = 90.f;
+        
+        const float containerWidth = 320.f;
+        const float containerHeight = 40.f;
 
         m_yPosInactive = m_screenHeight + containerHeight;
         m_yPosActive = m_screenHeight - containerHeight;
 
-        self.frame = CGRectMake(0, m_screenHeight - containerHeight, m_screenWidth, containerHeight);
+        self.frame = CGRectMake((m_screenWidth * 0.5f) - (containerWidth * 0.5f),
+                                m_screenHeight - containerHeight,
+                                containerWidth,
+                                containerHeight);
 
-        self.pTitleBar = [[[UIView alloc] initWithFrame: CGRectMake(0, 0, 0, 0)] autorelease];
-        [self addSubview: self.pTitleBar];
-        const float titleBarHeight = 20.f;
-        self.pTitleBar.frame = CGRectMake(0, 0, m_screenWidth, titleBarHeight);
-        [self.pTitleBar setBackgroundColor: [UIColor whiteColor]];
+        const float buttonSize = containerHeight;
 
+        // cancel button
+        self.pCancelButton = [[[UIButton alloc] initWithFrame: CGRectMake(0, 0, buttonSize, buttonSize)] autorelease];
+        [self.pCancelButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_close_place_pin_off") forState:UIControlStateNormal];
+        [self.pCancelButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_close_place_pin_on") forState:UIControlStateHighlighted];
+        [self.pCancelButton addTarget:self action:@selector(onCancelButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview: self.pCancelButton];
+
+        // confirm button
+        self.pConfirmButton = [[[UIButton alloc] initWithFrame: CGRectMake(containerWidth - buttonSize, 0, buttonSize, buttonSize)] autorelease];
+        [self.pConfirmButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_ok_place_pin_off") forState:UIControlStateNormal];
+        [self.pConfirmButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_ok_place_pin_on") forState:UIControlStateHighlighted];
+        [self.pConfirmButton addTarget:self action:@selector(onOkayButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview: self.pConfirmButton];
+        
+        
+        // main section with text
+        const float mainSectionWidth = containerWidth - (buttonSize * 2.f);
+        self.pMainSection = [[[UIView alloc] initWithFrame: CGRectMake(buttonSize, 0.f, mainSectionWidth, containerHeight)] autorelease];
+        [self.pMainSection setBackgroundColor: [UIColor colorWithPatternImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"place_pin_background")]];
+        
         const float textPadding = 2.f;
-        self.pTitleBarText = [[[UILabel alloc] initWithFrame: self.pTitleBar.frame] autorelease];
-        self.pTitleBarText.textColor = ExampleApp::Helpers::ColorPalette::DarkGreyTone;
-        [self.pTitleBar addSubview: self.pTitleBarText];
-
-        self.pTitleBarText.frame = CGRectMake(textPadding, textPadding, containerWidth - textPadding, titleBarHeight - textPadding);
-        self.pTitleBarText.center =  self.pTitleBar.center;
-
+        self.pTitleBarText = [[[UILabel alloc] initWithFrame: CGRectMake(textPadding,
+                                                                         textPadding,
+                                                                         mainSectionWidth - textPadding,
+                                                                         containerHeight - textPadding)] autorelease];
+        
         self.pTitleBarText.font = [UIFont systemFontOfSize:13.0f];
         self.pTitleBarText.text = @"Drag the marker to place your pin";
         self.pTitleBarText.textAlignment = NSTextAlignmentCenter;
-
-        self.pMainSection = [[[UIView alloc] initWithFrame: CGRectMake(0, 0, 0, 0)] autorelease];
+        self.pTitleBarText.textColor = ExampleApp::Helpers::ColorPalette::DarkGreyTone;
+        
+        [self.pMainSection addSubview: self.pTitleBarText];
         [self addSubview: self.pMainSection];
-        self.pMainSection.frame = CGRectMake(0.f, titleBarHeight, containerWidth, containerHeight - titleBarHeight);
-        [self.pMainSection setBackgroundColor: ExampleApp::Helpers::ColorPalette::GoldTone];
-
-        const float shadowHeight = 10.f;
-        ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self, "shadow_03", 0.f, titleBarHeight, containerWidth, shadowHeight);
-
-        const float buttonSize = containerHeight - titleBarHeight;
-
-        self.pCancelButton = [[[UIButton alloc] initWithFrame: CGRectMake(0, 0, 0, 0)] autorelease];
-        [self.pMainSection addSubview: self.pCancelButton];
-
-        self.pCancelButton.frame = CGRectMake(0, 0, buttonSize, buttonSize);
-        [self.pCancelButton setBackgroundImage:[UIImage imageNamed:@"button_close_off.png"] forState:UIControlStateNormal];
-        [self.pCancelButton setBackgroundImage:[UIImage imageNamed:@"button_close_on.png"] forState:UIControlStateHighlighted];
-        [self.pCancelButton addTarget:self action:@selector(onCancelButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-
-        self.pConfirmButton = [[[UIButton alloc] initWithFrame: CGRectMake(0, 0, 0, 0)] autorelease];
-        [self.pMainSection addSubview: self.pConfirmButton];
-
-        self.pConfirmButton.frame = CGRectMake(containerWidth - buttonSize, 0, buttonSize, buttonSize);
-        [self.pConfirmButton setBackgroundImage:[UIImage imageNamed:@"button_ok_off.png"] forState:UIControlStateNormal];
-        [self.pConfirmButton setBackgroundImage:[UIImage imageNamed:@"button_ok_on.png"] forState:UIControlStateHighlighted];
-        [self.pConfirmButton addTarget:self action:@selector(onOkayButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-
+        
         [self setHidden:YES];
         [self setTouchExclusivity: self];
     }
@@ -95,10 +90,7 @@
 
     [self.pTitleBarText removeFromSuperview];
     [self.pTitleBarText release];
-
-    [self.pTitleBar removeFromSuperview];
-    [self.pTitleBar release];
-
+    
     [self.pMainSection removeFromSuperview];
     [self.pMainSection release];
 

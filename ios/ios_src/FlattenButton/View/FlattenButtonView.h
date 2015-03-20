@@ -18,9 +18,10 @@
     float m_screenWidth;
     float m_screenHeight;
     float m_pixelScale;
-
-    float m_xPosActive;
-    float m_xPosInactive;
+    
+    float m_yPosActive;
+    float m_yPosInactive;
+    float m_yPosBase;
 
     float m_stateChangeAnimationTimeSeconds;
 }
@@ -37,6 +38,6 @@
 
 - (void) setOnScreenStateToIntermediateValue:(float)openState;
 
-- (void) animateToX:(float)x;
+- (void) animateToY:(float)y;
 
 @end

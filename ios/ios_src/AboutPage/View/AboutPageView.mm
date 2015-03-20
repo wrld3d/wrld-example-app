@@ -22,10 +22,6 @@
         self.alpha = 0.f;
         m_stateChangeAnimationTimeSeconds = 0.2f;
 
-        self.pShadowContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pShadowContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::BlackTone;
-        self.pShadowContainer.alpha = 0.1f;
-        [self addSubview: self.pShadowContainer];
 
         self.pControlContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         self.pControlContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::GoldTone;
@@ -36,15 +32,13 @@
         [self.pControlContainer addSubview: self.pCloseButtonContainer];
 
         self.pCloseButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        [self.pCloseButton setBackgroundImage:[UIImage imageNamed:@"button_close_off.png"] forState:UIControlStateNormal];
-        [self.pCloseButton setBackgroundImage:[UIImage imageNamed:@"button_close_on.png"] forState:UIControlStateHighlighted];
+        [self.pCloseButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_close_off") forState:UIControlStateNormal];
+        [self.pCloseButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_close_on") forState:UIControlStateHighlighted];
         [self.pCloseButtonContainer addSubview: self.pCloseButton];
 
         self.pContentContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         self.pContentContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::MainHudColor;
         [self.pControlContainer addSubview: self.pContentContainer];
-
-        self.pContainerShadowBottom = ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pContentContainer, "shadow_03", 0.f, 0.f, 0, 0);
 
         self.pLabelsContainer = [[[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         self.pLabelsContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::WhiteTone;
@@ -58,15 +52,13 @@
         self.pTitleLabel.textColor = ExampleApp::Helpers::ColorPalette::GoldTone;
         [self.pHeadlineContainer addSubview: self.pTitleLabel];
 
-        self.pContainerShadowTop = ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pContentContainer, "shadow_03", 0.f, 0.f, 0, 0);
-
         self.pDevelopedByLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         self.pDevelopedByLabel.textColor = ExampleApp::Helpers::ColorPalette::DarkGreyTone;
         self.pDevelopedByLabel.textAlignment = NSTextAlignmentCenter;
         [self.pLabelsContainer addSubview: self.pDevelopedByLabel];
 
         self.pLogoImage = [[[UIImageView alloc] initWithFrame: CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pLogoImage.image = [UIImage imageNamed: @"eegeo_logo@ipho.png"];
+        self.pLogoImage.image = ExampleApp::Helpers::ImageHelpers::LoadImage(@"eegeo_logo");
         [self.pLabelsContainer addSubview: self.pLogoImage];
 
         self.pTextContent = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
@@ -90,10 +82,7 @@
 
     [self.pCloseButtonContainer removeFromSuperview];
     [self.pCloseButtonContainer release];
-
-    [self.pShadowContainer removeFromSuperview];
-    [self.pShadowContainer release];
-
+    
     [self.pControlContainer removeFromSuperview];
     [self.pControlContainer release];
 
@@ -102,11 +91,6 @@
 
     [self.pLabelsContainer removeFromSuperview];
     [self.pLabelsContainer release];
-
-    [self.pContainerShadowTop removeFromSuperview];
-    [self.pContainerShadowTop release];
-    [self.pContainerShadowBottom removeFromSuperview];
-    [self.pContainerShadowBottom release];
 
     [self.pContentContainer removeFromSuperview];
     [self.pContentContainer release];
@@ -152,11 +136,6 @@
                                    mainWindowWidth,
                                    mainWindowHeight);
 
-    self.pShadowContainer.frame = CGRectMake(2.f,
-                                  2.f,
-                                  mainWindowWidth,
-                                  mainWindowHeight);
-
     const float headlineHeight = 50.f;
     const float headlineMargin = 10.f;
     const float closeButtonSectionHeight = 80.f;
@@ -164,21 +143,16 @@
     const float closeButtonSectionOffsetY = mainWindowHeight - closeButtonSectionHeight;
     const float contentSectionOffsetY = headlineOffsetY + headlineHeight;
     const float contentSectionHeight = mainWindowHeight - (closeButtonSectionHeight + headlineHeight);
-    const float shadowHeight = 10.f;
-
+   
     self.pHeadlineContainer.frame = CGRectMake(0.f,
                                     headlineOffsetY,
                                     mainWindowWidth,
                                     headlineHeight);
 
-
-
     self.pContentContainer.frame = CGRectMake(0.f,
                                    contentSectionOffsetY,
                                    mainWindowWidth,
                                    contentSectionHeight);
-
-    self.pContainerShadowTop.frame = CGRectMake(0.f, 0.f, mainWindowWidth, shadowHeight);
 
     const float labelsSectionOffsetX = 8.f;
     const float labelsSectionWidth = mainWindowWidth - (2.f * labelsSectionOffsetX);
@@ -198,8 +172,6 @@
                                          0.f,
                                          closeButtonSectionHeight,
                                          closeButtonSectionHeight);
-
-    self.pContainerShadowBottom.frame = CGRectMake(0.f, contentSectionHeight, mainWindowWidth, shadowHeight);
 
     const float headlineWidth = mainWindowWidth - headlineMargin;
 

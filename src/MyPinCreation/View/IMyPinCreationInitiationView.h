@@ -18,7 +18,6 @@ namespace ExampleApp
                 virtual ~IMyPinCreationInitiationView() { }
 
                 virtual void OnSelected() = 0;
-                virtual void ShouldOffsetButton(bool shouldOffset) = 0;
                 virtual void InsertSelectedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
                 virtual void RemoveSelectedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
             };

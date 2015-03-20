@@ -5,7 +5,6 @@
 #include "UIColors.h"
 #include "ImageHelpers.h"
 #include "CompassViewInterop.h"
-#include "ScaleHelpers.h"
 
 @implementation CompassView
 
@@ -14,61 +13,48 @@
     if(self = [super init])
     {
         m_pInterop = Eegeo_NEW(ExampleApp::Compass::View::CompassViewInterop)(self);
-        float iphoneTweakScale = ExampleApp::Helpers::ScaleHelpers::GetScaleTweakValue();
         m_stateChangeAnimationTimeSeconds = 0.2f;
         m_pixelScale = 1.f;
         m_screenWidth = width/pixelScale;
         m_screenHeight = height/pixelScale;
-        m_darkColour = ExampleApp::Helpers::ColorPalette::GoldTone;
-        m_lightColour = ExampleApp::Helpers::ColorPalette::WhiteTone;
+        m_gpsIndicatorColour = ExampleApp::Helpers::ColorPalette::WhiteTone;
 
         //control positioning
-        m_width = 64 * m_pixelScale * iphoneTweakScale;
-        m_height = m_width;
-        m_yPosActive = 16 * m_pixelScale;
-        m_yPosInactive = -m_height;
-        self.frame = CGRectMake(((m_screenWidth * 0.5f) - (m_width * 0.5f)), m_yPosActive, m_width, m_height);
-
-        //outer shape shadow
-        self.pOuterShadowContainer = [[[UIView alloc] init] autorelease];
-        [self addSubview: self.pOuterShadowContainer];
-        ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pOuterShadowContainer, "compass_shadow", 8*iphoneTweakScale, 8*iphoneTweakScale, m_width, m_height);
+        m_width = 80.f;
+        m_height = 80.f;
+        
+        m_yPosBase = m_yPosActive = m_screenHeight - (8 * m_pixelScale) - m_height;
+        m_yPosInactive = m_screenHeight + m_height;
+        
+        self.frame = CGRectMake(((m_screenWidth * 0.5f) - (m_width * 0.5f)), m_yPosInactive, m_width, m_height);
 
         //outer shape
         self.pOuterShape = [[[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, m_width, m_height)] autorelease];
-        self.pOuterShape.layer.cornerRadius = m_width * 0.5f;
-        self.pOuterShape.backgroundColor = m_lightColour;
+        self.pOuterShape.backgroundColor = [UIColor colorWithPatternImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"compass")];
         [self addSubview: self.pOuterShape];
 
         //inner shape
-        const float innerWidth = 54 * m_pixelScale * iphoneTweakScale;
-        const float innerHeight = innerWidth;
-        self.pInnerShape = [[[UIView alloc] initWithFrame:CGRectMake(5.f * iphoneTweakScale, 5.f * iphoneTweakScale, innerWidth, innerHeight)] autorelease];
-        self.pInnerShape.layer.cornerRadius = innerWidth * 0.5f;
-        self.pInnerShape.backgroundColor = m_darkColour;
+        const float innerWidth = 14.f;
+        const float innerHeight = 14.f;
+        self.pInnerShape = [[[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, innerWidth, innerHeight)] autorelease];
+        CAShapeLayer *circleLayer = [CAShapeLayer layer];
+        [circleLayer setBounds:CGRectMake(0.0f, 0.0f, self.pInnerShape.bounds.size.width, self.pInnerShape.bounds.size.height)];
+        [circleLayer setPosition:self.pOuterShape.center];
+        UIBezierPath *path = [UIBezierPath bezierPathWithOvalInRect: CGRectMake(0.0f, 0.0f, innerWidth, innerHeight)];
+        [circleLayer setPath:[path CGPath]];
+        [circleLayer setStrokeColor:[[UIColor clearColor] CGColor]];
+        [circleLayer setFillColor:[[UIColor clearColor] CGColor]];
+        [circleLayer setLineWidth:1.0f];
+        [[self.pInnerShape layer] addSublayer:circleLayer];
         [self addSubview: self.pInnerShape];
-
-        //compass point shadow
-        self.pPointShadowContainer = [[[UIView alloc] init] autorelease];
-        [self addSubview: self.pPointShadowContainer];
-        ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pPointShadowContainer, "compass_shadow", 0, 0, 12 * iphoneTweakScale, 12 * iphoneTweakScale);
-
+        
         //compass point
-        float pointWidth = (12.f * m_pixelScale) * iphoneTweakScale;
-        float pointHeight = pointWidth;
+        float pointWidth = 7.f;
+        float pointHeight = 26.f;
         self.pPoint = [[[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, pointWidth, pointHeight)] autorelease];
-        self.pPoint.backgroundColor = m_lightColour;
-        self.pPoint.layer.cornerRadius = pointWidth * 0.5f;
+        self.pPoint.backgroundColor = [UIColor colorWithPatternImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"CompassPoint")];
+        self.pPoint.center = self.pOuterShape.center;
         [self addSubview: self.pPoint];
-
-        //lock icon
-        self.pLockIconContainer = [[[UIView alloc] init] autorelease];
-        [self addSubview: self.pLockIconContainer];
-        ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pLockIconContainer, "compass_lock", 54 * iphoneTweakScale, 0, 25 * iphoneTweakScale, 25 * iphoneTweakScale);
-        self.pLockIconContainer.alpha = 0.f;
-
-        m_compassPointNaturalOffsetX = (m_width / 2.f) - (pointWidth / 2.f);
-        m_compassPointNaturalOffsetY = (m_width / 2.f) - (pointWidth / 2.f);
 
         m_tapGestureRecogniser = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(_tapTabGesture:)] autorelease];
         [m_tapGestureRecogniser setDelegate:self];
@@ -86,20 +72,11 @@
     [self.pOuterShape removeFromSuperview];
     [self.pOuterShape release];
 
-    [self.pOuterShadowContainer removeFromSuperview];
-    [self.pOuterShadowContainer release];
-
     [self.pInnerShape removeFromSuperview];
     [self.pInnerShape release];
 
     [self.pPoint removeFromSuperview];
     [self.pPoint release];
-
-    [self.pPointShadowContainer removeFromSuperview];
-    [self.pPointShadowContainer release];
-
-    [self.pLockIconContainer removeFromSuperview];
-    [self.pLockIconContainer release];
 
     [super dealloc];
 }
@@ -111,50 +88,36 @@
 
 - (void) showGpsDisabledView
 {
-    [self.pOuterShape setBackgroundColor: m_lightColour];
-    [self.pInnerShape setBackgroundColor: m_darkColour];
-    [self.pPoint setBackgroundColor: m_lightColour];
-
-    [UIView animateWithDuration:m_stateChangeAnimationTimeSeconds animations:^ {self.pLockIconContainer.alpha = 0.f;}];
+    for (CAShapeLayer *layer in self.pInnerShape.layer.sublayers)
+    {
+        [layer setStrokeColor:[[UIColor clearColor] CGColor]];
+        [layer setFillColor:[[UIColor clearColor] CGColor]];
+    }
 }
 
 - (void) showGpsFollowView
 {
-    [self.pOuterShape setBackgroundColor: m_darkColour];
-    [self.pInnerShape setBackgroundColor: m_lightColour];
-    [self.pPoint setBackgroundColor: m_darkColour];
-
-    [UIView animateWithDuration:m_stateChangeAnimationTimeSeconds animations:^ {self.pLockIconContainer.alpha = 0.f;}];
+    for (CAShapeLayer *layer in self.pInnerShape.layer.sublayers)
+    {
+        [layer setStrokeColor:[m_gpsIndicatorColour CGColor]];
+        [layer setFillColor:[[UIColor clearColor] CGColor]];
+    }
 }
 
 - (void) showGpsCompassModeView
 {
-    [self.pOuterShape setBackgroundColor: m_darkColour];
-    [self.pInnerShape setBackgroundColor: m_lightColour];
-    [self.pPoint setBackgroundColor: m_darkColour];
-
-    [UIView animateWithDuration:m_stateChangeAnimationTimeSeconds animations:^ {self.pLockIconContainer.alpha = 1.f;}];
+    for (CAShapeLayer *layer in self.pInnerShape.layer.sublayers)
+    {
+        [layer setStrokeColor:[m_gpsIndicatorColour CGColor]];
+        [layer setFillColor:[m_gpsIndicatorColour CGColor]];
+    }
 }
 
 - (void) updateHeading:(float)angleRadians
 {
-    const float theta = -angleRadians;
-    const float sinTheta = (float)sin(theta);
-    const float cosTheta = (float)cos(theta);
-    const float x = 0.f;
-    const float y = -15.f * ExampleApp::Helpers::ScaleHelpers::GetScaleTweakValue();
-    const float newX = (x*cosTheta - y*sinTheta) + m_compassPointNaturalOffsetX;
-    const float newY = (y*cosTheta + x*sinTheta) + m_compassPointNaturalOffsetY;
-
-    CGRect frame = self.pPoint.frame;
-    frame.origin.x = newX;
-    frame.origin.y = newY;
-    self.pPoint.frame = frame;
-
-    CGRect shadowFrame = self.pPointShadowContainer.frame;
-    shadowFrame.origin.x = newX + 2.f;
-    shadowFrame.origin.y = newY + 2.f;
-    self.pPointShadowContainer.frame = shadowFrame;
+    self.pPoint.transform = CGAffineTransformTranslate(CGAffineTransformRotate(CGAffineTransformIdentity,
+                                                                               -angleRadians),
+                                                       0, -24.f);
 }
 
 - (ExampleApp::Compass::View::CompassViewInterop *)getInterop
@@ -174,7 +137,7 @@
     {
         return;
     }
-
+    
     [self animateToY:m_yPosActive];
 }
 
@@ -184,14 +147,14 @@
     {
         return;
     }
-
+    
     [self animateToY:m_yPosInactive];
 }
 
 - (void) setOnScreenStateToIntermediateValue:(float)onScreenState
 {
     float newY = m_yPosInactive + (m_yPosActive - m_yPosInactive) * onScreenState;
-
+    
     self.hidden = false;
     CGRect f = self.frame;
     f.origin.y = newY;
@@ -202,22 +165,20 @@
 {
     CGRect f = self.frame;
     f.origin.y = y;
-
+    
     if(y != m_yPosInactive)
     {
         self.hidden = false;
     }
-
-    [UIView animateWithDuration:m_stateChangeAnimationTimeSeconds
-     animations:^
-    {
-        self.frame = f;
-    }
-    completion:^(BOOL finished)
-    {
-        self.hidden = (y == m_yPosInactive);
-    }
-    ];
+    
+    [UIView animateWithDuration:m_stateChangeAnimationTimeSeconds animations:^
+     {
+         self.frame = f;
+     } completion:^(BOOL finished)
+     {
+         self.hidden = (y == m_yPosInactive);
+     }
+     ];
 }
 
 - (void)_tapTabGesture:(UITapGestureRecognizer *)recognizer

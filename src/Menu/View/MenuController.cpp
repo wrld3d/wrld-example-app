@@ -254,8 +254,6 @@ namespace ExampleApp
             {
                 m_viewModel.InsertOpenStateChangedCallback(m_onOpenableStateChanged);
                 m_viewModel.InsertOnScreenStateChangedCallback(m_onScreenStateChanged);
-                m_model.InsertItemAddedCallback(m_onItemAddedCallback);
-                m_model.InsertItemRemovedCallback(m_onItemRemovedCallback);
                 m_view.InsertOnDrag(m_onDragCallback);
                 m_view.InsertOnDragCompleted(m_onDragCompletedCallback);
                 m_view.InsertOnDragStarted(m_onDragStartedCallback);
@@ -272,10 +270,26 @@ namespace ExampleApp
                 }
 
                 m_presentationDirty = true;
+                
+                for(size_t i = 0; i < m_viewModel.SectionsCount(); ++ i)
+                {
+                    IMenuSectionViewModel& section(m_viewModel.GetMenuSection(i));
+                    IMenuModel& model = section.GetModel();
+                    model.InsertItemAddedCallback(m_onItemAddedCallback);
+                    model.InsertItemRemovedCallback(m_onItemRemovedCallback);
+                }
             }
 
             MenuController::~MenuController()
             {
+                for(size_t i = 0; i < m_viewModel.SectionsCount(); ++ i)
+                {
+                    IMenuSectionViewModel& section(m_viewModel.GetMenuSection(i));
+                    IMenuModel& model = section.GetModel();
+                    model.RemoveItemAddedCallback(m_onItemAddedCallback);
+                    model.RemoveItemRemovedCallback(m_onItemRemovedCallback);
+                }
+                
                 m_view.ClearTryDragFunc();
                 m_view.RemoveOnViewOpened(m_onViewOpenedCallback);
                 m_view.RemoveOnViewClosed(m_onViewClosedCallback);
@@ -284,8 +298,6 @@ namespace ExampleApp
                 m_view.RemoveOnDragStarted(m_onDragStartedCallback);
                 m_view.RemoveOnDragCompleted(m_onDragCompletedCallback);
                 m_view.RemoveOnDrag(m_onDragCallback);
-                m_model.RemoveItemRemovedCallback(m_onItemRemovedCallback);
-                m_model.RemoveItemAddedCallback(m_onItemAddedCallback);
                 m_viewModel.RemoveOnScreenStateChangedCallback(m_onScreenStateChanged);
                 m_viewModel.RemoveOpenStateChangedCallback(m_onOpenableStateChanged);
             }

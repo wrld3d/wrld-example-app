@@ -12,8 +12,7 @@
     ExampleApp::Compass::View::CompassViewInterop* m_pInterop;
     UITapGestureRecognizer* m_tapGestureRecogniser;
 
-    UIColor* m_darkColour;
-    UIColor* m_lightColour;
+    UIColor* m_gpsIndicatorColour;
 
     float m_width;
     float m_height;
@@ -21,9 +20,10 @@
     float m_screenWidth;
     float m_screenHeight;
     float m_pixelScale;
-
+    
     float m_yPosActive;
     float m_yPosInactive;
+    float m_yPosBase;
 
     float m_stateChangeAnimationTimeSeconds;
 
@@ -54,10 +54,7 @@
 - (void) animateToY:(float)y;
 
 @property (nonatomic, retain) UIView* pOuterShape;
-@property (nonatomic, retain) UIView* pOuterShadowContainer;
 @property (nonatomic, retain) UIView* pInnerShape;
 @property (nonatomic, retain) UIView* pPoint;
-@property (nonatomic, retain) UIView* pPointShadowContainer;
-@property (nonatomic, retain) UIView* pLockIconContainer;
 
 @end

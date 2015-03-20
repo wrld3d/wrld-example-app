@@ -37,7 +37,7 @@ namespace ExampleApp
 			jstring apiKeyStr = env->NewStringUTF(apiKey.c_str());
 			jstring appVersionStr = env->NewStringUTF(appVersion.c_str());
 
-			jmethodID beginMethod = env->GetStaticMethodID(m_flurryClass, "begin", "(Lcom/eegeo/mobileexampleapp/MainActivity;Ljava/lang/String;Ljava/lang/String;)V");
+			jmethodID beginMethod = env->GetStaticMethodID(m_flurryClass, "begin", "(Lcom/eegeo/entrypointinfrastructure/MainActivity;Ljava/lang/String;Ljava/lang/String;)V");
 			env->CallStaticVoidMethod(m_flurryClass, beginMethod, m_pNativeState->activity, apiKeyStr, appVersionStr);
 
 			env->DeleteLocalRef(apiKeyStr);

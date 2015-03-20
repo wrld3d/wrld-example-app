@@ -8,9 +8,6 @@
 @class MenuView;
 @class MenuViewInterop;
 
-FOUNDATION_EXPORT NSInteger const SubItemCellShadowViewTag;
-FOUNDATION_EXPORT NSInteger const SubItemCellShadowFlippedViewTag;
-
 @interface CustomTableDataProvider : UITableViewController<UITableViewDelegate, UITableViewDataSource>
 {
     MenuView* m_pView;
@@ -31,8 +28,6 @@ FOUNDATION_EXPORT NSInteger const SubItemCellShadowFlippedViewTag;
 
 - (void)updateMenuSections:(ExampleApp::Menu::View::TSections*)sections;
 
-@property (nonatomic, retain) UIImage* pSubItemShadow;
-@property (nonatomic, retain) UIImage* pSubItemShadowFlipped;
 @property (nonatomic, retain) UIImage* pOpenableMenuArrow;
 
 @end;

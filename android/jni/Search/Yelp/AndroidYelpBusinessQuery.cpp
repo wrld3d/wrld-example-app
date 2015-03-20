@@ -38,7 +38,7 @@ namespace ExampleApp
                 env->DeleteLocalRef(strClassName);
 
                 m_yelpSearchQueryClass = static_cast<jclass>(env->NewGlobalRef(objClass));
-                jmethodID objCtor = env->GetMethodID(m_yelpSearchQueryClass, "<init>", "(Lcom/eegeo/mobileexampleapp/MainActivity;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;J)V");
+                jmethodID objCtor = env->GetMethodID(m_yelpSearchQueryClass, "<init>", "(Lcom/eegeo/entrypointinfrastructure/MainActivity;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;J)V");
 
                 jstring yelpConsumerKeyStr = env->NewStringUTF(yelpConsumerKey.c_str());
                 jstring yelpConsumerSecretStr = env->NewStringUTF(yelpConsumerSecret.c_str());
