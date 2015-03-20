@@ -26,8 +26,7 @@ namespace ExampleApp
 
             void MyPinRemovedFromMenuObserver::OnMyRemovedFromMenuMessage(const MyPinRemovedFromMenuMessage& message)
             {
-                SdkModel::MyPinModel* myPinModel = message.GetMyPinModel();
-                m_menuOptionsModel.RemoveItem(ConvertModelDetailToString(myPinModel->Identifier()));
+                m_menuOptionsModel.RemoveItem(ConvertModelDetailToString(message.GetMyPinId()));
             }
         }
     }

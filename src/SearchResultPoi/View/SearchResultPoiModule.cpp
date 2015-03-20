@@ -3,6 +3,7 @@
 #include "SearchResultPoiModule.h"
 #include "SearchResultPoiViewModel.h"
 #include "SearchResultPoiMyPinService.h"
+#include "SearchResultPoiViewImageFetcher.h"
 
 namespace ExampleApp
 {
@@ -13,18 +14,25 @@ namespace ExampleApp
             SearchResultPoiModule::SearchResultPoiModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
                                                          Reaction::View::IReactionControllerModel& reactionControllerModel,
                                                          MyPins::SdkModel::IMyPinsService& myPinsService,
-                                                         MyPins::SdkModel::IMyPinsRepository& myPinsRepository,
+                                                         Search::SdkModel::MyPins::ISearchResultMyPinsService& searchResultMyPinsService,
                                                          CategorySearch::ISearchResultIconCategoryMapper& searchResultIconCategoryMapper,
+                                                         Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
                                                          ExampleAppMessaging::TMessageBus& messageBus)
             {
                 m_pSearchResultPoiViewModel = Eegeo_NEW(SearchResultPoiViewModel)(identityProvider.GetNextIdentity(),
                                                                                   reactionControllerModel);
                 
                 m_pSearchResultPoiMyPinService = Eegeo_NEW(SdkModel::SearchResultPoiMyPinService)(myPinsService,
-                                                                                                  myPinsRepository,
+                                                                                                  searchResultMyPinsService,
                                                                                                   searchResultIconCategoryMapper);
                 
                 m_pSearchResultPoiPinToggledMessageHandler = Eegeo_NEW(SdkModel::SearchResultPoiPinToggledMessageHandler)(*m_pSearchResultPoiMyPinService,
+                                                                                                                          messageBus);
+                
+                m_pSearchResultPoiViewImageFetcher = Eegeo_NEW(SdkModel::SearchResultPoiViewImageFetcher)(webRequestFactory,
+                                                                                                          messageBus);
+                
+                m_pSearchResultPoiViewOpenedMessageHandler = Eegeo_NEW(SdkModel::SearchResultPoiViewOpenedMessageHandler)(*m_pSearchResultPoiViewImageFetcher,
                                                                                                                           messageBus);
             }
 

@@ -2,7 +2,7 @@
 
 package com.eegeo.searchmenu;
 
-import com.eegeo.mobileexampleapp.MainActivity;
+import com.eegeo.entrypointinfrastructure.MainActivity;
 
 import android.view.View;
 

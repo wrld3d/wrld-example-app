@@ -6,6 +6,7 @@
 #include "ImageHelpers.h"
 #include "IconResources.h"
 #include "OptionsCacheClearSubView.h"
+#import "UIView+TouchExclusivity.h"
 #include "App.h"
 
 @implementation OptionsCacheClearSubView
@@ -21,11 +22,6 @@
         self.pDarkBackgroundPanel.alpha = 0.4f;
         [self addSubview: self.pDarkBackgroundPanel];
         
-        self.pShadowContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pShadowContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::BlackTone;
-        self.pShadowContainer.alpha = 0.1f;
-        [self addSubview: self.pShadowContainer];
-        
         self.pControlContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         self.pControlContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::GoldTone;
         [self addSubview: self.pControlContainer];
@@ -35,22 +31,20 @@
         [self.pControlContainer addSubview: self.pOptionButtonsContainer];
         
         self.pCloseButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        [self.pCloseButton setBackgroundImage:[UIImage imageNamed:@"button_close_off.png"] forState:UIControlStateNormal];
-        [self.pCloseButton setBackgroundImage:[UIImage imageNamed:@"button_close_on.png"] forState:UIControlStateHighlighted];
+        [self.pCloseButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_close_off") forState:UIControlStateNormal];
+        [self.pCloseButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_close_on") forState:UIControlStateHighlighted];
         [self.pCloseButton addTarget:self action:@selector(handleCloseClicked) forControlEvents:UIControlEventTouchUpInside];
         [self.pOptionButtonsContainer addSubview: self.pCloseButton];
         
         self.pConfirmButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        [self.pConfirmButton setBackgroundImage:[UIImage imageNamed:@"button_ok_off.png"] forState:UIControlStateNormal];
-        [self.pConfirmButton setBackgroundImage:[UIImage imageNamed:@"button_ok_on.png"] forState:UIControlStateHighlighted];
+        [self.pConfirmButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_ok_off") forState:UIControlStateNormal];
+        [self.pConfirmButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_ok_on") forState:UIControlStateHighlighted];
         [self.pConfirmButton addTarget:self action:@selector(handleConfirmClicked) forControlEvents:UIControlEventTouchUpInside];
         [self.pOptionButtonsContainer addSubview: self.pConfirmButton];
         
         self.pContentContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         self.pContentContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::WhiteTone;
         [self.pControlContainer addSubview: self.pContentContainer];
-        
-        self.pContainerShadowBottom = ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pContentContainer, "shadow_03", 0.f, 0.f, 0, 0);
         
         self.pMessageContent = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         self.pMessageContent.textColor = ExampleApp::Helpers::ColorPalette::BlackTone;
@@ -70,7 +64,7 @@
         self.pTitleLabel.textColor = ExampleApp::Helpers::ColorPalette::GoldTone;
         [self.pHeadlineContainer addSubview: self.pTitleLabel];
         
-        self.pContainerShadowTop = ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pContentContainer, "shadow_03", 0.f, 0.f, 0, 0);
+        [self setTouchExclusivity:self];
         
         [self resetState];
     }
@@ -92,20 +86,11 @@
     [self.pOptionButtonsContainer removeFromSuperview];
     [self.pOptionButtonsContainer release];
     
-    [self.pShadowContainer removeFromSuperview];
-    [self.pShadowContainer release];
-    
     [self.pControlContainer removeFromSuperview];
     [self.pControlContainer release];
     
     [self.pHeadlineContainer removeFromSuperview];
     [self.pHeadlineContainer release];
-    
-    [self.pContainerShadowTop removeFromSuperview];
-    [self.pContainerShadowTop release];
-    
-    [self.pContainerShadowBottom removeFromSuperview];
-    [self.pContainerShadowBottom release];
     
     [self.pSpinner removeFromSuperview];
     [self.pSpinner release];
@@ -152,11 +137,6 @@
                                               mainWindowWidth,
                                               mainWindowHeight);
     
-    self.pShadowContainer.frame = CGRectMake(mainWindowX + 2.f,
-                                             mainWindowY + 2.f,
-                                             mainWindowWidth,
-                                             mainWindowHeight);
-    
     const float headlineHeight = 50.f;
     const float headlineMargin = 10.f;
     const float optionButtonSectionHeight = 80.f;
@@ -164,7 +144,6 @@
     const float closeButtonSectionOffsetY = mainWindowHeight - optionButtonSectionHeight;
     const float contentSectionOffsetY = headlineOffsetY + headlineHeight;
     const float contentSectionHeight = mainWindowHeight - (optionButtonSectionHeight + headlineHeight);
-    const float shadowHeight = 10.f;
     
     self.pHeadlineContainer.frame = CGRectMake(0.f,
                                                headlineOffsetY,
@@ -194,8 +173,6 @@
     
     [self setSpinnerEnabled:NO];
     
-    self.pContainerShadowTop.frame = CGRectMake(0.f, 0.f, mainWindowWidth, shadowHeight);
-    
     self.pOptionButtonsContainer.frame = CGRectMake(0.f,
                                                     closeButtonSectionOffsetY,
                                                     mainWindowWidth,
@@ -211,8 +188,6 @@
                                            optionButtonSectionHeight,
                                            optionButtonSectionHeight);
     
-    self.pContainerShadowBottom.frame = CGRectMake(0.f, contentSectionHeight, mainWindowWidth, shadowHeight);
-    
     const float headlineWidth = mainWindowWidth - headlineMargin;
     
     self.pTitleLabel.frame = CGRectMake(headlineMargin,
@@ -220,7 +195,6 @@
                                         headlineWidth,
                                         headlineHeight);
     self.pTitleLabel.font = [UIFont systemFontOfSize:18.0f];
-    self.pTitleLabel.text = @"Warning";
 }
 
 - (bool) isDisplayed
@@ -242,6 +216,7 @@
     
     [pConfirmedHandlerInstance.superview addSubview:self];
     
+    self.pTitleLabel.text = @"Warning";
     self.pMessageContent.text = @"Are you sure you want to remove all stored data?";
 }
 

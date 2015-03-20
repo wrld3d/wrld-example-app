@@ -146,6 +146,14 @@ namespace ExampleApp
                 m_urlEncoder.UrlEncode(query, encodedQuery);
                 out_stream << encodedQuery << ".json";
             }
+            
+            void DecartaSearchService::PerformIdentitySearch(const std::string& searchResultIdentifier,
+                                                             Eegeo::Helpers::ICallback1<const SdkModel::IdentitySearchCallbackData&>& callback)
+            {
+                // Not implemented.
+                SdkModel::IdentitySearchCallbackData result = SdkModel::IdentitySearchCallbackData::CreateFailed(searchResultIdentifier);
+                callback(result);
+            }
         }
     }
 }

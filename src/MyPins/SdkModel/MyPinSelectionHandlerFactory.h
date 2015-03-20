@@ -5,6 +5,7 @@
 #include "IMyPinSelectionHandlerFactory.h"
 #include "MyPins.h"
 #include "BidirectionalBus.h"
+#include "IMetricsService.h"
 
 namespace ExampleApp
 {
@@ -15,10 +16,12 @@ namespace ExampleApp
             class MyPinSelectionHandlerFactory : public IMyPinSelectionHandlerFactory
             {
             private:
-                ExampleAppMessaging::TMessageBus& m_messageBus;
+                MyPins::SdkModel::IMyPinBoundObjectRepository& m_myPinBoundObjectRepository;
+                
+                Metrics::IMetricsService& m_metricsService;
 
             public:
-                MyPinSelectionHandlerFactory(ExampleAppMessaging::TMessageBus& messageBus);
+                MyPinSelectionHandlerFactory(MyPins::SdkModel::IMyPinBoundObjectRepository& myPinBoundObjectRepository, Metrics::IMetricsService& metricsService);
 
                 MyPinSelectionHandler* CreateMyPinSelectionHandler(MyPinModel& myPinModel) const;
             };

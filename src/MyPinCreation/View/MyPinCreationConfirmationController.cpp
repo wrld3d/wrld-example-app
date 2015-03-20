@@ -5,7 +5,6 @@
 #include "IMyPinCreationConfirmationView.h"
 #include "IMyPinCreationDetailsViewModel.h"
 #include "ApplyScreenControl.h"
-#include "FlurryWrapper.h"
 
 namespace ExampleApp
 {
@@ -17,11 +16,13 @@ namespace ExampleApp
                 IMyPinCreationConfirmationViewModel& viewModel,
                 IMyPinCreationConfirmationView& view,
                 MyPinCreationDetails::View::IMyPinCreationDetailsViewModel& detailsViewModel,
-                ExampleAppMessaging::TMessageBus& messageBus)
+                ExampleAppMessaging::TMessageBus& messageBus,
+                Metrics::IMetricsService& metricsService)
                 : m_viewModel(viewModel)
                 , m_view(view)
                 , m_detailsViewModel(detailsViewModel)
                 , m_messageBus(messageBus)
+                , m_metricsService(metricsService)
                 , m_dismissedCallback(this, &MyPinCreationConfirmationController::OnDismissed)
                 , m_confirmedCallback(this, &MyPinCreationConfirmationController::OnConfirmed)
                 , m_viewStateCallback(this, &MyPinCreationConfirmationController::OnViewStateChangeScreenControl)
@@ -44,7 +45,7 @@ namespace ExampleApp
 
             void MyPinCreationConfirmationController::OnConfirmed()
             {
-                FLURRY_SET_EVENT("PinCreationConfirmation: Confirmed");
+                m_metricsService.SetEvent("PinCreationConfirmation: Confirmed");
                 m_viewModel.Close();
                 m_messageBus.Publish(ExampleApp::MyPinCreation::MyPinCreationViewStateChangedMessage(ExampleApp::MyPinCreation::Details));
                 m_viewModel.RemoveFromScreen();
@@ -53,7 +54,7 @@ namespace ExampleApp
 
             void MyPinCreationConfirmationController::OnDismissed()
             {
-                FLURRY_SET_EVENT("PinCreationConfirmation: Cancelled");
+                m_metricsService.SetEvent("PinCreationConfirmation: Cancelled");
                 m_viewModel.Close();
                 m_messageBus.Publish(ExampleApp::MyPinCreation::MyPinCreationViewStateChangedMessage(ExampleApp::MyPinCreation::Inactive));
             }

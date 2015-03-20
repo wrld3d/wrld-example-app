@@ -7,6 +7,7 @@
 #include "ICallback.h"
 #include "IScreenControlViewModel.h"
 #include "BidirectionalBus.h"
+#include "IMetricsService.h"
 
 namespace ExampleApp
 {
@@ -20,7 +21,9 @@ namespace ExampleApp
                 MyPinCreationInitiationController(IMyPinCreationInitiationViewModel& viewModel,
                                                   IMyPinCreationInitiationView& view,
                                                   IMyPinCreationConfirmationViewModel& confirmationViewModel,
-                                                  ExampleAppMessaging::TMessageBus& messageBus);
+                                                  ExampleAppMessaging::TMessageBus& messageBus,
+                                                  Metrics::IMetricsService& metricsService);
+                
                 ~MyPinCreationInitiationController();
 
                 void OnSelected();
@@ -32,6 +35,8 @@ namespace ExampleApp
                 IMyPinCreationInitiationView& m_view;
                 IMyPinCreationConfirmationViewModel& m_confirmationViewModel;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
+                
+                Metrics::IMetricsService& m_metricsService;
 
                 Eegeo::Helpers::TCallback2<MyPinCreationInitiationController, ScreenControl::View::IScreenControlViewModel&, float> m_viewStateCallback;
                 Eegeo::Helpers::TCallback0<MyPinCreationInitiationController> m_selectedCallback;

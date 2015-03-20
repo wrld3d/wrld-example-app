@@ -5,11 +5,12 @@ import java.util.TimerTask;
 
 import android.os.SystemClock;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.eegeo.mobileexampleapp.MainActivity;
+import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.mobileexampleapp.R;
 
 public class OptionsCacheClearSubView 
@@ -52,6 +53,8 @@ public class OptionsCacheClearSubView
 		        m_uiRoot.removeView(m_view);
 			}
 		});
+        
+        m_activity.recursiveDisableSplitMotionEvents((ViewGroup)m_view);
         
         resetState();
     }

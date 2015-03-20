@@ -3,7 +3,7 @@
 #include "FlattenButtonView.h"
 #include "FlattenButtonViewInterop.h"
 #include "MathFunc.h"
-#include "ScaleHelpers.h"
+#include "ImageHelpers.h"
 
 @implementation FlattenButtonView
 
@@ -22,20 +22,17 @@
 
         m_pInterop = new ExampleApp::FlattenButton::View::FlattenButtonViewInterop(self);
         [self addTarget:self action:@selector(onClick:) forControlEvents:UIControlEventTouchUpInside];
-        [self setBackgroundImage:[UIImage imageNamed:@"button_streets_off.png"] forState:UIControlStateNormal];
-        [self setBackgroundImage:[UIImage imageNamed:@"button_streets_on.png"] forState:UIControlStateSelected];
+        [self setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_streets_off") forState:UIControlStateNormal];
+        [self setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_streets_on") forState:UIControlStateSelected];
 
-        float iphoneTweakScale = ExampleApp::Helpers::ScaleHelpers::GetScaleTweakValue();
-
-        m_width = 60 * m_pixelScale * iphoneTweakScale;
-        m_height = 60 * m_pixelScale * iphoneTweakScale;
-
-        m_xPosActive = 0;
-        m_xPosInactive = -m_width;
-
-        [self setBounds: CGRectMake(0, 0, m_width, m_height)];
-        [self setCenter: CGPointMake(m_xPosInactive, m_screenHeight * 0.5f)];
-
+        m_width = 64 * m_pixelScale;
+        m_height = 64 * m_pixelScale;
+        
+        m_yPosBase = m_yPosActive = m_screenHeight - (8 * m_pixelScale) - m_height;
+        m_yPosInactive = m_screenHeight + m_height;
+        
+        self.frame = CGRectMake(((m_screenWidth * 0.5f) - (m_width + (m_width * 0.5f) + 16.f)), m_yPosInactive, m_width, m_height);
+        
         m_stateChangeAnimationTimeSeconds = 0.2f;
     }
 
@@ -63,54 +60,54 @@
 
 - (void) setFullyOnScreen
 {
-    if(self.frame.origin.x == m_xPosActive)
+    if(self.frame.origin.y == m_yPosActive)
     {
         return;
     }
-
-    [self animateToX:m_xPosActive];
+    
+    [self animateToY:m_yPosActive];
 }
 
 - (void) setFullyOffScreen
 {
-    if(self.frame.origin.x == m_xPosInactive)
+    if(self.frame.origin.y == m_yPosInactive)
     {
         return;
     }
-
-    [self animateToX:m_xPosInactive];
+    
+    [self animateToY:m_yPosInactive];
 }
 
 - (void) setOnScreenStateToIntermediateValue:(float)onScreenState
 {
-    float newX = m_xPosInactive + abs(m_xPosActive - m_xPosInactive) * onScreenState;
-
+    float newY = m_yPosInactive + (m_yPosActive - m_yPosInactive) * onScreenState;
+    
     self.hidden = false;
     CGRect f = self.frame;
-    f.origin.x = newX;
+    f.origin.y = newY;
     self.frame = f;
 }
 
-- (void) animateToX:(float)x
+- (void) animateToY:(float)y
 {
     CGRect f = self.frame;
-    f.origin.x = x;
-
-    if(x != m_xPosInactive)
+    f.origin.y = y;
+    
+    if(y != m_yPosInactive)
     {
         self.hidden = false;
     }
-
+    
     [UIView animateWithDuration:m_stateChangeAnimationTimeSeconds
-     animations:^
-    {
-        self.frame = f;
-    }
-    completion:^(BOOL finished)
-    {
-        self.hidden = (x == m_xPosInactive);
-    }
-    ];
+                     animations:^
+     {
+         self.frame = f;
+     }
+                     completion:^(BOOL finished)
+     {
+         self.hidden = (y == m_yPosInactive);
+     }
+     ];
 }
 
 @end

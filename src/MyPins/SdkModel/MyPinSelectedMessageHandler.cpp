@@ -26,7 +26,7 @@ namespace ExampleApp
             void MyPinSelectedMessageHandler::OnMyPinSelectedMessage(const MyPinSelectedMessage& message)
             {
                 const float MyPinAltitude = 1500.0f;
-                m_cameraTransitionController.StartTransitionTo(message.Model().GetLatLong().ToECEF(), MyPinAltitude);
+                m_cameraTransitionController.StartTransitionTo(message.GetPinLocation().ToECEF(), MyPinAltitude);
             }
         }
     }

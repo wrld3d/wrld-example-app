@@ -17,9 +17,11 @@ namespace ExampleApp
 
             WorldPinItemModel::WorldPinItemModel(const WorldPinItemModelId& id,
                                                  IWorldPinSelectionHandler* pSelectionHandler,
+                                                 IWorldPinVisibilityStateChangedHandler* pVisibilityStateChangedHandler,
                                                  const WorldPinFocusData& worldPinFocusData)
                 : m_id(id)
                 , m_pSelectionHandler(pSelectionHandler)
+                , m_pVisibilityStateChangedHandler(pVisibilityStateChangedHandler)
                 , m_focusModel(m_id, worldPinFocusData.title, worldPinFocusData.subtitle)
                 , m_transitionState(StableHidden)
                 , m_transitionStateValue(0.f)
@@ -58,12 +60,18 @@ namespace ExampleApp
 
             void WorldPinItemModel::Hide()
             {
-                m_transitionState = TransitionToHidden;
+                if(m_transitionState != StableHidden)
+                {
+                    m_transitionState = TransitionToHidden;
+                }
             }
 
             void WorldPinItemModel::Show()
             {
-                m_transitionState = TransitionToVisible;
+                if(m_transitionState != StableVisible)
+                {
+                    m_transitionState = TransitionToVisible;
+                }
             }
 
             float WorldPinItemModel::TransitionStateValue() const
@@ -79,6 +87,11 @@ namespace ExampleApp
 
                     if(m_transitionStateValue <= 0.f)
                     {
+                        if(m_transitionState != StableHidden && m_pVisibilityStateChangedHandler != NULL)
+                        {
+                            m_pVisibilityStateChangedHandler->HandlePinBecameFullyInvisible();
+                        }
+                        
                         m_transitionStateValue = 0.f;
                         m_transitionState = StableHidden;
                     }
@@ -89,6 +102,11 @@ namespace ExampleApp
 
                     if(m_transitionStateValue >= 1.f)
                     {
+                        if(m_transitionState != StableVisible && m_pVisibilityStateChangedHandler != NULL)
+                        {
+                            m_pVisibilityStateChangedHandler->HandlePinBecameFullyVisible();
+                        }
+                        
                         m_transitionStateValue = 1.f;
                         m_transitionState = StableVisible;
                     }

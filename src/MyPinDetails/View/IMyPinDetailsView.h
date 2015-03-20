@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include <string>
 #include "ICallback.h"
 #include "MyPins.h"
 
@@ -16,7 +17,9 @@ namespace ExampleApp
             public:
                 virtual ~IMyPinDetailsView() { }
 
-                virtual void OpenWithModel(const ExampleApp::MyPins::SdkModel::MyPinModel &myPinModel) = 0;
+                virtual void OpenWithModel(const std::string& title,
+                                           const std::string& description,
+                                           const std::string& imagePath) = 0;
                 virtual void Close() = 0;
 
                 virtual void OnDismiss() = 0;

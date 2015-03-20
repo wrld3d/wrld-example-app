@@ -26,7 +26,6 @@ namespace ExampleApp
                 MyPinCreationCompositeViewModel(ExampleAppMessaging::TMessageBus& messageBus,
                                                 IMyPinCreationInitiationViewModel& initiationViewModel,
                                                 IMyPinCreationConfirmationViewModel& confirmationViewModel,
-                                                ExampleApp::Menu::View::IMenuViewModel& primaryMenuViewModel,
                                                 ExampleApp::Menu::View::IMenuViewModel& secondaryMenuViewModel,
                                                 ExampleApp::Menu::View::IMenuViewModel& searchResultMenuViewModel);
 
@@ -43,9 +42,7 @@ namespace ExampleApp
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 IMyPinCreationInitiationViewModel& m_initiationViewModel;
                 IMyPinCreationConfirmationViewModel& m_confirmationViewModel;
-                ExampleApp::Menu::View::IMenuViewModel& m_primaryMenuViewModel;
                 ExampleApp::Menu::View::IMenuViewModel& m_secondaryMenuViewModel;
-
                 ExampleApp::Menu::View::IMenuViewModel& m_searchResultMenuViewModel;
             };
         }

@@ -18,7 +18,12 @@ namespace ExampleApp
             public:
 
                 MenuSectionViewModel(const std::string& name, const std::string& icon, IMenuModel& menuModel, bool isExpandable);
-
+                
+                IMenuModel& GetModel() const
+                {
+                    return m_menuModel;
+                }
+                
                 const std::string& Name() const
                 {
                     return m_name;

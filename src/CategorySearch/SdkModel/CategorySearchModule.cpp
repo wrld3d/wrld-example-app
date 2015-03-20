@@ -11,43 +11,26 @@
 #include "CategorySearchSelectedMessageHandler.h"
 #include "SearchResultIconCategoryMapper.h"
 
-namespace
-{
-    std::vector<ExampleApp::CategorySearch::View::CategorySearchModel> GetDeCartaCategories()
-    {
-        // Some decarta categories from http://developer.decarta.com/Docs/REST/Search#category
-        std::vector<ExampleApp::CategorySearch::View::CategorySearchModel> categories;
-        categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Coffee", "coffee shop", "coffee"));
-        categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Food", "restaurant", "food"));
-        categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Nightlife", "night life", "nightlife"));
-        categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Arts", "museum", "arts"));
-        categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Hotels", "hotel", "hotel"));
-        categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Parks", "park", "park"));
-        categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Banks", "bank", "bank"));
-        return categories;
-    }
-}
-
 namespace ExampleApp
 {
     namespace CategorySearch
     {
         namespace SdkModel
         {
-            CategorySearchModule::CategorySearchModule(Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
-                    Menu::View::IMenuViewModel& menuViewModel,
-                    ExampleAppMessaging::TMessageBus& messageBus)
+            CategorySearchModule::CategorySearchModule(const std::vector<CategorySearch::View::CategorySearchModel>& categorySearchModels,
+                                                       Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
+                                                       Menu::View::IMenuViewModel& menuViewModel,
+                                                       ExampleAppMessaging::TMessageBus& messageBus,
+                                                       Metrics::IMetricsService& metricsService)
             {
                 m_pMenuModel = Eegeo_NEW(Menu::View::MenuModel)();
                 m_pMenuOptionsModel = Eegeo_NEW(Menu::View::MenuOptionsModel)(*m_pMenuModel);
 
-                std::vector<View::CategorySearchModel> categories = GetDeCartaCategories();
+                m_pCategorySearchRepository = Eegeo_NEW(View::CategorySearchRepository)(categorySearchModels);
 
-                m_pCategorySearchRepository = Eegeo_NEW(View::CategorySearchRepository)(categories);
-
-                for(std::vector<View::CategorySearchModel>::iterator it = categories.begin(); it != categories.end(); it++)
+                for(std::vector<View::CategorySearchModel>::const_iterator it = categorySearchModels.begin(); it != categorySearchModels.end(); it++)
                 {
-                    View::CategorySearchModel& categorySearchModel = *it;
+                    const View::CategorySearchModel& categorySearchModel = *it;
 
                     m_pMenuOptionsModel->AddItem(categorySearchModel.Name(),
                                                  categorySearchModel.Name(),
@@ -59,7 +42,8 @@ namespace ExampleApp
 
                 m_pCategorySearchSelectedMessageHandler = Eegeo_NEW(CategorySearchSelectedMessageHandler)(
                             searchQueryPerformer,
-                            messageBus
+                            messageBus,
+                            metricsService
                         );
                 
                 m_pSearchResultIconCategoryMapper = Eegeo_NEW(SearchResultIconCategoryMapper)();

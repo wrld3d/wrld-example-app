@@ -5,8 +5,8 @@
 #include "SearchResultModel.h"
 #include "SearchQueryPerformer.h"
 #include "SearchRefreshService.h"
-#include "DecartaSearchJsonParser.h"
-#include "DecartaSearchService.h"
+#include "SearchResultMyPinsService.h"
+#include "MyPinsSearchResultRefreshService.h"
 
 namespace ExampleApp
 {
@@ -14,34 +14,31 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            SearchModule::SearchModule(const std::string& searchApiKey,
-                                       Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory,
-                                       Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder,
+            SearchModule::SearchModule(ISearchService& searchService,
                                        Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& cameraController,
                                        CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionsController,
-                                       ExampleAppMessaging::TMessageBus& messageBus)
+                                       ExampleAppMessaging::TMessageBus& messageBus,
+                                       ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus)
             {
                 m_pSearchResultRepository = Eegeo_NEW(SearchResultRepository)();
+                
+                m_pSearchResultMyPinsService = Eegeo_NEW(MyPins::SearchResultMyPinsService)(sdkModelDomainEventBus);
+                
+                m_pMyPinsSearchResultRefreshService = Eegeo_NEW(MyPins::MyPinsSearchResultRefreshService)(*m_pSearchResultMyPinsService,
+                                                                                                          searchService);
 
-                m_pSearchResultParser = Eegeo_NEW(Decarta::DecartaSearchJsonParser);
-
-                m_pSearchService = Eegeo_NEW(Decarta::DecartaSearchService)(searchApiKey,
-                                   *m_pSearchResultParser,
-                                   urlEncoder,
-                                   webLoadRequestFactory);
-
-                m_pSearchQueryPerformer = Eegeo_NEW(SearchQueryPerformer)(*m_pSearchService,
+                m_pSearchQueryPerformer = Eegeo_NEW(SearchQueryPerformer)(searchService,
                                           *m_pSearchResultRepository,
                                           cameraController);
 
-                m_pSearchRefreshService = Eegeo_NEW(SearchRefreshService)(*m_pSearchService,
+                m_pSearchRefreshService = Eegeo_NEW(SearchRefreshService)(searchService,
                                           *m_pSearchQueryPerformer,
                                           cameraTransitionsController,
                                           1.f,
                                           500.f);
 
                 m_pSearchQueryObserver = Eegeo_NEW(SearchQueryObserver)(
-                                             *m_pSearchService,
+                                             searchService,
                                              *m_pSearchQueryPerformer,
                                              messageBus
                                          );
@@ -52,16 +49,11 @@ namespace ExampleApp
                 Eegeo_DELETE m_pSearchQueryObserver;
                 Eegeo_DELETE m_pSearchRefreshService;
                 Eegeo_DELETE m_pSearchQueryPerformer;
-                Eegeo_DELETE m_pSearchService;
-                Eegeo_DELETE m_pSearchResultParser;
+                Eegeo_DELETE m_pMyPinsSearchResultRefreshService;
+                Eegeo_DELETE m_pSearchResultMyPinsService;
                 Eegeo_DELETE m_pSearchResultRepository;
             }
-
-            ISearchService& SearchModule::GetSearchService() const
-            {
-                return *m_pSearchService;
-            }
-
+            
             ISearchResultRepository& SearchModule::GetSearchResultRepository() const
             {
                 return *m_pSearchResultRepository;
@@ -75,6 +67,16 @@ namespace ExampleApp
             ISearchRefreshService& SearchModule::GetSearchRefreshService() const
             {
                 return *m_pSearchRefreshService;
+            }
+            
+            MyPins::ISearchResultMyPinsService& SearchModule::GetSearchResultMyPinsService() const
+            {
+                return *m_pSearchResultMyPinsService;
+            }
+            
+            MyPins::IMyPinsSearchResultRefreshService& SearchModule::GetMyPinsSearchResultRefreshService() const
+            {
+                return *m_pMyPinsSearchResultRefreshService;
             }
         }
     }

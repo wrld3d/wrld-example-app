@@ -18,16 +18,18 @@ namespace ExampleApp
                 IMyPinDetailsViewModel& m_myPinDetailsViewModel;
                 SearchResultPoi::View::ISearchResultPoiViewModel& m_searchResultPoiViewModel;
                 
-                void CreateSearchResultModelFromPinModel(const MyPins::SdkModel::MyPinModel& myPinModel,
-                                                         Search::SdkModel::SearchResultModel& out_searchResultModel);
-                
             public:
                 MyPinDetailsDisplayService(IMyPinDetailsViewModel& myPinDetailsViewModel,
                                            SearchResultPoi::View::ISearchResultPoiViewModel& searchResultPoiViewModel);
                 
                 ~MyPinDetailsDisplayService();
                 
-                virtual void DisplayPinDetails(const MyPins::SdkModel::MyPinModel& myPinModel);
+                void DisplayUserCreatedMyPinDetails(MyPins::SdkModel::MyPinModel::TPinIdType pinId,
+                                                    const std::string& title,
+                                                    const std::string& description,
+                                                    const std::string& imagePath);
+                
+                void DisplaySearchResultMyPinDetails(const Search::SdkModel::SearchResultModel& searchResultModel);
             };
         }
     }

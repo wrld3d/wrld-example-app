@@ -57,7 +57,13 @@
 #include "InitialExperienceDialogsModule.h"
 #include "ApiKey.h"
 #include "INetworkCapabilities.h"
-#include "FlurryWrapper.h"
+#include "ISearchServiceModule.h"
+#include "IMyPinsService.h"
+#include "IEegeoErrorHandler.h"
+#include "OptionsMenuOption.h"
+#include "AboutPageMenuOption.h"
+#include "ImagePathHelpers.h"
+#include "WatermarkModule.h"
 
 namespace ExampleApp
 {
@@ -76,8 +82,9 @@ namespace ExampleApp
             loadingScreenConfig.screenWidth = screenProperties.GetScreenWidth();
             loadingScreenConfig.screenHeight = screenProperties.GetScreenHeight();
             loadingScreenConfig.loadingBarOffset = Eegeo::v2(0.5f, 0.1f);
+
             Eegeo::Rendering::LoadingScreen* loadingScreen = Eegeo::Rendering::LoadingScreen::Create(
-                        "SplashScreen.png",
+            			Helpers::ImageHelpers::GetImageNameForDevice("SplashScreen", ".png"),
                         loadingScreenConfig,
                         renderingModule.GetShaderIdGenerator(),
                         renderingModule.GetMaterialIdGenerator(),
@@ -100,17 +107,21 @@ namespace ExampleApp
         ExampleApp::PersistentSettings::IPersistentSettingsModel& persistentSettings,
         Eegeo::Debug::IMemoryStats& memoryStats,
         ExampleAppMessaging::TMessageBus& messageBus,
-        Net::SdkModel::INetworkCapabilities& networkCapabilities)
+        ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
+        Net::SdkModel::INetworkCapabilities& networkCapabilities,
+        ExampleApp::Search::SdkModel::ISearchServiceModule& searchServiceModule,
+        ExampleApp::Metrics::IMetricsService& metricsService,
+        const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration,
+        Eegeo::IEegeoErrorHandler& errorHandler)
         : m_pGlobeCameraController(NULL)
         , m_pCameraTouchController(NULL)
         , m_pNavigationService(NULL)
         , m_pWorld(NULL)
         , m_platformAbstractions(platformAbstractions, networkCapabilities)
         , m_pLoadingScreen(NULL)
-        , m_pinDiameter(50.f)
+        , m_pinDiameter(64.f)
         , m_initialisedApplicationViewState(false)
         , m_pCameraTransitionController(NULL)
-        , m_pPrimaryMenuModule(NULL)
         , m_pSecondaryMenuModule(NULL)
         , m_pSearchResultMenuModule(NULL)
         , m_pModalityModule(NULL)
@@ -133,6 +144,7 @@ namespace ExampleApp
         , m_initialExperienceModule(initialExperienceModule)
         , m_pBlitter(NULL)
         , m_messageBus(messageBus)
+        , m_sdkDomainEventBus(sdkModelDomainEventBus)
         , m_persistentSettings(persistentSettings)
         , m_pMyPinCreationModule(NULL)
         , m_pPoiRingModule(NULL)
@@ -141,15 +153,19 @@ namespace ExampleApp
         , m_pMyPinDetailsModule(NULL)
     	, m_pInitialExperienceDialogsModule(NULL)
         , m_pOptionsModule(NULL)
+        , m_pWatermarkModule(NULL)
         , m_screenProperties(screenProperties)
         , m_networkCapabilities(networkCapabilities)
-        , m_setFlurryLocation(false)
+        , m_setMetricsLocation(false)
+        , m_searchServiceModule(searchServiceModule)
+        , m_metricsService(metricsService)
+        , m_applicationConfiguration(applicationConfiguration)
     {
-        FLURRY_BEGIN(FlurryApiKey.c_str(), EEGEO_PLATFORM_VERSION_NUMBER);
+        m_metricsService.BeginSession(ExampleApp::FlurryApiKey, EEGEO_PLATFORM_VERSION_NUMBER);
 
         m_pBlitter = Eegeo_NEW(Eegeo::Blitter)(1024 * 128, 1024 * 64, 1024 * 32);
         m_pBlitter->Initialise();
-
+        
         m_pWorld = Eegeo_NEW(Eegeo::EegeoWorld)(apiKey,
                                                 m_platformAbstractions,
                                                 jpegLoader,
@@ -159,7 +175,11 @@ namespace ExampleApp
                                                 nativeUIFactories,
                                                 Eegeo::EnvironmentCharacterSet::Latin,
                                                 platformConfig,
-                                                NULL);
+                                                NULL,
+                                                "http://cdn1.eegeo.com/coverage-trees/v493/manifest.txt.gz",
+                                                "http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v275/manifest.txt.gz",
+                                                &errorHandler
+                                                );
 
         Eegeo::Modules::Map::Layers::TerrainModelModule& terrainModelModule = m_pWorld->GetTerrainModelModule();
         Eegeo::Modules::Map::MapModule& mapModule = m_pWorld->GetMapModule();
@@ -188,16 +208,9 @@ namespace ExampleApp
         touchSettings.TiltEnabled = true;
         m_pGlobeCameraController->GetGlobeCameraController().SetTouchSettings(touchSettings);
 
-        float interestPointLatitudeDegrees = 37.7858f;
-        float interestPointLongitudeDegrees = -122.401f;
-        float interestPointAltitudeMeters = 2.7f;
-
-        Eegeo::Space::LatLongAltitude location = Eegeo::Space::LatLongAltitude::FromDegrees(interestPointLatitudeDegrees,
-                interestPointLongitudeDegrees,
-                interestPointAltitudeMeters);
-
-        float cameraControllerOrientationDegrees = 0.0f;
-        float cameraControllerDistanceFromInterestPointMeters = 1781.0f;
+        Eegeo::Space::LatLongAltitude location = m_applicationConfiguration.InterestLocation();
+        float cameraControllerOrientationDegrees = m_applicationConfiguration.OrientationDegrees();
+        float cameraControllerDistanceFromInterestPointMeters = m_applicationConfiguration.DistanceToInterestMetres();
 
         Eegeo::Space::EcefTangentBasis cameraInterestBasis;
         Eegeo::Camera::CameraHelpers::EcefTangentBasisFromPointAndHeading(location.ToECEF(), cameraControllerOrientationDegrees, cameraInterestBasis);
@@ -243,7 +256,11 @@ namespace ExampleApp
                              Eegeo::Config::LodRefinementConfig::GetLodRefinementAltitudesForDeviceSpec(platformConfig.PerformanceConfig.DeviceSpecification),
                              Eegeo::Streaming::QuadTreeCube::MAX_DEPTH_TO_VISIT,
                              mapModule.GetEnvironmentFlatteningService());
-
+        
+        if(m_applicationConfiguration.TryStartAtGpsLocation())
+        {
+            m_pNavigationService->SetGpsMode(Eegeo::Location::NavigationService::GpsModeFollow);
+        }
     }
 
     MobileExampleApp::~MobileExampleApp()
@@ -277,6 +294,8 @@ namespace ExampleApp
 
         m_pReactionControllerModule = Eegeo_NEW(Reaction::View::ReactionControllerModule)();
 
+        m_pWatermarkModule = Eegeo_NEW(ExampleApp::Watermark::WatermarkModule)(m_identityProvider);
+
         m_pAboutPageModule = Eegeo_NEW(ExampleApp::AboutPage::View::AboutPageModule)(m_identityProvider,
                                                                                      m_pReactionControllerModule->GetReactionControllerModel());
         
@@ -284,18 +303,18 @@ namespace ExampleApp
                                                                          m_pReactionControllerModule->GetReactionControllerModel(),
                                                                          m_messageBus,
                                                                          m_networkCapabilities);
-
-        m_pSearchModule = Eegeo_NEW(Search::SdkModel::SearchModule)(DecartaApiKey,
-                          m_platformAbstractions.GetWebLoadRequestFactory(),
-                          m_platformAbstractions.GetUrlEncoder(),
-                          *m_pGlobeCameraController,
-                          *m_pCameraTransitionController,
-                          m_messageBus);
+        
+        m_pSearchModule = Eegeo_NEW(Search::SdkModel::SearchModule)(m_searchServiceModule.GetSearchService(),
+                                                                    *m_pGlobeCameraController,
+                                                                    *m_pCameraTransitionController,
+                                                                    m_messageBus,
+                                                                    m_sdkDomainEventBus);
 
         m_pCompassModule = Eegeo_NEW(ExampleApp::Compass::SdkModel::CompassModule)(*m_pNavigationService,
                            *m_pGlobeCameraController,
                            m_identityProvider,
-                           m_messageBus);
+                           m_messageBus,
+                           m_metricsService);
         
         m_pGpsMarkerModule = Eegeo_NEW(ExampleApp::GpsMarker::SdkModel::GpsMarkerModule)(m_pWorld->GetRenderingModule(),
                                                                                          m_platformAbstractions,
@@ -306,34 +325,31 @@ namespace ExampleApp
         Eegeo::Modules::Map::CityThemesModule& cityThemesModule = world.GetCityThemesModule();
 
         m_pWeatherMenuModule = Eegeo_NEW(ExampleApp::WeatherMenu::SdkModel::WeatherMenuModule)(m_platformAbstractions.GetFileIO(),
-                               cityThemesModule.GetCityThemesService(),
-                               cityThemesModule.GetCityThemesUpdater(),
-                               m_messageBus);
+                                                                                               cityThemesModule.GetCityThemesService(),
+                                                                                               cityThemesModule.GetCityThemesUpdater(),
+                                                                                               m_messageBus,
+                                                                                               m_metricsService);
         
-        m_pPrimaryMenuModule = Eegeo_NEW(ExampleApp::PrimaryMenu::View::PrimaryMenuModule)(m_identityProvider,
-                                                                                           AboutPageModule().GetAboutPageViewModel(),
-                                                                                           OptionsModule().GetOptionsViewModel(),
-                                                                                           m_pReactionControllerModule->GetReactionControllerModel());
-
         m_pSecondaryMenuModule = Eegeo_NEW(ExampleApp::SecondaryMenu::SdkModel::SecondaryMenuModule)(m_identityProvider,
-                                 m_pReactionControllerModule->GetReactionControllerModel(),
-                                 m_pSearchModule->GetSearchQueryPerformer(),
-                                 m_messageBus);
-
+                                                                                                     m_pReactionControllerModule->GetReactionControllerModel(),
+                                                                                                     m_pSearchModule->GetSearchQueryPerformer(),
+                                                                                                     m_messageBus,
+                                                                                                     m_pAboutPageModule->GetAboutPageViewModel(),
+                                                                                                     m_pOptionsModule->GetOptionsViewModel(),
+                                                                                                     m_metricsService);
         m_pPlaceJumpsModule = Eegeo_NEW(PlaceJumps::SdkModel::PlaceJumpsModule)(m_platformAbstractions.GetFileIO(),
                               GetCameraController(),
                               m_pCompassModule->GetCompassModel(),
                               m_pSecondaryMenuModule->GetSecondaryMenuViewModel(),
-                              m_messageBus);
+                              m_messageBus,
+                              m_metricsService);
 
         m_pCategorySearchModule = Eegeo_NEW(ExampleApp::CategorySearch::SdkModel::CategorySearchModule(
+                                                m_searchServiceModule.GetCategorySearchModels(),
                                                 SearchModule().GetSearchQueryPerformer(),
                                                 m_pSecondaryMenuModule->GetSecondaryMenuViewModel(),
-                                                m_messageBus));
-
-        m_pSecondaryMenuModule->AddMenuSection("Search", "place", m_pCategorySearchModule->GetCategorySearchMenuModel(), true);
-        m_pSecondaryMenuModule->AddMenuSection("Weather", "weather", m_pWeatherMenuModule->GetWeatherMenuModel(), true);
-        m_pSecondaryMenuModule->AddMenuSection("Locations", "location", m_pPlaceJumpsModule->GetPlaceJumpsMenuModel(), true);
+                                                m_messageBus,
+                                                m_metricsService));
 
         Eegeo::Modules::Map::MapModule& mapModule = world.GetMapModule();
 
@@ -347,15 +363,20 @@ namespace ExampleApp
         m_pMyPinsModule = Eegeo_NEW(ExampleApp::MyPins::SdkModel::MyPinsModule)(m_pWorldPinsModule->GetWorldPinsService(),
                                                                                 m_platformAbstractions,
                                                                                 m_persistentSettings,
-                                                                                m_pPrimaryMenuModule->GetPrimaryMenuViewModel(),
+                                                                                m_pSecondaryMenuModule->GetSecondaryMenuViewModel(),
                                                                                 m_messageBus,
-                                                                                *m_pCameraTransitionController);
+                                                                                m_sdkDomainEventBus,
+                                                                                *m_pCameraTransitionController,
+                                                                                m_pCategorySearchModule->GetCategorySearchRepository(),
+                                                                                m_pSearchModule->GetMyPinsSearchResultRefreshService(),
+                                                                                m_metricsService);
         
         m_pSearchResultPoiModule = Eegeo_NEW(ExampleApp::SearchResultPoi::View::SearchResultPoiModule)(m_identityProvider,
                                                                                                        m_pReactionControllerModule->GetReactionControllerModel(),
                                                                                                        m_pMyPinsModule->GetMyPinsService(),
-                                                                                                       m_pMyPinsModule->GetMyPinsRepository(),
+                                                                                                       m_pSearchModule->GetSearchResultMyPinsService(),
                                                                                                        m_pCategorySearchModule->GetSearchResultIconCategoryMapper(),
+                                                                                                       world.GetPlatformAbstractionModule().GetWebLoadRequestFactory(),
                                                                                                        m_messageBus);
         
         m_pSearchResultMenuModule = Eegeo_NEW(SearchResultMenu::SdkModel::SearchResultMenuModule)(m_pSearchModule->GetSearchResultRepository(),
@@ -368,15 +389,13 @@ namespace ExampleApp
         m_pSearchResultOnMapModule = Eegeo_NEW(SearchResultOnMap::SdkModel::SearchResultOnMapModule)(m_pSearchModule->GetSearchResultRepository(),
                                                                                                      m_pSearchResultPoiModule->GetSearchResultPoiViewModel(),
                                                                                                      m_pWorldPinsModule->GetWorldPinsService(),
-                                                                                                     m_pMyPinsModule->GetMyPinsRepository(),
                                                                                                      m_pCategorySearchModule->GetSearchResultIconCategoryMapper(),
-                                                                                                     m_messageBus);
+                                                                                                     m_pSearchModule->GetSearchResultMyPinsService(),
+                                                                                                     m_messageBus,
+                                                                                                     m_metricsService);
         
-        m_pPrimaryMenuModule->AddMenuSection("My Pins", "place", m_pMyPinsModule->GetMyPinsMenuModel(), true);
-
         m_pMyPinCreationModule = Eegeo_NEW(ExampleApp::MyPinCreation::SdkModel::MyPinCreationModule)(m_pMyPinsModule->GetMyPinsService(),
                                  m_identityProvider,
-                                 m_pPrimaryMenuModule->GetPrimaryMenuViewModel(),
                                  m_pSecondaryMenuModule->GetSecondaryMenuViewModel(),
                                  m_pSearchModule->GetSearchQueryPerformer(),
                                  m_pSearchResultMenuModule->GetMenuViewModel(),
@@ -417,6 +436,12 @@ namespace ExampleApp
         m_pWorldAreaLoaderModule = Eegeo_NEW(WorldAreaLoader::SdkModel::WorldAreaLoaderModule)(streamingModule.GetPrecachingService());
 
         m_initialExperienceModule.InitialiseWithApplicationModels(m_pWorldAreaLoaderModule->GetWorldAreaLoaderModel());
+        
+        m_pSecondaryMenuModule->AddMenuSection("Search", m_pCategorySearchModule->GetCategorySearchMenuModel(), true);
+        m_pSecondaryMenuModule->AddMenuSection("Weather" , m_pWeatherMenuModule->GetWeatherMenuModel(), true);
+        m_pSecondaryMenuModule->AddMenuSection("Locations", m_pPlaceJumpsModule->GetPlaceJumpsMenuModel(), true);
+        m_pSecondaryMenuModule->AddMenuSection("My Pins", m_pMyPinsModule->GetMyPinsMenuModel(), true);
+        m_pSecondaryMenuModule->AddMenuSection("Settings", m_pSecondaryMenuModule->GetSettingsMenuModel(), true);
     }
 
     void MobileExampleApp::DestroyApplicationModelModules()
@@ -457,8 +482,6 @@ namespace ExampleApp
 
         Eegeo_DELETE m_pSecondaryMenuModule;
 
-        Eegeo_DELETE m_pPrimaryMenuModule;
-
         Eegeo_DELETE m_pFlattenButtonModule;
 
         Eegeo_DELETE m_pWeatherMenuModule;
@@ -472,6 +495,8 @@ namespace ExampleApp
         Eegeo_DELETE m_pOptionsModule;
         
         Eegeo_DELETE m_pAboutPageModule;
+        
+        Eegeo_DELETE m_pWatermarkModule;
 
         Eegeo_DELETE m_pReactionControllerModule;
     }
@@ -479,7 +504,6 @@ namespace ExampleApp
     std::vector<ExampleApp::OpenableControl::View::IOpenableControlViewModel*> MobileExampleApp::GetOpenableControls() const
     {
         std::vector<ExampleApp::OpenableControl::View::IOpenableControlViewModel*> openables;
-        openables.push_back(&PrimaryMenuModule().GetPrimaryMenuViewModel());
         openables.push_back(&SecondaryMenuModule().GetSecondaryMenuViewModel());
         openables.push_back(&SearchResultMenuModule().GetMenuViewModel());
         openables.push_back(&SearchResultPoiModule().GetObservableOpenableControl());
@@ -494,19 +518,21 @@ namespace ExampleApp
     std::vector<ExampleApp::ScreenControl::View::IScreenControlViewModel*> MobileExampleApp::GetReactorControls() const
     {
         std::vector<ExampleApp::ScreenControl::View::IScreenControlViewModel*> reactors;
-        reactors.push_back(&PrimaryMenuModule().GetPrimaryMenuViewModel());
         reactors.push_back(&SecondaryMenuModule().GetSecondaryMenuViewModel());
         reactors.push_back(&SearchResultMenuModule().GetMenuViewModel());
         reactors.push_back(&FlattenButtonModule().GetScreenControlViewModel());
         reactors.push_back(&WorldPinsModule().GetScreenControlViewModel());
         reactors.push_back(&CompassModule().GetScreenControlViewModel());
         reactors.push_back(&MyPinCreationModule().GetInitiationScreenControlViewModel());
+        reactors.push_back(&WatermarkModule().GetScreenControlViewModel());
         return reactors;
     }
 
     void MobileExampleApp::InitialisePinsModules(Eegeo::Modules::Map::MapModule& mapModule, Eegeo::EegeoWorld& world)
     {
-        m_platformAbstractions.GetTextureFileLoader().LoadTexture(m_pinIconsTexture, "SearchResultOnMap/PinIconTexturePage.png", true);
+        m_platformAbstractions.GetTextureFileLoader().LoadTexture(m_pinIconsTexture,
+                                                                  Helpers::ImageHelpers::GetImageNameForDevice("SearchResultOnMap/PinIconTexturePage", ".png"),
+                                                                  false);
         Eegeo_ASSERT(m_pinIconsTexture.textureId != 0);
 
         int numberOfTilesAlongEachAxisOfTexturePage = 4;
@@ -602,14 +628,14 @@ namespace ExampleApp
                 initialExperienceController.Update(dt);
             }
   
-            if (!m_setFlurryLocation)
+            if (!m_setMetricsLocation)
             {
                 Eegeo::dv3 gpsLocation;
                 if(m_pNavigationService->TryGetGpsLocationOnTerrain(gpsLocation))
                 {
                     Eegeo::Space::LatLong ll = Eegeo::Space::LatLong::FromECEF(gpsLocation);
-                    FLURRY_SET_POSITION(ll.GetLatitudeInDegrees(), ll.GetLongitudeInDegrees(), 0.f, 0.f);
-                    m_setFlurryLocation = true;
+                    m_metricsService.SetPosition(ll.GetLatitudeInDegrees(), ll.GetLongitudeInDegrees(), 0.f, 0.f);
+                    m_setMetricsLocation = true;
                 }
             }
         }
@@ -664,12 +690,12 @@ namespace ExampleApp
 
         m_initialisedApplicationViewState = true;
 
-        m_pPrimaryMenuModule->GetPrimaryMenuViewModel().AddToScreen();
         m_pSecondaryMenuModule->GetSecondaryMenuViewModel().AddToScreen();
         m_pSearchResultMenuModule->GetMenuViewModel().AddToScreen();
         m_pFlattenButtonModule->GetScreenControlViewModel().AddToScreen();
         m_pCompassModule->GetScreenControlViewModel().AddToScreen();
         m_pMyPinCreationModule->GetInitiationScreenControlViewModel().AddToScreen();
+        m_pWatermarkModule->GetWatermarkViewModel().AddToScreen();
     }
 
     void MobileExampleApp::UpdateLoadingScreen(float dt)
@@ -693,6 +719,8 @@ namespace ExampleApp
         {
             Eegeo_DELETE m_pLoadingScreen;
             m_pLoadingScreen = NULL;
+            
+            MyPinsModule().GetMyPinsService().LoadAllPinsFromDisk();
         }
     }
 
@@ -715,7 +743,6 @@ namespace ExampleApp
         m_pStreamingVolume->ResetVolume(cameraState.InterestPointEcef());
         return *m_pStreamingVolume;
     }
-
 
     void MobileExampleApp::Event_TouchRotate(const AppInterface::RotateData& data)
     {

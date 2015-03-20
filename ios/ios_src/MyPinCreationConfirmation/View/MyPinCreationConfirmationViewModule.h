@@ -9,6 +9,7 @@
 #include "IMyPinCreationConfirmationViewModule.h"
 #include "MyPinCreationDetails.h"
 #include "BidirectionalBus.h"
+#include "IMetricsService.h"
 
 namespace ExampleApp
 {
@@ -27,7 +28,8 @@ namespace ExampleApp
                                                     IMyPinCreationConfirmationViewModel& viewModel,
                                                     IMyPinCreationCompositeViewModel& compositeViewModel,
                                                     MyPinCreationDetails::View::IMyPinCreationDetailsViewModel& detailsViewModel,
-                                                    const Eegeo::Rendering::ScreenProperties& screenProperties);
+                                                    const Eegeo::Rendering::ScreenProperties& screenProperties,
+                                                    Metrics::IMetricsService& metricsService);
 
                 ~MyPinCreationConfirmationViewModule();
 

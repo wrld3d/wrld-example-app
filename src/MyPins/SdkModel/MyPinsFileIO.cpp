@@ -1,18 +1,18 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
+#include <sstream>
+#include <vector>
+#include "document.h"
+#include "writer.h"
+#include "stringbuffer.h"
 #include "MyPinsFileIO.h"
 #include "LatLongAltitude.h"
 #include "IPersistentSettingsModel.h"
 #include "MyPinModel.h"
+#include "IMyPinBoundObject.h"
 #include "MyPinsSemanticPinType.h"
-
-#include "document.h"
-#include "writer.h"
-#include "stringbuffer.h"
-
-#include <sstream>
-#include <vector>
-
+#include "IMyPinBoundObjectFactory.h"
+#include "IMyPinBoundObjectRepository.h"
 
 namespace ExampleApp
 {
@@ -42,9 +42,13 @@ namespace ExampleApp
             }
 
             MyPinsFileIO::MyPinsFileIO(Eegeo::Helpers::IFileIO& fileIO,
-                                       PersistentSettings::IPersistentSettingsModel& persistentSettings)
+                                       PersistentSettings::IPersistentSettingsModel& persistentSettings,
+                                       IMyPinBoundObjectFactory& myPinBoundObjectFactory,
+                                       IMyPinBoundObjectRepository& myPinBoundObjectRepository)
                 : m_fileIO(fileIO)
                 , m_persistentSettings(persistentSettings)
+                , m_myPinBoundObjectFactory(myPinBoundObjectFactory)
+                , m_myPinBoundObjectRepository(myPinBoundObjectRepository)
             {
                 if (!m_fileIO.Exists(MyPinsDataFilename))
                 {
@@ -56,7 +60,6 @@ namespace ExampleApp
                 {
                     m_persistentSettings.SetValue(MyPins_LastMyPinModelIdKey, lastId);
                 }
-
             }
 
             bool MyPinsFileIO::TryCacheImageToDisk(Byte* imageData,
@@ -121,15 +124,18 @@ namespace ExampleApp
                     const Eegeo::Space::LatLong& latLong = pinModel.GetLatLong();
 
                     rapidjson::Value valueObject(rapidjson::kObjectType);
+                    valueObject.AddMember("version", pinModel.Version(), allocator);
                     valueObject.AddMember("id", pinModel.Identifier(), allocator);
                     valueObject.AddMember("title", pinModel.GetTitle().c_str(), allocator);
                     valueObject.AddMember("description", pinModel.GetDescription().c_str(), allocator);
                     valueObject.AddMember("icon", pinModel.GetSdkMapPinIconIndexIcon(), allocator);
-                    valueObject.AddMember("type", static_cast<int>(pinModel.GetSemanticPinType()), allocator);
-                    valueObject.AddMember("metadata", pinModel.GetTypeMetadata().c_str(), allocator);
                     valueObject.AddMember("latitude", latLong.GetLatitudeInDegrees(), allocator);
                     valueObject.AddMember("longitude", latLong.GetLongitudeInDegrees(), allocator);
-
+                    
+                    IMyPinBoundObject& pinBoundObject(m_myPinBoundObjectRepository.GetBoundObjectForPin(pinModel));
+                    valueObject.AddMember("type", static_cast<int>(pinBoundObject.GetSemanticPinType()), allocator);
+                    valueObject.AddMember("metadata", pinBoundObject.GetSerialized().c_str(), allocator);
+                    
                     myPinsArray.PushBack(valueObject, allocator);
 
                     rapidjson::StringBuffer strbuf;
@@ -147,7 +153,6 @@ namespace ExampleApp
                     Eegeo_TTY("Couldn't open file:%s\n", MyPinsDataFilename.c_str());
                 }
             }
-
 
             void MyPinsFileIO::SaveAllRepositoryPinsToDisk(const std::vector<MyPinModel*>& pinModels)
             {
@@ -172,14 +177,17 @@ namespace ExampleApp
                     const Eegeo::Space::LatLong& latLong = pinModel->GetLatLong();
 
                     rapidjson::Value valueObject(rapidjson::kObjectType);
+                    valueObject.AddMember("version", pinModel->Version(), allocator);
                     valueObject.AddMember("id", pinModel->Identifier(), allocator);
                     valueObject.AddMember("title", pinModel->GetTitle().c_str(), allocator);
                     valueObject.AddMember("description", pinModel->GetDescription().c_str(), allocator);
                     valueObject.AddMember("icon", pinModel->GetSdkMapPinIconIndexIcon(), allocator);
-                    valueObject.AddMember("type", static_cast<int>(pinModel->GetSemanticPinType()), allocator);
-                    valueObject.AddMember("metadata", pinModel->GetTypeMetadata().c_str(), allocator);
                     valueObject.AddMember("latitude", latLong.GetLatitudeInDegrees(), allocator);
                     valueObject.AddMember("longitude", latLong.GetLongitudeInDegrees(), allocator);
+                    
+                    IMyPinBoundObject& pinBoundObject(m_myPinBoundObjectRepository.GetBoundObjectForPin(*pinModel));
+                    valueObject.AddMember("type", static_cast<int>(pinBoundObject.GetSemanticPinType()), allocator);
+                    valueObject.AddMember("metadata", pinBoundObject.GetSerialized().c_str(), allocator);
 
                     myPinsArray.PushBack(valueObject, allocator);
                 }
@@ -192,10 +200,9 @@ namespace ExampleApp
                 m_fileIO.WriteFile((Byte*)jsonString.c_str(), jsonString.size(), MyPinsDataFilename);
             }
 
-
-            void MyPinsFileIO::LoadPinModelsFromDisk(std::vector<MyPinModel*>& out_pinModels)
+            void MyPinsFileIO::LoadPinModelsFromDisk(std::vector<std::pair<MyPinModel*, IMyPinBoundObject*> >& out_pinModelBindings)
             {
-                out_pinModels.clear();
+                out_pinModelBindings.clear();
 
                 std::fstream stream;
                 size_t size;
@@ -220,8 +227,15 @@ namespace ExampleApp
                     for(int i = 0; i < numEntries; ++i)
                     {
                         const rapidjson::Value& entry = myPinsArray[i];
-
-                        int pinId = entry["id"].GetInt();
+                        
+                        Eegeo_ASSERT(entry.HasMember("version"),
+                                     "Old MyPinModel version detected. Please delete and reinstall the application.\n");
+                        
+                        const int version = entry["version"].GetInt();
+                        
+                        Eegeo_ASSERT(version == MyPinModel::CurrentVersion, "Old MyPinModel version detected: tried to deserialize version %d but current version is %d. Please delete and reinstall the application.\n", version, MyPinModel::CurrentVersion);
+                        
+                        MyPinModel::TPinIdType pinId = entry["id"].GetInt();
                         std::string title = entry["title"].GetString();
                         std::string description = entry["description"].GetString();
                         int sdkMapPinIconIndex = entry["icon"].GetInt();
@@ -230,13 +244,19 @@ namespace ExampleApp
                         MyPinsSemanticPinType semanticPinType = static_cast<MyPinsSemanticPinType>(entry["type"].GetInt());
                         std::string pinTypeMetadata = entry["metadata"].GetString();
                         
-                        out_pinModels.push_back(Eegeo_NEW(MyPinModel)(pinId,
-                                                                      title,
-                                                                      description,
-                                                                      sdkMapPinIconIndex,
-                                                                      Eegeo::Space::LatLong::FromDegrees(latitude, longitude),
-                                                                      semanticPinType,
-                                                                      pinTypeMetadata));
+                        IMyPinBoundObject* pPinBoundObject(m_myPinBoundObjectFactory.CreatePinBoundObjectFromSerialized(*this,
+                                                                                                                        pinId,
+                                                                                                                        semanticPinType,
+                                                                                                                        pinTypeMetadata));
+                        
+                        MyPinModel* pModel(Eegeo_NEW(MyPinModel)(version,
+                                                                 pinId,
+                                                                 title,
+                                                                 description,
+                                                                 sdkMapPinIconIndex,
+                                                                 Eegeo::Space::LatLong::FromDegrees(latitude, longitude)));
+                        
+                        out_pinModelBindings.push_back(std::make_pair(pModel, pPinBoundObject));
                     }
                 }
             }

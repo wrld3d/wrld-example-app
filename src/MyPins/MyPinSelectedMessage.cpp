@@ -2,20 +2,26 @@
 
 #include "MyPinSelectedMessage.h"
 
-
 namespace ExampleApp
 {
     namespace MyPins
-    {
-        MyPinSelectedMessage::MyPinSelectedMessage(const SdkModel::MyPinModel& myPinModel)
-            : m_myPinModel(myPinModel)
+    {   
+        MyPinSelectedMessage::MyPinSelectedMessage(SdkModel::MyPinModel::TPinIdType pinId,
+                             const Eegeo::Space::LatLong& pinLocation)
+        : m_pinId(pinId)
+        , m_pinLocation(pinLocation)
         {
-
+            
         }
-
-        const SdkModel::MyPinModel& MyPinSelectedMessage::Model() const
+    
+        SdkModel::MyPinModel::TPinIdType MyPinSelectedMessage::GetPinId() const
         {
-            return m_myPinModel;
+            return m_pinId;
+        }
+        
+        const Eegeo::Space::LatLong& MyPinSelectedMessage::GetPinLocation() const
+        {
+            return m_pinLocation;
         }
     }
 }

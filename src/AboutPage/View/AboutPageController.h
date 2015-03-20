@@ -7,6 +7,7 @@
 #include "ICallback.h"
 #include "IAboutPageViewModel.h"
 #include "IAboutPageView.h"
+#include "IMetricsService.h"
 
 namespace ExampleApp
 {
@@ -23,6 +24,8 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback0<AboutPageController> m_viewOpened;
                 Eegeo::Helpers::TCallback0<AboutPageController> m_viewClosed;
                 Eegeo::Helpers::TCallback0<AboutPageController> m_viewCloseTapped;
+                
+                Metrics::IMetricsService& m_metricsService;
 
                 void OnOpen();
 
@@ -30,7 +33,7 @@ namespace ExampleApp
 
                 void OnCloseTapped();
             public:
-                AboutPageController(IAboutPageView& view, IAboutPageViewModel& viewModel);
+                AboutPageController(IAboutPageView& view, IAboutPageViewModel& viewModel, Metrics::IMetricsService& metricsService);
 
                 ~AboutPageController();
             };

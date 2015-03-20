@@ -6,17 +6,18 @@
 #include "IWorldPinsFactory.h"
 #include "Pin.h"
 #include "MyPinsFileIO.h"
-#include "IWebLoadRequestFactory.h"
-#include "IWebLoadRequest.h"
 #include "ImageUploadData.h"
 #include "IMenuOptionsModel.h"
 #include "MyPinMenuOption.h"
 #include "IWorldPinsService.h"
 #include "WorldPinFocusData.h"
 #include "IMyPinSelectionHandlerFactory.h"
+#include "IMyPinVisibilityStateChangedHandlerFactory.h"
 #include "MyPinSelectionHandler.h"
 #include "MyPinsSemanticPinType.h"
-
+#include "IMyPinBoundObjectFactory.h"
+#include "IMyPinBoundObjectRepository.h"
+#include "IMyPinBoundObject.h"
 #include <string>
 #include <sstream>
 
@@ -29,23 +30,38 @@ namespace ExampleApp
             MyPinsService::MyPinsService(IMyPinsRepository& myPinsRepository,
                                          MyPinsFileIO& myPinsFileIO,
                                          IMyPinSelectionHandlerFactory& myPinSelectionHandlerFactory,
-                                         WorldPins::SdkModel::IWorldPinsService& worldPinsService,
-                                         Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory)
+                                         IMyPinVisibilityStateChangedHandlerFactory& myPinVisibilityStateChangedHandlerFactory,
+                                         IMyPinBoundObjectFactory& myPinBoundObjectFactory,
+                                         IMyPinBoundObjectRepository& myPinBoundObjectRepository,
+                                         WorldPins::SdkModel::IWorldPinsService& worldPinsService)
                 : m_myPinsRepository(myPinsRepository)
                 , m_myPinsFileIO(myPinsFileIO)
                 , m_myPinSelectionHandlerFactory(myPinSelectionHandlerFactory)
+                , m_myPinVisibilityStateChangedHandlerFactory(myPinVisibilityStateChangedHandlerFactory)
+                , m_myPinBoundObjectFactory(myPinBoundObjectFactory)
+                , m_myPinBoundObjectRepository(myPinBoundObjectRepository)
                 , m_worldPinsService(worldPinsService)
-                , m_webLoadRequestFactory(webLoadRequestFactory)
                 , m_lastIdUsed(m_myPinsFileIO.GetLastIdWrittenToDisk())
-                , m_webRequestCompleteCallback(this, &MyPinsService::WebRequestCompleteCallback)
             {
-                std::vector<MyPinModel*> pinModels;
-                m_myPinsFileIO.LoadPinModelsFromDisk(pinModels);
-
-                for (std::vector<MyPinModel*>::iterator it = pinModels.begin(); it != pinModels.end(); ++it)
+            }
+            
+            void MyPinsService::LoadAllPinsFromDisk()
+            {
+                std::vector<std::pair<MyPinModel*, IMyPinBoundObject*> > pinModelBindings;
+                
+                m_myPinsFileIO.LoadPinModelsFromDisk(pinModelBindings);
+                
+                for (std::vector<std::pair<MyPinModel*, IMyPinBoundObject*> >::iterator it = pinModelBindings.begin();
+                     it != pinModelBindings.end();
+                     ++it)
                 {
-                    m_myPinsRepository.AddItem(*it);
-                    AddPinToMap(*it);
+                    MyPinModel* pPinModel(it->first);
+                    IMyPinBoundObject& pinModelBoundObject(*it->second);
+                    
+                    m_myPinBoundObjectRepository.AddBoundItemForPin(pPinModel->Identifier(), pinModelBoundObject);
+                    pinModelBoundObject.HandlePinAdded(*pPinModel);
+                    m_myPinsRepository.AddItem(pPinModel);
+                    AddPinToMap(pPinModel);
                 }
             }
 
@@ -54,9 +70,12 @@ namespace ExampleApp
                 WorldPins::SdkModel::WorldPinFocusData worldPinFocusData(pMyPinModel->GetTitle(),
                                                                          pMyPinModel->GetDescription());
                 
-                MyPinSelectionHandler* selectionHandler = m_myPinSelectionHandlerFactory.CreateMyPinSelectionHandler(*pMyPinModel);
+                MyPinSelectionHandler* pSelectionHandler(m_myPinSelectionHandlerFactory.CreateMyPinSelectionHandler(*pMyPinModel));
                 
-                WorldPins::SdkModel::WorldPinItemModel* worldPinItemModel = m_worldPinsService.AddPin(selectionHandler,
+                WorldPins::SdkModel::IWorldPinVisibilityStateChangedHandler* pVisibilityChangedHandler(m_myPinVisibilityStateChangedHandlerFactory.CreateMyPinVisibilityStateChangedHandler(*pMyPinModel));
+                
+                WorldPins::SdkModel::WorldPinItemModel* worldPinItemModel = m_worldPinsService.AddPin(pSelectionHandler,
+                                                                                                      pVisibilityChangedHandler,
                                                                                                       worldPinFocusData,
                                                                                                       pMyPinModel->GetLatLong(),
                                                                                                       pMyPinModel->GetSdkMapPinIconIndexIcon());
@@ -72,7 +91,12 @@ namespace ExampleApp
 
                     if (pinModel->Identifier() == myPinId)
                     {
-                        CleanUpMyPinMetadata(*pinModel);
+                        IMyPinBoundObject& boundObject = m_myPinBoundObjectRepository.GetBoundObjectForPin(*pinModel);
+                        m_myPinBoundObjectRepository.RemoveBoundItemForPin(pinModel->Identifier());
+                        boundObject.HandlePinRemoved(*pinModel);
+                        boundObject.HandlePinDestroyed(*pinModel);
+                        Eegeo_DELETE &boundObject;
+                        
                         m_worldPinsService.RemovePin(worldPinItemModel);
                         m_myPinsRepository.RemoveItem(pinModel);
                         m_myPinToWorldPinMap.erase(it);
@@ -88,31 +112,26 @@ namespace ExampleApp
                                                       size_t imageSize,
                                                       bool shouldShare)
             {
-                unsigned int idForThisPin = ++m_lastIdUsed;
-                std::string imagePath = "";
-                
-                if (imageData)
-                {
-                    m_myPinsFileIO.TryCacheImageToDisk(imageData, imageSize, idForThisPin, imagePath);
-                }
-                
+                MyPinModel::TPinIdType idForThisPin = ++m_lastIdUsed;
                 const int myPinIconIndex = 9;
-
-                MyPinModel *pinModel = Eegeo_NEW(MyPinModel)(idForThisPin,
+                
+                IMyPinBoundObject& boundObject = *m_myPinBoundObjectFactory.CreateUserCreatedPinBoundObject(m_myPinsFileIO,
+                                                                                                            idForThisPin,
+                                                                                                            imageData,
+                                                                                                            imageSize,
+                                                                                                            shouldShare);
+                m_myPinBoundObjectRepository.AddBoundItemForPin(idForThisPin, boundObject);
+                
+                MyPinModel *pinModel = Eegeo_NEW(MyPinModel)(MyPinModel::CurrentVersion,
+                                                             idForThisPin,
                                                              title,
                                                              description,
                                                              myPinIconIndex,
-                                                             latLong,
-                                                             UserCreatedPoi,
-                                                             imagePath);
-
-                m_myPinsFileIO.SavePinModelToDisk(*pinModel);
-
-                if (shouldShare)
-                {
-                    SubmitPinToWebService(*pinModel);
-                }
-
+                                                             latLong);
+                
+                boundObject.HandlePinCreated(*pinModel);
+                boundObject.HandlePinAdded(*pinModel);
+                
                 m_myPinsRepository.AddItem(pinModel);
                 AddPinToMap(pinModel);
             }
@@ -120,51 +139,25 @@ namespace ExampleApp
             void MyPinsService::SaveSearchResultPoiPin(const Search::SdkModel::SearchResultModel& searchResult,
                                                        int pinIconIndex)
             {
-                unsigned int idForThisPin = ++m_lastIdUsed;
+                MyPinModel::TPinIdType idForThisPin = ++m_lastIdUsed;
+                
+                IMyPinBoundObject& boundObject = *m_myPinBoundObjectFactory.CreateSearchResultPinBoundObject(m_myPinsFileIO,
+                                                                                                             idForThisPin,
+                                                                                                             searchResult);
+                m_myPinBoundObjectRepository.AddBoundItemForPin(idForThisPin, boundObject);
                                 
-                MyPinModel *pinModel = Eegeo_NEW(MyPinModel)(idForThisPin,
+                MyPinModel *pinModel = Eegeo_NEW(MyPinModel)(MyPinModel::CurrentVersion,
+                                                             idForThisPin,
                                                              searchResult.GetTitle(),
                                                              searchResult.GetAddress(),
                                                              pinIconIndex,
-                                                             searchResult.GetLocation(),
-                                                             SearchResultPoi,
-                                                             SerializeToJson(searchResult));
+                                                             searchResult.GetLocation());
                 
-                m_myPinsFileIO.SavePinModelToDisk(*pinModel);
+                boundObject.HandlePinCreated(*pinModel);
+                boundObject.HandlePinAdded(*pinModel);
+                
                 m_myPinsRepository.AddItem(pinModel);
                 AddPinToMap(pinModel);
-            }
-            
-            void MyPinsService::CleanUpMyPinMetadata(const MyPinModel& myPinModel)
-            {
-                switch(myPinModel.GetSemanticPinType())
-                {
-                    case UserCreatedPoi:
-                    {
-                        if (!myPinModel.GetTypeMetadata().empty())
-                        {
-                            m_myPinsFileIO.DeleteImageFromDisk(myPinModel.GetTypeMetadata());
-                        }
-                    }break;
-                    case SearchResultPoi:
-                    {
-                        // No cleanup required for SearchResultPoiPin.
-                    }break;
-                    default:
-                    {
-                        Eegeo_ASSERT(false, "Unhandled MyPin type.\n");
-                    }
-                }
-            }
-            
-            void MyPinsService::SubmitPinToWebService(const ExampleApp::MyPins::SdkModel::MyPinModel &myPinModel)
-            {
-                Eegeo_TTY("Here is where you submit pin to web service\n");
-            }
-
-            void MyPinsService::WebRequestCompleteCallback(Eegeo::Web::IWebLoadRequest& webLoadRequest)
-            {
-                Eegeo_TTY("Web Request Completed, code: %d\n", webLoadRequest.HttpStatusCode());
             }
         }
     }

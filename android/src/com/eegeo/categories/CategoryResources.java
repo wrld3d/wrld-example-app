@@ -8,18 +8,13 @@ import android.app.Activity;
 
 public class CategoryResources
 {
-    public static int getSearchResultIconForCategory(Activity activity, String category)
-    {
-        String matchedCategory = getCategoryMatch(category);
-        String uri = "drawable/icon2_" + matchedCategory;
-        int imageResource = activity.getResources().getIdentifier(uri, null, activity.getPackageName());
-
-        return imageResource;
-    }
-
     private static String getCategoryMatch(String category)
     {
         category = category.toLowerCase(Locale.getDefault());
+        if(category.contains("around me"))
+        {
+        	return "aroundme";
+        }
         if(category.contains("caf\u00e9") || category.contains("cafe") || category.contains("coffee"))
         {
             return "coffee";
@@ -50,6 +45,11 @@ public class CategoryResources
         }
 
         return "misc";
+    }
+    
+    public static int getSearchResultIconForCategory(Activity activity, String category)
+    {
+        return getSmallIconForCategory(activity, category);
     }
 
     public static int getSmallIconForCategory(Activity activity, String category)

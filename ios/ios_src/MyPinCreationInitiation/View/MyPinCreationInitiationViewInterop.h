@@ -32,8 +32,6 @@ namespace ExampleApp
 
                 void OnSelected();
 
-                void ShouldOffsetButton(bool shouldOffset);
-
                 void InsertSelectedCallback(Eegeo::Helpers::ICallback0& callback);
 
                 void RemoveSelectedCallback(Eegeo::Helpers::ICallback0& callback);

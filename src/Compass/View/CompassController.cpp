@@ -41,19 +41,45 @@ namespace ExampleApp
             {
                 ScreenControl::View::Apply(m_viewModel, m_view);
             }
-
+            
+            void CompassController::OnMyPinCreationStateChangedMessage(const MyPinCreation::MyPinCreationStateChangedMessage& message)
+            {
+                switch (message.GetMyPinCreationStage())
+                {
+                    case MyPinCreation::Inactive:
+                    {
+                        m_viewModel.AddToScreen();
+                    }break;
+                    case MyPinCreation::Ring:
+                    {
+                        m_viewModel.RemoveFromScreen();
+                    }break;
+                    case MyPinCreation::Details:
+                    {
+                    }break;
+                    default:
+                    {
+                        Eegeo_ASSERT(false, "Unknown MyPinCreationStage");
+                    }
+                }
+            }
+            
             CompassController::CompassController(  ICompassView& view,
                                                    ICompassViewModel& viewModel,
-                                                   ExampleAppMessaging::TMessageBus& messageBus) : m_view(view)
+                                                   ExampleAppMessaging::TMessageBus& messageBus)
+                : m_view(view)
                 , m_viewModel(viewModel)
                 , m_messageBus(messageBus)
                 , m_viewStateCallback(this, &CompassController::OnScreenStateChangedCallback)
                 , m_modeChangedHandler(this, &CompassController::OnCompassModeChangedMessage)
                 , m_headingChangedHandler(this, &CompassController::OnCompassHeadingChangedMessage)
+                , m_myPinCreationStateChangedMessageHandler(this, &CompassController::OnMyPinCreationStateChangedMessage)
                 , m_viewCycledCallback(this, &CompassController::OnViewCycled)
             {
                 m_messageBus.SubscribeUi(m_modeChangedHandler);
                 m_messageBus.SubscribeUi(m_headingChangedHandler);
+                m_messageBus.SubscribeUi(m_myPinCreationStateChangedMessageHandler);
+                
                 m_view.InsertCycledCallback(m_viewCycledCallback);
                 m_viewModel.InsertOnScreenStateChangedCallback(m_viewStateCallback);
 
@@ -66,6 +92,7 @@ namespace ExampleApp
                 m_view.RemoveCycledCallback(m_viewCycledCallback);
                 m_messageBus.UnsubscribeUi(m_headingChangedHandler);
                 m_messageBus.UnsubscribeUi(m_modeChangedHandler);
+                m_messageBus.UnsubscribeUi(m_myPinCreationStateChangedMessageHandler);
             }
         }
     }

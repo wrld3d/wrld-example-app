@@ -20,6 +20,7 @@ namespace ExampleApp
                 virtual ~IWorldPinsService() {}
 
                 virtual WorldPinItemModel* AddPin(IWorldPinSelectionHandler* pSelectionHandler,
+                                                  IWorldPinVisibilityStateChangedHandler* pVisibilityStateChangedHandler,
                                                   const WorldPinFocusData& worldPinFocusData,
                                                   const Eegeo::Space::LatLong& location,
                                                   int iconIndex) = 0;

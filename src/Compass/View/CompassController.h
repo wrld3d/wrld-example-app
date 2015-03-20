@@ -7,6 +7,7 @@
 #include "BidirectionalBus.h"
 #include "ICompassViewModel.h"
 #include "ApplyScreenControl.h"
+#include "MyPinCreationStateChangedMessage.h"
 
 namespace ExampleApp
 {
@@ -24,6 +25,7 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback2<CompassController, ScreenControl::View::IScreenControlViewModel&, float> m_viewStateCallback;
                 Eegeo::Helpers::TCallback1<CompassController, const CompassModeChangedMessage&> m_modeChangedHandler;
                 Eegeo::Helpers::TCallback1<CompassController, const CompassHeadingUpdateMessage&> m_headingChangedHandler;
+                Eegeo::Helpers::TCallback1<CompassController, const MyPinCreation::MyPinCreationStateChangedMessage&> m_myPinCreationStateChangedMessageHandler;
                 Eegeo::Helpers::TCallback0<CompassController> m_viewCycledCallback;
 
                 void OnViewCycled();
@@ -33,6 +35,8 @@ namespace ExampleApp
                 void OnCompassHeadingChangedMessage(const CompassHeadingUpdateMessage& message);
 
                 void OnScreenStateChangedCallback(ScreenControl::View::IScreenControlViewModel &viewModel, float& onScreenState);
+                
+                void OnMyPinCreationStateChangedMessage(const MyPinCreation::MyPinCreationStateChangedMessage& message);
 
             public:
                 CompassController(  ICompassView& view,

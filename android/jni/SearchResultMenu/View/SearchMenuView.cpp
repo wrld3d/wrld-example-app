@@ -15,7 +15,7 @@ namespace ExampleApp
             {
             }
 
-            void SearchMenuView::SetHeader(const std::string& header, bool queryPending, int numResult)
+            void SearchMenuView::SetHeader(const std::string& header, bool queryPending, size_t numResult)
             {
                 ASSERT_UI_THREAD
 

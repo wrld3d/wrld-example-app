@@ -5,7 +5,6 @@
 #include "IMyPinCreationDetailsViewModel.h"
 #include "MyPinCreationViewStateChangedMessage.h"
 #include "MyPinCreationViewSavePinMessage.h"
-#include "FlurryWrapper.h"
 #include <string>
 
 namespace ExampleApp
@@ -18,12 +17,14 @@ namespace ExampleApp
                 IMyPinCreationDetailsView& view,
                 IMyPinCreationDetailsViewModel& viewModel,
                 Eegeo::Web::IConnectivityService& connectivityService,
-                ExampleAppMessaging::TMessageBus& messageBus
+                ExampleAppMessaging::TMessageBus& messageBus,
+                Metrics::IMetricsService& metricsService
             )
                 : m_view(view)
                 , m_viewModel(viewModel)
                 , m_messageBus(messageBus)
                 , m_connectivityService(connectivityService)
+                , m_metricsService(metricsService)
                 , m_viewConfirmedCallback(this, &MyPinCreationDetailsController::OnConfirmed)
                 , m_viewDismissedCallback(this, &MyPinCreationDetailsController::OnDismissed)
                 , m_viewModelOpenedCallback(this, &MyPinCreationDetailsController::OnOpened)
@@ -56,15 +57,18 @@ namespace ExampleApp
             {
                 if(m_viewModel.TryAcquireReactorControl())
                 {
-                    FLURRY_BEGIN_TIMED_EVENT("MyPinCreationDetailsDialogue");
+                    m_metricsService.BeginTimedEvent("MyPinCreationDetailsDialogue");
                     m_view.Open();
                 }
             }
 
             void MyPinCreationDetailsController::OnClosed()
             {
-                FLURRY_END_TIMED_EVENT("MyPinCreationDetailsDialogue");
+                m_metricsService.EndTimedEvent("MyPinCreationDetailsDialogue");
                 m_view.Close();
+                
+                ExampleApp::MyPinCreation::MyPinCreationViewStateChangedMessage message(ExampleApp::MyPinCreation::Inactive);
+                m_messageBus.Publish(message);
             }
 
             void MyPinCreationDetailsController::OnConfirmed()
@@ -85,17 +89,14 @@ namespace ExampleApp
 
                 m_messageBus.Publish(message);
 
-                FLURRY_SET_EVENT("MyPinCreationDetails: Confirmed",
-                				 "Image", imageDataBytes ? "yes" : "no",
-                				 "Shared", shouldShare ? "yes" : "no");
+                m_metricsService.SetEvent("MyPinCreationDetails: Confirmed",
+                                          "Image", imageDataBytes ? "yes" : "no",
+                                          "Shared", shouldShare ? "yes" : "no");
             }
 
             void MyPinCreationDetailsController::OnDismissed()
             {
                 m_viewModel.Close();
-
-                ExampleApp::MyPinCreation::MyPinCreationViewStateChangedMessage message(ExampleApp::MyPinCreation::Inactive);
-                m_messageBus.Publish(message);
             }
 
             void MyPinCreationDetailsController::OnNetworkStateChanged(const bool &hasConnectivity)

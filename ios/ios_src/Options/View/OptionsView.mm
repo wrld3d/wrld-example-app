@@ -8,6 +8,7 @@
 #include "ImageHelpers.h"
 #include "IconResources.h"
 #include "OptionsViewInterop.h"
+#import "UIView+TouchExclusivity.h"
 #include "App.h"
 
 @implementation OptionsView
@@ -22,11 +23,6 @@
         self.alpha = 0.f;
         m_stateChangeAnimationTimeSeconds = 0.2f;
 
-        self.pShadowContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pShadowContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::BlackTone;
-        self.pShadowContainer.alpha = 0.1f;
-        [self addSubview: self.pShadowContainer];
-
         self.pControlContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         self.pControlContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::GoldTone;
         [self addSubview: self.pControlContainer];
@@ -36,15 +32,13 @@
         [self.pControlContainer addSubview: self.pCloseButtonContainer];
 
         self.pCloseButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        [self.pCloseButton setBackgroundImage:[UIImage imageNamed:@"button_close_off.png"] forState:UIControlStateNormal];
-        [self.pCloseButton setBackgroundImage:[UIImage imageNamed:@"button_close_on.png"] forState:UIControlStateHighlighted];
+        [self.pCloseButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_close_off") forState:UIControlStateNormal];
+        [self.pCloseButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_close_on") forState:UIControlStateHighlighted];
         [self.pCloseButtonContainer addSubview: self.pCloseButton];
 
         self.pContentContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         self.pContentContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::MainHudColor;
         [self.pControlContainer addSubview: self.pContentContainer];
-
-        self.pContainerShadowBottom = ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pContentContainer, "shadow_03", 0.f, 0.f, 0, 0);
 
         self.pOptionsContainer = [[[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         self.pOptionsContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::WhiteTone;
@@ -58,15 +52,13 @@
         self.pTitleLabel.textColor = ExampleApp::Helpers::ColorPalette::GoldTone;
         [self.pHeadlineContainer addSubview: self.pTitleLabel];
 
-        self.pContainerShadowTop = ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pContentContainer, "shadow_03", 0.f, 0.f, 0, 0);
-
         m_tapGestureRecogniser = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(_tapTabGesture:)];
         [m_tapGestureRecogniser setDelegate:self];
         [self.pCloseButton addGestureRecognizer: m_tapGestureRecogniser];
         
-        self.pWifiOnlyCheckbox = [[[UILabelledCheckboxView alloc] initWithParams:32.f
-                                                                                :"button_checkbox_off.png"
-                                                                                :"button_checkbox_on.png"
+        self.pWifiOnlyCheckbox = [[[UILabelledCheckboxView alloc] initWithParams:20.f
+                                                                                :"button_checkbox_off"
+                                                                                :"button_checkbox_on"
                                                                                 :"Stream over Wi-fi only"
                                                                                 :false
                                                                                 :self
@@ -74,9 +66,9 @@
 
         [self.pOptionsContainer addSubview: self.pWifiOnlyCheckbox];
         
-        self.pCacheEnabledCheckbox = [[[UILabelledCheckboxView alloc] initWithParams:32.f
-                                                                                    :"button_checkbox_off.png"
-                                                                                    :"button_checkbox_on.png"
+        self.pCacheEnabledCheckbox = [[[UILabelledCheckboxView alloc] initWithParams:20.f
+                                                                                    :"button_checkbox_off"
+                                                                                    :"button_checkbox_on"
                                                                                     :"Enable data caching on device"
                                                                                     :false
                                                                                     :self
@@ -84,9 +76,9 @@
 
         [self.pOptionsContainer addSubview: self.pCacheEnabledCheckbox];
         
-        self.pClearCacheButton = [[[UILabelledCheckboxView alloc] initWithParams:32.f
-                                                                                :"buttonsmall_close_on.png"
-                                                                                :"buttonsmall_close_on.png"
+        self.pClearCacheButton = [[[UILabelledCheckboxView alloc] initWithParams:20.f
+                                                                                :"buttonsmall_close_off"
+                                                                                :"buttonsmall_close_on"
                                                                                 :"Clear cached map data"
                                                                                 :false
                                                                                 :self
@@ -94,6 +86,7 @@
         
         [self.pOptionsContainer addSubview: self.pClearCacheButton];
         
+        [self setTouchExclusivity:self];
         
         self.pOptionsCacheClearSubView = [[[OptionsCacheClearSubView alloc] init] autorelease];
     }
@@ -110,9 +103,6 @@
 
     [self.pCloseButtonContainer removeFromSuperview];
     [self.pCloseButtonContainer release];
-
-    [self.pShadowContainer removeFromSuperview];
-    [self.pShadowContainer release];
 
     [self.pControlContainer removeFromSuperview];
     [self.pControlContainer release];
@@ -131,12 +121,6 @@
     
     [self.pOptionsContainer removeFromSuperview];
     [self.pOptionsContainer release];
-
-    [self.pContainerShadowTop removeFromSuperview];
-    [self.pContainerShadowTop release];
-    
-    [self.pContainerShadowBottom removeFromSuperview];
-    [self.pContainerShadowBottom release];
 
     [self.pContentContainer removeFromSuperview];
     [self.pContentContainer release];
@@ -176,11 +160,6 @@
                                    mainWindowWidth,
                                    mainWindowHeight);
 
-    self.pShadowContainer.frame = CGRectMake(2.f,
-                                  2.f,
-                                  mainWindowWidth,
-                                  mainWindowHeight);
-
     const float headlineHeight = 50.f;
     const float headlineMargin = 10.f;
     const float closeButtonSectionHeight = 80.f;
@@ -188,7 +167,6 @@
     const float closeButtonSectionOffsetY = mainWindowHeight - closeButtonSectionHeight;
     const float contentSectionOffsetY = headlineOffsetY + headlineHeight;
     const float contentSectionHeight = mainWindowHeight - (closeButtonSectionHeight + headlineHeight);
-    const float shadowHeight = 10.f;
 
     self.pHeadlineContainer.frame = CGRectMake(0.f,
                                     headlineOffsetY,
@@ -199,8 +177,6 @@
                                    contentSectionOffsetY,
                                    mainWindowWidth,
                                    contentSectionHeight);
-
-    self.pContainerShadowTop.frame = CGRectMake(0.f, 0.f, mainWindowWidth, shadowHeight);
 
     const float labelsSectionOffsetX = 8.f;
     const float labelsSectionWidth = mainWindowWidth - (2.f * labelsSectionOffsetX);
@@ -219,8 +195,6 @@
                                          0.f,
                                          closeButtonSectionHeight,
                                          closeButtonSectionHeight);
-
-    self.pContainerShadowBottom.frame = CGRectMake(0.f, contentSectionHeight, mainWindowWidth, shadowHeight);
 
     const float headlineWidth = mainWindowWidth - headlineMargin;
 

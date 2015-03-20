@@ -1,7 +1,6 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "PerformedSearchMessageHandler.h"
-#include "FlurryWrapper.h"
 
 namespace ExampleApp
 {
@@ -11,9 +10,11 @@ namespace ExampleApp
         {
             PerformedSearchMessageHandler::PerformedSearchMessageHandler(
                 Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
-                ExampleAppMessaging::TMessageBus& messageBus)
+                ExampleAppMessaging::TMessageBus& messageBus,
+                Metrics::IMetricsService& metricsService)
                 : m_searchQueryPerformer(searchQueryPerformer)
                 , m_messageBus(messageBus)
+                , m_metricsService(metricsService)
                 , m_handlePerformedSearchMessageBinding(this, &PerformedSearchMessageHandler::OnPerformedSearchMessage)
             {
                 m_messageBus.SubscribeNative(m_handlePerformedSearchMessageBinding);
@@ -26,7 +27,7 @@ namespace ExampleApp
 
             void PerformedSearchMessageHandler::OnPerformedSearchMessage(const PerformedSearchMessage& message)
             {
-                FLURRY_SET_EVENT("Search", "Search string", message.SearchQuery().c_str());
+                m_metricsService.SetEvent("Search", "Search string", message.SearchQuery().c_str());
                 m_searchQueryPerformer.PerformSearchQuery(message.SearchQuery(), message.IsCategory());
             }
         }

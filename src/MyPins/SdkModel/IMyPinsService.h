@@ -19,6 +19,8 @@ namespace ExampleApp
             {
             public:
                 virtual ~IMyPinsService() {}
+                
+                virtual void LoadAllPinsFromDisk() = 0;
 
                 virtual void RemovePinWithId(const int myPinId) = 0;
 

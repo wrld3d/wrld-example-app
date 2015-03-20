@@ -7,6 +7,7 @@
 #include "Search.h"
 #include "SearchResultPoi.h"
 #include "BidirectionalBus.h"
+#include "IMetricsService.h"
 
 namespace ExampleApp
 {
@@ -18,10 +19,13 @@ namespace ExampleApp
             {
                 Search::SdkModel::SearchResultModel m_searchResultModel;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
+                
+                Metrics::IMetricsService& m_metricsService;
 
             public:
                 SearchResultOnMapItemModel(const Search::SdkModel::SearchResultModel& searchResultModel,
-                                           ExampleAppMessaging::TMessageBus& messageBus);
+                                           ExampleAppMessaging::TMessageBus& messageBus,
+                                           Metrics::IMetricsService& metricsService);
 
                 ~SearchResultOnMapItemModel();
 

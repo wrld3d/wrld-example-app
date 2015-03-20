@@ -9,6 +9,7 @@
 #include "CallbackCollection.h"
 #include "GlobeCamera.h"
 #include "Location.h"
+#include "IMetricsService.h"
 
 namespace ExampleApp
 {
@@ -25,11 +26,14 @@ namespace ExampleApp
                 std::map<Eegeo::Location::NavigationService::GpsMode, GpsMode::Values> m_compassGpsModeToNavigationGpsMode;
                 std::map<GpsMode::Values, Eegeo::Location::NavigationService::GpsMode> m_navigationGpsModeToCompassGpsMode;
                 std::map<GpsMode::Values, const char*> m_gpsModeToString;
+                
+                Metrics::IMetricsService& m_metricsService;
 
             public:
 
                 CompassModel(Eegeo::Location::NavigationService& navigationService,
-                             Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& controller);
+                             Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& controller,
+                             Metrics::IMetricsService& metricsService);
 
                 ~CompassModel();
 

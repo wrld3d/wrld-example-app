@@ -2,13 +2,16 @@
 
 package com.eegeo.compass;
 
-import com.eegeo.mobileexampleapp.MainActivity;
+import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.mobileexampleapp.R;
 
-import android.graphics.PorterDuff.Mode;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.RelativeLayout.LayoutParams;
 
 public class CompassView implements View.OnClickListener
 {
@@ -16,18 +19,13 @@ public class CompassView implements View.OnClickListener
     private long m_nativeCallerPointer;
     private View m_view = null;
     private View m_compassPoint = null;
-    private View m_compassOuter = null;
-    private View m_compassInner = null;
-    private View m_compassPointShadow = null;
-    private View m_compassLock = null;
-    private int m_colorGold;
-    private int m_colorWhite;
-
-    private float m_compassPointOffset;
+    private ImageView m_compassInner = null;
 
     private float m_yPosActive;
     private float m_yPosInactive;
-
+    private float m_compassPointOffsetX;
+    private float m_compassPointOffsetY;
+    
     private final long m_stateChangeAnimationTimeMilliseconds = 200;
 
     public CompassView(MainActivity activity, long nativeCallerPointer)
@@ -51,27 +49,35 @@ public class CompassView implements View.OnClickListener
         m_view = m_activity.getLayoutInflater().inflate(R.layout.compass_layout, uiRoot, false);
         m_view.setOnClickListener(this);
 
-        m_compassOuter = m_view.findViewById(R.id.compass_outer_shape);
-        m_compassInner = m_view.findViewById(R.id.compass_inner_shape);
         m_compassPoint = m_view.findViewById(R.id.compass_arrow_shape);
-        m_compassPointShadow = m_view.findViewById(R.id.compass_arrow_shape_shadow);
-        m_compassLock = m_view.findViewById(R.id.compass_lock);
+        m_compassInner = (ImageView)m_view.findViewById(R.id.compass_inner_shape);
+    	m_compassInner.setVisibility(View.GONE);
 
-        m_colorGold = m_activity.getResources().getColor(R.color.gold);
-        m_colorWhite = m_activity.getResources().getColor(R.color.white);
+        m_view.addOnLayoutChangeListener(new View.OnLayoutChangeListener() 
+        {
+			@Override
+			public void onLayoutChange(View v, int left, int top, int right,
+					int bottom, int oldLeft, int oldTop, int oldRight,
+					int oldBottom) 
+			{   
+		        final float screenWidth = uiRoot.getWidth();
+		        final float screenHeight = uiRoot.getHeight();
+		        final float viewWidth = m_view.getWidth();
+		        final float viewHeight = m_view.getHeight();
+		        final float pointWidth = m_compassPoint.getWidth();
+		        final float pointHeight = m_compassPoint.getHeight();
 
-        RelativeLayout.LayoutParams viewLayout = (LayoutParams) m_compassOuter.getLayoutParams();
-
-        RelativeLayout.LayoutParams compassViewLayout = (LayoutParams) m_compassPoint.getLayoutParams();
-        m_compassPointOffset = (viewLayout.width * 0.5f) - (compassViewLayout.width * 0.5f);
-
-        m_yPosActive = m_activity.dipAsPx(16);
-        m_yPosInactive = -m_activity.dipAsPx(viewLayout.height);
-
-        m_view.setX((uiRoot.getWidth() * 0.5f) - (viewLayout.width * 0.5f));
-        m_view.setY(m_yPosInactive);
-
-        setCompassColours(m_colorGold, m_colorWhite);
+		    	m_compassPointOffsetX = (viewWidth * 0.5f) - (pointWidth * 0.5f);
+		        m_compassPointOffsetY = (viewHeight * 0.5f) - (pointHeight * 0.5f);
+		        
+		        m_yPosActive = (screenHeight - viewWidth) - m_activity.dipAsPx(8.f);
+		        m_yPosInactive = screenHeight + viewHeight;
+		        
+		        m_view.setX((screenWidth * 0.5f) - (viewWidth * 0.5f));
+		        m_view.setY(m_yPosInactive);
+		        m_view.removeOnLayoutChangeListener(this);
+			}
+        });
 
         uiRoot.addView(m_view);
         showGpsDisabledView();
@@ -79,41 +85,34 @@ public class CompassView implements View.OnClickListener
 
     public void updateHeading(float headingAngleRadians)
     {
-        final float theta = -headingAngleRadians;
-
-        final float sinTheta = (float)Math.sin(theta);
+    	final float verticalPointOffsetPx = 25.f;
+       	final float theta = -headingAngleRadians;
+       	final float sinTheta = (float)Math.sin(theta);
         final float cosTheta = (float)Math.cos(theta);
         final float x = 0.f;
-        final float y = m_activity.dipAsPx(-15.f);
+        final float y = m_activity.dipAsPx(-verticalPointOffsetPx);
         final float newX = x*cosTheta - y*sinTheta;
         final float newY = y*cosTheta + x*sinTheta;
-        m_compassPoint.setX(m_compassPointOffset + newX);
-        m_compassPoint.setY(m_compassPointOffset + newY);
-
-        final float shadowOffset = m_activity.dipAsPx(2.0f);
-        m_compassPointShadow.setX(m_compassPointOffset + newX + shadowOffset);
-        m_compassPointShadow.setY(m_compassPointOffset + newY + shadowOffset);
+        m_compassPoint.setX(m_compassPointOffsetX + newX);
+        m_compassPoint.setY(m_compassPointOffsetY + newY);
+    	m_compassPoint.setRotation((float) -Math.toDegrees(headingAngleRadians));
     }
 
     public void showGpsDisabledView()
-    {
-        setCompassColours(m_colorGold, m_colorWhite);
-
-        m_compassLock.animate().alpha(0.0f).setDuration(200).start();
+    { 
+    	m_compassInner.setVisibility(View.GONE);
     }
 
     public void showGpsFollowView()
-    {
-        setCompassColours(m_colorWhite, m_colorGold);
-
-        m_compassLock.animate().alpha(0.0f).setDuration(200).start();
+    {  
+    	m_compassInner.setVisibility(View.VISIBLE);
+    	createBitMap(Paint.Style.STROKE);
     }
 
     public void showGpsCompassModeView()
-    {
-        setCompassColours(m_colorWhite, m_colorGold);
-
-        m_compassLock.animate().alpha(1.0f).setDuration(200).start();
+    { 
+    	m_compassInner.setVisibility(View.VISIBLE);
+    	createBitMap(Paint.Style.FILL);
     }
 
     @Override
@@ -149,17 +148,20 @@ public class CompassView implements View.OnClickListener
             m_view.setY(newYPx);
         }
     }
-
-    private void setCompassColours(int bodyColour, int pointColour)
+    
+    private void createBitMap(Paint.Style style) 
     {
-        m_compassOuter.getBackground().setColorFilter(pointColour, Mode.MULTIPLY);
-        m_compassOuter.invalidate();
-
-        m_compassPoint.getBackground().setColorFilter(pointColour, Mode.MULTIPLY);
-        m_compassPoint.invalidate();
-
-        m_compassInner.getBackground().setColorFilter(bodyColour, Mode.MULTIPLY);
+        final int innerDiameter = m_activity.dipAsPx(20);
+        Bitmap bmp = Bitmap.createBitmap(innerDiameter, innerDiameter, Bitmap.Config.ARGB_8888);
+        Canvas compassInnerCanvas = new Canvas(bmp);
+        compassInnerCanvas.drawColor(Color.TRANSPARENT);
+        Paint compassInnerPaint = new Paint();
+        compassInnerPaint.setStyle(style);
+        compassInnerPaint.setColor(m_activity.getResources().getColor(R.color.white));
+        compassInnerPaint.setAntiAlias(true);
+        compassInnerPaint.setFilterBitmap(true);
+        compassInnerCanvas.drawCircle(innerDiameter / 2, innerDiameter/2 , innerDiameter/2, compassInnerPaint);   
+        m_compassInner.setImageBitmap(bmp);  
         m_compassInner.invalidate();
     }
-
 }

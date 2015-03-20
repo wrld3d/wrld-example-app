@@ -6,7 +6,9 @@
 #include "SearchResultPoi.h"
 #include "ISearchResultPoiViewModule.h"
 #include "SearchResultPoiController.h"
+#include "SearchResultPoiViewContainer.h"
 #include "BidirectionalBus.h"
+#include "IMetricsService.h"
 
 namespace ExampleApp
 {
@@ -17,18 +19,19 @@ namespace ExampleApp
             class SearchResultPoiViewModule: public ISearchResultPoiViewModule, private Eegeo::NonCopyable
             {
             private:
-                SearchResultPoiView* m_pView;
+                SearchResultPoiViewContainer* m_pView;
                 SearchResultPoiController* m_pController;
 
             public:
                 SearchResultPoiViewModule(ISearchResultPoiViewModel& searchResultPoiViewModel,
-                                          ExampleAppMessaging::TMessageBus& messageBus);
+                                          ExampleAppMessaging::TMessageBus& messageBus,
+                                          Metrics::IMetricsService& metricsService);
 
                 ~SearchResultPoiViewModule();
 
                 SearchResultPoiController& GetController() const;
 
-                SearchResultPoiView& GetView() const;
+                SearchResultPoiViewContainer& GetView() const;
             };
         }
     }

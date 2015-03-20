@@ -8,6 +8,8 @@
 #include "Menu.h"
 #include "CategorySearchSelectedMessageHandler.h"
 #include "BidirectionalBus.h"
+#include "CategorySearchModel.h"
+#include "IMetricsService.h"
 
 namespace ExampleApp
 {
@@ -18,9 +20,11 @@ namespace ExampleApp
             class CategorySearchModule : public ICategorySearchModule, private Eegeo::NonCopyable
             {
             public:
-                CategorySearchModule(Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
+                CategorySearchModule(const std::vector<CategorySearch::View::CategorySearchModel>& categorySearchModels,
+                                     Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
                                      Menu::View::IMenuViewModel& menuViewModel,
-                                     ExampleAppMessaging::TMessageBus& messageBus);
+                                     ExampleAppMessaging::TMessageBus& messageBus,
+                                     Metrics::IMetricsService& metricsService);
 
                 ~CategorySearchModule();
 

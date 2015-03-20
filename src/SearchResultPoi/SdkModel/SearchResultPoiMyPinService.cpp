@@ -1,11 +1,10 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include <string>
-#include "SearchResultPoiMyPinService.h"
 #include "IMyPinsService.h"
-#include "IMyPinsRepository.h"
+#include "ISearchResultMyPinsService.h"
+#include "SearchResultPoiMyPinService.h"
 #include "ISearchResultIconCategoryMapper.h"
-#include "MyPinsSearchResultExtensions.h"
 
 namespace ExampleApp
 {
@@ -14,10 +13,10 @@ namespace ExampleApp
         namespace SdkModel
         {   
             SearchResultPoiMyPinService::SearchResultPoiMyPinService(MyPins::SdkModel::IMyPinsService& myPinsService,
-                                                                     MyPins::SdkModel::IMyPinsRepository& myPinsRepository,
+                                                                     Search::SdkModel::MyPins::ISearchResultMyPinsService& searchResultMyPinsService,
                                                                      CategorySearch::ISearchResultIconCategoryMapper& searchResultIconCategoryMapper)
             : m_myPinsService(myPinsService)
-            , m_myPinsRepository(myPinsRepository)
+            , m_searchResultMyPinsService(searchResultMyPinsService)
             , m_searchResultIconCategoryMapper(searchResultIconCategoryMapper)
             {
                 
@@ -30,12 +29,12 @@ namespace ExampleApp
             
             void SearchResultPoiMyPinService::AddOrRemoveSearchResultFromMyPins(const Search::SdkModel::SearchResultModel& searchResult)
             {
-                MyPins::SdkModel::MyPinModel* pMyPinModel = NULL;
+                MyPins::SdkModel::MyPinModel myPinModel;
                 
-                if(TryFindPinnedPoiForSearchResult(m_myPinsRepository, searchResult, pMyPinModel))
+                if(m_searchResultMyPinsService.TryGetPinForSearchResult(searchResult, myPinModel))
                 {
                     // The pin already exists, so remove it and return!
-                    m_myPinsService.RemovePinWithId(pMyPinModel->Identifier());
+                    m_myPinsService.RemovePinWithId(myPinModel.Identifier());
                 }
                 else
                 {

@@ -10,13 +10,14 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.eegeo.mobileexampleapp.MainActivity;
+import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.mobileexampleapp.R;
 
 public class MyPinDetailsView implements View.OnClickListener
@@ -60,6 +61,8 @@ public class MyPinDetailsView implements View.OnClickListener
         m_closeButton.setOnClickListener(this);
         m_view.setVisibility(View.GONE);
         m_uiRoot.addView(m_view);
+
+        m_activity.recursiveDisableSplitMotionEvents((ViewGroup)m_view);
     }
 
     public void destroy()

@@ -41,23 +41,30 @@ namespace ExampleApp
             }
 
             WorldPinItemModel* WorldPinsService::AddPin(IWorldPinSelectionHandler* pSelectionHandler,
-                    const WorldPinFocusData& worldPinFocusData,
-                    const Eegeo::Space::LatLong& location,
-                    int iconIndex)
+                                                        IWorldPinVisibilityStateChangedHandler* pVisibilityStateChangedHandler,
+                                                        const WorldPinFocusData& worldPinFocusData,
+                                                        const Eegeo::Space::LatLong& location,
+                                                        int iconIndex)
             {
-
+                
                 Eegeo::Pins::Pin* pPin = m_worldPinsFactory.CreatePin(location, iconIndex);
 
                 m_pinRepository.AddPin(*pPin);
 
                 Eegeo::Pins::TPinId pinId = pPin->GetId();
 
-                mapIt pinIt = m_pinsToSelectionHandlers.find(pinId);
-                Eegeo_ASSERT(pinIt == m_pinsToSelectionHandlers.end(), "Attempting to add same pin ID %d twice.\n", pinId);
-
+                TPinToSelectionHandlerMapIt pinToSelectionHandlerMapIt = m_pinsToSelectionHandlers.find(pinId);
+                Eegeo_ASSERT(pinToSelectionHandlerMapIt == m_pinsToSelectionHandlers.end(), "Attempting to add same pin ID %d twice.\n", pinId);
                 m_pinsToSelectionHandlers[pinId] = pSelectionHandler;
+                
+                TPinToVisiblityHandlerMapIt pinToVisiblityHandlerMapIt = m_pinsToVisbilityChangedHandlers.find(pinId);
+                Eegeo_ASSERT(pinToVisiblityHandlerMapIt == m_pinsToVisbilityChangedHandlers.end(), "Attempting to add same pin ID %d twice.\n", pinId);
+                m_pinsToVisbilityChangedHandlers[pinId] = pVisibilityStateChangedHandler;
 
-                WorldPinItemModel* model = Eegeo_NEW(WorldPinItemModel)(pinId, pSelectionHandler, worldPinFocusData);
+                WorldPinItemModel* model = Eegeo_NEW(WorldPinItemModel)(pinId,
+                                                                        pSelectionHandler,
+                                                                        pVisibilityStateChangedHandler,
+                                                                        worldPinFocusData);
                 m_worldPinsRepository.AddItem(model);
 
                 UpdatePinScale(*model, model->TransitionStateValue());
@@ -95,9 +102,10 @@ namespace ExampleApp
                     Eegeo_ASSERT(intersectingPinsClosestToCameraFirst.size() > 0);
                     Eegeo::Pins::Pin* pSelectedPin = intersectingPinsClosestToCameraFirst[0];
                     Eegeo_ASSERT(pSelectedPin != NULL);
-                    mapIt pinIt = m_pinsToSelectionHandlers.find(pSelectedPin->GetId());
-                    Eegeo_ASSERT(pinIt != m_pinsToSelectionHandlers.end(), "Selected pin with unknown ID %d.\n", pSelectedPin->GetId());
-                    IWorldPinSelectionHandler& selectionHandler = *pinIt->second;
+                    TPinToSelectionHandlerMapIt pinToSelectionHandlerMapIt = m_pinsToSelectionHandlers.find(pSelectedPin->GetId());
+                    Eegeo_ASSERT(pinToSelectionHandlerMapIt != m_pinsToSelectionHandlers.end(),
+                                 "Selected pin with unknown ID %d.\n", pSelectedPin->GetId());
+                    IWorldPinSelectionHandler& selectionHandler = *pinToSelectionHandlerMapIt->second;
                     selectionHandler.SelectPin();
                     return true;
                 }
@@ -122,11 +130,17 @@ namespace ExampleApp
 
             void WorldPinsService::ErasePin(const WorldPinItemModel::WorldPinItemModelId& id)
             {
-                mapIt pinIt = m_pinsToSelectionHandlers.find(id);
-                Eegeo_ASSERT(pinIt != m_pinsToSelectionHandlers.end(), "Attempting to remove pin with unknown ID %d.\n", id);
-                IWorldPinSelectionHandler* pHandler = pinIt->second;
-                m_pinsToSelectionHandlers.erase(pinIt);
-                Eegeo_DELETE pHandler;
+                TPinToSelectionHandlerMapIt pinToSelectionHandlerMapIt = m_pinsToSelectionHandlers.find(id);
+                Eegeo_ASSERT(pinToSelectionHandlerMapIt != m_pinsToSelectionHandlers.end(), "Attempting to remove pin with unknown ID %d.\n", id);
+                IWorldPinSelectionHandler* pSelectionHandler = pinToSelectionHandlerMapIt->second;
+                m_pinsToSelectionHandlers.erase(pinToSelectionHandlerMapIt);
+                Eegeo_DELETE pSelectionHandler;
+                
+                TPinToVisiblityHandlerMapIt pinToVisiblityHandlerMapIt = m_pinsToVisbilityChangedHandlers.find(id);
+                Eegeo_ASSERT(pinToVisiblityHandlerMapIt != m_pinsToVisbilityChangedHandlers.end(), "Attempting to remove pin with unknown ID %d.\n", id);
+                IWorldPinVisibilityStateChangedHandler* pVisibilityHandler = pinToVisiblityHandlerMapIt->second;
+                m_pinsToVisbilityChangedHandlers.erase(pinToVisiblityHandlerMapIt);
+                Eegeo_DELETE pVisibilityHandler;
             }
 
             IWorldPinSelectionHandler* WorldPinsService::GetSelectionHandlerForPin(WorldPinItemModel::WorldPinItemModelId worldPinItemModelId)

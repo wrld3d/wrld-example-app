@@ -17,6 +17,8 @@ namespace ExampleApp
             public:
 
                 virtual ~IMenuSectionViewModel() {};
+                
+                virtual IMenuModel& GetModel() const = 0;
 
                 virtual const std::string& Name() const = 0;
 

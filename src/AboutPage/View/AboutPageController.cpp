@@ -1,7 +1,6 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "AboutPageController.h"
-#include "FlurryWrapper.h"
 
 namespace ExampleApp
 {
@@ -13,8 +12,8 @@ namespace ExampleApp
             {
                 if (m_viewModel.TryAcquireReactorControl())
                 {
-                    FLURRY_SET_EVENT("UIItem: About page");
-                    FLURRY_BEGIN_TIMED_EVENT("TimedEvent: Viewing About Page");
+                    m_metricsService.SetEvent("UIItem: About page");
+                    m_metricsService.BeginTimedEvent("TimedEvent: Viewing About Page");
                     m_view.SetContent(m_viewModel.GetContent());
                     m_view.Open();
                 }
@@ -22,7 +21,7 @@ namespace ExampleApp
 
             void AboutPageController::OnClose()
             {
-                FLURRY_END_TIMED_EVENT("TimedEvent: Viewing About Page");
+                m_metricsService.EndTimedEvent("TimedEvent: Viewing About Page");
                 m_view.Close();
             }
 
@@ -34,9 +33,10 @@ namespace ExampleApp
                 }
             }
 
-            AboutPageController::AboutPageController(IAboutPageView& view, IAboutPageViewModel& viewModel)
+            AboutPageController::AboutPageController(IAboutPageView& view, IAboutPageViewModel& viewModel, Metrics::IMetricsService& metricsService)
                 : m_view(view)
                 , m_viewModel(viewModel)
+                , m_metricsService(metricsService)
                 , m_viewClosed(this, &AboutPageController::OnClose)
                 , m_viewOpened(this, &AboutPageController::OnOpen)
                 , m_viewCloseTapped(this, &AboutPageController::OnCloseTapped)

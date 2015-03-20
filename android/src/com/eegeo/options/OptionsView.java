@@ -1,11 +1,12 @@
 package com.eegeo.options;
 
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-import com.eegeo.mobileexampleapp.MainActivity;
+import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.mobileexampleapp.R;
 
 public class OptionsView 
@@ -38,6 +39,8 @@ public class OptionsView
         configureStreamOverWifiOption();
         configureDataCachingOption();
         configureClearCacheOption();
+
+        m_activity.recursiveDisableSplitMotionEvents((ViewGroup)m_view);
 		
         m_view.setVisibility(View.GONE);
         m_uiRoot.addView(m_view);

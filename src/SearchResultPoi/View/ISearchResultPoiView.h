@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include <vector>
+#include "Types.h"
 #include "SearchResultModel.h"
 #include "ICallback.h"
 
@@ -20,6 +22,10 @@ namespace ExampleApp
                                   bool isPinned) = 0;
                 
                 virtual void Hide() = 0;
+                
+                virtual void UpdateImage(const std::string& url,
+                                         bool hasImage,
+                                         const std::vector<Byte>* pImageBytes) = 0;
                 
                 virtual void InsertClosedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
                 virtual void RemoveClosedCallback(Eegeo::Helpers::ICallback0& callback) = 0;

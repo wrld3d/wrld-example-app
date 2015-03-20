@@ -8,20 +8,26 @@ namespace ExampleApp
     {
         namespace View
         {
-            SearchResultPoiViewInterop::SearchResultPoiViewInterop(SearchResultPoiView* pView) : m_pView(pView)
+            SearchResultPoiViewInterop::SearchResultPoiViewInterop(SearchResultPoiViewContainer* pView) : m_pView(pView)
             {
             }
 
             void SearchResultPoiViewInterop::Show(const Search::SdkModel::SearchResultModel model,
                                                   bool isPinned)
             {
-                [m_pView setFullyActive];
-                [m_pView setContent:&model :isPinned];
+                [m_pView open:&model :isPinned];
             }
 
             void SearchResultPoiViewInterop::Hide()
             {
-                [m_pView setFullyInactive];
+                [m_pView close];
+            }
+            
+            void SearchResultPoiViewInterop::UpdateImage(const std::string& url,
+                                                         bool hasImage,
+                                                         const std::vector<Byte>* imageBytes)
+            {
+                [m_pView updateImage :url :hasImage bytes:imageBytes];
             }
 
             void SearchResultPoiViewInterop::InsertClosedCallback(Eegeo::Helpers::ICallback0& callback)

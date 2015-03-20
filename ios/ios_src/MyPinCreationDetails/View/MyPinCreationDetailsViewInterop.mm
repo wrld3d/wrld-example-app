@@ -19,7 +19,6 @@ namespace ExampleApp
             void MyPinCreationDetailsViewInterop::Close()
             {
                 [m_pView setFullyInactive];
-                m_dismissedCallbacks.ExecuteCallbacks();
             }
 
             void MyPinCreationDetailsViewInterop::OnConfirmed()

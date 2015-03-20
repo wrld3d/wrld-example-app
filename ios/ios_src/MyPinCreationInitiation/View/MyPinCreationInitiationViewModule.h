@@ -8,6 +8,7 @@
 #include "MyPinCreation.h"
 #include "IMyPinCreationInitiationViewModule.h"
 #include "BidirectionalBus.h"
+#include "IMetricsService.h"
 
 namespace ExampleApp
 {
@@ -26,7 +27,8 @@ namespace ExampleApp
                 MyPinCreationInitiationViewModule(ExampleAppMessaging::TMessageBus& messageBus,
                                                   IMyPinCreationInitiationViewModel& viewModel,
                                                   IMyPinCreationConfirmationViewModel& confirmationViewModel,
-                                                  const Eegeo::Rendering::ScreenProperties& screenProperties);
+                                                  const Eegeo::Rendering::ScreenProperties& screenProperties,
+                                                  Metrics::IMetricsService& metricsService);
 
                 ~MyPinCreationInitiationViewModule();
 

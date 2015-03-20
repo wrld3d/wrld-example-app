@@ -15,13 +15,15 @@ namespace ExampleApp
             public:
                 virtual ~ISearchModule() { }
 
-                virtual ISearchService& GetSearchService() const = 0;
-
                 virtual ISearchResultRepository& GetSearchResultRepository() const = 0;
 
                 virtual ISearchQueryPerformer& GetSearchQueryPerformer() const = 0;
 
                 virtual ISearchRefreshService& GetSearchRefreshService() const = 0;
+                
+                virtual MyPins::ISearchResultMyPinsService& GetSearchResultMyPinsService() const = 0;
+                
+                virtual MyPins::IMyPinsSearchResultRefreshService& GetMyPinsSearchResultRefreshService() const = 0;
             };
         }
     }

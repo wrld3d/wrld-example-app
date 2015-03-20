@@ -25,40 +25,24 @@ namespace ExampleApp
                 
             }
             
-            void MyPinDetailsDisplayService::DisplayPinDetails(const MyPins::SdkModel::MyPinModel& myPinModel)
+            
+            void MyPinDetailsDisplayService::DisplayUserCreatedMyPinDetails(MyPins::SdkModel::MyPinModel::TPinIdType pinId,
+                                                                            const std::string& title,
+                                                                            const std::string& description,
+                                                                            const std::string& imagePath)
             {
-                switch(myPinModel.GetSemanticPinType())
+                if (!m_myPinDetailsViewModel.IsOpen())
                 {
-                    case MyPins::SdkModel::UserCreatedPoi:
-                    {
-                        if (!m_myPinDetailsViewModel.IsOpen())
-                        {
-                            m_myPinDetailsViewModel.Open(myPinModel);
-                        }
-                    }break;
-                        
-                    case MyPins::SdkModel::SearchResultPoi:
-                    {
-                        if (!m_searchResultPoiViewModel.IsOpen())
-                        {
-                            Search::SdkModel::SearchResultModel searchResultModel;
-                            CreateSearchResultModelFromPinModel(myPinModel, searchResultModel);
-                            m_searchResultPoiViewModel.Open(searchResultModel, true);
-                        }
-                    }break;
-                        
-                    default:
-                    {
-                        Eegeo_ASSERT(false, "Unknown pin type selected.\n");
-                    }break;
+                    m_myPinDetailsViewModel.Open(pinId, title, description, imagePath);
                 }
             }
             
-            void MyPinDetailsDisplayService::CreateSearchResultModelFromPinModel(const MyPins::SdkModel::MyPinModel& myPinModel,
-                                                                                 Search::SdkModel::SearchResultModel& out_searchResultModel)
+            void MyPinDetailsDisplayService::DisplaySearchResultMyPinDetails(const Search::SdkModel::SearchResultModel& searchResultModel)
             {
-                Eegeo_ASSERT(myPinModel.GetSemanticPinType() == MyPins::SdkModel::SearchResultPoi);
-                out_searchResultModel = Search::SdkModel::DeserializeFromJson(myPinModel.GetTypeMetadata());
+                if (!m_searchResultPoiViewModel.IsOpen())
+                {
+                    m_searchResultPoiViewModel.Open(searchResultModel, true);
+                }
             }
         }
     }

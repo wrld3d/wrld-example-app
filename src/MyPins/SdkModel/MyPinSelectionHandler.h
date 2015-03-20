@@ -5,6 +5,7 @@
 #include "IWorldPinSelectionHandler.h"
 #include "MyPinModel.h"
 #include "BidirectionalBus.h"
+#include "IMetricsService.h"
 
 namespace ExampleApp
 {
@@ -16,11 +17,14 @@ namespace ExampleApp
             {
             private:
                 MyPinModel& m_myPinModel;
-                ExampleAppMessaging::TMessageBus& m_messageBus;
+                MyPins::SdkModel::IMyPinBoundObjectRepository& m_myPinBoundObjectRepository;
+                
+                Metrics::IMetricsService& m_metricsService;
 
             public:
                 MyPinSelectionHandler(MyPinModel& myPinModel,
-                                      ExampleAppMessaging::TMessageBus& messageBus);
+                                      MyPins::SdkModel::IMyPinBoundObjectRepository& myPinBoundObjectRepository,
+                                      Metrics::IMetricsService& metricsService);
 
                 void SelectPin();
             };

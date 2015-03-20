@@ -2,9 +2,11 @@
 
 #pragma once
 
+#include <string>
 #include "Search.h"
 #include "ICallback.h"
 #include "MyPins.h"
+#include "MyPinModel.h"
 
 namespace ExampleApp
 {
@@ -16,14 +18,23 @@ namespace ExampleApp
             {
             public:
                 virtual ~IMyPinDetailsViewModel() { }
-
-                virtual const MyPins::SdkModel::MyPinModel& GetMyPinModel() const = 0;
+                
+                virtual MyPins::SdkModel::MyPinModel::TPinIdType GetMyPinId() const = 0;
+                
+                virtual const std::string& GetMyPinTitle() const = 0;
+                
+                virtual const std::string& GetMyPinDescription() const = 0;
+                
+                virtual const std::string& GetImagePath() const = 0;
 
                 virtual bool TryAcquireReactorControl() = 0;
 
                 virtual bool IsOpen() const = 0;
 
-                virtual void Open(const MyPins::SdkModel::MyPinModel& myPinModel) = 0;
+                virtual void Open(MyPins::SdkModel::MyPinModel::TPinIdType pinId,
+                                  const std::string& title,
+                                  const std::string& description,
+                                  const std::string& imagePath) = 0;
 
                 virtual void Close() = 0;
 

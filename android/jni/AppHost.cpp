@@ -27,7 +27,6 @@
 #include "EnvironmentFlatteningService.h"
 #include "TtyHandler.h"
 #include "MenuViewModule.h"
-#include "PrimaryMenuModule.h"
 #include "SecondaryMenuModule.h"
 #include "ModalityModule.h"
 #include "ModalBackgroundViewModule.h"
@@ -76,8 +75,13 @@
 #include "ApiKey.h"
 #include "OptionsViewModule.h"
 #include "OptionsView.h"
+#include "WatermarkViewModule.h"
+#include "WatermarkView.h"
 #include "NetworkCapabilities.h"
-#include "FlurryWrapper.h"
+#include "AndroidYelpSearchServiceModule.h"
+#include "DecartaSearchServiceModule.h"
+#include "ApplicationConfigurationModule.h"
+#include "IApplicationConfigurationService.h"
 
 using namespace Eegeo::Android;
 using namespace Eegeo::Android::Input;
@@ -100,7 +104,6 @@ AppHost::AppHost(
     ,m_androidNativeUIFactories(m_androidAlertBoxFactory, m_androidInputBoxFactory, m_androidKeyboardInputFactory)
     ,m_pInputProcessor(NULL)
     ,m_pAndroidPlatformAbstractionModule(NULL)
-    ,m_pPrimaryMenuViewModule(NULL)
     ,m_pSecondaryMenuViewModule(NULL)
     ,m_pSearchResultMenuViewModule(NULL)
     ,m_pModalBackgroundViewModule(NULL)
@@ -117,13 +120,12 @@ AppHost::AppHost(
     ,m_requestedApplicationInitialiseViewState(false)
     ,m_uiCreatedMessageReceivedOnNativeThread(false)
     ,m_pViewControllerUpdaterModule(NULL)
+	,m_pSearchServiceModule(NULL)
+	,m_pAndroidFlurryMetricsService(NULL)
 	,m_pInitialExperienceDialogsViewModule(NULL)
+	,m_failAlertHandler(this, &AppHost::HandleStartupFailure)
 {
     ASSERT_NATIVE_THREAD
-
-#if (FLURRY_ENABLED)
-    ExampleApp::FlurryWrapper::InitialiseJavaInterface(&nativeState);
-#endif
 
     Eegeo_ASSERT(resourceBuildShareContext != EGL_NO_CONTEXT);
 
@@ -137,6 +139,7 @@ AppHost::AppHost(
 
     std::set<std::string> customApplicationAssetDirectories;
     customApplicationAssetDirectories.insert("SearchResultOnMap");
+    customApplicationAssetDirectories.insert("ApplicationConfigs");
 
     m_pAndroidPlatformAbstractionModule = Eegeo_NEW(Eegeo::Android::AndroidPlatformAbstractionModule)(
             nativeState,
@@ -165,6 +168,28 @@ AppHost::AppHost(
     		m_pAndroidPlatformAbstractionModule->GetHttpCache(),
     		m_androidPersistentSettingsModel);
 
+    const bool useYelp = true;
+    if(useYelp)
+    {
+        m_pSearchServiceModule = Eegeo_NEW(ExampleApp::Search::Yelp::AndroidYelpSearchServiceModule)(
+        		nativeState,
+        		m_pAndroidPlatformAbstractionModule->GetWebLoadRequestFactory(),
+        		*m_pNetworkCapabilities,
+        		m_pAndroidPlatformAbstractionModule->GetUrlEncoder()
+        );
+    }
+    else
+    {
+        m_pSearchServiceModule = Eegeo_NEW(ExampleApp::Search::Decarta::DecartaSearchServiceModule)(
+        		m_pAndroidPlatformAbstractionModule->GetWebLoadRequestFactory(),
+        		m_pAndroidPlatformAbstractionModule->GetUrlEncoder());
+    }
+
+    m_pAndroidFlurryMetricsService = Eegeo_NEW(ExampleApp::Metrics::AndroidFlurryMetricsService)(&m_nativeState);
+
+    typedef ExampleApp::ApplicationConfig::SdkModel::ApplicationConfigurationModule ApplicationConfigurationModule;
+    ApplicationConfigurationModule applicationConfigurationModule(m_pAndroidPlatformAbstractionModule->GetFileIO());
+
     m_pApp = Eegeo_NEW(ExampleApp::MobileExampleApp)(
                  ExampleApp::ApiKey,
                  *m_pAndroidPlatformAbstractionModule,
@@ -176,7 +201,12 @@ AppHost::AppHost(
                  *m_pInitialExperienceModule,
                  m_androidPersistentSettingsModel,
                  m_messageBus,
-                 *m_pNetworkCapabilities);
+                 m_sdkDomainEventBus,
+                 *m_pNetworkCapabilities,
+                 *m_pSearchServiceModule,
+                 *m_pAndroidFlurryMetricsService,
+                 applicationConfigurationModule.GetApplicationConfigurationService().LoadConfiguration("ApplicationConfigs/standard_config.json"),
+                 *this);
 
     m_pModalBackgroundNativeViewModule = Eegeo_NEW(ExampleApp::ModalBackground::SdkModel::ModalBackgroundNativeViewModule)(
             m_pApp->World().GetRenderingModule(),
@@ -199,6 +229,12 @@ AppHost::~AppHost()
 
     Eegeo_DELETE m_pApp;
     m_pApp = NULL;
+
+    Eegeo_DELETE m_pAndroidFlurryMetricsService;
+    m_pAndroidFlurryMetricsService = NULL;
+
+    Eegeo_DELETE m_pSearchServiceModule;
+    m_pSearchServiceModule = NULL;
 
     Eegeo_DELETE m_pNetworkCapabilities;
     m_pNetworkCapabilities = NULL;
@@ -374,6 +410,13 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
     m_createdUIModules = true;
     ExampleApp::MobileExampleApp& app = *m_pApp;
 
+    m_pWatermarkViewModule = Eegeo_NEW(ExampleApp::Watermark::View::WatermarkViewModule)(
+		m_nativeState,
+		app.WatermarkModule().GetWatermarkViewModel(),
+		m_messageBus,
+		*m_pAndroidFlurryMetricsService
+    );
+
     // 3d map view layer.
     m_pWorldPinOnMapViewModule = Eegeo_NEW(ExampleApp::WorldPins::View::WorldPinOnMapViewModule)(
                                      m_nativeState,
@@ -387,7 +430,8 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
     m_pFlattenButtonViewModule = Eegeo_NEW(ExampleApp::FlattenButton::View::FlattenButtonViewModule)(
                                      m_nativeState,
                                      app.FlattenButtonModule().GetFlattenButtonViewModel(),
-                                     m_messageBus
+                                     m_messageBus,
+                                     *m_pAndroidFlurryMetricsService
                                  );
 
     m_pMyPinCreationViewModule = Eegeo_NEW(ExampleApp::MyPinCreation::View::MyPinCreationViewModule)(
@@ -395,7 +439,8 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
                                      app.MyPinCreationModule().GetMyPinCreationInitiationViewModel(),
                                      app.MyPinCreationModule().GetMyPinCreationConfirmationViewModel(),
                                      app.MyPinCreationDetailsModule().GetMyPinCreationDetailsViewModel(),
-                                     m_messageBus
+                                     m_messageBus,
+                                     *m_pAndroidFlurryMetricsService
                                  );
 
 
@@ -411,14 +456,6 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
                                        app.ModalityModule().GetModalityModel(),
                                        m_messageBus
                                    );
-
-    // Menus & HUD layer.
-    m_pPrimaryMenuViewModule = Eegeo_NEW(ExampleApp::Menu::View::MenuViewModule)(
-                                   "com/eegeo/primarymenu/PrimaryMenuView",
-                                   m_nativeState,
-                                   app.MyPinsModule().GetMyPinsMenuModel(),
-                                   app.PrimaryMenuModule().GetPrimaryMenuViewModel()
-                               );
 
     m_pSecondaryMenuViewModule = Eegeo_NEW(ExampleApp::SecondaryMenu::View::SecondaryMenuViewModule)(
                                      "com/eegeo/secondarymenu/SecondaryMenuView",
@@ -442,13 +479,16 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
     m_pSearchResultPoiViewModule = Eegeo_NEW(ExampleApp::SearchResultPoi::View::SearchResultPoiViewModule)(
                                        m_nativeState,
                                        app.SearchResultPoiModule().GetSearchResultPoiViewModel(),
-                                       m_messageBus
+                                       m_messageBus,
+                                       *m_pAndroidFlurryMetricsService
                                    );
 
     m_pAboutPageViewModule = Eegeo_NEW(ExampleApp::AboutPage::View::AboutPageViewModule)(
                                  m_nativeState,
-                                 app.AboutPageModule().GetAboutPageViewModel()
+                                 app.AboutPageModule().GetAboutPageViewModel(),
+                                 *m_pAndroidFlurryMetricsService
                              );
+
 
     m_pOptionsViewModule = Eegeo_NEW(ExampleApp::Options::View::OptionsViewModule)(
     		m_nativeState,
@@ -460,7 +500,8 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
                                             m_nativeState,
                                             app.MyPinCreationDetailsModule().GetMyPinCreationDetailsViewModel(),
                                             *m_pAndroidConnectivityService,
-                                            m_messageBus
+                                            m_messageBus,
+                                            *m_pAndroidFlurryMetricsService
                                         );
 
     m_pMyPinDetailsViewModule = Eegeo_NEW(ExampleApp::MyPinDetails::View::MyPinDetailsViewModule)(
@@ -480,7 +521,6 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
 
     ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModel& viewControllerUpdaterModel = m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel();
 
-    viewControllerUpdaterModel.AddUpdateableObject(m_pPrimaryMenuViewModule->GetMenuController());
     viewControllerUpdaterModel.AddUpdateableObject(m_pSecondaryMenuViewModule->GetMenuController());
     viewControllerUpdaterModel.AddUpdateableObject(m_pSearchResultMenuViewModule->GetMenuController());
 }
@@ -515,11 +555,37 @@ void AppHost::DestroyApplicationViewModulesFromUiThread()
 
         Eegeo_DELETE m_pSecondaryMenuViewModule;
 
-        Eegeo_DELETE m_pPrimaryMenuViewModule;
-
         Eegeo_DELETE m_pCompassViewModule;
 
         Eegeo_DELETE m_pInitialExperienceDialogsViewModule;
+
+        Eegeo_DELETE m_pWatermarkViewModule;
     }
     m_createdUIModules = false;
 }
+
+void AppHost::HandleFailureToProvideWorkingApiKey()
+{
+	m_androidAlertBoxFactory.CreateSingleOptionAlertBox
+    (
+	"Bad API Key",
+	"You must provide a valid API key to the constructor of EegeoWorld. See the readme file for details.",
+	m_failAlertHandler
+    );
+}
+
+void AppHost::HandleFailureToDownloadBootstrapResources()
+{
+	std::string message =
+			m_pNetworkCapabilities->StreamOverWifiOnly()
+			? "Unable to download required data! Please ensure you have a Wi-fi connection the next time you attempt to run this application."
+			: "Unable to download required data! Please ensure you have an Internet connection the next time you attempt to run this application.";
+
+	m_androidAlertBoxFactory.CreateSingleOptionAlertBox("Error", message, m_failAlertHandler);
+}
+
+void AppHost::HandleStartupFailure()
+{
+	exit(1);
+}
+

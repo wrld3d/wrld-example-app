@@ -22,9 +22,9 @@ iOS
 
 * Run ./update.platform.sh -p ios to get the latest platform libraries and headers.
 * The accompanying project has no code signing, so run in the simulator (or provide your own credentials).
-* The platform needs an API key to operate. Sign up at https://appstore.eegeo.com/ to get your API key and introduce it into the following line in ApiKey.h : 
+* The platform needs an API key to operate. Sign up at https://appstore.eegeo.com/ to get your API key and introduce it into the following line in src/ApiKey.h : 
 	const std::string API_KEY "OBTAIN API_KEY FROM https://appstore.eegeo.com AND INSERT IT HERE".
-* Scroll between the examples using the Next and Previous buttons; the current example name is displayed at the top of the screen.
+* See src/ApiKey.h for more details about providing API Keys for other services to enable additional functionality.
 * To build at the command line, run ./build -p ios from the repository root.
 
 Android
@@ -40,8 +40,9 @@ Note - In order to run, your version of Android Developer Tools must be >= 22.6
     * ADT -> Preferences -> Android -> NDK : Set NDK location to root of your NDK directory
     * Select imported activity -> Android Tools : 'Add native support'
     * Select jni directory -> New folder -> Advanced -> Linked folder : mobile-example-app/src
-* The platform needs an API key to operate. Sign up at https://appstore.eegeo.com/ to get your API key and introduce it into the following line in jni/src/ApiKey.h : 
+* The platform needs an API key to operate. Sign up at https://appstore.eegeo.com/ to get your API key and introduce it into the following line in src/ApiKey.h : 
 	const std::string API_KEY "OBTAIN API_KEY FROM https://appstore.eegeo.com AND INSERT IT HERE"
+* See src/ApiKey.h for more details about providing API Keys for other services to enable additional functionality.
 * Build and debug from within ADT Eclipse
 * build.sh can be used to generate the native library if you want to manually package the .apk
 * Scroll between the examples using the Next and Previous buttons, or select the example from the drop-down list; the current example name is displayed at the top of the screen. 

@@ -9,6 +9,7 @@
 #include "BidirectionalBus.h"
 #include "Rendering.h"
 #include "IConnectivityService.h"
+#include "IMetricsService.h"
 
 namespace ExampleApp
 {
@@ -23,6 +24,7 @@ namespace ExampleApp
                                                IMyPinCreationDetailsViewModel& myPinCreationDetailsViewModel,
                                                const Eegeo::Rendering::ScreenProperties& screenProperties,
                                                Eegeo::Web::IConnectivityService& connectivityService,
+                                               Metrics::IMetricsService& metricsService,
                                                UIViewController* rootViewController);
 
                 ~MyPinCreationDetailsViewModule();

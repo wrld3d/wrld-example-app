@@ -1,5 +1,6 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
+#include <string>
 #include "MyPinAddedToMenuObserver.h"
 #include "MyPinsHelpers.h"
 #include "IMenuOptionsModel.h"
@@ -13,8 +14,8 @@ namespace ExampleApp
         namespace View
         {
             MyPinAddedToMenuObserver::MyPinAddedToMenuObserver(Menu::View::IMenuViewModel& menuViewModel,
-                    Menu::View::IMenuOptionsModel& menuOptionsModel,
-                    ExampleAppMessaging::TMessageBus& messageBus)
+                                                               Menu::View::IMenuOptionsModel& menuOptionsModel,
+                                                               ExampleAppMessaging::TMessageBus& messageBus)
                 : m_menuViewModel(menuViewModel)
                 , m_menuOptionsModel(menuOptionsModel)
                 , m_messageBus(messageBus)
@@ -30,13 +31,13 @@ namespace ExampleApp
 
             void MyPinAddedToMenuObserver::OnMyPinAddedToMenuMessage(const MyPinAddedToMenuMessage& message)
             {
-                SdkModel::MyPinModel* myPinModel = message.GetMyPinModel();
+                const std::string& myPinIcon(message.GetMyPinIcon());
 
-                m_menuOptionsModel.AddItem(ConvertModelDetailToString(myPinModel->Identifier()),
-                                           myPinModel->GetTitle(),
+                m_menuOptionsModel.AddItem(ConvertModelDetailToString(message.GetMyPinId()),
+                                           message.GetMyPinTitle(),
                                            "",
-                                           "place",
-                                           Eegeo_NEW(MyPinMenuOption)(*myPinModel, m_menuViewModel, m_messageBus));
+                                           myPinIcon,
+                                           Eegeo_NEW(MyPinMenuOption)(message.GetMyPinId(), message.GetMyPinLocation(), m_menuViewModel, m_messageBus));
             }
         }
     }

@@ -12,7 +12,8 @@ namespace ExampleApp
             FlattenButtonViewModule::FlattenButtonViewModule(
                 AndroidNativeState& nativeState,
                 IFlattenButtonViewModel& viewModel,
-                ExampleAppMessaging::TMessageBus& messageBus
+                ExampleAppMessaging::TMessageBus& messageBus,
+                Metrics::IMetricsService& metricsService
             )
             {
                 ASSERT_UI_THREAD
@@ -22,8 +23,8 @@ namespace ExampleApp
                 m_pController = Eegeo_NEW(FlattenButtonController)(
                                     viewModel,
                                     *m_pView,
-                                    messageBus
-                                );
+                                    messageBus,
+                                    metricsService);
 
             }
 

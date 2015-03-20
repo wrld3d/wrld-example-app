@@ -13,6 +13,7 @@
     UIPanGestureRecognizer* _panGestureRecognizer;
     UITapGestureRecognizer* _tapGestureRecogniser;
     bool _dragging;
+    bool _touchedDownInsideDragTab;
 }
 
 @end
@@ -362,7 +363,6 @@
     return NO;
 }
 
-
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
 {
     if (self.hidden || !self.userInteractionEnabled || self.alpha < 0.01 || ![self canInteract])
@@ -411,11 +411,13 @@
 
     case UIGestureRecognizerStateEnded:
         _dragging = false;
+        _touchedDownInsideDragTab = false;
         [self completeDrag:positionAbs velocity:velocity];
         break;
 
     case UIGestureRecognizerStateCancelled:
         _dragging = false;
+        _touchedDownInsideDragTab = false;
         [self completeDrag:positionAbs velocity:velocity];
         break;
 
@@ -424,9 +426,20 @@
     }
 }
 
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    UITouch *touch = [[event allTouches] anyObject];
+    CGPoint touchLocation = [touch locationInView:self];
+    
+    if(CGRectContainsPoint(_pDragTab.frame, touchLocation))
+    {
+        _touchedDownInsideDragTab = true;
+    }
+}
+
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
 {
-    if([self canInteract])
+    if(_touchedDownInsideDragTab && [self canInteract])
     {
         return m_pInterop->CallBeginDrag();
     }

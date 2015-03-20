@@ -33,7 +33,7 @@
 
 - (BOOL) consumesTouch:(UITouch *)touch;
 
-- (void) setContent:(const ExampleApp::MyPins::SdkModel::MyPinModel*)pModel;
+- (void) setContent:(const std::string&)title :(const std::string&)description :(const std::string&)imagePath;
 
 - (void) setFullyActive;
 
@@ -44,13 +44,10 @@
 @property (nonatomic, retain) UIView* pCloseButtonContainer;
 @property (nonatomic, retain) UIButton* pCloseButton;
 @property (nonatomic, retain) UIButton* pRemovePinButton;
-@property (nonatomic, retain) UIView* pShadowContainer;
 @property (nonatomic, retain) UIView* pControlContainer;
 @property (nonatomic, retain) UIView* pHeadlineContainer;
-@property (nonatomic, retain) UIImageView* pHeadlineShadow;
 @property (nonatomic, retain) UIView* pContentContainer;
 @property (nonatomic, retain) UIScrollView* pLabelsContainer;
-@property (nonatomic, retain) UIImageView* pContentShadow;
 @property (nonatomic, retain) UIView* pIconContainer;
 @property (nonatomic, retain) UILabel* pTitleLabel;
 @property (nonatomic, retain) UIView* pDescriptionHeaderContainer;

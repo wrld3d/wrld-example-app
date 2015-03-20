@@ -8,11 +8,11 @@
 
 namespace
 {
-    const std::string SearchMenuTitle = "Search Menu";
-    const std::string SearchMenuDescription = "Search for places of interest, or customize the look of the world.";
+    const std::string MainMenuTitle = "World Menu";
+    const std::string MainMenuDescription = "Search for places of interest, or customize the look of the world, view your pinned locations, see options or information about the app.";
 
-    const std::string PrimaryMenuTitle = "My Menu";
-	const std::string PrimaryMenuDescription = "View your pinned locations, see options or information about the app.";
+    const std::string SearchResultMenuTitle = "Search Results Menu";
+	const std::string SearchResultMenuDescription = "Search results are displayed here.";
 
 	const std::string CompassTitle = "Compass";
 	const std::string CompassDescription = "Shows your orientation. Tap to lock to your GPS position, then slide the camera to unlock.";
@@ -41,19 +41,19 @@ namespace ExampleApp
 					std::map<InitialExperienceDialogType::Values, std::string> titleMap;
 					std::map<InitialExperienceDialogType::Values, std::string> descriptionMap;
 
-					titleMap[InitialExperienceDialogType::SearchMenu] 	= SearchMenuTitle;
-					titleMap[InitialExperienceDialogType::PrimaryMenu] 	= PrimaryMenuTitle;
-					titleMap[InitialExperienceDialogType::Compass] 		= CompassTitle;
-					titleMap[InitialExperienceDialogType::PinCreation] 	= PinCreationTitle;
-					titleMap[InitialExperienceDialogType::Flatten] 		= FlattenTitle;
-					titleMap[InitialExperienceDialogType::SourceCode] 	= SourceCodeTitle;
+					titleMap[InitialExperienceDialogType::MainMenu]         = MainMenuTitle;
+					titleMap[InitialExperienceDialogType::SearchResultMenu] = SearchResultMenuTitle;
+					titleMap[InitialExperienceDialogType::Compass]          = CompassTitle;
+					titleMap[InitialExperienceDialogType::PinCreation]      = PinCreationTitle;
+					titleMap[InitialExperienceDialogType::Flatten]          = FlattenTitle;
+					titleMap[InitialExperienceDialogType::SourceCode]       = SourceCodeTitle;
 
-					descriptionMap[InitialExperienceDialogType::SearchMenu] 	= SearchMenuDescription;
-					descriptionMap[InitialExperienceDialogType::PrimaryMenu] 	= PrimaryMenuDescription;
-					descriptionMap[InitialExperienceDialogType::Compass] 		= CompassDescription;
-					descriptionMap[InitialExperienceDialogType::PinCreation] 	= PinCreationDescription;
-					descriptionMap[InitialExperienceDialogType::Flatten] 		= FlattenDescription;
-					descriptionMap[InitialExperienceDialogType::SourceCode] 	= SourceCodeDescription;
+					descriptionMap[InitialExperienceDialogType::MainMenu]           = MainMenuDescription;
+                    descriptionMap[InitialExperienceDialogType::SearchResultMenu] 	= SearchResultMenuDescription;
+					descriptionMap[InitialExperienceDialogType::Compass]            = CompassDescription;
+					descriptionMap[InitialExperienceDialogType::PinCreation]        = PinCreationDescription;
+					descriptionMap[InitialExperienceDialogType::Flatten]            = FlattenDescription;
+					descriptionMap[InitialExperienceDialogType::SourceCode]         = SourceCodeDescription;
 
 					m_pDialogsViewModel = Eegeo_NEW(InitialExperienceDialogsViewModel)(titleMap, descriptionMap);
 				}

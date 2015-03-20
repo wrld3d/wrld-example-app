@@ -2,13 +2,12 @@
 
 #pragma once
 
+#include <vector>
 #include "IFileIO.h"
 #include "PersistentSettings.h"
 #include "Types.h"
 #include "Space.h"
 #include "MyPins.h"
-
-#include <vector>
 
 namespace ExampleApp
 {
@@ -20,7 +19,9 @@ namespace ExampleApp
             {
             public:
                 MyPinsFileIO(Eegeo::Helpers::IFileIO& fileIO,
-                             PersistentSettings::IPersistentSettingsModel& persistentSettings);
+                             PersistentSettings::IPersistentSettingsModel& persistentSetting,
+                             IMyPinBoundObjectFactory& myPinBoundObjectFactory,
+                             IMyPinBoundObjectRepository& myPinBoundObjectRepository);
 
                 bool TryCacheImageToDisk(Byte* imageData,
                                          size_t imageSize,
@@ -31,7 +32,7 @@ namespace ExampleApp
 
                 void SavePinModelToDisk(const MyPinModel& pinModel);
 
-                void LoadPinModelsFromDisk(std::vector<MyPinModel*>& out_pinModels);
+                void LoadPinModelsFromDisk(std::vector<std::pair<MyPinModel*, IMyPinBoundObject*> >& out_pinModelBindings);
 
                 void SaveAllRepositoryPinsToDisk(const std::vector<MyPinModel*>& pinModels);
 
@@ -43,6 +44,8 @@ namespace ExampleApp
 
                 Eegeo::Helpers::IFileIO& m_fileIO;
                 PersistentSettings::IPersistentSettingsModel& m_persistentSettings;
+                IMyPinBoundObjectFactory& m_myPinBoundObjectFactory;
+                IMyPinBoundObjectRepository& m_myPinBoundObjectRepository;
             };
         }
     }

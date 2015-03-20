@@ -10,8 +10,10 @@ namespace ExampleApp
     {
         namespace View
         {
-            SearchResultOnMapFactory::SearchResultOnMapFactory(ExampleAppMessaging::TMessageBus& messageBus)
+            SearchResultOnMapFactory::SearchResultOnMapFactory(ExampleAppMessaging::TMessageBus& messageBus,
+                                                               Metrics::IMetricsService& metricsService)
                 : m_messageBus(messageBus)
+                , m_metricsService(metricsService)
             {
 
             }
@@ -24,7 +26,8 @@ namespace ExampleApp
             SearchResultOnMapItemModel* SearchResultOnMapFactory::CreateSearchResultOnMapItemModel(Search::SdkModel::SearchResultModel& searchResultModel) const
             {
                 return Eegeo_NEW(SearchResultOnMapItemModel(searchResultModel,
-                                 m_messageBus));
+                                                            m_messageBus,
+                                                            m_metricsService));
             }
         }
     }

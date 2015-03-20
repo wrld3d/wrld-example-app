@@ -30,6 +30,7 @@
 #include "LightingModule.h"
 #include "TerrainModelModule.h"
 #include "MapModule.h"
+#include "ImagePathHelpers.h"
 
 namespace ExampleApp
 {
@@ -57,7 +58,9 @@ namespace ExampleApp
                     Eegeo::Rendering::Shaders::ShaderIdGenerator& shaderIdGenerator = renderingModule.GetShaderIdGenerator();
                     m_pSpriteShader = Eegeo::Rendering::Shaders::BatchedSpriteShader::Create(shaderIdGenerator.GetNextId());
 
-                    platformAbstractions.GetTextureFileLoader().LoadTexture(m_poiRingIconTexture, "poi_marker.png");
+                    platformAbstractions.GetTextureFileLoader().LoadTexture(m_poiRingIconTexture,
+                                                                            Helpers::ImageHelpers::GetImageNameForDevice("poi_marker", ".png"),
+                                                                            false);
 
                     Eegeo::Rendering::Materials::MaterialIdGenerator& materialIdGenerator = renderingModule.GetMaterialIdGenerator();
                     m_pPoiRingIconMaterial = Eegeo_NEW(Eegeo::Rendering::Materials::BatchedSpriteMaterial)(materialIdGenerator.GetNextId(),

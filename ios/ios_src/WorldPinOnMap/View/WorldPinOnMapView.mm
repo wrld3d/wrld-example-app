@@ -62,8 +62,7 @@
         [self.pLabelBack addSubview: self.pAddressLabel];
 
         // poi arrow
-        NSString* pImageString = [NSString stringWithUTF8String:"arrow1"];
-        self.pArrowContainer = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:pImageString]] autorelease];
+        self.pArrowContainer = [[[UIImageView alloc] initWithImage:ExampleApp::Helpers::ImageHelpers::LoadImage("arrow1")] autorelease];
         self.pArrowContainer.contentMode = UIViewContentModeScaleToFill;
         [self addSubview: self.pArrowContainer];
     }

@@ -7,6 +7,8 @@
 #include "IFlattenButtonView.h"
 #include "IFlattenButtonViewModel.h"
 #include "ApplyScreenControl.h"
+#include "MyPinCreationStateChangedMessage.h"
+#include "IMetricsService.h"
 
 namespace ExampleApp
 {
@@ -24,19 +26,24 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<FlattenButtonController, const FlattenButtonModelStateChangedMessage&> m_stateChangeHandler;
                 Eegeo::Helpers::TCallback1<FlattenButtonController, bool> m_toggledCallback;
                 Eegeo::Helpers::TCallback2<FlattenButtonController, ScreenControl::View::IScreenControlViewModel&, float> m_viewStateCallback;
+                Eegeo::Helpers::TCallback1<FlattenButtonController, const MyPinCreation::MyPinCreationStateChangedMessage&> m_myPinCreationStateChangedMessageHandler;
 
+                Metrics::IMetricsService& m_metricsService;
 
                 void OnToggleButton(bool& toggle);
 
                 void OnFlattenButtonModelStateChangedMessage(const FlattenButtonModelStateChangedMessage& message);
 
                 void OnViewStateChangeScreenControl(ScreenControl::View::IScreenControlViewModel& viewModel, float& state);
+                
+                void OnMyPinCreationStateChangedMessage(const MyPinCreation::MyPinCreationStateChangedMessage& message);
 
             public:
                 FlattenButtonController(
                     IFlattenButtonViewModel& viewModel,
                     IFlattenButtonView& view,
-                    ExampleAppMessaging::TMessageBus& messageBus
+                    ExampleAppMessaging::TMessageBus& messageBus,
+                    Metrics::IMetricsService& metricsService
                 );
 
                 ~FlattenButtonController();

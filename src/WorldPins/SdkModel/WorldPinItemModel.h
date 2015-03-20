@@ -7,6 +7,7 @@
 #include "WorldPins.h"
 #include "Pins.h"
 #include "IWorldPinSelectionHandler.h"
+#include "IWorldPinVisibilityStateChangedHandler.h"
 #include "WorldPinsInFocusModel.h"
 #include "WorldPinFocusData.h"
 
@@ -32,6 +33,7 @@ namespace ExampleApp
             private:
                 WorldPinItemModelId m_id;
                 IWorldPinSelectionHandler* m_pSelectionHandler;
+                IWorldPinVisibilityStateChangedHandler* m_pVisibilityStateChangedHandler;
                 WorldPinsInFocusModel m_focusModel;
                 TransitionState m_transitionState;
                 float m_transitionStateValue;
@@ -39,6 +41,7 @@ namespace ExampleApp
             public:
                 WorldPinItemModel(const WorldPinItemModelId& id,
                                   IWorldPinSelectionHandler* pSelectionHandler,
+                                  IWorldPinVisibilityStateChangedHandler* pVisibilityStateChangedHandler,
                                   const WorldPinFocusData& worldPinFocusData);
 
                 ~WorldPinItemModel();

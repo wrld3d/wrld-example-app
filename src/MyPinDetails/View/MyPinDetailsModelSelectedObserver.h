@@ -5,7 +5,8 @@
 #include "Types.h"
 #include "BidirectionalBus.h"
 #include "ICallback.h"
-#include "MyPinDetailsModelSelectedMessage.h"
+#include "UserCreatedMyPinDetailsModelSelectedMessage.h"
+#include "SearchResultMyPinDetailsModelSelectedMessage.h"
 #include "MyPinDetails.h"
 
 namespace ExampleApp
@@ -18,9 +19,11 @@ namespace ExampleApp
             {
                 IMyPinDetailsDisplayService& m_myPinDetailsDisplayService;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
-                Eegeo::Helpers::TCallback1<MyPinDetailsModelSelectedObserver, const MyPinDetailsModelSelectedMessage&> m_handlerBinding;
+                Eegeo::Helpers::TCallback1<MyPinDetailsModelSelectedObserver, const UserCreatedMyPinDetailsModelSelectedMessage&> m_userCreatedBinding;
+                Eegeo::Helpers::TCallback1<MyPinDetailsModelSelectedObserver, const SearchResultMyPinDetailsModelSelectedMessage&> m_searchResultBinding;
 
-                void OnMyPinDetailsModelSelectedMessage(const MyPinDetailsModelSelectedMessage& message);
+                void OnUserCreatedMyPinDetailsModelSelectedMessage(const UserCreatedMyPinDetailsModelSelectedMessage& message);
+                void OnSearchResultMyPinDetailsModelSelectedMessage(const SearchResultMyPinDetailsModelSelectedMessage& message);
 
             public:
                 MyPinDetailsModelSelectedObserver(IMyPinDetailsDisplayService& myPinDetailsDisplayService,

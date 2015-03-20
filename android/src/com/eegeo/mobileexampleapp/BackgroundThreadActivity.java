@@ -2,6 +2,11 @@
 
 package com.eegeo.mobileexampleapp;
 
+import com.eegeo.entrypointinfrastructure.EegeoSurfaceView;
+import com.eegeo.entrypointinfrastructure.MainActivity;
+import com.eegeo.entrypointinfrastructure.NativeJniCalls;
+import com.eegeo.mobileexampleapp.R;
+
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -10,6 +15,7 @@ import android.util.DisplayMetrics;
 import android.view.SurfaceHolder;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 
 
 public class BackgroundThreadActivity extends MainActivity
@@ -35,6 +41,8 @@ public class BackgroundThreadActivity extends MainActivity
             finish();
             return;
         }
+        
+        setDisplayOrientationBasedOnDeviceProperties();
 
         setContentView(R.layout.activity_main);
 
@@ -44,6 +52,7 @@ public class BackgroundThreadActivity extends MainActivity
 
         DisplayMetrics dm = getResources().getDisplayMetrics();
         final float dpi = dm.ydpi;
+        final int density = dm.densityDpi;
         final Activity activity = this;
 
         m_threadedRunner = new ThreadedUpdateRunner(false);
@@ -56,7 +65,7 @@ public class BackgroundThreadActivity extends MainActivity
         {
             public void run()
             {
-                m_nativeAppWindowPtr = NativeJniCalls.createNativeCode(activity, getAssets(), dpi);
+                m_nativeAppWindowPtr = NativeJniCalls.createNativeCode(activity, getAssets(), dpi, density);
 
                 if(m_nativeAppWindowPtr == 0)
                 {
@@ -207,6 +216,19 @@ public class BackgroundThreadActivity extends MainActivity
                 NativeJniCalls.handleApplicationUiCreatedOnNativeThread(nativeCallerPointer);
             }
         });
+    }
+    
+    private void setDisplayOrientationBasedOnDeviceProperties()
+    {
+    	// Technique based on http://stackoverflow.com/a/9308284 using res/values configuration.
+        if(getResources().getBoolean(R.bool.isPhone))
+        {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
+        }
+        else
+        {
+        	setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+        }
     }
 
     private class ThreadedUpdateRunner implements Runnable

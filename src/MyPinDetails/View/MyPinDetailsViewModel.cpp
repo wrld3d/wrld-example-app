@@ -25,11 +25,29 @@ namespace ExampleApp
             {
                 return m_openable.TryAcquireReactorControl();
             }
-
-            const MyPins::SdkModel::MyPinModel& MyPinDetailsViewModel::GetMyPinModel() const
+            
+            MyPins::SdkModel::MyPinModel::TPinIdType MyPinDetailsViewModel::GetMyPinId() const
             {
                 Eegeo_ASSERT(IsOpen(), "Cannot read SearchResultModel when view model is not open.\n");
-                return m_myPinModel;
+                return m_id;
+            }
+            
+            const std::string& MyPinDetailsViewModel::GetMyPinTitle() const
+            {
+                Eegeo_ASSERT(IsOpen(), "Cannot read SearchResultModel when view model is not open.\n");
+                return m_title;
+            }
+            
+            const std::string& MyPinDetailsViewModel::GetMyPinDescription() const
+            {
+                Eegeo_ASSERT(IsOpen(), "Cannot read SearchResultModel when view model is not open.\n");
+                return m_description;
+            }
+            
+            const std::string& MyPinDetailsViewModel::GetImagePath() const
+            {
+                Eegeo_ASSERT(IsOpen(), "Cannot read SearchResultModel when view model is not open.\n");
+                return m_imagePath;
             }
 
             bool MyPinDetailsViewModel::IsOpen() const
@@ -37,12 +55,19 @@ namespace ExampleApp
                 return m_openable.IsFullyOpen();
             }
 
-            void MyPinDetailsViewModel::Open(const MyPins::SdkModel::MyPinModel& myPinModel)
+            void MyPinDetailsViewModel::Open(MyPins::SdkModel::MyPinModel::TPinIdType pinId,
+                                             const std::string& title,
+                                             const std::string& description,
+                                             const std::string& imagePath)
             {
                 Eegeo_ASSERT(!IsOpen(), "Cannot open MyPinDetailsViewModel when already open.\n");
+                
                 if(m_openable.Open())
                 {
-                    m_myPinModel = myPinModel;
+                    m_id = pinId;
+                    m_title = title;
+                    m_description = description;
+                    m_imagePath = imagePath;
                     m_openedCallbacks.ExecuteCallbacks();
                 }
             }

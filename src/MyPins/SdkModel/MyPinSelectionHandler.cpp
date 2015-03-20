@@ -1,8 +1,8 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "MyPinSelectionHandler.h"
-#include "MyPinDetailsModelSelectedMessage.h"
-#include "FlurryWrapper.h"
+#include "IMyPinBoundObjectRepository.h"
+#include "IMyPinBoundObject.h"
 
 namespace ExampleApp
 {
@@ -11,17 +11,20 @@ namespace ExampleApp
         namespace SdkModel
         {
             MyPinSelectionHandler::MyPinSelectionHandler(MyPinModel& myPinModel,
-                    ExampleAppMessaging::TMessageBus& messageBus)
+                                                         MyPins::SdkModel::IMyPinBoundObjectRepository& myPinBoundObjectRepository,
+                                                         Metrics::IMetricsService& metricsService)
                 : m_myPinModel(myPinModel)
-                , m_messageBus(messageBus)
+                , m_myPinBoundObjectRepository(myPinBoundObjectRepository)
+                , m_metricsService(metricsService)
             {
 
             }
 
             void MyPinSelectionHandler::SelectPin()
             {
-                FLURRY_SET_EVENT("Selected MyPin", "Name", m_myPinModel.GetTitle().c_str());
-                m_messageBus.Publish(MyPinDetails::MyPinDetailsModelSelectedMessage(m_myPinModel));
+                m_metricsService.SetEvent("Selected MyPin", "Name", m_myPinModel.GetTitle().c_str());
+                IMyPinBoundObject& myPinBoundObject(m_myPinBoundObjectRepository.GetBoundObjectForPin(m_myPinModel));
+                myPinBoundObject.HandlePinSelected(m_myPinModel);
             }
         }
     }

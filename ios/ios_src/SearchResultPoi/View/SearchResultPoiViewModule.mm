@@ -4,6 +4,8 @@
 #include "ISearchResultPoiViewModel.h"
 #include "SearchResultPoiView.h"
 #include "SearchResultPoiController.h"
+#include "SearchResultPoiViewContainer.h"
+#include "SearchResultPoiViewInterop.h"
 
 namespace ExampleApp
 {
@@ -12,13 +14,15 @@ namespace ExampleApp
         namespace View
         {
             SearchResultPoiViewModule::SearchResultPoiViewModule(ISearchResultPoiViewModel& searchResultPoiViewModel,
-                                                                 ExampleAppMessaging::TMessageBus& messageBus)
+                                                                 ExampleAppMessaging::TMessageBus& messageBus,
+                                                                 Metrics::IMetricsService& metricsService)
             {
-                m_pView = [[SearchResultPoiView alloc] initWithoutParams];
+                m_pView = [[SearchResultPoiViewContainer alloc] initWithoutParams];
                 
                 m_pController = Eegeo_NEW(SearchResultPoiController)(*[m_pView getInterop],
                                                                      searchResultPoiViewModel,
-                                                                     messageBus);
+                                                                     messageBus,
+                                                                     metricsService);
             }
 
             SearchResultPoiViewModule::~SearchResultPoiViewModule()
@@ -33,7 +37,7 @@ namespace ExampleApp
                 return *m_pController;
             }
 
-            SearchResultPoiView& SearchResultPoiViewModule::GetView() const
+            SearchResultPoiViewContainer& SearchResultPoiViewModule::GetView() const
             {
                 return *m_pView;
             }

@@ -14,6 +14,7 @@ namespace ExampleApp
             class IWorldPinsService;
             class IWorldPinsRepository;
             class IWorldPinSelectionHandler;
+            class IWorldPinVisibilityStateChangedHandler;
             class IWorldPinsScaleController;
             class IWorldPinsInFocusModel;
             class IWorldPinsInFocusController;

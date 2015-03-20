@@ -18,12 +18,13 @@
 
 - (ExampleApp::SearchResultMenu::View::SearchResultMenuViewInterop*) getSearchInterop;
 
-- (void) updateViewForQuery:(std::string)searchText :(bool)queryPending :(size_t)numResults;
+- (void) updateViewForQuery:(const std::string&)searchText :(bool)queryPending :(size_t)numResults;
 
 - (void) onClearPressed:(UIButton *) sender;
 
-@property (nonatomic, retain) UIView* pCategory;
 @property (nonatomic, retain) UILabel* pHeading;
+@property (nonatomic, retain) UIView* pHeaderContainer;
+@property (nonatomic, retain) UIView* pCategory;
 @property (nonatomic, retain) UIActivityIndicatorView* pSpinner;
 @property (nonatomic, retain) UILabel* pResultsCount;
 @property (nonatomic, retain) UIButton* pClearResults;

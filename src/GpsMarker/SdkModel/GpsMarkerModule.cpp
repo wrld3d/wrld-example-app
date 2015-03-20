@@ -16,6 +16,7 @@
 #include "GpsMarkerController.h"
 #include "RenderableFilters.h"
 #include "TerrainModelModule.h"
+#include "ImagePathHelpers.h"
 
 namespace ExampleApp
 {
@@ -33,7 +34,9 @@ namespace ExampleApp
                 Eegeo::Rendering::Shaders::ShaderIdGenerator& shaderIdGenerator = renderingModule.GetShaderIdGenerator();
                 m_pSpriteShader = Eegeo::Rendering::Shaders::BatchedSpriteShader::Create(shaderIdGenerator.GetNextId());
                 
-                platformAbstractions.GetTextureFileLoader().LoadTexture(m_gpsIconTexture, "gps_marker.png");
+                platformAbstractions.GetTextureFileLoader().LoadTexture(m_gpsIconTexture,
+                                                                        Helpers::ImageHelpers::GetImageNameForDevice("gps_marker", ".png"),
+                                                                        false);
                 
                 Eegeo::Rendering::Materials::MaterialIdGenerator& materialIdGenerator = renderingModule.GetMaterialIdGenerator();
                 m_pGpsIconMaterial = Eegeo_NEW(Eegeo::Rendering::Materials::BatchedSpriteMaterial)(materialIdGenerator.GetNextId(),

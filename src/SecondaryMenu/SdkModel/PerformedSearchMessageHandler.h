@@ -7,6 +7,7 @@
 #include "ICallback.h"
 #include "PerformedSearchMessage.h"
 #include "ISearchQueryPerformer.h"
+#include "IMetricsService.h"
 
 namespace ExampleApp
 {
@@ -20,12 +21,15 @@ namespace ExampleApp
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 Eegeo::Helpers::TCallback1<PerformedSearchMessageHandler, const PerformedSearchMessage&> m_handlePerformedSearchMessageBinding;
 
+                Metrics::IMetricsService& m_metricsService;
+                
                 void OnPerformedSearchMessage(const PerformedSearchMessage& message);
 
             public:
                 PerformedSearchMessageHandler(
                     Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
-                    ExampleAppMessaging::TMessageBus& messageBus);
+                    ExampleAppMessaging::TMessageBus& messageBus,
+                    Metrics::IMetricsService& metricsService);
 
                 ~PerformedSearchMessageHandler();
             };

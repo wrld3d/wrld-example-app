@@ -22,7 +22,9 @@ namespace ExampleApp
                 {
                 }
 
-                void OpenWithModel(const MyPins::SdkModel::MyPinModel &myPinModel);
+                void OpenWithModel(const std::string& title,
+                                   const std::string& description,
+                                   const std::string& imagePath);
                 void Close();
 
                 void OnDismiss();

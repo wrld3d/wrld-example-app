@@ -88,7 +88,7 @@ public class SearchMenuAdapter extends BaseAdapter
         }
         catch(JSONException exception)
         {
-            Log.e("Eegeo", "Failed to read json data object: " + exception.getMessage());
+            Log.e("Eegeo", "SearchMenuAdapter: Failed to read json data object: " + exception.getMessage());
         }
 
 

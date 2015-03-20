@@ -7,7 +7,6 @@
 #include "ApplyScreenControl.h"
 #include "MyPinCreationViewStateChangedMessage.h"
 #include "MyPinCreationStage.h"
-#include "FlurryWrapper.h"
 
 namespace ExampleApp
 {
@@ -19,11 +18,13 @@ namespace ExampleApp
                 IMyPinCreationInitiationViewModel& viewModel,
                 IMyPinCreationInitiationView& view,
                 IMyPinCreationConfirmationViewModel& confirmationViewModel,
-                ExampleAppMessaging::TMessageBus& messageBus)
+                ExampleAppMessaging::TMessageBus& messageBus,
+                Metrics::IMetricsService& metricsService)
                 : m_view(view)
                 , m_viewModel(viewModel)
                 , m_confirmationViewModel(confirmationViewModel)
                 , m_messageBus(messageBus)
+                , m_metricsService(metricsService)
                 , m_selectedCallback(this, &MyPinCreationInitiationController::OnSelected)
                 , m_viewStateCallback(this, &MyPinCreationInitiationController::OnViewStateChangeScreenControl)
             {
@@ -41,7 +42,7 @@ namespace ExampleApp
             {
                 if(m_confirmationViewModel.TryOpen())
                 {
-                    FLURRY_SET_EVENT("UIItem: MyPinCreation");
+                    m_metricsService.SetEvent("UIItem: MyPinCreation");
                     MyPinCreationViewStateChangedMessage message(ExampleApp::MyPinCreation::Ring);
                     m_messageBus.Publish(message);
                 }
@@ -49,8 +50,6 @@ namespace ExampleApp
 
             void MyPinCreationInitiationController::OnViewStateChangeScreenControl(ScreenControl::View::IScreenControlViewModel &viewModel, float &state)
             {
-                m_view.ShouldOffsetButton(m_viewModel.ShouldOffsetViewButton());
-
                 ScreenControl::View::Apply(m_viewModel, m_view);
             }
         }

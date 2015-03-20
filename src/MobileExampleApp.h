@@ -11,7 +11,6 @@
 #include "SearchResultOnMap.h"
 #include "NavigationService.h"
 #include "IPlatformAbstractionModule.h"
-#include "PrimaryMenu.h"
 #include "SecondaryMenu.h"
 #include "SearchResultMenu.h"
 #include "Modality.h"
@@ -26,7 +25,6 @@
 #include "SearchResultPoi.h"
 #include "WeatherMenu.h"
 #include "CameraTransitions.h"
-#include "PrimaryMenuModule.h"
 #include "SecondaryMenuModule.h"
 #include "ModalityModule.h"
 #include "MenuModel.h"
@@ -82,6 +80,11 @@
 #include "NetIncludes.h"
 #include "GpsMarker.h"
 #include "InitialExperienceDialogs.h"
+#include "SdkModelDomainEventBus.h"
+#include "IMetricsService.h"
+#include "Watermark.h"
+#include "IWatermarkModule.h"
+#include "ApplicationConfiguration.h"
 
 namespace ExampleApp
 {
@@ -158,14 +161,15 @@ namespace ExampleApp
         Eegeo::Blitter* m_pBlitter;
         Eegeo::Rendering::ScreenProperties m_screenProperties;
         bool m_initialisedApplicationViewState;
-        bool m_setFlurryLocation;
+        bool m_setMetricsLocation;
         float m_pinDiameter;
 
         CameraTransitions::SdkModel::ICameraTransitionController* m_pCameraTransitionController;
 
         ExampleApp::PersistentSettings::IPersistentSettingsModel& m_persistentSettings;
+        ExampleApp::Metrics::IMetricsService& m_metricsService;
+        
         Eegeo::Helpers::IdentityProvider m_identityProvider;
-        ExampleApp::PrimaryMenu::View::IPrimaryMenuModule* m_pPrimaryMenuModule;
         ExampleApp::SecondaryMenu::SdkModel::ISecondaryMenuModule* m_pSecondaryMenuModule;
         ExampleApp::SearchResultMenu::SdkModel::ISearchResultMenuModule* m_pSearchResultMenuModule;
         ExampleApp::Modality::View::IModalityModule* m_pModalityModule;
@@ -194,9 +198,13 @@ namespace ExampleApp
         ExampleApp::MyPins::SdkModel::IMyPinsModule* m_pMyPinsModule;
         ExampleApp::MyPinDetails::SdkModel::IMyPinDetailsModule* m_pMyPinDetailsModule;
         ExampleApp::Options::IOptionsModule* m_pOptionsModule;
+        Watermark::IWatermarkModule* m_pWatermarkModule;
+        ExampleApp::ApplicationConfig::ApplicationConfiguration m_applicationConfiguration;
         Eegeo::Streaming::CameraFrustumStreamingVolume* m_pStreamingVolume;
         ExampleAppMessaging::TMessageBus& m_messageBus;
+        ExampleAppMessaging::TSdkModelDomainEventBus& m_sdkDomainEventBus;
         Net::SdkModel::INetworkCapabilities& m_networkCapabilities;
+        Search::SdkModel::ISearchServiceModule& m_searchServiceModule;
 
         void CreateApplicationModelModules();
 
@@ -222,8 +230,12 @@ namespace ExampleApp
                          ExampleApp::PersistentSettings::IPersistentSettingsModel& persistentSettings,
                          Eegeo::Debug::IMemoryStats& memoryStats,
                          ExampleAppMessaging::TMessageBus& messageBus,
-                         ExampleApp::Net::SdkModel::INetworkCapabilities& networkCapabilities);
-
+                         ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
+                         ExampleApp::Net::SdkModel::INetworkCapabilities& networkCapabilities,
+                         ExampleApp::Search::SdkModel::ISearchServiceModule& searchServiceModule,
+                         ExampleApp::Metrics::IMetricsService& metricsService,
+                         const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration,
+                         Eegeo::IEegeoErrorHandler& errorHandler);
 
         ~MobileExampleApp();
 
@@ -240,11 +252,6 @@ namespace ExampleApp
         CameraTransitions::SdkModel::ICameraTransitionController& CameraTransitionController() const
         {
             return *m_pCameraTransitionController;
-        }
-
-        const ExampleApp::PrimaryMenu::View::IPrimaryMenuModule& PrimaryMenuModule() const
-        {
-            return *m_pPrimaryMenuModule;
         }
 
         const ExampleApp::SecondaryMenu::SdkModel::ISecondaryMenuModule& SecondaryMenuModule() const
@@ -355,6 +362,11 @@ namespace ExampleApp
         const ExampleApp::Options::IOptionsModule& OptionsModule() const
         {
             return *m_pOptionsModule;
+        }
+        
+        const ExampleApp::Watermark::IWatermarkModule& WatermarkModule() const
+        {
+            return *m_pWatermarkModule;
         }
 
         const ExampleApp::InitialExperience::Dialogs::View::IInitialExperienceDialogsModule& InitialExperienceDialogsModule() const

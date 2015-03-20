@@ -21,6 +21,8 @@ namespace ExampleApp
                 CategorySearchRepository(const std::vector<CategorySearchModel>& models);
 
                 bool TryGetCategorySearchNameByQuery(const std::string& query, std::string& out_name) const;
+                
+                bool TryGetCategorySearchIconByCategory(const std::string& category, std::string& out_icon) const;
             };
         }
     }

@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include <string>
 #include "Types.h"
 #include "ISearchResultPoiView.h"
 #include "AndroidNativeState.h"
@@ -32,6 +33,8 @@ namespace ExampleApp
 
                 void Hide();
 
+                void UpdateImage(const std::string& url, bool hasImage, const std::vector<Byte>* pImageBytes);
+
                 void InsertClosedCallback(Eegeo::Helpers::ICallback0& callback);
 
                 void RemoveClosedCallback(Eegeo::Helpers::ICallback0& callback);
@@ -43,6 +46,8 @@ namespace ExampleApp
                 void RemoveTogglePinnedCallback(Eegeo::Helpers::ICallback1<Search::SdkModel::SearchResultModel>& callback);
 
                 void HandlePinToggleClicked();
+
+                void CreateVendorSpecificPoiView(const std::string& vendor);
             };
         }
     }

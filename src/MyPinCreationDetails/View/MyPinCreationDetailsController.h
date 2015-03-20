@@ -7,6 +7,7 @@
 #include "BidirectionalBus.h"
 #include "IConnectivityService.h"
 #include "ICallback.h"
+#include "IMetricsService.h"
 
 namespace ExampleApp
 {
@@ -22,7 +23,8 @@ namespace ExampleApp
                     IMyPinCreationDetailsView& view,
                     IMyPinCreationDetailsViewModel& viewModel,
                     Eegeo::Web::IConnectivityService& connectivityService,
-                    ExampleAppMessaging::TMessageBus& messageBus
+                    ExampleAppMessaging::TMessageBus& messageBus,
+                    Metrics::IMetricsService& metricsService
                 );
                 ~MyPinCreationDetailsController();
 
@@ -48,6 +50,8 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback0<MyPinCreationDetailsController> m_viewDismissedCallback;
 
                 Eegeo::Helpers::TCallback1<MyPinCreationDetailsController, const bool&> m_networkStateChangeCallback;
+                
+                Metrics::IMetricsService& m_metricsService;
             };
         }
     }

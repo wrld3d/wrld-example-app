@@ -13,8 +13,8 @@ namespace ExampleApp
 				enum Values
 				{
 					INVALID = 0,
-					SearchMenu,
-					PrimaryMenu,
+					MainMenu,
+					SearchResultMenu,
 					Compass,
 					PinCreation,
 					Flatten,

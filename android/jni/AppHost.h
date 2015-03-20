@@ -46,9 +46,15 @@
 #include "AndroidConnectivityService.h"
 #include "InitialExperienceDialogsViewIncludes.h"
 #include "OptionsViewIncludes.h"
+#include "WatermarkViewIncludes.h"
 #include "NetIncludes.h"
+#include "Search.h"
+#include "SdkModelDomainEventBus.h"
+#include "IEegeoErrorHandler.h"
+#include "ISingleOptionAlertBoxDismissedHandler.h"
+#include "AndroidFlurryMetricsService.h"
 
-class AppHost : protected Eegeo::NonCopyable
+class AppHost : public Eegeo::IEegeoErrorHandler, protected Eegeo::NonCopyable
 {
 public:
     AppHost(
@@ -73,6 +79,10 @@ public:
     void OnResume();
 
     void NotifyScreenPropertiesChanged(const Eegeo::Rendering::ScreenProperties& screenProperties);
+
+    void HandleFailureToProvideWorkingApiKey();
+
+    void HandleFailureToDownloadBootstrapResources();
 
     void HandleTouchInputEvent(const Eegeo::Android::Input::TouchInputEvent& event);
 
@@ -104,7 +114,6 @@ private:
 
 
     Eegeo::Android::AndroidPlatformAbstractionModule* m_pAndroidPlatformAbstractionModule;
-    ExampleApp::Menu::View::IMenuViewModule* m_pPrimaryMenuViewModule;
     ExampleApp::Menu::View::IMenuViewModule* m_pSecondaryMenuViewModule;
     ExampleApp::Menu::View::IMenuViewModule* m_pSearchResultMenuViewModule;
     ExampleApp::ModalBackground::View::IModalBackgroundViewModule* m_pModalBackgroundViewModule;
@@ -118,7 +127,10 @@ private:
     ExampleApp::MyPinDetails::View::IMyPinDetailsViewModule* m_pMyPinDetailsViewModule;
     ExampleApp::InitialExperience::Dialogs::View::InitialExperienceDialogsViewModule* m_pInitialExperienceDialogsViewModule; // TODO: Interface.
     ExampleApp::Options::View::IOptionsViewModule* m_pOptionsViewModule;
+    ExampleApp::Watermark::View::IWatermarkViewModule* m_pWatermarkViewModule;
     ExampleApp::Net::SdkModel::INetworkCapabilities* m_pNetworkCapabilities;
+    ExampleApp::Search::SdkModel::ISearchServiceModule* m_pSearchServiceModule;
+    ExampleApp::Metrics::AndroidFlurryMetricsService* m_pAndroidFlurryMetricsService;
 
     ExampleApp::MobileExampleApp* m_pApp;
 
@@ -131,9 +143,13 @@ private:
     ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModule* m_pViewControllerUpdaterModule;
 
     ExampleApp::ExampleAppMessaging::TMessageBus m_messageBus;
+    ExampleApp::ExampleAppMessaging::TSdkModelDomainEventBus m_sdkDomainEventBus;
+    Eegeo::UI::NativeAlerts::TSingleOptionAlertBoxDismissedHandler<AppHost> m_failAlertHandler;
 
     void DispatchRevealUiMessageToUiThreadFromNativeThread();
     void DispatchUiCreatedMessageToNativeThreadFromUiThread();
     void CreateApplicationViewModulesFromUiThread();
     void DestroyApplicationViewModulesFromUiThread();
+
+    void HandleStartupFailure();
 };

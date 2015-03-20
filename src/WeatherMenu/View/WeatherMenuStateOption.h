@@ -6,6 +6,7 @@
 #include "WeatherMenuStateModel.h"
 #include "BidirectionalBus.h"
 #include "WeatherSelectedMessage.h"
+#include "IMetricsService.h"
 
 namespace ExampleApp
 {
@@ -18,7 +19,8 @@ namespace ExampleApp
             public:
                 WeatherMenuStateOption(
                     SdkModel::WeatherMenuStateModel& weatherStateModel,
-                    ExampleAppMessaging::TMessageBus& messageBus);
+                    ExampleAppMessaging::TMessageBus& messageBus,
+                                       Metrics::IMetricsService& metricsService);
 
                 void Select();
 
@@ -26,6 +28,8 @@ namespace ExampleApp
 
                 SdkModel::WeatherMenuStateModel m_weatherStateModel;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
+                
+                Metrics::IMetricsService& m_metricsService;
             };
         }
     }

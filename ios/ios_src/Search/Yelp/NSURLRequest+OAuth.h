@@ -1,0 +1,27 @@
+//
+//  NSURLRequest+OAuth.h
+//  YelpAPISample
+//
+//  Created by Thibaud Robelain on 7/2/14.
+//  Copyright (c) 2014 Yelp Inc. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+
+@interface NSURLRequest (OAuth)
+
+/**
+ @param host The domain host
+ @param path The path on the domain host
+ @param params The query parameters
+ @return Builds a NSURLRequest with all the OAuth headers field set with the host, path, and query parameters given to it.
+ */
++ (NSURLRequest *)requestWithHost:(NSString *)host
+                             path:(NSString *)path
+                           params:(NSDictionary *)params
+                      consumerKey:(NSString*)consumerKey
+                   consumerSecret:(NSString*)consumerSecret
+                         tokenKey:(NSString*)tokenKey
+                      tokenSecret:(NSString*)tokenSecret;
+
+@end

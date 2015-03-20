@@ -21,7 +21,6 @@
 #include "InitialExperience.h"
 #include "iOSPersistentSettingsModel.h"
 #include "ViewControllerUpdater.h"
-#include "PrimaryMenuViewIncludes.h"
 #include "SecondaryMenuViewIncludes.h"
 #include "SearchResultMenuViewModule.h"
 #include "ModalBackgroundViewIncludes.h"
@@ -37,14 +36,20 @@
 #include "MyPinDetailsViewIncludes.h"
 #include "iOSConnectivityService.h"
 #include "OptionsViewIncludes.h"
+#include "WatermarkViewIncludes.h"
 #include "InitialExperienceDialogsViewIncludes.h"
 #include "NetIncludes.h"
+#include "Search.h"
+#include "SdkModelDomainEventBus.h"
+#include "IEegeoErrorHandler.h"
+#include "ISingleOptionAlertBoxDismissedHandler.h"
+#include "iOSFlurryMetricsService.h"
 
 @class ViewController;
 class AppInputDelegate;
 class AppLocationDelegate;
 
-class AppHost : protected Eegeo::NonCopyable
+class AppHost : public Eegeo::IEegeoErrorHandler, protected Eegeo::NonCopyable
 {
 public:
     AppHost(
@@ -63,6 +68,10 @@ public:
     void OnResume();
 
     void NotifyScreenPropertiesChanged(const Eegeo::Rendering::ScreenProperties& screenProperties);
+    
+    void HandleFailureToProvideWorkingApiKey();
+    
+    void HandleFailureToDownloadBootstrapResources();
 
 private:
     UIView* m_pView;
@@ -79,7 +88,6 @@ private:
     Eegeo::UI::NativeUIFactories m_iOSNativeUIFactories;
     Eegeo::iOS::iOSPlatformAbstractionModule* m_piOSPlatformAbstractionModule;
 
-    ExampleApp::PrimaryMenu::View::IPrimaryMenuViewModule* m_pPrimaryMenuViewModule;
     ExampleApp::SecondaryMenu::View::ISecondaryMenuViewModule* m_pSecondaryMenuViewModule;
     ExampleApp::SearchResultMenu::View::ISearchResultMenuViewModule* m_pSearchResultMenuViewModule;
     ExampleApp::ModalBackground::View::IModalBackgroundViewModule* m_pModalBackgroundViewModule;
@@ -96,15 +104,23 @@ private:
     ExampleApp::MyPinCreationDetails::View::IMyPinCreationDetailsViewModule* m_pMyPinCreationDetailsViewModule;
     ExampleApp::MyPinDetails::View::IMyPinDetailsViewModule* m_pMyPinDetailsViewModule;
     ExampleApp::Options::View::IOptionsViewModule* m_pOptionsViewModule;
+    ExampleApp::Watermark::View::IWatermarkViewModule* m_pWatermarkViewModule;
     ExampleApp::InitialExperience::Dialogs::View::IInitialExperienceDialogsViewModule* m_pInitialExperienceDialogsViewModule;
     ExampleApp::Net::SdkModel::INetworkCapabilities* m_pNetworkCapabilities;
+    ExampleApp::Search::SdkModel::ISearchServiceModule* m_pSearchServiceModule;
+    ExampleApp::Metrics::iOSFlurryMetricsService* m_piOSFlurryMetricsService;
 
     ExampleApp::MobileExampleApp* m_pApp;
     bool m_requestedApplicationInitialiseViewState;
 
     ExampleApp::ExampleAppMessaging::TMessageBus m_messageBus;
+    ExampleApp::ExampleAppMessaging::TSdkModelDomainEventBus m_sdkModelDomainEventBus;
+    
+    Eegeo::UI::NativeAlerts::TSingleOptionAlertBoxDismissedHandler<AppHost> m_failAlertHandler;
 
     void CreateApplicationViewModules(const Eegeo::Rendering::ScreenProperties& screenProperties);
     void DestroyApplicationViewModules();
+    
+    void HandleStartupFailure();
 };
 
