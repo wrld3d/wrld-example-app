@@ -35,6 +35,10 @@ namespace ExampleApp
                 virtual void InsertGpsModeChangedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
 
                 virtual void RemoveGpsModeChangedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
+                
+                virtual void InsertGpsModeUnauthorizedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
+                
+                virtual void RemoveGpsModeUnauthorizedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
             };
         }
     }

@@ -267,10 +267,11 @@ namespace ExampleApp
                                                                     m_sdkDomainEventBus);
 
         m_pCompassModule = Eegeo_NEW(ExampleApp::Compass::SdkModel::CompassModule)(*m_pNavigationService,
-                           *m_pGlobeCameraController,
-                           m_identityProvider,
-                           m_messageBus,
-                           m_metricsService);
+                                                                                   world.GetLocationService(),
+                                                                                   *m_pGlobeCameraController,
+                                                                                   m_identityProvider,
+                                                                                   m_messageBus,
+                                                                                   m_metricsService);
         
         m_pGpsMarkerModule = Eegeo_NEW(ExampleApp::GpsMarker::SdkModel::GpsMarkerModule)(m_pWorld->GetRenderingModule(),
                                                                                          m_platformAbstractions,

@@ -31,6 +31,11 @@ namespace ExampleApp
                     break;
                 }
             }
+            
+            void CompassController::OnCompassModeUnauthorizedMessage(const CompassModeUnauthorizedMessage& message)
+            {
+                m_view.NotifyGpsUnauthorized();
+            }
 
             void CompassController::OnCompassHeadingChangedMessage(const CompassHeadingUpdateMessage& message)
             {
@@ -72,6 +77,7 @@ namespace ExampleApp
                 , m_messageBus(messageBus)
                 , m_viewStateCallback(this, &CompassController::OnScreenStateChangedCallback)
                 , m_modeChangedHandler(this, &CompassController::OnCompassModeChangedMessage)
+                , m_modeUnauthorizedHandler(this, &CompassController::OnCompassModeUnauthorizedMessage)
                 , m_headingChangedHandler(this, &CompassController::OnCompassHeadingChangedMessage)
                 , m_myPinCreationStateChangedMessageHandler(this, &CompassController::OnMyPinCreationStateChangedMessage)
                 , m_viewCycledCallback(this, &CompassController::OnViewCycled)
@@ -79,6 +85,7 @@ namespace ExampleApp
                 m_messageBus.SubscribeUi(m_modeChangedHandler);
                 m_messageBus.SubscribeUi(m_headingChangedHandler);
                 m_messageBus.SubscribeUi(m_myPinCreationStateChangedMessageHandler);
+                m_messageBus.SubscribeUi(m_modeUnauthorizedHandler);
                 
                 m_view.InsertCycledCallback(m_viewCycledCallback);
                 m_viewModel.InsertOnScreenStateChangedCallback(m_viewStateCallback);
@@ -90,6 +97,7 @@ namespace ExampleApp
             {
                 m_viewModel.RemoveOnScreenStateChangedCallback(m_viewStateCallback);
                 m_view.RemoveCycledCallback(m_viewCycledCallback);
+                m_messageBus.UnsubscribeUi(m_modeUnauthorizedHandler);
                 m_messageBus.UnsubscribeUi(m_headingChangedHandler);
                 m_messageBus.UnsubscribeUi(m_modeChangedHandler);
                 m_messageBus.UnsubscribeUi(m_myPinCreationStateChangedMessageHandler);

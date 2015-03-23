@@ -45,6 +45,8 @@
 
 - (void) showGpsCompassModeView;
 
+- (void) notifyGpsUnauthorized;
+
 - (void) setFullyOnScreen;
 
 - (void) setFullyOffScreen;

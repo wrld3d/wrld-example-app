@@ -10,8 +10,9 @@
 #include "SearchQueryRemovedMessage.h"
 #include "FlattenButtonModelStateChangedMessage.h"
 #include "SearchQueryResponseReceivedMessage.h"
-#include "CompassModeCHangedMessage.h"
+#include "CompassModeChangedMessage.h"
 #include "CompassHeadingUpdateMessage.h"
+#include "CompassModeUnauthorizedMessage.h"
 #include "WorldPinGainedFocusMessage.h"
 #include "WorldPinLostFocusMessage.h"
 #include "WorldPinInFocusChangedLocationMessage.h"
@@ -38,6 +39,7 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<Search::SearchQueryResponseReceivedMessage>
             , public Eegeo::Messaging::CatalogBinding<Compass::CompassModeChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<Compass::CompassHeadingUpdateMessage>
+            , public Eegeo::Messaging::CatalogBinding<Compass::CompassModeUnauthorizedMessage>
             , public Eegeo::Messaging::CatalogBinding<WorldPins::WorldPinGainedFocusMessage>
             , public Eegeo::Messaging::CatalogBinding<WorldPins::WorldPinLostFocusMessage>
             , public Eegeo::Messaging::CatalogBinding<WorldPins::WorldPinInFocusChangedLocationMessage>

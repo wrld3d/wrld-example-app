@@ -38,6 +38,8 @@ namespace ExampleApp
 
                 void ShowGpsCompassModeView();
 
+                void NotifyGpsUnauthorized();
+
                 void SetHeadingRadians(float heading);
 
                 void SetOnScreenStateToIntermediateValue(float value);
