@@ -171,8 +171,8 @@
     float trueX = x/m_pixelScale;
 
     CGRect f = self.frame;
-    f.origin.x = trueX - (f.size.width/2.f);
-    f.origin.y = trueY - (f.size.height);
+    f.origin.x = static_cast<int>(trueX - (f.size.width/2.f));
+    f.origin.y = static_cast<int>(trueY - (f.size.height));
     self.frame = f;
 }
 
