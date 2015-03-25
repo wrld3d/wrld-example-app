@@ -29,6 +29,7 @@ namespace ExampleApp
                     void Update(float dt, const Eegeo::Camera::RenderCamera& renderCamera, const Eegeo::dv3& cameraEcefInterestPoint);
 
                     void GetIconPositionAndSize(Eegeo::dv3& out_positionEcef, float& out_sizeMeters) const;
+                    void GetSpherePositionAndRadius(Eegeo::dv3& out_sphereCenterEcef, float& out_sphereRadius) const;
 
                 private:
                     Eegeo::Rendering::EnvironmentFlatteningService& m_environmentFlatteningService;
@@ -42,6 +43,7 @@ namespace ExampleApp
                     float m_easeDurationInSeconds;
                     Eegeo::dv3 m_iconPosition;
                     float m_iconSize;
+                    float m_ringRadius;
 
                     Eegeo::v3 CalculateQuadScreenSpaceTranslation(const Eegeo::Camera::RenderCamera& renderCamera) const;
                     float CalculateTransitionScale(float dt);

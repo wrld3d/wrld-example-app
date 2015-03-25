@@ -12,13 +12,14 @@ namespace ExampleApp
         namespace SdkModel
         {
             CompassModule::CompassModule(Eegeo::Location::NavigationService& navigationService,
+                                         Eegeo::Location::ILocationService& locationService,
                                          Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& cameraController,
                                          Eegeo::Helpers::IIdentityProvider& identityProvider,
                                          ExampleAppMessaging::TMessageBus& messageBus,
                                          Metrics::IMetricsService& metricsService
                                         )
             {
-                m_pModel = Eegeo_NEW(CompassModel)(navigationService, cameraController, metricsService);
+                m_pModel = Eegeo_NEW(CompassModel)(navigationService, locationService, cameraController, metricsService);
                 m_pViewModel = Eegeo_NEW(View::CompassViewModel)(identityProvider.GetNextIdentity(), false);
                 m_pCompassUpdateController = Eegeo_NEW(CompassUpdateController)(*m_pModel, navigationService, messageBus);
                 m_pCompassModeObserver = Eegeo_NEW(CompassModeObserver)(*m_pModel, messageBus);

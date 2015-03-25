@@ -33,6 +33,11 @@ namespace ExampleApp
                 [m_pView showGpsCompassModeView];
             }
 
+            void CompassViewInterop::NotifyGpsUnauthorized()
+            {
+                [m_pView notifyGpsUnauthorized];
+            }
+            
             void CompassViewInterop::SetHeadingRadians(float heading)
             {
                 [m_pView updateHeading:heading];

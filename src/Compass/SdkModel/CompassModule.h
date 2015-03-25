@@ -31,6 +31,7 @@ namespace ExampleApp
 
             public:
                 CompassModule(Eegeo::Location::NavigationService& navigationService,
+                              Eegeo::Location::ILocationService& locationService,
                               Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& cameraController,
                               Eegeo::Helpers::IIdentityProvider& identityProvider,
                               ExampleAppMessaging::TMessageBus& messageBus,

@@ -5,6 +5,9 @@ package com.eegeo.compass;
 import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.mobileexampleapp.R;
 
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -113,6 +116,23 @@ public class CompassView implements View.OnClickListener
     { 
     	m_compassInner.setVisibility(View.VISIBLE);
     	createBitMap(Paint.Style.FILL);
+    }
+    
+    public void notifyGpsUnauthorized()
+    {
+    	AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(m_activity);
+    	alertDialogBuilder.setTitle("Location Services disabled")
+    		.setMessage("GPS Compass inaccessable: Location Services are not enabled for this application. You can change this in your device settings.")
+    		.setCancelable(false)
+    		.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					dialog.dismiss();
+				}
+			});
+    	AlertDialog alert = alertDialogBuilder.create();
+    	alert.show();
     }
 
     @Override

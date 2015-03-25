@@ -77,6 +77,11 @@ namespace ExampleApp
                 CallVoidMethod("showGpsCompassModeView");
             }
 
+            void CompassView::NotifyGpsUnauthorized()
+            {
+            	CallVoidMethod("notifyGpsUnauthorized");
+            }
+
             void CompassView::SetHeadingRadians(float heading)
             {
                 ASSERT_UI_THREAD

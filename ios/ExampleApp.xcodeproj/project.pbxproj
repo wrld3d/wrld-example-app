@@ -2346,6 +2346,7 @@
 		7E9B7F411A8E25E400C6F2E3 /* arrow3_left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow3_left.png; sourceTree = "<group>"; };
 		7E9B7F421A8E25E400C6F2E3 /* arrow3_right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow3_right.png; sourceTree = "<group>"; };
 		7E9B7F431A8E25E400C6F2E3 /* arrow3_up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow3_up.png; sourceTree = "<group>"; };
+		7EC46F2A1ABC484600683975 /* CompassModeUnauthorizedMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompassModeUnauthorizedMessage.h; sourceTree = "<group>"; };
 		7EE481E616836F370006E99B /* ExampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7EE481EA16836F370006E99B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		7EE481EC16836F370006E99B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -2972,6 +2973,7 @@
 				7E3B868D1A385A290023C94E /* CompassHeadingUpdateMessage.h */,
 				7E3B868E1A385A290023C94E /* CompassModeChangedMessage.cpp */,
 				7E3B868F1A385A290023C94E /* CompassModeChangedMessage.h */,
+				7EC46F2A1ABC484600683975 /* CompassModeUnauthorizedMessage.h */,
 				7E3B86901A385A290023C94E /* CompassViewCycledMessage.cpp */,
 				7E3B86911A385A290023C94E /* CompassViewCycledMessage.h */,
 				7E3B86921A385A290023C94E /* SdkModel */,

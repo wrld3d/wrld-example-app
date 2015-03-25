@@ -7,6 +7,7 @@
 #include "RenderCamera.h"
 #include "VectorMath.h"
 #include "NavigationService.h"
+#include "ILocationService.h"
 
 namespace ExampleApp
 {
@@ -15,9 +16,11 @@ namespace ExampleApp
         namespace SdkModel
         {
             CompassModel::CompassModel(Eegeo::Location::NavigationService& navigationService,
+                                       Eegeo::Location::ILocationService& locationService,
                                        Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& controller,
                                        Metrics::IMetricsService& metricsService)
                 :m_navigationService(navigationService)
+                ,m_locationService(locationService)
                 ,m_cameraController(controller)
                 ,m_metricsService(metricsService)
             {
@@ -51,6 +54,12 @@ namespace ExampleApp
 
             void CompassModel::CycleToNextGpsMode()
             {
+                if(!m_locationService.GetIsAuthorized())
+                {
+                    DisableGpsMode();
+                    m_gpsModeUnauthorizedCallbacks.ExecuteCallbacks();
+                    return;
+                }
                 int gpsMode = static_cast<int>(m_gpsMode);
                 gpsMode = (gpsMode + 1) % static_cast<int>(GpsMode::GpsMode_Max);
                 GpsMode::Values newGpsMode = static_cast<GpsMode::Values>(gpsMode);
@@ -68,6 +77,12 @@ namespace ExampleApp
 
             void CompassModel::TryUpdateToNavigationServiceGpsMode(Eegeo::Location::NavigationService::GpsMode value)
             {
+                if(!m_locationService.GetIsAuthorized())
+                {
+                    DisableGpsMode();
+                    return;
+                }
+                
                 GpsMode::Values gpsModeValueFromNavigationService = m_compassGpsModeToNavigationGpsMode[value];
 
                 if(gpsModeValueFromNavigationService != GetGpsMode())
@@ -128,6 +143,16 @@ namespace ExampleApp
             void CompassModel::RemoveGpsModeChangedCallback(Eegeo::Helpers::ICallback0& callback)
             {
                 m_gpsModeChangedCallbacks.RemoveCallback(callback);
+            }
+            
+            void CompassModel::InsertGpsModeUnauthorizedCallback(Eegeo::Helpers::ICallback0 &callback)
+            {
+                m_gpsModeUnauthorizedCallbacks.AddCallback(callback);
+            }
+            
+            void CompassModel::RemoveGpsModeUnauthorizedCallback(Eegeo::Helpers::ICallback0 &callback)
+            {
+                m_gpsModeUnauthorizedCallbacks.RemoveCallback(callback);
             }
         }
     }

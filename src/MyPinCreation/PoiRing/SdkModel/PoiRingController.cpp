@@ -26,6 +26,17 @@ namespace ExampleApp
             {
                 namespace
                 {
+                    
+                    float CalculateAltitudeBasedSphereOuterScale(float altitude)
+                    {
+                        const float minAltitude = 200.f;
+                        const float maxAltitude = 900.f;
+                        const float lowAltitudeScale = 0.2f;
+                        const float highAltitudeScale = 1.0f;
+                        float t = Eegeo::Math::Clamp01((altitude - minAltitude)/(maxAltitude-minAltitude));
+                        return Eegeo::Math::Lerp(lowAltitudeScale, highAltitudeScale, t);
+                    }
+                    
                     float CalculateAltitudeBasedSphereScale(float altitude, float outerRingRadiusInMeters)
                     {
                         const float minAltitude = 500.f;
@@ -67,14 +78,20 @@ namespace ExampleApp
                     , m_terrainHeightProvider(terrainHeightProvider)
                     , m_iconPosition(Eegeo::dv3::Zero())
                     , m_iconSize(0.0f)
+                    , m_ringRadius(0.0f)
                 {
 
                 }
 
                 void PoiRingController::Update(float dt, const Eegeo::Camera::RenderCamera& renderCamera, const Eegeo::dv3& cameraEcefInterestPoint)
                 {
+                    const float altitude = (float)(renderCamera.GetAltitude() - (m_pMyPinCreationModel.GetPosition().Length() - Eegeo::Space::EarthConstants::Radius));
                     const float outerRingRadiusInMeters = 120.f;
-                    const bool ringIsOnScreen = RingIsOnScreen(renderCamera, m_pMyPinCreationModel.GetPosition(), outerRingRadiusInMeters * m_scaleInterpolationParam);
+                    const float altitudeScale = CalculateAltitudeBasedSphereOuterScale(altitude);
+                    const float transitionScale = CalculateTransitionScale(dt);
+                    m_ringRadius = outerRingRadiusInMeters * altitudeScale * transitionScale;
+                    
+                    const bool ringIsOnScreen = RingIsOnScreen(renderCamera, m_pMyPinCreationModel.GetPosition(), m_ringRadius);
 
                     m_poiRingView.SetShouldRenderRing(m_scaleInterpolationParam > 0.f && ringIsOnScreen);
 
@@ -98,9 +115,7 @@ namespace ExampleApp
                     }
 
                     Eegeo::m44 sphereTransformMatrix;
-
-                    const float transitionScale = CalculateTransitionScale(dt);
-                    sphereTransformMatrix.Scale(outerRingRadiusInMeters * transitionScale);
+                    sphereTransformMatrix.Scale(m_ringRadius);
 
                     Eegeo::dv3 scaledPoint = Eegeo::Rendering::EnvironmentFlatteningService::GetScaledPointEcef(m_pMyPinCreationModel.GetPosition(), m_environmentFlatteningService.GetCurrentScale());
 
@@ -109,8 +124,8 @@ namespace ExampleApp
 
                     m_poiRingView.SetRingTransforms(sphereTransformMatrix);
 
-                    float altitudeBasedScale = CalculateAltitudeBasedSphereScale(renderCamera.GetAltitude(), outerRingRadiusInMeters);
-                    m_poiRingView.SetInnerSphereScale(altitudeBasedScale * transitionScale);
+                    float altitudeBasedScale = CalculateAltitudeBasedSphereScale(altitude, m_ringRadius);
+                    m_poiRingView.SetInnerSphereScale(altitudeBasedScale);
 
                     Eegeo::dv3 unflattenedIconPosition = m_pMyPinCreationModel.GetPosition();
                     Eegeo::dv3 iconPosition = Eegeo::Rendering::EnvironmentFlatteningService::GetScaledPointEcef(
@@ -137,6 +152,12 @@ namespace ExampleApp
                 {
                     out_positionEcef = m_iconPosition;
                     out_sizeMeters = m_iconSize;
+                }
+                
+                void PoiRingController::GetSpherePositionAndRadius(Eegeo::dv3& out_sphereCenterEcef, float& out_sphereRadius) const
+                {
+                    out_sphereCenterEcef = m_pMyPinCreationModel.GetPosition();
+                    out_sphereRadius = m_ringRadius;
                 }
             }
         }

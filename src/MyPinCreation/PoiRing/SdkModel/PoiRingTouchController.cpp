@@ -18,7 +18,7 @@ namespace ExampleApp
             namespace SdkModel
             {
                 PoiRingTouchController::PoiRingTouchController(MyPinCreation::SdkModel::IMyPinCreationModel& myPinCreationModel,
-                        Eegeo::Resources::Terrain::Collision::IRayPicker& rayPicker,
+                        Eegeo::Collision::IRayPicker& rayPicker,
                         const IPoiRingController& poiRingController)
                     : m_myPinCreationModel(myPinCreationModel)
                     , m_rayPicker(rayPicker)
@@ -49,16 +49,16 @@ namespace ExampleApp
 
                     if (rayPick)
                     {
-                        const Eegeo::dv3& currentPosition = m_myPinCreationModel.GetPosition();
-                        float cameraAltitude = static_cast<float>(rayOrigin.Length() - Eegeo::Space::EarthConstants::Radius);
-                        const float touchRadius = 100.f + cameraAltitude/20;
-
                         Eegeo::dv3 iconPosition;
                         float iconSize;
                         m_poiRingController.GetIconPositionAndSize(iconPosition, iconSize);
+                        
+                        Eegeo::dv3 spherePosition;
+                        float sphereRadius;
+                        m_poiRingController.GetSpherePositionAndRadius(spherePosition, sphereRadius);
 
                         bool hitIcon = Eegeo::Geometry::IntersectionTests::TestRaySphere(rayOrigin, rayDirection, iconPosition, iconSize/2.0f);
-                        if ((rayIntersectionPoint - currentPosition).Length() < touchRadius || hitIcon)
+                        if ((rayIntersectionPoint - spherePosition).Length() < sphereRadius || hitIcon)
                         {
                             m_isDragging = true;
                             return true;
