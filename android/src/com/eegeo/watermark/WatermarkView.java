@@ -89,7 +89,7 @@ public class WatermarkView implements View.OnClickListener
      AlertDialog.Builder builder = new AlertDialog.Builder(m_activity);
 
      builder.setTitle("Maps by eeGeo");
-     builder.setMessage("This application is built using the eeGeo SDK, a cross-platform API for building immersive, engaging maps. Click 'Yes' to visit eeGeo SDK website and find out more.");
+     builder.setMessage("This application is built using the open source eeGeo SDK, a cross-platform API for building immersive, engaging maps. Click 'Yes' to visit eeGeo SDK website and find out more.");
      builder.setPositiveButton("Yes", createClickListener(true));
      builder.setNegativeButton("Later", createClickListener(false));
      builder.setCancelable(false);
