@@ -104,4 +104,9 @@ public class ClearableEditText extends RelativeLayout
 	{
 		m_editText.setOnEditorActionListener(onEditorActionListener);
 	}
+	
+	public void setPlaceholder(String placeholder)
+	{
+		m_editText.setHint(placeholder);
+	}
 }
