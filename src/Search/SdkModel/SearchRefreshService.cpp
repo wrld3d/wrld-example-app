@@ -82,17 +82,15 @@ namespace ExampleApp
 
                     if(m_secondsSincePreviousRefresh >= m_minimumSecondsBetweenUpdates)
                     {
-                        Eegeo::Space::LatLongAltitude currentLocationSeaLevel = Eegeo::Space::LatLongAltitude::FromECEF(ecefLocation);
-                        currentLocationSeaLevel.SetAltitude(0.f);
-                        Eegeo::dv3 currentEcefSeaLevel = currentLocationSeaLevel.ToECEF();
+                        Eegeo::Space::LatLongAltitude currentLocation = Eegeo::Space::LatLongAltitude::FromECEF(ecefLocation);
 
-                        double distanceMetresSq = (currentEcefSeaLevel - m_previousQueryLocationEcef).LengthSq();
+                        double distanceMetresSq = (ecefLocation - m_previousQueryLocationEcef).LengthSq();
 
                         if(distanceMetresSq >= m_minimumMetresSquaredBetweenUpdates)
                         {
-                            m_previousQueryLocationEcef = currentEcefSeaLevel;
+                            m_previousQueryLocationEcef = ecefLocation;
                             const SearchQuery& previousQuery = m_searchQueryPerformer.GetPreviousSearchQuery();
-                            m_searchQueryPerformer.PerformSearchQuery(previousQuery.Query(), previousQuery.IsCategory(), currentLocationSeaLevel);
+                            m_searchQueryPerformer.PerformSearchQuery(previousQuery.Query(), previousQuery.IsCategory(), currentLocation);
 
                             m_secondsSincePreviousRefresh = 0.f;
                         }
