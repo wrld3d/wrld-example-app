@@ -26,6 +26,7 @@ public class SearchMenuAdapter extends BaseAdapter
     private int m_itemViewId;
     private List<String> m_nameData;
     private Activity m_context;
+    private final String m_defaultIconString = "misc";
 
     public SearchMenuAdapter(Activity context, int itemViewId)
     {
@@ -84,7 +85,8 @@ public class SearchMenuAdapter extends BaseAdapter
             detailLabel.setText(data.getString("details"));
 
             RelativeLayout categoryIcon = (RelativeLayout)contextView.findViewById(R.id.menu_list_item_icon);
-            categoryIcon.setBackgroundResource(CategoryResources.getSearchResultIconForCategory(m_context, data.getString("icon")));
+            String categoryIconString = data.has("icon") ? data.getString("icon") : m_defaultIconString;
+            categoryIcon.setBackgroundResource(CategoryResources.getSearchResultIconForCategory(m_context, categoryIconString));
         }
         catch(JSONException exception)
         {
