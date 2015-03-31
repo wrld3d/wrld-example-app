@@ -52,7 +52,6 @@ namespace ExampleApp
             , m_messageBus(messageBus)
             , m_sdkModelDomainEventBus(sdkModelDomainEventBus)
             , m_webLoadRequestFactory(webLoadRequestFactory)
-            , m_webRequestCompleteCallback(this, &SearchResultPinBoundObject::WebRequestCompleteCallback)
             , m_pinVendorRequiresRefreshing(m_searchResult.GetVendor() == "Yelp")
             , m_isCurrentlyRefreshingResult(false)
             {
@@ -141,11 +140,6 @@ namespace ExampleApp
             void SearchResultPinBoundObject::SubmitPinToWebService(const MyPinModel& pinModel)
             {
                 Eegeo_TTY("Here is where you submit pin to web service\n");
-            }
-            
-            void SearchResultPinBoundObject::WebRequestCompleteCallback(Eegeo::Web::IWebLoadRequest& webLoadRequest)
-            {
-                Eegeo_TTY("Web Request Completed, code: %d\n", webLoadRequest.HttpStatusCode());
             }
             
             void SearchResultPinBoundObject::FinishRefreshingSearchResult(bool success,

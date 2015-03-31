@@ -26,10 +26,8 @@ namespace ExampleApp
                 MyPinsFileIO& m_myPinsFileIO;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 Eegeo::Web::IWebLoadRequestFactory& m_webLoadRequestFactory;
-                Eegeo::Web::TWebLoadRequestCompletionCallback<UserCreatedPinBoundObject> m_webRequestCompleteCallback;
                 
                 void SubmitPinToWebService(const MyPinModel& pinModel);
-                void WebRequestCompleteCallback(Eegeo::Web::IWebLoadRequest& webLoadRequest);
                 
             public:
                 static UserCreatedPinBoundObject* FromSerializedData(MyPinModel::TPinIdType pinId,
