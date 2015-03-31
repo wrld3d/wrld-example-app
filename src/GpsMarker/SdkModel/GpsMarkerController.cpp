@@ -4,6 +4,7 @@
 #include "GpsMarkerModel.h"
 #include "GpsMarkerView.h"
 #include "VectorMath.h"
+#include "EnvironmentFlatteningService.h"
 
 namespace ExampleApp
 {
@@ -13,9 +14,13 @@ namespace ExampleApp
         {
             const float GpsMarkerController::DefaultUpdatePeriod = 2.f;
             
-            GpsMarkerController::GpsMarkerController(GpsMarkerModel& model, GpsMarkerView& view, ExampleAppMessaging::TMessageBus& messageBus)
+            GpsMarkerController::GpsMarkerController(GpsMarkerModel& model,
+                                                     GpsMarkerView& view,
+                                                     Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
+                                                     ExampleAppMessaging::TMessageBus& messageBus)
             : m_model(model)
             , m_view(view)
+            , m_environmentFlatteningService(environmentFlatteningService)
             , m_messageBus(messageBus)
             , m_updateTime(0.0f)
             , m_modalityChangedHandlerBinding(this, &GpsMarkerController::OnModalityChangedMessage)
@@ -55,7 +60,7 @@ namespace ExampleApp
                 
                 if(m_model.HasLocation())
                 {
-                    m_view.DrawIconAtEcefPosition(renderCamera, m_model.GetCurrentLocationEcef());
+                    m_view.DrawIconAtEcefPosition(renderCamera, m_environmentFlatteningService.GetScaledPointEcef(m_model.GetCurrentLocationEcef(), m_environmentFlatteningService.GetCurrentScale()));
                 }
             }
         }

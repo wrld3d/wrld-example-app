@@ -17,6 +17,7 @@
 #include "RenderableFilters.h"
 #include "TerrainModelModule.h"
 #include "ImagePathHelpers.h"
+#include "MapModule.h"
 
 namespace ExampleApp
 {
@@ -28,6 +29,7 @@ namespace ExampleApp
                                              Eegeo::Modules::IPlatformAbstractionModule& platformAbstractions,
                                              Eegeo::Location::ILocationService& locationService,
                                              Eegeo::Modules::Map::Layers::TerrainModelModule& terrainModelModule,
+                                             Eegeo::Modules::Map::MapModule& mapModule,
                                              ExampleAppMessaging::TMessageBus& messageBus)
             : m_renderableFilters(renderingModule.GetRenderableFilters())
             {
@@ -58,7 +60,7 @@ namespace ExampleApp
                 
                 m_pModel = Eegeo_NEW(GpsMarkerModel)(locationService, terrainModelModule.GetTerrainHeightProvider());
                 m_pView = Eegeo_NEW(GpsMarkerView)(*m_pGpsIconRenderable);
-                m_pController = Eegeo_NEW(GpsMarkerController)(*m_pModel, *m_pView, messageBus);
+                m_pController = Eegeo_NEW(GpsMarkerController)(*m_pModel, *m_pView, mapModule.GetEnvironmentFlatteningService(), messageBus);
                 
                 m_renderableFilters.AddRenderableFilter(*m_pView);
 
