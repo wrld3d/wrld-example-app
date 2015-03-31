@@ -74,12 +74,12 @@
     self.pTableviewContainer = [[[UIScrollView alloc] initWithFrame:CGRectMake(m_tableX, m_tableY, m_tableWidth, m_tableHeight)] autorelease];
     self.pTableviewContainer.bounces = NO;
     self.pTableviewContainer.contentSize = CGSizeMake(m_tableWidth, realTableHeight);
-
+    
     self.pTableview = [[[CustomTableView alloc] initWithFrame:CGRectMake(0.f, 0.f, m_tableWidth, realTableHeight)
-                        style:UITableViewStylePlain
-                        container:self.pTableviewContainer
-                       ] autorelease];
-
+                                                        style:UITableViewStylePlain
+                                                    container:self.pTableviewContainer
+                                                  hasSubMenus:true
+                        ] autorelease];
     self.pTableview.backgroundColor = [UIColor clearColor];
     self.pTableview.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.pTableview.bounces = NO;

@@ -8,22 +8,23 @@
     float m_animationSpeed;
     bool m_inAnimationCeremony;
     UIScrollView* m_pContainer;
+    bool m_hasSubMenus;
 }
 
-- (instancetype)initWithFrame:(CGRect)frame style:(UITableViewStyle)style
-{
-    return [self initWithFrame: frame style: style container: nil];
-}
-
-- (instancetype)initWithFrame:(CGRect)frame style:(UITableViewStyle)style container:(UIScrollView*)container
+- (instancetype)initWithFrame:(CGRect)frame style:(UITableViewStyle)style container:(UIScrollView*)container hasSubMenus:(bool)hasSubMenus
 {
     id it = [super initWithFrame:frame style:style];
     m_pContainer = container;
     m_animationSpeed = 0.3f;
     m_inAnimationCeremony = NO;
+    m_hasSubMenus = hasSubMenus;
     return it;
 }
 
+-(BOOL)hasDynamicCellPresentation
+{
+    return m_hasSubMenus;
+}
 
 -(BOOL)inAnimationCeremony
 {
@@ -33,21 +34,24 @@
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-
-    float zOffset = 0.f;
-    const float zOffsetIncrement = 0.001f;
-
-    NSArray *sortedIndexPaths = [[self indexPathsForVisibleRows] sortedArrayUsingSelector:@selector(compare:)];
-    for (NSIndexPath *path in sortedIndexPaths)
+    
+    if(m_hasSubMenus)
     {
-        UITableViewCell *cell = [self cellForRowAtIndexPath:path];
-        [self sendSubviewToBack:cell];
-        [cell.layer setZPosition: zOffset];
-
-        zOffset -= zOffsetIncrement;
+        float zOffset = 0.f;
+        const float zOffsetIncrement = 0.001f;
+        
+        NSArray *sortedIndexPaths = [[self indexPathsForVisibleRows] sortedArrayUsingSelector:@selector(compare:)];
+        for (NSIndexPath *path in sortedIndexPaths)
+        {
+            UITableViewCell *cell = [self cellForRowAtIndexPath:path];
+            [self sendSubviewToBack:cell];
+            [cell.layer setZPosition: zOffset];
+            
+            zOffset -= zOffsetIncrement;
+        }
+        
+        m_pContainer.contentSize = self.contentSize;
     }
-
-    m_pContainer.contentSize = self.contentSize;
 }
 
 -(void)setInteractionEnabled:(BOOL)enabled

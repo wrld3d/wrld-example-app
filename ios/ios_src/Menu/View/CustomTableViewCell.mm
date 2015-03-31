@@ -9,6 +9,21 @@ const float SubViewInset = 22.f;
 @implementation CustomTableViewCell
 {
     UIView* pCustomSeparatorContainer;
+    bool m_hasSetBackground;
+    bool m_hasSetSeparators;
+    bool m_selected;
+    bool m_highlighted;
+    bool m_requiresRefresh;
+}
+
+-(void) lazySetBackgroundPresentation
+{
+    if(m_hasSetBackground && !m_tableView.hasDynamicCellPresentation)
+    {
+        return;
+    }
+    
+    [self setBackgroundPresentation];
 }
 
 -(void) setBackgroundPresentation
@@ -18,6 +33,7 @@ const float SubViewInset = 22.f;
         if(m_headerBackgroundImage != nil)
         {
             self.contentView.backgroundColor = [UIColor colorWithPatternImage:ExampleApp::Helpers::ImageHelpers::LoadImage(m_headerBackgroundImage)];
+            m_hasSetBackground = true;
         }
     }
     else
@@ -25,14 +41,24 @@ const float SubViewInset = 22.f;
         if(m_subMenuBackgroundImage != nil)
         {
             self.contentView.backgroundColor = [UIColor colorWithPatternImage:ExampleApp::Helpers::ImageHelpers::LoadImage(m_subMenuBackgroundImage)];
+            m_hasSetBackground = true;
         }
     }
 }
 
+-(bool) requiresVisualRefresh
+{
+    return !m_hasSetBackground || !m_hasSetSeparators || m_tableView.hasDynamicCellPresentation || m_requiresRefresh;
+}
+
 - (void)layoutSubviews
 {
-    [super layoutSubviews];
-
+    if([self requiresVisualRefresh])
+    {
+        m_requiresRefresh = false;
+        [super layoutSubviews];
+    }
+    
     CGRect r = self.contentView.frame;
 
     if(!m_isHeader)
@@ -77,13 +103,17 @@ const float SubViewInset = 22.f;
     }
     
     [self insertSeparators :r :imageFrame];
-    [self setBackgroundPresentation];
+    [self lazySetBackgroundPresentation];
 }
 
 - (void)initCell:(CGFloat)initialWidth :(CustomTableView*)tableView;
 {
     m_initialWidth = static_cast<float>(initialWidth);
     m_tableView = tableView;
+    m_hasSetBackground = false;
+    m_hasSetSeparators = false;
+    m_selected = false;
+    m_highlighted = false;
     self->pCustomSeparatorContainer = [[UIView alloc]  initWithFrame:CGRectMake(0,0,0,0)];
     [self addSubview:self->pCustomSeparatorContainer];
 }
@@ -99,6 +129,7 @@ const float SubViewInset = 22.f;
     m_isHeader = isHeader;
     m_headerBackgroundImage = headerBackgroundImage;
     m_subMenuBackgroundImage = subMenuBackgroundImage;
+    m_requiresRefresh = true;
 }
 
 - (BOOL)canInteract
@@ -124,11 +155,16 @@ const float SubViewInset = 22.f;
 
     if (highlighted)
     {
+        m_highlighted = true;
         [self.contentView setBackgroundColor: ExampleApp::Helpers::ColorPalette::LightGreyTone];
     }
     else
     {
-        [self setBackgroundPresentation];
+        if(m_highlighted)
+        {
+            [self setBackgroundPresentation];
+        }
+        m_highlighted = false;
     }
 }
 
@@ -143,15 +179,27 @@ const float SubViewInset = 22.f;
     if (selected)
     {
         [self.contentView setBackgroundColor: ExampleApp::Helpers::ColorPalette::LightGreyTone];
+        m_selected = true;
     }
     else
     {
-        [self setBackgroundPresentation];
+        if(m_selected)
+        {
+            [self setBackgroundPresentation];
+        }
+        m_selected = false;
     }
 }
 
 - (void)insertSeparators:(CGRect)cellFrame :(CGRect)imageFrame
 {
+    if(m_hasSetSeparators && !m_tableView.hasDynamicCellPresentation)
+    {
+        return;
+    }
+    
+    m_hasSetSeparators = true;
+    
     if([self->pCustomSeparatorContainer subviews] != nil) {
         for (UIView *subview in [self->pCustomSeparatorContainer subviews]) {
             [subview removeFromSuperview];
