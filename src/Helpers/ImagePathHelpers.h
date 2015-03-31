@@ -12,6 +12,8 @@ namespace ExampleApp
         {
             std::string GetImageNameForDevice(const std::string& name,
                                               const std::string& ext);
+
+            float GetPixelScale();
         }
     }
 }

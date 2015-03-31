@@ -4,6 +4,7 @@
 #include "Graphics.h"
 #include "AndroidThreadHelper.h"
 #include "AndroidAppThreadAssertionMacros.h"
+#include "ImagePathHelpers.h"
 
 AppRunner::AppRunner
 (
@@ -41,7 +42,7 @@ void AppRunner::CreateAppHost()
         const Eegeo::Rendering::ScreenProperties& screenProperties = Eegeo::Rendering::ScreenProperties::Make(
                     m_displayService.GetDisplayWidth(),
                     m_displayService.GetDisplayHeight(),
-                    1.f,
+                    ExampleApp::Helpers::ImageHelpers::GetPixelScale(),
                     m_pNativeState->deviceDpi);
         m_pAppHost = Eegeo_NEW(AppHost)
                      (
@@ -123,7 +124,7 @@ bool AppRunner::TryBindDisplay()
             const Eegeo::Rendering::ScreenProperties& screenProperties = Eegeo::Rendering::ScreenProperties::Make(
                         m_displayService.GetDisplayWidth(),
                         m_displayService.GetDisplayHeight(),
-                        1.f,
+                        ExampleApp::Helpers::ImageHelpers::GetPixelScale(),
                         m_pNativeState->deviceDpi);
             m_pAppHost->NotifyScreenPropertiesChanged(screenProperties);
             m_pAppHost->SetViewportOffset(0, 0);
