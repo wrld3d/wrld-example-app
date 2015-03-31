@@ -6,7 +6,9 @@
 
 @interface CustomTableView : UITableView
 
-- (instancetype)initWithFrame:(CGRect)frame style:(UITableViewStyle)style container:(UIScrollView*)container;
+- (instancetype)initWithFrame:(CGRect)frame style:(UITableViewStyle)style container:(UIScrollView*)container  hasSubMenus:(bool)hasSubMenus;
+
+-(BOOL)hasDynamicCellPresentation;
 
 -(BOOL)inAnimationCeremony;
 

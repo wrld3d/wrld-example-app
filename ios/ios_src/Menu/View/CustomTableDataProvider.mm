@@ -164,10 +164,15 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    CustomTableViewCell* customCell = (CustomTableViewCell*)cell;
+    
+    if(![customCell requiresVisualRefresh])
+    {
+        return;
+    }
+    
     ExampleApp::Menu::View::IMenuSectionViewModel& section = *m_currentSections.at(indexPath.section);
     UIImageView *openableArrow = (UIImageView*)[cell viewWithTag:SubItemCellOpenableMenuArrowTag];
-
-    CustomTableViewCell* customCell = (CustomTableViewCell*)cell;
 
     if(section.IsExpandable() && indexPath.row != 0)
     {

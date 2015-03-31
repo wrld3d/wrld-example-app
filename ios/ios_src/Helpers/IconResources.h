@@ -10,8 +10,6 @@ namespace ExampleApp
     {
         namespace IconResources
         {
-            std::string GetCategoryMatch(std::string category);
-
             std::string GetSmallIconForCategory(const std::string& category);
 
             std::string GetSmallIconPathForResourceName(const std::string& resource);

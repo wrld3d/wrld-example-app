@@ -28,4 +28,6 @@
 
 - (BOOL)canInteract;
 
+- (bool)requiresVisualRefresh;
+
 @end

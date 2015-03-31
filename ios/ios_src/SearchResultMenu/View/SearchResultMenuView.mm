@@ -82,6 +82,7 @@
     self.pTableview = [[[CustomTableView alloc] initWithFrame:CGRectMake(0.f, 0.f, m_tableWidth, realTableHeight)
                                                         style:UITableViewStylePlain
                                                     container:self.pTableviewContainer
+                                                  hasSubMenus:false
                         ] autorelease];
     self.pTableview.backgroundColor = [UIColor clearColor];
     self.pTableview.separatorStyle = UITableViewCellSeparatorStyleNone;
