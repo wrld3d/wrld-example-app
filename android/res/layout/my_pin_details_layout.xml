@@ -8,8 +8,7 @@
     	android:id="@+id/my_pin_details_view_container"
 	    android:layout_width="250dip"
 	    android:layout_height="295dip"
-	    android:layout_centerInParent="true"
-      	android:background="@color/gold">
+	    android:layout_centerInParent="true">
 		    
         <!-- Title bar -->
         <LinearLayout 
@@ -109,7 +108,8 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/my_pin_details_view_footer"
-        	android:layout_alignParentBottom="true">
+        	android:layout_alignParentBottom="true"
+        	android:background="@color/gold">
  
          <Button
              android:id="@+id/my_pin_details_view_delete_button"
