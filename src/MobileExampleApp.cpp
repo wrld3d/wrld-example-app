@@ -277,6 +277,7 @@ namespace ExampleApp
                                                                                          m_platformAbstractions,
                                                                                          m_pWorld->GetLocationService(),
                                                                                          m_pWorld->GetTerrainModelModule(),
+                                                                                         m_pWorld->GetMapModule(),
                                                                                          m_messageBus);
 
         Eegeo::Modules::Map::CityThemesModule& cityThemesModule = world.GetCityThemesModule();

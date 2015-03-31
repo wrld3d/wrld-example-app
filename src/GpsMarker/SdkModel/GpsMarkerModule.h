@@ -24,6 +24,7 @@ namespace ExampleApp
                                 Eegeo::Modules::IPlatformAbstractionModule& platformAbstractions,
                                 Eegeo::Location::ILocationService& locationService,
                                 Eegeo::Modules::Map::Layers::TerrainModelModule& terrainModelModule,
+                                Eegeo::Modules::Map::MapModule& mapModule,
                                 ExampleAppMessaging::TMessageBus& messageBus);
                 ~GpsMarkerModule();
                 

@@ -7,6 +7,7 @@
 #include "BidirectionalBus.h"
 #include "ICallback.h"
 #include "ModalityChangedMessage.h"
+#include "Rendering.h"
 
 namespace ExampleApp
 {
@@ -18,7 +19,10 @@ namespace ExampleApp
             {
             public:
                 
-                GpsMarkerController(GpsMarkerModel& model, GpsMarkerView& view, ExampleAppMessaging::TMessageBus& messageBus);
+                GpsMarkerController(GpsMarkerModel& model,
+                                    GpsMarkerView& view,
+                                    Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
+                                    ExampleAppMessaging::TMessageBus& messageBus);
                 ~GpsMarkerController();
                 
                 void Update(float dt, const Eegeo::Camera::RenderCamera& renderCamera);
@@ -30,6 +34,8 @@ namespace ExampleApp
                 
                 GpsMarkerModel& m_model;
                 GpsMarkerView& m_view;
+                
+                Eegeo::Rendering::EnvironmentFlatteningService& m_environmentFlatteningService;
                 
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 Eegeo::Helpers::TCallback1<GpsMarkerController, const Modality::ModalityChangedMessage&> m_modalityChangedHandlerBinding;
