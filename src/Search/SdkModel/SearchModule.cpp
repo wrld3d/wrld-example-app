@@ -35,7 +35,7 @@ namespace ExampleApp
                                           *m_pSearchQueryPerformer,
                                           cameraTransitionsController,
                                           1.f,
-                                          500.f);
+                                          100.f);
 
                 m_pSearchQueryObserver = Eegeo_NEW(SearchQueryObserver)(
                                              searchService,

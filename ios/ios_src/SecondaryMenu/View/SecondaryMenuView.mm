@@ -113,6 +113,8 @@
      object:nil];
 
     [self.pSearchEditBox setDelegate:self];
+    
+    [self.pSearchEditBox setPlaceholder:@"Enter search term"];
 }
 
 - (void)dealloc
@@ -250,8 +252,6 @@
     m_returnPressed = false;
 
     textField.layer.borderColor = ExampleApp::Helpers::ColorPalette::MainHudColor.CGColor;
-    textField.layer.borderWidth = 2.0;
-    textField.layer.cornerRadius = 10.0;
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -266,8 +266,6 @@
     m_keyboardActive = false;
 
     textField.layer.borderColor = [[UIColor clearColor] CGColor];
-    textField.layer.borderWidth = 1.0;
-    textField.layer.cornerRadius = 10.0;
 
     if (!m_returnPressed || [self.pSearchEditBox.text isEqualToString:@""])
     {

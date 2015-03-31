@@ -113,7 +113,6 @@ namespace ExampleApp
                     if(m_pCurrentRequest->IsSucceeded())
                     {
                         const std::string& response(m_pCurrentRequest->ResponseString());
-                        EXAMPLE_LOG("%s\n", response.c_str());
                         m_searchResultParser.ParseSearchResults(response, m_currentQueryResults);
                     }
 

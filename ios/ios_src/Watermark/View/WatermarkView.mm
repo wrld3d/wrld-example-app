@@ -72,7 +72,7 @@
 - (void) onClick:(UIButton *)sender
 {   
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Maps by eeGeo"
-                                                    message:@"This application is built using the eeGeo SDK, a cross-platform API for building immersive, engaging maps. Click 'Yes' to visit eeGeo SDK website and find out more."
+                                                    message:@"This application is built using the open source eeGeo SDK, a cross-platform API for building immersive, engaging maps. Click 'Yes' to visit eeGeo SDK website and find out more."
                                                    delegate:self
                                           cancelButtonTitle:@"Later"
                                           otherButtonTitles:@"Yes", nil];

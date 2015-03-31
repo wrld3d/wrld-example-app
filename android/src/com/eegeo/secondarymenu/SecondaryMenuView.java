@@ -89,6 +89,7 @@ public class SecondaryMenuView extends MenuView implements TextView.OnEditorActi
         );
 
         m_list.setOnItemClickListener(m_menuItemSelectedListener);
+        m_editText.setPlaceholder("Enter search term");
     }
 
     @Override
