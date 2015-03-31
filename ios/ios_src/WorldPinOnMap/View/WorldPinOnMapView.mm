@@ -15,7 +15,7 @@
     if(self)
     {
         self.alpha = 0.f;
-        m_pinOffset = pinDiameter * 0.75f;
+        m_pinOffset = (pinDiameter * pixelScale) * 0.75f;
         m_pixelScale = pixelScale;
         m_stateChangeAnimationTimeSeconds = 0.2f;
 
@@ -167,7 +167,7 @@
 
 - (void) updatePosition:(float)x :(float)y
 {
-    float trueY = y/m_pixelScale - m_pinOffset;
+    float trueY = y/m_pixelScale - m_pinOffset/m_pixelScale;
     float trueX = x/m_pixelScale;
 
     CGRect f = self.frame;

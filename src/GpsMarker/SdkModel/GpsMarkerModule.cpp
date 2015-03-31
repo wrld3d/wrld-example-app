@@ -40,9 +40,10 @@ namespace ExampleApp
                 
                 Eegeo::Rendering::Materials::MaterialIdGenerator& materialIdGenerator = renderingModule.GetMaterialIdGenerator();
                 m_pGpsIconMaterial = Eegeo_NEW(Eegeo::Rendering::Materials::BatchedSpriteMaterial)(materialIdGenerator.GetNextId(),
-                                                                                                       "Gps icon Sprite Material",
-                                                                                                       *m_pSpriteShader,
-                                                                                                       m_gpsIconTexture.textureId);
+                                                                                                   "Gps icon Sprite Material",
+                                                                                                   *m_pSpriteShader,
+                                                                                                   m_gpsIconTexture.textureId,
+                                                                                                   Eegeo::Rendering::TextureMinify_Nearest);
                 
                 Eegeo::Rendering::VertexLayouts::VertexLayoutPool& vertexLayoutPool = renderingModule.GetVertexLayoutPool();
                 Eegeo::Rendering::VertexLayouts::VertexBindingPool& vertexBindingPool = renderingModule.GetVertexBindingPool();
