@@ -53,15 +53,12 @@ CGFloat const SearchResultRowHeight = SECTION_HEADER_CELL_HEIGHT;
     {
         ExampleApp::Menu::View::MenuItemModel item = section.GetItemAtIndex(index);
 
-        std::string name = item.Name();
-        std::string details = item.Details();
-        std::string icon = item.Icon();
-
-        cell.textLabel.text = [NSString stringWithUTF8String:name.c_str()];
-        cell.detailTextLabel.text = [NSString stringWithUTF8String:details.c_str()];
+        cell.textLabel.text = [NSString stringWithUTF8String:item.Name().c_str()];
+        [cell.textLabel sizeToFit];
+        cell.detailTextLabel.text = [NSString stringWithUTF8String:item.Details().c_str()];
         cell.detailTextLabel.textColor = ExampleApp::Helpers::ColorPalette::DarkGreyTone;
         
-        std::string iconResourceName = ExampleApp::Helpers::IconResources::GetSearchResultIconPathForResourceName(icon);
+        std::string iconResourceName = ExampleApp::Helpers::IconResources::GetSearchResultIconPathForResourceName(item.Icon());
         cell.imageView.image = ExampleApp::Helpers::ImageHelpers::LoadImage(iconResourceName);
         cell.imageView.contentMode = UIViewContentModeScaleToFill;
     }

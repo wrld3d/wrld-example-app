@@ -14,6 +14,7 @@ import android.text.util.Linkify;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -43,7 +44,7 @@ public class YelpSearchResultPoiView implements View.OnClickListener
     private TextView m_reviewsView = null;
     private TextView m_reviewsHeader = null;
     private	TextView m_webHeader = null;
-    private	Button m_webVendorStyleLinkButton = null;
+    private	ImageButton m_webVendorStyleLinkButton = null;
     private ImageView m_categoryIcon = null;
 	private ImageView m_poiImage = null;
 	private ImageView m_poiRatingImage = null;
@@ -73,7 +74,7 @@ public class YelpSearchResultPoiView implements View.OnClickListener
         m_humanReadableCategoriesHeader = (TextView)m_view.findViewById(R.id.search_result_poi_view_categories_header);
         m_reviewsView = (TextView)m_view.findViewById(R.id.search_result_poi_view_reviews);
         m_reviewsHeader = (TextView)m_view.findViewById(R.id.search_result_poi_view_reviews_header);
-        m_webVendorStyleLinkButton = (Button)m_view.findViewById(R.id.search_result_poi_view_web_vendor_link_style);
+        m_webVendorStyleLinkButton = (ImageButton)m_view.findViewById(R.id.search_result_poi_view_web_vendor_link_style);
         m_webHeader = (TextView)m_view.findViewById(R.id.search_result_poi_view_web_header);
         m_categoryIcon = (ImageView)m_view.findViewById(R.id.search_result_poi_view_category_icon);
         m_poiImageProgressBar = m_view.findViewById(R.id.search_result_poi_view_image_progress);

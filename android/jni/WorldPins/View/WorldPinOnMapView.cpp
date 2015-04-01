@@ -2,6 +2,7 @@
 
 #include "WorldPinOnMapView.h"
 #include "AndroidAppThreadAssertionMacros.h"
+#include "ImagePathHelpers.h"
 
 namespace ExampleApp
 {
@@ -11,7 +12,7 @@ namespace ExampleApp
         {
             WorldPinOnMapView::WorldPinOnMapView(AndroidNativeState& nativeState, float pinDiameter)
                 : m_nativeState(nativeState)
-                , m_pinOffset(pinDiameter * 0.75f)
+                , m_pinOffset((pinDiameter * Helpers::ImageHelpers::GetPixelScale()) * 0.75f)
             {
                 ASSERT_UI_THREAD
 

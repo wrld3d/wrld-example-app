@@ -23,44 +23,43 @@ namespace ExampleApp
                 
                 if(Contains(category, "around me"))
                 {
-                    return "aroundme";
+                    return "icon1_aroundme";
                 }
                 if(Contains(category, "caf\xc3\xa9") || Contains(category, "cafe") || Contains(category, "coffee"))
                 {
-                    return "coffee";
+                    return "icon1_coffee";
                 }
                 if(Contains(category, "nightlife") || Contains(category, "night life"))
                 {
-                    return "nightlife";
+                    return "icon1_nightlife";
                 }
                 if(Contains(category, "museum") || category == "arts")
                 {
-                    return "arts";
+                    return "icon1_arts";
                 }
                 if(Contains(category, "park"))
                 {
-                    return "park";
+                    return "icon1_park";
                 }
                 if(Contains(category, "bank"))
                 {
-                    return "bank";
+                    return "icon1_bank";
                 }
                 if(Contains(category, "hotel"))
                 {
-                    return "hotel";
+                    return "icon1_hotel";
                 }
                 if(Contains(category, "restaurant") || Contains(category, "food"))
                 {
-                    return "food";
+                    return "icon1_food";
                 }
 
-                return "misc";
+                return "icon1_misc";
             }
 
             std::string GetSmallIconForCategory(const std::string& category)
             {
-                std::string matchedCategory = GetCategoryMatch(category);
-                return GetSmallIconPathForResourceName(matchedCategory);
+                return GetCategoryMatch(category);
             }
 
             std::string GetSmallIconPathForResourceName(const std::string& resource)
@@ -70,8 +69,7 @@ namespace ExampleApp
 
             std::string GetSearchResultIconPathForResourceName(const std::string& resource)
             {
-                std::string matchedCategory = GetCategoryMatch(resource);
-                return GetSmallIconPathForResourceName(matchedCategory);
+                return GetCategoryMatch(resource);
             }
         }
     }

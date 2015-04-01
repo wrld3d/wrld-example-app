@@ -111,7 +111,7 @@ namespace ExampleApp
         , m_pWorld(NULL)
         , m_platformAbstractions(platformAbstractions, networkCapabilities)
         , m_pLoadingScreen(NULL)
-        , m_pinDiameter(64.f)
+        , m_pinDiameter(48.f)
         , m_initialisedApplicationViewState(false)
         , m_pCameraTransitionController(NULL)
         , m_pSecondaryMenuModule(NULL)
@@ -277,6 +277,7 @@ namespace ExampleApp
                                                                                          m_platformAbstractions,
                                                                                          m_pWorld->GetLocationService(),
                                                                                          m_pWorld->GetTerrainModelModule(),
+                                                                                         m_pWorld->GetMapModule(),
                                                                                          m_messageBus);
 
         Eegeo::Modules::Map::CityThemesModule& cityThemesModule = world.GetCityThemesModule();
@@ -514,7 +515,9 @@ namespace ExampleApp
                             spriteWidth,
                             spriteHeight,
                             Eegeo::Rendering::LayerIds::PlaceNames,
-                            mapModule.GetEnvironmentFlatteningService()
+                            mapModule.GetEnvironmentFlatteningService(),
+                            m_screenProperties,
+                            false
                         );
 
         m_pWorldPinsModule = Eegeo_NEW(ExampleApp::WorldPins::SdkModel::WorldPinsModule)(

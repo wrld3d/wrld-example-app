@@ -66,7 +66,8 @@ namespace ExampleApp
                     m_pPoiRingIconMaterial = Eegeo_NEW(Eegeo::Rendering::Materials::BatchedSpriteMaterial)(materialIdGenerator.GetNextId(),
                                              "Poi Creation Sprite Material",
                                              *m_pSpriteShader,
-                                             m_poiRingIconTexture.textureId);
+                                             m_poiRingIconTexture.textureId,
+                                                                                                           Eegeo::Rendering::TextureMinify_Nearest);
 
                     Eegeo::Rendering::VertexLayouts::VertexLayoutPool& vertexLayoutPool = renderingModule.GetVertexLayoutPool();
                     Eegeo::Rendering::VertexLayouts::VertexBindingPool& vertexBindingPool = renderingModule.GetVertexBindingPool();

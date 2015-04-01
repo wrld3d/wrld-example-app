@@ -12,7 +12,6 @@ import org.scribe.model.Verb;
 import org.scribe.oauth.OAuthService;
 
 import com.eegeo.entrypointinfrastructure.MainActivity;
-import com.eegeo.web.UrlEncoder;
 
 import android.os.AsyncTask;
 
@@ -74,7 +73,7 @@ public class AndroidYelpSearchQuery
         }
         
     	OAuthRequest request = new OAuthRequest(Verb.GET, "http://" + API_HOST + SEARCH_PATH);
-        request.addQuerystringParameter("term", UrlEncoder.encodeQuery(searchQueryStr));
+        request.addQuerystringParameter("term", searchQueryStr);
         request.addQuerystringParameter("category_filter", categoryFilterStr);
         request.addQuerystringParameter("ll", searchLocationStr);
         request.addQuerystringParameter("radius_filter", radiusFilterStr);

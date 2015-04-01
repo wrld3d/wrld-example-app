@@ -44,7 +44,7 @@ namespace ExampleApp
                 std::string m_yelpOAuthToken;
                 std::string m_yelpOAuthTokenSecret;
                 IYelpCategoryMapper& m_yelpCategoryMapper;
-                const std::string& m_locationIdentifier;
+                std::string m_locationIdentifier;
                 Eegeo::Helpers::ICallback1<const SdkModel::IdentitySearchCallbackData&>& m_callback;
                 std::string m_responseString;
                 bool m_cancelled;
