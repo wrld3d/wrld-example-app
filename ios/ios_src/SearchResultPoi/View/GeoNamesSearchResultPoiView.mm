@@ -158,7 +158,7 @@
                                               mainWindowHeight);
     
     const float headlineHeight = 50.f;
-    const float closeButtonSectionHeight = 80.f;
+    const float closeButtonSectionHeight = 64.f;
     const float closeButtonSectionOffsetY = mainWindowHeight - closeButtonSectionHeight;
     const float contentSectionHeight = mainWindowHeight - (closeButtonSectionHeight + headlineHeight);
     
