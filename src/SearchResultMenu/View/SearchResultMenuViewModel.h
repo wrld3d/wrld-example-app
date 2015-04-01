@@ -24,6 +24,7 @@ namespace ExampleApp
                 Eegeo::Helpers::ICallback0* m_pModalReactorOpenControlReleasedCallback;
                 Reaction::View::IReactionControllerModel& m_reactionControllerModel;
                 bool m_hasSearchQuery;
+                bool m_hasSearchQueryInFlight;
 
                 void HandleMenuContentsChanged(Menu::View::MenuItemModel& item);
 
@@ -48,6 +49,8 @@ namespace ExampleApp
                 void RemoveFromScreen();
 
                 void SetHasSearchQuery(bool hasSearchQuery);
+
+                void SetHasSearchQueryInFlight(bool hasSearchQueryInFlight);
 
                 void UpdateOnScreenState(float onScreenState);
             };

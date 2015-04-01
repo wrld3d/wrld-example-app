@@ -12,12 +12,14 @@ namespace ExampleApp
             {
                 std::string headerString = CategorySearch::View::GetPresentationStringForQuery(m_categorySearchRepository, message.Query());
                 m_searchView.SetHeader(headerString, true, 0);
+                m_searchResultMenuViewModel.SetHasSearchQueryInFlight(true);
             }
 
             void SearchResultMenuController::OnSearchQueryResponseReceivedMessage(const Search::SearchQueryResponseReceivedMessage& message)
             {
                 std::string headerString = CategorySearch::View::GetPresentationStringForQuery(m_categorySearchRepository, message.GetQuery());
                 m_searchView.SetHeader(headerString, false, message.GetResults().size());
+                m_searchResultMenuViewModel.SetHasSearchQueryInFlight(false);
             }
 
             void SearchResultMenuController::OnViewClicked()
