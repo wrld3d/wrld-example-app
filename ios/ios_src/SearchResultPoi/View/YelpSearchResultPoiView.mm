@@ -274,7 +274,7 @@ const int DeletePinAlertViewTag = 2;
                                               mainWindowHeight);
     
     const float headlineHeight = 50.f;
-    const float closeButtonSectionHeight = 80.f;
+    const float closeButtonSectionHeight = 64.f;
     const float closeButtonSectionOffsetY = mainWindowHeight - closeButtonSectionHeight;
     const float contentSectionHeight = mainWindowHeight - (closeButtonSectionHeight + headlineHeight);
     
@@ -322,7 +322,7 @@ const int DeletePinAlertViewTag = 2;
     
     self->m_pVendorBrandingImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"yelp_logo_100x50", true) retain];
     self.pVendorBrandingImageContainer = [[[UIImageView alloc] initWithImage:self->m_pVendorBrandingImage] autorelease];
-    [self.pCloseButtonContainer addSubview:self.pVendorBrandingImageContainer];
+    //[self.pCloseButtonContainer addSubview:self.pVendorBrandingImageContainer];
     
     CGRect frame = self.pVendorBrandingImageContainer.frame;
     frame.origin.x = (self.pCloseButtonContainer.frame.size.width * 0.5f) - (frame.size.width * 0.5f);
