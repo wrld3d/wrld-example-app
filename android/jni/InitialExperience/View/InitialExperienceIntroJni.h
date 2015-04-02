@@ -6,7 +6,7 @@
 
 extern "C"
 {
-    JNIEXPORT void JNICALL Java_com_eegeo_initialexperience_dialogs_InitialExperienceDialogsJniMethods_CloseButtonClicked(
+    JNIEXPORT void JNICALL Java_com_eegeo_initialexperience_intro_InitialExperienceIntroJniMethods_OnDismiss(
         JNIEnv* jenv, jobject obj,
         jlong nativeObjectPtr);
 }

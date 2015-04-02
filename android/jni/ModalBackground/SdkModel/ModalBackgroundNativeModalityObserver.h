@@ -23,6 +23,7 @@ namespace ExampleApp
 
                 void OnUpdateNativeModalBackgroundMessage(const Modality::UpdateNativeModalBackgroundMessage& message)
                 {
+                	m_modalBackgroundView.SetFixedOn(message.ShouldFixOn());
                     m_modalBackgroundView.SetAlpha(message.Modality());
                 }
 

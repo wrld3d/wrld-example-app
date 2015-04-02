@@ -30,6 +30,8 @@ namespace ExampleApp
                     ExampleAppMessaging::TMessageBus& messageBus
                 );
 
+                void Update(float dt);
+
                 ~ModalBackgroundNativeViewModule();
             };
         }

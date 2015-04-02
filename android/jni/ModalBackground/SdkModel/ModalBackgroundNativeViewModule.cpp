@@ -44,6 +44,11 @@ namespace ExampleApp
                 m_renderableFilters.RemoveRenderableFilter(*m_pModalBackgroundView);
                 Eegeo_DELETE(m_pModalBackgroundView);
             }
+
+            void ModalBackgroundNativeViewModule::Update(float dt)
+            {
+            	m_pModalBackgroundView->Update(dt);
+            }
         }
     }
 }

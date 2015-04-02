@@ -44,7 +44,7 @@
 #include "MyPinDetailsViewIncludes.h"
 #include "BidirectionalBus.h"
 #include "AndroidConnectivityService.h"
-#include "InitialExperienceDialogsViewIncludes.h"
+#include "InitialExperienceViewIncludes.h"
 #include "OptionsViewIncludes.h"
 #include "WatermarkViewIncludes.h"
 #include "NetIncludes.h"
@@ -125,7 +125,7 @@ private:
     ExampleApp::MyPinCreation::View::IMyPinCreationViewModule* m_pMyPinCreationViewModule;
     ExampleApp::MyPinCreationDetails::View::IMyPinCreationDetailsViewModule* m_pMyPinCreationDetailsViewModule;
     ExampleApp::MyPinDetails::View::IMyPinDetailsViewModule* m_pMyPinDetailsViewModule;
-    ExampleApp::InitialExperience::Dialogs::View::InitialExperienceDialogsViewModule* m_pInitialExperienceDialogsViewModule; // TODO: Interface.
+    ExampleApp::InitialExperience::View::InitialExperienceIntroViewModule* m_pInitialExperienceIntroViewModule; // TODO: Interface.
     ExampleApp::Options::View::IOptionsViewModule* m_pOptionsViewModule;
     ExampleApp::Watermark::View::IWatermarkViewModule* m_pWatermarkViewModule;
     ExampleApp::Net::SdkModel::INetworkCapabilities* m_pNetworkCapabilities;

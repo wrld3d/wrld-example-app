@@ -6,13 +6,10 @@ namespace ExampleApp
 {
 	namespace InitialExperience
 	{
-		namespace Dialogs
+		namespace View
 		{
-			namespace View
-			{
-				class InitialExperienceDialogsView;
-				class InitialExperienceDialogsViewModule;
-			}
+			class InitialExperienceIntroViewModule;
+			class InitialExperienceIntroView;
 		}
 	}
 }
