@@ -139,11 +139,11 @@
     
     const float headlineHeight = 50.f;
     const float headlineMargin = 10.f;
-    const float optionButtonSectionHeight = 80.f;
+    const float optionButtonSectionHeight = 64.f;
     const float headlineOffsetY = 10.f;
     const float closeButtonSectionOffsetY = mainWindowHeight - optionButtonSectionHeight;
     const float contentSectionOffsetY = headlineOffsetY + headlineHeight;
-    const float contentSectionHeight = mainWindowHeight - (optionButtonSectionHeight + headlineHeight);
+    const float contentSectionHeight = mainWindowHeight - (optionButtonSectionHeight + contentSectionOffsetY);
     
     self.pHeadlineContainer.frame = CGRectMake(0.f,
                                                headlineOffsetY,

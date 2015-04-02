@@ -35,7 +35,6 @@ namespace ExampleApp
             , m_myPinsFileIO(myPinsFileIO)
             , m_messageBus(messageBus)
             , m_webLoadRequestFactory(webLoadRequestFactory)
-            , m_webRequestCompleteCallback(this, &UserCreatedPinBoundObject::WebRequestCompleteCallback)
             {
                 
             }
@@ -53,7 +52,6 @@ namespace ExampleApp
             , m_myPinsFileIO(myPinsFileIO)
             , m_messageBus(messageBus)
             , m_webLoadRequestFactory(webLoadRequestFactory)
-            , m_webRequestCompleteCallback(this, &UserCreatedPinBoundObject::WebRequestCompleteCallback)
             {
                 
             }
@@ -132,11 +130,6 @@ namespace ExampleApp
             void UserCreatedPinBoundObject::SubmitPinToWebService(const MyPinModel& pinModel)
             {
                 Eegeo_TTY("Here is where you submit pin to web service\n");
-            }
-            
-            void UserCreatedPinBoundObject::WebRequestCompleteCallback(Eegeo::Web::IWebLoadRequest& webLoadRequest)
-            {
-                Eegeo_TTY("Web Request Completed, code: %d\n", webLoadRequest.HttpStatusCode());
             }
         }
     }

@@ -55,7 +55,7 @@ namespace ExampleApp
 
             bool SearchResultMenuViewModel::CanInteract() const
             {
-                return CanShowOnScreen() && m_menuModel.GetItemCount() > 0;
+                return CanShowOnScreen() && m_menuModel.GetItemCount() > 0 && !m_hasSearchQueryInFlight;
             }
 
             void SearchResultMenuViewModel::AddToScreen()
@@ -110,6 +110,11 @@ namespace ExampleApp
                 {
                     AddToScreen();
                 }
+            }
+
+            void SearchResultMenuViewModel::SetHasSearchQueryInFlight(bool hasSearchQueryInFlight)
+            {
+            	m_hasSearchQueryInFlight = hasSearchQueryInFlight;
             }
 
             void SearchResultMenuViewModel::HandleReactorOpenControlReleased()

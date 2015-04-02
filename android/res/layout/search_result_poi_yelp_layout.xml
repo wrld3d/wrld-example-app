@@ -113,18 +113,17 @@
 	                android:text="@string/header_web"/>
 	
 	            <RelativeLayout 
-	                android:paddingLeft="3dp"
 	                android:paddingTop="5dp"
 	                android:paddingBottom="5dp"
-	             android:layout_width="fill_parent"
-	             android:layout_height="wrap_content">
-	             
-	             <Button
-	                 android:id="@+id/search_result_poi_view_web_vendor_link_style"
-	                 android:layout_width="wrap_content"
-	                 android:layout_height="wrap_content"
-	                 android:layout_centerInParent="true"
-	                 android:background="@drawable/reviews_from_yelp_red"/>
+	             	android:layout_width="fill_parent"
+	             	android:layout_height="wrap_content">
+		            <ImageButton
+		            	android:id="@+id/search_result_poi_view_web_vendor_link_style"
+		                android:layout_width="fill_parent"
+		                android:layout_height="fill_parent"
+		                android:layout_centerInParent="true"
+		                android:background="#00000000"
+		                android:src="@drawable/yelp_reviews"/>
 	            </RelativeLayout>
 	            
 	            <!--  Address  -->
@@ -220,14 +219,14 @@
 	         
 	         <ImageView
 				android:id="@+id/search_result_poi_view_vendor_branding"
-	            android:layout_width="102px"
-	            android:layout_height="50px"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
 	            android:layout_centerVertical="true"
 	            android:layout_centerHorizontal="true"
 				android:dither="true"
 	    		android:antialias="true"
 	    		android:contentDescription="Yelp"
-	    		android:src="@drawable/yelp_logo_100x50" />
+	    		android:src="@drawable/yelp_logo" />
          
          </RelativeLayout>
 	</RelativeLayout>

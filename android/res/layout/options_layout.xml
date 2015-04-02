@@ -3,12 +3,6 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:id="@+id/options_view">
-
-    <RelativeLayout
-        android:layout_width="450dp"
-        android:layout_height="325dp"
-        android:layout_centerInParent="true"
-        android:background="@color/gold"/>
     
     <LinearLayout
     	android:id="@+id/options_view_container"
@@ -17,7 +11,13 @@
 	    android:layout_centerInParent="true"
 	    android:orientation="vertical"
 	    android:paddingTop="10dp">
-		    
+	    
+        <!-- Top spacer fill bar -->
+        <RelativeLayout 
+            android:layout_width="fill_parent"
+            android:layout_height="20dp"
+            android:background="@color/gold"/>
+            
         <!-- Title bar -->
         <RelativeLayout 
             android:layout_width="fill_parent"
@@ -151,7 +151,8 @@
         <!--  Bottom bar with close button -->
         <RelativeLayout
            android:layout_width="fill_parent"
-           android:layout_height="wrap_content">
+           android:layout_height="wrap_content"
+	        android:background="@color/gold">
  
          <Button
              android:id="@+id/options_view_close_button"

@@ -12,7 +12,6 @@
 #include "CategorySearch.h"
 #include "Search.h"
 #include "Web.h"
-#include "WebLoadRequestCompletionCallback.h"
 #include "ICallback.h"
 
 namespace ExampleApp
@@ -32,12 +31,10 @@ namespace ExampleApp
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 ExampleAppMessaging::TSdkModelDomainEventBus& m_sdkModelDomainEventBus;
                 Eegeo::Web::IWebLoadRequestFactory& m_webLoadRequestFactory;
-                Eegeo::Web::TWebLoadRequestCompletionCallback<SearchResultPinBoundObject> m_webRequestCompleteCallback;
                 bool m_pinVendorRequiresRefreshing;
                 bool m_isCurrentlyRefreshingResult;
                 
                 void SubmitPinToWebService(const MyPinModel& pinModel);
-                void WebRequestCompleteCallback(Eegeo::Web::IWebLoadRequest& webLoadRequest);
                 
             public:
                 static SearchResultPinBoundObject* FromSerializedData(MyPinModel::TPinIdType pinId,

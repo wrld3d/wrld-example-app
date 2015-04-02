@@ -109,7 +109,11 @@ public class SearchMenuView extends MenuView
             m_progressSpinner.setVisibility(View.GONE);
         }
 
-        m_headerCategoryImage.setImageResource(CategoryResources.getSmallIconForCategory(m_activity, searchText));
+        if(m_headerCategoryImage != null)
+        {
+        	m_headerCategoryImage.setImageResource(CategoryResources.getSmallIconForCategory(m_activity, searchText));
+        }
+        
         m_headerText.setText(searchText);
     }
     
