@@ -27,8 +27,8 @@ const float arrowWidth = 10;
         self.pBannerBarContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::GoldTone;
         [self addSubview: self.pBannerBarContainer];
         
-        self.pWelcomeImage = [[[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, 140.f, 52.f)] autorelease];
-        self.pWelcomeImage.backgroundColor = [UIColor colorWithPatternImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"eegeo_logo")];
+        self.pWelcomeImage = [[[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, 320.0f, 90.0f)] autorelease];
+        self.pWelcomeImage.backgroundColor = [UIColor colorWithPatternImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"banner_logo")];
         [self.pBannerBarContainer addSubview:self.pWelcomeImage];
         
         self.pMenuDialogContainer = [[[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, 0.f, 0.f)] autorelease];
