@@ -8,6 +8,7 @@
 #include "VectorMath.h"
 #include "NavigationService.h"
 #include "ILocationService.h"
+#include "LatLongAltitude.h"
 
 namespace ExampleApp
 {
@@ -60,6 +61,14 @@ namespace ExampleApp
                     m_gpsModeUnauthorizedCallbacks.ExecuteCallbacks();
                     return;
                 }
+                
+                Eegeo::Space::LatLong latlong = Eegeo::Space::LatLong::FromDegrees(0.0, 0.0);
+                if(!m_locationService.GetLocation(latlong))
+                {
+                    DisableGpsMode();
+                    return;
+                }
+                
                 int gpsMode = static_cast<int>(m_gpsMode);
                 gpsMode = (gpsMode + 1) % static_cast<int>(GpsMode::GpsMode_Max);
                 GpsMode::Values newGpsMode = static_cast<GpsMode::Values>(gpsMode);
