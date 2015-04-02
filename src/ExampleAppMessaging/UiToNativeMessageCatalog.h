@@ -23,7 +23,7 @@
 #include "CacheEnabledChangedMessage.h"
 #include "ClearCacheMessage.h"
 #include "GpsMarkerVisibilityMessage.h"
-#include "InitialExperienceDialogDismissedMessage.h"
+#include "InitialExperienceIntroDismissedMessage.h"
 #include "SearchResultPoiPinToggledMessage.h"
 #include "SearchResultPoiViewOpenedMessage.h"
 
@@ -51,7 +51,7 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<Options::CacheEnabledChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<Options::ClearCacheMessage>
             , public Eegeo::Messaging::CatalogBinding<GpsMarker::GpsMarkerVisibilityMessage>
-        	, public Eegeo::Messaging::CatalogBinding<InitialExperience::Dialogs::InitialExperienceDialogDismissedMessage>
+        	, public Eegeo::Messaging::CatalogBinding<InitialExperience::InitialExperienceIntroDismissedMessage>
             , public Eegeo::Messaging::CatalogBinding<SearchResultPoi::SearchResultPoiPinToggledMessage>
             , public Eegeo::Messaging::CatalogBinding<SearchResultPoi::SearchResultPoiViewOpenedMessage>
             , private Eegeo::NonCopyable

@@ -61,9 +61,9 @@
 #include "NetworkCapabilities.h"
 #include "iOSYelpSearchServiceModule.h"
 #include "DecartaSearchServiceModule.h"
-#include "InitialExperienceDialogsViewModule.h"
-#include "InitialExperienceDialogsModule.h"
-#include "InitialExperienceDialogsView.h"
+#include "InitialExperienceIntroViewModule.h"
+#include "InitialExperienceIntroView.h"
+#include "InitialExperienceIntroBackgroundView.h"
 #include "ApplicationConfigurationModule.h"
 #include "IApplicationConfigurationService.h"
 
@@ -317,10 +317,13 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
                                 app.MyPinDetailsModule().GetMyPinDetailsViewModel(),
                                 screenProperties);
     
-    m_pInitialExperienceDialogsViewModule = Eegeo_NEW(ExampleApp::InitialExperience::Dialogs::View::InitialExperienceDialogsViewModule)(app.InitialExperienceDialogsModule().GetDialogsViewModel() ,m_messageBus);
+    m_pInitialExperienceIntroViewModule = Eegeo_NEW(ExampleApp::InitialExperience::View::InitialExperienceIntroViewModule)(m_messageBus);
 
     // 3d map view layer.
     [m_pView addSubview: &m_pWorldPinOnMapViewModule->GetWorldPinOnMapView()];
+    
+    // Initial Experience background
+    [m_pView addSubview: &m_pInitialExperienceIntroViewModule->GetIntroBackgroundView()];
 
     // HUD behind modal background layer.
     [m_pView addSubview: &m_pWatermarkViewModule->GetWatermarkView()];
@@ -344,7 +347,7 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
     [m_pView addSubview: &m_pMyPinDetailsViewModule->GetMyPinDetailsView()];
     
     // Initial experience layer
-    [m_pView addSubview: &m_pInitialExperienceDialogsViewModule->GetDialogsView()];
+    [m_pView addSubview: &m_pInitialExperienceIntroViewModule->GetIntroView()];
 
     m_pViewControllerUpdaterModule = Eegeo_NEW(ExampleApp::ViewControllerUpdater::View::ViewControllerUpdaterModule);
     ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModel& viewControllerUpdaterModel = m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel();
@@ -357,6 +360,8 @@ void AppHost::DestroyApplicationViewModules()
 {
     // 3d map view layer.
     [&m_pWorldPinOnMapViewModule->GetWorldPinOnMapView() removeFromSuperview];
+    
+    [&m_pInitialExperienceIntroViewModule->GetIntroBackgroundView() removeFromSuperview];
 
     // HUD behind modal background layer.
     [&m_pWatermarkViewModule->GetWatermarkView() removeFromSuperview];
@@ -380,7 +385,7 @@ void AppHost::DestroyApplicationViewModules()
     [&m_pOptionsViewModule->GetOptionsView() removeFromSuperview];
     
     // Initial experience layer
-    [&m_pInitialExperienceDialogsViewModule->GetDialogsView() removeFromSuperview];
+    [&m_pInitialExperienceIntroViewModule->GetIntroView() removeFromSuperview];
 
     Eegeo_DELETE m_pViewControllerUpdaterModule;
 
@@ -408,7 +413,7 @@ void AppHost::DestroyApplicationViewModules()
 
     Eegeo_DELETE m_pFlattenButtonViewModule;
     
-    Eegeo_DELETE m_pInitialExperienceDialogsViewModule;
+    Eegeo_DELETE m_pInitialExperienceIntroViewModule;
     
     Eegeo_DELETE m_pWatermarkViewModule;
 }

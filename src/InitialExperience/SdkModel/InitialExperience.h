@@ -13,5 +13,11 @@ namespace ExampleApp
             class IInitialExperienceStep;
             class IInitialExperienceController;
         }
+        
+        namespace View
+        {
+            class IInitialExperienceIntroView;
+            class InitialExperienceIntroController;
+        }
     }
 }

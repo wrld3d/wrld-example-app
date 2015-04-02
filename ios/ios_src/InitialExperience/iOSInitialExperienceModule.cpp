@@ -2,7 +2,7 @@
 
 #include "iOSInitialExperienceModule.h"
 #include "iOSInitialExperiencePreLoadModel.h"
-#include "InitialExperienceDialogStepsFactory.h"
+#include "InitialExperienceIntroStep.h"
 
 namespace ExampleApp
 {
@@ -30,8 +30,9 @@ namespace ExampleApp
 
             steps.push_back(pWorldAreaLoaderStep);
             
-            Dialogs::SdkModel::InitialExperienceDialogStepsFactory::AddInitialExperienceDialogSteps(m_messageBus, GetPersistentSettings(), steps);
-
+            SdkModel::IInitialExperienceStep* pIntroScreenStep = Eegeo_NEW(SdkModel::InitialExperienceIntroStep)(m_messageBus, GetPersistentSettings());
+            steps.push_back(pIntroScreenStep);
+            
             return steps;
         }
     }

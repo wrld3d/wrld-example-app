@@ -64,7 +64,6 @@
 #include "PlatformAbstractionsFacade.h"
 #include "NetIncludes.h"
 #include "GpsMarker.h"
-#include "InitialExperienceDialogs.h"
 #include "SdkModelDomainEventBus.h"
 #include "IMetricsService.h"
 #include "Watermark.h"
@@ -115,7 +114,6 @@ namespace ExampleApp
         ExampleApp::WorldAreaLoader::SdkModel::IWorldAreaLoaderModule* m_pWorldAreaLoaderModule;
         ExampleApp::AboutPage::View::IAboutPageModule* m_pAboutPageModule;
         ExampleApp::InitialExperience::SdkModel::IInitialExperienceModule& m_initialExperienceModule;
-        ExampleApp::InitialExperience::Dialogs::View::IInitialExperienceDialogsModule* m_pInitialExperienceDialogsModule;
         ExampleApp::MyPinCreation::PoiRing::SdkModel::IPoiRingModule* m_pPoiRingModule;
         ExampleApp::MyPinCreation::SdkModel::IMyPinCreationModule* m_pMyPinCreationModule;
         ExampleApp::MyPinCreationDetails::View::IMyPinCreationDetailsModule* m_pMyPinCreationDetailsModule;
@@ -290,11 +288,6 @@ namespace ExampleApp
         const ExampleApp::Watermark::IWatermarkModule& WatermarkModule() const
         {
             return *m_pWatermarkModule;
-        }
-
-        const ExampleApp::InitialExperience::Dialogs::View::IInitialExperienceDialogsModule& InitialExperienceDialogsModule() const
-        {
-        	return *m_pInitialExperienceDialogsModule;
         }
 
         void OnPause();
