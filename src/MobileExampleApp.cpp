@@ -389,7 +389,9 @@ namespace ExampleApp
         Eegeo::Modules::Map::StreamingModule& streamingModule = world.GetStreamingModule();
         m_pWorldAreaLoaderModule = Eegeo_NEW(WorldAreaLoader::SdkModel::WorldAreaLoaderModule)(streamingModule.GetPrecachingService());
 
-        m_initialExperienceModule.InitialiseWithApplicationModels(m_pWorldAreaLoaderModule->GetWorldAreaLoaderModel());
+        m_initialExperienceModule.InitialiseWithApplicationModels(m_pWorldAreaLoaderModule->GetWorldAreaLoaderModel(),
+                                                                  m_pSearchResultMenuModule->GetMenuViewModel(),
+                                                                  m_pSearchResultMenuModule->GetSearchResultMenuViewModel());
         
         m_pSecondaryMenuModule->AddMenuSection("Search", m_pCategorySearchModule->GetCategorySearchMenuModel(), true);
         m_pSecondaryMenuModule->AddMenuSection("Weather" , m_pWeatherMenuModule->GetWeatherMenuModel(), true);

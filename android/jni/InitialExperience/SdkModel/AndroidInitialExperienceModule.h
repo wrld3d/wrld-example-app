@@ -7,6 +7,8 @@
 #include "InitialExperienceModuleBase.h"
 #include "Types.h"
 #include "BidirectionalBus.h"
+#include "Menu.h"
+#include "SearchResultMenu.h"
 
 namespace ExampleApp
 {
@@ -30,7 +32,9 @@ namespace ExampleApp
 
             protected:
 
-                std::vector<IInitialExperienceStep*> CreateSteps(WorldAreaLoader::SdkModel::IWorldAreaLoaderModel& worldAreaLoaderModel) const;
+                std::vector<IInitialExperienceStep*> CreateSteps(WorldAreaLoader::SdkModel::IWorldAreaLoaderModel& worldAreaLoaderModel,
+                        Menu::View::IMenuViewModel& searchMenuViewModelControl,
+                        SearchResultMenu::View::ISearchResultMenuViewModel& searchResultMenuViewModel) const;
             };
         }
     }

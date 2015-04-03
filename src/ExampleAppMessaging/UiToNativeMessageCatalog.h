@@ -26,6 +26,7 @@
 #include "InitialExperienceIntroDismissedMessage.h"
 #include "SearchResultPoiPinToggledMessage.h"
 #include "SearchResultPoiViewOpenedMessage.h"
+#include "InitialExperienceSearchResultAttractModeModelStateExitedMessage.h"
 
 namespace ExampleApp
 {
@@ -54,6 +55,7 @@ namespace ExampleApp
         	, public Eegeo::Messaging::CatalogBinding<InitialExperience::InitialExperienceIntroDismissedMessage>
             , public Eegeo::Messaging::CatalogBinding<SearchResultPoi::SearchResultPoiPinToggledMessage>
             , public Eegeo::Messaging::CatalogBinding<SearchResultPoi::SearchResultPoiViewOpenedMessage>
+            , public Eegeo::Messaging::CatalogBinding<InitialExperience::SearchResultAttractMode::InitialExperienceSearchResultAttractModeModelStateExitedMessage>
             , private Eegeo::NonCopyable
         {
 

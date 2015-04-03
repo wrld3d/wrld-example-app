@@ -6,6 +6,9 @@ import java.util.HashMap;
 import java.util.List;
 
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -27,6 +30,8 @@ public class SearchMenuView extends MenuView
 
     protected int m_dragStartPosYPx;
     protected int m_controlStartPosYPx;
+    
+    private boolean m_inAttractMode = false;
 
     private SearchMenuAdapter m_listAdapter = null;
 
@@ -117,6 +122,27 @@ public class SearchMenuView extends MenuView
         m_headerText.setText(searchText);
     }
     
+    public void setAttractMode(boolean attractModeEnabled)
+    {
+        m_inAttractMode = attractModeEnabled;
+        updateAttractMode();
+    }
+    
+    private void updateAttractMode()
+    {
+    	m_view.clearAnimation();
+    	
+        if(m_inAttractMode)
+        {	
+    		Animation anim = new TranslateAnimation(0, -30.f, 0.f, 0.f);
+    		anim.setDuration(300);
+    		anim.setInterpolator(new AccelerateDecelerateInterpolator());
+    		anim.setRepeatCount(TranslateAnimation.INFINITE);
+    		anim.setRepeatMode(TranslateAnimation.REVERSE);
+    		
+    		m_view.startAnimation(anim);
+        }
+    }
 
     @Override
     protected void handleDragFinish(int xPx, int yPx)

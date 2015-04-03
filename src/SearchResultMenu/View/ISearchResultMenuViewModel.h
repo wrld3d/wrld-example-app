@@ -21,6 +21,16 @@ namespace ExampleApp
                 virtual void SetHasSearchQuery(bool hasSearchQuery) = 0;
 
                 virtual void SetHasSearchQueryInFlight(bool hasSearchQueryInFlight) = 0;
+                
+                virtual void EnterAttractMode() = 0;
+                
+                virtual void ExitAttractMode() = 0;
+                
+                virtual bool AttractModeEnabled() const = 0;
+                
+                virtual void InsertAttractModeChangedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
+                
+                virtual void RemoveAttractModeChangedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
             };
         }
     }

@@ -57,6 +57,8 @@
 		183E547A1ACE9E7700AD6B3E /* reviewsFromYelpRED@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 183E54751ACE9E7700AD6B3E /* reviewsFromYelpRED@2x.png */; };
 		183E547B1ACE9E7700AD6B3E /* reviewsFromYelpRED@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 183E54761ACE9E7700AD6B3E /* reviewsFromYelpRED@3x.png */; };
 		183E547C1ACE9E7700AD6B3E /* reviewsFromYelpRED@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 183E54761ACE9E7700AD6B3E /* reviewsFromYelpRED@3x.png */; };
+		183E546F1ACD8A4300AD6B3E /* InitialExperienceSearchResultAttractModeModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 183E546D1ACD8A4300AD6B3E /* InitialExperienceSearchResultAttractModeModel.cpp */; };
+		183E54701ACD8A4300AD6B3E /* InitialExperienceSearchResultAttractModeModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 183E546D1ACD8A4300AD6B3E /* InitialExperienceSearchResultAttractModeModel.cpp */; };
 		185145901AB0A8DC0071913E /* SplashScreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 1851458D1AB0A8DC0071913E /* SplashScreen.png */; };
 		185145911AB0A8DC0071913E /* SplashScreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 1851458D1AB0A8DC0071913E /* SplashScreen.png */; };
 		185145921AB0A8DC0071913E /* SplashScreen@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1851458E1AB0A8DC0071913E /* SplashScreen@2x.png */; };
@@ -1249,6 +1251,11 @@
 		183E54741ACE9E7700AD6B3E /* reviewsFromYelpRED.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = reviewsFromYelpRED.png; sourceTree = "<group>"; };
 		183E54751ACE9E7700AD6B3E /* reviewsFromYelpRED@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "reviewsFromYelpRED@2x.png"; sourceTree = "<group>"; };
 		183E54761ACE9E7700AD6B3E /* reviewsFromYelpRED@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "reviewsFromYelpRED@3x.png"; sourceTree = "<group>"; };
+		183E546D1ACD8A4300AD6B3E /* InitialExperienceSearchResultAttractModeModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InitialExperienceSearchResultAttractModeModel.cpp; sourceTree = "<group>"; };
+		183E546E1ACD8A4300AD6B3E /* InitialExperienceSearchResultAttractModeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InitialExperienceSearchResultAttractModeModel.h; sourceTree = "<group>"; };
+		183E54711ACD920700AD6B3E /* InitialExperienceSearchResultAttractModeModelStateUpdatedMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InitialExperienceSearchResultAttractModeModelStateUpdatedMessage.h; sourceTree = "<group>"; };
+		183E54721ACD960C00AD6B3E /* InitialExperienceSearchResultAttractModeModelStateEnteredMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InitialExperienceSearchResultAttractModeModelStateEnteredMessage.h; sourceTree = "<group>"; };
+		183E54731ACD961B00AD6B3E /* InitialExperienceSearchResultAttractModeModelStateExitedMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InitialExperienceSearchResultAttractModeModelStateExitedMessage.h; sourceTree = "<group>"; };
 		1851458D1AB0A8DC0071913E /* SplashScreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = SplashScreen.png; path = SplashScreen/SplashScreen.png; sourceTree = "<group>"; };
 		1851458E1AB0A8DC0071913E /* SplashScreen@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "SplashScreen@2x.png"; path = "SplashScreen/SplashScreen@2x.png"; sourceTree = "<group>"; };
 		1851458F1AB0A8DC0071913E /* SplashScreen@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "SplashScreen@3x.png"; path = "SplashScreen/SplashScreen@3x.png"; sourceTree = "<group>"; };
@@ -2537,6 +2544,18 @@
 			path = GeoNames;
 			sourceTree = "<group>";
 		};
+		183E54671ACD7BF100AD6B3E /* SearchAttract */ = {
+			isa = PBXGroup;
+			children = (
+				183E546D1ACD8A4300AD6B3E /* InitialExperienceSearchResultAttractModeModel.cpp */,
+				183E546E1ACD8A4300AD6B3E /* InitialExperienceSearchResultAttractModeModel.h */,
+				183E54721ACD960C00AD6B3E /* InitialExperienceSearchResultAttractModeModelStateEnteredMessage.h */,
+				183E54711ACD920700AD6B3E /* InitialExperienceSearchResultAttractModeModelStateUpdatedMessage.h */,
+				183E54731ACD961B00AD6B3E /* InitialExperienceSearchResultAttractModeModelStateExitedMessage.h */,
+			);
+			path = SearchAttract;
+			sourceTree = "<group>";
+		};
 		186B47011AB1D46B0084E80B /* Watermark */ = {
 			isa = PBXGroup;
 			children = (
@@ -3126,6 +3145,7 @@
 				7E1B506B1ACAD7030060FA4F /* View */,
 				7E1B506C1ACAD71F0060FA4F /* ShowInitialExperienceIntroMessage.h */,
 				7E1B506A1ACAD67F0060FA4F /* InitialExperienceIntroDismissedMessage.h */,
+				183E54671ACD7BF100AD6B3E /* SearchAttract */,
 				7E3B86C81A385A290023C94E /* Preload */,
 				7E3B86CF1A385A290023C94E /* SdkModel */,
 			);
@@ -5586,6 +5606,7 @@
 				7E3B89251A385A290023C94E /* MyPinCreationViewSavePinHandler.cpp in Sources */,
 				7E3B88E91A385A290023C94E /* InitialExperienceController.cpp in Sources */,
 				187853221A9CD6750001889C /* SearchResultPoiViewContainer.mm in Sources */,
+				183E54701ACD8A4300AD6B3E /* InitialExperienceSearchResultAttractModeModel.cpp in Sources */,
 				7E3B89711A385A290023C94E /* PlaceJumpsModule.cpp in Sources */,
 				7E3B89831A385A290023C94E /* ReactionModelModule.cpp in Sources */,
 				7E3B890F1A385A290023C94E /* MyPinCreationStateChangedMessage.cpp in Sources */,
@@ -5930,6 +5951,7 @@
 				7E3B89241A385A290023C94E /* MyPinCreationViewSavePinHandler.cpp in Sources */,
 				187853211A9CD6750001889C /* SearchResultPoiViewContainer.mm in Sources */,
 				7E3B88E81A385A290023C94E /* InitialExperienceController.cpp in Sources */,
+				183E546F1ACD8A4300AD6B3E /* InitialExperienceSearchResultAttractModeModel.cpp in Sources */,
 				7E3B89701A385A290023C94E /* PlaceJumpsModule.cpp in Sources */,
 				7E3B89821A385A290023C94E /* ReactionModelModule.cpp in Sources */,
 				7E3B890E1A385A290023C94E /* MyPinCreationStateChangedMessage.cpp in Sources */,

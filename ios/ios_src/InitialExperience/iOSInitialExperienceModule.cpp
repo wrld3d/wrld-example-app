@@ -3,6 +3,7 @@
 #include "iOSInitialExperienceModule.h"
 #include "iOSInitialExperiencePreLoadModel.h"
 #include "InitialExperienceIntroStep.h"
+#include "InitialExperienceSearchResultAttractModeModel.h"
 
 namespace ExampleApp
 {
@@ -21,7 +22,9 @@ namespace ExampleApp
 
         }
 
-        std::vector<SdkModel::IInitialExperienceStep*> iOSInitialExperienceModule::CreateSteps(WorldAreaLoader::SdkModel::IWorldAreaLoaderModel& worldAreaLoaderModel) const
+        std::vector<SdkModel::IInitialExperienceStep*> iOSInitialExperienceModule::CreateSteps(WorldAreaLoader::SdkModel::IWorldAreaLoaderModel& worldAreaLoaderModel,
+                                                                                               Menu::View::IMenuViewModel& searchMenuViewModelControl,
+                                                                                               SearchResultMenu::View::ISearchResultMenuViewModel& searchResultMenuViewModel) const
         {
             std::vector<SdkModel::IInitialExperienceStep*> steps;
 
@@ -32,6 +35,10 @@ namespace ExampleApp
             
             SdkModel::IInitialExperienceStep* pIntroScreenStep = Eegeo_NEW(SdkModel::InitialExperienceIntroStep)(m_messageBus, GetPersistentSettings());
             steps.push_back(pIntroScreenStep);
+            
+            SdkModel::IInitialExperienceStep* pSearchAttractStep = Eegeo_NEW(SearchResultAttractMode::InitialExperienceSearchResultAttractModeModel)(GetPersistentSettings(),
+                                                                                                                                                     searchMenuViewModelControl,searchResultMenuViewModel,                   m_messageBus);
+            steps.push_back(pSearchAttractStep);
             
             return steps;
         }

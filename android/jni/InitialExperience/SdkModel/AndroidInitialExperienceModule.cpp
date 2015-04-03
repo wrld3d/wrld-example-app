@@ -3,6 +3,7 @@
 #include "AndroidInitialExperienceModule.h"
 #include "AndroidInitialExperiencePreLoadModel.h"
 #include "InitialExperienceIntroStep.h"
+#include "InitialExperienceSearchResultAttractModeModel.h"
 
 namespace ExampleApp
 {
@@ -27,7 +28,9 @@ namespace ExampleApp
 
             }
 
-            std::vector<IInitialExperienceStep*> AndroidInitialExperienceModule::CreateSteps(WorldAreaLoader::SdkModel::IWorldAreaLoaderModel& worldAreaLoaderModel) const
+            std::vector<IInitialExperienceStep*> AndroidInitialExperienceModule::CreateSteps(WorldAreaLoader::SdkModel::IWorldAreaLoaderModel& worldAreaLoaderModel,
+                    Menu::View::IMenuViewModel& searchMenuViewModelControl,
+                    SearchResultMenu::View::ISearchResultMenuViewModel& searchResultMenuViewModel) const
             {
                 std::vector<IInitialExperienceStep*> steps;
 
@@ -41,6 +44,13 @@ namespace ExampleApp
 
                 IInitialExperienceStep* pIntroStep = Eegeo_NEW(InitialExperienceIntroStep)(m_messageBus, GetPersistentSettings());
                 steps.push_back(pIntroStep);
+
+                SdkModel::IInitialExperienceStep* pSearchAttractStep = Eegeo_NEW(SearchResultAttractMode::InitialExperienceSearchResultAttractModeModel)(GetPersistentSettings(),
+                                                                                                                                         searchMenuViewModelControl,
+                                                                                                                                         searchResultMenuViewModel,
+                                                                                                                                         m_messageBus);
+
+                steps.push_back(pSearchAttractStep);
 
                 return steps;
             }

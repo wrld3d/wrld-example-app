@@ -45,6 +45,11 @@ namespace ExampleApp
                 m_messageBus.Publish(ExampleApp::SearchResultMenu::SearchResultViewClearedMessage());
                 m_viewModel.RemoveFromScreen();
             }
+            
+            void SearchResultMenuController::OnAttractModeChanged()
+            {
+                m_searchView.SetAttractMode(m_searchResultMenuViewModel.AttractModeEnabled());
+            }
 
             SearchResultMenuController::SearchResultMenuController(
                 ISearchResultMenuView& searchView,
@@ -63,14 +68,17 @@ namespace ExampleApp
                 , m_onSearchCloseTappedCallback(this, &SearchResultMenuController::OnSearchClosed)
                 , m_searchQueryIssuedHandler(this, &SearchResultMenuController::OnSearchQueryPerformedMessage)
                 , m_searchResultReceivedHandler(this, &SearchResultMenuController::OnSearchQueryResponseReceivedMessage)
+                , m_attractModeChangedCallback(this, &SearchResultMenuController::OnAttractModeChanged)
             {
                 m_searchView.InsertSearchClosed(m_onSearchCloseTappedCallback);
                 m_messageBus.SubscribeUi(m_searchQueryIssuedHandler);
                 m_messageBus.SubscribeUi(m_searchResultReceivedHandler);
+                m_searchResultMenuViewModel.InsertAttractModeChangedCallback(m_attractModeChangedCallback);
             }
 
             SearchResultMenuController::~SearchResultMenuController()
             {
+                m_searchResultMenuViewModel.RemoveAttractModeChangedCallback(m_attractModeChangedCallback);
                 m_messageBus.UnsubscribeUi(m_searchResultReceivedHandler);
                 m_messageBus.UnsubscribeUi(m_searchQueryIssuedHandler);
                 m_searchView.RemoveSearchClosed(m_onSearchCloseTappedCallback);
