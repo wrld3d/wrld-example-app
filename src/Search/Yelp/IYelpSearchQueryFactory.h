@@ -18,10 +18,12 @@ namespace ExampleApp
                 virtual ~IYelpSearchQueryFactory() { }
                 
                 virtual IYelpSearchQuery* CreateYelpSearchForQuery(const SdkModel::SearchQuery& query,
-                                                                   Eegeo::Helpers::ICallback0& completionCallback) = 0;
+                                                                   Eegeo::Helpers::ICallback0& completionCallback,
+                                                                   SdkModel::ISearchResultParser& searchResultParser) = 0;
                 
                 virtual IYelpSearchQuery* CreateYelpSearchForSpecificLocation(const std::string& locationIdentifier,
-                                                                              Eegeo::Helpers::ICallback1<const SdkModel::IdentitySearchCallbackData&>& callback) = 0;
+                                                                              Eegeo::Helpers::ICallback1<const SdkModel::IdentitySearchCallbackData&>& callback,
+                                                                              SdkModel::ISearchResultParser& searchResultParser) = 0;
             };
         }
     }

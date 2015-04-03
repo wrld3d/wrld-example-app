@@ -33,11 +33,13 @@ namespace ExampleApp
                 ~iOSYelpSearchQueryFactory();
                 
                 IYelpSearchQuery* CreateYelpSearchForQuery(const SdkModel::SearchQuery& query,
-                                                           Eegeo::Helpers::ICallback0& completionCallback);
+                                                           Eegeo::Helpers::ICallback0& completionCallback,
+                                                           SdkModel::ISearchResultParser& searchResultParser);
                 
                 
                 IYelpSearchQuery* CreateYelpSearchForSpecificLocation(const std::string& locationIdentifier,
-                                                                      Eegeo::Helpers::ICallback1<const SdkModel::IdentitySearchCallbackData&>& callback);
+                                                                      Eegeo::Helpers::ICallback1<const SdkModel::IdentitySearchCallbackData&>& callback,
+                                                                      SdkModel::ISearchResultParser& searchResultParser);
             };
         }
     }

@@ -4,6 +4,8 @@
 
 #include <string>
 #include "Search.h"
+#include <vector>
+#include "SearchResultModel.h"
 
 namespace ExampleApp
 {
@@ -23,6 +25,7 @@ namespace ExampleApp
                 virtual bool IsSucceeded() = 0;
                 
                 virtual const std::string& ResponseString() = 0;
+                virtual const std::vector<SdkModel::SearchResultModel>& ResponseSearchQueryResults() = 0;
             };
         }
     }

@@ -28,7 +28,8 @@ namespace ExampleApp
             }
             
             IYelpSearchQuery* iOSYelpSearchQueryFactory::CreateYelpSearchForQuery(const SdkModel::SearchQuery& query,
-                                                                                  Eegeo::Helpers::ICallback0& completionCallback)
+                                                                                  Eegeo::Helpers::ICallback0& completionCallback,
+                                                                                  SdkModel::ISearchResultParser& m_searchResultParser)
             
             {
                 return Eegeo_NEW(iOSYelpSearchQuery)(m_yelpConsumerKey,
@@ -36,11 +37,13 @@ namespace ExampleApp
                                                      m_yelpOAuthToken,
                                                      m_yelpOAuthTokenSecret,
                                                      query,
-                                                     completionCallback);
+                                                     completionCallback,
+                                                     m_searchResultParser);
             }
             
             IYelpSearchQuery* iOSYelpSearchQueryFactory::CreateYelpSearchForSpecificLocation(const std::string& locationIdentifier,
-                                                                                             Eegeo::Helpers::ICallback1<const SdkModel::IdentitySearchCallbackData&>& callback)
+                                                                                             Eegeo::Helpers::ICallback1<const SdkModel::IdentitySearchCallbackData&>& callback,
+                                                                                             SdkModel::ISearchResultParser& m_searchResultParser)
             
             {
                 return Eegeo_NEW(iOSYelpBusinessQuery)(m_yelpConsumerKey,
@@ -49,7 +52,8 @@ namespace ExampleApp
                                                        m_yelpOAuthTokenSecret,
                                                        m_yelpCategoryMapper,
                                                        locationIdentifier,
-                                                       callback);
+                                                       callback,
+                                                       m_searchResultParser);
             }
         }
     }

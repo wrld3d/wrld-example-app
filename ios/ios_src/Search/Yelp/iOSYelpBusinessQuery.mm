@@ -3,6 +3,7 @@
 #include "iOSYelpBusinessQuery.h"
 #import <Foundation/Foundation.h>
 #import "NSURLRequest+OAuth.h"
+#include "ISearchResultParser.h"
 #include "YelpSearchJsonParser.h"
 
 namespace ExampleApp
@@ -20,7 +21,8 @@ namespace ExampleApp
                                                        const std::string& yelpOAuthTokenSecret,
                                                        IYelpCategoryMapper& yelpCategoryMapper,
                                                        const std::string& locationIdentifier,
-                                                       Eegeo::Helpers::ICallback1<const SdkModel::IdentitySearchCallbackData&>& callback)
+                                                       Eegeo::Helpers::ICallback1<const SdkModel::IdentitySearchCallbackData&>& callback,
+                                                       SdkModel::ISearchResultParser& searchResultParser)
             : m_yelpConsumerKey(yelpConsumerKey)
             , m_yelpConsumerSecret(yelpConsumerSecret)
             , m_yelpOAuthToken(yelpOAuthToken)
@@ -32,6 +34,7 @@ namespace ExampleApp
             , m_cancelled(false)
             , m_isSuccess(false)
             , m_pTask(NULL)
+            , m_searchResultParser(searchResultParser)
             {
             }
             
@@ -66,6 +69,7 @@ namespace ExampleApp
                                    const Byte* input = (Byte*)[data bytes];
                                    const size_t length = [data length];
                                    m_responseString = std::string(reinterpret_cast<char const*>(&(input[0])), length);
+                                   m_searchResultParser.ParseSearchResults(m_responseString, m_responseQueryResults);
                                }
                                
                                dispatch_async(dispatch_get_main_queue(),
@@ -95,6 +99,11 @@ namespace ExampleApp
                 return m_responseString;
             }
             
+            const std::vector<SdkModel::SearchResultModel>& iOSYelpBusinessQuery::ResponseSearchQueryResults()
+            {
+                return m_responseQueryResults;
+            }
+
             void iOSYelpBusinessQuery::DispatchCallback()
             {
                 if(!m_cancelled)

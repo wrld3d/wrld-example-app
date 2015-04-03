@@ -57,7 +57,7 @@ CGFloat const SearchResultRowHeight = SECTION_HEADER_CELL_HEIGHT;
         [cell.textLabel sizeToFit];
         cell.detailTextLabel.text = [NSString stringWithUTF8String:item.Details().c_str()];
         cell.detailTextLabel.textColor = ExampleApp::Helpers::ColorPalette::DarkGreyTone;
-        
+        // COMENT 3 LINES BELOW THIS- SCOTT
         std::string iconResourceName = ExampleApp::Helpers::IconResources::GetSearchResultIconPathForResourceName(item.Icon());
         cell.imageView.image = ExampleApp::Helpers::ImageHelpers::LoadImage(iconResourceName);
         cell.imageView.contentMode = UIViewContentModeScaleToFill;

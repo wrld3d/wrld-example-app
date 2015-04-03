@@ -12,6 +12,7 @@
 #include "IGeoNamesSearchQueryFactory.h"
 #include "IGeoNamesParser.h"
 #include "INetworkCapabilities.h"
+#include "Timer.h"
 
 namespace ExampleApp
 {
@@ -86,7 +87,19 @@ namespace ExampleApp
                 m_hasActiveQuery = true;
                 
                 ExecuteQueryPerformedCallbacks(m_currentQueryModel);
+                
+                Eegeo::Helpers::Timer issueYelpRequestTimer;
+                issueYelpRequestTimer.Start();
+                
                 IssueYelpRequest();
+                issueYelpRequestTimer.Stop();
+                if(issueYelpRequestTimer.Total() > 1)
+                {
+                    Eegeo::TtyHandler::TtyEnabled = true;
+                    //Eegeo_TTY("issueYelpRequestTimer = %lld\n", issueYelpRequestTimer.Total());
+                    Eegeo::TtyHandler::TtyEnabled = false;
+                }
+                
                 IssueGeoNameRequest();
             }
             
@@ -102,7 +115,7 @@ namespace ExampleApp
                 // the details of how cancellation works with the request lifecycle for our platform specific
                 // implementations. We keep a pointer to the current request so we can change the active request,
                 // have a NULL request, etc.
-                m_pCurrentRequest = m_searchQueryFactory.CreateYelpSearchForQuery(m_currentQueryModel, m_poiSearchCallback);
+                m_pCurrentRequest = m_searchQueryFactory.CreateYelpSearchForQuery(m_currentQueryModel, m_poiSearchCallback, m_searchResultParser);
                 m_pCurrentRequest->Dispatch();
             }
 
@@ -112,8 +125,19 @@ namespace ExampleApp
                 {
                     if(m_pCurrentRequest->IsSucceeded())
                     {
-                        const std::string& response(m_pCurrentRequest->ResponseString());
-                        m_searchResultParser.ParseSearchResults(response, m_currentQueryResults);
+                        Eegeo::Helpers::Timer parseSearchResultsTimer;
+                        parseSearchResultsTimer.Start();
+                        
+                        //const std::string& response(m_pCurrentRequest->ResponseString());
+                        //m_searchResultParser.ParseSearchResults(response, m_currentQueryResults);
+                        m_currentQueryResults = m_pCurrentRequest->ResponseSearchQueryResults();
+                        parseSearchResultsTimer.Stop();
+                        if(parseSearchResultsTimer.Total() > 1)
+                        {
+                            Eegeo::TtyHandler::TtyEnabled = true;
+                            //Eegeo_TTY("parseSearchResultsTimer = %lld\n", parseSearchResultsTimer.Total());
+                            Eegeo::TtyHandler::TtyEnabled = false;
+                        }
                     }
 
                     m_pCurrentRequest = NULL;
@@ -180,7 +204,7 @@ namespace ExampleApp
             void YelpSearchService::PerformIdentitySearch(const std::string& searchResultIdentifier,
                                                           Eegeo::Helpers::ICallback1<const SdkModel::IdentitySearchCallbackData&>& callback)
             {
-                m_searchQueryFactory.CreateYelpSearchForSpecificLocation(searchResultIdentifier, callback)->Dispatch();
+                m_searchQueryFactory.CreateYelpSearchForSpecificLocation(searchResultIdentifier, callback, m_searchResultParser)->Dispatch();
             }
         }
     }

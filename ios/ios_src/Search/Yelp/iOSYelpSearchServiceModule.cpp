@@ -12,6 +12,7 @@
 #include "GeoNamesJsonParser.h"
 #include "ApiKey.h"
 
+
 namespace ExampleApp
 {
     namespace Search

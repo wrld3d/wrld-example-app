@@ -21,7 +21,8 @@ namespace ExampleApp
                                    const std::string& yelpOAuthToken,
                                    const std::string& yelpOAuthTokenSecret,
                                    const SdkModel::SearchQuery& searchQuery,
-                                   Eegeo::Helpers::ICallback0& completionCallback);
+                                   Eegeo::Helpers::ICallback0& completionCallback,
+                                   SdkModel::ISearchResultParser& searchResultParser);
                 
                 ~iOSYelpSearchQuery();
                 
@@ -35,6 +36,8 @@ namespace ExampleApp
                 
                 const SdkModel::SearchQuery& GetSearchQuery() const;
                 
+                const std::vector<SdkModel::SearchResultModel>& ResponseSearchQueryResults();
+                
             private:
                 std::string m_yelpConsumerKey;
                 std::string m_yelpConsumerSecret;
@@ -43,9 +46,11 @@ namespace ExampleApp
                 SdkModel::SearchQuery m_searchQuery;
                 Eegeo::Helpers::ICallback0& m_completionCallback;
                 std::string m_responseString;
+                std::vector<SdkModel::SearchResultModel> m_responseQueryResults;
                 bool m_cancelled;
                 bool m_isSuccess;
                 NSURLSessionDataTask* m_pTask;
+                SdkModel::ISearchResultParser& m_searchResultParser;
             };
         }
     }
