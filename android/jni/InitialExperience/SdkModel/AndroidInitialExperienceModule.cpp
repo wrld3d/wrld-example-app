@@ -19,18 +19,19 @@ namespace ExampleApp
                 : InitialExperienceModuleBase(persistentSettings)
                 , m_nativeState(nativeState)
             	, m_messageBus(messageBus)
+            	, m_pInitialExperienceSearchResultAttractModeModule(NULL)
             {
 
             }
 
             AndroidInitialExperienceModule::~AndroidInitialExperienceModule()
             {
-
+                Eegeo_DELETE m_pInitialExperienceSearchResultAttractModeModule;
             }
 
             std::vector<IInitialExperienceStep*> AndroidInitialExperienceModule::CreateSteps(WorldAreaLoader::SdkModel::IWorldAreaLoaderModel& worldAreaLoaderModel,
                     Menu::View::IMenuViewModel& searchMenuViewModelControl,
-                    SearchResultMenu::View::ISearchResultMenuViewModel& searchResultMenuViewModel) const
+                    SearchResultMenu::View::ISearchResultMenuViewModel& searchResultMenuViewModel)
             {
                 std::vector<IInitialExperienceStep*> steps;
 
@@ -45,12 +46,10 @@ namespace ExampleApp
                 IInitialExperienceStep* pIntroStep = Eegeo_NEW(InitialExperienceIntroStep)(m_messageBus, GetPersistentSettings());
                 steps.push_back(pIntroStep);
 
-                SdkModel::IInitialExperienceStep* pSearchAttractStep = Eegeo_NEW(SearchResultAttractMode::InitialExperienceSearchResultAttractModeModel)(GetPersistentSettings(),
-                                                                                                                                         searchMenuViewModelControl,
-                                                                                                                                         searchResultMenuViewModel,
-                                                                                                                                         m_messageBus);
+                m_pInitialExperienceSearchResultAttractModeModule = Eegeo_NEW(SearchResultAttractMode::InitialExperienceSearchResultAttractModeModule)(GetPersistentSettings(),
+                                                                                                                                                         searchMenuViewModelControl,searchResultMenuViewModel,                   m_messageBus);
 
-                steps.push_back(pSearchAttractStep);
+                steps.push_back(&m_pInitialExperienceSearchResultAttractModeModule->GetInitialExperienceStep());
 
                 return steps;
             }

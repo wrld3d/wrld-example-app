@@ -130,17 +130,17 @@ public class SearchMenuView extends MenuView
     
     private void updateAttractMode()
     {
-    	m_view.clearAnimation();
+    	m_dragTabView.clearAnimation();
     	
         if(m_inAttractMode)
         {	
-    		Animation anim = new TranslateAnimation(0, -30.f, 0.f, 0.f);
+    		Animation anim = new TranslateAnimation(0, -10.f, 0.f, 0.f);
     		anim.setDuration(300);
     		anim.setInterpolator(new AccelerateDecelerateInterpolator());
     		anim.setRepeatCount(TranslateAnimation.INFINITE);
     		anim.setRepeatMode(TranslateAnimation.REVERSE);
     		
-    		m_view.startAnimation(anim);
+    		m_dragTabView.startAnimation(anim);
         }
     }
 
@@ -156,11 +156,14 @@ public class SearchMenuView extends MenuView
 
         animateViewToX(upXPx);
         MenuViewJniMethods.ViewDragCompleted(m_nativeCallerPointer);
+        updateAttractMode();
     }
 
     @Override
     protected void handleDragUpdate(int xPx, int yPx)
     {
+    	m_dragTabView.clearAnimation();
+    	
         float newXPx = m_controlStartPosXPx + (xPx - m_dragStartPosXPx);
 
         if(newXPx > m_mainContainerOffscreenOffsetXPx)

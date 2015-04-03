@@ -44,7 +44,7 @@ namespace ExampleApp
 
                 virtual std::vector<IInitialExperienceStep*> CreateSteps(WorldAreaLoader::SdkModel::IWorldAreaLoaderModel &worldAreaLoaderModel,
                                                                          Menu::View::IMenuViewModel& searchMenuViewModelControl,
-                                                                         SearchResultMenu::View::ISearchResultMenuViewModel& searchResultMenuViewModel) const = 0;
+                                                                         SearchResultMenu::View::ISearchResultMenuViewModel& searchResultMenuViewModel)  = 0;
             };
         }
     }

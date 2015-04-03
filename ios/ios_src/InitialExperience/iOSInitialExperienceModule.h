@@ -10,6 +10,7 @@
 #include "BidirectionalBus.h"
 #include "Menu.h"
 #include "SearchResultMenu.h"
+#include "InitialExperienceSearchResultAttractModeModule.h"
 
 namespace ExampleApp
 {
@@ -27,9 +28,12 @@ namespace ExampleApp
 
             std::vector<SdkModel::IInitialExperienceStep*> CreateSteps(WorldAreaLoader::SdkModel::IWorldAreaLoaderModel& worldAreaLoaderModel,
                                                                        Menu::View::IMenuViewModel& searchMenuViewModelControl,
-                                                                       SearchResultMenu::View::ISearchResultMenuViewModel& searchResultMenuViewModel) const;
+                                                                       SearchResultMenu::View::ISearchResultMenuViewModel& searchResultMenuViewModel) ;
             
             ExampleAppMessaging::TMessageBus& m_messageBus;
+            
+        private:
+            SearchResultAttractMode::InitialExperienceSearchResultAttractModeModule* m_pInitialExperienceSearchResultAttractModeModule;
         };
     }
 }

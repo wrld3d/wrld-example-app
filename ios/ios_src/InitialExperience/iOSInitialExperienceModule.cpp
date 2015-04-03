@@ -11,20 +11,20 @@ namespace ExampleApp
     {
         iOSInitialExperienceModule::iOSInitialExperienceModule(PersistentSettings::IPersistentSettingsModel& persistentSettings,
                                                                ExampleAppMessaging::TMessageBus& messageBus)
-            :InitialExperienceModuleBase(persistentSettings)
-            ,m_messageBus(messageBus)
+            : InitialExperienceModuleBase(persistentSettings)
+            , m_messageBus(messageBus)
+            , m_pInitialExperienceSearchResultAttractModeModule(NULL)
         {
-
         }
 
         iOSInitialExperienceModule::~iOSInitialExperienceModule()
         {
-
+            Eegeo_DELETE m_pInitialExperienceSearchResultAttractModeModule;
         }
 
         std::vector<SdkModel::IInitialExperienceStep*> iOSInitialExperienceModule::CreateSteps(WorldAreaLoader::SdkModel::IWorldAreaLoaderModel& worldAreaLoaderModel,
                                                                                                Menu::View::IMenuViewModel& searchMenuViewModelControl,
-                                                                                               SearchResultMenu::View::ISearchResultMenuViewModel& searchResultMenuViewModel) const
+                                                                                               SearchResultMenu::View::ISearchResultMenuViewModel& searchResultMenuViewModel)
         {
             std::vector<SdkModel::IInitialExperienceStep*> steps;
 
@@ -36,9 +36,10 @@ namespace ExampleApp
             SdkModel::IInitialExperienceStep* pIntroScreenStep = Eegeo_NEW(SdkModel::InitialExperienceIntroStep)(m_messageBus, GetPersistentSettings());
             steps.push_back(pIntroScreenStep);
             
-            SdkModel::IInitialExperienceStep* pSearchAttractStep = Eegeo_NEW(SearchResultAttractMode::InitialExperienceSearchResultAttractModeModel)(GetPersistentSettings(),
+            m_pInitialExperienceSearchResultAttractModeModule = Eegeo_NEW(SearchResultAttractMode::InitialExperienceSearchResultAttractModeModule)(GetPersistentSettings(),
                                                                                                                                                      searchMenuViewModelControl,searchResultMenuViewModel,                   m_messageBus);
-            steps.push_back(pSearchAttractStep);
+            
+            steps.push_back(&m_pInitialExperienceSearchResultAttractModeModule->GetInitialExperienceStep());
             
             return steps;
         }
