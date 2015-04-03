@@ -67,6 +67,8 @@ const float arrowWidth = 10;
         self.pPinCreationDialogDescription = [self createDialogDescription:@"Create your own places"];
         [self.pPinCreationDialogContainer addSubview:self.pPinCreationDialogDescription];
         
+        m_awaitingInput = false;
+        
         m_tapGestureRecogniser = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(_tapTabGesture:)];
         [m_tapGestureRecogniser setDelegate:self];
         [self addGestureRecognizer:m_tapGestureRecogniser];
@@ -226,12 +228,14 @@ const float arrowWidth = 10;
 
 - (BOOL) consumesTouch:(UITouch *)touch
 {
-    return ![self isHidden];
+    return m_awaitingInput;
 }
 
 - (void) show
 {
     [self setHidden:NO];
+    
+    m_awaitingInput = true;
     
     [self.pBannerBarContainer setCenter:CGPointMake(m_screenWidth/2 - m_screenWidth, m_screenHeight/2)];
     self.pMenuDialogContainer.alpha = 0.0f;
@@ -287,6 +291,8 @@ const float arrowWidth = 10;
 
 - (void) dismiss
 {
+    m_awaitingInput = false;
+    
     [self.pBannerBarContainer setCenter:CGPointMake(m_screenWidth/2, m_screenHeight/2)];
     self.pMenuDialogContainer.alpha = 1.0f;
     self.pCompassDialogContainer.alpha = 1.0f;
@@ -343,7 +349,10 @@ const float arrowWidth = 10;
 
 - (void)_tapTabGesture:(UITapGestureRecognizer *)recognizer
 {
-    m_pInterop->OnDismiss();
+    if(m_awaitingInput)
+    {
+        m_pInterop->OnDismiss();
+    }
 }
 
 @end
