@@ -93,7 +93,7 @@ const float arrowWidth = 10;
 {
     const bool useSmallScreen = App::IsDeviceSmall();
     UITextView* pTextView = [[[UITextView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-    pTextView.textColor = ExampleApp::Helpers::ColorPalette::LightGreyTone;
+    pTextView.textColor = ExampleApp::Helpers::ColorPalette::DarkGreyTone;
     pTextView.editable = NO;
     pTextView.scrollEnabled = NO;
     pTextView.font = useSmallScreen ? [UIFont systemFontOfSize:14.0f] : [UIFont systemFontOfSize:16.0f];
