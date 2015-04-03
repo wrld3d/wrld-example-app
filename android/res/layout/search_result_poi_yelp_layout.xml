@@ -117,13 +117,13 @@
 	                android:paddingBottom="5dp"
 	             	android:layout_width="fill_parent"
 	             	android:layout_height="wrap_content">
-		            <ImageButton
+		            <com.eegeo.helpers.TintableImageView
 		            	android:id="@+id/search_result_poi_view_web_vendor_link_style"
-		                android:layout_width="fill_parent"
-		                android:layout_height="fill_parent"
+		                android:layout_width="wrap_content"
+		                android:layout_height="wrap_content"
 		                android:layout_centerInParent="true"
-		                android:background="#00000000"
-		                android:src="@drawable/yelp_reviews"/>
+		                android:background="@drawable/yelp_reviews"
+   						android:clickable="true"/>
 	            </RelativeLayout>
 	            
 	            <!--  Address  -->
