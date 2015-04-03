@@ -167,13 +167,32 @@
 
 - (void) updatePosition:(float)x :(float)y
 {
-    float trueY = y/m_pixelScale - m_pinOffset/m_pixelScale;
-    float trueX = x/m_pixelScale;
-
-    CGRect f = self.frame;
-    f.origin.x = static_cast<int>(trueX - (f.size.width/2.f));
-    f.origin.y = static_cast<int>(trueY - (f.size.height));
-    self.frame = f;
+    float roundedX = roundf(x);
+    float roundedY = roundf(y);
+    
+    if(m_previousX == roundedX && m_previousY == roundedY)
+    {
+        float trueY = roundedY/m_pixelScale - m_pinOffset/m_pixelScale;
+        float trueX = roundedX/m_pixelScale;
+        
+        CGRect f = self.frame;
+        f.origin.x = static_cast<int>(trueX - (f.size.width/2.f));
+        f.origin.y = static_cast<int>(trueY - (f.size.height));
+        self.frame = f;
+    }
+    else
+    {
+        float trueY = y/m_pixelScale - m_pinOffset;
+        float trueX = x/m_pixelScale;
+        
+        CGRect f = self.frame;
+        f.origin.x = trueX - (f.size.width/2.f);
+        f.origin.y = trueY - (f.size.height);
+        self.frame = f;
+    }
+    
+    m_previousX = roundedX;
+    m_previousY = roundedY;
 }
 
 - (BOOL)consumesTouch:(UITouch *)touch
