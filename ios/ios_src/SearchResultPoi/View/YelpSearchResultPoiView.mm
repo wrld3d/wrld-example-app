@@ -69,10 +69,11 @@ const int DeletePinAlertViewTag = 2;
         [self.pContentContainer addSubview: self.pLabelsContainer];
         
         self.pHeadlineContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pHeadlineContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::MainHudColor;
+        self.pHeadlineContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::WhiteTone;
         [self.pControlContainer addSubview: self.pHeadlineContainer];
         
         self.pCategoryIconContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        self.pCategoryIconContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::WhiteTone;
         [self.pHeadlineContainer addSubview: self.pCategoryIconContainer];
         
         self.pTitleLabel = [self createLabel :ExampleApp::Helpers::ColorPalette::MainHudColor :ExampleApp::Helpers::ColorPalette::WhiteTone];
