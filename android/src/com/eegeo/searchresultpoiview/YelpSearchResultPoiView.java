@@ -33,7 +33,7 @@ public class YelpSearchResultPoiView implements View.OnClickListener
 
     private View m_closeButton = null;
     private ToggleButton m_togglePinnedButton = null;
-    private View m_vendorBranding = null;
+    //private View m_vendorBranding = null;
     private TextView m_titleView = null;
     private TextView m_addressView = null;
     private TextView m_addressHeader = null;
@@ -80,7 +80,7 @@ public class YelpSearchResultPoiView implements View.OnClickListener
         m_poiImageProgressBar = m_view.findViewById(R.id.search_result_poi_view_image_progress);
 		m_poiImage = (ImageView)m_view.findViewById(R.id.search_result_poi_view_image);
 		m_poiRatingImage = (ImageView)m_view.findViewById(R.id.search_result_poi_view_rating_image);
-        m_vendorBranding = m_view.findViewById(R.id.search_result_poi_view_vendor_branding);
+        //m_vendorBranding = m_view.findViewById(R.id.search_result_poi_view_vendor_branding);
 
         m_activity.recursiveDisableSplitMotionEvents((ViewGroup)m_view);
         
@@ -188,7 +188,7 @@ public class YelpSearchResultPoiView implements View.OnClickListener
         	m_reviewsView.setVisibility(View.GONE);
         }
         
-        m_vendorBranding.setVisibility(View.VISIBLE);
+        //m_vendorBranding.setVisibility(View.VISIBLE);
         m_poiImage.setVisibility(View.GONE);
         m_poiImageProgressBar.setVisibility(View.GONE);
         m_poiRatingImage.setVisibility(View.GONE);

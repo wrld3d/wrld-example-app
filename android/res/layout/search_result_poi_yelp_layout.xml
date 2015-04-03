@@ -217,7 +217,7 @@
 	             android:layout_alignParentRight="true"
 	             android:background="@drawable/button_close_states" />
 	         
-	         <ImageView
+	         <!-- <ImageView
 				android:id="@+id/search_result_poi_view_vendor_branding"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
@@ -226,7 +226,7 @@
 				android:dither="true"
 	    		android:antialias="true"
 	    		android:contentDescription="Yelp"
-	    		android:src="@drawable/yelp_logo" />
+	    		android:src="@drawable/yelp_logo" /> -->
          
          </RelativeLayout>
 	</RelativeLayout>
