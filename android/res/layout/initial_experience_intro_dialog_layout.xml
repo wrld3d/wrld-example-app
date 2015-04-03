@@ -22,7 +22,7 @@
    	    android:gravity="top|left"
    	    android:singleLine="false"
    	    android:text="@string/placeholder"
-   	    android:textColor="@color/grey"
+   	    android:textColor="@color/darkgrey"
    	    android:textSize="12sp" />
 
 </LinearLayout>
