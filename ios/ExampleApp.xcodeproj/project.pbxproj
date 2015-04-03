@@ -51,6 +51,12 @@
 		183E54541ACC17A800AD6B3E /* big_button_close_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 183E54491ACC17A800AD6B3E /* big_button_close_on@2x.png */; };
 		183E54551ACC17A800AD6B3E /* big_button_close_on@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 183E544A1ACC17A800AD6B3E /* big_button_close_on@3x.png */; };
 		183E54561ACC17A800AD6B3E /* big_button_close_on@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 183E544A1ACC17A800AD6B3E /* big_button_close_on@3x.png */; };
+		183E54771ACE9E7700AD6B3E /* reviewsFromYelpRED.png in Resources */ = {isa = PBXBuildFile; fileRef = 183E54741ACE9E7700AD6B3E /* reviewsFromYelpRED.png */; };
+		183E54781ACE9E7700AD6B3E /* reviewsFromYelpRED.png in Resources */ = {isa = PBXBuildFile; fileRef = 183E54741ACE9E7700AD6B3E /* reviewsFromYelpRED.png */; };
+		183E54791ACE9E7700AD6B3E /* reviewsFromYelpRED@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 183E54751ACE9E7700AD6B3E /* reviewsFromYelpRED@2x.png */; };
+		183E547A1ACE9E7700AD6B3E /* reviewsFromYelpRED@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 183E54751ACE9E7700AD6B3E /* reviewsFromYelpRED@2x.png */; };
+		183E547B1ACE9E7700AD6B3E /* reviewsFromYelpRED@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 183E54761ACE9E7700AD6B3E /* reviewsFromYelpRED@3x.png */; };
+		183E547C1ACE9E7700AD6B3E /* reviewsFromYelpRED@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 183E54761ACE9E7700AD6B3E /* reviewsFromYelpRED@3x.png */; };
 		185145901AB0A8DC0071913E /* SplashScreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 1851458D1AB0A8DC0071913E /* SplashScreen.png */; };
 		185145911AB0A8DC0071913E /* SplashScreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 1851458D1AB0A8DC0071913E /* SplashScreen.png */; };
 		185145921AB0A8DC0071913E /* SplashScreen@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1851458E1AB0A8DC0071913E /* SplashScreen@2x.png */; };
@@ -402,8 +408,6 @@
 		18FB648E1A9336A0005A9411 /* iOSYelpSearchServiceModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18FB648B1A9336A0005A9411 /* iOSYelpSearchServiceModule.cpp */; };
 		18FB64921A933CF3005A9411 /* iOSYelpSearchQueryFactory.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18FB64911A933CF3005A9411 /* iOSYelpSearchQueryFactory.mm */; };
 		18FB64931A933CF3005A9411 /* iOSYelpSearchQueryFactory.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18FB64911A933CF3005A9411 /* iOSYelpSearchQueryFactory.mm */; };
-		18FB64971A938A54005A9411 /* reviewsFromYelpRED.gif in Resources */ = {isa = PBXBuildFile; fileRef = 18FB64951A938A54005A9411 /* reviewsFromYelpRED.gif */; };
-		18FB64981A938A54005A9411 /* reviewsFromYelpRED.gif in Resources */ = {isa = PBXBuildFile; fileRef = 18FB64951A938A54005A9411 /* reviewsFromYelpRED.gif */; };
 		18FB64991A938A54005A9411 /* yelp_logo_100x50.png in Resources */ = {isa = PBXBuildFile; fileRef = 18FB64961A938A54005A9411 /* yelp_logo_100x50.png */; };
 		18FB649A1A938A54005A9411 /* yelp_logo_100x50.png in Resources */ = {isa = PBXBuildFile; fileRef = 18FB64961A938A54005A9411 /* yelp_logo_100x50.png */; };
 		18FB649D1A94B525005A9411 /* SearchResultPoiViewOpenedMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18FB649C1A94B525005A9411 /* SearchResultPoiViewOpenedMessage.cpp */; };
@@ -1242,6 +1246,9 @@
 		183E54481ACC17A800AD6B3E /* big_button_close_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = big_button_close_on.png; sourceTree = "<group>"; };
 		183E54491ACC17A800AD6B3E /* big_button_close_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "big_button_close_on@2x.png"; sourceTree = "<group>"; };
 		183E544A1ACC17A800AD6B3E /* big_button_close_on@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "big_button_close_on@3x.png"; sourceTree = "<group>"; };
+		183E54741ACE9E7700AD6B3E /* reviewsFromYelpRED.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = reviewsFromYelpRED.png; sourceTree = "<group>"; };
+		183E54751ACE9E7700AD6B3E /* reviewsFromYelpRED@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "reviewsFromYelpRED@2x.png"; sourceTree = "<group>"; };
+		183E54761ACE9E7700AD6B3E /* reviewsFromYelpRED@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "reviewsFromYelpRED@3x.png"; sourceTree = "<group>"; };
 		1851458D1AB0A8DC0071913E /* SplashScreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = SplashScreen.png; path = SplashScreen/SplashScreen.png; sourceTree = "<group>"; };
 		1851458E1AB0A8DC0071913E /* SplashScreen@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "SplashScreen@2x.png"; path = "SplashScreen/SplashScreen@2x.png"; sourceTree = "<group>"; };
 		1851458F1AB0A8DC0071913E /* SplashScreen@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "SplashScreen@3x.png"; path = "SplashScreen/SplashScreen@3x.png"; sourceTree = "<group>"; };
@@ -1539,7 +1546,6 @@
 		18FB648F1A933C01005A9411 /* IYelpSearchQueryFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IYelpSearchQueryFactory.h; sourceTree = "<group>"; };
 		18FB64901A933CF3005A9411 /* iOSYelpSearchQueryFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iOSYelpSearchQueryFactory.h; sourceTree = "<group>"; };
 		18FB64911A933CF3005A9411 /* iOSYelpSearchQueryFactory.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = iOSYelpSearchQueryFactory.mm; sourceTree = "<group>"; };
-		18FB64951A938A54005A9411 /* reviewsFromYelpRED.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = reviewsFromYelpRED.gif; sourceTree = "<group>"; };
 		18FB64961A938A54005A9411 /* yelp_logo_100x50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yelp_logo_100x50.png; sourceTree = "<group>"; };
 		18FB649B1A94B34E005A9411 /* SearchResultPoiViewOpenedMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchResultPoiViewOpenedMessage.h; sourceTree = "<group>"; };
 		18FB649C1A94B525005A9411 /* SearchResultPoiViewOpenedMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchResultPoiViewOpenedMessage.cpp; sourceTree = "<group>"; };
@@ -2855,7 +2861,9 @@
 		18FB64941A938A54005A9411 /* Yelp */ = {
 			isa = PBXGroup;
 			children = (
-				18FB64951A938A54005A9411 /* reviewsFromYelpRED.gif */,
+				183E54741ACE9E7700AD6B3E /* reviewsFromYelpRED.png */,
+				183E54751ACE9E7700AD6B3E /* reviewsFromYelpRED@2x.png */,
+				183E54761ACE9E7700AD6B3E /* reviewsFromYelpRED@3x.png */,
 				18FB64961A938A54005A9411 /* yelp_logo_100x50.png */,
 			);
 			path = Yelp;
@@ -4846,7 +4854,6 @@
 				18EC010C1AA7752500902E98 /* icon1_dusk@2x.png in Resources */,
 				18EC01061AA7752500902E98 /* icon1_dawn@3x.png in Resources */,
 				18B5AC9619DC15CD00BA4A38 /* icon1_arts.png in Resources */,
-				18FB64981A938A54005A9411 /* reviewsFromYelpRED.gif in Resources */,
 				18B5ACA619DC15CD00BA4A38 /* icon1_food.png in Resources */,
 				18FE21361AA9BA3C00ACE28A /* button_close_on@3x.png in Resources */,
 				18FE21E21AA9D34400ACE28A /* arrow3_down@2x.png in Resources */,
@@ -4874,6 +4881,7 @@
 				56CF26881A24777100B30439 /* icon_create_poi.png in Resources */,
 				18FE215C1AA9BA3D00ACE28A /* button_streets_off@2x.png in Resources */,
 				18EC01301AA7752500902E98 /* icon1_place@2x.png in Resources */,
+				183E547A1ACE9E7700AD6B3E /* reviewsFromYelpRED@2x.png in Resources */,
 				56F28E841A261DA90061C7BF /* button_create_poi.png in Resources */,
 				18EC01261AA7752500902E98 /* icon1_nightlife@3x.png in Resources */,
 				18FB649A1A938A54005A9411 /* yelp_logo_100x50.png in Resources */,
@@ -4922,6 +4930,7 @@
 				18FE21381AA9BA3C00ACE28A /* button_create_poi@2x.png in Resources */,
 				188C4CB51AA730BF0080B34B /* menu_bar.png in Resources */,
 				18B5AC8219DC15CD00BA4A38 /* button_close_off.png in Resources */,
+				183E54781ACE9E7700AD6B3E /* reviewsFromYelpRED.png in Resources */,
 				18FE21C61AA9C98100ACE28A /* search_result_background_small@2x.png in Resources */,
 				18FE213C1AA9BA3C00ACE28A /* button_gallery_off@2x.png in Resources */,
 				18B5ACA419DC15CD00BA4A38 /* icon1_foggy.png in Resources */,
@@ -4992,6 +5001,7 @@
 				18B5AC8619DC15CD00BA4A38 /* button_streets_off.png in Resources */,
 				7E9B7F451A8E25E400C6F2E3 /* arrow3_down.png in Resources */,
 				18FE21501AA9BA3D00ACE28A /* button_photo_on@2x.png in Resources */,
+				183E547C1ACE9E7700AD6B3E /* reviewsFromYelpRED@3x.png in Resources */,
 				18B5ACFC19DC15CD00BA4A38 /* weatherstates.json in Resources */,
 				18B5ACA019DC15CD00BA4A38 /* icon1_day.png in Resources */,
 				18FE214C1AA9BA3D00ACE28A /* button_photo_off@2x.png in Resources */,
@@ -5091,7 +5101,6 @@
 				18EC01521AA8BA7E00902E98 /* search_results_close.png in Resources */,
 				18EC010B1AA7752500902E98 /* icon1_dusk@2x.png in Resources */,
 				18EC01051AA7752500902E98 /* icon1_dawn@3x.png in Resources */,
-				18FB64971A938A54005A9411 /* reviewsFromYelpRED.gif in Resources */,
 				18B5ACAF19DC15CD00BA4A38 /* icon1_nightlife.png in Resources */,
 				56A3DCE71A239BD100110FDD /* button_photo_off.png in Resources */,
 				18FE21351AA9BA3C00ACE28A /* button_close_on@3x.png in Resources */,
@@ -5120,6 +5129,7 @@
 				18FE216D1AA9BA3D00ACE28A /* poi_marker@3x.png in Resources */,
 				18EC012F1AA7752500902E98 /* icon1_place@2x.png in Resources */,
 				18FE215B1AA9BA3D00ACE28A /* button_streets_off@2x.png in Resources */,
+				183E54791ACE9E7700AD6B3E /* reviewsFromYelpRED@2x.png in Resources */,
 				7EE48211168371460006E99B /* MainStoryboard_iPad.storyboard in Resources */,
 				18EC01251AA7752500902E98 /* icon1_nightlife@3x.png in Resources */,
 				18FB64991A938A54005A9411 /* yelp_logo_100x50.png in Resources */,
@@ -5168,6 +5178,7 @@
 				18EC013D1AA7752500902E98 /* icon1_spring@3x.png in Resources */,
 				18FE21371AA9BA3C00ACE28A /* button_create_poi@2x.png in Resources */,
 				188C4CB41AA730BF0080B34B /* menu_bar.png in Resources */,
+				183E54771ACE9E7700AD6B3E /* reviewsFromYelpRED.png in Resources */,
 				56A3DCE31A239BD100110FDD /* button_ok_off.png in Resources */,
 				18FE21C51AA9C98100ACE28A /* search_result_background_small@2x.png in Resources */,
 				18FE213B1AA9BA3C00ACE28A /* button_gallery_off@2x.png in Resources */,
@@ -5238,6 +5249,7 @@
 				18B5AC8519DC15CD00BA4A38 /* button_streets_off.png in Resources */,
 				7E9B7F441A8E25E400C6F2E3 /* arrow3_down.png in Resources */,
 				18FE214F1AA9BA3D00ACE28A /* button_photo_on@2x.png in Resources */,
+				183E547B1ACE9E7700AD6B3E /* reviewsFromYelpRED@3x.png in Resources */,
 				18B5ACFB19DC15CD00BA4A38 /* weatherstates.json in Resources */,
 				18B5AC9F19DC15CD00BA4A38 /* icon1_day.png in Resources */,
 				18FE214B1AA9BA3D00ACE28A /* button_photo_off@2x.png in Resources */,

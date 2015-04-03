@@ -389,7 +389,7 @@ const int DeletePinAlertViewTag = 2;
         currentLabelY += labelYSpacing + self.pWebHeaderContainer.frame.size.height;
         
         self.pWebHeaderContainer.hidden = false;
-        UIImage* pButtonImage = ExampleApp::Helpers::ImageHelpers::LoadImage(@"reviewsFromYelpRED.gif", true);
+        UIImage* pButtonImage = ExampleApp::Helpers::ImageHelpers::LoadImage(@"reviewsFromYelpRED");
         const CGFloat buttonX = (self.pCloseButtonContainer.frame.size.width * 0.5f - pButtonImage.size.width * 0.5f);
         self.pVendorWebLinkButton = [[[UIButton alloc] initWithFrame:CGRectMake(buttonX,
                                                                                 currentLabelY,
