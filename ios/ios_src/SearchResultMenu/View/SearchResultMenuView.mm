@@ -239,7 +239,7 @@
                               delay:0.0f
                             options:(UIViewAnimationOptionAutoreverse | UIViewAnimationOptionRepeat)
                          animations:^{
-                             self.frame = CGRectMake(m_closedX,
+                             self.frame = CGRectMake(m_closedX - 10.f,
                                                      self.frame.origin.y,
                                                      self.frame.size.width,
                                                      self.frame.size.height);
