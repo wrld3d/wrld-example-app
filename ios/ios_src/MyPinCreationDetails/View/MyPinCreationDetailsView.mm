@@ -272,7 +272,7 @@
     self.pDescriptionPlaceholder.hidden = NO;
     self.pDescriptionPlaceholder.font = [UIFont systemFontOfSize: 16.f];
     self.pDescriptionPlaceholder.textColor = ExampleApp::Helpers::ColorPalette::GreyTone;
-    self.pDescriptionPlaceholder.text = @"Tell us about your Point of Interest...";
+    self.pDescriptionPlaceholder.text = @"Tell us about your pin...";
 
     const float poiImageY = poiDescriptionBoxHeight + poiDescriptionBoxY + 30.f;
     const float poiImageX = 20.f;
