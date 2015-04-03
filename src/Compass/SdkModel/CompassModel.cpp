@@ -102,7 +102,10 @@ namespace ExampleApp
 
             void CompassModel::DisableGpsMode()
             {
-                SetGpsMode(GpsMode::GpsDisabled);
+            	if (GetGpsMode() != GpsMode::GpsDisabled)
+            	{
+            		SetGpsMode(GpsMode::GpsDisabled);
+            	}
             }
 
             void CompassModel::SetGpsMode(GpsMode::Values gpsMode)
