@@ -25,6 +25,8 @@
 #include "ShowInitialExperienceIntroMessage.h"
 #include "CompletedCacheClearMessage.h"
 #include "SearchResultPoiViewImageDownloadCompletedMessage.h"
+#include "InitialExperienceSearchResultAttractModeModelStateEnteredMessage.h"
+#include "InitialExperienceSearchResultAttractModeModelStateUpdatedMessage.h"
 
 namespace ExampleApp
 {
@@ -52,6 +54,8 @@ namespace ExampleApp
         	, public Eegeo::Messaging::CatalogBinding<InitialExperience::ShowInitialExperienceIntroMessage>
             , public Eegeo::Messaging::CatalogBinding<Options::CompletedCacheClearMessage>
             , public Eegeo::Messaging::CatalogBinding<SearchResultPoi::SearchResultPoiViewImageDownloadCompletedMessage>
+            , public Eegeo::Messaging::CatalogBinding<InitialExperience::SearchResultAttractMode::InitialExperienceSearchResultAttractModeModelStateEnteredMessage>
+            , public Eegeo::Messaging::CatalogBinding<InitialExperience::SearchResultAttractMode::InitialExperienceSearchResultAttractModeModelStateUpdatedMessage>
             , private Eegeo::NonCopyable
         {
 

@@ -29,7 +29,12 @@ namespace ExampleApp
                 {
                     [m_pView updateViewForQuery :header :queryPending :numResult];
                 }
-
+                
+                void SetAttractMode(bool attractModeEnabled)
+                {
+                    [m_pView setAttractMode :attractModeEnabled];
+                }
+                
                 void InsertSearchClosed(Eegeo::Helpers::ICallback0& callback)
                 {
                     m_callbacks.AddCallback(callback);

@@ -121,6 +121,42 @@ namespace ExampleApp
             {
                 UpdateOnScreenState();
             }
+            
+            void SearchResultMenuViewModel::EnterAttractMode()
+            {
+                SetAttractMode(true);
+            }
+            
+            void SearchResultMenuViewModel::ExitAttractMode()
+            {
+                SetAttractMode(false);
+            }
+            
+            void SearchResultMenuViewModel::SetAttractMode(bool attractModeEnabled)
+            {
+                bool attractModeChanged = m_inAttractMode != attractModeEnabled;
+                m_inAttractMode = attractModeEnabled;
+                
+                if(attractModeChanged)
+                {
+                    m_attractModeChangedCallbacks.ExecuteCallbacks();
+                }
+            }
+            
+            bool SearchResultMenuViewModel::AttractModeEnabled() const
+            {
+                return m_inAttractMode;
+            }
+            
+            void SearchResultMenuViewModel::InsertAttractModeChangedCallback(Eegeo::Helpers::ICallback0& callback)
+            {
+                m_attractModeChangedCallbacks.AddCallback(callback);
+            }
+            
+            void SearchResultMenuViewModel::RemoveAttractModeChangedCallback(Eegeo::Helpers::ICallback0& callback)
+            {
+                m_attractModeChangedCallbacks.RemoveCallback(callback);
+            }
         }
     }
 }

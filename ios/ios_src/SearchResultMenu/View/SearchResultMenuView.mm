@@ -19,7 +19,8 @@
 - (void) initialiseViews:(size_t)numberOfSections numberOfCells:(size_t)numberOfCells
 {
     m_pSearchInterop = Eegeo_NEW(ExampleApp::SearchResultMenu::View::SearchResultMenuViewInterop)(self);
-
+    m_inAttractMode = false;
+    
     m_pColour = ExampleApp::Helpers::ColorPalette::WhiteTone;
 
     m_stateChangeAnimationTimeSeconds = 0.2f;
@@ -217,6 +218,36 @@
     ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pCategory, categoryIcon, ExampleApp::Helpers::ImageHelpers::Centre);
 }
 
+- (void) setAttractMode :(bool)attractModeEnabled
+{
+    m_inAttractMode = attractModeEnabled;
+    [self updateAttractMode];
+}
+
+- (void) updateAttractMode
+{
+    [self.layer removeAllAnimations];
+    
+    if(m_inAttractMode)
+    {
+        self.frame = CGRectMake(m_closedX,
+                                self.frame.origin.y,
+                                self.frame.size.width,
+                                self.frame.size.height);
+        
+        [UIView animateWithDuration:0.3f
+                              delay:0.0f
+                            options:(UIViewAnimationOptionAutoreverse | UIViewAnimationOptionRepeat)
+                         animations:^{
+                             self.frame = CGRectMake(m_closedX - 10.f,
+                                                     self.frame.origin.y,
+                                                     self.frame.size.width,
+                                                     self.frame.size.height);
+                         }
+                         completion:nil];
+    }
+}
+
 - (void) onClearPressed:(UIButton *) sender
 {
     m_pSearchInterop->SearchClosed();
@@ -228,7 +259,7 @@
     {
         return;
     }
-
+    
     self.hidden = false;
     [self setOffscreenPartsHiddenState:false];
     
@@ -241,6 +272,8 @@
     CGRect f = self.frame;
     f.origin.x = newX;
     self.frame = f;
+    
+    [self updateAttractMode];
 }
 
 - (void) updateDrag:(CGPoint)absolutePosition velocity:(CGPoint)absoluteVelocity
@@ -282,6 +315,7 @@
     
     [self animateToX:(close ? m_closedX : m_openX)];
     m_pInterop->HandleDraggingViewCompleted();
+    [self updateAttractMode];
 }
 
 - (void) refreshTableHeights: (size_t)numberOfSections numberOfCells:(size_t)numberOfCells

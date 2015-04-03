@@ -7,6 +7,9 @@
 #include "InitialExperienceModuleBase.h"
 #include "Types.h"
 #include "BidirectionalBus.h"
+#include "Menu.h"
+#include "SearchResultMenu.h"
+#include "InitialExperienceSearchResultAttractModeModule.h"
 
 namespace ExampleApp
 {
@@ -16,9 +19,6 @@ namespace ExampleApp
         {
             class AndroidInitialExperienceModule : public InitialExperienceModuleBase, private Eegeo::NonCopyable
             {
-                AndroidNativeState& m_nativeState;
-                ExampleAppMessaging::TMessageBus& m_messageBus;
-
             public:
                 AndroidInitialExperienceModule(
                     AndroidNativeState& m_nativeState,
@@ -29,8 +29,14 @@ namespace ExampleApp
                 ~AndroidInitialExperienceModule();
 
             protected:
+                std::vector<IInitialExperienceStep*> CreateSteps(WorldAreaLoader::SdkModel::IWorldAreaLoaderModel& worldAreaLoaderModel,
+                        Menu::View::IMenuViewModel& searchMenuViewModelControl,
+                        SearchResultMenu::View::ISearchResultMenuViewModel& searchResultMenuViewModel);
 
-                std::vector<IInitialExperienceStep*> CreateSteps(WorldAreaLoader::SdkModel::IWorldAreaLoaderModel& worldAreaLoaderModel) const;
+            private:
+                AndroidNativeState& m_nativeState;
+                ExampleAppMessaging::TMessageBus& m_messageBus;
+                SearchResultAttractMode::InitialExperienceSearchResultAttractModeModule* m_pInitialExperienceSearchResultAttractModeModule;
             };
         }
     }

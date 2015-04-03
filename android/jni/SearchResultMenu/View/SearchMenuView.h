@@ -23,9 +23,12 @@ namespace ExampleApp
 
                 void SetHeader(const std::string& header, bool queryPending, size_t numResult);
 
+                void SetAttractMode(bool attractModeEnabled);
+
                 void HandleSearchClosed();
 
                 void InsertSearchClosed(Eegeo::Helpers::ICallback0& callback);
+
                 void RemoveSearchClosed(Eegeo::Helpers::ICallback0& callback);
             };
         }

@@ -36,6 +36,17 @@ namespace ExampleApp
                 m_closedCallbacks.ExecuteCallbacks();
             }
 
+            void SearchMenuView::SetAttractMode(bool attractModeEnabled)
+            {
+                ASSERT_UI_THREAD
+
+                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                JNIEnv* env = attached.envForThread;
+
+                jmethodID setAttractModeMethod = env->GetMethodID(m_uiViewClass, "setAttractMode", "(Z)V");
+                env->CallVoidMethod(m_uiView, setAttractModeMethod, attractModeEnabled);
+            }
+
             void SearchMenuView::InsertSearchClosed(Eegeo::Helpers::ICallback0& callback)
             {
                 m_closedCallbacks.AddCallback(callback);
