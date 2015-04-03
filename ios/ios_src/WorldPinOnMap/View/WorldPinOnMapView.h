@@ -16,6 +16,8 @@
     float m_stateChangeAnimationTimeSeconds;
     float m_pinOffset;
     float m_pixelScale;
+    float m_previousX;
+    float m_previousY;
 }
 
 - (id) initWithParams:(float)pinDiameter :(float)pixelScale;
