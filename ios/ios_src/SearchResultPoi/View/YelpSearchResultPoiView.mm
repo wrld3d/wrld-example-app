@@ -333,7 +333,7 @@ const int DeletePinAlertViewTag = 2;
 
 - (void) performDynamicContentLayout
 {
-    const float headerLabelHeight = 16.f;
+    const float headerLabelHeight = 20.f;
     const float labelYSpacing = 8.f;
     const float headerTextPadding = 3.0f;
     
