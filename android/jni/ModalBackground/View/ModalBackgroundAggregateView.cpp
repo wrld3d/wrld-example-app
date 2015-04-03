@@ -70,7 +70,7 @@ namespace ExampleApp
                 env->CallVoidMethod(m_uiView, animateToIntermediateActivityState, modality);
 
                 // Publish message to native view.
-                m_messageBus.Publish(Modality::UpdateNativeModalBackgroundMessage(modality));
+                m_messageBus.Publish(Modality::UpdateNativeModalBackgroundMessage(modality, false));
             }
         }
     }

@@ -19,6 +19,8 @@ namespace ExampleApp
                 virtual bool CanInteract() const = 0;
 
                 virtual void SetHasSearchQuery(bool hasSearchQuery) = 0;
+
+                virtual void SetHasSearchQueryInFlight(bool hasSearchQueryInFlight) = 0;
             };
         }
     }

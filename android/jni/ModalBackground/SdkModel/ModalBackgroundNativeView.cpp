@@ -16,6 +16,7 @@
 #include "RenderContext.h"
 #include "RenderQueue.h"
 #include "AndroidAppThreadAssertionMacros.h"
+#include "MathFunc.h"
 
 namespace ExampleApp
 {
@@ -29,6 +30,9 @@ namespace ExampleApp
                 Eegeo::Rendering::GlBufferPool& glBufferPool,
                 Eegeo::Rendering::VertexLayouts::VertexLayoutPool& vertexLayoutPool,
                 Eegeo::Rendering::VertexLayouts::VertexBindingPool& vertexBindingPool)
+            : m_fixedOn(false)
+            , m_fixedTransition(0.0f)
+            , m_setAlpha(0.0f)
             {
                 ASSERT_NATIVE_THREAD
 
@@ -76,8 +80,24 @@ namespace ExampleApp
             {
                 ASSERT_NATIVE_THREAD
 
-                Eegeo::v4 color(0.0f, 0.0f, 0.0f, alpha * m_baseAlpha);
-                m_pMaterial->SetColor(color);
+                m_setAlpha = alpha;
+            }
+
+            void ModalBackgroundNativeView::SetFixedOn(bool fixedOn)
+            {
+            	m_fixedOn = fixedOn;
+            }
+
+            void ModalBackgroundNativeView::Update(float dt)
+            {
+            	dt = std::min(dt, 0.05f);
+            	m_fixedTransition = m_fixedOn ? m_fixedTransition+dt : m_fixedTransition-dt;
+            	m_fixedTransition = Eegeo::Math::Clamp01(m_fixedTransition);
+
+            	float trueAlpha = Eegeo::Math::Lerp(m_setAlpha, 1.0f, m_fixedTransition);
+
+            	Eegeo::v4 color(0.0f, 0.0f, 0.0f, trueAlpha * m_baseAlpha);
+            	m_pMaterial->SetColor(color);
             }
         }
     }

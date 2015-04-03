@@ -46,7 +46,6 @@
 #include "StreamingVolumeController.h"
 #include "GpsMarkerModule.h"
 #include "IGpsMarkerController.h"
-#include "InitialExperienceDialogsModule.h"
 #include "ApiKey.h"
 #include "INetworkCapabilities.h"
 #include "ISearchServiceModule.h"
@@ -143,7 +142,6 @@ namespace ExampleApp
         , m_pMyPinCreationDetailsModule(NULL)
         , m_pMyPinsModule(NULL)
         , m_pMyPinDetailsModule(NULL)
-    	, m_pInitialExperienceDialogsModule(NULL)
         , m_pOptionsModule(NULL)
         , m_pWatermarkModule(NULL)
         , m_screenProperties(screenProperties)
@@ -379,8 +377,6 @@ namespace ExampleApp
                                                                                                   m_pSearchResultPoiModule->GetSearchResultPoiViewModel(),
                                                                                                   m_messageBus);
 
-        m_pInitialExperienceDialogsModule = Eegeo_NEW(ExampleApp::InitialExperience::Dialogs::View::InitialExperienceDialogsModule)();
-
         std::vector<ScreenControl::View::IScreenControlViewModel*> reactors(GetReactorControls());
         std::vector<ExampleApp::OpenableControl::View::IOpenableControlViewModel*> openables(GetOpenableControls());
 
@@ -404,8 +400,6 @@ namespace ExampleApp
 
     void MobileExampleApp::DestroyApplicationModelModules()
     {
-    	Eegeo_DELETE m_pInitialExperienceDialogsModule;
-
         m_initialExperienceModule.TearDown();
         
         Eegeo_DELETE m_pWorldAreaLoaderModule;

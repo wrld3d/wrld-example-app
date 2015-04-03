@@ -2,9 +2,7 @@
 
 #include "AndroidInitialExperienceModule.h"
 #include "AndroidInitialExperiencePreLoadModel.h"
-#include "InitialExperienceDialogStep.h"
-#include "InitialExperienceDialogType.h"
-#include "InitialExperienceDialogStepsFactory.h"
+#include "InitialExperienceIntroStep.h"
 
 namespace ExampleApp
 {
@@ -41,7 +39,8 @@ namespace ExampleApp
 
                 steps.push_back(pWorldAreaLoaderStep);
 
-                Dialogs::SdkModel::InitialExperienceDialogStepsFactory::AddInitialExperienceDialogSteps(m_messageBus, GetPersistentSettings(), steps);
+                IInitialExperienceStep* pIntroStep = Eegeo_NEW(InitialExperienceIntroStep)(m_messageBus, GetPersistentSettings());
+                steps.push_back(pIntroStep);
 
                 return steps;
             }

@@ -14,6 +14,7 @@ namespace ExampleApp
             {
             public:
                 virtual ~IModalBackgroundNativeViewModule() { }
+                virtual void Update(float dt) = 0;
             };
         }
     }

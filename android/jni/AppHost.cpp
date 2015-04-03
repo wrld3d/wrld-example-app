@@ -66,12 +66,11 @@
 #include "MyPinCreationDetailsViewModule.h"
 #include "MyPinDetailsViewModule.h"
 #include "IMyPinDetailsModule.h"
-#include "InitialExperienceDialogsViewModule.h"
+#include "InitialExperienceIntroViewModule.h"
 #include "Logger.h"
 #include "AndroidAppThreadAssertionMacros.h"
 #include "SearchResultRepositoryObserver.h"
 #include "IMyPinsModule.h"
-#include "IInitialExperienceDialogsModule.h"
 #include "ApiKey.h"
 #include "OptionsViewModule.h"
 #include "OptionsView.h"
@@ -122,7 +121,7 @@ AppHost::AppHost(
     ,m_pViewControllerUpdaterModule(NULL)
 	,m_pSearchServiceModule(NULL)
 	,m_pAndroidFlurryMetricsService(NULL)
-	,m_pInitialExperienceDialogsViewModule(NULL)
+	,m_pInitialExperienceIntroViewModule(NULL)
 	,m_failAlertHandler(this, &AppHost::HandleStartupFailure)
 {
     ASSERT_NATIVE_THREAD
@@ -316,6 +315,8 @@ void AppHost::Update(float dt)
     m_messageBus.FlushToNative();
 
     m_pApp->Update(dt);
+
+    m_pModalBackgroundNativeViewModule->Update(dt);
 
     if(m_pApp->IsLoadingScreenComplete() && !m_requestedApplicationInitialiseViewState)
     {
@@ -511,9 +512,8 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
                                 );
 
     // Initial UX layer
-    m_pInitialExperienceDialogsViewModule = Eegeo_NEW(ExampleApp::InitialExperience::Dialogs::View::InitialExperienceDialogsViewModule)(
+    m_pInitialExperienceIntroViewModule = Eegeo_NEW(ExampleApp::InitialExperience::View::InitialExperienceIntroViewModule)(
 									m_nativeState,
-									app.InitialExperienceDialogsModule().GetDialogsViewModel(),
 									m_messageBus
 								);
 
@@ -557,7 +557,7 @@ void AppHost::DestroyApplicationViewModulesFromUiThread()
 
         Eegeo_DELETE m_pCompassViewModule;
 
-        Eegeo_DELETE m_pInitialExperienceDialogsViewModule;
+        Eegeo_DELETE m_pInitialExperienceIntroViewModule;
 
         Eegeo_DELETE m_pWatermarkViewModule;
     }

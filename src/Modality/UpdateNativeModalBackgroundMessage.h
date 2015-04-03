@@ -9,11 +9,13 @@ namespace ExampleApp
         class UpdateNativeModalBackgroundMessage
         {
             float m_modality;
+            bool m_fixed;
 
         public:
-            UpdateNativeModalBackgroundMessage(float modality);
+            UpdateNativeModalBackgroundMessage(float modality, bool fixed);
 
             float Modality() const;
+            bool ShouldFixOn() const;
         };
     }
 }
