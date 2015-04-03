@@ -15,6 +15,7 @@
     float m_animationTimeSeconds;
     CGFloat m_screenWidth;
     CGFloat m_screenHeight;
+    BOOL m_awaitingInput;
 }
 
 - (id) initView: (InitialExperienceIntroBackgroundView*)pBackground;

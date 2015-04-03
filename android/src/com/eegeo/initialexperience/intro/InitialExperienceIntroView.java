@@ -35,6 +35,8 @@ public class InitialExperienceIntroView implements View.OnClickListener, Animati
 	private Animation m_mainAnimationOn;
 	private Animation m_mainAnimationOff;
 	
+	private boolean m_awaitingInput;
+	
 	InitialExperienceIntroView(MainActivity activity, long nativeCallerPointer)
     {
 		m_activity = activity;
@@ -62,6 +64,8 @@ public class InitialExperienceIntroView implements View.OnClickListener, Animati
         setDialogText(m_pinCreationDialog, "Pin Creation", "Create your own places");
         m_view.setOnClickListener(this);
         
+        m_awaitingInput = false;
+        
         m_view.setVisibility(View.GONE);
         m_uiRoot.addView(m_view);
 	}
@@ -74,6 +78,7 @@ public class InitialExperienceIntroView implements View.OnClickListener, Animati
     
     public void show()
     {
+    	m_awaitingInput = true;
     	m_view.setVisibility(View.VISIBLE);
 
     	m_mainAnimationOn = new TranslateAnimation(-m_uiRoot.getWidth(), 0, 0, 0);
@@ -93,6 +98,7 @@ public class InitialExperienceIntroView implements View.OnClickListener, Animati
 
     public void dismiss()
     {
+    	m_awaitingInput = false;
     	m_mainAnimationOff = new TranslateAnimation(0, m_uiRoot.getWidth(), 0, 0);
     	m_mainAnimationOff.setDuration(m_animationDuration);
     	m_mainAnimationOff.setInterpolator(new DecelerateInterpolator());
@@ -151,7 +157,10 @@ public class InitialExperienceIntroView implements View.OnClickListener, Animati
 	@Override
 	public void onClick(View arg0) 
 	{
-		InitialExperienceIntroJniMethods.OnDismiss(m_nativeCallerPointer);
+		if(m_awaitingInput)
+		{
+			InitialExperienceIntroJniMethods.OnDismiss(m_nativeCallerPointer);
+		}
 	}
 	
 }
