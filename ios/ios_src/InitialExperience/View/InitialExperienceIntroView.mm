@@ -37,7 +37,7 @@ const float arrowWidth = 10;
         self.pMenuDialogArrow = ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pMenuDialogContainer, "arrow3_right", 0.f, 0.f, 0, 0);
         self.pMenuDialogTitle = [self createDialogTitle:@"Main Menu"];
         [self.pMenuDialogContainer addSubview:self.pMenuDialogTitle];
-        self.pMenuDialogDescription = [self createDialogDescription:@"Start here to begin exploring"];
+        self.pMenuDialogDescription = [self createDialogDescription:@"Start exploring here"];
         [self.pMenuDialogContainer addSubview:self.pMenuDialogDescription];
         
         self.pCompassDialogContainer = [[[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, 0.f, 0.f)] autorelease];
@@ -62,7 +62,7 @@ const float arrowWidth = 10;
         self.pPinCreationDialogContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::WhiteTone;
         [self addSubview: self.pPinCreationDialogContainer];
         self.pPinCreationDialogArrow = ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pPinCreationDialogContainer, "arrow3_down", 0.f, 0.f, 0, 0);
-        self.pPinCreationDialogTitle = [self createDialogTitle:@"Pin Creation"];
+        self.pPinCreationDialogTitle = [self createDialogTitle:@"My Pin"];
         [self.pPinCreationDialogContainer addSubview:self.pPinCreationDialogTitle];
         self.pPinCreationDialogDescription = [self createDialogDescription:@"Create your own places"];
         [self.pPinCreationDialogContainer addSubview:self.pPinCreationDialogDescription];

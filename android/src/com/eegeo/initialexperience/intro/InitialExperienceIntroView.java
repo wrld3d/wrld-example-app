@@ -58,10 +58,10 @@ public class InitialExperienceIntroView implements View.OnClickListener, Animati
         m_mapmodeDialog = (LinearLayout)m_view.findViewById(R.id.initial_ux_mapmode_dialog);
         m_pinCreationDialog = (LinearLayout)m_view.findViewById(R.id.initial_ux_pin_creation_dialog);
         
-        setDialogText(m_menuDialog, "Main Menu", "Start here to begin exploring");
+        setDialogText(m_menuDialog, "Main Menu", "Start exploring here");
         setDialogText(m_compassDialog, "Compass", "Find me\nLock rotation");
         setDialogText(m_mapmodeDialog, "Map Mode", "Simple 2D View");
-        setDialogText(m_pinCreationDialog, "Pin Creation", "Create your own places");
+        setDialogText(m_pinCreationDialog, "My Pins", "Create your own places");
         m_view.setOnClickListener(this);
         
         m_awaitingInput = false;
