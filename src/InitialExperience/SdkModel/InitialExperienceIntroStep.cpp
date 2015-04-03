@@ -3,6 +3,8 @@
 #include "InitialExperienceIntroStep.h"
 #include "IPersistentSettingsModel.h"
 #include "ShowInitialExperienceIntroMessage.h"
+#include "IWatermarkViewModel.h"
+#include "SetWatermarkVisibilityMessage.h"
 
 namespace
 {
@@ -62,6 +64,7 @@ namespace ExampleApp
             
             void InitialExperienceIntroStep::ShowIntro()
             {
+                m_messageBus.Publish(Watermark::SetWatermarkVisibilityMessage(false));
                 m_currentlyShowingIntro = true;
                 m_messageBus.Publish(ShowInitialExperienceIntroMessage());
             }
@@ -70,6 +73,7 @@ namespace ExampleApp
             {
                 Eegeo_ASSERT(!HasCompleted(), "Cannot perform InitialExperienceDialogStep, has already completed.\n");
                 m_persistentSettings.SetValue(InitialExperienceModel_HasCompletedIntro, true);
+                m_messageBus.Publish(Watermark::SetWatermarkVisibilityMessage(true));
             }
             
             void InitialExperienceIntroStep::OnIntroDismissed(const InitialExperienceIntroDismissedMessage& message)

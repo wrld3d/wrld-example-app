@@ -27,6 +27,7 @@
 #include "SearchResultPoiViewImageDownloadCompletedMessage.h"
 #include "InitialExperienceSearchResultAttractModeModelStateEnteredMessage.h"
 #include "InitialExperienceSearchResultAttractModeModelStateUpdatedMessage.h"
+#include "SetWatermarkVisibilityMessage.h"
 
 namespace ExampleApp
 {
@@ -56,6 +57,7 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<SearchResultPoi::SearchResultPoiViewImageDownloadCompletedMessage>
             , public Eegeo::Messaging::CatalogBinding<InitialExperience::SearchResultAttractMode::InitialExperienceSearchResultAttractModeModelStateEnteredMessage>
             , public Eegeo::Messaging::CatalogBinding<InitialExperience::SearchResultAttractMode::InitialExperienceSearchResultAttractModeModelStateUpdatedMessage>
+            , public Eegeo::Messaging::CatalogBinding<Watermark::SetWatermarkVisibilityMessage>
             , private Eegeo::NonCopyable
         {
 
