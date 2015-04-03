@@ -1732,6 +1732,7 @@
 		7E1B508A1ACD9AA50060FA4F /* banner_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = banner_logo.png; sourceTree = "<group>"; };
 		7E1B508B1ACD9AA50060FA4F /* banner_logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "banner_logo@2x.png"; sourceTree = "<group>"; };
 		7E1B508C1ACD9AA50060FA4F /* banner_logo@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "banner_logo@3x.png"; sourceTree = "<group>"; };
+		7E1B50941ACEDAD00060FA4F /* SetWatermarkVisibilityMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetWatermarkVisibilityMessage.h; sourceTree = "<group>"; };
 		7E3B86651A385A280023C94E /* AboutPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutPage.h; sourceTree = "<group>"; };
 		7E3B86661A385A280023C94E /* AboutPageController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AboutPageController.cpp; sourceTree = "<group>"; };
 		7E3B86671A385A280023C94E /* AboutPageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutPageController.h; sourceTree = "<group>"; };
@@ -2587,6 +2588,7 @@
 		186B47011AB1D46B0084E80B /* Watermark */ = {
 			isa = PBXGroup;
 			children = (
+				7E1B50941ACEDAD00060FA4F /* SetWatermarkVisibilityMessage.h */,
 				186B47021AB1D46B0084E80B /* View */,
 				186B47161AB1D8E00084E80B /* IWatermarkModule.h */,
 				186B470B1AB1D46B0084E80B /* Watermark.h */,
