@@ -290,7 +290,7 @@
 - (void) layoutFooter
 {
     const float footerY = m_yCursor;
-    const float footerHeight = 80.f;
+    const float footerHeight = 64.f;
     const float footerWidth = m_controlContainerWidth;
 
     self.pFooterContainer.frame = CGRectMake(0, footerY, footerWidth, footerHeight);
@@ -302,26 +302,22 @@
 
     const float closeButtonX = buttonPadding;
     self.pCloseButton.frame = CGRectMake(closeButtonX, 0, buttonSize, buttonSize);
-    [self.pCloseButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"big_button_close_off") forState:UIControlStateNormal];
-    [self.pCloseButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"big_button_close_on") forState:UIControlStateHighlighted];
+    [self.pCloseButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_close_off") forState:UIControlStateNormal];
     [self.pCloseButton addTarget:self action:@selector(onCloseButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 
     const float cameraButtonX = buttonSize + 2 * buttonPadding;
     self.pCameraButton.frame = CGRectMake(cameraButtonX, 0, buttonSize, buttonSize);
     [self.pCameraButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_photo_off") forState:UIControlStateNormal];
-    [self.pCameraButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_photo_on") forState:UIControlStateHighlighted];
     [self.pCameraButton addTarget:self action:@selector(onCameraButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 
     const float galleryButtonX = 2 * buttonSize + 3 * buttonPadding;
     self.pGalleryButton.frame = CGRectMake(galleryButtonX, 0, buttonSize, buttonSize);
     [self.pGalleryButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_gallery_off") forState:UIControlStateNormal];
-    [self.pGalleryButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_gallery_on") forState:UIControlStateHighlighted];
     [self.pGalleryButton addTarget:self action:@selector(onGalleryButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 
     const float confirmButtonX = 3 * buttonSize + 4 * buttonPadding;
     self.pConfirmButton.frame = CGRectMake(confirmButtonX, 0, buttonSize, buttonSize);
     [self.pConfirmButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_ok_off") forState:UIControlStateNormal];
-    [self.pConfirmButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_ok_on") forState:UIControlStateHighlighted];
     [self.pConfirmButton addTarget:self action:@selector(onConfirmButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 
     m_popoverX = m_controlContainerWidth * 0.5f;
