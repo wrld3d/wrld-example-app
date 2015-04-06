@@ -355,6 +355,23 @@ const int DeletePinAlertViewTag = 2;
         self.pRatingImage.frame = CGRectMake(imageX, currentLabelY, m_ratingsImageWidth, m_ratingsImageHeight);
         const CGFloat imageBottomPadding = 8.0;
         currentLabelY += (m_ratingsImageHeight + imageBottomPadding);
+        
+        UIImage* image = ExampleApp::Helpers::ImageHelpers::LoadImage(m_model.GetRatingImageUrl());
+        [self.pRatingImage setImage:image];
+        
+        CGRect frame = self.pRatingImage.frame;
+        const CGFloat initialFrameHeight = frame.size.height;
+        frame.size = image.size;
+        frame.origin.x = self.frame.size.width * 0.5f - frame.size.width * 0.5f;
+        self.pRatingImage.frame = frame;
+        self.pRatingImage.hidden = false;
+        
+        const CGFloat imageContentHeightDifference = (image.size.height - initialFrameHeight);
+        const CGFloat newContentHeight = self.pLabelsContainer.contentSize.height + imageContentHeightDifference;
+        [self.pLabelsContainer setContentSize:CGSizeMake(self.pLabelsContainer.contentSize.width, newContentHeight)];
+        
+        m_ratingsImageWidth = image.size.width;
+        m_ratingsImageHeight = image.size.height;
     }
     
     if(!m_model.GetPhone().empty())
@@ -563,38 +580,6 @@ const int DeletePinAlertViewTag = 2;
         {
             m_imageWidth = 0.f;
             m_imageHeight = 0.f;
-            
-            [self performDynamicContentLayout];
-        }
-    }
-    else if(url == m_model.GetRatingImageUrl())
-    {
-        if(success)
-        {
-            NSData* imageData = [NSData dataWithBytes:&bytes->at(0) length:bytes->size()];
-            UIImage *image = [UIImage imageWithData:imageData];
-            [self.pRatingImage setImage:image];
-            
-            CGRect frame = self.pRatingImage.frame;
-            const CGFloat initialFrameHeight = frame.size.height;
-            frame.size = image.size;
-            frame.origin.x = self.frame.size.width * 0.5f - frame.size.width * 0.5f;
-            self.pRatingImage.frame = frame;
-            self.pRatingImage.hidden = false;
-            
-            const CGFloat imageContentHeightDifference = (image.size.height - initialFrameHeight);
-            const CGFloat newContentHeight = self.pLabelsContainer.contentSize.height + imageContentHeightDifference;
-            [self.pLabelsContainer setContentSize:CGSizeMake(self.pLabelsContainer.contentSize.width, newContentHeight)];
-            
-            m_ratingsImageWidth = image.size.width;
-            m_ratingsImageHeight = image.size.height;
-            
-            [self performDynamicContentLayout];
-        }
-        else
-        {
-            m_ratingsImageWidth = 0.f;
-            m_ratingsImageHeight = 0.f;
             
             [self performDynamicContentLayout];
         }

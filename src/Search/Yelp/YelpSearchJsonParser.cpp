@@ -92,9 +92,22 @@ namespace
             entry.imageUrl = entry.imageUrl.substr(0, lastSlashIndex) + "/348s.jpg";
         }
         
-        if(json.HasMember("rating_img_url"))
+        if(json.HasMember("rating"))
         {
-            entry.ratingImageUrl = json["rating_img_url"].GetString();
+            double rating = json["rating"].GetDouble();
+            std::stringstream ss;
+            ss << rating;
+            
+            std::string ratingAsString = ss.str();
+            
+            if (ratingAsString.find('.') == std::string::npos)
+            {
+                ratingAsString.append(".0");
+            }
+            
+            std::replace(ratingAsString.begin(), ratingAsString.end(), '.', '_');
+            
+            entry.ratingImageUrl = "stars_" + ratingAsString;
         }
         
         std::vector<std::string> reviews;
