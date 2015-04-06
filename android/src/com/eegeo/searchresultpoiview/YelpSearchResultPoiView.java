@@ -42,7 +42,6 @@ public class YelpSearchResultPoiView implements View.OnClickListener
     private TextView m_humanReadableCategoriesHeader = null;
     private TextView m_reviewsView = null;
     private TextView m_reviewsHeader = null;
-    private	TextView m_webHeader = null;
     private	ImageView m_webVendorStyleLinkButton = null;
     private ImageView m_categoryIcon = null;
 	private ImageView m_poiImage = null;
@@ -74,7 +73,6 @@ public class YelpSearchResultPoiView implements View.OnClickListener
         m_reviewsView = (TextView)m_view.findViewById(R.id.search_result_poi_view_reviews);
         m_reviewsHeader = (TextView)m_view.findViewById(R.id.search_result_poi_view_reviews_header);
         m_webVendorStyleLinkButton = (ImageView)m_view.findViewById(R.id.search_result_poi_view_web_vendor_link_style);
-        m_webHeader = (TextView)m_view.findViewById(R.id.search_result_poi_view_web_header);
         m_categoryIcon = (ImageView)m_view.findViewById(R.id.search_result_poi_view_category_icon);
         m_poiImageProgressBar = m_view.findViewById(R.id.search_result_poi_view_image_progress);
 		m_poiImage = (ImageView)m_view.findViewById(R.id.search_result_poi_view_image);
@@ -147,12 +145,10 @@ public class YelpSearchResultPoiView implements View.OnClickListener
 
         if(!url.equals(""))
         {
-            m_webHeader.setVisibility(View.VISIBLE);
             m_webVendorStyleLinkButton.setVisibility(View.VISIBLE);
         }
         else
         {
-            m_webHeader.setVisibility(View.GONE);
         	m_webVendorStyleLinkButton.setVisibility(View.GONE);
         }
 

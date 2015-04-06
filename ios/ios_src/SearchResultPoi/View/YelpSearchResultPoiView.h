@@ -66,18 +66,16 @@
 @property (nonatomic, retain) UIView* pPhoneHeaderContainer;
 @property (nonatomic, retain) UILabel* pPhoneHeaderLabel;
 @property (nonatomic, retain) UILabel* pPhoneContent;
-@property (nonatomic, retain) UIView* pWebHeaderContainer;
-@property (nonatomic, retain) UILabel* pWebHeaderLabel;
 @property (nonatomic, retain) UIView* pCategoriesHeaderContainer;
 @property (nonatomic, retain) UILabel* pCategoriesHeaderLabel;
 @property (nonatomic, retain) UILabel* pCategoriesContent;
 @property (nonatomic, retain) UIView* pReviewsHeaderContainer;
 @property (nonatomic, retain) UILabel* pReviewsHeaderLabel;
 @property (nonatomic, retain) UILabel* pReviewsContent;
-@property (nonatomic, retain) UIButton* pVendorWebLinkButton;
 @property (nonatomic, retain) UIImageView* pPreviewImage;
 @property (nonatomic, retain) UIActivityIndicatorView* pPreviewImageSpinner;
 @property (nonatomic, retain) UIImageView* pRatingImage;
+@property (nonatomic, retain) UIButton* pVendorWebLinkButton;
 @property (nonatomic, retain) UIImageView* pVendorBrandingImageContainer;
 
 @end

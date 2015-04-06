@@ -115,13 +115,6 @@ const int DeletePinAlertViewTag = 2;
         
         [self.pLabelsContainer addSubview: self.pPhoneContent];
         
-        self.pWebHeaderContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pWebHeaderContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::GoldTone;
-        [self.pLabelsContainer addSubview: self.pWebHeaderContainer];
-        
-        self.pWebHeaderLabel = [self createLabel :ExampleApp::Helpers::ColorPalette::WhiteTone :ExampleApp::Helpers::ColorPalette::GoldTone];
-        [self.pWebHeaderContainer addSubview: self.pWebHeaderLabel];
-        
         self.pCategoriesHeaderContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         self.pCategoriesHeaderContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::GoldTone;
         [self.pLabelsContainer addSubview: self.pCategoriesHeaderContainer];
@@ -207,12 +200,6 @@ const int DeletePinAlertViewTag = 2;
     
     [self.pPhoneContent removeFromSuperview];
     [self.pPhoneContent release];
-    
-    [self.pWebHeaderLabel removeFromSuperview];
-    [self.pWebHeaderLabel release];
-    
-    [self.pWebHeaderContainer removeFromSuperview];
-    [self.pWebHeaderContainer release];
     
     [self.pCategoriesHeaderContainer removeFromSuperview];
     [self.pCategoriesHeaderContainer release];
@@ -346,12 +333,42 @@ const int DeletePinAlertViewTag = 2;
         currentLabelY += (m_imageHeight + imageBottomPadding);
     }
     
+    const float yelpButtonWidth = 115.0f;
+    const float yelpButtonHeight = 25.0f;
+    const float reviewSpacing = 2.0f;
+    const float fullRatingsWidth = yelpButtonWidth + m_ratingsImageWidth + reviewSpacing;
+    const CGFloat yelpButtonX = (self.frame.size.width * 0.5f - fullRatingsWidth * 0.5f);
+    
+    if(!m_model.GetWebUrl().empty())
+    {
+        if(self.pVendorWebLinkButton != nil)
+        {
+            [self.pVendorWebLinkButton removeFromSuperview];
+            self.pVendorWebLinkButton = nil;
+        }
+        
+        UIImage* pButtonImage = ExampleApp::Helpers::ImageHelpers::LoadImage(@"reviewsFromYelpRED");
+        self.pVendorWebLinkButton = [[[UIButton alloc] initWithFrame:CGRectMake(roundf(yelpButtonX),
+                                                                                roundf(currentLabelY),
+                                                                                pButtonImage.size.width,
+                                                                                pButtonImage.size.height)] autorelease];
+        self.pVendorWebLinkButton.frame = CGRectIntegral(self.pVendorWebLinkButton.frame);
+        
+        // Set kCAFilterNearest for point filtering on link button, as button has baked text so needs to be pixel perfect.
+        self.pVendorWebLinkButton.imageView.layer.minificationFilter = kCAFilterNearest;
+        self.pVendorWebLinkButton.imageView.layer.magnificationFilter = kCAFilterNearest;
+        
+        [self.pVendorWebLinkButton setImage:pButtonImage forState:UIControlStateNormal];
+        [self.pVendorWebLinkButton addTarget:self action:@selector(handleLinkClicked) forControlEvents:UIControlEventTouchUpInside];
+        [self.pLabelsContainer addSubview: self.pVendorWebLinkButton];
+    }
+    
     if(!m_model.GetRatingImageUrl().empty())
     {
-        const CGFloat imageX = (self.frame.size.width * 0.5f - m_ratingsImageWidth * 0.5f);
-        self.pRatingImage.frame = CGRectMake(imageX, currentLabelY, m_ratingsImageWidth, m_ratingsImageHeight);
+        const CGFloat imageX = roundf(yelpButtonX + yelpButtonWidth + reviewSpacing);
+        const CGFloat imageY = roundf(currentLabelY + (yelpButtonHeight * 0.5f) - (m_ratingsImageHeight*0.5f));
+        self.pRatingImage.frame = CGRectMake(imageX, imageY, m_ratingsImageWidth, m_ratingsImageHeight);
         const CGFloat imageBottomPadding = 8.0;
-        currentLabelY += (m_ratingsImageHeight + imageBottomPadding);
         
         UIImage* image = ExampleApp::Helpers::ImageHelpers::LoadImage(m_model.GetRatingImageUrl());
         [self.pRatingImage setImage:image];
@@ -359,7 +376,7 @@ const int DeletePinAlertViewTag = 2;
         CGRect frame = self.pRatingImage.frame;
         const CGFloat initialFrameHeight = frame.size.height;
         frame.size = image.size;
-        frame.origin.x = self.frame.size.width * 0.5f - frame.size.width * 0.5f;
+        frame.origin.x = imageX;
         self.pRatingImage.frame = frame;
         self.pRatingImage.hidden = false;
         
@@ -369,8 +386,10 @@ const int DeletePinAlertViewTag = 2;
         
         m_ratingsImageWidth = image.size.width;
         m_ratingsImageHeight = image.size.height;
+
+        currentLabelY += (yelpButtonHeight + imageBottomPadding);
     }
-    
+
     if(!m_model.GetPhone().empty())
     {
         self.pPhoneHeaderContainer.frame = CGRectMake(0.f, currentLabelY, m_labelsSectionWidth, headerLabelHeight + 2 * headerTextPadding);
@@ -387,41 +406,6 @@ const int DeletePinAlertViewTag = 2;
         [self.pPhoneContent sizeToFit];
         
         currentLabelY += labelYSpacing + self.pPhoneContent.frame.size.height;
-    }
-    
-    if(!m_model.GetWebUrl().empty())
-    {
-        if(self.pVendorWebLinkButton != nil)
-        {
-            [self.pVendorWebLinkButton removeFromSuperview];
-            self.pVendorWebLinkButton = nil;
-        }
-        
-        self.pWebHeaderContainer.frame = CGRectMake(0.f, currentLabelY, m_labelsSectionWidth, headerLabelHeight + 2 * headerTextPadding);
-        
-        self.pWebHeaderLabel.frame = CGRectMake(headerTextPadding, headerTextPadding, m_labelsSectionWidth - headerTextPadding, headerLabelHeight);
-        self.pWebHeaderLabel.text = @"Web";
-        currentLabelY += labelYSpacing + self.pWebHeaderContainer.frame.size.height;
-        
-        self.pWebHeaderContainer.hidden = false;
-        UIImage* pButtonImage = ExampleApp::Helpers::ImageHelpers::LoadImage(@"reviewsFromYelpRED");
-        
-        const CGFloat buttonX = roundf((self.pCloseButtonContainer.frame.size.width * 0.5f - pButtonImage.size.width * 0.5f));
-        self.pVendorWebLinkButton = [[[UIButton alloc] initWithFrame:CGRectMake(buttonX,
-                                                                                roundf(currentLabelY),
-                                                                                pButtonImage.size.width,
-                                                                                pButtonImage.size.height)] autorelease];
-        
-        // Set kCAFilterNearest for point filtering on link button, as button has baked text so needs to be pixel perfect.
-        self.pVendorWebLinkButton.imageView.layer.minificationFilter = kCAFilterNearest;
-        self.pVendorWebLinkButton.imageView.layer.magnificationFilter = kCAFilterNearest;
-        
-        [self.pVendorWebLinkButton setImage:pButtonImage forState:UIControlStateNormal];
-        [self.pVendorWebLinkButton addTarget:self action:@selector(handleLinkClicked) forControlEvents:UIControlEventTouchUpInside];
-        
-        [self.pLabelsContainer addSubview: self.pVendorWebLinkButton];
-        
-        currentLabelY += labelYSpacing + pButtonImage.size.height;
     }
     
     if(!m_model.GetAddress().empty())
@@ -467,10 +451,11 @@ const int DeletePinAlertViewTag = 2;
         
         std::string categoriesText;
         const std::vector<std::string>& categoriesList(m_model.GetHumanReadableCategories());
-        for(std::vector<std::string>::const_iterator it = categoriesList.begin(); it != categoriesList.end(); ++it)
+        for(size_t i = 0; i < categoriesList.size()-1; ++i)
         {
-            categoriesText += (*it) + "\n";
+            categoriesText += categoriesList[i] + "\n";
         }
+        categoriesText += categoriesList.back();
         
         self.pCategoriesContent.text = [NSString stringWithUTF8String:categoriesText.c_str()];
         self.pCategoriesContent.hidden = false;
@@ -530,12 +515,12 @@ const int DeletePinAlertViewTag = 2;
     self.pAddressContent.hidden = true;
     self.pPhoneHeaderContainer.hidden = true;
     self.pPhoneContent.hidden = true;
-    self.pWebHeaderContainer.hidden = true;
     self.pPreviewImage.hidden = true;
     self.pCategoriesHeaderContainer.hidden = true;
     self.pCategoriesContent.hidden = true;
     self.pReviewsHeaderContainer.hidden = true;
     self.pReviewsContent.hidden = true;
+    self.pVendorWebLinkButton.hidden = true;
     
     const CGFloat previewImagePlaceholderSize = 64.f;
     m_imageWidth = m_imageHeight = previewImagePlaceholderSize;
