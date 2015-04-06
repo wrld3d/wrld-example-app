@@ -29,11 +29,6 @@ namespace ExampleApp
                 {
                     m_searchResultPoiViewImageFetcher.FetchImageForSearchResult(message.GetImageUrl());
                 }
-                
-                if(!message.GetRatingsImageUrl().empty())
-                {
-                    m_searchResultPoiViewImageFetcher.FetchImageForSearchResult(message.GetRatingsImageUrl());
-                }
             }
         }
     }

@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.text.util.Linkify;
 import android.view.View;
@@ -196,6 +197,15 @@ public class YelpSearchResultPoiView implements View.OnClickListener
             m_poiImageProgressBar.setVisibility(View.VISIBLE);
         }
         
+        if (!ratingImageUrl.equals(""))
+        {
+        	int imageResource = m_activity.getResources().getIdentifier(ratingImageUrl, "drawable", m_activity.getPackageName());
+            Drawable image = m_activity.getResources().getDrawable(imageResource);
+            m_poiRatingImage.setImageDrawable(image);
+        
+		    m_poiRatingImage.setVisibility(View.VISIBLE);
+        }
+        
         int iconId = CategoryResources.getSmallIconForCategory(m_activity, category);
         m_categoryIcon.setImageResource(iconId);
 
@@ -253,24 +263,6 @@ public class YelpSearchResultPoiView implements View.OnClickListener
 				int size = m_activity.dipAsPx(280);
 				Bitmap poiBitmap = BitmapFactory.decodeByteArray(imgData, 0, imgData.length, bmOptions);
 				m_poiImage.setImageBitmap(Bitmap.createScaledBitmap(poiBitmap, size, size, false));
-			}
-		}
-		else if(url.equals(m_poiRatingUrl))
-		{
-			if(hasImage)
-			{
-				m_poiRatingImage.setVisibility(View.VISIBLE);
-				
-			    BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-			    bmOptions.inJustDecodeBounds = true;
-			    int scaleFactor = calculateInSampleSize(bmOptions, m_uiRoot.getWidth(), m_uiRoot.getHeight());
-			    
-			    bmOptions.inJustDecodeBounds = false;
-			    bmOptions.inSampleSize = scaleFactor;
-			    bmOptions.inPurgeable = true;
-			    
-			    Bitmap poiBitmap = BitmapFactory.decodeByteArray(imgData, 0, imgData.length, bmOptions);
-			    m_poiRatingImage.setImageBitmap(poiBitmap);
 			}
 		}
 	}
