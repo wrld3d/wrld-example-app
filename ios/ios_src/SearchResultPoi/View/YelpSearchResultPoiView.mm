@@ -391,13 +391,20 @@ const int DeletePinAlertViewTag = 2;
         
         self.pWebHeaderContainer.hidden = false;
         UIImage* pButtonImage = ExampleApp::Helpers::ImageHelpers::LoadImage(@"reviewsFromYelpRED");
-        const CGFloat buttonX = (self.pCloseButtonContainer.frame.size.width * 0.5f - pButtonImage.size.width * 0.5f);
+        
+        const CGFloat buttonX = roundf((self.pCloseButtonContainer.frame.size.width * 0.5f - pButtonImage.size.width * 0.5f));
         self.pVendorWebLinkButton = [[[UIButton alloc] initWithFrame:CGRectMake(buttonX,
-                                                                                currentLabelY,
+                                                                                roundf(currentLabelY),
                                                                                 pButtonImage.size.width,
                                                                                 pButtonImage.size.height)] autorelease];
+        
+        // Set kCAFilterNearest for point filtering on link button, as button has baked text so needs to be pixel perfect.
+        self.pVendorWebLinkButton.imageView.layer.minificationFilter = kCAFilterNearest;
+        self.pVendorWebLinkButton.imageView.layer.magnificationFilter = kCAFilterNearest;
+        
         [self.pVendorWebLinkButton setImage:pButtonImage forState:UIControlStateNormal];
         [self.pVendorWebLinkButton addTarget:self action:@selector(handleLinkClicked) forControlEvents:UIControlEventTouchUpInside];
+        
         [self.pLabelsContainer addSubview: self.pVendorWebLinkButton];
         
         currentLabelY += labelYSpacing + pButtonImage.size.height;
