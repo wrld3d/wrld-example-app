@@ -145,11 +145,14 @@ namespace ExampleApp
                                                                                                              idForThisPin,
                                                                                                              searchResult);
                 m_myPinBoundObjectRepository.AddBoundItemForPin(idForThisPin, boundObject);
+                
+                // Use the ratings image if available, else fall back to address.
+                const std::string& ratingsImage(searchResult.GetRatingImageUrl());
                                 
                 MyPinModel *pinModel = Eegeo_NEW(MyPinModel)(MyPinModel::CurrentVersion,
                                                              idForThisPin,
                                                              searchResult.GetTitle(),
-                                                             searchResult.GetAddress(),
+                                                             ratingsImage.empty() ? searchResult.GetAddress() : ratingsImage,
                                                              pinIconIndex,
                                                              searchResult.GetLocation());
                 

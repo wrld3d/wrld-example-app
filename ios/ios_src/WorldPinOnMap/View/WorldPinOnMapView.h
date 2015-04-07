@@ -26,7 +26,7 @@
 
 - (BOOL) consumesTouch:(UITouch *)touch;
 
-- (void) setLabel:(std::string)name :(std::string)detail;
+- (void) setContent:(const std::string&)name :(const std::string&)data;
 
 - (void) setFullyActive :(float)modality;
 
@@ -41,5 +41,7 @@
 @property (nonatomic, retain) UIView* pLabelBack;
 @property (nonatomic, retain) UILabel* pNameLabel;
 @property (nonatomic, retain) UILabel* pAddressLabel;
+@property (nonatomic, retain) UIImageView* pImageDisplay;
+
 
 @end

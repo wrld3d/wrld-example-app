@@ -144,7 +144,10 @@ namespace ExampleApp
                 
                 const int pinIconIndex = m_searchResultIconCategoryMapper.GetIconIndexFromSearchResult(searchResultModel);
                 
-                WorldPins::SdkModel::WorldPinFocusData worldPinFocusData(searchResultModel.GetTitle(), searchResultModel.GetAddress());
+                // Use the ratings image if available, else fall back to address.
+                const std::string& ratingsImage(searchResultModel.GetRatingImageUrl());
+                WorldPins::SdkModel::WorldPinFocusData worldPinFocusData(searchResultModel.GetTitle(),
+                                                                         ratingsImage.empty() ? searchResultModel.GetAddress() : ratingsImage);
                 
                 ExampleApp::WorldPins::SdkModel::WorldPinItemModel *pinItemModel = m_worldPinsService.AddPin(pSearchResultOnMapItemModel,
                                                                                                              NULL,
