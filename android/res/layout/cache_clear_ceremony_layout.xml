@@ -96,19 +96,19 @@
            android:layout_alignParentBottom="true"
            android:id="@+id/cache_clear_ceremony_view_footer">
          
-         <Button
+         <com.eegeo.helpers.TintableImageView
              android:id="@+id/cache_clear_ceremony_confirm_button"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              android:layout_alignParentLeft="true"
-             android:background="@drawable/button_ok_states" />
+             android:background="@drawable/button_ok_off" />
  
-         <Button
+         <com.eegeo.helpers.TintableImageView
              android:id="@+id/cache_clear_ceremony_close_button"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              android:layout_alignParentRight="true"
-             android:background="@drawable/button_close_states" />
+             android:background="@drawable/button_close_off" />
          
          </RelativeLayout>
 	        

@@ -119,12 +119,12 @@
            android:layout_width="fill_parent"
            android:layout_height="wrap_content">
  
-         <Button
+         <com.eegeo.helpers.TintableImageView
              android:id="@+id/about_page_view_close_button"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              android:layout_alignParentRight="true"
-             android:background="@drawable/button_close_states" />
+             android:background="@drawable/button_close_off" />
          
          </RelativeLayout>
 	        

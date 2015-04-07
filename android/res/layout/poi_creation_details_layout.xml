@@ -168,12 +168,12 @@
 		       		    android:layout_height="wrap_content"
 		       		    android:layout_weight="0.25">
 	
-		       		    <Button
+		       		    <com.eegeo.helpers.TintableImageView
 		       		        android:id="@+id/poi_creation_details_button_close"
 		       		        android:layout_width="wrap_content"
 		       		        android:layout_height="wrap_content"
 		       		        android:layout_centerInParent="true"
-		       		        android:background="@drawable/button_close_states" />
+		       		        android:background="@drawable/button_close_off" />
 	
 		       		</RelativeLayout>
 		            
@@ -181,36 +181,36 @@
 		       		    android:layout_width="0dp"
 		       		    android:layout_height="wrap_content"
 		       		    android:layout_weight="0.25">
-			            <Button
+			            <com.eegeo.helpers.TintableImageView
 			                android:id="@+id/poi_creation_details_button_photo"
 			                android:layout_width="wrap_content"
 			                android:layout_height="wrap_content"
 			                android:layout_centerInParent="true"
-			                android:background="@drawable/button_photo_states"/>
+			                android:background="@drawable/button_photo_off"/>
 		            </RelativeLayout>
 		            
 		            <RelativeLayout
 		       		    android:layout_width="0dp"
 		       		    android:layout_height="wrap_content"
 		       		    android:layout_weight="0.25">
-			            <Button
+			            <com.eegeo.helpers.TintableImageView
 			                android:id="@+id/poi_creation_details_button_gallery"
 			                android:layout_width="wrap_content"
 			                android:layout_height="wrap_content"
 			                android:layout_centerInParent="true"
-			                android:background="@drawable/button_gallery_states"/>
+			                android:background="@drawable/button_gallery_off"/>
 			        </RelativeLayout>
 		            
 		            <RelativeLayout
 		       		    android:layout_width="0dp"
 		       		    android:layout_height="wrap_content"
 		       		    android:layout_weight="0.25">
-			            <Button
+			            <com.eegeo.helpers.TintableImageView
 			                android:id="@+id/poi_creation_details_button_submit"
 			                android:layout_width="wrap_content"
 			                android:layout_height="wrap_content"
 			                android:layout_centerInParent="true"
-			                android:background="@drawable/button_ok_states"/>
+			                android:background="@drawable/button_ok_off"/>
 			        </RelativeLayout>
 
 		        </LinearLayout>
