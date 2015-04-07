@@ -6,10 +6,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
 import com.eegeo.categories.CategoryResources;
 import com.eegeo.entrypointinfrastructure.MainActivity;
+import com.eegeo.helpers.TintablePinToggleButton;
 import com.eegeo.mobileexampleapp.R;
 
 public class GeoNamesSearchResultPoiView 
@@ -19,11 +19,12 @@ public class GeoNamesSearchResultPoiView
     private View m_view = null;
     private RelativeLayout m_uiRoot = null;
     private View m_closeButton = null;
-    private ToggleButton m_togglePinnedButton = null;
+    private View m_togglePinnedButton = null;
     private TextView m_titleView = null;
     private TextView m_countryView = null;
     private TextView m_countryHeader = null;
     private ImageView m_categoryIcon = null;
+    private TintablePinToggleButton m_togglePinnedWrapper;
 
     public GeoNamesSearchResultPoiView(MainActivity activity, long nativeCallerPointer)
     {
@@ -34,7 +35,8 @@ public class GeoNamesSearchResultPoiView
         m_view = m_activity.getLayoutInflater().inflate(R.layout.search_result_poi_geonames_layout, m_uiRoot, false);
        
         m_closeButton = m_view.findViewById(R.id.search_result_poi_view_close_button);
-        m_togglePinnedButton = (ToggleButton)m_view.findViewById(R.id.search_result_poi_view_toggle_pinned_button);
+        m_togglePinnedButton = m_view.findViewById(R.id.search_result_poi_view_toggle_pinned_button);
+        m_togglePinnedWrapper = new TintablePinToggleButton(m_togglePinnedButton);
         m_titleView = (TextView)m_view.findViewById(R.id.search_result_poi_view_title);
         m_countryView = (TextView)m_view.findViewById(R.id.search_result_poi_view_country);
         m_countryHeader = (TextView)m_view.findViewById(R.id.search_result_poi_view_country_header);
@@ -94,7 +96,7 @@ public class GeoNamesSearchResultPoiView
         m_categoryIcon.setImageResource(iconId);
 
         m_closeButton.setEnabled(true);
-    	m_togglePinnedButton.setChecked(isPinned);
+        m_togglePinnedWrapper.setPinToggleState(isPinned);
     	
         m_view.setVisibility(View.VISIBLE);
         m_view.requestFocus();
@@ -113,7 +115,8 @@ public class GeoNamesSearchResultPoiView
     }
 
     private void handleTogglePinnedClicked()
-    {
+    {	
         SearchResultPoiViewJniMethods.TogglePinnedButtonClicked(m_nativeCallerPointer);
+        m_togglePinnedWrapper.setPinToggleState(!m_togglePinnedWrapper.isPinned());
     }
 }

@@ -129,26 +129,24 @@
 
         <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="80dp"
+            android:layout_height="64dp"
         	android:background="@color/gold">
             
-         <ToggleButton
-             android:id="@+id/search_result_poi_view_toggle_pinned_button"
-             android:layout_width="80dp"
-             android:layout_height="80dp"
-             android:layout_alignParentBottom="true"
-             android:layout_alignParentLeft="true"
-             android:background="@drawable/button_toggle_pinned_states"
-             android:textOff=""
-             android:textOn="" />
+			<include 
+			    layout="@layout/toggle_pinned_control"
+	             android:id="@+id/search_result_poi_view_toggle_pinned_button"
+	             android:layout_width="wrap_content"
+	             android:layout_height="wrap_content"
+	             android:layout_alignParentBottom="true"
+	             android:layout_alignParentLeft="true"/>
  
-         <com.eegeo.helpers.TintableImageView
-             android:id="@+id/search_result_poi_view_close_button"
-             android:layout_width="80dp"
-             android:layout_height="80dp"
-             android:layout_alignParentBottom="true"
-             android:layout_alignParentRight="true"
-             android:background="@drawable/button_close_off" />
+	         <com.eegeo.helpers.TintableImageView
+	             android:id="@+id/search_result_poi_view_close_button"
+	             android:layout_width="wrap_content"
+	             android:layout_height="wrap_content"
+	             android:layout_alignParentBottom="true"
+	             android:layout_alignParentRight="true"
+	             android:background="@drawable/button_close_off" />
          
          </RelativeLayout>
 	        

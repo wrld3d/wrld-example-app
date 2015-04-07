@@ -200,34 +200,21 @@
         	android:background="@color/gold"
         	android:id="@+id/search_result_poi_view_footer"
         	android:layout_alignParentBottom="true">
-            
-	         <ToggleButton
+	             
+			<include 
+			    layout="@layout/toggle_pinned_control"
 	             android:id="@+id/search_result_poi_view_toggle_pinned_button"
 	             android:layout_width="wrap_content"
 	             android:layout_height="wrap_content"
-	             android:layout_alignParentLeft="true"
-	             android:background="@drawable/button_toggle_pinned_states"
-	             android:textOff=""
-	             android:textOn="" />
-	 
-	         <com.eegeo.helpers.TintableImageView
-	             android:id="@+id/search_result_poi_view_close_button"
-	             android:layout_width="wrap_content"
-	             android:layout_height="wrap_content"
-	             android:layout_alignParentRight="true"
-	             android:background="@drawable/button_close_off" />
-	         
-	         <!-- <ImageView
-				android:id="@+id/search_result_poi_view_vendor_branding"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_centerVertical="true"
-	            android:layout_centerHorizontal="true"
-				android:dither="true"
-	    		android:antialias="true"
-	    		android:contentDescription="Yelp"
-	    		android:src="@drawable/yelp_logo" /> -->
-         
+	             android:layout_alignParentLeft="true"/>
+			
+			<com.eegeo.helpers.TintableImageView
+			    android:id="@+id/search_result_poi_view_close_button"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_alignParentRight="true"
+			    android:background="@drawable/button_close_off" />
+
          </RelativeLayout>
 	</RelativeLayout>
 </RelativeLayout>
