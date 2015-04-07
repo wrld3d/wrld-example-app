@@ -2,6 +2,7 @@
 
 package com.eegeo.aboutpageview;
 
+import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -17,6 +18,8 @@ public class AboutPageView implements View.OnClickListener
     private RelativeLayout m_uiRoot = null;
     private View m_closeButton = null;
     private TextView m_aboutTextView = null;
+    private TextView m_eulaLink = null;
+    private TextView m_privacyLink = null;
 
     public AboutPageView(MainActivity activity, long nativeCallerPointer)
     {
@@ -28,10 +31,15 @@ public class AboutPageView implements View.OnClickListener
         m_view = m_activity.getLayoutInflater().inflate(R.layout.about_page_layout, m_uiRoot, false);
         m_closeButton = m_view.findViewById(R.id.about_page_view_close_button);
         m_aboutTextView = (TextView)m_view.findViewById(R.id.about_page_view_about_text);
+        m_eulaLink = (TextView)m_view.findViewById(R.id.about_page_view_about_text_eula_link);
+        m_privacyLink = (TextView)m_view.findViewById(R.id.about_page_view_privacy_link);
 
         m_closeButton.setOnClickListener(this);
         m_view.setVisibility(View.GONE);
         m_uiRoot.addView(m_view);
+        
+        m_eulaLink.setMovementMethod(LinkMovementMethod.getInstance());
+        m_privacyLink.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     public void destroy()

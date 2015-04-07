@@ -142,13 +142,13 @@
              android:textOff=""
              android:textOn="" />
  
-         <Button
+         <com.eegeo.helpers.TintableImageView
              android:id="@+id/search_result_poi_view_close_button"
              android:layout_width="80dp"
              android:layout_height="80dp"
              android:layout_alignParentBottom="true"
              android:layout_alignParentRight="true"
-             android:background="@drawable/button_close_states" />
+             android:background="@drawable/button_close_off" />
          
          </RelativeLayout>
 	        

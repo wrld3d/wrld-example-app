@@ -118,12 +118,12 @@
              android:layout_alignParentLeft="true"
              android:background="@drawable/button_remove_pin_states" />
             
-         <Button
+         <com.eegeo.helpers.TintableImageView
              android:id="@+id/my_pin_details_view_close_button"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              android:layout_alignParentRight="true"
-             android:background="@drawable/button_close_states" />
+             android:background="@drawable/button_close_off" />
          
          </RelativeLayout>
 	        

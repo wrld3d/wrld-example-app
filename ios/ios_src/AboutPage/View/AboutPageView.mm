@@ -33,7 +33,6 @@
 
         self.pCloseButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         [self.pCloseButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_close_off") forState:UIControlStateNormal];
-        [self.pCloseButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_close_on") forState:UIControlStateHighlighted];
         [self.pCloseButtonContainer addSubview: self.pCloseButton];
 
         self.pContentContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
@@ -65,6 +64,22 @@
         self.pTextContent.textColor = ExampleApp::Helpers::ColorPalette::DarkGreyTone;
         self.pTextContent.textAlignment = NSTextAlignmentCenter;
         [self.pLabelsContainer addSubview: self.pTextContent];
+        
+        UITapGestureRecognizer* pPrivacyTapHandler = [[[UITapGestureRecognizer alloc]
+                                                          initWithTarget:self
+                                                          action:@selector(privacyClickHandler:)] autorelease];
+        self.pPrivacyLink = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        self.pPrivacyLink.textColor = ExampleApp::Helpers::ColorPalette::LinkTone;
+        [self.pPrivacyLink addGestureRecognizer: pPrivacyTapHandler];
+        [self.pLabelsContainer addSubview: self.pPrivacyLink];
+        
+        UITapGestureRecognizer* pEulaTapHandler = [[[UITapGestureRecognizer alloc]
+                                                    initWithTarget:self
+                                                    action:@selector(eulaClickHandler:)] autorelease];
+        self.pEulaLink = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        self.pEulaLink.textColor = ExampleApp::Helpers::ColorPalette::LinkTone;
+        [self.pEulaLink addGestureRecognizer: pEulaTapHandler];
+        [self.pLabelsContainer addSubview: self.pEulaLink];
 
         m_tapGestureRecogniser = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(_tapTabGesture:)];
         [m_tapGestureRecogniser setDelegate:self];
@@ -106,6 +121,12 @@
 
     [self.pTextContent removeFromSuperview];
     [self.pTextContent release];
+    
+    [self.pPrivacyLink removeFromSuperview];
+    [self.pPrivacyLink release];
+    
+    [self.pEulaLink removeFromSuperview];
+    [self.pEulaLink release];
 
     [self removeFromSuperview];
     [super dealloc];
@@ -114,8 +135,6 @@
 
 - (void)layoutSubviews
 {
-    self.alpha = 0.f;
-
     const float boundsWidth = static_cast<float>(self.superview.bounds.size.width);
     const float boundsHeight = static_cast<float>(self.superview.bounds.size.height);
     const bool useFullScreenSize = App::IsDeviceSmall();
@@ -201,11 +220,40 @@
 
     const float textContentY = logoY + logoHeight;
     self.pTextContent.frame = CGRectMake(textContentX, textContentY, textWidth, contentSectionHeight - 300.f);
-    self.pTextContent.text = @"";
     self.pTextContent.numberOfLines = 0;
     self.pTextContent.adjustsFontSizeToFitWidth = NO;
     self.pTextContent.font = [UIFont systemFontOfSize:14.0f];
     self.pTextContent.lineBreakMode = NSLineBreakByWordWrapping;
+    [self.pTextContent sizeToFit];
+    
+    self.pEulaLink.text = @"EULA";
+    self.pEulaLink.font = [UIFont systemFontOfSize:14.f];
+    [self.pEulaLink sizeToFit];
+    self.pEulaLink.userInteractionEnabled = YES;
+    CGRect eulaFrame = self.pPrivacyLink.frame;
+    eulaFrame.origin.x = roundf(mainWindowWidth/2.f - self.pEulaLink.frame.size.width/2.f);
+    eulaFrame.origin.y = roundf(textContentY + self.pTextContent.frame.size.height);
+    self.pEulaLink.frame = eulaFrame;
+    
+    self.pPrivacyLink.text = @"Privacy Policy";
+    self.pPrivacyLink.font = [UIFont systemFontOfSize:14.f];
+    [self.pPrivacyLink sizeToFit];
+    self.pPrivacyLink.userInteractionEnabled = YES;
+    CGRect privacyFrame = self.pPrivacyLink.frame;
+    privacyFrame.origin.x = roundf(mainWindowWidth/2.f - self.pEulaLink.frame.size.width/2.f);
+    privacyFrame.origin.y = roundf(eulaFrame.origin.y + self.pEulaLink.frame.size.height + 16.f);
+    self.pPrivacyLink.frame = privacyFrame;
+    
+    CGRect contentRect = CGRectZero;
+    for (UIView *view in self.self.pLabelsContainer.subviews) {
+        contentRect = CGRectUnion(contentRect, view.frame);
+    }
+    
+    contentRect.size.width = std::max(self.pTextContent.frame.size.width, self.pLogoImage.frame.size.width);
+    self.pLabelsContainer.contentSize = contentRect.size;
+    
+    self.pLabelsContainer.userInteractionEnabled = YES;
+    
 }
 
 - (ExampleApp::AboutPage::View::AboutPageViewInterop*)getInterop
@@ -216,9 +264,7 @@
 - (void) setContent:(const std::string*)content
 {
     self.pTextContent.text = [NSString stringWithUTF8String:content->c_str()];
-    [self.pTextContent sizeToFit];
-    self.pLabelsContainer.contentSize = CGSizeMake(std::max(self.pTextContent.frame.size.width, self.pLogoImage.frame.size.width),
-                                        self.pTextContent.frame.size.height + self.pLogoImage.frame.size.height + self.pDevelopedByLabel.frame.size.height);
+    [self setNeedsLayout];
 }
 
 - (void) setFullyActive
@@ -263,6 +309,16 @@
 - (void)_tapTabGesture:(UITapGestureRecognizer *)recognizer
 {
     m_pInterop->CloseTapped();
+}
+
+- (void) privacyClickHandler:(UITapGestureRecognizer *)recognizer
+{
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://recce.com/privacy/"]];
+}
+
+- (void) eulaClickHandler:(UITapGestureRecognizer *)recognizer
+{
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://recce.com/eula/"]];
 }
 
 @end
