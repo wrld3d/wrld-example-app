@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="eula_link"><a href='http://recce.com/eula'>EULA</a></string>
+    <string name="privacy_link"><a href='http://recce.com/privacy'>Privacy Policy</a></string>
+    
     <string name="about_page_title">About this app...</string>
     
     <string name="options_title">Options</string>

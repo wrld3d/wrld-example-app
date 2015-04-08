@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.text.util.Linkify;
 import android.view.View;
@@ -16,9 +17,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
 import com.eegeo.entrypointinfrastructure.MainActivity;
+import com.eegeo.helpers.TintablePinToggleButton;
 import com.eegeo.mobileexampleapp.R;
 import com.eegeo.categories.CategoryResources;
 
@@ -30,8 +31,7 @@ public class YelpSearchResultPoiView implements View.OnClickListener
     private RelativeLayout m_uiRoot = null;
 
     private View m_closeButton = null;
-    private ToggleButton m_togglePinnedButton = null;
-    //private View m_vendorBranding = null;
+    private View m_togglePinnedButton = null;
     private TextView m_titleView = null;
     private TextView m_addressView = null;
     private TextView m_addressHeader = null;
@@ -41,7 +41,6 @@ public class YelpSearchResultPoiView implements View.OnClickListener
     private TextView m_humanReadableCategoriesHeader = null;
     private TextView m_reviewsView = null;
     private TextView m_reviewsHeader = null;
-    private	TextView m_webHeader = null;
     private	ImageView m_webVendorStyleLinkButton = null;
     private ImageView m_categoryIcon = null;
 	private ImageView m_poiImage = null;
@@ -49,9 +48,9 @@ public class YelpSearchResultPoiView implements View.OnClickListener
 	private View m_poiImageProgressBar = null;
 	private String m_url;
 	private String m_poiImageUrl;
-	private String m_poiRatingUrl;
 
     private boolean m_handlingClick = false;
+    private TintablePinToggleButton m_togglePinnedWrapper;
 
     public YelpSearchResultPoiView(MainActivity activity, long nativeCallerPointer)
     {
@@ -62,7 +61,8 @@ public class YelpSearchResultPoiView implements View.OnClickListener
         m_view = m_activity.getLayoutInflater().inflate(R.layout.search_result_poi_yelp_layout, m_uiRoot, false);
 
         m_closeButton = m_view.findViewById(R.id.search_result_poi_view_close_button);
-        m_togglePinnedButton = (ToggleButton)m_view.findViewById(R.id.search_result_poi_view_toggle_pinned_button);
+        m_togglePinnedButton = m_view.findViewById(R.id.search_result_poi_view_toggle_pinned_button);
+        m_togglePinnedWrapper = new TintablePinToggleButton(m_togglePinnedButton);
         m_titleView = (TextView)m_view.findViewById(R.id.search_result_poi_view_title);
         m_addressView = (TextView)m_view.findViewById(R.id.search_result_poi_view_address);
         m_addressHeader = (TextView)m_view.findViewById(R.id.search_result_poi_view_address_header);
@@ -73,13 +73,11 @@ public class YelpSearchResultPoiView implements View.OnClickListener
         m_reviewsView = (TextView)m_view.findViewById(R.id.search_result_poi_view_reviews);
         m_reviewsHeader = (TextView)m_view.findViewById(R.id.search_result_poi_view_reviews_header);
         m_webVendorStyleLinkButton = (ImageView)m_view.findViewById(R.id.search_result_poi_view_web_vendor_link_style);
-        m_webHeader = (TextView)m_view.findViewById(R.id.search_result_poi_view_web_header);
         m_categoryIcon = (ImageView)m_view.findViewById(R.id.search_result_poi_view_category_icon);
         m_poiImageProgressBar = m_view.findViewById(R.id.search_result_poi_view_image_progress);
 		m_poiImage = (ImageView)m_view.findViewById(R.id.search_result_poi_view_image);
 		m_poiRatingImage = (ImageView)m_view.findViewById(R.id.search_result_poi_view_rating_image);
-        //m_vendorBranding = m_view.findViewById(R.id.search_result_poi_view_vendor_branding);
-
+        
         m_activity.recursiveDisableSplitMotionEvents((ViewGroup)m_view);
         
         m_view.setVisibility(View.GONE);
@@ -110,7 +108,6 @@ public class YelpSearchResultPoiView implements View.OnClickListener
     {
     	m_url = url;
     	m_poiImageUrl = imageUrl;
-    	m_poiRatingUrl = ratingImageUrl;
     	
         m_titleView.setText(title);
 
@@ -146,12 +143,10 @@ public class YelpSearchResultPoiView implements View.OnClickListener
 
         if(!url.equals(""))
         {
-            m_webHeader.setVisibility(View.VISIBLE);
             m_webVendorStyleLinkButton.setVisibility(View.VISIBLE);
         }
         else
         {
-            m_webHeader.setVisibility(View.GONE);
         	m_webVendorStyleLinkButton.setVisibility(View.GONE);
         }
 
@@ -196,11 +191,20 @@ public class YelpSearchResultPoiView implements View.OnClickListener
             m_poiImageProgressBar.setVisibility(View.VISIBLE);
         }
         
+        if (!ratingImageUrl.equals(""))
+        {
+        	int imageResource = m_activity.getResources().getIdentifier(ratingImageUrl, "drawable", m_activity.getPackageName());
+            Drawable image = m_activity.getResources().getDrawable(imageResource);
+            m_poiRatingImage.setImageDrawable(image);
+        
+		    m_poiRatingImage.setVisibility(View.VISIBLE);
+        }
+        
         int iconId = CategoryResources.getSmallIconForCategory(m_activity, category);
         m_categoryIcon.setImageResource(iconId);
 
         m_closeButton.setEnabled(true);
-    	m_togglePinnedButton.setChecked(isPinned);
+        m_togglePinnedWrapper.setPinToggleState(isPinned);
     	
         m_view.setVisibility(View.VISIBLE);
         m_view.requestFocus();
@@ -255,24 +259,6 @@ public class YelpSearchResultPoiView implements View.OnClickListener
 				m_poiImage.setImageBitmap(Bitmap.createScaledBitmap(poiBitmap, size, size, false));
 			}
 		}
-		else if(url.equals(m_poiRatingUrl))
-		{
-			if(hasImage)
-			{
-				m_poiRatingImage.setVisibility(View.VISIBLE);
-				
-			    BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-			    bmOptions.inJustDecodeBounds = true;
-			    int scaleFactor = calculateInSampleSize(bmOptions, m_uiRoot.getWidth(), m_uiRoot.getHeight());
-			    
-			    bmOptions.inJustDecodeBounds = false;
-			    bmOptions.inSampleSize = scaleFactor;
-			    bmOptions.inPurgeable = true;
-			    
-			    Bitmap poiBitmap = BitmapFactory.decodeByteArray(imgData, 0, imgData.length, bmOptions);
-			    m_poiRatingImage.setImageBitmap(poiBitmap);
-			}
-		}
 	}
 
     private void handleCloseClicked()
@@ -281,23 +267,6 @@ public class YelpSearchResultPoiView implements View.OnClickListener
         m_togglePinnedButton.setOnClickListener(null);
 
         SearchResultPoiViewJniMethods.CloseButtonClicked(m_nativeCallerPointer);
-    }
-
-    private void handleTogglePinnedClicked()
-    {
-    	// Undo the toggle which occurred on this click, we will redo it manually if confirmed.
-    	m_togglePinnedButton.setChecked(!m_togglePinnedButton.isChecked());
-		
-    	if(m_togglePinnedButton.isChecked())
-    	{
-    		showRemovePinDialog();
-    	}
-    	else
-    	{
-    		SearchResultPoiViewJniMethods.TogglePinnedButtonClicked(m_nativeCallerPointer);
-            m_handlingClick = false;
-            m_togglePinnedButton.setChecked(true);
-    	}
     }
     
     private void handleWebLinkButtonClicked()
@@ -330,6 +299,20 @@ public class YelpSearchResultPoiView implements View.OnClickListener
 	    
 	    return inSampleSize;
 	}
+
+    private void handleTogglePinnedClicked()
+    {
+    	if(m_togglePinnedWrapper.isPinned())
+    	{
+    		showRemovePinDialog();
+    	}
+    	else
+    	{
+    		SearchResultPoiViewJniMethods.TogglePinnedButtonClicked(m_nativeCallerPointer);
+            m_handlingClick = false;
+            m_togglePinnedWrapper.setPinToggleState(true);
+    	}
+    }
 	
 	private void showRemovePinDialog()
     {
@@ -343,7 +326,7 @@ public class YelpSearchResultPoiView implements View.OnClickListener
             {
         		SearchResultPoiViewJniMethods.TogglePinnedButtonClicked(m_nativeCallerPointer);
                 m_handlingClick = false;
-                m_togglePinnedButton.setChecked(false);
+                m_togglePinnedWrapper.setPinToggleState(false);
             }
         })
         .setNegativeButton("No,  keep it", new DialogInterface.OnClickListener()
@@ -351,7 +334,7 @@ public class YelpSearchResultPoiView implements View.OnClickListener
             @Override
             public void onClick(DialogInterface dialog, int which)
             {
-            	m_togglePinnedButton.setChecked(true);
+            	m_togglePinnedWrapper.setPinToggleState(true);
                 m_handlingClick = false;
             }
         })
@@ -360,7 +343,7 @@ public class YelpSearchResultPoiView implements View.OnClickListener
             @Override
             public void onCancel(DialogInterface dialog)
             {
-            	m_togglePinnedButton.setChecked(true);
+            	m_togglePinnedWrapper.setPinToggleState(true);
                 m_handlingClick = false;
             }
         });

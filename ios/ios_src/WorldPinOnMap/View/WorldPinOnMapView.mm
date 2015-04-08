@@ -1,6 +1,7 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "WorldPinOnMapView.h"
+#include <algorithm>
 #include "MathFunc.h"
 #include "UIColors.h"
 #include "ImageHelpers.h"
@@ -60,7 +61,11 @@
         self.pAddressLabel.font = [UIFont systemFontOfSize:12.0];
         self.pAddressLabel.backgroundColor = [UIColor clearColor];
         [self.pLabelBack addSubview: self.pAddressLabel];
-
+        
+        // image container
+        self.pImageDisplay = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 115, 25)] autorelease];
+        [self.pLabelBack addSubview: self.pImageDisplay];
+        
         // poi arrow
         self.pArrowContainer = [[[UIImageView alloc] initWithImage:ExampleApp::Helpers::ImageHelpers::LoadImage("arrow1")] autorelease];
         self.pArrowContainer.contentMode = UIViewContentModeScaleToFill;
@@ -80,6 +85,9 @@
 
     [self.pLabelBack removeFromSuperview];
     [self.pLabelBack release];
+    
+    [self.pImageDisplay removeFromSuperview];
+    [self.pImageDisplay release];
 
     [self.pTopStrip removeFromSuperview];
     [self.pTopStrip release];
@@ -140,6 +148,11 @@
                                           labelVerticalSpace + labelSpacing,
                                           w - labelOffsetX,
                                           labelVerticalSpace);
+    
+    self.pImageDisplay.frame = CGRectMake(labelOffsetX,
+                                          labelVerticalSpace + labelSpacing,
+                                          0.f,
+                                          0.f);
 
     const float arrowWidth = 16.f;
     self.pArrowContainer.frame = CGRectMake(w/2.f - arrowWidth/2.f, h, arrowWidth, arrowWidth);
@@ -147,10 +160,45 @@
     self.frame = CGRectMake(x, y, w, h + arrowWidth);
 }
 
-- (void) setLabel:(std::string)name :(std::string)detail
+- (void) setContent:(const std::string&)name :(const std::string&)data;
 {
     self.pNameLabel.text = [NSString stringWithUTF8String:name.c_str()];
-    self.pAddressLabel.text = [NSString stringWithUTF8String:detail.c_str()];
+    
+    // Use convention to determine if data is a ratings image or an address -- if the data prefix is 'stars_' and it corresponds to
+    // a ratings image, then assume it *is* a ratings image. This would hypothetically cause an error if a POI address was, for
+    // example, exactly 'stars_0_2' or similar.
+    const std::string ratingsPrefix("stars_");
+    
+    const bool dataIsRatingImage =
+    (ratingsPrefix.size() < data.size())
+    && (std::mismatch(ratingsPrefix.begin(), ratingsPrefix.end(), data.begin()).first == ratingsPrefix.end());
+    
+    bool usedImage = false;
+    
+    if(dataIsRatingImage)
+    {
+        UIImage* image = ExampleApp::Helpers::ImageHelpers::LoadImage(data);
+        if(image != nil)
+        {
+            self.pAddressLabel.text = @"";
+            
+            [self.pImageDisplay setImage:image];
+            [self.pImageDisplay setHidden:NO];
+            
+            CGRect frame = self.pImageDisplay.frame;
+            frame.size = image.size;
+            self.pImageDisplay.frame = frame;
+            
+            usedImage = true;
+        }
+    }
+    
+    if(!usedImage)
+    {
+        self.pAddressLabel.text = [NSString stringWithUTF8String:data.c_str()];
+        [self.pImageDisplay setImage:nil];
+        [self.pImageDisplay setHidden:YES];
+    }
 }
 
 - (void) setFullyActive :(float)modality

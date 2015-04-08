@@ -74,12 +74,37 @@
 	                android:layout_height="wrap_content"/>
 	            
 	            <!--  Ratings  -->
-	            <ImageView
-	                android:id="@+id/search_result_poi_view_rating_image"
+
+	            <LinearLayout
 	                android:layout_width="fill_parent"
 	                android:layout_height="wrap_content"
-	                android:padding="5dp"/>
-	            
+	                android:gravity="center_horizontal"
+	                android:orientation="horizontal" >
+					
+	                <RelativeLayout
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:paddingBottom="5dp"
+	                    android:paddingTop="5dp" >
+
+			            <com.eegeo.helpers.TintableImageView
+			                android:id="@+id/search_result_poi_view_web_vendor_link_style"
+			                android:layout_width="wrap_content"
+			                android:layout_height="wrap_content"
+			                android:layout_toRightOf="@id/search_result_poi_view_web_vendor_link_style"
+			                android:background="@drawable/yelp_reviews"
+			                android:clickable="true" />
+	            	</RelativeLayout>
+	            	
+	            	<ImageView
+	            	    android:id="@+id/search_result_poi_view_rating_image"
+	            	    android:layout_width="wrap_content"
+	            	    android:layout_height="wrap_content"
+	            	    android:layout_gravity="center_vertical"
+	            	    android:padding="5dp" />
+
+	            </LinearLayout>
+	
 	             <!--  Phone  -->
 	            <TextView
 	                android:id="@+id/search_result_poi_view_phone_header"
@@ -100,32 +125,7 @@
 	                android:paddingLeft="3dp"
 	                android:textColor="@color/darkgrey"
 	                android:textSize="12dp" />
-	            
-	             <!--  Web  -->
-	            <TextView
-	                android:id="@+id/search_result_poi_view_web_header"
-	                android:layout_width="fill_parent"
-	                android:layout_height="wrap_content"
-	                android:textColor="@color/white"
-	                android:textSize="12dp"
-	                android:paddingLeft="3dp"
-	                android:background="@color/gold"
-	                android:text="@string/header_web"/>
-	
-	            <RelativeLayout 
-	                android:paddingTop="5dp"
-	                android:paddingBottom="5dp"
-	             	android:layout_width="fill_parent"
-	             	android:layout_height="wrap_content">
-		            <com.eegeo.helpers.TintableImageView
-		            	android:id="@+id/search_result_poi_view_web_vendor_link_style"
-		                android:layout_width="wrap_content"
-		                android:layout_height="wrap_content"
-		                android:layout_centerInParent="true"
-		                android:background="@drawable/yelp_reviews"
-   						android:clickable="true"/>
-	            </RelativeLayout>
-	            
+
 	            <!--  Address  -->
 	            <TextView
 	                android:id="@+id/search_result_poi_view_address_header"
@@ -200,34 +200,21 @@
         	android:background="@color/gold"
         	android:id="@+id/search_result_poi_view_footer"
         	android:layout_alignParentBottom="true">
-            
-	         <ToggleButton
+	             
+			<include 
+			    layout="@layout/toggle_pinned_control"
 	             android:id="@+id/search_result_poi_view_toggle_pinned_button"
 	             android:layout_width="wrap_content"
 	             android:layout_height="wrap_content"
-	             android:layout_alignParentLeft="true"
-	             android:background="@drawable/button_toggle_pinned_states"
-	             android:textOff=""
-	             android:textOn="" />
-	 
-	         <Button
-	             android:id="@+id/search_result_poi_view_close_button"
-	             android:layout_width="wrap_content"
-	             android:layout_height="wrap_content"
-	             android:layout_alignParentRight="true"
-	             android:background="@drawable/button_close_states" />
-	         
-	         <!-- <ImageView
-				android:id="@+id/search_result_poi_view_vendor_branding"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_centerVertical="true"
-	            android:layout_centerHorizontal="true"
-				android:dither="true"
-	    		android:antialias="true"
-	    		android:contentDescription="Yelp"
-	    		android:src="@drawable/yelp_logo" /> -->
-         
+	             android:layout_alignParentLeft="true"/>
+			
+			<com.eegeo.helpers.TintableImageView
+			    android:id="@+id/search_result_poi_view_close_button"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_alignParentRight="true"
+			    android:background="@drawable/button_close_off" />
+
          </RelativeLayout>
 	</RelativeLayout>
 </RelativeLayout>

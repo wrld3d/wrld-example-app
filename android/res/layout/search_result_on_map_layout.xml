@@ -35,17 +35,27 @@
             android:textSize="15.0dp"
             android:textStyle="bold" />
         
-        <TextView
-            android:layout_marginLeft="3dp"
-            android:layout_marginBottom="2dp"
-            android:textColor="@color/darkgrey"
-			android:layout_width="fill_parent"
-			android:layout_height="15dp"
-			android:textSize="12.0dp"
-            android:singleLine="true"
-            android:ellipsize="end"
-	    	android:id="@+id/search_result_on_map_view_details"/>
-	        
+	        <RelativeLayout
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content">
+	            
+		        <TextView
+		            android:layout_marginLeft="3dp"
+		            android:layout_marginBottom="2dp"
+		            android:textColor="@color/darkgrey"
+					android:layout_width="fill_parent"
+					android:layout_height="15dp"
+					android:textSize="12.0dp"
+		            android:singleLine="true"
+		            android:ellipsize="end"
+			    	android:id="@+id/search_result_on_map_view_details"/>
+		        
+		       	<ImageView
+		       	    android:id="@+id/search_result_on_map_view_image"
+		       	    android:layout_width="wrap_content"
+		       	    android:layout_height="wrap_content"/>
+		       	
+	        </RelativeLayout>
 	 	</LinearLayout>
 
       <RelativeLayout

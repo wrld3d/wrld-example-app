@@ -3,7 +3,9 @@
 package com.eegeo.worldpinonmapview;
 
 import android.animation.Animator;
+import android.graphics.drawable.Drawable;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.RelativeLayout.LayoutParams;
@@ -24,6 +26,7 @@ public class WorldPinOnMapView implements View.OnClickListener
     private float m_horizontalOffsetPx;
     private TextView m_titleView;
     private TextView m_detailsView;
+	private ImageView m_poiRatingImage;
 
     public WorldPinOnMapView(MainActivity activity, long nativeCallerPointer)
     {
@@ -41,6 +44,7 @@ public class WorldPinOnMapView implements View.OnClickListener
         m_view.setVisibility(View.GONE);
         m_titleView = (TextView)m_view.findViewById(R.id.search_result_on_map_view_title);
         m_detailsView = (TextView)m_view.findViewById(R.id.search_result_on_map_view_details);
+        m_poiRatingImage = (ImageView)m_view.findViewById(R.id.search_result_on_map_view_image);
     }
 
     public void destroy()
@@ -48,11 +52,33 @@ public class WorldPinOnMapView implements View.OnClickListener
         m_uiRoot.removeView(m_view);
     }
 
-    public void show(final String title, final String details, final float modality)
+    public void show(final String title, final String data, final float modality)
     {
+        boolean usedImage = false; 
+        
+    	if(data.startsWith("stars_"))
+    	{
+        	int imageResource = m_activity.getResources().getIdentifier(data, "drawable", m_activity.getPackageName());
+        	if(imageResource != 0)
+        	{
+        		m_detailsView.setText("");
+        		Drawable image = m_activity.getResources().getDrawable(imageResource);
+        		m_poiRatingImage.setImageDrawable(image);
+            	m_poiRatingImage.setVisibility(View.VISIBLE);
+        		usedImage = true;
+        	}
+    	}
+    	
         m_view.setEnabled(true);
         m_titleView.setText(title);
-        m_detailsView.setText(details);
+        
+        if(!usedImage)
+        {	
+        	m_detailsView.setText(data);
+        	m_poiRatingImage.setImageDrawable(null);
+        	m_poiRatingImage.setVisibility(View.INVISIBLE);
+        }
+        
         m_view.setVisibility(View.VISIBLE);
         animateToAlpha(1.f - modality);
     }

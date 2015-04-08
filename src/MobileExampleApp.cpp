@@ -167,7 +167,7 @@ namespace ExampleApp
                                                 platformConfig,
                                                 NULL,
                                                 "http://cdn1.eegeo.com/coverage-trees/v528/manifest.txt.gz",
-                                                "http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v275/manifest.txt.gz",
+                                                "http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v285/manifest.txt.gz",
                                                 &errorHandler
                                                 );
 
@@ -573,7 +573,7 @@ namespace ExampleApp
             m_pGpsMarkerModule->GetGpsMarkerController().Update(dt, renderCamera);
 
             InitialExperience::SdkModel::IInitialExperienceModel& initialExperienceModel = m_initialExperienceModule.GetInitialExperienceModel();
-            if(!initialExperienceModel.HasCompletedInitialExperience())
+            if(!initialExperienceModel.HasCompletedInitialExperience() && IsLoadingScreenComplete())
             {
                 InitialExperience::SdkModel::IInitialExperienceController& initialExperienceController = m_initialExperienceModule.GetInitialExperienceController();
                 initialExperienceController.Update(dt);

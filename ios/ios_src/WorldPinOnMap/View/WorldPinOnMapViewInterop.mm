@@ -28,7 +28,7 @@ namespace ExampleApp
                                                 float modality)
             {
                 [m_pView setFullyActive:modality];
-                [m_pView setLabel:title :subtitle];
+                [m_pView setContent:title :subtitle];
             }
 
             void WorldPinOnMapViewInterop::Close()
