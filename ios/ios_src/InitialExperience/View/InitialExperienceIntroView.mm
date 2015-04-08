@@ -64,7 +64,7 @@ const float arrowWidth = 10;
         self.pPinCreationDialogArrow = ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pPinCreationDialogContainer, "arrow3_down", 0.f, 0.f, 0, 0);
         self.pPinCreationDialogTitle = [self createDialogTitle:@"My Pin"];
         [self.pPinCreationDialogContainer addSubview:self.pPinCreationDialogTitle];
-        self.pPinCreationDialogDescription = [self createDialogDescription:@"Create your own places"];
+        self.pPinCreationDialogDescription = [self createDialogDescription:@"Create your own pins"];
         [self.pPinCreationDialogContainer addSubview:self.pPinCreationDialogDescription];
         
         m_awaitingInput = false;
