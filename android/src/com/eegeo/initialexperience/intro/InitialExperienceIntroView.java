@@ -61,7 +61,7 @@ public class InitialExperienceIntroView implements View.OnClickListener, Animati
         setDialogText(m_menuDialog, "Main Menu", "Start exploring here");
         setDialogText(m_compassDialog, "Compass", "Find me\nLock rotation");
         setDialogText(m_mapmodeDialog, "Map Mode", "Simple 2D View");
-        setDialogText(m_pinCreationDialog, "My Pins", "Create your own places");
+        setDialogText(m_pinCreationDialog, "My Pins", "Create your own pins");
         m_view.setOnClickListener(this);
         
         m_awaitingInput = false;
