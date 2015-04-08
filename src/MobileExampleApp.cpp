@@ -573,7 +573,7 @@ namespace ExampleApp
             m_pGpsMarkerModule->GetGpsMarkerController().Update(dt, renderCamera);
 
             InitialExperience::SdkModel::IInitialExperienceModel& initialExperienceModel = m_initialExperienceModule.GetInitialExperienceModel();
-            if(!initialExperienceModel.HasCompletedInitialExperience())
+            if(!initialExperienceModel.HasCompletedInitialExperience() && IsLoadingScreenComplete())
             {
                 InitialExperience::SdkModel::IInitialExperienceController& initialExperienceController = m_initialExperienceModule.GetInitialExperienceController();
                 initialExperienceController.Update(dt);
