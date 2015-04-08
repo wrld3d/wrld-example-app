@@ -45,6 +45,7 @@ public class YelpSearchResultPoiView implements View.OnClickListener
     private ImageView m_categoryIcon = null;
 	private ImageView m_poiImage = null;
 	private ImageView m_poiRatingImage = null;
+	private ImageView m_poiRatingOverImage = null;
 	private View m_poiImageProgressBar = null;
 	private String m_url;
 	private String m_poiImageUrl;
@@ -77,8 +78,12 @@ public class YelpSearchResultPoiView implements View.OnClickListener
         m_poiImageProgressBar = m_view.findViewById(R.id.search_result_poi_view_image_progress);
 		m_poiImage = (ImageView)m_view.findViewById(R.id.search_result_poi_view_image);
 		m_poiRatingImage = (ImageView)m_view.findViewById(R.id.search_result_poi_view_rating_image);
+		m_poiRatingOverImage = (ImageView)m_view.findViewById(R.id.search_result_poi_view_rating_over_image);
         
         m_activity.recursiveDisableSplitMotionEvents((ViewGroup)m_view);
+        
+        m_poiRatingImage.setVisibility(View.GONE);
+        m_poiRatingOverImage.setVisibility(View.GONE);
         
         m_view.setVisibility(View.GONE);
         m_uiRoot.addView(m_view);
@@ -191,13 +196,23 @@ public class YelpSearchResultPoiView implements View.OnClickListener
             m_poiImageProgressBar.setVisibility(View.VISIBLE);
         }
         
+        m_poiRatingImage.setVisibility(View.GONE);
+        m_poiRatingOverImage.setVisibility(View.GONE);
         if (!ratingImageUrl.equals(""))
         {
         	int imageResource = m_activity.getResources().getIdentifier(ratingImageUrl, "drawable", m_activity.getPackageName());
             Drawable image = m_activity.getResources().getDrawable(imageResource);
-            m_poiRatingImage.setImageDrawable(image);
-        
-		    m_poiRatingImage.setVisibility(View.VISIBLE);
+            
+            if(imageUrl.equals(""))
+            {
+            	m_poiRatingImage.setImageDrawable(image);
+    		    m_poiRatingImage.setVisibility(View.VISIBLE);
+            }
+            else
+            {
+            	m_poiRatingOverImage.setImageDrawable(image);
+            	m_poiRatingOverImage.setVisibility(View.VISIBLE);
+            }   
         }
         
         int iconId = CategoryResources.getSmallIconForCategory(m_activity, category);
