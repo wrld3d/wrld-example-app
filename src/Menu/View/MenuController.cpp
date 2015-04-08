@@ -67,8 +67,11 @@ namespace ExampleApp
                     sections.push_back(&section);
                 }
 
-                m_view.UpdateMenuSectionViews(sections);
-                m_presentationDirty = false;
+                if(!m_viewModel.IsFullyClosed())
+                {
+                    m_view.UpdateMenuSectionViews(sections);
+                    m_presentationDirty = false;
+                }
             }
 
             void MenuController::UpdateUiThread(float dt)
