@@ -322,6 +322,7 @@ const int DeletePinAlertViewTag = 2;
     const float headerTextPadding = 3.0f;
     
     float currentLabelY = 8.f;
+    const bool hasImage = !m_model.GetImageUrl().empty();
     
     if(!m_model.GetImageUrl().empty())
     {
@@ -337,7 +338,38 @@ const int DeletePinAlertViewTag = 2;
     const float yelpButtonHeight = 25.0f;
     const float reviewSpacing = 2.0f;
     const float fullRatingsWidth = yelpButtonWidth + m_ratingsImageWidth + reviewSpacing;
-    const CGFloat yelpButtonX = (self.frame.size.width * 0.5f - fullRatingsWidth * 0.5f);
+    const CGFloat rateBarOriginX = hasImage
+        ? (self.frame.size.width * 0.5f - yelpButtonWidth * 0.5f)
+        : (self.frame.size.width * 0.5f - fullRatingsWidth * 0.5f);
+    const float yelpButtonX = hasImage ? rateBarOriginX : rateBarOriginX + reviewSpacing + m_ratingsImageWidth;
+    const CGFloat imageBottomPadding = 8.0;
+    
+    if(!m_model.GetRatingImageUrl().empty())
+    {
+        UIImage* image = ExampleApp::Helpers::ImageHelpers::LoadImage(m_model.GetRatingImageUrl());
+        [self.pRatingImage setImage:image];
+        
+        m_ratingsImageWidth = image.size.width;
+        m_ratingsImageHeight = image.size.height;
+
+        const CGFloat imageX = hasImage ? (self.frame.size.width * 0.5f) - m_ratingsImageWidth*0.5f : roundf(rateBarOriginX);
+        const CGFloat imageY = hasImage
+        ? self.pPreviewImage.frame.origin.y + self.pPreviewImage.frame.size.height - yelpButtonHeight - reviewSpacing
+        : currentLabelY + (yelpButtonHeight*0.5f) - (m_ratingsImageHeight*0.5f);
+        self.pRatingImage.frame = CGRectMake(imageX, imageY, m_ratingsImageWidth, m_ratingsImageHeight);
+        
+        CGRect frame = self.pRatingImage.frame;
+        const CGFloat initialFrameHeight = frame.size.height;
+        frame.size = image.size;
+        frame.origin.x = imageX;
+        frame.origin.y = imageY;
+        self.pRatingImage.frame = frame;
+        self.pRatingImage.hidden = false;
+        
+        const CGFloat imageContentHeightDifference = (image.size.height - initialFrameHeight);
+        const CGFloat newContentHeight = self.pLabelsContainer.contentSize.height + imageContentHeightDifference;
+        [self.pLabelsContainer setContentSize:CGSizeMake(self.pLabelsContainer.contentSize.width, newContentHeight)];
+    }
     
     if(!m_model.GetWebUrl().empty())
     {
@@ -361,35 +393,11 @@ const int DeletePinAlertViewTag = 2;
         [self.pVendorWebLinkButton setImage:pButtonImage forState:UIControlStateNormal];
         [self.pVendorWebLinkButton addTarget:self action:@selector(handleLinkClicked) forControlEvents:UIControlEventTouchUpInside];
         [self.pLabelsContainer addSubview: self.pVendorWebLinkButton];
-    }
-    
-    if(!m_model.GetRatingImageUrl().empty())
-    {
-        const CGFloat imageX = roundf(yelpButtonX + yelpButtonWidth + reviewSpacing);
-        const CGFloat imageY = roundf(currentLabelY + (yelpButtonHeight * 0.5f) - (m_ratingsImageHeight*0.5f));
-        self.pRatingImage.frame = CGRectMake(imageX, imageY, m_ratingsImageWidth, m_ratingsImageHeight);
-        const CGFloat imageBottomPadding = 8.0;
         
-        UIImage* image = ExampleApp::Helpers::ImageHelpers::LoadImage(m_model.GetRatingImageUrl());
-        [self.pRatingImage setImage:image];
-        
-        CGRect frame = self.pRatingImage.frame;
-        const CGFloat initialFrameHeight = frame.size.height;
-        frame.size = image.size;
-        frame.origin.x = imageX;
-        self.pRatingImage.frame = frame;
-        self.pRatingImage.hidden = false;
-        
-        const CGFloat imageContentHeightDifference = (image.size.height - initialFrameHeight);
-        const CGFloat newContentHeight = self.pLabelsContainer.contentSize.height + imageContentHeightDifference;
-        [self.pLabelsContainer setContentSize:CGSizeMake(self.pLabelsContainer.contentSize.width, newContentHeight)];
-        
-        m_ratingsImageWidth = image.size.width;
-        m_ratingsImageHeight = image.size.height;
-
         currentLabelY += (yelpButtonHeight + imageBottomPadding);
     }
-
+    
+    
     if(!m_model.GetPhone().empty())
     {
         self.pPhoneHeaderContainer.frame = CGRectMake(0.f, currentLabelY, m_labelsSectionWidth, headerLabelHeight + 2 * headerTextPadding);
