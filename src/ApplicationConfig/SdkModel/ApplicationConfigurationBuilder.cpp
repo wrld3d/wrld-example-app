@@ -48,13 +48,20 @@ namespace ExampleApp
                 return *this;
             }
             
+            IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetGoogleAnalyticsReferrerToken(const std::string& googleAnalyticsReferrerToken)
+            {
+                m_googleAnalyticsReferrerToken = googleAnalyticsReferrerToken;
+                return *this;
+            }
+            
             ApplicationConfiguration ApplicationConfigurationBuilder::Build()
             {
                 return ApplicationConfiguration(m_name,
                                                 m_interestLocation,
                                                 m_distanceToInterestMetres,
                                                 m_orientationDegrees,
-                                                m_tryStartAtGpsLocation);
+                                                m_tryStartAtGpsLocation,
+                                                m_googleAnalyticsReferrerToken);
             }
         }
     }

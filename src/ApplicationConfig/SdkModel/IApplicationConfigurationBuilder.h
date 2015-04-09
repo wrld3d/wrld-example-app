@@ -27,6 +27,8 @@ namespace ExampleApp
                 
                 virtual IApplicationConfigurationBuilder& SetTryStartAtGpsLocation(bool tryStartAtGpsLocation) = 0;
                 
+                virtual IApplicationConfigurationBuilder& SetGoogleAnalyticsReferrerToken(const std::string& googleAnalyticsReferrerToken) = 0;
+                
                 virtual ApplicationConfiguration Build() = 0;
             };
         }

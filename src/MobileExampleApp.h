@@ -164,6 +164,11 @@ namespace ExampleApp
         {
             return * m_pWorld;
         }
+       
+        ExampleApp::ApplicationConfig::ApplicationConfiguration GetApplicationConfiguration() const
+        {
+            return m_applicationConfiguration;
+        }
 
         float PinDiameter() const
         {

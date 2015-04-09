@@ -13,12 +13,13 @@ namespace ExampleApp
                 AndroidNativeState& nativeState,
                 IWatermarkViewModel& viewModel,
                 ExampleAppMessaging::TMessageBus& messageBus,
-                Metrics::IMetricsService& metricsService
+                Metrics::IMetricsService& metricsService,
+                const std::string& googleAnalyticsReferrerToken
             )
             {
                 ASSERT_UI_THREAD
 
-                m_pView = Eegeo_NEW(WatermarkView)(nativeState);
+                m_pView = Eegeo_NEW(WatermarkView)(nativeState, googleAnalyticsReferrerToken);
 
                 m_pController = Eegeo_NEW(WatermarkController)(
                                     viewModel,

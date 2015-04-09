@@ -19,6 +19,7 @@ namespace ExampleApp
                 float m_distanceToInterestMetres;
                 float m_orientationDegrees;
                 bool m_tryStartAtGpsLocation;
+                std::string m_googleAnalyticsReferrerToken;
                 
             public:
                 ApplicationConfigurationBuilder();
@@ -32,6 +33,8 @@ namespace ExampleApp
                 IApplicationConfigurationBuilder& SetStartOrientationAboutInterestPoint(float degrees);
                 
                 IApplicationConfigurationBuilder& SetTryStartAtGpsLocation(bool tryStartAtGpsLocation);
+                
+                IApplicationConfigurationBuilder& SetGoogleAnalyticsReferrerToken(const std::string& googleAnalyticsReferrerToken);
                 
                 ApplicationConfiguration Build();
             };

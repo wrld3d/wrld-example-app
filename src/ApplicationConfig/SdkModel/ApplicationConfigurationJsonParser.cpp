@@ -43,6 +43,9 @@ namespace ExampleApp
                 Eegeo_ASSERT(document.HasMember("TryStartAtGpsLocation"));
                 m_builder.SetTryStartAtGpsLocation(document["TryStartAtGpsLocation"].GetBool());
                 
+                Eegeo_ASSERT(document.HasMember("GoogleAnalyticsReferrerToken"));
+                m_builder.SetGoogleAnalyticsReferrerToken(document["GoogleAnalyticsReferrerToken"].GetString());
+                
                 return m_builder.Build();
             }
         }

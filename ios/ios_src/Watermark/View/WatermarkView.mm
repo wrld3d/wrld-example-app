@@ -13,7 +13,7 @@
     return m_pInterop;
 }
 
-- (id) initWithDimensions:(float)width :(float)height :(float)pixelScale
+- (id) initWithDimensions:(float)width :(float)height :(float)pixelScale :(const std::string&) googleAnalyticsReferrerToken
 {
     if(self = [super init])
     {
@@ -22,6 +22,7 @@
         m_pixelScale = 1.f;
         m_screenWidth = width/pixelScale;
         m_screenHeight = height/pixelScale;
+        m_googleAnalyticsReferrerToken = googleAnalyticsReferrerToken;
 
         m_pInterop = new ExampleApp::Watermark::View::WatermarkViewInterop(self);
         [self addTarget:self action:@selector(onClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -140,7 +141,12 @@
 {
     if (buttonIndex == 1)
     {
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://sdk.eegeo.com"]];
+        NSString* urlString = [NSString stringWithFormat
+                               :@"http://eegeo.com/findoutmore?utm_source=%@&utm_medium=referral&utm_campaign=eegeo",
+                               [NSString stringWithUTF8String:m_googleAnalyticsReferrerToken.c_str()]
+                               ];
+        
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlString]];
     }
 }
 

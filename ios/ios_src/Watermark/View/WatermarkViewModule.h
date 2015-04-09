@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include <string>
 #include "Types.h"
 #include "WatermarkViewIncludes.h"
 #include "Rendering.h"
@@ -26,7 +27,8 @@ namespace ExampleApp
                 WatermarkViewModule(IWatermarkViewModel& viewModel,
                                     const Eegeo::Rendering::ScreenProperties& screenProperties,
                                     ExampleAppMessaging::TMessageBus& messageBus,
-                                    Metrics::IMetricsService& metricsService);
+                                    Metrics::IMetricsService& metricsService,
+                                    const std::string& googleAnalyticsReferrerToken);
 
                 ~WatermarkViewModule();
 

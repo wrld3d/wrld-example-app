@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include <string>
 #include "IWatermarkViewModule.h"
 #include "AndroidNativeState.h"
 #include "Types.h"
@@ -28,7 +29,8 @@ namespace ExampleApp
                     AndroidNativeState& nativeState,
                     IWatermarkViewModel& viewModel,
                     ExampleAppMessaging::TMessageBus& messageBus,
-                    Metrics::IMetricsService& metricsService
+                    Metrics::IMetricsService& metricsService,
+                    const std::string& googleAnalyticsReferrerToken
                 );
 
                 ~WatermarkViewModule();

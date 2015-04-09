@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include <string>
 #include "Types.h"
 #include "IWatermarkView.h"
 #include "AndroidNativeState.h"
@@ -23,7 +24,7 @@ namespace ExampleApp
                 jclass m_uiViewClass;
                 jobject m_uiView;
             public:
-                WatermarkView(AndroidNativeState& nativeState);
+                WatermarkView(AndroidNativeState& nativeState, const std::string& googleAnalyticsReferrerToken);
                 ~WatermarkView();
 
                 void SetOnScreenStateToIntermediateValue(float value);

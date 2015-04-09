@@ -248,7 +248,8 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
     m_pWatermarkViewModule = Eegeo_NEW(ExampleApp::Watermark::View::WatermarkViewModule)(app.WatermarkModule().GetWatermarkViewModel(),
                                                                                          screenProperties,
                                                                                          m_messageBus,
-                                                                                         *m_piOSFlurryMetricsService);
+                                                                                         *m_piOSFlurryMetricsService,
+                                                                                         app.GetApplicationConfiguration().GoogleAnalyticsReferrerToken());
 
     m_pModalBackgroundViewModule = Eegeo_NEW(ExampleApp::ModalBackground::View::ModalBackgroundViewModule)(app.ModalityModule().GetModalityModel(), screenProperties);
 

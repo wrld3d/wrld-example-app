@@ -14,9 +14,10 @@ import android.widget.RelativeLayout;
 
 public class WatermarkView implements View.OnClickListener
 {
- protected MainActivity m_activity = null;
- protected long m_nativeCallerPointer;
- protected View m_view = null;
+ private MainActivity m_activity = null;
+ private long m_nativeCallerPointer;
+ private String m_googleAnalyticsReferrerToken;
+ private View m_view = null;
  private static AlertDialog m_options = null;
 
  private float m_yPosActive;
@@ -24,10 +25,11 @@ public class WatermarkView implements View.OnClickListener
 
  private final long m_stateChangeAnimationTimeMilliseconds = 200;
 
- public WatermarkView(MainActivity activity, long nativeCallerPointer)
+ public WatermarkView(MainActivity activity, long nativeCallerPointer, String googleAnalyticsReferrerToken)
  {
      m_activity = activity;
      m_nativeCallerPointer = nativeCallerPointer;
+     m_googleAnalyticsReferrerToken = googleAnalyticsReferrerToken;
 
      final RelativeLayout uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
      m_view = m_activity.getLayoutInflater().inflate(R.layout.watermark_layout, uiRoot, false);
@@ -142,7 +144,8 @@ public class WatermarkView implements View.OnClickListener
  {
 	 if(shouldOpenLink)
 	 {
-	 	final Uri uri = Uri.parse("http://sdk.eegeo.com");
+		String url = "http://eegeo.com/findoutmore?utm_source=" + m_googleAnalyticsReferrerToken + "&utm_medium=referral&utm_campaign=eegeo";
+	 	final Uri uri = Uri.parse(url);
 	 	final Intent browserIntent = new Intent(Intent.ACTION_VIEW, uri);
 	 	m_activity.startActivity(browserIntent);
 	 }

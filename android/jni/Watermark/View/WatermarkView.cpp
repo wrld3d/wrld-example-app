@@ -9,7 +9,7 @@ namespace ExampleApp
     {
         namespace View
         {
-            WatermarkView::WatermarkView(AndroidNativeState& nativeState)
+            WatermarkView::WatermarkView(AndroidNativeState& nativeState, const std::string& googleAnalyticsReferrerToken)
                 : m_nativeState(nativeState)
             {
                 ASSERT_UI_THREAD
@@ -22,14 +22,19 @@ namespace ExampleApp
                 env->DeleteLocalRef(strClassName);
 
                 m_uiViewClass = static_cast<jclass>(env->NewGlobalRef(uiClass));
-                jmethodID uiViewCtor = env->GetMethodID(m_uiViewClass, "<init>", "(Lcom/eegeo/entrypointinfrastructure/MainActivity;J)V");
+                jmethodID uiViewCtor = env->GetMethodID(m_uiViewClass, "<init>", "(Lcom/eegeo/entrypointinfrastructure/MainActivity;JLjava/lang/String;)V");
+
+                jstring jniGoogleAnalyticsReferrerTokenString = env->NewStringUTF(googleAnalyticsReferrerToken.c_str());
 
                 jobject instance = env->NewObject(
                                        m_uiViewClass,
                                        uiViewCtor,
                                        m_nativeState.activity,
-                                       (jlong)(this)
+                                       (jlong)(this),
+                                       jniGoogleAnalyticsReferrerTokenString
                                    );
+
+                env->DeleteLocalRef(jniGoogleAnalyticsReferrerTokenString);
 
                 m_uiView = env->NewGlobalRef(instance);
             }

@@ -415,7 +415,8 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
 		m_nativeState,
 		app.WatermarkModule().GetWatermarkViewModel(),
 		m_messageBus,
-		*m_pAndroidFlurryMetricsService
+		*m_pAndroidFlurryMetricsService,
+        app.GetApplicationConfiguration().GoogleAnalyticsReferrerToken()
     );
 
     // 3d map view layer.

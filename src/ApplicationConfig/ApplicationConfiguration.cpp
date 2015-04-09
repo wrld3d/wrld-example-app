@@ -10,13 +10,31 @@ namespace ExampleApp
                                                            const Eegeo::Space::LatLongAltitude& interestLocation,
                                                            float distanceToInterestMetres,
                                                            float orientationDegrees,
-                                                           bool tryStartAtGpsLocation)
+                                                           bool tryStartAtGpsLocation,
+                                                           const std::string& googleAnalyticsReferrerToken)
         : m_name(name)
         , m_interestLocation(interestLocation)
         , m_distanceToInterestMetres(distanceToInterestMetres)
         , m_orientationDegrees(orientationDegrees)
         , m_tryStartAtGpsLocation(tryStartAtGpsLocation)
+        , m_googleAnalyticsReferrerToken(googleAnalyticsReferrerToken)
         {
+        }
+        
+        ApplicationConfiguration::ApplicationConfiguration()
+        : m_name("")
+        , m_interestLocation(Eegeo::Space::LatLongAltitude::FromDegrees(0.0, 0.0, 0.0))
+        , m_distanceToInterestMetres(0.f)
+        , m_orientationDegrees(0.f)
+        , m_tryStartAtGpsLocation(false)
+        , m_googleAnalyticsReferrerToken("")
+        {
+            
+        }
+        
+        ApplicationConfiguration ApplicationConfiguration::Empty()
+        {
+            return ApplicationConfiguration();
         }
         
         const std::string& ApplicationConfiguration::Name() const
@@ -42,6 +60,11 @@ namespace ExampleApp
         bool ApplicationConfiguration::TryStartAtGpsLocation() const
         {
             return m_tryStartAtGpsLocation;
+        }
+        
+        const std::string& ApplicationConfiguration::GoogleAnalyticsReferrerToken() const
+        {
+            return m_googleAnalyticsReferrerToken;
         }
     }
 }

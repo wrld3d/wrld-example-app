@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include <string>
 #import <UIKit/UIKit.h>
 #include "WatermarkViewIncludes.h"
 
@@ -23,11 +24,12 @@
     float m_yPosInactive;
 
     float m_stateChangeAnimationTimeSeconds;
+    std::string m_googleAnalyticsReferrerToken;
 }
 
 - (ExampleApp::Watermark::View::WatermarkViewInterop*) getInterop;
 
-- (id) initWithDimensions:(float)width :(float)height :(float)pixelScale;
+- (id) initWithDimensions:(float)width :(float)height :(float)pixelScale :(const std::string&) googleAnalyticsReferrerToken;
 
 - (BOOL) consumesTouch:(UITouch *)touch;
 

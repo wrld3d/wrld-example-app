@@ -15,12 +15,14 @@ namespace ExampleApp
             WatermarkViewModule::WatermarkViewModule(IWatermarkViewModel& viewModel,
                                                      const Eegeo::Rendering::ScreenProperties& screenProperties,
                                                      ExampleAppMessaging::TMessageBus& messageBus,
-                                                     Metrics::IMetricsService& metricsService)
+                                                     Metrics::IMetricsService& metricsService,
+                                                     const std::string& googleAnalyticsReferrerToken)
             {
                 m_pView = [[WatermarkView alloc] initWithDimensions
                            :screenProperties.GetScreenWidth()
                            :screenProperties.GetScreenHeight()
                            :screenProperties.GetPixelScale()
+                           :googleAnalyticsReferrerToken
                           ];
 
                 m_pController = new WatermarkController(viewModel, *[m_pView getInterop], messageBus, metricsService);
