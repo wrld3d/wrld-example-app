@@ -19,10 +19,7 @@ namespace ExampleApp
             bool m_tryStartAtGpsLocation;
             std::string m_googleAnalyticsReferrerToken;
             
-            ApplicationConfiguration();
         public:
-            
-            static ApplicationConfiguration Empty();
             
             ApplicationConfiguration(const std::string& name,
                                      const Eegeo::Space::LatLongAltitude& interestLocation,

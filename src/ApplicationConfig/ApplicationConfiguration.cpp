@@ -21,22 +21,6 @@ namespace ExampleApp
         {
         }
         
-        ApplicationConfiguration::ApplicationConfiguration()
-        : m_name("")
-        , m_interestLocation(Eegeo::Space::LatLongAltitude::FromDegrees(0.0, 0.0, 0.0))
-        , m_distanceToInterestMetres(0.f)
-        , m_orientationDegrees(0.f)
-        , m_tryStartAtGpsLocation(false)
-        , m_googleAnalyticsReferrerToken("")
-        {
-            
-        }
-        
-        ApplicationConfiguration ApplicationConfiguration::Empty()
-        {
-            return ApplicationConfiguration();
-        }
-        
         const std::string& ApplicationConfiguration::Name() const
         {
             return m_name;
