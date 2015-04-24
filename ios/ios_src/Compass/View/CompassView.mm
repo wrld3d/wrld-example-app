@@ -51,8 +51,8 @@
         //compass point
         float pointWidth = 7.f;
         float pointHeight = 26.f;
-        self.pPoint = [[[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, pointWidth, pointHeight)] autorelease];
-        self.pPoint.backgroundColor = [UIColor colorWithPatternImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"CompassPoint")];
+        self.pPoint = [[[UIImageView alloc] initWithFrame:CGRectMake(0.f, 0.f, pointWidth, pointHeight)] autorelease];
+        self.pPoint.image = ExampleApp::Helpers::ImageHelpers::LoadImage(@"CompassPoint");
         self.pPoint.center = self.pOuterShape.center;
         [self addSubview: self.pPoint];
 

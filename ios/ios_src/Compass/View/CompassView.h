@@ -57,6 +57,6 @@
 
 @property (nonatomic, retain) UIView* pOuterShape;
 @property (nonatomic, retain) UIView* pInnerShape;
-@property (nonatomic, retain) UIView* pPoint;
+@property (nonatomic, retain) UIImageView* pPoint;
 
 @end
