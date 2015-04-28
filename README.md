@@ -30,6 +30,8 @@ iOS
 Android
 =======
 Note - In order to run, your version of Android Developer Tools must be >= 22.6
+In order to support 64-bit ABIs, you must be using Android NDK revision 10d or later:
+http://developer.android.com/tools/sdk/ndk/index.html#Revisions
 
 * Install the Android SDK and NDK
 * Run ./update.platform.sh -p android to get the latest platform libraries and headers.
@@ -44,6 +46,11 @@ Note - In order to run, your version of Android Developer Tools must be >= 22.6
 	const std::string API_KEY "OBTAIN API_KEY FROM https://appstore.eegeo.com AND INSERT IT HERE"
 * See src/ApiKey.h for more details about providing API Keys for other services to enable additional functionality.
 * Build and debug from within ADT Eclipse
+* The project is configured to build for multiple target CPU architectures, creating a universal .apk containing exectutables for each of these architectures.
+	* The supported architectures are defined in ./Android/jni/Application.mk, by the line:
+		APP_ABI := armeabi,armeabi-v7a,arm64-v8a
+	* Removing the APP_ABI line will build and package for the default armeabi architecture. The armeabi architecture is backwards-compatible with armeabi-v7a, but will not run on devices 64-bit Arm instruction sets.
+	* For further information about supporting multiple architectures see: http://developer.android.com/google/play/publishing/multiple-apks.html
 * build.sh can be used to generate the native library if you want to manually package the .apk
 * Scroll between the examples using the Next and Previous buttons, or select the example from the drop-down list; the current example name is displayed at the top of the screen. 
 * To build at the command line, run ./build -p android from the repository root.
