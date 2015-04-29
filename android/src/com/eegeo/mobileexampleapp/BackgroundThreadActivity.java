@@ -28,7 +28,7 @@ public class BackgroundThreadActivity extends MainActivity
 
     static
     {
-        System.loadLibrary("native-activity");
+        System.loadLibrary("eegeo-mobile-example-app");
     }
 
     @Override
