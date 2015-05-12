@@ -22,6 +22,8 @@ namespace ExampleApp
                 virtual void DoNextPartOfInitialExperience() = 0;
 
                 virtual void UpdateCurrentStep(float deltaSeconds) = 0;
+                
+                virtual bool LockedCameraStepsCompleted() const = 0;
             };
         }
     }

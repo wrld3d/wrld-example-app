@@ -17,9 +17,10 @@ namespace ExampleApp
                 size_t m_currentStepIndex;
                 std::vector<IInitialExperienceStep*> m_steps;
                 bool m_started;
+                int m_lastLockedCameraStep;
 
             public:
-                InitialExperienceModel(const std::vector<IInitialExperienceStep*>& initialExperienceSteps);
+                InitialExperienceModel(const std::vector<IInitialExperienceStep*>& initialExperienceSteps, int lastCameraLockedStep);
 
                 ~InitialExperienceModel();
 
@@ -30,6 +31,8 @@ namespace ExampleApp
                 void DoNextPartOfInitialExperience();
 
                 void UpdateCurrentStep(float deltaSeconds);
+                
+                bool LockedCameraStepsCompleted() const;
 
             private:
                 IInitialExperienceStep& GetCurrentStep();
