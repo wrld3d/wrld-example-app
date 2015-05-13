@@ -558,9 +558,6 @@ namespace ExampleApp
                 cameraState.ProjectionMatrix(),
                 GetUpdatedStreamingVolume(cameraState, renderCamera),
                 m_screenProperties);
-        
-        
-
 
         eegeoWorld.Update(updateParameters);
 

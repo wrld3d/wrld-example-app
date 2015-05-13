@@ -2,7 +2,6 @@
 
 #include "IInitialExperienceStep.h"
 #include "InitialExperienceModel.h"
-#include <limits>
 
 namespace ExampleApp
 {
