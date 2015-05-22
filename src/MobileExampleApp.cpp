@@ -697,7 +697,7 @@ namespace ExampleApp
 
     void MobileExampleApp::Event_TouchRotate(const AppInterface::RotateData& data)
     {
-        if(World().Initialising())
+        if (!CanAcceptTouch())
         {
             return;
         }
@@ -707,7 +707,7 @@ namespace ExampleApp
 
     void MobileExampleApp::Event_TouchRotate_Start(const AppInterface::RotateData& data)
     {
-        if(World().Initialising())
+        if (!CanAcceptTouch())
         {
             return;
         }
@@ -717,7 +717,7 @@ namespace ExampleApp
 
     void MobileExampleApp::Event_TouchRotate_End(const AppInterface::RotateData& data)
     {
-        if(World().Initialising())
+        if (!CanAcceptTouch())
         {
             return;
         }
@@ -727,7 +727,7 @@ namespace ExampleApp
 
     void MobileExampleApp::Event_TouchPinch(const AppInterface::PinchData& data)
     {
-        if(World().Initialising())
+        if (!CanAcceptTouch())
         {
             return;
         }
@@ -737,7 +737,7 @@ namespace ExampleApp
 
     void MobileExampleApp::Event_TouchPinch_Start(const AppInterface::PinchData& data)
     {
-        if(World().Initialising())
+        if (!CanAcceptTouch())
         {
             return;
         }
@@ -747,7 +747,7 @@ namespace ExampleApp
 
     void MobileExampleApp::Event_TouchPinch_End(const AppInterface::PinchData& data)
     {
-        if(World().Initialising())
+        if (!CanAcceptTouch())
         {
             return;
         }
@@ -758,7 +758,7 @@ namespace ExampleApp
     void MobileExampleApp::Event_TouchPan(const AppInterface::PanData& data)
     {
         MyPinCreation::PoiRing::SdkModel::IPoiRingTouchController& poiRingTouchController = m_pPoiRingModule->GetPoiRingTouchController();
-        if(World().Initialising() || poiRingTouchController.IsDragging())
+        if(!CanAcceptTouch() || poiRingTouchController.IsDragging())
         {
             return;
         }
@@ -769,7 +769,7 @@ namespace ExampleApp
     void MobileExampleApp::Event_TouchPan_Start(const AppInterface::PanData& data)
     {
         MyPinCreation::PoiRing::SdkModel::IPoiRingTouchController& poiRingTouchController = m_pPoiRingModule->GetPoiRingTouchController();
-        if(World().Initialising() || poiRingTouchController.IsDragging())
+        if(!CanAcceptTouch() || poiRingTouchController.IsDragging())
         {
             return;
         }
@@ -780,7 +780,7 @@ namespace ExampleApp
     void MobileExampleApp::Event_TouchPan_End(const AppInterface::PanData& data)
     {
         MyPinCreation::PoiRing::SdkModel::IPoiRingTouchController& poiRingTouchController = m_pPoiRingModule->GetPoiRingTouchController();
-        if(World().Initialising() || poiRingTouchController.IsDragging())
+        if(!CanAcceptTouch() || poiRingTouchController.IsDragging())
         {
             return;
         }
@@ -790,7 +790,7 @@ namespace ExampleApp
 
     void MobileExampleApp::Event_TouchTap(const AppInterface::TapData& data)
     {
-        if(World().Initialising())
+        if (!CanAcceptTouch())
         {
             return;
         }
@@ -803,7 +803,7 @@ namespace ExampleApp
 
     void MobileExampleApp::Event_TouchDoubleTap(const AppInterface::TapData& data)
     {
-        if(World().Initialising())
+        if (!CanAcceptTouch())
         {
             return;
         }
@@ -813,7 +813,7 @@ namespace ExampleApp
 
     void MobileExampleApp::Event_TouchDown(const AppInterface::TouchData& data)
     {
-        if(World().Initialising())
+        if (!CanAcceptTouch())
         {
             return;
         }
@@ -828,7 +828,7 @@ namespace ExampleApp
 
     void MobileExampleApp::Event_TouchMove(const AppInterface::TouchData& data)
     {
-        if(World().Initialising())
+        if (!CanAcceptTouch())
         {
             return;
         }
@@ -842,7 +842,7 @@ namespace ExampleApp
 
     void MobileExampleApp::Event_TouchUp(const AppInterface::TouchData& data)
     {
-        if(World().Initialising())
+        if (!CanAcceptTouch())
         {
             return;
         }
@@ -852,5 +852,15 @@ namespace ExampleApp
         {
             m_pCameraTouchController->Event_TouchUp(data);
         }
+    }
+    
+    bool MobileExampleApp::CanAcceptTouch() const
+    {
+        const bool worldIsInitialising = World().Initialising();
+        
+        InitialExperience::SdkModel::IInitialExperienceModel& initialExperienceModel = m_initialExperienceModule.GetInitialExperienceModel();
+        const bool lockedCameraStepsCompleted = initialExperienceModel.LockedCameraStepsCompleted();
+        
+        return !worldIsInitialising && lockedCameraStepsCompleted;
     }
 }

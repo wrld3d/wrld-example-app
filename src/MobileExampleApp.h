@@ -139,6 +139,8 @@ namespace ExampleApp
         std::vector<ExampleApp::ScreenControl::View::IScreenControlViewModel*> GetReactorControls() const;
 
         void InitialisePinsModules(Eegeo::Modules::Map::MapModule& mapModule, Eegeo::EegeoWorld& world);
+        
+        bool CanAcceptTouch() const;
 
     public:
         MobileExampleApp(const std::string& apiKey,
@@ -160,7 +162,7 @@ namespace ExampleApp
 
         ~MobileExampleApp();
 
-        Eegeo::EegeoWorld& World()
+        Eegeo::EegeoWorld& World() const
         {
             return * m_pWorld;
         }

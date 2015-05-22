@@ -57,7 +57,8 @@
     
     NSMutableArray *queryParts = [[NSMutableArray alloc] init];
     for (NSString *key in [queryParameters allKeys]) {
-        NSString *queryPart = [NSString stringWithFormat:@"%@=%@", key, queryParameters[key]];
+        NSString *percentEncodedParamValue = [queryParameters[key] encodedURLParameterString];
+        NSString *queryPart = [NSString stringWithFormat:@"%@=%@", key, percentEncodedParamValue];
         [queryParts addObject:queryPart];
     }
     
@@ -65,7 +66,7 @@
     components.scheme = @"http";
     components.host = host;
     components.path = path;
-    components.query = [queryParts componentsJoinedByString:@"&"];
+    components.percentEncodedQuery = [queryParts componentsJoinedByString:@"&"];
     
     return [components URL];
 }

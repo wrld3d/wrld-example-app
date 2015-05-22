@@ -9,11 +9,23 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            InitialExperienceModel::InitialExperienceModel(const std::vector<IInitialExperienceStep*>& initialExperienceSteps)
+            InitialExperienceModel::InitialExperienceModel(const std::vector<IInitialExperienceStep*>& initialExperienceSteps,
+                                                           int lastCameraLockedStep)
                 : m_currentStepIndex(0)
                 , m_steps(initialExperienceSteps)
             	, m_started(false)
+                , m_lastLockedCameraStep(lastCameraLockedStep)
             {
+                Eegeo_ASSERT(m_lastLockedCameraStep < m_steps.size(), "Last camera locked index out of range");
+                
+                for(std::vector<IInitialExperienceStep*>::iterator it = m_steps.begin(); it != m_steps.end(); ++ it)
+                {
+                    IInitialExperienceStep* pStep = *it;
+                    if (pStep->HasCompleted())
+                    {
+                        ++m_currentStepIndex;
+                    }
+                }
             }
 
             InitialExperienceModel::~InitialExperienceModel()
@@ -50,8 +62,7 @@ namespace ExampleApp
                 {
                     IInitialExperienceStep& step = GetCurrentStep();
 
-                    bool haveStartedPreviouslyButNotCompleted = (!m_started && step.HasStarted() && !step.HasCompleted()); // Might be pointless.
-                    if(!step.HasCompleted() | haveStartedPreviouslyButNotCompleted )
+                    if(!step.HasCompleted())
                     {
 						step.PerformInitialExperience();
 						m_started = true;
@@ -74,6 +85,11 @@ namespace ExampleApp
             IInitialExperienceStep& InitialExperienceModel::GetCurrentStep()
             {
                 return *m_steps[m_currentStepIndex];
+            }
+            
+            bool InitialExperienceModel::LockedCameraStepsCompleted() const
+            {
+                return m_currentStepIndex > m_lastLockedCameraStep;
             }
         }
     }
