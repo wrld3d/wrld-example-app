@@ -55,17 +55,23 @@ include $(CLEAR_VARS)
 LOCAL_MODULE := eegeo-mobile-example-app
 LOCAL_LDLIBS := -llog -landroid -lEGL -lGLESv2 -lz -lm
 LOCAL_LDLIBS += -fuse-ld=bfd
-LOCAL_STATIC_LIBRARIES := eegeo-sdk-lib png-lib curl-lib ssl-lib crypto-lib http-parser-lib jpeg-lib turbojpeg-lib
+LOCAL_STATIC_LIBRARIES := recce-common-lib eegeo-sdk-lib png-lib curl-lib ssl-lib crypto-lib http-parser-lib jpeg-lib turbojpeg-lib
 
-LOCAL_CFLAGS += -Wall -Wno-unknown-pragmas -Wno-sign-compare -Wno-format-security -Wno-reorder
+cflags := -Wall -Wno-unknown-pragmas -Wno-sign-compare -Wno-format-security -Wno-reorder
+
 #LOCAL_CFLAGS += -Werror
 
 ifdef COMPILE_CPP_11
   $(info Configured for C++11)
-  LOCAL_CPPFLAGS += -DCOMPILE_CPP_11=1 -std=c++11
+  cppflags := -DCOMPILE_CPP_11=1 -std=c++11
 else
   $(info Configured for C++0x)
+  cppflags :=
 endif
+
+
+LOCAL_CFLAGS += ${cflags}
+LOCAL_CPPFLAGS += ${cppflags}
 
 os_name:=$(shell uname -s)
 
@@ -77,30 +83,32 @@ get_platform_includes_cmd := find ./libs/eegeo/platform -type d ! -path "*/OSX/*
 
 
 ifeq ($(os_name),Darwin)
-	cppfiles := ${shell ${get_android_cpp_files_cmd}}
-	cppfiles += ${shell ${get_shared_cpp_files_cmd}}
+	android_cpp_files := ${shell ${get_android_cpp_files_cmd}}
+	shared_cpp_files := ${shell ${get_shared_cpp_files_cmd}}
 	
 	includes := ${shell ${get_android_includes_cmd}}
 	includes += ${shell ${get_shared_includes_cmd}}
 	includes += ${shell ${get_platform_includes_cmd}}
 else
 	# assume windows if not specified for now (due to no uname)
-	cppfiles := ${shell sh -c '${get_android_cpp_files_cmd}'}
-	cppfiles += ${shell sh -c '${get_shared_cpp_files_cmd}'}
+	android_cpp_files := ${shell sh -c '${get_android_cpp_files_cmd}'}
+	shared_cpp_files := ${shell sh -c '${get_shared_cpp_files_cmd}'}
 	
 	includes := ${shell sh -c '${get_android_includes_cmd}'}
 	includes += ${shell sh -c '${get_shared_includes_cmd}'}
 	includes += ${shell sh -c '${get_platform_includes_cmd}'}
 endif 
 
-LOCAL_SRC_FILES := $(cppfiles:$(LOCAL_PATH)/%=%)
-LOCAL_C_INCLUDES := $(includes:$(LOCAL_PATH)/%=%)
+includes += ./libs/eegeo/rapidjson
+includes += ./libs/eegeo/rapidjson/internal
 
-LOCAL_C_INCLUDES += ./libs/eegeo/rapidjson
-LOCAL_C_INCLUDES += ./libs/eegeo/rapidjson/internal
+LOCAL_SRC_FILES := $(android_cpp_files:$(LOCAL_PATH)/%=%)
+LOCAL_C_INCLUDES := $(includes:$(LOCAL_PATH)/%=%)
 
 
 
 include $(BUILD_SHARED_LIBRARY)
+
+include $(LOCAL_PATH)/Common.mk
 
 $(call import-module,android/native_app_glue)
