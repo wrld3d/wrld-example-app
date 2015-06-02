@@ -43,6 +43,10 @@
 #include "IEegeoErrorHandler.h"
 #include "ISingleOptionAlertBoxDismissedHandler.h"
 #include "iOSFlurryMetricsService.h"
+#include "Interiors.h"
+#include "IosInteriorViewIncludes.h"
+#include "IInteriorsView.h"
+#include "InteriorsViewController.h"
 
 @class ViewController;
 class AppInputDelegate;
@@ -108,6 +112,8 @@ private:
     ExampleApp::Net::SdkModel::INetworkCapabilities* m_pNetworkCapabilities;
     ExampleApp::Search::SdkModel::ISearchServiceModule* m_pSearchServiceModule;
     ExampleApp::Metrics::iOSFlurryMetricsService* m_piOSFlurryMetricsService;
+    
+    ExampleApp::Interiors::View::IosInteriorViewModule* m_pIosInteriorViewModule;
 
     ExampleApp::MobileExampleApp* m_pApp;
     bool m_requestedApplicationInitialiseViewState;

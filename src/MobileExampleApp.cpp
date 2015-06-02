@@ -55,6 +55,10 @@
 #include "AboutPageMenuOption.h"
 #include "ImagePathHelpers.h"
 #include "WatermarkModule.h"
+#include "InteriorsPresentationModule.h"
+#include "InteriorsCameraController.h"
+#include "InteriorsTouchController.h"
+#include "InteriorsPinsController.h"
 
 namespace ExampleApp
 {
@@ -106,6 +110,7 @@ namespace ExampleApp
         Eegeo::IEegeoErrorHandler& errorHandler)
         : m_pGlobeCameraController(NULL)
         , m_pCameraTouchController(NULL)
+        , m_pCurrentTouchController(NULL)
         , m_pNavigationService(NULL)
         , m_pWorld(NULL)
         , m_platformAbstractions(platformAbstractions, networkCapabilities)
@@ -166,8 +171,8 @@ namespace ExampleApp
                                                 Eegeo::EnvironmentCharacterSet::Latin,
                                                 platformConfig,
                                                 NULL,
-                                                "http://cdn1.eegeo.com/coverage-trees/v528/manifest.txt.gz",
-                                                "http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v285/manifest.txt.gz",
+                                                "http://cdn1.eegeo.com/coverage-trees/vtest_builds/interiors_2015_05_28_002/manifest.txt.gz",
+                                                "http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v305/manifest.txt.gz",
                                                 &errorHandler
                                                 );
 
@@ -539,14 +544,25 @@ namespace ExampleApp
     void MobileExampleApp::Update(float dt)
     {
         Eegeo::EegeoWorld& eegeoWorld(World());
+        
+        Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsModule = eegeoWorld.GetMapModule().GetInteriorsPresentationModule();
+        Eegeo::Resources::Interiors::Camera::InteriorsCameraController& interiorsCameraController = interiorsModule.GetCameraController();
+        
+        m_pCurrentTouchController = interiorsModule.GetCameraController().IsEnabled()
+            ? &interiorsModule.GetTouchController()
+            : m_pCameraTouchController;
 
         eegeoWorld.EarlyUpdate(dt);
 
         m_pGlobeCameraController->Update(dt);
         m_pCameraTransitionController->Update(dt);
 
-        Eegeo::Camera::CameraState cameraState(m_pGlobeCameraController->GetCameraState());
-        Eegeo::Camera::RenderCamera renderCamera(m_pGlobeCameraController->GetRenderCamera());
+        Eegeo::Camera::CameraState cameraState(interiorsCameraController.IsEnabled()
+                                               ? interiorsCameraController.GetCameraState()
+                                               : m_pGlobeCameraController->GetCameraState());
+        Eegeo::Camera::RenderCamera renderCamera(interiorsCameraController.IsEnabled()
+                                                 ? interiorsCameraController.GetRenderCamera()
+                                                 : m_pGlobeCameraController->GetRenderCamera());
         Eegeo::dv3 ecefInterestPoint(cameraState.InterestPointEcef());
 
         m_pPoiRingModule->GetPoiRingController().Update(dt, renderCamera, ecefInterestPoint);
@@ -600,8 +616,15 @@ namespace ExampleApp
     {
         Eegeo::EegeoWorld& eegeoWorld = World();
 
-        Eegeo::Camera::CameraState cameraState(m_pGlobeCameraController->GetCameraState());
-        Eegeo::Camera::RenderCamera renderCamera(m_pGlobeCameraController->GetRenderCamera());
+        Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsModule = eegeoWorld.GetMapModule().GetInteriorsPresentationModule();
+        Eegeo::Resources::Interiors::Camera::InteriorsCameraController& interiorsCameraController = interiorsModule.GetCameraController();
+        
+        Eegeo::Camera::CameraState cameraState(interiorsCameraController.IsEnabled()
+                                               ? interiorsCameraController.GetCameraState()
+                                               : m_pGlobeCameraController->GetCameraState());
+        Eegeo::Camera::RenderCamera renderCamera(interiorsCameraController.IsEnabled()
+                                                 ? interiorsCameraController.GetRenderCamera()
+                                                 : m_pGlobeCameraController->GetRenderCamera());
         Eegeo::dv3 ecefInterestPoint(cameraState.InterestPointEcef());
 
         if(!eegeoWorld.Initialising())
@@ -702,7 +725,7 @@ namespace ExampleApp
             return;
         }
 
-        m_pCameraTouchController->Event_TouchRotate(data);
+        m_pCurrentTouchController->Event_TouchRotate(data);
     }
 
     void MobileExampleApp::Event_TouchRotate_Start(const AppInterface::RotateData& data)
@@ -712,7 +735,7 @@ namespace ExampleApp
             return;
         }
 
-        m_pCameraTouchController->Event_TouchRotate_Start(data);
+        m_pCurrentTouchController->Event_TouchRotate_Start(data);
     }
 
     void MobileExampleApp::Event_TouchRotate_End(const AppInterface::RotateData& data)
@@ -722,7 +745,7 @@ namespace ExampleApp
             return;
         }
 
-        m_pCameraTouchController->Event_TouchRotate_End(data);
+        m_pCurrentTouchController->Event_TouchRotate_End(data);
     }
 
     void MobileExampleApp::Event_TouchPinch(const AppInterface::PinchData& data)
@@ -732,7 +755,7 @@ namespace ExampleApp
             return;
         }
 
-        m_pCameraTouchController->Event_TouchPinch(data);
+        m_pCurrentTouchController->Event_TouchPinch(data);
     }
 
     void MobileExampleApp::Event_TouchPinch_Start(const AppInterface::PinchData& data)
@@ -742,7 +765,7 @@ namespace ExampleApp
             return;
         }
 
-        m_pCameraTouchController->Event_TouchPinch_Start(data);
+        m_pCurrentTouchController->Event_TouchPinch_Start(data);
     }
 
     void MobileExampleApp::Event_TouchPinch_End(const AppInterface::PinchData& data)
@@ -752,7 +775,7 @@ namespace ExampleApp
             return;
         }
 
-        m_pCameraTouchController->Event_TouchPinch_End(data);
+        m_pCurrentTouchController->Event_TouchPinch_End(data);
     }
 
     void MobileExampleApp::Event_TouchPan(const AppInterface::PanData& data)
@@ -763,7 +786,7 @@ namespace ExampleApp
             return;
         }
 
-        m_pCameraTouchController->Event_TouchPan(data);
+        m_pCurrentTouchController->Event_TouchPan(data);
     }
 
     void MobileExampleApp::Event_TouchPan_Start(const AppInterface::PanData& data)
@@ -774,7 +797,7 @@ namespace ExampleApp
             return;
         }
 
-        m_pCameraTouchController->Event_TouchPan_Start(data);
+        m_pCurrentTouchController->Event_TouchPan_Start(data);
     }
 
     void MobileExampleApp::Event_TouchPan_End(const AppInterface::PanData& data)
@@ -785,7 +808,7 @@ namespace ExampleApp
             return;
         }
 
-        m_pCameraTouchController->Event_TouchPan_End(data);
+        m_pCurrentTouchController->Event_TouchPan_End(data);
     }
 
     void MobileExampleApp::Event_TouchTap(const AppInterface::TapData& data)
@@ -797,8 +820,10 @@ namespace ExampleApp
 
         if(!m_pWorldPinsModule->GetWorldPinsService().HandleTouchTap(data.point))
         {
-            m_pCameraTouchController->Event_TouchTap(data);
+            m_pCurrentTouchController->Event_TouchTap(data);
         }
+        
+        World().GetMapModule().GetInteriorsPresentationModule().GetPinsController().Event_TouchTap(data, *m_pGlobeCameraController);
     }
 
     void MobileExampleApp::Event_TouchDoubleTap(const AppInterface::TapData& data)
@@ -808,7 +833,7 @@ namespace ExampleApp
             return;
         }
 
-        m_pCameraTouchController->Event_TouchDoubleTap(data);
+        m_pCurrentTouchController->Event_TouchDoubleTap(data);
     }
 
     void MobileExampleApp::Event_TouchDown(const AppInterface::TouchData& data)
@@ -821,7 +846,7 @@ namespace ExampleApp
         MyPinCreation::PoiRing::SdkModel::IPoiRingTouchController& poiRingTouchController = m_pPoiRingModule->GetPoiRingTouchController();
         if (!poiRingTouchController.HandleTouchDown(data, m_pGlobeCameraController->GetRenderCamera(), m_pGlobeCameraController->GetGlobeCameraController()))
         {
-            m_pCameraTouchController->Event_TouchDown(data);
+            m_pCurrentTouchController->Event_TouchDown(data);
         }
 
     }
@@ -836,7 +861,7 @@ namespace ExampleApp
         MyPinCreation::PoiRing::SdkModel::IPoiRingTouchController& poiRingTouchController = m_pPoiRingModule->GetPoiRingTouchController();
         if (!poiRingTouchController.HandleTouchMove(data, m_pGlobeCameraController->GetRenderCamera(), m_pGlobeCameraController->GetGlobeCameraController()))
         {
-            m_pCameraTouchController->Event_TouchMove(data);
+            m_pCurrentTouchController->Event_TouchMove(data);
         }
     }
 
@@ -850,7 +875,7 @@ namespace ExampleApp
         MyPinCreation::PoiRing::SdkModel::IPoiRingTouchController& poiRingTouchController = m_pPoiRingModule->GetPoiRingTouchController();
         if (!poiRingTouchController.HandleTouchUp(data))
         {
-            m_pCameraTouchController->Event_TouchUp(data);
+            m_pCurrentTouchController->Event_TouchUp(data);
         }
     }
     

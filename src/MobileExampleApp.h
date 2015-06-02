@@ -69,6 +69,7 @@
 #include "Watermark.h"
 #include "IWatermarkModule.h"
 #include "ApplicationConfiguration.h"
+#include "InteriorsViewController.h"
 
 namespace ExampleApp
 {
@@ -77,6 +78,7 @@ namespace ExampleApp
     private:
         Eegeo::Camera::GlobeCamera::GpsGlobeCameraController* m_pGlobeCameraController;
         Eegeo::ITouchController* m_pCameraTouchController;
+        Eegeo::ITouchController* m_pCurrentTouchController;
         Eegeo::EegeoWorld* m_pWorld;
         Eegeo::Location::NavigationService* m_pNavigationService;
         PlatformAbstractionsFacade m_platformAbstractions;
@@ -295,6 +297,13 @@ namespace ExampleApp
         const ExampleApp::Watermark::IWatermarkModule& WatermarkModule() const
         {
             return *m_pWatermarkModule;
+        }
+        
+        // Exposed to allow view model creation in iOS code.
+        // Remove this.
+        Eegeo::Helpers::IdentityProvider& GetIdentityProvider()
+        {
+            return m_identityProvider;
         }
 
         void OnPause();

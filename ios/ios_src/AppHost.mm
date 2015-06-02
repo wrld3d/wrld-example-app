@@ -67,6 +67,13 @@
 #include "ApplicationConfigurationModule.h"
 #include "IApplicationConfigurationService.h"
 
+#include "IosInteriorView.h"
+#include "IosInteriorViewInterop.h"
+#include "InteriorsViewController.h"
+#include "InteriorsController.h"
+#include "InteriorsPresentationModule.h"
+#include "IosInteriorViewModule.h"
+
 using namespace Eegeo::iOS;
 
 AppHost::AppHost(
@@ -318,7 +325,19 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
                                 app.MyPinDetailsModule().GetMyPinDetailsViewModel(),
                                 screenProperties);
     
+    
     m_pInitialExperienceIntroViewModule = Eegeo_NEW(ExampleApp::InitialExperience::View::InitialExperienceIntroViewModule)(m_messageBus);
+    
+    
+    m_pIosInteriorViewModule = Eegeo_NEW(ExampleApp::Interiors::View::IosInteriorViewModule)(m_messageBus,
+                                                                                             app.World().GetMapModule().GetInteriorsPresentationModule().GetInteriorsController(),
+                                                                                             app.MyPinCreationModule().GetMyPinCreationInitiationViewModel(),
+                                                                                             app.SecondaryMenuModule().GetSecondaryMenuViewModel(),
+                                                                                             app.SearchResultMenuModule().GetMenuViewModel(),
+                                                                                             app.FlattenButtonModule().GetScreenControlViewModel(),
+                                                                                             app.CompassModule().GetScreenControlViewModel(),
+                                                                                             screenProperties,
+                                                                                             app.GetIdentityProvider());
 
     // 3d map view layer.
     [m_pView addSubview: &m_pWorldPinOnMapViewModule->GetWorldPinOnMapView()];
@@ -332,6 +351,7 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
     [m_pView addSubview: &m_pCompassViewModule->GetCompassView()];
     [m_pView addSubview: &m_pMyPinCreationInitiationViewModule->GetMyPinCreationInitiationView()];
     [m_pView addSubview: &m_pMyPinCreationConfirmationViewModule->GetMyPinCreationConfirmationView()];
+    [m_pView addSubview: &m_pIosInteriorViewModule->GetView()];
 
     // Modal background layer.
     [m_pView addSubview: &m_pModalBackgroundViewModule->GetModalBackgroundView()];
