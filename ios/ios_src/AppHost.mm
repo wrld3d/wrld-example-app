@@ -390,6 +390,7 @@ void AppHost::DestroyApplicationViewModules()
     [&m_pCompassViewModule->GetCompassView() removeFromSuperview];
     [&m_pMyPinCreationInitiationViewModule->GetMyPinCreationInitiationView() removeFromSuperview];
     [&m_pMyPinCreationConfirmationViewModule->GetMyPinCreationConfirmationView() removeFromSuperview];
+    [&m_pIosInteriorViewModule->GetView() removeFromSuperview];
 
     // Modal background layer.
     [&m_pModalBackgroundViewModule->GetModalBackgroundView() removeFromSuperview];
@@ -408,6 +409,8 @@ void AppHost::DestroyApplicationViewModules()
     // Initial experience layer
     [&m_pInitialExperienceIntroViewModule->GetIntroView() removeFromSuperview];
 
+    Eegeo_DELETE m_pIosInteriorViewModule;
+    
     Eegeo_DELETE m_pViewControllerUpdaterModule;
 
     Eegeo_DELETE m_pMyPinDetailsViewModule;
