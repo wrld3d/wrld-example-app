@@ -27,6 +27,8 @@
 #include "SearchResultPoiPinToggledMessage.h"
 #include "SearchResultPoiViewOpenedMessage.h"
 #include "InitialExperienceSearchResultAttractModeModelStateExitedMessage.h"
+#include "InteriorsExplorerSelectFloorMessage.h"
+#include "InteriorsExplorerExitMessage.h"
 
 namespace ExampleApp
 {
@@ -56,6 +58,8 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<SearchResultPoi::SearchResultPoiPinToggledMessage>
             , public Eegeo::Messaging::CatalogBinding<SearchResultPoi::SearchResultPoiViewOpenedMessage>
             , public Eegeo::Messaging::CatalogBinding<InitialExperience::SearchResultAttractMode::InitialExperienceSearchResultAttractModeModelStateExitedMessage>
+            , public Eegeo::Messaging::CatalogBinding<InteriorsExplorer::InteriorsExplorerSelectFloorMessage>
+            , public Eegeo::Messaging::CatalogBinding<InteriorsExplorer::InteriorsExplorerExitMessage>
             , private Eegeo::NonCopyable
         {
 

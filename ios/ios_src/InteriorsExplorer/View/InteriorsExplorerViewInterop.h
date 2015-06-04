@@ -2,33 +2,32 @@
 
 #pragma once
 
-#include "IInteriorsView.h"
-#include "IosInteriorViewIncludes.h"
+#include "IInteriorsExplorerView.h"
+#include "InteriorsExplorerViewIncludes.h"
 #include "ICallback.h"
 #include "CallbackCollection.h"
 
 namespace ExampleApp
 {
-    namespace Interiors
+    namespace InteriorsExplorer
     {
         namespace View
         {
-            class IosInteriorViewInterop : public IInteriorsView
+            class InteriorsExplorerViewInterop : public IInteriorsExplorerView
             {
             public:
                 
-                IosInteriorViewInterop(IosInteriorView* pView)
+                InteriorsExplorerViewInterop(InteriorsExplorerView* pView)
                 : m_pView(pView)
                 {
                 }
                 
                 void OnDismissed();
-                void Show();
 
                 void Dismiss();
                 void SelectFloor(int floor);
                 
-                void SetFloorCount(int floorCount);
+                void SetFloorCount(int floorCount, int initialFloor);
                 void SetFloorName(const std::string& name);
                 
                 void InsertDismissedCallback(Eegeo::Helpers::ICallback0& callback);
@@ -44,7 +43,7 @@ namespace ExampleApp
                 
                 Eegeo::Helpers::CallbackCollection1<int> m_selectedFloorCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_dismissedCallbacks;
-                IosInteriorView* m_pView;
+                InteriorsExplorerView* m_pView;
             };
         }
     }

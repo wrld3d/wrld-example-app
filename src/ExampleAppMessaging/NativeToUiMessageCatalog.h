@@ -27,6 +27,8 @@
 #include "SearchResultPoiViewImageDownloadCompletedMessage.h"
 #include "InitialExperienceSearchResultAttractModeModelStateEnteredMessage.h"
 #include "InitialExperienceSearchResultAttractModeModelStateUpdatedMessage.h"
+#include "InteriorsExplorerFloorSelectedMessage.h"
+#include "InteriorsExplorerStateChangedMessage.h"
 #include "SetWatermarkVisibilityMessage.h"
 
 namespace ExampleApp
@@ -58,6 +60,8 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<InitialExperience::SearchResultAttractMode::InitialExperienceSearchResultAttractModeModelStateEnteredMessage>
             , public Eegeo::Messaging::CatalogBinding<InitialExperience::SearchResultAttractMode::InitialExperienceSearchResultAttractModeModelStateUpdatedMessage>
             , public Eegeo::Messaging::CatalogBinding<Watermark::SetWatermarkVisibilityMessage>
+            , public Eegeo::Messaging::CatalogBinding<InteriorsExplorer::InteriorsExplorerFloorSelectedMessage>
+            , public Eegeo::Messaging::CatalogBinding<InteriorsExplorer::InteriorsExplorerStateChangedMessage>
             , private Eegeo::NonCopyable
         {
 

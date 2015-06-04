@@ -3,14 +3,14 @@
 #pragma once
 
 #import <UIKit/UIKit.h>
-#include "IosInteriorViewIncludes.h"
+#include "InteriorsExplorerViewIncludes.h"
 #include <string>
 
-@class IosInteriorView;
+@class InteriorsExplorerView;
 
-@interface IosInteriorView : UIView <UITableViewDelegate, UITableViewDataSource>
+@interface InteriorsExplorerView : UIView <UITableViewDelegate, UITableViewDataSource>
 {
-    ExampleApp::Interiors::View::IosInteriorViewInterop* m_pInterop;
+    ExampleApp::InteriorsExplorer::View::InteriorsExplorerViewInterop* m_pInterop;
     
     float m_width;
     float m_height;
@@ -30,7 +30,7 @@
 
 - (id) initWithParams:(float)width :(float)height :(float)pixelScale;
 
-- (ExampleApp::Interiors::View::IosInteriorViewInterop*) getInterop;
+- (ExampleApp::InteriorsExplorer::View::InteriorsExplorerViewInterop*) getInterop;
 
 - (BOOL)consumesTouch:(UITouch *)touch;
 
@@ -40,7 +40,7 @@
 
 - (void) setFloorName:(const std::string*)name;
 
-- (void) setFloorCount:(int)floors;
+- (void) setFloorCount:(int)floors :(int)initialFloor;
 
 - (void) setFullyOnScreen;
 

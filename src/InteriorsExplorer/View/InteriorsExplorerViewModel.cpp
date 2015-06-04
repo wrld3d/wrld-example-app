@@ -1,21 +1,21 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
-#include "InteriorsViewModel.h"
+#include "InteriorsExplorerViewModel.h"
 
 namespace ExampleApp
 {
-    namespace Interiors
+    namespace InteriorsExplorer
     {
         namespace View
         {
-            InteriorsViewModel::InteriorsViewModel(bool initiallyOnScreen, Eegeo::Helpers::TIdentity identity)
+            InteriorsExplorerViewModel::InteriorsExplorerViewModel(bool initiallyOnScreen, Eegeo::Helpers::TIdentity identity)
             : ScreenControl::View::ScreenControlViewModelBase(initiallyOnScreen)
             , m_identity(identity)
             {
                 
             }
 
-            Eegeo::Helpers::TIdentity InteriorsViewModel::GetIdentity() const
+            Eegeo::Helpers::TIdentity InteriorsExplorerViewModel::GetIdentity() const
             {
                 return m_identity;
             }

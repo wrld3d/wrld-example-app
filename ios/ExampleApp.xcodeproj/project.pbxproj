@@ -703,8 +703,6 @@
 		7E0195361B1C6B1900884B3F /* floor_selection_bottom.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E0195331B1C6B1900884B3F /* floor_selection_bottom.png */; };
 		7E0195371B1C6B1900884B3F /* floor_selection_top.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E0195341B1C6B1900884B3F /* floor_selection_top.png */; };
 		7E0195381B1C6B1900884B3F /* floor_selection_top.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E0195341B1C6B1900884B3F /* floor_selection_top.png */; };
-		7E01953B1B1CACBD00884B3F /* InteriorsViewModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E0195391B1CACBD00884B3F /* InteriorsViewModel.cpp */; };
-		7E01953C1B1CACBD00884B3F /* InteriorsViewModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E0195391B1CACBD00884B3F /* InteriorsViewModel.cpp */; };
 		7E1B50671ACAD4170060FA4F /* InitialExperienceIntroStep.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E1B50651ACAD4170060FA4F /* InitialExperienceIntroStep.cpp */; };
 		7E1B50681ACAD4170060FA4F /* InitialExperienceIntroStep.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E1B50651ACAD4170060FA4F /* InitialExperienceIntroStep.cpp */; };
 		7E1B50751ACAD9010060FA4F /* InitialExperienceIntroController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E1B50731ACAD9010060FA4F /* InitialExperienceIntroController.cpp */; };
@@ -723,14 +721,12 @@
 		7E1B50901ACD9AA50060FA4F /* banner_logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E1B508B1ACD9AA50060FA4F /* banner_logo@2x.png */; };
 		7E1B50911ACD9AA50060FA4F /* banner_logo@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E1B508C1ACD9AA50060FA4F /* banner_logo@3x.png */; };
 		7E1B50921ACD9AA50060FA4F /* banner_logo@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E1B508C1ACD9AA50060FA4F /* banner_logo@3x.png */; };
+		7E1D22CA1B205455006A8703 /* InteriorsExplorerModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E1D22C81B205455006A8703 /* InteriorsExplorerModel.cpp */; };
+		7E1D22CB1B205455006A8703 /* InteriorsExplorerModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E1D22C81B205455006A8703 /* InteriorsExplorerModel.cpp */; };
+		7E1D22CE1B2085E0006A8703 /* InteriorsExplorerController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E1D22CD1B2085E0006A8703 /* InteriorsExplorerController.cpp */; };
+		7E1D22CF1B2085E0006A8703 /* InteriorsExplorerController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E1D22CD1B2085E0006A8703 /* InteriorsExplorerController.cpp */; };
 		7E37BCE31B18A6E80082C349 /* pinteriors.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E37BCE21B18A6E80082C349 /* pinteriors.png */; };
 		7E37BCE41B18A6E80082C349 /* pinteriors.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E37BCE21B18A6E80082C349 /* pinteriors.png */; };
-		7E37BCEF1B18B06A0082C349 /* IosInteriorView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7E37BCEE1B18B06A0082C349 /* IosInteriorView.mm */; };
-		7E37BCF01B18B06A0082C349 /* IosInteriorView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7E37BCEE1B18B06A0082C349 /* IosInteriorView.mm */; };
-		7E37BCF31B18B1060082C349 /* IosInteriorViewInterop.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7E37BCF11B18B1060082C349 /* IosInteriorViewInterop.mm */; };
-		7E37BCF41B18B1060082C349 /* IosInteriorViewInterop.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7E37BCF11B18B1060082C349 /* IosInteriorViewInterop.mm */; };
-		7E37BCF81B18B38F0082C349 /* IosInteriorViewModule.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7E37BCF61B18B38F0082C349 /* IosInteriorViewModule.mm */; };
-		7E37BCF91B18B38F0082C349 /* IosInteriorViewModule.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7E37BCF61B18B38F0082C349 /* IosInteriorViewModule.mm */; };
 		7E3B88A61A385A290023C94E /* AboutPageController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B86661A385A280023C94E /* AboutPageController.cpp */; };
 		7E3B88A71A385A290023C94E /* AboutPageController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B86661A385A280023C94E /* AboutPageController.cpp */; };
 		7E3B88A81A385A290023C94E /* AboutPageModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B86681A385A280023C94E /* AboutPageModule.cpp */; };
@@ -1189,6 +1185,16 @@
 		7E3B8B341A385F110023C94E /* WorldPinOnMapViewInterop.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B8AC21A385F110023C94E /* WorldPinOnMapViewInterop.mm */; };
 		7E3B8B351A385F110023C94E /* WorldPinOnMapViewModule.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B8AC41A385F110023C94E /* WorldPinOnMapViewModule.mm */; };
 		7E3B8B361A385F110023C94E /* WorldPinOnMapViewModule.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B8AC41A385F110023C94E /* WorldPinOnMapViewModule.mm */; };
+		7E5811B81B1F050A007AD67F /* InteriorsExplorerModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E5811B01B1F050A007AD67F /* InteriorsExplorerModule.cpp */; };
+		7E5811B91B1F050A007AD67F /* InteriorsExplorerModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E5811B01B1F050A007AD67F /* InteriorsExplorerModule.cpp */; };
+		7E5811BA1B1F050A007AD67F /* InteriorsExplorerViewModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E5811B61B1F050A007AD67F /* InteriorsExplorerViewModel.cpp */; };
+		7E5811BB1B1F050A007AD67F /* InteriorsExplorerViewModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E5811B61B1F050A007AD67F /* InteriorsExplorerViewModel.cpp */; };
+		7E5811CB1B1F3248007AD67F /* InteriorsExplorerView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7E5811C51B1F3248007AD67F /* InteriorsExplorerView.mm */; };
+		7E5811CC1B1F3248007AD67F /* InteriorsExplorerView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7E5811C51B1F3248007AD67F /* InteriorsExplorerView.mm */; };
+		7E5811CD1B1F3248007AD67F /* InteriorsExplorerViewInterop.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7E5811C81B1F3248007AD67F /* InteriorsExplorerViewInterop.mm */; };
+		7E5811CE1B1F3248007AD67F /* InteriorsExplorerViewInterop.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7E5811C81B1F3248007AD67F /* InteriorsExplorerViewInterop.mm */; };
+		7E5811CF1B1F3248007AD67F /* InteriorsExplorerViewModule.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7E5811CA1B1F3248007AD67F /* InteriorsExplorerViewModule.mm */; };
+		7E5811D01B1F3248007AD67F /* InteriorsExplorerViewModule.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7E5811CA1B1F3248007AD67F /* InteriorsExplorerViewModule.mm */; };
 		7E8F03D61A822E820056F229 /* GpsMarkerModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E8F03D41A822E820056F229 /* GpsMarkerModule.cpp */; };
 		7E8F03D71A822E820056F229 /* GpsMarkerModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E8F03D41A822E820056F229 /* GpsMarkerModule.cpp */; };
 		7E8F03DA1A822E9A0056F229 /* GpsMarkerModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E8F03D81A822E9A0056F229 /* GpsMarkerModel.cpp */; };
@@ -1737,8 +1743,6 @@
 		56FBCDEE1A0BB5150026546E /* poi_marker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = poi_marker.png; sourceTree = "<group>"; };
 		7E0195331B1C6B1900884B3F /* floor_selection_bottom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = floor_selection_bottom.png; sourceTree = "<group>"; };
 		7E0195341B1C6B1900884B3F /* floor_selection_top.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = floor_selection_top.png; sourceTree = "<group>"; };
-		7E0195391B1CACBD00884B3F /* InteriorsViewModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InteriorsViewModel.cpp; sourceTree = "<group>"; };
-		7E01953A1B1CACBD00884B3F /* InteriorsViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InteriorsViewModel.h; sourceTree = "<group>"; };
 		7E1B50651ACAD4170060FA4F /* InitialExperienceIntroStep.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InitialExperienceIntroStep.cpp; sourceTree = "<group>"; };
 		7E1B50661ACAD4170060FA4F /* InitialExperienceIntroStep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InitialExperienceIntroStep.h; sourceTree = "<group>"; };
 		7E1B506A1ACAD67F0060FA4F /* InitialExperienceIntroDismissedMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InitialExperienceIntroDismissedMessage.h; sourceTree = "<group>"; };
@@ -1760,16 +1764,14 @@
 		7E1B508B1ACD9AA50060FA4F /* banner_logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "banner_logo@2x.png"; sourceTree = "<group>"; };
 		7E1B508C1ACD9AA50060FA4F /* banner_logo@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "banner_logo@3x.png"; sourceTree = "<group>"; };
 		7E1B50941ACEDAD00060FA4F /* SetWatermarkVisibilityMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetWatermarkVisibilityMessage.h; sourceTree = "<group>"; };
+		7E1D22C51B1F5645006A8703 /* InteriorsExplorerStateChangedMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InteriorsExplorerStateChangedMessage.h; sourceTree = "<group>"; };
+		7E1D22C61B2045FE006A8703 /* InteriorsExplorerExitMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InteriorsExplorerExitMessage.h; sourceTree = "<group>"; };
+		7E1D22C71B204936006A8703 /* InteriorsExplorerFloorSelectedMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InteriorsExplorerFloorSelectedMessage.h; sourceTree = "<group>"; };
+		7E1D22C81B205455006A8703 /* InteriorsExplorerModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InteriorsExplorerModel.cpp; sourceTree = "<group>"; };
+		7E1D22C91B205455006A8703 /* InteriorsExplorerModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InteriorsExplorerModel.h; sourceTree = "<group>"; };
+		7E1D22CC1B205CC2006A8703 /* InteriorsExplorerSelectFloorMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InteriorsExplorerSelectFloorMessage.h; sourceTree = "<group>"; };
+		7E1D22CD1B2085E0006A8703 /* InteriorsExplorerController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InteriorsExplorerController.cpp; sourceTree = "<group>"; };
 		7E37BCE21B18A6E80082C349 /* pinteriors.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pinteriors.png; sourceTree = "<group>"; };
-		7E37BCE91B18AB500082C349 /* IInteriorsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IInteriorsView.h; sourceTree = "<group>"; };
-		7E37BCEA1B18AC190082C349 /* InteriorsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InteriorsViewController.h; sourceTree = "<group>"; };
-		7E37BCED1B18B0540082C349 /* IosInteriorView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IosInteriorView.h; sourceTree = "<group>"; };
-		7E37BCEE1B18B06A0082C349 /* IosInteriorView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = IosInteriorView.mm; sourceTree = "<group>"; };
-		7E37BCF11B18B1060082C349 /* IosInteriorViewInterop.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = IosInteriorViewInterop.mm; sourceTree = "<group>"; };
-		7E37BCF21B18B1060082C349 /* IosInteriorViewInterop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IosInteriorViewInterop.h; sourceTree = "<group>"; };
-		7E37BCF51B18B1280082C349 /* IosInteriorViewIncludes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IosInteriorViewIncludes.h; sourceTree = "<group>"; };
-		7E37BCF61B18B38F0082C349 /* IosInteriorViewModule.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = IosInteriorViewModule.mm; sourceTree = "<group>"; };
-		7E37BCF71B18B38F0082C349 /* IosInteriorViewModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IosInteriorViewModule.h; sourceTree = "<group>"; };
 		7E3B86651A385A280023C94E /* AboutPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutPage.h; sourceTree = "<group>"; };
 		7E3B86661A385A280023C94E /* AboutPageController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AboutPageController.cpp; sourceTree = "<group>"; };
 		7E3B86671A385A280023C94E /* AboutPageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutPageController.h; sourceTree = "<group>"; };
@@ -2395,6 +2397,22 @@
 		7E3B8AC21A385F110023C94E /* WorldPinOnMapViewInterop.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = WorldPinOnMapViewInterop.mm; sourceTree = "<group>"; };
 		7E3B8AC31A385F110023C94E /* WorldPinOnMapViewModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorldPinOnMapViewModule.h; sourceTree = "<group>"; };
 		7E3B8AC41A385F110023C94E /* WorldPinOnMapViewModule.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = WorldPinOnMapViewModule.mm; sourceTree = "<group>"; };
+		7E5811B01B1F050A007AD67F /* InteriorsExplorerModule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InteriorsExplorerModule.cpp; sourceTree = "<group>"; };
+		7E5811B11B1F050A007AD67F /* InteriorsExplorerModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InteriorsExplorerModule.h; sourceTree = "<group>"; };
+		7E5811B31B1F050A007AD67F /* IInteriorsExplorerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IInteriorsExplorerView.h; sourceTree = "<group>"; };
+		7E5811B51B1F050A007AD67F /* InteriorsExplorerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InteriorsExplorerController.h; sourceTree = "<group>"; };
+		7E5811B61B1F050A007AD67F /* InteriorsExplorerViewModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InteriorsExplorerViewModel.cpp; sourceTree = "<group>"; };
+		7E5811B71B1F050A007AD67F /* InteriorsExplorerViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InteriorsExplorerViewModel.h; sourceTree = "<group>"; };
+		7E5811BC1B1F0525007AD67F /* InteriorsExplorer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InteriorsExplorer.h; sourceTree = "<group>"; };
+		7E5811BD1B1F074C007AD67F /* IInteriorsExplorerModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IInteriorsExplorerModule.h; sourceTree = "<group>"; };
+		7E5811C41B1F3248007AD67F /* InteriorsExplorerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InteriorsExplorerView.h; sourceTree = "<group>"; };
+		7E5811C51B1F3248007AD67F /* InteriorsExplorerView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = InteriorsExplorerView.mm; sourceTree = "<group>"; };
+		7E5811C61B1F3248007AD67F /* InteriorsExplorerViewIncludes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InteriorsExplorerViewIncludes.h; sourceTree = "<group>"; };
+		7E5811C71B1F3248007AD67F /* InteriorsExplorerViewInterop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InteriorsExplorerViewInterop.h; sourceTree = "<group>"; };
+		7E5811C81B1F3248007AD67F /* InteriorsExplorerViewInterop.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = InteriorsExplorerViewInterop.mm; sourceTree = "<group>"; };
+		7E5811C91B1F3248007AD67F /* InteriorsExplorerViewModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InteriorsExplorerViewModule.h; sourceTree = "<group>"; };
+		7E5811CA1B1F3248007AD67F /* InteriorsExplorerViewModule.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = InteriorsExplorerViewModule.mm; sourceTree = "<group>"; };
+		7E5811D11B1F3866007AD67F /* IInteriorsExplorerViewModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IInteriorsExplorerViewModule.h; sourceTree = "<group>"; };
 		7E8F03D41A822E820056F229 /* GpsMarkerModule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GpsMarkerModule.cpp; sourceTree = "<group>"; };
 		7E8F03D51A822E820056F229 /* GpsMarkerModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GpsMarkerModule.h; sourceTree = "<group>"; };
 		7E8F03D81A822E9A0056F229 /* GpsMarkerModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GpsMarkerModel.cpp; sourceTree = "<group>"; };
@@ -2522,7 +2540,6 @@
 		18143846192B6E4500BCDF2E /* src */ = {
 			isa = PBXGroup;
 			children = (
-				7E37BCE61B18AB500082C349 /* Interiors */,
 				18B22B181A7A901D00DDBFA2 /* ApiKey.h */,
 				7E3B86631A385A280023C94E /* AboutPage */,
 				186B473D1AB333150084E80B /* ApplicationConfig */,
@@ -2553,6 +2570,7 @@
 				18096F761A7BD5D4006A6438 /* PlatformAbstractionsFacade.h */,
 				7E3B87B91A385A290023C94E /* Reaction */,
 				7E3B87C81A385A290023C94E /* Repository */,
+				7E5811AE1B1F050A007AD67F /* InteriorsExplorer */,
 				7E3B87CB1A385A290023C94E /* ScreenControl */,
 				7E3B87D41A385A290023C94E /* Search */,
 				7E3B87F91A385A290023C94E /* SearchResultMenu */,
@@ -3031,55 +3049,6 @@
 				7E1B507E1ACAE45C0060FA4F /* InitialExperienceIntroViewInterop.h */,
 				7E1B50821ACAE8570060FA4F /* InitialExperienceIntroViewModule.mm */,
 				7E1B50831ACAE8570060FA4F /* InitialExperienceIntroViewModule.h */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		7E37BCE61B18AB500082C349 /* Interiors */ = {
-			isa = PBXGroup;
-			children = (
-				7E37BCE71B18AB500082C349 /* SdkModel */,
-				7E37BCE81B18AB500082C349 /* View */,
-			);
-			path = Interiors;
-			sourceTree = "<group>";
-		};
-		7E37BCE71B18AB500082C349 /* SdkModel */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = SdkModel;
-			sourceTree = "<group>";
-		};
-		7E37BCE81B18AB500082C349 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				7E37BCE91B18AB500082C349 /* IInteriorsView.h */,
-				7E37BCEA1B18AC190082C349 /* InteriorsViewController.h */,
-				7E0195391B1CACBD00884B3F /* InteriorsViewModel.cpp */,
-				7E01953A1B1CACBD00884B3F /* InteriorsViewModel.h */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		7E37BCEB1B18B0450082C349 /* Interiors */ = {
-			isa = PBXGroup;
-			children = (
-				7E37BCEC1B18B0450082C349 /* View */,
-			);
-			path = Interiors;
-			sourceTree = "<group>";
-		};
-		7E37BCEC1B18B0450082C349 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				7E37BCED1B18B0540082C349 /* IosInteriorView.h */,
-				7E37BCEE1B18B06A0082C349 /* IosInteriorView.mm */,
-				7E37BCF11B18B1060082C349 /* IosInteriorViewInterop.mm */,
-				7E37BCF21B18B1060082C349 /* IosInteriorViewInterop.h */,
-				7E37BCF51B18B1280082C349 /* IosInteriorViewIncludes.h */,
-				7E37BCF61B18B38F0082C349 /* IosInteriorViewModule.mm */,
-				7E37BCF71B18B38F0082C349 /* IosInteriorViewModule.h */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -4176,7 +4145,6 @@
 		7E3B8A121A385F100023C94E /* ios_src */ = {
 			isa = PBXGroup;
 			children = (
-				7E37BCEB1B18B0450082C349 /* Interiors */,
 				7E3B8A131A385F100023C94E /* AboutPage */,
 				7E3B8A1D1A385F100023C94E /* AppHost.h */,
 				7E3B8A1E1A385F100023C94E /* AppHost.mm */,
@@ -4191,6 +4159,7 @@
 				7E3B8A391A385F100023C94E /* GlDisplayService.h */,
 				7E3B8A3A1A385F100023C94E /* GlDisplayService.mm */,
 				7E3B8A3B1A385F100023C94E /* Helpers */,
+				7E5811C21B1F3248007AD67F /* InteriorsExplorer */,
 				7E3B8A441A385F100023C94E /* InitialExperience */,
 				7E3B8A4A1A385F100023C94E /* Main.m */,
 				7E3B8A4B1A385F100023C94E /* Menu */,
@@ -4573,6 +4542,67 @@
 				7E3B8AC21A385F110023C94E /* WorldPinOnMapViewInterop.mm */,
 				7E3B8AC31A385F110023C94E /* WorldPinOnMapViewModule.h */,
 				7E3B8AC41A385F110023C94E /* WorldPinOnMapViewModule.mm */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		7E5811AE1B1F050A007AD67F /* InteriorsExplorer */ = {
+			isa = PBXGroup;
+			children = (
+				7E5811BC1B1F0525007AD67F /* InteriorsExplorer.h */,
+				7E1D22C51B1F5645006A8703 /* InteriorsExplorerStateChangedMessage.h */,
+				7E1D22C61B2045FE006A8703 /* InteriorsExplorerExitMessage.h */,
+				7E1D22C71B204936006A8703 /* InteriorsExplorerFloorSelectedMessage.h */,
+				7E1D22CC1B205CC2006A8703 /* InteriorsExplorerSelectFloorMessage.h */,
+				7E5811AF1B1F050A007AD67F /* SdkModel */,
+				7E5811B21B1F050A007AD67F /* View */,
+			);
+			path = InteriorsExplorer;
+			sourceTree = "<group>";
+		};
+		7E5811AF1B1F050A007AD67F /* SdkModel */ = {
+			isa = PBXGroup;
+			children = (
+				7E5811BD1B1F074C007AD67F /* IInteriorsExplorerModule.h */,
+				7E5811B01B1F050A007AD67F /* InteriorsExplorerModule.cpp */,
+				7E5811B11B1F050A007AD67F /* InteriorsExplorerModule.h */,
+				7E1D22C81B205455006A8703 /* InteriorsExplorerModel.cpp */,
+				7E1D22C91B205455006A8703 /* InteriorsExplorerModel.h */,
+			);
+			path = SdkModel;
+			sourceTree = "<group>";
+		};
+		7E5811B21B1F050A007AD67F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				7E5811B31B1F050A007AD67F /* IInteriorsExplorerView.h */,
+				7E5811B51B1F050A007AD67F /* InteriorsExplorerController.h */,
+				7E1D22CD1B2085E0006A8703 /* InteriorsExplorerController.cpp */,
+				7E5811B61B1F050A007AD67F /* InteriorsExplorerViewModel.cpp */,
+				7E5811B71B1F050A007AD67F /* InteriorsExplorerViewModel.h */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		7E5811C21B1F3248007AD67F /* InteriorsExplorer */ = {
+			isa = PBXGroup;
+			children = (
+				7E5811C31B1F3248007AD67F /* View */,
+			);
+			path = InteriorsExplorer;
+			sourceTree = "<group>";
+		};
+		7E5811C31B1F3248007AD67F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				7E5811D11B1F3866007AD67F /* IInteriorsExplorerViewModule.h */,
+				7E5811C41B1F3248007AD67F /* InteriorsExplorerView.h */,
+				7E5811C51B1F3248007AD67F /* InteriorsExplorerView.mm */,
+				7E5811C61B1F3248007AD67F /* InteriorsExplorerViewIncludes.h */,
+				7E5811C71B1F3248007AD67F /* InteriorsExplorerViewInterop.h */,
+				7E5811C81B1F3248007AD67F /* InteriorsExplorerViewInterop.mm */,
+				7E5811C91B1F3248007AD67F /* InteriorsExplorerViewModule.h */,
+				7E5811CA1B1F3248007AD67F /* InteriorsExplorerViewModule.mm */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -5505,6 +5535,7 @@
 				7E8F03E61A82401B0056F229 /* GpsMarkerController.cpp in Sources */,
 				7E3B89C91A385A290023C94E /* SearchResultOnMapItemModel.cpp in Sources */,
 				7E3B88C51A385A290023C94E /* CompassModeObserver.cpp in Sources */,
+				7E1D22CF1B2085E0006A8703 /* InteriorsExplorerController.cpp in Sources */,
 				18B22B0D1A7A8B3400DDBFA2 /* OptionsController.cpp in Sources */,
 				188C4C9C1AA5FCA00080B34B /* AboutPageMenuOption.cpp in Sources */,
 				7E3B89331A385A290023C94E /* MyPinCreationInitiationViewModel.cpp in Sources */,
@@ -5518,13 +5549,13 @@
 				7E3B8AF81A385F110023C94E /* ModalBackgroundView.mm in Sources */,
 				18A657531A9F391E00238F33 /* SearchResultPinRemovedEvent.cpp in Sources */,
 				7E3B89311A385A290023C94E /* MyPinCreationInitiationController.cpp in Sources */,
-				7E37BCF41B18B1060082C349 /* IosInteriorViewInterop.mm in Sources */,
 				1827D0801A975777008923F5 /* YelpCategoryMapper.cpp in Sources */,
 				18FB64931A933CF3005A9411 /* iOSYelpSearchQueryFactory.mm in Sources */,
 				7E3B892D1A385A290023C94E /* MyPinCreationConfirmationOpenableControl.cpp in Sources */,
 				7E3B88E51A385A290023C94E /* InitialExperiencePreLoadModel.cpp in Sources */,
 				7E3B8B041A385F110023C94E /* MyPinCreationDetailsView.mm in Sources */,
 				7E3B896F1A385A290023C94E /* PlaceJumpSelectedMessageHandler.cpp in Sources */,
+				7E5811CC1B1F3248007AD67F /* InteriorsExplorerView.mm in Sources */,
 				18FB64671A9240FC005A9411 /* OAMutableURLRequest.m in Sources */,
 				7E3B89531A385A290023C94E /* MyPinSelectedMessage.cpp in Sources */,
 				7E3B89B11A385A290023C94E /* SearchResultAddRemoveHandler.cpp in Sources */,
@@ -5539,6 +5570,7 @@
 				7E3B8AE81A385F110023C94E /* UIColors.mm in Sources */,
 				7E3B89031A385A290023C94E /* UpdateNativeModalBackgroundMessage.cpp in Sources */,
 				225FFA181A39EE8600C2282A /* SearchResultRepository.cpp in Sources */,
+				7E5811BB1B1F050A007AD67F /* InteriorsExplorerViewModel.cpp in Sources */,
 				7E3B89F91A385A290023C94E /* WorldPinsInFocusModel.cpp in Sources */,
 				7E3B89BF1A385A290023C94E /* SearchResultOnMapModel.cpp in Sources */,
 				7E3B8B281A385F110023C94E /* SearchResultPoiViewModule.mm in Sources */,
@@ -5584,6 +5616,7 @@
 				18096F621A7B8FEF006A6438 /* CacheEnabledChangedMessageHandler.cpp in Sources */,
 				18FB64A21A94B80C005A9411 /* SearchResultPoiViewImageDownloadCompletedMessage.cpp in Sources */,
 				7E3B88D71A385A290023C94E /* FlattenButtonModel.cpp in Sources */,
+				7E1D22CB1B205455006A8703 /* InteriorsExplorerModel.cpp in Sources */,
 				18E102941A8BA63C0011A18C /* SearchResultIconCategoryMapper.cpp in Sources */,
 				18E1027B1A8B64470011A18C /* SerializeSearchResultModelToJson.cpp in Sources */,
 				7E3B89CD1A385A290023C94E /* SearchResultPoiController.cpp in Sources */,
@@ -5614,6 +5647,7 @@
 				7E1B50851ACAE8570060FA4F /* InitialExperienceIntroViewModule.mm in Sources */,
 				7E3B88F31A385A290023C94E /* MenuOpenableControl.cpp in Sources */,
 				186B470F1AB1D46B0084E80B /* WatermarkScreenControl.cpp in Sources */,
+				7E5811B91B1F050A007AD67F /* InteriorsExplorerModule.cpp in Sources */,
 				7E3B8B0E1A385F110023C94E /* MyPinCreationInitiationViewModule.mm in Sources */,
 				18FB64B41A94D504005A9411 /* SearchResultPoiViewOpenedMessageHandler.cpp in Sources */,
 				186B475B1AB33C7E0084E80B /* ApplicationConfigurationService.cpp in Sources */,
@@ -5641,12 +5675,12 @@
 				7E3B892F1A385A290023C94E /* MyPinCreationConfirmationViewModel.cpp in Sources */,
 				18FE3BD31A9CA561002D61C4 /* SortedMenuComparisonFunctions.cpp in Sources */,
 				7E3B8AEC1A385F110023C94E /* iOSInitialExperiencePreLoadModel.mm in Sources */,
+				7E5811CE1B1F3248007AD67F /* InteriorsExplorerViewInterop.mm in Sources */,
 				7E3B89131A385A290023C94E /* MyPinCreationViewStateChangedMessage.cpp in Sources */,
 				225FFA161A39EE8600C2282A /* SearchResultModel.cpp in Sources */,
 				7E3B890D1A385A290023C94E /* ModalityObserver.cpp in Sources */,
 				18FB646B1A9240FC005A9411 /* OAProblem.m in Sources */,
 				7E3B89691A385A290023C94E /* OpenableControlViewModelBase.cpp in Sources */,
-				7E37BCF91B18B38F0082C349 /* IosInteriorViewModule.mm in Sources */,
 				7E3B88FF1A385A290023C94E /* MobileExampleApp.cpp in Sources */,
 				7E3B8B2E1A385F110023C94E /* ViewController.mm in Sources */,
 				7E3B89D11A385A290023C94E /* SearchResultPoiOpenableControl.cpp in Sources */,
@@ -5676,9 +5710,7 @@
 				7E3B88E11A385A290023C94E /* FlattenButtonScreenControl.cpp in Sources */,
 				7E3B8AFE1A385F110023C94E /* MyPinCreationConfirmationView.mm in Sources */,
 				18A6574F1A9F390E00238F33 /* SearchResultPinAddedEvent.cpp in Sources */,
-				7E37BCF01B18B06A0082C349 /* IosInteriorView.mm in Sources */,
 				7E3B897F1A385A290023C94E /* ReactionControllerModule.cpp in Sources */,
-				7E01953C1B1CACBD00884B3F /* InteriorsViewModel.cpp in Sources */,
 				7E3B88C91A385A290023C94E /* CompassUpdateController.cpp in Sources */,
 				7E3B8B121A385F110023C94E /* MyPinDetailsViewInterop.mm in Sources */,
 				18FB64691A9240FC005A9411 /* OAPlaintextSignatureProvider.m in Sources */,
@@ -5698,6 +5730,7 @@
 				7E3B89BB1A385A290023C94E /* SearchResultMenuViewModel.cpp in Sources */,
 				7E3B89451A385A290023C94E /* MyPinDetailsViewRemovePinHandler.cpp in Sources */,
 				7E3B88EF1A385A290023C94E /* MenuController.cpp in Sources */,
+				7E5811D01B1F3248007AD67F /* InteriorsExplorerViewModule.mm in Sources */,
 				7E3B88FD1A385A290023C94E /* MenuViewModel.cpp in Sources */,
 				18A6575E1A9F6A8E00238F33 /* MyPinVisibilityStateChangedHandler.cpp in Sources */,
 				7E3B89871A385A290023C94E /* ScreenControlViewModelBase.cpp in Sources */,
@@ -5856,6 +5889,7 @@
 				7E8F03E51A82401B0056F229 /* GpsMarkerController.cpp in Sources */,
 				7E3B89C81A385A290023C94E /* SearchResultOnMapItemModel.cpp in Sources */,
 				7E3B88C41A385A290023C94E /* CompassModeObserver.cpp in Sources */,
+				7E1D22CE1B2085E0006A8703 /* InteriorsExplorerController.cpp in Sources */,
 				18B22B0C1A7A8B3400DDBFA2 /* OptionsController.cpp in Sources */,
 				188C4C9B1AA5FCA00080B34B /* AboutPageMenuOption.cpp in Sources */,
 				7E3B89321A385A290023C94E /* MyPinCreationInitiationViewModel.cpp in Sources */,
@@ -5869,13 +5903,13 @@
 				7E3B8AF71A385F110023C94E /* ModalBackgroundView.mm in Sources */,
 				18A657521A9F391E00238F33 /* SearchResultPinRemovedEvent.cpp in Sources */,
 				7E3B89301A385A290023C94E /* MyPinCreationInitiationController.cpp in Sources */,
-				7E37BCF31B18B1060082C349 /* IosInteriorViewInterop.mm in Sources */,
 				1827D07F1A975777008923F5 /* YelpCategoryMapper.cpp in Sources */,
 				18FB64921A933CF3005A9411 /* iOSYelpSearchQueryFactory.mm in Sources */,
 				7E3B892C1A385A290023C94E /* MyPinCreationConfirmationOpenableControl.cpp in Sources */,
 				7E3B88E41A385A290023C94E /* InitialExperiencePreLoadModel.cpp in Sources */,
 				7E3B8B031A385F110023C94E /* MyPinCreationDetailsView.mm in Sources */,
 				7E3B896E1A385A290023C94E /* PlaceJumpSelectedMessageHandler.cpp in Sources */,
+				7E5811CB1B1F3248007AD67F /* InteriorsExplorerView.mm in Sources */,
 				18FB64661A9240FC005A9411 /* OAMutableURLRequest.m in Sources */,
 				7E3B89521A385A290023C94E /* MyPinSelectedMessage.cpp in Sources */,
 				7E3B89B01A385A290023C94E /* SearchResultAddRemoveHandler.cpp in Sources */,
@@ -5890,6 +5924,7 @@
 				7E3B8AE71A385F110023C94E /* UIColors.mm in Sources */,
 				7E3B89021A385A290023C94E /* UpdateNativeModalBackgroundMessage.cpp in Sources */,
 				225FFA171A39EE8600C2282A /* SearchResultRepository.cpp in Sources */,
+				7E5811BA1B1F050A007AD67F /* InteriorsExplorerViewModel.cpp in Sources */,
 				7E3B89F81A385A290023C94E /* WorldPinsInFocusModel.cpp in Sources */,
 				7E3B89BE1A385A290023C94E /* SearchResultOnMapModel.cpp in Sources */,
 				7E3B8B271A385F110023C94E /* SearchResultPoiViewModule.mm in Sources */,
@@ -5935,6 +5970,7 @@
 				18096F611A7B8FEF006A6438 /* CacheEnabledChangedMessageHandler.cpp in Sources */,
 				18FB64A11A94B80C005A9411 /* SearchResultPoiViewImageDownloadCompletedMessage.cpp in Sources */,
 				7E3B88D61A385A290023C94E /* FlattenButtonModel.cpp in Sources */,
+				7E1D22CA1B205455006A8703 /* InteriorsExplorerModel.cpp in Sources */,
 				18E102931A8BA63C0011A18C /* SearchResultIconCategoryMapper.cpp in Sources */,
 				18E1027A1A8B64470011A18C /* SerializeSearchResultModelToJson.cpp in Sources */,
 				7E3B89CC1A385A290023C94E /* SearchResultPoiController.cpp in Sources */,
@@ -5965,6 +6001,7 @@
 				7E1B50841ACAE8570060FA4F /* InitialExperienceIntroViewModule.mm in Sources */,
 				7E3B88F21A385A290023C94E /* MenuOpenableControl.cpp in Sources */,
 				186B470E1AB1D46B0084E80B /* WatermarkScreenControl.cpp in Sources */,
+				7E5811B81B1F050A007AD67F /* InteriorsExplorerModule.cpp in Sources */,
 				7E3B8B0D1A385F110023C94E /* MyPinCreationInitiationViewModule.mm in Sources */,
 				18FB64B31A94D504005A9411 /* SearchResultPoiViewOpenedMessageHandler.cpp in Sources */,
 				186B475A1AB33C7E0084E80B /* ApplicationConfigurationService.cpp in Sources */,
@@ -5992,12 +6029,12 @@
 				7E3B892E1A385A290023C94E /* MyPinCreationConfirmationViewModel.cpp in Sources */,
 				18FE3BD21A9CA561002D61C4 /* SortedMenuComparisonFunctions.cpp in Sources */,
 				7E3B8AEB1A385F110023C94E /* iOSInitialExperiencePreLoadModel.mm in Sources */,
+				7E5811CD1B1F3248007AD67F /* InteriorsExplorerViewInterop.mm in Sources */,
 				7E3B89121A385A290023C94E /* MyPinCreationViewStateChangedMessage.cpp in Sources */,
 				225FFA151A39EE8600C2282A /* SearchResultModel.cpp in Sources */,
 				7E3B890C1A385A290023C94E /* ModalityObserver.cpp in Sources */,
 				18FB646A1A9240FC005A9411 /* OAProblem.m in Sources */,
 				7E3B89681A385A290023C94E /* OpenableControlViewModelBase.cpp in Sources */,
-				7E37BCF81B18B38F0082C349 /* IosInteriorViewModule.mm in Sources */,
 				7E3B88FE1A385A290023C94E /* MobileExampleApp.cpp in Sources */,
 				7E3B8B2D1A385F110023C94E /* ViewController.mm in Sources */,
 				7E3B89D01A385A290023C94E /* SearchResultPoiOpenableControl.cpp in Sources */,
@@ -6027,9 +6064,7 @@
 				7E3B88E01A385A290023C94E /* FlattenButtonScreenControl.cpp in Sources */,
 				7E3B8AFD1A385F110023C94E /* MyPinCreationConfirmationView.mm in Sources */,
 				18A6574E1A9F390E00238F33 /* SearchResultPinAddedEvent.cpp in Sources */,
-				7E37BCEF1B18B06A0082C349 /* IosInteriorView.mm in Sources */,
 				7E3B897E1A385A290023C94E /* ReactionControllerModule.cpp in Sources */,
-				7E01953B1B1CACBD00884B3F /* InteriorsViewModel.cpp in Sources */,
 				7E3B88C81A385A290023C94E /* CompassUpdateController.cpp in Sources */,
 				7E3B8B111A385F110023C94E /* MyPinDetailsViewInterop.mm in Sources */,
 				18FB64681A9240FC005A9411 /* OAPlaintextSignatureProvider.m in Sources */,
@@ -6049,6 +6084,7 @@
 				7E3B89BA1A385A290023C94E /* SearchResultMenuViewModel.cpp in Sources */,
 				7E3B89441A385A290023C94E /* MyPinDetailsViewRemovePinHandler.cpp in Sources */,
 				7E3B88EE1A385A290023C94E /* MenuController.cpp in Sources */,
+				7E5811CF1B1F3248007AD67F /* InteriorsExplorerViewModule.mm in Sources */,
 				7E3B88FC1A385A290023C94E /* MenuViewModel.cpp in Sources */,
 				18A6575D1A9F6A8E00238F33 /* MyPinVisibilityStateChangedHandler.cpp in Sources */,
 				7E3B89861A385A290023C94E /* ScreenControlViewModelBase.cpp in Sources */,

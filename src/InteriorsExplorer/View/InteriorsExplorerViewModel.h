@@ -7,14 +7,14 @@
 
 namespace ExampleApp
 {
-    namespace Interiors
+    namespace InteriorsExplorer
     {
         namespace View
         {
-            class InteriorsViewModel : public ScreenControl::View::ScreenControlViewModelBase
+            class InteriorsExplorerViewModel : public ScreenControl::View::ScreenControlViewModelBase
             {
             public:
-                InteriorsViewModel(bool initiallyOnScreen, Eegeo::Helpers::TIdentity identity);
+                InteriorsExplorerViewModel(bool initiallyOnScreen, Eegeo::Helpers::TIdentity identity);
                 
                 Eegeo::Helpers::TIdentity GetIdentity() const;
                 

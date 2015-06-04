@@ -66,13 +66,10 @@
 #include "InitialExperienceIntroBackgroundView.h"
 #include "ApplicationConfigurationModule.h"
 #include "IApplicationConfigurationService.h"
-
-#include "IosInteriorView.h"
-#include "IosInteriorViewInterop.h"
-#include "InteriorsViewController.h"
-#include "InteriorsController.h"
+#include "InteriorsExplorerViewModule.h"
+#include "IInteriorsExplorerModule.h"
 #include "InteriorsPresentationModule.h"
-#include "IosInteriorViewModule.h"
+#include "InteriorsExplorerView.h"
 
 using namespace Eegeo::iOS;
 
@@ -329,8 +326,8 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
     m_pInitialExperienceIntroViewModule = Eegeo_NEW(ExampleApp::InitialExperience::View::InitialExperienceIntroViewModule)(m_messageBus);
     
     
-    m_pIosInteriorViewModule = Eegeo_NEW(ExampleApp::Interiors::View::IosInteriorViewModule)(m_messageBus,
-                                                                                             app.World().GetMapModule().GetInteriorsPresentationModule().GetInteriorsController(),
+    m_pInteriorsExplorerViewModule = Eegeo_NEW(ExampleApp::InteriorsExplorer::View::InteriorsExplorerViewModule)(app.InteriorsExplorerModule().GetInteriorsExplorerViewModel(),
+                                                                                             m_messageBus,
                                                                                              app.MyPinCreationModule().GetMyPinCreationInitiationViewModel(),
                                                                                              app.SecondaryMenuModule().GetSecondaryMenuViewModel(),
                                                                                              app.SearchResultMenuModule().GetMenuViewModel(),
@@ -351,7 +348,7 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
     [m_pView addSubview: &m_pCompassViewModule->GetCompassView()];
     [m_pView addSubview: &m_pMyPinCreationInitiationViewModule->GetMyPinCreationInitiationView()];
     [m_pView addSubview: &m_pMyPinCreationConfirmationViewModule->GetMyPinCreationConfirmationView()];
-    [m_pView addSubview: &m_pIosInteriorViewModule->GetView()];
+    [m_pView addSubview: &m_pInteriorsExplorerViewModule->GetView()];
 
     // Modal background layer.
     [m_pView addSubview: &m_pModalBackgroundViewModule->GetModalBackgroundView()];
@@ -390,7 +387,7 @@ void AppHost::DestroyApplicationViewModules()
     [&m_pCompassViewModule->GetCompassView() removeFromSuperview];
     [&m_pMyPinCreationInitiationViewModule->GetMyPinCreationInitiationView() removeFromSuperview];
     [&m_pMyPinCreationConfirmationViewModule->GetMyPinCreationConfirmationView() removeFromSuperview];
-    [&m_pIosInteriorViewModule->GetView() removeFromSuperview];
+    [&m_pInteriorsExplorerViewModule->GetView() removeFromSuperview];
 
     // Modal background layer.
     [&m_pModalBackgroundViewModule->GetModalBackgroundView() removeFromSuperview];
@@ -409,7 +406,7 @@ void AppHost::DestroyApplicationViewModules()
     // Initial experience layer
     [&m_pInitialExperienceIntroViewModule->GetIntroView() removeFromSuperview];
 
-    Eegeo_DELETE m_pIosInteriorViewModule;
+    Eegeo_DELETE m_pInteriorsExplorerViewModule;
     
     Eegeo_DELETE m_pViewControllerUpdaterModule;
 

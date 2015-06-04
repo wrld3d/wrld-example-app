@@ -8,22 +8,21 @@
 
 namespace ExampleApp
 {
-    namespace Interiors
+    namespace InteriorsExplorer
     {
         namespace View
         {
-            class IInteriorsView : public ScreenControl::View::IScreenControlView
+            class IInteriorsExplorerView : public ScreenControl::View::IScreenControlView
             {
             public:
                 
-                virtual ~IInteriorsView() { }
+                virtual ~IInteriorsExplorerView() { }
                 
-                virtual void Show() = 0;
                 virtual void Dismiss() = 0;
                 virtual void SelectFloor(int floor) = 0;
                 
                 virtual void OnDismissed() = 0;
-                virtual void SetFloorCount(int floorCount) = 0;
+                virtual void SetFloorCount(int floorCount, int initialFloor) = 0;
                 virtual void SetFloorName(const std::string& name) = 0;
                 
                 virtual void InsertDismissedCallback(Eegeo::Helpers::ICallback0& callback) = 0;

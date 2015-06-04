@@ -59,6 +59,7 @@
 #include "InteriorsCameraController.h"
 #include "InteriorsTouchController.h"
 #include "InteriorsPinsController.h"
+#include "InteriorsExplorerModule.h"
 
 namespace ExampleApp
 {
@@ -149,6 +150,7 @@ namespace ExampleApp
         , m_pMyPinDetailsModule(NULL)
         , m_pOptionsModule(NULL)
         , m_pWatermarkModule(NULL)
+        , m_pInteriorsExplorerModule(NULL)
         , m_screenProperties(screenProperties)
         , m_networkCapabilities(networkCapabilities)
         , m_setMetricsLocation(false)
@@ -171,7 +173,7 @@ namespace ExampleApp
                                                 Eegeo::EnvironmentCharacterSet::Latin,
                                                 platformConfig,
                                                 NULL,
-                                                "http://cdn1.eegeo.com/coverage-trees/vtest_builds/interiors_2015_05_28_002/manifest.txt.gz",
+                                                "http://cdn1.eegeo.com/coverage-trees/vtest_builds/interiors_2015_06_02_006/manifest.txt.gz",
                                                 "http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v305/manifest.txt.gz",
                                                 &errorHandler
                                                 );
@@ -381,6 +383,10 @@ namespace ExampleApp
                                                                                                   m_pMyPinsModule->GetMyPinsService(),
                                                                                                   m_pSearchResultPoiModule->GetSearchResultPoiViewModel(),
                                                                                                   m_messageBus);
+        
+        m_pInteriorsExplorerModule = Eegeo_NEW(InteriorsExplorer::SdkModel::InteriorsExplorerModule)(world.GetMapModule().GetInteriorsPresentationModule().GetInteriorsController(),
+                                                                                                     m_identityProvider,
+                                                                                                     m_messageBus);
 
         std::vector<ScreenControl::View::IScreenControlViewModel*> reactors(GetReactorControls());
         std::vector<ExampleApp::OpenableControl::View::IOpenableControlViewModel*> openables(GetOpenableControls());
@@ -414,6 +420,8 @@ namespace ExampleApp
         Eegeo_DELETE m_pReactionModelModule;
         
         Eegeo_DELETE m_pModalityModule;
+        
+        Eegeo_DELETE m_pInteriorsExplorerModule;
         
         Eegeo_DELETE m_pMyPinDetailsModule;
         

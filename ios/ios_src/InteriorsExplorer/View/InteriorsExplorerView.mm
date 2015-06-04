@@ -1,14 +1,14 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
-#include "IosInteriorView.h"
+#include "InteriorsExplorerView.h"
 #include "UIColors.h"
 #include "ImageHelpers.h"
-#include "IosInteriorViewInterop.h"
+#include "InteriorsExplorerViewInterop.h"
 #import "UIView+TouchExclusivity.h"
 
-@implementation IosInteriorView
+@implementation InteriorsExplorerView
 
-- (ExampleApp::Interiors::View::IosInteriorViewInterop*) getInterop
+- (ExampleApp::InteriorsExplorer::View::InteriorsExplorerViewInterop*) getInterop
 {
     return m_pInterop;
 }
@@ -23,7 +23,7 @@
         
         m_stateChangeAnimationTimeSeconds = 0.2f;
         
-        m_pInterop = new ExampleApp::Interiors::View::IosInteriorViewInterop(self);
+        m_pInterop = new ExampleApp::InteriorsExplorer::View::InteriorsExplorerViewInterop(self);
 
         self.frame = CGRectMake(0,
                                 0,
@@ -36,29 +36,7 @@
         
         self.pFloorPanel = [[[UIView alloc] initWithFrame:CGRectMake(m_inactiveFloorListXPosition, m_screenHeight/2.0f, 50, 200)] autorelease];
         [self addSubview:self.pFloorPanel];
-        
-        // No longer needed since we have the tableview?
-        // Floor 2
-        /*self.pFloor2Button = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, 50)] autorelease];
-        [self.pFloor2Button setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_ok_place_pin_off") forState:UIControlStateNormal];
-        [self.pFloor2Button setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_ok_place_pin_on") forState:UIControlStateHighlighted];
-        [self.pFloor2Button addTarget:self action:@selector(onFloorButton2Pressed:) forControlEvents:UIControlEventTouchUpInside];
-        [self.pFloorPanel addSubview:self.pFloor2Button];
-        
-        // Floor 1
-        self.pFloor1Button = [[[UIButton alloc] initWithFrame:CGRectMake(0, 50, 50, 50)] autorelease];
-        [self.pFloor1Button setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_ok_place_pin_off") forState:UIControlStateNormal];
-        [self.pFloor1Button setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_ok_place_pin_on") forState:UIControlStateHighlighted];
-        [self.pFloor1Button addTarget:self action:@selector(onFloorButton1Pressed:) forControlEvents:UIControlEventTouchUpInside];
-        [self.pFloorPanel addSubview:self.pFloor1Button];
-        
-        // Floor 0
-        self.pFloor0Button = [[[UIButton alloc] initWithFrame:CGRectMake(0, 100, 50, 50)] autorelease];
-        [self.pFloor0Button setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_ok_place_pin_off") forState:UIControlStateNormal];
-        [self.pFloor0Button setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_ok_place_pin_on") forState:UIControlStateHighlighted];
-        [self.pFloor0Button addTarget:self action:@selector(onFloorButton0Pressed:) forControlEvents:UIControlEventTouchUpInside];
-        [self.pFloorPanel addSubview:self.pFloor0Button];*/
-        
+
         m_floorCount = 0;
         
         self.pFloorPanelTop = [[[UIImageView alloc] initWithImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"floor_selection_top")] autorelease];
@@ -146,11 +124,12 @@
     return NO;
 }
 
-- (void)setFloorCount:(int)floors
+- (void)setFloorCount:(int)floors :(int)initialFloor
 {
     m_floorCount = floors;
     
     [self.pFloorList reloadData];
+    [self.pFloorList selectRowAtIndexPath:[NSIndexPath indexPathForRow:(m_floorCount - initialFloor)-1 inSection:0] animated:NO scrollPosition:0];
     [self.pFloorList sizeToFit];
     [self layoutIfNeeded];
     [self setNeedsLayout];
@@ -189,7 +168,7 @@
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:Identifier];
     }
-    cell.textLabel.text = [NSString stringWithFormat:@"%ld", (m_floorCount - indexPath.item)];
+    cell.textLabel.text = [NSString stringWithFormat:@"%d", (m_floorCount - indexPath.item)];
     return cell;
 }
 
