@@ -88,7 +88,7 @@ namespace ExampleApp
                 JNIEnv* env = attached.envForThread;
 
                 jstring titleStr = env->NewStringUTF(title.c_str());
-                jstring descriptionStr = env->NewStringUTF(title.c_str());
+                jstring descriptionStr = env->NewStringUTF(description.c_str());
                 jstring imageStr = env->NewStringUTF(imagePath.c_str());
 
                 jmethodID showDetailsMethod = env->GetMethodID(m_uiViewClass, "display", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V");
