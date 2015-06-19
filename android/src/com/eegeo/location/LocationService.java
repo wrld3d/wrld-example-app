@@ -172,11 +172,18 @@ class LocationService
         }
     }
 
+    private static boolean isAnyProviderEnabled(LocationManager locationManager)
+    {
+    	boolean gpsIsAuthorized = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+    	boolean networkIsAuthorized = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+    	return (gpsIsAuthorized || networkIsAuthorized);
+    }
+    
     private static void setupListenerAndLocationManager(Activity a)
     {
         LocationService.locationManager = (LocationManager) a.getSystemService(Context.LOCATION_SERVICE);
 
-        LocationService.isAuthorized = LocationService.locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        LocationService.isAuthorized = isAnyProviderEnabled(LocationService.locationManager);
         
         if (LocationService.locationListener == null)
         {
@@ -198,23 +205,16 @@ class LocationService
                 }
 
                 public void onProviderEnabled(String provider)
-                {
-                	if(provider == LocationManager.GPS_PROVIDER)
-                	{
-                		LocationService.isAuthorized = true;
-                	}
-                    Log.v("Location", "onProviderEnabled");
-                }
-
-                public void onProviderDisabled(String provider)
-                {
-                	if(provider == LocationManager.GPS_PROVIDER)
-                	{
-                		LocationService.isAuthorized = false;
-                	}
-                    Log.v("Location", "onProviderDisabled");
-                }
-
+				{
+					LocationService.isAuthorized = isAnyProviderEnabled(LocationService.locationManager);
+					Log.v("Location", "onProviderEnabled, LocationService.isAuthorized : " + LocationService.isAuthorized);
+				}
+				
+				public void onProviderDisabled(String provider)
+				{
+					LocationService.isAuthorized = isAnyProviderEnabled(LocationService.locationManager);
+					Log.v("Location", "onProviderDisabled, LocationService.isAuthorized : " + LocationService.isAuthorized);
+				}        	   
             };
         }
         isListening = true;
