@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.view.ViewGroup;
 
 import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.mobileexampleapp.R;
@@ -98,6 +99,9 @@ public class SearchMenuView extends MenuView
 
         m_menuItemSelectedListener = new SearchMenuItemSelectedListener(m_nativeCallerPointer, this);
         m_list.setOnItemClickListener(m_menuItemSelectedListener);
+        
+        ViewGroup vg = (ViewGroup)m_view;
+        m_activity.recursiveDisableSplitMotionEvents(vg);
     }
 
     public void updateHeader(final String searchText, final boolean pendingQueryResult, final int numResults)
