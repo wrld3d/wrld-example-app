@@ -64,8 +64,8 @@ iOS c++11 support
 android c++11 support
 =====================
 * Android c++11 support is EXPERIMENTAL due to the experimental nature of c++11 support in the NDK (see https://developer.android.com/tools/sdk/ndk/index.html & https://gcc.gnu.org/gcc-4.8/cxx0x_status.html)
-* Only tested against Android NDK version r10101010101010101010d - https://developer.android.com/tools/sdk/ndk/index.html
-* Only tested against gcc 4.8 & gnu libstd++ (see android/jni/Application.mk for how to target these)
+* Only tested against Android NDK version r10d - https://developer.android.com/tools/sdk/ndk/index.html
+* Only tested against gcc 4.9 & gnu libstd++ (see android/jni/Application.mk for how to target these)
 * ./update.platform.sh -p android -c will fetch c++11/gnu libstdc++ ABI compatible versions of the SDK
 * ./build -p android -c from the command line will build targeting c++11
 * Pass COMPILE_CPP_11=1 to ndk-build to build cpp11
