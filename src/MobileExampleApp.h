@@ -70,6 +70,7 @@
 #include "IWatermarkModule.h"
 #include "ApplicationConfiguration.h"
 #include "InteriorsExplorer.h"
+#include "InteriorsEntitiesPins.h"
 
 namespace ExampleApp
 {
@@ -130,6 +131,8 @@ namespace ExampleApp
         Net::SdkModel::INetworkCapabilities& m_networkCapabilities;
         Search::SdkModel::ISearchServiceModule& m_searchServiceModule;
         InteriorsExplorer::SdkModel::IInteriorsExplorerModule* m_pInteriorsExplorerModule;
+        InteriorsEntitiesPins::SdkModel::IInteriorsEntitiesPinsModule* m_pInteriorsEntitiesPinsModule;
+        
 
         void CreateApplicationModelModules();
 
@@ -303,6 +306,11 @@ namespace ExampleApp
         const InteriorsExplorer::SdkModel::IInteriorsExplorerModule& InteriorsExplorerModule() const
         {
             return *m_pInteriorsExplorerModule;
+        }
+        
+        InteriorsEntitiesPins::SdkModel::IInteriorsEntitiesPinsModule& InteriorsEntitiesPinsModule()
+        {
+            return *m_pInteriorsEntitiesPinsModule;
         }
         
         // Exposed to allow view model creation in iOS code.

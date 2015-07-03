@@ -60,6 +60,9 @@
 #include "InteriorsTouchController.h"
 #include "InteriorsPinsController.h"
 #include "InteriorsExplorerModule.h"
+#include "InteriorsEntitiesPinsModule.h"
+#include "InteriorsEntitiesPinsController.h"
+#include "PinsModule.h"
 
 namespace ExampleApp
 {
@@ -173,8 +176,8 @@ namespace ExampleApp
                                                 Eegeo::EnvironmentCharacterSet::Latin,
                                                 platformConfig,
                                                 NULL,
-                                                "http://cdn1.eegeo.com/coverage-trees/vtest_builds/interiors_2015_06_02_006/manifest.txt.gz",
-                                                "http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v305/manifest.txt.gz",
+                                                "http://cdn1.eegeo.com/coverage-trees/vinteriors_test_20150702_001/manifest.txt.gz",
+                                                "http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v310/manifest.txt.gz",
                                                 &errorHandler
                                                 );
 
@@ -387,6 +390,11 @@ namespace ExampleApp
         m_pInteriorsExplorerModule = Eegeo_NEW(InteriorsExplorer::SdkModel::InteriorsExplorerModule)(world.GetMapModule().GetInteriorsPresentationModule().GetInteriorsController(),
                                                                                                      m_identityProvider,
                                                                                                      m_messageBus);
+        
+        m_pInteriorsEntitiesPinsModule = Eegeo_NEW(InteriorsEntitiesPins::SdkModel::InteriorsEntitiesPinsModule(m_pWorld->GetPlatformAbstractionModule(),
+                                                                                                                m_pWorld->GetRenderingModule(),
+                                                                                                                m_pWorld->GetMapModule(),
+                                                                                                                m_screenProperties));
 
         std::vector<ScreenControl::View::IScreenControlViewModel*> reactors(GetReactorControls());
         std::vector<ExampleApp::OpenableControl::View::IOpenableControlViewModel*> openables(GetOpenableControls());
@@ -564,6 +572,11 @@ namespace ExampleApp
 
         m_pGlobeCameraController->Update(dt);
         m_pCameraTransitionController->Update(dt);
+        
+        if(interiorsCameraController.IsEnabled())
+        {
+            interiorsCameraController.Update(dt);
+        }
 
         Eegeo::Camera::CameraState cameraState(interiorsCameraController.IsEnabled()
                                                ? interiorsCameraController.GetCameraState()
@@ -595,6 +608,9 @@ namespace ExampleApp
             CompassModule().GetCompassUpdateController().Update(dt);
             CompassModule().GetCompassUpdateController().Update(dt);
             m_pGpsMarkerModule->GetGpsMarkerController().Update(dt, renderCamera);
+            
+            InteriorsEntitiesPinsModule().GetPinsModule().Update(dt, renderCamera);
+            InteriorsEntitiesPinsModule().GetInteriorsEntitiesPinsController().Update(dt);
 
             InitialExperience::SdkModel::IInitialExperienceModel& initialExperienceModel = m_initialExperienceModule.GetInitialExperienceModel();
             if(!initialExperienceModel.HasCompletedInitialExperience() && IsLoadingScreenComplete())

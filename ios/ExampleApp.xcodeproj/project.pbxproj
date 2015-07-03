@@ -603,6 +603,10 @@
 		225FFA161A39EE8600C2282A /* SearchResultModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 225FFA111A39EE8600C2282A /* SearchResultModel.cpp */; };
 		225FFA171A39EE8600C2282A /* SearchResultRepository.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 225FFA131A39EE8600C2282A /* SearchResultRepository.cpp */; };
 		225FFA181A39EE8600C2282A /* SearchResultRepository.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 225FFA131A39EE8600C2282A /* SearchResultRepository.cpp */; };
+		561ECF221B467FD3007BD4F9 /* InteriorsEntitiesPinsModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 561ECF201B467FD3007BD4F9 /* InteriorsEntitiesPinsModule.cpp */; };
+		561ECF231B467FD4007BD4F9 /* InteriorsEntitiesPinsModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 561ECF201B467FD3007BD4F9 /* InteriorsEntitiesPinsModule.cpp */; };
+		561ECF291B46820F007BD4F9 /* InteriorsEntitiesPinsController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 561ECF271B46820F007BD4F9 /* InteriorsEntitiesPinsController.cpp */; };
+		561ECF2A1B46820F007BD4F9 /* InteriorsEntitiesPinsController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 561ECF271B46820F007BD4F9 /* InteriorsEntitiesPinsController.cpp */; };
 		5633F8EB1A79289500D69813 /* libFlurry_6.0.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5633F8EA1A79289500D69813 /* libFlurry_6.0.0.a */; };
 		5633F8ED1A7928C500D69813 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5633F8EC1A7928C500D69813 /* Security.framework */; };
 		5637B7071A261A5400181973 /* image_blank.png in Resources */ = {isa = PBXBuildFile; fileRef = 56FBCDED1A0BB5150026546E /* image_blank.png */; };
@@ -668,6 +672,10 @@
 		566307161AD2D69800980426 /* stars_5_0@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 566306DA1AD2D69800980426 /* stars_5_0@3x.png */; };
 		5675901E19F53C7A00C4599E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5675901D19F53C7A00C4599E /* QuartzCore.framework */; };
 		5675901F19F53C9100C4599E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE481EE16836F370006E99B /* CoreGraphics.framework */; };
+		56A16A431B428B6900DA35F7 /* DejaVuSansBold_0.png in Resources */ = {isa = PBXBuildFile; fileRef = 56A16A411B428B6900DA35F7 /* DejaVuSansBold_0.png */; };
+		56A16A441B428B6900DA35F7 /* DejaVuSansBold_0.png in Resources */ = {isa = PBXBuildFile; fileRef = 56A16A411B428B6900DA35F7 /* DejaVuSansBold_0.png */; };
+		56A16A451B428B6900DA35F7 /* DejaVuSansBold.fnt in Resources */ = {isa = PBXBuildFile; fileRef = 56A16A421B428B6900DA35F7 /* DejaVuSansBold.fnt */; };
+		56A16A461B428B6900DA35F7 /* DejaVuSansBold.fnt in Resources */ = {isa = PBXBuildFile; fileRef = 56A16A421B428B6900DA35F7 /* DejaVuSansBold.fnt */; };
 		56A3DCDF1A239BD100110FDD /* button_gallery_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 56A3DCD71A239BD000110FDD /* button_gallery_off.png */; };
 		56A3DCE01A239BD100110FDD /* button_gallery_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 56A3DCD71A239BD000110FDD /* button_gallery_off.png */; };
 		56A3DCE31A239BD100110FDD /* button_ok_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 56A3DCD91A239BD000110FDD /* button_ok_off.png */; };
@@ -690,6 +698,8 @@
 		56D620DA1A8B641200828A9E /* libapps-on-maps-sim.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 56D620D71A8B641200828A9E /* libapps-on-maps-sim.a */; };
 		56D620DB1A8B641200828A9E /* libapps-on-maps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 56D620D81A8B641200828A9E /* libapps-on-maps.a */; };
 		56D620DC1A8B641200828A9E /* libturbojpeg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 56D620D91A8B641200828A9E /* libturbojpeg.a */; };
+		56D8C03A1B4574AB0053B932 /* icons_interior_entities.png in Resources */ = {isa = PBXBuildFile; fileRef = 56D8C0391B4574AB0053B932 /* icons_interior_entities.png */; };
+		56D8C03B1B4574AB0053B932 /* icons_interior_entities.png in Resources */ = {isa = PBXBuildFile; fileRef = 56D8C0391B4574AB0053B932 /* icons_interior_entities.png */; };
 		56F28E821A261DA40061C7BF /* button_checkbox_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 56FBCDE71A0BB5150026546E /* button_checkbox_off.png */; };
 		56F28E831A261DA70061C7BF /* button_checkbox_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 56FBCDE81A0BB5150026546E /* button_checkbox_on.png */; };
 		56F28E841A261DA90061C7BF /* button_create_poi.png in Resources */ = {isa = PBXBuildFile; fileRef = 56FBCDE91A0BB5150026546E /* button_create_poi.png */; };
@@ -1688,6 +1698,14 @@
 		225FFA121A39EE8600C2282A /* SearchResultModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultModel.h; sourceTree = "<group>"; };
 		225FFA131A39EE8600C2282A /* SearchResultRepository.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchResultRepository.cpp; sourceTree = "<group>"; };
 		225FFA141A39EE8600C2282A /* SearchResultRepository.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultRepository.h; sourceTree = "<group>"; };
+		561ECF201B467FD3007BD4F9 /* InteriorsEntitiesPinsModule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InteriorsEntitiesPinsModule.cpp; sourceTree = "<group>"; };
+		561ECF211B467FD3007BD4F9 /* InteriorsEntitiesPinsModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InteriorsEntitiesPinsModule.h; sourceTree = "<group>"; };
+		561ECF241B46801C007BD4F9 /* IInteriorsEntitiesPinsModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IInteriorsEntitiesPinsModule.h; sourceTree = "<group>"; };
+		561ECF251B468060007BD4F9 /* InteriorsEntitiesPins.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InteriorsEntitiesPins.h; sourceTree = "<group>"; };
+		561ECF271B46820F007BD4F9 /* InteriorsEntitiesPinsController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InteriorsEntitiesPinsController.cpp; sourceTree = "<group>"; };
+		561ECF281B46820F007BD4F9 /* InteriorsEntitiesPinsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InteriorsEntitiesPinsController.h; sourceTree = "<group>"; };
+		561ECF2B1B46821D007BD4F9 /* IInteriorsEntitiesPinsController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IInteriorsEntitiesPinsController.h; sourceTree = "<group>"; };
+		562FD15D1B46C73F009A85D7 /* InteriorsEntityPinData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InteriorsEntityPinData.h; sourceTree = "<group>"; };
 		5633F8EA1A79289500D69813 /* libFlurry_6.0.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libFlurry_6.0.0.a; path = Include/libFlurry_6.0.0.a; sourceTree = "<group>"; };
 		5633F8EC1A7928C500D69813 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		566306BD1AD2D69800980426 /* stars_0_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stars_0_0.png; sourceTree = "<group>"; };
@@ -1721,6 +1739,8 @@
 		566306D91AD2D69800980426 /* stars_5_0@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stars_5_0@2x.png"; sourceTree = "<group>"; };
 		566306DA1AD2D69800980426 /* stars_5_0@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stars_5_0@3x.png"; sourceTree = "<group>"; };
 		5675901D19F53C7A00C4599E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		56A16A411B428B6900DA35F7 /* DejaVuSansBold_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DejaVuSansBold_0.png; sourceTree = "<group>"; };
+		56A16A421B428B6900DA35F7 /* DejaVuSansBold.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DejaVuSansBold.fnt; sourceTree = "<group>"; };
 		56A3DCD71A239BD000110FDD /* button_gallery_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_gallery_off.png; sourceTree = "<group>"; };
 		56A3DCD91A239BD000110FDD /* button_ok_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_ok_off.png; sourceTree = "<group>"; };
 		56A3DCDB1A239BD000110FDD /* button_photo_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_photo_off.png; sourceTree = "<group>"; };
@@ -1736,6 +1756,7 @@
 		56D620D71A8B641200828A9E /* libapps-on-maps-sim.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libapps-on-maps-sim.a"; path = "Include/eegeo/libapps-on-maps-sim.a"; sourceTree = "<group>"; };
 		56D620D81A8B641200828A9E /* libapps-on-maps.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libapps-on-maps.a"; path = "Include/eegeo/libapps-on-maps.a"; sourceTree = "<group>"; };
 		56D620D91A8B641200828A9E /* libturbojpeg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libturbojpeg.a; path = Include/eegeo/libturbojpeg.a; sourceTree = "<group>"; };
+		56D8C0391B4574AB0053B932 /* icons_interior_entities.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icons_interior_entities.png; path = ../../../../Desktop/icons_interior_entities.png; sourceTree = "<group>"; };
 		56FBCDE71A0BB5150026546E /* button_checkbox_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_checkbox_off.png; sourceTree = "<group>"; };
 		56FBCDE81A0BB5150026546E /* button_checkbox_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_checkbox_on.png; sourceTree = "<group>"; };
 		56FBCDE91A0BB5150026546E /* button_create_poi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_create_poi.png; sourceTree = "<group>"; };
@@ -2540,6 +2561,7 @@
 		18143846192B6E4500BCDF2E /* src */ = {
 			isa = PBXGroup;
 			children = (
+				561ECF1E1B467F84007BD4F9 /* InteriorsEntitiesPins */,
 				18B22B181A7A901D00DDBFA2 /* ApiKey.h */,
 				7E3B86631A385A280023C94E /* AboutPage */,
 				186B473D1AB333150084E80B /* ApplicationConfig */,
@@ -2813,6 +2835,8 @@
 		18D1D363194A0EA000FAA1B9 /* platform_assets */ = {
 			isa = PBXGroup;
 			children = (
+				56A16A411B428B6900DA35F7 /* DejaVuSansBold_0.png */,
+				56A16A421B428B6900DA35F7 /* DejaVuSansBold.fnt */,
 				18D1D364194A0F7D00FAA1B9 /* Icons */,
 				18D1D34A194A057200FAA1B9 /* placeholder.pvr */,
 				18D1D343194A057200FAA1B9 /* FrankBold50_A8_icons_0.png */,
@@ -3007,6 +3031,29 @@
 				18FE21D01AA9CD3800ACE28A /* ImagePathHelpers.h */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		561ECF1E1B467F84007BD4F9 /* InteriorsEntitiesPins */ = {
+			isa = PBXGroup;
+			children = (
+				561ECF1F1B467F84007BD4F9 /* SdkModel */,
+				561ECF251B468060007BD4F9 /* InteriorsEntitiesPins.h */,
+			);
+			path = InteriorsEntitiesPins;
+			sourceTree = "<group>";
+		};
+		561ECF1F1B467F84007BD4F9 /* SdkModel */ = {
+			isa = PBXGroup;
+			children = (
+				561ECF201B467FD3007BD4F9 /* InteriorsEntitiesPinsModule.cpp */,
+				561ECF211B467FD3007BD4F9 /* InteriorsEntitiesPinsModule.h */,
+				561ECF241B46801C007BD4F9 /* IInteriorsEntitiesPinsModule.h */,
+				561ECF271B46820F007BD4F9 /* InteriorsEntitiesPinsController.cpp */,
+				561ECF281B46820F007BD4F9 /* InteriorsEntitiesPinsController.h */,
+				561ECF2B1B46821D007BD4F9 /* IInteriorsEntitiesPinsController.h */,
+				562FD15D1B46C73F009A85D7 /* InteriorsEntityPinData.h */,
+			);
+			path = SdkModel;
 			sourceTree = "<group>";
 		};
 		56AC9BF91AA6076D00E603C4 /* Metrics */ = {
@@ -4709,6 +4756,7 @@
 		7EE4825B16847E7C0006E99B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				56D8C0391B4574AB0053B932 /* icons_interior_entities.png */,
 				7E0195331B1C6B1900884B3F /* floor_selection_bottom.png */,
 				7E0195341B1C6B1900884B3F /* floor_selection_top.png */,
 				7E37BCE21B18A6E80082C349 /* pinteriors.png */,
@@ -5079,6 +5127,7 @@
 				18FE21F01AA9D34400ACE28A /* arrow3_up@3x.png in Resources */,
 				185145951AB0A8DC0071913E /* SplashScreen@3x.png in Resources */,
 				566306F61AD2D69800980426 /* stars_2_5@2x.png in Resources */,
+				56D8C03B1B4574AB0053B932 /* icons_interior_entities.png in Resources */,
 				18FE20EA1AA9B2C200ACE28A /* button_ok_place_pin_on@3x.png in Resources */,
 				18FE21AA1AA9C75700ACE28A /* menu_button@2x.png in Resources */,
 				18FE21A21AA9C75700ACE28A /* menu_background2@2x.png in Resources */,
@@ -5097,6 +5146,7 @@
 				18EC01081AA7752500902E98 /* icon1_day@2x.png in Resources */,
 				18EC013E1AA7752500902E98 /* icon1_spring@3x.png in Resources */,
 				18FE21381AA9BA3C00ACE28A /* button_create_poi@2x.png in Resources */,
+				56A16A461B428B6900DA35F7 /* DejaVuSansBold.fnt in Resources */,
 				188C4CB51AA730BF0080B34B /* menu_bar.png in Resources */,
 				18B5AC8219DC15CD00BA4A38 /* button_close_off.png in Resources */,
 				183E54781ACE9E7700AD6B3E /* reviewsFromYelpRED.png in Resources */,
@@ -5219,6 +5269,7 @@
 				56A3DCE41A239BD100110FDD /* button_ok_off.png in Resources */,
 				566307161AD2D69800980426 /* stars_5_0@3x.png in Resources */,
 				18B5ACB819DC15CD00BA4A38 /* icon1_rainy.png in Resources */,
+				56A16A441B428B6900DA35F7 /* DejaVuSansBold_0.png in Resources */,
 				18FE20DC1AA9B2C200ACE28A /* button_close_place_pin_off@2x.png in Resources */,
 				18EC01141AA7752500902E98 /* icon1_food@2x.png in Resources */,
 				18FE21FD1AA9D3D000ACE28A /* eegeo_logo@3x.png in Resources */,
@@ -5333,6 +5384,7 @@
 				185145941AB0A8DC0071913E /* SplashScreen@3x.png in Resources */,
 				566306F51AD2D69800980426 /* stars_2_5@2x.png in Resources */,
 				18FE21EF1AA9D34400ACE28A /* arrow3_up@3x.png in Resources */,
+				56D8C03A1B4574AB0053B932 /* icons_interior_entities.png in Resources */,
 				18FE20E91AA9B2C200ACE28A /* button_ok_place_pin_on@3x.png in Resources */,
 				18FE21A91AA9C75700ACE28A /* menu_button@2x.png in Resources */,
 				18FE21A11AA9C75700ACE28A /* menu_background2@2x.png in Resources */,
@@ -5351,6 +5403,7 @@
 				18EC01071AA7752500902E98 /* icon1_day@2x.png in Resources */,
 				18EC013D1AA7752500902E98 /* icon1_spring@3x.png in Resources */,
 				18FE21371AA9BA3C00ACE28A /* button_create_poi@2x.png in Resources */,
+				56A16A451B428B6900DA35F7 /* DejaVuSansBold.fnt in Resources */,
 				188C4CB41AA730BF0080B34B /* menu_bar.png in Resources */,
 				183E54771ACE9E7700AD6B3E /* reviewsFromYelpRED.png in Resources */,
 				56A3DCE31A239BD100110FDD /* button_ok_off.png in Resources */,
@@ -5473,6 +5526,7 @@
 				566307151AD2D69800980426 /* stars_5_0@3x.png in Resources */,
 				18D1D354194A057200FAA1B9 /* FrankBold50_A8_icons_0.png in Resources */,
 				18FE20DB1AA9B2C200ACE28A /* button_close_place_pin_off@2x.png in Resources */,
+				56A16A431B428B6900DA35F7 /* DejaVuSansBold_0.png in Resources */,
 				18B5ACB719DC15CD00BA4A38 /* icon1_rainy.png in Resources */,
 				18FE21FC1AA9D3D000ACE28A /* eegeo_logo@3x.png in Resources */,
 				18FE20DD1AA9B2C200ACE28A /* button_close_place_pin_off@3x.png in Resources */,
@@ -5546,6 +5600,7 @@
 				18A657621A9F6AA800238F33 /* MyPinVisibilityStateChangedHandlerFactory.cpp in Sources */,
 				7E3B8A111A385A290023C94E /* WorldPinsVisibilityMessage.cpp in Sources */,
 				7E3B89571A385A290023C94E /* MyPinSelectedMessageHandler.cpp in Sources */,
+				561ECF231B467FD4007BD4F9 /* InteriorsEntitiesPinsModule.cpp in Sources */,
 				7E3B8AF81A385F110023C94E /* ModalBackgroundView.mm in Sources */,
 				18A657531A9F391E00238F33 /* SearchResultPinRemovedEvent.cpp in Sources */,
 				7E3B89311A385A290023C94E /* MyPinCreationInitiationController.cpp in Sources */,
@@ -5724,6 +5779,7 @@
 				7E3B89671A385A290023C94E /* MyPinRemovedFromMenuObserver.cpp in Sources */,
 				7E3B88CF1A385A290023C94E /* CompassScreenControl.cpp in Sources */,
 				7E3B89751A385A290023C94E /* PlaceJumpsDataParser.cpp in Sources */,
+				561ECF2A1B46820F007BD4F9 /* InteriorsEntitiesPinsController.cpp in Sources */,
 				18C0EC011A9E122F008EED21 /* MyPinBoundObjectRepository.cpp in Sources */,
 				7E3B88BD1A385A290023C94E /* CompassHeadingUpdateMessage.cpp in Sources */,
 				186B474E1AB333150084E80B /* ApplicationConfigurationBuilder.cpp in Sources */,
@@ -5900,6 +5956,7 @@
 				18A657611A9F6AA800238F33 /* MyPinVisibilityStateChangedHandlerFactory.cpp in Sources */,
 				7E3B8A101A385A290023C94E /* WorldPinsVisibilityMessage.cpp in Sources */,
 				7E3B89561A385A290023C94E /* MyPinSelectedMessageHandler.cpp in Sources */,
+				561ECF221B467FD3007BD4F9 /* InteriorsEntitiesPinsModule.cpp in Sources */,
 				7E3B8AF71A385F110023C94E /* ModalBackgroundView.mm in Sources */,
 				18A657521A9F391E00238F33 /* SearchResultPinRemovedEvent.cpp in Sources */,
 				7E3B89301A385A290023C94E /* MyPinCreationInitiationController.cpp in Sources */,
@@ -6078,6 +6135,7 @@
 				7E3B89661A385A290023C94E /* MyPinRemovedFromMenuObserver.cpp in Sources */,
 				7E3B88CE1A385A290023C94E /* CompassScreenControl.cpp in Sources */,
 				7E3B89741A385A290023C94E /* PlaceJumpsDataParser.cpp in Sources */,
+				561ECF291B46820F007BD4F9 /* InteriorsEntitiesPinsController.cpp in Sources */,
 				18C0EC001A9E122F008EED21 /* MyPinBoundObjectRepository.cpp in Sources */,
 				7E3B88BC1A385A290023C94E /* CompassHeadingUpdateMessage.cpp in Sources */,
 				186B474D1AB333150084E80B /* ApplicationConfigurationBuilder.cpp in Sources */,
