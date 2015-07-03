@@ -35,4 +35,4 @@ FREE AND OPEN SOURCE SOFTWARE LICENSES:
 ---------------------------------------
 
 The eeGeo Platform makes use of several pieces of free and open-source software,
- a list of which is available at http://sdk.eegeo.com/legal
+ a list of which is available at http://www.eegeo.com/legal
