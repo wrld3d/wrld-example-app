@@ -1175,6 +1175,10 @@
 		7E3B8B341A385F110023C94E /* WorldPinOnMapViewInterop.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B8AC21A385F110023C94E /* WorldPinOnMapViewInterop.mm */; };
 		7E3B8B351A385F110023C94E /* WorldPinOnMapViewModule.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B8AC41A385F110023C94E /* WorldPinOnMapViewModule.mm */; };
 		7E3B8B361A385F110023C94E /* WorldPinOnMapViewModule.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B8AC41A385F110023C94E /* WorldPinOnMapViewModule.mm */; };
+		7E8897981B4C26E9006F9DE0 /* yelp_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E8897961B4C26E9006F9DE0 /* yelp_logo.png */; };
+		7E8897991B4C26E9006F9DE0 /* yelp_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E8897961B4C26E9006F9DE0 /* yelp_logo.png */; };
+		7E88979A1B4C26E9006F9DE0 /* yelp_logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E8897971B4C26E9006F9DE0 /* yelp_logo@2x.png */; };
+		7E88979B1B4C26E9006F9DE0 /* yelp_logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E8897971B4C26E9006F9DE0 /* yelp_logo@2x.png */; };
 		7E8F03D61A822E820056F229 /* GpsMarkerModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E8F03D41A822E820056F229 /* GpsMarkerModule.cpp */; };
 		7E8F03D71A822E820056F229 /* GpsMarkerModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E8F03D41A822E820056F229 /* GpsMarkerModule.cpp */; };
 		7E8F03DA1A822E9A0056F229 /* GpsMarkerModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E8F03D81A822E9A0056F229 /* GpsMarkerModel.cpp */; };
@@ -2368,6 +2372,8 @@
 		7E3B8AC31A385F110023C94E /* WorldPinOnMapViewModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorldPinOnMapViewModule.h; sourceTree = "<group>"; };
 		7E3B8AC41A385F110023C94E /* WorldPinOnMapViewModule.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = WorldPinOnMapViewModule.mm; sourceTree = "<group>"; };
 		7E75EE1D16848B8A00BCA283 /* libapps-on-maps-sim.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libapps-on-maps-sim.a"; path = "Include/libapps-on-maps-sim.a"; sourceTree = "<group>"; };
+		7E8897961B4C26E9006F9DE0 /* yelp_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yelp_logo.png; sourceTree = "<group>"; };
+		7E8897971B4C26E9006F9DE0 /* yelp_logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "yelp_logo@2x.png"; sourceTree = "<group>"; };
 		7E8F03D41A822E820056F229 /* GpsMarkerModule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GpsMarkerModule.cpp; sourceTree = "<group>"; };
 		7E8F03D51A822E820056F229 /* GpsMarkerModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GpsMarkerModule.h; sourceTree = "<group>"; };
 		7E8F03D81A822E9A0056F229 /* GpsMarkerModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GpsMarkerModel.cpp; sourceTree = "<group>"; };
@@ -2919,6 +2925,8 @@
 		18FB64941A938A54005A9411 /* Yelp */ = {
 			isa = PBXGroup;
 			children = (
+				7E8897961B4C26E9006F9DE0 /* yelp_logo.png */,
+				7E8897971B4C26E9006F9DE0 /* yelp_logo@2x.png */,
 				566306BD1AD2D69800980426 /* stars_0_0.png */,
 				566306BE1AD2D69800980426 /* stars_0_0@2x.png */,
 				566306BF1AD2D69800980426 /* stars_0_0@3x.png */,
@@ -4900,6 +4908,7 @@
 				18FE21601AA9BA3D00ACE28A /* button_streets_on@2x.png in Resources */,
 				18FE21561AA9BA3D00ACE28A /* button_remove_pin_off@3x.png in Resources */,
 				566306F41AD2D69800980426 /* stars_2_5.png in Resources */,
+				7E8897991B4C26E9006F9DE0 /* yelp_logo.png in Resources */,
 				18FE21941AA9C75700ACE28A /* buttonsmall_close_on@3x.png in Resources */,
 				18FE21901AA9C75700ACE28A /* buttonsmall_close_off@3x.png in Resources */,
 				189B246819F93547006DD887 /* Images.xcassets in Resources */,
@@ -5032,6 +5041,7 @@
 				18FE21C41AA9C98100ACE28A /* search_result_background_small.png in Resources */,
 				18FE21F91AA9D3D000ACE28A /* eegeo_logo.png in Resources */,
 				7E8F03EB1A8260B40056F229 /* gps_marker.png in Resources */,
+				7E88979B1B4C26E9006F9DE0 /* yelp_logo@2x.png in Resources */,
 				566306E01AD2D69800980426 /* stars_0_0@3x.png in Resources */,
 				7E9B7F491A8E25E400C6F2E3 /* arrow3_right.png in Resources */,
 				56F28E831A261DA70061C7BF /* button_checkbox_on.png in Resources */,
@@ -5151,6 +5161,7 @@
 				18B5ACB319DC15CD00BA4A38 /* icon1_park.png in Resources */,
 				18FE215F1AA9BA3D00ACE28A /* button_streets_on@2x.png in Resources */,
 				566306F31AD2D69800980426 /* stars_2_5.png in Resources */,
+				7E8897981B4C26E9006F9DE0 /* yelp_logo.png in Resources */,
 				18FE21551AA9BA3D00ACE28A /* button_remove_pin_off@3x.png in Resources */,
 				18FE21931AA9C75700ACE28A /* buttonsmall_close_on@3x.png in Resources */,
 				18FE218F1AA9C75700ACE28A /* buttonsmall_close_off@3x.png in Resources */,
@@ -5283,6 +5294,7 @@
 				18B5ACBF19DC15CD00BA4A38 /* icon1_summer.png in Resources */,
 				18FE21C31AA9C98100ACE28A /* search_result_background_small.png in Resources */,
 				18FE21F81AA9D3D000ACE28A /* eegeo_logo.png in Resources */,
+				7E88979A1B4C26E9006F9DE0 /* yelp_logo@2x.png in Resources */,
 				566306DF1AD2D69800980426 /* stars_0_0@3x.png in Resources */,
 				7E8F03EA1A8260B40056F229 /* gps_marker.png in Resources */,
 				7E9B7F481A8E25E400C6F2E3 /* arrow3_right.png in Resources */,

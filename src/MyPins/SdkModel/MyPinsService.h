@@ -33,6 +33,8 @@ namespace ExampleApp
                 
                 void SaveUserCreatedPoiPin(const std::string& title,
                                            const std::string& description,
+                                           const std::string& ratingsImage,
+                                           const int reviewCount,
                                            const Eegeo::Space::LatLong& latLong,
                                            Byte* imageData,
                                            size_t imageSize,

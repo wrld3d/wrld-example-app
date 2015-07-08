@@ -68,7 +68,9 @@ namespace ExampleApp
             void MyPinsService::AddPinToMap(MyPinModel* pMyPinModel)
             {
                 WorldPins::SdkModel::WorldPinFocusData worldPinFocusData(pMyPinModel->GetTitle(),
-                                                                         pMyPinModel->GetDescription());
+                                                                         pMyPinModel->GetDescription(),
+                                                                         pMyPinModel->GetRatingsImage(),
+                                                                         pMyPinModel->GetReviewsCount());
                 
                 MyPinSelectionHandler* pSelectionHandler(m_myPinSelectionHandlerFactory.CreateMyPinSelectionHandler(*pMyPinModel));
                 
@@ -107,6 +109,8 @@ namespace ExampleApp
             
             void MyPinsService::SaveUserCreatedPoiPin(const std::string& title,
                                                       const std::string& description,
+                                                      const std::string& ratingsImage,
+                                                      const int reviewCount,
                                                       const Eegeo::Space::LatLong& latLong,
                                                       Byte* imageData,
                                                       size_t imageSize,
@@ -126,6 +130,8 @@ namespace ExampleApp
                                                              idForThisPin,
                                                              title,
                                                              description,
+                                                             ratingsImage,
+                                                             reviewCount,
                                                              myPinIconIndex,
                                                              latLong);
                 
@@ -152,7 +158,9 @@ namespace ExampleApp
                 MyPinModel *pinModel = Eegeo_NEW(MyPinModel)(MyPinModel::CurrentVersion,
                                                              idForThisPin,
                                                              searchResult.GetTitle(),
-                                                             ratingsImage.empty() ? searchResult.GetAddress() : ratingsImage,
+                                                             searchResult.GetAddress(),
+                                                             searchResult.GetRatingImageUrl(),
+                                                             searchResult.GetReviewCount(),
                                                              pinIconIndex,
                                                              searchResult.GetLocation());
                 

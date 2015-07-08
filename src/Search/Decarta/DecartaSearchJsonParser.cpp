@@ -137,6 +137,7 @@ namespace ExampleApp
                                                                    "",
                                                                    "",
                                                                    std::vector<std::string>(),
+                                                                   0,
                                                                    Eegeo::Helpers::Time::MillisecondsSinceEpoch());
 
                                 out_results.push_back(result);

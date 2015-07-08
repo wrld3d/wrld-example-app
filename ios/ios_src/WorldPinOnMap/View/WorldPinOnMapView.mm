@@ -66,6 +66,19 @@
         self.pImageDisplay = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 115, 25)] autorelease];
         [self.pLabelBack addSubview: self.pImageDisplay];
         
+        // review count
+        self.pReviewCountLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        self.pReviewCountLabel.textColor = ExampleApp::Helpers::ColorPalette::DarkGreyTone;
+        self.pReviewCountLabel.textAlignment = NSTextAlignmentLeft;
+        self.pReviewCountLabel.font = [UIFont systemFontOfSize:12.0];
+        self.pReviewCountLabel.backgroundColor = [UIColor clearColor];
+        [self.pLabelBack addSubview: self.pReviewCountLabel];
+        
+        // accreditation image (Only Yelp for now for reviews/ratings)
+        self.pAccreditationImage = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 51, 27)] autorelease];
+        self.pAccreditationImage.image = ExampleApp::Helpers::ImageHelpers::LoadImage("yelp_logo");
+        [self.pLabelBack addSubview: self.pAccreditationImage];
+        
         // poi arrow
         self.pArrowContainer = [[[UIImageView alloc] initWithImage:ExampleApp::Helpers::ImageHelpers::LoadImage("arrow1")] autorelease];
         self.pArrowContainer.contentMode = UIViewContentModeScaleToFill;
@@ -82,6 +95,12 @@
 
     [self.pAddressLabel removeFromSuperview];
     [self.pAddressLabel release];
+    
+    [self.pReviewCountLabel removeFromSuperview];
+    [self.pReviewCountLabel release];
+    
+    [self.pAccreditationImage removeFromSuperview];
+    [self.pAccreditationImage release];
 
     [self.pLabelBack removeFromSuperview];
     [self.pLabelBack release];
@@ -119,7 +138,7 @@
     self.layer.rasterizationScale = [[UIScreen mainScreen] scale];
 
     // figures from a proportional size of an iPad2 screen -- use const so not proportional to small screens on iPhones.
-    float w = 172.f; //self.superview.bounds.size.width/6;
+    float w = 190.f; //self.superview.bounds.size.width/6;
     float h = 56.f; //self.superview.bounds.size.height/16;
     float x = 0.f;
     float y = 0.f;
@@ -153,6 +172,7 @@
                                           labelVerticalSpace + labelSpacing,
                                           0.f,
                                           0.f);
+    self.pReviewCountLabel.frame = CGRectMake(labelOffsetX, labelVerticalSpace + labelSpacing, 0, 0);
 
     const float arrowWidth = 16.f;
     self.pArrowContainer.frame = CGRectMake(w/2.f - arrowWidth/2.f, h, arrowWidth, arrowWidth);
@@ -160,24 +180,17 @@
     self.frame = CGRectMake(x, y, w, h + arrowWidth);
 }
 
-- (void) setContent:(const std::string&)name :(const std::string&)data;
+- (void) setContent:(const std::string&)name :(const std::string&)subtitle :(const std::string&)ratingsImage :(const int)reviewCount;
 {
     self.pNameLabel.text = [NSString stringWithUTF8String:name.c_str()];
     
-    // Use convention to determine if data is a ratings image or an address -- if the data prefix is 'stars_' and it corresponds to
-    // a ratings image, then assume it *is* a ratings image. This would hypothetically cause an error if a POI address was, for
-    // example, exactly 'stars_0_2' or similar.
-    const std::string ratingsPrefix("stars_");
-    
-    const bool dataIsRatingImage =
-    (ratingsPrefix.size() < data.size())
-    && (std::mismatch(ratingsPrefix.begin(), ratingsPrefix.end(), data.begin()).first == ratingsPrefix.end());
+    const bool hasRatingsImage = !ratingsImage.empty();
     
     bool usedImage = false;
     
-    if(dataIsRatingImage)
+    if(hasRatingsImage)
     {
-        UIImage* image = ExampleApp::Helpers::ImageHelpers::LoadImage(data);
+        UIImage* image = ExampleApp::Helpers::ImageHelpers::LoadImage(ratingsImage);
         if(image != nil)
         {
             self.pAddressLabel.text = @"";
@@ -189,15 +202,28 @@
             frame.size = image.size;
             self.pImageDisplay.frame = frame;
             
+            // Include review count.
+            [self.pReviewCountLabel setHidden:NO];
+            self.pReviewCountLabel.text = [NSString stringWithFormat:@"(%d)", reviewCount];
+            self.pReviewCountLabel.frame = CGRectMake(frame.origin.x + frame.size.width + 4.0f,
+                                                      frame.origin.y,
+                                                      self.pLabelBack.frame.size.width - (frame.size.width + self.pAccreditationImage.frame.size.width),
+                                                      frame.size.height);
+            
+            [self.pAccreditationImage setHidden:NO];
+            self.pAccreditationImage.frame = CGRectMake(self.pLabelBack.frame.size.width - 51, self.pLabelBack.frame.size.height-27, 51, 27);
+            
             usedImage = true;
         }
     }
     
     if(!usedImage)
     {
-        self.pAddressLabel.text = [NSString stringWithUTF8String:data.c_str()];
+        self.pAddressLabel.text = [NSString stringWithUTF8String:subtitle.c_str()];
         [self.pImageDisplay setImage:nil];
         [self.pImageDisplay setHidden:YES];
+        [self.pReviewCountLabel setHidden:YES];
+        [self.pAccreditationImage setHidden:YES];
     }
 }
 

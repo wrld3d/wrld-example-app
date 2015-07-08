@@ -88,6 +88,13 @@ const int DeletePinAlertViewTag = 2;
         self.pRatingImage = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         [self.pLabelsContainer addSubview: self.pRatingImage];
         
+        self.pReviewCountLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        self.pReviewCountLabel.textColor = ExampleApp::Helpers::ColorPalette::DarkGreyTone;
+        self.pReviewCountLabel.textAlignment = NSTextAlignmentLeft;
+        self.pReviewCountLabel.font = [UIFont systemFontOfSize:12.0];
+        self.pReviewCountLabel.backgroundColor = [UIColor clearColor];
+        [self.pLabelsContainer addSubview: self.pReviewCountLabel];
+        
         self.pAddressHeaderContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         self.pAddressHeaderContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::GoldTone;
         [self.pLabelsContainer addSubview: self.pAddressHeaderContainer];
@@ -137,6 +144,12 @@ const int DeletePinAlertViewTag = 2;
         self.pReviewsContent.textColor = ExampleApp::Helpers::ColorPalette::DarkGreyTone;
         [self.pLabelsContainer addSubview: self.pReviewsContent];
         
+        m_pGradientMask = [CAGradientLayer layer];
+        m_pGradientMask.colors = @[(id)[UIColor clearColor].CGColor,
+                                   (id)[UIColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:0.5f].CGColor];
+        m_pGradientMask.locations = @[@0.8, @1.0];
+        [self.pPreviewImage.layer addSublayer:m_pGradientMask];
+        
         [self setTouchExclusivity: self];
         
         self.alpha = 0.f;
@@ -147,6 +160,9 @@ const int DeletePinAlertViewTag = 2;
 
 - (void)dealloc
 {
+    [m_pGradientMask release];
+    m_pGradientMask = nil;
+    
     [self->m_pVendorBrandingImage release];
     self->m_pVendorBrandingImage = nil;
     
@@ -334,28 +350,30 @@ const int DeletePinAlertViewTag = 2;
         currentLabelY += (m_imageHeight + imageBottomPadding);
     }
     
+    const float reviewCountWidth = 40.0f;
+    const float reviewCountHeight = 17.0f;
     const float yelpButtonWidth = 115.0f;
     const float yelpButtonHeight = 25.0f;
-    const float reviewSpacing = 2.0f;
-    const float fullRatingsWidth = yelpButtonWidth + m_ratingsImageWidth + reviewSpacing;
+    const float reviewSpacing = 4.0f;
+    const float fullRatingsWidth = yelpButtonWidth + m_ratingsImageWidth + reviewSpacing + reviewCountWidth;
     const CGFloat rateBarOriginX = hasImage
         ? (self.frame.size.width * 0.5f - yelpButtonWidth * 0.5f)
         : (self.frame.size.width * 0.5f - fullRatingsWidth * 0.5f);
-    const float yelpButtonX = hasImage ? rateBarOriginX : rateBarOriginX + reviewSpacing + m_ratingsImageWidth;
+    const float yelpButtonX = hasImage ? rateBarOriginX : rateBarOriginX + reviewSpacing + reviewCountWidth + m_ratingsImageWidth;
     const CGFloat imageBottomPadding = 8.0;
     
     if(!m_model.GetRatingImageUrl().empty())
     {
         UIImage* image = ExampleApp::Helpers::ImageHelpers::LoadImage(m_model.GetRatingImageUrl());
         [self.pRatingImage setImage:image];
-        
+
         m_ratingsImageWidth = image.size.width;
         m_ratingsImageHeight = image.size.height;
 
         const CGFloat imageX = hasImage ? (self.frame.size.width * 0.5f) - m_ratingsImageWidth*0.5f : roundf(rateBarOriginX);
         const CGFloat imageY = hasImage
-        ? self.pPreviewImage.frame.origin.y + self.pPreviewImage.frame.size.height - yelpButtonHeight - reviewSpacing
-        : currentLabelY + (yelpButtonHeight*0.5f) - (m_ratingsImageHeight*0.5f);
+            ? self.pPreviewImage.frame.origin.y + self.pPreviewImage.frame.size.height - yelpButtonHeight - reviewSpacing
+            : currentLabelY + (yelpButtonHeight*0.5f) - (m_ratingsImageHeight*0.5f);
         self.pRatingImage.frame = CGRectMake(imageX, imageY, m_ratingsImageWidth, m_ratingsImageHeight);
         
         CGRect frame = self.pRatingImage.frame;
@@ -365,6 +383,9 @@ const int DeletePinAlertViewTag = 2;
         frame.origin.y = imageY;
         self.pRatingImage.frame = frame;
         self.pRatingImage.hidden = false;
+        
+        self.pReviewCountLabel.frame = CGRectMake(imageX + frame.size.width + reviewSpacing, imageY, reviewCountWidth, reviewCountHeight);
+        self.pReviewCountLabel.textColor = hasImage ? ExampleApp::Helpers::ColorPalette::WhiteTone : ExampleApp::Helpers::ColorPalette::DarkGreyTone;
         
         const CGFloat imageContentHeightDifference = (image.size.height - initialFrameHeight);
         const CGFloat newContentHeight = self.pLabelsContainer.contentSize.height + imageContentHeightDifference;
@@ -535,6 +556,8 @@ const int DeletePinAlertViewTag = 2;
     m_ratingsImageWidth = RatingImageWidth;
     m_ratingsImageHeight = RatingImageHeight;
     
+    self.pReviewCountLabel.text = [NSString stringWithFormat:@"(%d)", pModel->GetReviewCount()];
+    
     [self performDynamicContentLayout];
     
     if(!pModel->GetImageUrl().empty())
@@ -565,6 +588,11 @@ const int DeletePinAlertViewTag = 2;
             self.pPreviewImage.frame = frame;
             self.pPreviewImage.hidden = false;
             
+            
+            m_pGradientMask.frame = self.pPreviewImage.bounds;
+            [m_pGradientMask removeAllAnimations];
+            [self.pPreviewImage.layer removeAllAnimations];
+            
             const CGFloat imageContentHeightDifference = (image.size.height - initialFrameHeight);
             const CGFloat newContentHeight = self.pLabelsContainer.contentSize.height + imageContentHeightDifference;
             [self.pLabelsContainer setContentSize:CGSizeMake(self.pLabelsContainer.contentSize.width, newContentHeight)];
@@ -577,6 +605,8 @@ const int DeletePinAlertViewTag = 2;
         {
             m_imageWidth = 0.f;
             m_imageHeight = 0.f;
+            
+            m_pGradientMask.frame = CGRectMake(0, 0, 0, 0);
             
             [self performDynamicContentLayout];
         }

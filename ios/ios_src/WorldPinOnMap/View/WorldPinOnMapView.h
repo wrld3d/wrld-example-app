@@ -26,7 +26,7 @@
 
 - (BOOL) consumesTouch:(UITouch *)touch;
 
-- (void) setContent:(const std::string&)name :(const std::string&)data;
+- (void) setContent:(const std::string&)name :(const std::string&)subtitle :(const std::string&)ratingsImage :(const int)reviewCount;
 
 - (void) setFullyActive :(float)modality;
 
@@ -42,6 +42,8 @@
 @property (nonatomic, retain) UILabel* pNameLabel;
 @property (nonatomic, retain) UILabel* pAddressLabel;
 @property (nonatomic, retain) UIImageView* pImageDisplay;
+@property (nonatomic, retain) UILabel* pReviewCountLabel;
+@property (nonatomic, retain) UIImageView* pAccreditationImage;
 
 
 @end

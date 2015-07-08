@@ -132,6 +132,7 @@ namespace ExampleApp
                                                                                 it->GetImageUrl(),
                                                                                 it->GetRatingImageUrl(),
                                                                                 it->GetReviews(),
+                                                                                it->GetReviewCount(),
                                                                                 it->GetCreationTimestamp());
 
                         newResultTemporaryStorage.push_back(pItem);

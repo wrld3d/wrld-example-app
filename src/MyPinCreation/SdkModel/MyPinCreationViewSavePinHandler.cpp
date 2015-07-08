@@ -26,6 +26,8 @@ namespace ExampleApp
             {
                 m_myPinCreationModel.SavePoi(message.GetTitle(),
                                              message.GetDescription(),
+                                             "",
+                                             0,
                                              message.GetImageData(),
                                              message.GetImageSize(),
                                              message.GetShouldShare());
