@@ -27,6 +27,8 @@ namespace ExampleApp
                 const std::string& GetRatingsImage() const;
                 const int GetReviewCount() const;
                 const int GetPinId() const;
+                
+                void Refresh(const std::string& title, const std::string& subtitle, const std::string& ratingsImage, const int reviewCount);
 
             private:
 

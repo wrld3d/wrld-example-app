@@ -32,7 +32,7 @@ namespace ExampleApp
 
                 void SavePinModelToDisk(const MyPinModel& pinModel);
 
-                void LoadPinModelsFromDisk(std::vector<std::pair<MyPinModel*, IMyPinBoundObject*> >& out_pinModelBindings);
+                void LoadPinModelsFromDisk(std::vector<std::pair<MyPinModel*, IMyPinBoundObject*> >& out_pinModelBindings, IMyPinsService& myPinsService);
 
                 void SaveAllRepositoryPinsToDisk(const std::vector<MyPinModel*>& pinModels);
 

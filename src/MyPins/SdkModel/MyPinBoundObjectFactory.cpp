@@ -15,7 +15,8 @@ namespace ExampleApp
                                                              ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
                                                              CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
                                                              Search::SdkModel::MyPins::IMyPinsSearchResultRefreshService& myPinsSearchResultRefreshService,
-                                                             Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory)
+                                                             Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory
+                                                             )
             : m_messageBus(messageBus)
             , m_sdkModelDomainEventBus(sdkModelDomainEventBus)
             , m_categorySearchRepository(categorySearchRepository)
@@ -47,7 +48,8 @@ namespace ExampleApp
             
             IMyPinBoundObject* MyPinBoundObjectFactory::CreateSearchResultPinBoundObject(MyPinsFileIO& myPinsFileIO,
                                                                                          MyPinModel::TPinIdType pinId,
-                                                                                         const Search::SdkModel::SearchResultModel& searchResult)
+                                                                                         const Search::SdkModel::SearchResultModel& searchResult,
+                                                                                         ExampleApp::MyPins::SdkModel::IMyPinsService& myPinsService)
             {
                 return Eegeo_NEW(SearchResultPinBoundObject)(pinId,
                                                              searchResult,
@@ -56,13 +58,15 @@ namespace ExampleApp
                                                              m_myPinsSearchResultRefreshService,
                                                              m_messageBus,
                                                              m_sdkModelDomainEventBus,
-                                                             m_webLoadRequestFactory);
+                                                             m_webLoadRequestFactory,
+                                                             myPinsService);
             }
             
             IMyPinBoundObject* MyPinBoundObjectFactory::CreatePinBoundObjectFromSerialized(MyPinsFileIO& myPinsFileIO,
                                                                                            MyPinModel::TPinIdType pinId,
                                                                                            const MyPinsSemanticPinType& semanticPinType,
-                                                                                           const std::string& serializedData)
+                                                                                           const std::string& serializedData,
+                                                                                           ExampleApp::MyPins::SdkModel::IMyPinsService& myPinsService)
             {
                 switch (semanticPinType)
                 {
@@ -84,7 +88,9 @@ namespace ExampleApp
                                                                               m_myPinsSearchResultRefreshService,
                                                                               m_messageBus,
                                                                               m_sdkModelDomainEventBus,
-                                                                              m_webLoadRequestFactory);
+                                                                              m_webLoadRequestFactory,
+                                                                              myPinsService
+                                                                              );
                     }break;
                         
                     default:

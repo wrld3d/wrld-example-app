@@ -204,7 +204,7 @@ namespace ExampleApp
                 m_fileIO.WriteFile((Byte*)jsonString.c_str(), jsonString.size(), MyPinsDataFilename);
             }
 
-            void MyPinsFileIO::LoadPinModelsFromDisk(std::vector<std::pair<MyPinModel*, IMyPinBoundObject*> >& out_pinModelBindings)
+            void MyPinsFileIO::LoadPinModelsFromDisk(std::vector<std::pair<MyPinModel*, IMyPinBoundObject*> >& out_pinModelBindings, IMyPinsService& myPinService)
             {
                 out_pinModelBindings.clear();
 
@@ -271,7 +271,8 @@ namespace ExampleApp
                         IMyPinBoundObject* pPinBoundObject(m_myPinBoundObjectFactory.CreatePinBoundObjectFromSerialized(*this,
                                                                                                                         pinId,
                                                                                                                         semanticPinType,
-                                                                                                                        pinTypeMetadata));
+                                                                                                                        pinTypeMetadata,
+                                                                                                                        myPinService));
                         
                         MyPinModel* pModel(Eegeo_NEW(MyPinModel)(version,
                                                                  pinId,

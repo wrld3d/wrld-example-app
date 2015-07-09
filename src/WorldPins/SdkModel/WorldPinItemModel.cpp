@@ -78,6 +78,11 @@ namespace ExampleApp
             {
                 return m_transitionStateValue;
             }
+            
+            void WorldPinItemModel::Refresh(const std::string& title, const std::string& description, const std::string& ratingsImage, const int reviewCount)
+            {
+                m_focusModel.Refresh(title, description, ratingsImage, reviewCount);
+            }
 
             void WorldPinItemModel::Update(float deltaSeconds)
             {

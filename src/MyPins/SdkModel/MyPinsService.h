@@ -43,6 +43,10 @@ namespace ExampleApp
                 void SaveSearchResultPoiPin(const Search::SdkModel::SearchResultModel& searchResult,
                                             int pinIconIndex);
                 
+                void UpdatePinWithResult(const int myPinId, const Search::SdkModel::SearchResultModel& result);
+                
+                void SaveAllPinsToDisk();
+                
             private:
                 IMyPinsRepository& m_myPinsRepository;
                 MyPinsFileIO& m_myPinsFileIO;

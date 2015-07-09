@@ -36,6 +36,8 @@ namespace ExampleApp
                 
                 virtual void SaveSearchResultPoiPin(const Search::SdkModel::SearchResultModel& searchResult,
                                                     int pinIconIndex) = 0;
+                
+                virtual void UpdatePinWithResult(const int myPinId, const Search::SdkModel::SearchResultModel& result) = 0;
             };
         }
     }

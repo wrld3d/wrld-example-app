@@ -42,12 +42,14 @@ namespace ExampleApp
                 
                 IMyPinBoundObject* CreateSearchResultPinBoundObject(MyPinsFileIO& myPinsFileIO,
                                                                     MyPinModel::TPinIdType pinId,
-                                                                    const Search::SdkModel::SearchResultModel& searchResult);
+                                                                    const Search::SdkModel::SearchResultModel& searchResult,
+                                                                    ExampleApp::MyPins::SdkModel::IMyPinsService& myPinsService);
                 
                 IMyPinBoundObject* CreatePinBoundObjectFromSerialized(MyPinsFileIO& myPinsFileIO,
                                                                       MyPinModel::TPinIdType pinId,
                                                                       const MyPinsSemanticPinType& semanticPinType,
-                                                                      const std::string& serializedData);
+                                                                      const std::string& serializedData,
+                                                                      ExampleApp::MyPins::SdkModel::IMyPinsService& myPinsService);
             };
         }
     }

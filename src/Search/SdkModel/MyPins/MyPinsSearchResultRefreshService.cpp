@@ -113,7 +113,7 @@ namespace ExampleApp
                     if(m_searchResultMyPinsService.ContainsPinWithId(pinId))
                     {
                         ExampleApp::MyPins::SdkModel::SearchResultPinBoundObject& boundObject(*pinIdToBoundObjectMapIt->second);
-                        boundObject.FinishRefreshingSearchResult(result.IsSuccess(), result.GetSearchResultModel());
+                        boundObject.FinishRefreshingSearchResult(result.IsSuccess(), pinId, result.GetSearchResultModel());
                     }
                     
                     TIdentifierToPinIdMap::size_type numErasedFromIdentifierToPinIdMap = m_vendorIdToPinMap.erase(result.GetLocationIdentifier());

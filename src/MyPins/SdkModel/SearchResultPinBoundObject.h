@@ -31,6 +31,7 @@ namespace ExampleApp
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 ExampleAppMessaging::TSdkModelDomainEventBus& m_sdkModelDomainEventBus;
                 Eegeo::Web::IWebLoadRequestFactory& m_webLoadRequestFactory;
+                ExampleApp::MyPins::SdkModel::IMyPinsService& m_myPinsService;
                 bool m_pinVendorRequiresRefreshing;
                 bool m_isCurrentlyRefreshingResult;
                 
@@ -44,7 +45,8 @@ namespace ExampleApp
                                                                       Search::SdkModel::MyPins::IMyPinsSearchResultRefreshService& myPinsSearchResultRefreshService,
                                                                       ExampleAppMessaging::TMessageBus& messageBus,
                                                                       ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
-                                                                      Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory);
+                                                                      Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory,
+                                                                      ExampleApp::MyPins::SdkModel::IMyPinsService& myPinsService);
                 
                 SearchResultPinBoundObject(MyPinModel::TPinIdType pinId,
                                            const Search::SdkModel::SearchResultModel& searchResult,
@@ -53,7 +55,8 @@ namespace ExampleApp
                                            Search::SdkModel::MyPins::IMyPinsSearchResultRefreshService& myPinsSearchResultRefreshService,
                                            ExampleAppMessaging::TMessageBus& messageBus,
                                            ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
-                                           Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory);
+                                           Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory,
+                                           ExampleApp::MyPins::SdkModel::IMyPinsService& myPinsService);
                 
                 ~SearchResultPinBoundObject();
                 
@@ -78,6 +81,7 @@ namespace ExampleApp
                 const std::string& GetSerialized() const;
                 
                 void FinishRefreshingSearchResult(bool success,
+                                                  const ExampleApp::MyPins::SdkModel::MyPinModel::TPinIdType pinId,
                                                   const Search::SdkModel::SearchResultModel& result);
             };
         }

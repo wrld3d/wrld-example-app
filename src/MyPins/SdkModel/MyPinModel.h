@@ -80,6 +80,18 @@ namespace ExampleApp
                 {
                     return m_latLong;
                 }
+                
+                void Update(const std::string& title,
+                            const std::string& description,
+                            const std::string& ratingsImage,
+                            int reviewCount)
+                {
+                    m_version = CurrentVersion;
+                    m_title = title;
+                    m_description = description;
+                    m_ratingsImage = ratingsImage;
+                    m_reviewCount = reviewCount;
+                }
             };
 
             inline bool operator==(const MyPinModel& lhs, const MyPinModel& rhs)

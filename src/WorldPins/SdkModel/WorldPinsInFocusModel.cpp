@@ -58,6 +58,14 @@ namespace ExampleApp
             {
                 return m_worldPinItemModelId;
             }
+            
+            void WorldPinsInFocusModel::Refresh(const std::string& title, const std::string& subtitle, const std::string& ratingsImage, const int reviewCount)
+            {
+                m_title = title;
+                m_subtitle = subtitle;
+                m_ratingsImage = ratingsImage;
+                m_reviewCount = reviewCount;
+            }
         }
     }
 }
