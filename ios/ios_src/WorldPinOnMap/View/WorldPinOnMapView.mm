@@ -16,6 +16,7 @@
     if(self)
     {
         self.alpha = 0.f;
+        m_enlarged = NO;
         m_pinOffset = (pinDiameter * pixelScale);
         m_pixelScale = pixelScale;
         m_stateChangeAnimationTimeSeconds = 0.2f;
@@ -49,7 +50,7 @@
         // name label
         self.pNameLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         self.pNameLabel.textColor = ExampleApp::Helpers::ColorPalette::GoldTone;
-        self.pNameLabel.textAlignment = NSTextAlignmentLeft;
+        self.pNameLabel.textAlignment = NSTextAlignmentCenter;
         self.pNameLabel.font = [UIFont systemFontOfSize:16.0];
         self.pNameLabel.backgroundColor = [UIColor clearColor];
         [self.pLabelBack addSubview: self.pNameLabel];
@@ -57,7 +58,7 @@
         // address label
         self.pAddressLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         self.pAddressLabel.textColor = ExampleApp::Helpers::ColorPalette::DarkGreyTone;
-        self.pAddressLabel.textAlignment = NSTextAlignmentLeft;
+        self.pAddressLabel.textAlignment = NSTextAlignmentCenter;
         self.pAddressLabel.font = [UIFont systemFontOfSize:12.0];
         self.pAddressLabel.backgroundColor = [UIColor clearColor];
         [self.pLabelBack addSubview: self.pAddressLabel];
@@ -83,6 +84,8 @@
         self.pArrowContainer = [[[UIImageView alloc] initWithImage:ExampleApp::Helpers::ImageHelpers::LoadImage("arrow1")] autorelease];
         self.pArrowContainer.contentMode = UIViewContentModeScaleToFill;
         [self addSubview: self.pArrowContainer];
+        
+        self.frame.origin = CGPointMake(0, 0);
     }
 
     return self;
@@ -133,18 +136,18 @@
 
 - (void)layoutSubviews
 {
-    self.alpha = 0.f;
+    
     self.layer.shouldRasterize = YES;
     self.layer.rasterizationScale = [[UIScreen mainScreen] scale];
 
+    float maxH = 85.f;
     // figures from a proportional size of an iPad2 screen -- use const so not proportional to small screens on iPhones.
-    float w = 190.f; //self.superview.bounds.size.width/6;
-    float h = 56.f; //self.superview.bounds.size.height/16;
-    float x = 0.f;
-    float y = 0.f;
+    float w = 162.f; //self.superview.bounds.size.width/6;
+    float h = m_enlarged ? maxH : 56.f; //self.superview.bounds.size.height/16;
 
-    self.pMainControlContainer.frame = CGRectMake(x, y, w, h);
-    self.pMainControlShadowContainer.frame = CGRectMake(x + 2.f, y + 2.f, w, h);
+    
+    self.pMainControlContainer.frame = CGRectMake(0, 0, w, h);
+    self.pMainControlShadowContainer.frame = CGRectMake(2.f, 2.f, w, h);
 
     const float labelContainerOffsetY = 6.f;
     const CGFloat labelContainerHeight = self.pMainControlContainer.frame.size.height - labelContainerOffsetY;
@@ -152,32 +155,49 @@
     self.pTopStrip.frame =  CGRectMake(0.f, 0.f, w, labelContainerOffsetY);
     self.pLabelBack.frame = CGRectMake(0.f, labelContainerOffsetY, w, labelContainerHeight);
 
-    const float labelVerticalSpace = h*0.4f;
+    const float labelVerticalSpace = h*0.3f;
     const float labelSpacing = h*0.05f;
     const float labelOffsetX = 4.f;
-    const float labelOffsetY = 4.f;
+    const float labelOffsetY = 2.f;
 
     self.pNameLabel.frame = CGRectMake(labelOffsetX,
                                        labelOffsetY,
-                                       w - labelOffsetX,
+                                       w - (labelOffsetX*2),
                                        labelVerticalSpace);
 
 
     self.pAddressLabel.frame = CGRectMake(labelOffsetX,
                                           labelVerticalSpace + labelSpacing,
-                                          w - labelOffsetX,
+                                          w - (labelOffsetX*2),
                                           labelVerticalSpace);
     
-    self.pImageDisplay.frame = CGRectMake(labelOffsetX,
-                                          labelVerticalSpace + labelSpacing,
-                                          0.f,
-                                          0.f);
-    self.pReviewCountLabel.frame = CGRectMake(labelOffsetX, labelVerticalSpace + labelSpacing, 0, 0);
+    if(m_enlarged)
+    {
+        float textWidth = [self.pReviewCountLabel.text sizeWithAttributes:@{NSFontAttributeName: self.pReviewCountLabel.font}].width;
+        float totalWidth = self.pImageDisplay.frame.size.width + textWidth + labelOffsetX;
+        self.pImageDisplay.frame = CGRectMake(w/2 - totalWidth/2,
+                                              labelVerticalSpace + labelSpacing,
+                                              self.pImageDisplay.frame.size.width,
+                                              self.pImageDisplay.frame.size.height);
+        self.pReviewCountLabel.frame = CGRectMake(labelOffsetX, labelVerticalSpace + labelSpacing, 0, 0);
+        [self.pReviewCountLabel setHidden:NO];
+        self.pReviewCountLabel.frame = CGRectMake(self.pImageDisplay.frame.origin.x + self.pImageDisplay.frame.size.width + labelOffsetX,
+                                                  self.pImageDisplay.frame.origin.y,
+                                                  textWidth,
+                                                  self.pImageDisplay.frame.size.height);
+
+        [self.pAccreditationImage setHidden:NO];
+        self.pAccreditationImage.frame = CGRectMake(w/2 - self.pAccreditationImage.bounds.size.width/2, (labelVerticalSpace *2) - labelOffsetY, 51, 27);
+    }
 
     const float arrowWidth = 16.f;
     self.pArrowContainer.frame = CGRectMake(w/2.f - arrowWidth/2.f, h, arrowWidth, arrowWidth);
 
-    self.frame = CGRectMake(x, y, w, h + arrowWidth);
+    float trueY = m_previousY/m_pixelScale - m_pinOffset/m_pixelScale;
+    float trueX = m_previousX/m_pixelScale;
+    self.frame = CGRectMake(trueX - w/2, trueY - (h + arrowWidth), w, maxH + arrowWidth);
+    
+    m_cardHeight = h + arrowWidth;
 }
 
 - (void) setContent:(const std::string&)name :(const std::string&)subtitle :(const std::string&)ratingsImage :(const int)reviewCount;
@@ -187,6 +207,7 @@
     const bool hasRatingsImage = !ratingsImage.empty();
     
     bool usedImage = false;
+    m_enlarged = hasRatingsImage;
     
     if(hasRatingsImage)
     {
@@ -203,15 +224,7 @@
             self.pImageDisplay.frame = frame;
             
             // Include review count.
-            [self.pReviewCountLabel setHidden:NO];
             self.pReviewCountLabel.text = [NSString stringWithFormat:@"(%d)", reviewCount];
-            self.pReviewCountLabel.frame = CGRectMake(frame.origin.x + frame.size.width + 4.0f,
-                                                      frame.origin.y,
-                                                      self.pLabelBack.frame.size.width - (frame.size.width + self.pAccreditationImage.frame.size.width),
-                                                      frame.size.height);
-            
-            [self.pAccreditationImage setHidden:NO];
-            self.pAccreditationImage.frame = CGRectMake(self.pLabelBack.frame.size.width - 51, self.pLabelBack.frame.size.height-27, 51, 27);
             
             usedImage = true;
         }
@@ -225,6 +238,8 @@
         [self.pReviewCountLabel setHidden:YES];
         [self.pAccreditationImage setHidden:YES];
     }
+    
+    [self setNeedsLayout];
 }
 
 - (void) setFullyActive :(float)modality
@@ -251,7 +266,7 @@
         
         CGRect f = self.frame;
         f.origin.x = static_cast<int>(trueX - (f.size.width/2.f));
-        f.origin.y = static_cast<int>(trueY - (f.size.height));
+        f.origin.y = static_cast<int>(trueY - (m_cardHeight));
         self.frame = f;
     }
     else
@@ -261,7 +276,7 @@
         
         CGRect f = self.frame;
         f.origin.x = trueX - (f.size.width/2.f);
-        f.origin.y = trueY - (f.size.height);
+        f.origin.y = trueY - (m_cardHeight);
         self.frame = f;
     }
     

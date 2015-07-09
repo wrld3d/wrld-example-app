@@ -18,6 +18,8 @@
     float m_pixelScale;
     float m_previousX;
     float m_previousY;
+    bool m_enlarged;
+    float m_cardHeight;
 }
 
 - (id) initWithParams:(float)pinDiameter :(float)pixelScale;
