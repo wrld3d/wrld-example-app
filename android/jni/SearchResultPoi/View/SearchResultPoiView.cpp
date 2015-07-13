@@ -73,7 +73,7 @@ namespace ExampleApp
                 jstring ratingImageUrlStr = env->NewStringUTF(model.GetRatingImageUrl().c_str());
                 jstring vendorStr = env->NewStringUTF(model.GetVendor().c_str());
 
-                jmethodID displayPoiInfoMethod = env->GetMethodID(m_uiViewClass, "displayPoiInfo", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;Z)V");
+                jmethodID displayPoiInfoMethod = env->GetMethodID(m_uiViewClass, "displayPoiInfo", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;IZ)V");
                 env->CallVoidMethod(
 					m_uiView,
 					displayPoiInfoMethod,
@@ -87,6 +87,7 @@ namespace ExampleApp
 					ratingImageUrlStr,
 					vendorStr,
 					reviewsArray,
+					model.GetReviewCount(),
 					isPinned
 				);
 

@@ -47,6 +47,10 @@ public class YelpSearchResultPoiView implements View.OnClickListener
 	private ImageView m_poiRatingImage = null;
 	private ImageView m_poiRatingOverImage = null;
 	private View m_poiImageProgressBar = null;
+	private RelativeLayout m_poiRatingOverImageContainer = null;
+	private TextView m_poiRatingOverImageReviewCount = null;
+	private TextView m_poiRatingReviewCount = null;
+	private View m_poiImageGradient = null;
 	private String m_url;
 	private String m_poiImageUrl;
 
@@ -79,6 +83,11 @@ public class YelpSearchResultPoiView implements View.OnClickListener
 		m_poiImage = (ImageView)m_view.findViewById(R.id.search_result_poi_view_image);
 		m_poiRatingImage = (ImageView)m_view.findViewById(R.id.search_result_poi_view_rating_image);
 		m_poiRatingOverImage = (ImageView)m_view.findViewById(R.id.search_result_poi_view_rating_over_image);
+		m_poiRatingOverImageContainer = (RelativeLayout)m_view.findViewById(R.id.search_result_poi_view_rating_over_image_container);
+		m_poiRatingOverImageReviewCount = (TextView)m_view.findViewById(R.id.search_result_poi_view_rating_over_image_review_count);
+		m_poiRatingReviewCount = (TextView)m_view.findViewById(R.id.search_result_poi_view_rating_review_count);
+		m_poiImageGradient = m_view.findViewById(R.id.search_result_poi_view_image_gradient);
+		
         
         m_activity.recursiveDisableSplitMotionEvents((ViewGroup)m_view);
         
@@ -109,6 +118,7 @@ public class YelpSearchResultPoiView implements View.OnClickListener
     		final String ratingImageUrl,
     		final String vendor,
     		final String[] reviews,
+    		final int reviewCount,
     		final boolean isPinned)
     {
     	m_url = url;
@@ -190,6 +200,9 @@ public class YelpSearchResultPoiView implements View.OnClickListener
         m_poiImage.setVisibility(View.GONE);
         m_poiImageProgressBar.setVisibility(View.GONE);
         m_poiRatingImage.setVisibility(View.GONE);
+        m_poiRatingOverImageContainer.setVisibility(View.GONE);
+    	m_poiRatingReviewCount.setVisibility(View.GONE);
+    	m_poiImageGradient.setVisibility(View.GONE);
 
         if(!imageUrl.equals(""))
         {
@@ -207,11 +220,17 @@ public class YelpSearchResultPoiView implements View.OnClickListener
             {
             	m_poiRatingImage.setImageDrawable(image);
     		    m_poiRatingImage.setVisibility(View.VISIBLE);
+            	m_poiRatingReviewCount.setVisibility(View.VISIBLE);
+            	m_poiRatingReviewCount.setText("(" + reviewCount + ")");
             }
             else
             {
+            	m_poiRatingOverImageContainer.setVisibility(View.VISIBLE);
             	m_poiRatingOverImage.setImageDrawable(image);
             	m_poiRatingOverImage.setVisibility(View.VISIBLE);
+            	m_poiRatingOverImageReviewCount.setVisibility(View.VISIBLE);
+            	m_poiRatingOverImageReviewCount.setText("(" + reviewCount + ")");
+            	m_poiImageGradient.setVisibility(View.VISIBLE);
             }   
         }
         
