@@ -699,6 +699,8 @@
 		56FBCDF11A0BB5150026546E /* button_create_poi.png in Resources */ = {isa = PBXBuildFile; fileRef = 56FBCDE91A0BB5150026546E /* button_create_poi.png */; };
 		56FBCDF51A0BB5150026546E /* image_blank.png in Resources */ = {isa = PBXBuildFile; fileRef = 56FBCDED1A0BB5150026546E /* image_blank.png */; };
 		56FBCDF61A0BB5150026546E /* poi_marker.png in Resources */ = {isa = PBXBuildFile; fileRef = 56FBCDEE1A0BB5150026546E /* poi_marker.png */; };
+		7E1A492D1B53EB6500D0DEA9 /* yelp_logo@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E1A492C1B53EB6500D0DEA9 /* yelp_logo@3x.png */; };
+		7E1A492E1B53EB6500D0DEA9 /* yelp_logo@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E1A492C1B53EB6500D0DEA9 /* yelp_logo@3x.png */; };
 		7E1B50671ACAD4170060FA4F /* InitialExperienceIntroStep.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E1B50651ACAD4170060FA4F /* InitialExperienceIntroStep.cpp */; };
 		7E1B50681ACAD4170060FA4F /* InitialExperienceIntroStep.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E1B50651ACAD4170060FA4F /* InitialExperienceIntroStep.cpp */; };
 		7E1B50751ACAD9010060FA4F /* InitialExperienceIntroController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E1B50731ACAD9010060FA4F /* InitialExperienceIntroController.cpp */; };
@@ -1725,6 +1727,7 @@
 		56FBCDE91A0BB5150026546E /* button_create_poi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_create_poi.png; sourceTree = "<group>"; };
 		56FBCDED1A0BB5150026546E /* image_blank.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = image_blank.png; sourceTree = "<group>"; };
 		56FBCDEE1A0BB5150026546E /* poi_marker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = poi_marker.png; sourceTree = "<group>"; };
+		7E1A492C1B53EB6500D0DEA9 /* yelp_logo@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "yelp_logo@3x.png"; sourceTree = "<group>"; };
 		7E1B50651ACAD4170060FA4F /* InitialExperienceIntroStep.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InitialExperienceIntroStep.cpp; sourceTree = "<group>"; };
 		7E1B50661ACAD4170060FA4F /* InitialExperienceIntroStep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InitialExperienceIntroStep.h; sourceTree = "<group>"; };
 		7E1B506A1ACAD67F0060FA4F /* InitialExperienceIntroDismissedMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InitialExperienceIntroDismissedMessage.h; sourceTree = "<group>"; };
@@ -2927,6 +2930,7 @@
 			children = (
 				7E8897961B4C26E9006F9DE0 /* yelp_logo.png */,
 				7E8897971B4C26E9006F9DE0 /* yelp_logo@2x.png */,
+				7E1A492C1B53EB6500D0DEA9 /* yelp_logo@3x.png */,
 				566306BD1AD2D69800980426 /* stars_0_0.png */,
 				566306BE1AD2D69800980426 /* stars_0_0@2x.png */,
 				566306BF1AD2D69800980426 /* stars_0_0@3x.png */,
@@ -4982,6 +4986,7 @@
 				185145951AB0A8DC0071913E /* SplashScreen@3x.png in Resources */,
 				566306F61AD2D69800980426 /* stars_2_5@2x.png in Resources */,
 				18FE20EA1AA9B2C200ACE28A /* button_ok_place_pin_on@3x.png in Resources */,
+				7E1A492E1B53EB6500D0DEA9 /* yelp_logo@3x.png in Resources */,
 				18FE21AA1AA9C75700ACE28A /* menu_button@2x.png in Resources */,
 				18FE21A21AA9C75700ACE28A /* menu_background2@2x.png in Resources */,
 				18EC01101AA7752500902E98 /* icon1_foggy@2x.png in Resources */,
@@ -5235,6 +5240,7 @@
 				566306F51AD2D69800980426 /* stars_2_5@2x.png in Resources */,
 				18FE21EF1AA9D34400ACE28A /* arrow3_up@3x.png in Resources */,
 				18FE20E91AA9B2C200ACE28A /* button_ok_place_pin_on@3x.png in Resources */,
+				7E1A492D1B53EB6500D0DEA9 /* yelp_logo@3x.png in Resources */,
 				18FE21A91AA9C75700ACE28A /* menu_button@2x.png in Resources */,
 				18FE21A11AA9C75700ACE28A /* menu_background2@2x.png in Resources */,
 				18EC010F1AA7752500902E98 /* icon1_foggy@2x.png in Resources */,
