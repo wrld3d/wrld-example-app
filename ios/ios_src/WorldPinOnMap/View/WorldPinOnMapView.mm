@@ -180,7 +180,6 @@
                                               self.pImageDisplay.frame.size.width,
                                               self.pImageDisplay.frame.size.height);
         self.pReviewCountLabel.frame = CGRectMake(labelOffsetX, labelVerticalSpace + labelSpacing, 0, 0);
-        [self.pReviewCountLabel setHidden:NO];
         self.pReviewCountLabel.frame = CGRectMake(self.pImageDisplay.frame.origin.x + self.pImageDisplay.frame.size.width + labelOffsetX,
                                                   self.pImageDisplay.frame.origin.y,
                                                   textWidth,
@@ -209,7 +208,9 @@
     bool usedImage = false;
     m_enlarged = hasRatingsImage;
     
-    if(hasRatingsImage)
+    [self.pReviewCountLabel setHidden:YES];
+    
+    if(hasRatingsImage && reviewCount > 0)
     {
         UIImage* image = ExampleApp::Helpers::ImageHelpers::LoadImage(ratingsImage);
         if(image != nil)
@@ -225,6 +226,7 @@
             
             // Include review count.
             self.pReviewCountLabel.text = [NSString stringWithFormat:@"(%d)", reviewCount];
+            [self.pReviewCountLabel setHidden:NO];
             
             usedImage = true;
         }

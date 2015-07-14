@@ -66,19 +66,24 @@ public class WorldPinOnMapView implements View.OnClickListener
     	if(usedImage)
     	{
         	int imageResource = m_activity.getResources().getIdentifier(ratingsImg, "drawable", m_activity.getPackageName());
-        	if(imageResource != 0)
+        	if(imageResource != 0 && reviewCount > 0)
         	{
         		m_detailsView.setText("");
         		Drawable image = m_activity.getResources().getDrawable(imageResource);
         		m_poiRatingImage.setImageDrawable(image);
         		usedImage = true;
+        		m_reviewsCountView.setText("(" + reviewCount + ")");
+        		m_ratingsBar.setVisibility(View.VISIBLE);
+        		m_detailsView.setVisibility(View.GONE);
+        	}
+        	else
+        	{
+        		m_ratingsBar.setVisibility(View.GONE);
+        		m_detailsView.setText(subtitle);
+        		m_detailsView.setVisibility(View.VISIBLE);
         	}
         	
-        	m_reviewsCountView.setText("(" + reviewCount + ")");
-        	
-        	m_ratingsBar.setVisibility(View.VISIBLE);
         	m_poiAccreditationImage.setVisibility(View.VISIBLE);
-        	m_detailsView.setVisibility(View.GONE);
         	
     	}
     	else

@@ -390,6 +390,9 @@ const int DeletePinAlertViewTag = 2;
         const CGFloat imageContentHeightDifference = (image.size.height - initialFrameHeight);
         const CGFloat newContentHeight = self.pLabelsContainer.contentSize.height + imageContentHeightDifference;
         [self.pLabelsContainer setContentSize:CGSizeMake(self.pLabelsContainer.contentSize.width, newContentHeight)];
+        
+        self.pRatingImage.hidden = self.pReviewCountLabel.hidden;
+        
     }
     
     if(!m_model.GetWebUrl().empty())
@@ -550,13 +553,20 @@ const int DeletePinAlertViewTag = 2;
     self.pReviewsHeaderContainer.hidden = true;
     self.pReviewsContent.hidden = true;
     self.pVendorWebLinkButton.hidden = true;
+    self.pReviewCountLabel.hidden = true;
     
     const CGFloat previewImagePlaceholderSize = 64.f;
     m_imageWidth = m_imageHeight = previewImagePlaceholderSize;
     m_ratingsImageWidth = RatingImageWidth;
     m_ratingsImageHeight = RatingImageHeight;
     
-    self.pReviewCountLabel.text = [NSString stringWithFormat:@"(%d)", pModel->GetReviewCount()];
+    if(pModel->GetReviewCount() > 0)
+    {
+        self.pReviewCountLabel.hidden = false;
+        self.pReviewCountLabel.text = [NSString stringWithFormat:@"(%d)", pModel->GetReviewCount()];
+    }
+    
+    
     
     [self performDynamicContentLayout];
     

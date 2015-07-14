@@ -211,7 +211,7 @@ public class YelpSearchResultPoiView implements View.OnClickListener
         
         m_poiRatingImage.setVisibility(View.GONE);
         m_poiRatingOverImage.setVisibility(View.GONE);
-        if (!ratingImageUrl.equals(""))
+        if (!ratingImageUrl.equals("") && reviewCount > 0)
         {
         	int imageResource = m_activity.getResources().getIdentifier(ratingImageUrl, "drawable", m_activity.getPackageName());
             Drawable image = m_activity.getResources().getDrawable(imageResource);
