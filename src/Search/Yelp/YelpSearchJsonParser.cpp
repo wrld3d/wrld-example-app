@@ -196,8 +196,8 @@ namespace ExampleApp
                                                           std::vector<SdkModel::SearchResultModel>& out_results)
             {
                 Document document;
-                
-                if (!document.Parse<0>(serialized.c_str()).HasParseError())
+
+                if (!document.Parse<0>(serialized.c_str()).HasParseError() && !document.HasMember("error"))
                 {
                     if(document.HasMember("businesses"))
                     {
@@ -219,14 +219,15 @@ namespace ExampleApp
                                                   SdkModel::SearchResultModel& out_result)
             {
                 Document document;
-                
-                if (!document.Parse<0>(serialized.c_str()).HasParseError())
+
+                if (!document.Parse<0>(serialized.c_str()).HasParseError() && !document.HasMember("error"))
                 {
                     out_result = ParseYelpSearchResultFromJsonObject(document, yelpCategoryMapper);
                     return true;
                 }
                 else
                 {
+                	Eegeo_TTY("Failure to parse business search result: %s", serialized.c_str());
                     return false;
                 }
             }
