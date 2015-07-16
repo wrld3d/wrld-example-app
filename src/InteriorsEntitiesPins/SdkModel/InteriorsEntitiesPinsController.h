@@ -32,8 +32,7 @@ namespace ExampleApp
             {
             public:
                 
-                InteriorsEntitiesPinsController(Eegeo::Resources::Interiors::InteriorsModelRepository& interiorsModelRepository,
-                                                Eegeo::Resources::Interiors::Entities::InteriorsEntitiesRepository& interiorsEntityRepository,
+                InteriorsEntitiesPinsController(Eegeo::Resources::Interiors::Entities::InteriorsEntitiesRepository& interiorsEntitiesRepository,
                                                 Eegeo::Pins::PinController& pinController,
                                                 Eegeo::Pins::PinRepository& pinRepository,
                                                 Eegeo::Resources::Interiors::InteriorsController& interiorsController,
@@ -46,19 +45,18 @@ namespace ExampleApp
                 void Event_TouchTap(const AppInterface::TapData& data, Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& globeCameraController);
                 
             private:
-                void OnModelAdded(Eegeo::Resources::Interiors::InteriorsModel& model);
+                void AddPinsForEntities(const Eegeo::Resources::Interiors::Entities::TEntityModelVector& entities);
                 void AddPinForEntity(const Eegeo::Resources::Interiors::Entities::InteriorsEntityModel& model);
                 void RemovePinForEntity(const Eegeo::Resources::Interiors::Entities::InteriorsEntityModel& model);
+                void RemoveAllPins();
                 void UpdateScaleForPins(float t);
                 
-                Eegeo::Resources::Interiors::InteriorsModelRepository& m_interiorsModelRepository;
                 Eegeo::Resources::Interiors::Entities::InteriorsEntitiesRepository& m_interiorsEntitiesRepository;
                 Eegeo::Pins::PinController& m_pinController;
                 Eegeo::Pins::PinRepository& m_pinRepository;
                 Eegeo::Resources::Interiors::InteriorsController& m_interiorsController;
                 Eegeo::Resources::Interiors::Entities::InteriorsLabelsController& m_interiorsLabelsController;
                 
-                Eegeo::Helpers::TCallback1<InteriorsEntitiesPinsController, Eegeo::Resources::Interiors::InteriorsModel&> m_modelAddedCallback;
                 Eegeo::Helpers::TCallback2<InteriorsEntitiesPinsController, const std::string&, const Eegeo::Resources::Interiors::Entities::TEntityModelVector&> m_entitiesAddedCallback;
                 Eegeo::Helpers::TCallback2<InteriorsEntitiesPinsController, const std::string&, const Eegeo::Resources::Interiors::Entities::TEntityModelVector&> m_entitiesRemovedCallback;
                 
@@ -68,8 +66,8 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback0<InteriorsEntitiesPinsController> m_onExitInteriorCallback;
                 void OnInteriorExit();
                 
-                Eegeo::Helpers::TCallback0<InteriorsEntitiesPinsController> m_showInteriorsStateChangedCallback;
-                void OnShowInteriorStateChanged();
+                Eegeo::Helpers::TCallback0<InteriorsEntitiesPinsController> m_interiorsStateChangedCallback;
+                void OnInteriorsStateChanged();
                 
                 const Eegeo::Resources::Interiors::InteriorsModel* m_pCurrentInteriorsModel;
                 

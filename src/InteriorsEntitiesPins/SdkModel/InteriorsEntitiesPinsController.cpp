@@ -24,23 +24,20 @@ namespace ExampleApp
                 return interiorViewState == Viewing || interiorViewState == Exiting;
             }
             
-            InteriorsEntitiesPinsController::InteriorsEntitiesPinsController(Eegeo::Resources::Interiors::InteriorsModelRepository& interiorsModelRepository,
-                                                                             Eegeo::Resources::Interiors::Entities::InteriorsEntitiesRepository& interiorsEntitiesRepostiory,
+            InteriorsEntitiesPinsController::InteriorsEntitiesPinsController(Eegeo::Resources::Interiors::Entities::InteriorsEntitiesRepository& interiorsEntitiesRepostiory,
                                                                              Eegeo::Pins::PinController& pinController,
                                                                              Eegeo::Pins::PinRepository& pinRepository,
                                                                              Eegeo::Resources::Interiors::InteriorsController& interiorsController,
                                                                              Eegeo::Resources::Interiors::Entities::InteriorsLabelsController& interiorsLabelsController)
-            : m_interiorsModelRepository(interiorsModelRepository)
-            , m_interiorsEntitiesRepository(interiorsEntitiesRepostiory)
+            : m_interiorsEntitiesRepository(interiorsEntitiesRepostiory)
             , m_pinController(pinController)
             , m_pinRepository(pinRepository)
             , m_interiorsController(interiorsController)
             , m_interiorsLabelsController(interiorsLabelsController)
             , m_entitiesAddedCallback(this, &InteriorsEntitiesPinsController::OnEntitiesAdded)
             , m_entitiesRemovedCallback(this, &InteriorsEntitiesPinsController::OnEntitiesRemoved)
-            , m_modelAddedCallback(this, &InteriorsEntitiesPinsController::OnModelAdded)
             , m_onExitInteriorCallback(this, &InteriorsEntitiesPinsController::OnInteriorExit)
-            , m_showInteriorsStateChangedCallback(this, &InteriorsEntitiesPinsController::OnShowInteriorStateChanged)
+            , m_interiorsStateChangedCallback(this, &InteriorsEntitiesPinsController::OnInteriorsStateChanged)
             , m_lastId(0)
             , m_pCurrentInteriorsModel(NULL)
             , m_interiorViewState(NotViewing)
@@ -48,12 +45,16 @@ namespace ExampleApp
                 m_interiorsEntitiesRepository.RegisterEntitiesAddedCallback(m_entitiesAddedCallback);
                 m_interiorsEntitiesRepository.RegisterEntitiesRemovedCallback(m_entitiesRemovedCallback);
                 
-                m_interiorsModelRepository.RegisterAddedCallback(m_modelAddedCallback);
-                
-                m_interiorsController.RegisterStateChangedCallback(m_showInteriorsStateChangedCallback);
+                m_interiorsController.RegisterStateChangedCallback(m_interiorsStateChangedCallback);
                 m_interiorsController.RegisterExitCallback(m_onExitInteriorCallback);
                 
+                // This is same across all interiors right now. If we want different omissions per interior
+                // then we'll need to do a bit of work.
                 m_labelNameToIconIndex["Restroom"] = 0;
+                m_labelNameToIconIndex["Men's Bathroom"] = 0;
+                m_labelNameToIconIndex["Women's Bathroom"] = 0;
+                m_labelNameToIconIndex["Bathroom"] = 0;
+                m_labelNameToIconIndex["Elevator"] = 1; // Not really an elevator logo, just for testing
                 m_labelNameToIconIndex["Escalator"] = 1;
                 
                 for (std::map<std::string, int>::const_iterator it = m_labelNameToIconIndex.begin(); it != m_labelNameToIconIndex.end(); ++it)
@@ -67,9 +68,8 @@ namespace ExampleApp
             {
                 m_interiorsEntitiesRepository.UnregisterEntitiesAddedCallback(m_entitiesAddedCallback);
                 m_interiorsEntitiesRepository.UnregisterEntitiesRemovedCallback(m_entitiesRemovedCallback);
-                m_interiorsModelRepository.UnregisterAddedCallback(m_modelAddedCallback);
                 
-                m_interiorsController.UnregisterInteriorViewChangedCallback(m_showInteriorsStateChangedCallback);
+                m_interiorsController.UnregisterInteriorViewChangedCallback(m_interiorsStateChangedCallback);
                 m_interiorsController.UnregisterExitCallback(m_onExitInteriorCallback);
                 
                 for (std::map<std::string, int>::const_iterator it = m_labelNameToIconIndex.begin(); it != m_labelNameToIconIndex.end(); ++it)
@@ -94,10 +94,21 @@ namespace ExampleApp
                 // TODO: Leaving this here in case we want to consume touch and be able to tap pins.
             }
             
-            void InteriorsEntitiesPinsController::OnModelAdded(Eegeo::Resources::Interiors::InteriorsModel& model)
+            void InteriorsEntitiesPinsController::AddPinsForEntities(const Eegeo::Resources::Interiors::Entities::TEntityModelVector& entities)
             {
-                // Same as labels for now. This will change when we have multiple interiors.
-                m_pCurrentInteriorsModel = &model;
+                for (Eegeo::Resources::Interiors::Entities::TEntityModelVector::const_iterator it = entities.begin(); it != entities.end(); ++it)
+                {
+                    const Eegeo::Resources::Interiors::Entities::InteriorsEntityMetadata *pMetadata = m_pCurrentInteriorsModel->GetMetadataForEntityFromCategory("labels", (*it)->GetIdentifier());
+                    if (pMetadata == NULL)
+                    {
+                        continue;
+                    }
+                    
+                    if (m_labelNameToIconIndex.find(pMetadata->name) != m_labelNameToIconIndex.end())
+                    {
+                        AddPinForEntity(**it);
+                    }
+                }
             }
             
             void InteriorsEntitiesPinsController::AddPinForEntity(const Eegeo::Resources::Interiors::Entities::InteriorsEntityModel& model)
@@ -139,11 +150,20 @@ namespace ExampleApp
                 Eegeo::Pins::Pin* pPin = m_pinRepository.GetPinById(id);
                 m_pinRepository.RemovePin(*pPin);
                 Eegeo_DELETE pPin;
-                
-                if (m_pinRepository.GetNumOfPins() == 0)
+            }
+            
+            void InteriorsEntitiesPinsController::RemoveAllPins()
+            {
+                for (TEntityToPinIdMap::iterator it = m_entityToPinIdMap.begin(); it != m_entityToPinIdMap.end(); ++it)
                 {
-                    m_floorToScaleMap.clear();
+                    const Eegeo::Pins::TPinId id = it->second;
+
+                    Eegeo::Pins::Pin* pPin = m_pinRepository.GetPinById(id);
+                    m_pinRepository.RemovePin(*pPin);
+                    Eegeo_DELETE pPin;
                 }
+                
+                m_entityToPinIdMap.clear();
             }
             
             void InteriorsEntitiesPinsController::UpdateScaleForPins(float t)
@@ -154,7 +174,7 @@ namespace ExampleApp
                 {
                     const int floorNumber = it->first;
                     float scale = it->second;
-                    float scaleDelta = floorNumber == m_interiorsController.GetCurrentFloorNumber() && m_interiorViewState != Exiting ? t : -t;
+                    float scaleDelta = floorNumber == m_interiorsController.GetCurrentFloorIndex() && m_interiorViewState != Exiting ? t : -t;
                     
                     scale += scaleDelta;
                     m_floorToScaleMap[floorNumber] = Eegeo::Math::Clamp01(scale);
@@ -174,23 +194,21 @@ namespace ExampleApp
             
             void InteriorsEntitiesPinsController::OnEntitiesAdded(const std::string& interiorName, const Eegeo::Resources::Interiors::Entities::TEntityModelVector& entities)
             {
-                for (Eegeo::Resources::Interiors::Entities::TEntityModelVector::const_iterator it = entities.begin(); it != entities.end(); ++it)
+                if (m_pCurrentInteriorsModel == NULL || interiorName != m_pCurrentInteriorsModel->GetName() || entities.empty())
                 {
-                    const Eegeo::Resources::Interiors::Entities::InteriorsEntityMetadata *pMetadata = m_pCurrentInteriorsModel->GetMetadataForEntityFromCategory("labels", (*it)->GetIdentifier());
-                    if (pMetadata == NULL)
-                    {
-                        continue;
-                    }
-                    
-                    if (m_labelNameToIconIndex.find(pMetadata->name) != m_labelNameToIconIndex.end())
-                    {
-                        AddPinForEntity(**it);
-                    }
+                    return;
                 }
+                
+                AddPinsForEntities(entities);
             }
             
             void InteriorsEntitiesPinsController::OnEntitiesRemoved(const std::string& interiorName, const Eegeo::Resources::Interiors::Entities::TEntityModelVector& entities)
             {
+                if (m_pCurrentInteriorsModel == NULL || interiorName != m_pCurrentInteriorsModel->GetName() || entities.empty())
+                {
+                    return;
+                }
+                
                 for (Eegeo::Resources::Interiors::Entities::TEntityModelVector::const_iterator it = entities.begin(); it != entities.end(); ++it)
                 {
                     if (m_entityToPinIdMap.find(*it) != m_entityToPinIdMap.end())
@@ -205,11 +223,31 @@ namespace ExampleApp
                 m_interiorViewState = Exiting;
             }
             
-            void InteriorsEntitiesPinsController::OnShowInteriorStateChanged()
+            void InteriorsEntitiesPinsController::OnInteriorsStateChanged()
             {
-                m_interiorViewState = m_interiorsController.ShowingInterior() ? Viewing : NotViewing;
+                if (m_interiorsController.ShowingInterior())
+                {
+                    bool success = m_interiorsController.TryGetCurrentModel(m_pCurrentInteriorsModel);
+                    if (!success)
+                    {
+                        return;
+                    }
+
+                    Eegeo_ASSERT(m_pCurrentInteriorsModel != NULL, "Have NULL interior model");
+                    m_interiorViewState = Viewing;
+                    
+                    const Eegeo::Resources::Interiors::Entities::TEntityModelVector& entities = m_interiorsEntitiesRepository.GetAllStreamedEntitiesForInterior(m_pCurrentInteriorsModel->GetName());
+                    AddPinsForEntities(entities);
+                }
+                else
+                {
+                    m_interiorViewState = NotViewing;
+                    m_pCurrentInteriorsModel = NULL;
+                    
+                    RemoveAllPins();
+                    m_floorToScaleMap.clear();
+                }
             }
         }
-        
     }
 }

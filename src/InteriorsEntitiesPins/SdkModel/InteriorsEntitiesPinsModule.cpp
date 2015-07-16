@@ -61,8 +61,7 @@ namespace ExampleApp
                 Eegeo::Modules::Map::Layers::InteriorsModelModule& interiorsModelModule = mapModule.GetInteriorsModelModule();
                 Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsPresentationModule = mapModule.GetInteriorsPresentationModule();
                 
-                m_pInteriorsEntitiesPinsController = Eegeo_NEW(InteriorsEntitiesPinsController)(interiorsModelModule.GetInteriorsModelRepository(),
-                                                                                                interiorsModelModule.GetInteriorsEntitiesRepository(),
+                m_pInteriorsEntitiesPinsController = Eegeo_NEW(InteriorsEntitiesPinsController)(interiorsModelModule.GetInteriorsEntitiesRepository(),
                                                                                                 m_pEntityPinsModule->GetController(),
                                                                                                 m_pEntityPinsModule->GetRepository(),
                                                                                                 interiorsPresentationModule.GetInteriorsController(),

@@ -36,7 +36,7 @@ namespace ExampleApp
             void InteriorsExplorerModel::OnControllerStateChanged()
             {
                 int floorCount = m_controller.ShowingInterior() ? m_controller.GetFloorCount() : 0;
-                int floor = m_controller.ShowingInterior() ? m_controller.GetCurrentFloorNumber() : 0;
+                int floor = m_controller.ShowingInterior() ? m_controller.GetCurrentFloorIndex() : 0;
                 m_messageBus.Publish(InteriorsExplorerStateChangedMessage(m_controller.ShowingInterior(),
                                                                           floorCount,
                                                                           floor));
@@ -59,8 +59,8 @@ namespace ExampleApp
             
             void InteriorsExplorerModel::SelectFloor(int floor)
             {
-                m_controller.SelectFloor(floor);
-                m_messageBus.Publish(InteriorsExplorerFloorSelectedMessage(m_controller.GetCurrentFloorNumber()));
+                m_controller.SelectFloorAtIndex(floor);
+                m_messageBus.Publish(InteriorsExplorerFloorSelectedMessage(m_controller.GetCurrentFloorIndex()));
             }
         }
     }
