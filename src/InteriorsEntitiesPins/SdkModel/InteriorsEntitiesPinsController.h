@@ -9,6 +9,7 @@
 #include "AppInterface.h"
 #include "GlobeCamera.h"
 #include "InteriorsEntitiesRepository.h"
+#include "Terrain.h"
 
 #include <map>
 #include <string>
@@ -36,7 +37,8 @@ namespace ExampleApp
                                                 Eegeo::Pins::PinController& pinController,
                                                 Eegeo::Pins::PinRepository& pinRepository,
                                                 Eegeo::Resources::Interiors::InteriorsController& interiorsController,
-                                                Eegeo::Resources::Interiors::Entities::InteriorsLabelsController& interiorsLabelsController);
+                                                Eegeo::Resources::Interiors::Entities::InteriorsLabelsController& interiorsLabelsController,
+                                                Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider);
                 
                 ~InteriorsEntitiesPinsController();
                 
@@ -78,6 +80,8 @@ namespace ExampleApp
                 InteriorViewState m_interiorViewState;
                 
                 Eegeo::Pins::TPinId m_lastId;
+                
+                Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& m_terrainHeightProvider;
             };
         }
     }

@@ -12,6 +12,8 @@
 #include "InteriorsModelRepository.h"
 #include "InteriorsEntityPinData.h"
 #include "InteriorsLabelController.h"
+#include "InteriorsFloorModel.h"
+#include "TerrainHeightProvider.h"
 
 namespace ExampleApp
 {
@@ -28,7 +30,8 @@ namespace ExampleApp
                                                                              Eegeo::Pins::PinController& pinController,
                                                                              Eegeo::Pins::PinRepository& pinRepository,
                                                                              Eegeo::Resources::Interiors::InteriorsController& interiorsController,
-                                                                             Eegeo::Resources::Interiors::Entities::InteriorsLabelsController& interiorsLabelsController)
+                                                                             Eegeo::Resources::Interiors::Entities::InteriorsLabelsController& interiorsLabelsController,
+                                                                             Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider)
             : m_interiorsEntitiesRepository(interiorsEntitiesRepostiory)
             , m_pinController(pinController)
             , m_pinRepository(pinRepository)
@@ -41,6 +44,7 @@ namespace ExampleApp
             , m_lastId(0)
             , m_pCurrentInteriorsModel(NULL)
             , m_interiorViewState(NotViewing)
+            , m_terrainHeightProvider(terrainHeightProvider)
             {
                 m_interiorsEntitiesRepository.RegisterEntitiesAddedCallback(m_entitiesAddedCallback);
                 m_interiorsEntitiesRepository.RegisterEntitiesRemovedCallback(m_entitiesRemovedCallback);
@@ -123,7 +127,11 @@ namespace ExampleApp
                 
                 Eegeo::Space::LatLong pinLocation = Eegeo::Space::LatLong::FromDegrees(pMetadata->latitudeDegrees, pMetadata->longitudeDegrees);
                 const float wallHeight = 5.f;
-                const float height = wallHeight * (pMetadata->floorNumber + 1);
+                float terrainHeight = 0.f;
+                m_terrainHeightProvider.TryGetHeight(pinLocation.ToECEF(), 12, terrainHeight);
+                
+                const float height = static_cast<float>(pMetadata->altitude - terrainHeight + wallHeight);
+                
                 int pinIconIndex = m_labelNameToIconIndex.at(pMetadata->name);
                 
                 if (m_floorToScaleMap.find(pMetadata->floorNumber) == m_floorToScaleMap.end())
@@ -169,12 +177,15 @@ namespace ExampleApp
             void InteriorsEntitiesPinsController::UpdateScaleForPins(float t)
             {
                 std::map<int, float> easedfloorScales;
+
+                const Eegeo::Resources::Interiors::InteriorsFloorModel& currentFloorModel = m_interiorsController.GetCurrentFloorModel();
+                int currentFloorNumber = currentFloorModel.GetFloorNumber();
                 
                 for (std::map<int, float>::iterator it = m_floorToScaleMap.begin(); it != m_floorToScaleMap.end(); ++it)
                 {
                     const int floorNumber = it->first;
                     float scale = it->second;
-                    float scaleDelta = floorNumber == m_interiorsController.GetCurrentFloorIndex() && m_interiorViewState != Exiting ? t : -t;
+                    float scaleDelta = floorNumber == currentFloorNumber && m_interiorViewState != Exiting ? t : -t;
                     
                     scale += scaleDelta;
                     m_floorToScaleMap[floorNumber] = Eegeo::Math::Clamp01(scale);
