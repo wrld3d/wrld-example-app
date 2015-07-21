@@ -36,8 +36,6 @@
         
         self.pFloorPanel = [[[UIView alloc] initWithFrame:CGRectMake(m_inactiveFloorListXPosition, m_screenHeight/2.0f, 50, 200)] autorelease];
         [self addSubview:self.pFloorPanel];
-
-        m_floorCount = 0;
         
         self.pFloorPanelTop = [[[UIImageView alloc] initWithImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"floor_selection_top")] autorelease];
         self.pFloorPanelBottom = [[[UIImageView alloc] initWithImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"floor_selection_bottom")] autorelease];
@@ -124,20 +122,20 @@
     return NO;
 }
 
-- (void)setFloorCount:(int)floors :(int)initialFloor
-{
-    m_floorCount = floors;
-    
-    [self.pFloorList reloadData];
-    [self.pFloorList selectRowAtIndexPath:[NSIndexPath indexPathForRow:(m_floorCount - initialFloor)-1 inSection:0] animated:NO scrollPosition:0];
-    [self.pFloorList sizeToFit];
-    [self layoutIfNeeded];
-    [self setNeedsLayout];
-}
-
 - (void) setFloorName:(const std::string*)name;
 {
     self.pFloorNameLabel.text = [NSString stringWithUTF8String:name->c_str()];
+}
+
+- (void) updateFloors: (const std::vector<int>&) floorNumbers withCurrentFloor: (int) currentlySelectedFloor;
+{
+    m_floorNumbers = floorNumbers;
+    
+    [self.pFloorList reloadData];
+    [self.pFloorList selectRowAtIndexPath:[NSIndexPath indexPathForRow:(m_floorNumbers.size() - currentlySelectedFloor)-1 inSection:0] animated:NO scrollPosition:0];
+    [self.pFloorList sizeToFit];
+    [self layoutIfNeeded];
+    [self setNeedsLayout];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -147,7 +145,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return m_floorCount;
+    return m_floorNumbers.size();
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
@@ -168,13 +166,13 @@
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:Identifier];
     }
-    cell.textLabel.text = [NSString stringWithFormat:@"%d", (m_floorCount - indexPath.item)];
+    cell.textLabel.text = [NSString stringWithFormat:@"%d", m_floorNumbers.at(indexPath.item)];
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    int floorSelected = int((m_floorCount - indexPath.item)-1);
+    int floorSelected = int((m_floorNumbers.size() - indexPath.item)-1);
     m_pInterop->SelectFloor(floorSelected);
 }
 

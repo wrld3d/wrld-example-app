@@ -2,6 +2,9 @@
 
 #pragma once
 
+#include <vector>
+#include <string>
+
 namespace ExampleApp
 {
     namespace InteriorsExplorer
@@ -10,22 +13,26 @@ namespace ExampleApp
         {
         public:
             InteriorsExplorerStateChangedMessage(bool interiorVisible,
-                                                 int floorCount,
-                                                 int floor)
+                                                 int selectedFloor,
+                                                 const std::string& floorName,
+                                                 const std::vector<int>& floorNumbers)
             : m_interiorVisible(interiorVisible)
-            , m_floorCount(floorCount)
-            , m_floor(floor)
+            , m_selectedFloor(selectedFloor)
+            , m_floorName(floorName)
+            , m_floorNumbers(floorNumbers)
             {
             }
             
             const bool IsInteriorVisible() const { return m_interiorVisible; }
-            const int GetFloorCount() const { return m_floorCount; }
-            const int GetCurrentlySelectedFloor() const { return m_floor; }
+            int GetSelectedFloor() const { return m_selectedFloor; }
+            std::string GetFloorName() const { return m_floorName; }
+            const std::vector<int>& GetFloorNumbers() const { return m_floorNumbers; }
             
         private:
             bool m_interiorVisible;
-            int m_floorCount;
-            int m_floor;
+            int m_selectedFloor;
+            std::string m_floorName;
+            std::vector<int> m_floorNumbers;
         };
     }
 }

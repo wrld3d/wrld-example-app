@@ -5,6 +5,7 @@
 #include "IScreenControlView.h"
 #include "ICallback.h"
 #include <string>
+#include <vector>
 
 namespace ExampleApp
 {
@@ -22,8 +23,8 @@ namespace ExampleApp
                 virtual void SelectFloor(int floor) = 0;
                 
                 virtual void OnDismissed() = 0;
-                virtual void SetFloorCount(int floorCount, int initialFloor) = 0;
                 virtual void SetFloorName(const std::string& name) = 0;
+                virtual void UpdateFloors(const std::vector<int>& floorNumbers, int currentlySelectedFloor) = 0;
                 
                 virtual void InsertDismissedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
                 virtual void RemoveDismissedCallback(Eegeo::Helpers::ICallback0& callback) = 0;

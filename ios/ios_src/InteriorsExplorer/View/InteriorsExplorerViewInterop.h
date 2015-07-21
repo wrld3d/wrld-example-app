@@ -7,6 +7,8 @@
 #include "ICallback.h"
 #include "CallbackCollection.h"
 
+#include <vector>
+
 namespace ExampleApp
 {
     namespace InteriorsExplorer
@@ -27,8 +29,8 @@ namespace ExampleApp
                 void Dismiss();
                 void SelectFloor(int floor);
                 
-                void SetFloorCount(int floorCount, int initialFloor);
                 void SetFloorName(const std::string& name);
+                void UpdateFloors(const std::vector<int>& floorNumbers, int currentlySelectedFloor);
                 
                 void InsertDismissedCallback(Eegeo::Helpers::ICallback0& callback);
                 void RemoveDismissedCallback(Eegeo::Helpers::ICallback0& callback);

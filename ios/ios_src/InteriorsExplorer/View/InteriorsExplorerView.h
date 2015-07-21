@@ -5,6 +5,7 @@
 #import <UIKit/UIKit.h>
 #include "InteriorsExplorerViewIncludes.h"
 #include <string>
+#include <vector>
 
 @class InteriorsExplorerView;
 
@@ -22,10 +23,10 @@
     float m_inactiveFloorListXPosition;
     float m_inactiveDetailPaneYPosition;
     
-    int m_floorCount;
-    
     float m_onScreenParam;
     float m_stateChangeAnimationTimeSeconds;
+    
+    std::vector<int> m_floorNumbers;
 }
 
 - (id) initWithParams:(float)width :(float)height :(float)pixelScale;
@@ -40,7 +41,7 @@
 
 - (void) setFloorName:(const std::string*)name;
 
-- (void) setFloorCount:(int)floors :(int)initialFloor;
+- (void) updateFloors: (const std::vector<int>&) floorNumbers withCurrentFloor: (int) currentlySelectedFloor;
 
 - (void) setFullyOnScreen;
 

@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include <string>
+
 namespace ExampleApp
 {
     namespace InteriorsExplorer
@@ -9,15 +11,19 @@ namespace ExampleApp
         class InteriorsExplorerFloorSelectedMessage
         {
         public:
-            InteriorsExplorerFloorSelectedMessage(int floor)
-            : m_floor(floor)
+            InteriorsExplorerFloorSelectedMessage(int floorIndex,
+                                                  const std::string& floorName)
+            : m_floorIndex(floorIndex)
+            , m_floorName(floorName)
             {
             }
             
-            const int GetFloor() const { return m_floor; }
+            const int GetFloorIndex() const { return m_floorIndex; }
+            std::string GetFloorName() const { return m_floorName; }
             
         private:
-            int m_floor;
+            int m_floorIndex;
+            std::string m_floorName;
         };
     }
 }

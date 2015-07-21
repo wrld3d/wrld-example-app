@@ -69,7 +69,7 @@ namespace ExampleApp
             void InteriorsExplorerController::OnFloorSelected(const InteriorsExplorerFloorSelectedMessage& message)
             {
                 std::stringstream content;
-                content << "Floor " << (message.GetFloor()+1);
+                content << "Floor " << (message.GetFloorName());
                 m_view.SetFloorName(content.str());
             }
             
@@ -77,9 +77,9 @@ namespace ExampleApp
             {
                 if(message.IsInteriorVisible())
                 {
-                    m_view.SetFloorCount(message.GetFloorCount(), message.GetCurrentlySelectedFloor());
-                    int initialFloor = message.GetCurrentlySelectedFloor();
-                    OnFloorSelected(initialFloor);
+                    m_view.UpdateFloors(message.GetFloorNumbers(), message.GetSelectedFloor());
+                    
+                    OnFloorSelected(InteriorsExplorerFloorSelectedMessage(message.GetSelectedFloor(), message.GetFloorName()));
                     
                     m_viewModel.AddToScreen();
                     

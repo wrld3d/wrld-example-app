@@ -24,9 +24,10 @@ namespace ExampleApp
             {
             }
             
-            void InteriorsExplorerViewInterop::SetFloorCount(int count, int initialFloor)
+            void InteriorsExplorerViewInterop::UpdateFloors(const std::vector<int>& floorNumbers, int currentlySelectedFloor)
             {
-                [m_pView setFloorCount:count :initialFloor];
+                [m_pView updateFloors: floorNumbers
+                     withCurrentFloor: currentlySelectedFloor];
             }
             
             void InteriorsExplorerViewInterop::SetFloorName(const std::string& name)
