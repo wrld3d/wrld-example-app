@@ -8,6 +8,7 @@
 #include "ICallback.h"
 #include "InteriorsExplorerExitMessage.h"
 #include "InteriorsExplorerSelectFloorMessage.h"
+#include "InteriorPinsVisibilityMessage.h"
 
 namespace ExampleApp
 {
@@ -31,6 +32,7 @@ namespace ExampleApp
                 void OnControllerStateChanged();
                 void OnExit(const InteriorsExplorerExitMessage& message);
                 void OnSelectFloor(const InteriorsExplorerSelectFloorMessage& message);
+                void OnChangePinVisibility(const InteriorPinsVisibilityMessage& message);
                 
                 Eegeo::Resources::Interiors::InteriorsController& m_controller;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
@@ -38,6 +40,7 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback0<InteriorsExplorerModel> m_controllerStateChangedCallback;
                 Eegeo::Helpers::TCallback1<InteriorsExplorerModel, const InteriorsExplorerExitMessage&> m_exitCallback;
                 Eegeo::Helpers::TCallback1<InteriorsExplorerModel, const InteriorsExplorerSelectFloorMessage&> m_selectFloorCallback;
+                Eegeo::Helpers::TCallback1<InteriorsExplorerModel, const InteriorPinsVisibilityMessage&> m_changePinVisibilityCallback;
             };
         }
     }

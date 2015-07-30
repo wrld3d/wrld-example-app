@@ -1239,6 +1239,8 @@
 		7EE48258168477CB0006E99B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE48257168477CB0006E99B /* libz.dylib */; };
 		7EF5D8651737F9A40049D787 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EF5D8641737F9A40049D787 /* CoreLocation.framework */; };
 		E016040E19EEC26E0029A035 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E016040D19EEC26E0029A035 /* Images.xcassets */; };
+		F7F3705B9F1C119656682545 /* InteriorPinsVisibilityMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F7F37A9053721BC0EF524069 /* InteriorPinsVisibilityMessage.cpp */; };
+		F7F37FB46E5FE7C2E8AC7146 /* InteriorPinsVisibilityMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F7F37A9053721BC0EF524069 /* InteriorPinsVisibilityMessage.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -2471,6 +2473,8 @@
 		7EE48257168477CB0006E99B /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		7EF5D8641737F9A40049D787 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		E016040D19EEC26E0029A035 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		F7F376FC5C4FFA017F2B49CF /* InteriorPinsVisibilityMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InteriorPinsVisibilityMessage.h; sourceTree = "<group>"; };
+		F7F37A9053721BC0EF524069 /* InteriorPinsVisibilityMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InteriorPinsVisibilityMessage.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -4603,6 +4607,8 @@
 				7E1D22CC1B205CC2006A8703 /* InteriorsExplorerSelectFloorMessage.h */,
 				7E5811AF1B1F050A007AD67F /* SdkModel */,
 				7E5811B21B1F050A007AD67F /* View */,
+				F7F37A9053721BC0EF524069 /* InteriorPinsVisibilityMessage.cpp */,
+				F7F376FC5C4FFA017F2B49CF /* InteriorPinsVisibilityMessage.h */,
 			);
 			path = InteriorsExplorer;
 			sourceTree = "<group>";
@@ -5909,6 +5915,7 @@
 				7E3B89991A385A290023C94E /* SearchQueryPerformedMessage.cpp in Sources */,
 				7E3B89051A385A290023C94E /* ModalBackgroundController.cpp in Sources */,
 				7E1B50681ACAD4170060FA4F /* InitialExperienceIntroStep.cpp in Sources */,
+				F7F3705B9F1C119656682545 /* InteriorPinsVisibilityMessage.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6265,6 +6272,7 @@
 				7E3B89981A385A290023C94E /* SearchQueryPerformedMessage.cpp in Sources */,
 				7E3B89041A385A290023C94E /* ModalBackgroundController.cpp in Sources */,
 				7E1B50671ACAD4170060FA4F /* InitialExperienceIntroStep.cpp in Sources */,
+				F7F37FB46E5FE7C2E8AC7146 /* InteriorPinsVisibilityMessage.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

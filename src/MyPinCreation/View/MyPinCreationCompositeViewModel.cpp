@@ -8,6 +8,7 @@
 #include "ISearchQueryPerformer.h"
 #include "WorldPinsVisibilityMessage.h"
 #include "GpsMarkerVisibilityMessage.h"
+#include "InteriorPinsVisibilityMessage.h"
 
 namespace ExampleApp
 {
@@ -49,6 +50,7 @@ namespace ExampleApp
                     m_searchResultMenuViewModel.AddToScreen();
                     m_messageBus.Publish(WorldPins::WorldPinsVisibilityMessage(true));
                     m_messageBus.Publish(GpsMarker::GpsMarkerVisibilityMessage(true));
+                    m_messageBus.Publish(InteriorsExplorer::InteriorPinsVisibilityMessage(true));
 
                     m_confirmationViewModel.RemoveFromScreen();
                     break;
@@ -62,6 +64,8 @@ namespace ExampleApp
 
                     m_messageBus.Publish(WorldPins::WorldPinsVisibilityMessage(false));
                     m_messageBus.Publish(GpsMarker::GpsMarkerVisibilityMessage(false));
+                    m_messageBus.Publish(InteriorsExplorer::InteriorPinsVisibilityMessage(false));
+
                     m_searchResultMenuViewModel.RemoveFromScreen();
                     break;
                 }

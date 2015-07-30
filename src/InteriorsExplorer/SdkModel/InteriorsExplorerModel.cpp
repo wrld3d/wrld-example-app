@@ -54,17 +54,20 @@ namespace ExampleApp
             , m_controllerStateChangedCallback(this, &InteriorsExplorerModel::OnControllerStateChanged)
             , m_exitCallback(this, &InteriorsExplorerModel::OnExit)
             , m_selectFloorCallback(this, &InteriorsExplorerModel::OnSelectFloor)
+            , m_changePinVisibilityCallback(this, &InteriorsExplorerModel::OnChangePinVisibility)
             {
                 m_controller.RegisterStateChangedCallback(m_controllerStateChangedCallback);
                 
                 m_messageBus.SubscribeNative(m_exitCallback);
                 m_messageBus.SubscribeNative(m_selectFloorCallback);
+                m_messageBus.SubscribeNative(m_changePinVisibilityCallback);
             }
             
             InteriorsExplorerModel::~InteriorsExplorerModel()
             {
                 m_messageBus.UnsubscribeNative(m_selectFloorCallback);
                 m_messageBus.UnsubscribeNative(m_exitCallback);
+                m_messageBus.UnsubscribeNative(m_changePinVisibilityCallback);
                 
                 m_controller.UnregisterStateChangedCallback(m_controllerStateChangedCallback);
             }
@@ -109,6 +112,12 @@ namespace ExampleApp
                 const Eegeo::Resources::Interiors::InteriorsFloorModel& currentFloor = m_controller.GetCurrentFloorModel();
                 
                 m_messageBus.Publish(InteriorsExplorerFloorSelectedMessage(m_controller.GetCurrentFloorIndex(), currentFloor.GetFloorName()));
+            }
+
+            void InteriorsExplorerModel::OnChangePinVisibility(const InteriorPinsVisibilityMessage& message)
+            {
+                bool shouldShowPins = message.GetShouldShowPins();
+                m_controller.SetShouldShowPins(shouldShowPins);
             }
         }
     }

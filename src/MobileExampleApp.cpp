@@ -177,7 +177,7 @@ namespace ExampleApp
                                                 platformConfig,
                                                 NULL,
 //                                                "http://cdn1.eegeo.com/coverage-trees/vtest_builds/interiors/ian_floor_test_002/manifest.txt.gz",
-                                                "http://cdn1.eegeo.com/coverage-trees/vtest_builds/interiors/ian_z_test_002/manifest.txt.gz",
+                                                "http://cdn1.eegeo.com/coverage-trees/vtest_builds/interior_markers_20150729_001/manifest.txt.gz",
                                                 "http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v327/manifest.txt.gz",
                                                 &errorHandler
                                                 );
