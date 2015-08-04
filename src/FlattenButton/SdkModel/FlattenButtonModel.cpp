@@ -1,8 +1,7 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "FlattenButtonModel.h"
-#include "EnvironmentFlatteningService.h"
-#include "IWeatherController.h"
+#include "IMapModeModel.h"
 
 namespace ExampleApp
 {
@@ -10,53 +9,31 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            FlattenButtonModel::FlattenButtonModel(Eegeo::Rendering::EnvironmentFlatteningService& flatteningService,
-                                                   WeatherMenu::SdkModel::IWeatherController& weatherController)
-                : m_environmentFlattening(flatteningService)
-                , m_pFlatteningModelChangedCallback(Eegeo_NEW(Eegeo::Helpers::TCallback0<FlattenButtonModel>)(this, &FlattenButtonModel::HandleModelChanged))
-                , m_weatherController(weatherController)
-                , m_previousThemeState("")
+            FlattenButtonModel::FlattenButtonModel(MapMode::SdkModel::IMapModeModel& mapModeModel)
+            : m_mapModeModel(mapModeModel)
+            , m_onMapModeChangedCallback(this, &FlattenButtonModel::OnMapModeChanged)
             {
-                m_environmentFlattening.InsertChangedCallback(*m_pFlatteningModelChangedCallback);
+                m_mapModeModel.AddMapModeChangedCallback(m_onMapModeChangedCallback);
             }
 
             FlattenButtonModel::~FlattenButtonModel()
             {
-                m_environmentFlattening.RemoveChangedCallback(*m_pFlatteningModelChangedCallback);
-                Eegeo_DELETE m_pFlatteningModelChangedCallback;
-            }
-
-            void FlattenButtonModel::HandleModelChanged()
-            {
-                m_changedCallbacks.ExecuteCallbacks();
+                m_mapModeModel.RemoveMapModeChangedCallback(m_onMapModeChangedCallback);
             }
 
             void FlattenButtonModel::Flatten()
             {
-                if(m_environmentFlattening.IsFlattened())
-                {
-                    return;
-                }
-                m_environmentFlattening.SetIsFlattened(true);
-                m_previousThemeState = m_weatherController.GetState();
-                m_weatherController.SetState("MapMode");
-                m_changedCallbacks.ExecuteCallbacks();
+                m_mapModeModel.SetInMapMode(true);
             }
 
             void FlattenButtonModel::Unflatten()
             {
-                if(!m_environmentFlattening.IsFlattened())
-                {
-                    return;
-                }
-                m_weatherController.SetState(m_previousThemeState);
-                m_environmentFlattening.SetIsFlattened(false);
-                m_changedCallbacks.ExecuteCallbacks();
+                m_mapModeModel.SetInMapMode(false);
             }
 
             bool FlattenButtonModel::GetFlattened() const
             {
-                return m_environmentFlattening.IsFlattened();
+                return m_mapModeModel.IsInMapMode();
             }
 
             void FlattenButtonModel::InsertChangedCallback(Eegeo::Helpers::ICallback0& callback)
@@ -67,6 +44,11 @@ namespace ExampleApp
             void FlattenButtonModel::RemoveChangedCallback(Eegeo::Helpers::ICallback0& callback)
             {
                 m_changedCallbacks.RemoveCallback(callback);
+            }
+
+            void FlattenButtonModel::OnMapModeChanged()
+            {
+                m_changedCallbacks.ExecuteCallbacks();
             }
         }
     }

@@ -3,7 +3,6 @@
 #pragma once
 
 #include "FlattenButton.h"
-#include "Rendering.h"
 #include "FlattenButtonModule.h"
 #include "IFlattenButtonModule.h"
 #include "IIdentity.h"
@@ -11,7 +10,7 @@
 #include "FlattenButtonViewStateChangedObserver.h"
 #include "FlattenButtonModelStateChangedObserver.h"
 #include "BidirectionalBus.h"
-#include "WeatherMenu.h"
+#include "MapMode.h"
 
 namespace ExampleApp
 {
@@ -28,8 +27,7 @@ namespace ExampleApp
                 FlattenButtonModelStateChangedObserver* m_pFlattenButtonModelStateChangedObserver;
 
             public:
-                FlattenButtonModule(Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
-                                    WeatherMenu::SdkModel::IWeatherController& weatherController,
+                FlattenButtonModule(MapMode::SdkModel::IMapModeModel & mapModeModel,
                                     Eegeo::Helpers::IIdentityProvider& identityProvider,
                                     ExampleAppMessaging::TMessageBus& messageBus);
 

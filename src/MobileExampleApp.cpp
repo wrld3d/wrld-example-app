@@ -63,6 +63,10 @@
 #include "InteriorsEntitiesPinsModule.h"
 #include "InteriorsEntitiesPinsController.h"
 #include "PinsModule.h"
+#include "MapModeModule.h"
+#include "InteriorsController.h"
+#include "InteriorId.h"
+
 
 namespace ExampleApp
 {
@@ -126,6 +130,7 @@ namespace ExampleApp
         , m_pSearchResultMenuModule(NULL)
         , m_pModalityModule(NULL)
         , m_pCategorySearchModule(NULL)
+        , m_pMapModeModule(NULL)
         , m_pFlattenButtonModule(NULL)
         , m_pSearchModule(NULL)
         , m_pPinIconsTexturePageLayout(NULL)
@@ -177,7 +182,7 @@ namespace ExampleApp
                                                 platformConfig,
                                                 NULL,
 //                                                "http://cdn1.eegeo.com/coverage-trees/vtest_builds/interiors/ian_floor_test_002/manifest.txt.gz",
-                                                "http://cdn1.eegeo.com/coverage-trees/vtest_builds/interior_markers_20150729_001/manifest.txt.gz",
+                                                "http://cdn1.eegeo.com/coverage-trees/vtest_builds/interiors_2015_08_03_002/manifest.txt.gz",
                                                 "http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v327/manifest.txt.gz",
                                                 &errorHandler
                                                 );
@@ -320,8 +325,9 @@ namespace ExampleApp
 
         Eegeo::Modules::Map::MapModule& mapModule = world.GetMapModule();
 
-        m_pFlattenButtonModule = Eegeo_NEW(ExampleApp::FlattenButton::SdkModel::FlattenButtonModule)(mapModule.GetEnvironmentFlatteningService(),
-                                 m_pWeatherMenuModule->GetWeatherController(),
+        m_pMapModeModule = Eegeo_NEW(MapMode::SdkModel::MapModeModule(mapModule.GetEnvironmentFlatteningService(), m_pWeatherMenuModule->GetWeatherController()));
+
+        m_pFlattenButtonModule = Eegeo_NEW(ExampleApp::FlattenButton::SdkModel::FlattenButtonModule)(m_pMapModeModule->GetMapModeModel(),
                                  m_identityProvider,
                                  m_messageBus);
 
@@ -389,7 +395,11 @@ namespace ExampleApp
                                                                                                   m_messageBus);
         
         m_pInteriorsExplorerModule = Eegeo_NEW(InteriorsExplorer::SdkModel::InteriorsExplorerModule)(world.GetMapModule().GetInteriorsPresentationModule().GetInteriorsController(),
+                                                                                                     world.GetMapModule().GetInteriorsPresentationModule().GetCameraController(),
+                                                                                                     world.GetMapModule().GetInteriorsPresentationModule().GetInteriorSelectionModel(),
+                                                                                                     *m_pGlobeCameraController,
                                                                                                      m_identityProvider,
+                                                                                                     m_pMapModeModule->GetMapModeModel(),
                                                                                                      m_messageBus);
         
         m_pInteriorsEntitiesPinsModule = Eegeo_NEW(InteriorsEntitiesPins::SdkModel::InteriorsEntitiesPinsModule(m_pWorld->GetPlatformAbstractionModule(),
@@ -453,6 +463,8 @@ namespace ExampleApp
         Eegeo_DELETE m_pPinsModule;
 
         Eegeo_DELETE m_pPlaceJumpsModule;
+
+        Eegeo_DELETE m_pMapModeModule;
 
         Eegeo_DELETE m_pCategorySearchModule;
 
@@ -582,9 +594,11 @@ namespace ExampleApp
         Eegeo::Camera::CameraState cameraState(interiorsCameraController.IsEnabled()
                                                ? interiorsCameraController.GetCameraState()
                                                : m_pGlobeCameraController->GetCameraState());
+        
         Eegeo::Camera::RenderCamera renderCamera(interiorsCameraController.IsEnabled()
                                                  ? interiorsCameraController.GetRenderCamera()
                                                  : m_pGlobeCameraController->GetRenderCamera());
+        
         Eegeo::dv3 ecefInterestPoint(cameraState.InterestPointEcef());
 
         m_pPoiRingModule->GetPoiRingController().Update(dt, renderCamera, ecefInterestPoint);
@@ -843,12 +857,30 @@ namespace ExampleApp
             return;
         }
 
-        if(!m_pWorldPinsModule->GetWorldPinsService().HandleTouchTap(data.point))
+        // TODO: Move to input delegate
+        Eegeo::Resources::Interiors::InteriorId selectedInteriorId;
+        Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsPresentationModule = World().GetMapModule().GetInteriorsPresentationModule();
+        Eegeo::Resources::Interiors::InteriorsPinsController& interiorsPinsController = interiorsPresentationModule.GetPinsController();
+        if (interiorsPinsController.Event_TouchTap(data, selectedInteriorId))
         {
-            m_pCurrentTouchController->Event_TouchTap(data);
+            Eegeo::Resources::Interiors::InteriorsController& interiorsController = interiorsPresentationModule.GetInteriorsController();
+            
+            const Eegeo::Resources::Interiors::Camera::InteriorsCameraState& initialInteriorsCameraState = Eegeo::Resources::Interiors::Camera::InteriorsCameraState::MakeFromRenderCamera(m_pGlobeCameraController->GetRenderCamera());
+
+            bool success = interiorsController.TryEnterInterior(selectedInteriorId, initialInteriorsCameraState);
+
+            if (success)
+            {
+                return;
+            }
         }
         
-        World().GetMapModule().GetInteriorsPresentationModule().GetPinsController().Event_TouchTap(data, *m_pGlobeCameraController);
+        if(m_pWorldPinsModule->GetWorldPinsService().HandleTouchTap(data.point))
+        {
+            return;
+        }
+        
+        m_pCurrentTouchController->Event_TouchTap(data);
     }
 
     void MobileExampleApp::Event_TouchDoubleTap(const AppInterface::TapData& data)

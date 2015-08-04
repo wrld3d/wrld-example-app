@@ -2,13 +2,15 @@
 
 #pragma once
 
+#include "InteriorsExplorer.h"
+#include "Interiors.h"
 #include "Types.h"
 #include "IInteriorsExplorerModule.h"
 #include "ScreenControlViewModelIncludes.h"
-#include "InteriorsExplorer.h"
-#include "Interiors.h"
 #include "IIdentity.h"
 #include "BidirectionalBus.h"
+#include "MapMode.h"
+#include "GlobeCamera.h"
 
 namespace ExampleApp
 {
@@ -20,7 +22,11 @@ namespace ExampleApp
             {
             public:
                 InteriorsExplorerModule(Eegeo::Resources::Interiors::InteriorsController& interiorsController,
+                                        Eegeo::Resources::Interiors::Camera::InteriorsCameraController& interiorsCameraController,
+                                        Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
+                                        Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& globeCameraController,
                                         Eegeo::Helpers::IIdentityProvider& identityProvider,
+                                        MapMode::SdkModel::IMapModeModel& mapModeModel,
                                         ExampleAppMessaging::TMessageBus& messageBus);
                 ~InteriorsExplorerModule();
                 
@@ -32,6 +38,7 @@ namespace ExampleApp
                 
                 InteriorsExplorerModel* m_pModel;
                 View::InteriorsExplorerViewModel* m_pViewModel;
+                InteriorsControllerExitObserver* m_pInteriorsControllerExitObserver;
             };
         }
     }

@@ -7,6 +7,8 @@
 
 #include "InteriorsModel.h"
 #include "InteriorsFloorModel.h"
+#include "InteriorSelectionModel.h"
+#include "IMapModeModel.h"
 
 namespace ExampleApp
 {
@@ -48,15 +50,22 @@ namespace ExampleApp
             }
             
             InteriorsExplorerModel::InteriorsExplorerModel(Eegeo::Resources::Interiors::InteriorsController& controller,
+                                                           Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
+                                                           MapMode::SdkModel::IMapModeModel& mapModeModel,
                                                            ExampleAppMessaging::TMessageBus& messageBus)
             : m_controller(controller)
+            , m_interiorSelectionModel(interiorSelectionModel)
+            , m_mapModeModel(mapModeModel)
             , m_messageBus(messageBus)
             , m_controllerStateChangedCallback(this, &InteriorsExplorerModel::OnControllerStateChanged)
             , m_exitCallback(this, &InteriorsExplorerModel::OnExit)
             , m_selectFloorCallback(this, &InteriorsExplorerModel::OnSelectFloor)
             , m_changePinVisibilityCallback(this, &InteriorsExplorerModel::OnChangePinVisibility)
+            , m_interiorSelectionModelChangedCallback(this, &InteriorsExplorerModel::OnInteriorSelectionModelChanged)
+            , m_previouslyInMapMode(false)
             {
                 m_controller.RegisterStateChangedCallback(m_controllerStateChangedCallback);
+                m_interiorSelectionModel.RegisterSelectionChangedCallback(m_interiorSelectionModelChangedCallback);
                 
                 m_messageBus.SubscribeNative(m_exitCallback);
                 m_messageBus.SubscribeNative(m_selectFloorCallback);
@@ -68,7 +77,8 @@ namespace ExampleApp
                 m_messageBus.UnsubscribeNative(m_selectFloorCallback);
                 m_messageBus.UnsubscribeNative(m_exitCallback);
                 m_messageBus.UnsubscribeNative(m_changePinVisibilityCallback);
-                
+
+                m_interiorSelectionModel.UnregisterSelectionChangedCallback(m_interiorSelectionModelChangedCallback);
                 m_controller.UnregisterStateChangedCallback(m_controllerStateChangedCallback);
             }
             
@@ -100,12 +110,7 @@ namespace ExampleApp
             {
                 SelectFloor(message.GetFloor());
             }
-            
-            void InteriorsExplorerModel::Exit()
-            {
-                m_controller.ExitInterior();
-            }
-            
+
             void InteriorsExplorerModel::SelectFloor(int floor)
             {
                 m_controller.SelectFloorAtIndex(floor);
@@ -118,6 +123,19 @@ namespace ExampleApp
             {
                 bool shouldShowPins = message.GetShouldShowPins();
                 m_controller.SetShouldShowPins(shouldShowPins);
+            }
+
+            void InteriorsExplorerModel::OnInteriorSelectionModelChanged(const Eegeo::Resources::Interiors::InteriorId& interiord)
+            {
+                if (m_interiorSelectionModel.IsInteriorSelected())
+                {
+                    m_previouslyInMapMode = m_mapModeModel.IsInMapMode();
+                    m_mapModeModel.SetInMapMode(false);
+                }
+                else
+                {
+                    m_mapModeModel.SetInMapMode(m_previouslyInMapMode);
+                }
             }
         }
     }

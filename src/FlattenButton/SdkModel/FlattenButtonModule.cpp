@@ -10,12 +10,11 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            FlattenButtonModule::FlattenButtonModule(Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
-                                                     WeatherMenu::SdkModel::IWeatherController& weatherController,
-                    Eegeo::Helpers::IIdentityProvider& identityProvider,
-                    ExampleAppMessaging::TMessageBus& messageBus)
+            FlattenButtonModule::FlattenButtonModule(MapMode::SdkModel::IMapModeModel& mapModeModel,
+                                                     Eegeo::Helpers::IIdentityProvider& identityProvider,
+                                                     ExampleAppMessaging::TMessageBus& messageBus)
             {
-                m_pModel = Eegeo_NEW(FlattenButtonModel)(environmentFlatteningService, weatherController);
+                m_pModel = Eegeo_NEW(FlattenButtonModel)(mapModeModel);
                 m_pViewModel = Eegeo_NEW(View::FlattenButtonViewModel)(identityProvider.GetNextIdentity(), false);
                 m_pFlattenButtonViewStateChangedObserver = Eegeo_NEW(FlattenButtonViewStateChangedObserver)(*m_pModel, messageBus);
                 m_pFlattenButtonModelStateChangedObserver = Eegeo_NEW(FlattenButtonModelStateChangedObserver)(*m_pModel, messageBus);

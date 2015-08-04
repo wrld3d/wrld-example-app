@@ -18,5 +18,7 @@ namespace ExampleApp
             class IInteriorsExplorerView;
             class InteriorsExplorerController;
         }
+
+        class InteriorsControllerExitObserver;
     }
 }

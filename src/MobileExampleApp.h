@@ -71,6 +71,7 @@
 #include "ApplicationConfiguration.h"
 #include "InteriorsExplorer.h"
 #include "InteriorsEntitiesPins.h"
+#include "MapMode.h"
 
 namespace ExampleApp
 {
@@ -100,6 +101,7 @@ namespace ExampleApp
         ExampleApp::SearchResultMenu::SdkModel::ISearchResultMenuModule* m_pSearchResultMenuModule;
         ExampleApp::Modality::View::IModalityModule* m_pModalityModule;
         ExampleApp::CategorySearch::SdkModel::ICategorySearchModule* m_pCategorySearchModule;
+        ExampleApp::MapMode::SdkModel::IMapModeModule* m_pMapModeModule;
         ExampleApp::FlattenButton::SdkModel::IFlattenButtonModule* m_pFlattenButtonModule;
         Search::SdkModel::ISearchModule* m_pSearchModule;
         Eegeo::Rendering::ITexturePageLayout* m_pPinIconsTexturePageLayout;
