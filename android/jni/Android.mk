@@ -1,9 +1,5 @@
 LOCAL_PATH := $(call my-dir)
 
-$(info TARGET_ARCH_ABI is $(TARGET_ARCH_ABI))
-
-$(info LOCAL_PATH is $(LOCAL_PATH))
-
 PREBUILT_LIBS := ./libs/eegeo/prebuilt/android-$(TARGET_ARCH_ABI)
 
 include $(CLEAR_VARS)
@@ -61,11 +57,9 @@ cflags := -Wall -Wno-unknown-pragmas -Wno-sign-compare -Wno-format-security -Wno
 
 #LOCAL_CFLAGS += -Werror
 
-ifdef COMPILE_CPP_11
-  $(info Configured for C++11)
+ifdef COMPILE_CPP_11  
   cppflags := -DCOMPILE_CPP_11=1 -std=c++11
-else
-  $(info Configured for C++0x)
+else  
   cppflags :=
 endif
 
