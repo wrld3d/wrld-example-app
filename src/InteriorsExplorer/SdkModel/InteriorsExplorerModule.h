@@ -11,6 +11,7 @@
 #include "BidirectionalBus.h"
 #include "MapMode.h"
 #include "GlobeCamera.h"
+#include "Metrics.h"
 
 namespace ExampleApp
 {
@@ -28,7 +29,8 @@ namespace ExampleApp
                                         Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& globeCameraController,
                                         Eegeo::Helpers::IIdentityProvider& identityProvider,
                                         MapMode::SdkModel::IMapModeModel& mapModeModel,
-                                        ExampleAppMessaging::TMessageBus& messageBus);
+                                        ExampleAppMessaging::TMessageBus& messageBus,
+                                        ExampleApp::Metrics::IMetricsService& metricsService);
                 ~InteriorsExplorerModule();
                 
                 View::InteriorsExplorerViewModel& GetInteriorsExplorerViewModel() const;

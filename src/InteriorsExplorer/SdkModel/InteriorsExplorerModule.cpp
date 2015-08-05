@@ -19,9 +19,10 @@ namespace ExampleApp
                                                              Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& globeCameraController,
                                                              Eegeo::Helpers::IIdentityProvider& identityProvider,
                                                              MapMode::SdkModel::IMapModeModel& mapModeModel,
-                                                             ExampleAppMessaging::TMessageBus& messageBus)
+                                                             ExampleAppMessaging::TMessageBus& messageBus,
+                                                             ExampleApp::Metrics::IMetricsService& metricsService)
             {
-                m_pModel = Eegeo_NEW(InteriorsExplorerModel)(interiorsController, interiorSelectionModel, mapModeModel, messageBus);
+                m_pModel = Eegeo_NEW(InteriorsExplorerModel)(interiorsController, interiorSelectionModel, mapModeModel, messageBus, metricsService);
                 m_pViewModel = Eegeo_NEW(View::InteriorsExplorerViewModel)(false, identityProvider.GetNextIdentity());
                 m_pInteriorsControllerExitObserver = Eegeo_NEW(InteriorsControllerExitObserver)(interiorsController, globeCameraController);
                 m_pInteriorsExplorerInputDelegate = Eegeo_NEW(InteriorsExplorerInputDelegate)(interiorsController, interiorsPinsController, globeCameraController);

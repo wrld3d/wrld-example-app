@@ -1,11 +1,11 @@
-//
-//  Metrics.h
-//  ExampleApp
-//
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
-#ifndef ExampleApp_Metrics_h
-#define ExampleApp_Metrics_h
+#pragma once
 
-
-
-#endif
+namespace ExampleApp
+{
+    namespace Metrics
+    {
+        class IMetricsService;
+    }
+}
