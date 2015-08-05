@@ -9,6 +9,7 @@
 #include "InteriorsFloorModel.h"
 #include "InteriorSelectionModel.h"
 #include "IMapModeModel.h"
+#include "IMetricsService.h"
 
 namespace ExampleApp
 {
@@ -18,6 +19,12 @@ namespace ExampleApp
         {
             namespace
             {
+            
+                const std::string MetricEventInteriorsVisible = "TimedEvent: Interiors Visible";
+                const std::string MetricEventInteriorSelected = "Interior Selected";
+                const std::string MetricEventInteriorFloorSelected = "Interior Floor Selected";
+                
+                
                 void GetFloorNumberList(Eegeo::Resources::Interiors::InteriorsController& interiorsController,
                                         std::vector<int>& out_floorNumbers)
                 {
@@ -52,11 +59,13 @@ namespace ExampleApp
             InteriorsExplorerModel::InteriorsExplorerModel(Eegeo::Resources::Interiors::InteriorsController& controller,
                                                            Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                            MapMode::SdkModel::IMapModeModel& mapModeModel,
-                                                           ExampleAppMessaging::TMessageBus& messageBus)
+                                                           ExampleAppMessaging::TMessageBus& messageBus,
+                                                           Metrics::IMetricsService& metricsService)
             : m_controller(controller)
             , m_interiorSelectionModel(interiorSelectionModel)
             , m_mapModeModel(mapModeModel)
             , m_messageBus(messageBus)
+            , m_metricsService(metricsService)
             , m_controllerStateChangedCallback(this, &InteriorsExplorerModel::OnControllerStateChanged)
             , m_exitCallback(this, &InteriorsExplorerModel::OnExit)
             , m_selectFloorCallback(this, &InteriorsExplorerModel::OnSelectFloor)
@@ -117,6 +126,8 @@ namespace ExampleApp
                 const Eegeo::Resources::Interiors::InteriorsFloorModel& currentFloor = m_controller.GetCurrentFloorModel();
                 
                 m_messageBus.Publish(InteriorsExplorerFloorSelectedMessage(m_controller.GetCurrentFloorIndex(), currentFloor.GetFloorName()));
+
+                m_metricsService.SetEvent(MetricEventInteriorFloorSelected, "InteriorId", m_interiorSelectionModel.GetSelectedInteriorId().Value(), "FloorName", currentFloor.GetFloorName());
             }
 
             void InteriorsExplorerModel::OnChangePinVisibility(const InteriorPinsVisibilityMessage& message)
@@ -125,16 +136,21 @@ namespace ExampleApp
                 m_controller.SetShouldShowPins(shouldShowPins);
             }
 
-            void InteriorsExplorerModel::OnInteriorSelectionModelChanged(const Eegeo::Resources::Interiors::InteriorId& interiord)
+            void InteriorsExplorerModel::OnInteriorSelectionModelChanged(const Eegeo::Resources::Interiors::InteriorId& previousInteriorId)
             {
                 if (m_interiorSelectionModel.IsInteriorSelected())
                 {
                     m_previouslyInMapMode = m_mapModeModel.IsInMapMode();
                     m_mapModeModel.SetInMapMode(false);
+                    m_metricsService.BeginTimedEvent(MetricEventInteriorsVisible);
+                    
+                    const Eegeo::Resources::Interiors::InteriorId& interiorId = m_interiorSelectionModel.GetSelectedInteriorId();
+                    m_metricsService.SetEvent(MetricEventInteriorSelected, "InteriorId", interiorId.Value());
                 }
                 else
                 {
                     m_mapModeModel.SetInMapMode(m_previouslyInMapMode);
+                    m_metricsService.EndTimedEvent(MetricEventInteriorsVisible);
                 }
             }
         }

@@ -400,7 +400,8 @@ namespace ExampleApp
                                                                                                      *m_pGlobeCameraController,
                                                                                                      m_identityProvider,
                                                                                                      m_pMapModeModule->GetMapModeModel(),
-                                                                                                     m_messageBus);
+                                                                                                     m_messageBus,
+                                                                                                     m_metricsService);
         
         m_pInteriorsEntitiesPinsModule = Eegeo_NEW(InteriorsEntitiesPins::SdkModel::InteriorsEntitiesPinsModule(m_pWorld->GetPlatformAbstractionModule(),
                                                                                                                 m_pWorld->GetRenderingModule(),

@@ -11,6 +11,7 @@
 #include "InteriorPinsVisibilityMessage.h"
 #include "MapMode.h"
 #include "InteriorId.h"
+#include "Metrics.h"
 
 namespace ExampleApp
 {
@@ -25,7 +26,8 @@ namespace ExampleApp
                 InteriorsExplorerModel(Eegeo::Resources::Interiors::InteriorsController& controller,
                                        Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                        MapMode::SdkModel::IMapModeModel& mapModeModel,
-                                       ExampleAppMessaging::TMessageBus& messageBus);
+                                       ExampleAppMessaging::TMessageBus& messageBus,
+                                       Metrics::IMetricsService& metricsService);
                 ~InteriorsExplorerModel();
                 
                 void SelectFloor(int floor);
@@ -42,6 +44,7 @@ namespace ExampleApp
                 MapMode::SdkModel::IMapModeModel& m_mapModeModel;
 
                 ExampleAppMessaging::TMessageBus& m_messageBus;
+                Metrics::IMetricsService& m_metricsService;
                 
                 Eegeo::Helpers::TCallback0<InteriorsExplorerModel> m_controllerStateChangedCallback;
                 Eegeo::Helpers::TCallback1<InteriorsExplorerModel, const InteriorsExplorerExitMessage&> m_exitCallback;
