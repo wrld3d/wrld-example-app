@@ -4,6 +4,7 @@
 #include "InteriorsExplorerViewModel.h"
 #include "InteriorsExplorerModel.h"
 #include "InteriorsControllerExitObserver.h"
+#include "InteriorsExplorerInputDelegate.h"
 
 namespace ExampleApp
 {
@@ -14,6 +15,7 @@ namespace ExampleApp
             InteriorsExplorerModule::InteriorsExplorerModule(Eegeo::Resources::Interiors::InteriorsController& interiorsController,
                                                              Eegeo::Resources::Interiors::Camera::InteriorsCameraController& interiorsCameraController,
                                                              Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
+                                                             Eegeo::Resources::Interiors::InteriorsPinsController& interiorsPinsController,
                                                              Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& globeCameraController,
                                                              Eegeo::Helpers::IIdentityProvider& identityProvider,
                                                              MapMode::SdkModel::IMapModeModel& mapModeModel,
@@ -22,10 +24,12 @@ namespace ExampleApp
                 m_pModel = Eegeo_NEW(InteriorsExplorerModel)(interiorsController, interiorSelectionModel, mapModeModel, messageBus);
                 m_pViewModel = Eegeo_NEW(View::InteriorsExplorerViewModel)(false, identityProvider.GetNextIdentity());
                 m_pInteriorsControllerExitObserver = Eegeo_NEW(InteriorsControllerExitObserver)(interiorsController, globeCameraController);
+                m_pInteriorsExplorerInputDelegate = Eegeo_NEW(InteriorsExplorerInputDelegate)(interiorsController, interiorsPinsController, globeCameraController);
             }
             
             InteriorsExplorerModule::~InteriorsExplorerModule()
             {
+                Eegeo_DELETE m_pInteriorsExplorerInputDelegate;
                 Eegeo_DELETE m_pInteriorsControllerExitObserver;
                 Eegeo_DELETE m_pModel;
                 Eegeo_DELETE m_pViewModel;
@@ -39,6 +43,11 @@ namespace ExampleApp
             ScreenControl::View::IScreenControlViewModel& InteriorsExplorerModule::GetScreenControlViewModel() const
             {
                 return *m_pViewModel;
+            }
+
+            IInteriorsExplorerInputDelegate& InteriorsExplorerModule::GetInputDelegate() const
+            {
+                return *m_pInteriorsExplorerInputDelegate;
             }
         }
     }

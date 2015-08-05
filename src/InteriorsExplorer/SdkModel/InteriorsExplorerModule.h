@@ -24,6 +24,7 @@ namespace ExampleApp
                 InteriorsExplorerModule(Eegeo::Resources::Interiors::InteriorsController& interiorsController,
                                         Eegeo::Resources::Interiors::Camera::InteriorsCameraController& interiorsCameraController,
                                         Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
+                                        Eegeo::Resources::Interiors::InteriorsPinsController& interiorsPinsController,
                                         Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& globeCameraController,
                                         Eegeo::Helpers::IIdentityProvider& identityProvider,
                                         MapMode::SdkModel::IMapModeModel& mapModeModel,
@@ -33,12 +34,15 @@ namespace ExampleApp
                 View::InteriorsExplorerViewModel& GetInteriorsExplorerViewModel() const;
                 
                 ScreenControl::View::IScreenControlViewModel& GetScreenControlViewModel() const;
+
+                IInteriorsExplorerInputDelegate& GetInputDelegate() const;
                 
             private:
                 
                 InteriorsExplorerModel* m_pModel;
                 View::InteriorsExplorerViewModel* m_pViewModel;
                 InteriorsControllerExitObserver* m_pInteriorsControllerExitObserver;
+                IInteriorsExplorerInputDelegate* m_pInteriorsExplorerInputDelegate;
             };
         }
     }

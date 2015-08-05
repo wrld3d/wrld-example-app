@@ -64,8 +64,7 @@
 #include "InteriorsEntitiesPinsController.h"
 #include "PinsModule.h"
 #include "MapModeModule.h"
-#include "InteriorsController.h"
-#include "InteriorId.h"
+#include "IInteriorsExplorerInputDelegate.h"
 
 
 namespace ExampleApp
@@ -397,6 +396,7 @@ namespace ExampleApp
         m_pInteriorsExplorerModule = Eegeo_NEW(InteriorsExplorer::SdkModel::InteriorsExplorerModule)(world.GetMapModule().GetInteriorsPresentationModule().GetInteriorsController(),
                                                                                                      world.GetMapModule().GetInteriorsPresentationModule().GetCameraController(),
                                                                                                      world.GetMapModule().GetInteriorsPresentationModule().GetInteriorSelectionModel(),
+                                                                                                     world.GetMapModule().GetInteriorsPresentationModule().GetPinsController(),
                                                                                                      *m_pGlobeCameraController,
                                                                                                      m_identityProvider,
                                                                                                      m_pMapModeModule->GetMapModeModel(),
@@ -857,22 +857,10 @@ namespace ExampleApp
             return;
         }
 
-        // TODO: Move to input delegate
-        Eegeo::Resources::Interiors::InteriorId selectedInteriorId;
-        Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsPresentationModule = World().GetMapModule().GetInteriorsPresentationModule();
-        Eegeo::Resources::Interiors::InteriorsPinsController& interiorsPinsController = interiorsPresentationModule.GetPinsController();
-        if (interiorsPinsController.Event_TouchTap(data, selectedInteriorId))
+        InteriorsExplorer::SdkModel::IInteriorsExplorerInputDelegate& interiorsExplorerInputDelegate = m_pInteriorsExplorerModule->GetInputDelegate();
+        if (interiorsExplorerInputDelegate.HandleTouchTap(data))
         {
-            Eegeo::Resources::Interiors::InteriorsController& interiorsController = interiorsPresentationModule.GetInteriorsController();
-            
-            const Eegeo::Resources::Interiors::Camera::InteriorsCameraState& initialInteriorsCameraState = Eegeo::Resources::Interiors::Camera::InteriorsCameraState::MakeFromRenderCamera(m_pGlobeCameraController->GetRenderCamera());
-
-            bool success = interiorsController.TryEnterInterior(selectedInteriorId, initialInteriorsCameraState);
-
-            if (success)
-            {
-                return;
-            }
+            return;
         }
         
         if(m_pWorldPinsModule->GetWorldPinsService().HandleTouchTap(data.point))

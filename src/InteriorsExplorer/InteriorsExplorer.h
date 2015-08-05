@@ -10,6 +10,8 @@ namespace ExampleApp
         {
             class IInteriorsExplorerModule;
             class InteriorsExplorerModel;
+            class IInteriorsExplorerInputDelegate;
+            class InteriorsExplorerInputDelegate;
         }
         
         namespace View

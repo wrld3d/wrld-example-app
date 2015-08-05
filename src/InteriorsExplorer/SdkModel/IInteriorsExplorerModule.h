@@ -20,6 +20,8 @@ namespace ExampleApp
                 virtual View::InteriorsExplorerViewModel& GetInteriorsExplorerViewModel() const = 0;
 
                 virtual ScreenControl::View::IScreenControlViewModel& GetScreenControlViewModel() const = 0;
+
+                virtual IInteriorsExplorerInputDelegate& GetInputDelegate() const = 0;
             };
         }
     }
