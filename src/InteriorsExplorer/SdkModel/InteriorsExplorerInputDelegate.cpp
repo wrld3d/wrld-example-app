@@ -14,7 +14,7 @@ namespace ExampleApp
         {
             InteriorsExplorerInputDelegate::InteriorsExplorerInputDelegate(Eegeo::Resources::Interiors::InteriorsController& interiorsController,
                                                                            Eegeo::Resources::Interiors::InteriorsPinsController& interiorsPinsController,
-                                                                           Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& globeCameraController)
+                                                                           const Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& globeCameraController)
             : m_interiorsController(interiorsController)
             , m_interiorsPinsController(interiorsPinsController)
             , m_globeCameraController(globeCameraController)

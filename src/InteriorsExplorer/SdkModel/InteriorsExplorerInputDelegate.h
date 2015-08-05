@@ -19,14 +19,14 @@ namespace ExampleApp
             public:
                 InteriorsExplorerInputDelegate(Eegeo::Resources::Interiors::InteriorsController& interiorsController,
                                                Eegeo::Resources::Interiors::InteriorsPinsController& interiorsPinsController,
-                                               Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& globeCameraController);
+                                               const Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& globeCameraController);
 
                 bool HandleTouchTap(const AppInterface::TapData& tapData);
 
             private:
                 Eegeo::Resources::Interiors::InteriorsController& m_interiorsController;
                 Eegeo::Resources::Interiors::InteriorsPinsController& m_interiorsPinsController;
-                Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& m_globeCameraController;
+                const Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& m_globeCameraController;
             };
         }
     }
