@@ -15,6 +15,7 @@
 #include "PinsModule.h"
 #include "ITextureFileLoader.h"
 #include "InteriorsLabelController.h"
+#include "ImagePathHelpers.h"
 
 namespace ExampleApp
 {
@@ -30,11 +31,11 @@ namespace ExampleApp
             , m_pEntityPinsModule(NULL)
             , m_pEntityPinIconsTexturePageLayout(NULL)
             {
-                const float entityPinSpriteWidth = 54;
-                const float entityPinSpriteHeight = 54;
+                const float entityPinSpriteWidth = 32;
+                const float entityPinSpriteHeight = 32;
                 
                 Eegeo::Helpers::ITextureFileLoader& textureFileLoader = platformAbstractionModule.GetTextureFileLoader();
-                textureFileLoader.LoadTexture(m_entityPinsTextureInfo, "icons_interior_entities.png");
+                textureFileLoader.LoadTexture(m_entityPinsTextureInfo, Helpers::ImageHelpers::GetImageNameForDevice("Interiors/icons_interior_entities", ".png"));
                 
                 const int iconsPerAxisInTpage = 4;
                 m_pEntityPinIconsTexturePageLayout = Eegeo_NEW(Eegeo::Rendering::RegularTexturePageLayout)(iconsPerAxisInTpage);
