@@ -1239,6 +1239,7 @@
 		E016040E19EEC26E0029A035 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E016040D19EEC26E0029A035 /* Images.xcassets */; };
 		E07992C31B724AF3000402B0 /* Interiors in Resources */ = {isa = PBXBuildFile; fileRef = E07992BF1B724AF3000402B0 /* Interiors */; };
 		E07992C41B724AF3000402B0 /* Interiors in Resources */ = {isa = PBXBuildFile; fileRef = E07992BF1B724AF3000402B0 /* Interiors */; };
+		E07992CD1B725EDB000402B0 /* micello_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = E07992CB1B725EDB000402B0 /* micello_logo.png */; };
 		F7F3702A5538EF1098A7B54D /* MapModeController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F7F37DF89F160CEF56F89506 /* MapModeController.cpp */; };
 		F7F3705B9F1C119656682545 /* InteriorPinsVisibilityMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F7F37A9053721BC0EF524069 /* InteriorPinsVisibilityMessage.cpp */; };
 		F7F3718BE3D42C0AAD8EC7E3 /* MapModeModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F7F376B8EDEEDCD448A9C3D8 /* MapModeModule.cpp */; };
@@ -2488,6 +2489,7 @@
 		E016040D19EEC26E0029A035 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		E07992BE1B7241F4000402B0 /* Metrics.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Metrics.h; sourceTree = "<group>"; };
 		E07992BF1B724AF3000402B0 /* Interiors */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Interiors; sourceTree = "<group>"; };
+		E07992CB1B725EDB000402B0 /* micello_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = micello_logo.png; sourceTree = "<group>"; };
 		F7F37109109640BBE8C7E280 /* InteriorsExplorerInputDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InteriorsExplorerInputDelegate.h; sourceTree = "<group>"; };
 		F7F371A45CA6451F37A29696 /* IMapModeModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMapModeModule.h; sourceTree = "<group>"; };
 		F7F371EA20411E0AA0E2214B /* InteriorsExplorerInputDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InteriorsExplorerInputDelegate.cpp; sourceTree = "<group>"; };
@@ -4798,6 +4800,7 @@
 		7EE4825B16847E7C0006E99B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				E07992CB1B725EDB000402B0 /* micello_logo.png */,
 				E07992BF1B724AF3000402B0 /* Interiors */,
 				7E0195331B1C6B1900884B3F /* floor_selection_bottom.png */,
 				7E0195341B1C6B1900884B3F /* floor_selection_top.png */,
@@ -5287,6 +5290,7 @@
 				18FE20E61AA9B2C200ACE28A /* button_ok_place_pin_off@3x.png in Resources */,
 				18EC012C1AA7752500902E98 /* icon1_park@2x.png in Resources */,
 				18FE21EA1AA9D34400ACE28A /* arrow3_right@2x.png in Resources */,
+				E07992CD1B725EDB000402B0 /* micello_logo.png in Resources */,
 				18FE21AC1AA9C75700ACE28A /* menu_button@3x.png in Resources */,
 				18B5AC8619DC15CD00BA4A38 /* button_streets_off.png in Resources */,
 				7E9B7F451A8E25E400C6F2E3 /* arrow3_down.png in Resources */,
@@ -5546,6 +5550,7 @@
 				18B5ACAD19DC15CD00BA4A38 /* icon1_night.png in Resources */,
 				18EC012B1AA7752500902E98 /* icon1_park@2x.png in Resources */,
 				18FE21E91AA9D34400ACE28A /* arrow3_right@2x.png in Resources */,
+				E07992CC1B725EDB000402B0 /* micello_logo.png in Resources */,
 				18FE21AB1AA9C75700ACE28A /* menu_button@3x.png in Resources */,
 				18B5AC8519DC15CD00BA4A38 /* button_streets_off.png in Resources */,
 				7E9B7F441A8E25E400C6F2E3 /* arrow3_down.png in Resources */,

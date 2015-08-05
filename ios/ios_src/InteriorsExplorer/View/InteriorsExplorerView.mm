@@ -49,8 +49,14 @@
         float buttonSize = 50.f;
         float labelLength = 200.f;
         float totalPanelLength = buttonSize + labelLength;
+
+        const int micelloLogoWidth = 110;
+        const int micelloLogoHeight = 24;
+        float totalPanelHeight = micelloLogoHeight + buttonSize;
         
-        self.pDetailsPanel = [[[UIView alloc] initWithFrame:CGRectMake(m_screenWidth * 0.5f - totalPanelLength * 0.5f, m_inactiveDetailPaneYPosition, totalPanelLength, buttonSize)] autorelease];
+        m_detailsPanelHeight = totalPanelHeight;
+        
+        self.pDetailsPanel = [[[UIView alloc] initWithFrame:CGRectMake(m_screenWidth * 0.5f - totalPanelLength * 0.5f, m_inactiveDetailPaneYPosition, totalPanelLength, totalPanelHeight)] autorelease];
         
         self.pDismissButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, buttonSize, buttonSize)] autorelease];
         [self.pDismissButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_close_place_pin_off") forState:UIControlStateNormal];
@@ -65,6 +71,20 @@
         self.pFloorNameLabel.layer.borderWidth = 2.0f;
         self.pFloorNameLabel.textAlignment = NSTextAlignmentCenter;
         [self.pDetailsPanel addSubview:self.pFloorNameLabel];
+        
+        self.pMicelloLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, buttonSize, totalPanelLength - micelloLogoWidth, micelloLogoHeight)] autorelease];
+        self.pMicelloLabel.backgroundColor = ExampleApp::Helpers::ColorPalette::WhiteTone;
+        self.pMicelloLabel.textColor = ExampleApp::Helpers::ColorPalette::GreyTone;
+        self.pMicelloLabel.layer.borderWidth = 0;
+        self.pMicelloLabel.textAlignment = NSTextAlignmentCenter;
+        self.pMicelloLabel.text = @"Indoor data from";
+        
+        self.pMicelloLogo = [[[UIImageView alloc] initWithImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"micello_logo")] autorelease];
+        self.pMicelloLogo.frame = CGRectMake(totalPanelLength - micelloLogoWidth, buttonSize, micelloLogoWidth, micelloLogoHeight);
+        
+        [self.pDetailsPanel addSubview:self.pMicelloLabel];
+        [self.pDetailsPanel addSubview:self.pMicelloLogo];
+        
         
         [self addSubview:self.pDetailsPanel];
         
@@ -199,7 +219,7 @@
 - (void) setOnScreenStateToIntermediateValue:(float)onScreenState
 {
     float newX = -50 + onScreenState * 50;
-    float newY = m_screenHeight - 50 * onScreenState;
+    float newY = m_screenHeight - m_detailsPanelHeight * onScreenState;
     
     self.hidden = onScreenState == 0.0f;
     self.pFloorPanel.frame.origin = CGPointMake(newX, self.pFloorPanel.frame.origin.y);
@@ -210,7 +230,7 @@
 - (void) animateTo:(float)t
 {
     float newX = -50 + t * 50;
-    float newY = m_screenHeight - 50 * t;
+    float newY = m_screenHeight - m_detailsPanelHeight * t;
     
     CGRect floorFrame = self.pFloorPanel.frame;
     CGRect detailFrame = self.pDetailsPanel.frame;

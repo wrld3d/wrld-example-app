@@ -26,6 +26,8 @@
     float m_onScreenParam;
     float m_stateChangeAnimationTimeSeconds;
     
+    float m_detailsPanelHeight;
+    
     std::vector<int> m_floorNumbers;
 }
 
@@ -59,5 +61,8 @@
 @property(nonatomic, retain) UIView* pDetailsPanel;
 @property(nonatomic, retain) UIButton* pDismissButton;
 @property(nonatomic, retain) UILabel* pFloorNameLabel;
+
+@property(nonatomic, retain) UILabel* pMicelloLabel;
+@property(nonatomic, retain) UIImageView* pMicelloLogo;
 
 @end
