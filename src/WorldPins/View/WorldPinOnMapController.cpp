@@ -4,6 +4,8 @@
 #include "IWorldPinOnMapView.h"
 #include "IWorldPinInFocusViewModel.h"
 #include "IModalityModel.h"
+#include "InteriorsExplorerViewModel.h"
+#include "InteriorSelectionModel.h"
 
 namespace ExampleApp
 {
@@ -14,11 +16,13 @@ namespace ExampleApp
             WorldPinOnMapController::WorldPinOnMapController(IWorldPinOnMapView& view,
                                                              IWorldPinInFocusViewModel& viewModel,
                                                              ScreenControl::View::IScreenControlViewModel& screenControlViewModel,
-                                                             Modality::View::IModalityModel& modalityModel)
+                                                             Modality::View::IModalityModel& modalityModel,
+                                                             Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel)
             : m_view(view)
             , m_viewModel(viewModel)
             , m_screenControlViewModel(screenControlViewModel)
             , m_modalityModel(modalityModel)
+            , m_interiorSelectionModel(interiorSelectionModel)
             , m_viewSelectedCallback(this, &WorldPinOnMapController::OnSelected)
             , m_viewModelOpenedCallback(this, &WorldPinOnMapController::OnOpened)
             , m_viewModelClosedCallback(this, &WorldPinOnMapController::OnClosed)
@@ -52,6 +56,12 @@ namespace ExampleApp
             
             void WorldPinOnMapController::OnSelected()
             {
+                
+                if (m_interiorSelectionModel.IsInteriorSelected())
+                {
+                    return;
+                }
+                
                 if(!m_modalityModel.IsModalEnabled())
                 {
                     if(m_viewModel.IsOpen())

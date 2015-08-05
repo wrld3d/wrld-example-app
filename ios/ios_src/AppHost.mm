@@ -282,6 +282,7 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
     m_pWorldPinOnMapViewModule = Eegeo_NEW(ExampleApp::WorldPins::View::WorldPinOnMapViewModule)(app.WorldPinsModule().GetWorldPinInFocusViewModel(),
                                  app.WorldPinsModule().GetScreenControlViewModel(),
                                  app.ModalityModule().GetModalityModel(),
+                                app.World().GetMapModule().GetInteriorsPresentationModule().GetInteriorSelectionModel(),
                                  app.PinDiameter(),
                                  screenProperties.GetPixelScale());
 

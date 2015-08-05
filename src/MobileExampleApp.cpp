@@ -857,10 +857,13 @@ namespace ExampleApp
             return;
         }
 
-        InteriorsExplorer::SdkModel::IInteriorsExplorerInputDelegate& interiorsExplorerInputDelegate = m_pInteriorsExplorerModule->GetInputDelegate();
-        if (interiorsExplorerInputDelegate.HandleTouchTap(data))
+        if (!m_pModalityModule->GetModalityModel().IsModalEnabled())
         {
-            return;
+            InteriorsExplorer::SdkModel::IInteriorsExplorerInputDelegate& interiorsExplorerInputDelegate = m_pInteriorsExplorerModule->GetInputDelegate();
+            if (interiorsExplorerInputDelegate.HandleTouchTap(data))
+            {
+                return;
+            }
         }
         
         if(m_pWorldPinsModule->GetWorldPinsService().HandleTouchTap(data.point))

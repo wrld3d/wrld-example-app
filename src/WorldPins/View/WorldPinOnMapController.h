@@ -7,6 +7,8 @@
 #include "WorldPins.h"
 #include "IScreenControlViewModel.h"
 #include "Modality.h"
+#include "InteriorsExplorer.h"
+#include "Interiors.h"
 
 namespace ExampleApp
 {
@@ -21,7 +23,9 @@ namespace ExampleApp
                 WorldPinOnMapController(IWorldPinOnMapView& view,
                                         IWorldPinInFocusViewModel& viewModel,
                                         ScreenControl::View::IScreenControlViewModel& screenControlViewModel,
-                                        Modality::View::IModalityModel& modalityModel);
+                                        Modality::View::IModalityModel& modalityModel,
+                                        Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel);
+                
                 ~WorldPinOnMapController();
 
             private:
@@ -37,6 +41,7 @@ namespace ExampleApp
                 IWorldPinInFocusViewModel& m_viewModel;
                 ScreenControl::View::IScreenControlViewModel& m_screenControlViewModel;
                 Modality::View::IModalityModel& m_modalityModel;
+                Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
 
                 Eegeo::Helpers::TCallback0<WorldPinOnMapController> m_viewSelectedCallback;
                 Eegeo::Helpers::TCallback0<WorldPinOnMapController> m_viewModelOpenedCallback;
