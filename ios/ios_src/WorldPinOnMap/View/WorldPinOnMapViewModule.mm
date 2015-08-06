@@ -16,7 +16,7 @@ namespace ExampleApp
             WorldPinOnMapViewModule::WorldPinOnMapViewModule(IWorldPinInFocusViewModel& worldPinInFocusViewModel,
                     ScreenControl::View::IScreenControlViewModel::IScreenControlViewModel& worldPinOnMapInFocusScreenControlViewModel,
                     Modality::View::IModalityModel& modalityModel,
-                    Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
+                    const IAppModeModel& appModeModel,
                     float pinDiameter,
                     float pixelScale)
             {
@@ -27,7 +27,7 @@ namespace ExampleApp
                                     worldPinInFocusViewModel,
                                     worldPinOnMapInFocusScreenControlViewModel,
                                     modalityModel,
-                                                                   interiorSelectionModel);
+                                    appModeModel);
             }
 
             WorldPinOnMapViewModule::~WorldPinOnMapViewModule()

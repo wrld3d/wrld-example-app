@@ -5,7 +5,6 @@
 #include "IWorldPinInFocusViewModel.h"
 #include "IModalityModel.h"
 #include "InteriorsExplorerViewModel.h"
-#include "InteriorSelectionModel.h"
 
 namespace ExampleApp
 {
@@ -17,12 +16,12 @@ namespace ExampleApp
                                                              IWorldPinInFocusViewModel& viewModel,
                                                              ScreenControl::View::IScreenControlViewModel& screenControlViewModel,
                                                              Modality::View::IModalityModel& modalityModel,
-                                                             Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel)
+                                                             const IAppModeModel& appModeModel)
             : m_view(view)
             , m_viewModel(viewModel)
             , m_screenControlViewModel(screenControlViewModel)
             , m_modalityModel(modalityModel)
-            , m_interiorSelectionModel(interiorSelectionModel)
+            , m_appModeModel(appModeModel)
             , m_viewSelectedCallback(this, &WorldPinOnMapController::OnSelected)
             , m_viewModelOpenedCallback(this, &WorldPinOnMapController::OnOpened)
             , m_viewModelClosedCallback(this, &WorldPinOnMapController::OnClosed)
@@ -57,7 +56,7 @@ namespace ExampleApp
             void WorldPinOnMapController::OnSelected()
             {
                 
-                if (m_interiorSelectionModel.IsInteriorSelected())
+                if (m_appModeModel.GetAppMode() == InteriorMode)
                 {
                     return;
                 }
@@ -97,7 +96,6 @@ namespace ExampleApp
                     m_view.UpdateScreenState(screenState);
                 }
             }
-            
         }
     }
 }

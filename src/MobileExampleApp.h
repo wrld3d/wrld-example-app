@@ -75,6 +75,8 @@
 
 namespace ExampleApp
 {
+    class IAppModeModel;
+
     class MobileExampleApp : private Eegeo::NonCopyable
     {
     private:
@@ -134,7 +136,7 @@ namespace ExampleApp
         Search::SdkModel::ISearchServiceModule& m_searchServiceModule;
         InteriorsExplorer::SdkModel::IInteriorsExplorerModule* m_pInteriorsExplorerModule;
         InteriorsEntitiesPins::SdkModel::IInteriorsEntitiesPinsModule* m_pInteriorsEntitiesPinsModule;
-        
+        IAppModeModel* m_pAppModeModel;
 
         void CreateApplicationModelModules();
 
@@ -320,6 +322,11 @@ namespace ExampleApp
         Eegeo::Helpers::IdentityProvider& GetIdentityProvider()
         {
             return m_identityProvider;
+        }
+
+        const IAppModeModel& GetAppModeModel() const
+        {
+            return *m_pAppModeModel;
         }
 
         void OnPause();

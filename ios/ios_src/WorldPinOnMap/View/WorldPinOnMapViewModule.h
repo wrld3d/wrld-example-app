@@ -8,8 +8,7 @@
 #include "IScreenControlViewModel.h"
 #include "Modality.h"
 #include "WorldPinOnMapViewIncludes.h"
-#include "InteriorsExplorer.h"
-#include "Interiors.h"
+#include "IAppModeModel.h"
 
 namespace ExampleApp
 {
@@ -27,7 +26,7 @@ namespace ExampleApp
                 WorldPinOnMapViewModule(IWorldPinInFocusViewModel& worldPinInFocusViewModel,
                                         ScreenControl::View::IScreenControlViewModel::IScreenControlViewModel& worldPinOnMapInFocusScreenControlViewModel,
                                         Modality::View::IModalityModel& modalityModel,
-                                        Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
+                                        const IAppModeModel& appModeModel,
                                         float pinDiameter,
                                         float pixelScale);
 

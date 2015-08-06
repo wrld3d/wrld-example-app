@@ -65,6 +65,7 @@
 #include "PinsModule.h"
 #include "MapModeModule.h"
 #include "IInteriorsExplorerInputDelegate.h"
+#include "AppModeModel.h"
 
 
 namespace ExampleApp
@@ -197,6 +198,7 @@ namespace ExampleApp
                 mapModule.GetResourceCeilingProvider(),
                 *m_pNavigationService);
 
+        m_pAppModeModel = Eegeo_NEW(AppModeModel)(m_pWorld->GetMapModule().GetInteriorsPresentationModule().GetInteriorSelectionModel());
 
         const bool useLowSpecSettings = false;
 
@@ -249,6 +251,8 @@ namespace ExampleApp
         Eegeo_DELETE m_pNavigationService;
         Eegeo_DELETE m_pGlobeCameraController;
         Eegeo_DELETE m_pLoadingScreen;
+
+        Eegeo_DELETE m_pAppModeModel;
 
         Eegeo_DELETE m_pWorld;
         
