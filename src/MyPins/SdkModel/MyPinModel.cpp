@@ -8,7 +8,11 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            const int MyPinModel::CurrentVersion = 1;
+            /*
+                Version 1: Initial version
+                Version 2: Added optional ratings image & reviews count data (8/7/15)
+             */
+            const int MyPinModel::CurrentVersion = 2;
             
             MyPinModel::MyPinModel()
                 : m_version(-1)
@@ -22,12 +26,16 @@ namespace ExampleApp
                                    int modelId,
                                    const std::string& title,
                                    const std::string& description,
+                                   const std::string& ratingsImage,
+                                   int reviewCount,
                                    int sdkMapPinIconIndex,
                                    const Eegeo::Space::LatLong& latLong)
             : m_version(version)
             , m_modelId(modelId)
             , m_title(title)
             , m_description(description)
+            , m_ratingsImage(ratingsImage)
+            , m_reviewCount(reviewCount)
             , m_sdkMapPinIconIndex(sdkMapPinIconIndex)
             , m_latLong(latLong)
             {

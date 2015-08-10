@@ -33,6 +33,8 @@ namespace ExampleApp
                 
                 void SaveUserCreatedPoiPin(const std::string& title,
                                            const std::string& description,
+                                           const std::string& ratingsImage,
+                                           const int reviewCount,
                                            const Eegeo::Space::LatLong& latLong,
                                            Byte* imageData,
                                            size_t imageSize,
@@ -40,6 +42,10 @@ namespace ExampleApp
                 
                 void SaveSearchResultPoiPin(const Search::SdkModel::SearchResultModel& searchResult,
                                             int pinIconIndex);
+                
+                void UpdatePinWithResult(const int myPinId, const Search::SdkModel::SearchResultModel& result);
+                
+                void SaveAllPinsToDisk();
                 
             private:
                 IMyPinsRepository& m_myPinsRepository;

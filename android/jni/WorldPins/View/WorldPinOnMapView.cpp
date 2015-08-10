@@ -48,7 +48,11 @@ namespace ExampleApp
                 env->DeleteGlobalRef(m_uiViewClass);
             }
 
-            void WorldPinOnMapView::Open(const std::string& title, const std::string& subtitle, float modality)
+            void WorldPinOnMapView::Open(const std::string& title,
+            		const std::string& subtitle,
+            		const std::string& ratingsImage,
+            		const int reviewCount,
+            		float modality)
             {
                 ASSERT_UI_THREAD
 
@@ -57,12 +61,14 @@ namespace ExampleApp
 
                 jstring titleStr = env->NewStringUTF(title.c_str());
                 jstring detailsStr = env->NewStringUTF(subtitle.c_str());
+                jstring ratingsImgStr = env->NewStringUTF(ratingsImage.c_str());
 
-                jmethodID showAtScreenLocation = env->GetMethodID(m_uiViewClass, "show", "(Ljava/lang/String;Ljava/lang/String;F)V");
-                env->CallVoidMethod(m_uiView, showAtScreenLocation, titleStr, detailsStr, modality);
+                jmethodID showAtScreenLocation = env->GetMethodID(m_uiViewClass, "show", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IF)V");
+                env->CallVoidMethod(m_uiView, showAtScreenLocation, titleStr, detailsStr, ratingsImgStr, reviewCount, modality);
 
                 env->DeleteLocalRef(titleStr);
                 env->DeleteLocalRef(detailsStr);
+                env->DeleteLocalRef(ratingsImgStr);
             }
 
             void WorldPinOnMapView::Close()

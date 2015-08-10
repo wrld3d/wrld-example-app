@@ -49,7 +49,7 @@ namespace ExampleApp
             {
                 std::vector<std::pair<MyPinModel*, IMyPinBoundObject*> > pinModelBindings;
                 
-                m_myPinsFileIO.LoadPinModelsFromDisk(pinModelBindings);
+                m_myPinsFileIO.LoadPinModelsFromDisk(pinModelBindings, *this);
                 
                 for (std::vector<std::pair<MyPinModel*, IMyPinBoundObject*> >::iterator it = pinModelBindings.begin();
                      it != pinModelBindings.end();
@@ -68,7 +68,9 @@ namespace ExampleApp
             void MyPinsService::AddPinToMap(MyPinModel* pMyPinModel)
             {
                 WorldPins::SdkModel::WorldPinFocusData worldPinFocusData(pMyPinModel->GetTitle(),
-                                                                         pMyPinModel->GetDescription());
+                                                                         pMyPinModel->GetDescription(),
+                                                                         pMyPinModel->GetRatingsImage(),
+                                                                         pMyPinModel->GetReviewsCount());
                 
                 MyPinSelectionHandler* pSelectionHandler(m_myPinSelectionHandlerFactory.CreateMyPinSelectionHandler(*pMyPinModel));
                 
@@ -81,6 +83,7 @@ namespace ExampleApp
                                                                                                       pMyPinModel->GetSdkMapPinIconIndexIcon());
                 m_myPinToWorldPinMap.insert(std::make_pair(pMyPinModel, worldPinItemModel));
             }
+        
 
             void MyPinsService::RemovePinWithId(const int myPinId)
             {
@@ -105,8 +108,42 @@ namespace ExampleApp
                 }
             }
             
+            void MyPinsService::UpdatePinWithResult(const int myPinId, const Search::SdkModel::SearchResultModel& result)
+            {
+                for (TMyPinToWorldPinMap::iterator it = m_myPinToWorldPinMap.begin(); it != m_myPinToWorldPinMap.end(); ++it)
+                {
+                    MyPinModel* pinModel = it->first;
+                    WorldPins::SdkModel::WorldPinItemModel* worldPinItemModel = it->second;
+                    
+                    if (pinModel->Identifier() == myPinId)
+                    {
+                        pinModel->Update(result.GetTitle(), result.GetAddress(), result.GetRatingImageUrl(), result.GetReviewCount());
+                        worldPinItemModel->Refresh(result.GetTitle(), result.GetAddress(), result.GetRatingImageUrl(), result.GetReviewCount());
+                        
+                        SaveAllPinsToDisk();
+                        
+                        break;
+                    }
+                }
+            }
+            
+            void MyPinsService::SaveAllPinsToDisk()
+            {
+                std::vector<MyPinModel*> pinModels;
+                pinModels.reserve(m_myPinsRepository.GetItemCount());
+                
+                for (int i = 0; i < m_myPinsRepository.GetItemCount(); ++i)
+                {
+                    pinModels.push_back(m_myPinsRepository.GetItemAtIndex(i));
+                }
+                
+                m_myPinsFileIO.SaveAllRepositoryPinsToDisk(pinModels);
+            }
+            
             void MyPinsService::SaveUserCreatedPoiPin(const std::string& title,
                                                       const std::string& description,
+                                                      const std::string& ratingsImage,
+                                                      const int reviewCount,
                                                       const Eegeo::Space::LatLong& latLong,
                                                       Byte* imageData,
                                                       size_t imageSize,
@@ -126,6 +163,8 @@ namespace ExampleApp
                                                              idForThisPin,
                                                              title,
                                                              description,
+                                                             ratingsImage,
+                                                             reviewCount,
                                                              myPinIconIndex,
                                                              latLong);
                 
@@ -139,20 +178,22 @@ namespace ExampleApp
             void MyPinsService::SaveSearchResultPoiPin(const Search::SdkModel::SearchResultModel& searchResult,
                                                        int pinIconIndex)
             {
+                
+                
                 MyPinModel::TPinIdType idForThisPin = ++m_lastIdUsed;
                 
                 IMyPinBoundObject& boundObject = *m_myPinBoundObjectFactory.CreateSearchResultPinBoundObject(m_myPinsFileIO,
                                                                                                              idForThisPin,
-                                                                                                             searchResult);
+                                                                                                             searchResult,
+                                                                                                             *this);
                 m_myPinBoundObjectRepository.AddBoundItemForPin(idForThisPin, boundObject);
-                
-                // Use the ratings image if available, else fall back to address.
-                const std::string& ratingsImage(searchResult.GetRatingImageUrl());
                                 
                 MyPinModel *pinModel = Eegeo_NEW(MyPinModel)(MyPinModel::CurrentVersion,
                                                              idForThisPin,
                                                              searchResult.GetTitle(),
-                                                             ratingsImage.empty() ? searchResult.GetAddress() : ratingsImage,
+                                                             searchResult.GetAddress(),
+                                                             searchResult.GetRatingImageUrl(),
+                                                             searchResult.GetReviewCount(),
                                                              pinIconIndex,
                                                              searchResult.GetLocation());
                 

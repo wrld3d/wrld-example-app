@@ -29,6 +29,8 @@
     UIImage* m_pAddPinHighlightButtonBackgroundImage;
     UIImage* m_pVendorBrandingImage;
     
+    CAGradientLayer* m_pGradientMask;
+    
     float m_imageWidth;
     float m_imageHeight;
     float m_ratingsImageWidth;
@@ -75,6 +77,7 @@
 @property (nonatomic, retain) UIImageView* pPreviewImage;
 @property (nonatomic, retain) UIActivityIndicatorView* pPreviewImageSpinner;
 @property (nonatomic, retain) UIImageView* pRatingImage;
+@property (nonatomic, retain) UILabel* pReviewCountLabel;
 @property (nonatomic, retain) UIButton* pVendorWebLinkButton;
 @property (nonatomic, retain) UIImageView* pVendorBrandingImageContainer;
 

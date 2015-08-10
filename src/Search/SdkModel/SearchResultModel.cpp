@@ -8,7 +8,11 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            const int SearchResultModel::CurrentVersion = 3;
+            /*
+                3: Yelp support (27/2/15)
+                4: Added review count (7/7/15)
+            */
+            const int SearchResultModel::CurrentVersion = 4;
             
             SearchResultModel::SearchResultModel()
             : m_version(-1)
@@ -25,6 +29,7 @@ namespace ExampleApp
             , m_imageUrl("")
             , m_ratingImageUrl("")
             , m_reviews()
+            , m_reviewCount(0)
             , m_searchResultCreationTimeStamp(-1)
             {
                 
@@ -44,6 +49,7 @@ namespace ExampleApp
                                                  const std::string& imageUrl,
                                                  const std::string& ratingImageUrl,
                                                  const std::vector<std::string>& reviews,
+                                                 const int reviewCount,
                                                  int64_t searchResultCreationTimeStamp)
                 : m_version(version)
                 , m_identifier(identifier)
@@ -59,6 +65,7 @@ namespace ExampleApp
                 , m_imageUrl(imageUrl)
                 , m_ratingImageUrl(ratingImageUrl)
                 , m_reviews(reviews)
+                , m_reviewCount(reviewCount)
                 , m_searchResultCreationTimeStamp(searchResultCreationTimeStamp)
             {
             }
@@ -146,6 +153,11 @@ namespace ExampleApp
             const std::vector<std::string>& SearchResultModel::GetReviews() const
             {
                 return m_reviews;
+            }
+            
+            const int SearchResultModel::GetReviewCount() const
+            {
+                return m_reviewCount;
             }
             
             int64_t SearchResultModel::GetCreationTimestamp() const

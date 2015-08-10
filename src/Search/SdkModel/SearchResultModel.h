@@ -29,6 +29,7 @@ namespace ExampleApp
                 std::string m_imageUrl;
                 std::string m_ratingImageUrl;
                 std::vector<std::string> m_reviews;
+                int m_reviewCount;
                 int64_t m_searchResultCreationTimeStamp;
                 
             public:
@@ -48,6 +49,7 @@ namespace ExampleApp
                                   const std::string& imageUrl,
                                   const std::string& ratingImageUrl,
                                   const std::vector<std::string>& reviews,
+                                  int reviewCount,
                                   int64_t searchResultCreationTimeStamp);
                 
                 SearchResultModel();
@@ -85,6 +87,8 @@ namespace ExampleApp
                 const std::string& GetRatingImageUrl() const;
                 
                 const std::vector<std::string>& GetReviews() const;
+                
+                const int GetReviewCount() const;
                 
                 int64_t GetCreationTimestamp() const;
             };

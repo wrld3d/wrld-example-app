@@ -74,6 +74,8 @@ namespace ExampleApp
             {
                 m_view.Open(m_viewModel.GetWorldPinsInFocusModel().GetTitle(),
                             m_viewModel.GetWorldPinsInFocusModel().GetSubtitle(),
+                            m_viewModel.GetWorldPinsInFocusModel().GetRatingsImage(),
+                            m_viewModel.GetWorldPinsInFocusModel().GetReviewCount(),
                             m_modalityModel.GetModality());
                 
                 OnUpdated();

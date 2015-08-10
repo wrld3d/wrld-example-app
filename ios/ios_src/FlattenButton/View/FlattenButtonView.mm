@@ -34,6 +34,8 @@
         self.frame = CGRectMake(((m_screenWidth * 0.5f) - (m_width + (m_width * 0.5f) + 16.f)), m_yPosInactive, m_width, m_height);
         
         m_stateChangeAnimationTimeSeconds = 0.2f;
+        
+        self.hidden = YES;
     }
 
     return self;
@@ -60,6 +62,8 @@
 
 - (void) setFullyOnScreen
 {
+    self.hidden = NO;
+    
     if(self.frame.origin.y == m_yPosActive)
     {
         return;

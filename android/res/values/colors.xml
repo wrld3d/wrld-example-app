@@ -10,4 +10,5 @@
     <color name="blue">#291e9a</color>
     <color name="menu_separator">#b1cce1</color>
     <color name="submenu_separator">#c6cecf</color>
+    <color name="transparent">#00000000</color>
 </resources>

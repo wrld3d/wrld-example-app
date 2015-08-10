@@ -25,10 +25,12 @@ namespace ExampleApp
 
             void WorldPinOnMapViewInterop::Open(const std::string& title,
                                                 const std::string& subtitle,
+                                                const std::string& ratingsImage,
+                                                const int reviewCount,
                                                 float modality)
             {
                 [m_pView setFullyActive:modality];
-                [m_pView setContent:title :subtitle];
+                [m_pView setContent:title :subtitle :ratingsImage :reviewCount];
             }
 
             void WorldPinOnMapViewInterop::Close()

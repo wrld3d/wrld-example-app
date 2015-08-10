@@ -36,6 +36,8 @@
         [self.pPoiCreateButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_create_poi") forState:UIControlStateNormal];
         self.pPoiCreateButton.frame = CGRectMake(0.f, 0.f, m_width, m_height);
         [self.pPoiCreateButton addTarget:self action:@selector(onClick:) forControlEvents:UIControlEventTouchUpInside];
+        
+        self.hidden = YES;
     }
 
     return self;
@@ -69,6 +71,8 @@
 
 - (void) setFullyOnScreen
 {
+    self.hidden = NO;
+    
     if(self.frame.origin.y == m_yPosActive)
     {
         return;

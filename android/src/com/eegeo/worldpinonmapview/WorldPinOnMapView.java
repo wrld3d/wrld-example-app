@@ -6,6 +6,7 @@ import android.animation.Animator;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.RelativeLayout.LayoutParams;
@@ -27,6 +28,9 @@ public class WorldPinOnMapView implements View.OnClickListener
     private TextView m_titleView;
     private TextView m_detailsView;
 	private ImageView m_poiRatingImage;
+	private ImageView m_poiAccreditationImage;
+	private TextView m_reviewsCountView;
+	private LinearLayout m_ratingsBar;
 
     public WorldPinOnMapView(MainActivity activity, long nativeCallerPointer)
     {
@@ -45,6 +49,9 @@ public class WorldPinOnMapView implements View.OnClickListener
         m_titleView = (TextView)m_view.findViewById(R.id.search_result_on_map_view_title);
         m_detailsView = (TextView)m_view.findViewById(R.id.search_result_on_map_view_details);
         m_poiRatingImage = (ImageView)m_view.findViewById(R.id.search_result_on_map_view_image);
+        m_ratingsBar = (LinearLayout)m_view.findViewById(R.id.search_result_on_map_view_ratings_bar);
+        m_reviewsCountView = (TextView)m_view.findViewById(R.id.search_result_on_map_view_review_count);
+        m_poiAccreditationImage = (ImageView)m_view.findViewById(R.id.search_result_on_map_accreditation_logo);
     }
 
     public void destroy()
@@ -52,35 +59,50 @@ public class WorldPinOnMapView implements View.OnClickListener
         m_uiRoot.removeView(m_view);
     }
 
-    public void show(final String title, final String data, final float modality)
+    public void show(final String title, final String subtitle, final String ratingsImg, final int reviewCount, final float modality)
     {
-        boolean usedImage = false; 
+        boolean usedImage = !ratingsImg.isEmpty();
         
-    	if(data.startsWith("stars_"))
+    	if(usedImage)
     	{
-        	int imageResource = m_activity.getResources().getIdentifier(data, "drawable", m_activity.getPackageName());
-        	if(imageResource != 0)
+        	int imageResource = m_activity.getResources().getIdentifier(ratingsImg, "drawable", m_activity.getPackageName());
+        	if(imageResource != 0 && reviewCount > 0)
         	{
         		m_detailsView.setText("");
         		Drawable image = m_activity.getResources().getDrawable(imageResource);
         		m_poiRatingImage.setImageDrawable(image);
-            	m_poiRatingImage.setVisibility(View.VISIBLE);
         		usedImage = true;
+        		m_reviewsCountView.setText("(" + reviewCount + ")");
+        		m_ratingsBar.setVisibility(View.VISIBLE);
+        		m_detailsView.setVisibility(View.GONE);
         	}
+        	else
+        	{
+        		m_ratingsBar.setVisibility(View.GONE);
+        		m_detailsView.setText(subtitle);
+        		m_detailsView.setVisibility(View.VISIBLE);
+        	}
+        	
+        	m_poiAccreditationImage.setVisibility(View.VISIBLE);
+        	
+    	}
+    	else
+    	{
+    		m_ratingsBar.setVisibility(View.GONE);
+    		m_poiAccreditationImage.setVisibility(View.GONE);
+        	m_detailsView.setVisibility(View.VISIBLE);
+        	m_detailsView.setText(subtitle);
+        	m_poiRatingImage.setImageDrawable(null);
     	}
     	
         m_view.setEnabled(true);
         m_titleView.setText(title);
         
-        if(!usedImage)
-        {	
-        	m_detailsView.setText(data);
-        	m_poiRatingImage.setImageDrawable(null);
-        	m_poiRatingImage.setVisibility(View.INVISIBLE);
-        }
-        
         m_view.setVisibility(View.VISIBLE);
         animateToAlpha(1.f - modality);
+        
+        m_height = usedImage ? m_activity.dipAsPx(95) : m_activity.dipAsPx(72);
+        
     }
 
     public void updateScreenLocation(final float x, final float y)
