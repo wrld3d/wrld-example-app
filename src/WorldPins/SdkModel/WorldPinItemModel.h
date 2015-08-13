@@ -63,6 +63,8 @@ namespace ExampleApp
                 void Show();
 
                 void Update(float deltaSeconds);
+                
+                void Refresh(const std::string& title, const std::string& description, const std::string& ratingsImage, const int reviewCount);
 
                 const IWorldPinsInFocusModel& GetInFocusModel() const;
             };

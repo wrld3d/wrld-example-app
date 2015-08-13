@@ -34,6 +34,8 @@ namespace ExampleApp
 
                 void SavePoi(const std::string& title,
                              const std::string& description,
+                             const std::string& ratingsImage,
+                             const int reviewCount,
                              Byte* imageData,
                              size_t imageSize,
                              bool shouldShare);

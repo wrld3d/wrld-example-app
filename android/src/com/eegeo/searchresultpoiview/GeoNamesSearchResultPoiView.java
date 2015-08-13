@@ -73,7 +73,8 @@ public class GeoNamesSearchResultPoiView
     		final String imageUrl,
     		final String ratingImageUrl,
     		final String vendor,
-    		final String[] reviewSnippet,
+    		final String[] reviews,
+    		final int reviewCount,
     		final boolean isPinned)
     {
         m_titleView.setText(title);

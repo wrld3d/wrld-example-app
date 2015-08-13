@@ -66,12 +66,16 @@ namespace ExampleApp
 
             void MyPinCreationModel::SavePoi(const std::string& title,
                                              const std::string& description,
+                                             const std::string& ratingsImage,
+                                             const int reviewCount,
                                              Byte* imageData,
                                              size_t imageSize,
                                              bool shouldShare)
             {
                 m_myPinsService.SaveUserCreatedPoiPin(title,
                                                       description,
+                                                      ratingsImage,
+                                                      reviewCount,
                                                       Eegeo::Space::LatLong::FromECEF(m_position),
                                                       imageData,
                                                       imageSize,

@@ -147,7 +147,9 @@ namespace ExampleApp
                 // Use the ratings image if available, else fall back to address.
                 const std::string& ratingsImage(searchResultModel.GetRatingImageUrl());
                 WorldPins::SdkModel::WorldPinFocusData worldPinFocusData(searchResultModel.GetTitle(),
-                                                                         ratingsImage.empty() ? searchResultModel.GetAddress() : ratingsImage);
+                                                                         searchResultModel.GetAddress(),
+                                                                         ratingsImage,
+                                                                         searchResultModel.GetReviewCount());
                 
                 ExampleApp::WorldPins::SdkModel::WorldPinItemModel *pinItemModel = m_worldPinsService.AddPin(pSearchResultOnMapItemModel,
                                                                                                              NULL,

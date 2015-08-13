@@ -27,6 +27,7 @@ namespace
         std::string uniqueId;
         std::string imageUrl;
         std::string ratingImageUrl;
+        int reviewCount;
         Eegeo::Space::LatLong location;
         
         Result():location(0.f, 0.f) { }
@@ -42,6 +43,7 @@ namespace
         entry.webUrl = "";
         entry.name = "";
         entry.imageUrl = "";
+        entry.reviewCount = 0;
         
         const Value& name = json["name"];
         entry.name = name.GetString();
@@ -147,6 +149,11 @@ namespace
             }
         }
         
+        if(json.HasMember("review_count"))
+        {
+            entry.reviewCount = json["review_count"].GetInt();
+        }
+        
         entry.vicinity = entry.address;
         
         const Value& id = json["id"];
@@ -167,6 +174,7 @@ namespace
                                                                entry.imageUrl,
                                                                entry.ratingImageUrl,
                                                                reviews,
+                                                               entry.reviewCount,
                                                                Eegeo::Helpers::Time::MillisecondsSinceEpoch());
     }
     
@@ -188,8 +196,8 @@ namespace ExampleApp
                                                           std::vector<SdkModel::SearchResultModel>& out_results)
             {
                 Document document;
-                
-                if (!document.Parse<0>(serialized.c_str()).HasParseError())
+
+                if (!document.Parse<0>(serialized.c_str()).HasParseError() && !document.HasMember("error"))
                 {
                     if(document.HasMember("businesses"))
                     {
@@ -211,14 +219,15 @@ namespace ExampleApp
                                                   SdkModel::SearchResultModel& out_result)
             {
                 Document document;
-                
-                if (!document.Parse<0>(serialized.c_str()).HasParseError())
+
+                if (!document.Parse<0>(serialized.c_str()).HasParseError() && !document.HasMember("error"))
                 {
                     out_result = ParseYelpSearchResultFromJsonObject(document, yelpCategoryMapper);
                     return true;
                 }
                 else
                 {
+                	Eegeo_TTY("Failure to parse business search result: %s", serialized.c_str());
                     return false;
                 }
             }

@@ -2,6 +2,7 @@
 
 package com.eegeo.search.yelp;
 
+import java.net.URLEncoder;
 import java.util.Locale;
 
 import org.scribe.builder.ServiceBuilder;
@@ -84,7 +85,7 @@ public class AndroidYelpSearchQuery
     public void dispatchBusinessQuery(String searchQueryInput)
     {
         m_performRequestTask = new PerformRequestTask(true);
-    	OAuthRequest request = new OAuthRequest(Verb.GET, "http://" + API_HOST + BUSINESS_PATH + searchQueryInput);
+    	OAuthRequest request = new OAuthRequest(Verb.GET, "http://" + API_HOST + BUSINESS_PATH + URLEncoder.encode(searchQueryInput));
         m_performRequestTask.execute(request);
     }
     

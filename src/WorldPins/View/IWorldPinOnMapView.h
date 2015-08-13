@@ -18,6 +18,8 @@ namespace ExampleApp
 
                 virtual void Open(const std::string& title,
                                   const std::string& subtitle,
+                                  const std::string& ratingsImage,
+                                  const int reviewCount,
                                   float modality) = 0;
                 virtual void Close() = 0;
                 virtual void UpdateScreenLocation(float posX, float posY) = 0;

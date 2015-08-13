@@ -75,15 +75,44 @@
 		                android:id="@+id/search_result_poi_view_image"
 		                android:layout_width="fill_parent"
 		                android:layout_height="wrap_content"/>
+		            
+		            <View android:id="@+id/search_result_poi_view_image_gradient"
+		                android:layout_width="fill_parent"
+		                android:layout_height="30dp"
+		                android:background="@drawable/image_gradient"
+		                android:layout_alignParentBottom="true"/>
 
-		            <ImageView
-		                android:id="@+id/search_result_poi_view_rating_over_image"
+		            <!--  Ratings over image -->
+		            <RelativeLayout android:id="@+id/search_result_poi_view_rating_over_image_container"
 		                android:layout_width="wrap_content"
 		                android:layout_height="wrap_content"
 		                android:layout_alignParentBottom="true"
 		                android:layout_centerHorizontal="true"
-		                android:layout_gravity="center_vertical"
-		                android:padding="5dp" />
+		                android:layout_marginBottom="5dp">
+		                
+			            <ImageView
+			                android:id="@+id/search_result_poi_view_rating_over_image"
+			                android:layout_width="wrap_content"
+			                android:layout_height="wrap_content"
+			                android:layout_gravity="center_vertical"
+			                android:padding="5dp" />
+			            
+			            <TextView
+			                android:id="@+id/search_result_poi_view_rating_over_image_review_count"
+			                android:layout_width="wrap_content"
+			                android:layout_height="15dp"
+			                android:layout_centerVertical="true"
+			                android:layout_gravity="center_vertical"
+			                android:layout_marginLeft="3dp"
+			                android:layout_toRightOf="@id/search_result_poi_view_rating_over_image"
+			                android:ellipsize="end"
+			                android:singleLine="true"
+			                android:textColor="@color/white"
+			                android:textSize="12.0dp" />
+		            
+		            </RelativeLayout>
+		            
+		            
 
 	            </RelativeLayout>
 	            
@@ -101,6 +130,18 @@
 	            	    android:layout_height="wrap_content"
 	            	    android:layout_gravity="center_vertical"
 	            	    android:padding="5dp" />
+	                
+	                <TextView
+			                android:id="@+id/search_result_poi_view_rating_review_count"
+			                android:layout_width="wrap_content"
+			                android:layout_height="15dp"
+			                android:layout_gravity="center_vertical"
+			                android:layout_marginLeft="3dp"
+			                android:layout_marginRight="10dp"
+			                android:ellipsize="end"
+			                android:singleLine="true"
+			                android:textColor="@color/darkgrey"
+			                android:textSize="12.0dp" />
 	                
 	                <RelativeLayout
 	                    android:layout_width="wrap_content"

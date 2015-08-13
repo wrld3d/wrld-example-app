@@ -59,6 +59,8 @@
         m_tapGestureRecogniser = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(_tapTabGesture:)] autorelease];
         [m_tapGestureRecogniser setDelegate:self];
         [self addGestureRecognizer: m_tapGestureRecogniser];
+        
+        self.hidden = YES;
     }
 
     return self;
@@ -144,6 +146,8 @@
 
 - (void) setFullyOnScreen
 {
+    self.hidden = NO;
+    
     if(self.frame.origin.y == m_yPosActive)
     {
         return;
@@ -166,7 +170,11 @@
 {
     float newY = m_yPosInactive + (m_yPosActive - m_yPosInactive) * onScreenState;
     
-    self.hidden = false;
+    if (onScreenState > 0.f)
+    {
+        self.hidden = false;
+    }
+    
     CGRect f = self.frame;
     f.origin.y = newY;
     self.frame = f;

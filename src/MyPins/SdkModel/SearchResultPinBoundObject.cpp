@@ -9,6 +9,8 @@
 #include "SearchResultPinRemovedEvent.h"
 #include "TimeHelpers.h"
 #include "IMyPinsSearchResultRefreshService.h"
+#include "IMyPinsService.h"
+#include "SearchResultIconCategoryMapper.h"
 
 namespace ExampleApp
 {
@@ -23,7 +25,8 @@ namespace ExampleApp
                                                                                        Search::SdkModel::MyPins::IMyPinsSearchResultRefreshService& myPinsSearchResultRefreshService,
                                                                                        ExampleAppMessaging::TMessageBus& messageBus,
                                                                                        ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
-                                                                                       Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory)
+                                                                                       Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory,
+                                                                                       ExampleApp::MyPins::SdkModel::IMyPinsService& myPinsService)
             {
                 return Eegeo_NEW(SearchResultPinBoundObject)(pinId,
                                                              Search::SdkModel::DeserializeFromJson(serializedData),
@@ -32,7 +35,8 @@ namespace ExampleApp
                                                              myPinsSearchResultRefreshService,
                                                              messageBus,
                                                              sdkModelDomainEventBus,
-                                                             webLoadRequestFactory);
+                                                             webLoadRequestFactory,
+                                                             myPinsService);
             }
             
             SearchResultPinBoundObject::SearchResultPinBoundObject(MyPinModel::TPinIdType pinId,
@@ -42,7 +46,8 @@ namespace ExampleApp
                                                                    Search::SdkModel::MyPins::IMyPinsSearchResultRefreshService& myPinsSearchResultRefreshService,
                                                                    ExampleAppMessaging::TMessageBus& messageBus,
                                                                    ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
-                                                                   Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory)
+                                                                   Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory,
+                                                                   ExampleApp::MyPins::SdkModel::IMyPinsService& myPinsService)
             : m_pinId(pinId)
             , m_searchResult(searchResult)
             , m_serialized(Search::SdkModel::SerializeToJson(m_searchResult))
@@ -54,6 +59,7 @@ namespace ExampleApp
             , m_webLoadRequestFactory(webLoadRequestFactory)
             , m_pinVendorRequiresRefreshing(m_searchResult.GetVendor() == "Yelp")
             , m_isCurrentlyRefreshingResult(false)
+            , m_myPinsService(myPinsService)
             {
                 
             }
@@ -99,7 +105,7 @@ namespace ExampleApp
                     // Allow at least five minutes between refreshes.
                     const int64_t millisecondsBetweenRefresh = (5 * 60 * 1000);
 
-                    if(millisecondsSinceCreated >= millisecondsBetweenRefresh)
+                    if(millisecondsSinceCreated >= millisecondsBetweenRefresh || pinModel.Version() != MyPinModel::CurrentVersion)
                     {
                         m_isCurrentlyRefreshingResult = true;
                         m_myPinsSearchResultRefreshService.RefreshPinnedSearchResult(pinModel.Identifier(),
@@ -143,6 +149,7 @@ namespace ExampleApp
             }
             
             void SearchResultPinBoundObject::FinishRefreshingSearchResult(bool success,
+                                                                          const ExampleApp::MyPins::SdkModel::MyPinModel::TPinIdType pinId,
                                                                           const Search::SdkModel::SearchResultModel& result)
             {
                 m_isCurrentlyRefreshingResult = false;
@@ -151,6 +158,8 @@ namespace ExampleApp
                 {
                     m_searchResult = result;
                     m_serialized = Search::SdkModel::SerializeToJson(m_searchResult);
+                    
+                    m_myPinsService.UpdatePinWithResult(pinId, result);
                 }
             }
         }

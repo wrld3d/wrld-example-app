@@ -128,6 +128,8 @@ namespace ExampleApp
                     valueObject.AddMember("id", pinModel.Identifier(), allocator);
                     valueObject.AddMember("title", pinModel.GetTitle().c_str(), allocator);
                     valueObject.AddMember("description", pinModel.GetDescription().c_str(), allocator);
+                    valueObject.AddMember("ratingsImage", pinModel.GetRatingsImage().c_str(), allocator);
+                    valueObject.AddMember("reviewCount", pinModel.GetReviewsCount(), allocator);
                     valueObject.AddMember("icon", pinModel.GetSdkMapPinIconIndexIcon(), allocator);
                     valueObject.AddMember("latitude", latLong.GetLatitudeInDegrees(), allocator);
                     valueObject.AddMember("longitude", latLong.GetLongitudeInDegrees(), allocator);
@@ -181,6 +183,8 @@ namespace ExampleApp
                     valueObject.AddMember("id", pinModel->Identifier(), allocator);
                     valueObject.AddMember("title", pinModel->GetTitle().c_str(), allocator);
                     valueObject.AddMember("description", pinModel->GetDescription().c_str(), allocator);
+                    valueObject.AddMember("ratingsImage", pinModel->GetRatingsImage().c_str(), allocator);
+                    valueObject.AddMember("reviewCount", pinModel->GetReviewsCount(), allocator);
                     valueObject.AddMember("icon", pinModel->GetSdkMapPinIconIndexIcon(), allocator);
                     valueObject.AddMember("latitude", latLong.GetLatitudeInDegrees(), allocator);
                     valueObject.AddMember("longitude", latLong.GetLongitudeInDegrees(), allocator);
@@ -200,7 +204,7 @@ namespace ExampleApp
                 m_fileIO.WriteFile((Byte*)jsonString.c_str(), jsonString.size(), MyPinsDataFilename);
             }
 
-            void MyPinsFileIO::LoadPinModelsFromDisk(std::vector<std::pair<MyPinModel*, IMyPinBoundObject*> >& out_pinModelBindings)
+            void MyPinsFileIO::LoadPinModelsFromDisk(std::vector<std::pair<MyPinModel*, IMyPinBoundObject*> >& out_pinModelBindings, IMyPinsService& myPinService)
             {
                 out_pinModelBindings.clear();
 
@@ -233,7 +237,10 @@ namespace ExampleApp
                         
                         const int version = entry["version"].GetInt();
                         
-                        Eegeo_ASSERT(version == MyPinModel::CurrentVersion, "Old MyPinModel version detected: tried to deserialize version %d but current version is %d. Please delete and reinstall the application.\n", version, MyPinModel::CurrentVersion);
+                        const int earliestSupportedVersion = 1;
+                        Eegeo_ASSERT(version >= earliestSupportedVersion, "Old MyPinModel version detected: tried to deserialize version %d but current version is %d. Please delete and reinstall the application.\n", version, MyPinModel::CurrentVersion);
+                        
+                        
                         
                         MyPinModel::TPinIdType pinId = entry["id"].GetInt();
                         std::string title = entry["title"].GetString();
@@ -244,15 +251,35 @@ namespace ExampleApp
                         MyPinsSemanticPinType semanticPinType = static_cast<MyPinsSemanticPinType>(entry["type"].GetInt());
                         std::string pinTypeMetadata = entry["metadata"].GetString();
                         
+                        std::string ratingsImage = "";
+                        int reviewCount = 0;
+                        
+                        if(version == 1)
+                        {
+                            // MB: Cannot infer review count therefore cannot show ratings by Yelp branding rules.
+                            if(description.find("stars_") == 0)
+                            {
+                                description = "";
+                            }
+                        }
+                        else if(version == MyPinModel::CurrentVersion)
+                        {
+                            ratingsImage = entry["ratingsImage"].GetString();
+                            reviewCount = entry["reviewCount"].GetInt();
+                        }
+                        
                         IMyPinBoundObject* pPinBoundObject(m_myPinBoundObjectFactory.CreatePinBoundObjectFromSerialized(*this,
                                                                                                                         pinId,
                                                                                                                         semanticPinType,
-                                                                                                                        pinTypeMetadata));
+                                                                                                                        pinTypeMetadata,
+                                                                                                                        myPinService));
                         
                         MyPinModel* pModel(Eegeo_NEW(MyPinModel)(version,
                                                                  pinId,
                                                                  title,
                                                                  description,
+                                                                 ratingsImage,
+                                                                 reviewCount,
                                                                  sdkMapPinIconIndex,
                                                                  Eegeo::Space::LatLong::FromDegrees(latitude, longitude)));
                         

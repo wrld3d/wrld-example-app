@@ -41,6 +41,7 @@ namespace ExampleApp
                                                   "",
                                                   "",
                                                   std::vector<std::string>(),
+                                                  0,
                                                   Eegeo::Helpers::Time::MillisecondsSinceEpoch());
                 
                 return model;

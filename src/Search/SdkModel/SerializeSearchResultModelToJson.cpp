@@ -50,6 +50,7 @@ namespace ExampleApp
                 valueObject.AddMember("latitude", searchResult.GetLocation().GetLatitudeInDegrees(), allocator);
                 valueObject.AddMember("longitude", searchResult.GetLocation().GetLongitudeInDegrees(), allocator);
                 valueObject.AddMember("createTimestamp", searchResult.GetCreationTimestamp(), allocator);
+                valueObject.AddMember("reviewCount", searchResult.GetReviewCount(), allocator);
                
                 rapidjson::StringBuffer strbuf;
                 rapidjson::Writer<rapidjson::StringBuffer> writer(strbuf);
@@ -70,7 +71,10 @@ namespace ExampleApp
                 
                 const int version = document["version"].GetInt();
                 
-                Eegeo_ASSERT(version == SearchResultModel::CurrentVersion, "Old SearchResultModel version detected: tried to deserialize version %d but current version is %d. Please delete and reinstall the application.\n", version, SearchResultModel::CurrentVersion);
+                const int earliestSupportedVersionForUpversioning = 3;
+                
+                Eegeo_ASSERT(version >= earliestSupportedVersionForUpversioning,
+                             "Old SearchResultModel version detected: tried to deserialize version %d but current version is %d. Please delete and reinstall the application.\n", version, SearchResultModel::CurrentVersion);
                 
                 
                 const rapidjson::Value& categoriesJson(document["humanReadableCategories"]);
@@ -85,6 +89,12 @@ namespace ExampleApp
                 for(size_t i = 0; i < reviewsJson.Size(); ++ i)
                 {
                     reviews.push_back(reviewsJson[i].GetString());
+                }
+                
+                int reviewCount = 0;
+                if(document.HasMember("reviewCount"))
+                {
+                    reviewCount = document["reviewCount"].GetInt();
                 }
                 
                 return SearchResultModel(version,
@@ -102,6 +112,7 @@ namespace ExampleApp
                                          document["imageUrl"].GetString(),
                                          document["ratingImageUrl"].GetString(),
                                          reviews,
+                                         reviewCount,
                                          document["createTimestamp"].GetInt64());
             }
         }

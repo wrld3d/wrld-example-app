@@ -8,6 +8,7 @@
 #include "IScreenControlViewModel.h"
 #include "Modality.h"
 #include "WorldPinOnMapViewIncludes.h"
+#include "IAppModeModel.h"
 
 namespace ExampleApp
 {
@@ -25,6 +26,7 @@ namespace ExampleApp
                 WorldPinOnMapViewModule(IWorldPinInFocusViewModel& worldPinInFocusViewModel,
                                         ScreenControl::View::IScreenControlViewModel::IScreenControlViewModel& worldPinOnMapInFocusScreenControlViewModel,
                                         Modality::View::IModalityModel& modalityModel,
+                                        const IAppModeModel& appModeModel,
                                         float pinDiameter,
                                         float pixelScale);
 

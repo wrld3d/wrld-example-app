@@ -537,7 +537,7 @@
 
 - (void) userTappedOnLink:(UITapGestureRecognizer *)recognizer
 {
-    NSString * webUrlString = @"http://recce.com/eula";
+    NSString * webUrlString = @"http://eegeo.com/tos";
     NSURL *url = [NSURL URLWithString:webUrlString];
     if (![[UIApplication sharedApplication] openURL:url])
     {

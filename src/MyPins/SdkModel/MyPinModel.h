@@ -22,6 +22,8 @@ namespace ExampleApp
                 TPinIdType m_modelId;
                 std::string m_title;
                 std::string m_description;
+                std::string m_ratingsImage;
+                int m_reviewCount;
                 int m_sdkMapPinIconIndex;
                 Eegeo::Space::LatLong m_latLong;
 
@@ -34,6 +36,8 @@ namespace ExampleApp
                            TPinIdType modelId,
                            const std::string& title,
                            const std::string& description,
+                           const std::string& ratingsImage,
+                           int reviewCount,
                            int sdkMapPinIconIndex,
                            const Eegeo::Space::LatLong& latLong);
                 
@@ -57,6 +61,16 @@ namespace ExampleApp
                     return m_description;
                 }
                 
+                const std::string& GetRatingsImage() const
+                {
+                    return m_ratingsImage;
+                }
+                
+                const int GetReviewsCount() const
+                {
+                    return m_reviewCount;
+                }
+                
                 int GetSdkMapPinIconIndexIcon() const
                 {
                     return m_sdkMapPinIconIndex;
@@ -65,6 +79,18 @@ namespace ExampleApp
                 const Eegeo::Space::LatLong& GetLatLong() const
                 {
                     return m_latLong;
+                }
+                
+                void Update(const std::string& title,
+                            const std::string& description,
+                            const std::string& ratingsImage,
+                            int reviewCount)
+                {
+                    m_version = CurrentVersion;
+                    m_title = title;
+                    m_description = description;
+                    m_ratingsImage = ratingsImage;
+                    m_reviewCount = reviewCount;
                 }
             };
 
