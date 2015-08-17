@@ -12,6 +12,7 @@
 #include "MapMode.h"
 #include "GlobeCamera.h"
 #include "Metrics.h"
+#include "NativeUIFactories.h"
 
 namespace ExampleApp
 {
@@ -25,12 +26,15 @@ namespace ExampleApp
                 InteriorsExplorerModule(Eegeo::Resources::Interiors::InteriorsController& interiorsController,
                                         Eegeo::Resources::Interiors::Camera::InteriorsCameraController& interiorsCameraController,
                                         Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
+                                        Eegeo::Resources::Interiors::InteriorSelectionController& interiorSelectionController,
                                         Eegeo::Resources::Interiors::InteriorsPinsController& interiorsPinsController,
                                         Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& globeCameraController,
+                                        Eegeo::UI::NativeUIFactories& nativeUIFactories,
                                         Eegeo::Helpers::IIdentityProvider& identityProvider,
                                         MapMode::SdkModel::IMapModeModel& mapModeModel,
                                         ExampleAppMessaging::TMessageBus& messageBus,
                                         ExampleApp::Metrics::IMetricsService& metricsService);
+
                 ~InteriorsExplorerModule();
                 
                 View::InteriorsExplorerViewModel& GetInteriorsExplorerViewModel() const;
@@ -43,7 +47,7 @@ namespace ExampleApp
                 
                 InteriorsExplorerModel* m_pModel;
                 View::InteriorsExplorerViewModel* m_pViewModel;
-                InteriorsControllerExitObserver* m_pInteriorsControllerExitObserver;
+                InteriorsExitObserver* m_pInteriorExitObserver;
                 IInteriorsExplorerInputDelegate* m_pInteriorsExplorerInputDelegate;
             };
         }

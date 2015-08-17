@@ -166,6 +166,7 @@ namespace ExampleApp
         , m_metricsService(metricsService)
         , m_applicationConfiguration(applicationConfiguration)
     {
+        Eegeo::TtyHandler::TtyEnabled = false;
         m_metricsService.BeginSession(ExampleApp::FlurryApiKey, EEGEO_PLATFORM_VERSION_NUMBER);
 
         m_pBlitter = Eegeo_NEW(Eegeo::Blitter)(1024 * 128, 1024 * 64, 1024 * 32);
@@ -181,9 +182,8 @@ namespace ExampleApp
                                                 Eegeo::EnvironmentCharacterSet::Latin,
                                                 platformConfig,
                                                 NULL,
-//                                                "http://cdn1.eegeo.com/coverage-trees/vtest_builds/interiors/ian_floor_test_002/manifest.txt.gz",
-                                                "http://cdn1.eegeo.com/coverage-trees/vtest_builds/interiors_2015_08_03_002/manifest.txt.gz",
-                                                "http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v327/manifest.txt.gz",
+                                                "http://cdn1.eegeo.com/coverage-trees/vtest_builds/interiors/20150814_landmarks_002/manifest.txt.gz",
+                                                "http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v363/manifest.txt.gz",
                                                 &errorHandler
                                                 );
 
@@ -396,12 +396,15 @@ namespace ExampleApp
                                                                                                   m_pMyPinsModule->GetMyPinsService(),
                                                                                                   m_pSearchResultPoiModule->GetSearchResultPoiViewModel(),
                                                                                                   m_messageBus);
-        
-        m_pInteriorsExplorerModule = Eegeo_NEW(InteriorsExplorer::SdkModel::InteriorsExplorerModule)(world.GetMapModule().GetInteriorsPresentationModule().GetInteriorsController(),
-                                                                                                     world.GetMapModule().GetInteriorsPresentationModule().GetCameraController(),
-                                                                                                     world.GetMapModule().GetInteriorsPresentationModule().GetInteriorSelectionModel(),
+
+        Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsPresentationModule = mapModule.GetInteriorsPresentationModule();
+        m_pInteriorsExplorerModule = Eegeo_NEW(InteriorsExplorer::SdkModel::InteriorsExplorerModule)(interiorsPresentationModule.GetInteriorsController(),
+                                                                                                     interiorsPresentationModule.GetCameraController(),
+                                                                                                     interiorsPresentationModule.GetInteriorSelectionModel(),
+                                                                                                     interiorsPresentationModule.GetInteriorSelectionController(),
                                                                                                      world.GetMapModule().GetInteriorsPresentationModule().GetPinsController(),
                                                                                                      *m_pGlobeCameraController,
+                                                                                                     world.GetNativeUIFactories(),
                                                                                                      m_identityProvider,
                                                                                                      m_pMapModeModule->GetMapModeModel(),
                                                                                                      m_messageBus,

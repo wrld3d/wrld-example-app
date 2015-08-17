@@ -21,6 +21,6 @@ namespace ExampleApp
             class InteriorsExplorerController;
         }
 
-        class InteriorsControllerExitObserver;
+        class InteriorsExitObserver;
     }
 }
