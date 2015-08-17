@@ -66,8 +66,8 @@ namespace ExampleApp
         {
             Eegeo::Rendering::LoadingScreenConfig loadingScreenConfig;
             loadingScreenConfig.layout = Eegeo::Rendering::LoadingScreenLayout::Centred;
-            loadingScreenConfig.backgroundColor = Eegeo::v4::One();
-            loadingScreenConfig.loadingBarColor = Eegeo::v4(135.0f/255.0f, 213.0f/255.f, 245.0f/255.f, 1.0f);
+            loadingScreenConfig.backgroundColor = Eegeo::v4::Zero();
+            loadingScreenConfig.loadingBarColor = Eegeo::v4::One();
             loadingScreenConfig.loadingBarBackgroundColor = Eegeo::v4(0.5f, 0.5f, 0.5f, 1.0f);
             loadingScreenConfig.fadeOutDurationSeconds = 1.5f;
             loadingScreenConfig.screenWidth = screenProperties.GetScreenWidth();

@@ -33,8 +33,8 @@ namespace ExampleApp
     {
         self->m_pInitialExperiencePreLoadModel = pInitialExperiencePreLoadModel;
 
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Pre-load San Francisco?"
-                              message:@"Select 'Yes' to pre-load data for the city of San Francisco. This message will not appear again."
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Pre-load Area?"
+                              message:@"Select 'Yes' to pre-load data for the area around Finsbury Square, London. This message will not appear again."
                               delegate:self
                               cancelButtonTitle:@"No"
                               otherButtonTitles:@"Yes", nil];
