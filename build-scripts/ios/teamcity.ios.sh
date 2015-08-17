@@ -5,7 +5,7 @@ productName=$2
 productVersion=$3
 teamcityBuildUrl=$4
 githubCommitUrl=$5
-webServiceUrl=$6
+pathToProjectDir=${6}
 hockeyAppIdentifier=${7:-d7b222a21f80e5f429f395652ff06924}
 
 # This script executes all the steps to produce an iOS app.
