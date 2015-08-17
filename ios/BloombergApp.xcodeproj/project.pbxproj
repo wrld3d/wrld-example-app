@@ -1666,7 +1666,7 @@
 		18FE3BCD1A9CA4DF002D61C4 /* SortedMenuModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SortedMenuModel.cpp; sourceTree = "<group>"; };
 		18FE3BD01A9CA561002D61C4 /* SortedMenuComparisonFunctions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SortedMenuComparisonFunctions.cpp; sourceTree = "<group>"; };
 		18FE3BD11A9CA561002D61C4 /* SortedMenuComparisonFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SortedMenuComparisonFunctions.h; sourceTree = "<group>"; };
-		222E06C91948B08B0004FFD9 /* ExampleAppCpp11.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExampleAppCpp11.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		222E06C91948B08B0004FFD9 /* BloombergAppCpp11.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BloombergAppCpp11.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		222E06CB1948B0B70004FFD9 /* libapps-on-maps-cpp11-sim.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libapps-on-maps-cpp11-sim.a"; path = "Include/libapps-on-maps-cpp11-sim.a"; sourceTree = "<group>"; };
 		222E06CC1948B0B70004FFD9 /* libapps-on-maps-cpp11.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libapps-on-maps-cpp11.a"; path = "Include/libapps-on-maps-cpp11.a"; sourceTree = "<group>"; };
 		225FFA101A39EE8600C2282A /* ISearchResultRepository.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISearchResultRepository.h; sourceTree = "<group>"; };
@@ -2396,14 +2396,14 @@
 		7E9B7F421A8E25E400C6F2E3 /* arrow3_right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow3_right.png; sourceTree = "<group>"; };
 		7E9B7F431A8E25E400C6F2E3 /* arrow3_up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow3_up.png; sourceTree = "<group>"; };
 		7EC46F2A1ABC484600683975 /* CompassModeUnauthorizedMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompassModeUnauthorizedMessage.h; sourceTree = "<group>"; };
-		7EE481E616836F370006E99B /* ExampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7EE481E616836F370006E99B /* BloombergApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BloombergApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7EE481EA16836F370006E99B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		7EE481EC16836F370006E99B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		7EE481EE16836F370006E99B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		7EE481F016836F370006E99B /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		7EE481F416836F370006E99B /* ExampleApp-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ExampleApp-Info.plist"; sourceTree = "<group>"; };
+		7EE481F416836F370006E99B /* BloombergApp-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "BloombergApp-Info.plist"; sourceTree = "<group>"; };
 		7EE481F616836F370006E99B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		7EE481FA16836F370006E99B /* ExampleApp-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ExampleApp-Prefix.pch"; sourceTree = "<group>"; };
+		7EE481FA16836F370006E99B /* BloombergApp-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BloombergApp-Prefix.pch"; sourceTree = "<group>"; };
 		7EE4820D1683713B0006E99B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
 		7EE48210168371460006E99B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
 		7EE48223168373E20006E99B /* libapps-on-maps.a */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.objfile"; name = "libapps-on-maps.a"; path = "Include/libapps-on-maps.a"; sourceTree = "<group>"; };
@@ -4555,8 +4555,8 @@
 		7EE481E716836F370006E99B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				7EE481E616836F370006E99B /* ExampleApp.app */,
-				222E06C91948B08B0004FFD9 /* ExampleAppCpp11.app */,
+				7EE481E616836F370006E99B /* BloombergApp.app */,
+				222E06C91948B08B0004FFD9 /* BloombergAppCpp11.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -4608,9 +4608,9 @@
 			children = (
 				7EE4820F168371460006E99B /* MainStoryboard_iPad.storyboard */,
 				7EE4820C1683713B0006E99B /* MainStoryboard_iPhone.storyboard */,
-				7EE481F416836F370006E99B /* ExampleApp-Info.plist */,
+				7EE481F416836F370006E99B /* BloombergApp-Info.plist */,
 				7EE481F516836F370006E99B /* InfoPlist.strings */,
-				7EE481FA16836F370006E99B /* ExampleApp-Prefix.pch */,
+				7EE481FA16836F370006E99B /* BloombergApp-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -4830,9 +4830,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		222E06471948B08B0004FFD9 /* ExampleAppCpp11 */ = {
+		222E06471948B08B0004FFD9 /* BloombergAppCpp11 */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 222E06C61948B08B0004FFD9 /* Build configuration list for PBXNativeTarget "ExampleAppCpp11" */;
+			buildConfigurationList = 222E06C61948B08B0004FFD9 /* Build configuration list for PBXNativeTarget "BloombergAppCpp11" */;
 			buildPhases = (
 				222E06481948B08B0004FFD9 /* Sources */,
 				222E06891948B08B0004FFD9 /* Frameworks */,
@@ -4842,14 +4842,14 @@
 			);
 			dependencies = (
 			);
-			name = ExampleAppCpp11;
+			name = BloombergAppCpp11;
 			productName = ExampleApp;
-			productReference = 222E06C91948B08B0004FFD9 /* ExampleAppCpp11.app */;
+			productReference = 222E06C91948B08B0004FFD9 /* BloombergAppCpp11.app */;
 			productType = "com.apple.product-type.application";
 		};
-		7EE481E516836F370006E99B /* ExampleApp */ = {
+		7EE481E516836F370006E99B /* BloombergApp */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 7EE4820916836F370006E99B /* Build configuration list for PBXNativeTarget "ExampleApp" */;
+			buildConfigurationList = 7EE4820916836F370006E99B /* Build configuration list for PBXNativeTarget "BloombergApp" */;
 			buildPhases = (
 				7EE481E216836F370006E99B /* Sources */,
 				7EE481E316836F370006E99B /* Frameworks */,
@@ -4859,9 +4859,9 @@
 			);
 			dependencies = (
 			);
-			name = ExampleApp;
+			name = BloombergApp;
 			productName = ExampleApp;
-			productReference = 7EE481E616836F370006E99B /* ExampleApp.app */;
+			productReference = 7EE481E616836F370006E99B /* BloombergApp.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -4878,7 +4878,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 7EE481E016836F360006E99B /* Build configuration list for PBXProject "ExampleApp" */;
+			buildConfigurationList = 7EE481E016836F360006E99B /* Build configuration list for PBXProject "BloombergApp" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -4890,8 +4890,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				7EE481E516836F370006E99B /* ExampleApp */,
-				222E06471948B08B0004FFD9 /* ExampleAppCpp11 */,
+				7EE481E516836F370006E99B /* BloombergApp */,
+				222E06471948B08B0004FFD9 /* BloombergAppCpp11 */,
 			);
 		};
 /* End PBXProject section */
@@ -6149,7 +6149,7 @@
 					"Include/**",
 					./../external/rapidjson,
 				);
-				INFOPLIST_FILE = "$(SRCROOT)/ExampleApp/ExampleApp-Info.plist";
+				INFOPLIST_FILE = "ExampleApp/BloombergApp-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -6161,7 +6161,7 @@
 					"$(OTHER_CFLAGS)",
 					"-DCOMPILE_CPP_11=1",
 				);
-				PRODUCT_NAME = ExampleAppCpp11;
+				PRODUCT_NAME = BloombergAppCpp11;
 				PROVISIONING_PROFILE = "";
 				VALID_ARCHS = "armv7 arm64 i386";
 				WRAPPER_EXTENSION = app;
@@ -6185,7 +6185,7 @@
 					"Include/**",
 					./../external/rapidjson,
 				);
-				INFOPLIST_FILE = "$(SRCROOT)/ExampleApp/ExampleApp-Info.plist";
+				INFOPLIST_FILE = "ExampleApp/BloombergApp-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -6197,7 +6197,7 @@
 					"$(OTHER_CFLAGS)",
 					"-DCOMPILE_CPP_11=1",
 				);
-				PRODUCT_NAME = ExampleAppCpp11;
+				PRODUCT_NAME = BloombergAppCpp11;
 				PROVISIONING_PROFILE = "";
 				VALID_ARCHS = "armv7 arm64 i386";
 				WRAPPER_EXTENSION = app;
@@ -6295,19 +6295,19 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "ExampleApp/ExampleApp-Prefix.pch";
+				GCC_PREFIX_HEADER = "ExampleApp/BloombergApp-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
 					"Include/**",
 					"./../external/rapidjson/**",
 				);
-				INFOPLIST_FILE = "ExampleApp/ExampleApp-Info.plist";
+				INFOPLIST_FILE = "ExampleApp/BloombergApp-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Include",
 					"$(PROJECT_DIR)/Include/eegeo",
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = BloombergApp;
 				PROVISIONING_PROFILE = "";
 				VALID_ARCHS = "armv7 arm64 i386";
 				WRAPPER_EXTENSION = app;
@@ -6326,12 +6326,12 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "ExampleApp/ExampleApp-Prefix.pch";
+				GCC_PREFIX_HEADER = "ExampleApp/BloombergApp-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
 					"Include/**",
 					"./../external/rapidjson/**",
 				);
-				INFOPLIST_FILE = "ExampleApp/ExampleApp-Info.plist";
+				INFOPLIST_FILE = "ExampleApp/BloombergApp-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -6339,7 +6339,7 @@
 					"$(PROJECT_DIR)/Include/eegeo",
 				);
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = BloombergApp;
 				PROVISIONING_PROFILE = "";
 				VALID_ARCHS = "armv7 arm64 i386";
 				WRAPPER_EXTENSION = app;
@@ -6349,7 +6349,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		222E06C61948B08B0004FFD9 /* Build configuration list for PBXNativeTarget "ExampleAppCpp11" */ = {
+		222E06C61948B08B0004FFD9 /* Build configuration list for PBXNativeTarget "BloombergAppCpp11" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				222E06C71948B08B0004FFD9 /* Debug */,
@@ -6358,7 +6358,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		7EE481E016836F360006E99B /* Build configuration list for PBXProject "ExampleApp" */ = {
+		7EE481E016836F360006E99B /* Build configuration list for PBXProject "BloombergApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7EE4820716836F370006E99B /* Debug */,
@@ -6367,7 +6367,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		7EE4820916836F370006E99B /* Build configuration list for PBXNativeTarget "ExampleApp" */ = {
+		7EE4820916836F370006E99B /* Build configuration list for PBXNativeTarget "BloombergApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7EE4820A16836F370006E99B /* Debug */,
