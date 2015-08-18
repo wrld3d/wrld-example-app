@@ -69,7 +69,6 @@ namespace ExampleApp
             , m_controllerStateChangedCallback(this, &InteriorsExplorerModel::OnControllerStateChanged)
             , m_exitCallback(this, &InteriorsExplorerModel::OnExit)
             , m_selectFloorCallback(this, &InteriorsExplorerModel::OnSelectFloor)
-            , m_changePinVisibilityCallback(this, &InteriorsExplorerModel::OnChangePinVisibility)
             , m_interiorSelectionModelChangedCallback(this, &InteriorsExplorerModel::OnInteriorSelectionModelChanged)
             , m_previouslyInMapMode(false)
             {
@@ -78,14 +77,12 @@ namespace ExampleApp
                 
                 m_messageBus.SubscribeNative(m_exitCallback);
                 m_messageBus.SubscribeNative(m_selectFloorCallback);
-                m_messageBus.SubscribeNative(m_changePinVisibilityCallback);
             }
             
             InteriorsExplorerModel::~InteriorsExplorerModel()
             {
                 m_messageBus.UnsubscribeNative(m_selectFloorCallback);
                 m_messageBus.UnsubscribeNative(m_exitCallback);
-                m_messageBus.UnsubscribeNative(m_changePinVisibilityCallback);
 
                 m_interiorSelectionModel.UnregisterSelectionChangedCallback(m_interiorSelectionModelChangedCallback);
                 m_controller.UnregisterStateChangedCallback(m_controllerStateChangedCallback);
@@ -128,12 +125,6 @@ namespace ExampleApp
                 m_messageBus.Publish(InteriorsExplorerFloorSelectedMessage(m_controller.GetCurrentFloorIndex(), currentFloor.GetFloorName()));
 
                 m_metricsService.SetEvent(MetricEventInteriorFloorSelected, "InteriorId", m_interiorSelectionModel.GetSelectedInteriorId().Value(), "FloorName", currentFloor.GetFloorName());
-            }
-
-            void InteriorsExplorerModel::OnChangePinVisibility(const InteriorPinsVisibilityMessage& message)
-            {
-                bool shouldShowPins = message.GetShouldShowPins();
-                m_controller.SetShouldShowPins(shouldShowPins);
             }
 
             void InteriorsExplorerModel::OnInteriorSelectionModelChanged(const Eegeo::Resources::Interiors::InteriorId& previousInteriorId)

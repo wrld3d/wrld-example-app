@@ -49,6 +49,8 @@ namespace ExampleApp
                 View::InteriorsExplorerViewModel* m_pViewModel;
                 InteriorsExitObserver* m_pInteriorExitObserver;
                 IInteriorsExplorerInputDelegate* m_pInteriorsExplorerInputDelegate;
+                InteriorPinModalityObserver* m_pInteriorPinModalityObserver;
+                InteriorPinScaleController* m_pInteriorPinScaleController;
             };
         }
     }

@@ -12,6 +12,8 @@ namespace ExampleApp
             class InteriorsExplorerModel;
             class IInteriorsExplorerInputDelegate;
             class InteriorsExplorerInputDelegate;
+            class InteriorPinModalityObserver;
+            class InteriorPinScaleController;
         }
         
         namespace View

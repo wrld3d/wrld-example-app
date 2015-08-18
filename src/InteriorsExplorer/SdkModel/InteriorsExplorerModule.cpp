@@ -5,6 +5,8 @@
 #include "InteriorsExplorerModel.h"
 #include "InteriorsExitObserver.h"
 #include "InteriorsExplorerInputDelegate.h"
+#include "InteriorPinModalityObserver.h"
+#include "InteriorPinScaleController.h"
 
 namespace ExampleApp
 {
@@ -28,10 +30,14 @@ namespace ExampleApp
                 m_pViewModel = Eegeo_NEW(View::InteriorsExplorerViewModel)(false, identityProvider.GetNextIdentity());
                 m_pInteriorExitObserver = Eegeo_NEW(InteriorsExitObserver)(interiorsController, interiorSelectionController, globeCameraController, nativeUIFactories);
                 m_pInteriorsExplorerInputDelegate = Eegeo_NEW(InteriorsExplorerInputDelegate)(interiorsController, interiorsPinsController, globeCameraController);
+                m_pInteriorPinModalityObserver = Eegeo_NEW(InteriorPinModalityObserver)(messageBus);
+                m_pInteriorPinScaleController = Eegeo_NEW(InteriorPinScaleController)(interiorsPinsController, messageBus);
             }
             
             InteriorsExplorerModule::~InteriorsExplorerModule()
             {
+                Eegeo_DELETE m_pInteriorPinScaleController;
+                Eegeo_DELETE m_pInteriorPinModalityObserver;
                 Eegeo_DELETE m_pInteriorsExplorerInputDelegate;
                 Eegeo_DELETE m_pInteriorExitObserver;
                 Eegeo_DELETE m_pModel;

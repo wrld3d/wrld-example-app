@@ -6,15 +6,15 @@ namespace ExampleApp
 {
     namespace InteriorsExplorer
     {
-        class InteriorPinsVisibilityMessage
+        class InteriorPinsSetScaleMessage
         {
         public:
-            InteriorPinsVisibilityMessage(bool shouldShowPins);
+            InteriorPinsSetScaleMessage(float scale);
 
-            bool GetShouldShowPins() const;
+            float GetScale() const;
 
         private:
-            bool m_shouldShowPins;
+            float m_scale;
         };
     }
 }
