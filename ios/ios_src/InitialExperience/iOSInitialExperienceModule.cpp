@@ -28,13 +28,13 @@ namespace ExampleApp
         {
             std::vector<SdkModel::IInitialExperienceStep*> steps;
 
+            SdkModel::IInitialExperienceStep* pIntroScreenStep = Eegeo_NEW(SdkModel::InitialExperienceIntroStep)(m_messageBus, GetPersistentSettings());
+            steps.push_back(pIntroScreenStep);
+            
             SdkModel::IInitialExperienceStep* pWorldAreaLoaderStep = Eegeo_NEW(PreLoad::iOSInitialExperiencePreLoadModel)(worldAreaLoaderModel,
                     GetPersistentSettings());
 
             steps.push_back(pWorldAreaLoaderStep);
-            
-            SdkModel::IInitialExperienceStep* pIntroScreenStep = Eegeo_NEW(SdkModel::InitialExperienceIntroStep)(m_messageBus, GetPersistentSettings());
-            steps.push_back(pIntroScreenStep);
             
             m_pInitialExperienceSearchResultAttractModeModule = Eegeo_NEW(SearchResultAttractMode::InitialExperienceSearchResultAttractModeModule)(GetPersistentSettings(),
                                                                                                                                                      searchMenuViewModelControl,searchResultMenuViewModel,                   m_messageBus);
