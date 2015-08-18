@@ -225,14 +225,16 @@ namespace ExampleApp
 
         m_pCameraTransitionController = Eegeo_NEW(ExampleApp::CameraTransitions::SdkModel::CameraTransitionController)(*m_pGlobeCameraController, *m_pNavigationService, terrainModelModule.GetTerrainHeightProvider());
 
+        m_pStreamingVolume = Eegeo_NEW(Eegeo::Streaming::CameraFrustumStreamingVolume)(mapModule.GetResourceCeilingProvider(),
+                                                                                       Eegeo::Config::LodRefinementConfig::GetLodRefinementAltitudesForDeviceSpec(platformConfig.PerformanceConfig.DeviceSpecification),
+                                                                                       Eegeo::Streaming::QuadTreeCube::MAX_DEPTH_TO_VISIT,
+                                                                                       mapModule.GetEnvironmentFlatteningService());
+        
         CreateApplicationModelModules();
         
         m_pLoadingScreen = CreateLoadingScreen(screenProperties, m_pWorld->GetRenderingModule(), m_pWorld->GetPlatformAbstractionModule());
 
-        m_pStreamingVolume = Eegeo_NEW(Eegeo::Streaming::CameraFrustumStreamingVolume)(mapModule.GetResourceCeilingProvider(),
-                             Eegeo::Config::LodRefinementConfig::GetLodRefinementAltitudesForDeviceSpec(platformConfig.PerformanceConfig.DeviceSpecification),
-                             Eegeo::Streaming::QuadTreeCube::MAX_DEPTH_TO_VISIT,
-                             mapModule.GetEnvironmentFlatteningService());
+
         
         if(m_applicationConfiguration.TryStartAtGpsLocation())
         {
@@ -403,6 +405,7 @@ namespace ExampleApp
                                                                                                      interiorsPresentationModule.GetInteriorSelectionController(),
                                                                                                      world.GetMapModule().GetInteriorsPresentationModule().GetPinsController(),
                                                                                                      *m_pGlobeCameraController,
+                                                                                                     *m_pStreamingVolume,
                                                                                                      world.GetNativeUIFactories(),
                                                                                                      m_identityProvider,
                                                                                                      m_pMapModeModule->GetMapModeModel(),
