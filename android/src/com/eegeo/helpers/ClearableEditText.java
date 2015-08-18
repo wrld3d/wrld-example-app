@@ -1,6 +1,6 @@
 package com.eegeo.helpers;
 
-import com.eegeo.mobileexampleapp.R;
+import com.eegeo.BloombergApp.R;
 
 import android.content.Context;
 import android.text.Editable;

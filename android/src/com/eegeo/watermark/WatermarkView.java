@@ -2,8 +2,8 @@
 
 package com.eegeo.watermark;
 
+import com.eegeo.BloombergApp.R;
 import com.eegeo.entrypointinfrastructure.MainActivity;
-import com.eegeo.mobileexampleapp.R;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;

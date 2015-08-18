@@ -1,11 +1,11 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
-package com.eegeo.mobileexampleapp;
+package com.eegeo.BloombergApp;
 
+import com.eegeo.BloombergApp.R;
 import com.eegeo.entrypointinfrastructure.EegeoSurfaceView;
 import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.entrypointinfrastructure.NativeJniCalls;
-import com.eegeo.mobileexampleapp.R;
 
 import android.os.Bundle;
 import android.os.Handler;

@@ -10,7 +10,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.eegeo.entrypointinfrastructure.MainActivity;
-import com.eegeo.mobileexampleapp.R;
+import com.eegeo.BloombergApp.R;
 import com.eegeo.categories.CategoryResources;
 
 import android.animation.ValueAnimator;

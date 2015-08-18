@@ -30,8 +30,8 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.eegeo.helpers.IActivityIntentResultHandler;
+import com.eegeo.BloombergApp.R;
 import com.eegeo.entrypointinfrastructure.MainActivity;
-import com.eegeo.mobileexampleapp.R;
 import com.eegeo.photos.PhotoIntentDispatcher;
 
 public class MyPinCreationDetailsView implements View.OnClickListener, IActivityIntentResultHandler

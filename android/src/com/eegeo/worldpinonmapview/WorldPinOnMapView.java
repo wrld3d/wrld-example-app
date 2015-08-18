@@ -11,8 +11,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.RelativeLayout.LayoutParams;
 
+import com.eegeo.BloombergApp.R;
 import com.eegeo.entrypointinfrastructure.MainActivity;
-import com.eegeo.mobileexampleapp.R;
 
 public class WorldPinOnMapView implements View.OnClickListener
 {

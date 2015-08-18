@@ -16,7 +16,7 @@ import android.widget.TextView;
 import android.view.ViewGroup;
 
 import com.eegeo.entrypointinfrastructure.MainActivity;
-import com.eegeo.mobileexampleapp.R;
+import com.eegeo.BloombergApp.R;
 import com.eegeo.categories.CategoryResources;
 import com.eegeo.menu.MenuView;
 import com.eegeo.menu.MenuViewJniMethods;
