@@ -96,6 +96,13 @@
     return self;
 }
 
+- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
+{
+    UIView *hitView = [super hitTest:point withEvent:event];
+    if (hitView == self) return nil;
+    return hitView;
+}
+
 - (void)layoutSubviews
 {
     const int borderHeight = 20;
@@ -134,6 +141,7 @@
 
 - (void) onCancelButtonPressed:(UIButton *)sender
 {
+    NSLog(@"InteriorExplorerView::onCancelButtonPressed");
     m_pInterop->Dismiss();
 }
 
