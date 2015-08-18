@@ -38,7 +38,7 @@ namespace ExampleApp
                                                                          searchMenuViewModelControl,
                                                                          searchResultMenuViewModel);
 
-                const int lastCameraLockedStep = 1;
+                const int lastCameraLockedStep = 0;
                 
                 m_pInitialExperienceModel = Eegeo_NEW(InitialExperienceModel)(steps, lastCameraLockedStep);
 
