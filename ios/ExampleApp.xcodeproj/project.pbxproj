@@ -696,6 +696,10 @@
 		56BFB0CD1A8B7BF800572C99 /* libFlurry_6.0.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5633F8EA1A79289500D69813 /* libFlurry_6.0.0.a */; };
 		56CF26871A24776600B30439 /* icon_create_poi.png in Resources */ = {isa = PBXBuildFile; fileRef = 56CF26861A24776600B30439 /* icon_create_poi.png */; };
 		56CF26881A24777100B30439 /* icon_create_poi.png in Resources */ = {isa = PBXBuildFile; fileRef = 56CF26861A24776600B30439 /* icon_create_poi.png */; };
+		56D5B2371B822F2A00306841 /* InteriorPinModalityObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56D5B2351B822F2A00306841 /* InteriorPinModalityObserver.cpp */; };
+		56D5B2381B822F2A00306841 /* InteriorPinModalityObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56D5B2351B822F2A00306841 /* InteriorPinModalityObserver.cpp */; };
+		56D5B23C1B8233C700306841 /* InteriorPinScaleController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56D5B23A1B8233C700306841 /* InteriorPinScaleController.cpp */; };
+		56D5B23D1B8233C700306841 /* InteriorPinScaleController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56D5B23A1B8233C700306841 /* InteriorPinScaleController.cpp */; };
 		56D620DA1A8B641200828A9E /* libapps-on-maps-sim.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 56D620D71A8B641200828A9E /* libapps-on-maps-sim.a */; };
 		56D620DB1A8B641200828A9E /* libapps-on-maps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 56D620D81A8B641200828A9E /* libapps-on-maps.a */; };
 		56D620DC1A8B641200828A9E /* libturbojpeg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 56D620D91A8B641200828A9E /* libturbojpeg.a */; };
@@ -1250,7 +1254,7 @@
 		E07992C41B724AF3000402B0 /* Interiors in Resources */ = {isa = PBXBuildFile; fileRef = E07992BF1B724AF3000402B0 /* Interiors */; };
 		E07992CD1B725EDB000402B0 /* micello_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = E07992CB1B725EDB000402B0 /* micello_logo.png */; };
 		F7F3702A5538EF1098A7B54D /* MapModeController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F7F37DF89F160CEF56F89506 /* MapModeController.cpp */; };
-		F7F3705B9F1C119656682545 /* InteriorPinsVisibilityMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F7F37A9053721BC0EF524069 /* InteriorPinsVisibilityMessage.cpp */; };
+		F7F3705B9F1C119656682545 /* InteriorPinsSetScaleMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F7F37A9053721BC0EF524069 /* InteriorPinsSetScaleMessage.cpp */; };
 		F7F3718BE3D42C0AAD8EC7E3 /* MapModeModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F7F376B8EDEEDCD448A9C3D8 /* MapModeModule.cpp */; };
 		F7F373D9D747899B4430C7EC /* InteriorsExplorerInputDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F7F371EA20411E0AA0E2214B /* InteriorsExplorerInputDelegate.cpp */; };
 		F7F373F4043CCF2D73DD1F06 /* MapModeModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F7F378860045756E6BD85445 /* MapModeModel.cpp */; };
@@ -1265,7 +1269,7 @@
 		F7F37E42EB0E364A9E0EFF40 /* AppModeModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F7F376DDD2115F1B2E9E925F /* AppModeModel.cpp */; };
 		F7F37F39F2038F91049410A9 /* MapModeModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F7F378860045756E6BD85445 /* MapModeModel.cpp */; };
 		F7F37F4C1A542A11877345C4 /* MapModeController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F7F37DF89F160CEF56F89506 /* MapModeController.cpp */; };
-		F7F37FB46E5FE7C2E8AC7146 /* InteriorPinsVisibilityMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F7F37A9053721BC0EF524069 /* InteriorPinsVisibilityMessage.cpp */; };
+		F7F37FB46E5FE7C2E8AC7146 /* InteriorPinsSetScaleMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F7F37A9053721BC0EF524069 /* InteriorPinsSetScaleMessage.cpp */; };
 		F7F37FC6C755DC44D732DDCB /* MapMode.h in Resources */ = {isa = PBXBuildFile; fileRef = F7F37D7FD513A2DB502EFD5C /* MapMode.h */; };
 /* End PBXBuildFile section */
 
@@ -1781,6 +1785,10 @@
 		56BFB0C51A8B73ED00572C99 /* libsdk-extensions-sqlite-cpp11-sim.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libsdk-extensions-sqlite-cpp11-sim.a"; path = "Include/eegeo/libsdk-extensions-sqlite-cpp11-sim.a"; sourceTree = "<group>"; };
 		56BFB0C91A8B76D200572C99 /* libapps-on-maps-cpp11.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libapps-on-maps-cpp11.a"; path = "Include/eegeo/libapps-on-maps-cpp11.a"; sourceTree = "<group>"; };
 		56CF26861A24776600B30439 /* icon_create_poi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_create_poi.png; sourceTree = "<group>"; };
+		56D5B2351B822F2A00306841 /* InteriorPinModalityObserver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InteriorPinModalityObserver.cpp; sourceTree = "<group>"; };
+		56D5B2361B822F2A00306841 /* InteriorPinModalityObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InteriorPinModalityObserver.h; sourceTree = "<group>"; };
+		56D5B23A1B8233C700306841 /* InteriorPinScaleController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InteriorPinScaleController.cpp; sourceTree = "<group>"; };
+		56D5B23B1B8233C700306841 /* InteriorPinScaleController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InteriorPinScaleController.h; sourceTree = "<group>"; };
 		56D620D71A8B641200828A9E /* libapps-on-maps-sim.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libapps-on-maps-sim.a"; path = "Include/eegeo/libapps-on-maps-sim.a"; sourceTree = "<group>"; };
 		56D620D81A8B641200828A9E /* libapps-on-maps.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libapps-on-maps.a"; path = "Include/eegeo/libapps-on-maps.a"; sourceTree = "<group>"; };
 		56D620D91A8B641200828A9E /* libturbojpeg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libturbojpeg.a; path = Include/eegeo/libturbojpeg.a; sourceTree = "<group>"; };
@@ -2519,10 +2527,10 @@
 		F7F376C8FE0F6455F5768B58 /* IInteriorsExplorerInputDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IInteriorsExplorerInputDelegate.h; sourceTree = "<group>"; };
 		F7F376DDD2115F1B2E9E925F /* AppModeModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppModeModel.cpp; sourceTree = "<group>"; };
 		F7F376E13595780B52F7F378 /* AppModeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppModeModel.h; sourceTree = "<group>"; };
-		F7F376FC5C4FFA017F2B49CF /* InteriorPinsVisibilityMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InteriorPinsVisibilityMessage.h; sourceTree = "<group>"; };
+		F7F376FC5C4FFA017F2B49CF /* InteriorPinsSetScaleMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InteriorPinsSetScaleMessage.h; sourceTree = "<group>"; };
 		F7F378860045756E6BD85445 /* MapModeModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MapModeModel.cpp; sourceTree = "<group>"; };
 		F7F3795319370D448E707830 /* InteriorsExitObserver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InteriorsExitObserver.cpp; sourceTree = "<group>"; };
-		F7F37A9053721BC0EF524069 /* InteriorPinsVisibilityMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InteriorPinsVisibilityMessage.cpp; sourceTree = "<group>"; };
+		F7F37A9053721BC0EF524069 /* InteriorPinsSetScaleMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InteriorPinsSetScaleMessage.cpp; sourceTree = "<group>"; };
 		F7F37D7FD513A2DB502EFD5C /* MapMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapMode.h; sourceTree = "<group>"; };
 		F7F37DF89F160CEF56F89506 /* MapModeController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MapModeController.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -4665,8 +4673,8 @@
 				7E1D22CC1B205CC2006A8703 /* InteriorsExplorerSelectFloorMessage.h */,
 				7E5811AF1B1F050A007AD67F /* SdkModel */,
 				7E5811B21B1F050A007AD67F /* View */,
-				F7F37A9053721BC0EF524069 /* InteriorPinsVisibilityMessage.cpp */,
-				F7F376FC5C4FFA017F2B49CF /* InteriorPinsVisibilityMessage.h */,
+				F7F37A9053721BC0EF524069 /* InteriorPinsSetScaleMessage.cpp */,
+				F7F376FC5C4FFA017F2B49CF /* InteriorPinsSetScaleMessage.h */,
 				F7F3795319370D448E707830 /* InteriorsExitObserver.cpp */,
 				F7F3741D57D4BFE631DEC068 /* InteriorsExitObserver.h */,
 			);
@@ -4686,6 +4694,10 @@
 				F7F376C8FE0F6455F5768B58 /* IInteriorsExplorerInputDelegate.h */,
 				E0632E9E1B8331E4000C282E /* InteriorsStreamingController.cpp */,
 				E0632E9F1B8331E4000C282E /* InteriorsStreamingController.h */,
+				56D5B2351B822F2A00306841 /* InteriorPinModalityObserver.cpp */,
+				56D5B2361B822F2A00306841 /* InteriorPinModalityObserver.h */,
+				56D5B23A1B8233C700306841 /* InteriorPinScaleController.cpp */,
+				56D5B23B1B8233C700306841 /* InteriorPinScaleController.h */,
 			);
 			path = SdkModel;
 			sourceTree = "<group>";
@@ -5989,6 +6001,7 @@
 				18FB646D1A9240FC005A9411 /* OARequestParameter.m in Sources */,
 				7E3B890B1A385A290023C94E /* ModalityModule.cpp in Sources */,
 				7E3B88A91A385A290023C94E /* AboutPageModule.cpp in Sources */,
+				56D5B23D1B8233C700306841 /* InteriorPinScaleController.cpp in Sources */,
 				186B47521AB333150084E80B /* ApplicationConfigurationReader.cpp in Sources */,
 				1827D0771A964207008923F5 /* GeoNamesSearchResultDto.cpp in Sources */,
 				18B44CEC1A83D3CF00FDFD8A /* OptionsCacheClearSubView.mm in Sources */,
@@ -6016,9 +6029,10 @@
 				186B47501AB333150084E80B /* ApplicationConfigurationJsonParser.cpp in Sources */,
 				7E3B88D51A385A290023C94E /* FlattenButtonViewStateChangedMessage.cpp in Sources */,
 				7E3B89991A385A290023C94E /* SearchQueryPerformedMessage.cpp in Sources */,
+				56D5B2381B822F2A00306841 /* InteriorPinModalityObserver.cpp in Sources */,
 				7E3B89051A385A290023C94E /* ModalBackgroundController.cpp in Sources */,
 				7E1B50681ACAD4170060FA4F /* InitialExperienceIntroStep.cpp in Sources */,
-				F7F3705B9F1C119656682545 /* InteriorPinsVisibilityMessage.cpp in Sources */,
+				F7F3705B9F1C119656682545 /* InteriorPinsSetScaleMessage.cpp in Sources */,
 				F7F37F39F2038F91049410A9 /* MapModeModel.cpp in Sources */,
 				F7F37C72A4A0A11F290E135D /* MapModeModule.cpp in Sources */,
 				F7F37763E9082D85ABCF50B6 /* InteriorsExitObserver.cpp in Sources */,
@@ -6353,6 +6367,7 @@
 				7E3B89C41A385A290023C94E /* SearchResultOnMapFactory.cpp in Sources */,
 				7E3B890A1A385A290023C94E /* ModalityModule.cpp in Sources */,
 				1827D0761A964207008923F5 /* GeoNamesSearchResultDto.cpp in Sources */,
+				56D5B23C1B8233C700306841 /* InteriorPinScaleController.cpp in Sources */,
 				186B47511AB333150084E80B /* ApplicationConfigurationReader.cpp in Sources */,
 				7E3B88A81A385A290023C94E /* AboutPageModule.cpp in Sources */,
 				18B44CEB1A83D3CF00FDFD8A /* OptionsCacheClearSubView.mm in Sources */,
@@ -6380,9 +6395,10 @@
 				186B474F1AB333150084E80B /* ApplicationConfigurationJsonParser.cpp in Sources */,
 				7E3B88D41A385A290023C94E /* FlattenButtonViewStateChangedMessage.cpp in Sources */,
 				7E3B89981A385A290023C94E /* SearchQueryPerformedMessage.cpp in Sources */,
+				56D5B2371B822F2A00306841 /* InteriorPinModalityObserver.cpp in Sources */,
 				7E3B89041A385A290023C94E /* ModalBackgroundController.cpp in Sources */,
 				7E1B50671ACAD4170060FA4F /* InitialExperienceIntroStep.cpp in Sources */,
-				F7F37FB46E5FE7C2E8AC7146 /* InteriorPinsVisibilityMessage.cpp in Sources */,
+				F7F37FB46E5FE7C2E8AC7146 /* InteriorPinsSetScaleMessage.cpp in Sources */,
 				F7F373F4043CCF2D73DD1F06 /* MapModeModel.cpp in Sources */,
 				F7F3718BE3D42C0AAD8EC7E3 /* MapModeModule.cpp in Sources */,
 				F7F3741B41A5EE79F725EED4 /* InteriorsExitObserver.cpp in Sources */,

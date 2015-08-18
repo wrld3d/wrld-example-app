@@ -52,6 +52,8 @@ namespace ExampleApp
                 InteriorsExitObserver* m_pInteriorExitObserver;
                 IInteriorsExplorerInputDelegate* m_pInteriorsExplorerInputDelegate;
                 InteriorsStreamingController* m_pInteriorsStreamingController;
+                InteriorPinModalityObserver* m_pInteriorPinModalityObserver;
+                InteriorPinScaleController* m_pInteriorPinScaleController;
             };
         }
     }

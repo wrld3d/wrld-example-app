@@ -17,13 +17,14 @@ namespace ExampleApp
                     IMyPinCreationInitiationViewModel& viewModel,
                     IMyPinCreationConfirmationViewModel& confirmationViewModel,
                     const Eegeo::Rendering::ScreenProperties& screenProperties,
-                    Metrics::IMetricsService& metricsService)
+                    Metrics::IMetricsService& metricsService,
+                                                                                 const IAppModeModel& appModeModel)
             {
                 m_pView = [[MyPinCreationInitiationView alloc]
                            initWithParams:screenProperties.GetScreenWidth() :screenProperties.GetScreenHeight() :screenProperties.GetPixelScale()];
 
 
-                m_pController = Eegeo_NEW(MyPinCreationInitiationController)(viewModel, *[m_pView getInterop], confirmationViewModel, messageBus, metricsService);
+                m_pController = Eegeo_NEW(MyPinCreationInitiationController)(viewModel, *[m_pView getInterop], confirmationViewModel, messageBus, metricsService, appModeModel);
             }
 
             MyPinCreationInitiationViewModule::~MyPinCreationInitiationViewModule()
