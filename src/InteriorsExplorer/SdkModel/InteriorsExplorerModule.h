@@ -13,6 +13,7 @@
 #include "GlobeCamera.h"
 #include "Metrics.h"
 #include "NativeUIFactories.h"
+#include "Streaming.h"
 
 namespace ExampleApp
 {
@@ -29,6 +30,7 @@ namespace ExampleApp
                                         Eegeo::Resources::Interiors::InteriorSelectionController& interiorSelectionController,
                                         Eegeo::Resources::Interiors::InteriorsPinsController& interiorsPinsController,
                                         Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& globeCameraController,
+                                        Eegeo::Streaming::CameraFrustumStreamingVolume& cameraFrustumStreamingVolume,
                                         Eegeo::UI::NativeUIFactories& nativeUIFactories,
                                         Eegeo::Helpers::IIdentityProvider& identityProvider,
                                         MapMode::SdkModel::IMapModeModel& mapModeModel,
@@ -49,6 +51,7 @@ namespace ExampleApp
                 View::InteriorsExplorerViewModel* m_pViewModel;
                 InteriorsExitObserver* m_pInteriorExitObserver;
                 IInteriorsExplorerInputDelegate* m_pInteriorsExplorerInputDelegate;
+                InteriorsStreamingController* m_pInteriorsStreamingController;
             };
         }
     }

@@ -5,6 +5,7 @@
 #include "InteriorsExplorerModel.h"
 #include "InteriorsExitObserver.h"
 #include "InteriorsExplorerInputDelegate.h"
+#include "InteriorsStreamingController.h"
 
 namespace ExampleApp
 {
@@ -18,6 +19,7 @@ namespace ExampleApp
                                                              Eegeo::Resources::Interiors::InteriorSelectionController& interiorSelectionController,
                                                              Eegeo::Resources::Interiors::InteriorsPinsController& interiorsPinsController,
                                                              Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& globeCameraController,
+                                                             Eegeo::Streaming::CameraFrustumStreamingVolume& cameraFrustumStreamingVolume,
                                                              Eegeo::UI::NativeUIFactories& nativeUIFactories,
                                                              Eegeo::Helpers::IIdentityProvider& identityProvider,
                                                              MapMode::SdkModel::IMapModeModel& mapModeModel,
@@ -28,6 +30,8 @@ namespace ExampleApp
                 m_pViewModel = Eegeo_NEW(View::InteriorsExplorerViewModel)(false, identityProvider.GetNextIdentity());
                 m_pInteriorExitObserver = Eegeo_NEW(InteriorsExitObserver)(interiorsController, interiorSelectionController, globeCameraController, nativeUIFactories);
                 m_pInteriorsExplorerInputDelegate = Eegeo_NEW(InteriorsExplorerInputDelegate)(interiorsController, interiorsPinsController, globeCameraController);
+                
+                m_pInteriorsStreamingController = Eegeo_NEW(InteriorsStreamingController)(interiorSelectionController, cameraFrustumStreamingVolume);
             }
             
             InteriorsExplorerModule::~InteriorsExplorerModule()
@@ -36,6 +40,7 @@ namespace ExampleApp
                 Eegeo_DELETE m_pInteriorExitObserver;
                 Eegeo_DELETE m_pModel;
                 Eegeo_DELETE m_pViewModel;
+                Eegeo_DELETE m_pInteriorsStreamingController;
             }
             
             View::InteriorsExplorerViewModel& InteriorsExplorerModule::GetInteriorsExplorerViewModel() const
