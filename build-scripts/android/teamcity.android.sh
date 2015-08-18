@@ -3,10 +3,10 @@
 version=$1
 buildUrl=$2
 githubUrl=$3
-pathToProjectDir=${5}
-pathToReleaseKey=${6:-./release-key.keystore}
-hockeyAppIdentifier=${7:-62a47548d62a577300d5949f3f858683}
-shouldKeepLibs=${8:-0}
+pathToProjectDir=${4}
+pathToReleaseKey=${5:-./release-key.keystore}
+hockeyAppIdentifier=${6:-62a47548d62a577300d5949f3f858683}
+shouldKeepLibs=${7:-1}
 
 #poke the version in the manifest
 manifest=$pathToProjectDir/AndroidManifest.xml
