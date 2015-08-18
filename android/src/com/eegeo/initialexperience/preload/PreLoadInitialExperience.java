@@ -24,8 +24,8 @@ public class PreLoadInitialExperience
             {
                 AlertDialog.Builder builder = new AlertDialog.Builder(m_activity);
 
-                builder.setTitle("Pre-load San Francisco?");
-                builder.setMessage("Select 'Yes' to pre-load data for the city of San Francisco. This message will not appear again.");
+                builder.setTitle("Pre-load Area?");
+                builder.setMessage("Select 'Yes' to pre-load data for the area around Finsbury Square, London. This message will not appear again.");
                 builder.setPositiveButton("Yes", createClickListener(true));
                 builder.setNegativeButton("No", createClickListener(false));
                 builder.setCancelable(false);

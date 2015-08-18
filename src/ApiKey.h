@@ -10,13 +10,13 @@ namespace ExampleApp
     static const std::string ApiKey = "bd23b6d0699b090d315527ababedacb7";
     
     //! Optional: If 'useYelp' is true in AppHost you may wish to obtain a Yelp API key from https://www.yelp.com/developers for POI search provision
-    static const std::string YelpConsumerKey = "OBTAIN YELP CONSUMER KEY AND INSERT IT HERE";
-    static const std::string YelpConsumerSecret = "OBTAIN YELP CONSUMER SECRET AND INSERT IT HERE";
-    static const std::string YelpOAuthToken = "OBTAIN YELP OAUTH TOKEN AND INSERT IT HERE";
-    static const std::string YelpOAuthTokenSecret = "OBTAIN YELP OAUTH TOKEN SECRET AND INSERT IT HERE";
+    static const std::string YelpConsumerKey = "8_4FTFD1k-bOhMv6bCIZEw";
+    static const std::string YelpConsumerSecret = "ZhCAoLI9bbDALeXMw-FUTZOCAug";
+    static const std::string YelpOAuthToken = "cNBh0p1tGXTKVt-Pf6b-Z3uX8zlpNWjq";
+    static const std::string YelpOAuthTokenSecret = "bYe9r5miUuwm87HcMnt3ZMng9aU";
     
     //! Optional: You may wish to obtain a geonames account key from http://www.geonames.org/export/web-services.html for address/place search provision
-    static const std::string GeoNamesUserName = "OBTAIN GEONAMES USERNAME AND INSERT IT HERE";
+    static const std::string GeoNamesUserName = "eegeo_bloomberg_ios";
     
     //! Optional: If 'useYelp' is false in AppHost you may wish to obtain a Decarta API key from http://www.decarta.com/ for POI search provision
     static const std::string DecartaApiKey = "OBTAIN DECARTA SEARCH KEY AND INSERT IT HERE";
