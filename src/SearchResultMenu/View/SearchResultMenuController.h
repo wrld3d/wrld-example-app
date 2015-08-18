@@ -13,6 +13,8 @@
 
 namespace ExampleApp
 {
+    class IAppModeModel;
+    
     namespace SearchResultMenu
     {
         namespace View
@@ -23,6 +25,7 @@ namespace ExampleApp
                 ISearchResultMenuView& m_searchView;
                 CategorySearch::View::ICategorySearchRepository& m_categorySearchRepository;
                 View::ISearchResultMenuViewModel& m_searchResultMenuViewModel;
+                IAppModeModel& m_appModelModel;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
 
                 Eegeo::Helpers::TCallback1<SearchResultMenuController, const Search::SearchQueryPerformedMessage&> m_searchQueryIssuedHandler;
@@ -30,6 +33,8 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback0<SearchResultMenuController> m_onSearchCloseTappedCallback;
                 
                 Eegeo::Helpers::TCallback0<SearchResultMenuController> m_attractModeChangedCallback;
+                
+                Eegeo::Helpers::TCallback0<SearchResultMenuController> m_appModeChangedCallback;
 
             private:
                 void OnSearchQueryPerformedMessage(const Search::SearchQueryPerformedMessage& message);
@@ -45,6 +50,8 @@ namespace ExampleApp
                 
                 void OnAttractModeChanged();
                 
+                void OnAppModelChanged();
+                
             public:
                 SearchResultMenuController(
                     ISearchResultMenuView& searchView,
@@ -53,6 +60,7 @@ namespace ExampleApp
                     Menu::View::IMenuViewModel& menuViewModel,
                     CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
                     View::ISearchResultMenuViewModel& searchResultMenuViewModel,
+                    IAppModeModel& appModelModel,
                     ExampleAppMessaging::TMessageBus& messageBus
                 );
 

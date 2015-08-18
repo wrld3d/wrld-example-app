@@ -72,6 +72,7 @@
 #include "InteriorsExplorer.h"
 #include "InteriorsEntitiesPins.h"
 #include "MapMode.h"
+#include "AppModeModel.h"
 
 namespace ExampleApp
 {
@@ -324,7 +325,7 @@ namespace ExampleApp
             return m_identityProvider;
         }
 
-        const IAppModeModel& GetAppModeModel() const
+        IAppModeModel& GetAppModeModel() const
         {
             return *m_pAppModeModel;
         }

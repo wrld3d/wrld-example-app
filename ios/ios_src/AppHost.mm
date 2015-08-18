@@ -267,7 +267,8 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
                                     app.SearchResultMenuModule().GetMenuViewModel(),
                                     app.SearchResultMenuModule().GetSearchResultMenuViewModel(),
                                     screenProperties,
-                                    m_messageBus);
+                                    m_messageBus,
+                                    app.GetAppModeModel());
 
     m_pSearchResultPoiViewModule = Eegeo_NEW(ExampleApp::SearchResultPoi::View::SearchResultPoiViewModule)(app.SearchResultPoiModule().GetSearchResultPoiViewModel(),
                                                                                                            m_messageBus,

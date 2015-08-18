@@ -16,6 +16,8 @@
 
 namespace ExampleApp
 {
+    class IAppModeModel;
+    
     namespace SearchResultMenu
     {
         namespace View
@@ -33,7 +35,8 @@ namespace ExampleApp
                                            Menu::View::IMenuViewModel& menuViewModel,
                                            ISearchResultMenuViewModel& searchResultMenuViewModel,
                                            const Eegeo::Rendering::ScreenProperties& screenProperties,
-                                           ExampleAppMessaging::TMessageBus& messageBus);
+                                           ExampleAppMessaging::TMessageBus& messageBus,
+                                           IAppModeModel& appModeModel);
 
                 ~SearchResultMenuViewModule();
 
