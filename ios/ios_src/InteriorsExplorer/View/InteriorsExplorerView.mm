@@ -141,7 +141,6 @@
 
 - (void) onCancelButtonPressed:(UIButton *)sender
 {
-    NSLog(@"InteriorExplorerView::onCancelButtonPressed");
     m_pInterop->Dismiss();
 }
 
