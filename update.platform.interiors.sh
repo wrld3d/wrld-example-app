@@ -43,9 +43,9 @@ elif [ "$p" == "android" ]; then
 fi
 
 if [ "$c" == "cpp11" ]; then
-   srcPackageName="$interiors_srcPackageName.cpp11.tar.gz"
+   srcPackageName="$srcPackageName.cpp11.tar.gz"
 else
-   srcPackageName="$interiors_srcPackageName.tar.gz"
+   srcPackageName="$srcPackageName.tar.gz"
 fi
 
 echo "Updating $p platform..."
