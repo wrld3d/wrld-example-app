@@ -289,7 +289,8 @@ namespace ExampleApp
                                                                                    *m_pGlobeCameraController,
                                                                                    m_identityProvider,
                                                                                    m_messageBus,
-                                                                                   m_metricsService);
+                                                                                   m_metricsService,
+                                                                                   *m_pAppModeModel);
         
         m_pGpsMarkerModule = Eegeo_NEW(ExampleApp::GpsMarker::SdkModel::GpsMarkerModule)(m_pWorld->GetRenderingModule(),
                                                                                          m_platformAbstractions,

@@ -16,6 +16,8 @@
 
 namespace ExampleApp
 {
+    class IAppModeModel;
+    
     namespace Compass
     {
         namespace SdkModel
@@ -35,7 +37,8 @@ namespace ExampleApp
                               Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& cameraController,
                               Eegeo::Helpers::IIdentityProvider& identityProvider,
                               ExampleAppMessaging::TMessageBus& messageBus,
-                              Metrics::IMetricsService& metricsService
+                              Metrics::IMetricsService& metricsService,
+                              IAppModeModel& appModeModel
                              );
 
                 ~CompassModule();
