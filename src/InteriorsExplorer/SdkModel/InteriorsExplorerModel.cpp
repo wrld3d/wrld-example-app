@@ -23,6 +23,7 @@ namespace ExampleApp
                 const std::string MetricEventInteriorsVisible = "TimedEvent: Interiors Visible";
                 const std::string MetricEventInteriorSelected = "Interior Selected";
                 const std::string MetricEventInteriorFloorSelected = "Interior Floor Selected";
+                const std::string MetricEventInteriorExitPressed = "Interior Exit Pressed";
                 
                 
                 void GetFloorNumberList(Eegeo::Resources::Interiors::InteriorsController& interiorsController,
@@ -109,6 +110,7 @@ namespace ExampleApp
         
             void InteriorsExplorerModel::OnExit(const InteriorsExplorerExitMessage& message)
             {
+                m_metricsService.SetEvent(MetricEventInteriorExitPressed);
                 m_controller.ExitInterior();
             }
             
