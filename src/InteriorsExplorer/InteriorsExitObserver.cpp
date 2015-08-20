@@ -21,17 +21,18 @@ namespace ExampleApp
         , m_interiorSelectionController(interiorSelectionController)
         , m_globeCameraController(globeCameraController)
         , m_nativeUiFactories(nativeUiFactories)
+        , m_pAlertBox(NULL)
         , m_onInteriorsControllerExitCallback(this, &InteriorsExitObserver::OnInteriorsControllerExit)
-        , m_NetworkConnectivityFailureCallback(this, &InteriorsExitObserver::OnNetworkConnectivityFailed)
+        , m_failedToStreamResourceCallback(this, &InteriorsExitObserver::OnFailedToStreamResource)
         {
             m_interiorsController.RegisterExitCallback(m_onInteriorsControllerExitCallback);
-            m_interiorSelectionController.RegisterNetworkConnectivityFailureCallback(m_NetworkConnectivityFailureCallback);
+            m_interiorSelectionController.RegisterFailedToStreamResourceCallback(m_failedToStreamResourceCallback);
         }
 
         InteriorsExitObserver::~InteriorsExitObserver()
         {
             m_interiorsController.UnregisterExitCallback(m_onInteriorsControllerExitCallback);
-            m_interiorSelectionController.UnregisterNetworkConnectivityFailureCallback(m_NetworkConnectivityFailureCallback);
+            m_interiorSelectionController.UnregisterFailedToStreamResourceCallback(m_failedToStreamResourceCallback);
         }
 
         void InteriorsExitObserver::OnInteriorsControllerExit()
@@ -40,10 +41,12 @@ namespace ExampleApp
             InitialiseTransitionToGlobeCamera(additionalDistanceOffset);
         }
 
-        void InteriorsExitObserver::OnNetworkConnectivityFailed()
+        void InteriorsExitObserver::OnFailedToStreamResource()
         {
-            m_nativeUiFactories.AlertBoxFactory().CreateSingleOptionAlertBox("Unable to download indoor map",
-                    "Please check that you have a valid network connection.",
+            Eegeo_ASSERT(m_pAlertBox == NULL);
+
+            m_pAlertBox = m_nativeUiFactories.AlertBoxFactory().CreateSingleOptionAlertBox("Unable to download indoor map",
+                    "Please check that you have a healthy network connection.",
                     *this);
 
             const float additionalDistanceOffset = 500.f;
@@ -66,6 +69,12 @@ namespace ExampleApp
             const Eegeo::Resources::Interiors::Camera::InteriorsCameraState& exitTransitionTarget = Eegeo::Resources::Interiors::Camera::InteriorsCameraState::MakeFromRenderCamera(m_globeCameraController.GetRenderCamera());
 
             m_interiorsController.SetExitTransitionTarget(exitTransitionTarget);
+        }
+
+        void InteriorsExitObserver::HandleAlertBoxDismissed()
+        {
+            Eegeo_DELETE m_pAlertBox;
+            m_pAlertBox = NULL;
         }
     }
 }
