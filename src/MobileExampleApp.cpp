@@ -410,6 +410,7 @@ namespace ExampleApp
                                                                                                      world.GetNativeUIFactories(),
                                                                                                      m_identityProvider,
                                                                                                      m_pMapModeModule->GetMapModeModel(),
+                                                                                                     *m_pAppModeModel,
                                                                                                      m_messageBus,
                                                                                                      m_metricsService);
         

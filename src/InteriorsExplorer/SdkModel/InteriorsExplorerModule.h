@@ -17,6 +17,7 @@
 
 namespace ExampleApp
 {
+    class IAppModeModel;
     namespace InteriorsExplorer
     {
         namespace SdkModel
@@ -34,6 +35,7 @@ namespace ExampleApp
                                         Eegeo::UI::NativeUIFactories& nativeUIFactories,
                                         Eegeo::Helpers::IIdentityProvider& identityProvider,
                                         MapMode::SdkModel::IMapModeModel& mapModeModel,
+                                        ExampleApp::IAppModeModel& appModeModel,
                                         ExampleAppMessaging::TMessageBus& messageBus,
                                         ExampleApp::Metrics::IMetricsService& metricsService);
 
@@ -52,7 +54,6 @@ namespace ExampleApp
                 InteriorsExitObserver* m_pInteriorExitObserver;
                 IInteriorsExplorerInputDelegate* m_pInteriorsExplorerInputDelegate;
                 InteriorsStreamingController* m_pInteriorsStreamingController;
-                InteriorPinModalityObserver* m_pInteriorPinModalityObserver;
                 InteriorPinScaleController* m_pInteriorPinScaleController;
             };
         }
