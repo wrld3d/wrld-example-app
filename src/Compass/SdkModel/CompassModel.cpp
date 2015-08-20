@@ -9,6 +9,7 @@
 #include "NavigationService.h"
 #include "ILocationService.h"
 #include "LatLongAltitude.h"
+#include "IAppModeModel.h"
 
 namespace ExampleApp
 {
@@ -19,11 +20,14 @@ namespace ExampleApp
             CompassModel::CompassModel(Eegeo::Location::NavigationService& navigationService,
                                        Eegeo::Location::ILocationService& locationService,
                                        Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& controller,
-                                       Metrics::IMetricsService& metricsService)
+                                       Metrics::IMetricsService& metricsService,
+                                       IAppModeModel& appModeModel)
                 :m_navigationService(navigationService)
                 ,m_locationService(locationService)
                 ,m_cameraController(controller)
                 ,m_metricsService(metricsService)
+                , m_appModeModel(appModeModel)
+                , m_appModeChangedCallback(this, &CompassModel::OnAppModeChanged)
             {
                 m_compassGpsModeToNavigationGpsMode[Eegeo::Location::NavigationService::GpsModeOff] = GpsMode::GpsDisabled;
                 m_compassGpsModeToNavigationGpsMode[Eegeo::Location::NavigationService::GpsModeFollow] = GpsMode::GpsFollow;
@@ -36,11 +40,14 @@ namespace ExampleApp
                 m_gpsModeToString[GpsMode::GpsDisabled] = "GpsDisabled";
                 m_gpsModeToString[GpsMode::GpsFollow] = "GpsFollow";
                 m_gpsModeToString[GpsMode::GpsCompassMode] = "GpsCompassMode";
+                
+                
+                m_appModeModel.RegisterAppModeChangedCallback(m_appModeChangedCallback);
             }
 
             CompassModel::~CompassModel()
             {
-
+                m_appModeModel.UnregisterAppModeChangedCallback(m_appModeChangedCallback);
             }
 
             bool CompassModel::GetGpsModeActive() const
@@ -55,6 +62,13 @@ namespace ExampleApp
 
             void CompassModel::CycleToNextGpsMode()
             {
+                const AppMode appMode = m_appModeModel.GetAppMode();
+                if (appMode != WorldMode)
+                {
+                    DisableGpsMode();
+                    return;
+                }
+                
                 if(!m_locationService.GetIsAuthorized())
                 {
                     DisableGpsMode();
@@ -165,6 +179,16 @@ namespace ExampleApp
             void CompassModel::RemoveGpsModeUnauthorizedCallback(Eegeo::Helpers::ICallback0 &callback)
             {
                 m_gpsModeUnauthorizedCallbacks.RemoveCallback(callback);
+            }
+            
+            void CompassModel::OnAppModeChanged()
+            {
+                const AppMode appMode = m_appModeModel.GetAppMode();
+                if (appMode != WorldMode)
+                {
+                    DisableGpsMode();
+                    return;
+                }
             }
         }
     }

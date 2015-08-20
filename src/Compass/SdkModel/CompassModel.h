@@ -13,6 +13,8 @@
 
 namespace ExampleApp
 {
+    class IAppModeModel;
+    
     namespace Compass
     {
         namespace SdkModel
@@ -31,12 +33,15 @@ namespace ExampleApp
                 
                 Metrics::IMetricsService& m_metricsService;
 
+                IAppModeModel& m_appModeModel;
+                Eegeo::Helpers::TCallback0<CompassModel> m_appModeChangedCallback;
             public:
 
                 CompassModel(Eegeo::Location::NavigationService& navigationService,
                              Eegeo::Location::ILocationService& locationService,
                              Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& controller,
-                             Metrics::IMetricsService& metricsService);
+                             Metrics::IMetricsService& metricsService,
+                             IAppModeModel& appModeModel);
 
                 ~CompassModel();
 
@@ -64,6 +69,8 @@ namespace ExampleApp
 
             private:
                 void SetGpsMode(GpsMode::Values value);
+                
+                void OnAppModeChanged();
             };
         }
     }
