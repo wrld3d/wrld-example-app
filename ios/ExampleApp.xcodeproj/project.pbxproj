@@ -2509,6 +2509,7 @@
 		E06AE5991B87207B000F85E3 /* AppModeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppModeModel.h; path = AppModes/SdkModel/AppModeModel.h; sourceTree = "<group>"; };
 		E06AE59A1B87207B000F85E3 /* IAppModeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IAppModeModel.h; path = AppModes/SdkModel/IAppModeModel.h; sourceTree = "<group>"; };
 		E06AE59D1B872086000F85E3 /* AppModes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppModes.h; path = AppModes/AppModes.h; sourceTree = "<group>"; };
+		E06AE5A21B8740A3000F85E3 /* AppModeChangedMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AppModeChangedMessage.h; path = AppModes/AppModeChangedMessage.h; sourceTree = "<group>"; };
 		E07992BE1B7241F4000402B0 /* Metrics.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Metrics.h; sourceTree = "<group>"; };
 		E07992BF1B724AF3000402B0 /* Interiors */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Interiors; sourceTree = "<group>"; };
 		E07992CB1B725EDB000402B0 /* micello_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = micello_logo.png; sourceTree = "<group>"; };
@@ -5045,6 +5046,7 @@
 			children = (
 				E06AE59D1B872086000F85E3 /* AppModes.h */,
 				E06AE5911B871E76000F85E3 /* SdkModel */,
+				E06AE5A21B8740A3000F85E3 /* AppModeChangedMessage.h */,
 			);
 			name = AppModes;
 			sourceTree = "<group>";

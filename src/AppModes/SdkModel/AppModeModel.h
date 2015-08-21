@@ -4,6 +4,7 @@
 
 #include "IAppModeModel.h"
 #include "Interiors.h"
+#include "BidirectionalBus.h"
 
 namespace ExampleApp
 {
@@ -14,7 +15,8 @@ namespace ExampleApp
             class AppModeModel : public IAppModeModel
             {
             public:
-                AppModeModel(Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel);
+                AppModeModel(Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
+                             ExampleAppMessaging::TMessageBus& messageBus);
                 ~AppModeModel();
 
                 AppMode GetAppMode() const;
@@ -30,6 +32,7 @@ namespace ExampleApp
                 void OnInteriorSelectionModelChanged(const Eegeo::Resources::Interiors::InteriorId& interiorId);
                 Eegeo::Helpers::TCallback1<AppModeModel, const Eegeo::Resources::Interiors::InteriorId> m_interiorSelectionModelChangedCallback;
 
+                ExampleAppMessaging::TMessageBus& m_messageBus;
                 Eegeo::Helpers::CallbackCollection0 m_appModeChangedCallbacks;
 
                 AppMode m_appMode;

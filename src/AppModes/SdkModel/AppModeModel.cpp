@@ -3,6 +3,7 @@
 
 #include "AppModeModel.h"
 #include "InteriorSelectionModel.h"
+#include "AppModeChangedMessage.h"
 
 namespace ExampleApp
 {
@@ -10,8 +11,10 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            AppModeModel::AppModeModel(Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel)
+            AppModeModel::AppModeModel(Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
+                                       ExampleAppMessaging::TMessageBus& messageBus)
             : m_interiorSelectionModel(interiorSelectionModel)
+            , m_messageBus(messageBus)
             , m_interiorSelectionModelChangedCallback(this, &AppModeModel::OnInteriorSelectionModelChanged)
             , m_appMode(WorldMode)
             {
@@ -50,6 +53,7 @@ namespace ExampleApp
                 {
                     m_appMode = appMode;
                     m_appModeChangedCallbacks.ExecuteCallbacks();
+                    m_messageBus.Publish(AppModeChangedMessage(m_appMode));
                 }
             }
         }

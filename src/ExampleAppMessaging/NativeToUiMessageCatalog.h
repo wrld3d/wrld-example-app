@@ -30,6 +30,7 @@
 #include "InteriorsExplorerFloorSelectedMessage.h"
 #include "InteriorsExplorerStateChangedMessage.h"
 #include "SetWatermarkVisibilityMessage.h"
+#include "AppModeChangedMessage.h"
 
 namespace ExampleApp
 {
@@ -62,6 +63,7 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<Watermark::SetWatermarkVisibilityMessage>
             , public Eegeo::Messaging::CatalogBinding<InteriorsExplorer::InteriorsExplorerFloorSelectedMessage>
             , public Eegeo::Messaging::CatalogBinding<InteriorsExplorer::InteriorsExplorerStateChangedMessage>
+            , public Eegeo::Messaging::CatalogBinding<AppModes::AppModeChangedMessage>
             , private Eegeo::NonCopyable
         {
 
