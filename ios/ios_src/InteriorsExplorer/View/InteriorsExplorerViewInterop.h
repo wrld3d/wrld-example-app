@@ -30,7 +30,7 @@ namespace ExampleApp
                 void SelectFloor(int floor);
                 
                 void SetFloorName(const std::string& name);
-                void UpdateFloors(const std::vector<int>& floorNumbers, int currentlySelectedFloor);
+                void UpdateFloors(const std::vector<std::string>& floorShortNames, int currentlySelectedFloorIndex);
                 
                 void InsertDismissedCallback(Eegeo::Helpers::ICallback0& callback);
                 void RemoveDismissedCallback(Eegeo::Helpers::ICallback0& callback);

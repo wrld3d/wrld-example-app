@@ -34,7 +34,7 @@
         m_inactiveFloorListXPosition = -50.f;
         m_inactiveDetailPaneYPosition = m_screenHeight;
         
-        self.pFloorPanel = [[[UIView alloc] initWithFrame:CGRectMake(m_inactiveFloorListXPosition, m_screenHeight/2.0f, 50, 200)] autorelease];
+        self.pFloorPanel = [[[UIView alloc] initWithFrame:CGRectMake(m_inactiveFloorListXPosition, m_screenHeight/2.0f, 55, 200)] autorelease];
         [self addSubview:self.pFloorPanel];
         
         self.pFloorPanelTop = [[[UIImageView alloc] initWithImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"floor_selection_top")] autorelease];
@@ -106,7 +106,7 @@
 - (void)layoutSubviews
 {
     const int borderHeight = 20;
-    const int floorPanelWidth = 50;
+    const int floorPanelWidth = 55;
     CGFloat listHeight = self.pFloorList.contentSize.height;
     CGFloat totalFloorPanelHeight = (borderHeight * 2.f) + listHeight;
     
@@ -154,16 +154,24 @@
     self.pFloorNameLabel.text = [NSString stringWithUTF8String:name->c_str()];
 }
 
-- (void) updateFloors: (const std::vector<int>&) floorNumbers withCurrentFloor: (int) currentlySelectedFloor;
+- (void) updateFloors: (const std::vector<std::string>&) floorShortNames withCurrentFloor: (int) currentlySelectedFloorIndex;
 {
-    m_floorNumbers = floorNumbers;
+    m_tableViewFloorNames = floorShortNames;
+    std::reverse(m_tableViewFloorNames.begin(), m_tableViewFloorNames.end());
     
     [self.pFloorList reloadData];
-    [self.pFloorList selectRowAtIndexPath:[NSIndexPath indexPathForRow:(m_floorNumbers.size() - currentlySelectedFloor)-1 inSection:0] animated:NO scrollPosition:0];
+    int rowIndex = [self reverseIndex:currentlySelectedFloorIndex];
+    [self.pFloorList selectRowAtIndexPath:[NSIndexPath indexPathForRow:rowIndex inSection:0] animated:NO scrollPosition:0];
     [self.pFloorList sizeToFit];
     [self layoutIfNeeded];
     [self setNeedsLayout];
 }
+
+- (int) reverseIndex:(int)floorIndex
+{
+    return int((m_tableViewFloorNames.size() - floorIndex)-1);
+}
+
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -172,7 +180,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return m_floorNumbers.size();
+    return m_tableViewFloorNames.size();
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
@@ -193,14 +201,16 @@
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:Identifier];
     }
-    cell.textLabel.text = [NSString stringWithFormat:@"%d", m_floorNumbers.at(indexPath.item)];
+    
+    cell.textLabel.text = [NSString stringWithUTF8String:m_tableViewFloorNames.at(indexPath.item).c_str()];
     return cell;
 }
 
+
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    int floorSelected = int((m_floorNumbers.size() - indexPath.item)-1);
-    m_pInterop->SelectFloor(floorSelected);
+    m_pInterop->SelectFloor([self reverseIndex:indexPath.item]);
 }
 
 - (void) setFullyOnScreen

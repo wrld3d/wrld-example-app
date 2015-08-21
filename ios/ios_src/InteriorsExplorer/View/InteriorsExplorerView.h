@@ -28,7 +28,7 @@
     
     float m_detailsPanelHeight;
     
-    std::vector<int> m_floorNumbers;
+    std::vector<std::string> m_tableViewFloorNames;
 }
 
 - (id) initWithParams:(float)width :(float)height :(float)pixelScale;
@@ -43,7 +43,7 @@
 
 - (void) setFloorName:(const std::string*)name;
 
-- (void) updateFloors: (const std::vector<int>&) floorNumbers withCurrentFloor: (int) currentlySelectedFloor;
+- (void) updateFloors: (const std::vector<std::string>&) floorNumbers withCurrentFloor: (int) currentlySelectedFloor;
 
 - (void) setFullyOnScreen;
 
@@ -52,6 +52,8 @@
 - (void) setOnScreenStateToIntermediateValue:(float)openState;
 
 - (void) animateTo:(float)t;
+
+- (int) reverseIndex:(int)floorIndex;
 
 @property(nonatomic, retain) UIView* pFloorPanel;
 @property(nonatomic, retain) UIImageView* pFloorPanelTop;

@@ -13,26 +13,26 @@ namespace ExampleApp
         {
         public:
             InteriorsExplorerStateChangedMessage(bool interiorVisible,
-                                                 int selectedFloor,
-                                                 const std::string& floorName,
-                                                 const std::vector<int>& floorNumbers)
+                                                 int selectedFloorIndex,
+                                                 const std::string& selectedFloorName,
+                                                 const std::vector<std::string>& floorShortNames)
             : m_interiorVisible(interiorVisible)
-            , m_selectedFloor(selectedFloor)
-            , m_floorName(floorName)
-            , m_floorNumbers(floorNumbers)
+            , m_selectedFloorIndex(selectedFloorIndex)
+            , m_selectedFloorName(selectedFloorName)
+            , m_floorShortNames(floorShortNames)
             {
             }
             
-            const bool IsInteriorVisible() const { return m_interiorVisible; }
-            int GetSelectedFloor() const { return m_selectedFloor; }
-            std::string GetFloorName() const { return m_floorName; }
-            const std::vector<int>& GetFloorNumbers() const { return m_floorNumbers; }
+            bool IsInteriorVisible() const { return m_interiorVisible; }
+            int GetSelectedFloorIndex() const { return m_selectedFloorIndex; }
+            std::string GetSelectedFloorName() const { return m_selectedFloorName; }
+            std::vector<std::string> GetFloorShortNames() const { return m_floorShortNames; }
             
         private:
-            bool m_interiorVisible;
-            int m_selectedFloor;
-            std::string m_floorName;
-            std::vector<int> m_floorNumbers;
+            const bool m_interiorVisible;
+            const int m_selectedFloorIndex;
+            const std::string m_selectedFloorName;
+            const std::vector<std::string> m_floorShortNames;
         };
     }
 }

@@ -77,9 +77,9 @@ namespace ExampleApp
             {
                 if(message.IsInteriorVisible())
                 {
-                    m_view.UpdateFloors(message.GetFloorNumbers(), message.GetSelectedFloor());
+                    m_view.UpdateFloors(message.GetFloorShortNames(), message.GetSelectedFloorIndex());
                     
-                    OnFloorSelected(InteriorsExplorerFloorSelectedMessage(message.GetSelectedFloor(), message.GetFloorName()));
+                    OnFloorSelected(InteriorsExplorerFloorSelectedMessage(message.GetSelectedFloorIndex(), message.GetSelectedFloorName()));
                     
                     m_viewModel.AddToScreen();
                     

@@ -25,35 +25,9 @@ namespace ExampleApp
                 const std::string MetricEventInteriorFloorSelected = "Interior Floor Selected";
                 const std::string MetricEventInteriorExitPressed = "Interior Exit Pressed";
                 
-                
-                void GetFloorNumberList(Eegeo::Resources::Interiors::InteriorsController& interiorsController,
-                                        std::vector<int>& out_floorNumbers)
+                std::string ToFloorName(const Eegeo::Resources::Interiors::InteriorsFloorModel* pFloorModel)
                 {
-                    out_floorNumbers.clear();
-                    
-                    const Eegeo::Resources::Interiors::InteriorsModel* pModel = NULL;
-                    interiorsController.TryGetCurrentModel(pModel);
-                    
-                    Eegeo_ASSERT(pModel != NULL, "Couldn't get current model for interior");
-
-                    out_floorNumbers.reserve(pModel->GetFloorCount());
-                    
-                    const Eegeo::Resources::Interiors::TFloorModelVector& floors = pModel->GetFloors();
-                    for (Eegeo::Resources::Interiors::TFloorModelVector::const_reverse_iterator rit = floors.rbegin(); rit != floors.rend(); ++rit)
-                    {
-
-                        // Floor numbers currently match Micello's 'z-level', which starts at 0 for ground floor.
-                        // However, Micello's names follow US conventions, with ground floor being 1.
-                        // Incrementing floor numbers by one so that the z-level and names visually match in UI.
-                        int floorNumber = (*rit)->GetFloorNumber();
-                        if (floorNumber >= 0)
-                        {
-                            ++floorNumber;
-                        }
-                        
-                        out_floorNumbers.push_back(floorNumber);
-                    }
-                    
+                    return pFloorModel->GetFloorName();
                 }
             }
             
@@ -94,18 +68,25 @@ namespace ExampleApp
                 int floor = m_controller.ShowingInterior() ? m_controller.GetCurrentFloorIndex() : 0;
                 
                 std::string floorName;
-                std::vector<int> floorNumbers;
+                std::vector<std::string> floorShortNames;
 
                 if (m_controller.ShowingInterior())
                 {
-                    GetFloorNumberList(m_controller, floorNumbers);
+                    const Eegeo::Resources::Interiors::InteriorsModel* pModel = NULL;
+                    m_controller.TryGetCurrentModel(pModel);
+                    
+                    Eegeo_ASSERT(pModel != NULL, "Couldn't get current model for interior");
+                    const Eegeo::Resources::Interiors::TFloorModelVector& floorModels = pModel->GetFloors();
+                    
+                    std::transform(floorModels.begin(), floorModels.end(), std::back_inserter(floorShortNames), ToFloorName);
+                    
                     floorName = m_controller.GetCurrentFloorModel().GetFloorName();
                 }
                 
                 m_messageBus.Publish(InteriorsExplorerStateChangedMessage(m_controller.ShowingInterior(),
                                                                           floor,
                                                                           floorName,
-                                                                          floorNumbers));
+                                                                          floorShortNames));
             }
         
             void InteriorsExplorerModel::OnExit(const InteriorsExplorerExitMessage& message)
