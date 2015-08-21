@@ -21,7 +21,7 @@ namespace ExampleApp
                                        Eegeo::Location::ILocationService& locationService,
                                        Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& controller,
                                        Metrics::IMetricsService& metricsService,
-                                       IAppModeModel& appModeModel)
+                                       AppModes::SdkModel::IAppModeModel& appModeModel)
                 :m_navigationService(navigationService)
                 ,m_locationService(locationService)
                 ,m_cameraController(controller)
@@ -62,8 +62,8 @@ namespace ExampleApp
 
             void CompassModel::CycleToNextGpsMode()
             {
-                const AppMode appMode = m_appModeModel.GetAppMode();
-                if (appMode != WorldMode)
+                const AppModes::SdkModel::AppMode appMode = m_appModeModel.GetAppMode();
+                if (appMode != AppModes::SdkModel::WorldMode)
                 {
                     DisableGpsMode();
                     return;
@@ -183,8 +183,8 @@ namespace ExampleApp
             
             void CompassModel::OnAppModeChanged()
             {
-                const AppMode appMode = m_appModeModel.GetAppMode();
-                if (appMode != WorldMode)
+                const AppModes::SdkModel::AppMode appMode = m_appModeModel.GetAppMode();
+                if (appMode != AppModes::SdkModel::WorldMode)
                 {
                     DisableGpsMode();
                     return;

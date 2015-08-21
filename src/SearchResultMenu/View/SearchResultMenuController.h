@@ -10,11 +10,10 @@
 #include "ICallback.h"
 #include "ISearchResultMenuViewModel.h"
 #include "ICategorySearchRepository.h"
+#include "AppModes.h"
 
 namespace ExampleApp
 {
-    class IAppModeModel;
-    
     namespace SearchResultMenu
     {
         namespace View
@@ -25,7 +24,7 @@ namespace ExampleApp
                 ISearchResultMenuView& m_searchView;
                 CategorySearch::View::ICategorySearchRepository& m_categorySearchRepository;
                 View::ISearchResultMenuViewModel& m_searchResultMenuViewModel;
-                IAppModeModel& m_appModelModel;
+                AppModes::SdkModel::IAppModeModel& m_appModelModel;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
 
                 Eegeo::Helpers::TCallback1<SearchResultMenuController, const Search::SearchQueryPerformedMessage&> m_searchQueryIssuedHandler;
@@ -60,7 +59,7 @@ namespace ExampleApp
                     Menu::View::IMenuViewModel& menuViewModel,
                     CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
                     View::ISearchResultMenuViewModel& searchResultMenuViewModel,
-                    IAppModeModel& appModelModel,
+                    AppModes::SdkModel::IAppModeModel& appModelModel,
                     ExampleAppMessaging::TMessageBus& messageBus
                 );
 

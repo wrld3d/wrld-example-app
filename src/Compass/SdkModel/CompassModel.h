@@ -10,11 +10,10 @@
 #include "GlobeCamera.h"
 #include "Location.h"
 #include "IMetricsService.h"
+#include "AppModes.h"
 
 namespace ExampleApp
 {
-    class IAppModeModel;
-    
     namespace Compass
     {
         namespace SdkModel
@@ -33,7 +32,7 @@ namespace ExampleApp
                 
                 Metrics::IMetricsService& m_metricsService;
 
-                IAppModeModel& m_appModeModel;
+                AppModes::SdkModel::IAppModeModel& m_appModeModel;
                 Eegeo::Helpers::TCallback0<CompassModel> m_appModeChangedCallback;
             public:
 
@@ -41,7 +40,7 @@ namespace ExampleApp
                              Eegeo::Location::ILocationService& locationService,
                              Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& controller,
                              Metrics::IMetricsService& metricsService,
-                             IAppModeModel& appModeModel);
+                             AppModes::SdkModel::IAppModeModel& appModeModel);
 
                 ~CompassModel();
 

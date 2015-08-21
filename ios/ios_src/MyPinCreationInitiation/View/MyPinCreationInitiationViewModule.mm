@@ -14,11 +14,11 @@ namespace ExampleApp
         namespace View
         {
             MyPinCreationInitiationViewModule::MyPinCreationInitiationViewModule(ExampleAppMessaging::TMessageBus& messageBus,
-                    IMyPinCreationInitiationViewModel& viewModel,
-                    IMyPinCreationConfirmationViewModel& confirmationViewModel,
-                    const Eegeo::Rendering::ScreenProperties& screenProperties,
-                    Metrics::IMetricsService& metricsService,
-                                                                                 const IAppModeModel& appModeModel)
+                                                                                 IMyPinCreationInitiationViewModel& viewModel,
+                                                                                 IMyPinCreationConfirmationViewModel& confirmationViewModel,
+                                                                                 const Eegeo::Rendering::ScreenProperties& screenProperties,
+                                                                                 Metrics::IMetricsService& metricsService,
+                                                                                 const AppModes::SdkModel::IAppModeModel& appModeModel)
             {
                 m_pView = [[MyPinCreationInitiationView alloc]
                            initWithParams:screenProperties.GetScreenWidth() :screenProperties.GetScreenHeight() :screenProperties.GetPixelScale()];

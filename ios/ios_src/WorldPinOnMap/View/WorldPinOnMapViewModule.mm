@@ -16,7 +16,7 @@ namespace ExampleApp
             WorldPinOnMapViewModule::WorldPinOnMapViewModule(IWorldPinInFocusViewModel& worldPinInFocusViewModel,
                     ScreenControl::View::IScreenControlViewModel::IScreenControlViewModel& worldPinOnMapInFocusScreenControlViewModel,
                     Modality::View::IModalityModel& modalityModel,
-                    const IAppModeModel& appModeModel,
+                    const AppModes::SdkModel::IAppModeModel& appModeModel,
                     float pinDiameter,
                     float pixelScale)
             {

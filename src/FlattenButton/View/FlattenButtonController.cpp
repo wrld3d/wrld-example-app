@@ -10,7 +10,7 @@ namespace ExampleApp
         {
             void FlattenButtonController::OnToggleButton(bool& toggle)
             {
-                if (m_appModeModel.GetAppMode() == InteriorMode)
+                if (m_appModeModel.GetAppMode() == AppModes::SdkModel::InteriorMode)
                 {
                     m_view.SetToggled(false);
                     return;
@@ -57,7 +57,7 @@ namespace ExampleApp
                 IFlattenButtonView& view,
                 ExampleAppMessaging::TMessageBus& messageBus,
                 Metrics::IMetricsService& metricsService,
-                const IAppModeModel& appModeModel
+                const AppModes::SdkModel::IAppModeModel& appModeModel
             )
                 : m_viewModel(viewModel)
                 , m_view(view)

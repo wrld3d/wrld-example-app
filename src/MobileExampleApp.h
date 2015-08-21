@@ -72,12 +72,10 @@
 #include "InteriorsExplorer.h"
 #include "InteriorsEntitiesPins.h"
 #include "MapMode.h"
-#include "AppModeModel.h"
+#include "AppModes.h"
 
 namespace ExampleApp
 {
-    class IAppModeModel;
-
     class MobileExampleApp : private Eegeo::NonCopyable
     {
     private:
@@ -137,7 +135,7 @@ namespace ExampleApp
         Search::SdkModel::ISearchServiceModule& m_searchServiceModule;
         InteriorsExplorer::SdkModel::IInteriorsExplorerModule* m_pInteriorsExplorerModule;
         InteriorsEntitiesPins::SdkModel::IInteriorsEntitiesPinsModule* m_pInteriorsEntitiesPinsModule;
-        IAppModeModel* m_pAppModeModel;
+        AppModes::SdkModel::IAppModeModel* m_pAppModeModel;
 
         void CreateApplicationModelModules();
 
@@ -325,7 +323,7 @@ namespace ExampleApp
             return m_identityProvider;
         }
 
-        IAppModeModel& GetAppModeModel() const
+        AppModes::SdkModel::IAppModeModel& GetAppModeModel() const
         {
             return *m_pAppModeModel;
         }

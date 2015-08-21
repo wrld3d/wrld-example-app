@@ -20,7 +20,7 @@ namespace ExampleApp
                 IMyPinCreationConfirmationViewModel& confirmationViewModel,
                 ExampleAppMessaging::TMessageBus& messageBus,
                 Metrics::IMetricsService& metricsService,
-                                                                                 const IAppModeModel& appModeModel)
+                const AppModes::SdkModel::IAppModeModel& appModeModel)
                 : m_view(view)
                 , m_viewModel(viewModel)
                 , m_confirmationViewModel(confirmationViewModel)
@@ -42,7 +42,7 @@ namespace ExampleApp
 
             void MyPinCreationInitiationController::OnSelected()
             {
-                if(m_appModeModel.GetAppMode() != InteriorMode && m_confirmationViewModel.TryOpen())
+                if(m_appModeModel.GetAppMode() != AppModes::SdkModel::InteriorMode && m_confirmationViewModel.TryOpen())
                 {
                     m_metricsService.SetEvent("UIItem: MyPinCreation");
                     MyPinCreationViewStateChangedMessage message(ExampleApp::MyPinCreation::Ring);

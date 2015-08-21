@@ -14,10 +14,10 @@
 #include "Metrics.h"
 #include "NativeUIFactories.h"
 #include "Streaming.h"
+#include "AppModes.h"
 
 namespace ExampleApp
 {
-    class IAppModeModel;
     namespace InteriorsExplorer
     {
         namespace SdkModel
@@ -35,7 +35,7 @@ namespace ExampleApp
                                         Eegeo::UI::NativeUIFactories& nativeUIFactories,
                                         Eegeo::Helpers::IIdentityProvider& identityProvider,
                                         MapMode::SdkModel::IMapModeModel& mapModeModel,
-                                        ExampleApp::IAppModeModel& appModeModel,
+                                        AppModes::SdkModel::IAppModeModel& appModeModel,
                                         ExampleAppMessaging::TMessageBus& messageBus,
                                         ExampleApp::Metrics::IMetricsService& metricsService);
 

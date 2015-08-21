@@ -24,7 +24,7 @@ namespace ExampleApp
                                                   IMyPinCreationConfirmationViewModel& confirmationViewModel,
                                                   ExampleAppMessaging::TMessageBus& messageBus,
                                                   Metrics::IMetricsService& metricsService,
-                                                  const IAppModeModel& appModeModel);
+                                                  const AppModes::SdkModel::IAppModeModel& appModeModel);
                 
                 ~MyPinCreationInitiationController();
 
@@ -39,7 +39,7 @@ namespace ExampleApp
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 
                 Metrics::IMetricsService& m_metricsService;
-                const IAppModeModel& m_appModeModel;
+                const AppModes::SdkModel::IAppModeModel& m_appModeModel;
                 
                 Eegeo::Helpers::TCallback2<MyPinCreationInitiationController, ScreenControl::View::IScreenControlViewModel&, float> m_viewStateCallback;
                 Eegeo::Helpers::TCallback0<MyPinCreationInitiationController> m_selectedCallback;

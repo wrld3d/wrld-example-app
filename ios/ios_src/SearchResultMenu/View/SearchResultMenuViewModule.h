@@ -13,11 +13,10 @@
 #include "SearchResultMenuViewIncludes.h"
 #include "BidirectionalBus.h"
 #include "SearchResultMenuDataProvider.h"
+#include "AppModes.h"
 
 namespace ExampleApp
 {
-    class IAppModeModel;
-    
     namespace SearchResultMenu
     {
         namespace View
@@ -36,7 +35,7 @@ namespace ExampleApp
                                            ISearchResultMenuViewModel& searchResultMenuViewModel,
                                            const Eegeo::Rendering::ScreenProperties& screenProperties,
                                            ExampleAppMessaging::TMessageBus& messageBus,
-                                           IAppModeModel& appModeModel);
+                                           AppModes::SdkModel::IAppModeModel& appModeModel);
 
                 ~SearchResultMenuViewModule();
 

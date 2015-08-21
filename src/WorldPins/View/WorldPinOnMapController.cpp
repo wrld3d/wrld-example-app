@@ -16,7 +16,7 @@ namespace ExampleApp
                                                              IWorldPinInFocusViewModel& viewModel,
                                                              ScreenControl::View::IScreenControlViewModel& screenControlViewModel,
                                                              Modality::View::IModalityModel& modalityModel,
-                                                             const IAppModeModel& appModeModel)
+                                                             const AppModes::SdkModel::IAppModeModel& appModeModel)
             : m_view(view)
             , m_viewModel(viewModel)
             , m_screenControlViewModel(screenControlViewModel)
@@ -56,7 +56,7 @@ namespace ExampleApp
             void WorldPinOnMapController::OnSelected()
             {
                 
-                if (m_appModeModel.GetAppMode() == InteriorMode)
+                if (m_appModeModel.GetAppMode() == AppModes::SdkModel::InteriorMode)
                 {
                     return;
                 }

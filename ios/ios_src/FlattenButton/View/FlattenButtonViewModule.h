@@ -28,7 +28,7 @@ namespace ExampleApp
                                         const Eegeo::Rendering::ScreenProperties& screenProperties,
                                         ExampleAppMessaging::TMessageBus& messageBus,
                                         Metrics::IMetricsService& metricsService,
-                                        const IAppModeModel& appModeModel);
+                                        const AppModes::SdkModel::IAppModeModel& appModeModel);
 
                 ~FlattenButtonViewModule();
 

@@ -23,7 +23,7 @@ namespace ExampleApp
                     ISearchResultMenuViewModel& searchResultMenuViewModel,
                     const Eegeo::Rendering::ScreenProperties& screenProperties,
                     ExampleAppMessaging::TMessageBus& messageBus,
-                    IAppModeModel& appModeModel)
+                    AppModes::SdkModel::IAppModeModel& appModeModel)
             {
                 m_pDataProvider = [SearchResultMenuDataProvider alloc];
 

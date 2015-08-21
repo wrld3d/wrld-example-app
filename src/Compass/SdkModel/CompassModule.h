@@ -13,11 +13,10 @@
 #include "CompassViewCycledObserver.h"
 #include "BidirectionalBus.h"
 #include "IMetricsService.h"
+#include "AppModes.h"
 
 namespace ExampleApp
 {
-    class IAppModeModel;
-    
     namespace Compass
     {
         namespace SdkModel
@@ -38,7 +37,7 @@ namespace ExampleApp
                               Eegeo::Helpers::IIdentityProvider& identityProvider,
                               ExampleAppMessaging::TMessageBus& messageBus,
                               Metrics::IMetricsService& metricsService,
-                              IAppModeModel& appModeModel
+                              AppModes::SdkModel::IAppModeModel& appModeModel
                              );
 
                 ~CompassModule();

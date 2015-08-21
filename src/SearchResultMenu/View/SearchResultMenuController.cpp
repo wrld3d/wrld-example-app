@@ -54,8 +54,8 @@ namespace ExampleApp
             
             void SearchResultMenuController::OnAppModelChanged()
             {
-                const AppMode appMode = m_appModelModel.GetAppMode();
-                if (appMode != WorldMode)
+                const AppModes::SdkModel::AppMode appMode = m_appModelModel.GetAppMode();
+                if (appMode != AppModes::SdkModel::WorldMode)
                 {
                     OnSearchClosed();
                 }
@@ -68,7 +68,7 @@ namespace ExampleApp
                 Menu::View::IMenuViewModel& menuViewModel,
                 CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
                 ISearchResultMenuViewModel& searchResultMenuViewModel,
-                IAppModeModel& appModelModel,
+                AppModes::SdkModel::IAppModeModel& appModelModel,
                 ExampleAppMessaging::TMessageBus& messageBus
             )
                 : MenuController(menuModel, menuViewModel, menuView)

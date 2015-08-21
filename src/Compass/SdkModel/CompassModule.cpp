@@ -17,7 +17,7 @@ namespace ExampleApp
                                          Eegeo::Helpers::IIdentityProvider& identityProvider,
                                          ExampleAppMessaging::TMessageBus& messageBus,
                                          Metrics::IMetricsService& metricsService,
-                                         IAppModeModel& appModeModel
+                                         AppModes::SdkModel::IAppModeModel& appModeModel
                                         )
             {
                 m_pModel = Eegeo_NEW(CompassModel)(navigationService, locationService, cameraController, metricsService, appModeModel);

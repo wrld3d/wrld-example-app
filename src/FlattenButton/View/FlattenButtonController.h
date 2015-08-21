@@ -30,7 +30,7 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<FlattenButtonController, const MyPinCreation::MyPinCreationStateChangedMessage&> m_myPinCreationStateChangedMessageHandler;
 
                 Metrics::IMetricsService& m_metricsService;
-                const IAppModeModel& m_appModeModel;
+                const AppModes::SdkModel::IAppModeModel& m_appModeModel;
                 
                 void OnToggleButton(bool& toggle);
 
@@ -46,7 +46,7 @@ namespace ExampleApp
                     IFlattenButtonView& view,
                     ExampleAppMessaging::TMessageBus& messageBus,
                     Metrics::IMetricsService& metricsService,
-                    const IAppModeModel& appModeModel
+                    const AppModes::SdkModel::IAppModeModel& appModeModel
                 );
 
                 ~FlattenButtonController();

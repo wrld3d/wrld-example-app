@@ -197,7 +197,7 @@ namespace ExampleApp
                 mapModule.GetResourceCeilingProvider(),
                 *m_pNavigationService);
 
-        m_pAppModeModel = Eegeo_NEW(AppModeModel)(m_pWorld->GetMapModule().GetInteriorsPresentationModule().GetInteriorSelectionModel());
+        m_pAppModeModel = Eegeo_NEW(AppModes::SdkModel::AppModeModel)(m_pWorld->GetMapModule().GetInteriorsPresentationModule().GetInteriorSelectionModel());
 
         const bool useLowSpecSettings = false;
 
