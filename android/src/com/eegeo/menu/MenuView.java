@@ -15,7 +15,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
-import com.eegeo.BloombergApp.R;
+import com.eegeo.ProjectSwallowApp.R;
 import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.menu.MenuViewJniMethods;
 

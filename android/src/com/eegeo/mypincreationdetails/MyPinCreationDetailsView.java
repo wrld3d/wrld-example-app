@@ -30,7 +30,7 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.eegeo.helpers.IActivityIntentResultHandler;
-import com.eegeo.BloombergApp.R;
+import com.eegeo.ProjectSwallowApp.R;
 import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.photos.PhotoIntentDispatcher;
 

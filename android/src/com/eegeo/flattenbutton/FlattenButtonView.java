@@ -2,7 +2,7 @@
 
 package com.eegeo.flattenbutton;
 
-import com.eegeo.BloombergApp.R;
+import com.eegeo.ProjectSwallowApp.R;
 import com.eegeo.entrypointinfrastructure.MainActivity;
 
 import android.view.View;

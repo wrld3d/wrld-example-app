@@ -1,6 +1,6 @@
 package com.eegeo.helpers;
 
-import com.eegeo.BloombergApp.R;
+import com.eegeo.ProjectSwallowApp.R;
 
 import android.view.View;
 

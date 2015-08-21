@@ -1,10 +1,10 @@
 {
-  "Name": "Bloomberg App",
+  "Name": "Project Swallow App",
   "StartLocationLatitude": 51.520275,
   "StartLocationLongitude": -0.086135,
   "StartLocationAltitude": 10.0,
   "StartLocationDistance": 400.0,
   "StartLocationOrientationDegrees": 180.0,
   "TryStartAtGpsLocation":false,
-  "GoogleAnalyticsReferrerToken":"eegeo_bloomberg_ios"
+  "GoogleAnalyticsReferrerToken":"eegeo_project_swallow_ios"
 }

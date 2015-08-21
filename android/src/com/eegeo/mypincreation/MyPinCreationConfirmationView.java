@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 
-import com.eegeo.BloombergApp.R;
+import com.eegeo.ProjectSwallowApp.R;
 import com.eegeo.entrypointinfrastructure.MainActivity;
 
 public class MyPinCreationConfirmationView implements View.OnClickListener

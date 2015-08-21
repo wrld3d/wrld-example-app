@@ -20,7 +20,7 @@ import android.widget.TextView;
 
 import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.helpers.TintablePinToggleButton;
-import com.eegeo.BloombergApp.R;
+import com.eegeo.ProjectSwallowApp.R;
 import com.eegeo.categories.CategoryResources;
 
 public class YelpSearchResultPoiView implements View.OnClickListener 

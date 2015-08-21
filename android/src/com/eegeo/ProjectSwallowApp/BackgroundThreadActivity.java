@@ -1,8 +1,8 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
-package com.eegeo.BloombergApp;
+package com.eegeo.ProjectSwallowApp;
 
-import com.eegeo.BloombergApp.R;
+import com.eegeo.ProjectSwallowApp.R;
 import com.eegeo.entrypointinfrastructure.EegeoSurfaceView;
 import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.entrypointinfrastructure.NativeJniCalls;

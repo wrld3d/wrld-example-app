@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- BEGIN_INCLUDE(manifest) -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-        package="com.eegeo.BloombergApp"
+        package="com.eegeo.ProjectSwallowApp"
         android:versionCode="1"
         android:versionName="1.0">
 
@@ -17,10 +17,10 @@
     <uses-feature android:name="android.hardware.camera"
         android:required="true"/>
 
-    <application android:icon="@mipmap/icon" android:label="Bloomberg App" android:theme="@android:style/Theme.NoTitleBar">
+    <application android:icon="@mipmap/icon" android:label="Project Swallow App" android:theme="@android:style/Theme.NoTitleBar">
        
-        <activity android:name=".BackgroundThreadActivity"
-                  android:label="Bloomberg App"
+        <activity android:name="com.eegeo.ProjectSwallowApp.BackgroundThreadActivity"
+                  android:label="Project Swallow App"
                   android:configChanges="orientation|keyboardHidden|screenSize|fontScale"
                   android:windowSoftInputMode="adjustPan"
               	  android:launchMode="standard"
