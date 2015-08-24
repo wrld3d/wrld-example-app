@@ -46,7 +46,7 @@
         [self.pFloorPanel addSubview:self.pFloorList];
         [self.pFloorPanel addSubview:self.pFloorPanelBottom];
         
-        float buttonSize = 50.f;
+        float buttonSize = 40.f;
         float labelLength = 200.f;
         float totalPanelLength = buttonSize + labelLength;
 
@@ -118,7 +118,7 @@
     self.pFloorPanel.frame = originalFloorPanelFrame;
     self.pFloorPanelTop.frame = CGRectMake(0, 0, floorPanelWidth, borderHeight);
     self.pFloorList.frame = CGRectMake(0, borderHeight, floorPanelWidth, listHeight);
-    self.pFloorPanelBottom.frame = CGRectMake(0, borderHeight+listHeight, floorPanelWidth, borderHeight);
+    self.pFloorPanelBottom.frame = CGRectMake(0, borderHeight+listHeight-1, floorPanelWidth, borderHeight);
 }
 
 - (void)dealloc
