@@ -20,7 +20,12 @@ namespace ExampleApp
         {
             iOSYelpSearchServiceModule::iOSYelpSearchServiceModule(Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
                                                                    Net::SdkModel::INetworkCapabilities& networkCapabilities,
-                                                                   Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder)
+                                                                   Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder,
+                                                                   const std::string& yelpConsumerKey,
+                                                                   const std::string& yelpConsumerSecret,
+                                                                   const std::string& yelpOAuthToken,
+                                                                   const std::string& yelpOAuthTokenSecret,
+                                                                   const std::string& geoNamesUserName)
             {
                 m_pYelpCategoryMapper = Eegeo_NEW(Yelp::YelpCategoryMapper)(webRequestFactory,
                                                                             Yelp::GetYelpFoundationCategoryToApplicationCategoryMap(),
@@ -28,13 +33,14 @@ namespace ExampleApp
                 
                 m_pSearchResultParser = Eegeo_NEW(Yelp::YelpSearchJsonParser)(*m_pYelpCategoryMapper);
                 
-                m_pSearchQueryFactory = Eegeo_NEW(Yelp::iOSYelpSearchQueryFactory)(ExampleApp::YelpConsumerKey,
-                                                                                   ExampleApp::YelpConsumerSecret,
-                                                                                   ExampleApp::YelpOAuthToken,
-                                                                                   ExampleApp::YelpOAuthTokenSecret,
+                m_pSearchQueryFactory = Eegeo_NEW(Yelp::iOSYelpSearchQueryFactory)(yelpConsumerKey,
+                                                                                   yelpConsumerSecret,
+                                                                                   yelpOAuthToken,
+                                                                                   yelpOAuthTokenSecret,
                                                                                    *m_pYelpCategoryMapper);
 
-                m_pGeoNamesSearchQueryFactory = Eegeo_NEW(GeoNames::GeoNamesSearchQueryFactory)(webRequestFactory,
+                m_pGeoNamesSearchQueryFactory = Eegeo_NEW(GeoNames::GeoNamesSearchQueryFactory)(geoNamesUserName,
+                                                                                                webRequestFactory,
                                                                                                 urlEncoder);
                 m_pGeoNamesParser = Eegeo_NEW(GeoNames::GeoNamesJsonParser)();
                 

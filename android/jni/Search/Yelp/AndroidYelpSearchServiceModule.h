@@ -31,7 +31,12 @@ namespace ExampleApp
                 AndroidYelpSearchServiceModule(AndroidNativeState& nativeState,
                 		Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
                         Net::SdkModel::INetworkCapabilities& networkCapabilities,
-                        Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder);
+                        Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder,
+                        const std::string& yelpConsumerKey,
+                        const std::string& yelpConsumerSecret,
+                        const std::string& yelpOAuthToken,
+                        const std::string& yelpOAuthTokenSecret,
+                        const std::string& geoNamesUserName);
                 
                 ~AndroidYelpSearchServiceModule();
                 

@@ -26,7 +26,8 @@ namespace ExampleApp
                 Eegeo::Web::IWebLoadRequest* m_pWebLoadRequest;
                 
             public:
-                GeoNamesSearchQuery(Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
+                GeoNamesSearchQuery(const std::string& geoNameUserName,
+                                    Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
                                     Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder,
                                     const SdkModel::SearchQuery& query,
                                     Eegeo::Helpers::ICallback0& completionCallback);

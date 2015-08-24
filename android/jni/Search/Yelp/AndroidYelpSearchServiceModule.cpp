@@ -19,7 +19,12 @@ namespace ExampleApp
         	AndroidYelpSearchServiceModule::AndroidYelpSearchServiceModule(AndroidNativeState& nativeState,
         			Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
                     Net::SdkModel::INetworkCapabilities& networkCapabilities,
-                    Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder)
+                    Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder,
+                    const std::string& yelpConsumerKey,
+                    const std::string& yelpConsumerSecret,
+                    const std::string& yelpOAuthToken,
+                    const std::string& yelpOAuthTokenSecret,
+                    const std::string& geoNamesUserName)
             {
                 m_pYelpCategoryMapper = Eegeo_NEW(Yelp::YelpCategoryMapper)(webRequestFactory,
                                                                             Yelp::GetYelpFoundationCategoryToApplicationCategoryMap(),
@@ -29,13 +34,13 @@ namespace ExampleApp
                 
                 m_pSearchQueryFactory = Eegeo_NEW(Yelp::AndroidYelpSearchQueryFactory)(
                 		nativeState,
-                		ExampleApp::YelpConsumerKey,
-                		ExampleApp::YelpConsumerSecret,
-                		ExampleApp::YelpOAuthToken,
-                		ExampleApp::YelpOAuthTokenSecret,
+                		yelpConsumerKey,
+                		yelpConsumerSecret,
+                		yelpOAuthToken,
+                		yelpOAuthTokenSecret,
                 		*m_pYelpCategoryMapper);
 
-                m_pGeoNamesSearchQueryFactory = Eegeo_NEW(GeoNames::GeoNamesSearchQueryFactory)(webRequestFactory, urlEncoder);
+                m_pGeoNamesSearchQueryFactory = Eegeo_NEW(GeoNames::GeoNamesSearchQueryFactory)(geoNamesUserName, webRequestFactory, urlEncoder);
                 m_pGeoNamesParser = Eegeo_NEW(GeoNames::GeoNamesJsonParser)();
                 
                 m_pSearchService = Eegeo_NEW(Yelp::YelpSearchService)(*m_pSearchQueryFactory,

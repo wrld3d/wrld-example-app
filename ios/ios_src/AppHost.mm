@@ -93,13 +93,20 @@ AppHost::AppHost(
 {
     Eegeo::TtyHandler::TtyEnabled = true;
     
+    // create file IO instance (iOSPlatformAbstractionModule not yet available)
+    Eegeo::iOS::iOSFileIO tempFileIO;
+    
+    ExampleApp::ApplicationConfig::SdkModel::ApplicationConfigurationModule applicationConfigurationModule(tempFileIO);
+    
+    const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration = applicationConfigurationModule.GetApplicationConfigurationService().LoadConfiguration(ExampleApp::ApplicationConfigurationPath);
+    
     m_piOSLocationService = Eegeo_NEW(iOSLocationService)();
 
     m_piOSConnectivityService = Eegeo_NEW(iOSConnectivityService)();
 
     m_pJpegLoader = Eegeo_NEW(Eegeo::Helpers::Jpeg::JpegLoader)();
 
-    m_piOSPlatformAbstractionModule = Eegeo_NEW(Eegeo::iOS::iOSPlatformAbstractionModule)(*m_pJpegLoader, ExampleApp::ApiKey);
+    m_piOSPlatformAbstractionModule = Eegeo_NEW(Eegeo::iOS::iOSPlatformAbstractionModule)(*m_pJpegLoader, applicationConfiguration.EegeoApiKey());
 
     Eegeo::EffectHandler::Initialise();
 
@@ -115,37 +122,39 @@ AppHost::AppHost(
     const bool useYelp = true;
     if(useYelp)
     {
-        m_pSearchServiceModule = Eegeo_NEW(ExampleApp::Search::Yelp::iOSYelpSearchServiceModule)(m_piOSPlatformAbstractionModule->GetWebLoadRequestFactory(),
-                                                                                                 *m_pNetworkCapabilities,
-                                                                                                 m_piOSPlatformAbstractionModule->GetUrlEncoder());
+    m_pSearchServiceModule = Eegeo_NEW(ExampleApp::Search::Yelp::iOSYelpSearchServiceModule)(m_piOSPlatformAbstractionModule->GetWebLoadRequestFactory(),
+                                                                                             *m_pNetworkCapabilities,
+                                                                                             m_piOSPlatformAbstractionModule->GetUrlEncoder(),
+                                                                                             applicationConfiguration.YelpConsumerKey(),
+                                                                                             applicationConfiguration.YelpConsumerSecret(),
+                                                                                             applicationConfiguration.YelpOAuthToken(),
+                                                                                             applicationConfiguration.YelpOAuthTokenSecret(),
+                                                                                             applicationConfiguration.GeoNamesUserName());
     }
     else
-    {   
+    {
         m_pSearchServiceModule = Eegeo_NEW(ExampleApp::Search::Decarta::DecartaSearchServiceModule)(m_piOSPlatformAbstractionModule->GetWebLoadRequestFactory(),
                                                                                                     m_piOSPlatformAbstractionModule->GetUrlEncoder());
     }
     
+    
     m_piOSFlurryMetricsService = Eegeo_NEW(ExampleApp::Metrics::iOSFlurryMetricsService)();
     
-    typedef ExampleApp::ApplicationConfig::SdkModel::ApplicationConfigurationModule ApplicationConfigurationModule;
-    ApplicationConfigurationModule applicationConfigurationModule(m_piOSPlatformAbstractionModule->GetFileIO());
-    
-    m_pApp = Eegeo_NEW(ExampleApp::MobileExampleApp)(ExampleApp::ApiKey,
-             *m_piOSPlatformAbstractionModule,
-             screenProperties,
-             *m_piOSLocationService,
-             m_iOSNativeUIFactories,
-             platformConfig,
-             *m_pJpegLoader,
-             *m_pInitialExperienceModule,
-             m_iOSPersistentSettingsModel,
-             m_messageBus,
-             m_sdkModelDomainEventBus,
-             *m_pNetworkCapabilities,
-             *m_pSearchServiceModule,
-             *m_piOSFlurryMetricsService,
-             applicationConfigurationModule.GetApplicationConfigurationService().LoadConfiguration("ApplicationConfigs/standard_config.json"),
-             *this);
+    m_pApp = Eegeo_NEW(ExampleApp::MobileExampleApp)(*m_piOSPlatformAbstractionModule,
+                                                     screenProperties,
+                                                     *m_piOSLocationService,
+                                                     m_iOSNativeUIFactories,
+                                                     platformConfig,
+                                                     *m_pJpegLoader,
+                                                     *m_pInitialExperienceModule,
+                                                     m_iOSPersistentSettingsModel,
+                                                     m_messageBus,
+                                                     m_sdkModelDomainEventBus,
+                                                     *m_pNetworkCapabilities,
+                                                     *m_pSearchServiceModule,
+                                                     *m_piOSFlurryMetricsService,
+                                                     applicationConfiguration,
+                                                     *this);
 
     CreateApplicationViewModules(screenProperties);
 

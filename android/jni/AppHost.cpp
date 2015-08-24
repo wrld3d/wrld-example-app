@@ -131,14 +131,21 @@ AppHost::AppHost(
     Eegeo::TtyHandler::TtyEnabled = true;
     Eegeo::AssertHandler::BreakOnAssert = true;
 
+    // create file IO instance (AndroidPlatformAbstractionModule not yet available)
+    std::set<std::string> customApplicationAssetDirectories;
+	customApplicationAssetDirectories.insert("SearchResultOnMap");
+	customApplicationAssetDirectories.insert("ApplicationConfigs");
+
+	AndroidFileIO tempFileIO(&m_nativeState, customApplicationAssetDirectories);
+
+	ExampleApp::ApplicationConfig::SdkModel::ApplicationConfigurationModule applicationConfigurationModule(tempFileIO);
+
+	const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration = applicationConfigurationModule.GetApplicationConfigurationService().LoadConfiguration(ExampleApp::ApplicationConfigurationPath);
+
     m_pAndroidLocationService = Eegeo_NEW(AndroidLocationService)(&nativeState);
     m_pAndroidConnectivityService = Eegeo_NEW(AndroidConnectivityService)(&nativeState);
 
     m_pJpegLoader = Eegeo_NEW(Eegeo::Helpers::Jpeg::JpegLoader)();
-
-    std::set<std::string> customApplicationAssetDirectories;
-    customApplicationAssetDirectories.insert("SearchResultOnMap");
-    customApplicationAssetDirectories.insert("ApplicationConfigs");
 
     m_pAndroidPlatformAbstractionModule = Eegeo_NEW(Eegeo::Android::AndroidPlatformAbstractionModule)(
             nativeState,
@@ -146,7 +153,7 @@ AppHost::AppHost(
             display,
             resourceBuildShareContext,
             shareSurface,
-            ExampleApp::ApiKey,
+            applicationConfiguration.EegeoApiKey(),
             customApplicationAssetDirectories);
 
     Eegeo::EffectHandler::Initialise();
@@ -174,7 +181,12 @@ AppHost::AppHost(
         		nativeState,
         		m_pAndroidPlatformAbstractionModule->GetWebLoadRequestFactory(),
         		*m_pNetworkCapabilities,
-        		m_pAndroidPlatformAbstractionModule->GetUrlEncoder()
+        		m_pAndroidPlatformAbstractionModule->GetUrlEncoder(),
+                applicationConfiguration.YelpConsumerKey(),
+                applicationConfiguration.YelpConsumerSecret(),
+                applicationConfiguration.YelpOAuthToken(),
+                applicationConfiguration.YelpOAuthTokenSecret(),
+                applicationConfiguration.GeoNamesUserName()
         );
     }
     else
@@ -186,11 +198,7 @@ AppHost::AppHost(
 
     m_pAndroidFlurryMetricsService = Eegeo_NEW(ExampleApp::Metrics::AndroidFlurryMetricsService)(&m_nativeState);
 
-    typedef ExampleApp::ApplicationConfig::SdkModel::ApplicationConfigurationModule ApplicationConfigurationModule;
-    ApplicationConfigurationModule applicationConfigurationModule(m_pAndroidPlatformAbstractionModule->GetFileIO());
-
     m_pApp = Eegeo_NEW(ExampleApp::MobileExampleApp)(
-                 ExampleApp::ApiKey,
                  *m_pAndroidPlatformAbstractionModule,
                  screenProperties,
                  *m_pAndroidLocationService,
@@ -204,7 +212,7 @@ AppHost::AppHost(
                  *m_pNetworkCapabilities,
                  *m_pSearchServiceModule,
                  *m_pAndroidFlurryMetricsService,
-                 applicationConfigurationModule.GetApplicationConfigurationService().LoadConfiguration("ApplicationConfigs/standard_config.json"),
+                 applicationConfiguration,
                  *this);
 
     m_pModalBackgroundNativeViewModule = Eegeo_NEW(ExampleApp::ModalBackground::SdkModel::ModalBackgroundNativeViewModule)(

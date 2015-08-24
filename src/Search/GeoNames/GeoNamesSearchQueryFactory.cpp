@@ -9,9 +9,11 @@ namespace ExampleApp
     {
         namespace GeoNames
         {
-            GeoNamesSearchQueryFactory::GeoNamesSearchQueryFactory(Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
+            GeoNamesSearchQueryFactory::GeoNamesSearchQueryFactory(const std::string& geoNamesUserName,
+                                                                   Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
                                                                    Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder)
-            : m_webRequestFactory(webRequestFactory)
+            : m_geoNamesUserName(geoNamesUserName)
+            , m_webRequestFactory(webRequestFactory)
             , m_urlEncoder(urlEncoder)
             {
                 
@@ -25,7 +27,8 @@ namespace ExampleApp
             IGeoNamesSearchQuery* GeoNamesSearchQueryFactory::CreateGeoNamesSearchForQuery(const SdkModel::SearchQuery& query,
                                                                                            Eegeo::Helpers::ICallback0& completionCallback)
             {
-                return Eegeo_NEW(GeoNamesSearchQuery)(m_webRequestFactory,
+                return Eegeo_NEW(GeoNamesSearchQuery)(m_geoNamesUserName,
+                                                      m_webRequestFactory,
                                                       m_urlEncoder,
                                                       query,
                                                       completionCallback);

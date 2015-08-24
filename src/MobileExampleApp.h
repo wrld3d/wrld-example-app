@@ -143,8 +143,7 @@ namespace ExampleApp
         bool CanAcceptTouch() const;
 
     public:
-        MobileExampleApp(const std::string& apiKey,
-                         Eegeo::Modules::IPlatformAbstractionModule& platformAbstractions,
+        MobileExampleApp(Eegeo::Modules::IPlatformAbstractionModule& platformAbstractions,
                          Eegeo::Rendering::ScreenProperties& screenProperties,
                          Eegeo::Location::ILocationService& locationService,
                          Eegeo::UI::NativeUIFactories& nativeUIFactories,
@@ -157,7 +156,7 @@ namespace ExampleApp
                          ExampleApp::Net::SdkModel::INetworkCapabilities& networkCapabilities,
                          ExampleApp::Search::SdkModel::ISearchServiceModule& searchServiceModule,
                          ExampleApp::Metrics::IMetricsService& metricsService,
-                         const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration,
+                         ExampleApp::ApplicationConfig::ApplicationConfiguration applicationConfiguration,
                          Eegeo::IEegeoErrorHandler& errorHandler);
 
         ~MobileExampleApp();

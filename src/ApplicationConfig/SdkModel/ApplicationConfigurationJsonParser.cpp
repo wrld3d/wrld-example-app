@@ -27,6 +27,9 @@ namespace ExampleApp
                 Eegeo_ASSERT(document.HasMember("Name"));
                 m_builder.SetApplicationName(document["Name"].GetString());
                 
+                Eegeo_ASSERT(document.HasMember("EegeoApiKey"));
+                m_builder.SetEegeoApiKey(document["EegeoApiKey"].GetString());
+                
                 Eegeo_ASSERT(document.HasMember("StartLocationLatitude"));
                 Eegeo_ASSERT(document.HasMember("StartLocationLongitude"));
                 Eegeo_ASSERT(document.HasMember("StartLocationAltitude"));
@@ -45,6 +48,30 @@ namespace ExampleApp
                 
                 Eegeo_ASSERT(document.HasMember("GoogleAnalyticsReferrerToken"));
                 m_builder.SetGoogleAnalyticsReferrerToken(document["GoogleAnalyticsReferrerToken"].GetString());
+                
+                Eegeo_ASSERT(document.HasMember("FlurryAppKey"), "FlurryAppKey config not found");
+                m_builder.SetFlurryAppKey(document["FlurryAppKey"].GetString());
+                
+                Eegeo_ASSERT(document.HasMember("YelpConsumerKey"), "YelpConsumerKey config not found");
+                m_builder.SetYelpConsumerKey(document["YelpConsumerKey"].GetString());
+                
+                Eegeo_ASSERT(document.HasMember("YelpConsumerSecret"), "YelpConsumerSecret config not found");
+                m_builder.SetYelpConsumerSecret(document["YelpConsumerSecret"].GetString());
+                
+                Eegeo_ASSERT(document.HasMember("YelpOAuthToken"), "YelpOAuthToken config not found");
+                m_builder.SetYelpOAuthToken(document["YelpOAuthToken"].GetString());
+                
+                Eegeo_ASSERT(document.HasMember("YelpOAuthTokenSecret"), "YelpOAuthTokenSecret config not found");
+                m_builder.SetYelpOAuthTokenSecret(document["YelpOAuthTokenSecret"].GetString());
+                
+                Eegeo_ASSERT(document.HasMember("GeoNamesUserName"), "GeoNamesUserName config not found");
+                m_builder.SetGeoNamesUserName(document["GeoNamesUserName"].GetString());
+                
+                Eegeo_ASSERT(document.HasMember("CoverageTreeManifestURL"), "CoverageTreeManifestURL config not found");
+                m_builder.SetCoverageTreeManifestURL(document["CoverageTreeManifestURL"].GetString());
+                
+                Eegeo_ASSERT(document.HasMember("ThemeManifestURL"), "ThemeManifestURL config not found");
+                m_builder.SetThemeManifestURL(document["ThemeManifestURL"].GetString());
                 
                 return m_builder.Build();
             }

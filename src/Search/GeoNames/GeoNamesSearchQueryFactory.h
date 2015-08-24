@@ -18,11 +18,13 @@ namespace ExampleApp
         {
             class GeoNamesSearchQueryFactory : public IGeoNamesSearchQueryFactory, private Eegeo::NonCopyable
             {
+                std::string m_geoNamesUserName;
                 Eegeo::Web::IWebLoadRequestFactory& m_webRequestFactory;
                 Eegeo::Helpers::UrlHelpers::IUrlEncoder& m_urlEncoder;
                 
             public:
-                GeoNamesSearchQueryFactory(Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
+                GeoNamesSearchQueryFactory(const std::string& geoNamesUserName,
+                                           Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
                                            Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder);
                 
                 ~GeoNamesSearchQueryFactory();

@@ -88,7 +88,6 @@ namespace ExampleApp
     }
 
     MobileExampleApp::MobileExampleApp(
-        const std::string& apiKey,
         Eegeo::Modules::IPlatformAbstractionModule& platformAbstractions,
         Eegeo::Rendering::ScreenProperties& screenProperties,
         Eegeo::Location::ILocationService& locationService,
@@ -102,7 +101,7 @@ namespace ExampleApp
         Net::SdkModel::INetworkCapabilities& networkCapabilities,
         ExampleApp::Search::SdkModel::ISearchServiceModule& searchServiceModule,
         ExampleApp::Metrics::IMetricsService& metricsService,
-        const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration,
+        ExampleApp::ApplicationConfig::ApplicationConfiguration applicationConfiguration,
         Eegeo::IEegeoErrorHandler& errorHandler)
         : m_pGlobeCameraController(NULL)
         , m_pCameraTouchController(NULL)
@@ -151,12 +150,12 @@ namespace ExampleApp
         , m_metricsService(metricsService)
         , m_applicationConfiguration(applicationConfiguration)
     {
-        m_metricsService.BeginSession(ExampleApp::FlurryApiKey, EEGEO_PLATFORM_VERSION_NUMBER);
+        m_metricsService.BeginSession(applicationConfiguration.FlurryAppKey(), EEGEO_PLATFORM_VERSION_NUMBER);
 
         m_pBlitter = Eegeo_NEW(Eegeo::Blitter)(1024 * 128, 1024 * 64, 1024 * 32);
         m_pBlitter->Initialise();
         
-        m_pWorld = Eegeo_NEW(Eegeo::EegeoWorld)(apiKey,
+        m_pWorld = Eegeo_NEW(Eegeo::EegeoWorld)(applicationConfiguration.EegeoApiKey(),
                                                 m_platformAbstractions,
                                                 jpegLoader,
                                                 screenProperties,
@@ -166,8 +165,8 @@ namespace ExampleApp
                                                 Eegeo::EnvironmentCharacterSet::Latin,
                                                 platformConfig,
                                                 NULL,
-                                                "http://cdn1.eegeo.com/coverage-trees/vglobal/v716/manifest.txt.gz",
-                                                "http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v314/manifest.txt.gz",
+                                                applicationConfiguration.CoverageTreeManifestURL(),
+                                                applicationConfiguration.ThemeManifestURL(),
                                                 &errorHandler
                                                 );
 

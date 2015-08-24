@@ -10,10 +10,20 @@ namespace ExampleApp
         {
             ApplicationConfigurationBuilder::ApplicationConfigurationBuilder()
             : m_name("")
+            , m_eegeoApiKey("")
             , m_interestLocation(0.0, 0.0, 0.0)
             , m_distanceToInterestMetres(0.f)
             , m_orientationDegrees(0.f)
             , m_tryStartAtGpsLocation(false)
+            , m_googleAnalyticsReferrerToken("")
+            , m_flurryAppKey("")
+            , m_yelpConsumerKey("")
+            , m_yelpConsumerSecret("")
+            , m_yelpOAuthToken("")
+            , m_yelpOAuthTokenSecret("")
+            , m_geoNamesUserName("")
+            , m_coverageTreeManifestURL("")
+            , m_themeManifestURL("")
             {
                 
             }
@@ -21,6 +31,12 @@ namespace ExampleApp
             IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetApplicationName(const std::string& name)
             {
                 m_name = name;
+                return *this;
+            }
+            
+            IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetEegeoApiKey(const std::string& eegeoApiKey)
+            {
+                m_eegeoApiKey = eegeoApiKey;
                 return *this;
             }
             
@@ -54,14 +70,71 @@ namespace ExampleApp
                 return *this;
             }
             
+            IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetFlurryAppKey(const std::string& flurryAppKey)
+            {
+                m_flurryAppKey = flurryAppKey;
+                return *this;
+            }
+            
+            IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetYelpConsumerKey(const std::string& yelpConsumerKey)
+            {
+                m_yelpConsumerKey = yelpConsumerKey;
+                return *this;
+            }
+            
+            IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetYelpConsumerSecret(const std::string& yelpConsumerSecret)
+            {
+                m_yelpConsumerSecret = yelpConsumerSecret;
+                return *this;
+            }
+            
+            IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetYelpOAuthToken(const std::string& yelpOAuthToken)
+            {
+                m_yelpOAuthToken = yelpOAuthToken;
+                return *this;
+            }
+            
+            IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetYelpOAuthTokenSecret(const std::string& yelpOAuthTokenSecret)
+            {
+                m_yelpOAuthTokenSecret = yelpOAuthTokenSecret;
+                return *this;
+            }
+            
+            IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetGeoNamesUserName(const std::string& geoNamesUserName)
+            {
+                m_geoNamesUserName = geoNamesUserName;
+                return *this;
+            }
+            
+            IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetCoverageTreeManifestURL(const std::string& coverageTreeManifestURL)
+            {
+                m_coverageTreeManifestURL = coverageTreeManifestURL;
+                return *this;
+            }
+            
+            IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetThemeManifestURL(const std::string& themeManifestURL)
+            {
+                m_themeManifestURL = themeManifestURL;
+                return *this;
+            }
+            
             ApplicationConfiguration ApplicationConfigurationBuilder::Build()
             {
                 return ApplicationConfiguration(m_name,
+                                                m_eegeoApiKey,
                                                 m_interestLocation,
                                                 m_distanceToInterestMetres,
                                                 m_orientationDegrees,
                                                 m_tryStartAtGpsLocation,
-                                                m_googleAnalyticsReferrerToken);
+                                                m_googleAnalyticsReferrerToken,
+                                                m_flurryAppKey,
+                                                m_yelpConsumerKey,
+                                                m_yelpConsumerSecret,
+                                                m_yelpOAuthToken,
+                                                m_yelpOAuthTokenSecret,
+                                                m_geoNamesUserName,
+                                                m_coverageTreeManifestURL,
+                                                m_themeManifestURL);
             }
         }
     }
