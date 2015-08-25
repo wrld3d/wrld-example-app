@@ -3,6 +3,27 @@
 #include "AppLocationDelegate.h"
 #include "ViewController.h"
 
+float GetValidOrNegativeHeading(float HeadingAccuracy, float TrueHeading, float MagneticHeading)
+{
+    if(HeadingAccuracy < 0.f)
+    {
+        return -1.f;
+    }
+    
+    if(TrueHeading < 0.f)
+    {
+        //since location updates couldn't obtain heading
+        //use magnetic compass heading, in certain cases
+        //compass would need to be calibrated
+        if(MagneticHeading < 0.f)
+            return -1.f;
+        
+        return MagneticHeading;
+    }
+    
+    return TrueHeading;
+}
+
 @implementation AppLocationDelegateLocationListener
 
 CLLocationManager* m_pLocationManager;
@@ -72,10 +93,14 @@ AppLocationDelegate* m_pAppLocationDelegate;
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateHeading:(CLHeading *)newHeading
 {
-    if (newHeading.headingAccuracy >= 0)
+    float heading = GetValidOrNegativeHeading(static_cast<float>(newHeading.headingAccuracy), static_cast<float>(newHeading.trueHeading), static_cast<float>(newHeading.magneticHeading));
+    
+    if(heading < 0.f)
     {
-        float heading = static_cast<float>(newHeading.trueHeading);
-
+        m_piOSLocationService->FailedToGetHeading();
+    }
+    else
+    {
         if (m_pUIViewController.interfaceOrientation == UIInterfaceOrientationLandscapeLeft)
         {
             heading -= 90.f;
@@ -92,13 +117,9 @@ AppLocationDelegate* m_pAppLocationDelegate;
         {
             heading += 0.f;
         }
-
+        
         heading = fmodf((heading + 360.f), 360.f);
         m_piOSLocationService->UpdateHeading(heading);
-    }
-    else
-    {
-        m_piOSLocationService->FailedToGetHeading();
     }
 }
 
