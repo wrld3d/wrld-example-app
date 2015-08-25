@@ -66,11 +66,6 @@ namespace ExampleApp
         return m_wrappedPlatformAbstractions.GetResourceCacheCleaner();
     }
     
-    Eegeo::Web::IConnectivityService& PlatformAbstractionsFacade::GetConnectivityService() const
-    {
-        return m_wrappedPlatformAbstractions.GetConnectivityService();
-    }
-    
     void PlatformAbstractionsFacade::OnPause()
     {
         return m_wrappedPlatformAbstractions.OnPause();
