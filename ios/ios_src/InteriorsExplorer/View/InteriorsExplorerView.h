@@ -61,6 +61,9 @@
 @property(nonatomic, retain) UITableView* pFloorList;
 
 @property(nonatomic, retain) UIView* pDetailsPanel;
+@property(nonatomic, retain) UIImageView* pDetailsPanelBackground;
+@property(nonatomic, retain) UIImageView* pDetailsPanelRight;
+
 @property(nonatomic, retain) UIButton* pDismissButton;
 @property(nonatomic, retain) UILabel* pFloorNameLabel;
 

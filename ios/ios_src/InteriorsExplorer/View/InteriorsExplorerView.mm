@@ -48,7 +48,7 @@
         
         float buttonSize = 40.f;
         float labelLength = 200.f;
-        float totalPanelLength = buttonSize + labelLength;
+        float totalPanelLength = buttonSize + labelLength + buttonSize;
 
         const int micelloLogoWidth = 110;
         const int micelloLogoHeight = 24;
@@ -60,15 +60,21 @@
         
         self.pDismissButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, buttonSize, buttonSize)] autorelease];
         [self.pDismissButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_close_place_pin_off") forState:UIControlStateNormal];
-        [self.pDismissButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_close_place_pin_on") forState:UIControlStateHighlighted];
         [self.pDismissButton addTarget:self action:@selector(onCancelButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         [self.pDetailsPanel addSubview:self.pDismissButton];
         
-        self.pFloorNameLabel = [[[UILabel alloc] initWithFrame:CGRectMake(buttonSize, 0, labelLength, buttonSize)] autorelease];
-        self.pFloorNameLabel.backgroundColor = ExampleApp::Helpers::ColorPalette::WhiteTone;
+        self.pDetailsPanelBackground = [[[UIImageView alloc] initWithImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"place_pin_background")] autorelease];
+        self.pDetailsPanelBackground.frame = CGRectMake(buttonSize, 0, labelLength, buttonSize);
+        [self.pDetailsPanel addSubview:self.pDetailsPanelBackground];
+
+        self.pDetailsPanelRight = [[[UIImageView alloc] initWithImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"place_pin_right")] autorelease];
+        self.pDetailsPanelRight.frame = CGRectMake(buttonSize + labelLength, 0, buttonSize, buttonSize);
+        [self.pDetailsPanel addSubview:self.pDetailsPanelRight];
+        
+        const float textPadding = 2.f;
+        
+        self.pFloorNameLabel = [[[UILabel alloc] initWithFrame:CGRectMake(buttonSize + textPadding, textPadding, labelLength - textPadding, buttonSize - textPadding)] autorelease];
         self.pFloorNameLabel.textColor = ExampleApp::Helpers::ColorPalette::DarkGreyTone;
-        self.pFloorNameLabel.layer.borderColor = [ExampleApp::Helpers::ColorPalette::MainHudColor CGColor];
-        self.pFloorNameLabel.layer.borderWidth = 2.0f;
         self.pFloorNameLabel.textAlignment = NSTextAlignmentCenter;
         [self.pDetailsPanel addSubview:self.pFloorNameLabel];
         
