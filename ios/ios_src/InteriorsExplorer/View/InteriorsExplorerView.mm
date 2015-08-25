@@ -152,7 +152,12 @@
 
 - (BOOL)consumesTouch:(UITouch *)touch
 {
-    return NO;
+    CGPoint touchLocation = [touch locationInView:self];
+    if (CGRectContainsPoint(self.pFloorPanel.frame, touchLocation))
+        return YES;
+    if (CGRectContainsPoint(self.pDetailsPanel.frame, touchLocation))
+        return YES;
+    return  NO;
 }
 
 - (void) setFloorName:(const std::string*)name;
