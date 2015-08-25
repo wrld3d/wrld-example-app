@@ -425,6 +425,7 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
                                      app.WorldPinsModule().GetWorldPinInFocusViewModel(),
                                      app.WorldPinsModule().GetScreenControlViewModel(),
                                      app.ModalityModule().GetModalityModel(),
+                                     app.GetAppModeModel(),
                                      app.PinDiameter()
                                  );
 
@@ -433,7 +434,8 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
                                      m_nativeState,
                                      app.FlattenButtonModule().GetFlattenButtonViewModel(),
                                      m_messageBus,
-                                     *m_pAndroidFlurryMetricsService
+                                     *m_pAndroidFlurryMetricsService,
+                                     app.GetAppModeModel()
                                  );
 
     m_pMyPinCreationViewModule = Eegeo_NEW(ExampleApp::MyPinCreation::View::MyPinCreationViewModule)(
@@ -442,7 +444,8 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
                                      app.MyPinCreationModule().GetMyPinCreationConfirmationViewModel(),
                                      app.MyPinCreationDetailsModule().GetMyPinCreationDetailsViewModel(),
                                      m_messageBus,
-                                     *m_pAndroidFlurryMetricsService
+                                     *m_pAndroidFlurryMetricsService,
+                                     app.GetAppModeModel()
                                  );
 
 
@@ -474,6 +477,7 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
                                         app.SearchResultMenuModule().GetMenuViewModel(),
                                         app.CategorySearchModule().GetCategorySearchRepository(),
                                         app.SearchResultMenuModule().GetSearchResultMenuViewModel(),
+                                        app.GetAppModeModel(),
                                         m_messageBus
                                     );
 
