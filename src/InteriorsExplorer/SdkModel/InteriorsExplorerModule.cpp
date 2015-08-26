@@ -31,7 +31,7 @@ namespace ExampleApp
                 m_pModel = Eegeo_NEW(InteriorsExplorerModel)(interiorsController, interiorSelectionModel, mapModeModel, messageBus, metricsService);
                 m_pViewModel = Eegeo_NEW(View::InteriorsExplorerViewModel)(false, identityProvider.GetNextIdentity());
                 m_pInteriorExitObserver = Eegeo_NEW(InteriorsExitObserver)(interiorsController, interiorSelectionController, globeCameraController, nativeUIFactories);
-                m_pInteriorsExplorerInputDelegate = Eegeo_NEW(InteriorsExplorerInputDelegate)(interiorsController, interiorsPinsController, globeCameraController);
+                m_pInteriorsExplorerInputDelegate = Eegeo_NEW(InteriorsExplorerInputDelegate)(interiorsController, interiorsPinsController, globeCameraController, messageBus);
                 m_pInteriorsStreamingController = Eegeo_NEW(InteriorsStreamingController)(interiorSelectionController, cameraFrustumStreamingVolume);
                 m_pInteriorPinScaleController = Eegeo_NEW(InteriorPinScaleController)(interiorsPinsController, appModeModel, messageBus);
             }

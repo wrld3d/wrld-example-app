@@ -29,6 +29,7 @@
 #include "InitialExperienceSearchResultAttractModeModelStateExitedMessage.h"
 #include "InteriorsExplorerSelectFloorMessage.h"
 #include "InteriorsExplorerExitMessage.h"
+#include "MenuDragStateChangedMessage.h"
 
 namespace ExampleApp
 {
@@ -60,6 +61,7 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<InitialExperience::SearchResultAttractMode::InitialExperienceSearchResultAttractModeModelStateExitedMessage>
             , public Eegeo::Messaging::CatalogBinding<InteriorsExplorer::InteriorsExplorerSelectFloorMessage>
             , public Eegeo::Messaging::CatalogBinding<InteriorsExplorer::InteriorsExplorerExitMessage>
+            , public Eegeo::Messaging::CatalogBinding<Menu::MenuDragStateChangedMessage>
             , private Eegeo::NonCopyable
         {
 

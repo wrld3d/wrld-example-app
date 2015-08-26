@@ -70,7 +70,7 @@ namespace ExampleApp
                 Menu::View::IMenuViewModel& menuViewModel,
                 ExampleAppMessaging::TMessageBus& messageBus
             )
-                : Menu::View::MenuController(menuModel, menuViewModel, menuView)
+                : Menu::View::MenuController(menuModel, menuViewModel, menuView, messageBus)
                 , m_secondaryMenuView(secondaryMenuView)
                 , m_messageBus(messageBus)
                 , m_onOpenStateChangedCallback(this, &SecondaryMenuController::OnOpenStateChanged)

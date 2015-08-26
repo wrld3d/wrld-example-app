@@ -71,7 +71,7 @@ namespace ExampleApp
                 AppModes::SdkModel::IAppModeModel& appModelModel,
                 ExampleAppMessaging::TMessageBus& messageBus
             )
-                : MenuController(menuModel, menuViewModel, menuView)
+                : MenuController(menuModel, menuViewModel, menuView, messageBus)
                 , m_searchView(searchView)
                 , m_categorySearchRepository(categorySearchRepository)
                 , m_searchResultMenuViewModel(searchResultMenuViewModel)

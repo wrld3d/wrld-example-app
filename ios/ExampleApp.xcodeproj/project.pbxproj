@@ -603,6 +603,8 @@
 		225FFA161A39EE8600C2282A /* SearchResultModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 225FFA111A39EE8600C2282A /* SearchResultModel.cpp */; };
 		225FFA171A39EE8600C2282A /* SearchResultRepository.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 225FFA131A39EE8600C2282A /* SearchResultRepository.cpp */; };
 		225FFA181A39EE8600C2282A /* SearchResultRepository.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 225FFA131A39EE8600C2282A /* SearchResultRepository.cpp */; };
+		560741141B8CC624002B0F49 /* MenuDragStateChangedMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 560741121B8CC624002B0F49 /* MenuDragStateChangedMessage.cpp */; };
+		560741151B8CC624002B0F49 /* MenuDragStateChangedMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 560741121B8CC624002B0F49 /* MenuDragStateChangedMessage.cpp */; };
 		561ECF221B467FD3007BD4F9 /* InteriorsEntitiesPinsModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 561ECF201B467FD3007BD4F9 /* InteriorsEntitiesPinsModule.cpp */; };
 		561ECF231B467FD4007BD4F9 /* InteriorsEntitiesPinsModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 561ECF201B467FD3007BD4F9 /* InteriorsEntitiesPinsModule.cpp */; };
 		561ECF291B46820F007BD4F9 /* InteriorsEntitiesPinsController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 561ECF271B46820F007BD4F9 /* InteriorsEntitiesPinsController.cpp */; };
@@ -1730,6 +1732,8 @@
 		225FFA121A39EE8600C2282A /* SearchResultModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultModel.h; sourceTree = "<group>"; };
 		225FFA131A39EE8600C2282A /* SearchResultRepository.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchResultRepository.cpp; sourceTree = "<group>"; };
 		225FFA141A39EE8600C2282A /* SearchResultRepository.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultRepository.h; sourceTree = "<group>"; };
+		560741121B8CC624002B0F49 /* MenuDragStateChangedMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MenuDragStateChangedMessage.cpp; sourceTree = "<group>"; };
+		560741131B8CC624002B0F49 /* MenuDragStateChangedMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuDragStateChangedMessage.h; sourceTree = "<group>"; };
 		561ECF201B467FD3007BD4F9 /* InteriorsEntitiesPinsModule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InteriorsEntitiesPinsModule.cpp; sourceTree = "<group>"; };
 		561ECF211B467FD3007BD4F9 /* InteriorsEntitiesPinsModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InteriorsEntitiesPinsModule.h; sourceTree = "<group>"; };
 		561ECF241B46801C007BD4F9 /* IInteriorsEntitiesPinsModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IInteriorsEntitiesPinsModule.h; sourceTree = "<group>"; };
@@ -3426,6 +3430,8 @@
 				7E3B86DD1A385A290023C94E /* IFunc.h */,
 				7E3B86DE1A385A290023C94E /* Menu.h */,
 				7E3B86DF1A385A290023C94E /* View */,
+				560741121B8CC624002B0F49 /* MenuDragStateChangedMessage.cpp */,
+				560741131B8CC624002B0F49 /* MenuDragStateChangedMessage.h */,
 			);
 			path = Menu;
 			sourceTree = "<group>";
@@ -5897,6 +5903,7 @@
 				186B474C1AB333150084E80B /* ApplicationConfiguration.cpp in Sources */,
 				186B47241AB1DD5C0084E80B /* WatermarkViewInterop.mm in Sources */,
 				7E3B8AEE1A385F110023C94E /* Main.m in Sources */,
+				560741151B8CC624002B0F49 /* MenuDragStateChangedMessage.cpp in Sources */,
 				7E3B89FF1A385A290023C94E /* WorldPinsScaleController.cpp in Sources */,
 				7E3B89D71A385A290023C94E /* PerformedSearchMessageHandler.cpp in Sources */,
 				18FB64771A92455E005A9411 /* iOSYelpSearchQuery.mm in Sources */,
@@ -6261,6 +6268,7 @@
 				186B474B1AB333150084E80B /* ApplicationConfiguration.cpp in Sources */,
 				186B47231AB1DD5C0084E80B /* WatermarkViewInterop.mm in Sources */,
 				7E3B8AED1A385F110023C94E /* Main.m in Sources */,
+				560741141B8CC624002B0F49 /* MenuDragStateChangedMessage.cpp in Sources */,
 				7E3B89FE1A385A290023C94E /* WorldPinsScaleController.cpp in Sources */,
 				7E3B89D61A385A290023C94E /* PerformedSearchMessageHandler.cpp in Sources */,
 				18FB64761A92455E005A9411 /* iOSYelpSearchQuery.mm in Sources */,
