@@ -159,12 +159,14 @@ namespace ExampleApp
         , m_pOptionsModule(NULL)
         , m_pWatermarkModule(NULL)
         , m_pInteriorsExplorerModule(NULL)
+        , m_pInteriorsEntitiesPinsModule(NULL)
         , m_screenProperties(screenProperties)
         , m_networkCapabilities(networkCapabilities)
         , m_setMetricsLocation(false)
         , m_searchServiceModule(searchServiceModule)
         , m_metricsService(metricsService)
         , m_applicationConfiguration(applicationConfiguration)
+        , m_interiorsEnabled(platformConfig.OptionsConfig.EnableInteriors)
     {
         m_metricsService.BeginSession(ExampleApp::FlurryApiKey, EEGEO_PLATFORM_VERSION_NUMBER);
 
@@ -414,11 +416,14 @@ namespace ExampleApp
                                                                                                      m_messageBus,
                                                                                                      m_metricsService);
         
-        m_pInteriorsEntitiesPinsModule = Eegeo_NEW(InteriorsEntitiesPins::SdkModel::InteriorsEntitiesPinsModule(m_pWorld->GetPlatformAbstractionModule(),
+        if (m_interiorsEnabled)
+        {
+            m_pInteriorsEntitiesPinsModule = Eegeo_NEW(InteriorsEntitiesPins::SdkModel::InteriorsEntitiesPinsModule(m_pWorld->GetPlatformAbstractionModule(),
                                                                                                                 m_pWorld->GetRenderingModule(),
                                                                                                                 m_pWorld->GetMapModule(),
                                                                                                                 m_screenProperties));
-
+        }
+        
         std::vector<ScreenControl::View::IScreenControlViewModel*> reactors(GetReactorControls());
         std::vector<ExampleApp::OpenableControl::View::IOpenableControlViewModel*> openables(GetOpenableControls());
 
@@ -636,9 +641,14 @@ namespace ExampleApp
             CompassModule().GetCompassUpdateController().Update(dt);
             m_pGpsMarkerModule->GetGpsMarkerController().Update(dt, renderCamera);
             
-            InteriorsEntitiesPinsModule().GetPinsModule().Update(dt, renderCamera);
-            InteriorsEntitiesPinsModule().GetInteriorsEntitiesPinsController().Update(dt);
-
+            if (m_interiorsEnabled)
+            {
+                Eegeo_ASSERT(m_pInteriorsEntitiesPinsModule != NULL);
+                
+                m_pInteriorsEntitiesPinsModule->GetPinsModule().Update(dt, renderCamera);
+                m_pInteriorsEntitiesPinsModule->GetInteriorsEntitiesPinsController().Update(dt);
+            }
+            
             InitialExperience::SdkModel::IInitialExperienceModel& initialExperienceModel = m_initialExperienceModule.GetInitialExperienceModel();
             if(!initialExperienceModel.HasCompletedInitialExperience() && IsLoadingScreenComplete())
             {

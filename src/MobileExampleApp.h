@@ -136,6 +136,7 @@ namespace ExampleApp
         InteriorsExplorer::SdkModel::IInteriorsExplorerModule* m_pInteriorsExplorerModule;
         InteriorsEntitiesPins::SdkModel::IInteriorsEntitiesPinsModule* m_pInteriorsEntitiesPinsModule;
         AppModes::SdkModel::IAppModeModel* m_pAppModeModel;
+        const bool m_interiorsEnabled;
 
         void CreateApplicationModelModules();
 
@@ -309,11 +310,6 @@ namespace ExampleApp
         const InteriorsExplorer::SdkModel::IInteriorsExplorerModule& InteriorsExplorerModule() const
         {
             return *m_pInteriorsExplorerModule;
-        }
-        
-        InteriorsEntitiesPins::SdkModel::IInteriorsEntitiesPinsModule& InteriorsEntitiesPinsModule()
-        {
-            return *m_pInteriorsEntitiesPinsModule;
         }
         
         // Exposed to allow view model creation in iOS code.
