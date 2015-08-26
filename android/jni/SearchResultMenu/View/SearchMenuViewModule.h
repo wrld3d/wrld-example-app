@@ -2,7 +2,6 @@
 
 #pragma once
 
-#include <string>
 #include "AndroidNativeState.h"
 #include "Types.h"
 #include "Menu.h"
@@ -12,6 +11,9 @@
 #include "CategorySearch.h"
 #include "SearchResultMenu.h"
 #include "BidirectionalBus.h"
+#include "AppModes.h"
+
+#include <string>
 
 namespace ExampleApp
 {
@@ -33,6 +35,7 @@ namespace ExampleApp
                     Menu::View::IMenuViewModel& menuViewModel,
                     CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
                     ISearchResultMenuViewModel& searchResultMenuViewModel,
+                    AppModes::SdkModel::IAppModeModel& appModeModel,
                     ExampleAppMessaging::TMessageBus& messageBus
                 );
 
