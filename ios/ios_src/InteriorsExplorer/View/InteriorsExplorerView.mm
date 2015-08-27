@@ -172,7 +172,7 @@
     
     [self.pFloorList reloadData];
     int rowIndex = [self reverseIndex:currentlySelectedFloorIndex];
-    [self.pFloorList selectRowAtIndexPath:[NSIndexPath indexPathForRow:rowIndex inSection:0] animated:NO scrollPosition:0];
+    [self.pFloorList selectRowAtIndexPath:[NSIndexPath indexPathForRow:rowIndex inSection:0] animated:NO scrollPosition:static_cast<UITableViewScrollPosition>(0)];
     [self.pFloorList sizeToFit];
     [self layoutIfNeeded];
     [self setNeedsLayout];
@@ -221,7 +221,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    m_pInterop->SelectFloor([self reverseIndex:indexPath.item]);
+    m_pInterop->SelectFloor([self reverseIndex:static_cast<int>(indexPath.item)]);
 }
 
 - (void) setFullyOnScreen
