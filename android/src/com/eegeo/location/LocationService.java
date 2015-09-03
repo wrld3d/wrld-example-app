@@ -174,6 +174,11 @@ class LocationService
 
     private static boolean isAnyProviderEnabled(LocationManager locationManager)
     {
+    	if(locationManager == null)
+    	{
+    		return false;
+    	}
+    	
     	boolean gpsIsAuthorized = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
     	boolean networkIsAuthorized = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     	return (gpsIsAuthorized || networkIsAuthorized);
