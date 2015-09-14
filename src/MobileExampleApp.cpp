@@ -567,12 +567,15 @@ namespace ExampleApp
                             false
                         );
 
+        Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsPresentationModule = mapModule.GetInteriorsPresentationModule();
+        
         m_pWorldPinsModule = Eegeo_NEW(ExampleApp::WorldPins::SdkModel::WorldPinsModule)(
                                  m_pPinsModule->GetRepository(),
                                  m_pPinsModule->GetController(),
                                  mapModule.GetEnvironmentFlatteningService(),
                                  m_identityProvider,
-                                 m_messageBus);
+                                 m_messageBus,
+                                 interiorsPresentationModule.GetInteriorsController());
     }
 
     void MobileExampleApp::OnPause()
