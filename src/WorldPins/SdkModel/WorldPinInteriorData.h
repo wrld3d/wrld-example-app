@@ -12,7 +12,7 @@ namespace ExampleApp
         {
             struct WorldPinInteriorData
             {
-                WorldPinInteriorData(const std::string& building = "", const std::string& floor = "", bool showInExterior = true)
+                WorldPinInteriorData(const std::string& building = "", int floor = 0, bool showInExterior = true)
                 : building(building)
                 , floor(floor)
                 , showInExterior(showInExterior)
@@ -21,7 +21,7 @@ namespace ExampleApp
                 }
                 
                 std::string building;
-                std::string floor;
+                int floor;
                 bool showInExterior;
             };
         }

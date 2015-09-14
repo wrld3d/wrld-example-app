@@ -162,7 +162,7 @@ namespace
         
         const bool interior = false;
         const std::string building = "";
-        const std::string floor = "";
+        const int floor = 0;
         
         return ExampleApp::Search::SdkModel::SearchResultModel(ExampleApp::Search::SdkModel::SearchResultModel::CurrentVersion,
                                                                entry.uniqueId,

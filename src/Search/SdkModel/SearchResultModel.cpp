@@ -21,7 +21,7 @@ namespace ExampleApp
             , m_location(Eegeo::Space::LatLong(0.f, 0.f))
             , m_interior(false)
             , m_building("")
-            , m_floor("")
+            , m_floor(0)
             , m_phone("")
             , m_address("")
             , m_webUrl("")
@@ -44,7 +44,7 @@ namespace ExampleApp
                                                  const Eegeo::Space::LatLong& location,
                                                  bool interior,
                                                  const std::string& building,
-                                                 const std::string& floor,
+                                                 int floor,
                                                  const std::string& phone,
                                                  const std::string& address,
                                                  const std::string& webUrl,
@@ -114,7 +114,7 @@ namespace ExampleApp
                 return m_building;
             }
             
-            const std::string& SearchResultModel::GetFloor() const
+            int SearchResultModel::GetFloor() const
             {
                 return m_floor;
             }

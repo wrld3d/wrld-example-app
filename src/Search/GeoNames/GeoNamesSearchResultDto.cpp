@@ -33,7 +33,7 @@ namespace ExampleApp
                                                                                      m_location.GetLongitudeInDegrees()),
                                                   false,
                                                   "",
-                                                  "",
+                                                  0,
                                                   "",
                                                   m_country,
                                                   "",

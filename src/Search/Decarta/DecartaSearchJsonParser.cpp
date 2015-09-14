@@ -125,7 +125,7 @@ namespace ExampleApp
                                 
                                 const bool interior = false;
                                 const std::string building = "";
-                                const std::string floor = "";
+                                const int floor = 0;
 
                                 SdkModel::SearchResultModel result(SdkModel::SearchResultModel::CurrentVersion,
                                                                    entry.uniqueId,

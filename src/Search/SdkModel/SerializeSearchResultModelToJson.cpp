@@ -40,7 +40,7 @@ namespace ExampleApp
                 valueObject.AddMember("address", searchResult.GetAddress().c_str(), allocator);
                 valueObject.AddMember("interior", searchResult.IsInterior(), allocator);
                 valueObject.AddMember("building", searchResult.GetBuilding().c_str(), allocator);
-                valueObject.AddMember("floor", searchResult.GetFloor().c_str(), allocator);
+                valueObject.AddMember("floor", searchResult.GetFloor(), allocator);
                 valueObject.AddMember("phone", searchResult.GetPhone().c_str(), allocator);
                 valueObject.AddMember("web", searchResult.GetWebUrl().c_str(), allocator);
                 valueObject.AddMember("category", searchResult.GetCategory().c_str(), allocator);
@@ -109,13 +109,13 @@ namespace ExampleApp
                 std::string building = "";
                 if(document.HasMember("building"))
                 {
-                    interior = document["building"].GetString();
+                    building = document["building"].GetString();
                 }
-                
-                std::string floor = "";
+        
+                int floor = 0;
                 if(document.HasMember("floor"))
                 {
-                    interior = document["floor"].GetString();
+                    floor = document["floor"].GetInt();
                 }
                 
                 return SearchResultModel(version,
