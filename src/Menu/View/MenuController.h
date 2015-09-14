@@ -10,6 +10,7 @@
 #include "IMenuSectionViewModel.h"
 #include "IUpdateableViewController.h"
 #include "ICallback.h"
+#include "BidirectionalBus.h"
 
 namespace ExampleApp
 {
@@ -33,6 +34,8 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback2<MenuController, OpenableControl::View::IOpenableControlViewModel&, float> m_onOpenableStateChanged;
 
                 Eegeo::Helpers::TFunc0<MenuController, bool> m_tryDragFunc;
+                
+                ExampleAppMessaging::TMessageBus& m_messageBus;
 
             protected:
                 IMenuModel& m_model;
@@ -75,7 +78,8 @@ namespace ExampleApp
                 MenuController(
                     IMenuModel& model,
                     IMenuViewModel& viewModel,
-                    IMenuView& view
+                    IMenuView& view,
+                    ExampleAppMessaging::TMessageBus& messageBus
                 );
 
                 ~MenuController();

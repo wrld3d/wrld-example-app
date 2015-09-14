@@ -62,6 +62,7 @@ namespace ExampleApp
 
                     m_messageBus.Publish(WorldPins::WorldPinsVisibilityMessage(false));
                     m_messageBus.Publish(GpsMarker::GpsMarkerVisibilityMessage(false));
+
                     m_searchResultMenuViewModel.RemoveFromScreen();
                     break;
                 }

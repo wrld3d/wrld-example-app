@@ -1,6 +1,7 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "SecondaryMenuController.h"
+#include "AppModeChangedMessage.h"
 
 namespace ExampleApp
 {
@@ -32,6 +33,36 @@ namespace ExampleApp
                 m_messageBus.Publish(PerformedSearchMessage(searchQuery, false));
             }
 
+            void SecondaryMenuController::OnAppModeChanged(const AppModes::AppModeChangedMessage& message)
+            {
+                m_appModeAllowsOpen = message.GetAppMode() != AppModes::SdkModel::InteriorMode;
+                if (!m_appModeAllowsOpen)
+                {
+                    m_viewModel.Close();
+                }
+            }
+            
+            bool SecondaryMenuController::TryDrag()
+            {
+                if (!m_appModeAllowsOpen)
+                {
+                    m_viewModel.Close();
+                    return false;
+                }
+                
+                return MenuController::TryDrag();
+            }
+            
+            void SecondaryMenuController::OnViewClicked()
+            {
+                if (!m_appModeAllowsOpen)
+                {
+                    m_viewModel.Close();
+                    return;
+                }
+                MenuController::OnViewClicked();
+            }
+            
             SecondaryMenuController::SecondaryMenuController(
                 ISecondaryMenuView& secondaryMenuView,
                 Menu::View::IMenuView& menuView,
@@ -39,24 +70,28 @@ namespace ExampleApp
                 Menu::View::IMenuViewModel& menuViewModel,
                 ExampleAppMessaging::TMessageBus& messageBus
             )
-                : Menu::View::MenuController(menuModel, menuViewModel, menuView)
+                : Menu::View::MenuController(menuModel, menuViewModel, menuView, messageBus)
                 , m_secondaryMenuView(secondaryMenuView)
                 , m_messageBus(messageBus)
                 , m_onOpenStateChangedCallback(this, &SecondaryMenuController::OnOpenStateChanged)
                 , m_performedQueryHandler(this, &SecondaryMenuController::OnSearchQueryPerformedMessage)
                 , m_receivedQueryResponseHandler(this, &SecondaryMenuController::OnSearchQueryResponseReceivedMessage)
                 , m_onSearchCallback(this, &SecondaryMenuController::OnSearch)
+                , m_appModeChangedCallback(this, &SecondaryMenuController::OnAppModeChanged)
+                , m_appModeAllowsOpen(true)
             {
                 m_secondaryMenuView.InsertSearchPeformedCallback(m_onSearchCallback);
                 m_viewModel.InsertOpenStateChangedCallback(m_onOpenStateChangedCallback);
                 m_messageBus.SubscribeUi(m_performedQueryHandler);
                 m_messageBus.SubscribeUi(m_receivedQueryResponseHandler);
+                m_messageBus.SubscribeUi(m_appModeChangedCallback);
             }
 
             SecondaryMenuController::~SecondaryMenuController()
             {
                 m_messageBus.UnsubscribeUi(m_receivedQueryResponseHandler);
                 m_messageBus.UnsubscribeUi(m_performedQueryHandler);
+                m_messageBus.UnsubscribeUi(m_appModeChangedCallback);
                 m_viewModel.RemoveOpenStateChangedCallback(m_onOpenStateChangedCallback);
                 m_secondaryMenuView.RemoveSearchPeformedCallback(m_onSearchCallback);
             }

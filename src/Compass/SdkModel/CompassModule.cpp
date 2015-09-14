@@ -16,10 +16,11 @@ namespace ExampleApp
                                          Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& cameraController,
                                          Eegeo::Helpers::IIdentityProvider& identityProvider,
                                          ExampleAppMessaging::TMessageBus& messageBus,
-                                         Metrics::IMetricsService& metricsService
+                                         Metrics::IMetricsService& metricsService,
+                                         AppModes::SdkModel::IAppModeModel& appModeModel
                                         )
             {
-                m_pModel = Eegeo_NEW(CompassModel)(navigationService, locationService, cameraController, metricsService);
+                m_pModel = Eegeo_NEW(CompassModel)(navigationService, locationService, cameraController, metricsService, appModeModel);
                 m_pViewModel = Eegeo_NEW(View::CompassViewModel)(identityProvider.GetNextIdentity(), false);
                 m_pCompassUpdateController = Eegeo_NEW(CompassUpdateController)(*m_pModel, navigationService, messageBus);
                 m_pCompassModeObserver = Eegeo_NEW(CompassModeObserver)(*m_pModel, messageBus);

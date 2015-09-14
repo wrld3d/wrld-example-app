@@ -69,6 +69,10 @@
 #include "Watermark.h"
 #include "IWatermarkModule.h"
 #include "ApplicationConfiguration.h"
+#include "InteriorsExplorer.h"
+#include "InteriorsEntitiesPins.h"
+#include "MapMode.h"
+#include "AppModes.h"
 
 namespace ExampleApp
 {
@@ -77,6 +81,7 @@ namespace ExampleApp
     private:
         Eegeo::Camera::GlobeCamera::GpsGlobeCameraController* m_pGlobeCameraController;
         Eegeo::ITouchController* m_pCameraTouchController;
+        Eegeo::ITouchController* m_pCurrentTouchController;
         Eegeo::EegeoWorld* m_pWorld;
         Eegeo::Location::NavigationService* m_pNavigationService;
         PlatformAbstractionsFacade m_platformAbstractions;
@@ -97,6 +102,7 @@ namespace ExampleApp
         ExampleApp::SearchResultMenu::SdkModel::ISearchResultMenuModule* m_pSearchResultMenuModule;
         ExampleApp::Modality::View::IModalityModule* m_pModalityModule;
         ExampleApp::CategorySearch::SdkModel::ICategorySearchModule* m_pCategorySearchModule;
+        ExampleApp::MapMode::SdkModel::IMapModeModule* m_pMapModeModule;
         ExampleApp::FlattenButton::SdkModel::IFlattenButtonModule* m_pFlattenButtonModule;
         Search::SdkModel::ISearchModule* m_pSearchModule;
         Eegeo::Rendering::ITexturePageLayout* m_pPinIconsTexturePageLayout;
@@ -127,6 +133,10 @@ namespace ExampleApp
         ExampleAppMessaging::TSdkModelDomainEventBus& m_sdkDomainEventBus;
         Net::SdkModel::INetworkCapabilities& m_networkCapabilities;
         Search::SdkModel::ISearchServiceModule& m_searchServiceModule;
+        InteriorsExplorer::SdkModel::IInteriorsExplorerModule* m_pInteriorsExplorerModule;
+        InteriorsEntitiesPins::SdkModel::IInteriorsEntitiesPinsModule* m_pInteriorsEntitiesPinsModule;
+        AppModes::SdkModel::IAppModeModel* m_pAppModeModel;
+        const bool m_interiorsEnabled;
 
         void CreateApplicationModelModules();
 
@@ -294,6 +304,23 @@ namespace ExampleApp
         const ExampleApp::Watermark::IWatermarkModule& WatermarkModule() const
         {
             return *m_pWatermarkModule;
+        }
+        
+        const InteriorsExplorer::SdkModel::IInteriorsExplorerModule& InteriorsExplorerModule() const
+        {
+            return *m_pInteriorsExplorerModule;
+        }
+        
+        // Exposed to allow view model creation in iOS code.
+        // Remove this.
+        Eegeo::Helpers::IdentityProvider& GetIdentityProvider()
+        {
+            return m_identityProvider;
+        }
+
+        AppModes::SdkModel::IAppModeModel& GetAppModeModel() const
+        {
+            return *m_pAppModeModel;
         }
 
         void OnPause();

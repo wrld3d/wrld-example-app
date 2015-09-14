@@ -22,11 +22,13 @@ namespace ExampleApp
             private:
                 ISecondaryMenuView& m_secondaryMenuView;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
+                bool m_appModeAllowsOpen;
 
                 Eegeo::Helpers::TCallback2<SecondaryMenuController, OpenableControl::View::IOpenableControlViewModel&, float> m_onOpenStateChangedCallback;
                 Eegeo::Helpers::TCallback1<SecondaryMenuController, const Search::SearchQueryPerformedMessage&> m_performedQueryHandler;
                 Eegeo::Helpers::TCallback1<SecondaryMenuController, const Search::SearchQueryResponseReceivedMessage&> m_receivedQueryResponseHandler;
                 Eegeo::Helpers::TCallback1<SecondaryMenuController, const std::string&> m_onSearchCallback;
+                Eegeo::Helpers::TCallback1<SecondaryMenuController, const AppModes::AppModeChangedMessage&> m_appModeChangedCallback;
 
                 void OnOpenStateChanged(OpenableControl::View::IOpenableControlViewModel& viewModel, float& openState);
 
@@ -35,6 +37,12 @@ namespace ExampleApp
                 void OnSearchQueryResponseReceivedMessage(const Search::SearchQueryResponseReceivedMessage& message);
 
                 void OnSearch(const std::string& searchQuery);
+                
+                void OnAppModeChanged(const AppModes::AppModeChangedMessage& message);
+                
+                bool TryDrag();
+                
+                void OnViewClicked();
             public:
                 SecondaryMenuController(
                     ISecondaryMenuView& secondaryMenuView,

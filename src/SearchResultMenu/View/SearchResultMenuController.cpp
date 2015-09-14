@@ -1,6 +1,7 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "SearchResultMenuController.h"
+#include "IAppModeModel.h"
 
 namespace ExampleApp
 {
@@ -50,6 +51,15 @@ namespace ExampleApp
             {
                 m_searchView.SetAttractMode(m_searchResultMenuViewModel.AttractModeEnabled());
             }
+            
+            void SearchResultMenuController::OnAppModelChanged()
+            {
+                const AppModes::SdkModel::AppMode appMode = m_appModelModel.GetAppMode();
+                if (appMode != AppModes::SdkModel::WorldMode)
+                {
+                    OnSearchClosed();
+                }
+            }
 
             SearchResultMenuController::SearchResultMenuController(
                 ISearchResultMenuView& searchView,
@@ -58,22 +68,26 @@ namespace ExampleApp
                 Menu::View::IMenuViewModel& menuViewModel,
                 CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
                 ISearchResultMenuViewModel& searchResultMenuViewModel,
+                AppModes::SdkModel::IAppModeModel& appModelModel,
                 ExampleAppMessaging::TMessageBus& messageBus
             )
-                : MenuController(menuModel, menuViewModel, menuView)
+                : MenuController(menuModel, menuViewModel, menuView, messageBus)
                 , m_searchView(searchView)
                 , m_categorySearchRepository(categorySearchRepository)
                 , m_searchResultMenuViewModel(searchResultMenuViewModel)
+                , m_appModelModel(appModelModel)
                 , m_messageBus(messageBus)
                 , m_onSearchCloseTappedCallback(this, &SearchResultMenuController::OnSearchClosed)
                 , m_searchQueryIssuedHandler(this, &SearchResultMenuController::OnSearchQueryPerformedMessage)
                 , m_searchResultReceivedHandler(this, &SearchResultMenuController::OnSearchQueryResponseReceivedMessage)
                 , m_attractModeChangedCallback(this, &SearchResultMenuController::OnAttractModeChanged)
+                , m_appModeChangedCallback(this, &SearchResultMenuController::OnAppModelChanged)
             {
                 m_searchView.InsertSearchClosed(m_onSearchCloseTappedCallback);
                 m_messageBus.SubscribeUi(m_searchQueryIssuedHandler);
                 m_messageBus.SubscribeUi(m_searchResultReceivedHandler);
                 m_searchResultMenuViewModel.InsertAttractModeChangedCallback(m_attractModeChangedCallback);
+                m_appModelModel.RegisterAppModeChangedCallback(m_appModeChangedCallback);
             }
 
             SearchResultMenuController::~SearchResultMenuController()
@@ -82,6 +96,7 @@ namespace ExampleApp
                 m_messageBus.UnsubscribeUi(m_searchResultReceivedHandler);
                 m_messageBus.UnsubscribeUi(m_searchQueryIssuedHandler);
                 m_searchView.RemoveSearchClosed(m_onSearchCloseTappedCallback);
+                m_appModelModel.UnregisterAppModeChangedCallback(m_appModeChangedCallback);
             }
         }
     }

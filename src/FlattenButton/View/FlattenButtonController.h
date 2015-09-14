@@ -9,6 +9,7 @@
 #include "ApplyScreenControl.h"
 #include "MyPinCreationStateChangedMessage.h"
 #include "IMetricsService.h"
+#include "IAppModeModel.h"
 
 namespace ExampleApp
 {
@@ -29,7 +30,8 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<FlattenButtonController, const MyPinCreation::MyPinCreationStateChangedMessage&> m_myPinCreationStateChangedMessageHandler;
 
                 Metrics::IMetricsService& m_metricsService;
-
+                const AppModes::SdkModel::IAppModeModel& m_appModeModel;
+                
                 void OnToggleButton(bool& toggle);
 
                 void OnFlattenButtonModelStateChangedMessage(const FlattenButtonModelStateChangedMessage& message);
@@ -43,7 +45,8 @@ namespace ExampleApp
                     IFlattenButtonViewModel& viewModel,
                     IFlattenButtonView& view,
                     ExampleAppMessaging::TMessageBus& messageBus,
-                    Metrics::IMetricsService& metricsService
+                    Metrics::IMetricsService& metricsService,
+                    const AppModes::SdkModel::IAppModeModel& appModeModel
                 );
 
                 ~FlattenButtonController();

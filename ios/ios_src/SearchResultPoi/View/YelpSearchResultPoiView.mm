@@ -339,6 +339,7 @@ const int DeletePinAlertViewTag = 2;
     
     float currentLabelY = 8.f;
     const bool hasImage = !m_model.GetImageUrl().empty();
+    const bool hasReviewBar = !self.pReviewCountLabel.hidden;
     
     if(!m_model.GetImageUrl().empty())
     {
@@ -355,11 +356,14 @@ const int DeletePinAlertViewTag = 2;
     const float yelpButtonWidth = 115.0f;
     const float yelpButtonHeight = 25.0f;
     const float reviewSpacing = 4.0f;
-    const float fullRatingsWidth = yelpButtonWidth + m_ratingsImageWidth + reviewSpacing + reviewCountWidth;
-    const CGFloat rateBarOriginX = hasImage
-        ? (self.frame.size.width * 0.5f - yelpButtonWidth * 0.5f)
-        : (self.frame.size.width * 0.5f - fullRatingsWidth * 0.5f);
-    const float yelpButtonX = hasImage ? rateBarOriginX : rateBarOriginX + reviewSpacing + reviewCountWidth + m_ratingsImageWidth;
+    
+    const float fullRatingsWidth = (m_ratingsImageWidth + reviewSpacing + reviewCountWidth);
+    const CGFloat barButtonCentredX = (self.frame.size.width * 0.5f - yelpButtonWidth * 0.5f);
+    const CGFloat reviewBarOffsetX = (self.frame.size.width * 0.5f - (yelpButtonWidth + fullRatingsWidth) * 0.5f);
+    const CGFloat yelpButtonOffsetX = reviewBarOffsetX + fullRatingsWidth;
+    
+    const CGFloat rateBarOriginX = hasImage ? barButtonCentredX : reviewBarOffsetX;
+    const CGFloat yelpButtonX = (hasImage || !hasReviewBar) ? barButtonCentredX : yelpButtonOffsetX;
     const CGFloat imageBottomPadding = 8.0;
     
     if(!m_model.GetRatingImageUrl().empty())

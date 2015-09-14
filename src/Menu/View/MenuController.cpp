@@ -2,6 +2,7 @@
 
 #include "MenuController.h"
 #include "IOpenableControlViewModel.h"
+#include "MenuDragStateChangedMessage.h"
 
 namespace ExampleApp
 {
@@ -170,6 +171,7 @@ namespace ExampleApp
                 }
 
                 m_dragInProgress = true;
+                m_messageBus.Publish(MenuDragStateChangedMessage(m_dragInProgress));
             }
 
             void MenuController::OnDrag(float& value)
@@ -194,6 +196,7 @@ namespace ExampleApp
                 }
 
                 m_dragInProgress = false;
+                m_messageBus.Publish(MenuDragStateChangedMessage(m_dragInProgress));
             }
 
             void MenuController::OnItemAdded(MenuItemModel& item)
@@ -235,7 +238,8 @@ namespace ExampleApp
             MenuController::MenuController(
                 IMenuModel& model,
                 IMenuViewModel& viewModel,
-                IMenuView& view
+                IMenuView& view,
+                ExampleAppMessaging::TMessageBus& messageBus
             )
                 : m_model(model)
                 , m_viewModel(viewModel)
@@ -252,6 +256,7 @@ namespace ExampleApp
                 , m_onScreenStateChanged(this, &MenuController::OnScreenControlStateChanged)
                 , m_onOpenableStateChanged(this, &MenuController::OnOpenableStateChanged)
                 , m_tryDragFunc(this, &MenuController::TryDrag)
+                , m_messageBus(messageBus)
                 , m_dragInProgress(false)
                 , m_presentationDirty(false)
             {

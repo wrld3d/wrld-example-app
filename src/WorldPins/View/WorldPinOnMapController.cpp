@@ -4,6 +4,7 @@
 #include "IWorldPinOnMapView.h"
 #include "IWorldPinInFocusViewModel.h"
 #include "IModalityModel.h"
+#include "InteriorsExplorerViewModel.h"
 
 namespace ExampleApp
 {
@@ -14,11 +15,13 @@ namespace ExampleApp
             WorldPinOnMapController::WorldPinOnMapController(IWorldPinOnMapView& view,
                                                              IWorldPinInFocusViewModel& viewModel,
                                                              ScreenControl::View::IScreenControlViewModel& screenControlViewModel,
-                                                             Modality::View::IModalityModel& modalityModel)
+                                                             Modality::View::IModalityModel& modalityModel,
+                                                             const AppModes::SdkModel::IAppModeModel& appModeModel)
             : m_view(view)
             , m_viewModel(viewModel)
             , m_screenControlViewModel(screenControlViewModel)
             , m_modalityModel(modalityModel)
+            , m_appModeModel(appModeModel)
             , m_viewSelectedCallback(this, &WorldPinOnMapController::OnSelected)
             , m_viewModelOpenedCallback(this, &WorldPinOnMapController::OnOpened)
             , m_viewModelClosedCallback(this, &WorldPinOnMapController::OnClosed)
@@ -52,6 +55,12 @@ namespace ExampleApp
             
             void WorldPinOnMapController::OnSelected()
             {
+                
+                if (m_appModeModel.GetAppMode() == AppModes::SdkModel::InteriorMode)
+                {
+                    return;
+                }
+                
                 if(!m_modalityModel.IsModalEnabled())
                 {
                     if(m_viewModel.IsOpen())
@@ -89,7 +98,6 @@ namespace ExampleApp
                     m_view.UpdateScreenState(screenState);
                 }
             }
-            
         }
     }
 }

@@ -66,6 +66,10 @@
 #include "InitialExperienceIntroBackgroundView.h"
 #include "ApplicationConfigurationModule.h"
 #include "IApplicationConfigurationService.h"
+#include "InteriorsExplorerViewModule.h"
+#include "IInteriorsExplorerModule.h"
+#include "InteriorsPresentationModule.h"
+#include "InteriorsExplorerView.h"
 
 using namespace Eegeo::iOS;
 
@@ -272,7 +276,8 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
                                     app.SearchResultMenuModule().GetMenuViewModel(),
                                     app.SearchResultMenuModule().GetSearchResultMenuViewModel(),
                                     screenProperties,
-                                    m_messageBus);
+                                    m_messageBus,
+                                    app.GetAppModeModel());
 
     m_pSearchResultPoiViewModule = Eegeo_NEW(ExampleApp::SearchResultPoi::View::SearchResultPoiViewModule)(app.SearchResultPoiModule().GetSearchResultPoiViewModel(),
                                                                                                            m_messageBus,
@@ -282,11 +287,13 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
                                      app.FlattenButtonModule().GetFlattenButtonViewModel(),
                                      screenProperties,
                                      m_messageBus,
-                                     *m_piOSFlurryMetricsService);
+                                     *m_piOSFlurryMetricsService,
+                                     app.GetAppModeModel());
 
     m_pWorldPinOnMapViewModule = Eegeo_NEW(ExampleApp::WorldPins::View::WorldPinOnMapViewModule)(app.WorldPinsModule().GetWorldPinInFocusViewModel(),
                                  app.WorldPinsModule().GetScreenControlViewModel(),
                                  app.ModalityModule().GetModalityModel(),
+                                 app.GetAppModeModel(),
                                  app.PinDiameter(),
                                  screenProperties.GetPixelScale());
 
@@ -306,7 +313,8 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
                                            app.MyPinCreationModule().GetMyPinCreationInitiationViewModel(),
                                            app.MyPinCreationModule().GetMyPinCreationConfirmationViewModel(),
                                            screenProperties,
-                                           *m_piOSFlurryMetricsService);
+                                           *m_piOSFlurryMetricsService,
+                                                                                                                         app.GetAppModeModel());
 
     m_pMyPinCreationConfirmationViewModule = Eegeo_NEW(ExampleApp::MyPinCreation::View::MyPinCreationConfirmationViewModule)(m_messageBus,
             app.MyPinCreationModule().GetMyPinCreationConfirmationViewModel(),
@@ -327,7 +335,19 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
                                 app.MyPinDetailsModule().GetMyPinDetailsViewModel(),
                                 screenProperties);
     
+    
     m_pInitialExperienceIntroViewModule = Eegeo_NEW(ExampleApp::InitialExperience::View::InitialExperienceIntroViewModule)(m_messageBus);
+    
+    
+    m_pInteriorsExplorerViewModule = Eegeo_NEW(ExampleApp::InteriorsExplorer::View::InteriorsExplorerViewModule)(app.InteriorsExplorerModule().GetInteriorsExplorerViewModel(),
+                                                                                             m_messageBus,
+                                                                                             app.MyPinCreationModule().GetMyPinCreationInitiationViewModel(),
+                                                                                             app.SecondaryMenuModule().GetSecondaryMenuViewModel(),
+                                                                                             app.SearchResultMenuModule().GetMenuViewModel(),
+                                                                                             app.FlattenButtonModule().GetScreenControlViewModel(),
+                                                                                             app.CompassModule().GetScreenControlViewModel(),
+                                                                                             screenProperties,
+                                                                                             app.GetIdentityProvider());
 
     // 3d map view layer.
     [m_pView addSubview: &m_pWorldPinOnMapViewModule->GetWorldPinOnMapView()];
@@ -341,6 +361,7 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
     [m_pView addSubview: &m_pCompassViewModule->GetCompassView()];
     [m_pView addSubview: &m_pMyPinCreationInitiationViewModule->GetMyPinCreationInitiationView()];
     [m_pView addSubview: &m_pMyPinCreationConfirmationViewModule->GetMyPinCreationConfirmationView()];
+    [m_pView addSubview: &m_pInteriorsExplorerViewModule->GetView()];
 
     // Modal background layer.
     [m_pView addSubview: &m_pModalBackgroundViewModule->GetModalBackgroundView()];
@@ -379,6 +400,7 @@ void AppHost::DestroyApplicationViewModules()
     [&m_pCompassViewModule->GetCompassView() removeFromSuperview];
     [&m_pMyPinCreationInitiationViewModule->GetMyPinCreationInitiationView() removeFromSuperview];
     [&m_pMyPinCreationConfirmationViewModule->GetMyPinCreationConfirmationView() removeFromSuperview];
+    [&m_pInteriorsExplorerViewModule->GetView() removeFromSuperview];
 
     // Modal background layer.
     [&m_pModalBackgroundViewModule->GetModalBackgroundView() removeFromSuperview];
@@ -397,6 +419,8 @@ void AppHost::DestroyApplicationViewModules()
     // Initial experience layer
     [&m_pInitialExperienceIntroViewModule->GetIntroView() removeFromSuperview];
 
+    Eegeo_DELETE m_pInteriorsExplorerViewModule;
+    
     Eegeo_DELETE m_pViewControllerUpdaterModule;
 
     Eegeo_DELETE m_pMyPinDetailsViewModule;

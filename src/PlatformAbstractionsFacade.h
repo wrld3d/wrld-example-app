@@ -30,7 +30,7 @@ namespace ExampleApp
         Eegeo::Helpers::UrlHelpers::IUrlEncoder& GetUrlEncoder() const;
         Eegeo::Concurrency::Tasks::IGlTaskContextFactory& GetGlTaskContextFactory() const;
         Eegeo::Helpers::IResourceCacheCleaner& GetResourceCacheCleaner() const;
-        
+       
         void OnPause();
         void Update();
         void OnResume();

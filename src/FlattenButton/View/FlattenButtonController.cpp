@@ -10,6 +10,12 @@ namespace ExampleApp
         {
             void FlattenButtonController::OnToggleButton(bool& toggle)
             {
+                if (m_appModeModel.GetAppMode() == AppModes::SdkModel::InteriorMode)
+                {
+                    m_view.SetToggled(false);
+                    return;
+                }
+                
                 m_metricsService.SetEvent("UIItem: Flatten Button", "State", toggle ? "flattened" : "unflattened");
                 m_messageBus.Publish(FlattenButtonViewStateChangedMessage(toggle));
             }
@@ -50,12 +56,14 @@ namespace ExampleApp
                 IFlattenButtonViewModel& viewModel,
                 IFlattenButtonView& view,
                 ExampleAppMessaging::TMessageBus& messageBus,
-                Metrics::IMetricsService& metricsService
+                Metrics::IMetricsService& metricsService,
+                const AppModes::SdkModel::IAppModeModel& appModeModel
             )
                 : m_viewModel(viewModel)
                 , m_view(view)
                 , m_messageBus(messageBus)
                 , m_metricsService(metricsService)
+                , m_appModeModel(appModeModel)
                 , m_stateChangeHandler(this, &FlattenButtonController::OnFlattenButtonModelStateChangedMessage)
                 , m_toggledCallback(this, &FlattenButtonController::OnToggleButton)
                 , m_viewStateCallback(this, &FlattenButtonController::OnViewStateChangeScreenControl)

@@ -14,9 +14,10 @@ namespace ExampleApp
         namespace View
         {
             FlattenButtonViewModule::FlattenButtonViewModule(IFlattenButtonViewModel& viewModel,
-                    const Eegeo::Rendering::ScreenProperties& screenProperties,
-                    ExampleAppMessaging::TMessageBus& messageBus,
-                    Metrics::IMetricsService& metricsService)
+                                                                const Eegeo::Rendering::ScreenProperties& screenProperties,
+                                                             ExampleAppMessaging::TMessageBus& messageBus,
+                                                             Metrics::IMetricsService& metricsService,
+                                                             const AppModes::SdkModel::IAppModeModel& appModeModel)
             {
                 m_pView = [[FlattenButtonView alloc] initWithDimensions
                            :screenProperties.GetScreenWidth()
@@ -24,7 +25,7 @@ namespace ExampleApp
                            :screenProperties.GetPixelScale()
                           ];
 
-                m_pController = new FlattenButtonController(viewModel, *[m_pView getInterop], messageBus, metricsService);
+                m_pController = new FlattenButtonController(viewModel, *[m_pView getInterop], messageBus, metricsService, appModeModel);
             }
 
             FlattenButtonViewModule::~FlattenButtonViewModule()

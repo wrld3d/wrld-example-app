@@ -9,6 +9,7 @@
 #include "IFlattenButtonViewModule.h"
 #include "BidirectionalBus.h"
 #include "IMetricsService.h"
+#include "IAppModeModel.h"
 
 namespace ExampleApp
 {
@@ -26,7 +27,8 @@ namespace ExampleApp
                 FlattenButtonViewModule(IFlattenButtonViewModel& viewModel,
                                         const Eegeo::Rendering::ScreenProperties& screenProperties,
                                         ExampleAppMessaging::TMessageBus& messageBus,
-                                        Metrics::IMetricsService& metricsService);
+                                        Metrics::IMetricsService& metricsService,
+                                        const AppModes::SdkModel::IAppModeModel& appModeModel);
 
                 ~FlattenButtonViewModule();
 

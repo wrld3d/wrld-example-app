@@ -17,13 +17,14 @@ namespace ExampleApp
                 const std::string& viewName,
                 AndroidNativeState& nativeState,
                 IMenuModel& menuModel,
-                IMenuViewModel& menuViewModel
+                IMenuViewModel& menuViewModel,
+                ExampleAppMessaging::TMessageBus& messageBus
             )
             {
                 ASSERT_UI_THREAD
 
                 m_pView = Eegeo_NEW(MenuView)(nativeState, viewName);
-                m_pController = Eegeo_NEW(MenuController)(menuModel, menuViewModel, *m_pView);
+                m_pController = Eegeo_NEW(MenuController)(menuModel, menuViewModel, *m_pView, messageBus);
             }
 
             MenuViewModule::~MenuViewModule()

@@ -27,7 +27,8 @@ namespace ExampleApp
                     const std::string& viewName,
                     AndroidNativeState& nativeState,
                     IMenuModel& menuModelModel,
-                    IMenuViewModel& menuViewModel
+                    IMenuViewModel& menuViewModel,
+                    ExampleAppMessaging::TMessageBus& messageBus
                 );
 
                 ~MenuViewModule();
