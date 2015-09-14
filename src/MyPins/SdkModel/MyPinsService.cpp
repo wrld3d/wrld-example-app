@@ -72,7 +72,7 @@ namespace ExampleApp
                                                                          pMyPinModel->GetRatingsImage(),
                                                                          pMyPinModel->GetReviewsCount());
                 
-                WorldPins::SdkModel::WorldPinInteriorData worldPinInteriorData("","");
+                WorldPins::SdkModel::WorldPinInteriorData worldPinInteriorData;
                 
                 bool interior = false;
                 
