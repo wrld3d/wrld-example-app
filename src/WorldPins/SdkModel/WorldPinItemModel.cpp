@@ -126,6 +126,16 @@ namespace ExampleApp
             {
                 return m_focusModel;
             }
+            
+            bool WorldPinItemModel::IsInterior() const
+            {
+                return m_interior;
+            }
+            
+            const WorldPinInteriorData& WorldPinItemModel::GetInteriorData() const
+            {
+                return m_worldPinInteriorData;
+            }
         }
     }
 }

@@ -73,6 +73,10 @@ namespace ExampleApp
                 void Refresh(const std::string& title, const std::string& description, const std::string& ratingsImage, const int reviewCount);
 
                 const IWorldPinsInFocusModel& GetInFocusModel() const;
+                
+                bool IsInterior() const;
+                
+                const WorldPinInteriorData& GetInteriorData() const;
             };
 
             inline bool operator==(const WorldPinItemModel& lhs, const WorldPinItemModel& rhs)
