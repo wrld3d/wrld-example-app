@@ -19,6 +19,9 @@ namespace ExampleApp
             , m_identifier("")
             , m_title("")
             , m_location(Eegeo::Space::LatLong(0.f, 0.f))
+            , m_interior(false)
+            , m_building("")
+            , m_floor("")
             , m_phone("")
             , m_address("")
             , m_webUrl("")
@@ -39,6 +42,9 @@ namespace ExampleApp
                                                  const std::string& identifier,
                                                  const std::string& title,
                                                  const Eegeo::Space::LatLong& location,
+                                                 bool interior,
+                                                 const std::string& building,
+                                                 const std::string& floor,
                                                  const std::string& phone,
                                                  const std::string& address,
                                                  const std::string& webUrl,
@@ -55,6 +61,9 @@ namespace ExampleApp
                 , m_identifier(identifier)
                 , m_title(title)
                 , m_location(location)
+                , m_interior(interior)
+                , m_building(building)
+                , m_floor(floor)
                 , m_phone(phone)
                 , m_address(address)
                 , m_webUrl(webUrl)
@@ -93,6 +102,21 @@ namespace ExampleApp
             const Eegeo::Space::LatLong& SearchResultModel::GetLocation() const
             {
                 return m_location;
+            }
+            
+            bool SearchResultModel::IsInterior() const
+            {
+                return m_interior;
+            }
+            
+            const std::string& SearchResultModel::GetBuilding() const
+            {
+                return m_building;
+            }
+            
+            const std::string& SearchResultModel::GetFloor() const
+            {
+                return m_floor;
             }
 
             const std::string& SearchResultModel::GetPhone() const

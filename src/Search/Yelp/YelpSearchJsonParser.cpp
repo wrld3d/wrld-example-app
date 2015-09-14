@@ -160,10 +160,17 @@ namespace
         entry.placeId = id.GetString();
         entry.uniqueId = id.GetString();
         
+        const bool interior = false;
+        const std::string building = "";
+        const std::string floor = "";
+        
         return ExampleApp::Search::SdkModel::SearchResultModel(ExampleApp::Search::SdkModel::SearchResultModel::CurrentVersion,
                                                                entry.uniqueId,
                                                                entry.name,
                                                                entry.location,
+                                                               interior,
+                                                               building,
+                                                               floor,
                                                                entry.phone,
                                                                entry.address,
                                                                entry.webUrl,

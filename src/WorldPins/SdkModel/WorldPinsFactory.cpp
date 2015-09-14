@@ -19,12 +19,13 @@ namespace ExampleApp
             {
 
             }
-
+            
             Eegeo::Pins::Pin* WorldPinsFactory::CreatePin(const Eegeo::Space::LatLong& location,
-                    int iconIndex)
+                                                          int iconIndex,
+                                                          float heightAboveTerrainInMetres)
             {
                 WorldPinItemModel::WorldPinItemModelId pinId = m_lastId ++;
-                return Eegeo_NEW(Eegeo::Pins::Pin)(pinId, location, 0, iconIndex, NULL);
+                return Eegeo_NEW(Eegeo::Pins::Pin)(pinId, location, heightAboveTerrainInMetres, iconIndex, NULL);
             }
         }
     }

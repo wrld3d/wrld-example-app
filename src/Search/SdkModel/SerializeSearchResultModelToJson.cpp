@@ -38,6 +38,9 @@ namespace ExampleApp
                 valueObject.AddMember("id", searchResult.GetIdentifier().c_str(), allocator);
                 valueObject.AddMember("title", searchResult.GetTitle().c_str(), allocator);
                 valueObject.AddMember("address", searchResult.GetAddress().c_str(), allocator);
+                valueObject.AddMember("interior", searchResult.IsInterior(), allocator);
+                valueObject.AddMember("building", searchResult.GetBuilding().c_str(), allocator);
+                valueObject.AddMember("floor", searchResult.GetFloor().c_str(), allocator);
                 valueObject.AddMember("phone", searchResult.GetPhone().c_str(), allocator);
                 valueObject.AddMember("web", searchResult.GetWebUrl().c_str(), allocator);
                 valueObject.AddMember("category", searchResult.GetCategory().c_str(), allocator);
@@ -97,11 +100,32 @@ namespace ExampleApp
                     reviewCount = document["reviewCount"].GetInt();
                 }
                 
+                bool interior = false;
+                if(document.HasMember("interior"))
+                {
+                    interior = document["interior"].GetBool();
+                }
+                
+                std::string building = "";
+                if(document.HasMember("building"))
+                {
+                    interior = document["building"].GetString();
+                }
+                
+                std::string floor = "";
+                if(document.HasMember("floor"))
+                {
+                    interior = document["floor"].GetString();
+                }
+                
                 return SearchResultModel(version,
                                          document["id"].GetString(),
                                          document["title"].GetString(),
                                          Eegeo::Space::LatLong::FromDegrees(document["latitude"].GetDouble(),
                                                                             document["longitude"].GetDouble()),
+                                         interior,
+                                         building,
+                                         floor,
                                          document["phone"].GetString(),
                                          document["address"].GetString(),
                                          document["web"].GetString(),

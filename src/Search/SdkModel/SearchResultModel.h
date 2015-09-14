@@ -19,6 +19,9 @@ namespace ExampleApp
                 std::string m_identifier;
                 std::string m_title;
                 Eegeo::Space::LatLong m_location;
+                bool m_interior;
+                std::string m_building;
+                std::string m_floor;
                 std::string m_phone;
                 std::string m_address;
                 std::string m_webUrl;
@@ -39,6 +42,9 @@ namespace ExampleApp
                                   const std::string& identifier,
                                   const std::string& title,
                                   const Eegeo::Space::LatLong& location,
+                                  bool interior,
+                                  const std::string& building,
+                                  const std::string& floor,
                                   const std::string& phone,
                                   const std::string& address,
                                   const std::string& webUrl,
@@ -63,6 +69,12 @@ namespace ExampleApp
                 const std::string& GetIdentifier() const;
 
                 const Eegeo::Space::LatLong& GetLocation() const;
+                
+                bool IsInterior() const;
+                
+                const std::string& GetBuilding() const;
+                
+                const std::string& GetFloor() const;
 
                 const std::string& GetPhone() const;
 

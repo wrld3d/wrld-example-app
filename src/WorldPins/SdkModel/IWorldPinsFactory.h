@@ -18,7 +18,8 @@ namespace ExampleApp
                 virtual ~IWorldPinsFactory() { }
 
                 virtual Eegeo::Pins::Pin* CreatePin(const Eegeo::Space::LatLong& location,
-                                                    int iconIndex) = 0;
+                                                    int iconIndex,
+                                                    float heightAboveTerrainInMetres = 0) = 0;
             };
         }
     }

@@ -72,6 +72,10 @@ namespace ExampleApp
                                                                          pMyPinModel->GetRatingsImage(),
                                                                          pMyPinModel->GetReviewsCount());
                 
+                WorldPins::SdkModel::WorldPinInteriorData worldPinInteriorData("","");
+                
+                bool interior = false;
+                
                 MyPinSelectionHandler* pSelectionHandler(m_myPinSelectionHandlerFactory.CreateMyPinSelectionHandler(*pMyPinModel));
                 
                 WorldPins::SdkModel::IWorldPinVisibilityStateChangedHandler* pVisibilityChangedHandler(m_myPinVisibilityStateChangedHandlerFactory.CreateMyPinVisibilityStateChangedHandler(*pMyPinModel));
@@ -79,6 +83,8 @@ namespace ExampleApp
                 WorldPins::SdkModel::WorldPinItemModel* worldPinItemModel = m_worldPinsService.AddPin(pSelectionHandler,
                                                                                                       pVisibilityChangedHandler,
                                                                                                       worldPinFocusData,
+                                                                                                      interior,
+                                                                                                      worldPinInteriorData,
                                                                                                       pMyPinModel->GetLatLong(),
                                                                                                       pMyPinModel->GetSdkMapPinIconIndexIcon());
                 m_myPinToWorldPinMap.insert(std::make_pair(pMyPinModel, worldPinItemModel));

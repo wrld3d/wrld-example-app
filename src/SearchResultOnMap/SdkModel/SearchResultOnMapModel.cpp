@@ -8,6 +8,7 @@
 #include "SearchResultModel.h"
 #include "ISearchResultIconCategoryMapper.h"
 #include "WorldPinFocusData.h"
+#include "WorldPinInteriorData.h"
 #include "ISearchResultMyPinsService.h"
 #include "Logger.h"
 
@@ -151,9 +152,13 @@ namespace ExampleApp
                                                                          ratingsImage,
                                                                          searchResultModel.GetReviewCount());
                 
+                WorldPins::SdkModel::WorldPinInteriorData worldPinInteriorData(searchResultModel.GetBuilding(), searchResultModel.GetFloor());
+                
                 ExampleApp::WorldPins::SdkModel::WorldPinItemModel *pinItemModel = m_worldPinsService.AddPin(pSearchResultOnMapItemModel,
                                                                                                              NULL,
                                                                                                              worldPinFocusData,
+                                                                                                             searchResultModel.IsInterior(),
+                                                                                                             worldPinInteriorData,
                                                                                                              searchResultModel.GetLocation(),
                                                                                                              pinIconIndex);
                 

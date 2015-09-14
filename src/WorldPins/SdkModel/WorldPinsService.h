@@ -46,6 +46,8 @@ namespace ExampleApp
                 WorldPinItemModel* AddPin(IWorldPinSelectionHandler* pSelectionHandler,
                                           IWorldPinVisibilityStateChangedHandler* pVisibilityStateChangedHandler,
                                           const WorldPinFocusData& worldPinFocusData,
+                                          bool interior,
+                                          const WorldPinInteriorData& worldPinInteriorData,
                                           const Eegeo::Space::LatLong& location,
                                           int iconIndex);
 
