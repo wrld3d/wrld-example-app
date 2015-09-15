@@ -628,21 +628,31 @@ namespace ExampleApp
         
         // Example tour.
         std::vector<Tours::SdkModel::TourStateModel> tourStates;
-        tourStates.push_back(Tours::SdkModel::TourStateModel("Twin Peaks Park!",
-                                                             "",
+        tourStates.push_back(Tours::SdkModel::TourStateModel("Gardens!",
+                                                             "Born in 1989, a man founded this little park",
                                                              "Tours/page"));
         
-        tourStates.push_back(Tours::SdkModel::TourStateModel("Golden Gate Bridge",
-                                                             "",
+        tourStates.push_back(Tours::SdkModel::TourStateModel("Not the Golden Gate Bridge",
+                                                             "It turned out to be a mall",
                                                              "Tours/page"));
         
         tourStates.push_back(Tours::SdkModel::TourStateModel("Union Square",
-                                                             "",
+                                                             "A place",
                                                              "Tours/page"));
         
         ExampleApp::Tours::SdkModel::TourModel tourModel("Example",
                                                          "Take the tour",
                                                          Eegeo::Space::LatLong::FromDegrees(37.784783, -122.402659),
+                                                         false,
+                                                         Helpers::ColorHelpers::Color::FromRGB(30, 123, 195),
+                                                         Helpers::ColorHelpers::Color::FromRGB(255, 255, 255),
+                                                         Helpers::ColorHelpers::Color::FromRGB(30, 123, 195),
+                                                         Helpers::ColorHelpers::Color::FromRGB(30, 123, 195),
+                                                         tourStates);
+        
+        ExampleApp::Tours::SdkModel::TourModel tourModel2("Example2",
+                                                         "Take the tour",
+                                                         Eegeo::Space::LatLong::FromDegrees(37.785884, -122.403208),
                                                          false,
                                                          Helpers::ColorHelpers::Color::FromRGB(30, 123, 195),
                                                          Helpers::ColorHelpers::Color::FromRGB(255, 255, 255),
@@ -656,6 +666,7 @@ namespace ExampleApp
                                                                                         );
         
         ToursModule().GetTourService().AddTour(tourModel, *factory.CreateTourStateMachine(tourModel));
+        ToursModule().GetTourService().AddTour(tourModel2, *factory.CreateTourStateMachine(tourModel2));
     }
 
     void MobileExampleApp::OnPause()

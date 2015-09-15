@@ -50,7 +50,7 @@ namespace ExampleApp
                             m_cameraTransitionComplete = true;
                             
                             // Add pin.
-                            ExampleApp::WorldPins::SdkModel::WorldPinFocusData worldPinFocusData("Example pin", "Tours/page");
+                            ExampleApp::WorldPins::SdkModel::WorldPinFocusData worldPinFocusData(m_stateModel.Headline(), m_stateModel.Description());
                             
                             const int iconIndex = 4;
                             
