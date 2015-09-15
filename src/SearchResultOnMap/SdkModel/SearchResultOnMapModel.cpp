@@ -160,7 +160,8 @@ namespace ExampleApp
                                                                                                              searchResultModel.IsInterior(),
                                                                                                              worldPinInteriorData,
                                                                                                              searchResultModel.GetLocation(),
-                                                                                                             pinIconIndex);
+                                                                                                             pinIconIndex,
+                                                                                                             searchResultModel.GetHeightAboveTerrainMetres());
                 
                 m_searchResultsToPinModel.insert(std::make_pair(searchResultModel, pinItemModel));
             }

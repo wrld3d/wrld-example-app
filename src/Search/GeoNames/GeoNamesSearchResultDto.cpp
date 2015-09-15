@@ -31,6 +31,7 @@ namespace ExampleApp
                                                   m_name,
                                                   Eegeo::Space::LatLong::FromDegrees(m_location.GetLatitudeInDegrees(),
                                                                                      m_location.GetLongitudeInDegrees()),
+                                                  0,
                                                   false,
                                                   "",
                                                   0,

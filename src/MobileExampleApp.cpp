@@ -561,7 +561,7 @@ namespace ExampleApp
                             terrainModelModule.GetTerrainHeightProvider(),
                             spriteWidth,
                             spriteHeight,
-                            Eegeo::Rendering::LayerIds::PlaceNames,
+                            Eegeo::Rendering::LayerIds::InteriorEntities,
                             mapModule.GetEnvironmentFlatteningService(),
                             m_screenProperties,
                             false

@@ -52,6 +52,7 @@ namespace ExampleApp
                 valueObject.AddMember("reviews", reviewsJson, allocator);
                 valueObject.AddMember("latitude", searchResult.GetLocation().GetLatitudeInDegrees(), allocator);
                 valueObject.AddMember("longitude", searchResult.GetLocation().GetLongitudeInDegrees(), allocator);
+                valueObject.AddMember("heightAboveTerrain", searchResult.GetHeightAboveTerrainMetres(), allocator);
                 valueObject.AddMember("createTimestamp", searchResult.GetCreationTimestamp(), allocator);
                 valueObject.AddMember("reviewCount", searchResult.GetReviewCount(), allocator);
                
@@ -118,11 +119,18 @@ namespace ExampleApp
                     floor = document["floor"].GetInt();
                 }
                 
+                float heightAboveTerrainMetres = 0;
+                if(document.HasMember("heightAboveTerrain"))
+                {
+                    heightAboveTerrainMetres = document["heightAboveTerrain"].GetDouble();
+                }
+                
                 return SearchResultModel(version,
                                          document["id"].GetString(),
                                          document["title"].GetString(),
                                          Eegeo::Space::LatLong::FromDegrees(document["latitude"].GetDouble(),
                                                                             document["longitude"].GetDouble()),
+                                         heightAboveTerrainMetres,
                                          interior,
                                          building,
                                          floor,

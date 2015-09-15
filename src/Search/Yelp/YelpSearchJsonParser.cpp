@@ -163,11 +163,13 @@ namespace
         const bool interior = false;
         const std::string building = "";
         const int floor = 0;
+        const float heightAboveTerrainMetres = 0;
         
         return ExampleApp::Search::SdkModel::SearchResultModel(ExampleApp::Search::SdkModel::SearchResultModel::CurrentVersion,
                                                                entry.uniqueId,
                                                                entry.name,
                                                                entry.location,
+                                                               heightAboveTerrainMetres,
                                                                interior,
                                                                building,
                                                                floor,

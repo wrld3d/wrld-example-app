@@ -46,11 +46,9 @@ namespace ExampleApp
                                                         bool interior,
                                                         const WorldPinInteriorData& worldPinInteriorData,
                                                         const Eegeo::Space::LatLong& location,
-                                                        int iconIndex)
+                                                        int iconIndex,
+                                                        float heightAboveTerrainMetres)
             {
-                
-                //TODO Calculate height from interior/exterior details
-                float heightAboveTerrainMetres = 0;
                 
                 Eegeo::Pins::Pin* pPin = m_worldPinsFactory.CreatePin(location, iconIndex, heightAboveTerrainMetres);
 

@@ -19,6 +19,7 @@ namespace ExampleApp
                 std::string m_identifier;
                 std::string m_title;
                 Eegeo::Space::LatLong m_location;
+                float m_heightAboveTerrainMetres;
                 bool m_interior;
                 std::string m_building;
                 int m_floor;
@@ -42,6 +43,7 @@ namespace ExampleApp
                                   const std::string& identifier,
                                   const std::string& title,
                                   const Eegeo::Space::LatLong& location,
+                                  float heightAboveTerrainMetres,
                                   bool interior,
                                   const std::string& building,
                                   int floor,
@@ -69,6 +71,8 @@ namespace ExampleApp
                 const std::string& GetIdentifier() const;
 
                 const Eegeo::Space::LatLong& GetLocation() const;
+                
+                float GetHeightAboveTerrainMetres() const;
                 
                 bool IsInterior() const;
                 

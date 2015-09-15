@@ -19,6 +19,7 @@ namespace ExampleApp
             , m_identifier("")
             , m_title("")
             , m_location(Eegeo::Space::LatLong(0.f, 0.f))
+            , m_heightAboveTerrainMetres(0.0f)
             , m_interior(false)
             , m_building("")
             , m_floor(0)
@@ -42,6 +43,7 @@ namespace ExampleApp
                                                  const std::string& identifier,
                                                  const std::string& title,
                                                  const Eegeo::Space::LatLong& location,
+                                                 float heightAboveTerrainMetres,
                                                  bool interior,
                                                  const std::string& building,
                                                  int floor,
@@ -61,6 +63,7 @@ namespace ExampleApp
                 , m_identifier(identifier)
                 , m_title(title)
                 , m_location(location)
+                , m_heightAboveTerrainMetres(heightAboveTerrainMetres)
                 , m_interior(interior)
                 , m_building(building)
                 , m_floor(floor)
@@ -102,6 +105,11 @@ namespace ExampleApp
             const Eegeo::Space::LatLong& SearchResultModel::GetLocation() const
             {
                 return m_location;
+            }
+            
+            float SearchResultModel::GetHeightAboveTerrainMetres() const
+            {
+                return m_heightAboveTerrainMetres;
             }
             
             bool SearchResultModel::IsInterior() const
