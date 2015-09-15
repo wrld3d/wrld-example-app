@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "InteriorId.h"
 #include "MyPinCreationStage.h"
 #include "ICallback.h"
 #include "VectorMathDecl.h"
@@ -26,6 +27,10 @@ namespace ExampleApp
                 virtual const Eegeo::dv3& GetPosition() const = 0;
                 virtual void SetPosition(const Eegeo::dv3& position) = 0;
                 virtual void SetTerrainHeight(float height) = 0;
+                virtual void SetHeightAboveTerrain(float heightAboveTerrain) = 0;
+                virtual void SetInterior(bool interior) = 0;
+                virtual void SetFloor(int floor) = 0;
+                virtual void SetBuildingId(const Eegeo::Resources::Interiors::InteriorId& buildingId) = 0;
                 virtual bool NeedsTerrainHeight() const = 0;
 
                 virtual void SavePoi(const std::string& title,

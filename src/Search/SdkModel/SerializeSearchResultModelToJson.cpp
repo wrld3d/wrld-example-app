@@ -38,6 +38,9 @@ namespace ExampleApp
                 valueObject.AddMember("id", searchResult.GetIdentifier().c_str(), allocator);
                 valueObject.AddMember("title", searchResult.GetTitle().c_str(), allocator);
                 valueObject.AddMember("address", searchResult.GetAddress().c_str(), allocator);
+                valueObject.AddMember("interior", searchResult.IsInterior(), allocator);
+                valueObject.AddMember("building", searchResult.GetBuildingId().Value().c_str(), allocator);
+                valueObject.AddMember("floor", searchResult.GetFloor(), allocator);
                 valueObject.AddMember("phone", searchResult.GetPhone().c_str(), allocator);
                 valueObject.AddMember("web", searchResult.GetWebUrl().c_str(), allocator);
                 valueObject.AddMember("category", searchResult.GetCategory().c_str(), allocator);
@@ -49,6 +52,7 @@ namespace ExampleApp
                 valueObject.AddMember("reviews", reviewsJson, allocator);
                 valueObject.AddMember("latitude", searchResult.GetLocation().GetLatitudeInDegrees(), allocator);
                 valueObject.AddMember("longitude", searchResult.GetLocation().GetLongitudeInDegrees(), allocator);
+                valueObject.AddMember("heightAboveTerrain", searchResult.GetHeightAboveTerrainMetres(), allocator);
                 valueObject.AddMember("createTimestamp", searchResult.GetCreationTimestamp(), allocator);
                 valueObject.AddMember("reviewCount", searchResult.GetReviewCount(), allocator);
                
@@ -97,11 +101,39 @@ namespace ExampleApp
                     reviewCount = document["reviewCount"].GetInt();
                 }
                 
+                bool interior = false;
+                if(document.HasMember("interior"))
+                {
+                    interior = document["interior"].GetBool();
+                }
+                
+                std::string building = "";
+                if(document.HasMember("building"))
+                {
+                    building = document["building"].GetString();
+                }
+        
+                int floor = 0;
+                if(document.HasMember("floor"))
+                {
+                    floor = document["floor"].GetInt();
+                }
+                
+                float heightAboveTerrainMetres = 0;
+                if(document.HasMember("heightAboveTerrain"))
+                {
+                    heightAboveTerrainMetres = document["heightAboveTerrain"].GetDouble();
+                }
+                
                 return SearchResultModel(version,
                                          document["id"].GetString(),
                                          document["title"].GetString(),
                                          Eegeo::Space::LatLong::FromDegrees(document["latitude"].GetDouble(),
                                                                             document["longitude"].GetDouble()),
+                                         heightAboveTerrainMetres,
+                                         interior,
+                                         building,
+                                         floor,
                                          document["phone"].GetString(),
                                          document["address"].GetString(),
                                          document["web"].GetString(),

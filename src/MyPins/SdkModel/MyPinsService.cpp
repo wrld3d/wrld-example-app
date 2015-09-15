@@ -72,6 +72,8 @@ namespace ExampleApp
                                                                          pMyPinModel->GetRatingsImage(),
                                                                          pMyPinModel->GetReviewsCount());
                 
+                WorldPins::SdkModel::WorldPinInteriorData worldPinInteriorData(pMyPinModel->GetBuildingId(), pMyPinModel->GetFloor());
+                
                 MyPinSelectionHandler* pSelectionHandler(m_myPinSelectionHandlerFactory.CreateMyPinSelectionHandler(*pMyPinModel));
                 
                 WorldPins::SdkModel::IWorldPinVisibilityStateChangedHandler* pVisibilityChangedHandler(m_myPinVisibilityStateChangedHandlerFactory.CreateMyPinVisibilityStateChangedHandler(*pMyPinModel));
@@ -79,8 +81,11 @@ namespace ExampleApp
                 WorldPins::SdkModel::WorldPinItemModel* worldPinItemModel = m_worldPinsService.AddPin(pSelectionHandler,
                                                                                                       pVisibilityChangedHandler,
                                                                                                       worldPinFocusData,
+                                                                                                      pMyPinModel->IsInterior(),
+                                                                                                      worldPinInteriorData,
                                                                                                       pMyPinModel->GetLatLong(),
-                                                                                                      pMyPinModel->GetSdkMapPinIconIndexIcon());
+                                                                                                      pMyPinModel->GetSdkMapPinIconIndexIcon(),
+                                                                                                      pMyPinModel->GetHeightAboveTerrainMetres());
                 m_myPinToWorldPinMap.insert(std::make_pair(pMyPinModel, worldPinItemModel));
             }
         
@@ -145,6 +150,10 @@ namespace ExampleApp
                                                       const std::string& ratingsImage,
                                                       const int reviewCount,
                                                       const Eegeo::Space::LatLong& latLong,
+                                                      float heightAboveTerrainMetres,
+                                                      bool interior,
+                                                      const Eegeo::Resources::Interiors::InteriorId& buildingId,
+                                                      int floor,
                                                       Byte* imageData,
                                                       size_t imageSize,
                                                       bool shouldShare)
@@ -166,7 +175,11 @@ namespace ExampleApp
                                                              ratingsImage,
                                                              reviewCount,
                                                              myPinIconIndex,
-                                                             latLong);
+                                                             latLong,
+                                                             heightAboveTerrainMetres,
+                                                             interior,
+                                                             buildingId,
+                                                             floor);
                 
                 boundObject.HandlePinCreated(*pinModel);
                 boundObject.HandlePinAdded(*pinModel);
@@ -195,7 +208,11 @@ namespace ExampleApp
                                                              searchResult.GetRatingImageUrl(),
                                                              searchResult.GetReviewCount(),
                                                              pinIconIndex,
-                                                             searchResult.GetLocation());
+                                                             searchResult.GetLocation(),
+                                                             searchResult.GetHeightAboveTerrainMetres(),
+                                                             searchResult.IsInterior(),
+                                                             searchResult.GetBuildingId(),
+                                                             searchResult.GetFloor());
                 
                 boundObject.HandlePinCreated(*pinModel);
                 boundObject.HandlePinAdded(*pinModel);

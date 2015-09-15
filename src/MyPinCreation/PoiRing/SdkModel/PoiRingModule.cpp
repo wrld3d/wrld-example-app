@@ -31,6 +31,8 @@
 #include "TerrainModelModule.h"
 #include "MapModule.h"
 #include "ImagePathHelpers.h"
+#include "InteriorsPresentationModule.h"
+#include "InteriorsController.h"
 
 namespace ExampleApp
 {
@@ -86,11 +88,14 @@ namespace ExampleApp
 
                     m_renderableFilters.AddRenderableFilter(*m_pPoiRingView);
 
-
+                    
+                    Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsPresentationModule = mapModule.GetInteriorsPresentationModule();
+                    
                     m_pPoiRingController = Eegeo_NEW(PoiRingController)(myPinCreationModel,
                                            *m_pPoiRingView,
                                            mapModule.GetEnvironmentFlatteningService(),
-                                           terrainModelModule.GetTerrainHeightProvider());
+                                           terrainModelModule.GetTerrainHeightProvider(),
+                                           interiorsPresentationModule.GetInteriorsController());
 
 
                     m_pTerrainRayPicker = Eegeo_NEW(Eegeo::Resources::Terrain::Collision::TerrainRayPicker)(terrainModelModule.GetTerrainHeightProvider(),

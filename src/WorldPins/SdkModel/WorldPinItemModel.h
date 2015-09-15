@@ -10,6 +10,7 @@
 #include "IWorldPinVisibilityStateChangedHandler.h"
 #include "WorldPinsInFocusModel.h"
 #include "WorldPinFocusData.h"
+#include "WorldPinInteriorData.h"
 
 namespace ExampleApp
 {
@@ -37,12 +38,17 @@ namespace ExampleApp
                 WorldPinsInFocusModel m_focusModel;
                 TransitionState m_transitionState;
                 float m_transitionStateValue;
+                bool m_focusable;
+                bool m_interior;
+                WorldPinInteriorData m_worldPinInteriorData;
 
             public:
                 WorldPinItemModel(const WorldPinItemModelId& id,
                                   IWorldPinSelectionHandler* pSelectionHandler,
                                   IWorldPinVisibilityStateChangedHandler* pVisibilityStateChangedHandler,
-                                  const WorldPinFocusData& worldPinFocusData);
+                                  const WorldPinFocusData& worldPinFocusData,
+                                  bool interior,
+                                  const WorldPinInteriorData& worldPinInteriorData);
 
                 ~WorldPinItemModel();
 
@@ -67,6 +73,10 @@ namespace ExampleApp
                 void Refresh(const std::string& title, const std::string& description, const std::string& ratingsImage, const int reviewCount);
 
                 const IWorldPinsInFocusModel& GetInFocusModel() const;
+                
+                bool IsInterior() const;
+                
+                const WorldPinInteriorData& GetInteriorData() const;
             };
 
             inline bool operator==(const WorldPinItemModel& lhs, const WorldPinItemModel& rhs)

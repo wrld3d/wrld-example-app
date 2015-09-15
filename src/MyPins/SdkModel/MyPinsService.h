@@ -4,6 +4,7 @@
 
 #include <map>
 
+#include "InteriorId.h"
 #include "MyPins.h"
 #include "IMyPinsService.h"
 #include "WorldPins.h"
@@ -36,6 +37,10 @@ namespace ExampleApp
                                            const std::string& ratingsImage,
                                            const int reviewCount,
                                            const Eegeo::Space::LatLong& latLong,
+                                           float heightAboveTerrainMetres,
+                                           bool interior,
+                                           const Eegeo::Resources::Interiors::InteriorId& buildingId,
+                                           int floor,
                                            Byte* imageData,
                                            size_t imageSize,
                                            bool shouldShare);

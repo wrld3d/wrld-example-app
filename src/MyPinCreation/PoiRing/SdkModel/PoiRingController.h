@@ -3,6 +3,7 @@
 #pragma once
 
 #include "MyPinCreation.h"
+#include "InteriorsController.h"
 #include "IPoiRingController.h"
 #include "AppInterface.h"
 #include "Camera.h"
@@ -24,7 +25,8 @@ namespace ExampleApp
                     PoiRingController(MyPinCreation::SdkModel::IMyPinCreationModel& myPinCreationModel,
                                       PoiRingView& poiRingView,
                                       Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
-                                      Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider);
+                                      Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider,
+                                      Eegeo::Resources::Interiors::InteriorsController& interiorsController);
 
                     void Update(float dt, const Eegeo::Camera::RenderCamera& renderCamera, const Eegeo::dv3& cameraEcefInterestPoint);
 
@@ -34,8 +36,9 @@ namespace ExampleApp
                 private:
                     Eegeo::Rendering::EnvironmentFlatteningService& m_environmentFlatteningService;
                     Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& m_terrainHeightProvider;
+                    Eegeo::Resources::Interiors::InteriorsController& m_interiorsController;
 
-                    MyPinCreation::SdkModel::IMyPinCreationModel& m_pMyPinCreationModel;
+                    MyPinCreation::SdkModel::IMyPinCreationModel& m_myPinCreationModel;
 
                     PoiRingView& m_poiRingView;
 

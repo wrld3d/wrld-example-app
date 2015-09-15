@@ -18,6 +18,10 @@ namespace ExampleApp
                 : m_version(-1)
                 , m_modelId(-1)
                 , m_latLong(0.0, 0.0)
+                , m_heightAboveTerrainMetres(0)
+                , m_interior(false)
+                , m_buildingId("")
+                , m_floor(0)
             {
 
             }
@@ -29,7 +33,11 @@ namespace ExampleApp
                                    const std::string& ratingsImage,
                                    int reviewCount,
                                    int sdkMapPinIconIndex,
-                                   const Eegeo::Space::LatLong& latLong)
+                                   const Eegeo::Space::LatLong& latLong,
+                                   float heightAboveTerrainMetres,
+                                   bool interior,
+                                   const Eegeo::Resources::Interiors::InteriorId& buildingId,
+                                   int floor)
             : m_version(version)
             , m_modelId(modelId)
             , m_title(title)
@@ -38,6 +46,10 @@ namespace ExampleApp
             , m_reviewCount(reviewCount)
             , m_sdkMapPinIconIndex(sdkMapPinIconIndex)
             , m_latLong(latLong)
+            , m_heightAboveTerrainMetres(heightAboveTerrainMetres)
+            , m_interior(interior)
+            , m_buildingId(buildingId)
+            , m_floor(floor)
             {
                 
             }
