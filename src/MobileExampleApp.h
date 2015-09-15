@@ -73,6 +73,7 @@
 #include "InteriorsEntitiesPins.h"
 #include "MapMode.h"
 #include "AppModes.h"
+#include "IToursModule.h"
 
 namespace ExampleApp
 {
@@ -136,6 +137,14 @@ namespace ExampleApp
         InteriorsExplorer::SdkModel::IInteriorsExplorerModule* m_pInteriorsExplorerModule;
         InteriorsEntitiesPins::SdkModel::IInteriorsEntitiesPinsModule* m_pInteriorsEntitiesPinsModule;
         AppModes::SdkModel::IAppModeModel* m_pAppModeModel;
+        
+        ExampleAppMessaging::TMessageBus m_toursMessageBus;
+        Eegeo::Pins::PinsModule* m_pToursPinsModule;
+        ExampleApp::WorldPins::SdkModel::IWorldPinsModule* m_pToursWorldPinsModule;
+        Tours::IToursModule* m_pToursModule;
+        Eegeo::Modules::FireworksModule* m_pFireworksModule;
+        float m_toursPinDiameter;
+        
         const bool m_interiorsEnabled;
 
         void CreateApplicationModelModules();
@@ -147,10 +156,22 @@ namespace ExampleApp
         std::vector<ExampleApp::OpenableControl::View::IOpenableControlViewModel*> GetOpenableControls() const;
 
         std::vector<ExampleApp::ScreenControl::View::IScreenControlViewModel*> GetReactorControls() const;
+        
+        Eegeo::Pins::PinsModule* CreatePlatformPinsModuleInstance(Eegeo::Modules::Map::MapModule& mapModule,
+                                                                  Eegeo::EegeoWorld& world,
+                                                                  const std::string& pinsTexture,
+                                                                  float pinDiameter,
+                                                                  int sheetSize);
 
         void InitialisePinsModules(Eegeo::Modules::Map::MapModule& mapModule, Eegeo::EegeoWorld& world);
         
         bool CanAcceptTouch() const;
+        
+        void AddTours();
+        
+        void InitialiseToursModules(Eegeo::Modules::Map::MapModule& mapModule, Eegeo::EegeoWorld& world);
+        
+        const bool IsTourCameraActive() const;
 
     public:
         MobileExampleApp(const std::string& apiKey,
@@ -187,6 +208,11 @@ namespace ExampleApp
             return m_pinDiameter;
         }
 
+        float ToursPinDiameter() const
+        {
+            return m_toursPinDiameter;
+        }
+        
         CameraTransitions::SdkModel::ICameraTransitionController& CameraTransitionController() const
         {
             return *m_pCameraTransitionController;
@@ -310,6 +336,16 @@ namespace ExampleApp
         const InteriorsExplorer::SdkModel::IInteriorsExplorerModule& InteriorsExplorerModule() const
         {
             return *m_pInteriorsExplorerModule;
+        }
+        
+        const ExampleApp::Tours::IToursModule& ToursModule() const
+        {
+            return *m_pToursModule;
+        }
+        
+        const ExampleApp::WorldPins::SdkModel::IWorldPinsModule& TourWorldPinsModule() const
+        {
+            return *m_pToursWorldPinsModule;
         }
         
         // Exposed to allow view model creation in iOS code.

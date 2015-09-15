@@ -27,6 +27,9 @@
 #include "SearchResultPoiPinToggledMessage.h"
 #include "SearchResultPoiViewOpenedMessage.h"
 #include "InitialExperienceSearchResultAttractModeModelStateExitedMessage.h"
+#include "TourActiveStateChangedMessage.h"
+#include "ActiveTourQuitSelectedMessage.h"
+#include "TourChangeRequestMessage.h"
 #include "InteriorsExplorerSelectFloorMessage.h"
 #include "InteriorsExplorerExitMessage.h"
 #include "MenuDragStateChangedMessage.h"
@@ -59,6 +62,9 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<SearchResultPoi::SearchResultPoiPinToggledMessage>
             , public Eegeo::Messaging::CatalogBinding<SearchResultPoi::SearchResultPoiViewOpenedMessage>
             , public Eegeo::Messaging::CatalogBinding<InitialExperience::SearchResultAttractMode::InitialExperienceSearchResultAttractModeModelStateExitedMessage>
+            , public Eegeo::Messaging::CatalogBinding<Tours::TourActiveStateChangedMessage>
+            , public Eegeo::Messaging::CatalogBinding<Tours::ActiveTourQuitSelectedMessage>
+            , public Eegeo::Messaging::CatalogBinding<Tours::TourChangeRequestMessage>
             , public Eegeo::Messaging::CatalogBinding<InteriorsExplorer::InteriorsExplorerSelectFloorMessage>
             , public Eegeo::Messaging::CatalogBinding<InteriorsExplorer::InteriorsExplorerExitMessage>
             , public Eegeo::Messaging::CatalogBinding<Menu::MenuDragStateChangedMessage>

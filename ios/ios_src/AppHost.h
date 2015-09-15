@@ -36,6 +36,9 @@
 #include "iOSConnectivityService.h"
 #include "OptionsViewIncludes.h"
 #include "WatermarkViewIncludes.h"
+#include "TourExplorerViewIncludes.h"
+#include "TourFullScreenImageViewIncludes.h"
+#include "TourHovercardViewIncludes.h"
 #include "InitialExperienceIntroViewIncludes.h"
 #include "NetIncludes.h"
 #include "Search.h"
@@ -45,6 +48,7 @@
 #include "iOSFlurryMetricsService.h"
 #include "Interiors.h"
 #include "InteriorsExplorerViewIncludes.h"
+#include "ImageStore.h"
 
 @class ViewController;
 class AppInputDelegate;
@@ -106,12 +110,17 @@ private:
     ExampleApp::MyPinDetails::View::IMyPinDetailsViewModule* m_pMyPinDetailsViewModule;
     ExampleApp::Options::View::IOptionsViewModule* m_pOptionsViewModule;
     ExampleApp::Watermark::View::IWatermarkViewModule* m_pWatermarkViewModule;
+    ExampleApp::Tours::View::TourExplorer::ITourExplorerViewModule* m_pTourExplorerViewModule;
+    ExampleApp::Tours::View::TourFullScreenImage::ITourFullScreenImageViewModule* m_pTourFullScreenImageViewModule;
+    ExampleApp::Tours::View::TourHovercard::ITourHovercardViewModule* m_pTourWorldPinOnMapViewModule;
     ExampleApp::InitialExperience::View::IInitialExperienceIntroViewModule* m_pInitialExperienceIntroViewModule;
     ExampleApp::Net::SdkModel::INetworkCapabilities* m_pNetworkCapabilities;
     ExampleApp::Search::SdkModel::ISearchServiceModule* m_pSearchServiceModule;
     ExampleApp::Metrics::iOSFlurryMetricsService* m_piOSFlurryMetricsService;
     ExampleApp::InteriorsExplorer::View::IInteriorsExplorerViewModule* m_pInteriorsExplorerViewModule;
-
+    
+    ImageStore* m_pImageStore;
+    
     ExampleApp::MobileExampleApp* m_pApp;
     bool m_requestedApplicationInitialiseViewState;
 

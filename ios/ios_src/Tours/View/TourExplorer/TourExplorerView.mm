@@ -1,0 +1,428 @@
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
+
+#include "TourExplorerView.h"
+#include "MyPinCreationConfirmationViewInterop.h"
+#import "UIView+TouchExclusivity.h"
+#include "TourExplorerViewInterop.h"
+#include "iCarouselTourExplorerViewController.h"
+#include "ColorHelpers.h"
+#include "ImageHelpers.h"
+
+@implementation TourExplorerView
+{
+    iCarouselTourExplorerViewController* m_viewController;
+    ExampleApp::Tours::SdkModel::TourModel m_tour;
+    ExampleApp::Tours::SdkModel::TourModel m_nextTour;
+    bool m_isInterruptingTour;
+    bool m_hasActiveTour;
+    UIPanGestureRecognizer* m_pPanGesture;
+    bool m_dragging;
+    
+    CGPoint m_dragStartPos;
+    CGPoint m_controlStartPos;
+}
+
+- (ExampleApp::Tours::View::TourExplorer::TourExplorerViewInterop*) getInterop
+{
+    return m_pInterop;
+}
+
+- (id) initWithParams:(float)width :(float)height :(float)pixelScale :(ImageStore*)pImageStore
+{
+    if (self = [super init])
+    {
+        m_stateChangeAnimationTimeSeconds = 0.2f;
+        m_pixelScale = 1.f;
+        m_screenWidth = width/pixelScale;
+        m_screenHeight = height/pixelScale;
+        m_hasActiveTour = false;
+        m_dragging = false;
+        
+        m_pInterop = new ExampleApp::Tours::View::TourExplorer::TourExplorerViewInterop(self);
+        
+        m_viewController = [[iCarouselTourExplorerViewController alloc] initWithParams
+                            :m_screenWidth
+                            :m_screenHeight
+                            :m_pixelScale
+                            :self
+                            :@selector(onSelectionChanged)
+                            :@selector(onCurrentItemChanged)
+                            :m_pInterop
+                            :pImageStore];
+        
+        UIView* pViewImplementation = [self->m_viewController getView];
+        
+        
+        // MB: TODO: viewImplementation's frame isn't actually a containing size - suspect nonsense with differing card sizes - will resolve when unify card theme sizes.
+        // For now, just fix the size.
+        m_pCarouselContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, m_screenWidth, 224.0f)];
+        
+        [self addSubview:m_pCarouselContainer];
+        [m_pCarouselContainer addSubview:pViewImplementation];
+        
+        // Copy our initial frame size and position from the carousel control.
+        self.frame = m_pCarouselContainer.frame;
+        
+        // Set the carousel control as a subview inside main view, origin at 0.
+        CGRect carouselFrame = m_pCarouselContainer.frame;
+        carouselFrame.origin = CGPointMake(0.f, 0.f);
+        m_pCarouselContainer.frame = carouselFrame;
+        pViewImplementation.frame = carouselFrame;
+        
+        // Scott -- hack -- as determined below.
+        const float textLineHeight = 58.f;
+        const float textVerticalPadding = 8.f;
+        const float textHeight = (textLineHeight) + (textVerticalPadding * 2.f);
+        
+        const float carouselOffsetFromBottom = textHeight;
+        self.frame = CGRectMake(self.frame.origin.x,
+                                self.frame.origin.y - carouselOffsetFromBottom,
+                                self.frame.size.width,
+                                self.frame.size.height + carouselOffsetFromBottom);
+        
+        const float labelContainerHeight = ([self controlHeight] * 0.25f) + textHeight;
+        CGRect labelContainerFrame = CGRectMake(0.f,
+                                                self.frame.size.height - labelContainerHeight,
+                                                carouselFrame.size.width,
+                                                labelContainerHeight);
+        
+        m_pTourItemLabelContainer = [[UIView alloc] initWithFrame:labelContainerFrame];
+        [self insertSubview:m_pTourItemLabelContainer belowSubview:m_pCarouselContainer];
+        
+        const float textVerticalOffset = labelContainerHeight - textHeight;
+        m_pTourItemLabel = [[UILabel alloc] initWithFrame:CGRectMake(labelContainerFrame.origin.x,
+                                                                     textVerticalOffset,
+                                                                     labelContainerFrame.size.width,
+                                                                     textHeight)];
+        m_pTourItemLabel.backgroundColor = [UIColor clearColor];
+        m_pTourItemLabel.textAlignment = NSTextAlignmentCenter;
+        m_pTourItemLabel.numberOfLines = 0;
+        m_pTourItemLabel.font = [m_pTourItemLabel.font fontWithSize:16];
+        [m_pTourItemLabelContainer addSubview:m_pTourItemLabel];
+        
+        // Scott quick hack to get label height for desired number lines (currently 3).
+        //m_pTourItemLabel.text = @"1 \n 2 \n 3";
+        //[m_pTourItemLabel sizeToFit];
+        //printf("textLineHeight = %f\n", m_pTourItemLabel.frame.size.height);
+        
+        const float gradientHeight = 60.f;
+        m_pTourItemLabelGradientContainer = [[UIView alloc] initWithFrame:CGRectMake(0.f,
+                                                                                     labelContainerFrame.origin.y - gradientHeight,
+                                                                                     labelContainerFrame.size.width,
+                                                                                     gradientHeight)];
+        [self insertSubview:m_pTourItemLabelGradientContainer belowSubview:m_pCarouselContainer];
+        
+        m_yPosInactive = m_screenHeight + [self controlHeight];
+        m_yPosActive = m_screenHeight - [self controlHeight];
+        
+        [self setTouchExclusivity: self];
+        
+        const float exitButtonSize = 100.0f;
+        const float exitButtonY = self.frame.size.height - exitButtonSize;
+        
+        self.pExitButton = [[UIButton alloc]initWithFrame:CGRectMake(0.0f, exitButtonY, exitButtonSize, exitButtonSize)];
+        [self.pExitButton setImage:ExampleApp::Helpers::ImageHelpers::LoadImage("Tours/browser_back") forState:UIControlStateNormal];
+        [self.pExitButton addTarget:self action:@selector(handleExitButtonTap) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:self.pExitButton];
+        
+        m_pPanGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(dragTabGesture:)];
+        [m_pPanGesture setDelegate:self];
+        m_pPanGesture.cancelsTouchesInView = FALSE;
+        [self addGestureRecognizer: m_pPanGesture];
+        [m_pPanGesture release];
+    }
+    
+    return self;
+}
+
+- (void)dealloc
+{
+    [self.pExitButton removeFromSuperview];
+    [self.pExitButton release];
+    self.pExitButton = nil;
+    
+    delete m_pInterop;
+    
+    [self removeFromSuperview];
+    [super dealloc];
+}
+
+-(void) setPresentationColors :(ExampleApp::Helpers::ColorHelpers::Color)baseColor :(ExampleApp::Helpers::ColorHelpers::Color)textColor
+{
+    CAGradientLayer *gradient = [CAGradientLayer layer];
+    gradient.frame =  CGRectMake(0.f, 0.f, m_pTourItemLabelGradientContainer.bounds.size.width, m_pTourItemLabelGradientContainer.bounds.size.height);
+    
+    UIColor* labelBackgroundColour = [UIColor colorWithRed:baseColor.GetRedF() green:baseColor.GetGreenF() blue:baseColor.GetBlueF() alpha:1.f];
+    
+    [m_pTourItemLabelContainer setBackgroundColor:labelBackgroundColour];
+    m_pTourItemLabel.textColor = [UIColor colorWithRed:textColor.GetRedF() green:textColor.GetGreenF() blue:textColor.GetBlueF() alpha:1.f];
+   
+    UIColor *topColor = [UIColor colorWithRed:baseColor.GetRedF() green:baseColor.GetGreenF() blue:baseColor.GetBlueF() alpha:0.f];
+    UIColor *bottomColor = labelBackgroundColour;
+    gradient.colors = [NSArray arrayWithObjects:(id)[topColor CGColor], (id)[bottomColor CGColor], nil];
+    
+    for (CALayer *layer in [[m_pTourItemLabelGradientContainer.layer.sublayers copy] autorelease]) {
+        [layer removeFromSuperlayer];
+    }
+    
+    [m_pTourItemLabelGradientContainer.layer insertSublayer:gradient atIndex:0];
+}
+
+- (void) configureViewForTour:(const ExampleApp::Tours::SdkModel::TourModel&) tour :(int)initialCard
+{
+    if(m_hasActiveTour)
+    {
+        // Exit current tour then join new tour.
+        [self interruptCurrentTour:tour];
+        return;
+    }
+    
+    CGRect f = m_pCarouselContainer.frame;
+    f.origin.y = 60.0f;
+    m_pCarouselContainer.frame = f;
+    
+    m_tour = tour;
+    m_hasActiveTour = true;
+    m_dragging = false;
+    m_pTourItemLabel.text = @"";
+    [self->m_viewController configureTourStatesPresentation: tour];
+    [m_viewController resetView:initialCard];
+    if(tour.ShowGradientBase())
+    {
+        m_pTourItemLabelContainer.hidden = NO;
+        m_pTourItemLabelGradientContainer.hidden = NO;
+        [self setPresentationColors :tour.BaseColor() :tour.TextColor()];
+    }
+    else
+    {
+        m_pTourItemLabelContainer.hidden = YES;
+        m_pTourItemLabelGradientContainer.hidden = YES;
+    }
+}
+
+- (void) interruptCurrentTour:(const ExampleApp::Tours::SdkModel::TourModel&) tour
+{
+    m_isInterruptingTour = YES;
+    m_nextTour = tour;
+    
+    CGRect offFrame = self.frame;
+    offFrame.origin.y = m_yPosInactive;
+    
+    CGRect onFrame = self.frame;
+    onFrame.origin.y = m_yPosActive;
+
+    [self.layer removeAllAnimations];
+    
+    [UIView animateWithDuration:m_stateChangeAnimationTimeSeconds animations:^{
+        self.frame = offFrame;
+        
+    } completion:^(BOOL finished) {
+        if(finished)
+        {
+            m_hasActiveTour = NO;
+            m_isInterruptingTour = NO;
+            
+            [self setNeedsLayout];
+            [self layoutIfNeeded];
+
+            [self configureViewForTour:m_nextTour :0];
+            
+            [UIView animateWithDuration:m_stateChangeAnimationTimeSeconds animations:^{
+                self.frame = onFrame;
+            } completion:^(BOOL finished) {
+            }];
+        }
+    }];
+}
+
+-(void) onSelectionChanged
+{
+    // Nothing to do, change states when animation finishes (onCurrentItemChanged).
+}
+
+-(void) onCurrentItemChanged
+{
+    [self dispatchStateSelectionChanged];
+}
+
+-(void) dispatchStateSelectionChanged
+{
+    if(m_hasActiveTour && [self->m_viewController getSelectionIndex] < m_tour.StateCount())
+    {
+        int selectionIndex = [self->m_viewController getSelectionIndex];
+        m_pInterop->OnStateSelected(selectionIndex);
+        if(m_tour.ShowGradientBase())
+        {
+            [self setBaseTextLabel:[NSString stringWithUTF8String:m_tour.States()[selectionIndex].Description().c_str()]];
+        }
+    }
+}
+
+-(void)exitTour
+{
+    if(m_hasActiveTour)
+    {
+        m_hasActiveTour = false;
+        m_pInterop->OnDismissed();
+    }
+}
+
+-(void) setBaseTextLabel:(NSString*) text
+{
+    CATransition *animation = [CATransition animation];
+    animation.duration = 0.5f;
+    animation.type = kCATransitionFade;
+    animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    
+    [m_pTourItemLabelContainer.layer removeAnimationForKey:@"changeTextTransition"];
+    [m_pTourItemLabel.layer addAnimation:animation forKey:@"changeTextTransition"];
+    
+    m_pTourItemLabel.text = text;
+}
+
+- (BOOL)consumesTouch:(UITouch *)touch
+{
+    CGPoint touchLocation = [touch locationInView:self];
+    return CGRectContainsPoint(self.bounds, touchLocation);
+}
+
+- (void) setOnScreenStateToIntermediateValue:(float)onScreenState
+{
+    float newY = m_yPosInactive + (m_yPosActive - m_yPosInactive) * onScreenState;
+    
+    self.hidden = onScreenState == 0.0f;
+    CGRect f = self.frame;
+    f.origin.y = newY;
+    self.frame = f;
+}
+
+- (void) setFullyOnScreen
+{
+    if(m_isInterruptingTour)
+    {
+        return;
+    }
+    
+    [self animateToY:m_yPosActive];
+}
+
+- (void) setFullyOffScreen
+{
+    if(self.frame.origin.y == m_yPosInactive)
+    {
+        return;
+    }
+    
+    [self animateToY:m_yPosInactive];
+}
+
+- (void) animateToY:(float)y
+{
+    CGRect f = self.frame;
+    f.origin.y = y;
+    
+    if(y != m_yPosInactive)
+    {
+        self.hidden = false;
+    }
+    
+    [UIView animateWithDuration:m_stateChangeAnimationTimeSeconds
+                     animations:^
+     {
+         self.frame = f;
+     }
+                     completion:^(BOOL finished)
+     {
+         self.hidden = (y == m_yPosInactive);
+         
+         if(self.hidden)
+         {
+             [self exitTour];
+         }
+     }
+     ];
+}
+
+- (void) beginDrag:(CGPoint)absolutePosition velocity:(CGPoint)absoluteVelocity
+{
+    m_dragStartPos = absolutePosition;
+    m_controlStartPos = self.frame.origin;
+}
+
+- (void) updateDrag:(CGPoint)absolutePosition velocity:(CGPoint)absoluteVelocity
+{
+    CGRect f = self.frame;
+    f.origin.y = m_controlStartPos.y + (absolutePosition.y - m_dragStartPos.y);
+    
+    const float openY = (m_screenHeight - [self controlHeight]);
+    const float closedY = (m_screenHeight);
+    
+    if(f.origin.y < openY)
+    {
+        f.origin.y = openY;
+    }
+    
+    if(f.origin.y > closedY)
+    {
+        f.origin.y = closedY;
+    }
+    
+    self.frame = f;
+}
+
+- (void) completeDrag:(CGPoint)absolutePosition velocity:(CGPoint)absoluteVelocity
+{
+    const float yRatioForStateChange = 0.6f;
+    const float stayOpenThreshold = (m_screenHeight - ([self controlHeight] * yRatioForStateChange));
+    const bool quitting = static_cast<float>(self.frame.origin.y) >= stayOpenThreshold;
+    
+    [self animateToY:(quitting ? m_yPosInactive : m_yPosActive)];
+}
+
+- (void)dragTabGesture:(UIPanGestureRecognizer *)recognizer
+{
+    CGPoint positionAbs = [recognizer locationInView:[self superview]];
+    CGPoint velocity = [recognizer velocityInView:[self superview]];
+    
+    switch(recognizer.state)
+    {
+        case UIGestureRecognizerStateBegan:
+            m_dragging = true;
+            [self beginDrag:positionAbs velocity:velocity];
+            break;
+            
+        case UIGestureRecognizerStateChanged:
+            [self updateDrag:positionAbs velocity:velocity];
+            break;
+            
+        case UIGestureRecognizerStateEnded:
+            m_dragging = false;
+            [self completeDrag:positionAbs velocity:velocity];
+            break;
+            
+        case UIGestureRecognizerStateCancelled:
+            m_dragging = false;
+            [self completeDrag:positionAbs velocity:velocity];
+            break;
+            
+        default:
+            break;
+    }
+}
+
+- (void)handleExitButtonTap
+{
+    [self animateToY:m_yPosInactive];
+}
+
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
+{
+    return true;
+}
+
+-(float) controlHeight
+{
+    return static_cast<float>(self.frame.size.height);
+}
+
+@end
