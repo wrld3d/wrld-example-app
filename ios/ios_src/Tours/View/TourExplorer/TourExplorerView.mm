@@ -344,7 +344,7 @@
 - (BOOL)consumesTouch:(UITouch *)touch
 {
     CGPoint touchLocation = [touch locationInView:self];
-    return CGRectContainsPoint(self.bounds, touchLocation);
+    return CGRectContainsPoint(self.pDetailsPanel.frame, touchLocation) || CGRectContainsPoint(m_pCarouselContainer.frame, touchLocation);
 }
 
 - (void) setOnScreenStateToIntermediateValue:(float)onScreenState
