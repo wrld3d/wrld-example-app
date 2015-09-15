@@ -35,6 +35,9 @@ namespace ExampleApp
             {
                 std::vector<IInitialExperienceStep*> steps;
 
+                IInitialExperienceStep* pIntroStep = Eegeo_NEW(InitialExperienceIntroStep)(m_messageBus, GetPersistentSettings());
+                steps.push_back(pIntroStep);
+
                 IInitialExperienceStep* pWorldAreaLoaderStep = Eegeo_NEW(PreLoad::SdkModel::AndroidInitialExperiencePreLoadModel)(
                             m_nativeState,
                             worldAreaLoaderModel,
@@ -42,9 +45,6 @@ namespace ExampleApp
                         );
 
                 steps.push_back(pWorldAreaLoaderStep);
-
-                IInitialExperienceStep* pIntroStep = Eegeo_NEW(InitialExperienceIntroStep)(m_messageBus, GetPersistentSettings());
-                steps.push_back(pIntroStep);
 
                 m_pInitialExperienceSearchResultAttractModeModule = Eegeo_NEW(SearchResultAttractMode::InitialExperienceSearchResultAttractModeModule)(GetPersistentSettings(),
                                                                                                                                                          searchMenuViewModelControl,searchResultMenuViewModel,                   m_messageBus);
