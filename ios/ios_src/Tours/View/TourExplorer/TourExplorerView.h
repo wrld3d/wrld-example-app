@@ -32,7 +32,12 @@
     UILabel* m_pTourItemLabel;
 }
 
+@property(nonatomic, retain) UIView* pDetailsPanel;
+@property(nonatomic, retain) UIImageView* pDetailsPanelBackground;
+
 @property (nonatomic, retain) UIButton* pExitButton;
+@property(nonatomic, retain) UIImageView* pExitButtonBackground;
+@property(nonatomic, retain) UILabel* pTourNameLabel;
 
 - (id) initWithParams:(float)width :(float)height :(float)pixelScale :(ImageStore*)pImageStore;
 

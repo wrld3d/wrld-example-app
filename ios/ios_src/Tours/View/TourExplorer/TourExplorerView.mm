@@ -7,6 +7,7 @@
 #include "iCarouselTourExplorerViewController.h"
 #include "ColorHelpers.h"
 #include "ImageHelpers.h"
+#include "UIColors.h"
 
 @implementation TourExplorerView
 {
@@ -55,13 +56,12 @@
         
         // MB: TODO: viewImplementation's frame isn't actually a containing size - suspect nonsense with differing card sizes - will resolve when unify card theme sizes.
         // For now, just fix the size.
-        m_pCarouselContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, m_screenWidth, 224.0f)];
+        const float carouselHeight = 224.0f;
+        
+        m_pCarouselContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, m_screenWidth, carouselHeight)];
         
         [self addSubview:m_pCarouselContainer];
         [m_pCarouselContainer addSubview:pViewImplementation];
-        
-        // Copy our initial frame size and position from the carousel control.
-        self.frame = m_pCarouselContainer.frame;
         
         // Set the carousel control as a subview inside main view, origin at 0.
         CGRect carouselFrame = m_pCarouselContainer.frame;
@@ -74,11 +74,10 @@
         const float textVerticalPadding = 8.f;
         const float textHeight = (textLineHeight) + (textVerticalPadding * 2.f);
         
-        const float carouselOffsetFromBottom = textHeight;
-        self.frame = CGRectMake(self.frame.origin.x,
-                                self.frame.origin.y - carouselOffsetFromBottom,
-                                self.frame.size.width,
-                                self.frame.size.height + carouselOffsetFromBottom);
+        self.frame = CGRectMake(0,
+                                0,
+                                m_screenWidth,
+                                m_screenHeight);
         
         const float labelContainerHeight = ([self controlHeight] * 0.25f) + textHeight;
         CGRect labelContainerFrame = CGRectMake(0.f,
@@ -117,14 +116,56 @@
         
         [self setTouchExclusivity: self];
         
-        const float exitButtonSize = 100.0f;
-        const float exitButtonY = self.frame.size.height - exitButtonSize;
+        const float upperMargin = 50.0f;
+        float exitButtonSize = 40.f;
+        float labelLength = 200.f;
         
-        self.pExitButton = [[UIButton alloc]initWithFrame:CGRectMake(0.0f, exitButtonY, exitButtonSize, exitButtonSize)];
-        [self.pExitButton setImage:ExampleApp::Helpers::ImageHelpers::LoadImage("Tours/browser_back") forState:UIControlStateNormal];
+        const float detailsPanelHeight = 40.0f;
+        float totalPanelLength = labelLength + exitButtonSize;
+        
+        float totalPanelHeight = detailsPanelHeight;
+        
+        self.pDetailsPanel = [[[UIView alloc] initWithFrame:CGRectMake(m_screenWidth * 0.5f - totalPanelLength * 0.5f, upperMargin, totalPanelLength, totalPanelHeight)] autorelease];
+        
+        self.pExitButtonBackground = [[[UIImageView alloc] initWithImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"menu_button")] autorelease];
+        self.pExitButtonBackground.frame = CGRectMake(0.0f, 0.0f, exitButtonSize, exitButtonSize);
+        
+        [self.pDetailsPanel addSubview:self.pExitButtonBackground];
+    
+        
+        self.pExitButton = [[UIButton alloc]initWithFrame:CGRectMake(0.0f, 0.0f, exitButtonSize, exitButtonSize)];
+        [self.pExitButton setImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"Arrow") forState:UIControlStateNormal];
         [self.pExitButton addTarget:self action:@selector(handleExitButtonTap) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:self.pExitButton];
+        [self.pExitButtonBackground addSubview:self.pExitButton];
         
+        self.pExitButtonBackground.userInteractionEnabled = YES;
+        
+        self.pDetailsPanelBackground = [[[UIImageView alloc] initWithImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"place_pin_background")] autorelease];
+        
+        self.pDetailsPanelBackground.frame = CGRectMake(exitButtonSize, 0, labelLength, detailsPanelHeight);
+        
+        UIBezierPath* roundedShapePath = [UIBezierPath bezierPathWithRoundedRect:self.pDetailsPanelBackground.bounds byRoundingCorners:UIRectCornerTopRight | UIRectCornerBottomRight cornerRadii:CGSizeMake(7.0f, 7.0f)];
+        
+        CAShapeLayer* roundedShapeLayer = [CAShapeLayer layer];
+        roundedShapeLayer.frame = self.pDetailsPanelBackground.bounds;
+        roundedShapeLayer.path = roundedShapePath.CGPath;
+        roundedShapeLayer.fillColor = [UIColor blackColor].CGColor;
+        roundedShapeLayer.strokeColor = [UIColor blackColor].CGColor;
+        roundedShapeLayer.lineWidth = 1.0f;
+        
+        self.pDetailsPanelBackground.layer.mask = roundedShapeLayer;
+        
+        [self.pDetailsPanel addSubview:self.pDetailsPanelBackground];
+        
+        const float textPadding = 2.f;
+        
+        self.pTourNameLabel = [[[UILabel alloc] initWithFrame:CGRectMake( textPadding + exitButtonSize, textPadding, labelLength - textPadding, detailsPanelHeight - textPadding)] autorelease];
+        self.pTourNameLabel.textColor = ExampleApp::Helpers::ColorPalette::DarkGreyTone;
+        self.pTourNameLabel.textAlignment = NSTextAlignmentCenter;
+        [self.pDetailsPanel addSubview:self.pTourNameLabel];
+        
+        
+        [self addSubview:self.pDetailsPanel];
         m_pPanGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(dragTabGesture:)];
         [m_pPanGesture setDelegate:self];
         m_pPanGesture.cancelsTouchesInView = FALSE;
@@ -137,9 +178,26 @@
 
 - (void)dealloc
 {
+    
+    [self.pDetailsPanel removeFromSuperview];
+    [self.pDetailsPanel release];
+    self.pDetailsPanel = nil;
+    
+    [self.pDetailsPanelBackground removeFromSuperview];
+    [self.pDetailsPanelBackground release];
+    self.pDetailsPanelBackground = nil;
+    
+    [self.pExitButtonBackground removeFromSuperview];
+    [self.pExitButtonBackground release];
+    self.pExitButtonBackground = nil;
+    
     [self.pExitButton removeFromSuperview];
     [self.pExitButton release];
     self.pExitButton = nil;
+    
+    [self.pTourNameLabel removeFromSuperview];
+    [self.pTourNameLabel release];
+    self.pTourNameLabel = nil;
     
     delete m_pInterop;
     
@@ -176,15 +234,18 @@
         [self interruptCurrentTour:tour];
         return;
     }
+    const float carouselHeight = 224.0f;
     
     CGRect f = m_pCarouselContainer.frame;
-    f.origin.y = 60.0f;
+    f.origin.y = m_screenHeight - carouselHeight;
     m_pCarouselContainer.frame = f;
     
     m_tour = tour;
     m_hasActiveTour = true;
     m_dragging = false;
     m_pTourItemLabel.text = @"";
+    self.pTourNameLabel.text = [NSString stringWithUTF8String:m_tour.Name().c_str()];
+    
     [self->m_viewController configureTourStatesPresentation: tour];
     [m_viewController resetView:initialCard];
     if(tour.ShowGradientBase())
