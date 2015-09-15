@@ -33,7 +33,6 @@ namespace ExampleApp
                                             Modality::View::IModalityModel& modalityModel,
                                             float pinDiameter,
                                             float pixelScale,
-                                            ImageStore* pImageStore,
                                             const AppModes::SdkModel::IAppModeModel& appModeModel);
                     
                     ~TourHovercardViewModule();

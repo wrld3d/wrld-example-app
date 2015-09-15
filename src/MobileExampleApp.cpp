@@ -646,8 +646,8 @@ namespace ExampleApp
                                                          false,
                                                          Helpers::ColorHelpers::Color::FromRGB(30, 123, 195),
                                                          Helpers::ColorHelpers::Color::FromRGB(255, 255, 255),
-                                                         Helpers::ColorHelpers::Color::FromRGB(0, 0, 0),
-                                                         Helpers::ColorHelpers::Color::FromRGB(255, 255, 255),
+                                                         Helpers::ColorHelpers::Color::FromRGB(30, 123, 195),
+                                                         Helpers::ColorHelpers::Color::FromRGB(30, 123, 195),
                                                          tourStates);
         
         Tours::SdkModel::TourInstances::Example::ExampleTourStateMachineFactory factory(ToursModule().GetCameraTransitionController(),

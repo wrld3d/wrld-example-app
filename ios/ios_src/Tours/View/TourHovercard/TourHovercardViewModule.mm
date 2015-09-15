@@ -19,10 +19,9 @@ namespace ExampleApp
                                                                  Modality::View::IModalityModel& modalityModel,
                                                                  float pinDiameter,
                                                                  float pixelScale,
-                                                                 ImageStore* pImageStore,
                                                                  const AppModes::SdkModel::IAppModeModel& appModeModel)
                 {
-                    m_pView = [[TourHovercardView alloc] initWithParams:pinDiameter :pixelScale :pImageStore];
+                    m_pView = [[TourHovercardView alloc] initWithParams:pinDiameter :pixelScale];
                     
                     m_pController = Eegeo_NEW(WorldPins::View::WorldPinOnMapController)(
                                                                        *[m_pView getInterop],

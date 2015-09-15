@@ -307,7 +307,6 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
                                                                                                                 app.ModalityModule().GetModalityModel(),
                                                                                                                 app.ToursPinDiameter(),
                                                                                                                 screenProperties.GetPixelScale(),
-                                                                                                                m_pImageStore,
                                                                                                                 app.GetAppModeModel());
     
     m_pCompassViewModule = Eegeo_NEW(ExampleApp::Compass::View::CompassViewModule)(app.CompassModule().GetCompassViewModel(),

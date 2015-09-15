@@ -17,7 +17,7 @@
     UIImage* m_pPlayIconImage;
 }
 
-- (id) initWithParams:(float)pinDiameter :(float)pixelScale :(ImageStore*)pImageStore;
+- (id) initWithParams:(float)pinDiameter :(float)pixelScale;
 
 - (ExampleApp::Tours::View::TourHovercard::TourHovercardViewInterop*) getInterop;
 
@@ -31,17 +31,15 @@
 
 - (void) updatePosition:(float)x :(float)y;
 
-- (CAShapeLayer*) createBubbleLayer:(float)width :(float)height :(float)arrowSize :(float)cornerRadius;
-
 - (void) setPresentationColors :(ExampleApp::Helpers::ColorHelpers::Color)baseColor :(ExampleApp::Helpers::ColorHelpers::Color)textColor;
 
-- (void) clear;
-
 @property (nonatomic, retain) UIView* pMainControlContainer;
+@property (nonatomic, retain) UIView* pMainControlShadowContainer;
 @property (nonatomic, retain) UIView* pMainShape;
-@property (nonatomic, retain) FXImageView* pBackgroundImage;
-@property (nonatomic, retain) FXImageView* pBackgroundSubImage;
+@property (nonatomic, retain) UIView* pTopStrip;
+@property (nonatomic, retain) UIView* pLabelBack;
+@property (nonatomic, retain) UIImageView* pArrowContainer;
 @property (nonatomic, retain) UILabel* pNameLabel;
-@property (nonatomic, retain) UIView* pNameLabelBackground;
+@property (nonatomic, retain) UILabel* pInfoLabel;
 
 @end
