@@ -45,7 +45,7 @@ namespace ExampleApp
                                                  const Eegeo::Space::LatLong& location,
                                                  float heightAboveTerrainMetres,
                                                  bool interior,
-                                                 const std::string& building,
+                                                 const Eegeo::Resources::Interiors::InteriorId& building,
                                                  int floor,
                                                  const std::string& phone,
                                                  const std::string& address,
@@ -117,7 +117,7 @@ namespace ExampleApp
                 return m_interior;
             }
             
-            const std::string& SearchResultModel::GetBuilding() const
+            const Eegeo::Resources::Interiors::InteriorId& SearchResultModel::GetBuildingId() const
             {
                 return m_building;
             }

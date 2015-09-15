@@ -4,6 +4,7 @@
 
 #include <string>
 #include <vector>
+#include "InteriorId.h"
 #include "LatLongAltitude.h"
 #include "Types.h"
 
@@ -21,7 +22,7 @@ namespace ExampleApp
                 Eegeo::Space::LatLong m_location;
                 float m_heightAboveTerrainMetres;
                 bool m_interior;
-                std::string m_building;
+                Eegeo::Resources::Interiors::InteriorId m_building;
                 int m_floor;
                 std::string m_phone;
                 std::string m_address;
@@ -45,7 +46,7 @@ namespace ExampleApp
                                   const Eegeo::Space::LatLong& location,
                                   float heightAboveTerrainMetres,
                                   bool interior,
-                                  const std::string& building,
+                                  const Eegeo::Resources::Interiors::InteriorId& building,
                                   int floor,
                                   const std::string& phone,
                                   const std::string& address,
@@ -76,7 +77,7 @@ namespace ExampleApp
                 
                 bool IsInterior() const;
                 
-                const std::string& GetBuilding() const;
+                const Eegeo::Resources::Interiors::InteriorId& GetBuildingId() const;
                 
                 int GetFloor() const;
 

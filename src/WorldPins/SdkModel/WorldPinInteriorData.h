@@ -3,6 +3,7 @@
 #pragma once
 
 #include <string>
+#include "InteriorId.h"
 
 namespace ExampleApp
 {
@@ -12,7 +13,9 @@ namespace ExampleApp
         {
             struct WorldPinInteriorData
             {
-                WorldPinInteriorData(const std::string& building = "", int floor = 0, bool showInExterior = true)
+                WorldPinInteriorData(const Eegeo::Resources::Interiors::InteriorId& building = Eegeo::Resources::Interiors::InteriorId::NullId(),
+                                     int floor = 0,
+                                     bool showInExterior = false)
                 : building(building)
                 , floor(floor)
                 , showInExterior(showInExterior)
@@ -20,7 +23,7 @@ namespace ExampleApp
                     
                 }
                 
-                std::string building;
+                Eegeo::Resources::Interiors::InteriorId building;
                 int floor;
                 bool showInExterior;
             };

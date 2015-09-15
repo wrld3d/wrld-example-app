@@ -3,6 +3,7 @@
 #pragma once
 
 #include <string>
+#include "InteriorId.h"
 #include "LatLongAltitude.h"
 #include "Types.h"
 
@@ -26,6 +27,10 @@ namespace ExampleApp
                 int m_reviewCount;
                 int m_sdkMapPinIconIndex;
                 Eegeo::Space::LatLong m_latLong;
+                float m_heightAboveTerrainMetres;
+                bool m_interior;
+                Eegeo::Resources::Interiors::InteriorId m_buildingId;
+                int m_floor;
 
             public:
                 const static int CurrentVersion;
@@ -39,7 +44,11 @@ namespace ExampleApp
                            const std::string& ratingsImage,
                            int reviewCount,
                            int sdkMapPinIconIndex,
-                           const Eegeo::Space::LatLong& latLong);
+                           const Eegeo::Space::LatLong& latLong,
+                           float heightAboveTerrainMetresbool,
+                           bool interior,
+                           const Eegeo::Resources::Interiors::InteriorId& buildingId,
+                           int floor);
                 
                 int Version() const
                 {
@@ -79,6 +88,26 @@ namespace ExampleApp
                 const Eegeo::Space::LatLong& GetLatLong() const
                 {
                     return m_latLong;
+                }
+                
+                const float GetHeightAboveTerrainMetres() const
+                {
+                    return m_heightAboveTerrainMetres;
+                }
+                
+                bool IsInterior() const
+                {
+                    return m_interior;
+                }
+                
+                const Eegeo::Resources::Interiors::InteriorId& GetBuildingId() const
+                {
+                    return m_buildingId;
+                }
+                
+                int GetFloor() const
+                {
+                    return m_floor;
                 }
                 
                 void Update(const std::string& title,

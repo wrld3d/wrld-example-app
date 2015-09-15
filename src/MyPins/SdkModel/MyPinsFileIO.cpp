@@ -5,6 +5,7 @@
 #include "document.h"
 #include "writer.h"
 #include "stringbuffer.h"
+#include "InteriorId.h"
 #include "MyPinsFileIO.h"
 #include "LatLongAltitude.h"
 #include "IPersistentSettingsModel.h"
@@ -20,6 +21,35 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
+            namespace
+            {
+                void MyPinModelToJson(const MyPinModel& pinModel, rapidjson::Document::AllocatorType& allocator, IMyPinBoundObjectRepository& myPinBoundObjectRepository, rapidjson::Value& out_value)
+                {
+                    const Eegeo::Space::LatLong& latLong = pinModel.GetLatLong();
+                    
+                    rapidjson::Value valueObject(rapidjson::kObjectType);
+                    valueObject.AddMember("version", pinModel.Version(), allocator);
+                    valueObject.AddMember("id", pinModel.Identifier(), allocator);
+                    valueObject.AddMember("title", pinModel.GetTitle().c_str(), allocator);
+                    valueObject.AddMember("description", pinModel.GetDescription().c_str(), allocator);
+                    valueObject.AddMember("ratingsImage", pinModel.GetRatingsImage().c_str(), allocator);
+                    valueObject.AddMember("reviewCount", pinModel.GetReviewsCount(), allocator);
+                    valueObject.AddMember("icon", pinModel.GetSdkMapPinIconIndexIcon(), allocator);
+                    valueObject.AddMember("latitude", latLong.GetLatitudeInDegrees(), allocator);
+                    valueObject.AddMember("longitude", latLong.GetLongitudeInDegrees(), allocator);
+                    valueObject.AddMember("heightAboveTerrain", pinModel.GetHeightAboveTerrainMetres(), allocator);
+                    valueObject.AddMember("interior", pinModel.IsInterior(), allocator);
+                    valueObject.AddMember("building", pinModel.GetBuildingId().Value().c_str(), allocator);
+                    valueObject.AddMember("floor", pinModel.GetFloor(), allocator);
+                    
+                    IMyPinBoundObject& pinBoundObject(myPinBoundObjectRepository.GetBoundObjectForPin(pinModel));
+                    valueObject.AddMember("type", static_cast<int>(pinBoundObject.GetSemanticPinType()), allocator);
+                    valueObject.AddMember("metadata", pinBoundObject.GetSerialized().c_str(), allocator);
+                    
+                    out_value = valueObject;
+                }
+            }
+            
             const std::string MyPinsDataFilename = "pin_data.json";
             const std::string MyPinImagePrefix = "my_pin_image_";
             const std::string MyPins_LastMyPinModelIdKey = "MyPins_LastMyPinModelIdKey";
@@ -121,24 +151,10 @@ namespace ExampleApp
                     rapidjson::Document::AllocatorType& allocator = jsonDoc.GetAllocator();
                     rapidjson::Value& myPinsArray = jsonDoc[MyPinsJsonArrayName.c_str()];
 
-                    const Eegeo::Space::LatLong& latLong = pinModel.GetLatLong();
-
-                    rapidjson::Value valueObject(rapidjson::kObjectType);
-                    valueObject.AddMember("version", pinModel.Version(), allocator);
-                    valueObject.AddMember("id", pinModel.Identifier(), allocator);
-                    valueObject.AddMember("title", pinModel.GetTitle().c_str(), allocator);
-                    valueObject.AddMember("description", pinModel.GetDescription().c_str(), allocator);
-                    valueObject.AddMember("ratingsImage", pinModel.GetRatingsImage().c_str(), allocator);
-                    valueObject.AddMember("reviewCount", pinModel.GetReviewsCount(), allocator);
-                    valueObject.AddMember("icon", pinModel.GetSdkMapPinIconIndexIcon(), allocator);
-                    valueObject.AddMember("latitude", latLong.GetLatitudeInDegrees(), allocator);
-                    valueObject.AddMember("longitude", latLong.GetLongitudeInDegrees(), allocator);
+                    rapidjson::Value pinModelJson;
+                    MyPinModelToJson(pinModel, allocator, m_myPinBoundObjectRepository, pinModelJson);
                     
-                    IMyPinBoundObject& pinBoundObject(m_myPinBoundObjectRepository.GetBoundObjectForPin(pinModel));
-                    valueObject.AddMember("type", static_cast<int>(pinBoundObject.GetSemanticPinType()), allocator);
-                    valueObject.AddMember("metadata", pinBoundObject.GetSerialized().c_str(), allocator);
-                    
-                    myPinsArray.PushBack(valueObject, allocator);
+                    myPinsArray.PushBack(pinModelJson, allocator);
 
                     rapidjson::StringBuffer strbuf;
                     rapidjson::Writer<rapidjson::StringBuffer> writer(strbuf);
@@ -178,22 +194,10 @@ namespace ExampleApp
                     const MyPinModel* pinModel = *it;
                     const Eegeo::Space::LatLong& latLong = pinModel->GetLatLong();
 
-                    rapidjson::Value valueObject(rapidjson::kObjectType);
-                    valueObject.AddMember("version", pinModel->Version(), allocator);
-                    valueObject.AddMember("id", pinModel->Identifier(), allocator);
-                    valueObject.AddMember("title", pinModel->GetTitle().c_str(), allocator);
-                    valueObject.AddMember("description", pinModel->GetDescription().c_str(), allocator);
-                    valueObject.AddMember("ratingsImage", pinModel->GetRatingsImage().c_str(), allocator);
-                    valueObject.AddMember("reviewCount", pinModel->GetReviewsCount(), allocator);
-                    valueObject.AddMember("icon", pinModel->GetSdkMapPinIconIndexIcon(), allocator);
-                    valueObject.AddMember("latitude", latLong.GetLatitudeInDegrees(), allocator);
-                    valueObject.AddMember("longitude", latLong.GetLongitudeInDegrees(), allocator);
-                    
-                    IMyPinBoundObject& pinBoundObject(m_myPinBoundObjectRepository.GetBoundObjectForPin(*pinModel));
-                    valueObject.AddMember("type", static_cast<int>(pinBoundObject.GetSemanticPinType()), allocator);
-                    valueObject.AddMember("metadata", pinBoundObject.GetSerialized().c_str(), allocator);
+                    rapidjson::Value pinModelJson;
+                    MyPinModelToJson(*pinModel, allocator, m_myPinBoundObjectRepository, pinModelJson);
 
-                    myPinsArray.PushBack(valueObject, allocator);
+                    myPinsArray.PushBack(pinModelJson, allocator);
                 }
 
                 rapidjson::StringBuffer strbuf;
@@ -268,6 +272,30 @@ namespace ExampleApp
                             reviewCount = entry["reviewCount"].GetInt();
                         }
                         
+                        float heightAboveTerrainMetres = 0;
+                        if(entry.HasMember("heightAboveTerrain"))
+                        {
+                            heightAboveTerrainMetres = entry["heightAboveTerrain"].GetDouble();
+                        }
+                        
+                        bool interior = false;
+                        if(entry.HasMember("interior"))
+                        {
+                            interior = entry["interior"].GetBool();
+                        }
+                        
+                        std::string buildingId("");
+                        if(entry.HasMember("building"))
+                        {
+                            buildingId = entry["building"].GetString();
+                        }
+                        
+                        int floor = 0;
+                        if(entry.HasMember("floor"))
+                        {
+                            floor = entry["floor"].GetInt();
+                        }
+                        
                         IMyPinBoundObject* pPinBoundObject(m_myPinBoundObjectFactory.CreatePinBoundObjectFromSerialized(*this,
                                                                                                                         pinId,
                                                                                                                         semanticPinType,
@@ -281,7 +309,11 @@ namespace ExampleApp
                                                                  ratingsImage,
                                                                  reviewCount,
                                                                  sdkMapPinIconIndex,
-                                                                 Eegeo::Space::LatLong::FromDegrees(latitude, longitude)));
+                                                                 Eegeo::Space::LatLong::FromDegrees(latitude, longitude),
+                                                                 heightAboveTerrainMetres,
+                                                                 interior,
+                                                                 buildingId,
+                                                                 floor));
                         
                         out_pinModelBindings.push_back(std::make_pair(pModel, pPinBoundObject));
                     }

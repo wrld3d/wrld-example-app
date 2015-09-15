@@ -39,7 +39,7 @@ namespace ExampleApp
                 valueObject.AddMember("title", searchResult.GetTitle().c_str(), allocator);
                 valueObject.AddMember("address", searchResult.GetAddress().c_str(), allocator);
                 valueObject.AddMember("interior", searchResult.IsInterior(), allocator);
-                valueObject.AddMember("building", searchResult.GetBuilding().c_str(), allocator);
+                valueObject.AddMember("building", searchResult.GetBuildingId().Value().c_str(), allocator);
                 valueObject.AddMember("floor", searchResult.GetFloor(), allocator);
                 valueObject.AddMember("phone", searchResult.GetPhone().c_str(), allocator);
                 valueObject.AddMember("web", searchResult.GetWebUrl().c_str(), allocator);

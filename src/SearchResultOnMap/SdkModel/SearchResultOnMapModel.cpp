@@ -152,7 +152,7 @@ namespace ExampleApp
                                                                          ratingsImage,
                                                                          searchResultModel.GetReviewCount());
                 
-                WorldPins::SdkModel::WorldPinInteriorData worldPinInteriorData(searchResultModel.GetBuilding(), searchResultModel.GetFloor());
+                WorldPins::SdkModel::WorldPinInteriorData worldPinInteriorData(searchResultModel.GetBuildingId(), searchResultModel.GetFloor());
                 
                 ExampleApp::WorldPins::SdkModel::WorldPinItemModel *pinItemModel = m_worldPinsService.AddPin(pSearchResultOnMapItemModel,
                                                                                                              NULL,

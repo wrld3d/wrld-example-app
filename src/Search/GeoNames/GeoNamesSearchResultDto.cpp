@@ -33,7 +33,7 @@ namespace ExampleApp
                                                                                      m_location.GetLongitudeInDegrees()),
                                                   0,
                                                   false,
-                                                  "",
+                                                  Eegeo::Resources::Interiors::InteriorId(""),
                                                   0,
                                                   "",
                                                   m_country,
