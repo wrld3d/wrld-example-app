@@ -71,6 +71,9 @@ namespace ExampleApp
                     const Eegeo::Camera::RenderCamera& renderCamera)
             {
                 const bool showingInterior = m_interiorsController.ShowingInterior();
+                
+                const bool shouldHideExteriorPin = showingInterior && !worldPinItemModel.IsInterior();
+                
                 bool shouldHideInteirorPin = worldPinItemModel.IsInterior();
                 if( showingInterior == false)
                 {
@@ -86,7 +89,7 @@ namespace ExampleApp
 
                 const float ratioX = screenLocation.GetX() / renderCamera.GetViewportWidth();
                 const float ratioY = screenLocation.GetY() / renderCamera.GetViewportHeight();
-                const bool shouldHide = (ratioX < 0.1f) || (ratioX > 0.9f) || (ratioY < 0.15f) || (ratioY > 0.9f) || shouldHideInteirorPin;
+                const bool shouldHide = (ratioX < 0.1f) || (ratioX > 0.9f) || (ratioY < 0.15f) || (ratioY > 0.9f) || shouldHideInteirorPin || shouldHideExteriorPin;
 
                 if(shouldHide)
                 {
