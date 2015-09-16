@@ -127,6 +127,8 @@ namespace ExampleApp
                                 const std::string building = "";
                                 const int floor = 0;
                                 const float heightAboveTerrainMetres = 0;
+                                
+                                std::map<std::string, std::string> metaData;
 
                                 SdkModel::SearchResultModel result(SdkModel::SearchResultModel::CurrentVersion,
                                                                    entry.uniqueId,
@@ -147,7 +149,8 @@ namespace ExampleApp
                                                                    "",
                                                                    std::vector<std::string>(),
                                                                    0,
-                                                                   Eegeo::Helpers::Time::MillisecondsSinceEpoch());
+                                                                   Eegeo::Helpers::Time::MillisecondsSinceEpoch(),
+                                                                   metaData);
 
                                 out_results.push_back(result);
                             }

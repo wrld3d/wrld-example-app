@@ -11,6 +11,7 @@
 #import "UIView+TouchExclusivity.h"
 #include "SwallowPersonSearchResultPoiView.h"
 #include "App.h"
+#include "SwallowSearchConstants.h"
 
 @interface SwallowPersonSearchResultPoiView()<UIGestureRecognizerDelegate>
 {
@@ -53,9 +54,29 @@
         self.pContentContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::WhiteTone;
         [self.pControlContainer addSubview: self.pContentContainer];
         
+        self.pContentSeparator = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        self.pContentSeparator.backgroundColor = ExampleApp::Helpers::ColorPalette::GoldTone;
+        [self.pControlContainer addSubview:self.pContentSeparator];
+        
         self.pLabelsContainer = [[[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         self.pLabelsContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::WhiteTone;
         [self.pContentContainer addSubview: self.pLabelsContainer];
+        
+        self.pJobTitleLabel = [self createLabel :ExampleApp::Helpers::ColorPalette::MainHudColor :ExampleApp::Helpers::ColorPalette::WhiteTone];
+        self.pJobTitleLabel.textColor = ExampleApp::Helpers::ColorPalette::GoldTone;
+        [self.pLabelsContainer addSubview: self.pJobTitleLabel];
+        
+        self.pWorkingGroupLabel = [self createLabel :ExampleApp::Helpers::ColorPalette::MainHudColor :ExampleApp::Helpers::ColorPalette::WhiteTone];
+        self.pWorkingGroupLabel.textColor = ExampleApp::Helpers::ColorPalette::GoldTone;
+        [self.pLabelsContainer addSubview: self.pWorkingGroupLabel];
+        
+        self.pOfficeLocationLabel = [self createLabel :ExampleApp::Helpers::ColorPalette::MainHudColor :ExampleApp::Helpers::ColorPalette::WhiteTone];
+        self.pOfficeLocationLabel.textColor = ExampleApp::Helpers::ColorPalette::GoldTone;
+        [self.pLabelsContainer addSubview: self.pOfficeLocationLabel];
+        
+        self.pDeskCodeLabel = [self createLabel :ExampleApp::Helpers::ColorPalette::MainHudColor :ExampleApp::Helpers::ColorPalette::WhiteTone];
+        self.pDeskCodeLabel.textColor = ExampleApp::Helpers::ColorPalette::GoldTone;
+        [self.pLabelsContainer addSubview: self.pDeskCodeLabel];
         
         self.pHeadlineContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         self.pHeadlineContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::MainHudColor;
@@ -64,9 +85,9 @@
         self.pCategoryIconContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         [self.pHeadlineContainer addSubview: self.pCategoryIconContainer];
         
-        self.pTitleLabel = [self createLabel :ExampleApp::Helpers::ColorPalette::MainHudColor :ExampleApp::Helpers::ColorPalette::WhiteTone];
-        self.pTitleLabel.textColor = ExampleApp::Helpers::ColorPalette::GoldTone;
-        [self.pHeadlineContainer addSubview: self.pTitleLabel];
+        self.pNameLabel = [self createLabel :ExampleApp::Helpers::ColorPalette::MainHudColor :ExampleApp::Helpers::ColorPalette::WhiteTone];
+        self.pNameLabel.textColor = ExampleApp::Helpers::ColorPalette::GoldTone;
+        [self.pHeadlineContainer addSubview: self.pNameLabel];
         
         [self setTouchExclusivity: self];
         
@@ -78,32 +99,47 @@
 
 - (void)dealloc
 {
-    [self.pCloseButton removeFromSuperview];
-    [self.pCloseButton release];
+    [self.pNameLabel removeFromSuperview];
+    [self.pNameLabel release];
+    
+    [self.pCategoryIconContainer removeFromSuperview];
+    [self.pCategoryIconContainer release];
+    
+    [self.pHeadlineContainer removeFromSuperview];
+    [self.pHeadlineContainer release];
+    
+    [self.pDeskCodeLabel removeFromSuperview];
+    [self.pDeskCodeLabel release];
+    
+    [self.pOfficeLocationLabel removeFromSuperview];
+    [self.pOfficeLocationLabel release];
+    
+    [self.pWorkingGroupLabel removeFromSuperview];
+    [self.pWorkingGroupLabel release];
+    
+    [self.pJobTitleLabel removeFromSuperview];
+    [self.pJobTitleLabel release];
+    
+    [self.pLabelsContainer removeFromSuperview];
+    [self.pLabelsContainer release];
+    
+    [self.pContentSeparator removeFromSuperview];
+    [self.pContentSeparator release];
+    
+    [self.pContentContainer removeFromSuperview];
+    [self.pContentContainer release];
     
     [self.pPinButton removeFromSuperview];
     [self.pPinButton release];
+    
+    [self.pCloseButton removeFromSuperview];
+    [self.pCloseButton release];
     
     [self.pCloseButtonContainer removeFromSuperview];
     [self.pCloseButtonContainer release];
     
     [self.pControlContainer removeFromSuperview];
     [self.pControlContainer release];
-    
-    [self.pHeadlineContainer removeFromSuperview];
-    [self.pHeadlineContainer release];
-    
-    [self.pLabelsContainer removeFromSuperview];
-    [self.pLabelsContainer release];
-    
-    [self.pContentContainer removeFromSuperview];
-    [self.pContentContainer release];
-    
-    [self.pCategoryIconContainer removeFromSuperview];
-    [self.pCategoryIconContainer release];
-    
-    [self.pTitleLabel removeFromSuperview];
-    [self.pTitleLabel release];
     
     [self->m_pRemovePinButtonBackgroundImage release];
     [self->m_pRemovePinHighlightButtonBackgroundImage release];
@@ -137,16 +173,21 @@
     const float headlineHeight = 50.f;
     const float closeButtonSectionHeight = 64.f;
     const float closeButtonSectionOffsetY = mainWindowHeight - closeButtonSectionHeight;
-    const float contentSectionHeight = mainWindowHeight - (closeButtonSectionHeight + headlineHeight);
+    const float contentSeparatorHeight = 32.0f;
+    const float contentSectionHeight = mainWindowHeight - (closeButtonSectionHeight + contentSeparatorHeight + headlineHeight);
     
     self.pHeadlineContainer.frame = CGRectMake(0.f,
                                                0.f,
                                                mainWindowWidth,
                                                headlineHeight);
     
+    self.pContentSeparator.frame = CGRectMake(0.0f,
+                                              headlineHeight,
+                                              mainWindowWidth,
+                                              contentSeparatorHeight);
     
     self.pContentContainer.frame = CGRectMake(0.f,
-                                              headlineHeight,
+                                              headlineHeight + contentSeparatorHeight,
                                               mainWindowWidth,
                                               contentSectionHeight);
     
@@ -158,6 +199,42 @@
                                              m_labelsSectionWidth,
                                              contentSectionHeight);
     
+    const float labelHeight = 18.0f;
+    const float labelXPadding = 10.0f;
+    const float labelSpacing = 6.0f;
+    const float labelWidth = mainWindowWidth - labelXPadding * 2.0f;
+    
+    float currentLabelY = 10.0f;
+    
+    self.pJobTitleLabel.frame = CGRectMake(labelXPadding,
+                                           currentLabelY,
+                                           labelWidth,
+                                           labelHeight);
+    
+    currentLabelY += labelHeight + labelSpacing;
+    
+    self.pWorkingGroupLabel.frame = CGRectMake(labelXPadding,
+                                               currentLabelY,
+                                               labelWidth,
+                                               labelHeight);
+    
+    currentLabelY += labelHeight + labelSpacing;
+    
+    self.pOfficeLocationLabel.frame = CGRectMake(labelXPadding,
+                                                 currentLabelY,
+                                                 labelWidth,
+                                                 labelHeight);
+    
+    currentLabelY += labelHeight + labelSpacing;
+    
+    self.pDeskCodeLabel.frame = CGRectMake(labelXPadding,
+                                           currentLabelY,
+                                           labelWidth,
+                                           labelHeight);
+    
+    currentLabelY += labelHeight + labelSpacing;
+    
+    [self.pLabelsContainer setContentSize:CGSizeMake(m_labelsSectionWidth, currentLabelY)];
     
     self.pCloseButtonContainer.frame = CGRectMake(0.f,
                                                   closeButtonSectionOffsetY,
@@ -176,11 +253,11 @@
     
     self.pCategoryIconContainer.frame = CGRectMake(0.f, 0.f, headlineHeight, headlineHeight);
     const float titlePadding = 10.0f;
-    self.pTitleLabel.frame = CGRectMake(headlineHeight + titlePadding,
+    self.pNameLabel.frame = CGRectMake(headlineHeight + titlePadding,
                                         0.f,
                                         mainWindowWidth - (headlineHeight + titlePadding),
                                         headlineHeight);
-    self.pTitleLabel.font = [UIFont systemFontOfSize:24.0f];
+    self.pNameLabel.font = [UIFont systemFontOfSize:24.0f];
 }
 
 - (void) setContent:(const ExampleApp::Search::SdkModel::SearchResultModel*)pModel :(bool)isPinned
@@ -189,18 +266,26 @@
     
     m_model = *pModel;
     m_isPinned = isPinned;
-    [self updatePinnedButtonState];
     
-    self.pTitleLabel.text = [NSString stringWithUTF8String:pModel->GetTitle().c_str()];
+    [self updatePinnedButtonState];
     
     [self.pCategoryIconContainer.subviews makeObjectsPerformSelector: @selector(removeFromSuperview)];
     std::string categoryIcon = ExampleApp::Helpers::IconResources::GetSmallIconForCategory(pModel->GetCategory());
     ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pCategoryIconContainer, categoryIcon, ExampleApp::Helpers::ImageHelpers::Centre);
     
-    float currentLabelY = 8.f;
+    self.pNameLabel.text = [NSString stringWithUTF8String:pModel->GetTitle().c_str()];
+    
+    const std::string jobTitlePrefix = "Job Title: ";
+    const std::string workingGroupPrefix = "Working Group: ";
+    const std::string officeLocationPrefix = "Location: ";
+    const std::string deskCodePrefix = "Desk: ";
+    
+    self.pJobTitleLabel.text = [NSString stringWithUTF8String:(jobTitlePrefix + pModel->GetMetaDataValue(ExampleApp::Search::Swallow::JOB_TITLE_FIELD_NAME)).c_str()];
+    self.pWorkingGroupLabel.text = [NSString stringWithUTF8String:(workingGroupPrefix + pModel->GetMetaDataValue(ExampleApp::Search::Swallow::WORKING_GROUP_FIELD_NAME)).c_str()];
+    self.pOfficeLocationLabel.text = [NSString stringWithUTF8String:(officeLocationPrefix + pModel->GetMetaDataValue(ExampleApp::Search::Swallow::OFFICE_LOCATION_FIELD_NAME)).c_str()];
+    self.pDeskCodeLabel.text = [NSString stringWithUTF8String:(deskCodePrefix + pModel->GetMetaDataValue(ExampleApp::Search::Swallow::DESK_CODE_FIELD_NAME)).c_str()];
     
     [self.pLabelsContainer setContentOffset:CGPointMake(0,0) animated:NO];
-    [self.pLabelsContainer setContentSize:CGSizeMake(m_labelsSectionWidth, currentLabelY)];
 }
 
 - (void) updateImage:(const std::string&)url :(bool)success bytes:(const std::vector<Byte>*)bytes;

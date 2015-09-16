@@ -58,7 +58,8 @@ namespace ExampleApp
                                                  const std::string& ratingImageUrl,
                                                  const std::vector<std::string>& reviews,
                                                  const int reviewCount,
-                                                 int64_t searchResultCreationTimeStamp)
+                                                 int64_t searchResultCreationTimeStamp,
+                                                 const std::map<std::string, std::string>& extendedMetaData)
                 : m_version(version)
                 , m_identifier(identifier)
                 , m_title(title)
@@ -79,6 +80,7 @@ namespace ExampleApp
                 , m_reviews(reviews)
                 , m_reviewCount(reviewCount)
                 , m_searchResultCreationTimeStamp(searchResultCreationTimeStamp)
+                , m_extendedMetaData(extendedMetaData)
             {
             }
 
@@ -195,6 +197,29 @@ namespace ExampleApp
             int64_t SearchResultModel::GetCreationTimestamp() const
             {
                 return m_searchResultCreationTimeStamp;
+            }
+            
+            const std::string SearchResultModel::GetMetaDataValue(const std::string& key) const
+            {
+                std::map<std::string, std::string>::const_iterator it = m_extendedMetaData.find(key);
+                
+                if(it == m_extendedMetaData.end())
+                {
+                    Eegeo_TTY("MetaData string: %s not found", key.c_str());
+                    return "";
+                }
+                
+                return m_extendedMetaData.at(key);
+            }
+            
+            const void SearchResultModel::GetExtendedMetaDataKeys(std::vector<std::string>& out_keys) const
+            {
+                out_keys.clear();
+                
+                for (std::map<std::string, std::string>::const_iterator it = m_extendedMetaData.begin(); it != m_extendedMetaData.end(); ++it)
+                {
+                    out_keys.push_back((*it).first);
+                }
             }
 
             const bool operator< (const SearchResultModel& a, const SearchResultModel& b)

@@ -165,6 +165,8 @@ namespace
         const int floor = 0;
         const float heightAboveTerrainMetres = 0;
         
+        std::map<std::string, std::string> metaData;
+        
         return ExampleApp::Search::SdkModel::SearchResultModel(ExampleApp::Search::SdkModel::SearchResultModel::CurrentVersion,
                                                                entry.uniqueId,
                                                                entry.name,
@@ -184,7 +186,8 @@ namespace
                                                                entry.ratingImageUrl,
                                                                reviews,
                                                                entry.reviewCount,
-                                                               Eegeo::Helpers::Time::MillisecondsSinceEpoch());
+                                                               Eegeo::Helpers::Time::MillisecondsSinceEpoch(),
+                                                               metaData);
     }
     
 }

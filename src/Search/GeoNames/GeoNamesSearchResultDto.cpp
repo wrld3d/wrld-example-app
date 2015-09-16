@@ -26,6 +26,8 @@ namespace ExampleApp
             
             SdkModel::SearchResultModel GeoNamesSearchResultDto::ToSearchResultModel() const
             {
+                std::map<std::string, std::string> metaData;
+                
                 SdkModel::SearchResultModel model(SdkModel::SearchResultModel::CurrentVersion,
                                                   "",
                                                   m_name,
@@ -46,7 +48,8 @@ namespace ExampleApp
                                                   "",
                                                   std::vector<std::string>(),
                                                   0,
-                                                  Eegeo::Helpers::Time::MillisecondsSinceEpoch());
+                                                  Eegeo::Helpers::Time::MillisecondsSinceEpoch(),
+                                                  metaData);
                 
                 return model;
             }

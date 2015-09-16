@@ -55,6 +55,21 @@ namespace ExampleApp
                 valueObject.AddMember("heightAboveTerrain", searchResult.GetHeightAboveTerrainMetres(), allocator);
                 valueObject.AddMember("createTimestamp", searchResult.GetCreationTimestamp(), allocator);
                 valueObject.AddMember("reviewCount", searchResult.GetReviewCount(), allocator);
+                
+                std::vector<std::string> metaDataKeys;
+                searchResult.GetExtendedMetaDataKeys(metaDataKeys);
+                
+                if(!metaDataKeys.empty())
+                {
+                    rapidjson::Value metaDataValueObject(rapidjson::kObjectType);
+                    
+                    for(std::vector<std::string>::const_iterator it = metaDataKeys.begin(); it != metaDataKeys.end(); ++it)
+                    {
+                        metaDataValueObject.AddMember((*it).c_str(), searchResult.GetMetaDataValue((*it)).c_str(), allocator);
+                    }
+                    
+                    valueObject.AddMember("metaData", metaDataValueObject, allocator);
+                }
                
                 rapidjson::StringBuffer strbuf;
                 rapidjson::Writer<rapidjson::StringBuffer> writer(strbuf);
@@ -125,6 +140,15 @@ namespace ExampleApp
                     heightAboveTerrainMetres = document["heightAboveTerrain"].GetDouble();
                 }
                 
+                std::map<std::string, std::string> metaData;
+                if(document.HasMember("metaData") && document["metaData"].IsObject())
+                {
+                    for(rapidjson::Value::ConstMemberIterator it = document["metaData"].MemberBegin(); it != document["metaData"].MemberEnd(); ++it)
+                    {
+                        metaData.insert(std::pair<std::string, std::string>(it->name.GetString(), it->value.GetString()));
+                    }
+                }
+                
                 return SearchResultModel(version,
                                          document["id"].GetString(),
                                          document["title"].GetString(),
@@ -145,7 +169,8 @@ namespace ExampleApp
                                          document["ratingImageUrl"].GetString(),
                                          reviews,
                                          reviewCount,
-                                         document["createTimestamp"].GetInt64());
+                                         document["createTimestamp"].GetInt64(),
+                                         metaData);
             }
         }
     }

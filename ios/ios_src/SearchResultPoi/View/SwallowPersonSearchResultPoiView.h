@@ -48,9 +48,14 @@
 @property (nonatomic, retain) UIButton* pPinButton;
 @property (nonatomic, retain) UIView* pControlContainer;
 @property (nonatomic, retain) UIView* pHeadlineContainer;
+@property (nonatomic, retain) UIView* pContentSeparator;
 @property (nonatomic, retain) UIView* pContentContainer;
 @property (nonatomic, retain) UIScrollView* pLabelsContainer;
+@property (nonatomic, retain) UILabel* pJobTitleLabel;
+@property (nonatomic, retain) UILabel* pWorkingGroupLabel;
+@property (nonatomic, retain) UILabel* pOfficeLocationLabel;
+@property (nonatomic, retain) UILabel* pDeskCodeLabel;
 @property (nonatomic, retain) UIView* pCategoryIconContainer;
-@property (nonatomic, retain) UILabel* pTitleLabel;
+@property (nonatomic, retain) UILabel* pNameLabel;
 
 @end

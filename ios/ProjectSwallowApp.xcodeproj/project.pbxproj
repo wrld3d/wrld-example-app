@@ -124,6 +124,8 @@
 		18A5E0391BA70EA70015684B /* SwallowSearchService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18A5E0361BA70EA70015684B /* SwallowSearchService.cpp */; };
 		18A5E03C1BA72D760015684B /* SwallowPersonSearchResultPoiView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18A5E03B1BA72D760015684B /* SwallowPersonSearchResultPoiView.mm */; };
 		18A5E03D1BA72D770015684B /* SwallowPersonSearchResultPoiView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18A5E03B1BA72D760015684B /* SwallowPersonSearchResultPoiView.mm */; };
+		18A5E0451BA98A0D0015684B /* SwallowSearchConstants.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18A5E0431BA98A0D0015684B /* SwallowSearchConstants.cpp */; };
+		18A5E0461BA98A0D0015684B /* SwallowSearchConstants.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18A5E0431BA98A0D0015684B /* SwallowSearchConstants.cpp */; };
 		18A6574E1A9F390E00238F33 /* SearchResultPinAddedEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18A6574C1A9F390E00238F33 /* SearchResultPinAddedEvent.cpp */; };
 		18A6574F1A9F390E00238F33 /* SearchResultPinAddedEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18A6574C1A9F390E00238F33 /* SearchResultPinAddedEvent.cpp */; };
 		18A657521A9F391E00238F33 /* SearchResultPinRemovedEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18A657501A9F391E00238F33 /* SearchResultPinRemovedEvent.cpp */; };
@@ -1413,6 +1415,8 @@
 		18A5E0371BA70EA70015684B /* SwallowSearchService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwallowSearchService.h; sourceTree = "<group>"; };
 		18A5E03A1BA72D760015684B /* SwallowPersonSearchResultPoiView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwallowPersonSearchResultPoiView.h; sourceTree = "<group>"; };
 		18A5E03B1BA72D760015684B /* SwallowPersonSearchResultPoiView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SwallowPersonSearchResultPoiView.mm; sourceTree = "<group>"; };
+		18A5E0431BA98A0D0015684B /* SwallowSearchConstants.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SwallowSearchConstants.cpp; sourceTree = "<group>"; };
+		18A5E0441BA98A0D0015684B /* SwallowSearchConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwallowSearchConstants.h; sourceTree = "<group>"; };
 		18A6574B1A9F385B00238F33 /* SdkDomainEventsMessageCatalog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SdkDomainEventsMessageCatalog.h; sourceTree = "<group>"; };
 		18A6574C1A9F390E00238F33 /* SearchResultPinAddedEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchResultPinAddedEvent.cpp; sourceTree = "<group>"; };
 		18A6574D1A9F390E00238F33 /* SearchResultPinAddedEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultPinAddedEvent.h; sourceTree = "<group>"; };
@@ -2847,6 +2851,8 @@
 			children = (
 				18A5E0361BA70EA70015684B /* SwallowSearchService.cpp */,
 				18A5E0371BA70EA70015684B /* SwallowSearchService.h */,
+				18A5E0431BA98A0D0015684B /* SwallowSearchConstants.cpp */,
+				18A5E0441BA98A0D0015684B /* SwallowSearchConstants.h */,
 			);
 			path = Swallow;
 			sourceTree = "<group>";
@@ -5999,6 +6005,7 @@
 				7E3B88BD1A385A290023C94E /* CompassHeadingUpdateMessage.cpp in Sources */,
 				186B474E1AB333150084E80B /* ApplicationConfigurationBuilder.cpp in Sources */,
 				7E3B89BB1A385A290023C94E /* SearchResultMenuViewModel.cpp in Sources */,
+				18A5E0461BA98A0D0015684B /* SwallowSearchConstants.cpp in Sources */,
 				7E3B89451A385A290023C94E /* MyPinDetailsViewRemovePinHandler.cpp in Sources */,
 				7E3B88EF1A385A290023C94E /* MenuController.cpp in Sources */,
 				7E5811D01B1F3248007AD67F /* InteriorsExplorerViewModule.mm in Sources */,
@@ -6366,6 +6373,7 @@
 				7E3B88BC1A385A290023C94E /* CompassHeadingUpdateMessage.cpp in Sources */,
 				186B474D1AB333150084E80B /* ApplicationConfigurationBuilder.cpp in Sources */,
 				7E3B89BA1A385A290023C94E /* SearchResultMenuViewModel.cpp in Sources */,
+				18A5E0451BA98A0D0015684B /* SwallowSearchConstants.cpp in Sources */,
 				7E3B89441A385A290023C94E /* MyPinDetailsViewRemovePinHandler.cpp in Sources */,
 				7E3B88EE1A385A290023C94E /* MenuController.cpp in Sources */,
 				7E5811CF1B1F3248007AD67F /* InteriorsExplorerViewModule.mm in Sources */,

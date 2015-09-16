@@ -4,6 +4,7 @@
 
 #include <string>
 #include <vector>
+#include <map>
 #include "InteriorId.h"
 #include "LatLongAltitude.h"
 #include "Types.h"
@@ -36,6 +37,7 @@ namespace ExampleApp
                 std::vector<std::string> m_reviews;
                 int m_reviewCount;
                 int64_t m_searchResultCreationTimeStamp;
+                std::map<std::string, std::string> m_extendedMetaData;
                 
             public:
                 static const int CurrentVersion;
@@ -59,7 +61,8 @@ namespace ExampleApp
                                   const std::string& ratingImageUrl,
                                   const std::vector<std::string>& reviews,
                                   int reviewCount,
-                                  int64_t searchResultCreationTimeStamp);
+                                  int64_t searchResultCreationTimeStamp,
+                                  const std::map<std::string, std::string>& extendedMetaData);
                 
                 SearchResultModel();
 
@@ -108,6 +111,10 @@ namespace ExampleApp
                 const int GetReviewCount() const;
                 
                 int64_t GetCreationTimestamp() const;
+                
+                const std::string GetMetaDataValue(const std::string& key) const;
+                
+                const void GetExtendedMetaDataKeys(std::vector<std::string>& out_keys) const;
             };
 
             const bool operator< (const SearchResultModel& a, const SearchResultModel& b);
