@@ -17,8 +17,9 @@ namespace ExampleApp
         namespace SdkModel
         {
             WorldPinsScaleController::WorldPinsScaleController(IWorldPinsRepository& worldPinsRepository,
-                    IWorldPinsService& worldPinsService,
-                    ExampleAppMessaging::TMessageBus& messageBus)
+                                                               IWorldPinsService& worldPinsService,
+                                                               ExampleAppMessaging::TMessageBus& messageBus,
+                                                               Eegeo::Resources::Interiors::InteriorsController& interiorsController)
                 : m_worldPinsRepository(worldPinsRepository)
                 , m_worldPinsService(worldPinsService)
                 , m_messageBus(messageBus)
@@ -27,6 +28,7 @@ namespace ExampleApp
                 , m_visibilityScale(0.f)
                 , m_targetVisibilityScale(1.f)
                 , m_visibilityAnimationDuration(0.2f)
+                , m_interiorsController(interiorsController)
             {
                 m_messageBus.SubscribeNative(m_visibilityMessageHandlerBinding);
             }
@@ -68,12 +70,26 @@ namespace ExampleApp
                     float deltaSeconds,
                     const Eegeo::Camera::RenderCamera& renderCamera)
             {
+                const bool showingInterior = m_interiorsController.ShowingInterior();
+                
+                const bool shouldHideExteriorPin = showingInterior && !worldPinItemModel.IsInterior();
+                
+                bool shouldHideInteirorPin = worldPinItemModel.IsInterior();
+                if( showingInterior == false)
+                {
+                    shouldHideInteirorPin = shouldHideInteirorPin && !worldPinItemModel.GetInteriorData().showInExterior;
+                }
+                else
+                {
+                    shouldHideInteirorPin = shouldHideInteirorPin && (worldPinItemModel.GetInteriorData().floor != m_interiorsController.GetCurrentFloorIndex());
+                }
+                
                 Eegeo::v2 screenLocation;
                 GetScreenLocation(worldPinItemModel, screenLocation, renderCamera);
 
                 const float ratioX = screenLocation.GetX() / renderCamera.GetViewportWidth();
                 const float ratioY = screenLocation.GetY() / renderCamera.GetViewportHeight();
-                const bool shouldHide = (ratioX < 0.1f) || (ratioX > 0.9f) || (ratioY < 0.15f) || (ratioY > 0.9f);
+                const bool shouldHide = (ratioX < 0.1f) || (ratioX > 0.9f) || (ratioY < 0.15f) || (ratioY > 0.9f) || shouldHideInteirorPin || shouldHideExteriorPin;
 
                 if(shouldHide)
                 {

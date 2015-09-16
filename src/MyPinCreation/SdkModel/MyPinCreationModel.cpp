@@ -19,6 +19,11 @@ namespace ExampleApp
                 , m_position(Eegeo::dv3::Zero())
                 , m_myPinsService(myPinsService)
                 , m_needsTerrainHeightUpdate(false)
+                , m_terrainHeight(0)
+                , m_heightAboveTerrainMetres(0)
+                , m_interior(false)
+                , m_buildingId("")
+                , m_floor(0)
             {
 
             }
@@ -55,8 +60,31 @@ namespace ExampleApp
 
             void MyPinCreationModel::SetTerrainHeight(float height)
             {
-                m_position = m_position.Norm() * (Eegeo::Space::EarthConstants::Radius + height);
+                
+                m_terrainHeight = height;
+                UpdatePosition();
                 m_needsTerrainHeightUpdate = false;
+            }
+            
+            void MyPinCreationModel::SetHeightAboveTerrain(float heightAboveTerrain)
+            {
+                m_heightAboveTerrainMetres = heightAboveTerrain;
+                UpdatePosition();
+            }
+            
+            void MyPinCreationModel::SetInterior(bool interior)
+            {
+                m_interior = interior;
+            }
+            
+            void MyPinCreationModel::SetBuildingId(const Eegeo::Resources::Interiors::InteriorId& buildingId)
+            {
+                m_buildingId = buildingId;
+            }
+            
+            void MyPinCreationModel::SetFloor(int floor)
+            {
+                m_floor = floor;
             }
 
             bool MyPinCreationModel::NeedsTerrainHeight() const
@@ -77,6 +105,10 @@ namespace ExampleApp
                                                       ratingsImage,
                                                       reviewCount,
                                                       Eegeo::Space::LatLong::FromECEF(m_position),
+                                                      m_heightAboveTerrainMetres,
+                                                      m_interior,
+                                                      m_buildingId,
+                                                      m_floor,
                                                       imageData,
                                                       imageSize,
                                                       shouldShare);
@@ -92,6 +124,11 @@ namespace ExampleApp
             void MyPinCreationModel::RemoveStateChangedCallback(Eegeo::Helpers::ICallback1<MyPinCreationStage>& stateChangedCallback)
             {
                 m_stateChangedCallbacks.RemoveCallback(stateChangedCallback);
+            }
+            
+            void MyPinCreationModel::UpdatePosition()
+            {
+                 m_position = m_position.Norm() * (Eegeo::Space::EarthConstants::Radius + m_terrainHeight + m_heightAboveTerrainMetres);
             }
         }
     }

@@ -35,8 +35,11 @@ namespace ExampleApp
                 TPin* pPin = m_worldPinsService.AddPin(m_tourWorldPinSelectionHandlerFactory.CreateSelectionHandler(tourModel),
                                                        NULL,
                                                        WorldPins::SdkModel::WorldPinFocusData(tourModel.Name(), tourModel.IntroText()),
+                                                       tourModel.IsInterior(),
+                                                       ExampleApp::WorldPins::SdkModel::WorldPinInteriorData(),
                                                        tourModel.Location(),
-                                                       IconIndex);
+                                                       IconIndex,
+                                                       0.0f);
                 
                 // map pPin to tourModel somehow, possibly in TourService or another repo.
             }

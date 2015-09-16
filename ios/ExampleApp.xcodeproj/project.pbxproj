@@ -1858,6 +1858,7 @@
 		225FFA121A39EE8600C2282A /* SearchResultModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultModel.h; sourceTree = "<group>"; };
 		225FFA131A39EE8600C2282A /* SearchResultRepository.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchResultRepository.cpp; sourceTree = "<group>"; };
 		225FFA141A39EE8600C2282A /* SearchResultRepository.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultRepository.h; sourceTree = "<group>"; };
+		278A8F651BA6DB00000BBA67 /* WorldPinInteriorData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorldPinInteriorData.h; sourceTree = "<group>"; };
 		560741121B8CC624002B0F49 /* MenuDragStateChangedMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MenuDragStateChangedMessage.cpp; sourceTree = "<group>"; };
 		560741131B8CC624002B0F49 /* MenuDragStateChangedMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuDragStateChangedMessage.h; sourceTree = "<group>"; };
 		561ECF201B467FD3007BD4F9 /* InteriorsEntitiesPinsModule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InteriorsEntitiesPinsModule.cpp; sourceTree = "<group>"; };
@@ -4492,6 +4493,7 @@
 		7E3B88771A385A290023C94E /* SdkModel */ = {
 			isa = PBXGroup;
 			children = (
+				278A8F651BA6DB00000BBA67 /* WorldPinInteriorData.h */,
 				7E3B88781A385A290023C94E /* IWorldPinSelectionHandler.h */,
 				18A6575A1A9F686400238F33 /* IWorldPinVisibilityStateChangedHandler.h */,
 				7E3B88791A385A290023C94E /* IWorldPinsFactory.h */,

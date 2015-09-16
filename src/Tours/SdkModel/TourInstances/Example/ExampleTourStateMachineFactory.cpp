@@ -7,6 +7,7 @@
 #include "ITourRepository.h"
 #include "TourModel.h"
 #include "LatLongAltitude.h"
+#include "WorldPinInteriorData.h"
 #include <vector>
 
 namespace ExampleApp
@@ -43,21 +44,29 @@ namespace ExampleApp
                         
                         int tourIndex = 0;
                         
+                        ExampleApp::WorldPins::SdkModel::WorldPinInteriorData blankWorldPinInteriorData;
+                        
                         stateMachineStates.push_back(Eegeo_NEW(ExampleTourState(tourModel.States()[tourIndex++],
                                                                                 Eegeo::Space::LatLong::FromDegrees(37.784783, -122.402659),
+                                                                                false,
                                                                                 m_toursCameraTransitionController,
-                                                                                m_worldPinsService)));
+                                                                                m_worldPinsService,
+                                                                                blankWorldPinInteriorData)));
 
                         
                         stateMachineStates.push_back(Eegeo_NEW(ExampleTourState(tourModel.States()[tourIndex++],
                                                                                 Eegeo::Space::LatLong::FromDegrees(37.783487, -122.406571),
+                                                                                false,
                                                                                 m_toursCameraTransitionController,
-                                                                                m_worldPinsService)));
+                                                                                m_worldPinsService,
+                                                                                blankWorldPinInteriorData)));
                         
                         stateMachineStates.push_back(Eegeo_NEW(ExampleTourState(tourModel.States()[tourIndex++],
                                                                                 Eegeo::Space::LatLong::FromDegrees(37.787939, -122.407558),
+                                                                                false,
                                                                                 m_toursCameraTransitionController,
-                                                                                m_worldPinsService)));
+                                                                                m_worldPinsService,
+                                                                                blankWorldPinInteriorData)));
                         
                         
                         return Eegeo_NEW(States::TourStateMachine)(stateMachineStates,

@@ -16,7 +16,6 @@
     ExampleApp::Tours::SdkModel::TourModel m_nextTour;
     bool m_isInterruptingTour;
     bool m_hasActiveTour;
-    UIPanGestureRecognizer* m_pPanGesture;
     bool m_dragging;
     
     CGPoint m_dragStartPos;
@@ -166,11 +165,6 @@
         
         
         [self addSubview:self.pDetailsPanel];
-        m_pPanGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(dragTabGesture:)];
-        [m_pPanGesture setDelegate:self];
-        m_pPanGesture.cancelsTouchesInView = FALSE;
-        [self addGestureRecognizer: m_pPanGesture];
-        [m_pPanGesture release];
     }
     
     return self;
@@ -431,54 +425,9 @@
     self.frame = f;
 }
 
-- (void) completeDrag:(CGPoint)absolutePosition velocity:(CGPoint)absoluteVelocity
-{
-    const float yRatioForStateChange = 0.6f;
-    const float stayOpenThreshold = (m_screenHeight - ([self controlHeight] * yRatioForStateChange));
-    const bool quitting = static_cast<float>(self.frame.origin.y) >= stayOpenThreshold;
-    
-    [self animateToY:(quitting ? m_yPosInactive : m_yPosActive)];
-}
-
-- (void)dragTabGesture:(UIPanGestureRecognizer *)recognizer
-{
-    CGPoint positionAbs = [recognizer locationInView:[self superview]];
-    CGPoint velocity = [recognizer velocityInView:[self superview]];
-    
-    switch(recognizer.state)
-    {
-        case UIGestureRecognizerStateBegan:
-            m_dragging = true;
-            [self beginDrag:positionAbs velocity:velocity];
-            break;
-            
-        case UIGestureRecognizerStateChanged:
-            [self updateDrag:positionAbs velocity:velocity];
-            break;
-            
-        case UIGestureRecognizerStateEnded:
-            m_dragging = false;
-            [self completeDrag:positionAbs velocity:velocity];
-            break;
-            
-        case UIGestureRecognizerStateCancelled:
-            m_dragging = false;
-            [self completeDrag:positionAbs velocity:velocity];
-            break;
-            
-        default:
-            break;
-    }
-}
-
 - (void)handleExitButtonTap
 {
     [self animateToY:m_yPosInactive];
-}
-
-- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
-{
-    return true;
 }
 
 -(float) controlHeight

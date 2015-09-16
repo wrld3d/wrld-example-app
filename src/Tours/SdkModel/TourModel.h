@@ -19,6 +19,7 @@ namespace ExampleApp
                 std::string m_name;
                 std::string m_introText;
                 Eegeo::Space::LatLong m_location;
+                bool m_isInterior;
                 bool m_showGradientBase;
                 Helpers::ColorHelpers::Color m_baseColor;
                 Helpers::ColorHelpers::Color m_textColor;
@@ -35,6 +36,7 @@ namespace ExampleApp
                 TourModel(const std::string& name,
                           const std::string& introText,
                           const Eegeo::Space::LatLong& location,
+                          bool isInterior,
                           bool showGradientBase,
                           Helpers::ColorHelpers::Color baseColor,
                           Helpers::ColorHelpers::Color textColor,
@@ -47,6 +49,8 @@ namespace ExampleApp
                 const std::string& IntroText() const;
                 
                 const Eegeo::Space::LatLong& Location() const;
+                
+                bool IsInterior() const;
                 
                 bool ShowGradientBase() const;
                 

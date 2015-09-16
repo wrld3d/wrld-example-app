@@ -19,14 +19,18 @@ namespace ExampleApp
                 {
                     ExampleTourState::ExampleTourState(const TourStateModel& stateModel,
                                                        Eegeo::Space::LatLong position,
+                                                       bool isInterior,
                                                        Camera::IToursCameraTransitionController& toursCameraTransitionController,
-                                                       WorldPins::SdkModel::IWorldPinsService& worldPinsService)
+                                                       WorldPins::SdkModel::IWorldPinsService& worldPinsService,
+                                                       WorldPins::SdkModel::WorldPinInteriorData& worldPinInteriorData)
                     : m_stateModel(stateModel)
                     , m_toursCameraTransitionController(toursCameraTransitionController)
                     , m_position(position)
                     , m_cameraMode(position.ToECEF(), 300, 300)
                     , m_worldPinsService(worldPinsService)
                     , m_pPinItemModel(NULL)
+                    , m_interior(isInterior)
+                    , m_worldPinInteriorData(worldPinInteriorData)
                     {
                         
                     }
@@ -57,8 +61,11 @@ namespace ExampleApp
                             m_pPinItemModel = m_worldPinsService.AddPin(Eegeo_NEW(ExampleTourPinSelectionHandler),
                                                                         NULL,
                                                                         worldPinFocusData,
+                                                                        m_interior,
+                                                                        m_worldPinInteriorData,
                                                                         m_position,
-                                                                        iconIndex);
+                                                                        iconIndex,
+                                                                        0.0f);
                         }
                     }
                     

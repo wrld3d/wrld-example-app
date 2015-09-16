@@ -18,6 +18,7 @@ namespace ExampleApp
             , m_hoverCardBaseColor(Helpers::ColorHelpers::Color::FromRGB(0, 0, 0))
             , m_hoverCardTextColor(Helpers::ColorHelpers::Color::FromRGB(0, 0, 0))
             , m_states()
+            , m_isInterior(false)
             {
                 
             }
@@ -25,6 +26,7 @@ namespace ExampleApp
             TourModel::TourModel(const std::string& name,
                                  const std::string& introText,
                                  const Eegeo::Space::LatLong& location,
+                                 bool isInterior,
                                  bool showGradientBase,
                                  Helpers::ColorHelpers::Color baseColor,
                                  Helpers::ColorHelpers::Color textColor,
@@ -40,6 +42,7 @@ namespace ExampleApp
             , m_hoverCardBaseColor(hoverCardBaseColor)
             , m_hoverCardTextColor(hoverCardTextColor)
             , m_states(states)
+            , m_isInterior(isInterior)
             {
                 
             }
@@ -62,6 +65,11 @@ namespace ExampleApp
             const Eegeo::Space::LatLong& TourModel::Location() const
             {
                 return m_location;
+            }
+            
+            bool TourModel::IsInterior() const
+            {
+                return m_isInterior;
             }
             
             bool TourModel::ShowGradientBase() const

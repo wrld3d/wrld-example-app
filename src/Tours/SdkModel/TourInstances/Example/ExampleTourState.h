@@ -9,6 +9,7 @@
 #include "OrbitCameraMode.h"
 #include "LatLongAltitude.h"
 #include "WorldPins.h"
+#include "WorldPinInteriorData.h"
 #include <string>
 
 namespace ExampleApp
@@ -27,8 +28,10 @@ namespace ExampleApp
                         
                         ExampleTourState(const TourStateModel& stateModel,
                                          Eegeo::Space::LatLong position,
+                                         bool isInterior,
                                          Camera::IToursCameraTransitionController& toursCameraTransitionController,
-                                         WorldPins::SdkModel::IWorldPinsService& worldPinsService);
+                                         WorldPins::SdkModel::IWorldPinsService& worldPinsService,
+                                         WorldPins::SdkModel::WorldPinInteriorData& worldPinInteriorData);
                         ~ExampleTourState();
                         
                         void Enter();
@@ -46,6 +49,9 @@ namespace ExampleApp
                         WorldPins::SdkModel::WorldPinItemModel* m_pPinItemModel;
                         Eegeo::Space::LatLong m_position;
                         bool m_cameraTransitionComplete;
+                        
+                        bool m_interior;
+                        WorldPins::SdkModel::WorldPinInteriorData m_worldPinInteriorData;
                     };
                 }
             }

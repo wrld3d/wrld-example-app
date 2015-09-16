@@ -589,22 +589,28 @@ namespace ExampleApp
         
         m_pPinsModule = CreatePlatformPinsModuleInstance(mapModule, world, "SearchResultOnMap/PinIconTexturePage", m_pinDiameter, 4);
 
+        Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsPresentationModule = mapModule.GetInteriorsPresentationModule();
+        
         m_pWorldPinsModule = Eegeo_NEW(ExampleApp::WorldPins::SdkModel::WorldPinsModule)(
                                  m_pPinsModule->GetRepository(),
                                  m_pPinsModule->GetController(),
                                  mapModule.GetEnvironmentFlatteningService(),
                                  m_identityProvider,
-                                 m_messageBus);
+                                 m_messageBus,
+                                 interiorsPresentationModule.GetInteriorsController());
     }
     void MobileExampleApp::InitialiseToursModules(Eegeo::Modules::Map::MapModule& mapModule, Eegeo::EegeoWorld& world)
     {
         m_pToursPinsModule = CreatePlatformPinsModuleInstance(mapModule, world, "Tours/tour_markers", m_toursPinDiameter, 4);
         
+        Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsPresentationModule = mapModule.GetInteriorsPresentationModule();
+        
         m_pToursWorldPinsModule = Eegeo_NEW(ExampleApp::WorldPins::SdkModel::WorldPinsModule)(m_pToursPinsModule->GetRepository(),
                                                                                               m_pToursPinsModule->GetController(),
                                                                                               mapModule.GetEnvironmentFlatteningService(),
                                                                                               m_identityProvider,
-                                                                                              m_toursMessageBus);
+                                                                                              m_toursMessageBus,
+                                                                                              interiorsPresentationModule.GetInteriorsController());
         
         m_pToursModule = Eegeo_NEW(ExampleApp::Tours::ToursModule)(m_identityProvider,
                                                        m_messageBus,
@@ -644,6 +650,7 @@ namespace ExampleApp
                                                          "Take the tour",
                                                          Eegeo::Space::LatLong::FromDegrees(37.784783, -122.402659),
                                                          false,
+                                                         false,
                                                          Helpers::ColorHelpers::Color::FromRGB(30, 123, 195),
                                                          Helpers::ColorHelpers::Color::FromRGB(255, 255, 255),
                                                          Helpers::ColorHelpers::Color::FromRGB(30, 123, 195),
@@ -651,14 +658,15 @@ namespace ExampleApp
                                                          tourStates);
         
         ExampleApp::Tours::SdkModel::TourModel tourModel2("Example2",
-                                                         "Take the tour",
-                                                         Eegeo::Space::LatLong::FromDegrees(37.785884, -122.403208),
-                                                         false,
-                                                         Helpers::ColorHelpers::Color::FromRGB(30, 123, 195),
-                                                         Helpers::ColorHelpers::Color::FromRGB(255, 255, 255),
-                                                         Helpers::ColorHelpers::Color::FromRGB(30, 123, 195),
-                                                         Helpers::ColorHelpers::Color::FromRGB(30, 123, 195),
-                                                         tourStates);
+                                                          "Take the tour",
+                                                          Eegeo::Space::LatLong::FromDegrees(37.785884, -122.403208),
+                                                          false,
+                                                          false,
+                                                          Helpers::ColorHelpers::Color::FromRGB(30, 123, 195),
+                                                          Helpers::ColorHelpers::Color::FromRGB(255, 255, 255),
+                                                          Helpers::ColorHelpers::Color::FromRGB(30, 123, 195),
+                                                          Helpers::ColorHelpers::Color::FromRGB(30, 123, 195),
+                                                          tourStates);
         
         Tours::SdkModel::TourInstances::Example::ExampleTourStateMachineFactory factory(ToursModule().GetCameraTransitionController(),
                                                                                         ToursModule().GetCameraController(),
