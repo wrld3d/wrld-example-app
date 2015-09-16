@@ -10,6 +10,7 @@
 #include "TourModel.h"
 #include "BidirectionalBus.h"
 #include <stack>
+#include "SdkModelDomainEventBus.h"
 
 namespace ExampleApp
 {
@@ -43,6 +44,7 @@ namespace ExampleApp
                 Camera::IToursCameraTransitionController& m_cameraTransitionController;
                 std::map<std::string, States::ITourStateMachine*> m_pTourToStateMachineMapping;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
+                ExampleAppMessaging::TSdkModelDomainEventBus& m_sdkDomainEventBus;
                 
                 TourModel m_activeTourModel;
                 TourModel m_nextTourModel;
@@ -56,7 +58,8 @@ namespace ExampleApp
             public:
                 TourService(ITourRepository& repository,
                             Camera::IToursCameraTransitionController& cameraTransitionController,
-                            ExampleAppMessaging::TMessageBus& messageBus);
+                            ExampleAppMessaging::TMessageBus& messageBus,
+                            ExampleAppMessaging::TSdkModelDomainEventBus& sdkDomainEventBus);
                 
                 ~TourService();
                 

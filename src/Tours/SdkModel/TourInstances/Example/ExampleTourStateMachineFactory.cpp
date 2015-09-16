@@ -9,6 +9,8 @@
 #include "LatLongAltitude.h"
 #include "WorldPinInteriorData.h"
 #include <vector>
+#include "InteriorId.h"
+#include "IToursCameraController.h"
 
 namespace ExampleApp
 {
@@ -22,11 +24,13 @@ namespace ExampleApp
                 {
                     ExampleTourStateMachineFactory::ExampleTourStateMachineFactory(Camera::IToursCameraTransitionController& toursCameraTransitionController,
                                                                                    Camera::IToursCameraController& toursCameraController,
-                                                                                   WorldPins::SdkModel::IWorldPinsService& worldPinsService
+                                                                                   WorldPins::SdkModel::IWorldPinsService& worldPinsService,
+                                                                                   Eegeo::Resources::Interiors::InteriorsController& interiorController
                                                                              )
                     : m_toursCameraController(toursCameraController)
                     , m_toursCameraTransitionController(toursCameraTransitionController)
                     , m_worldPinsService(worldPinsService)
+                    , m_interiorController(interiorController)
                     {
                         
                     }
@@ -46,27 +50,36 @@ namespace ExampleApp
                         
                         ExampleApp::WorldPins::SdkModel::WorldPinInteriorData blankWorldPinInteriorData;
                         
+                        Eegeo::Resources::Interiors::InteriorId hotelId("intercontinental_hotel_8628");
+                        ExampleApp::WorldPins::SdkModel::WorldPinInteriorData hotelPinInteriorData(hotelId, 3, true);
+                        
                         stateMachineStates.push_back(Eegeo_NEW(ExampleTourState(tourModel.States()[tourIndex++],
                                                                                 Eegeo::Space::LatLong::FromDegrees(37.784783, -122.402659),
                                                                                 false,
                                                                                 m_toursCameraTransitionController,
                                                                                 m_worldPinsService,
-                                                                                blankWorldPinInteriorData)));
+                                                                                blankWorldPinInteriorData,
+                                                                                m_interiorController,
+                                                                                m_toursCameraController.GetRenderCamera())));
 
                         
                         stateMachineStates.push_back(Eegeo_NEW(ExampleTourState(tourModel.States()[tourIndex++],
-                                                                                Eegeo::Space::LatLong::FromDegrees(37.783487, -122.406571),
-                                                                                false,
+                                                                                Eegeo::Space::LatLong::FromDegrees(37.781908, -122.404784),
+                                                                                true,
                                                                                 m_toursCameraTransitionController,
                                                                                 m_worldPinsService,
-                                                                                blankWorldPinInteriorData)));
+                                                                                hotelPinInteriorData,
+                                                                                m_interiorController,
+                                                                                m_toursCameraController.GetRenderCamera())));
                         
                         stateMachineStates.push_back(Eegeo_NEW(ExampleTourState(tourModel.States()[tourIndex++],
                                                                                 Eegeo::Space::LatLong::FromDegrees(37.787939, -122.407558),
                                                                                 false,
                                                                                 m_toursCameraTransitionController,
                                                                                 m_worldPinsService,
-                                                                                blankWorldPinInteriorData)));
+                                                                                blankWorldPinInteriorData,
+                                                                                m_interiorController,
+                                                                                m_toursCameraController.GetRenderCamera())));
                         
                         
                         return Eegeo_NEW(States::TourStateMachine)(stateMachineStates,

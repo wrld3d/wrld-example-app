@@ -10,6 +10,7 @@
 #include "TerrainHeightProvider.h"
 #include "EarthConstants.h"
 #include "IntersectionTests.h"
+#include "InteriorsController.h"
 
 namespace ExampleApp
 {
@@ -21,14 +22,15 @@ namespace ExampleApp
             {
                 ToursCameraTransitionController::ToursCameraTransitionController(IToursCameraController& toursCameraController,
                                                                                  Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& gpsGlobeCameraController,
-                                                                                 Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider)
+                                                                                 Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider,
+                                                                                 Eegeo::Resources::Interiors::InteriorsController& interiorsController)
                 : m_toursCameraController(toursCameraController)
                 , m_pToursTransitionMode(NULL)
                 , m_pToursCurrentMode(NULL)
                 , m_pToursNextMode(NULL)
                 , m_gpsGlobeCameraController(gpsGlobeCameraController)
                 , m_terrainHeightProvider(terrainHeightProvider)
-
+                , m_interiorsController(interiorsController)
                 {
                     
                 }
@@ -74,7 +76,7 @@ namespace ExampleApp
                     
                     // HACK - Need to ensure both modes have a valid state (by updating). Should ensure they're initialised as such.
                     m_pToursNextMode->UpdateCamera(0.0f, m_toursCameraController.GetTouchController(), 0.0f);
-                    
+                                        
                     if(IsTransitioning()) // interrupting an in-flight transition
                     {
                         ToursCameraState currentTransitionCameraState(m_pToursTransitionMode->GetCurrentState());

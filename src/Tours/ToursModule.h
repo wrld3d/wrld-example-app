@@ -27,6 +27,8 @@
 #include "TourFullScreenImageCeremonyBeganObserver.h"
 #include "TourFullScreenImageCeremonyEndedObserver.h"
 #include "Menu.h"
+#include "Interiors.h"
+#include "SdkModelDomainEventBus.h"
 
 namespace ExampleApp
 {
@@ -66,7 +68,9 @@ namespace ExampleApp
                         Eegeo::Streaming::ResourceCeilingProvider& resourceCeilingProvider,
                         const Eegeo::Rendering::ScreenProperties& screenProperties,
                         Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& gpsGlobeCameraController,
-                        Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider);
+                        Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider,
+                        Eegeo::Resources::Interiors::InteriorsController& interiorsController,
+                        ExampleAppMessaging::TSdkModelDomainEventBus& sdkDomainEventBus);
             
             ~ToursModule();
             

@@ -6,6 +6,7 @@
 #include "Tours.h"
 #include "WorldPins.h"
 #include <string>
+#include "Interiors.h"
 
 namespace ExampleApp
 {
@@ -23,7 +24,8 @@ namespace ExampleApp
                         
                         ExampleTourStateMachineFactory(Camera::IToursCameraTransitionController& toursCameraTransitionController,
                                                        Camera::IToursCameraController& toursCameraController,
-                                                       WorldPins::SdkModel::IWorldPinsService& worldPinsService
+                                                       WorldPins::SdkModel::IWorldPinsService& worldPinsService,
+                                                       Eegeo::Resources::Interiors::InteriorsController& interiorController
                                                     );
                         ~ExampleTourStateMachineFactory();
                         
@@ -34,6 +36,8 @@ namespace ExampleApp
                         Camera::IToursCameraTransitionController& m_toursCameraTransitionController;
                         Camera::IToursCameraController& m_toursCameraController;
                         WorldPins::SdkModel::IWorldPinsService& m_worldPinsService;
+                        
+                        Eegeo::Resources::Interiors::InteriorsController& m_interiorController;
                     };
                 }
             }

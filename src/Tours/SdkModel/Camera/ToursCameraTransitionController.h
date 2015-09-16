@@ -8,6 +8,7 @@
 #include "IToursCameraTransitionController.h"
 #include "GlobeCamera.h"
 #include "Terrain.h"
+#include "Interiors.h"
 
 namespace ExampleApp
 {
@@ -23,7 +24,8 @@ namespace ExampleApp
                     
                     ToursCameraTransitionController(IToursCameraController& toursCameraController,
                                                     Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& gpsGlobeCameraController,
-                                                    Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider);
+                                                    Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider,
+                                                    Eegeo::Resources::Interiors::InteriorsController& interiorsController);
                     
                     ~ToursCameraTransitionController();
                     
@@ -62,6 +64,8 @@ namespace ExampleApp
                     
                     Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& m_gpsGlobeCameraController;
                     Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& m_terrainHeightProvider;
+                    
+                    Eegeo::Resources::Interiors::InteriorsController& m_interiorsController;
                 };
             }
         }

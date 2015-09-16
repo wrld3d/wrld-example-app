@@ -6,6 +6,7 @@
 #include "IWorldPinsService.h"
 #include "WorldPinFocusData.h"
 #include "ExampleTourPinSelectionHandler.h"
+#include "InteriorsController.h"
 
 namespace ExampleApp
 {
@@ -22,7 +23,9 @@ namespace ExampleApp
                                                        bool isInterior,
                                                        Camera::IToursCameraTransitionController& toursCameraTransitionController,
                                                        WorldPins::SdkModel::IWorldPinsService& worldPinsService,
-                                                       WorldPins::SdkModel::WorldPinInteriorData& worldPinInteriorData)
+                                                       WorldPins::SdkModel::WorldPinInteriorData& worldPinInteriorData,
+                                                       Eegeo::Resources::Interiors::InteriorsController& interiorsController,
+                                                       const Eegeo::Camera::RenderCamera& tourRenderCamera)
                     : m_stateModel(stateModel)
                     , m_toursCameraTransitionController(toursCameraTransitionController)
                     , m_position(position)
@@ -31,6 +34,8 @@ namespace ExampleApp
                     , m_pPinItemModel(NULL)
                     , m_interior(isInterior)
                     , m_worldPinInteriorData(worldPinInteriorData)
+                    , m_interiorsController(interiorsController)
+                    , m_tourRenderCamera(tourRenderCamera)
                     {
                         
                     }
@@ -44,7 +49,20 @@ namespace ExampleApp
                     {
                         m_cameraTransitionComplete = false;
                         m_cameraMode.Reset();
+                        
                         m_toursCameraTransitionController.TransitionTo(m_cameraMode);
+                        
+                        if(m_interior)
+                        {
+                            const Eegeo::Resources::Interiors::Camera::InteriorsCameraState& initialInteriorsCameraState = Eegeo::Resources::Interiors::Camera::InteriorsCameraState::MakeFromRenderCamera(m_tourRenderCamera);
+                            
+                            m_interiorsController.TryEnterInterior(m_worldPinInteriorData.building,
+                                                                   initialInteriorsCameraState);
+                        }
+                        else if (m_interiorsController.ShowingInterior())
+                        {
+                            m_interiorsController.ExitInterior();
+                        }
                     }
                     
                     void ExampleTourState::Update(float dt)

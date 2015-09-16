@@ -15,6 +15,7 @@
 #include "NativeUIFactories.h"
 #include "Streaming.h"
 #include "AppModes.h"
+#include "SdkModelDomainEventBus.h"
 
 namespace ExampleApp
 {
@@ -37,7 +38,8 @@ namespace ExampleApp
                                         MapMode::SdkModel::IMapModeModel& mapModeModel,
                                         AppModes::SdkModel::IAppModeModel& appModeModel,
                                         ExampleAppMessaging::TMessageBus& messageBus,
-                                        ExampleApp::Metrics::IMetricsService& metricsService);
+                                        ExampleApp::Metrics::IMetricsService& metricsService,
+                                        ExampleAppMessaging::TSdkModelDomainEventBus& sdkDomainEventBus);
 
                 ~InteriorsExplorerModule();
                 

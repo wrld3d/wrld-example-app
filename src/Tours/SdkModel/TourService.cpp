@@ -6,6 +6,7 @@
 #include "ITourStateMachine.h"
 #include "IToursCameraTransitionController.h"
 #include "TourOnMapSelectedMessage.h"
+#include "TourStateChangedMessage.h"
 
 namespace ExampleApp
 {
@@ -15,7 +16,8 @@ namespace ExampleApp
         {
             TourService::TourService(ITourRepository& repository,
                                      Camera::IToursCameraTransitionController& cameraTransitionController,
-                                     ExampleAppMessaging::TMessageBus& messageBus)
+                                     ExampleAppMessaging::TMessageBus& messageBus,
+                                     ExampleAppMessaging::TSdkModelDomainEventBus& sdkDomainEventBus)
             : m_repository(repository)
             , m_cameraTransitionController(cameraTransitionController)
             , m_messageBus(messageBus)
@@ -25,6 +27,7 @@ namespace ExampleApp
             , m_pActiveTourStateMachine(NULL)
             , m_nextTourModel(TourModel::Empty())
             , m_suspendCurrentTour(false)
+            , m_sdkDomainEventBus(sdkDomainEventBus)
             {
                 
             }
@@ -76,6 +79,7 @@ namespace ExampleApp
                 m_activeTourState = atCard;
                 
                 m_messageBus.Publish(TourOnMapSelectedMessage(m_activeTourModel, atCard));
+                m_sdkDomainEventBus.Publish(TourStateChangedMessage(true));
             }
             
             void TourService::EnqueueNextTour(const TourModel& tourModel)
@@ -103,6 +107,7 @@ namespace ExampleApp
                     if(m_previousActiveToursStack.size() == 0)
                     {
                         Eegeo_TTY("Back to app camera");
+                        m_sdkDomainEventBus.Publish(TourStateChangedMessage(false));
                         m_cameraTransitionController.TransitionBackToAppCamera(false);
                     }
                     else if(m_previousActiveToursStack.size() > 0)

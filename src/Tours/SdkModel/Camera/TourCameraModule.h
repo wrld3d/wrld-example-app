@@ -9,6 +9,7 @@
 #include "ResourceCeilingProvider.h"
 #include "ScreenProperties.h"
 #include "Terrain.h"
+#include "Interiors.h"
 
 namespace ExampleApp
 {
@@ -23,12 +24,14 @@ namespace ExampleApp
                     IToursCameraController* m_pToursCameraController;
                     IToursCameraTransitionController* m_pToursCameraTransitionController;
                     Eegeo::Camera::GlobeCamera::GlobeCameraTouchController* m_pTouchController;
+                    Eegeo::Resources::Interiors::InteriorsController& m_interiorController;
                     
                 public:
                     TourCameraModule(Eegeo::Streaming::ResourceCeilingProvider& resourceCeilingProvider,
                                      const Eegeo::Rendering::ScreenProperties& screenProperties,
                                      Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& gpsGlobeCameraController,
-                                     Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider);
+                                     Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider,
+                                     Eegeo::Resources::Interiors::InteriorsController& interiorController);
 
                     
                     ~TourCameraModule();

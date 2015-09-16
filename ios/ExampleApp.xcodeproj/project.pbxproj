@@ -1245,6 +1245,8 @@
 		7EE48256168477A80006E99B /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE48255168477A80006E99B /* MobileCoreServices.framework */; };
 		7EE48258168477CB0006E99B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE48257168477CB0006E99B /* libz.dylib */; };
 		7EF5D8651737F9A40049D787 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EF5D8641737F9A40049D787 /* CoreLocation.framework */; };
+		BFD4C7231BA9BB1F006F4E0B /* TourStateChangedMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFD4C7211BA9BB1F006F4E0B /* TourStateChangedMessage.cpp */; };
+		BFD4C7241BA9BB1F006F4E0B /* TourStateChangedMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFD4C7211BA9BB1F006F4E0B /* TourStateChangedMessage.cpp */; };
 		BFD5FCB41BA7068300F591F1 /* TourDefines.mm in Sources */ = {isa = PBXBuildFile; fileRef = BFD5FC8D1BA7068300F591F1 /* TourDefines.mm */; };
 		BFD5FCB51BA7068300F591F1 /* TourDefines.mm in Sources */ = {isa = PBXBuildFile; fileRef = BFD5FC8D1BA7068300F591F1 /* TourDefines.mm */; };
 		BFD5FCB61BA7068300F591F1 /* iCarouselTourExplorerViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = BFD5FC901BA7068300F591F1 /* iCarouselTourExplorerViewController.mm */; };
@@ -2636,6 +2638,8 @@
 		7EE48255168477A80006E99B /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		7EE48257168477CB0006E99B /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		7EF5D8641737F9A40049D787 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		BFD4C7211BA9BB1F006F4E0B /* TourStateChangedMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TourStateChangedMessage.cpp; sourceTree = "<group>"; };
+		BFD4C7221BA9BB1F006F4E0B /* TourStateChangedMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TourStateChangedMessage.h; sourceTree = "<group>"; };
 		BFD5FC8C1BA7068300F591F1 /* TourDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TourDefines.h; sourceTree = "<group>"; };
 		BFD5FC8D1BA7068300F591F1 /* TourDefines.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TourDefines.mm; sourceTree = "<group>"; };
 		BFD5FC8F1BA7068300F591F1 /* iCarouselTourExplorerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCarouselTourExplorerViewController.h; sourceTree = "<group>"; };
@@ -5447,6 +5451,8 @@
 				BFD5FD1B1BA706AD00F591F1 /* ToursModule.cpp */,
 				BFD5FD1C1BA706AD00F591F1 /* ToursModule.h */,
 				BFD5FD1D1BA706AD00F591F1 /* View */,
+				BFD4C7211BA9BB1F006F4E0B /* TourStateChangedMessage.cpp */,
+				BFD4C7221BA9BB1F006F4E0B /* TourStateChangedMessage.h */,
 			);
 			path = Tours;
 			sourceTree = "<group>";
@@ -6582,6 +6588,7 @@
 				7E3B899D1A385A290023C94E /* SearchQueryResponseReceivedMessage.cpp in Sources */,
 				7E3B89951A385A290023C94E /* SearchRefreshService.cpp in Sources */,
 				7E3B88B91A385A290023C94E /* CategorySearchModel.cpp in Sources */,
+				BFD4C7241BA9BB1F006F4E0B /* TourStateChangedMessage.cpp in Sources */,
 				BFD5FD6B1BA706AD00F591F1 /* TourOnMapSelectedMessage.cpp in Sources */,
 				7E3B89631A385A290023C94E /* MyPinsService.cpp in Sources */,
 				18E102851A8B85710011A18C /* SearchResultPoiPinToggledMessageHandler.cpp in Sources */,
@@ -7002,6 +7009,7 @@
 				7E3B899C1A385A290023C94E /* SearchQueryResponseReceivedMessage.cpp in Sources */,
 				7E3B89941A385A290023C94E /* SearchRefreshService.cpp in Sources */,
 				7E3B88B81A385A290023C94E /* CategorySearchModel.cpp in Sources */,
+				BFD4C7231BA9BB1F006F4E0B /* TourStateChangedMessage.cpp in Sources */,
 				BFD5FD6A1BA706AD00F591F1 /* TourOnMapSelectedMessage.cpp in Sources */,
 				7E3B89621A385A290023C94E /* MyPinsService.cpp in Sources */,
 				18E102841A8B85710011A18C /* SearchResultPoiPinToggledMessageHandler.cpp in Sources */,

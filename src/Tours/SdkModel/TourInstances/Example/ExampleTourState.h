@@ -11,6 +11,8 @@
 #include "WorldPins.h"
 #include "WorldPinInteriorData.h"
 #include <string>
+#include "Interiors.h"
+#include "Camera.h"
 
 namespace ExampleApp
 {
@@ -31,7 +33,9 @@ namespace ExampleApp
                                          bool isInterior,
                                          Camera::IToursCameraTransitionController& toursCameraTransitionController,
                                          WorldPins::SdkModel::IWorldPinsService& worldPinsService,
-                                         WorldPins::SdkModel::WorldPinInteriorData& worldPinInteriorData);
+                                         WorldPins::SdkModel::WorldPinInteriorData& worldPinInteriorData,
+                                         Eegeo::Resources::Interiors::InteriorsController& interiorsController,
+                                         const Eegeo::Camera::RenderCamera& tourRenderCamera);
                         ~ExampleTourState();
                         
                         void Enter();
@@ -52,6 +56,8 @@ namespace ExampleApp
                         
                         bool m_interior;
                         WorldPins::SdkModel::WorldPinInteriorData m_worldPinInteriorData;
+                        Eegeo::Resources::Interiors::InteriorsController& m_interiorsController;
+                        const Eegeo::Camera::RenderCamera& m_tourRenderCamera;
                     };
                 }
             }

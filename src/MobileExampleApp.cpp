@@ -205,7 +205,7 @@ namespace ExampleApp
                 mapModule.GetResourceCeilingProvider(),
                 *m_pNavigationService);
 
-        m_pAppModeModel = Eegeo_NEW(AppModes::SdkModel::AppModeModel)(m_pWorld->GetMapModule().GetInteriorsPresentationModule().GetInteriorSelectionModel(), m_messageBus);
+        m_pAppModeModel = Eegeo_NEW(AppModes::SdkModel::AppModeModel)(m_pWorld->GetMapModule().GetInteriorsPresentationModule().GetInteriorSelectionModel(), m_messageBus, m_sdkDomainEventBus);
 
         const bool useLowSpecSettings = false;
 
@@ -420,7 +420,8 @@ namespace ExampleApp
                                                                                                      m_pMapModeModule->GetMapModeModel(),
                                                                                                      *m_pAppModeModel,
                                                                                                      m_messageBus,
-                                                                                                     m_metricsService);
+                                                                                                     m_metricsService,
+                                                                                                     m_sdkDomainEventBus);
         
         InitialiseToursModules(mapModule, world);
         
@@ -625,7 +626,9 @@ namespace ExampleApp
                                                        world.GetMapModule().GetResourceCeilingProvider(),
                                                        m_screenProperties,
                                                        *m_pGlobeCameraController,
-                                                       world.GetTerrainModelModule().GetTerrainHeightProvider());
+                                                       world.GetTerrainModelModule().GetTerrainHeightProvider(),
+                                                       interiorsPresentationModule.GetInteriorsController(),
+                                                       m_sdkDomainEventBus);
         
     }
     
@@ -668,9 +671,14 @@ namespace ExampleApp
                                                           Helpers::ColorHelpers::Color::FromRGB(30, 123, 195),
                                                           tourStates);
         
+        Eegeo::Modules::Map::MapModule& mapModule = m_pWorld->GetMapModule();
+        Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsPresentationModule = mapModule.GetInteriorsPresentationModule();
+        
+        
         Tours::SdkModel::TourInstances::Example::ExampleTourStateMachineFactory factory(ToursModule().GetCameraTransitionController(),
                                                                                         ToursModule().GetCameraController(),
-                                                                                        m_pToursWorldPinsModule->GetWorldPinsService()
+                                                                                        m_pToursWorldPinsModule->GetWorldPinsService(),
+                                                                                        interiorsPresentationModule.GetInteriorsController()
                                                                                         );
         
         ToursModule().GetTourService().AddTour(tourModel, *factory.CreateTourStateMachine(tourModel));

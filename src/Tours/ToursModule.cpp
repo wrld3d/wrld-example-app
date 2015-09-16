@@ -22,19 +22,23 @@ namespace ExampleApp
                                  Eegeo::Streaming::ResourceCeilingProvider& resourceCeilingProvider,
                                  const Eegeo::Rendering::ScreenProperties& screenProperties,
                                  Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& gpsGlobeCameraController,
-                                 Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider)
+                                 Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider,
+                                 Eegeo::Resources::Interiors::InteriorsController& interiorsController,
+                                 ExampleAppMessaging::TSdkModelDomainEventBus& sdkDomainEventBus)
         {
             m_pToursCameraModule = Eegeo_NEW(SdkModel::Camera::TourCameraModule)(resourceCeilingProvider,
                                                                                  screenProperties,
                                                                                  gpsGlobeCameraController,
-                                                                                 terrainHeightProvider);
+                                                                                 terrainHeightProvider,
+                                                                                 interiorsController);
 
         
             m_pTourRepository = Eegeo_NEW(SdkModel::TourRepository);
             
             m_pTourService = Eegeo_NEW(SdkModel::TourService)(*m_pTourRepository,
                                                               m_pToursCameraModule->GetCameraTransitionController(),
-                                                              messageBus);
+                                                              messageBus,
+                                                              sdkDomainEventBus);
             
             m_pTourWorldPinSelectionHandlerFactory = Eegeo_NEW(SdkModel::TourWorldPinSelectionHandlerFactory)(*m_pTourService,
                                                                                                               searchRefreshService);
