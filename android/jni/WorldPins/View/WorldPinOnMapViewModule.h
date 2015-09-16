@@ -29,9 +29,7 @@ namespace ExampleApp
                     IWorldPinInFocusViewModel& worldPinInFocusViewModel,
                     ScreenControl::View::IScreenControlViewModel& worldPinOnMapInFocusScreenControlViewModel,
                     Modality::View::IModalityModel& modalityModel,
-                    const AppModes::SdkModel::IAppModeModel& appModeModel,
-                    float pinDiameter
-                );
+                    float pinDiameter);
 
                 ~WorldPinOnMapViewModule();
 

@@ -28,9 +28,10 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<FlattenButtonController, bool> m_toggledCallback;
                 Eegeo::Helpers::TCallback2<FlattenButtonController, ScreenControl::View::IScreenControlViewModel&, float> m_viewStateCallback;
                 Eegeo::Helpers::TCallback1<FlattenButtonController, const MyPinCreation::MyPinCreationStateChangedMessage&> m_myPinCreationStateChangedMessageHandler;
+                Eegeo::Helpers::TCallback1<FlattenButtonController, const AppModes::AppModeChangedMessage&> m_appModeChangedMessage;
 
                 Metrics::IMetricsService& m_metricsService;
-                const AppModes::SdkModel::IAppModeModel& m_appModeModel;
+                bool m_appModeAllowsOpen;
                 
                 void OnToggleButton(bool& toggle);
 
@@ -39,15 +40,15 @@ namespace ExampleApp
                 void OnViewStateChangeScreenControl(ScreenControl::View::IScreenControlViewModel& viewModel, float& state);
                 
                 void OnMyPinCreationStateChangedMessage(const MyPinCreation::MyPinCreationStateChangedMessage& message);
+                
+                void OnAppModeChanged(const AppModes::AppModeChangedMessage& message);
 
             public:
                 FlattenButtonController(
                     IFlattenButtonViewModel& viewModel,
                     IFlattenButtonView& view,
                     ExampleAppMessaging::TMessageBus& messageBus,
-                    Metrics::IMetricsService& metricsService,
-                    const AppModes::SdkModel::IAppModeModel& appModeModel
-                );
+                    Metrics::IMetricsService& metricsService);
 
                 ~FlattenButtonController();
             };

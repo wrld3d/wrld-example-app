@@ -33,9 +33,7 @@ namespace ExampleApp
                     IMyPinCreationConfirmationViewModel& confirmationViewModel,
                     MyPinCreationDetails::View::IMyPinCreationDetailsViewModel& detailsViewModel,
                     ExampleAppMessaging::TMessageBus& messageBus,
-                    Metrics::IMetricsService& metricsService,
-                    const AppModes::SdkModel::IAppModeModel& appModeModel
-                );
+                    Metrics::IMetricsService& metricsService);
 
                 ~MyPinCreationViewModule();
             };

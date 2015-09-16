@@ -35,31 +35,16 @@ namespace ExampleApp
 
             void SecondaryMenuController::OnAppModeChanged(const AppModes::AppModeChangedMessage& message)
             {
-                m_appModeAllowsOpen = message.GetAppMode() != AppModes::SdkModel::InteriorMode;
-                if (!m_appModeAllowsOpen)
-                {
-                    m_viewModel.Close();
-                }
+                
             }
             
             bool SecondaryMenuController::TryDrag()
             {
-                if (!m_appModeAllowsOpen)
-                {
-                    m_viewModel.Close();
-                    return false;
-                }
-                
                 return MenuController::TryDrag();
             }
             
             void SecondaryMenuController::OnViewClicked()
             {
-                if (!m_appModeAllowsOpen)
-                {
-                    m_viewModel.Close();
-                    return;
-                }
                 MenuController::OnViewClicked();
             }
             

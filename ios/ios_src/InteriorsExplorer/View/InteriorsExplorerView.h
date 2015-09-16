@@ -67,7 +67,4 @@
 @property(nonatomic, retain) UIButton* pDismissButton;
 @property(nonatomic, retain) UILabel* pFloorNameLabel;
 
-@property(nonatomic, retain) UILabel* pMicelloLabel;
-@property(nonatomic, retain) UIImageView* pMicelloLogo;
-
 @end

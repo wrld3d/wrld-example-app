@@ -433,18 +433,14 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
                                      app.WorldPinsModule().GetWorldPinInFocusViewModel(),
                                      app.WorldPinsModule().GetScreenControlViewModel(),
                                      app.ModalityModule().GetModalityModel(),
-                                     app.GetAppModeModel(),
-                                     app.PinDiameter()
-                                 );
+                                     app.PinDiameter());
 
     // HUD behind modal background layer.
     m_pFlattenButtonViewModule = Eegeo_NEW(ExampleApp::FlattenButton::View::FlattenButtonViewModule)(
                                      m_nativeState,
                                      app.FlattenButtonModule().GetFlattenButtonViewModel(),
                                      m_messageBus,
-                                     *m_pAndroidFlurryMetricsService,
-                                     app.GetAppModeModel()
-                                 );
+                                     *m_pAndroidFlurryMetricsService);
 
     m_pMyPinCreationViewModule = Eegeo_NEW(ExampleApp::MyPinCreation::View::MyPinCreationViewModule)(
                                      m_nativeState,
@@ -452,9 +448,7 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
                                      app.MyPinCreationModule().GetMyPinCreationConfirmationViewModel(),
                                      app.MyPinCreationDetailsModule().GetMyPinCreationDetailsViewModel(),
                                      m_messageBus,
-                                     *m_pAndroidFlurryMetricsService,
-                                     app.GetAppModeModel()
-                                 );
+                                     *m_pAndroidFlurryMetricsService);
 
 
     m_pCompassViewModule = Eegeo_NEW(ExampleApp::Compass::View::CompassViewModule)(
@@ -485,9 +479,7 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
                                         app.SearchResultMenuModule().GetMenuViewModel(),
                                         app.CategorySearchModule().GetCategorySearchRepository(),
                                         app.SearchResultMenuModule().GetSearchResultMenuViewModel(),
-                                        app.GetAppModeModel(),
-                                        m_messageBus
-                                    );
+                                        m_messageBus);
 
     // Pop-up layer.
     m_pSearchResultPoiViewModule = Eegeo_NEW(ExampleApp::SearchResultPoi::View::SearchResultPoiViewModule)(

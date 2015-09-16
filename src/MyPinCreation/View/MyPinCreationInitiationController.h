@@ -23,8 +23,7 @@ namespace ExampleApp
                                                   IMyPinCreationInitiationView& view,
                                                   IMyPinCreationConfirmationViewModel& confirmationViewModel,
                                                   ExampleAppMessaging::TMessageBus& messageBus,
-                                                  Metrics::IMetricsService& metricsService,
-                                                  const AppModes::SdkModel::IAppModeModel& appModeModel);
+                                                  Metrics::IMetricsService& metricsService);
                 
                 ~MyPinCreationInitiationController();
 
@@ -32,6 +31,8 @@ namespace ExampleApp
                 void OnViewStateChangeScreenControl(ScreenControl::View::IScreenControlViewModel& viewModel, float& state);
 
             private:
+                
+                void OnAppModeChanged(const AppModes::AppModeChangedMessage& message);
 
                 IMyPinCreationInitiationViewModel& m_viewModel;
                 IMyPinCreationInitiationView& m_view;
@@ -39,10 +40,11 @@ namespace ExampleApp
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 
                 Metrics::IMetricsService& m_metricsService;
-                const AppModes::SdkModel::IAppModeModel& m_appModeModel;
+                bool m_appModeAllowsOpen;
                 
                 Eegeo::Helpers::TCallback2<MyPinCreationInitiationController, ScreenControl::View::IScreenControlViewModel&, float> m_viewStateCallback;
                 Eegeo::Helpers::TCallback0<MyPinCreationInitiationController> m_selectedCallback;
+                Eegeo::Helpers::TCallback1<MyPinCreationInitiationController, const AppModes::AppModeChangedMessage&> m_appModeChangedMessage;
             };
         }
     }

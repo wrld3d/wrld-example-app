@@ -28,6 +28,9 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<CompassController, const CompassHeadingUpdateMessage&> m_headingChangedHandler;
                 Eegeo::Helpers::TCallback1<CompassController, const MyPinCreation::MyPinCreationStateChangedMessage&> m_myPinCreationStateChangedMessageHandler;
                 Eegeo::Helpers::TCallback0<CompassController> m_viewCycledCallback;
+                Eegeo::Helpers::TCallback1<CompassController, const AppModes::AppModeChangedMessage&> m_appModeChangedMessage;
+                
+                bool m_appModelAllowsOpen;
 
                 void OnViewCycled();
 
@@ -40,11 +43,13 @@ namespace ExampleApp
                 void OnScreenStateChangedCallback(ScreenControl::View::IScreenControlViewModel &viewModel, float& onScreenState);
                 
                 void OnMyPinCreationStateChangedMessage(const MyPinCreation::MyPinCreationStateChangedMessage& message);
+                
+                void OnAppModeChanged(const AppModes::AppModeChangedMessage& message);
 
             public:
-                CompassController(  ICompassView& view,
-                                    ICompassViewModel& viewModel,
-                                    ExampleAppMessaging::TMessageBus& messageBus);
+                CompassController(ICompassView& view,
+                                  ICompassViewModel& viewModel,
+                                  ExampleAppMessaging::TMessageBus& messageBus);
 
                 ~CompassController();
             };

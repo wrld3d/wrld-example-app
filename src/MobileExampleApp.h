@@ -73,6 +73,7 @@
 #include "InteriorsEntitiesPins.h"
 #include "MapMode.h"
 #include "AppModes.h"
+#include "SwallowSearchService.h"
 
 namespace ExampleApp
 {
@@ -125,6 +126,7 @@ namespace ExampleApp
         ExampleApp::MyPinCreationDetails::View::IMyPinCreationDetailsModule* m_pMyPinCreationDetailsModule;
         ExampleApp::MyPins::SdkModel::IMyPinsModule* m_pMyPinsModule;
         ExampleApp::MyPinDetails::SdkModel::IMyPinDetailsModule* m_pMyPinDetailsModule;
+        ExampleApp::Search::Swallow::SwallowSearchService* m_pSwallowSearchService;
         ExampleApp::Options::IOptionsModule* m_pOptionsModule;
         Watermark::IWatermarkModule* m_pWatermarkModule;
         ExampleApp::ApplicationConfig::ApplicationConfiguration m_applicationConfiguration;

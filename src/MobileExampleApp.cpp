@@ -279,7 +279,9 @@ namespace ExampleApp
                                                                          m_messageBus,
                                                                          m_networkCapabilities);
         
-        m_pSearchModule = Eegeo_NEW(Search::SdkModel::SearchModule)(m_searchServiceModule.GetSearchService(),
+        m_pSwallowSearchService = new(ExampleApp::Search::Swallow::SwallowSearchService)();
+        
+        m_pSearchModule = Eegeo_NEW(Search::SdkModel::SearchModule)(*m_pSwallowSearchService,
                                                                     *m_pGlobeCameraController,
                                                                     *m_pCameraTransitionController,
                                                                     m_messageBus,
@@ -495,6 +497,8 @@ namespace ExampleApp
         Eegeo_DELETE m_pCompassModule;
 
         Eegeo_DELETE m_pSearchModule;
+        
+        Eegeo_DELETE m_pSwallowSearchService;
 
         Eegeo_DELETE m_pOptionsModule;
         
@@ -560,7 +564,7 @@ namespace ExampleApp
                             terrainModelModule.GetTerrainHeightProvider(),
                             spriteWidth,
                             spriteHeight,
-                            Eegeo::Rendering::LayerIds::PlaceNames,
+                            Eegeo::Rendering::LayerIds::InteriorEntities,
                             mapModule.GetEnvironmentFlatteningService(),
                             m_screenProperties,
                             false

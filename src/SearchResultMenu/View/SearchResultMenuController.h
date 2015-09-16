@@ -24,17 +24,15 @@ namespace ExampleApp
                 ISearchResultMenuView& m_searchView;
                 CategorySearch::View::ICategorySearchRepository& m_categorySearchRepository;
                 View::ISearchResultMenuViewModel& m_searchResultMenuViewModel;
-                AppModes::SdkModel::IAppModeModel& m_appModelModel;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
 
                 Eegeo::Helpers::TCallback1<SearchResultMenuController, const Search::SearchQueryPerformedMessage&> m_searchQueryIssuedHandler;
                 Eegeo::Helpers::TCallback1<SearchResultMenuController, const Search::SearchQueryResponseReceivedMessage&> m_searchResultReceivedHandler;
                 Eegeo::Helpers::TCallback0<SearchResultMenuController> m_onSearchCloseTappedCallback;
+                Eegeo::Helpers::TCallback1<SearchResultMenuController, const AppModes::AppModeChangedMessage&> m_appModeChangedCallback;
                 
                 Eegeo::Helpers::TCallback0<SearchResultMenuController> m_attractModeChangedCallback;
                 
-                Eegeo::Helpers::TCallback0<SearchResultMenuController> m_appModeChangedCallback;
-
             private:
                 void OnSearchQueryPerformedMessage(const Search::SearchQueryPerformedMessage& message);
 
@@ -49,7 +47,7 @@ namespace ExampleApp
                 
                 void OnAttractModeChanged();
                 
-                void OnAppModelChanged();
+                void OnAppModeChanged(const AppModes::AppModeChangedMessage& message);
                 
             public:
                 SearchResultMenuController(
@@ -59,9 +57,7 @@ namespace ExampleApp
                     Menu::View::IMenuViewModel& menuViewModel,
                     CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
                     View::ISearchResultMenuViewModel& searchResultMenuViewModel,
-                    AppModes::SdkModel::IAppModeModel& appModelModel,
-                    ExampleAppMessaging::TMessageBus& messageBus
-                );
+                    ExampleAppMessaging::TMessageBus& messageBus);
 
                 ~SearchResultMenuController();
             };

@@ -34,8 +34,7 @@ namespace ExampleApp
                                            Menu::View::IMenuViewModel& menuViewModel,
                                            ISearchResultMenuViewModel& searchResultMenuViewModel,
                                            const Eegeo::Rendering::ScreenProperties& screenProperties,
-                                           ExampleAppMessaging::TMessageBus& messageBus,
-                                           AppModes::SdkModel::IAppModeModel& appModeModel);
+                                           ExampleAppMessaging::TMessageBus& messageBus);
 
                 ~SearchResultMenuViewModule();
 

@@ -28,9 +28,7 @@ namespace ExampleApp
                     AndroidNativeState& nativeState,
                     IFlattenButtonViewModel& viewModel,
                     ExampleAppMessaging::TMessageBus& messageBus,
-                    Metrics::IMetricsService& metricsService,
-                    const AppModes::SdkModel::IAppModeModel& appModeModel
-                );
+                    Metrics::IMetricsService& metricsService);
 
                 ~FlattenButtonViewModule();
             };

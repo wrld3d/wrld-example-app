@@ -84,11 +84,6 @@ namespace ExampleApp
                     m_viewModel.AddToScreen();
                     
                     m_initiationViewModel.RemoveFromScreen();
-                    m_secondaryMenuViewModel.RemoveFromScreen();
-                    m_searchResultMenuViewModel.RemoveFromScreen();
-                    m_flattenViewModel.RemoveFromScreen();
-                    m_compassViewModel.RemoveFromScreen();
-                    m_messageBus.Publish(WorldPins::WorldPinsVisibilityMessage(false));
                     m_messageBus.Publish(GpsMarker::GpsMarkerVisibilityMessage(false));
                 }
                 else
@@ -96,11 +91,6 @@ namespace ExampleApp
                     m_viewModel.RemoveFromScreen();
                     
                     m_initiationViewModel.AddToScreen();
-                    m_secondaryMenuViewModel.AddToScreen();
-                    m_searchResultMenuViewModel.AddToScreen();
-                    m_flattenViewModel.AddToScreen();
-                    m_compassViewModel.AddToScreen();
-                    m_messageBus.Publish(WorldPins::WorldPinsVisibilityMessage(true));
                     m_messageBus.Publish(GpsMarker::GpsMarkerVisibilityMessage(true));
                 }
             }

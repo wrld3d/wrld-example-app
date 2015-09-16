@@ -16,14 +16,13 @@ namespace ExampleApp
                 IWorldPinInFocusViewModel& worldPinInFocusViewModel,
                 ScreenControl::View::IScreenControlViewModel& worldPinOnMapInFocusScreenControlViewModel,
                 Modality::View::IModalityModel& modalityModel,
-                const AppModes::SdkModel::IAppModeModel& appModeModel,
                 float pinDiameter
             )
             {
                 ASSERT_UI_THREAD
 
                 m_pView = Eegeo_NEW(WorldPinOnMapView)(nativeState, pinDiameter);
-                m_pController = Eegeo_NEW(WorldPinOnMapController)(*m_pView, worldPinInFocusViewModel, worldPinOnMapInFocusScreenControlViewModel, modalityModel, appModeModel);
+                m_pController = Eegeo_NEW(WorldPinOnMapController)(*m_pView, worldPinInFocusViewModel, worldPinOnMapInFocusScreenControlViewModel, modalityModel);
             }
 
             WorldPinOnMapViewModule::~WorldPinOnMapViewModule()

@@ -50,9 +50,7 @@
         float labelLength = 200.f;
         float totalPanelLength = buttonSize + labelLength + buttonSize;
 
-        const int micelloLogoWidth = 110;
-        const int micelloLogoHeight = 24;
-        float totalPanelHeight = micelloLogoHeight + buttonSize;
+        float totalPanelHeight = buttonSize;
         
         m_detailsPanelHeight = totalPanelHeight;
         
@@ -77,21 +75,7 @@
         self.pFloorNameLabel.textColor = ExampleApp::Helpers::ColorPalette::DarkGreyTone;
         self.pFloorNameLabel.textAlignment = NSTextAlignmentCenter;
         [self.pDetailsPanel addSubview:self.pFloorNameLabel];
-        
-        self.pMicelloLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, buttonSize, totalPanelLength - micelloLogoWidth, micelloLogoHeight)] autorelease];
-        self.pMicelloLabel.backgroundColor = ExampleApp::Helpers::ColorPalette::WhiteTone;
-        self.pMicelloLabel.textColor = ExampleApp::Helpers::ColorPalette::GreyTone;
-        self.pMicelloLabel.layer.borderWidth = 0;
-        self.pMicelloLabel.textAlignment = NSTextAlignmentCenter;
-        self.pMicelloLabel.text = @"Indoor data from";
-        
-        self.pMicelloLogo = [[[UIImageView alloc] initWithImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"micello_logo")] autorelease];
-        self.pMicelloLogo.frame = CGRectMake(totalPanelLength - micelloLogoWidth, buttonSize, micelloLogoWidth, micelloLogoHeight);
-        
-        [self.pDetailsPanel addSubview:self.pMicelloLabel];
-        [self.pDetailsPanel addSubview:self.pMicelloLogo];
-        
-        
+                
         [self addSubview:self.pDetailsPanel];
         
         m_onScreenParam = 0.f;
