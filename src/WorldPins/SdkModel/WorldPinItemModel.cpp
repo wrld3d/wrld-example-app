@@ -18,13 +18,17 @@ namespace ExampleApp
             WorldPinItemModel::WorldPinItemModel(const WorldPinItemModelId& id,
                                                  IWorldPinSelectionHandler* pSelectionHandler,
                                                  IWorldPinVisibilityStateChangedHandler* pVisibilityStateChangedHandler,
-                                                 const WorldPinFocusData& worldPinFocusData)
+                                                 const WorldPinFocusData& worldPinFocusData,
+                                                 bool interior,
+                                                 const WorldPinInteriorData& worldPinInteriorData)
                 : m_id(id)
                 , m_pSelectionHandler(pSelectionHandler)
                 , m_pVisibilityStateChangedHandler(pVisibilityStateChangedHandler)
                 , m_focusModel(m_id, worldPinFocusData.title, worldPinFocusData.subtitle, worldPinFocusData.ratingsImage, worldPinFocusData.reviewCount)
                 , m_transitionState(StableHidden)
                 , m_transitionStateValue(0.f)
+                , m_interior(interior)
+                , m_worldPinInteriorData(worldPinInteriorData)
             {
                 Eegeo_ASSERT(m_pSelectionHandler != NULL, "WorldPinItemModel must be provided with a non-null selection handler.")
             }
@@ -121,6 +125,16 @@ namespace ExampleApp
             const IWorldPinsInFocusModel& WorldPinItemModel::GetInFocusModel() const
             {
                 return m_focusModel;
+            }
+            
+            bool WorldPinItemModel::IsInterior() const
+            {
+                return m_interior;
+            }
+            
+            const WorldPinInteriorData& WorldPinItemModel::GetInteriorData() const
+            {
+                return m_worldPinInteriorData;
             }
         }
     }

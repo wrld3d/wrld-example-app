@@ -7,6 +7,7 @@
 #include "Search.h"
 #include "SearchServiceBase.h"
 #include "LatLongAltitude.h"
+#include "InteriorId.h"
 
 namespace ExampleApp
 {
@@ -30,17 +31,23 @@ namespace ExampleApp
                 {
                     std::string m_name;
                     Eegeo::Space::LatLong m_location;
+                    Eegeo::Resources::Interiors::InteriorId m_interiorId;
+                    int m_floor;
                     std::string m_officeCode;
                     std::string m_deskNumber;
                     std::string m_department;
                     
                     PersonDetails(const std::string& name,
                                   const Eegeo::Space::LatLong& location,
+                                  Eegeo::Resources::Interiors::InteriorId interiorId,
+                                  int floor,
                                   const std::string& officeCode,
                                   const std::string& deskNumber,
                                   const std::string& department)
                     : m_name(name)
                     , m_location(location)
+                    , m_interiorId(interiorId)
+                    , m_floor(floor)
                     , m_officeCode(officeCode)
                     , m_deskNumber(deskNumber)
                     , m_department(department)

@@ -7,6 +7,7 @@
 #include "Space.h"
 #include "VectorMath.h"
 #include "WorldPinFocusData.h"
+#include "WorldPinInteriorData.h"
 
 namespace ExampleApp
 {
@@ -22,8 +23,11 @@ namespace ExampleApp
                 virtual WorldPinItemModel* AddPin(IWorldPinSelectionHandler* pSelectionHandler,
                                                   IWorldPinVisibilityStateChangedHandler* pVisibilityStateChangedHandler,
                                                   const WorldPinFocusData& worldPinFocusData,
+                                                  bool interior,
+                                                  const WorldPinInteriorData& worldPinInteriorData,
                                                   const Eegeo::Space::LatLong& location,
-                                                  int iconIndex) = 0;
+                                                  int iconIndex,
+                                                  float heightAboveTerrainMetres = 0) = 0;
 
                 virtual void RemovePin(WorldPinItemModel* pinItemModel) = 0;
 

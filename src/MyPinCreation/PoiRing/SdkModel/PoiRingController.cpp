@@ -1,6 +1,9 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "PoiRingController.h"
+#include "InteriorsFloorModel.h"
+#include "InteriorsModel.h"
+#include "InteriorId.h"
 #include "TtyHandler.h"
 #include "CameraHelpers.h"
 #include "RenderCamera.h"
@@ -69,8 +72,9 @@ namespace ExampleApp
                 PoiRingController::PoiRingController(MyPinCreation::SdkModel::IMyPinCreationModel& myPinCreationModel,
                                                      PoiRingView& poiRingView,
                                                      Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
-                                                     Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider)
-                    : m_pMyPinCreationModel(myPinCreationModel)
+                                                     Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider,
+                                                     Eegeo::Resources::Interiors::InteriorsController& interiorsController)
+                    : m_myPinCreationModel(myPinCreationModel)
                     , m_poiRingView(poiRingView)
                     , m_scaleInterpolationParam(0.f)
                     , m_easeDurationInSeconds(1.2f)
@@ -79,45 +83,69 @@ namespace ExampleApp
                     , m_iconPosition(Eegeo::dv3::Zero())
                     , m_iconSize(0.0f)
                     , m_ringRadius(0.0f)
+                    , m_interiorsController(interiorsController)
                 {
 
                 }
 
                 void PoiRingController::Update(float dt, const Eegeo::Camera::RenderCamera& renderCamera, const Eegeo::dv3& cameraEcefInterestPoint)
                 {
-                    const float altitude = (float)(renderCamera.GetAltitude() - (m_pMyPinCreationModel.GetPosition().Length() - Eegeo::Space::EarthConstants::Radius));
+                    const float altitude = (float)(renderCamera.GetAltitude() - (m_myPinCreationModel.GetPosition().Length() - Eegeo::Space::EarthConstants::Radius));
                     const float outerRingRadiusInMeters = 120.f;
                     const float altitudeScale = CalculateAltitudeBasedSphereOuterScale(altitude);
                     const float transitionScale = CalculateTransitionScale(dt);
                     m_ringRadius = outerRingRadiusInMeters * altitudeScale * transitionScale;
                     
-                    const bool ringIsOnScreen = RingIsOnScreen(renderCamera, m_pMyPinCreationModel.GetPosition(), m_ringRadius);
+                    const bool ringIsOnScreen = RingIsOnScreen(renderCamera, m_myPinCreationModel.GetPosition(), m_ringRadius);
 
                     m_poiRingView.SetShouldRenderRing(m_scaleInterpolationParam > 0.f && ringIsOnScreen);
 
-                    if (m_pMyPinCreationModel.GetCreationStage() == Inactive && !ringIsOnScreen)
+                    if (m_myPinCreationModel.GetCreationStage() == Inactive && !ringIsOnScreen)
                     {
                         m_scaleInterpolationParam = 0.f;
                     }
 
-                    if (m_scaleInterpolationParam < 0.01f && m_pMyPinCreationModel.GetCreationStage() != Details)
+                    if (m_scaleInterpolationParam < 0.01f && m_myPinCreationModel.GetCreationStage() != Details)
                     {
-                        m_pMyPinCreationModel.SetPosition(cameraEcefInterestPoint);
+                        m_myPinCreationModel.SetPosition(cameraEcefInterestPoint);
                     }
 
-                    if(m_pMyPinCreationModel.NeedsTerrainHeight())
+                    if(m_myPinCreationModel.NeedsTerrainHeight())
                     {
                         float terrainHeight;
-                        if(m_terrainHeightProvider.TryGetHeight(m_pMyPinCreationModel.GetPosition(), 11, terrainHeight))
+                        if(m_terrainHeightProvider.TryGetHeight(m_myPinCreationModel.GetPosition(), 11, terrainHeight))
                         {
-                            m_pMyPinCreationModel.SetTerrainHeight(terrainHeight);
+                            m_myPinCreationModel.SetTerrainHeight(terrainHeight);
+                        }
+                    }
+                    
+                    if(m_myPinCreationModel.GetCreationStage() == Ring)
+                    {
+                        bool showingInterior = m_interiorsController.ShowingInterior();
+                        m_myPinCreationModel.SetInterior(showingInterior);
+                        if(showingInterior)
+                        {
+                            const Eegeo::Resources::Interiors::InteriorsModel *pModel = NULL;
+                            bool success = m_interiorsController.TryGetCurrentModel(pModel);
+                            if(success)
+                            {
+                                const Eegeo::Resources::Interiors::InteriorId& buildingId = pModel->GetId();
+                                m_myPinCreationModel.SetBuildingId(buildingId);
+                            }
+                            m_myPinCreationModel.SetFloor(m_interiorsController.GetCurrentFloorIndex());
+                            float terrainHeight = static_cast<float>(m_interiorsController.GetCurrentFloorModel().GetTangentSpaceBounds().Center().y);
+                            m_myPinCreationModel.SetHeightAboveTerrain(terrainHeight);
+                        }
+                        else
+                        {
+                            m_myPinCreationModel.SetHeightAboveTerrain(0);
                         }
                     }
 
                     Eegeo::m44 sphereTransformMatrix;
                     sphereTransformMatrix.Scale(m_ringRadius);
 
-                    Eegeo::dv3 scaledPoint = Eegeo::Rendering::EnvironmentFlatteningService::GetScaledPointEcef(m_pMyPinCreationModel.GetPosition(), m_environmentFlatteningService.GetCurrentScale());
+                    Eegeo::dv3 scaledPoint = Eegeo::Rendering::EnvironmentFlatteningService::GetScaledPointEcef(m_myPinCreationModel.GetPosition(), m_environmentFlatteningService.GetCurrentScale());
 
                     Eegeo::dv3 cameraRelativePosition = scaledPoint - renderCamera.GetEcefLocation();
                     sphereTransformMatrix.SetRow(3, Eegeo::v4(cameraRelativePosition.ToSingle(), 1.f));
@@ -127,7 +155,7 @@ namespace ExampleApp
                     float altitudeBasedScale = CalculateAltitudeBasedSphereScale(altitude, m_ringRadius);
                     m_poiRingView.SetInnerSphereScale(altitudeBasedScale);
 
-                    Eegeo::dv3 unflattenedIconPosition = m_pMyPinCreationModel.GetPosition();
+                    Eegeo::dv3 unflattenedIconPosition = m_myPinCreationModel.GetPosition();
                     Eegeo::dv3 iconPosition = Eegeo::Rendering::EnvironmentFlatteningService::GetScaledPointEcef(
                                                   unflattenedIconPosition,
                                                   m_environmentFlatteningService.GetCurrentScale());
@@ -142,7 +170,7 @@ namespace ExampleApp
 
                 float PoiRingController::CalculateTransitionScale(float dt)
                 {
-                    float delta = m_pMyPinCreationModel.GetCreationStage() == Ring ? dt : -dt;
+                    float delta = m_myPinCreationModel.GetCreationStage() == Ring ? dt : -dt;
                     delta /= m_easeDurationInSeconds;
                     m_scaleInterpolationParam = Eegeo::Clamp(m_scaleInterpolationParam + delta, 0.f, 1.f);
                     return Eegeo::Helpers::MathsHelpers::PennerElasticEaseInOut(0.f, 1.f, m_scaleInterpolationParam);
@@ -156,7 +184,7 @@ namespace ExampleApp
                 
                 void PoiRingController::GetSpherePositionAndRadius(Eegeo::dv3& out_sphereCenterEcef, float& out_sphereRadius) const
                 {
-                    out_sphereCenterEcef = m_pMyPinCreationModel.GetPosition();
+                    out_sphereCenterEcef = m_myPinCreationModel.GetPosition();
                     out_sphereRadius = m_ringRadius;
                 }
             }

@@ -17,14 +17,15 @@ namespace ExampleApp
             class WorldPinsFactory : public IWorldPinsFactory, private Eegeo::NonCopyable
             {
                 WorldPinItemModel::WorldPinItemModelId m_lastId;
-
+                
             public:
                 WorldPinsFactory();
-
+                
                 ~WorldPinsFactory();
-
-                virtual Eegeo::Pins::Pin* CreatePin(const Eegeo::Space::LatLong& location,
-                                                    int iconIndex);
+                
+                Eegeo::Pins::Pin* CreatePin(const Eegeo::Space::LatLong& location,
+                                            int iconIndex,
+                                            float heightAboveTerrainInMetres);
             };
         }
     }

@@ -43,11 +43,14 @@ namespace ExampleApp
             WorldPinItemModel* WorldPinsService::AddPin(IWorldPinSelectionHandler* pSelectionHandler,
                                                         IWorldPinVisibilityStateChangedHandler* pVisibilityStateChangedHandler,
                                                         const WorldPinFocusData& worldPinFocusData,
+                                                        bool interior,
+                                                        const WorldPinInteriorData& worldPinInteriorData,
                                                         const Eegeo::Space::LatLong& location,
-                                                        int iconIndex)
+                                                        int iconIndex,
+                                                        float heightAboveTerrainMetres)
             {
                 
-                Eegeo::Pins::Pin* pPin = m_worldPinsFactory.CreatePin(location, iconIndex);
+                Eegeo::Pins::Pin* pPin = m_worldPinsFactory.CreatePin(location, iconIndex, heightAboveTerrainMetres);
 
                 m_pinRepository.AddPin(*pPin);
 
@@ -64,7 +67,9 @@ namespace ExampleApp
                 WorldPinItemModel* model = Eegeo_NEW(WorldPinItemModel)(pinId,
                                                                         pSelectionHandler,
                                                                         pVisibilityStateChangedHandler,
-                                                                        worldPinFocusData);
+                                                                        worldPinFocusData,
+                                                                        interior,
+                                                                        worldPinInteriorData);
                 m_worldPinsRepository.AddItem(model);
 
                 UpdatePinScale(*model, model->TransitionStateValue());

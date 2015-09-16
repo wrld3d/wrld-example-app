@@ -3,7 +3,6 @@
 #include "SwallowSearchService.h"
 #include "SearchQuery.h"
 
-
 namespace ExampleApp
 {
     namespace Search
@@ -12,10 +11,10 @@ namespace ExampleApp
         {
             SwallowSearchService::SwallowSearchService()
             {
-                m_people.push_back(PersonDetails("James Smith", Eegeo::Space::LatLong::FromDegrees(51.520196, -0.085797), "", "", ""));
-                m_people.push_back(PersonDetails("Emily Gray", Eegeo::Space::LatLong::FromDegrees(51.520236, -0.086151), "", "", ""));
-                m_people.push_back(PersonDetails("John Brown", Eegeo::Space::LatLong::FromDegrees(51.520272, -0.086529), "", "", ""));
-                m_people.push_back(PersonDetails("Jane Smith", Eegeo::Space::LatLong::FromDegrees(51.520332, -0.086951), "", "", ""));
+                m_people.push_back(PersonDetails("James Smith", Eegeo::Space::LatLong::FromDegrees(51.520196, -0.085797), Eegeo::Resources::Interiors::InteriorId("swallow_lon_citygatehouse"), 0, "", "", ""));
+                m_people.push_back(PersonDetails("Emily Gray", Eegeo::Space::LatLong::FromDegrees(51.520236, -0.086151), Eegeo::Resources::Interiors::InteriorId("swallow_lon_citygatehouse"), 0, "", "", ""));
+                m_people.push_back(PersonDetails("John Brown", Eegeo::Space::LatLong::FromDegrees(51.520272, -0.086529), Eegeo::Resources::Interiors::InteriorId("swallow_lon_citygatehouse"), 0, "", "", ""));
+                m_people.push_back(PersonDetails("Jane Smith", Eegeo::Space::LatLong::FromDegrees(51.520332, -0.086951), Eegeo::Resources::Interiors::InteriorId("swallow_lon_citygatehouse"), 0, "", "", ""));
             }
             
             void SwallowSearchService::CancelInFlightQueries()
@@ -55,6 +54,10 @@ namespace ExampleApp
                                                                       (*it).m_name,
                                                                       (*it).m_name,
                                                                       (*it).m_location,
+                                                                      0,
+                                                                      true,
+                                                                      (*it).m_interiorId,
+                                                                      (*it).m_floor,
                                                                       "",
                                                                       "",
                                                                       "",

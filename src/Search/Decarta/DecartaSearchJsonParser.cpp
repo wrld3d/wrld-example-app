@@ -122,11 +122,20 @@ namespace ExampleApp
                                 // Decarta has duplicate ids in results, so need different unique ID for mapping.
                                 ss << "_" << i;
                                 entry.uniqueId = ss.str();
+                                
+                                const bool interior = false;
+                                const std::string building = "";
+                                const int floor = 0;
+                                const float heightAboveTerrainMetres = 0;
 
                                 SdkModel::SearchResultModel result(SdkModel::SearchResultModel::CurrentVersion,
                                                                    entry.uniqueId,
                                                                    entry.name,
                                                                    entry.location,
+                                                                   heightAboveTerrainMetres,
+                                                                   interior,
+                                                                   building,
+                                                                   floor,
                                                                    entry.phone,
                                                                    entry.address,
                                                                    entry.webUrl,
