@@ -133,8 +133,9 @@ namespace ExampleApp
                                 m_myPinCreationModel.SetBuildingId(buildingId);
                             }
                             m_myPinCreationModel.SetFloor(m_interiorsController.GetCurrentFloorIndex());
-                            float terrainHeight = static_cast<float>(m_interiorsController.GetCurrentFloorModel().GetTangentSpaceBounds().Center().y);
-                            m_myPinCreationModel.SetHeightAboveTerrain(terrainHeight);
+                            float floorHeightAboveSeaLevel = static_cast<float>(m_interiorsController.GetCurrentFloorModel().GetTangentSpaceBounds().GetMin().y);
+                            const float floorHeightAboveTerrain = floorHeightAboveSeaLevel - m_myPinCreationModel.GetTerrainHeight();
+                            m_myPinCreationModel.SetHeightAboveTerrain(floorHeightAboveTerrain);
                         }
                         else
                         {
