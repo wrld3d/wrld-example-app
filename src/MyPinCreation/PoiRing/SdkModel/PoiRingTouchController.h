@@ -9,6 +9,8 @@
 #include "Camera.h"
 #include "GpsGlobeCameraController.h"
 #include "VectorMathDecl.h"
+#include "AppModes.h"
+#include "Interiors.h"
 
 namespace ExampleApp
 {
@@ -23,7 +25,9 @@ namespace ExampleApp
                 public:
                     PoiRingTouchController(MyPinCreation::SdkModel::IMyPinCreationModel& myPinCreationModel,
                                            Eegeo::Collision::IRayPicker& rayPicker,
-                                           const IPoiRingController& poiRingController);
+                                           const IPoiRingController& poiRingController,
+                                           ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
+                                           Eegeo::Resources::Interiors::InteriorsController& interiorsController);
 
                     bool HandleTouchDown(const AppInterface::TouchData& data, const Eegeo::Camera::RenderCamera& renderCamera, Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController);
                     bool HandleTouchUp(const AppInterface::TouchData& data);
@@ -35,6 +39,9 @@ namespace ExampleApp
                     MyPinCreation::SdkModel::IMyPinCreationModel& m_myPinCreationModel;
                     Eegeo::Collision::IRayPicker& m_rayPicker;
                     const IPoiRingController& m_poiRingController;
+                    
+                    ExampleApp::AppModes::SdkModel::IAppModeModel& m_appModeModel;
+                    Eegeo::Resources::Interiors::InteriorsController& m_interiorsController;
 
                     bool m_isDragging;
 
