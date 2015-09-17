@@ -92,6 +92,8 @@ namespace ExampleApp
         bool m_initialisedApplicationViewState;
         bool m_setMetricsLocation;
         float m_pinDiameter;
+        
+        const bool m_enableTours;
 
         CameraTransitions::SdkModel::ICameraTransitionController* m_pCameraTransitionController;
 
@@ -346,6 +348,16 @@ namespace ExampleApp
         const ExampleApp::WorldPins::SdkModel::IWorldPinsModule& TourWorldPinsModule() const
         {
             return *m_pToursWorldPinsModule;
+        }
+        
+        // A flag for opting in/out of tours
+        const bool ToursEnabled() const
+        {
+#ifdef EEGEO_DROID
+            Eegeo_TTY("Tours are not currently supported for android");
+            return false;
+#endif
+            return m_enableTours;
         }
         
         // Exposed to allow view model creation in iOS code.

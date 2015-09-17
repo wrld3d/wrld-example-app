@@ -172,7 +172,11 @@ namespace ExampleApp
         , m_metricsService(metricsService)
         , m_applicationConfiguration(applicationConfiguration)
         , m_interiorsEnabled(platformConfig.OptionsConfig.EnableInteriors)
+        , m_pToursModule(NULL)
+        , m_pToursWorldPinsModule(NULL)
+        , m_pToursPinsModule(NULL)
         , m_toursPinDiameter(80)
+        , m_enableTours(false)
     {
         m_metricsService.BeginSession(ExampleApp::FlurryApiKey, EEGEO_PLATFORM_VERSION_NUMBER);
 
@@ -423,7 +427,10 @@ namespace ExampleApp
                                                                                                      m_metricsService,
                                                                                                      m_sdkDomainEventBus);
         
-        InitialiseToursModules(mapModule, world);
+        if(ToursEnabled())
+        {
+            InitialiseToursModules(mapModule, world);
+        }
         
         if (m_interiorsEnabled)
         {
@@ -459,6 +466,7 @@ namespace ExampleApp
     void MobileExampleApp::DestroyApplicationModelModules()
     {
         m_initialExperienceModule.TearDown();
+        
         
         Eegeo_DELETE m_pToursModule;
         Eegeo_DELETE m_pToursWorldPinsModule;
@@ -713,16 +721,18 @@ namespace ExampleApp
         m_pGlobeCameraController->Update(dt);
         m_pCameraTransitionController->Update(dt);
         
-        ExampleApp::Tours::SdkModel::Camera::ToursCameraState appCameraState =
-        ExampleApp::Tours::SdkModel::Camera::ToursCameraState::CreateFromCameraState(m_pGlobeCameraController->GetCameraState(),
-                                                                                     Eegeo::Math::Rad2Deg(m_pGlobeCameraController->GetRenderCamera().GetFOV()));
-        ToursModule().GetCameraTransitionController().SetAppCameraState(appCameraState);
-        if(IsTourCameraActive())
+        if(ToursEnabled())
         {
-            ToursModule().GetCameraController().Update(dt);
-            ToursModule().GetCameraTransitionController().Update(dt);
+            ExampleApp::Tours::SdkModel::Camera::ToursCameraState appCameraState =
+            ExampleApp::Tours::SdkModel::Camera::ToursCameraState::CreateFromCameraState(m_pGlobeCameraController->GetCameraState(),
+                                                                                         Eegeo::Math::Rad2Deg(m_pGlobeCameraController->GetRenderCamera().GetFOV()));
+            ToursModule().GetCameraTransitionController().SetAppCameraState(appCameraState);
+            if(IsTourCameraActive())
+            {
+                ToursModule().GetCameraController().Update(dt);
+                ToursModule().GetCameraTransitionController().Update(dt);
+            }
         }
-        
         if(interiorsCameraController.IsEnabled())
         {
             interiorsCameraController.Update(dt);
@@ -759,12 +769,20 @@ namespace ExampleApp
         m_pSearchModule->GetSearchRefreshService().TryRefreshSearch(dt, ecefInterestPoint);
 
         m_pPinsModule->GetController().Update(dt, renderCamera);
-        m_pToursPinsModule->GetController().Update(dt, renderCamera);
-
+        
+        if(ToursEnabled())
+        {
+            m_pToursPinsModule->GetController().Update(dt, renderCamera);
+        }
+        
         if(!eegeoWorld.Initialising())
         {
             WorldPinsModule().GetWorldPinsScaleController().Update(dt, renderCamera);
-            TourWorldPinsModule().GetWorldPinsScaleController().Update(dt, renderCamera);
+            
+            if(ToursEnabled())
+            {
+                TourWorldPinsModule().GetWorldPinsScaleController().Update(dt, renderCamera);
+            }
             
             CompassModule().GetCompassUpdateController().Update(dt);
             CompassModule().GetCompassUpdateController().Update(dt);
@@ -799,7 +817,10 @@ namespace ExampleApp
 
         m_pNavigationService->Update(dt);
         
-        ToursModule().GetTourService().UpdateCurrentTour(dt);
+        if(ToursEnabled())
+        {
+            ToursModule().GetTourService().UpdateCurrentTour(dt);
+        }
         
         UpdateLoadingScreen(dt);
     }
@@ -829,7 +850,11 @@ namespace ExampleApp
         if(!eegeoWorld.Initialising())
         {
             WorldPinsModule().GetWorldPinsInFocusController().Update(dt, ecefInterestPoint, renderCamera);
-            TourWorldPinsModule().GetWorldPinsInFocusController().Update(dt, ecefInterestPoint, renderCamera);
+            
+            if(ToursEnabled())
+            {
+                TourWorldPinsModule().GetWorldPinsInFocusController().Update(dt, ecefInterestPoint, renderCamera);
+            }
         }
 
         Eegeo::EegeoDrawParameters drawParameters(cameraState.LocationEcef(),
@@ -895,13 +920,18 @@ namespace ExampleApp
             m_pLoadingScreen = NULL;
             
             MyPinsModule().GetMyPinsService().LoadAllPinsFromDisk();
-            AddTours();
+            
+            if(ToursEnabled())
+            {
+                AddTours();
+            }
         }
     }
     
     const bool MobileExampleApp::IsTourCameraActive() const
     {
-        return ToursModule().GetTourService().IsTourActive() || !ToursModule().GetCameraTransitionController().IsTransitionComplete();
+        return ToursEnabled() ? ToursModule().GetTourService().IsTourActive() ||
+                                !ToursModule().GetCameraTransitionController().IsTransitionComplete() : false;
     }
     
     bool MobileExampleApp::IsRunning() const
@@ -1096,7 +1126,7 @@ namespace ExampleApp
             }
         }
         
-        if(m_pWorldPinsModule->GetWorldPinsService().HandleTouchTap(data.point) || m_pToursWorldPinsModule->GetWorldPinsService().HandleTouchTap(data.point))
+        if(m_pWorldPinsModule->GetWorldPinsService().HandleTouchTap(data.point) || (ToursEnabled() && m_pToursWorldPinsModule->GetWorldPinsService().HandleTouchTap(data.point)))
         {
             return;
         }
