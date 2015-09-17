@@ -4,6 +4,7 @@
 #include "SearchQuery.h"
 #include "SwallowSearchConstants.h"
 #include <algorithm>
+#include <cctype>
 
 namespace ExampleApp
 {
@@ -73,28 +74,34 @@ namespace ExampleApp
                  Eegeo_ASSERT(false, "Identity search not implemented");
             }
             
+            // TODO: temporary alias to the unary version of std::tolower to stop eclipse getting confused (will be replaced when poiDB functionality added
+            int ToLower( int ch )
+            {
+            	return std::tolower(ch);
+            }
+
             void SwallowSearchService::PerformTextSearch(const SdkModel::SearchQuery& query)
             {
                 ExecuteQueryPerformedCallbacks(query);
                 
                 std::vector<SdkModel::SearchResultModel> results;
                 
-                std::string queryLower = query.Query();
+                std::string queryLower;
                 
-                std::transform(queryLower.begin(), queryLower.end(), queryLower.begin(), std::tolower);
+                std::transform(query.Query().begin(), query.Query().end(), std::back_inserter(queryLower), ToLower);
                 
                 for(std::vector<PersonDetails>::const_iterator it = m_people.begin(); it != m_people.end(); ++it)
                 {
-                    std::string nameLower = (*it).m_name;
-                    std::transform(nameLower.begin(), nameLower.end(), nameLower.begin(), std::tolower);
-                    std::string jobTitleLower = (*it).m_jobTitle;
-                    std::transform(jobTitleLower.begin(), jobTitleLower.end(), jobTitleLower.begin(), std::tolower);
-                    std::string workingGroupLower = (*it).m_workingGroup;
-                    std::transform(workingGroupLower.begin(), workingGroupLower.end(), workingGroupLower.begin(), std::tolower);
-                    std::string officeLocationLower = (*it).m_officeLocation;
-                    std::transform(officeLocationLower.begin(), officeLocationLower.end(), officeLocationLower.begin(), std::tolower);
-                    std::string deskCodeLower = (*it).m_deskCode;
-                    std::transform(deskCodeLower.begin(), deskCodeLower.end(), deskCodeLower.begin(), std::tolower);
+                    std::string nameLower;
+                    std::transform((*it).m_name.begin(), (*it).m_name.end(), std::back_inserter(nameLower), ToLower);
+                    std::string jobTitleLower;
+                    std::transform((*it).m_jobTitle.begin(), (*it).m_jobTitle.end(), std::back_inserter(jobTitleLower), ToLower);
+                    std::string workingGroupLower;
+                    std::transform((*it).m_workingGroup.begin(), (*it).m_workingGroup.end(), std::back_inserter(workingGroupLower), ToLower);
+                    std::string officeLocationLower;
+                    std::transform((*it).m_officeLocation.begin(), (*it).m_officeLocation.end(), std::back_inserter(officeLocationLower), ToLower);
+                    std::string deskCodeLower;
+                    std::transform((*it).m_deskCode.begin(), (*it).m_deskCode.end(), std::back_inserter(deskCodeLower), ToLower);
                     
                     bool queryMatch = false;
                     
