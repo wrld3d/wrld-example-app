@@ -25,6 +25,7 @@ namespace ExampleApp
                         ExampleTourStateMachineFactory(Camera::IToursCameraTransitionController& toursCameraTransitionController,
                                                        Camera::IToursCameraController& toursCameraController,
                                                        WorldPins::SdkModel::IWorldPinsService& worldPinsService,
+                                                       bool interiorsEnabled,
                                                        Eegeo::Resources::Interiors::InteriorsController& interiorController
                                                     );
                         ~ExampleTourStateMachineFactory();
@@ -37,6 +38,7 @@ namespace ExampleApp
                         Camera::IToursCameraController& m_toursCameraController;
                         WorldPins::SdkModel::IWorldPinsService& m_worldPinsService;
                         
+                        bool m_interiorsEnabled;
                         Eegeo::Resources::Interiors::InteriorsController& m_interiorController;
                     };
                 }

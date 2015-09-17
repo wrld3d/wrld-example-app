@@ -193,7 +193,7 @@ namespace ExampleApp
                                                 Eegeo::EnvironmentCharacterSet::Latin,
                                                 platformConfig,
                                                 NULL,
-                                                "http://cdn1.eegeo.com/coverage-trees/vinteriors/v30/manifest.txt.gz",
+                                                "http://cdn1.eegeo.com/coverage-trees/vglobal/v742/manifest.txt.gz",
                                                 "http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v366/manifest.txt.gz",
                                                 &errorHandler
                                                 );
@@ -686,6 +686,7 @@ namespace ExampleApp
         Tours::SdkModel::TourInstances::Example::ExampleTourStateMachineFactory factory(ToursModule().GetCameraTransitionController(),
                                                                                         ToursModule().GetCameraController(),
                                                                                         m_pToursWorldPinsModule->GetWorldPinsService(),
+                                                                                        m_interiorsEnabled,
                                                                                         interiorsPresentationModule.GetInteriorsController()
                                                                                         );
         

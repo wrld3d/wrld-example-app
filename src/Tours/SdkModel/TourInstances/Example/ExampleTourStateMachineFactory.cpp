@@ -25,6 +25,7 @@ namespace ExampleApp
                     ExampleTourStateMachineFactory::ExampleTourStateMachineFactory(Camera::IToursCameraTransitionController& toursCameraTransitionController,
                                                                                    Camera::IToursCameraController& toursCameraController,
                                                                                    WorldPins::SdkModel::IWorldPinsService& worldPinsService,
+                                                                                   bool interiorsEnabled,
                                                                                    Eegeo::Resources::Interiors::InteriorsController& interiorController
                                                                              )
                     : m_toursCameraController(toursCameraController)
@@ -65,7 +66,7 @@ namespace ExampleApp
                         
                         stateMachineStates.push_back(Eegeo_NEW(ExampleTourState(tourModel.States()[tourIndex++],
                                                                                 Eegeo::Space::LatLong::FromDegrees(37.781908, -122.404784),
-                                                                                true,
+                                                                                m_interiorsEnabled,
                                                                                 m_toursCameraTransitionController,
                                                                                 m_worldPinsService,
                                                                                 hotelPinInteriorData,

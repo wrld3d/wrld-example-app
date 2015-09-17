@@ -120,7 +120,6 @@ AppHost::AppHost(
 
     Eegeo::Config::PlatformConfig platformConfig = Eegeo::iOS::iOSPlatformConfigBuilder(App::GetDevice(), App::IsDeviceMultiCore(), App::GetMajorSystemVersion()).Build();
     platformConfig.OptionsConfig.StartMapModuleAutomatically = false;
-    platformConfig.OptionsConfig.EnableInteriors = true;
 
     m_pInitialExperienceModule = Eegeo_NEW(ExampleApp::InitialExperience::iOSInitialExperienceModule)(m_iOSPersistentSettingsModel, m_messageBus);
     
