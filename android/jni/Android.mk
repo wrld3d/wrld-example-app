@@ -47,11 +47,17 @@ LOCAL_EXPORT_C_INCLUDES := ./libs/eegeo/jpeg-turbo
 include $(PREBUILT_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
+LOCAL_MODULE := sqlite-lib
+LOCAL_SRC_FILES := ../$(PREBUILT_LIBS)/libeegeo-sdk-extensions-sqlite.a
+LOCAL_EXPORT_C_INCLUDES := ./libs/eegeo/sdk-extensions/sqlite
+include $(PREBUILT_STATIC_LIBRARY)
+
+include $(CLEAR_VARS)
 
 LOCAL_MODULE := eegeo-mobile-example-app
 LOCAL_LDLIBS := -llog -landroid -lEGL -lGLESv2 -lz -lm
 LOCAL_LDLIBS += -fuse-ld=bfd
-LOCAL_STATIC_LIBRARIES := recce-common-lib eegeo-sdk-lib png-lib curl-lib ssl-lib crypto-lib http-parser-lib jpeg-lib turbojpeg-lib
+LOCAL_STATIC_LIBRARIES := recce-common-lib eegeo-sdk-lib png-lib curl-lib ssl-lib crypto-lib http-parser-lib jpeg-lib turbojpeg-lib sqlite-lib
 
 cflags := -Wall -Wno-unknown-pragmas -Wno-sign-compare -Wno-format-security -Wno-reorder
 
@@ -95,6 +101,8 @@ endif
 
 includes += ./libs/eegeo/rapidjson
 includes += ./libs/eegeo/rapidjson/internal
+includes += ./libs/eegeo/sdk-extensions/sqlite
+includes += ./libs/eegeo/sdk-extensions/sqlite3
 
 LOCAL_SRC_FILES := $(android_cpp_files:$(LOCAL_PATH)/%=%)
 LOCAL_C_INCLUDES := $(includes:$(LOCAL_PATH)/%=%)

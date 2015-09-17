@@ -1,0 +1,3 @@
+# pip requirements (package management system: http://www.pip-installer.org/en/latest/requirements.html)
+xlrd
+python-dateutil
