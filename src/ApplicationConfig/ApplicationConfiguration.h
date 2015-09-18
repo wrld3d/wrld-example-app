@@ -28,6 +28,7 @@ namespace ExampleApp
             std::string m_geoNamesUserName;
             std::string m_coverageTreeManifestURL;
             std::string m_themeManifestURL;
+            std::string m_sqliteDbUrl;
             
         public:
             
@@ -45,7 +46,8 @@ namespace ExampleApp
                                      const std::string& yelpOAuthTokenSecret,
                                      const std::string& geoNamesUserName,
                                      const std::string& coverageTreeManifestURL,
-                                     const std::string& themeManifestURL);
+                                     const std::string& themeManifestURL,
+                                     const std::string& sqliteDbUrl);
             
             const std::string& Name() const;
             
@@ -76,6 +78,8 @@ namespace ExampleApp
             const std::string& CoverageTreeManifestURL() const;
             
             const std::string& ThemeManifestURL() const;
+            
+            const std::string& SqliteDbUrl() const;
         };
     }
 }

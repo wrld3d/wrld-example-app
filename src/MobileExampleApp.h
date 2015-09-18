@@ -74,6 +74,7 @@
 #include "MapMode.h"
 #include "AppModes.h"
 #include "SwallowSearchService.h"
+#include "PoiDb.h"
 
 namespace ExampleApp
 {
@@ -137,9 +138,15 @@ namespace ExampleApp
         Search::SdkModel::ISearchServiceModule& m_searchServiceModule;
         InteriorsExplorer::SdkModel::IInteriorsExplorerModule* m_pInteriorsExplorerModule;
         InteriorsEntitiesPins::SdkModel::IInteriorsEntitiesPinsModule* m_pInteriorsEntitiesPinsModule;
+        
+        Eegeo::Modules::SQLiteModule* m_pSQLiteModule;
+        PoiDb::IPoiDbModule* m_pPoiDbModule;
+        
         AppModes::SdkModel::IAppModeModel* m_pAppModeModel;
         const bool m_interiorsEnabled;
 
+        void CreateSQLiteModule(Eegeo::UI::NativeUIFactories& nativeUIFactories);
+        
         void CreateApplicationModelModules();
 
         void DestroyApplicationModelModules();

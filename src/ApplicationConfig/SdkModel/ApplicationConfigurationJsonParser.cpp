@@ -73,6 +73,9 @@ namespace ExampleApp
                 Eegeo_ASSERT(document.HasMember("ThemeManifestURL"), "ThemeManifestURL config not found");
                 m_builder.SetThemeManifestURL(document["ThemeManifestURL"].GetString());
                 
+                Eegeo_ASSERT(document.HasMember("SqliteDbUrl"), "SqliteDbUrl config not found");
+                m_builder.SetSqliteDbUrl(document["SqliteDbUrl"].GetString());
+                
                 return m_builder.Build();
             }
         }

@@ -118,6 +118,12 @@ namespace ExampleApp
                 return *this;
             }
             
+            IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetSqliteDbUrl(const std::string& SqliteDbUrl)
+            {
+                m_sqliteDbUrl = SqliteDbUrl;
+                return *this;
+            }
+            
             ApplicationConfiguration ApplicationConfigurationBuilder::Build()
             {
                 return ApplicationConfiguration(m_name,
@@ -134,7 +140,8 @@ namespace ExampleApp
                                                 m_yelpOAuthTokenSecret,
                                                 m_geoNamesUserName,
                                                 m_coverageTreeManifestURL,
-                                                m_themeManifestURL);
+                                                m_themeManifestURL,
+                                                m_sqliteDbUrl);
             }
         }
     }

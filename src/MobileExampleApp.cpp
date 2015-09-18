@@ -66,7 +66,9 @@
 #include "MapModeModule.h"
 #include "IInteriorsExplorerInputDelegate.h"
 #include "AppModeModel.h"
-
+#include "PoiDbModule.h"
+#include "PoiDbWebLoader.h"
+#include "SQLiteModule.h"
 
 namespace ExampleApp
 {
@@ -166,6 +168,8 @@ namespace ExampleApp
         , m_metricsService(metricsService)
         , m_applicationConfiguration(applicationConfiguration)
         , m_interiorsEnabled(platformConfig.OptionsConfig.EnableInteriors)
+        , m_pSQLiteModule(NULL)
+        , m_pPoiDbModule(NULL)
     {
         m_metricsService.BeginSession(applicationConfiguration.FlurryAppKey(), EEGEO_PLATFORM_VERSION_NUMBER);
 
@@ -231,6 +235,8 @@ namespace ExampleApp
                                                                                        Eegeo::Streaming::QuadTreeCube::MAX_DEPTH_TO_VISIT,
                                                                                        mapModule.GetEnvironmentFlatteningService());
         
+        CreateSQLiteModule(nativeUIFactories);
+        
         CreateApplicationModelModules();
         
         m_pLoadingScreen = CreateLoadingScreen(screenProperties, m_pWorld->GetRenderingModule(), m_pWorld->GetPlatformAbstractionModule());
@@ -248,6 +254,8 @@ namespace ExampleApp
         Eegeo_DELETE m_pStreamingVolume;
 
         DestroyApplicationModelModules();
+        
+        Eegeo_DELETE m_pSQLiteModule;
 
         Eegeo_DELETE m_pCameraTransitionController;
         Eegeo_DELETE m_pNavigationService;
@@ -262,10 +270,31 @@ namespace ExampleApp
         Eegeo_DELETE m_pBlitter;
         m_pBlitter = NULL;
     }
+    
+    void MobileExampleApp::CreateSQLiteModule(Eegeo::UI::NativeUIFactories& nativeUIFactories)
+    {
+        Eegeo_ASSERT(m_pSQLiteModule == NULL);
+        
+        Eegeo::Modules::IPlatformAbstractionModule& platformAbstractionModule = m_platformAbstractions;
+        
+        const Eegeo::Modules::SQLiteModuleConfig& config = Eegeo::Modules::SQLiteModuleConfig::CreateDefault();
+        
+        m_pSQLiteModule = Eegeo::Modules::SQLiteModule::Create(config, platformAbstractionModule, nativeUIFactories.AlertBoxFactory());
+    }
 
     void MobileExampleApp::CreateApplicationModelModules()
     {
         Eegeo::EegeoWorld& world = *m_pWorld;
+        
+        Eegeo_ASSERT(m_pPoiDbModule == NULL);
+        Eegeo_ASSERT(m_pSQLiteModule != NULL);
+        
+        const std::string poiTableName = "EmployeePois";
+        
+        const std::string destSqliteDbFilename = "pois.db";
+        
+        m_pPoiDbModule = PoiDb::PoiDbModule::Create(poiTableName, m_applicationConfiguration.SqliteDbUrl(), destSqliteDbFilename, *m_pSQLiteModule);
+        m_pPoiDbModule->GetPoiDbWebLoader().Load();
 
         m_pReactionControllerModule = Eegeo_NEW(Reaction::View::ReactionControllerModule)();
 
@@ -507,6 +536,8 @@ namespace ExampleApp
         Eegeo_DELETE m_pWatermarkModule;
 
         Eegeo_DELETE m_pReactionControllerModule;
+        
+        Eegeo_DELETE m_pPoiDbModule;
     }
 
     std::vector<ExampleApp::OpenableControl::View::IOpenableControlViewModel*> MobileExampleApp::GetOpenableControls() const

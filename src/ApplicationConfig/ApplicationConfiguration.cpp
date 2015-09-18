@@ -20,7 +20,8 @@ namespace ExampleApp
                                                            const std::string& yelpOAuthTokenSecret,
                                                            const std::string& geoNamesUserName,
                                                            const std::string& coverageTreeManifestURL,
-                                                           const std::string& themeManifestURL)
+                                                           const std::string& themeManifestURL,
+                                                           const std::string& sqliteDbUrl)
         : m_name(name)
         , m_eegeoApiKey(eegeoApiKey)
         , m_interestLocation(interestLocation)
@@ -36,6 +37,7 @@ namespace ExampleApp
         , m_geoNamesUserName(geoNamesUserName)
         , m_coverageTreeManifestURL(coverageTreeManifestURL)
         , m_themeManifestURL(themeManifestURL)
+        , m_sqliteDbUrl(sqliteDbUrl)
         {
             
         }
@@ -113,6 +115,11 @@ namespace ExampleApp
         const std::string& ApplicationConfiguration::ThemeManifestURL() const
         {
             return m_themeManifestURL;
+        }
+        
+        const std::string& ApplicationConfiguration::SqliteDbUrl() const
+        {
+            return m_sqliteDbUrl;
         }
     }
 }

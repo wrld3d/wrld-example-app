@@ -47,6 +47,8 @@ namespace ExampleApp
                 
                 virtual IApplicationConfigurationBuilder& SetThemeManifestURL(const std::string& themesManifestUrl) = 0;
                 
+                virtual IApplicationConfigurationBuilder& SetSqliteDbUrl(const std::string& SqliteDbUrl) = 0;
+                
                 virtual ApplicationConfiguration Build() = 0;
             };
         }

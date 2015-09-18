@@ -134,6 +134,10 @@
 		18A5E08C1BAADABF0015684B /* PoiDbServiceProvider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18A5E0811BAADABF0015684B /* PoiDbServiceProvider.cpp */; };
 		18A5E08D1BAADABF0015684B /* PoiDbWebLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18A5E0831BAADABF0015684B /* PoiDbWebLoader.cpp */; };
 		18A5E08E1BAADABF0015684B /* PoiDbWebLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18A5E0831BAADABF0015684B /* PoiDbWebLoader.cpp */; };
+		18A5E0911BAB34BA0015684B /* libsdk-extensions-sqlite-sim.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18A5E08F1BAB34BA0015684B /* libsdk-extensions-sqlite-sim.a */; };
+		18A5E0921BAB34BA0015684B /* libsdk-extensions-sqlite-sim.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18A5E08F1BAB34BA0015684B /* libsdk-extensions-sqlite-sim.a */; };
+		18A5E0931BAB34BA0015684B /* libsdk-extensions-sqlite.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18A5E0901BAB34BA0015684B /* libsdk-extensions-sqlite.a */; };
+		18A5E0941BAB34BA0015684B /* libsdk-extensions-sqlite.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18A5E0901BAB34BA0015684B /* libsdk-extensions-sqlite.a */; };
 		18A6574E1A9F390E00238F33 /* SearchResultPinAddedEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18A6574C1A9F390E00238F33 /* SearchResultPinAddedEvent.cpp */; };
 		18A6574F1A9F390E00238F33 /* SearchResultPinAddedEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18A6574C1A9F390E00238F33 /* SearchResultPinAddedEvent.cpp */; };
 		18A657521A9F391E00238F33 /* SearchResultPinRemovedEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18A657501A9F391E00238F33 /* SearchResultPinRemovedEvent.cpp */; };
@@ -1440,6 +1444,8 @@
 		18A5E0841BAADABF0015684B /* PoiDbWebLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PoiDbWebLoader.h; sourceTree = "<group>"; };
 		18A5E0851BAADABF0015684B /* PoiFtsResults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PoiFtsResults.h; sourceTree = "<group>"; };
 		18A5E0861BAADABF0015684B /* PoiTableDto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PoiTableDto.h; sourceTree = "<group>"; };
+		18A5E08F1BAB34BA0015684B /* libsdk-extensions-sqlite-sim.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libsdk-extensions-sqlite-sim.a"; path = "Include/eegeo/libsdk-extensions-sqlite-sim.a"; sourceTree = "<group>"; };
+		18A5E0901BAB34BA0015684B /* libsdk-extensions-sqlite.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libsdk-extensions-sqlite.a"; path = "Include/eegeo/libsdk-extensions-sqlite.a"; sourceTree = "<group>"; };
 		18A6574B1A9F385B00238F33 /* SdkDomainEventsMessageCatalog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SdkDomainEventsMessageCatalog.h; sourceTree = "<group>"; };
 		18A6574C1A9F390E00238F33 /* SearchResultPinAddedEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchResultPinAddedEvent.cpp; sourceTree = "<group>"; };
 		18A6574D1A9F390E00238F33 /* SearchResultPinAddedEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultPinAddedEvent.h; sourceTree = "<group>"; };
@@ -2604,6 +2610,7 @@
 				56BFB0C81A8B76D200572C99 /* libapps-on-maps-cpp11-sim.a in Frameworks */,
 				56BFB0CA1A8B76D200572C99 /* libapps-on-maps-cpp11.a in Frameworks */,
 				56BFB0C31A8B73ED00572C99 /* libturbojpeg.a in Frameworks */,
+				18A5E0941BAB34BA0015684B /* libsdk-extensions-sqlite.a in Frameworks */,
 				56BFB0CC1A8B7BDC00572C99 /* Security.framework in Frameworks */,
 				56BFB0CD1A8B7BF800572C99 /* libFlurry_6.0.0.a in Frameworks */,
 				222E068F1948B08B0004FFD9 /* SystemConfiguration.framework in Frameworks */,
@@ -2617,6 +2624,7 @@
 				222E06921948B08B0004FFD9 /* OpenGLES.framework in Frameworks */,
 				222E06931948B08B0004FFD9 /* UIKit.framework in Frameworks */,
 				222E06941948B08B0004FFD9 /* Foundation.framework in Frameworks */,
+				18A5E0921BAB34BA0015684B /* libsdk-extensions-sqlite-sim.a in Frameworks */,
 				222E06961948B08B0004FFD9 /* CoreData.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2628,6 +2636,7 @@
 				56D620DA1A8B641200828A9E /* libapps-on-maps-sim.a in Frameworks */,
 				56D620DB1A8B641200828A9E /* libapps-on-maps.a in Frameworks */,
 				56D620DC1A8B641200828A9E /* libturbojpeg.a in Frameworks */,
+				18A5E0931BAB34BA0015684B /* libsdk-extensions-sqlite.a in Frameworks */,
 				5633F8ED1A7928C500D69813 /* Security.framework in Frameworks */,
 				5633F8EB1A79289500D69813 /* libFlurry_6.0.0.a in Frameworks */,
 				7EE48254168477600006E99B /* SystemConfiguration.framework in Frameworks */,
@@ -2641,6 +2650,7 @@
 				7EE4824E168476BA0006E99B /* OpenGLES.framework in Frameworks */,
 				7EE481EB16836F370006E99B /* UIKit.framework in Frameworks */,
 				7EE481ED16836F370006E99B /* Foundation.framework in Frameworks */,
+				18A5E0911BAB34BA0015684B /* libsdk-extensions-sqlite-sim.a in Frameworks */,
 				7EE481F116836F370006E99B /* CoreData.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4883,6 +4893,8 @@
 		7EE481E916836F370006E99B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				18A5E08F1BAB34BA0015684B /* libsdk-extensions-sqlite-sim.a */,
+				18A5E0901BAB34BA0015684B /* libsdk-extensions-sqlite.a */,
 				56BFB0C91A8B76D200572C99 /* libapps-on-maps-cpp11.a */,
 				56BFB0C41A8B73ED00572C99 /* libapps-on-maps-cpp11-sim.a */,
 				56BFB0C51A8B73ED00572C99 /* libsdk-extensions-sqlite-cpp11-sim.a */,
