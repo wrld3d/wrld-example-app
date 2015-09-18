@@ -1245,6 +1245,12 @@
 		7EE48256168477A80006E99B /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE48255168477A80006E99B /* MobileCoreServices.framework */; };
 		7EE48258168477CB0006E99B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE48257168477CB0006E99B /* libz.dylib */; };
 		7EF5D8651737F9A40049D787 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EF5D8641737F9A40049D787 /* CoreLocation.framework */; };
+		BFDAB4CE1BAC0D0E00E10ADD /* menu_list.png in Resources */ = {isa = PBXBuildFile; fileRef = BFDAB4CB1BAC0D0E00E10ADD /* menu_list.png */; };
+		BFDAB4CF1BAC0D0E00E10ADD /* menu_list.png in Resources */ = {isa = PBXBuildFile; fileRef = BFDAB4CB1BAC0D0E00E10ADD /* menu_list.png */; };
+		BFDAB4D01BAC0D0E00E10ADD /* menu_list@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFDAB4CC1BAC0D0E00E10ADD /* menu_list@2x.png */; };
+		BFDAB4D11BAC0D0E00E10ADD /* menu_list@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFDAB4CC1BAC0D0E00E10ADD /* menu_list@2x.png */; };
+		BFDAB4D21BAC0D0E00E10ADD /* menu_list@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFDAB4CD1BAC0D0E00E10ADD /* menu_list@3x.png */; };
+		BFDAB4D31BAC0D0E00E10ADD /* menu_list@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFDAB4CD1BAC0D0E00E10ADD /* menu_list@3x.png */; };
 		E016040E19EEC26E0029A035 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E016040D19EEC26E0029A035 /* Images.xcassets */; };
 		E0632EA01B8331E4000C282E /* InteriorsStreamingController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E0632E9E1B8331E4000C282E /* InteriorsStreamingController.cpp */; };
 		E0632EA11B8331E4000C282E /* InteriorsStreamingController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E0632E9E1B8331E4000C282E /* InteriorsStreamingController.cpp */; };
@@ -2524,6 +2530,9 @@
 		7EE48255168477A80006E99B /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		7EE48257168477CB0006E99B /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		7EF5D8641737F9A40049D787 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		BFDAB4CB1BAC0D0E00E10ADD /* menu_list.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu_list.png; sourceTree = "<group>"; };
+		BFDAB4CC1BAC0D0E00E10ADD /* menu_list@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu_list@2x.png"; sourceTree = "<group>"; };
+		BFDAB4CD1BAC0D0E00E10ADD /* menu_list@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu_list@3x.png"; sourceTree = "<group>"; };
 		E016040D19EEC26E0029A035 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		E0632E9E1B8331E4000C282E /* InteriorsStreamingController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InteriorsStreamingController.cpp; sourceTree = "<group>"; };
 		E0632E9F1B8331E4000C282E /* InteriorsStreamingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InteriorsStreamingController.h; sourceTree = "<group>"; };
@@ -4862,6 +4871,9 @@
 		7EE4825B16847E7C0006E99B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				BFDAB4CB1BAC0D0E00E10ADD /* menu_list.png */,
+				BFDAB4CC1BAC0D0E00E10ADD /* menu_list@2x.png */,
+				BFDAB4CD1BAC0D0E00E10ADD /* menu_list@3x.png */,
 				E0AEEEF21B8CB0C700BA9BF0 /* floor_selection_bottom@2x.png */,
 				E0AEEEF31B8CB0C700BA9BF0 /* floor_selection_bottom@3x.png */,
 				E0AEEEF41B8CB0C700BA9BF0 /* floor_selection_top@2x.png */,
@@ -5343,6 +5355,8 @@
 				566307101AD2D69800980426 /* stars_4_5@3x.png in Resources */,
 				18FE20EE1AA9B2C200ACE28A /* compass@3x.png in Resources */,
 				56A3DCEC1A239BD100110FDD /* button_remove_pin_off.png in Resources */,
+				BFDAB4D11BAC0D0E00E10ADD /* menu_list@2x.png in Resources */,
+				BFDAB4CF1BAC0D0E00E10ADD /* menu_list.png in Resources */,
 				566306FC1AD2D69800980426 /* stars_3_0@2x.png in Resources */,
 				18B5ACFF19DC160E00BA4A38 /* SearchResultOnMap in Resources */,
 				18FE21E81AA9D34400ACE28A /* arrow3_left@3x.png in Resources */,
@@ -5403,6 +5417,7 @@
 				566306F81AD2D69800980426 /* stars_2_5@3x.png in Resources */,
 				18EC013C1AA7752500902E98 /* icon1_spring@2x.png in Resources */,
 				18FE21A01AA9C75700ACE28A /* menu_background1@3x.png in Resources */,
+				BFDAB4D31BAC0D0E00E10ADD /* menu_list@3x.png in Resources */,
 				18FE215E1AA9BA3D00ACE28A /* button_streets_off@3x.png in Resources */,
 				18FE21CC1AA9C98100ACE28A /* search_results_bar_small@2x.png in Resources */,
 				E06AE5C11B8B3A05000F85E3 /* button_close_place_pin_on@2x.png in Resources */,
@@ -5615,6 +5630,8 @@
 				18FE20ED1AA9B2C200ACE28A /* compass@3x.png in Resources */,
 				18B5ACA719DC15CD00BA4A38 /* icon1_hotel.png in Resources */,
 				E016040E19EEC26E0029A035 /* Images.xcassets in Resources */,
+				BFDAB4D01BAC0D0E00E10ADD /* menu_list@2x.png in Resources */,
+				BFDAB4CE1BAC0D0E00E10ADD /* menu_list.png in Resources */,
 				566306FB1AD2D69800980426 /* stars_3_0@2x.png in Resources */,
 				56A3DCEB1A239BD100110FDD /* button_remove_pin_off.png in Resources */,
 				18FE21E71AA9D34400ACE28A /* arrow3_left@3x.png in Resources */,
@@ -5675,6 +5692,7 @@
 				566306F71AD2D69800980426 /* stars_2_5@3x.png in Resources */,
 				18EC013B1AA7752500902E98 /* icon1_spring@2x.png in Resources */,
 				18FE219F1AA9C75700ACE28A /* menu_background1@3x.png in Resources */,
+				BFDAB4D21BAC0D0E00E10ADD /* menu_list@3x.png in Resources */,
 				18FE215D1AA9BA3D00ACE28A /* button_streets_off@3x.png in Resources */,
 				18FE21CB1AA9C98100ACE28A /* search_results_bar_small@2x.png in Resources */,
 				E06AE5C01B8B3A05000F85E3 /* button_close_place_pin_on@2x.png in Resources */,
