@@ -354,8 +354,7 @@ namespace ExampleApp
         const bool ToursEnabled() const
         {
 #ifdef EEGEO_DROID
-            Eegeo_TTY("Tours are not currently supported for android");
-            return false;
+            Eegeo_ASSERT(!m_enableTours, "Tours are not currently supported for android");
 #endif
             return m_enableTours;
         }
