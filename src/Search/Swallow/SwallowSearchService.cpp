@@ -30,10 +30,10 @@ namespace ExampleApp
             {
                 PoiDb::IPoiDbService* poiDbService;
                 
+                ExecuteQueryPerformedCallbacks(query);
+                
                 if(m_poiDbModule.TryGetPoiDbService(poiDbService))
                 {
-                    ExecuteQueryPerformedCallbacks(query);
-                    
                     if(query.IsCategory())
                     {
                         PerformCategorySearch(query, *poiDbService);
