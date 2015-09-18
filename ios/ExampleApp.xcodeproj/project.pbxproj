@@ -1348,11 +1348,11 @@
 		BFD5FD7E1BA706AD00F591F1 /* TourFullScreenImageViewModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFD5FD361BA706AD00F591F1 /* TourFullScreenImageViewModel.cpp */; };
 		BFD5FD7F1BA706AD00F591F1 /* TourFullScreenImageViewModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFD5FD361BA706AD00F591F1 /* TourFullScreenImageViewModel.cpp */; };
 		BFD5FD891BA708E100F591F1 /* FXImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD5FD831BA708E100F591F1 /* FXImageView.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
-		BFD5FD8A1BA708E100F591F1 /* FXImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD5FD831BA708E100F591F1 /* FXImageView.m */; };
+		BFD5FD8A1BA708E100F591F1 /* FXImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD5FD831BA708E100F591F1 /* FXImageView.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		BFD5FD8B1BA708E100F591F1 /* UIImage+FX.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD5FD851BA708E100F591F1 /* UIImage+FX.m */; };
 		BFD5FD8C1BA708E100F591F1 /* UIImage+FX.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD5FD851BA708E100F591F1 /* UIImage+FX.m */; };
 		BFD5FD8D1BA708E100F591F1 /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD5FD881BA708E100F591F1 /* iCarousel.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
-		BFD5FD8E1BA708E100F591F1 /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD5FD881BA708E100F591F1 /* iCarousel.m */; };
+		BFD5FD8E1BA708E100F591F1 /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD5FD881BA708E100F591F1 /* iCarousel.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		BFD5FD941BA7141600F591F1 /* ImageFetchOperation.mm in Sources */ = {isa = PBXBuildFile; fileRef = BFD5FD911BA7141600F591F1 /* ImageFetchOperation.mm */; };
 		BFD5FD951BA7141600F591F1 /* ImageFetchOperation.mm in Sources */ = {isa = PBXBuildFile; fileRef = BFD5FD911BA7141600F591F1 /* ImageFetchOperation.mm */; };
 		BFD5FD961BA7141600F591F1 /* ImageStore.mm in Sources */ = {isa = PBXBuildFile; fileRef = BFD5FD931BA7141600F591F1 /* ImageStore.mm */; };
@@ -6730,6 +6730,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7E3B894C1A385A290023C94E /* MyPinDetailsViewModel.cpp in Sources */,
+				BFD5FD8D1BA708E100F591F1 /* iCarousel.m in Sources */,
 				7E3B8A061A385A290023C94E /* WorldPinInFocusViewModel.cpp in Sources */,
 				7E3B89221A385A290023C94E /* MyPinCreationModule.cpp in Sources */,
 				7E3B88A61A385A290023C94E /* AboutPageController.cpp in Sources */,
@@ -6792,7 +6793,6 @@
 				7E3B89B01A385A290023C94E /* SearchResultAddRemoveHandler.cpp in Sources */,
 				7E3B8A041A385A290023C94E /* WorldPinInFocusScreenControl.cpp in Sources */,
 				7E3B893E1A385A290023C94E /* UserCreatedMyPinDetailsModelSelectedMessage.cpp in Sources */,
-				BFD5FD8D1BA708E100F591F1 /* iCarousel.m in Sources */,
 				7E3B89DA1A385A290023C94E /* SecondaryMenuController.cpp in Sources */,
 				7E3B89461A385A290023C94E /* MyPinDetailsController.cpp in Sources */,
 				7E3B8ADD1A385F110023C94E /* FlattenButtonViewModule.mm in Sources */,

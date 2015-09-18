@@ -221,7 +221,7 @@ const bool TestCycleCarouselMode = false;
         // index 0 is a dummy to test different carousel modes
         if(index == 0)
         {
-            _carousel.type = (_carousel.type + 1) % 12;
+            _carousel.type = (iCarouselType)((_carousel.type + 1) % 12);
             [_carousel reloadData];
         }
         else
