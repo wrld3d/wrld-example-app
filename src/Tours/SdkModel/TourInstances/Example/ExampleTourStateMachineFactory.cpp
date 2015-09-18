@@ -32,6 +32,7 @@ namespace ExampleApp
                     , m_toursCameraTransitionController(toursCameraTransitionController)
                     , m_worldPinsService(worldPinsService)
                     , m_interiorController(interiorController)
+                    , m_interiorsEnabled(interiorsEnabled)
                     {
                         
                     }
