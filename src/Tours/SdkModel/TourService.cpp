@@ -115,7 +115,7 @@ namespace ExampleApp
                         SuspendedTour previousTour = m_previousActiveToursStack.top();
                         m_previousActiveToursStack.pop();
                         
-                        StartCurrentActiveTour(previousTour.Tour, previousTour.Card);
+                        StartCurrentActiveTour(previousTour.tour, previousTour.card);
                     }
                 }
             }

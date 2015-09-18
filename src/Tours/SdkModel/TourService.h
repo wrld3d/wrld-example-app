@@ -24,18 +24,18 @@ namespace ExampleApp
                 
                 SuspendedTour(TourModel& tour, int card)
                 {
-                    Card = card;
-                    Tour = tour;
+                    this->card = card;
+                    this->tour = tour;
                 }
                 
                 SuspendedTour()
                 {
-                    Card = -1;
-                    Tour = TourModel::Empty();
+                    card = -1;
+                    tour = TourModel::Empty();
                 }
                 
-                int Card;
-                TourModel Tour;
+                int card;
+                TourModel tour;
             };
             
             class TourService : public ITourService, private Eegeo::NonCopyable
