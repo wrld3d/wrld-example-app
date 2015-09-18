@@ -77,31 +77,6 @@ def insert_into_table(db_cursor,
             raise ValueError("mismatched columns for row: " + insert_values)
         db_cursor.execute(sql_insert_row_cmd, insert_values)
 
-def insert_into_table(db_cursor, 
-                      table_name, 
-                      column_names, 
-                      xls_sheet, 
-                      first_data_row_number, 
-                      available_in_app_col_index):
-    placeholder_fields = ['?'] * len(column_names)
-    comma_separated_placeholder_fields = ','.join(placeholder_fields)
-    sql_insert_row_cmd = u'INSERT INTO "' +\
-                         table_name +\
-                         '" VALUES (' +\
-                         comma_separated_placeholder_fields +\
-                         ');'
-
-    for row_num in range(first_data_row_number, xls_sheet.nrows):
-        if not is_row_available_in_app(xls_sheet, row_num, available_in_app_col_index):
-            print("skipping row " + str(row_num))
-            continue
-        row_values = xls_sheet.row_values(row_num, 0, len(column_names) - 1)
-
-        insert_values = [None] + row_values
-        if len(insert_values) != len(column_names):
-            raise ValueError("mismatched columns for row: " + insert_values)
-        db_cursor.execute(sql_insert_row_cmd, insert_values)
-
 def validate_column_names(xls_sheet, column_name_row, expected_columns):
     sheet_column_names = []
 
@@ -324,7 +299,7 @@ def build_db(src_xls_path, dest_db_path, dest_assets_relative_path, verbose, sto
 
     table_name = xls_sheet.name
 
-    poi_columns = ['name', 'job_title', 'working_group', 'office_location', 'desk_code', 'interior_id', 'interior_floor', 'latitude_degrees', 'longitude_degrees']
+    poi_columns = ['name', 'job_title', 'image_filename', 'working_group', 'office_location', 'desk_code', 'interior_id', 'interior_floor', 'latitude_degrees', 'longitude_degrees']
     control_columns = ['available_in_app']
     expected_columns = poi_columns + control_columns
     available_in_app_col_index = len(poi_columns)
@@ -359,21 +334,21 @@ def build_db(src_xls_path, dest_db_path, dest_assets_relative_path, verbose, sto
     if not all_validated and stop_on_first_error:
         raise ValueError("failed to validated title longitude_degrees values")
 
-#    all_validated &= validate_images(xls_sheet, first_data_row_number, poi_columns.index('image_filename'), available_in_app_col_index, src_image_folder_path)
-#    if not all_validated and stop_on_first_error:
-#        raise ValueError("failed to validated image_filename column values")
+    all_validated &= validate_images(xls_sheet, first_data_row_number, poi_columns.index('image_filename'), available_in_app_col_index, src_image_folder_path)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated image_filename column values")
 
     if not all_validated:
         raise ValueError("failed validation")
 
-#    build_images(xls_sheet, first_data_row_number, poi_columns.index('image_filename'), available_in_app_col_index, src_image_folder_path, dest_image_dir, verbose)
+    build_images(xls_sheet, first_data_row_number, poi_columns.index('image_filename'), available_in_app_col_index, src_image_folder_path, dest_image_dir, verbose)
 
     column_names = ['id'] + poi_columns
-    column_types = ['INTEGER PRIMARY KEY', 'TEXT', 'TEXT', 'TEXT', 'TEXT', 'TEXT', 'TEXT', 'INTEGER', 'REAL', 'REAL']
+    column_types = ['INTEGER PRIMARY KEY', 'TEXT', 'TEXT', 'TEXT', 'TEXT', 'TEXT', 'TEXT', 'TEXT', 'INTEGER', 'REAL', 'REAL']
     create_table(db_cursor, table_name, column_names, column_types)
 
-#    (db_cursor, table_name, column_names, xls_sheet, first_data_row_number, available_in_app_col_index, poi_columns.index('image_filename'), dest_image_relative_dir)
-    insert_into_table(db_cursor, table_name, column_names, xls_sheet, first_data_row_number, available_in_app_col_index)
+    insert_into_table(db_cursor, table_name, column_names, xls_sheet, first_data_row_number, available_in_app_col_index, poi_columns.index('image_filename'), dest_image_relative_dir)
+#    insert_into_table(db_cursor, table_name, column_names, xls_sheet, first_data_row_number, available_in_app_col_index)
 
     connection.commit()
 

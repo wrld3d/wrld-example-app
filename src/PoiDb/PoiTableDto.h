@@ -16,6 +16,7 @@ namespace ExampleApp
             int poi_id;
             std::string name;
             std::string job_title;
+            std::string image_filename;
             std::string working_group;
             std::string office_location;
             std::string desk_code;
