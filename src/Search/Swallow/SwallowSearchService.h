@@ -3,11 +3,11 @@
 #pragma once
 
 #include <vector>
-#include <string>
 #include "Search.h"
 #include "SearchServiceBase.h"
 #include "LatLongAltitude.h"
 #include "InteriorId.h"
+#include "PoiDb.h"
 
 namespace ExampleApp
 {
@@ -18,7 +18,7 @@ namespace ExampleApp
             class SwallowSearchService : public SdkModel::SearchServiceBase, private Eegeo::NonCopyable
             {
             public:
-                SwallowSearchService();
+                SwallowSearchService(PoiDb::IPoiDbModule& poiDbModule);
                 
                 void CancelInFlightQueries();
                 
@@ -59,11 +59,13 @@ namespace ExampleApp
                     }
                 };
                 
-                void PerformTextSearch(const SdkModel::SearchQuery& query);
+                void PerformFullTextSearch(const SdkModel::SearchQuery& query, PoiDb::IPoiDbService& poiDbService);
                 
-                void PerformCategorySearch(const SdkModel::SearchQuery& query);
+                void PerformCategorySearch(const SdkModel::SearchQuery& query, PoiDb::IPoiDbService& poiDbService);
                 
-                std::vector<PersonDetails> m_people;
+                void ParseSearchResults(const SdkModel::SearchQuery& searchQuery, const std::vector<PoiDb::PoiTableDto>& results);
+                
+                PoiDb::IPoiDbModule& m_poiDbModule;
             };
         }
     }

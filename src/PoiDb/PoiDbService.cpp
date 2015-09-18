@@ -43,6 +43,7 @@ namespace ExampleApp
                 poi_id = 0,
                 poi_name,
                 poi_job_title,
+                poi_workingGroup,
                 poi_office_location,
                 poi_desk_code,
                 poi_interior_id,

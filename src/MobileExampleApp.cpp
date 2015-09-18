@@ -308,7 +308,7 @@ namespace ExampleApp
                                                                          m_messageBus,
                                                                          m_networkCapabilities);
         
-        m_pSwallowSearchService = new(ExampleApp::Search::Swallow::SwallowSearchService)();
+        m_pSwallowSearchService = new(ExampleApp::Search::Swallow::SwallowSearchService)(*m_pPoiDbModule);
         
         m_pSearchModule = Eegeo_NEW(Search::SdkModel::SearchModule)(*m_pSwallowSearchService,
                                                                     *m_pGlobeCameraController,
