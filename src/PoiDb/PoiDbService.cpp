@@ -66,7 +66,7 @@ namespace ExampleApp
                 out_poiRow.poi_id = resultRow.Cell(columnOffset + poi_id).AsInteger();
                 out_poiRow.name = resultRow.Cell(columnOffset + poi_name).AsText();
                 out_poiRow.job_title = resultRow.Cell(columnOffset + poi_job_title).AsText();
-                out_poiRow.image_filename = resultRow.Cell(columnOffset + poi_image_filename).AsText();
+                out_poiRow.image_filename = GetImageUrl(assetsBaseUrl, resultRow.Cell(columnOffset + poi_image_filename).AsText());
                 out_poiRow.office_location = resultRow.Cell(columnOffset + poi_office_location).AsText();
                 out_poiRow.desk_code = resultRow.Cell(columnOffset + poi_desk_code).AsText();
                 out_poiRow.interior_id = resultRow.Cell(columnOffset + poi_interior_id).AsText();

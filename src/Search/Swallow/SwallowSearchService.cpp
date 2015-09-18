@@ -99,7 +99,7 @@ namespace ExampleApp
                                                                         std::vector<std::string>(),
                                                                         "",
                                                                         "Swallow",
-                                                                        "",
+                                                                        results.at(i).image_filename,
                                                                         "",
                                                                         std::vector<std::string>(),
                                                                         0,

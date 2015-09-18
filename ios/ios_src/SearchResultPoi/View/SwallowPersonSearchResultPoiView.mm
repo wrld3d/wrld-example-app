@@ -82,8 +82,8 @@
         self.pHeadlineContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::MainHudColor;
         [self.pControlContainer addSubview: self.pHeadlineContainer];
         
-        self.pCategoryIconContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        [self.pHeadlineContainer addSubview: self.pCategoryIconContainer];
+        self.pProfileImageContainer = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        [self.pHeadlineContainer addSubview: self.pProfileImageContainer];
         
         self.pNameLabel = [self createLabel :ExampleApp::Helpers::ColorPalette::MainHudColor :ExampleApp::Helpers::ColorPalette::WhiteTone];
         self.pNameLabel.textColor = ExampleApp::Helpers::ColorPalette::GoldTone;
@@ -102,8 +102,8 @@
     [self.pNameLabel removeFromSuperview];
     [self.pNameLabel release];
     
-    [self.pCategoryIconContainer removeFromSuperview];
-    [self.pCategoryIconContainer release];
+    [self.pProfileImageContainer removeFromSuperview];
+    [self.pProfileImageContainer release];
     
     [self.pHeadlineContainer removeFromSuperview];
     [self.pHeadlineContainer release];
@@ -251,7 +251,7 @@
                                        closeButtonSectionHeight,
                                        closeButtonSectionHeight);
     
-    self.pCategoryIconContainer.frame = CGRectMake(0.f, 0.f, headlineHeight, headlineHeight);
+    self.pProfileImageContainer.frame = CGRectMake(0.f, 0.f, headlineHeight, headlineHeight);
     const float titlePadding = 10.0f;
     self.pNameLabel.frame = CGRectMake(headlineHeight + titlePadding,
                                         0.f,
@@ -269,9 +269,9 @@
     
     [self updatePinnedButtonState];
     
-    [self.pCategoryIconContainer.subviews makeObjectsPerformSelector: @selector(removeFromSuperview)];
+    /*[self.pCategoryIconContainer.subviews makeObjectsPerformSelector: @selector(removeFromSuperview)];
     std::string categoryIcon = ExampleApp::Helpers::IconResources::GetSmallIconForCategory(pModel->GetCategory());
-    ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pCategoryIconContainer, categoryIcon, ExampleApp::Helpers::ImageHelpers::Centre);
+    ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pCategoryIconContainer, categoryIcon, ExampleApp::Helpers::ImageHelpers::Centre);*/
     
     self.pNameLabel.text = [NSString stringWithUTF8String:pModel->GetTitle().c_str()];
     
@@ -290,7 +290,20 @@
 
 - (void) updateImage:(const std::string&)url :(bool)success bytes:(const std::vector<Byte>*)bytes;
 {
-    
+    if(url == m_model.GetImageUrl())
+    {
+        //[self.pPreviewImageSpinner stopAnimating];
+        
+        if(success)
+        {
+            NSData* imageData = [NSData dataWithBytes:&bytes->at(0) length:bytes->size()];
+            UIImage *image = [UIImage imageWithData:imageData];
+            [self.pProfileImageContainer setImage:image];
+            
+            [self.pProfileImageContainer.layer removeAllAnimations];
+            self.pProfileImageContainer.hidden = false;
+        }
+    }
 }
 
 - (void) setFullyActive
