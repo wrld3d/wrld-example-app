@@ -98,7 +98,7 @@
     [self.pTableviewContainer addSubview:self.pTableview];
     [self.pMenuContainer addSubview:self.pTableviewContainer];
 
-    ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pDragTab, "Arrow", ExampleApp::Helpers::ImageHelpers::Centre);
+    ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pDragTab, "menu_list", ExampleApp::Helpers::ImageHelpers::Centre);
 
     self.pSearchEditBox.borderStyle = UITextBorderStyleRoundedRect;
     self.pSearchEditBox.returnKeyType = UIReturnKeySearch;

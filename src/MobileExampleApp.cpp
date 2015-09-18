@@ -394,13 +394,13 @@ namespace ExampleApp
                                  m_pReactionControllerModule->GetReactionControllerModel());
 
         m_pPoiRingModule = Eegeo_NEW(ExampleApp::MyPinCreation::PoiRing::SdkModel::PoiRingModule)(m_pMyPinCreationModule->GetMyPinCreationModel(),
-                           m_platformAbstractions,
-                           m_pWorld->GetRenderingModule(),
-                           m_pWorld->GetAsyncLoadersModule(),
-                           m_pWorld->GetLightingModule(),
-                           m_pWorld->GetTerrainModelModule(),
-                           m_pWorld->GetMapModule());
-
+                                                                                                  m_platformAbstractions,
+                                                                                                  m_pWorld->GetRenderingModule(),
+                                                                                                  m_pWorld->GetAsyncLoadersModule(),
+                                                                                                  m_pWorld->GetLightingModule(),
+                                                                                                  m_pWorld->GetTerrainModelModule(),
+                                                                                                  m_pWorld->GetMapModule(),
+                                                                                                  *m_pAppModeModel);
 
         m_pMyPinCreationDetailsModule = Eegeo_NEW(ExampleApp::MyPinCreationDetails::View::MyPinCreationDetailsModule)(m_identityProvider,
                                         m_pReactionControllerModule->GetReactionControllerModel());
