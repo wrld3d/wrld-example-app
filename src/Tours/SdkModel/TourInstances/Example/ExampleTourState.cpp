@@ -74,6 +74,7 @@ namespace ExampleApp
                             // Add pin.
                             ExampleApp::WorldPins::SdkModel::WorldPinFocusData worldPinFocusData(m_stateModel.Headline(), m_stateModel.Description());
                             
+                            const float heightOffsetMetres = 0.0f;
                             const int iconIndex = 4;
                             
                             m_pPinItemModel = m_worldPinsService.AddPin(Eegeo_NEW(ExampleTourPinSelectionHandler),
@@ -83,7 +84,7 @@ namespace ExampleApp
                                                                         m_worldPinInteriorData,
                                                                         m_position,
                                                                         iconIndex,
-                                                                        0.0f);
+                                                                        heightOffsetMetres);
                         }
                     }
                     

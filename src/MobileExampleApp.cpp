@@ -661,6 +661,7 @@ namespace ExampleApp
                                                          "Take the tour",
                                                          Eegeo::Space::LatLong::FromDegrees(37.784783, -122.402659),
                                                          false,
+                                                         ExampleApp::WorldPins::SdkModel::WorldPinInteriorData(),
                                                          false,
                                                          Helpers::ColorHelpers::Color::FromRGB(30, 123, 195),
                                                          Helpers::ColorHelpers::Color::FromRGB(255, 255, 255),

@@ -27,6 +27,7 @@ namespace ExampleApp
                                  const std::string& introText,
                                  const Eegeo::Space::LatLong& location,
                                  bool isInterior,
+                                 const ExampleApp::WorldPins::SdkModel::WorldPinInteriorData& worldPinInteriorData,
                                  bool showGradientBase,
                                  Helpers::ColorHelpers::Color baseColor,
                                  Helpers::ColorHelpers::Color textColor,
@@ -43,6 +44,7 @@ namespace ExampleApp
             , m_hoverCardTextColor(hoverCardTextColor)
             , m_states(states)
             , m_isInterior(isInterior)
+            , m_worldPinInteriorData(worldPinInteriorData)
             {
                 
             }
@@ -95,6 +97,11 @@ namespace ExampleApp
             Helpers::ColorHelpers::Color TourModel::HoverCardTextColor() const
             {
                 return m_hoverCardTextColor;
+            }
+            
+            const ExampleApp::WorldPins::SdkModel::WorldPinInteriorData& TourModel::WorldPinInteriorData() const
+            {
+                return m_worldPinInteriorData;
             }
             
             const std::vector<TourStateModel>& TourModel::States() const
