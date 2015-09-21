@@ -22,15 +22,13 @@ namespace ExampleApp
             {
                 ToursCameraTransitionController::ToursCameraTransitionController(IToursCameraController& toursCameraController,
                                                                                  Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& gpsGlobeCameraController,
-                                                                                 Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider,
-                                                                                 Eegeo::Resources::Interiors::InteriorsController& interiorsController)
+                                                                                 Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider)
                 : m_toursCameraController(toursCameraController)
                 , m_pToursTransitionMode(NULL)
                 , m_pToursCurrentMode(NULL)
                 , m_pToursNextMode(NULL)
                 , m_gpsGlobeCameraController(gpsGlobeCameraController)
                 , m_terrainHeightProvider(terrainHeightProvider)
-                , m_interiorsController(interiorsController)
                 {
                     
                 }

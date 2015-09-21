@@ -29,8 +29,7 @@ namespace ExampleApp
             m_pToursCameraModule = Eegeo_NEW(SdkModel::Camera::TourCameraModule)(resourceCeilingProvider,
                                                                                  screenProperties,
                                                                                  gpsGlobeCameraController,
-                                                                                 terrainHeightProvider,
-                                                                                 interiorsController);
+                                                                                 terrainHeightProvider);
 
         
             m_pTourRepository = Eegeo_NEW(SdkModel::TourRepository);
