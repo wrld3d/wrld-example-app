@@ -37,6 +37,8 @@ namespace ExampleApp
             m_categoryToIconIndex["museum"] = 8;
             m_categoryToIconIndex["museums"] = 8;
             m_categoryToIconIndex["arts"] = 8;
+            
+            m_categoryToIconIndex["person"] = 14;
         }
         
         SearchResultIconCategoryMapper::~SearchResultIconCategoryMapper()

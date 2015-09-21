@@ -95,7 +95,7 @@ namespace ExampleApp
                                                                         "",
                                                                         "",
                                                                         "",
-                                                                        "",
+                                                                        "person",
                                                                         std::vector<std::string>(),
                                                                         "",
                                                                         "Swallow",

@@ -138,6 +138,12 @@
 		18A5E0921BAB34BA0015684B /* libsdk-extensions-sqlite-sim.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18A5E08F1BAB34BA0015684B /* libsdk-extensions-sqlite-sim.a */; };
 		18A5E0931BAB34BA0015684B /* libsdk-extensions-sqlite.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18A5E0901BAB34BA0015684B /* libsdk-extensions-sqlite.a */; };
 		18A5E0941BAB34BA0015684B /* libsdk-extensions-sqlite.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18A5E0901BAB34BA0015684B /* libsdk-extensions-sqlite.a */; };
+		18A5E0A11BB035830015684B /* icon1_person.png in Resources */ = {isa = PBXBuildFile; fileRef = 18A5E09E1BB035830015684B /* icon1_person.png */; };
+		18A5E0A21BB035830015684B /* icon1_person.png in Resources */ = {isa = PBXBuildFile; fileRef = 18A5E09E1BB035830015684B /* icon1_person.png */; };
+		18A5E0A31BB035830015684B /* icon1_person@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18A5E09F1BB035830015684B /* icon1_person@2x.png */; };
+		18A5E0A41BB035830015684B /* icon1_person@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18A5E09F1BB035830015684B /* icon1_person@2x.png */; };
+		18A5E0A51BB035830015684B /* icon1_person@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18A5E0A01BB035830015684B /* icon1_person@3x.png */; };
+		18A5E0A61BB035830015684B /* icon1_person@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18A5E0A01BB035830015684B /* icon1_person@3x.png */; };
 		18A6574E1A9F390E00238F33 /* SearchResultPinAddedEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18A6574C1A9F390E00238F33 /* SearchResultPinAddedEvent.cpp */; };
 		18A6574F1A9F390E00238F33 /* SearchResultPinAddedEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18A6574C1A9F390E00238F33 /* SearchResultPinAddedEvent.cpp */; };
 		18A657521A9F391E00238F33 /* SearchResultPinRemovedEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18A657501A9F391E00238F33 /* SearchResultPinRemovedEvent.cpp */; };
@@ -1446,6 +1452,9 @@
 		18A5E0861BAADABF0015684B /* PoiTableDto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PoiTableDto.h; sourceTree = "<group>"; };
 		18A5E08F1BAB34BA0015684B /* libsdk-extensions-sqlite-sim.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libsdk-extensions-sqlite-sim.a"; path = "Include/eegeo/libsdk-extensions-sqlite-sim.a"; sourceTree = "<group>"; };
 		18A5E0901BAB34BA0015684B /* libsdk-extensions-sqlite.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libsdk-extensions-sqlite.a"; path = "Include/eegeo/libsdk-extensions-sqlite.a"; sourceTree = "<group>"; };
+		18A5E09E1BB035830015684B /* icon1_person.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon1_person.png; sourceTree = "<group>"; };
+		18A5E09F1BB035830015684B /* icon1_person@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon1_person@2x.png"; sourceTree = "<group>"; };
+		18A5E0A01BB035830015684B /* icon1_person@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon1_person@3x.png"; sourceTree = "<group>"; };
 		18A6574B1A9F385B00238F33 /* SdkDomainEventsMessageCatalog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SdkDomainEventsMessageCatalog.h; sourceTree = "<group>"; };
 		18A6574C1A9F390E00238F33 /* SearchResultPinAddedEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchResultPinAddedEvent.cpp; sourceTree = "<group>"; };
 		18A6574D1A9F390E00238F33 /* SearchResultPinAddedEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultPinAddedEvent.h; sourceTree = "<group>"; };
@@ -5095,6 +5104,9 @@
 				18B5AC5819DC15CD00BA4A38 /* icon1_park.png */,
 				18EC00E31AA7752500902E98 /* icon1_park@2x.png */,
 				18EC00E41AA7752500902E98 /* icon1_park@3x.png */,
+				18A5E09E1BB035830015684B /* icon1_person.png */,
+				18A5E09F1BB035830015684B /* icon1_person@2x.png */,
+				18A5E0A01BB035830015684B /* icon1_person@3x.png */,
 				18B5AC5919DC15CD00BA4A38 /* icon1_place.png */,
 				18EC00E51AA7752500902E98 /* icon1_place@2x.png */,
 				18EC00E61AA7752500902E98 /* icon1_place@3x.png */,
@@ -5340,6 +5352,7 @@
 				18FE216E1AA9BA3D00ACE28A /* poi_marker@3x.png in Resources */,
 				56CF26881A24777100B30439 /* icon_create_poi.png in Resources */,
 				18FE215C1AA9BA3D00ACE28A /* button_streets_off@2x.png in Resources */,
+				18A5E0A41BB035830015684B /* icon1_person@2x.png in Resources */,
 				18EC01301AA7752500902E98 /* icon1_place@2x.png in Resources */,
 				183E547A1ACE9E7700AD6B3E /* reviewsFromYelpRED@2x.png in Resources */,
 				56F28E841A261DA90061C7BF /* button_create_poi.png in Resources */,
@@ -5466,6 +5479,7 @@
 				E06AE5C31B8B3A05000F85E3 /* button_close_place_pin_on@3x.png in Resources */,
 				18EC01421AA7752500902E98 /* icon1_summer@3x.png in Resources */,
 				7E0195381B1C6B1900884B3F /* floor_selection_top.png in Resources */,
+				18A5E0A21BB035830015684B /* icon1_person.png in Resources */,
 				18FE216A1AA9BA3D00ACE28A /* place_pin_background@3x.png in Resources */,
 				18B5ACAE19DC15CD00BA4A38 /* icon1_night.png in Resources */,
 				566307021AD2D69800980426 /* stars_3_5@2x.png in Resources */,
@@ -5546,6 +5560,7 @@
 				18B5ACBE19DC15CD00BA4A38 /* icon1_spring.png in Resources */,
 				18FE21621AA9BA3D00ACE28A /* button_streets_on@3x.png in Resources */,
 				566307081AD2D69800980426 /* stars_4_0@2x.png in Resources */,
+				18A5E0A61BB035830015684B /* icon1_person@3x.png in Resources */,
 				222E069B1948B08B0004FFD9 /* MainStoryboard_iPad.storyboard in Resources */,
 				18FE21661AA9BA3D00ACE28A /* gps_marker@3x.png in Resources */,
 				566307041AD2D69800980426 /* stars_3_5@3x.png in Resources */,
@@ -5612,6 +5627,7 @@
 				18FE20F31AA9B2C200ACE28A /* icon1_options@2x.png in Resources */,
 				18FE216D1AA9BA3D00ACE28A /* poi_marker@3x.png in Resources */,
 				18EC012F1AA7752500902E98 /* icon1_place@2x.png in Resources */,
+				18A5E0A31BB035830015684B /* icon1_person@2x.png in Resources */,
 				18FE215B1AA9BA3D00ACE28A /* button_streets_off@2x.png in Resources */,
 				183E54791ACE9E7700AD6B3E /* reviewsFromYelpRED@2x.png in Resources */,
 				7EE48211168371460006E99B /* MainStoryboard_iPad.storyboard in Resources */,
@@ -5738,6 +5754,7 @@
 				E06AE5C21B8B3A05000F85E3 /* button_close_place_pin_on@3x.png in Resources */,
 				18FE20E71AA9B2C200ACE28A /* button_ok_place_pin_on@2x.png in Resources */,
 				18FE21691AA9BA3D00ACE28A /* place_pin_background@3x.png in Resources */,
+				18A5E0A11BB035830015684B /* icon1_person.png in Resources */,
 				7E0195371B1C6B1900884B3F /* floor_selection_top.png in Resources */,
 				18EC01411AA7752500902E98 /* icon1_summer@3x.png in Resources */,
 				566307011AD2D69800980426 /* stars_3_5@2x.png in Resources */,
@@ -5818,6 +5835,7 @@
 				18EC01211AA7752500902E98 /* icon1_night@3x.png in Resources */,
 				18FE21611AA9BA3D00ACE28A /* button_streets_on@3x.png in Resources */,
 				566307071AD2D69800980426 /* stars_4_0@2x.png in Resources */,
+				18A5E0A51BB035830015684B /* icon1_person@3x.png in Resources */,
 				18B5ACBD19DC15CD00BA4A38 /* icon1_spring.png in Resources */,
 				18FE21651AA9BA3D00ACE28A /* gps_marker@3x.png in Resources */,
 				566307031AD2D69800980426 /* stars_3_5@3x.png in Resources */,

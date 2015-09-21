@@ -574,7 +574,7 @@ namespace ExampleApp
                                                                   false);
         Eegeo_ASSERT(m_pinIconsTexture.textureId != 0);
 
-        int numberOfTilesAlongEachAxisOfTexturePage = 4;
+        const int numberOfTilesAlongEachAxisOfTexturePage = 8;
         m_pPinIconsTexturePageLayout = Eegeo_NEW(Eegeo::Rendering::RegularTexturePageLayout)(numberOfTilesAlongEachAxisOfTexturePage);
 
         float spriteWidth = m_pinDiameter;
