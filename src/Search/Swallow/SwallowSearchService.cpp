@@ -65,7 +65,9 @@ namespace ExampleApp
             
             void SwallowSearchService::PerformCategorySearch(const SdkModel::SearchQuery& query, PoiDb::IPoiDbService& poiDbService)
             {
+                ExecuteQueryPerformedCallbacks(query);
                 
+                ExecutQueryResponseReceivedCallbacks(query, std::vector<SdkModel::SearchResultModel>());
             }
             
             void SwallowSearchService::ParseSearchResults(const SdkModel::SearchQuery& query, const std::vector<PoiDb::PoiTableDto>& results)
