@@ -11,6 +11,9 @@
 #include "MapMode.h"
 #include "InteriorId.h"
 #include "Metrics.h"
+#include "AppModes.h"
+#include "SdkModelDomainEventBus.h"
+#include "TourStateChangedMessage.h"
 
 namespace ExampleApp
 {
@@ -26,7 +29,8 @@ namespace ExampleApp
                                        Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                        MapMode::SdkModel::IMapModeModel& mapModeModel,
                                        ExampleAppMessaging::TMessageBus& messageBus,
-                                       Metrics::IMetricsService& metricsService);
+                                       Metrics::IMetricsService& metricsService,
+                                       ExampleAppMessaging::TSdkModelDomainEventBus& sdkDomainEventBus);
                 ~InteriorsExplorerModel();
                 
                 void SelectFloor(int floor);
@@ -36,6 +40,8 @@ namespace ExampleApp
                 void OnControllerStateChanged();
                 void OnExit(const InteriorsExplorerExitMessage& message);
                 void OnSelectFloor(const InteriorsExplorerSelectFloorMessage& message);
+                
+                void PublishInteriorExplorerStateChange();
 
                 Eegeo::Resources::Interiors::InteriorsController& m_controller;
                 Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
@@ -52,7 +58,12 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<InteriorsExplorerModel, const Eegeo::Resources::Interiors::InteriorId> m_interiorSelectionModelChangedCallback;
 
                 bool m_previouslyInMapMode;
-
+                
+                bool m_tourIsActive;
+                
+                ExampleAppMessaging::TSdkModelDomainEventBus& m_sdkDomainEventBus;
+                Eegeo::Helpers::TCallback1<InteriorsExplorerModel, const ExampleApp::Tours::TourStateChangedMessage&> m_tourStateChangedBinding;
+                void OnTourStateChanged(const Tours::TourStateChangedMessage& message);
             };
         }
     }

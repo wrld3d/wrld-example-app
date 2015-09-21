@@ -9,6 +9,7 @@
 #include "IdTypes.h"
 #include "Terrain.h"
 #include "GLHelpers.h"
+#include "AppModes.h"
 
 namespace ExampleApp
 {
@@ -27,7 +28,8 @@ namespace ExampleApp
                                   Eegeo::Modules::Core::AsyncLoadersModule& asyncLoadersModule,
                                   Eegeo::Modules::Core::LightingModule& lightingModule,
                                   Eegeo::Modules::Map::Layers::TerrainModelModule& terrainModelModule,
-                                  Eegeo::Modules::Map::MapModule& mapModule);
+                                  Eegeo::Modules::Map::MapModule& mapModule,
+                                  ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel);
 
                     ~PoiRingModule();
 

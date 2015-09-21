@@ -32,6 +32,8 @@
         
         
         m_inactiveFloorListXPosition = -50.f;
+        
+        const float upperMargin = 50.0f;
         m_inactiveDetailPaneYPosition = m_screenHeight;
         
         self.pFloorPanel = [[[UIView alloc] initWithFrame:CGRectMake(m_inactiveFloorListXPosition, m_screenHeight/2.0f, 55, 200)] autorelease];
@@ -48,30 +50,49 @@
         
         float buttonSize = 40.f;
         float labelLength = 200.f;
-        float totalPanelLength = buttonSize + labelLength + buttonSize;
-
-        float totalPanelHeight = buttonSize;
+        
+        const float detailsPanelHeight = 40.0f;
+        float totalPanelLength = labelLength + buttonSize;
+        
+        float totalPanelHeight = detailsPanelHeight;
         
         m_detailsPanelHeight = totalPanelHeight;
         
-        self.pDetailsPanel = [[[UIView alloc] initWithFrame:CGRectMake(m_screenWidth * 0.5f - totalPanelLength * 0.5f, m_inactiveDetailPaneYPosition, totalPanelLength, totalPanelHeight)] autorelease];
+        self.pDetailsPanel = [[[UIView alloc] initWithFrame:CGRectMake(m_screenWidth * 0.5f - totalPanelLength * 0.5f, upperMargin, totalPanelLength, totalPanelHeight)] autorelease];
         
-        self.pDismissButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, buttonSize, buttonSize)] autorelease];
-        [self.pDismissButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_close_place_pin_off") forState:UIControlStateNormal];
+        
+        self.pDismissButtonBackground = [[[UIImageView alloc] initWithImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"menu_button")] autorelease];
+        self.pDismissButtonBackground.frame = CGRectMake(0.0f, 0.0f, buttonSize, buttonSize);
+        
+        [self.pDetailsPanel addSubview:self.pDismissButtonBackground];
+        
+        self.pDismissButton = [[[UIButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, buttonSize, buttonSize)] autorelease];
+        [self.pDismissButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"Arrow") forState:UIControlStateNormal];
         [self.pDismissButton addTarget:self action:@selector(onCancelButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-        [self.pDetailsPanel addSubview:self.pDismissButton];
+        [self.pDismissButtonBackground addSubview:self.pDismissButton];
+        
+        self.pDismissButtonBackground.userInteractionEnabled = YES;
         
         self.pDetailsPanelBackground = [[[UIImageView alloc] initWithImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"place_pin_background")] autorelease];
-        self.pDetailsPanelBackground.frame = CGRectMake(buttonSize, 0, labelLength, buttonSize);
+        
+        self.pDetailsPanelBackground.frame = CGRectMake(buttonSize, 0, labelLength, detailsPanelHeight);
+        
+        UIBezierPath* roundedShapePath = [UIBezierPath bezierPathWithRoundedRect:self.pDetailsPanelBackground.bounds byRoundingCorners:UIRectCornerTopRight | UIRectCornerBottomRight cornerRadii:CGSizeMake(7.0f, 7.0f)];
+        
+        CAShapeLayer* roundedShapeLayer = [CAShapeLayer layer];
+        roundedShapeLayer.frame = self.pDetailsPanelBackground.bounds;
+        roundedShapeLayer.path = roundedShapePath.CGPath;
+        roundedShapeLayer.fillColor = [UIColor blackColor].CGColor;
+        roundedShapeLayer.strokeColor = [UIColor blackColor].CGColor;
+        roundedShapeLayer.lineWidth = 1.0f;
+        
+        self.pDetailsPanelBackground.layer.mask = roundedShapeLayer;
+        
         [self.pDetailsPanel addSubview:self.pDetailsPanelBackground];
-
-        self.pDetailsPanelRight = [[[UIImageView alloc] initWithImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"place_pin_right")] autorelease];
-        self.pDetailsPanelRight.frame = CGRectMake(buttonSize + labelLength, 0, buttonSize, buttonSize);
-        [self.pDetailsPanel addSubview:self.pDetailsPanelRight];
         
         const float textPadding = 2.f;
         
-        self.pFloorNameLabel = [[[UILabel alloc] initWithFrame:CGRectMake(buttonSize + textPadding, textPadding, labelLength - textPadding, buttonSize - textPadding)] autorelease];
+        self.pFloorNameLabel = [[[UILabel alloc] initWithFrame:CGRectMake( textPadding + buttonSize, textPadding, labelLength - textPadding, detailsPanelHeight - textPadding)] autorelease];
         self.pFloorNameLabel.textColor = ExampleApp::Helpers::ColorPalette::DarkGreyTone;
         self.pFloorNameLabel.textAlignment = NSTextAlignmentCenter;
         [self.pDetailsPanel addSubview:self.pFloorNameLabel];
@@ -114,7 +135,7 @@
 - (void)dealloc
 {
     delete m_pInterop;
-
+    
     [self removeFromSuperview];
     [super dealloc];
 }
@@ -195,9 +216,15 @@
     if(cell == nil)
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:Identifier];
+        cell.textLabel.textColor = ExampleApp::Helpers::ColorPalette::DarkGreyTone;
+        cell.backgroundView = [[UIImageView alloc] initWithImage:[ [UIImage imageNamed:@"place_pin_background"] stretchableImageWithLeftCapWidth:0.0 topCapHeight:0.0] ];
+        UIView *selectedColorView = [[UIView alloc] init];
+        selectedColorView.backgroundColor = ExampleApp::Helpers::ColorPalette::LightGreyTone;
+        [cell setSelectedBackgroundView:selectedColorView];
     }
     
     cell.textLabel.text = [NSString stringWithUTF8String:m_tableViewFloorNames.at(indexPath.item).c_str()];
+    
     return cell;
 }
 
@@ -231,23 +258,25 @@
 - (void) setOnScreenStateToIntermediateValue:(float)onScreenState
 {
     float newX = -50 + onScreenState * 50;
-    float newY = m_screenHeight - m_detailsPanelHeight * onScreenState;
+    
+    CGRect floorPanel = self.pFloorPanel.frame;
+    floorPanel.origin.x = newX;
     
     self.hidden = onScreenState == 0.0f;
-    self.pFloorPanel.frame.origin = CGPointMake(newX, self.pFloorPanel.frame.origin.y);
-    self.pDetailsPanel.frame.origin = CGPointMake(self.pDetailsPanel.frame.origin.x, newY);
+    self.pFloorPanel.frame = floorPanel;
+    
+    self.pDetailsPanel.alpha = onScreenState;
     m_onScreenParam = onScreenState;
+    
+    self.pDismissButton.alpha = onScreenState;
 }
 
 - (void) animateTo:(float)t
 {
     float newX = -50 + t * 50;
-    float newY = m_screenHeight - m_detailsPanelHeight * t;
     
     CGRect floorFrame = self.pFloorPanel.frame;
-    CGRect detailFrame = self.pDetailsPanel.frame;
     floorFrame.origin.x = newX;
-    detailFrame.origin.y = newY;
     
     if(t > 0.f)
     {
@@ -258,7 +287,8 @@
                      animations:^
      {
          self.pFloorPanel.frame = floorFrame;
-         self.pDetailsPanel.frame = detailFrame;
+         self.pDetailsPanel.alpha = t;
+         self.pDismissButton.alpha = t;
      }
                      completion:^(BOOL finished)
      {

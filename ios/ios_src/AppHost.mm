@@ -58,6 +58,8 @@
 #include "OptionsView.h"
 #include "WatermarkViewModule.h"
 #include "WatermarkView.h"
+#include "TourExplorerViewModule.h"
+#include "TourExplorerView.h"
 #include "NetworkCapabilities.h"
 #include "iOSYelpSearchServiceModule.h"
 #include "DecartaSearchServiceModule.h"
@@ -70,6 +72,12 @@
 #include "IInteriorsExplorerModule.h"
 #include "InteriorsPresentationModule.h"
 #include "InteriorsExplorerView.h"
+#include "TourHovercardViewModule.h"
+#include "TourHovercardView.h"
+#include "TourFullScreenImageViewModule.h"
+#include "TourFullScreenImageViewModel.h"
+#include "TourFullScreenImageView.h"
+#include "ImageStore.h"
 
 using namespace Eegeo::iOS;
 
@@ -94,6 +102,9 @@ AppHost::AppHost(
     ,m_pSearchServiceModule(NULL)
     ,m_piOSFlurryMetricsService(NULL)
     ,m_failAlertHandler(this, &AppHost::HandleStartupFailure)
+    ,m_pTourWorldPinOnMapViewModule(NULL)
+    ,m_pTourFullScreenImageViewModule(NULL)
+    ,m_pTourExplorerViewModule(NULL)
 {
     Eegeo::TtyHandler::TtyEnabled = true;
     
@@ -177,6 +188,9 @@ AppHost::~AppHost()
 
     DestroyApplicationViewModules();
 
+    [m_pImageStore release];
+    m_pImageStore = nil;
+    
     Eegeo_DELETE m_pApp;
     m_pApp = NULL;
     
@@ -294,8 +308,7 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
                                  app.ModalityModule().GetModalityModel(),
                                  app.PinDiameter(),
                                  screenProperties.GetPixelScale());
-
-
+    
     m_pCompassViewModule = Eegeo_NEW(ExampleApp::Compass::View::CompassViewModule)(app.CompassModule().GetCompassViewModel(),
                            screenProperties,
                            m_messageBus);
@@ -333,6 +346,27 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
                                 screenProperties);
     
     
+    if(app.ToursEnabled())
+    {
+        m_pTourWorldPinOnMapViewModule = Eegeo_NEW(ExampleApp::Tours::View::TourHovercard::TourHovercardViewModule)(app.TourWorldPinsModule().GetWorldPinInFocusViewModel(),
+                                                                                                                    app.TourWorldPinsModule().GetScreenControlViewModel(),
+                                                                                                                    app.ModalityModule().GetModalityModel(),
+                                                                                                                    app.ToursPinDiameter(),
+                                                                                                                    screenProperties.GetPixelScale());
+    
+        m_pTourExplorerViewModule = Eegeo_NEW(ExampleApp::Tours::View::TourExplorer::TourExplorerViewModule)(m_messageBus,
+                                                                                                             app.ToursModule().GetToursExplorerViewModel(),
+                                                                                                             m_pTourWorldPinOnMapViewModule->GetTourHovercardViewInterop(),
+                                                                                                             app.ToursModule().GetToursExplorerCompositeViewController(),
+                                                                                                             screenProperties,
+                                                                                                             *m_piOSFlurryMetricsService,
+                                                                                                             m_pImageStore);
+    
+        m_pTourFullScreenImageViewModule = Eegeo_NEW(ExampleApp::Tours::View::TourFullScreenImage::TourFullScreenImageViewModule)(m_messageBus,
+                                                                                                                                  app.ToursModule().GetTourFullScreenImageViewModel(),
+                                                                                                                                  screenProperties);
+    }
+    
     m_pInitialExperienceIntroViewModule = Eegeo_NEW(ExampleApp::InitialExperience::View::InitialExperienceIntroViewModule)(m_messageBus);
     
     
@@ -348,6 +382,10 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
 
     // 3d map view layer.
     [m_pView addSubview: &m_pWorldPinOnMapViewModule->GetWorldPinOnMapView()];
+    if(m_pApp->ToursEnabled())
+    {
+        [m_pView addSubview: &m_pTourWorldPinOnMapViewModule->GetTourHovercardView()];
+    }
     
     // Initial Experience background
     [m_pView addSubview: &m_pInitialExperienceIntroViewModule->GetIntroBackgroundView()];
@@ -358,6 +396,11 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
     [m_pView addSubview: &m_pCompassViewModule->GetCompassView()];
     [m_pView addSubview: &m_pMyPinCreationInitiationViewModule->GetMyPinCreationInitiationView()];
     [m_pView addSubview: &m_pMyPinCreationConfirmationViewModule->GetMyPinCreationConfirmationView()];
+    if(m_pApp->ToursEnabled())
+    {
+        [m_pView addSubview: &m_pTourFullScreenImageViewModule->GetTourFullScreenImageView()];
+        [m_pView addSubview: &m_pTourExplorerViewModule->GetTourExplorerView()];
+    }
     [m_pView addSubview: &m_pInteriorsExplorerViewModule->GetView()];
 
     // Modal background layer.
@@ -388,6 +431,10 @@ void AppHost::DestroyApplicationViewModules()
 {
     // 3d map view layer.
     [&m_pWorldPinOnMapViewModule->GetWorldPinOnMapView() removeFromSuperview];
+    if(m_pApp->ToursEnabled())
+    {
+        [&m_pTourWorldPinOnMapViewModule->GetTourHovercardView() removeFromSuperview];
+    }
     
     [&m_pInitialExperienceIntroViewModule->GetIntroBackgroundView() removeFromSuperview];
 
@@ -397,6 +444,11 @@ void AppHost::DestroyApplicationViewModules()
     [&m_pCompassViewModule->GetCompassView() removeFromSuperview];
     [&m_pMyPinCreationInitiationViewModule->GetMyPinCreationInitiationView() removeFromSuperview];
     [&m_pMyPinCreationConfirmationViewModule->GetMyPinCreationConfirmationView() removeFromSuperview];
+    if(m_pApp->ToursEnabled())
+    {
+        [&m_pTourFullScreenImageViewModule->GetTourFullScreenImageView() removeFromSuperview];
+        [&m_pTourExplorerViewModule->GetTourExplorerView() removeFromSuperview];
+    }
     [&m_pInteriorsExplorerViewModule->GetView() removeFromSuperview];
 
     // Modal background layer.
@@ -419,7 +471,11 @@ void AppHost::DestroyApplicationViewModules()
     Eegeo_DELETE m_pInteriorsExplorerViewModule;
     
     Eegeo_DELETE m_pViewControllerUpdaterModule;
-
+    
+    Eegeo_DELETE m_pTourFullScreenImageViewModule;
+    
+    Eegeo_DELETE m_pTourExplorerViewModule;
+    
     Eegeo_DELETE m_pMyPinDetailsViewModule;
 
     Eegeo_DELETE m_pMyPinCreationDetailsViewModule;
@@ -433,7 +489,9 @@ void AppHost::DestroyApplicationViewModules()
     Eegeo_DELETE m_pCompassViewModule;
 
     Eegeo_DELETE m_pWorldPinOnMapViewModule;
-
+    
+    Eegeo_DELETE m_pTourWorldPinOnMapViewModule;
+    
     Eegeo_DELETE m_pSearchResultPoiViewModule;
 
     Eegeo_DELETE m_pModalBackgroundViewModule;

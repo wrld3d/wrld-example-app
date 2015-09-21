@@ -10,6 +10,7 @@
 #include "InteriorSelectionModel.h"
 #include "IMapModeModel.h"
 #include "IMetricsService.h"
+#include "IAppModeModel.h"
 
 namespace ExampleApp
 {
@@ -35,7 +36,8 @@ namespace ExampleApp
                                                            Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                            MapMode::SdkModel::IMapModeModel& mapModeModel,
                                                            ExampleAppMessaging::TMessageBus& messageBus,
-                                                           Metrics::IMetricsService& metricsService)
+                                                           Metrics::IMetricsService& metricsService,
+                                                           ExampleAppMessaging::TSdkModelDomainEventBus& sdkDomainEventBus)
             : m_controller(controller)
             , m_interiorSelectionModel(interiorSelectionModel)
             , m_mapModeModel(mapModeModel)
@@ -46,12 +48,17 @@ namespace ExampleApp
             , m_selectFloorCallback(this, &InteriorsExplorerModel::OnSelectFloor)
             , m_interiorSelectionModelChangedCallback(this, &InteriorsExplorerModel::OnInteriorSelectionModelChanged)
             , m_previouslyInMapMode(false)
+            , m_tourIsActive(false)
+            , m_sdkDomainEventBus(sdkDomainEventBus)
+            , m_tourStateChangedBinding(this, &InteriorsExplorerModel::OnTourStateChanged)
             {
                 m_controller.RegisterStateChangedCallback(m_controllerStateChangedCallback);
                 m_interiorSelectionModel.RegisterSelectionChangedCallback(m_interiorSelectionModelChangedCallback);
                 
                 m_messageBus.SubscribeNative(m_exitCallback);
                 m_messageBus.SubscribeNative(m_selectFloorCallback);
+                
+                m_sdkDomainEventBus.Subscribe(m_tourStateChangedBinding);
             }
             
             InteriorsExplorerModel::~InteriorsExplorerModel()
@@ -61,32 +68,18 @@ namespace ExampleApp
 
                 m_interiorSelectionModel.UnregisterSelectionChangedCallback(m_interiorSelectionModelChangedCallback);
                 m_controller.UnregisterStateChangedCallback(m_controllerStateChangedCallback);
+                
+                m_sdkDomainEventBus.Unsubscribe(m_tourStateChangedBinding);
             }
             
             void InteriorsExplorerModel::OnControllerStateChanged()
             {
-                int floor = m_controller.ShowingInterior() ? m_controller.GetCurrentFloorIndex() : 0;
-                
-                std::string floorName;
-                std::vector<std::string> floorShortNames;
-
-                if (m_controller.ShowingInterior())
+                if(m_tourIsActive)
                 {
-                    const Eegeo::Resources::Interiors::InteriorsModel* pModel = NULL;
-                    m_controller.TryGetCurrentModel(pModel);
-                    
-                    Eegeo_ASSERT(pModel != NULL, "Couldn't get current model for interior");
-                    const Eegeo::Resources::Interiors::TFloorModelVector& floorModels = pModel->GetFloors();
-                    
-                    std::transform(floorModels.begin(), floorModels.end(), std::back_inserter(floorShortNames), ToFloorName);
-                    
-                    floorName = m_controller.GetCurrentFloorModel().GetFloorName();
+                    return;
                 }
                 
-                m_messageBus.Publish(InteriorsExplorerStateChangedMessage(m_controller.ShowingInterior(),
-                                                                          floor,
-                                                                          floorName,
-                                                                          floorShortNames));
+                PublishInteriorExplorerStateChange();
             }
         
             void InteriorsExplorerModel::OnExit(const InteriorsExplorerExitMessage& message)
@@ -125,6 +118,43 @@ namespace ExampleApp
                 {
                     m_mapModeModel.SetInMapMode(m_previouslyInMapMode);
                     m_metricsService.EndTimedEvent(MetricEventInteriorsVisible);
+                }
+            }
+            
+            void InteriorsExplorerModel::PublishInteriorExplorerStateChange()
+            {
+                
+                int floor = m_controller.ShowingInterior() ? m_controller.GetCurrentFloorIndex() : 0;
+                
+                std::string floorName;
+                std::vector<std::string> floorShortNames;
+                
+                if (m_controller.ShowingInterior())
+                {
+                    const Eegeo::Resources::Interiors::InteriorsModel* pModel = NULL;
+                    m_controller.TryGetCurrentModel(pModel);
+                    
+                    Eegeo_ASSERT(pModel != NULL, "Couldn't get current model for interior");
+                    const Eegeo::Resources::Interiors::TFloorModelVector& floorModels = pModel->GetFloors();
+                    
+                    std::transform(floorModels.begin(), floorModels.end(), std::back_inserter(floorShortNames), ToFloorName);
+                    
+                    floorName = m_controller.GetCurrentFloorModel().GetFloorName();
+                }
+                
+                m_messageBus.Publish(InteriorsExplorerStateChangedMessage(m_controller.ShowingInterior(),
+                                                                          floor,
+                                                                          floorName,
+                                                                          floorShortNames));
+            }
+            
+            void InteriorsExplorerModel::OnTourStateChanged(const Tours::TourStateChangedMessage& message)
+            {
+                m_tourIsActive = message.TourStarted();
+                
+                if(!message.TourStarted() && m_controller.ShowingInterior())
+                {
+                    PublishInteriorExplorerStateChange();
                 }
             }
         }

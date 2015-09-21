@@ -20,6 +20,10 @@ namespace ExampleApp
             {
             public:
                 virtual ~IMenuViewModel() { }
+                
+                virtual void SuspendScreenUpdates() = 0;
+                
+                virtual void AllowScreenUpdates() = 0;
             };
         }
     }

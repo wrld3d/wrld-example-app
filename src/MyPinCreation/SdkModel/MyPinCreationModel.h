@@ -29,6 +29,7 @@ namespace ExampleApp
                 void SetCreationStage(MyPinCreationStage stage);
 
                 const Eegeo::dv3& GetPosition() const;
+                float GetTerrainHeight() const;
                 void SetPosition(const Eegeo::dv3& position);
                 void SetTerrainHeight(float height);
                 void SetHeightAboveTerrain(float heightAboveTerrain);

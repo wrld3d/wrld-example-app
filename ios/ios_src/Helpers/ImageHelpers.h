@@ -38,6 +38,8 @@ namespace ExampleApp
             UIImage* LoadImage(const std::string& name, bool permitFallbackToNonNativeResolution=false);
             
             UIImage* LoadImage(const NSString* name, bool permitFallbackToNonNativeResolution=false);
+            
+            UIImage* ImageFromColor(UIColor* color);
         }
     }
 }
