@@ -8,7 +8,6 @@
 #include "IToursCameraTransitionController.h"
 #include "GlobeCamera.h"
 #include "Terrain.h"
-#include "Interiors.h"
 
 namespace ExampleApp
 {

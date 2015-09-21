@@ -9,7 +9,6 @@
 #include "ResourceCeilingProvider.h"
 #include "ScreenProperties.h"
 #include "Terrain.h"
-#include "Interiors.h"
 
 namespace ExampleApp
 {
