@@ -8,6 +8,12 @@
 #include "EarthConstants.h"
 #include "IntersectionTests.h"
 #include "IPoiRingController.h"
+#include "IAppModeModel.h"
+#include "InteriorsController.h"
+#include "InteriorsFloorModel.h"
+#include "Bounds.h"
+#include "InteriorsModel.h"
+#include "EcefTangentBasis.h"
 
 namespace ExampleApp
 {
@@ -18,12 +24,16 @@ namespace ExampleApp
             namespace SdkModel
             {
                 PoiRingTouchController::PoiRingTouchController(MyPinCreation::SdkModel::IMyPinCreationModel& myPinCreationModel,
-                        Eegeo::Collision::IRayPicker& rayPicker,
-                        const IPoiRingController& poiRingController)
+                                                               Eegeo::Collision::IRayPicker& rayPicker,
+                                                               const IPoiRingController& poiRingController,
+                                                               ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
+                                                               Eegeo::Resources::Interiors::InteriorsController& interiorsController)
                     : m_myPinCreationModel(myPinCreationModel)
                     , m_rayPicker(rayPicker)
                     , m_poiRingController(poiRingController)
                     , m_isDragging(false)
+                    , m_appModeModel(appModeModel)
+                    , m_interiorsController(interiorsController)
                 {
 
                 }
@@ -118,7 +128,25 @@ namespace ExampleApp
 
                 bool PoiRingTouchController::PerformRayPick(Eegeo::dv3 &rayOrigin, Eegeo::dv3 &rayDirection, Eegeo::dv3 &out_rayIntersectionPoint, double &out_intersectionParam)
                 {
-                    bool rayPick = m_rayPicker.TryGetRayIntersection(rayOrigin, rayDirection, out_rayIntersectionPoint, out_intersectionParam);
+                    bool rayPick = false;
+                    
+                    if(m_appModeModel.GetAppMode() == AppModes::SdkModel::InteriorMode)
+                    {
+                        const Eegeo::Resources::Interiors::InteriorsModel* interiorsModel;
+                        
+                        Eegeo_ASSERT(m_interiorsController.TryGetCurrentModel(interiorsModel), "Couldn't get current interiorsModel");
+                        
+                        const Eegeo::dv3 originNormal = interiorsModel->GetTangentBasis().GetUp();
+                        double interiorOriginAltitude = interiorsModel->GetTangentBasis().GetPointEcef().Length() - Eegeo::Space::EarthConstants::Radius;
+                        const Eegeo::dv3 pointOffset = originNormal * (m_interiorsController.GetCurrentFloorModel().GetTangentSpaceBounds().GetMin().y -interiorOriginAltitude);
+                        Eegeo::dv3 point = interiorsModel->GetTangentBasis().GetPointEcef() + pointOffset;
+                        
+                        rayPick = Eegeo::Geometry::IntersectionTests::RayIntersectsWithPlane(rayOrigin, rayDirection, originNormal, point, out_intersectionParam, out_rayIntersectionPoint);
+                    }
+                    else
+                    {
+                        rayPick = m_rayPicker.TryGetRayIntersection(rayOrigin, rayDirection, out_rayIntersectionPoint, out_intersectionParam);
+                    }
                     if(!rayPick)
                     {
                         rayPick = Eegeo::Geometry::IntersectionTests::GetRayEarthSphereIntersection(rayOrigin, rayDirection, out_rayIntersectionPoint, Eegeo::Space::EarthConstants::RadiusSquared);

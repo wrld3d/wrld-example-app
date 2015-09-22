@@ -57,6 +57,11 @@ namespace ExampleApp
             {
                 m_position = position;
             }
+            
+            float MyPinCreationModel::GetTerrainHeight() const
+            {
+                return m_terrainHeight;
+            }
 
             void MyPinCreationModel::SetTerrainHeight(float height)
             {

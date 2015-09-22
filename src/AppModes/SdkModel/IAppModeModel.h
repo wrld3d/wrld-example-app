@@ -19,7 +19,8 @@ namespace ExampleApp
             enum AppMode
             {
                 WorldMode,
-                InteriorMode
+                InteriorMode,
+                TourMode
             };
 
             class IAppModeModel : protected Eegeo::NonCopyable

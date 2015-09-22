@@ -53,6 +53,10 @@ namespace ExampleApp
                 {
                     return "icon1_food";
                 }
+                if(Contains(category, "person"))
+                {
+                    return "icon1_person";
+                }
 
                 return "icon1_misc";
             }

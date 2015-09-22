@@ -26,9 +26,16 @@ namespace ExampleApp
                                                              MapMode::SdkModel::IMapModeModel& mapModeModel,
                                                              AppModes::SdkModel::IAppModeModel& appModeModel,
                                                              ExampleAppMessaging::TMessageBus& messageBus,
-                                                             ExampleApp::Metrics::IMetricsService& metricsService)
+                                                             ExampleApp::Metrics::IMetricsService& metricsService,
+                                                             ExampleAppMessaging::TSdkModelDomainEventBus& sdkDomainEventBus)
             {
-                m_pModel = Eegeo_NEW(InteriorsExplorerModel)(interiorsController, interiorSelectionModel, mapModeModel, messageBus, metricsService);
+                m_pModel = Eegeo_NEW(InteriorsExplorerModel)(interiorsController,
+                                                             interiorSelectionModel,
+                                                             mapModeModel,
+                                                             messageBus,
+                                                             metricsService,
+                                                             sdkDomainEventBus);
+                
                 m_pViewModel = Eegeo_NEW(View::InteriorsExplorerViewModel)(false, identityProvider.GetNextIdentity());
                 m_pInteriorExitObserver = Eegeo_NEW(InteriorsExitObserver)(interiorsController, interiorSelectionController, globeCameraController, nativeUIFactories);
                 m_pInteriorsExplorerInputDelegate = Eegeo_NEW(InteriorsExplorerInputDelegate)(interiorsController, interiorsPinsController, globeCameraController, messageBus);
