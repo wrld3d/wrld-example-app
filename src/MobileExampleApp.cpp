@@ -75,6 +75,8 @@
 #include "PoiDbModule.h"
 #include "PoiDbWebLoader.h"
 #include "SQLiteModule.h"
+#include "SwallowSearchService.h"
+#include "SwallowSearchMenuModule.h"
 
 namespace ExampleApp
 {
@@ -319,7 +321,7 @@ namespace ExampleApp
                                                                          m_messageBus,
                                                                          m_networkCapabilities);
         
-        m_pSwallowSearchService = new(ExampleApp::Search::Swallow::SwallowSearchService)(*m_pPoiDbModule);
+        m_pSwallowSearchService = new(Search::Swallow::SdkModel::SwallowSearchService)(*m_pPoiDbModule);
         
         m_pSearchModule = Eegeo_NEW(Search::SdkModel::SearchModule)(*m_pSwallowSearchService,
                                                                     *m_pGlobeCameraController,
@@ -363,13 +365,24 @@ namespace ExampleApp
                               m_pSecondaryMenuModule->GetSecondaryMenuViewModel(),
                               m_messageBus,
                               m_metricsService);
+        
+        std::vector<CategorySearch::View::CategorySearchModel> categorySearchModels = m_searchServiceModule.GetCategorySearchModels();
+        std::vector<CategorySearch::View::CategorySearchModel> swallowCategorySearchModels = m_pSwallowSearchService->GetCategorySearchModels();
+        
+        for(std::vector<CategorySearch::View::CategorySearchModel>::const_iterator it = swallowCategorySearchModels.begin(); it != swallowCategorySearchModels.end(); ++it)
+        {
+            categorySearchModels.push_back(*it);
+        }
 
         m_pCategorySearchModule = Eegeo_NEW(ExampleApp::CategorySearch::SdkModel::CategorySearchModule(
-                                                m_searchServiceModule.GetCategorySearchModels(),
+                                                categorySearchModels,
                                                 SearchModule().GetSearchQueryPerformer(),
                                                 m_pSecondaryMenuModule->GetSecondaryMenuViewModel(),
                                                 m_messageBus,
                                                 m_metricsService));
+        
+        m_pSwallowSearchMenuModule = Eegeo_NEW(Search::Swallow::SdkModel::SwallowSearchMenuModule)(m_pSecondaryMenuModule->GetSecondaryMenuViewModel(),
+                                                                                                   m_messageBus);
 
         Eegeo::Modules::Map::MapModule& mapModule = world.GetMapModule();
 
@@ -487,10 +500,12 @@ namespace ExampleApp
                                                                   m_pSearchResultMenuModule->GetMenuViewModel(),
                                                                   m_pSearchResultMenuModule->GetSearchResultMenuViewModel());
         
-        m_pSecondaryMenuModule->AddMenuSection("Search", m_pCategorySearchModule->GetCategorySearchMenuModel(), true);
-        m_pSecondaryMenuModule->AddMenuSection("Weather" , m_pWeatherMenuModule->GetWeatherMenuModel(), true);
-        m_pSecondaryMenuModule->AddMenuSection("Locations", m_pPlaceJumpsModule->GetPlaceJumpsMenuModel(), true);
+        m_pSecondaryMenuModule->AddMenuSection("Meeting Rooms", m_pSwallowSearchMenuModule->GetMeetingRoomsMenuModel(), false);
+        m_pSecondaryMenuModule->AddMenuSection("Working Groups", m_pSwallowSearchMenuModule->GetWorkingGroupsMenuModel(), false);
+        m_pSecondaryMenuModule->AddMenuSection("Facilities", m_pSwallowSearchMenuModule->GetFacilitiesMenuModel(), false);
+        m_pSecondaryMenuModule->AddMenuSection("Offices", m_pSwallowSearchMenuModule->GetOfficesMenuModel(), false);
         m_pSecondaryMenuModule->AddMenuSection("My Pins", m_pMyPinsModule->GetMyPinsMenuModel(), true);
+        m_pSecondaryMenuModule->AddMenuSection("Search", m_pCategorySearchModule->GetCategorySearchMenuModel(), true);
         m_pSecondaryMenuModule->AddMenuSection("Settings", m_pSecondaryMenuModule->GetSettingsMenuModel(), true);
     }
 
@@ -534,6 +549,8 @@ namespace ExampleApp
         Eegeo_DELETE m_pPlaceJumpsModule;
 
         Eegeo_DELETE m_pMapModeModule;
+        
+        Eegeo_DELETE m_pSwallowSearchMenuModule;
 
         Eegeo_DELETE m_pCategorySearchModule;
 
