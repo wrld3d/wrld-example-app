@@ -46,7 +46,7 @@ namespace ExampleApp
 
             void MyPinCreationInitiationController::OnSelected()
             {
-                if(m_appModeAllowsOpen)
+                if(m_appModeAllowsOpen && m_confirmationViewModel.TryOpen())
                 {
                     m_metricsService.SetEvent("UIItem: MyPinCreation");
                     MyPinCreationViewStateChangedMessage message(ExampleApp::MyPinCreation::Ring);
