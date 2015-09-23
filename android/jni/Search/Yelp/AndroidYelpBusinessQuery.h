@@ -9,6 +9,7 @@
 #include "AndroidNativeState.h"
 #include "IYelpCategoryMapper.h"
 #include "IdentitySearchCallbackData.h"
+#include "SearchResultModel.h"
 
 namespace ExampleApp
 {
@@ -26,7 +27,7 @@ namespace ExampleApp
             			const std::string& yelpOAuthToken,
             			const std::string& yelpOAuthTokenSecret,
                         IYelpCategoryMapper& yelpCategoryMapper,
-                        const std::string& locationIdentifier,
+                        const SdkModel::SearchResultModel& outdatedSearchResult,
                         Eegeo::Helpers::ICallback1<const SdkModel::IdentitySearchCallbackData&>& callback);
 
                 ~AndroidYelpBusinessQuery();
@@ -46,7 +47,7 @@ namespace ExampleApp
                 jobject m_yelpSearchQuery;
         		AndroidNativeState& m_nativeState;
                 IYelpCategoryMapper& m_yelpCategoryMapper;
-                const std::string& m_locationIdentifier;
+                SdkModel::SearchResultModel m_outdatedSearchResult;
                 Eegeo::Helpers::ICallback1<const SdkModel::IdentitySearchCallbackData&>& m_callback;
                 std::string m_responseString;
                 bool m_cancelled;

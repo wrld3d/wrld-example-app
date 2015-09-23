@@ -19,14 +19,14 @@ namespace ExampleApp
                                                        const std::string& yelpOAuthToken,
                                                        const std::string& yelpOAuthTokenSecret,
                                                        IYelpCategoryMapper& yelpCategoryMapper,
-                                                       const std::string& locationIdentifier,
+                                                       const SdkModel::SearchResultModel& outdatedSearchResult,
                                                        Eegeo::Helpers::ICallback1<const SdkModel::IdentitySearchCallbackData&>& callback)
             : m_yelpConsumerKey(yelpConsumerKey)
             , m_yelpConsumerSecret(yelpConsumerSecret)
             , m_yelpOAuthToken(yelpOAuthToken)
             , m_yelpOAuthTokenSecret(yelpOAuthTokenSecret)
             , m_yelpCategoryMapper(yelpCategoryMapper)
-            , m_locationIdentifier(locationIdentifier)
+            , m_outdatedSearchResult(outdatedSearchResult)
             , m_callback(callback)
             , m_responseString()
             , m_cancelled(false)
@@ -42,7 +42,7 @@ namespace ExampleApp
             
             void iOSYelpBusinessQuery::Dispatch()
             {
-                NSString *businessPath = [NSString stringWithFormat:@"%@%@", BusinessPath, [NSString stringWithUTF8String:m_locationIdentifier.c_str()]];
+                NSString *businessPath = [NSString stringWithFormat:@"%@%@", BusinessPath, [NSString stringWithUTF8String:m_outdatedSearchResult.GetIdentifier().c_str()]];
                 
                 NSURLRequest *searchRequest = [NSURLRequest requestWithHost:APIHost
                                                                        path:businessPath
@@ -102,16 +102,16 @@ namespace ExampleApp
                     SdkModel::SearchResultModel result;
                     if(TryParseYelpBusinessSearchResult(m_responseString, m_yelpCategoryMapper, result))
                     {
-                        m_callback(SdkModel::IdentitySearchCallbackData::CreateSucceeded(m_locationIdentifier, result));
+                        m_callback(SdkModel::IdentitySearchCallbackData::CreateSucceeded(result));
                     }
                     else
                     {
-                        m_callback(SdkModel::IdentitySearchCallbackData::CreateFailed(m_locationIdentifier));
+                        m_callback(SdkModel::IdentitySearchCallbackData::CreateFailed(m_outdatedSearchResult));
                     }
                 }
                 else
                 {
-                    m_callback(SdkModel::IdentitySearchCallbackData::CreateFailed(m_locationIdentifier));
+                    m_callback(SdkModel::IdentitySearchCallbackData::CreateFailed(m_outdatedSearchResult));
                 }
             }
         }

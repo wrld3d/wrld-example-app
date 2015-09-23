@@ -17,11 +17,11 @@ namespace ExampleApp
         			const std::string& yelpOAuthToken,
         			const std::string& yelpOAuthTokenSecret,
                     IYelpCategoryMapper& yelpCategoryMapper,
-                    const std::string& locationIdentifier,
+					const SdkModel::SearchResultModel& outdatedSearchResult,
                     Eegeo::Helpers::ICallback1<const SdkModel::IdentitySearchCallbackData&>& callback)
             : m_nativeState(nativeState)
         	, m_yelpCategoryMapper(yelpCategoryMapper)
-            , m_locationIdentifier(locationIdentifier)
+            , m_outdatedSearchResult(outdatedSearchResult)
             , m_callback(callback)
             , m_responseString()
             , m_cancelled(false)
@@ -85,7 +85,7 @@ namespace ExampleApp
                 AndroidSafeNativeThreadAttachment attached(m_nativeState);
                 JNIEnv* env = attached.envForThread;
 
-                jstring queryStr = env->NewStringUTF(m_locationIdentifier.c_str());
+                jstring queryStr = env->NewStringUTF(m_outdatedSearchResult.GetIdentifier().c_str());
 
                 jmethodID dispatchBusinessQueryMethod = env->GetMethodID(m_yelpSearchQueryClass, "dispatchBusinessQuery", "(Ljava/lang/String;)V");
 
@@ -120,16 +120,16 @@ namespace ExampleApp
                     SdkModel::SearchResultModel result;
                     if(TryParseYelpBusinessSearchResult(m_responseString, m_yelpCategoryMapper, result))
                     {
-                        m_callback(SdkModel::IdentitySearchCallbackData::CreateSucceeded(m_locationIdentifier, result));
+                        m_callback(SdkModel::IdentitySearchCallbackData::CreateSucceeded(result));
                     }
                     else
                     {
-                        m_callback(SdkModel::IdentitySearchCallbackData::CreateFailed(m_locationIdentifier));
+                        m_callback(SdkModel::IdentitySearchCallbackData::CreateFailed(m_outdatedSearchResult));
                     }
                 }
                 else
                 {
-                    m_callback(SdkModel::IdentitySearchCallbackData::CreateFailed(m_locationIdentifier));
+                    m_callback(SdkModel::IdentitySearchCallbackData::CreateFailed(m_outdatedSearchResult));
                 }
 
             	Eegeo_DELETE this;

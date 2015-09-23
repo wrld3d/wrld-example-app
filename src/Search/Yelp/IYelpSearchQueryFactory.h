@@ -5,6 +5,7 @@
 #include "Search.h"
 #include "ICallback.h"
 #include "IdentitySearchCallbackData.h"
+#include "SearchResultModel.h"
 
 namespace ExampleApp
 {
@@ -20,7 +21,7 @@ namespace ExampleApp
                 virtual IYelpSearchQuery* CreateYelpSearchForQuery(const SdkModel::SearchQuery& query,
                                                                    Eegeo::Helpers::ICallback0& completionCallback) = 0;
                 
-                virtual IYelpSearchQuery* CreateYelpSearchForSpecificLocation(const std::string& locationIdentifier,
+                virtual IYelpSearchQuery* CreateYelpSearchForSpecificLocation(const SdkModel::SearchResultModel& outdatedSearchResult,
                                                                               Eegeo::Helpers::ICallback1<const SdkModel::IdentitySearchCallbackData&>& callback) = 0;
             };
         }

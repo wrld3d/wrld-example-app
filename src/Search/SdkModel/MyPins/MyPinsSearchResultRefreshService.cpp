@@ -94,7 +94,7 @@ namespace ExampleApp
                         Eegeo_ASSERT(insertPinIdToBoundObjectMapping.second,
                                      "Couldn't add pin ID to search pin binding mapping, key value already exists.\n");
                         
-                        m_searchService.PerformIdentitySearch(searchResultModel.GetIdentifier(),
+                        m_searchService.PerformIdentitySearch(searchResultModel,
                                                               m_refreshSearchResultCompletedHandler);
                     }
                 }

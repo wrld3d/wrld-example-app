@@ -147,11 +147,11 @@ namespace ExampleApp
                 out_stream << encodedQuery << ".json";
             }
             
-            void DecartaSearchService::PerformIdentitySearch(const std::string& searchResultIdentifier,
+            void DecartaSearchService::PerformIdentitySearch(const SdkModel::SearchResultModel& outdatedSearchResult,
                                                              Eegeo::Helpers::ICallback1<const SdkModel::IdentitySearchCallbackData&>& callback)
             {
                 // Not implemented.
-                SdkModel::IdentitySearchCallbackData result = SdkModel::IdentitySearchCallbackData::CreateFailed(searchResultIdentifier);
+                SdkModel::IdentitySearchCallbackData result = SdkModel::IdentitySearchCallbackData::CreateFailed(outdatedSearchResult);
                 callback(result);
             }
         }

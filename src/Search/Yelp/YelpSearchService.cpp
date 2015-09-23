@@ -177,10 +177,10 @@ namespace ExampleApp
                 }
             }
             
-            void YelpSearchService::PerformIdentitySearch(const std::string& searchResultIdentifier,
+            void YelpSearchService::PerformIdentitySearch(const SdkModel::SearchResultModel& outdatedSearchResult,
                                                           Eegeo::Helpers::ICallback1<const SdkModel::IdentitySearchCallbackData&>& callback)
             {
-                m_searchQueryFactory.CreateYelpSearchForSpecificLocation(searchResultIdentifier, callback)->Dispatch();
+                m_searchQueryFactory.CreateYelpSearchForSpecificLocation(outdatedSearchResult, callback)->Dispatch();
             }
         }
     }

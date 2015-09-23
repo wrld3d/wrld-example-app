@@ -54,7 +54,7 @@ namespace ExampleApp
                 
                 void PerformLocationQuerySearch(const SdkModel::SearchQuery& query);
                 
-                void PerformIdentitySearch(const std::string& searchResultIdentifier,
+                void PerformIdentitySearch(const SdkModel::SearchResultModel& outdatedSearchResult,
                                            Eegeo::Helpers::ICallback1<const SdkModel::IdentitySearchCallbackData&>& callback);
                 
             private:

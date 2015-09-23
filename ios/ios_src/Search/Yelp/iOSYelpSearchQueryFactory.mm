@@ -39,7 +39,7 @@ namespace ExampleApp
                                                      completionCallback);
             }
             
-            IYelpSearchQuery* iOSYelpSearchQueryFactory::CreateYelpSearchForSpecificLocation(const std::string& locationIdentifier,
+            IYelpSearchQuery* iOSYelpSearchQueryFactory::CreateYelpSearchForSpecificLocation(const SdkModel::SearchResultModel& outdatedSearchResult,
                                                                                              Eegeo::Helpers::ICallback1<const SdkModel::IdentitySearchCallbackData&>& callback)
             
             {
@@ -48,7 +48,7 @@ namespace ExampleApp
                                                        m_yelpOAuthToken,
                                                        m_yelpOAuthTokenSecret,
                                                        m_yelpCategoryMapper,
-                                                       locationIdentifier,
+                                                       outdatedSearchResult,
                                                        callback);
             }
         }

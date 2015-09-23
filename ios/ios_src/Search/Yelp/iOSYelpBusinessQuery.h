@@ -8,6 +8,7 @@
 #include "ICallback.h"
 #include "IdentitySearchCallbackData.h"
 #include "IYelpCategoryMapper.h"
+#include "SearchResultModel.h"
 
 namespace ExampleApp
 {
@@ -23,7 +24,7 @@ namespace ExampleApp
                                      const std::string& yelpOAuthToken,
                                      const std::string& yelpOAuthTokenSecret,
                                      IYelpCategoryMapper& yelpCategoryMapper,
-                                     const std::string& locationIdentifier,
+                                     const SdkModel::SearchResultModel& outdatedSearchResult,
                                      Eegeo::Helpers::ICallback1<const SdkModel::IdentitySearchCallbackData&>& callback);
                 
                 ~iOSYelpBusinessQuery();
@@ -44,7 +45,7 @@ namespace ExampleApp
                 std::string m_yelpOAuthToken;
                 std::string m_yelpOAuthTokenSecret;
                 IYelpCategoryMapper& m_yelpCategoryMapper;
-                std::string m_locationIdentifier;
+                SdkModel::SearchResultModel m_outdatedSearchResult;
                 Eegeo::Helpers::ICallback1<const SdkModel::IdentitySearchCallbackData&>& m_callback;
                 std::string m_responseString;
                 bool m_cancelled;

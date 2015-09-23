@@ -41,7 +41,7 @@ namespace ExampleApp
                 IYelpSearchQuery* CreateYelpSearchForQuery(const SdkModel::SearchQuery& query,
                                                            Eegeo::Helpers::ICallback0& completionCallback);
 
-                IYelpSearchQuery* CreateYelpSearchForSpecificLocation(const std::string& locationIdentifier,
+                IYelpSearchQuery* CreateYelpSearchForSpecificLocation(const SdkModel::SearchResultModel& outdatedSearchResult,
                                                                       Eegeo::Helpers::ICallback1<const SdkModel::IdentitySearchCallbackData&>& callback);
             };
         }

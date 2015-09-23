@@ -45,7 +45,7 @@ namespace ExampleApp
             }
 
             IYelpSearchQuery* AndroidYelpSearchQueryFactory::CreateYelpSearchForSpecificLocation(
-            		const std::string& locationIdentifier,
+            		const SdkModel::SearchResultModel& outdatedSearchResult,
             		Eegeo::Helpers::ICallback1<const SdkModel::IdentitySearchCallbackData&>& callback)
             {
                 return Eegeo_NEW(AndroidYelpBusinessQuery)(
@@ -55,7 +55,7 @@ namespace ExampleApp
                 		m_yelpOAuthToken,
                 		m_yelpOAuthTokenSecret,
                 		m_yelpCategoryMapper,
-                		locationIdentifier,
+						outdatedSearchResult,
                 		callback);
             }
         }
