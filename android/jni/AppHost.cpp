@@ -78,7 +78,6 @@
 #include "WatermarkView.h"
 #include "NetworkCapabilities.h"
 #include "AndroidYelpSearchServiceModule.h"
-#include "DecartaSearchServiceModule.h"
 #include "ApplicationConfigurationModule.h"
 #include "IApplicationConfigurationService.h"
 
@@ -167,22 +166,14 @@ AppHost::AppHost(
     		m_pAndroidPlatformAbstractionModule->GetHttpCache(),
     		m_androidPersistentSettingsModel);
 
-    const bool useYelp = true;
-    if(useYelp)
-    {
-        m_pSearchServiceModule = Eegeo_NEW(ExampleApp::Search::Yelp::AndroidYelpSearchServiceModule)(
-        		nativeState,
-        		m_pAndroidPlatformAbstractionModule->GetWebLoadRequestFactory(),
-        		*m_pNetworkCapabilities,
-        		m_pAndroidPlatformAbstractionModule->GetUrlEncoder()
-        );
-    }
-    else
-    {
-        m_pSearchServiceModule = Eegeo_NEW(ExampleApp::Search::Decarta::DecartaSearchServiceModule)(
-        		m_pAndroidPlatformAbstractionModule->GetWebLoadRequestFactory(),
-        		m_pAndroidPlatformAbstractionModule->GetUrlEncoder());
-    }
+
+    m_pSearchServiceModule = Eegeo_NEW(ExampleApp::Search::Yelp::AndroidYelpSearchServiceModule)(
+    		nativeState,
+    		m_pAndroidPlatformAbstractionModule->GetWebLoadRequestFactory(),
+    		*m_pNetworkCapabilities,
+    		m_pAndroidPlatformAbstractionModule->GetUrlEncoder()
+    );
+
 
     m_pAndroidFlurryMetricsService = Eegeo_NEW(ExampleApp::Metrics::AndroidFlurryMetricsService)(&m_nativeState);
 

@@ -2,6 +2,7 @@
 
 #include "SearchResultPoiView.h"
 #include "AndroidAppThreadAssertionMacros.h"
+#include "YelpSearchJsonParser.h"
 
 namespace ExampleApp
 {
@@ -27,6 +28,8 @@ namespace ExampleApp
                 ASSERT_UI_THREAD
 
                 m_model = model;
+                m_yelpModel = Search::Yelp::TransformToYelpSearchResult(m_model);
+
                 CreateVendorSpecificPoiView(m_model.GetVendor());
 
                 AndroidSafeNativeThreadAttachment attached(m_nativeState);
@@ -48,7 +51,7 @@ namespace ExampleApp
                     env->DeleteLocalRef(jniString);
                 }
 
-                const std::vector<std::string>& reviews(model.GetReviews());
+                const std::vector<std::string>& reviews(m_yelpModel.GetReviews());
 
                 jobjectArray reviewsArray = env->NewObjectArray(
                 	reviews.size(),
@@ -65,12 +68,12 @@ namespace ExampleApp
                 }
 
                 jstring titleStr = env->NewStringUTF(model.GetTitle().c_str());
-                jstring addressStr = env->NewStringUTF(model.GetAddress().c_str());
-                jstring phoneStr = env->NewStringUTF(model.GetPhone().c_str());
-                jstring urlStr = env->NewStringUTF(model.GetWebUrl().c_str());
+                jstring addressStr = env->NewStringUTF(model.GetSubtitle().c_str());
+                jstring phoneStr = env->NewStringUTF(m_yelpModel.GetPhone().c_str());
+                jstring urlStr = env->NewStringUTF(m_yelpModel.GetWebUrl().c_str());
                 jstring categoryStr = env->NewStringUTF(model.GetCategory().c_str());
-                jstring imageUrlStr = env->NewStringUTF(model.GetImageUrl().c_str());
-                jstring ratingImageUrlStr = env->NewStringUTF(model.GetRatingImageUrl().c_str());
+                jstring imageUrlStr = env->NewStringUTF(m_yelpModel.GetImageUrl().c_str());
+                jstring ratingImageUrlStr = env->NewStringUTF(m_yelpModel.GetRatingImageUrl().c_str());
                 jstring vendorStr = env->NewStringUTF(model.GetVendor().c_str());
 
                 jmethodID displayPoiInfoMethod = env->GetMethodID(m_uiViewClass, "displayPoiInfo", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;IZ)V");
@@ -87,7 +90,7 @@ namespace ExampleApp
 					ratingImageUrlStr,
 					vendorStr,
 					reviewsArray,
-					model.GetReviewCount(),
+					m_yelpModel.GetReviewCount(),
 					isPinned
 				);
 
@@ -195,10 +198,6 @@ namespace ExampleApp
                 if(vendor == "Yelp")
                 {
                     viewClass = "com/eegeo/searchresultpoiview/YelpSearchResultPoiView";
-                }
-                else if(vendor == "DeCarta")
-                {
-                    viewClass = "com/eegeo/searchresultpoiview/DeCartaSearchResultPoiView";
                 }
                 else if(vendor == "GeoNames")
                 {
