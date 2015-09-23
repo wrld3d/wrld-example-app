@@ -51,6 +51,11 @@
 		183E54881ACEB1FB00AD6B3E /* InitialExperienceSearchResultAttractModeModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 183E54801ACEB1FB00AD6B3E /* InitialExperienceSearchResultAttractModeModel.cpp */; };
 		183E54891ACEB1FB00AD6B3E /* InitialExperienceSearchResultAttractModeViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 183E54831ACEB1FB00AD6B3E /* InitialExperienceSearchResultAttractModeViewController.cpp */; };
 		183E548A1ACEB1FB00AD6B3E /* InitialExperienceSearchResultAttractModeViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 183E54831ACEB1FB00AD6B3E /* InitialExperienceSearchResultAttractModeViewController.cpp */; };
+		1846CAEB1BB15504007F1922 /* SwallowSearchService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1846CAE81BB15504007F1922 /* SwallowSearchService.cpp */; };
+		1846CAEE1BB15545007F1922 /* SwallowCategoryMenuOption.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1846CAEC1BB15545007F1922 /* SwallowCategoryMenuOption.cpp */; };
+		1846CAEF1BB15545007F1922 /* SwallowCategoryMenuOption.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1846CAEC1BB15545007F1922 /* SwallowCategoryMenuOption.cpp */; };
+		1846CAF41BB16808007F1922 /* SwallowSearchMenuModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1846CAF21BB16808007F1922 /* SwallowSearchMenuModule.cpp */; };
+		1846CAF51BB16808007F1922 /* SwallowSearchMenuModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1846CAF21BB16808007F1922 /* SwallowSearchMenuModule.cpp */; };
 		185145901AB0A8DC0071913E /* SplashScreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 1851458D1AB0A8DC0071913E /* SplashScreen.png */; };
 		185145911AB0A8DC0071913E /* SplashScreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 1851458D1AB0A8DC0071913E /* SplashScreen.png */; };
 		185145921AB0A8DC0071913E /* SplashScreen@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1851458E1AB0A8DC0071913E /* SplashScreen@2x.png */; };
@@ -120,8 +125,6 @@
 		188C4CBC1AA753F70080B34B /* Arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 188C4CBA1AA753F70080B34B /* Arrow.png */; };
 		189B246819F93547006DD887 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E016040D19EEC26E0029A035 /* Images.xcassets */; };
 		18A1B0751A8A1EE1004C928E /* icon1_options.png in Resources */ = {isa = PBXBuildFile; fileRef = 18B22B391A7A9C7300DDBFA2 /* icon1_options.png */; };
-		18A5E0381BA70EA70015684B /* SwallowSearchService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18A5E0361BA70EA70015684B /* SwallowSearchService.cpp */; };
-		18A5E0391BA70EA70015684B /* SwallowSearchService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18A5E0361BA70EA70015684B /* SwallowSearchService.cpp */; };
 		18A5E03C1BA72D760015684B /* SwallowPersonSearchResultPoiView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18A5E03B1BA72D760015684B /* SwallowPersonSearchResultPoiView.mm */; };
 		18A5E03D1BA72D770015684B /* SwallowPersonSearchResultPoiView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18A5E03B1BA72D760015684B /* SwallowPersonSearchResultPoiView.mm */; };
 		18A5E0451BA98A0D0015684B /* SwallowSearchConstants.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18A5E0431BA98A0D0015684B /* SwallowSearchConstants.cpp */; };
@@ -1483,6 +1486,14 @@
 		183E54811ACEB1FB00AD6B3E /* InitialExperienceSearchResultAttractModeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InitialExperienceSearchResultAttractModeModel.h; sourceTree = "<group>"; };
 		183E54831ACEB1FB00AD6B3E /* InitialExperienceSearchResultAttractModeViewController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InitialExperienceSearchResultAttractModeViewController.cpp; sourceTree = "<group>"; };
 		183E54841ACEB1FB00AD6B3E /* InitialExperienceSearchResultAttractModeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InitialExperienceSearchResultAttractModeViewController.h; sourceTree = "<group>"; };
+		1846CAE81BB15504007F1922 /* SwallowSearchService.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SwallowSearchService.cpp; sourceTree = "<group>"; };
+		1846CAE91BB15504007F1922 /* SwallowSearchService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwallowSearchService.h; sourceTree = "<group>"; };
+		1846CAEC1BB15545007F1922 /* SwallowCategoryMenuOption.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SwallowCategoryMenuOption.cpp; sourceTree = "<group>"; };
+		1846CAED1BB15545007F1922 /* SwallowCategoryMenuOption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwallowCategoryMenuOption.h; sourceTree = "<group>"; };
+		1846CAF01BB16406007F1922 /* ISwallowSearchMenuModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISwallowSearchMenuModule.h; sourceTree = "<group>"; };
+		1846CAF11BB166E7007F1922 /* SwallowSearch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwallowSearch.h; sourceTree = "<group>"; };
+		1846CAF21BB16808007F1922 /* SwallowSearchMenuModule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SwallowSearchMenuModule.cpp; sourceTree = "<group>"; };
+		1846CAF31BB16808007F1922 /* SwallowSearchMenuModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwallowSearchMenuModule.h; sourceTree = "<group>"; };
 		1851458D1AB0A8DC0071913E /* SplashScreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = SplashScreen.png; path = SplashScreen/SplashScreen.png; sourceTree = "<group>"; };
 		1851458E1AB0A8DC0071913E /* SplashScreen@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "SplashScreen@2x.png"; path = "SplashScreen/SplashScreen@2x.png"; sourceTree = "<group>"; };
 		1851458F1AB0A8DC0071913E /* SplashScreen@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "SplashScreen@3x.png"; path = "SplashScreen/SplashScreen@3x.png"; sourceTree = "<group>"; };
@@ -1546,8 +1557,6 @@
 		188C4CA61AA730BF0080B34B /* menu_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu_button.png; sourceTree = "<group>"; };
 		188C4CA71AA730BF0080B34B /* place_pin_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = place_pin_background.png; sourceTree = "<group>"; };
 		188C4CBA1AA753F70080B34B /* Arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Arrow.png; sourceTree = "<group>"; };
-		18A5E0361BA70EA70015684B /* SwallowSearchService.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SwallowSearchService.cpp; sourceTree = "<group>"; };
-		18A5E0371BA70EA70015684B /* SwallowSearchService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwallowSearchService.h; sourceTree = "<group>"; };
 		18A5E03A1BA72D760015684B /* SwallowPersonSearchResultPoiView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwallowPersonSearchResultPoiView.h; sourceTree = "<group>"; };
 		18A5E03B1BA72D760015684B /* SwallowPersonSearchResultPoiView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SwallowPersonSearchResultPoiView.mm; sourceTree = "<group>"; };
 		18A5E0431BA98A0D0015684B /* SwallowSearchConstants.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SwallowSearchConstants.cpp; sourceTree = "<group>"; };
@@ -3070,6 +3079,27 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		1846CAE71BB15504007F1922 /* SdkModel */ = {
+			isa = PBXGroup;
+			children = (
+				1846CAE81BB15504007F1922 /* SwallowSearchService.cpp */,
+				1846CAE91BB15504007F1922 /* SwallowSearchService.h */,
+				1846CAF01BB16406007F1922 /* ISwallowSearchMenuModule.h */,
+				1846CAF21BB16808007F1922 /* SwallowSearchMenuModule.cpp */,
+				1846CAF31BB16808007F1922 /* SwallowSearchMenuModule.h */,
+			);
+			path = SdkModel;
+			sourceTree = "<group>";
+		};
+		1846CAEA1BB15504007F1922 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				1846CAEC1BB15545007F1922 /* SwallowCategoryMenuOption.cpp */,
+				1846CAED1BB15545007F1922 /* SwallowCategoryMenuOption.h */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		186B47011AB1D46B0084E80B /* Watermark */ = {
 			isa = PBXGroup;
 			children = (
@@ -3157,8 +3187,9 @@
 		18A5E0351BA70E720015684B /* Swallow */ = {
 			isa = PBXGroup;
 			children = (
-				18A5E0361BA70EA70015684B /* SwallowSearchService.cpp */,
-				18A5E0371BA70EA70015684B /* SwallowSearchService.h */,
+				1846CAE71BB15504007F1922 /* SdkModel */,
+				1846CAEA1BB15504007F1922 /* View */,
+				1846CAF11BB166E7007F1922 /* SwallowSearch.h */,
 				18A5E0431BA98A0D0015684B /* SwallowSearchConstants.cpp */,
 				18A5E0441BA98A0D0015684B /* SwallowSearchConstants.h */,
 			);
@@ -6447,6 +6478,7 @@
 				7E3B88B31A385A290023C94E /* CategorySearchModule.cpp in Sources */,
 				18B22B401A7AA0BC00DDBFA2 /* UILabelledCheckboxView.mm in Sources */,
 				7E3B8B321A385F110023C94E /* WorldPinOnMapView.mm in Sources */,
+				1846CAF51BB16808007F1922 /* SwallowSearchMenuModule.cpp in Sources */,
 				7E3B8B361A385F110023C94E /* WorldPinOnMapViewModule.mm in Sources */,
 				1827D07B1A96421D008923F5 /* GeoNamesJsonParser.cpp in Sources */,
 				18B44CE31A83B6C900FDFD8A /* CompletedCacheClearMessageHandler.cpp in Sources */,
@@ -6597,6 +6629,7 @@
 				7E3B89D51A385A290023C94E /* PerformedSearchMessage.cpp in Sources */,
 				18096F591A7B8DC7006A6438 /* OptionsModule.cpp in Sources */,
 				BFD5FCB71BA7068300F591F1 /* iCarouselTourExplorerViewController.mm in Sources */,
+				1846CAEF1BB15545007F1922 /* SwallowCategoryMenuOption.cpp in Sources */,
 				7E3B88DF1A385A290023C94E /* FlattenButtonController.cpp in Sources */,
 				7E3B8AF41A385F110023C94E /* CustomTableViewCell.mm in Sources */,
 				7E3B8B201A385F110023C94E /* SearchResultMenuViewModule.mm in Sources */,
@@ -6677,7 +6710,6 @@
 				7E3B89091A385A290023C94E /* ModalityModel.cpp in Sources */,
 				7E3B8AF21A385F110023C94E /* CustomTableView.mm in Sources */,
 				7E3B893B1A385A290023C94E /* MyPinCreationDetailsOpenableControl.cpp in Sources */,
-				18A5E0391BA70EA70015684B /* SwallowSearchService.cpp in Sources */,
 				7E3B89B91A385A290023C94E /* SearchResultMenuSearchQueryRemovedMessageHandler.cpp in Sources */,
 				7E3B8AE41A385F110023C94E /* ImageHelpers.mm in Sources */,
 				7E3B88E71A385A290023C94E /* PreloadSphereVolume.cpp in Sources */,
@@ -6920,6 +6952,7 @@
 				7E3B8ADD1A385F110023C94E /* FlattenButtonViewModule.mm in Sources */,
 				7E3B88F81A385A290023C94E /* MenuSectionsViewModel.cpp in Sources */,
 				7E3B89501A385A290023C94E /* MyPinRemovedFromMenuMessage.cpp in Sources */,
+				1846CAEE1BB15545007F1922 /* SwallowCategoryMenuOption.cpp in Sources */,
 				BFD5FCBC1BA7068300F591F1 /* TourExplorerViewInterop.mm in Sources */,
 				18FB64601A9240FC005A9411 /* OAConsumer.m in Sources */,
 				7E3B8AE71A385F110023C94E /* UIColors.mm in Sources */,
@@ -6951,6 +6984,7 @@
 				1827D0831A9B4F36008923F5 /* YelpSearchConstants.cpp in Sources */,
 				7E3B8A001A385A290023C94E /* WorldPinsService.cpp in Sources */,
 				7E3B8AC91A385F110023C94E /* AboutPageViewModule.mm in Sources */,
+				1846CAEB1BB15504007F1922 /* SwallowSearchService.cpp in Sources */,
 				18C0EC041A9E1240008EED21 /* MyPinBoundObjectFactory.cpp in Sources */,
 				7E3B89181A385A290023C94E /* PoiRingRenderable.cpp in Sources */,
 				BFD5FCBA1BA7068300F591F1 /* TourExplorerView.mm in Sources */,
@@ -7105,7 +7139,6 @@
 				7E3B89081A385A290023C94E /* ModalityModel.cpp in Sources */,
 				7E3B8AF11A385F110023C94E /* CustomTableView.mm in Sources */,
 				7E3B893A1A385A290023C94E /* MyPinCreationDetailsOpenableControl.cpp in Sources */,
-				18A5E0381BA70EA70015684B /* SwallowSearchService.cpp in Sources */,
 				7E3B89B81A385A290023C94E /* SearchResultMenuSearchQueryRemovedMessageHandler.cpp in Sources */,
 				7E3B8AE31A385F110023C94E /* ImageHelpers.mm in Sources */,
 				7E3B88E61A385A290023C94E /* PreloadSphereVolume.cpp in Sources */,
@@ -7150,6 +7183,7 @@
 				7E3B88D01A385A290023C94E /* CompassViewModel.cpp in Sources */,
 				7E3B88B01A385A290023C94E /* CategorySearchSelectedMessage.cpp in Sources */,
 				7E3B89A61A385A290023C94E /* SearchResultViewClearedObserver.cpp in Sources */,
+				1846CAF41BB16808007F1922 /* SwallowSearchMenuModule.cpp in Sources */,
 				7E3B89901A385A290023C94E /* SearchQueryObserver.cpp in Sources */,
 				7E3B89E41A385A290023C94E /* WeatherMenuStateModel.cpp in Sources */,
 				18096F911A7FA703006A6438 /* NetworkCapabilities.cpp in Sources */,

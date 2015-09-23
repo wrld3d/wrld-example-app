@@ -56,6 +56,7 @@
 @property (nonatomic, retain) UILabel* pOfficeLocationLabel;
 @property (nonatomic, retain) UILabel* pDeskCodeLabel;
 @property (nonatomic, retain) UIImageView* pProfileImageContainer;
+@property (nonatomic, retain) UIActivityIndicatorView* pProfileImageActivityIndicator;
 @property (nonatomic, retain) UILabel* pNameLabel;
 
 @end
