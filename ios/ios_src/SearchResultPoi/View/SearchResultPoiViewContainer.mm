@@ -15,7 +15,6 @@
 #include "SearchResultModel.h"
 
 #include "YelpSearchResultPoiView.h"
-#include "DecartaSearchResultPoiView.h"
 #include "GeoNamesSearchResultPoiView.h"
 
 @interface SearchResultPoiViewContainer()<UIGestureRecognizerDelegate>
@@ -83,10 +82,6 @@
     if(vendor == "Yelp")
     {
         return [[YelpSearchResultPoiView alloc] initWithInterop:m_pInterop];
-    }
-    else if(vendor == "DeCarta")
-    {
-        return [[DecartaSearchResultPoiView alloc] initWithInterop:m_pInterop];
     }
     else if(vendor == "GeoNames")
     {

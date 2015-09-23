@@ -62,7 +62,6 @@
 #include "TourExplorerView.h"
 #include "NetworkCapabilities.h"
 #include "iOSYelpSearchServiceModule.h"
-#include "DecartaSearchServiceModule.h"
 #include "InitialExperienceIntroViewModule.h"
 #include "InitialExperienceIntroView.h"
 #include "InitialExperienceIntroBackgroundView.h"
@@ -127,18 +126,9 @@ AppHost::AppHost(
                                                                                        m_piOSPlatformAbstractionModule->GetHttpCache(),
                                                                                        m_iOSPersistentSettingsModel);
     
-    const bool useYelp = true;
-    if(useYelp)
-    {
-        m_pSearchServiceModule = Eegeo_NEW(ExampleApp::Search::Yelp::iOSYelpSearchServiceModule)(m_piOSPlatformAbstractionModule->GetWebLoadRequestFactory(),
+    m_pSearchServiceModule = Eegeo_NEW(ExampleApp::Search::Yelp::iOSYelpSearchServiceModule)(m_piOSPlatformAbstractionModule->GetWebLoadRequestFactory(),
                                                                                                  *m_pNetworkCapabilities,
                                                                                                  m_piOSPlatformAbstractionModule->GetUrlEncoder());
-    }
-    else
-    {   
-        m_pSearchServiceModule = Eegeo_NEW(ExampleApp::Search::Decarta::DecartaSearchServiceModule)(m_piOSPlatformAbstractionModule->GetWebLoadRequestFactory(),
-                                                                                                    m_piOSPlatformAbstractionModule->GetUrlEncoder());
-    }
     
     m_piOSFlurryMetricsService = Eegeo_NEW(ExampleApp::Metrics::iOSFlurryMetricsService)();
     

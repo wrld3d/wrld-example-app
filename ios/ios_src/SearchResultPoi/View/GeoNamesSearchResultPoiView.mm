@@ -211,7 +211,7 @@
     
     float currentLabelY = 8.f;
     
-    if(!m_model.GetAddress().empty())
+    if(!m_model.GetSubtitle().empty())
     {
         self.pCountryHeaderContainer.frame = CGRectMake(0.f, currentLabelY, m_labelsSectionWidth, headerLabelHeight + 2 * headerTextPadding);
         self.pCountryHeaderContainer.hidden = false;
@@ -227,7 +227,7 @@
         self.pCountryContent.adjustsFontSizeToFitWidth = NO;
         self.pCountryContent.lineBreakMode = NSLineBreakByTruncatingTail;
         
-        std::string countryText = m_model.GetAddress();
+        std::string countryText = m_model.GetSubtitle();
         Eegeo::Helpers::SearchReplace(countryText,", ", "\n");
         self.pCountryContent.text = [NSString stringWithUTF8String:countryText.c_str()];
         self.pCountryContent.hidden = false;

@@ -6,10 +6,8 @@ namespace ExampleApp
 {
     namespace SearchResultPoi
     {
-        SearchResultPoiViewOpenedMessage::SearchResultPoiViewOpenedMessage(const std::string& imageUrl,
-                                                                           const std::string& ratingsImageUrl)
+        SearchResultPoiViewOpenedMessage::SearchResultPoiViewOpenedMessage(const std::string& imageUrl)
         : m_imageUrl(imageUrl)
-        , m_ratingsImageUrl(ratingsImageUrl)
         {
             
         }
@@ -17,11 +15,6 @@ namespace ExampleApp
         const std::string& SearchResultPoiViewOpenedMessage::GetImageUrl() const
         {
             return m_imageUrl;
-        }
-        
-        const std::string& SearchResultPoiViewOpenedMessage::GetRatingsImageUrl() const
-        {
-            return m_ratingsImageUrl;
         }
     }
 }

@@ -29,6 +29,7 @@ namespace ExampleApp
                 SdkModel::SearchResultModel model(SdkModel::SearchResultModel::CurrentVersion,
                                                   "",
                                                   m_name,
+                                                  m_country,
                                                   Eegeo::Space::LatLong::FromDegrees(m_location.GetLatitudeInDegrees(),
                                                                                      m_location.GetLongitudeInDegrees()),
                                                   0,
@@ -36,16 +37,9 @@ namespace ExampleApp
                                                   Eegeo::Resources::Interiors::InteriorId(""),
                                                   0,
                                                   "",
-                                                  m_country,
-                                                  "",
-                                                  "",
                                                   std::vector<std::string>(),
-                                                  "",
                                                   "GeoNames",
                                                   "",
-                                                  "",
-                                                  std::vector<std::string>(),
-                                                  0,
                                                   Eegeo::Helpers::Time::MillisecondsSinceEpoch());
                 
                 return model;

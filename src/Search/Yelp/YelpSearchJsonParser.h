@@ -28,6 +28,12 @@ namespace ExampleApp
             bool TryParseYelpBusinessSearchResult(const std::string& serialized,
                                                   IYelpCategoryMapper& yelpCategoryMapper,
                                                   SdkModel::SearchResultModel& out_result);
+            
+            YelpSearchResultModel TransformToYelpSearchResult(const SdkModel::SearchResultModel& searchResultModel);
+            
+            bool TryParseImageDetails(const Search::SdkModel::SearchResultModel& searchResultModel, std::string& out_imageUrl, std::string& out_ratingImageUrl);
+            
+            bool TryParseReviewDetails(const Search::SdkModel::SearchResultModel& searchResultModel, std::string& out_ratingImageUrl, int& out_reviewCount);
         }
     }
 }

@@ -11,6 +11,8 @@
 #include "WorldPinInteriorData.h"
 #include "ISearchResultMyPinsService.h"
 #include "Logger.h"
+#include "YelpSearchJsonParser.h"
+#include "YelpSearchResultModel.h"
 
 using ExampleApp::Search::SdkModel::SearchResultModel;
 
@@ -145,12 +147,15 @@ namespace ExampleApp
                 
                 const int pinIconIndex = m_searchResultIconCategoryMapper.GetIconIndexFromSearchResult(searchResultModel);
                 
-                // Use the ratings image if available, else fall back to address.
-                const std::string& ratingsImage(searchResultModel.GetRatingImageUrl());
+                std::string ratingsImage = "";
+                int reviewCount = 0;
+                
+                Search::Yelp::TryParseReviewDetails(searchResultModel, ratingsImage, reviewCount);
+                
                 WorldPins::SdkModel::WorldPinFocusData worldPinFocusData(searchResultModel.GetTitle(),
-                                                                         searchResultModel.GetAddress(),
+                                                                         searchResultModel.GetSubtitle(),
                                                                          ratingsImage,
-                                                                         searchResultModel.GetReviewCount());
+                                                                         reviewCount);
                 
                 WorldPins::SdkModel::WorldPinInteriorData worldPinInteriorData(searchResultModel.GetBuildingId(), searchResultModel.GetFloor());
                 
