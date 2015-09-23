@@ -79,10 +79,10 @@ namespace ExampleApp
                 m_numExpectedResponses = 0;
                 m_currentQueryResults.clear();
                 
-                ExecuteQueryPerformedCallbacks(m_currentQueryModel);
+                ExecuteQueryPerformedCallbacks(searchQuery);
                 if(m_networkCapabilities.StreamOverWifiOnly() && !m_networkCapabilities.ConnectedToWifi())
                 {
-                    ExecutQueryResponseReceivedCallbacks(m_currentQueryModel, std::vector<SdkModel::SearchResultModel>());
+                    ExecutQueryResponseReceivedCallbacks(searchQuery, std::vector<SdkModel::SearchResultModel>());
                     return;
                 }
                 

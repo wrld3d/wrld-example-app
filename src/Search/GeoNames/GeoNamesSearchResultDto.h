@@ -14,13 +14,15 @@ namespace ExampleApp
         {
             class GeoNamesSearchResultDto
             {
+                std::string m_id;
                 std::string m_name;
                 std::string m_country;
                 Eegeo::Space::LatLong m_location;
                 int m_population;
                 
             public:
-                GeoNamesSearchResultDto(const std::string& name,
+                GeoNamesSearchResultDto(const std::string& id,
+                                        const std::string& name,
                                         const std::string& country,
                                         const Eegeo::Space::LatLong& location,
                                         int population);

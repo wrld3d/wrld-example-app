@@ -609,6 +609,10 @@
 		27E9975F1BB2B74600B0BE14 /* CombinedSearchService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27E9975A1BB2B74600B0BE14 /* CombinedSearchService.cpp */; };
 		27E997601BB2B74600B0BE14 /* CombinedSearchServiceModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27E9975C1BB2B74600B0BE14 /* CombinedSearchServiceModule.cpp */; };
 		27E997611BB2B74600B0BE14 /* CombinedSearchServiceModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27E9975C1BB2B74600B0BE14 /* CombinedSearchServiceModule.cpp */; };
+		27E997641BB2E7CD00B0BE14 /* GeoNamesSearchService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27E997621BB2E7CD00B0BE14 /* GeoNamesSearchService.cpp */; };
+		27E997651BB2E7CD00B0BE14 /* GeoNamesSearchService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27E997621BB2E7CD00B0BE14 /* GeoNamesSearchService.cpp */; };
+		27E997681BB2F43900B0BE14 /* GeoNamesSearchServiceModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27E997661BB2F43900B0BE14 /* GeoNamesSearchServiceModule.cpp */; };
+		27E997691BB2F43900B0BE14 /* GeoNamesSearchServiceModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27E997661BB2F43900B0BE14 /* GeoNamesSearchServiceModule.cpp */; };
 		560741141B8CC624002B0F49 /* MenuDragStateChangedMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 560741121B8CC624002B0F49 /* MenuDragStateChangedMessage.cpp */; };
 		560741151B8CC624002B0F49 /* MenuDragStateChangedMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 560741121B8CC624002B0F49 /* MenuDragStateChangedMessage.cpp */; };
 		561ECF221B467FD3007BD4F9 /* InteriorsEntitiesPinsModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 561ECF201B467FD3007BD4F9 /* InteriorsEntitiesPinsModule.cpp */; };
@@ -1873,6 +1877,10 @@
 		27E9975B1BB2B74600B0BE14 /* CombinedSearchService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CombinedSearchService.h; sourceTree = "<group>"; };
 		27E9975C1BB2B74600B0BE14 /* CombinedSearchServiceModule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CombinedSearchServiceModule.cpp; sourceTree = "<group>"; };
 		27E9975D1BB2B74600B0BE14 /* CombinedSearchServiceModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CombinedSearchServiceModule.h; sourceTree = "<group>"; };
+		27E997621BB2E7CD00B0BE14 /* GeoNamesSearchService.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GeoNamesSearchService.cpp; sourceTree = "<group>"; };
+		27E997631BB2E7CD00B0BE14 /* GeoNamesSearchService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeoNamesSearchService.h; sourceTree = "<group>"; };
+		27E997661BB2F43900B0BE14 /* GeoNamesSearchServiceModule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GeoNamesSearchServiceModule.cpp; sourceTree = "<group>"; };
+		27E997671BB2F43900B0BE14 /* GeoNamesSearchServiceModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeoNamesSearchServiceModule.h; sourceTree = "<group>"; };
 		560741121B8CC624002B0F49 /* MenuDragStateChangedMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MenuDragStateChangedMessage.cpp; sourceTree = "<group>"; };
 		560741131B8CC624002B0F49 /* MenuDragStateChangedMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuDragStateChangedMessage.h; sourceTree = "<group>"; };
 		561ECF201B467FD3007BD4F9 /* InteriorsEntitiesPinsModule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InteriorsEntitiesPinsModule.cpp; sourceTree = "<group>"; };
@@ -2985,6 +2993,10 @@
 				1827D06C1A9640A1008923F5 /* GeoNamesSearchQueryFactory.h */,
 				1827D0741A964207008923F5 /* GeoNamesSearchResultDto.cpp */,
 				1827D0751A964207008923F5 /* GeoNamesSearchResultDto.h */,
+				27E997621BB2E7CD00B0BE14 /* GeoNamesSearchService.cpp */,
+				27E997631BB2E7CD00B0BE14 /* GeoNamesSearchService.h */,
+				27E997661BB2F43900B0BE14 /* GeoNamesSearchServiceModule.cpp */,
+				27E997671BB2F43900B0BE14 /* GeoNamesSearchServiceModule.h */,
 			);
 			path = GeoNames;
 			sourceTree = "<group>";
@@ -6523,6 +6535,7 @@
 				7E3B88DF1A385A290023C94E /* FlattenButtonController.cpp in Sources */,
 				7E3B8AF41A385F110023C94E /* CustomTableViewCell.mm in Sources */,
 				7E3B8B201A385F110023C94E /* SearchResultMenuViewModule.mm in Sources */,
+				27E997691BB2F43900B0BE14 /* GeoNamesSearchServiceModule.cpp in Sources */,
 				7E3B88C11A385A290023C94E /* CompassViewCycledMessage.cpp in Sources */,
 				BFD5FD491BA706AD00F591F1 /* TourStateMachine.cpp in Sources */,
 				7E3B89611A385A290023C94E /* MyPinsRepositoryObserver.cpp in Sources */,
@@ -6660,6 +6673,7 @@
 				7E3B8AFA1A385F110023C94E /* ModalBackgroundViewInterop.mm in Sources */,
 				7E3B89971A385A290023C94E /* SearchServiceBase.cpp in Sources */,
 				BFD5FCC11BA7068300F591F1 /* TourFullScreenImageView.mm in Sources */,
+				27E997651BB2E7CD00B0BE14 /* GeoNamesSearchService.cpp in Sources */,
 				7E3B8B061A385F110023C94E /* MyPinCreationDetailsViewInterop.mm in Sources */,
 				7E3B89171A385A290023C94E /* PoiRingModule.cpp in Sources */,
 				18E1028E1A8BA12C0011A18C /* SearchResultPoiMyPinService.cpp in Sources */,
@@ -6947,6 +6961,7 @@
 				7E3B88DE1A385A290023C94E /* FlattenButtonController.cpp in Sources */,
 				7E3B8AF31A385F110023C94E /* CustomTableViewCell.mm in Sources */,
 				7E3B8B1F1A385F110023C94E /* SearchResultMenuViewModule.mm in Sources */,
+				27E997681BB2F43900B0BE14 /* GeoNamesSearchServiceModule.cpp in Sources */,
 				7E3B88C01A385A290023C94E /* CompassViewCycledMessage.cpp in Sources */,
 				BFD5FD481BA706AD00F591F1 /* TourStateMachine.cpp in Sources */,
 				7E3B89601A385A290023C94E /* MyPinsRepositoryObserver.cpp in Sources */,
@@ -7084,6 +7099,7 @@
 				7E3B8AF91A385F110023C94E /* ModalBackgroundViewInterop.mm in Sources */,
 				7E3B89961A385A290023C94E /* SearchServiceBase.cpp in Sources */,
 				BFD5FCC01BA7068300F591F1 /* TourFullScreenImageView.mm in Sources */,
+				27E997641BB2E7CD00B0BE14 /* GeoNamesSearchService.cpp in Sources */,
 				7E3B8B051A385F110023C94E /* MyPinCreationDetailsViewInterop.mm in Sources */,
 				7E3B89161A385A290023C94E /* PoiRingModule.cpp in Sources */,
 				18E1028D1A8BA12C0011A18C /* SearchResultPoiMyPinService.cpp in Sources */,

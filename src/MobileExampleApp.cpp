@@ -74,6 +74,7 @@
 #include "ICompassViewModel.h"
 #include "CombinedSearchServiceModule.h"
 #include "DecartaSearchServiceModule.h"
+#include "GeoNamesSearchServiceModule.h"
 
 namespace ExampleApp
 {
@@ -299,10 +300,12 @@ namespace ExampleApp
             m_searchServiceModules["Decarta"] = Eegeo_NEW(ExampleApp::Search::Decarta::DecartaSearchServiceModule)(m_platformAbstractions.GetWebLoadRequestFactory(),
                                                                                                                    m_platformAbstractions.GetUrlEncoder());
         }
-        const bool useGeoName = true;
+        const bool useGeoName = false;
         if(useGeoName)
         {
-            //TODO: Add GeoNameSearchModule once implemented
+            m_searchServiceModules["GeoNames"] = Eegeo_NEW(Search::GeoNames::GeoNamesSearchServiceModule)(m_platformAbstractions.GetWebLoadRequestFactory(),
+                                                                                                          m_platformAbstractions.GetUrlEncoder(),
+                                                                                                          m_networkCapabilities);
         }
         searchServiceModulesForCombinedSearch.insert(m_searchServiceModules.begin(), m_searchServiceModules.end());
         

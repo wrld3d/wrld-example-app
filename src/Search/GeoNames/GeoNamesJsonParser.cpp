@@ -1,6 +1,8 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "GeoNamesJsonParser.h"
+
+#include <sstream>
 #include "document.h"
 
 namespace ExampleApp
@@ -29,7 +31,11 @@ namespace ExampleApp
                             const double lat(::atof(json["lat"].GetString()));
                             const double lng(::atof(json["lng"].GetString()));
                             
-                            GeoNamesSearchResultDto dto(json["name"].GetString(),
+                            std::stringstream ss;
+                            ss << json["geonameId"].GetInt();
+                            
+                            GeoNamesSearchResultDto dto(ss.str(),
+                                                        json["name"].GetString(),
                                                         json["countryName"].GetString(),
                                                         Eegeo::Space::LatLong::FromDegrees(lat, lng),
                                                         json["population"].GetInt());

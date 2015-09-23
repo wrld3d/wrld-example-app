@@ -25,7 +25,7 @@ namespace ExampleApp
                 
                 std::string url = "http://api.geonames.org/searchJSON?q="
                 + encodedQuery
-                + "&maxRows=1&featureClass=A&featureClass=P&orderby=relevance&username="
+                + "&maxRows=5&featureClass=A&featureClass=P&orderby=relevance&username="
                 + ExampleApp::GeoNamesUserName;
                 
                 m_pWebLoadRequest = webRequestFactory.CreateGet(url, m_webRequestCompleteCallback, NULL);
