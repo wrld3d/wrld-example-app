@@ -79,15 +79,17 @@ namespace ExampleApp
                 m_numExpectedResponses = 0;
                 m_currentQueryResults.clear();
                 
+                ExecuteQueryPerformedCallbacks(m_currentQueryModel);
                 if(m_networkCapabilities.StreamOverWifiOnly() && !m_networkCapabilities.ConnectedToWifi())
                 {
+                    ExecutQueryResponseReceivedCallbacks(m_currentQueryModel, std::vector<SdkModel::SearchResultModel>());
                     return;
                 }
                 
                 m_currentQueryModel = searchQuery;
                 m_hasActiveQuery = true;
                 
-                ExecuteQueryPerformedCallbacks(m_currentQueryModel);
+                
                 IssueYelpRequest();
                 IssueGeoNameRequest();
             }

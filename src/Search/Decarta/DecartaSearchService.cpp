@@ -56,6 +56,8 @@ namespace ExampleApp
             {
                 CancelInFlightQueries();
 
+                ExecuteQueryPerformedCallbacks(searchQuery);
+                
                 const std::string baseUrl =  "http://api.decarta.com/v1/";
 
                 std::stringstream ss;
@@ -75,6 +77,7 @@ namespace ExampleApp
                         // the POI results nearby, but deCarta does not support this feature. We could fake it
                         // by performing multiple searches for various categories from the deCarta category
                         // list, aggregating the results, but seems overly complex for this example.
+                        ExecutQueryResponseReceivedCallbacks(searchQuery, std::vector<SdkModel::SearchResultModel>());
                         return;
                     }
                     else
@@ -90,8 +93,6 @@ namespace ExampleApp
 
                 std::string url = ss.str();
                 EXAMPLE_LOG("Search Request: %s\n", url.c_str());
-                
-                ExecuteQueryPerformedCallbacks(searchQuery);
 
                 IssueRequest(url, searchQuery);
             }

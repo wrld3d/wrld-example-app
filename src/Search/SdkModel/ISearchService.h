@@ -24,6 +24,7 @@ namespace ExampleApp
 
                 virtual void CancelInFlightQueries() = 0;
 
+                // Implementation should call PerFormedQueryCallbacks and ReceivedQueryResultsCallback even if no search is made or falure occurs 
                 virtual void PerformLocationQuerySearch(const SearchQuery& query) = 0;
                 
                 // Implementation should search for an update for the given SearchResultModel
