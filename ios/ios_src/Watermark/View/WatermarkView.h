@@ -11,6 +11,8 @@
 @interface WatermarkView : UIButton
 {
     ExampleApp::Watermark::View::WatermarkViewInterop* m_pInterop;
+    UIViewController* m_pController;
+
     UIColor* m_pColour;
 
     float m_width;
