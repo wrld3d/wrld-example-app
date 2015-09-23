@@ -19,6 +19,8 @@ namespace ExampleApp
             {
             public:
                 virtual ~ISearchService() { }
+                
+                virtual bool CanHandleCategory(const std::string& category) const = 0;
 
                 virtual void CancelInFlightQueries() = 0;
 

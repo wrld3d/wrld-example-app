@@ -3,7 +3,6 @@
 #pragma once
 
 #include "Types.h"
-#include "Yelp.h"
 #include "Search.h"
 #include "ISearchServiceModule.h"
 #include "Web.h"

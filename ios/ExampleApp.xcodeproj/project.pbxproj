@@ -35,8 +35,6 @@
 		1827D07B1A96421D008923F5 /* GeoNamesJsonParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1827D0781A96421D008923F5 /* GeoNamesJsonParser.cpp */; };
 		1827D07F1A975777008923F5 /* YelpCategoryMapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1827D07D1A975777008923F5 /* YelpCategoryMapper.cpp */; };
 		1827D0801A975777008923F5 /* YelpCategoryMapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1827D07D1A975777008923F5 /* YelpCategoryMapper.cpp */; };
-		1827D0831A9B4F36008923F5 /* YelpSearchConstants.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1827D0811A9B4F36008923F5 /* YelpSearchConstants.cpp */; };
-		1827D0841A9B4F36008923F5 /* YelpSearchConstants.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1827D0811A9B4F36008923F5 /* YelpSearchConstants.cpp */; };
 		1827D0861A9B536E008923F5 /* icon1_aroundme.png in Resources */ = {isa = PBXBuildFile; fileRef = 1827D0851A9B536E008923F5 /* icon1_aroundme.png */; };
 		1827D0871A9B536E008923F5 /* icon1_aroundme.png in Resources */ = {isa = PBXBuildFile; fileRef = 1827D0851A9B536E008923F5 /* icon1_aroundme.png */; };
 		183E54771ACE9E7700AD6B3E /* reviewsFromYelpRED.png in Resources */ = {isa = PBXBuildFile; fileRef = 183E54741ACE9E7700AD6B3E /* reviewsFromYelpRED.png */; };
@@ -603,6 +601,14 @@
 		225FFA161A39EE8600C2282A /* SearchResultModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 225FFA111A39EE8600C2282A /* SearchResultModel.cpp */; };
 		225FFA171A39EE8600C2282A /* SearchResultRepository.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 225FFA131A39EE8600C2282A /* SearchResultRepository.cpp */; };
 		225FFA181A39EE8600C2282A /* SearchResultRepository.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 225FFA131A39EE8600C2282A /* SearchResultRepository.cpp */; };
+		27E997521BB2B69000B0BE14 /* YelpSearchConstants.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27E997501BB2B69000B0BE14 /* YelpSearchConstants.cpp */; };
+		27E997531BB2B69000B0BE14 /* YelpSearchConstants.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27E997501BB2B69000B0BE14 /* YelpSearchConstants.cpp */; };
+		27E997571BB2B69900B0BE14 /* DecartaSearchConstants.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27E997551BB2B69900B0BE14 /* DecartaSearchConstants.cpp */; };
+		27E997581BB2B69900B0BE14 /* DecartaSearchConstants.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27E997551BB2B69900B0BE14 /* DecartaSearchConstants.cpp */; };
+		27E9975E1BB2B74600B0BE14 /* CombinedSearchService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27E9975A1BB2B74600B0BE14 /* CombinedSearchService.cpp */; };
+		27E9975F1BB2B74600B0BE14 /* CombinedSearchService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27E9975A1BB2B74600B0BE14 /* CombinedSearchService.cpp */; };
+		27E997601BB2B74600B0BE14 /* CombinedSearchServiceModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27E9975C1BB2B74600B0BE14 /* CombinedSearchServiceModule.cpp */; };
+		27E997611BB2B74600B0BE14 /* CombinedSearchServiceModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27E9975C1BB2B74600B0BE14 /* CombinedSearchServiceModule.cpp */; };
 		560741141B8CC624002B0F49 /* MenuDragStateChangedMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 560741121B8CC624002B0F49 /* MenuDragStateChangedMessage.cpp */; };
 		560741151B8CC624002B0F49 /* MenuDragStateChangedMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 560741121B8CC624002B0F49 /* MenuDragStateChangedMessage.cpp */; };
 		561ECF221B467FD3007BD4F9 /* InteriorsEntitiesPinsModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 561ECF201B467FD3007BD4F9 /* InteriorsEntitiesPinsModule.cpp */; };
@@ -1441,8 +1447,6 @@
 		1827D07C1A9756DB008923F5 /* IYelpCategoryMapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IYelpCategoryMapper.h; sourceTree = "<group>"; };
 		1827D07D1A975777008923F5 /* YelpCategoryMapper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = YelpCategoryMapper.cpp; sourceTree = "<group>"; };
 		1827D07E1A975777008923F5 /* YelpCategoryMapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YelpCategoryMapper.h; sourceTree = "<group>"; };
-		1827D0811A9B4F36008923F5 /* YelpSearchConstants.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = YelpSearchConstants.cpp; sourceTree = "<group>"; };
-		1827D0821A9B4F36008923F5 /* YelpSearchConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YelpSearchConstants.h; sourceTree = "<group>"; };
 		1827D0851A9B536E008923F5 /* icon1_aroundme.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon1_aroundme.png; sourceTree = "<group>"; };
 		183E54711ACD920700AD6B3E /* InitialExperienceSearchResultAttractModeModelStateUpdatedMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InitialExperienceSearchResultAttractModeModelStateUpdatedMessage.h; sourceTree = "<group>"; };
 		183E54721ACD960C00AD6B3E /* InitialExperienceSearchResultAttractModeModelStateEnteredMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InitialExperienceSearchResultAttractModeModelStateEnteredMessage.h; sourceTree = "<group>"; };
@@ -1861,6 +1865,14 @@
 		225FFA131A39EE8600C2282A /* SearchResultRepository.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchResultRepository.cpp; sourceTree = "<group>"; };
 		225FFA141A39EE8600C2282A /* SearchResultRepository.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultRepository.h; sourceTree = "<group>"; };
 		278A8F651BA6DB00000BBA67 /* WorldPinInteriorData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorldPinInteriorData.h; sourceTree = "<group>"; };
+		27E997501BB2B69000B0BE14 /* YelpSearchConstants.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = YelpSearchConstants.cpp; sourceTree = "<group>"; };
+		27E997511BB2B69000B0BE14 /* YelpSearchConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YelpSearchConstants.h; sourceTree = "<group>"; };
+		27E997551BB2B69900B0BE14 /* DecartaSearchConstants.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DecartaSearchConstants.cpp; sourceTree = "<group>"; };
+		27E997561BB2B69900B0BE14 /* DecartaSearchConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DecartaSearchConstants.h; sourceTree = "<group>"; };
+		27E9975A1BB2B74600B0BE14 /* CombinedSearchService.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CombinedSearchService.cpp; sourceTree = "<group>"; };
+		27E9975B1BB2B74600B0BE14 /* CombinedSearchService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CombinedSearchService.h; sourceTree = "<group>"; };
+		27E9975C1BB2B74600B0BE14 /* CombinedSearchServiceModule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CombinedSearchServiceModule.cpp; sourceTree = "<group>"; };
+		27E9975D1BB2B74600B0BE14 /* CombinedSearchServiceModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CombinedSearchServiceModule.h; sourceTree = "<group>"; };
 		560741121B8CC624002B0F49 /* MenuDragStateChangedMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MenuDragStateChangedMessage.cpp; sourceTree = "<group>"; };
 		560741131B8CC624002B0F49 /* MenuDragStateChangedMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuDragStateChangedMessage.h; sourceTree = "<group>"; };
 		561ECF201B467FD3007BD4F9 /* InteriorsEntitiesPinsModule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InteriorsEntitiesPinsModule.cpp; sourceTree = "<group>"; };
@@ -3232,14 +3244,13 @@
 		18FB64121A922BCD005A9411 /* Yelp */ = {
 			isa = PBXGroup;
 			children = (
+				27E9974F1BB2B69000B0BE14 /* SearchConstants */,
 				1827D07C1A9756DB008923F5 /* IYelpCategoryMapper.h */,
 				18FB641B1A922F9C005A9411 /* IYelpSearchQuery.h */,
 				18FB648F1A933C01005A9411 /* IYelpSearchQueryFactory.h */,
 				18FB641E1A9235BB005A9411 /* Yelp.h */,
 				1827D07D1A975777008923F5 /* YelpCategoryMapper.cpp */,
 				1827D07E1A975777008923F5 /* YelpCategoryMapper.h */,
-				1827D0811A9B4F36008923F5 /* YelpSearchConstants.cpp */,
-				1827D0821A9B4F36008923F5 /* YelpSearchConstants.h */,
 				18FB64131A922BCD005A9411 /* YelpSearchJsonParser.cpp */,
 				18FB64141A922BCD005A9411 /* YelpSearchJsonParser.h */,
 				18FB64151A922BCD005A9411 /* YelpSearchService.cpp */,
@@ -3384,6 +3395,35 @@
 				18FE21D01AA9CD3800ACE28A /* ImagePathHelpers.h */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		27E9974F1BB2B69000B0BE14 /* SearchConstants */ = {
+			isa = PBXGroup;
+			children = (
+				27E997501BB2B69000B0BE14 /* YelpSearchConstants.cpp */,
+				27E997511BB2B69000B0BE14 /* YelpSearchConstants.h */,
+			);
+			path = SearchConstants;
+			sourceTree = "<group>";
+		};
+		27E997541BB2B69900B0BE14 /* SearchConstants */ = {
+			isa = PBXGroup;
+			children = (
+				27E997551BB2B69900B0BE14 /* DecartaSearchConstants.cpp */,
+				27E997561BB2B69900B0BE14 /* DecartaSearchConstants.h */,
+			);
+			path = SearchConstants;
+			sourceTree = "<group>";
+		};
+		27E997591BB2B74600B0BE14 /* Combined */ = {
+			isa = PBXGroup;
+			children = (
+				27E9975A1BB2B74600B0BE14 /* CombinedSearchService.cpp */,
+				27E9975B1BB2B74600B0BE14 /* CombinedSearchService.h */,
+				27E9975C1BB2B74600B0BE14 /* CombinedSearchServiceModule.cpp */,
+				27E9975D1BB2B74600B0BE14 /* CombinedSearchServiceModule.h */,
+			);
+			path = Combined;
 			sourceTree = "<group>";
 		};
 		561ECF1E1B467F84007BD4F9 /* InteriorsEntitiesPins */ = {
@@ -4163,6 +4203,7 @@
 		7E3B87D41A385A290023C94E /* Search */ = {
 			isa = PBXGroup;
 			children = (
+				27E997591BB2B74600B0BE14 /* Combined */,
 				7E3B87D51A385A290023C94E /* Decarta */,
 				1827D0671A9640A1008923F5 /* GeoNames */,
 				18FB64121A922BCD005A9411 /* Yelp */,
@@ -4181,6 +4222,7 @@
 		7E3B87D51A385A290023C94E /* Decarta */ = {
 			isa = PBXGroup;
 			children = (
+				27E997541BB2B69900B0BE14 /* SearchConstants */,
 				7E3B87D61A385A290023C94E /* DecartaSearchJsonParser.cpp */,
 				7E3B87D71A385A290023C94E /* DecartaSearchJsonParser.h */,
 				7E3B87D81A385A290023C94E /* DecartaSearchService.cpp */,
@@ -6405,7 +6447,6 @@
 				7E3B88BF1A385A290023C94E /* CompassModeChangedMessage.cpp in Sources */,
 				BFD5FD631BA706AD00F591F1 /* TourActiveStateChangedMessage.cpp in Sources */,
 				7E3B89F11A385A290023C94E /* WorldAreaLoaderModule.cpp in Sources */,
-				1827D0841A9B4F36008923F5 /* YelpSearchConstants.cpp in Sources */,
 				7E3B8A011A385A290023C94E /* WorldPinsService.cpp in Sources */,
 				7E3B8ACA1A385F110023C94E /* AboutPageViewModule.mm in Sources */,
 				18C0EC051A9E1240008EED21 /* MyPinBoundObjectFactory.cpp in Sources */,
@@ -6519,6 +6560,7 @@
 				18FB641A1A922BCD005A9411 /* YelpSearchService.cpp in Sources */,
 				18B22B111A7A8B3400DDBFA2 /* OptionsOpenableControl.cpp in Sources */,
 				7E3B89931A385A290023C94E /* SearchQueryPerformer.cpp in Sources */,
+				27E9975F1BB2B74600B0BE14 /* CombinedSearchService.cpp in Sources */,
 				7E3B89AD1A385A290023C94E /* SearchResultRemovedMessage.cpp in Sources */,
 				7E1B50761ACAD9010060FA4F /* InitialExperienceIntroController.cpp in Sources */,
 				7E3B89271A385A290023C94E /* MyPinCreationViewStateChangedHandler.cpp in Sources */,
@@ -6527,6 +6569,7 @@
 				186B47221AB1DD5C0084E80B /* WatermarkView.mm in Sources */,
 				7E3B89591A385A290023C94E /* MyPinSelectionHandler.cpp in Sources */,
 				7E3B88BB1A385A290023C94E /* CategorySearchRepository.cpp in Sources */,
+				27E997611BB2B74600B0BE14 /* CombinedSearchServiceModule.cpp in Sources */,
 				BFD5FD7B1BA706AD00F591F1 /* TourFullScreenImageCeremonyEndedObserver.cpp in Sources */,
 				18C0EBFC1A9E0E66008EED21 /* UserCreatedPinBoundObject.cpp in Sources */,
 				7E3B88C71A385A290023C94E /* CompassModule.cpp in Sources */,
@@ -6585,6 +6628,7 @@
 				18096F851A7F90A1006A6438 /* ExampleAppCustomWebLoadRequestFactory.cpp in Sources */,
 				7E3B88CD1A385A290023C94E /* CompassController.cpp in Sources */,
 				7E1B50801ACAE45C0060FA4F /* InitialExperienceIntroViewInterop.mm in Sources */,
+				27E997531BB2B69000B0BE14 /* YelpSearchConstants.cpp in Sources */,
 				7E3B899D1A385A290023C94E /* SearchQueryResponseReceivedMessage.cpp in Sources */,
 				7E3B89951A385A290023C94E /* SearchRefreshService.cpp in Sources */,
 				7E3B88B91A385A290023C94E /* CategorySearchModel.cpp in Sources */,
@@ -6705,6 +6749,7 @@
 				BFD5FCCD1BA7068300F591F1 /* TourWebView.mm in Sources */,
 				7E3B88F51A385A290023C94E /* MenuOptionsModel.cpp in Sources */,
 				7E3B8A091A385A290023C94E /* WorldPinOnMapController.cpp in Sources */,
+				27E997581BB2B69900B0BE14 /* DecartaSearchConstants.cpp in Sources */,
 				BFD5FD711BA706AD00F591F1 /* TourExplorerScreenControl.cpp in Sources */,
 				7E3B89E11A385A290023C94E /* WeatherController.cpp in Sources */,
 				7E3B88FB1A385A290023C94E /* MenuSectionViewModel.cpp in Sources */,
@@ -6826,7 +6871,6 @@
 				7E3B88BE1A385A290023C94E /* CompassModeChangedMessage.cpp in Sources */,
 				BFD5FD621BA706AD00F591F1 /* TourActiveStateChangedMessage.cpp in Sources */,
 				7E3B89F01A385A290023C94E /* WorldAreaLoaderModule.cpp in Sources */,
-				1827D0831A9B4F36008923F5 /* YelpSearchConstants.cpp in Sources */,
 				7E3B8A001A385A290023C94E /* WorldPinsService.cpp in Sources */,
 				7E3B8AC91A385F110023C94E /* AboutPageViewModule.mm in Sources */,
 				18C0EC041A9E1240008EED21 /* MyPinBoundObjectFactory.cpp in Sources */,
@@ -6940,6 +6984,7 @@
 				18FB64191A922BCD005A9411 /* YelpSearchService.cpp in Sources */,
 				18B22B101A7A8B3400DDBFA2 /* OptionsOpenableControl.cpp in Sources */,
 				7E3B89921A385A290023C94E /* SearchQueryPerformer.cpp in Sources */,
+				27E9975E1BB2B74600B0BE14 /* CombinedSearchService.cpp in Sources */,
 				7E3B89AC1A385A290023C94E /* SearchResultRemovedMessage.cpp in Sources */,
 				7E1B50751ACAD9010060FA4F /* InitialExperienceIntroController.cpp in Sources */,
 				7E3B89261A385A290023C94E /* MyPinCreationViewStateChangedHandler.cpp in Sources */,
@@ -6948,6 +6993,7 @@
 				186B47211AB1DD5C0084E80B /* WatermarkView.mm in Sources */,
 				7E3B89581A385A290023C94E /* MyPinSelectionHandler.cpp in Sources */,
 				7E3B88BA1A385A290023C94E /* CategorySearchRepository.cpp in Sources */,
+				27E997601BB2B74600B0BE14 /* CombinedSearchServiceModule.cpp in Sources */,
 				BFD5FD7A1BA706AD00F591F1 /* TourFullScreenImageCeremonyEndedObserver.cpp in Sources */,
 				18C0EBFB1A9E0E66008EED21 /* UserCreatedPinBoundObject.cpp in Sources */,
 				7E3B88C61A385A290023C94E /* CompassModule.cpp in Sources */,
@@ -7006,6 +7052,7 @@
 				18096F841A7F90A1006A6438 /* ExampleAppCustomWebLoadRequestFactory.cpp in Sources */,
 				7E3B88CC1A385A290023C94E /* CompassController.cpp in Sources */,
 				7E1B507F1ACAE45C0060FA4F /* InitialExperienceIntroViewInterop.mm in Sources */,
+				27E997521BB2B69000B0BE14 /* YelpSearchConstants.cpp in Sources */,
 				7E3B899C1A385A290023C94E /* SearchQueryResponseReceivedMessage.cpp in Sources */,
 				7E3B89941A385A290023C94E /* SearchRefreshService.cpp in Sources */,
 				7E3B88B81A385A290023C94E /* CategorySearchModel.cpp in Sources */,
@@ -7126,6 +7173,7 @@
 				BFD5FCCC1BA7068300F591F1 /* TourWebView.mm in Sources */,
 				7E3B88F41A385A290023C94E /* MenuOptionsModel.cpp in Sources */,
 				7E3B8A081A385A290023C94E /* WorldPinOnMapController.cpp in Sources */,
+				27E997571BB2B69900B0BE14 /* DecartaSearchConstants.cpp in Sources */,
 				BFD5FD701BA706AD00F591F1 /* TourExplorerScreenControl.cpp in Sources */,
 				7E3B89E01A385A290023C94E /* WeatherController.cpp in Sources */,
 				7E3B88FA1A385A290023C94E /* MenuSectionViewModel.cpp in Sources */,

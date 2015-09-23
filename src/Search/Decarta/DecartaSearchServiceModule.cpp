@@ -1,6 +1,8 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "DecartaSearchServiceModule.h"
+
+#include "DecartaSearchConstants.h"
 #include "DecartaSearchJsonParser.h"
 #include "DecartaSearchService.h"
 #include "ApiKey.h"
@@ -19,7 +21,8 @@ namespace ExampleApp
                 m_pSearchService = Eegeo_NEW(Decarta::DecartaSearchService)(ExampleApp::DecartaApiKey,
                                                                             *m_pSearchResultParser,
                                                                             urlEncoder,
-                                                                            webLoadRequestFactory);
+                                                                            webLoadRequestFactory,
+                                                                            Decarta::SearchConstants::GetCategories());
             }
             
             DecartaSearchServiceModule::~DecartaSearchServiceModule()
@@ -35,16 +38,7 @@ namespace ExampleApp
             
             std::vector<CategorySearch::View::CategorySearchModel> DecartaSearchServiceModule::GetCategorySearchModels() const
             {
-                // Some DeCarta categories from http://developer.decarta.com/Docs/REST/Search#category
-                std::vector<ExampleApp::CategorySearch::View::CategorySearchModel> categories;
-                categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Coffee", "coffee shop", "coffee"));
-                categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Food", "restaurant", "food"));
-                categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Nightlife", "night life", "nightlife"));
-                categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Arts", "museum", "arts"));
-                categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Hotels", "hotel", "hotel"));
-                categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Parks", "park", "park"));
-                categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Banks", "bank", "bank"));
-                return categories;
+                return Decarta::SearchConstants::GetCategorySearchModels();
             }
         }
     }

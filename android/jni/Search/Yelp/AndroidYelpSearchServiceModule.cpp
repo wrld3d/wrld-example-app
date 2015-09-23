@@ -22,8 +22,8 @@ namespace ExampleApp
                     Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder)
             {
                 m_pYelpCategoryMapper = Eegeo_NEW(Yelp::YelpCategoryMapper)(webRequestFactory,
-                                                                            Yelp::GetYelpFoundationCategoryToApplicationCategoryMap(),
-                                                                            Yelp::GetDefaultCategory());
+                                                                            Yelp::SearchConstants::GetYelpFoundationCategoryToApplicationCategoryMap(),
+                                                                            Yelp::SearchConstants::GetDefaultCategory());
 
                 m_pSearchResultParser = Eegeo_NEW(Yelp::YelpSearchJsonParser)(*m_pYelpCategoryMapper);
                 
@@ -42,7 +42,8 @@ namespace ExampleApp
                                                                       *m_pSearchResultParser,
                                                                       *m_pGeoNamesSearchQueryFactory,
                                                                       *m_pGeoNamesParser,
-                                                                      networkCapabilities);
+                                                                      networkCapabilities,
+																	  Yelp::SearchConstants::GetCategories());
             }
             
         	AndroidYelpSearchServiceModule::~AndroidYelpSearchServiceModule()
@@ -62,7 +63,7 @@ namespace ExampleApp
             
             std::vector<CategorySearch::View::CategorySearchModel> AndroidYelpSearchServiceModule::GetCategorySearchModels() const
             {
-            	return Yelp::GetCategorySearchModels();
+            	return Yelp::SearchConstants::GetCategorySearchModels();
             }
         }
     }

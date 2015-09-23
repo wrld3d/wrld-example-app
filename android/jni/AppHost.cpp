@@ -78,7 +78,6 @@
 #include "WatermarkView.h"
 #include "NetworkCapabilities.h"
 #include "AndroidYelpSearchServiceModule.h"
-#include "DecartaSearchServiceModule.h"
 #include "ApplicationConfigurationModule.h"
 #include "IApplicationConfigurationService.h"
 
@@ -119,9 +118,9 @@ AppHost::AppHost(
     ,m_requestedApplicationInitialiseViewState(false)
     ,m_uiCreatedMessageReceivedOnNativeThread(false)
     ,m_pViewControllerUpdaterModule(NULL)
-	,m_pSearchServiceModule(NULL)
 	,m_pAndroidFlurryMetricsService(NULL)
 	,m_pInitialExperienceIntroViewModule(NULL)
+	,m_searchServiceModules()
 	,m_failAlertHandler(this, &AppHost::HandleStartupFailure)
 {
     ASSERT_NATIVE_THREAD
@@ -170,18 +169,12 @@ AppHost::AppHost(
     const bool useYelp = true;
     if(useYelp)
     {
-        m_pSearchServiceModule = Eegeo_NEW(ExampleApp::Search::Yelp::AndroidYelpSearchServiceModule)(
+    	m_searchServiceModules["Yelp"] = Eegeo_NEW(ExampleApp::Search::Yelp::AndroidYelpSearchServiceModule)(
         		nativeState,
         		m_pAndroidPlatformAbstractionModule->GetWebLoadRequestFactory(),
         		*m_pNetworkCapabilities,
         		m_pAndroidPlatformAbstractionModule->GetUrlEncoder()
         );
-    }
-    else
-    {
-        m_pSearchServiceModule = Eegeo_NEW(ExampleApp::Search::Decarta::DecartaSearchServiceModule)(
-        		m_pAndroidPlatformAbstractionModule->GetWebLoadRequestFactory(),
-        		m_pAndroidPlatformAbstractionModule->GetUrlEncoder());
     }
 
     m_pAndroidFlurryMetricsService = Eegeo_NEW(ExampleApp::Metrics::AndroidFlurryMetricsService)(&m_nativeState);
@@ -202,7 +195,7 @@ AppHost::AppHost(
                  m_messageBus,
                  m_sdkDomainEventBus,
                  *m_pNetworkCapabilities,
-                 *m_pSearchServiceModule,
+                 m_searchServiceModules,
                  *m_pAndroidFlurryMetricsService,
                  applicationConfigurationModule.GetApplicationConfigurationService().LoadConfiguration("ApplicationConfigs/standard_config.json"),
                  *this);
@@ -232,8 +225,11 @@ AppHost::~AppHost()
     Eegeo_DELETE m_pAndroidFlurryMetricsService;
     m_pAndroidFlurryMetricsService = NULL;
 
-    Eegeo_DELETE m_pSearchServiceModule;
-    m_pSearchServiceModule = NULL;
+	for(std::map<std::string, ExampleApp::Search::SdkModel::ISearchServiceModule*>::iterator it = m_searchServiceModules.begin(); it != m_searchServiceModules.end(); ++it)
+	{
+		Eegeo_DELETE (*it).second;
+	}
+	m_searchServiceModules.clear();
 
     Eegeo_DELETE m_pNetworkCapabilities;
     m_pNetworkCapabilities = NULL;

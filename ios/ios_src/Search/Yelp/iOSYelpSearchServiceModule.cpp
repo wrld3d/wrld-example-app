@@ -23,8 +23,8 @@ namespace ExampleApp
                                                                    Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder)
             {
                 m_pYelpCategoryMapper = Eegeo_NEW(Yelp::YelpCategoryMapper)(webRequestFactory,
-                                                                            Yelp::GetYelpFoundationCategoryToApplicationCategoryMap(),
-                                                                            Yelp::GetDefaultCategory());
+                                                                            Yelp::SearchConstants::GetYelpFoundationCategoryToApplicationCategoryMap(),
+                                                                            Yelp::SearchConstants::GetDefaultCategory());
                 
                 m_pSearchResultParser = Eegeo_NEW(Yelp::YelpSearchJsonParser)(*m_pYelpCategoryMapper);
                 
@@ -38,11 +38,14 @@ namespace ExampleApp
                                                                                                 urlEncoder);
                 m_pGeoNamesParser = Eegeo_NEW(GeoNames::GeoNamesJsonParser)();
                 
+                std::vector<std::string> categories = Yelp::SearchConstants::GetCategories();
+                
                 m_pSearchService = Eegeo_NEW(Yelp::YelpSearchService)(*m_pSearchQueryFactory,
                                                                       *m_pSearchResultParser,
                                                                       *m_pGeoNamesSearchQueryFactory,
                                                                       *m_pGeoNamesParser,
-                                                                      networkCapabilities);
+                                                                      networkCapabilities,
+                                                                      categories);
             }
             
             iOSYelpSearchServiceModule::~iOSYelpSearchServiceModule()
@@ -62,7 +65,7 @@ namespace ExampleApp
             
             std::vector<CategorySearch::View::CategorySearchModel> iOSYelpSearchServiceModule::GetCategorySearchModels() const
             {
-                return Yelp::GetCategorySearchModels();
+                return Yelp::SearchConstants::GetCategorySearchModels();
             }
         }
     }

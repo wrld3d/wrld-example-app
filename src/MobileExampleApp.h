@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include <map>
+#include <string>
 #include <vector>
 #include "GlobeCamera.h"
 #include "EegeoWorld.h"
@@ -135,7 +137,8 @@ namespace ExampleApp
         ExampleAppMessaging::TMessageBus& m_messageBus;
         ExampleAppMessaging::TSdkModelDomainEventBus& m_sdkDomainEventBus;
         Net::SdkModel::INetworkCapabilities& m_networkCapabilities;
-        Search::SdkModel::ISearchServiceModule& m_searchServiceModule;
+        std::map<std::string,ExampleApp::Search::SdkModel::ISearchServiceModule*> m_searchServiceModules;
+        Search::SdkModel::ISearchServiceModule* m_pSearchServiceModule;
         InteriorsExplorer::SdkModel::IInteriorsExplorerModule* m_pInteriorsExplorerModule;
         InteriorsEntitiesPins::SdkModel::IInteriorsEntitiesPinsModule* m_pInteriorsEntitiesPinsModule;
         AppModes::SdkModel::IAppModeModel* m_pAppModeModel;
@@ -149,7 +152,7 @@ namespace ExampleApp
         
         const bool m_interiorsEnabled;
 
-        void CreateApplicationModelModules();
+        void CreateApplicationModelModules(const std::map<std::string,ExampleApp::Search::SdkModel::ISearchServiceModule*>& platformImplementedSearchServiceModules);
 
         void DestroyApplicationModelModules();
 
@@ -188,7 +191,7 @@ namespace ExampleApp
                          ExampleAppMessaging::TMessageBus& messageBus,
                          ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
                          ExampleApp::Net::SdkModel::INetworkCapabilities& networkCapabilities,
-                         ExampleApp::Search::SdkModel::ISearchServiceModule& searchServiceModule,
+                         const std::map<std::string,ExampleApp::Search::SdkModel::ISearchServiceModule*>& platformImplementedSearchServiceModules,
                          ExampleApp::Metrics::IMetricsService& metricsService,
                          const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration,
                          Eegeo::IEegeoErrorHandler& errorHandler);

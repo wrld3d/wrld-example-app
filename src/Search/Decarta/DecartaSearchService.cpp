@@ -21,8 +21,10 @@ namespace ExampleApp
             DecartaSearchService::DecartaSearchService(const std::string& decartaApiKey,
                     SdkModel::ISearchResultParser& parser,
                     Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder,
-                    Eegeo::Web::IWebLoadRequestFactory& webRequestFactory)
-                : m_decartaApiKey(decartaApiKey)
+                    Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
+                    const std::vector<std::string>& availableCategories)
+                : SdkModel::SearchServiceBase(availableCategories)
+                , m_decartaApiKey(decartaApiKey)
                 , m_parser(parser)
                 , m_webRequestFactory(webRequestFactory)
                 , m_urlEncoder(urlEncoder)

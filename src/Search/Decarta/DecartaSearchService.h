@@ -30,7 +30,8 @@ namespace ExampleApp
                 DecartaSearchService(const std::string& decartaApiKey,
                                      SdkModel::ISearchResultParser& parser,
                                      Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder,
-                                     Eegeo::Web::IWebLoadRequestFactory& webRequestFactory);
+                                     Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
+                                     const std::vector<std::string>& availableCategories);
 
                 ~DecartaSearchService();
 

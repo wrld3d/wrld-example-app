@@ -46,7 +46,8 @@ namespace ExampleApp
                                   SdkModel::ISearchResultParser& searchResultParser,
                                   GeoNames::IGeoNamesSearchQueryFactory& geoNamesSearchQueryFactory,
                                   GeoNames::IGeoNamesParser& geoNamesParser,
-                                  Net::SdkModel::INetworkCapabilities& networkCapabilities);
+                                  Net::SdkModel::INetworkCapabilities& networkCapabilities,
+                                  const std::vector<std::string>& availableCategories);
                 
                 ~YelpSearchService();
                 
