@@ -12,14 +12,12 @@ namespace ExampleApp
         {
         private:
             std::string m_imageUrl;
-            std::string m_ratingsImageUrl;
             
         public:
-            SearchResultPoiViewOpenedMessage(const std::string& imageUrl, const std::string& ratingsImageUrl);
+            SearchResultPoiViewOpenedMessage(const std::string& imageUrl);
             
             const std::string& GetImageUrl() const;
             
-            const std::string& GetRatingsImageUrl() const;
         };
     }
 }

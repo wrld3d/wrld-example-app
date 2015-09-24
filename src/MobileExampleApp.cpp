@@ -73,7 +73,6 @@
 #include "ExampleTourStateMachineFactory.h"
 #include "ICompassViewModel.h"
 #include "CombinedSearchServiceModule.h"
-#include "DecartaSearchServiceModule.h"
 #include "GeoNamesSearchServiceModule.h"
 #include "SearchVendorNames.h"
 
@@ -295,12 +294,6 @@ namespace ExampleApp
                                                                          m_networkCapabilities);
         
         std::map<std::string,ExampleApp::Search::SdkModel::ISearchServiceModule*> searchServiceModulesForCombinedSearch = platformImplementedSearchServiceModules;
-        const bool useDecarta = false;
-        if(useDecarta)
-        {
-            m_searchServiceModules[Search::DecartaVendorName] = Eegeo_NEW(Search::Decarta::SdkModel::DecartaSearchServiceModule)(m_platformAbstractions.GetWebLoadRequestFactory(),
-                                                                                                                   m_platformAbstractions.GetUrlEncoder());
-        }
         const bool useGeoName = true;
         if(useGeoName)
         {

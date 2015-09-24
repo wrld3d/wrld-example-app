@@ -8,7 +8,6 @@ namespace ExampleApp
 {
     namespace Search
     {
-        extern const std::string DecartaVendorName;
         extern const std::string YelpVendorName;
         extern const std::string GeoNamesVendorName;
     }

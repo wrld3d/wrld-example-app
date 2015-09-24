@@ -6,7 +6,6 @@ namespace ExampleApp
 {
     namespace Search
     {
-        const std::string DecartaVendorName = "DeCarta";
         const std::string YelpVendorName = "Yelp";
         const std::string GeoNamesVendorName = "GeoNames";
     }

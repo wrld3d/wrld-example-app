@@ -20,6 +20,7 @@
 #include "IMyPinBoundObject.h"
 #include <string>
 #include <sstream>
+#include "YelpSearchJsonParser.h"
 
 namespace ExampleApp
 {
@@ -122,8 +123,13 @@ namespace ExampleApp
                     
                     if (pinModel->Identifier() == myPinId)
                     {
-                        pinModel->Update(result.GetTitle(), result.GetAddress(), result.GetRatingImageUrl(), result.GetReviewCount());
-                        worldPinItemModel->Refresh(result.GetTitle(), result.GetAddress(), result.GetRatingImageUrl(), result.GetReviewCount());
+                        std::string ratingImageUrl = "";
+                        int reviewCount = 0;
+                        
+                        Search::Yelp::SdkModel::TryParseReviewDetails(result, ratingImageUrl, reviewCount);
+                        
+                        pinModel->Update(result.GetTitle(), result.GetSubtitle(), ratingImageUrl, reviewCount);
+                        worldPinItemModel->Refresh(result.GetTitle(), result.GetSubtitle(), ratingImageUrl, reviewCount);
                         
                         SaveAllPinsToDisk();
                         
@@ -200,13 +206,19 @@ namespace ExampleApp
                                                                                                              searchResult,
                                                                                                              *this);
                 m_myPinBoundObjectRepository.AddBoundItemForPin(idForThisPin, boundObject);
-                                
+                
+                
+                std::string ratingImageUrl = "";
+                int reviewCount = 0;
+                
+                Search::Yelp::SdkModel::TryParseReviewDetails(searchResult, ratingImageUrl, reviewCount);
+                
                 MyPinModel *pinModel = Eegeo_NEW(MyPinModel)(MyPinModel::CurrentVersion,
                                                              idForThisPin,
                                                              searchResult.GetTitle(),
-                                                             searchResult.GetAddress(),
-                                                             searchResult.GetRatingImageUrl(),
-                                                             searchResult.GetReviewCount(),
+                                                             searchResult.GetSubtitle(),
+                                                             ratingImageUrl,
+                                                             reviewCount,
                                                              pinIconIndex,
                                                              searchResult.GetLocation(),
                                                              searchResult.GetHeightAboveTerrainMetres(),

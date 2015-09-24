@@ -9,6 +9,7 @@
 #include "SearchResultModel.h"
 #include "SearchResultPoiViewInterop.h"
 #include "SearchResultPoiView.h"
+#include "YelpSearchResultModel.h"
 
 @class YelpSearchResultPoiView;
 
@@ -18,6 +19,7 @@
     
     float m_stateChangeAnimationTimeSeconds;
     ExampleApp::Search::SdkModel::SearchResultModel m_model;
+    ExampleApp::Search::Yelp::SdkModel::YelpSearchResultModel m_yelpModel;
     ExampleApp::SearchResultPoi::View::SearchResultPoiViewInterop* m_pInterop;
     
     bool m_isPinned;

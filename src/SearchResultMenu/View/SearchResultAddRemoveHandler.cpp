@@ -35,7 +35,7 @@ namespace ExampleApp
                 m_menuOptions.AddItem(
                     model.GetIdentifier(),
                     model.GetTitle(),
-                    model.GetAddress(),
+                    model.GetSubtitle(),
                     model.GetCategory(),
                     Eegeo_NEW(SearchResultItemModel)(
                         model.GetTitle(),

@@ -127,14 +127,10 @@ AppHost::AppHost(
                                                                                        m_piOSPlatformAbstractionModule->GetHttpCache(),
                                                                                        m_iOSPersistentSettingsModel);
     
-    const bool useYelp = true;
-    if(useYelp)
-    {
-        m_searchServiceModules[ExampleApp::Search::YelpVendorName] = Eegeo_NEW(ExampleApp::Search::Yelp::iOSYelpSearchServiceModule)(m_piOSPlatformAbstractionModule->GetWebLoadRequestFactory(),
+    m_searchServiceModules[ExampleApp::Search::YelpVendorName] = Eegeo_NEW(ExampleApp::Search::Yelp::iOSYelpSearchServiceModule)(m_piOSPlatformAbstractionModule->GetWebLoadRequestFactory(),
                                                                                                  *m_pNetworkCapabilities,
                                                                                                  m_piOSPlatformAbstractionModule->GetUrlEncoder());
-    }
-    
+
     m_piOSFlurryMetricsService = Eegeo_NEW(ExampleApp::Metrics::iOSFlurryMetricsService)();
     
     typedef ExampleApp::ApplicationConfig::SdkModel::ApplicationConfigurationModule ApplicationConfigurationModule;
