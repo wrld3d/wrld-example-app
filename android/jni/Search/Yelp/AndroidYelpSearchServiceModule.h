@@ -5,7 +5,6 @@
 #include "Types.h"
 #include "Yelp.h"
 #include "Search.h"
-#include "GeoNames.h"
 #include "Web.h"
 #include "NetIncludes.h"
 #include "UrlHelpers.h"
@@ -24,8 +23,6 @@ namespace ExampleApp
                 Yelp::IYelpSearchQueryFactory* m_pSearchQueryFactory;
                 SdkModel::ISearchResultParser* m_pSearchResultParser;
                 Yelp::IYelpCategoryMapper* m_pYelpCategoryMapper;
-                GeoNames::IGeoNamesSearchQueryFactory* m_pGeoNamesSearchQueryFactory;
-                GeoNames::IGeoNamesParser* m_pGeoNamesParser;
                 
             public:
                 AndroidYelpSearchServiceModule(AndroidNativeState& nativeState,

@@ -117,10 +117,10 @@ namespace ExampleApp
                 
                 if(m_hasActiveQuery)
                 {
+                    m_hasActiveQuery = false;
                     m_combinedResults.clear();
                     ExecutQueryResponseReceivedCallbacks(m_currentQueryModel, m_combinedResults);
                 }
-                m_hasActiveQuery = false;
             }
             
             void CombinedSearchService::OnSearchResponseRecieved(const SdkModel::SearchQuery& query,
@@ -130,10 +130,10 @@ namespace ExampleApp
                 
                 if( --m_pendingResultsLeft <= 0)
                 {
+                    m_hasActiveQuery = false;
+                    m_pendingResultsLeft = 0;
                     ExecutQueryResponseReceivedCallbacks(query, m_combinedResults);
                     m_combinedResults.clear();
-                    m_pendingResultsLeft = 0;
-                    m_hasActiveQuery = false;
                 }
             }
         }

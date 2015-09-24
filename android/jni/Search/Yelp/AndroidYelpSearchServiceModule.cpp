@@ -7,8 +7,6 @@
 #include "YelpSearchConstants.h"
 #include "ApiKey.h"
 #include "AndroidYelpSearchQueryFactory.h"
-#include "GeoNamesSearchQueryFactory.h"
-#include "GeoNamesJsonParser.h"
 
 namespace ExampleApp
 {
@@ -34,14 +32,9 @@ namespace ExampleApp
                 		ExampleApp::YelpOAuthToken,
                 		ExampleApp::YelpOAuthTokenSecret,
                 		*m_pYelpCategoryMapper);
-
-                m_pGeoNamesSearchQueryFactory = Eegeo_NEW(GeoNames::GeoNamesSearchQueryFactory)(webRequestFactory, urlEncoder);
-                m_pGeoNamesParser = Eegeo_NEW(GeoNames::GeoNamesJsonParser)();
                 
                 m_pSearchService = Eegeo_NEW(Yelp::YelpSearchService)(*m_pSearchQueryFactory,
                                                                       *m_pSearchResultParser,
-                                                                      *m_pGeoNamesSearchQueryFactory,
-                                                                      *m_pGeoNamesParser,
                                                                       networkCapabilities,
 																	  Yelp::SearchConstants::GetCategories());
             }
@@ -49,8 +42,6 @@ namespace ExampleApp
         	AndroidYelpSearchServiceModule::~AndroidYelpSearchServiceModule()
             {
                 Eegeo_DELETE m_pSearchService;
-                Eegeo_DELETE m_pGeoNamesParser;
-                Eegeo_DELETE m_pGeoNamesSearchQueryFactory;
                 Eegeo_DELETE m_pSearchQueryFactory;
                 Eegeo_DELETE m_pSearchResultParser;
                 Eegeo_DELETE m_pYelpCategoryMapper;

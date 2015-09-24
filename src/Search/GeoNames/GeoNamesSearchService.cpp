@@ -49,11 +49,10 @@ namespace ExampleApp
                 
                 if(m_hasActiveQuery)
                 {
+                    m_hasActiveQuery = false;
                     std::vector<SdkModel::SearchResultModel> results;
                     ExecutQueryResponseReceivedCallbacks(m_currentQueryModel, results);
                 }
-                
-                m_hasActiveQuery = false;
             }
             
             void GeoNamesSearchService::PerformLocationQuerySearch(const SdkModel::SearchQuery& query)
