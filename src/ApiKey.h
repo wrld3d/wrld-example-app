@@ -16,8 +16,8 @@ namespace ExampleApp
     static const std::string YelpOAuthTokenSecret = "OBTAIN YELP OAUTH TOKEN SECRET AND INSERT IT HERE";
     
     //! Optional: You may wish to obtain a geonames account key from http://www.geonames.org/export/web-services.html for address/place search provision
-    static const std::string GeoNamesUserName = "Eegeo_Cisco";
-    
+    static const std::string GeoNamesUserName = "OBTAIN GEONAMES USERNAME AND INSERT IT HERE";
+ 
     //! Optional: You may wish to obtain an API key for Flurry from https://developer.yahoo.com/analytics/ for metrics
     static const std::string FlurryApiKey = "OBTAIN FLURRY KEY AND INSERT IT HERE";
 }
