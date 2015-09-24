@@ -77,6 +77,7 @@
 #include "TourFullScreenImageViewModel.h"
 #include "TourFullScreenImageView.h"
 #include "ImageStore.h"
+#include "SearchVendorNames.h"
 
 using namespace Eegeo::iOS;
 
@@ -129,7 +130,7 @@ AppHost::AppHost(
     const bool useYelp = true;
     if(useYelp)
     {
-        m_searchServiceModules["Yelp"] = Eegeo_NEW(ExampleApp::Search::Yelp::iOSYelpSearchServiceModule)(m_piOSPlatformAbstractionModule->GetWebLoadRequestFactory(),
+        m_searchServiceModules[ExampleApp::Search::YelpVendorName] = Eegeo_NEW(ExampleApp::Search::Yelp::iOSYelpSearchServiceModule)(m_piOSPlatformAbstractionModule->GetWebLoadRequestFactory(),
                                                                                                  *m_pNetworkCapabilities,
                                                                                                  m_piOSPlatformAbstractionModule->GetUrlEncoder());
     }

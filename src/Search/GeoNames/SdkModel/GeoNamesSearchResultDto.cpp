@@ -4,6 +4,7 @@
 #include <vector>
 #include "GeoNamesSearchResultDto.h"
 #include "SearchResultModel.h"
+#include "SearchVendorNames.h"
 #include "TimeHelpers.h"
 
 namespace ExampleApp
@@ -45,7 +46,7 @@ namespace ExampleApp
                                                               "",
                                                               std::vector<std::string>(),
                                                               "",
-                                                              "GeoNames",
+                                                              GeoNamesVendorName,
                                                               "",
                                                               "",
                                                               std::vector<std::string>(),

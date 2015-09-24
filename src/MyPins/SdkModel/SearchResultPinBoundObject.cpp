@@ -11,6 +11,7 @@
 #include "IMyPinsSearchResultRefreshService.h"
 #include "IMyPinsService.h"
 #include "SearchResultIconCategoryMapper.h"
+#include "SearchVendorNames.h"
 
 namespace ExampleApp
 {
@@ -57,7 +58,7 @@ namespace ExampleApp
             , m_messageBus(messageBus)
             , m_sdkModelDomainEventBus(sdkModelDomainEventBus)
             , m_webLoadRequestFactory(webLoadRequestFactory)
-            , m_pinVendorRequiresRefreshing(m_searchResult.GetVendor() == "Yelp")
+            , m_pinVendorRequiresRefreshing(m_searchResult.GetVendor() == Search::YelpVendorName)
             , m_isCurrentlyRefreshingResult(false)
             , m_myPinsService(myPinsService)
             {

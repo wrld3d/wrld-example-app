@@ -613,6 +613,8 @@
 		27DB89F11BB3FF270020CDA5 /* YelpSearchJsonParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27DB89EA1BB3FF270020CDA5 /* YelpSearchJsonParser.cpp */; };
 		27DB89F21BB3FF270020CDA5 /* YelpSearchService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27DB89EC1BB3FF270020CDA5 /* YelpSearchService.cpp */; };
 		27DB89F31BB3FF270020CDA5 /* YelpSearchService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27DB89EC1BB3FF270020CDA5 /* YelpSearchService.cpp */; };
+		27DB89F91BB413F60020CDA5 /* SearchVendorNames.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27DB89F71BB413F60020CDA5 /* SearchVendorNames.cpp */; };
+		27DB89FA1BB413F60020CDA5 /* SearchVendorNames.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27DB89F71BB413F60020CDA5 /* SearchVendorNames.cpp */; };
 		27E997521BB2B69000B0BE14 /* YelpSearchConstants.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27E997501BB2B69000B0BE14 /* YelpSearchConstants.cpp */; };
 		27E997531BB2B69000B0BE14 /* YelpSearchConstants.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27E997501BB2B69000B0BE14 /* YelpSearchConstants.cpp */; };
 		27E997571BB2B69900B0BE14 /* DecartaSearchConstants.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27E997551BB2B69900B0BE14 /* DecartaSearchConstants.cpp */; };
@@ -1887,6 +1889,8 @@
 		27DB89EB1BB3FF270020CDA5 /* YelpSearchJsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YelpSearchJsonParser.h; sourceTree = "<group>"; };
 		27DB89EC1BB3FF270020CDA5 /* YelpSearchService.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = YelpSearchService.cpp; sourceTree = "<group>"; };
 		27DB89ED1BB3FF270020CDA5 /* YelpSearchService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YelpSearchService.h; sourceTree = "<group>"; };
+		27DB89F71BB413F60020CDA5 /* SearchVendorNames.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchVendorNames.cpp; sourceTree = "<group>"; };
+		27DB89F81BB413F60020CDA5 /* SearchVendorNames.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchVendorNames.h; sourceTree = "<group>"; };
 		27E997501BB2B69000B0BE14 /* YelpSearchConstants.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = YelpSearchConstants.cpp; sourceTree = "<group>"; };
 		27E997511BB2B69000B0BE14 /* YelpSearchConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YelpSearchConstants.h; sourceTree = "<group>"; };
 		27E997551BB2B69900B0BE14 /* DecartaSearchConstants.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DecartaSearchConstants.cpp; sourceTree = "<group>"; };
@@ -4261,6 +4265,8 @@
 		7E3B87D41A385A290023C94E /* Search */ = {
 			isa = PBXGroup;
 			children = (
+				27DB89F71BB413F60020CDA5 /* SearchVendorNames.cpp */,
+				27DB89F81BB413F60020CDA5 /* SearchVendorNames.h */,
 				27E997591BB2B74600B0BE14 /* Combined */,
 				7E3B87D51A385A290023C94E /* Decarta */,
 				1827D0671A9640A1008923F5 /* GeoNames */,
@@ -6466,6 +6472,7 @@
 				7E3B892D1A385A290023C94E /* MyPinCreationConfirmationOpenableControl.cpp in Sources */,
 				7E3B88E51A385A290023C94E /* InitialExperiencePreLoadModel.cpp in Sources */,
 				7E3B8B041A385F110023C94E /* MyPinCreationDetailsView.mm in Sources */,
+				27DB89FA1BB413F60020CDA5 /* SearchVendorNames.cpp in Sources */,
 				7E3B896F1A385A290023C94E /* PlaceJumpSelectedMessageHandler.cpp in Sources */,
 				27DB89E11BB3FF170020CDA5 /* GeoNamesSearchService.cpp in Sources */,
 				7E5811CC1B1F3248007AD67F /* InteriorsExplorerView.mm in Sources */,
@@ -6892,6 +6899,7 @@
 				18FB64921A933CF3005A9411 /* iOSYelpSearchQueryFactory.mm in Sources */,
 				7E3B892C1A385A290023C94E /* MyPinCreationConfirmationOpenableControl.cpp in Sources */,
 				7E3B88E41A385A290023C94E /* InitialExperiencePreLoadModel.cpp in Sources */,
+				27DB89F91BB413F60020CDA5 /* SearchVendorNames.cpp in Sources */,
 				7E3B8B031A385F110023C94E /* MyPinCreationDetailsView.mm in Sources */,
 				27DB89E01BB3FF170020CDA5 /* GeoNamesSearchService.cpp in Sources */,
 				7E3B896E1A385A290023C94E /* PlaceJumpSelectedMessageHandler.cpp in Sources */,

@@ -7,6 +7,7 @@
 #include "DecartaSearchJsonParser.h"
 #include "LatLongAltitude.h"
 #include "SearchResultModel.h"
+#include "SearchVendorNames.h"
 #include "TimeHelpers.h"
 
 using namespace rapidjson;
@@ -144,7 +145,7 @@ namespace ExampleApp
                                                                                entry.category,
                                                                                std::vector<std::string>(),
                                                                                entry.vicinity,
-                                                                               "DeCarta",
+                                                                               DecartaVendorName,
                                                                                "",
                                                                                "",
                                                                                std::vector<std::string>(),

@@ -80,6 +80,7 @@
 #include "AndroidYelpSearchServiceModule.h"
 #include "ApplicationConfigurationModule.h"
 #include "IApplicationConfigurationService.h"
+#include "SearchVendorNames.h"
 
 using namespace Eegeo::Android;
 using namespace Eegeo::Android::Input;
@@ -169,7 +170,7 @@ AppHost::AppHost(
     const bool useYelp = true;
     if(useYelp)
     {
-    	m_searchServiceModules["Yelp"] = Eegeo_NEW(ExampleApp::Search::Yelp::AndroidYelpSearchServiceModule)(
+    	m_searchServiceModules[ExampleApp::Search::YelpVendorName] = Eegeo_NEW(ExampleApp::Search::Yelp::AndroidYelpSearchServiceModule)(
         		nativeState,
         		m_pAndroidPlatformAbstractionModule->GetWebLoadRequestFactory(),
         		*m_pNetworkCapabilities,

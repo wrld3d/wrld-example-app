@@ -9,6 +9,7 @@
 #include "LatLongAltitude.h"
 #include "SearchResultModel.h"
 #include "SearchQuery.h"
+#include "SearchVendorNames.h"
 #include "TimeHelpers.h"
 
 using namespace rapidjson;
@@ -179,7 +180,7 @@ namespace
                                                                entry.category,
                                                                humanCategories,
                                                                entry.vicinity,
-                                                               "Yelp",
+                                                               ExampleApp::Search::YelpVendorName,
                                                                entry.imageUrl,
                                                                entry.ratingImageUrl,
                                                                reviews,

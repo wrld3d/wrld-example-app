@@ -75,6 +75,7 @@
 #include "CombinedSearchServiceModule.h"
 #include "DecartaSearchServiceModule.h"
 #include "GeoNamesSearchServiceModule.h"
+#include "SearchVendorNames.h"
 
 namespace ExampleApp
 {
@@ -297,13 +298,13 @@ namespace ExampleApp
         const bool useDecarta = false;
         if(useDecarta)
         {
-            m_searchServiceModules["Decarta"] = Eegeo_NEW(Search::Decarta::SdkModel::DecartaSearchServiceModule)(m_platformAbstractions.GetWebLoadRequestFactory(),
+            m_searchServiceModules[Search::DecartaVendorName] = Eegeo_NEW(Search::Decarta::SdkModel::DecartaSearchServiceModule)(m_platformAbstractions.GetWebLoadRequestFactory(),
                                                                                                                    m_platformAbstractions.GetUrlEncoder());
         }
         const bool useGeoName = true;
         if(useGeoName)
         {
-            m_searchServiceModules["GeoNames"] = Eegeo_NEW(Search::GeoNames::SdkModel::GeoNamesSearchServiceModule)(m_platformAbstractions.GetWebLoadRequestFactory(),
+            m_searchServiceModules[Search::GeoNamesVendorName] = Eegeo_NEW(Search::GeoNames::SdkModel::GeoNamesSearchServiceModule)(m_platformAbstractions.GetWebLoadRequestFactory(),
                                                                                                           m_platformAbstractions.GetUrlEncoder(),
                                                                                                           m_networkCapabilities);
         }
