@@ -11,8 +11,9 @@ namespace ExampleApp
             /*
              3: Yelp support (27/2/15)
              4: Added review count (7/7/15)
+             5: Refactored search result model footprint (24/9/15)
              */
-            const int SearchResultModel::CurrentVersion = 4;
+            const int SearchResultModel::CurrentVersion = 5;
             
             SearchResultModel::SearchResultModel()
             : m_version(-1)

@@ -49,12 +49,12 @@ namespace
             const size_t numYelpCategoryEntries(categoryEntries.Size());
             std::vector<std::string> allCategories;
             
-            for(size_t categoryEntryIndex = 0; categoryEntryIndex < numYelpCategoryEntries; ++categoryEntryIndex)
+            for(rapidjson::SizeType categoryEntryIndex = 0; categoryEntryIndex < numYelpCategoryEntries; ++categoryEntryIndex)
             {
                 const Value& categoryEntry = categoryEntries[categoryEntryIndex];
                 const size_t numYelpCategoryEntryStrings(categoryEntry.Size());
                 
-                for(size_t categoryStringIndex = 0; categoryStringIndex < numYelpCategoryEntryStrings; ++ categoryStringIndex)
+                for(rapidjson::SizeType categoryStringIndex = 0; categoryStringIndex < numYelpCategoryEntryStrings; ++ categoryStringIndex)
                 {
                     if(categoryStringIndex%2 == 0)
                     {
@@ -222,20 +222,27 @@ namespace ExampleApp
                     }
                     if(json.HasMember("rating"))
                     {
-                        double rating = json["rating"].GetDouble();
-                        std::stringstream ss;
-                        ss << rating;
-                        
-                        std::string ratingAsString = ss.str();
-                        
-                        if (ratingAsString.find('.') == std::string::npos)
+                        if(json["rating"].IsString())
                         {
-                            ratingAsString.append(".0");
+                            ratingImageUrl = json["rating"].GetString();
                         }
-                        
-                        std::replace(ratingAsString.begin(), ratingAsString.end(), '.', '_');
-                        
-                        ratingImageUrl = "stars_" + ratingAsString;
+                        else
+                        {
+                            double rating = json["rating"].GetDouble();
+                            std::stringstream ss;
+                            ss << rating;
+                            
+                            std::string ratingAsString = ss.str();
+                            
+                            if (ratingAsString.find('.') == std::string::npos)
+                            {
+                                ratingAsString.append(".0");
+                            }
+                            
+                            std::replace(ratingAsString.begin(), ratingAsString.end(), '.', '_');
+                            
+                            ratingImageUrl = "stars_" + ratingAsString;
+                        }
                     }
                     
                     if(json.HasMember("review_count"))
