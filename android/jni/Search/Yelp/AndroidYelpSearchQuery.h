@@ -15,7 +15,7 @@ namespace ExampleApp
     {
         namespace Yelp
         {
-            class AndroidYelpSearchQuery : public IYelpSearchQuery, private Eegeo::NonCopyable
+            class AndroidYelpSearchQuery : public SdkModel::IYelpSearchQuery, private Eegeo::NonCopyable
             {
             public:
             	AndroidYelpSearchQuery(
@@ -24,7 +24,7 @@ namespace ExampleApp
             			const std::string& yelpConsumerSecret,
             			const std::string& yelpOAuthToken,
             			const std::string& yelpOAuthTokenSecret,
-            			const SdkModel::SearchQuery& searchQuery,
+            			const Search::SdkModel::SearchQuery& searchQuery,
             			Eegeo::Helpers::ICallback0& completionCallback);
                 
                 ~AndroidYelpSearchQuery();
@@ -39,13 +39,13 @@ namespace ExampleApp
                 
                 const std::string& ResponseString();
                 
-                const SdkModel::SearchQuery& GetSearchQuery() const;
+                const Search::SdkModel::SearchQuery& GetSearchQuery() const;
                 
             private:
                 jclass m_yelpSearchQueryClass;
                 jobject m_yelpSearchQuery;
         		AndroidNativeState& m_nativeState;
-                SdkModel::SearchQuery m_searchQuery;
+        		Search::SdkModel::SearchQuery m_searchQuery;
                 Eegeo::Helpers::ICallback0& m_completionCallback;
                 std::string m_responseString;
                 bool m_cancelled;

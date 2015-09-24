@@ -15,7 +15,7 @@ namespace ExampleApp
         			const std::string& yelpConsumerSecret,
         			const std::string& yelpOAuthToken,
         			const std::string& yelpOAuthTokenSecret,
-            		const SdkModel::SearchQuery& searchQuery,
+            		const Search::SdkModel::SearchQuery& searchQuery,
             		Eegeo::Helpers::ICallback0& completionCallback)
             : m_nativeState(nativeState)
             , m_searchQuery(searchQuery)
@@ -139,7 +139,7 @@ namespace ExampleApp
                 return m_responseString;
             }
             
-            const SdkModel::SearchQuery& AndroidYelpSearchQuery::GetSearchQuery() const
+            const Search::SdkModel::SearchQuery& AndroidYelpSearchQuery::GetSearchQuery() const
             {
             	ASSERT_NATIVE_THREAD
 

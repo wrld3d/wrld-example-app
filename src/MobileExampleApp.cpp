@@ -72,6 +72,9 @@
 #include "ToursCameraState.h"
 #include "ExampleTourStateMachineFactory.h"
 #include "ICompassViewModel.h"
+#include "CombinedSearchServiceModule.h"
+#include "DecartaSearchServiceModule.h"
+#include "GeoNamesSearchServiceModule.h"
 
 namespace ExampleApp
 {
@@ -117,7 +120,7 @@ namespace ExampleApp
         ExampleAppMessaging::TMessageBus& messageBus,
         ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
         Net::SdkModel::INetworkCapabilities& networkCapabilities,
-        ExampleApp::Search::SdkModel::ISearchServiceModule& searchServiceModule,
+        const std::map<std::string,ExampleApp::Search::SdkModel::ISearchServiceModule*>& platformImplementedSearchServiceModules,
         ExampleApp::Metrics::IMetricsService& metricsService,
         const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration,
         Eegeo::IEegeoErrorHandler& errorHandler)
@@ -168,7 +171,7 @@ namespace ExampleApp
         , m_screenProperties(screenProperties)
         , m_networkCapabilities(networkCapabilities)
         , m_setMetricsLocation(false)
-        , m_searchServiceModule(searchServiceModule)
+        , m_pSearchServiceModule(NULL)
         , m_metricsService(metricsService)
         , m_applicationConfiguration(applicationConfiguration)
         , m_interiorsEnabled(platformConfig.OptionsConfig.EnableInteriors)
@@ -242,7 +245,7 @@ namespace ExampleApp
                                                                                        Eegeo::Streaming::QuadTreeCube::MAX_DEPTH_TO_VISIT,
                                                                                        mapModule.GetEnvironmentFlatteningService());
         
-        CreateApplicationModelModules();
+        CreateApplicationModelModules(platformImplementedSearchServiceModules);
         
         m_pLoadingScreen = CreateLoadingScreen(screenProperties, m_pWorld->GetRenderingModule(), m_pWorld->GetPlatformAbstractionModule());
 
@@ -274,7 +277,7 @@ namespace ExampleApp
         m_pBlitter = NULL;
     }
 
-    void MobileExampleApp::CreateApplicationModelModules()
+    void MobileExampleApp::CreateApplicationModelModules(const std::map<std::string,ExampleApp::Search::SdkModel::ISearchServiceModule*>& platformImplementedSearchServiceModules)
     {
         Eegeo::EegeoWorld& world = *m_pWorld;
 
@@ -290,7 +293,25 @@ namespace ExampleApp
                                                                          m_messageBus,
                                                                          m_networkCapabilities);
         
-        m_pSearchModule = Eegeo_NEW(Search::SdkModel::SearchModule)(m_searchServiceModule.GetSearchService(),
+        std::map<std::string,ExampleApp::Search::SdkModel::ISearchServiceModule*> searchServiceModulesForCombinedSearch = platformImplementedSearchServiceModules;
+        const bool useDecarta = false;
+        if(useDecarta)
+        {
+            m_searchServiceModules["Decarta"] = Eegeo_NEW(Search::Decarta::SdkModel::DecartaSearchServiceModule)(m_platformAbstractions.GetWebLoadRequestFactory(),
+                                                                                                                   m_platformAbstractions.GetUrlEncoder());
+        }
+        const bool useGeoName = true;
+        if(useGeoName)
+        {
+            m_searchServiceModules["GeoNames"] = Eegeo_NEW(Search::GeoNames::SdkModel::GeoNamesSearchServiceModule)(m_platformAbstractions.GetWebLoadRequestFactory(),
+                                                                                                          m_platformAbstractions.GetUrlEncoder(),
+                                                                                                          m_networkCapabilities);
+        }
+        searchServiceModulesForCombinedSearch.insert(m_searchServiceModules.begin(), m_searchServiceModules.end());
+        
+        m_pSearchServiceModule = Eegeo_NEW(Search::Combined::SdkModel::CombinedSearchServiceModule)(searchServiceModulesForCombinedSearch);
+        
+        m_pSearchModule = Eegeo_NEW(Search::SdkModel::SearchModule)(m_pSearchServiceModule->GetSearchService(),
                                                                     *m_pGlobeCameraController,
                                                                     *m_pCameraTransitionController,
                                                                     m_messageBus,
@@ -334,7 +355,7 @@ namespace ExampleApp
                               m_metricsService);
 
         m_pCategorySearchModule = Eegeo_NEW(ExampleApp::CategorySearch::SdkModel::CategorySearchModule(
-                                                m_searchServiceModule.GetCategorySearchModels(),
+                                                m_pSearchServiceModule->GetCategorySearchModels(),
                                                 SearchModule().GetSearchQueryPerformer(),
                                                 m_pSecondaryMenuModule->GetSecondaryMenuViewModel(),
                                                 m_messageBus,
@@ -517,6 +538,12 @@ namespace ExampleApp
         Eegeo_DELETE m_pCompassModule;
 
         Eegeo_DELETE m_pSearchModule;
+        
+        for(std::map<std::string, ExampleApp::Search::SdkModel::ISearchServiceModule*>::iterator it = m_searchServiceModules.begin(); it != m_searchServiceModules.end(); ++it)
+        {
+            Eegeo_DELETE (*it).second;
+        }
+        m_searchServiceModules.clear();
 
         Eegeo_DELETE m_pOptionsModule;
         

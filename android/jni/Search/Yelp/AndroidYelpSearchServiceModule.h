@@ -5,7 +5,6 @@
 #include "Types.h"
 #include "Yelp.h"
 #include "Search.h"
-#include "GeoNames.h"
 #include "Web.h"
 #include "NetIncludes.h"
 #include "UrlHelpers.h"
@@ -18,14 +17,12 @@ namespace ExampleApp
     {
         namespace Yelp
         {
-            class AndroidYelpSearchServiceModule : public SdkModel::ISearchServiceModule, private Eegeo::NonCopyable
+            class AndroidYelpSearchServiceModule : public Search::SdkModel::ISearchServiceModule, private Eegeo::NonCopyable
             {
-                SdkModel::ISearchService* m_pSearchService;
-                Yelp::IYelpSearchQueryFactory* m_pSearchQueryFactory;
-                SdkModel::ISearchResultParser* m_pSearchResultParser;
-                Yelp::IYelpCategoryMapper* m_pYelpCategoryMapper;
-                GeoNames::IGeoNamesSearchQueryFactory* m_pGeoNamesSearchQueryFactory;
-                GeoNames::IGeoNamesParser* m_pGeoNamesParser;
+            	Search::SdkModel::ISearchService* m_pSearchService;
+                Yelp::SdkModel::IYelpSearchQueryFactory* m_pSearchQueryFactory;
+                Search::SdkModel::ISearchResultParser* m_pSearchResultParser;
+                Yelp::SdkModel::IYelpCategoryMapper* m_pYelpCategoryMapper;
                 
             public:
                 AndroidYelpSearchServiceModule(AndroidNativeState& nativeState,
@@ -35,7 +32,7 @@ namespace ExampleApp
                 
                 ~AndroidYelpSearchServiceModule();
                 
-                SdkModel::ISearchService& GetSearchService() const;
+                Search::SdkModel::ISearchService& GetSearchService() const;
                 
                 std::vector<CategorySearch::View::CategorySearchModel> GetCategorySearchModels() const;
             };

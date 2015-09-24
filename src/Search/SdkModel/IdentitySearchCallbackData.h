@@ -14,33 +14,29 @@ namespace ExampleApp
             class IdentitySearchCallbackData
             {
                 bool m_success;
-                std::string m_locationIdentifier;
                 SearchResultModel m_searchResultModel;
                 
                 IdentitySearchCallbackData(bool success,
-                                           const std::string& locationIdentifier)
+                                           const SearchResultModel& searchResultModel)
                 : m_success(success)
-                , m_locationIdentifier(locationIdentifier)
+                , m_searchResultModel(searchResultModel)
                 {
                 }
                 
             public:
-                static IdentitySearchCallbackData CreateFailed(const std::string& locationIdentifier)
+                static IdentitySearchCallbackData CreateFailed(const SearchResultModel& searchResultModel)
                 {
-                    return IdentitySearchCallbackData(false, locationIdentifier);
+                    return IdentitySearchCallbackData(false, searchResultModel);
                 }
                 
-                static IdentitySearchCallbackData CreateSucceeded(const std::string& locationIdentifier,
-                                                                  const SearchResultModel& model)
+                static IdentitySearchCallbackData CreateSucceeded(const SearchResultModel& searchResultModel)
                 {
-                    IdentitySearchCallbackData result(true, locationIdentifier);
-                    result.m_searchResultModel = model;
-                    return result;
+                    return IdentitySearchCallbackData(true, searchResultModel);;
                 }
                 
                 bool IsSuccess() const { return m_success; }
                 
-                const std::string& GetLocationIdentifier() const { return m_locationIdentifier; }
+                const std::string& GetLocationIdentifier() const { return m_searchResultModel.GetIdentifier(); }
                 
                 const SearchResultModel& GetSearchResultModel() const { return m_searchResultModel; }
             };

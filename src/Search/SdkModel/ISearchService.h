@@ -7,6 +7,7 @@
 #include "Space.h"
 #include "ICallback.h"
 #include "IdentitySearchCallbackData.h"
+#include "SearchResultModel.h"
 
 namespace ExampleApp
 {
@@ -18,12 +19,16 @@ namespace ExampleApp
             {
             public:
                 virtual ~ISearchService() { }
+                
+                virtual bool CanHandleCategory(const std::string& category) const = 0;
 
                 virtual void CancelInFlightQueries() = 0;
 
+                // Implementation should call PerFormedQueryCallbacks and ReceivedQueryResultsCallback even if no search is made or falure occurs 
                 virtual void PerformLocationQuerySearch(const SearchQuery& query) = 0;
                 
-                virtual void PerformIdentitySearch(const std::string& searchResultIdentifier,
+                // Implementation should search for an update for the given SearchResultModel
+                virtual void PerformIdentitySearch(const SearchResultModel& outdatedSearchResult,
                                                    Eegeo::Helpers::ICallback1<const IdentitySearchCallbackData&>& callback) = 0;
 
                 virtual void InsertOnPerformedQueryCallback(Eegeo::Helpers::ICallback1<const SearchQuery&>& callback) = 0;

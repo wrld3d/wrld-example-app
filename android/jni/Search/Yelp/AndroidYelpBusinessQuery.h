@@ -9,6 +9,7 @@
 #include "AndroidNativeState.h"
 #include "IYelpCategoryMapper.h"
 #include "IdentitySearchCallbackData.h"
+#include "SearchResultModel.h"
 
 namespace ExampleApp
 {
@@ -16,7 +17,7 @@ namespace ExampleApp
     {
         namespace Yelp
         {
-            class AndroidYelpBusinessQuery : public IYelpSearchQuery, private Eegeo::NonCopyable
+            class AndroidYelpBusinessQuery : public SdkModel::IYelpSearchQuery, private Eegeo::NonCopyable
             {
             public:
             	AndroidYelpBusinessQuery(
@@ -25,9 +26,9 @@ namespace ExampleApp
             			const std::string& yelpConsumerSecret,
             			const std::string& yelpOAuthToken,
             			const std::string& yelpOAuthTokenSecret,
-                        IYelpCategoryMapper& yelpCategoryMapper,
-                        const std::string& locationIdentifier,
-                        Eegeo::Helpers::ICallback1<const SdkModel::IdentitySearchCallbackData&>& callback);
+						SdkModel::IYelpCategoryMapper& yelpCategoryMapper,
+                        const Search::SdkModel::SearchResultModel& outdatedSearchResult,
+                        Eegeo::Helpers::ICallback1<const Search::SdkModel::IdentitySearchCallbackData&>& callback);
 
                 ~AndroidYelpBusinessQuery();
 
@@ -45,9 +46,9 @@ namespace ExampleApp
                 jclass m_yelpSearchQueryClass;
                 jobject m_yelpSearchQuery;
         		AndroidNativeState& m_nativeState;
-                IYelpCategoryMapper& m_yelpCategoryMapper;
-                const std::string& m_locationIdentifier;
-                Eegeo::Helpers::ICallback1<const SdkModel::IdentitySearchCallbackData&>& m_callback;
+        		SdkModel::IYelpCategoryMapper& m_yelpCategoryMapper;
+                Search::SdkModel::SearchResultModel m_outdatedSearchResult;
+                Eegeo::Helpers::ICallback1<const Search::SdkModel::IdentitySearchCallbackData&>& m_callback;
                 std::string m_responseString;
                 bool m_cancelled;
                 bool m_dispatched;
