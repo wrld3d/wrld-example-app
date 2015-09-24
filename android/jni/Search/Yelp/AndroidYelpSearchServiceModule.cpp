@@ -7,8 +7,6 @@
 #include "YelpSearchConstants.h"
 #include "ApiKey.h"
 #include "AndroidYelpSearchQueryFactory.h"
-#include "GeoNamesSearchQueryFactory.h"
-#include "GeoNamesJsonParser.h"
 
 namespace ExampleApp
 {
@@ -26,11 +24,11 @@ namespace ExampleApp
                     const std::string& yelpOAuthTokenSecret,
                     const std::string& geoNamesUserName)
             {
-                m_pYelpCategoryMapper = Eegeo_NEW(Yelp::YelpCategoryMapper)(webRequestFactory,
-                                                                            Yelp::GetYelpFoundationCategoryToApplicationCategoryMap(),
-                                                                            Yelp::GetDefaultCategory());
+                m_pYelpCategoryMapper = Eegeo_NEW(Yelp::SdkModel::YelpCategoryMapper)(webRequestFactory,
+                                                                            Yelp::SearchConstants::GetYelpFoundationCategoryToApplicationCategoryMap(),
+                                                                            Yelp::SearchConstants::GetDefaultCategory());
 
-                m_pSearchResultParser = Eegeo_NEW(Yelp::YelpSearchJsonParser)(*m_pYelpCategoryMapper);
+                m_pSearchResultParser = Eegeo_NEW(Yelp::SdkModel::YelpSearchJsonParser)(*m_pYelpCategoryMapper);
                 
                 m_pSearchQueryFactory = Eegeo_NEW(Yelp::AndroidYelpSearchQueryFactory)(
                 		nativeState,
@@ -39,35 +37,29 @@ namespace ExampleApp
                 		yelpOAuthToken,
                 		yelpOAuthTokenSecret,
                 		*m_pYelpCategoryMapper);
-
-                m_pGeoNamesSearchQueryFactory = Eegeo_NEW(GeoNames::GeoNamesSearchQueryFactory)(geoNamesUserName, webRequestFactory, urlEncoder);
-                m_pGeoNamesParser = Eegeo_NEW(GeoNames::GeoNamesJsonParser)();
                 
-                m_pSearchService = Eegeo_NEW(Yelp::YelpSearchService)(*m_pSearchQueryFactory,
+                m_pSearchService = Eegeo_NEW(Yelp::SdkModel::YelpSearchService)(*m_pSearchQueryFactory,
                                                                       *m_pSearchResultParser,
-                                                                      *m_pGeoNamesSearchQueryFactory,
-                                                                      *m_pGeoNamesParser,
-                                                                      networkCapabilities);
+                                                                      networkCapabilities,
+																	  Yelp::SearchConstants::GetCategories());
             }
             
         	AndroidYelpSearchServiceModule::~AndroidYelpSearchServiceModule()
             {
                 Eegeo_DELETE m_pSearchService;
-                Eegeo_DELETE m_pGeoNamesParser;
-                Eegeo_DELETE m_pGeoNamesSearchQueryFactory;
                 Eegeo_DELETE m_pSearchQueryFactory;
                 Eegeo_DELETE m_pSearchResultParser;
                 Eegeo_DELETE m_pYelpCategoryMapper;
             }
             
-            SdkModel::ISearchService& AndroidYelpSearchServiceModule::GetSearchService() const
+        	Search::SdkModel::ISearchService& AndroidYelpSearchServiceModule::GetSearchService() const
             {
                 return *m_pSearchService;
             }
             
             std::vector<CategorySearch::View::CategorySearchModel> AndroidYelpSearchServiceModule::GetCategorySearchModels() const
             {
-            	return Yelp::GetCategorySearchModels();
+            	return Yelp::SearchConstants::GetCategorySearchModels();
             }
         }
     }

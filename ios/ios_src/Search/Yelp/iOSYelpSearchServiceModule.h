@@ -17,14 +17,12 @@ namespace ExampleApp
     {
         namespace Yelp
         {
-            class iOSYelpSearchServiceModule : public SdkModel::ISearchServiceModule, private Eegeo::NonCopyable
+            class iOSYelpSearchServiceModule : public Search::SdkModel::ISearchServiceModule, private Eegeo::NonCopyable
             {
-                SdkModel::ISearchService* m_pSearchService;
-                Yelp::IYelpSearchQueryFactory* m_pSearchQueryFactory;
-                Yelp::IYelpCategoryMapper* m_pYelpCategoryMapper;
-                SdkModel::ISearchResultParser* m_pSearchResultParser;
-                GeoNames::IGeoNamesSearchQueryFactory* m_pGeoNamesSearchQueryFactory;
-                GeoNames::IGeoNamesParser* m_pGeoNamesParser;
+                Search::SdkModel::ISearchService* m_pSearchService;
+                SdkModel::IYelpSearchQueryFactory* m_pSearchQueryFactory;
+                SdkModel::IYelpCategoryMapper* m_pYelpCategoryMapper;
+                Search::SdkModel::ISearchResultParser* m_pSearchResultParser;
                 
             public:
                 iOSYelpSearchServiceModule(Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
@@ -33,12 +31,11 @@ namespace ExampleApp
                                            const std::string& yelpConsumerKey,
                                            const std::string& yelpConsumerSecret,
                                            const std::string& yelpOAuthToken,
-                                           const std::string& yelpOAuthTokenSecret,
-                                           const std::string& geoNamesUserName);
+                                           const std::string& yelpOAuthTokenSecret);
                 
                 ~iOSYelpSearchServiceModule();
                 
-                SdkModel::ISearchService& GetSearchService() const;
+                Search::SdkModel::ISearchService& GetSearchService() const;
                 
                 std::vector<CategorySearch::View::CategorySearchModel> GetCategorySearchModels() const;
             };

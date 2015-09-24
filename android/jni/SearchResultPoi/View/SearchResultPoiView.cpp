@@ -2,6 +2,7 @@
 
 #include "SearchResultPoiView.h"
 #include "AndroidAppThreadAssertionMacros.h"
+#include "SearchVendorNames.h"
 
 namespace ExampleApp
 {
@@ -192,15 +193,15 @@ namespace ExampleApp
 
                 std::string viewClass = "";
 
-                if(vendor == "Yelp")
+                if(vendor == Search::YelpVendorName)
                 {
                     viewClass = "com/eegeo/searchresultpoiview/YelpSearchResultPoiView";
                 }
-                else if(vendor == "DeCarta")
+                else if(vendor == Search::DecartaVendorName)
                 {
                     viewClass = "com/eegeo/searchresultpoiview/DeCartaSearchResultPoiView";
                 }
-                else if(vendor == "GeoNames")
+                else if(vendor == Search::GeoNamesVendorName)
                 {
                     viewClass = "com/eegeo/searchresultpoiview/GeoNamesSearchResultPoiView";
                 }

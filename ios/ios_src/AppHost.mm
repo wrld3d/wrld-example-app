@@ -62,7 +62,6 @@
 #include "TourExplorerView.h"
 #include "NetworkCapabilities.h"
 #include "iOSYelpSearchServiceModule.h"
-#include "DecartaSearchServiceModule.h"
 #include "InitialExperienceIntroViewModule.h"
 #include "InitialExperienceIntroView.h"
 #include "InitialExperienceIntroBackgroundView.h"
@@ -78,6 +77,7 @@
 #include "TourFullScreenImageViewModel.h"
 #include "TourFullScreenImageView.h"
 #include "ImageStore.h"
+#include "SearchVendorNames.h"
 
 using namespace Eegeo::iOS;
 
@@ -99,7 +99,7 @@ AppHost::AppHost(
     ,m_piOSPlatformAbstractionModule(NULL)
     ,m_pApp(NULL)
     ,m_requestedApplicationInitialiseViewState(false)
-    ,m_pSearchServiceModule(NULL)
+    ,m_searchServiceModules()
     ,m_piOSFlurryMetricsService(NULL)
     ,m_failAlertHandler(this, &AppHost::HandleStartupFailure)
     ,m_pTourWorldPinOnMapViewModule(NULL)
@@ -138,39 +138,35 @@ AppHost::AppHost(
     const bool useYelp = true;
     if(useYelp)
     {
-    m_pSearchServiceModule = Eegeo_NEW(ExampleApp::Search::Yelp::iOSYelpSearchServiceModule)(m_piOSPlatformAbstractionModule->GetWebLoadRequestFactory(),
-                                                                                             *m_pNetworkCapabilities,
-                                                                                             m_piOSPlatformAbstractionModule->GetUrlEncoder(),
-                                                                                             applicationConfiguration.YelpConsumerKey(),
-                                                                                             applicationConfiguration.YelpConsumerSecret(),
-                                                                                             applicationConfiguration.YelpOAuthToken(),
-                                                                                             applicationConfiguration.YelpOAuthTokenSecret(),
-                                                                                             applicationConfiguration.GeoNamesUserName());
+        m_searchServiceModules[ExampleApp::Search::YelpVendorName] = Eegeo_NEW(ExampleApp::Search::Yelp::iOSYelpSearchServiceModule)(m_piOSPlatformAbstractionModule->GetWebLoadRequestFactory(),
+                                                                                                                                     *m_pNetworkCapabilities,
+                                                                                                                                     m_piOSPlatformAbstractionModule->GetUrlEncoder(),
+                                                                                                                                     applicationConfiguration.YelpConsumerKey(),
+                                                                                                                                     applicationConfiguration.YelpConsumerSecret(),
+                                                                                                                                     applicationConfiguration.YelpOAuthToken(),
+                                                                                                                                     applicationConfiguration.YelpOAuthTokenSecret());
     }
-    else
-    {
-        m_pSearchServiceModule = Eegeo_NEW(ExampleApp::Search::Decarta::DecartaSearchServiceModule)(m_piOSPlatformAbstractionModule->GetWebLoadRequestFactory(),
-                                                                                                    m_piOSPlatformAbstractionModule->GetUrlEncoder());
-    }
-    
     
     m_piOSFlurryMetricsService = Eegeo_NEW(ExampleApp::Metrics::iOSFlurryMetricsService)();
     
-    m_pApp = Eegeo_NEW(ExampleApp::MobileExampleApp)(*m_piOSPlatformAbstractionModule,
-                                                     screenProperties,
-                                                     *m_piOSLocationService,
-                                                     m_iOSNativeUIFactories,
-                                                     platformConfig,
-                                                     *m_pJpegLoader,
-                                                     *m_pInitialExperienceModule,
-                                                     m_iOSPersistentSettingsModel,
-                                                     m_messageBus,
-                                                     m_sdkModelDomainEventBus,
-                                                     *m_pNetworkCapabilities,
-                                                     *m_pSearchServiceModule,
-                                                     *m_piOSFlurryMetricsService,
-                                                     applicationConfiguration,
-                                                     *this);
+    m_pImageStore = [[ImageStore alloc]init];
+    
+    m_pApp = Eegeo_NEW(ExampleApp::MobileExampleApp)(
+			*m_piOSPlatformAbstractionModule,
+             screenProperties,
+             *m_piOSLocationService,
+             m_iOSNativeUIFactories,
+             platformConfig,
+             *m_pJpegLoader,
+             *m_pInitialExperienceModule,
+             m_iOSPersistentSettingsModel,
+             m_messageBus,
+             m_sdkModelDomainEventBus,
+             *m_pNetworkCapabilities,
+             m_searchServiceModules,
+             *m_piOSFlurryMetricsService,
+             applicationConfiguration,
+             *this);
 
     CreateApplicationViewModules(screenProperties);
 
@@ -197,8 +193,11 @@ AppHost::~AppHost()
     Eegeo_DELETE m_piOSFlurryMetricsService;
     m_piOSFlurryMetricsService = NULL;
     
-    Eegeo_DELETE m_pSearchServiceModule;
-    m_pSearchServiceModule = NULL;
+    for(std::map<std::string, ExampleApp::Search::SdkModel::ISearchServiceModule*>::iterator it = m_searchServiceModules.begin(); it != m_searchServiceModules.end(); ++it)
+    {
+        Eegeo_DELETE (*it).second;
+    }
+    m_searchServiceModules.clear();
     
     Eegeo_DELETE m_pNetworkCapabilities;
     m_pNetworkCapabilities = NULL;

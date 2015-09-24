@@ -7,6 +7,7 @@
 #include "LatLongAltitude.h"
 #include "TourStateModel.h"
 #include "ColorHelpers.h"
+#include "WorldPinInteriorData.h"
 
 namespace ExampleApp
 {
@@ -27,6 +28,7 @@ namespace ExampleApp
                 Helpers::ColorHelpers::Color m_hoverCardTextColor;
                 
                 std::vector<TourStateModel> m_states;
+                ExampleApp::WorldPins::SdkModel::WorldPinInteriorData m_worldPinInteriorData;
                 
             public:
                 TourModel();
@@ -37,6 +39,7 @@ namespace ExampleApp
                           const std::string& introText,
                           const Eegeo::Space::LatLong& location,
                           bool isInterior,
+                          const ExampleApp::WorldPins::SdkModel::WorldPinInteriorData& worldPinInteriorData,
                           bool showGradientBase,
                           Helpers::ColorHelpers::Color baseColor,
                           Helpers::ColorHelpers::Color textColor,
@@ -51,6 +54,8 @@ namespace ExampleApp
                 const Eegeo::Space::LatLong& Location() const;
                 
                 bool IsInterior() const;
+                
+                const ExampleApp::WorldPins::SdkModel::WorldPinInteriorData& WorldPinInteriorData() const;
                 
                 bool ShowGradientBase() const;
                 

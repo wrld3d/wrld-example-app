@@ -3,7 +3,6 @@
 #pragma once
 
 #include "Tours.h"
-#include "ICallback.h"
 
 namespace ExampleApp
 {

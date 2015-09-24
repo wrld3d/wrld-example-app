@@ -19,7 +19,7 @@ namespace ExampleApp
                                                    const std::string& yelpConsumerSecret,
                                                    const std::string& yelpOAuthToken,
                                                    const std::string& yelpOAuthTokenSecret,
-                                                   const SdkModel::SearchQuery& searchQuery,
+                                                   const Search::SdkModel::SearchQuery& searchQuery,
                                                    Eegeo::Helpers::ICallback0& completionCallback)
             : m_yelpConsumerKey(yelpConsumerKey)
             , m_yelpConsumerSecret(yelpConsumerSecret)
@@ -123,7 +123,7 @@ namespace ExampleApp
                 return m_responseString;
             }
             
-            const SdkModel::SearchQuery& iOSYelpSearchQuery::GetSearchQuery() const
+            const Search::SdkModel::SearchQuery& iOSYelpSearchQuery::GetSearchQuery() const
             {
                 return m_searchQuery;
             }

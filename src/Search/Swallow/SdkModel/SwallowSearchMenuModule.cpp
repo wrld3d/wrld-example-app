@@ -26,19 +26,19 @@ namespace ExampleApp
                 {
                     m_pMeetingRoomsMenuModel = Eegeo_NEW(Menu::View::MenuModel)();
                     m_pMeetingRoomsMenuOptionsModel = Eegeo_NEW(Menu::View::MenuOptionsModel)(*m_pMeetingRoomsMenuModel);
-                    m_pMeetingRoomsMenuOptionsModel->AddItem("Meeting Rooms", "Meeting Rooms", "", "", Eegeo_NEW(View::SwallowCategoryMenuOption)("meeting_rooms", menuViewModel, messageBus));
+                    m_pMeetingRoomsMenuOptionsModel->AddItem("Meeting Rooms", "Meeting Rooms", "", "", Eegeo_NEW(View::SwallowCategoryMenuOption)("meeting_room", menuViewModel, messageBus));
                     
                     m_pWorkingGroupsMenuModel = Eegeo_NEW(Menu::View::MenuModel)();
                     m_pWorkingGroupsMenuOptionsModel = Eegeo_NEW(Menu::View::MenuOptionsModel)(*m_pWorkingGroupsMenuModel);
-                    m_pWorkingGroupsMenuOptionsModel->AddItem("Working Groups", "Working Groups", "", "", Eegeo_NEW(View::SwallowCategoryMenuOption)("working_groups", menuViewModel, messageBus));
+                    m_pWorkingGroupsMenuOptionsModel->AddItem("Working Groups", "Working Groups", "", "", Eegeo_NEW(View::SwallowCategoryMenuOption)("working_group", menuViewModel, messageBus));
                     
                     m_pFacilitiesMenuModel = Eegeo_NEW(Menu::View::MenuModel)();
                     m_pFacilitiesMenuOptionsModel = Eegeo_NEW(Menu::View::MenuOptionsModel)(*m_pFacilitiesMenuModel);
-                    m_pFacilitiesMenuOptionsModel->AddItem("Facilities", "Facilities", "", "", Eegeo_NEW(View::SwallowCategoryMenuOption)("facilities", menuViewModel, messageBus));
+                    m_pFacilitiesMenuOptionsModel->AddItem("Facilities", "Facilities", "", "", Eegeo_NEW(View::SwallowCategoryMenuOption)("facility", menuViewModel, messageBus));
                     
                     m_pOfficesMenuModel = Eegeo_NEW(Menu::View::MenuModel)();
                     m_pOfficesMenuOptionsModel = Eegeo_NEW(Menu::View::MenuOptionsModel)(*m_pOfficesMenuModel);
-                    m_pOfficesMenuOptionsModel->AddItem("Offices", "Offices", "", "", Eegeo_NEW(View::SwallowCategoryMenuOption)("offices", menuViewModel, messageBus));
+                    m_pOfficesMenuOptionsModel->AddItem("Offices", "Offices", "", "", Eegeo_NEW(View::SwallowCategoryMenuOption)("office", menuViewModel, messageBus));
                 }
                 
                 SwallowSearchMenuModule::~SwallowSearchMenuModule()

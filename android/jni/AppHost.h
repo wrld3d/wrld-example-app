@@ -2,6 +2,9 @@
 
 #pragma once
 
+#include <map>
+#include <string>
+#include <vector>
 #include "Types.h"
 #include "Graphics.h"
 #include "AndroidFileIO.h"
@@ -28,7 +31,6 @@
 #include "AndroidNativeState.h"
 #include "AppInputDelegate.h"
 #include "Modules.h"
-#include <vector>
 #include "InitialExperience.h"
 #include "AndroidPersistentSettingsModel.h"
 #include "ViewControllerUpdater.h"
@@ -129,7 +131,7 @@ private:
     ExampleApp::Options::View::IOptionsViewModule* m_pOptionsViewModule;
     ExampleApp::Watermark::View::IWatermarkViewModule* m_pWatermarkViewModule;
     ExampleApp::Net::SdkModel::INetworkCapabilities* m_pNetworkCapabilities;
-    ExampleApp::Search::SdkModel::ISearchServiceModule* m_pSearchServiceModule;
+    std::map<std::string,ExampleApp::Search::SdkModel::ISearchServiceModule*> m_searchServiceModules;
     ExampleApp::Metrics::AndroidFlurryMetricsService* m_pAndroidFlurryMetricsService;
 
     ExampleApp::MobileExampleApp* m_pApp;

@@ -13,7 +13,7 @@
 #include "SearchResultPoiViewInterop.h"
 #include "App.h"
 #include "SearchResultModel.h"
-
+#include "SearchVendorNames.h"
 #include "YelpSearchResultPoiView.h"
 #include "DecartaSearchResultPoiView.h"
 #include "GeoNamesSearchResultPoiView.h"
@@ -81,19 +81,19 @@
 
 - (UIView<SearchResultPoiView>*) createSearchResultPoiViewForVendor:(const std::string&)vendor
 {
-    if(vendor == "Yelp")
+    if(vendor == ExampleApp::Search::YelpVendorName)
     {
         return [[YelpSearchResultPoiView alloc] initWithInterop:m_pInterop];
     }
-    else if(vendor == "DeCarta")
+    else if(vendor == ExampleApp::Search::DecartaVendorName)
     {
         return [[DecartaSearchResultPoiView alloc] initWithInterop:m_pInterop];
     }
-    else if(vendor == "GeoNames")
+    else if(vendor == ExampleApp::Search::GeoNamesVendorName)
     {
         return [[GeoNamesSearchResultPoiView alloc] initWithInterop:m_pInterop];
     }
-    else if(vendor == "Swallow")
+    else if(vendor == ExampleApp::Search::SwallowVendorName)
     {
         return [[SwallowPersonSearchResultPoiView alloc] initWithInterop:m_pInterop];
     }

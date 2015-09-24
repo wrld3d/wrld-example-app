@@ -21,16 +21,16 @@ namespace ExampleApp
                 class SwallowSearchService : public Search::SdkModel::SearchServiceBase, private Eegeo::NonCopyable
                 {
                 public:
-                    SwallowSearchService(PoiDb::IPoiDbModule& poiDbModule);
+                    SwallowSearchService(const std::vector<std::string>& availableCategories,
+                                         PoiDb::IPoiDbModule& poiDbModule);
                     
                     void CancelInFlightQueries();
                     
                     void PerformLocationQuerySearch(const Search::SdkModel::SearchQuery& query);
                     
-                    void PerformIdentitySearch(const std::string& searchResultIdentifier,
+                    void PerformIdentitySearch(const Search::SdkModel::SearchResultModel& outdatedSearchResult,
                                                Eegeo::Helpers::ICallback1<const Search::SdkModel::IdentitySearchCallbackData&>& callback);
                     
-                    std::vector<CategorySearch::View::CategorySearchModel> GetCategorySearchModels() const;
                 private:
                     struct PersonDetails
                     {

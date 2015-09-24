@@ -18,8 +18,10 @@ namespace ExampleApp
         {
             namespace SdkModel
             {
-                SwallowSearchService::SwallowSearchService(PoiDb::IPoiDbModule& poiDbModule)
-                : m_poiDbModule(poiDbModule)
+                SwallowSearchService::SwallowSearchService(const std::vector<std::string>& availableCategories,
+                                                           PoiDb::IPoiDbModule& poiDbModule)
+                : Search::SdkModel::SearchServiceBase(availableCategories)
+                , m_poiDbModule(poiDbModule)
                 {
                     
                 }
@@ -46,17 +48,18 @@ namespace ExampleApp
                             PerformFullTextSearch(query, *poiDbService);
                         }
                     }
+                    else
+                    {
+                        ExecutQueryResponseReceivedCallbacks(query, std::vector<Search::SdkModel::SearchResultModel>());
+                    }
                 }
                     
-                void SwallowSearchService::PerformIdentitySearch(const std::string& searchResultIdentifier,
+                void SwallowSearchService::PerformIdentitySearch(const Search::SdkModel::SearchResultModel& outdatedSearchResult,
                                                                  Eegeo::Helpers::ICallback1<const Search::SdkModel::IdentitySearchCallbackData&>& callback)
                 {
-                     Eegeo_ASSERT(false, "Identity search not implemented");
-                }
-                
-                std::vector<CategorySearch::View::CategorySearchModel> SwallowSearchService::GetCategorySearchModels() const
-                {
-                    return Swallow::GetCategorySearchModels();
+                    // Not implemented.
+                    Search::SdkModel::IdentitySearchCallbackData result = Search::SdkModel::IdentitySearchCallbackData::CreateFailed(outdatedSearchResult);
+                    callback(result);
                 }
                 
                 void SwallowSearchService::PerformFullTextSearch(const Search::SdkModel::SearchQuery& query, PoiDb::IPoiDbService& poiDbService)
@@ -73,8 +76,6 @@ namespace ExampleApp
                 
                 void SwallowSearchService::PerformCategorySearch(const Search::SdkModel::SearchQuery& query, PoiDb::IPoiDbService& poiDbService)
                 {
-                    ExecuteQueryPerformedCallbacks(query);
-                    
                     ExecutQueryResponseReceivedCallbacks(query, std::vector<Search::SdkModel::SearchResultModel>());
                 }
                 
@@ -89,10 +90,10 @@ namespace ExampleApp
                         
                         std::map<std::string, std::string> metaData;
                         
-                        metaData.insert(std::pair<std::string, std::string>(JOB_TITLE_FIELD_NAME, results.at(i).job_title));
-                        metaData.insert(std::pair<std::string, std::string>(WORKING_GROUP_FIELD_NAME, results.at(i).working_group));
-                        metaData.insert(std::pair<std::string, std::string>(OFFICE_LOCATION_FIELD_NAME, results.at(i).office_location));
-                        metaData.insert(std::pair<std::string, std::string>(DESK_CODE_FIELD_NAME, results.at(i).desk_code));
+                        metaData.insert(std::pair<std::string, std::string>(SearchConstants::JOB_TITLE_FIELD_NAME, results.at(i).job_title));
+                        metaData.insert(std::pair<std::string, std::string>(SearchConstants::WORKING_GROUP_FIELD_NAME, results.at(i).working_group));
+                        metaData.insert(std::pair<std::string, std::string>(SearchConstants::OFFICE_LOCATION_FIELD_NAME, results.at(i).office_location));
+                        metaData.insert(std::pair<std::string, std::string>(SearchConstants::DESK_CODE_FIELD_NAME, results.at(i).desk_code));
                         
                         searchResults.push_back(Search::SdkModel::SearchResultModel(ExampleApp::Search::SdkModel::SearchResultModel::CurrentVersion,
                                                                                     idString.str(),

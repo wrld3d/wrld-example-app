@@ -10,7 +10,6 @@
 #include "TerrainHeightProvider.h"
 #include "EarthConstants.h"
 #include "IntersectionTests.h"
-#include "InteriorsController.h"
 
 namespace ExampleApp
 {

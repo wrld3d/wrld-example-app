@@ -20,15 +20,20 @@ namespace ExampleApp
                 Eegeo::Helpers::CallbackCollection2<const SearchQuery&, const std::vector<SearchResultModel>& > m_queryResponseReceivedCallbacks;
 
             protected:
-                SearchServiceBase();
+                SearchServiceBase(const std::vector<std::string>& availableCategories);
 
                 ~SearchServiceBase();
 
                 void ExecuteQueryPerformedCallbacks(const SearchQuery& query);
 
                 void ExecutQueryResponseReceivedCallbacks(const SearchQuery& query, const std::vector<SearchResultModel>& results);
+                
+                std::vector<std::string> m_availableCategories;
 
             public:
+                
+                virtual bool CanHandleCategory(const std::string& category) const;
+                
                 void InsertOnPerformedQueryCallback(Eegeo::Helpers::ICallback1<const SearchQuery&>& callback);
 
                 void RemoveOnPerformedQueryCallback(Eegeo::Helpers::ICallback1<const SearchQuery&>& callback);

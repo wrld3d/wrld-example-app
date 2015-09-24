@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include <map>
+#include <string>
 #include <vector>
 #include "Types.h"
 #include "Graphics.h"
@@ -115,7 +117,7 @@ private:
     ExampleApp::Tours::View::TourHovercard::ITourHovercardViewModule* m_pTourWorldPinOnMapViewModule;
     ExampleApp::InitialExperience::View::IInitialExperienceIntroViewModule* m_pInitialExperienceIntroViewModule;
     ExampleApp::Net::SdkModel::INetworkCapabilities* m_pNetworkCapabilities;
-    ExampleApp::Search::SdkModel::ISearchServiceModule* m_pSearchServiceModule;
+    std::map<std::string,ExampleApp::Search::SdkModel::ISearchServiceModule*> m_searchServiceModules;
     ExampleApp::Metrics::iOSFlurryMetricsService* m_piOSFlurryMetricsService;
     ExampleApp::InteriorsExplorer::View::IInteriorsExplorerViewModule* m_pInteriorsExplorerViewModule;
     

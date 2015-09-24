@@ -8,6 +8,7 @@
 #include "ColorHelpers.h"
 #include "ImageHelpers.h"
 #include "UIColors.h"
+#include "App.h"
 
 @implementation TourExplorerView
 {
@@ -29,6 +30,8 @@
 
 - (id) initWithParams:(float)width :(float)height :(float)pixelScale :(ImageStore*)pImageStore
 {
+    const bool isPhone = App::IsDeviceSmall();
+    
     if (self = [super init])
     {
         m_stateChangeAnimationTimeSeconds = 0.2f;
@@ -115,7 +118,7 @@
         
         [self setTouchExclusivity: self];
         
-        const float upperMargin = 50.0f;
+        const float upperMargin = isPhone ? 20.0f : 50.0f;
         float exitButtonSize = 40.f;
         float labelLength = 200.f;
         

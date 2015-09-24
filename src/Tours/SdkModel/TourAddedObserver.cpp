@@ -36,7 +36,7 @@ namespace ExampleApp
                                                        NULL,
                                                        WorldPins::SdkModel::WorldPinFocusData(tourModel.Name(), tourModel.IntroText()),
                                                        tourModel.IsInterior(),
-                                                       ExampleApp::WorldPins::SdkModel::WorldPinInteriorData(),
+                                                       tourModel.WorldPinInteriorData(),
                                                        tourModel.Location(),
                                                        IconIndex,
                                                        0.0f);

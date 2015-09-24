@@ -72,11 +72,16 @@
 #include "ToursCameraState.h"
 #include "ExampleTourStateMachineFactory.h"
 #include "ICompassViewModel.h"
+#include "CombinedSearchServiceModule.h"
+#include "DecartaSearchServiceModule.h"
+#include "GeoNamesSearchServiceModule.h"
+#include "SearchVendorNames.h"
 #include "PoiDbModule.h"
 #include "PoiDbWebLoader.h"
 #include "SQLiteModule.h"
-#include "SwallowSearchService.h"
+#include "SwallowSearchServiceModule.h"
 #include "SwallowSearchMenuModule.h"
+#include "SwallowSearchConstants.h"
 
 namespace ExampleApp
 {
@@ -121,7 +126,7 @@ namespace ExampleApp
         ExampleAppMessaging::TMessageBus& messageBus,
         ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
         Net::SdkModel::INetworkCapabilities& networkCapabilities,
-        ExampleApp::Search::SdkModel::ISearchServiceModule& searchServiceModule,
+        const std::map<std::string,ExampleApp::Search::SdkModel::ISearchServiceModule*>& platformImplementedSearchServiceModules,
         ExampleApp::Metrics::IMetricsService& metricsService,
         ExampleApp::ApplicationConfig::ApplicationConfiguration applicationConfiguration,
         Eegeo::IEegeoErrorHandler& errorHandler)
@@ -172,7 +177,7 @@ namespace ExampleApp
         , m_screenProperties(screenProperties)
         , m_networkCapabilities(networkCapabilities)
         , m_setMetricsLocation(false)
-        , m_searchServiceModule(searchServiceModule)
+        , m_pSearchServiceModule(NULL)
         , m_metricsService(metricsService)
         , m_applicationConfiguration(applicationConfiguration)
         , m_interiorsEnabled(platformConfig.OptionsConfig.EnableInteriors)
@@ -247,10 +252,10 @@ namespace ExampleApp
                                                                                        Eegeo::Config::LodRefinementConfig::GetLodRefinementAltitudesForDeviceSpec(platformConfig.PerformanceConfig.DeviceSpecification),
                                                                                        Eegeo::Streaming::QuadTreeCube::MAX_DEPTH_TO_VISIT,
                                                                                        mapModule.GetEnvironmentFlatteningService());
+
+		CreateSQLiteModule(nativeUIFactories);
         
-        CreateSQLiteModule(nativeUIFactories);
-        
-        CreateApplicationModelModules();
+        CreateApplicationModelModules(platformImplementedSearchServiceModules);
         
         m_pLoadingScreen = CreateLoadingScreen(screenProperties, m_pWorld->GetRenderingModule(), m_pWorld->GetPlatformAbstractionModule());
 
@@ -295,7 +300,7 @@ namespace ExampleApp
         m_pSQLiteModule = Eegeo::Modules::SQLiteModule::Create(config, platformAbstractionModule, nativeUIFactories.AlertBoxFactory());
     }
 
-    void MobileExampleApp::CreateApplicationModelModules()
+    void MobileExampleApp::CreateApplicationModelModules(const std::map<std::string,ExampleApp::Search::SdkModel::ISearchServiceModule*>& platformImplementedSearchServiceModules)
     {
         Eegeo::EegeoWorld& world = *m_pWorld;
         
@@ -320,10 +325,31 @@ namespace ExampleApp
                                                                          m_pReactionControllerModule->GetReactionControllerModel(),
                                                                          m_messageBus,
                                                                          m_networkCapabilities);
+
+        std::map<std::string,ExampleApp::Search::SdkModel::ISearchServiceModule*> searchServiceModulesForCombinedSearch = platformImplementedSearchServiceModules;
         
-        m_pSwallowSearchService = new(Search::Swallow::SdkModel::SwallowSearchService)(*m_pPoiDbModule);
+        m_searchServiceModules[Search::SwallowVendorName] = Eegeo_NEW(Search::Swallow::SdkModel::SwallowSearchServiceModule)(*m_pPoiDbModule);
         
-        m_pSearchModule = Eegeo_NEW(Search::SdkModel::SearchModule)(*m_pSwallowSearchService,
+        const bool useDecarta = false;
+        if(useDecarta)
+        {
+            m_searchServiceModules[Search::DecartaVendorName] = Eegeo_NEW(Search::Decarta::SdkModel::DecartaSearchServiceModule)(m_platformAbstractions.GetWebLoadRequestFactory(),
+                                                                                                                   m_platformAbstractions.GetUrlEncoder());
+        }
+        
+        const bool useGeoName = true;
+        if(useGeoName)
+        {
+            m_searchServiceModules[Search::GeoNamesVendorName] = Eegeo_NEW(Search::GeoNames::SdkModel::GeoNamesSearchServiceModule)(m_platformAbstractions.GetWebLoadRequestFactory(),
+                                                                                                                                    m_platformAbstractions.GetUrlEncoder(),
+                                                                                                                                    m_networkCapabilities,
+                                                                                                                                    m_applicationConfiguration.GeoNamesUserName());
+        }
+        searchServiceModulesForCombinedSearch.insert(m_searchServiceModules.begin(), m_searchServiceModules.end());
+        
+        m_pSearchServiceModule = Eegeo_NEW(Search::Combined::SdkModel::CombinedSearchServiceModule)(searchServiceModulesForCombinedSearch);
+        
+        m_pSearchModule = Eegeo_NEW(Search::SdkModel::SearchModule)(m_pSearchServiceModule->GetSearchService(),
                                                                     *m_pGlobeCameraController,
                                                                     *m_pCameraTransitionController,
                                                                     m_messageBus,
@@ -366,16 +392,8 @@ namespace ExampleApp
                               m_messageBus,
                               m_metricsService);
         
-        std::vector<CategorySearch::View::CategorySearchModel> categorySearchModels = m_searchServiceModule.GetCategorySearchModels();
-        std::vector<CategorySearch::View::CategorySearchModel> swallowCategorySearchModels = m_pSwallowSearchService->GetCategorySearchModels();
-        
-        for(std::vector<CategorySearch::View::CategorySearchModel>::const_iterator it = swallowCategorySearchModels.begin(); it != swallowCategorySearchModels.end(); ++it)
-        {
-            categorySearchModels.push_back(*it);
-        }
-
         m_pCategorySearchModule = Eegeo_NEW(ExampleApp::CategorySearch::SdkModel::CategorySearchModule(
-                                                categorySearchModels,
+                                                m_pSearchServiceModule->GetCategorySearchModels(),
                                                 SearchModule().GetSearchQueryPerformer(),
                                                 m_pSecondaryMenuModule->GetSecondaryMenuViewModel(),
                                                 m_messageBus,
@@ -566,7 +584,11 @@ namespace ExampleApp
 
         Eegeo_DELETE m_pSearchModule;
         
-        Eegeo_DELETE m_pSwallowSearchService;
+        for(std::map<std::string, ExampleApp::Search::SdkModel::ISearchServiceModule*>::iterator it = m_searchServiceModules.begin(); it != m_searchServiceModules.end(); ++it)
+        {
+            Eegeo_DELETE (*it).second;
+        }
+        m_searchServiceModules.clear();
 
         Eegeo_DELETE m_pOptionsModule;
         
@@ -713,6 +735,7 @@ namespace ExampleApp
                                                          "Take the tour",
                                                          Eegeo::Space::LatLong::FromDegrees(37.784783, -122.402659),
                                                          false,
+                                                         ExampleApp::WorldPins::SdkModel::WorldPinInteriorData(),
                                                          false,
                                                          Helpers::ColorHelpers::Color::FromRGB(30, 123, 195),
                                                          Helpers::ColorHelpers::Color::FromRGB(255, 255, 255),

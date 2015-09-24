@@ -288,10 +288,10 @@
     const std::string officeLocationPrefix = "Location: ";
     const std::string deskCodePrefix = "Desk: ";
     
-    self.pJobTitleLabel.text = [NSString stringWithUTF8String:(jobTitlePrefix + pModel->GetMetaDataValue(ExampleApp::Search::Swallow::JOB_TITLE_FIELD_NAME)).c_str()];
-    self.pWorkingGroupLabel.text = [NSString stringWithUTF8String:(workingGroupPrefix + pModel->GetMetaDataValue(ExampleApp::Search::Swallow::WORKING_GROUP_FIELD_NAME)).c_str()];
-    self.pOfficeLocationLabel.text = [NSString stringWithUTF8String:(officeLocationPrefix + pModel->GetMetaDataValue(ExampleApp::Search::Swallow::OFFICE_LOCATION_FIELD_NAME)).c_str()];
-    self.pDeskCodeLabel.text = [NSString stringWithUTF8String:(deskCodePrefix + pModel->GetMetaDataValue(ExampleApp::Search::Swallow::DESK_CODE_FIELD_NAME)).c_str()];
+    self.pJobTitleLabel.text = [NSString stringWithUTF8String:(jobTitlePrefix + pModel->GetMetaDataValue(ExampleApp::Search::Swallow::SearchConstants::JOB_TITLE_FIELD_NAME)).c_str()];
+    self.pWorkingGroupLabel.text = [NSString stringWithUTF8String:(workingGroupPrefix + pModel->GetMetaDataValue(ExampleApp::Search::Swallow::SearchConstants::WORKING_GROUP_FIELD_NAME)).c_str()];
+    self.pOfficeLocationLabel.text = [NSString stringWithUTF8String:(officeLocationPrefix + pModel->GetMetaDataValue(ExampleApp::Search::Swallow::SearchConstants::OFFICE_LOCATION_FIELD_NAME)).c_str()];
+    self.pDeskCodeLabel.text = [NSString stringWithUTF8String:(deskCodePrefix + pModel->GetMetaDataValue(ExampleApp::Search::Swallow::SearchConstants::DESK_CODE_FIELD_NAME)).c_str()];
     
     [self.pLabelsContainer setContentOffset:CGPointMake(0,0) animated:NO];
 }
