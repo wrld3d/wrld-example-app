@@ -18,9 +18,9 @@ namespace ExampleApp
                                                        const std::string& yelpConsumerSecret,
                                                        const std::string& yelpOAuthToken,
                                                        const std::string& yelpOAuthTokenSecret,
-                                                       IYelpCategoryMapper& yelpCategoryMapper,
-                                                       const SdkModel::SearchResultModel& outdatedSearchResult,
-                                                       Eegeo::Helpers::ICallback1<const SdkModel::IdentitySearchCallbackData&>& callback)
+                                                       SdkModel::IYelpCategoryMapper& yelpCategoryMapper,
+                                                       const Search::SdkModel::SearchResultModel& outdatedSearchResult,
+                                                       Eegeo::Helpers::ICallback1<const Search::SdkModel::IdentitySearchCallbackData&>& callback)
             : m_yelpConsumerKey(yelpConsumerKey)
             , m_yelpConsumerSecret(yelpConsumerSecret)
             , m_yelpOAuthToken(yelpOAuthToken)
@@ -99,19 +99,19 @@ namespace ExampleApp
             {
                 if(!m_cancelled)
                 {
-                    SdkModel::SearchResultModel result;
+                    ExampleApp::Search::SdkModel::SearchResultModel result;
                     if(TryParseYelpBusinessSearchResult(m_responseString, m_yelpCategoryMapper, result))
                     {
-                        m_callback(SdkModel::IdentitySearchCallbackData::CreateSucceeded(result));
+                        m_callback(ExampleApp::Search::SdkModel::IdentitySearchCallbackData::CreateSucceeded(result));
                     }
                     else
                     {
-                        m_callback(SdkModel::IdentitySearchCallbackData::CreateFailed(m_outdatedSearchResult));
+                        m_callback(ExampleApp::Search::SdkModel::IdentitySearchCallbackData::CreateFailed(m_outdatedSearchResult));
                     }
                 }
                 else
                 {
-                    m_callback(SdkModel::IdentitySearchCallbackData::CreateFailed(m_outdatedSearchResult));
+                    m_callback(ExampleApp::Search::SdkModel::IdentitySearchCallbackData::CreateFailed(m_outdatedSearchResult));
                 }
             }
         }

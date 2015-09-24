@@ -16,7 +16,7 @@ namespace ExampleApp
         			const std::string& yelpConsumerSecret,
         			const std::string& yelpOAuthToken,
         			const std::string& yelpOAuthTokenSecret,
-                    IYelpCategoryMapper& yelpCategoryMapper)
+					SdkModel::IYelpCategoryMapper& yelpCategoryMapper)
             : m_nativeState(nativeState)
             , m_yelpConsumerKey(yelpConsumerKey)
             , m_yelpConsumerSecret(yelpConsumerSecret)
@@ -30,7 +30,7 @@ namespace ExampleApp
             {
             }
 
-            IYelpSearchQuery* AndroidYelpSearchQueryFactory::CreateYelpSearchForQuery(const SdkModel::SearchQuery &query,
+            SdkModel::IYelpSearchQuery* AndroidYelpSearchQueryFactory::CreateYelpSearchForQuery(const Search::SdkModel::SearchQuery &query,
                                                                                Eegeo::Helpers::ICallback0 &completionCallback)
 
             {
@@ -44,9 +44,9 @@ namespace ExampleApp
                 		completionCallback);
             }
 
-            IYelpSearchQuery* AndroidYelpSearchQueryFactory::CreateYelpSearchForSpecificLocation(
-            		const SdkModel::SearchResultModel& outdatedSearchResult,
-            		Eegeo::Helpers::ICallback1<const SdkModel::IdentitySearchCallbackData&>& callback)
+            SdkModel::IYelpSearchQuery* AndroidYelpSearchQueryFactory::CreateYelpSearchForSpecificLocation(
+            		const Search::SdkModel::SearchResultModel& outdatedSearchResult,
+            		Eegeo::Helpers::ICallback1<const Search::SdkModel::IdentitySearchCallbackData&>& callback)
             {
                 return Eegeo_NEW(AndroidYelpBusinessQuery)(
                 		m_nativeState,

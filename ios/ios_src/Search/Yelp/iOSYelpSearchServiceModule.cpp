@@ -21,11 +21,11 @@ namespace ExampleApp
                                                                    Net::SdkModel::INetworkCapabilities& networkCapabilities,
                                                                    Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder)
             {
-                m_pYelpCategoryMapper = Eegeo_NEW(Yelp::YelpCategoryMapper)(webRequestFactory,
+                m_pYelpCategoryMapper = Eegeo_NEW(SdkModel::YelpCategoryMapper)(webRequestFactory,
                                                                             Yelp::SearchConstants::GetYelpFoundationCategoryToApplicationCategoryMap(),
                                                                             Yelp::SearchConstants::GetDefaultCategory());
                 
-                m_pSearchResultParser = Eegeo_NEW(Yelp::YelpSearchJsonParser)(*m_pYelpCategoryMapper);
+                m_pSearchResultParser = Eegeo_NEW(SdkModel::YelpSearchJsonParser)(*m_pYelpCategoryMapper);
                 
                 m_pSearchQueryFactory = Eegeo_NEW(Yelp::iOSYelpSearchQueryFactory)(ExampleApp::YelpConsumerKey,
                                                                                    ExampleApp::YelpConsumerSecret,
@@ -35,7 +35,7 @@ namespace ExampleApp
                 
                 std::vector<std::string> categories = Yelp::SearchConstants::GetCategories();
                 
-                m_pSearchService = Eegeo_NEW(Yelp::YelpSearchService)(*m_pSearchQueryFactory,
+                m_pSearchService = Eegeo_NEW(SdkModel::YelpSearchService)(*m_pSearchQueryFactory,
                                                                       *m_pSearchResultParser,
                                                                       networkCapabilities,
                                                                       categories);
@@ -49,7 +49,7 @@ namespace ExampleApp
                 Eegeo_DELETE m_pYelpCategoryMapper;
             }
             
-            SdkModel::ISearchService& iOSYelpSearchServiceModule::GetSearchService() const
+            Search::SdkModel::ISearchService& iOSYelpSearchServiceModule::GetSearchService() const
             {
                 return *m_pSearchService;
             }

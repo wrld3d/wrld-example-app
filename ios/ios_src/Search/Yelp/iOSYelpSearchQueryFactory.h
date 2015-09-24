@@ -15,29 +15,29 @@ namespace ExampleApp
     {
         namespace Yelp
         {
-            class iOSYelpSearchQueryFactory : public IYelpSearchQueryFactory, private Eegeo::NonCopyable
+            class iOSYelpSearchQueryFactory : public SdkModel::IYelpSearchQueryFactory, private Eegeo::NonCopyable
             {
                 std::string m_yelpConsumerKey;
                 std::string m_yelpConsumerSecret;
                 std::string m_yelpOAuthToken;
                 std::string m_yelpOAuthTokenSecret;
-                IYelpCategoryMapper& m_yelpCategoryMapper;
+                SdkModel::IYelpCategoryMapper& m_yelpCategoryMapper;
                 
             public:
                 iOSYelpSearchQueryFactory(const std::string& yelpConsumerKey,
                                           const std::string& yelpConsumerSecret,
                                           const std::string& yelpOAuthToken,
                                           const std::string& yelpOAuthTokenSecret,
-                                          IYelpCategoryMapper& yelpCategoryMapper);
+                                          SdkModel::IYelpCategoryMapper& yelpCategoryMapper);
                 
                 ~iOSYelpSearchQueryFactory();
                 
-                IYelpSearchQuery* CreateYelpSearchForQuery(const SdkModel::SearchQuery& query,
+                SdkModel::IYelpSearchQuery* CreateYelpSearchForQuery(const Search::SdkModel::SearchQuery& query,
                                                            Eegeo::Helpers::ICallback0& completionCallback);
                 
                 
-                IYelpSearchQuery* CreateYelpSearchForSpecificLocation(const SdkModel::SearchResultModel& outdatedSearchResult,
-                                                                      Eegeo::Helpers::ICallback1<const SdkModel::IdentitySearchCallbackData&>& callback);
+                SdkModel::IYelpSearchQuery* CreateYelpSearchForSpecificLocation(const Search::SdkModel::SearchResultModel& outdatedSearchResult,
+                                                                      Eegeo::Helpers::ICallback1<const Search::SdkModel::IdentitySearchCallbackData&>& callback);
             };
         }
     }

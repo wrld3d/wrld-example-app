@@ -16,16 +16,16 @@ namespace ExampleApp
     {
         namespace Yelp
         {
-            class iOSYelpBusinessQuery : public IYelpSearchQuery, private Eegeo::NonCopyable
+            class iOSYelpBusinessQuery : public SdkModel::IYelpSearchQuery, private Eegeo::NonCopyable
             {
             public:
                 iOSYelpBusinessQuery(const std::string& yelpConsumerKey,
                                      const std::string& yelpConsumerSecret,
                                      const std::string& yelpOAuthToken,
                                      const std::string& yelpOAuthTokenSecret,
-                                     IYelpCategoryMapper& yelpCategoryMapper,
-                                     const SdkModel::SearchResultModel& outdatedSearchResult,
-                                     Eegeo::Helpers::ICallback1<const SdkModel::IdentitySearchCallbackData&>& callback);
+                                     SdkModel::IYelpCategoryMapper& yelpCategoryMapper,
+                                     const Search::SdkModel::SearchResultModel& outdatedSearchResult,
+                                     Eegeo::Helpers::ICallback1<const Search::SdkModel::IdentitySearchCallbackData&>& callback);
                 
                 ~iOSYelpBusinessQuery();
                 
@@ -44,9 +44,9 @@ namespace ExampleApp
                 std::string m_yelpConsumerSecret;
                 std::string m_yelpOAuthToken;
                 std::string m_yelpOAuthTokenSecret;
-                IYelpCategoryMapper& m_yelpCategoryMapper;
-                SdkModel::SearchResultModel m_outdatedSearchResult;
-                Eegeo::Helpers::ICallback1<const SdkModel::IdentitySearchCallbackData&>& m_callback;
+                SdkModel::IYelpCategoryMapper& m_yelpCategoryMapper;
+                Search::SdkModel::SearchResultModel m_outdatedSearchResult;
+                Eegeo::Helpers::ICallback1<const Search::SdkModel::IdentitySearchCallbackData&>& m_callback;
                 std::string m_responseString;
                 bool m_cancelled;
                 bool m_isSuccess;

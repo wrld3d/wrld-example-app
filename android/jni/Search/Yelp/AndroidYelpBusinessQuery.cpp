@@ -16,9 +16,9 @@ namespace ExampleApp
         			const std::string& yelpConsumerSecret,
         			const std::string& yelpOAuthToken,
         			const std::string& yelpOAuthTokenSecret,
-                    IYelpCategoryMapper& yelpCategoryMapper,
-					const SdkModel::SearchResultModel& outdatedSearchResult,
-                    Eegeo::Helpers::ICallback1<const SdkModel::IdentitySearchCallbackData&>& callback)
+					SdkModel::IYelpCategoryMapper& yelpCategoryMapper,
+					const Search::SdkModel::SearchResultModel& outdatedSearchResult,
+                    Eegeo::Helpers::ICallback1<const Search::SdkModel::IdentitySearchCallbackData&>& callback)
             : m_nativeState(nativeState)
         	, m_yelpCategoryMapper(yelpCategoryMapper)
             , m_outdatedSearchResult(outdatedSearchResult)
@@ -117,19 +117,19 @@ namespace ExampleApp
 
                 if(!m_cancelled)
                 {
-                    SdkModel::SearchResultModel result;
+                	Search::SdkModel::SearchResultModel result;
                     if(TryParseYelpBusinessSearchResult(m_responseString, m_yelpCategoryMapper, result))
                     {
-                        m_callback(SdkModel::IdentitySearchCallbackData::CreateSucceeded(result));
+                        m_callback(Search::SdkModel::IdentitySearchCallbackData::CreateSucceeded(result));
                     }
                     else
                     {
-                        m_callback(SdkModel::IdentitySearchCallbackData::CreateFailed(m_outdatedSearchResult));
+                        m_callback(Search::SdkModel::IdentitySearchCallbackData::CreateFailed(m_outdatedSearchResult));
                     }
                 }
                 else
                 {
-                    m_callback(SdkModel::IdentitySearchCallbackData::CreateFailed(m_outdatedSearchResult));
+                    m_callback(Search::SdkModel::IdentitySearchCallbackData::CreateFailed(m_outdatedSearchResult));
                 }
 
             	Eegeo_DELETE this;

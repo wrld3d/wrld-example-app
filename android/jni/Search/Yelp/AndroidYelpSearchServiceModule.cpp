@@ -19,11 +19,11 @@ namespace ExampleApp
                     Net::SdkModel::INetworkCapabilities& networkCapabilities,
                     Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder)
             {
-                m_pYelpCategoryMapper = Eegeo_NEW(Yelp::YelpCategoryMapper)(webRequestFactory,
+                m_pYelpCategoryMapper = Eegeo_NEW(Yelp::SdkModel::YelpCategoryMapper)(webRequestFactory,
                                                                             Yelp::SearchConstants::GetYelpFoundationCategoryToApplicationCategoryMap(),
                                                                             Yelp::SearchConstants::GetDefaultCategory());
 
-                m_pSearchResultParser = Eegeo_NEW(Yelp::YelpSearchJsonParser)(*m_pYelpCategoryMapper);
+                m_pSearchResultParser = Eegeo_NEW(Yelp::SdkModel::YelpSearchJsonParser)(*m_pYelpCategoryMapper);
                 
                 m_pSearchQueryFactory = Eegeo_NEW(Yelp::AndroidYelpSearchQueryFactory)(
                 		nativeState,
@@ -33,7 +33,7 @@ namespace ExampleApp
                 		ExampleApp::YelpOAuthTokenSecret,
                 		*m_pYelpCategoryMapper);
                 
-                m_pSearchService = Eegeo_NEW(Yelp::YelpSearchService)(*m_pSearchQueryFactory,
+                m_pSearchService = Eegeo_NEW(Yelp::SdkModel::YelpSearchService)(*m_pSearchQueryFactory,
                                                                       *m_pSearchResultParser,
                                                                       networkCapabilities,
 																	  Yelp::SearchConstants::GetCategories());
@@ -47,7 +47,7 @@ namespace ExampleApp
                 Eegeo_DELETE m_pYelpCategoryMapper;
             }
             
-            SdkModel::ISearchService& AndroidYelpSearchServiceModule::GetSearchService() const
+        	Search::SdkModel::ISearchService& AndroidYelpSearchServiceModule::GetSearchService() const
             {
                 return *m_pSearchService;
             }

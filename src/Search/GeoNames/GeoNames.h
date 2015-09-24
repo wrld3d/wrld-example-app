@@ -8,9 +8,12 @@ namespace ExampleApp
     {
         namespace GeoNames
         {
-            class IGeoNamesSearchQuery;
-            class IGeoNamesSearchQueryFactory;
-            class IGeoNamesParser;
+            namespace SdkModel
+            {
+                class IGeoNamesSearchQuery;
+                class IGeoNamesSearchQueryFactory;
+                class IGeoNamesParser;
+            }
         }
     }
 }

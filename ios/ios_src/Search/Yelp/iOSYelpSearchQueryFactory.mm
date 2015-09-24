@@ -14,7 +14,7 @@ namespace ExampleApp
                                                                  const std::string& yelpConsumerSecret,
                                                                  const std::string& yelpOAuthToken,
                                                                  const std::string& yelpOAuthTokenSecret,
-                                                                 IYelpCategoryMapper& yelpCategoryMapper)
+                                                                 SdkModel::IYelpCategoryMapper& yelpCategoryMapper)
             : m_yelpConsumerKey(yelpConsumerKey)
             , m_yelpConsumerSecret(yelpConsumerSecret)
             , m_yelpOAuthToken(yelpOAuthToken)
@@ -27,7 +27,7 @@ namespace ExampleApp
             {
             }
             
-            IYelpSearchQuery* iOSYelpSearchQueryFactory::CreateYelpSearchForQuery(const SdkModel::SearchQuery& query,
+            SdkModel::IYelpSearchQuery* iOSYelpSearchQueryFactory::CreateYelpSearchForQuery(const Search::SdkModel::SearchQuery& query,
                                                                                   Eegeo::Helpers::ICallback0& completionCallback)
             
             {
@@ -39,8 +39,8 @@ namespace ExampleApp
                                                      completionCallback);
             }
             
-            IYelpSearchQuery* iOSYelpSearchQueryFactory::CreateYelpSearchForSpecificLocation(const SdkModel::SearchResultModel& outdatedSearchResult,
-                                                                                             Eegeo::Helpers::ICallback1<const SdkModel::IdentitySearchCallbackData&>& callback)
+            SdkModel::IYelpSearchQuery* iOSYelpSearchQueryFactory::CreateYelpSearchForSpecificLocation(const Search::SdkModel::SearchResultModel& outdatedSearchResult,
+                                                                                             Eegeo::Helpers::ICallback1<const ExampleApp::Search::SdkModel::IdentitySearchCallbackData&>& callback)
             
             {
                 return Eegeo_NEW(iOSYelpBusinessQuery)(m_yelpConsumerKey,
