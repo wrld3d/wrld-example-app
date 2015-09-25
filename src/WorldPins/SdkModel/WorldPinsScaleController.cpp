@@ -66,37 +66,46 @@ namespace ExampleApp
 
                 m_modality = modality;
             }
+            
+            bool WorldPinsScaleController::ShouldHidePin(WorldPins::SdkModel::WorldPinItemModel& worldPinItemModel,
+                                                         const Eegeo::Camera::RenderCamera& renderCamera)
+            {
+                const bool showingInterior = m_interiorsController.ShowingInterior();
+                
+                if(showingInterior && !worldPinItemModel.IsInterior())
+                {
+                    return true;
+                }
+                
+                if(!showingInterior && worldPinItemModel.IsInterior())
+                {
+                    return !worldPinItemModel.GetInteriorData().showInExterior;
+                }
+                
+                
+                if(showingInterior && worldPinItemModel.IsInterior())
+                {
+                    //hide if building and floor of pin not showing
+                    const Eegeo::Resources::Interiors::InteriorsModel* pInteriorModel = NULL;
+                    return !(worldPinItemModel.GetInteriorData().floor == m_interiorsController.GetCurrentFloorIndex() &&
+                             m_interiorsController.TryGetCurrentModel(pInteriorModel) &&
+                             worldPinItemModel.GetInteriorData().building == pInteriorModel->GetId());
+                }
+                
+                // hide when close to edge of screen
+                Eegeo::v2 screenLocation;
+                GetScreenLocation(worldPinItemModel, screenLocation, renderCamera);
+                
+                const float ratioX = screenLocation.GetX() / renderCamera.GetViewportWidth();
+                const float ratioY = screenLocation.GetY() / renderCamera.GetViewportHeight();
+                return (ratioX < 0.1f) || (ratioX > 0.9f) || (ratioY < 0.15f) || (ratioY > 0.9f);
+            }
 
             void WorldPinsScaleController::UpdateWorldPin(WorldPinItemModel& worldPinItemModel,
                     float deltaSeconds,
                     const Eegeo::Camera::RenderCamera& renderCamera)
             {
-                const bool showingInterior = m_interiorsController.ShowingInterior();
-                
-                const bool shouldHideExteriorPin = showingInterior && !worldPinItemModel.IsInterior();
-                
-                bool shouldHideInteirorPin = worldPinItemModel.IsInterior();
-                if( showingInterior == false)
-                {
-                    shouldHideInteirorPin = shouldHideInteirorPin && !worldPinItemModel.GetInteriorData().showInExterior;
-                }
-                else
-                {
-                    const Eegeo::Resources::Interiors::InteriorsModel* pInterirorModel = NULL;
-                    shouldHideInteirorPin = shouldHideInteirorPin &&
-                                            !(worldPinItemModel.GetInteriorData().floor == m_interiorsController.GetCurrentFloorIndex() &&
-                                              m_interiorsController.TryGetCurrentModel(pInterirorModel) &&
-                                              worldPinItemModel.GetInteriorData().building == pInterirorModel->GetId());
-                }
-                
-                Eegeo::v2 screenLocation;
-                GetScreenLocation(worldPinItemModel, screenLocation, renderCamera);
-
-                const float ratioX = screenLocation.GetX() / renderCamera.GetViewportWidth();
-                const float ratioY = screenLocation.GetY() / renderCamera.GetViewportHeight();
-                const bool shouldHide = (ratioX < 0.1f) || (ratioX > 0.9f) || (ratioY < 0.15f) || (ratioY > 0.9f) || shouldHideInteirorPin || shouldHideExteriorPin;
-
-                if(shouldHide)
+                if(ShouldHidePin(worldPinItemModel, renderCamera))
                 {
                     worldPinItemModel.Hide();
                 }
