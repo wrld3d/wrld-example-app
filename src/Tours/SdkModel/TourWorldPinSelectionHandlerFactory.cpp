@@ -2,6 +2,7 @@
 
 #include "TourWorldPinSelectionHandlerFactory.h"
 #include "TourWorldPinSelectionHandler.h"
+#include "IAppModeModel.h"
 
 namespace ExampleApp
 {
@@ -10,9 +11,11 @@ namespace ExampleApp
         namespace SdkModel
         {
             TourWorldPinSelectionHandlerFactory::TourWorldPinSelectionHandlerFactory(ITourService& tourService,
-                                                                                     Search::SdkModel::ISearchRefreshService& searchRefreshService)
+                                                                                     Search::SdkModel::ISearchRefreshService& searchRefreshService,
+                                                                                     AppModes::SdkModel::IAppModeModel& appModeModel)
             : m_tourService(tourService)
             , m_searchRefreshService(searchRefreshService)
+            , m_appModeModel(appModeModel)
             {
                 
             }
@@ -21,7 +24,8 @@ namespace ExampleApp
             {
                 return Eegeo_NEW(TourWorldPinSelectionHandler)(model,
                                                                m_tourService,
-                                                               m_searchRefreshService);
+                                                               m_searchRefreshService,
+                                                               m_appModeModel);
             }
         };
     }

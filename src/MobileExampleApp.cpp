@@ -657,7 +657,8 @@ namespace ExampleApp
                                                        *m_pGlobeCameraController,
                                                        world.GetTerrainModelModule().GetTerrainHeightProvider(),
                                                        interiorsPresentationModule.GetInteriorsController(),
-                                                       m_sdkDomainEventBus);
+                                                       m_sdkDomainEventBus,
+                                                       *m_pAppModeModel);
         
     }
     
