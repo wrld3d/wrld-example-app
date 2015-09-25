@@ -4,6 +4,7 @@
 
 #include <limits>
 
+#include "InteriorsModel.h"
 #include "IWorldPinsService.h"
 #include "ScreenProperties.h"
 #include "RenderCamera.h"
@@ -81,7 +82,11 @@ namespace ExampleApp
                 }
                 else
                 {
-                    shouldHideInteirorPin = shouldHideInteirorPin && (worldPinItemModel.GetInteriorData().floor != m_interiorsController.GetCurrentFloorIndex());
+                    const Eegeo::Resources::Interiors::InteriorsModel* pInterirorModel = NULL;
+                    shouldHideInteirorPin = shouldHideInteirorPin &&
+                                            !(worldPinItemModel.GetInteriorData().floor == m_interiorsController.GetCurrentFloorIndex() &&
+                                              m_interiorsController.TryGetCurrentModel(pInterirorModel) &&
+                                              worldPinItemModel.GetInteriorData().building == pInterirorModel->GetId());
                 }
                 
                 Eegeo::v2 screenLocation;
