@@ -106,9 +106,9 @@ namespace ExampleApp
                 Eegeo_ASSERT(document.HasMember("version"),
                              "Old SearchResultModel version detected. Please delete and reinstall the application.\n");
                 
-                const int version = document["version"].GetInt();
+                int version = document["version"].GetInt();
                 
-                const int earliestSupportedVersionForUpversioning = 3;
+                const int earliestSupportedVersionForUpversioning = 4;
                 
                 Eegeo_ASSERT(version >= earliestSupportedVersionForUpversioning,
                              "Old SearchResultModel version detected: tried to deserialize version %d but current version is %d. Please delete and reinstall the application.\n", version, SearchResultModel::CurrentVersion);
@@ -117,6 +117,7 @@ namespace ExampleApp
                 if(version == 4)
                 {
                     jsonData = ExtractAnyVersion4Data(document);
+                    version = SearchResultModel::CurrentVersion;
                 }
                 else if(version > 4)
                 {
