@@ -23,19 +23,19 @@ namespace ExampleApp
                     rapidjson::Value valueObject(rapidjson::kObjectType);
                     std::string jsonString ="";
                     
-                    if(document.HasMember("phone"))
+                    if(document.HasMember("phone") && std::string(document["phone"].GetString()).empty() == false)
                     {
                         valueObject.AddMember("display_phone", document["phone"].GetString(), allocator);
                     }
-                    if(document.HasMember("web"))
+                    if(document.HasMember("web") && std::string(document["web"].GetString()).empty() == false)
                     {
                         valueObject.AddMember("url", document["web"].GetString(), allocator);
                     }
-                    if(document.HasMember("imageUrl"))
+                    if(document.HasMember("imageUrl") && std::string(document["imageUrl"].GetString()).empty() == false)
                     {
                         valueObject.AddMember("image_url", document["imageUrl"].GetString(), allocator);
                     }
-                    if(document.HasMember("ratingImageUrl"))
+                    if(document.HasMember("ratingImageUrl") && std::string(document["ratingImageUrl"].GetString()).empty() == false)
                     {
                         valueObject.AddMember("rating", document["ratingImageUrl"].GetString(), allocator);
                     }
