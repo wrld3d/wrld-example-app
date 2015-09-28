@@ -11,11 +11,13 @@ namespace ExampleApp
         namespace View
         {
             CategorySearchModel::CategorySearchModel(const std::string& name,
-                    const std::string& searchCategory,
-                    const std::string& icon)
+                                                     const std::string& searchCategory,
+                                                     const std::string& icon,
+                                                     bool visibleInSearchMenu)
                 : m_name(name)
                 , m_searchCategory(searchCategory)
                 , m_icon(icon)
+                , m_visibleInSearchMenu(visibleInSearchMenu)
             {
 
             }
@@ -33,6 +35,11 @@ namespace ExampleApp
             const std::string& CategorySearchModel::SearchCategory() const
             {
                 return m_searchCategory;
+            }
+            
+            bool CategorySearchModel::IsVisibleInSearchMenu() const
+            {
+                return m_visibleInSearchMenu;
             }
         }
     }

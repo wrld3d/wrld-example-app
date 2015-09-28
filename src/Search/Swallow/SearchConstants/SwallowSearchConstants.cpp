@@ -18,11 +18,13 @@ namespace ExampleApp
                 
                 std::vector<CategorySearch::View::CategorySearchModel> GetCategorySearchModels()
                 {
+                    const bool showCategoriesInSearchMenu = false;
+                    
                     std::vector<ExampleApp::CategorySearch::View::CategorySearchModel> categories;
-                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Meeting Rooms", "meeting_room", "meeting_room"));
-                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Working Groups", "working_group", "working_group"));
-                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Facilities", "facility", "facility"));
-                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Offices", "office", "office"));
+                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Meeting Rooms", "meeting_room", "meeting_room", showCategoriesInSearchMenu));
+                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Working Groups", "working_group", "working_group", showCategoriesInSearchMenu));
+                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Facilities", "facility", "facility", showCategoriesInSearchMenu));
+                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Offices", "office", "office", showCategoriesInSearchMenu));
                     return categories;
                 }
                 

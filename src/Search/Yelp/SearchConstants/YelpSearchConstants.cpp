@@ -36,15 +36,17 @@ namespace ExampleApp
                 
                 std::vector<CategorySearch::View::CategorySearchModel> GetCategorySearchModels()
                 {
+                    const bool showCategoriesInSearchMenu = true;
+                    
                     std::vector<ExampleApp::CategorySearch::View::CategorySearchModel> categories;
-                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Around Me", "", "aroundme"));
-                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Coffee", "coffee", "coffee"));
-                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Food", "restaurants", "food"));
-                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Nightlife", "nightlife", "nightlife"));
-                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Arts", "museums", "arts"));
-                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Hotels", "hotels", "hotel"));
-                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Parks", "parks", "park"));
-                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Banks", "financialservices", "bank"));
+                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Around Me", "", "aroundme", showCategoriesInSearchMenu));
+                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Coffee", "coffee", "coffee", showCategoriesInSearchMenu));
+                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Food", "restaurants", "food", showCategoriesInSearchMenu));
+                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Nightlife", "nightlife", "nightlife", showCategoriesInSearchMenu));
+                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Arts", "museums", "arts", showCategoriesInSearchMenu));
+                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Hotels", "hotels", "hotel", showCategoriesInSearchMenu));
+                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Parks", "parks", "park", showCategoriesInSearchMenu));
+                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Banks", "financialservices", "bank", showCategoriesInSearchMenu));
                     return categories;
                 }
                 
