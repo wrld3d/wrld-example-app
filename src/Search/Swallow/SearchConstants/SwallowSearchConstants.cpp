@@ -10,10 +10,11 @@ namespace ExampleApp
         {
             namespace SearchConstants
             {
-                const std::string JOB_TITLE_FIELD_NAME = "jobTitle";
-                const std::string WORKING_GROUP_FIELD_NAME = "workingGroup";
-                const std::string OFFICE_LOCATION_FIELD_NAME = "officeLocation";
-                const std::string DESK_CODE_FIELD_NAME = "deskCode";
+                const std::string NAME_FIELD_NAME = "name";
+                const std::string JOB_TITLE_FIELD_NAME = "job_title";
+                const std::string WORKING_GROUP_FIELD_NAME = "working_group";
+                const std::string OFFICE_LOCATION_FIELD_NAME = "office_location";
+                const std::string DESK_CODE_FIELD_NAME = "desk_code";
                 
                 std::vector<CategorySearch::View::CategorySearchModel> GetCategorySearchModels()
                 {

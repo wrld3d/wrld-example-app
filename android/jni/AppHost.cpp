@@ -174,21 +174,17 @@ AppHost::AppHost(
     		m_pAndroidPlatformAbstractionModule->GetHttpCache(),
     		m_androidPersistentSettingsModel);
 
-    const bool useYelp = true;
-    if(useYelp)
-    {
-    	m_searchServiceModules[ExampleApp::Search::YelpVendorName] = Eegeo_NEW(ExampleApp::Search::Yelp::AndroidYelpSearchServiceModule)(
-        		nativeState,
-        		m_pAndroidPlatformAbstractionModule->GetWebLoadRequestFactory(),
-        		*m_pNetworkCapabilities,
-        		m_pAndroidPlatformAbstractionModule->GetUrlEncoder(),
-                applicationConfiguration.YelpConsumerKey(),
-                applicationConfiguration.YelpConsumerSecret(),
-                applicationConfiguration.YelpOAuthToken(),
-                applicationConfiguration.YelpOAuthTokenSecret(),
-                applicationConfiguration.GeoNamesUserName()
-        );
-    }
+    m_searchServiceModules[ExampleApp::Search::YelpVendorName] = Eegeo_NEW(ExampleApp::Search::Yelp::AndroidYelpSearchServiceModule)(
+    		nativeState,
+    		m_pAndroidPlatformAbstractionModule->GetWebLoadRequestFactory(),
+    		*m_pNetworkCapabilities,
+    		m_pAndroidPlatformAbstractionModule->GetUrlEncoder(),
+            applicationConfiguration.YelpConsumerKey(),
+            applicationConfiguration.YelpConsumerSecret(),
+            applicationConfiguration.YelpOAuthToken(),
+            applicationConfiguration.YelpOAuthTokenSecret(),
+            applicationConfiguration.GeoNamesUserName()
+    );
 
     m_pAndroidFlurryMetricsService = Eegeo_NEW(ExampleApp::Metrics::AndroidFlurryMetricsService)(&m_nativeState);
 

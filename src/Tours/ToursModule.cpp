@@ -4,6 +4,7 @@
 #include "TourExplorerViewModel.h"
 #include "TourCameraModule.h"
 #include "TourFullScreenImageViewModel.h"
+#include "IAppModeModel.h"
 
 namespace ExampleApp
 {
@@ -24,14 +25,15 @@ namespace ExampleApp
                                  Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& gpsGlobeCameraController,
                                  Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider,
                                  Eegeo::Resources::Interiors::InteriorsController& interiorsController,
-                                 ExampleAppMessaging::TSdkModelDomainEventBus& sdkDomainEventBus)
+                                 ExampleAppMessaging::TSdkModelDomainEventBus& sdkDomainEventBus,
+                                 AppModes::SdkModel::IAppModeModel& appModeModel)
         {
             m_pToursCameraModule = Eegeo_NEW(SdkModel::Camera::TourCameraModule)(resourceCeilingProvider,
                                                                                  screenProperties,
                                                                                  gpsGlobeCameraController,
                                                                                  terrainHeightProvider);
-
-        
+            
+            
             m_pTourRepository = Eegeo_NEW(SdkModel::TourRepository);
             
             m_pTourService = Eegeo_NEW(SdkModel::TourService)(*m_pTourRepository,
@@ -40,7 +42,8 @@ namespace ExampleApp
                                                               sdkDomainEventBus);
             
             m_pTourWorldPinSelectionHandlerFactory = Eegeo_NEW(SdkModel::TourWorldPinSelectionHandlerFactory)(*m_pTourService,
-                                                                                                              searchRefreshService);
+                                                                                                              searchRefreshService,
+                                                                                                              appModeModel);
             
             m_pTourAddedObserver = Eegeo_NEW(SdkModel::TourAddedObserver)(*m_pTourRepository,
                                                                           worldPinsService,

@@ -11,7 +11,7 @@
 #import "UIView+TouchExclusivity.h"
 #include "SwallowPersonSearchResultPoiView.h"
 #include "App.h"
-#include "SwallowSearchConstants.h"
+#include "SwallowSearchParser.h"
 
 @interface SwallowPersonSearchResultPoiView()<UIGestureRecognizerDelegate>
 {
@@ -275,31 +275,33 @@
     Eegeo_ASSERT(pModel != NULL);
     
     m_model = *pModel;
+    
+    m_swallowPersonModel = ExampleApp::Search::Swallow::SdkModel::SearchParser::TransformToSwallowPersonResult(m_model);
     m_isPinned = isPinned;
     
     [self updatePinnedButtonState];
     
     [self.pProfileImageActivityIndicator startAnimating];
     
-    self.pNameLabel.text = [NSString stringWithUTF8String:pModel->GetTitle().c_str()];
+    self.pNameLabel.text = [NSString stringWithUTF8String:m_swallowPersonModel.GetName().c_str()];
     
     const std::string jobTitlePrefix = "Job Title: ";
     const std::string workingGroupPrefix = "Working Group: ";
     const std::string officeLocationPrefix = "Location: ";
     const std::string deskCodePrefix = "Desk: ";
     
-    self.pJobTitleLabel.text = [NSString stringWithUTF8String:(jobTitlePrefix + pModel->GetMetaDataValue(ExampleApp::Search::Swallow::SearchConstants::JOB_TITLE_FIELD_NAME)).c_str()];
-    self.pWorkingGroupLabel.text = [NSString stringWithUTF8String:(workingGroupPrefix + pModel->GetMetaDataValue(ExampleApp::Search::Swallow::SearchConstants::WORKING_GROUP_FIELD_NAME)).c_str()];
-    self.pOfficeLocationLabel.text = [NSString stringWithUTF8String:(officeLocationPrefix + pModel->GetMetaDataValue(ExampleApp::Search::Swallow::SearchConstants::OFFICE_LOCATION_FIELD_NAME)).c_str()];
-    self.pDeskCodeLabel.text = [NSString stringWithUTF8String:(deskCodePrefix + pModel->GetMetaDataValue(ExampleApp::Search::Swallow::SearchConstants::DESK_CODE_FIELD_NAME)).c_str()];
+    self.pJobTitleLabel.text = [NSString stringWithUTF8String:(jobTitlePrefix + m_swallowPersonModel.GetJobTitle()).c_str()];
+    self.pWorkingGroupLabel.text = [NSString stringWithUTF8String:(workingGroupPrefix + m_swallowPersonModel.GetWorkingGroup()).c_str()];
+    self.pOfficeLocationLabel.text = [NSString stringWithUTF8String:(officeLocationPrefix + m_swallowPersonModel.GetOfficeLocation()).c_str()];
+    self.pDeskCodeLabel.text = [NSString stringWithUTF8String:(deskCodePrefix + m_swallowPersonModel.GetDeskCode()).c_str()];
     
     [self.pLabelsContainer setContentOffset:CGPointMake(0,0) animated:NO];
 }
 
 - (void) updateImage:(const std::string&)url :(bool)success bytes:(const std::vector<Byte>*)bytes;
 {
-    if(url == m_model.GetImageUrl())
-    {
+//    if(url == m_swallowPersonModel.GetImageUrl())
+//    {
         [self.pProfileImageActivityIndicator stopAnimating];
         
         if(success)
@@ -311,7 +313,7 @@
             [self.pProfileImageContainer.layer removeAllAnimations];
             self.pProfileImageContainer.hidden = false;
         }
-    }
+//    }
 }
 
 - (void) setFullyActive

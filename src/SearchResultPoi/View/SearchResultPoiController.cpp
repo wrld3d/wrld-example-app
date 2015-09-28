@@ -2,13 +2,14 @@
 
 #include "SearchResultPoiController.h"
 #include "SearchResultPoiViewOpenedMessage.h"
+#include "YelpSearchJsonParser.h"
 
 namespace ExampleApp
 {
     namespace SearchResultPoi
     {
         namespace View
-        {
+        {   
             void SearchResultPoiController::OnViewOpened()
             {
                 if(!m_viewModel.TryAcquireReactorControl())
@@ -25,13 +26,14 @@ namespace ExampleApp
                 m_metricsService.SetEvent("Opened POI",
                                           "Title", searchResultModel.GetTitle().c_str(),
                                           "Category", searchResultModel.GetCategory().c_str(),
-                                          "Vicinity", searchResultModel.GetVicinity().c_str());
+                                          "Vicinity", searchResultModel.GetSubtitle().c_str());
                 
                 m_view.Show(searchResultModel, m_viewModel.IsPinned());
                 
-                m_messageBus.Publish(SearchResultPoiViewOpenedMessage(searchResultModel.GetImageUrl(),
-                                                                      searchResultModel.GetRatingImageUrl()));
-                
+                std::string imageUrl = "";
+                std::string ratingImageUrl = "";
+                Search::Yelp::SdkModel::TryParseImageDetails(searchResultModel, imageUrl, ratingImageUrl);
+                m_messageBus.Publish(SearchResultPoiViewOpenedMessage(imageUrl));
             }
 
             void SearchResultPoiController::OnViewClosed()
@@ -57,9 +59,13 @@ namespace ExampleApp
                 // The view may have closed while we were waiting for the download.
                 if (m_viewModel.IsOpen())
                 {
+                    std::string imageUrl = "";
+                    std::string ratingImageUrl = "";
+                    Search::Yelp::SdkModel::TryParseImageDetails(m_viewModel.GetSearchResultModel(), imageUrl, ratingImageUrl);
+                    
                     // We may have closed the view and opened a new view, so check it's the same image...
-                    const bool isCorrectImageUrl = (m_viewModel.GetSearchResultModel().GetImageUrl() == message.GetImageUrl())
-                        || (m_viewModel.GetSearchResultModel().GetRatingImageUrl() == message.GetImageUrl());
+                    const bool isCorrectImageUrl = (imageUrl == message.GetImageUrl())
+                        || (ratingImageUrl == message.GetImageUrl());
                 
                     if(isCorrectImageUrl)
                     {

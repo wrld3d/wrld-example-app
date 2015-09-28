@@ -29,6 +29,7 @@
 #include "Menu.h"
 #include "Interiors.h"
 #include "SdkModelDomainEventBus.h"
+#include "AppModes.h"
 
 namespace ExampleApp
 {
@@ -70,14 +71,15 @@ namespace ExampleApp
                         Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& gpsGlobeCameraController,
                         Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider,
                         Eegeo::Resources::Interiors::InteriorsController& interiorsController,
-                        ExampleAppMessaging::TSdkModelDomainEventBus& sdkDomainEventBus);
+                        ExampleAppMessaging::TSdkModelDomainEventBus& sdkDomainEventBus,
+                        AppModes::SdkModel::IAppModeModel& appModeModel);
             
             ~ToursModule();
             
             SdkModel::ITourService& GetTourService() const;
             
             SdkModel::ITourRepository& GetTourRepository() const;
-
+            
             SdkModel::Camera::IToursCameraController& GetCameraController() const;
             
             Eegeo::Camera::GlobeCamera::GlobeCameraTouchController& GetCameraTouchController() const;

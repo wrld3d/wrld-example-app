@@ -7,6 +7,7 @@
 #include "ISearchResultPoiView.h"
 #include "AndroidNativeState.h"
 #include "CallbackCollection.h"
+#include "YelpSearchResultModel.h"
 
 namespace ExampleApp
 {
@@ -24,6 +25,8 @@ namespace ExampleApp
                 jclass m_uiViewClass;
                 jobject m_uiView;
                 Search::SdkModel::SearchResultModel m_model;
+                Search::Yelp::SdkModel::YelpSearchResultModel m_yelpModel;
+
             public:
                 SearchResultPoiView(AndroidNativeState& nativeState);
 

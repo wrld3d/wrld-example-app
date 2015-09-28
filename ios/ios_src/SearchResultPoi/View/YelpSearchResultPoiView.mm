@@ -11,6 +11,7 @@
 #import "UIView+TouchExclusivity.h"
 #include "YelpSearchResultPoiView.h"
 #include "App.h"
+#include "YelpSearchJsonParser.h"
 
 @interface YelpSearchResultPoiView()<UIGestureRecognizerDelegate>
 {
@@ -338,10 +339,10 @@ const int DeletePinAlertViewTag = 2;
     const float headerTextPadding = 3.0f;
     
     float currentLabelY = 8.f;
-    const bool hasImage = !m_model.GetImageUrl().empty();
+    const bool hasImage = !m_yelpModel.GetImageUrl().empty();
     const bool hasReviewBar = !self.pReviewCountLabel.hidden;
     
-    if(!m_model.GetImageUrl().empty())
+    if(!m_yelpModel.GetImageUrl().empty())
     {
         currentLabelY = 0.f;
         const CGFloat imageX = (self.frame.size.width * 0.5f - m_imageWidth * 0.5f);
@@ -366,9 +367,9 @@ const int DeletePinAlertViewTag = 2;
     const CGFloat yelpButtonX = (hasImage || !hasReviewBar) ? barButtonCentredX : yelpButtonOffsetX;
     const CGFloat imageBottomPadding = 8.0;
     
-    if(!m_model.GetRatingImageUrl().empty())
+    if(!m_yelpModel.GetRatingImageUrl().empty())
     {
-        UIImage* image = ExampleApp::Helpers::ImageHelpers::LoadImage(m_model.GetRatingImageUrl());
+        UIImage* image = ExampleApp::Helpers::ImageHelpers::LoadImage(m_yelpModel.GetRatingImageUrl());
         [self.pRatingImage setImage:image];
 
         m_ratingsImageWidth = image.size.width;
@@ -399,7 +400,7 @@ const int DeletePinAlertViewTag = 2;
         
     }
     
-    if(!m_model.GetWebUrl().empty())
+    if(!m_yelpModel.GetWebUrl().empty())
     {
         if(self.pVendorWebLinkButton != nil)
         {
@@ -426,7 +427,7 @@ const int DeletePinAlertViewTag = 2;
     }
     
     
-    if(!m_model.GetPhone().empty())
+    if(!m_yelpModel.GetPhone().empty())
     {
         self.pPhoneHeaderContainer.frame = CGRectMake(0.f, currentLabelY, m_labelsSectionWidth, headerLabelHeight + 2 * headerTextPadding);
         self.pPhoneHeaderContainer.hidden = false;
@@ -437,14 +438,14 @@ const int DeletePinAlertViewTag = 2;
         currentLabelY += labelYSpacing + self.pPhoneHeaderContainer.frame.size.height;
         
         self.pPhoneContent.frame = CGRectMake(headerTextPadding, currentLabelY, m_labelsSectionWidth - headerTextPadding, 32.f);
-        self.pPhoneContent.text = [NSString stringWithUTF8String:m_model.GetPhone().c_str()];
+        self.pPhoneContent.text = [NSString stringWithUTF8String:m_yelpModel.GetPhone().c_str()];
         self.pPhoneContent.hidden = false;
         [self.pPhoneContent sizeToFit];
         
         currentLabelY += labelYSpacing + self.pPhoneContent.frame.size.height;
     }
     
-    if(!m_model.GetAddress().empty())
+    if(!m_model.GetSubtitle().empty())
     {
         self.pAddressHeaderContainer.frame = CGRectMake(0.f, currentLabelY, m_labelsSectionWidth, headerLabelHeight + 2 * headerTextPadding);
         self.pAddressHeaderContainer.hidden = false;
@@ -460,7 +461,7 @@ const int DeletePinAlertViewTag = 2;
         self.pAddressContent.adjustsFontSizeToFitWidth = NO;
         self.pAddressContent.lineBreakMode = NSLineBreakByTruncatingTail;
         
-        std::string addressText = m_model.GetAddress();
+        std::string addressText = m_model.GetSubtitle();
         Eegeo::Helpers::SearchReplace(addressText,", ", "\n");
         self.pAddressContent.text = [NSString stringWithUTF8String:addressText.c_str()];
         self.pAddressContent.hidden = false;
@@ -500,7 +501,7 @@ const int DeletePinAlertViewTag = 2;
         currentLabelY += labelYSpacing + self.pCategoriesContent.frame.size.height;
     }
     
-    if(!m_model.GetReviews().empty())
+    if(!m_yelpModel.GetReviews().empty())
     {
         self.pReviewsHeaderContainer.frame = CGRectMake(0.f, currentLabelY, m_labelsSectionWidth, headerLabelHeight + 2 * headerTextPadding);
         self.pReviewsHeaderContainer.hidden = false;
@@ -517,7 +518,7 @@ const int DeletePinAlertViewTag = 2;
         self.pReviewsContent.lineBreakMode = NSLineBreakByTruncatingTail;
         
         std::string reviewsText;
-        const std::vector<std::string>& reviewsList(m_model.GetReviews());
+        const std::vector<std::string>& reviewsList(m_yelpModel.GetReviews());
         for(std::vector<std::string>::const_iterator it = reviewsList.begin(); it != reviewsList.end(); ++it)
         {
             reviewsText += (*it) + "\n";
@@ -538,6 +539,9 @@ const int DeletePinAlertViewTag = 2;
     Eegeo_ASSERT(pModel != NULL);
     
     m_model = *pModel;
+    
+    m_yelpModel = ExampleApp::Search::Yelp::SdkModel::TransformToYelpSearchResult(m_model);
+    
     m_isPinned = isPinned;
     [self updatePinnedButtonState];
     
@@ -564,17 +568,17 @@ const int DeletePinAlertViewTag = 2;
     m_ratingsImageWidth = RatingImageWidth;
     m_ratingsImageHeight = RatingImageHeight;
     
-    if(pModel->GetReviewCount() > 0)
+    if(m_yelpModel.GetReviewCount() > 0)
     {
         self.pReviewCountLabel.hidden = false;
-        self.pReviewCountLabel.text = [NSString stringWithFormat:@"(%d)", pModel->GetReviewCount()];
+        self.pReviewCountLabel.text = [NSString stringWithFormat:@"(%d)", m_yelpModel.GetReviewCount()];
     }
     
     
     
     [self performDynamicContentLayout];
     
-    if(!pModel->GetImageUrl().empty())
+    if(!m_yelpModel.GetImageUrl().empty())
     {
         [self.pPreviewImage setImage:nil];
         [self.pPreviewImageSpinner startAnimating];
@@ -585,7 +589,7 @@ const int DeletePinAlertViewTag = 2;
 
 - (void) updateImage:(const std::string&)url :(bool)success bytes:(const std::vector<Byte>*)bytes;
 {
-    if(url == m_model.GetImageUrl())
+    if(url == m_yelpModel.GetImageUrl())
     {
         [self.pPreviewImageSpinner stopAnimating];
         
@@ -687,7 +691,7 @@ const int DeletePinAlertViewTag = 2;
 
 - (void) handleLinkClicked
 {
-    NSString* preFormattedUrlString = [NSString stringWithUTF8String:m_model.GetWebUrl().c_str()];
+    NSString* preFormattedUrlString = [NSString stringWithUTF8String:m_yelpModel.GetWebUrl().c_str()];
         
     NSString* webUrlString = ([preFormattedUrlString rangeOfString:@"http"].location != NSNotFound)
     ? preFormattedUrlString

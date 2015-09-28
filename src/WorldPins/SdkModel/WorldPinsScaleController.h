@@ -51,6 +51,9 @@ namespace ExampleApp
 
 
             private:
+                bool ShouldHidePin(WorldPins::SdkModel::WorldPinItemModel& worldPinItemModel,
+                                   const Eegeo::Camera::RenderCamera& renderCamera);
+                
                 void UpdateWorldPin(WorldPins::SdkModel::WorldPinItemModel& worldPinItemModel,
                                     float deltaSeconds,
                                     const Eegeo::Camera::RenderCamera& renderCamera);

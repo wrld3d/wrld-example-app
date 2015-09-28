@@ -15,7 +15,6 @@
 #include "SearchResultModel.h"
 #include "SearchVendorNames.h"
 #include "YelpSearchResultPoiView.h"
-#include "DecartaSearchResultPoiView.h"
 #include "GeoNamesSearchResultPoiView.h"
 #include "SwallowPersonSearchResultPoiView.h"
 
@@ -84,10 +83,6 @@
     if(vendor == ExampleApp::Search::YelpVendorName)
     {
         return [[YelpSearchResultPoiView alloc] initWithInterop:m_pInterop];
-    }
-    else if(vendor == ExampleApp::Search::DecartaVendorName)
-    {
-        return [[DecartaSearchResultPoiView alloc] initWithInterop:m_pInterop];
     }
     else if(vendor == ExampleApp::Search::GeoNamesVendorName)
     {

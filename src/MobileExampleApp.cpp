@@ -73,7 +73,6 @@
 #include "ExampleTourStateMachineFactory.h"
 #include "ICompassViewModel.h"
 #include "CombinedSearchServiceModule.h"
-#include "DecartaSearchServiceModule.h"
 #include "GeoNamesSearchServiceModule.h"
 #include "SearchVendorNames.h"
 #include "PoiDbModule.h"
@@ -328,15 +327,8 @@ namespace ExampleApp
 
         std::map<std::string,ExampleApp::Search::SdkModel::ISearchServiceModule*> searchServiceModulesForCombinedSearch = platformImplementedSearchServiceModules;
         
-        m_searchServiceModules[Search::SwallowVendorName] = Eegeo_NEW(Search::Swallow::SdkModel::SwallowSearchServiceModule)(*m_pPoiDbModule);
-        
-        const bool useDecarta = false;
-        if(useDecarta)
-        {
-            m_searchServiceModules[Search::DecartaVendorName] = Eegeo_NEW(Search::Decarta::SdkModel::DecartaSearchServiceModule)(m_platformAbstractions.GetWebLoadRequestFactory(),
-                                                                                                                   m_platformAbstractions.GetUrlEncoder());
-        }
-        
+		m_searchServiceModules[Search::SwallowVendorName] = Eegeo_NEW(Search::Swallow::SdkModel::SwallowSearchServiceModule)(*m_pPoiDbModule);
+
         const bool useGeoName = true;
         if(useGeoName)
         {
@@ -710,7 +702,8 @@ namespace ExampleApp
                                                        *m_pGlobeCameraController,
                                                        world.GetTerrainModelModule().GetTerrainHeightProvider(),
                                                        interiorsPresentationModule.GetInteriorsController(),
-                                                       m_sdkDomainEventBus);
+                                                       m_sdkDomainEventBus,
+                                                       *m_pAppModeModel);
         
     }
     

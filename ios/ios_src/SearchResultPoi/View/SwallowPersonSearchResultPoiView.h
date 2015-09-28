@@ -9,6 +9,7 @@
 #include "SearchResultModel.h"
 #include "SearchResultPoiViewInterop.h"
 #include "SearchResultPoiView.h"
+#include "SwallowPersonResultModel.h"
 
 @class SwallowPersonSearchResultPoiView;
 
@@ -16,6 +17,7 @@
 {
     float m_stateChangeAnimationTimeSeconds;
     ExampleApp::Search::SdkModel::SearchResultModel m_model;
+    ExampleApp::Search::Swallow::SdkModel::SwallowPersonResultModel m_swallowPersonModel;
     ExampleApp::SearchResultPoi::View::SearchResultPoiViewInterop* m_pInterop;
     
     bool m_isPinned;
