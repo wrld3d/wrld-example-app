@@ -57,6 +57,10 @@ namespace ExampleApp
                 {
                     return "icon1_person";
                 }
+                if(Contains(category, "meeting_room"))
+                {
+                    return "icon1_meetingroom";
+                }
 
                 return "icon1_misc";
             }

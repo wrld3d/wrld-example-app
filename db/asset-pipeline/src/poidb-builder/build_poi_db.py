@@ -21,6 +21,12 @@ MAX_LAT = 61.0
 MIN_LNG = -8.0
 MAX_LNG = 2.5
 
+MIN_DISTANCE = 0.0
+MAX_DISTANCE = 3000.0
+
+MIN_HEADING = 0
+MAX_HEADING = 360
+
 MIN_FLOOR = 0
 
 
@@ -45,14 +51,14 @@ def to_relative_image_path(dest_image_relative_dir, image_filename):
     image_filename = image_filename.lstrip().rstrip()
     return os.path.normcase(os.path.join(dest_image_relative_dir, image_filename)).replace("\\","/")
 
-def insert_into_table(db_cursor, 
-                      table_name, 
-                      column_names, 
-                      xls_sheet, 
-                      first_data_row_number, 
-                      available_in_app_col_index,
-                      image_filename_col_index,
-                      dest_image_relative_dir):
+def insert_into_table_with_image_column(db_cursor, 
+                                        table_name, 
+                                        column_names, 
+                                        xls_sheet, 
+                                        first_data_row_number, 
+                                        available_in_app_col_index,
+                                        image_filename_col_index,
+                                        dest_image_relative_dir):
     placeholder_fields = ['?'] * len(column_names)
     comma_separated_placeholder_fields = ','.join(placeholder_fields)
     sql_insert_row_cmd = u'INSERT INTO "' +\
@@ -71,6 +77,31 @@ def insert_into_table(db_cursor,
         if image_filename:
             image_filename =  filename_to_jpg(image_filename)
             row_values[image_filename_col_index] = to_relative_image_path(dest_image_relative_dir, image_filename)
+
+        insert_values = [None] + row_values
+        if len(insert_values) != len(column_names):
+            raise ValueError("mismatched columns for row: " + insert_values)
+        db_cursor.execute(sql_insert_row_cmd, insert_values)
+
+def insert_into_table(db_cursor, 
+                      table_name, 
+                      column_names, 
+                      xls_sheet, 
+                      first_data_row_number, 
+                      available_in_app_col_index):
+    placeholder_fields = ['?'] * len(column_names)
+    comma_separated_placeholder_fields = ','.join(placeholder_fields)
+    sql_insert_row_cmd = u'INSERT INTO "' +\
+                         table_name +\
+                         '" VALUES (' +\
+                         comma_separated_placeholder_fields +\
+                         ');'
+
+    for row_num in range(first_data_row_number, xls_sheet.nrows):
+        if not is_row_available_in_app(xls_sheet, row_num, available_in_app_col_index):
+            print("skipping row " + str(row_num))
+            continue
+        row_values = xls_sheet.row_values(row_num, 0, len(column_names) - 1)
 
         insert_values = [None] + row_values
         if len(insert_values) != len(column_names):
@@ -243,8 +274,15 @@ def build_images(xls_sheet, first_data_row_number, image_column_index, available
 
 def validate_table_exists(db_cursor, table_name):
     db_cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
-    if db_cursor.fetchone()[0] != table_name:
-        raise ValueError("Failed to create table")
+
+    result_row = db_cursor.fetchone()
+    while result_row != None:
+        if result_row[0] == table_name:
+            return
+        else:
+            result_row = db_cursor.fetchone()
+
+    raise ValueError("Failed to create table")
 
 
 def log_result_info(db_cursor, table_name, verbose):
@@ -257,7 +295,335 @@ def log_result_info(db_cursor, table_name, verbose):
         for row in db_cursor.execute("SELECT * FROM " + table_name):
             print(row)
 
+def build_employee_table(xls_book, sheet_index, db_cursor, connection, src_image_folder_path, dest_image_dir, verbose, first_data_row_number, column_name_row, dest_image_relative_dir):
+    xls_sheet = xls_book.sheet_by_index(sheet_index)
 
+    table_name = xls_sheet.name
+
+    poi_columns = ['name', 'job_title', 'image_filename', 'working_group', 'office_location', 'desk_code', 'interior_id', 'interior_floor', 'latitude_degrees', 'longitude_degrees']
+    control_columns = ['available_in_app']
+    expected_columns = poi_columns + control_columns
+    available_in_app_col_index = len(poi_columns)
+
+    all_validated = True
+
+    all_validated &= validate_column_names(xls_sheet, column_name_row, expected_columns)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated column names")
+
+    all_validated &= validate_required_text_field(xls_sheet, poi_columns, 'name', first_data_row_number, available_in_app_col_index)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated name column values")
+
+    all_validated &= validate_required_text_field(xls_sheet, poi_columns, 'job_title', first_data_row_number, available_in_app_col_index)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated job_title column values")
+
+    all_validated &= validate_images(xls_sheet, first_data_row_number, poi_columns.index('image_filename'), available_in_app_col_index, src_image_folder_path)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated image_filename column values")
+
+    all_validated &= validate_required_text_field(xls_sheet, poi_columns, 'working_group', first_data_row_number, available_in_app_col_index)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated working_group column values")
+
+    all_validated &= validate_required_text_field(xls_sheet, poi_columns, 'office_location', first_data_row_number, available_in_app_col_index)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated office_location column values")
+
+    all_validated &= validate_required_text_field(xls_sheet, poi_columns, 'desk_code', first_data_row_number, available_in_app_col_index)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated desk_code column values")
+
+    all_validated &= validate_required_text_field(xls_sheet, poi_columns, 'interior_id', first_data_row_number, available_in_app_col_index)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated interior_id column values")
+
+    all_validated &= validate_required_int_field(xls_sheet, poi_columns, 'interior_floor', first_data_row_number, available_in_app_col_index, MIN_FLOOR)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated interior floor number")
+
+    all_validated &= validate_required_real_field(xls_sheet, poi_columns, 'latitude_degrees', first_data_row_number, available_in_app_col_index, MIN_LAT, MAX_LAT)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated title latitude_degrees values")
+
+    all_validated &= validate_required_real_field(xls_sheet, poi_columns, 'longitude_degrees', first_data_row_number, available_in_app_col_index, MIN_LNG, MAX_LNG)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated title longitude_degrees values")
+
+    if not all_validated:
+        raise ValueError("failed validation")
+
+    build_images(xls_sheet, first_data_row_number, poi_columns.index('image_filename'), available_in_app_col_index, src_image_folder_path, dest_image_dir, verbose)
+
+    column_names = ['id'] + poi_columns
+    column_types = ['INTEGER PRIMARY KEY', 'TEXT', 'TEXT', 'TEXT', 'TEXT', 'TEXT', 'TEXT', 'TEXT', 'INTEGER', 'REAL', 'REAL']
+    create_table(db_cursor, table_name, column_names, column_types)
+
+    insert_into_table_with_image_column(db_cursor, table_name, column_names, xls_sheet, first_data_row_number, available_in_app_col_index, poi_columns.index('image_filename'), dest_image_relative_dir)
+
+    connection.commit()
+
+    validate_table_exists(db_cursor, table_name)
+
+    log_result_info(db_cursor, table_name, verbose)
+
+    connection.commit()
+
+def build_meeting_room_table(xls_book, sheet_index, db_cursor, connection, src_image_folder_path, dest_image_dir, verbose, first_data_row_number, column_name_row, dest_image_relative_dir):
+    xls_sheet = xls_book.sheet_by_index(sheet_index)
+
+    table_name = xls_sheet.name
+
+    print(str(table_name))
+
+    poi_columns = ['name', 'image_filename', 'availability', 'interior_id', 'interior_floor', 'latitude_degrees', 'longitude_degrees']
+    control_columns = ['available_in_app']
+    expected_columns = poi_columns + control_columns
+    available_in_app_col_index = len(poi_columns)
+
+    all_validated = True
+
+    all_validated &= validate_column_names(xls_sheet, column_name_row, expected_columns)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated column names")
+
+    all_validated &= validate_required_text_field(xls_sheet, poi_columns, 'name', first_data_row_number, available_in_app_col_index)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated name column values")
+
+    all_validated &= validate_images(xls_sheet, first_data_row_number, poi_columns.index('image_filename'), available_in_app_col_index, src_image_folder_path)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated image_filename column values")
+
+    all_validated &= validate_required_text_field(xls_sheet, poi_columns, 'availability', first_data_row_number, available_in_app_col_index)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated availability column values")
+
+    all_validated &= validate_required_text_field(xls_sheet, poi_columns, 'interior_id', first_data_row_number, available_in_app_col_index)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated interior_id column values")
+
+    all_validated &= validate_required_int_field(xls_sheet, poi_columns, 'interior_floor', first_data_row_number, available_in_app_col_index, MIN_FLOOR)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated interior floor number")
+
+    all_validated &= validate_required_real_field(xls_sheet, poi_columns, 'latitude_degrees', first_data_row_number, available_in_app_col_index, MIN_LAT, MAX_LAT)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated title latitude_degrees values")
+
+    all_validated &= validate_required_real_field(xls_sheet, poi_columns, 'longitude_degrees', first_data_row_number, available_in_app_col_index, MIN_LNG, MAX_LNG)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated title longitude_degrees values")
+
+    if not all_validated:
+        raise ValueError("failed validation")
+
+    build_images(xls_sheet, first_data_row_number, poi_columns.index('image_filename'), available_in_app_col_index, src_image_folder_path, dest_image_dir, verbose)
+
+    column_names = ['id'] + poi_columns
+    column_types = ['INTEGER PRIMARY KEY', 'TEXT', 'TEXT', 'TEXT', 'TEXT', 'INTEGER', 'REAL', 'REAL']
+    create_table(db_cursor, table_name, column_names, column_types)
+
+    insert_into_table_with_image_column(db_cursor, table_name, column_names, xls_sheet, first_data_row_number, available_in_app_col_index, poi_columns.index('image_filename'), dest_image_relative_dir)
+
+    connection.commit()
+
+    validate_table_exists(db_cursor, table_name)
+
+    log_result_info(db_cursor, table_name, verbose)
+
+    connection.commit()
+
+def build_working_group_table(xls_book, sheet_index, db_cursor, connection, src_image_folder_path, dest_image_dir, verbose, first_data_row_number, column_name_row, dest_image_relative_dir):
+    xls_sheet = xls_book.sheet_by_index(sheet_index)
+
+    table_name = xls_sheet.name
+
+    print(str(table_name))
+
+    poi_columns = ['name', 'image_filename', 'description', 'interior_id', 'interior_floor', 'latitude_degrees', 'longitude_degrees']
+    control_columns = ['available_in_app']
+    expected_columns = poi_columns + control_columns
+    available_in_app_col_index = len(poi_columns)
+
+    all_validated = True
+
+    all_validated &= validate_column_names(xls_sheet, column_name_row, expected_columns)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated column names")
+
+    all_validated &= validate_required_text_field(xls_sheet, poi_columns, 'name', first_data_row_number, available_in_app_col_index)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated name column values")
+
+    all_validated &= validate_images(xls_sheet, first_data_row_number, poi_columns.index('image_filename'), available_in_app_col_index, src_image_folder_path)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated image_filename column values")
+
+    all_validated &= validate_required_text_field(xls_sheet, poi_columns, 'description', first_data_row_number, available_in_app_col_index)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated description column values")
+
+    all_validated &= validate_required_text_field(xls_sheet, poi_columns, 'interior_id', first_data_row_number, available_in_app_col_index)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated interior_id column values")
+
+    all_validated &= validate_required_int_field(xls_sheet, poi_columns, 'interior_floor', first_data_row_number, available_in_app_col_index, MIN_FLOOR)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated interior floor number")
+
+    all_validated &= validate_required_real_field(xls_sheet, poi_columns, 'latitude_degrees', first_data_row_number, available_in_app_col_index, MIN_LAT, MAX_LAT)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated title latitude_degrees values")
+
+    all_validated &= validate_required_real_field(xls_sheet, poi_columns, 'longitude_degrees', first_data_row_number, available_in_app_col_index, MIN_LNG, MAX_LNG)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated title longitude_degrees values")
+
+    if not all_validated:
+        raise ValueError("failed validation")
+
+    build_images(xls_sheet, first_data_row_number, poi_columns.index('image_filename'), available_in_app_col_index, src_image_folder_path, dest_image_dir, verbose)
+
+    column_names = ['id'] + poi_columns
+    column_types = ['INTEGER PRIMARY KEY', 'TEXT', 'TEXT', 'TEXT', 'TEXT', 'INTEGER', 'REAL', 'REAL']
+    create_table(db_cursor, table_name, column_names, column_types)
+
+    insert_into_table_with_image_column(db_cursor, table_name, column_names, xls_sheet, first_data_row_number, available_in_app_col_index, poi_columns.index('image_filename'), dest_image_relative_dir)
+
+    connection.commit()
+
+    validate_table_exists(db_cursor, table_name)
+
+    log_result_info(db_cursor, table_name, verbose)
+
+    connection.commit()
+
+def build_facility_table(xls_book, sheet_index, db_cursor, connection, src_image_folder_path, dest_image_dir, verbose, first_data_row_number, column_name_row, dest_image_relative_dir):
+    xls_sheet = xls_book.sheet_by_index(sheet_index)
+
+    table_name = xls_sheet.name
+
+    print(str(table_name))
+
+    poi_columns = ['name', 'category', 'image_filename', 'description', 'interior_id', 'interior_floor', 'latitude_degrees', 'longitude_degrees']
+    control_columns = ['available_in_app']
+    expected_columns = poi_columns + control_columns
+    available_in_app_col_index = len(poi_columns)
+
+    all_validated = True
+
+    all_validated &= validate_column_names(xls_sheet, column_name_row, expected_columns)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated column names")
+
+    all_validated &= validate_required_text_field(xls_sheet, poi_columns, 'name', first_data_row_number, available_in_app_col_index)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated name column values")
+
+    #TODO: Validate on actual category instead of just chekcing existance
+    all_validated &= validate_required_text_field(xls_sheet, poi_columns, 'category', first_data_row_number, available_in_app_col_index)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated name category values")
+
+    all_validated &= validate_images(xls_sheet, first_data_row_number, poi_columns.index('image_filename'), available_in_app_col_index, src_image_folder_path)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated image_filename column values")
+
+    all_validated &= validate_required_text_field(xls_sheet, poi_columns, 'description', first_data_row_number, available_in_app_col_index)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated description column values")
+
+    all_validated &= validate_required_text_field(xls_sheet, poi_columns, 'interior_id', first_data_row_number, available_in_app_col_index)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated interior_id column values")
+
+    all_validated &= validate_required_int_field(xls_sheet, poi_columns, 'interior_floor', first_data_row_number, available_in_app_col_index, MIN_FLOOR)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated interior floor number")
+
+    all_validated &= validate_required_real_field(xls_sheet, poi_columns, 'latitude_degrees', first_data_row_number, available_in_app_col_index, MIN_LAT, MAX_LAT)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated title latitude_degrees values")
+
+    all_validated &= validate_required_real_field(xls_sheet, poi_columns, 'longitude_degrees', first_data_row_number, available_in_app_col_index, MIN_LNG, MAX_LNG)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated title longitude_degrees values")
+
+    if not all_validated:
+        raise ValueError("failed validation")
+
+    build_images(xls_sheet, first_data_row_number, poi_columns.index('image_filename'), available_in_app_col_index, src_image_folder_path, dest_image_dir, verbose)
+
+    column_names = ['id'] + poi_columns
+    column_types = ['INTEGER PRIMARY KEY', 'TEXT', 'TEXT', 'TEXT', 'TEXT', 'TEXT', 'INTEGER', 'REAL', 'REAL']
+    create_table(db_cursor, table_name, column_names, column_types)
+
+    insert_into_table_with_image_column(db_cursor, table_name, column_names, xls_sheet, first_data_row_number, available_in_app_col_index, poi_columns.index('image_filename'), dest_image_relative_dir)
+
+    connection.commit()
+
+    validate_table_exists(db_cursor, table_name)
+
+    log_result_info(db_cursor, table_name, verbose)
+
+    connection.commit()
+
+def build_office_table(xls_book, sheet_index, db_cursor, connection, src_image_folder_path, dest_image_dir, verbose, first_data_row_number, column_name_row, dest_image_relative_dir):
+    xls_sheet = xls_book.sheet_by_index(sheet_index)
+
+    table_name = xls_sheet.name
+
+    print(str(table_name))
+
+    poi_columns = ['name', 'latitude_degrees', 'longitude_degrees', 'distance', 'heading_degrees']
+    control_columns = ['available_in_app']
+    expected_columns = poi_columns + control_columns
+    available_in_app_col_index = len(poi_columns)
+
+    all_validated = True
+
+    all_validated &= validate_column_names(xls_sheet, column_name_row, expected_columns)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated column names")
+
+    all_validated &= validate_required_text_field(xls_sheet, poi_columns, 'name', first_data_row_number, available_in_app_col_index)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated name column values")
+
+    all_validated &= validate_required_real_field(xls_sheet, poi_columns, 'latitude_degrees', first_data_row_number, available_in_app_col_index, MIN_LAT, MAX_LAT)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated title latitude_degrees values")
+
+    all_validated &= validate_required_real_field(xls_sheet, poi_columns, 'longitude_degrees', first_data_row_number, available_in_app_col_index, MIN_LNG, MAX_LNG)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated title longitude_degrees values")
+
+    all_validated &= validate_required_real_field(xls_sheet, poi_columns, 'distance', first_data_row_number, available_in_app_col_index, MIN_DISTANCE, MAX_DISTANCE)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated title distance values")
+
+    all_validated &= validate_required_real_field(xls_sheet, poi_columns, 'heading_degrees', first_data_row_number, available_in_app_col_index, MIN_HEADING, MAX_HEADING)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated title distance values")
+
+    if not all_validated:
+        raise ValueError("failed validation")
+
+    column_names = ['id'] + poi_columns
+    column_types = ['INTEGER PRIMARY KEY', 'TEXT', 'REAL', 'REAL', 'REAL', 'REAL']
+    create_table(db_cursor, table_name, column_names, column_types)
+
+    insert_into_table(db_cursor, table_name, column_names, xls_sheet, first_data_row_number, available_in_app_col_index)
+
+    connection.commit()
+
+    validate_table_exists(db_cursor, table_name)
+
+    log_result_info(db_cursor, table_name, verbose)
+
+    connection.commit()
 
 def build_db(src_xls_path, dest_db_path, dest_assets_relative_path, verbose, stop_on_first_error):
     print("sqlite3.sqlite_version " + sqlite3.sqlite_version)
@@ -271,8 +637,7 @@ def build_db(src_xls_path, dest_db_path, dest_assets_relative_path, verbose, sto
 
     column_name_row = 0
     first_data_row_number = 1
-    sheet_index = 0
-
+    
     if not os.path.exists(src_xls_path):
         raise ValueError('file not found: ' + src_xls_path)
 
@@ -295,68 +660,26 @@ def build_db(src_xls_path, dest_db_path, dest_assets_relative_path, verbose, sto
     db_cursor = connection.cursor()
 
     xls_book =  xlrd.open_workbook(src_xls_path)
-    xls_sheet = xls_book.sheet_by_index(sheet_index)
 
-    table_name = xls_sheet.name
+    sheet_index = 0
 
-    poi_columns = ['name', 'job_title', 'image_filename', 'working_group', 'office_location', 'desk_code', 'interior_id', 'interior_floor', 'latitude_degrees', 'longitude_degrees']
-    control_columns = ['available_in_app']
-    expected_columns = poi_columns + control_columns
-    available_in_app_col_index = len(poi_columns)
+    build_employee_table(xls_book, sheet_index, db_cursor, connection, src_image_folder_path, dest_image_dir, verbose, first_data_row_number, column_name_row, dest_image_relative_dir)
 
-    all_validated = True
+    sheet_index = 1
 
-    all_validated &= validate_column_names(xls_sheet, column_name_row, expected_columns)
-    if not all_validated and stop_on_first_error:
-        raise ValueError("failed to validated column names")
+    build_meeting_room_table(xls_book, sheet_index, db_cursor, connection, src_image_folder_path, dest_image_dir, verbose, first_data_row_number, column_name_row, dest_image_relative_dir)
 
-#    all_validated &= validate_required_text_field(xls_sheet, poi_columns, 'title', first_data_row_number, available_in_app_col_index)
-#    if not all_validated and stop_on_first_error:
-#        raise ValueError("failed to validated title column values")
+    sheet_index = 2
 
-#    all_validated &= validate_required_text_field(xls_sheet, poi_columns, 'location_name', first_data_row_number, available_in_app_col_index)
-#    if not all_validated and stop_on_first_error:
-#        raise ValueError("failed to validated location_name column values")
+    build_working_group_table(xls_book, sheet_index, db_cursor, connection, src_image_folder_path, dest_image_dir, verbose, first_data_row_number, column_name_row, dest_image_relative_dir)
 
-#    all_validated &= validate_category(xls_sheet, first_data_row_number, poi_columns.index('category'), available_in_app_col_index)
-#    if not all_validated and stop_on_first_error:
-#        raise ValueError("failed to validated category column values")
+    sheet_index = 3
 
-    all_validated &= validate_required_int_field(xls_sheet, poi_columns, 'interior_floor', first_data_row_number, available_in_app_col_index, MIN_FLOOR)
-    if not all_validated and stop_on_first_error:
-        raise ValueError("failed to validated interior floor number")
+    build_facility_table(xls_book, sheet_index, db_cursor, connection, src_image_folder_path, dest_image_dir, verbose, first_data_row_number, column_name_row, dest_image_relative_dir)
 
-    all_validated &= validate_required_real_field(xls_sheet, poi_columns, 'latitude_degrees', first_data_row_number, available_in_app_col_index, MIN_LAT, MAX_LAT)
-    if not all_validated and stop_on_first_error:
-        raise ValueError("failed to validated title latitude_degrees values")
+    sheet_index = 4
 
-    all_validated &= validate_required_real_field(xls_sheet, poi_columns, 'longitude_degrees', first_data_row_number, available_in_app_col_index, MIN_LNG, MAX_LNG)
-    if not all_validated and stop_on_first_error:
-        raise ValueError("failed to validated title longitude_degrees values")
-
-    all_validated &= validate_images(xls_sheet, first_data_row_number, poi_columns.index('image_filename'), available_in_app_col_index, src_image_folder_path)
-    if not all_validated and stop_on_first_error:
-        raise ValueError("failed to validated image_filename column values")
-
-    if not all_validated:
-        raise ValueError("failed validation")
-
-    build_images(xls_sheet, first_data_row_number, poi_columns.index('image_filename'), available_in_app_col_index, src_image_folder_path, dest_image_dir, verbose)
-
-    column_names = ['id'] + poi_columns
-    column_types = ['INTEGER PRIMARY KEY', 'TEXT', 'TEXT', 'TEXT', 'TEXT', 'TEXT', 'TEXT', 'TEXT', 'INTEGER', 'REAL', 'REAL']
-    create_table(db_cursor, table_name, column_names, column_types)
-
-    insert_into_table(db_cursor, table_name, column_names, xls_sheet, first_data_row_number, available_in_app_col_index, poi_columns.index('image_filename'), dest_image_relative_dir)
-#    insert_into_table(db_cursor, table_name, column_names, xls_sheet, first_data_row_number, available_in_app_col_index)
-
-    connection.commit()
-
-    validate_table_exists(db_cursor, table_name)
-
-    log_result_info(db_cursor, table_name, verbose)
-
-    connection.commit()
+    build_office_table(xls_book, sheet_index, db_cursor, connection, src_image_folder_path, dest_image_dir, verbose, first_data_row_number, column_name_row, dest_image_relative_dir)
 
     db_cursor.close()
     connection.close()

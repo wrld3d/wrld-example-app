@@ -48,6 +48,12 @@
 		1846CAF91BB43AE2007F1922 /* SwallowSearchServiceModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1846CAF61BB43AE2007F1922 /* SwallowSearchServiceModule.cpp */; };
 		1846CAFD1BB43F1D007F1922 /* SwallowSearchConstants.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1846CAFB1BB43F1D007F1922 /* SwallowSearchConstants.cpp */; };
 		1846CAFE1BB43F1D007F1922 /* SwallowSearchConstants.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1846CAFB1BB43F1D007F1922 /* SwallowSearchConstants.cpp */; };
+		1846CB021BB44E28007F1922 /* icon1_meetingroom.png in Resources */ = {isa = PBXBuildFile; fileRef = 1846CAFF1BB44E28007F1922 /* icon1_meetingroom.png */; };
+		1846CB031BB44E28007F1922 /* icon1_meetingroom.png in Resources */ = {isa = PBXBuildFile; fileRef = 1846CAFF1BB44E28007F1922 /* icon1_meetingroom.png */; };
+		1846CB041BB44E28007F1922 /* icon1_meetingroom@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1846CB001BB44E28007F1922 /* icon1_meetingroom@2x.png */; };
+		1846CB051BB44E28007F1922 /* icon1_meetingroom@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1846CB001BB44E28007F1922 /* icon1_meetingroom@2x.png */; };
+		1846CB061BB44E28007F1922 /* icon1_meetingroom@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1846CB011BB44E28007F1922 /* icon1_meetingroom@3x.png */; };
+		1846CB071BB44E28007F1922 /* icon1_meetingroom@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1846CB011BB44E28007F1922 /* icon1_meetingroom@3x.png */; };
 		185145901AB0A8DC0071913E /* SplashScreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 1851458D1AB0A8DC0071913E /* SplashScreen.png */; };
 		185145911AB0A8DC0071913E /* SplashScreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 1851458D1AB0A8DC0071913E /* SplashScreen.png */; };
 		185145921AB0A8DC0071913E /* SplashScreen@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1851458E1AB0A8DC0071913E /* SplashScreen@2x.png */; };
@@ -1502,6 +1508,9 @@
 		1846CAF71BB43AE2007F1922 /* SwallowSearchServiceModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwallowSearchServiceModule.h; sourceTree = "<group>"; };
 		1846CAFB1BB43F1D007F1922 /* SwallowSearchConstants.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SwallowSearchConstants.cpp; sourceTree = "<group>"; };
 		1846CAFC1BB43F1D007F1922 /* SwallowSearchConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwallowSearchConstants.h; sourceTree = "<group>"; };
+		1846CAFF1BB44E28007F1922 /* icon1_meetingroom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon1_meetingroom.png; sourceTree = "<group>"; };
+		1846CB001BB44E28007F1922 /* icon1_meetingroom@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon1_meetingroom@2x.png"; sourceTree = "<group>"; };
+		1846CB011BB44E28007F1922 /* icon1_meetingroom@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon1_meetingroom@3x.png"; sourceTree = "<group>"; };
 		1851458D1AB0A8DC0071913E /* SplashScreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = SplashScreen.png; path = SplashScreen/SplashScreen.png; sourceTree = "<group>"; };
 		1851458E1AB0A8DC0071913E /* SplashScreen@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "SplashScreen@2x.png"; path = "SplashScreen/SplashScreen@2x.png"; sourceTree = "<group>"; };
 		1851458F1AB0A8DC0071913E /* SplashScreen@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "SplashScreen@3x.png"; path = "SplashScreen/SplashScreen@3x.png"; sourceTree = "<group>"; };
@@ -5374,9 +5383,6 @@
 				187C11CF1AB35E04001D1B87 /* ApplicationConfigs */,
 				E07992BF1B724AF3000402B0 /* Interiors */,
 				18B5ACFD19DC160E00BA4A38 /* SearchResultOnMap */,
-				BFDFC3DA1BB2FB020099BAEC /* menu_list.png */,
-				BFDFC3DB1BB2FB020099BAEC /* menu_list@2x.png */,
-				BFDFC3DC1BB2FB020099BAEC /* menu_list@3x.png */,
 				BFD5FD981BA7226A00F591F1 /* Tours */,
 				18B5AC7819DC15CD00BA4A38 /* placejumps.json */,
 				18B5AC7E19DC15CD00BA4A38 /* weatherstates.json */,
@@ -5506,6 +5512,9 @@
 				18B5AC5219DC15CD00BA4A38 /* icon1_hotel.png */,
 				18EC00D91AA7752500902E98 /* icon1_hotel@2x.png */,
 				18EC00DA1AA7752500902E98 /* icon1_hotel@3x.png */,
+				1846CAFF1BB44E28007F1922 /* icon1_meetingroom.png */,
+				1846CB001BB44E28007F1922 /* icon1_meetingroom@2x.png */,
+				1846CB011BB44E28007F1922 /* icon1_meetingroom@3x.png */,
 				18B5AC5419DC15CD00BA4A38 /* icon1_misc.png */,
 				18EC00DB1AA7752500902E98 /* icon1_misc@2x.png */,
 				18EC00DC1AA7752500902E98 /* icon1_misc@3x.png */,
@@ -5563,8 +5572,8 @@
 				188C4CA61AA730BF0080B34B /* menu_button.png */,
 				18FE217F1AA9C75700ACE28A /* menu_button@2x.png */,
 				18FE21801AA9C75700ACE28A /* menu_button@3x.png */,
-				18A5E0A71BB03DF20015684B /* menu_list.png */,
-				18A5E0A81BB03DF20015684B /* menu_list@2x.png */,
+				BFDFC3DA1BB2FB020099BAEC /* menu_list.png */,
+				BFDFC3DB1BB2FB020099BAEC /* menu_list@2x.png */,
 				18A5E0A91BB03DF20015684B /* menu_list@3x.png */,
 				E07992CB1B725EDB000402B0 /* micello_logo.png */,
 				188C4CA71AA730BF0080B34B /* place_pin_background.png */,
@@ -5600,6 +5609,9 @@
 				56A8DF7A19FEA977009DC352 /* Geosphere_01.pod */,
 				18D1D363194A0EA000FAA1B9 /* platform_assets */,
 				18FB64941A938A54005A9411 /* Yelp */,
+				18A5E0A71BB03DF20015684B /* menu_list.png */,
+				18A5E0A81BB03DF20015684B /* menu_list@2x.png */,
+				18A5E0A91BB03DF20015684B /* menu_list@3x.png */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -6066,6 +6078,7 @@
 				18FE216E1AA9BA3D00ACE28A /* poi_marker@3x.png in Resources */,
 				56CF26881A24777100B30439 /* icon_create_poi.png in Resources */,
 				18FE215C1AA9BA3D00ACE28A /* button_streets_off@2x.png in Resources */,
+				1846CB031BB44E28007F1922 /* icon1_meetingroom.png in Resources */,
 				18A5E0A41BB035830015684B /* icon1_person@2x.png in Resources */,
 				18EC01301AA7752500902E98 /* icon1_place@2x.png in Resources */,
 				183E547A1ACE9E7700AD6B3E /* reviewsFromYelpRED@2x.png in Resources */,
@@ -6174,6 +6187,7 @@
 				7E88979B1B4C26E9006F9DE0 /* yelp_logo@2x.png in Resources */,
 				566306E01AD2D69800980426 /* stars_0_0@3x.png in Resources */,
 				7E9B7F491A8E25E400C6F2E3 /* arrow3_right.png in Resources */,
+				1846CB071BB44E28007F1922 /* icon1_meetingroom@3x.png in Resources */,
 				56F28E831A261DA70061C7BF /* button_checkbox_on.png in Resources */,
 				186D2936196D9E4B00E004E0 /* placeholder.pvr in Resources */,
 				18FE21E61AA9D34400ACE28A /* arrow3_left@2x.png in Resources */,
@@ -6262,6 +6276,7 @@
 				18FE21FD1AA9D3D000ACE28A /* eegeo_logo@3x.png in Resources */,
 				18FE20DE1AA9B2C200ACE28A /* button_close_place_pin_off@3x.png in Resources */,
 				18B5ACC219DC15CD00BA4A38 /* icon1_sunny.png in Resources */,
+				1846CB051BB44E28007F1922 /* icon1_meetingroom@2x.png in Resources */,
 				566306EC1AD2D69800980426 /* stars_1_5@3x.png in Resources */,
 				18B5AC9E19DC15CD00BA4A38 /* icon1_dawn.png in Resources */,
 				18B5AC8819DC15CD00BA4A38 /* button_streets_on.png in Resources */,
@@ -6378,6 +6393,7 @@
 				18FE21CD1AA9C98100ACE28A /* search_results_bar_small@3x.png in Resources */,
 				18FE21E31AA9D34400ACE28A /* arrow3_down@3x.png in Resources */,
 				18B5AC8119DC15CD00BA4A38 /* button_close_off.png in Resources */,
+				1846CB041BB44E28007F1922 /* icon1_meetingroom@2x.png in Resources */,
 				185145941AB0A8DC0071913E /* SplashScreen@3x.png in Resources */,
 				566306F51AD2D69800980426 /* stars_2_5@2x.png in Resources */,
 				18FE21EF1AA9D34400ACE28A /* arrow3_up@3x.png in Resources */,
@@ -6420,6 +6436,7 @@
 				18EC014E1AA8BA7E00902E98 /* search_result_background.png in Resources */,
 				18FE20F11AA9B2C200ACE28A /* icon1_aroundme@3x.png in Resources */,
 				188C4CAC1AA730BF0080B34B /* button_ok_place_pin_off.png in Resources */,
+				1846CB061BB44E28007F1922 /* icon1_meetingroom@3x.png in Resources */,
 				E0AEEEFB1B8CB0C700BA9BF0 /* floor_selection_bottom@3x.png in Resources */,
 				18A5E0AA1BB03DF20015684B /* menu_list.png in Resources */,
 				56AEEF381B7E48500059DEE6 /* micello_logo.png in Resources */,
@@ -6447,6 +6464,7 @@
 				BFDFC3DD1BB2FB020099BAEC /* menu_list.png in Resources */,
 				18FE21951AA9C75700ACE28A /* CompassPoint@2x.png in Resources */,
 				566307131AD2D69800980426 /* stars_5_0@2x.png in Resources */,
+				1846CB021BB44E28007F1922 /* icon1_meetingroom.png in Resources */,
 				18B5ACC519DC15CD00BA4A38 /* icon1_winter.png in Resources */,
 				18EC01171AA7752500902E98 /* icon1_hotel@2x.png in Resources */,
 				18EC00FF1AA7752500902E98 /* icon1_coffee@2x.png in Resources */,
