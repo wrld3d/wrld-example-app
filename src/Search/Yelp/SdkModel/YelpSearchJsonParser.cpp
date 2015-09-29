@@ -264,14 +264,13 @@ namespace ExampleApp
                                                  reviewCount);
                 }
                 
-                bool TryParseImageDetails(const Search::SdkModel::SearchResultModel& searchResultModel, std::string& out_imageUrl, std::string& out_ratingImageUrl)
+                bool TryParseImageDetails(const Search::SdkModel::SearchResultModel& searchResultModel, std::string& out_imageUrl)
                 {
                     if(searchResultModel.GetVendor() == ExampleApp::Search::YelpVendorName)
                     {
                         Search::Yelp::SdkModel::YelpSearchResultModel yelpResultModel = Search::Yelp::SdkModel::TransformToYelpSearchResult(searchResultModel);
                         
                         out_imageUrl = yelpResultModel.GetImageUrl();
-                        out_ratingImageUrl = yelpResultModel.GetRatingImageUrl();
                         
                         return true;
                     }

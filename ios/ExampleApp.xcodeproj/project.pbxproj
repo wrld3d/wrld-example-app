@@ -1232,6 +1232,8 @@
 		7E9B7F491A8E25E400C6F2E3 /* arrow3_right.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E9B7F421A8E25E400C6F2E3 /* arrow3_right.png */; };
 		7E9B7F4A1A8E25E400C6F2E3 /* arrow3_up.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E9B7F431A8E25E400C6F2E3 /* arrow3_up.png */; };
 		7E9B7F4B1A8E25E400C6F2E3 /* arrow3_up.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E9B7F431A8E25E400C6F2E3 /* arrow3_up.png */; };
+		7ECE70741BBAA9BF0008CDDB /* SearchJsonParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7ECE70721BBAA9BF0008CDDB /* SearchJsonParser.cpp */; };
+		7ECE70751BBAA9BF0008CDDB /* SearchJsonParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7ECE70721BBAA9BF0008CDDB /* SearchJsonParser.cpp */; };
 		7EE481EB16836F370006E99B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE481EA16836F370006E99B /* UIKit.framework */; };
 		7EE481ED16836F370006E99B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE481EC16836F370006E99B /* Foundation.framework */; };
 		7EE481F116836F370006E99B /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE481F016836F370006E99B /* CoreData.framework */; };
@@ -2629,6 +2631,8 @@
 		7E9B7F421A8E25E400C6F2E3 /* arrow3_right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow3_right.png; sourceTree = "<group>"; };
 		7E9B7F431A8E25E400C6F2E3 /* arrow3_up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow3_up.png; sourceTree = "<group>"; };
 		7EC46F2A1ABC484600683975 /* CompassModeUnauthorizedMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompassModeUnauthorizedMessage.h; sourceTree = "<group>"; };
+		7ECE70721BBAA9BF0008CDDB /* SearchJsonParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchJsonParser.cpp; sourceTree = "<group>"; };
+		7ECE70731BBAA9BF0008CDDB /* SearchJsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchJsonParser.h; sourceTree = "<group>"; };
 		7EE481E616836F370006E99B /* ExampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7EE481EA16836F370006E99B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		7EE481EC16836F370006E99B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -4247,6 +4251,8 @@
 		7E3B87DA1A385A290023C94E /* SdkModel */ = {
 			isa = PBXGroup;
 			children = (
+				7ECE70721BBAA9BF0008CDDB /* SearchJsonParser.cpp */,
+				7ECE70731BBAA9BF0008CDDB /* SearchJsonParser.h */,
 				BFDFC3CE1BB2EF190099BAEC /* SearchResultModel.cpp */,
 				18A657541A9F49A500238F33 /* MyPins */,
 				225FFA101A39EE8600C2282A /* ISearchResultRepository.h */,
@@ -6551,6 +6557,7 @@
 				7E3B88ED1A385A290023C94E /* InitialExperienceModuleBase.cpp in Sources */,
 				BFD5FCCF1BA7068300F591F1 /* TourWebViewModule.mm in Sources */,
 				7E3B89431A385A290023C94E /* MyPinDetailsModule.cpp in Sources */,
+				7ECE70751BBAA9BF0008CDDB /* SearchJsonParser.cpp in Sources */,
 				BFD5FD7F1BA706AD00F591F1 /* TourFullScreenImageViewModel.cpp in Sources */,
 				7E3B8AC61A385F110023C94E /* AboutPageView.mm in Sources */,
 				7E3B88F71A385A290023C94E /* MenuScreenControl.cpp in Sources */,
@@ -6974,6 +6981,7 @@
 				7E3B88EC1A385A290023C94E /* InitialExperienceModuleBase.cpp in Sources */,
 				BFD5FCCE1BA7068300F591F1 /* TourWebViewModule.mm in Sources */,
 				7E3B89421A385A290023C94E /* MyPinDetailsModule.cpp in Sources */,
+				7ECE70741BBAA9BF0008CDDB /* SearchJsonParser.cpp in Sources */,
 				BFD5FD7E1BA706AD00F591F1 /* TourFullScreenImageViewModel.cpp in Sources */,
 				7E3B8AC51A385F110023C94E /* AboutPageView.mm in Sources */,
 				7E3B88F61A385A290023C94E /* MenuScreenControl.cpp in Sources */,
