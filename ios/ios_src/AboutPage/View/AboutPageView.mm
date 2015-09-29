@@ -313,12 +313,12 @@
 
 - (void) privacyClickHandler:(UITapGestureRecognizer *)recognizer
 {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://recce.com/privacy/"]];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.eegeo.com/privacy/"]];
 }
 
 - (void) eulaClickHandler:(UITapGestureRecognizer *)recognizer
 {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://recce.com/eula/"]];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.eegeo.com/tos/"]];
 }
 
 @end
