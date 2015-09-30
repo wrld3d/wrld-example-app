@@ -427,7 +427,7 @@ namespace ExampleApp
                                                                                                   m_messageBus);
 
         Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsPresentationModule = mapModule.GetInteriorsPresentationModule();
-        m_pInteriorsExplorerModule = Eegeo_NEW(InteriorsExplorer::SdkModel::InteriorsExplorerModule)(interiorsPresentationModule.GetInteriorsController(),
+        m_pInteriorsExplorerModule = Eegeo_NEW(InteriorsExplorer::SdkModel::InteriorsExplorerModule)(interiorsPresentationModule.GetLegacyInteriorsController(),
                                                                                                      interiorsPresentationModule.GetCameraController(),
                                                                                                      interiorsPresentationModule.GetInteriorSelectionModel(),
                                                                                                      interiorsPresentationModule.GetInteriorSelectionController(),
@@ -627,7 +627,7 @@ namespace ExampleApp
                                  mapModule.GetEnvironmentFlatteningService(),
                                  m_identityProvider,
                                  m_messageBus,
-                                 interiorsPresentationModule.GetInteriorsController());
+                                 interiorsPresentationModule.GetLegacyInteriorsController());
     }
     void MobileExampleApp::InitialiseToursModules(Eegeo::Modules::Map::MapModule& mapModule, Eegeo::EegeoWorld& world)
     {
@@ -640,7 +640,7 @@ namespace ExampleApp
                                                                                               mapModule.GetEnvironmentFlatteningService(),
                                                                                               m_identityProvider,
                                                                                               m_toursMessageBus,
-                                                                                              interiorsPresentationModule.GetInteriorsController());
+                                                                                              interiorsPresentationModule.GetLegacyInteriorsController());
         
         m_pToursModule = Eegeo_NEW(ExampleApp::Tours::ToursModule)(m_identityProvider,
                                                        m_messageBus,
@@ -656,7 +656,7 @@ namespace ExampleApp
                                                        m_screenProperties,
                                                        *m_pGlobeCameraController,
                                                        world.GetTerrainModelModule().GetTerrainHeightProvider(),
-                                                       interiorsPresentationModule.GetInteriorsController(),
+                                                       interiorsPresentationModule.GetLegacyInteriorsController(),
                                                        m_sdkDomainEventBus,
                                                        *m_pAppModeModel);
         
@@ -700,7 +700,7 @@ namespace ExampleApp
                                                                                         ToursModule().GetCameraController(),
                                                                                         m_pToursWorldPinsModule->GetWorldPinsService(),
                                                                                         m_interiorsEnabled,
-                                                                                        interiorsPresentationModule.GetInteriorsController()
+                                                                                        interiorsPresentationModule.GetLegacyInteriorsController()
                                                                                         );
         
         ToursModule().GetTourService().AddTour(tourModel, *factory.CreateTourStateMachine(tourModel));

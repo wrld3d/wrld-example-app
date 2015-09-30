@@ -37,7 +37,7 @@ namespace ExampleApp
                                                 Eegeo::Pins::PinController& pinController,
                                                 Eegeo::Pins::PinRepository& pinRepository,
                                                 Eegeo::Resources::Interiors::InteriorsController& interiorsController,
-                                                Eegeo::Resources::Interiors::Entities::InteriorsLabelsController& interiorsLabelsController,
+                                                Eegeo::Resources::Interiors::Entities::IInteriorsLabelController& interiorsLabelsController,
                                                 Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider);
                 
                 ~InteriorsEntitiesPinsController();
@@ -57,7 +57,7 @@ namespace ExampleApp
                 Eegeo::Pins::PinController& m_pinController;
                 Eegeo::Pins::PinRepository& m_pinRepository;
                 Eegeo::Resources::Interiors::InteriorsController& m_interiorsController;
-                Eegeo::Resources::Interiors::Entities::InteriorsLabelsController& m_interiorsLabelsController;
+                Eegeo::Resources::Interiors::Entities::IInteriorsLabelController& m_interiorsLabelsController;
                 
                 Eegeo::Helpers::TCallback2<InteriorsEntitiesPinsController, const std::string&, const Eegeo::Resources::Interiors::Entities::TEntityModelVector&> m_entitiesAddedCallback;
                 Eegeo::Helpers::TCallback2<InteriorsEntitiesPinsController, const std::string&, const Eegeo::Resources::Interiors::Entities::TEntityModelVector&> m_entitiesRemovedCallback;
