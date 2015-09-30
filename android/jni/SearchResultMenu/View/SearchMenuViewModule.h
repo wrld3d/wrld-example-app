@@ -35,6 +35,8 @@ namespace ExampleApp
                     Menu::View::IMenuViewModel& menuViewModel,
                     CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
                     ISearchResultMenuViewModel& searchResultMenuViewModel,
+					Menu::View::IMenuOptionsModel& menuOptionsModel,
+					ISearchResultMenuOrder& searchResultMenuOrder,
                     AppModes::SdkModel::IAppModeModel& appModeModel,
                     ExampleAppMessaging::TMessageBus& messageBus
                 );

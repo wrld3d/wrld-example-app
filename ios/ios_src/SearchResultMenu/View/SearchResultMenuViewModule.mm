@@ -21,6 +21,8 @@ namespace ExampleApp
                     Menu::View::IMenuModel& searchResultMenuModel,
                     Menu::View::IMenuViewModel& menuViewModel,
                     ISearchResultMenuViewModel& searchResultMenuViewModel,
+                    Menu::View::IMenuOptionsModel& menuOptionsModel,
+                    ISearchResultMenuOrder& searchResultMenuOrder,
                     const Eegeo::Rendering::ScreenProperties& screenProperties,
                     ExampleAppMessaging::TMessageBus& messageBus,
                     AppModes::SdkModel::IAppModeModel& appModeModel)
@@ -40,6 +42,8 @@ namespace ExampleApp
                                  *[m_pView getInterop],
                                  searchResultMenuModel,
                                  menuViewModel,
+                                 menuOptionsModel,
+                                 searchResultMenuOrder,
                                  categorySearchRepository,
                                  searchResultMenuViewModel,
                                  appModeModel,
