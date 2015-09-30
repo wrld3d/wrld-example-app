@@ -32,16 +32,44 @@ namespace ExampleApp
     if(self = [super init])
     {
         self->m_pInitialExperiencePreLoadModel = pInitialExperiencePreLoadModel;
-
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Pre-load San Francisco?"
-                              message:@"Select 'Yes' to pre-load data for the city of San Francisco. This message will not appear again."
-                              delegate:self
-                              cancelButtonTitle:@"No"
-                              otherButtonTitles:@"Yes", nil];
-
-
-        [alert show];
-        [alert release];
+        
+        NSString* alertTitle = @"Pre-load San Francisco?";
+        NSString* alertMessage = @"Select 'Yes' to pre-load data for the city of San Francisco. This message will not appear again.";
+        NSString* noMessage = @"No";
+        NSString* yesMessage = @"Yes";
+        
+        if([UIAlertController class])
+        {
+            UIAlertController* alert = [UIAlertController alertControllerWithTitle:alertTitle
+                                                                           message:alertMessage
+                                                                    preferredStyle:UIAlertControllerStyleAlert];
+            
+            UIAlertAction* openSiteAction = [UIAlertAction actionWithTitle:yesMessage
+                                                                     style:UIAlertActionStyleDefault
+                                                                   handler:^(UIAlertAction * action) { m_pInitialExperiencePreLoadModel->HandleDismiss(true); }];
+            
+            UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:noMessage
+                                                                   style:UIAlertActionStyleCancel
+                                                                 handler:^(UIAlertAction * action) { m_pInitialExperiencePreLoadModel->HandleDismiss(false); }];
+            
+            [alert addAction:openSiteAction];
+            [alert addAction:cancelAction];
+            
+            UIWindow *window = [[UIApplication sharedApplication] keyWindow];
+            UIViewController *viewController = window.rootViewController;
+            [viewController presentViewController:alert animated:YES completion:nil];
+        }
+        else
+        {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:alertTitle
+                                                            message:alertMessage
+                                                           delegate:self
+                                                  cancelButtonTitle:noMessage
+                                                  otherButtonTitles:yesMessage, nil];
+            
+            [alert show];
+            [alert release];
+        }
     }
 
     return self;
