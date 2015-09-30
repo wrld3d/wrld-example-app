@@ -130,7 +130,7 @@ namespace ExampleApp
                 {
                     bool rayPick = false;
                     
-                    if(m_appModeModel.GetAppMode() == AppModes::SdkModel::InteriorMode)
+                    if(m_appModeModel.GetAppMode() == AppModes::SdkModel::InteriorMode && m_interiorsController.ShowingInterior())
                     {
                         const Eegeo::Resources::Interiors::InteriorsModel* interiorsModel;
                         
