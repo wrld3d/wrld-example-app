@@ -18,3 +18,4 @@ obj
 .project
 .settings/
 **/xcuserdata/
+**/.~lock*
