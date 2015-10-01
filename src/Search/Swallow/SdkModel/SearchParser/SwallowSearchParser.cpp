@@ -226,6 +226,25 @@ namespace ExampleApp
                                                         distance,
                                                         headingDegrees);
                     }
+                    
+                    bool TryParseImageDetails(const Search::SdkModel::SearchResultModel& searchResultModel, std::string& out_imageUrl)
+                    {
+                        if(searchResultModel.GetVendor().find(Search::SwallowVendorName) == 0)
+                        {
+                            rapidjson::Document json;
+                            
+                            if (!json.Parse<0>(searchResultModel.GetJsonData().c_str()).HasParseError())
+                            {
+                                if(json.HasMember(SearchConstants::IMAGE_FILENAME_FIELD_NAME.c_str()) && json[SearchConstants::IMAGE_FILENAME_FIELD_NAME.c_str()].IsString())
+                                {
+                                    out_imageUrl = json[SearchConstants::IMAGE_FILENAME_FIELD_NAME.c_str()].GetString();
+                                    return true;
+                                }
+                            }
+                        }
+                        
+                        return false;
+                    }
                 }
             }
         }
