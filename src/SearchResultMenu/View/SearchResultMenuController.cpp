@@ -6,6 +6,10 @@
 #include "IAppModeModel.h"
 #include "ISearchResultMenuOrder.h"
 #include "SearchResultItemModel.h"
+#include "SearchVendorNames.h"
+#include "SwallowSearchParser.h"
+#include "SwallowOfficeResultMenuOption.h"
+
 
 namespace ExampleApp
 {
@@ -57,20 +61,36 @@ namespace ExampleApp
                 for(int i = 0; i < m_lastAddedResults.size(); ++i)
                 {
                     const Search::SdkModel::SearchResultModel& model(m_lastAddedResults[i]);
-                    m_menuOptions.AddItem(
-                                      model.GetIdentifier(),
-                                      model.GetTitle(),
-                                      model.GetSubtitle(),
-                                      model.GetCategory(),
-                                      Eegeo_NEW(SearchResultItemModel)(
-                                                                       model.GetTitle(),
-                                                                       model.GetLocation().ToECEF(),
-                                                                       m_viewModel,
-                                                                       m_messageBus)
-                                      );
+                    m_menuOptions.AddItem(model.GetIdentifier(),
+                                          model.GetTitle(),
+                                          model.GetSubtitle(),
+                                          model.GetCategory(),
+                                          GetMenuOptionByVendor(model.GetVendor(), model));
                 }
                 
                 m_searchResultMenuViewModel.SetHasSearchQueryInFlight(false);
+            }
+            
+            Menu::View::IMenuOption* SearchResultMenuController::GetMenuOptionByVendor(const std::string& vendor, const Search::SdkModel::SearchResultModel& model) const
+            {
+                if(vendor == Search::SwallowOfficesVendorName)
+                {
+                    Search::Swallow::SdkModel::SwallowOfficeResultModel officeModel = Search::Swallow::SdkModel::SearchParser::TransformToSwallowOfficeResult(model);
+                    
+                    return Eegeo_NEW(Search::Swallow::View::SwallowOfficeResultMenuOption)(officeModel.GetName(),
+                                                                                           model.GetLocation(),
+                                                                                           officeModel.GetHeadingDegrees(),
+                                                                                           officeModel.GetDistance(),
+                                                                                           m_viewModel,
+                                                                                           m_messageBus);
+                }
+                else
+                {
+                    return Eegeo_NEW(SearchResultItemModel)(model.GetTitle(),
+                                                            model.GetLocation().ToECEF(),
+                                                            m_viewModel,
+                                                            m_messageBus);
+                }
             }
 
             void SearchResultMenuController::OnViewClicked()

@@ -3,7 +3,7 @@
 #include "SearchResultMenuModule.h"
 
 #include "SearchResultMenu.h"
-#include "SearchResultMenuOrder.h"
+#include "SwallowSearchResultMenuOrder.h"
 #include "MenuModel.h"
 #include "MenuViewModel.h"
 #include "MenuOptionsModel.h"
@@ -58,7 +58,7 @@ namespace ExampleApp
 
                 m_pSearchResultViewClearedObserver = Eegeo_NEW(SearchResultViewClearedObserver)(searchQueryPerformer, messageBus);
                 
-                m_pSearchResultMenuOrder = Eegeo_NEW(View::SearchResultMenuOrder);
+                m_pSearchResultMenuOrder = Eegeo_NEW(View::Swallow::SwallowSearchResultMenuOrder);
             }
 
             SearchResultMenuModule::~SearchResultMenuModule()
