@@ -84,9 +84,8 @@ namespace ExampleApp
                 
                 void GeoNamesSearchService::HandleSearchResponse()
                 {
-                    Eegeo_ASSERT(m_pCurrentRequest != NULL, "GeoNames search request must have been performed");
                     std::vector<Search::SdkModel::SearchResultModel> queryResults;
-                    if(m_pCurrentRequest->IsSucceeded())
+                    if(m_pCurrentRequest != NULL && m_pCurrentRequest->IsSucceeded())  // Needs NULL check because callback can happen before factory returns query
                     {
                         const std::string& response(m_pCurrentRequest->ResponseString());
                         std::vector<GeoNamesSearchResultDto> geoNameResultDtos;

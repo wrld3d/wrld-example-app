@@ -59,7 +59,7 @@ namespace ExampleApp
                             m_interiorsController.TryEnterInterior(m_worldPinInteriorData.building,
                                                                    initialInteriorsCameraState);
                         }
-                        else if (m_interiorsController.ShowingInterior())
+                        else if (m_interiorsController.InteriorIsVisible())
                         {
                             m_interiorsController.ExitInterior();
                         }

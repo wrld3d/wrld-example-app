@@ -11,7 +11,7 @@
 #include "PinController.h"
 #include "InteriorsModelRepository.h"
 #include "InteriorsEntityPinData.h"
-#include "InteriorsLabelController.h"
+#include "IInteriorsLabelController.h"
 #include "InteriorsFloorModel.h"
 #include "TerrainHeightProvider.h"
 
@@ -30,7 +30,7 @@ namespace ExampleApp
                                                                              Eegeo::Pins::PinController& pinController,
                                                                              Eegeo::Pins::PinRepository& pinRepository,
                                                                              Eegeo::Resources::Interiors::InteriorsController& interiorsController,
-                                                                             Eegeo::Resources::Interiors::Entities::InteriorsLabelsController& interiorsLabelsController,
+                                                                             Eegeo::Resources::Interiors::Entities::IInteriorsLabelController& interiorsLabelsController,
                                                                              Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider)
             : m_interiorsEntitiesRepository(interiorsEntitiesRepostiory)
             , m_pinController(pinController)
@@ -178,8 +178,9 @@ namespace ExampleApp
             {
                 std::map<int, float> easedfloorScales;
 
-                const Eegeo::Resources::Interiors::InteriorsFloorModel& currentFloorModel = m_interiorsController.GetCurrentFloorModel();
-                int currentFloorNumber = currentFloorModel.GetFloorNumber();
+                const Eegeo::Resources::Interiors::InteriorsFloorModel* pFloorModel = NULL;
+                Eegeo_ASSERT(m_interiorsController.TryGetCurrentFloorModel(pFloorModel), "Failed to fetch current floor");
+                int currentFloorNumber = pFloorModel->GetFloorNumber();
                 
                 for (std::map<int, float>::iterator it = m_floorToScaleMap.begin(); it != m_floorToScaleMap.end(); ++it)
                 {
@@ -236,7 +237,7 @@ namespace ExampleApp
             
             void InteriorsEntitiesPinsController::OnInteriorsStateChanged()
             {
-                if (m_interiorsController.ShowingInterior())
+                if (m_interiorsController.InteriorIsVisible())
                 {
                     bool success = m_interiorsController.TryGetCurrentModel(m_pCurrentInteriorsModel);
                     if (!success)

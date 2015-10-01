@@ -21,6 +21,9 @@ namespace ExampleApp
                     
                     Eegeo::Quaternion startOrientation = Eegeo::Quaternion::ExtractQuaternion(startState.orientationMatrix);
                     Eegeo::Quaternion endOrientation = Eegeo::Quaternion::ExtractQuaternion(endState.orientationMatrix);
+                    
+                    startOrientation.Normalise();
+                    endOrientation.Normalise();
 
                     return Eegeo_NEW(SplineTransitionCameraMode)(positionSpline, startState.fovDegrees, endState.fovDegrees, startOrientation, endOrientation);
                 }

@@ -121,7 +121,7 @@ namespace ExampleApp
                     
                     if(m_myPinCreationModel.GetCreationStage() == Ring)
                     {
-                        bool showingInterior = m_interiorsController.ShowingInterior();
+                        bool showingInterior = m_interiorsController.InteriorIsVisible();
                         m_myPinCreationModel.SetInterior(showingInterior);
                         if(showingInterior)
                         {
@@ -133,7 +133,9 @@ namespace ExampleApp
                                 m_myPinCreationModel.SetBuildingId(buildingId);
                             }
                             m_myPinCreationModel.SetFloor(m_interiorsController.GetCurrentFloorIndex());
-                            float floorHeightAboveSeaLevel = static_cast<float>(m_interiorsController.GetCurrentFloorModel().GetTangentSpaceBounds().GetMin().y);
+                            const Eegeo::Resources::Interiors::InteriorsFloorModel* pFloorModel = NULL;
+                            Eegeo_ASSERT(m_interiorsController.TryGetCurrentFloorModel(pFloorModel), "Failed to fetch current interior floor");
+                            float floorHeightAboveSeaLevel = static_cast<float>(pFloorModel->GetTangentSpaceBounds().GetMin().y);
                             const float floorHeightAboveTerrain = floorHeightAboveSeaLevel - m_myPinCreationModel.GetTerrainHeight();
                             m_myPinCreationModel.SetHeightAboveTerrain(floorHeightAboveTerrain);
                         }

@@ -120,7 +120,7 @@
         
         const float upperMargin = isPhone ? 20.0f : 50.0f;
         float exitButtonSize = 40.f;
-        float labelLength = 200.f;
+        const float labelLength = isPhone? 150.f : 200.f;
         
         const float detailsPanelHeight = 40.0f;
         float totalPanelLength = labelLength + exitButtonSize;

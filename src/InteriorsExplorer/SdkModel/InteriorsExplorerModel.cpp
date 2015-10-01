@@ -95,12 +95,14 @@ namespace ExampleApp
 
             void InteriorsExplorerModel::SelectFloor(int floor)
             {
-                m_controller.SelectFloorAtIndex(floor);
-                const Eegeo::Resources::Interiors::InteriorsFloorModel& currentFloor = m_controller.GetCurrentFloorModel();
+                m_controller.SetCurrentFloor(floor);
                 
-                m_messageBus.Publish(InteriorsExplorerFloorSelectedMessage(m_controller.GetCurrentFloorIndex(), currentFloor.GetFloorName()));
+                const Eegeo::Resources::Interiors::InteriorsFloorModel* pFloorModel = NULL;
+                Eegeo_ASSERT(m_controller.TryGetCurrentFloorModel(pFloorModel), "Could not fetch current floor model");
+                
+                m_messageBus.Publish(InteriorsExplorerFloorSelectedMessage(m_controller.GetCurrentFloorIndex(), pFloorModel->GetFloorName()));
 
-                m_metricsService.SetEvent(MetricEventInteriorFloorSelected, "InteriorId", m_interiorSelectionModel.GetSelectedInteriorId().Value(), "FloorName", currentFloor.GetFloorName());
+                m_metricsService.SetEvent(MetricEventInteriorFloorSelected, "InteriorId", m_interiorSelectionModel.GetSelectedInteriorId().Value(), "FloorName", pFloorModel->GetFloorName());
             }
 
             void InteriorsExplorerModel::OnInteriorSelectionModelChanged(const Eegeo::Resources::Interiors::InteriorId& previousInteriorId)
@@ -124,12 +126,12 @@ namespace ExampleApp
             void InteriorsExplorerModel::PublishInteriorExplorerStateChange()
             {
                 
-                int floor = m_controller.ShowingInterior() ? m_controller.GetCurrentFloorIndex() : 0;
+                int floor = m_controller.InteriorIsVisible() ? m_controller.GetCurrentFloorIndex() : 0;
                 
                 std::string floorName;
                 std::vector<std::string> floorShortNames;
                 
-                if (m_controller.ShowingInterior())
+                if (m_controller.InteriorIsVisible())
                 {
                     const Eegeo::Resources::Interiors::InteriorsModel* pModel = NULL;
                     m_controller.TryGetCurrentModel(pModel);
@@ -139,10 +141,12 @@ namespace ExampleApp
                     
                     std::transform(floorModels.begin(), floorModels.end(), std::back_inserter(floorShortNames), ToFloorName);
                     
-                    floorName = m_controller.GetCurrentFloorModel().GetFloorName();
+                    const Eegeo::Resources::Interiors::InteriorsFloorModel* pFloorModel = NULL;
+                    Eegeo_ASSERT(m_controller.TryGetCurrentFloorModel(pFloorModel), "Could not fetch current floor model");
+                    floorName = pFloorModel->GetFloorName();
                 }
                 
-                m_messageBus.Publish(InteriorsExplorerStateChangedMessage(m_controller.ShowingInterior(),
+                m_messageBus.Publish(InteriorsExplorerStateChangedMessage(m_controller.InteriorIsVisible(),
                                                                           floor,
                                                                           floorName,
                                                                           floorShortNames));
@@ -152,7 +156,7 @@ namespace ExampleApp
             {
                 m_tourIsActive = message.TourStarted();
                 
-                if(!message.TourStarted() && m_controller.ShowingInterior())
+                if(!message.TourStarted() && m_controller.InteriorIsVisible())
                 {
                     PublishInteriorExplorerStateChange();
                 }

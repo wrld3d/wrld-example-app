@@ -20,7 +20,11 @@ namespace ExampleApp
                 Menu::View::IMenuViewModel& menuViewModel,
                 CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
                 ISearchResultMenuViewModel& searchResultMenuViewModel,
-                ExampleAppMessaging::TMessageBus& messageBus)
+				Menu::View::IMenuOptionsModel& menuOptionsModel,
+				ISearchResultMenuOrder& searchResultMenuOrder,
+                AppModes::SdkModel::IAppModeModel& appModeModel,
+                ExampleAppMessaging::TMessageBus& messageBus
+            )
             {
                 ASSERT_UI_THREAD
 
@@ -32,6 +36,8 @@ namespace ExampleApp
                                     *view,
                                     menuModel,
                                     menuViewModel,
+									menuOptionsModel,
+									searchResultMenuOrder,
                                     categorySearchRepository,
                                     searchResultMenuViewModel,
                                     messageBus);
