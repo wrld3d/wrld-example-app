@@ -3,8 +3,12 @@
 #pragma once
 
 #include "MenuController.h"
+
+#include <vector>
 #include "BidirectionalBus.h"
+#include "ISearchResultMenuOrder.h"
 #include "ISearchResultMenuView.h"
+#include "SearchResultModel.h"
 #include "SearchQueryPerformedMessage.h"
 #include "SearchQueryResponseReceivedMessage.h"
 #include "ICallback.h"
@@ -24,8 +28,11 @@ namespace ExampleApp
                 ISearchResultMenuView& m_searchView;
                 CategorySearch::View::ICategorySearchRepository& m_categorySearchRepository;
                 View::ISearchResultMenuViewModel& m_searchResultMenuViewModel;
+                Menu::View::IMenuOptionsModel& m_menuOptions;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
-
+                std::vector<Search::SdkModel::SearchResultModel> m_lastAddedResults;
+                ISearchResultMenuOrder& m_order;
+                
                 Eegeo::Helpers::TCallback1<SearchResultMenuController, const Search::SearchQueryPerformedMessage&> m_searchQueryIssuedHandler;
                 Eegeo::Helpers::TCallback1<SearchResultMenuController, const Search::SearchQueryResponseReceivedMessage&> m_searchResultReceivedHandler;
                 Eegeo::Helpers::TCallback0<SearchResultMenuController> m_onSearchCloseTappedCallback;
@@ -55,6 +62,8 @@ namespace ExampleApp
                     Menu::View::IMenuView& menuView,
                     Menu::View::IMenuModel& menuModel,
                     Menu::View::IMenuViewModel& menuViewModel,
+                    Menu::View::IMenuOptionsModel& menuOptionsModel,
+                    ISearchResultMenuOrder& order,
                     CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
                     View::ISearchResultMenuViewModel& searchResultMenuViewModel,
                     ExampleAppMessaging::TMessageBus& messageBus);

@@ -96,7 +96,7 @@ namespace ExampleApp
                                            *m_pPoiRingView,
                                            mapModule.GetEnvironmentFlatteningService(),
                                            terrainModelModule.GetTerrainHeightProvider(),
-                                           interiorsPresentationModule.GetInteriorsController());
+                                           interiorsPresentationModule.GetLegacyInteriorsController());
 
 
                     m_pTerrainRayPicker = Eegeo_NEW(Eegeo::Resources::Terrain::Collision::TerrainRayPicker)(terrainModelModule.GetTerrainHeightProvider(),
@@ -106,7 +106,7 @@ namespace ExampleApp
                                                                                   *m_pTerrainRayPicker,
                                                                                   *m_pPoiRingController,
                                                                                   appModeModel,
-                                                                                  interiorsPresentationModule.GetInteriorsController());
+                                                                                  interiorsPresentationModule.GetLegacyInteriorsController());
                 }
 
                 PoiRingModule::~PoiRingModule()

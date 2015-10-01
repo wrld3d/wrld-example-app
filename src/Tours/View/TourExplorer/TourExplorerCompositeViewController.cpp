@@ -52,7 +52,6 @@ namespace ExampleApp
                     m_compassViewModel.RemoveFromScreen();
                     m_flattenViewModel.RemoveFromScreen();
                     m_myPinCreationViewModel.RemoveFromScreen();
-                    m_watermarkViewModel.RemoveFromScreen();
                     
                 }
                 
@@ -71,7 +70,6 @@ namespace ExampleApp
                         m_compassViewModel.AddToScreen();
                         m_flattenViewModel.AddToScreen();
                         m_myPinCreationViewModel.AddToScreen();
-                        m_watermarkViewModel.AddToScreen();
                     }
                 }
             }

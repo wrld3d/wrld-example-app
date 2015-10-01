@@ -1,7 +1,11 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "SearchResultMenuController.h"
+
+#include <algorithm>
 #include "IAppModeModel.h"
+#include "ISearchResultMenuOrder.h"
+#include "SearchResultItemModel.h"
 
 namespace ExampleApp
 {
@@ -9,6 +13,25 @@ namespace ExampleApp
     {
         namespace View
         {
+            namespace
+            {
+                class OrderWrapper
+                {
+                private:
+                    ISearchResultMenuOrder& m_order;
+                public:
+                    OrderWrapper(ISearchResultMenuOrder& order)
+                        : m_order(order)
+                    {
+                    }
+                    
+                    bool operator() (const Search::SdkModel::SearchResultModel& a, const Search::SdkModel::SearchResultModel& b)
+                    {
+                        return m_order(a, b);
+                    }
+                };
+            }
+            
             void SearchResultMenuController::OnSearchQueryPerformedMessage(const Search::SearchQueryPerformedMessage& message)
             {
                 std::string headerString = CategorySearch::View::GetPresentationStringForQuery(m_categorySearchRepository, message.Query());
@@ -20,6 +43,33 @@ namespace ExampleApp
             {
                 std::string headerString = CategorySearch::View::GetPresentationStringForQuery(m_categorySearchRepository, message.GetQuery());
                 m_searchView.SetHeader(headerString, false, message.GetResults().size());
+                
+                for(int i = 0; i < m_lastAddedResults.size(); ++i)
+                {
+                    const Search::SdkModel::SearchResultModel& model(m_lastAddedResults[i]);
+                    m_menuOptions.RemoveItem(model.GetIdentifier());
+                }
+                
+                m_lastAddedResults = message.GetResults();
+                OrderWrapper orderWrapper(m_order);
+                std::stable_sort(m_lastAddedResults.begin(), m_lastAddedResults.end(), orderWrapper);
+                
+                for(int i = 0; i < m_lastAddedResults.size(); ++i)
+                {
+                    const Search::SdkModel::SearchResultModel& model(m_lastAddedResults[i]);
+                    m_menuOptions.AddItem(
+                                      model.GetIdentifier(),
+                                      model.GetTitle(),
+                                      model.GetSubtitle(),
+                                      model.GetCategory(),
+                                      Eegeo_NEW(SearchResultItemModel)(
+                                                                       model.GetTitle(),
+                                                                       model.GetLocation().ToECEF(),
+                                                                       m_viewModel,
+                                                                       m_messageBus)
+                                      );
+                }
+                
                 m_searchResultMenuViewModel.SetHasSearchQueryInFlight(false);
             }
 
@@ -62,11 +112,15 @@ namespace ExampleApp
                 Menu::View::IMenuView& menuView,
                 Menu::View::IMenuModel& menuModel,
                 Menu::View::IMenuViewModel& menuViewModel,
+                Menu::View::IMenuOptionsModel& menuOptions,
+                ISearchResultMenuOrder& order,
                 CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
                 ISearchResultMenuViewModel& searchResultMenuViewModel,
                 ExampleAppMessaging::TMessageBus& messageBus)
                 : MenuController(menuModel, menuViewModel, menuView, messageBus)
                 , m_searchView(searchView)
+                , m_menuOptions(menuOptions)
+                , m_order(order)
                 , m_categorySearchRepository(categorySearchRepository)
                 , m_searchResultMenuViewModel(searchResultMenuViewModel)
                 , m_messageBus(messageBus)

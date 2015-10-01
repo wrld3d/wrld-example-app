@@ -2,7 +2,7 @@
 
 #include "SearchResultPoiController.h"
 #include "SearchResultPoiViewOpenedMessage.h"
-#include "YelpSearchJsonParser.h"
+#include "SearchJsonParser.h"
 
 namespace ExampleApp
 {
@@ -31,8 +31,7 @@ namespace ExampleApp
                 m_view.Show(searchResultModel, m_viewModel.IsPinned());
                 
                 std::string imageUrl = "";
-                std::string ratingImageUrl = "";
-                Search::Yelp::SdkModel::TryParseImageDetails(searchResultModel, imageUrl, ratingImageUrl);
+                Search::SdkModel::TryParseImageDetails(searchResultModel, imageUrl);
                 m_messageBus.Publish(SearchResultPoiViewOpenedMessage(imageUrl));
             }
 
@@ -60,12 +59,10 @@ namespace ExampleApp
                 if (m_viewModel.IsOpen())
                 {
                     std::string imageUrl = "";
-                    std::string ratingImageUrl = "";
-                    Search::Yelp::SdkModel::TryParseImageDetails(m_viewModel.GetSearchResultModel(), imageUrl, ratingImageUrl);
+                    Search::SdkModel::TryParseImageDetails(m_viewModel.GetSearchResultModel(), imageUrl);
                     
                     // We may have closed the view and opened a new view, so check it's the same image...
-                    const bool isCorrectImageUrl = (imageUrl == message.GetImageUrl())
-                        || (ratingImageUrl == message.GetImageUrl());
+                    const bool isCorrectImageUrl = (imageUrl == message.GetImageUrl());
                 
                     if(isCorrectImageUrl)
                     {

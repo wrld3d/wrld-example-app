@@ -13,7 +13,6 @@
 #include "SearchResultMenuItemSelectedMessageHandler.h"
 #include "BidirectionalBus.h"
 #include "SearchResultRepositoryObserver.h"
-#include "SearchResultAddRemoveHandler.h"
 #include "SearchResultMenuSearchQueryPerformedMessageHandler.h"
 #include "SearchResultMenuSearchQueryRemovedMessageHandler.h"
 #include "SearchResultViewClearedObserver.h"
@@ -33,10 +32,10 @@ namespace ExampleApp
                 View::SearchResultRepositoryObserver* m_pSearchResultRepositoryObserver;
                 Menu::View::IMenuSectionViewModel* m_pMenuSection;
                 SearchResultMenuItemSelectedMessageHandler* m_pSearchResultMenuItemSelectedMessageHandler;
-                View::SearchResultAddRemoveHandler* m_pSearchResultAddRemoveHandler;
                 View::SearchResultMenuSearchQueryPerformedMessageHandler* m_pSearchResultMenuSearchQueryPerformedMessageHandler;
                 View::SearchResultMenuSearchQueryRemovedMessageHandler* m_pSearchResultMenuSearchQueryRemovedMessageHandler;
                 SearchResultViewClearedObserver* m_pSearchResultViewClearedObserver;
+                View::ISearchResultMenuOrder* m_pSearchResultMenuOrder;
 
             public:
                 SearchResultMenuModule(
@@ -57,6 +56,8 @@ namespace ExampleApp
                 Menu::View::IMenuViewModel& GetMenuViewModel() const;
 
                 View::ISearchResultMenuViewModel& GetSearchResultMenuViewModel() const;
+                
+                View::ISearchResultMenuOrder& GetSearchResultMenuOrder() const;
             };
         }
     }

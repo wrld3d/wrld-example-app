@@ -130,7 +130,7 @@ namespace ExampleApp
                 {
                     bool rayPick = false;
                     
-                    if(m_appModeModel.GetAppMode() == AppModes::SdkModel::InteriorMode)
+                    if(m_appModeModel.GetAppMode() == AppModes::SdkModel::InteriorMode && m_interiorsController.InteriorIsVisible())
                     {
                         const Eegeo::Resources::Interiors::InteriorsModel* interiorsModel;
                         
@@ -138,10 +138,14 @@ namespace ExampleApp
                         
                         const Eegeo::dv3 originNormal = interiorsModel->GetTangentBasis().GetUp();
                         double interiorOriginAltitude = interiorsModel->GetTangentBasis().GetPointEcef().Length() - Eegeo::Space::EarthConstants::Radius;
-                        const Eegeo::dv3 pointOffset = originNormal * (m_interiorsController.GetCurrentFloorModel().GetTangentSpaceBounds().GetMin().y -interiorOriginAltitude);
-                        Eegeo::dv3 point = interiorsModel->GetTangentBasis().GetPointEcef() + pointOffset;
-                        
-                        rayPick = Eegeo::Geometry::IntersectionTests::RayIntersectsWithPlane(rayOrigin, rayDirection, originNormal, point, out_intersectionParam, out_rayIntersectionPoint);
+                        const Eegeo::Resources::Interiors::InteriorsFloorModel* pFloorModel = NULL;
+                        if(m_interiorsController.TryGetCurrentFloorModel(pFloorModel))
+                        {
+                            const Eegeo::dv3 pointOffset = originNormal * (pFloorModel->GetTangentSpaceBounds().GetMin().y -interiorOriginAltitude);
+                            Eegeo::dv3 point = interiorsModel->GetTangentBasis().GetPointEcef() + pointOffset;
+                            
+                            rayPick = Eegeo::Geometry::IntersectionTests::RayIntersectsWithPlane(rayOrigin, rayDirection, originNormal, point, out_intersectionParam, out_rayIntersectionPoint);
+                        }
                     }
                     else
                     {

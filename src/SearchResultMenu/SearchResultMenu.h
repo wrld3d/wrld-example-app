@@ -17,6 +17,7 @@ namespace ExampleApp
             class SearchResultMenuViewModel;
             class SearchResultMenuController;
             class ISearchResultView;
+            class ISearchResultMenuOrder;
         }
     }
 }

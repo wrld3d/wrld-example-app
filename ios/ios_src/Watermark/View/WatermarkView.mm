@@ -64,6 +64,7 @@
 - (void)dealloc
 {
     delete m_pInterop;
+    [m_pController release];
     [super dealloc];
 }
 

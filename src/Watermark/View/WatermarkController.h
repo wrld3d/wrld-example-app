@@ -10,6 +10,7 @@
 #include "MyPinCreationStateChangedMessage.h"
 #include "IMetricsService.h"
 #include "SetWatermarkVisibilityMessage.h"
+#include "AppModes.h"
 
 namespace ExampleApp
 {
@@ -23,10 +24,12 @@ namespace ExampleApp
                 IWatermarkViewModel& m_viewModel;
                 IWatermarkView& m_view;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
+                bool m_appModeAllowsOpen;
 
                 Eegeo::Helpers::TCallback0<WatermarkController> m_selectedCallback;
                 Eegeo::Helpers::TCallback2<WatermarkController, ScreenControl::View::IScreenControlViewModel&, float> m_viewStateCallback;
                 Eegeo::Helpers::TCallback1<WatermarkController, const SetWatermarkVisibilityMessage&> m_setVisibilityHandler;
+                Eegeo::Helpers::TCallback1<WatermarkController, const AppModes::AppModeChangedMessage&> m_appModeChangedHandler;
                 Metrics::IMetricsService& m_metricsService;
 
                 void OnSelected();
@@ -34,6 +37,8 @@ namespace ExampleApp
                 void OnViewStateChangeScreenControl(ScreenControl::View::IScreenControlViewModel& viewModel, float& state);
                 
                 void OnHandleSetVisibility(const SetWatermarkVisibilityMessage& message);
+                
+                void OnAppModeChanged(const AppModes::AppModeChangedMessage& message);
 
             public:
                 WatermarkController(

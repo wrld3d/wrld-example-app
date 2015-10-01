@@ -1,7 +1,9 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "SearchResultMenuModule.h"
+
 #include "SearchResultMenu.h"
+#include "SearchResultMenuOrder.h"
 #include "MenuModel.h"
 #include "MenuViewModel.h"
 #include "MenuOptionsModel.h"
@@ -44,10 +46,6 @@ namespace ExampleApp
                             messageBus
                         );
 
-                m_pSearchResultAddRemoveHandler = Eegeo_NEW(View::SearchResultAddRemoveHandler)(*m_pMenuOptionsModel,
-                                                                                                *m_pViewModel,
-                                                                                                messageBus);
-
                 m_pSearchResultMenuSearchQueryPerformedMessageHandler = Eegeo_NEW(View::SearchResultMenuSearchQueryPerformedMessageHandler)(
                             *m_pViewModel,
                             messageBus
@@ -59,14 +57,16 @@ namespace ExampleApp
                         );
 
                 m_pSearchResultViewClearedObserver = Eegeo_NEW(SearchResultViewClearedObserver)(searchQueryPerformer, messageBus);
+                
+                m_pSearchResultMenuOrder = Eegeo_NEW(View::SearchResultMenuOrder);
             }
 
             SearchResultMenuModule::~SearchResultMenuModule()
             {
+                Eegeo_DELETE m_pSearchResultMenuOrder;
                 Eegeo_DELETE m_pSearchResultViewClearedObserver;
                 Eegeo_DELETE m_pSearchResultMenuSearchQueryRemovedMessageHandler;
                 Eegeo_DELETE m_pSearchResultMenuSearchQueryPerformedMessageHandler;
-                Eegeo_DELETE m_pSearchResultAddRemoveHandler;
                 Eegeo_DELETE m_pSearchResultMenuItemSelectedMessageHandler;
                 Eegeo_DELETE m_pSearchResultRepositoryObserver;
                 Eegeo_DELETE m_pMenuSection;
@@ -93,6 +93,11 @@ namespace ExampleApp
             View::ISearchResultMenuViewModel& SearchResultMenuModule::GetSearchResultMenuViewModel() const
             {
                 return *m_pViewModel;
+            }
+            
+            View::ISearchResultMenuOrder& SearchResultMenuModule::GetSearchResultMenuOrder() const
+            {
+                return *m_pSearchResultMenuOrder;
             }
         }
     }

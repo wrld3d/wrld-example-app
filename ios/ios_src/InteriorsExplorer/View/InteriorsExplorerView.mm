@@ -4,6 +4,8 @@
 #include "UIColors.h"
 #include "ImageHelpers.h"
 #include "InteriorsExplorerViewInterop.h"
+#include "App.h"
+
 #import "UIView+TouchExclusivity.h"
 
 @implementation InteriorsExplorerView
@@ -17,6 +19,8 @@
 {
     if (self = [super init])
     {
+        const bool isPhone = App::IsDeviceSmall();
+        
         m_pixelScale = 1.f;
         m_screenWidth = width/pixelScale;
         m_screenHeight = height/pixelScale;
@@ -36,7 +40,7 @@
         const float upperMargin = 50.0f;
         m_inactiveDetailPaneYPosition = m_screenHeight;
         
-        self.pFloorPanel = [[[UIView alloc] initWithFrame:CGRectMake(m_inactiveFloorListXPosition, m_screenHeight/2.0f, 55, 200)] autorelease];
+        self.pFloorPanel = [[[UIView alloc] initWithFrame:CGRectMake(m_inactiveFloorListXPosition, m_screenHeight/2.0f, 50, 200)] autorelease];
         [self addSubview:self.pFloorPanel];
         
         self.pFloorPanelTop = [[[UIImageView alloc] initWithImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"floor_selection_top")] autorelease];
@@ -48,8 +52,8 @@
         [self.pFloorPanel addSubview:self.pFloorList];
         [self.pFloorPanel addSubview:self.pFloorPanelBottom];
         
-        float buttonSize = 40.f;
-        float labelLength = 200.f;
+        const float buttonSize = 40.f;
+        const float labelLength = isPhone? 150.f : 200.f;
         
         const float detailsPanelHeight = 40.0f;
         float totalPanelLength = labelLength + buttonSize;
@@ -117,7 +121,7 @@
 - (void)layoutSubviews
 {
     const int borderHeight = 20;
-    const int floorPanelWidth = 55;
+    const int floorPanelWidth = 50;
     CGFloat listHeight = self.pFloorList.contentSize.height;
     CGFloat totalFloorPanelHeight = (borderHeight * 2.f) + listHeight;
     

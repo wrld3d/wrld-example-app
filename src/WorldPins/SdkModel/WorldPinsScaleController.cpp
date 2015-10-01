@@ -70,7 +70,7 @@ namespace ExampleApp
             bool WorldPinsScaleController::ShouldHidePin(WorldPins::SdkModel::WorldPinItemModel& worldPinItemModel,
                                                          const Eegeo::Camera::RenderCamera& renderCamera)
             {
-                const bool showingInterior = m_interiorsController.ShowingInterior();
+                const bool showingInterior = m_interiorsController.InteriorIsVisible();
                 
                 if(showingInterior && !worldPinItemModel.IsInterior())
                 {

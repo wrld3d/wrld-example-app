@@ -285,6 +285,8 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
                                     app.SearchResultMenuModule().GetSearchResultMenuModel(),
                                     app.SearchResultMenuModule().GetMenuViewModel(),
                                     app.SearchResultMenuModule().GetSearchResultMenuViewModel(),
+                                    app.SearchResultMenuModule().GetSearchResultMenuOptionsModel(),
+                                    app.SearchResultMenuModule().GetSearchResultMenuOrder(),
                                     screenProperties,
                                     m_messageBus);
 
