@@ -2,6 +2,7 @@
 
 #include "ViewController.h"
 #include "AppLocationDelegate.h"
+#include "MathFunc.h"
 
 using namespace Eegeo::iOS;
 
@@ -71,6 +72,11 @@ using namespace Eegeo::iOS;
 
     CFTimeInterval timeNow = CFAbsoluteTimeGetCurrent();
     CFTimeInterval frameDuration = timeNow - m_previousTimestamp;
+    
+    const CFTimeInterval maxFrameInterval = 1.0f/self.preferredFramesPerSecond;
+    
+    frameDuration = Eegeo::Clamp<CFTimeInterval>(frameDuration, 0.0f, maxFrameInterval);
+    
     m_pAppRunner->Update(static_cast<float>(frameDuration));
 
     const GLenum discards[]  = {GL_DEPTH_ATTACHMENT, GL_STENCIL_ATTACHMENT};
