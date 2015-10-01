@@ -1468,6 +1468,8 @@
 		E0AEEF061B8CB0C700BA9BF0 /* place_pin_right@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E0AEEEF81B8CB0C700BA9BF0 /* place_pin_right@3x.png */; };
 		EEE021331BB44239001AF4CF /* YelpSearchResultModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EEE021311BB44239001AF4CF /* YelpSearchResultModel.cpp */; };
 		EEE021341BB44239001AF4CF /* YelpSearchResultModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EEE021311BB44239001AF4CF /* YelpSearchResultModel.cpp */; };
+		EEE022F71BBD8531001AF4CF /* WorldPinsFloorHeightController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EEE022F51BBD8531001AF4CF /* WorldPinsFloorHeightController.cpp */; };
+		EEE022F81BBD8531001AF4CF /* WorldPinsFloorHeightController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EEE022F51BBD8531001AF4CF /* WorldPinsFloorHeightController.cpp */; };
 		F7F3702A5538EF1098A7B54D /* MapModeController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F7F37DF89F160CEF56F89506 /* MapModeController.cpp */; };
 		F7F3718BE3D42C0AAD8EC7E3 /* MapModeModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F7F376B8EDEEDCD448A9C3D8 /* MapModeModule.cpp */; };
 		F7F373D9D747899B4430C7EC /* InteriorsExplorerInputDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F7F371EA20411E0AA0E2214B /* InteriorsExplorerInputDelegate.cpp */; };
@@ -2969,6 +2971,9 @@
 		E0AEEEF81B8CB0C700BA9BF0 /* place_pin_right@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "place_pin_right@3x.png"; sourceTree = "<group>"; };
 		EEE021311BB44239001AF4CF /* YelpSearchResultModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = YelpSearchResultModel.cpp; sourceTree = "<group>"; };
 		EEE021321BB44239001AF4CF /* YelpSearchResultModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YelpSearchResultModel.h; sourceTree = "<group>"; };
+		EEE022F51BBD8531001AF4CF /* WorldPinsFloorHeightController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WorldPinsFloorHeightController.cpp; sourceTree = "<group>"; };
+		EEE022F61BBD8531001AF4CF /* WorldPinsFloorHeightController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorldPinsFloorHeightController.h; sourceTree = "<group>"; };
+		EEE022F91BBD85B6001AF4CF /* IWorldPinsFloorHeightController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IWorldPinsFloorHeightController.h; sourceTree = "<group>"; };
 		F7F37109109640BBE8C7E280 /* InteriorsExplorerInputDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InteriorsExplorerInputDelegate.h; sourceTree = "<group>"; };
 		F7F371A45CA6451F37A29696 /* IMapModeModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMapModeModule.h; sourceTree = "<group>"; };
 		F7F371EA20411E0AA0E2214B /* InteriorsExplorerInputDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InteriorsExplorerInputDelegate.cpp; sourceTree = "<group>"; };
@@ -4867,6 +4872,9 @@
 				7E3B888F1A385A290023C94E /* WorldPinsScaleController.h */,
 				7E3B88901A385A290023C94E /* WorldPinsService.cpp */,
 				7E3B88911A385A290023C94E /* WorldPinsService.h */,
+				EEE022F51BBD8531001AF4CF /* WorldPinsFloorHeightController.cpp */,
+				EEE022F61BBD8531001AF4CF /* WorldPinsFloorHeightController.h */,
+				EEE022F91BBD85B6001AF4CF /* IWorldPinsFloorHeightController.h */,
 			);
 			path = SdkModel;
 			sourceTree = "<group>";
@@ -6969,6 +6977,7 @@
 				1846CBE11BBBD627007F1922 /* SwallowPoiDbFacilityParser.cpp in Sources */,
 				7E3B89871A385A290023C94E /* ScreenControlViewModelBase.cpp in Sources */,
 				18FB645F1A9240FC005A9411 /* OACall.m in Sources */,
+				EEE022F81BBD8531001AF4CF /* WorldPinsFloorHeightController.cpp in Sources */,
 				186B47261AB1DD5C0084E80B /* WatermarkViewModule.mm in Sources */,
 				BFD5FD791BA706AD00F591F1 /* TourFullScreenImageCeremonyBeganObserver.cpp in Sources */,
 				18FB64591A9240FC005A9411 /* Base64Transcoder.c in Sources */,
@@ -7511,6 +7520,7 @@
 				18FB64B11A94D504005A9411 /* SearchResultPoiViewImageFetcher.cpp in Sources */,
 				BFD5FD8B1BA708E100F591F1 /* UIImage+FX.m in Sources */,
 				7E3B8AE91A385F110023C94E /* iOSInitialExperienceModule.cpp in Sources */,
+				EEE022F71BBD8531001AF4CF /* WorldPinsFloorHeightController.cpp in Sources */,
 				27DB89DA1BB3FF170020CDA5 /* GeoNamesSearchQuery.cpp in Sources */,
 				18C0EC091A9E147C008EED21 /* SearchResultPinBoundObject.cpp in Sources */,
 				7E3B89FC1A385A290023C94E /* WorldPinsModule.cpp in Sources */,

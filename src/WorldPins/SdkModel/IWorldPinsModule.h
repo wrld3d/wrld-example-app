@@ -21,6 +21,8 @@ namespace ExampleApp
                 virtual IWorldPinsFactory& GetWorldPinsFactory() const = 0;
 
                 virtual IWorldPinsScaleController& GetWorldPinsScaleController() const = 0;
+                
+                virtual IWorldPinsFloorHeightController& GetWorldPinsFloorHeightController() const = 0;
 
                 virtual View::IWorldPinInFocusViewModel& GetWorldPinInFocusViewModel() const = 0;
 

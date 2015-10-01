@@ -38,6 +38,8 @@ namespace ExampleApp
                 WorldPinsInFocusModel m_focusModel;
                 TransitionState m_transitionState;
                 float m_transitionStateValue;
+                float m_floorHeight;
+                bool m_hasFloorHeight;
                 bool m_focusable;
                 bool m_interior;
                 WorldPinInteriorData m_worldPinInteriorData;
@@ -63,6 +65,14 @@ namespace ExampleApp
                 bool IsTransitioning() const;
 
                 float TransitionStateValue() const;
+                
+                bool NeedsFloorHeight() const;
+                
+                void SetFloorHeight(float floorHeight);
+                
+                bool HasFloorHeight() const;
+                
+                float FloorHeight() const;
 
                 void Hide();
 
