@@ -4,6 +4,7 @@
 #include "SearchResultModel.h"
 #include "SearchVendorNames.h"
 #include "YelpSearchJsonParser.h"
+#include "SwallowSearchParser.h"
 
 namespace ExampleApp
 {
@@ -17,6 +18,11 @@ namespace ExampleApp
                 if(vendor == YelpVendorName)
                 {
                     return Yelp::SdkModel::TryParseImageDetails(searchResultModel, out_imageUrl);
+                }
+                
+                if(vendor.find(SwallowVendorName) == 0)
+                {
+                    return Swallow::SdkModel::SearchParser::TryParseImageDetails(searchResultModel, out_imageUrl);
                 }
                 
                 return false;
