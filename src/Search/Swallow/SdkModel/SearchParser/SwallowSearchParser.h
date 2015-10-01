@@ -6,9 +6,12 @@
 
 #include "Types.h"
 
-#include "PoiDb.h"
 #include "Search.h"
 #include "SwallowPersonResultModel.h"
+#include "SwallowMeetingRoomResultModel.h"
+#include "SwallowWorkingGroupResultModel.h"
+#include "SwallowFacilityResultModel.h"
+#include "SwallowOfficeResultModel.h"
 
 namespace ExampleApp
 {
@@ -20,10 +23,15 @@ namespace ExampleApp
             {
                 namespace SearchParser
                 {
-                    void ParsePersonSearchResults(const std::vector<PoiDb::PoiTableDto>& results,
-                                                  std::vector<Search::SdkModel::SearchResultModel>& out_results);
-                    
                     SwallowPersonResultModel TransformToSwallowPersonResult(const Search::SdkModel::SearchResultModel& searchResultModel);
+                    
+                    SwallowMeetingRoomResultModel TransformToSwallowMeetingRoomResult(const Search::SdkModel::SearchResultModel& searchResultModel);
+                    
+                    SwallowWorkingGroupResultModel TransformToSwallowWorkingGroupResult(const Search::SdkModel::SearchResultModel& searchResultModel);
+                    
+                    SwallowFacilityResultModel TransformToSwallowFacilityResult(const Search::SdkModel::SearchResultModel& searchResultModel);
+                    
+                    SwallowOfficeResultModel TransformToSwallowOfficeResult(const Search::SdkModel::SearchResultModel& searchResultModel);
                 }
             }
         }

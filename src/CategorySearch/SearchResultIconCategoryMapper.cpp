@@ -2,6 +2,7 @@
 
 #include "SearchResultIconCategoryMapper.h"
 #include "SearchResultModel.h"
+#include "SwallowSearchConstants.h"
 
 namespace ExampleApp
 {
@@ -38,8 +39,8 @@ namespace ExampleApp
             m_categoryToIconIndex["museums"] = 8;
             m_categoryToIconIndex["arts"] = 8;
             
-            m_categoryToIconIndex["person"] = 14;
-            m_categoryToIconIndex["meeting_room"] = 16;
+            m_categoryToIconIndex[Search::Swallow::SearchConstants::PERSON_CATEGORY_NAME] = 14;
+            m_categoryToIconIndex[Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME] = 16;
         }
         
         SearchResultIconCategoryMapper::~SearchResultIconCategoryMapper()

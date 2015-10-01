@@ -44,11 +44,9 @@ namespace ExampleApp
                             messageBus
                         );
 
-                m_pSearchResultAddRemoveHandler = Eegeo_NEW(View::SearchResultAddRemoveHandler)(
-                                                      *m_pMenuOptionsModel,
-                                                      *m_pViewModel,
-                                                      messageBus
-                                                  );
+                m_pSearchResultAddRemoveHandler = Eegeo_NEW(View::SearchResultAddRemoveHandler)(*m_pMenuOptionsModel,
+                                                                                                *m_pViewModel,
+                                                                                                messageBus);
 
                 m_pSearchResultMenuSearchQueryPerformedMessageHandler = Eegeo_NEW(View::SearchResultMenuSearchQueryPerformedMessageHandler)(
                             *m_pViewModel,

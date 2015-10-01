@@ -3,10 +3,8 @@
 #include "SwallowSearchService.h"
 #include "SearchQuery.h"
 #include "SwallowSearchConstants.h"
-#include "IPoiDbModule.h"
-#include "IPoiDbService.h"
-#include "PoiFtsResults.h"
-#include "SQLiteSpellingSuggestionResults.h"
+#include "SwallowPoiDbServiceProvider.h"
+#include "SwallowPoiDbCombinedService.h"
 #include <sstream>
 #include "SwallowSearchConstants.h"
 #include "SwallowSearchParser.h"
@@ -20,9 +18,9 @@ namespace ExampleApp
             namespace SdkModel
             {
                 SwallowSearchService::SwallowSearchService(const std::vector<std::string>& availableCategories,
-                                                           PoiDb::IPoiDbModule& poiDbModule)
+                                                           SwallowPoiDb::SwallowPoiDbServiceProvider& swallowPoiDbServiceProvider)
                 : Search::SdkModel::SearchServiceBase(availableCategories)
-                , m_poiDbModule(poiDbModule)
+                , m_swallowPoiDbServiceProvider(swallowPoiDbServiceProvider)
                 {
                     
                 }
@@ -34,19 +32,19 @@ namespace ExampleApp
                 
                 void SwallowSearchService::PerformLocationQuerySearch(const Search::SdkModel::SearchQuery& query)
                 {
-                    PoiDb::IPoiDbService* poiDbService;
+                    SwallowPoiDb::SwallowPoiDbCombinedService* swallowPoiDbService;
                     
                     ExecuteQueryPerformedCallbacks(query);
                     
-                    if(m_poiDbModule.TryGetPoiDbService(poiDbService))
+                    if(m_swallowPoiDbServiceProvider.TryGetSwallowPoiDbService(swallowPoiDbService))
                     {
                         if(query.IsCategory())
                         {
-                            PerformCategorySearch(query, *poiDbService);
+                            PerformCategorySearch(query, *swallowPoiDbService);
                         }
                         else
                         {
-                            PerformFullTextSearch(query, *poiDbService);
+                            PerformFullTextSearch(query, *swallowPoiDbService);
                         }
                     }
                     else
@@ -63,30 +61,22 @@ namespace ExampleApp
                     callback(result);
                 }
                 
-                void SwallowSearchService::PerformFullTextSearch(const Search::SdkModel::SearchQuery& query, PoiDb::IPoiDbService& poiDbService)
+                void SwallowSearchService::PerformFullTextSearch(const Search::SdkModel::SearchQuery& query, SwallowPoiDb::SwallowPoiDbCombinedService& swallowPoiDbService)
                 {
-                    Eegeo::SQLite::SQLiteSpellingSuggestionResults spellingSuggestions;
-                    poiDbService.SuggestSpelling(query.Query(), spellingSuggestions);
+                    std::vector<Search::SdkModel::SearchResultModel> results;
                     
-                    PoiDb::PoiFtsResults ftsResults;
+                    swallowPoiDbService.FullTextSearch(query.Query(), results);
                     
-                    poiDbService.FullTextSearch(spellingSuggestions.spellCheckedSearchQuery, ftsResults);
-                    
-                    ParseSearchResults(query, ftsResults.resultRows);
+                    ExecutQueryResponseReceivedCallbacks(query, results);
                 }
                 
-                void SwallowSearchService::PerformCategorySearch(const Search::SdkModel::SearchQuery& query, PoiDb::IPoiDbService& poiDbService)
+                void SwallowSearchService::PerformCategorySearch(const Search::SdkModel::SearchQuery& query, SwallowPoiDb::SwallowPoiDbCombinedService& swallowPoiDbService)
                 {
-                    ExecutQueryResponseReceivedCallbacks(query, std::vector<Search::SdkModel::SearchResultModel>());
-                }
-                
-                void SwallowSearchService::ParseSearchResults(const Search::SdkModel::SearchQuery& query, const std::vector<PoiDb::PoiTableDto>& results)
-                {
-                    std::vector<Search::SdkModel::SearchResultModel> searchResults;
+                    std::vector<Search::SdkModel::SearchResultModel> results;
                     
-                    SearchParser::ParsePersonSearchResults(results, searchResults);
+                    swallowPoiDbService.CategorySearch(query.Query(), results);
                     
-                    ExecutQueryResponseReceivedCallbacks(query, searchResults);
+                    ExecutQueryResponseReceivedCallbacks(query, results);
                 }
             }
         }

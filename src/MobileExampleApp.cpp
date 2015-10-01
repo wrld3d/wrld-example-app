@@ -75,8 +75,8 @@
 #include "CombinedSearchServiceModule.h"
 #include "GeoNamesSearchServiceModule.h"
 #include "SearchVendorNames.h"
-#include "PoiDbModule.h"
-#include "PoiDbWebLoader.h"
+#include "SwallowPoiDbModule.h"
+#include "SwallowPoiDbWebLoader.h"
 #include "SQLiteModule.h"
 #include "SwallowSearchServiceModule.h"
 #include "SwallowSearchMenuModule.h"
@@ -186,7 +186,7 @@ namespace ExampleApp
         , m_toursPinDiameter(80)
         , m_enableTours(false)
         , m_pSQLiteModule(NULL)
-        , m_pPoiDbModule(NULL)
+        , m_pSwallowPoiDbModule(NULL)
     {
         m_metricsService.BeginSession(applicationConfiguration.FlurryAppKey(), EEGEO_PLATFORM_VERSION_NUMBER);
 
@@ -303,16 +303,14 @@ namespace ExampleApp
     {
         Eegeo::EegeoWorld& world = *m_pWorld;
         
-        Eegeo_ASSERT(m_pPoiDbModule == NULL);
+        Eegeo_ASSERT(m_pSwallowPoiDbModule == NULL);
         Eegeo_ASSERT(m_pSQLiteModule != NULL);
-        
-        const std::string poiTableName = "EmployeePois";
         
         const std::string destSqliteDbFilename = "pois.db";
         
-        m_pPoiDbModule = PoiDb::PoiDbModule::Create(poiTableName, m_applicationConfiguration.SqliteDbUrl(), destSqliteDbFilename, *m_pSQLiteModule);
-        m_pPoiDbModule->GetPoiDbWebLoader().Load();
-
+        m_pSwallowPoiDbModule = SwallowPoiDb::SwallowPoiDbModule::Create(m_applicationConfiguration.SqliteDbUrl(), destSqliteDbFilename, *m_pSQLiteModule);
+        m_pSwallowPoiDbModule->GetSwallowPoiDbWebLoader().Load();
+        
         m_pReactionControllerModule = Eegeo_NEW(Reaction::View::ReactionControllerModule)();
 
         m_pWatermarkModule = Eegeo_NEW(ExampleApp::Watermark::WatermarkModule)(m_identityProvider);
@@ -327,8 +325,10 @@ namespace ExampleApp
 
         std::map<std::string,ExampleApp::Search::SdkModel::ISearchServiceModule*> searchServiceModulesForCombinedSearch = platformImplementedSearchServiceModules;
         
-		m_searchServiceModules[Search::SwallowVendorName] = Eegeo_NEW(Search::Swallow::SdkModel::SwallowSearchServiceModule)(*m_pPoiDbModule);
-
+		m_searchServiceModules[Search::SwallowVendorName] = Eegeo_NEW(Search::Swallow::SdkModel::SwallowSearchServiceModule)(m_pSwallowPoiDbModule->GetSwallowPoiDbServiceProvider(),
+                                                                                                                             *m_pCameraTransitionController,
+                                                                                                                             m_messageBus);
+        
         const bool useGeoName = true;
         if(useGeoName)
         {
@@ -590,7 +590,7 @@ namespace ExampleApp
 
         Eegeo_DELETE m_pReactionControllerModule;
         
-        Eegeo_DELETE m_pPoiDbModule;
+        Eegeo_DELETE m_pSwallowPoiDbModule;
     }
 
     std::vector<ExampleApp::OpenableControl::View::IOpenableControlViewModel*> MobileExampleApp::GetOpenableControls() const

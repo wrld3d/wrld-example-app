@@ -4,6 +4,7 @@
 #include "MenuModel.h"
 #include "MenuOptionsModel.h"
 #include "SwallowCategoryMenuOption.h"
+#include "SwallowSearchConstants.h"
 
 namespace ExampleApp
 {
@@ -26,19 +27,43 @@ namespace ExampleApp
                 {
                     m_pMeetingRoomsMenuModel = Eegeo_NEW(Menu::View::MenuModel)();
                     m_pMeetingRoomsMenuOptionsModel = Eegeo_NEW(Menu::View::MenuOptionsModel)(*m_pMeetingRoomsMenuModel);
-                    m_pMeetingRoomsMenuOptionsModel->AddItem("Meeting Rooms", "Meeting Rooms", "", "", Eegeo_NEW(View::SwallowCategoryMenuOption)("meeting_room", menuViewModel, messageBus));
+                    m_pMeetingRoomsMenuOptionsModel->AddItem("Meeting Rooms",
+                                                             "Meeting Rooms",
+                                                             "",
+                                                             "",
+                                                             Eegeo_NEW(View::SwallowCategoryMenuOption)(Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME,
+                                                                                                        menuViewModel,
+                                                                                                        messageBus));
                     
                     m_pWorkingGroupsMenuModel = Eegeo_NEW(Menu::View::MenuModel)();
                     m_pWorkingGroupsMenuOptionsModel = Eegeo_NEW(Menu::View::MenuOptionsModel)(*m_pWorkingGroupsMenuModel);
-                    m_pWorkingGroupsMenuOptionsModel->AddItem("Working Groups", "Working Groups", "", "", Eegeo_NEW(View::SwallowCategoryMenuOption)("working_group", menuViewModel, messageBus));
+                    m_pWorkingGroupsMenuOptionsModel->AddItem("Working Groups",
+                                                              "Working Groups",
+                                                              "",
+                                                              "",
+                                                              Eegeo_NEW(View::SwallowCategoryMenuOption)(Search::Swallow::SearchConstants::WORKING_GROUP_CATEGORY_NAME,
+                                                                                                         menuViewModel,
+                                                                                                         messageBus));
                     
                     m_pFacilitiesMenuModel = Eegeo_NEW(Menu::View::MenuModel)();
                     m_pFacilitiesMenuOptionsModel = Eegeo_NEW(Menu::View::MenuOptionsModel)(*m_pFacilitiesMenuModel);
-                    m_pFacilitiesMenuOptionsModel->AddItem("Facilities", "Facilities", "", "", Eegeo_NEW(View::SwallowCategoryMenuOption)("facility", menuViewModel, messageBus));
+                    m_pFacilitiesMenuOptionsModel->AddItem("Facilities",
+                                                           "Facilities",
+                                                           "",
+                                                           "",
+                                                           Eegeo_NEW(View::SwallowCategoryMenuOption)(Search::Swallow::SearchConstants::FACILITY_CATEGORY_NAME,
+                                                                                                      menuViewModel,
+                                                                                                      messageBus));
                     
                     m_pOfficesMenuModel = Eegeo_NEW(Menu::View::MenuModel)();
                     m_pOfficesMenuOptionsModel = Eegeo_NEW(Menu::View::MenuOptionsModel)(*m_pOfficesMenuModel);
-                    m_pOfficesMenuOptionsModel->AddItem("Offices", "Offices", "", "", Eegeo_NEW(View::SwallowCategoryMenuOption)("office", menuViewModel, messageBus));
+                    m_pOfficesMenuOptionsModel->AddItem("Offices",
+                                                        "Offices",
+                                                        "",
+                                                        "",
+                                                        Eegeo_NEW(View::SwallowCategoryMenuOption)(Search::Swallow::SearchConstants::OFFICE_CATEGORY_NAME,
+                                                                                                   menuViewModel,
+                                                                                                   messageBus));
                 }
                 
                 SwallowSearchMenuModule::~SwallowSearchMenuModule()

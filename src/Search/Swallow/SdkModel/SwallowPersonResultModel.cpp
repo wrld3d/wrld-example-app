@@ -12,11 +12,13 @@ namespace ExampleApp
             {
                 SwallowPersonResultModel::SwallowPersonResultModel(const std::string& name,
                                                                    const std::string& jobTitle,
+                                                                   const std::string& imageFilename,
                                                                    const std::string& workingGroup,
                                                                    const std::string& officeLocation,
                                                                    const std::string& deskCode)
                 : m_name(name)
                 , m_jobTitle(jobTitle)
+                , m_imageFilename(imageFilename)
                 , m_workingGroup(workingGroup)
                 , m_officeLocation(officeLocation)
                 , m_deskCode(deskCode)
@@ -42,6 +44,11 @@ namespace ExampleApp
                 const std::string& SwallowPersonResultModel::GetJobTitle() const
                 {
                     return m_jobTitle;
+                }
+                
+                const std::string& SwallowPersonResultModel::GetImageFilename() const
+                {
+                    return m_imageFilename;
                 }
                 
                 const std::string& SwallowPersonResultModel::GetWorkingGroup() const

@@ -12,6 +12,7 @@
 #include "IMenuViewModel.h"
 #include "SearchResultAddedMessage.h"
 #include "SearchResultRemovedMessage.h"
+#include "ICameraTransitionController.h"
 
 namespace ExampleApp
 {
@@ -31,12 +32,13 @@ namespace ExampleApp
                 void OnSearchResultAddedMessage(const SearchResultAddedMessage& message);
 
                 void OnSearchResultRemovedMessage(const SearchResultRemovedMessage& message);
+                
+                Menu::View::IMenuOption* GetMenuOptionByVendor(const std::string& vendor, const Search::SdkModel::SearchResultModel model);
 
             public:
-                SearchResultAddRemoveHandler(
-                    Menu::View::IMenuOptionsModel& menuOptions,
-                    Menu::View::IMenuViewModel& menuViewModel,
-                    ExampleAppMessaging::TMessageBus& messageBus);
+                SearchResultAddRemoveHandler(Menu::View::IMenuOptionsModel& menuOptions,
+                                             Menu::View::IMenuViewModel& menuViewModel,
+                                             ExampleAppMessaging::TMessageBus& messageBus);
 
                 ~SearchResultAddRemoveHandler();
             };

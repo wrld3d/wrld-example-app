@@ -11,5 +11,10 @@ namespace ExampleApp
         extern const std::string YelpVendorName;
         extern const std::string GeoNamesVendorName;
         extern const std::string SwallowVendorName;
+        extern const std::string SwallowPeopleVendorName;
+        extern const std::string SwallowMeetingRoomsVendorName;
+        extern const std::string SwallowWorkingGroupsVendorName;
+        extern const std::string SwallowFacilitiesVendorName;
+        extern const std::string SwallowOfficesVendorName;
     }
 }

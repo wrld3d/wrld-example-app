@@ -6,7 +6,9 @@
 
 #include "Types.h"
 
-#include "PoiDb.h"
+#include "BidirectionalBus.h"
+#include "CameraTransitions.h"
+#include "SwallowPoiDb.h"
 #include "SwallowSearch.h"
 
 namespace ExampleApp
@@ -21,9 +23,12 @@ namespace ExampleApp
                 {
                 private:
                     Search::SdkModel::ISearchService* m_pSearchService;
+                    SwallowOfficeResultMenuOptionSelectedMessageHandler* m_pSwallowOfficeResultMenuOptionSelectedMessageHandler;
                     
                 public:
-                    SwallowSearchServiceModule(PoiDb::IPoiDbModule& poiDbModule);
+                    SwallowSearchServiceModule(SwallowPoiDb::SwallowPoiDbServiceProvider& swallowPoiDbServiceProvider,
+                                               CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
+                                               ExampleAppMessaging::TMessageBus& messageBus);
                     
                     ~SwallowSearchServiceModule();
                     

@@ -2,6 +2,7 @@
 
 #include "SwallowSearchServiceModule.h"
 
+#include "SwallowOfficeResultMenuOptionSelectedMessageHandler.h"
 #include "SwallowSearchConstants.h"
 #include "SwallowSearchService.h"
 
@@ -13,15 +14,22 @@ namespace ExampleApp
         {
             namespace SdkModel
             {
-                SwallowSearchServiceModule::SwallowSearchServiceModule(PoiDb::IPoiDbModule& poiDbModule)
+                SwallowSearchServiceModule::SwallowSearchServiceModule(SwallowPoiDb::SwallowPoiDbServiceProvider& swallowPoiDbServiceProvider,
+                                                                       CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
+                                                                       ExampleAppMessaging::TMessageBus& messageBus)
                 : m_pSearchService(NULL)
+                , m_pSwallowOfficeResultMenuOptionSelectedMessageHandler(NULL)
                 {
                     m_pSearchService = Eegeo_NEW(SwallowSearchService)(SearchConstants::GetCategories(),
-                                                                       poiDbModule);
+                                                                       swallowPoiDbServiceProvider);
+                    
+                    m_pSwallowOfficeResultMenuOptionSelectedMessageHandler = Eegeo_NEW(SwallowOfficeResultMenuOptionSelectedMessageHandler)(cameraTransitionController, messageBus);
                 }
                     
                 SwallowSearchServiceModule::~SwallowSearchServiceModule()
                 {
+                    Eegeo_DELETE m_pSwallowOfficeResultMenuOptionSelectedMessageHandler;
+                    
                     Eegeo_DELETE m_pSearchService;
                 }
                     

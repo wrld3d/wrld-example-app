@@ -17,6 +17,9 @@
 #include "YelpSearchResultPoiView.h"
 #include "GeoNamesSearchResultPoiView.h"
 #include "SwallowPersonSearchResultPoiView.h"
+#include "SwallowMeetingRoomSearchResultPoiView.h"
+#include "SwallowWorkingGroupSearchResultPoiView.h"
+#include "SwallowFacilitySearchResultPoiView.h"
 
 @interface SearchResultPoiViewContainer()<UIGestureRecognizerDelegate>
 {
@@ -88,9 +91,21 @@
     {
         return [[GeoNamesSearchResultPoiView alloc] initWithInterop:m_pInterop];
     }
-    else if(vendor == ExampleApp::Search::SwallowVendorName)
+    else if(vendor == ExampleApp::Search::SwallowPeopleVendorName)
     {
         return [[SwallowPersonSearchResultPoiView alloc] initWithInterop:m_pInterop];
+    }
+    else if(vendor == ExampleApp::Search::SwallowMeetingRoomsVendorName)
+    {
+        return [[SwallowMeetingRoomSearchResultPoiView alloc] initWithInterop:m_pInterop];
+    }
+    else if(vendor == ExampleApp::Search::SwallowWorkingGroupsVendorName)
+    {
+        return [[SwallowWorkingGroupSearchResultPoiView alloc] initWithInterop:m_pInterop];
+    }
+    else if(vendor == ExampleApp::Search::SwallowFacilitiesVendorName)
+    {
+        return [[SwallowFacilitySearchResultPoiView alloc] initWithInterop:m_pInterop];
     }
     
     Eegeo_ASSERT(false, "Unknown POI vendor %s, cannot create view instance.\n", vendor.c_str());

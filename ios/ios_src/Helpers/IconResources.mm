@@ -3,6 +3,8 @@
 #include "IconResources.h"
 #include "ImageHelpers.h"
 
+#include "SwallowSearchConstants.h"
+
 namespace
 {
     bool Contains(const std::string& string, const std::string& searchFor)
@@ -53,11 +55,11 @@ namespace ExampleApp
                 {
                     return "icon1_food";
                 }
-                if(Contains(category, "person"))
+                if(Contains(category, Search::Swallow::SearchConstants::PERSON_CATEGORY_NAME))
                 {
                     return "icon1_person";
                 }
-                if(Contains(category, "meeting_room"))
+                if(Contains(category, Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME))
                 {
                     return "icon1_meetingroom";
                 }

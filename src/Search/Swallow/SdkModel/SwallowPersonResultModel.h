@@ -17,6 +17,7 @@ namespace ExampleApp
                 private:
                     std::string m_name;
                     std::string m_jobTitle;
+                    std::string m_imageFilename;
                     std::string m_workingGroup;
                     std::string m_officeLocation;
                     std::string m_deskCode;
@@ -25,6 +26,7 @@ namespace ExampleApp
                     
                     SwallowPersonResultModel(const std::string& name,
                                              const std::string& jobTitle,
+                                             const std::string& imageFilename,
                                              const std::string& workingGroup,
                                              const std::string& officeLocation,
                                              const std::string& deskCode);
@@ -36,6 +38,8 @@ namespace ExampleApp
                     const std::string& GetName() const;
                     
                     const std::string& GetJobTitle() const;
+                    
+                    const std::string& GetImageFilename() const;
                     
                     const std::string& GetWorkingGroup() const;
                     

@@ -13,6 +13,7 @@
 #include "Logger.h"
 #include "YelpSearchJsonParser.h"
 #include "YelpSearchResultModel.h"
+#include "SearchVendorNames.h"
 
 using ExampleApp::Search::SdkModel::SearchResultModel;
 
@@ -75,7 +76,7 @@ namespace ExampleApp
                 {
                     m_hiddenSearchResultsDueToMyPins.insert(*pSearchResultModel);
                 }
-                else
+                else if(pSearchResultModel->GetVendor() != Search::SwallowOfficesVendorName)
                 {
                     AddSearchResultOnMap(*pSearchResultModel);
                 }
@@ -95,7 +96,7 @@ namespace ExampleApp
                     Eegeo_ASSERT(hiddenItemIterator != m_hiddenSearchResultsDueToMyPins.end());
                     m_hiddenSearchResultsDueToMyPins.erase(hiddenItemIterator);
                 }
-                else
+                else if(pSearchResultModel->GetVendor() != Search::SwallowOfficesVendorName)
                 {
                     RemoveSearchResultOnMap(*pSearchResultModel);
                 }

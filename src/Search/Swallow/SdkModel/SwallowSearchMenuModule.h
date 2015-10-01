@@ -4,7 +4,6 @@
 
 #include "ISwallowSearchMenuModule.h"
 #include "Types.h"
-#include "PoiDb.h"
 #include "BidirectionalBus.h"
 
 namespace ExampleApp

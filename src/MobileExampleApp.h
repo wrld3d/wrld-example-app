@@ -75,7 +75,7 @@
 #include "InteriorsEntitiesPins.h"
 #include "MapMode.h"
 #include "AppModes.h"
-#include "PoiDb.h"
+#include "SwallowPoiDb.h"
 #include "IToursModule.h"
 #include "SwallowSearch.h"
 
@@ -146,7 +146,7 @@ namespace ExampleApp
         InteriorsEntitiesPins::SdkModel::IInteriorsEntitiesPinsModule* m_pInteriorsEntitiesPinsModule;
         
         Eegeo::Modules::SQLiteModule* m_pSQLiteModule;
-        PoiDb::IPoiDbModule* m_pPoiDbModule;
+        SwallowPoiDb::ISwallowPoiDbModule* m_pSwallowPoiDbModule;
         
         AppModes::SdkModel::IAppModeModel* m_pAppModeModel;
         
