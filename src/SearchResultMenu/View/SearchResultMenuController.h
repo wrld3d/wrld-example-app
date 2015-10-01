@@ -44,6 +44,8 @@ namespace ExampleApp
                 void OnSearchQueryPerformedMessage(const Search::SearchQueryPerformedMessage& message);
 
                 void OnSearchQueryResponseReceivedMessage(const Search::SearchQueryResponseReceivedMessage& message);
+                
+                Menu::View::IMenuOption* GetMenuOptionByVendor(const std::string& vendor, const Search::SdkModel::SearchResultModel& model) const;
 
             protected:
                 void OnViewClicked();

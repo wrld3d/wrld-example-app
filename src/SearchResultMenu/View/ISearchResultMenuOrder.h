@@ -13,6 +13,8 @@ namespace ExampleApp
             class ISearchResultMenuOrder
             {
             public:
+                virtual ~ISearchResultMenuOrder() { }
+                
                 // This operator should return true if a should come before b
                 // (if indifferent return false and the relative order will be maintained)
                 virtual bool operator() (const Search::SdkModel::SearchResultModel& a, const Search::SdkModel::SearchResultModel& b) = 0;

@@ -72,12 +72,15 @@ namespace ExampleApp
                 rapidjson::Writer<rapidjson::StringBuffer> writer(strbuf);
                 valueObject.Accept(writer);
                 
+                std::string modelID = Search::Swallow::SearchConstants::PERSON_CATEGORY_NAME + std::string("_") + resultRow.Cell(columnOffset + poi_id).AsText();
+                Eegeo::Space::LatLong modelLocation = Eegeo::Space::LatLong::FromDegrees(resultRow.Cell(columnOffset + poi_latitude_degrees).AsReal(), resultRow.Cell(columnOffset + poi_longitude_degrees).AsReal());
+                
                 
                 return Search::SdkModel::SearchResultModel(ExampleApp::Search::SdkModel::SearchResultModel::CurrentVersion,
-                                                           resultRow.Cell(columnOffset + poi_id).AsText(),
+                                                           modelID,
                                                            resultRow.Cell(columnOffset + poi_name).AsText(),
                                                            resultRow.Cell(columnOffset + poi_job_title).AsText(),
-                                                           Eegeo::Space::LatLong::FromDegrees(resultRow.Cell(columnOffset + poi_latitude_degrees).AsReal(), resultRow.Cell(columnOffset + poi_longitude_degrees).AsReal()),
+                                                           modelLocation,
                                                            0.0f,
                                                            true,
                                                            Eegeo::Resources::Interiors::InteriorId(resultRow.Cell(columnOffset + poi_interior_id).AsText()),
