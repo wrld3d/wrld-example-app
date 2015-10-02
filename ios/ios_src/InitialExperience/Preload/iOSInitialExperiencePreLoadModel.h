@@ -19,7 +19,8 @@ namespace ExampleApp
 
             public:
                 iOSInitialExperiencePreLoadModel(WorldAreaLoader::SdkModel::IWorldAreaLoaderModel& worldAreaLoaderModel,
-                                                 PersistentSettings::IPersistentSettingsModel& persistentSettings);
+                                                 PersistentSettings::IPersistentSettingsModel& persistentSettings,
+                                                 bool performSilentPreload);
 
                 ~iOSInitialExperiencePreLoadModel();
 

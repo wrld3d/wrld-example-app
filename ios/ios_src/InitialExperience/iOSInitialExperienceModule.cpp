@@ -32,7 +32,8 @@ namespace ExampleApp
             steps.push_back(pIntroScreenStep);
             
             SdkModel::IInitialExperienceStep* pWorldAreaLoaderStep = Eegeo_NEW(PreLoad::iOSInitialExperiencePreLoadModel)(worldAreaLoaderModel,
-                    GetPersistentSettings());
+                                                                                                                          GetPersistentSettings(),
+                                                                                                                          true);
 
             steps.push_back(pWorldAreaLoaderStep);
             

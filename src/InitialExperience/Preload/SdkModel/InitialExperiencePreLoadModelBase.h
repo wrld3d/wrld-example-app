@@ -21,12 +21,15 @@ namespace ExampleApp
                     WorldAreaLoader::SdkModel::IWorldAreaLoaderModel& m_worldAreaLoaderModel;
                     PersistentSettings::IPersistentSettingsModel& m_persistentSettings;
                     Eegeo::Helpers::ICallback0* m_pPreloadCompleteCallback;
+                    
+                    const bool m_performSilentPreload;
 
                     void HandlePreloadComplete();
 
                 public:
                     InitialExperiencePreLoadModelBase(WorldAreaLoader::SdkModel::IWorldAreaLoaderModel& worldAreaLoaderModel,
-                                                      PersistentSettings::IPersistentSettingsModel& persistentSettings);
+                                                      PersistentSettings::IPersistentSettingsModel& persistentSettings,
+                                                      bool performSilentPreload);
 
                     ~InitialExperiencePreLoadModelBase();
 

@@ -35,10 +35,12 @@ namespace ExampleApp
             namespace SdkModel
             {
                 InitialExperiencePreLoadModelBase::InitialExperiencePreLoadModelBase(WorldAreaLoader::SdkModel::IWorldAreaLoaderModel& worldAreaLoaderModel,
-                        PersistentSettings::IPersistentSettingsModel& persistentSettings)
-                    : m_worldAreaLoaderModel(worldAreaLoaderModel)
-                    , m_persistentSettings(persistentSettings)
-                    , m_pPreloadCompleteCallback(Eegeo_NEW(Eegeo::Helpers::TCallback0<InitialExperiencePreLoadModelBase>)(this, &InitialExperiencePreLoadModelBase::HandlePreloadComplete))
+                                                                                     PersistentSettings::IPersistentSettingsModel& persistentSettings,
+                                                                                     bool performSilentPreload)
+                : m_worldAreaLoaderModel(worldAreaLoaderModel)
+                , m_persistentSettings(persistentSettings)
+                , m_pPreloadCompleteCallback(Eegeo_NEW(Eegeo::Helpers::TCallback0<InitialExperiencePreLoadModelBase>)(this, &InitialExperiencePreLoadModelBase::HandlePreloadComplete))
+                , m_performSilentPreload(performSilentPreload)
                 {
                     m_worldAreaLoaderModel.InsertPreloadCompleteCallback(*m_pPreloadCompleteCallback);
                 }
@@ -88,7 +90,14 @@ namespace ExampleApp
                 {
                     Eegeo_ASSERT(!HasCompleted(), "Cannot perform InitialExperiencePreLoadModel step, has already completed.\n");
                     m_persistentSettings.SetValue(InitialExperienceModel_HasCompletedPopUpPreloadOptionExperience_StartedKey, true);
-                    ShowOptions();
+                    if(!m_performSilentPreload)
+                    {
+                        ShowOptions();
+                    }
+                    else
+                    {
+                        PrecacheRegion();
+                    }
                 }
             }
         }

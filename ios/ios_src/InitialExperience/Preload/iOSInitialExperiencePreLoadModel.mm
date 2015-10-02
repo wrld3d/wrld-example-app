@@ -33,7 +33,7 @@ namespace ExampleApp
     {
         self->m_pInitialExperiencePreLoadModel = pInitialExperiencePreLoadModel;
         
-        NSString* alertTitle = @"Pre-load San Francisco?";
+        NSString* alertTitle = @"Pre-load Area?";
         NSString* alertMessage = @"Select 'Yes' to pre-load data for the area around Finsbury Square, London. This message will not appear again";
         NSString* noMessage = @"No";
         NSString* yesMessage = @"Yes";
@@ -97,8 +97,9 @@ namespace ExampleApp
         namespace PreLoad
         {
             iOSInitialExperiencePreLoadModel::iOSInitialExperiencePreLoadModel(WorldAreaLoader::SdkModel::IWorldAreaLoaderModel& worldAreaLoaderModel,
-                    PersistentSettings::IPersistentSettingsModel& persistentSettings)
-                : InitialExperiencePreLoadModelBase(worldAreaLoaderModel, persistentSettings)
+                                                                               PersistentSettings::IPersistentSettingsModel& persistentSettings,
+                                                                               bool performSilentPreload)
+                : InitialExperiencePreLoadModelBase(worldAreaLoaderModel, persistentSettings, performSilentPreload)
                 , m_pAlertListener(NULL)
             {
 
