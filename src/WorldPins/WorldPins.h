@@ -16,6 +16,7 @@ namespace ExampleApp
             class IWorldPinSelectionHandler;
             class IWorldPinVisibilityStateChangedHandler;
             class IWorldPinsScaleController;
+            class IWorldPinsFloorHeightController;
             class IWorldPinsInFocusModel;
             class IWorldPinsInFocusController;
         }
