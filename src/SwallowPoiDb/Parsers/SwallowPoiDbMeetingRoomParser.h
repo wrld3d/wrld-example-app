@@ -16,6 +16,8 @@ namespace ExampleApp
                 Search::SdkModel::SearchResultModel SQLiteResultRowToSearchResult(const Eegeo::SQLite::SQLiteResultRow& resultRow, const std::string& assetsBaseUrl, int columnOffset);
              
                 Search::SdkModel::SearchResultModel SQLiteResultRowToSearchResult(const Eegeo::SQLite::SQLiteResultRow& resultRow, const std::string& assetsBaseUrl);
+            private:
+                std::string GetFormattedAvailabilityString(const std::string& availabilityString) const;
             };
         }
     }

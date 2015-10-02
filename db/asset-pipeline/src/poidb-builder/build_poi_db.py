@@ -9,10 +9,13 @@ import Image
 import xlrd
 
 IMAGES_FOLDER = "images"
-CATEGORIES = [u'Demo Areas',
-              u'Conference Room',
-              u'Facilities',
-              u'Fire Escapes']
+CATEGORIES = [u'stationery',
+              u'toilets',
+              u'print_station',
+              u'emergency_exit']
+MEETING_ROOM_STATUSES = [u'available',
+                         u'available_soon',
+                         u'occupied']
 
 # UK bounds
 MIN_LAT = 49.0
@@ -153,20 +156,30 @@ def validate_images(xls_sheet, first_data_row_number, image_column_index, availa
 
     return all_images_validated
 
-
-def validate_category(xls_sheet, first_data_row_number, category_column_index, available_in_app_col_index):
+def validate_category_text_field(xls_sheet, poi_columns, column_name, first_data_row_number, available_in_app_col_index, categories):
+    column_index = poi_columns.index(column_name)
     all_rows_validated = True
     for row_num in range(first_data_row_number, xls_sheet.nrows):
         if not is_row_available_in_app(xls_sheet, row_num, available_in_app_col_index):
             continue
-        category = xls_sheet.cell_value(row_num, category_column_index)
 
-        if not category in CATEGORIES:
-            print("Unknown category " + category + " for row " + str(row_num))
+        text_type = xls_sheet.cell_type(row_num, column_index)
+        text_value = xls_sheet.cell_value(row_num, column_index).encode('utf-8')
+
+        if not text_value:
+            print ("empty cell found for required text field '%s', row %d " % (column_name, row_num))
+            all_rows_validated = False
+
+        if not text_value in categories:
+            print("Unknown category " + text_value + " for row " + str(row_num))
+            all_rows_validated = False
+
+        if not text_type is xlrd.XL_CELL_TEXT:
+            print ("non-text cell value '%s' found for required text field '%s', row %d " % (str(text_value), column_name, row_num))
             all_rows_validated = False
 
     if not all_rows_validated:
-        print ("Failed to find all image files")
+        print("Failed to validate all required text fields")
 
     return all_rows_validated
 
@@ -396,7 +409,7 @@ def build_meeting_room_table(xls_book, sheet_index, db_cursor, connection, src_i
     if not all_validated and stop_on_first_error:
         raise ValueError("failed to validated image_filename column values")
 
-    all_validated &= validate_required_text_field(xls_sheet, poi_columns, 'availability', first_data_row_number, available_in_app_col_index)
+    all_validated &= validate_category_text_field(xls_sheet, poi_columns, 'availability', first_data_row_number, available_in_app_col_index, MEETING_ROOM_STATUSES)
     if not all_validated and stop_on_first_error:
         raise ValueError("failed to validated availability column values")
 
@@ -522,8 +535,7 @@ def build_facility_table(xls_book, sheet_index, db_cursor, connection, src_image
     if not all_validated and stop_on_first_error:
         raise ValueError("failed to validated name column values")
 
-    #TODO: Validate on actual category instead of just chekcing existance
-    all_validated &= validate_required_text_field(xls_sheet, poi_columns, 'category', first_data_row_number, available_in_app_col_index)
+    all_validated &= validate_category_text_field(xls_sheet, poi_columns, 'category', first_data_row_number, available_in_app_col_index, CATEGORIES)
     if not all_validated and stop_on_first_error:
         raise ValueError("failed to validated name category values")
 

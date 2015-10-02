@@ -59,11 +59,12 @@ namespace ExampleApp
                 
                 std::string modelID = Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME + std::string("_") + resultRow.Cell(columnOffset + poi_id).AsText();
                 Eegeo::Space::LatLong modelLocation = Eegeo::Space::LatLong::FromDegrees(resultRow.Cell(columnOffset + poi_latitude_degrees).AsReal(), resultRow.Cell(columnOffset + poi_longitude_degrees).AsReal());
+                std::string modelSubTitle = GetFormattedAvailabilityString(resultRow.Cell(columnOffset + poi_availability).AsText());
                 
                 return Search::SdkModel::SearchResultModel(ExampleApp::Search::SdkModel::SearchResultModel::CurrentVersion,
                                                            modelID,
                                                            resultRow.Cell(columnOffset + poi_name).AsText(),
-                                                           resultRow.Cell(columnOffset + poi_availability).AsText(),
+                                                           modelSubTitle,
                                                            modelLocation,
                                                            0.0f,
                                                            true,
@@ -79,6 +80,26 @@ namespace ExampleApp
             Search::SdkModel::SearchResultModel SwallowPoiDbMeetingRoomParser::SQLiteResultRowToSearchResult(const Eegeo::SQLite::SQLiteResultRow& resultRow, const std::string& assetsBaseUrl)
             {
                 return SQLiteResultRowToSearchResult(resultRow, assetsBaseUrl, FtsQueryColumnIndices_MAX);
+            }
+            
+            std::string SwallowPoiDbMeetingRoomParser::GetFormattedAvailabilityString(const std::string& availabilityString) const
+            {
+                if(availabilityString == Search::Swallow::SearchConstants::MEETING_ROOM_AVAILABLE)
+                {
+                    return "Available";
+                }
+                else if(availabilityString == Search::Swallow::SearchConstants::MEETING_ROOM_AVAILABLE_SOON)
+                {
+                    return "Available Soon";
+                }
+                else if(availabilityString == Search::Swallow::SearchConstants::MEETING_ROOM_OCCUPIED)
+                {
+                    return "Occupied";
+                }
+                else
+                {
+                    Eegeo_ASSERT(false, "Unrecognised meeting room availabity string");
+                }
             }
         }
     }
