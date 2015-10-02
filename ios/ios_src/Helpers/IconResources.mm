@@ -63,6 +63,30 @@ namespace ExampleApp
                 {
                     return "icon1_meetingroom";
                 }
+                if(Contains(category, Search::Swallow::SearchConstants::WORKING_GROUP_CATEGORY_NAME))
+                {
+                    return "icon1_workinggroup";
+                }
+                if(Contains(category, Search::Swallow::SearchConstants::OFFICE_CATEGORY_NAME))
+                {
+                    return "icon1_office";
+                }
+                if(Contains(category, Search::Swallow::SearchConstants::STATIONERY_CATEGORY_NAME))
+                {
+                    return "icon1_stationery";
+                }
+                if(Contains(category, Search::Swallow::SearchConstants::TOILETS_CATEGORY_NAME))
+                {
+                    return "icon1_toilets";
+                }
+                if(Contains(category, Search::Swallow::SearchConstants::PRINT_STATION_CATEGORY_NAME))
+                {
+                    return "icon1_printstation";
+                }
+                if(Contains(category, Search::Swallow::SearchConstants::EMERGENCY_EXIT_CATEGORY_NAME))
+                {
+                    return "icon1_emergencyexit";
+                }
 
                 return "icon1_misc";
             }

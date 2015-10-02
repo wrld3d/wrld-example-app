@@ -20,6 +20,8 @@
     float m_stateChangeAnimationTimeSeconds;
     ExampleApp::Search::SdkModel::SearchResultModel m_model;
     ExampleApp::Search::Swallow::SdkModel::SwallowMeetingRoomResultModel m_meetingRoomModel;
+    // using this as temporary storage for updating state of the availability buttons as we don't have a process to update the backend data yet
+    std::string m_availability;
     ExampleApp::SearchResultPoi::View::SearchResultPoiViewInterop* m_pInterop;
     
     bool m_isPinned;
@@ -62,7 +64,9 @@
 
 @property (nonatomic, retain) UIView* pAvailableHeaderContainer;
 @property (nonatomic, retain) UILabel* pAvailableHeaderLabel;
-@property (nonatomic, retain) UILabel* pAvailableContent;
+@property (nonatomic, retain) UIButton* pAvailableButton;
+@property (nonatomic, retain) UIButton* pAvailableSoonButton;
+@property (nonatomic, retain) UIButton* pOccupiedButton;
 
 @property (nonatomic, retain) UIView* pCategoriesHeaderContainer;
 @property (nonatomic, retain) UILabel* pCategoriesHeaderLabel;

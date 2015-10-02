@@ -11,6 +11,7 @@
 #import "UIView+TouchExclusivity.h"
 #include "SwallowMeetingRoomSearchResultPoiView.h"
 #include "SwallowSearchParser.h"
+#include "SwallowSearchConstants.h"
 #include "App.h"
 
 @interface SwallowMeetingRoomSearchResultPoiView()<UIGestureRecognizerDelegate>
@@ -84,7 +85,6 @@ const int DeletePinAlertViewTag = 1;
         self.pPreviewImageSpinner.center = CGPointZero;
         [self.pPreviewImage addSubview: self.pPreviewImageSpinner];
         
-        // available labels/title
         self.pAvailableHeaderContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         self.pAvailableHeaderContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::GoldTone;
         [self.pLabelsContainer addSubview: self.pAvailableHeaderContainer];
@@ -92,9 +92,23 @@ const int DeletePinAlertViewTag = 1;
         self.pAvailableHeaderLabel = [self createLabel :ExampleApp::Helpers::ColorPalette::WhiteTone :ExampleApp::Helpers::ColorPalette::GoldTone];
         [self.pAvailableHeaderContainer addSubview: self.pAvailableHeaderLabel];
         
-        self.pAvailableContent = [self createLabel :ExampleApp::Helpers::ColorPalette::MainHudColor :ExampleApp::Helpers::ColorPalette::WhiteTone];
-        self.pAvailableContent.textColor = ExampleApp::Helpers::ColorPalette::DarkGreyTone;
-        [self.pLabelsContainer addSubview: self.pAvailableContent];
+        self.pAvailableButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        [self.pAvailableButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_occupancy_available_off") forState:UIControlStateNormal];
+        [self.pAvailableButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_occupancy_available_on") forState:UIControlStateSelected];
+        [self.pAvailableButton addTarget:self action:@selector(handleAvailableButtonSelected) forControlEvents:UIControlEventTouchUpInside];
+        [self.pLabelsContainer addSubview: self.pAvailableButton];
+        
+        self.pAvailableSoonButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        [self.pAvailableSoonButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_occupancy_availablesoon_off") forState:UIControlStateNormal];
+        [self.pAvailableSoonButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_occupancy_availablesoon_on") forState:UIControlStateSelected];
+        [self.pAvailableSoonButton addTarget:self action:@selector(handleAvailableSoonButtonSelected) forControlEvents:UIControlEventTouchUpInside];
+        [self.pLabelsContainer addSubview: self.pAvailableSoonButton];
+        
+        self.pOccupiedButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        [self.pOccupiedButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_occupancy_occupied_off") forState:UIControlStateNormal];
+        [self.pOccupiedButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_occupancy_occupied_on") forState:UIControlStateSelected];
+        [self.pOccupiedButton addTarget:self action:@selector(handleOccupiedButtonSelected) forControlEvents:UIControlEventTouchUpInside];
+        [self.pLabelsContainer addSubview: self.pOccupiedButton];
         
         self.pCategoriesHeaderContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         self.pCategoriesHeaderContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::GoldTone;
@@ -106,7 +120,6 @@ const int DeletePinAlertViewTag = 1;
         self.pCategoriesContent = [self createLabel :ExampleApp::Helpers::ColorPalette::MainHudColor :ExampleApp::Helpers::ColorPalette::WhiteTone];
         self.pCategoriesContent.textColor = ExampleApp::Helpers::ColorPalette::DarkGreyTone;
         [self.pLabelsContainer addSubview: self.pCategoriesContent];
-        
         
         [self setTouchExclusivity: self];
         
@@ -151,8 +164,14 @@ const int DeletePinAlertViewTag = 1;
     [self.pAvailableHeaderContainer removeFromSuperview];
     [self.pAvailableHeaderContainer release];
     
-    [self.pAvailableContent removeFromSuperview];
-    [self.pAvailableContent release];
+    [self.pOccupiedButton removeFromSuperview];
+    [self.pOccupiedButton release];
+    
+    [self.pAvailableSoonButton removeFromSuperview];
+    [self.pAvailableSoonButton release];
+    
+    [self.pAvailableButton removeFromSuperview];
+    [self.pAvailableButton release];
     
     [self.pCategoriesHeaderContainer removeFromSuperview];
     [self.pCategoriesHeaderContainer release];
@@ -260,21 +279,52 @@ const int DeletePinAlertViewTag = 1;
     const float headerLabelHeight = 20.f;
     const float labelYSpacing = 8.f;
     const float headerTextPadding = 3.0f;
+    const float buttonSpacing = 16.0f;
+    const float buttonWidth = m_labelsSectionWidth / 2.0f;
+    const float buttonHeight = 40.0f;
+    const float buttonX = m_labelsSectionWidth / 4.0f;
     
-    float currentLabelY = 8.f;
+    float currentContentY = 8.f;
+    
     if(!m_meetingRoomModel.GetImageUrl().empty())
     {
-        currentLabelY = 0.f;
+        currentContentY = 0.f;
         
-        self.pPreviewImage.frame = CGRectMake(0, currentLabelY, m_imageWidth, m_imageHeight);
+        self.pPreviewImage.frame = CGRectMake(0, currentContentY, m_imageWidth, m_imageHeight);
         [self.pPreviewImage setClipsToBounds:YES];
         self.pPreviewImageSpinner.center = [self.pPreviewImage convertPoint:self.pPreviewImage.center fromView:self.pPreviewImage.superview];
         const CGFloat imageBottomPadding = 8.0;
-        currentLabelY += (m_imageHeight + imageBottomPadding);
+        currentContentY += (m_imageHeight + imageBottomPadding);
         self.pPreviewImage.hidden = false;
     }
     
-    [self.pLabelsContainer setContentSize:CGSizeMake(m_labelsSectionWidth, currentLabelY)];
+    if(!m_availability.empty())
+    {
+        self.pAvailableHeaderContainer.frame = CGRectMake(0.f, currentContentY, m_labelsSectionWidth, headerLabelHeight + 2 * headerTextPadding);
+        self.pAvailableHeaderContainer.hidden = false;
+        
+        self.pAvailableHeaderLabel.frame = CGRectMake(headerTextPadding, headerTextPadding, m_labelsSectionWidth - headerTextPadding * 2, headerLabelHeight);
+        self.pAvailableHeaderLabel.text = @"Availability";
+        self.pAvailableHeaderLabel.hidden = false;
+        currentContentY += buttonSpacing + self.pAvailableHeaderContainer.frame.size.height;
+        
+        self.pAvailableButton.frame = CGRectMake(buttonX, currentContentY, buttonWidth, buttonHeight);
+        self.pAvailableButton.hidden = false;
+        self.pAvailableButton.selected = m_availability == ExampleApp::Search::Swallow::SearchConstants::MEETING_ROOM_AVAILABLE;
+        currentContentY += buttonSpacing + self.pAvailableButton.frame.size.height;
+        
+        self.pAvailableSoonButton.frame = CGRectMake(buttonX, currentContentY, buttonWidth, buttonHeight);
+        self.pAvailableSoonButton.hidden = false;
+        self.pAvailableSoonButton.selected = m_availability == ExampleApp::Search::Swallow::SearchConstants::MEETING_ROOM_AVAILABLE_SOON;
+        currentContentY += buttonSpacing + self.pAvailableSoonButton.frame.size.height;
+        
+        self.pOccupiedButton.frame = CGRectMake(buttonX, currentContentY, buttonWidth, buttonHeight);
+        self.pOccupiedButton.hidden = false;
+        self.pOccupiedButton.selected = m_availability == ExampleApp::Search::Swallow::SearchConstants::MEETING_ROOM_OCCUPIED;
+        currentContentY += labelYSpacing + self.pOccupiedButton.frame.size.height;
+    }
+    
+    [self.pLabelsContainer setContentSize:CGSizeMake(m_labelsSectionWidth, currentContentY)];
 }
 
 - (void) setContent:(const ExampleApp::Search::SdkModel::SearchResultModel*)pModel :(bool)isPinned
@@ -283,6 +333,7 @@ const int DeletePinAlertViewTag = 1;
     
     m_model = *pModel;
     m_meetingRoomModel = ExampleApp::Search::Swallow::SdkModel::SearchParser::TransformToSwallowMeetingRoomResult(m_model);
+    m_availability = m_meetingRoomModel.GetAvailability();
     m_isPinned = isPinned;
     [self updatePinnedButtonState];
     
@@ -294,7 +345,9 @@ const int DeletePinAlertViewTag = 1;
     
     self.pAvailableHeaderContainer.hidden = true;
     self.pAvailableHeaderLabel.hidden = true;
-    self.pAvailableContent.hidden = true;
+    self.pAvailableButton.hidden = true;
+    self.pAvailableSoonButton.hidden = true;
+    self.pOccupiedButton.hidden = true;
     self.pPreviewImage.hidden = true;
     self.pCategoriesHeaderContainer.hidden = true;
     self.pCategoriesContent.hidden = true;
@@ -404,6 +457,27 @@ const int DeletePinAlertViewTag = 1;
         default:
             break;
     }
+}
+
+- (void) handleAvailableButtonSelected
+{
+    m_availability = ExampleApp::Search::Swallow::SearchConstants::MEETING_ROOM_AVAILABLE;
+    
+    [self performDynamicContentLayout];
+}
+
+- (void) handleAvailableSoonButtonSelected
+{
+    m_availability = ExampleApp::Search::Swallow::SearchConstants::MEETING_ROOM_AVAILABLE_SOON;
+    
+    [self performDynamicContentLayout];
+}
+
+- (void) handleOccupiedButtonSelected
+{
+    m_availability = ExampleApp::Search::Swallow::SearchConstants::MEETING_ROOM_OCCUPIED;
+    
+    [self performDynamicContentLayout];
 }
 
 - (void) handleClosedButtonSelected

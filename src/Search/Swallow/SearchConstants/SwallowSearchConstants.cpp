@@ -22,11 +22,19 @@ namespace ExampleApp
                 const std::string DISTANCE_FIELD_NAME = "distance";
                 const std::string HEADING_DEGREES_FIELD_NAME = "heading_degrees";
                 
-                extern const std::string PERSON_CATEGORY_NAME = "person";
-                extern const std::string MEETING_ROOM_CATEGORY_NAME = "meeting_room";
-                extern const std::string WORKING_GROUP_CATEGORY_NAME = "working_group";
-                extern const std::string FACILITY_CATEGORY_NAME = "facility";
-                extern const std::string OFFICE_CATEGORY_NAME = "office";
+                const std::string PERSON_CATEGORY_NAME = "person";
+                const std::string MEETING_ROOM_CATEGORY_NAME = "meeting_room";
+                const std::string WORKING_GROUP_CATEGORY_NAME = "working_group";
+                const std::string FACILITY_CATEGORY_NAME = "facility";
+                const std::string OFFICE_CATEGORY_NAME = "office";
+                const std::string STATIONERY_CATEGORY_NAME = "stationery";
+                const std::string TOILETS_CATEGORY_NAME = "toilets";
+                const std::string PRINT_STATION_CATEGORY_NAME = "print_station";
+                const std::string EMERGENCY_EXIT_CATEGORY_NAME = "emergency_exit";
+                
+                const std::string MEETING_ROOM_AVAILABLE = "available";
+                const std::string MEETING_ROOM_AVAILABLE_SOON = "available_soon";
+                const std::string MEETING_ROOM_OCCUPIED = "occupied";
                 
                 std::vector<CategorySearch::View::CategorySearchModel> GetCategorySearchModels()
                 {

@@ -63,6 +63,16 @@ const int DeletePinAlertViewTag = 1;
         self.pLabelsContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::WhiteTone;
         [self.pContentContainer addSubview: self.pLabelsContainer];
         
+        self.pDescriptionHeaderContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        self.pDescriptionHeaderContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::GoldTone;
+        [self.pLabelsContainer addSubview: self.pDescriptionHeaderContainer];
+        
+        self.pDescriptionHeaderLabel = [self createLabel :ExampleApp::Helpers::ColorPalette::WhiteTone :ExampleApp::Helpers::ColorPalette::GoldTone];
+        [self.pDescriptionHeaderContainer addSubview: self.pDescriptionHeaderLabel];
+        
+        self.pDescriptionContent = [self createLabel :ExampleApp::Helpers::ColorPalette::DarkGreyTone :ExampleApp::Helpers::ColorPalette::WhiteTone];
+        [self.pLabelsContainer addSubview: self.pDescriptionContent];
+        
         self.pHeadlineContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         self.pHeadlineContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::WhiteTone;
         [self.pControlContainer addSubview: self.pHeadlineContainer];
@@ -120,6 +130,15 @@ const int DeletePinAlertViewTag = 1;
     
     [self.pHeadlineContainer removeFromSuperview];
     [self.pHeadlineContainer release];
+    
+    [self.pDescriptionContent removeFromSuperview];
+    [self.pDescriptionContent release];
+    
+    [self.pDescriptionHeaderLabel removeFromSuperview];
+    [self.pDescriptionHeaderLabel release];
+    
+    [self.pDescriptionHeaderContainer removeFromSuperview];
+    [self.pDescriptionHeaderContainer release];
     
     [self.pLabelsContainer removeFromSuperview];
     [self.pLabelsContainer release];
@@ -253,6 +272,29 @@ const int DeletePinAlertViewTag = 1;
         self.pPreviewImage.hidden = false;
     }
     
+    if(!m_workingGroupModel.GetDescription().empty())
+    {
+        self.pDescriptionHeaderContainer.frame = CGRectMake(0.f, currentLabelY, m_labelsSectionWidth, headerLabelHeight + 2 * headerTextPadding);
+        self.pDescriptionHeaderContainer.hidden = false;
+        
+        self.pDescriptionHeaderLabel.frame = CGRectMake(headerTextPadding, headerTextPadding, m_labelsSectionWidth - headerTextPadding, headerLabelHeight);
+        self.pDescriptionHeaderLabel.text = @"Description";
+        self.pDescriptionHeaderLabel.hidden = false;
+        currentLabelY += labelYSpacing + self.pDescriptionHeaderContainer.frame.size.height;
+        
+        self.pDescriptionContent.frame = CGRectMake(headerTextPadding, currentLabelY, m_labelsSectionWidth - headerTextPadding, 32.f);
+        self.pDescriptionContent.text = [NSString stringWithUTF8String:m_workingGroupModel.GetDescription().c_str()];
+        
+        self.pDescriptionContent.numberOfLines = 0;
+        self.pDescriptionContent.adjustsFontSizeToFitWidth = NO;
+        self.pDescriptionContent.lineBreakMode = NSLineBreakByWordWrapping;
+        
+        self.pDescriptionContent.hidden = false;
+        [self.pDescriptionContent sizeToFit];
+        
+        currentLabelY += labelYSpacing + self.pDescriptionContent.frame.size.height;
+    }
+    
     [self.pLabelsContainer setContentSize:CGSizeMake(m_labelsSectionWidth, currentLabelY)];
 }
 
@@ -274,6 +316,9 @@ const int DeletePinAlertViewTag = 1;
     self.pPreviewImage.hidden = true;
     self.pCategoriesHeaderContainer.hidden = true;
     self.pCategoriesContent.hidden = true;
+    self.pDescriptionHeaderContainer.hidden = true;
+    self.pDescriptionHeaderLabel.hidden = true;
+    self.pDescriptionContent.hidden = true;
     
     [self performDynamicContentLayout];
     

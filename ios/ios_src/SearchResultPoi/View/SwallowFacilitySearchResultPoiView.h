@@ -59,11 +59,12 @@
 @property (nonatomic, retain) UIScrollView* pLabelsContainer;
 @property (nonatomic, retain) UIView* pCategoryIconContainer;
 @property (nonatomic, retain) UILabel* pTitleLabel;
-
+@property (nonatomic, retain) UIView* pDescriptionHeaderContainer;
+@property (nonatomic, retain) UILabel* pDescriptionHeaderLabel;
+@property (nonatomic, retain) UILabel* pDescriptionContent;
 @property (nonatomic, retain) UIView* pCategoriesHeaderContainer;
 @property (nonatomic, retain) UILabel* pCategoriesHeaderLabel;
 @property (nonatomic, retain) UILabel* pCategoriesContent;
-
 @property (nonatomic, retain) UIImageView* pPreviewImage;
 @property (nonatomic, retain) UIActivityIndicatorView* pPreviewImageSpinner;
 @end

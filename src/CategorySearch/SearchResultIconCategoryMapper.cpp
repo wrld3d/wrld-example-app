@@ -39,8 +39,15 @@ namespace ExampleApp
             m_categoryToIconIndex["museums"] = 8;
             m_categoryToIconIndex["arts"] = 8;
             
-            m_categoryToIconIndex[Search::Swallow::SearchConstants::PERSON_CATEGORY_NAME] = 14;
-            m_categoryToIconIndex[Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME] = 16;
+            m_categoryToIconIndex[Search::Swallow::SearchConstants::PERSON_CATEGORY_NAME] = 12;
+            m_categoryToIconIndex[Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME] = 13;
+            m_categoryToIconIndex[Search::Swallow::SearchConstants::WORKING_GROUP_CATEGORY_NAME] = 14;
+            m_categoryToIconIndex[Search::Swallow::SearchConstants::OFFICE_CATEGORY_NAME] = 15;
+            m_categoryToIconIndex[Search::Swallow::SearchConstants::STATIONERY_CATEGORY_NAME] = 16;
+            m_categoryToIconIndex[Search::Swallow::SearchConstants::TOILETS_CATEGORY_NAME] = 17;
+            m_categoryToIconIndex[Search::Swallow::SearchConstants::PRINT_STATION_CATEGORY_NAME] = 18;
+            m_categoryToIconIndex[Search::Swallow::SearchConstants::EMERGENCY_EXIT_CATEGORY_NAME] = 19;
+            
         }
         
         SearchResultIconCategoryMapper::~SearchResultIconCategoryMapper()
