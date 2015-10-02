@@ -35,7 +35,7 @@ namespace ExampleApp
                 Eegeo::SQLite::SQLiteSpellingSuggestionResults spellingSuggestions;
                 (*it).second->SuggestSpelling(query, spellingSuggestions);
                 
-                (*it).second->FullTextSearch(query, out_results);
+                (*it).second->FullTextSearch(spellingSuggestions.spellCheckedSearchQuery, out_results);
             }
         }
         
