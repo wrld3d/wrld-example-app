@@ -26,13 +26,14 @@ namespace ExampleApp
                                                                                    Camera::IToursCameraController& toursCameraController,
                                                                                    WorldPins::SdkModel::IWorldPinsService& worldPinsService,
                                                                                    bool interiorsEnabled,
-                                                                                   Eegeo::Resources::Interiors::InteriorsController& interiorController
-                                                                             )
+                                                                                   Eegeo::Resources::Interiors::InteriorsController& interiorController,
+                                                                                   ExampleAppMessaging::TMessageBus& messageBus)
                     : m_toursCameraController(toursCameraController)
                     , m_toursCameraTransitionController(toursCameraTransitionController)
                     , m_worldPinsService(worldPinsService)
                     , m_interiorController(interiorController)
                     , m_interiorsEnabled(interiorsEnabled)
+                    , m_messageBus(messageBus)
                     {
                         
                     }
@@ -62,7 +63,8 @@ namespace ExampleApp
                                                                                 m_worldPinsService,
                                                                                 blankWorldPinInteriorData,
                                                                                 m_interiorController,
-                                                                                m_toursCameraController.GetRenderCamera())));
+                                                                                m_toursCameraController.GetRenderCamera(),
+                                                                                m_messageBus)));
 
                         
                         stateMachineStates.push_back(Eegeo_NEW(ExampleTourState(tourModel.States()[tourIndex++],
@@ -72,7 +74,8 @@ namespace ExampleApp
                                                                                 m_worldPinsService,
                                                                                 hotelPinInteriorData,
                                                                                 m_interiorController,
-                                                                                m_toursCameraController.GetRenderCamera())));
+                                                                                m_toursCameraController.GetRenderCamera(),
+                                                                                m_messageBus)));
                         
                         stateMachineStates.push_back(Eegeo_NEW(ExampleTourState(tourModel.States()[tourIndex++],
                                                                                 Eegeo::Space::LatLong::FromDegrees(37.787939, -122.407558),
@@ -81,7 +84,8 @@ namespace ExampleApp
                                                                                 m_worldPinsService,
                                                                                 blankWorldPinInteriorData,
                                                                                 m_interiorController,
-                                                                                m_toursCameraController.GetRenderCamera())));
+                                                                                m_toursCameraController.GetRenderCamera(),
+                                                                                m_messageBus)));
                         
                         
                         return Eegeo_NEW(States::TourStateMachine)(stateMachineStates,

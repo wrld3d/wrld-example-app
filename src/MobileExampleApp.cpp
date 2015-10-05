@@ -701,8 +701,8 @@ namespace ExampleApp
                                                                                         ToursModule().GetCameraController(),
                                                                                         m_pToursWorldPinsModule->GetWorldPinsService(),
                                                                                         m_interiorsEnabled,
-                                                                                        interiorsPresentationModule.GetLegacyInteriorsController()
-                                                                                        );
+                                                                                        interiorsPresentationModule.GetLegacyInteriorsController(),
+                                                                                        m_messageBus);
         
         ToursModule().GetTourService().AddTour(tourModel, *factory.CreateTourStateMachine(tourModel));
     }

@@ -1251,6 +1251,16 @@
 		7EE48256168477A80006E99B /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE48255168477A80006E99B /* MobileCoreServices.framework */; };
 		7EE48258168477CB0006E99B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE48257168477CB0006E99B /* libz.dylib */; };
 		7EF5D8651737F9A40049D787 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EF5D8641737F9A40049D787 /* CoreLocation.framework */; };
+		BF4FEE391BC2BD1200932C17 /* ExampleTourPinSelectionHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF4FEE381BC2BD1200932C17 /* ExampleTourPinSelectionHandler.cpp */; };
+		BF4FEE3A1BC2BD1200932C17 /* ExampleTourPinSelectionHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF4FEE381BC2BD1200932C17 /* ExampleTourPinSelectionHandler.cpp */; };
+		BF4FEE3D1BC2BF8400932C17 /* ExampleTourSearchResultPoiView.mm in Sources */ = {isa = PBXBuildFile; fileRef = BF4FEE3C1BC2BF8400932C17 /* ExampleTourSearchResultPoiView.mm */; };
+		BF4FEE3E1BC2BF8400932C17 /* ExampleTourSearchResultPoiView.mm in Sources */ = {isa = PBXBuildFile; fileRef = BF4FEE3C1BC2BF8400932C17 /* ExampleTourSearchResultPoiView.mm */; };
+		BF4FEE441BC2C0E600932C17 /* ExampleSearchJsonParser.h in Sources */ = {isa = PBXBuildFile; fileRef = BF4FEE421BC2C0E600932C17 /* ExampleSearchJsonParser.h */; };
+		BF4FEE451BC2C0E600932C17 /* ExampleSearchJsonParser.h in Sources */ = {isa = PBXBuildFile; fileRef = BF4FEE421BC2C0E600932C17 /* ExampleSearchJsonParser.h */; };
+		BF4FEE481BC2C1AC00932C17 /* ExampleSearchResultModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF4FEE461BC2C1AC00932C17 /* ExampleSearchResultModel.cpp */; };
+		BF4FEE491BC2C1AC00932C17 /* ExampleSearchResultModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF4FEE461BC2C1AC00932C17 /* ExampleSearchResultModel.cpp */; };
+		BF4FEE4A1BC2C78400932C17 /* ExampleSearchJsonParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF4FEE431BC2C0E600932C17 /* ExampleSearchJsonParser.cpp */; };
+		BF4FEE4B1BC2C78500932C17 /* ExampleSearchJsonParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF4FEE431BC2C0E600932C17 /* ExampleSearchJsonParser.cpp */; };
 		BFD4C7231BA9BB1F006F4E0B /* TourStateChangedMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFD4C7211BA9BB1F006F4E0B /* TourStateChangedMessage.cpp */; };
 		BFD4C7241BA9BB1F006F4E0B /* TourStateChangedMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFD4C7211BA9BB1F006F4E0B /* TourStateChangedMessage.cpp */; };
 		BFD5FCB41BA7068300F591F1 /* TourDefines.mm in Sources */ = {isa = PBXBuildFile; fileRef = BFD5FC8D1BA7068300F591F1 /* TourDefines.mm */; };
@@ -2660,6 +2670,13 @@
 		7EE48255168477A80006E99B /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		7EE48257168477CB0006E99B /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		7EF5D8641737F9A40049D787 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		BF4FEE381BC2BD1200932C17 /* ExampleTourPinSelectionHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ExampleTourPinSelectionHandler.cpp; sourceTree = "<group>"; };
+		BF4FEE3C1BC2BF8400932C17 /* ExampleTourSearchResultPoiView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ExampleTourSearchResultPoiView.mm; sourceTree = "<group>"; };
+		BF4FEE3F1BC2BFD000932C17 /* ExampleTourSearchResultPoiView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExampleTourSearchResultPoiView.h; sourceTree = "<group>"; };
+		BF4FEE421BC2C0E600932C17 /* ExampleSearchJsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExampleSearchJsonParser.h; path = Example/SdkModel/ExampleSearchJsonParser.h; sourceTree = "<group>"; };
+		BF4FEE431BC2C0E600932C17 /* ExampleSearchJsonParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ExampleSearchJsonParser.cpp; path = Example/SdkModel/ExampleSearchJsonParser.cpp; sourceTree = "<group>"; };
+		BF4FEE461BC2C1AC00932C17 /* ExampleSearchResultModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ExampleSearchResultModel.cpp; path = Example/SdkModel/ExampleSearchResultModel.cpp; sourceTree = "<group>"; };
+		BF4FEE471BC2C1AC00932C17 /* ExampleSearchResultModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExampleSearchResultModel.h; path = Example/SdkModel/ExampleSearchResultModel.h; sourceTree = "<group>"; };
 		BFD4C7211BA9BB1F006F4E0B /* TourStateChangedMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TourStateChangedMessage.cpp; sourceTree = "<group>"; };
 		BFD4C7221BA9BB1F006F4E0B /* TourStateChangedMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TourStateChangedMessage.h; sourceTree = "<group>"; };
 		BFD5FC8C1BA7068300F591F1 /* TourDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TourDefines.h; sourceTree = "<group>"; };
@@ -4243,6 +4260,7 @@
 		7E3B87D41A385A290023C94E /* Search */ = {
 			isa = PBXGroup;
 			children = (
+				BF4FEE401BC2C09C00932C17 /* Example */,
 				27DB89F71BB413F60020CDA5 /* SearchVendorNames.cpp */,
 				27DB89F81BB413F60020CDA5 /* SearchVendorNames.h */,
 				27E997591BB2B74600B0BE14 /* Combined */,
@@ -4965,6 +4983,8 @@
 				1878531B1A9CD0A90001889C /* GeoNamesSearchResultPoiView.mm */,
 				187853141A9CD0820001889C /* YelpSearchResultPoiView.h */,
 				187853131A9CD0820001889C /* YelpSearchResultPoiView.mm */,
+				BF4FEE3C1BC2BF8400932C17 /* ExampleTourSearchResultPoiView.mm */,
+				BF4FEE3F1BC2BFD000932C17 /* ExampleTourSearchResultPoiView.h */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -5426,6 +5446,25 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		BF4FEE401BC2C09C00932C17 /* Example */ = {
+			isa = PBXGroup;
+			children = (
+				BF4FEE411BC2C0AF00932C17 /* SdkModel */,
+			);
+			name = Example;
+			sourceTree = "<group>";
+		};
+		BF4FEE411BC2C0AF00932C17 /* SdkModel */ = {
+			isa = PBXGroup;
+			children = (
+				BF4FEE421BC2C0E600932C17 /* ExampleSearchJsonParser.h */,
+				BF4FEE431BC2C0E600932C17 /* ExampleSearchJsonParser.cpp */,
+				BF4FEE461BC2C1AC00932C17 /* ExampleSearchResultModel.cpp */,
+				BF4FEE471BC2C1AC00932C17 /* ExampleSearchResultModel.h */,
+			);
+			name = SdkModel;
+			sourceTree = "<group>";
+		};
 		BFD5FC8A1BA7068300F591F1 /* Tours */ = {
 			isa = PBXGroup;
 			children = (
@@ -5622,6 +5661,7 @@
 				BFD5FCFE1BA706AD00F591F1 /* ExampleTourState.h */,
 				BFD5FCFF1BA706AD00F591F1 /* ExampleTourStateMachineFactory.cpp */,
 				BFD5FD001BA706AD00F591F1 /* ExampleTourStateMachineFactory.h */,
+				BF4FEE381BC2BD1200932C17 /* ExampleTourPinSelectionHandler.cpp */,
 			);
 			path = Example;
 			sourceTree = "<group>";
@@ -6556,6 +6596,7 @@
 				18096F591A7B8DC7006A6438 /* OptionsModule.cpp in Sources */,
 				BFD5FCB71BA7068300F591F1 /* iCarouselTourExplorerViewController.mm in Sources */,
 				7E3B88DF1A385A290023C94E /* FlattenButtonController.cpp in Sources */,
+				BF4FEE3A1BC2BD1200932C17 /* ExampleTourPinSelectionHandler.cpp in Sources */,
 				7E3B8AF41A385F110023C94E /* CustomTableViewCell.mm in Sources */,
 				7E3B8B201A385F110023C94E /* SearchResultMenuViewModule.mm in Sources */,
 				7E3B88C11A385A290023C94E /* CompassViewCycledMessage.cpp in Sources */,
@@ -6601,6 +6642,7 @@
 				7E3B8B001A385F110023C94E /* MyPinCreationConfirmationViewInterop.mm in Sources */,
 				186B47221AB1DD5C0084E80B /* WatermarkView.mm in Sources */,
 				7E3B89591A385A290023C94E /* MyPinSelectionHandler.cpp in Sources */,
+				BF4FEE3E1BC2BF8400932C17 /* ExampleTourSearchResultPoiView.mm in Sources */,
 				27DB89F11BB3FF270020CDA5 /* YelpSearchJsonParser.cpp in Sources */,
 				7E3B88BB1A385A290023C94E /* CategorySearchRepository.cpp in Sources */,
 				BFD5FD7B1BA706AD00F591F1 /* TourFullScreenImageCeremonyEndedObserver.cpp in Sources */,
@@ -6682,6 +6724,7 @@
 				7E3B89C11A385A290023C94E /* SearchResultOnMapModule.cpp in Sources */,
 				7E3B8B1C1A385F110023C94E /* SearchResultMenuDataProvider.mm in Sources */,
 				7E3B88D11A385A290023C94E /* CompassViewModel.cpp in Sources */,
+				BF4FEE4B1BC2C78500932C17 /* ExampleSearchJsonParser.cpp in Sources */,
 				7E3B88B11A385A290023C94E /* CategorySearchSelectedMessage.cpp in Sources */,
 				7E3B89A71A385A290023C94E /* SearchResultViewClearedObserver.cpp in Sources */,
 				7E3B89911A385A290023C94E /* SearchQueryObserver.cpp in Sources */,
@@ -6734,6 +6777,7 @@
 				7E3B89411A385A290023C94E /* MyPinDetailsViewRemovePinMessage.cpp in Sources */,
 				183E54861ACEB1FB00AD6B3E /* InitialExperienceSearchResultAttractModeModule.cpp in Sources */,
 				7E3B896B1A385A290023C94E /* PlaceJumpSelectedMessage.cpp in Sources */,
+				BF4FEE491BC2C1AC00932C17 /* ExampleSearchResultModel.cpp in Sources */,
 				7E3B8B301A385F110023C94E /* UIView+TouchExclusivity.m in Sources */,
 				27E7A9C51BBC0F3200CDB502 /* SearchResultMenuOrder.cpp in Sources */,
 				7E3B891D1A385A290023C94E /* PoiRingView.cpp in Sources */,
@@ -6796,6 +6840,7 @@
 				BFD5FD531BA706AD00F591F1 /* ExampleTourStateMachineFactory.cpp in Sources */,
 				7E3B89D91A385A290023C94E /* SecondaryMenuModule.cpp in Sources */,
 				186B47501AB333150084E80B /* ApplicationConfigurationJsonParser.cpp in Sources */,
+				BF4FEE451BC2C0E600932C17 /* ExampleSearchJsonParser.h in Sources */,
 				7E3B88D51A385A290023C94E /* FlattenButtonViewStateChangedMessage.cpp in Sources */,
 				7E3B89991A385A290023C94E /* SearchQueryPerformedMessage.cpp in Sources */,
 				7E3B89051A385A290023C94E /* ModalBackgroundController.cpp in Sources */,
@@ -6982,6 +7027,7 @@
 				18096F581A7B8DC7006A6438 /* OptionsModule.cpp in Sources */,
 				BFD5FCB61BA7068300F591F1 /* iCarouselTourExplorerViewController.mm in Sources */,
 				7E3B88DE1A385A290023C94E /* FlattenButtonController.cpp in Sources */,
+				BF4FEE391BC2BD1200932C17 /* ExampleTourPinSelectionHandler.cpp in Sources */,
 				7E3B8AF31A385F110023C94E /* CustomTableViewCell.mm in Sources */,
 				7E3B8B1F1A385F110023C94E /* SearchResultMenuViewModule.mm in Sources */,
 				7E3B88C01A385A290023C94E /* CompassViewCycledMessage.cpp in Sources */,
@@ -7027,6 +7073,7 @@
 				7E3B8AFF1A385F110023C94E /* MyPinCreationConfirmationViewInterop.mm in Sources */,
 				186B47211AB1DD5C0084E80B /* WatermarkView.mm in Sources */,
 				7E3B89581A385A290023C94E /* MyPinSelectionHandler.cpp in Sources */,
+				BF4FEE3D1BC2BF8400932C17 /* ExampleTourSearchResultPoiView.mm in Sources */,
 				27DB89F01BB3FF270020CDA5 /* YelpSearchJsonParser.cpp in Sources */,
 				7E3B88BA1A385A290023C94E /* CategorySearchRepository.cpp in Sources */,
 				BFD5FD7A1BA706AD00F591F1 /* TourFullScreenImageCeremonyEndedObserver.cpp in Sources */,
@@ -7108,6 +7155,7 @@
 				7E3B89C01A385A290023C94E /* SearchResultOnMapModule.cpp in Sources */,
 				7E3B8B1B1A385F110023C94E /* SearchResultMenuDataProvider.mm in Sources */,
 				7E3B88D01A385A290023C94E /* CompassViewModel.cpp in Sources */,
+				BF4FEE4A1BC2C78400932C17 /* ExampleSearchJsonParser.cpp in Sources */,
 				7E3B88B01A385A290023C94E /* CategorySearchSelectedMessage.cpp in Sources */,
 				7E3B89A61A385A290023C94E /* SearchResultViewClearedObserver.cpp in Sources */,
 				7E3B89901A385A290023C94E /* SearchQueryObserver.cpp in Sources */,
@@ -7160,6 +7208,7 @@
 				7E3B89401A385A290023C94E /* MyPinDetailsViewRemovePinMessage.cpp in Sources */,
 				183E54851ACEB1FB00AD6B3E /* InitialExperienceSearchResultAttractModeModule.cpp in Sources */,
 				7E3B896A1A385A290023C94E /* PlaceJumpSelectedMessage.cpp in Sources */,
+				BF4FEE481BC2C1AC00932C17 /* ExampleSearchResultModel.cpp in Sources */,
 				7E3B8B2F1A385F110023C94E /* UIView+TouchExclusivity.m in Sources */,
 				27E7A9C41BBC0F3200CDB502 /* SearchResultMenuOrder.cpp in Sources */,
 				7E3B891C1A385A290023C94E /* PoiRingView.cpp in Sources */,
@@ -7222,6 +7271,7 @@
 				BFD5FD521BA706AD00F591F1 /* ExampleTourStateMachineFactory.cpp in Sources */,
 				7E3B89D81A385A290023C94E /* SecondaryMenuModule.cpp in Sources */,
 				186B474F1AB333150084E80B /* ApplicationConfigurationJsonParser.cpp in Sources */,
+				BF4FEE441BC2C0E600932C17 /* ExampleSearchJsonParser.h in Sources */,
 				7E3B88D41A385A290023C94E /* FlattenButtonViewStateChangedMessage.cpp in Sources */,
 				7E3B89981A385A290023C94E /* SearchQueryPerformedMessage.cpp in Sources */,
 				7E3B89041A385A290023C94E /* ModalBackgroundController.cpp in Sources */,

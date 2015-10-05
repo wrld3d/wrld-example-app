@@ -13,6 +13,7 @@
 #include <string>
 #include "Interiors.h"
 #include "Camera.h"
+#include "BidirectionalBus.h"
 
 namespace ExampleApp
 {
@@ -35,7 +36,8 @@ namespace ExampleApp
                                          WorldPins::SdkModel::IWorldPinsService& worldPinsService,
                                          WorldPins::SdkModel::WorldPinInteriorData& worldPinInteriorData,
                                          Eegeo::Resources::Interiors::InteriorsController& interiorsController,
-                                         const Eegeo::Camera::RenderCamera& tourRenderCamera);
+                                         const Eegeo::Camera::RenderCamera& tourRenderCamera,
+                                         ExampleAppMessaging::TMessageBus& messageBus);
                         ~ExampleTourState();
                         
                         void Enter();
@@ -58,6 +60,7 @@ namespace ExampleApp
                         WorldPins::SdkModel::WorldPinInteriorData m_worldPinInteriorData;
                         Eegeo::Resources::Interiors::InteriorsController& m_interiorsController;
                         const Eegeo::Camera::RenderCamera& m_tourRenderCamera;
+                        ExampleAppMessaging::TMessageBus& m_messageBus;
                     };
                 }
             }
