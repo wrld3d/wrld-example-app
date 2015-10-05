@@ -6,6 +6,7 @@
 #include "TourModel.h"
 #include "Tours.h"
 #include "ITourService.h"
+#include "BidirectionalBus.h"
 
 namespace ExampleApp
 {
@@ -21,13 +22,15 @@ namespace ExampleApp
                     {
                         
                     public:
-                        ExampleTourPinSelectionHandler()
-                        { }
+                        ExampleTourPinSelectionHandler(ExampleAppMessaging::TMessageBus& messageBus,TourStateModel& stateModel);
                         
-                        void SelectPin()
-                        {
-                            Eegeo_TTY("Selected");
-                        }
+                        void SelectPin();
+                        
+                    private:
+                        ExampleAppMessaging::TMessageBus& m_messageBus;
+                        TourStateModel& m_stateModel;
+                        
+                        std::string CreateJsonData();
                     };
                 }
             }

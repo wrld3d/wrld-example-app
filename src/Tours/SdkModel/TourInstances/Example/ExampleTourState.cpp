@@ -25,7 +25,8 @@ namespace ExampleApp
                                                        WorldPins::SdkModel::IWorldPinsService& worldPinsService,
                                                        WorldPins::SdkModel::WorldPinInteriorData& worldPinInteriorData,
                                                        Eegeo::Resources::Interiors::InteriorsController& interiorsController,
-                                                       const Eegeo::Camera::RenderCamera& tourRenderCamera)
+                                                       const Eegeo::Camera::RenderCamera& tourRenderCamera,
+                                                       ExampleAppMessaging::TMessageBus& messageBus)
                     : m_stateModel(stateModel)
                     , m_toursCameraTransitionController(toursCameraTransitionController)
                     , m_position(position)
@@ -36,6 +37,7 @@ namespace ExampleApp
                     , m_worldPinInteriorData(worldPinInteriorData)
                     , m_interiorsController(interiorsController)
                     , m_tourRenderCamera(tourRenderCamera)
+                    , m_messageBus(messageBus)
                     {
                         
                     }
@@ -77,7 +79,7 @@ namespace ExampleApp
                             const float heightOffsetMetres = 0.0f;
                             const int iconIndex = 4;
                             
-                            m_pPinItemModel = m_worldPinsService.AddPin(Eegeo_NEW(ExampleTourPinSelectionHandler),
+                            m_pPinItemModel = m_worldPinsService.AddPin(Eegeo_NEW(ExampleTourPinSelectionHandler)(m_messageBus, m_stateModel),
                                                                         NULL,
                                                                         worldPinFocusData,
                                                                         m_interior,
