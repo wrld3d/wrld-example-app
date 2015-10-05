@@ -19,6 +19,8 @@
 #include "TransformHelpers.h"
 #include "VectorMath.h"
 
+#include "InteriorHeightHelpers.h"
+
 namespace ExampleApp
 {
     namespace MyPinCreation
@@ -133,9 +135,7 @@ namespace ExampleApp
                                 m_myPinCreationModel.SetBuildingId(buildingId);
                             }
                             m_myPinCreationModel.SetFloor(m_interiorsController.GetCurrentFloorIndex());
-                            const Eegeo::Resources::Interiors::InteriorsFloorModel* pFloorModel = NULL;
-                            Eegeo_ASSERT(m_interiorsController.TryGetCurrentFloorModel(pFloorModel), "Failed to fetch current interior floor");
-                            float floorHeightAboveSeaLevel = static_cast<float>(pFloorModel->GetTangentSpaceBounds().GetMin().y);
+                            float floorHeightAboveSeaLevel = Helpers::InteriorHeightHelpers::GetFloorHeightAboveSeaLevel(*pModel, m_interiorsController.GetCurrentFloorIndex());
                             const float floorHeightAboveTerrain = floorHeightAboveSeaLevel - m_myPinCreationModel.GetTerrainHeight();
                             m_myPinCreationModel.SetHeightAboveTerrain(floorHeightAboveTerrain);
                         }

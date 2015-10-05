@@ -27,6 +27,7 @@ namespace ExampleApp
                 IWorldPinsService* m_pWorldPinsService;
                 IWorldPinsRepository* m_pWorldPinsRepository;
                 IWorldPinsScaleController* m_pWorldPinsScaleController;
+                IWorldPinsFloorHeightController* m_pWorldPinsFloorHeightController;
                 View::WorldPinInFocusViewModel* m_pWorldPinsInFocusViewModel;
                 IWorldPinsInFocusController* m_pWorldPinsInFocusController;
                 View::WorldPinInFocusObserver* m_pWorldPinInFocusObserver;
@@ -48,6 +49,8 @@ namespace ExampleApp
                 IWorldPinsFactory& GetWorldPinsFactory() const;
 
                 IWorldPinsScaleController& GetWorldPinsScaleController() const;
+                
+                IWorldPinsFloorHeightController& GetWorldPinsFloorHeightController() const;
 
                 View::IWorldPinInFocusViewModel& GetWorldPinInFocusViewModel() const;
 

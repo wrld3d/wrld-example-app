@@ -40,6 +40,7 @@
 #include "MyPinsModule.h"
 #include "IWorldPinsInFocusController.h"
 #include "IWorldPinsScaleController.h"
+#include "IWorldPinsFloorHeightController.h"
 #include "MyPinDetailsModule.h"
 #include "QuadTreeCube.h"
 #include "LodRefinementConfig.h"
@@ -791,6 +792,7 @@ namespace ExampleApp
         if(!eegeoWorld.Initialising())
         {
             WorldPinsModule().GetWorldPinsScaleController().Update(dt, renderCamera);
+            WorldPinsModule().GetWorldPinsFloorHeightController().Update(dt);
             
             if(ToursEnabled())
             {
