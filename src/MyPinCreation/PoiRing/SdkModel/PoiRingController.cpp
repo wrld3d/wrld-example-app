@@ -32,9 +32,9 @@ namespace ExampleApp
                     
                     float CalculateAltitudeBasedSphereOuterScale(float altitude)
                     {
-                        const float minAltitude = 200.f;
-                        const float maxAltitude = 900.f;
-                        const float lowAltitudeScale = 0.2f;
+                        const float minAltitude = 50.f;
+                        const float maxAltitude = 1500.f;
+                        const float lowAltitudeScale = 0.05f;
                         const float highAltitudeScale = 1.0f;
                         float t = Eegeo::Math::Clamp01((altitude - minAltitude)/(maxAltitude-minAltitude));
                         return Eegeo::Math::Lerp(lowAltitudeScale, highAltitudeScale, t);
