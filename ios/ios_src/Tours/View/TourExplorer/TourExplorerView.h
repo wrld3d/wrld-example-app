@@ -3,14 +3,13 @@
 #pragma once
 
 #import <UIKit/UIKit.h>
-#import "iCarousel.h"
 #include "TourExplorerViewIncludes.h"
 #include "Tours.h"
 #include "TourWebViewIncludes.h"
 
 @class ImageStore;
 
-@interface TourExplorerView : iCarousel<UIGestureRecognizerDelegate>
+@interface TourExplorerView : UIView<UIGestureRecognizerDelegate>
 {
     ExampleApp::Tours::View::TourExplorer::TourExplorerViewInterop* m_pInterop;
     

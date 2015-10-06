@@ -65,8 +65,8 @@
         
         self.pDetailTextLabel = [[UILabel alloc]initWithFrame:CGRectMake(textSpacingX, textSpacingY, frameSizeX - textSpacingX * 2.0f, detailTextHeight)];
         self.pDetailTextLabel.numberOfLines = 0;
-        self.pDetailTextLabel.lineBreakMode = NSLineBreakByWordWrapping;
-        self.pDetailTextLabel.textColor = TourDefines::DarkTextColor;
+        self.pDetailTextLabel.lineBreakMode = NSLineBreakByTruncatingTail;
+        self.pDetailTextLabel.textColor = TourDefines::LightTextColor;
         self.pDetailTextLabel.font = [UIFont fontWithName:@"GothamNarrow-Book" size:detailTextSize];
         [self.pDetailTextContainer addSubview:self.pDetailTextLabel];
     }

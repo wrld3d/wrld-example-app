@@ -13,7 +13,7 @@ namespace ExampleApp
             class IMyPinCreationDetailsViewModel
             {
             public:
-                ~IMyPinCreationDetailsViewModel() { }
+                virtual ~IMyPinCreationDetailsViewModel() { }
 
                 virtual bool TryAcquireReactorControl() = 0;
 

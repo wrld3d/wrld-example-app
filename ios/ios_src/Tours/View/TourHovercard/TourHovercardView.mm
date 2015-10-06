@@ -77,7 +77,7 @@
         // info label
         const float infoFontSize = 12.f;
         self.pInfoLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pInfoLabel.textColor = ExampleApp::Helpers::ColorPalette::DarkGreyTone;
+        self.pInfoLabel.textColor = TourDefines::LightTextColor;
         self.pInfoLabel.textAlignment = NSTextAlignmentCenter;
         self.pInfoLabel.font = [UIFont systemFontOfSize:infoFontSize];
         self.pInfoLabel.backgroundColor = [UIColor clearColor];

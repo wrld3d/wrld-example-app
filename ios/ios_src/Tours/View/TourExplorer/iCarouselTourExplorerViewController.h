@@ -29,4 +29,8 @@
 
 -(int) getSelectionIndex;
 
+-(float) getItemWidth;
+
+-(float) getItemHeight;
+
 @end

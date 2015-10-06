@@ -29,7 +29,7 @@ namespace ExampleApp
                 , m_transitionStateValue(0.f)
                 , m_interior(interior)
                 , m_worldPinInteriorData(worldPinInteriorData)
-                , m_floorHeight(0.f)
+                , m_floorHeight(0.0f)
                 , m_hasFloorHeight(false)
             {
                 Eegeo_ASSERT(m_pSelectionHandler != NULL, "WorldPinItemModel must be provided with a non-null selection handler.")
@@ -85,6 +85,17 @@ namespace ExampleApp
                 return m_transitionStateValue;
             }
             
+            bool WorldPinItemModel::NeedsFloorHeight() const
+            {
+                return m_interior && (!m_hasFloorHeight);
+            }
+            
+            void WorldPinItemModel::SetFloorHeight(float floorHeight)
+            {
+                m_floorHeight = floorHeight;
+                m_hasFloorHeight = true;
+            }
+            
             void WorldPinItemModel::Refresh(const std::string& title, const std::string& description, const std::string& ratingsImage, const int reviewCount)
             {
                 m_focusModel.Refresh(title, description, ratingsImage, reviewCount);
@@ -137,27 +148,6 @@ namespace ExampleApp
             const WorldPinInteriorData& WorldPinItemModel::GetInteriorData() const
             {
                 return m_worldPinInteriorData;
-            }
-            
-            bool WorldPinItemModel::NeedsFloorHeight() const
-            {
-                return m_interior && (!m_hasFloorHeight);
-            }
-            
-            void WorldPinItemModel::SetFloorHeight(float floorHeight)
-            {
-                m_floorHeight = floorHeight;
-                m_hasFloorHeight = true;
-            }
-            
-            bool WorldPinItemModel::HasFloorHeight() const
-            {
-                return m_hasFloorHeight;
-            }
-            
-            float WorldPinItemModel::FloorHeight() const
-            {
-                return m_floorHeight;
             }
         }
     }

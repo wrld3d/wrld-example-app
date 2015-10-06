@@ -16,6 +16,8 @@ namespace ExampleApp
         extern const std::string SwallowWorkingGroupsVendorName;
         extern const std::string SwallowFacilitiesVendorName;
         extern const std::string SwallowOfficesVendorName;
+
+		extern const std::string ExampleTourVendorName;
         
         enum SwallowVendorPriority
         {

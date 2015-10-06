@@ -51,7 +51,7 @@ namespace ExampleApp
                 IWorldPinsScaleController& GetWorldPinsScaleController() const;
                 
                 IWorldPinsFloorHeightController& GetWorldPinsFloorHeightController() const;
-                
+
                 View::IWorldPinInFocusViewModel& GetWorldPinInFocusViewModel() const;
 
                 IWorldPinsInFocusController& GetWorldPinsInFocusController() const;

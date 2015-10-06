@@ -69,10 +69,6 @@ namespace ExampleApp
                 bool NeedsFloorHeight() const;
                 
                 void SetFloorHeight(float floorHeight);
-                
-                bool HasFloorHeight() const;
-                
-                float FloorHeight() const;
 
                 void Hide();
 

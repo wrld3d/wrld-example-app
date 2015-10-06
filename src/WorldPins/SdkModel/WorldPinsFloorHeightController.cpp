@@ -1,12 +1,16 @@
 //  Copyright (c) 2015 eeGeo. All rights reserved.
 
 #include "WorldPinsFloorHeightController.h"
+
+#include "EarthConstants.h"
 #include "IWorldPinsRepository.h"
 #include "InteriorsController.h"
 #include "InteriorsFloorModel.h"
 #include "InteriorsModel.h"
 #include "PinRepository.h"
 #include "Pin.h"
+
+#include "InteriorHeightHelpers.h"
 
 namespace ExampleApp
 {
@@ -38,7 +42,7 @@ namespace ExampleApp
                         const Eegeo::Resources::Interiors::InteriorsFloorModel* pFloorModel = NULL;
                         if (m_interiorsController.TryGetCurrentFloorModel(pFloorModel))
                         {
-                            float floorHeightAboveSeaLevel = static_cast<float>(pFloorModel->GetTangentSpaceBounds().GetMin().y);
+                            float floorHeightAboveSeaLevel = Helpers::InteriorHeightHelpers::GetFloorHeightAboveSeaLevel(*pModel, m_interiorsController.GetCurrentFloorIndex());
                             
                             for(size_t i = 0; i < m_worldPinsRepository.GetItemCount(); ++i)
                             {

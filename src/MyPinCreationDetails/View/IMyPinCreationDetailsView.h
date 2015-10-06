@@ -15,7 +15,7 @@ namespace ExampleApp
             class IMyPinCreationDetailsView
             {
             public:
-                ~IMyPinCreationDetailsView() { }
+                virtual ~IMyPinCreationDetailsView() { }
 
                 virtual void Open() = 0;
                 virtual void Close() = 0;

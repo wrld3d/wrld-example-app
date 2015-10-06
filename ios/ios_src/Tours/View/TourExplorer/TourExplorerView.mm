@@ -58,7 +58,7 @@
         
         // MB: TODO: viewImplementation's frame isn't actually a containing size - suspect nonsense with differing card sizes - will resolve when unify card theme sizes.
         // For now, just fix the size.
-        const float carouselHeight = 224.0f;
+        const float carouselHeight = [m_viewController getItemHeight ];
         
         m_pCarouselContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, m_screenWidth, carouselHeight)];
         
@@ -231,7 +231,7 @@
         [self interruptCurrentTour:tour];
         return;
     }
-    const float carouselHeight = 224.0f;
+    const float carouselHeight = [m_viewController getItemHeight];
     
     CGRect f = m_pCarouselContainer.frame;
     f.origin.y = m_screenHeight - carouselHeight;
