@@ -22,6 +22,7 @@ namespace ExampleApp
                     virtual ~ITourExplorerView() { }
                     
                     virtual void SetCurrentTour(const SdkModel::TourModel& tourModel) = 0;
+                    virtual const SdkModel::TourModel& GetCurrentTour() = 0;
                     virtual void SetInitialCard(const int initialCard) = 0;
                     
                     virtual void OnDismissed() = 0;

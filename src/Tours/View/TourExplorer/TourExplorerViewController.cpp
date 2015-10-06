@@ -77,10 +77,12 @@ namespace ExampleApp
                 void TourExplorerViewController::OnViewStateChangeScreenControl(ScreenControl::View::IScreenControlViewModel &viewModel,
                                                                                 float &state)
                 {
-                    //m_metricsService.SetEvent("TourExplorerViewController: Entered");
                     
-                    m_view.SetCurrentTour(m_viewModel.GetCurrentTour());
-                    m_hovercardView.SetCurrentTour(m_viewModel.GetCurrentTour());
+                    if(m_view.GetCurrentTour() != m_viewModel.GetCurrentTour() && state > 0.0f)
+                    {
+                        m_view.SetCurrentTour(m_viewModel.GetCurrentTour());
+                        m_hovercardView.SetCurrentTour(m_viewModel.GetCurrentTour());
+                    }
                     
                     // Added to screen, set initial card
                     if(m_viewModel.IsFullyOnScreen())

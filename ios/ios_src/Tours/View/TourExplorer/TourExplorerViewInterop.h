@@ -40,6 +40,8 @@ namespace ExampleApp
                     void SetFullyOnScreen();
                     void SetFullyOffScreen();
                     
+                    const SdkModel::TourModel& GetCurrentTour();
+                    
                 private:
                     Eegeo::Helpers::CallbackCollection1<int> m_stateChangedCallbacks;
                     Eegeo::Helpers::CallbackCollection0 m_dismissedCallbacks;
