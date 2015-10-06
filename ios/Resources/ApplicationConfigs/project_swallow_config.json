@@ -16,5 +16,5 @@
     "GeoNamesUserName":"eegeo_bloomberg_ios",
     "CoverageTreeManifestURL":"http://cdn1.eegeo.com/coverage-trees/vswallow/v77/manifest.txt.gz",
     "ThemeManifestURL":"http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v407/manifest.txt.gz",
-    "SqliteDbUrl":"http://cdn1.eegeo.com/swallow-pois/pois_v22.db.gz"
+    "SqliteDbUrl":"http://cdn1.eegeo.com/swallow-pois/pois_v25.db.gz"
 }
