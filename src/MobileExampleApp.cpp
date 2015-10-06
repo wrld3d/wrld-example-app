@@ -632,7 +632,7 @@ namespace ExampleApp
     }
     void MobileExampleApp::InitialiseToursModules(Eegeo::Modules::Map::MapModule& mapModule, Eegeo::EegeoWorld& world)
     {
-        m_pToursPinsModule = CreatePlatformPinsModuleInstance(mapModule, world, "Tours/tour_markers", m_toursPinDiameter, 4);
+        m_pToursPinsModule = CreatePlatformPinsModuleInstance(mapModule, world, "SearchResultOnMap/PinIconTexturePage", m_toursPinDiameter, 4);
         
         Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsPresentationModule = mapModule.GetInteriorsPresentationModule();
         
@@ -670,15 +670,18 @@ namespace ExampleApp
         std::vector<Tours::SdkModel::TourStateModel> tourStates;
         tourStates.push_back(Tours::SdkModel::TourStateModel("Example place 1",
                                                              "Some example text",
-                                                             "Tours/page"));
+                                                             "Tours/page",
+                                                             "tours"));
         
         tourStates.push_back(Tours::SdkModel::TourStateModel("Example place 2",
                                                              "More example text",
-                                                             "Tours/page"));
+                                                             "Tours/page",
+                                                             "tours"));
         
         tourStates.push_back(Tours::SdkModel::TourStateModel("Example place 3",
                                                              "Some more example text",
-                                                             "Tours/page"));
+                                                             "Tours/page",
+                                                             "tours"));
         
         ExampleApp::Tours::SdkModel::TourModel tourModel("Example",
                                                          "Take the tour",

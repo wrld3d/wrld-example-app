@@ -613,6 +613,12 @@
 		27E7A9C51BBC0F3200CDB502 /* SearchResultMenuOrder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27E7A9C21BBC0F3200CDB502 /* SearchResultMenuOrder.cpp */; };
 		27E997521BB2B69000B0BE14 /* YelpSearchConstants.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27E997501BB2B69000B0BE14 /* YelpSearchConstants.cpp */; };
 		27E997531BB2B69000B0BE14 /* YelpSearchConstants.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27E997501BB2B69000B0BE14 /* YelpSearchConstants.cpp */; };
+		27EACB571BC4140700135BE6 /* icon1_tours.png in Resources */ = {isa = PBXBuildFile; fileRef = 27EACB541BC4140700135BE6 /* icon1_tours.png */; };
+		27EACB581BC4140700135BE6 /* icon1_tours.png in Resources */ = {isa = PBXBuildFile; fileRef = 27EACB541BC4140700135BE6 /* icon1_tours.png */; };
+		27EACB591BC4140700135BE6 /* icon1_tours@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 27EACB551BC4140700135BE6 /* icon1_tours@2x.png */; };
+		27EACB5A1BC4140700135BE6 /* icon1_tours@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 27EACB551BC4140700135BE6 /* icon1_tours@2x.png */; };
+		27EACB5B1BC4140700135BE6 /* icon1_tours@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 27EACB561BC4140700135BE6 /* icon1_tours@3x.png */; };
+		27EACB5C1BC4140700135BE6 /* icon1_tours@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 27EACB561BC4140700135BE6 /* icon1_tours@3x.png */; };
 		560741141B8CC624002B0F49 /* MenuDragStateChangedMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 560741121B8CC624002B0F49 /* MenuDragStateChangedMessage.cpp */; };
 		560741151B8CC624002B0F49 /* MenuDragStateChangedMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 560741121B8CC624002B0F49 /* MenuDragStateChangedMessage.cpp */; };
 		561ECF221B467FD3007BD4F9 /* InteriorsEntitiesPinsModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 561ECF201B467FD3007BD4F9 /* InteriorsEntitiesPinsModule.cpp */; };
@@ -1897,6 +1903,9 @@
 		27E7A9C31BBC0F3200CDB502 /* SearchResultMenuOrder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultMenuOrder.h; sourceTree = "<group>"; };
 		27E997501BB2B69000B0BE14 /* YelpSearchConstants.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = YelpSearchConstants.cpp; sourceTree = "<group>"; };
 		27E997511BB2B69000B0BE14 /* YelpSearchConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YelpSearchConstants.h; sourceTree = "<group>"; };
+		27EACB541BC4140700135BE6 /* icon1_tours.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon1_tours.png; sourceTree = "<group>"; };
+		27EACB551BC4140700135BE6 /* icon1_tours@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon1_tours@2x.png"; sourceTree = "<group>"; };
+		27EACB561BC4140700135BE6 /* icon1_tours@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon1_tours@3x.png"; sourceTree = "<group>"; };
 		560741121B8CC624002B0F49 /* MenuDragStateChangedMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MenuDragStateChangedMessage.cpp; sourceTree = "<group>"; };
 		560741131B8CC624002B0F49 /* MenuDragStateChangedMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuDragStateChangedMessage.h; sourceTree = "<group>"; };
 		561ECF201B467FD3007BD4F9 /* InteriorsEntitiesPinsModule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InteriorsEntitiesPinsModule.cpp; sourceTree = "<group>"; };
@@ -5219,6 +5228,9 @@
 		7EE4825B16847E7C0006E99B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				27EACB541BC4140700135BE6 /* icon1_tours.png */,
+				27EACB551BC4140700135BE6 /* icon1_tours@2x.png */,
+				27EACB561BC4140700135BE6 /* icon1_tours@3x.png */,
 				187C11CF1AB35E04001D1B87 /* ApplicationConfigs */,
 				188C4CBA1AA753F70080B34B /* Arrow.png */,
 				18FE216F1AA9C75700ACE28A /* Arrow@2x.png */,
@@ -5895,6 +5907,7 @@
 				18EC011A1AA7752500902E98 /* icon1_hotel@3x.png in Resources */,
 				566307061AD2D69800980426 /* stars_4_0.png in Resources */,
 				56A3DCE01A239BD100110FDD /* button_gallery_off.png in Resources */,
+				27EACB581BC4140700135BE6 /* icon1_tours.png in Resources */,
 				18EC011E1AA7752500902E98 /* icon1_misc@3x.png in Resources */,
 				18EC013A1AA7752500902E98 /* icon1_snowy@3x.png in Resources */,
 				566306E21AD2D69800980426 /* stars_1_0.png in Resources */,
@@ -6026,6 +6039,7 @@
 				566307141AD2D69800980426 /* stars_5_0@2x.png in Resources */,
 				18EC01181AA7752500902E98 /* icon1_hotel@2x.png in Resources */,
 				18EC01001AA7752500902E98 /* icon1_coffee@2x.png in Resources */,
+				27EACB5C1BC4140700135BE6 /* icon1_tours@3x.png in Resources */,
 				18B5AC9A19DC15CD00BA4A38 /* icon1_bank.png in Resources */,
 				18FE21C41AA9C98100ACE28A /* search_result_background_small.png in Resources */,
 				18FE21F91AA9D3D000ACE28A /* eegeo_logo.png in Resources */,
@@ -6090,6 +6104,7 @@
 				18FE21461AA9BA3C00ACE28A /* button_ok_off@3x.png in Resources */,
 				5663070C1AD2D69800980426 /* stars_4_5.png in Resources */,
 				18EC01241AA7752500902E98 /* icon1_nightlife@2x.png in Resources */,
+				27EACB5A1BC4140700135BE6 /* icon1_tours@2x.png in Resources */,
 				18FE21A81AA9C75700ACE28A /* menu_bar@3x.png in Resources */,
 				18EC01401AA7752500902E98 /* icon1_summer@2x.png in Resources */,
 				18FE212A1AA9BA3C00ACE28A /* button_checkbox_off@3x.png in Resources */,
@@ -6157,6 +6172,7 @@
 				18FE21BB1AA9C75700ACE28A /* sub_menu_arrow@3x.png in Resources */,
 				18FE21F31AA9D34400ACE28A /* image_blank@3x.png in Resources */,
 				185145921AB0A8DC0071913E /* SplashScreen@2x.png in Resources */,
+				27EACB571BC4140700135BE6 /* icon1_tours.png in Resources */,
 				18B5ACB319DC15CD00BA4A38 /* icon1_park.png in Resources */,
 				18FE215F1AA9BA3D00ACE28A /* button_streets_on@2x.png in Resources */,
 				566306F31AD2D69800980426 /* stars_2_5.png in Resources */,
@@ -6210,6 +6226,7 @@
 				188C4CA81AA730BF0080B34B /* button_close_place_pin_off.png in Resources */,
 				566307111AD2D69800980426 /* stars_5_0.png in Resources */,
 				18FE212D1AA9BA3C00ACE28A /* button_checkbox_on@3x.png in Resources */,
+				27EACB591BC4140700135BE6 /* icon1_tours@2x.png in Resources */,
 				18EC01451AA7752500902E98 /* icon1_sunny@3x.png in Resources */,
 				18FE21F11AA9D34400ACE28A /* image_blank@2x.png in Resources */,
 				18EC011F1AA7752500902E98 /* icon1_night@2x.png in Resources */,
@@ -6377,6 +6394,7 @@
 				18EC00FB1AA7752500902E98 /* icon1_bank@2x.png in Resources */,
 				18EC00F31AA7752500902E98 /* icon1_arts@2x.png in Resources */,
 				18FE219B1AA9C75700ACE28A /* icon_create_poi@3x.png in Resources */,
+				27EACB5B1BC4140700135BE6 /* icon1_tours@3x.png in Resources */,
 				56A3DCDF1A239BD100110FDD /* button_gallery_off.png in Resources */,
 				187C11D01AB35E04001D1B87 /* ApplicationConfigs in Resources */,
 				188C4CB21AA730BF0080B34B /* menu_background2.png in Resources */,

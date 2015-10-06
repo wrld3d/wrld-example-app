@@ -10,10 +10,12 @@ namespace ExampleApp
         {
             TourStateModel::TourStateModel(const std::string& headline,
                                            const std::string& description,
-                                           const std::string& imagePath)
+                                           const std::string& imagePath,
+                                           const std::string& icon)
             : m_headline(headline)
             , m_description(description)
             , m_imagePath(imagePath)
+            , m_icon(icon)
             {
                 
             }
@@ -31,6 +33,11 @@ namespace ExampleApp
             const std::string& TourStateModel::ImagePath() const
             {
                 return m_imagePath;
+            }
+            
+            const std::string& TourStateModel::Icon() const
+            {
+                return m_icon;
             }
         }
     }

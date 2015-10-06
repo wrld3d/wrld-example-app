@@ -77,7 +77,7 @@ namespace ExampleApp
                             ExampleApp::WorldPins::SdkModel::WorldPinFocusData worldPinFocusData(m_stateModel.Headline(), m_stateModel.Description());
                             
                             const float heightOffsetMetres = 0.0f;
-                            const int iconIndex = 4;
+                            const int iconIndex = 10;
                             
                             m_pPinItemModel = m_worldPinsService.AddPin(Eegeo_NEW(ExampleTourPinSelectionHandler)(m_messageBus, m_stateModel),
                                                                         NULL,
