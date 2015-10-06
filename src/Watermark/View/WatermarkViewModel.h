@@ -38,6 +38,8 @@ namespace ExampleApp
                 bool IsFullyOnScreen() const;
 
                 float OnScreenState() const;
+                
+                bool IsAddedToScreen() const;
 
                 ScreenControl::View::IScreenControlViewModel& GetScreenControlViewModel();
 

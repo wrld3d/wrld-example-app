@@ -54,6 +54,8 @@ namespace ExampleApp
                     
                     float OnScreenState() const;
                     
+                    bool IsAddedToScreen() const;
+                    
                     ScreenControl::View::IScreenControlViewModel& GetScreenControlViewModel();
                     
                     bool ShouldOffsetViewButton() const;

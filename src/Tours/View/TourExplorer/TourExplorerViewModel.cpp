@@ -90,6 +90,11 @@ namespace ExampleApp
                     return m_screenControl.OnScreenState();
                 }
                 
+                bool TourExplorerViewModel::IsAddedToScreen() const
+                {
+                    return m_screenControl.IsAddedToScreen();
+                }
+                
                 bool TourExplorerViewModel::ShouldOffsetViewButton() const
                 {
                     return m_shouldOffsetViewButton;

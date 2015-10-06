@@ -31,6 +31,8 @@ namespace ExampleApp
                 virtual bool IsFullyOnScreen() const = 0;
 
                 virtual float OnScreenState() const = 0;
+                
+                virtual bool IsAddedToScreen() const = 0;
             };
         }
     }

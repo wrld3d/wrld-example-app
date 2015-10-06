@@ -17,7 +17,8 @@ namespace ExampleApp
             {
             private:
                 float m_onScreenState;
-
+                bool m_addedToScreen;
+                
                 Eegeo::Helpers::CallbackCollection2<IScreenControlViewModel&, float> m_onScreenStateChangedCallbacks;
 
             protected:
@@ -42,6 +43,8 @@ namespace ExampleApp
                 bool IsFullyOnScreen() const;
 
                 float OnScreenState() const;
+                
+                bool IsAddedToScreen() const;
             };
         }
     }

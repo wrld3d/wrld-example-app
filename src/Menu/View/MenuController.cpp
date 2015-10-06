@@ -17,17 +17,24 @@ namespace ExampleApp
                     return;
                 }
 
-                if (m_viewModel.IsFullyClosed())
+                if(m_viewModel.IsAddedToScreen())
                 {
-                    m_view.SetFullyOnScreenClosed();
-                }
-                else if (m_viewModel.IsFullyOpen())
-                {
-                    m_view.SetFullyOnScreenOpen();
+                    if (m_viewModel.IsFullyClosed())
+                    {
+                        m_view.SetFullyOnScreenClosed();
+                    }
+                    else if (m_viewModel.IsFullyOpen())
+                    {
+                        m_view.SetFullyOnScreenOpen();
+                    }
+                    else
+                    {
+                        m_view.SetOnScreenStateToIntermediateValue(state);
+                    }
                 }
                 else
                 {
-                    m_view.SetOnScreenStateToIntermediateValue(state);
+                    m_view.SetFullyOffScreen();
                 }
             }
 

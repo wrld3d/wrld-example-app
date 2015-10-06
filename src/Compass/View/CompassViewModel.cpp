@@ -64,6 +64,11 @@ namespace ExampleApp
             {
                 return m_screenControl.OnScreenState();
             }
+            
+            bool CompassViewModel::IsAddedToScreen() const
+            {
+                return m_screenControl.IsAddedToScreen();
+            }
         }
     }
 }
