@@ -403,33 +403,6 @@
      ];
 }
 
-- (void) beginDrag:(CGPoint)absolutePosition velocity:(CGPoint)absoluteVelocity
-{
-    m_dragStartPos = absolutePosition;
-    m_controlStartPos = self.frame.origin;
-}
-
-- (void) updateDrag:(CGPoint)absolutePosition velocity:(CGPoint)absoluteVelocity
-{
-    CGRect f = self.frame;
-    f.origin.y = m_controlStartPos.y + (absolutePosition.y - m_dragStartPos.y);
-    
-    const float openY = (m_screenHeight - [self controlHeight]);
-    const float closedY = (m_screenHeight);
-    
-    if(f.origin.y < openY)
-    {
-        f.origin.y = openY;
-    }
-    
-    if(f.origin.y > closedY)
-    {
-        f.origin.y = closedY;
-    }
-    
-    self.frame = f;
-}
-
 - (void)handleExitButtonTap
 {
     m_exitingTour = true;
