@@ -17,9 +17,8 @@
     ExampleApp::Tours::SdkModel::TourModel m_nextTour;
     bool m_isInterruptingTour;
     bool m_hasActiveTour;
-    bool m_dragging;
+    bool m_exitingTour;
     
-    CGPoint m_dragStartPos;
     CGPoint m_controlStartPos;
 }
 
@@ -39,7 +38,7 @@
         m_screenWidth = width/pixelScale;
         m_screenHeight = height/pixelScale;
         m_hasActiveTour = false;
-        m_dragging = false;
+        m_exitingTour = false;
         
         m_pInterop = new ExampleApp::Tours::View::TourExplorer::TourExplorerViewInterop(self);
         
@@ -239,7 +238,7 @@
     
     m_tour = tour;
     m_hasActiveTour = true;
-    m_dragging = false;
+    m_exitingTour = false;
     m_pTourItemLabel.text = @"";
     self.pTourNameLabel.text = [NSString stringWithUTF8String:m_tour.Name().c_str()];
     
@@ -300,7 +299,10 @@
 
 -(void) onCurrentItemChanged
 {
-    [self dispatchStateSelectionChanged];
+    if(m_hasActiveTour)
+    {
+        [self dispatchStateSelectionChanged];
+    }
 }
 
 -(void) dispatchStateSelectionChanged
@@ -393,7 +395,7 @@
      {
          self.hidden = (y == m_yPosInactive);
          
-         if(self.hidden)
+         if(self.hidden && m_exitingTour)
          {
              [self exitTour];
          }
@@ -430,6 +432,7 @@
 
 - (void)handleExitButtonTap
 {
+    m_exitingTour = true;
     [self animateToY:m_yPosInactive];
 }
 

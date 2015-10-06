@@ -22,6 +22,12 @@ namespace ExampleApp
                 void TourExplorerViewInterop::SetCurrentTour(const SdkModel::TourModel& tourModel)
                 {
                     m_tourModel = tourModel;
+                    [m_pView configureViewForTour:m_tourModel :m_initialCard];
+                }
+                
+                const SdkModel::TourModel& TourExplorerViewInterop::GetCurrentTour()
+                {
+                    return m_tourModel;
                 }
                 
                 void TourExplorerViewInterop::SetInitialCard(const int initialCard)
@@ -42,6 +48,7 @@ namespace ExampleApp
                 
                 void TourExplorerViewInterop::OnDismissed()
                 {
+                    m_tourModel = SdkModel::TourModel::Empty();
                     m_dismissedCallbacks.ExecuteCallbacks();
                 }
                                 
@@ -82,7 +89,6 @@ namespace ExampleApp
                 
                 void TourExplorerViewInterop::SetFullyOnScreen()
                 {
-                    [m_pView configureViewForTour:m_tourModel :m_initialCard];
                     [m_pView setFullyOnScreen];
                 }
                 

@@ -573,6 +573,7 @@ namespace ExampleApp
         reactors.push_back(&CompassModule().GetScreenControlViewModel());
         reactors.push_back(&MyPinCreationModule().GetInitiationScreenControlViewModel());
         reactors.push_back(&WatermarkModule().GetScreenControlViewModel());
+        reactors.push_back(&ToursModule().GetToursExplorerViewModel());
         return reactors;
     }
     
