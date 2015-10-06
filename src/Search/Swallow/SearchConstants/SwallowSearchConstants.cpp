@@ -36,6 +36,11 @@ namespace ExampleApp
                 const std::string MEETING_ROOM_AVAILABLE_SOON = "available_soon";
                 const std::string MEETING_ROOM_OCCUPIED = "occupied";
                 
+                const int MEETING_ROOM_AVAILABLE_PRIORITY = 0;
+                const int MEETING_ROOM_AVAILABLE_SOON_PRIORITY = 1;
+                const int MEETING_ROOM_OCCUPIED_PRIORITY = 2;
+                const int MEETING_ROOM_MAX_PRIORITY = 3;
+                
                 std::vector<CategorySearch::View::CategorySearchModel> GetCategorySearchModels()
                 {
                     const bool showCategoriesInSearchMenu = false;

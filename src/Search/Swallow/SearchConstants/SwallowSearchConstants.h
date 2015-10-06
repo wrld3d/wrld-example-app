@@ -36,10 +36,14 @@ namespace ExampleApp
                 extern const std::string PRINT_STATION_CATEGORY_NAME;
                 extern const std::string EMERGENCY_EXIT_CATEGORY_NAME;
                 
-                
                 extern const std::string MEETING_ROOM_AVAILABLE;
                 extern const std::string MEETING_ROOM_AVAILABLE_SOON;
                 extern const std::string MEETING_ROOM_OCCUPIED;
+                
+                extern const int MEETING_ROOM_AVAILABLE_PRIORITY;
+                extern const int MEETING_ROOM_AVAILABLE_SOON_PRIORITY;
+                extern const int MEETING_ROOM_OCCUPIED_PRIORITY;
+                extern const int MEETING_ROOM_MAX_PRIORITY;
                 
                 std::vector<CategorySearch::View::CategorySearchModel> GetCategorySearchModels();
                 
