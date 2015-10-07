@@ -80,10 +80,6 @@ namespace ExampleApp
 
             bool MyPinCreationConfirmationViewModel::TryOpen()
             {
-                if(!m_screenControl.IsAddedToScreen())
-                {
-                    return false;
-                }
                 return m_openable.TryAcquireReactorControl();
             }
 
