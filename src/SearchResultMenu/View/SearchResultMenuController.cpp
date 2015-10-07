@@ -34,11 +34,6 @@ namespace ExampleApp
             
             void SearchResultMenuController::OnSearchQueryPerformedMessage(const Search::SearchQueryPerformedMessage& message)
             {
-                if(!m_appModeAllowsOpen)
-                {
-                    return;
-                }
-                
                 std::string headerString = CategorySearch::View::GetPresentationStringForQuery(m_categorySearchRepository, message.Query());
                 m_searchView.SetHeader(headerString, true, 0);
                 m_searchResultMenuViewModel.SetHasSearchQueryInFlight(true);
@@ -46,11 +41,6 @@ namespace ExampleApp
 
             void SearchResultMenuController::OnSearchQueryResponseReceivedMessage(const Search::SearchQueryResponseReceivedMessage& message)
             {
-                if(!m_appModeAllowsOpen)
-                {
-                    return;
-                }
-                
                 std::string headerString = CategorySearch::View::GetPresentationStringForQuery(m_categorySearchRepository, message.GetQuery());
                 m_searchView.SetHeader(headerString, false, message.GetResults().size());
                 
@@ -144,6 +134,7 @@ namespace ExampleApp
                 , m_searchResultReceivedHandler(this, &SearchResultMenuController::OnSearchQueryResponseReceivedMessage)
                 , m_attractModeChangedCallback(this, &SearchResultMenuController::OnAttractModeChanged)
                 , m_appModeChangedHandler(this, &SearchResultMenuController::OnAppModeChanged)
+                , m_appModeAllowsOpen(true)
             {
                 m_searchView.InsertSearchClosed(m_onSearchCloseTappedCallback);
                 m_messageBus.SubscribeUi(m_searchQueryIssuedHandler);
