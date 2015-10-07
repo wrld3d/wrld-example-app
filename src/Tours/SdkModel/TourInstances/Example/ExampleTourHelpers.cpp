@@ -33,7 +33,7 @@ namespace ExampleApp
                                                                   false,
                                                                   Eegeo::Resources::Interiors::InteriorId(""),
                                                                   0,
-                                                                  "",
+                                                                  model.Icon(),
                                                                   std::vector<std::string>(),
                                                                   Search::ExampleTourVendorName,
                                                                   CreateJsonDataFromTourStateModel(model),
