@@ -110,7 +110,7 @@ namespace ExampleApp
                                                       ratingsImage,
                                                       reviewCount,
                                                       Eegeo::Space::LatLong::FromECEF(m_position),
-                                                      m_heightAboveTerrainMetres,
+                                                      0,
                                                       m_interior,
                                                       m_buildingId,
                                                       m_floor,
