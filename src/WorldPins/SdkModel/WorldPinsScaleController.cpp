@@ -82,12 +82,12 @@ namespace ExampleApp
                     return !worldPinItemModel.GetInteriorData().showInExterior;
                 }
                 
-                
+                bool hidePinFromInteriorData =  false;
                 if(showingInterior && worldPinItemModel.IsInterior())
                 {
                     //hide if building and floor of pin not showing
                     const Eegeo::Resources::Interiors::InteriorsModel* pInteriorModel = NULL;
-                    return !(worldPinItemModel.GetInteriorData().floor == m_interiorsController.GetCurrentFloorIndex() &&
+                    hidePinFromInteriorData = !(worldPinItemModel.GetInteriorData().floor == m_interiorsController.GetCurrentFloorIndex() &&
                              m_interiorsController.TryGetCurrentModel(pInteriorModel) &&
                              worldPinItemModel.GetInteriorData().building == pInteriorModel->GetId());
                 }
@@ -98,7 +98,9 @@ namespace ExampleApp
                 
                 const float ratioX = screenLocation.GetX() / renderCamera.GetViewportWidth();
                 const float ratioY = screenLocation.GetY() / renderCamera.GetViewportHeight();
-                return (ratioX < 0.1f) || (ratioX > 0.9f) || (ratioY < 0.15f) || (ratioY > 0.9f);
+                const bool hidePinFromScreenPosition = (ratioX < 0.1f) || (ratioX > 0.9f) || (ratioY < 0.15f) || (ratioY > 0.9f);
+                
+                return hidePinFromScreenPosition || hidePinFromInteriorData;
             }
 
             void WorldPinsScaleController::UpdateWorldPin(WorldPinItemModel& worldPinItemModel,
