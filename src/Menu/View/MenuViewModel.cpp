@@ -99,10 +99,6 @@ namespace ExampleApp
             
             bool MenuViewModel::TryAcquireReactorControl()
             {
-                if(!m_screenViewModel.IsAddedToScreen())
-                {
-                    return false;
-                }
                 return m_openViewModel.TryAcquireReactorControl();
             }
             
