@@ -25,6 +25,7 @@ const bool TestCycleCarouselMode = false;
 {
     id m_interactionHandlerInstance;
     SEL m_selectionInteractionHandler;
+    SEL m_selectionTappedHandler;
     SEL m_currentItemChangedHandler;
     int m_selectionIndex;
     float m_screenWidth;
@@ -49,6 +50,7 @@ const bool TestCycleCarouselMode = false;
                     :(float)pixelScale
                     :(id)interactionHandlerInstance
                     :(SEL)selectionInteractionHandler
+                    :(SEL)selectionTappedHandler
                     :(SEL)currentItemChangedHandler
                     :(ExampleApp::Tours::View::TourExplorer::TourExplorerViewInterop*)pInterop
                     :(ImageStore*)pImageStore;
@@ -60,6 +62,7 @@ const bool TestCycleCarouselMode = false;
         self->m_screenHeight = screenHeight;
         self->m_interactionHandlerInstance = interactionHandlerInstance;
         self->m_selectionInteractionHandler = selectionInteractionHandler;
+        self->m_selectionTappedHandler = selectionTappedHandler;
         self->m_currentItemChangedHandler = currentItemChangedHandler;
         self->m_selectionIndex = -1;
         self->m_pImageStore = pImageStore;
@@ -224,11 +227,19 @@ const bool TestCycleCarouselMode = false;
             _carousel.type = (iCarouselType)((_carousel.type + 1) % 12);
             [_carousel reloadData];
         }
+        else if(m_selectionIndex == index)
+        {
+            [self->m_interactionHandlerInstance performSelector:self->m_selectionTappedHandler];
+        }
         else
         {
             m_selectionIndex = index;
             [self->m_interactionHandlerInstance performSelector:self->m_selectionInteractionHandler];
         }
+    }
+    else if(m_selectionIndex == index)
+    {
+        [self->m_interactionHandlerInstance performSelector:self->m_selectionTappedHandler];
     }
     else
     {

@@ -7,6 +7,7 @@
 #include "WorldPinFocusData.h"
 #include "ExampleTourPinSelectionHandler.h"
 #include "InteriorsController.h"
+#include "ExampleCurrentTourCardTappedHandler.h"
 
 namespace ExampleApp
 {
@@ -38,6 +39,7 @@ namespace ExampleApp
                     , m_interiorsController(interiorsController)
                     , m_tourRenderCamera(tourRenderCamera)
                     , m_messageBus(messageBus)
+                    , m_pTourCardTappedHandler(NULL)
                     {
                         
                     }
@@ -65,6 +67,8 @@ namespace ExampleApp
                         {
                             m_interiorsController.ExitInterior();
                         }
+                        
+                        m_pTourCardTappedHandler = Eegeo_NEW(ExampleCurrentTourCardTappedHandler)(m_messageBus, m_stateModel);
                     }
                     
                     void ExampleTourState::Update(float dt)
@@ -92,6 +96,12 @@ namespace ExampleApp
                     
                     void ExampleTourState::Exit()
                     {
+                        if(m_pTourCardTappedHandler != NULL)
+                        {
+                            Eegeo_DELETE m_pTourCardTappedHandler;
+                            m_pTourCardTappedHandler = NULL;
+                        }
+                        
                         if(m_pPinItemModel != NULL)
                         {
                             m_worldPinsService.RemovePin(m_pPinItemModel);

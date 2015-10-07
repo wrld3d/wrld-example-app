@@ -33,6 +33,7 @@
 #include "InteriorsExplorerSelectFloorMessage.h"
 #include "InteriorsExplorerExitMessage.h"
 #include "MenuDragStateChangedMessage.h"
+#include "CurrentTourCardTappedMessage.h"
 
 namespace ExampleApp
 {
@@ -68,6 +69,7 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<InteriorsExplorer::InteriorsExplorerSelectFloorMessage>
             , public Eegeo::Messaging::CatalogBinding<InteriorsExplorer::InteriorsExplorerExitMessage>
             , public Eegeo::Messaging::CatalogBinding<Menu::MenuDragStateChangedMessage>
+            , public Eegeo::Messaging::CatalogBinding<Tours::CurrentTourCardTappedMessage>
             , private Eegeo::NonCopyable
         {
 

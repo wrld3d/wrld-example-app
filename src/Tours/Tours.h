@@ -52,5 +52,16 @@ namespace ExampleApp
                 class ITourFullScreenImageViewModel;
             }
         }
+        
+        namespace SdkModel
+        {
+            namespace TourInstances
+            {
+                namespace Example
+                {
+                    class ExampleCurrentTourCardTappedHandler;
+                }
+            }
+        }
     }
 }

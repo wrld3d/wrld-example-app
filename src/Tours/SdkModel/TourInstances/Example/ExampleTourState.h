@@ -61,6 +61,8 @@ namespace ExampleApp
                         Eegeo::Resources::Interiors::InteriorsController& m_interiorsController;
                         const Eegeo::Camera::RenderCamera& m_tourRenderCamera;
                         ExampleAppMessaging::TMessageBus& m_messageBus;
+                        
+                        ExampleCurrentTourCardTappedHandler* m_pTourCardTappedHandler;
                     };
                 }
             }

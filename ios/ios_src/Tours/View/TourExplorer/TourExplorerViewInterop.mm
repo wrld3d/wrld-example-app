@@ -96,6 +96,21 @@ namespace ExampleApp
                 {
                     [m_pView setOnScreenStateToIntermediateValue: value];
                 }
+                
+                void TourExplorerViewInterop::OnCurrentTourCardTapped()
+                {
+                    m_currentTourCardTappedCallbacks.ExecuteCallbacks();
+                }
+                
+                void TourExplorerViewInterop::InsertCurrentTourCardTappedCallback(Eegeo::Helpers::ICallback0& callback)
+                {
+                    m_currentTourCardTappedCallbacks.AddCallback(callback);
+                }
+                
+                void TourExplorerViewInterop::RemoveCurrentTourCardTappedCallback(Eegeo::Helpers::ICallback0& callback)
+                {
+                    m_currentTourCardTappedCallbacks.RemoveCallback(callback);
+                }
             }
         }
     }

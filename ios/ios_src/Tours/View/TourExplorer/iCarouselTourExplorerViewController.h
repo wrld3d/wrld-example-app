@@ -15,6 +15,7 @@
                     :(float)pixelScale
                     :(id)interactionHandlerInstance
                     :(SEL)selectionInteractionHandler
+                    :(SEL)selectionTappedHandler
                     :(SEL)currentItemChangedHandler
                     :(ExampleApp::Tours::View::TourExplorer::TourExplorerViewInterop*)pInterop
                     :(ImageStore*)pImageStore;

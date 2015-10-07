@@ -29,12 +29,17 @@ namespace ExampleApp
                     virtual void OnStateSelected(int activeStateIndex) = 0;
                     virtual void OnChangeTourRequested(const std::string& name) = 0;
                     
+                    virtual void OnCurrentTourCardTapped() = 0;
+                    
                     virtual void InsertDismissedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
                     virtual void RemoveDismissedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
                     virtual void InsertStateChangedCallback(Eegeo::Helpers::ICallback1<int>& callback) = 0;
                     virtual void RemoveStateChangedCallback(Eegeo::Helpers::ICallback1<int>& callback) = 0;
                     virtual void InsertChangeTourRequestCallback(Eegeo::Helpers::ICallback1<std::string>& callback) = 0;
                     virtual void RemoveChangeTourRequestCallback(Eegeo::Helpers::ICallback1<std::string>& callback) = 0;
+                    
+                    virtual void InsertCurrentTourCardTappedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
+                    virtual void RemoveCurrentTourCardTappedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
                 };
             }
         }

@@ -48,6 +48,7 @@
                             :m_pixelScale
                             :self
                             :@selector(onSelectionChanged)
+                            :@selector(onCurrentSelectionTapped)
                             :@selector(onCurrentItemChanged)
                             :m_pInterop
                             :pImageStore];
@@ -295,6 +296,13 @@
 -(void) onSelectionChanged
 {
     // Nothing to do, change states when animation finishes (onCurrentItemChanged).
+}
+
+-(void) onCurrentSelectionTapped
+{
+    // display the POI view.
+    NSLog(@"Tapped carousel thing");
+    m_pInterop->OnCurrentTourCardTapped();
 }
 
 -(void) onCurrentItemChanged

@@ -8,6 +8,7 @@
 #include "ITourExplorerCompositeViewController.h"
 #include "TourActiveStateChangedMessage.h"
 #include "ActiveTourQuitSelectedMessage.h"
+#include "CurrentTourCardTappedMessage.h"
 
 namespace ExampleApp
 {
@@ -33,18 +34,21 @@ namespace ExampleApp
                 , m_stateChangedCallback(this, &TourExplorerViewController::OnStateChanged)
                 , m_viewStateCallback(this, &TourExplorerViewController::OnViewStateChangeScreenControl)
                 , m_tourChangeRequestCallback(this, &TourExplorerViewController::OnTourChangeRequested)
+                , m_currentTourCardTappedCallback(this, &TourExplorerViewController::OnCurrentTourCardTapped)
                 {
                     m_viewModel.InsertOnScreenStateChangedCallback(m_viewStateCallback);
                     
                     m_view.InsertStateChangedCallback(m_stateChangedCallback);
                     m_view.InsertDismissedCallback(m_dismissedCallback);
                     m_view.InsertChangeTourRequestCallback(m_tourChangeRequestCallback);
+                    m_view.InsertCurrentTourCardTappedCallback(m_currentTourCardTappedCallback);
                     
                     m_view.SetOnScreenStateToIntermediateValue(m_viewModel.OnScreenState());
                 }
                 
                 TourExplorerViewController::~TourExplorerViewController()
                 {
+                    m_view.RemoveCurrentTourCardTappedCallback(m_currentTourCardTappedCallback);
                     m_view.RemoveStateChangedCallback(m_stateChangedCallback);
                     m_view.RemoveDismissedCallback(m_dismissedCallback);
                     m_view.RemoveChangeTourRequestCallback(m_tourChangeRequestCallback);
@@ -98,6 +102,11 @@ namespace ExampleApp
                         m_messageBus.Publish(WorldPins::WorldPinsVisibilityMessage(false));
                         m_messageBus.Publish(GpsMarker::GpsMarkerVisibilityMessage(false));
                     }
+                }
+                
+                void TourExplorerViewController::OnCurrentTourCardTapped()
+                {
+                    m_messageBus.Publish(Tours::CurrentTourCardTappedMessage());
                 }
             }
         }
