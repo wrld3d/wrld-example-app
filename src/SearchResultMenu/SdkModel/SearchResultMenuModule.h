@@ -15,6 +15,7 @@
 #include "SearchResultRepositoryObserver.h"
 #include "SearchResultMenuSearchQueryPerformedMessageHandler.h"
 #include "SearchResultMenuSearchQueryRemovedMessageHandler.h"
+#include "SearchResultMenuAppModeMessageHandler.h"
 #include "SearchResultViewClearedObserver.h"
 
 namespace ExampleApp
@@ -34,6 +35,7 @@ namespace ExampleApp
                 SearchResultMenuItemSelectedMessageHandler* m_pSearchResultMenuItemSelectedMessageHandler;
                 View::SearchResultMenuSearchQueryPerformedMessageHandler* m_pSearchResultMenuSearchQueryPerformedMessageHandler;
                 View::SearchResultMenuSearchQueryRemovedMessageHandler* m_pSearchResultMenuSearchQueryRemovedMessageHandler;
+                View::SearchResultMenuAppModeMessageHandler* m_pSearchResultMenuAppModeMessageHandler;
                 SearchResultViewClearedObserver* m_pSearchResultViewClearedObserver;
                 View::ISearchResultMenuOrder* m_pSearchResultMenuOrder;
 

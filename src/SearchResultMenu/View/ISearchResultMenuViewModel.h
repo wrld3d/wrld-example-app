@@ -28,6 +28,8 @@ namespace ExampleApp
                 
                 virtual bool AttractModeEnabled() const = 0;
                 
+                virtual void SetEnabled(bool enabled) = 0;
+                
                 virtual void InsertAttractModeChangedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
                 
                 virtual void RemoveAttractModeChangedCallback(Eegeo::Helpers::ICallback0& callback) = 0;

@@ -27,6 +27,7 @@ namespace ExampleApp
                 bool m_hasSearchQueryInFlight;
                 bool m_inAttractMode;
                 Eegeo::Helpers::CallbackCollection0 m_attractModeChangedCallbacks;
+                bool m_enabled;
 
                 void HandleMenuContentsChanged(Menu::View::MenuItemModel& item);
 
@@ -37,6 +38,8 @@ namespace ExampleApp
                 void HandleReactorOpenControlReleased();
                 
                 void SetAttractMode(bool attractModeEnabled);
+                
+                void SetEnabled(bool enabled);
                 
             public:
                 SearchResultMenuViewModel(Menu::View::IMenuModel& menuModel,
