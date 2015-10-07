@@ -1271,6 +1271,8 @@
 		BF681D9C1BC41B4200100BFF /* ExampleCurrentTourCardTappedHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF681D991BC41B4200100BFF /* ExampleCurrentTourCardTappedHandler.cpp */; };
 		BF681D9F1BC4210700100BFF /* ExampleTourHelpers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF681D9D1BC4210700100BFF /* ExampleTourHelpers.cpp */; };
 		BF681DA01BC4210700100BFF /* ExampleTourHelpers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF681D9D1BC4210700100BFF /* ExampleTourHelpers.cpp */; };
+		BFB90EC71BC5732B00076380 /* SearchResultMenuAppModeMessageHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFB90EC51BC5732B00076380 /* SearchResultMenuAppModeMessageHandler.cpp */; };
+		BFB90EC81BC5732B00076380 /* SearchResultMenuAppModeMessageHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFB90EC51BC5732B00076380 /* SearchResultMenuAppModeMessageHandler.cpp */; };
 		BFD4C7231BA9BB1F006F4E0B /* TourStateChangedMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFD4C7211BA9BB1F006F4E0B /* TourStateChangedMessage.cpp */; };
 		BFD4C7241BA9BB1F006F4E0B /* TourStateChangedMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFD4C7211BA9BB1F006F4E0B /* TourStateChangedMessage.cpp */; };
 		BFD5FCB41BA7068300F591F1 /* TourDefines.mm in Sources */ = {isa = PBXBuildFile; fileRef = BFD5FC8D1BA7068300F591F1 /* TourDefines.mm */; };
@@ -2696,6 +2698,8 @@
 		BF681D9A1BC41B4200100BFF /* ExampleCurrentTourCardTappedHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExampleCurrentTourCardTappedHandler.h; sourceTree = "<group>"; };
 		BF681D9D1BC4210700100BFF /* ExampleTourHelpers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ExampleTourHelpers.cpp; sourceTree = "<group>"; };
 		BF681D9E1BC4210700100BFF /* ExampleTourHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExampleTourHelpers.h; sourceTree = "<group>"; };
+		BFB90EC51BC5732B00076380 /* SearchResultMenuAppModeMessageHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchResultMenuAppModeMessageHandler.cpp; sourceTree = "<group>"; };
+		BFB90EC61BC5732B00076380 /* SearchResultMenuAppModeMessageHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultMenuAppModeMessageHandler.h; sourceTree = "<group>"; };
 		BFD4C7211BA9BB1F006F4E0B /* TourStateChangedMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TourStateChangedMessage.cpp; sourceTree = "<group>"; };
 		BFD4C7221BA9BB1F006F4E0B /* TourStateChangedMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TourStateChangedMessage.h; sourceTree = "<group>"; };
 		BFD5FC8C1BA7068300F591F1 /* TourDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TourDefines.h; sourceTree = "<group>"; };
@@ -4367,6 +4371,8 @@
 		7E3B880B1A385A290023C94E /* View */ = {
 			isa = PBXGroup;
 			children = (
+				BFB90EC51BC5732B00076380 /* SearchResultMenuAppModeMessageHandler.cpp */,
+				BFB90EC61BC5732B00076380 /* SearchResultMenuAppModeMessageHandler.h */,
 				27E7A9C11BBC0F3200CDB502 /* ISearchResultMenuOrder.h */,
 				7E3B880C1A385A290023C94E /* ISearchResultMenuView.h */,
 				7E3B880D1A385A290023C94E /* ISearchResultMenuViewModel.h */,
@@ -6668,6 +6674,7 @@
 				7E3B89691A385A290023C94E /* OpenableControlViewModelBase.cpp in Sources */,
 				7E3B88FF1A385A290023C94E /* MobileExampleApp.cpp in Sources */,
 				7E3B8B2E1A385F110023C94E /* ViewController.mm in Sources */,
+				BFB90EC81BC5732B00076380 /* SearchResultMenuAppModeMessageHandler.cpp in Sources */,
 				7E3B89D11A385A290023C94E /* SearchResultPoiOpenableControl.cpp in Sources */,
 				18B22B111A7A8B3400DDBFA2 /* OptionsOpenableControl.cpp in Sources */,
 				7E3B89931A385A290023C94E /* SearchQueryPerformer.cpp in Sources */,
@@ -7101,6 +7108,7 @@
 				7E3B89681A385A290023C94E /* OpenableControlViewModelBase.cpp in Sources */,
 				7E3B88FE1A385A290023C94E /* MobileExampleApp.cpp in Sources */,
 				7E3B8B2D1A385F110023C94E /* ViewController.mm in Sources */,
+				BFB90EC71BC5732B00076380 /* SearchResultMenuAppModeMessageHandler.cpp in Sources */,
 				7E3B89D01A385A290023C94E /* SearchResultPoiOpenableControl.cpp in Sources */,
 				18B22B101A7A8B3400DDBFA2 /* OptionsOpenableControl.cpp in Sources */,
 				7E3B89921A385A290023C94E /* SearchQueryPerformer.cpp in Sources */,
