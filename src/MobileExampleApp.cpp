@@ -181,6 +181,7 @@ namespace ExampleApp
         , m_pToursPinsModule(NULL)
         , m_toursPinDiameter(80)
         , m_enableTours(false)
+        , m_toursPinDiameter(48.f)
     {
         m_metricsService.BeginSession(ExampleApp::FlurryApiKey, EEGEO_PLATFORM_VERSION_NUMBER);
 
