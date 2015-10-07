@@ -472,7 +472,6 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
                                         app.SearchResultMenuModule().GetSearchResultMenuViewModel(),
 	                                    app.SearchResultMenuModule().GetSearchResultMenuOptionsModel(),
 	                                    app.SearchResultMenuModule().GetSearchResultMenuOrder(),
-                                        app.GetAppModeModel(),
                                         m_messageBus
                                     );
 
