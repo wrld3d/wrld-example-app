@@ -197,7 +197,7 @@ namespace ExampleApp
                                                 Eegeo::EnvironmentCharacterSet::Latin,
                                                 platformConfig,
                                                 NULL,
-                                                "http://cdn1.eegeo.com/coverage-trees/vglobal/v742/manifest.txt.gz",
+                                                "http://cdn1.eegeo.com/coverage-trees/vglobal/v798/manifest.bin.gz",
                                                 "http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v366/manifest.txt.gz",
                                                 &errorHandler
                                                 );
