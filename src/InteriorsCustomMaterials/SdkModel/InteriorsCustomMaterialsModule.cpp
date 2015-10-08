@@ -45,8 +45,8 @@ namespace ExampleApp
                         const rapidjson::Value& jsonValue = document[i];
                         
                         InteriorsCustomMaterialDto materialDto;
-                        materialDto.MaterialName = jsonValue["MaterialName"].GetString();
-                        materialDto.MaterialType = jsonValue["MaterialType"].GetString();
+                        materialDto.materialName = jsonValue["MaterialName"].GetString();
+                        materialDto.materialType = jsonValue["MaterialType"].GetString();
                         
                         
                         const rapidjson::Value& jsonTexturesValue = jsonValue["Textures"];
@@ -55,9 +55,9 @@ namespace ExampleApp
                         {
                             const rapidjson::Value& jsonTextureValue = jsonTexturesValue[j];
                             InteriorsCustomTextureDto textureDto;
-                            textureDto.TextureKey = jsonTextureValue["TextureKey"].GetString();
-                            textureDto.Filename = jsonTextureValue["Filename"].GetString();
-                            materialDto.Textures.push_back(textureDto);
+                            textureDto.textureKey = jsonTextureValue["TextureKey"].GetString();
+                            textureDto.filename = jsonTextureValue["Filename"].GetString();
+                            materialDto.textures.push_back(textureDto);
                         }
                         
                         
@@ -74,11 +74,11 @@ namespace ExampleApp
                     {
                         const InteriorsCustomMaterialDto& materialDto = *iter;
                         
-                        for (std::vector<InteriorsCustomTextureDto>::const_iterator texIter = materialDto.Textures.begin(); texIter != materialDto.Textures.end(); ++texIter)
+                        for (std::vector<InteriorsCustomTextureDto>::const_iterator texIter = materialDto.textures.begin(); texIter != materialDto.textures.end(); ++texIter)
                         {
                             const InteriorsCustomTextureDto& textureDto = *texIter;
                             
-                            interiorsTextureResourceService.Create(textureDto.TextureKey, textureDto.Filename);
+                            interiorsTextureResourceService.Create(textureDto.textureKey, textureDto.filename);
                         }
                     }
                     
@@ -92,7 +92,7 @@ namespace ExampleApp
                     {
                         const InteriorsCustomMaterialDto& materialDto = *iter;
                         
-                        materialKeyToFactoryType.insert(std::make_pair(materialDto.MaterialName, materialDto.MaterialType));
+                        materialKeyToFactoryType.insert(std::make_pair(materialDto.materialName, materialDto.materialType));
                     }
                     
                     return materialKeyToFactoryType;

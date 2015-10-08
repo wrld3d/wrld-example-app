@@ -15,15 +15,15 @@ namespace ExampleApp
         {
             struct InteriorsCustomTextureDto
             {
-                std::string TextureKey;
-                std::string Filename;
+                std::string textureKey;
+                std::string filename;
             };
             
             struct InteriorsCustomMaterialDto
             {
-                std::string MaterialName;
-                std::string MaterialType;
-                std::vector<InteriorsCustomTextureDto> Textures;
+                std::string materialName;
+                std::string materialType;
+                std::vector<InteriorsCustomTextureDto> textures;
             };
         }
     }
