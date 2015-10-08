@@ -1555,6 +1555,9 @@
 		E0ECCFFC1BC68A0700967A95 /* InteriorsCustomMaterialsModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E0ECCFFA1BC68A0700967A95 /* InteriorsCustomMaterialsModule.cpp */; };
 		E0ECD0001BC68B7700967A95 /* InteriorsCustomMaterialFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E0ECCFFE1BC68B7700967A95 /* InteriorsCustomMaterialFactory.cpp */; };
 		E0ECD0041BC690F900967A95 /* InteriorsCustomMaterialDto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E0ECD0021BC690F900967A95 /* InteriorsCustomMaterialDto.cpp */; };
+		E0ECD0521BC6D20000967A95 /* InteriorsCustomMaterialFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E0ECCFFE1BC68B7700967A95 /* InteriorsCustomMaterialFactory.cpp */; };
+		E0ECD0531BC6D20400967A95 /* InteriorsCustomMaterialsModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E0ECCFFA1BC68A0700967A95 /* InteriorsCustomMaterialsModule.cpp */; };
+		E0ECD0541BC6D20600967A95 /* InteriorsCustomMaterialDto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E0ECD0021BC690F900967A95 /* InteriorsCustomMaterialDto.cpp */; };
 		EEE021331BB44239001AF4CF /* YelpSearchResultModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EEE021311BB44239001AF4CF /* YelpSearchResultModel.cpp */; };
 		EEE021341BB44239001AF4CF /* YelpSearchResultModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EEE021311BB44239001AF4CF /* YelpSearchResultModel.cpp */; };
 		F7F3702A5538EF1098A7B54D /* MapModeController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F7F37DF89F160CEF56F89506 /* MapModeController.cpp */; };
@@ -7004,6 +7007,7 @@
 				18FE3BCF1A9CA4DF002D61C4 /* SortedMenuModel.cpp in Sources */,
 				1846CBE31BBBD627007F1922 /* SwallowPoiDbMeetingRoomParser.cpp in Sources */,
 				56AC9BFD1AA6076D00E603C4 /* iOSFlurryMetricsService.mm in Sources */,
+				E0ECD0541BC6D20600967A95 /* InteriorsCustomMaterialDto.cpp in Sources */,
 				7E3B88D91A385A290023C94E /* FlattenButtonModelStateChangedObserver.cpp in Sources */,
 				7E3B8AD61A385F110023C94E /* CompassViewInterop.mm in Sources */,
 				18FB64531A9240FC005A9411 /* NSMutableURLRequest+Parameters.m in Sources */,
@@ -7190,6 +7194,7 @@
 				7E3B88F71A385A290023C94E /* MenuScreenControl.cpp in Sources */,
 				7E3B891F1A385A290023C94E /* MyPinCreationModel.cpp in Sources */,
 				1868A4151AB3529700030AB6 /* ApplicationConfigurationModule.cpp in Sources */,
+				E0ECD0521BC6D20000967A95 /* InteriorsCustomMaterialFactory.cpp in Sources */,
 				7E3B89DF1A385A290023C94E /* ViewControllerUpdaterModule.cpp in Sources */,
 				7E3B894F1A385A290023C94E /* MyPinAddedToMenuMessage.cpp in Sources */,
 				18B22B381A7A937D00DDBFA2 /* OptionsView.mm in Sources */,
@@ -7297,6 +7302,7 @@
 				18E102851A8B85710011A18C /* SearchResultPoiPinToggledMessageHandler.cpp in Sources */,
 				7E3B8AF01A385F110023C94E /* CustomTableDataProvider.mm in Sources */,
 				7E3B898F1A385A290023C94E /* SearchQuery.cpp in Sources */,
+				E0ECD0531BC6D20400967A95 /* InteriorsCustomMaterialsModule.cpp in Sources */,
 				7E3B89851A385A290023C94E /* ApplyScreenControl.cpp in Sources */,
 				18FB64731A9240FC005A9411 /* OATokenManager.m in Sources */,
 				7E3B89C11A385A290023C94E /* SearchResultOnMapModule.cpp in Sources */,
