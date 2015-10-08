@@ -78,6 +78,7 @@
 #include "SwallowPoiDb.h"
 #include "IToursModule.h"
 #include "SwallowSearch.h"
+#include "IInteriorsCustomMaterialsModule.h"
 
 namespace ExampleApp
 {
@@ -144,9 +145,9 @@ namespace ExampleApp
         Search::SdkModel::ISearchServiceModule* m_pSearchServiceModule;
         InteriorsExplorer::SdkModel::IInteriorsExplorerModule* m_pInteriorsExplorerModule;
         InteriorsEntitiesPins::SdkModel::IInteriorsEntitiesPinsModule* m_pInteriorsEntitiesPinsModule;
-        
         Eegeo::Modules::SQLiteModule* m_pSQLiteModule;
         SwallowPoiDb::ISwallowPoiDbModule* m_pSwallowPoiDbModule;
+        InteriorsCustomMaterials::SdkModel::IInteriorsCustomMaterialsModule* m_pInteriorsCustomMaterialsModule;
         
         AppModes::SdkModel::IAppModeModel* m_pAppModeModel;
         
