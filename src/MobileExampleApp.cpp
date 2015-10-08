@@ -76,6 +76,7 @@
 #include "CombinedSearchServiceModule.h"
 #include "GeoNamesSearchServiceModule.h"
 #include "SearchVendorNames.h"
+#include "InteriorsCustomMaterialsModule.h"
 
 namespace ExampleApp
 {
@@ -169,6 +170,7 @@ namespace ExampleApp
         , m_pWatermarkModule(NULL)
         , m_pInteriorsExplorerModule(NULL)
         , m_pInteriorsEntitiesPinsModule(NULL)
+        , m_pInteriorsCustomMaterialsModule(NULL)
         , m_screenProperties(screenProperties)
         , m_networkCapabilities(networkCapabilities)
         , m_setMetricsLocation(false)
@@ -454,6 +456,10 @@ namespace ExampleApp
                                                                                                                 m_pWorld->GetRenderingModule(),
                                                                                                                 m_pWorld->GetMapModule(),
                                                                                                                 m_screenProperties));
+
+            
+            m_pInteriorsCustomMaterialsModule = Eegeo_NEW(InteriorsCustomMaterials::SdkModel::InteriorsCustomMaterialsModule)(mapModule.GetInteriorsStreamingModule(), m_platformAbstractions.GetFileIO());
+                                                                                                            
         }
         
         std::vector<ScreenControl::View::IScreenControlViewModel*> reactors(GetReactorControls());
@@ -483,6 +489,7 @@ namespace ExampleApp
     {
         m_initialExperienceModule.TearDown();
         
+        Eegeo_DELETE m_pInteriorsCustomMaterialsModule;
         
         Eegeo_DELETE m_pToursModule;
         Eegeo_DELETE m_pToursWorldPinsModule;
