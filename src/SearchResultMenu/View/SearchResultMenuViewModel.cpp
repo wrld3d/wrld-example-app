@@ -41,7 +41,7 @@ namespace ExampleApp
 
             bool SearchResultMenuViewModel::CanShowOnScreen() const
             {
-                if(!m_hasSearchQuery)
+                if(!m_hasSearchQuery || !m_enabled)
                 {
                     return false;
                 }
