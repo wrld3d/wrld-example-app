@@ -28,6 +28,8 @@
     
     float m_detailsPanelHeight;
     
+    BOOL m_touchEnabled;
+    
     std::vector<std::string> m_tableViewFloorNames;
 }
 
@@ -54,6 +56,8 @@
 - (void) animateTo:(float)t;
 
 - (int) reverseIndex:(int)floorIndex;
+
+- (void) setTouchEnabled:(BOOL)enabled;
 
 @property(nonatomic, retain) UIView* pFloorPanel;
 @property(nonatomic, retain) UIImageView* pFloorPanelTop;

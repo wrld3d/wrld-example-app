@@ -95,6 +95,11 @@ namespace ExampleApp
 
             void InteriorsExplorerModel::SelectFloor(int floor)
             {
+                if(!m_controller.InteriorIsVisible())
+                {
+                    return;
+                }
+                
                 m_controller.SetCurrentFloor(floor);
                 
                 const Eegeo::Resources::Interiors::InteriorsFloorModel* pFloorModel = NULL;

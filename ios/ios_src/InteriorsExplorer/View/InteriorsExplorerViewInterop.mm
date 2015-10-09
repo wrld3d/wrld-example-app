@@ -69,6 +69,11 @@ namespace ExampleApp
             {
                 [m_pView setFullyOffScreen];
             }
+            
+            void InteriorsExplorerViewInterop::SetTouchEnabled(bool enabled)
+            {
+                [m_pView setTouchEnabled: enabled];
+            }
         }
     }
 }
