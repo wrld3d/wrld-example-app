@@ -1,2 +1,12 @@
 [
+    {
+        "MaterialName": "InteriorMaterial_SwallowCGHWall",
+        "MaterialType":"InteriorsDiffuseTexturedMaterial",
+        "Textures":[
+            {
+                "TextureKey":"InteriorMaterial_SwallowCGHWall-texture0",
+                "Filename":"Interiors/swallowwalltempmaterial-interior.pvr"
+            }
+        ]
+    }
 ]
