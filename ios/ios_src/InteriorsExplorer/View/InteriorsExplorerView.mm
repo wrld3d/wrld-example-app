@@ -105,6 +105,7 @@
         [self addSubview:self.pDetailsPanel];
         
         m_onScreenParam = 0.f;
+        m_touchEnabled = NO;
         
         [self setHidden:YES];
     }
@@ -114,6 +115,11 @@
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
 {
+    if(!m_touchEnabled)
+    {
+        return nil;
+    }
+    
     UIView *hitView = [super hitTest:point withEvent:event];
     if (hitView == self) return nil;
     return hitView;
@@ -162,6 +168,11 @@
 
 - (BOOL)consumesTouch:(UITouch *)touch
 {
+    if(!m_touchEnabled)
+    {
+        return NO;
+    }
+    
     CGPoint touchLocation = [touch locationInView:self];
     if (CGRectContainsPoint(self.pFloorPanel.frame, touchLocation))
         return YES;
@@ -303,5 +314,9 @@
      ];
 }
 
+- (void) setTouchEnabled:(BOOL)enabled
+{
+    m_touchEnabled = enabled;
+}
 
 @end

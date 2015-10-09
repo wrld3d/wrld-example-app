@@ -59,6 +59,7 @@ namespace ExampleApp
             void InteriorsExplorerController::OnDismiss()
             {
                 m_messageBus.Publish(InteriorsExplorerExitMessage());
+                m_view.SetTouchEnabled(false);
             }
             
             void InteriorsExplorerController::OnSelectFloor(int& selected)
@@ -78,6 +79,7 @@ namespace ExampleApp
                 if(message.IsInteriorVisible())
                 {
                     m_view.UpdateFloors(message.GetFloorShortNames(), message.GetSelectedFloorIndex());
+                    m_view.SetTouchEnabled(true);
                     
                     OnFloorSelected(InteriorsExplorerFloorSelectedMessage(message.GetSelectedFloorIndex(), message.GetSelectedFloorName()));
                     

@@ -41,6 +41,8 @@ namespace ExampleApp
                 void SetFullyOnScreen();
                 void SetFullyOffScreen();
                 
+                void SetTouchEnabled(bool enabled);
+                
             private:
                 
                 Eegeo::Helpers::CallbackCollection1<int> m_selectedFloorCallbacks;
