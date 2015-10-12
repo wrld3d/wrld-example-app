@@ -397,6 +397,7 @@ namespace ExampleApp
         m_pSearchResultOnMapModule = Eegeo_NEW(SearchResultOnMap::SdkModel::SearchResultOnMapModule)(m_pSearchModule->GetSearchResultRepository(),
                                                                                                      m_pSearchResultPoiModule->GetSearchResultPoiViewModel(),
                                                                                                      m_pWorldPinsModule->GetWorldPinsService(),
+                                                                                                     m_pMyPinsModule->GetMyPinsService(),
                                                                                                      m_pCategorySearchModule->GetSearchResultIconCategoryMapper(),
                                                                                                      m_pSearchModule->GetSearchResultMyPinsService(),
                                                                                                      m_messageBus,
@@ -639,7 +640,8 @@ namespace ExampleApp
                                  mapModule.GetEnvironmentFlatteningService(),
                                  m_identityProvider,
                                  m_messageBus,
-                                 interiorsPresentationModule.GetLegacyInteriorsController());
+                                 interiorsPresentationModule.GetLegacyInteriorsController(),
+                                 m_sdkDomainEventBus);
     }
     void MobileExampleApp::InitialiseToursModules(Eegeo::Modules::Map::MapModule& mapModule, Eegeo::EegeoWorld& world)
     {
@@ -652,7 +654,8 @@ namespace ExampleApp
                                                                                               mapModule.GetEnvironmentFlatteningService(),
                                                                                               m_identityProvider,
                                                                                               m_toursMessageBus,
-                                                                                              interiorsPresentationModule.GetLegacyInteriorsController());
+                                                                                              interiorsPresentationModule.GetLegacyInteriorsController(),
+                                                                                              m_sdkDomainEventBus);
         
         m_pToursModule = Eegeo_NEW(ExampleApp::Tours::ToursModule)(m_identityProvider,
                                                        m_messageBus,

@@ -9,6 +9,7 @@
 #include "VectorMath.h"
 #include "Types.h"
 #include "Search.h"
+#include "WorldPins.h"
 
 namespace ExampleApp
 {
@@ -22,6 +23,9 @@ namespace ExampleApp
                 virtual ~IMyPinsService() {}
                 
                 virtual void LoadAllPinsFromDisk() = 0;
+                
+                virtual bool TryGetWorldPinItemModelForMyPin(const int myPinId,
+                                                             ExampleApp::WorldPins::SdkModel::WorldPinItemModel*& out_pWorldPinItemModel) const = 0;
 
                 virtual void RemovePinWithId(const int myPinId) = 0;
 

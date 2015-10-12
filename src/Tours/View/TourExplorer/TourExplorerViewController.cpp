@@ -70,7 +70,6 @@ namespace ExampleApp
                 void TourExplorerViewController::OnDismissed()
                 {
                     //scott -- should probably do this in the SDKModel ActiveTourQuitSelectedMessageHandler, or an SDK domain event?
-                    m_messageBus.Publish(WorldPins::WorldPinsVisibilityMessage(true));
                     m_messageBus.Publish(GpsMarker::GpsMarkerVisibilityMessage(true));
                     
                     //m_metricsService.SetEvent("TourExplorerViewController: Exited");
@@ -99,7 +98,6 @@ namespace ExampleApp
                     //scott -- should probably do this in the SDKModel dispatcher, or an equivalent SDK domain event?
                     if(!m_viewModel.IsFullyOffScreen())
                     {
-                        m_messageBus.Publish(WorldPins::WorldPinsVisibilityMessage(false));
                         m_messageBus.Publish(GpsMarker::GpsMarkerVisibilityMessage(false));
                     }
                 }

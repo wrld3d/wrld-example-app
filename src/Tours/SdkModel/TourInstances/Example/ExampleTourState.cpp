@@ -8,6 +8,8 @@
 #include "ExampleTourPinSelectionHandler.h"
 #include "InteriorsController.h"
 #include "ExampleCurrentTourCardTappedHandler.h"
+#include "WorldPinItemModel.h"
+#include "WorldPinVisibility.h"
 
 namespace ExampleApp
 {
@@ -90,7 +92,8 @@ namespace ExampleApp
                                                                         m_worldPinInteriorData,
                                                                         m_position,
                                                                         iconIndex,
-                                                                        heightOffsetMetres);
+                                                                        heightOffsetMetres,
+                                                                        WorldPins::SdkModel::WorldPinVisibility::TourPin);
                         }
                     }
                     

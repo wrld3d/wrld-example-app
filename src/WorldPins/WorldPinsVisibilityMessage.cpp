@@ -6,8 +6,9 @@ namespace ExampleApp
 {
     namespace WorldPins
     {
-        WorldPinsVisibilityMessage::WorldPinsVisibilityMessage(bool setVisible)
-            : m_setVisible(setVisible)
+        WorldPinsVisibilityMessage::WorldPinsVisibilityMessage(int visibilityMask)
+            : m_setVisible(visibilityMask != 0)
+            , m_visibilityMask(visibilityMask)
         {
         }
     }

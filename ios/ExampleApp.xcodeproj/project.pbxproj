@@ -1879,6 +1879,7 @@
 		225FFA101A39EE8600C2282A /* ISearchResultRepository.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISearchResultRepository.h; sourceTree = "<group>"; };
 		225FFA131A39EE8600C2282A /* SearchResultRepository.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchResultRepository.cpp; sourceTree = "<group>"; };
 		225FFA141A39EE8600C2282A /* SearchResultRepository.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultRepository.h; sourceTree = "<group>"; };
+		270A7A651BCBE2000020EAF7 /* WorldPinVisibility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorldPinVisibility.h; sourceTree = "<group>"; };
 		278A8F651BA6DB00000BBA67 /* WorldPinInteriorData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorldPinInteriorData.h; sourceTree = "<group>"; };
 		27DB89B31BB3FEF00020CDA5 /* CombinedSearchService.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CombinedSearchService.cpp; sourceTree = "<group>"; };
 		27DB89B41BB3FEF00020CDA5 /* CombinedSearchService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CombinedSearchService.h; sourceTree = "<group>"; };
@@ -4627,6 +4628,7 @@
 		7E3B88771A385A290023C94E /* SdkModel */ = {
 			isa = PBXGroup;
 			children = (
+				270A7A651BCBE2000020EAF7 /* WorldPinVisibility.h */,
 				7E3B88781A385A290023C94E /* IWorldPinSelectionHandler.h */,
 				7E3B88791A385A290023C94E /* IWorldPinsFactory.h */,
 				1833B2721BC2C48B001CB77A /* IWorldPinsFloorHeightController.h */,

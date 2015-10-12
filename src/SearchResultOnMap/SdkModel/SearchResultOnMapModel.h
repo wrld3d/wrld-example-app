@@ -10,6 +10,7 @@
 #include "CategorySearch.h"
 #include "Search.h"
 #include "WorldPins.h"
+#include "MyPins.h"
 #include "ICallback.h"
 
 namespace ExampleApp
@@ -37,6 +38,7 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<SearchResultOnMapModel, Search::SdkModel::SearchResultModel> m_searchResultUnpinnedCallback;
                 
                 Search::SdkModel::MyPins::ISearchResultMyPinsService& m_searchResultOnMapMyPinsService;
+                MyPins::SdkModel::IMyPinsService& m_myPinsService;
                 Search::SdkModel::ISearchResultRepository& m_searchResultRepository;
                 CategorySearch::ISearchResultIconCategoryMapper& m_searchResultIconCategoryMapper;
                 View::ISearchResultOnMapFactory& m_searchResultOnMapFactory;
@@ -44,6 +46,7 @@ namespace ExampleApp
 
             public:
                 SearchResultOnMapModel(WorldPins::SdkModel::IWorldPinsService& worldPinsService,
+                                       MyPins::SdkModel::IMyPinsService& myPinsService,
                                        View::ISearchResultOnMapFactory& searchResultOnMapFactory,
                                        Search::SdkModel::MyPins::ISearchResultMyPinsService& searchResultOnMapMyPinsService,
                                        CategorySearch::ISearchResultIconCategoryMapper& searchResultIconCategoryMapper,

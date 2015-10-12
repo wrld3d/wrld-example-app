@@ -27,7 +27,8 @@ namespace ExampleApp
                                                   const WorldPinInteriorData& worldPinInteriorData,
                                                   const Eegeo::Space::LatLong& location,
                                                   int iconIndex,
-                                                  float heightAboveTerrainMetres = 0) = 0;
+                                                  float heightAboveTerrainMetres,
+                                                  int visibilityMask) = 0;
 
                 virtual void RemovePin(WorldPinItemModel* pinItemModel) = 0;
 

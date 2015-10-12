@@ -14,6 +14,7 @@
 #include "IIdentity.h"
 #include "IScreenControlViewModel.h"
 #include "WorldPinsModalityObserver.h"
+#include "SdkModelDomainEventBus.h"
 
 namespace ExampleApp
 {
@@ -40,7 +41,8 @@ namespace ExampleApp
                                 const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                 Eegeo::Helpers::IIdentityProvider& identityProvider,
                                 ExampleAppMessaging::TMessageBus& messageBus,
-                                Eegeo::Resources::Interiors::InteriorsController& interiorsController);
+                                Eegeo::Resources::Interiors::InteriorsController& interiorsController,
+                                ExampleAppMessaging::TSdkModelDomainEventBus& sdkDomainEventBus);
 
                 ~WorldPinsModule();
 

@@ -17,6 +17,7 @@ namespace ExampleApp
             SearchResultOnMapModule::SearchResultOnMapModule(Search::SdkModel::ISearchResultRepository& searchResultRepository,
                                                              SearchResultPoi::View::ISearchResultPoiViewModel& searchResultPoiViewModel,
                                                              WorldPins::SdkModel::IWorldPinsService& worldPinsService,
+                                                             MyPins::SdkModel::IMyPinsService& myPinsService,
                                                              CategorySearch::ISearchResultIconCategoryMapper& searchResultOnMapIconCategoryMapper,
                                                              Search::SdkModel::MyPins::ISearchResultMyPinsService& searchResultMyPinsService,
                                                              ExampleAppMessaging::TMessageBus& messageBus,
@@ -25,6 +26,7 @@ namespace ExampleApp
                 m_pSearchResultOnMapFactory = Eegeo_NEW(View::SearchResultOnMapFactory)(messageBus, metricsService);
                 
                 m_pSearchResultOnMapModel = Eegeo_NEW(SearchResultOnMapModel)(worldPinsService,
+                                                                              myPinsService,
                                                                               *m_pSearchResultOnMapFactory,
                                                                               searchResultMyPinsService,
                                                                               searchResultOnMapIconCategoryMapper,

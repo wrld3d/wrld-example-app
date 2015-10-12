@@ -21,6 +21,7 @@
 #include <string>
 #include <sstream>
 #include "YelpSearchJsonParser.h"
+#include "WorldPinVisibility.h"
 
 namespace ExampleApp
 {
@@ -62,11 +63,11 @@ namespace ExampleApp
                     m_myPinBoundObjectRepository.AddBoundItemForPin(pPinModel->Identifier(), pinModelBoundObject);
                     pinModelBoundObject.HandlePinAdded(*pPinModel);
                     m_myPinsRepository.AddItem(pPinModel);
-                    AddPinToMap(pPinModel);
+                    AddPinToMap(pPinModel, WorldPins::SdkModel::WorldPinVisibility::None);
                 }
             }
 
-            void MyPinsService::AddPinToMap(MyPinModel* pMyPinModel)
+            void MyPinsService::AddPinToMap(MyPinModel* pMyPinModel, int aditionalMask)
             {
                 WorldPins::SdkModel::WorldPinFocusData worldPinFocusData(pMyPinModel->GetTitle(),
                                                                          pMyPinModel->GetDescription(),
@@ -79,62 +80,73 @@ namespace ExampleApp
                 
                 WorldPins::SdkModel::IWorldPinVisibilityStateChangedHandler* pVisibilityChangedHandler(m_myPinVisibilityStateChangedHandlerFactory.CreateMyPinVisibilityStateChangedHandler(*pMyPinModel));
                 
-                WorldPins::SdkModel::WorldPinItemModel* worldPinItemModel = m_worldPinsService.AddPin(pSelectionHandler,
+                int pinVisibilityMask = WorldPins::SdkModel::WorldPinVisibility::UserPin | aditionalMask;
+                
+                WorldPins::SdkModel::WorldPinItemModel* pWorldPinItemModel = m_worldPinsService.AddPin(pSelectionHandler,
                                                                                                       pVisibilityChangedHandler,
                                                                                                       worldPinFocusData,
                                                                                                       pMyPinModel->IsInterior(),
                                                                                                       worldPinInteriorData,
                                                                                                       pMyPinModel->GetLatLong(),
                                                                                                       pMyPinModel->GetSdkMapPinIconIndexIcon(),
-                                                                                                      pMyPinModel->GetHeightAboveTerrainMetres());
-                m_myPinToWorldPinMap.insert(std::make_pair(pMyPinModel, worldPinItemModel));
+                                                                                                      pMyPinModel->GetHeightAboveTerrainMetres(),
+                                                                                                      pinVisibilityMask);
+                m_myPinToWorldPinMap[pMyPinModel->Identifier()] = std::make_pair(pMyPinModel, pWorldPinItemModel);
             }
         
+            bool MyPinsService::TryGetWorldPinItemModelForMyPin(const int myPinId,
+                                                                ExampleApp::WorldPins::SdkModel::WorldPinItemModel*& out_pWorldPinItemModel) const
+            {
+                TMyPinToWorldPinMap::const_iterator it = m_myPinToWorldPinMap.find(myPinId);
+                if(it != m_myPinToWorldPinMap.end())
+                {
+                    out_pWorldPinItemModel = it->second.second;
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
 
             void MyPinsService::RemovePinWithId(const int myPinId)
             {
-                for (TMyPinToWorldPinMap::iterator it = m_myPinToWorldPinMap.begin(); it != m_myPinToWorldPinMap.end(); ++it)
+                TMyPinToWorldPinMap::iterator it = m_myPinToWorldPinMap.find(myPinId);
+                if(it != m_myPinToWorldPinMap.end())
                 {
-                    MyPinModel* pinModel = it->first;
-                    WorldPins::SdkModel::WorldPinItemModel* worldPinItemModel = it->second;
+                    
+                    MyPinModel* pPinModel = it->second.first;
+                    WorldPins::SdkModel::WorldPinItemModel* pWorldPinItemModel = it->second.second;
 
-                    if (pinModel->Identifier() == myPinId)
-                    {
-                        IMyPinBoundObject& boundObject = m_myPinBoundObjectRepository.GetBoundObjectForPin(*pinModel);
-                        m_myPinBoundObjectRepository.RemoveBoundItemForPin(pinModel->Identifier());
-                        boundObject.HandlePinRemoved(*pinModel);
-                        boundObject.HandlePinDestroyed(*pinModel);
-                        Eegeo_DELETE &boundObject;
+                    IMyPinBoundObject& boundObject = m_myPinBoundObjectRepository.GetBoundObjectForPin(*pPinModel);
+                    m_myPinBoundObjectRepository.RemoveBoundItemForPin(pPinModel->Identifier());
+                    boundObject.HandlePinRemoved(*pPinModel);
+                    boundObject.HandlePinDestroyed(*pPinModel);
+                    Eegeo_DELETE &boundObject;
                         
-                        m_worldPinsService.RemovePin(worldPinItemModel);
-                        m_myPinsRepository.RemoveItem(pinModel);
-                        m_myPinToWorldPinMap.erase(it);
-                        break;
-                    }
+                    m_worldPinsService.RemovePin(pWorldPinItemModel);
+                    m_myPinsRepository.RemoveItem(pPinModel);
+                    m_myPinToWorldPinMap.erase(it);
                 }
             }
             
             void MyPinsService::UpdatePinWithResult(const int myPinId, const Search::SdkModel::SearchResultModel& result)
             {
-                for (TMyPinToWorldPinMap::iterator it = m_myPinToWorldPinMap.begin(); it != m_myPinToWorldPinMap.end(); ++it)
+                TMyPinToWorldPinMap::iterator it = m_myPinToWorldPinMap.find(myPinId);
+                if(it != m_myPinToWorldPinMap.end())
                 {
-                    MyPinModel* pinModel = it->first;
-                    WorldPins::SdkModel::WorldPinItemModel* worldPinItemModel = it->second;
                     
-                    if (pinModel->Identifier() == myPinId)
-                    {
-                        std::string ratingImageUrl = "";
-                        int reviewCount = 0;
+                    MyPinModel* pPinModel = it->second.first;
+                    WorldPins::SdkModel::WorldPinItemModel* pWorldPinItemModel = it->second.second;
+                    std::string ratingImageUrl = "";
+                    int reviewCount = 0;
                         
-                        Search::Yelp::SdkModel::TryParseReviewDetails(result, ratingImageUrl, reviewCount);
+                    Search::Yelp::SdkModel::TryParseReviewDetails(result, ratingImageUrl, reviewCount);
                         
-                        pinModel->Update(result.GetTitle(), result.GetSubtitle(), ratingImageUrl, reviewCount);
-                        worldPinItemModel->Refresh(result.GetTitle(), result.GetSubtitle(), ratingImageUrl, reviewCount);
+                    pPinModel->Update(result.GetTitle(), result.GetSubtitle(), ratingImageUrl, reviewCount);
+                    pWorldPinItemModel->Refresh(result.GetTitle(), result.GetSubtitle(), ratingImageUrl, reviewCount);
                         
-                        SaveAllPinsToDisk();
-                        
-                        break;
-                    }
+                    SaveAllPinsToDisk();
                 }
             }
             
@@ -191,7 +203,7 @@ namespace ExampleApp
                 boundObject.HandlePinAdded(*pinModel);
                 
                 m_myPinsRepository.AddItem(pinModel);
-                AddPinToMap(pinModel);
+                AddPinToMap(pinModel, WorldPins::SdkModel::WorldPinVisibility::None);
             }
             
             void MyPinsService::SaveSearchResultPoiPin(const Search::SdkModel::SearchResultModel& searchResult,
@@ -230,7 +242,7 @@ namespace ExampleApp
                 boundObject.HandlePinAdded(*pinModel);
                 
                 m_myPinsRepository.AddItem(pinModel);
-                AddPinToMap(pinModel);
+                AddPinToMap(pinModel, WorldPins::SdkModel::WorldPinVisibility::Search);
             }
         }
     }

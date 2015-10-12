@@ -4,6 +4,8 @@
 #include "ITourRepository.h"
 #include "IWorldPinsService.h"
 #include "TourWorldPinSelectionHandler.h"
+#include "WorldPinItemModel.h"
+#include "WorldPinVisibility.h"
 
 namespace ExampleApp
 {
@@ -39,7 +41,8 @@ namespace ExampleApp
                                                        tourModel.WorldPinInteriorData(),
                                                        tourModel.Location(),
                                                        IconIndex,
-                                                       0.0f);
+                                                       0.0f,
+                                                       WorldPins::SdkModel::WorldPinVisibility::World);
                 
                 // map pPin to tourModel somehow, possibly in TourService or another repo.
             }
