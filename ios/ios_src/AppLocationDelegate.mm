@@ -55,8 +55,13 @@ AppLocationDelegate* m_pAppLocationDelegate;
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
-    m_piOSLocationService->FailedToGetLocation();
-    m_piOSLocationService->FailedToGetHeading();
+    // kCLErrorLocationUnknown doesn't meen an explicit failure - Can fall back on existing state
+    if(error.code != kCLErrorLocationUnknown)
+    {
+        m_piOSLocationService->FailedToGetLocation();
+        m_piOSLocationService->FailedToGetHeading();
+    }
+    
     if(error.code == kCLErrorDenied)
     {
         m_piOSLocationService->SetAuthorized(false);
