@@ -32,14 +32,14 @@ namespace ExampleApp
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 std::vector<Search::SdkModel::SearchResultModel> m_lastAddedResults;
                 ISearchResultMenuOrder& m_order;
-                
+
                 Eegeo::Helpers::TCallback1<SearchResultMenuController, const Search::SearchQueryPerformedMessage&> m_searchQueryIssuedHandler;
                 Eegeo::Helpers::TCallback1<SearchResultMenuController, const Search::SearchQueryResponseReceivedMessage&> m_searchResultReceivedHandler;
                 Eegeo::Helpers::TCallback0<SearchResultMenuController> m_onSearchCloseTappedCallback;
                 Eegeo::Helpers::TCallback1<SearchResultMenuController, const AppModes::AppModeChangedMessage&> m_appModeChangedCallback;
                 
                 Eegeo::Helpers::TCallback0<SearchResultMenuController> m_attractModeChangedCallback;
-                
+
             private:
                 void OnSearchQueryPerformedMessage(const Search::SearchQueryPerformedMessage& message);
 
@@ -68,7 +68,8 @@ namespace ExampleApp
                     ISearchResultMenuOrder& order,
                     CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
                     View::ISearchResultMenuViewModel& searchResultMenuViewModel,
-                    ExampleAppMessaging::TMessageBus& messageBus);
+                    ExampleAppMessaging::TMessageBus& messageBus
+                );
 
                 ~SearchResultMenuController();
             };

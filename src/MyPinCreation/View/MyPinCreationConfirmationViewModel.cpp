@@ -72,6 +72,11 @@ namespace ExampleApp
             {
                 return m_screenControl.OnScreenState();
             }
+            
+            bool MyPinCreationConfirmationViewModel::IsAddedToScreen() const
+            {
+                return m_screenControl.IsAddedToScreen();
+            }
 
             bool MyPinCreationConfirmationViewModel::TryOpen()
             {

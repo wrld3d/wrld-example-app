@@ -87,6 +87,11 @@ namespace ExampleApp
                 return m_screenViewModel.OnScreenState();
             }
             
+            bool MenuViewModel::IsAddedToScreen() const
+            {
+                return m_screenViewModel.IsAddedToScreen();
+            }
+            
             bool MenuViewModel::HasReactorControl() const
             {
                 return m_openViewModel.HasReactorControl();

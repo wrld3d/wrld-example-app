@@ -10,6 +10,7 @@
 #include "RenderCamera.h"
 #include "IWorldPinsRepository.h"
 #include "WorldPinsVisibilityMessage.h"
+#include "WorldPinVisibility.h"
 
 namespace ExampleApp
 {
@@ -20,7 +21,8 @@ namespace ExampleApp
             WorldPinsScaleController::WorldPinsScaleController(IWorldPinsRepository& worldPinsRepository,
                                                                IWorldPinsService& worldPinsService,
                                                                ExampleAppMessaging::TMessageBus& messageBus,
-                                                               Eegeo::Resources::Interiors::InteriorsController& interiorsController)
+                                                               Eegeo::Resources::Interiors::InteriorsController& interiorsController,
+                                                               ExampleAppMessaging::TSdkModelDomainEventBus& sdkDomainEventBus)
                 : m_worldPinsRepository(worldPinsRepository)
                 , m_worldPinsService(worldPinsService)
                 , m_messageBus(messageBus)
@@ -30,13 +32,17 @@ namespace ExampleApp
                 , m_targetVisibilityScale(1.f)
                 , m_visibilityAnimationDuration(0.2f)
                 , m_interiorsController(interiorsController)
+                , m_sdkDomainEventBus(sdkDomainEventBus)
+                , m_visibilityMask(WorldPins::SdkModel::WorldPinVisibility::All)
             {
                 m_messageBus.SubscribeNative(m_visibilityMessageHandlerBinding);
+                m_sdkDomainEventBus.Subscribe(m_visibilityMessageHandlerBinding);
             }
 
             WorldPinsScaleController::~WorldPinsScaleController()
             {
                 m_messageBus.UnsubscribeNative(m_visibilityMessageHandlerBinding);
+                m_sdkDomainEventBus.Unsubscribe(m_visibilityMessageHandlerBinding);
             }
 
             void WorldPinsScaleController::Update(float deltaSeconds, const Eegeo::Camera::RenderCamera& renderCamera)
@@ -72,6 +78,11 @@ namespace ExampleApp
             {
                 const bool showingInterior = m_interiorsController.InteriorIsVisible();
                 
+                if((m_visibilityMask & worldPinItemModel.VisibilityMask()) == 0)
+                {
+                    return true;
+                }
+                
                 if(showingInterior && !worldPinItemModel.IsInterior())
                 {
                     return true;
@@ -82,12 +93,12 @@ namespace ExampleApp
                     return !worldPinItemModel.GetInteriorData().showInExterior;
                 }
                 
-                
+                bool hidePinFromInteriorData =  false;
                 if(showingInterior && worldPinItemModel.IsInterior())
                 {
                     //hide if building and floor of pin not showing
                     const Eegeo::Resources::Interiors::InteriorsModel* pInteriorModel = NULL;
-                    return !(worldPinItemModel.GetInteriorData().floor == m_interiorsController.GetCurrentFloorIndex() &&
+                    hidePinFromInteriorData = !(worldPinItemModel.GetInteriorData().floor == m_interiorsController.GetCurrentFloorIndex() &&
                              m_interiorsController.TryGetCurrentModel(pInteriorModel) &&
                              worldPinItemModel.GetInteriorData().building == pInteriorModel->GetId());
                 }
@@ -98,7 +109,9 @@ namespace ExampleApp
                 
                 const float ratioX = screenLocation.GetX() / renderCamera.GetViewportWidth();
                 const float ratioY = screenLocation.GetY() / renderCamera.GetViewportHeight();
-                return (ratioX < 0.1f) || (ratioX > 0.9f) || (ratioY < 0.15f) || (ratioY > 0.9f);
+                const bool hidePinFromScreenPosition = (ratioX < 0.1f) || (ratioX > 0.9f) || (ratioY < 0.15f) || (ratioY > 0.9f);
+                
+                return hidePinFromScreenPosition || hidePinFromInteriorData;
             }
 
             void WorldPinsScaleController::UpdateWorldPin(WorldPinItemModel& worldPinItemModel,
@@ -149,6 +162,8 @@ namespace ExampleApp
                 {
                     Hide();
                 }
+                
+                m_visibilityMask = worldPinsVisibilityMessage.VisibilityMask();
             }
         }
     }

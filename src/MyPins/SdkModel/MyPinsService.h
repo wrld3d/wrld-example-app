@@ -3,6 +3,7 @@
 #pragma once
 
 #include <map>
+#include <utility>
 
 #include "InteriorId.h"
 #include "MyPins.h"
@@ -30,6 +31,9 @@ namespace ExampleApp
                 
                 void LoadAllPinsFromDisk();
 
+                bool TryGetWorldPinItemModelForMyPin(const int myPinId,
+                                                     ExampleApp::WorldPins::SdkModel::WorldPinItemModel*& out_pWorldPinItemModel) const;
+                
                 void RemovePinWithId(const int myPinId);
                 
                 void SaveUserCreatedPoiPin(const std::string& title,
@@ -63,10 +67,10 @@ namespace ExampleApp
 
                 MyPinModel::TPinIdType m_lastIdUsed;
 
-                typedef std::map<MyPinModel*, WorldPins::SdkModel::WorldPinItemModel*> TMyPinToWorldPinMap;
+                typedef std::map<int, std::pair<MyPinModel*, WorldPins::SdkModel::WorldPinItemModel*> > TMyPinToWorldPinMap;
                 TMyPinToWorldPinMap m_myPinToWorldPinMap;
 
-                void AddPinToMap(MyPinModel* pMyPinModel);
+                void AddPinToMap(MyPinModel* pMyPinModel, int aditionalMask);
 
                 void SubmitPinToWebService(const MyPinModel& myPinModel);
 

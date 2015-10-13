@@ -65,6 +65,11 @@ namespace ExampleApp
             {
                 return m_screenControl.OnScreenState();
             }
+            
+            bool MyPinCreationInitiationViewModel::IsAddedToScreen() const
+            {
+                return m_screenControl.IsAddedToScreen();
+            }
 
             bool MyPinCreationInitiationViewModel::ShouldOffsetViewButton() const
             {

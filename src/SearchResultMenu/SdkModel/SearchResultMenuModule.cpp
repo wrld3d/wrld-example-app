@@ -55,6 +55,8 @@ namespace ExampleApp
                             *m_pViewModel,
                             messageBus
                         );
+                
+                m_pSearchResultMenuAppModeMessageHandler = Eegeo_NEW(View::SearchResultMenuAppModeMessageHandler)(*m_pViewModel, messageBus);
 
                 m_pSearchResultViewClearedObserver = Eegeo_NEW(SearchResultViewClearedObserver)(searchQueryPerformer, messageBus);
                 
@@ -65,6 +67,7 @@ namespace ExampleApp
             {
                 Eegeo_DELETE m_pSearchResultMenuOrder;
                 Eegeo_DELETE m_pSearchResultViewClearedObserver;
+                Eegeo_DELETE m_pSearchResultMenuAppModeMessageHandler;
                 Eegeo_DELETE m_pSearchResultMenuSearchQueryRemovedMessageHandler;
                 Eegeo_DELETE m_pSearchResultMenuSearchQueryPerformedMessageHandler;
                 Eegeo_DELETE m_pSearchResultMenuItemSelectedMessageHandler;

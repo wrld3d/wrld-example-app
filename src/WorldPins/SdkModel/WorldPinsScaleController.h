@@ -13,6 +13,7 @@
 #include "Modality.h"
 #include "BidirectionalBus.h"
 #include "ICallback.h"
+#include "SdkModelDomainEventBus.h"
 
 namespace ExampleApp
 {
@@ -33,12 +34,17 @@ namespace ExampleApp
 
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 Eegeo::Helpers::TCallback1<WorldPinsScaleController, const WorldPinsVisibilityMessage&> m_visibilityMessageHandlerBinding;
+                
+                ExampleAppMessaging::TSdkModelDomainEventBus& m_sdkDomainEventBus;
+                
+                int m_visibilityMask;
 
             public:
                 WorldPinsScaleController(IWorldPinsRepository& worldPinsRepository,
                                          WorldPins::SdkModel::IWorldPinsService& worldPinsService,
                                          ExampleAppMessaging::TMessageBus& messageBus,
-                                         Eegeo::Resources::Interiors::InteriorsController& interiorsController);
+                                         Eegeo::Resources::Interiors::InteriorsController& interiorsController,
+                                         ExampleAppMessaging::TSdkModelDomainEventBus& sdkDomainEventBus);
 
                 ~WorldPinsScaleController();
 

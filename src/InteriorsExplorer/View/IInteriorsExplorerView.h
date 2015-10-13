@@ -30,6 +30,8 @@ namespace ExampleApp
                 virtual void RemoveDismissedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
                 virtual void InsertFloorSelectedCallback(Eegeo::Helpers::ICallback1<int>& callback) = 0;
                 virtual void RemoveFloorSelectedCallback(Eegeo::Helpers::ICallback1<int>& callback) = 0;
+                
+                virtual void SetTouchEnabled(bool enabled) = 0;
             };
         }
     }

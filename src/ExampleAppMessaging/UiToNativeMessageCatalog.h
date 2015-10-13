@@ -34,6 +34,7 @@
 #include "InteriorsExplorerExitMessage.h"
 #include "MenuDragStateChangedMessage.h"
 #include "SwallowOfficeResultMenuOptionSelectedMessage.h"
+#include "CurrentTourCardTappedMessage.h"
 
 namespace ExampleApp
 {
@@ -70,6 +71,7 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<InteriorsExplorer::InteriorsExplorerExitMessage>
             , public Eegeo::Messaging::CatalogBinding<Menu::MenuDragStateChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<Search::Swallow::SwallowOfficeResultMenuOptionSelectedMessage>
+            , public Eegeo::Messaging::CatalogBinding<Tours::CurrentTourCardTappedMessage>
             , private Eegeo::NonCopyable
         {
 

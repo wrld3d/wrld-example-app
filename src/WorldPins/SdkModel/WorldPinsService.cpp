@@ -47,7 +47,8 @@ namespace ExampleApp
                                                         const WorldPinInteriorData& worldPinInteriorData,
                                                         const Eegeo::Space::LatLong& location,
                                                         int iconIndex,
-                                                        float heightAboveTerrainMetres)
+                                                        float heightAboveTerrainMetres,
+                                                        int visibilityMask)
             {
                 
                 Eegeo::Pins::Pin* pPin = m_worldPinsFactory.CreatePin(location, iconIndex, heightAboveTerrainMetres);
@@ -69,7 +70,8 @@ namespace ExampleApp
                                                                         pVisibilityStateChangedHandler,
                                                                         worldPinFocusData,
                                                                         interior,
-                                                                        worldPinInteriorData);
+                                                                        worldPinInteriorData,
+                                                                        visibilityMask);
                 m_worldPinsRepository.AddItem(model);
 
                 UpdatePinScale(*model, model->TransitionStateValue());

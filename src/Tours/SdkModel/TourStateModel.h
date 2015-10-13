@@ -15,7 +15,8 @@ namespace ExampleApp
             public:
                 TourStateModel(const std::string& headline,
                                const std::string& description,
-                               const std::string& imagePath);
+                               const std::string& imagePath,
+                               const std::string& icon);
                 
                 const std::string& Headline() const;
                 
@@ -23,10 +24,13 @@ namespace ExampleApp
                 
                 const std::string& ImagePath() const;
                 
+                const std::string& Icon() const;
+                
             private:
                 std::string m_headline;
                 std::string m_description;
                 std::string m_imagePath;
+                std::string m_icon;
             };
         }
     }

@@ -25,8 +25,10 @@ const bool TestCycleCarouselMode = false;
 {
     id m_interactionHandlerInstance;
     SEL m_selectionInteractionHandler;
+    SEL m_selectionTappedHandler;
     SEL m_currentItemChangedHandler;
     int m_selectionIndex;
+    bool m_scrollingToSelected;
     float m_screenWidth;
     float m_screenHeight;
     std::vector<std::vector<std::string> > m_stateViewData;
@@ -49,6 +51,7 @@ const bool TestCycleCarouselMode = false;
                     :(float)pixelScale
                     :(id)interactionHandlerInstance
                     :(SEL)selectionInteractionHandler
+                    :(SEL)selectionTappedHandler
                     :(SEL)currentItemChangedHandler
                     :(ExampleApp::Tours::View::TourExplorer::TourExplorerViewInterop*)pInterop
                     :(ImageStore*)pImageStore;
@@ -60,8 +63,10 @@ const bool TestCycleCarouselMode = false;
         self->m_screenHeight = screenHeight;
         self->m_interactionHandlerInstance = interactionHandlerInstance;
         self->m_selectionInteractionHandler = selectionInteractionHandler;
+        self->m_selectionTappedHandler = selectionTappedHandler;
         self->m_currentItemChangedHandler = currentItemChangedHandler;
         self->m_selectionIndex = -1;
+        self->m_scrollingToSelected = false;
         self->m_pImageStore = pImageStore;
         
         CGRect f = CGRectMake(0.f, (m_screenHeight-REFLECTION_OFFSET_Y)-(ITEM_HEIGHT), m_screenWidth, ITEM_HEIGHT);
@@ -224,15 +229,23 @@ const bool TestCycleCarouselMode = false;
             _carousel.type = (iCarouselType)((_carousel.type + 1) % 12);
             [_carousel reloadData];
         }
+        else if(m_selectionIndex == index && !m_scrollingToSelected)
+        {
+            [self->m_interactionHandlerInstance performSelector:self->m_selectionTappedHandler];
+        }
         else
         {
-            m_selectionIndex = index;
+            m_scrollingToSelected = true;
             [self->m_interactionHandlerInstance performSelector:self->m_selectionInteractionHandler];
         }
     }
+    else if(m_selectionIndex == index && !m_scrollingToSelected)
+    {
+        [self->m_interactionHandlerInstance performSelector:self->m_selectionTappedHandler];
+    }
     else
     {
-        m_selectionIndex = index;
+        m_scrollingToSelected = true;
         [self->m_interactionHandlerInstance performSelector:self->m_selectionInteractionHandler];
     }
 }
@@ -252,6 +265,7 @@ const bool TestCycleCarouselMode = false;
         m_selectionIndex = carousel.currentItemIndex;
         [self->m_interactionHandlerInstance performSelector:self->m_currentItemChangedHandler];
     }
+    m_scrollingToSelected = false;
 }
 
 - (CGFloat)carousel:(iCarousel *)carousel valueForOption:(iCarouselOption)option withDefault:(CGFloat)value

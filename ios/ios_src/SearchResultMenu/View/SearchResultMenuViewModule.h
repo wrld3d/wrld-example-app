@@ -13,7 +13,6 @@
 #include "SearchResultMenuViewIncludes.h"
 #include "BidirectionalBus.h"
 #include "SearchResultMenuDataProvider.h"
-#include "AppModes.h"
 
 namespace ExampleApp
 {

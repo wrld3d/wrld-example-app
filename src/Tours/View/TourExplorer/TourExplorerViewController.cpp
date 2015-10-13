@@ -8,6 +8,7 @@
 #include "ITourExplorerCompositeViewController.h"
 #include "TourActiveStateChangedMessage.h"
 #include "ActiveTourQuitSelectedMessage.h"
+#include "CurrentTourCardTappedMessage.h"
 
 namespace ExampleApp
 {
@@ -33,18 +34,21 @@ namespace ExampleApp
                 , m_stateChangedCallback(this, &TourExplorerViewController::OnStateChanged)
                 , m_viewStateCallback(this, &TourExplorerViewController::OnViewStateChangeScreenControl)
                 , m_tourChangeRequestCallback(this, &TourExplorerViewController::OnTourChangeRequested)
+                , m_currentTourCardTappedCallback(this, &TourExplorerViewController::OnCurrentTourCardTapped)
                 {
                     m_viewModel.InsertOnScreenStateChangedCallback(m_viewStateCallback);
                     
                     m_view.InsertStateChangedCallback(m_stateChangedCallback);
                     m_view.InsertDismissedCallback(m_dismissedCallback);
                     m_view.InsertChangeTourRequestCallback(m_tourChangeRequestCallback);
+                    m_view.InsertCurrentTourCardTappedCallback(m_currentTourCardTappedCallback);
                     
                     m_view.SetOnScreenStateToIntermediateValue(m_viewModel.OnScreenState());
                 }
                 
                 TourExplorerViewController::~TourExplorerViewController()
                 {
+                    m_view.RemoveCurrentTourCardTappedCallback(m_currentTourCardTappedCallback);
                     m_view.RemoveStateChangedCallback(m_stateChangedCallback);
                     m_view.RemoveDismissedCallback(m_dismissedCallback);
                     m_view.RemoveChangeTourRequestCallback(m_tourChangeRequestCallback);
@@ -66,7 +70,6 @@ namespace ExampleApp
                 void TourExplorerViewController::OnDismissed()
                 {
                     //scott -- should probably do this in the SDKModel ActiveTourQuitSelectedMessageHandler, or an SDK domain event?
-                    m_messageBus.Publish(WorldPins::WorldPinsVisibilityMessage(true));
                     m_messageBus.Publish(GpsMarker::GpsMarkerVisibilityMessage(true));
                     
                     //m_metricsService.SetEvent("TourExplorerViewController: Exited");
@@ -77,10 +80,12 @@ namespace ExampleApp
                 void TourExplorerViewController::OnViewStateChangeScreenControl(ScreenControl::View::IScreenControlViewModel &viewModel,
                                                                                 float &state)
                 {
-                    //m_metricsService.SetEvent("TourExplorerViewController: Entered");
                     
-                    m_view.SetCurrentTour(m_viewModel.GetCurrentTour());
-                    m_hovercardView.SetCurrentTour(m_viewModel.GetCurrentTour());
+                    if(m_view.GetCurrentTour() != m_viewModel.GetCurrentTour() && state > 0.0f)
+                    {
+                        m_view.SetCurrentTour(m_viewModel.GetCurrentTour());
+                        m_hovercardView.SetCurrentTour(m_viewModel.GetCurrentTour());
+                    }
                     
                     // Added to screen, set initial card
                     if(m_viewModel.IsFullyOnScreen())
@@ -93,9 +98,13 @@ namespace ExampleApp
                     //scott -- should probably do this in the SDKModel dispatcher, or an equivalent SDK domain event?
                     if(!m_viewModel.IsFullyOffScreen())
                     {
-                        m_messageBus.Publish(WorldPins::WorldPinsVisibilityMessage(false));
                         m_messageBus.Publish(GpsMarker::GpsMarkerVisibilityMessage(false));
                     }
+                }
+                
+                void TourExplorerViewController::OnCurrentTourCardTapped()
+                {
+                    m_messageBus.Publish(Tours::CurrentTourCardTappedMessage());
                 }
             }
         }

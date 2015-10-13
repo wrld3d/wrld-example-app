@@ -7,6 +7,7 @@
 #include "IScreenControlViewModel.h"
 #include "IMyPinCreationInitiationViewModel.h"
 #include "ApplyScreenControl.h"
+#include "WorldPinVisibility.h"
 
 namespace ExampleApp
 {
@@ -59,6 +60,7 @@ namespace ExampleApp
             void InteriorsExplorerController::OnDismiss()
             {
                 m_messageBus.Publish(InteriorsExplorerExitMessage());
+                m_view.SetTouchEnabled(false);
             }
             
             void InteriorsExplorerController::OnSelectFloor(int& selected)
@@ -78,6 +80,7 @@ namespace ExampleApp
                 if(message.IsInteriorVisible())
                 {
                     m_view.UpdateFloors(message.GetFloorShortNames(), message.GetSelectedFloorIndex());
+                    m_view.SetTouchEnabled(true);
                     
                     OnFloorSelected(InteriorsExplorerFloorSelectedMessage(message.GetSelectedFloorIndex(), message.GetSelectedFloorName()));
                     
@@ -88,7 +91,7 @@ namespace ExampleApp
                 else
                 {
                     m_viewModel.RemoveFromScreen();
-                    
+
                     m_messageBus.Publish(GpsMarker::GpsMarkerVisibilityMessage(true));
                 }
             }

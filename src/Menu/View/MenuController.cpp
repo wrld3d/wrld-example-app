@@ -17,17 +17,24 @@ namespace ExampleApp
                     return;
                 }
 
-                if (m_viewModel.IsFullyClosed())
+                if(m_viewModel.IsAddedToScreen())
                 {
-                    m_view.SetFullyOnScreenClosed();
-                }
-                else if (m_viewModel.IsFullyOpen())
-                {
-                    m_view.SetFullyOnScreenOpen();
+                    if (m_viewModel.IsFullyClosed())
+                    {
+                        m_view.SetFullyOnScreenClosed();
+                    }
+                    else if (m_viewModel.IsFullyOpen())
+                    {
+                        m_view.SetFullyOnScreenOpen();
+                    }
+                    else
+                    {
+                        m_view.SetOnScreenStateToIntermediateValue(state);
+                    }
                 }
                 else
                 {
-                    m_view.SetOnScreenStateToIntermediateValue(state);
+                    m_view.SetFullyOffScreen();
                 }
             }
 
@@ -195,6 +202,11 @@ namespace ExampleApp
                     Eegeo_ASSERT(acquiredReactorControl, "%d failed to acquire reactor control.\n", Identity());
                 }
 
+                if(!m_viewModel.IsAddedToScreen())
+                {
+                    m_viewModel.Close();
+                    m_view.SetFullyOffScreen();
+                }
                 m_dragInProgress = false;
                 m_messageBus.Publish(MenuDragStateChangedMessage(m_dragInProgress));
             }

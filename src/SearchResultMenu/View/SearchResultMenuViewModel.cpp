@@ -23,6 +23,7 @@ namespace ExampleApp
                 , m_pModalReactorOpenControlReleasedCallback(Eegeo_NEW((Eegeo::Helpers::TCallback0<SearchResultMenuViewModel>))(this, &SearchResultMenuViewModel::HandleReactorOpenControlReleased))
                 , m_reactionControllerModel(reactionControllerModel)
                 , m_hasSearchQuery(false)
+                , m_enabled(true)
             {
                 m_menuModel.InsertItemAddedCallback(*m_pMenuContentsChangedCallback);
                 m_menuModel.InsertItemRemovedCallback(*m_pMenuContentsChangedCallback);
@@ -40,7 +41,7 @@ namespace ExampleApp
 
             bool SearchResultMenuViewModel::CanShowOnScreen() const
             {
-                if(!m_hasSearchQuery)
+                if(!m_hasSearchQuery || !m_enabled)
                 {
                     return false;
                 }
@@ -106,7 +107,7 @@ namespace ExampleApp
             {
                 m_hasSearchQuery = hasSearchQuery;
 
-                if(m_hasSearchQuery)
+                if(m_hasSearchQuery && m_enabled)
                 {
                     AddToScreen();
                 }
@@ -146,6 +147,24 @@ namespace ExampleApp
             bool SearchResultMenuViewModel::AttractModeEnabled() const
             {
                 return m_inAttractMode;
+            }
+            
+            void SearchResultMenuViewModel::SetEnabled(bool enabled)
+            {
+                bool hasChanged = m_enabled != enabled;
+                m_enabled = enabled;
+                
+                if(hasChanged)
+                {
+                    if(m_enabled && (m_hasSearchQuery || m_hasSearchQueryInFlight))
+                    {
+                        AddToScreen();
+                    }
+                    else if(!m_enabled)
+                    {
+                        RemoveFromScreen();
+                    }
+                }
             }
             
             void SearchResultMenuViewModel::InsertAttractModeChangedCallback(Eegeo::Helpers::ICallback0& callback)

@@ -29,6 +29,8 @@ namespace ExampleApp
                     void OnStateSelected(int activeStateIndex);
                     void OnChangeTourRequested(const std::string& name);
                     
+                    void OnCurrentTourCardTapped();
+                    
                     void InsertDismissedCallback(Eegeo::Helpers::ICallback0& callback);
                     void RemoveDismissedCallback(Eegeo::Helpers::ICallback0& callback);
                     void InsertStateChangedCallback(Eegeo::Helpers::ICallback1<int>& callback);
@@ -40,10 +42,17 @@ namespace ExampleApp
                     void SetFullyOnScreen();
                     void SetFullyOffScreen();
                     
+                    const SdkModel::TourModel& GetCurrentTour();
+                    
+                    void InsertCurrentTourCardTappedCallback(Eegeo::Helpers::ICallback0& callback);
+                    void RemoveCurrentTourCardTappedCallback(Eegeo::Helpers::ICallback0& callback);
+                    
                 private:
                     Eegeo::Helpers::CallbackCollection1<int> m_stateChangedCallbacks;
                     Eegeo::Helpers::CallbackCollection0 m_dismissedCallbacks;
                     Eegeo::Helpers::CallbackCollection1<std::string> m_changeTourCallbacks;
+                    Eegeo::Helpers::CallbackCollection0 m_currentTourCardTappedCallbacks;
+                    
                     TourExplorerView* m_pView;
                     SdkModel::TourModel m_tourModel;
                     int m_initialCard;

@@ -124,7 +124,7 @@ namespace ExampleApp
             
             void SearchResultMenuController::OnAppModeChanged(const AppModes::AppModeChangedMessage& message)
             {
-                
+
             }
 
             SearchResultMenuController::SearchResultMenuController(
@@ -155,10 +155,13 @@ namespace ExampleApp
                 m_messageBus.SubscribeUi(m_searchResultReceivedHandler);
                 m_messageBus.SubscribeUi(m_appModeChangedCallback);
                 m_searchResultMenuViewModel.InsertAttractModeChangedCallback(m_attractModeChangedCallback);
+
+                m_messageBus.SubscribeUi(m_appModeChangedCallback);
             }
 
             SearchResultMenuController::~SearchResultMenuController()
             {
+                m_messageBus.UnsubscribeUi(m_appModeChangedCallback);
                 m_searchResultMenuViewModel.RemoveAttractModeChangedCallback(m_attractModeChangedCallback);
                 m_messageBus.UnsubscribeUi(m_appModeChangedCallback);
                 m_messageBus.UnsubscribeUi(m_searchResultReceivedHandler);

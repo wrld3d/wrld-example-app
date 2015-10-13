@@ -37,6 +37,7 @@ namespace ExampleApp
                     void OnStateChanged(int& activeStateIndex);
                     void OnTourChangeRequested(std::string& tourName);
                     void OnViewStateChangeScreenControl(ScreenControl::View::IScreenControlViewModel& viewModel, float& state);
+                    void OnCurrentTourCardTapped();
                     
                     ITourExplorerViewModel& m_viewModel;
                     ITourExplorerCompositeViewController& m_tourExplorerCompositeViewController;
@@ -48,6 +49,7 @@ namespace ExampleApp
                     Eegeo::Helpers::TCallback0<TourExplorerViewController> m_dismissedCallback;
                     Eegeo::Helpers::TCallback1<TourExplorerViewController, int> m_stateChangedCallback;
                     Eegeo::Helpers::TCallback1<TourExplorerViewController, std::string> m_tourChangeRequestCallback;
+                    Eegeo::Helpers::TCallback0<TourExplorerViewController> m_currentTourCardTappedCallback;
                     
                     Metrics::IMetricsService& m_metricsService;
                 };

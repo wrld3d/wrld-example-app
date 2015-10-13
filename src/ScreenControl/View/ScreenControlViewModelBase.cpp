@@ -10,6 +10,7 @@ namespace ExampleApp
         {
             ScreenControlViewModelBase::ScreenControlViewModelBase(bool isInitiallyOnScreen)
                 : m_onScreenState(isInitiallyOnScreen ? 1.f : 0.f)
+                , m_addedToScreen(isInitiallyOnScreen)
             {
 
             }
@@ -21,21 +22,26 @@ namespace ExampleApp
 
             void ScreenControlViewModelBase::AddToScreen()
             {
+                m_addedToScreen = true;
                 m_onScreenState = 1.f;
                 m_onScreenStateChangedCallbacks.ExecuteCallbacks(*this, m_onScreenState);
             }
 
             void ScreenControlViewModelBase::RemoveFromScreen()
             {
+                m_addedToScreen = false;
                 m_onScreenState = 0.f;
                 m_onScreenStateChangedCallbacks.ExecuteCallbacks(*this, m_onScreenState);
             }
 
             void ScreenControlViewModelBase::UpdateOnScreenState(float onScreenState)
             {
-                Eegeo_ASSERT(onScreenState >= 0.f && onScreenState <= 1.f, "Invalid value %f for screen state, valid range for UI on-screen-state is 0.0 to 1.0 inclusive.\n", onScreenState);
-                m_onScreenState = onScreenState;
-                m_onScreenStateChangedCallbacks.ExecuteCallbacks(*this, m_onScreenState);
+                if(m_addedToScreen)
+                {
+                    Eegeo_ASSERT(onScreenState >= 0.f && onScreenState <= 1.f, "Invalid value %f for screen state, valid range for UI on-screen-state is 0.0 to 1.0 inclusive.\n", onScreenState);
+                    m_onScreenState = onScreenState;
+                    m_onScreenStateChangedCallbacks.ExecuteCallbacks(*this, m_onScreenState);
+                }
             }
 
             void ScreenControlViewModelBase::InsertOnScreenStateChangedCallback(Eegeo::Helpers::ICallback2<IScreenControlViewModel&, float>& callback)
@@ -61,6 +67,11 @@ namespace ExampleApp
             float ScreenControlViewModelBase::OnScreenState() const
             {
                 return m_onScreenState;
+            }
+            
+            bool ScreenControlViewModelBase::IsAddedToScreen() const
+            {
+                return m_addedToScreen;
             }
         }
     }
