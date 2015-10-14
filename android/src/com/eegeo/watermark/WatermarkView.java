@@ -90,8 +90,10 @@ public class WatermarkView implements View.OnClickListener
  {
      AlertDialog.Builder builder = new AlertDialog.Builder(m_activity);
 
+     String appName =  m_activity.getPackageManager().getApplicationLabel(m_activity.getApplicationInfo()).toString();
+    	  
      builder.setTitle("Maps by eeGeo");
-     builder.setMessage("The Recce App is open source. It's built using the eeGeo maps SDK, a cross platform API for building engaging, customizable apps");
+     builder.setMessage("The " + appName + " app is built using the eeGeo maps SDK, a cross platform API for building engaging, customizable apps");
      builder.setPositiveButton("Find Out More", createClickListener(true));
      builder.setNegativeButton("Later", createClickListener(false));
      builder.setCancelable(false);

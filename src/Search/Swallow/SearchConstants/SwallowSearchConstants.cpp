@@ -47,11 +47,15 @@ namespace ExampleApp
                     
                     std::vector<ExampleApp::CategorySearch::View::CategorySearchModel> categories;
                     
-                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Meeting Rooms", MEETING_ROOM_CATEGORY_NAME, MEETING_ROOM_CATEGORY_NAME, showCategoriesInSearchMenu));
-                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Working Groups", WORKING_GROUP_CATEGORY_NAME, WORKING_GROUP_CATEGORY_NAME, showCategoriesInSearchMenu));
-                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Facilities", FACILITY_CATEGORY_NAME, FACILITY_CATEGORY_NAME, showCategoriesInSearchMenu));
-                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Offices", OFFICE_CATEGORY_NAME, OFFICE_CATEGORY_NAME, showCategoriesInSearchMenu));
+                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Meeting Rooms", MEETING_ROOM_CATEGORY_NAME, "meetingroom", showCategoriesInSearchMenu));
+                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Working Groups", WORKING_GROUP_CATEGORY_NAME, "workinggroup", showCategoriesInSearchMenu));
+                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Facilities", FACILITY_CATEGORY_NAME, "toilets", showCategoriesInSearchMenu));
+                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Offices", OFFICE_CATEGORY_NAME, "office", showCategoriesInSearchMenu));
                     
+                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Toilets", OFFICE_CATEGORY_NAME, "toilets", false));
+                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Print Stations", PRINT_STATION_CATEGORY_NAME, "printstation", false));
+                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Stationary", STATIONERY_CATEGORY_NAME, "stationary", false));
+                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("People", PERSON_CATEGORY_NAME, "person", false));
                     return categories;
                 }
                 
