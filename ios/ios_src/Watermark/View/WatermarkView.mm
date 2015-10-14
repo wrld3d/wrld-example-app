@@ -76,8 +76,9 @@
 
 - (void) onClick:(UIButton *)sender
 {
+    NSString* appName =  [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDisplayName"];
     NSString* alertTitle = @"Maps by eeGeo";
-    NSString* alertMessage = @"The Recce App is open source. It's built using the eeGeo maps SDK, a cross platform API for building engaging, customizable apps.";
+    NSString* alertMessage = [NSString stringWithFormat: @"The %@ is open source. It's built using the eeGeo maps SDK, a cross platform API for building engaging, customizable apps.", appName];
     NSString* cancelMessage = @"Later";
     NSString* goToSiteMessage = @"Find Out More";
     
