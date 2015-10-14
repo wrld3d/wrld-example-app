@@ -94,10 +94,17 @@ namespace ExampleApp
             void WorldPinsService::UpdatePinScale(const WorldPinItemModel& pinItemModel, float scale)
             {
                 Eegeo::Pins::Pin* pPin = m_pinRepository.GetPinById(pinItemModel.Id());
-                Eegeo_ASSERT(pPin != NULL);
+                Eegeo_ASSERT(pPin != NULL, "Couldn't find Pin to set scale on");
 
                 float scaleWithTerrainHeight = pPin->HasTerrainHeight() ? scale : 0.f;
                 m_pinController.SetScaleForPin(*pPin, scaleWithTerrainHeight);
+            }
+            
+            void WorldPinsService::UpdatePinCategory(const WorldPinItemModel& pinItemModel, int category)
+            {
+                Eegeo::Pins::Pin* pPin = m_pinRepository.GetPinById(pinItemModel.Id());
+                Eegeo_ASSERT(pPin != NULL, "Couldn't find Pin to set category on");
+                pPin->SetCategoryId(category);
             }
 
             bool WorldPinsService::HandleTouchTap(const Eegeo::v2& screenTapPoint)

@@ -33,6 +33,8 @@ namespace ExampleApp
                 virtual void RemovePin(WorldPinItemModel* pinItemModel) = 0;
 
                 virtual void UpdatePinScale(const WorldPinItemModel& pinItemModel, float scale) = 0;
+                
+                virtual void UpdatePinCategory(const WorldPinItemModel& pinItemModel, int category) = 0;
 
                 virtual void GetPinEcefAndScreenLocations(const WorldPinItemModel& pinItemModel,
                         Eegeo::dv3& ecefLocation,

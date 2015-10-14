@@ -57,6 +57,8 @@ namespace ExampleApp
 
                 void UpdatePinScale(const WorldPinItemModel& pinItemModel, float scale);
 
+                void UpdatePinCategory(const WorldPinItemModel& pinItemModel, int category);
+
                 bool HandleTouchTap(const Eegeo::v2& screenTapPoint);
 
                 void GetPinEcefAndScreenLocations(const WorldPinItemModel& pinItemModel,
