@@ -14,9 +14,10 @@ namespace ExampleApp
                 AndroidInitialExperiencePreLoadModel::AndroidInitialExperiencePreLoadModel(
                     AndroidNativeState& nativeState,
                     WorldAreaLoader::SdkModel::IWorldAreaLoaderModel& worldAreaLoaderModel,
-                    PersistentSettings::IPersistentSettingsModel& persistentSettings
+                    PersistentSettings::IPersistentSettingsModel& persistentSettings,
+					bool performSilentPreload
                 )
-                    : InitialExperiencePreLoadModelBase(worldAreaLoaderModel, persistentSettings)
+                    : InitialExperiencePreLoadModelBase(worldAreaLoaderModel, persistentSettings, performSilentPreload)
                     , m_nativeState(nativeState)
                     , m_jniApiClass(NULL)
                     , m_jniApiInstance(NULL)
