@@ -78,7 +78,7 @@
 {
     NSString* appName =  [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDisplayName"];
     NSString* alertTitle = @"Maps by eeGeo";
-    NSString* alertMessage = [NSString stringWithFormat: @"The %@ is open source. It's built using the eeGeo maps SDK, a cross platform API for building engaging, customizable apps.", appName];
+    NSString* alertMessage = [NSString stringWithFormat: @"The %@ app is open source. It's built using the eeGeo maps SDK, a cross platform API for building engaging, customizable apps.", appName];
     NSString* cancelMessage = @"Later";
     NSString* goToSiteMessage = @"Find Out More";
     
