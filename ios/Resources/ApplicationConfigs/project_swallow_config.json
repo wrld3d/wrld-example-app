@@ -14,7 +14,7 @@
     "YelpOAuthToken":"vpOZ6xdngeq4s5SJN4LWeoyF5OsNbAkl",
     "YelpOAuthTokenSecret":"JQ3PaHPT6Wt3jtCAy2S5YzmIYQM",
     "GeoNamesUserName":"eegeo_bloomberg_ios",
-    "CoverageTreeManifestURL":"http://cdn1.eegeo.com/coverage-trees/vswallow/v122/manifest.bin.gz",
+    "CoverageTreeManifestURL":"http://cdn1.eegeo.com/coverage-trees/vswallow/v123/manifest.bin.gz",
     "ThemeManifestURL":"http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v414/manifest.txt.gz",
     "SqliteDbUrl":"http://cdn1.eegeo.com/swallow-pois/pois_v25.db.gz"
 }
