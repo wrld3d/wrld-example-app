@@ -38,6 +38,10 @@ namespace ExampleApp
 
                 void UpdateImage(const std::string& url, bool hasImage, const std::vector<Byte>* pImageBytes);
 
+                void InsertAvailabilityChangedCallback(Eegeo::Helpers::ICallback2<const Search::SdkModel::SearchResultModel&, const std::string&>& callback);
+
+                void RemoveAvailabilityChangedCallback(Eegeo::Helpers::ICallback2<const Search::SdkModel::SearchResultModel&, const std::string&>& callback);
+
                 void InsertClosedCallback(Eegeo::Helpers::ICallback0& callback);
 
                 void RemoveClosedCallback(Eegeo::Helpers::ICallback0& callback);

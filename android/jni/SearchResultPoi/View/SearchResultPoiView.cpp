@@ -148,6 +148,16 @@ namespace ExampleApp
     			env->DeleteLocalRef(imgArr);
             }
 
+            void SearchResultPoiView::InsertAvailabilityChangedCallback(Eegeo::Helpers::ICallback2<const Search::SdkModel::SearchResultModel&, const std::string&>& callback)
+            {
+            	// TJ: Stubbed for Droid implementation
+            }
+
+            void SearchResultPoiView::RemoveAvailabilityChangedCallback(Eegeo::Helpers::ICallback2<const Search::SdkModel::SearchResultModel&, const std::string&>& callback)
+            {
+            	// TJ: Stubbed for Droid implementation
+            }
+
             void SearchResultPoiView::InsertClosedCallback(Eegeo::Helpers::ICallback0& callback)
             {
                 ASSERT_UI_THREAD
