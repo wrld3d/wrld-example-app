@@ -11,6 +11,7 @@
 #include "WorldPinInteriorData.h"
 #include "ISearchResultMyPinsService.h"
 #include "Logger.h"
+#include "SwallowSearchParser.h"
 #include "YelpSearchJsonParser.h"
 #include "YelpSearchResultModel.h"
 #include "SearchVendorNames.h"
@@ -32,17 +33,20 @@ namespace ExampleApp
                                                            View::ISearchResultOnMapFactory& searchResultOnMapFactory,
                                                            Search::SdkModel::MyPins::ISearchResultMyPinsService& searchResultOnMapMyPinsService,
                                                            CategorySearch::ISearchResultIconCategoryMapper& searchResultIconCategoryMapper,
+                                                           ExampleAppMessaging::TMessageBus& messageBus,
                                                            Search::SdkModel::ISearchResultRepository& searchResultRepository)
             : m_searchResultRepository(searchResultRepository)
             , m_searchResultIconCategoryMapper(searchResultIconCategoryMapper)
             , m_searchResultOnMapMyPinsService(searchResultOnMapMyPinsService)
             , m_searchResultOnMapFactory(searchResultOnMapFactory)
             , m_myPinsService(myPinsService)
+            , m_messageBus(messageBus)
             , m_worldPinsService(worldPinsService)
             , m_searchResultAddedCallback(this, &SearchResultOnMapModel::HandleAddedSearchResult)
             , m_searchResultRemovedCallback(this, &SearchResultOnMapModel::HandleRemovedSearchResult)
             , m_searchResultPinnedCallback(this, &SearchResultOnMapModel::HandleSearchResultPinned)
             , m_searchResultUnpinnedCallback(this, &SearchResultOnMapModel::HandleSearchResultUnpinned)
+            , m_availbilityChangedMessage(this, &SearchResultOnMapModel::OnSearchResultMeetingAvailbilityChanged)
             {
                 m_searchResultRepository.InsertItemAddedCallback(m_searchResultAddedCallback);
                 m_searchResultRepository.InsertItemRemovedCallback(m_searchResultRemovedCallback);
@@ -55,10 +59,14 @@ namespace ExampleApp
                     Search::SdkModel::SearchResultModel* pModel = m_searchResultRepository.GetItemAtIndex(i);
                     HandleAddedSearchResult(pModel);
                 }
+                
+                m_messageBus.SubscribeNative(m_availbilityChangedMessage);
             }
 
             SearchResultOnMapModel::~SearchResultOnMapModel()
             {
+                m_messageBus.UnsubscribeNative(m_availbilityChangedMessage);
+
                 m_searchResultRepository.RemoveItemAddedCallback(m_searchResultAddedCallback);
                 m_searchResultRepository.RemoveItemRemovedCallback(m_searchResultRemovedCallback);
                 
@@ -165,6 +173,19 @@ namespace ExampleApp
                 {
                     AddSearchResultOnMap(searchResultModel);
                     m_hiddenSearchResultsDueToMyPins.erase(hiddenItemIterator);
+                }
+            }
+            
+            void SearchResultOnMapModel::OnSearchResultMeetingAvailbilityChanged(const SearchResultMeetingAvailabilityChanged& meetingAvailbilityChangedMessage)
+            {
+                const SearchResultModel& model = meetingAvailbilityChangedMessage.GetModel();
+                mapIt it = m_searchResultsToPinModel.find(model);
+                
+                if (it != m_searchResultsToPinModel.end())
+                {
+                    const WorldPins::SdkModel::WorldPinItemModel& worldPinModel = *(it->second);
+                    const SearchResultModel& mutatedModel = Search::Swallow::SdkModel::SearchParser::MutateMeetingRoomAvailability(model, meetingAvailbilityChangedMessage.GetAvailability());
+                    m_worldPinsService.UpdatePinCategory(worldPinModel, m_searchResultIconCategoryMapper.GetIconIndexFromSearchResult(mutatedModel));
                 }
             }
             

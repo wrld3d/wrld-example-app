@@ -12,6 +12,7 @@
 #include "WorldPins.h"
 #include "MyPins.h"
 #include "ICallback.h"
+#include "SearchResultMeetingAvailabilityChanged.h"
 
 namespace ExampleApp
 {
@@ -37,12 +38,15 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<SearchResultOnMapModel, Search::SdkModel::SearchResultModel> m_searchResultPinnedCallback;
                 Eegeo::Helpers::TCallback1<SearchResultOnMapModel, Search::SdkModel::SearchResultModel> m_searchResultUnpinnedCallback;
                 
+                Eegeo::Helpers::TCallback1<SearchResultOnMapModel, const SearchResultMeetingAvailabilityChanged&> m_availbilityChangedMessage;
+                
                 Search::SdkModel::MyPins::ISearchResultMyPinsService& m_searchResultOnMapMyPinsService;
                 MyPins::SdkModel::IMyPinsService& m_myPinsService;
                 Search::SdkModel::ISearchResultRepository& m_searchResultRepository;
                 CategorySearch::ISearchResultIconCategoryMapper& m_searchResultIconCategoryMapper;
                 View::ISearchResultOnMapFactory& m_searchResultOnMapFactory;
                 WorldPins::SdkModel::IWorldPinsService& m_worldPinsService;
+                ExampleAppMessaging::TMessageBus& m_messageBus;
 
             public:
                 SearchResultOnMapModel(WorldPins::SdkModel::IWorldPinsService& worldPinsService,
@@ -50,6 +54,7 @@ namespace ExampleApp
                                        View::ISearchResultOnMapFactory& searchResultOnMapFactory,
                                        Search::SdkModel::MyPins::ISearchResultMyPinsService& searchResultOnMapMyPinsService,
                                        CategorySearch::ISearchResultIconCategoryMapper& searchResultIconCategoryMapper,
+                                       ExampleAppMessaging::TMessageBus& messageBus,
                                        Search::SdkModel::ISearchResultRepository& searchResultRepository);
 
                 ~SearchResultOnMapModel();
@@ -70,6 +75,8 @@ namespace ExampleApp
                 void HandleSearchResultPinned(Search::SdkModel::SearchResultModel& searchResultModel);
                 
                 void HandleSearchResultUnpinned(Search::SdkModel::SearchResultModel& searchResultModel);
+                
+                void OnSearchResultMeetingAvailbilityChanged(const SearchResultMeetingAvailabilityChanged& meetingAvailbilityChangedMessage);
             };
         }
     }

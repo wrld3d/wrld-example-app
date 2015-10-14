@@ -464,6 +464,8 @@ const int DeletePinAlertViewTag = 1;
     m_availability = ExampleApp::Search::Swallow::SearchConstants::MEETING_ROOM_AVAILABLE;
     
     [self performDynamicContentLayout];
+    
+    m_pInterop->HandleAvailabilityChanged(m_model, m_availability);
 }
 
 - (void) handleAvailableSoonButtonSelected
@@ -471,6 +473,8 @@ const int DeletePinAlertViewTag = 1;
     m_availability = ExampleApp::Search::Swallow::SearchConstants::MEETING_ROOM_AVAILABLE_SOON;
     
     [self performDynamicContentLayout];
+    m_pInterop->HandleAvailabilityChanged(m_model, m_availability);
+
 }
 
 - (void) handleOccupiedButtonSelected
@@ -478,6 +482,8 @@ const int DeletePinAlertViewTag = 1;
     m_availability = ExampleApp::Search::Swallow::SearchConstants::MEETING_ROOM_OCCUPIED;
     
     [self performDynamicContentLayout];
+    
+    m_pInterop->HandleAvailabilityChanged(m_model, m_availability);
 }
 
 - (void) handleClosedButtonSelected

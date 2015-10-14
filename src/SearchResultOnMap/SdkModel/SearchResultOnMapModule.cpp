@@ -30,6 +30,7 @@ namespace ExampleApp
                                                                               *m_pSearchResultOnMapFactory,
                                                                               searchResultMyPinsService,
                                                                               searchResultOnMapIconCategoryMapper,
+                                                                              messageBus,
                                                                               searchResultRepository);
                 
                 m_pSearchResultOnMapItemModelSelectedObserver = Eegeo_NEW(View::SearchResultOnMapItemModelSelectedObserver)(searchResultPoiViewModel,

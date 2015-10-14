@@ -3,6 +3,7 @@
 #include "SearchResultPoiController.h"
 #include "SearchResultPoiViewOpenedMessage.h"
 #include "SearchJsonParser.h"
+#include "SearchResultMeetingAvailabilityChanged.h"
 
 namespace ExampleApp
 {
@@ -43,6 +44,11 @@ namespace ExampleApp
             void SearchResultPoiController::OnCloseButtonClicked()
             {
                 m_viewModel.Close();
+            }
+            
+            void SearchResultPoiController::OnAvailabilityChanged(const Search::SdkModel::SearchResultModel& searchResultModel, const std::string& availability)
+            {
+                m_messageBus.Publish(ExampleApp::SearchResultOnMap::SearchResultMeetingAvailabilityChanged(searchResultModel, availability));
             }
             
             void SearchResultPoiController::OnPinToggledButtonClicked(Search::SdkModel::SearchResultModel& searchResultModel)
@@ -87,9 +93,11 @@ namespace ExampleApp
                 , m_closeButtonCallback(this, &SearchResultPoiController::OnCloseButtonClicked)
                 , m_togglePinnedCallback(this, &SearchResultPoiController::OnPinToggledButtonClicked)
                 , m_imageLoadedHandlerBinding(this, &SearchResultPoiController::OnSearchResultImageLoaded)
+                , m_availabilityChangedCallback(this, &SearchResultPoiController::OnAvailabilityChanged)
             {
                 m_view.InsertClosedCallback(m_closeButtonCallback);
                 m_view.InsertTogglePinnedCallback(m_togglePinnedCallback);
+                m_view.InsertAvailabilityChangedCallback(m_availabilityChangedCallback);
                 m_viewModel.InsertOpenedCallback(m_viewOpenedCallback);
                 m_viewModel.InsertClosedCallback(m_viewClosedCallback);
                 m_messageBus.SubscribeUi(m_imageLoadedHandlerBinding);
@@ -100,6 +108,7 @@ namespace ExampleApp
                 m_messageBus.UnsubscribeUi(m_imageLoadedHandlerBinding);
                 m_viewModel.RemoveClosedCallback(m_viewClosedCallback);
                 m_viewModel.RemoveOpenedCallback(m_viewOpenedCallback);
+                m_view.RemoveAvailabilityChangedCallback(m_availabilityChangedCallback);
                 m_view.RemoveTogglePinnedCallback(m_togglePinnedCallback);
                 m_view.RemoveClosedCallback(m_closeButtonCallback);
             }

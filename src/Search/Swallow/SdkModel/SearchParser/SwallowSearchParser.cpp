@@ -87,6 +87,34 @@ namespace ExampleApp
                                                         deskCode);
                     }
                     
+                    ExampleApp::Search::SdkModel::SearchResultModel MutateMeetingRoomAvailability(const Search::SdkModel::SearchResultModel& searchResultModel, const std::string& updatedAvailability)
+                    {
+                        rapidjson::Document json;
+                        if (!json.Parse<0>(searchResultModel.GetJsonData().c_str()).HasParseError())
+                        {
+                            json[SearchConstants::AVAILABILITY_FIELD_NAME.c_str()] = updatedAvailability.c_str();
+                        }
+                        
+                        rapidjson::StringBuffer strbuf;
+                        rapidjson::Writer<rapidjson::StringBuffer> writer(strbuf);
+                        json.Accept(writer);
+                        
+                        return Search::SdkModel::SearchResultModel(ExampleApp::Search::SdkModel::SearchResultModel::CurrentVersion,
+                                                                   searchResultModel.GetIdentifier(),
+                                                                   searchResultModel.GetTitle(),
+                                                                   searchResultModel.GetSubtitle(),
+                                                                   searchResultModel.GetLocation(),
+                                                                   0.0f,
+                                                                   true,
+                                                                   searchResultModel.GetBuildingId(),
+                                                                   searchResultModel.GetFloor(),
+                                                                   Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME,
+                                                                   std::vector<std::string>(),
+                                                                   Search::SwallowMeetingRoomsVendorName,
+                                                                   strbuf.GetString(),
+                                                                   searchResultModel.GetCreationTimestamp());
+                    }
+                    
                     SwallowMeetingRoomResultModel TransformToSwallowMeetingRoomResult(const Search::SdkModel::SearchResultModel& searchResultModel)
                     {
                         rapidjson::Document json;

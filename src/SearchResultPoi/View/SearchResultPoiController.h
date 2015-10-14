@@ -31,6 +31,7 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback0<SearchResultPoiController> m_closeButtonCallback;
                 Eegeo::Helpers::TCallback1<SearchResultPoiController, Search::SdkModel::SearchResultModel> m_togglePinnedCallback;
                 Eegeo::Helpers::TCallback1<SearchResultPoiController, const SearchResultPoiViewImageDownloadCompletedMessage&> m_imageLoadedHandlerBinding;
+                Eegeo::Helpers::TCallback2<SearchResultPoiController, const Search::SdkModel::SearchResultModel&, const std::string&> m_availabilityChangedCallback;
 
                 void OnViewOpened();
 
@@ -41,6 +42,8 @@ namespace ExampleApp
                 void OnPinToggledButtonClicked(Search::SdkModel::SearchResultModel& searchResultModel);
                 
                 void OnSearchResultImageLoaded(const SearchResultPoiViewImageDownloadCompletedMessage& message);
+                
+                void OnAvailabilityChanged(const Search::SdkModel::SearchResultModel& searchResultModel, const std::string& availability);
 
             public:
                 SearchResultPoiController(ISearchResultPoiView& view,

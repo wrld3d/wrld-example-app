@@ -27,6 +27,9 @@ namespace ExampleApp
                                          bool hasImage,
                                          const std::vector<Byte>* pImageBytes) = 0;
                 
+                virtual void InsertAvailabilityChangedCallback(Eegeo::Helpers::ICallback2<const Search::SdkModel::SearchResultModel&, const std::string&>& callback) = 0;
+                virtual void RemoveAvailabilityChangedCallback(Eegeo::Helpers::ICallback2<const Search::SdkModel::SearchResultModel&, const std::string&>& callback) = 0;
+                
                 virtual void InsertClosedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
                 virtual void RemoveClosedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
                 
