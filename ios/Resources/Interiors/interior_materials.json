@@ -8,5 +8,104 @@
                 "Filename":"Interiors/swallowwalltempmaterial-interior.pvr"
             }
         ]
+    },
+ 
+    {
+        "MaterialName": "swallowdecalexit-interior",
+        "MaterialType":"InteriorsDiffuseTexturedMaterial",
+        "Textures":[
+             {
+                "TextureKey":"swallowdecalexit-interior-texture0",
+                "Filename":"Interiors/swallowdecalexit-interior.pvr"
+             }
+        ]
+    },
+ 
+    {
+        "MaterialName": "swallowfloorcarpet01-interior",
+        "MaterialType":"InteriorsDiffuseTexturedMaterial",
+        "Textures":[
+             {
+                    "TextureKey":"swallowfloorcarpet01-interior-texture0",
+                    "Filename":"Interiors/swallowfloorcarpet01-interior.pvr"
+             }
+        ]
+    },
+ 
+    {
+        "MaterialName": "swallowfloortiles01-interior",
+        "MaterialType":"InteriorsDiffuseTexturedMaterial",
+        "Textures":[
+             {
+                    "TextureKey":"swallowfloortiles01-interior-texture0",
+                    "Filename":"Interiors/swallowfloortiles01-interior"
+             }
+        ]
+    },
+ 
+    {
+        "MaterialName": "swallowglass01-interior",
+        "MaterialType":"InteriorsDiffuseTexturedMaterial",
+        "Textures":[
+             {
+                    "TextureKey":"swallowglass01-interior-texture0",
+                    "Filename":"Interiors/swallowglass01-interior.pvr"
+             }
+        ]
+    },
+ 
+    {
+        "MaterialName": "swallownoise01-interior",
+        "MaterialType":"InteriorsDiffuseTexturedMaterial",
+        "Textures":[
+             {
+                    "TextureKey":"swallownoise01-interior-texture0",
+                    "Filename":"Interiors/swallownoise01-interior.pvr"
+             }
+        ]
+    },
+ 
+    {
+        "MaterialName": "swallowplaingray-interior",
+        "MaterialType":"InteriorsDiffuseTexturedMaterial",
+        "Textures":[
+             {
+                    "TextureKey":"swallowplaingray-interior-texture0",
+                    "Filename":"Interiors/swallowplaingray-interior.pvr"
+             }
+        ]
+    },
+ 
+    {
+        "MaterialName": "swallowwall01-interior",
+        "MaterialType":"InteriorsDiffuseTexturedMaterial",
+        "Textures":[
+             {
+                    "TextureKey":"swallowwall01-interior-texture0",
+                    "Filename":"Interiors/swallowwall01-interior.pvr"
+             }
+        ]
+    },
+ 
+    {
+        "MaterialName": "swallowwood01-interior",
+        "MaterialType":"InteriorsDiffuseTexturedMaterial",
+        "Textures":[
+             {
+                    "TextureKey":"swallowwood01-interior-texture0",
+                    "Filename":"Interiors/swallowwood01-interior.pvr"
+             }
+        ]
+    },
+ 
+    {
+        "MaterialName": "swallowwood02-interior",
+        "MaterialType":"InteriorsDiffuseTexturedMaterial",
+        "Textures":[
+             {
+                    "TextureKey":"swallowwood02-interior-texture0",
+                    "Filename":"Interiors/swallowwood02-interior.pvr"
+             }
+        ]
     }
 ]
