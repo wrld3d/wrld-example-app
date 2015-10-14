@@ -41,6 +41,8 @@ namespace ExampleApp
                 rapidjson::Document::AllocatorType& allocator = jsonDoc.GetAllocator();
                 rapidjson::Value valueObject(rapidjson::kObjectType);
                 
+                std::string availability = resultRow.Cell(columnOffset + poi_availability).AsText();
+                
                 valueObject.AddMember(Search::Swallow::SearchConstants::NAME_FIELD_NAME.c_str(),
                                       resultRow.Cell(columnOffset + poi_name).AsText().c_str(),
                                       allocator);
@@ -50,7 +52,7 @@ namespace ExampleApp
                                       allocator);
                 
                 valueObject.AddMember(Search::Swallow::SearchConstants::AVAILABILITY_FIELD_NAME.c_str(),
-                                      resultRow.Cell(columnOffset + poi_availability).AsText().c_str(),
+                                      availability.c_str(),
                                       allocator);
                 
                 rapidjson::StringBuffer strbuf;
@@ -59,7 +61,7 @@ namespace ExampleApp
                 
                 std::string modelID = Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME + std::string("_") + resultRow.Cell(columnOffset + poi_id).AsText();
                 Eegeo::Space::LatLong modelLocation = Eegeo::Space::LatLong::FromDegrees(resultRow.Cell(columnOffset + poi_latitude_degrees).AsReal(), resultRow.Cell(columnOffset + poi_longitude_degrees).AsReal());
-                std::string modelSubTitle = GetFormattedAvailabilityString(resultRow.Cell(columnOffset + poi_availability).AsText());
+                std::string modelSubTitle = GetFormattedAvailabilityString(availability);
                 
                 return Search::SdkModel::SearchResultModel(ExampleApp::Search::SdkModel::SearchResultModel::CurrentVersion,
                                                            modelID,
