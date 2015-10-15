@@ -21,10 +21,6 @@ namespace ExampleApp
 
             void FlattenButtonController::OnViewStateChangeScreenControl(ScreenControl::View::IScreenControlViewModel& viewModel, float& state)
             {
-                if (state > 0.001f && !m_appModeAllowsOpen)
-                {
-                    return;
-                }
                 ScreenControl::View::Apply(m_viewModel, m_view);
             }
             
@@ -51,16 +47,14 @@ namespace ExampleApp
             }
             
             void FlattenButtonController::OnAppModeChanged(const AppModes::AppModeChangedMessage& message)
-            {
+            {                
                 if(message.GetAppMode() == AppModes::SdkModel::InteriorMode)
                 {
-                    m_appModeAllowsOpen = false;
-                    m_view.SetFullyOffScreen();
+                    m_view.SetViewEnabled(false);
                 }
                 else
                 {
-                    m_appModeAllowsOpen = true;
-                    m_view.SetFullyOnScreen();
+                    m_view.SetViewEnabled(true);
                 }
             }
 
@@ -73,7 +67,6 @@ namespace ExampleApp
                 , m_view(view)
                 , m_messageBus(messageBus)
                 , m_metricsService(metricsService)
-                , m_appModeAllowsOpen(true)
                 , m_stateChangeHandler(this, &FlattenButtonController::OnFlattenButtonModelStateChangedMessage)
                 , m_toggledCallback(this, &FlattenButtonController::OnToggleButton)
                 , m_viewStateCallback(this, &FlattenButtonController::OnViewStateChangeScreenControl)

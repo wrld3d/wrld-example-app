@@ -28,21 +28,44 @@ namespace ExampleApp
                                            const IPoiRingController& poiRingController,
                                            ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
                                            Eegeo::Resources::Interiors::InteriorsController& interiorsController);
-
-                    bool HandleTouchDown(const AppInterface::TouchData& data, const Eegeo::Camera::RenderCamera& renderCamera, Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController);
+                    
+                    bool HandleTouchDown(const AppInterface::TouchData& data,
+                                         const Eegeo::Camera::RenderCamera& renderCamera,
+                                         Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController);
+                    
                     bool HandleTouchUp(const AppInterface::TouchData& data);
-                    bool HandleTouchMove(const AppInterface::TouchData& data, const Eegeo::Camera::RenderCamera& renderCamera, Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController);
+                    
+                    bool HandleTouchMove(const AppInterface::TouchData& data,
+                                         const Eegeo::Camera::RenderCamera& renderCamera,
+                                         Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController);
+                    
+                    bool HandleTouchDown(const AppInterface::TouchData& data,
+                                         const Eegeo::Camera::RenderCamera& renderCamera);
+                    
+                    bool HandleTouchMove(const AppInterface::TouchData& data,
+                                         const Eegeo::Camera::RenderCamera& renderCamera);
 
                     bool IsDragging() const;
 
                 private:
+                    
+                    bool TouchDownRaycast(const AppInterface::TouchData &data,
+                                          const Eegeo::Camera::RenderCamera &renderCamera,
+                                          Eegeo::dv3 &rayOrigin);
+                    
+                    bool TouchMoveRaycast(const AppInterface::TouchData &data,
+                                          const Eegeo::Camera::RenderCamera &renderCamera,
+                                          Eegeo::dv3 &rayOrigin);
+                    
+                    
+                    
                     MyPinCreation::SdkModel::IMyPinCreationModel& m_myPinCreationModel;
                     Eegeo::Collision::IRayPicker& m_rayPicker;
                     const IPoiRingController& m_poiRingController;
                     
                     ExampleApp::AppModes::SdkModel::IAppModeModel& m_appModeModel;
                     Eegeo::Resources::Interiors::InteriorsController& m_interiorsController;
-
+                    
                     bool m_isDragging;
 
                     bool PerformRayPick(Eegeo::dv3& rayOrigin, Eegeo::dv3& rayDirection, Eegeo::dv3& out_rayIntersectionPoint, double& out_intersectionParam);

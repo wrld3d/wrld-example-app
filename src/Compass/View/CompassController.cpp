@@ -44,11 +44,6 @@ namespace ExampleApp
 
             void CompassController::OnScreenStateChangedCallback(ScreenControl::View::IScreenControlViewModel &viewModel, float& onScreenState)
             {
-                if (onScreenState > 0.001f && !m_appModelAllowsOpen)
-                {
-                    return;
-                }
-                
                 ScreenControl::View::Apply(m_viewModel, m_view);
             }
             
@@ -74,40 +69,23 @@ namespace ExampleApp
                 }
             }
             
-            void CompassController::OnAppModeChanged(const AppModes::AppModeChangedMessage& message)
-            {
-                if(message.GetAppMode() == AppModes::SdkModel::InteriorMode)
-                {
-                    m_appModelAllowsOpen = false;
-                    m_view.SetFullyOffScreen();
-                }
-                else
-                {
-                    m_appModelAllowsOpen = true;
-                    m_view.SetFullyOnScreen();
-                }
-            }
-            
             CompassController::CompassController(ICompassView& view,
                                                  ICompassViewModel& viewModel,
                                                  ExampleAppMessaging::TMessageBus& messageBus)
                 : m_view(view)
                 , m_viewModel(viewModel)
                 , m_messageBus(messageBus)
-                , m_appModelAllowsOpen(true)
                 , m_viewStateCallback(this, &CompassController::OnScreenStateChangedCallback)
                 , m_modeChangedHandler(this, &CompassController::OnCompassModeChangedMessage)
                 , m_modeUnauthorizedHandler(this, &CompassController::OnCompassModeUnauthorizedMessage)
                 , m_headingChangedHandler(this, &CompassController::OnCompassHeadingChangedMessage)
                 , m_myPinCreationStateChangedMessageHandler(this, &CompassController::OnMyPinCreationStateChangedMessage)
                 , m_viewCycledCallback(this, &CompassController::OnViewCycled)
-                , m_appModeChangedMessage(this, &CompassController::OnAppModeChanged)
             {
                 m_messageBus.SubscribeUi(m_modeChangedHandler);
                 m_messageBus.SubscribeUi(m_headingChangedHandler);
                 m_messageBus.SubscribeUi(m_myPinCreationStateChangedMessageHandler);
                 m_messageBus.SubscribeUi(m_modeUnauthorizedHandler);
-                m_messageBus.SubscribeUi(m_appModeChangedMessage);
                 
                 m_view.InsertCycledCallback(m_viewCycledCallback);
                 m_viewModel.InsertOnScreenStateChangedCallback(m_viewStateCallback);
@@ -120,7 +98,6 @@ namespace ExampleApp
                 m_viewModel.RemoveOnScreenStateChangedCallback(m_viewStateCallback);
                 m_view.RemoveCycledCallback(m_viewCycledCallback);
                 
-                m_messageBus.UnsubscribeUi(m_appModeChangedMessage);
                 m_messageBus.UnsubscribeUi(m_modeUnauthorizedHandler);
                 m_messageBus.UnsubscribeUi(m_headingChangedHandler);
                 m_messageBus.UnsubscribeUi(m_modeChangedHandler);

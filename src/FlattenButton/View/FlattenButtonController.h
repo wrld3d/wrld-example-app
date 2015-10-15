@@ -31,7 +31,6 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<FlattenButtonController, const AppModes::AppModeChangedMessage&> m_appModeChangedMessage;
 
                 Metrics::IMetricsService& m_metricsService;
-                bool m_appModeAllowsOpen;
                 
                 void OnToggleButton(bool& toggle);
 

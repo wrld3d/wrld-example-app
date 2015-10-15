@@ -198,7 +198,7 @@
         self.pTitleText.tintColor = ExampleApp::Helpers::ColorPalette::GoldTone;
     }
 
-    self.pTitleText.placeholder = @"Name your pin...";
+    self.pTitleText.placeholder = @"Name your report...";
     self.pTitleText.textAlignment = NSTextAlignmentLeft;
     self.pTitleText.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
     self.pTitleText.returnKeyType = UIReturnKeyDone;
@@ -272,7 +272,7 @@
     self.pDescriptionPlaceholder.hidden = NO;
     self.pDescriptionPlaceholder.font = [UIFont systemFontOfSize: 16.f];
     self.pDescriptionPlaceholder.textColor = ExampleApp::Helpers::ColorPalette::GreyTone;
-    self.pDescriptionPlaceholder.text = @"Tell us about your pin...";
+    self.pDescriptionPlaceholder.text = @"Tell us about your report...";
 
     const float poiImageY = poiDescriptionBoxHeight + poiDescriptionBoxY + 30.f;
     const float poiImageX = 20.f;

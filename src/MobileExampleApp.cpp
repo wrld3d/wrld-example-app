@@ -522,7 +522,7 @@ namespace ExampleApp
         m_pSecondaryMenuModule->AddMenuSection("Working Groups", m_pSwallowSearchMenuModule->GetWorkingGroupsMenuModel(), false);
         m_pSecondaryMenuModule->AddMenuSection("Facilities", m_pSwallowSearchMenuModule->GetFacilitiesMenuModel(), false);
         m_pSecondaryMenuModule->AddMenuSection("Offices", m_pSwallowSearchMenuModule->GetOfficesMenuModel(), false);
-        m_pSecondaryMenuModule->AddMenuSection("My Pins", m_pMyPinsModule->GetMyPinsMenuModel(), true);
+        m_pSecondaryMenuModule->AddMenuSection("My Reports", m_pMyPinsModule->GetMyPinsMenuModel(), true);
         m_pSecondaryMenuModule->AddMenuSection("Search", m_pCategorySearchModule->GetCategorySearchMenuModel(), true);
         m_pSecondaryMenuModule->AddMenuSection("Settings", m_pSecondaryMenuModule->GetSettingsMenuModel(), true);
     }
@@ -1241,9 +1241,33 @@ namespace ExampleApp
         {
             return;
         }
-
+        
         MyPinCreation::PoiRing::SdkModel::IPoiRingTouchController& poiRingTouchController = m_pPoiRingModule->GetPoiRingTouchController();
-        if (!poiRingTouchController.HandleTouchDown(data, m_pGlobeCameraController->GetRenderCamera(), m_pGlobeCameraController->GetGlobeCameraController()))
+        
+        if(m_pAppModeModel->GetAppMode() == AppModes::SdkModel::WorldMode)
+        {
+            if (poiRingTouchController.HandleTouchDown(data, m_pGlobeCameraController->GetRenderCamera()))
+            {
+                return;
+            }
+        }
+        else
+        {
+            Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsModule = m_pWorld->GetMapModule().GetInteriorsPresentationModule();
+            Eegeo::Resources::Interiors::Camera::InteriorsCameraController& interiorsCameraController = interiorsModule.GetCameraController();
+            
+            
+            if (poiRingTouchController.HandleTouchDown(data, interiorsCameraController.GetRenderCamera()))
+            {
+                return;
+            }
+        }
+        
+        if(IsTourCameraActive())
+        {
+            ToursModule().GetCameraTouchController().Event_TouchDown(data);
+        }
+        else
         {
             if(IsTourCameraActive())
             {
@@ -1263,9 +1287,33 @@ namespace ExampleApp
         {
             return;
         }
-
+        
         MyPinCreation::PoiRing::SdkModel::IPoiRingTouchController& poiRingTouchController = m_pPoiRingModule->GetPoiRingTouchController();
-        if (!poiRingTouchController.HandleTouchMove(data, m_pGlobeCameraController->GetRenderCamera(), m_pGlobeCameraController->GetGlobeCameraController()))
+        
+        if(m_pAppModeModel->GetAppMode() == AppModes::SdkModel::WorldMode)
+        {
+            if (poiRingTouchController.HandleTouchMove(data, m_pGlobeCameraController->GetRenderCamera()))
+            {
+                return;
+            }
+        }
+        else
+        {
+            Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsModule = m_pWorld->GetMapModule().GetInteriorsPresentationModule();
+            Eegeo::Resources::Interiors::Camera::InteriorsCameraController& interiorsCameraController = interiorsModule.GetCameraController();
+            
+            
+            if (poiRingTouchController.HandleTouchMove(data, interiorsCameraController.GetRenderCamera()))
+            {
+                return;
+            }
+        }
+        
+        if(IsTourCameraActive())
+        {
+            ToursModule().GetCameraTouchController().Event_TouchMove(data);
+        }
+        else
         {
             if(IsTourCameraActive())
             {
@@ -1276,15 +1324,16 @@ namespace ExampleApp
                 m_pCurrentTouchController->Event_TouchUp(data);
             }
         }
+        
     }
-
+    
     void MobileExampleApp::Event_TouchUp(const AppInterface::TouchData& data)
     {
         if (!CanAcceptTouch())
         {
             return;
         }
-
+        
         MyPinCreation::PoiRing::SdkModel::IPoiRingTouchController& poiRingTouchController = m_pPoiRingModule->GetPoiRingTouchController();
         if (!poiRingTouchController.HandleTouchUp(data))
         {
