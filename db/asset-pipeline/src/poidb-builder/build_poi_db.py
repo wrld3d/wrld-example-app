@@ -637,6 +637,73 @@ def build_office_table(xls_book, sheet_index, db_cursor, connection, src_image_f
 
     connection.commit()
 
+def build_transition_table(xls_book, sheet_index, db_cursor, connection, src_image_folder_path, dest_image_dir, verbose, first_data_row_number, column_name_row, dest_image_relative_dir):
+    xls_sheet = xls_book.sheet_by_index(sheet_index)
+
+    table_name = xls_sheet.name
+
+    print(str(table_name))
+
+    poi_columns = ['interior_id', 'interior_floor', 'latitude_degrees', 'longitude_degrees', 'target_interior_id', 'target_interior_floor', 'target_latitude_degrees', 'target_longitude_degrees']
+    control_columns = ['available_in_app']
+    expected_columns = poi_columns + control_columns
+    available_in_app_col_index = len(poi_columns)
+
+    all_validated = True
+
+    all_validated &= validate_column_names(xls_sheet, column_name_row, expected_columns)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated column names")
+
+    all_validated &= validate_required_text_field(xls_sheet, poi_columns, 'interior_id', first_data_row_number, available_in_app_col_index)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated interior_id column values")
+
+    all_validated &= validate_required_int_field(xls_sheet, poi_columns, 'interior_floor', first_data_row_number, available_in_app_col_index, MIN_FLOOR)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated interior floor number")
+
+    all_validated &= validate_required_real_field(xls_sheet, poi_columns, 'latitude_degrees', first_data_row_number, available_in_app_col_index, MIN_LAT, MAX_LAT)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated latitude_degrees values")
+
+    all_validated &= validate_required_real_field(xls_sheet, poi_columns, 'longitude_degrees', first_data_row_number, available_in_app_col_index, MIN_LNG, MAX_LNG)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated longitude_degrees values")
+
+    all_validated &= validate_required_text_field(xls_sheet, poi_columns, 'target_interior_id', first_data_row_number, available_in_app_col_index)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated target interior_id column values")
+
+    all_validated &= validate_required_int_field(xls_sheet, poi_columns, 'target_interior_floor', first_data_row_number, available_in_app_col_index, MIN_FLOOR)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated target interior floor number")
+
+    all_validated &= validate_required_real_field(xls_sheet, poi_columns, 'target_latitude_degrees', first_data_row_number, available_in_app_col_index, MIN_LAT, MAX_LAT)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated target latitude_degrees values")
+
+    all_validated &= validate_required_real_field(xls_sheet, poi_columns, 'target_longitude_degrees', first_data_row_number, available_in_app_col_index, MIN_LNG, MAX_LNG)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated target longitude_degrees values")
+
+    if not all_validated:
+        raise ValueError("failed validation")
+
+    column_names = ['id'] + poi_columns
+    column_types = ['INTEGER PRIMARY KEY', 'TEXT', 'INTEGER', 'REAL', 'REAL', 'TEXT', 'INTEGER', 'REAL', 'REAL']
+    create_table(db_cursor, table_name, column_names, column_types)
+
+    insert_into_table(db_cursor, table_name, column_names, xls_sheet, first_data_row_number, available_in_app_col_index)
+
+    connection.commit()
+
+    validate_table_exists(db_cursor, table_name)
+
+    log_result_info(db_cursor, table_name, verbose)
+
+    connection.commit()
+
 def build_db(src_xls_path, dest_db_path, dest_assets_relative_path, verbose, stop_on_first_error):
     print("sqlite3.sqlite_version " + sqlite3.sqlite_version)
     print("sqlite3.version " + sqlite3.version)
@@ -692,6 +759,10 @@ def build_db(src_xls_path, dest_db_path, dest_assets_relative_path, verbose, sto
     sheet_index = 4
 
     build_office_table(xls_book, sheet_index, db_cursor, connection, src_image_folder_path, dest_image_dir, verbose, first_data_row_number, column_name_row, dest_image_relative_dir)
+
+    sheet_index = 5
+
+    build_transition_table(xls_book, sheet_index, db_cursor, connection, src_image_folder_path, dest_image_dir, verbose, first_data_row_number, column_name_row, dest_image_relative_dir)
 
     db_cursor.close()
     connection.close()
