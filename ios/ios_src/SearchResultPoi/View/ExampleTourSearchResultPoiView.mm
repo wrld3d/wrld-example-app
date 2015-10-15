@@ -7,6 +7,7 @@
 #include "UIColors.h"
 #include "ImageHelpers.h"
 #include "IconResources.h"
+#include "SizeHelpers.h"
 #include "StringHelpers.h"
 #import "UIView+TouchExclusivity.h"
 #include "ExampleTourSearchResultPoiView.h"
@@ -206,18 +207,27 @@
         UIImage *image = [UIImage imageNamed: [NSString stringWithUTF8String:imageUrl.c_str()]];
         [self.pPreviewImage setImage:image];
         
+        Eegeo::v2 maxImageSize;
+        maxImageSize.x = self.frame.size.width;
+        maxImageSize.y = 0.7*self.frame.size.height;
+        Eegeo::v2 imageSize(image.size.width, image.size.height);
+        Eegeo::v2 fitMaintainSize = ExampleApp::Helpers::SizeHelpers::CalculateFitMaintain(maxImageSize, imageSize);
+        CGSize fitMaintainImageSize;
+        fitMaintainImageSize.width = fitMaintainSize.x;
+        fitMaintainImageSize.height = fitMaintainSize.y;
+        
         CGRect frame = self.pPreviewImage.frame;
         const CGFloat initialFrameHeight = frame.size.height;
-        frame.size = image.size;
+        frame.size = fitMaintainImageSize;
         frame.origin.x = self.frame.size.width * 0.5f - frame.size.width * 0.5f;
         self.pPreviewImage.frame = frame;
         self.pPreviewImage.hidden = false;
         
-        const CGFloat imageContentHeightDifference = (image.size.height - initialFrameHeight);
+        const CGFloat imageContentHeightDifference = (fitMaintainImageSize.height - initialFrameHeight);
         const CGFloat newContentHeight = self.pLabelsContainer.contentSize.height + imageContentHeightDifference;
         [self.pLabelsContainer setContentSize:CGSizeMake(self.pLabelsContainer.contentSize.width, newContentHeight)];
         
-        currentLabelY += (image.size.height);
+        currentLabelY += (fitMaintainImageSize.height);
     }
     
     currentLabelY += 8.f;

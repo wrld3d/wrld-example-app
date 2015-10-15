@@ -585,6 +585,8 @@
 		222E069B1948B08B0004FFD9 /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4820F168371460006E99B /* MainStoryboard_iPad.storyboard */; };
 		225FFA171A39EE8600C2282A /* SearchResultRepository.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 225FFA131A39EE8600C2282A /* SearchResultRepository.cpp */; };
 		225FFA181A39EE8600C2282A /* SearchResultRepository.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 225FFA131A39EE8600C2282A /* SearchResultRepository.cpp */; };
+		27CADB631BCFEA2A00805A27 /* SizeHelpers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27CADB611BCFEA2A00805A27 /* SizeHelpers.cpp */; };
+		27CADB641BCFEA2A00805A27 /* SizeHelpers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27CADB611BCFEA2A00805A27 /* SizeHelpers.cpp */; };
 		27DB89B71BB3FEF00020CDA5 /* CombinedSearchService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27DB89B31BB3FEF00020CDA5 /* CombinedSearchService.cpp */; };
 		27DB89B81BB3FEF00020CDA5 /* CombinedSearchService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27DB89B31BB3FEF00020CDA5 /* CombinedSearchService.cpp */; };
 		27DB89B91BB3FEF00020CDA5 /* CombinedSearchServiceModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27DB89B51BB3FEF00020CDA5 /* CombinedSearchServiceModule.cpp */; };
@@ -1881,6 +1883,8 @@
 		225FFA141A39EE8600C2282A /* SearchResultRepository.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultRepository.h; sourceTree = "<group>"; };
 		270A7A651BCBE2000020EAF7 /* WorldPinVisibility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorldPinVisibility.h; sourceTree = "<group>"; };
 		278A8F651BA6DB00000BBA67 /* WorldPinInteriorData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorldPinInteriorData.h; sourceTree = "<group>"; };
+		27CADB611BCFEA2A00805A27 /* SizeHelpers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SizeHelpers.cpp; sourceTree = "<group>"; };
+		27CADB621BCFEA2A00805A27 /* SizeHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SizeHelpers.h; sourceTree = "<group>"; };
 		27DB89B31BB3FEF00020CDA5 /* CombinedSearchService.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CombinedSearchService.cpp; sourceTree = "<group>"; };
 		27DB89B41BB3FEF00020CDA5 /* CombinedSearchService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CombinedSearchService.h; sourceTree = "<group>"; };
 		27DB89B51BB3FEF00020CDA5 /* CombinedSearchServiceModule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CombinedSearchServiceModule.cpp; sourceTree = "<group>"; };
@@ -3446,6 +3450,8 @@
 		18FE21CF1AA9CD3800ACE28A /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				27CADB611BCFEA2A00805A27 /* SizeHelpers.cpp */,
+				27CADB621BCFEA2A00805A27 /* SizeHelpers.h */,
 				BFD5FD801BA7078800F591F1 /* ColorHelpers.h */,
 				18FE21D01AA9CD3800ACE28A /* ImagePathHelpers.h */,
 				1833B2771BC2C4AB001CB77A /* InteriorHeightHelpers.cpp */,
@@ -6810,6 +6816,7 @@
 				7E3B8B1C1A385F110023C94E /* SearchResultMenuDataProvider.mm in Sources */,
 				7E3B88D11A385A290023C94E /* CompassViewModel.cpp in Sources */,
 				BF4FEE4B1BC2C78500932C17 /* ExampleSearchJsonParser.cpp in Sources */,
+				27CADB641BCFEA2A00805A27 /* SizeHelpers.cpp in Sources */,
 				7E3B88B11A385A290023C94E /* CategorySearchSelectedMessage.cpp in Sources */,
 				7E3B89A71A385A290023C94E /* SearchResultViewClearedObserver.cpp in Sources */,
 				7E3B89911A385A290023C94E /* SearchQueryObserver.cpp in Sources */,
@@ -7247,6 +7254,7 @@
 				7E3B8B1B1A385F110023C94E /* SearchResultMenuDataProvider.mm in Sources */,
 				7E3B88D01A385A290023C94E /* CompassViewModel.cpp in Sources */,
 				BF4FEE4A1BC2C78400932C17 /* ExampleSearchJsonParser.cpp in Sources */,
+				27CADB631BCFEA2A00805A27 /* SizeHelpers.cpp in Sources */,
 				7E3B88B01A385A290023C94E /* CategorySearchSelectedMessage.cpp in Sources */,
 				7E3B89A61A385A290023C94E /* SearchResultViewClearedObserver.cpp in Sources */,
 				7E3B89901A385A290023C94E /* SearchQueryObserver.cpp in Sources */,
