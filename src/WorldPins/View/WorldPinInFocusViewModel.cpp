@@ -57,6 +57,7 @@ namespace ExampleApp
                 m_worldPinInFocusModel = worldPinsInFocusModel;
                 m_isOpen = true;
                 m_screenPos = screenPos;
+                m_screenControl.AddToScreen();
                 m_openedCallbacks.ExecuteCallbacks();
             }
 
@@ -64,6 +65,7 @@ namespace ExampleApp
             {
                 Eegeo_ASSERT(IsOpen(), "Cannot close SearchResultModel when view model when already closed.\n");
                 m_isOpen = false;
+                m_screenControl.RemoveFromScreen();
                 m_closedCallbacks.ExecuteCallbacks();
             }
 
