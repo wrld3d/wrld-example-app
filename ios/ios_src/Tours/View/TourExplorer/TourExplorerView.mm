@@ -354,6 +354,13 @@
     return CGRectContainsPoint(self.pDetailsPanel.frame, touchLocation) || CGRectContainsPoint(m_pCarouselContainer.frame, touchLocation);
 }
 
+- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
+{
+    UIView *hitView = [super hitTest:point withEvent:event];
+    if (hitView == self) return nil;
+    return hitView;
+}
+
 - (void) setOnScreenStateToIntermediateValue:(float)onScreenState
 {
     float newY = m_yPosInactive + (m_yPosActive - m_yPosInactive) * onScreenState;
