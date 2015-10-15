@@ -54,7 +54,7 @@
 
 - (void) setOnScreenStateToIntermediateValue:(float)openState;
 
-- (void) animateToY:(float)y;
+- (void) animateTo:(float)t;
 
 
 @end
