@@ -10,6 +10,7 @@
 #include "ILocationService.h"
 #include "LatLongAltitude.h"
 #include "IAppModeModel.h"
+#include "IAlertBoxFactory.h"
 
 namespace ExampleApp
 {
@@ -21,13 +22,16 @@ namespace ExampleApp
                                        Eegeo::Location::ILocationService& locationService,
                                        Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& controller,
                                        Metrics::IMetricsService& metricsService,
-                                       AppModes::SdkModel::IAppModeModel& appModeModel)
+                                       AppModes::SdkModel::IAppModeModel& appModeModel,
+                                       Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory)
                 :m_navigationService(navigationService)
                 ,m_locationService(locationService)
                 ,m_cameraController(controller)
                 ,m_metricsService(metricsService)
                 , m_appModeModel(appModeModel)
                 , m_appModeChangedCallback(this, &CompassModel::OnAppModeChanged)
+                , m_alertBoxFactory(alertBoxFactory)
+                , m_failAlertHandler(this, &CompassModel::OnFailedToGetLocation)
             {
                 m_compassGpsModeToNavigationGpsMode[Eegeo::Location::NavigationService::GpsModeOff] = GpsMode::GpsDisabled;
                 m_compassGpsModeToNavigationGpsMode[Eegeo::Location::NavigationService::GpsModeFollow] = GpsMode::GpsFollow;
@@ -79,6 +83,9 @@ namespace ExampleApp
                 Eegeo::Space::LatLong latlong = Eegeo::Space::LatLong::FromDegrees(0.0, 0.0);
                 if(!m_locationService.GetLocation(latlong))
                 {
+                    m_alertBoxFactory.CreateSingleOptionAlertBox("Failed to obtain location",
+                                                                 "Could not get the device location. Please ensure you have GPS enabled",
+                                                                 m_failAlertHandler);
                     DisableGpsMode();
                     return;
                 }
@@ -189,6 +196,11 @@ namespace ExampleApp
                     DisableGpsMode();
                     return;
                 }
+            }
+            
+            void CompassModel::OnFailedToGetLocation()
+            {
+                Eegeo_TTY("Failed to get comapass loation");
             }
         }
     }

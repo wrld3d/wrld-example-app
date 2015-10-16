@@ -11,6 +11,8 @@
 #include "Location.h"
 #include "IMetricsService.h"
 #include "AppModes.h"
+#include "AlertBox.h"
+#include "ISingleOptionAlertBoxDismissedHandler.h"
 
 namespace ExampleApp
 {
@@ -34,13 +36,18 @@ namespace ExampleApp
 
                 AppModes::SdkModel::IAppModeModel& m_appModeModel;
                 Eegeo::Helpers::TCallback0<CompassModel> m_appModeChangedCallback;
+                
+                Eegeo::UI::NativeAlerts::IAlertBoxFactory& m_alertBoxFactory;
+                Eegeo::UI::NativeAlerts::TSingleOptionAlertBoxDismissedHandler<CompassModel> m_failAlertHandler;
+                
             public:
 
                 CompassModel(Eegeo::Location::NavigationService& navigationService,
                              Eegeo::Location::ILocationService& locationService,
                              Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& controller,
                              Metrics::IMetricsService& metricsService,
-                             AppModes::SdkModel::IAppModeModel& appModeModel);
+                             AppModes::SdkModel::IAppModeModel& appModeModel,
+                             Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory);
 
                 ~CompassModel();
 
@@ -70,6 +77,8 @@ namespace ExampleApp
                 void SetGpsMode(GpsMode::Values value);
                 
                 void OnAppModeChanged();
+                
+                void OnFailedToGetLocation();
             };
         }
     }
