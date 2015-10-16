@@ -21,12 +21,17 @@ namespace ExampleApp
                 const std::string CATEGORY_FIELD_NAME = "category";
                 const std::string DISTANCE_FIELD_NAME = "distance";
                 const std::string HEADING_DEGREES_FIELD_NAME = "heading_degrees";
+                const std::string TARGET_INTERIOR_ID_FIELD_NAME = "target_interior_id";
+                const std::string TARGET_INTERIOR_FLOOR_FIELD_NAME = "target_interior_floor";
+                const std::string TARGET_LATITUDE_DEGREES_FIELD_NAME = "target_latitude_degrees";
+                const std::string TARGET_LONGITUDE_DEGREES_FILED_NAME = "target_longitude_degrees";
                 
                 const std::string PERSON_CATEGORY_NAME = "person";
                 const std::string MEETING_ROOM_CATEGORY_NAME = "meeting_room";
                 const std::string WORKING_GROUP_CATEGORY_NAME = "working_group";
                 const std::string FACILITY_CATEGORY_NAME = "facility";
                 const std::string OFFICE_CATEGORY_NAME = "office";
+                const std::string TRANSITION_CATEGORY_NAME = "transition";
                 const std::string STATIONERY_CATEGORY_NAME = "stationery";
                 const std::string TOILETS_CATEGORY_NAME = "toilets";
                 const std::string PRINT_STATION_CATEGORY_NAME = "print_station";

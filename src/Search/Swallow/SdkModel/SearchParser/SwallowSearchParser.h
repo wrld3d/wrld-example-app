@@ -12,6 +12,7 @@
 #include "SwallowWorkingGroupResultModel.h"
 #include "SwallowFacilityResultModel.h"
 #include "SwallowOfficeResultModel.h"
+#include "SwallowTransitionResultModel.h"
 
 namespace ExampleApp
 {
@@ -34,6 +35,8 @@ namespace ExampleApp
                     SwallowFacilityResultModel TransformToSwallowFacilityResult(const Search::SdkModel::SearchResultModel& searchResultModel);
                     
                     SwallowOfficeResultModel TransformToSwallowOfficeResult(const Search::SdkModel::SearchResultModel& searchResultModel);
+                    
+                    SwallowTransitionResultModel TransformToSwallowTransitionResult(const Search::SdkModel::SearchResultModel& searchResultModel);
                     
                     bool TryParseImageDetails(const Search::SdkModel::SearchResultModel& searchResultModel, std::string& out_imageUrl);
                 }

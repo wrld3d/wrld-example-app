@@ -10,6 +10,7 @@
 #include "SQLiteFtsSnippetFormattingConfig.h"
 #include "SQLiteFtsComponent.h"
 #include "SQLiteFtsComponentFactory.h"
+#include "SQLiteTable.h"
 
 #include "IteratorHelpers.h"
 #include "SwallowPoiDbConstants.h"
@@ -19,6 +20,7 @@
 #include "SwallowPoiDbMeetingRoomParser.h"
 #include "SwallowPoiDbOfficeParser.h"
 #include "SwallowPoiDbService.h"
+#include "SwallowPoiDbTransitionParser.h"
 #include "SwallowPoiDbWorkingGroupParser.h"
 #include "SwallowSearchConstants.h"
 
@@ -116,7 +118,10 @@ namespace ExampleApp
                                                                                                                 Eegeo_NEW(Parsers::SwallowPoiDbOfficeParser),
                                                                                                                 m_assetsBaseUrl);
             
-            pSwallowPoiDbService = Eegeo_NEW(SwallowPoiDbCombinedService)(serviceMap);
+            Eegeo::SQLite::SQLiteTable* transitionsTable = Eegeo_NEW(Eegeo::SQLite::SQLiteTable)(Constants::TransitionTableName, *pSQLiteDbConnection);
+            
+            pSwallowPoiDbService = Eegeo_NEW(SwallowPoiDbCombinedService)(serviceMap,
+                                                                          transitionsTable);
             
             m_serviceStartedCallback(pSwallowPoiDbService);
         }

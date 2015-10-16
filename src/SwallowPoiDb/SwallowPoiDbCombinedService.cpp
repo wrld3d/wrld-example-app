@@ -2,9 +2,14 @@
 
 #include "SwallowPoiDbCombinedService.h"
 
+#include "SQLiteResultCells.h"
 #include "SQLiteSpellingSuggestionResults.h"
+#include "SQLiteTable.h"
+#include "SQLiteTableQueryHelpers.h"
 
 #include "SwallowPoiDbService.h"
+#include "SwallowPoiDbTransitionParser.h"
+#include "SwallowSearchConstants.h"
 
 namespace ExampleApp
 {
@@ -12,8 +17,10 @@ namespace ExampleApp
     {
         const std::string categoryColumnName = "category";
         
-        SwallowPoiDbCombinedService::SwallowPoiDbCombinedService(const std::map<std::string, SwallowPoiDbService*>& serviceMap)
+        SwallowPoiDbCombinedService::SwallowPoiDbCombinedService(const std::map<std::string, SwallowPoiDbService*>& serviceMap,
+                                                                 Eegeo::SQLite::SQLiteTable* pTransitionsTable)
         : m_serviceMap(serviceMap)
+        , m_pTransitionsTable(pTransitionsTable)
         {
             
         }
@@ -26,6 +33,8 @@ namespace ExampleApp
             }
             
             m_serviceMap.clear();
+            
+            Eegeo_DELETE m_pTransitionsTable;
         }
         
         void SwallowPoiDbCombinedService::FullTextSearch(const std::string& query, std::vector<Search::SdkModel::SearchResultModel>& out_results)
@@ -47,6 +56,27 @@ namespace ExampleApp
             {
                 (*it).second->FullTableSearch(out_results);
             }
+        }
+        
+        void SwallowPoiDbCombinedService::GetTransitionResults(std::vector<Search::SdkModel::SearchResultModel>& out_results)
+        {
+            Eegeo_ASSERT(m_pTransitionsTable != NULL, "Couldn't find transition table in SwallowPoiDbService");
+            
+            Eegeo::SQLite::SQLiteResultCells* pResult = NULL;
+            
+            bool succeed = Eegeo::SQLite::MakeQuery_SelectAll(*m_pTransitionsTable).Execute(pResult);
+            
+            Parsers::SwallowPoiDbTransitionParser swallowPoiDbTransitionParser;
+            
+            if (succeed)
+            {
+                for(int i = 0; i < pResult->RowCount(); ++i)
+                {
+                    out_results.push_back(swallowPoiDbTransitionParser.SQLiteResultRowToSearchResult(pResult->Row(i), "", 0));
+                }
+            }
+            
+            Eegeo_DELETE pResult;
         }
     }
 }

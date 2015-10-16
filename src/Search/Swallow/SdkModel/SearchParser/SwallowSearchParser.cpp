@@ -255,6 +255,47 @@ namespace ExampleApp
                                                         headingDegrees);
                     }
                     
+                    SwallowTransitionResultModel TransformToSwallowTransitionResult(const Search::SdkModel::SearchResultModel& searchResultModel)
+                    {
+                        rapidjson::Document json;
+                        
+                        std::string targetInteriorID("");
+                        int targetInteriorFloor = 0;
+                        double targetLatitudeDegrees = 0.0;
+                        double targetLongitudeDegrees = 0.0;
+                        
+                        if (!json.Parse<0>(searchResultModel.GetJsonData().c_str()).HasParseError())
+                        {
+                            if(json.HasMember(SearchConstants::TARGET_INTERIOR_ID_FIELD_NAME.c_str()) && json[SearchConstants::TARGET_INTERIOR_ID_FIELD_NAME.c_str()].IsString())
+                            {
+                                targetInteriorID = json[SearchConstants::TARGET_INTERIOR_ID_FIELD_NAME.c_str()].GetString();
+                            }
+                            
+                            if(json.HasMember(SearchConstants::TARGET_INTERIOR_FLOOR_FIELD_NAME.c_str()) && json[SearchConstants::TARGET_INTERIOR_FLOOR_FIELD_NAME.c_str()].IsNumber())
+                            {
+                                targetInteriorFloor = json[SearchConstants::TARGET_INTERIOR_FLOOR_FIELD_NAME.c_str()].GetInt();
+                            }
+                            
+                            if(json.HasMember(SearchConstants::TARGET_LATITUDE_DEGREES_FIELD_NAME.c_str()) && json[SearchConstants::TARGET_LATITUDE_DEGREES_FIELD_NAME.c_str()].IsNumber())
+                            {
+                                targetLatitudeDegrees = (float)json[SearchConstants::TARGET_LATITUDE_DEGREES_FIELD_NAME.c_str()].GetDouble();
+                            }
+                            
+                            if(json.HasMember(SearchConstants::TARGET_LONGITUDE_DEGREES_FILED_NAME.c_str()) && json[SearchConstants::TARGET_LONGITUDE_DEGREES_FILED_NAME.c_str()].IsNumber())
+                            {
+                                targetLongitudeDegrees = (float)json[SearchConstants::TARGET_LONGITUDE_DEGREES_FILED_NAME.c_str()].GetDouble();
+                            }
+                        }
+                        else
+                        {
+                            Eegeo_ASSERT(false, "JSON parse error transforming search result model to swallow transition model");
+                        }
+                        
+                        return SwallowTransitionResultModel(Eegeo::Resources::Interiors::InteriorId(targetInteriorID),
+                                                            targetInteriorFloor,
+                                                            Eegeo::Space::LatLong::FromDegrees(targetLatitudeDegrees, targetLongitudeDegrees));
+                    }
+                    
                     bool TryParseImageDetails(const Search::SdkModel::SearchResultModel& searchResultModel, std::string& out_imageUrl)
                     {
                         if(searchResultModel.GetVendor().find(Search::SwallowVendorName) == 0)

@@ -29,6 +29,8 @@ namespace ExampleApp
             extern const std::string OfficeTableName;
             extern const std::string OfficeFtsColumnNames[1];
             extern const float OfficeFtsColumnWeights[1];
+            
+            extern const std::string TransitionTableName;
         }
     }
 }

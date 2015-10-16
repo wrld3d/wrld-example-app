@@ -10,6 +10,7 @@
 #include "CameraTransitions.h"
 #include "SwallowPoiDb.h"
 #include "SwallowSearch.h"
+#include "WorldPins.h"
 
 namespace ExampleApp
 {
@@ -23,18 +24,22 @@ namespace ExampleApp
                 {
                 private:
                     Search::SdkModel::ISearchService* m_pSearchService;
+                    SwallowSearchTransitionPinController* m_pSwallowSearchTransitionPinController;
                     SwallowOfficeResultMenuOptionSelectedMessageHandler* m_pSwallowOfficeResultMenuOptionSelectedMessageHandler;
                     
                 public:
                     SwallowSearchServiceModule(SwallowPoiDb::SwallowPoiDbServiceProvider& swallowPoiDbServiceProvider,
                                                CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
-                                               ExampleAppMessaging::TMessageBus& messageBus);
+                                               ExampleAppMessaging::TMessageBus& messageBus,
+                                               WorldPins::SdkModel::IWorldPinsService& worldPinsService);
                     
                     ~SwallowSearchServiceModule();
                     
                     Search::SdkModel::ISearchService& GetSearchService() const;
                     
                     std::vector<CategorySearch::View::CategorySearchModel> GetCategorySearchModels() const;
+                    
+                    SwallowSearchTransitionPinController& GetSwallowSearchTransitionPinController() const;
                 };
             }
         }

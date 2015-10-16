@@ -25,6 +25,10 @@ namespace ExampleApp
                 extern const std::string CATEGORY_FIELD_NAME;
                 extern const std::string DISTANCE_FIELD_NAME;
                 extern const std::string HEADING_DEGREES_FIELD_NAME;
+                extern const std::string TARGET_INTERIOR_ID_FIELD_NAME;
+                extern const std::string TARGET_INTERIOR_FLOOR_FIELD_NAME;
+                extern const std::string TARGET_LATITUDE_DEGREES_FIELD_NAME;
+                extern const std::string TARGET_LONGITUDE_DEGREES_FILED_NAME;
                 
                 extern const std::string PERSON_CATEGORY_NAME;
                 extern const std::string MEETING_ROOM_CATEGORY_NAME;
@@ -32,6 +36,7 @@ namespace ExampleApp
                 extern const std::string FACILITY_CATEGORY_NAME;
                 extern const std::string OFFICE_CATEGORY_NAME;
                 extern const std::string STATIONERY_CATEGORY_NAME;
+                extern const std::string TRANSITION_CATEGORY_NAME;
                 extern const std::string TOILETS_CATEGORY_NAME;
                 extern const std::string PRINT_STATION_CATEGORY_NAME;
                 extern const std::string EMERGENCY_EXIT_CATEGORY_NAME;

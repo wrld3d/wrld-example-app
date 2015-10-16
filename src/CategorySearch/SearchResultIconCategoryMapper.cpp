@@ -52,6 +52,8 @@ namespace ExampleApp
             m_availabilityToIconIndex[Search::Swallow::SearchConstants::MEETING_ROOM_AVAILABLE] = 22;
             m_availabilityToIconIndex[Search::Swallow::SearchConstants::MEETING_ROOM_AVAILABLE_SOON] = 21;
             m_availabilityToIconIndex[Search::Swallow::SearchConstants::MEETING_ROOM_OCCUPIED] = 20;
+            
+            m_categoryToIconIndex[Search::Swallow::SearchConstants::TRANSITION_CATEGORY_NAME] = 23;
         }
         
         SearchResultIconCategoryMapper::~SearchResultIconCategoryMapper()

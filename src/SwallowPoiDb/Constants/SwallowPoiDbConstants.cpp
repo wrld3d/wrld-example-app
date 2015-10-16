@@ -31,6 +31,8 @@ namespace ExampleApp
             const std::string OfficeTableName = "OfficePois";
             const std::string OfficeFtsColumnNames[1] = { NAME_FIELD_NAME };
             const float OfficeFtsColumnWeights[1] = { 1.0f };
+            
+            const std::string TransitionTableName = "TransitionPois";
         }
     }
 }

@@ -14,6 +14,7 @@ namespace ExampleApp
         const std::string SwallowWorkingGroupsVendorName = "SwallowWorkingGroups";
         const std::string SwallowFacilitiesVendorName = "SwallowFacilities";
         const std::string SwallowOfficesVendorName = "SwallowOffices";
+        const std::string SwallowTransitionsVendorName = "SwallowTranstions";
         
         const std::string ExampleTourVendorName = "Tour";
     }

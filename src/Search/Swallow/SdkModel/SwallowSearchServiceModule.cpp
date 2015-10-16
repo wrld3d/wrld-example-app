@@ -5,6 +5,7 @@
 #include "SwallowOfficeResultMenuOptionSelectedMessageHandler.h"
 #include "SwallowSearchConstants.h"
 #include "SwallowSearchService.h"
+#include "SwallowSearchTransitionPinController.h"
 
 namespace ExampleApp
 {
@@ -16,18 +17,24 @@ namespace ExampleApp
             {
                 SwallowSearchServiceModule::SwallowSearchServiceModule(SwallowPoiDb::SwallowPoiDbServiceProvider& swallowPoiDbServiceProvider,
                                                                        CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
-                                                                       ExampleAppMessaging::TMessageBus& messageBus)
+                                                                       ExampleAppMessaging::TMessageBus& messageBus,
+                                                                       WorldPins::SdkModel::IWorldPinsService& worldPinsService)
                 : m_pSearchService(NULL)
                 , m_pSwallowOfficeResultMenuOptionSelectedMessageHandler(NULL)
+                , m_pSwallowSearchTransitionPinController(NULL)
                 {
                     m_pSearchService = Eegeo_NEW(SwallowSearchService)(SearchConstants::GetCategories(),
                                                                        swallowPoiDbServiceProvider);
                     
                     m_pSwallowOfficeResultMenuOptionSelectedMessageHandler = Eegeo_NEW(SwallowOfficeResultMenuOptionSelectedMessageHandler)(cameraTransitionController, messageBus);
+                    
+                    m_pSwallowSearchTransitionPinController = Eegeo_NEW(SwallowSearchTransitionPinController)(worldPinsService);
                 }
                     
                 SwallowSearchServiceModule::~SwallowSearchServiceModule()
                 {
+                    Eegeo_DELETE m_pSwallowSearchTransitionPinController;
+                    
                     Eegeo_DELETE m_pSwallowOfficeResultMenuOptionSelectedMessageHandler;
                     
                     Eegeo_DELETE m_pSearchService;
@@ -41,6 +48,11 @@ namespace ExampleApp
                 std::vector<CategorySearch::View::CategorySearchModel> SwallowSearchServiceModule::GetCategorySearchModels() const
                 {
                     return SearchConstants::GetCategorySearchModels();
+                }
+                
+                SwallowSearchTransitionPinController& SwallowSearchServiceModule::GetSwallowSearchTransitionPinController() const
+                {
+                    return *m_pSwallowSearchTransitionPinController;
                 }
             }
         }

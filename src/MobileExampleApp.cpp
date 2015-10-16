@@ -83,6 +83,8 @@
 #include "SwallowSearchMenuModule.h"
 #include "SwallowSearchConstants.h"
 #include "InteriorsCustomMaterialsModule.h"
+#include "SwallowSearchTransitionPinController.h"
+#include "SwallowPoiDbServiceProvider.h"
 
 namespace ExampleApp
 {
@@ -306,13 +308,18 @@ namespace ExampleApp
     {
         Eegeo::EegeoWorld& world = *m_pWorld;
         
+        Eegeo::Modules::Map::MapModule& mapModule = world.GetMapModule();
+        
+        InitialisePinsModules(mapModule, world);
+        
         Eegeo_ASSERT(m_pSwallowPoiDbModule == NULL);
         Eegeo_ASSERT(m_pSQLiteModule != NULL);
         
         const std::string destSqliteDbFilename = "pois.db";
         
-        m_pSwallowPoiDbModule = SwallowPoiDb::SwallowPoiDbModule::Create(m_applicationConfiguration.SqliteDbUrl(), destSqliteDbFilename, *m_pSQLiteModule);
-        m_pSwallowPoiDbModule->GetSwallowPoiDbWebLoader().Load();
+        m_pSwallowPoiDbModule = SwallowPoiDb::SwallowPoiDbModule::Create(m_applicationConfiguration.SqliteDbUrl(),
+                                                                         destSqliteDbFilename,
+                                                                         *m_pSQLiteModule);
         
         m_pReactionControllerModule = Eegeo_NEW(Reaction::View::ReactionControllerModule)();
 
@@ -326,11 +333,19 @@ namespace ExampleApp
                                                                          m_messageBus,
                                                                          m_networkCapabilities);
 
+        Search::Swallow::SdkModel::SwallowSearchServiceModule* pSwallowSearchServiceModule = Eegeo_NEW(Search::Swallow::SdkModel::SwallowSearchServiceModule)(m_pSwallowPoiDbModule->GetSwallowPoiDbServiceProvider(),
+                                                                                                                                                              *m_pCameraTransitionController,
+                                                                                                                                                              m_messageBus,
+                                                                                                                                                              m_pWorldPinsModule->GetWorldPinsService());
+        
+        
+        
+        m_pSwallowPoiDbModule->GetSwallowPoiDbServiceProvider().AddTransitionLoadedCallback(pSwallowSearchServiceModule->GetSwallowSearchTransitionPinController());
+        m_pSwallowPoiDbModule->GetSwallowPoiDbWebLoader().Load();
+        
         std::map<std::string,ExampleApp::Search::SdkModel::ISearchServiceModule*> searchServiceModulesForCombinedSearch = platformImplementedSearchServiceModules;
         
-		m_searchServiceModules[Search::SwallowVendorName] = Eegeo_NEW(Search::Swallow::SdkModel::SwallowSearchServiceModule)(m_pSwallowPoiDbModule->GetSwallowPoiDbServiceProvider(),
-                                                                                                                             *m_pCameraTransitionController,
-                                                                                                                             m_messageBus);
+        m_searchServiceModules[Search::SwallowVendorName] = pSwallowSearchServiceModule;
         
         const bool useGeoName = true;
         if(useGeoName)
@@ -397,15 +412,13 @@ namespace ExampleApp
         m_pSwallowSearchMenuModule = Eegeo_NEW(Search::Swallow::SdkModel::SwallowSearchMenuModule)(m_pSecondaryMenuModule->GetSecondaryMenuViewModel(),
                                                                                                    m_messageBus);
 
-        Eegeo::Modules::Map::MapModule& mapModule = world.GetMapModule();
+        
 
         m_pMapModeModule = Eegeo_NEW(MapMode::SdkModel::MapModeModule(mapModule.GetEnvironmentFlatteningService(), m_pWeatherMenuModule->GetWeatherController()));
 
         m_pFlattenButtonModule = Eegeo_NEW(ExampleApp::FlattenButton::SdkModel::FlattenButtonModule)(m_pMapModeModule->GetMapModeModel(),
                                  m_identityProvider,
                                  m_messageBus);
-
-        InitialisePinsModules(mapModule, world);
         
         m_pMyPinsModule = Eegeo_NEW(ExampleApp::MyPins::SdkModel::MyPinsModule)(m_pWorldPinsModule->GetWorldPinsService(),
                                                                                 m_platformAbstractions,
