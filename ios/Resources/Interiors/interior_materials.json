@@ -107,5 +107,15 @@
                     "Filename":"Interiors/swallowwood02-interior.pvr"
              }
         ]
+    },
+	    {
+        "MaterialName": "swallowexterior01-interior",
+        "MaterialType":"InteriorsDiffuseTexturedMaterial",
+        "Textures":[
+             {
+                    "TextureKey":"swallowexterior01-interior-texture0",
+                    "Filename":"Interiors/exterior01-interior.pvr"
+             }
+        ]
     }
 ]
