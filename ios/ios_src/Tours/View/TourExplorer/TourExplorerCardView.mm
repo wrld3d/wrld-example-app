@@ -23,12 +23,15 @@
         float textSpacingX = isPhone ? 4.0f : 7.0f;
         float textSpacingY = isPhone ? 3.0f : 5.0f;
         
-        float textHeight = isPhone ? 15.0f : 21.0f;
-        float detailTextHeight = isPhone ? 45.0f : 63.0f;
-        float detailTextBackgroundHeight = detailTextHeight + textSpacingY * 2.0f;
-        
         float textSize = isPhone ? 14.0f : 17.0f;
         float detailTextSize = isPhone ? 11.0f : 14.0f;
+        
+        UIFont* textFont = [UIFont systemFontOfSize:textSize];
+        UIFont* detailTextFont = [UIFont systemFontOfSize:detailTextSize];
+        
+        float textHeight = textFont.lineHeight + 1.0f;
+        float detailTextHeight = 2.0f*(detailTextFont.lineHeight + 1.0f);
+        float detailTextBackgroundHeight = detailTextHeight + textSpacingY * 2.0f;
         
         m_textContainerY = frameSizeY - (detailTextBackgroundHeight + textHeight + textSpacingY * 2.0f);
         m_textContainerYNoDescription = m_textContainerY + detailTextBackgroundHeight;
@@ -56,7 +59,7 @@
         
         self.pTextLabel = [[UILabel alloc]initWithFrame:CGRectMake(textSpacingX, textSpacingY, frameSizeX - textSpacingX * 2.0f, textHeight)];
         self.pTextLabel.textColor = [UIColor whiteColor];
-        self.pTextLabel.font = [UIFont fontWithName:@"GothamNarrow-Bold" size:textSize];
+        self.pTextLabel.font = textFont;
         [self.pTextContainer addSubview:self.pTextLabel];
         
         self.pDetailTextContainer = [[UIView alloc]initWithFrame:CGRectMake(0.0f, frameSizeY - detailTextBackgroundHeight, frameSizeX, detailTextBackgroundHeight)];
@@ -67,7 +70,7 @@
         self.pDetailTextLabel.numberOfLines = 0;
         self.pDetailTextLabel.lineBreakMode = NSLineBreakByTruncatingTail;
         self.pDetailTextLabel.textColor = TourDefines::LightTextColor;
-        self.pDetailTextLabel.font = [UIFont fontWithName:@"GothamNarrow-Book" size:detailTextSize];
+        self.pDetailTextLabel.font = detailTextFont;
         [self.pDetailTextContainer addSubview:self.pDetailTextLabel];
     }
     return self;
