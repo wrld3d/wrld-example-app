@@ -108,14 +108,4 @@
              }
         ]
     }
-    {
-        "MaterialName": "exterior01-interior",
-        "MaterialType":"InteriorsDiffuseTexturedMaterial",
-        "Textures":[
-             {
-                    "TextureKey":"exterior01-interior-texture0",
-                    "Filename":"Interiors/exterior1-interior.pvr"
-             }
-        ]
-    }
 ]
