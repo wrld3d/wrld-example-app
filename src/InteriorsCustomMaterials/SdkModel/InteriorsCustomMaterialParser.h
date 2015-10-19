@@ -6,6 +6,8 @@
 #include "Types.h"
 
 #include <vector>
+#include <string>
+
 
 namespace ExampleApp
 {
