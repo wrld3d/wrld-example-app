@@ -46,6 +46,15 @@
         }
         ],
     "CubeMapTextures":[
+        {
+            "TextureKey":"PointLightsCubeMap",
+            "PositiveXFilename":"Interiors/PointLightCubeFace.png",
+            "NegativeXFilename":"Interiors/PointLightCubeFace.png",
+            "PositiveYFilename":"Interiors/PointLightCubeFace.png",
+            "NegativeYFilename":"Interiors/PointLightCubeFace.png",
+            "PositiveZFilename":"Interiors/PointLightCubeFace.png",
+            "NegativeZFilename":"Interiors/PointLightCubeFace.png"
+        }
     ],
     "Materials":[
          {
@@ -80,8 +89,12 @@
          
          {
              "MaterialName": "swallowglass01-interior",
-             "MaterialType":"InteriorsDiffuseTexturedMaterial",
-             "DiffuseTexture":"swallowglass01-interior-texture0"
+             "MaterialType":"InteriorsCubeMappedMaterial",
+             "DiffuseTexture":"swallowglass01-interior-texture0",
+             "CubeMapTexture":"PointLightsCubeMap",
+             "SpecularPower":10.0,
+             "SpecularColor":[0.2,0.2,0.2,1.0],
+             "ReflectionColor":[0.2,0.2,0.2,1.0]
          },
          
          {
@@ -98,20 +111,29 @@
          
          {
              "MaterialName": "swallowwall01-interior",
-             "MaterialType":"InteriorsDiffuseTexturedMaterial",
-             "DiffuseTexture":"swallowwall01-interior-texture0"
+             "MaterialType":"InteriorsSpecularMaterial",
+             "DiffuseTexture":"swallowwall01-interior-texture0",
+             "SpecularPower":20.0,
+             "SpecularColor":[0.4,0.4,0.4,1.0],
+             "SpecularityFromTextureLuminance":1.0
          },
          
          {
              "MaterialName": "swallowwood01-interior",
-             "MaterialType":"InteriorsDiffuseTexturedMaterial",
-             "DiffuseTexture":"swallowwood01-interior-texture0"
+             "MaterialType":"InteriorsSpecularMaterial",
+             "DiffuseTexture":"swallowwood01-interior-texture0",
+             "SpecularPower":15.0,
+             "SpecularColor":[0.3,0.3,0.3,1.0],
+             "SpecularityFromTextureLuminance":1.0
          },
 
          {
              "MaterialName": "swallowwood02-interior",
-             "MaterialType":"InteriorsDiffuseTexturedMaterial",
-             "DiffuseTexture":"swallowwood02-interior-texture0"
+             "MaterialType":"InteriorsSpecularMaterial",
+             "DiffuseTexture":"swallowwood02-interior-texture0",
+             "SpecularPower":15.0,
+             "SpecularColor":[0.3,0.3,0.3,1.0],
+             "SpecularityFromTextureLuminance":1.0
          },
 
          {
