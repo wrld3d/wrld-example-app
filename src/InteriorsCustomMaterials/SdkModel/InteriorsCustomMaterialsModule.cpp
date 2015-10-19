@@ -6,8 +6,13 @@
 #include "InteriorsCustomMaterialDto.h"
 #include "IFileIO.h"
 #include "IInteriorsTextureResourceService.h"
+#include "InteriorsCustomMaterialDtoRepository.h"
+#include "CubeFaceFileNames.h"
+#include "InteriorMaterialSemantics.h"
+#include "LayerIds.h"
+#include "InteriorsCustomMaterialParser.h"
 
-#include "document.h"
+
 
 #include <vector>
 
@@ -19,9 +24,8 @@ namespace ExampleApp
         {
             namespace
             {
-                std::vector<InteriorsCustomMaterialDto> ParseCustomMaterials(Eegeo::Helpers::IFileIO& fileIO, const std::string& filename)
+                InteriorsCustomMaterialParserResult ParseCustomMaterials(Eegeo::Helpers::IFileIO& fileIO, const std::string& filename)
                 {
-                    std::vector<InteriorsCustomMaterialDto> result;
                     std::fstream stream;
                     size_t size;
                     
@@ -33,69 +37,49 @@ namespace ExampleApp
                     std::string json((std::istreambuf_iterator<char>(stream)),
                                      (std::istreambuf_iterator<char>()));
                     
-                    rapidjson::Document document;
-                    if(document.Parse<0>(json.c_str()).HasParseError())
-                    {
-                        Eegeo_ASSERT(false, "Error parsing %s.", filename.c_str());
-                    }
+                    InteriorsCustomMaterialParser parser;
                     
-                    int elementCount = document.Size();
-                    for (int i = 0; i < elementCount; ++i)
-                    {
-                        const rapidjson::Value& jsonValue = document[i];
-                        
-                        InteriorsCustomMaterialDto materialDto;
-                        materialDto.materialName = jsonValue["MaterialName"].GetString();
-                        materialDto.materialType = jsonValue["MaterialType"].GetString();
-                        
-                        
-                        const rapidjson::Value& jsonTexturesValue = jsonValue["Textures"];
-                        int textureCount = jsonTexturesValue.Size();
-                        for (int j = 0; j < textureCount; ++j)
-                        {
-                            const rapidjson::Value& jsonTextureValue = jsonTexturesValue[j];
-                            InteriorsCustomTextureDto textureDto;
-                            textureDto.textureKey = jsonTextureValue["TextureKey"].GetString();
-                            textureDto.filename = jsonTextureValue["Filename"].GetString();
-                            materialDto.textures.push_back(textureDto);
-                        }
-                        
-                        
-                        result.push_back(materialDto);
-                    }
-                    
+                    const InteriorsCustomMaterialParserResult& result = parser.Parse(json);
                     return result;
                 }
+
                 
-                void CreateAndRegisterTextures(const std::vector<InteriorsCustomMaterialDto>& customMaterialDtos, Eegeo::Resources::Interiors::IInteriorsTextureResourceService& interiorsTextureResourceService)
+                void CreateAndRegisterTextures(const std::vector<InteriorsCustomTextureDto>& customTextureDtos, Eegeo::Resources::Interiors::IInteriorsTextureResourceService& interiorsTextureResourceService)
                 {
-                
-                    for (std::vector<InteriorsCustomMaterialDto>::const_iterator iter = customMaterialDtos.begin(); iter != customMaterialDtos.end(); ++iter)
+                    for (std::vector<InteriorsCustomTextureDto>::const_iterator iter = customTextureDtos.begin(); iter != customTextureDtos.end(); ++iter)
                     {
-                        const InteriorsCustomMaterialDto& materialDto = *iter;
+                        const InteriorsCustomTextureDto& textureDto = *iter;
                         
-                        for (std::vector<InteriorsCustomTextureDto>::const_iterator texIter = materialDto.textures.begin(); texIter != materialDto.textures.end(); ++texIter)
-                        {
-                            const InteriorsCustomTextureDto& textureDto = *texIter;
-                            
-                            interiorsTextureResourceService.Create(textureDto.textureKey, textureDto.filename);
-                        }
+                        interiorsTextureResourceService.Create(textureDto.textureKey, textureDto.filename);
                     }
-                    
                 }
                 
-                InteriorsCustomMaterialFactory::TMaterialKeyToFactoryType MakeMaterialFactoryMap(const std::vector<InteriorsCustomMaterialDto>& customMaterialDtos)
+                void CreateAndRegisterCubeMapTextures(const std::vector<InteriorsCustomCubeMapTextureDto>& customTextureDtos, Eegeo::Resources::Interiors::IInteriorsTextureResourceService& interiorsTextureResourceService)
                 {
-                    InteriorsCustomMaterialFactory::TMaterialKeyToFactoryType materialKeyToFactoryType;
-                    
-                    for (std::vector<InteriorsCustomMaterialDto>::const_iterator iter = customMaterialDtos.begin(); iter != customMaterialDtos.end(); ++iter)
+                    for (std::vector<InteriorsCustomCubeMapTextureDto>::const_iterator iter = customTextureDtos.begin(); iter != customTextureDtos.end(); ++iter)
                     {
-                        const InteriorsCustomMaterialDto& materialDto = *iter;
+                        const InteriorsCustomCubeMapTextureDto& textureDto = *iter;
                         
-                        materialKeyToFactoryType.insert(std::make_pair(materialDto.materialName, materialDto.materialType));
+                        Eegeo::Helpers::CubeFaceFileNames cubeFaceFileNames;
+                        cubeFaceFileNames.positiveXFileName = textureDto.positiveXFilename;
+                        cubeFaceFileNames.negativeXFileName = textureDto.negativeXFilename;
+                        cubeFaceFileNames.positiveYFileName = textureDto.positiveYFilename;
+                        cubeFaceFileNames.negativeYFileName = textureDto.negativeYFilename;
+                        cubeFaceFileNames.positiveZFileName = textureDto.positiveZFilename;
+                        cubeFaceFileNames.negativeZFileName = textureDto.negativeZFilename;
+                        
+                        interiorsTextureResourceService.CreateFromCubeMapFaces(textureDto.textureKey, cubeFaceFileNames);
                     }
-                    
-                    return materialKeyToFactoryType;
+                }
+
+                void RegisterMaterialData(const std::vector<InteriorsCustomMaterialDto>& materialDtos, IInteriorsCustomMaterialDtoRepository& materialDtoRepository)
+                {
+                    for (std::vector<InteriorsCustomMaterialDto>::const_iterator iter = materialDtos.begin(); iter != materialDtos.end(); ++iter)
+                    {
+                        const InteriorsCustomMaterialDto materialDto = *iter;
+
+                        materialDtoRepository.Add(*iter);
+                    }
                 }
             }
 
@@ -103,33 +87,35 @@ namespace ExampleApp
                                                                            
                                                                            Eegeo::Helpers::IFileIO& fileIO)
             : m_pInteriorsCustomMaterialFactory(NULL)
+            , m_pInteriorsCustomMaterialDtoRepository(NULL)
             {
-                const std::vector<InteriorsCustomMaterialDto>& customMaterialDtos = ParseCustomMaterials(fileIO, "Interiors/interior_materials.json");
-                
-                
-                CreateAndRegisterTextures(customMaterialDtos, interiorsStreamingModule.GetInteriorsTextureResourceService());
-                
-                
-                const InteriorsCustomMaterialFactory::TMaterialKeyToFactoryType& materialKeyToFactoryType = MakeMaterialFactoryMap(customMaterialDtos);
-                
+                m_pInteriorsCustomMaterialDtoRepository = Eegeo_NEW(InteriorsCustomMaterialDtoRepository)();
                 
             
-            
-                m_pInteriorsCustomMaterialFactory = Eegeo_NEW(InteriorsCustomMaterialFactory)(materialKeyToFactoryType,
+                m_pInteriorsCustomMaterialFactory = Eegeo_NEW(InteriorsCustomMaterialFactory)(*m_pInteriorsCustomMaterialDtoRepository,
                                                                                               interiorsStreamingModule.GetInteriorsMaterialFactory(),
-                                                                                              interiorsStreamingModule.GetInteriorsDiffuseTexturedMaterialFactory()
+                                                                                              interiorsStreamingModule.GetInteriorsDiffuseTexturedMaterialFactory(),
+                                                                                              interiorsStreamingModule.GetInteriorsDiffuseSpecularMaterialFactory(),
+                                                                                              interiorsStreamingModule.GetInteriorsCubeMappedMaterialFactory()
                                                                                               );
                 
                 interiorsStreamingModule.AddInteriorsMaterialFactory(m_pInteriorsCustomMaterialFactory);
+                
+                const InteriorsCustomMaterialParserResult& materialParserResult = ParseCustomMaterials(fileIO, "Interiors/interior_materials.json");
+                
+                CreateAndRegisterTextures(materialParserResult.textureDtos, interiorsStreamingModule.GetInteriorsTextureResourceService());
+                
+                CreateAndRegisterCubeMapTextures(materialParserResult.cubeMapTextureDtos, interiorsStreamingModule.GetInteriorsTextureResourceService());
+                
+                RegisterMaterialData(materialParserResult.materialDtos, *m_pInteriorsCustomMaterialDtoRepository);
             }
             
             InteriorsCustomMaterialsModule::~InteriorsCustomMaterialsModule()
             {
                 Eegeo_DELETE m_pInteriorsCustomMaterialFactory;
+                Eegeo_DELETE m_pInteriorsCustomMaterialDtoRepository;
             }
-
-            
-            
+           
         }
     }
 }

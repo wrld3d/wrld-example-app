@@ -9,6 +9,8 @@
 
 #include "Types.h"
 
+#include <vector>
+
 namespace ExampleApp
 {
     namespace InteriorsCustomMaterials
@@ -25,8 +27,9 @@ namespace ExampleApp
                 ~InteriorsCustomMaterialsModule();
                 
             private:
-                
                 Eegeo::Resources::Interiors::IInteriorsMaterialFactory* m_pInteriorsCustomMaterialFactory;
+                IInteriorsCustomMaterialDtoRepository* m_pInteriorsCustomMaterialDtoRepository;
+
             };
             
             
