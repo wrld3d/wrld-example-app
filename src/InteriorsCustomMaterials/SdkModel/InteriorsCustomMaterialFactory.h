@@ -21,18 +21,21 @@ namespace ExampleApp
             class InteriorsCustomMaterialFactory : public Eegeo::Resources::Interiors::IInteriorsMaterialFactory, private Eegeo::NonCopyable
             {
             public:
-                typedef std::map<std::string, std::string> TMaterialKeyToFactoryType;
-                
-                InteriorsCustomMaterialFactory(const TMaterialKeyToFactoryType& materialKeyToFactoryType,
+                InteriorsCustomMaterialFactory(const IInteriorsCustomMaterialDtoRepository& materialDtoRepository,
                                                Eegeo::Resources::Interiors::IInteriorsMaterialFactory& untexturedMaterialFactory,
-                                               Eegeo::Resources::Interiors::IInteriorsMaterialFactory& diffuseTexturedMaterialFactory);
+                                               Eegeo::Resources::Interiors::IInteriorsMaterialFactory& diffuseTexturedMaterialFactory,
+                                               Eegeo::Resources::Interiors::IInteriorsMaterialFactory& diffuseSpecularMaterialFactory,
+                                               Eegeo::Resources::Interiors::IInteriorsMaterialFactory& cubeMappedMaterialFactory);
 
                 Eegeo::Rendering::Materials::IMaterial* TryCreate(const Eegeo::Resources::Interiors::InteriorMaterialData& interiorMaterialData);
             private:
-                
+
+                const IInteriorsCustomMaterialDtoRepository& m_materialDtoRepository;
                 Eegeo::Resources::Interiors::IInteriorsMaterialFactory& m_untexturedMaterialFactory;
                 Eegeo::Resources::Interiors::IInteriorsMaterialFactory& m_diffuseTexturedMaterialFactory;
-                TMaterialKeyToFactoryType m_materialKeyToFactoryType;
+                Eegeo::Resources::Interiors::IInteriorsMaterialFactory& m_diffuseSpecularMaterialFactory;
+                Eegeo::Resources::Interiors::IInteriorsMaterialFactory& m_cubeMappedMaterialFactory;
+                
             };
         }
     }

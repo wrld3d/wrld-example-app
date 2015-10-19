@@ -1,121 +1,123 @@
-[
-    {
-        "MaterialName": "InteriorMaterial_SwallowCGHWall",
-        "MaterialType":"InteriorsDiffuseTexturedMaterial",
-        "Textures":[
-            {
-                "TextureKey":"InteriorMaterial_SwallowCGHWall-texture0",
-                "Filename":"Interiors/swallowwalltempmaterial-interior.pvr"
-            }
-        ]
-    },
- 
-    {
-        "MaterialName": "swallowdecalexit-interior",
-        "MaterialType":"InteriorsDiffuseTexturedMaterial",
-        "Textures":[
-             {
-                "TextureKey":"swallowdecalexit-interior-texture0",
-                "Filename":"Interiors/swallowdecalexit-interior.pvr"
-             }
-        ]
-    },
- 
-    {
-        "MaterialName": "swallowfloorcarpet01-interior",
-        "MaterialType":"InteriorsDiffuseTexturedMaterial",
-        "Textures":[
-             {
-                    "TextureKey":"swallowfloorcarpet01-interior-texture0",
-                    "Filename":"Interiors/swallowfloorcarpet01-interior.pvr"
-             }
-        ]
-    },
- 
-    {
-        "MaterialName": "swallowfloortiles01-interior",
-        "MaterialType":"InteriorsDiffuseTexturedMaterial",
-        "Textures":[
-             {
-                    "TextureKey":"swallowfloortiles01-interior-texture0",
-                    "Filename":"Interiors/swallowfloortiles01-interior"
-             }
-        ]
-    },
- 
-    {
-        "MaterialName": "swallowglass01-interior",
-        "MaterialType":"InteriorsDiffuseTexturedMaterial",
-        "Textures":[
-             {
-                    "TextureKey":"swallowglass01-interior-texture0",
-                    "Filename":"Interiors/swallowglass01-interior.pvr"
-             }
-        ]
-    },
- 
-    {
-        "MaterialName": "swallownoise01-interior",
-        "MaterialType":"InteriorsDiffuseTexturedMaterial",
-        "Textures":[
-             {
-                    "TextureKey":"swallownoise01-interior-texture0",
-                    "Filename":"Interiors/swallownoise01-interior.pvr"
-             }
-        ]
-    },
- 
-    {
-        "MaterialName": "swallowplaingray-interior",
-        "MaterialType":"InteriorsDiffuseTexturedMaterial",
-        "Textures":[
-             {
-                    "TextureKey":"swallowplaingray-interior-texture0",
-                    "Filename":"Interiors/swallowplaingray-interior.pvr"
-             }
-        ]
-    },
- 
-    {
-        "MaterialName": "swallowwall01-interior",
-        "MaterialType":"InteriorsDiffuseTexturedMaterial",
-        "Textures":[
-             {
-                    "TextureKey":"swallowwall01-interior-texture0",
-                    "Filename":"Interiors/swallowwall01-interior.pvr"
-             }
-        ]
-    },
- 
-    {
-        "MaterialName": "swallowwood01-interior",
-        "MaterialType":"InteriorsDiffuseTexturedMaterial",
-        "Textures":[
-             {
-                    "TextureKey":"swallowwood01-interior-texture0",
-                    "Filename":"Interiors/swallowwood01-interior.pvr"
-             }
-        ]
-    },
- 
-    {
-        "MaterialName": "swallowwood02-interior",
-        "MaterialType":"InteriorsDiffuseTexturedMaterial",
-        "Textures":[
-             {
-                    "TextureKey":"swallowwood02-interior-texture0",
-                    "Filename":"Interiors/swallowwood02-interior.pvr"
-             }
-        ]
-    },
-	    {
-        "MaterialName": "swallowexterior01-interior",
-        "MaterialType":"InteriorsDiffuseTexturedMaterial",
-        "Textures":[
-             {
-                    "TextureKey":"swallowexterior01-interior-texture0",
-                    "Filename":"Interiors/exterior01-interior.pvr"
-             }
-        ]
-    }
-]
+{
+    "Textures":[
+        {
+            "TextureKey":"InteriorMaterial_SwallowCGHWall-texture0",
+            "Filename":"Interiors/swallowwalltempmaterial-interior.pvr"
+        },
+        {
+            "TextureKey":"swallowdecalexit-interior-texture0",
+            "Filename":"Interiors/swallowdecalexit-interior.pvr"
+        },
+        {
+            "TextureKey":"swallowfloorcarpet01-interior-texture0",
+            "Filename":"Interiors/swallowfloorcarpet01-interior.pvr"
+        },
+        {
+            "TextureKey":"swallowfloortiles01-interior-texture0",
+            "Filename":"Interiors/swallowfloortiles01-interior"
+        },
+        {
+            "TextureKey":"swallowglass01-interior-texture0",
+            "Filename":"Interiors/swallowglass01-interior.pvr"
+        },
+        {
+            "TextureKey":"swallownoise01-interior-texture0",
+            "Filename":"Interiors/swallownoise01-interior.pvr"
+        },
+        {
+            "TextureKey":"swallowplaingray-interior-texture0",
+            "Filename":"Interiors/swallowplaingray-interior.pvr"
+        },
+        {
+            "TextureKey":"swallowwall01-interior-texture0",
+            "Filename":"Interiors/swallowwall01-interior.pvr"
+        },
+        {
+            "TextureKey":"swallowwood01-interior-texture0",
+            "Filename":"Interiors/swallowwood01-interior.pvr"
+        },
+        {
+            "TextureKey":"swallowwood02-interior-texture0",
+            "Filename":"Interiors/swallowwood02-interior.pvr"
+        },
+        {
+            "TextureKey":"swallowexterior01-interior-texture0",
+            "Filename":"Interiors/exterior01-interior.pvr"
+        }
+        ],
+    "CubeMapTextures":[
+    ],
+    "Materials":[
+         {
+             "MaterialName": "InteriorMaterial_SwallowCGHWall",
+             "MaterialType":"InteriorsDiffuseTexturedMaterial",
+             "DiffuseTexture":"InteriorMaterial_SwallowCGHWall-texture0"
+         },
+         
+         {
+             "MaterialName": "swallowdecalexit-interior",
+             "MaterialType":"InteriorsDiffuseTexturedMaterial",
+             "DiffuseTexture":"swallowdecalexit-interior-texture0"
+         },
+         
+         {
+             "MaterialName": "swallowfloorcarpet01-interior",
+             "MaterialType":"InteriorsDiffuseTexturedMaterial",
+             "DiffuseTexture":"swallowfloorcarpet01-interior-texture0"
+         },
+         
+         {
+             "MaterialName": "InteriorMaterial_BuildingStructure",
+             "MaterialType":"InteriorsDiffuseTexturedMaterial",
+             "DiffuseTexture":"swallowfloorcarpet01-interior-texture0"
+         },
+         
+         {
+             "MaterialName": "swallowfloortiles01-interior",
+             "MaterialType":"InteriorsDiffuseTexturedMaterial",
+             "DiffuseTexture":"swallowfloortiles01-interior-texture0"
+         },
+         
+         {
+             "MaterialName": "swallowglass01-interior",
+             "MaterialType":"InteriorsDiffuseTexturedMaterial",
+             "DiffuseTexture":"swallowglass01-interior-texture0"
+         },
+         
+         {
+             "MaterialName": "swallownoise01-interior",
+             "MaterialType":"InteriorsDiffuseTexturedMaterial",
+             "DiffuseTexture":"swallownoise01-interior-texture0"
+         },
+         
+         {
+             "MaterialName": "swallowplaingray-interior",
+             "MaterialType":"InteriorsDiffuseTexturedMaterial",
+             "DiffuseTexture":"swallowplaingray-interior-texture0"
+         },
+         
+         {
+             "MaterialName": "swallowwall01-interior",
+             "MaterialType":"InteriorsDiffuseTexturedMaterial",
+             "DiffuseTexture":"swallowwall01-interior-texture0"
+         },
+         
+         {
+             "MaterialName": "swallowwood01-interior",
+             "MaterialType":"InteriorsDiffuseTexturedMaterial",
+             "DiffuseTexture":"swallowwood01-interior-texture0"
+         },
+
+         {
+             "MaterialName": "swallowwood02-interior",
+             "MaterialType":"InteriorsDiffuseTexturedMaterial",
+             "DiffuseTexture":"swallowwood02-interior-texture0"
+         },
+
+         {
+             "MaterialName": "swallowexterior01-interior",
+             "MaterialType":"InteriorsDiffuseTexturedMaterial",
+             "DiffuseTexture":"swallowexterior01-interior-texture0"
+         }
+    ]
+}

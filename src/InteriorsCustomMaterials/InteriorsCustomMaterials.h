@@ -13,6 +13,9 @@ namespace ExampleApp
             class InteriorsCustomMaterialFactory;
             struct InteriorsCustomMaterialDto;
             struct InteriorsCustomTextureDto;
+            struct InteriorsCustomCubeMapTextureDto;
+            class IInteriorsCustomMaterialDtoRepository;
+            class InteriorsCustomMaterialDtoRepository;
         }
     }
 }

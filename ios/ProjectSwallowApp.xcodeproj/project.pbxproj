@@ -1544,6 +1544,14 @@
 		BFD5FD9A1BA7226A00F591F1 /* Tours in Resources */ = {isa = PBXBuildFile; fileRef = BFD5FD981BA7226A00F591F1 /* Tours */; };
 		BFDFC3CF1BB2EF190099BAEC /* SearchResultModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFDFC3CE1BB2EF190099BAEC /* SearchResultModel.cpp */; };
 		BFDFC3D01BB2EF190099BAEC /* SearchResultModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFDFC3CE1BB2EF190099BAEC /* SearchResultModel.cpp */; };
+		BFDFC3D41BB2F5BA0099BAEC /* menu_list.png in Resources */ = {isa = PBXBuildFile; fileRef = BFDFC3D11BB2F5BA0099BAEC /* menu_list.png */; };
+		BFDFC3D51BB2F5BA0099BAEC /* menu_list.png in Resources */ = {isa = PBXBuildFile; fileRef = BFDFC3D11BB2F5BA0099BAEC /* menu_list.png */; };
+		BFDFC3D61BB2F5BA0099BAEC /* menu_list@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFDFC3D21BB2F5BA0099BAEC /* menu_list@2x.png */; };
+		BFDFC3D81BB2F5BA0099BAEC /* menu_list@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFDFC3D31BB2F5BA0099BAEC /* menu_list@3x.png */; };
+		E002DEAF1BD148E40062D4D2 /* InteriorsCustomMaterialDtoRepository.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E002DEAD1BD148E40062D4D2 /* InteriorsCustomMaterialDtoRepository.cpp */; };
+		E002DEB01BD148E40062D4D2 /* InteriorsCustomMaterialDtoRepository.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E002DEAD1BD148E40062D4D2 /* InteriorsCustomMaterialDtoRepository.cpp */; };
+		E002DEB41BD4E56E0062D4D2 /* InteriorsCustomMaterialParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E002DEB21BD4E56E0062D4D2 /* InteriorsCustomMaterialParser.cpp */; };
+		E002DEB51BD4E56E0062D4D2 /* InteriorsCustomMaterialParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E002DEB21BD4E56E0062D4D2 /* InteriorsCustomMaterialParser.cpp */; };
 		E016040E19EEC26E0029A035 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E016040D19EEC26E0029A035 /* Images.xcassets */; };
 		E0632EA01B8331E4000C282E /* InteriorsStreamingController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E0632E9E1B8331E4000C282E /* InteriorsStreamingController.cpp */; };
 		E0632EA11B8331E4000C282E /* InteriorsStreamingController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E0632E9E1B8331E4000C282E /* InteriorsStreamingController.cpp */; };
@@ -1574,7 +1582,6 @@
 		E0AEEF061B8CB0C700BA9BF0 /* place_pin_right@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E0AEEEF81B8CB0C700BA9BF0 /* place_pin_right@3x.png */; };
 		E0ECCFFC1BC68A0700967A95 /* InteriorsCustomMaterialsModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E0ECCFFA1BC68A0700967A95 /* InteriorsCustomMaterialsModule.cpp */; };
 		E0ECD0001BC68B7700967A95 /* InteriorsCustomMaterialFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E0ECCFFE1BC68B7700967A95 /* InteriorsCustomMaterialFactory.cpp */; };
-		E0ECD0041BC690F900967A95 /* InteriorsCustomMaterialDto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E0ECD0021BC690F900967A95 /* InteriorsCustomMaterialDto.cpp */; };
 		E0ECD0521BC6D20000967A95 /* InteriorsCustomMaterialFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E0ECCFFE1BC68B7700967A95 /* InteriorsCustomMaterialFactory.cpp */; };
 		E0ECD0531BC6D20400967A95 /* InteriorsCustomMaterialsModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E0ECCFFA1BC68A0700967A95 /* InteriorsCustomMaterialsModule.cpp */; };
 		E0ECD0541BC6D20600967A95 /* InteriorsCustomMaterialDto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E0ECD0021BC690F900967A95 /* InteriorsCustomMaterialDto.cpp */; };
@@ -3127,6 +3134,15 @@
 		BFD5FD981BA7226A00F591F1 /* Tours */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Tours; sourceTree = "<group>"; };
 		BFDFC3CB1BB2D8B90099BAEC /* SearchResultModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultModel.h; sourceTree = "<group>"; };
 		BFDFC3CE1BB2EF190099BAEC /* SearchResultModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchResultModel.cpp; sourceTree = "<group>"; };
+		BFDFC3D11BB2F5BA0099BAEC /* menu_list.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu_list.png; sourceTree = "<group>"; };
+		BFDFC3D21BB2F5BA0099BAEC /* menu_list@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu_list@2x.png"; sourceTree = "<group>"; };
+		BFDFC3D31BB2F5BA0099BAEC /* menu_list@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu_list@3x.png"; sourceTree = "<group>"; };
+		E002DEAD1BD148E40062D4D2 /* InteriorsCustomMaterialDtoRepository.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = InteriorsCustomMaterialDtoRepository.cpp; path = InteriorsCustomMaterials/SdkModel/InteriorsCustomMaterialDtoRepository.cpp; sourceTree = "<group>"; };
+		E002DEAE1BD148E40062D4D2 /* InteriorsCustomMaterialDtoRepository.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InteriorsCustomMaterialDtoRepository.h; path = InteriorsCustomMaterials/SdkModel/InteriorsCustomMaterialDtoRepository.h; sourceTree = "<group>"; };
+		E002DEB11BD14AEB0062D4D2 /* IInteriorsCustomMaterialDtoRepository.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = IInteriorsCustomMaterialDtoRepository.h; path = InteriorsCustomMaterials/SdkModel/IInteriorsCustomMaterialDtoRepository.h; sourceTree = "<group>"; };
+		E002DEB21BD4E56E0062D4D2 /* InteriorsCustomMaterialParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = InteriorsCustomMaterialParser.cpp; path = InteriorsCustomMaterials/SdkModel/InteriorsCustomMaterialParser.cpp; sourceTree = "<group>"; };
+		E002DEB31BD4E56E0062D4D2 /* InteriorsCustomMaterialParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InteriorsCustomMaterialParser.h; path = InteriorsCustomMaterials/SdkModel/InteriorsCustomMaterialParser.h; sourceTree = "<group>"; };
+		E002DEB61BD4ED4C0062D4D2 /* InteriorsCustomMaterialKeys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = InteriorsCustomMaterialKeys.h; path = InteriorsCustomMaterials/SdkModel/InteriorsCustomMaterialKeys.h; sourceTree = "<group>"; };
 		E016040D19EEC26E0029A035 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		E0632E9E1B8331E4000C282E /* InteriorsStreamingController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InteriorsStreamingController.cpp; sourceTree = "<group>"; };
 		E0632E9F1B8331E4000C282E /* InteriorsStreamingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InteriorsStreamingController.h; sourceTree = "<group>"; };
@@ -3154,7 +3170,6 @@
 		E0ECCFFD1BC68A2000967A95 /* IInteriorsCustomMaterialsModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = IInteriorsCustomMaterialsModule.h; path = InteriorsCustomMaterials/SdkModel/IInteriorsCustomMaterialsModule.h; sourceTree = "<group>"; };
 		E0ECCFFE1BC68B7700967A95 /* InteriorsCustomMaterialFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = InteriorsCustomMaterialFactory.cpp; path = InteriorsCustomMaterials/SdkModel/InteriorsCustomMaterialFactory.cpp; sourceTree = "<group>"; };
 		E0ECCFFF1BC68B7700967A95 /* InteriorsCustomMaterialFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InteriorsCustomMaterialFactory.h; path = InteriorsCustomMaterials/SdkModel/InteriorsCustomMaterialFactory.h; sourceTree = "<group>"; };
-		E0ECD0021BC690F900967A95 /* InteriorsCustomMaterialDto.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = InteriorsCustomMaterialDto.cpp; path = InteriorsCustomMaterials/SdkModel/InteriorsCustomMaterialDto.cpp; sourceTree = "<group>"; };
 		E0ECD0031BC690F900967A95 /* InteriorsCustomMaterialDto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InteriorsCustomMaterialDto.h; path = InteriorsCustomMaterials/SdkModel/InteriorsCustomMaterialDto.h; sourceTree = "<group>"; };
 		EED214011BCE960A00DC4D34 /* SearchResultMeetingAvailabilityChanged.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchResultMeetingAvailabilityChanged.cpp; sourceTree = "<group>"; };
 		EED214021BCE960A00DC4D34 /* SearchResultMeetingAvailabilityChanged.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultMeetingAvailabilityChanged.h; sourceTree = "<group>"; };
@@ -6316,8 +6331,13 @@
 				E0ECCFFD1BC68A2000967A95 /* IInteriorsCustomMaterialsModule.h */,
 				E0ECCFFA1BC68A0700967A95 /* InteriorsCustomMaterialsModule.cpp */,
 				E0ECCFFB1BC68A0700967A95 /* InteriorsCustomMaterialsModule.h */,
-				E0ECD0021BC690F900967A95 /* InteriorsCustomMaterialDto.cpp */,
 				E0ECD0031BC690F900967A95 /* InteriorsCustomMaterialDto.h */,
+				E002DEAD1BD148E40062D4D2 /* InteriorsCustomMaterialDtoRepository.cpp */,
+				E002DEAE1BD148E40062D4D2 /* InteriorsCustomMaterialDtoRepository.h */,
+				E002DEB11BD14AEB0062D4D2 /* IInteriorsCustomMaterialDtoRepository.h */,
+				E002DEB21BD4E56E0062D4D2 /* InteriorsCustomMaterialParser.cpp */,
+				E002DEB31BD4E56E0062D4D2 /* InteriorsCustomMaterialParser.h */,
+				E002DEB61BD4ED4C0062D4D2 /* InteriorsCustomMaterialKeys.h */,
 			);
 			name = SdkModel;
 			sourceTree = "<group>";
@@ -7078,7 +7098,6 @@
 				18FE3BCF1A9CA4DF002D61C4 /* SortedMenuModel.cpp in Sources */,
 				1846CBE31BBBD627007F1922 /* SwallowPoiDbMeetingRoomParser.cpp in Sources */,
 				56AC9BFD1AA6076D00E603C4 /* iOSFlurryMetricsService.mm in Sources */,
-				E0ECD0541BC6D20600967A95 /* InteriorsCustomMaterialDto.cpp in Sources */,
 				7E3B88D91A385A290023C94E /* FlattenButtonModelStateChangedObserver.cpp in Sources */,
 				7E3B8AD61A385F110023C94E /* CompassViewInterop.mm in Sources */,
 				18FB64531A9240FC005A9411 /* NSMutableURLRequest+Parameters.m in Sources */,
@@ -7178,6 +7197,7 @@
 				7E3B8AD81A385F110023C94E /* CompassViewModule.mm in Sources */,
 				18FB64511A9240FC005A9411 /* NSURLRequest+OAuth.mm in Sources */,
 				7E8F03DB1A822E9A0056F229 /* GpsMarkerModel.cpp in Sources */,
+				E002DEB01BD148E40062D4D2 /* InteriorsCustomMaterialDtoRepository.cpp in Sources */,
 				7E3B893D1A385A290023C94E /* MyPinCreationDetailsViewModel.cpp in Sources */,
 				7E3B8AFC1A385F110023C94E /* ModalBackgroundViewModule.mm in Sources */,
 				7E3B8B341A385F110023C94E /* WorldPinOnMapViewInterop.mm in Sources */,
@@ -7207,6 +7227,7 @@
 				18B44CF11A88D4B400FDFD8A /* CacheClearBackgroundTask.cpp in Sources */,
 				7E3B8B081A385F110023C94E /* MyPinCreationDetailsViewModule.mm in Sources */,
 				7E3B88B51A385A290023C94E /* CategorySearchSelectedMessageHandler.cpp in Sources */,
+				E002DEB51BD4E56E0062D4D2 /* InteriorsCustomMaterialParser.cpp in Sources */,
 				18096F511A7B7F48006A6438 /* CacheEnabledChangedMessage.cpp in Sources */,
 				18C0EC0F1A9E41BB008EED21 /* SearchResultMyPinDetailsModelSelectedMessage.cpp in Sources */,
 				18096F751A7BD4B1006A6438 /* PlatformAbstractionsFacade.cpp in Sources */,
@@ -7541,7 +7562,6 @@
 				7E3B89C21A385A290023C94E /* SearchResultOnMapItemModelSelectedMessage.cpp in Sources */,
 				BFD5FCCA1BA7068300F591F1 /* TourHovercardViewModule.mm in Sources */,
 				18FE3BCE1A9CA4DF002D61C4 /* SortedMenuModel.cpp in Sources */,
-				E0ECD0041BC690F900967A95 /* InteriorsCustomMaterialDto.cpp in Sources */,
 				56AC9BFC1AA6076D00E603C4 /* iOSFlurryMetricsService.mm in Sources */,
 				7E3B88D81A385A290023C94E /* FlattenButtonModelStateChangedObserver.cpp in Sources */,
 				7E3B8AD51A385F110023C94E /* CompassViewInterop.mm in Sources */,
@@ -7646,6 +7666,7 @@
 				7E3B8AD71A385F110023C94E /* CompassViewModule.mm in Sources */,
 				18FB64501A9240FC005A9411 /* NSURLRequest+OAuth.mm in Sources */,
 				7E8F03DA1A822E9A0056F229 /* GpsMarkerModel.cpp in Sources */,
+				E002DEAF1BD148E40062D4D2 /* InteriorsCustomMaterialDtoRepository.cpp in Sources */,
 				7E3B893C1A385A290023C94E /* MyPinCreationDetailsViewModel.cpp in Sources */,
 				7E3B8AFB1A385F110023C94E /* ModalBackgroundViewModule.mm in Sources */,
 				7E3B8B331A385F110023C94E /* WorldPinOnMapViewInterop.mm in Sources */,
@@ -7676,6 +7697,7 @@
 				18B44CF01A88D4B400FDFD8A /* CacheClearBackgroundTask.cpp in Sources */,
 				7E3B8B071A385F110023C94E /* MyPinCreationDetailsViewModule.mm in Sources */,
 				7E3B88B41A385A290023C94E /* CategorySearchSelectedMessageHandler.cpp in Sources */,
+				E002DEB41BD4E56E0062D4D2 /* InteriorsCustomMaterialParser.cpp in Sources */,
 				18096F501A7B7F48006A6438 /* CacheEnabledChangedMessage.cpp in Sources */,
 				18C0EC0E1A9E41BB008EED21 /* SearchResultMyPinDetailsModelSelectedMessage.cpp in Sources */,
 				18096F741A7BD4B1006A6438 /* PlatformAbstractionsFacade.cpp in Sources */,
