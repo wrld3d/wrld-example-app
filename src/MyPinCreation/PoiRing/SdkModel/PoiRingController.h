@@ -10,6 +10,7 @@
 #include "Terrain.h"
 #include "EnvironmentFlatteningService.h"
 #include "VectorMathDecl.h"
+#include "Rendering.h"
 
 namespace ExampleApp
 {
@@ -26,7 +27,8 @@ namespace ExampleApp
                                       PoiRingView& poiRingView,
                                       Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                       Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider,
-                                      Eegeo::Resources::Interiors::InteriorsController& interiorsController);
+                                      Eegeo::Resources::Interiors::InteriorsController& interiorsController,
+                                      Eegeo::Rendering::ScreenProperties& screenProperties);
 
                     void Update(float dt, const Eegeo::Camera::RenderCamera& renderCamera, const Eegeo::dv3& cameraEcefInterestPoint);
 
@@ -50,6 +52,8 @@ namespace ExampleApp
 
                     Eegeo::v3 CalculateQuadScreenSpaceTranslation(const Eegeo::Camera::RenderCamera& renderCamera) const;
                     float CalculateTransitionScale(float dt);
+                    
+                    Eegeo::Rendering::ScreenProperties& m_screenProperties;
                 };
             }
         }
