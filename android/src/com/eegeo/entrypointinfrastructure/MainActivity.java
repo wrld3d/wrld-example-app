@@ -14,7 +14,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.RelativeLayout;
 
-import com.eegeo.mobileexampleapp.R;
+import com.eegeo.ProjectSwallowApp.R;
 import com.eegeo.photos.PhotoIntentDispatcher;
 
 public abstract class MainActivity extends Activity implements SurfaceHolder.Callback, INativeMessageRunner
