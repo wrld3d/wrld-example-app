@@ -16,12 +16,14 @@ namespace ExampleApp
                                                                            Eegeo::Resources::Interiors::IInteriorsMaterialFactory& untexturedMaterialFactory,
                                                                            Eegeo::Resources::Interiors::IInteriorsMaterialFactory& diffuseTexturedMaterialFactory,
                                                                            Eegeo::Resources::Interiors::IInteriorsMaterialFactory& diffuseSpecularMaterialFactory,
-                                                                           Eegeo::Resources::Interiors::IInteriorsMaterialFactory& cubeMappedMaterialFactory)
+                                                                           Eegeo::Resources::Interiors::IInteriorsMaterialFactory& cubeMappedMaterialFactory,
+                                                                           Eegeo::Resources::Interiors::IInteriorsMaterialFactory& chromeMaterialFactory)
             : m_materialDtoRepository(materialDtoRepository)
             , m_untexturedMaterialFactory(untexturedMaterialFactory)
             , m_diffuseTexturedMaterialFactory(diffuseTexturedMaterialFactory)
             , m_diffuseSpecularMaterialFactory(diffuseSpecularMaterialFactory)
             , m_cubeMappedMaterialFactory(cubeMappedMaterialFactory)
+            , m_chromeMaterialFactory(chromeMaterialFactory)
             {
                 
             }
@@ -65,7 +67,10 @@ namespace ExampleApp
                 {
                     return m_cubeMappedMaterialFactory.TryCreate(customInteriorMaterialData);
                 }
-                
+                else if (materialFactoryType == InteriorsCustomMaterialKeys::InteriorsChromeMaterial)
+                {
+                    return m_chromeMaterialFactory.TryCreate(customInteriorMaterialData);
+                }
                 
                 return NULL;
             }

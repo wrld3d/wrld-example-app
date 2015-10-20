@@ -26,6 +26,7 @@ namespace ExampleApp
                 const static std::string InteriorsDiffuseTexturedMaterial = "InteriorsDiffuseTexturedMaterial";
                 const static std::string InteriorsSpecularMaterial = "InteriorsSpecularMaterial";
                 const static std::string InteriorsCubeMappedMaterial = "InteriorsCubeMappedMaterial";
+                const static std::string InteriorsChromeMaterial = "InteriorsChromeMaterial";
             }
         }
     }
