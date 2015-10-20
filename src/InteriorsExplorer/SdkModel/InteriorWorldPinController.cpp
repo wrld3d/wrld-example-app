@@ -56,6 +56,12 @@ namespace ExampleApp
                 m_interiorIdToWorldPinMap.clear();
             }
             
+            const bool InteriorWorldPinController::PinInteractionAllowed() const
+            {
+                return !m_menuIsDragging &&
+                    m_interiorController.GetCurrentState() == Eegeo::Resources::Interiors::InteriorViewState::NoInteriorSelected;
+            }
+            
             void InteriorWorldPinController::HandleMarkerAdded(const Eegeo::Resources::Interiors::Markers::InteriorMarkerModel& markerModel)
             {
                 Eegeo_ASSERT(m_interiorIdToWorldPinMap.find(markerModel.GetInteriorId().Value()) == m_interiorIdToWorldPinMap.end(),
