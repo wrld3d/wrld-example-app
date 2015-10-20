@@ -6,21 +6,26 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.RelativeLayout;
 
+import com.eegeo.mobileexampleapp.R;
 import com.eegeo.photos.PhotoIntentDispatcher;
 
 public abstract class MainActivity extends Activity implements SurfaceHolder.Callback, INativeMessageRunner
 {
     private PhotoIntentDispatcher m_photoIntentDispatcher;
+    private boolean m_touchEnabled;
 
     public MainActivity()
     {
         m_photoIntentDispatcher = new PhotoIntentDispatcher(this);
+        m_touchEnabled = true;
     }
 
     public PhotoIntentDispatcher getPhotoIntentDispatcher()
@@ -65,7 +70,22 @@ public abstract class MainActivity extends Activity implements SurfaceHolder.Cal
     		}
     	}
     }
+    
+    public void setTouchEnabled(final boolean touchEnabled)
+    {
+    	m_touchEnabled = touchEnabled;
+    }
 
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event)
+    {
+    	if(m_touchEnabled)
+    	{
+    		return super.dispatchTouchEvent(event);
+    	}
+    	return m_touchEnabled;
+    }
+    
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {

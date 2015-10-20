@@ -9,12 +9,10 @@ namespace ExampleApp
         namespace SdkModel
         {
             class IInteriorsExplorerModule;
+            class InteriorsExplorerCameraController;
             class InteriorsExplorerModel;
-            class IInteriorsExplorerInputDelegate;
-            class InteriorsExplorerInputDelegate;
-            class InteriorsStreamingController;
-            class InteriorPinModalityObserver;
-            class InteriorPinScaleController;
+            class InteriorWorldPinController;
+            class InteriorVisibilityUpdater;
         }
         
         namespace View
@@ -23,7 +21,5 @@ namespace ExampleApp
             class IInteriorsExplorerView;
             class InteriorsExplorerController;
         }
-
-        class InteriorsExitObserver;
     }
 }

@@ -22,12 +22,13 @@ namespace ExampleApp
                     m_pTouchController = Eegeo_NEW(Eegeo::Camera::GlobeCamera::GlobeCameraTouchController)(touchConfig);
                     
                     m_pToursCameraController = Eegeo_NEW(ToursCameraController)(resourceCeilingProvider,
-                                                                                m_pTouchController,
+                                                                                *m_pTouchController,
                                                                                 screenProperties);
                     
                     m_pToursCameraTransitionController = Eegeo_NEW(ToursCameraTransitionController)(*m_pToursCameraController,
                                                                                                     gpsGlobeCameraController,
-                                                                                                    terrainHeightProvider);
+                                                                                                    terrainHeightProvider,
+                                                                                                    *m_pTouchController);
 
                 }
                 

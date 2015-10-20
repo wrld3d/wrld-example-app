@@ -13,13 +13,19 @@ namespace ExampleApp
         namespace View
         {
             SearchResultItemModel::SearchResultItemModel(const std::string& name,
-                    const Eegeo::dv3& searchResultModelLocationEcef,
-                    OpenableControl::View::IOpenableControlViewModel& searchMenuViewModel,
-                    ExampleAppMessaging::TMessageBus& messageBus)
-                : m_name(name)
-                , m_searchResultModelLocationEcef(searchResultModelLocationEcef)
-                , m_searchMenuViewModel(searchMenuViewModel)
-                , m_messageBus(messageBus)
+                                                         const Eegeo::dv3& searchResultModelLocationEcef,
+                                                         const bool isInterior,
+                                                         const Eegeo::Resources::Interiors::InteriorId& interiorId,
+                                                         const int floorIndex,
+                                                         OpenableControl::View::IOpenableControlViewModel& searchMenuViewModel,
+                                                         ExampleAppMessaging::TMessageBus& messageBus)
+            : m_name(name)
+            , m_searchResultModelLocationEcef(searchResultModelLocationEcef)
+            , m_isInterior(isInterior)
+            , m_interiorId(interiorId)
+            , m_floorIndex(floorIndex)
+            , m_searchMenuViewModel(searchMenuViewModel)
+            , m_messageBus(messageBus)
             {
 
             }
@@ -33,7 +39,10 @@ namespace ExampleApp
             {
                 m_searchMenuViewModel.Close();
 
-                m_messageBus.Publish(SearchResultMenuItemSelectedMessage(m_searchResultModelLocationEcef));
+                m_messageBus.Publish(SearchResultMenuItemSelectedMessage(m_searchResultModelLocationEcef,
+                                                                         m_isInterior,
+                                                                         m_interiorId,
+                                                                         m_floorIndex));
             }
         }
     }

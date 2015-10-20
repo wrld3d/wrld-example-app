@@ -51,6 +51,7 @@
 #include "Interiors.h"
 #include "InteriorsExplorerViewIncludes.h"
 #include "ImageStore.h"
+#include "ICallback.h"
 
 @class ViewController;
 class AppInputDelegate;
@@ -130,10 +131,12 @@ private:
     ExampleApp::ExampleAppMessaging::TSdkModelDomainEventBus m_sdkModelDomainEventBus;
     
     Eegeo::UI::NativeAlerts::TSingleOptionAlertBoxDismissedHandler<AppHost> m_failAlertHandler;
+    Eegeo::Helpers::TCallback1<AppHost, const ExampleApp::CameraTransitions::CameraTransitionChangedMessage&> m_cameraTransitionChangedHandler;
 
     void CreateApplicationViewModules(const Eegeo::Rendering::ScreenProperties& screenProperties);
     void DestroyApplicationViewModules();
     
     void HandleStartupFailure();
+    void HandleCameraTransitionChanged(const ExampleApp::CameraTransitions::CameraTransitionChangedMessage& message);
 };
 

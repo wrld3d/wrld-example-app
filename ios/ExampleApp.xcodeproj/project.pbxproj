@@ -585,6 +585,8 @@
 		222E069B1948B08B0004FFD9 /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4820F168371460006E99B /* MainStoryboard_iPad.storyboard */; };
 		225FFA171A39EE8600C2282A /* SearchResultRepository.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 225FFA131A39EE8600C2282A /* SearchResultRepository.cpp */; };
 		225FFA181A39EE8600C2282A /* SearchResultRepository.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 225FFA131A39EE8600C2282A /* SearchResultRepository.cpp */; };
+		27C1F99B1BC6A47600D5EFF4 /* InteriorsExplorerCameraController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27C1F9991BC6A47600D5EFF4 /* InteriorsExplorerCameraController.cpp */; };
+		27C1F99C1BC6A47600D5EFF4 /* InteriorsExplorerCameraController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27C1F9991BC6A47600D5EFF4 /* InteriorsExplorerCameraController.cpp */; };
 		27CADB631BCFEA2A00805A27 /* SizeHelpers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27CADB611BCFEA2A00805A27 /* SizeHelpers.cpp */; };
 		27CADB641BCFEA2A00805A27 /* SizeHelpers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27CADB611BCFEA2A00805A27 /* SizeHelpers.cpp */; };
 		27DB89B71BB3FEF00020CDA5 /* CombinedSearchService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27DB89B31BB3FEF00020CDA5 /* CombinedSearchService.cpp */; };
@@ -716,8 +718,6 @@
 		56BFB0CD1A8B7BF800572C99 /* libFlurry_6.0.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5633F8EA1A79289500D69813 /* libFlurry_6.0.0.a */; };
 		56CF26871A24776600B30439 /* icon_create_poi.png in Resources */ = {isa = PBXBuildFile; fileRef = 56CF26861A24776600B30439 /* icon_create_poi.png */; };
 		56CF26881A24777100B30439 /* icon_create_poi.png in Resources */ = {isa = PBXBuildFile; fileRef = 56CF26861A24776600B30439 /* icon_create_poi.png */; };
-		56D5B23C1B8233C700306841 /* InteriorPinScaleController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56D5B23A1B8233C700306841 /* InteriorPinScaleController.cpp */; };
-		56D5B23D1B8233C700306841 /* InteriorPinScaleController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56D5B23A1B8233C700306841 /* InteriorPinScaleController.cpp */; };
 		56D620DA1A8B641200828A9E /* libapps-on-maps-sim.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 56D620D71A8B641200828A9E /* libapps-on-maps-sim.a */; };
 		56D620DB1A8B641200828A9E /* libapps-on-maps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 56D620D81A8B641200828A9E /* libapps-on-maps.a */; };
 		56D620DC1A8B641200828A9E /* libturbojpeg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 56D620D91A8B641200828A9E /* libturbojpeg.a */; };
@@ -734,6 +734,22 @@
 		7E0195361B1C6B1900884B3F /* floor_selection_bottom.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E0195331B1C6B1900884B3F /* floor_selection_bottom.png */; };
 		7E0195371B1C6B1900884B3F /* floor_selection_top.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E0195341B1C6B1900884B3F /* floor_selection_top.png */; };
 		7E0195381B1C6B1900884B3F /* floor_selection_top.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E0195341B1C6B1900884B3F /* floor_selection_top.png */; };
+		7E149DBF1BCD209B00C0AFFC /* ExampleSearchJsonParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E149DBB1BCD209B00C0AFFC /* ExampleSearchJsonParser.cpp */; };
+		7E149DC01BCD209B00C0AFFC /* ExampleSearchJsonParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E149DBB1BCD209B00C0AFFC /* ExampleSearchJsonParser.cpp */; };
+		7E149DC11BCD209B00C0AFFC /* ExampleSearchResultModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E149DBD1BCD209B00C0AFFC /* ExampleSearchResultModel.cpp */; };
+		7E149DC21BCD209B00C0AFFC /* ExampleSearchResultModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E149DBD1BCD209B00C0AFFC /* ExampleSearchResultModel.cpp */; };
+		7E149DC61BCD4F7F00C0AFFC /* AppGlobeCameraWrapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E149DC41BCD4F7F00C0AFFC /* AppGlobeCameraWrapper.cpp */; };
+		7E149DC71BCD4F7F00C0AFFC /* AppGlobeCameraWrapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E149DC41BCD4F7F00C0AFFC /* AppGlobeCameraWrapper.cpp */; };
+		7E149DCA1BCE564000C0AFFC /* InteriorVisibilityUpdater.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E149DC81BCE564000C0AFFC /* InteriorVisibilityUpdater.cpp */; };
+		7E149DCB1BCE564000C0AFFC /* InteriorVisibilityUpdater.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E149DC81BCE564000C0AFFC /* InteriorVisibilityUpdater.cpp */; };
+		7E149DCF1BD1118D00C0AFFC /* TransitionToWorldPointStage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E149DCD1BD1118D00C0AFFC /* TransitionToWorldPointStage.cpp */; };
+		7E149DD01BD1118D00C0AFFC /* TransitionToWorldPointStage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E149DCD1BD1118D00C0AFFC /* TransitionToWorldPointStage.cpp */; };
+		7E149DD31BD1169B00C0AFFC /* ExitCurrentInteriorStage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E149DD11BD1169A00C0AFFC /* ExitCurrentInteriorStage.cpp */; };
+		7E149DD41BD1169B00C0AFFC /* ExitCurrentInteriorStage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E149DD11BD1169A00C0AFFC /* ExitCurrentInteriorStage.cpp */; };
+		7E149DD71BD12BC700C0AFFC /* TransitionToInteriorStage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E149DD51BD12BC700C0AFFC /* TransitionToInteriorStage.cpp */; };
+		7E149DD81BD12BC700C0AFFC /* TransitionToInteriorStage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E149DD51BD12BC700C0AFFC /* TransitionToInteriorStage.cpp */; };
+		7E149DDB1BD1466F00C0AFFC /* CameraTransitionService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E149DD91BD1466F00C0AFFC /* CameraTransitionService.cpp */; };
+		7E149DDC1BD1466F00C0AFFC /* CameraTransitionService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E149DD91BD1466F00C0AFFC /* CameraTransitionService.cpp */; };
 		7E1A492D1B53EB6500D0DEA9 /* yelp_logo@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E1A492C1B53EB6500D0DEA9 /* yelp_logo@3x.png */; };
 		7E1A492E1B53EB6500D0DEA9 /* yelp_logo@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E1A492C1B53EB6500D0DEA9 /* yelp_logo@3x.png */; };
 		7E1B50671ACAD4170060FA4F /* InitialExperienceIntroStep.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E1B50651ACAD4170060FA4F /* InitialExperienceIntroStep.cpp */; };
@@ -1220,6 +1236,8 @@
 		7E5811CE1B1F3248007AD67F /* InteriorsExplorerViewInterop.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7E5811C81B1F3248007AD67F /* InteriorsExplorerViewInterop.mm */; };
 		7E5811CF1B1F3248007AD67F /* InteriorsExplorerViewModule.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7E5811CA1B1F3248007AD67F /* InteriorsExplorerViewModule.mm */; };
 		7E5811D01B1F3248007AD67F /* InteriorsExplorerViewModule.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7E5811CA1B1F3248007AD67F /* InteriorsExplorerViewModule.mm */; };
+		7E6732291BC3D7FB002A31FD /* InteriorWorldPinController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E6732271BC3D7FB002A31FD /* InteriorWorldPinController.cpp */; };
+		7E67322A1BC3D7FB002A31FD /* InteriorWorldPinController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E6732271BC3D7FB002A31FD /* InteriorWorldPinController.cpp */; };
 		7E8897981B4C26E9006F9DE0 /* yelp_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E8897961B4C26E9006F9DE0 /* yelp_logo.png */; };
 		7E8897991B4C26E9006F9DE0 /* yelp_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E8897961B4C26E9006F9DE0 /* yelp_logo.png */; };
 		7E88979A1B4C26E9006F9DE0 /* yelp_logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E8897971B4C26E9006F9DE0 /* yelp_logo@2x.png */; };
@@ -1259,14 +1277,16 @@
 		7EE48256168477A80006E99B /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE48255168477A80006E99B /* MobileCoreServices.framework */; };
 		7EE48258168477CB0006E99B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE48257168477CB0006E99B /* libz.dylib */; };
 		7EF5D8651737F9A40049D787 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EF5D8641737F9A40049D787 /* CoreLocation.framework */; };
+		BF0E350C1BC673EA005B30E8 /* AppCameraController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF0E350A1BC673EA005B30E8 /* AppCameraController.cpp */; };
+		BF0E350D1BC673EA005B30E8 /* AppCameraController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF0E350A1BC673EA005B30E8 /* AppCameraController.cpp */; };
+		BF0E35141BC6A2A1005B30E8 /* AppCameraHelpers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF0E35121BC6A2A1005B30E8 /* AppCameraHelpers.cpp */; };
+		BF0E35151BC6A2A1005B30E8 /* AppCameraHelpers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF0E35121BC6A2A1005B30E8 /* AppCameraHelpers.cpp */; };
+		BF34FE9E1BCBF78600E7094F /* AppCameraModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF34FE9C1BCBF78600E7094F /* AppCameraModule.cpp */; };
+		BF34FE9F1BCBF78600E7094F /* AppCameraModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF34FE9C1BCBF78600E7094F /* AppCameraModule.cpp */; };
 		BF4FEE391BC2BD1200932C17 /* ExampleTourPinSelectionHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF4FEE381BC2BD1200932C17 /* ExampleTourPinSelectionHandler.cpp */; };
 		BF4FEE3A1BC2BD1200932C17 /* ExampleTourPinSelectionHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF4FEE381BC2BD1200932C17 /* ExampleTourPinSelectionHandler.cpp */; };
 		BF4FEE3D1BC2BF8400932C17 /* ExampleTourSearchResultPoiView.mm in Sources */ = {isa = PBXBuildFile; fileRef = BF4FEE3C1BC2BF8400932C17 /* ExampleTourSearchResultPoiView.mm */; };
 		BF4FEE3E1BC2BF8400932C17 /* ExampleTourSearchResultPoiView.mm in Sources */ = {isa = PBXBuildFile; fileRef = BF4FEE3C1BC2BF8400932C17 /* ExampleTourSearchResultPoiView.mm */; };
-		BF4FEE481BC2C1AC00932C17 /* ExampleSearchResultModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF4FEE461BC2C1AC00932C17 /* ExampleSearchResultModel.cpp */; };
-		BF4FEE491BC2C1AC00932C17 /* ExampleSearchResultModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF4FEE461BC2C1AC00932C17 /* ExampleSearchResultModel.cpp */; };
-		BF4FEE4A1BC2C78400932C17 /* ExampleSearchJsonParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF4FEE431BC2C0E600932C17 /* ExampleSearchJsonParser.cpp */; };
-		BF4FEE4B1BC2C78500932C17 /* ExampleSearchJsonParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF4FEE431BC2C0E600932C17 /* ExampleSearchJsonParser.cpp */; };
 		BF681D971BC4183500100BFF /* CurrentTourCardTappedMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF681D951BC4183500100BFF /* CurrentTourCardTappedMessage.cpp */; };
 		BF681D981BC4183500100BFF /* CurrentTourCardTappedMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF681D951BC4183500100BFF /* CurrentTourCardTappedMessage.cpp */; };
 		BF681D9B1BC41B4200100BFF /* ExampleCurrentTourCardTappedHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF681D991BC41B4200100BFF /* ExampleCurrentTourCardTappedHandler.cpp */; };
@@ -1275,8 +1295,6 @@
 		BF681DA01BC4210700100BFF /* ExampleTourHelpers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF681D9D1BC4210700100BFF /* ExampleTourHelpers.cpp */; };
 		BFB90EC71BC5732B00076380 /* SearchResultMenuAppModeMessageHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFB90EC51BC5732B00076380 /* SearchResultMenuAppModeMessageHandler.cpp */; };
 		BFB90EC81BC5732B00076380 /* SearchResultMenuAppModeMessageHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFB90EC51BC5732B00076380 /* SearchResultMenuAppModeMessageHandler.cpp */; };
-		BFD4C7231BA9BB1F006F4E0B /* TourStateChangedMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFD4C7211BA9BB1F006F4E0B /* TourStateChangedMessage.cpp */; };
-		BFD4C7241BA9BB1F006F4E0B /* TourStateChangedMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFD4C7211BA9BB1F006F4E0B /* TourStateChangedMessage.cpp */; };
 		BFD5FCB41BA7068300F591F1 /* TourDefines.mm in Sources */ = {isa = PBXBuildFile; fileRef = BFD5FC8D1BA7068300F591F1 /* TourDefines.mm */; };
 		BFD5FCB51BA7068300F591F1 /* TourDefines.mm in Sources */ = {isa = PBXBuildFile; fileRef = BFD5FC8D1BA7068300F591F1 /* TourDefines.mm */; };
 		BFD5FCB61BA7068300F591F1 /* iCarouselTourExplorerViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = BFD5FC901BA7068300F591F1 /* iCarouselTourExplorerViewController.mm */; };
@@ -1389,6 +1407,24 @@
 		BFD5FD971BA7141600F591F1 /* ImageStore.mm in Sources */ = {isa = PBXBuildFile; fileRef = BFD5FD931BA7141600F591F1 /* ImageStore.mm */; };
 		BFD5FD991BA7226A00F591F1 /* Tours in Resources */ = {isa = PBXBuildFile; fileRef = BFD5FD981BA7226A00F591F1 /* Tours */; };
 		BFD5FD9A1BA7226A00F591F1 /* Tours in Resources */ = {isa = PBXBuildFile; fileRef = BFD5FD981BA7226A00F591F1 /* Tours */; };
+		BFDD75E21BCE5BE800335508 /* AppModeStatesFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFDD75E01BCE5BE800335508 /* AppModeStatesFactory.cpp */; };
+		BFDD75E31BCE5BE800335508 /* AppModeStatesFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFDD75E01BCE5BE800335508 /* AppModeStatesFactory.cpp */; };
+		BFDD75E81BCE885000335508 /* InteriorExplorerSetupState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFDD75E61BCE885000335508 /* InteriorExplorerSetupState.cpp */; };
+		BFDD75E91BCE885000335508 /* InteriorExplorerSetupState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFDD75E61BCE885000335508 /* InteriorExplorerSetupState.cpp */; };
+		BFDD75EC1BCE90E200335508 /* InteriorExplorerStreamState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFDD75EA1BCE90E200335508 /* InteriorExplorerStreamState.cpp */; };
+		BFDD75ED1BCE90E200335508 /* InteriorExplorerStreamState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFDD75EA1BCE90E200335508 /* InteriorExplorerStreamState.cpp */; };
+		BFDD75F01BCEA3E200335508 /* InteriorExplorerViewingState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFDD75EE1BCEA3E200335508 /* InteriorExplorerViewingState.cpp */; };
+		BFDD75F11BCEA3E200335508 /* InteriorExplorerViewingState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFDD75EE1BCEA3E200335508 /* InteriorExplorerViewingState.cpp */; };
+		BFDD75F51BCEAF5800335508 /* InteriorExplorerExitingState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFDD75F31BCEAF5800335508 /* InteriorExplorerExitingState.cpp */; };
+		BFDD75F61BCEAF5800335508 /* InteriorExplorerExitingState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFDD75F31BCEAF5800335508 /* InteriorExplorerExitingState.cpp */; };
+		BFDEAA7B1BCD3702007CE4D7 /* WorldState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFDEAA791BCD3702007CE4D7 /* WorldState.cpp */; };
+		BFDEAA7C1BCD3702007CE4D7 /* WorldState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFDEAA791BCD3702007CE4D7 /* WorldState.cpp */; };
+		BFDEAA861BCD5821007CE4D7 /* StateMachine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFDEAA841BCD5821007CE4D7 /* StateMachine.cpp */; };
+		BFDEAA871BCD5821007CE4D7 /* StateMachine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFDEAA841BCD5821007CE4D7 /* StateMachine.cpp */; };
+		BFDEAA8B1BCD6133007CE4D7 /* InteriorExplorerState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFDEAA891BCD6133007CE4D7 /* InteriorExplorerState.cpp */; };
+		BFDEAA8C1BCD6133007CE4D7 /* InteriorExplorerState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFDEAA891BCD6133007CE4D7 /* InteriorExplorerState.cpp */; };
+		BFDEB4BD1BCFADFF00F037B7 /* TourState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFDEB4BB1BCFADFF00F037B7 /* TourState.cpp */; };
+		BFDEB4BE1BCFADFF00F037B7 /* TourState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFDEB4BB1BCFADFF00F037B7 /* TourState.cpp */; };
 		BFDFC3CF1BB2EF190099BAEC /* SearchResultModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFDFC3CE1BB2EF190099BAEC /* SearchResultModel.cpp */; };
 		BFDFC3D01BB2EF190099BAEC /* SearchResultModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFDFC3CE1BB2EF190099BAEC /* SearchResultModel.cpp */; };
 		BFDFC3D41BB2F5BA0099BAEC /* menu_list.png in Resources */ = {isa = PBXBuildFile; fileRef = BFDFC3D11BB2F5BA0099BAEC /* menu_list.png */; };
@@ -1400,8 +1436,6 @@
 		E002DEB41BD4E56E0062D4D2 /* InteriorsCustomMaterialParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E002DEB21BD4E56E0062D4D2 /* InteriorsCustomMaterialParser.cpp */; };
 		E002DEB51BD4E56E0062D4D2 /* InteriorsCustomMaterialParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E002DEB21BD4E56E0062D4D2 /* InteriorsCustomMaterialParser.cpp */; };
 		E016040E19EEC26E0029A035 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E016040D19EEC26E0029A035 /* Images.xcassets */; };
-		E0632EA01B8331E4000C282E /* InteriorsStreamingController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E0632E9E1B8331E4000C282E /* InteriorsStreamingController.cpp */; };
-		E0632EA11B8331E4000C282E /* InteriorsStreamingController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E0632E9E1B8331E4000C282E /* InteriorsStreamingController.cpp */; };
 		E06AE59B1B87207B000F85E3 /* AppModeModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E06AE5981B87207B000F85E3 /* AppModeModel.cpp */; };
 		E06AE59C1B87207B000F85E3 /* AppModeModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E06AE5981B87207B000F85E3 /* AppModeModel.cpp */; };
 		E06AE5BE1B8B3A05000F85E3 /* button_close_place_pin_on.png in Resources */ = {isa = PBXBuildFile; fileRef = E06AE5BB1B8B3A05000F85E3 /* button_close_place_pin_on.png */; };
@@ -1435,15 +1469,9 @@
 		EEE021341BB44239001AF4CF /* YelpSearchResultModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EEE021311BB44239001AF4CF /* YelpSearchResultModel.cpp */; };
 		F7F3702A5538EF1098A7B54D /* MapModeController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F7F37DF89F160CEF56F89506 /* MapModeController.cpp */; };
 		F7F3718BE3D42C0AAD8EC7E3 /* MapModeModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F7F376B8EDEEDCD448A9C3D8 /* MapModeModule.cpp */; };
-		F7F373D9D747899B4430C7EC /* InteriorsExplorerInputDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F7F371EA20411E0AA0E2214B /* InteriorsExplorerInputDelegate.cpp */; };
 		F7F373F4043CCF2D73DD1F06 /* MapModeModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F7F378860045756E6BD85445 /* MapModeModel.cpp */; };
-		F7F3741B41A5EE79F725EED4 /* InteriorsExitObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F7F3795319370D448E707830 /* InteriorsExitObserver.cpp */; };
-		F7F375B895F34FBAD297D747 /* InteriorsExplorerInputDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F7F371EA20411E0AA0E2214B /* InteriorsExplorerInputDelegate.cpp */; };
 		F7F375BE591A1178B2648C93 /* MapMode.h in Resources */ = {isa = PBXBuildFile; fileRef = F7F37D7FD513A2DB502EFD5C /* MapMode.h */; };
-		F7F37763E9082D85ABCF50B6 /* InteriorsExitObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F7F3795319370D448E707830 /* InteriorsExitObserver.cpp */; };
-		F7F37A7C56FBA7BC913F59C7 /* IInteriorsExplorerInputDelegate.h in Resources */ = {isa = PBXBuildFile; fileRef = F7F376C8FE0F6455F5768B58 /* IInteriorsExplorerInputDelegate.h */; };
 		F7F37C72A4A0A11F290E135D /* MapModeModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F7F376B8EDEEDCD448A9C3D8 /* MapModeModule.cpp */; };
-		F7F37CE9B350E74AF11855A0 /* IInteriorsExplorerInputDelegate.h in Resources */ = {isa = PBXBuildFile; fileRef = F7F376C8FE0F6455F5768B58 /* IInteriorsExplorerInputDelegate.h */; };
 		F7F37F39F2038F91049410A9 /* MapModeModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F7F378860045756E6BD85445 /* MapModeModel.cpp */; };
 		F7F37F4C1A542A11877345C4 /* MapModeController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F7F37DF89F160CEF56F89506 /* MapModeController.cpp */; };
 		F7F37FC6C755DC44D732DDCB /* MapMode.h in Resources */ = {isa = PBXBuildFile; fileRef = F7F37D7FD513A2DB502EFD5C /* MapMode.h */; };
@@ -1885,6 +1913,8 @@
 		225FFA141A39EE8600C2282A /* SearchResultRepository.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultRepository.h; sourceTree = "<group>"; };
 		270A7A651BCBE2000020EAF7 /* WorldPinVisibility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorldPinVisibility.h; sourceTree = "<group>"; };
 		278A8F651BA6DB00000BBA67 /* WorldPinInteriorData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorldPinInteriorData.h; sourceTree = "<group>"; };
+		27C1F9991BC6A47600D5EFF4 /* InteriorsExplorerCameraController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InteriorsExplorerCameraController.cpp; sourceTree = "<group>"; };
+		27C1F99A1BC6A47600D5EFF4 /* InteriorsExplorerCameraController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InteriorsExplorerCameraController.h; sourceTree = "<group>"; };
 		27CADB611BCFEA2A00805A27 /* SizeHelpers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SizeHelpers.cpp; sourceTree = "<group>"; };
 		27CADB621BCFEA2A00805A27 /* SizeHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SizeHelpers.h; sourceTree = "<group>"; };
 		27DB89B31BB3FEF00020CDA5 /* CombinedSearchService.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CombinedSearchService.cpp; sourceTree = "<group>"; };
@@ -1982,8 +2012,6 @@
 		56BFB0C51A8B73ED00572C99 /* libsdk-extensions-sqlite-cpp11-sim.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libsdk-extensions-sqlite-cpp11-sim.a"; path = "Include/eegeo/libsdk-extensions-sqlite-cpp11-sim.a"; sourceTree = "<group>"; };
 		56BFB0C91A8B76D200572C99 /* libapps-on-maps-cpp11.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libapps-on-maps-cpp11.a"; path = "Include/eegeo/libapps-on-maps-cpp11.a"; sourceTree = "<group>"; };
 		56CF26861A24776600B30439 /* icon_create_poi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_create_poi.png; sourceTree = "<group>"; };
-		56D5B23A1B8233C700306841 /* InteriorPinScaleController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InteriorPinScaleController.cpp; sourceTree = "<group>"; };
-		56D5B23B1B8233C700306841 /* InteriorPinScaleController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InteriorPinScaleController.h; sourceTree = "<group>"; };
 		56D620D71A8B641200828A9E /* libapps-on-maps-sim.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libapps-on-maps-sim.a"; path = "Include/eegeo/libapps-on-maps-sim.a"; sourceTree = "<group>"; };
 		56D620D81A8B641200828A9E /* libapps-on-maps.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libapps-on-maps.a"; path = "Include/eegeo/libapps-on-maps.a"; sourceTree = "<group>"; };
 		56D620D91A8B641200828A9E /* libturbojpeg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libturbojpeg.a; path = Include/eegeo/libturbojpeg.a; sourceTree = "<group>"; };
@@ -1994,6 +2022,24 @@
 		56FBCDEE1A0BB5150026546E /* poi_marker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = poi_marker.png; sourceTree = "<group>"; };
 		7E0195331B1C6B1900884B3F /* floor_selection_bottom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = floor_selection_bottom.png; sourceTree = "<group>"; };
 		7E0195341B1C6B1900884B3F /* floor_selection_top.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = floor_selection_top.png; sourceTree = "<group>"; };
+		7E149DBB1BCD209B00C0AFFC /* ExampleSearchJsonParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ExampleSearchJsonParser.cpp; sourceTree = "<group>"; };
+		7E149DBC1BCD209B00C0AFFC /* ExampleSearchJsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExampleSearchJsonParser.h; sourceTree = "<group>"; };
+		7E149DBD1BCD209B00C0AFFC /* ExampleSearchResultModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ExampleSearchResultModel.cpp; sourceTree = "<group>"; };
+		7E149DBE1BCD209B00C0AFFC /* ExampleSearchResultModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExampleSearchResultModel.h; sourceTree = "<group>"; };
+		7E149DC31BCD4C9D00C0AFFC /* IAppCamera.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IAppCamera.h; sourceTree = "<group>"; };
+		7E149DC41BCD4F7F00C0AFFC /* AppGlobeCameraWrapper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AppGlobeCameraWrapper.cpp; path = AppCamera/SdkModel/AppGlobeCameraWrapper.cpp; sourceTree = "<group>"; };
+		7E149DC51BCD4F7F00C0AFFC /* AppGlobeCameraWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppGlobeCameraWrapper.h; path = AppCamera/SdkModel/AppGlobeCameraWrapper.h; sourceTree = "<group>"; };
+		7E149DC81BCE564000C0AFFC /* InteriorVisibilityUpdater.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InteriorVisibilityUpdater.cpp; sourceTree = "<group>"; };
+		7E149DC91BCE564000C0AFFC /* InteriorVisibilityUpdater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InteriorVisibilityUpdater.h; sourceTree = "<group>"; };
+		7E149DCC1BD0FDB300C0AFFC /* ICameraTransitionStage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICameraTransitionStage.h; sourceTree = "<group>"; };
+		7E149DCD1BD1118D00C0AFFC /* TransitionToWorldPointStage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TransitionToWorldPointStage.cpp; sourceTree = "<group>"; };
+		7E149DCE1BD1118D00C0AFFC /* TransitionToWorldPointStage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransitionToWorldPointStage.h; sourceTree = "<group>"; };
+		7E149DD11BD1169A00C0AFFC /* ExitCurrentInteriorStage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ExitCurrentInteriorStage.cpp; sourceTree = "<group>"; };
+		7E149DD21BD1169A00C0AFFC /* ExitCurrentInteriorStage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExitCurrentInteriorStage.h; sourceTree = "<group>"; };
+		7E149DD51BD12BC700C0AFFC /* TransitionToInteriorStage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TransitionToInteriorStage.cpp; sourceTree = "<group>"; };
+		7E149DD61BD12BC700C0AFFC /* TransitionToInteriorStage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransitionToInteriorStage.h; sourceTree = "<group>"; };
+		7E149DD91BD1466F00C0AFFC /* CameraTransitionService.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CameraTransitionService.cpp; sourceTree = "<group>"; };
+		7E149DDA1BD1466F00C0AFFC /* CameraTransitionService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraTransitionService.h; sourceTree = "<group>"; };
 		7E1A492C1B53EB6500D0DEA9 /* yelp_logo@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "yelp_logo@3x.png"; sourceTree = "<group>"; };
 		7E1B50651ACAD4170060FA4F /* InitialExperienceIntroStep.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InitialExperienceIntroStep.cpp; sourceTree = "<group>"; };
 		7E1B50661ACAD4170060FA4F /* InitialExperienceIntroStep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InitialExperienceIntroStep.h; sourceTree = "<group>"; };
@@ -2023,6 +2069,7 @@
 		7E1D22C91B205455006A8703 /* InteriorsExplorerModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InteriorsExplorerModel.h; sourceTree = "<group>"; };
 		7E1D22CC1B205CC2006A8703 /* InteriorsExplorerSelectFloorMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InteriorsExplorerSelectFloorMessage.h; sourceTree = "<group>"; };
 		7E1D22CD1B2085E0006A8703 /* InteriorsExplorerController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InteriorsExplorerController.cpp; sourceTree = "<group>"; };
+		7E3275631BD525D200A115C0 /* CameraTransitionChangedMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CameraTransitionChangedMessage.h; sourceTree = "<group>"; };
 		7E3B86651A385A280023C94E /* AboutPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutPage.h; sourceTree = "<group>"; };
 		7E3B86661A385A280023C94E /* AboutPageController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AboutPageController.cpp; sourceTree = "<group>"; };
 		7E3B86671A385A280023C94E /* AboutPageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutPageController.h; sourceTree = "<group>"; };
@@ -2658,6 +2705,9 @@
 		7E5811C91B1F3248007AD67F /* InteriorsExplorerViewModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InteriorsExplorerViewModule.h; sourceTree = "<group>"; };
 		7E5811CA1B1F3248007AD67F /* InteriorsExplorerViewModule.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = InteriorsExplorerViewModule.mm; sourceTree = "<group>"; };
 		7E5811D11B1F3866007AD67F /* IInteriorsExplorerViewModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IInteriorsExplorerViewModule.h; sourceTree = "<group>"; };
+		7E6732271BC3D7FB002A31FD /* InteriorWorldPinController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InteriorWorldPinController.cpp; sourceTree = "<group>"; };
+		7E6732281BC3D7FB002A31FD /* InteriorWorldPinController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InteriorWorldPinController.h; sourceTree = "<group>"; };
+		7E67322B1BC3DE2A002A31FD /* InteriorWorldPinSelectionHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InteriorWorldPinSelectionHandler.h; sourceTree = "<group>"; };
 		7E8897961B4C26E9006F9DE0 /* yelp_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yelp_logo.png; sourceTree = "<group>"; };
 		7E8897971B4C26E9006F9DE0 /* yelp_logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "yelp_logo@2x.png"; sourceTree = "<group>"; };
 		7E8F03D41A822E820056F229 /* GpsMarkerModule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GpsMarkerModule.cpp; sourceTree = "<group>"; };
@@ -2698,23 +2748,26 @@
 		7EE48255168477A80006E99B /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		7EE48257168477CB0006E99B /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		7EF5D8641737F9A40049D787 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		BF0E350A1BC673EA005B30E8 /* AppCameraController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AppCameraController.cpp; path = AppCamera/SdkModel/AppCameraController.cpp; sourceTree = "<group>"; };
+		BF0E350B1BC673EA005B30E8 /* AppCameraController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppCameraController.h; path = AppCamera/SdkModel/AppCameraController.h; sourceTree = "<group>"; };
+		BF0E350F1BC678AA005B30E8 /* AppCamera.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AppCamera.h; path = AppCamera/AppCamera.h; sourceTree = "<group>"; };
+		BF0E35101BC67A50005B30E8 /* IAppCameraController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = IAppCameraController.h; path = AppCamera/SdkModel/IAppCameraController.h; sourceTree = "<group>"; };
+		BF0E35121BC6A2A1005B30E8 /* AppCameraHelpers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AppCameraHelpers.cpp; path = AppCamera/Helpers/AppCameraHelpers.cpp; sourceTree = "<group>"; };
+		BF0E35131BC6A2A1005B30E8 /* AppCameraHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppCameraHelpers.h; path = AppCamera/Helpers/AppCameraHelpers.h; sourceTree = "<group>"; };
+		BF34FE9C1BCBF78600E7094F /* AppCameraModule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AppCameraModule.cpp; path = AppCamera/SdkModel/AppCameraModule.cpp; sourceTree = "<group>"; };
+		BF34FE9D1BCBF78600E7094F /* AppCameraModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppCameraModule.h; path = AppCamera/SdkModel/AppCameraModule.h; sourceTree = "<group>"; };
 		BF4FEE381BC2BD1200932C17 /* ExampleTourPinSelectionHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ExampleTourPinSelectionHandler.cpp; sourceTree = "<group>"; };
 		BF4FEE3C1BC2BF8400932C17 /* ExampleTourSearchResultPoiView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ExampleTourSearchResultPoiView.mm; sourceTree = "<group>"; };
 		BF4FEE3F1BC2BFD000932C17 /* ExampleTourSearchResultPoiView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExampleTourSearchResultPoiView.h; sourceTree = "<group>"; };
-		BF4FEE421BC2C0E600932C17 /* ExampleSearchJsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExampleSearchJsonParser.h; path = Example/SdkModel/ExampleSearchJsonParser.h; sourceTree = "<group>"; };
-		BF4FEE431BC2C0E600932C17 /* ExampleSearchJsonParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ExampleSearchJsonParser.cpp; path = Example/SdkModel/ExampleSearchJsonParser.cpp; sourceTree = "<group>"; };
-		BF4FEE461BC2C1AC00932C17 /* ExampleSearchResultModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ExampleSearchResultModel.cpp; path = Example/SdkModel/ExampleSearchResultModel.cpp; sourceTree = "<group>"; };
-		BF4FEE471BC2C1AC00932C17 /* ExampleSearchResultModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExampleSearchResultModel.h; path = Example/SdkModel/ExampleSearchResultModel.h; sourceTree = "<group>"; };
 		BF681D951BC4183500100BFF /* CurrentTourCardTappedMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CurrentTourCardTappedMessage.cpp; sourceTree = "<group>"; };
 		BF681D961BC4183500100BFF /* CurrentTourCardTappedMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurrentTourCardTappedMessage.h; sourceTree = "<group>"; };
 		BF681D991BC41B4200100BFF /* ExampleCurrentTourCardTappedHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ExampleCurrentTourCardTappedHandler.cpp; sourceTree = "<group>"; };
 		BF681D9A1BC41B4200100BFF /* ExampleCurrentTourCardTappedHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExampleCurrentTourCardTappedHandler.h; sourceTree = "<group>"; };
 		BF681D9D1BC4210700100BFF /* ExampleTourHelpers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ExampleTourHelpers.cpp; sourceTree = "<group>"; };
 		BF681D9E1BC4210700100BFF /* ExampleTourHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExampleTourHelpers.h; sourceTree = "<group>"; };
+		BF6E49A51BCBF67E00354F0E /* IAppCameraModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = IAppCameraModule.h; path = AppCamera/SdkModel/IAppCameraModule.h; sourceTree = "<group>"; };
 		BFB90EC51BC5732B00076380 /* SearchResultMenuAppModeMessageHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchResultMenuAppModeMessageHandler.cpp; sourceTree = "<group>"; };
 		BFB90EC61BC5732B00076380 /* SearchResultMenuAppModeMessageHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultMenuAppModeMessageHandler.h; sourceTree = "<group>"; };
-		BFD4C7211BA9BB1F006F4E0B /* TourStateChangedMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TourStateChangedMessage.cpp; sourceTree = "<group>"; };
-		BFD4C7221BA9BB1F006F4E0B /* TourStateChangedMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TourStateChangedMessage.h; sourceTree = "<group>"; };
 		BFD5FC8C1BA7068300F591F1 /* TourDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TourDefines.h; sourceTree = "<group>"; };
 		BFD5FC8D1BA7068300F591F1 /* TourDefines.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TourDefines.mm; sourceTree = "<group>"; };
 		BFD5FC8F1BA7068300F591F1 /* iCarouselTourExplorerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCarouselTourExplorerViewController.h; sourceTree = "<group>"; };
@@ -2857,6 +2910,26 @@
 		BFD5FD921BA7141600F591F1 /* ImageStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageStore.h; sourceTree = "<group>"; };
 		BFD5FD931BA7141600F591F1 /* ImageStore.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ImageStore.mm; sourceTree = "<group>"; };
 		BFD5FD981BA7226A00F591F1 /* Tours */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Tours; sourceTree = "<group>"; };
+		BFDD75DF1BCE5B3500335508 /* IAppModeStatesFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = IAppModeStatesFactory.h; path = AppModes/SdkModel/IAppModeStatesFactory.h; sourceTree = "<group>"; };
+		BFDD75E01BCE5BE800335508 /* AppModeStatesFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AppModeStatesFactory.cpp; path = AppModes/States/SdkModel/AppModeStatesFactory.cpp; sourceTree = "<group>"; };
+		BFDD75E11BCE5BE800335508 /* AppModeStatesFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppModeStatesFactory.h; path = AppModes/States/SdkModel/AppModeStatesFactory.h; sourceTree = "<group>"; };
+		BFDD75E61BCE885000335508 /* InteriorExplorerSetupState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = InteriorExplorerSetupState.cpp; path = States/InteriorExplorerSetupState.cpp; sourceTree = "<group>"; };
+		BFDD75E71BCE885000335508 /* InteriorExplorerSetupState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InteriorExplorerSetupState.h; path = States/InteriorExplorerSetupState.h; sourceTree = "<group>"; };
+		BFDD75EA1BCE90E200335508 /* InteriorExplorerStreamState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = InteriorExplorerStreamState.cpp; path = States/InteriorExplorerStreamState.cpp; sourceTree = "<group>"; };
+		BFDD75EB1BCE90E200335508 /* InteriorExplorerStreamState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InteriorExplorerStreamState.h; path = States/InteriorExplorerStreamState.h; sourceTree = "<group>"; };
+		BFDD75EE1BCEA3E200335508 /* InteriorExplorerViewingState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = InteriorExplorerViewingState.cpp; path = States/InteriorExplorerViewingState.cpp; sourceTree = "<group>"; };
+		BFDD75EF1BCEA3E200335508 /* InteriorExplorerViewingState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InteriorExplorerViewingState.h; path = States/InteriorExplorerViewingState.h; sourceTree = "<group>"; };
+		BFDD75F31BCEAF5800335508 /* InteriorExplorerExitingState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = InteriorExplorerExitingState.cpp; path = States/InteriorExplorerExitingState.cpp; sourceTree = "<group>"; };
+		BFDD75F41BCEAF5800335508 /* InteriorExplorerExitingState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InteriorExplorerExitingState.h; path = States/InteriorExplorerExitingState.h; sourceTree = "<group>"; };
+		BFDEAA791BCD3702007CE4D7 /* WorldState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WorldState.cpp; path = AppModes/States/SdkModel/WorldState.cpp; sourceTree = "<group>"; };
+		BFDEAA7A1BCD3702007CE4D7 /* WorldState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WorldState.h; path = AppModes/States/SdkModel/WorldState.h; sourceTree = "<group>"; };
+		BFDEAA841BCD5821007CE4D7 /* StateMachine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StateMachine.cpp; sourceTree = "<group>"; };
+		BFDEAA851BCD5821007CE4D7 /* StateMachine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StateMachine.h; sourceTree = "<group>"; };
+		BFDEAA881BCD58D8007CE4D7 /* IStateMachineState.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IStateMachineState.h; sourceTree = "<group>"; };
+		BFDEAA891BCD6133007CE4D7 /* InteriorExplorerState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = InteriorExplorerState.cpp; path = AppModes/States/SdkModel/InteriorExplorerState.cpp; sourceTree = "<group>"; };
+		BFDEAA8A1BCD6133007CE4D7 /* InteriorExplorerState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InteriorExplorerState.h; path = AppModes/States/SdkModel/InteriorExplorerState.h; sourceTree = "<group>"; };
+		BFDEB4BB1BCFADFF00F037B7 /* TourState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TourState.cpp; path = AppModes/States/SdkModel/TourState.cpp; sourceTree = "<group>"; };
+		BFDEB4BC1BCFADFF00F037B7 /* TourState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TourState.h; path = AppModes/States/SdkModel/TourState.h; sourceTree = "<group>"; };
 		BFDFC3CB1BB2D8B90099BAEC /* SearchResultModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultModel.h; sourceTree = "<group>"; };
 		BFDFC3CE1BB2EF190099BAEC /* SearchResultModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchResultModel.cpp; sourceTree = "<group>"; };
 		BFDFC3D11BB2F5BA0099BAEC /* menu_list.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu_list.png; sourceTree = "<group>"; };
@@ -2869,8 +2942,6 @@
 		E002DEB31BD4E56E0062D4D2 /* InteriorsCustomMaterialParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InteriorsCustomMaterialParser.h; path = InteriorsCustomMaterials/SdkModel/InteriorsCustomMaterialParser.h; sourceTree = "<group>"; };
 		E002DEB61BD4ED4C0062D4D2 /* InteriorsCustomMaterialKeys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = InteriorsCustomMaterialKeys.h; path = InteriorsCustomMaterials/SdkModel/InteriorsCustomMaterialKeys.h; sourceTree = "<group>"; };
 		E016040D19EEC26E0029A035 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		E0632E9E1B8331E4000C282E /* InteriorsStreamingController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InteriorsStreamingController.cpp; sourceTree = "<group>"; };
-		E0632E9F1B8331E4000C282E /* InteriorsStreamingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InteriorsStreamingController.h; sourceTree = "<group>"; };
 		E06AE5981B87207B000F85E3 /* AppModeModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AppModeModel.cpp; path = AppModes/SdkModel/AppModeModel.cpp; sourceTree = "<group>"; };
 		E06AE5991B87207B000F85E3 /* AppModeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppModeModel.h; path = AppModes/SdkModel/AppModeModel.h; sourceTree = "<group>"; };
 		E06AE59A1B87207B000F85E3 /* IAppModeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IAppModeModel.h; path = AppModes/SdkModel/IAppModeModel.h; sourceTree = "<group>"; };
@@ -2898,18 +2969,13 @@
 		E0ECD0031BC690F900967A95 /* InteriorsCustomMaterialDto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InteriorsCustomMaterialDto.h; path = InteriorsCustomMaterials/SdkModel/InteriorsCustomMaterialDto.h; sourceTree = "<group>"; };
 		EEE021311BB44239001AF4CF /* YelpSearchResultModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = YelpSearchResultModel.cpp; sourceTree = "<group>"; };
 		EEE021321BB44239001AF4CF /* YelpSearchResultModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YelpSearchResultModel.h; sourceTree = "<group>"; };
-		F7F37109109640BBE8C7E280 /* InteriorsExplorerInputDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InteriorsExplorerInputDelegate.h; sourceTree = "<group>"; };
 		F7F371A45CA6451F37A29696 /* IMapModeModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMapModeModule.h; sourceTree = "<group>"; };
-		F7F371EA20411E0AA0E2214B /* InteriorsExplorerInputDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InteriorsExplorerInputDelegate.cpp; sourceTree = "<group>"; };
 		F7F3721A109C5E6C1E483C60 /* MapModeModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapModeModule.h; sourceTree = "<group>"; };
-		F7F3741D57D4BFE631DEC068 /* InteriorsExitObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InteriorsExitObserver.h; sourceTree = "<group>"; };
 		F7F374A2D5A50F3F43D330A7 /* MapModeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapModeModel.h; sourceTree = "<group>"; };
 		F7F3759F38C78D3E118C840E /* MapModeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapModeController.h; sourceTree = "<group>"; };
 		F7F375DD3B02008F9BFBEA3D /* IMapModeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMapModeModel.h; sourceTree = "<group>"; };
 		F7F376B8EDEEDCD448A9C3D8 /* MapModeModule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MapModeModule.cpp; sourceTree = "<group>"; };
-		F7F376C8FE0F6455F5768B58 /* IInteriorsExplorerInputDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IInteriorsExplorerInputDelegate.h; sourceTree = "<group>"; };
 		F7F378860045756E6BD85445 /* MapModeModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MapModeModel.cpp; sourceTree = "<group>"; };
-		F7F3795319370D448E707830 /* InteriorsExitObserver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InteriorsExitObserver.cpp; sourceTree = "<group>"; };
 		F7F37D7FD513A2DB502EFD5C /* MapMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapMode.h; sourceTree = "<group>"; };
 		F7F37DF89F160CEF56F89506 /* MapModeController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MapModeController.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -3002,10 +3068,11 @@
 		18143846192B6E4500BCDF2E /* src */ = {
 			isa = PBXGroup;
 			children = (
+				BF0E35081BC67313005B30E8 /* AppCamera */,
+				E06AE5901B871E6E000F85E3 /* AppModes */,
 				7E3B86631A385A280023C94E /* AboutPage */,
 				18B22B181A7A901D00DDBFA2 /* ApiKey.h */,
 				186B473D1AB333150084E80B /* ApplicationConfig */,
-				E06AE5901B871E6E000F85E3 /* AppModes */,
 				7E3B86711A385A280023C94E /* CameraTransitions */,
 				7E3B86771A385A280023C94E /* CategorySearch */,
 				7E3B86891A385A280023C94E /* Compass */,
@@ -3463,6 +3530,9 @@
 				18FE21D01AA9CD3800ACE28A /* ImagePathHelpers.h */,
 				1833B2771BC2C4AB001CB77A /* InteriorHeightHelpers.cpp */,
 				1833B2781BC2C4AB001CB77A /* InteriorHeightHelpers.h */,
+				BFDEAA881BCD58D8007CE4D7 /* IStateMachineState.h */,
+				BFDEAA841BCD5821007CE4D7 /* StateMachine.cpp */,
+				BFDEAA851BCD5821007CE4D7 /* StateMachine.h */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -3576,6 +3646,18 @@
 			path = Metrics;
 			sourceTree = "<group>";
 		};
+		7E149DBA1BCD209B00C0AFFC /* SdkModel */ = {
+			isa = PBXGroup;
+			children = (
+				7E149DBB1BCD209B00C0AFFC /* ExampleSearchJsonParser.cpp */,
+				7E149DBC1BCD209B00C0AFFC /* ExampleSearchJsonParser.h */,
+				7E149DBD1BCD209B00C0AFFC /* ExampleSearchResultModel.cpp */,
+				7E149DBE1BCD209B00C0AFFC /* ExampleSearchResultModel.h */,
+			);
+			name = SdkModel;
+			path = Example/SdkModel;
+			sourceTree = "<group>";
+		};
 		7E1B506B1ACAD7030060FA4F /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -3634,6 +3716,7 @@
 			isa = PBXGroup;
 			children = (
 				7E3B86721A385A280023C94E /* SdkModel */,
+				7E3275631BD525D200A115C0 /* CameraTransitionChangedMessage.h */,
 			);
 			path = CameraTransitions;
 			sourceTree = "<group>";
@@ -3641,10 +3724,19 @@
 		7E3B86721A385A280023C94E /* SdkModel */ = {
 			isa = PBXGroup;
 			children = (
+				7E149DD91BD1466F00C0AFFC /* CameraTransitionService.cpp */,
+				7E149DDA1BD1466F00C0AFFC /* CameraTransitionService.h */,
 				7E3B86731A385A280023C94E /* CameraTransitionController.cpp */,
 				7E3B86741A385A280023C94E /* CameraTransitionController.h */,
 				7E3B86751A385A280023C94E /* CameraTransitions.h */,
 				7E3B86761A385A280023C94E /* ICameraTransitionController.h */,
+				7E149DCC1BD0FDB300C0AFFC /* ICameraTransitionStage.h */,
+				7E149DCD1BD1118D00C0AFFC /* TransitionToWorldPointStage.cpp */,
+				7E149DCE1BD1118D00C0AFFC /* TransitionToWorldPointStage.h */,
+				7E149DD11BD1169A00C0AFFC /* ExitCurrentInteriorStage.cpp */,
+				7E149DD21BD1169A00C0AFFC /* ExitCurrentInteriorStage.h */,
+				7E149DD51BD12BC700C0AFFC /* TransitionToInteriorStage.cpp */,
+				7E149DD61BD12BC700C0AFFC /* TransitionToInteriorStage.h */,
 			);
 			path = SdkModel;
 			sourceTree = "<group>";
@@ -5110,8 +5202,6 @@
 				7E1D22CC1B205CC2006A8703 /* InteriorsExplorerSelectFloorMessage.h */,
 				7E5811AF1B1F050A007AD67F /* SdkModel */,
 				7E5811B21B1F050A007AD67F /* View */,
-				F7F3795319370D448E707830 /* InteriorsExitObserver.cpp */,
-				F7F3741D57D4BFE631DEC068 /* InteriorsExitObserver.h */,
 			);
 			path = InteriorsExplorer;
 			sourceTree = "<group>";
@@ -5119,18 +5209,19 @@
 		7E5811AF1B1F050A007AD67F /* SdkModel */ = {
 			isa = PBXGroup;
 			children = (
+				BFDD75F21BCEA3F500335508 /* States */,
 				7E5811BD1B1F074C007AD67F /* IInteriorsExplorerModule.h */,
 				7E5811B01B1F050A007AD67F /* InteriorsExplorerModule.cpp */,
 				7E5811B11B1F050A007AD67F /* InteriorsExplorerModule.h */,
 				7E1D22C81B205455006A8703 /* InteriorsExplorerModel.cpp */,
 				7E1D22C91B205455006A8703 /* InteriorsExplorerModel.h */,
-				F7F371EA20411E0AA0E2214B /* InteriorsExplorerInputDelegate.cpp */,
-				F7F37109109640BBE8C7E280 /* InteriorsExplorerInputDelegate.h */,
-				F7F376C8FE0F6455F5768B58 /* IInteriorsExplorerInputDelegate.h */,
-				E0632E9E1B8331E4000C282E /* InteriorsStreamingController.cpp */,
-				E0632E9F1B8331E4000C282E /* InteriorsStreamingController.h */,
-				56D5B23A1B8233C700306841 /* InteriorPinScaleController.cpp */,
-				56D5B23B1B8233C700306841 /* InteriorPinScaleController.h */,
+				7E6732271BC3D7FB002A31FD /* InteriorWorldPinController.cpp */,
+				7E6732281BC3D7FB002A31FD /* InteriorWorldPinController.h */,
+				7E67322B1BC3DE2A002A31FD /* InteriorWorldPinSelectionHandler.h */,
+				27C1F9991BC6A47600D5EFF4 /* InteriorsExplorerCameraController.cpp */,
+				27C1F99A1BC6A47600D5EFF4 /* InteriorsExplorerCameraController.h */,
+				7E149DC81BCE564000C0AFFC /* InteriorVisibilityUpdater.cpp */,
+				7E149DC91BCE564000C0AFFC /* InteriorVisibilityUpdater.h */,
 			);
 			path = SdkModel;
 			sourceTree = "<group>";
@@ -5504,23 +5595,47 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		BF0E35081BC67313005B30E8 /* AppCamera */ = {
+			isa = PBXGroup;
+			children = (
+				BF0E35111BC6A250005B30E8 /* Helpers */,
+				BF0E350F1BC678AA005B30E8 /* AppCamera.h */,
+				BF0E35091BC67322005B30E8 /* SdkModel */,
+			);
+			name = AppCamera;
+			sourceTree = "<group>";
+		};
+		BF0E35091BC67322005B30E8 /* SdkModel */ = {
+			isa = PBXGroup;
+			children = (
+				BF0E35101BC67A50005B30E8 /* IAppCameraController.h */,
+				BF0E350A1BC673EA005B30E8 /* AppCameraController.cpp */,
+				BF0E350B1BC673EA005B30E8 /* AppCameraController.h */,
+				BF6E49A51BCBF67E00354F0E /* IAppCameraModule.h */,
+				BF34FE9C1BCBF78600E7094F /* AppCameraModule.cpp */,
+				BF34FE9D1BCBF78600E7094F /* AppCameraModule.h */,
+				7E149DC31BCD4C9D00C0AFFC /* IAppCamera.h */,
+				7E149DC41BCD4F7F00C0AFFC /* AppGlobeCameraWrapper.cpp */,
+				7E149DC51BCD4F7F00C0AFFC /* AppGlobeCameraWrapper.h */,
+			);
+			name = SdkModel;
+			sourceTree = "<group>";
+		};
+		BF0E35111BC6A250005B30E8 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				BF0E35121BC6A2A1005B30E8 /* AppCameraHelpers.cpp */,
+				BF0E35131BC6A2A1005B30E8 /* AppCameraHelpers.h */,
+			);
+			name = Helpers;
+			sourceTree = "<group>";
+		};
 		BF4FEE401BC2C09C00932C17 /* Example */ = {
 			isa = PBXGroup;
 			children = (
-				BF4FEE411BC2C0AF00932C17 /* SdkModel */,
+				7E149DBA1BCD209B00C0AFFC /* SdkModel */,
 			);
 			name = Example;
-			sourceTree = "<group>";
-		};
-		BF4FEE411BC2C0AF00932C17 /* SdkModel */ = {
-			isa = PBXGroup;
-			children = (
-				BF4FEE421BC2C0E600932C17 /* ExampleSearchJsonParser.h */,
-				BF4FEE431BC2C0E600932C17 /* ExampleSearchJsonParser.cpp */,
-				BF4FEE461BC2C1AC00932C17 /* ExampleSearchResultModel.cpp */,
-				BF4FEE471BC2C1AC00932C17 /* ExampleSearchResultModel.h */,
-			);
-			name = SdkModel;
 			sourceTree = "<group>";
 		};
 		BFD5FC8A1BA7068300F591F1 /* Tours */ = {
@@ -5624,8 +5739,6 @@
 				BFD5FD1B1BA706AD00F591F1 /* ToursModule.cpp */,
 				BFD5FD1C1BA706AD00F591F1 /* ToursModule.h */,
 				BFD5FD1D1BA706AD00F591F1 /* View */,
-				BFD4C7211BA9BB1F006F4E0B /* TourStateChangedMessage.cpp */,
-				BFD4C7221BA9BB1F006F4E0B /* TourStateChangedMessage.h */,
 				BF681D951BC4183500100BFF /* CurrentTourCardTappedMessage.cpp */,
 				BF681D961BC4183500100BFF /* CurrentTourCardTappedMessage.h */,
 			);
@@ -5821,9 +5934,48 @@
 			path = ImageStore;
 			sourceTree = "<group>";
 		};
+		BFDD75F21BCEA3F500335508 /* States */ = {
+			isa = PBXGroup;
+			children = (
+				BFDD75E61BCE885000335508 /* InteriorExplorerSetupState.cpp */,
+				BFDD75E71BCE885000335508 /* InteriorExplorerSetupState.h */,
+				BFDD75EA1BCE90E200335508 /* InteriorExplorerStreamState.cpp */,
+				BFDD75EB1BCE90E200335508 /* InteriorExplorerStreamState.h */,
+				BFDD75EE1BCEA3E200335508 /* InteriorExplorerViewingState.cpp */,
+				BFDD75EF1BCEA3E200335508 /* InteriorExplorerViewingState.h */,
+				BFDD75F31BCEAF5800335508 /* InteriorExplorerExitingState.cpp */,
+				BFDD75F41BCEAF5800335508 /* InteriorExplorerExitingState.h */,
+			);
+			name = States;
+			sourceTree = "<group>";
+		};
+		BFDEAA771BCD35E3007CE4D7 /* States */ = {
+			isa = PBXGroup;
+			children = (
+				BFDEAA781BCD35EF007CE4D7 /* SdkModel */,
+			);
+			name = States;
+			sourceTree = "<group>";
+		};
+		BFDEAA781BCD35EF007CE4D7 /* SdkModel */ = {
+			isa = PBXGroup;
+			children = (
+				BFDEAA791BCD3702007CE4D7 /* WorldState.cpp */,
+				BFDEAA891BCD6133007CE4D7 /* InteriorExplorerState.cpp */,
+				BFDEAA8A1BCD6133007CE4D7 /* InteriorExplorerState.h */,
+				BFDEAA7A1BCD3702007CE4D7 /* WorldState.h */,
+				BFDD75E01BCE5BE800335508 /* AppModeStatesFactory.cpp */,
+				BFDD75E11BCE5BE800335508 /* AppModeStatesFactory.h */,
+				BFDEB4BB1BCFADFF00F037B7 /* TourState.cpp */,
+				BFDEB4BC1BCFADFF00F037B7 /* TourState.h */,
+			);
+			name = SdkModel;
+			sourceTree = "<group>";
+		};
 		E06AE5901B871E6E000F85E3 /* AppModes */ = {
 			isa = PBXGroup;
 			children = (
+				BFDEAA771BCD35E3007CE4D7 /* States */,
 				E06AE59D1B872086000F85E3 /* AppModes.h */,
 				E06AE5911B871E76000F85E3 /* SdkModel */,
 				E06AE5A21B8740A3000F85E3 /* AppModeChangedMessage.h */,
@@ -5837,6 +5989,7 @@
 				E06AE5981B87207B000F85E3 /* AppModeModel.cpp */,
 				E06AE5991B87207B000F85E3 /* AppModeModel.h */,
 				E06AE59A1B87207B000F85E3 /* IAppModeModel.h */,
+				BFDD75DF1BCE5B3500335508 /* IAppModeStatesFactory.h */,
 			);
 			name = SdkModel;
 			sourceTree = "<group>";
@@ -6236,7 +6389,6 @@
 				566307041AD2D69800980426 /* stars_3_5@3x.png in Resources */,
 				F7F37FC6C755DC44D732DDCB /* MapMode.h in Resources */,
 				E0AEEEFE1B8CB0C700BA9BF0 /* floor_selection_top@2x.png in Resources */,
-				F7F37CE9B350E74AF11855A0 /* IInteriorsExplorerInputDelegate.h in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6515,7 +6667,6 @@
 				566307031AD2D69800980426 /* stars_3_5@3x.png in Resources */,
 				F7F375BE591A1178B2648C93 /* MapMode.h in Resources */,
 				E0AEEEFD1B8CB0C700BA9BF0 /* floor_selection_top@2x.png in Resources */,
-				F7F37A7C56FBA7BC913F59C7 /* IInteriorsExplorerInputDelegate.h in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6530,6 +6681,7 @@
 				7E3B8A071A385A290023C94E /* WorldPinInFocusViewModel.cpp in Sources */,
 				7E3B89231A385A290023C94E /* MyPinCreationModule.cpp in Sources */,
 				7E3B88A71A385A290023C94E /* AboutPageController.cpp in Sources */,
+				BF34FE9F1BCBF78600E7094F /* AppCameraModule.cpp in Sources */,
 				18096F4E1A7B7F39006A6438 /* StreamOverWifiOnlyChangedMessage.cpp in Sources */,
 				7E3B8AD21A385F110023C94E /* AppRunner.mm in Sources */,
 				183E54881ACEB1FB00AD6B3E /* InitialExperienceSearchResultAttractModeModel.cpp in Sources */,
@@ -6565,6 +6717,7 @@
 				18FB64711A9240FC005A9411 /* OAToken.m in Sources */,
 				7E3B88C31A385A290023C94E /* CompassModel.cpp in Sources */,
 				7E3B895D1A385A290023C94E /* MyPinsFileIO.cpp in Sources */,
+				BFDD75E31BCE5BE800335508 /* AppModeStatesFactory.cpp in Sources */,
 				7E3B89551A385A290023C94E /* MyPinModel.cpp in Sources */,
 				18A657621A9F6AA800238F33 /* MyPinVisibilityStateChangedHandlerFactory.cpp in Sources */,
 				7E3B8A111A385A290023C94E /* WorldPinsVisibilityMessage.cpp in Sources */,
@@ -6589,6 +6742,7 @@
 				BFD5FD451BA706AD00F591F1 /* ToursCameraFadeTransitionMode.cpp in Sources */,
 				7E3B89531A385A290023C94E /* MyPinSelectedMessage.cpp in Sources */,
 				7E3B8A051A385A290023C94E /* WorldPinInFocusScreenControl.cpp in Sources */,
+				BF0E35151BC6A2A1005B30E8 /* AppCameraHelpers.cpp in Sources */,
 				7E3B893F1A385A290023C94E /* UserCreatedMyPinDetailsModelSelectedMessage.cpp in Sources */,
 				BFD5FD8E1BA708E100F591F1 /* iCarousel.m in Sources */,
 				7E3B89DB1A385A290023C94E /* SecondaryMenuController.cpp in Sources */,
@@ -6612,8 +6766,10 @@
 				7E1B50891ACC53680060FA4F /* InitialExperienceIntroBackgroundView.mm in Sources */,
 				18FB649E1A94B525005A9411 /* SearchResultPoiViewOpenedMessage.cpp in Sources */,
 				7E3B8AC81A385F110023C94E /* AboutPageViewInterop.mm in Sources */,
+				7E149DC71BCD4F7F00C0AFFC /* AppGlobeCameraWrapper.cpp in Sources */,
 				18FB64631A9240FC005A9411 /* OADataFetcher.m in Sources */,
 				7E3B88DD1A385A290023C94E /* FlattenButtonViewStateChangedObserver.cpp in Sources */,
+				7E149DC21BCD209B00C0AFFC /* ExampleSearchResultModel.cpp in Sources */,
 				7E3B8B261A385F110023C94E /* SearchResultPoiViewInterop.mm in Sources */,
 				18A6576D1AA0775900238F33 /* iOSYelpBusinessQuery.mm in Sources */,
 				7E3B8A0D1A385A290023C94E /* WorldPinInFocusChangedLocationMessage.cpp in Sources */,
@@ -6621,6 +6777,7 @@
 				7E3B89E71A385A290023C94E /* WeatherSelectedMessageHandler.cpp in Sources */,
 				7E3B88AF1A385A290023C94E /* CameraTransitionController.cpp in Sources */,
 				7E3B88AD1A385A290023C94E /* AboutPageViewModel.cpp in Sources */,
+				BFDEAA7C1BCD3702007CE4D7 /* WorldState.cpp in Sources */,
 				7E3B88BF1A385A290023C94E /* CompassModeChangedMessage.cpp in Sources */,
 				BFD5FD631BA706AD00F591F1 /* TourActiveStateChangedMessage.cpp in Sources */,
 				7E3B89F11A385A290023C94E /* WorldAreaLoaderModule.cpp in Sources */,
@@ -6637,6 +6794,7 @@
 				E002DEB01BD148E40062D4D2 /* InteriorsCustomMaterialDtoRepository.cpp in Sources */,
 				7E3B893D1A385A290023C94E /* MyPinCreationDetailsViewModel.cpp in Sources */,
 				7E3B8AFC1A385F110023C94E /* ModalBackgroundViewModule.mm in Sources */,
+				7E149DCB1BCE564000C0AFFC /* InteriorVisibilityUpdater.cpp in Sources */,
 				7E3B8B341A385F110023C94E /* WorldPinOnMapViewInterop.mm in Sources */,
 				7E3B896D1A385A290023C94E /* PlaceJumpController.cpp in Sources */,
 				7E3B88E31A385A290023C94E /* FlattenButtonViewModel.cpp in Sources */,
@@ -6658,6 +6816,7 @@
 				18E102941A8BA63C0011A18C /* SearchResultIconCategoryMapper.cpp in Sources */,
 				18E1027B1A8B64470011A18C /* SerializeSearchResultModelToJson.cpp in Sources */,
 				7E3B89CD1A385A290023C94E /* SearchResultPoiController.cpp in Sources */,
+				7E67322A1BC3D7FB002A31FD /* InteriorWorldPinController.cpp in Sources */,
 				7E3B8B1E1A385F110023C94E /* SearchResultMenuView.mm in Sources */,
 				7E3B899B1A385A290023C94E /* SearchQueryRemovedMessage.cpp in Sources */,
 				18B44CF11A88D4B400FDFD8A /* CacheClearBackgroundTask.cpp in Sources */,
@@ -6677,11 +6836,11 @@
 				7E3B89491A385A290023C94E /* MyPinDetailsModelSelectedObserver.cpp in Sources */,
 				E06AE59C1B87207B000F85E3 /* AppModeModel.cpp in Sources */,
 				18FB64571A9240FC005A9411 /* NSURL+Base.m in Sources */,
-				E0632EA11B8331E4000C282E /* InteriorsStreamingController.cpp in Sources */,
 				7E3B8A0B1A385A290023C94E /* WorldPinGainedFocusMessage.cpp in Sources */,
 				7E3B89D31A385A290023C94E /* SearchResultPoiViewModel.cpp in Sources */,
 				7E3B8A0F1A385A290023C94E /* WorldPinLostFocusMessage.cpp in Sources */,
 				BFD5FD591BA706AD00F591F1 /* TourRepository.cpp in Sources */,
+				BFDD75F11BCEA3E200335508 /* InteriorExplorerViewingState.cpp in Sources */,
 				18FB64551A9240FC005A9411 /* NSString+URLEncoding.m in Sources */,
 				7E3B8AD41A385F110023C94E /* CompassView.mm in Sources */,
 				7E3B8B2C1A385F110023C94E /* SecondaryMenuViewModule.mm in Sources */,
@@ -6698,6 +6857,7 @@
 				BFD5FCB71BA7068300F591F1 /* iCarouselTourExplorerViewController.mm in Sources */,
 				7E3B88DF1A385A290023C94E /* FlattenButtonController.cpp in Sources */,
 				BF4FEE3A1BC2BD1200932C17 /* ExampleTourPinSelectionHandler.cpp in Sources */,
+				BFDEB4BE1BCFADFF00F037B7 /* TourState.cpp in Sources */,
 				7E3B8AF41A385F110023C94E /* CustomTableViewCell.mm in Sources */,
 				7E3B8B201A385F110023C94E /* SearchResultMenuViewModule.mm in Sources */,
 				7E3B88C11A385A290023C94E /* CompassViewCycledMessage.cpp in Sources */,
@@ -6728,6 +6888,7 @@
 				18FE3BD31A9CA561002D61C4 /* SortedMenuComparisonFunctions.cpp in Sources */,
 				7E3B8AEC1A385F110023C94E /* iOSInitialExperiencePreLoadModel.mm in Sources */,
 				7E5811CE1B1F3248007AD67F /* InteriorsExplorerViewInterop.mm in Sources */,
+				BF0E350D1BC673EA005B30E8 /* AppCameraController.cpp in Sources */,
 				7E3B89131A385A290023C94E /* MyPinCreationViewStateChangedMessage.cpp in Sources */,
 				BFD5FD6F1BA706AD00F591F1 /* TourExplorerCompositeViewController.cpp in Sources */,
 				7E3B890D1A385A290023C94E /* ModalityObserver.cpp in Sources */,
@@ -6736,6 +6897,7 @@
 				7E3B88FF1A385A290023C94E /* MobileExampleApp.cpp in Sources */,
 				7E3B8B2E1A385F110023C94E /* ViewController.mm in Sources */,
 				BFB90EC81BC5732B00076380 /* SearchResultMenuAppModeMessageHandler.cpp in Sources */,
+				7E149DDC1BD1466F00C0AFFC /* CameraTransitionService.cpp in Sources */,
 				7E3B89D11A385A290023C94E /* SearchResultPoiOpenableControl.cpp in Sources */,
 				18B22B111A7A8B3400DDBFA2 /* OptionsOpenableControl.cpp in Sources */,
 				7E3B89931A385A290023C94E /* SearchQueryPerformer.cpp in Sources */,
@@ -6750,12 +6912,14 @@
 				7E3B88BB1A385A290023C94E /* CategorySearchRepository.cpp in Sources */,
 				BFD5FD7B1BA706AD00F591F1 /* TourFullScreenImageCeremonyEndedObserver.cpp in Sources */,
 				18C0EBFC1A9E0E66008EED21 /* UserCreatedPinBoundObject.cpp in Sources */,
+				BFDEAA8C1BCD6133007CE4D7 /* InteriorExplorerState.cpp in Sources */,
 				7E3B88C71A385A290023C94E /* CompassModule.cpp in Sources */,
 				1833B2761BC2C48B001CB77A /* WorldPinsFloorHeightController.cpp in Sources */,
 				186B474C1AB333150084E80B /* ApplicationConfiguration.cpp in Sources */,
 				186B47241AB1DD5C0084E80B /* WatermarkViewInterop.mm in Sources */,
 				EEE021341BB44239001AF4CF /* YelpSearchResultModel.cpp in Sources */,
 				BFD5FD391BA706AD00F591F1 /* ActiveTourQuitSelectedMessage.cpp in Sources */,
+				7E149DD41BD1169B00C0AFFC /* ExitCurrentInteriorStage.cpp in Sources */,
 				7E3B8AEE1A385F110023C94E /* Main.m in Sources */,
 				560741151B8CC624002B0F49 /* MenuDragStateChangedMessage.cpp in Sources */,
 				27DB89E31BB3FF170020CDA5 /* GeoNamesSearchServiceModule.cpp in Sources */,
@@ -6816,7 +6980,6 @@
 				7E3B899D1A385A290023C94E /* SearchQueryResponseReceivedMessage.cpp in Sources */,
 				7E3B89951A385A290023C94E /* SearchRefreshService.cpp in Sources */,
 				7E3B88B91A385A290023C94E /* CategorySearchModel.cpp in Sources */,
-				BFD4C7241BA9BB1F006F4E0B /* TourStateChangedMessage.cpp in Sources */,
 				BFD5FD6B1BA706AD00F591F1 /* TourOnMapSelectedMessage.cpp in Sources */,
 				7E3B89631A385A290023C94E /* MyPinsService.cpp in Sources */,
 				18E102851A8B85710011A18C /* SearchResultPoiPinToggledMessageHandler.cpp in Sources */,
@@ -6828,7 +6991,6 @@
 				7E3B89C11A385A290023C94E /* SearchResultOnMapModule.cpp in Sources */,
 				7E3B8B1C1A385F110023C94E /* SearchResultMenuDataProvider.mm in Sources */,
 				7E3B88D11A385A290023C94E /* CompassViewModel.cpp in Sources */,
-				BF4FEE4B1BC2C78500932C17 /* ExampleSearchJsonParser.cpp in Sources */,
 				27CADB641BCFEA2A00805A27 /* SizeHelpers.cpp in Sources */,
 				7E3B88B11A385A290023C94E /* CategorySearchSelectedMessage.cpp in Sources */,
 				7E3B89A71A385A290023C94E /* SearchResultViewClearedObserver.cpp in Sources */,
@@ -6858,8 +7020,10 @@
 				7E3B89711A385A290023C94E /* PlaceJumpsModule.cpp in Sources */,
 				7E3B89831A385A290023C94E /* ReactionModelModule.cpp in Sources */,
 				7E3B890F1A385A290023C94E /* MyPinCreationStateChangedMessage.cpp in Sources */,
+				7E149DC01BCD209B00C0AFFC /* ExampleSearchJsonParser.cpp in Sources */,
 				7E3B89F51A385A290023C94E /* WorldPinsFactory.cpp in Sources */,
 				27DB89DD1BB3FF170020CDA5 /* GeoNamesSearchQueryFactory.cpp in Sources */,
+				7E149DD01BD1118D00C0AFFC /* TransitionToWorldPointStage.cpp in Sources */,
 				7E3B89ED1A385A290023C94E /* WeatherSelectedMessage.cpp in Sources */,
 				7E3B8AE01A385F110023C94E /* GlDisplayService.mm in Sources */,
 				BFD5FD611BA706AD00F591F1 /* TourWorldPinSelectionHandlerFactory.cpp in Sources */,
@@ -6883,7 +7047,6 @@
 				7E3B89411A385A290023C94E /* MyPinDetailsViewRemovePinMessage.cpp in Sources */,
 				183E54861ACEB1FB00AD6B3E /* InitialExperienceSearchResultAttractModeModule.cpp in Sources */,
 				7E3B896B1A385A290023C94E /* PlaceJumpSelectedMessage.cpp in Sources */,
-				BF4FEE491BC2C1AC00932C17 /* ExampleSearchResultModel.cpp in Sources */,
 				7E3B8B301A385F110023C94E /* UIView+TouchExclusivity.m in Sources */,
 				27E7A9C51BBC0F3200CDB502 /* SearchResultMenuOrder.cpp in Sources */,
 				7E3B891D1A385A290023C94E /* PoiRingView.cpp in Sources */,
@@ -6901,8 +7064,11 @@
 				7E3B89A51A385A290023C94E /* SearchResultMenuModule.cpp in Sources */,
 				7E3B8B161A385F110023C94E /* iOSPersistentSettingsModel.mm in Sources */,
 				7E8F03D71A822E820056F229 /* GpsMarkerModule.cpp in Sources */,
+				BFDEAA871BCD5821007CE4D7 /* StateMachine.cpp in Sources */,
+				BFDD75ED1BCE90E200335508 /* InteriorExplorerStreamState.cpp in Sources */,
 				7E3B88AB1A385A290023C94E /* AboutPageOpenableControl.cpp in Sources */,
 				7E3B8B2A1A385F110023C94E /* SecondaryMenuView.mm in Sources */,
+				BFDD75E91BCE885000335508 /* InteriorExplorerSetupState.cpp in Sources */,
 				7E3B8B0A1A385F110023C94E /* MyPinCreationInitiationView.mm in Sources */,
 				7E3B8B0C1A385F110023C94E /* MyPinCreationInitiationViewInterop.mm in Sources */,
 				18FB645D1A9240FC005A9411 /* sha1.c in Sources */,
@@ -6914,7 +7080,7 @@
 				7E3B890B1A385A290023C94E /* ModalityModule.cpp in Sources */,
 				BFD5FD971BA7141600F591F1 /* ImageStore.mm in Sources */,
 				7E3B88A91A385A290023C94E /* AboutPageModule.cpp in Sources */,
-				56D5B23D1B8233C700306841 /* InteriorPinScaleController.cpp in Sources */,
+				7E149DD81BD12BC700C0AFFC /* TransitionToInteriorStage.cpp in Sources */,
 				186B47521AB333150084E80B /* ApplicationConfigurationReader.cpp in Sources */,
 				18B44CEC1A83D3CF00FDFD8A /* OptionsCacheClearSubView.mm in Sources */,
 				183E548A1ACEB1FB00AD6B3E /* InitialExperienceSearchResultAttractModeViewController.cpp in Sources */,
@@ -6937,6 +7103,7 @@
 				7E3B89011A385A290023C94E /* ModalityChangedMessage.cpp in Sources */,
 				7E3B89A31A385A290023C94E /* SearchResultMenuItemSelectedMessageHandler.cpp in Sources */,
 				7E3B892B1A385A290023C94E /* MyPinCreationConfirmationController.cpp in Sources */,
+				27C1F99C1BC6A47600D5EFF4 /* InteriorsExplorerCameraController.cpp in Sources */,
 				BFD5FCCD1BA7068300F591F1 /* TourWebView.mm in Sources */,
 				7E3B88F51A385A290023C94E /* MenuOptionsModel.cpp in Sources */,
 				7E3B8A091A385A290023C94E /* WorldPinOnMapController.cpp in Sources */,
@@ -6952,12 +7119,11 @@
 				7E1B50681ACAD4170060FA4F /* InitialExperienceIntroStep.cpp in Sources */,
 				F7F37F39F2038F91049410A9 /* MapModeModel.cpp in Sources */,
 				BFD5FD4B1BA706AD00F591F1 /* TourActiveStateChangedMessageHandler.cpp in Sources */,
+				BFDD75F61BCEAF5800335508 /* InteriorExplorerExitingState.cpp in Sources */,
 				F7F37C72A4A0A11F290E135D /* MapModeModule.cpp in Sources */,
-				F7F37763E9082D85ABCF50B6 /* InteriorsExitObserver.cpp in Sources */,
 				F7F3702A5538EF1098A7B54D /* MapModeController.cpp in Sources */,
 				BF681DA01BC4210700100BFF /* ExampleTourHelpers.cpp in Sources */,
 				BFD5FD7D1BA706AD00F591F1 /* TourFullScreenImageViewController.cpp in Sources */,
-				F7F373D9D747899B4430C7EC /* InteriorsExplorerInputDelegate.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6969,6 +7135,7 @@
 				BFD5FD8D1BA708E100F591F1 /* iCarousel.m in Sources */,
 				7E3B8A061A385A290023C94E /* WorldPinInFocusViewModel.cpp in Sources */,
 				7E3B89221A385A290023C94E /* MyPinCreationModule.cpp in Sources */,
+				BF34FE9E1BCBF78600E7094F /* AppCameraModule.cpp in Sources */,
 				7E3B88A61A385A290023C94E /* AboutPageController.cpp in Sources */,
 				18096F4D1A7B7F39006A6438 /* StreamOverWifiOnlyChangedMessage.cpp in Sources */,
 				7E3B8AD11A385F110023C94E /* AppRunner.mm in Sources */,
@@ -7004,6 +7171,7 @@
 				7E3B89321A385A290023C94E /* MyPinCreationInitiationViewModel.cpp in Sources */,
 				18FB64701A9240FC005A9411 /* OAToken.m in Sources */,
 				7E3B88C21A385A290023C94E /* CompassModel.cpp in Sources */,
+				BFDD75E21BCE5BE800335508 /* AppModeStatesFactory.cpp in Sources */,
 				7E3B895C1A385A290023C94E /* MyPinsFileIO.cpp in Sources */,
 				7E3B89541A385A290023C94E /* MyPinModel.cpp in Sources */,
 				18A657611A9F6AA800238F33 /* MyPinVisibilityStateChangedHandlerFactory.cpp in Sources */,
@@ -7028,6 +7196,7 @@
 				18FB64661A9240FC005A9411 /* OAMutableURLRequest.m in Sources */,
 				BFD5FD441BA706AD00F591F1 /* ToursCameraFadeTransitionMode.cpp in Sources */,
 				7E3B89521A385A290023C94E /* MyPinSelectedMessage.cpp in Sources */,
+				BF0E35141BC6A2A1005B30E8 /* AppCameraHelpers.cpp in Sources */,
 				7E3B8A041A385A290023C94E /* WorldPinInFocusScreenControl.cpp in Sources */,
 				7E3B893E1A385A290023C94E /* UserCreatedMyPinDetailsModelSelectedMessage.cpp in Sources */,
 				7E3B89DA1A385A290023C94E /* SecondaryMenuController.cpp in Sources */,
@@ -7051,8 +7220,10 @@
 				7E1B50881ACC53680060FA4F /* InitialExperienceIntroBackgroundView.mm in Sources */,
 				18FB649D1A94B525005A9411 /* SearchResultPoiViewOpenedMessage.cpp in Sources */,
 				7E3B8AC71A385F110023C94E /* AboutPageViewInterop.mm in Sources */,
+				7E149DC61BCD4F7F00C0AFFC /* AppGlobeCameraWrapper.cpp in Sources */,
 				18FB64621A9240FC005A9411 /* OADataFetcher.m in Sources */,
 				7E3B88DC1A385A290023C94E /* FlattenButtonViewStateChangedObserver.cpp in Sources */,
+				7E149DC11BCD209B00C0AFFC /* ExampleSearchResultModel.cpp in Sources */,
 				7E3B8B251A385F110023C94E /* SearchResultPoiViewInterop.mm in Sources */,
 				18A6576C1AA0775900238F33 /* iOSYelpBusinessQuery.mm in Sources */,
 				7E3B8A0C1A385A290023C94E /* WorldPinInFocusChangedLocationMessage.cpp in Sources */,
@@ -7060,6 +7231,7 @@
 				7E3B89E61A385A290023C94E /* WeatherSelectedMessageHandler.cpp in Sources */,
 				7E3B88AE1A385A290023C94E /* CameraTransitionController.cpp in Sources */,
 				7E3B88AC1A385A290023C94E /* AboutPageViewModel.cpp in Sources */,
+				BFDEAA7B1BCD3702007CE4D7 /* WorldState.cpp in Sources */,
 				7E3B88BE1A385A290023C94E /* CompassModeChangedMessage.cpp in Sources */,
 				BFD5FD621BA706AD00F591F1 /* TourActiveStateChangedMessage.cpp in Sources */,
 				7E3B89F01A385A290023C94E /* WorldAreaLoaderModule.cpp in Sources */,
@@ -7076,6 +7248,7 @@
 				E002DEAF1BD148E40062D4D2 /* InteriorsCustomMaterialDtoRepository.cpp in Sources */,
 				7E3B893C1A385A290023C94E /* MyPinCreationDetailsViewModel.cpp in Sources */,
 				7E3B8AFB1A385F110023C94E /* ModalBackgroundViewModule.mm in Sources */,
+				7E149DCA1BCE564000C0AFFC /* InteriorVisibilityUpdater.cpp in Sources */,
 				7E3B8B331A385F110023C94E /* WorldPinOnMapViewInterop.mm in Sources */,
 				7E3B896C1A385A290023C94E /* PlaceJumpController.cpp in Sources */,
 				7E3B88E21A385A290023C94E /* FlattenButtonViewModel.cpp in Sources */,
@@ -7097,6 +7270,7 @@
 				18E102931A8BA63C0011A18C /* SearchResultIconCategoryMapper.cpp in Sources */,
 				18E1027A1A8B64470011A18C /* SerializeSearchResultModelToJson.cpp in Sources */,
 				7E3B89CC1A385A290023C94E /* SearchResultPoiController.cpp in Sources */,
+				7E6732291BC3D7FB002A31FD /* InteriorWorldPinController.cpp in Sources */,
 				7E3B8B1D1A385F110023C94E /* SearchResultMenuView.mm in Sources */,
 				7E3B899A1A385A290023C94E /* SearchQueryRemovedMessage.cpp in Sources */,
 				18B44CF01A88D4B400FDFD8A /* CacheClearBackgroundTask.cpp in Sources */,
@@ -7116,11 +7290,11 @@
 				7E3B89481A385A290023C94E /* MyPinDetailsModelSelectedObserver.cpp in Sources */,
 				E06AE59B1B87207B000F85E3 /* AppModeModel.cpp in Sources */,
 				18FB64561A9240FC005A9411 /* NSURL+Base.m in Sources */,
-				E0632EA01B8331E4000C282E /* InteriorsStreamingController.cpp in Sources */,
 				7E3B8A0A1A385A290023C94E /* WorldPinGainedFocusMessage.cpp in Sources */,
 				7E3B89D21A385A290023C94E /* SearchResultPoiViewModel.cpp in Sources */,
 				7E3B8A0E1A385A290023C94E /* WorldPinLostFocusMessage.cpp in Sources */,
 				BFD5FD581BA706AD00F591F1 /* TourRepository.cpp in Sources */,
+				BFDD75F01BCEA3E200335508 /* InteriorExplorerViewingState.cpp in Sources */,
 				18FB64541A9240FC005A9411 /* NSString+URLEncoding.m in Sources */,
 				7E3B8AD31A385F110023C94E /* CompassView.mm in Sources */,
 				7E3B8B2B1A385F110023C94E /* SecondaryMenuViewModule.mm in Sources */,
@@ -7137,6 +7311,7 @@
 				BFD5FCB61BA7068300F591F1 /* iCarouselTourExplorerViewController.mm in Sources */,
 				7E3B88DE1A385A290023C94E /* FlattenButtonController.cpp in Sources */,
 				BF4FEE391BC2BD1200932C17 /* ExampleTourPinSelectionHandler.cpp in Sources */,
+				BFDEB4BD1BCFADFF00F037B7 /* TourState.cpp in Sources */,
 				7E3B8AF31A385F110023C94E /* CustomTableViewCell.mm in Sources */,
 				7E3B8B1F1A385F110023C94E /* SearchResultMenuViewModule.mm in Sources */,
 				7E3B88C01A385A290023C94E /* CompassViewCycledMessage.cpp in Sources */,
@@ -7166,6 +7341,7 @@
 				18FE3BD21A9CA561002D61C4 /* SortedMenuComparisonFunctions.cpp in Sources */,
 				7E3B8AEB1A385F110023C94E /* iOSInitialExperiencePreLoadModel.mm in Sources */,
 				7E5811CD1B1F3248007AD67F /* InteriorsExplorerViewInterop.mm in Sources */,
+				BF0E350C1BC673EA005B30E8 /* AppCameraController.cpp in Sources */,
 				7E3B89121A385A290023C94E /* MyPinCreationViewStateChangedMessage.cpp in Sources */,
 				BFD5FD6E1BA706AD00F591F1 /* TourExplorerCompositeViewController.cpp in Sources */,
 				7E3B890C1A385A290023C94E /* ModalityObserver.cpp in Sources */,
@@ -7175,6 +7351,7 @@
 				7E3B8B2D1A385F110023C94E /* ViewController.mm in Sources */,
 				BFB90EC71BC5732B00076380 /* SearchResultMenuAppModeMessageHandler.cpp in Sources */,
 				7E3B89D01A385A290023C94E /* SearchResultPoiOpenableControl.cpp in Sources */,
+				7E149DDB1BD1466F00C0AFFC /* CameraTransitionService.cpp in Sources */,
 				18B22B101A7A8B3400DDBFA2 /* OptionsOpenableControl.cpp in Sources */,
 				7E3B89921A385A290023C94E /* SearchQueryPerformer.cpp in Sources */,
 				7E3B89AC1A385A290023C94E /* SearchResultRemovedMessage.cpp in Sources */,
@@ -7189,12 +7366,14 @@
 				7E3B88BA1A385A290023C94E /* CategorySearchRepository.cpp in Sources */,
 				BFD5FD7A1BA706AD00F591F1 /* TourFullScreenImageCeremonyEndedObserver.cpp in Sources */,
 				18C0EBFB1A9E0E66008EED21 /* UserCreatedPinBoundObject.cpp in Sources */,
+				BFDEAA8B1BCD6133007CE4D7 /* InteriorExplorerState.cpp in Sources */,
 				7E3B88C61A385A290023C94E /* CompassModule.cpp in Sources */,
 				1833B2751BC2C48B001CB77A /* WorldPinsFloorHeightController.cpp in Sources */,
 				186B474B1AB333150084E80B /* ApplicationConfiguration.cpp in Sources */,
 				186B47231AB1DD5C0084E80B /* WatermarkViewInterop.mm in Sources */,
 				EEE021331BB44239001AF4CF /* YelpSearchResultModel.cpp in Sources */,
 				BFD5FD381BA706AD00F591F1 /* ActiveTourQuitSelectedMessage.cpp in Sources */,
+				7E149DD31BD1169B00C0AFFC /* ExitCurrentInteriorStage.cpp in Sources */,
 				7E3B8AED1A385F110023C94E /* Main.m in Sources */,
 				560741141B8CC624002B0F49 /* MenuDragStateChangedMessage.cpp in Sources */,
 				27DB89E21BB3FF170020CDA5 /* GeoNamesSearchServiceModule.cpp in Sources */,
@@ -7256,7 +7435,6 @@
 				7E3B899C1A385A290023C94E /* SearchQueryResponseReceivedMessage.cpp in Sources */,
 				7E3B89941A385A290023C94E /* SearchRefreshService.cpp in Sources */,
 				7E3B88B81A385A290023C94E /* CategorySearchModel.cpp in Sources */,
-				BFD4C7231BA9BB1F006F4E0B /* TourStateChangedMessage.cpp in Sources */,
 				BFD5FD6A1BA706AD00F591F1 /* TourOnMapSelectedMessage.cpp in Sources */,
 				7E3B89621A385A290023C94E /* MyPinsService.cpp in Sources */,
 				18E102841A8B85710011A18C /* SearchResultPoiPinToggledMessageHandler.cpp in Sources */,
@@ -7267,7 +7445,6 @@
 				7E3B89C01A385A290023C94E /* SearchResultOnMapModule.cpp in Sources */,
 				7E3B8B1B1A385F110023C94E /* SearchResultMenuDataProvider.mm in Sources */,
 				7E3B88D01A385A290023C94E /* CompassViewModel.cpp in Sources */,
-				BF4FEE4A1BC2C78400932C17 /* ExampleSearchJsonParser.cpp in Sources */,
 				27CADB631BCFEA2A00805A27 /* SizeHelpers.cpp in Sources */,
 				7E3B88B01A385A290023C94E /* CategorySearchSelectedMessage.cpp in Sources */,
 				7E3B89A61A385A290023C94E /* SearchResultViewClearedObserver.cpp in Sources */,
@@ -7297,8 +7474,10 @@
 				7E3B89701A385A290023C94E /* PlaceJumpsModule.cpp in Sources */,
 				7E3B89821A385A290023C94E /* ReactionModelModule.cpp in Sources */,
 				7E3B890E1A385A290023C94E /* MyPinCreationStateChangedMessage.cpp in Sources */,
+				7E149DBF1BCD209B00C0AFFC /* ExampleSearchJsonParser.cpp in Sources */,
 				7E3B89F41A385A290023C94E /* WorldPinsFactory.cpp in Sources */,
 				27DB89DC1BB3FF170020CDA5 /* GeoNamesSearchQueryFactory.cpp in Sources */,
+				7E149DCF1BD1118D00C0AFFC /* TransitionToWorldPointStage.cpp in Sources */,
 				7E3B89EC1A385A290023C94E /* WeatherSelectedMessage.cpp in Sources */,
 				7E3B8ADF1A385F110023C94E /* GlDisplayService.mm in Sources */,
 				BFD5FD601BA706AD00F591F1 /* TourWorldPinSelectionHandlerFactory.cpp in Sources */,
@@ -7322,7 +7501,6 @@
 				7E3B89401A385A290023C94E /* MyPinDetailsViewRemovePinMessage.cpp in Sources */,
 				183E54851ACEB1FB00AD6B3E /* InitialExperienceSearchResultAttractModeModule.cpp in Sources */,
 				7E3B896A1A385A290023C94E /* PlaceJumpSelectedMessage.cpp in Sources */,
-				BF4FEE481BC2C1AC00932C17 /* ExampleSearchResultModel.cpp in Sources */,
 				7E3B8B2F1A385F110023C94E /* UIView+TouchExclusivity.m in Sources */,
 				27E7A9C41BBC0F3200CDB502 /* SearchResultMenuOrder.cpp in Sources */,
 				7E3B891C1A385A290023C94E /* PoiRingView.cpp in Sources */,
@@ -7340,8 +7518,11 @@
 				7E3B89A41A385A290023C94E /* SearchResultMenuModule.cpp in Sources */,
 				7E3B8B151A385F110023C94E /* iOSPersistentSettingsModel.mm in Sources */,
 				7E8F03D61A822E820056F229 /* GpsMarkerModule.cpp in Sources */,
+				BFDEAA861BCD5821007CE4D7 /* StateMachine.cpp in Sources */,
+				BFDD75EC1BCE90E200335508 /* InteriorExplorerStreamState.cpp in Sources */,
 				7E3B88AA1A385A290023C94E /* AboutPageOpenableControl.cpp in Sources */,
 				7E3B8B291A385F110023C94E /* SecondaryMenuView.mm in Sources */,
+				BFDD75E81BCE885000335508 /* InteriorExplorerSetupState.cpp in Sources */,
 				7E3B8B091A385F110023C94E /* MyPinCreationInitiationView.mm in Sources */,
 				18FB645C1A9240FC005A9411 /* sha1.c in Sources */,
 				18FB648D1A9336A0005A9411 /* iOSYelpSearchServiceModule.cpp in Sources */,
@@ -7352,8 +7533,8 @@
 				7E3B89C41A385A290023C94E /* SearchResultOnMapFactory.cpp in Sources */,
 				7E3B890A1A385A290023C94E /* ModalityModule.cpp in Sources */,
 				BFD5FD961BA7141600F591F1 /* ImageStore.mm in Sources */,
-				56D5B23C1B8233C700306841 /* InteriorPinScaleController.cpp in Sources */,
 				186B47511AB333150084E80B /* ApplicationConfigurationReader.cpp in Sources */,
+				7E149DD71BD12BC700C0AFFC /* TransitionToInteriorStage.cpp in Sources */,
 				7E3B88A81A385A290023C94E /* AboutPageModule.cpp in Sources */,
 				18B44CEB1A83D3CF00FDFD8A /* OptionsCacheClearSubView.mm in Sources */,
 				183E54891ACEB1FB00AD6B3E /* InitialExperienceSearchResultAttractModeViewController.cpp in Sources */,
@@ -7376,6 +7557,7 @@
 				7E3B89001A385A290023C94E /* ModalityChangedMessage.cpp in Sources */,
 				7E3B89A21A385A290023C94E /* SearchResultMenuItemSelectedMessageHandler.cpp in Sources */,
 				7E3B892A1A385A290023C94E /* MyPinCreationConfirmationController.cpp in Sources */,
+				27C1F99B1BC6A47600D5EFF4 /* InteriorsExplorerCameraController.cpp in Sources */,
 				BFD5FCCC1BA7068300F591F1 /* TourWebView.mm in Sources */,
 				7E3B88F41A385A290023C94E /* MenuOptionsModel.cpp in Sources */,
 				7E3B8A081A385A290023C94E /* WorldPinOnMapController.cpp in Sources */,
@@ -7391,12 +7573,11 @@
 				7E1B50671ACAD4170060FA4F /* InitialExperienceIntroStep.cpp in Sources */,
 				F7F373F4043CCF2D73DD1F06 /* MapModeModel.cpp in Sources */,
 				BFD5FD4A1BA706AD00F591F1 /* TourActiveStateChangedMessageHandler.cpp in Sources */,
+				BFDD75F51BCEAF5800335508 /* InteriorExplorerExitingState.cpp in Sources */,
 				F7F3718BE3D42C0AAD8EC7E3 /* MapModeModule.cpp in Sources */,
-				F7F3741B41A5EE79F725EED4 /* InteriorsExitObserver.cpp in Sources */,
 				F7F37F4C1A542A11877345C4 /* MapModeController.cpp in Sources */,
 				BF681D9F1BC4210700100BFF /* ExampleTourHelpers.cpp in Sources */,
 				BFD5FD7C1BA706AD00F591F1 /* TourFullScreenImageViewController.cpp in Sources */,
-				F7F375B895F34FBAD297D747 /* InteriorsExplorerInputDelegate.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -4,6 +4,8 @@
 
 #include "CallbackCollection.h"
 #include "AppModes.h"
+#include <vector>
+#include "IStateMachineState.h"
 
 namespace ExampleApp
 {
@@ -18,7 +20,7 @@ namespace ExampleApp
             //       at the moment, but should be expanded on (e.g. in menu state by observing modality model etc.)
             enum AppMode
             {
-                WorldMode,
+                WorldMode = 0,
                 InteriorMode,
                 TourMode
             };
@@ -30,8 +32,14 @@ namespace ExampleApp
                 {
 
                 }
+                
+                virtual void InitialiseStateMachine(const std::vector<Helpers::IStateMachineState*>& appStates) = 0;
 
                 virtual AppMode GetAppMode() const = 0;
+                
+                virtual void SetAppMode(AppMode mode) = 0;
+                
+                virtual void Update(float dt) = 0;
 
                 virtual void RegisterAppModeChangedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
                 virtual void UnregisterAppModeChangedCallback(Eegeo::Helpers::ICallback0& callback) = 0;

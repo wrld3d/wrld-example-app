@@ -8,6 +8,7 @@
 #include <string>
 #include "Interiors.h"
 #include "BidirectionalBus.h"
+#include "InteriorsExplorer.h"
 
 namespace ExampleApp
 {
@@ -27,7 +28,8 @@ namespace ExampleApp
                                                        Camera::IToursCameraController& toursCameraController,
                                                        WorldPins::SdkModel::IWorldPinsService& worldPinsService,
                                                        bool interiorsEnabled,
-                                                       Eegeo::Resources::Interiors::InteriorsController& interiorController,
+                                                       Eegeo::Resources::Interiors::InteriorController& interiorController,
+                                                       InteriorsExplorer::SdkModel::InteriorVisibilityUpdater& interiorVisibilityUpdater,
                                                        ExampleAppMessaging::TMessageBus& messageBus);
                         ~ExampleTourStateMachineFactory();
                         
@@ -40,7 +42,8 @@ namespace ExampleApp
                         WorldPins::SdkModel::IWorldPinsService& m_worldPinsService;
                         
                         bool m_interiorsEnabled;
-                        Eegeo::Resources::Interiors::InteriorsController& m_interiorController;
+                        Eegeo::Resources::Interiors::InteriorController& m_interiorController;
+                        InteriorsExplorer::SdkModel::InteriorVisibilityUpdater& m_interiorVisibilityUpdater;
                         ExampleAppMessaging::TMessageBus& m_messageBus;
                     };
                 }

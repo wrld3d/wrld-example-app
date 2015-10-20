@@ -21,13 +21,15 @@ namespace ExampleApp
             {
                 ToursCameraTransitionController::ToursCameraTransitionController(IToursCameraController& toursCameraController,
                                                                                  Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& gpsGlobeCameraController,
-                                                                                 Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider)
+                                                                                 Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider,
+                                                                                 Eegeo::Camera::GlobeCamera::GlobeCameraTouchController& touchController)
                 : m_toursCameraController(toursCameraController)
                 , m_pToursTransitionMode(NULL)
                 , m_pToursCurrentMode(NULL)
                 , m_pToursNextMode(NULL)
                 , m_gpsGlobeCameraController(gpsGlobeCameraController)
                 , m_terrainHeightProvider(terrainHeightProvider)
+                , m_touchController(touchController)
                 {
                     
                 }
@@ -45,11 +47,6 @@ namespace ExampleApp
                 bool ToursCameraTransitionController::IsTransitioning() const
                 {
                     return !IsTransitionComplete();
-                }
-                
-                void ToursCameraTransitionController::SetAppCameraState(ToursCameraState& cameraState)
-                {
-                    m_appCameraState = cameraState;
                 }
                 
                 void ToursCameraTransitionController::Update(float dt)
@@ -72,7 +69,7 @@ namespace ExampleApp
                     m_pToursNextMode = pTargetCameraMode;
                     
                     // HACK - Need to ensure both modes have a valid state (by updating). Should ensure they're initialised as such.
-                    m_pToursNextMode->UpdateCamera(0.0f, m_toursCameraController.GetTouchController(), 0.0f);
+                    m_pToursNextMode->UpdateCamera(0.0f, m_touchController, 0.0f);
                                         
                     if(IsTransitioning()) // interrupting an in-flight transition
                     {
@@ -80,70 +77,23 @@ namespace ExampleApp
                         Eegeo_DELETE m_pToursTransitionMode;
                         m_pToursTransitionMode = SplineTransitionCameraMode::CreateBetweenStates(currentTransitionCameraState,
                                                                                                  m_pToursNextMode->GetCurrentState());
+                        m_toursCameraController.SetMode(m_pToursTransitionMode);
                     }
                     else if(m_pToursCurrentMode != NULL) // transition from stable state
                     {
                         m_pToursTransitionMode = SplineTransitionCameraMode::CreateBetweenStates(m_pToursCurrentMode->GetCurrentState(),
                                                                                                  m_pToursNextMode->GetCurrentState());
+                        m_toursCameraController.SetMode(m_pToursTransitionMode);
                     }
                     else // 'transition' from app
                     {
-                        PerformCameraTransitionOrFade(m_appCameraState,
-                                                      m_pToursNextMode->GetCurrentState());
+                        // Transition from other 'modes' now dealt with externally by AppCameraController
+                        m_pToursTransitionMode = NULL;
+                        
+                        m_pToursCurrentMode = NULL;
+                        m_pToursCurrentMode = m_pToursNextMode;
+                        m_toursCameraController.SetMode(m_pToursCurrentMode);
                     }
-                    
-                    m_toursCameraController.SetMode(m_pToursTransitionMode);
-                }
-                
-                void ToursCameraTransitionController::TransitionBackToAppCamera(bool returnToOriginalMode)
-                {
-                    if(!returnToOriginalMode)
-                    {
-                        Eegeo::dv3 interestPoint;
-                        Eegeo::v3 toInterestPoint;
-                        
-                        if(IsTransitioning())
-                        {
-                            toInterestPoint = m_toursCameraController.GetRenderCamera().GetModelMatrix().GetRow(2);
-                            Eegeo_ASSERT(Eegeo::Geometry::IntersectionTests::GetRayEarthSphereIntersection(m_toursCameraController.GetCameraState().LocationEcef(),
-                                                                                                           toInterestPoint,
-                                                                                                           interestPoint),
-                                         "Camera forward does not intersect with earth before transitioning out of tour mode");
-                        }
-                        else
-                        {
-                            toInterestPoint = Eegeo::dv3::ToSingle(interestPoint - m_toursCameraController.GetCameraState().LocationEcef());
-                            interestPoint = m_toursCameraController.GetCameraState().InterestPointEcef();
-                        }
-                        
-                        float distanceToInterest = (float)(interestPoint - m_toursCameraController.GetRenderCamera().GetEcefLocation()).Length();
-                        
-                        float terrainHeightAtInterest = 0.0f;
-                        
-                        if(m_terrainHeightProvider.TryGetHeight(interestPoint, 0, terrainHeightAtInterest))
-                        {
-                            interestPoint = interestPoint.Norm() * (Eegeo::Space::EarthConstants::Radius + terrainHeightAtInterest);
-                        }
-                        
-                        Eegeo::Space::EcefTangentBasis ecefTangentBasis(interestPoint, toInterestPoint);
-                        m_gpsGlobeCameraController.SetView(ecefTangentBasis, distanceToInterest);
-                        
-                        m_appCameraState = ToursCameraState::CreateFromCameraState(m_gpsGlobeCameraController.GetCameraState(), Eegeo::Math::Rad2Deg(m_gpsGlobeCameraController.GetRenderCamera().GetFOV()));
-                    }
-                    
-                    if(IsTransitioning())
-                    {
-                        ToursCameraState currentTransitionCameraState(m_pToursTransitionMode->GetCurrentState());
-                        Eegeo_DELETE m_pToursTransitionMode;
-                        PerformCameraTransitionOrFade(currentTransitionCameraState, m_appCameraState);
-                    }
-                    else
-                    {
-                        PerformCameraTransitionOrFade(m_pToursCurrentMode->GetCurrentState(), m_appCameraState);
-                    }
-                    
-                    m_toursCameraController.SetMode(m_pToursTransitionMode);
-                    m_pToursNextMode = NULL;
                 }
                 
                 void ToursCameraTransitionController::PerformCameraTransitionOrFade(const ToursCameraState& currentState,

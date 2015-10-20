@@ -6,10 +6,11 @@
 #include "IWorldPinsService.h"
 #include "WorldPinFocusData.h"
 #include "ExampleTourPinSelectionHandler.h"
-#include "InteriorsController.h"
+#include "InteriorController.h"
 #include "ExampleCurrentTourCardTappedHandler.h"
 #include "WorldPinItemModel.h"
 #include "WorldPinVisibility.h"
+#include "InteriorVisibilityUpdater.h"
 
 namespace ExampleApp
 {
@@ -27,8 +28,8 @@ namespace ExampleApp
                                                        Camera::IToursCameraTransitionController& toursCameraTransitionController,
                                                        WorldPins::SdkModel::IWorldPinsService& worldPinsService,
                                                        WorldPins::SdkModel::WorldPinInteriorData& worldPinInteriorData,
-                                                       Eegeo::Resources::Interiors::InteriorsController& interiorsController,
-                                                       const Eegeo::Camera::RenderCamera& tourRenderCamera,
+                                                       Eegeo::Resources::Interiors::InteriorController& interiorController,
+                                                       InteriorsExplorer::SdkModel::InteriorVisibilityUpdater& interiorVisibilityUpdater,
                                                        ExampleAppMessaging::TMessageBus& messageBus)
                     : m_stateModel(stateModel)
                     , m_toursCameraTransitionController(toursCameraTransitionController)
@@ -38,8 +39,8 @@ namespace ExampleApp
                     , m_pPinItemModel(NULL)
                     , m_interior(isInterior)
                     , m_worldPinInteriorData(worldPinInteriorData)
-                    , m_interiorsController(interiorsController)
-                    , m_tourRenderCamera(tourRenderCamera)
+                    , m_interiorController(interiorController)
+                    , m_interiorVisibilityUpdater(interiorVisibilityUpdater)
                     , m_messageBus(messageBus)
                     , m_pTourCardTappedHandler(NULL)
                     {
@@ -60,15 +61,14 @@ namespace ExampleApp
                         
                         if(m_interior)
                         {
-                            const Eegeo::Resources::Interiors::Camera::InteriorsCameraState& initialInteriorsCameraState = Eegeo::Resources::Interiors::Camera::InteriorsCameraState::MakeFromRenderCamera(m_tourRenderCamera);
-                            
-                            m_interiorsController.TryEnterInterior(m_worldPinInteriorData.building,
-                                                                   initialInteriorsCameraState);
+                            m_interiorController.SetSelectedInterior(m_worldPinInteriorData.building);
                         }
-                        else if (m_interiorsController.InteriorIsVisible())
+                        else if (m_interiorController.InteriorIsVisible())
                         {
-                            m_interiorsController.ExitInterior();
+                            m_interiorController.ClearSelectedInterior();
                         }
+                        
+                         m_interiorVisibilityUpdater.SetInteriorShouldDisplay(false);
                         
                         m_pTourCardTappedHandler = Eegeo_NEW(ExampleCurrentTourCardTappedHandler)(m_messageBus, m_stateModel);
                     }
@@ -78,6 +78,8 @@ namespace ExampleApp
                         if(m_toursCameraTransitionController.IsTransitionComplete() && !m_cameraTransitionComplete)
                         {   
                             m_cameraTransitionComplete = true;
+                            
+                            m_interiorVisibilityUpdater.SetInteriorShouldDisplay(true);
                             
                             // Add pin.
                             ExampleApp::WorldPins::SdkModel::WorldPinFocusData worldPinFocusData(m_stateModel.Headline(), m_stateModel.Description());

@@ -70,7 +70,6 @@ namespace ExampleApp
                         const Eegeo::Rendering::ScreenProperties& screenProperties,
                         Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& gpsGlobeCameraController,
                         Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider,
-                        Eegeo::Resources::Interiors::InteriorsController& interiorsController,
                         ExampleAppMessaging::TSdkModelDomainEventBus& sdkDomainEventBus,
                         AppModes::SdkModel::IAppModeModel& appModeModel);
             

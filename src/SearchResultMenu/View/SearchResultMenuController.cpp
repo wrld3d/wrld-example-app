@@ -65,6 +65,9 @@ namespace ExampleApp
                                       Eegeo_NEW(SearchResultItemModel)(
                                                                        model.GetTitle(),
                                                                        model.GetLocation().ToECEF(),
+                                                                       model.IsInterior(),
+                                                                       model.GetBuildingId(),
+                                                                       model.GetFloor(),
                                                                        m_viewModel,
                                                                        m_messageBus)
                                       );

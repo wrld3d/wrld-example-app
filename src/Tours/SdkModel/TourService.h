@@ -11,6 +11,7 @@
 #include "BidirectionalBus.h"
 #include <stack>
 #include "SdkModelDomainEventBus.h"
+#include "CallbackCollection.h"
 
 namespace ExampleApp
 {
@@ -55,6 +56,9 @@ namespace ExampleApp
                 
                 std::stack<SuspendedTour> m_previousActiveToursStack;
                 
+                Eegeo::Helpers::CallbackCollection0 m_tourStartedCallbacks;
+                Eegeo::Helpers::CallbackCollection0 m_tourEndedCallbacks;
+                
             public:
                 TourService(ITourRepository& repository,
                             Camera::IToursCameraTransitionController& cameraTransitionController,
@@ -79,6 +83,11 @@ namespace ExampleApp
                 void SetActiveTourState(int activeStateIndex);
                 
                 void UpdateCurrentTour(float dt);
+                
+                void RegisterTourStartedCallback(Eegeo::Helpers::ICallback0& callback);
+                void UnregisterTourStartedCallback(Eegeo::Helpers::ICallback0& callback);
+                void RegisterTourEndedCallback(Eegeo::Helpers::ICallback0& callback);
+                void UnregisterTourEndedCallback(Eegeo::Helpers::ICallback0& callback);
             };
         }
     }
