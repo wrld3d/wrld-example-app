@@ -208,7 +208,7 @@ namespace ExampleApp
                                                 platformConfig,
                                                 NULL,
                                                 "http://cdn1.eegeo.com/coverage-trees/vglobal/v813/manifest.bin.gz",
-                                                "http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v428/manifest.txt.gz",
+                                                "http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v421/manifest.txt.gz",
                                                 &errorHandler
                                                 );
 
