@@ -360,7 +360,7 @@ namespace ExampleApp
                                                                          m_networkCapabilities);
 
         Search::Swallow::SdkModel::SwallowSearchServiceModule* pSwallowSearchServiceModule = Eegeo_NEW(Search::Swallow::SdkModel::SwallowSearchServiceModule)(m_pSwallowPoiDbModule->GetSwallowPoiDbServiceProvider(),
-                                                                                                                                                              *m_pCameraTransitionController,
+                                                                                                                                                              *m_pCameraTransitionService,
                                                                                                                                                               m_messageBus,
                                                                                                                                                               m_pWorldPinsModule->GetWorldPinsService());
         
