@@ -27,7 +27,7 @@ namespace ExampleApp
                                            ExampleAppMessaging::TMessageBus& messageBus);
                 ~InteriorWorldPinController();
                 
-                const bool PinInteractionAllowed() const { return !m_menuIsDragging; }
+                const bool PinInteractionAllowed() const;
                 
             private:
                 
