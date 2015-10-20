@@ -10,6 +10,7 @@
 #include "Terrain.h"
 #include "GLHelpers.h"
 #include "AppModes.h"
+#include "Rendering.h"
 
 namespace ExampleApp
 {
@@ -29,7 +30,8 @@ namespace ExampleApp
                                   Eegeo::Modules::Core::LightingModule& lightingModule,
                                   Eegeo::Modules::Map::Layers::TerrainModelModule& terrainModelModule,
                                   Eegeo::Modules::Map::MapModule& mapModule,
-                                  ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel);
+                                  ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
+                                  Eegeo::Rendering::ScreenProperties& screenProperties);
 
                     ~PoiRingModule();
 

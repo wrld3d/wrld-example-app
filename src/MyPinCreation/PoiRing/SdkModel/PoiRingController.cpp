@@ -21,6 +21,7 @@
 #include "InteriorController.h"
 
 #include "InteriorHeightHelpers.h"
+#include "ScreenProperties.h"
 
 namespace ExampleApp
 {
@@ -76,7 +77,8 @@ namespace ExampleApp
                                                      PoiRingView& poiRingView,
                                                      Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                                      Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider,
-                                                     Eegeo::Resources::Interiors::InteriorController& interiorController)
+                                                     Eegeo::Resources::Interiors::InteriorController& interiorController,
+                                                     Eegeo::Rendering::ScreenProperties& screenProperties)
                     : m_myPinCreationModel(myPinCreationModel)
                     , m_poiRingView(poiRingView)
                     , m_scaleInterpolationParam(0.f)
@@ -87,6 +89,7 @@ namespace ExampleApp
                     , m_iconSize(0.0f)
                     , m_ringRadius(0.0f)
                     , m_interiorController(interiorController)
+                    , m_screenProperties(screenProperties)
                 {
 
                 }
@@ -165,8 +168,9 @@ namespace ExampleApp
                                                   unflattenedIconPosition,
                                                   m_environmentFlatteningService.GetCurrentScale());
 
-                    const float iconConstantScale = 0.14f;
-                    const float iconScale = Eegeo::Helpers::TransformHelpers::ComputeModelScaleForConstantScreenSize(renderCamera, iconPosition) * iconConstantScale;
+                    const float assetSize = 114.f;
+                    const float iconScale = Eegeo::Helpers::TransformHelpers::ComputeModelScaleForConstantScreenSizeWithVerticalFoV(renderCamera, iconPosition) / (m_screenProperties.GetScreenHeight()* 0.5f)*m_screenProperties.GetPixelScale() * assetSize;
+                    
                     m_iconSize = Eegeo::Max(iconScale * transitionScale, 0.0f);
                     m_poiRingView.AddIconSprite(renderCamera, iconPosition, m_iconSize);
 

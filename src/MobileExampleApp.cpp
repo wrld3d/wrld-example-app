@@ -445,7 +445,8 @@ namespace ExampleApp
                                                                                                   m_pWorld->GetLightingModule(),
                                                                                                   m_pWorld->GetTerrainModelModule(),
                                                                                                   m_pWorld->GetMapModule(),
-                                                                                                  *m_pAppModeModel);
+                                                                                                  *m_pAppModeModel,
+                                                                                                  m_screenProperties);
 
         m_pMyPinCreationDetailsModule = Eegeo_NEW(ExampleApp::MyPinCreationDetails::View::MyPinCreationDetailsModule)(m_identityProvider,
                                         m_pReactionControllerModule->GetReactionControllerModel());
