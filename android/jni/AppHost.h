@@ -55,6 +55,7 @@
 #include "IEegeoErrorHandler.h"
 #include "ISingleOptionAlertBoxDismissedHandler.h"
 #include "AndroidFlurryMetricsService.h"
+#include "ICallback.h"
 
 class AppHost : public Eegeo::IEegeoErrorHandler, protected Eegeo::NonCopyable
 {
@@ -147,6 +148,7 @@ private:
     ExampleApp::ExampleAppMessaging::TMessageBus m_messageBus;
     ExampleApp::ExampleAppMessaging::TSdkModelDomainEventBus m_sdkDomainEventBus;
     Eegeo::UI::NativeAlerts::TSingleOptionAlertBoxDismissedHandler<AppHost> m_failAlertHandler;
+    Eegeo::Helpers::TCallback1<AppHost, const ExampleApp::CameraTransitions::CameraTransitionChangedMessage&> m_cameraTransitionChangedHandler;
 
     void DispatchRevealUiMessageToUiThreadFromNativeThread();
     void DispatchUiCreatedMessageToNativeThreadFromUiThread();
@@ -154,4 +156,5 @@ private:
     void DestroyApplicationViewModulesFromUiThread();
 
     void HandleStartupFailure();
+    void HandleCameraTransitionChanged(const ExampleApp::CameraTransitions::CameraTransitionChangedMessage& message);
 };

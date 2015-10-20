@@ -1,12 +1,16 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "InteriorsExplorerModule.h"
+#include "InteriorsExplorerCameraController.h"
 #include "InteriorsExplorerViewModel.h"
 #include "InteriorsExplorerModel.h"
-#include "InteriorsExitObserver.h"
-#include "InteriorsExplorerInputDelegate.h"
-#include "InteriorsStreamingController.h"
-#include "InteriorPinScaleController.h"
+#include "InteriorWorldPinController.h"
+#include "GlobeCameraController.h"
+#include "GlobeCameraControllerFactory.h"
+#include "GlobeCameraTouchController.h"
+#include "GlobeCameraTouchControllerConfiguration.h"
+#include "GlobeCameraControllerConfiguration.h"
+#include "InteriorVisibilityUpdater.h"
 
 namespace ExampleApp
 {
@@ -14,43 +18,68 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            InteriorsExplorerModule::InteriorsExplorerModule(Eegeo::Resources::Interiors::InteriorsController& interiorsController,
-                                                             Eegeo::Resources::Interiors::Camera::InteriorsCameraController& interiorsCameraController,
+            InteriorsExplorerModule::InteriorsExplorerModule(Eegeo::Resources::Interiors::InteriorController& interiorController,
                                                              Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                                                             Eegeo::Resources::Interiors::InteriorSelectionController& interiorSelectionController,
-                                                             Eegeo::Resources::Interiors::InteriorsPinsController& interiorsPinsController,
-                                                             Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& globeCameraController,
-                                                             Eegeo::Streaming::CameraFrustumStreamingVolume& cameraFrustumStreamingVolume,
-                                                             Eegeo::UI::NativeUIFactories& nativeUIFactories,
+                                                             Eegeo::Resources::Interiors::Markers::InteriorMarkerModelRepository& markerRepository,
+                                                             WorldPins::SdkModel::IWorldPinsService& worldPinsService,
+                                                             ExampleApp::MapMode::SdkModel::IMapModeModel& mapModeModel,
+                                                             WeatherMenu::SdkModel::IWeatherController& weatherController,
+                                                             Eegeo::Camera::GlobeCamera::GlobeCameraControllerFactory& globeCameraControllerFactory,
+                                                             const Eegeo::Rendering::ScreenProperties& screenProperties,
                                                              Eegeo::Helpers::IIdentityProvider& identityProvider,
-                                                             MapMode::SdkModel::IMapModeModel& mapModeModel,
-                                                             AppModes::SdkModel::IAppModeModel& appModeModel,
                                                              ExampleAppMessaging::TMessageBus& messageBus,
-                                                             ExampleApp::Metrics::IMetricsService& metricsService,
-                                                             ExampleAppMessaging::TSdkModelDomainEventBus& sdkDomainEventBus)
+                                                             Metrics::IMetricsService& metricsService)
             {
-                m_pModel = Eegeo_NEW(InteriorsExplorerModel)(interiorsController,
+                
+                const float transitionTime = 0.5f;
+                m_pVisibilityUpdater = Eegeo_NEW(InteriorVisibilityUpdater)(interiorController, transitionTime);
+                
+                Eegeo::Camera::GlobeCamera::GlobeCameraTouchControllerConfiguration touchConfig = Eegeo::Camera::GlobeCamera::GlobeCameraTouchControllerConfiguration::CreateDefault();
+                Eegeo::Camera::GlobeCamera::GlobeCameraControllerConfiguration globeCameraConfig = Eegeo::Camera::GlobeCamera::GlobeCameraControllerConfiguration::CreateDefault(false);
+                
+                globeCameraConfig.terrainFollowingEnabled = false;
+                globeCameraConfig.zoomAltitudeLow = 100.0f; // Probably too low.
+                globeCameraConfig.fovZoomedInCity = 10.0f;
+                globeCameraConfig.maxAltitude = 1000.0f;
+                
+                m_pGlobeCameraTouchController = globeCameraControllerFactory.CreateTouchController(touchConfig);
+                
+                m_pGlobeCameraController = globeCameraControllerFactory.CreateCameraController(globeCameraConfig,
+                                                                                               *m_pGlobeCameraTouchController,
+                                                                                               screenProperties);
+                
+                m_pInteriorsCameraController = Eegeo_NEW(InteriorsExplorerCameraController)(interiorController,
+                                                                                            interiorSelectionModel,
+                                                                                            markerRepository,
+                                                                                            *m_pGlobeCameraTouchController,
+                                                                                            *m_pGlobeCameraController);
+                
+                m_pWorldPinController = Eegeo_NEW(InteriorWorldPinController)(interiorController,
+                                                                              markerRepository,
+                                                                              worldPinsService,
+                                                                              *m_pInteriorsCameraController,
+                                                                              messageBus);
+                
+                m_pModel = Eegeo_NEW(InteriorsExplorerModel)(interiorController,
                                                              interiorSelectionModel,
+                                                             *m_pVisibilityUpdater,
                                                              mapModeModel,
+                                                             weatherController,
                                                              messageBus,
-                                                             metricsService,
-                                                             sdkDomainEventBus);
+                                                             metricsService);
                 
                 m_pViewModel = Eegeo_NEW(View::InteriorsExplorerViewModel)(false, identityProvider.GetNextIdentity());
-                m_pInteriorExitObserver = Eegeo_NEW(InteriorsExitObserver)(interiorsController, interiorSelectionController, globeCameraController, nativeUIFactories);
-                m_pInteriorsExplorerInputDelegate = Eegeo_NEW(InteriorsExplorerInputDelegate)(interiorsController, interiorsPinsController, globeCameraController, messageBus);
-                m_pInteriorsStreamingController = Eegeo_NEW(InteriorsStreamingController)(interiorSelectionController, cameraFrustumStreamingVolume);
-                m_pInteriorPinScaleController = Eegeo_NEW(InteriorPinScaleController)(interiorsPinsController, appModeModel, messageBus);
             }
             
             InteriorsExplorerModule::~InteriorsExplorerModule()
             {
-                Eegeo_DELETE m_pInteriorPinScaleController;
-                Eegeo_DELETE m_pInteriorsExplorerInputDelegate;
-                Eegeo_DELETE m_pInteriorExitObserver;
-                Eegeo_DELETE m_pModel;
                 Eegeo_DELETE m_pViewModel;
-                Eegeo_DELETE m_pInteriorsStreamingController;
+                Eegeo_DELETE m_pModel;
+                Eegeo_DELETE m_pWorldPinController;
+                Eegeo_DELETE m_pInteriorsCameraController;
+                Eegeo_DELETE m_pGlobeCameraTouchController;
+                Eegeo_DELETE m_pGlobeCameraController;
+                Eegeo_DELETE m_pVisibilityUpdater;
             }
             
             View::InteriorsExplorerViewModel& InteriorsExplorerModule::GetInteriorsExplorerViewModel() const
@@ -62,10 +91,26 @@ namespace ExampleApp
             {
                 return *m_pViewModel;
             }
-
-            IInteriorsExplorerInputDelegate& InteriorsExplorerModule::GetInputDelegate() const
+            
+            InteriorVisibilityUpdater& InteriorsExplorerModule::GetInteriorVisibilityUpdater() const
             {
-                return *m_pInteriorsExplorerInputDelegate;
+                return *m_pVisibilityUpdater;
+            }
+            
+            InteriorsExplorerCameraController& InteriorsExplorerModule::GetInteriorsCameraController() const
+            {
+                return *m_pInteriorsCameraController;
+            }
+            
+            void InteriorsExplorerModule::Update(float dt) const
+            {
+                m_pVisibilityUpdater->Update(dt);
+            }
+            
+            
+            InteriorsExplorerModel& InteriorsExplorerModule::GetInteriorsExplorerModel() const
+            {
+                return *m_pModel;
             }
         }
     }

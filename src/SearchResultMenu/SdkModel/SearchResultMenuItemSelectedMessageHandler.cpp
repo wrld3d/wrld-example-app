@@ -11,7 +11,20 @@ namespace ExampleApp
             void SearchResultMenuItemSelectedMessageHandler::OnSearchResultMenuItemSelectedMessage(const SearchResultMenuItemSelectedMessage& message)
             {
                 const float newDistanceFromInterest = 1000;
-                m_cameraTransitionController.StartTransitionTo(message.SearchResultLocationEcef(), newDistanceFromInterest);
+                const float newInteriorDistanceFromInterest = 300;
+                if(message.InInterior())
+                {
+                    m_cameraTransitionController.StartTransitionTo(message.SearchResultLocationEcef(),
+                                                                   newInteriorDistanceFromInterest,
+                                                                   message.InteriorBuildingId(),
+                                                                   message.FloorIndex());
+                }
+                else
+                {
+                    m_cameraTransitionController.StartTransitionTo(message.SearchResultLocationEcef(),
+                                                                   newDistanceFromInterest);
+                }
+                
             }
 
             SearchResultMenuItemSelectedMessageHandler::SearchResultMenuItemSelectedMessageHandler(

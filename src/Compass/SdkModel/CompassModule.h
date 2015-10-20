@@ -14,6 +14,7 @@
 #include "BidirectionalBus.h"
 #include "IMetricsService.h"
 #include "AppModes.h"
+#include "AlertBox.h"
 
 namespace ExampleApp
 {
@@ -37,8 +38,8 @@ namespace ExampleApp
                               Eegeo::Helpers::IIdentityProvider& identityProvider,
                               ExampleAppMessaging::TMessageBus& messageBus,
                               Metrics::IMetricsService& metricsService,
-                              AppModes::SdkModel::IAppModeModel& appModeModel
-                             );
+                              AppModes::SdkModel::IAppModeModel& appModeModel,
+                              Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory);
 
                 ~CompassModule();
 

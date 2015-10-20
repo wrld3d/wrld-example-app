@@ -37,7 +37,12 @@ namespace ExampleApp
                                            message.GetMyPinTitle(),
                                            "",
                                            myPinIcon,
-                                           Eegeo_NEW(MyPinMenuOption)(message.GetMyPinId(), message.GetMyPinLocation(), m_menuViewModel, m_messageBus));
+                                           Eegeo_NEW(MyPinMenuOption)(message.GetMyPinId(),
+                                                                      message.GetMyPinLocation(),
+                                                                      message.GetMyPinInteriorId(),
+                                                                      message.GetMyPinFloorIndex(),
+                                                                      m_menuViewModel,
+                                                                      m_messageBus));
             }
         }
     }

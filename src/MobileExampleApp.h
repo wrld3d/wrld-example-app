@@ -78,7 +78,9 @@
 #include "SwallowPoiDb.h"
 #include "IToursModule.h"
 #include "SwallowSearch.h"
+#include "IAppCameraModule.h"
 #include "IInteriorsCustomMaterialsModule.h"
+#include "CameraTransitionService.h"
 
 namespace ExampleApp
 {
@@ -86,6 +88,7 @@ namespace ExampleApp
     {
     private:
         Eegeo::Camera::GlobeCamera::GpsGlobeCameraController* m_pGlobeCameraController;
+        AppCamera::SdkModel::AppGlobeCameraWrapper* m_pGlobeCameraWrapper;
         Eegeo::ITouchController* m_pCameraTouchController;
         Eegeo::ITouchController* m_pCurrentTouchController;
         Eegeo::EegeoWorld* m_pWorld;
@@ -101,6 +104,7 @@ namespace ExampleApp
         const bool m_enableTours;
 
         CameraTransitions::SdkModel::ICameraTransitionController* m_pCameraTransitionController;
+        CameraTransitions::SdkModel::CameraTransitionService* m_pCameraTransitionService;
 
         ExampleApp::PersistentSettings::IPersistentSettingsModel& m_persistentSettings;
         ExampleApp::Metrics::IMetricsService& m_metricsService;
@@ -158,11 +162,14 @@ namespace ExampleApp
         Eegeo::Modules::FireworksModule* m_pFireworksModule;
         float m_toursPinDiameter;
         
+        AppCamera::SdkModel::IAppCameraModule* m_pAppCameraModule;
+        
         const bool m_interiorsEnabled;
 
 		void CreateSQLiteModule(Eegeo::UI::NativeUIFactories& nativeUIFactories);
 
-        void CreateApplicationModelModules(const std::map<std::string,ExampleApp::Search::SdkModel::ISearchServiceModule*>& platformImplementedSearchServiceModules);
+        void CreateApplicationModelModules(const std::map<std::string,ExampleApp::Search::SdkModel::ISearchServiceModule*>& platformImplementedSearchServiceModules,
+                                           Eegeo::UI::NativeUIFactories& nativeUIFactories);
 
         void DestroyApplicationModelModules();
 
@@ -229,7 +236,7 @@ namespace ExampleApp
         
         CameraTransitions::SdkModel::ICameraTransitionController& CameraTransitionController() const
         {
-            return *m_pCameraTransitionController;
+            return *m_pCameraTransitionService;
         }
 
         const ExampleApp::SecondaryMenu::SdkModel::ISecondaryMenuModule& SecondaryMenuModule() const
@@ -382,7 +389,7 @@ namespace ExampleApp
         {
             return *m_pAppModeModel;
         }
-
+        
         void OnPause();
 
         void OnResume();

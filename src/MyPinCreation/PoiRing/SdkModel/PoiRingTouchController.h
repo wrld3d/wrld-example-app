@@ -27,7 +27,7 @@ namespace ExampleApp
                                            Eegeo::Collision::IRayPicker& rayPicker,
                                            const IPoiRingController& poiRingController,
                                            ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
-                                           Eegeo::Resources::Interiors::InteriorsController& interiorsController);
+                                           Eegeo::Resources::Interiors::InteriorController& interiorsController);
                     
                     bool HandleTouchDown(const AppInterface::TouchData& data,
                                          const Eegeo::Camera::RenderCamera& renderCamera,
@@ -64,8 +64,8 @@ namespace ExampleApp
                     const IPoiRingController& m_poiRingController;
                     
                     ExampleApp::AppModes::SdkModel::IAppModeModel& m_appModeModel;
-                    Eegeo::Resources::Interiors::InteriorsController& m_interiorsController;
-                    
+                    Eegeo::Resources::Interiors::InteriorController& m_interiorController;
+
                     bool m_isDragging;
 
                     bool PerformRayPick(Eegeo::dv3& rayOrigin, Eegeo::dv3& rayDirection, Eegeo::dv3& out_rayIntersectionPoint, double& out_intersectionParam);

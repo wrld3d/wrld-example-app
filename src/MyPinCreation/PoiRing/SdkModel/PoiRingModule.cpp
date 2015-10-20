@@ -49,7 +49,8 @@ namespace ExampleApp
                                              Eegeo::Modules::Core::LightingModule& lightingModule,
                                              Eegeo::Modules::Map::Layers::TerrainModelModule& terrainModelModule,
                                              Eegeo::Modules::Map::MapModule& mapModule,
-                                             ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel)
+                                             ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
+                                             Eegeo::Rendering::ScreenProperties& screenProperties)
                     : m_renderableFilters(renderingModule.GetRenderableFilters())
                 {
                     m_pPoiRingRenderable = Eegeo_NEW(PoiRingRenderable)(renderingModule,
@@ -96,7 +97,8 @@ namespace ExampleApp
                                            *m_pPoiRingView,
                                            mapModule.GetEnvironmentFlatteningService(),
                                            terrainModelModule.GetTerrainHeightProvider(),
-                                           interiorsPresentationModule.GetLegacyInteriorsController());
+                                           interiorsPresentationModule.GetAppLevelController(),
+                                           screenProperties);
 
 
                     m_pTerrainRayPicker = Eegeo_NEW(Eegeo::Resources::Terrain::Collision::TerrainRayPicker)(terrainModelModule.GetTerrainHeightProvider(),
@@ -106,7 +108,7 @@ namespace ExampleApp
                                                                                   *m_pTerrainRayPicker,
                                                                                   *m_pPoiRingController,
                                                                                   appModeModel,
-                                                                                  interiorsPresentationModule.GetLegacyInteriorsController());
+                                                                                  interiorsPresentationModule.GetAppLevelController());
                 }
 
                 PoiRingModule::~PoiRingModule()

@@ -2,14 +2,19 @@
 
 #include "MyPinSelectedMessage.h"
 
+
 namespace ExampleApp
 {
     namespace MyPins
     {   
         MyPinSelectedMessage::MyPinSelectedMessage(SdkModel::MyPinModel::TPinIdType pinId,
-                             const Eegeo::Space::LatLong& pinLocation)
+                                                   const Eegeo::Space::LatLong& pinLocation,
+                                                   const Eegeo::Resources::Interiors::InteriorId& interiorId,
+                                                   int targetFloorIndex)
         : m_pinId(pinId)
         , m_pinLocation(pinLocation)
+        , m_interiorId(interiorId)
+        , m_targetFloorIndex(targetFloorIndex)
         {
             
         }
@@ -22,6 +27,16 @@ namespace ExampleApp
         const Eegeo::Space::LatLong& MyPinSelectedMessage::GetPinLocation() const
         {
             return m_pinLocation;
+        }
+        
+        const Eegeo::Resources::Interiors::InteriorId& MyPinSelectedMessage::GetInteriorId() const
+        {
+            return m_interiorId;
+        }
+        
+        const int MyPinSelectedMessage::GetFloorIndex() const
+        {
+            return m_targetFloorIndex;
         }
     }
 }

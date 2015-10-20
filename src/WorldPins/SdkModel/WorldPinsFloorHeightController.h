@@ -19,12 +19,12 @@ namespace ExampleApp
             private:
                 IWorldPinsRepository& m_worldPinsRepository;
                 Eegeo::Pins::PinRepository& m_pinRepository;
-                Eegeo::Resources::Interiors::InteriorsController& m_interiorsController;
+                Eegeo::Resources::Interiors::InteriorController& m_interiorController;
                 
             public:
                 WorldPinsFloorHeightController(IWorldPinsRepository& worldPinsRepository,
                                                Eegeo::Pins::PinRepository& pinRepository,
-                                               Eegeo::Resources::Interiors::InteriorsController& interiorsController);
+                                               Eegeo::Resources::Interiors::InteriorController& interiorController);
                 
                 ~WorldPinsFloorHeightController();
                 

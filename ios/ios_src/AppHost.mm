@@ -78,6 +78,7 @@
 #include "TourFullScreenImageView.h"
 #include "ImageStore.h"
 #include "SearchVendorNames.h"
+#include "CameraTransitionChangedMessage.h"
 
 using namespace Eegeo::iOS;
 
@@ -105,6 +106,7 @@ AppHost::AppHost(
     ,m_pTourWorldPinOnMapViewModule(NULL)
     ,m_pTourFullScreenImageViewModule(NULL)
     ,m_pTourExplorerViewModule(NULL)
+    ,m_cameraTransitionChangedHandler(this, &AppHost::HandleCameraTransitionChanged)
 {
     Eegeo::TtyHandler::TtyEnabled = true;
     
@@ -128,6 +130,7 @@ AppHost::AppHost(
     Eegeo::Config::PlatformConfig platformConfig = Eegeo::iOS::iOSPlatformConfigBuilder(App::GetDevice(), App::IsDeviceMultiCore(), App::GetMajorSystemVersion()).Build();
     platformConfig.OptionsConfig.StartMapModuleAutomatically = false;
     platformConfig.OptionsConfig.EnableInteriors = true;
+    platformConfig.OptionsConfig.InteriorsControlledByApp = true;
 
     m_pInitialExperienceModule = Eegeo_NEW(ExampleApp::InitialExperience::iOSInitialExperienceModule)(m_iOSPersistentSettingsModel, m_messageBus);
     
@@ -168,10 +171,14 @@ AppHost::AppHost(
 
     m_pAppInputDelegate = Eegeo_NEW(AppInputDelegate)(*m_pApp, m_viewController, screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight(), screenProperties.GetPixelScale());
     m_pAppLocationDelegate = Eegeo_NEW(AppLocationDelegate)(*m_piOSLocationService, m_viewController);
+    
+    m_messageBus.SubscribeUi(m_cameraTransitionChangedHandler);
 }
 
 AppHost::~AppHost()
 {
+    m_messageBus.SubscribeUi(m_cameraTransitionChangedHandler);
+    
     Eegeo_DELETE m_pAppLocationDelegate;
     m_pAppLocationDelegate = NULL;
 
@@ -226,7 +233,6 @@ void AppHost::OnPause()
 {
     m_pApp->OnPause();
 }
-
 
 void AppHost::NotifyScreenPropertiesChanged(const Eegeo::Rendering::ScreenProperties& screenProperties)
 {
@@ -527,5 +533,10 @@ void AppHost::HandleFailureToDownloadBootstrapResources()
 void AppHost::HandleStartupFailure()
 {
     exit(1);
+}
+
+void AppHost::HandleCameraTransitionChanged(const ExampleApp::CameraTransitions::CameraTransitionChangedMessage& message)
+{
+    m_pView.userInteractionEnabled = !message.IsTransitionInProgress();
 }
 

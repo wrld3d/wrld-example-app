@@ -14,6 +14,7 @@
 #include "Interiors.h"
 #include "Camera.h"
 #include "BidirectionalBus.h"
+#include "InteriorsExplorer.h"
 
 namespace ExampleApp
 {
@@ -35,8 +36,8 @@ namespace ExampleApp
                                          Camera::IToursCameraTransitionController& toursCameraTransitionController,
                                          WorldPins::SdkModel::IWorldPinsService& worldPinsService,
                                          WorldPins::SdkModel::WorldPinInteriorData& worldPinInteriorData,
-                                         Eegeo::Resources::Interiors::InteriorsController& interiorsController,
-                                         const Eegeo::Camera::RenderCamera& tourRenderCamera,
+                                         Eegeo::Resources::Interiors::InteriorController& interiorController,
+                                         InteriorsExplorer::SdkModel::InteriorVisibilityUpdater& interiorVisibilityUpdater,
                                          ExampleAppMessaging::TMessageBus& messageBus);
                         ~ExampleTourState();
                         
@@ -58,8 +59,8 @@ namespace ExampleApp
                         
                         bool m_interior;
                         WorldPins::SdkModel::WorldPinInteriorData m_worldPinInteriorData;
-                        Eegeo::Resources::Interiors::InteriorsController& m_interiorsController;
-                        const Eegeo::Camera::RenderCamera& m_tourRenderCamera;
+                        Eegeo::Resources::Interiors::InteriorController& m_interiorController;
+                        InteriorsExplorer::SdkModel::InteriorVisibilityUpdater& m_interiorVisibilityUpdater;
                         ExampleAppMessaging::TMessageBus& m_messageBus;
                         
                         ExampleCurrentTourCardTappedHandler* m_pTourCardTappedHandler;

@@ -23,10 +23,7 @@ namespace ExampleApp
                     
                     virtual void Update(float dt) = 0;
                     
-                    virtual void SetAppCameraState(ToursCameraState& appCameraState) = 0;
-                    
                     virtual void TransitionTo(IToursCameraMode& targetCameraMode) = 0;
-                    virtual void TransitionBackToAppCamera(bool returnToOriginalMode) = 0;
                 };
             }
         }

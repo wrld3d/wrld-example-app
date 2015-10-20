@@ -123,6 +123,7 @@ AppHost::AppHost(
 	,m_pInitialExperienceIntroViewModule(NULL)
 	,m_searchServiceModules()
 	,m_failAlertHandler(this, &AppHost::HandleStartupFailure)
+	,m_cameraTransitionChangedHandler(this, &AppHost::HandleCameraTransitionChanged)
 {
     ASSERT_NATIVE_THREAD
 
@@ -160,6 +161,7 @@ AppHost::AppHost(
 
     std::string deviceModel = std::string(nativeState.deviceModel, strlen(nativeState.deviceModel));
     Eegeo::Config::PlatformConfig platformConfig = Eegeo::Android::AndroidPlatformConfigBuilder(deviceModel).Build();
+    platformConfig.OptionsConfig.InteriorsControlledByApp = true;
 
     m_pInputProcessor = Eegeo_NEW(Eegeo::Android::Input::AndroidInputProcessor)(&m_inputHandler, screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight());
 
@@ -524,6 +526,8 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
 
     viewControllerUpdaterModel.AddUpdateableObject(m_pSecondaryMenuViewModule->GetMenuController());
     viewControllerUpdaterModel.AddUpdateableObject(m_pSearchResultMenuViewModule->GetMenuController());
+
+    m_messageBus.SubscribeUi(m_cameraTransitionChangedHandler);
 }
 
 void AppHost::DestroyApplicationViewModulesFromUiThread()
@@ -532,6 +536,8 @@ void AppHost::DestroyApplicationViewModulesFromUiThread()
 
     if(m_createdUIModules)
     {
+    	m_messageBus.UnsubscribeUi(m_cameraTransitionChangedHandler);
+
         Eegeo_DELETE m_pMyPinDetailsViewModule;
 
         Eegeo_DELETE m_pViewControllerUpdaterModule;
@@ -588,5 +594,18 @@ void AppHost::HandleFailureToDownloadBootstrapResources()
 void AppHost::HandleStartupFailure()
 {
 	exit(1);
+}
+
+
+void AppHost::HandleCameraTransitionChanged(const ExampleApp::CameraTransitions::CameraTransitionChangedMessage& message)
+{
+	ASSERT_UI_THREAD
+
+	AndroidSafeNativeThreadAttachment attached(m_nativeState);
+	                JNIEnv* env = attached.envForThread;
+
+	const std::string methodName = "setTouchEnabled";
+	jmethodID touchEnabledMethod = env->GetMethodID(m_nativeState.activityClass, methodName.c_str(), "(Z)V");
+	env->CallVoidMethod(m_nativeState.activity, touchEnabledMethod, !message.IsTransitionInProgress());
 }
 

@@ -22,11 +22,11 @@ namespace ExampleApp
             namespace Camera
             {
                 ToursCameraController::ToursCameraController(const Eegeo::Streaming::ResourceCeilingProvider& resourceCeilingProvider,
-                                                             Eegeo::Camera::GlobeCamera::GlobeCameraTouchController* pTouchController,
+                                                             Eegeo::Camera::GlobeCamera::GlobeCameraTouchController& touchController,
                                                              const Eegeo::Rendering::ScreenProperties& screenProperties)
                 : m_resourceCeilingProvider(resourceCeilingProvider)
                 , m_pCurrentMode(NULL)
-                , m_pTouchController(pTouchController)
+                , m_touchController(touchController)
                 {
                     UpdateScreenProperties(screenProperties);
                 }
@@ -40,12 +40,12 @@ namespace ExampleApp
                 {
                     Eegeo_ASSERT(m_pCurrentMode != NULL, "Camera mode is NULL")
                     
-                    m_pTouchController->Update(dt);
+                    m_touchController.Update(dt);
 
                     float screenWidth = m_camera.GetViewportWidth();
                     float screenHeight = m_camera.GetViewportHeight();
                     float inputScreenScale = 1.0f / std::max(screenWidth, screenHeight);
-                    m_pCurrentMode->UpdateCamera(dt, GetTouchController(), inputScreenScale);
+                    m_pCurrentMode->UpdateCamera(dt, m_touchController, inputScreenScale);
                     
                     const ToursCameraState& state = m_pCurrentMode->GetCurrentState();
                     
@@ -72,7 +72,7 @@ namespace ExampleApp
                     m_camera.SetProjection(Eegeo::Math::Deg2Rad(m_pCurrentMode->GetCurrentState().fovDegrees), nearZ, farZ);
                 }
                 
-                Eegeo::Camera::CameraState ToursCameraController::GetCameraState() const
+                const Eegeo::Camera::CameraState ToursCameraController::GetCameraState() const
                 {
                     Eegeo_ASSERT(m_pCurrentMode != NULL, "Camera mode is NULL")
                     const ToursCameraState& state = m_pCurrentMode->GetCurrentState();

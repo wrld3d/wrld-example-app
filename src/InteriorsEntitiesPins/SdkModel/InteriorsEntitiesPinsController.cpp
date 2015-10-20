@@ -6,7 +6,7 @@
 #include "InteriorsEntityModel.h"
 #include "LatLongAltitude.h"
 #include "Pin.h"
-#include "InteriorsController.h"
+#include "InteriorController.h"
 #include "MathsHelpers.h"
 #include "PinController.h"
 #include "InteriorsModelRepository.h"
@@ -29,18 +29,17 @@ namespace ExampleApp
             InteriorsEntitiesPinsController::InteriorsEntitiesPinsController(Eegeo::Resources::Interiors::Entities::InteriorsEntitiesRepository& interiorsEntitiesRepostiory,
                                                                              Eegeo::Pins::PinController& pinController,
                                                                              Eegeo::Pins::PinRepository& pinRepository,
-                                                                             Eegeo::Resources::Interiors::InteriorsController& interiorsController,
+                                                                             Eegeo::Resources::Interiors::InteriorController& interiorController,
                                                                              Eegeo::Resources::Interiors::Entities::IInteriorsLabelController& interiorsLabelsController,
                                                                              Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider)
             : m_interiorsEntitiesRepository(interiorsEntitiesRepostiory)
             , m_pinController(pinController)
             , m_pinRepository(pinRepository)
-            , m_interiorsController(interiorsController)
+            , m_interiorController(interiorController)
             , m_interiorsLabelsController(interiorsLabelsController)
             , m_entitiesAddedCallback(this, &InteriorsEntitiesPinsController::OnEntitiesAdded)
             , m_entitiesRemovedCallback(this, &InteriorsEntitiesPinsController::OnEntitiesRemoved)
-            , m_onExitInteriorCallback(this, &InteriorsEntitiesPinsController::OnInteriorExit)
-            , m_interiorsStateChangedCallback(this, &InteriorsEntitiesPinsController::OnInteriorsStateChanged)
+            , m_interiorVisibilityChangedCallback(this, &InteriorsEntitiesPinsController::OnInteriorVisibilityChanged)
             , m_lastId(0)
             , m_pCurrentInteriorsModel(NULL)
             , m_interiorViewState(NotViewing)
@@ -49,8 +48,7 @@ namespace ExampleApp
                 m_interiorsEntitiesRepository.RegisterEntitiesAddedCallback(m_entitiesAddedCallback);
                 m_interiorsEntitiesRepository.RegisterEntitiesRemovedCallback(m_entitiesRemovedCallback);
                 
-                m_interiorsController.RegisterStateChangedCallback(m_interiorsStateChangedCallback);
-                m_interiorsController.RegisterExitCallback(m_onExitInteriorCallback);
+                m_interiorController.RegisterVisibilityChangedCallback(m_interiorVisibilityChangedCallback);
                 
                 // This is same across all interiors right now. If we want different omissions per interior
                 // then we'll need to do a bit of work.
@@ -73,8 +71,7 @@ namespace ExampleApp
                 m_interiorsEntitiesRepository.UnregisterEntitiesAddedCallback(m_entitiesAddedCallback);
                 m_interiorsEntitiesRepository.UnregisterEntitiesRemovedCallback(m_entitiesRemovedCallback);
                 
-                m_interiorsController.UnregisterInteriorViewChangedCallback(m_interiorsStateChangedCallback);
-                m_interiorsController.UnregisterExitCallback(m_onExitInteriorCallback);
+                m_interiorController.UnregisterVisibilityChangedCallback(m_interiorVisibilityChangedCallback);
                 
                 for (std::map<std::string, int>::const_iterator it = m_labelNameToIconIndex.begin(); it != m_labelNameToIconIndex.end(); ++it)
                 {
@@ -87,7 +84,7 @@ namespace ExampleApp
             {
                 const float TransitionTimeInSeconds = 0.75f;
                 
-                if (IsViewingInterior(m_interiorViewState) && m_interiorsController.GetExteriorMeshHasFaded())
+                if (IsViewingInterior(m_interiorViewState) && m_interiorController.InteriorIsVisible())
                 {
                     UpdateScaleForPins(dt/TransitionTimeInSeconds);
                 }
@@ -179,7 +176,7 @@ namespace ExampleApp
                 std::map<int, float> easedfloorScales;
 
                 const Eegeo::Resources::Interiors::InteriorsFloorModel* pFloorModel = NULL;
-                Eegeo_ASSERT(m_interiorsController.TryGetCurrentFloorModel(pFloorModel), "Failed to fetch current floor");
+                Eegeo_ASSERT(m_interiorController.TryGetCurrentFloorModel(pFloorModel), "Failed to fetch current floor");
                 int currentFloorNumber = pFloorModel->GetFloorNumber();
                 
                 for (std::map<int, float>::iterator it = m_floorToScaleMap.begin(); it != m_floorToScaleMap.end(); ++it)
@@ -230,21 +227,16 @@ namespace ExampleApp
                 }
             }
             
-            void InteriorsEntitiesPinsController::OnInteriorExit()
+            void InteriorsEntitiesPinsController::OnInteriorVisibilityChanged()
             {
-                m_interiorViewState = Exiting;
-            }
-            
-            void InteriorsEntitiesPinsController::OnInteriorsStateChanged()
-            {
-                if (m_interiorsController.InteriorIsVisible())
+                if (m_interiorController.InteriorIsVisible())
                 {
-                    bool success = m_interiorsController.TryGetCurrentModel(m_pCurrentInteriorsModel);
+                    bool success = m_interiorController.TryGetCurrentModel(m_pCurrentInteriorsModel);
                     if (!success)
                     {
                         return;
                     }
-
+                    
                     Eegeo_ASSERT(m_pCurrentInteriorsModel != NULL, "Have NULL interior model");
                     m_interiorViewState = Viewing;
                     

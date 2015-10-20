@@ -1,7 +1,7 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "InteriorsExplorerModel.h"
-#include "InteriorsController.h"
+#include "InteriorController.h"
 #include "InteriorsExplorerStateChangedMessage.h"
 #include "InteriorsExplorerFloorSelectedMessage.h"
 
@@ -11,6 +11,13 @@
 #include "IMapModeModel.h"
 #include "IMetricsService.h"
 #include "IAppModeModel.h"
+#include "InteriorsModel.h"
+#include "InteriorId.h"
+#include "InteriorsFloorModel.h"
+#include "InteriorVisibilityUpdater.h"
+#include "IWeatherController.h"
+
+#include "ICameraTransitionController.h"
 
 namespace ExampleApp
 {
@@ -32,33 +39,34 @@ namespace ExampleApp
                 }
             }
             
-            InteriorsExplorerModel::InteriorsExplorerModel(Eegeo::Resources::Interiors::InteriorsController& controller,
+            InteriorsExplorerModel::InteriorsExplorerModel(Eegeo::Resources::Interiors::InteriorController& controller,
                                                            Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
+                                                           InteriorVisibilityUpdater& interiorVisibilityUpdater,
                                                            MapMode::SdkModel::IMapModeModel& mapModeModel,
+                                                           WeatherMenu::SdkModel::IWeatherController& weatherController,
                                                            ExampleAppMessaging::TMessageBus& messageBus,
-                                                           Metrics::IMetricsService& metricsService,
-                                                           ExampleAppMessaging::TSdkModelDomainEventBus& sdkDomainEventBus)
+                                                           Metrics::IMetricsService& metricsService)
             : m_controller(controller)
             , m_interiorSelectionModel(interiorSelectionModel)
+            , m_interiorVisibilityUpdater(interiorVisibilityUpdater)
             , m_mapModeModel(mapModeModel)
+            , m_weatherController(weatherController)
             , m_messageBus(messageBus)
             , m_metricsService(metricsService)
             , m_controllerStateChangedCallback(this, &InteriorsExplorerModel::OnControllerStateChanged)
+            , m_controllerVisibilityChangedCallback(this, &InteriorsExplorerModel::OnControllerVisibilityChanged)
+            , m_controllerFloorChangedCallback(this, &InteriorsExplorerModel::OnControllerFloorChanged)
             , m_exitCallback(this, &InteriorsExplorerModel::OnExit)
             , m_selectFloorCallback(this, &InteriorsExplorerModel::OnSelectFloor)
-            , m_interiorSelectionModelChangedCallback(this, &InteriorsExplorerModel::OnInteriorSelectionModelChanged)
             , m_previouslyInMapMode(false)
-            , m_tourIsActive(false)
-            , m_sdkDomainEventBus(sdkDomainEventBus)
-            , m_tourStateChangedBinding(this, &InteriorsExplorerModel::OnTourStateChanged)
+            , m_interiorExplorerEnabled(false)
             {
                 m_controller.RegisterStateChangedCallback(m_controllerStateChangedCallback);
-                m_interiorSelectionModel.RegisterSelectionChangedCallback(m_interiorSelectionModelChangedCallback);
+                m_controller.RegisterVisibilityChangedCallback(m_controllerVisibilityChangedCallback);
+                m_controller.RegisterFloorChangedCallback(m_controllerFloorChangedCallback);
                 
                 m_messageBus.SubscribeNative(m_exitCallback);
                 m_messageBus.SubscribeNative(m_selectFloorCallback);
-                
-                m_sdkDomainEventBus.Subscribe(m_tourStateChangedBinding);
             }
             
             InteriorsExplorerModel::~InteriorsExplorerModel()
@@ -66,26 +74,66 @@ namespace ExampleApp
                 m_messageBus.UnsubscribeNative(m_selectFloorCallback);
                 m_messageBus.UnsubscribeNative(m_exitCallback);
 
-                m_interiorSelectionModel.UnregisterSelectionChangedCallback(m_interiorSelectionModelChangedCallback);
                 m_controller.UnregisterStateChangedCallback(m_controllerStateChangedCallback);
+                m_controller.UnregisterVisibilityChangedCallback(m_controllerVisibilityChangedCallback);
+                m_controller.UnregisterFloorChangedCallback(m_controllerFloorChangedCallback);
+            }
+            
+            void InteriorsExplorerModel::ShowInteriorExplorer()
+            {
+                Eegeo_ASSERT(m_controller.InteriorInScene(), "Can't show interior explorer without a selected and streamed interior");
                 
-                m_sdkDomainEventBus.Unsubscribe(m_tourStateChangedBinding);
+                if(!m_interiorExplorerEnabled)
+                {
+                    m_previouslyInMapMode = m_mapModeModel.IsInMapMode();
+                    m_mapModeModel.SetInMapMode(false);
+                    m_previousWeatherState = m_weatherController.GetState();
+                    m_weatherController.SetState("DayDefault");
+                    
+                    const Eegeo::Resources::Interiors::InteriorId& interiorId = m_interiorSelectionModel.GetSelectedInteriorId();
+                    m_metricsService.SetEvent(MetricEventInteriorSelected, "InteriorId", interiorId.Value());
+                    
+                    m_metricsService.BeginTimedEvent(MetricEventInteriorsVisible);
+                    m_interiorExplorerEnabled = true;
+                    PublishInteriorExplorerStateChange();
+                }
+            }
+            
+            void InteriorsExplorerModel::HideInteriorExplorer()
+            {
+                if(m_interiorExplorerEnabled)
+                {
+                    m_weatherController.SetState(m_previousWeatherState);
+                    m_mapModeModel.SetInMapMode(m_previouslyInMapMode);
+                    
+                    m_metricsService.EndTimedEvent(MetricEventInteriorsVisible);
+                    m_interiorExplorerEnabled = false;
+                    PublishInteriorExplorerStateChange();
+                }
             }
             
             void InteriorsExplorerModel::OnControllerStateChanged()
             {
-                if(m_tourIsActive)
-                {
-                    return;
-                }
-                
-                PublishInteriorExplorerStateChange();
+            }
+            
+            void InteriorsExplorerModel::OnControllerFloorChanged()
+            {
+            }
+            
+            void InteriorsExplorerModel::OnControllerVisibilityChanged()
+            {
             }
         
             void InteriorsExplorerModel::OnExit(const InteriorsExplorerExitMessage& message)
             {
+                Exit();
+            }
+            
+            void InteriorsExplorerModel::Exit()
+            {
+                HideInteriorExplorer();
                 m_metricsService.SetEvent(MetricEventInteriorExitPressed);
-                m_controller.ExitInterior();
+                m_interiorExplorerExitedCallbacks.ExecuteCallbacks();
             }
             
             void InteriorsExplorerModel::OnSelectFloor(const InteriorsExplorerSelectFloorMessage &message)
@@ -110,33 +158,15 @@ namespace ExampleApp
                 m_metricsService.SetEvent(MetricEventInteriorFloorSelected, "InteriorId", m_interiorSelectionModel.GetSelectedInteriorId().Value(), "FloorName", pFloorModel->GetFloorName());
             }
 
-            void InteriorsExplorerModel::OnInteriorSelectionModelChanged(const Eegeo::Resources::Interiors::InteriorId& previousInteriorId)
-            {
-                if (m_interiorSelectionModel.IsInteriorSelected())
-                {
-                    m_previouslyInMapMode = m_mapModeModel.IsInMapMode();
-                    m_mapModeModel.SetInMapMode(false);
-                    m_metricsService.BeginTimedEvent(MetricEventInteriorsVisible);
-                    
-                    const Eegeo::Resources::Interiors::InteriorId& interiorId = m_interiorSelectionModel.GetSelectedInteriorId();
-                    m_metricsService.SetEvent(MetricEventInteriorSelected, "InteriorId", interiorId.Value());
-                }
-                else
-                {
-                    m_mapModeModel.SetInMapMode(m_previouslyInMapMode);
-                    m_metricsService.EndTimedEvent(MetricEventInteriorsVisible);
-                }
-            }
-            
             void InteriorsExplorerModel::PublishInteriorExplorerStateChange()
             {
                 
-                int floor = m_controller.InteriorIsVisible() ? m_controller.GetCurrentFloorIndex() : 0;
+                int floor = m_controller.InteriorInScene() ? m_controller.GetCurrentFloorIndex() : 0;
                 
                 std::string floorName;
                 std::vector<std::string> floorShortNames;
                 
-                if (m_controller.InteriorIsVisible())
+                if (m_controller.InteriorInScene())
                 {
                     const Eegeo::Resources::Interiors::InteriorsModel* pModel = NULL;
                     m_controller.TryGetCurrentModel(pModel);
@@ -151,20 +181,19 @@ namespace ExampleApp
                     floorName = pFloorModel->GetFloorName();
                 }
                 
-                m_messageBus.Publish(InteriorsExplorerStateChangedMessage(m_controller.InteriorIsVisible(),
+                m_messageBus.Publish(InteriorsExplorerStateChangedMessage(m_interiorExplorerEnabled,
                                                                           floor,
                                                                           floorName,
                                                                           floorShortNames));
             }
             
-            void InteriorsExplorerModel::OnTourStateChanged(const Tours::TourStateChangedMessage& message)
+            void InteriorsExplorerModel::InsertInteriorExplorerExitedCallback(Eegeo::Helpers::ICallback0& callback)
             {
-                m_tourIsActive = message.TourStarted();
-                
-                if(!message.TourStarted() && m_controller.InteriorIsVisible())
-                {
-                    PublishInteriorExplorerStateChange();
-                }
+                m_interiorExplorerExitedCallbacks.AddCallback(callback);
+            }
+            void InteriorsExplorerModel::RemoveInteriorExplorerExitedCallback(Eegeo::Helpers::ICallback0& callback)
+            {
+                m_interiorExplorerExitedCallbacks.RemoveCallback(callback);
             }
         }
     }

@@ -2,6 +2,7 @@
 
 #include "MyPinSelectedMessageHandler.h"
 #include "ICameraTransitionController.h"
+#include "InteriorId.h"
 
 namespace ExampleApp
 {
@@ -26,7 +27,19 @@ namespace ExampleApp
             void MyPinSelectedMessageHandler::OnMyPinSelectedMessage(const MyPinSelectedMessage& message)
             {
                 const float MyPinAltitude = 1500.0f;
-                m_cameraTransitionController.StartTransitionTo(message.GetPinLocation().ToECEF(), MyPinAltitude);
+                const float MyPinInteriorAltitude = 300.0f;
+                if(message.GetInteriorId() == Eegeo::Resources::Interiors::InteriorId::NullId())
+                {
+                    m_cameraTransitionController.StartTransitionTo(message.GetPinLocation().ToECEF(),
+                                                                  MyPinAltitude);
+                }
+                else
+                {
+                    m_cameraTransitionController.StartTransitionTo(message.GetPinLocation().ToECEF(),
+                                                               MyPinInteriorAltitude,
+                                                               message.GetInteriorId(),
+                                                               message.GetFloorIndex());
+                }
             }
         }
     }

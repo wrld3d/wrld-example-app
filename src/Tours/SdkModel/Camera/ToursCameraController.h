@@ -11,6 +11,7 @@
 #include "ToursCameraState.h"
 #include "IToursCameraController.h"
 #include "Types.h"
+#include "ITouchController.h"
 
 namespace ExampleApp
 {
@@ -25,18 +26,17 @@ namespace ExampleApp
                 public:
                     
                     ToursCameraController(const Eegeo::Streaming::ResourceCeilingProvider& resourceCeilingProvider,
-                                          Eegeo::Camera::GlobeCamera::GlobeCameraTouchController* pTouchController,
+                                          Eegeo::Camera::GlobeCamera::GlobeCameraTouchController& touchController,
                                           const Eegeo::Rendering::ScreenProperties& screenProperties);
                     
                     void Update(float dt);
                     
                     void SetMode(IToursCameraMode* pMode);
                     
-                    Eegeo::Camera::CameraState GetCameraState() const;
-                    const Eegeo::Camera::RenderCamera& GetRenderCamera() const { return m_camera; }
+                    const Eegeo::Camera::CameraState GetCameraState() const;
+                    const Eegeo::Camera::RenderCamera GetRenderCamera() const { return m_camera; }
                     
-                    // todo extract type or common?
-                    Eegeo::Camera::GlobeCamera::GlobeCameraTouchController& GetTouchController() const { return *m_pTouchController; }
+                    Eegeo::ITouchController& GetTouchController() const { return m_touchController; }
                     
                     void UpdateScreenProperties(const Eegeo::Rendering::ScreenProperties& screenProperties);
                     
@@ -49,7 +49,7 @@ namespace ExampleApp
                     void UpdateFovAndClippingPlanes();
                     
                     IToursCameraMode* m_pCurrentMode;
-                    Eegeo::Camera::GlobeCamera::GlobeCameraTouchController* m_pTouchController;
+                    Eegeo::Camera::GlobeCamera::GlobeCameraTouchController& m_touchController;
 
                 };
             }

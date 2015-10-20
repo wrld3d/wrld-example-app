@@ -23,7 +23,8 @@ namespace ExampleApp
                     
                     ToursCameraTransitionController(IToursCameraController& toursCameraController,
                                                     Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& gpsGlobeCameraController,
-                                                    Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider);
+                                                    Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider,
+                                                    Eegeo::Camera::GlobeCamera::GlobeCameraTouchController& touchController);
                     
                     ~ToursCameraTransitionController();
                     
@@ -33,11 +34,7 @@ namespace ExampleApp
                     
                     void Update(float dt);
                     
-                    void SetAppCameraState(ToursCameraState& appCameraState);
-                    
                     void TransitionTo(IToursCameraMode& targetCameraMode);
-                    
-                    void TransitionBackToAppCamera(bool returnToOriginalMode);
                     
                 private:
                     
@@ -57,11 +54,10 @@ namespace ExampleApp
                     //for which they are referenced by this class.
                     IToursCameraMode* m_pToursCurrentMode;
                     IToursCameraMode* m_pToursNextMode;
-
-                    ToursCameraState m_appCameraState;
                     
                     Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& m_gpsGlobeCameraController;
                     Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& m_terrainHeightProvider;
+                    Eegeo::Camera::GlobeCamera::GlobeCameraTouchController& m_touchController;
                 };
             }
         }

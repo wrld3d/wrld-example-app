@@ -3,13 +3,14 @@
 #pragma once
 
 #include "MyPinCreation.h"
-#include "InteriorsController.h"
+#include "Interiors.h"
 #include "IPoiRingController.h"
 #include "AppInterface.h"
 #include "Camera.h"
 #include "Terrain.h"
 #include "EnvironmentFlatteningService.h"
 #include "VectorMathDecl.h"
+#include "Rendering.h"
 
 namespace ExampleApp
 {
@@ -26,7 +27,8 @@ namespace ExampleApp
                                       PoiRingView& poiRingView,
                                       Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                       Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider,
-                                      Eegeo::Resources::Interiors::InteriorsController& interiorsController);
+                                      Eegeo::Resources::Interiors::InteriorController& interiorController,
+                                      Eegeo::Rendering::ScreenProperties& screenProperties);
 
                     void Update(float dt, const Eegeo::Camera::RenderCamera& renderCamera, const Eegeo::dv3& cameraEcefInterestPoint);
 
@@ -36,7 +38,7 @@ namespace ExampleApp
                 private:
                     Eegeo::Rendering::EnvironmentFlatteningService& m_environmentFlatteningService;
                     Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& m_terrainHeightProvider;
-                    Eegeo::Resources::Interiors::InteriorsController& m_interiorsController;
+                    Eegeo::Resources::Interiors::InteriorController& m_interiorController;
 
                     MyPinCreation::SdkModel::IMyPinCreationModel& m_myPinCreationModel;
 
@@ -50,6 +52,8 @@ namespace ExampleApp
 
                     Eegeo::v3 CalculateQuadScreenSpaceTranslation(const Eegeo::Camera::RenderCamera& renderCamera) const;
                     float CalculateTransitionScale(float dt);
+                    
+                    Eegeo::Rendering::ScreenProperties& m_screenProperties;
                 };
             }
         }

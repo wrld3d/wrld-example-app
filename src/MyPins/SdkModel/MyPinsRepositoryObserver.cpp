@@ -46,7 +46,9 @@ namespace ExampleApp
                 m_messageBus.Publish(MyPinAddedToMenuMessage(myPinModel->Identifier(),
                                                              myPinModel->GetTitle(),
                                                              pinBoundObject.GetIconForPin(),
-                                                             myPinModel->GetLatLong()));
+                                                             myPinModel->GetLatLong(),
+                                                             myPinModel->GetBuildingId(),
+                                                             myPinModel->GetFloor()));
             }
 
             void MyPinsRepositoryObserver::HandlePinRemovedFromRepository(MyPinModel*& myPinModel)

@@ -9,7 +9,7 @@
 #include "IntersectionTests.h"
 #include "IPoiRingController.h"
 #include "IAppModeModel.h"
-#include "InteriorsController.h"
+#include "InteriorController.h"
 #include "InteriorsFloorModel.h"
 #include "Bounds.h"
 #include "InteriorsModel.h"
@@ -28,13 +28,13 @@ namespace ExampleApp
                                                                Eegeo::Collision::IRayPicker& rayPicker,
                                                                const IPoiRingController& poiRingController,
                                                                ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
-                                                               Eegeo::Resources::Interiors::InteriorsController& interiorsController)
+                                                               Eegeo::Resources::Interiors::InteriorController& interiorController)
                     : m_myPinCreationModel(myPinCreationModel)
                     , m_rayPicker(rayPicker)
                     , m_poiRingController(poiRingController)
                     , m_isDragging(false)
                     , m_appModeModel(appModeModel)
-                    , m_interiorsController(interiorsController)
+                    , m_interiorController(interiorController)
                 {
 
                 }
@@ -175,19 +175,20 @@ namespace ExampleApp
                 {
                     bool rayPick = false;
                     
-                    if(m_appModeModel.GetAppMode() == AppModes::SdkModel::InteriorMode && m_interiorsController.InteriorIsVisible())
+                    if(m_appModeModel.GetAppMode() == AppModes::SdkModel::InteriorMode && m_interiorController.InteriorIsVisible())
                     {
                         const Eegeo::Resources::Interiors::InteriorsModel* interiorsModel;
                         
-                        Eegeo_ASSERT(m_interiorsController.TryGetCurrentModel(interiorsModel), "Couldn't get current interiorsModel");
+                        Eegeo_ASSERT(m_interiorController.TryGetCurrentModel(interiorsModel), "Couldn't get current interiorsModel");
                         
                         const Eegeo::dv3 originNormal = interiorsModel->GetTangentBasis().GetUp();
                         
-                        float floorHeightAboveSeaLevel = Helpers::InteriorHeightHelpers::GetFloorHeightAboveSeaLevel(*interiorsModel, m_interiorsController.GetCurrentFloorIndex());
+                        float floorHeightAboveSeaLevel = Helpers::InteriorHeightHelpers::GetFloorHeightAboveSeaLevel(*interiorsModel, m_interiorController.GetCurrentFloorIndex());
                         
                         const Eegeo::dv3 point = originNormal * (floorHeightAboveSeaLevel + Eegeo::Space::EarthConstants::Radius);
                         
                         rayPick = Eegeo::Geometry::IntersectionTests::RayIntersectsWithPlane(rayOrigin, rayDirection, originNormal, point, out_intersectionParam, out_rayIntersectionPoint);
+
                     }
                     else
                     {

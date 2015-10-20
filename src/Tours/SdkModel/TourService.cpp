@@ -6,7 +6,6 @@
 #include "ITourStateMachine.h"
 #include "IToursCameraTransitionController.h"
 #include "TourOnMapSelectedMessage.h"
-#include "TourStateChangedMessage.h"
 #include "WorldPinsVisibilityMessage.h"
 #include "WorldPinVisibility.h"
 
@@ -81,9 +80,8 @@ namespace ExampleApp
                 m_activeTourState = atCard;
                 
                 m_messageBus.Publish(TourOnMapSelectedMessage(m_activeTourModel, atCard));
-                m_sdkDomainEventBus.Publish(TourStateChangedMessage(true));
                 m_sdkDomainEventBus.Publish(WorldPins::WorldPinsVisibilityMessage(WorldPins::SdkModel::WorldPinVisibility::TourPin));
-                
+                m_tourStartedCallbacks.ExecuteCallbacks();
             }
             
             void TourService::EnqueueNextTour(const TourModel& tourModel)
@@ -105,15 +103,13 @@ namespace ExampleApp
                 m_pActiveTourStateMachine->EndTour();
                 m_pActiveTourStateMachine = NULL;
                 
+                m_tourEndedCallbacks.ExecuteCallbacks();
+                
                 if(!m_suspendCurrentTour)
                 {
                     // Don't return to app camera if we're going to another tour.
                     if(m_previousActiveToursStack.size() == 0)
                     {
-                        Eegeo_TTY("Back to app camera");
-                        m_sdkDomainEventBus.Publish(TourStateChangedMessage(false));
-                        m_cameraTransitionController.TransitionBackToAppCamera(false);
-                        
                         m_sdkDomainEventBus.Publish(WorldPins::WorldPinsVisibilityMessage(WorldPins::SdkModel::WorldPinVisibility::World | WorldPins::SdkModel::WorldPinVisibility::Search | WorldPins::SdkModel::WorldPinVisibility::UserPin));
                     }
                     else if(m_previousActiveToursStack.size() > 0)
@@ -124,6 +120,7 @@ namespace ExampleApp
                         StartCurrentActiveTour(previousTour.tour, previousTour.card);
                     }
                 }
+                
             }
             
             void TourService::SetActiveTourState(int activeStateIndex)
@@ -163,6 +160,26 @@ namespace ExampleApp
                         m_suspendCurrentTour = false;
                     }
                 }
+            }
+            
+            void TourService::RegisterTourStartedCallback(Eegeo::Helpers::ICallback0 &callback)
+            {
+                m_tourStartedCallbacks.AddCallback(callback);
+            }
+            
+            void TourService::UnregisterTourStartedCallback(Eegeo::Helpers::ICallback0 &callback)
+            {
+                m_tourStartedCallbacks.RemoveCallback(callback);
+            }
+            
+            void TourService::RegisterTourEndedCallback(Eegeo::Helpers::ICallback0 &callback)
+            {
+                m_tourEndedCallbacks.AddCallback(callback);
+            }
+            
+            void TourService::UnregisterTourEndedCallback(Eegeo::Helpers::ICallback0 &callback)
+            {
+                m_tourEndedCallbacks.RemoveCallback(callback);
             }
         }
     }

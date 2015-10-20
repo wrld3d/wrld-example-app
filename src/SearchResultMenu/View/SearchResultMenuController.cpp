@@ -77,6 +77,7 @@ namespace ExampleApp
                 {
                     Search::Swallow::SdkModel::SwallowOfficeResultModel officeModel = Search::Swallow::SdkModel::SearchParser::TransformToSwallowOfficeResult(model);
                     
+                    // TODO: Add interior data to office result.
                     return Eegeo_NEW(Search::Swallow::View::SwallowOfficeResultMenuOption)(officeModel.GetName(),
                                                                                            model.GetLocation(),
                                                                                            officeModel.GetHeadingDegrees(),
@@ -88,6 +89,9 @@ namespace ExampleApp
                 {
                     return Eegeo_NEW(SearchResultItemModel)(model.GetTitle(),
                                                             model.GetLocation().ToECEF(),
+                                                            model.IsInterior(),
+                                                            model.GetBuildingId(),
+                                                            model.GetFloor(),
                                                             m_viewModel,
                                                             m_messageBus);
                 }

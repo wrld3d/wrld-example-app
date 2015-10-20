@@ -36,7 +36,7 @@ namespace ExampleApp
                 InteriorsEntitiesPinsController(Eegeo::Resources::Interiors::Entities::InteriorsEntitiesRepository& interiorsEntitiesRepository,
                                                 Eegeo::Pins::PinController& pinController,
                                                 Eegeo::Pins::PinRepository& pinRepository,
-                                                Eegeo::Resources::Interiors::InteriorsController& interiorsController,
+                                                Eegeo::Resources::Interiors::InteriorController& interiorController,
                                                 Eegeo::Resources::Interiors::Entities::IInteriorsLabelController& interiorsLabelsController,
                                                 Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider);
                 
@@ -56,7 +56,7 @@ namespace ExampleApp
                 Eegeo::Resources::Interiors::Entities::InteriorsEntitiesRepository& m_interiorsEntitiesRepository;
                 Eegeo::Pins::PinController& m_pinController;
                 Eegeo::Pins::PinRepository& m_pinRepository;
-                Eegeo::Resources::Interiors::InteriorsController& m_interiorsController;
+                Eegeo::Resources::Interiors::InteriorController& m_interiorController;
                 Eegeo::Resources::Interiors::Entities::IInteriorsLabelController& m_interiorsLabelsController;
                 
                 Eegeo::Helpers::TCallback2<InteriorsEntitiesPinsController, const std::string&, const Eegeo::Resources::Interiors::Entities::TEntityModelVector&> m_entitiesAddedCallback;
@@ -65,11 +65,8 @@ namespace ExampleApp
                 void OnEntitiesAdded(const std::string& interiorName, const Eegeo::Resources::Interiors::Entities::TEntityModelVector& entities);
                 void OnEntitiesRemoved(const std::string& interiorName, const Eegeo::Resources::Interiors::Entities::TEntityModelVector& entities);
                 
-                Eegeo::Helpers::TCallback0<InteriorsEntitiesPinsController> m_onExitInteriorCallback;
-                void OnInteriorExit();
-                
-                Eegeo::Helpers::TCallback0<InteriorsEntitiesPinsController> m_interiorsStateChangedCallback;
-                void OnInteriorsStateChanged();
+                Eegeo::Helpers::TCallback0<InteriorsEntitiesPinsController> m_interiorVisibilityChangedCallback;
+                void OnInteriorVisibilityChanged();
                 
                 const Eegeo::Resources::Interiors::InteriorsModel* m_pCurrentInteriorsModel;
                 

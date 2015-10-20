@@ -18,8 +18,10 @@
 #include "TerrainHeightProvider.h"
 #include "TransformHelpers.h"
 #include "VectorMath.h"
+#include "InteriorController.h"
 
 #include "InteriorHeightHelpers.h"
+#include "ScreenProperties.h"
 
 namespace ExampleApp
 {
@@ -75,7 +77,8 @@ namespace ExampleApp
                                                      PoiRingView& poiRingView,
                                                      Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                                      Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider,
-                                                     Eegeo::Resources::Interiors::InteriorsController& interiorsController)
+                                                     Eegeo::Resources::Interiors::InteriorController& interiorController,
+                                                     Eegeo::Rendering::ScreenProperties& screenProperties)
                     : m_myPinCreationModel(myPinCreationModel)
                     , m_poiRingView(poiRingView)
                     , m_scaleInterpolationParam(0.f)
@@ -85,7 +88,8 @@ namespace ExampleApp
                     , m_iconPosition(Eegeo::dv3::Zero())
                     , m_iconSize(0.0f)
                     , m_ringRadius(0.0f)
-                    , m_interiorsController(interiorsController)
+                    , m_interiorController(interiorController)
+                    , m_screenProperties(screenProperties)
                 {
 
                 }
@@ -123,19 +127,20 @@ namespace ExampleApp
                     
                     if(m_myPinCreationModel.GetCreationStage() == Ring)
                     {
-                        bool showingInterior = m_interiorsController.InteriorIsVisible();
+                        bool showingInterior = m_interiorController.InteriorIsVisible();
                         m_myPinCreationModel.SetInterior(showingInterior);
                         if(showingInterior)
                         {
                             const Eegeo::Resources::Interiors::InteriorsModel *pModel = NULL;
-                            bool success = m_interiorsController.TryGetCurrentModel(pModel);
+                            bool success = m_interiorController.TryGetCurrentModel(pModel);
                             if(success)
                             {
                                 const Eegeo::Resources::Interiors::InteriorId& buildingId = pModel->GetId();
                                 m_myPinCreationModel.SetBuildingId(buildingId);
                             }
-                            m_myPinCreationModel.SetFloor(m_interiorsController.GetCurrentFloorIndex());
-                            float floorHeightAboveSeaLevel = Helpers::InteriorHeightHelpers::GetFloorHeightAboveSeaLevel(*pModel, m_interiorsController.GetCurrentFloorIndex());
+
+                            m_myPinCreationModel.SetFloor(m_interiorController.GetCurrentFloorIndex());
+                            float floorHeightAboveSeaLevel = Helpers::InteriorHeightHelpers::GetFloorHeightAboveSeaLevel(*pModel, m_interiorController.GetCurrentFloorIndex());
                             const float floorHeightAboveTerrain = floorHeightAboveSeaLevel - m_myPinCreationModel.GetTerrainHeight();
                             m_myPinCreationModel.SetHeightAboveTerrain(floorHeightAboveTerrain);
                         }
@@ -163,8 +168,9 @@ namespace ExampleApp
                                                   unflattenedIconPosition,
                                                   m_environmentFlatteningService.GetCurrentScale());
 
-                    const float iconConstantScale = 0.14f;
-                    const float iconScale = Eegeo::Helpers::TransformHelpers::ComputeModelScaleForConstantScreenSize(renderCamera, iconPosition) * iconConstantScale;
+                    const float assetSize = 114.f;
+                    const float iconScale = Eegeo::Helpers::TransformHelpers::ComputeModelScaleForConstantScreenSizeWithVerticalFoV(renderCamera, iconPosition) / (m_screenProperties.GetScreenHeight()* 0.5f)*m_screenProperties.GetPixelScale() * assetSize;
+                    
                     m_iconSize = Eegeo::Max(iconScale * transitionScale, 0.0f);
                     m_poiRingView.AddIconSprite(renderCamera, iconPosition, m_iconSize);
 

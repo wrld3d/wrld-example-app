@@ -6,16 +6,14 @@
 #include "Interiors.h"
 #include "Types.h"
 #include "IInteriorsExplorerModule.h"
-#include "ScreenControlViewModelIncludes.h"
-#include "IIdentity.h"
-#include "BidirectionalBus.h"
-#include "MapMode.h"
+#include "WorldPins.h"
 #include "GlobeCamera.h"
+#include "Rendering.h"
+#include "MapMode.h"
+#include "BidirectionalBus.h"
 #include "Metrics.h"
-#include "NativeUIFactories.h"
-#include "Streaming.h"
-#include "AppModes.h"
-#include "SdkModelDomainEventBus.h"
+#include "IIdentity.h"
+#include "WeatherMenu.h"
 
 namespace ExampleApp
 {
@@ -26,37 +24,42 @@ namespace ExampleApp
             class InteriorsExplorerModule : public IInteriorsExplorerModule, private Eegeo::NonCopyable
             {
             public:
-                InteriorsExplorerModule(Eegeo::Resources::Interiors::InteriorsController& interiorsController,
-                                        Eegeo::Resources::Interiors::Camera::InteriorsCameraController& interiorsCameraController,
+                InteriorsExplorerModule(Eegeo::Resources::Interiors::InteriorController& interiorController,
                                         Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                                        Eegeo::Resources::Interiors::InteriorSelectionController& interiorSelectionController,
-                                        Eegeo::Resources::Interiors::InteriorsPinsController& interiorsPinsController,
-                                        Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& globeCameraController,
-                                        Eegeo::Streaming::CameraFrustumStreamingVolume& cameraFrustumStreamingVolume,
-                                        Eegeo::UI::NativeUIFactories& nativeUIFactories,
+                                        Eegeo::Resources::Interiors::Markers::InteriorMarkerModelRepository& markerRepository,
+                                        WorldPins::SdkModel::IWorldPinsService& worldPinsService,
+                                        ExampleApp::MapMode::SdkModel::IMapModeModel& mapModeModel,
+                                        WeatherMenu::SdkModel::IWeatherController& weatherController,
+                                        Eegeo::Camera::GlobeCamera::GlobeCameraControllerFactory& globeCameraControllerFactory,
+                                        const Eegeo::Rendering::ScreenProperties& screenProperties,
                                         Eegeo::Helpers::IIdentityProvider& identityProvider,
-                                        MapMode::SdkModel::IMapModeModel& mapModeModel,
-                                        AppModes::SdkModel::IAppModeModel& appModeModel,
                                         ExampleAppMessaging::TMessageBus& messageBus,
-                                        ExampleApp::Metrics::IMetricsService& metricsService,
-                                        ExampleAppMessaging::TSdkModelDomainEventBus& sdkDomainEventBus);
+                                        Metrics::IMetricsService& metricsService);
 
                 ~InteriorsExplorerModule();
                 
                 View::InteriorsExplorerViewModel& GetInteriorsExplorerViewModel() const;
                 
                 ScreenControl::View::IScreenControlViewModel& GetScreenControlViewModel() const;
-
-                IInteriorsExplorerInputDelegate& GetInputDelegate() const;
+                
+                InteriorsExplorerCameraController& GetInteriorsCameraController() const;
+                
+                InteriorVisibilityUpdater& GetInteriorVisibilityUpdater() const;
+                
+                void Update(float dt) const;
+                
+                InteriorsExplorerModel& GetInteriorsExplorerModel() const;
                 
             private:
                 
                 InteriorsExplorerModel* m_pModel;
                 View::InteriorsExplorerViewModel* m_pViewModel;
-                InteriorsExitObserver* m_pInteriorExitObserver;
-                IInteriorsExplorerInputDelegate* m_pInteriorsExplorerInputDelegate;
-                InteriorsStreamingController* m_pInteriorsStreamingController;
-                InteriorPinScaleController* m_pInteriorPinScaleController;
+                InteriorVisibilityUpdater* m_pVisibilityUpdater;
+                
+                InteriorWorldPinController* m_pWorldPinController;
+                InteriorsExplorerCameraController* m_pInteriorsCameraController;
+                Eegeo::Camera::GlobeCamera::GlobeCameraTouchController* m_pGlobeCameraTouchController;
+                Eegeo::Camera::GlobeCamera::GlobeCameraController* m_pGlobeCameraController;
             };
         }
     }

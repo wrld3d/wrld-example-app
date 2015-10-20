@@ -34,6 +34,7 @@
 #include "TourFullScreenImageCeremonyBeganMessage.h"
 #include "TourFullScreenImageCeremonyEndedMessage.h"
 #include "AppModeChangedMessage.h"
+#include "CameraTransitionChangedMessage.h"
 
 namespace ExampleApp
 {
@@ -70,6 +71,7 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<InteriorsExplorer::InteriorsExplorerFloorSelectedMessage>
             , public Eegeo::Messaging::CatalogBinding<InteriorsExplorer::InteriorsExplorerStateChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<AppModes::AppModeChangedMessage>
+            , public Eegeo::Messaging::CatalogBinding<CameraTransitions::CameraTransitionChangedMessage>
             , private Eegeo::NonCopyable
         {
 

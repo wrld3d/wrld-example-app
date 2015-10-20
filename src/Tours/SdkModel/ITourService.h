@@ -3,6 +3,7 @@
 #pragma once
 
 #include "Tours.h"
+#include "ICallback.h"
 
 namespace ExampleApp
 {
@@ -30,6 +31,11 @@ namespace ExampleApp
                 virtual void SetActiveTourState(int activeStateIndex) = 0;
                 
                 virtual void UpdateCurrentTour(float dt) = 0;
+                
+                virtual void RegisterTourStartedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
+                virtual void UnregisterTourStartedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
+                virtual void RegisterTourEndedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
+                virtual void UnregisterTourEndedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
             };
         }
     }
