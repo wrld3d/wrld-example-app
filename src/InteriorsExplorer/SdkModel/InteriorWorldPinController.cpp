@@ -9,6 +9,7 @@
 #include "InteriorId.h"
 #include "InteriorWorldPinSelectionHandler.h"
 #include "WorldPinVisibility.h"
+#include "MenuDragStateChangedMessage.h"
 
 namespace ExampleApp
 {
@@ -19,20 +20,28 @@ namespace ExampleApp
             InteriorWorldPinController::InteriorWorldPinController(Eegeo::Resources::Interiors::InteriorController& interiorController,
                                                                    Eegeo::Resources::Interiors::Markers::InteriorMarkerModelRepository& markerRepository,
                                                                    WorldPins::SdkModel::IWorldPinsService& worldPinsService,
-                                                                   InteriorsExplorerCameraController& cameraController)
+                                                                   InteriorsExplorerCameraController& cameraController,
+                                                                   ExampleAppMessaging::TMessageBus& messageBus)
             : m_interiorController(interiorController)
             , m_markerRepository(markerRepository)
             , m_worldPinsService(worldPinsService)
             , m_cameraController(cameraController)
+            , m_messageBus(messageBus)
             , m_markerAddedCallback(this, &InteriorWorldPinController::HandleMarkerAdded)
             , m_markerRemovedCallback(this, &InteriorWorldPinController::HandleMarkerRemoved)
+            , m_menuDraggedCallback(this, &InteriorWorldPinController::HandleMenuDragged)
+            , m_menuIsDragging(false)
             {
                 m_markerRepository.RegisterNotifyAddedCallback(m_markerAddedCallback);
                 m_markerRepository.RegisterNotifyRemovedCallback(m_markerRemovedCallback);
+                
+                m_messageBus.SubscribeNative(m_menuDraggedCallback);
             }
             
             InteriorWorldPinController::~InteriorWorldPinController()
             {
+                m_messageBus.UnsubscribeNative(m_menuDraggedCallback);
+                
                 m_markerRepository.UnregisterNotifyAddedCallback(m_markerAddedCallback);
                 m_markerRepository.UnregisterNotifyRemovedCallback(m_markerRemovedCallback);
                 
@@ -65,8 +74,8 @@ namespace ExampleApp
                 InteriorWorldPinSelectionHandler* pSelectionHandler = Eegeo_NEW(InteriorWorldPinSelectionHandler)(markerModel.GetInteriorId(),
                                                                                                                   m_interiorController,
                                                                                                                   m_cameraController,
-                                                                                                                  markerModel.GetMarkerLatLongAltitude().ToECEF()
-                                                                                                                  );
+                                                                                                                  markerModel.GetMarkerLatLongAltitude().ToECEF(),
+                                                                                                                  *this);
                 
                 WorldPins::SdkModel::WorldPinItemModel* pItemModel = m_worldPinsService.AddPin(pSelectionHandler,
                                                                                                NULL,
@@ -89,6 +98,11 @@ namespace ExampleApp
                 m_worldPinsService.RemovePin(pPinModel);
                 
                 m_interiorIdToWorldPinMap.erase(markerModel.GetInteriorId().Value());
+            }
+            
+            void InteriorWorldPinController::HandleMenuDragged(const Menu::MenuDragStateChangedMessage &message)
+            {
+                m_menuIsDragging = message.IsDragging();
             }
         }
     }

@@ -8,6 +8,7 @@
 #include "InteriorsExplorer.h"
 #include <map>
 #include <string>
+#include "BidirectionalBus.h"
 
 namespace ExampleApp
 {
@@ -22,8 +23,11 @@ namespace ExampleApp
                 InteriorWorldPinController(Eegeo::Resources::Interiors::InteriorController& interiorController,
                                            Eegeo::Resources::Interiors::Markers::InteriorMarkerModelRepository& markerRepository,
                                            WorldPins::SdkModel::IWorldPinsService& worldPinsService,
-                                           InteriorsExplorerCameraController& cameraController);
+                                           InteriorsExplorerCameraController& cameraController,
+                                           ExampleAppMessaging::TMessageBus& messageBus);
                 ~InteriorWorldPinController();
+                
+                const bool PinInteractionAllowed() const { return !m_menuIsDragging; }
                 
             private:
                 
@@ -32,12 +36,17 @@ namespace ExampleApp
                 WorldPins::SdkModel::IWorldPinsService& m_worldPinsService;
                 InteriorsExplorerCameraController& m_cameraController;
                 std::map<std::string, WorldPins::SdkModel::WorldPinItemModel*> m_interiorIdToWorldPinMap;
+                ExampleAppMessaging::TMessageBus& m_messageBus;
+                bool m_menuIsDragging;
                 
                 Eegeo::Helpers::TCallback1<InteriorWorldPinController, const Eegeo::Resources::Interiors::Markers::InteriorMarkerModel&> m_markerAddedCallback;
                 Eegeo::Helpers::TCallback1<InteriorWorldPinController, const Eegeo::Resources::Interiors::Markers::InteriorMarkerModel&> m_markerRemovedCallback;
                 
+                Eegeo::Helpers::TCallback1<InteriorWorldPinController, const Menu::MenuDragStateChangedMessage&> m_menuDraggedCallback;
+                
                 void HandleMarkerAdded(const Eegeo::Resources::Interiors::Markers::InteriorMarkerModel& markerModel);
                 void HandleMarkerRemoved(const Eegeo::Resources::Interiors::Markers::InteriorMarkerModel& markerModel);
+                void HandleMenuDragged(const Menu::MenuDragStateChangedMessage& message);
             };
         }
     }

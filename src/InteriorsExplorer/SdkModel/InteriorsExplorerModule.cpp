@@ -54,7 +54,11 @@ namespace ExampleApp
                                                                                             *m_pGlobeCameraTouchController,
                                                                                             *m_pGlobeCameraController);
                 
-                m_pWorldPinController = Eegeo_NEW(InteriorWorldPinController)(interiorController, markerRepository, worldPinsService, *m_pInteriorsCameraController);
+                m_pWorldPinController = Eegeo_NEW(InteriorWorldPinController)(interiorController,
+                                                                              markerRepository,
+                                                                              worldPinsService,
+                                                                              *m_pInteriorsCameraController,
+                                                                              messageBus);
                 
                 m_pModel = Eegeo_NEW(InteriorsExplorerModel)(interiorController,
                                                              interiorSelectionModel,
