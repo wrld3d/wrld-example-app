@@ -76,12 +76,6 @@
          },
          
          {
-             "MaterialName": "InteriorMaterial_BuildingStructure",
-             "MaterialType":"InteriorsDiffuseTexturedMaterial",
-             "DiffuseTexture":"swallowfloorcarpet01-interior-texture0"
-         },
-         
-         {
              "MaterialName": "swallowfloortiles01-interior",
              "MaterialType":"InteriorsDiffuseTexturedMaterial",
              "DiffuseTexture":"swallowfloortiles01-interior-texture0"
