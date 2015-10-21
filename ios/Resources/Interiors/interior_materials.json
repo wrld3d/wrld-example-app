@@ -86,6 +86,8 @@
              "MaterialType":"InteriorsCubeMappedMaterial",
              "DiffuseTexture":"swallowglass01-interior-texture0",
              "CubeMapTexture":"PointLightsCubeMap",
+             "IsTranslucent":true,
+             "DiffuseColor":[1.0,1.0,1.0,0.5],
              "SpecularPower":10.0,
              "SpecularColor":[0.2,0.2,0.2,1.0],
              "ReflectionColor":[0.2,0.2,0.2,1.0]
