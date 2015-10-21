@@ -38,6 +38,7 @@ namespace ExampleApp
                 std::vector<std::pair<std::string, std::string> > keyValueStrings;
                 std::vector<std::pair<std::string, Eegeo::v4> >  keyValueColors;
                 std::vector<std::pair<std::string, float> > keyValueScalars;
+                std::vector<std::pair<std::string, bool> > keyValueBooleans;
             };
         }
     }

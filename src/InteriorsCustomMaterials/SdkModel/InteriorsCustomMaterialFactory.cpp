@@ -41,11 +41,10 @@ namespace ExampleApp
                 
                 const Eegeo::Resources::Interiors::InteriorMaterialData& customInteriorMaterialData =
                     Eegeo::Resources::Interiors::InteriorMaterialData::Make(materialDto.materialName,
-                                                                            Eegeo::Rendering::LayerIds::Interiors,
-                                                                            0,
                                                                             materialDto.keyValueStrings,
                                                                             materialDto.keyValueColors,
-                                                                            materialDto.keyValueScalars);
+                                                                            materialDto.keyValueScalars,
+                                                                            materialDto.keyValueBooleans);
                 
                 const std::string& materialFactoryType = customInteriorMaterialData.GetStringOrDefault(InteriorsCustomMaterialKeys::MaterialType, InteriorsCustomMaterialKeys::InteriorsDiffuseUntexturedMaterial);
 
