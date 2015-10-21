@@ -110,6 +110,15 @@ namespace ExampleApp
                     }
                 }
                 
+                void TryAddBoolean(const std::string& key, const rapidjson::Value& materialJson, std::vector<std::pair<std::string, bool> >& inout_booleans)
+                {
+                    if (materialJson.HasMember(key.c_str()))
+                    {
+                        const bool value = materialJson[key.c_str()].GetBool();
+                        inout_booleans.push_back(std::make_pair(key, value));
+                    }
+                }
+                
                 InteriorsCustomMaterialDto ParseMaterial(const rapidjson::Value& materialJson)
                 {
                     using namespace Eegeo::Resources::Interiors::InteriorMaterialSemantics;
@@ -131,6 +140,8 @@ namespace ExampleApp
                     TryAddScalar(SpecularPowerScalar, materialJson, result.keyValueScalars);
                     TryAddScalar(SpecularModulateTextureScalar, materialJson, result.keyValueScalars);
                     TryAddScalar(SpecularityFromTextureLuminanceScalar, materialJson, result.keyValueScalars);
+                    
+                    TryAddBoolean(IsTranslucent, materialJson, result.keyValueBooleans);
                     
                     return result;
                 }
