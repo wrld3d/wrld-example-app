@@ -125,6 +125,13 @@ AppHost::AppHost(
     Eegeo::Config::PlatformConfig platformConfig = Eegeo::iOS::iOSPlatformConfigBuilder(App::GetDevice(), App::IsDeviceMultiCore(), App::GetMajorSystemVersion()).Build();
     platformConfig.OptionsConfig.StartMapModuleAutomatically = false;
     platformConfig.OptionsConfig.InteriorsControlledByApp = true;
+    
+    platformConfig.CoverageTreeConfig.ManifestUrl = "http://cdn1.eegeo.com/coverage-trees/vglobal/v813/manifest.bin.gz";
+    platformConfig.CityThemesConfig.StreamedManifestUrl = "http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v421/manifest.txt.gz";
+    platformConfig.CityThemesConfig.EmbeddedThemeManifestFile = "embedded_manifest.txt";
+    platformConfig.CityThemesConfig.EmbeddedThemeTexturePath = "Textures/EmbeddedTheme";
+    platformConfig.CityThemesConfig.EmbeddedThemeNameContains = "Summer";
+    platformConfig.CityThemesConfig.EmbeddedThemeStateName = "DayDefault";
 
     m_pInitialExperienceModule = Eegeo_NEW(ExampleApp::InitialExperience::iOSInitialExperienceModule)(m_iOSPersistentSettingsModel, m_messageBus);
     
