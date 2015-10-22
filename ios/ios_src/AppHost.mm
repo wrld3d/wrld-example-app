@@ -80,6 +80,8 @@
 #include "SearchVendorNames.h"
 #include "CameraTransitionChangedMessage.h"
 
+#import "UIView+TouchExclusivity.h"
+
 using namespace Eegeo::iOS;
 
 AppHost::AppHost(
@@ -423,6 +425,8 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
 
     viewControllerUpdaterModel.AddUpdateableObject(m_pSecondaryMenuViewModule->GetMenuController());
     viewControllerUpdaterModel.AddUpdateableObject(m_pSearchResultMenuViewModule->GetMenuController());
+    
+    SetTouchExclusivity();
 }
 
 void AppHost::DestroyApplicationViewModules()
@@ -503,6 +507,11 @@ void AppHost::DestroyApplicationViewModules()
     Eegeo_DELETE m_pInitialExperienceIntroViewModule;
     
     Eegeo_DELETE m_pWatermarkViewModule;
+}
+
+void AppHost::SetTouchExclusivity()
+{
+    [m_pView setTouchExclusivity:m_pView];
 }
 
 void AppHost::HandleFailureToProvideWorkingApiKey()
