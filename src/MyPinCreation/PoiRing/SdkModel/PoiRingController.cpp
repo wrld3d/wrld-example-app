@@ -168,7 +168,7 @@ namespace ExampleApp
                                                   unflattenedIconPosition,
                                                   m_environmentFlatteningService.GetCurrentScale());
 
-                    const float assetSize = 114.f;
+                    const float assetSize = 70.f;
                     const float iconScale = Eegeo::Helpers::TransformHelpers::ComputeModelScaleForConstantScreenSizeWithVerticalFoV(renderCamera, iconPosition) / (m_screenProperties.GetScreenHeight()* 0.5f)*m_screenProperties.GetPixelScale() * assetSize;
                     
                     m_iconSize = Eegeo::Max(iconScale * transitionScale, 0.0f);
