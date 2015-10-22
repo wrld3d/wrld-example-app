@@ -16,6 +16,7 @@
 #include "ExitCurrentInteriorStage.h"
 #include "TransitionToInteriorStage.h"
 #include "CameraTransitionChangedMessage.h"
+#include "IAppCameraController.h"
 
 namespace ExampleApp
 {
@@ -28,6 +29,7 @@ namespace ExampleApp
                                                                    Eegeo::Location::NavigationService& navigationService,
                                                                    Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider,
                                                                    ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
+                                                                   ExampleApp::AppCamera::SdkModel::IAppCameraController& appCameraController,
                                                                    Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                                    Eegeo::Resources::Interiors::InteriorController& interiorController,
                                                                    InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel,
@@ -38,6 +40,7 @@ namespace ExampleApp
             , m_terrainHeightProvider(terrainHeightProvider)
             , m_appModeModel(appModeModel)
             , m_interiorSelectionModel(interiorSelectionModel)
+            , m_appCameraController(appCameraController)
             , m_interiorController(interiorController)
             , m_interiorsExplorerModel(interiorsExplorerModel)
             , m_isTransitioning(false)
@@ -153,7 +156,7 @@ namespace ExampleApp
 
                 ICameraTransitionStage* pCurrentStage = m_transitionStages.front();
                 pCurrentStage->Update(dt);
-                if(pCurrentStage->StageIsComplete())
+                if(pCurrentStage->StageIsComplete() && !m_appCameraController.IsTransitionInFlight())
                 {
                     pCurrentStage->End();
                     Eegeo_DELETE pCurrentStage;

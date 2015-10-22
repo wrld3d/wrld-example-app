@@ -66,7 +66,7 @@ namespace ExampleApp
                 
                 if(m_interiorController.InteriorInScene())
                 {
-                    m_interiorController.SetCurrentFloor(m_targetFloorIndex);
+                    m_interiorController.SetCurrentFloor(m_targetFloorIndex, true);
                 }
             }
             

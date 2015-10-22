@@ -38,9 +38,10 @@ namespace ExampleApp
                 Eegeo::Camera::GlobeCamera::GlobeCameraControllerConfiguration globeCameraConfig = Eegeo::Camera::GlobeCamera::GlobeCameraControllerConfiguration::CreateDefault(false);
                 
                 globeCameraConfig.terrainFollowingEnabled = false;
-                globeCameraConfig.zoomAltitudeLow = 100.0f; // Probably too low.
+                globeCameraConfig.zoomAltitudeLow = 50.0f;
                 globeCameraConfig.fovZoomedInCity = 10.0f;
-                globeCameraConfig.maxAltitude = 1000.0f;
+                globeCameraConfig.fovZoomedInGlobe = 90.0f;
+                globeCameraConfig.maxAltitude = 250.0f;
                 
                 m_pGlobeCameraTouchController = globeCameraControllerFactory.CreateTouchController(touchConfig);
                 
