@@ -187,7 +187,7 @@
 
 - (void) setSelectedFloor:(int)floorIndex
 {
-    Eegeo_ASSERT(floorIndex >= 0 && floorIndex < m_tableViewFloorNames.size(), "Invalid floorindex - Out of range");
+    Eegeo_ASSERT(floorIndex >= 0 && floorIndex < m_tableViewFloorNames.size(), "Invalid floorindex - Out of range 0 << %d << %d", floorIndex, m_tableViewFloorNames.size());
     int rowIndex = [self reverseIndex:floorIndex];
     [self.pFloorList selectRowAtIndexPath:[NSIndexPath indexPathForRow:rowIndex inSection:0] animated:NO scrollPosition:static_cast<UITableViewScrollPosition>(0)];
 }

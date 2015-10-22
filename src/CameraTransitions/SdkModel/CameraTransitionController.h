@@ -14,6 +14,7 @@
 #include "InteriorId.h"
 #include <queue>
 #include "BidirectionalBus.h"
+#include "AppCamera.h"
 
 namespace ExampleApp
 {
@@ -30,6 +31,7 @@ namespace ExampleApp
                                            Eegeo::Location::NavigationService& navigationService,
                                            Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider,
                                            ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
+                                           ExampleApp::AppCamera::SdkModel::IAppCameraController& appCameraController,
                                            Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                            Eegeo::Resources::Interiors::InteriorController& interiorController,
                                            InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel,
@@ -87,6 +89,7 @@ namespace ExampleApp
                 Eegeo::Location::NavigationService& m_navigationService;
                 Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& m_terrainHeightProvider;
                 ExampleApp::AppModes::SdkModel::IAppModeModel& m_appModeModel;
+                ExampleApp::AppCamera::SdkModel::IAppCameraController& m_appCameraController;
                 Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
                 Eegeo::Resources::Interiors::InteriorController& m_interiorController;
                 InteriorsExplorer::SdkModel::InteriorsExplorerModel& m_interiorsExplorerModel;

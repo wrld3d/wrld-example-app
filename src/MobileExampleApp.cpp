@@ -280,6 +280,7 @@ namespace ExampleApp
                                                                                                                        *m_pNavigationService,
                                                                                                                        terrainModelModule.GetTerrainHeightProvider(),
                                                                                                                        *m_pAppModeModel,
+                                                                                                                       m_pAppCameraModule->GetController(),
                                                                                                                        interiorsPresentationModule.GetInteriorSelectionModel(),
                                                                                                                        interiorsPresentationModule.GetAppLevelController(),
                                                                                                                        m_pInteriorsExplorerModule->GetInteriorsExplorerModel(),
