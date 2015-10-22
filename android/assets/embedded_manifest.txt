@@ -9,6 +9,10 @@
     "AssetRoot_iOS": "http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v407/", 
     "GlobeViewAltitude": 15000, 
     "GlobeViewThemeState": "GlobeView", 
+    "LandmarkTexturePostfixes": [
+        "", 
+        "night"
+    ], 
     "LandmarkTextureRoot": "http://d2xvsc8j92rfya.cloudfront.net/landmark_textures/test_builds/v499/", 
     "Themes": [
         {

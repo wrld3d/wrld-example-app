@@ -9,6 +9,10 @@
     "AssetRoot_iOS": "http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v407/", 
     "GlobeViewAltitude": 15000, 
     "GlobeViewThemeState": "GlobeView", 
+    "LandmarkTexturePostfixes": [
+        "", 
+        "night"
+    ], 
     "LandmarkTextureRoot": "http://d2xvsc8j92rfya.cloudfront.net/landmark_textures/test_builds/v499/", 
     "Themes": [
         {
@@ -17,7 +21,7 @@
                 37.75253, 
                 -122.449837
             ], 
-            "Name": "SummerSanFrancisco",
+            "Name": "SummerSanFrancisco", 
             "PlaceNameStyles": [
                 {
                     "Category": "ctry", 
@@ -150,7 +154,7 @@
                         0
                     ], 
                     "LightMapIntensity": 0.0, 
-                    "Name": "DayDefault",
+                    "Name": "DayDefault", 
                     "ShadowColor": [
                         0.45098039215686275, 
                         0.56862745098039214, 
