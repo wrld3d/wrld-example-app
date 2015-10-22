@@ -180,9 +180,16 @@
     return  NO;
 }
 
-- (void) setFloorName:(const std::string*)name;
+- (void) setFloorName:(const std::string*)name
 {
     self.pFloorNameLabel.text = [NSString stringWithUTF8String:name->c_str()];
+}
+
+- (void) setSelectedFloor:(int)floorIndex
+{
+    Eegeo_ASSERT(floorIndex >= 0 && floorIndex < m_tableViewFloorNames.size(), "Invalid floorindex - Out of range");
+    int rowIndex = [self reverseIndex:floorIndex];
+    [self.pFloorList selectRowAtIndexPath:[NSIndexPath indexPathForRow:rowIndex inSection:0] animated:NO scrollPosition:static_cast<UITableViewScrollPosition>(0)];
 }
 
 - (void) updateFloors: (const std::vector<std::string>&) floorShortNames withCurrentFloor: (int) currentlySelectedFloorIndex;

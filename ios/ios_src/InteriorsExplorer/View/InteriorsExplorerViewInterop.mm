@@ -35,6 +35,11 @@ namespace ExampleApp
                 [m_pView setFloorName:&name];
             }
             
+            void InteriorsExplorerViewInterop::SetSelectedFloorIndex(int index)
+            {
+                [m_pView setSelectedFloor:index];
+            }
+            
             void InteriorsExplorerViewInterop::InsertDismissedCallback(Eegeo::Helpers::ICallback0& callback)
             {
                 m_dismissedCallbacks.AddCallback(callback);

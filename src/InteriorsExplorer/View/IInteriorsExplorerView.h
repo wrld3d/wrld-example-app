@@ -24,6 +24,7 @@ namespace ExampleApp
                 
                 virtual void OnDismissed() = 0;
                 virtual void SetFloorName(const std::string& name) = 0;
+                virtual void SetSelectedFloorIndex(int index) = 0;
                 virtual void UpdateFloors(const std::vector<std::string>& floorShortNames, int currentlySelectedFloorIndex) = 0;
                 
                 virtual void InsertDismissedCallback(Eegeo::Helpers::ICallback0& callback) = 0;

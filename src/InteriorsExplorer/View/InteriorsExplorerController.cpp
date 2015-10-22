@@ -73,6 +73,7 @@ namespace ExampleApp
                 std::stringstream content;
                 content << "Floor " << (message.GetFloorName());
                 m_view.SetFloorName(content.str());
+                m_view.SetSelectedFloorIndex(message.GetFloorIndex());
             }
             
             void InteriorsExplorerController::OnStateChanged(const InteriorsExplorerStateChangedMessage& message)

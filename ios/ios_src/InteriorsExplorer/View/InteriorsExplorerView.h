@@ -45,6 +45,8 @@
 
 - (void) setFloorName:(const std::string*)name;
 
+- (void) setSelectedFloor:(int)floorIndex;
+
 - (void) updateFloors: (const std::vector<std::string>&) floorNumbers withCurrentFloor: (int) currentlySelectedFloor;
 
 - (void) setFullyOnScreen;
