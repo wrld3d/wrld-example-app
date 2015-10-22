@@ -118,6 +118,10 @@ namespace ExampleApp
             
             void InteriorsExplorerModel::OnControllerFloorChanged()
             {
+                const Eegeo::Resources::Interiors::InteriorsFloorModel* pFloorModel = NULL;
+                Eegeo_ASSERT(m_controller.TryGetCurrentFloorModel(pFloorModel), "Could not fetch current floor model");
+                
+                m_messageBus.Publish(InteriorsExplorerFloorSelectedMessage(m_controller.GetCurrentFloorIndex(), pFloorModel->GetFloorName()));
             }
             
             void InteriorsExplorerModel::OnControllerVisibilityChanged()
@@ -148,12 +152,15 @@ namespace ExampleApp
                     return;
                 }
                 
+                if(m_controller.GetCurrentFloorIndex() == floor)
+                {
+                    return;
+                }
+                
                 m_controller.SetCurrentFloor(floor);
                 
                 const Eegeo::Resources::Interiors::InteriorsFloorModel* pFloorModel = NULL;
                 Eegeo_ASSERT(m_controller.TryGetCurrentFloorModel(pFloorModel), "Could not fetch current floor model");
-                
-                m_messageBus.Publish(InteriorsExplorerFloorSelectedMessage(m_controller.GetCurrentFloorIndex(), pFloorModel->GetFloorName()));
 
                 m_metricsService.SetEvent(MetricEventInteriorFloorSelected, "InteriorId", m_interiorSelectionModel.GetSelectedInteriorId().Value(), "FloorName", pFloorModel->GetFloorName());
             }
