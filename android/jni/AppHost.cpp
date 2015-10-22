@@ -525,6 +525,8 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
     viewControllerUpdaterModel.AddUpdateableObject(m_pSecondaryMenuViewModule->GetMenuController());
     viewControllerUpdaterModel.AddUpdateableObject(m_pSearchResultMenuViewModule->GetMenuController());
 
+    SetTouchExclusivity();
+
     m_messageBus.SubscribeUi(m_cameraTransitionChangedHandler);
 }
 
@@ -567,6 +569,18 @@ void AppHost::DestroyApplicationViewModulesFromUiThread()
         Eegeo_DELETE m_pWatermarkViewModule;
     }
     m_createdUIModules = false;
+}
+
+void AppHost::SetTouchExclusivity()
+{
+	ASSERT_UI_THREAD
+
+	AndroidSafeNativeThreadAttachment attached(m_nativeState);
+	JNIEnv* env = attached.envForThread;
+
+	const std::string methodName = "setTouchExclusivity";
+	jmethodID setTouchExclusivityMethod = env->GetMethodID(m_nativeState.activityClass, methodName.c_str(), "()V");
+	env->CallVoidMethod(m_nativeState.activity, setTouchExclusivityMethod);
 }
 
 void AppHost::HandleFailureToProvideWorkingApiKey()
