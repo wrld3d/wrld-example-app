@@ -69,6 +69,11 @@ namespace ExampleApp
                 return m_globeCameraController.GetRenderCamera();
             }
             
+            Eegeo::dv3 InteriorsExplorerCameraController::ComputeNonFlattenedCameraPosition() const
+            {
+                return m_globeCameraController.ComputeNonFlattenedCameraPosition();
+            }
+            
             Eegeo::ITouchController& InteriorsExplorerCameraController::GetTouchController() const
             {
                 return m_globeCameraTouchController;
