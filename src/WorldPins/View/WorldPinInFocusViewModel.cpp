@@ -44,12 +44,7 @@ namespace ExampleApp
 
             void WorldPinInFocusViewModel::SelectFocussedResult()
             {
-                SdkModel::IWorldPinSelectionHandler* pSelectionHandler = m_worldPinsService.GetSelectionHandlerForPin(m_worldPinInFocusModel.GetPinId());
-
-                if (pSelectionHandler)
-                {
-                    pSelectionHandler->SelectPin();
-                }
+                m_worldPinsService.SelectPin(m_worldPinInFocusModel.GetPinId());
             }
 
             void WorldPinInFocusViewModel::Open(const SdkModel::WorldPinsInFocusModel& worldPinsInFocusModel, const Eegeo::v2& screenPos)

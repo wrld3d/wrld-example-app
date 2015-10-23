@@ -20,6 +20,8 @@ namespace ExampleApp
             namespace
             {
                 static int nextHandleId = -1;
+                
+                const double JumpThresholdDistanceBetweenCameras = 4000.0f;
             }
             
             AppCameraController::AppCameraController()
@@ -58,6 +60,8 @@ namespace ExampleApp
                 
                 m_previousCameraIndex = m_currentCameraIndex;
                 m_currentCameraIndex = cameraHandle;
+                
+                Update(0.0f);
             }
 
             const bool AppCameraController::IsTransitionInFlight() const
@@ -115,6 +119,11 @@ namespace ExampleApp
                 previousCamera.Update(dt);
                 nextCamera.Update(dt);
                 
+                if(ShouldSkipTransition(previousCamera, nextCamera))
+                {
+                    m_transitionTimer = m_transitionDuration;
+                }
+                
                 const Eegeo::Camera::RenderCamera startCamera = previousCamera.GetRenderCamera();
                 const Eegeo::Camera::RenderCamera endCamera = nextCamera.GetRenderCamera();
                 
@@ -146,6 +155,17 @@ namespace ExampleApp
                 m_renderCamera.SetProjection(fov, near, far);
                 m_renderCamera.SetEcefLocation(m_currentPosition);
                 m_renderCamera.SetOrientationMatrix(m_currentOrientation);
+            }
+            
+            const bool AppCameraController::ShouldSkipTransition(IAppCamera &previousCamera, IAppCamera &nextCamera)
+            {
+                double distanceBetweenCameras =  (previousCamera.GetRenderCamera().GetEcefLocation() - nextCamera.GetRenderCamera().GetEcefLocation()).Length();
+                if(distanceBetweenCameras >= JumpThresholdDistanceBetweenCameras)
+                {
+                    return true;
+                }
+                
+                return false;
             }
         }
     }
