@@ -23,6 +23,7 @@ namespace ExampleApp
             , m_environmentFlatteningService(environmentFlatteningService)
             , m_messageBus(messageBus)
             , m_updateTime(0.0f)
+            , m_visibilityCount(1)
             , m_modalityChangedHandlerBinding(this, &GpsMarkerController::OnModalityChangedMessage)
             , m_visibilityChangedHandlerBinding(this, &GpsMarkerController::OnVisbilityChangedMessage)
             {
@@ -44,7 +45,9 @@ namespace ExampleApp
             
             void GpsMarkerController::OnVisbilityChangedMessage(const ExampleApp::GpsMarker::GpsMarkerVisibilityMessage &message)
             {
-                m_view.SetVisible(message.ShouldSetVisible());
+                m_visibilityCount += message.ShouldSetVisible() ? 1 : -1;
+                Eegeo_ASSERT(m_visibilityCount <= 1, "Gps Marker sent visibility message to make visible before visibility message to be made invisible");
+                m_view.SetVisible(m_visibilityCount == 1);
             }
             
             void GpsMarkerController::Update(float dt, const Eegeo::Camera::RenderCamera &renderCamera)
