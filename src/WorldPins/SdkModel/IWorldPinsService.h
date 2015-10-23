@@ -39,8 +39,10 @@ namespace ExampleApp
                         Eegeo::v2& screenLocation) const = 0;
 
                 virtual bool HandleTouchTap(const Eegeo::v2& screenTapPoint) = 0;
-
-                virtual IWorldPinSelectionHandler* GetSelectionHandlerForPin(WorldPinItemModel::WorldPinItemModelId worldPinItemModelId) = 0;
+                
+                virtual void SelectPin(WorldPinItemModel::WorldPinItemModelId worldPinItemModelId) = 0;
+                
+                virtual void Update(float dt) = 0;
 
             };
         }

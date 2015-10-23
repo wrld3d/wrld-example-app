@@ -28,6 +28,7 @@ namespace ExampleApp
                 , m_pinRepository(pinRepository)
                 , m_pinController(pinController)
                 , m_environmentFlatteningService(flatteningService)
+                , m_pinAlreadySelected(false)
             {
             }
 
@@ -109,11 +110,7 @@ namespace ExampleApp
                     Eegeo_ASSERT(intersectingPinsClosestToCameraFirst.size() > 0);
                     Eegeo::Pins::Pin* pSelectedPin = intersectingPinsClosestToCameraFirst[0];
                     Eegeo_ASSERT(pSelectedPin != NULL);
-                    TPinToSelectionHandlerMapIt pinToSelectionHandlerMapIt = m_pinsToSelectionHandlers.find(pSelectedPin->GetId());
-                    Eegeo_ASSERT(pinToSelectionHandlerMapIt != m_pinsToSelectionHandlers.end(),
-                                 "Selected pin with unknown ID %d.\n", pSelectedPin->GetId());
-                    IWorldPinSelectionHandler& selectionHandler = *pinToSelectionHandlerMapIt->second;
-                    selectionHandler.SelectPin();
+                    SelectPin(pSelectedPin->GetId());
                     return true;
                 }
 
@@ -133,6 +130,25 @@ namespace ExampleApp
                 Eegeo::Geometry::Bounds2D outScreenBounds = Eegeo::Geometry::Bounds2D::Empty();
                 m_pinController.GetScreenBoundsForPin(*pPin, outScreenBounds);
                 screenLocation = outScreenBounds.center();
+            }
+            
+            void WorldPinsService::SelectPin(WorldPinItemModel::WorldPinItemModelId worldPinItemModelId)
+            {
+                if(m_pinAlreadySelected)
+                {
+                    return;
+                }
+                IWorldPinSelectionHandler* selectionHandler = GetSelectionHandlerForPin(worldPinItemModelId);
+                if(selectionHandler != NULL)
+                {
+                    m_pinAlreadySelected = true;
+                    selectionHandler->SelectPin();
+                }
+            }
+            
+            void WorldPinsService::Update(float dt)
+            {
+                m_pinAlreadySelected = false;
             }
 
             void WorldPinsService::ErasePin(const WorldPinItemModel::WorldPinItemModelId& id)

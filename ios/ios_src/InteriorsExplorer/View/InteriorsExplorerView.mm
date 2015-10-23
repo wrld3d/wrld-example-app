@@ -37,7 +37,7 @@
         
         m_inactiveFloorListXPosition = -50.f;
         
-        const float upperMargin = 50.0f;
+        const float upperMargin = isPhone ? 20.0f : 50.0f;
         m_inactiveDetailPaneYPosition = m_screenHeight;
         
         self.pFloorPanel = [[[UIView alloc] initWithFrame:CGRectMake(m_inactiveFloorListXPosition, m_screenHeight/2.0f, 50, 200)] autorelease];
