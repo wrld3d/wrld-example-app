@@ -3,6 +3,7 @@
 
 #include "AppGlobeCameraWrapper.h"
 #include "GpsGlobeCameraController.h"
+#include "GlobeCameraController.h"
 
 namespace ExampleApp
 {
@@ -28,6 +29,11 @@ namespace ExampleApp
             const Eegeo::Camera::RenderCamera AppGlobeCameraWrapper::GetRenderCamera() const
             {
                 return m_gpsGlobeCameraController.GetRenderCamera();
+            }
+            
+            Eegeo::dv3 AppGlobeCameraWrapper::ComputeNonFlattenedCameraPosition() const
+            {
+                return m_gpsGlobeCameraController.GetGlobeCameraController().ComputeNonFlattenedCameraPosition();
             }
             
             Eegeo::ITouchController& AppGlobeCameraWrapper::GetTouchController() const

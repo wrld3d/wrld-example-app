@@ -33,6 +33,8 @@ namespace ExampleApp
                 Eegeo::dv3 m_currentPosition;
                 Eegeo::m33 m_currentOrientation;
                 
+                Eegeo::dv3 m_currentNonFlattenedCameraPosition;
+                
                 void UpdateTransitionBetween(IAppCamera& previousCamera, IAppCamera& nextCamera, float dt);
                 
             public:
@@ -51,6 +53,8 @@ namespace ExampleApp
                 const Eegeo::Camera::CameraState GetCameraState();
                 
                 const Eegeo::Camera::RenderCamera& GetRenderCamera();
+                
+                Eegeo::dv3 GetNonFlattenedCameraPosition() const;
                 
                 Eegeo::ITouchController& GetTouchController();
                 

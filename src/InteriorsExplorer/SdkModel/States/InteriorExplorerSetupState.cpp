@@ -3,6 +3,7 @@
 #include "InteriorExplorerSetupState.h"
 #include "IAppCameraController.h"
 #include "InteriorController.h"
+#include "InteriorsExplorerModel.h"
 
 namespace ExampleApp
 {
@@ -13,9 +14,11 @@ namespace ExampleApp
             namespace States
             {
                 InteriorExplorerSetupState::InteriorExplorerSetupState(AppModes::States::SdkModel::InteriorExplorerState& parentState,
+                                                                       InteriorsExplorerModel& interiorsExplorerModel,
                                                                        AppCamera::SdkModel::IAppCameraController& cameraController,
                                                                        int interiorCameraHandle)
                 : m_parentState(parentState)
+                , m_interiorsExplorerModel(interiorsExplorerModel)
                 , m_cameraController(cameraController)
                 , m_interiorCameraHandle(interiorCameraHandle)
                 {
@@ -27,6 +30,7 @@ namespace ExampleApp
                 
                 void InteriorExplorerSetupState::Enter()
                 {
+                    m_interiorsExplorerModel.SuspendCurrentMapState();
                     m_cameraController.TransitionToCameraWithHandle(m_interiorCameraHandle);
                 }
                 

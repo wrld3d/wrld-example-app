@@ -27,23 +27,11 @@ namespace ExampleApp
                                            Eegeo::Collision::IRayPicker& rayPicker,
                                            const IPoiRingController& poiRingController,
                                            ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
-                                           Eegeo::Resources::Interiors::InteriorController& interiorsController);
-                    
-                    bool HandleTouchDown(const AppInterface::TouchData& data,
-                                         const Eegeo::Camera::RenderCamera& renderCamera,
-                                         Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController);
-                    
+                                           Eegeo::Resources::Interiors::InteriorController& interiorController);
+
+                    bool HandleTouchDown(const AppInterface::TouchData& data, const Eegeo::Camera::RenderCamera& renderCamera, const Eegeo::dv3& nonFlattenedCameraPosition);
                     bool HandleTouchUp(const AppInterface::TouchData& data);
-                    
-                    bool HandleTouchMove(const AppInterface::TouchData& data,
-                                         const Eegeo::Camera::RenderCamera& renderCamera,
-                                         Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController);
-                    
-                    bool HandleTouchDown(const AppInterface::TouchData& data,
-                                         const Eegeo::Camera::RenderCamera& renderCamera);
-                    
-                    bool HandleTouchMove(const AppInterface::TouchData& data,
-                                         const Eegeo::Camera::RenderCamera& renderCamera);
+                    bool HandleTouchMove(const AppInterface::TouchData& data, const Eegeo::Camera::RenderCamera& renderCamera, const Eegeo::dv3& nonFlattenedCameraPosition);
 
                     bool IsDragging() const;
 
@@ -51,11 +39,11 @@ namespace ExampleApp
                     
                     bool TouchDownRaycast(const AppInterface::TouchData &data,
                                           const Eegeo::Camera::RenderCamera &renderCamera,
-                                          Eegeo::dv3 &rayOrigin);
+                                          const Eegeo::dv3 &rayOrigin);
                     
                     bool TouchMoveRaycast(const AppInterface::TouchData &data,
                                           const Eegeo::Camera::RenderCamera &renderCamera,
-                                          Eegeo::dv3 &rayOrigin);
+                                          const Eegeo::dv3 &rayOrigin);
                     
                     
                     
@@ -68,7 +56,7 @@ namespace ExampleApp
 
                     bool m_isDragging;
 
-                    bool PerformRayPick(Eegeo::dv3& rayOrigin, Eegeo::dv3& rayDirection, Eegeo::dv3& out_rayIntersectionPoint, double& out_intersectionParam);
+                    bool PerformRayPick(const Eegeo::dv3& rayOrigin, Eegeo::dv3& rayDirection, Eegeo::dv3& out_rayIntersectionPoint, double& out_intersectionParam);
                 };
             }
         }

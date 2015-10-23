@@ -136,6 +136,8 @@ private:
     void CreateApplicationViewModules(const Eegeo::Rendering::ScreenProperties& screenProperties);
     void DestroyApplicationViewModules();
     
+    void SetTouchExclusivity();
+    
     void HandleStartupFailure();
     void HandleCameraTransitionChanged(const ExampleApp::CameraTransitions::CameraTransitionChangedMessage& message);
 };

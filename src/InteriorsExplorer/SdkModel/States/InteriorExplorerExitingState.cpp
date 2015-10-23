@@ -18,11 +18,13 @@ namespace ExampleApp
                 InteriorExplorerExitingState::InteriorExplorerExitingState(AppModes::States::SdkModel::InteriorExplorerState& parentState,
                                                                            Eegeo::Resources::Interiors::InteriorController& interiorController,
                                                                            Eegeo::Streaming::CameraFrustumStreamingVolume& cameraFrustumStreamingVolume,
-                                                                           InteriorsExplorer::SdkModel::InteriorVisibilityUpdater& interiorVisibilityUpdater)
+                                                                           InteriorsExplorer::SdkModel::InteriorVisibilityUpdater& interiorVisibilityUpdater,
+                                                                           InteriorsExplorerModel& interiorsExplorerModel)
                 : m_parentState(parentState)
                 , m_interiorController(interiorController)
                 , m_cameraFrustumStreamingVolume(cameraFrustumStreamingVolume)
                 , m_interiorVisibilityUpdater(interiorVisibilityUpdater)
+                , m_interiorsExplorerModel(interiorsExplorerModel)
                 {
                 }
                 
@@ -40,6 +42,7 @@ namespace ExampleApp
                 {
                     if(m_interiorVisibilityUpdater.GetInteriorTransitionParam() <= 0.0f)
                     {
+                        m_interiorsExplorerModel.ResumePreviousMapState();
                         m_interiorController.ClearSelectedInterior();
                         m_parentState.ReturnToWorldMode();
                     }

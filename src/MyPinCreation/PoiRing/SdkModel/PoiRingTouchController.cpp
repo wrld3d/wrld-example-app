@@ -39,19 +39,14 @@ namespace ExampleApp
 
                 }
 
-                bool PoiRingTouchController::HandleTouchDown(const AppInterface::TouchData& data,
-                                                             const Eegeo::Camera::RenderCamera& renderCamera,
-                                                             Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController)
+                bool PoiRingTouchController::HandleTouchDown(const AppInterface::TouchData& data, const Eegeo::Camera::RenderCamera& renderCamera, const Eegeo::dv3& nonFlattenedCameraPosition)
                 {
                     if (m_myPinCreationModel.GetCreationStage() != Ring)
                     {
                         return false;
                     }
                     
-                    
-                    Eegeo::dv3 rayOrigin = globeCameraController.ComputeNonFlattenedCameraPosition();
-                    
-                    return TouchDownRaycast(data, renderCamera, rayOrigin);
+                    return TouchDownRaycast(data, renderCamera, nonFlattenedCameraPosition);
                 }
                 
                 bool PoiRingTouchController::HandleTouchUp(const AppInterface::TouchData& data)
@@ -65,55 +60,18 @@ namespace ExampleApp
                     
                     return true;
                 }
-                
-                bool PoiRingTouchController::HandleTouchMove(const AppInterface::TouchData &data, const Eegeo::Camera::RenderCamera &renderCamera, Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController)
-                {
-                    if (m_myPinCreationModel.GetCreationStage() != Ring)
-                    {
-                        return false;
-                    }
-                    
-                    Eegeo::dv3 rayOrigin = globeCameraController.ComputeNonFlattenedCameraPosition();
-                    
-                    return TouchMoveRaycast(data, renderCamera, rayOrigin);
-                }
-                
-                bool PoiRingTouchController::HandleTouchDown(const AppInterface::TouchData& data,
-                                                             const Eegeo::Camera::RenderCamera& renderCamera)
-                {
-                    if (m_myPinCreationModel.GetCreationStage() != Ring)
-                    {
-                        return false;
-                    }
-                    
-                    
-                    Eegeo::dv3 rayOrigin = renderCamera.GetEcefLocation();
-                    
-                    return TouchDownRaycast(data, renderCamera, rayOrigin);
-                }
-                
-                bool PoiRingTouchController::HandleTouchMove(const AppInterface::TouchData &data,
-                                                             const Eegeo::Camera::RenderCamera &renderCamera)
-                {
-                    if (m_myPinCreationModel.GetCreationStage() != Ring)
-                    {
-                        return false;
-                    }
-                    
-                    Eegeo::dv3 rayOrigin = renderCamera.GetEcefLocation();
-                    
-                    return TouchMoveRaycast(data, renderCamera, rayOrigin);
-                }
+            
                 
                 bool PoiRingTouchController::TouchDownRaycast(const AppInterface::TouchData &data,
-                                                              const Eegeo::Camera::RenderCamera &renderCamera, Eegeo::dv3 &rayOrigin)
+                                                              const Eegeo::Camera::RenderCamera &renderCamera,
+                                                              const Eegeo::dv3 &rayOrigin)
                 {
                     float screenPixelX = data.point.GetX();
                     float screenPixelY = data.point.GetY();
                     
                     Eegeo::dv3 rayDirection;
                     Eegeo::Camera::CameraHelpers::GetScreenPickRay(renderCamera, screenPixelX, screenPixelY, rayDirection);
-                    
+
                     Eegeo::dv3 rayIntersectionPoint;
                     double intersectionParam;
                     
@@ -141,8 +99,26 @@ namespace ExampleApp
                 }
                 
                 bool PoiRingTouchController::TouchMoveRaycast(const AppInterface::TouchData &data,
-                                                              const Eegeo::Camera::RenderCamera &renderCamera, Eegeo::dv3 &rayOrigin)
+                                                              const Eegeo::Camera::RenderCamera &renderCamera,
+                                                              const Eegeo::dv3 &rayOrigin)
                 {
+                    m_isDragging = false;
+
+                    if (m_myPinCreationModel.GetCreationStage() != Ring)
+                    {
+                        return false;
+                    }
+
+                    return true;
+                }
+
+                bool PoiRingTouchController::HandleTouchMove(const AppInterface::TouchData &data, const Eegeo::Camera::RenderCamera &renderCamera, const Eegeo::dv3& nonFlattenedCameraPosition)
+                {
+                    if (m_myPinCreationModel.GetCreationStage() != Ring)
+                    {
+                        return false;
+                    }
+
                     if (m_isDragging)
                     {
                         float screenPixelX = data.point.GetX();
@@ -150,7 +126,8 @@ namespace ExampleApp
                         
                         Eegeo::dv3 rayDirection;
                         Eegeo::Camera::CameraHelpers::GetScreenPickRay(renderCamera, screenPixelX, screenPixelY, rayDirection);
-                        
+
+                        Eegeo::dv3 rayOrigin = nonFlattenedCameraPosition;
                         Eegeo::dv3 rayIntersectionPoint;
                         double intersectionParam;
                         bool rayPick = PerformRayPick(rayOrigin, rayDirection, rayIntersectionPoint, intersectionParam);
@@ -171,7 +148,7 @@ namespace ExampleApp
                     return m_isDragging && m_myPinCreationModel.GetCreationStage() == Ring;
                 }
 
-                bool PoiRingTouchController::PerformRayPick(Eegeo::dv3 &rayOrigin, Eegeo::dv3 &rayDirection, Eegeo::dv3 &out_rayIntersectionPoint, double &out_intersectionParam)
+                bool PoiRingTouchController::PerformRayPick(const Eegeo::dv3 &rayOrigin, Eegeo::dv3 &rayDirection, Eegeo::dv3 &out_rayIntersectionPoint, double &out_intersectionParam)
                 {
                     bool rayPick = false;
                     

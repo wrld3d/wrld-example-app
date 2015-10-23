@@ -27,6 +27,7 @@ namespace ExampleApp
             , m_previousCameraIndex(0)
             , m_transitionDuration(0.75f)
             , m_transitionTimer(0.0f)
+            , m_currentNonFlattenedCameraPosition(0.0, 0.0, 0.0)
             {
                 nextHandleId = -1;
             }
@@ -78,6 +79,11 @@ namespace ExampleApp
                 return m_renderCamera;
             }
             
+            Eegeo::dv3 AppCameraController::GetNonFlattenedCameraPosition() const
+            {
+                return m_currentNonFlattenedCameraPosition;
+            }
+            
             Eegeo::ITouchController& AppCameraController::GetTouchController()
             {
                 return m_cameras[m_currentCameraIndex]->GetTouchController();
@@ -100,6 +106,7 @@ namespace ExampleApp
                 {
                     m_cameras[m_currentCameraIndex]->Update(dt);
                     m_renderCamera = m_cameras[m_currentCameraIndex]->GetRenderCamera();
+                    m_currentNonFlattenedCameraPosition = m_cameras[m_currentCameraIndex]->ComputeNonFlattenedCameraPosition();
                 }
             }
             
@@ -117,6 +124,10 @@ namespace ExampleApp
                 const Eegeo::dv3 startPos = startCamera.GetEcefLocation();
                 const Eegeo::dv3 endPos = endCamera.GetEcefLocation();
                 m_currentPosition = Eegeo::dv3::Lerp(startPos, endPos, easedT);
+                
+                const Eegeo::dv3 startNonFlatennedPos = previousCamera.ComputeNonFlattenedCameraPosition();
+                const Eegeo::dv3 endNonFlatennedPos = nextCamera.ComputeNonFlattenedCameraPosition();
+                m_currentNonFlattenedCameraPosition = Eegeo::dv3::Lerp(startNonFlatennedPos, endNonFlatennedPos, easedT);
                 
                 const Eegeo::m33 startOrientation = startCamera.GetModelMatrix();
                 const Eegeo::m33 endOrientation = endCamera.GetModelMatrix();

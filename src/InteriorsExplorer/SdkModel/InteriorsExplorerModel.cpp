@@ -79,17 +79,26 @@ namespace ExampleApp
                 m_controller.UnregisterFloorChangedCallback(m_controllerFloorChangedCallback);
             }
             
+            void InteriorsExplorerModel::SuspendCurrentMapState()
+            {
+                m_previouslyInMapMode = m_mapModeModel.IsInMapMode();
+                m_mapModeModel.SetInMapMode(false);
+                m_previousWeatherState = m_weatherController.GetState();
+                m_weatherController.SetState("DayDefault");
+            }
+            
+            void InteriorsExplorerModel::ResumePreviousMapState()
+            {
+                m_weatherController.SetState(m_previousWeatherState);
+                m_mapModeModel.SetInMapMode(m_previouslyInMapMode);
+            }
+            
             void InteriorsExplorerModel::ShowInteriorExplorer()
             {
                 Eegeo_ASSERT(m_controller.InteriorInScene(), "Can't show interior explorer without a selected and streamed interior");
                 
                 if(!m_interiorExplorerEnabled)
                 {
-                    m_previouslyInMapMode = m_mapModeModel.IsInMapMode();
-                    m_mapModeModel.SetInMapMode(false);
-                    m_previousWeatherState = m_weatherController.GetState();
-                    m_weatherController.SetState("DayDefault");
-                    
                     const Eegeo::Resources::Interiors::InteriorId& interiorId = m_interiorSelectionModel.GetSelectedInteriorId();
                     m_metricsService.SetEvent(MetricEventInteriorSelected, "InteriorId", interiorId.Value());
                     
@@ -103,9 +112,6 @@ namespace ExampleApp
             {
                 if(m_interiorExplorerEnabled)
                 {
-                    m_weatherController.SetState(m_previousWeatherState);
-                    m_mapModeModel.SetInMapMode(m_previouslyInMapMode);
-                    
                     m_metricsService.EndTimedEvent(MetricEventInteriorsVisible);
                     m_interiorExplorerEnabled = false;
                     PublishInteriorExplorerStateChange();

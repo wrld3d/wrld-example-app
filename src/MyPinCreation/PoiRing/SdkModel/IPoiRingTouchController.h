@@ -6,6 +6,7 @@
 #include "Camera.h"
 #include "GpsGlobeCameraController.h"
 #include "InteriorsCameraController.h"
+#include "VectorMath.h"
 
 namespace ExampleApp
 {
@@ -21,16 +22,10 @@ namespace ExampleApp
                     
                     virtual ~IPoiRingTouchController() {}
                     
-                    virtual bool HandleTouchDown(const AppInterface::TouchData& data, const Eegeo::Camera::RenderCamera& renderCamera, Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController) = 0;
-                    
-                    virtual bool HandleTouchDown(const AppInterface::TouchData& data, const Eegeo::Camera::RenderCamera& renderCamera) = 0;
-                    
+                    virtual bool HandleTouchDown(const AppInterface::TouchData& data, const Eegeo::Camera::RenderCamera& renderCamera, const Eegeo::dv3& nonFlattenedCameraPosition) = 0;
                     virtual bool HandleTouchUp(const AppInterface::TouchData& data) = 0;
-                    
-                    virtual bool HandleTouchMove(const AppInterface::TouchData& data, const Eegeo::Camera::RenderCamera& renderCamera, Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController) = 0;
-                    
-                    virtual bool HandleTouchMove(const AppInterface::TouchData& data, const Eegeo::Camera::RenderCamera& renderCamera) = 0;
-                    
+                    virtual bool HandleTouchMove(const AppInterface::TouchData& data, const Eegeo::Camera::RenderCamera& renderCamera, const Eegeo::dv3& nonFlattenedCameraPosition) = 0;
+
                     virtual bool IsDragging() const = 0;
                 };
             }

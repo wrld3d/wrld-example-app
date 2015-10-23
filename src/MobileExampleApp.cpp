@@ -1186,23 +1186,11 @@ namespace ExampleApp
         }
         
         MyPinCreation::PoiRing::SdkModel::IPoiRingTouchController& poiRingTouchController = m_pPoiRingModule->GetPoiRingTouchController();
-        
-        if(m_pAppModeModel->GetAppMode() == AppModes::SdkModel::WorldMode)
+
+        if (!poiRingTouchController.HandleTouchDown(data, m_pAppCameraModule->GetController().GetRenderCamera(), m_pAppCameraModule->GetController().GetNonFlattenedCameraPosition()))
         {
-            if (poiRingTouchController.HandleTouchDown(data, m_pGlobeCameraController->GetRenderCamera()))
-            {
-                return;
-            }
+            m_pCurrentTouchController->Event_TouchDown(data);
         }
-        else
-        {
-            if (poiRingTouchController.HandleTouchDown(data, m_pInteriorsExplorerModule->GetInteriorsCameraController().GetRenderCamera()))
-            {
-                return;
-            }
-        }
-        
-        m_pCurrentTouchController->Event_TouchDown(data);
     }
 
     void MobileExampleApp::Event_TouchMove(const AppInterface::TouchData& data)
@@ -1213,23 +1201,11 @@ namespace ExampleApp
         }
         
         MyPinCreation::PoiRing::SdkModel::IPoiRingTouchController& poiRingTouchController = m_pPoiRingModule->GetPoiRingTouchController();
-        
-        if(m_pAppModeModel->GetAppMode() == AppModes::SdkModel::WorldMode)
+
+        if (!poiRingTouchController.HandleTouchMove(data, m_pAppCameraModule->GetController().GetRenderCamera(), m_pAppCameraModule->GetController().GetNonFlattenedCameraPosition()))
         {
-            if (poiRingTouchController.HandleTouchMove(data, m_pGlobeCameraController->GetRenderCamera()))
-            {
-                return;
-            }
+            m_pCurrentTouchController->Event_TouchMove(data);
         }
-        else
-        {
-            if (poiRingTouchController.HandleTouchMove(data, m_pInteriorsExplorerModule->GetInteriorsCameraController().GetRenderCamera()))
-            {
-                return;
-            }
-        }
-        
-        m_pCurrentTouchController->Event_TouchUp(data);
     }
     
     void MobileExampleApp::Event_TouchUp(const AppInterface::TouchData& data)

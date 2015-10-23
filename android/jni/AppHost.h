@@ -155,6 +155,8 @@ private:
     void CreateApplicationViewModulesFromUiThread();
     void DestroyApplicationViewModulesFromUiThread();
 
+    void SetTouchExclusivity();
+
     void HandleStartupFailure();
     void HandleCameraTransitionChanged(const ExampleApp::CameraTransitions::CameraTransitionChangedMessage& message);
 };

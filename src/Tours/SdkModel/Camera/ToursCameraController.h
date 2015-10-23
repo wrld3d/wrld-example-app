@@ -35,6 +35,7 @@ namespace ExampleApp
                     
                     const Eegeo::Camera::CameraState GetCameraState() const;
                     const Eegeo::Camera::RenderCamera GetRenderCamera() const { return m_camera; }
+                    Eegeo::dv3 ComputeNonFlattenedCameraPosition() const { return m_camera.GetEcefLocation(); }
                     
                     Eegeo::ITouchController& GetTouchController() const { return m_touchController; }
                     
