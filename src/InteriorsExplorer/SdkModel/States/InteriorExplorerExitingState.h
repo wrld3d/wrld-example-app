@@ -24,6 +24,7 @@ namespace ExampleApp
                     Eegeo::Resources::Interiors::InteriorController& m_interiorController;
                     Eegeo::Streaming::CameraFrustumStreamingVolume& m_cameraFrustumStreamingVolume;
                     InteriorsExplorer::SdkModel::InteriorVisibilityUpdater& m_interiorVisibilityUpdater;
+                    InteriorsExplorerModel& m_interiorsExplorerModel;
                     
                     void OnInteriorExplorerExit();
                     
@@ -32,7 +33,8 @@ namespace ExampleApp
                     InteriorExplorerExitingState(AppModes::States::SdkModel::InteriorExplorerState& parentState,
                                                  Eegeo::Resources::Interiors::InteriorController& interiorController,
                                                  Eegeo::Streaming::CameraFrustumStreamingVolume& cameraFrustumStreamingVolume,
-                                                 InteriorsExplorer::SdkModel::InteriorVisibilityUpdater& interiorVisibilityUpdater);
+                                                 InteriorsExplorer::SdkModel::InteriorVisibilityUpdater& interiorVisibilityUpdater,
+                                                 InteriorsExplorerModel& interiorsExplorerModel);
                     
                     ~InteriorExplorerExitingState();
                     
