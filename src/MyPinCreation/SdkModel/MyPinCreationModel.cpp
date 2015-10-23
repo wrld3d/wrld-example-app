@@ -117,8 +117,6 @@ namespace ExampleApp
                                                       imageData,
                                                       imageSize,
                                                       shouldShare);
-
-                SetCreationStage(Inactive);
             }
 
             void MyPinCreationModel::InsertStateChangedCallback(Eegeo::Helpers::ICallback1<MyPinCreationStage>& stateChangedCallback)
