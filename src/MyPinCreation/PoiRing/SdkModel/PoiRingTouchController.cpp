@@ -38,7 +38,7 @@ namespace ExampleApp
 
                 }
 
-                bool PoiRingTouchController::HandleTouchDown(const AppInterface::TouchData& data, const Eegeo::Camera::RenderCamera& renderCamera, Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController)
+                bool PoiRingTouchController::HandleTouchDown(const AppInterface::TouchData& data, const Eegeo::Camera::RenderCamera& renderCamera, const Eegeo::dv3& nonFlattenedCameraPosition)
                 {
                     if (m_myPinCreationModel.GetCreationStage() != Ring)
                     {
@@ -51,7 +51,7 @@ namespace ExampleApp
                     Eegeo::dv3 rayDirection;
                     Eegeo::Camera::CameraHelpers::GetScreenPickRay(renderCamera, screenPixelX, screenPixelY, rayDirection);
 
-                    Eegeo::dv3 rayOrigin = globeCameraController.ComputeNonFlattenedCameraPosition();
+                    Eegeo::dv3 rayOrigin = nonFlattenedCameraPosition;
                     Eegeo::dv3 rayIntersectionPoint;
                     double intersectionParam;
 
@@ -90,7 +90,7 @@ namespace ExampleApp
                     return true;
                 }
 
-                bool PoiRingTouchController::HandleTouchMove(const AppInterface::TouchData &data, const Eegeo::Camera::RenderCamera &renderCamera, Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController)
+                bool PoiRingTouchController::HandleTouchMove(const AppInterface::TouchData &data, const Eegeo::Camera::RenderCamera &renderCamera, const Eegeo::dv3& nonFlattenedCameraPosition)
                 {
                     if (m_myPinCreationModel.GetCreationStage() != Ring)
                     {
@@ -105,7 +105,7 @@ namespace ExampleApp
                         Eegeo::dv3 rayDirection;
                         Eegeo::Camera::CameraHelpers::GetScreenPickRay(renderCamera, screenPixelX, screenPixelY, rayDirection);
 
-                        Eegeo::dv3 rayOrigin = globeCameraController.ComputeNonFlattenedCameraPosition();
+                        Eegeo::dv3 rayOrigin = nonFlattenedCameraPosition;
                         Eegeo::dv3 rayIntersectionPoint;
                         double intersectionParam;
                         bool rayPick = PerformRayPick(rayOrigin, rayDirection, rayIntersectionPoint, intersectionParam);

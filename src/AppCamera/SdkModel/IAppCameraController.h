@@ -3,6 +3,7 @@
 #pragma once
 
 #include "Types.h"
+#include "VectorMath.h"
 #include "AppCamera.h"
 #include "Camera.h"
 #include "GlobeCamera.h"
@@ -31,6 +32,8 @@ namespace ExampleApp
                 virtual const Eegeo::Camera::CameraState GetCameraState() = 0;
                 
                 virtual const Eegeo::Camera::RenderCamera& GetRenderCamera() = 0;
+                
+                virtual Eegeo::dv3 GetNonFlattenedCameraPosition() const = 0;
                 
                 virtual Eegeo::ITouchController& GetTouchController() = 0;
                 
