@@ -39,6 +39,8 @@ namespace ExampleApp
                 
                 const Eegeo::Camera::RenderCamera GetRenderCamera() const;
                 
+                Eegeo::dv3 ComputeNonFlattenedCameraPosition() const;
+                
                 Eegeo::ITouchController& GetTouchController() const;
                 
                 Eegeo::Camera::GlobeCamera::GlobeCameraController& GetGlobeCameraController();

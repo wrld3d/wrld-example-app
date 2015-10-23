@@ -40,7 +40,7 @@ namespace ExampleApp
                 void InteriorExplorerStreamState::Update(float dt)
                 {
                     m_timeUntilTimeout -= dt;
-                    if(m_timeUntilTimeout <=0.0f)
+                    if(m_timeUntilTimeout <= 0.0f)
                     {
                         m_parentState.ShowFailMessage();
                         m_parentState.SetSubState(AppModes::States::SdkModel::InteriorExplorerSubStates::Exit);

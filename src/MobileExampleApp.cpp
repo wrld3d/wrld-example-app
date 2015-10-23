@@ -293,6 +293,8 @@ namespace ExampleApp
         {
             m_pNavigationService->SetGpsMode(Eegeo::Location::NavigationService::GpsModeFollow);
         }
+        
+        InitialiseAppState(nativeUIFactories);
     }
 
     MobileExampleApp::~MobileExampleApp()
@@ -569,6 +571,12 @@ namespace ExampleApp
        
         // TODO: Check if this module is still relevant 
         m_pAppCameraModule = Eegeo_NEW(AppCamera::SdkModel::AppCameraModule)();
+    }
+    
+    void MobileExampleApp::InitialiseAppState(Eegeo::UI::NativeUIFactories& nativeUIFactories)
+    {
+        Eegeo::Modules::Map::MapModule& mapModule = m_pWorld->GetMapModule();
+        Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsPresentationModule = mapModule.GetInteriorsPresentationModule();
         
         AppModes::States::SdkModel::AppModeStatesFactory appModeStatesFactory(m_pAppCameraModule->GetController(),
                                                                               interiorsPresentationModule.GetAppLevelController(),
@@ -894,11 +902,13 @@ namespace ExampleApp
         
         if(!eegeoWorld.Initialising())
         {
+            WorldPinsModule().GetWorldPinsService().Update(dt);
             WorldPinsModule().GetWorldPinsScaleController().Update(dt, renderCamera);
             WorldPinsModule().GetWorldPinsFloorHeightController().Update(dt);
             
             if(ToursEnabled())
             {
+                TourWorldPinsModule().GetWorldPinsService().Update(dt);
                 TourWorldPinsModule().GetWorldPinsScaleController().Update(dt, renderCamera);
             }
             
@@ -1186,23 +1196,11 @@ namespace ExampleApp
         }
         
         MyPinCreation::PoiRing::SdkModel::IPoiRingTouchController& poiRingTouchController = m_pPoiRingModule->GetPoiRingTouchController();
-        
-        if(m_pAppModeModel->GetAppMode() == AppModes::SdkModel::WorldMode)
+
+        if (!poiRingTouchController.HandleTouchDown(data, m_pAppCameraModule->GetController().GetRenderCamera(), m_pAppCameraModule->GetController().GetNonFlattenedCameraPosition()))
         {
-            if (poiRingTouchController.HandleTouchDown(data, m_pGlobeCameraController->GetRenderCamera()))
-            {
-                return;
-            }
+            m_pCurrentTouchController->Event_TouchDown(data);
         }
-        else
-        {
-            if (poiRingTouchController.HandleTouchDown(data, m_pInteriorsExplorerModule->GetInteriorsCameraController().GetRenderCamera()))
-            {
-                return;
-            }
-        }
-        
-        m_pCurrentTouchController->Event_TouchDown(data);
     }
 
     void MobileExampleApp::Event_TouchMove(const AppInterface::TouchData& data)
@@ -1213,23 +1211,11 @@ namespace ExampleApp
         }
         
         MyPinCreation::PoiRing::SdkModel::IPoiRingTouchController& poiRingTouchController = m_pPoiRingModule->GetPoiRingTouchController();
-        
-        if(m_pAppModeModel->GetAppMode() == AppModes::SdkModel::WorldMode)
+
+        if (!poiRingTouchController.HandleTouchMove(data, m_pAppCameraModule->GetController().GetRenderCamera(), m_pAppCameraModule->GetController().GetNonFlattenedCameraPosition()))
         {
-            if (poiRingTouchController.HandleTouchMove(data, m_pGlobeCameraController->GetRenderCamera()))
-            {
-                return;
-            }
+            m_pCurrentTouchController->Event_TouchMove(data);
         }
-        else
-        {
-            if (poiRingTouchController.HandleTouchMove(data, m_pInteriorsExplorerModule->GetInteriorsCameraController().GetRenderCamera()))
-            {
-                return;
-            }
-        }
-        
-        m_pCurrentTouchController->Event_TouchUp(data);
     }
     
     void MobileExampleApp::Event_TouchUp(const AppInterface::TouchData& data)

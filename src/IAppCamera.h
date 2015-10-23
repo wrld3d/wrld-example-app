@@ -4,6 +4,7 @@
 
 #include "Camera.h"
 #include "ITouchController.h"
+#include "VectorMath.h"
 
 namespace ExampleApp
 {
@@ -24,6 +25,8 @@ namespace ExampleApp
                 virtual const Eegeo::Camera::RenderCamera GetRenderCamera() const = 0;
                 
                 virtual Eegeo::ITouchController& GetTouchController() const = 0;
+                
+                virtual Eegeo::dv3 ComputeNonFlattenedCameraPosition() const = 0;
             };
         }
     }

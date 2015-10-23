@@ -20,6 +20,8 @@ namespace ExampleApp
             namespace
             {
                 static int nextHandleId = -1;
+                
+                const double JumpThresholdDistanceBetweenCameras = 4000.0f;
             }
             
             AppCameraController::AppCameraController()
@@ -27,6 +29,7 @@ namespace ExampleApp
             , m_previousCameraIndex(0)
             , m_transitionDuration(0.75f)
             , m_transitionTimer(0.0f)
+            , m_currentNonFlattenedCameraPosition(0.0, 0.0, 0.0)
             {
                 nextHandleId = -1;
             }
@@ -57,6 +60,8 @@ namespace ExampleApp
                 
                 m_previousCameraIndex = m_currentCameraIndex;
                 m_currentCameraIndex = cameraHandle;
+                
+                Update(0.0f);
             }
 
             const bool AppCameraController::IsTransitionInFlight() const
@@ -76,6 +81,11 @@ namespace ExampleApp
             const Eegeo::Camera::RenderCamera& AppCameraController::GetRenderCamera()
             {
                 return m_renderCamera;
+            }
+            
+            Eegeo::dv3 AppCameraController::GetNonFlattenedCameraPosition() const
+            {
+                return m_currentNonFlattenedCameraPosition;
             }
             
             Eegeo::ITouchController& AppCameraController::GetTouchController()
@@ -100,6 +110,7 @@ namespace ExampleApp
                 {
                     m_cameras[m_currentCameraIndex]->Update(dt);
                     m_renderCamera = m_cameras[m_currentCameraIndex]->GetRenderCamera();
+                    m_currentNonFlattenedCameraPosition = m_cameras[m_currentCameraIndex]->ComputeNonFlattenedCameraPosition();
                 }
             }
             
@@ -107,6 +118,11 @@ namespace ExampleApp
             {
                 previousCamera.Update(dt);
                 nextCamera.Update(dt);
+                
+                if(ShouldSkipTransition(previousCamera, nextCamera))
+                {
+                    m_transitionTimer = m_transitionDuration;
+                }
                 
                 const Eegeo::Camera::RenderCamera startCamera = previousCamera.GetRenderCamera();
                 const Eegeo::Camera::RenderCamera endCamera = nextCamera.GetRenderCamera();
@@ -117,6 +133,10 @@ namespace ExampleApp
                 const Eegeo::dv3 startPos = startCamera.GetEcefLocation();
                 const Eegeo::dv3 endPos = endCamera.GetEcefLocation();
                 m_currentPosition = Eegeo::dv3::Lerp(startPos, endPos, easedT);
+                
+                const Eegeo::dv3 startNonFlatennedPos = previousCamera.ComputeNonFlattenedCameraPosition();
+                const Eegeo::dv3 endNonFlatennedPos = nextCamera.ComputeNonFlattenedCameraPosition();
+                m_currentNonFlattenedCameraPosition = Eegeo::dv3::Lerp(startNonFlatennedPos, endNonFlatennedPos, easedT);
                 
                 const Eegeo::m33 startOrientation = startCamera.GetModelMatrix();
                 const Eegeo::m33 endOrientation = endCamera.GetModelMatrix();
@@ -135,6 +155,17 @@ namespace ExampleApp
                 m_renderCamera.SetProjection(fov, near, far);
                 m_renderCamera.SetEcefLocation(m_currentPosition);
                 m_renderCamera.SetOrientationMatrix(m_currentOrientation);
+            }
+            
+            const bool AppCameraController::ShouldSkipTransition(IAppCamera &previousCamera, IAppCamera &nextCamera)
+            {
+                double distanceBetweenCameras =  (previousCamera.GetRenderCamera().GetEcefLocation() - nextCamera.GetRenderCamera().GetEcefLocation()).Length();
+                if(distanceBetweenCameras >= JumpThresholdDistanceBetweenCameras)
+                {
+                    return true;
+                }
+                
+                return false;
             }
         }
     }
