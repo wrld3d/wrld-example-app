@@ -180,6 +180,8 @@ namespace ExampleApp
 
         void InitialisePinsModules(Eegeo::Modules::Map::MapModule& mapModule, Eegeo::EegeoWorld& world);
         
+        void InitialiseAppState(Eegeo::UI::NativeUIFactories& nativeUIFactories);
+        
         bool CanAcceptTouch() const;
         
         void AddTours();
