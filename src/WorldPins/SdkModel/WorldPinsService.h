@@ -33,6 +33,7 @@ namespace ExampleApp
                 Eegeo::Pins::PinRepository& m_pinRepository;
                 Eegeo::Pins::PinController& m_pinController;
                 const Eegeo::Rendering::EnvironmentFlatteningService& m_environmentFlatteningService;
+                bool m_pinAlreadySelected;
 
             public:
                 WorldPinsService(IWorldPinsRepository& worldPinsRepository,
@@ -63,9 +64,13 @@ namespace ExampleApp
                                                   Eegeo::dv3& ecefLocation,
                                                   Eegeo::v2& screenLocation) const;
 
-                IWorldPinSelectionHandler* GetSelectionHandlerForPin(WorldPinItemModel::WorldPinItemModelId worldPinItemModelId);
+                void SelectPin(WorldPinItemModel::WorldPinItemModelId worldPinItemModelId);
+                
+                void Update(float dt);
 
             private:
+                IWorldPinSelectionHandler* GetSelectionHandlerForPin(WorldPinItemModel::WorldPinItemModelId worldPinItemModelId);
+                
                 void ErasePin(const WorldPinItemModel::WorldPinItemModelId& id);
 
             };

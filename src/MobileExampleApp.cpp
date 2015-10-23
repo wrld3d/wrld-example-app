@@ -835,11 +835,13 @@ namespace ExampleApp
         
         if(!eegeoWorld.Initialising())
         {
+            WorldPinsModule().GetWorldPinsService().Update(dt);
             WorldPinsModule().GetWorldPinsScaleController().Update(dt, renderCamera);
             WorldPinsModule().GetWorldPinsFloorHeightController().Update(dt);
             
             if(ToursEnabled())
             {
+                TourWorldPinsModule().GetWorldPinsService().Update(dt);
                 TourWorldPinsModule().GetWorldPinsScaleController().Update(dt, renderCamera);
             }
             
