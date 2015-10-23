@@ -10,6 +10,7 @@
 #include "SearchResultIconCategoryMapper.h"
 #include "SearchResultModel.h"
 #include "WorldPins.h"
+#include "CameraTransitions.h"
 
 namespace ExampleApp
 {
@@ -22,7 +23,8 @@ namespace ExampleApp
                 class SwallowSearchTransitionPinController : public Eegeo::Helpers::TCallback1<SwallowSearchTransitionPinController, const std::vector<Search::SdkModel::SearchResultModel>&>, Eegeo::NonCopyable
                 {
                 public:
-                    SwallowSearchTransitionPinController(WorldPins::SdkModel::IWorldPinsService& worldPinsService);
+                    SwallowSearchTransitionPinController(WorldPins::SdkModel::IWorldPinsService& worldPinsService,
+                                                         CameraTransitions::SdkModel::ICameraTransitionController& transitionController);
                     
                     ~SwallowSearchTransitionPinController();
                     
@@ -33,6 +35,7 @@ namespace ExampleApp
                     
                     CategorySearch::SearchResultIconCategoryMapper m_searchResultIconCategoryMapper;
                     WorldPins::SdkModel::IWorldPinsService& m_worldPinsService;
+                    CameraTransitions::SdkModel::ICameraTransitionController& m_transitionController;
                     
                     std::vector<WorldPins::SdkModel::WorldPinItemModel*> m_transitionPins;
                 };

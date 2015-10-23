@@ -28,7 +28,7 @@ namespace ExampleApp
                     
                     m_pSwallowOfficeResultMenuOptionSelectedMessageHandler = Eegeo_NEW(SwallowOfficeResultMenuOptionSelectedMessageHandler)(cameraTransitionController, messageBus);
                     
-                    m_pSwallowSearchTransitionPinController = Eegeo_NEW(SwallowSearchTransitionPinController)(worldPinsService);
+                    m_pSwallowSearchTransitionPinController = Eegeo_NEW(SwallowSearchTransitionPinController)(worldPinsService, cameraTransitionController);
                 }
                     
                 SwallowSearchServiceModule::~SwallowSearchServiceModule()
