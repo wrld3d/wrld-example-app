@@ -36,6 +36,7 @@ namespace ExampleApp
                 Eegeo::dv3 m_currentNonFlattenedCameraPosition;
                 
                 void UpdateTransitionBetween(IAppCamera& previousCamera, IAppCamera& nextCamera, float dt);
+                const bool ShouldSkipTransition(IAppCamera& previousCamera, IAppCamera& nextCamera);
                 
             public:
                 
