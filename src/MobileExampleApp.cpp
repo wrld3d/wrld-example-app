@@ -293,6 +293,8 @@ namespace ExampleApp
         {
             m_pNavigationService->SetGpsMode(Eegeo::Location::NavigationService::GpsModeFollow);
         }
+        
+        InitialiseAppState(nativeUIFactories);
     }
 
     MobileExampleApp::~MobileExampleApp()
@@ -569,6 +571,12 @@ namespace ExampleApp
        
         // TODO: Check if this module is still relevant 
         m_pAppCameraModule = Eegeo_NEW(AppCamera::SdkModel::AppCameraModule)();
+    }
+    
+    void MobileExampleApp::InitialiseAppState(Eegeo::UI::NativeUIFactories& nativeUIFactories)
+    {
+        Eegeo::Modules::Map::MapModule& mapModule = m_pWorld->GetMapModule();
+        Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsPresentationModule = mapModule.GetInteriorsPresentationModule();
         
         AppModes::States::SdkModel::AppModeStatesFactory appModeStatesFactory(m_pAppCameraModule->GetController(),
                                                                               interiorsPresentationModule.GetAppLevelController(),

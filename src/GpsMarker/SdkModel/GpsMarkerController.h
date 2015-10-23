@@ -31,6 +31,7 @@ namespace ExampleApp
                 
                 const static float DefaultUpdatePeriod;
                 float m_updateTime;
+                int m_visibilityCount;
                 
                 GpsMarkerModel& m_model;
                 GpsMarkerView& m_view;
