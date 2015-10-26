@@ -32,6 +32,7 @@ namespace ExampleApp
                 
                 Eegeo::dv3 m_currentPosition;
                 Eegeo::m33 m_currentOrientation;
+                Eegeo::dv3 m_currentInterestPoint;
                 
                 Eegeo::dv3 m_currentNonFlattenedCameraPosition;
                 
