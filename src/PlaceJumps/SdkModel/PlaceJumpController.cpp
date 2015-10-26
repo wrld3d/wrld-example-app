@@ -19,7 +19,7 @@ namespace ExampleApp
 
             void PlaceJumpController::JumpTo(const View::IPlaceJumpModel& jumpModel)
             {
-                m_cameraTransitionController.StartTransitionTo(jumpModel.GetLocation().ToECEF(), jumpModel.GetDistance(), jumpModel.GetHeadingDegrees());
+                m_cameraTransitionController.StartTransitionTo(jumpModel.GetLocation().ToECEF(), jumpModel.GetDistance(), Eegeo::Math::Deg2Rad(jumpModel.GetHeadingDegrees()));
             }
         }
     }
