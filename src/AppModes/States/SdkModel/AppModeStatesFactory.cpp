@@ -58,7 +58,8 @@ namespace ExampleApp
                                                                              worldCameraHandle,
                                                                              m_tourService,
                                                                              m_interiorSelectionModel,
-                                                                             m_appModeModel));
+                                                                             m_appModeModel,
+                                                                             m_interiorCameraController));
                     
                     states.push_back(Eegeo_NEW(States::SdkModel::InteriorExplorerState)(m_appCameraController,
                                                                                         m_interiorController,
@@ -75,7 +76,9 @@ namespace ExampleApp
                                                                             toursCameraHandle,
                                                                             m_tourService,
                                                                             m_interiorSelectionModel,
-                                                                            m_appModeModel));
+                                                                            m_appModeModel,
+                                                                            m_worldCameraController.GetGlobeCameraController(),
+                                                                            m_interiorCameraController));
                     
                     return states;
                 }
