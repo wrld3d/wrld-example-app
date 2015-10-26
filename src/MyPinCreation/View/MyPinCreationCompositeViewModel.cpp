@@ -20,7 +20,8 @@ namespace ExampleApp
                     IMyPinCreationInitiationViewModel& initiationViewModel,
                     IMyPinCreationConfirmationViewModel& confirmationViewModel,
                     ExampleApp::Menu::View::IMenuViewModel& secondaryMenuViewModel,
-                    ExampleApp::Menu::View::IMenuViewModel& searchResultMenuViewModel)
+                    ExampleApp::Menu::View::IMenuViewModel& searchResultMenuViewModel,
+                    ScreenControl::View::IScreenControlViewModel& interiorControlViewModel)
                 : m_stateChangeHandler(this, &MyPinCreationCompositeViewModel::OnPoiRingStateChangedMessage)
                 , m_searchResultMenuStateChangedCallback(this, &MyPinCreationCompositeViewModel::HandleSearchResultMenuStateChanged)
                 , m_messageBus(messageBus)
@@ -28,6 +29,7 @@ namespace ExampleApp
                 , m_confirmationViewModel(confirmationViewModel)
                 , m_secondaryMenuViewModel(secondaryMenuViewModel)
                 , m_searchResultMenuViewModel(searchResultMenuViewModel)
+                , m_interiorControlViewModel(interiorControlViewModel)
             {
                 m_messageBus.SubscribeUi(m_stateChangeHandler);
                 m_searchResultMenuViewModel.InsertOnScreenStateChangedCallback(m_searchResultMenuStateChangedCallback);
@@ -48,6 +50,8 @@ namespace ExampleApp
                     m_initiationViewModel.AddToScreen();
                     m_secondaryMenuViewModel.AddToScreen();
                     m_searchResultMenuViewModel.AddToScreen();
+                    m_interiorControlViewModel.AddToScreen();
+                    
                     m_messageBus.Publish(WorldPins::WorldPinsVisibilityMessage(WorldPins::SdkModel::WorldPinVisibility::All));
                     m_messageBus.Publish(GpsMarker::GpsMarkerVisibilityMessage(true));
 
@@ -57,9 +61,9 @@ namespace ExampleApp
                 case Ring:
                 {
                     m_confirmationViewModel.AddToScreen();
-
                     m_initiationViewModel.RemoveFromScreen();
                     m_secondaryMenuViewModel.RemoveFromScreen();
+                    m_interiorControlViewModel.RemoveFromScreen();
 
                     m_messageBus.Publish(WorldPins::WorldPinsVisibilityMessage(WorldPins::SdkModel::WorldPinVisibility::None));
                     m_messageBus.Publish(GpsMarker::GpsMarkerVisibilityMessage(false));

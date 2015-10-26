@@ -47,6 +47,7 @@ namespace ExampleApp
                     Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
                     ExampleApp::Menu::View::IMenuViewModel& searchResultMenuViewModel,
                     Search::SdkModel::ISearchRefreshService& searchRefreshService,
+                    ScreenControl::View::IScreenControlViewModel& interiorControlViewModel,
                     ExampleAppMessaging::TMessageBus& messageBus,
                     Reaction::View::IReactionControllerModel& reactionControllerModel)
             {
@@ -70,7 +71,8 @@ namespace ExampleApp
                                                      *m_pMyPinCreationInitiationViewModel,
                                                      *m_pMyPinCreationConfirmationViewModel,
                                                      secondaryMenuViewModel,
-                                                     searchResultMenuViewModel);
+                                                     searchResultMenuViewModel,
+                                                     interiorControlViewModel);
 
             }
 

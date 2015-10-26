@@ -69,7 +69,7 @@ namespace ExampleApp
                                                              messageBus,
                                                              metricsService);
                 
-                m_pViewModel = Eegeo_NEW(View::InteriorsExplorerViewModel)(false, identityProvider.GetNextIdentity());
+                m_pViewModel = Eegeo_NEW(View::InteriorsExplorerViewModel)(false, identityProvider.GetNextIdentity(), messageBus);
             }
             
             InteriorsExplorerModule::~InteriorsExplorerModule()

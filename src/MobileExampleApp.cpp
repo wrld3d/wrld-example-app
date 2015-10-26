@@ -485,12 +485,32 @@ namespace ExampleApp
                                                                                                      m_messageBus,
                                                                                                      m_metricsService);
         
+        Eegeo::Modules::Map::Layers::InteriorsModelModule& interiorsModelModule = mapModule.GetInteriorsModelModule();
+        Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsPresentationModule = mapModule.GetInteriorsPresentationModule();
+        Eegeo::Camera::GlobeCamera::GlobeCameraControllerFactory cameraControllerFactory(m_pWorld->GetTerrainModelModule().GetTerrainHeightProvider(),
+                                                                                         mapModule.GetEnvironmentFlatteningService(),
+                                                                                         mapModule.GetResourceCeilingProvider());
+        
+        m_pInteriorsExplorerModule = Eegeo_NEW(InteriorsExplorer::SdkModel::InteriorsExplorerModule)(interiorsPresentationModule.GetAppLevelController(),
+                                                                                                     interiorsPresentationModule.GetInteriorSelectionModel(),
+                                                                                                     interiorsModelModule.GetInteriorMarkerModelRepository(),
+                                                                                                     m_pWorldPinsModule->GetWorldPinsService(),
+                                                                                                     m_pMapModeModule->GetMapModeModel(),
+                                                                                                     m_pWeatherMenuModule->GetWeatherController(),
+                                                                                                     cameraControllerFactory,
+                                                                                                     m_screenProperties,
+                                                                                                     m_identityProvider,
+                                                                                                     m_messageBus,
+                                                                                                     m_metricsService);
+        
+        
         m_pMyPinCreationModule = Eegeo_NEW(ExampleApp::MyPinCreation::SdkModel::MyPinCreationModule)(m_pMyPinsModule->GetMyPinsService(),
                                  m_identityProvider,
                                  m_pSecondaryMenuModule->GetSecondaryMenuViewModel(),
                                  m_pSearchModule->GetSearchQueryPerformer(),
                                  m_pSearchResultMenuModule->GetMenuViewModel(),
                                  m_pSearchModule->GetSearchRefreshService(),
+                                 m_pInteriorsExplorerModule->GetScreenControlViewModel(),
                                  m_messageBus,
                                  m_pReactionControllerModule->GetReactionControllerModel());
 
@@ -513,23 +533,7 @@ namespace ExampleApp
                                                                                                   m_pSearchResultPoiModule->GetSearchResultPoiViewModel(),
                                                                                                   m_messageBus);
 
-        Eegeo::Modules::Map::Layers::InteriorsModelModule& interiorsModelModule = mapModule.GetInteriorsModelModule();
-        Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsPresentationModule = mapModule.GetInteriorsPresentationModule();
-        Eegeo::Camera::GlobeCamera::GlobeCameraControllerFactory cameraControllerFactory(m_pWorld->GetTerrainModelModule().GetTerrainHeightProvider(),
-                                                                                         mapModule.GetEnvironmentFlatteningService(),
-                                                                                         mapModule.GetResourceCeilingProvider());
         
-        m_pInteriorsExplorerModule = Eegeo_NEW(InteriorsExplorer::SdkModel::InteriorsExplorerModule)(interiorsPresentationModule.GetAppLevelController(),
-                                                                                                     interiorsPresentationModule.GetInteriorSelectionModel(),
-                                                                                                     interiorsModelModule.GetInteriorMarkerModelRepository(),
-                                                                                                     m_pWorldPinsModule->GetWorldPinsService(),
-                                                                                                     m_pMapModeModule->GetMapModeModel(),
-                                                                                                     m_pWeatherMenuModule->GetWeatherController(),
-                                                                                                     cameraControllerFactory,
-                                                                                                     m_screenProperties,
-                                                                                                     m_identityProvider,
-                                                                                                     m_messageBus,
-                                                                                                     m_metricsService);
         
         InitialiseToursModules(mapModule, world);
         

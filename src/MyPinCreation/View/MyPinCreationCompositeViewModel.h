@@ -27,7 +27,8 @@ namespace ExampleApp
                                                 IMyPinCreationInitiationViewModel& initiationViewModel,
                                                 IMyPinCreationConfirmationViewModel& confirmationViewModel,
                                                 ExampleApp::Menu::View::IMenuViewModel& secondaryMenuViewModel,
-                                                ExampleApp::Menu::View::IMenuViewModel& searchResultMenuViewModel);
+                                                ExampleApp::Menu::View::IMenuViewModel& searchResultMenuViewModel,
+                                                ScreenControl::View::IScreenControlViewModel& interiorControlViewModel);
 
                 ~MyPinCreationCompositeViewModel();
 
@@ -44,6 +45,7 @@ namespace ExampleApp
                 IMyPinCreationConfirmationViewModel& m_confirmationViewModel;
                 ExampleApp::Menu::View::IMenuViewModel& m_secondaryMenuViewModel;
                 ExampleApp::Menu::View::IMenuViewModel& m_searchResultMenuViewModel;
+                ScreenControl::View::IScreenControlViewModel& m_interiorControlViewModel;
             };
         }
     }
