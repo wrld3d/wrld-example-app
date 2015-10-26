@@ -76,9 +76,10 @@ namespace ExampleApp
 
             void WorldPinItemModel::Show()
             {
-                if(m_transitionState != StableVisible)
+                if(m_transitionState != StableVisible && m_transitionState != TransitionToVisible)
                 {
                     m_transitionState = TransitionToVisible;
+                    m_hasFloorHeight = false;
                 }
             }
 
