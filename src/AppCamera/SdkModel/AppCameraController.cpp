@@ -53,6 +53,11 @@ namespace ExampleApp
             
             void AppCameraController::TransitionToCameraWithHandle(int cameraHandle)
             {
+                if(m_currentCameraIndex == cameraHandle)
+                {
+                    return;
+                }
+                
                 Eegeo_ASSERT(cameraHandle < static_cast<int>(m_cameras.size()), "Invalid camera Id");
                 
                 m_transitionTimer = 0.0f;
