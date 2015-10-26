@@ -4,8 +4,7 @@
 
 #include "IPlaceJumpController.h"
 #include "PlaceJumps.h"
-#include "GlobeCamera.h"
-#include "Compass.h"
+#include "CameraTransitions.h"
 
 namespace ExampleApp
 {
@@ -16,14 +15,12 @@ namespace ExampleApp
             class PlaceJumpController : public IPlaceJumpController
             {
             public:
-                PlaceJumpController(Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& globeCameraController,
-                                    Compass::SdkModel::ICompassModel& compassModel);
+                PlaceJumpController(CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController);
 
-                void JumpTo(View::IPlaceJumpModel& jumpModel);
+                void JumpTo(const View::IPlaceJumpModel& jumpModel);
 
             private:
-                Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& m_cameraController;
-                Compass::SdkModel::ICompassModel& m_compassModel;
+                CameraTransitions::SdkModel::ICameraTransitionController& m_cameraTransitionController;
             };
         }
 

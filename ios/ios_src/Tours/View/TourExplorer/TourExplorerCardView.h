@@ -7,7 +7,7 @@
 
 @interface TourExplorerCardView : UIView
 
-@property (nonatomic, retain) FXImageView* pBackgroundImage;
+@property (nonatomic, retain) UIImageView* pBackgroundImage;
 @property (nonatomic, retain) UIView* pTextContainer;
 @property (nonatomic, retain) UILabel* pTextLabel;
 @property (nonatomic, retain) UIView* pDetailTextContainer;

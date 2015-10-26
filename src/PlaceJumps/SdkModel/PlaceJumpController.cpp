@@ -1,13 +1,10 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "PlaceJumpController.h"
-#include "GpsGlobeCameraController.h"
 #include "IPlaceJumpsModel.h"
-#include "EcefTangentBasis.h"
-#include "CameraHelpers.h"
 #include "LatLongAltitude.h"
 #include "Types.h"
-#include "CompassModel.h"
+#include "ICameraTransitionController.h"
 
 namespace ExampleApp
 {
@@ -15,25 +12,14 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            PlaceJumpController::PlaceJumpController(Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& globeCameraController,
-                    Compass::SdkModel::ICompassModel& compassModel)
-                : m_cameraController(globeCameraController)
-                , m_compassModel(compassModel)
+            PlaceJumpController::PlaceJumpController(CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController)
+                : m_cameraTransitionController(cameraTransitionController)
             {
-
             }
 
-            void PlaceJumpController::JumpTo(View::IPlaceJumpModel& jumpModel)
+            void PlaceJumpController::JumpTo(const View::IPlaceJumpModel& jumpModel)
             {
-                m_compassModel.DisableGpsMode();
-
-                Eegeo::Space::EcefTangentBasis cameraInterestBasis;
-                Eegeo::Camera::CameraHelpers::EcefTangentBasisFromPointAndHeading(jumpModel.GetLocation().ToECEF(),
-                        jumpModel.GetHeadingDegrees(),
-                        cameraInterestBasis);
-
-
-                m_cameraController.SetView(cameraInterestBasis, jumpModel.GetDistance());
+                m_cameraTransitionController.StartTransitionTo(jumpModel.GetLocation().ToECEF(), jumpModel.GetDistance(), jumpModel.GetHeadingDegrees());
             }
         }
     }

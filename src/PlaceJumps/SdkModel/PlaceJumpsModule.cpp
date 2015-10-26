@@ -10,7 +10,6 @@
 #include "MenuOptionsModel.h"
 #include "PlaceJumpMenuOption.h"
 #include "PlaceJumpController.h"
-#include "GpsGlobeCameraController.h"
 
 namespace ExampleApp
 {
@@ -19,13 +18,12 @@ namespace ExampleApp
         namespace SdkModel
         {
             PlaceJumpsModule::PlaceJumpsModule(Eegeo::Helpers::IFileIO& fileIO,
-                                               Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& controller,
-                                               Compass::SdkModel::ICompassModel& compassModel,
+                                               CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
                                                Menu::View::IMenuViewModel& menuViewModel,
                                                ExampleAppMessaging::TMessageBus& messageBus,
                                                Metrics::IMetricsService& metricsService)
             {
-                m_pJumpController = Eegeo_NEW(PlaceJumpController)(controller, compassModel);
+                m_pJumpController = Eegeo_NEW(PlaceJumpController)(cameraTransitionController);
 
                 m_pMenuModel = Eegeo_NEW(Menu::View::MenuModel)();
                 m_pMenuOptionsModel = Eegeo_NEW(Menu::View::MenuOptionsModel)(*m_pMenuModel);

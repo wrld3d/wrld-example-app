@@ -7,6 +7,7 @@
 #include "App.h"
 
 #import "UIView+TouchExclusivity.h"
+#import <QuartzCore/QuartzCore.h>
 
 @implementation InteriorsExplorerView
 
@@ -259,21 +260,11 @@
 
 - (void) setFullyOnScreen
 {
-    if(m_onScreenParam == 1.0f)
-    {
-        return;
-    }
-    
     [self animateTo:1.0f];
 }
 
 - (void) setFullyOffScreen
 {
-    if(m_onScreenParam == 0.0f)
-    {
-        return;
-    }
-    
     [self animateTo:0.0f];
 }
 
@@ -306,6 +297,8 @@
     }
     
     [UIView animateWithDuration:m_stateChangeAnimationTimeSeconds
+                          delay:0.0f
+                        options:UIViewAnimationOptionBeginFromCurrentState
                      animations:^
      {
          self.pFloorPanel.frame = floorFrame;

@@ -30,6 +30,7 @@ namespace ExampleApp
             , m_transitionDuration(0.75f)
             , m_transitionTimer(0.0f)
             , m_currentNonFlattenedCameraPosition(0.0, 0.0, 0.0)
+            , m_currentInterestPoint(0.0, 0.0, 0.0)
             {
                 nextHandleId = -1;
             }
@@ -53,6 +54,11 @@ namespace ExampleApp
             
             void AppCameraController::TransitionToCameraWithHandle(int cameraHandle)
             {
+                if(m_currentCameraIndex == cameraHandle)
+                {
+                    return;
+                }
+                
                 Eegeo_ASSERT(cameraHandle < static_cast<int>(m_cameras.size()), "Invalid camera Id");
                 
                 m_transitionTimer = 0.0f;
@@ -72,7 +78,7 @@ namespace ExampleApp
             const Eegeo::Camera::CameraState AppCameraController::GetCameraState()
             {
                 return m_isTransitionInFlight ? Eegeo::Camera::CameraState(m_renderCamera.GetEcefLocation(),
-                                                                           m_renderCamera.GetEcefLocation(),
+                                                                           m_currentInterestPoint,
                                                                            m_renderCamera.GetViewMatrix(),
                                                                            m_renderCamera.GetProjectionMatrix())
                                               : m_cameras[m_currentCameraIndex]->GetCameraState();
@@ -133,6 +139,10 @@ namespace ExampleApp
                 const Eegeo::dv3 startPos = startCamera.GetEcefLocation();
                 const Eegeo::dv3 endPos = endCamera.GetEcefLocation();
                 m_currentPosition = Eegeo::dv3::Lerp(startPos, endPos, easedT);
+                
+                const Eegeo::dv3 startInterestPoint = previousCamera.GetCameraState().InterestPointEcef();
+                const Eegeo::dv3 endInterestPoint = nextCamera.GetCameraState().InterestPointEcef();
+                m_currentInterestPoint = Eegeo::dv3::Lerp(startInterestPoint, endInterestPoint, easedT);
                 
                 const Eegeo::dv3 startNonFlatennedPos = previousCamera.ComputeNonFlattenedCameraPosition();
                 const Eegeo::dv3 endNonFlatennedPos = nextCamera.ComputeNonFlattenedCameraPosition();

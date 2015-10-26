@@ -39,9 +39,8 @@
         self.frame = CGRectMake(0, 0, frameSizeX, frameSizeY);
         self.backgroundColor = [UIColor whiteColor];
         
-        self.pBackgroundImage = [[FXImageView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, frameSizeX, frameSizeY)];
+        self.pBackgroundImage = [[UIImageView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, frameSizeX, frameSizeY)];
         self.pBackgroundImage.contentMode = UIViewContentModeScaleAspectFill;
-        self.pBackgroundImage.asynchronous = YES;
         [self addSubview:self.pBackgroundImage];
         
         self.pTextContainer = [[UIView alloc]initWithFrame:CGRectMake(0.0f, m_textContainerY, frameSizeX, textHeight + textSpacingY * 2.0f)];

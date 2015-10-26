@@ -4,6 +4,7 @@
 
 #include <limits>
 
+#include "CameraHelpers.h"
 #include "IWorldPinsService.h"
 #include "VectorMath.h"
 #include "IInterestPointProvider.h"
@@ -22,6 +23,17 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
+            namespace
+            {
+                Eegeo::v2 ProjectEcefToScreen(const Eegeo::dv3& ecefPoint, const Eegeo::Camera::RenderCamera& renderCamera)
+                {
+                    Eegeo::v3 cameraLocal = Eegeo::Camera::CameraHelpers::CameraRelativePoint(ecefPoint, renderCamera.GetEcefLocation());
+                    Eegeo::v3 screenPos;
+                    renderCamera.Project(cameraLocal, screenPos);
+                    return Eegeo::v2(screenPos.GetX(), screenPos.GetY());
+                }
+            }
+            
             WorldPinsInFocusController::WorldPinsInFocusController(IWorldPinsRepository& worldPinsRepository,
                     IWorldPinsService& worldPinsService,
                     ExampleAppMessaging::TMessageBus& messageBus)
@@ -45,6 +57,7 @@ namespace ExampleApp
                 const IWorldPinsInFocusModel* pClosest = NULL;
                 double minDistanceSq = std::numeric_limits<double>::max();
                 Eegeo::v2 closestScreenPinLocation;
+                Eegeo::v2 screenInterestPoint = ProjectEcefToScreen(ecefInterestPoint, renderCamera);
 
                 if(m_focusEnabled)
                 {
@@ -70,11 +83,9 @@ namespace ExampleApp
                             continue;
                         }
 
-                        Eegeo::v3 screenPos;
-                        renderCamera.Project(cameraLocal, screenPos);
-                        screenPinLocation.Set(screenPos.GetX(), screenPos.GetY());
+                        screenPinLocation = ProjectEcefToScreen(ecefPinLocation, renderCamera);
 
-                        double distanceToFocusSq = (ecefInterestPoint - ecefPinLocation).LengthSq();
+                        double distanceToFocusSq = (screenInterestPoint - screenPinLocation).LengthSq();
 
                         if(distanceToFocusSq < minDistanceSq && worldPinItemModel->IsVisible())
                         {

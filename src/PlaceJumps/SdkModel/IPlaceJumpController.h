@@ -17,7 +17,7 @@ namespace ExampleApp
             public:
                 virtual ~IPlaceJumpController() { }
 
-                virtual void JumpTo(View::IPlaceJumpModel& jumpModel) = 0;
+                virtual void JumpTo(const View::IPlaceJumpModel& jumpModel) = 0;
             };
         }
     }
