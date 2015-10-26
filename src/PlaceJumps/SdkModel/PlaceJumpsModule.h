@@ -8,7 +8,7 @@
 #include "PlaceJumps.h"
 #include "PlaceJumpsDataParser.h"
 #include "IFileIO.h"
-#include "GlobeCamera.h"
+#include "CameraTransitions.h"
 #include "Compass.h"
 #include "BidirectionalBus.h"
 #include "PlaceJumpSelectedMessageHandler.h"
@@ -25,8 +25,7 @@ namespace ExampleApp
             public:
 
                 PlaceJumpsModule(Eegeo::Helpers::IFileIO& fileIO,
-                                 Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& camera,
-                                 Compass::SdkModel::ICompassModel& compassModel,
+                                 CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
                                  Menu::View::IMenuViewModel& menuViewModel,
                                  ExampleAppMessaging::TMessageBus& messageBus,
                                  Metrics::IMetricsService& metricsService);

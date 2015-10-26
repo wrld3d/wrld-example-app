@@ -374,8 +374,7 @@ namespace ExampleApp
                                                                                                      m_pOptionsModule->GetOptionsViewModel(),
                                                                                                      m_metricsService);
         m_pPlaceJumpsModule = Eegeo_NEW(PlaceJumps::SdkModel::PlaceJumpsModule)(m_platformAbstractions.GetFileIO(),
-                              GetCameraController(),
-                              m_pCompassModule->GetCompassModel(),
+                              CameraTransitionController(),
                               m_pSecondaryMenuModule->GetSecondaryMenuViewModel(),
                               m_messageBus,
                               m_metricsService);
