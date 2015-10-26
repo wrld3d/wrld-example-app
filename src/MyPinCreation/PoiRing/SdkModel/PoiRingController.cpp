@@ -46,9 +46,9 @@ namespace ExampleApp
                     
                     float CalculateAltitudeBasedSphereScale(float altitude, float outerRingRadiusInMeters)
                     {
-                        const float minAltitude = 500.f;
+                        const float minAltitude = 100.f;
                         const float maxAltitude = 18000.f;
-                        const float lowAltitudeSphereScale = outerRingRadiusInMeters - 2.f;
+                        const float lowAltitudeSphereScale = outerRingRadiusInMeters - 0.5f;
                         const float highAltitudeSphereScale = outerRingRadiusInMeters - 100.f;
                         return lowAltitudeSphereScale + (((altitude - minAltitude)/maxAltitude) * (highAltitudeSphereScale - lowAltitudeSphereScale));
                     }
@@ -96,8 +96,10 @@ namespace ExampleApp
 
                 void PoiRingController::Update(float dt, const Eegeo::Camera::RenderCamera& renderCamera, const Eegeo::dv3& cameraEcefInterestPoint)
                 {
+                    const bool showingInterior = m_interiorController.InteriorIsVisible();
+                    float interiorDownScale = showingInterior ? 0.5f : 1.0f;
                     const float altitude = (float)(renderCamera.GetAltitude() - (m_myPinCreationModel.GetPosition().Length() - Eegeo::Space::EarthConstants::Radius));
-                    const float outerRingRadiusInMeters = 120.f;
+                    const float outerRingRadiusInMeters = 120.f * interiorDownScale;
                     const float altitudeScale = CalculateAltitudeBasedSphereOuterScale(altitude);
                     const float transitionScale = CalculateTransitionScale(dt);
                     m_ringRadius = outerRingRadiusInMeters * altitudeScale * transitionScale;
@@ -127,7 +129,6 @@ namespace ExampleApp
                     
                     if(m_myPinCreationModel.GetCreationStage() == Ring)
                     {
-                        bool showingInterior = m_interiorController.InteriorIsVisible();
                         m_myPinCreationModel.SetInterior(showingInterior);
                         if(showingInterior)
                         {
