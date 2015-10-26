@@ -36,6 +36,8 @@ namespace ExampleApp
                     
                     void TransitionTo(IToursCameraMode& targetCameraMode);
                     
+                    void ResetControllerState();
+                    
                 private:
                     
                     void PerformCameraTransitionOrFade(const ToursCameraState& currentState,

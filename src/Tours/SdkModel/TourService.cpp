@@ -103,6 +103,8 @@ namespace ExampleApp
                 m_pActiveTourStateMachine->EndTour();
                 m_pActiveTourStateMachine = NULL;
                 
+                m_cameraTransitionController.ResetControllerState();
+                
                 m_tourEndedCallbacks.ExecuteCallbacks();
                 
                 if(!m_suspendCurrentTour)
