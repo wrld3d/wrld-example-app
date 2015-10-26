@@ -1,6 +1,7 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "SwallowSearchTransitionPinSelectionHandler.h"
+#include "ICameraTransitionController.h"
 
 namespace ExampleApp
 {
@@ -10,16 +11,18 @@ namespace ExampleApp
         {
             namespace SdkModel
             {
-                SwallowSearchTransitionPinSelectionHandler::SwallowSearchTransitionPinSelectionHandler(const SwallowTransitionResultModel& transitionResult)
+                SwallowSearchTransitionPinSelectionHandler::SwallowSearchTransitionPinSelectionHandler(const SwallowTransitionResultModel& transitionResult,
+                                                                                                       CameraTransitions::SdkModel::ICameraTransitionController& transitionController)
                 : m_transitionResult(transitionResult)
+                , m_transitionController(transitionController)
                 {
                     
                 }
                 
                 void SwallowSearchTransitionPinSelectionHandler::SelectPin()
                 {
-                    // TODO: jump to interior specified in transition result
-                    Eegeo_TTY("TRANSITION TO %s, FLOOR %d", m_transitionResult.GetTargetInteriorId().Value().c_str(), m_transitionResult.GetTargetInteriorFloor());
+                    const float newInteriorDistanceFromInterest = 250;
+                    m_transitionController.StartTransitionTo(m_transitionResult.GetTargetLatLong().ToECEF(), newInteriorDistanceFromInterest,  m_transitionResult.GetTargetInteriorId(), m_transitionResult.GetTargetInteriorFloor());
                 }
             }
         }

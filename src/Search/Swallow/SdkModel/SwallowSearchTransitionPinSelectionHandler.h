@@ -5,6 +5,7 @@
 #include "IWorldPinSelectionHandler.h"
 
 #include "SwallowTransitionResultModel.h"
+#include "CameraTransitions.h"
 
 namespace ExampleApp
 {
@@ -17,10 +18,12 @@ namespace ExampleApp
                 class SwallowSearchTransitionPinSelectionHandler : public WorldPins::SdkModel::IWorldPinSelectionHandler
                 {
                 public:
-                    SwallowSearchTransitionPinSelectionHandler(const SwallowTransitionResultModel& transitionResult);
+                    SwallowSearchTransitionPinSelectionHandler(const SwallowTransitionResultModel& transitionResult,
+                                                               CameraTransitions::SdkModel::ICameraTransitionController& transitionController);
                     
                     void SelectPin();
                 private:
+                    CameraTransitions::SdkModel::ICameraTransitionController& m_transitionController;
                     SwallowTransitionResultModel m_transitionResult;
                 };
             }
