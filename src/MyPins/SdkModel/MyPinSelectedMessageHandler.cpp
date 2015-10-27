@@ -27,7 +27,7 @@ namespace ExampleApp
             void MyPinSelectedMessageHandler::OnMyPinSelectedMessage(const MyPinSelectedMessage& message)
             {
                 const float MyPinAltitude = 1500.0f;
-                const float MyPinInteriorAltitude = 300.0f;
+                const float MyPinInteriorAltitude = 100.0f;
                 if(message.GetInteriorId() == Eegeo::Resources::Interiors::InteriorId::NullId())
                 {
                     m_cameraTransitionController.StartTransitionTo(message.GetPinLocation().ToECEF(),
