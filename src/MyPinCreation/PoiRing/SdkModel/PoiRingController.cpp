@@ -145,10 +145,6 @@ namespace ExampleApp
                             const float floorHeightAboveTerrain = floorHeightAboveSeaLevel - m_myPinCreationModel.GetTerrainHeight();
                             m_myPinCreationModel.SetHeightAboveTerrain(floorHeightAboveTerrain);
                         }
-                        else
-                        {
-                            m_myPinCreationModel.SetHeightAboveTerrain(0);
-                        }
                     }
 
                     Eegeo::m44 sphereTransformMatrix;
