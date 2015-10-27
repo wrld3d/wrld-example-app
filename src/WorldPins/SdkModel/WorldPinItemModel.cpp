@@ -28,6 +28,7 @@ namespace ExampleApp
                 , m_focusModel(m_id, worldPinFocusData.title, worldPinFocusData.subtitle, worldPinFocusData.ratingsImage, worldPinFocusData.reviewCount)
                 , m_transitionState(StableHidden)
                 , m_transitionStateValue(0.f)
+                , m_focusable(true)
                 , m_interior(interior)
                 , m_worldPinInteriorData(worldPinInteriorData)
                 , m_floorHeight(0.0f)
@@ -40,7 +41,17 @@ namespace ExampleApp
             WorldPinItemModel::~WorldPinItemModel()
             {
             }
-
+            
+            bool WorldPinItemModel::IsFocusable() const
+            {
+                return m_focusable;
+            }
+            
+            void WorldPinItemModel::SetFocusable(bool focusable)
+            {
+                m_focusable = focusable;
+            }
+            
             const WorldPinItemModel::WorldPinItemModelId& WorldPinItemModel::Id() const
             {
                 return m_id;

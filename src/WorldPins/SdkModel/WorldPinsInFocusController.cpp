@@ -65,6 +65,11 @@ namespace ExampleApp
                     {
                         ExampleApp::WorldPins::SdkModel::WorldPinItemModel* worldPinItemModel = m_worldPinsRepository.GetItemAtIndex(i);
 
+                        if (!worldPinItemModel->IsFocusable())
+                        {
+                            continue;
+                        }
+                        
                         Eegeo::dv3 ecefPinLocation;
                         Eegeo::v2 screenPinLocation;
 

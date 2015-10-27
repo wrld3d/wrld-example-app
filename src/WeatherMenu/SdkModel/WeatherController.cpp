@@ -24,38 +24,26 @@ namespace ExampleApp
 
             void WeatherController::SetTime(const std::string &time)
             {
-                if(m_currentTheme.compare(time) != 0)
-                {
-                    m_currentTime = time;
-                    SetState(m_currentTime + m_currentWeather);
-                }
+                m_currentTime = time;
+                SetState(m_currentTime + m_currentWeather);
             }
 
             void WeatherController::SetWeather(const std::string &weather)
             {
-                if(m_currentWeather.compare(weather) != 0)
-                {
-                    m_currentWeather = weather;
-                    SetState(m_currentTime + m_currentWeather);
-                }
+                m_currentWeather = weather;
+                SetState(m_currentTime + m_currentWeather);
             }
 
             void WeatherController::SetTheme(const std::string &theme)
             {
-                if(m_currentTheme.compare(theme) != 0)
-                {
-                    m_currentTheme = theme;
-                    RefreshTheme();
-                }
+                m_currentTheme = theme;
+                RefreshTheme();
             }
             
             void WeatherController::SetState(const std::string &state)
             {
-                if(m_currentState.compare(state) != 0)
-                {
-                    m_currentState = state;
-                    RefreshTheme();
-                }
+                m_currentState = state;
+                RefreshTheme();
             }
 
             void WeatherController::RefreshTheme()

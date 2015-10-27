@@ -4,7 +4,6 @@
 
 #include "Types.h"
 #include "Tours.h"
-#include "SplineTransitionCameraMode.h"
 #include "IToursCameraTransitionController.h"
 #include "GlobeCamera.h"
 #include "Terrain.h"
@@ -35,6 +34,8 @@ namespace ExampleApp
                     void Update(float dt);
                     
                     void TransitionTo(IToursCameraMode& targetCameraMode);
+                    
+                    void ResetControllerState();
                     
                 private:
                     

@@ -90,10 +90,6 @@ namespace ExampleApp
                 
                 void InteriorExplorerState::Enter()
                 {
-                    float headingRadians = Eegeo::Camera::CameraHelpers::GetAbsoluteBearingRadians(m_worldCameraController.GetInterestBasis().GetPointEcef(),
-                                                                                                   m_worldCameraController.GetInterestBasis().GetForward());
-                    m_interiorsCameraController.SetHeading(Eegeo::Math::Rad2Deg(headingRadians));
-                    m_interiorsCameraController.SetTilt(0.0f);
                     m_pSubStateMachine->StartStateMachine(0);
                 }
                 

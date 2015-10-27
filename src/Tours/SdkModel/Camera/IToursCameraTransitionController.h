@@ -24,6 +24,8 @@ namespace ExampleApp
                     virtual void Update(float dt) = 0;
                     
                     virtual void TransitionTo(IToursCameraMode& targetCameraMode) = 0;
+                    
+                    virtual void ResetControllerState() = 0;
                 };
             }
         }
