@@ -163,6 +163,13 @@ AppHost::AppHost(
     Eegeo::Config::PlatformConfig platformConfig = Eegeo::Android::AndroidPlatformConfigBuilder(deviceModel).Build();
     platformConfig.OptionsConfig.InteriorsControlledByApp = true;
 
+    platformConfig.CoverageTreeConfig.ManifestUrl = "http://cdn1.eegeo.com/coverage-trees/vglobal/v813/manifest.bin.gz";
+    platformConfig.CityThemesConfig.StreamedManifestUrl = "http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v421/manifest.txt.gz";
+    platformConfig.CityThemesConfig.EmbeddedThemeManifestFile = "embedded_manifest.txt";
+    platformConfig.CityThemesConfig.EmbeddedThemeTexturePath = "Textures";
+    platformConfig.CityThemesConfig.EmbeddedThemeNameContains = "Summer";
+    platformConfig.CityThemesConfig.EmbeddedThemeStateName = "DayDefault";
+
     m_pInputProcessor = Eegeo_NEW(Eegeo::Android::Input::AndroidInputProcessor)(&m_inputHandler, screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight());
 
     m_pInitialExperienceModule = Eegeo_NEW(ExampleApp::InitialExperience::SdkModel::AndroidInitialExperienceModule)(

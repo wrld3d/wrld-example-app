@@ -217,8 +217,6 @@ namespace ExampleApp
                                                 Eegeo::EnvironmentCharacterSet::Latin,
                                                 platformConfig,
                                                 NULL,
-                                                applicationConfiguration.CoverageTreeManifestURL(),
-                                                applicationConfiguration.ThemeManifestURL(),
                                                 &errorHandler
                                                 );
 

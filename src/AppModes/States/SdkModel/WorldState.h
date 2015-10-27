@@ -8,6 +8,7 @@
 #include "Tours.h"
 #include "ICallback.h"
 #include "Interiors.h"
+#include "InteriorsExplorer.h"
 
 namespace ExampleApp
 {
@@ -26,6 +27,8 @@ namespace ExampleApp
                     
                     AppModes::SdkModel::IAppModeModel& m_appModeModel;
                     
+                    ExampleApp::InteriorsExplorer::SdkModel::InteriorsExplorerCameraController& m_interiorsCameraController;
+                    
                     Eegeo::Helpers::TCallback0<WorldState> m_tourStartedCallback;
                     Tours::SdkModel::ITourService& m_tourService;
                     void OnTourStarted();
@@ -40,7 +43,8 @@ namespace ExampleApp
                                int worldCameraHandle,
                                Tours::SdkModel::ITourService& tourService,
                                Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                               AppModes::SdkModel::IAppModeModel& appModeModel);
+                               AppModes::SdkModel::IAppModeModel& appModeModel,
+                               ExampleApp::InteriorsExplorer::SdkModel::InteriorsExplorerCameraController& interiorsCameraController);
                     
                     ~WorldState();
                     

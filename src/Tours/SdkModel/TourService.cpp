@@ -72,6 +72,7 @@ namespace ExampleApp
                 Eegeo_ASSERT(atCard >= 0 && atCard < m_activeTourModel.StateCount(),
                              "Invalid 'atCard' parameter. Must be within range. Was: %d, Max: %d", atCard, m_activeTourModel.StateCount());
                 
+                m_cameraTransitionController.ResetControllerState();
                 
                 m_pActiveTourStateMachine = m_pTourToStateMachineMapping[tourModel.Name()];
                 m_pActiveTourStateMachine->StartTour(atCard);

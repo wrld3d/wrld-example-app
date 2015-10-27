@@ -126,6 +126,17 @@ namespace ExampleApp
                     const double maxSplineAltitudeDelta = 6000.f;
                     return altitudeDelta < maxSplineAltitudeDelta;
                 }
+                
+                void ToursCameraTransitionController::ResetControllerState()
+                {
+                    if(m_pToursTransitionMode != NULL)
+                    {
+                        Eegeo_DELETE m_pToursTransitionMode;
+                        m_pToursTransitionMode = NULL;
+                    }
+                    
+                    m_pToursCurrentMode = NULL;
+                }
             }
         }
     }

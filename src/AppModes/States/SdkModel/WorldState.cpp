@@ -5,6 +5,11 @@
 #include "TourService.h"
 #include "IAppModeModel.h"
 #include "InteriorSelectionModel.h"
+#include "CameraHelpers.h"
+#include "IAppCameraController.h"
+#include "CameraState.h"
+#include "RenderCamera.h"
+#include "InteriorsExplorerCameraController.h"
 
 namespace ExampleApp
 {
@@ -18,7 +23,8 @@ namespace ExampleApp
                                        int worldCameraHandle,
                                        Tours::SdkModel::ITourService& tourService,
                                        Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                                       AppModes::SdkModel::IAppModeModel& appModeModel)
+                                       AppModes::SdkModel::IAppModeModel& appModeModel,
+                                       ExampleApp::InteriorsExplorer::SdkModel::InteriorsExplorerCameraController& interiorsCameraController)
                 : m_cameraController(cameraController)
                 , m_worldCameraHandle(worldCameraHandle)
                 , m_tourService(tourService)
@@ -26,6 +32,7 @@ namespace ExampleApp
                 , m_interiorSelectionModel(interiorSelectionModel)
                 , m_interiorSelectionModelChangedCallback(this, &WorldState::OnInteriorSelectionModelChanged)
                 , m_appModeModel(appModeModel)
+                , m_interiorsCameraController(interiorsCameraController)
                 {
                 }
                 
@@ -49,6 +56,15 @@ namespace ExampleApp
                 {
                     m_tourService.UnregisterTourStartedCallback(m_tourStartedCallback);
                     m_interiorSelectionModel.UnregisterSelectionChangedCallback(m_interiorSelectionModelChangedCallback);
+                    
+                    if(m_appModeModel.GetAppMode() == AppModes::SdkModel::InteriorMode)
+                    {
+                        float headingRadians = Eegeo::Camera::CameraHelpers::GetAbsoluteBearingRadians(m_cameraController.GetCameraState().InterestPointEcef(),
+                                                                                                       m_cameraController.GetRenderCamera().GetModelMatrix().GetRow(2));
+                        
+                        m_interiorsCameraController.SetHeading(Eegeo::Math::Rad2Deg(headingRadians));
+                        m_interiorsCameraController.SetTilt(0.0f);
+                    }
                 }
                 
                 void WorldState::OnTourStarted()
