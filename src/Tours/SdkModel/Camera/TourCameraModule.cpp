@@ -19,7 +19,7 @@ namespace ExampleApp
                 {
                     Eegeo::Camera::GlobeCamera::GlobeCameraTouchControllerConfiguration touchConfig = Eegeo::Camera::GlobeCamera::GlobeCameraTouchControllerConfiguration::CreateDefault();
                     
-                    m_pTouchController = Eegeo_NEW(Eegeo::Camera::GlobeCamera::GlobeCameraTouchController)(touchConfig);
+                    m_pTouchController = Eegeo_NEW(Eegeo::Camera::GlobeCamera::GlobeCameraTouchController)(touchConfig, screenProperties);
                     
                     m_pToursCameraController = Eegeo_NEW(ToursCameraController)(resourceCeilingProvider,
                                                                                 *m_pTouchController,

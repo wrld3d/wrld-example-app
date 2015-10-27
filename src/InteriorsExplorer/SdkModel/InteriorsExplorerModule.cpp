@@ -43,7 +43,7 @@ namespace ExampleApp
                 globeCameraConfig.fovZoomedInGlobe = 90.0f;
                 globeCameraConfig.maxAltitude = 250.0f;
                 
-                m_pGlobeCameraTouchController = globeCameraControllerFactory.CreateTouchController(touchConfig);
+                m_pGlobeCameraTouchController = globeCameraControllerFactory.CreateTouchController(touchConfig, screenProperties);
                 
                 m_pGlobeCameraController = globeCameraControllerFactory.CreateCameraController(globeCameraConfig,
                                                                                                *m_pGlobeCameraTouchController,
