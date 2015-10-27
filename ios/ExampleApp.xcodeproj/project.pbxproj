@@ -615,6 +615,8 @@
 		27DB89FA1BB413F60020CDA5 /* SearchVendorNames.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27DB89F71BB413F60020CDA5 /* SearchVendorNames.cpp */; };
 		27E7A9C41BBC0F3200CDB502 /* SearchResultMenuOrder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27E7A9C21BBC0F3200CDB502 /* SearchResultMenuOrder.cpp */; };
 		27E7A9C51BBC0F3200CDB502 /* SearchResultMenuOrder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27E7A9C21BBC0F3200CDB502 /* SearchResultMenuOrder.cpp */; };
+		27E935CF1BDFA701007D52C5 /* InterestPointTransitionCameraMode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27E935CD1BDFA701007D52C5 /* InterestPointTransitionCameraMode.cpp */; };
+		27E935D01BDFA701007D52C5 /* InterestPointTransitionCameraMode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27E935CD1BDFA701007D52C5 /* InterestPointTransitionCameraMode.cpp */; };
 		27E997521BB2B69000B0BE14 /* YelpSearchConstants.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27E997501BB2B69000B0BE14 /* YelpSearchConstants.cpp */; };
 		27E997531BB2B69000B0BE14 /* YelpSearchConstants.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27E997501BB2B69000B0BE14 /* YelpSearchConstants.cpp */; };
 		27EACB571BC4140700135BE6 /* icon1_tours.png in Resources */ = {isa = PBXBuildFile; fileRef = 27EACB541BC4140700135BE6 /* icon1_tours.png */; };
@@ -1954,6 +1956,8 @@
 		27E7A9C11BBC0F3200CDB502 /* ISearchResultMenuOrder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISearchResultMenuOrder.h; sourceTree = "<group>"; };
 		27E7A9C21BBC0F3200CDB502 /* SearchResultMenuOrder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchResultMenuOrder.cpp; sourceTree = "<group>"; };
 		27E7A9C31BBC0F3200CDB502 /* SearchResultMenuOrder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultMenuOrder.h; sourceTree = "<group>"; };
+		27E935CD1BDFA701007D52C5 /* InterestPointTransitionCameraMode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InterestPointTransitionCameraMode.cpp; sourceTree = "<group>"; };
+		27E935CE1BDFA701007D52C5 /* InterestPointTransitionCameraMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InterestPointTransitionCameraMode.h; sourceTree = "<group>"; };
 		27E997501BB2B69000B0BE14 /* YelpSearchConstants.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = YelpSearchConstants.cpp; sourceTree = "<group>"; };
 		27E997511BB2B69000B0BE14 /* YelpSearchConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YelpSearchConstants.h; sourceTree = "<group>"; };
 		27EACB541BC4140700135BE6 /* icon1_tours.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon1_tours.png; sourceTree = "<group>"; };
@@ -5804,6 +5808,8 @@
 				BFD5FCE11BA706AD00F591F1 /* SplineCameraMode.h */,
 				BFD5FCE21BA706AD00F591F1 /* SplineTransitionCameraMode.cpp */,
 				BFD5FCE31BA706AD00F591F1 /* SplineTransitionCameraMode.h */,
+				27E935CD1BDFA701007D52C5 /* InterestPointTransitionCameraMode.cpp */,
+				27E935CE1BDFA701007D52C5 /* InterestPointTransitionCameraMode.h */,
 				BFD5FCE41BA706AD00F591F1 /* TourCameraModule.cpp */,
 				BFD5FCE51BA706AD00F591F1 /* TourCameraModule.h */,
 				BFD5FCE61BA706AD00F591F1 /* ToursCameraController.cpp */,
@@ -6700,6 +6706,7 @@
 				7E3B897D1A385A290023C94E /* ReactionControllerModel.cpp in Sources */,
 				7E3B89C31A385A290023C94E /* SearchResultOnMapItemModelSelectedMessage.cpp in Sources */,
 				27DB89D91BB3FF170020CDA5 /* GeoNamesJsonParser.cpp in Sources */,
+				27E935D01BDFA701007D52C5 /* InterestPointTransitionCameraMode.cpp in Sources */,
 				BFD5FCCB1BA7068300F591F1 /* TourHovercardViewModule.mm in Sources */,
 				18FE3BCF1A9CA4DF002D61C4 /* SortedMenuModel.cpp in Sources */,
 				56AC9BFD1AA6076D00E603C4 /* iOSFlurryMetricsService.mm in Sources */,
@@ -7155,6 +7162,7 @@
 				183E54871ACEB1FB00AD6B3E /* InitialExperienceSearchResultAttractModeModel.cpp in Sources */,
 				7E3B897C1A385A290023C94E /* ReactionControllerModel.cpp in Sources */,
 				27DB89D81BB3FF170020CDA5 /* GeoNamesJsonParser.cpp in Sources */,
+				27E935CF1BDFA701007D52C5 /* InterestPointTransitionCameraMode.cpp in Sources */,
 				7E3B89C21A385A290023C94E /* SearchResultOnMapItemModelSelectedMessage.cpp in Sources */,
 				BFD5FCCA1BA7068300F591F1 /* TourHovercardViewModule.mm in Sources */,
 				18FE3BCE1A9CA4DF002D61C4 /* SortedMenuModel.cpp in Sources */,

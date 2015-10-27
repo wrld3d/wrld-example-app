@@ -10,6 +10,7 @@
 #include "TerrainHeightProvider.h"
 #include "EarthConstants.h"
 #include "IntersectionTests.h"
+#include "InterestPointTransitionCameraMode.h"
 
 namespace ExampleApp
 {
@@ -75,13 +76,13 @@ namespace ExampleApp
                     {
                         ToursCameraState currentTransitionCameraState(m_pToursTransitionMode->GetCurrentState());
                         Eegeo_DELETE m_pToursTransitionMode;
-                        m_pToursTransitionMode = SplineTransitionCameraMode::CreateBetweenStates(currentTransitionCameraState,
+                        m_pToursTransitionMode = InterestPointTransitionCameraMode::CreateBetweenStates(currentTransitionCameraState,
                                                                                                  m_pToursNextMode->GetCurrentState());
                         m_toursCameraController.SetMode(m_pToursTransitionMode);
                     }
                     else if(m_pToursCurrentMode != NULL) // transition from stable state
                     {
-                        m_pToursTransitionMode = SplineTransitionCameraMode::CreateBetweenStates(m_pToursCurrentMode->GetCurrentState(),
+                        m_pToursTransitionMode = InterestPointTransitionCameraMode::CreateBetweenStates(m_pToursCurrentMode->GetCurrentState(),
                                                                                                  m_pToursNextMode->GetCurrentState());
                         m_toursCameraController.SetMode(m_pToursTransitionMode);
                     }
@@ -104,7 +105,7 @@ namespace ExampleApp
                     
                     if(shouldAnimateCamera)
                     {
-                        m_pToursTransitionMode = SplineTransitionCameraMode::CreateBetweenStates(currentState,
+                        m_pToursTransitionMode = InterestPointTransitionCameraMode::CreateBetweenStates(currentState,
                                                                                                  desiredState);
                     }
                     else
