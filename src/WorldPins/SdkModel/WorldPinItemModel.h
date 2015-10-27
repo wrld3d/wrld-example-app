@@ -83,6 +83,10 @@ namespace ExampleApp
 
                 const IWorldPinsInFocusModel& GetInFocusModel() const;
                 
+                void SetFocusable(bool focusable);
+                
+                bool IsFocusable() const;
+                
                 bool IsInterior() const;
                 
                 const WorldPinInteriorData& GetInteriorData() const;

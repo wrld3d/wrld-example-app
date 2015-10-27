@@ -46,7 +46,7 @@ namespace ExampleApp
                 globeCameraConfig.nearPlane = 1.f;
                 globeCameraConfig.farPlane = 5000.f;
                 
-                m_pGlobeCameraTouchController = globeCameraControllerFactory.CreateTouchController(touchConfig);
+                m_pGlobeCameraTouchController = globeCameraControllerFactory.CreateTouchController(touchConfig, screenProperties);
                 
                 m_pGlobeCameraController = globeCameraControllerFactory.CreateCameraController(globeCameraConfig,
                                                                                                *m_pGlobeCameraTouchController,

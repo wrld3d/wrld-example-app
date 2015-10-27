@@ -221,6 +221,11 @@ namespace ExampleApp
                                                                                                              pinIconIndex,
                                                                                                              searchResultModel.GetHeightAboveTerrainMetres(),
                                                                                                              WorldPins::SdkModel::WorldPinVisibility::Search);
+                // TODO: Handle this more semsibly
+                if(searchResultModel.GetCategory() == "meeting_room")
+                {
+                    pinItemModel->SetFocusable(false);
+                }
                 
                 m_searchResultsToPinModel.insert(std::make_pair(searchResultModel, pinItemModel));
             }
