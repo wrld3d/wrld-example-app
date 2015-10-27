@@ -93,6 +93,7 @@
 #include "AppModeStatesFactory.h"
 #include "AppGlobeCameraWrapper.h"
 #include "NativeUIFactories.h"
+#include "InteriorsNavigationService.h"
 
 namespace ExampleApp
 {
@@ -145,6 +146,7 @@ namespace ExampleApp
         , m_pCameraTouchController(NULL)
         , m_pCurrentTouchController(NULL)
         , m_pNavigationService(NULL)
+        , m_pInteriorsNavigationService(NULL)
         , m_pWorld(NULL)
         , m_platformAbstractions(platformAbstractions, networkCapabilities)
         , m_pLoadingScreen(NULL)
@@ -391,15 +393,6 @@ namespace ExampleApp
                                                                     *m_pCameraTransitionService,
                                                                     m_messageBus,
                                                                     m_sdkDomainEventBus);
-
-        m_pCompassModule = Eegeo_NEW(ExampleApp::Compass::SdkModel::CompassModule)(*m_pNavigationService,
-                                                                                   world.GetLocationService(),
-                                                                                   *m_pGlobeCameraController,
-                                                                                   m_identityProvider,
-                                                                                   m_messageBus,
-                                                                                   m_metricsService,
-                                                                                   *m_pAppModeModel,
-                                                                                   m_pWorld->GetNativeUIFactories().AlertBoxFactory());
         
         m_pGpsMarkerModule = Eegeo_NEW(ExampleApp::GpsMarker::SdkModel::GpsMarkerModule)(m_pWorld->GetRenderingModule(),
                                                                                          m_platformAbstractions,
@@ -530,7 +523,20 @@ namespace ExampleApp
                                                                                                   m_pSearchResultPoiModule->GetSearchResultPoiViewModel(),
                                                                                                   m_messageBus);
 
+        m_pInteriorsNavigationService = Eegeo_NEW(ExampleApp::InteriorsNavigation::SdkModel::InteriorsNavigationService)(world.GetLocationService(),
+                                                                                                                         m_pInteriorsExplorerModule->GetInteriorsCameraController(),
+                                                                                                                         m_pInteriorsExplorerModule->GetTouchController(),
+                                                                                                                         interiorsPresentationModule.GetAppLevelController());
         
+        m_pCompassModule = Eegeo_NEW(ExampleApp::Compass::SdkModel::CompassModule)(*m_pNavigationService,
+                                                                                   *m_pInteriorsNavigationService,
+                                                                                   world.GetLocationService(),
+                                                                                   *m_pGlobeCameraController,
+                                                                                   m_identityProvider,
+                                                                                   m_messageBus,
+                                                                                   m_metricsService,
+                                                                                   *m_pAppModeModel,
+                                                                                   m_pWorld->GetNativeUIFactories().AlertBoxFactory());
         
         InitialiseToursModules(mapModule, world);
         
@@ -615,6 +621,10 @@ namespace ExampleApp
         
         Eegeo_DELETE m_pInteriorsExplorerModule;
         
+        Eegeo_DELETE m_pCompassModule;
+        
+        Eegeo_DELETE m_pInteriorsNavigationService;
+        
         Eegeo_DELETE m_pMyPinDetailsModule;
         
         Eegeo_DELETE m_pMyPinCreationDetailsModule;
@@ -650,8 +660,6 @@ namespace ExampleApp
         Eegeo_DELETE m_pWeatherMenuModule;
         
         Eegeo_DELETE m_pGpsMarkerModule;
-
-        Eegeo_DELETE m_pCompassModule;
 
         Eegeo_DELETE m_pSearchModule;
         
@@ -945,6 +953,7 @@ namespace ExampleApp
         }
 
         m_pNavigationService->Update(dt);
+        m_pInteriorsNavigationService->Update(dt);
         
         if(ToursEnabled())
         {

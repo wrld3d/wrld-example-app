@@ -81,6 +81,7 @@
 #include "IAppCameraModule.h"
 #include "IInteriorsCustomMaterialsModule.h"
 #include "CameraTransitionService.h"
+#include "InteriorsNavigation.h"
 
 namespace ExampleApp
 {
@@ -93,6 +94,7 @@ namespace ExampleApp
         Eegeo::ITouchController* m_pCurrentTouchController;
         Eegeo::EegeoWorld* m_pWorld;
         Eegeo::Location::NavigationService* m_pNavigationService;
+        InteriorsNavigation::SdkModel::IInteriorsNavigationService* m_pInteriorsNavigationService;
         PlatformAbstractionsFacade m_platformAbstractions;
         Eegeo::Rendering::LoadingScreen* m_pLoadingScreen;
         Eegeo::Blitter* m_pBlitter;

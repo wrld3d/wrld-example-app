@@ -90,13 +90,11 @@ namespace ExampleApp
                     
                     m_viewModel.AddToScreen();
                     
-                    m_messageBus.Publish(GpsMarker::GpsMarkerVisibilityMessage(false));
                 }
                 else
                 {
                     m_viewModel.RemoveFromScreen();
 
-                    m_messageBus.Publish(GpsMarker::GpsMarkerVisibilityMessage(true));
                 }
             }
             

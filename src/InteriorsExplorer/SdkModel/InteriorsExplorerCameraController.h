@@ -9,6 +9,7 @@
 #include "Interiors.h"
 #include "ITouchController.h"
 #include "VectorMath.h"
+#include "GlobeCameraTouchSettings.h"
 
 namespace ExampleApp
 {
@@ -25,6 +26,7 @@ namespace ExampleApp
                 Eegeo::Resources::Interiors::Markers::InteriorMarkerModelRepository& m_markerRepository;
                 Eegeo::Camera::GlobeCamera::GlobeCameraTouchController& m_globeCameraTouchController;
                 Eegeo::Camera::GlobeCamera::GlobeCameraController& m_globeCameraController;
+                Eegeo::Camera::GlobeCamera::GlobeCameraTouchSettings m_cameraTouchSettings;
                 
             public:
                 InteriorsExplorerCameraController(Eegeo::Resources::Interiors::InteriorController& interiorController,
@@ -57,6 +59,8 @@ namespace ExampleApp
                 const float GetHeadingDegrees() const;
                 
                 void SetTilt(float tiltDegrees);
+                
+                void SetPanEnabled(bool enabled);
                 
             private:
                 

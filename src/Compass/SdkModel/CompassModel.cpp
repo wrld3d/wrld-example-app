@@ -11,6 +11,7 @@
 #include "LatLongAltitude.h"
 #include "IAppModeModel.h"
 #include "IAlertBoxFactory.h"
+#include "IInteriorsNavigationService.h"
 
 namespace ExampleApp
 {
@@ -19,12 +20,14 @@ namespace ExampleApp
         namespace SdkModel
         {
             CompassModel::CompassModel(Eegeo::Location::NavigationService& navigationService,
+                                       InteriorsNavigation::SdkModel::IInteriorsNavigationService& interiorsNavigationService,
                                        Eegeo::Location::ILocationService& locationService,
                                        Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& controller,
                                        Metrics::IMetricsService& metricsService,
                                        AppModes::SdkModel::IAppModeModel& appModeModel,
                                        Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory)
                 :m_navigationService(navigationService)
+                ,m_interiorsNavigationService(interiorsNavigationService)
                 ,m_locationService(locationService)
                 ,m_cameraController(controller)
                 ,m_metricsService(metricsService)
@@ -66,13 +69,6 @@ namespace ExampleApp
 
             void CompassModel::CycleToNextGpsMode()
             {
-                const AppModes::SdkModel::AppMode appMode = m_appModeModel.GetAppMode();
-                if (appMode != AppModes::SdkModel::WorldMode)
-                {
-                    DisableGpsMode();
-                    return;
-                }
-                
                 if(!m_locationService.GetIsAuthorized())
                 {
                     DisableGpsMode();
@@ -132,7 +128,18 @@ namespace ExampleApp
             void CompassModel::SetGpsMode(GpsMode::Values gpsMode)
             {
                 m_gpsMode = gpsMode;
-                m_navigationService.SetGpsMode(m_navigationGpsModeToCompassGpsMode[gpsMode]);
+                
+                const AppModes::SdkModel::AppMode appMode = m_appModeModel.GetAppMode();
+                if (appMode == AppModes::SdkModel::WorldMode)
+                {
+                    m_navigationService.SetGpsMode(m_navigationGpsModeToCompassGpsMode[gpsMode]);
+                    m_interiorsNavigationService.SetGpsMode(m_navigationGpsModeToCompassGpsMode[GpsMode::GpsDisabled]);
+                }
+                else
+                {
+                    m_navigationService.SetGpsMode(m_navigationGpsModeToCompassGpsMode[GpsMode::GpsDisabled]);
+                    m_interiorsNavigationService.SetGpsMode(m_navigationGpsModeToCompassGpsMode[gpsMode]);
+                }
                 
                 m_metricsService.SetEvent("SetGpsMode", "GpsMode", m_gpsModeToString[m_gpsMode]);
                 

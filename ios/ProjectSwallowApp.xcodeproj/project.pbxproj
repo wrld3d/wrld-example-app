@@ -1589,6 +1589,8 @@
 		BFE06D9A1BDFA36200C09B79 /* icon1_tours@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE06D951BDFA36200C09B79 /* icon1_tours@2x.png */; };
 		BFE06D9B1BDFA36200C09B79 /* icon1_tours@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE06D961BDFA36200C09B79 /* icon1_tours@3x.png */; };
 		BFE06D9C1BDFA36200C09B79 /* icon1_tours@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE06D961BDFA36200C09B79 /* icon1_tours@3x.png */; };
+		BFE06DA31BDFCEA700C09B79 /* InteriorsNavigationService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFE06DA11BDFCEA700C09B79 /* InteriorsNavigationService.cpp */; };
+		BFE06DA41BDFCEA700C09B79 /* InteriorsNavigationService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFE06DA11BDFCEA700C09B79 /* InteriorsNavigationService.cpp */; };
 		BFE248061BD8EF30000DEAA6 /* MapCameraMode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFE248051BD8EF30000DEAA6 /* MapCameraMode.cpp */; };
 		BFE248071BD8EF30000DEAA6 /* MapCameraMode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFE248051BD8EF30000DEAA6 /* MapCameraMode.cpp */; };
 		E002DEAF1BD148E40062D4D2 /* InteriorsCustomMaterialDtoRepository.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E002DEAD1BD148E40062D4D2 /* InteriorsCustomMaterialDtoRepository.cpp */; };
@@ -3219,6 +3221,10 @@
 		BFE06D941BDFA36200C09B79 /* icon1_tours.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon1_tours.png; sourceTree = "<group>"; };
 		BFE06D951BDFA36200C09B79 /* icon1_tours@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon1_tours@2x.png"; sourceTree = "<group>"; };
 		BFE06D961BDFA36200C09B79 /* icon1_tours@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon1_tours@3x.png"; sourceTree = "<group>"; };
+		BFE06D9E1BDFCC4700C09B79 /* InteriorsNavigation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = InteriorsNavigation.h; path = InteriorsNavigation/InteriorsNavigation.h; sourceTree = "<group>"; };
+		BFE06D9F1BDFCCB300C09B79 /* IInteriorsNavigationService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = IInteriorsNavigationService.h; path = InteriorsNavigation/SdkModel/IInteriorsNavigationService.h; sourceTree = "<group>"; };
+		BFE06DA11BDFCEA700C09B79 /* InteriorsNavigationService.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = InteriorsNavigationService.cpp; path = InteriorsNavigation/SdkModel/InteriorsNavigationService.cpp; sourceTree = "<group>"; };
+		BFE06DA21BDFCEA700C09B79 /* InteriorsNavigationService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InteriorsNavigationService.h; path = InteriorsNavigation/SdkModel/InteriorsNavigationService.h; sourceTree = "<group>"; };
 		BFE248051BD8EF30000DEAA6 /* MapCameraMode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MapCameraMode.cpp; sourceTree = "<group>"; };
 		E002DEAD1BD148E40062D4D2 /* InteriorsCustomMaterialDtoRepository.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = InteriorsCustomMaterialDtoRepository.cpp; path = InteriorsCustomMaterials/SdkModel/InteriorsCustomMaterialDtoRepository.cpp; sourceTree = "<group>"; };
 		E002DEAE1BD148E40062D4D2 /* InteriorsCustomMaterialDtoRepository.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InteriorsCustomMaterialDtoRepository.h; path = InteriorsCustomMaterials/SdkModel/InteriorsCustomMaterialDtoRepository.h; sourceTree = "<group>"; };
@@ -3376,6 +3382,7 @@
 				561ECF1E1B467F84007BD4F9 /* InteriorsEntitiesPins */,
 				7E5811AE1B1F050A007AD67F /* InteriorsExplorer */,
 				E0ECCFF71BC688CE00967A95 /* InteriorsCustomMaterials */,
+				BFE06D9D1BDFCBF700C09B79 /* InteriorsNavigation */,
 				7E3B86DB1A385A290023C94E /* Logger.h */,
 				F7F3705892DE41262BA7773A /* MapMode */,
 				7E3B86DC1A385A290023C94E /* Menu */,
@@ -6460,6 +6467,25 @@
 			name = SdkModel;
 			sourceTree = "<group>";
 		};
+		BFE06D9D1BDFCBF700C09B79 /* InteriorsNavigation */ = {
+			isa = PBXGroup;
+			children = (
+				BFE06DA01BDFCCCC00C09B79 /* SdkModel */,
+				BFE06D9E1BDFCC4700C09B79 /* InteriorsNavigation.h */,
+			);
+			name = InteriorsNavigation;
+			sourceTree = "<group>";
+		};
+		BFE06DA01BDFCCCC00C09B79 /* SdkModel */ = {
+			isa = PBXGroup;
+			children = (
+				BFE06D9F1BDFCCB300C09B79 /* IInteriorsNavigationService.h */,
+				BFE06DA11BDFCEA700C09B79 /* InteriorsNavigationService.cpp */,
+				BFE06DA21BDFCEA700C09B79 /* InteriorsNavigationService.h */,
+			);
+			name = SdkModel;
+			sourceTree = "<group>";
+		};
 		E06AE5901B871E6E000F85E3 /* AppModes */ = {
 			isa = PBXGroup;
 			children = (
@@ -7264,6 +7290,7 @@
 				BF34FE9F1BCBF78600E7094F /* AppCameraModule.cpp in Sources */,
 				18096F4E1A7B7F39006A6438 /* StreamOverWifiOnlyChangedMessage.cpp in Sources */,
 				7E3B8AD21A385F110023C94E /* AppRunner.mm in Sources */,
+				BFE06DA41BDFCEA700C09B79 /* InteriorsNavigationService.cpp in Sources */,
 				183E54881ACEB1FB00AD6B3E /* InitialExperienceSearchResultAttractModeModel.cpp in Sources */,
 				7E3B897D1A385A290023C94E /* ReactionControllerModel.cpp in Sources */,
 				7E3B89C31A385A290023C94E /* SearchResultOnMapItemModelSelectedMessage.cpp in Sources */,
@@ -7926,6 +7953,7 @@
 				1833B1FB1BBD2D65001CB77A /* SwallowOfficeResultMenuOptionSelectedMessageHandler.cpp in Sources */,
 				18FB64B31A94D504005A9411 /* SearchResultPoiViewOpenedMessageHandler.cpp in Sources */,
 				186B475A1AB33C7E0084E80B /* ApplicationConfigurationService.cpp in Sources */,
+				BFE06DA31BDFCEA700C09B79 /* InteriorsNavigationService.cpp in Sources */,
 				7E3B89D41A385A290023C94E /* PerformedSearchMessage.cpp in Sources */,
 				18096F581A7B8DC7006A6438 /* OptionsModule.cpp in Sources */,
 				BFD5FCB61BA7068300F591F1 /* iCarouselTourExplorerViewController.mm in Sources */,

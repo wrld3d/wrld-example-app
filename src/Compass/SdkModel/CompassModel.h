@@ -13,6 +13,7 @@
 #include "AppModes.h"
 #include "AlertBox.h"
 #include "ISingleOptionAlertBoxDismissedHandler.h"
+#include "InteriorsNavigation.h"
 
 namespace ExampleApp
 {
@@ -23,6 +24,7 @@ namespace ExampleApp
             class CompassModel : public ICompassModel, private Eegeo::NonCopyable
             {
                 Eegeo::Location::NavigationService& m_navigationService;
+                InteriorsNavigation::SdkModel::IInteriorsNavigationService& m_interiorsNavigationService;
                 Eegeo::Location::ILocationService& m_locationService;
                 Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& m_cameraController;
                 Eegeo::Helpers::CallbackCollection0 m_gpsModeChangedCallbacks;
@@ -43,6 +45,7 @@ namespace ExampleApp
             public:
 
                 CompassModel(Eegeo::Location::NavigationService& navigationService,
+                             InteriorsNavigation::SdkModel::IInteriorsNavigationService& interiorsNavigationService,
                              Eegeo::Location::ILocationService& locationService,
                              Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& controller,
                              Metrics::IMetricsService& metricsService,

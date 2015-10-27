@@ -53,6 +53,8 @@ namespace ExampleApp
                 Eegeo::Space::EcefTangentBasis basis;
                 Eegeo::Camera::CameraHelpers::EcefTangentBasisFromPointAndHeading(Eegeo::Space::LatLong::FromDegrees(0, 0).ToECEF(), 0.0f, basis);
                 m_globeCameraController.SetView(basis, 100.0f);
+                
+                m_cameraTouchSettings = m_globeCameraController.GetTouchSettings();
             }
             
             InteriorsExplorerCameraController::~InteriorsExplorerCameraController()
@@ -182,6 +184,12 @@ namespace ExampleApp
             void InteriorsExplorerCameraController::SetTilt(float tiltDegrees)
             {
                 m_globeCameraController.ApplyTilt(tiltDegrees);
+            }
+            
+            void InteriorsExplorerCameraController::SetPanEnabled(bool enabled)
+            {
+                m_cameraTouchSettings.PanEnabled = enabled;
+                m_globeCameraController.SetTouchSettings(m_cameraTouchSettings);
             }
             
             float InteriorsExplorerCameraController::GetFloorOffsetHeight() const

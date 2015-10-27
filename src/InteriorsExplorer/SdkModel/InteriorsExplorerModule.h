@@ -50,6 +50,8 @@ namespace ExampleApp
                 
                 InteriorsExplorerModel& GetInteriorsExplorerModel() const;
                 
+                Eegeo::Camera::GlobeCamera::GlobeCameraTouchController& GetTouchController() const;
+                
             private:
                 
                 InteriorsExplorerModel* m_pModel;

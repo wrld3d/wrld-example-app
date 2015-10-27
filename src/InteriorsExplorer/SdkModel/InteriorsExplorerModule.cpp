@@ -111,10 +111,14 @@ namespace ExampleApp
                 m_pVisibilityUpdater->Update(dt);
             }
             
-            
             InteriorsExplorerModel& InteriorsExplorerModule::GetInteriorsExplorerModel() const
             {
                 return *m_pModel;
+            }
+            
+            Eegeo::Camera::GlobeCamera::GlobeCameraTouchController& InteriorsExplorerModule::GetTouchController() const
+            {
+                return *m_pGlobeCameraTouchController;
             }
         }
     }

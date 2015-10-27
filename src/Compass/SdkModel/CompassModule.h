@@ -15,6 +15,7 @@
 #include "IMetricsService.h"
 #include "AppModes.h"
 #include "AlertBox.h"
+#include "InteriorsNavigation.h"
 
 namespace ExampleApp
 {
@@ -33,6 +34,7 @@ namespace ExampleApp
 
             public:
                 CompassModule(Eegeo::Location::NavigationService& navigationService,
+                              InteriorsNavigation::SdkModel::IInteriorsNavigationService& interiorsNavigationService,
                               Eegeo::Location::ILocationService& locationService,
                               Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& cameraController,
                               Eegeo::Helpers::IIdentityProvider& identityProvider,
