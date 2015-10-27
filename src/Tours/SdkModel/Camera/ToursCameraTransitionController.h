@@ -4,7 +4,6 @@
 
 #include "Types.h"
 #include "Tours.h"
-#include "SplineTransitionCameraMode.h"
 #include "IToursCameraTransitionController.h"
 #include "GlobeCamera.h"
 #include "Terrain.h"
