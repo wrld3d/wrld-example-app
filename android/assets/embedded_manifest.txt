@@ -13,7 +13,7 @@
         "", 
         "night"
     ], 
-    "LandmarkTextureRoot": "http://d2xvsc8j92rfya.cloudfront.net/landmark_textures/test_builds/v515/“, 
+    "LandmarkTextureRoot": "http://d2xvsc8j92rfya.cloudfront.net/landmark_textures/test_builds/v515/", 
     "Themes": [
         {
             "BaseAltitude": 0, 
