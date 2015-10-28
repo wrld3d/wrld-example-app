@@ -344,7 +344,8 @@
 - (BOOL)consumesTouch:(UITouch *)touch
 {
     CGPoint touchLocation = [touch locationInView:self];
-    return CGRectContainsPoint(self.pDetailsPanel.frame, touchLocation) || CGRectContainsPoint(m_pCarouselContainer.frame, touchLocation);
+    return (self.pDetailsPanel.alpha > 0.0 && CGRectContainsPoint(self.pDetailsPanel.frame, touchLocation)) ||
+            CGRectContainsPoint(m_pCarouselContainer.frame, touchLocation);
 }
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
