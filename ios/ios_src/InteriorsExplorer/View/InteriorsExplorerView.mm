@@ -248,6 +248,7 @@
     }
     
     cell.textLabel.text = [NSString stringWithUTF8String:m_tableViewFloorNames.at(indexPath.item).c_str()];
+    cell.textLabel.adjustsFontSizeToFitWidth = YES;
     
     return cell;
 }
