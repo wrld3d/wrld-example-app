@@ -1,6 +1,7 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "SearchResultMenuItemSelectedMessageHandler.h"
+#include "InteriorsExplorer.h"
 
 namespace ExampleApp
 {
@@ -11,11 +12,10 @@ namespace ExampleApp
             void SearchResultMenuItemSelectedMessageHandler::OnSearchResultMenuItemSelectedMessage(const SearchResultMenuItemSelectedMessage& message)
             {
                 const float newDistanceFromInterest = 1000;
-                const float newInteriorDistanceFromInterest = 100;
                 if(message.InInterior())
                 {
                     m_cameraTransitionController.StartTransitionTo(message.SearchResultLocationEcef(),
-                                                                   newInteriorDistanceFromInterest,
+                                                                   InteriorsExplorer::DefaultInteriorTransitionInterestDistance,
                                                                    message.InteriorBuildingId(),
                                                                    message.FloorIndex());
                 }

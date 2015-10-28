@@ -2,6 +2,7 @@
 
 #include "SwallowSearchTransitionPinSelectionHandler.h"
 #include "ICameraTransitionController.h"
+#include "InteriorsExplorer.h"
 
 namespace ExampleApp
 {
@@ -21,8 +22,7 @@ namespace ExampleApp
                 
                 void SwallowSearchTransitionPinSelectionHandler::SelectPin()
                 {
-                    const float newInteriorDistanceFromInterest = 250;
-                    m_transitionController.StartTransitionTo(m_transitionResult.GetTargetLatLong().ToECEF(), newInteriorDistanceFromInterest,  m_transitionResult.GetTargetInteriorId(), m_transitionResult.GetTargetInteriorFloor());
+                    m_transitionController.StartTransitionTo(m_transitionResult.GetTargetLatLong().ToECEF(), InteriorsExplorer::DefaultInteriorTransitionInterestDistance,  m_transitionResult.GetTargetInteriorId(), m_transitionResult.GetTargetInteriorFloor());
                 }
             }
         }
