@@ -17,6 +17,8 @@
 #include "NativeUIFactories.h"
 #include "IAlertBoxFactory.h"
 #include "LatLongAltitude.h"
+#include "MyPinCreationModel.h"
+#include "MyPinCreationStage.h"
 
 namespace ExampleApp
 {
@@ -35,7 +37,8 @@ namespace ExampleApp
                                                              AppModes::SdkModel::IAppModeModel& appModeModel,
                                                              Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& worldCameraController,
                                                              ExampleApp::InteriorsExplorer::SdkModel::InteriorsExplorerCameraController& interiorsCameraController,
-                                                             Eegeo::UI::NativeUIFactories& nativeUIFactories)
+                                                             Eegeo::UI::NativeUIFactories& nativeUIFactories,
+                                                             MyPinCreation::SdkModel::IMyPinCreationModel& myPinCreationModel)
                 : m_cameraController(cameraController)
                 , m_interiorController(interiorController)
                 , m_interiorCameraHandle(interiorCameraHandle)
@@ -44,6 +47,7 @@ namespace ExampleApp
                 , m_interiorsCameraController(interiorsCameraController)
                 , m_nativeUIFactories(nativeUIFactories)
                 , m_failAlertHandler(this, &InteriorExplorerState::OnFailAlertBoxDismissed)
+                , m_myPinCreationModel(myPinCreationModel)
                 {
                     
                     m_subStates.push_back(Eegeo_NEW(InteriorsExplorer::SdkModel::States::InteriorExplorerSetupState)(*this,
@@ -90,6 +94,7 @@ namespace ExampleApp
                 
                 void InteriorExplorerState::Enter()
                 {
+                    m_myPinCreationModel.SetCreationStage(MyPinCreation::Inactive);
                     m_pSubStateMachine->StartStateMachine(0);
                 }
                 
