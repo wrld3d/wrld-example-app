@@ -531,7 +531,8 @@ namespace ExampleApp
                                                                               *m_pAppModeModel,
                                                                               m_pToursModule->GetTourService(),
                                                                               interiorsPresentationModule.GetInteriorSelectionModel(),
-                                                                              nativeUIFactories);
+                                                                              nativeUIFactories,
+                                                                              m_pMapModeModule->GetMapModeModel());
         
         m_pAppModeModel->InitialiseStateMachine(appModeStatesFactory.CreateStateMachineStates());
     }

@@ -10,6 +10,7 @@
 #include "Interiors.h"
 #include "GlobeCamera.h"
 #include "InteriorsExplorer.h"
+#include "MapMode.h"
 
 namespace ExampleApp
 {
@@ -36,6 +37,9 @@ namespace ExampleApp
                     Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& m_worldCameraController;
                     ExampleApp::InteriorsExplorer::SdkModel::InteriorsExplorerCameraController& m_interiorsCameraController;
                     
+                    MapMode::SdkModel::IMapModeModel& m_mapModeModel;
+                    bool m_previousMapModeState;
+                    
                     void OnTourEnded();
                     
                 public:
@@ -46,7 +50,8 @@ namespace ExampleApp
                               Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                               AppModes::SdkModel::IAppModeModel& appModeModel,
                               Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& worldCameraController,
-                              ExampleApp::InteriorsExplorer::SdkModel::InteriorsExplorerCameraController& interiorsCameraController);
+                              ExampleApp::InteriorsExplorer::SdkModel::InteriorsExplorerCameraController& interiorsCameraController,
+                              MapMode::SdkModel::IMapModeModel& mapModeModel);
                     
                     ~TourState();
                     

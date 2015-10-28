@@ -41,6 +41,7 @@
         
         self.pBackgroundImage = [[UIImageView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, frameSizeX, frameSizeY)];
         self.pBackgroundImage.contentMode = UIViewContentModeScaleAspectFill;
+        self.pBackgroundImage.clipsToBounds = YES;
         [self addSubview:self.pBackgroundImage];
         
         self.pTextContainer = [[UIView alloc]initWithFrame:CGRectMake(0.0f, m_textContainerY, frameSizeX, textHeight + textSpacingY * 2.0f)];
