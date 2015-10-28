@@ -773,6 +773,14 @@
 		27E7A9C51BBC0F3200CDB502 /* SearchResultMenuOrder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27E7A9C21BBC0F3200CDB502 /* SearchResultMenuOrder.cpp */; };
 		27E935CF1BDFA701007D52C5 /* InterestPointTransitionCameraMode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27E935CD1BDFA701007D52C5 /* InterestPointTransitionCameraMode.cpp */; };
 		27E935D01BDFA701007D52C5 /* InterestPointTransitionCameraMode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27E935CD1BDFA701007D52C5 /* InterestPointTransitionCameraMode.cpp */; };
+		27E935D71BDFD758007D52C5 /* MenuSectionExpandedChangedMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27E935D51BDFD758007D52C5 /* MenuSectionExpandedChangedMessage.cpp */; };
+		27E935D81BDFD758007D52C5 /* MenuSectionExpandedChangedMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27E935D51BDFD758007D52C5 /* MenuSectionExpandedChangedMessage.cpp */; };
+		27E935ED1BE0E008007D52C5 /* MenuSectionExpandedChangedObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27E935E91BE0E008007D52C5 /* MenuSectionExpandedChangedObserver.cpp */; };
+		27E935EE1BE0E009007D52C5 /* MenuSectionExpandedChangedObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27E935E91BE0E008007D52C5 /* MenuSectionExpandedChangedObserver.cpp */; };
+		27E935EF1BE0E009007D52C5 /* ReportPinsVisibilityMaskingModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27E935EB1BE0E008007D52C5 /* ReportPinsVisibilityMaskingModule.cpp */; };
+		27E935F01BE0E009007D52C5 /* ReportPinsVisibilityMaskingModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27E935EB1BE0E008007D52C5 /* ReportPinsVisibilityMaskingModule.cpp */; };
+		27E935F41BE0E6C6007D52C5 /* ReportPinsVisibilityMaskingController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27E935F21BE0E6C6007D52C5 /* ReportPinsVisibilityMaskingController.cpp */; };
+		27E935F51BE0E6C6007D52C5 /* ReportPinsVisibilityMaskingController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27E935F21BE0E6C6007D52C5 /* ReportPinsVisibilityMaskingController.cpp */; };
 		27E997521BB2B69000B0BE14 /* YelpSearchConstants.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27E997501BB2B69000B0BE14 /* YelpSearchConstants.cpp */; };
 		27E997531BB2B69000B0BE14 /* YelpSearchConstants.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27E997501BB2B69000B0BE14 /* YelpSearchConstants.cpp */; };
 		27EACB581BC4140700135BE6 /* icon1_tours.png in Resources */ = {isa = PBXBuildFile; fileRef = 27EACB541BC4140700135BE6 /* icon1_tours.png */; };
@@ -2239,6 +2247,15 @@
 		27E7A9C31BBC0F3200CDB502 /* SearchResultMenuOrder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultMenuOrder.h; sourceTree = "<group>"; };
 		27E935CD1BDFA701007D52C5 /* InterestPointTransitionCameraMode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InterestPointTransitionCameraMode.cpp; sourceTree = "<group>"; };
 		27E935CE1BDFA701007D52C5 /* InterestPointTransitionCameraMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InterestPointTransitionCameraMode.h; sourceTree = "<group>"; };
+		27E935D51BDFD758007D52C5 /* MenuSectionExpandedChangedMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MenuSectionExpandedChangedMessage.cpp; sourceTree = "<group>"; };
+		27E935D61BDFD758007D52C5 /* MenuSectionExpandedChangedMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuSectionExpandedChangedMessage.h; sourceTree = "<group>"; };
+		27E935E91BE0E008007D52C5 /* MenuSectionExpandedChangedObserver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MenuSectionExpandedChangedObserver.cpp; sourceTree = "<group>"; };
+		27E935EA1BE0E008007D52C5 /* MenuSectionExpandedChangedObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuSectionExpandedChangedObserver.h; sourceTree = "<group>"; };
+		27E935EB1BE0E008007D52C5 /* ReportPinsVisibilityMaskingModule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ReportPinsVisibilityMaskingModule.cpp; sourceTree = "<group>"; };
+		27E935EC1BE0E008007D52C5 /* ReportPinsVisibilityMaskingModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReportPinsVisibilityMaskingModule.h; sourceTree = "<group>"; };
+		27E935F11BE0E0A6007D52C5 /* ReportPinsVisibilityMasking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReportPinsVisibilityMasking.h; sourceTree = "<group>"; };
+		27E935F21BE0E6C6007D52C5 /* ReportPinsVisibilityMaskingController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ReportPinsVisibilityMaskingController.cpp; sourceTree = "<group>"; };
+		27E935F31BE0E6C6007D52C5 /* ReportPinsVisibilityMaskingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReportPinsVisibilityMaskingController.h; sourceTree = "<group>"; };
 		27E997501BB2B69000B0BE14 /* YelpSearchConstants.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = YelpSearchConstants.cpp; sourceTree = "<group>"; };
 		27E997511BB2B69000B0BE14 /* YelpSearchConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YelpSearchConstants.h; sourceTree = "<group>"; };
 		27EACB541BC4140700135BE6 /* icon1_tours.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon1_tours.png; sourceTree = "<group>"; };
@@ -3407,6 +3424,7 @@
 				18096F761A7BD5D4006A6438 /* PlatformAbstractionsFacade.h */,
 				7E3B87B91A385A290023C94E /* Reaction */,
 				7E3B87C81A385A290023C94E /* Repository */,
+				27E935E71BE0E008007D52C5 /* ReportPinsVisibilityMasking */,
 				7E3B87CB1A385A290023C94E /* ScreenControl */,
 				7E3B87D41A385A290023C94E /* Search */,
 				7E3B87F91A385A290023C94E /* SearchResultMenu */,
@@ -4028,6 +4046,28 @@
 			path = SdkModel;
 			sourceTree = "<group>";
 		};
+		27E935E71BE0E008007D52C5 /* ReportPinsVisibilityMasking */ = {
+			isa = PBXGroup;
+			children = (
+				27E935E81BE0E008007D52C5 /* SdkModel */,
+				27E935F11BE0E0A6007D52C5 /* ReportPinsVisibilityMasking.h */,
+			);
+			path = ReportPinsVisibilityMasking;
+			sourceTree = "<group>";
+		};
+		27E935E81BE0E008007D52C5 /* SdkModel */ = {
+			isa = PBXGroup;
+			children = (
+				27E935E91BE0E008007D52C5 /* MenuSectionExpandedChangedObserver.cpp */,
+				27E935EA1BE0E008007D52C5 /* MenuSectionExpandedChangedObserver.h */,
+				27E935EB1BE0E008007D52C5 /* ReportPinsVisibilityMaskingModule.cpp */,
+				27E935EC1BE0E008007D52C5 /* ReportPinsVisibilityMaskingModule.h */,
+				27E935F21BE0E6C6007D52C5 /* ReportPinsVisibilityMaskingController.cpp */,
+				27E935F31BE0E6C6007D52C5 /* ReportPinsVisibilityMaskingController.h */,
+			);
+			path = SdkModel;
+			sourceTree = "<group>";
+		};
 		27E9974F1BB2B69000B0BE14 /* SearchConstants */ = {
 			isa = PBXGroup;
 			children = (
@@ -4395,6 +4435,8 @@
 				7E3B86DF1A385A290023C94E /* View */,
 				560741121B8CC624002B0F49 /* MenuDragStateChangedMessage.cpp */,
 				560741131B8CC624002B0F49 /* MenuDragStateChangedMessage.h */,
+				27E935D51BDFD758007D52C5 /* MenuSectionExpandedChangedMessage.cpp */,
+				27E935D61BDFD758007D52C5 /* MenuSectionExpandedChangedMessage.h */,
 			);
 			path = Menu;
 			sourceTree = "<group>";
@@ -7310,6 +7352,7 @@
 				7E3B8AD61A385F110023C94E /* CompassViewInterop.mm in Sources */,
 				18FB64531A9240FC005A9411 /* NSMutableURLRequest+Parameters.m in Sources */,
 				18FB64651A9240FC005A9411 /* OAHMAC_SHA1SignatureProvider.m in Sources */,
+				27E935F51BE0E6C6007D52C5 /* ReportPinsVisibilityMaskingController.cpp in Sources */,
 				7E3B8AD01A385F110023C94E /* AppLocationDelegate.mm in Sources */,
 				7E3B89EF1A385A290023C94E /* WorldAreaLoaderModel.cpp in Sources */,
 				7E3B89351A385A290023C94E /* MyPinCreationScreenControl.cpp in Sources */,
@@ -7513,6 +7556,7 @@
 				7E3B8AEC1A385F110023C94E /* iOSInitialExperiencePreLoadModel.mm in Sources */,
 				7E5811CE1B1F3248007AD67F /* InteriorsExplorerViewInterop.mm in Sources */,
 				BF0E350D1BC673EA005B30E8 /* AppCameraController.cpp in Sources */,
+				27E935EE1BE0E009007D52C5 /* MenuSectionExpandedChangedObserver.cpp in Sources */,
 				7E3B89131A385A290023C94E /* MyPinCreationViewStateChangedMessage.cpp in Sources */,
 				BFD5FD6F1BA706AD00F591F1 /* TourExplorerCompositeViewController.cpp in Sources */,
 				7E3B890D1A385A290023C94E /* ModalityObserver.cpp in Sources */,
@@ -7539,8 +7583,10 @@
 				7E3B88BB1A385A290023C94E /* CategorySearchRepository.cpp in Sources */,
 				1846CB191BB945EE007F1922 /* SwallowSearchParser.cpp in Sources */,
 				BFD5FD7B1BA706AD00F591F1 /* TourFullScreenImageCeremonyEndedObserver.cpp in Sources */,
+				27E935D81BDFD758007D52C5 /* MenuSectionExpandedChangedMessage.cpp in Sources */,
 				18C0EBFC1A9E0E66008EED21 /* UserCreatedPinBoundObject.cpp in Sources */,
 				1846CBEF1BBBD627007F1922 /* SwallowPoiDbService.cpp in Sources */,
+				27E935F01BE0E009007D52C5 /* ReportPinsVisibilityMaskingModule.cpp in Sources */,
 				BFDEAA8C1BCD6133007CE4D7 /* InteriorExplorerState.cpp in Sources */,
 				7E3B88C71A385A290023C94E /* CompassModule.cpp in Sources */,
 				186B474C1AB333150084E80B /* ApplicationConfiguration.cpp in Sources */,
@@ -7922,6 +7968,7 @@
 				7E1D22CA1B205455006A8703 /* InteriorsExplorerModel.cpp in Sources */,
 				18E102931A8BA63C0011A18C /* SearchResultIconCategoryMapper.cpp in Sources */,
 				18E1027A1A8B64470011A18C /* SerializeSearchResultModelToJson.cpp in Sources */,
+				27E935D71BDFD758007D52C5 /* MenuSectionExpandedChangedMessage.cpp in Sources */,
 				1846CAFD1BB43F1D007F1922 /* SwallowSearchConstants.cpp in Sources */,
 				7E3B89CC1A385A290023C94E /* SearchResultPoiController.cpp in Sources */,
 				7E6732291BC3D7FB002A31FD /* InteriorWorldPinController.cpp in Sources */,
@@ -8057,6 +8104,7 @@
 				7E3B8A021A385A290023C94E /* WorldPinInFocusObserver.cpp in Sources */,
 				7E3B88E01A385A290023C94E /* FlattenButtonScreenControl.cpp in Sources */,
 				7E3B8AFD1A385F110023C94E /* MyPinCreationConfirmationView.mm in Sources */,
+				27E935ED1BE0E008007D52C5 /* MenuSectionExpandedChangedObserver.cpp in Sources */,
 				18A6574E1A9F390E00238F33 /* SearchResultPinAddedEvent.cpp in Sources */,
 				7E3B897E1A385A290023C94E /* ReactionControllerModule.cpp in Sources */,
 				7E3B88C81A385A290023C94E /* CompassUpdateController.cpp in Sources */,
@@ -8165,6 +8213,7 @@
 				18B22B351A7A937D00DDBFA2 /* OptionsViewModule.mm in Sources */,
 				7E3B88EA1A385A290023C94E /* InitialExperienceModel.cpp in Sources */,
 				1846CBE61BBBD627007F1922 /* SwallowPoiDbParseHelper.cpp in Sources */,
+				27E935EF1BE0E009007D52C5 /* ReportPinsVisibilityMaskingModule.cpp in Sources */,
 				18E102881A8B97F00011A18C /* MyPinDetailsDisplayService.cpp in Sources */,
 				7E3B89381A385A290023C94E /* MyPinCreationDetailsModule.cpp in Sources */,
 				7E3B89801A385A290023C94E /* ReactionModel.cpp in Sources */,
@@ -8250,6 +8299,7 @@
 				7E3B89D81A385A290023C94E /* SecondaryMenuModule.cpp in Sources */,
 				186B474F1AB333150084E80B /* ApplicationConfigurationJsonParser.cpp in Sources */,
 				7E3B88D41A385A290023C94E /* FlattenButtonViewStateChangedMessage.cpp in Sources */,
+				27E935F41BE0E6C6007D52C5 /* ReportPinsVisibilityMaskingController.cpp in Sources */,
 				7E3B89981A385A290023C94E /* SearchQueryPerformedMessage.cpp in Sources */,
 				7E3B89041A385A290023C94E /* ModalBackgroundController.cpp in Sources */,
 				7E1B50671ACAD4170060FA4F /* InitialExperienceIntroStep.cpp in Sources */,

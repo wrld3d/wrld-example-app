@@ -94,6 +94,7 @@
 #include "AppGlobeCameraWrapper.h"
 #include "NativeUIFactories.h"
 #include "InteriorsNavigationService.h"
+#include "ReportPinsVisibilityMaskingModule.h"
 
 namespace ExampleApp
 {
@@ -340,6 +341,8 @@ namespace ExampleApp
         Eegeo::Modules::Map::MapModule& mapModule = world.GetMapModule();
         
         InitialisePinsModules(mapModule, world);
+        
+        m_pReportPinsVisibilityMaskingModule = Eegeo_NEW(ReportPinsVisibilityMasking::SdkModel::ReportPinsVisibilityMaskingModule)(m_pWorldPinsModule->GetWorldPinsScaleController(), m_messageBus);
         
         Eegeo_ASSERT(m_pSwallowPoiDbModule == NULL);
         Eegeo_ASSERT(m_pSQLiteModule != NULL);
@@ -678,6 +681,8 @@ namespace ExampleApp
         Eegeo_DELETE m_pReactionControllerModule;
         
         Eegeo_DELETE m_pSwallowPoiDbModule;
+        
+        Eegeo_DELETE m_pReportPinsVisibilityMaskingModule;
     }
 
     std::vector<ExampleApp::OpenableControl::View::IOpenableControlViewModel*> MobileExampleApp::GetOpenableControls() const
