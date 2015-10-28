@@ -12,6 +12,7 @@
 #include "AppModes.h"
 #include "Tours.h"
 #include "EegeoUI.h"
+#include "MapMode.h"
 
 namespace ExampleApp
 {
@@ -36,6 +37,7 @@ namespace ExampleApp
                     Tours::SdkModel::ITourService& m_tourService;
                     Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
                     Eegeo::UI::NativeUIFactories& m_nativeUIFactories;
+                    MapMode::SdkModel::IMapModeModel& m_mapModeModel;
                     
                 public:
                     
@@ -50,7 +52,8 @@ namespace ExampleApp
                                          AppModes::SdkModel::IAppModeModel& appModeModel,
                                          Tours::SdkModel::ITourService& tourService,
                                          Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                                         Eegeo::UI::NativeUIFactories& nativeUIFactories);
+                                         Eegeo::UI::NativeUIFactories& nativeUIFactories,
+                                         MapMode::SdkModel::IMapModeModel& mapModeModel);
                     
                     ~AppModeStatesFactory()
                     {
