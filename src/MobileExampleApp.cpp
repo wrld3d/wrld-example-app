@@ -84,6 +84,7 @@
 #include "AppModeStatesFactory.h"
 #include "AppGlobeCameraWrapper.h"
 #include "NativeUIFactories.h"
+#include "UserInteractionModule.h"
 
 namespace ExampleApp
 {
@@ -281,10 +282,14 @@ namespace ExampleApp
         }
         
         InitialiseAppState(nativeUIFactories);
+        
+        m_pUserInteractionModule = Eegeo_NEW(UserInteraction::SdkModel::UserInteractionModule)(m_pAppCameraModule->GetController(), *m_pCameraTransitionService);
     }
 
     MobileExampleApp::~MobileExampleApp()
     {
+        Eegeo_DELETE m_pUserInteractionModule;
+        
         Eegeo_DELETE m_pStreamingVolume;
 
         DestroyApplicationModelModules();

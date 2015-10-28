@@ -130,6 +130,7 @@ namespace ExampleApp
                 m_isTransitioning = true;
                 m_transitionStages.front()->Start();
                 
+                m_transitioningChangedCallbacks.ExecuteCallbacks();
                 m_messageBus.Publish(CameraTransitionChangedMessage(true));
             }
             
@@ -143,7 +144,7 @@ namespace ExampleApp
                     m_transitionStages.pop();
                     Eegeo_DELETE pStage;
                 }
-                
+                m_transitioningChangedCallbacks.ExecuteCallbacks();
                 m_messageBus.Publish(CameraTransitionChangedMessage(false));
             }
 
@@ -176,6 +177,15 @@ namespace ExampleApp
                 {
                     StopCurrentTransition();
                 }
+            }
+            
+            void CameraTransitionController::InsertTransitioningChangedCallback(Eegeo::Helpers::ICallback0& callback)
+            {
+                m_transitioningChangedCallbacks.AddCallback(callback);
+            }
+            void CameraTransitionController::RemoveTransitioningChangedCallback(Eegeo::Helpers::ICallback0& callback)
+            {
+                m_transitioningChangedCallbacks.RemoveCallback(callback);
             }
             
             void CameraTransitionController::EnqueueExitInteriorStage()

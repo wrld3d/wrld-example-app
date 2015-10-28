@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include "CallbackCollection.h"
+#include "ICallback.h"
 #include "Types.h"
 #include "VectorMath.h"
 #include "AppCamera.h"
@@ -38,6 +40,9 @@ namespace ExampleApp
                 virtual Eegeo::ITouchController& GetTouchController() = 0;
                 
                 virtual void Update(float dt) = 0;
+                
+                virtual void InsertTransitioInFlightChangedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
+                virtual void RemoveTransitioInFlightChangedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
             };
         }
     }

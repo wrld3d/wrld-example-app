@@ -7,6 +7,8 @@
 #include "Types.h"
 #include "Interiors.h"
 #include "VectorMath.h"
+#include "CallbackCollection.h"
+#include "ICallback.h"
 
 namespace ExampleApp
 {
@@ -51,11 +53,19 @@ namespace ExampleApp
                 const bool IsTransitioning() const;
                 const bool HasValidController() const;
                 
+                void InsertTransitioningChangedCallback(Eegeo::Helpers::ICallback0& callback);
+                void RemoveTransitioningChangedCallback(Eegeo::Helpers::ICallback0& callback);
+                
             private:
+                
+                void OnTransitioningChanged();
                 
                 void FailIfNoValidControllerSet();
                 
                 ICameraTransitionController* m_pTransitionController;
+                
+                Eegeo::Helpers::CallbackCollection0 m_transitioningChangedCallbacks;
+                Eegeo::Helpers::TCallback0<CameraTransitionService> m_transitioningChangedHandler;
             };
         }
     }

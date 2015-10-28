@@ -177,7 +177,7 @@ AppHost::AppHost(
 
 AppHost::~AppHost()
 {
-    m_messageBus.SubscribeUi(m_cameraTransitionChangedHandler);
+    m_messageBus.UnsubscribeUi(m_cameraTransitionChangedHandler);
     
     Eegeo_DELETE m_pAppLocationDelegate;
     m_pAppLocationDelegate = NULL;

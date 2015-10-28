@@ -79,6 +79,7 @@
 #include "IAppCameraModule.h"
 #include "IInteriorsCustomMaterialsModule.h"
 #include "CameraTransitionService.h"
+#include "UserInteraction.h"
 
 namespace ExampleApp
 {
@@ -147,6 +148,7 @@ namespace ExampleApp
         InteriorsExplorer::SdkModel::IInteriorsExplorerModule* m_pInteriorsExplorerModule;
         InteriorsEntitiesPins::SdkModel::IInteriorsEntitiesPinsModule* m_pInteriorsEntitiesPinsModule;
         InteriorsCustomMaterials::SdkModel::IInteriorsCustomMaterialsModule* m_pInteriorsCustomMaterialsModule;
+        UserInteraction::SdkModel::UserInteractionModule* m_pUserInteractionModule;
         
         AppModes::SdkModel::IAppModeModel* m_pAppModeModel;
         
