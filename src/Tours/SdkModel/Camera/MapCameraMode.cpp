@@ -33,15 +33,16 @@ namespace ExampleApp
                     m_mapExtentsX = Eegeo::Math::Abs(Eegeo::v3::Dot((topLeft - m_mapCenterEcef).ToSingle(), m_tangentBasis.GetRight()));
                     m_mapExtentsZ = Eegeo::Math::Abs(Eegeo::v3::Dot((bottomRight - m_mapCenterEcef).ToSingle(), m_tangentBasis.GetForward()));
                     
-                    const float minAltitude = static_cast<float>(borderPositionBottomRight.GetAltitude());
-                    const float maxAltitude = static_cast<float>(borderPositionTopLeft.GetAltitude());
-                    
                     Eegeo::Camera::GlobeCamera::GlobeCameraControllerConfiguration globeCameraConfig = Eegeo::Camera::GlobeCamera::GlobeCameraControllerConfiguration::CreateDefault(false);
                     
                     globeCameraConfig.terrainFollowingEnabled = false;
-                    globeCameraConfig.zoomAltitudeLow = minAltitude;
-                    globeCameraConfig.fovZoomedInCity = 10.0f;
-                    globeCameraConfig.maxAltitude = maxAltitude;
+                    globeCameraConfig.zoomAltitudeLow = 10.0f;
+                    globeCameraConfig.fovZoomedInCity = 45.0f;
+                    globeCameraConfig.fovZoomedInGlobe = 90.0f;
+                    globeCameraConfig.maxAltitude = 120.0f;
+                    globeCameraConfig.computeNearFarPlanes = false;
+                    globeCameraConfig.nearPlane = 1.f;
+                    globeCameraConfig.farPlane = 5000.f;
                     
                     m_pCameraController = cameraControllerFactory.CreateCameraController(globeCameraConfig, touchController, screenProperties);
                 }
