@@ -36,7 +36,7 @@ namespace ExampleApp
                     
                     float CalculateAltitudeBasedSphereOuterScale(float altitude)
                     {
-                        const float minAltitude = 50.f;
+                        const float minAltitude = 10.f;
                         const float maxAltitude = 1500.f;
                         const float lowAltitudeScale = 0.05f;
                         const float highAltitudeScale = 1.0f;
@@ -46,7 +46,7 @@ namespace ExampleApp
                     
                     float CalculateAltitudeBasedSphereScale(float altitude, float outerRingRadiusInMeters)
                     {
-                        const float minAltitude = 100.f;
+                        const float minAltitude = 10.f;
                         const float maxAltitude = 18000.f;
                         const float lowAltitudeSphereScale = outerRingRadiusInMeters - 0.5f;
                         const float highAltitudeSphereScale = outerRingRadiusInMeters - 100.f;
