@@ -73,7 +73,7 @@ namespace ExampleApp
                 WorldPins::SdkModel::WorldPinInteriorData worldPinInteriorData;
                 
                 // Don't have a human readable 'Name' for Interiors at this point. Can map IDS -> Names per app?
-                ExampleApp::WorldPins::SdkModel::WorldPinFocusData worldPinFocusData("Interior", markerModel.GetInteriorId().Value());
+                ExampleApp::WorldPins::SdkModel::WorldPinFocusData worldPinFocusData(markerModel.GetInteriorName(), markerModel.GetInteriorOwner());
                 Eegeo::Space::LatLong location = Eegeo::Space::LatLong::FromDegrees(markerModel.GetMarkerLatLongAltitude().GetLatitudeInDegrees(),
                                                                                     markerModel.GetMarkerLatLongAltitude().GetLongitudeInDegrees());
                 
