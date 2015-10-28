@@ -21,5 +21,7 @@ namespace ExampleApp
             class IInteriorsExplorerView;
             class InteriorsExplorerController;
         }
+        
+        static const float DefaultInteriorTransitionInterestDistance = 80.f;
     }
 }
