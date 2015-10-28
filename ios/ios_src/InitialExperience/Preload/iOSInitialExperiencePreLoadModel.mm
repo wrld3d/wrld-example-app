@@ -19,6 +19,7 @@ namespace ExampleApp
 @interface PreLoadModelListener : NSObject<UIAlertViewDelegate>
 {
     ExampleApp::InitialExperience::PreLoad::iOSInitialExperiencePreLoadModel* m_pInitialExperiencePreLoadModel;
+    bool m_handeled;
 }
 
 - (id)initWithParams:(ExampleApp::InitialExperience::PreLoad::iOSInitialExperiencePreLoadModel *)pInitialExperiencePreLoadModel;
@@ -32,6 +33,7 @@ namespace ExampleApp
     if(self = [super init])
     {
         self->m_pInitialExperiencePreLoadModel = pInitialExperiencePreLoadModel;
+        self->m_handeled = false;
         
         NSString* alertTitle = @"Pre-load Area?";
         NSString* alertMessage = @"Select 'Yes' to pre-load data for the area around Finsbury Square, London. This message will not appear again";
@@ -77,6 +79,12 @@ namespace ExampleApp
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
+    if(m_handeled)
+    {
+        return;
+    }
+    m_handeled = true;
+    
     bool shouldPreload = false;
 
     if (buttonIndex == 1)
@@ -122,8 +130,6 @@ namespace ExampleApp
 
             void iOSInitialExperiencePreLoadModel::HandleDismiss(bool shouldPreload)
             {
-                DestroyAlertListener();
-
                 if(shouldPreload)
                 {
                     PrecacheRegion();
@@ -136,6 +142,7 @@ namespace ExampleApp
 
             void iOSInitialExperiencePreLoadModel::ShowOptions()
             {
+                DestroyAlertListener();
                 m_pAlertListener = [[PreLoadModelListener alloc] initWithParams:this];
             }
         }
