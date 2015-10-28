@@ -29,7 +29,8 @@ namespace ExampleApp
                                                            AppModes::SdkModel::IAppModeModel& appModeModel,
                                                            Tours::SdkModel::ITourService& tourService,
                                                            Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                                                           Eegeo::UI::NativeUIFactories& nativeUIFactories)
+                                                           Eegeo::UI::NativeUIFactories& nativeUIFactories,
+                                                           MapMode::SdkModel::IMapModeModel& mapModeModel)
                 : m_appCameraController(appCameraController)
                 , m_interiorController(interiorController)
                 , m_worldCameraController(worldCameraController)
@@ -42,6 +43,7 @@ namespace ExampleApp
                 , m_tourService(tourService)
                 , m_interiorSelectionModel(interiorSelectionModel)
                 , m_nativeUIFactories(nativeUIFactories)
+                , m_mapModeModel(mapModeModel)
                 {
                     
                 }
@@ -78,7 +80,8 @@ namespace ExampleApp
                                                                             m_interiorSelectionModel,
                                                                             m_appModeModel,
                                                                             m_worldCameraController.GetGlobeCameraController(),
-                                                                            m_interiorCameraController));
+                                                                            m_interiorCameraController,
+                                                                            m_mapModeModel));
                     
                     return states;
                 }

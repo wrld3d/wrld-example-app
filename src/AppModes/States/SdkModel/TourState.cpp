@@ -12,6 +12,7 @@
 #include "GpsGlobeCameraController.h"
 #include "InteriorsExplorerCameraController.h"
 #include "MathFunc.h"
+#include "IMapModeModel.h"
 
 namespace ExampleApp
 {
@@ -27,7 +28,8 @@ namespace ExampleApp
                                      Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                      AppModes::SdkModel::IAppModeModel& appModeModel,
                                      Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& worldCameraController,
-                                     ExampleApp::InteriorsExplorer::SdkModel::InteriorsExplorerCameraController& interiorsCameraController)
+                                     ExampleApp::InteriorsExplorer::SdkModel::InteriorsExplorerCameraController& interiorsCameraController,
+                                     MapMode::SdkModel::IMapModeModel& mapModeModel)
                 : m_cameraController(cameraController)
                 , m_tourCameraHandle(tourCameraHandle)
                 , m_tourService(tourService)
@@ -36,6 +38,8 @@ namespace ExampleApp
                 , m_appModeModel(appModeModel)
                 , m_worldCameraController(worldCameraController)
                 , m_interiorsCameraController(interiorsCameraController)
+                , m_mapModeModel(mapModeModel)
+                , m_previousMapModeState(false)
                 {
                 }
                 
@@ -47,6 +51,9 @@ namespace ExampleApp
                 {
                     m_cameraController.TransitionToCameraWithHandle(m_tourCameraHandle);
                     m_tourService.RegisterTourEndedCallback(m_tourStartedCallback);
+                    
+                    m_previousMapModeState = m_mapModeModel.IsInMapMode();
+                    m_mapModeModel.SetInMapMode(false);
                 }
                 
                 void TourState::Update(float dt)
@@ -77,6 +84,8 @@ namespace ExampleApp
                         m_interiorsCameraController.SetHeading(Eegeo::Math::Rad2Deg(headingRadians));
                         m_interiorsCameraController.SetInterestLocation(m_cameraController.GetCameraState().InterestPointEcef());
                     }
+                    
+                    m_mapModeModel.SetInMapMode(m_previousMapModeState);
                 }
 
                 
