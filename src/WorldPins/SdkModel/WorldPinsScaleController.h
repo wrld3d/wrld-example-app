@@ -51,6 +51,10 @@ namespace ExampleApp
                 void Update(float deltaSeconds, const Eegeo::Camera::RenderCamera& renderCamera);
 
                 void SetModality(float modality);
+                
+                int GetVisibilityMask();
+                
+                void SetVisibilityMask(int visibilityMask);
 
                 void Show();
                 void Hide();

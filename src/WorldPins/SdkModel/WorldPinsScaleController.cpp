@@ -74,6 +74,16 @@ namespace ExampleApp
                 m_modality = modality;
             }
             
+            int WorldPinsScaleController::GetVisibilityMask()
+            {
+                return m_visibilityMask;
+            }
+            
+            void WorldPinsScaleController::SetVisibilityMask(int visibilityMask)
+            {
+                m_visibilityMask = visibilityMask;
+            }
+            
             bool WorldPinsScaleController::ShouldHidePin(WorldPins::SdkModel::WorldPinItemModel& worldPinItemModel,
                                                          const Eegeo::Camera::RenderCamera& renderCamera)
             {
