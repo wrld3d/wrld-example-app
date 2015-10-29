@@ -83,6 +83,7 @@
 #include "CameraTransitionService.h"
 #include "InteriorsNavigation.h"
 #include "UserInteraction.h"
+#include "ReportPinsVisibilityMasking.h"
 
 namespace ExampleApp
 {
@@ -156,6 +157,7 @@ namespace ExampleApp
         SwallowPoiDb::ISwallowPoiDbModule* m_pSwallowPoiDbModule;
         InteriorsCustomMaterials::SdkModel::IInteriorsCustomMaterialsModule* m_pInteriorsCustomMaterialsModule;
         UserInteraction::SdkModel::UserInteractionModule* m_pUserInteractionModule;
+        ReportPinsVisibilityMasking::SdkModel::ReportPinsVisibilityMaskingModule* m_pReportPinsVisibilityMaskingModule;
         
         AppModes::SdkModel::IAppModeModel* m_pAppModeModel;
         

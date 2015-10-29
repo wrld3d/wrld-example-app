@@ -34,6 +34,7 @@ namespace ExampleApp
 
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 Eegeo::Helpers::TCallback1<WorldPinsScaleController, const WorldPinsVisibilityMessage&> m_visibilityMessageHandlerBinding;
+                Eegeo::Helpers::CallbackCollection0 m_visibilityMaskChangedCallbacks;
                 
                 ExampleAppMessaging::TSdkModelDomainEventBus& m_sdkDomainEventBus;
                 
@@ -55,6 +56,10 @@ namespace ExampleApp
                 int GetVisibilityMask();
                 
                 void SetVisibilityMask(int visibilityMask);
+                
+                void InsertVisibilityMaskChangedCallback(Eegeo::Helpers::ICallback0& callback);
+                
+                void RemoveVisibilityMaskChangedCallback(Eegeo::Helpers::ICallback0& callback);
 
                 void Show();
                 void Hide();

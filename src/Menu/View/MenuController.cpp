@@ -3,6 +3,7 @@
 #include "MenuController.h"
 #include "IOpenableControlViewModel.h"
 #include "MenuDragStateChangedMessage.h"
+#include "MenuSectionExpandedChangedMessage.h"
 
 namespace ExampleApp
 {
@@ -10,6 +11,11 @@ namespace ExampleApp
     {
         namespace View
         {
+            void MenuController::OnMenuSectionExpandeStateChanged(IMenuSectionViewModel& menuSectionViewModel, bool& expanded)
+            {
+                m_messageBus.Publish(MenuSectionExpandedChangedMessage(menuSectionViewModel.Name(), expanded));
+            }
+            
             void MenuController::OnOpenableStateChanged(OpenableControl::View::IOpenableControlViewModel& viewModel, float& state)
             {
                 if(m_dragInProgress)
@@ -267,6 +273,7 @@ namespace ExampleApp
                 , m_onItemRemovedCallback(this, &MenuController::OnItemRemoved)
                 , m_onScreenStateChanged(this, &MenuController::OnScreenControlStateChanged)
                 , m_onOpenableStateChanged(this, &MenuController::OnOpenableStateChanged)
+                , m_onMenuSectionExpandedStateChanged(this, &MenuController::OnMenuSectionExpandeStateChanged)
                 , m_tryDragFunc(this, &MenuController::TryDrag)
                 , m_messageBus(messageBus)
                 , m_dragInProgress(false)
@@ -294,6 +301,7 @@ namespace ExampleApp
                 for(size_t i = 0; i < m_viewModel.SectionsCount(); ++ i)
                 {
                     IMenuSectionViewModel& section(m_viewModel.GetMenuSection(i));
+                    section.InsertExpandedChangedCallback(m_onMenuSectionExpandedStateChanged);
                     IMenuModel& model = section.GetModel();
                     model.InsertItemAddedCallback(m_onItemAddedCallback);
                     model.InsertItemRemovedCallback(m_onItemRemovedCallback);
@@ -305,6 +313,7 @@ namespace ExampleApp
                 for(size_t i = 0; i < m_viewModel.SectionsCount(); ++ i)
                 {
                     IMenuSectionViewModel& section(m_viewModel.GetMenuSection(i));
+                    section.RemoveExpandedChangedCallback(m_onMenuSectionExpandedStateChanged);
                     IMenuModel& model = section.GetModel();
                     model.RemoveItemAddedCallback(m_onItemAddedCallback);
                     model.RemoveItemRemovedCallback(m_onItemRemovedCallback);

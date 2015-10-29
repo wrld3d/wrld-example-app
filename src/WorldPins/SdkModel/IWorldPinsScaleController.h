@@ -3,6 +3,7 @@
 #pragma once
 
 #include "Camera.h"
+#include "ICallback.h"
 
 namespace ExampleApp
 {
@@ -22,6 +23,10 @@ namespace ExampleApp
                 virtual int GetVisibilityMask() = 0;
                 
                 virtual void SetVisibilityMask(int visibilityMask) = 0;
+                
+                virtual void InsertVisibilityMaskChangedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
+                
+                virtual void RemoveVisibilityMaskChangedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
             };
         }
     }

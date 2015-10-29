@@ -36,6 +36,7 @@
 #include "SwallowOfficeResultMenuOptionSelectedMessage.h"
 #include "CurrentTourCardTappedMessage.h"
 #include "SearchResultMeetingAvailabilityChanged.h"
+#include "MenuSectionExpandedChangedMessage.h"
 
 namespace ExampleApp
 {
@@ -74,6 +75,7 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<Search::Swallow::SwallowOfficeResultMenuOptionSelectedMessage>
             , public Eegeo::Messaging::CatalogBinding<Tours::CurrentTourCardTappedMessage>
             , public Eegeo::Messaging::CatalogBinding<SearchResultOnMap::SearchResultMeetingAvailabilityChanged>
+            , public Eegeo::Messaging::CatalogBinding<Menu::MenuSectionExpandedChangedMessage>
             , private Eegeo::NonCopyable
         {
 
