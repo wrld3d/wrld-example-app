@@ -84,16 +84,6 @@ namespace ExampleApp
                 }
             }
 
-            bool SearchResultMenuController::TryDrag()
-            {
-                if(m_searchResultMenuViewModel.CanInteract())
-                {
-                    return MenuController::TryDrag();
-                }
-
-                return false;
-            }
-
             void SearchResultMenuController::OnSearchClosed()
             {
                 m_messageBus.Publish(ExampleApp::SearchResultMenu::SearchResultViewClearedMessage());

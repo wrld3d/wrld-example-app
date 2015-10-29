@@ -52,8 +52,6 @@ namespace ExampleApp
             protected:
                 void OnViewClicked();
 
-                bool TryDrag();
-
                 void OnSearchClosed();
                 
                 void OnAttractModeChanged();

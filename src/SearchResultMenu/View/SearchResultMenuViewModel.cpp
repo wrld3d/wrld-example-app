@@ -56,14 +56,14 @@ namespace ExampleApp
 
             bool SearchResultMenuViewModel::CanInteract() const
             {
-                return CanShowOnScreen() && m_menuModel.GetItemCount() > 0 && !m_hasSearchQueryInFlight;
+                return CanShowOnScreen() && !m_hasSearchQueryInFlight;
             }
 
             void SearchResultMenuViewModel::AddToScreen()
             {
                 if(CanShowOnScreen())
                 {
-                    if(Menu::View::MenuViewModel::IsFullyOffScreen())
+                    if(!IsAddedToScreen())
                     {
                         Menu::View::MenuViewModel::AddToScreen();
                     }
@@ -110,6 +110,10 @@ namespace ExampleApp
                 if(m_hasSearchQuery && m_enabled)
                 {
                     AddToScreen();
+                }
+                else
+                {
+                    RemoveFromScreen();
                 }
             }
 
