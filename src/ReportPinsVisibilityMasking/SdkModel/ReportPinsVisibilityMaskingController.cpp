@@ -22,7 +22,7 @@ namespace ExampleApp
             , m_visibilityMaskChangedHandler(this, &ReportPinsVisibilityMaskingController::OnVisibilityMaskChanged)
             , m_reportPinsExpanded(false)
             {
-                m_menuSectionExpandedChangedObserver.InsertExpandedChangedCallback(m_myReportsSectionExpandedChangedHandler);
+                m_menuSectionExpandedChangedObserver.InsertReportPinsExpandedChangedCallback(m_myReportsSectionExpandedChangedHandler);
                 m_worldPinsScaleController.InsertVisibilityMaskChangedCallback(m_visibilityMaskChangedHandler);
                 UpdateReportPinsVisibility();
             }
@@ -30,7 +30,7 @@ namespace ExampleApp
             ReportPinsVisibilityMaskingController::~ReportPinsVisibilityMaskingController()
             {
                 m_worldPinsScaleController.RemoveVisibilityMaskChangedCallback(m_visibilityMaskChangedHandler);
-                m_menuSectionExpandedChangedObserver.RemoveExpandedChangedCallback(m_myReportsSectionExpandedChangedHandler);
+                m_menuSectionExpandedChangedObserver.RemoveReportPinsExpandedChangedCallback(m_myReportsSectionExpandedChangedHandler);
             }
             
             void ReportPinsVisibilityMaskingController::OnMyReportsSectionExpandedChanged(bool& expanded)

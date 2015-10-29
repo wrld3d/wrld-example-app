@@ -27,8 +27,8 @@ namespace ExampleApp
                 
                 ~MenuSectionExpandedChangedObserver();
                 
-                void InsertExpandedChangedCallback(Eegeo::Helpers::ICallback1<bool>& callback);
-                void RemoveExpandedChangedCallback(Eegeo::Helpers::ICallback1<bool>& callback);
+                void InsertReportPinsExpandedChangedCallback(Eegeo::Helpers::ICallback1<bool>& callback);
+                void RemoveReportPinsExpandedChangedCallback(Eegeo::Helpers::ICallback1<bool>& callback);
                 
             private:
                 void OnMenuSectionExpandedChangedMessage(const Menu::MenuSectionExpandedChangedMessage& message);

@@ -23,11 +23,11 @@ namespace ExampleApp
                 m_messageBus.UnsubscribeNative(m_handler);
             }
             
-            void MenuSectionExpandedChangedObserver::InsertExpandedChangedCallback(Eegeo::Helpers::ICallback1<bool>& callback)
+            void MenuSectionExpandedChangedObserver::InsertReportPinsExpandedChangedCallback(Eegeo::Helpers::ICallback1<bool>& callback)
             {
                 m_reportPinsExpandedChangedCallbacks.AddCallback(callback);
             }
-            void MenuSectionExpandedChangedObserver::RemoveExpandedChangedCallback(Eegeo::Helpers::ICallback1<bool>& callback)
+            void MenuSectionExpandedChangedObserver::RemoveReportPinsExpandedChangedCallback(Eegeo::Helpers::ICallback1<bool>& callback)
             {
                 m_reportPinsExpandedChangedCallbacks.RemoveCallback(callback);
             }
