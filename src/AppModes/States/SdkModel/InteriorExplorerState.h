@@ -14,6 +14,7 @@
 #include "GlobeCamera.h"
 #include "EegeoUI.h"
 #include "ISingleOptionAlertBoxDismissedHandler.h"
+#include "MyPinCreation.h"
 
 namespace ExampleApp
 {
@@ -52,6 +53,8 @@ namespace ExampleApp
                     
                     AppModes::SdkModel::IAppModeModel& m_appModeModel;
                     
+                    MyPinCreation::SdkModel::IMyPinCreationModel& m_myPinCreationModel;
+                    
                     void OnFailAlertBoxDismissed();
                 
                 public:
@@ -65,7 +68,8 @@ namespace ExampleApp
                                           AppModes::SdkModel::IAppModeModel& appModeModel,
                                           Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& worldCameraController,
                                           ExampleApp::InteriorsExplorer::SdkModel::InteriorsExplorerCameraController& interiorsCameraController,
-                                          Eegeo::UI::NativeUIFactories& nativeUIFactories);
+                                          Eegeo::UI::NativeUIFactories& nativeUIFactories,
+                                          MyPinCreation::SdkModel::IMyPinCreationModel& myPinCreationModel);
                     
                     ~InteriorExplorerState();
                     

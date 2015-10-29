@@ -10,18 +10,27 @@ namespace ExampleApp
         {
             CameraTransitionService::CameraTransitionService()
             : m_pTransitionController(NULL)
+            , m_transitioningChangedHandler(this, &CameraTransitionService::OnTransitioningChanged)
             {
                 
             }
             
             CameraTransitionService::~CameraTransitionService()
             {
-                
+                if(HasValidController())
+                {
+                    m_pTransitionController->RemoveTransitioningChangedCallback(m_transitioningChangedHandler);
+                }
             }
             
             void CameraTransitionService::SetTransitionController(ICameraTransitionController& transitionController)
             {
+                if(HasValidController())
+                {
+                    m_pTransitionController->RemoveTransitioningChangedCallback(m_transitioningChangedHandler);
+                }
                 m_pTransitionController = &transitionController;
+                m_pTransitionController->InsertTransitioningChangedCallback(m_transitioningChangedHandler);
             }
             
             const bool CameraTransitionService::HasValidController() const
@@ -89,6 +98,20 @@ namespace ExampleApp
             const bool CameraTransitionService::IsTransitioning() const
             {
                 return HasValidController() ? m_pTransitionController->IsTransitioning() : false;
+            }
+            
+            void CameraTransitionService::InsertTransitioningChangedCallback(Eegeo::Helpers::ICallback0& callback)
+            {
+                m_transitioningChangedCallbacks.AddCallback(callback);
+            }
+            void CameraTransitionService::RemoveTransitioningChangedCallback(Eegeo::Helpers::ICallback0& callback)
+            {
+                m_transitioningChangedCallbacks.RemoveCallback(callback);
+            }
+            
+            void CameraTransitionService::OnTransitioningChanged()
+            {
+                m_transitioningChangedCallbacks.ExecuteCallbacks();
             }
         }
     }

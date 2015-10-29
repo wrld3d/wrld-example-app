@@ -94,6 +94,7 @@
 #include "AppGlobeCameraWrapper.h"
 #include "NativeUIFactories.h"
 #include "InteriorsNavigationService.h"
+#include "UserInteractionModule.h"
 
 namespace ExampleApp
 {
@@ -295,10 +296,14 @@ namespace ExampleApp
         }
         
         InitialiseAppState(nativeUIFactories);
+        
+        m_pUserInteractionModule = Eegeo_NEW(UserInteraction::SdkModel::UserInteractionModule)(m_pAppCameraModule->GetController(), *m_pCameraTransitionService, m_messageBus);
     }
 
     MobileExampleApp::~MobileExampleApp()
     {
+        Eegeo_DELETE m_pUserInteractionModule;
+        
         Eegeo_DELETE m_pStreamingVolume;
 
         DestroyApplicationModelModules();
@@ -597,7 +602,8 @@ namespace ExampleApp
                                                                               m_pToursModule->GetTourService(),
                                                                               interiorsPresentationModule.GetInteriorSelectionModel(),
                                                                               nativeUIFactories,
-                                                                              m_pMapModeModule->GetMapModeModel());
+                                                                              m_pMapModeModule->GetMapModeModel(),
+                                                                              m_pMyPinCreationModule->GetMyPinCreationModel());
         
         m_pAppModeModel->InitialiseStateMachine(appModeStatesFactory.CreateStateMachineStates());
     }

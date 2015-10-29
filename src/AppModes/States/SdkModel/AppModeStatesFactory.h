@@ -13,6 +13,7 @@
 #include "Tours.h"
 #include "EegeoUI.h"
 #include "MapMode.h"
+#include "MyPinCreation.h"
 
 namespace ExampleApp
 {
@@ -38,6 +39,7 @@ namespace ExampleApp
                     Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
                     Eegeo::UI::NativeUIFactories& m_nativeUIFactories;
                     MapMode::SdkModel::IMapModeModel& m_mapModeModel;
+                    MyPinCreation::SdkModel::IMyPinCreationModel& m_myPinCreationModel;
                     
                 public:
                     
@@ -53,7 +55,8 @@ namespace ExampleApp
                                          Tours::SdkModel::ITourService& tourService,
                                          Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                          Eegeo::UI::NativeUIFactories& nativeUIFactories,
-                                         MapMode::SdkModel::IMapModeModel& mapModeModel);
+                                         MapMode::SdkModel::IMapModeModel& mapModeModel,
+                                         MyPinCreation::SdkModel::IMyPinCreationModel& myPinCreationModel);
                     
                     ~AppModeStatesFactory()
                     {

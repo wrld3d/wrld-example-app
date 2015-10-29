@@ -13,6 +13,8 @@
 #include "InteriorsExplorerCameraController.h"
 #include "MathFunc.h"
 #include "IMapModeModel.h"
+#include "MyPinCreationModel.h"
+#include "MyPinCreationStage.h"
 
 namespace ExampleApp
 {
@@ -29,7 +31,8 @@ namespace ExampleApp
                                      AppModes::SdkModel::IAppModeModel& appModeModel,
                                      Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& worldCameraController,
                                      ExampleApp::InteriorsExplorer::SdkModel::InteriorsExplorerCameraController& interiorsCameraController,
-                                     MapMode::SdkModel::IMapModeModel& mapModeModel)
+                                     MapMode::SdkModel::IMapModeModel& mapModeModel,
+                                     MyPinCreation::SdkModel::IMyPinCreationModel& myPinCreationModel)
                 : m_cameraController(cameraController)
                 , m_tourCameraHandle(tourCameraHandle)
                 , m_tourService(tourService)
@@ -40,6 +43,7 @@ namespace ExampleApp
                 , m_interiorsCameraController(interiorsCameraController)
                 , m_mapModeModel(mapModeModel)
                 , m_previousMapModeState(false)
+                , m_myPinCreationModel(myPinCreationModel)
                 {
                 }
                 
@@ -54,6 +58,8 @@ namespace ExampleApp
                     
                     m_previousMapModeState = m_mapModeModel.IsInMapMode();
                     m_mapModeModel.SetInMapMode(false);
+                    
+                    m_myPinCreationModel.SetCreationStage(MyPinCreation::Inactive);
                 }
                 
                 void TourState::Update(float dt)

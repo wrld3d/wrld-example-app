@@ -15,6 +15,7 @@
 #include <queue>
 #include "BidirectionalBus.h"
 #include "AppCamera.h"
+#include "CallbackCollection.h"
 
 namespace ExampleApp
 {
@@ -66,6 +67,9 @@ namespace ExampleApp
                 {
                     return m_isTransitioning;
                 }
+                
+                void InsertTransitioningChangedCallback(Eegeo::Helpers::ICallback0& callback);
+                void RemoveTransitioningChangedCallback(Eegeo::Helpers::ICallback0& callback);
 
             private:
 
@@ -98,6 +102,7 @@ namespace ExampleApp
                 Eegeo::Resources::Interiors::InteriorId m_defaultInteriorId;
                 bool m_isTransitioning;
                 
+                Eegeo::Helpers::CallbackCollection0 m_transitioningChangedCallbacks;
             };
         }
     }

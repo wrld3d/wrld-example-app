@@ -67,6 +67,7 @@ namespace ExampleApp
                 m_previousCameraIndex = m_currentCameraIndex;
                 m_currentCameraIndex = cameraHandle;
                 
+                m_transitionInFlightChangedCallbacks.ExecuteCallbacks();
                 Update(0.0f);
             }
 
@@ -108,6 +109,7 @@ namespace ExampleApp
                     if(m_transitionTimer >= m_transitionDuration)
                     {
                         m_isTransitionInFlight = false;
+                        m_transitionInFlightChangedCallbacks.ExecuteCallbacks();
                     }
                     
                     UpdateTransitionBetween(*m_cameras[m_previousCameraIndex], *m_cameras[m_currentCameraIndex], dt);
@@ -176,6 +178,15 @@ namespace ExampleApp
                 }
                 
                 return false;
+            }
+            
+            void AppCameraController::InsertTransitioInFlightChangedCallback(Eegeo::Helpers::ICallback0& callback)
+            {
+                m_transitionInFlightChangedCallbacks.AddCallback(callback);
+            }
+            void AppCameraController::RemoveTransitioInFlightChangedCallback(Eegeo::Helpers::ICallback0& callback)
+            {
+                m_transitionInFlightChangedCallbacks.RemoveCallback(callback);
             }
         }
     }

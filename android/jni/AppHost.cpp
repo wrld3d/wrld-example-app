@@ -81,6 +81,7 @@
 #include "ApplicationConfigurationModule.h"
 #include "IApplicationConfigurationService.h"
 #include "SearchVendorNames.h"
+#include "UserInteractionEnabledChangedMessage.h"
 
 using namespace Eegeo::Android;
 using namespace Eegeo::Android::Input;
@@ -123,7 +124,7 @@ AppHost::AppHost(
 	,m_pInitialExperienceIntroViewModule(NULL)
 	,m_searchServiceModules()
 	,m_failAlertHandler(this, &AppHost::HandleStartupFailure)
-	,m_cameraTransitionChangedHandler(this, &AppHost::HandleCameraTransitionChanged)
+	,m_userInteractionEnabledChangedHandler(this, &AppHost::HandleUserInteractionEnabledChanged)
 {
     ASSERT_NATIVE_THREAD
 
@@ -536,7 +537,7 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
 
     SetTouchExclusivity();
 
-    m_messageBus.SubscribeUi(m_cameraTransitionChangedHandler);
+    m_messageBus.SubscribeUi(m_userInteractionEnabledChangedHandler);
 }
 
 void AppHost::DestroyApplicationViewModulesFromUiThread()
@@ -545,7 +546,7 @@ void AppHost::DestroyApplicationViewModulesFromUiThread()
 
     if(m_createdUIModules)
     {
-    	m_messageBus.UnsubscribeUi(m_cameraTransitionChangedHandler);
+    	m_messageBus.UnsubscribeUi(m_userInteractionEnabledChangedHandler);
 
         Eegeo_DELETE m_pMyPinDetailsViewModule;
 
@@ -618,7 +619,7 @@ void AppHost::HandleStartupFailure()
 }
 
 
-void AppHost::HandleCameraTransitionChanged(const ExampleApp::CameraTransitions::CameraTransitionChangedMessage& message)
+void AppHost::HandleUserInteractionEnabledChanged(const ExampleApp::UserInteraction::UserInteractionEnabledChangedMessage& message)
 {
 	ASSERT_UI_THREAD
 
@@ -627,6 +628,6 @@ void AppHost::HandleCameraTransitionChanged(const ExampleApp::CameraTransitions:
 
 	const std::string methodName = "setTouchEnabled";
 	jmethodID touchEnabledMethod = env->GetMethodID(m_nativeState.activityClass, methodName.c_str(), "(Z)V");
-	env->CallVoidMethod(m_nativeState.activity, touchEnabledMethod, !message.IsTransitionInProgress());
+	env->CallVoidMethod(m_nativeState.activity, touchEnabledMethod, message.IsEnabled());
 }
 

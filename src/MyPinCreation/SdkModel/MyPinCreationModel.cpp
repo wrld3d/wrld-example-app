@@ -40,12 +40,15 @@ namespace ExampleApp
 
             void MyPinCreationModel::SetCreationStage(ExampleApp::MyPinCreation::MyPinCreationStage stage)
             {
-                m_stage = stage;
-                if(stage == Ring)
+                if(stage != m_stage)
                 {
-                    m_needsTerrainHeightUpdate = true;
+                    m_stage = stage;
+                    if(stage == Ring)
+                    {
+                        m_needsTerrainHeightUpdate = true;
+                    }
+                    m_stateChangedCallbacks.ExecuteCallbacks(m_stage);
                 }
-                m_stateChangedCallbacks.ExecuteCallbacks(m_stage);
             }
 
             const Eegeo::dv3& MyPinCreationModel::GetPosition() const

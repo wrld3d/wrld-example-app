@@ -36,6 +36,8 @@ namespace ExampleApp
                 
                 Eegeo::dv3 m_currentNonFlattenedCameraPosition;
                 
+                Eegeo::Helpers::CallbackCollection0 m_transitionInFlightChangedCallbacks;
+                
                 void UpdateTransitionBetween(IAppCamera& previousCamera, IAppCamera& nextCamera, float dt);
                 const bool ShouldSkipTransition(IAppCamera& previousCamera, IAppCamera& nextCamera);
                 
@@ -61,6 +63,9 @@ namespace ExampleApp
                 Eegeo::ITouchController& GetTouchController();
                 
                 void Update(float dt);
+                
+                void InsertTransitioInFlightChangedCallback(Eegeo::Helpers::ICallback0& callback);
+                void RemoveTransitioInFlightChangedCallback(Eegeo::Helpers::ICallback0& callback);
             };
         }
     }
