@@ -12,6 +12,7 @@
 #include "BidirectionalBus.h"
 #include "SdkModelDomainEventBus.h"
 #include "SearchQueryObserver.h"
+#include "AppModes.h"
 
 namespace ExampleApp
 {
@@ -30,11 +31,13 @@ namespace ExampleApp
                 MyPins::IMyPinsSearchResultRefreshService* m_pMyPinsSearchResultRefreshService;
 
             public:
-                SearchModule(ISearchService& searchService,
+                SearchModule(ISearchService& exteriorSearchService,
+                             ISearchService& interiorSearchService,
                              Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& cameraController,
                              CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionsController,
                              ExampleAppMessaging::TMessageBus& messageBus,
-                             ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus);
+                             ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
+                             AppModes::SdkModel::IAppModeModel& appModeModel);
 
                 ~SearchModule();
 

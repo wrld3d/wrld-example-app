@@ -14,34 +14,38 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            SearchModule::SearchModule(ISearchService& searchService,
+            SearchModule::SearchModule(ISearchService& exteriorSearchService,
+                                       ISearchService& interiorSearchService,
                                        Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& cameraController,
                                        CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionsController,
                                        ExampleAppMessaging::TMessageBus& messageBus,
-                                       ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus)
+                                       ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
+                                       AppModes::SdkModel::IAppModeModel& appModeModel)
             {
                 m_pSearchResultRepository = Eegeo_NEW(SearchResultRepository)();
                 
                 m_pSearchResultMyPinsService = Eegeo_NEW(MyPins::SearchResultMyPinsService)(sdkModelDomainEventBus);
                 
                 m_pMyPinsSearchResultRefreshService = Eegeo_NEW(MyPins::MyPinsSearchResultRefreshService)(*m_pSearchResultMyPinsService,
-                                                                                                          searchService);
+                                                                                                          exteriorSearchService);
 
-                m_pSearchQueryPerformer = Eegeo_NEW(SearchQueryPerformer)(searchService,
-                                          *m_pSearchResultRepository,
-                                          cameraController);
+                m_pSearchQueryPerformer = Eegeo_NEW(SearchQueryPerformer)(exteriorSearchService,
+                                                                          interiorSearchService,
+                                                                          *m_pSearchResultRepository,
+                                                                          cameraController,
+                                                                          appModeModel);
 
-                m_pSearchRefreshService = Eegeo_NEW(SearchRefreshService)(searchService,
+                m_pSearchRefreshService = Eegeo_NEW(SearchRefreshService)(exteriorSearchService,
+                                                                          interiorSearchService,
                                           *m_pSearchQueryPerformer,
                                           cameraTransitionsController,
                                           1.f,
                                           100.f);
 
-                m_pSearchQueryObserver = Eegeo_NEW(SearchQueryObserver)(
-                                             searchService,
-                                             *m_pSearchQueryPerformer,
-                                             messageBus
-                                         );
+                m_pSearchQueryObserver = Eegeo_NEW(SearchQueryObserver)(exteriorSearchService,
+                                                                        interiorSearchService,
+                                                                        *m_pSearchQueryPerformer,
+                                                                        messageBus);
             }
 
             SearchModule::~SearchModule()
