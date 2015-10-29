@@ -82,6 +82,7 @@
 #include "IInteriorsCustomMaterialsModule.h"
 #include "CameraTransitionService.h"
 #include "InteriorsNavigation.h"
+#include "UserInteraction.h"
 
 namespace ExampleApp
 {
@@ -154,6 +155,7 @@ namespace ExampleApp
         Eegeo::Modules::SQLiteModule* m_pSQLiteModule;
         SwallowPoiDb::ISwallowPoiDbModule* m_pSwallowPoiDbModule;
         InteriorsCustomMaterials::SdkModel::IInteriorsCustomMaterialsModule* m_pInteriorsCustomMaterialsModule;
+        UserInteraction::SdkModel::UserInteractionModule* m_pUserInteractionModule;
         
         AppModes::SdkModel::IAppModeModel* m_pAppModeModel;
         

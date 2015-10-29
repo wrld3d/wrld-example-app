@@ -4,6 +4,7 @@
 
 #include "VectorMathDecl.h"
 #include "Interiors.h"
+#include "ICallback.h"
 
 namespace ExampleApp
 {
@@ -43,6 +44,9 @@ namespace ExampleApp
                 virtual void Update(float dt) = 0;
 
                 virtual const bool IsTransitioning() const = 0;
+                
+                virtual void InsertTransitioningChangedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
+                virtual void RemoveTransitioningChangedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
             };
         }
     }

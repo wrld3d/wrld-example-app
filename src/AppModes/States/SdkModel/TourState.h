@@ -11,6 +11,7 @@
 #include "GlobeCamera.h"
 #include "InteriorsExplorer.h"
 #include "MapMode.h"
+#include "MyPinCreation.h"
 
 namespace ExampleApp
 {
@@ -40,6 +41,8 @@ namespace ExampleApp
                     MapMode::SdkModel::IMapModeModel& m_mapModeModel;
                     bool m_previousMapModeState;
                     
+                    MyPinCreation::SdkModel::IMyPinCreationModel& m_myPinCreationModel;
+                    
                     void OnTourEnded();
                     
                 public:
@@ -51,7 +54,8 @@ namespace ExampleApp
                               AppModes::SdkModel::IAppModeModel& appModeModel,
                               Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& worldCameraController,
                               ExampleApp::InteriorsExplorer::SdkModel::InteriorsExplorerCameraController& interiorsCameraController,
-                              MapMode::SdkModel::IMapModeModel& mapModeModel);
+                              MapMode::SdkModel::IMapModeModel& mapModeModel,
+                              MyPinCreation::SdkModel::IMyPinCreationModel& myPinCreationModel);
                     
                     ~TourState();
                     
