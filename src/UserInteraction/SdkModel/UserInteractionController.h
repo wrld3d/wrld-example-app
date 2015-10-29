@@ -8,6 +8,7 @@
 // App includes
 #include "AppCamera.h"
 #include "ICameraTransitionController.h"
+#include "InteriorsExplorer.h"
 #include "UserInteraction.h"
 
 namespace ExampleApp
@@ -22,17 +23,19 @@ namespace ExampleApp
                 UserInteractionModel& m_userInteractionModel;
                 AppCamera::SdkModel::IAppCameraController& m_appCameraController;
                 CameraTransitions::SdkModel::ICameraTransitionController& m_cameraTransitionController;
-                Eegeo::Helpers::TCallback0<UserInteractionController> m_cameraTransitionChangedHandler;
+                InteriorsExplorer::SdkModel::InteriorExplorerUserInteractionModel& m_interiorExplorerUserInteractionModel;
+                Eegeo::Helpers::TCallback0<UserInteractionController> m_handler;
                 
             public:
                 UserInteractionController(UserInteractionModel& userInteractionModel,
                                           AppCamera::SdkModel::IAppCameraController& appCameraController,
+                                          InteriorsExplorer::SdkModel::InteriorExplorerUserInteractionModel& interiorExplorerUserInteractionModel,
                                           CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController);
                 
                 ~UserInteractionController();
                 
             private:
-                void OnCameraTransitionChanged();
+                void OnObservedChanged();
             };
         }
     }

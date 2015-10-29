@@ -23,6 +23,7 @@ namespace ExampleApp
                     
                     AppModes::States::SdkModel::InteriorExplorerState& m_parentState;
                     InteriorsExplorerModel& m_interiorExplorerModel;
+                    InteriorExplorerUserInteractionModel& m_interiorExplorerUserInteractionModel;
                     Eegeo::Streaming::CameraFrustumStreamingVolume& m_cameraFrustumStreamingVolume;
                     Eegeo::Helpers::TCallback0<InteriorExplorerViewingState> m_exitCallback;
                     
@@ -34,6 +35,7 @@ namespace ExampleApp
                     
                     InteriorExplorerViewingState(AppModes::States::SdkModel::InteriorExplorerState& parentState,
                                                  InteriorsExplorerModel& interiorExplorerModel,
+                                                 InteriorExplorerUserInteractionModel& interiorExplorerUserInteractionModel,
                                                  Eegeo::Streaming::CameraFrustumStreamingVolume& cameraFrustumStreamingVolume);
                     
                     ~InteriorExplorerViewingState();

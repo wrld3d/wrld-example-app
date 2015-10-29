@@ -15,10 +15,16 @@ namespace ExampleApp
         {
             UserInteractionModule::UserInteractionModule(AppCamera::SdkModel::IAppCameraController& appCameraController,
                                                          CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
+                                                         InteriorsExplorer::SdkModel::InteriorExplorerUserInteractionModel& interiorExplorerUserInteractionModel,
                                                          ExampleAppMessaging::TMessageBus& messageBus)
             {
                 m_pUserInteractionModel = Eegeo_NEW(UserInteractionModel)();
-                m_pUserInteractionController = Eegeo_NEW(UserInteractionController)(*m_pUserInteractionModel, appCameraController, cameraTransitionController);
+                
+                m_pUserInteractionController = Eegeo_NEW(UserInteractionController)(*m_pUserInteractionModel,
+                                                                                    appCameraController,
+                                                                                    interiorExplorerUserInteractionModel,
+                                                                                    cameraTransitionController);
+                
                 m_pUserInteractionEnabledObserver = Eegeo_NEW(UserInteractionEnabledObserver)(*m_pUserInteractionModel, messageBus);
             }
             

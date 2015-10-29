@@ -19,6 +19,7 @@
 #include "LatLongAltitude.h"
 #include "MyPinCreationModel.h"
 #include "MyPinCreationStage.h"
+#include "InteriorExplorerUserInteractionModel.h"
 
 namespace ExampleApp
 {
@@ -34,6 +35,7 @@ namespace ExampleApp
                                                              Eegeo::Streaming::CameraFrustumStreamingVolume& cameraFrustumStreamingVolume,
                                                              InteriorsExplorer::SdkModel::InteriorVisibilityUpdater& interiorVisibilityUpdater,
                                                              InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel,
+                                                             InteriorsExplorer::SdkModel::InteriorExplorerUserInteractionModel& interiorExplorerUserInteractionModel,
                                                              AppModes::SdkModel::IAppModeModel& appModeModel,
                                                              Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& worldCameraController,
                                                              ExampleApp::InteriorsExplorer::SdkModel::InteriorsExplorerCameraController& interiorsCameraController,
@@ -42,6 +44,7 @@ namespace ExampleApp
                 : m_cameraController(cameraController)
                 , m_interiorController(interiorController)
                 , m_interiorCameraHandle(interiorCameraHandle)
+                , m_interiorExplorerUserInteractionModel(interiorExplorerUserInteractionModel)
                 , m_appModeModel(appModeModel)
                 , m_worldCameraController(worldCameraController)
                 , m_interiorsCameraController(interiorsCameraController)
@@ -62,6 +65,7 @@ namespace ExampleApp
                     
                     m_subStates.push_back(Eegeo_NEW(InteriorsExplorer::SdkModel::States::InteriorExplorerViewingState)(*this,
                                                                                                                        interiorsExplorerModel,
+                                                                                                                       interiorExplorerUserInteractionModel,
                                                                                                                        cameraFrustumStreamingVolume));
                     
                     m_subStates.push_back(Eegeo_NEW(InteriorsExplorer::SdkModel::States::InteriorExplorerExitingState)(*this,
@@ -94,6 +98,7 @@ namespace ExampleApp
                 
                 void InteriorExplorerState::Enter()
                 {
+                    m_interiorExplorerUserInteractionModel.SetEnabled(false);
                     m_myPinCreationModel.SetCreationStage(MyPinCreation::Inactive);
                     m_pSubStateMachine->StartStateMachine(0);
                 }
@@ -121,6 +126,7 @@ namespace ExampleApp
                     {
                         m_pSubStateMachine->StopStateMachine();
                     }
+                    m_interiorExplorerUserInteractionModel.SetEnabled(true);
                 }
                 
                 void InteriorExplorerState::SetSubState(InteriorExplorerSubStates::Values stateIndex)

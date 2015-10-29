@@ -781,6 +781,8 @@
 		27E9362F1BE23472007D52C5 /* UserInteractionModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27E936241BE23472007D52C5 /* UserInteractionModel.cpp */; };
 		27E936301BE23472007D52C5 /* UserInteractionModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27E936261BE23472007D52C5 /* UserInteractionModule.cpp */; };
 		27E936311BE23472007D52C5 /* UserInteractionModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27E936261BE23472007D52C5 /* UserInteractionModule.cpp */; };
+		27E936341BE24023007D52C5 /* InteriorExplorerUserInteractionModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27E936321BE24023007D52C5 /* InteriorExplorerUserInteractionModel.cpp */; };
+		27E936351BE24023007D52C5 /* InteriorExplorerUserInteractionModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27E936321BE24023007D52C5 /* InteriorExplorerUserInteractionModel.cpp */; };
 		27E997521BB2B69000B0BE14 /* YelpSearchConstants.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27E997501BB2B69000B0BE14 /* YelpSearchConstants.cpp */; };
 		27E997531BB2B69000B0BE14 /* YelpSearchConstants.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27E997501BB2B69000B0BE14 /* YelpSearchConstants.cpp */; };
 		27EACB581BC4140700135BE6 /* icon1_tours.png in Resources */ = {isa = PBXBuildFile; fileRef = 27EACB541BC4140700135BE6 /* icon1_tours.png */; };
@@ -2257,6 +2259,8 @@
 		27E936271BE23472007D52C5 /* UserInteractionModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInteractionModule.h; sourceTree = "<group>"; };
 		27E936281BE23472007D52C5 /* UserInteraction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInteraction.h; sourceTree = "<group>"; };
 		27E936291BE23472007D52C5 /* UserInteractionEnabledChangedMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInteractionEnabledChangedMessage.h; sourceTree = "<group>"; };
+		27E936321BE24023007D52C5 /* InteriorExplorerUserInteractionModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InteriorExplorerUserInteractionModel.cpp; sourceTree = "<group>"; };
+		27E936331BE24023007D52C5 /* InteriorExplorerUserInteractionModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InteriorExplorerUserInteractionModel.h; sourceTree = "<group>"; };
 		27E997501BB2B69000B0BE14 /* YelpSearchConstants.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = YelpSearchConstants.cpp; sourceTree = "<group>"; };
 		27E997511BB2B69000B0BE14 /* YelpSearchConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YelpSearchConstants.h; sourceTree = "<group>"; };
 		27EACB541BC4140700135BE6 /* icon1_tours.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon1_tours.png; sourceTree = "<group>"; };
@@ -5716,6 +5720,8 @@
 				27C1F99A1BC6A47600D5EFF4 /* InteriorsExplorerCameraController.h */,
 				7E149DC81BCE564000C0AFFC /* InteriorVisibilityUpdater.cpp */,
 				7E149DC91BCE564000C0AFFC /* InteriorVisibilityUpdater.h */,
+				27E936321BE24023007D52C5 /* InteriorExplorerUserInteractionModel.cpp */,
+				27E936331BE24023007D52C5 /* InteriorExplorerUserInteractionModel.h */,
 			);
 			path = SdkModel;
 			sourceTree = "<group>";
@@ -7335,6 +7341,7 @@
 				7E3B8A071A385A290023C94E /* WorldPinInFocusViewModel.cpp in Sources */,
 				7E3B89231A385A290023C94E /* MyPinCreationModule.cpp in Sources */,
 				7E3B88A71A385A290023C94E /* AboutPageController.cpp in Sources */,
+				27E936351BE24023007D52C5 /* InteriorExplorerUserInteractionModel.cpp in Sources */,
 				BF34FE9F1BCBF78600E7094F /* AppCameraModule.cpp in Sources */,
 				18096F4E1A7B7F39006A6438 /* StreamOverWifiOnlyChangedMessage.cpp in Sources */,
 				7E3B8AD21A385F110023C94E /* AppRunner.mm in Sources */,
@@ -8217,6 +8224,7 @@
 				7E3B89381A385A290023C94E /* MyPinCreationDetailsModule.cpp in Sources */,
 				7E3B89801A385A290023C94E /* ReactionModel.cpp in Sources */,
 				18A657661A9F877C00238F33 /* MyPinsSearchResultRefreshService.cpp in Sources */,
+				27E936341BE24023007D52C5 /* InteriorExplorerUserInteractionModel.cpp in Sources */,
 				7E3B89641A385A290023C94E /* MyPinAddedToMenuObserver.cpp in Sources */,
 				18FB646E1A9240FC005A9411 /* OAServiceTicket.m in Sources */,
 				186B47101AB1D46B0084E80B /* WatermarkViewModel.cpp in Sources */,
