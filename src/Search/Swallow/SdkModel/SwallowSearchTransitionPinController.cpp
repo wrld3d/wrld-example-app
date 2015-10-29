@@ -54,6 +54,7 @@ namespace ExampleApp
                                                                                                           iconIndex,
                                                                                                           heightOffsetMetres,
                                                                                                           WorldPins::SdkModel::WorldPinVisibility::All);
+                        pPinItemModel->SetFocusable(false);
                         
                         m_transitionPins.push_back(pPinItemModel);
                     }
