@@ -378,6 +378,13 @@ namespace ExampleApp
         
         
         m_pSwallowPoiDbModule->GetSwallowPoiDbServiceProvider().AddTransitionLoadedCallback(pSwallowSearchServiceModule->GetSwallowSearchTransitionPinController());
+        
+        Search::Swallow::SdkModel::SwallowSearchServiceModule* pStandaloneSwallowSearchServiceModule = Eegeo_NEW(Search::Swallow::SdkModel::SwallowSearchServiceModule)(m_pSwallowPoiDbModule->GetSwallowPoiDbServiceProvider(),
+                                                                                                                                                              *m_pCameraTransitionService,
+                                                                                                                                                              m_messageBus,
+                                                                                                                                                              m_pWorldPinsModule->GetWorldPinsService());
+        
+        m_pSwallowPoiDbModule->GetSwallowPoiDbServiceProvider().AddTransitionLoadedCallback(pStandaloneSwallowSearchServiceModule->GetSwallowSearchTransitionPinController());
         m_pSwallowPoiDbModule->GetSwallowPoiDbWebLoader().Load();
         
         std::map<std::string,ExampleApp::Search::SdkModel::ISearchServiceModule*> searchServiceModulesForCombinedSearch = platformImplementedSearchServiceModules;
@@ -394,13 +401,18 @@ namespace ExampleApp
         }
         searchServiceModulesForCombinedSearch.insert(m_searchServiceModules.begin(), m_searchServiceModules.end());
         
+        // add this after we add the search services to the searchServiceModulesForCombinedSearch object just for cleanup purposes
+        m_searchServiceModules[Search::SwallowVendorName + "_standalone"] = pStandaloneSwallowSearchServiceModule;
+        
         m_pSearchServiceModule = Eegeo_NEW(Search::Combined::SdkModel::CombinedSearchServiceModule)(searchServiceModulesForCombinedSearch);
         
         m_pSearchModule = Eegeo_NEW(Search::SdkModel::SearchModule)(m_pSearchServiceModule->GetSearchService(),
+                                                                    pStandaloneSwallowSearchServiceModule->GetSearchService(),
                                                                     *m_pGlobeCameraController,
                                                                     *m_pCameraTransitionService,
                                                                     m_messageBus,
-                                                                    m_sdkDomainEventBus);
+                                                                    m_sdkDomainEventBus,
+                                                                    *m_pAppModeModel);
         
         m_pGpsMarkerModule = Eegeo_NEW(ExampleApp::GpsMarker::SdkModel::GpsMarkerModule)(m_pWorld->GetRenderingModule(),
                                                                                          m_platformAbstractions,

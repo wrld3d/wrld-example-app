@@ -12,6 +12,7 @@
 #include "ICallback.h"
 #include "SearchQuery.h"
 #include "GpsGlobeCameraController.h"
+#include "AppModes.h"
 
 namespace ExampleApp
 {
@@ -21,18 +22,25 @@ namespace ExampleApp
         {
             class SearchQueryPerformer : public ISearchQueryPerformer, private Eegeo::NonCopyable
             {
-                ISearchService& m_searchService;
+                ISearchService& m_exteriorSearchService;
+                ISearchService& m_interiorSearchService;
+                
                 ISearchResultRepository& m_searchResultsRepository;
                 Eegeo::Helpers::ICallback2<const SearchQuery&, const std::vector<SearchResultModel>&>* m_pSearchResultResponseReceivedCallback;
                 Eegeo::Helpers::CallbackCollection0 m_queryResultsClearedCallbacks;
                 SearchQuery m_previousQuery;
                 bool m_hasQuery;
                 Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& m_cameraController;
+                
+                AppModes::SdkModel::IAppModeModel& m_appModeModel;
+                
 
             public:
-                SearchQueryPerformer(ISearchService& searchService,
+                SearchQueryPerformer(ISearchService& exteriorSearchService,
+                                     ISearchService& interiorSearchService,
                                      ISearchResultRepository& searchResultRepository,
-                                     Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& cameraController);
+                                     Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& cameraController,
+                                     AppModes::SdkModel::IAppModeModel& appModeModel);
 
                 ~SearchQueryPerformer();
 

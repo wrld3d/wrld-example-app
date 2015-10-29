@@ -23,7 +23,9 @@ namespace ExampleApp
                 const float m_minimumSecondsBetweenUpdates;
                 const float m_minimumMetresSquaredBetweenUpdates;
 
-                ISearchService& m_searchService;
+                ISearchService& m_exteriorSearchService;
+                ISearchService& m_interiorSearchService;
+                
                 ISearchQueryPerformer& m_searchQueryPerformer;
                 CameraTransitions::SdkModel::ICameraTransitionController& m_cameraTransitionsController;
                 Eegeo::Helpers::ICallback1<const SearchQuery&>* m_pSearchResultQueryIssuedCallback;
@@ -37,7 +39,8 @@ namespace ExampleApp
                 bool m_enabled;
 
             public:
-                SearchRefreshService(ISearchService& searchService,
+                SearchRefreshService(ISearchService& exteriorSearchService,
+                                     ISearchService& interiorSearchService,
                                      ISearchQueryPerformer& searchQueryPerformer,
                                      CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionsController,
                                      float minimumSecondsBetweenUpdates,

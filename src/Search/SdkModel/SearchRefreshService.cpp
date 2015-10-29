@@ -12,14 +12,16 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            SearchRefreshService::SearchRefreshService(ISearchService& searchService,
+            SearchRefreshService::SearchRefreshService(ISearchService& exteriorSearchService,
+                                                       ISearchService& interiorSearchService,
                     ISearchQueryPerformer& searchQueryPerformer,
                     CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionsController,
                     float minimumSecondsBetweenUpdates,
                     float minimumMetresBetweenUpdates)
                 : m_minimumSecondsBetweenUpdates(minimumSecondsBetweenUpdates)
                 , m_minimumMetresSquaredBetweenUpdates(minimumMetresBetweenUpdates * minimumMetresBetweenUpdates)
-                , m_searchService(searchService)
+                , m_exteriorSearchService(exteriorSearchService)
+                , m_interiorSearchService(interiorSearchService)
                 , m_searchQueryPerformer(searchQueryPerformer)
                 , m_cameraTransitionsController(cameraTransitionsController)
                 , m_pSearchResultQueryIssuedCallback(Eegeo_NEW((Eegeo::Helpers::TCallback1<SearchRefreshService, const SearchQuery&>))(this, &SearchRefreshService::HandleSearchQueryIssued))
@@ -31,16 +33,22 @@ namespace ExampleApp
                 , m_cameraTransitioning(false)
                 , m_enabled(true)
             {
-                m_searchService.InsertOnPerformedQueryCallback(*m_pSearchResultQueryIssuedCallback);
-                m_searchService.InsertOnReceivedQueryResultsCallback(*m_pSearchResultResponseReceivedCallback);
+                m_interiorSearchService.InsertOnPerformedQueryCallback(*m_pSearchResultQueryIssuedCallback);
+                m_interiorSearchService.InsertOnReceivedQueryResultsCallback(*m_pSearchResultResponseReceivedCallback);
+                
+                m_exteriorSearchService.InsertOnPerformedQueryCallback(*m_pSearchResultQueryIssuedCallback);
+                m_exteriorSearchService.InsertOnReceivedQueryResultsCallback(*m_pSearchResultResponseReceivedCallback);
                 m_searchQueryPerformer.InsertOnSearchResultsClearedCallback(*m_pSearchQueryResultsClearedCallback);
             }
 
             SearchRefreshService::~SearchRefreshService()
             {
                 m_searchQueryPerformer.RemoveOnSearchResultsClearedCallback(*m_pSearchQueryResultsClearedCallback);
-                m_searchService.RemoveOnReceivedQueryResultsCallback(*m_pSearchResultResponseReceivedCallback);
-                m_searchService.RemoveOnPerformedQueryCallback(*m_pSearchResultQueryIssuedCallback);
+                m_exteriorSearchService.RemoveOnReceivedQueryResultsCallback(*m_pSearchResultResponseReceivedCallback);
+                m_exteriorSearchService.RemoveOnPerformedQueryCallback(*m_pSearchResultQueryIssuedCallback);
+                
+                m_interiorSearchService.RemoveOnReceivedQueryResultsCallback(*m_pSearchResultResponseReceivedCallback);
+                m_interiorSearchService.RemoveOnPerformedQueryCallback(*m_pSearchResultQueryIssuedCallback);
 
                 Eegeo_DELETE m_pSearchResultResponseReceivedCallback;
                 Eegeo_DELETE m_pSearchResultQueryIssuedCallback;

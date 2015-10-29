@@ -8,6 +8,7 @@
 #include "LatLongAltitude.h"
 #include "RenderCamera.h"
 #include "SearchResultModel.h"
+#include "IAppModeModel.h"
 
 namespace
 {
@@ -25,22 +26,29 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            SearchQueryPerformer::SearchQueryPerformer(ISearchService& searchService,
-                    ISearchResultRepository& searchResultRepository,
-                    Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& cameraController)
-                : m_searchService(searchService)
+            SearchQueryPerformer::SearchQueryPerformer(ISearchService& exteriorSearchService,
+                                                       ISearchService& interiorSearchService,
+                                                       ISearchResultRepository& searchResultRepository,
+                                                       Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& cameraController,
+                                                       AppModes::SdkModel::IAppModeModel& appModeModel)
+                : m_exteriorSearchService(exteriorSearchService)
+                , m_interiorSearchService(interiorSearchService)
                 , m_searchResultsRepository(searchResultRepository)
                 , m_pSearchResultResponseReceivedCallback(Eegeo_NEW((Eegeo::Helpers::TCallback2<SearchQueryPerformer, const SearchQuery&, const std::vector<SearchResultModel>&>))(this, &SearchQueryPerformer::HandleSearchResultsResponseReceived))
                 , m_previousQuery("", false, Eegeo::Space::LatLongAltitude(0.0, 0.0, 0.0), 0.f)
                 , m_hasQuery(false)
                 , m_cameraController(cameraController)
+                , m_appModeModel(appModeModel)
             {
-                m_searchService.InsertOnReceivedQueryResultsCallback(*m_pSearchResultResponseReceivedCallback);
+                m_exteriorSearchService.InsertOnReceivedQueryResultsCallback(*m_pSearchResultResponseReceivedCallback);
+                m_interiorSearchService.InsertOnReceivedQueryResultsCallback(*m_pSearchResultResponseReceivedCallback);
             }
 
             SearchQueryPerformer::~SearchQueryPerformer()
             {
-                m_searchService.RemoveOnReceivedQueryResultsCallback(*m_pSearchResultResponseReceivedCallback);
+                m_exteriorSearchService.RemoveOnReceivedQueryResultsCallback(*m_pSearchResultResponseReceivedCallback);
+                m_interiorSearchService.RemoveOnReceivedQueryResultsCallback(*m_pSearchResultResponseReceivedCallback);
+                
                 Eegeo_DELETE m_pSearchResultResponseReceivedCallback;
             }
 
@@ -64,15 +72,23 @@ namespace ExampleApp
                 SearchQuery searchQuery(query, isCategory, location, radius);
                 m_previousQuery = searchQuery;
 
-                m_searchService.PerformLocationQuerySearch(searchQuery);
+                if(m_appModeModel.GetAppMode() == AppModes::SdkModel::WorldMode)
+                {
+                    m_exteriorSearchService.PerformLocationQuerySearch(searchQuery);
+                }
+                else
+                {
+                    m_interiorSearchService.PerformLocationQuerySearch(searchQuery);
+                }
             }
 
             void SearchQueryPerformer::RemoveSearchQueryResults()
             {
                 m_hasQuery = false;
 
-                m_searchService.CancelInFlightQueries();
-
+                m_exteriorSearchService.CancelInFlightQueries();
+                m_interiorSearchService.CancelInFlightQueries();
+                
                 RemoveExistingSearchResults();
 
                 m_queryResultsClearedCallbacks.ExecuteCallbacks();
