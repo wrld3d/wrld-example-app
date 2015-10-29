@@ -82,6 +82,7 @@ namespace ExampleApp
             void WorldPinsScaleController::SetVisibilityMask(int visibilityMask)
             {
                 m_visibilityMask = visibilityMask;
+                m_visibilityMaskChangedCallbacks.ExecuteCallbacks(); 
             }
             
             bool WorldPinsScaleController::ShouldHidePin(WorldPins::SdkModel::WorldPinItemModel& worldPinItemModel,
@@ -153,6 +154,16 @@ namespace ExampleApp
                 renderCamera.Project(cameraLocal, screenPos);
                 screenLocation.Set(screenPos.GetX(), screenPos.GetY());
             }
+            
+            void WorldPinsScaleController::InsertVisibilityMaskChangedCallback(Eegeo::Helpers::ICallback0& callback)
+            {
+                m_visibilityMaskChangedCallbacks.AddCallback(callback);
+            }
+            
+            void WorldPinsScaleController::RemoveVisibilityMaskChangedCallback(Eegeo::Helpers::ICallback0& callback)
+            {
+                m_visibilityMaskChangedCallbacks.RemoveCallback(callback);
+            }
 
             void WorldPinsScaleController::Show()
             {
@@ -175,7 +186,7 @@ namespace ExampleApp
                     Hide();
                 }
                 
-                m_visibilityMask = worldPinsVisibilityMessage.VisibilityMask();
+                SetVisibilityMask(worldPinsVisibilityMessage.VisibilityMask());
             }
         }
     }

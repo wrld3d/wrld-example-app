@@ -54,6 +54,7 @@ namespace ExampleApp
                     AppModes::SdkModel::IAppModeModel& m_appModeModel;
                     
                     MyPinCreation::SdkModel::IMyPinCreationModel& m_myPinCreationModel;
+                    InteriorsExplorer::SdkModel::InteriorExplorerUserInteractionModel& m_interiorExplorerUserInteractionModel;
                     
                     void OnFailAlertBoxDismissed();
                 
@@ -65,6 +66,7 @@ namespace ExampleApp
                                           Eegeo::Streaming::CameraFrustumStreamingVolume& cameraFrustumStreamingVolume,
                                           InteriorsExplorer::SdkModel::InteriorVisibilityUpdater& interiorVisibilityUpdater,
                                           InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel,
+                                          InteriorsExplorer::SdkModel::InteriorExplorerUserInteractionModel& interiorExplorerUserInteractionModel,
                                           AppModes::SdkModel::IAppModeModel& appModeModel,
                                           Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& worldCameraController,
                                           ExampleApp::InteriorsExplorer::SdkModel::InteriorsExplorerCameraController& interiorsCameraController,

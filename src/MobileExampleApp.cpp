@@ -95,6 +95,7 @@
 #include "NativeUIFactories.h"
 #include "InteriorsNavigationService.h"
 #include "UserInteractionModule.h"
+#include "ReportPinsVisibilityMaskingModule.h"
 
 namespace ExampleApp
 {
@@ -297,7 +298,7 @@ namespace ExampleApp
         
         InitialiseAppState(nativeUIFactories);
         
-        m_pUserInteractionModule = Eegeo_NEW(UserInteraction::SdkModel::UserInteractionModule)(m_pAppCameraModule->GetController(), *m_pCameraTransitionService, m_messageBus);
+        m_pUserInteractionModule = Eegeo_NEW(UserInteraction::SdkModel::UserInteractionModule)(m_pAppCameraModule->GetController(), *m_pCameraTransitionService, m_pInteriorsExplorerModule->GetInteriorsExplorerUserInteractionModel(), m_messageBus);
     }
 
     MobileExampleApp::~MobileExampleApp()
@@ -345,6 +346,8 @@ namespace ExampleApp
         Eegeo::Modules::Map::MapModule& mapModule = world.GetMapModule();
         
         InitialisePinsModules(mapModule, world);
+        
+        m_pReportPinsVisibilityMaskingModule = Eegeo_NEW(ReportPinsVisibilityMasking::SdkModel::ReportPinsVisibilityMaskingModule)(m_pWorldPinsModule->GetWorldPinsScaleController(), m_messageBus);
         
         Eegeo_ASSERT(m_pSwallowPoiDbModule == NULL);
         Eegeo_ASSERT(m_pSQLiteModule != NULL);
@@ -598,6 +601,7 @@ namespace ExampleApp
                                                                               *m_pStreamingVolume,
                                                                               m_pInteriorsExplorerModule->GetInteriorVisibilityUpdater(),
                                                                               m_pInteriorsExplorerModule->GetInteriorsExplorerModel(),
+                                                                              m_pInteriorsExplorerModule->GetInteriorsExplorerUserInteractionModel(),
                                                                               *m_pAppModeModel,
                                                                               m_pToursModule->GetTourService(),
                                                                               interiorsPresentationModule.GetInteriorSelectionModel(),
@@ -685,6 +689,8 @@ namespace ExampleApp
         Eegeo_DELETE m_pReactionControllerModule;
         
         Eegeo_DELETE m_pSwallowPoiDbModule;
+        
+        Eegeo_DELETE m_pReportPinsVisibilityMaskingModule;
     }
 
     std::vector<ExampleApp::OpenableControl::View::IOpenableControlViewModel*> MobileExampleApp::GetOpenableControls() const
@@ -711,6 +717,7 @@ namespace ExampleApp
         reactors.push_back(&CompassModule().GetScreenControlViewModel());
         reactors.push_back(&MyPinCreationModule().GetInitiationScreenControlViewModel());
         reactors.push_back(&WatermarkModule().GetScreenControlViewModel());
+        reactors.push_back(&InteriorsExplorerModule().GetScreenControlViewModel());
         if(m_enableTours)
         {
             reactors.push_back(&ToursModule().GetToursExplorerViewModel());
