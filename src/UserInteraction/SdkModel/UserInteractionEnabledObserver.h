@@ -6,9 +6,8 @@
 #include "ICallback.h"
 #include "Types.h"
 // App includes
+#include "BidirectionalBus.h"
 #include "UserInteraction.h"
-
-//TODO: finish implementing Observer
 
 namespace ExampleApp
 {
@@ -20,9 +19,16 @@ namespace ExampleApp
             {
             private:
                 UserInteractionModel& m_userInteractionModel;
+                ExampleAppMessaging::TMessageBus& m_messageBus;
+                Eegeo::Helpers::TCallback0<UserInteractionEnabledObserver> m_userInteractionEnabledChangedHandler;
                 
             public:
-                UserInteractionEnabledObserver(UserInteractionModel& userInteractionModel);
+                UserInteractionEnabledObserver(UserInteractionModel& userInteractionModel, ExampleAppMessaging::TMessageBus& messageBus);
+                
+                ~UserInteractionEnabledObserver();
+                
+            private:
+                void OnUserInteractionEnabledChanged();
             };
         }
     }

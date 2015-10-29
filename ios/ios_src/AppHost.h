@@ -52,6 +52,7 @@
 #include "InteriorsExplorerViewIncludes.h"
 #include "ImageStore.h"
 #include "ICallback.h"
+#include "UserInteraction.h"
 
 @class ViewController;
 class AppInputDelegate;
@@ -131,7 +132,7 @@ private:
     ExampleApp::ExampleAppMessaging::TSdkModelDomainEventBus m_sdkModelDomainEventBus;
     
     Eegeo::UI::NativeAlerts::TSingleOptionAlertBoxDismissedHandler<AppHost> m_failAlertHandler;
-    Eegeo::Helpers::TCallback1<AppHost, const ExampleApp::CameraTransitions::CameraTransitionChangedMessage&> m_cameraTransitionChangedHandler;
+    Eegeo::Helpers::TCallback1<AppHost, const ExampleApp::UserInteraction::UserInteractionEnabledChangedMessage&> m_userInteractionEnabledChangedHandler;
 
     void CreateApplicationViewModules(const Eegeo::Rendering::ScreenProperties& screenProperties);
     void DestroyApplicationViewModules();
@@ -139,6 +140,6 @@ private:
     void SetTouchExclusivity();
     
     void HandleStartupFailure();
-    void HandleCameraTransitionChanged(const ExampleApp::CameraTransitions::CameraTransitionChangedMessage& message);
+    void HandleUserInteractionEnabledChanged(const ExampleApp::UserInteraction::UserInteractionEnabledChangedMessage& message);
 };
 

@@ -4,9 +4,8 @@
 
 // App includes
 #include "UserInteractionController.h"
+#include "UserInteractionEnabledObserver.h"
 #include "UserInteractionModel.h"
-
-//TODO: Add Observer after implementing
 
 namespace ExampleApp
 {
@@ -15,14 +14,17 @@ namespace ExampleApp
         namespace SdkModel
         {
             UserInteractionModule::UserInteractionModule(AppCamera::SdkModel::IAppCameraController& appCameraController,
-                                                         CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController)
+                                                         CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
+                                                         ExampleAppMessaging::TMessageBus& messageBus)
             {
                 m_pUserInteractionModel = Eegeo_NEW(UserInteractionModel)();
                 m_pUserInteractionController = Eegeo_NEW(UserInteractionController)(*m_pUserInteractionModel, appCameraController, cameraTransitionController);
+                m_pUserInteractionEnabledObserver = Eegeo_NEW(UserInteractionEnabledObserver)(*m_pUserInteractionModel, messageBus);
             }
             
             UserInteractionModule::~UserInteractionModule()
             {
+                Eegeo_DELETE m_pUserInteractionEnabledObserver;
                 Eegeo_DELETE m_pUserInteractionController;
                 Eegeo_DELETE m_pUserInteractionModel;
             }

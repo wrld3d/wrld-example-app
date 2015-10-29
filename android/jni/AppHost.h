@@ -56,6 +56,7 @@
 #include "ISingleOptionAlertBoxDismissedHandler.h"
 #include "AndroidFlurryMetricsService.h"
 #include "ICallback.h"
+#include "UserInteraction.h"
 
 class AppHost : public Eegeo::IEegeoErrorHandler, protected Eegeo::NonCopyable
 {
@@ -148,7 +149,7 @@ private:
     ExampleApp::ExampleAppMessaging::TMessageBus m_messageBus;
     ExampleApp::ExampleAppMessaging::TSdkModelDomainEventBus m_sdkDomainEventBus;
     Eegeo::UI::NativeAlerts::TSingleOptionAlertBoxDismissedHandler<AppHost> m_failAlertHandler;
-    Eegeo::Helpers::TCallback1<AppHost, const ExampleApp::CameraTransitions::CameraTransitionChangedMessage&> m_cameraTransitionChangedHandler;
+    Eegeo::Helpers::TCallback1<AppHost, const ExampleApp::UserInteraction::UserInteractionEnabledChangedMessage&> m_userInteractionEnabledChangedHandler;
 
     void DispatchRevealUiMessageToUiThreadFromNativeThread();
     void DispatchUiCreatedMessageToNativeThreadFromUiThread();
@@ -158,5 +159,5 @@ private:
     void SetTouchExclusivity();
 
     void HandleStartupFailure();
-    void HandleCameraTransitionChanged(const ExampleApp::CameraTransitions::CameraTransitionChangedMessage& message);
+    void HandleUserInteractionEnabledChanged(const ExampleApp::UserInteraction::UserInteractionEnabledChangedMessage& message);
 };

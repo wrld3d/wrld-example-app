@@ -283,7 +283,7 @@ namespace ExampleApp
         
         InitialiseAppState(nativeUIFactories);
         
-        m_pUserInteractionModule = Eegeo_NEW(UserInteraction::SdkModel::UserInteractionModule)(m_pAppCameraModule->GetController(), *m_pCameraTransitionService);
+        m_pUserInteractionModule = Eegeo_NEW(UserInteraction::SdkModel::UserInteractionModule)(m_pAppCameraModule->GetController(), *m_pCameraTransitionService, m_messageBus);
     }
 
     MobileExampleApp::~MobileExampleApp()

@@ -78,7 +78,7 @@
 #include "TourFullScreenImageView.h"
 #include "ImageStore.h"
 #include "SearchVendorNames.h"
-#include "CameraTransitionChangedMessage.h"
+#include "UserInteractionEnabledChangedMessage.h"
 
 #import "UIView+TouchExclusivity.h"
 
@@ -108,7 +108,7 @@ AppHost::AppHost(
     ,m_pTourWorldPinOnMapViewModule(NULL)
     ,m_pTourFullScreenImageViewModule(NULL)
     ,m_pTourExplorerViewModule(NULL)
-    ,m_cameraTransitionChangedHandler(this, &AppHost::HandleCameraTransitionChanged)
+    ,m_userInteractionEnabledChangedHandler(this, &AppHost::HandleUserInteractionEnabledChanged)
 {
     Eegeo::TtyHandler::TtyEnabled = true;
     
@@ -172,12 +172,12 @@ AppHost::AppHost(
     m_pAppInputDelegate = Eegeo_NEW(AppInputDelegate)(*m_pApp, m_viewController, screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight(), screenProperties.GetPixelScale());
     m_pAppLocationDelegate = Eegeo_NEW(AppLocationDelegate)(*m_piOSLocationService, m_viewController);
     
-    m_messageBus.SubscribeUi(m_cameraTransitionChangedHandler);
+    m_messageBus.SubscribeUi(m_userInteractionEnabledChangedHandler);
 }
 
 AppHost::~AppHost()
 {
-    m_messageBus.UnsubscribeUi(m_cameraTransitionChangedHandler);
+    m_messageBus.UnsubscribeUi(m_userInteractionEnabledChangedHandler);
     
     Eegeo_DELETE m_pAppLocationDelegate;
     m_pAppLocationDelegate = NULL;
@@ -546,8 +546,8 @@ void AppHost::HandleStartupFailure()
     exit(1);
 }
 
-void AppHost::HandleCameraTransitionChanged(const ExampleApp::CameraTransitions::CameraTransitionChangedMessage& message)
+void AppHost::HandleUserInteractionEnabledChanged(const ExampleApp::UserInteraction::UserInteractionEnabledChangedMessage& message)
 {
-    m_pView.userInteractionEnabled = !message.IsTransitionInProgress();
+    m_pView.userInteractionEnabled = message.IsEnabled();
 }
 

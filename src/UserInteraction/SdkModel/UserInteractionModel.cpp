@@ -22,7 +22,7 @@ namespace ExampleApp
                 }
             }
             
-            bool UserInteractionModel::GetEnabled() const
+            bool UserInteractionModel::IsEnabled() const
             {
                 return m_enabled;
             }

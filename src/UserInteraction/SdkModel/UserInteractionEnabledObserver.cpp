@@ -3,9 +3,8 @@
 #include "UserInteractionEnabledObserver.h"
 
 // App includes
+#include "UserInteractionEnabledChangedMessage.h"
 #include "UserInteractionModel.h"
-
-//TODO: finish implementing Observer
 
 namespace ExampleApp
 {
@@ -13,10 +12,22 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            UserInteractionEnabledObserver::UserInteractionEnabledObserver(UserInteractionModel& userInteractionModel)
+            UserInteractionEnabledObserver::UserInteractionEnabledObserver(UserInteractionModel& userInteractionModel, ExampleAppMessaging::TMessageBus& messageBus)
             : m_userInteractionModel(userInteractionModel)
+            , m_messageBus(messageBus)
+            , m_userInteractionEnabledChangedHandler(this, &UserInteractionEnabledObserver::OnUserInteractionEnabledChanged)
             {
-                
+                m_userInteractionModel.InsertEnabledChangedCallback(m_userInteractionEnabledChangedHandler);
+            }
+            
+            UserInteractionEnabledObserver::~UserInteractionEnabledObserver()
+            {
+                m_userInteractionModel.RemoveEnabledChangedCallback(m_userInteractionEnabledChangedHandler);
+            }
+            
+            void UserInteractionEnabledObserver::OnUserInteractionEnabledChanged()
+            {
+                m_messageBus.Publish(UserInteractionEnabledChangedMessage(m_userInteractionModel.IsEnabled()));
             }
         }
     }

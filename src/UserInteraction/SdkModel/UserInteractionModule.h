@@ -6,10 +6,9 @@
 #include "Types.h"
 // App includes
 #include "AppCamera.h"
+#include "BidirectionalBus.h"
 #include "ICameraTransitionController.h"
 #include "UserInteraction.h"
-
-//TODO: Add Observer after implementing
 
 namespace ExampleApp
 {
@@ -22,10 +21,12 @@ namespace ExampleApp
             private:
                 UserInteractionModel* m_pUserInteractionModel;
                 UserInteractionController* m_pUserInteractionController;
+                UserInteractionEnabledObserver* m_pUserInteractionEnabledObserver;
                 
             public:
                 UserInteractionModule(AppCamera::SdkModel::IAppCameraController& appCameraController,
-                                      CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController);
+                                      CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
+                                      ExampleAppMessaging::TMessageBus& messageBus);
                 
                 ~UserInteractionModule();
             };

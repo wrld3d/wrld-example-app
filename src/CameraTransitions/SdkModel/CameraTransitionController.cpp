@@ -15,7 +15,6 @@
 #include "TransitionToWorldPointStage.h"
 #include "ExitCurrentInteriorStage.h"
 #include "TransitionToInteriorStage.h"
-#include "CameraTransitionChangedMessage.h"
 #include "IAppCameraController.h"
 
 namespace ExampleApp
@@ -131,7 +130,6 @@ namespace ExampleApp
                 m_transitionStages.front()->Start();
                 
                 m_transitioningChangedCallbacks.ExecuteCallbacks();
-                m_messageBus.Publish(CameraTransitionChangedMessage(true));
             }
             
             void CameraTransitionController::StopCurrentTransition()
@@ -145,7 +143,6 @@ namespace ExampleApp
                     Eegeo_DELETE pStage;
                 }
                 m_transitioningChangedCallbacks.ExecuteCallbacks();
-                m_messageBus.Publish(CameraTransitionChangedMessage(false));
             }
 
             void CameraTransitionController::Update(float dt)

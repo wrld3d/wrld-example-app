@@ -24,7 +24,7 @@ namespace ExampleApp
                 
                 void SetEnabled(bool enabled);
                 
-                bool GetEnabled() const;
+                bool IsEnabled() const;
                 
                 void InsertEnabledChangedCallback(Eegeo::Helpers::ICallback0& callback);
                 

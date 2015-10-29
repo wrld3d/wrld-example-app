@@ -13,5 +13,6 @@ namespace ExampleApp
             class UserInteractionModel;
             class UserInteractionModule;
         }
+        class UserInteractionEnabledChangedMessage;
     }
 }
