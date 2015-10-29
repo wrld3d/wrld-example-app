@@ -25,7 +25,8 @@ namespace ExampleApp
                                                            Tours::SdkModel::Camera::IToursCameraController& toursCameraController,
                                                            Eegeo::Streaming::CameraFrustumStreamingVolume& cameraFrustumStreamingVolume,
                                                            InteriorsExplorer::SdkModel::InteriorVisibilityUpdater& interiorVisibilityUpdate,
-                                                           InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModule,
+                                                           InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel,
+                                                           InteriorsExplorer::SdkModel::InteriorExplorerUserInteractionModel& interiorExplorerUserInteractionModel,
                                                            AppModes::SdkModel::IAppModeModel& appModeModel,
                                                            Tours::SdkModel::ITourService& tourService,
                                                            Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
@@ -39,7 +40,8 @@ namespace ExampleApp
                 , m_toursCameraController(toursCameraController)
                 , m_cameraFrustumStreamingVolume(cameraFrustumStreamingVolume)
                 , m_interiorVisibilityUpdate(interiorVisibilityUpdate)
-                , m_interiorsExplorerModel(interiorsExplorerModule)
+                , m_interiorsExplorerModel(interiorsExplorerModel)
+                , m_interiorExplorerUserInteractionModel(interiorExplorerUserInteractionModel)
                 , m_appModeModel(appModeModel)
                 , m_tourService(tourService)
                 , m_interiorSelectionModel(interiorSelectionModel)
@@ -71,6 +73,7 @@ namespace ExampleApp
                                                                                         m_cameraFrustumStreamingVolume,
                                                                                         m_interiorVisibilityUpdate,
                                                                                         m_interiorsExplorerModel,
+                                                                                        m_interiorExplorerUserInteractionModel,
                                                                                         m_appModeModel,
                                                                                         m_worldCameraController.GetGlobeCameraController(),
                                                                                         m_interiorCameraController,

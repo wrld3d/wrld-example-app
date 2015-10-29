@@ -6,6 +6,7 @@
 #include "CameraFrustumStreamingVolume.h"
 #include "InteriorVisibilityUpdater.h"
 #include "InteriorsExplorerModel.h"
+#include "InteriorExplorerUserInteractionModel.h"
 
 namespace ExampleApp
 {
@@ -17,9 +18,11 @@ namespace ExampleApp
             {
                 InteriorExplorerViewingState::InteriorExplorerViewingState(AppModes::States::SdkModel::InteriorExplorerState& parentState,
                                                                            InteriorsExplorerModel& interiorExplorerModel,
+                                                                           InteriorExplorerUserInteractionModel& interiorExplorerUserInteractionModel,
                                                                            Eegeo::Streaming::CameraFrustumStreamingVolume& cameraFrustumStreamingVolume)
                 : m_parentState(parentState)
                 , m_interiorExplorerModel(interiorExplorerModel)
+                , m_interiorExplorerUserInteractionModel(interiorExplorerUserInteractionModel)
                 , m_cameraFrustumStreamingVolume(cameraFrustumStreamingVolume)
                 , m_exitCallback(this, &InteriorExplorerViewingState::OnInteriorExplorerExit)
                 , m_exiting(false)
@@ -36,6 +39,7 @@ namespace ExampleApp
                     m_interiorExplorerModel.ShowInteriorExplorer();
                     m_interiorExplorerModel.InsertInteriorExplorerExitedCallback(m_exitCallback);
                     m_exiting = false;
+                    m_interiorExplorerUserInteractionModel.SetEnabled(true);
                 }
                 
                 void InteriorExplorerViewingState::Update(float dt)
@@ -56,6 +60,7 @@ namespace ExampleApp
                 void InteriorExplorerViewingState::OnInteriorExplorerExit()
                 {
                     m_exiting = true;
+                    m_interiorExplorerUserInteractionModel.SetEnabled(false);
                 }
                 
             }

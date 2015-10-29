@@ -29,6 +29,8 @@ namespace ExampleApp
                 virtual void Update(float dt) const = 0;
                 
                 virtual InteriorsExplorerModel& GetInteriorsExplorerModel() const = 0;
+                
+                virtual InteriorExplorerUserInteractionModel& GetInteriorsExplorerUserInteractionModel() const = 0;
             };
         }
     }

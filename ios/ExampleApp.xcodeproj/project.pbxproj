@@ -625,6 +625,8 @@
 		27E936041BE12F48007D52C5 /* UserInteractionController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27E936011BE12F48007D52C5 /* UserInteractionController.cpp */; };
 		27E936071BE13F2A007D52C5 /* UserInteractionEnabledObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27E936051BE13F2A007D52C5 /* UserInteractionEnabledObserver.cpp */; };
 		27E936081BE13F2A007D52C5 /* UserInteractionEnabledObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27E936051BE13F2A007D52C5 /* UserInteractionEnabledObserver.cpp */; };
+		27E936381BE25BE6007D52C5 /* InteriorExplorerUserInteractionModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27E936361BE25BE6007D52C5 /* InteriorExplorerUserInteractionModel.cpp */; };
+		27E936391BE25BE6007D52C5 /* InteriorExplorerUserInteractionModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27E936361BE25BE6007D52C5 /* InteriorExplorerUserInteractionModel.cpp */; };
 		27E997521BB2B69000B0BE14 /* YelpSearchConstants.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27E997501BB2B69000B0BE14 /* YelpSearchConstants.cpp */; };
 		27E997531BB2B69000B0BE14 /* YelpSearchConstants.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27E997501BB2B69000B0BE14 /* YelpSearchConstants.cpp */; };
 		27EACB571BC4140700135BE6 /* icon1_tours.png in Resources */ = {isa = PBXBuildFile; fileRef = 27EACB541BC4140700135BE6 /* icon1_tours.png */; };
@@ -1976,6 +1978,8 @@
 		27E936051BE13F2A007D52C5 /* UserInteractionEnabledObserver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UserInteractionEnabledObserver.cpp; sourceTree = "<group>"; };
 		27E936061BE13F2A007D52C5 /* UserInteractionEnabledObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInteractionEnabledObserver.h; sourceTree = "<group>"; };
 		27E936091BE21A64007D52C5 /* UserInteractionEnabledChangedMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInteractionEnabledChangedMessage.h; sourceTree = "<group>"; };
+		27E936361BE25BE6007D52C5 /* InteriorExplorerUserInteractionModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InteriorExplorerUserInteractionModel.cpp; sourceTree = "<group>"; };
+		27E936371BE25BE6007D52C5 /* InteriorExplorerUserInteractionModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InteriorExplorerUserInteractionModel.h; sourceTree = "<group>"; };
 		27E997501BB2B69000B0BE14 /* YelpSearchConstants.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = YelpSearchConstants.cpp; sourceTree = "<group>"; };
 		27E997511BB2B69000B0BE14 /* YelpSearchConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YelpSearchConstants.h; sourceTree = "<group>"; };
 		27EACB541BC4140700135BE6 /* icon1_tours.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon1_tours.png; sourceTree = "<group>"; };
@@ -5268,6 +5272,8 @@
 				7E5811B11B1F050A007AD67F /* InteriorsExplorerModule.h */,
 				7E1D22C81B205455006A8703 /* InteriorsExplorerModel.cpp */,
 				7E1D22C91B205455006A8703 /* InteriorsExplorerModel.h */,
+				27E936361BE25BE6007D52C5 /* InteriorExplorerUserInteractionModel.cpp */,
+				27E936371BE25BE6007D52C5 /* InteriorExplorerUserInteractionModel.h */,
 				7E6732271BC3D7FB002A31FD /* InteriorWorldPinController.cpp */,
 				7E6732281BC3D7FB002A31FD /* InteriorWorldPinController.h */,
 				7E67322B1BC3DE2A002A31FD /* InteriorWorldPinSelectionHandler.h */,
@@ -7037,6 +7043,7 @@
 				7E3B89F71A385A290023C94E /* WorldPinsInFocusController.cpp in Sources */,
 				7E3B89E91A385A290023C94E /* WeatherMenuStateOption.cpp in Sources */,
 				18096F851A7F90A1006A6438 /* ExampleAppCustomWebLoadRequestFactory.cpp in Sources */,
+				27E936391BE25BE6007D52C5 /* InteriorExplorerUserInteractionModel.cpp in Sources */,
 				7E3B88CD1A385A290023C94E /* CompassController.cpp in Sources */,
 				7E1B50801ACAE45C0060FA4F /* InitialExperienceIntroViewInterop.mm in Sources */,
 				27DB89EF1BB3FF270020CDA5 /* YelpCategoryMapper.cpp in Sources */,
@@ -7497,6 +7504,7 @@
 				18FB64581A9240FC005A9411 /* Base64Transcoder.c in Sources */,
 				7E3B89F61A385A290023C94E /* WorldPinsInFocusController.cpp in Sources */,
 				7E3B89E81A385A290023C94E /* WeatherMenuStateOption.cpp in Sources */,
+				27E936381BE25BE6007D52C5 /* InteriorExplorerUserInteractionModel.cpp in Sources */,
 				18096F841A7F90A1006A6438 /* ExampleAppCustomWebLoadRequestFactory.cpp in Sources */,
 				7E3B88CC1A385A290023C94E /* CompassController.cpp in Sources */,
 				7E1B507F1ACAE45C0060FA4F /* InitialExperienceIntroViewInterop.mm in Sources */,

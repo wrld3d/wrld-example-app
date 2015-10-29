@@ -283,7 +283,7 @@ namespace ExampleApp
         
         InitialiseAppState(nativeUIFactories);
         
-        m_pUserInteractionModule = Eegeo_NEW(UserInteraction::SdkModel::UserInteractionModule)(m_pAppCameraModule->GetController(), *m_pCameraTransitionService, m_messageBus);
+        m_pUserInteractionModule = Eegeo_NEW(UserInteraction::SdkModel::UserInteractionModule)(m_pAppCameraModule->GetController(), *m_pCameraTransitionService, m_pInteriorsExplorerModule->GetInteriorsExplorerUserInteractionModel(), m_messageBus);
     }
 
     MobileExampleApp::~MobileExampleApp()
@@ -533,6 +533,7 @@ namespace ExampleApp
                                                                               *m_pStreamingVolume,
                                                                               m_pInteriorsExplorerModule->GetInteriorVisibilityUpdater(),
                                                                               m_pInteriorsExplorerModule->GetInteriorsExplorerModel(),
+                                                                              m_pInteriorsExplorerModule->GetInteriorsExplorerUserInteractionModel(),
                                                                               *m_pAppModeModel,
                                                                               m_pToursModule->GetTourService(),
                                                                               interiorsPresentationModule.GetInteriorSelectionModel(),

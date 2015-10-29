@@ -8,6 +8,7 @@
 #include "AppCamera.h"
 #include "BidirectionalBus.h"
 #include "ICameraTransitionController.h"
+#include "InteriorsExplorer.h"
 #include "UserInteraction.h"
 
 namespace ExampleApp
@@ -26,6 +27,7 @@ namespace ExampleApp
             public:
                 UserInteractionModule(AppCamera::SdkModel::IAppCameraController& appCameraController,
                                       CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
+                                      InteriorsExplorer::SdkModel::InteriorExplorerUserInteractionModel& interiorExplorerUserInteractionModel,
                                       ExampleAppMessaging::TMessageBus& messageBus);
                 
                 ~UserInteractionModule();

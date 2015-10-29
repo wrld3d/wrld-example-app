@@ -50,11 +50,14 @@ namespace ExampleApp
                 
                 InteriorsExplorerModel& GetInteriorsExplorerModel() const;
                 
+                InteriorExplorerUserInteractionModel& GetInteriorsExplorerUserInteractionModel() const;
+
             private:
                 
                 InteriorsExplorerModel* m_pModel;
                 View::InteriorsExplorerViewModel* m_pViewModel;
                 InteriorVisibilityUpdater* m_pVisibilityUpdater;
+                InteriorExplorerUserInteractionModel* m_pUserInteractionModel;
                 
                 InteriorWorldPinController* m_pWorldPinController;
                 InteriorsExplorerCameraController* m_pInteriorsCameraController;

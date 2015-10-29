@@ -11,6 +11,7 @@
 #include "GlobeCameraTouchControllerConfiguration.h"
 #include "GlobeCameraControllerConfiguration.h"
 #include "InteriorVisibilityUpdater.h"
+#include "InteriorExplorerUserInteractionModel.h"
 
 namespace ExampleApp
 {
@@ -30,6 +31,7 @@ namespace ExampleApp
                                                              ExampleAppMessaging::TMessageBus& messageBus,
                                                              Metrics::IMetricsService& metricsService)
             {
+                m_pUserInteractionModel = Eegeo_NEW(InteriorExplorerUserInteractionModel)();
                 
                 const float transitionTime = 0.5f;
                 m_pVisibilityUpdater = Eegeo_NEW(InteriorVisibilityUpdater)(interiorController, transitionTime);
@@ -84,6 +86,7 @@ namespace ExampleApp
                 Eegeo_DELETE m_pGlobeCameraTouchController;
                 Eegeo_DELETE m_pGlobeCameraController;
                 Eegeo_DELETE m_pVisibilityUpdater;
+                Eegeo_DELETE m_pUserInteractionModel;
             }
             
             View::InteriorsExplorerViewModel& InteriorsExplorerModule::GetInteriorsExplorerViewModel() const
@@ -115,6 +118,11 @@ namespace ExampleApp
             InteriorsExplorerModel& InteriorsExplorerModule::GetInteriorsExplorerModel() const
             {
                 return *m_pModel;
+            }
+            
+            InteriorExplorerUserInteractionModel& InteriorsExplorerModule::GetInteriorsExplorerUserInteractionModel() const
+            {
+                return *m_pUserInteractionModel;
             }
         }
     }
