@@ -96,7 +96,7 @@
          {
              "MaterialName": "swallowchrome-interior",
              "MaterialType":"InteriorsDiffuseTexturedMaterial",
-             "DiffuseTexture":"swallownoise01-interior-texture0"
+             "DiffuseTexture":"swallownoise01-interior-texture0",
              "CubeMapTexture":"swallowcubemap",
 			 "SpecularPower":100.0,
              "SpecularColor":[0.6,0.6,0.6,1.0],
