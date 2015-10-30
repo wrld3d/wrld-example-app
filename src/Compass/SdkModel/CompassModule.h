@@ -6,7 +6,6 @@
 #include "Compass.h"
 #include "ICompassModule.h"
 #include "Rendering.h"
-#include "GlobeCamera.h"
 #include "IIdentity.h"
 #include "Location.h"
 #include "CompassModeObserver.h"
@@ -15,6 +14,8 @@
 #include "IMetricsService.h"
 #include "AppModes.h"
 #include "AlertBox.h"
+#include "Interiors.h"
+#include "AppCamera.h"
 
 namespace ExampleApp
 {
@@ -34,7 +35,7 @@ namespace ExampleApp
             public:
                 CompassModule(Eegeo::Location::NavigationService& navigationService,
                               Eegeo::Location::ILocationService& locationService,
-                              Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& cameraController,
+                              ExampleApp::AppCamera::SdkModel::IAppCameraController& cameraController,
                               Eegeo::Helpers::IIdentityProvider& identityProvider,
                               ExampleAppMessaging::TMessageBus& messageBus,
                               Metrics::IMetricsService& metricsService,
