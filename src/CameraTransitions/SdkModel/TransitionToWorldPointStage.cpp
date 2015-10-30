@@ -46,15 +46,18 @@ namespace ExampleApp
             , m_terrainHeightProvider(terrainHeightProvider)
             , m_jumpIfFar(jumpIfFar)
             {
+                m_endTransitionInterestPointEcef = newInterestPoint;
+                m_endInterestDistance = distanceFromInterest;
+                m_endInterestHeading = newHeadingRadians;
+            }
+            
+            void TransitionToWorldPointStage::Start()
+            {
                 const Eegeo::Space::EcefTangentBasis& currentInterestBasis = m_gpsGlobeCameraController.GetInterestBasis();
                 m_startTransitionInterestPointEcef = currentInterestBasis.GetPointEcef();
                 m_startInterestDistance = m_gpsGlobeCameraController.GetDistanceToInterest();
                 m_startInterestHeading = Eegeo::Camera::CameraHelpers::GetAbsoluteBearingRadians(currentInterestBasis.GetPointEcef(),
-                                                                                                 currentInterestBasis.GetForward());;
-                
-                m_endTransitionInterestPointEcef = newInterestPoint;
-                m_endInterestDistance = distanceFromInterest;
-                m_endInterestHeading = newHeadingRadians;
+                                                                                                 currentInterestBasis.GetForward());
                 
                 m_transitionTime = 0.0f;
                 
@@ -72,10 +75,6 @@ namespace ExampleApp
                     else
                         m_startInterestHeading -= 2.f * Eegeo::Math::kPI;
                 }
-            }
-            
-            void TransitionToWorldPointStage::Start()
-            {
             }
             
             void TransitionToWorldPointStage::Update(float dt)

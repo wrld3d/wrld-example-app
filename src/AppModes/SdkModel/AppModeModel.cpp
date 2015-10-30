@@ -54,7 +54,7 @@ namespace ExampleApp
 
             AppMode AppModeModel::GetAppMode() const
             {
-                return m_appMode;
+                return m_switchAppMode ? m_previousAppMode : m_appMode;
             }
 
             void AppModeModel::SetAppMode(AppMode appMode)
