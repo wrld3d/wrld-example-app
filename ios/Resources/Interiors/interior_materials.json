@@ -46,14 +46,14 @@
         }
         ],
     "CubeMapTextures":[
-        {
-            "TextureKey":"PointLightsCubeMap",
-            "PositiveXFilename":"Interiors/PointLightCubeFace.png",
-            "NegativeXFilename":"Interiors/PointLightCubeFace.png",
-            "PositiveYFilename":"Interiors/PointLightCubeFace.png",
-            "NegativeYFilename":"Interiors/PointLightCubeFace.png",
-            "PositiveZFilename":"Interiors/PointLightCubeFace.png",
-            "NegativeZFilename":"Interiors/PointLightCubeFace.png"
+		{
+            "TextureKey":"swallowcubemap",
+            "PositiveXFilename":"Interiors/interior_swallow_posX.png",
+            "NegativeXFilename":"Interiors/interior_swallow_negX.png",
+            "PositiveYFilename":"Interiors/interior_swallow_posY.png",
+            "NegativeYFilename":"Interiors/interior_swallow_negY.png",
+            "PositiveZFilename":"Interiors/interior_swallow_posZ.png",
+            "NegativeZFilename":"Interiors/interior_swallow_negZ.png"
         }
     ],
     "Materials":[
@@ -85,14 +85,25 @@
              "MaterialName": "swallowglass01-interior",
              "MaterialType":"InteriorsCubeMappedMaterial",
              "DiffuseTexture":"swallowglass01-interior-texture0",
-             "CubeMapTexture":"PointLightsCubeMap",
-             "IsTranslucent":true,
-             "DiffuseColor":[1.0,1.0,1.0,0.5],
-             "SpecularPower":10.0,
-             "SpecularColor":[0.2,0.2,0.2,1.0],
-             "ReflectionColor":[0.2,0.2,0.2,1.0]
+             "CubeMapTexture":"swallowcubemap",
+             "DiffuseColor":[0.647,1.0,0.961,0.5],
+             "SpecularPower":100.0,
+             "SpecularColor":[0.4,0.4,0.4,1.0],
+             "ReflectionColor":[0.5,0.5,0.5,1.0],
+             "IsTranslucent":true
          },
-         
+		 
+         {
+             "MaterialName": "swallowchrome-interior",
+             "MaterialType":"InteriorsDiffuseTexturedMaterial",
+             "DiffuseTexture":"swallownoise01-interior-texture0",
+             "CubeMapTexture":"swallowcubemap",
+			 "SpecularPower":100.0,
+             "SpecularColor":[0.6,0.6,0.6,1.0],
+             "ReflectionColor":[0.1,0.1,0.1,1.0],
+             "SpecularityFromTextureLuminance":1.0
+         },
+		 
          {
              "MaterialName": "swallownoise01-interior",
              "MaterialType":"InteriorsDiffuseTexturedMaterial",
@@ -108,9 +119,12 @@
          {
              "MaterialName": "swallowwall01-interior",
              "MaterialType":"InteriorsSpecularMaterial",
-             "DiffuseTexture":"swallowwall01-interior-texture0",
-             "SpecularPower":20.0,
-             "SpecularColor":[0.4,0.4,0.4,1.0],
+             "DiffuseTexture":"swallowfloortiles01-interior-texture0",
+             "CubeMapTexture":"swallowcubemap",
+             "DiffuseColor":[0.8,0.8,0.8,1.0],
+             "SpecularPower":100.0,
+             "SpecularColor":[0.3,0.3,0.3,0.5],
+             "ReflectionColor":[0.1,0.1,0.1,1.0],
              "SpecularityFromTextureLuminance":1.0
          },
          
@@ -118,8 +132,10 @@
              "MaterialName": "swallowwood01-interior",
              "MaterialType":"InteriorsSpecularMaterial",
              "DiffuseTexture":"swallowwood01-interior-texture0",
-             "SpecularPower":15.0,
-             "SpecularColor":[0.3,0.3,0.3,1.0],
+             "CubeMapTexture":"swallowcubemap",
+			 "SpecularPower":100.0,
+             "SpecularColor":[0.6,0.6,0.6,1.0],
+             "ReflectionColor":[0.1,0.1,0.1,1.0],
              "SpecularityFromTextureLuminance":1.0
          },
 

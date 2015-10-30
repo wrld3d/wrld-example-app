@@ -25,12 +25,15 @@
 
     m_stateChangeAnimationTimeSeconds = 0.2f;
     
+    const bool isPhone = App::IsDeviceSmall();
+    
+    const float upperMargin = isPhone ? 20.0f : 50.0f;
+    
     m_dragTabWidth = (50.f * m_pixelScale);
     m_dragTabHeight = (50.f * m_pixelScale);
     
     const float headerContainerHeight = m_dragTabHeight;
-    const float headerContainerY = 50.f;
-    const bool isPhone = App::IsDeviceSmall();
+    const float headerContainerY = upperMargin;
 
     m_mainContainerOffscreenOffsetX = (0.f * m_pixelScale);
     m_mainContainerOffscreenOffsetY = (0.f * m_pixelScale);
