@@ -207,7 +207,7 @@ namespace ExampleApp
             {
                 Eegeo::Space::EcefTangentBasis cameraInterestBasis;
                 float headingRadians = Eegeo::Camera::CameraHelpers::GetAbsoluteBearingRadians(m_globeCameraController.GetInterestBasis().GetPointEcef(),
-                                                                                               m_globeCameraController.GetRenderCamera().GetModelMatrix().GetRow(2));
+                                                                                               m_globeCameraController.GetInterestBasis().GetForward());
                 
                 return Eegeo::Math::Rad2Deg(headingRadians);
             }
