@@ -9,7 +9,7 @@ namespace ExampleApp
         namespace View
         {
             ScreenControlViewModelBase::ScreenControlViewModelBase(bool isInitiallyOnScreen)
-                : m_onScreenState(isInitiallyOnScreen ? 1.f : 0.f)
+                : m_onScreenState(1.f)
                 , m_addedToScreen(isInitiallyOnScreen)
             {
 
@@ -23,14 +23,12 @@ namespace ExampleApp
             void ScreenControlViewModelBase::AddToScreen()
             {
                 m_addedToScreen = true;
-                m_onScreenState = 1.f;
                 m_onScreenStateChangedCallbacks.ExecuteCallbacks(*this, m_onScreenState);
             }
 
             void ScreenControlViewModelBase::RemoveFromScreen()
             {
                 m_addedToScreen = false;
-                m_onScreenState = 0.f;
                 m_onScreenStateChangedCallbacks.ExecuteCallbacks(*this, m_onScreenState);
             }
 
@@ -66,7 +64,7 @@ namespace ExampleApp
 
             float ScreenControlViewModelBase::OnScreenState() const
             {
-                return m_onScreenState;
+                return m_addedToScreen ? m_onScreenState : 0.0f;
             }
             
             bool ScreenControlViewModelBase::IsAddedToScreen() const
