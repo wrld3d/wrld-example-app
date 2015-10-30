@@ -6,6 +6,7 @@
 #include "CellConstants.h"
 #include "SecondaryMenuViewInterop.h"
 #include "MenuViewInterop.h"
+#include "App.h"
 
 @implementation SecondaryMenuView
 
@@ -21,13 +22,17 @@
     m_pColour = ExampleApp::Helpers::ColorPalette::WhiteTone;
 
     m_stateChangeAnimationTimeSeconds = 0.2f;
+    
+    const bool isPhone = App::IsDeviceSmall();
+    
+    const float upperMargin = isPhone ? 20.0f : 50.0f;
 
     m_mainContainerOffscreenOffsetX = (0.f * m_pixelScale);
     m_mainContainerOffscreenOffsetY = (0.f * m_pixelScale);
     m_mainContainerVisibleOnScreenWhenClosedX = (0.f * m_pixelScale);
     m_mainContainerVisibleOnScreenWhenClosedY = (0.f * m_pixelScale);
     m_mainContainerX = m_screenWidth - m_mainContainerVisibleOnScreenWhenClosedX;
-    m_mainContainerY = (50.f * m_pixelScale);
+    m_mainContainerY = (upperMargin * m_pixelScale);
     m_mainContainerOnScreenWidth = (220.f * m_pixelScale);
     m_mainContainerOnScreenHeight = m_screenHeight - m_mainContainerY;
     m_mainContainerWidth = m_mainContainerOnScreenWidth + m_mainContainerOffscreenOffsetX;
