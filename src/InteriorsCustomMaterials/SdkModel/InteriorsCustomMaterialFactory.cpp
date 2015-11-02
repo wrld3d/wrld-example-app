@@ -17,13 +17,15 @@ namespace ExampleApp
                                                                            Eegeo::Resources::Interiors::IInteriorsMaterialFactory& diffuseTexturedMaterialFactory,
                                                                            Eegeo::Resources::Interiors::IInteriorsMaterialFactory& diffuseSpecularMaterialFactory,
                                                                            Eegeo::Resources::Interiors::IInteriorsMaterialFactory& cubeMappedMaterialFactory,
-                                                                           Eegeo::Resources::Interiors::IInteriorsMaterialFactory& chromeMaterialFactory)
+                                                                           Eegeo::Resources::Interiors::IInteriorsMaterialFactory& chromeMaterialFactory,
+                                                                           Eegeo::Resources::Interiors::IInteriorsMaterialFactory& reflectionMaterialFactory)
             : m_materialDtoRepository(materialDtoRepository)
             , m_untexturedMaterialFactory(untexturedMaterialFactory)
             , m_diffuseTexturedMaterialFactory(diffuseTexturedMaterialFactory)
             , m_diffuseSpecularMaterialFactory(diffuseSpecularMaterialFactory)
             , m_cubeMappedMaterialFactory(cubeMappedMaterialFactory)
             , m_chromeMaterialFactory(chromeMaterialFactory)
+            , m_reflectionMaterialFactory(reflectionMaterialFactory)
             {
                 
             }
@@ -69,6 +71,10 @@ namespace ExampleApp
                 else if (materialFactoryType == InteriorsCustomMaterialKeys::InteriorsChromeMaterial)
                 {
                     return m_chromeMaterialFactory.TryCreate(customInteriorMaterialData);
+                }
+                else if (materialFactoryType == InteriorsCustomMaterialKeys::InteriorReflectionMaterial)
+                {
+                    return m_reflectionMaterialFactory.TryCreate(customInteriorMaterialData);
                 }
                 
                 return NULL;
