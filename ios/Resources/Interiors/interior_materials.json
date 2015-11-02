@@ -152,6 +152,12 @@
              "MaterialName": "swallowexterior01-interior",
              "MaterialType":"InteriorsDiffuseTexturedMaterial",
              "DiffuseTexture":"swallowexterior01-interior-texture0"
+         },
+         
+         {
+             "MaterialName": "swallowplaingray-interior-reflection",
+             "MaterialType":"InteriorsReflectionMaterial",
+             "DiffuseTexture":"swallowplaingray-interior-texture0"
          }
     ]
 }
