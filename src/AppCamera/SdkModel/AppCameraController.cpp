@@ -153,8 +153,11 @@ namespace ExampleApp
                 const Eegeo::m33 startOrientation = startCamera.GetModelMatrix();
                 const Eegeo::m33 endOrientation = endCamera.GetModelMatrix();
                 
-                const Eegeo::Quaternion startRotation = Eegeo::Quaternion::ExtractQuaternion(startOrientation);
-                const Eegeo::Quaternion endRotation = Eegeo::Quaternion::ExtractQuaternion(endOrientation);
+                Eegeo::Quaternion startRotation = Eegeo::Quaternion::ExtractQuaternion(startOrientation);
+                Eegeo::Quaternion endRotation = Eegeo::Quaternion::ExtractQuaternion(endOrientation);
+                
+                startRotation.Normalise();
+                endRotation.Normalise();
                 
                 Eegeo::Quaternion currentRotation;
                 Eegeo::Quaternion::Slerp(currentRotation, startRotation, endRotation, easedT);
