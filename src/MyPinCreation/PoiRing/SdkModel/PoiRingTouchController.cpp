@@ -70,6 +70,7 @@ namespace ExampleApp
                         bool hitIcon = Eegeo::Geometry::IntersectionTests::TestRaySphere(rayOrigin, rayDirection, iconPosition, iconSize/2.0f);
                         if ((rayIntersectionPoint - spherePosition).Length() < sphereRadius || hitIcon)
                         {
+                            m_dragOffset = rayIntersectionPoint - spherePosition;
                             m_isDragging = true;
                             return true;
                         }
@@ -81,6 +82,7 @@ namespace ExampleApp
                 bool PoiRingTouchController::HandleTouchUp(const AppInterface::TouchData& data)
                 {
                     m_isDragging = false;
+                    m_dragOffset = Eegeo::dv3();
 
                     if (m_myPinCreationModel.GetCreationStage() != Ring)
                     {
@@ -112,7 +114,7 @@ namespace ExampleApp
 
                         if (rayPick)
                         {
-                            m_myPinCreationModel.SetPosition(rayIntersectionPoint);
+                            m_myPinCreationModel.SetPosition(rayIntersectionPoint - m_dragOffset);
                         }
 
                         return true;
