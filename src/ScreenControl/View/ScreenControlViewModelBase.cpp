@@ -23,12 +23,14 @@ namespace ExampleApp
             void ScreenControlViewModelBase::AddToScreen()
             {
                 m_addedToScreen = true;
+                m_onScreenState = 1.0f;
                 m_onScreenStateChangedCallbacks.ExecuteCallbacks(*this, m_onScreenState);
             }
 
             void ScreenControlViewModelBase::RemoveFromScreen()
             {
                 m_addedToScreen = false;
+                m_onScreenState = 0.0f;
                 m_onScreenStateChangedCallbacks.ExecuteCallbacks(*this, m_onScreenState);
             }
 
