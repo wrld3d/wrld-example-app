@@ -416,7 +416,7 @@
         return;
     }
 
-    if (![self checkCameraPermissionsEnabled])
+    if ([self checkCameraPermissionsDisabled])
     {
         NSString* appName =  [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDisplayName"];
         NSString* message = [NSString stringWithFormat: @"Please ensure %@ has camera access in your privacy settings", appName];
@@ -641,10 +641,12 @@
     [m_pRootViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (BOOL) checkCameraPermissionsEnabled
+- (BOOL) checkCameraPermissionsDisabled
 {
     AVAuthorizationStatus authorizationStatus = [AVCaptureDevice authorizationStatusForMediaType: AVMediaTypeVideo];
-    return authorizationStatus == AVAuthorizationStatusAuthorized;
+    
+    return authorizationStatus == AVAuthorizationStatusDenied ||
+           authorizationStatus == AVAuthorizationStatusRestricted;
 }
 
 @end
