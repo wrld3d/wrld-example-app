@@ -27,9 +27,7 @@ public class InteriorsFloorSelectedListener implements OnItemClickListener
     @Override
     public void onItemClick (AdapterView<?> parent, View itemClicked, int position, long id)
     {
-        final int index = position;
-
-        InteriorsExplorerViewJniMethods.OnFloorSelected(m_nativeCallerPointer, m_numOfFloors - index);
+        InteriorsExplorerViewJniMethods.OnFloorSelected(m_nativeCallerPointer, m_numOfFloors - position);
     }
 }
 

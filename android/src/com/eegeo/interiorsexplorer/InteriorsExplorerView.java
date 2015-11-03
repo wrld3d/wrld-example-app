@@ -156,7 +156,7 @@ public class InteriorsExplorerView implements View.OnClickListener
     
     public void setSelectedFloorIndex(int index)
     {
-    	InteriorsExplorerViewJniMethods.OnFloorSelected(m_nativeCallerPointer, index);
+    	m_floorListAdapter.updateSelectedItem(index);
     }
     
     public void setTouchEnabled(boolean enabled)
