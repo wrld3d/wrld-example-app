@@ -9,6 +9,11 @@
 #import "UIView+TouchExclusivity.h"
 #import <QuartzCore/QuartzCore.h>
 
+namespace
+{
+    const int LabelTag = 1;
+}
+
 @implementation InteriorsExplorerView
 
 - (ExampleApp::InteriorsExplorer::View::InteriorsExplorerViewInterop*) getInterop
@@ -141,6 +146,20 @@
     self.pFloorPanelTop.frame = CGRectMake(0, 0, floorPanelWidth, borderHeight);
     self.pFloorList.frame = CGRectMake(0, borderHeight, floorPanelWidth, listHeight);
     self.pFloorPanelBottom.frame = CGRectMake(0, borderHeight+listHeight-1, floorPanelWidth, borderHeight);
+
+    NSInteger rows =  [self.pFloorList numberOfRowsInSection:0];
+    for (int row = 0; row < rows; row++) {
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
+        UITableViewCell *cell = [self.pFloorList cellForRowAtIndexPath:indexPath];//**here, for those cells not in current screen, cell is nil**
+        if(cell != nil)
+        {
+            UILabel* label = (UILabel *)[cell.contentView viewWithTag:LabelTag];
+            UIFont* font = label.font;
+            label.frame = CGRectMake(cell.frame.size.width/2 - floorPanelWidth/2, cell.frame.size.height/2 - font.lineHeight/2, floorPanelWidth, font.lineHeight);
+            [label setNeedsLayout];
+            [label layoutIfNeeded];
+        }
+    };
 }
 
 - (void)dealloc
@@ -202,8 +221,8 @@
     int rowIndex = [self reverseIndex:currentlySelectedFloorIndex];
     [self.pFloorList selectRowAtIndexPath:[NSIndexPath indexPathForRow:rowIndex inSection:0] animated:NO scrollPosition:static_cast<UITableViewScrollPosition>(0)];
     [self.pFloorList sizeToFit];
-    [self layoutIfNeeded];
     [self setNeedsLayout];
+    [self layoutIfNeeded];
 }
 
 - (int) reverseIndex:(int)floorIndex
@@ -235,19 +254,28 @@
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *Identifier = @"ReusableCellIdentifier";
+    UILabel *label;
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:Identifier];
     if(cell == nil)
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:Identifier];
-        cell.textLabel.textColor = ExampleApp::Helpers::ColorPalette::DarkGreyTone;
+        
+        label = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, 0.0, 0.0)];
+        label.tag = LabelTag;
+        label.textAlignment = NSTextAlignmentCenter;
+        label.textColor = ExampleApp::Helpers::ColorPalette::DarkGreyTone;
+        label.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+        [cell.contentView addSubview:label];
+        
         cell.backgroundView = [[UIImageView alloc] initWithImage:[ [UIImage imageNamed:@"place_pin_background"] stretchableImageWithLeftCapWidth:0.0 topCapHeight:0.0] ];
         UIView *selectedColorView = [[UIView alloc] init];
         selectedColorView.backgroundColor = ExampleApp::Helpers::ColorPalette::LightGreyTone;
         [cell setSelectedBackgroundView:selectedColorView];
+        
     }
     
-    cell.textLabel.text = [NSString stringWithUTF8String:m_tableViewFloorNames.at(indexPath.item).c_str()];
-    cell.textLabel.adjustsFontSizeToFitWidth = YES;
+    label = (UILabel *)[cell.contentView viewWithTag:LabelTag];
+    label.text = [NSString stringWithUTF8String:m_tableViewFloorNames.at(indexPath.item).c_str()];
     
     return cell;
 }

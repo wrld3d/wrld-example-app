@@ -55,6 +55,7 @@ namespace ExampleApp
                     Eegeo::Resources::Interiors::InteriorController& m_interiorController;
 
                     bool m_isDragging;
+                    Eegeo::dv3 m_dragOffset;
 
                     bool PerformRayPick(const Eegeo::dv3& rayOrigin, Eegeo::dv3& rayDirection, Eegeo::dv3& out_rayIntersectionPoint, double& out_intersectionParam);
                 };

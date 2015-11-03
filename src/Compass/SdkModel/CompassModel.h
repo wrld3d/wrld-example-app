@@ -7,7 +7,7 @@
 #include "ICompassModel.h"
 #include "Rendering.h"
 #include "CallbackCollection.h"
-#include "GlobeCamera.h"
+#include "AppCamera.h"
 #include "Location.h"
 #include "IMetricsService.h"
 #include "AppModes.h"
@@ -26,7 +26,8 @@ namespace ExampleApp
                 Eegeo::Location::NavigationService& m_navigationService;
                 InteriorsNavigation::SdkModel::IInteriorsNavigationService& m_interiorsNavigationService;
                 Eegeo::Location::ILocationService& m_locationService;
-                Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& m_cameraController;
+                ExampleApp::AppCamera::SdkModel::IAppCameraController& m_cameraController;
+                Eegeo::Helpers::CallbackCollection0 m_compassAllowedChangedCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_gpsModeChangedCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_gpsModeUnauthorizedCallbacks;
                 GpsMode::Values m_gpsMode;
@@ -47,7 +48,7 @@ namespace ExampleApp
                 CompassModel(Eegeo::Location::NavigationService& navigationService,
                              InteriorsNavigation::SdkModel::IInteriorsNavigationService& interiorsNavigationService,
                              Eegeo::Location::ILocationService& locationService,
-                             Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& controller,
+                             ExampleApp::AppCamera::SdkModel::IAppCameraController& Cameracontroller,
                              Metrics::IMetricsService& metricsService,
                              AppModes::SdkModel::IAppModeModel& appModeModel,
                              Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory);

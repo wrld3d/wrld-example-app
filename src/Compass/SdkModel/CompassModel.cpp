@@ -2,7 +2,7 @@
 
 #include "CompassModel.h"
 #include "EnvironmentFlatteningService.h"
-#include "GpsGlobeCameraController.h"
+#include "IAppCameraController.h"
 #include "CameraHelpers.h"
 #include "RenderCamera.h"
 #include "VectorMath.h"
@@ -22,14 +22,14 @@ namespace ExampleApp
             CompassModel::CompassModel(Eegeo::Location::NavigationService& navigationService,
                                        InteriorsNavigation::SdkModel::IInteriorsNavigationService& interiorsNavigationService,
                                        Eegeo::Location::ILocationService& locationService,
-                                       Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& controller,
+                                       ExampleApp::AppCamera::SdkModel::IAppCameraController& cameraController,
                                        Metrics::IMetricsService& metricsService,
                                        AppModes::SdkModel::IAppModeModel& appModeModel,
                                        Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory)
                 :m_navigationService(navigationService)
                 ,m_interiorsNavigationService(interiorsNavigationService)
                 ,m_locationService(locationService)
-                ,m_cameraController(controller)
+                ,m_cameraController(cameraController)
                 ,m_metricsService(metricsService)
                 , m_appModeModel(appModeModel)
                 , m_appModeChangedCallback(this, &CompassModel::OnAppModeChanged)

@@ -5,6 +5,7 @@
 #include "CompassModel.h"
 #include "CompassUpdateController.h"
 
+
 namespace ExampleApp
 {
     namespace Compass
@@ -14,7 +15,7 @@ namespace ExampleApp
             CompassModule::CompassModule(Eegeo::Location::NavigationService& navigationService,
                                          InteriorsNavigation::SdkModel::IInteriorsNavigationService& interiorsNavigationService,
                                          Eegeo::Location::ILocationService& locationService,
-                                         Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& cameraController,
+                                         ExampleApp::AppCamera::SdkModel::IAppCameraController& cameraController,
                                          Eegeo::Helpers::IIdentityProvider& identityProvider,
                                          ExampleAppMessaging::TMessageBus& messageBus,
                                          Metrics::IMetricsService& metricsService,

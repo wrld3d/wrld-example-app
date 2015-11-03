@@ -436,6 +436,7 @@ namespace ExampleApp
                                                                                                      m_pAboutPageModule->GetAboutPageViewModel(),
                                                                                                      m_pOptionsModule->GetOptionsViewModel(),
                                                                                                      m_metricsService);
+        
         m_pPlaceJumpsModule = Eegeo_NEW(PlaceJumps::SdkModel::PlaceJumpsModule)(m_platformAbstractions.GetFileIO(),
                               CameraTransitionController(),
                               m_pSecondaryMenuModule->GetSecondaryMenuViewModel(),
@@ -547,11 +548,13 @@ namespace ExampleApp
                                                                                                                          m_pInteriorsExplorerModule->GetInteriorsCameraController(),
                                                                                                                          m_pInteriorsExplorerModule->GetTouchController(),
                                                                                                                          interiorsPresentationModule.GetAppLevelController());
+        // TODO: Check if this module is still relevant
+        m_pAppCameraModule = Eegeo_NEW(AppCamera::SdkModel::AppCameraModule)();
         
         m_pCompassModule = Eegeo_NEW(ExampleApp::Compass::SdkModel::CompassModule)(*m_pNavigationService,
                                                                                    *m_pInteriorsNavigationService,
                                                                                    world.GetLocationService(),
-                                                                                   *m_pGlobeCameraController,
+                                                                                   m_pAppCameraModule->GetController(),
                                                                                    m_identityProvider,
                                                                                    m_messageBus,
                                                                                    m_metricsService,
@@ -595,9 +598,8 @@ namespace ExampleApp
         m_pSecondaryMenuModule->AddMenuSection("My Reports", m_pMyPinsModule->GetMyPinsMenuModel(), true);
         m_pSecondaryMenuModule->AddMenuSection("Search", m_pCategorySearchModule->GetCategorySearchMenuModel(), true);
         m_pSecondaryMenuModule->AddMenuSection("Settings", m_pSecondaryMenuModule->GetSettingsMenuModel(), true);
-       
-        // TODO: Check if this module is still relevant 
-        m_pAppCameraModule = Eegeo_NEW(AppCamera::SdkModel::AppCameraModule)();
+
+
     }
     
     void MobileExampleApp::InitialiseAppState(Eegeo::UI::NativeUIFactories& nativeUIFactories)
@@ -628,8 +630,6 @@ namespace ExampleApp
     {
         m_initialExperienceModule.TearDown();
 
-        Eegeo_DELETE m_pAppCameraModule;
-
         Eegeo_DELETE m_pInteriorsCustomMaterialsModule;
         
         Eegeo_DELETE m_pToursModule;
@@ -645,6 +645,8 @@ namespace ExampleApp
         Eegeo_DELETE m_pInteriorsExplorerModule;
         
         Eegeo_DELETE m_pCompassModule;
+        
+        Eegeo_DELETE m_pAppCameraModule;
         
         Eegeo_DELETE m_pInteriorsNavigationService;
         
