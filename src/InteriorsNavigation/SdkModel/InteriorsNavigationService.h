@@ -32,6 +32,8 @@ namespace ExampleApp
                 
                 void Update(float dt);
                 
+                bool IsPositionInInterior();
+                
             private:
                 
                 Eegeo::Location::ILocationService& m_locationService;

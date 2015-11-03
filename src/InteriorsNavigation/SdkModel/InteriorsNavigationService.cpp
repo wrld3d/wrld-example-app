@@ -10,6 +10,8 @@
 #include "GlobeCameraController.h"
 #include "LatLongAltitude.h"
 #include "InteriorController.h"
+#include "InteriorsModel.h"
+#include "InteriorsFloorModel.h"
 
 namespace ExampleApp
 {
@@ -142,6 +144,41 @@ namespace ExampleApp
                     
                     m_targetLatitude = latLong.GetLatitudeInDegrees();
                     m_targetLongitude = latLong.GetLongitudeInDegrees();
+                }
+            }
+            
+            bool InteriorsNavigationService::IsPositionInInterior()
+            {
+                Eegeo::Space::LatLong latLong = Eegeo::Space::LatLong(0.0f, 0.0f);
+                const Eegeo::Resources::Interiors::InteriorsModel* pInteriorsModel;
+                
+                if(m_locationService.GetLocation(latLong) && m_interiorController.TryGetCurrentModel(pInteriorsModel))
+                {
+                    const Eegeo::Geometry::Bounds3D& tangentBounds = pInteriorsModel->GetTangentSpaceBounds();
+                    const Eegeo::dv3 boundsEcefOrigin = pInteriorsModel->GetTangentBasis().GetPointEcef();
+                    float targetAltitude = Helpers::InteriorHeightHelpers::GetFloorHeightAboveSeaLevel(*pInteriorsModel, m_interiorController.GetCurrentFloorIndex());
+                    
+                    Eegeo::Geometry::SingleSphere toleranceSphere;
+                    toleranceSphere.centre = (Eegeo::Space::LatLongAltitude::FromRadians(latLong.GetLatitude(),
+                                                                                        latLong.GetLongitude(),
+                                                                                        targetAltitude).ToECEF() - boundsEcefOrigin).ToSingle();
+                    toleranceSphere.radius = 2.0f;
+                    
+                    //TODO: change back to use real tangent bounds once bug related to it's origin not being the tangent basis one is fixed
+                    Eegeo::v3 tangentBoundsCentre = (tangentBounds.GetMax() + tangentBounds.GetMin())*0.5f;
+                    Eegeo::Geometry::Bounds3D correctedBounds(tangentBounds.GetMin()- tangentBoundsCentre, tangentBounds.GetMax()- tangentBoundsCentre);
+                    if(correctedBounds.intersectsSphere(toleranceSphere))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
                 }
             }
         }

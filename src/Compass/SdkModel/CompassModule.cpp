@@ -19,6 +19,7 @@ namespace ExampleApp
                                          Eegeo::Helpers::IIdentityProvider& identityProvider,
                                          ExampleAppMessaging::TMessageBus& messageBus,
                                          Metrics::IMetricsService& metricsService,
+                                         InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorExplorerModel,
                                          AppModes::SdkModel::IAppModeModel& appModeModel,
                                          Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory)
             {
@@ -27,6 +28,7 @@ namespace ExampleApp
                                                    locationService,
                                                    cameraController,
                                                    metricsService,
+                                                   interiorExplorerModel,
                                                    appModeModel,
                                                    alertBoxFactory);
                 

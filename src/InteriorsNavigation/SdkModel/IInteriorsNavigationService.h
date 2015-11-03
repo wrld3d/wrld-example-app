@@ -20,6 +20,8 @@ namespace ExampleApp
                 virtual Eegeo::Location::NavigationService::GpsMode GetGpsMode() const = 0;
                 
                 virtual void Update(float dt) = 0;
+                
+                virtual bool IsPositionInInterior() = 0;
             };
             
         }

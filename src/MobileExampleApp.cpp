@@ -558,6 +558,7 @@ namespace ExampleApp
                                                                                    m_identityProvider,
                                                                                    m_messageBus,
                                                                                    m_metricsService,
+                                                                                   m_pInteriorsExplorerModule->GetInteriorsExplorerModel(),
                                                                                    *m_pAppModeModel,
                                                                                    m_pWorld->GetNativeUIFactories().AlertBoxFactory());
         
