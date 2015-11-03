@@ -30,7 +30,6 @@ namespace ExampleApp
                 InteriorsExplorerController* m_pController;
                 InteriorsExplorerView* m_pView;
                 
-                
             public:
                 InteriorsExplorerViewModule(InteriorsExplorerViewModel& viewModel,
                                             ExampleAppMessaging::TMessageBus& messageBus,
@@ -39,6 +38,7 @@ namespace ExampleApp
                                             ExampleApp::Menu::View::IMenuViewModel& searchResultMenuViewModel,
                                             ScreenControl::View::IScreenControlViewModel& flattenViewModel,
                                             ScreenControl::View::IScreenControlViewModel& compassViewModel,
+											ScreenControl::View::IScreenControlViewModel& watermarkViewModel,
                                             const Eegeo::Rendering::ScreenProperties& screenProperties,
                                             Eegeo::Helpers::IdentityProvider& identityProvider,
 											AndroidNativeState &nativeState);

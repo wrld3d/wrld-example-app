@@ -16,7 +16,7 @@
         android:layout_centerInParent="true"
         android:textColor="@color/darkgrey"
         android:textSize="18dp"
-        android:background="#FFFFFF"
+        android:background="@drawable/place_pin_background"
         android:id="@+id/floor_name" >
 		</TextView>
 	</LinearLayout>	
