@@ -646,6 +646,8 @@
 		5633F8EB1A79289500D69813 /* libFlurry_6.0.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5633F8EA1A79289500D69813 /* libFlurry_6.0.0.a */; };
 		5633F8ED1A7928C500D69813 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5633F8EC1A7928C500D69813 /* Security.framework */; };
 		5637B7071A261A5400181973 /* image_blank.png in Resources */ = {isa = PBXBuildFile; fileRef = 56FBCDED1A0BB5150026546E /* image_blank.png */; };
+		565FE37E1BE8B18D00232A74 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 565FE37D1BE8B18D00232A74 /* AVFoundation.framework */; };
+		565FE37F1BE8B19100232A74 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 565FE37D1BE8B18D00232A74 /* AVFoundation.framework */; };
 		566306DB1AD2D69800980426 /* stars_0_0.png in Resources */ = {isa = PBXBuildFile; fileRef = 566306BD1AD2D69800980426 /* stars_0_0.png */; };
 		566306DC1AD2D69800980426 /* stars_0_0.png in Resources */ = {isa = PBXBuildFile; fileRef = 566306BD1AD2D69800980426 /* stars_0_0.png */; };
 		566306DD1AD2D69800980426 /* stars_0_0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 566306BE1AD2D69800980426 /* stars_0_0@2x.png */; };
@@ -1999,6 +2001,7 @@
 		562FD15D1B46C73F009A85D7 /* InteriorsEntityPinData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InteriorsEntityPinData.h; sourceTree = "<group>"; };
 		5633F8EA1A79289500D69813 /* libFlurry_6.0.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libFlurry_6.0.0.a; path = Include/libFlurry_6.0.0.a; sourceTree = "<group>"; };
 		5633F8EC1A7928C500D69813 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		565FE37D1BE8B18D00232A74 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		566306BD1AD2D69800980426 /* stars_0_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stars_0_0.png; sourceTree = "<group>"; };
 		566306BE1AD2D69800980426 /* stars_0_0@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stars_0_0@2x.png"; sourceTree = "<group>"; };
 		566306BF1AD2D69800980426 /* stars_0_0@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stars_0_0@3x.png"; sourceTree = "<group>"; };
@@ -3017,6 +3020,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				565FE37F1BE8B19100232A74 /* AVFoundation.framework in Frameworks */,
 				56BFB0C81A8B76D200572C99 /* libapps-on-maps-cpp11-sim.a in Frameworks */,
 				56BFB0CA1A8B76D200572C99 /* libapps-on-maps-cpp11.a in Frameworks */,
 				56BFB0C31A8B73ED00572C99 /* libturbojpeg.a in Frameworks */,
@@ -3041,6 +3045,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				565FE37E1BE8B18D00232A74 /* AVFoundation.framework in Frameworks */,
 				56D620DA1A8B641200828A9E /* libapps-on-maps-sim.a in Frameworks */,
 				56D620DB1A8B641200828A9E /* libapps-on-maps.a in Frameworks */,
 				56D620DC1A8B641200828A9E /* libturbojpeg.a in Frameworks */,
@@ -5371,6 +5376,7 @@
 		7EE481E916836F370006E99B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				565FE37D1BE8B18D00232A74 /* AVFoundation.framework */,
 				56BFB0C91A8B76D200572C99 /* libapps-on-maps-cpp11.a */,
 				56BFB0C41A8B73ED00572C99 /* libapps-on-maps-cpp11-sim.a */,
 				56BFB0C51A8B73ED00572C99 /* libsdk-extensions-sqlite-cpp11-sim.a */,

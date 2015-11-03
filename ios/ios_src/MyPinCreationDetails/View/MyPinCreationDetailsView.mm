@@ -4,8 +4,10 @@
 #include "UIColors.h"
 #include "ImageHelpers.h"
 #include "App.h"
+
 #import "UIView+TouchExclusivity.h"
 #import <QuartzCore/QuartzCore.h>
+#import <AVFoundation/AVFoundation.h>
 
 @implementation MyPinCreationDetailsView
 
@@ -410,9 +412,25 @@
                                       otherButtonTitles: nil];
 
         [noCameraAlert show];
+        [noCameraAlert release];
         return;
     }
 
+    if (![self checkCameraPermissionsEnabled])
+    {
+        NSString* appName =  [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDisplayName"];
+        NSString* message = [NSString stringWithFormat: @"Please ensure %@ has camera access in your privacy settings", appName];
+        UIAlertView* noPermissionsAlert = [[UIAlertView alloc] initWithTitle: @"Unable to access camera"
+                                                                     message: message
+                                                                    delegate: nil
+                                                           cancelButtonTitle: @"Dismiss"
+                                                           otherButtonTitles: nil];
+        
+        [noPermissionsAlert show];
+        [noPermissionsAlert release];
+        return;
+    }
+    
 
     UIImagePickerController *imagePicker = [[[UIImagePickerController alloc] init] autorelease];
 
@@ -621,6 +639,12 @@
         [self.pPopover dismissPopoverAnimated: YES];
     }
     [m_pRootViewController dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (BOOL) checkCameraPermissionsEnabled
+{
+    AVAuthorizationStatus authorizationStatus = [AVCaptureDevice authorizationStatusForMediaType: AVMediaTypeVideo];
+    return authorizationStatus == AVAuthorizationStatusAuthorized;
 }
 
 @end
