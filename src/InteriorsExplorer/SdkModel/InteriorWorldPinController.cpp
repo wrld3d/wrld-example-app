@@ -56,14 +56,34 @@ namespace ExampleApp
                 m_interiorIdToWorldPinMap.clear();
             }
             
-            const bool InteriorWorldPinController::PinInteractionAllowed() const
+            const bool InteriorWorldPinController::PinInteractionAllowed(const std::string& interiorId) const
             {
                 return !m_menuIsDragging &&
-                    m_interiorController.GetCurrentState() == Eegeo::Resources::Interiors::InteriorViewState::NoInteriorSelected;
+                    m_interiorController.GetCurrentState() == Eegeo::Resources::Interiors::InteriorViewState::NoInteriorSelected &&
+                    m_deferedRemovalMap.find(interiorId) == m_deferedRemovalMap.end();
+            }
+            
+            void InteriorWorldPinController::Update(float dt)
+            {
+                std::map<std::string, WorldPins::SdkModel::WorldPinItemModel*>::iterator it;
+                std::map<std::string, WorldPins::SdkModel::WorldPinItemModel*>::iterator nextIt;
+                for(it = m_deferedRemovalMap.begin(); it != m_deferedRemovalMap.end(); it = nextIt)
+                {
+                    nextIt = it;
+                    ++nextIt;
+                    m_worldPinsService.RemovePin(it->second);
+                    m_interiorIdToWorldPinMap.erase(it->first);
+                    m_deferedRemovalMap.erase(it);
+                }
             }
             
             void InteriorWorldPinController::HandleMarkerAdded(const Eegeo::Resources::Interiors::Markers::InteriorMarkerModel& markerModel)
             {
+                if(m_deferedRemovalMap.erase(markerModel.GetInteriorId().Value()) != 0)
+                {
+                    return;
+                }
+                
                 Eegeo_ASSERT(m_interiorIdToWorldPinMap.find(markerModel.GetInteriorId().Value()) == m_interiorIdToWorldPinMap.end(),
                              "InteriorWorldPinController already has a pin with that Id");
                 
@@ -101,9 +121,8 @@ namespace ExampleApp
                              "InteriorWorldPinController does not have a pin with that Id");
                 
                 WorldPins::SdkModel::WorldPinItemModel* pPinModel = m_interiorIdToWorldPinMap[markerModel.GetInteriorId().Value()];
-                m_worldPinsService.RemovePin(pPinModel);
                 
-                m_interiorIdToWorldPinMap.erase(markerModel.GetInteriorId().Value());
+                m_deferedRemovalMap[markerModel.GetInteriorId().Value()] = pPinModel;
             }
             
             void InteriorWorldPinController::HandleMenuDragged(const Menu::MenuDragStateChangedMessage &message)
