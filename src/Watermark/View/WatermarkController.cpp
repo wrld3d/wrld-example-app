@@ -39,7 +39,7 @@ namespace ExampleApp
             
             void WatermarkController::OnAppModeChanged(const AppModes::AppModeChangedMessage& message)
             {
-                m_appModeAllowsOpen = message.GetAppMode() == AppModes::SdkModel::WorldMode;
+                m_appModeAllowsOpen = message.GetAppMode() == (AppModes::SdkModel::WorldMode || AppModes::SdkModel::InteriorMode);
                 
                 if(m_appModeAllowsOpen)
                 {

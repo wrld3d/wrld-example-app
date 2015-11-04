@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout 
+	xmlns:android="http://schemas.android.com/apk/res/android"	    
+	android:id="@+id/interiors_floor_list_container"
+	android:layout_width="50dp"
+	android:layout_height="fill_parent"
+	android:background="@android:color/transparent"
+	android:cacheColorHint="@android:color/transparent" >
+    
+    <ListView
+        android:id="@+id/interiors_floor_item_list"
+	        android:layout_width="fill_parent"
+	        android:layout_height="fill_parent"
+	        android:dividerHeight="0dp"
+			android:divider="@null"
+			android:listSelector="@android:color/transparent"
+			android:background="@android:color/transparent"
+			android:cacheColorHint="@android:color/transparent"
+		    android:clipChildren="false"
+		    android:clipToPadding="false">
+	</ListView>
+
+</RelativeLayout>
