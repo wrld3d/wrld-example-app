@@ -131,9 +131,10 @@ namespace ExampleApp
                 Eegeo::Pins::Pin* pPin = m_pinRepository.GetPinById(pinItemModel.Id());
                 Eegeo_ASSERT(pPin != NULL);
 
-                ecefLocation = m_environmentFlatteningService.GetScaledPointEcef(pPin->GetEcefPosition(),
-                               m_environmentFlatteningService.GetCurrentScale());
-
+                ecefLocation = m_environmentFlatteningService.GetScaledPointAboveGroundEcef(pPin->GetEcefPosition(),
+                                                                                            pPin->GetHeightAboveTerrain(),
+                                                                                            m_environmentFlatteningService.GetCurrentScale());
+                
                 Eegeo::Geometry::Bounds2D outScreenBounds = Eegeo::Geometry::Bounds2D::Empty();
                 m_pinController.GetScreenBoundsForPin(*pPin, outScreenBounds);
                 screenLocation = outScreenBounds.center();

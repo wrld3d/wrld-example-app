@@ -133,6 +133,7 @@ AppHost::AppHost(
     platformConfig.OptionsConfig.StartMapModuleAutomatically = false;
     platformConfig.OptionsConfig.EnableInteriors = true;
     platformConfig.OptionsConfig.InteriorsControlledByApp = true;
+    platformConfig.OptionsConfig.InteriorsAffectedByFlattening = false;
     
     platformConfig.CoverageTreeConfig.ManifestUrl = applicationConfiguration.CoverageTreeManifestURL();
     platformConfig.CityThemesConfig.StreamedManifestUrl = applicationConfiguration.ThemeManifestURL();

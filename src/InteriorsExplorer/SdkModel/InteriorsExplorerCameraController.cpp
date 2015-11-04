@@ -14,8 +14,9 @@
 #include "CameraHelpers.h"
 #include "CurrentInteriorViewModel.h"
 #include "InteriorsFloorModel.h"
-
+#include "InteriorHeightHelpers.h"
 #include "GlobeCameraController.h"
+#include "EnvironmentFlatteningService.h"
 
 namespace ExampleApp
 {
@@ -27,11 +28,7 @@ namespace ExampleApp
             {
                 float CalcFloorHeightAboveBase(const Eegeo::Resources::Interiors::InteriorsModel& model, int floorIndex)
                 {
-                    float modelBaseAltitude = model.GetTangentSpaceBounds().GetMin().y;
-                    float floorAltitude = model.GetFloorAtIndex(floorIndex).GetTangentSpaceBounds().Center().y;
-                    float floorHeightAboveBase = floorAltitude - modelBaseAltitude;
-                    
-                    return floorHeightAboveBase;
+                    return ExampleApp::Helpers::InteriorHeightHelpers::INTERIOR_FLOOR_HEIGHT * floorIndex;
                 }
             }
             
@@ -39,15 +36,17 @@ namespace ExampleApp
             InteriorsExplorerCameraController::InteriorsExplorerCameraController(
                                                                 Eegeo::Resources::Interiors::InteriorController& interiorController,
                                                                 Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                                                                Eegeo::Resources::Interiors::Markers::InteriorMarkerModelRepository& markerRepository,
+                                                                const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                                                 Eegeo::Camera::GlobeCamera::GlobeCameraTouchController& globeCameraTouchController,
-                                                                Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController)
+                                                                Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController,
+                                                                const bool interiorsAffectedByFlattening)
             : m_interiorController(interiorController)
             , m_interiorSelectionModel(interiorSelectionModel)
-            , m_markerRepository(markerRepository)
             , m_globeCameraTouchController(globeCameraTouchController)
             , m_globeCameraController(globeCameraController)
+            , m_environmentFlatteningService(environmentFlatteningService)
             , m_cameraTouchEnabled(false)
+            , m_interiorsAffectedByFlattening(interiorsAffectedByFlattening)
             {
                 // Temp manually set initial cam pos.
                 Eegeo::Space::EcefTangentBasis basis;
@@ -73,7 +72,29 @@ namespace ExampleApp
             
             Eegeo::dv3 InteriorsExplorerCameraController::ComputeNonFlattenedCameraPosition() const
             {
-                return m_globeCameraController.ComputeNonFlattenedCameraPosition();
+                const Eegeo::Resources::Interiors::InteriorsModel* pModel = NULL;
+                if(!m_interiorController.TryGetCurrentModel(pModel))
+                {
+                    return m_globeCameraController.ComputeNonFlattenedCameraPosition();
+                }
+                
+                float baseHeight = pModel->GetTangentSpaceBounds().GetMin().y;
+                float floorOffsetHeight = GetFloorOffsetHeight();
+                float altitude = (baseHeight + floorOffsetHeight);
+                Eegeo::dv3 unflattenedInterestPos = m_globeCameraController.GetEcefInterestPoint().Norm() * (Eegeo::Space::EarthConstants::Radius + altitude);
+                
+                Eegeo::dv3 cameraPos;
+                Eegeo::v3 cameraDir;
+                Eegeo::v3 cameraUp;
+                Eegeo::Camera::CameraHelpers::CalculateLookAt(unflattenedInterestPos,
+                                                              m_globeCameraController.GetInterestBasis().GetForward(),
+                                                              Eegeo::Math::Deg2Rad( m_globeCameraController.CalculatePitchDegrees()),
+                                                              m_globeCameraController.GetDistanceToInterest(),
+                                                              cameraPos,
+                                                              cameraDir,
+                                                              cameraUp);
+                
+                return cameraPos;
             }
             
             Eegeo::ITouchController& InteriorsExplorerCameraController::GetTouchController() const
@@ -137,7 +158,14 @@ namespace ExampleApp
                     pModel->GetTangentBasis().GetBasisOrientationAsMatrix(tangentBasis);
                     relativeCameraInterestEcef = Eegeo::v3::Mul(cameraInterestTangentSpace, tangentBasis);
                     
-                    SetInterestLocation(pModel->GetTangentBasis().GetPointEcef() + relativeCameraInterestEcef);
+                    if(!m_interiorsAffectedByFlattening)
+                    {
+                        SetInterestLocation(m_environmentFlatteningService.GetScaledPointEcef(pModel->GetTangentBasis().GetPointEcef(), m_environmentFlatteningService.GetCurrentScale())  + relativeCameraInterestEcef);
+                    }
+                    else
+                    {
+                        SetInterestLocation(m_environmentFlatteningService.GetScaledPointEcef(pModel->GetTangentBasis().GetPointEcef() + relativeCameraInterestEcef, m_environmentFlatteningService.GetCurrentScale()));
+                    }
                 }
             }
             

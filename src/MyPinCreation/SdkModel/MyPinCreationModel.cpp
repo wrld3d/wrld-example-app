@@ -24,6 +24,7 @@ namespace ExampleApp
                 , m_interior(false)
                 , m_buildingId("")
                 , m_floor(0)
+                , m_latLong(0.0f, 0.0f)
             {
 
             }
@@ -51,14 +52,24 @@ namespace ExampleApp
                 }
             }
 
-            const Eegeo::dv3& MyPinCreationModel::GetPosition() const
+            const Eegeo::dv3& MyPinCreationModel::GetPosition()
             {
+                if(m_dirtyPosition)
+                {
+                    UpdatePosition();
+                }
                 return m_position;
             }
 
-            void MyPinCreationModel::SetPosition(const Eegeo::dv3& position)
+            void MyPinCreationModel::SetLatLong(const Eegeo::Space::LatLong& position)
             {
-                m_position = position;
+                m_latLong = position;
+                m_dirtyPosition = true;
+            }
+            
+            const Eegeo::Space::LatLong& MyPinCreationModel::GetLatLong() const
+            {
+                return m_latLong;
             }
             
             float MyPinCreationModel::GetTerrainHeight() const
@@ -68,16 +79,20 @@ namespace ExampleApp
 
             void MyPinCreationModel::SetTerrainHeight(float height)
             {
-                
                 m_terrainHeight = height;
-                UpdatePosition();
+                m_dirtyPosition = true;
                 m_needsTerrainHeightUpdate = false;
             }
             
             void MyPinCreationModel::SetHeightAboveTerrain(float heightAboveTerrain)
             {
                 m_heightAboveTerrainMetres = heightAboveTerrain;
-                UpdatePosition();
+                m_dirtyPosition = true;
+            }
+            
+            float MyPinCreationModel::GetHeightAboveTerrain() const
+            {
+                return m_heightAboveTerrainMetres;
             }
             
             void MyPinCreationModel::SetInterior(bool interior)
@@ -134,7 +149,7 @@ namespace ExampleApp
             
             void MyPinCreationModel::UpdatePosition()
             {
-                 m_position = m_position.Norm() * (Eegeo::Space::EarthConstants::Radius + m_terrainHeight + m_heightAboveTerrainMetres);
+                m_position = m_latLong.ToECEF().Norm() * (Eegeo::Space::EarthConstants::Radius + m_terrainHeight + m_heightAboveTerrainMetres);
             }
         }
     }

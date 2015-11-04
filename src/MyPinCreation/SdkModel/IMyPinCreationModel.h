@@ -7,6 +7,7 @@
 #include "ICallback.h"
 #include "VectorMathDecl.h"
 #include "Types.h"
+#include "LatLongAltitude.h"
 
 #include <string>
 
@@ -24,11 +25,13 @@ namespace ExampleApp
                 virtual const MyPinCreationStage& GetCreationStage() const = 0;
                 virtual void SetCreationStage(MyPinCreationStage stage) = 0;
 
-                virtual const Eegeo::dv3& GetPosition() const = 0;
+                virtual void SetLatLong(const Eegeo::Space::LatLong& position) = 0;
+                virtual const Eegeo::Space::LatLong& GetLatLong() const = 0;
                 virtual float GetTerrainHeight() const = 0;
-                virtual void SetPosition(const Eegeo::dv3& position) = 0;
                 virtual void SetTerrainHeight(float height) = 0;
                 virtual void SetHeightAboveTerrain(float heightAboveTerrain) = 0;
+                virtual float GetHeightAboveTerrain() const = 0;
+                virtual const Eegeo::dv3& GetPosition() = 0;
                 virtual void SetInterior(bool interior) = 0;
                 virtual void SetFloor(int floor) = 0;
                 virtual void SetBuildingId(const Eegeo::Resources::Interiors::InteriorId& buildingId) = 0;
