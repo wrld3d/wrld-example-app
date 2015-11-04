@@ -260,7 +260,7 @@ namespace ExampleApp
                                                                                        Eegeo::Streaming::QuadTreeCube::MAX_DEPTH_TO_VISIT,
                                                                                        mapModule.GetEnvironmentFlatteningService());
         
-        CreateApplicationModelModules(platformImplementedSearchServiceModules, nativeUIFactories);
+        CreateApplicationModelModules(platformImplementedSearchServiceModules, nativeUIFactories, platformConfig.OptionsConfig.InteriorsAffectedByFlattening);
         
         m_pCameraTransitionController = Eegeo_NEW(ExampleApp::CameraTransitions::SdkModel::CameraTransitionController)(*m_pGlobeCameraController,
                                                                                                                        m_pInteriorsExplorerModule->GetInteriorsCameraController(),
@@ -311,10 +311,11 @@ namespace ExampleApp
     }
 
     void MobileExampleApp::CreateApplicationModelModules(const std::map<std::string,ExampleApp::Search::SdkModel::ISearchServiceModule*>& platformImplementedSearchServiceModules,
-                                                         Eegeo::UI::NativeUIFactories& nativeUIFactories)
+                                                         Eegeo::UI::NativeUIFactories& nativeUIFactories,
+                                                         const bool interiorsAffectedByFlattening)
     {
         Eegeo::EegeoWorld& world = *m_pWorld;
-
+        
         m_pReactionControllerModule = Eegeo_NEW(Reaction::View::ReactionControllerModule)();
 
         m_pWatermarkModule = Eegeo_NEW(ExampleApp::Watermark::WatermarkModule)(m_identityProvider);
@@ -401,7 +402,7 @@ namespace ExampleApp
                                  m_identityProvider,
                                  m_messageBus);
 
-        InitialisePinsModules(mapModule, world);
+        InitialisePinsModules(mapModule, world, interiorsAffectedByFlattening);
         
         m_pMyPinsModule = Eegeo_NEW(ExampleApp::MyPins::SdkModel::MyPinsModule)(m_pWorldPinsModule->GetWorldPinsService(),
                                                                                 m_platformAbstractions,
@@ -455,7 +456,8 @@ namespace ExampleApp
                                                                                                   m_pWorld->GetTerrainModelModule(),
                                                                                                   m_pWorld->GetMapModule(),
                                                                                                   *m_pAppModeModel,
-                                                                                                  m_screenProperties);
+                                                                                                  m_screenProperties,
+                                                                                                  interiorsAffectedByFlattening);
 
         m_pMyPinCreationDetailsModule = Eegeo_NEW(ExampleApp::MyPinCreationDetails::View::MyPinCreationDetailsModule)(m_identityProvider,
                                         m_pReactionControllerModule->GetReactionControllerModel());
@@ -476,15 +478,17 @@ namespace ExampleApp
                                                                                                      interiorsPresentationModule.GetInteriorSelectionModel(),
                                                                                                      interiorsModelModule.GetInteriorMarkerModelRepository(),
                                                                                                      m_pWorldPinsModule->GetWorldPinsService(),
+                                                                                                     mapModule.GetEnvironmentFlatteningService(),
                                                                                                      m_pMapModeModule->GetMapModeModel(),
                                                                                                      m_pWeatherMenuModule->GetWeatherController(),
                                                                                                      cameraControllerFactory,
                                                                                                      m_screenProperties,
                                                                                                      m_identityProvider,
                                                                                                      m_messageBus,
-                                                                                                     m_metricsService);
+                                                                                                     m_metricsService,
+                                                                                                     interiorsAffectedByFlattening);
         
-        InitialiseToursModules(mapModule, world);
+        InitialiseToursModules(mapModule, world, interiorsAffectedByFlattening);
         
         if (m_interiorsEnabled)
         {
@@ -691,7 +695,9 @@ namespace ExampleApp
                                                   );
     }
     
-    void MobileExampleApp::InitialisePinsModules(Eegeo::Modules::Map::MapModule& mapModule, Eegeo::EegeoWorld& world)
+    void MobileExampleApp::InitialisePinsModules(Eegeo::Modules::Map::MapModule& mapModule,
+                                                 Eegeo::EegeoWorld& world,
+                                                 const bool interiorsAffectedByFlattening)
     {
         
         m_pPinsModule = CreatePlatformPinsModuleInstance(mapModule, world, "SearchResultOnMap/PinIconTexturePage", m_pinDiameter, 4);
@@ -705,10 +711,11 @@ namespace ExampleApp
                                  m_identityProvider,
                                  m_messageBus,
                                  interiorsPresentationModule.GetAppLevelController(),
-                                 m_sdkDomainEventBus);
+                                 m_sdkDomainEventBus,
+                                 interiorsAffectedByFlattening);
     }
     
-    void MobileExampleApp::InitialiseToursModules(Eegeo::Modules::Map::MapModule& mapModule, Eegeo::EegeoWorld& world)
+    void MobileExampleApp::InitialiseToursModules(Eegeo::Modules::Map::MapModule& mapModule, Eegeo::EegeoWorld& world, const bool interiorsAffectedByFlattening)
     {
         m_pToursPinsModule = CreatePlatformPinsModuleInstance(mapModule, world, "SearchResultOnMap/PinIconTexturePage", m_toursPinDiameter, 4);
         
@@ -720,7 +727,8 @@ namespace ExampleApp
                                                                                               m_identityProvider,
                                                                                               m_toursMessageBus,
                                                                                               interiorsPresentationModule.GetAppLevelController(),
-                                                                                              m_sdkDomainEventBus);
+                                                                                              m_sdkDomainEventBus,
+                                                                                              interiorsAffectedByFlattening);
         
         m_pToursModule = Eegeo_NEW(ExampleApp::Tours::ToursModule)(m_identityProvider,
                                                        m_messageBus,

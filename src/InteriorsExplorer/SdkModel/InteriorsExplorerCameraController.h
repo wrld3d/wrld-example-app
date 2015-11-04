@@ -9,6 +9,8 @@
 #include "Interiors.h"
 #include "ITouchController.h"
 #include "VectorMath.h"
+#include "GlobeCameraTouchSettings.h"
+#include "Rendering.h"
 
 namespace ExampleApp
 {
@@ -22,16 +24,19 @@ namespace ExampleApp
                 bool m_cameraTouchEnabled;
                 Eegeo::Resources::Interiors::InteriorController& m_interiorController;
                 Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
-                Eegeo::Resources::Interiors::Markers::InteriorMarkerModelRepository& m_markerRepository;
                 Eegeo::Camera::GlobeCamera::GlobeCameraTouchController& m_globeCameraTouchController;
                 Eegeo::Camera::GlobeCamera::GlobeCameraController& m_globeCameraController;
+                Eegeo::Camera::GlobeCamera::GlobeCameraTouchSettings m_cameraTouchSettings;
+                const Eegeo::Rendering::EnvironmentFlatteningService& m_environmentFlatteningService;
+                const bool m_interiorsAffectedByFlattening;
                 
             public:
                 InteriorsExplorerCameraController(Eegeo::Resources::Interiors::InteriorController& interiorController,
                                                   Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                                                  Eegeo::Resources::Interiors::Markers::InteriorMarkerModelRepository& markerRepository,
+                                                  const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                                   Eegeo::Camera::GlobeCamera::GlobeCameraTouchController& m_globeCameraTouchController,
-                                                  Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController);
+                                                  Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController,
+                                                  const bool interiorsAffectedByFlattening);
                 
                 ~InteriorsExplorerCameraController();
                 

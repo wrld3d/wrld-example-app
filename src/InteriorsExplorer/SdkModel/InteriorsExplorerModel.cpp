@@ -82,7 +82,7 @@ namespace ExampleApp
             void InteriorsExplorerModel::SuspendCurrentMapState()
             {
                 m_previouslyInMapMode = m_mapModeModel.IsInMapMode();
-                m_mapModeModel.SetInMapMode(false);
+                m_mapModeModel.SetInMapMode(true);
                 m_previousWeatherState = m_weatherController.GetState();
                 m_weatherController.SetState("DayDefault");
             }

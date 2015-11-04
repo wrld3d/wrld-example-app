@@ -28,7 +28,8 @@ namespace ExampleApp
                                       Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                       Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider,
                                       Eegeo::Resources::Interiors::InteriorController& interiorController,
-                                      Eegeo::Rendering::ScreenProperties& screenProperties);
+                                      Eegeo::Rendering::ScreenProperties& screenProperties,
+                                      const bool interiorsAffectedByFlattening);
 
                     void Update(float dt, const Eegeo::Camera::RenderCamera& renderCamera, const Eegeo::dv3& cameraEcefInterestPoint);
 
@@ -49,6 +50,7 @@ namespace ExampleApp
                     Eegeo::dv3 m_iconPosition;
                     float m_iconSize;
                     float m_ringRadius;
+                    const bool m_interiorsAffectedByFlattening;
 
                     Eegeo::v3 CalculateQuadScreenSpaceTranslation(const Eegeo::Camera::RenderCamera& renderCamera) const;
                     float CalculateTransitionScale(float dt);

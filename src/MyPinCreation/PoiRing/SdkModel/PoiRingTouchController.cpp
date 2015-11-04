@@ -14,6 +14,7 @@
 #include "Bounds.h"
 #include "InteriorsModel.h"
 #include "EcefTangentBasis.h"
+#include "InteriorHeightHelpers.h"
 
 namespace ExampleApp
 {
@@ -54,8 +55,9 @@ namespace ExampleApp
                     Eegeo::dv3 rayOrigin = nonFlattenedCameraPosition;
                     Eegeo::dv3 rayIntersectionPoint;
                     double intersectionParam;
-
-                    bool rayPick = PerformRayPick(rayOrigin, rayDirection, rayIntersectionPoint, intersectionParam);
+                    float terrainHeight;
+                    float heightAboveTerrain;
+                    bool rayPick = PerformRayPick(rayOrigin, rayDirection, rayIntersectionPoint, intersectionParam, terrainHeight, heightAboveTerrain);
 
                     if (rayPick)
                     {
@@ -110,11 +112,16 @@ namespace ExampleApp
                         Eegeo::dv3 rayOrigin = nonFlattenedCameraPosition;
                         Eegeo::dv3 rayIntersectionPoint;
                         double intersectionParam;
-                        bool rayPick = PerformRayPick(rayOrigin, rayDirection, rayIntersectionPoint, intersectionParam);
+                        float terrainHeight;
+                        float heightAboveTerrain;
+                        bool rayPick = PerformRayPick(rayOrigin, rayDirection, rayIntersectionPoint, intersectionParam, terrainHeight, heightAboveTerrain);
 
                         if (rayPick)
                         {
-                            m_myPinCreationModel.SetPosition(rayIntersectionPoint - m_dragOffset);
+                            Eegeo::Space::LatLong latLong = Eegeo::Space::LatLong::FromECEF(rayIntersectionPoint - m_dragOffset);
+                            m_myPinCreationModel.SetLatLong(latLong);
+                            m_myPinCreationModel.SetTerrainHeight(terrainHeight);
+                            m_myPinCreationModel.SetHeightAboveTerrain(heightAboveTerrain);
                         }
 
                         return true;
@@ -128,10 +135,15 @@ namespace ExampleApp
                     return m_isDragging && m_myPinCreationModel.GetCreationStage() == Ring;
                 }
 
-                bool PoiRingTouchController::PerformRayPick(Eegeo::dv3 &rayOrigin, Eegeo::dv3 &rayDirection, Eegeo::dv3 &out_rayIntersectionPoint, double &out_intersectionParam)
+                bool PoiRingTouchController::PerformRayPick(const Eegeo::dv3 &rayOrigin,
+                                                            Eegeo::dv3 &rayDirection,
+                                                            Eegeo::dv3 &out_rayIntersectionPoint,
+                                                            double &out_intersectionParam,
+                                                            float &out_terrainHeight,
+                                                            float &out_heightAboveTerrain)
                 {
                     bool rayPick = false;
-                    
+
                     if(m_appModeModel.GetAppMode() == AppModes::SdkModel::InteriorMode && m_interiorController.InteriorIsVisible())
                     {
                         const Eegeo::Resources::Interiors::InteriorsModel* interiorsModel;
@@ -139,25 +151,31 @@ namespace ExampleApp
                         Eegeo_ASSERT(m_interiorController.TryGetCurrentModel(interiorsModel), "Couldn't get current interiorsModel");
                         
                         const Eegeo::dv3 originNormal = interiorsModel->GetTangentBasis().GetUp();
-                        double interiorOriginAltitude = interiorsModel->GetTangentBasis().GetPointEcef().Length() - Eegeo::Space::EarthConstants::Radius;
-                        const Eegeo::Resources::Interiors::InteriorsFloorModel* pFloorModel = NULL;
-                        if(m_interiorController.TryGetCurrentFloorModel(pFloorModel))
-                        {
-                            const Eegeo::dv3 pointOffset = originNormal * (pFloorModel->GetTangentSpaceBounds().GetMin().y -interiorOriginAltitude);
-                            Eegeo::dv3 point = interiorsModel->GetTangentBasis().GetPointEcef() + pointOffset;
-                            
-                            rayPick = Eegeo::Geometry::IntersectionTests::RayIntersectsWithPlane(rayOrigin, rayDirection, originNormal, point, out_intersectionParam, out_rayIntersectionPoint);
-                        }
+
+                        float floorHeightAboveSeaLevel = Helpers::InteriorHeightHelpers::GetFloorHeightAboveSeaLevel(*interiorsModel, m_interiorController.GetCurrentFloorIndex());
+                        
+                        const Eegeo::dv3 point = originNormal * (floorHeightAboveSeaLevel + Eegeo::Space::EarthConstants::Radius);
+                        
+                        out_terrainHeight = interiorsModel->GetTangentSpaceBounds().GetMin().y;
+                        out_heightAboveTerrain = floorHeightAboveSeaLevel - out_terrainHeight;
+                        rayPick = Eegeo::Geometry::IntersectionTests::RayIntersectsWithPlane(rayOrigin, rayDirection, originNormal, point, out_intersectionParam, out_rayIntersectionPoint);
                     }
                     else
                     {
                         rayPick = m_rayPicker.TryGetRayIntersection(rayOrigin, rayDirection, out_rayIntersectionPoint, out_intersectionParam);
+                        if(rayPick)
+                        {
+                            out_terrainHeight = static_cast<float>(out_rayIntersectionPoint.Length() - Eegeo::Space::EarthConstants::Radius);
+                            out_heightAboveTerrain = 0.0f;
+                        }
                     }
                     if(!rayPick)
                     {
                         rayPick = Eegeo::Geometry::IntersectionTests::GetRayEarthSphereIntersection(rayOrigin, rayDirection, out_rayIntersectionPoint, Eegeo::Space::EarthConstants::RadiusSquared);
                         if(rayPick)
                         {
+                            out_terrainHeight = 0.0f;
+                            out_heightAboveTerrain = 0.0f;
                             out_intersectionParam = (out_rayIntersectionPoint - rayOrigin).Length();
                         }
                     }
