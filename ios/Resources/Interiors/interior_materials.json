@@ -43,6 +43,14 @@
         {
             "TextureKey":"swallowexterior01-interior-texture0",
             "Filename":"Interiors/exterior01-interior.pvr"
+        },
+        {
+            "TextureKey":"swallowscreens-texture0",
+            "Filename":"Interiors/swallowscreens.pvr"
+        },
+        {
+            "TextureKey":"chrome-texture0",
+            "Filename":"Interiors/chrome.pvr"
         }
         ],
     "CubeMapTextures":[
@@ -96,7 +104,7 @@
          {
              "MaterialName": "swallowchrome-interior",
              "MaterialType":"InteriorsDiffuseTexturedMaterial",
-             "DiffuseTexture":"swallownoise01-interior-texture0",
+             "DiffuseTexture":"chrome-texture0",
              "CubeMapTexture":"swallowcubemap",
 			 "SpecularPower":100.0,
              "SpecularColor":[0.6,0.6,0.6,1.0],
@@ -158,6 +166,12 @@
              "MaterialName": "swallowplaingray-interior-reflection",
              "MaterialType":"InteriorsReflectionMaterial",
              "DiffuseTexture":"swallowplaingray-interior-texture0"
+         },
+                 
+         {
+             "MaterialName": "swallowscreens-interior",
+             "MaterialType":"InteriorsDiffuseTexturedMaterial",
+             "DiffuseTexture":"swallowscreens-texture0"
          }
     ]
 }
