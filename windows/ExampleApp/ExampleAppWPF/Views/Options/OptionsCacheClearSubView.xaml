@@ -1,0 +1,51 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:ExampleAppWPF">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="../../Colours.xaml" />
+        <ResourceDictionary Source="../../TransparentButtonStyle.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+    
+    <Style TargetType="{x:Type local:OptionsCacheClearSubView}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:OptionsCacheClearSubView}">
+                    <Grid Background="#80000000" >
+                        <Grid Name="CacheClearCeremonyViewContainer" Width="550" Height="300" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,10,0,0">
+                            <Grid Background="{StaticResource Gold}" VerticalAlignment="Stretch" >
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid Grid.Row="0" Name="CacheClearCeremonyViewHeader" Background="{StaticResource White}" Height="Auto" VerticalAlignment="Top">
+                                        <TextBlock Name="CacheClearCeremonyViewTitle" Height="40" Margin="10,5,5,0" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:OptionsCacheClearSubView}}, Path=Title}" Foreground="{StaticResource Gold}" FontSize="18"/>
+                                    </Grid>
+                                    <Grid Grid.Row="1" Background="{StaticResource White}">
+                                        <Grid>
+                                            <Border BorderBrush="{x:Null}" Margin="10,10,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Height="Auto">
+                                                <TextBlock Name="CacheClearCeremonyViewMessage" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:OptionsCacheClearSubView}}, Path=Content}" Foreground="{StaticResource DarkGrey}" FontSize="16"/>
+                                            </Border>
+                                            <ProgressBar Name="CacheClearCeremonyViewSpinner" Width="40" Height="40" Margin="5,5,5,5" VerticalAlignment="Bottom" IsIndeterminate="True" HorizontalAlignment="Center" Background="{StaticResource White}" Visibility="Hidden"/>
+                                        </Grid>
+                                    </Grid>
+                                    <Grid Grid.Row="2" VerticalAlignment="Bottom" Name="CacheClearCeremonyViewFooter">
+                                        <Button Name="CacheClearCeremonyConfirmButton" Style="{StaticResource TransparentButtonStyle}" Width="48" Height="48" HorizontalAlignment="Left">
+                                            <Image Source="/ExampleAppWPF;component/Assets/button_ok_off.png"/>
+                                        </Button>
+                                        <Button Name="CacheClearCeremonyCloseButton" Style="{StaticResource TransparentButtonStyle}" Width="48" Height="48" HorizontalAlignment="Right">
+                                            <Image Source="/ExampleAppWPF;component/Assets/button_close_off.png"/>
+                                        </Button>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-usage() { echo "Usage: $0 -p android|ios [-c]"; echo "  -p -> platform, ios or android (required)"; echo "  -c -> cpp11 support"; 1>&2; exit 1; }
+usage() { echo "Usage: $0 -p android|ios|windows [-c]"; echo "  -p -> platform, ios, android or windows (required)"; echo "  -c -> cpp11 support"; 1>&2; exit 1; }
 
 baseUrl="http://s3.amazonaws.com/eegeo-static/"
 srcPackageName="INVALID"
@@ -14,7 +14,9 @@ while getopts "p:c" o; do
             p=${OPTARG}
             if [ "$p" != "ios" ]; then
                if [ "$p" != "android" ]; then
-                 usage
+	          if [ "$p" != "windows" ]; then
+                     usage
+		  fi
                fi
             fi
             ;;
@@ -40,6 +42,11 @@ elif [ "$p" == "android" ]; then
    srcPackageName="sdk.package.android"
    includeDestination="./android/libs/eegeo"
    sdkDestination="sdk.package.android"
+elif [ "$p" == "windows" ]; then
+   srcPackageName="sdk.package.windows"
+   includeDestination="./windows/libs/eegeo"
+   sdkDestination="sdk.package.windows"
+
 fi
 
 if [ "$c" == "cpp11" ]; then
@@ -58,8 +65,13 @@ if [ $statuscode -ne 0 ] ; then
     exit $statuscode
 fi    
 
+if [ ! -d `dirname "$includeDestination"` ]; then
+    mkdir -p `dirname "$includeDestination"`
+fi
+
 tar -zxvf $destPackageName
 rm -f ./$destPackageName
 platformVersion=`cat ./$sdkDestination/version.txt`
 echo "Platform version --> $platformVersion"
+echo mv ./$sdkDestination $includeDestination
 mv ./$sdkDestination $includeDestination

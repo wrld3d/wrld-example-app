@@ -1188,6 +1188,34 @@ namespace ExampleApp
             m_pCurrentTouchController->Event_TouchUp(data);
         }
     }
+
+    void MobileExampleApp::Event_Zoom(const AppInterface::ZoomData& data)
+    {
+        m_pCurrentTouchController->Event_Zoom(data);
+    }
+
+    void MobileExampleApp::Event_Keyboard(const AppInterface::KeyboardData& data)
+    {
+        if (data.printable)
+            Eegeo_TTY("Key Down: %c", data.keyCode);
+        else
+            Eegeo_TTY("Key Up: %c", data.keyCode);
+    }
+
+    void MobileExampleApp::Event_TiltStart(const AppInterface::TiltData& data)
+    {
+        m_pCurrentTouchController->Event_TiltStart(data);
+    }
+
+    void MobileExampleApp::Event_TiltEnd(const AppInterface::TiltData& data)
+    {
+        m_pCurrentTouchController->Event_TiltEnd(data);
+    }
+
+    void MobileExampleApp::Event_Tilt(const AppInterface::TiltData& data)
+    {
+        m_pCurrentTouchController->Event_Tilt(data);
+    }
     
     bool MobileExampleApp::CanAcceptTouch() const
     {

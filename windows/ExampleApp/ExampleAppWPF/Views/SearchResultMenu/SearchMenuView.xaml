@@ -1,0 +1,130 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:ExampleAppWPF">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="../../Colours.xaml" />
+        <ResourceDictionary Source="../../TransparentButtonStyle.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style TargetType="{x:Type local:SearchMenuView}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:SearchMenuView}">
+                    <StackPanel Orientation="Horizontal">
+                        <Grid Width="Auto" Height="Auto" Margin="0,50,0,0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <StackPanel Orientation="Horizontal" Grid.Row="0" Name="SearchMenuDragTabContainerView">
+
+                                <!--begin include search_results_bar_layout-->
+                                <StackPanel Width="Auto" Height="Auto" Orientation="Horizontal">
+                                    <StackPanel.Background>
+                                        <ImageBrush ImageSource="/ExampleAppWPF;component/Assets/search_results_bar_small.png" Stretch="Fill"/>
+                                    </StackPanel.Background>
+
+                                    <Border BorderBrush="{x:Null}" Height="40" Margin="30,0,0,0">
+                                        <TextBlock Name="SearchMenuHeaderText" Text="" VerticalAlignment="Center" Width="205" Foreground="{StaticResource Gold}" FontSize="18"/>
+                                    </Border>
+
+                                    <Button Name="SearchMenuCloseButton" VerticalAlignment="Center" Margin="5,0,10,0" Width="19" Height="19"  FocusVisualStyle="{x:Null}">
+                                        <Button.Style>
+                                            <Style TargetType="Button" BasedOn="{StaticResource TransparentButtonStyle}">
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsPressed" Value="True">
+                                                        <Setter Property="Content">
+                                                            <Setter.Value>
+                                                                <Image Source="/ExampleAppWPF;component/Assets/buttonsmall_close_on.png" />
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </Trigger>
+                                                    <Trigger Property="IsPressed" Value="False">
+                                                        <Setter Property="Content">
+                                                            <Setter.Value>
+                                                                <Image Source="/ExampleAppWPF;component/Assets/buttonsmall_close_off.png" />
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Button.Style>
+                                    </Button>
+                                </StackPanel>
+                                <!--end include search_results_bar_layout-->
+
+                                <Grid Name="SearchResultCount">
+                                    <Button Name="SearchMenuDragTabView" Style="{StaticResource TransparentButtonStyle}">
+                                        <Grid>
+                                            <Image Source="/ExampleAppWPF;component/Assets/menu_button.png" RenderTransformOrigin="0.5,0.5">
+                                                <Image.RenderTransform>
+                                                    <ScaleTransform ScaleX="-1"/>
+                                                </Image.RenderTransform>
+                                            </Image>
+                                            <ProgressBar Name="SearchMenuSpinner" Width="40" Height="40" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Center" Background="{StaticResource Transparent}" IsIndeterminate="True" />
+                                            <Border BorderBrush="{x:Null}" Width="40" Height="40">
+                                                <TextBlock Name="SearchMenuNumResultsText" FontSize="22" Foreground="{StaticResource White}" HorizontalAlignment="Center" VerticalAlignment="Center" Background="{StaticResource Transparent}"/>
+                                            </Border>
+                                        </Grid>
+                                    </Button>
+                                </Grid>
+
+                            </StackPanel>
+
+                            <Grid Name="SearchMenuViewListContainer" Width="270" Height="Auto" HorizontalAlignment="Left" Grid.Row="1">
+                                <ScrollViewer PanningMode="Both" 
+              HorizontalScrollBarVisibility="Hidden"
+              VerticalScrollBarVisibility="Auto" CanContentScroll="True" Height="{Binding RelativeSource={RelativeSource FindAncestor, 
+                        AncestorType={x:Type Grid}}, Path=ActualHeight}">
+                                    <ListBox Name="SearchMenuItemList" Background="{StaticResource Transparent}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" BorderThickness="0">
+                                        <ListBox.Resources>
+                                            <Style TargetType="ListBoxItem">
+                                                <Style.Resources>
+                                                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent"/>
+                                                    <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Transparent"/>
+                                                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Black"/>
+                                                </Style.Resources>
+                                                <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+                                            </Style>
+
+                                            <DataTemplate DataType="{x:Type local:SearchMenuListItem}">
+                                                <Grid HorizontalAlignment="Stretch" Height="42" Margin="0,0,0,0">
+                                                    <Grid.Background>
+                                                        <ImageBrush ImageSource="/ExampleAppWPF;component/Assets/search_result_background.png" />
+                                                    </Grid.Background>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="*"/>
+                                                        <RowDefinition Height="1"/>
+                                                    </Grid.RowDefinitions>
+                                                    <Grid HorizontalAlignment="Stretch" Grid.Row="0">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="Auto"/>
+                                                            <ColumnDefinition Width="*"/>
+                                                            <ColumnDefinition Width="Auto"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch"  Grid.Column="0" >
+                                                            <Image Source="{Binding Path=Icon}" Width="32" Height="32" VerticalAlignment="Center"/>
+                                                                <StackPanel HorizontalAlignment="Stretch">
+                                                                    <TextBlock Text="{Binding Path=Name}" FontSize="12" Foreground="{StaticResource DarkGrey}" MaxWidth="200" FontWeight="Bold" Margin="10,4,0,0" TextTrimming="CharacterEllipsis"/>
+                                                                    <TextBlock Text="{Binding Path=Details}" FontSize="10" Foreground="{StaticResource DarkGrey}" MaxWidth="200" Margin="10,0,0,0" TextTrimming="CharacterEllipsis"/>                                                                
+                                                                </StackPanel>
+                                                        </StackPanel>
+                                                    </Grid>
+                                                    <Grid Grid.Row="1" Grid.Column="1" Background="{StaticResource MenuSeparator}" Margin="22,0,0,0"/>
+                                                </Grid>
+                                            </DataTemplate>
+
+                                        </ListBox.Resources>
+                                    </ListBox>
+                                </ScrollViewer>
+                            </Grid>
+                        </Grid>
+                    </StackPanel>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+</ResourceDictionary>

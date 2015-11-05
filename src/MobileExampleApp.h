@@ -444,6 +444,13 @@ namespace ExampleApp
         void Event_TouchDown 			(const AppInterface::TouchData& data);
         void Event_TouchMove 			(const AppInterface::TouchData& data);
         void Event_TouchUp 				(const AppInterface::TouchData& data);
+
+        void Event_Zoom(const AppInterface::ZoomData& data);
+        void Event_Keyboard(const AppInterface::KeyboardData& data);
+
+        void Event_TiltStart(const AppInterface::TiltData& data);
+        void Event_TiltEnd(const AppInterface::TiltData& data);
+        void Event_Tilt(const AppInterface::TiltData& data);
     };
 }
 
