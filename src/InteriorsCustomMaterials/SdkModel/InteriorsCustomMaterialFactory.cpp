@@ -72,7 +72,7 @@ namespace ExampleApp
                 {
                     return m_chromeMaterialFactory.TryCreate(customInteriorMaterialData);
                 }
-                else if (materialFactoryType == InteriorsCustomMaterialKeys::InteriorReflectionMaterial)
+                else if (materialFactoryType == InteriorsCustomMaterialKeys::InteriorsReflectionMaterial)
                 {
                     return m_reflectionMaterialFactory.TryCreate(customInteriorMaterialData);
                 }
