@@ -1,7 +1,7 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 package com.eegeo.interiorsexplorer;
 
-import com.eegeo.mobileexampleapp.R;
+import com.eegeo.ProjectSwallowApp.R;
 
 import android.view.View;
 import android.widget.RelativeLayout;
