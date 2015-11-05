@@ -99,6 +99,8 @@ namespace ExampleApp
                 
                 if(!m_interiorExplorerEnabled)
                 {
+                    SuspendCurrentMapState();
+                    
                     const Eegeo::Resources::Interiors::InteriorId& interiorId = m_interiorSelectionModel.GetSelectedInteriorId();
                     m_metricsService.SetEvent(MetricEventInteriorSelected, "InteriorId", interiorId.Value());
                     

@@ -96,6 +96,7 @@
 #include "InteriorsNavigationService.h"
 #include "UserInteractionModule.h"
 #include "ReportPinsVisibilityMaskingModule.h"
+#include "EnvironmentFlatteningService.h"
 
 namespace ExampleApp
 {
@@ -223,6 +224,10 @@ namespace ExampleApp
                                                 NULL,
                                                 &errorHandler
                                                 );
+        
+        m_pWorld->GetMapModule().GetEnvironmentFlatteningService().SetFlattenedScale(0.1f);
+        m_pWorld->GetMapModule().GetEnvironmentFlatteningService().SetEasingType(Eegeo::Rendering::EnvironmentFlatteningService::SmoothStep);
+        m_pWorld->GetMapModule().GetEnvironmentFlatteningService().SetEaseDuration(0.5f);
 
         Eegeo::Modules::Map::Layers::TerrainModelModule& terrainModelModule = m_pWorld->GetTerrainModelModule();
         Eegeo::Modules::Map::MapModule& mapModule = m_pWorld->GetMapModule();
