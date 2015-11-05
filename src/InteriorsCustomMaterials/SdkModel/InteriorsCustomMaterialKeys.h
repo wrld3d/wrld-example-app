@@ -20,14 +20,7 @@ namespace ExampleApp
                 const static std::string Materials = "Materials";
                 const static std::string TextureKey = "TextureKey";
                 const static std::string Filename = "Filename";
-                const static std::string MaterialType = "MaterialType";
-                const static std::string MaterialName = "MaterialName"; 
-                const static std::string InteriorsDiffuseUntexturedMaterial = "InteriorsDiffuseUntexturedMaterial";
-                const static std::string InteriorsDiffuseTexturedMaterial = "InteriorsDiffuseTexturedMaterial";
-                const static std::string InteriorsSpecularMaterial = "InteriorsSpecularMaterial";
-                const static std::string InteriorsCubeMappedMaterial = "InteriorsCubeMappedMaterial";
-                const static std::string InteriorsChromeMaterial = "InteriorsChromeMaterial";
-                const static std::string InteriorsReflectionMaterial = "InteriorsReflectionMaterial";
+                const static std::string MaterialName = "MaterialName";
             }
         }
     }
