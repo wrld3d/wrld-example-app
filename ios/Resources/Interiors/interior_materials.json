@@ -51,6 +51,10 @@
         {
             "TextureKey":"chrome-texture0",
             "Filename":"Interiors/chrome.pvr"
+        },
+        {
+            "TextureKey":"fishtank-texture0",
+            "Filename":"Interiors/fishtank.pvr"
         }
         ],
     "CubeMapTextures":[
@@ -99,18 +103,52 @@
              "SpecularColor":[0.4,0.4,0.4,1.0],
              "ReflectionColor":[0.5,0.5,0.5,1.0],
              "IsTranslucent":true
-         },
+        },
+                 
+        {
+             "MaterialName": "swallowglass01-opaque-interior",
+             "MaterialType":"InteriorsCubeMappedMaterial",
+             "DiffuseTexture":"swallowglass01-interior-texture0",
+             "CubeMapTexture":"swallowcubemap",
+             "DiffuseColor":[0.647,1.0,0.961,0.9],
+             "SpecularPower":100.0,
+             "SpecularColor":[0.4,0.4,0.4,1.0],
+             "ReflectionColor":[0.5,0.5,0.5,1.0],
+             "IsTranslucent":true
+        },
 		 
          {
              "MaterialName": "swallowchrome-interior",
-             "MaterialType":"InteriorsDiffuseTexturedMaterial",
+             "MaterialType":"InteriorsCubeMappedMaterial",
              "DiffuseTexture":"chrome-texture0",
              "CubeMapTexture":"swallowcubemap",
 			 "SpecularPower":100.0,
-             "SpecularColor":[0.6,0.6,0.6,1.0],
+             "SpecularColor":[0.4,0.4,0.4,1.0],
              "ReflectionColor":[0.1,0.1,0.1,1.0],
              "SpecularityFromTextureLuminance":1.0
-         },
+        },
+                 
+        {
+             "MaterialName": "swallowshiny-interior",
+             "MaterialType":"InteriorsCubeMappedMaterial",
+             "DiffuseTexture":"swallowplaingray-interior-texture0",
+             "CubeMapTexture":"swallowcubemap",
+             "SpecularPower":100.0,
+             "SpecularColor":[0.8,0.8,0.8,1.0],
+             "ReflectionColor":[0.8,0.8,0.8,1.0],
+             "SpecularityFromTextureLuminance":1.0
+        },
+                 
+        {
+             "MaterialName": "swallowfishtank-interior",
+             "MaterialType":"InteriorsCubeMappedMaterial",
+             "DiffuseTexture":"fishtank-texture0",
+             "CubeMapTexture":"swallowcubemap",
+             "SpecularPower":100.0,
+             "SpecularColor":[0.8,0.8,0.8,1.0],
+             "ReflectionColor":[0.8,0.8,0.8,1.0],
+             "SpecularityFromTextureLuminance":1.0
+        },
 		 
          {
              "MaterialName": "swallownoise01-interior",
