@@ -4,6 +4,7 @@
 #include "InteriorMaterialData.h"
 #include "IInteriorsCustomMaterialDtoRepository.h"
 #include "InteriorsCustomMaterialKeys.h"
+#include "InteriorMaterialSemantics.h"
 
 namespace ExampleApp
 {
@@ -32,6 +33,8 @@ namespace ExampleApp
 
             Eegeo::Rendering::Materials::IMaterial* InteriorsCustomMaterialFactory::TryCreate(const Eegeo::Resources::Interiors::InteriorMaterialData& interiorMaterialData)
             {
+                using namespace Eegeo::Resources::Interiors;
+                
                 const std::string& key = interiorMaterialData.MaterialName();
                 
                 if (!m_materialDtoRepository.Contains(key))
@@ -48,31 +51,31 @@ namespace ExampleApp
                                                                             materialDto.keyValueScalars,
                                                                             materialDto.keyValueBooleans);
                 
-                const std::string& materialFactoryType = customInteriorMaterialData.GetStringOrDefault(InteriorsCustomMaterialKeys::MaterialType, InteriorsCustomMaterialKeys::InteriorsDiffuseUntexturedMaterial);
+                const std::string& materialFactoryType = customInteriorMaterialData.GetStringOrDefault(InteriorMaterialSemantics::MaterialType, InteriorMaterialSemantics::InteriorsDiffuseUntexturedMaterial);
 
                 
 
-                if (materialFactoryType == InteriorsCustomMaterialKeys::InteriorsDiffuseUntexturedMaterial)
+                if (materialFactoryType == InteriorMaterialSemantics::InteriorsDiffuseUntexturedMaterial)
                 {
                     return m_untexturedMaterialFactory.TryCreate(customInteriorMaterialData);
                 }
-                else if (materialFactoryType == InteriorsCustomMaterialKeys::InteriorsDiffuseTexturedMaterial)
+                else if (materialFactoryType == InteriorMaterialSemantics::InteriorsDiffuseTexturedMaterial)
                 {
                     return m_diffuseTexturedMaterialFactory.TryCreate(customInteriorMaterialData);
                 }
-                else if (materialFactoryType == InteriorsCustomMaterialKeys::InteriorsSpecularMaterial)
+                else if (materialFactoryType == InteriorMaterialSemantics::InteriorsSpecularMaterial)
                 {
                     return m_diffuseSpecularMaterialFactory.TryCreate(customInteriorMaterialData);
                 }
-                else if (materialFactoryType == InteriorsCustomMaterialKeys::InteriorsCubeMappedMaterial)
+                else if (materialFactoryType == InteriorMaterialSemantics::InteriorsCubeMappedMaterial)
                 {
                     return m_cubeMappedMaterialFactory.TryCreate(customInteriorMaterialData);
                 }
-                else if (materialFactoryType == InteriorsCustomMaterialKeys::InteriorsChromeMaterial)
+                else if (materialFactoryType == InteriorMaterialSemantics::InteriorsChromeMaterial)
                 {
                     return m_chromeMaterialFactory.TryCreate(customInteriorMaterialData);
                 }
-                else if (materialFactoryType == InteriorsCustomMaterialKeys::InteriorReflectionMaterial)
+                else if (materialFactoryType == InteriorMaterialSemantics::InteriorsReflectionMaterial)
                 {
                     return m_reflectionMaterialFactory.TryCreate(customInteriorMaterialData);
                 }

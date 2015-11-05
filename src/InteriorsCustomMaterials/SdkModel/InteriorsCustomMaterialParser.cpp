@@ -128,7 +128,7 @@ namespace ExampleApp
                     
                     result.materialName = materialJson[InteriorsCustomMaterialKeys::MaterialName.c_str()].GetString();
                     
-                    TryAddString(InteriorsCustomMaterialKeys::MaterialType.c_str(), materialJson, result.keyValueStrings);
+                    TryAddString(MaterialType, materialJson, result.keyValueStrings);
                     TryAddString(DiffuseTexture, materialJson, result.keyValueStrings);
                     TryAddString(CubeMapTexture, materialJson, result.keyValueStrings);
                     
