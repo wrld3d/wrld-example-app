@@ -76,7 +76,6 @@ namespace ExampleApp
                     }
                     else if(m_cameraTransitioning)
                     {
-                        m_previousQueryLocationEcef = Eegeo::Space::LatLong::FromECEF(ecefLocation).ToECEF();
                         m_cameraTransitioning = false;
                     }
 

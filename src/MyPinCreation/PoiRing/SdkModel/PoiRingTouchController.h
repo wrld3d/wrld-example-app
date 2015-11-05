@@ -46,7 +46,12 @@ namespace ExampleApp
                     bool m_isDragging;
                     Eegeo::dv3 m_dragOffset;
 
-                    bool PerformRayPick(Eegeo::dv3& rayOrigin, Eegeo::dv3& rayDirection, Eegeo::dv3& out_rayIntersectionPoint, double& out_intersectionParam);
+                    bool PerformRayPick(const Eegeo::dv3& rayOrigin,
+                                        Eegeo::dv3& rayDirection,
+                                        Eegeo::dv3& out_rayIntersectionPoint,
+                                        double& out_intersectionParam,
+                                        float& out_terrainHeight,
+                                        float& out_heightAboveTerrain);
                 };
             }
         }

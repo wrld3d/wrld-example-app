@@ -23,13 +23,15 @@ namespace ExampleApp
                                                              Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                              Eegeo::Resources::Interiors::Markers::InteriorMarkerModelRepository& markerRepository,
                                                              WorldPins::SdkModel::IWorldPinsService& worldPinsService,
+                                                             const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                                              ExampleApp::MapMode::SdkModel::IMapModeModel& mapModeModel,
                                                              WeatherMenu::SdkModel::IWeatherController& weatherController,
                                                              Eegeo::Camera::GlobeCamera::GlobeCameraControllerFactory& globeCameraControllerFactory,
                                                              const Eegeo::Rendering::ScreenProperties& screenProperties,
                                                              Eegeo::Helpers::IIdentityProvider& identityProvider,
                                                              ExampleAppMessaging::TMessageBus& messageBus,
-                                                             Metrics::IMetricsService& metricsService)
+                                                             Metrics::IMetricsService& metricsService,
+                                                             const bool interiorsAffectedByFlattening)
             {
                 m_pUserInteractionModel = Eegeo_NEW(InteriorExplorerUserInteractionModel)();
                 
@@ -56,9 +58,10 @@ namespace ExampleApp
                 
                 m_pInteriorsCameraController = Eegeo_NEW(InteriorsExplorerCameraController)(interiorController,
                                                                                             interiorSelectionModel,
-                                                                                            markerRepository,
+                                                                                            environmentFlatteningService,
                                                                                             *m_pGlobeCameraTouchController,
-                                                                                            *m_pGlobeCameraController);
+                                                                                            *m_pGlobeCameraController,
+                                                                                            interiorsAffectedByFlattening);
                 
                 m_pWorldPinController = Eegeo_NEW(InteriorWorldPinController)(interiorController,
                                                                               markerRepository,

@@ -31,7 +31,8 @@ namespace ExampleApp
                                   Eegeo::Modules::Map::Layers::TerrainModelModule& terrainModelModule,
                                   Eegeo::Modules::Map::MapModule& mapModule,
                                   ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
-                                  Eegeo::Rendering::ScreenProperties& screenProperties);
+                                  Eegeo::Rendering::ScreenProperties& screenProperties,
+                                  const bool interiorsAffectedByFlattening);
 
                     ~PoiRingModule();
 

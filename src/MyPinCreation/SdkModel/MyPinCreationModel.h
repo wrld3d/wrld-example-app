@@ -9,6 +9,7 @@
 #include "IPlatformAbstractionModule.h"
 #include "IWorkPool.h"
 #include "MyPins.h"
+#include "LatLongAltitude.h"
 
 #include <vector>
 
@@ -28,10 +29,12 @@ namespace ExampleApp
                 const MyPinCreationStage& GetCreationStage() const;
                 void SetCreationStage(MyPinCreationStage stage);
 
-                const Eegeo::dv3& GetPosition() const;
+                const Eegeo::dv3& GetPosition();
                 float GetTerrainHeight() const;
-                void SetPosition(const Eegeo::dv3& position);
+                void SetLatLong(const Eegeo::Space::LatLong& position);
+                const Eegeo::Space::LatLong& GetLatLong() const;
                 void SetTerrainHeight(float height);
+                float GetHeightAboveTerrain() const;
                 void SetHeightAboveTerrain(float heightAboveTerrain);
                 void SetInterior(bool interior);
                 void SetFloor(int floor);
@@ -51,13 +54,14 @@ namespace ExampleApp
 
             private:
                 void UpdatePosition();
-                
-            private:
+
                 bool m_needsTerrainHeightUpdate;
                 MyPinCreationStage m_stage;
+                Eegeo::Space::LatLong m_latLong;
                 Eegeo::dv3 m_position;
                 float m_terrainHeight;
                 float m_heightAboveTerrainMetres;
+                bool m_dirtyPosition;
                 bool m_interior;
                 int m_floor;
                 Eegeo::Resources::Interiors::InteriorId m_buildingId;

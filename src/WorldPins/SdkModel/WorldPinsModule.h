@@ -41,7 +41,8 @@ namespace ExampleApp
                                 Eegeo::Helpers::IIdentityProvider& identityProvider,
                                 ExampleAppMessaging::TMessageBus& messageBus,
                                 Eegeo::Resources::Interiors::InteriorController& interiorsController,
-                                ExampleAppMessaging::TSdkModelDomainEventBus& sdkDomainEventBus);
+                                ExampleAppMessaging::TSdkModelDomainEventBus& sdkDomainEventBus,
+                                const bool interiorsAffectedByFlattening);
 
                 ~WorldPinsModule();
 

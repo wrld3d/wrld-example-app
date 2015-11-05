@@ -78,7 +78,8 @@ namespace ExampleApp
                                                      Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                                      Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider,
                                                      Eegeo::Resources::Interiors::InteriorController& interiorController,
-                                                     Eegeo::Rendering::ScreenProperties& screenProperties)
+                                                     Eegeo::Rendering::ScreenProperties& screenProperties,
+                                                     const bool interiorsAffectedByFlattening)
                     : m_myPinCreationModel(myPinCreationModel)
                     , m_poiRingView(poiRingView)
                     , m_scaleInterpolationParam(0.f)
@@ -90,6 +91,7 @@ namespace ExampleApp
                     , m_ringRadius(0.0f)
                     , m_interiorController(interiorController)
                     , m_screenProperties(screenProperties)
+                    , m_interiorsAffectedByFlattening(interiorsAffectedByFlattening)
                 {
 
                 }
@@ -103,19 +105,10 @@ namespace ExampleApp
                     const float altitudeScale = CalculateAltitudeBasedSphereOuterScale(altitude);
                     const float transitionScale = CalculateTransitionScale(dt);
                     m_ringRadius = outerRingRadiusInMeters * altitudeScale * transitionScale;
-                    
-                    const bool ringIsOnScreen = RingIsOnScreen(renderCamera, m_myPinCreationModel.GetPosition(), m_ringRadius);
-
-                    m_poiRingView.SetShouldRenderRing(m_scaleInterpolationParam > 0.f && ringIsOnScreen);
-
-                    if (m_myPinCreationModel.GetCreationStage() == Inactive && !ringIsOnScreen)
-                    {
-                        m_scaleInterpolationParam = 0.f;
-                    }
 
                     if (m_scaleInterpolationParam < 0.01f && m_myPinCreationModel.GetCreationStage() != Details)
                     {
-                        m_myPinCreationModel.SetPosition(cameraEcefInterestPoint);
+                        m_myPinCreationModel.SetLatLong(Eegeo::Space::LatLong::FromECEF(cameraEcefInterestPoint));
                     }
 
                     if(m_myPinCreationModel.NeedsTerrainHeight())
@@ -141,6 +134,7 @@ namespace ExampleApp
                             }
 
                             m_myPinCreationModel.SetFloor(m_interiorController.GetCurrentFloorIndex());
+                            m_myPinCreationModel.SetTerrainHeight(pModel->GetTangentSpaceBounds().GetMin().y);
                             float floorHeightAboveSeaLevel = Helpers::InteriorHeightHelpers::GetFloorHeightAboveSeaLevel(*pModel, m_interiorController.GetCurrentFloorIndex());
                             const float floorHeightAboveTerrain = floorHeightAboveSeaLevel - m_myPinCreationModel.GetTerrainHeight();
                             m_myPinCreationModel.SetHeightAboveTerrain(floorHeightAboveTerrain);
@@ -149,14 +143,33 @@ namespace ExampleApp
                         {
                             m_myPinCreationModel.SetBuildingId(Eegeo::Resources::Interiors::InteriorId::NullId());
                             m_myPinCreationModel.SetFloor(0);
+                            m_myPinCreationModel.SetHeightAboveTerrain(0.0f);
                         }
                     }
-
                     Eegeo::m44 sphereTransformMatrix;
                     sphereTransformMatrix.Scale(m_ringRadius);
 
-                    Eegeo::dv3 scaledPoint = Eegeo::Rendering::EnvironmentFlatteningService::GetScaledPointEcef(m_myPinCreationModel.GetPosition(), m_environmentFlatteningService.GetCurrentScale());
+                    Eegeo::dv3 scaledPoint;
+                    if(m_interiorsAffectedByFlattening)
+                    {
+                        scaledPoint = Eegeo::Rendering::EnvironmentFlatteningService::GetScaledPointEcef(m_myPinCreationModel.GetPosition(), m_environmentFlatteningService.GetCurrentScale());
+                    }
+                    else
+                    {
+                        scaledPoint = Eegeo::Rendering::EnvironmentFlatteningService::GetScaledPointAboveGroundEcef(m_myPinCreationModel.GetPosition(),
+                                                                                                                    m_myPinCreationModel.GetHeightAboveTerrain(),
+                                                                                                                    m_environmentFlatteningService.GetCurrentScale());
+                    }
 
+                    const bool ringIsOnScreen = RingIsOnScreen(renderCamera, scaledPoint, m_ringRadius);
+                    
+                    if (m_myPinCreationModel.GetCreationStage() == Inactive && !ringIsOnScreen)
+                    {
+                        m_scaleInterpolationParam = 0.f;
+                    }
+                    
+                    m_poiRingView.SetShouldRenderRing(m_scaleInterpolationParam > 0.f && ringIsOnScreen);
+                    
                     Eegeo::dv3 cameraRelativePosition = scaledPoint - renderCamera.GetEcefLocation();
                     sphereTransformMatrix.SetRow(3, Eegeo::v4(cameraRelativePosition.ToSingle(), 1.f));
 
@@ -165,18 +178,13 @@ namespace ExampleApp
                     float altitudeBasedScale = CalculateAltitudeBasedSphereScale(altitude, m_ringRadius);
                     m_poiRingView.SetInnerSphereScale(altitudeBasedScale);
 
-                    Eegeo::dv3 unflattenedIconPosition = m_myPinCreationModel.GetPosition();
-                    Eegeo::dv3 iconPosition = Eegeo::Rendering::EnvironmentFlatteningService::GetScaledPointEcef(
-                                                  unflattenedIconPosition,
-                                                  m_environmentFlatteningService.GetCurrentScale());
-
                     const float assetSize = 75.f;
-                    const float iconScale = Eegeo::Helpers::TransformHelpers::ComputeModelScaleForConstantScreenSizeWithVerticalFoV(renderCamera, iconPosition) / (m_screenProperties.GetScreenHeight()* 0.5f)*m_screenProperties.GetPixelScale() * assetSize;
+                    const float iconScale = Eegeo::Helpers::TransformHelpers::ComputeModelScaleForConstantScreenSizeWithVerticalFoV(renderCamera, scaledPoint) / (m_screenProperties.GetScreenHeight()* 0.5f)*m_screenProperties.GetPixelScale() * assetSize;
                     
                     m_iconSize = Eegeo::Max(iconScale * transitionScale, 0.0f);
-                    m_poiRingView.AddIconSprite(renderCamera, iconPosition, m_iconSize);
+                    m_poiRingView.AddIconSprite(renderCamera, scaledPoint, m_iconSize);
 
-                    m_iconPosition = iconPosition + (Eegeo::dv3)renderCamera.GetModelMatrix().GetRow(1) * m_iconSize * 0.5f;
+                    m_iconPosition = scaledPoint + (Eegeo::dv3)renderCamera.GetModelMatrix().GetRow(1) * m_iconSize * 0.5f;
                 }
 
                 float PoiRingController::CalculateTransitionScale(float dt)

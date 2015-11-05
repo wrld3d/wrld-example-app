@@ -50,7 +50,8 @@ namespace ExampleApp
                                              Eegeo::Modules::Map::Layers::TerrainModelModule& terrainModelModule,
                                              Eegeo::Modules::Map::MapModule& mapModule,
                                              ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
-                                             Eegeo::Rendering::ScreenProperties& screenProperties)
+                                             Eegeo::Rendering::ScreenProperties& screenProperties,
+                                             const bool interiorsAffectedByFlattening)
                     : m_renderableFilters(renderingModule.GetRenderableFilters())
                 {
                     m_pPoiRingRenderable = Eegeo_NEW(PoiRingRenderable)(renderingModule,
@@ -98,7 +99,8 @@ namespace ExampleApp
                                            mapModule.GetEnvironmentFlatteningService(),
                                            terrainModelModule.GetTerrainHeightProvider(),
                                            interiorsPresentationModule.GetAppLevelController(),
-                                           screenProperties);
+                                           screenProperties,
+                                           interiorsAffectedByFlattening);
 
 
                     m_pTerrainRayPicker = Eegeo_NEW(Eegeo::Resources::Terrain::Collision::TerrainRayPicker)(terrainModelModule.GetTerrainHeightProvider(),
