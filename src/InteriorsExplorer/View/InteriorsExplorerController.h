@@ -28,7 +28,8 @@ namespace ExampleApp
                                             ExampleApp::Menu::View::IMenuViewModel& secondaryMenuViewModel,
                                             ExampleApp::Menu::View::IMenuViewModel& searchResultMenuViewModel,
                                             ScreenControl::View::IScreenControlViewModel& flattenViewModel,
-                                            ScreenControl::View::IScreenControlViewModel& compassViewModel);
+                                            ScreenControl::View::IScreenControlViewModel& compassViewModel,
+											ScreenControl::View::IScreenControlViewModel& watermarkModel);
                 
                 ~InteriorsExplorerController();
                 
@@ -54,10 +55,9 @@ namespace ExampleApp
                 ExampleApp::Menu::View::IMenuViewModel& m_searchResultMenuViewModel;
                 ScreenControl::View::IScreenControlViewModel& m_flattenViewModel;
                 ScreenControl::View::IScreenControlViewModel& m_compassViewModel;
+                ScreenControl::View::IScreenControlViewModel& m_watermarkViewModel;
                 
                 ExampleAppMessaging::TMessageBus& m_messageBus;
-                
-                
             };
         }
     }

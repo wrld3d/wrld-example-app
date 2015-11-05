@@ -21,6 +21,7 @@ namespace ExampleApp
                 Eegeo::Helpers::CallbackCollection0 m_closedCallbacks;
                 AboutPageOpenableControl m_openable;
 
+                const std::string m_buildVersion;
                 const std::string m_platformVersion;
                 const std::string m_platformHash;
                 const std::string m_platformArchitecture;
@@ -30,6 +31,7 @@ namespace ExampleApp
                 AboutPageViewModel(
                     Eegeo::Helpers::TIdentity identity,
                     Reaction::View::IReactionControllerModel& reactionControllerModel,
+                    const std::string& buildVersion,
                     const std::string& platformVersion,
                     const std::string& platformHash,
                     const std::string& platformArchitecture,

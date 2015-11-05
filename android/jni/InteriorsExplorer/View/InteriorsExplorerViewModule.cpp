@@ -1,9 +1,9 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
+#include <InteriorsExplorer/View/InteriorsExplorerViewJni.h>
 #include "InteriorsExplorerViewModule.h"
 #include "ScreenProperties.h"
 #include "InteriorsExplorerView.h"
-#include "InteriorsExplorerViewInterop.h"
 #include "InteriorsExplorerController.h"
 
 namespace ExampleApp
@@ -19,13 +19,14 @@ namespace ExampleApp
                                                                      ExampleApp::Menu::View::IMenuViewModel& searchResultMenuViewModel,
                                                                      ScreenControl::View::IScreenControlViewModel& flattenViewModel,
                                                                      ScreenControl::View::IScreenControlViewModel& compassViewModel,
-                                                                     ScreenControl::View::IScreenControlViewModel& watermarkViewModel,
+																	 ScreenControl::View::IScreenControlViewModel& watermarkViewModel,
                                                                      const Eegeo::Rendering::ScreenProperties& screenProperties,
-                                                                     Eegeo::Helpers::IdentityProvider& identityProvider)
+                                                                     Eegeo::Helpers::IdentityProvider& identityProvider,
+																	 AndroidNativeState& nativeState)
             {
-                m_pView = [[InteriorsExplorerView alloc] initWithParams: screenProperties.GetScreenWidth(): screenProperties.GetScreenHeight(): screenProperties.GetPixelScale()];
-                
-                m_pController = Eegeo_NEW(InteriorsExplorerController)(*[m_pView getInterop],
+            	m_pView = Eegeo_NEW(InteriorsExplorerView)(nativeState);
+
+            	m_pController = Eegeo_NEW(InteriorsExplorerController)(*m_pView,
                                                                        viewModel,
                                                                        messageBus,
                                                                        initiationViewModel,
@@ -33,16 +34,14 @@ namespace ExampleApp
                                                                        searchResultMenuViewModel,
                                                                        flattenViewModel,
                                                                        compassViewModel,
-                                                                       watermarkViewModel);
-                
-
+																	   watermarkViewModel);
             }
             
             InteriorsExplorerViewModule::~InteriorsExplorerViewModule()
             {
                 Eegeo_DELETE m_pController;
                 
-                [m_pView release];
+                Eegeo_DELETE m_pView;
             }
             
             InteriorsExplorerController& InteriorsExplorerViewModule::GetController() const

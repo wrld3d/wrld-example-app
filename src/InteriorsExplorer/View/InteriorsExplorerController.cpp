@@ -22,7 +22,8 @@ namespace ExampleApp
                                                                      ExampleApp::Menu::View::IMenuViewModel& secondaryMenuViewModel,
                                                                      ExampleApp::Menu::View::IMenuViewModel& searchResultMenuViewModel,
                                                                      ScreenControl::View::IScreenControlViewModel& flattenViewModel,
-                                                                     ScreenControl::View::IScreenControlViewModel& compassViewModel)
+                                                                     ScreenControl::View::IScreenControlViewModel& compassViewModel,
+																	 ScreenControl::View::IScreenControlViewModel& watermarkViewModel)
             : m_view(view)
             , m_viewModel(viewModel)
             , m_messageBus(messageBus)
@@ -31,6 +32,7 @@ namespace ExampleApp
             , m_searchResultMenuViewModel(searchResultMenuViewModel)
             , m_flattenViewModel(flattenViewModel)
             , m_compassViewModel(compassViewModel)
+            , m_watermarkViewModel(watermarkViewModel)
             , m_dismissedCallback(this, &InteriorsExplorerController::OnDismiss)
             , m_selectFloorCallback(this, &InteriorsExplorerController::OnSelectFloor)
             , m_stateChangedCallback(this, &InteriorsExplorerController::OnStateChanged)
@@ -89,12 +91,10 @@ namespace ExampleApp
                     OnFloorSelected(InteriorsExplorerFloorSelectedMessage(message.GetSelectedFloorIndex(), message.GetSelectedFloorName()));
                     
                     m_viewModel.AddToScreen();
-                    
                 }
                 else
                 {
                     m_viewModel.RemoveFromScreen();
-
                 }
             }
             
