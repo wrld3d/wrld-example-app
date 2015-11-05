@@ -17,6 +17,11 @@
 }
 @end
 
+namespace
+{
+    const bool AllowPinning = false;
+}
+
 @implementation GeoNamesSearchResultPoiView
 
 - (id)initWithInterop:(ExampleApp::SearchResultPoi::View::SearchResultPoiViewInterop*)pInterop
@@ -45,9 +50,12 @@
         [self.pCloseButton addTarget:self action:@selector(handleClosedButtonSelected) forControlEvents:UIControlEventTouchUpInside];
         [self.pCloseButtonContainer addSubview: self.pCloseButton];
         
-        self.pPinButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        [self.pPinButton addTarget:self action:@selector(handlePinButtonSelected) forControlEvents:UIControlEventTouchUpInside];
-        [self.pCloseButtonContainer addSubview: self.pPinButton];
+        if(AllowPinning)
+        {
+            self.pPinButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+            [self.pPinButton addTarget:self action:@selector(handlePinButtonSelected) forControlEvents:UIControlEventTouchUpInside];
+            [self.pCloseButtonContainer addSubview: self.pPinButton];
+        }
         
         self.pContentContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         self.pContentContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::WhiteTone;
@@ -92,8 +100,11 @@
     [self.pCloseButton removeFromSuperview];
     [self.pCloseButton release];
     
-    [self.pPinButton removeFromSuperview];
-    [self.pPinButton release];
+    if(AllowPinning)
+    {
+        [self.pPinButton removeFromSuperview];
+        [self.pPinButton release];
+    }
     
     [self.pCloseButtonContainer removeFromSuperview];
     [self.pCloseButtonContainer release];
@@ -189,10 +200,13 @@
                                          closeButtonSectionHeight,
                                          closeButtonSectionHeight);
     
-    self.pPinButton.frame = CGRectMake(0.f,
-                                       0.f,
-                                       closeButtonSectionHeight,
-                                       closeButtonSectionHeight);
+    if(AllowPinning)
+    {
+        self.pPinButton.frame = CGRectMake(0.f,
+                                           0.f,
+                                           closeButtonSectionHeight,
+                                           closeButtonSectionHeight);
+    }
     
     self.pCategoryIconContainer.frame = CGRectMake(0.f, 0.f, headlineHeight, headlineHeight);
     const float titlePadding = 10.0f;
@@ -246,6 +260,11 @@
     m_model = *pModel;
     m_isPinned = isPinned;
     [self updatePinnedButtonState];
+    
+    if(!AllowPinning && m_isPinned)
+    {
+        [self handlePinButtonSelected];
+    }
     
     self.pTitleLabel.text = [NSString stringWithUTF8String:pModel->GetTitle().c_str()];
     
@@ -334,15 +353,18 @@
 
 - (void) updatePinnedButtonState
 {
-    if(m_isPinned)
+    if(AllowPinning)
     {
-        [self.pPinButton setBackgroundImage:self->m_pRemovePinButtonBackgroundImage forState:UIControlStateNormal];
-        [self.pPinButton setBackgroundImage:self->m_pRemovePinHighlightButtonBackgroundImage forState:UIControlStateHighlighted];
-    }
-    else
-    {
-        [self.pPinButton setBackgroundImage:self->m_pAddPinButtonBackgroundImage forState:UIControlStateNormal];
-        [self.pPinButton setBackgroundImage:self->m_pAddPinHighlightButtonBackgroundImage forState:UIControlStateHighlighted];
+        if(m_isPinned)
+        {
+            [self.pPinButton setBackgroundImage:self->m_pRemovePinButtonBackgroundImage forState:UIControlStateNormal];
+            [self.pPinButton setBackgroundImage:self->m_pRemovePinHighlightButtonBackgroundImage forState:UIControlStateHighlighted];
+        }
+        else
+        {
+            [self.pPinButton setBackgroundImage:self->m_pAddPinButtonBackgroundImage forState:UIControlStateNormal];
+            [self.pPinButton setBackgroundImage:self->m_pAddPinHighlightButtonBackgroundImage forState:UIControlStateHighlighted];
+        }
     }
 }
 

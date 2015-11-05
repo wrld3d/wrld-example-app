@@ -18,10 +18,14 @@
 }
 @end
 
-const float RatingImageWidth = 100.f;
-const float RatingImageHeight = 30.f;
-const int PhoneAlertViewTag = 1;
-const int DeletePinAlertViewTag = 2;
+namespace
+{
+    const bool AllowPinning = false;
+    const float RatingImageWidth = 100.f;
+    const float RatingImageHeight = 30.f;
+    const int PhoneAlertViewTag = 1;
+    const int DeletePinAlertViewTag = 2;
+}
 
 @implementation YelpSearchResultPoiView
 
@@ -54,9 +58,12 @@ const int DeletePinAlertViewTag = 2;
         [self.pCloseButton addTarget:self action:@selector(handleClosedButtonSelected) forControlEvents:UIControlEventTouchUpInside];
         [self.pCloseButtonContainer addSubview: self.pCloseButton];
         
-        self.pPinButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        [self.pPinButton addTarget:self action:@selector(handlePinButtonSelected) forControlEvents:UIControlEventTouchUpInside];
-        [self.pCloseButtonContainer addSubview: self.pPinButton];
+        if(AllowPinning)
+        {
+            self.pPinButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+            [self.pPinButton addTarget:self action:@selector(handlePinButtonSelected) forControlEvents:UIControlEventTouchUpInside];
+            [self.pCloseButtonContainer addSubview: self.pPinButton];
+        }
         
         self.pContentContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         self.pContentContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::WhiteTone;
@@ -176,8 +183,11 @@ const int DeletePinAlertViewTag = 2;
     [self.pCloseButton removeFromSuperview];
     [self.pCloseButton release];
     
-    [self.pPinButton removeFromSuperview];
-    [self.pPinButton release];
+    if(AllowPinning)
+    {
+        [self.pPinButton removeFromSuperview];
+        [self.pPinButton release];
+    }
     
     [self.pCloseButtonContainer removeFromSuperview];
     [self.pCloseButtonContainer release];
@@ -309,10 +319,13 @@ const int DeletePinAlertViewTag = 2;
                                          closeButtonSectionHeight,
                                          closeButtonSectionHeight);
     
-    self.pPinButton.frame = CGRectMake(0.f,
-                                       0.f,
-                                       closeButtonSectionHeight,
-                                       closeButtonSectionHeight);
+    if(AllowPinning)
+    {
+        self.pPinButton.frame = CGRectMake(0.f,
+                                           0.f,
+                                           closeButtonSectionHeight,
+                                           closeButtonSectionHeight);
+    }
     
     self.pCategoryIconContainer.frame = CGRectMake(0.f, 0.f, headlineHeight, headlineHeight);
     const float titlePadding = 10.0f;
@@ -545,6 +558,11 @@ const int DeletePinAlertViewTag = 2;
     m_isPinned = isPinned;
     [self updatePinnedButtonState];
     
+    if(!AllowPinning && m_isPinned)
+    {
+        [self togglePinState];
+    }
+    
     self.pTitleLabel.text = [NSString stringWithUTF8String:pModel->GetTitle().c_str()];
     
     [self.pCategoryIconContainer.subviews makeObjectsPerformSelector: @selector(removeFromSuperview)];
@@ -767,15 +785,18 @@ const int DeletePinAlertViewTag = 2;
 
 - (void) updatePinnedButtonState
 {
-    if(m_isPinned)
+    if(AllowPinning)
     {
-        [self.pPinButton setBackgroundImage:self->m_pRemovePinButtonBackgroundImage forState:UIControlStateNormal];
-        [self.pPinButton setBackgroundImage:self->m_pRemovePinHighlightButtonBackgroundImage forState:UIControlStateHighlighted];
-    }
-    else
-    {
-        [self.pPinButton setBackgroundImage:self->m_pAddPinButtonBackgroundImage forState:UIControlStateNormal];
-        [self.pPinButton setBackgroundImage:self->m_pAddPinHighlightButtonBackgroundImage forState:UIControlStateHighlighted];
+        if(m_isPinned)
+        {
+            [self.pPinButton setBackgroundImage:self->m_pRemovePinButtonBackgroundImage forState:UIControlStateNormal];
+            [self.pPinButton setBackgroundImage:self->m_pRemovePinHighlightButtonBackgroundImage forState:UIControlStateHighlighted];
+        }
+        else
+        {
+            [self.pPinButton setBackgroundImage:self->m_pAddPinButtonBackgroundImage forState:UIControlStateNormal];
+            [self.pPinButton setBackgroundImage:self->m_pAddPinHighlightButtonBackgroundImage forState:UIControlStateHighlighted];
+        }
     }
 }
 
