@@ -54,6 +54,8 @@
 #include "ImageStore.h"
 #include "ICallback.h"
 #include "UserInteraction.h"
+#include "URLRequestHandler.h"
+
 
 @class ViewController;
 class AppInputDelegate;
@@ -126,6 +128,8 @@ private:
     std::map<std::string,ExampleApp::Search::SdkModel::ISearchServiceModule*> m_searchServiceModules;
     ExampleApp::Metrics::iOSFlurryMetricsService& m_iOSFlurryMetricsService;
     ExampleApp::InteriorsExplorer::View::IInteriorsExplorerViewModule* m_pInteriorsExplorerViewModule;
+    
+    ExampleApp::URLRequest::View::URLRequestHandler* m_pURLRequestHandler;
     
     ImageStore* m_pImageStore;
     

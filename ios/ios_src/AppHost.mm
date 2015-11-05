@@ -113,6 +113,7 @@ AppHost::AppHost(
     ,m_pTourFullScreenImageViewModule(NULL)
     ,m_pTourExplorerViewModule(NULL)
     ,m_userInteractionEnabledChangedHandler(this, &AppHost::HandleUserInteractionEnabledChanged)
+    ,m_pURLRequestHandler(NULL)
 {
     Eegeo::TtyHandler::TtyEnabled = true;
     
@@ -146,6 +147,8 @@ AppHost::AppHost(
     m_searchServiceModules[ExampleApp::Search::YelpVendorName] = Eegeo_NEW(ExampleApp::Search::Yelp::iOSYelpSearchServiceModule)(m_piOSPlatformAbstractionModule->GetWebLoadRequestFactory(),
                                                                                                  *m_pNetworkCapabilities,
                                                                                                  m_piOSPlatformAbstractionModule->GetUrlEncoder());
+    
+    m_pURLRequestHandler = Eegeo_NEW(ExampleApp::URLRequest::View::URLRequestHandler)(m_messageBus);
     
     m_pImageStore = [[ImageStore alloc]init];
     
@@ -186,6 +189,9 @@ AppHost::~AppHost()
 
     DestroyApplicationViewModules();
 
+    Eegeo_DELETE m_pURLRequestHandler;
+    m_pURLRequestHandler = NULL;
+    
     [m_pImageStore release];
     m_pImageStore = nil;
     

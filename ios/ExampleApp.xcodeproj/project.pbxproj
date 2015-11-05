@@ -607,6 +607,10 @@
 		279788C41C087D820053CD00 /* TwitterFeedTourObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 279788B91C087D820053CD00 /* TwitterFeedTourObserver.cpp */; };
 		279788C51C087D820053CD00 /* TwitterFeedTourStateMachineFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 279788BB1C087D820053CD00 /* TwitterFeedTourStateMachineFactory.cpp */; };
 		279788C61C087D820053CD00 /* TwitterFeedTourStateMachineFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 279788BB1C087D820053CD00 /* TwitterFeedTourStateMachineFactory.cpp */; };
+		279788CA1C0896FB0053CD00 /* URLRequestedMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 279788C81C0896FB0053CD00 /* URLRequestedMessage.cpp */; };
+		279788CB1C0896FB0053CD00 /* URLRequestedMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 279788C81C0896FB0053CD00 /* URLRequestedMessage.cpp */; };
+		279788D01C08975C0053CD00 /* URLRequestHandler.mm in Sources */ = {isa = PBXBuildFile; fileRef = 279788CF1C08975C0053CD00 /* URLRequestHandler.mm */; };
+		279788D11C08975C0053CD00 /* URLRequestHandler.mm in Sources */ = {isa = PBXBuildFile; fileRef = 279788CF1C08975C0053CD00 /* URLRequestHandler.mm */; };
 		27C1F99B1BC6A47600D5EFF4 /* InteriorsExplorerCameraController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27C1F9991BC6A47600D5EFF4 /* InteriorsExplorerCameraController.cpp */; };
 		27C1F99C1BC6A47600D5EFF4 /* InteriorsExplorerCameraController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27C1F9991BC6A47600D5EFF4 /* InteriorsExplorerCameraController.cpp */; };
 		27CADB631BCFEA2A00805A27 /* SizeHelpers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27CADB611BCFEA2A00805A27 /* SizeHelpers.cpp */; };
@@ -1994,6 +1998,10 @@
 		279788BA1C087D820053CD00 /* TwitterFeedTourObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwitterFeedTourObserver.h; sourceTree = "<group>"; };
 		279788BB1C087D820053CD00 /* TwitterFeedTourStateMachineFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TwitterFeedTourStateMachineFactory.cpp; sourceTree = "<group>"; };
 		279788BC1C087D820053CD00 /* TwitterFeedTourStateMachineFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwitterFeedTourStateMachineFactory.h; sourceTree = "<group>"; };
+		279788C81C0896FB0053CD00 /* URLRequestedMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = URLRequestedMessage.cpp; sourceTree = "<group>"; };
+		279788C91C0896FB0053CD00 /* URLRequestedMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = URLRequestedMessage.h; sourceTree = "<group>"; };
+		279788CE1C08975C0053CD00 /* URLRequestHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = URLRequestHandler.h; sourceTree = "<group>"; };
+		279788CF1C08975C0053CD00 /* URLRequestHandler.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = URLRequestHandler.mm; sourceTree = "<group>"; };
 		27C1F9991BC6A47600D5EFF4 /* InteriorsExplorerCameraController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InteriorsExplorerCameraController.cpp; sourceTree = "<group>"; };
 		27C1F99A1BC6A47600D5EFF4 /* InteriorsExplorerCameraController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InteriorsExplorerCameraController.h; sourceTree = "<group>"; };
 		27CADB611BCFEA2A00805A27 /* SizeHelpers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SizeHelpers.cpp; sourceTree = "<group>"; };
@@ -3188,12 +3196,11 @@
 		18143846192B6E4500BCDF2E /* src */ = {
 			isa = PBXGroup;
 			children = (
-				2797889D1C087D1A0053CD00 /* Social */,
-				BF0E35081BC67313005B30E8 /* AppCamera */,
-				E06AE5901B871E6E000F85E3 /* AppModes */,
 				7E3B86631A385A280023C94E /* AboutPage */,
 				18B22B181A7A901D00DDBFA2 /* ApiKey.h */,
+				BF0E35081BC67313005B30E8 /* AppCamera */,
 				186B473D1AB333150084E80B /* ApplicationConfig */,
+				E06AE5901B871E6E000F85E3 /* AppModes */,
 				7E3B86711A385A280023C94E /* CameraTransitions */,
 				7E3B86771A385A280023C94E /* CategorySearch */,
 				7E3B86891A385A280023C94E /* Compass */,
@@ -3202,9 +3209,9 @@
 				7E8F03D21A822E820056F229 /* GpsMarker */,
 				18FE21CF1AA9CD3800ACE28A /* Helpers */,
 				7E3B86C71A385A290023C94E /* InitialExperience */,
+				E0ECCFF71BC688CE00967A95 /* InteriorsCustomMaterials */,
 				561ECF1E1B467F84007BD4F9 /* InteriorsEntitiesPins */,
 				7E5811AE1B1F050A007AD67F /* InteriorsExplorer */,
-				E0ECCFF71BC688CE00967A95 /* InteriorsCustomMaterials */,
 				7E3B86DB1A385A290023C94E /* Logger.h */,
 				F7F3705892DE41262BA7773A /* MapMode */,
 				7E3B86DC1A385A290023C94E /* Menu */,
@@ -3231,8 +3238,10 @@
 				7E3B881C1A385A290023C94E /* SearchResultOnMap */,
 				7E3B88321A385A290023C94E /* SearchResultPoi */,
 				7E3B88401A385A290023C94E /* SecondaryMenu */,
-				27E935F61BE12816007D52C5 /* UserInteraction */,
+				2797889D1C087D1A0053CD00 /* Social */,
 				BFD5FCD01BA706AD00F591F1 /* Tours */,
+				279788C71C0896FB0053CD00 /* URLRequest */,
+				27E935F61BE12816007D52C5 /* UserInteraction */,
 				7E3B884E1A385A290023C94E /* ViewControllerUpdater */,
 				186B47011AB1D46B0084E80B /* Watermark */,
 				7E3B88581A385A290023C94E /* WeatherMenu */,
@@ -3738,6 +3747,32 @@
 				279788BC1C087D820053CD00 /* TwitterFeedTourStateMachineFactory.h */,
 			);
 			path = TwitterFeed;
+			sourceTree = "<group>";
+		};
+		279788C71C0896FB0053CD00 /* URLRequest */ = {
+			isa = PBXGroup;
+			children = (
+				279788C81C0896FB0053CD00 /* URLRequestedMessage.cpp */,
+				279788C91C0896FB0053CD00 /* URLRequestedMessage.h */,
+			);
+			path = URLRequest;
+			sourceTree = "<group>";
+		};
+		279788CC1C08975C0053CD00 /* URLRequest */ = {
+			isa = PBXGroup;
+			children = (
+				279788CD1C08975C0053CD00 /* View */,
+			);
+			path = URLRequest;
+			sourceTree = "<group>";
+		};
+		279788CD1C08975C0053CD00 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				279788CE1C08975C0053CD00 /* URLRequestHandler.h */,
+				279788CF1C08975C0053CD00 /* URLRequestHandler.mm */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		27DB89B21BB3FEF00020CDA5 /* SdkModel */ = {
@@ -5031,8 +5066,6 @@
 		7E3B8A121A385F100023C94E /* ios_src */ = {
 			isa = PBXGroup;
 			children = (
-				BFD5FD8F1BA7141600F591F1 /* ImageStore */,
-				BFD5FC8A1BA7068300F591F1 /* Tours */,
 				7E3B8A131A385F100023C94E /* AboutPage */,
 				18CFE2B21BECC76D003368D1 /* AppDelegate.h */,
 				18CFE2B31BECC76D003368D1 /* AppDelegate.mm */,
@@ -5050,8 +5083,9 @@
 				7E3B8A391A385F100023C94E /* GlDisplayService.h */,
 				7E3B8A3A1A385F100023C94E /* GlDisplayService.mm */,
 				7E3B8A3B1A385F100023C94E /* Helpers */,
-				7E5811C21B1F3248007AD67F /* InteriorsExplorer */,
+				BFD5FD8F1BA7141600F591F1 /* ImageStore */,
 				7E3B8A441A385F100023C94E /* InitialExperience */,
+				7E5811C21B1F3248007AD67F /* InteriorsExplorer */,
 				7E3B8A4A1A385F100023C94E /* Main.mm */,
 				7E3B8A4B1A385F100023C94E /* Menu */,
 				56AC9BF91AA6076D00E603C4 /* Metrics */,
@@ -5066,11 +5100,13 @@
 				7E3B8A951A385F100023C94E /* SearchResultMenu */,
 				7E3B8AA01A385F110023C94E /* SearchResultPoi */,
 				7E3B8AAD1A385F110023C94E /* SecondaryMenu */,
+				BFD5FC8A1BA7068300F591F1 /* Tours */,
+				279788CC1C08975C0053CD00 /* URLRequest */,
 				7E3B8AB61A385F110023C94E /* ViewController.h */,
 				7E3B8AB71A385F110023C94E /* ViewController.mm */,
 				7E3B8AB81A385F110023C94E /* Views */,
-				7E3B8ABB1A385F110023C94E /* WorldPinOnMap */,
 				186B47171AB1DD5C0084E80B /* Watermark */,
+				7E3B8ABB1A385F110023C94E /* WorldPinOnMap */,
 			);
 			path = ios_src;
 			sourceTree = SOURCE_ROOT;
@@ -7139,6 +7175,7 @@
 				2797889C1C087C970053CD00 /* TwitterDefines.mm in Sources */,
 				BFDFC3D01BB2EF190099BAEC /* SearchResultModel.cpp in Sources */,
 				7E3B898D1A385A290023C94E /* SearchModule.cpp in Sources */,
+				279788CB1C0896FB0053CD00 /* URLRequestedMessage.cpp in Sources */,
 				7E3B89371A385A290023C94E /* MyPinCreationDetailsController.cpp in Sources */,
 				7E3B88ED1A385A290023C94E /* InitialExperienceModuleBase.cpp in Sources */,
 				BFD5FCCF1BA7068300F591F1 /* TourWebViewModule.mm in Sources */,
@@ -7155,6 +7192,7 @@
 				7E3B894F1A385A290023C94E /* MyPinAddedToMenuMessage.cpp in Sources */,
 				18B22B381A7A937D00DDBFA2 /* OptionsView.mm in Sources */,
 				7E3B892F1A385A290023C94E /* MyPinCreationConfirmationViewModel.cpp in Sources */,
+				279788D11C08975C0053CD00 /* URLRequestHandler.mm in Sources */,
 				18FE3BD31A9CA561002D61C4 /* SortedMenuComparisonFunctions.cpp in Sources */,
 				7E3B8AEC1A385F110023C94E /* iOSInitialExperiencePreLoadModel.mm in Sources */,
 				560F99191BFE0E190008B0A2 /* WatermarkModule.cpp in Sources */,
@@ -7617,6 +7655,7 @@
 				2797889B1C087C970053CD00 /* TwitterDefines.mm in Sources */,
 				BFDFC3CF1BB2EF190099BAEC /* SearchResultModel.cpp in Sources */,
 				7E3B898C1A385A290023C94E /* SearchModule.cpp in Sources */,
+				279788CA1C0896FB0053CD00 /* URLRequestedMessage.cpp in Sources */,
 				7E3B89361A385A290023C94E /* MyPinCreationDetailsController.cpp in Sources */,
 				7E3B88EC1A385A290023C94E /* InitialExperienceModuleBase.cpp in Sources */,
 				BFD5FCCE1BA7068300F591F1 /* TourWebViewModule.mm in Sources */,
@@ -7633,6 +7672,7 @@
 				18B22B371A7A937D00DDBFA2 /* OptionsView.mm in Sources */,
 				7E3B892E1A385A290023C94E /* MyPinCreationConfirmationViewModel.cpp in Sources */,
 				18FE3BD21A9CA561002D61C4 /* SortedMenuComparisonFunctions.cpp in Sources */,
+				279788D01C08975C0053CD00 /* URLRequestHandler.mm in Sources */,
 				7E3B8AEB1A385F110023C94E /* iOSInitialExperiencePreLoadModel.mm in Sources */,
 				7E5811CD1B1F3248007AD67F /* InteriorsExplorerViewInterop.mm in Sources */,
 				560F99181BFE0E190008B0A2 /* WatermarkModule.cpp in Sources */,
