@@ -45,20 +45,15 @@ namespace ExampleApp
 
             const std::string AboutPageViewModel::GetContent() const
             {
-                const std::string DefaultBuildVersionString = "INSERT BUILD VERSION HERE";
-                
                 std::stringstream content;
-                content << m_aboutText;
                 
-                if(m_buildVersion.find(DefaultBuildVersionString) == std::string::npos)
-                {
-                    content << "\n\nApplication build version: " + m_buildVersion;
-                }
-                
-                content << "\n\nPlatform version: " + m_platformVersion
+                content << m_aboutText
+                        << "\n\nApplication build version: " + m_buildVersion
+                        << "\n\nPlatform version: " + m_platformVersion
                         << "\nPlatform hash: " + m_platformHash
                         << "\nPlatform runtime arch: " + m_platformArchitecture
                         << "\n\n";
+                
                 return content.str();
             }
 

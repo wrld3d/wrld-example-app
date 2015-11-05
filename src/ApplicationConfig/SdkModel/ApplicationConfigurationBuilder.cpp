@@ -8,12 +8,13 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            ApplicationConfigurationBuilder::ApplicationConfigurationBuilder()
+            ApplicationConfigurationBuilder::ApplicationConfigurationBuilder(const std::string& buildVersion)
             : m_name("")
             , m_interestLocation(0.0, 0.0, 0.0)
             , m_distanceToInterestMetres(0.f)
             , m_orientationDegrees(0.f)
             , m_tryStartAtGpsLocation(false)
+            , m_buildVersion(buildVersion)
             {
                 
             }
@@ -61,7 +62,8 @@ namespace ExampleApp
                                                 m_distanceToInterestMetres,
                                                 m_orientationDegrees,
                                                 m_tryStartAtGpsLocation,
-                                                m_googleAnalyticsReferrerToken);
+                                                m_googleAnalyticsReferrerToken,
+                                                m_buildVersion);
             }
         }
     }

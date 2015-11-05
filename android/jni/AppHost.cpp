@@ -187,7 +187,7 @@ AppHost::AppHost(
     m_pAndroidFlurryMetricsService = Eegeo_NEW(ExampleApp::Metrics::AndroidFlurryMetricsService)(&m_nativeState);
 
     typedef ExampleApp::ApplicationConfig::SdkModel::ApplicationConfigurationModule ApplicationConfigurationModule;
-    ApplicationConfigurationModule applicationConfigurationModule(m_pAndroidPlatformAbstractionModule->GetFileIO());
+    ApplicationConfigurationModule applicationConfigurationModule(m_pAndroidPlatformAbstractionModule->GetFileIO(), m_nativeState.versionName);
 
     m_pApp = Eegeo_NEW(ExampleApp::MobileExampleApp)(
                  ExampleApp::ApiKey,

@@ -320,7 +320,8 @@ namespace ExampleApp
         m_pWatermarkModule = Eegeo_NEW(ExampleApp::Watermark::WatermarkModule)(m_identityProvider);
 
         m_pAboutPageModule = Eegeo_NEW(ExampleApp::AboutPage::View::AboutPageModule)(m_identityProvider,
-                                                                                     m_pReactionControllerModule->GetReactionControllerModel());
+                                                                                     m_pReactionControllerModule->GetReactionControllerModel(),
+                                                                                     m_applicationConfiguration.BuildVersion());
         
         m_pOptionsModule = Eegeo_NEW(ExampleApp::Options::OptionsModule)(m_identityProvider,
                                                                          m_pReactionControllerModule->GetReactionControllerModel(),

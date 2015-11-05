@@ -145,8 +145,15 @@ AppHost::AppHost(
 
     m_piOSFlurryMetricsService = Eegeo_NEW(ExampleApp::Metrics::iOSFlurryMetricsService)();
     
+    const char* versionNumber = [[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"] cStringUsingEncoding:NSUTF8StringEncoding];
+    
+    if(versionNumber == NULL || strcmp(versionNumber, "") == 0)
+    {
+        versionNumber = "Development Build";
+    }
+    
     typedef ExampleApp::ApplicationConfig::SdkModel::ApplicationConfigurationModule ApplicationConfigurationModule;
-    ApplicationConfigurationModule applicationConfigurationModule(m_piOSPlatformAbstractionModule->GetFileIO());
+    ApplicationConfigurationModule applicationConfigurationModule(m_piOSPlatformAbstractionModule->GetFileIO(), versionNumber);
     
     m_pImageStore = [[ImageStore alloc]init];
     
