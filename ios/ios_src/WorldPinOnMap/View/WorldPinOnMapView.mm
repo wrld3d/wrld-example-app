@@ -155,7 +155,8 @@
     self.pTopStrip.frame =  CGRectMake(0.f, 0.f, w, labelContainerOffsetY);
     self.pLabelBack.frame = CGRectMake(0.f, labelContainerOffsetY, w, labelContainerHeight);
 
-    const float labelVerticalSpace = h*0.3f;
+    const float labelVerticalSpaceMultiplier = m_enlarged ? 0.3f : 0.4f;
+    const float labelVerticalSpace = h * labelVerticalSpaceMultiplier;
     const float labelSpacing = h*0.05f;
     const float labelOffsetX = 4.f;
     const float labelOffsetY = 2.f;

@@ -112,6 +112,7 @@ namespace ExampleApp
             void InteriorsExplorerModule::Update(float dt) const
             {
                 m_pVisibilityUpdater->Update(dt);
+                m_pWorldPinController->Update(dt);
             }
             
             InteriorsExplorerModel& InteriorsExplorerModule::GetInteriorsExplorerModel() const

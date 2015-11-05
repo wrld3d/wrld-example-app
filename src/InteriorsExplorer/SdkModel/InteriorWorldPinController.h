@@ -27,7 +27,9 @@ namespace ExampleApp
                                            ExampleAppMessaging::TMessageBus& messageBus);
                 ~InteriorWorldPinController();
                 
-                const bool PinInteractionAllowed() const;
+                const bool PinInteractionAllowed(const std::string& interiorId) const;
+                
+                void Update(float dt);
                 
             private:
                 
@@ -36,6 +38,7 @@ namespace ExampleApp
                 WorldPins::SdkModel::IWorldPinsService& m_worldPinsService;
                 InteriorsExplorerCameraController& m_cameraController;
                 std::map<std::string, WorldPins::SdkModel::WorldPinItemModel*> m_interiorIdToWorldPinMap;
+                std::map<std::string, WorldPins::SdkModel::WorldPinItemModel*> m_deferedRemovalMap;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 bool m_menuIsDragging;
                 

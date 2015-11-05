@@ -36,7 +36,7 @@ namespace ExampleApp
                 
                 void SelectPin()
                 {
-                    if(!m_pinController.PinInteractionAllowed())
+                    if(!m_pinController.PinInteractionAllowed(m_interiorId.Value()))
                     {
                         return;
                     }
