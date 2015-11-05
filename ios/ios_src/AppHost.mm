@@ -390,6 +390,7 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
                                                                                              app.SearchResultMenuModule().GetMenuViewModel(),
                                                                                              app.FlattenButtonModule().GetScreenControlViewModel(),
                                                                                              app.CompassModule().GetScreenControlViewModel(),
+                                                                                             app.WatermarkModule().GetScreenControlViewModel(),
                                                                                              screenProperties,
                                                                                              app.GetIdentityProvider());
 

@@ -3,6 +3,7 @@
 #include "AboutPageModule.h"
 #include "AboutPageViewModel.h"
 #include "EegeoWorld.h"
+#include "ApiKey.h"
 
 namespace
 {
@@ -104,7 +105,7 @@ namespace ExampleApp
                                              Reaction::View::IReactionControllerModel& reactionControllerModel)
             {
                 std::string platformRuntimeArchitecture = (sizeof(void*) == 4) ? "32-bit" : "64-bit";
-                m_pAboutPageViewModel = Eegeo_NEW(AboutPageViewModel)(identityProvider.GetNextIdentity(), reactionControllerModel, EEGEO_PLATFORM_VERSION_NUMBER, EEGEO_PLATFORM_VERSION_HASH, platformRuntimeArchitecture, AboutPageText);
+                m_pAboutPageViewModel = Eegeo_NEW(AboutPageViewModel)(identityProvider.GetNextIdentity(), reactionControllerModel, ExampleApp::BuildVersion, EEGEO_PLATFORM_VERSION_NUMBER, EEGEO_PLATFORM_VERSION_HASH, platformRuntimeArchitecture, AboutPageText);
             }
 
             AboutPageModule::~AboutPageModule()

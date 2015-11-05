@@ -13,11 +13,13 @@ namespace ExampleApp
             AboutPageViewModel::AboutPageViewModel(
                 Eegeo::Helpers::TIdentity identity,
                 Reaction::View::IReactionControllerModel& reactionControllerModel,
+                const std::string& buildVersion,
                 const std::string& platformVersion,
                 const std::string& platformHash,
                 const std::string& platformArchitecture,
                 const std::string& aboutText)
                 : m_openable(identity, reactionControllerModel)
+                , m_buildVersion(buildVersion)
                 , m_platformVersion(platformVersion)
                 , m_platformHash(platformHash)
                 , m_platformArchitecture(platformArchitecture)
@@ -43,9 +45,17 @@ namespace ExampleApp
 
             const std::string AboutPageViewModel::GetContent() const
             {
+                const std::string DefaultBuildVersionString = "INSERT BUILD VERSION HERE";
+                
                 std::stringstream content;
-                content << m_aboutText
-                        << "\n\nPlatform version: " + m_platformVersion
+                content << m_aboutText;
+                
+                if(m_buildVersion.find(DefaultBuildVersionString) == std::string::npos)
+                {
+                    content << "\n\nApplication build version: " + m_buildVersion;
+                }
+                
+                content << "\n\nPlatform version: " + m_platformVersion
                         << "\nPlatform hash: " + m_platformHash
                         << "\nPlatform runtime arch: " + m_platformArchitecture
                         << "\n\n";
