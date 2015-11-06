@@ -85,6 +85,7 @@
 #include "AppGlobeCameraWrapper.h"
 #include "NativeUIFactories.h"
 #include "UserInteractionModule.h"
+#include "UserInteractionModel.h"
 
 namespace ExampleApp
 {
@@ -1220,11 +1221,11 @@ namespace ExampleApp
     bool MobileExampleApp::CanAcceptTouch() const
     {
         const bool worldIsInitialising = World().Initialising();
-        const bool transitioning = m_pCameraTransitionService->IsTransitioning();
+        const bool userInteractionEnabled = m_pUserInteractionModule->GetUserInteractionModel().IsEnabled();
         
         InitialExperience::SdkModel::IInitialExperienceModel& initialExperienceModel = m_initialExperienceModule.GetInitialExperienceModel();
         const bool lockedCameraStepsCompleted = initialExperienceModel.LockedCameraStepsCompleted();
         
-        return !worldIsInitialising && lockedCameraStepsCompleted && !transitioning;
+        return !worldIsInitialising && lockedCameraStepsCompleted && userInteractionEnabled;
     }
 }
