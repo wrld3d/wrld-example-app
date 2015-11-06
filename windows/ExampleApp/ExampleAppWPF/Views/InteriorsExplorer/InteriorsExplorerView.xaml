@@ -33,7 +33,7 @@
                                     <Grid.OpacityMask>
                                         <VisualBrush Visual="{Binding ElementName=Mask}"/>
                                     </Grid.OpacityMask>
-                                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="FloorName" Foreground="{StaticResource DarkGrey}" FontSize="12"/>
+                                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="FloorName" Foreground="{StaticResource DarkGrey}" FontSize="16"/>
                                 </Grid>
                             </Grid>
                         </Grid>
@@ -46,16 +46,6 @@
                             </Grid.RowDefinitions>
                             <Image Grid.Row="0" Source="/ExampleAppWPF;component/Assets/floor_selection_top.png" Stretch="Uniform" Width="50"/>
                             <ListBox Name="FloorList" Grid.Row="1" HorizontalContentAlignment="Stretch">
-                                <ListBox.Resources>
-                                    <Style TargetType="ListBoxItem">
-                                        <Style.Resources>
-                                            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#cccccc"/>
-                                            <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Transparent"/>
-                                            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Black"/>
-                                        </Style.Resources>
-                                        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
-                                    </Style>
-                                </ListBox.Resources>
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
                                         <Grid HorizontalAlignment="Stretch" Height="42" Margin="0,0,0,0">
@@ -67,9 +57,8 @@
                                                 <RowDefinition Height="1"/>
                                             </Grid.RowDefinitions>
                                             <Grid HorizontalAlignment="Stretch" Grid.Row="0">
-                                                <TextBlock Text="{Binding}" FontSize="12" Foreground="{StaticResource DarkGrey}" MaxWidth="200" FontWeight="Bold" Margin="10,4,0,0" TextTrimming="CharacterEllipsis"/>
+                                                <TextBlock Text="{Binding}" FontSize="14" Foreground="{StaticResource DarkGrey}" MaxWidth="200" HorizontalAlignment="Center" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
                                             </Grid>
-                                            <Grid Grid.Row="1" Grid.Column="1" Background="{StaticResource MenuSeparator}" Margin="22,0,0,0"/>
                                         </Grid>
                                     </DataTemplate>
                                 </ListBox.ItemTemplate>
@@ -81,5 +70,4 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
 </ResourceDictionary>

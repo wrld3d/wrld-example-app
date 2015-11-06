@@ -48,6 +48,8 @@ namespace ExampleAppWPF
             m_detailsPanel.Opacity = 0.0f;
             var currentPosition = m_floorPanel.RenderTransform.Transform(new Point(0.0, 0.0));
             m_floorPanel.RenderTransform = new TranslateTransform(-50.0, currentPosition.Y);
+
+            m_floorList.SelectionMode = SelectionMode.Single;
         }
 
         private void OnClickDismiss(object sender, RoutedEventArgs e)
@@ -72,7 +74,7 @@ namespace ExampleAppWPF
         {
             m_floorList.ItemsSource = floorNames;
             m_floorCount = floorNames.Length;
-            m_floorList.SelectedIndex = currentlySelectedFloorIndex;
+            m_floorList.SelectedIndex = m_floorCount - 1 - currentlySelectedFloorIndex;
         }
         public void SetFloorName(string name)
         {
@@ -94,7 +96,7 @@ namespace ExampleAppWPF
         public void SetOnScreenStateToIntermediateValue(float intermediateValue)
         {
             float newX = -50 + intermediateValue * 50.0f;
-            m_detailsPanel.Opacity = intermediateValue;            
+            m_detailsPanel.Opacity = intermediateValue;
             var currentPosition = m_floorPanel.RenderTransform.Transform(new Point(0.0, 0.0));
             m_floorPanel.RenderTransform = new TranslateTransform(newX, currentPosition.Y);
         }
