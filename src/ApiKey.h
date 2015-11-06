@@ -20,7 +20,4 @@ namespace ExampleApp
  
     //! Optional: You may wish to obtain an API key for Flurry from https://developer.yahoo.com/analytics/ for metrics
     static const std::string FlurryApiKey = "OBTAIN FLURRY KEY AND INSERT IT HERE";
-    
-    //! Optional: You may wish to add a specific build number and have it appear on the "About" screen
-    static const std::string BuildVersion = "INSERT BUILD VERSION HERE";
 }

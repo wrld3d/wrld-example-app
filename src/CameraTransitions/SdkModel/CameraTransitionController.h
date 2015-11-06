@@ -86,6 +86,14 @@ namespace ExampleApp
                                                       float newDistanceToInterest,
                                                       const Eegeo::Resources::Interiors::InteriorId& interiorId,
                                                       int targetFloorIndex);
+                
+                void EnqueueTransitionToInteriorPointStage(const Eegeo::dv3& newInterestPoint,
+                                                           float newDistanceFromInterest,
+                                                           float newHeadingRadians,
+                                                           const Eegeo::Resources::Interiors::InteriorId &interiorId,
+                                                           int targetFloorIndex,
+                                                           bool jumpIfFar=true);
+                
                 void StartQueuedTransition();
                 
                 Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& m_cameraController;

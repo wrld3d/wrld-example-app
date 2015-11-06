@@ -1,0 +1,518 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C59BBDA4-5EEB-458E-9782-778CB31DEDC2}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ExampleAppWPF</RootNamespace>
+    <AssemblyName>ExampleAppWPF</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>x64</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>x64</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>
+    </DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SimpleOAuth, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleOAuth.Net.1.0.1\lib\net20\SimpleOAuth.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Colour.cs" />
+    <Compile Include="Layout.cs" />
+    <Compile Include="Views\InteriorsExplorer\InteriorsExplorerView.cs" />
+    <Compile Include="Views\Menu\MenuDelayedSourceUpdateAnimatorListener.cs" />
+    <Compile Include="Views\Menu\MenuListAdapter.cs" />
+    <Compile Include="Views\Menu\MenuListItem.cs" />
+    <Compile Include="Views\Options\OptionsCacheClearSubView.cs" />
+    <Compile Include="Views\Options\OptionsView.cs" />
+    <Compile Include="Views\SearchResultMenu\SearchMenuListItem.cs" />
+    <Compile Include="StartupResourceLoader.cs" />
+    <Compile Include="Views\SearchResultPoi\YelpSearchResultsPoiView.cs" />
+    <Compile Include="Views\SecondaryMenu\SubMenuListItem.cs" />
+    <Compile Include="Views\AboutPage\AboutPageView.cs" />
+    <Compile Include="Views\MyPinCreationDetails\MyPinCreationDetailsView.cs" />
+    <Compile Include="Views\MyPinCreationDetails\MyPinDetailsView.cs" />
+    <Compile Include="Views\Watermark\WatermarkView.cs" />
+    <Compile Include="Views\WorldPinOnMap\WorldPinOnMapView.cs" />
+    <Compile Include="Views\Menu\MenuView.cs" />
+    <Compile Include="Views\SearchResultMenu\SearchMenuView.cs" />
+    <Compile Include="Views\SecondaryMenu\SecondaryMenuView.cs" />
+    <Compile Include="Search\Yelp\YelpSearch.cs" />
+    <Page Include="CheckBoxStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Colours.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Views\Compass\CompassView.cs" />
+    <Compile Include="ConversionHelpers.cs" />
+    <Compile Include="Views\FlattenButton\FlattenButtonView.cs" />
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TransparentButtonStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AboutPage\AboutPageView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Compass\CompassView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FlattenButton\FlattenButtonView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\InteriorsExplorer\InteriorsExplorerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Menu\MenuView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MyPinCreationConfirmation\MyPinCreationConfirmationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MyPinCreationDetails\MyPinCreationDetailsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MyPinCreationDetails\MyPinDetailsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MyPinCreationInitiation\MyPinCreationButtonView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Options\OptionsCacheClearSubView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Options\OptionsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SearchResultMenu\SearchMenuView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SearchResultPoi\YelpSearchResultsPoiView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SecondaryMenu\SecondaryMenuView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Watermark\WatermarkView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\WorldPinOnMap\WorldPinOnMapView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Views\MyPinCreationInitiation\MyPinCreationButtonView.cs" />
+    <Compile Include="Views\MyPinCreationConfirmation\MyPinCreationConfirmationView.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ExampleApp\ExampleApp.vcxproj">
+      <Project>{6483906b-8db8-4f77-8da7-68865f7a9135}</Project>
+      <Name>ExampleApp</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5.2 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\..\Resources\button_streets_off.png">
+      <Link>Assets\button_streets_off.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_streets_on.png">
+      <Link>Assets\button_streets_on.png</Link>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\..\Resources\arrow.png">
+      <Link>Assets\arrow.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\arrow1.png">
+      <Link>Assets\arrow1.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\arrow3_down.png">
+      <Link>Assets\arrow3_down.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\arrow3_left.png">
+      <Link>Assets\arrow3_left.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\arrow3_right.png">
+      <Link>Assets\arrow3_right.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\arrow3_up.png">
+      <Link>Assets\arrow3_up.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\compass.png">
+      <Link>Assets\compass.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\compass_point.png">
+      <Link>Assets\compass_point.png</Link>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\..\Resources\button_create_poi.png">
+      <Link>Assets\button_create_poi.png</Link>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\..\Resources\buttonsmall_close_off.png">
+      <Link>Assets\buttonsmall_close_off.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\buttonsmall_close_on.png">
+      <Link>Assets\buttonsmall_close_on.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\menu_bar.png">
+      <Link>Assets\menu_bar.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\menu_button.png">
+      <Link>Assets\menu_button.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\search_results_bar_small.png">
+      <Link>Assets\search_results_bar_small.png</Link>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\..\Resources\sub_menu_arrow.png">
+      <Link>Assets\sub_menu_arrow.png</Link>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\..\Resources\menu_background1.png">
+      <Link>Assets\menu_background1.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\menu_background2.png">
+      <Link>Assets\menu_background2.png</Link>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\..\Resources\icon1_aroundme.png">
+      <Link>Assets\icon1_aroundme.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_arts.png">
+      <Link>Assets\icon1_arts.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_autumn.png">
+      <Link>Assets\icon1_autumn.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_bank.png">
+      <Link>Assets\icon1_bank.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_coffee.png">
+      <Link>Assets\icon1_coffee.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_dawn.png">
+      <Link>Assets\icon1_dawn.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_day.png">
+      <Link>Assets\icon1_day.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_dusk.png">
+      <Link>Assets\icon1_dusk.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_foggy.png">
+      <Link>Assets\icon1_foggy.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_food.png">
+      <Link>Assets\icon1_food.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_hotel.png">
+      <Link>Assets\icon1_hotel.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_misc.png">
+      <Link>Assets\icon1_misc.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_night.png">
+      <Link>Assets\icon1_night.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_nightlife.png">
+      <Link>Assets\icon1_nightlife.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_options.png">
+      <Link>Assets\icon1_options.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_overcast.png">
+      <Link>Assets\icon1_overcast.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_park.png">
+      <Link>Assets\icon1_park.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_place.png">
+      <Link>Assets\icon1_place.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_rainy.png">
+      <Link>Assets\icon1_rainy.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_snowy.png">
+      <Link>Assets\icon1_snowy.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_spring.png">
+      <Link>Assets\icon1_spring.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_summer.png">
+      <Link>Assets\icon1_summer.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_sunny.png">
+      <Link>Assets\icon1_sunny.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_winter.png">
+      <Link>Assets\icon1_winter.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon_create_poi.png">
+      <Link>Assets\icon_create_poi.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_close_place_pin_off.png">
+      <Link>Assets\button_close_place_pin_off.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_close_place_pin_on.png">
+      <Link>Assets\button_close_place_pin_on.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_ok_place_pin_off.png">
+      <Link>Assets\button_ok_place_pin_off.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_ok_place_pin_on.png">
+      <Link>Assets\button_ok_place_pin_on.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_gallery_off.png">
+      <Link>Assets\button_gallery_off.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\image_blank.png">
+      <Link>Assets\image_blank.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_close_off.png">
+      <Link>Assets\button_close_off.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_ok_off.png">
+      <Link>Assets\button_ok_off.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_photo_off.png">
+      <Link>Assets\button_photo_off.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\search_result_background.png">
+      <Link>Assets\search_result_background.png</Link>
+    </Resource>
+    <Resource Include="Assets\button_remove_pin_off.png" />
+    <Resource Include="..\..\Resources\eegeo_logo.png">
+      <Link>Assets\eegeo_logo.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_checkbox_off.png">
+      <Link>Assets\button_checkbox_off.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_checkbox_on.png">
+      <Link>Assets\button_checkbox_on.png</Link>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\..\Resources\yelp_logo_small.png">
+      <Link>Assets\yelp_logo_small.png</Link>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\..\Resources\yelp_reviews.gif">
+      <Link>Assets\yelp_reviews.gif</Link>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\..\Resources\button_add_pin_off.png">
+      <Link>Assets\button_add_pin_off.png</Link>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\..\Resources\Yelp\stars_0_0.png">
+      <Link>Assets\stars_0_0.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\Yelp\stars_1_0.png">
+      <Link>Assets\stars_1_0.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\Yelp\stars_1_5.png">
+      <Link>Assets\stars_1_5.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\Yelp\stars_2_0.png">
+      <Link>Assets\stars_2_0.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\Yelp\stars_2_5.png">
+      <Link>Assets\stars_2_5.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\Yelp\stars_3_0.png">
+      <Link>Assets\stars_3_0.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\Yelp\stars_3_5.png">
+      <Link>Assets\stars_3_5.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\Yelp\stars_4_0.png">
+      <Link>Assets\stars_4_0.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\Yelp\stars_4_5.png">
+      <Link>Assets\stars_4_5.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\Yelp\stars_5_0.png">
+      <Link>Assets\stars_5_0.png</Link>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\..\Resources\floor_selection_bottom.png">
+      <Link>Assets\floor_selection_bottom.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\floor_selection_top.png">
+      <Link>Assets\floor_selection_top.png</Link>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\place_pin_background.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy "$(ProjectDir)..\..\Resources" "$(TargetDir)Resources" /e /y /i /r
+xcopy "$(ProjectDir)..\..\libs\eegeo\ANGLE\x64\$(ConfigurationName)\libEGL.dll" "$(TargetDir)" /d
+xcopy "$(ProjectDir)..\..\libs\eegeo\ANGLE\x64\$(ConfigurationName)\libGLESv2.dll" "$(TargetDir)" /d
+xcopy "$(ProjectDir)..\..\libs\eegeo\openssl\x64\libeay32.dll" "$(TargetDir)" /d
+xcopy "$(ProjectDir)..\..\libs\eegeo\openssl\x64\ssleay32.dll" "$(TargetDir)" /d
+xcopy "$(ProjectDir)..\..\libs\eegeo\pthread\x64\$(ConfigurationName)\pthreadVC2.dll" "$(TargetDir)" /d
+xcopy "$(DevEnvDir)\..\..\VC\bin\amd64\d3dcompiler_47.dll" "$(TargetDir)" /d</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

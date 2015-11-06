@@ -29,6 +29,7 @@ namespace ExampleApp
                 Eegeo::Camera::GlobeCamera::GlobeCameraTouchSettings m_cameraTouchSettings;
                 const Eegeo::Rendering::EnvironmentFlatteningService& m_environmentFlatteningService;
                 const bool m_interiorsAffectedByFlattening;
+                bool m_applyRestrictions;
                 
             public:
                 InteriorsExplorerCameraController(Eegeo::Resources::Interiors::InteriorController& interiorController,
@@ -62,6 +63,8 @@ namespace ExampleApp
                 const float GetHeadingDegrees() const;
                 
                 void SetTilt(float tiltDegrees);
+                
+                void SetApplyRestrictions(bool applyRestrictions);
                 
             private:
                 

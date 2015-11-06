@@ -20,9 +20,10 @@ namespace ExampleApp
                 float m_orientationDegrees;
                 bool m_tryStartAtGpsLocation;
                 std::string m_googleAnalyticsReferrerToken;
+                std::string m_buildVersion;
                 
             public:
-                ApplicationConfigurationBuilder();
+                ApplicationConfigurationBuilder(const std::string& buildVersion);
                 
                 IApplicationConfigurationBuilder& SetApplicationName(const std::string& name);
                 

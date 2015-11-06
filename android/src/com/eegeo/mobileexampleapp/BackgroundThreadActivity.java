@@ -65,8 +65,18 @@ public class BackgroundThreadActivity extends MainActivity
         {
             public void run()
             {
-                m_nativeAppWindowPtr = NativeJniCalls.createNativeCode(activity, getAssets(), dpi, density);
-
+            	String versionNumber = "";
+            	try
+            	{
+            		versionNumber = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+            	}
+            	catch (Exception e)
+            	{
+            		versionNumber = "";
+            	}
+            	
+                m_nativeAppWindowPtr = NativeJniCalls.createNativeCode(activity, getAssets(), dpi, density, versionNumber);
+                
                 if(m_nativeAppWindowPtr == 0)
                 {
                     throw new RuntimeException("Failed to start native code.");

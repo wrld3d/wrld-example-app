@@ -47,6 +47,7 @@ namespace ExampleApp
             , m_environmentFlatteningService(environmentFlatteningService)
             , m_cameraTouchEnabled(false)
             , m_interiorsAffectedByFlattening(interiorsAffectedByFlattening)
+            , m_applyRestrictions(true)
             {
                 // Temp manually set initial cam pos.
                 Eegeo::Space::EcefTangentBasis basis;
@@ -142,10 +143,11 @@ namespace ExampleApp
                     
                     cameraInterestTangentSpace.Set(cameraInterestTangentSpace.x, cameraInterestAltitude, cameraInterestTangentSpace.z);
 
-                    if(cameraInterestTangentSpace.x < -tangentBoundsHalfWidth ||
+                    if(m_applyRestrictions && 
+                       (cameraInterestTangentSpace.x < -tangentBoundsHalfWidth ||
                        cameraInterestTangentSpace.x > tangentBoundsHalfWidth ||
                        cameraInterestTangentSpace.z < -tangentBoundsHalfLength ||
-                       cameraInterestTangentSpace.z > tangentBoundsHalfLength)
+                       cameraInterestTangentSpace.z > tangentBoundsHalfLength))
                     {
                         float newX = Eegeo::Math::Clamp(cameraInterestTangentSpace.x, -tangentBoundsHalfWidth, tangentBoundsHalfWidth);
                         float newZ = Eegeo::Math::Clamp(cameraInterestTangentSpace.z, -tangentBoundsHalfLength, tangentBoundsHalfLength);
@@ -212,6 +214,11 @@ namespace ExampleApp
                 m_globeCameraController.ApplyTilt(tiltDegrees);
             }
             
+            void InteriorsExplorerCameraController::SetApplyRestrictions(bool applyRestrictions)
+            {
+                m_applyRestrictions = applyRestrictions;
+            }
+
             float InteriorsExplorerCameraController::GetFloorOffsetHeight() const
             {
                 const Eegeo::Resources::Interiors::CurrentInteriorViewModel* pViewModel = NULL;
