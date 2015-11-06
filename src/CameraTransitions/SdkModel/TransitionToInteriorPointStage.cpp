@@ -32,11 +32,18 @@ namespace ExampleApp
             , m_targetFloorIndex(targetFloorIndex)
             , m_failed(false)
             , m_jumpIfFar(jumpIfFar)
+            , m_startCameraInterestAltitude(0.0f)
+            , m_endCameraInterestAltitude(0.0f)
+            , m_initialisedNextInterior(false)
+            , m_cameraInterestAltitudeStartTime(0.0f)
             {
             }
             
             void TransitionToInteriorPointStage::Start()
             {
+                Eegeo_ASSERT(m_interiorController.InteriorInScene(), "Must be inside interior to start this transition");
+                m_startCameraInterestAltitude = m_cameraController.GetFloorOffsetHeight();
+                m_endCameraInterestAltitude = m_startCameraInterestAltitude;
                 m_interiorController.ClearSelectedInterior();
                 m_interiorController.SetSelectedInterior(m_interiorId);
                 m_interiorsExplorerModel.HideInteriorExplorer();
@@ -44,6 +51,9 @@ namespace ExampleApp
                 m_startInterestPoint = m_cameraController.GetInterestLocation();
                 m_startDistanceToInterest = m_cameraController.GetDistanceToInterest();
                 m_cameraController.SetApplyRestrictions(false);
+                m_cameraController.SetApplyFloorOffset(false);
+                m_initialisedNextInterior = false;
+                m_cameraInterestAltitudeStartTime = 0.0f;
             }
             
             void TransitionToInteriorPointStage::Update(float dt)
@@ -53,9 +63,12 @@ namespace ExampleApp
                     return;
                 }
                 
-                if(m_interiorController.InteriorInScene())
+                if(!m_initialisedNextInterior && m_interiorController.InteriorInScene())
                 {
                     m_interiorController.SetCurrentFloor(m_targetFloorIndex, true);
+                    m_endCameraInterestAltitude = m_cameraController.GetFloorOffsetHeight();
+                    m_cameraInterestAltitudeStartTime = m_transitionTime;
+                    m_initialisedNextInterior = true;
                 }
                 
                 if(m_jumpIfFar && ShouldJumpTo(m_newInterestPoint))
@@ -72,6 +85,14 @@ namespace ExampleApp
                     
                     float lerpDistance = Eegeo::Math::Lerp(m_startDistanceToInterest, m_targetDistanceToInterest, smoothT);
                     m_cameraController.SetDistanceToInterest(lerpDistance);
+                    
+                    if(m_initialisedNextInterior)
+                    {
+                        float t2 = m_cameraInterestAltitudeStartTime >= 1.0f ? 1.0f : Eegeo::Math::Clamp01((m_transitionTime - m_cameraInterestAltitudeStartTime)/(1.0f-m_cameraInterestAltitudeStartTime));
+                        float smoothT2 = Eegeo::Math::SmoothStep(t2);
+                        float lerpAltitude = Eegeo::Math::Lerp(m_startCameraInterestAltitude, m_endCameraInterestAltitude, smoothT2);
+                        m_cameraController.SetCameraInterestAltitude(lerpAltitude);
+                    }
                 }
                 
                 // Check fail condition and clean up on fail
@@ -79,6 +100,7 @@ namespace ExampleApp
                 {
                     m_failed = true;
                     m_cameraController.SetApplyRestrictions(true);
+                    m_cameraController.SetApplyFloorOffset(true);
                 }
                 
             }
@@ -87,7 +109,9 @@ namespace ExampleApp
             {
                 m_cameraController.SetInterestLocation(m_newInterestPoint);
                 m_cameraController.SetDistanceToInterest(m_targetDistanceToInterest);
+                m_cameraController.SetCameraInterestAltitude(m_endCameraInterestAltitude);
                 m_cameraController.SetApplyRestrictions(true);
+                m_cameraController.SetApplyFloorOffset(true);
                 m_interiorController.SetCurrentFloor(m_targetFloorIndex, true);
                 m_interiorsExplorerModel.ShowInteriorExplorer();
             }

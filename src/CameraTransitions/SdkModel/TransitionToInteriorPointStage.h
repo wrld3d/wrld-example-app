@@ -50,6 +50,9 @@ namespace ExampleApp
                 float m_startDistanceToInterest;
                 float m_transitionTime;
                 float m_transitionDuration;
+                float m_startCameraInterestAltitude;
+                float m_endCameraInterestAltitude;
+                float m_cameraInterestAltitudeStartTime;
                 
                 const float m_targetDistanceToInterest;
                 Eegeo::Resources::Interiors::InteriorId m_interiorId;
@@ -57,6 +60,7 @@ namespace ExampleApp
                 bool m_jumpIfFar;
                 
                 bool m_failed;
+                bool m_initialisedNextInterior;
             };
         }
     }

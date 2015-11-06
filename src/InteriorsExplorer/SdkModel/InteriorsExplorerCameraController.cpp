@@ -48,6 +48,8 @@ namespace ExampleApp
             , m_cameraTouchEnabled(false)
             , m_interiorsAffectedByFlattening(interiorsAffectedByFlattening)
             , m_applyRestrictions(true)
+            , m_cameraInterestAltitude(0)
+            , m_applyFloorOffset(true)
             {
                 // Temp manually set initial cam pos.
                 Eegeo::Space::EcefTangentBasis basis;
@@ -141,9 +143,12 @@ namespace ExampleApp
                     float tangentBoundsHalfWidth = (pModel->GetTangentSpaceBounds().GetMax().x - pModel->GetTangentSpaceBounds().GetMin().x)*0.5f;
                     float tangentBoundsHalfLength = (pModel->GetTangentSpaceBounds().GetMax().z - pModel->GetTangentSpaceBounds().GetMin().z)*0.5f;
                     
-                    float cameraInterestAltitude = GetFloorOffsetHeight();
+                    if(m_applyFloorOffset)
+                    {
+                        m_cameraInterestAltitude = GetFloorOffsetHeight();
+                    }
                     
-                    cameraInterestTangentSpace.Set(cameraInterestTangentSpace.x, cameraInterestAltitude, cameraInterestTangentSpace.z);
+                    cameraInterestTangentSpace.Set(cameraInterestTangentSpace.x, m_cameraInterestAltitude, cameraInterestTangentSpace.z);
 
                     if(m_applyRestrictions && 
                        (cameraInterestTangentSpace.x < -tangentBoundsHalfWidth ||
@@ -153,7 +158,7 @@ namespace ExampleApp
                     {
                         float newX = Eegeo::Math::Clamp(cameraInterestTangentSpace.x, -tangentBoundsHalfWidth, tangentBoundsHalfWidth);
                         float newZ = Eegeo::Math::Clamp(cameraInterestTangentSpace.z, -tangentBoundsHalfLength, tangentBoundsHalfLength);
-                        cameraInterestTangentSpace.Set(newX, cameraInterestAltitude, newZ);
+                        cameraInterestTangentSpace.Set(newX, m_cameraInterestAltitude, newZ);
                     }
                     
                     Eegeo::m33 tangentBasis;
@@ -225,6 +230,20 @@ namespace ExampleApp
             void InteriorsExplorerCameraController::SetApplyRestrictions(bool applyRestrictions)
             {
                 m_applyRestrictions = applyRestrictions;
+            }
+            
+            void InteriorsExplorerCameraController::SetApplyFloorOffset(bool applyFloorOffset)
+            {
+                m_applyFloorOffset = applyFloorOffset;
+            }
+            
+            float InteriorsExplorerCameraController::GetCameraInterestAltitude() const
+            {
+                return m_cameraInterestAltitude;
+            }
+            void InteriorsExplorerCameraController::SetCameraInterestAltitude(float cameraInterestAltitude)
+            {
+                m_cameraInterestAltitude = cameraInterestAltitude;
             }
             
             float InteriorsExplorerCameraController::GetFloorOffsetHeight() const
