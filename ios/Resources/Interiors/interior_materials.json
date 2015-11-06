@@ -55,6 +55,10 @@
         {
             "TextureKey":"fishtank-texture0",
             "Filename":"Interiors/fishtank.pvr"
+        },
+        {
+            "TextureKey":"50finsburyexterior-texture0",
+            "Filename":"Interiors/50finsbury.pvr"
         }
         ],
     "CubeMapTextures":[
@@ -79,7 +83,13 @@
              "MaterialName": "swallowdecalexit-interior",
              "MaterialType":"InteriorsDiffuseTexturedMaterial",
              "DiffuseTexture":"swallowdecalexit-interior-texture0"
-         },
+        },
+                 
+        {
+             "MaterialName": "swallowexterior-interior",
+             "MaterialType":"InteriorsDiffuseTexturedMaterial",
+             "DiffuseTexture":"50finsburyexterior-texture0"
+        },
          
          {
              "MaterialName": "swallowfloorcarpet01-interior",
@@ -174,8 +184,8 @@
              "CubeMapTexture":"swallowcubemap",
              "DiffuseColor":[0.8,0.8,0.8,1.0],
              "SpecularPower":100.0,
-             "SpecularColor":[0.3,0.3,0.3,0.5],
-             "ReflectionColor":[0.1,0.1,0.1,1.0],
+             "SpecularColor":[0.2,0.2,0.2,0.5],
+             "ReflectionColor":[0.15,0.15,0.15,1.0],
              "SpecularityFromTextureLuminance":1.0,
              "IsStencilMirror":true,
              "ViewOffsetScale":0.8
@@ -209,7 +219,7 @@
              "MaterialName": "swallowplaingray-interior-reflection",
              "MaterialType":"InteriorsReflectionMaterial",
              "DiffuseTexture":"swallowplaingray-interior-texture0",
-             "DiffuseColor":[0.2,0.2,0.2,0.35],
+             "DiffuseColor":[0.2,0.2,0.2,0.25],
              "SpecularColor":[0.0,0.0,0.0,1.0],
              "ReflectionColor":[0.0,0.0,0.0,1.0]
          },
