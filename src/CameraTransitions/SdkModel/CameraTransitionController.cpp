@@ -13,6 +13,7 @@
 #include "IAppModeModel.h"
 #include "InteriorSelectionModel.h"
 #include "TransitionToWorldPointStage.h"
+#include "TransitionToInteriorPointStage.h"
 #include "ExitCurrentInteriorStage.h"
 #include "TransitionToInteriorStage.h"
 #include "IAppCameraController.h"
@@ -102,6 +103,12 @@ namespace ExampleApp
                     {
                         Eegeo_ASSERT(interiorId != Eegeo::Resources::Interiors::InteriorId::NullId(), "Invalid state. Have selected null Interior while in Interior mode");
                         EnqueueTransitionToInteriorStage(newInterestPoint, distanceFromInterest, interiorId, targetFloorIndex);
+                        StartQueuedTransition();
+                        return;
+                    }
+                    else if(interiorId != Eegeo::Resources::Interiors::InteriorId::NullId())
+                    {
+                        EnqueueTransitionToInteriorPointStage(newInterestPoint, distanceFromInterest, newHeadingRadians, interiorId, targetFloorIndex, jumpIfFar);
                         StartQueuedTransition();
                         return;
                     }
@@ -218,6 +225,26 @@ namespace ExampleApp
                                                                                       interiorId,
                                                                                       targetFloorIndex);
                 m_transitionStages.push(pStage);
+            }
+            
+            void CameraTransitionController::EnqueueTransitionToInteriorPointStage(const Eegeo::dv3& newInterestPoint,
+                                                                                   float newDistanceFromInterest,
+                                                                                   float newHeadingRadians,
+                                                                                   const Eegeo::Resources::Interiors::InteriorId &interiorId,
+                                                                                   int targetFloorIndex,
+                                                                                   bool jumpIfFar)
+            {
+                ICameraTransitionStage* pStage = Eegeo_NEW(TransitionToInteriorPointStage)(m_interiorController,
+                                                                                           m_interiorSelectionModel,
+                                                                                           m_interiorsExplorerModel,
+                                                                                           m_interiorsCameraController,
+                                                                                           newInterestPoint,
+                                                                                           newDistanceFromInterest,
+                                                                                           interiorId,
+                                                                                           targetFloorIndex,
+                                                                                           jumpIfFar);
+                m_transitionStages.push(pStage);
+
             }
         }
     }
