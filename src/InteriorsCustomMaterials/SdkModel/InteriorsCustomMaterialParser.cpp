@@ -144,6 +144,7 @@ namespace ExampleApp
                     TryAddScalar(FresnelBias, materialJson, result.keyValueScalars);
                     TryAddScalar(FresnelScale, materialJson, result.keyValueScalars);
                     TryAddScalar(FresnelPower, materialJson, result.keyValueScalars);
+                    TryAddScalar(ViewOffsetScale, materialJson, result.keyValueScalars);
                     
                     TryAddBoolean(IsTranslucent, materialJson, result.keyValueBooleans);
                     TryAddBoolean(IsStencilMirror, materialJson, result.keyValueBooleans);
