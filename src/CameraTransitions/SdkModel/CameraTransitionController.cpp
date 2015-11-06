@@ -99,6 +99,8 @@ namespace ExampleApp
                 
                 if(m_appModeModel.GetAppMode() == ExampleApp::AppModes::SdkModel::InteriorMode)
                 {
+                    const double exitInteriorDistanceSquared = 100*100;
+                    double interestDifferenceSquared = (m_interiorsCameraController.GetInterestLocation() - newInterestPoint).LengthSq();
                     if(m_interiorSelectionModel.GetSelectedInteriorId() == interiorId)
                     {
                         Eegeo_ASSERT(interiorId != Eegeo::Resources::Interiors::InteriorId::NullId(), "Invalid state. Have selected null Interior while in Interior mode");
@@ -106,7 +108,7 @@ namespace ExampleApp
                         StartQueuedTransition();
                         return;
                     }
-                    else if(interiorId != Eegeo::Resources::Interiors::InteriorId::NullId())
+                    else if(interiorId != Eegeo::Resources::Interiors::InteriorId::NullId() && interestDifferenceSquared < exitInteriorDistanceSquared)
                     {
                         EnqueueTransitionToInteriorPointStage(newInterestPoint, distanceFromInterest, newHeadingRadians, interiorId, targetFloorIndex, jumpIfFar);
                         StartQueuedTransition();
