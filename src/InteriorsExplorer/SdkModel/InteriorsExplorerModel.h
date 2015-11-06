@@ -40,7 +40,8 @@ namespace ExampleApp
                 void HideInteriorExplorer();
                 void Exit();
                 
-                void SuspendCurrentMapState();
+                void SaveCurrentMapState();
+                void ChangeToInteriorMapState();
                 void ResumePreviousMapState();
                 
                 void InsertInteriorExplorerExitedCallback(Eegeo::Helpers::ICallback0& callback);

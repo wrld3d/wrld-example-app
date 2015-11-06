@@ -43,7 +43,7 @@ namespace ExampleApp
                 
                 void InteriorExplorerSetupState::Exit()
                 {
-                    
+                    m_interiorsExplorerModel.SaveCurrentMapState();
                 }
                 
             }
