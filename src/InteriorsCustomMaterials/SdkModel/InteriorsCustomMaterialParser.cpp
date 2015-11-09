@@ -136,7 +136,10 @@ namespace ExampleApp
                     TryAddColor(SpecularColor, materialJson, result.keyValueColors);
                     TryAddColor(ReflectionColor, materialJson, result.keyValueColors);
                     TryAddColor(RimColor, materialJson, result.keyValueColors);
+                    TryAddColor(MirrorClearColor, materialJson, result.keyValueColors);
                     TryAddColor(AmbientColor, materialJson, result.keyValueColors);
+                    
+                    TryAddColor(ReflectionPlane, materialJson, result.keyValueColors);
                     
                     TryAddScalar(SpecularPowerScalar, materialJson, result.keyValueScalars);
                     TryAddScalar(SpecularModulateTextureScalar, materialJson, result.keyValueScalars);
