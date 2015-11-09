@@ -151,8 +151,6 @@ AppHost::AppHost(
                                                                                                                                  applicationConfiguration.YelpOAuthToken(),
                                                                                                                                  applicationConfiguration.YelpOAuthTokenSecret());
     
-    m_piOSFlurryMetricsService = Eegeo_NEW(ExampleApp::Metrics::iOSFlurryMetricsService)();
-    
     m_pImageStore = [[ImageStore alloc]init];
     
     m_pApp = Eegeo_NEW(ExampleApp::MobileExampleApp)(

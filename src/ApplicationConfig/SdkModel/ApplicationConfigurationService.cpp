@@ -30,11 +30,21 @@ namespace ExampleApp
                 const std::string combinedVersionString = m_productVersion + "." + m_buildNumber;
                 
                 return ApplicationConfiguration(parsedConfig.Name(),
+                								parsedConfig.EegeoApiKey(),
                                                 parsedConfig.InterestLocation(),
                                                 parsedConfig.DistanceToInterestMetres(),
                                                 parsedConfig.OrientationDegrees(),
                                                 parsedConfig.TryStartAtGpsLocation(),
                                                 parsedConfig.GoogleAnalyticsReferrerToken(),
+												parsedConfig.FlurryAppKey(),
+												parsedConfig.YelpConsumerKey(),
+												parsedConfig.YelpConsumerSecret(),
+												parsedConfig.YelpOAuthToken(),
+												parsedConfig.YelpOAuthTokenSecret(),
+												parsedConfig.GeoNamesUserName(),
+												parsedConfig.CoverageTreeManifestURL(),
+												parsedConfig.ThemeManifestURL(),
+												parsedConfig.SqliteDbUrl(),
                                                 m_productVersion,
                                                 m_buildNumber,
                                                 combinedVersionString);

@@ -24,7 +24,6 @@ namespace ExampleApp
             , m_geoNamesUserName("")
             , m_coverageTreeManifestURL("")
             , m_themeManifestURL("")
-            , m_buildVersion(buildVersion)
             {
                 
             }
