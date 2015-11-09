@@ -175,7 +175,8 @@ namespace ExampleApp
 		void CreateSQLiteModule(Eegeo::UI::NativeUIFactories& nativeUIFactories);
 
         void CreateApplicationModelModules(const std::map<std::string,ExampleApp::Search::SdkModel::ISearchServiceModule*>& platformImplementedSearchServiceModules,
-                                           Eegeo::UI::NativeUIFactories& nativeUIFactories);
+                                           Eegeo::UI::NativeUIFactories& nativeUIFactories,
+                                           const bool interiorsAffectedByFlattening);
 
         void DestroyApplicationModelModules();
 
@@ -191,7 +192,9 @@ namespace ExampleApp
                                                                   float pinDiameter,
                                                                   int sheetSize);
 
-        void InitialisePinsModules(Eegeo::Modules::Map::MapModule& mapModule, Eegeo::EegeoWorld& world);
+        void InitialisePinsModules(Eegeo::Modules::Map::MapModule& mapModule,
+                                   Eegeo::EegeoWorld& world,
+                                   const bool interiorsAffectedByFlattening);
         
         void InitialiseAppState(Eegeo::UI::NativeUIFactories& nativeUIFactories);
         
@@ -199,7 +202,9 @@ namespace ExampleApp
         
         void AddTours();
         
-        void InitialiseToursModules(Eegeo::Modules::Map::MapModule& mapModule, Eegeo::EegeoWorld& world);
+        void InitialiseToursModules(Eegeo::Modules::Map::MapModule& mapModule,
+                                    Eegeo::EegeoWorld& world,
+                                    const bool interiorsAffectedByFlattening);
         
         const bool IsTourCameraActive() const;
 
@@ -449,6 +454,13 @@ namespace ExampleApp
         void Event_TouchDown 			(const AppInterface::TouchData& data);
         void Event_TouchMove 			(const AppInterface::TouchData& data);
         void Event_TouchUp 				(const AppInterface::TouchData& data);
+
+        void Event_Zoom(const AppInterface::ZoomData& data);
+        void Event_Keyboard(const AppInterface::KeyboardData& data);
+
+        void Event_TiltStart(const AppInterface::TiltData& data);
+        void Event_TiltEnd(const AppInterface::TiltData& data);
+        void Event_Tilt(const AppInterface::TiltData& data);
     };
 }
 

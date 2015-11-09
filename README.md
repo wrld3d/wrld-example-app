@@ -67,6 +67,13 @@ The project is configured to build for multiple target CPU architectures, creati
 * **./build -p android -c** from the command line will build targeting c++ 11
 * Pass COMPILE_CPP_11=1 to ndk-build to build cpp11
 
+**To get started with the example app (Windows):**
+
+* The following steps assume Visual Studio 2015 and MinGW are installed.
+* Clone this repository and run `./update.platform.sh -p windows`
+* Open ./windows/ExampleApp/ExampleApp.sln
+* Right click the ExampleAppWPF project and choose `Set as StartUp Project`
+* Build and Run the app
 
 ### API Key 
 

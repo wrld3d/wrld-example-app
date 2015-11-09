@@ -7,6 +7,7 @@
 #include "ICallback.h"
 #include "Types.h"
 
+#include "AppCamera.h"
 #include "SearchResultIconCategoryMapper.h"
 #include "SearchResultModel.h"
 #include "WorldPins.h"
@@ -24,7 +25,8 @@ namespace ExampleApp
                 {
                 public:
                     SwallowSearchTransitionPinController(WorldPins::SdkModel::IWorldPinsService& worldPinsService,
-                                                         CameraTransitions::SdkModel::ICameraTransitionController& transitionController);
+                                                         CameraTransitions::SdkModel::ICameraTransitionController& transitionController,
+                                                         AppCamera::SdkModel::IAppCameraController& appCameraController);
                     
                     ~SwallowSearchTransitionPinController();
                     
@@ -36,6 +38,7 @@ namespace ExampleApp
                     CategorySearch::SearchResultIconCategoryMapper m_searchResultIconCategoryMapper;
                     WorldPins::SdkModel::IWorldPinsService& m_worldPinsService;
                     CameraTransitions::SdkModel::ICameraTransitionController& m_transitionController;
+                    AppCamera::SdkModel::IAppCameraController& m_appCameraController;
                     
                     std::vector<WorldPins::SdkModel::WorldPinItemModel*> m_transitionPins;
                 };

@@ -115,7 +115,15 @@ AppHost::AppHost(
     // create file IO instance (iOSPlatformAbstractionModule not yet available)
     Eegeo::iOS::iOSFileIO tempFileIO;
     
-    ExampleApp::ApplicationConfig::SdkModel::ApplicationConfigurationModule applicationConfigurationModule(tempFileIO);
+    const char* versionNumber = [[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"] cStringUsingEncoding:NSUTF8StringEncoding];
+    
+    if(versionNumber == NULL || strcmp(versionNumber, "") == 0)
+    {
+        versionNumber = "Development Build";
+    }
+    
+    typedef ExampleApp::ApplicationConfig::SdkModel::ApplicationConfigurationModule ApplicationConfigurationModule;
+    ApplicationConfigurationModule applicationConfigurationModule(tempFileIO, versionNumber);
     
     const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration = applicationConfigurationModule.GetApplicationConfigurationService().LoadConfiguration(ExampleApp::ApplicationConfigurationPath);
     
@@ -133,6 +141,7 @@ AppHost::AppHost(
     platformConfig.OptionsConfig.StartMapModuleAutomatically = false;
     platformConfig.OptionsConfig.EnableInteriors = true;
     platformConfig.OptionsConfig.InteriorsControlledByApp = true;
+    platformConfig.OptionsConfig.InteriorsAffectedByFlattening = false;
     
     platformConfig.CoverageTreeConfig.ManifestUrl = applicationConfiguration.CoverageTreeManifestURL();
     platformConfig.CityThemesConfig.StreamedManifestUrl = applicationConfiguration.ThemeManifestURL();
@@ -389,6 +398,7 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
                                                                                              app.SearchResultMenuModule().GetMenuViewModel(),
                                                                                              app.FlattenButtonModule().GetScreenControlViewModel(),
                                                                                              app.CompassModule().GetScreenControlViewModel(),
+                                                                                             app.WatermarkModule().GetScreenControlViewModel(),
                                                                                              screenProperties,
                                                                                              app.GetIdentityProvider());
 

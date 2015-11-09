@@ -1,0 +1,125 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Controls;
+using System.Windows.Shapes;
+using System.Windows;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.IO;
+
+namespace ExampleAppWPF
+{
+    class MyPinDetailsView : Control
+    {
+        private MainWindow m_currentWindow;
+        private IntPtr m_nativeCallerPointer;
+
+        private Image m_closeButton = null;
+        private Image m_deleteButton = null;
+        private TextBlock m_titleView = null;
+        private TextBlock m_descriptionView = null;
+        private TextBlock m_descriptHeader = null;
+        private TextBlock m_imageHeader = null;
+        private Image m_imageView = null;
+
+        private float m_imageWidth;
+
+        static MyPinDetailsView()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(MyPinDetailsView), new FrameworkPropertyMetadata(typeof(MyPinDetailsView)));
+        }
+
+        public MyPinDetailsView(IntPtr nativeCallerPointer)
+        {
+            m_nativeCallerPointer = nativeCallerPointer;
+
+            m_currentWindow = (MainWindow)Application.Current.MainWindow;
+            m_currentWindow.MainGrid.Children.Add(this);
+
+            Visibility = Visibility.Hidden;
+        }
+
+        void Destroy()
+        {
+            m_currentWindow.MainGrid.Children.Remove(this);
+        }
+
+        private DependencyObject CheckAndGetProperty(string name)
+        {
+            var prop = GetTemplateChild(name);
+            System.Diagnostics.Debug.Assert(prop != null, "Property cannot be found!!");
+            return prop;
+        }
+
+        public override void OnApplyTemplate()
+        {
+            m_titleView = (TextBlock)CheckAndGetProperty("Title");
+            m_descriptionView = (TextBlock)CheckAndGetProperty("Description");
+            m_closeButton = (Image)CheckAndGetProperty("Close");
+            m_deleteButton = (Image)CheckAndGetProperty("RemovePin");
+            m_imageView = (Image)CheckAndGetProperty("Image");
+            m_imageHeader = (TextBlock)CheckAndGetProperty("ImageHeader");
+
+            m_closeButton.MouseDown += OnCloseClicked;
+            m_deleteButton.MouseDown += OnDeleteClicked;
+        }
+
+        private void OnDeleteClicked(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (ShowRemovePinDialog() == MessageBoxResult.Yes)
+            {
+                ExampleApp.MyPinDetailsViewCLI.RemovePinButtonClicked(m_nativeCallerPointer);
+            }
+        }
+
+        private void OnCloseClicked(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            ExampleApp.MyPinDetailsViewCLI.CloseButtonClicked(m_nativeCallerPointer);
+        }
+
+        public void Display(string title, string description, string imagePath)
+        {
+            Visibility = Visibility.Visible;
+
+            m_titleView.Text = title;
+            m_descriptionView.Text = description;
+
+            if (imagePath.Length > 0)
+            {
+                StartupResourceLoader.LoadImage(imagePath);
+                var src = StartupResourceLoader.GetBitmap(imagePath);
+
+                if(src != null)
+                {
+                    m_imageView.Source = src;
+                }
+                else
+                {
+                    m_imageHeader.Visibility = Visibility.Hidden;
+                    m_imageView.Visibility = Visibility.Hidden;
+                }
+            }
+            else
+            {
+                m_imageHeader.Visibility = Visibility.Hidden;
+                m_imageView.Visibility = Visibility.Hidden;
+            }
+
+            m_currentWindow.DisableInput();
+        }
+
+        public void Dismiss()
+        {
+            Visibility = Visibility.Hidden;
+            m_currentWindow.EnableInput();
+        }
+
+        private MessageBoxResult ShowRemovePinDialog()
+        {
+            return MessageBox.Show("Are you sure you want to remove this pin?", "Remove Pin", MessageBoxButton.YesNo, MessageBoxImage.Question);
+        }
+    }
+}

@@ -31,9 +31,10 @@ namespace ExampleApp
                 std::string m_coverageTreeManifestURL;
                 std::string m_themeManifestURL;
                 std::string m_sqliteDbUrl;
+                std::string m_buildVersion;
                 
             public:
-                ApplicationConfigurationBuilder();
+                ApplicationConfigurationBuilder(const std::string& buildVersion);
                 
                 IApplicationConfigurationBuilder& SetApplicationName(const std::string& name);
                 

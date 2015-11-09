@@ -21,7 +21,8 @@ namespace ExampleApp
                                                            const std::string& geoNamesUserName,
                                                            const std::string& coverageTreeManifestURL,
                                                            const std::string& themeManifestURL,
-                                                           const std::string& sqliteDbUrl)
+                                                           const std::string& sqliteDbUrl,
+                                                           const std::string& buildVersionNumber)
         : m_name(name)
         , m_eegeoApiKey(eegeoApiKey)
         , m_interestLocation(interestLocation)
@@ -38,6 +39,7 @@ namespace ExampleApp
         , m_coverageTreeManifestURL(coverageTreeManifestURL)
         , m_themeManifestURL(themeManifestURL)
         , m_sqliteDbUrl(sqliteDbUrl)
+        , m_buildVersion(buildVersionNumber)
         {
             
         }
@@ -120,6 +122,11 @@ namespace ExampleApp
         const std::string& ApplicationConfiguration::SqliteDbUrl() const
         {
             return m_sqliteDbUrl;
+        }
+
+        const std::string& ApplicationConfiguration::BuildVersion() const
+        {
+            return m_buildVersion;
         }
     }
 }

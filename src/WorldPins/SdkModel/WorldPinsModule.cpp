@@ -22,7 +22,8 @@ namespace ExampleApp
                                              Eegeo::Helpers::IIdentityProvider& identityProvider,
                                              ExampleAppMessaging::TMessageBus& messageBus,
                                              Eegeo::Resources::Interiors::InteriorController& interiorController,
-                                             ExampleAppMessaging::TSdkModelDomainEventBus& sdkDomainEventBus)
+                                             ExampleAppMessaging::TSdkModelDomainEventBus& sdkDomainEventBus,
+                                             const bool interiorsAffectedByFlattening)
             {
                 m_pWorldPinsFactory = Eegeo_NEW(WorldPinsFactory);
 
@@ -42,7 +43,9 @@ namespace ExampleApp
                 
                 m_pWorldPinsFloorHeightController = Eegeo_NEW(WorldPinsFloorHeightController)(*m_pWorldPinsRepository,
                                                                                               pinRepository,
-                                                                                              interiorController);
+                                                                                              interiorController,
+                                                                                              environmentFlatteningService,
+                                                                                              interiorsAffectedByFlattening);
 
                 m_pWorldPinsInFocusViewModel = Eegeo_NEW(View::WorldPinInFocusViewModel)(identityProvider.GetNextIdentity(),
                                                *m_pWorldPinsService);

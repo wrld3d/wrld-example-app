@@ -12,9 +12,10 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            ApplicationConfigurationModule::ApplicationConfigurationModule(Eegeo::Helpers::IFileIO& fileIO)
+            ApplicationConfigurationModule::ApplicationConfigurationModule(Eegeo::Helpers::IFileIO& fileIO,
+                                                                           const std::string& buildVersion)
             {
-                m_pApplicationConfigurationBuilder = Eegeo_NEW(ApplicationConfigurationBuilder);
+                m_pApplicationConfigurationBuilder = Eegeo_NEW(ApplicationConfigurationBuilder)(buildVersion);
                 m_pApplicationConfigurationReader = Eegeo_NEW(ApplicationConfigurationReader)(fileIO);
                 m_pApplicationConfigurationParser = Eegeo_NEW(ApplicationConfigurationJsonParser)(*m_pApplicationConfigurationBuilder);
                 m_pApplicationConfigurationService = Eegeo_NEW(ApplicationConfigurationService)(*m_pApplicationConfigurationParser,

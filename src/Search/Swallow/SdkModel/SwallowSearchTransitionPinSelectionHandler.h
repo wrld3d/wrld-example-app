@@ -4,8 +4,10 @@
 
 #include "IWorldPinSelectionHandler.h"
 
+#include "AppCamera.h"
 #include "SwallowTransitionResultModel.h"
 #include "CameraTransitions.h"
+#include "InteriorsExplorer.h"
 
 namespace ExampleApp
 {
@@ -19,12 +21,15 @@ namespace ExampleApp
                 {
                 public:
                     SwallowSearchTransitionPinSelectionHandler(const SwallowTransitionResultModel& transitionResult,
-                                                               CameraTransitions::SdkModel::ICameraTransitionController& transitionController);
+                                                               CameraTransitions::SdkModel::ICameraTransitionController& transitionController,
+                                                               AppCamera::SdkModel::IAppCameraController& appCameraController
+                                                               );
                     
                     void SelectPin();
                 private:
                     CameraTransitions::SdkModel::ICameraTransitionController& m_transitionController;
                     SwallowTransitionResultModel m_transitionResult;
+                    AppCamera::SdkModel::IAppCameraController& m_appCameraController;
                 };
             }
         }

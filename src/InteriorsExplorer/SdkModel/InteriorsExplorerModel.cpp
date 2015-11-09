@@ -78,12 +78,15 @@ namespace ExampleApp
                 m_controller.UnregisterVisibilityChangedCallback(m_controllerVisibilityChangedCallback);
                 m_controller.UnregisterFloorChangedCallback(m_controllerFloorChangedCallback);
             }
-            
-            void InteriorsExplorerModel::SuspendCurrentMapState()
+            void InteriorsExplorerModel::SaveCurrentMapState()
             {
                 m_previouslyInMapMode = m_mapModeModel.IsInMapMode();
-                m_mapModeModel.SetInMapMode(false);
                 m_previousWeatherState = m_weatherController.GetState();
+            }
+
+            void InteriorsExplorerModel::ChangeToInteriorMapState()
+            {
+                m_mapModeModel.SetInMapMode(true);
                 m_weatherController.SetState("DayDefault");
             }
             
@@ -99,6 +102,8 @@ namespace ExampleApp
                 
                 if(!m_interiorExplorerEnabled)
                 {
+                    ChangeToInteriorMapState();
+
                     const Eegeo::Resources::Interiors::InteriorId& interiorId = m_interiorSelectionModel.GetSelectedInteriorId();
                     m_metricsService.SetEvent(MetricEventInteriorSelected, "InteriorId", interiorId.Value());
                     

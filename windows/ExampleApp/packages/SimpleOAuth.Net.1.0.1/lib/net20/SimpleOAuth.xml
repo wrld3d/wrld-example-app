@@ -1,0 +1,251 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SimpleOAuth</name>
+    </assembly>
+    <members>
+        <member name="T:SimpleOAuth.Generators.IGenerator">
+            <summary>
+            The base interface for all generators for OAuth parameters, excluding the signature.
+            </summary>
+        </member>
+        <member name="T:SimpleOAuth.Generators.HmacSha1Generator">
+            <summary>
+            This class generates HMAC-SHA1 signatures.
+            </summary>
+        </member>
+        <member name="T:SimpleOAuth.Generators.ISignatureGenerator">
+            <summary>
+            The interface for all signatures.
+            </summary>
+        </member>
+        <member name="T:SimpleOAuth.OAuthRequestWrapper">
+            <summary>
+            Contains a <see cref="T:System.Net.WebRequest"/> and does all the necessary work in order to sign it
+            as a valid OAuth request before it gets sent.
+            </summary>
+        </member>
+        <member name="M:SimpleOAuth.OAuthRequestWrapper.#ctor(System.Net.WebRequest)">
+            <summary>
+            There is only one constructor, and the OAuthRequestWrapper can only be instantiated internally to the library.
+            </summary>
+        </member>
+        <member name="M:SimpleOAuth.OAuthRequestWrapper.WithTokens(SimpleOAuth.Tokens)">
+            <summary>
+            Set the tokens that should be used for this request.
+            </summary>
+            <param name="oauthTokens">A <see cref="T:SimpleOAuth.Tokens"/> object containing the Consumer and/or Access tokens.</param>
+            <returns>Itself to chain.</returns>
+            <remarks>This is equivalent to setting <see cref="P:SimpleOAuth.OAuthRequestWrapper.RequestTokens"/>.</remarks>
+        </member>
+        <member name="M:SimpleOAuth.OAuthRequestWrapper.WithEncryption(SimpleOAuth.EncryptionMethod)">
+            <summary>
+            Set the encryption method that should be used for this request.
+            </summary>
+            <param name="enc">A <see cref="T:SimpleOAuth.EncryptionMethod"/></param>
+            <returns>Itself to chain.</returns>
+            <remarks>This is equivalent to setting <see cref="P:SimpleOAuth.OAuthRequestWrapper.SigningMethod"/>. If it is not set,
+            the default is to use <see cref="F:SimpleOAuth.EncryptionMethod.HMACSHA1"/>.</remarks>
+        </member>
+        <member name="M:SimpleOAuth.OAuthRequestWrapper.WithCallback(System.String)">
+            <summary>
+            Set the callback address that the OAuth Request Token stage should use.
+            </summary>
+            <param name="callbackUrl">An address or some other string to pass as the OAuth callback.</param>
+            <remarks>The oauth_callback is sometimes required at the Request Token stage in a three-legged OAuth
+            login request. It is possible to set this for other request, but may be unexpected and cause issues.</remarks>
+            <returns>Itself to chain.</returns>
+        </member>
+        <member name="M:SimpleOAuth.OAuthRequestWrapper.WithVerifier(System.String)">
+            <summary>
+            Set the oauth_verifier in the OAuth Access Token stage.
+            </summary>
+            <param name="verifier">The oauth_verifier string used to verify the request.</param>
+            <returns>Itself to chain.</returns>
+        </member>
+        <member name="M:SimpleOAuth.OAuthRequestWrapper.WithVersion(System.String)">
+            <summary>
+            Set the version of OAuth being used.
+            </summary>
+            <param name="version">The version number to use.</param>
+            <returns>Itself to chain.</returns>
+            <remarks>This is equivalent to setting <see cref="P:SimpleOAuth.OAuthRequestWrapper.OAuthVersion"/>. If this is not set, then "1.0" is used.</remarks>
+        </member>
+        <member name="M:SimpleOAuth.OAuthRequestWrapper.WithPostParameters(System.String)">
+            <summary>
+            Provide the POST request to generate a valid OAuth signature.
+            </summary>
+            <param name="parameters">The POST parameters that will be sent.</param>
+            <returns>Itself to chain.</returns>
+            <remarks>The OAuth standard requires POST parameters sent in application/x-www-form-urlencoded
+            requests to be included in the OAuth base string to create a valid signature. If it is not provided,
+            then the request will fail. If this is set, then the <see cref="P:System.Net.WebRequest.ContentType"/> of the 
+            <see cref="P:SimpleOAuth.OAuthRequestWrapper.ContainedRequest"/> will  be set to 'application/x-www-form-urlencoded' 
+            if it is not already set.</remarks>
+        </member>
+        <member name="M:SimpleOAuth.OAuthRequestWrapper.InHeader">
+            <summary>
+            Complete the request signing and add the OAuth information to the Authorization header.
+            </summary>
+            <remarks>This must be your last step in the function chain.</remarks>
+        </member>
+        <member name="P:SimpleOAuth.OAuthRequestWrapper.DefaultSigningMethod">
+            <summary>
+            Change the default signing method to use on all future OAuth requests.
+            </summary>
+        </member>
+        <member name="P:SimpleOAuth.OAuthRequestWrapper.RequestTokens">
+            <summary>
+            The consumer and access keys (if required) to sign the OAuth request.
+            </summary>
+            <remarks>Typically, this would be provided with <see cref="M:SimpleOAuth.OAuthRequestWrapper.WithTokens(SimpleOAuth.Tokens)"/>.</remarks>
+        </member>
+        <member name="P:SimpleOAuth.OAuthRequestWrapper.SigningMethod">
+            <summary>
+            The signing method to use. By default it is <see cref="F:SimpleOAuth.EncryptionMethod.HMACSHA1"/>.
+            </summary>
+            <remarks>Typically, this would be provided with <see cref="M:SimpleOAuth.OAuthRequestWrapper.WithEncryption(SimpleOAuth.EncryptionMethod)"/>.</remarks>
+        </member>
+        <member name="P:SimpleOAuth.OAuthRequestWrapper.PostParameters">
+            <summary>
+            The parameters to include in the OAuth base signature string when doing a POST request. 
+            </summary>
+            <remarks>Typically, this would be provided with <see cref="M:SimpleOAuth.OAuthRequestWrapper.WithPostParameters(System.String)"/>.</remarks>
+        </member>
+        <member name="P:SimpleOAuth.OAuthRequestWrapper.OAuthVersion">
+            <summary>
+            The OAuth version to use, by default it is 1.0.
+            </summary>
+        </member>
+        <member name="T:SimpleOAuth.Utilities.UrlHelper">
+            <summary>
+            Utility function to correctly percent encode URLs, and parse query strings, without use of System.Web.
+            </summary>
+        </member>
+        <member name="T:SimpleOAuth.Generators.NonceGenerator">
+            <summary>
+            Generates an NOnce token, or a token that should only be used once... ever.
+            </summary>
+        </member>
+        <member name="T:SimpleOAuth.EncryptionMethod">
+            <summary>
+            The types of Encryption that can be performed to generate an oauth_signature.
+            </summary>
+        </member>
+        <member name="F:SimpleOAuth.EncryptionMethod.Plain">
+            <summary>
+            PLAINTEXT
+            </summary>
+        </member>
+        <member name="F:SimpleOAuth.EncryptionMethod.HMACSHA1">
+            <summary>
+            HMAC-SHA1
+            </summary>
+        </member>
+        <member name="T:SimpleOAuth.Tokens">
+            <summary>
+            Contains the Consumer and Access tokens (if required) for signing valid OAuth requests.
+            </summary>
+        </member>
+        <member name="M:SimpleOAuth.Tokens.MergeWith(SimpleOAuth.Tokens)">
+            <summary>
+            Merge this set of tokens with another set of tokens. 
+            </summary>
+            <param name="newTokens">The new tokens to merge with.</param>
+            <remarks>Any token that isn't an empty string in <paramref name="newTokens"/> 
+            will replace the token in this <see cref="T:SimpleOAuth.Tokens"/> object. Useful for when you have
+            a new set of access tokens.</remarks>
+        </member>
+        <member name="P:SimpleOAuth.Tokens.ConsumerKey">
+            <summary>
+            The Consumer Key, usually this is provided on your end.
+            </summary>
+        </member>
+        <member name="P:SimpleOAuth.Tokens.ConsumerSecret">
+            <summary>
+            The Consumer Secret, usually this is provided on your end.
+            </summary>
+        </member>
+        <member name="P:SimpleOAuth.Tokens.AccessToken">
+            <summary>
+            The Access Token, usually this is provided by the OAuth provider.
+            </summary>
+        </member>
+        <member name="P:SimpleOAuth.Tokens.AccessTokenSecret">
+            <summary>
+            The Access Token Secret, usually this is provided by the OAuth provider.
+            </summary>
+        </member>
+        <member name="T:SimpleOAuth.Generators.TimestampGenerator">
+            <summary>
+            Generates a UNIX timestamp.
+            </summary>
+        </member>
+        <member name="T:SimpleOAuth.Extensions">
+            <summary>
+            Contains all extensions required to kick this magic off.
+            </summary>
+        </member>
+        <member name="M:SimpleOAuth.Extensions.SignRequest(System.Net.WebRequest)">
+            <summary>
+            Begin signing this <see cref="T:System.Net.WebRequest"/> object with OAuth.
+            </summary>
+            <param name="request">The request that needs to be signed with OAuth.</param>
+            <returns>An <see cref="T:SimpleOAuth.OAuthRequestWrapper"/> used to provide the required parameters for OAuth signing.</returns>
+        </member>
+        <member name="M:SimpleOAuth.Extensions.SignRequest(System.Net.WebRequest,SimpleOAuth.Tokens)">
+            <summary>
+            Begin signing this <see cref="T:System.Net.WebRequest"/> object with OAuth using the tokens provided.
+            </summary>
+            <param name="request">The request that needs to be signed with OAuth.</param>
+            <param name="withTokens">The <see cref="T:SimpleOAuth.Tokens"/> to use to sign the request with.</param>
+            <returns>An <see cref="T:SimpleOAuth.OAuthRequestWrapper"/> used to provide the required parameters for OAuth signing.</returns>
+        </member>
+        <member name="M:SimpleOAuth.Extensions.GetOAuthTokens(System.Net.WebRequest)">
+             <summary>
+             For the Request and Access Token stages, makes the request and parses out the OAuth tokens from
+             the server.
+             </summary>
+             <param name="request">The request that needs to be signed with OAuth.</param>
+             <returns>A <see cref="T:SimpleOAuth.Tokens"/> object containing the Access Token and Access Secret provided by the OAuth server.</returns>
+             <remarks>You typically call this when making a request to get the users access tokens and combine this with the <see cref="M:SimpleOAuth.Tokens.MergeWith(SimpleOAuth.Tokens)"/> function.</remarks>
+             <example>
+                 <code>
+                 var request = WebRequest.Create("https://api.twitter.com/oauth/request_token") { Method = "POST" };
+                 request.SignRequest(RequestTokens)
+                     .WithCallback("oob")
+                     .InHeader();
+            
+                 var accessTokens = request.GetOAuthTokens();
+                 RequestTokens.MergeWith(accessTokens);
+                 </code>
+             In the above example, the <see cref="T:System.Net.WebRequest"/> is created, and signed with a specific set of <see cref="T:SimpleOAuth.Tokens"/>. A call to <see cref="M:SimpleOAuth.Extensions.GetOAuthTokens(System.Net.WebRequest)"/>
+             is made and then merged with the original Request Tokens.
+             </example>
+             <exception cref="T:System.Net.WebException">Thrown when the <paramref name="request"/> encounters an error.</exception>
+        </member>
+        <member name="M:SimpleOAuth.Extensions.GetOAuthTokensAsync(System.Net.WebRequest,System.Action{SimpleOAuth.Tokens,System.Exception})">
+             <summary>
+             For the Request and Access Token stages, makes the request and parses out the OAuth tokens from
+             the server.
+             </summary>
+             <param name="request">The request that needs to be signed with OAuth.</param>
+             <returns>A <see cref="T:SimpleOAuth.Tokens"/> object containing the Access Token and Access Secret provided by the OAuth server.</returns>
+             <remarks>You typically call this when making a request to get the users access tokens and combine this with the <see cref="M:SimpleOAuth.Tokens.MergeWith(SimpleOAuth.Tokens)"/> function.</remarks>
+             <example>
+                 <code>
+                 var request = WebRequest.Create("https://api.twitter.com/oauth/request_token") { Method = "POST" };
+                 request.SignRequest(RequestTokens)
+                     .WithCallback("oob")
+                     .InHeader();
+            
+                 var accessTokens = request.GetOAuthTokens();
+                 RequestTokens.MergeWith(accessTokens);
+                 </code>
+             In the above example, the <see cref="T:System.Net.WebRequest"/> is created, and signed with a specific set of <see cref="T:SimpleOAuth.Tokens"/>. A call to <see cref="M:SimpleOAuth.Extensions.GetOAuthTokens(System.Net.WebRequest)"/>
+             is made and then merged with the original Request Tokens.
+             </example>
+             <exception cref="T:System.Net.WebException">Thrown when the <paramref name="request"/> encounters an error.</exception>
+        </member>
+    </members>
+</doc>

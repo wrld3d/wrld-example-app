@@ -795,6 +795,8 @@
 		27E997531BB2B69000B0BE14 /* YelpSearchConstants.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27E997501BB2B69000B0BE14 /* YelpSearchConstants.cpp */; };
 		27EACB581BC4140700135BE6 /* icon1_tours.png in Resources */ = {isa = PBXBuildFile; fileRef = 27EACB541BC4140700135BE6 /* icon1_tours.png */; };
 		27EACB5C1BC4140700135BE6 /* icon1_tours@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 27EACB561BC4140700135BE6 /* icon1_tours@3x.png */; };
+		27EAF9FC1BEBC4E6008A1EDB /* TransitionToInteriorPointStage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27EAF9FA1BEBC4E6008A1EDB /* TransitionToInteriorPointStage.cpp */; };
+		27EAF9FD1BEBC4E6008A1EDB /* TransitionToInteriorPointStage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27EAF9FA1BEBC4E6008A1EDB /* TransitionToInteriorPointStage.cpp */; };
 		2CA085EF1BD7E1C400A99340 /* embedded_manifest.txt in Resources */ = {isa = PBXBuildFile; fileRef = 2CA085ED1BD7E1C400A99340 /* embedded_manifest.txt */; };
 		2CA085F01BD7E1C400A99340 /* Textures in Resources */ = {isa = PBXBuildFile; fileRef = 2CA085EE1BD7E1C400A99340 /* Textures */; };
 		560741141B8CC624002B0F49 /* MenuDragStateChangedMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 560741121B8CC624002B0F49 /* MenuDragStateChangedMessage.cpp */; };
@@ -2284,6 +2286,8 @@
 		27E997511BB2B69000B0BE14 /* YelpSearchConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YelpSearchConstants.h; sourceTree = "<group>"; };
 		27EACB541BC4140700135BE6 /* icon1_tours.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon1_tours.png; sourceTree = "<group>"; };
 		27EACB561BC4140700135BE6 /* icon1_tours@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon1_tours@3x.png"; sourceTree = "<group>"; };
+		27EAF9FA1BEBC4E6008A1EDB /* TransitionToInteriorPointStage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TransitionToInteriorPointStage.cpp; sourceTree = "<group>"; };
+		27EAF9FB1BEBC4E6008A1EDB /* TransitionToInteriorPointStage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransitionToInteriorPointStage.h; sourceTree = "<group>"; };
 		2CA085ED1BD7E1C400A99340 /* embedded_manifest.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = embedded_manifest.txt; sourceTree = "<group>"; };
 		2CA085EE1BD7E1C400A99340 /* Textures */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Textures; sourceTree = "<group>"; };
 		560741121B8CC624002B0F49 /* MenuDragStateChangedMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MenuDragStateChangedMessage.cpp; sourceTree = "<group>"; };
@@ -4264,6 +4268,8 @@
 				7E149DCC1BD0FDB300C0AFFC /* ICameraTransitionStage.h */,
 				7E149DCD1BD1118D00C0AFFC /* TransitionToWorldPointStage.cpp */,
 				7E149DCE1BD1118D00C0AFFC /* TransitionToWorldPointStage.h */,
+				27EAF9FA1BEBC4E6008A1EDB /* TransitionToInteriorPointStage.cpp */,
+				27EAF9FB1BEBC4E6008A1EDB /* TransitionToInteriorPointStage.h */,
 				7E149DD11BD1169A00C0AFFC /* ExitCurrentInteriorStage.cpp */,
 				7E149DD21BD1169A00C0AFFC /* ExitCurrentInteriorStage.h */,
 				7E149DD51BD12BC700C0AFFC /* TransitionToInteriorStage.cpp */,
@@ -7525,6 +7531,7 @@
 				BFD5FD551BA706AD00F591F1 /* TourModel.cpp in Sources */,
 				18A657591A9F49A500238F33 /* SearchResultMyPinsService.cpp in Sources */,
 				7E3B88B71A385A290023C94E /* CategorySearchMenuOption.cpp in Sources */,
+				27EAF9FD1BEBC4E6008A1EDB /* TransitionToInteriorPointStage.cpp in Sources */,
 				27E9362B1BE23472007D52C5 /* UserInteractionController.cpp in Sources */,
 				18096F621A7B8FEF006A6438 /* CacheEnabledChangedMessageHandler.cpp in Sources */,
 				18FB64A21A94B80C005A9411 /* SearchResultPoiViewImageDownloadCompletedMessage.cpp in Sources */,
@@ -7890,6 +7897,7 @@
 				7E3B897C1A385A290023C94E /* ReactionControllerModel.cpp in Sources */,
 				27DB89D81BB3FF170020CDA5 /* GeoNamesJsonParser.cpp in Sources */,
 				27E935CF1BDFA701007D52C5 /* InterestPointTransitionCameraMode.cpp in Sources */,
+				27EAF9FC1BEBC4E6008A1EDB /* TransitionToInteriorPointStage.cpp in Sources */,
 				7E3B89C21A385A290023C94E /* SearchResultOnMapItemModelSelectedMessage.cpp in Sources */,
 				BFD5FCCA1BA7068300F591F1 /* TourHovercardViewModule.mm in Sources */,
 				18FE3BCE1A9CA4DF002D61C4 /* SortedMenuModel.cpp in Sources */,

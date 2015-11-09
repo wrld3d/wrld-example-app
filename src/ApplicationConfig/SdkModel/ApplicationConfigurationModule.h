@@ -21,7 +21,8 @@ namespace ExampleApp
                 IApplicationConfigurationBuilder* m_pApplicationConfigurationBuilder;
                 
             public:
-                ApplicationConfigurationModule(Eegeo::Helpers::IFileIO& fileIO);
+                ApplicationConfigurationModule(Eegeo::Helpers::IFileIO& fileIO,
+                                               const std::string& buildVersionNumber);
                 
                 ~ApplicationConfigurationModule();
                 

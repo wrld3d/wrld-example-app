@@ -7,6 +7,4 @@
 namespace ExampleApp
 {
     static const std::string ApplicationConfigurationPath = "ApplicationConfigs/project_swallow_config.json";
-	
-	static const std::string BuildVersion = "INSERT BUILD VERSION HERE";
 }

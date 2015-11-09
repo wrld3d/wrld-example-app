@@ -128,20 +128,29 @@ namespace ExampleApp
                     
                     result.materialName = materialJson[InteriorsCustomMaterialKeys::MaterialName.c_str()].GetString();
                     
-                    TryAddString(InteriorsCustomMaterialKeys::MaterialType.c_str(), materialJson, result.keyValueStrings);
+                    TryAddString(MaterialType, materialJson, result.keyValueStrings);
                     TryAddString(DiffuseTexture, materialJson, result.keyValueStrings);
                     TryAddString(CubeMapTexture, materialJson, result.keyValueStrings);
                     
                     TryAddColor(DiffuseColor, materialJson, result.keyValueColors);
                     TryAddColor(SpecularColor, materialJson, result.keyValueColors);
                     TryAddColor(ReflectionColor, materialJson, result.keyValueColors);
+                    TryAddColor(RimColor, materialJson, result.keyValueColors);
+                    TryAddColor(MirrorClearColor, materialJson, result.keyValueColors);
                     TryAddColor(AmbientColor, materialJson, result.keyValueColors);
+                    
+                    TryAddColor(ReflectionPlane, materialJson, result.keyValueColors);
                     
                     TryAddScalar(SpecularPowerScalar, materialJson, result.keyValueScalars);
                     TryAddScalar(SpecularModulateTextureScalar, materialJson, result.keyValueScalars);
                     TryAddScalar(SpecularityFromTextureLuminanceScalar, materialJson, result.keyValueScalars);
+                    TryAddScalar(FresnelBias, materialJson, result.keyValueScalars);
+                    TryAddScalar(FresnelScale, materialJson, result.keyValueScalars);
+                    TryAddScalar(FresnelPower, materialJson, result.keyValueScalars);
+                    TryAddScalar(ViewOffsetScale, materialJson, result.keyValueScalars);
                     
                     TryAddBoolean(IsTranslucent, materialJson, result.keyValueBooleans);
+                    TryAddBoolean(IsStencilMirror, materialJson, result.keyValueBooleans);
                     
                     return result;
                 }
