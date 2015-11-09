@@ -22,7 +22,8 @@ namespace ExampleApp
                 
             public:
                 ApplicationConfigurationModule(Eegeo::Helpers::IFileIO& fileIO,
-                                               const std::string& buildVersionNumber);
+                                               const std::string& productVersion,
+                                               const std::string& buildNumber);
                 
                 ~ApplicationConfigurationModule();
                 

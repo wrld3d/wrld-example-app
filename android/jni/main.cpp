@@ -46,7 +46,8 @@ JNIEXPORT long JNICALL Java_com_eegeo_entrypointinfrastructure_NativeJniCalls_cr
 		jobject assetManager,
 		jfloat dpi,
 		jint density,
-		jstring versionNumber)
+		jstring versionName,
+		jint versionCode)
 {
     EXAMPLE_LOG("startNativeCode\n");
 
@@ -79,19 +80,8 @@ JNIEXPORT long JNICALL Java_com_eegeo_entrypointinfrastructure_NativeJniCalls_cr
     g_nativeState.assetManagerGlobalRef = jenv->NewGlobalRef(assetManager);
     g_nativeState.assetManager = AAssetManager_fromJava(jenv, g_nativeState.assetManagerGlobalRef);
 
-    jboolean isCopy = false;
-    const char* versionName = jenv->GetStringUTFChars(versionNumber, &isCopy);
-
-    if(versionNumber == NULL || strcmp(versionName, "") == 0)
-	{
-    	g_nativeState.versionName = "Development Build";
-	}
-    else
-    {
-    	g_nativeState.versionName = std::string(versionName);
-    }
-
-    jenv->ReleaseStringUTFChars(versionNumber, versionName);
+    g_nativeState.versionName = jenv->GetStringUTFChars(versionName, 0);
+    g_nativeState.versionCode = static_cast<int>(versionCode);
 
     g_pAppRunner = Eegeo_NEW(AppRunner)(&g_nativeState);
 

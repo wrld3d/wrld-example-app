@@ -82,9 +82,31 @@
 #include "IApplicationConfigurationService.h"
 #include "SearchVendorNames.h"
 #include "UserInteractionEnabledChangedMessage.h"
+#include "AndroidApplicationConfigurationVersionProvider.h"
 
 using namespace Eegeo::Android;
 using namespace Eegeo::Android::Input;
+
+namespace
+{
+    typedef ExampleApp::ApplicationConfig::ApplicationConfiguration ApplicationConfiguration;
+
+    ApplicationConfiguration LoadConfiguration(AndroidNativeState& state)
+    {
+        // SJM -- this is kinda fail, we would like to get the platform file IO to load the API key but need the API key
+        // to create a file IO instance (due to coarseness of AndroidPlatformAbstractionModule).
+        std::set<std::string> customApplicationAssetDirectories;
+        customApplicationAssetDirectories.insert("ApplicationConfigs");
+
+        AndroidFileIO tempFileIO(&state, customApplicationAssetDirectories);
+
+        ExampleApp::ApplicationConfig::SdkModel::AndroidApplicationConfigurationVersionProvider versionProvider(state);
+        ExampleApp::ApplicationConfig::SdkModel::ApplicationConfigurationModule applicationConfigurationModule(tempFileIO,
+        		versionProvider.GetProductVersionString(),
+        		versionProvider.GetBuildNumberString());
+        return applicationConfigurationModule.GetApplicationConfigurationService().LoadConfiguration(ExampleApp::ApplicationConfigurationPath);
+    }
+}
 
 AppHost::AppHost(
     AndroidNativeState& nativeState,
@@ -142,6 +164,8 @@ AppHost::AppHost(
     customApplicationAssetDirectories.insert("SearchResultOnMap");
     customApplicationAssetDirectories.insert("ApplicationConfigs");
 
+    ApplicationConfiguration config(LoadConfiguration(nativeState));
+
     m_pAndroidPlatformAbstractionModule = Eegeo_NEW(Eegeo::Android::AndroidPlatformAbstractionModule)(
             nativeState,
             *m_pJpegLoader,
@@ -186,9 +210,6 @@ AppHost::AppHost(
 
     m_pAndroidFlurryMetricsService = Eegeo_NEW(ExampleApp::Metrics::AndroidFlurryMetricsService)(&m_nativeState);
 
-    typedef ExampleApp::ApplicationConfig::SdkModel::ApplicationConfigurationModule ApplicationConfigurationModule;
-    ApplicationConfigurationModule applicationConfigurationModule(m_pAndroidPlatformAbstractionModule->GetFileIO(), m_nativeState.versionName);
-
     m_pApp = Eegeo_NEW(ExampleApp::MobileExampleApp)(
                  ExampleApp::ApiKey,
                  *m_pAndroidPlatformAbstractionModule,
@@ -204,7 +225,7 @@ AppHost::AppHost(
                  *m_pNetworkCapabilities,
                  m_searchServiceModules,
                  *m_pAndroidFlurryMetricsService,
-                 applicationConfigurationModule.GetApplicationConfigurationService().LoadConfiguration("ApplicationConfigs/standard_config.json"),
+                 config,
                  *this);
 
     m_pModalBackgroundNativeViewModule = Eegeo_NEW(ExampleApp::ModalBackground::SdkModel::ModalBackgroundNativeViewModule)(

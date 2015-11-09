@@ -13,13 +13,16 @@ namespace ExampleApp
         namespace SdkModel
         {
             ApplicationConfigurationModule::ApplicationConfigurationModule(Eegeo::Helpers::IFileIO& fileIO,
-                                                                           const std::string& buildVersion)
+                                                                           const std::string& productVersion,
+                                                                           const std::string& buildNumber)
             {
-                m_pApplicationConfigurationBuilder = Eegeo_NEW(ApplicationConfigurationBuilder)(buildVersion);
+                m_pApplicationConfigurationBuilder = Eegeo_NEW(ApplicationConfigurationBuilder);
                 m_pApplicationConfigurationReader = Eegeo_NEW(ApplicationConfigurationReader)(fileIO);
                 m_pApplicationConfigurationParser = Eegeo_NEW(ApplicationConfigurationJsonParser)(*m_pApplicationConfigurationBuilder);
                 m_pApplicationConfigurationService = Eegeo_NEW(ApplicationConfigurationService)(*m_pApplicationConfigurationParser,
-                                                                                                *m_pApplicationConfigurationReader);
+                                                                                                *m_pApplicationConfigurationReader,
+                                                                                                productVersion,
+                                                                                                buildNumber);
             }
             
             ApplicationConfigurationModule::~ApplicationConfigurationModule()

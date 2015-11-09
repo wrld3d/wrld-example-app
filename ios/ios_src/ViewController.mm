@@ -3,6 +3,7 @@
 #include "ViewController.h"
 #include "AppLocationDelegate.h"
 #include "MathFunc.h"
+#include "AppDelegate.h"
 
 using namespace Eegeo::iOS;
 
@@ -57,7 +58,9 @@ using namespace Eegeo::iOS;
 {
     if(m_pAppRunner == NULL)
     {
-        m_pAppRunner = new AppRunner(*self, [self view]);
+        AppDelegate* appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+        
+        m_pAppRunner = new AppRunner(*self, [self view], *appDelegate.applicationConfiguration, *appDelegate.metricsService);
     }
 
     m_pAppRunner->NotifyViewLayoutChanged();

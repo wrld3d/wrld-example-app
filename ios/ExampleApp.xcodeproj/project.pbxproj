@@ -221,6 +221,10 @@
 		18C0EC0A1A9E147C008EED21 /* SearchResultPinBoundObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18C0EC081A9E147C008EED21 /* SearchResultPinBoundObject.cpp */; };
 		18C0EC0E1A9E41BB008EED21 /* SearchResultMyPinDetailsModelSelectedMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18C0EC0C1A9E41BB008EED21 /* SearchResultMyPinDetailsModelSelectedMessage.cpp */; };
 		18C0EC0F1A9E41BB008EED21 /* SearchResultMyPinDetailsModelSelectedMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18C0EC0C1A9E41BB008EED21 /* SearchResultMyPinDetailsModelSelectedMessage.cpp */; };
+		18CFE2B81BECC76D003368D1 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18CFE2B31BECC76D003368D1 /* AppDelegate.mm */; };
+		18CFE2B91BECC76D003368D1 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18CFE2B31BECC76D003368D1 /* AppDelegate.mm */; };
+		18CFE2BA1BECC76D003368D1 /* iOSApplicationConfigurationVersionProvider.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18CFE2B71BECC76D003368D1 /* iOSApplicationConfigurationVersionProvider.mm */; };
+		18CFE2BB1BECC76D003368D1 /* iOSApplicationConfigurationVersionProvider.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18CFE2B71BECC76D003368D1 /* iOSApplicationConfigurationVersionProvider.mm */; };
 		18D1D354194A057200FAA1B9 /* FrankBold50_A8_icons_0.png in Resources */ = {isa = PBXBuildFile; fileRef = 18D1D343194A057200FAA1B9 /* FrankBold50_A8_icons_0.png */; };
 		18D1D355194A057200FAA1B9 /* FrankBold50_A8_icons.fnt in Resources */ = {isa = PBXBuildFile; fileRef = 18D1D344194A057200FAA1B9 /* FrankBold50_A8_icons.fnt */; };
 		18D1D35B194A057200FAA1B9 /* placeholder.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 18D1D34A194A057200FAA1B9 /* placeholder.pvr */; };
@@ -1176,8 +1180,8 @@
 		7E3B8AEA1A385F110023C94E /* iOSInitialExperienceModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B8A451A385F100023C94E /* iOSInitialExperienceModule.cpp */; };
 		7E3B8AEB1A385F110023C94E /* iOSInitialExperiencePreLoadModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B8A491A385F100023C94E /* iOSInitialExperiencePreLoadModel.mm */; };
 		7E3B8AEC1A385F110023C94E /* iOSInitialExperiencePreLoadModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B8A491A385F100023C94E /* iOSInitialExperiencePreLoadModel.mm */; };
-		7E3B8AED1A385F110023C94E /* Main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B8A4A1A385F100023C94E /* Main.m */; };
-		7E3B8AEE1A385F110023C94E /* Main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B8A4A1A385F100023C94E /* Main.m */; };
+		7E3B8AED1A385F110023C94E /* Main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B8A4A1A385F100023C94E /* Main.mm */; };
+		7E3B8AEE1A385F110023C94E /* Main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B8A4A1A385F100023C94E /* Main.mm */; };
 		7E3B8AEF1A385F110023C94E /* CustomTableDataProvider.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B8A4F1A385F100023C94E /* CustomTableDataProvider.mm */; };
 		7E3B8AF01A385F110023C94E /* CustomTableDataProvider.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B8A4F1A385F100023C94E /* CustomTableDataProvider.mm */; };
 		7E3B8AF11A385F110023C94E /* CustomTableView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B8A511A385F100023C94E /* CustomTableView.mm */; };
@@ -1695,6 +1699,11 @@
 		18C0EC0D1A9E41BB008EED21 /* SearchResultMyPinDetailsModelSelectedMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultMyPinDetailsModelSelectedMessage.h; sourceTree = "<group>"; };
 		18C0EC111A9F345C008EED21 /* SdkModelDomainEventBus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SdkModelDomainEventBus.h; sourceTree = "<group>"; };
 		18C0EC141A9F3550008EED21 /* DispatchQueue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DispatchQueue.h; sourceTree = "<group>"; };
+		18CFE2B21BECC76D003368D1 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		18CFE2B31BECC76D003368D1 /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
+		18CFE2B61BECC76D003368D1 /* iOSApplicationConfigurationVersionProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iOSApplicationConfigurationVersionProvider.h; sourceTree = "<group>"; };
+		18CFE2B71BECC76D003368D1 /* iOSApplicationConfigurationVersionProvider.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = iOSApplicationConfigurationVersionProvider.mm; sourceTree = "<group>"; };
+		18CFE2BC1BECC8DE003368D1 /* IApplicationConfigurationVersionProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IApplicationConfigurationVersionProvider.h; sourceTree = "<group>"; };
 		18D1D343194A057200FAA1B9 /* FrankBold50_A8_icons_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FrankBold50_A8_icons_0.png; sourceTree = "<group>"; };
 		18D1D344194A057200FAA1B9 /* FrankBold50_A8_icons.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = FrankBold50_A8_icons.fnt; sourceTree = "<group>"; };
 		18D1D34A194A057200FAA1B9 /* placeholder.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = placeholder.pvr; sourceTree = "<group>"; };
@@ -2634,7 +2643,7 @@
 		7E3B8A461A385F100023C94E /* iOSInitialExperienceModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iOSInitialExperienceModule.h; sourceTree = "<group>"; };
 		7E3B8A481A385F100023C94E /* iOSInitialExperiencePreLoadModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iOSInitialExperiencePreLoadModel.h; sourceTree = "<group>"; };
 		7E3B8A491A385F100023C94E /* iOSInitialExperiencePreLoadModel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = iOSInitialExperiencePreLoadModel.mm; sourceTree = "<group>"; };
-		7E3B8A4A1A385F100023C94E /* Main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Main.m; sourceTree = "<group>"; };
+		7E3B8A4A1A385F100023C94E /* Main.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Main.mm; sourceTree = "<group>"; };
 		7E3B8A4D1A385F100023C94E /* CellConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellConstants.h; sourceTree = "<group>"; };
 		7E3B8A4E1A385F100023C94E /* CustomTableDataProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTableDataProvider.h; sourceTree = "<group>"; };
 		7E3B8A4F1A385F100023C94E /* CustomTableDataProvider.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CustomTableDataProvider.mm; sourceTree = "<group>"; };
@@ -3280,6 +3289,7 @@
 				186B47491AB333150084E80B /* IApplicationConfigurationParser.h */,
 				186B474A1AB333150084E80B /* IApplicationConfigurationReader.h */,
 				186B475C1AB33C920084E80B /* IApplicationConfigurationService.h */,
+				18CFE2BC1BECC8DE003368D1 /* IApplicationConfigurationVersionProvider.h */,
 			);
 			path = SdkModel;
 			sourceTree = "<group>";
@@ -3368,6 +3378,23 @@
 				18B44CE61A83C77800FDFD8A /* ClearCacheMessageHandler.mm */,
 				18B44CEF1A88D4B400FDFD8A /* CacheClearBackgroundTask.h */,
 				18B44CEE1A88D4B400FDFD8A /* CacheClearBackgroundTask.cpp */,
+			);
+			path = SdkModel;
+			sourceTree = "<group>";
+		};
+		18CFE2B41BECC76D003368D1 /* ApplicationConfig */ = {
+			isa = PBXGroup;
+			children = (
+				18CFE2B51BECC76D003368D1 /* SdkModel */,
+			);
+			path = ApplicationConfig;
+			sourceTree = "<group>";
+		};
+		18CFE2B51BECC76D003368D1 /* SdkModel */ = {
+			isa = PBXGroup;
+			children = (
+				18CFE2B61BECC76D003368D1 /* iOSApplicationConfigurationVersionProvider.h */,
+				18CFE2B71BECC76D003368D1 /* iOSApplicationConfigurationVersionProvider.mm */,
 			);
 			path = SdkModel;
 			sourceTree = "<group>";
@@ -4854,10 +4881,13 @@
 				BFD5FD8F1BA7141600F591F1 /* ImageStore */,
 				BFD5FC8A1BA7068300F591F1 /* Tours */,
 				7E3B8A131A385F100023C94E /* AboutPage */,
+				18CFE2B21BECC76D003368D1 /* AppDelegate.h */,
+				18CFE2B31BECC76D003368D1 /* AppDelegate.mm */,
 				7E3B8A1D1A385F100023C94E /* AppHost.h */,
 				7E3B8A1E1A385F100023C94E /* AppHost.mm */,
 				7E3B8A1F1A385F100023C94E /* AppInputDelegate.h */,
 				7E3B8A201A385F100023C94E /* AppInputDelegate.mm */,
+				18CFE2B41BECC76D003368D1 /* ApplicationConfig */,
 				7E3B8A211A385F100023C94E /* AppLocationDelegate.h */,
 				7E3B8A221A385F100023C94E /* AppLocationDelegate.mm */,
 				7E3B8A231A385F100023C94E /* AppRunner.h */,
@@ -4869,7 +4899,7 @@
 				7E3B8A3B1A385F100023C94E /* Helpers */,
 				7E5811C21B1F3248007AD67F /* InteriorsExplorer */,
 				7E3B8A441A385F100023C94E /* InitialExperience */,
-				7E3B8A4A1A385F100023C94E /* Main.m */,
+				7E3B8A4A1A385F100023C94E /* Main.mm */,
 				7E3B8A4B1A385F100023C94E /* Menu */,
 				56AC9BF91AA6076D00E603C4 /* Metrics */,
 				7E3B8A581A385F100023C94E /* ModalBackground */,
@@ -6882,6 +6912,7 @@
 				BFD5FD551BA706AD00F591F1 /* TourModel.cpp in Sources */,
 				18A657591A9F49A500238F33 /* SearchResultMyPinsService.cpp in Sources */,
 				7E3B88B71A385A290023C94E /* CategorySearchMenuOption.cpp in Sources */,
+				18CFE2BB1BECC76D003368D1 /* iOSApplicationConfigurationVersionProvider.mm in Sources */,
 				18096F621A7B8FEF006A6438 /* CacheEnabledChangedMessageHandler.cpp in Sources */,
 				18FB64A21A94B80C005A9411 /* SearchResultPoiViewImageDownloadCompletedMessage.cpp in Sources */,
 				7E3B88D71A385A290023C94E /* FlattenButtonModel.cpp in Sources */,
@@ -6995,7 +7026,7 @@
 				EEE021341BB44239001AF4CF /* YelpSearchResultModel.cpp in Sources */,
 				BFD5FD391BA706AD00F591F1 /* ActiveTourQuitSelectedMessage.cpp in Sources */,
 				7E149DD41BD1169B00C0AFFC /* ExitCurrentInteriorStage.cpp in Sources */,
-				7E3B8AEE1A385F110023C94E /* Main.m in Sources */,
+				7E3B8AEE1A385F110023C94E /* Main.mm in Sources */,
 				27E936001BE12AB1007D52C5 /* UserInteractionModel.cpp in Sources */,
 				560741151B8CC624002B0F49 /* MenuDragStateChangedMessage.cpp in Sources */,
 				27DB89E31BB3FF170020CDA5 /* GeoNamesSearchServiceModule.cpp in Sources */,
@@ -7067,6 +7098,7 @@
 				18FB64731A9240FC005A9411 /* OATokenManager.m in Sources */,
 				7E3B89C11A385A290023C94E /* SearchResultOnMapModule.cpp in Sources */,
 				7E3B8B1C1A385F110023C94E /* SearchResultMenuDataProvider.mm in Sources */,
+				18CFE2B91BECC76D003368D1 /* AppDelegate.mm in Sources */,
 				7E3B88D11A385A290023C94E /* CompassViewModel.cpp in Sources */,
 				27CADB641BCFEA2A00805A27 /* SizeHelpers.cpp in Sources */,
 				7E3B88B11A385A290023C94E /* CategorySearchSelectedMessage.cpp in Sources */,
@@ -7343,6 +7375,7 @@
 				BFD5FD541BA706AD00F591F1 /* TourModel.cpp in Sources */,
 				18A657581A9F49A500238F33 /* SearchResultMyPinsService.cpp in Sources */,
 				7E3B88B61A385A290023C94E /* CategorySearchMenuOption.cpp in Sources */,
+				18CFE2BA1BECC76D003368D1 /* iOSApplicationConfigurationVersionProvider.mm in Sources */,
 				18096F611A7B8FEF006A6438 /* CacheEnabledChangedMessageHandler.cpp in Sources */,
 				18FB64A11A94B80C005A9411 /* SearchResultPoiViewImageDownloadCompletedMessage.cpp in Sources */,
 				7E3B88D61A385A290023C94E /* FlattenButtonModel.cpp in Sources */,
@@ -7456,7 +7489,7 @@
 				EEE021331BB44239001AF4CF /* YelpSearchResultModel.cpp in Sources */,
 				BFD5FD381BA706AD00F591F1 /* ActiveTourQuitSelectedMessage.cpp in Sources */,
 				7E149DD31BD1169B00C0AFFC /* ExitCurrentInteriorStage.cpp in Sources */,
-				7E3B8AED1A385F110023C94E /* Main.m in Sources */,
+				7E3B8AED1A385F110023C94E /* Main.mm in Sources */,
 				27E935FF1BE12AB1007D52C5 /* UserInteractionModel.cpp in Sources */,
 				560741141B8CC624002B0F49 /* MenuDragStateChangedMessage.cpp in Sources */,
 				27DB89E21BB3FF170020CDA5 /* GeoNamesSearchServiceModule.cpp in Sources */,
@@ -7528,6 +7561,7 @@
 				18FB64721A9240FC005A9411 /* OATokenManager.m in Sources */,
 				7E3B89C01A385A290023C94E /* SearchResultOnMapModule.cpp in Sources */,
 				7E3B8B1B1A385F110023C94E /* SearchResultMenuDataProvider.mm in Sources */,
+				18CFE2B81BECC76D003368D1 /* AppDelegate.mm in Sources */,
 				7E3B88D01A385A290023C94E /* CompassViewModel.cpp in Sources */,
 				27CADB631BCFEA2A00805A27 /* SizeHelpers.cpp in Sources */,
 				7E3B88B01A385A290023C94E /* CategorySearchSelectedMessage.cpp in Sources */,

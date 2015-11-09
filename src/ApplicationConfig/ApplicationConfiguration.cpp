@@ -12,14 +12,18 @@ namespace ExampleApp
                                                            float orientationDegrees,
                                                            bool tryStartAtGpsLocation,
                                                            const std::string& googleAnalyticsReferrerToken,
-                                                           const std::string& buildVersionNumber)
+                                                           const std::string& productVersion,
+                                                           const std::string& buildNumber,
+                                                           const std::string& combinedVersionString)
         : m_name(name)
         , m_interestLocation(interestLocation)
         , m_distanceToInterestMetres(distanceToInterestMetres)
         , m_orientationDegrees(orientationDegrees)
         , m_tryStartAtGpsLocation(tryStartAtGpsLocation)
         , m_googleAnalyticsReferrerToken(googleAnalyticsReferrerToken)
-        , m_buildVersion(buildVersionNumber)
+        , m_productVersion(productVersion)
+        , m_buildNumber(buildNumber)
+        , m_combinedVersionString(combinedVersionString)
         {
         }
         
@@ -53,9 +57,19 @@ namespace ExampleApp
             return m_googleAnalyticsReferrerToken;
         }
         
-        const std::string& ApplicationConfiguration::BuildVersion() const
+        const std::string& ApplicationConfiguration::ProductVersion() const
         {
-            return m_buildVersion;
+            return m_productVersion;
+        }
+        
+        const std::string& ApplicationConfiguration::BuildNumber() const
+        {
+            return m_buildNumber;
+        }
+        
+        const std::string& ApplicationConfiguration::CombinedVersionString() const
+        {
+            return m_combinedVersionString;
         }
     }
 }

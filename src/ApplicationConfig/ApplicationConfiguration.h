@@ -18,7 +18,9 @@ namespace ExampleApp
             float m_orientationDegrees;
             bool m_tryStartAtGpsLocation;
             std::string m_googleAnalyticsReferrerToken;
-            std::string m_buildVersion;
+            std::string m_productVersion;
+            std::string m_buildNumber;
+            std::string m_combinedVersionString;
             
         public:
             
@@ -28,7 +30,9 @@ namespace ExampleApp
                                      float orientationDegrees,
                                      bool tryStartAtGpsLocation,
                                      const std::string& googleAnalyticsReferrerToken,
-                                     const std::string& buildVersion);
+                                     const std::string& productVersion,
+                                     const std::string& buildNumber,
+                                     const std::string& combinedVersionString);
             
             const std::string& Name() const;
             
@@ -42,7 +46,11 @@ namespace ExampleApp
             
             const std::string& GoogleAnalyticsReferrerToken() const;
             
-            const std::string& BuildVersion() const;
+            const std::string& ProductVersion() const;
+            
+            const std::string& BuildNumber() const;
+            
+            const std::string& CombinedVersionString() const;
         };
     }
 }

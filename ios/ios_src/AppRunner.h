@@ -15,7 +15,9 @@ class AppRunner : Eegeo::NonCopyable
 public:
     AppRunner(
         ViewController& pViewController,
-        UIView* pView
+        UIView* pView,
+        const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration,
+        ExampleApp::Metrics::iOSFlurryMetricsService& metricsService
     );
     ~AppRunner();
 
@@ -33,6 +35,8 @@ public:
 private:
     ViewController& m_viewController;
     UIView* m_pView;
+    const ExampleApp::ApplicationConfig::ApplicationConfiguration& m_applicationConfiguration;
+    ExampleApp::Metrics::iOSFlurryMetricsService& m_metricsService;
 
     GlDisplayService m_displayService;
     void ReleaseDisplay();

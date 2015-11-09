@@ -29,6 +29,12 @@ namespace ExampleApp
                 
                 virtual IApplicationConfigurationBuilder& SetGoogleAnalyticsReferrerToken(const std::string& googleAnalyticsReferrerToken) = 0;
                 
+                virtual IApplicationConfigurationBuilder& SetProductVersion(const std::string& productVersion) = 0;
+                
+                virtual IApplicationConfigurationBuilder& SetBuildNumber(const std::string& buildNumber) = 0;
+                
+                virtual IApplicationConfigurationBuilder& SetCombinedVersionString(const std::string& combinedVersionString) = 0;
+                
                 virtual ApplicationConfiguration Build() = 0;
             };
         }
