@@ -1,0 +1,230 @@
+{
+    "AssetExtension_Android": ".ktx", 
+    "AssetExtension_OSX": ".png", 
+    "AssetExtension_Windows": ".dds", 
+    "AssetExtension_iOS": ".pvr", 
+    "AssetRoot_Android": "http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v407/", 
+    "AssetRoot_OSX": "http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v407/", 
+    "AssetRoot_Windows": "http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v407/", 
+    "AssetRoot_iOS": "http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v407/", 
+    "GlobeViewAltitude": 15000, 
+    "GlobeViewThemeState": "GlobeView", 
+    "LandmarkTexturePostfixes": [
+        "", 
+        "night"
+    ], 
+    "LandmarkTextureRoot": "http://d2xvsc8j92rfya.cloudfront.net/landmark_textures/test_builds/v499/", 
+    "Themes": [
+        {
+            "BaseAltitude": 0, 
+            "LocationLatLong": [
+                37.75253, 
+                -122.449837
+            ], 
+            "Name": "SummerSanFrancisco", 
+            "PlaceNameStyles": [
+                {
+                    "Category": "ctry", 
+                    "Color": [
+                        1.0, 
+                        1.0, 
+                        1.0
+                    ], 
+                    "Scale": 1.0
+                }, 
+                {
+                    "Category": "stat", 
+                    "Color": [
+                        0.91000000000000003, 
+                        0.90600000000000003, 
+                        0.72599999999999998
+                    ], 
+                    "Scale": 1.0
+                }, 
+                {
+                    "Category": "coun", 
+                    "Color": [
+                        0.91000000000000003, 
+                        0.90600000000000003, 
+                        0.72599999999999998
+                    ], 
+                    "Scale": 1.0
+                }, 
+                {
+                    "Category": "ccty", 
+                    "Color": [
+                        0.93999999999999995, 
+                        0.93999999999999995, 
+                        0.93999999999999995
+                    ], 
+                    "Scale": 0.82999999999999996
+                }, 
+                {
+                    "Category": "city", 
+                    "Color": [
+                        0.93999999999999995, 
+                        0.93999999999999995, 
+                        0.93999999999999995
+                    ], 
+                    "Scale": 0.82999999999999996
+                }, 
+                {
+                    "Category": "poin", 
+                    "Color": [
+                        0.54000000000000004, 
+                        0.90000000000000002, 
+                        1.0
+                    ], 
+                    "Scale": 0.80000000000000004
+                }, 
+                {
+                    "Category": "dist", 
+                    "Color": [
+                        0.93999999999999995, 
+                        0.93999999999999995, 
+                        0.93999999999999995
+                    ], 
+                    "Scale": 1.0
+                }, 
+                {
+                    "Category": "airp", 
+                    "Color": [
+                        0.76200000000000001, 
+                        0.73199999999999998, 
+                        0.91000000000000003
+                    ], 
+                    "Scale": 1.0
+                }, 
+                {
+                    "Category": "park", 
+                    "Color": [
+                        0.80000000000000004, 
+                        1.0, 
+                        0.66000000000000003
+                    ], 
+                    "Scale": 0.82999999999999996
+                }, 
+                {
+                    "Category": "golf", 
+                    "Color": [
+                        0.0, 
+                        1.0, 
+                        0.0
+                    ], 
+                    "Scale": 0.80000000000000004
+                }
+            ], 
+            "States": [
+                {
+                    "AlternativeAmbientLight": [
+                        0.43137254901960786, 
+                        0.5490196078431373, 
+                        0.62745098039215685
+                    ], 
+                    "AmbientLight": [
+                        0.43137254901960786, 
+                        0.5490196078431373, 
+                        0.62745098039215685
+                    ], 
+                    "BackLight": [
+                        0.43137254901960786, 
+                        0.43137254901960786, 
+                        0.15686274509803921
+                    ], 
+                    "FillLight": [
+                        0.19607843137254902, 
+                        0.19607843137254902, 
+                        0.11764705882352941
+                    ], 
+                    "FogColor": [
+                        0, 
+                        0, 
+                        0
+                    ], 
+                    "FogIntensity": 0.0, 
+                    "KeyLight": [
+                        0.70588235294117652, 
+                        0.62745098039215685, 
+                        0.31372549019607843
+                    ], 
+                    "LandmarkPostfix": "", 
+                    "LightMapColor": [
+                        0, 
+                        0, 
+                        0
+                    ], 
+                    "LightMapIntensity": 0.0, 
+                    "Name": "DayDefault", 
+                    "ShadowColor": [
+                        0.45098039215686275, 
+                        0.56862745098039214, 
+                        0.70588235294117652
+                    ], 
+                    "Textures": {
+                        "AsyncPlaceholderDiffuse": "SanFrancisco_TerrainTexture3", 
+                        "BuildingDiffuse": "SanFrancisco_SanFran_wallDiffuse", 
+                        "LcmDiffuse": {
+                            "Terrain0": "SanFrancisco_TerrainTexture0", 
+                            "Terrain1": "SanFrancisco_TerrainTexture1", 
+                            "Terrain10": "SanFrancisco_TerrainTexture10", 
+                            "Terrain11": "SanFrancisco_TerrainTexture11", 
+                            "Terrain12": "SanFrancisco_TerrainTexture12", 
+                            "Terrain13": "SanFrancisco_TerrainTexture13", 
+                            "Terrain14": "SanFrancisco_TerrainTexture14", 
+                            "Terrain15": "SanFrancisco_TerrainTexture15", 
+                            "Terrain16": "SanFrancisco_TerrainTexture16", 
+                            "Terrain17": "SanFrancisco_TerrainTexture17", 
+                            "Terrain18": "SanFrancisco_TerrainTexture18", 
+                            "Terrain2": "SanFrancisco_TerrainTexture2", 
+                            "Terrain253": "SanFrancisco_Water_01", 
+                            "Terrain254": "SanFrancisco_Water_02", 
+                            "Terrain255": "SanFrancisco_Water_03", 
+                            "Terrain3": "SanFrancisco_TerrainTexture3", 
+                            "Terrain4": "SanFrancisco_TerrainTexture4", 
+                            "Terrain5": "SanFrancisco_TerrainTexture5", 
+                            "Terrain6": "SanFrancisco_TerrainTexture6", 
+                            "Terrain7": "SanFrancisco_TerrainTexture7", 
+                            "Terrain8": "SanFrancisco_TerrainTexture8", 
+                            "Terrain9": "SanFrancisco_TerrainTexture9"
+                        }, 
+                        "LcmLodDiffuse": {
+                            "Terrain0": "SanFrancisco_TerrainTexture0_LOD", 
+                            "Terrain1": "SanFrancisco_TerrainTexture1_LOD", 
+                            "Terrain10": "SanFrancisco_TerrainTexture10_LOD", 
+                            "Terrain11": "SanFrancisco_TerrainTexture11_LOD", 
+                            "Terrain12": "SanFrancisco_TerrainTexture12_LOD", 
+                            "Terrain13": "SanFrancisco_TerrainTexture13_LOD", 
+                            "Terrain14": "SanFrancisco_TerrainTexture14_LOD", 
+                            "Terrain15": "SanFrancisco_TerrainTexture15_LOD", 
+                            "Terrain16": "SanFrancisco_TerrainTexture16_LOD", 
+                            "Terrain17": "SanFrancisco_TerrainTexture17_LOD", 
+                            "Terrain18": "SanFrancisco_TerrainTexture18_LOD", 
+                            "Terrain2": "SanFrancisco_TerrainTexture2_LOD", 
+                            "Terrain253": "SanFrancisco_Water_01_LOD", 
+                            "Terrain254": "SanFrancisco_Water_02_LOD", 
+                            "Terrain255": "SanFrancisco_Water_03_LOD", 
+                            "Terrain3": "SanFrancisco_TerrainTexture3_LOD", 
+                            "Terrain4": "SanFrancisco_TerrainTexture4_LOD", 
+                            "Terrain5": "SanFrancisco_TerrainTexture5_LOD", 
+                            "Terrain6": "SanFrancisco_TerrainTexture6_LOD", 
+                            "Terrain7": "SanFrancisco_TerrainTexture7_LOD", 
+                            "Terrain8": "SanFrancisco_TerrainTexture8_LOD", 
+                            "Terrain9": "SanFrancisco_TerrainTexture9_LOD"
+                        }, 
+                        "PlaceholderNoDataDiffuse": "SanFrancisco_placeholder_no_data", 
+                        "PlaneDiffuse": "SanFrancisco_sf_planes_01", 
+                        "RailDiffuse": "London_London_railDiffuse_repeat", 
+                        "RoadDiffuse": "SanFrancisco_SanFran_roadDiffuse_repeat", 
+                        "TrainDiffuse": "SanFrancisco_ldn_trains_01", 
+                        "TramDiffuse": "SanFrancisco_VehicleModels_recce_trams", 
+                        "TreeSideDiffuse": "SanFrancisco_trees_01", 
+                        "TreeTopDiffuse": "SanFrancisco_trees_top_01", 
+                        "VehicleDiffuse": "SanFrancisco_sf_vehicles_01", 
+                        "WaterNormal": "SanFrancisco_water_normalmap", 
+                        "WaterReflection": "SanFrancisco_water_reflectionmap"
+                    }
+                }
+            ]
+        }
+    ]
+}

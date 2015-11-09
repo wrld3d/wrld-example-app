@@ -136,7 +136,10 @@ namespace ExampleApp
                     TryAddColor(SpecularColor, materialJson, result.keyValueColors);
                     TryAddColor(ReflectionColor, materialJson, result.keyValueColors);
                     TryAddColor(RimColor, materialJson, result.keyValueColors);
+                    TryAddColor(MirrorClearColor, materialJson, result.keyValueColors);
                     TryAddColor(AmbientColor, materialJson, result.keyValueColors);
+                    
+                    TryAddColor(ReflectionPlane, materialJson, result.keyValueColors);
                     
                     TryAddScalar(SpecularPowerScalar, materialJson, result.keyValueScalars);
                     TryAddScalar(SpecularModulateTextureScalar, materialJson, result.keyValueScalars);
@@ -144,6 +147,7 @@ namespace ExampleApp
                     TryAddScalar(FresnelBias, materialJson, result.keyValueScalars);
                     TryAddScalar(FresnelScale, materialJson, result.keyValueScalars);
                     TryAddScalar(FresnelPower, materialJson, result.keyValueScalars);
+                    TryAddScalar(ViewOffsetScale, materialJson, result.keyValueScalars);
                     
                     TryAddBoolean(IsTranslucent, materialJson, result.keyValueBooleans);
                     TryAddBoolean(IsStencilMirror, materialJson, result.keyValueBooleans);

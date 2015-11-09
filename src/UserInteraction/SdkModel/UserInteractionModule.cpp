@@ -34,6 +34,11 @@ namespace ExampleApp
                 Eegeo_DELETE m_pUserInteractionController;
                 Eegeo_DELETE m_pUserInteractionModel;
             }
+            
+            const UserInteractionModel& UserInteractionModule::GetUserInteractionModel() const
+            {
+                return *m_pUserInteractionModel;
+            }
         }
     }
 }

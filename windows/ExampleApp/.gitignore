@@ -1,0 +1,11 @@
+*.sdf
+*.opensdf
+ExampleApp/Debug/*
+ExampleApp/Release/*
+Debug/*
+Release/*
+*.suo
+.vs/*
+*.vcxproj.user
+x64/*
+ExampleApp/x64/*

@@ -1,0 +1,77 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:ExampleAppWPF">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="../../Colours.xaml" />
+        <ResourceDictionary Source="../../TransparentButtonStyle.xaml" />
+        <ResourceDictionary Source="../../CheckBoxStyle.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style TargetType="{x:Type local:OptionsView}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:OptionsView}">
+                    <Grid Width="450" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="20"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0" Background="{StaticResource Gold}"/>
+                        <Grid Grid.Row="1" Background="{StaticResource White}" >
+                            <StackPanel >
+                                <Border Height="40" Margin="10,5,5,0" BorderBrush="{x:Null}">
+                                    <TextBlock Name="OptionsViewTitle" VerticalAlignment="Center" Text="Options" FontSize="18" Foreground="{StaticResource Gold}"/>
+                                </Border>
+                                <Border Height="195" BorderBrush="{x:Null}">
+                                    <ScrollViewer PanningMode="Both" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" CanContentScroll="True">
+                                        <StackPanel>
+
+                                            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                                                <ToggleButton Name="OptionsViewCacheEnabledTogglebutton" Margin="10,5,0,0" IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:OptionsView}}, Path=CacheEnabled}" Style="{StaticResource CheckBoxStyle}"/>
+                                                <TextBlock Name="OptionsViewCacheEnabledLabel" Text="Enable data caching on device" FontSize="14" Foreground="{StaticResource DarkGrey}" Margin="6,2,0,0"/>
+                                            </StackPanel>
+
+                                            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                                                <Button Name="OptionsViewClearCacheButton" Margin="10,5,0,0" Width="19" Height="19">
+                                                    <Button.Style>
+                                                        <Style TargetType="Button" BasedOn="{StaticResource TransparentButtonStyle}">
+                                                            <Style.Triggers>
+                                                                <Trigger Property="IsPressed" Value="True">
+                                                                    <Setter Property="Content">
+                                                                        <Setter.Value>
+                                                                            <Image Source="/ExampleAppWPF;component/Assets/buttonsmall_close_off.png" />
+                                                                        </Setter.Value>
+                                                                    </Setter>
+                                                                </Trigger>
+                                                                <Trigger Property="IsPressed" Value="False">
+                                                                    <Setter Property="Content">
+                                                                        <Setter.Value>
+                                                                            <Image Source="/ExampleAppWPF;component/Assets/buttonsmall_close_on.png" />
+                                                                        </Setter.Value>
+                                                                    </Setter>
+                                                                </Trigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Button.Style>
+                                                </Button>
+
+                                                <TextBlock Name="OptionsViewClearCacheLabel" Text="Clear cached map data" FontSize="14" Foreground="{StaticResource DarkGrey}" Margin="6,2,0,0"/>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </ScrollViewer>
+                                </Border>
+                                <Button Name="OptionsViewCloseButton" Style="{StaticResource TransparentButtonStyle}">
+                                    <Border BorderBrush="{x:Null}" Background="{StaticResource Gold}">
+                                        <Image Source="/ExampleAppWPF;component/Assets/button_close_off.png" Width="48" Height="48" HorizontalAlignment="Right"/>
+                                    </Border>
+                                </Button>
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

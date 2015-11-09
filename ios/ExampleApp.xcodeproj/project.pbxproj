@@ -639,6 +639,8 @@
 		27EACB5A1BC4140700135BE6 /* icon1_tours@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 27EACB551BC4140700135BE6 /* icon1_tours@2x.png */; };
 		27EACB5B1BC4140700135BE6 /* icon1_tours@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 27EACB561BC4140700135BE6 /* icon1_tours@3x.png */; };
 		27EACB5C1BC4140700135BE6 /* icon1_tours@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 27EACB561BC4140700135BE6 /* icon1_tours@3x.png */; };
+		27EAFA001BECB6B2008A1EDB /* TransitionToInteriorPointStage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27EAF9FE1BECB6B2008A1EDB /* TransitionToInteriorPointStage.cpp */; };
+		27EAFA011BECB6B2008A1EDB /* TransitionToInteriorPointStage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27EAF9FE1BECB6B2008A1EDB /* TransitionToInteriorPointStage.cpp */; };
 		2CA085EF1BD7E1C400A99340 /* embedded_manifest.txt in Resources */ = {isa = PBXBuildFile; fileRef = 2CA085ED1BD7E1C400A99340 /* embedded_manifest.txt */; };
 		2CA085F01BD7E1C400A99340 /* Textures in Resources */ = {isa = PBXBuildFile; fileRef = 2CA085EE1BD7E1C400A99340 /* Textures */; };
 		560741141B8CC624002B0F49 /* MenuDragStateChangedMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 560741121B8CC624002B0F49 /* MenuDragStateChangedMessage.cpp */; };
@@ -1996,6 +1998,8 @@
 		27EACB541BC4140700135BE6 /* icon1_tours.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon1_tours.png; sourceTree = "<group>"; };
 		27EACB551BC4140700135BE6 /* icon1_tours@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon1_tours@2x.png"; sourceTree = "<group>"; };
 		27EACB561BC4140700135BE6 /* icon1_tours@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon1_tours@3x.png"; sourceTree = "<group>"; };
+		27EAF9FE1BECB6B2008A1EDB /* TransitionToInteriorPointStage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TransitionToInteriorPointStage.cpp; sourceTree = "<group>"; };
+		27EAF9FF1BECB6B2008A1EDB /* TransitionToInteriorPointStage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransitionToInteriorPointStage.h; sourceTree = "<group>"; };
 		2CA085ED1BD7E1C400A99340 /* embedded_manifest.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = embedded_manifest.txt; sourceTree = "<group>"; };
 		2CA085EE1BD7E1C400A99340 /* Textures */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Textures; sourceTree = "<group>"; };
 		560741121B8CC624002B0F49 /* MenuDragStateChangedMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MenuDragStateChangedMessage.cpp; sourceTree = "<group>"; };
@@ -3813,6 +3817,8 @@
 		7E3B86721A385A280023C94E /* SdkModel */ = {
 			isa = PBXGroup;
 			children = (
+				27EAF9FE1BECB6B2008A1EDB /* TransitionToInteriorPointStage.cpp */,
+				27EAF9FF1BECB6B2008A1EDB /* TransitionToInteriorPointStage.h */,
 				7E149DD91BD1466F00C0AFFC /* CameraTransitionService.cpp */,
 				7E149DDA1BD1466F00C0AFFC /* CameraTransitionService.h */,
 				7E3B86731A385A280023C94E /* CameraTransitionController.cpp */,
@@ -6868,6 +6874,7 @@
 				7E3B89EB1A385A290023C94E /* WeatherMenuDataParser.cpp in Sources */,
 				7E1B50891ACC53680060FA4F /* InitialExperienceIntroBackgroundView.mm in Sources */,
 				18FB649E1A94B525005A9411 /* SearchResultPoiViewOpenedMessage.cpp in Sources */,
+				27EAFA011BECB6B2008A1EDB /* TransitionToInteriorPointStage.cpp in Sources */,
 				7E3B8AC81A385F110023C94E /* AboutPageViewInterop.mm in Sources */,
 				7E149DC71BCD4F7F00C0AFFC /* AppGlobeCameraWrapper.cpp in Sources */,
 				18FB64631A9240FC005A9411 /* OADataFetcher.m in Sources */,
@@ -7331,6 +7338,7 @@
 				7E3B89EA1A385A290023C94E /* WeatherMenuDataParser.cpp in Sources */,
 				7E1B50881ACC53680060FA4F /* InitialExperienceIntroBackgroundView.mm in Sources */,
 				18FB649D1A94B525005A9411 /* SearchResultPoiViewOpenedMessage.cpp in Sources */,
+				27EAFA001BECB6B2008A1EDB /* TransitionToInteriorPointStage.cpp in Sources */,
 				7E3B8AC71A385F110023C94E /* AboutPageViewInterop.mm in Sources */,
 				7E149DC61BCD4F7F00C0AFFC /* AppGlobeCameraWrapper.cpp in Sources */,
 				18FB64621A9240FC005A9411 /* OADataFetcher.m in Sources */,

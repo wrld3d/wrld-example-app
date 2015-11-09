@@ -78,12 +78,15 @@ namespace ExampleApp
                 m_controller.UnregisterVisibilityChangedCallback(m_controllerVisibilityChangedCallback);
                 m_controller.UnregisterFloorChangedCallback(m_controllerFloorChangedCallback);
             }
-            
-            void InteriorsExplorerModel::SuspendCurrentMapState()
+            void InteriorsExplorerModel::SaveCurrentMapState()
             {
                 m_previouslyInMapMode = m_mapModeModel.IsInMapMode();
-                m_mapModeModel.SetInMapMode(false);
                 m_previousWeatherState = m_weatherController.GetState();
+            }
+
+            void InteriorsExplorerModel::ChangeToInteriorMapState()
+            {
+                m_mapModeModel.SetInMapMode(false);
                 m_weatherController.SetState("DayDefault");
             }
             
@@ -98,7 +101,7 @@ namespace ExampleApp
                 Eegeo_ASSERT(m_controller.InteriorInScene(), "Can't show interior explorer without a selected and streamed interior");
                 
                 if(!m_interiorExplorerEnabled)
-                {
+                {                    
                     const Eegeo::Resources::Interiors::InteriorId& interiorId = m_interiorSelectionModel.GetSelectedInteriorId();
                     m_metricsService.SetEvent(MetricEventInteriorSelected, "InteriorId", interiorId.Value());
                     

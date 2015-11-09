@@ -31,6 +31,8 @@ namespace ExampleApp
                                       ExampleAppMessaging::TMessageBus& messageBus);
                 
                 ~UserInteractionModule();
+                
+                const UserInteractionModel& GetUserInteractionModel() const;
             };
         }
     }

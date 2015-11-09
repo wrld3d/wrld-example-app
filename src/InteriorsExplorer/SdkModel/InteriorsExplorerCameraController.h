@@ -29,6 +29,9 @@ namespace ExampleApp
                 Eegeo::Camera::GlobeCamera::GlobeCameraTouchSettings m_cameraTouchSettings;
                 const Eegeo::Rendering::EnvironmentFlatteningService& m_environmentFlatteningService;
                 const bool m_interiorsAffectedByFlattening;
+                bool m_applyRestrictions;
+                float m_cameraInterestAltitude;
+                bool m_applyFloorOffset;
                 
             public:
                 InteriorsExplorerCameraController(Eegeo::Resources::Interiors::InteriorController& interiorController,
@@ -63,8 +66,14 @@ namespace ExampleApp
                 
                 void SetTilt(float tiltDegrees);
                 
-            private:
+                void SetApplyRestrictions(bool applyRestrictions);
                 
+                void SetApplyFloorOffset(bool applyFloorOffset);
+                
+                float GetCameraInterestAltitude() const;
+                void SetCameraInterestAltitude(float cameraInterestAltitude);
+                
+                // Must be able to get interior model
                 float GetFloorOffsetHeight() const;
             };
         }
