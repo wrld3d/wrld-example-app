@@ -13,7 +13,8 @@ extern "C"
     		jobject activity,
     		jobject assetManager,
     		jfloat dpi,
-    		jint density);
+    		jint density,
+			jstring versionNumber);
 
     JNIEXPORT void JNICALL Java_com_eegeo_entrypointinfrastructure_NativeJniCalls_destroyNativeCode(JNIEnv* jenv, jobject obj);
     JNIEXPORT void JNICALL Java_com_eegeo_entrypointinfrastructure_NativeJniCalls_pauseNativeCode(JNIEnv* jenv, jobject obj);

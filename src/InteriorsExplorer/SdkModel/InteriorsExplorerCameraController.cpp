@@ -231,7 +231,7 @@ namespace ExampleApp
             {
                 m_applyRestrictions = applyRestrictions;
             }
-            
+
             void InteriorsExplorerCameraController::SetApplyFloorOffset(bool applyFloorOffset)
             {
                 m_applyFloorOffset = applyFloorOffset;

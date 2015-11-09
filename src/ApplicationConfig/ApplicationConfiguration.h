@@ -29,6 +29,7 @@ namespace ExampleApp
             std::string m_coverageTreeManifestURL;
             std::string m_themeManifestURL;
             std::string m_sqliteDbUrl;
+            std::string m_buildVersion;
             
         public:
             
@@ -47,7 +48,8 @@ namespace ExampleApp
                                      const std::string& geoNamesUserName,
                                      const std::string& coverageTreeManifestURL,
                                      const std::string& themeManifestURL,
-                                     const std::string& sqliteDbUrl);
+                                     const std::string& sqliteDbUrl,
+                                     const std::string& buildVersion);
             
             const std::string& Name() const;
             
@@ -80,6 +82,8 @@ namespace ExampleApp
             const std::string& ThemeManifestURL() const;
             
             const std::string& SqliteDbUrl() const;
+
+            const std::string& BuildVersion() const;
         };
     }
 }

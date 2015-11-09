@@ -115,7 +115,15 @@ AppHost::AppHost(
     // create file IO instance (iOSPlatformAbstractionModule not yet available)
     Eegeo::iOS::iOSFileIO tempFileIO;
     
-    ExampleApp::ApplicationConfig::SdkModel::ApplicationConfigurationModule applicationConfigurationModule(tempFileIO);
+    const char* versionNumber = [[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"] cStringUsingEncoding:NSUTF8StringEncoding];
+    
+    if(versionNumber == NULL || strcmp(versionNumber, "") == 0)
+    {
+        versionNumber = "Development Build";
+    }
+    
+    typedef ExampleApp::ApplicationConfig::SdkModel::ApplicationConfigurationModule ApplicationConfigurationModule;
+    ApplicationConfigurationModule applicationConfigurationModule(tempFileIO, versionNumber);
     
     const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration = applicationConfigurationModule.GetApplicationConfigurationService().LoadConfiguration(ExampleApp::ApplicationConfigurationPath);
     

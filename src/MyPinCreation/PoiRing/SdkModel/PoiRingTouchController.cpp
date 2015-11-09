@@ -77,7 +77,7 @@ namespace ExampleApp
                     float terrainHeight;
                     float heightAboveTerrain;
                     bool rayPick = PerformRayPick(rayOrigin, rayDirection, rayIntersectionPoint, intersectionParam, terrainHeight, heightAboveTerrain);
-                    
+
                     if (rayPick)
                     {
                         Eegeo::dv3 iconPosition;
@@ -136,7 +136,7 @@ namespace ExampleApp
                         float terrainHeight;
                         float heightAboveTerrain;
                         bool rayPick = PerformRayPick(rayOrigin, rayDirection, rayIntersectionPoint, intersectionParam, terrainHeight, heightAboveTerrain);
-                        
+
                         if (rayPick)
                         {
                             Eegeo::Space::LatLong latLong = Eegeo::Space::LatLong::FromECEF(rayIntersectionPoint - m_dragOffset);
@@ -172,7 +172,7 @@ namespace ExampleApp
                         Eegeo_ASSERT(m_interiorController.TryGetCurrentModel(interiorsModel), "Couldn't get current interiorsModel");
                         
                         const Eegeo::dv3 originNormal = interiorsModel->GetTangentBasis().GetUp();
-                        
+
                         float floorHeightAboveSeaLevel = Helpers::InteriorHeightHelpers::GetFloorHeightAboveSeaLevel(*interiorsModel, m_interiorController.GetCurrentFloorIndex());
                         
                         const Eegeo::dv3 point = originNormal * (floorHeightAboveSeaLevel + Eegeo::Space::EarthConstants::Radius);

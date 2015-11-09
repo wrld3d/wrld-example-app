@@ -8,7 +8,7 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            ApplicationConfigurationBuilder::ApplicationConfigurationBuilder()
+            ApplicationConfigurationBuilder::ApplicationConfigurationBuilder(const std::string& buildVersion)
             : m_name("")
             , m_eegeoApiKey("")
             , m_interestLocation(0.0, 0.0, 0.0)
@@ -24,6 +24,7 @@ namespace ExampleApp
             , m_geoNamesUserName("")
             , m_coverageTreeManifestURL("")
             , m_themeManifestURL("")
+            , m_buildVersion(buildVersion)
             {
                 
             }
@@ -141,7 +142,8 @@ namespace ExampleApp
                                                 m_geoNamesUserName,
                                                 m_coverageTreeManifestURL,
                                                 m_themeManifestURL,
-                                                m_sqliteDbUrl);
+                                                m_sqliteDbUrl,
+                                                m_buildVersion);
             }
         }
     }

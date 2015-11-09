@@ -1,0 +1,28 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:ExampleAppWPF">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="../Colours.xaml" />
+        <ResourceDictionary Source="../TransparentButtonStyle.xaml" />
+        <ResourceDictionary Source="../Views/Options/OptionsView.xaml" />
+        <ResourceDictionary Source="../Views/FlattenButton/FlattenButtonView.xaml" />
+        <ResourceDictionary Source="../Views/Compass/CompassView.xaml" />
+        <ResourceDictionary Source="../Views/Watermark/WatermarkView.xaml" />
+        <ResourceDictionary Source="../Views/AboutPage/AboutPageView.xaml" />
+        <ResourceDictionary Source="../Views/MyPinCreationInitiation/MyPinCreationButtonView.xaml" />
+        <ResourceDictionary Source="../Views/MyPinCreationConfirmation/MyPinCreationConfirmationView.xaml" />
+        <ResourceDictionary Source="../Views/MyPinCreationDetails/MyPinCreationDetailsView.xaml" />
+        <ResourceDictionary Source="../Views/MyPinCreationDetails/MyPinDetailsView.xaml" />
+        <ResourceDictionary Source="../Views/MyPinCreationConfirmation/MyPinCreationConfirmationView.xaml" />
+        <ResourceDictionary Source="../Views/Menu/MenuView.xaml" />
+        <ResourceDictionary Source="../Views/SearchResultMenu/SearchMenuView.xaml" />
+        <ResourceDictionary Source="../Views/SecondaryMenu/SecondaryMenuView.xaml" />
+        <ResourceDictionary Source="../Views/Options/OptionsCacheClearSubView.xaml" />
+        <ResourceDictionary Source="../Views/WorldPinOnMap/WorldPinOnMapView.xaml" />
+        <ResourceDictionary Source="../Views/SearchResultPoi/YelpSearchResultsPoiView.xaml" />
+        <ResourceDictionary Source="../Views/InteriorsExplorer/InteriorsExplorerView.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+</ResourceDictionary>

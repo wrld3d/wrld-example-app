@@ -140,7 +140,8 @@ AppHost::AppHost(
 
 	AndroidFileIO tempFileIO(&m_nativeState, customApplicationAssetDirectories);
 
-	ExampleApp::ApplicationConfig::SdkModel::ApplicationConfigurationModule applicationConfigurationModule(tempFileIO);
+    typedef ExampleApp::ApplicationConfig::SdkModel::ApplicationConfigurationModule ApplicationConfigurationModule;
+    ApplicationConfigurationModule applicationConfigurationModule(tempFileIO, m_nativeState.versionName);
 
 	const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration = applicationConfigurationModule.GetApplicationConfigurationService().LoadConfiguration(ExampleApp::ApplicationConfigurationPath);
 

@@ -21,7 +21,8 @@ namespace ExampleApp
 
             public:
                 AboutPageModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
-                                Reaction::View::IReactionControllerModel& reactionControllerModel);
+                                Reaction::View::IReactionControllerModel& reactionControllerModel,
+                                const std::string& buildVersion);
 
                 ~AboutPageModule();
 
