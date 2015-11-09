@@ -6,6 +6,7 @@
 
 #include "Types.h"
 
+#include "AppCamera.h"
 #include "BidirectionalBus.h"
 #include "CameraTransitions.h"
 #include "SwallowPoiDb.h"
@@ -30,6 +31,7 @@ namespace ExampleApp
                 public:
                     SwallowSearchServiceModule(SwallowPoiDb::SwallowPoiDbServiceProvider& swallowPoiDbServiceProvider,
                                                CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
+                                               AppCamera::SdkModel::IAppCameraController& appCameraController,
                                                ExampleAppMessaging::TMessageBus& messageBus,
                                                WorldPins::SdkModel::IWorldPinsService& worldPinsService);
                     

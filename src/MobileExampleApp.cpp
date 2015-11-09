@@ -376,8 +376,12 @@ namespace ExampleApp
                                                                          m_messageBus,
                                                                          m_networkCapabilities);
 
+        // TODO: Check if this module is still relevant
+        m_pAppCameraModule = Eegeo_NEW(AppCamera::SdkModel::AppCameraModule)();
+        
         Search::Swallow::SdkModel::SwallowSearchServiceModule* pSwallowSearchServiceModule = Eegeo_NEW(Search::Swallow::SdkModel::SwallowSearchServiceModule)(m_pSwallowPoiDbModule->GetSwallowPoiDbServiceProvider(),
                                                                                                                                                               *m_pCameraTransitionService,
+                                                                                                                                                              m_pAppCameraModule->GetController(),
                                                                                                                                                               m_messageBus,
                                                                                                                                                               m_pWorldPinsModule->GetWorldPinsService());
         
@@ -387,6 +391,7 @@ namespace ExampleApp
         
         Search::Swallow::SdkModel::SwallowSearchServiceModule* pStandaloneSwallowSearchServiceModule = Eegeo_NEW(Search::Swallow::SdkModel::SwallowSearchServiceModule)(m_pSwallowPoiDbModule->GetSwallowPoiDbServiceProvider(),
                                                                                                                                                               *m_pCameraTransitionService,
+                                                                                                                                                              m_pAppCameraModule->GetController(),
                                                                                                                                                               m_messageBus,
                                                                                                                                                               m_pWorldPinsModule->GetWorldPinsService());
         
@@ -557,8 +562,6 @@ namespace ExampleApp
                                                                                                                          m_pInteriorsExplorerModule->GetInteriorsCameraController(),
                                                                                                                          m_pInteriorsExplorerModule->GetTouchController(),
                                                                                                                          interiorsPresentationModule.GetAppLevelController());
-        // TODO: Check if this module is still relevant
-        m_pAppCameraModule = Eegeo_NEW(AppCamera::SdkModel::AppCameraModule)();
         
         m_pCompassModule = Eegeo_NEW(ExampleApp::Compass::SdkModel::CompassModule)(*m_pNavigationService,
                                                                                    *m_pInteriorsNavigationService,
@@ -656,8 +659,6 @@ namespace ExampleApp
         
         Eegeo_DELETE m_pCompassModule;
         
-        Eegeo_DELETE m_pAppCameraModule;
-        
         Eegeo_DELETE m_pInteriorsNavigationService;
         
         Eegeo_DELETE m_pMyPinDetailsModule;
@@ -704,6 +705,8 @@ namespace ExampleApp
         }
         m_searchServiceModules.clear();
 
+        Eegeo_DELETE m_pAppCameraModule;
+        
         Eegeo_DELETE m_pOptionsModule;
         
         Eegeo_DELETE m_pAboutPageModule;

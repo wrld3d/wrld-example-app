@@ -16,9 +16,11 @@ namespace ExampleApp
             namespace SdkModel
             {
                 SwallowSearchTransitionPinController::SwallowSearchTransitionPinController(WorldPins::SdkModel::IWorldPinsService& worldPinsService,
-                                                                                           CameraTransitions::SdkModel::ICameraTransitionController& transitionController)
+                                                                                           CameraTransitions::SdkModel::ICameraTransitionController& transitionController,
+                                                                                           AppCamera::SdkModel::IAppCameraController& appCameraController)
                 : m_worldPinsService(worldPinsService)
                 , m_transitionController(transitionController)
+                , m_appCameraController(appCameraController)
                 , Eegeo::Helpers::TCallback1<SwallowSearchTransitionPinController, const std::vector<Search::SdkModel::SearchResultModel>&>(this, &SwallowSearchTransitionPinController::OnTransitionsLoaded)
                 {
                     
@@ -45,7 +47,10 @@ namespace ExampleApp
                         
                         SwallowTransitionResultModel transitionResultModel = SearchParser::TransformToSwallowTransitionResult(*it);
                         
-                        WorldPins::SdkModel::WorldPinItemModel* pPinItemModel = m_worldPinsService.AddPin(Eegeo_NEW(SwallowSearchTransitionPinSelectionHandler)(transitionResultModel, m_transitionController),
+                        WorldPins::SdkModel::WorldPinItemModel* pPinItemModel = m_worldPinsService.AddPin(Eegeo_NEW(SwallowSearchTransitionPinSelectionHandler)(
+                                                                                                                                            transitionResultModel,
+                                                                                                                                            m_transitionController,
+                                                                                                                                            m_appCameraController),
                                                                                                           NULL,
                                                                                                           worldPinFocusData,
                                                                                                           isInteriorPin,

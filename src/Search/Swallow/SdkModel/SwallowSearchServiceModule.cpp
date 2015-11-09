@@ -17,6 +17,7 @@ namespace ExampleApp
             {
                 SwallowSearchServiceModule::SwallowSearchServiceModule(SwallowPoiDb::SwallowPoiDbServiceProvider& swallowPoiDbServiceProvider,
                                                                        CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
+                                                                       AppCamera::SdkModel::IAppCameraController& appCameraController,
                                                                        ExampleAppMessaging::TMessageBus& messageBus,
                                                                        WorldPins::SdkModel::IWorldPinsService& worldPinsService)
                 : m_pSearchService(NULL)
@@ -28,7 +29,7 @@ namespace ExampleApp
                     
                     m_pSwallowOfficeResultMenuOptionSelectedMessageHandler = Eegeo_NEW(SwallowOfficeResultMenuOptionSelectedMessageHandler)(cameraTransitionController, messageBus);
                     
-                    m_pSwallowSearchTransitionPinController = Eegeo_NEW(SwallowSearchTransitionPinController)(worldPinsService, cameraTransitionController);
+                    m_pSwallowSearchTransitionPinController = Eegeo_NEW(SwallowSearchTransitionPinController)(worldPinsService, cameraTransitionController, appCameraController);
                 }
                     
                 SwallowSearchServiceModule::~SwallowSearchServiceModule()
