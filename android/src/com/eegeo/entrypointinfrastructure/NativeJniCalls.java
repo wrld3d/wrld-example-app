@@ -8,7 +8,7 @@ import android.view.Surface;
 
 public class NativeJniCalls
 {
-    public static native long createNativeCode(Activity activity, AssetManager assetManager, float dpi, int density, String versionNumber);
+    public static native long createNativeCode(Activity activity, AssetManager assetManager, float dpi, int density, String versionName, int versionCode);
     public static native void destroyNativeCode();
     public static native void pauseNativeCode();
     public static native void resumeNativeCode();

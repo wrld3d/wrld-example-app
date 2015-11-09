@@ -82,9 +82,31 @@
 #include "IApplicationConfigurationService.h"
 #include "SearchVendorNames.h"
 #include "UserInteractionEnabledChangedMessage.h"
+#include "AndroidApplicationConfigurationVersionProvider.h"
 
 using namespace Eegeo::Android;
 using namespace Eegeo::Android::Input;
+
+namespace
+{
+    typedef ExampleApp::ApplicationConfig::ApplicationConfiguration ApplicationConfiguration;
+
+    ApplicationConfiguration LoadConfiguration(AndroidNativeState& state)
+    {
+        // SJM -- this is kinda fail, we would like to get the platform file IO to load the API key but need the API key
+        // to create a file IO instance (due to coarseness of AndroidPlatformAbstractionModule).
+        std::set<std::string> customApplicationAssetDirectories;
+        customApplicationAssetDirectories.insert("ApplicationConfigs");
+
+        AndroidFileIO tempFileIO(&state, customApplicationAssetDirectories);
+
+        ExampleApp::ApplicationConfig::SdkModel::AndroidApplicationConfigurationVersionProvider versionProvider(state);
+        ExampleApp::ApplicationConfig::SdkModel::ApplicationConfigurationModule applicationConfigurationModule(tempFileIO,
+        		versionProvider.GetProductVersionString(),
+        		versionProvider.GetBuildNumberString());
+        return applicationConfigurationModule.GetApplicationConfigurationService().LoadConfiguration(ExampleApp::ApplicationConfigurationPath);
+    }
+}
 
 AppHost::AppHost(
     AndroidNativeState& nativeState,
@@ -133,22 +155,16 @@ AppHost::AppHost(
     Eegeo::TtyHandler::TtyEnabled = true;
     Eegeo::AssertHandler::BreakOnAssert = true;
 
-    // create file IO instance (AndroidPlatformAbstractionModule not yet available)
-    std::set<std::string> customApplicationAssetDirectories;
-	customApplicationAssetDirectories.insert("SearchResultOnMap");
-	customApplicationAssetDirectories.insert("ApplicationConfigs");
-
-	AndroidFileIO tempFileIO(&m_nativeState, customApplicationAssetDirectories);
-
-    typedef ExampleApp::ApplicationConfig::SdkModel::ApplicationConfigurationModule ApplicationConfigurationModule;
-    ApplicationConfigurationModule applicationConfigurationModule(tempFileIO, m_nativeState.versionName);
-
-	const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration = applicationConfigurationModule.GetApplicationConfigurationService().LoadConfiguration(ExampleApp::ApplicationConfigurationPath);
-
     m_pAndroidLocationService = Eegeo_NEW(AndroidLocationService)(&nativeState);
     m_pAndroidConnectivityService = Eegeo_NEW(AndroidConnectivityService)(&nativeState);
 
     m_pJpegLoader = Eegeo_NEW(Eegeo::Helpers::Jpeg::JpegLoader)();
+
+    std::set<std::string> customApplicationAssetDirectories;
+    customApplicationAssetDirectories.insert("SearchResultOnMap");
+    customApplicationAssetDirectories.insert("ApplicationConfigs");
+
+    ApplicationConfiguration config(LoadConfiguration(nativeState));
 
     m_pAndroidPlatformAbstractionModule = Eegeo_NEW(Eegeo::Android::AndroidPlatformAbstractionModule)(
             nativeState,
@@ -156,7 +172,7 @@ AppHost::AppHost(
             display,
             resourceBuildShareContext,
             shareSurface,
-            applicationConfiguration.EegeoApiKey(),
+            config.EegeoApiKey(),
             customApplicationAssetDirectories);
 
     Eegeo::EffectHandler::Initialise();
@@ -190,11 +206,11 @@ AppHost::AppHost(
     		m_pAndroidPlatformAbstractionModule->GetWebLoadRequestFactory(),
     		*m_pNetworkCapabilities,
     		m_pAndroidPlatformAbstractionModule->GetUrlEncoder(),
-            applicationConfiguration.YelpConsumerKey(),
-            applicationConfiguration.YelpConsumerSecret(),
-            applicationConfiguration.YelpOAuthToken(),
-            applicationConfiguration.YelpOAuthTokenSecret(),
-            applicationConfiguration.GeoNamesUserName()
+			config.YelpConsumerKey(),
+			config.YelpConsumerSecret(),
+			config.YelpOAuthToken(),
+			config.YelpOAuthTokenSecret(),
+			config.GeoNamesUserName()
     );
 
     m_pAndroidFlurryMetricsService = Eegeo_NEW(ExampleApp::Metrics::AndroidFlurryMetricsService)(&m_nativeState);
@@ -213,7 +229,7 @@ AppHost::AppHost(
                  *m_pNetworkCapabilities,
                  m_searchServiceModules,
                  *m_pAndroidFlurryMetricsService,
-                 applicationConfiguration,
+                 config,
                  *this);
 
     m_pModalBackgroundNativeViewModule = Eegeo_NEW(ExampleApp::ModalBackground::SdkModel::ModalBackgroundNativeViewModule)(

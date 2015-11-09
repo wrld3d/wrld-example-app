@@ -16,6 +16,8 @@ import android.view.SurfaceHolder;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager.NameNotFoundException;
 
 
 public class BackgroundThreadActivity extends MainActivity
@@ -42,6 +44,18 @@ public class BackgroundThreadActivity extends MainActivity
             return;
         }
         
+        PackageInfo pInfo = null;
+        try 
+        {
+        	pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+        } 
+        catch (NameNotFoundException e) 
+        {
+        	e.printStackTrace();
+        }
+        final String versionName = pInfo.versionName;
+        final int versionCode = pInfo.versionCode;
+        
         setDisplayOrientationBasedOnDeviceProperties();
 
         setContentView(R.layout.activity_main);
@@ -65,17 +79,7 @@ public class BackgroundThreadActivity extends MainActivity
         {
             public void run()
             {
-            	String versionNumber = "";
-            	try
-            	{
-            		versionNumber = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
-            	}
-            	catch (Exception e)
-            	{
-            		versionNumber = "";
-            	}
-            	
-                m_nativeAppWindowPtr = NativeJniCalls.createNativeCode(activity, getAssets(), dpi, density, versionNumber);
+                m_nativeAppWindowPtr = NativeJniCalls.createNativeCode(activity, getAssets(), dpi, density, versionName, versionCode);
                 
                 if(m_nativeAppWindowPtr == 0)
                 {

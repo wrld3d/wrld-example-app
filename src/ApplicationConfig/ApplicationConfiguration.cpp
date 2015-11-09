@@ -22,7 +22,9 @@ namespace ExampleApp
                                                            const std::string& coverageTreeManifestURL,
                                                            const std::string& themeManifestURL,
                                                            const std::string& sqliteDbUrl,
-                                                           const std::string& buildVersionNumber)
+                                                           const std::string& productVersion,
+                                                           const std::string& buildNumber,
+                                                           const std::string& combinedVersionString)
         : m_name(name)
         , m_eegeoApiKey(eegeoApiKey)
         , m_interestLocation(interestLocation)
@@ -39,7 +41,9 @@ namespace ExampleApp
         , m_coverageTreeManifestURL(coverageTreeManifestURL)
         , m_themeManifestURL(themeManifestURL)
         , m_sqliteDbUrl(sqliteDbUrl)
-        , m_buildVersion(buildVersionNumber)
+        , m_productVersion(productVersion)
+        , m_buildNumber(buildNumber)
+        , m_combinedVersionString(combinedVersionString)
         {
             
         }
@@ -124,9 +128,19 @@ namespace ExampleApp
             return m_sqliteDbUrl;
         }
 
-        const std::string& ApplicationConfiguration::BuildVersion() const
+        const std::string& ApplicationConfiguration::ProductVersion() const
         {
-            return m_buildVersion;
+            return m_productVersion;
+        }
+        
+        const std::string& ApplicationConfiguration::BuildNumber() const
+        {
+            return m_buildNumber;
+        }
+        
+        const std::string& ApplicationConfiguration::CombinedVersionString() const
+        {
+            return m_combinedVersionString;
         }
     }
 }

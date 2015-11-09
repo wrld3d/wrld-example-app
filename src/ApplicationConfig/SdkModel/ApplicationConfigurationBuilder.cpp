@@ -8,7 +8,7 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            ApplicationConfigurationBuilder::ApplicationConfigurationBuilder(const std::string& buildVersion)
+            ApplicationConfigurationBuilder::ApplicationConfigurationBuilder()
             : m_name("")
             , m_eegeoApiKey("")
             , m_interestLocation(0.0, 0.0, 0.0)
@@ -125,6 +125,24 @@ namespace ExampleApp
                 return *this;
             }
             
+            IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetProductVersion(const std::string& productVersion)
+            {
+                m_productVersion = productVersion;
+                return *this;
+            }
+            
+            IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetBuildNumber(const std::string& buildNumber)
+            {
+                m_buildNumber = buildNumber;
+                return *this;
+            }
+            
+            IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetCombinedVersionString(const std::string& combinedVersionString)
+            {
+                m_combinedVersionString = combinedVersionString;
+                return *this;
+            }
+            
             ApplicationConfiguration ApplicationConfigurationBuilder::Build()
             {
                 return ApplicationConfiguration(m_name,
@@ -143,7 +161,9 @@ namespace ExampleApp
                                                 m_coverageTreeManifestURL,
                                                 m_themeManifestURL,
                                                 m_sqliteDbUrl,
-                                                m_buildVersion);
+                                                m_productVersion,
+                                                m_buildNumber,
+                                                m_combinedVersionString);
             }
         }
     }

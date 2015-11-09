@@ -7,10 +7,14 @@
 AppRunner::AppRunner
 (
     ViewController& viewController,
-    UIView* pView
+    UIView* pView,
+    const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration,
+    ExampleApp::Metrics::iOSFlurryMetricsService& metricsService
 )
     : m_viewController(viewController)
     , m_pView(pView)
+    , m_applicationConfiguration(applicationConfiguration)
+    , m_metricsService(metricsService)
     , m_pAppHost(NULL)
 {
     ReleaseDisplay();
@@ -44,7 +48,9 @@ void AppRunner::CreateAppHost()
                      (
                          m_viewController,
                          m_pView,
-                         screenProperties
+                         screenProperties,
+                         m_applicationConfiguration,
+                         m_metricsService
                      );
     }
 }

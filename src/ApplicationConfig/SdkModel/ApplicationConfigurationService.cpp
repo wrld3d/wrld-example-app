@@ -11,9 +11,13 @@ namespace ExampleApp
         namespace SdkModel
         {
             ApplicationConfigurationService::ApplicationConfigurationService(IApplicationConfigurationParser& parser,
-                                                                             IApplicationConfigurationReader& reader)
+                                                                             IApplicationConfigurationReader& reader,
+                                                                             const std::string& productVersion,
+                                                                             const std::string& buildNumber)
             : m_parser(parser)
             , m_reader(reader)
+            , m_productVersion(productVersion)
+            , m_buildNumber(buildNumber)
             {
                 
             }
@@ -21,7 +25,19 @@ namespace ExampleApp
             ApplicationConfiguration ApplicationConfigurationService::LoadConfiguration(const std::string& path)
             {
                 std::string serialized(m_reader.ReadApplicationConfiguration(path));
-                return m_parser.ParseConfiguration(serialized);
+                const ApplicationConfiguration& parsedConfig = m_parser.ParseConfiguration(serialized);
+                
+                const std::string combinedVersionString = m_productVersion + "." + m_buildNumber;
+                
+                return ApplicationConfiguration(parsedConfig.Name(),
+                                                parsedConfig.InterestLocation(),
+                                                parsedConfig.DistanceToInterestMetres(),
+                                                parsedConfig.OrientationDegrees(),
+                                                parsedConfig.TryStartAtGpsLocation(),
+                                                parsedConfig.GoogleAnalyticsReferrerToken(),
+                                                m_productVersion,
+                                                m_buildNumber,
+                                                combinedVersionString);
             }
         }
     }
