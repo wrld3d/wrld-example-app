@@ -72,9 +72,8 @@ namespace ExampleApp
             
             void InteriorsExplorerController::OnFloorSelected(const InteriorsExplorerFloorSelectedMessage& message)
             {
-                std::stringstream content;
-                content << "Floor " << (message.GetFloorName());
-                m_view.SetFloorName(content.str());
+                m_view.SetFloorName(message.GetFloorName());
+                
                 if(m_viewModel.IsFullyOnScreen())
                 {
                     m_view.SetSelectedFloorIndex(message.GetFloorIndex());
