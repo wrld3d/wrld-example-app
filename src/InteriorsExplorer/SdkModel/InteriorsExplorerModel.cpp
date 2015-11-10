@@ -132,7 +132,7 @@ namespace ExampleApp
                 const Eegeo::Resources::Interiors::InteriorsFloorModel* pFloorModel = NULL;
                 Eegeo_ASSERT(m_controller.TryGetCurrentFloorModel(pFloorModel), "Could not fetch current floor model");
                 
-                m_messageBus.Publish(InteriorsExplorerFloorSelectedMessage(m_controller.GetCurrentFloorIndex(), pFloorModel->GetFloorName()));
+                m_messageBus.Publish(InteriorsExplorerFloorSelectedMessage(m_controller.GetCurrentFloorIndex(), pFloorModel->GetReadableFloorName()));
             }
             
             void InteriorsExplorerModel::OnControllerVisibilityChanged()
@@ -196,7 +196,7 @@ namespace ExampleApp
                     
                     const Eegeo::Resources::Interiors::InteriorsFloorModel* pFloorModel = NULL;
                     Eegeo_ASSERT(m_controller.TryGetCurrentFloorModel(pFloorModel), "Could not fetch current floor model");
-                    floorName = pFloorModel->GetFloorName();
+                    floorName = pFloorModel->GetReadableFloorName();
                 }
                 
                 m_messageBus.Publish(InteriorsExplorerStateChangedMessage(m_interiorExplorerEnabled,
