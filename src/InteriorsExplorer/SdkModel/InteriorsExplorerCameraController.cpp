@@ -123,53 +123,51 @@ namespace ExampleApp
                 
                 m_globeCameraController.Update(dt);
                 
-                
                 if(m_interiorController.InteriorInScene())
                 {
                     Eegeo::dv3 cameraInterestEcef = m_globeCameraController.GetInterestBasis().GetPointEcef();
                     cameraInterestEcef = cameraInterestEcef.Norm() * Eegeo::Space::EarthConstants::Radius;
-                    
+
                     const Eegeo::Resources::Interiors::InteriorsModel* pModel = NULL;
                     Eegeo_ASSERT(m_interiorController.TryGetCurrentModel(pModel));
-                    
-                    Eegeo::v3 relativeCameraInterestEcef = (cameraInterestEcef - pModel->GetTangentBasis().GetPointEcef()).ToSingle();
-                    
-                    Eegeo::v3 cameraInterestTangentSpace = Eegeo::v3(Eegeo::v3::Dot(relativeCameraInterestEcef, pModel->GetTangentBasis().GetRight()),
-                                                                     Eegeo::v3::Dot(relativeCameraInterestEcef, pModel->GetTangentBasis().GetUp()),
-                                                                     Eegeo::v3::Dot(relativeCameraInterestEcef, pModel->GetTangentBasis().GetForward()));
-                    
-                    float tangentBoundsHalfWidth = (pModel->GetTangentSpaceBounds().GetMax().x - pModel->GetTangentSpaceBounds().GetMin().x)*0.5f;
-                    float tangentBoundsHalfLength = (pModel->GetTangentSpaceBounds().GetMax().z - pModel->GetTangentSpaceBounds().GetMin().z)*0.5f;
-                    
+
                     if(m_applyFloorOffset)
                     {
                         m_cameraInterestAltitude = GetFloorOffsetHeight();
                     }
-                    
-                    cameraInterestTangentSpace.Set(cameraInterestTangentSpace.x, m_cameraInterestAltitude, cameraInterestTangentSpace.z);
 
-                    if(m_applyRestrictions && 
-                       (cameraInterestTangentSpace.x < -tangentBoundsHalfWidth ||
-                       cameraInterestTangentSpace.x > tangentBoundsHalfWidth ||
-                       cameraInterestTangentSpace.z < -tangentBoundsHalfLength ||
-                       cameraInterestTangentSpace.z > tangentBoundsHalfLength))
+                    const Eegeo::Space::EcefTangentBasis& interiorTangentBasis = pModel->GetTangentBasis();
+                    Eegeo::dv3 origin = interiorTangentBasis.GetPointEcef();
+
+                    Eegeo::v3 relativeCameraInterestEcef = (cameraInterestEcef - origin).ToSingle();
+                    Eegeo::v3 cameraInterestTangentSpace = Eegeo::v3::MulRotate(relativeCameraInterestEcef, interiorTangentBasis.GetEcefToTangentTransform());
+                    cameraInterestTangentSpace.y = m_cameraInterestAltitude;
+
+                    const Eegeo::Geometry::Bounds3D& tangentSpaceBounds = pModel->GetTangentSpaceBounds();
+                    
+                    if(m_applyRestrictions &&
+                       (cameraInterestTangentSpace.x > tangentSpaceBounds.GetMax().x ||
+                       cameraInterestTangentSpace.x < tangentSpaceBounds.GetMin().x ||
+                       cameraInterestTangentSpace.z > tangentSpaceBounds.GetMax().z ||
+                       cameraInterestTangentSpace.z < tangentSpaceBounds.GetMin().z))
                     {
-                        float newX = Eegeo::Math::Clamp(cameraInterestTangentSpace.x, -tangentBoundsHalfWidth, tangentBoundsHalfWidth);
-                        float newZ = Eegeo::Math::Clamp(cameraInterestTangentSpace.z, -tangentBoundsHalfLength, tangentBoundsHalfLength);
-                        cameraInterestTangentSpace.Set(newX, m_cameraInterestAltitude, newZ);
+                        Eegeo::v3 clampedPoint = Eegeo::v3::Min(Eegeo::v3::Max(cameraInterestTangentSpace, tangentSpaceBounds.GetMin()), tangentSpaceBounds.GetMax());
+                        cameraInterestTangentSpace.x = clampedPoint.x;
+                        cameraInterestTangentSpace.z = clampedPoint.z;
                     }
                     
                     Eegeo::m33 tangentBasis;
                     pModel->GetTangentBasis().GetBasisOrientationAsMatrix(tangentBasis);
                     relativeCameraInterestEcef = Eegeo::v3::Mul(cameraInterestTangentSpace, tangentBasis);
                     
+                    Eegeo::dv3 interiorOriginAtBase = pModel->GetTangentBasis().GetPointEcef() + pModel->GetTangentBasis().GetUp() * pModel->GetTangentSpaceBounds().GetMin().y;
                     if(!m_interiorsAffectedByFlattening)
                     {
-                        SetInterestLocation(m_environmentFlatteningService.GetScaledPointEcef(pModel->GetTangentBasis().GetPointEcef(), m_environmentFlatteningService.GetCurrentScale())  + relativeCameraInterestEcef);
+                        SetInterestLocation(m_environmentFlatteningService.GetScaledPointEcef(interiorOriginAtBase, m_environmentFlatteningService.GetCurrentScale()) + relativeCameraInterestEcef);
                     }
                     else
                     {
-                        SetInterestLocation(m_environmentFlatteningService.GetScaledPointEcef(pModel->GetTangentBasis().GetPointEcef() + relativeCameraInterestEcef, m_environmentFlatteningService.GetCurrentScale()));
+                        SetInterestLocation(m_environmentFlatteningService.GetScaledPointEcef(interiorOriginAtBase + relativeCameraInterestEcef, m_environmentFlatteningService.GetCurrentScale()));
                     }
                 }
             }

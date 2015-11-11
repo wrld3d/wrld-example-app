@@ -16,7 +16,7 @@ namespace ExampleApp
             
             float GetFloorHeightAboveSeaLevel(const Eegeo::Resources::Interiors::InteriorsModel& interiorModel, unsigned int floorIndex)
             {
-                return static_cast<float>(interiorModel.GetTangentBasis().GetPointEcef().Length() - Eegeo::Space::EarthConstants::Radius) + (floorIndex * INTERIOR_FLOOR_HEIGHT);
+                return interiorModel.GetTangentSpaceBounds().GetMin().y + (floorIndex * INTERIOR_FLOOR_HEIGHT);
             }
         }
     }
