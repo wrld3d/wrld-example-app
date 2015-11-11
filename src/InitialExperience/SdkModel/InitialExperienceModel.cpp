@@ -16,8 +16,15 @@ namespace ExampleApp
             	, m_started(false)
                 , m_lastLockedCameraStep(lastCameraLockedStep)
             {
-                Eegeo_ASSERT(m_lastLockedCameraStep < m_steps.size(), "Last camera locked index out of range");
-                
+				if (m_steps.empty())
+				{
+					m_lastLockedCameraStep = 0;
+					m_currentStepIndex = 1;
+					return;
+				}
+
+				Eegeo_ASSERT(m_lastLockedCameraStep < m_steps.size(), "Last camera locked index out of range");
+
                 for(std::vector<IInitialExperienceStep*>::iterator it = m_steps.begin(); it != m_steps.end(); ++ it)
                 {
                     IInitialExperienceStep* pStep = *it;

@@ -1752,6 +1752,9 @@
     <ClCompile Include="..\..\..\src\InteriorsExplorer\SdkModel\InteriorExplorerUserInteractionModel.cpp">
       <Filter>Source Files\App\InteriorsExplorer\SdkModel</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\CameraTransitions\SdkModel\TransitionToInteriorPointStage.cpp">
+      <Filter>Source Files\App\CameraTransitions\SdkModel</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\AppHost.h">
@@ -3826,6 +3829,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\InteriorsExplorer\SdkModel\InteriorExplorerUserInteractionModel.h">
       <Filter>Source Files\App\InteriorsExplorer\SdkModel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\CameraTransitions\SdkModel\TransitionToInteriorPointStage.h">
+      <Filter>Source Files\App\CameraTransitions\SdkModel</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

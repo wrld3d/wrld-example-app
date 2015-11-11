@@ -35,22 +35,8 @@ namespace ExampleApp
             {
                 std::vector<IInitialExperienceStep*> steps;
 
-                IInitialExperienceStep* pIntroStep = Eegeo_NEW(InitialExperienceIntroStep)(m_messageBus, GetPersistentSettings());
-                steps.push_back(pIntroStep);
-
-                IInitialExperienceStep* pWorldAreaLoaderStep = Eegeo_NEW(PreLoad::SdkModel::WindowsInitialExperiencePreLoadModel)(
-                            m_nativeState,
-                            worldAreaLoaderModel,
-                            GetPersistentSettings()
-                        );
-
-                steps.push_back(pWorldAreaLoaderStep);
-
-                m_pInitialExperienceSearchResultAttractModeModule = Eegeo_NEW(SearchResultAttractMode::InitialExperienceSearchResultAttractModeModule)(GetPersistentSettings(),
-                                                                                                                                                         searchMenuViewModelControl,searchResultMenuViewModel,                   m_messageBus);
-
-                steps.push_back(&m_pInitialExperienceSearchResultAttractModeModule->GetInitialExperienceStep());
-
+				// TODO: Recreate MEA initial experience steps for windows...
+				
                 return steps;
             }
         }
