@@ -187,7 +187,7 @@ AppHost::AppHost(
     m_pWindowsFlurryMetricsService = Eegeo_NEW(ExampleApp::Metrics::WindowsFlurryMetricsService)(&m_nativeState);
 
     typedef ExampleApp::ApplicationConfig::SdkModel::ApplicationConfigurationModule ApplicationConfigurationModule;
-    ApplicationConfigurationModule applicationConfigurationModule(m_pWindowsPlatformAbstractionModule->GetFileIO(), "Development Build");
+    ApplicationConfigurationModule applicationConfigurationModule(m_pWindowsPlatformAbstractionModule->GetFileIO(), "Development Build", "0.0.1");
 
     m_pApp = Eegeo_NEW(ExampleApp::MobileExampleApp)(
         ExampleApp::ApiKey,
