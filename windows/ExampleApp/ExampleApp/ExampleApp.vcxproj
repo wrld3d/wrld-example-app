@@ -128,6 +128,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>eegeo-sdk.lib;locationapi.lib;httpxx.lib;libEGL.lib;libGLESv2.lib;png.lib;curl.lib;turbojpeg.lib;http-parser.lib;xml2.lib;pthreadVC2.lib;jpeg.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>C:\Program Files (x86)\Microsoft SDKs\Windows\v7.1A\Lib\x64;../../libs/eegeo/prebuilt/x64/Debug/;../../libs/eegeo/prebuilt/x64/;../../libs/eegeo/ANGLE/x64/Debug/;../../libs/eegeo/pthread/x64/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AssemblyDebug>true</AssemblyDebug>
     </Link>
     <PostBuildEvent>
       <Command>
@@ -210,6 +211,7 @@
     <ClCompile Include="..\..\..\src\CameraTransitions\SdkModel\CameraTransitionController.cpp" />
     <ClCompile Include="..\..\..\src\CameraTransitions\SdkModel\CameraTransitionService.cpp" />
     <ClCompile Include="..\..\..\src\CameraTransitions\SdkModel\ExitCurrentInteriorStage.cpp" />
+    <ClCompile Include="..\..\..\src\CameraTransitions\SdkModel\TransitionToInteriorPointStage.cpp" />
     <ClCompile Include="..\..\..\src\CameraTransitions\SdkModel\TransitionToInteriorStage.cpp" />
     <ClCompile Include="..\..\..\src\CameraTransitions\SdkModel\TransitionToWorldPointStage.cpp" />
     <ClCompile Include="..\..\..\src\CategorySearch\CategorySearchSelectedMessage.cpp" />
@@ -1111,6 +1113,7 @@
     <ClInclude Include="..\..\..\src\CameraTransitions\SdkModel\ExitCurrentInteriorStage.h" />
     <ClInclude Include="..\..\..\src\CameraTransitions\SdkModel\ICameraTransitionController.h" />
     <ClInclude Include="..\..\..\src\CameraTransitions\SdkModel\ICameraTransitionStage.h" />
+    <ClInclude Include="..\..\..\src\CameraTransitions\SdkModel\TransitionToInteriorPointStage.h" />
     <ClInclude Include="..\..\..\src\CameraTransitions\SdkModel\TransitionToInteriorStage.h" />
     <ClInclude Include="..\..\..\src\CameraTransitions\SdkModel\TransitionToWorldPointStage.h" />
     <ClInclude Include="..\..\..\src\CategorySearch\CategorySearch.h" />
