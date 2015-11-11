@@ -16,6 +16,7 @@ namespace
                                         "\nTim Jenks"
                                         
                                         "\n\nSenior Software Engineers"
+                                        "\nJohn Bell"
                                         "\nMalcolm Brown"
                                         "\nJonty Dawson"
                                         "\nScott Murray"
@@ -23,17 +24,23 @@ namespace
                                         
                                         "\n\nSoftware Engineer"
                                         "\nIan Hutchinson"
-    
+                                        
                                         "\n\nJunior Software Engineer"
+                                        "\nPaul Harris"
                                         "\nVimarsh Raina"
-    
+                                        
                                         "\n\nContract Software Engineer"
+                                        "\nTom Haygarth"
+                                        "\nFrancisco Mendonca"
                                         "\nIan Reynolds"
                                         
                                         "\n\nSenior Artists"
                                         "\nJody Gallagher"
                                         "\nGary Thomson"
-    
+                                        
+                                        "\n\nArtist"
+                                        "\nNicky Rhodes"
+                                        
                                         "\n\nContract Artist"
                                         "\nAntony Connell"
                                         
@@ -46,13 +53,17 @@ namespace
                                         "\n\nSystem Tester"
                                         "\nKyle Welsh"
                                         
+                                        "\n\nContract System Testers"
+                                        "\nMatthew Ross"
+                                        "\nRyan Smith"
+                                        
                                         "\n\nProducer"
                                         "\nPiers Duplock"
                                         
                                         "\n\n\nEEGEO SAN FRANCISCO"
                                         "\n\nBusiness Development Director"
                                         "\nBart Denny"
-    
+                                        
                                         "\n\nFinance"
                                         "\nJeremy Arnaud"
                                         
@@ -62,9 +73,6 @@ namespace
                                         
                                         "\n\nChief Commercial Officer"
                                         "\nJeremy Copp"
-    
-                                        "\n\nSales Director"
-                                        "\nPeter Hannay"
                                         
                                         "\n\n\nFallen Comrades"
                                         "\nSalvador Lopez"
