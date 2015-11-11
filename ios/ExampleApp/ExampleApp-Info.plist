@@ -51,5 +51,7 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
+	<key>eeGeoAppBase</key>
+	<string>iOS-MEA</string>
 </dict>
 </plist>
