@@ -182,22 +182,29 @@
         return;
     }
 
+    bool done = false;
+    CGRect f = self.frame;
     const Eegeo::v2 totalDelta = (m_animationEndPos - m_animationStartPos);
     const float totalDeltaLen = totalDelta.Length();
-    Eegeo_ASSERT(totalDeltaLen != 0.f);
-    const float animationUnitsPerSecond = totalDeltaLen / m_stateChangeAnimationTimeSeconds;
-    const float frameDeltaUnits = animationUnitsPerSecond * deltaSeconds;
-    const Eegeo::v2 norm = totalDelta.Norm();
-    const Eegeo::v2 delta = norm * frameDeltaUnits;
-    m_animationCurrentPos += delta;
-
-    CGRect f = self.frame;
-    f.origin.x = m_animationCurrentPos.x;
-    f.origin.y = m_animationCurrentPos.y;
-
-    const Eegeo::v2 currentPosDirToEnd = (m_animationEndPos - m_animationCurrentPos).Norm();
-    const float dp = Eegeo::v2::Dot(currentPosDirToEnd, norm);
-    const bool done = dp < 0.f;
+    if(totalDeltaLen != 0.f)
+    {
+        const float animationUnitsPerSecond = totalDeltaLen / m_stateChangeAnimationTimeSeconds;
+        const float frameDeltaUnits = animationUnitsPerSecond * deltaSeconds;
+        const Eegeo::v2 norm = totalDelta.Norm();
+        const Eegeo::v2 delta = norm * frameDeltaUnits;
+        m_animationCurrentPos += delta;
+        
+        f.origin.x = m_animationCurrentPos.x;
+        f.origin.y = m_animationCurrentPos.y;
+        
+        const Eegeo::v2 currentPosDirToEnd = (m_animationEndPos - m_animationCurrentPos).Norm();
+        const float dp = Eegeo::v2::Dot(currentPosDirToEnd, norm);
+        done = dp < 0.f;
+    }
+    else
+    {
+        done = true;
+    }
 
     if(done)
     {
@@ -292,26 +299,16 @@
     [self setOffscreenPartsHiddenState:false];
     CGRect f = self.frame;
 
-    if(x == m_offscreenX || x == m_closedX)
-    {
-        m_animationStartPos.x = m_isFirstAnimationCeremony ? m_offscreenX : m_openX;
-    }
-    else if(x == m_openX)
-    {
-        m_animationStartPos.x = m_closedX;
-    }
-    else
-    {
-        Eegeo_ASSERT(false, "Invalid animation target.\n");
-    }
-
+    Eegeo_ASSERT(x == m_offscreenX || x == m_closedX || x == m_openX, "Invalid animation target.\n");
+    
     m_isFirstAnimationCeremony = false;
 
     m_animationStartPos.y =
         m_animationCurrentPos.y =
             m_animationEndPos.y = f.origin.y;
 
-    m_animationCurrentPos.x = f.origin.x;
+    m_animationStartPos.x =
+        m_animationCurrentPos.x = f.origin.x;
     m_animationEndPos.x = x;
 
     m_animating = true;
@@ -323,18 +320,7 @@
     [self setOffscreenPartsHiddenState:false];
     CGRect f = self.frame;
 
-    if(y == m_offscreenY || y == m_closedY)
-    {
-        m_animationStartPos.y = m_isFirstAnimationCeremony ? m_offscreenY : m_openY;
-    }
-    else if(y == m_openY)
-    {
-        m_animationStartPos.y = m_closedY;
-    }
-    else
-    {
-        Eegeo_ASSERT(false, "Invalid animation target.\n");
-    }
+    Eegeo_ASSERT(y == m_offscreenY || y == m_closedY || y == m_openY, "Invalid animation target.\n");
 
     m_isFirstAnimationCeremony = false;
 
@@ -342,7 +328,8 @@
         m_animationCurrentPos.x =
             m_animationEndPos.x = f.origin.x;
 
-    m_animationCurrentPos.y = f.origin.y;
+    m_animationStartPos.y =
+        m_animationCurrentPos.y = f.origin.y;
     m_animationEndPos.y = y;
 
     m_animating = true;
