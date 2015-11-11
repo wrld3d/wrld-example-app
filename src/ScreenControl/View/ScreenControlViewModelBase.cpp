@@ -36,10 +36,10 @@ namespace ExampleApp
 
             void ScreenControlViewModelBase::UpdateOnScreenState(float onScreenState)
             {
+                Eegeo_ASSERT(onScreenState >= 0.f && onScreenState <= 1.f, "Invalid value %f for screen state, valid range for UI on-screen-state is 0.0 to 1.0 inclusive.\n", onScreenState);
+                m_onScreenState = onScreenState;
                 if(m_addedToScreen)
                 {
-                    Eegeo_ASSERT(onScreenState >= 0.f && onScreenState <= 1.f, "Invalid value %f for screen state, valid range for UI on-screen-state is 0.0 to 1.0 inclusive.\n", onScreenState);
-                    m_onScreenState = onScreenState;
                     m_onScreenStateChangedCallbacks.ExecuteCallbacks(*this, m_onScreenState);
                 }
             }
