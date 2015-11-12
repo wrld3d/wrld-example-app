@@ -1671,6 +1671,11 @@ NSComparisonResult compareViewDepth(UIView *view1, UIView *view2, iCarousel *sel
 {
     [_timer invalidate];
     _timer = nil;
+    
+    if(_scrollOffset != [self currentItemIndex])
+    {
+        [self scrollToItemAtIndex:[self currentItemIndex] animated:YES];
+    }
 }
 
 - (CGFloat)decelerationDistance
