@@ -46,9 +46,6 @@ namespace ExampleApp
                     m_secondaryMenuViewModel.RemoveFromScreen();
                     m_searchMenuViewModel.RemoveFromScreen();
                     
-                    m_secondaryMenuViewModel.SuspendScreenUpdates();
-                    m_searchMenuViewModel.SuspendScreenUpdates();
-                    
                     m_compassViewModel.RemoveFromScreen();
                     m_flattenViewModel.RemoveFromScreen();
                     m_myPinCreationViewModel.RemoveFromScreen();
@@ -61,9 +58,6 @@ namespace ExampleApp
                     {
                         m_tourExplorerOpen = false;
                         m_tourExplorerViewModel.RemoveFromScreen();
-                        
-                        m_secondaryMenuViewModel.AllowScreenUpdates();
-                        m_searchMenuViewModel.AllowScreenUpdates();
                         
                         m_secondaryMenuViewModel.AddToScreen();
                         m_searchMenuViewModel.AddToScreen();

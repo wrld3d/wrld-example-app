@@ -14,9 +14,7 @@ namespace ExampleApp
             : m_identity(identity)
             , m_openViewModel(identity, reactionControllerModel)
             , m_screenViewModel(identity)
-            , m_screenUpdatesSuspended(false)
             {
-                m_onScreenState = m_screenViewModel.OnScreenState();
             }
             
             Eegeo::Helpers::TIdentity MenuViewModel::GetIdentity() const
@@ -27,7 +25,6 @@ namespace ExampleApp
             void MenuViewModel::AddToScreen()
             {
                 m_screenViewModel.AddToScreen();
-                m_onScreenState = 1.f;
             }
             
             void MenuViewModel::RemoveFromScreen()
@@ -38,28 +35,11 @@ namespace ExampleApp
                 }
                 
                 m_screenViewModel.RemoveFromScreen();
-                m_onScreenState = 0.f;
-            }
-            
-            void MenuViewModel::SuspendScreenUpdates()
-            {
-                m_screenUpdatesSuspended = true;
-            }
-            
-            void MenuViewModel::AllowScreenUpdates()
-            {
-                m_screenUpdatesSuspended = false;
-                UpdateOnScreenState(m_onScreenState);
             }
             
             void MenuViewModel::UpdateOnScreenState(float onScreenState)
             {
-                m_onScreenState = onScreenState;
-                
-                if(!m_screenUpdatesSuspended)
-                {
-                    m_screenViewModel.UpdateOnScreenState(onScreenState);
-                }
+                m_screenViewModel.UpdateOnScreenState(onScreenState);
             }
             
             void MenuViewModel::InsertOnScreenStateChangedCallback(Eegeo::Helpers::ICallback2<ScreenControl::View::IScreenControlViewModel&, float>& callback)
