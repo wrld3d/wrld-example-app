@@ -23,8 +23,7 @@ namespace ExampleApp
                                     viewModel,
                                     *m_pView,
                                     messageBus,
-                                    metricsService,
-                                    appModeModel);
+                                    metricsService);
             }
 
             void FlattenButtonViewModule::AnimateOffScreen()

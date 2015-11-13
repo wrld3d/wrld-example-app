@@ -41,7 +41,8 @@ namespace ExampleApp
                 IInitialExperienceStep* pWorldAreaLoaderStep = Eegeo_NEW(PreLoad::SdkModel::WindowsInitialExperiencePreLoadModel)(
                             m_nativeState,
                             worldAreaLoaderModel,
-                            GetPersistentSettings()
+                            GetPersistentSettings(),
+							true
                         );
 
                 steps.push_back(pWorldAreaLoaderStep);

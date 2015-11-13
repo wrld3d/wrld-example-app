@@ -23,7 +23,7 @@ namespace ExampleApp
                 ASSERT_UI_THREAD
 
                 m_pView = Eegeo_NEW(WorldPinOnMapView)(nativeState, pinDiameter);
-                m_pController = Eegeo_NEW(WorldPinOnMapController)(*m_pView, worldPinInFocusViewModel, worldPinOnMapInFocusScreenControlViewModel, modalityModel, appModeModel);
+                m_pController = Eegeo_NEW(WorldPinOnMapController)(*m_pView, worldPinInFocusViewModel, worldPinOnMapInFocusScreenControlViewModel, modalityModel);
             }
 
             WorldPinOnMapViewModule::~WorldPinOnMapViewModule()

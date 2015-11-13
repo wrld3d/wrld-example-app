@@ -23,7 +23,7 @@ namespace ExampleApp
             )
             {
                 m_pInitiationView = Eegeo_NEW(MyPinCreationInitiationView)(nativeState);
-                m_pInitiationController = Eegeo_NEW(MyPinCreationInitiationController)(initiationViewModel, *m_pInitiationView, confirmationViewModel, messageBus, metricsService, appModeModel);
+                m_pInitiationController = Eegeo_NEW(MyPinCreationInitiationController)(initiationViewModel, *m_pInitiationView, confirmationViewModel, messageBus, metricsService);
 
                 m_pConfirmationView = Eegeo_NEW(MyPinCreationConfirmationView)(nativeState);
                 m_pConfirmationController = Eegeo_NEW(MyPinCreationConfirmationController)(confirmationViewModel, *m_pConfirmationView, detailsViewModel, messageBus, metricsService);

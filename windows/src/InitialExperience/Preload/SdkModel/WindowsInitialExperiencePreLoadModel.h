@@ -27,7 +27,8 @@ namespace ExampleApp
                     WindowsInitialExperiencePreLoadModel(
                         WindowsNativeState& nativeState,
                         WorldAreaLoader::SdkModel::IWorldAreaLoaderModel& worldAreaLoaderModel,
-                        PersistentSettings::IPersistentSettingsModel& persistentSettings
+                        PersistentSettings::IPersistentSettingsModel& persistentSettings,
+						bool performSilentPreload
                     );
 
                     ~WindowsInitialExperiencePreLoadModel();

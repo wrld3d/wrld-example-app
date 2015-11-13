@@ -523,6 +523,45 @@
     <Filter Include="Source Files\Windows\UserInteraction\SdkModel">
       <UniqueIdentifier>{c3edd24e-e685-4a76-b206-5a2721f6195e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\App\Search\Swallow">
+      <UniqueIdentifier>{7e500016-19c3-4384-8f2f-42e5ea4b3137}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\App\Search\Swallow\View">
+      <UniqueIdentifier>{5bf5e4cd-2757-4029-ab39-b7c70e121430}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\App\Search\Swallow\SearchConstants">
+      <UniqueIdentifier>{2eba4c86-316e-417d-9772-9a71b111f2be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\App\Search\Swallow\SdkModel">
+      <UniqueIdentifier>{f722ab21-0efa-4d0a-88b4-0d680c69d570}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\App\Search\Swallow\SdkModel\SearchParser">
+      <UniqueIdentifier>{0f965369-0125-422f-9f41-301408c180df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\App\InteriorsNavigation">
+      <UniqueIdentifier>{cbcec94c-5534-4419-9c8a-d96e6d324d9d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\App\InteriorsNavigation\SdkModel">
+      <UniqueIdentifier>{059cb4a1-684c-4aad-95f1-e64a7575a07c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\App\SearchResultMenu\View\Swallow">
+      <UniqueIdentifier>{9e94dd0f-9e8f-413b-a8de-71cd95f57ad2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\App\SwallowPoiDb">
+      <UniqueIdentifier>{c57c271a-3c01-46d0-899f-68b37841e7b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\App\SwallowPoiDb\Parsers">
+      <UniqueIdentifier>{2d252f0c-7134-4789-98a0-afd376f096a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\App\SwallowPoiDb\Constants">
+      <UniqueIdentifier>{f2234bd2-369b-4e6b-aac3-3145efd6f03c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\App\ReportPinsVisibilityMasking">
+      <UniqueIdentifier>{a55dceba-8b8a-4c6e-9409-e29dbf5f2ee5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\App\ReportPinsVisibilityMasking\SdkModel">
+      <UniqueIdentifier>{9d1883f8-3da8-478f-a196-42f093445ba7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\AppHost.cpp">
@@ -1751,6 +1790,120 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\InteriorsExplorer\SdkModel\InteriorExplorerUserInteractionModel.cpp">
       <Filter>Source Files\App\InteriorsExplorer\SdkModel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Search\Swallow\SwallowOfficeResultMenuOptionSelectedMessage.cpp">
+      <Filter>Source Files\App\Search\Swallow</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Search\Swallow\SdkModel\SwallowFacilityResultModel.cpp">
+      <Filter>Source Files\App\Search\Swallow\SdkModel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Search\Swallow\SdkModel\SwallowMeetingRoomResultModel.cpp">
+      <Filter>Source Files\App\Search\Swallow\SdkModel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Search\Swallow\SdkModel\SwallowOfficeResultMenuOptionSelectedMessageHandler.cpp">
+      <Filter>Source Files\App\Search\Swallow\SdkModel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Search\Swallow\SdkModel\SwallowOfficeResultModel.cpp">
+      <Filter>Source Files\App\Search\Swallow\SdkModel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Search\Swallow\SdkModel\SwallowPersonResultModel.cpp">
+      <Filter>Source Files\App\Search\Swallow\SdkModel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Search\Swallow\SdkModel\SwallowSearchMenuModule.cpp">
+      <Filter>Source Files\App\Search\Swallow\SdkModel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Search\Swallow\SdkModel\SwallowSearchService.cpp">
+      <Filter>Source Files\App\Search\Swallow\SdkModel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Search\Swallow\SdkModel\SwallowSearchServiceModule.cpp">
+      <Filter>Source Files\App\Search\Swallow\SdkModel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Search\Swallow\SdkModel\SwallowSearchTransitionPinController.cpp">
+      <Filter>Source Files\App\Search\Swallow\SdkModel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Search\Swallow\SdkModel\SwallowSearchTransitionPinSelectionHandler.cpp">
+      <Filter>Source Files\App\Search\Swallow\SdkModel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Search\Swallow\SdkModel\SwallowTransitionResultModel.cpp">
+      <Filter>Source Files\App\Search\Swallow\SdkModel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Search\Swallow\SdkModel\SwallowWorkingGroupResultModel.cpp">
+      <Filter>Source Files\App\Search\Swallow\SdkModel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Search\Swallow\SdkModel\SearchParser\SwallowSearchParser.cpp">
+      <Filter>Source Files\App\Search\Swallow\SdkModel\SearchParser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Search\Swallow\SearchConstants\SwallowSearchConstants.cpp">
+      <Filter>Source Files\App\Search\Swallow\SearchConstants</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Search\Swallow\View\SwallowCategoryMenuOption.cpp">
+      <Filter>Source Files\App\Search\Swallow\View</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Search\Swallow\View\SwallowOfficeResultMenuOption.cpp">
+      <Filter>Source Files\App\Search\Swallow\View</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\InteriorsNavigation\SdkModel\InteriorsNavigationService.cpp">
+      <Filter>Source Files\App\InteriorsNavigation\SdkModel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\SearchResultMenu\View\Swallow\SwallowSearchResultMenuOrder.cpp">
+      <Filter>Source Files\App\SearchResultMenu\View\Swallow</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\SwallowPoiDb\SwallowPoiDbCombinedService.cpp">
+      <Filter>Source Files\App\SwallowPoiDb</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\SwallowPoiDb\SwallowPoiDbModule.cpp">
+      <Filter>Source Files\App\SwallowPoiDb</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\SwallowPoiDb\SwallowPoiDbService.cpp">
+      <Filter>Source Files\App\SwallowPoiDb</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\SwallowPoiDb\SwallowPoiDbServiceProvider.cpp">
+      <Filter>Source Files\App\SwallowPoiDb</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\SwallowPoiDb\SwallowPoiDbWebLoader.cpp">
+      <Filter>Source Files\App\SwallowPoiDb</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\SwallowPoiDb\Parsers\SwallowPoiDbEmployeeParser.cpp">
+      <Filter>Source Files\App\SwallowPoiDb\Parsers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\SwallowPoiDb\Parsers\SwallowPoiDbFacilityParser.cpp">
+      <Filter>Source Files\App\SwallowPoiDb\Parsers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\SwallowPoiDb\Parsers\SwallowPoiDbMeetingRoomParser.cpp">
+      <Filter>Source Files\App\SwallowPoiDb\Parsers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\SwallowPoiDb\Parsers\SwallowPoiDbOfficeParser.cpp">
+      <Filter>Source Files\App\SwallowPoiDb\Parsers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\SwallowPoiDb\Parsers\SwallowPoiDbParseHelper.cpp">
+      <Filter>Source Files\App\SwallowPoiDb\Parsers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\SwallowPoiDb\Parsers\SwallowPoiDbTransitionParser.cpp">
+      <Filter>Source Files\App\SwallowPoiDb\Parsers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\SwallowPoiDb\Parsers\SwallowPoiDbWorkingGroupParser.cpp">
+      <Filter>Source Files\App\SwallowPoiDb\Parsers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\SwallowPoiDb\Constants\SwallowPoiDbConstants.cpp">
+      <Filter>Source Files\App\SwallowPoiDb\Constants</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\ReportPinsVisibilityMasking\SdkModel\MenuSectionExpandedChangedObserver.cpp">
+      <Filter>Source Files\App\ReportPinsVisibilityMasking\SdkModel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\ReportPinsVisibilityMasking\SdkModel\ReportPinsVisibilityMaskingController.cpp">
+      <Filter>Source Files\App\ReportPinsVisibilityMasking\SdkModel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\ReportPinsVisibilityMasking\SdkModel\ReportPinsVisibilityMaskingModule.cpp">
+      <Filter>Source Files\App\ReportPinsVisibilityMasking\SdkModel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\CameraTransitions\SdkModel\TransitionToInteriorPointStage.cpp">
+      <Filter>Source Files\App\CameraTransitions\SdkModel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Menu\MenuSectionExpandedChangedMessage.cpp">
+      <Filter>Source Files\App\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\SearchResultOnMap\SearchResultMeetingAvailabilityChanged.cpp">
+      <Filter>Source Files\App\SearchResultOnMap</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -3826,6 +3979,144 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\InteriorsExplorer\SdkModel\InteriorExplorerUserInteractionModel.h">
       <Filter>Source Files\App\InteriorsExplorer\SdkModel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Search\Swallow\SwallowOfficeResultMenuOptionSelectedMessage.h">
+      <Filter>Source Files\App\Search\Swallow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Search\Swallow\SwallowSearch.h">
+      <Filter>Source Files\App\Search\Swallow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Search\Swallow\SdkModel\ISwallowSearchMenuModule.h">
+      <Filter>Source Files\App\Search\Swallow\SdkModel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Search\Swallow\SdkModel\SwallowFacilityResultModel.h">
+      <Filter>Source Files\App\Search\Swallow\SdkModel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Search\Swallow\SdkModel\SwallowMeetingRoomResultModel.h">
+      <Filter>Source Files\App\Search\Swallow\SdkModel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Search\Swallow\SdkModel\SwallowOfficeResultMenuOptionSelectedMessageHandler.h">
+      <Filter>Source Files\App\Search\Swallow\SdkModel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Search\Swallow\SdkModel\SwallowOfficeResultModel.h">
+      <Filter>Source Files\App\Search\Swallow\SdkModel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Search\Swallow\SdkModel\SwallowPersonResultModel.h">
+      <Filter>Source Files\App\Search\Swallow\SdkModel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Search\Swallow\SdkModel\SwallowSearchMenuModule.h">
+      <Filter>Source Files\App\Search\Swallow\SdkModel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Search\Swallow\SdkModel\SwallowSearchService.h">
+      <Filter>Source Files\App\Search\Swallow\SdkModel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Search\Swallow\SdkModel\SwallowSearchServiceModule.h">
+      <Filter>Source Files\App\Search\Swallow\SdkModel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Search\Swallow\SdkModel\SwallowSearchTransitionPinController.h">
+      <Filter>Source Files\App\Search\Swallow\SdkModel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Search\Swallow\SdkModel\SwallowSearchTransitionPinSelectionHandler.h">
+      <Filter>Source Files\App\Search\Swallow\SdkModel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Search\Swallow\SdkModel\SwallowTransitionResultModel.h">
+      <Filter>Source Files\App\Search\Swallow\SdkModel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Search\Swallow\SdkModel\SwallowWorkingGroupResultModel.h">
+      <Filter>Source Files\App\Search\Swallow\SdkModel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Search\Swallow\SdkModel\SearchParser\SwallowSearchParser.h">
+      <Filter>Source Files\App\Search\Swallow\SdkModel\SearchParser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Search\Swallow\SearchConstants\SwallowSearchConstants.h">
+      <Filter>Source Files\App\Search\Swallow\SearchConstants</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Search\Swallow\View\SwallowCategoryMenuOption.h">
+      <Filter>Source Files\App\Search\Swallow\View</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Search\Swallow\View\SwallowOfficeResultMenuOption.h">
+      <Filter>Source Files\App\Search\Swallow\View</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\InteriorsNavigation\InteriorsNavigation.h">
+      <Filter>Source Files\App\InteriorsNavigation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\InteriorsNavigation\SdkModel\IInteriorsNavigationService.h">
+      <Filter>Source Files\App\InteriorsNavigation\SdkModel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\InteriorsNavigation\SdkModel\InteriorsNavigationService.h">
+      <Filter>Source Files\App\InteriorsNavigation\SdkModel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\SearchResultMenu\View\Swallow\SwallowSearchResultMenuOrder.h">
+      <Filter>Source Files\App\SearchResultMenu\View\Swallow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\SwallowPoiDb\ISwallowPoiDbModule.h">
+      <Filter>Source Files\App\SwallowPoiDb</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\SwallowPoiDb\SwallowPoiDb.h">
+      <Filter>Source Files\App\SwallowPoiDb</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\SwallowPoiDb\SwallowPoiDbCombinedService.h">
+      <Filter>Source Files\App\SwallowPoiDb</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\SwallowPoiDb\SwallowPoiDbModule.h">
+      <Filter>Source Files\App\SwallowPoiDb</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\SwallowPoiDb\SwallowPoiDbService.h">
+      <Filter>Source Files\App\SwallowPoiDb</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\SwallowPoiDb\SwallowPoiDbServiceProvider.h">
+      <Filter>Source Files\App\SwallowPoiDb</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\SwallowPoiDb\SwallowPoiDbWebLoader.h">
+      <Filter>Source Files\App\SwallowPoiDb</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\SwallowPoiDb\Parsers\ISwallowPoiDbParser.h">
+      <Filter>Source Files\App\SwallowPoiDb\Parsers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\SwallowPoiDb\Parsers\SwallowPoiDbEmployeeParser.h">
+      <Filter>Source Files\App\SwallowPoiDb\Parsers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\SwallowPoiDb\Parsers\SwallowPoiDbFacilityParser.h">
+      <Filter>Source Files\App\SwallowPoiDb\Parsers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\SwallowPoiDb\Parsers\SwallowPoiDbMeetingRoomParser.h">
+      <Filter>Source Files\App\SwallowPoiDb\Parsers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\SwallowPoiDb\Parsers\SwallowPoiDbOfficeParser.h">
+      <Filter>Source Files\App\SwallowPoiDb\Parsers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\SwallowPoiDb\Parsers\SwallowPoiDbParseHelper.h">
+      <Filter>Source Files\App\SwallowPoiDb\Parsers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\SwallowPoiDb\Parsers\SwallowPoiDbTransitionParser.h">
+      <Filter>Source Files\App\SwallowPoiDb\Parsers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\SwallowPoiDb\Parsers\SwallowPoiDbWorkingGroupParser.h">
+      <Filter>Source Files\App\SwallowPoiDb\Parsers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\SwallowPoiDb\Constants\SwallowPoiDbConstants.h">
+      <Filter>Source Files\App\SwallowPoiDb\Constants</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\ReportPinsVisibilityMasking\ReportPinsVisibilityMasking.h">
+      <Filter>Source Files\App\ReportPinsVisibilityMasking</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\ReportPinsVisibilityMasking\SdkModel\MenuSectionExpandedChangedObserver.h">
+      <Filter>Source Files\App\ReportPinsVisibilityMasking\SdkModel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\ReportPinsVisibilityMasking\SdkModel\ReportPinsVisibilityMaskingController.h">
+      <Filter>Source Files\App\ReportPinsVisibilityMasking\SdkModel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\ReportPinsVisibilityMasking\SdkModel\ReportPinsVisibilityMaskingModule.h">
+      <Filter>Source Files\App\ReportPinsVisibilityMasking\SdkModel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\CameraTransitions\SdkModel\TransitionToInteriorPointStage.h">
+      <Filter>Source Files\App\CameraTransitions\SdkModel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Menu\MenuSectionExpandedChangedMessage.h">
+      <Filter>Source Files\App\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\SearchResultOnMap\SearchResultMeetingAvailabilityChanged.h">
+      <Filter>Source Files\App\SearchResultOnMap</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -74,6 +74,16 @@ namespace ExampleApp
                 UpdateImageData(gcnew System::String(url.c_str()), hasImage, imageDataArray);
             }
 
+			void SearchResultPoiView::InsertAvailabilityChangedCallback(Eegeo::Helpers::ICallback2<const Search::SdkModel::SearchResultModel&, const std::string&>& callback)
+			{
+				m_availabilityChangedCallbacks.AddCallback(callback);
+			}
+
+			void SearchResultPoiView::RemoveAvailabilityChangedCallback(Eegeo::Helpers::ICallback2<const Search::SdkModel::SearchResultModel&, const std::string&>& callback)
+			{
+				m_availabilityChangedCallbacks.RemoveCallback(callback);
+			}
+
             void SearchResultPoiView::InsertClosedCallback(Eegeo::Helpers::ICallback0& callback)
             {
                 m_closedCallbacks.AddCallback(callback);

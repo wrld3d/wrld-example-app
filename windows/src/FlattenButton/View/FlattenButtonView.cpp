@@ -69,6 +69,11 @@ namespace ExampleApp
             {
                 m_callbacks.RemoveCallback(callback);
             }
+
+			void FlattenButtonView::SetViewEnabled(bool enabled)
+			{
+				//  TODO: Implement for windows...
+			}
         }
     }
 }

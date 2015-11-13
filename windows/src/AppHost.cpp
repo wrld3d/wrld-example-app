@@ -85,6 +85,23 @@
 using namespace Eegeo::Windows;
 using namespace Eegeo::Windows::Input;
 
+namespace
+{
+	typedef ExampleApp::ApplicationConfig::ApplicationConfiguration ApplicationConfiguration;
+
+	ApplicationConfiguration LoadConfiguration(WindowsNativeState& state)
+	{
+		std::set<std::string> customAsssetDirectories;
+		customAsssetDirectories.insert("ApplicationConfigs");
+
+		WindowsFileIO tempFileIO(&state, customAsssetDirectories);
+
+		// TODO: Still need to supply product version and build number, probably via a windows specific IApplicationConfigurationVersionProvider
+		ExampleApp::ApplicationConfig::SdkModel::ApplicationConfigurationModule applicationConfigurationModule(tempFileIO, "Development Build", "0.0.1");
+		return applicationConfigurationModule.GetApplicationConfigurationService().LoadConfiguration(ExampleApp::ApplicationConfigurationPath);
+	}
+}
+
 AppHost::AppHost(
     WindowsNativeState& nativeState,
     Eegeo::Rendering::ScreenProperties screenProperties,
@@ -126,7 +143,7 @@ AppHost::AppHost(
 {
     ASSERT_NATIVE_THREAD
          
-        Eegeo_ASSERT(resourceBuildShareContext != EGL_NO_CONTEXT);
+    Eegeo_ASSERT(resourceBuildShareContext != EGL_NO_CONTEXT);
 
     Eegeo::TtyHandler::TtyEnabled = true;
     Eegeo::AssertHandler::BreakOnAssert = true;
@@ -139,6 +156,7 @@ AppHost::AppHost(
     locationOverride.horizontalAccuracyMeters = 10.0;
     locationOverride.headingDegrees = 0.0;
 
+	ApplicationConfiguration config(LoadConfiguration(nativeState));
 
     m_pWindowsLocationService = Eegeo_NEW(WindowsLocationService)(&nativeState, &locationOverride);
     m_pWindowsConnectivityService = Eegeo_NEW(WindowsConnectivityService)(&nativeState);
@@ -155,14 +173,24 @@ AppHost::AppHost(
         display,
         resourceBuildShareContext,
         shareSurface,
-        ExampleApp::ApiKey,
+        config.EegeoApiKey(),
         customApplicationAssetDirectories);
 
     Eegeo::EffectHandler::Initialise();
 
     std::string deviceModel = nativeState.deviceModel;
     Eegeo::Config::PlatformConfig platformConfig = Eegeo::Windows::WindowsPlatformConfigBuilder(deviceModel).Build();
+	platformConfig.OptionsConfig.StartMapModuleAutomatically = true;
+	platformConfig.OptionsConfig.EnableInteriors = true;
     platformConfig.OptionsConfig.InteriorsControlledByApp = true;
+	platformConfig.OptionsConfig.InteriorsAffectedByFlattening = false;
+
+	platformConfig.CoverageTreeConfig.ManifestUrl = config.CoverageTreeManifestURL();
+	platformConfig.CityThemesConfig.StreamedManifestUrl = config.ThemeManifestURL();
+	platformConfig.CityThemesConfig.EmbeddedThemeManifestFile = "embedded_manifest.txt";
+	platformConfig.CityThemesConfig.EmbeddedThemeTexturePath = "Textures/EmbeddedTheme";
+	platformConfig.CityThemesConfig.EmbeddedThemeNameContains = "Summer";
+	platformConfig.CityThemesConfig.EmbeddedThemeStateName = "DayDefault";
 
     m_pInputProcessor = Eegeo_NEW(Eegeo::Windows::Input::WindowsInputProcessor)(&m_inputHandler, m_nativeState.window, screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight());
 
@@ -181,16 +209,16 @@ AppHost::AppHost(
         nativeState,
         m_pWindowsPlatformAbstractionModule->GetWebLoadRequestFactory(),
         *m_pNetworkCapabilities,
-        m_pWindowsPlatformAbstractionModule->GetUrlEncoder()
+        m_pWindowsPlatformAbstractionModule->GetUrlEncoder(),
+		config.YelpConsumerKey(),
+		config.YelpConsumerSecret(),
+		config.YelpOAuthToken(),
+		config.YelpOAuthTokenSecret()
         );
 
     m_pWindowsFlurryMetricsService = Eegeo_NEW(ExampleApp::Metrics::WindowsFlurryMetricsService)(&m_nativeState);
 
-    typedef ExampleApp::ApplicationConfig::SdkModel::ApplicationConfigurationModule ApplicationConfigurationModule;
-    ApplicationConfigurationModule applicationConfigurationModule(m_pWindowsPlatformAbstractionModule->GetFileIO(), "Development Build");
-
     m_pApp = Eegeo_NEW(ExampleApp::MobileExampleApp)(
-        ExampleApp::ApiKey,
         *m_pWindowsPlatformAbstractionModule,
         screenProperties,
         *m_pWindowsLocationService,
@@ -204,7 +232,7 @@ AppHost::AppHost(
         *m_pNetworkCapabilities,
         m_searchServiceModules,
         *m_pWindowsFlurryMetricsService,
-        applicationConfigurationModule.GetApplicationConfigurationService().LoadConfiguration("ApplicationConfigs/standard_config.json"),
+        config,
         *this);
 
     m_pModalBackgroundNativeViewModule = Eegeo_NEW(ExampleApp::ModalBackground::SdkModel::ModalBackgroundNativeViewModule)(

@@ -23,6 +23,7 @@ namespace ExampleApp
                 WindowsNativeState& m_nativeState;
                 Eegeo::Helpers::CallbackCollection0 m_closedCallbacks;
                 Eegeo::Helpers::CallbackCollection1<Search::SdkModel::SearchResultModel> m_togglePinClickedCallbacks;
+				Eegeo::Helpers::CallbackCollection2<const Search::SdkModel::SearchResultModel&, const std::string&> m_availabilityChangedCallbacks;
 
                 Search::SdkModel::SearchResultModel m_model;
                 Search::Yelp::SdkModel::YelpSearchResultModel m_yelpModel;
@@ -47,6 +48,10 @@ namespace ExampleApp
                 void Hide();
 
                 void UpdateImage(const std::string& url, bool hasImage, const std::vector<unsigned char>* pImageBytes);
+
+				void InsertAvailabilityChangedCallback(Eegeo::Helpers::ICallback2<const Search::SdkModel::SearchResultModel&, const std::string&>& callback);
+
+				void RemoveAvailabilityChangedCallback(Eegeo::Helpers::ICallback2<const Search::SdkModel::SearchResultModel&, const std::string&>& callback);
 
                 void InsertClosedCallback(Eegeo::Helpers::ICallback0& callback);
 

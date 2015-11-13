@@ -17,7 +17,11 @@ namespace ExampleApp
             WindowsYelpSearchServiceModule::WindowsYelpSearchServiceModule(WindowsNativeState& nativeState,
                 Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
                 Net::SdkModel::INetworkCapabilities& networkCapabilities,
-                Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder)
+                Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder,
+				const std::string& yelpConsumerKey,
+				const std::string& yelpConsumerSecret,
+				const std::string& yelpOAuthToken,
+				const std::string& yelpOAuthTokenSecret)
             {
                 m_pYelpCategoryMapper = Eegeo_NEW(Yelp::SdkModel::YelpCategoryMapper)(webRequestFactory,
                     Yelp::SearchConstants::GetYelpFoundationCategoryToApplicationCategoryMap(),
@@ -27,10 +31,10 @@ namespace ExampleApp
 
                 m_pSearchQueryFactory = Eegeo_NEW(Yelp::WindowsYelpSearchQueryFactory)(
                     nativeState,
-                    ExampleApp::YelpConsumerKey,
-                    ExampleApp::YelpConsumerSecret,
-                    ExampleApp::YelpOAuthToken,
-                    ExampleApp::YelpOAuthTokenSecret,
+                    yelpConsumerKey,
+                    yelpConsumerSecret,
+                    yelpOAuthToken,
+                    yelpOAuthTokenSecret,
                     *m_pYelpCategoryMapper);
 
                 m_pSearchService = Eegeo_NEW(Yelp::SdkModel::YelpSearchService)(*m_pSearchQueryFactory,
