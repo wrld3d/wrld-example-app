@@ -61,7 +61,7 @@ namespace ExampleApp
                 
                 m_transitionTime = 0.0f;
                 
-                const float CAMERA_TRANSITION_SPEED_IN_METERS_PER_SECOND = 1000.0f;
+                const float CAMERA_TRANSITION_SPEED_IN_METERS_PER_SECOND = 250.0f;
                 const float MIN_TRANSITION_TIME = 0.5f;
                 const float MAX_TRANSITION_TIME = 2.0f;
                 float distance = (m_endTransitionInterestPointEcef - m_startTransitionInterestPointEcef).ToSingle().Length();

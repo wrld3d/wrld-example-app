@@ -78,5 +78,7 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>eeGeoAppBase</key>
+	<string>iOS-MEA</string>
 </dict>
 </plist>
