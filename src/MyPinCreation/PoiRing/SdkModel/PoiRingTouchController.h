@@ -45,6 +45,8 @@ namespace ExampleApp
 
                     bool m_isDragging;
                     Eegeo::dv3 m_dragOffset;
+                    
+                    float m_initialCameraAltitiude;
 
                     bool PerformRayPick(const Eegeo::dv3& rayOrigin,
                                         Eegeo::dv3& rayDirection,
