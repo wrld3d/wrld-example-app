@@ -83,6 +83,8 @@
 #include "SearchVendorNames.h"
 #include "UserInteractionEnabledChangedMessage.h"
 #include "AndroidApplicationConfigurationVersionProvider.h"
+#include "InteriorsExplorerModule.h"
+#include "InteriorsExplorerViewModule.h"
 
 using namespace Eegeo::Android;
 using namespace Eegeo::Android::Input;
@@ -545,6 +547,18 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
 									m_messageBus
 								);
 
+    m_pInteriorsExplorerViewModule = Eegeo_NEW(ExampleApp::InteriorsExplorer::View::InteriorsExplorerViewModule)(
+    																							 app.InteriorsExplorerModule().GetInteriorsExplorerViewModel(),
+                                                                                                 m_messageBus,
+                                                                                                 app.MyPinCreationModule().GetMyPinCreationInitiationViewModel(),
+                                                                                                 app.SecondaryMenuModule().GetSecondaryMenuViewModel(),
+                                                                                                 app.SearchResultMenuModule().GetMenuViewModel(),
+                                                                                                 app.FlattenButtonModule().GetScreenControlViewModel(),
+                                                                                                 app.CompassModule().GetScreenControlViewModel(),
+                                                                                                 app.WatermarkModule().GetScreenControlViewModel(),
+                                                                                                 app.GetIdentityProvider(),
+																								 m_nativeState);
+
     m_pViewControllerUpdaterModule = Eegeo_NEW(ExampleApp::ViewControllerUpdater::View::ViewControllerUpdaterModule);
 
     ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModel& viewControllerUpdaterModel = m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel();
@@ -568,6 +582,8 @@ void AppHost::DestroyApplicationViewModulesFromUiThread()
         Eegeo_DELETE m_pMyPinDetailsViewModule;
 
         Eegeo_DELETE m_pViewControllerUpdaterModule;
+
+        Eegeo_DELETE m_pInteriorsExplorerViewModule;
 
         Eegeo_DELETE m_pMyPinCreationDetailsViewModule;
 
