@@ -27,8 +27,6 @@ namespace ExampleApp
                 MenuOpenableControl m_openViewModel;
                 MenuScreenControl m_screenViewModel;
                 MenuSectionsViewModel m_sectionsViewModel;
-                bool m_screenUpdatesSuspended;
-                float m_onScreenState;
 
             public:
                 MenuViewModel(bool isInitiallyOnScreen,
@@ -40,10 +38,6 @@ namespace ExampleApp
                 void AddToScreen();
 
                 void RemoveFromScreen();
-                
-                void SuspendScreenUpdates();
-                
-                void AllowScreenUpdates();
 
                 void UpdateOnScreenState(float onScreenState);
 

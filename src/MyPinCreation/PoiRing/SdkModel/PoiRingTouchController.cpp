@@ -88,6 +88,8 @@ namespace ExampleApp
                         float sphereRadius;
                         m_poiRingController.GetSpherePositionAndRadius(spherePosition, sphereRadius);
                         
+                        m_initialCameraAltitiude =  renderCamera.GetAltitude();
+                        
                         bool hitIcon = Eegeo::Geometry::IntersectionTests::TestRaySphere(rayOrigin, rayDirection, iconPosition, iconSize/2.0f);
                         if ((rayIntersectionPoint - spherePosition).Length() < sphereRadius || hitIcon)
                         {
@@ -136,10 +138,18 @@ namespace ExampleApp
                         float terrainHeight;
                         float heightAboveTerrain;
                         bool rayPick = PerformRayPick(rayOrigin, rayDirection, rayIntersectionPoint, intersectionParam, terrainHeight, heightAboveTerrain);
-
+                        
                         if (rayPick)
                         {
-                            Eegeo::Space::LatLong latLong = Eegeo::Space::LatLong::FromECEF(rayIntersectionPoint - m_dragOffset);
+                            const float currentCameraAltitiude = renderCamera.GetAltitude();
+                            
+                            float offsetScale = 0.0f;
+                            if(currentCameraAltitiude != 0.0f && m_initialCameraAltitiude != 0.0f)
+                            {
+                                offsetScale = currentCameraAltitiude /m_initialCameraAltitiude;
+                            }
+                            
+                            Eegeo::Space::LatLong latLong = Eegeo::Space::LatLong::FromECEF(rayIntersectionPoint - (m_dragOffset * offsetScale));
                             m_myPinCreationModel.SetLatLong(latLong);
                             m_myPinCreationModel.SetTerrainHeight(terrainHeight);
                             m_myPinCreationModel.SetHeightAboveTerrain(heightAboveTerrain);
