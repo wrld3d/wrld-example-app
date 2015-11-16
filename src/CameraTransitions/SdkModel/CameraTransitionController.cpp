@@ -54,7 +54,7 @@ namespace ExampleApp
                                                                float distanceFromInterest,
                                                                bool jumpIfFar)
             {
-                float bearingRadians = GetHeadingFromAppCamera();
+                float bearingRadians = Eegeo::Math::Deg2Rad(m_appCameraController.GetHeadingDegrees());
 
                 StartTransitionTo(newInterestPoint, distanceFromInterest, bearingRadians, m_defaultInteriorId, 0, jumpIfFar);
             }
@@ -73,7 +73,7 @@ namespace ExampleApp
                                                                int targetFloorIndex,
                                                                bool jumpIfFar)
             {
-                float bearingRadians = GetHeadingFromAppCamera();
+                float bearingRadians = Eegeo::Math::Deg2Rad(m_appCameraController.GetHeadingDegrees());
                 
                 StartTransitionTo(newInterestPoint, distanceFromInterest, bearingRadians, interiorId, targetFloorIndex, jumpIfFar);
             }
@@ -242,18 +242,6 @@ namespace ExampleApp
                                                                                            jumpIfFar);
                 m_transitionStages.push(pStage);
 
-            }
-            
-            float CameraTransitionController::GetHeadingFromAppCamera()
-            {
-                const Eegeo::Camera::CameraState& cameraState = m_appCameraController.GetCameraState();
-                const Eegeo::m44& cameraViewMatrix = cameraState.ViewMatrix();
-                const Eegeo::v3 forward(cameraViewMatrix.GetRow(0).GetZ(),
-                                        cameraViewMatrix.GetRow(1).GetZ(),
-                                        cameraViewMatrix.GetRow(2).GetZ());
-                
-                return Eegeo::Camera::CameraHelpers::GetAbsoluteBearingRadians(cameraState.LocationEcef(),
-                                                                               forward);
             }
         }
     }

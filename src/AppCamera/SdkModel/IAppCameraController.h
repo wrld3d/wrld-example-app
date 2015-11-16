@@ -39,6 +39,8 @@ namespace ExampleApp
                 
                 virtual Eegeo::ITouchController& GetTouchController() = 0;
                 
+                virtual float GetHeadingDegrees() const = 0;
+                
                 virtual void Update(float dt) = 0;
                 
                 virtual void InsertTransitioInFlightChangedCallback(Eegeo::Helpers::ICallback0& callback) = 0;

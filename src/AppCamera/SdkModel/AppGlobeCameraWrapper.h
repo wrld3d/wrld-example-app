@@ -30,6 +30,8 @@ namespace ExampleApp
                 
                 Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& GetGlobeCameraController() const { return m_gpsGlobeCameraController; }
                 
+                float GetHeadingDegrees() const;
+                
             private:
                 
                 Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& m_gpsGlobeCameraController;

@@ -203,7 +203,7 @@ namespace ExampleApp
                 m_globeCameraController.SetView(cameraInterestBasis, m_globeCameraController.GetDistanceToInterest());
             }
             
-            const float InteriorsExplorerCameraController::GetHeadingDegrees() const
+            float InteriorsExplorerCameraController::GetHeadingDegrees() const
             {
                 Eegeo::Space::EcefTangentBasis cameraInterestBasis;
                 float headingRadians = Eegeo::Camera::CameraHelpers::GetAbsoluteBearingRadians(m_globeCameraController.GetInterestBasis().GetPointEcef(),

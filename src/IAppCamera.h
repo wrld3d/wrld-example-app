@@ -27,6 +27,8 @@ namespace ExampleApp
                 virtual Eegeo::ITouchController& GetTouchController() const = 0;
                 
                 virtual Eegeo::dv3 ComputeNonFlattenedCameraPosition() const = 0;
+                
+                virtual float GetHeadingDegrees() const = 0;
             };
         }
     }
