@@ -113,12 +113,10 @@ namespace ExampleApp
                 
                 void InteriorExplorerState::Exit()
                 {
-                    float headingRadians = Eegeo::Camera::CameraHelpers::GetAbsoluteBearingRadians(m_interiorsCameraController.GetCameraState().InterestPointEcef(),
-                                                                                                   m_interiorsCameraController.GetRenderCamera().GetModelMatrix().GetRow(2));
                     Eegeo::Space::LatLongAltitude latLong = Eegeo::Space::LatLongAltitude::FromECEF(m_interiorsCameraController.GetCameraState().InterestPointEcef());
                     const float interestDistance = 500.0f;
                     m_worldCameraController.SetView(latLong.GetLatitudeInDegrees(), latLong.GetLongitudeInDegrees(),
-                                                    Eegeo::Math::Rad2Deg(headingRadians),
+                                                    m_interiorsCameraController.GetHeadingDegrees(),
                                                     interestDistance);
                     m_worldCameraController.GetGlobeCameraController().ApplyTilt(0.0f);
                     
