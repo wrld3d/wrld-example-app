@@ -210,17 +210,11 @@
          
          {
              "MaterialName": "swallowwall01-interior",
-             "MaterialType":"InteriorsCubeMappedMaterial",
+             "MaterialType":"InteriorsStencilMirrorMaterial",
              "DiffuseTexture":"swallowfloortiles01-interior-texture0",
-             "CubeMapTexture":"swallowcubemap",
              "DiffuseColor":[0.5,0.5,0.5,1.0],
-             "SpecularPower":100.0,
-             "SpecularColor":[0.2,0.2,0.2,1.0],
-             "ReflectionColor":[0.15,0.15,0.15,1.0],
-             "RimColor":[0.0,0.0,0.0,1.0],
              "MirrorClearColor":[0.3,0.3,0.3,1.0],
              "SpecularityFromTextureLuminance":1.0,
-             "IsStencilMirror":true,
              "ViewOffsetScale":0.8,
              "FresnelBias":0.1,
              "FresnelScale":1.0,
