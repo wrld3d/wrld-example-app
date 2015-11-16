@@ -19,7 +19,8 @@ namespace ExampleApp
                                                                            Eegeo::Resources::Interiors::IInteriorsMaterialFactory& diffuseSpecularMaterialFactory,
                                                                            Eegeo::Resources::Interiors::IInteriorsMaterialFactory& cubeMappedMaterialFactory,
                                                                            Eegeo::Resources::Interiors::IInteriorsMaterialFactory& chromeMaterialFactory,
-                                                                           Eegeo::Resources::Interiors::IInteriorsMaterialFactory& reflectionMaterialFactory)
+                                                                           Eegeo::Resources::Interiors::IInteriorsMaterialFactory& reflectionMaterialFactory,
+                                                                           Eegeo::Resources::Interiors::IInteriorsMaterialFactory& stencilMirrorMaterialFactory)
             : m_materialDtoRepository(materialDtoRepository)
             , m_untexturedMaterialFactory(untexturedMaterialFactory)
             , m_diffuseTexturedMaterialFactory(diffuseTexturedMaterialFactory)
@@ -27,6 +28,7 @@ namespace ExampleApp
             , m_cubeMappedMaterialFactory(cubeMappedMaterialFactory)
             , m_chromeMaterialFactory(chromeMaterialFactory)
             , m_reflectionMaterialFactory(reflectionMaterialFactory)
+            , m_stencilMirrorMaterialFactory(stencilMirrorMaterialFactory)
             {
                 
             }
@@ -78,6 +80,10 @@ namespace ExampleApp
                 else if (materialFactoryType == InteriorMaterialSemantics::InteriorsReflectionMaterial)
                 {
                     return m_reflectionMaterialFactory.TryCreate(customInteriorMaterialData);
+                }
+                else if (materialFactoryType == InteriorMaterialSemantics::InteriorsStencilMirrorMaterial)
+                {
+                    return m_stencilMirrorMaterialFactory.TryCreate(customInteriorMaterialData);
                 }
                 
                 return NULL;

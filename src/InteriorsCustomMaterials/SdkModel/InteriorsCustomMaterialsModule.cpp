@@ -98,7 +98,8 @@ namespace ExampleApp
                                                                                               interiorsStreamingModule.GetInteriorsDiffuseSpecularMaterialFactory(),
                                                                                               interiorsStreamingModule.GetInteriorsCubeMappedMaterialFactory(),
                                                                                               interiorsStreamingModule.GetInteriorsChromeMaterialFactory(),
-                                                                                              interiorsStreamingModule.GetInteriorsReflectionMaterialFactory()
+                                                                                              interiorsStreamingModule.GetInteriorsReflectionMaterialFactory(),
+                                                                                              interiorsStreamingModule.GetInteriorsStencilMirrorMaterialFactory()
                                                                                               );
                 
                 interiorsStreamingModule.AddInteriorsMaterialFactory(m_pInteriorsCustomMaterialFactory);

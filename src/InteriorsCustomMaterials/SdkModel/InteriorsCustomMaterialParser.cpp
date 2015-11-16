@@ -150,7 +150,6 @@ namespace ExampleApp
                     TryAddScalar(ViewOffsetScale, materialJson, result.keyValueScalars);
                     
                     TryAddBoolean(IsTranslucent, materialJson, result.keyValueBooleans);
-                    TryAddBoolean(IsStencilMirror, materialJson, result.keyValueBooleans);
                     
                     return result;
                 }
