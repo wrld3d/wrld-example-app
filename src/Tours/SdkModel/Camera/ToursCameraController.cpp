@@ -87,6 +87,21 @@ namespace ExampleApp
                 {
                     m_camera.SetViewport(0.f, 0.f, screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight());
                 }
+                
+                float ToursCameraController::GetHeadingDegrees() const
+                {
+                    const Eegeo::Camera::CameraState& cameraState = GetCameraState();
+                    const Eegeo::m44& cameraViewMatrix = cameraState.ViewMatrix();
+                    
+                    const Eegeo::v3 forward = Eegeo::v3(cameraViewMatrix.GetRow(0).GetZ(),
+                                                        cameraViewMatrix.GetRow(1).GetZ(),
+                                                        cameraViewMatrix.GetRow(2).GetZ()).Norm();
+                    
+                    float heading = Eegeo::Camera::CameraHelpers::GetAbsoluteBearingRadians(cameraState.LocationEcef(),
+                                                                                   forward);
+                    
+                    return Eegeo::Math::Rad2Deg(heading);
+                }
 
             }
         }

@@ -4,6 +4,7 @@
 #include "AppGlobeCameraWrapper.h"
 #include "GpsGlobeCameraController.h"
 #include "GlobeCameraController.h"
+#include "CameraHelpers.h"
 
 namespace ExampleApp
 {
@@ -39,6 +40,15 @@ namespace ExampleApp
             Eegeo::ITouchController& AppGlobeCameraWrapper::GetTouchController() const
             {
                 return m_gpsGlobeCameraController.GetTouchController();
+            }
+            
+            float AppGlobeCameraWrapper::GetHeadingDegrees() const
+            {
+                Eegeo::Space::EcefTangentBasis cameraInterestBasis;
+                float headingRadians = Eegeo::Camera::CameraHelpers::GetAbsoluteBearingRadians(m_gpsGlobeCameraController.GetInterestBasis().GetPointEcef(),
+                                                                                               m_gpsGlobeCameraController.GetInterestBasis().GetForward());
+                
+                return Eegeo::Math::Rad2Deg(headingRadians);
             }
         }
     }

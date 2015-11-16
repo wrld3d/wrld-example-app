@@ -41,6 +41,8 @@ namespace ExampleApp
                     
                     void UpdateScreenProperties(const Eegeo::Rendering::ScreenProperties& screenProperties);
                     
+                    float GetHeadingDegrees() const;
+                    
                 private:
                     
                     Eegeo::Camera::RenderCamera m_camera;

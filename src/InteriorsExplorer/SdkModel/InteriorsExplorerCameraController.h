@@ -62,7 +62,7 @@ namespace ExampleApp
                 const float GetDistanceToInterest() const;
                 
                 void SetHeading(float headingDegrees);
-                const float GetHeadingDegrees() const;
+                float GetHeadingDegrees() const;
                 
                 void SetTilt(float tiltDegrees);
                 

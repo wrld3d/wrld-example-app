@@ -100,6 +100,21 @@ namespace ExampleApp
                 return m_cameras[m_currentCameraIndex]->GetTouchController();
             }
             
+            float AppCameraController::GetHeadingDegrees() const
+            {
+                if(m_isTransitionInFlight)
+                {
+                    float t = Eegeo::Math::Clamp01(m_transitionTimer/m_transitionDuration);
+                    float easedT = Eegeo::Helpers::MathsHelpers::PennerQuadraticEaseInOut(t, 0.0f, 1.0f, 1.0f);
+                    
+                    return Eegeo::Math::Lerp(m_cameras.at(m_previousCameraIndex)->GetHeadingDegrees(),
+                                             m_cameras.at(m_currentCameraIndex)->GetHeadingDegrees(),
+                                             easedT);
+                }
+                
+                return m_cameras.at(m_currentCameraIndex)->GetHeadingDegrees();
+            }
+            
             void AppCameraController::Update(float dt)
             {
                 if(m_isTransitionInFlight)
