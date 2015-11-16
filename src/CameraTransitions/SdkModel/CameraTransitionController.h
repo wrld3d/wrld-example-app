@@ -96,6 +96,8 @@ namespace ExampleApp
                 
                 void StartQueuedTransition();
                 
+                float GetHeadingFromAppCamera();
+                
                 Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& m_cameraController;
                 ExampleApp::InteriorsExplorer::SdkModel::InteriorsExplorerCameraController& m_interiorsCameraController;
                 Eegeo::Location::NavigationService& m_navigationService;

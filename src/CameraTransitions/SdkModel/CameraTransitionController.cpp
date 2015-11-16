@@ -54,11 +54,8 @@ namespace ExampleApp
                                                                float distanceFromInterest,
                                                                bool jumpIfFar)
             {
-                const Eegeo::Space::EcefTangentBasis& cameraInterestBasis = m_cameraController.GetInterestBasis();
-                
-                float bearingRadians = Eegeo::Camera::CameraHelpers::GetAbsoluteBearingRadians(cameraInterestBasis.GetPointEcef(),
-                                                                                               cameraInterestBasis.GetForward());
-                
+                float bearingRadians = GetHeadingFromAppCamera();
+
                 StartTransitionTo(newInterestPoint, distanceFromInterest, bearingRadians, m_defaultInteriorId, 0, jumpIfFar);
             }
             
@@ -76,10 +73,8 @@ namespace ExampleApp
                                                                int targetFloorIndex,
                                                                bool jumpIfFar)
             {
-                const Eegeo::Space::EcefTangentBasis& cameraInterestBasis = m_cameraController.GetInterestBasis();
+                float bearingRadians = GetHeadingFromAppCamera();
                 
-                float bearingRadians = Eegeo::Camera::CameraHelpers::GetAbsoluteBearingRadians(cameraInterestBasis.GetPointEcef(),
-                                                                                               cameraInterestBasis.GetForward());
                 StartTransitionTo(newInterestPoint, distanceFromInterest, bearingRadians, interiorId, targetFloorIndex, jumpIfFar);
             }
             
@@ -247,6 +242,18 @@ namespace ExampleApp
                                                                                            jumpIfFar);
                 m_transitionStages.push(pStage);
 
+            }
+            
+            float CameraTransitionController::GetHeadingFromAppCamera()
+            {
+                const Eegeo::Camera::CameraState& cameraState = m_appCameraController.GetCameraState();
+                const Eegeo::m44& cameraViewMatrix = cameraState.ViewMatrix();
+                const Eegeo::v3 forward(cameraViewMatrix.GetRow(0).GetZ(),
+                                        cameraViewMatrix.GetRow(1).GetZ(),
+                                        cameraViewMatrix.GetRow(2).GetZ());
+                
+                return Eegeo::Camera::CameraHelpers::GetAbsoluteBearingRadians(cameraState.LocationEcef(),
+                                                                               forward);
             }
         }
     }
