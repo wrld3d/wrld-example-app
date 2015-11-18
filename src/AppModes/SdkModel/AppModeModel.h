@@ -23,6 +23,8 @@ namespace ExampleApp
 
                 
                 void InitialiseStateMachine(const std::vector<Helpers::IStateMachineState*>& appStates);
+
+				void DestroyStateMachine();
                 
                 AppMode GetAppMode() const;
                 

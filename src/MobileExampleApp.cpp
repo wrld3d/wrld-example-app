@@ -309,6 +309,8 @@ namespace ExampleApp
 
     MobileExampleApp::~MobileExampleApp()
     {
+		m_pAppModeModel->DestroyStateMachine();
+
         Eegeo_DELETE m_pUserInteractionModule;
         
         Eegeo_DELETE m_pStreamingVolume;
@@ -657,8 +659,6 @@ namespace ExampleApp
         
         Eegeo_DELETE m_pModalityModule;
         
-        Eegeo_DELETE m_pInteriorsExplorerModule;
-        
         Eegeo_DELETE m_pCompassModule;
         
         Eegeo_DELETE m_pInteriorsNavigationService;
@@ -677,13 +677,9 @@ namespace ExampleApp
 
         Eegeo_DELETE m_pSearchResultPoiModule;
         
-        Eegeo_DELETE m_pMyPinsModule;
-
-        Eegeo_DELETE m_pWorldPinsModule;
-
-        Eegeo_DELETE m_pPinsModule;
-
         Eegeo_DELETE m_pPlaceJumpsModule;
+
+		Eegeo_DELETE m_pFlattenButtonModule;
 
         Eegeo_DELETE m_pMapModeModule;
         
@@ -693,11 +689,11 @@ namespace ExampleApp
 
         Eegeo_DELETE m_pSecondaryMenuModule;
 
-        Eegeo_DELETE m_pFlattenButtonModule;
-
         Eegeo_DELETE m_pWeatherMenuModule;
         
         Eegeo_DELETE m_pGpsMarkerModule;
+
+		Eegeo_DELETE m_pInteriorsExplorerModule;
 
         Eegeo_DELETE m_pSearchModule;
         
@@ -706,6 +702,14 @@ namespace ExampleApp
             Eegeo_DELETE (*it).second;
         }
         m_searchServiceModules.clear();
+
+		Eegeo_DELETE m_pReportPinsVisibilityMaskingModule;
+
+		Eegeo_DELETE m_pMyPinsModule;
+
+		Eegeo_DELETE m_pWorldPinsModule;
+
+		Eegeo_DELETE m_pPinsModule;
 
         Eegeo_DELETE m_pAppCameraModule;
         
@@ -718,8 +722,6 @@ namespace ExampleApp
         Eegeo_DELETE m_pReactionControllerModule;
         
         Eegeo_DELETE m_pSwallowPoiDbModule;
-        
-        Eegeo_DELETE m_pReportPinsVisibilityMaskingModule;
     }
 
     std::vector<ExampleApp::OpenableControl::View::IOpenableControlViewModel*> MobileExampleApp::GetOpenableControls() const
