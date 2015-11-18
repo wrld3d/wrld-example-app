@@ -73,6 +73,7 @@ The project is configured to build for multiple target CPU architectures, creati
 * Clone this repository and run `./update.platform.sh -p windows`
 * Open ./windows/ExampleApp/ExampleApp.sln
 * Right click the ExampleAppWPF project and choose `Set as StartUp Project`
+* Choose `x64` as your build platform instead of `Any CPU`
 * Build and Run the app
 
 ### API Key 
