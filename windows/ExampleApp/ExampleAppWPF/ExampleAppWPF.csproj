@@ -506,8 +506,12 @@ xcopy "$(ProjectDir)..\..\libs\eegeo\ANGLE\x64\$(ConfigurationName)\libGLESv2.dl
 xcopy "$(ProjectDir)..\..\libs\eegeo\openssl\x64\libeay32.dll" "$(TargetDir)" /d /r /y
 xcopy "$(ProjectDir)..\..\libs\eegeo\openssl\x64\ssleay32.dll" "$(TargetDir)" /d /r /y
 xcopy "$(ProjectDir)..\..\libs\eegeo\pthread\x64\$(ConfigurationName)\pthreadVC2.dll" "$(TargetDir)" /d /r /y
-xcopy "$(ProjectDir)..\..\libs\eegeo\VS2012\x64\$(ConfigurationName)\msvcr110.dll" "$(TargetDir)" /d /r /y
-xcopy "$(VS140COMNTOOLS)\..\..\VC\bin\amd64\d3dcompiler_47.dll" "$(TargetDir)" /d /r /y</PostBuildEvent>
+xcopy "$(VS140COMNTOOLS)\..\..\VC\bin\amd64\d3dcompiler_47.dll" "$(TargetDir)" /d /r /y
+if $(ConfigurationName) == Debug (
+  xcopy "$(ProjectDir)..\..\libs\eegeo\VS2012\x64\$(ConfigurationName)\msvcr110d.dll" "$(TargetDir)" /d /r /y
+) ELSE (
+  xcopy "$(ProjectDir)..\..\libs\eegeo\VS2012\x64\$(ConfigurationName)\msvcr110.dll" "$(TargetDir)" /d /r /y
+)</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
