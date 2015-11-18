@@ -59,10 +59,7 @@ namespace ExampleApp
                     
                     if(m_appModeModel.GetAppMode() == AppModes::SdkModel::InteriorMode)
                     {
-                        float headingRadians = Eegeo::Camera::CameraHelpers::GetAbsoluteBearingRadians(m_cameraController.GetCameraState().InterestPointEcef(),
-                                                                                                       m_cameraController.GetRenderCamera().GetModelMatrix().GetRow(2));
-                        
-                        m_interiorsCameraController.SetHeading(Eegeo::Math::Rad2Deg(headingRadians));
+                        m_interiorsCameraController.SetHeading(m_cameraController.GetHeadingDegrees());
                         m_interiorsCameraController.SetTilt(0.0f);
                     }
                 }

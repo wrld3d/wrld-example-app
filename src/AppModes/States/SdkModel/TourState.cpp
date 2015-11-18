@@ -70,9 +70,6 @@ namespace ExampleApp
                 {
                     m_tourService.UnregisterTourEndedCallback(m_tourStartedCallback);
                     
-                    float headingRadians = Eegeo::Camera::CameraHelpers::GetAbsoluteBearingRadians(m_cameraController.GetCameraState().InterestPointEcef(),
-                                                                                                   m_cameraController.GetRenderCamera().GetModelMatrix().GetRow(2));
-                    
                     const float interestDistance = m_appModeModel.GetAppMode() == AppModes::SdkModel::WorldMode ? 500.0f : 150.0f;
                     
                     if(m_appModeModel.GetAppMode() == AppModes::SdkModel::WorldMode)
@@ -80,14 +77,14 @@ namespace ExampleApp
                         Eegeo::Space::LatLongAltitude latLong = Eegeo::Space::LatLongAltitude::FromECEF(m_cameraController.GetCameraState().InterestPointEcef());
                         
                         m_worldCameraController.SetView(latLong.GetLatitudeInDegrees(), latLong.GetLongitudeInDegrees(),
-                                                        Eegeo::Math::Rad2Deg(headingRadians),
+                                                        m_cameraController.GetHeadingDegrees(),
                                                         interestDistance);
                         m_worldCameraController.GetGlobeCameraController().ApplyTilt(0.0f);
                     }
                     else if(m_appModeModel.GetAppMode() == AppModes::SdkModel::InteriorMode)
                     {
                         m_interiorsCameraController.SetDistanceToInterest(interestDistance);
-                        m_interiorsCameraController.SetHeading(Eegeo::Math::Rad2Deg(headingRadians));
+                        m_interiorsCameraController.SetHeading(m_cameraController.GetHeadingDegrees());
                         m_interiorsCameraController.SetInterestLocation(m_cameraController.GetCameraState().InterestPointEcef());
                     }
                     
