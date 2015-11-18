@@ -4,7 +4,7 @@
 #include "WatermarkViewInterop.h"
 #include "MathFunc.h"
 #include "ImageHelpers.h"
-#include "App.h"
+#include "UIHelpers.h"
 
 @implementation WatermarkView
 
@@ -34,7 +34,7 @@
         m_width = 140 * m_pixelScale;
         m_height = 52 * m_pixelScale;
         
-        if(App::IsDeviceSmall())
+        if(ExampleApp::Helpers::UIHelpers::UsePhoneLayout())
         {
             m_yPosActive = (20 * m_pixelScale);
             m_yPosInactive = (-m_height);

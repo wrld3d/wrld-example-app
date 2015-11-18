@@ -11,7 +11,7 @@
 #include "StringHelpers.h"
 #import "UIView+TouchExclusivity.h"
 #include "ExampleTourSearchResultPoiView.h"
-#include "App.h"
+#include "UIHelpers.h"
 #include "ExampleSearchJsonParser.h"
 
 @interface ExampleTourSearchResultPoiView()<UIGestureRecognizerDelegate>
@@ -132,7 +132,7 @@
     const float boundsWidth = static_cast<float>(self.superview.bounds.size.width);
     const float boundsHeight = static_cast<float>(self.superview.bounds.size.height);
     const float boundsOccupyMultiplier = 0.9f;
-    const float mainWindowWidth = App::IsDeviceSmall() ? std::min(boundsWidth, 348.f) : 450.f;
+    const float mainWindowWidth = ExampleApp::Helpers::UIHelpers::UsePhoneLayout() ? std::min(boundsWidth, 348.f) : 450.f;
     const float mainWindowHeight = (boundsHeight * boundsOccupyMultiplier);
     const float mainWindowX = (boundsWidth * 0.5f) - (mainWindowWidth * 0.5f);
     const float mainWindowY = ((boundsHeight * 0.5f) - (mainWindowHeight * 0.5f));

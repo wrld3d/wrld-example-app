@@ -6,7 +6,7 @@
 #include "CellConstants.h"
 #include "SecondaryMenuViewInterop.h"
 #include "MenuViewInterop.h"
-#include "App.h"
+#include "UIHelpers.h"
 
 @implementation SecondaryMenuView
 
@@ -23,7 +23,7 @@
 
     m_stateChangeAnimationTimeSeconds = 0.2f;
     
-    const bool isPhone = App::IsDeviceSmall();
+    const bool isPhone = ExampleApp::Helpers::UIHelpers::UsePhoneLayout();
     
     const float upperMargin = isPhone ? 20.0f : 50.0f;
 

@@ -1286,6 +1286,8 @@
 		7E9B7F4B1A8E25E400C6F2E3 /* arrow3_up.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E9B7F431A8E25E400C6F2E3 /* arrow3_up.png */; };
 		7ECE70741BBAA9BF0008CDDB /* SearchJsonParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7ECE70721BBAA9BF0008CDDB /* SearchJsonParser.cpp */; };
 		7ECE70751BBAA9BF0008CDDB /* SearchJsonParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7ECE70721BBAA9BF0008CDDB /* SearchJsonParser.cpp */; };
+		7ED084B91BFC94D700B6F91D /* UIHelpers.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7ED084B81BFC94D700B6F91D /* UIHelpers.mm */; };
+		7ED084BA1BFC94D700B6F91D /* UIHelpers.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7ED084B81BFC94D700B6F91D /* UIHelpers.mm */; };
 		7EE481EB16836F370006E99B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE481EA16836F370006E99B /* UIKit.framework */; };
 		7EE481ED16836F370006E99B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE481EC16836F370006E99B /* Foundation.framework */; };
 		7EE481F116836F370006E99B /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE481F016836F370006E99B /* CoreData.framework */; };
@@ -2778,6 +2780,8 @@
 		7EC46F2A1ABC484600683975 /* CompassModeUnauthorizedMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompassModeUnauthorizedMessage.h; sourceTree = "<group>"; };
 		7ECE70721BBAA9BF0008CDDB /* SearchJsonParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchJsonParser.cpp; sourceTree = "<group>"; };
 		7ECE70731BBAA9BF0008CDDB /* SearchJsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchJsonParser.h; sourceTree = "<group>"; };
+		7ED084B81BFC94D700B6F91D /* UIHelpers.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UIHelpers.mm; sourceTree = "<group>"; };
+		7ED084BB1BFC94E700B6F91D /* UIHelpers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UIHelpers.h; sourceTree = "<group>"; };
 		7EE481E616836F370006E99B /* ExampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7EE481EA16836F370006E99B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		7EE481EC16836F370006E99B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -5006,6 +5010,8 @@
 				7E3B8A3F1A385F100023C94E /* ImageHelpers.mm */,
 				7E3B8A421A385F100023C94E /* UIColors.h */,
 				7E3B8A431A385F100023C94E /* UIColors.mm */,
+				7ED084B81BFC94D700B6F91D /* UIHelpers.mm */,
+				7ED084BB1BFC94E700B6F91D /* UIHelpers.h */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -6810,6 +6816,7 @@
 				18B44CDF1A83B64200FDFD8A /* CompletedCacheClearMessage.cpp in Sources */,
 				BFD5FD671BA706AD00F591F1 /* TourFullScreenImageCeremonyBeganMessage.cpp in Sources */,
 				7E3B89B71A385A290023C94E /* SearchResultMenuSearchQueryPerformedMessageHandler.cpp in Sources */,
+				7ED084BA1BFC94D700B6F91D /* UIHelpers.mm in Sources */,
 				7E3B88B31A385A290023C94E /* CategorySearchModule.cpp in Sources */,
 				18B22B401A7AA0BC00DDBFA2 /* UILabelledCheckboxView.mm in Sources */,
 				7E3B8B321A385F110023C94E /* WorldPinOnMapView.mm in Sources */,
@@ -7274,6 +7281,7 @@
 				7E3B89341A385A290023C94E /* MyPinCreationScreenControl.cpp in Sources */,
 				18B44CDE1A83B64200FDFD8A /* CompletedCacheClearMessage.cpp in Sources */,
 				BFD5FD661BA706AD00F591F1 /* TourFullScreenImageCeremonyBeganMessage.cpp in Sources */,
+				7ED084B91BFC94D700B6F91D /* UIHelpers.mm in Sources */,
 				7E3B89B61A385A290023C94E /* SearchResultMenuSearchQueryPerformedMessageHandler.cpp in Sources */,
 				7E3B88B21A385A290023C94E /* CategorySearchModule.cpp in Sources */,
 				18B22B3F1A7AA0BC00DDBFA2 /* UILabelledCheckboxView.mm in Sources */,
