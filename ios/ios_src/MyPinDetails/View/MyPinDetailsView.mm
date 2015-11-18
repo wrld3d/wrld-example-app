@@ -10,7 +10,7 @@
 #include "StringHelpers.h"
 #include "MyPinDetailsViewInterop.h"
 #import "UIView+TouchExclusivity.h"
-#include "App.h"
+#include "UIHelpers.h"
 
 @implementation MyPinDetailsView
 
@@ -163,7 +163,7 @@
 
     const float boundsWidth = static_cast<float>(self.superview.bounds.size.width);
     const float boundsHeight = static_cast<float>(self.superview.bounds.size.height);
-    const bool useFullScreenSize = App::IsDeviceSmall();
+    const bool useFullScreenSize = ExampleApp::Helpers::UIHelpers::UsePhoneLayout();
     const float boundsOccupyMultiplier = useFullScreenSize ? 0.9f : 0.5f;
     const float mainWindowWidth = boundsWidth * boundsOccupyMultiplier;
     const float mainWindowHeight = boundsHeight * boundsOccupyMultiplier;

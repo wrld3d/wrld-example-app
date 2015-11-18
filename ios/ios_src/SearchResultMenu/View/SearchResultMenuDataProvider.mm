@@ -8,7 +8,7 @@
 #include "IconResources.h"
 #include "ImageHelpers.h"
 #include "CellConstants.h"
-#include "App.h"
+#include "UIHelpers.h"
 #include <sstream>
 
 @implementation SearchResultMenuDataProvider
@@ -22,7 +22,7 @@ CGFloat const SearchResultRowHeight = SECTION_HEADER_CELL_HEIGHT;
     [cell setAlignInfo :isRightMenu
                        :false
                        :isHeader
-                       :App::IsDeviceSmall() ? @"search_result_background_small" : @"search_result_background"
+                       :ExampleApp::Helpers::UIHelpers::UsePhoneLayout() ? @"search_result_background_small" : @"search_result_background"
                        :@""];
 }
 

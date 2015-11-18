@@ -8,7 +8,7 @@
 #include "ColorHelpers.h"
 #include "ImageHelpers.h"
 #include "UIColors.h"
-#include "App.h"
+#include "UIHelpers.h"
 
 @implementation TourExplorerView
 {
@@ -29,7 +29,7 @@
 
 - (id) initWithParams:(float)width :(float)height :(float)pixelScale :(ImageStore*)pImageStore
 {
-    const bool isPhone = App::IsDeviceSmall();
+    const bool isPhone = ExampleApp::Helpers::UIHelpers::UsePhoneLayout();
     
     if (self = [super init])
     {

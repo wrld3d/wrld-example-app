@@ -2,7 +2,7 @@
 
 #import "TourWebView.h"
 #include "UIColors.h"
-#include "App.h"
+#include "UIHelpers.h"
 #include "ImageHelpers.h"
 
 @implementation TourWebView
@@ -11,7 +11,7 @@
 {
     if (self = [super init])
     {
-        BOOL isPhone = App::IsDeviceSmall();
+        BOOL isPhone = ExampleApp::Helpers::UIHelpers::UsePhoneLayout();
         float percentOfScreenUse = isPhone ? 0.75f : 0.8f;
         float spacing = 10.0f;
         float buttonSize = 64;

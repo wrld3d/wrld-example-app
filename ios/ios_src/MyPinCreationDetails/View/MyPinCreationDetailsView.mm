@@ -3,7 +3,7 @@
 #include "MyPinCreationDetailsView.h"
 #include "UIColors.h"
 #include "ImageHelpers.h"
-#include "App.h"
+#include "UIHelpers.h"
 
 #import "UIView+TouchExclusivity.h"
 #import <QuartzCore/QuartzCore.h>
@@ -92,7 +92,7 @@
         self.pConfirmButton = [[[UIButton alloc] initWithFrame: CGRectMake(0, 0, 0, 0)] autorelease];
         [self.pFooterContainer addSubview: self.pConfirmButton];
 
-        m_usePopover = !App::IsDeviceSmall();
+        m_usePopover = !ExampleApp::Helpers::UIHelpers::UsePhoneLayout();
 
         [self layoutSubviews];
         [self setTouchExclusivity: self];
@@ -158,7 +158,7 @@
 
     m_scrollContentBottomMargin = 50;
 
-    const bool useFullScreenSize = App::IsDeviceSmall();
+    const bool useFullScreenSize = ExampleApp::Helpers::UIHelpers::UsePhoneLayout();
     const float boundsOccupyMultiplier = useFullScreenSize ? 0.9f : 0.6f;
     m_controlContainerWidth = floorf(boundsWidth * boundsOccupyMultiplier);
     m_controlContainerHeight = boundsHeight * boundsOccupyMultiplier;
@@ -264,7 +264,7 @@
     self.pPoiDescriptionBox.layer.borderWidth = 2.f;
     [self.pPoiDescriptionBox setDelegate: self];
 
-    if(App::IsDeviceSmall())
+    if(ExampleApp::Helpers::UIHelpers::UsePhoneLayout())
     {
         [self addDoneToolBarToKeyboard :self.pPoiDescriptionBox];
     }

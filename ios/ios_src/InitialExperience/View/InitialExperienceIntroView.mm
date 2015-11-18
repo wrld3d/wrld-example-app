@@ -4,7 +4,7 @@
 #include "InitialExperienceIntroViewInterop.h"
 #include "UIColors.h"
 #include "ImageHelpers.h"
-#include "App.h"
+#include "UIHelpers.h"
 
 @implementation InitialExperienceIntroView
 
@@ -81,7 +81,7 @@ const float arrowWidth = 10;
 
 - (UILabel*)createDialogTitle: (NSString*)text
 {
-    const bool useSmallScreen = App::IsDeviceSmall();
+    const bool useSmallScreen = ExampleApp::Helpers::UIHelpers::UsePhoneLayout();
     UILabel* pLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
     pLabel.textColor = ExampleApp::Helpers::ColorPalette::GoldTone;
     pLabel.text = text;
@@ -91,7 +91,7 @@ const float arrowWidth = 10;
 
 - (UITextView*)createDialogDescription: (NSString*)text
 {
-    const bool useSmallScreen = App::IsDeviceSmall();
+    const bool useSmallScreen = ExampleApp::Helpers::UIHelpers::UsePhoneLayout();
     UITextView* pTextView = [[[UITextView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
     pTextView.textColor = ExampleApp::Helpers::ColorPalette::DarkGreyTone;
     pTextView.editable = NO;
@@ -170,7 +170,7 @@ const float arrowWidth = 10;
     [self setFrame:CGRectMake(0, 0, m_screenWidth, m_screenHeight)];
     [self.pBackgroundContainer setFrame:CGRectMake(0, 0, m_screenWidth, m_screenHeight)];
     
-    const bool useSmallScreen = App::IsDeviceSmall();
+    const bool useSmallScreen = ExampleApp::Helpers::UIHelpers::UsePhoneLayout();
     
     const int dialogWidth = useSmallScreen ? 100 : 120;
     const int dialogHeight = useSmallScreen ? 64 : 97;

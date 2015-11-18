@@ -6,7 +6,7 @@
 #include "ImageHelpers.h"
 #include "ColorHelpers.h"
 #include "TourExplorerCardView.h"
-#include "App.h"
+#include "UIHelpers.h"
 #include <sstream>
 
 const bool TestCycleCarouselMode = false;
@@ -301,13 +301,13 @@ const bool TestCycleCarouselMode = false;
 
 - (float) getItemWidth
 {
-    const bool isPhone = App::IsDeviceSmall();
+    const bool isPhone = ExampleApp::Helpers::UIHelpers::UsePhoneLayout();
     return isPhone ? ITEM_WIDTH_IPHONE : ITEM_WIDTH;
 }
 
 - (float) getItemHeight
 {
-    const bool isPhone = App::IsDeviceSmall();
+    const bool isPhone = ExampleApp::Helpers::UIHelpers::UsePhoneLayout();
     return isPhone ? ITEM_HEIGHT_IPHONE : ITEM_HEIGHT;
 }
 

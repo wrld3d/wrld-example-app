@@ -6,7 +6,7 @@
 #include "UIColors.h"
 #include "ImageHelpers.h"
 #include "TourFullScreenImageViewInterop.h"
-#include "App.h"
+#include "UIHelpers.h"
 
 @implementation TourFullScreenImageView
 {
@@ -43,7 +43,7 @@
         self.pMessage.textColor = [UIColor whiteColor];
         self.pMessage.textAlignment = NSTextAlignmentCenter;
         self.pMessage.numberOfLines = 0;
-        self.pMessage.font = [self.pMessage.font fontWithSize: (App::IsDeviceSmall() ? 24 : 36)];
+        self.pMessage.font = [self.pMessage.font fontWithSize: (ExampleApp::Helpers::UIHelpers::UsePhoneLayout() ? 24 : 36)];
         self.pMessage.layer.shadowColor = [[UIColor blackColor] CGColor];
         self.pMessage.layer.shadowOffset = CGSizeMake(0.0f, 1.0f);
         self.pMessage.layer.shadowOpacity = 1.0f;
@@ -78,7 +78,7 @@
 {
     [super layoutSubviews];
     
-    const float screenMessageVerticalOffsetPercent = App::IsDeviceSmall() ? 0.50f : 0.65f;
+    const float screenMessageVerticalOffsetPercent = ExampleApp::Helpers::UIHelpers::UsePhoneLayout() ? 0.50f : 0.65f;
     
     self.pMessage.text = [NSString stringWithUTF8String:m_message.c_str()];
     [self.pMessage sizeToFit];

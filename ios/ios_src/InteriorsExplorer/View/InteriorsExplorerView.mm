@@ -4,7 +4,7 @@
 #include "UIColors.h"
 #include "ImageHelpers.h"
 #include "InteriorsExplorerViewInterop.h"
-#include "App.h"
+#include "UIHelpers.h"
 
 #import "UIView+TouchExclusivity.h"
 #import <QuartzCore/QuartzCore.h>
@@ -25,7 +25,7 @@ namespace
 {
     if (self = [super init])
     {
-        const bool isPhone = App::IsDeviceSmall();
+        const bool isPhone = ExampleApp::Helpers::UIHelpers::UsePhoneLayout();
         
         m_pixelScale = 1.f;
         m_screenWidth = width/pixelScale;

@@ -9,7 +9,7 @@
 #include "IconResources.h"
 #include "OptionsViewInterop.h"
 #import "UIView+TouchExclusivity.h"
-#include "App.h"
+#include "UIHelpers.h"
 
 @implementation OptionsView
 
@@ -141,7 +141,7 @@
 
     const float boundsWidth = static_cast<float>(self.superview.bounds.size.width);
     const float boundsHeight = static_cast<float>(self.superview.bounds.size.height);
-    const bool useFullScreenSize = App::IsDeviceSmall();
+    const bool useFullScreenSize = ExampleApp::Helpers::UIHelpers::UsePhoneLayout();
     const float boundsOccupyWidthMultiplier = useFullScreenSize ? 0.9f : ((2.f/3.f) * 0.6f);
     const float boundsOccupyHeightMultiplier = useFullScreenSize ? 0.9f : ((2.f/3.f));
     const float mainWindowWidth = boundsWidth * boundsOccupyWidthMultiplier;

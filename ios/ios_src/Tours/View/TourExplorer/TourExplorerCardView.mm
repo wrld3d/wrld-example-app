@@ -1,7 +1,7 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #import "TourExplorerCardView.h"
-#include "App.h"
+#include "UIHelpers.h"
 #include "ImageHelpers.h"
 #include "TourDefines.h"
 
@@ -15,7 +15,7 @@
 {
     if (self = [super init])
     {
-        const bool isPhone = App::IsDeviceSmall();
+        const bool isPhone = ExampleApp::Helpers::UIHelpers::UsePhoneLayout();
         
         float frameSizeX = isPhone ? 250 : 338;
         float frameSizeY = isPhone ? 164 : 222;
