@@ -25,10 +25,10 @@ namespace ExampleApp
 
             public:
                 WatermarkViewModule(IWatermarkViewModel& viewModel,
+                                    IWatermarkDataRepository& watermarkDataRepository,
                                     const Eegeo::Rendering::ScreenProperties& screenProperties,
                                     ExampleAppMessaging::TMessageBus& messageBus,
-                                    Metrics::IMetricsService& metricsService,
-                                    const std::string& googleAnalyticsReferrerToken);
+                                    Metrics::IMetricsService& metricsService);
 
                 ~WatermarkViewModule();
 

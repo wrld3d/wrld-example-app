@@ -37,6 +37,11 @@ namespace ExampleApp
             {
                 m_callbacks.RemoveCallback(callback);
             }
+            
+            void WatermarkViewInterop::UpdateWatermarkData(const WatermarkData& watermarkData)
+            {
+                [m_pView updateWatermarkData: watermarkData];
+            }
         }
     }
 }

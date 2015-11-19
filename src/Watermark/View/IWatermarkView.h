@@ -4,6 +4,7 @@
 
 #include "IScreenControlView.h"
 #include "ICallback.h"
+#include "Watermark.h"
 
 namespace ExampleApp
 {
@@ -17,6 +18,7 @@ namespace ExampleApp
                 virtual ~IWatermarkView() { };
                 
                 virtual void OnSelected() = 0;
+                virtual void UpdateWatermarkData(const WatermarkData& watermarkData) = 0;
                 virtual void InsertSelectedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
                 virtual void RemoveSelectedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
             };

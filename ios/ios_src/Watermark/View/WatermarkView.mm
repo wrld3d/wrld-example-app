@@ -5,6 +5,7 @@
 #include "MathFunc.h"
 #include "ImageHelpers.h"
 #include "UIHelpers.h"
+#include "WatermarkData.h"
 
 @implementation WatermarkView
 
@@ -13,7 +14,10 @@
     return m_pInterop;
 }
 
-- (id) initWithDimensions:(float)width :(float)height :(float)pixelScale :(const std::string&) googleAnalyticsReferrerToken
+- (id) initWithDimensions:(float)width
+                         :(float)height
+                         :(float)pixelScale
+                         :(const ExampleApp::Watermark::View::WatermarkData&) watermarkData
 {
     if(self = [super init])
     {
@@ -25,11 +29,10 @@
         m_pixelScale = 1.f;
         m_screenWidth = width/pixelScale;
         m_screenHeight = height/pixelScale;
-        m_googleAnalyticsReferrerToken = googleAnalyticsReferrerToken;
 
         m_pInterop = new ExampleApp::Watermark::View::WatermarkViewInterop(self);
         [self addTarget:self action:@selector(onClick:) forControlEvents:UIControlEventTouchUpInside];
-        [self setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"eegeo_logo") forState:UIControlStateNormal];
+        [self updateWatermarkData: watermarkData];
         
         m_width = 140 * m_pixelScale;
         m_height = 52 * m_pixelScale;
@@ -76,9 +79,8 @@
 
 - (void) onClick:(UIButton *)sender
 {
-    NSString* appName =  [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDisplayName"];
-    NSString* alertTitle = @"Maps by eeGeo";
-    NSString* alertMessage = [NSString stringWithFormat: @"The %@ app is open source. It's built using the eeGeo maps SDK, a cross platform API for building engaging, customizable apps.", appName];
+    NSString* alertTitle = [NSString stringWithUTF8String: m_popupTitle.c_str()];
+    NSString* alertMessage = [NSString stringWithUTF8String: m_popupBody.c_str()];
     NSString* cancelMessage = @"Later";
     NSString* goToSiteMessage = @"Find Out More";
     
@@ -90,7 +92,7 @@
         
         UIAlertAction* openSiteAction = [UIAlertAction actionWithTitle:goToSiteMessage
                                                                  style:UIAlertActionStyleDefault
-                                                               handler:^(UIAlertAction * action) { [self openEegeoWebsite]; }];
+                                                               handler:^(UIAlertAction * action) { [self goToWatermarkUrl]; }];
         
         UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:cancelMessage
                                                                style:UIAlertActionStyleCancel
@@ -169,13 +171,9 @@
      ];
 }
 
-- (void) openEegeoWebsite
+- (void) goToWatermarkUrl
 {
-    NSString* urlString = [NSString stringWithFormat
-                           :@"http://eegeo.com/findoutmore?utm_source=%@&utm_medium=referral&utm_campaign=eegeo",
-                           [NSString stringWithUTF8String:m_googleAnalyticsReferrerToken.c_str()]
-                           ];
-    
+    NSString* urlString = [NSString stringWithUTF8String: m_webUrl.c_str()];
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlString]];
 }
 
@@ -183,8 +181,55 @@
 {
     if (buttonIndex == 1)
     {
-        [self openEegeoWebsite];
+        [self goToWatermarkUrl];
     }
+}
+
+- (void) updateWatermarkData: (const ExampleApp::Watermark::View::WatermarkData&) watermarkData
+{
+    m_popupTitle = watermarkData.PopupTitle();
+    m_popupBody = watermarkData.PopupBody();
+    m_webUrl = watermarkData.WebUrl();
+    m_shouldShowShadow = watermarkData.ShouldShowShadow();
+ 
+    const std::string& newImageAssetName = watermarkData.ImageAssetName();
+    bool shouldTransitionImage = newImageAssetName != m_imageAssetName;
+    
+    if (shouldTransitionImage)
+    {
+        m_imageAssetName = newImageAssetName;
+        [self transitionToNewImage];
+    }
+}
+
+- (void) transitionToNewImage
+{
+    NSString* assetString = [NSString stringWithUTF8String: m_imageAssetName.c_str()];
+    UIImage* newImage = ExampleApp::Helpers::ImageHelpers::LoadImage(assetString);
+    
+    CABasicAnimation *crossFade = [CABasicAnimation animationWithKeyPath:@"contents"];
+    
+    crossFade.duration = 0.2;
+    crossFade.fromValue = (id)self.currentBackgroundImage.CGImage;
+    crossFade.toValue = (id)newImage.CGImage;
+    crossFade.removedOnCompletion = NO;
+    crossFade.fillMode = kCAFillModeForwards;
+
+    [CATransaction begin];
+    {
+        [CATransaction setCompletionBlock: ^
+         {
+             [self setBackgroundImage: self.imageView.image forState:UIControlStateNormal];
+             [self setImage: nil forState: UIControlStateNormal];
+         }];
+        
+        [self.imageView.layer addAnimation:crossFade forKey:@"animateContents"];
+        [self setImage:newImage forState:UIControlStateNormal];
+        [self setBackgroundImage: nil forState:UIControlStateNormal];
+    }
+    
+
+    [CATransaction commit];
 }
 
 @end

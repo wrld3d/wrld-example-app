@@ -3,6 +3,7 @@
 #pragma once
 
 #include "IWatermarkView.h"
+#include "Watermark.h"
 #include "WatermarkView.h"
 #include "CallbackCollection.h"
 
@@ -35,6 +36,8 @@ namespace ExampleApp
                 void InsertSelectedCallback(Eegeo::Helpers::ICallback0& callback);
 
                 void RemoveSelectedCallback(Eegeo::Helpers::ICallback0& callback);
+                
+                void UpdateWatermarkData(const WatermarkData& watermarkData);
             };
         }
     }

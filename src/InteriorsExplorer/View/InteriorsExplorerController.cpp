@@ -22,8 +22,7 @@ namespace ExampleApp
                                                                      ExampleApp::Menu::View::IMenuViewModel& secondaryMenuViewModel,
                                                                      ExampleApp::Menu::View::IMenuViewModel& searchResultMenuViewModel,
                                                                      ScreenControl::View::IScreenControlViewModel& flattenViewModel,
-                                                                     ScreenControl::View::IScreenControlViewModel& compassViewModel,
-																	 ScreenControl::View::IScreenControlViewModel& watermarkViewModel)
+                                                                     ScreenControl::View::IScreenControlViewModel& compassViewModel)
             : m_view(view)
             , m_viewModel(viewModel)
             , m_messageBus(messageBus)
@@ -32,7 +31,6 @@ namespace ExampleApp
             , m_searchResultMenuViewModel(searchResultMenuViewModel)
             , m_flattenViewModel(flattenViewModel)
             , m_compassViewModel(compassViewModel)
-            , m_watermarkViewModel(watermarkViewModel)
             , m_dismissedCallback(this, &InteriorsExplorerController::OnDismiss)
             , m_selectFloorCallback(this, &InteriorsExplorerController::OnSelectFloor)
             , m_stateChangedCallback(this, &InteriorsExplorerController::OnStateChanged)
@@ -96,7 +94,6 @@ namespace ExampleApp
                     m_searchResultMenuViewModel.RemoveFromScreen();
                     m_flattenViewModel.RemoveFromScreen();
                     m_compassViewModel.RemoveFromScreen();
-                    m_watermarkViewModel.RemoveFromScreen();
                     m_messageBus.Publish(WorldPins::WorldPinsVisibilityMessage(WorldPins::SdkModel::WorldPinVisibility::None));
                     m_messageBus.Publish(GpsMarker::GpsMarkerVisibilityMessage(false));
                 }
@@ -109,7 +106,6 @@ namespace ExampleApp
                     m_searchResultMenuViewModel.AddToScreen();
                     m_flattenViewModel.AddToScreen();
                     m_compassViewModel.AddToScreen();
-                    m_watermarkViewModel.AddToScreen();
                     m_messageBus.Publish(WorldPins::WorldPinsVisibilityMessage(WorldPins::SdkModel::WorldPinVisibility::All));
                     m_messageBus.Publish(GpsMarker::GpsMarkerVisibilityMessage(true));
                 }

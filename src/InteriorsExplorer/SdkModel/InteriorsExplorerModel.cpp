@@ -4,6 +4,7 @@
 #include "InteriorController.h"
 #include "InteriorsExplorerStateChangedMessage.h"
 #include "InteriorsExplorerFloorSelectedMessage.h"
+#include "InteriorsExplorerEnteredMessage.h"
 
 #include "InteriorsModel.h"
 #include "InteriorsFloorModel.h"
@@ -45,6 +46,7 @@ namespace ExampleApp
                                                            MapMode::SdkModel::IMapModeModel& mapModeModel,
                                                            WeatherMenu::SdkModel::IWeatherController& weatherController,
                                                            ExampleAppMessaging::TMessageBus& messageBus,
+                                                           ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
                                                            Metrics::IMetricsService& metricsService)
             : m_controller(controller)
             , m_interiorSelectionModel(interiorSelectionModel)
@@ -52,6 +54,7 @@ namespace ExampleApp
             , m_mapModeModel(mapModeModel)
             , m_weatherController(weatherController)
             , m_messageBus(messageBus)
+            , m_sdkModelDomainEventBus(sdkModelDomainEventBus)
             , m_metricsService(metricsService)
             , m_controllerStateChangedCallback(this, &InteriorsExplorerModel::OnControllerStateChanged)
             , m_controllerVisibilityChangedCallback(this, &InteriorsExplorerModel::OnControllerVisibilityChanged)
@@ -108,6 +111,7 @@ namespace ExampleApp
                     m_metricsService.BeginTimedEvent(MetricEventInteriorsVisible);
                     m_interiorExplorerEnabled = true;
                     PublishInteriorExplorerStateChange();
+                    m_sdkModelDomainEventBus.Publish(InteriorsExplorerEnteredMessage(interiorId));
                 }
             }
             
