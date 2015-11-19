@@ -48,6 +48,8 @@ namespace ExampleAppWPF
             Background = new SolidColorBrush(Colors.Cyan);
             UseLayoutRounding = true;
             SnapsToDevicePixels = true;
+
+            Visibility = Visibility.Hidden;
         }
 
         public override void OnApplyTemplate()
