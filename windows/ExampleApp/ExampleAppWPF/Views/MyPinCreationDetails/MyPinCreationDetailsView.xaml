@@ -13,19 +13,19 @@
                     <ControlTemplate.Resources>
                         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
                     </ControlTemplate.Resources>
-                    <DockPanel Width="350" Height="500">
+                    <DockPanel Width="350" Height="460">
                         <StackPanel Name="MainPanel" Background="{StaticResource White}" Orientation="Vertical">
                             <Rectangle Width="350" Height="7" Fill="{StaticResource Gold}" DockPanel.Dock="Top"/>
                             <StackPanel Orientation="Horizontal">
-                                <Image Source="/ExampleAppWPF;component/Assets/button_create_poi.png" Width="90" Height="90" Margin="10, 10, 0, 10"/>
-                                <Grid Margin="15, 30, 0, 30">
+                                <Image Source="/ExampleAppWPF;component/Assets/button_create_poi.png" Width="60" Height="60" Margin="5, 5, 0, 5"/>
+                                <Grid Margin="10, 20, 0, 20">
                                     <TextBox Name="TitleBox" Width="180" Height="30" Foreground="{StaticResource Gold}" FontWeight="Bold" Text="" BorderThickness="0" />
                                     <TextBlock IsHitTestVisible="False" Width="175" Height="28" Text="Name your pin..."  Margin="5,2" Foreground="{StaticResource LightGrey}"
                                                Visibility="{Binding ElementName=TitleBox, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
                                 </Grid>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
-                                <CheckBox Name="ToShare" Margin="50, 0, 10, 0"/>
+                                <CheckBox Name="ToShare" Margin="20, 0, 10, 0"/>
                                 <TextBlock Foreground="{StaticResource Gold}" FontWeight="Bold">
                                     Share 
                                     <Hyperlink  Name="TermsLink" NavigateUri="http://www.eegeo.com/tos/">
