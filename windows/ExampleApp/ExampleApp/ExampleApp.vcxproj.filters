@@ -1905,6 +1905,9 @@
     <ClCompile Include="..\..\..\src\SearchResultOnMap\SearchResultMeetingAvailabilityChanged.cpp">
       <Filter>Source Files\App\SearchResultOnMap</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\ExampleAppPch.cpp">
+      <Filter>Source Files\Windows</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\AppHost.h">
@@ -4117,6 +4120,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\SearchResultOnMap\SearchResultMeetingAvailabilityChanged.h">
       <Filter>Source Files\App\SearchResultOnMap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\ExampleAppPch.h">
+      <Filter>Source Files\Windows</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
