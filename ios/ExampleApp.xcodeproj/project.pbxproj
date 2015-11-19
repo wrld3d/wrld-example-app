@@ -643,10 +643,6 @@
 		2CA085F01BD7E1C400A99340 /* Textures in Resources */ = {isa = PBXBuildFile; fileRef = 2CA085EE1BD7E1C400A99340 /* Textures */; };
 		560741141B8CC624002B0F49 /* MenuDragStateChangedMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 560741121B8CC624002B0F49 /* MenuDragStateChangedMessage.cpp */; };
 		560741151B8CC624002B0F49 /* MenuDragStateChangedMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 560741121B8CC624002B0F49 /* MenuDragStateChangedMessage.cpp */; };
-		560F98F31BFCE1530008B0A2 /* micello_logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 560F98F11BFCE1530008B0A2 /* micello_logo@2x.png */; };
-		560F98F41BFCE1530008B0A2 /* micello_logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 560F98F11BFCE1530008B0A2 /* micello_logo@2x.png */; };
-		560F98F51BFCE1530008B0A2 /* micello_logo@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 560F98F21BFCE1530008B0A2 /* micello_logo@3x.png */; };
-		560F98F61BFCE1530008B0A2 /* micello_logo@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 560F98F21BFCE1530008B0A2 /* micello_logo@3x.png */; };
 		560F990B1BFDD4590008B0A2 /* WatermarkInteriorStateChangedObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 560F99071BFDD4590008B0A2 /* WatermarkInteriorStateChangedObserver.cpp */; };
 		560F990C1BFDD4590008B0A2 /* WatermarkInteriorStateChangedObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 560F99071BFDD4590008B0A2 /* WatermarkInteriorStateChangedObserver.cpp */; };
 		560F99131BFE0E0E0008B0A2 /* WatermarkDataRepository.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 560F99111BFE0E0E0008B0A2 /* WatermarkDataRepository.cpp */; };
@@ -2014,8 +2010,6 @@
 		560741121B8CC624002B0F49 /* MenuDragStateChangedMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MenuDragStateChangedMessage.cpp; sourceTree = "<group>"; };
 		560741131B8CC624002B0F49 /* MenuDragStateChangedMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuDragStateChangedMessage.h; sourceTree = "<group>"; };
 		560F98F01BFCD90F0008B0A2 /* WatermarkModelChangedMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WatermarkModelChangedMessage.h; sourceTree = "<group>"; };
-		560F98F11BFCE1530008B0A2 /* micello_logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "micello_logo@2x.png"; sourceTree = "<group>"; };
-		560F98F21BFCE1530008B0A2 /* micello_logo@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "micello_logo@3x.png"; sourceTree = "<group>"; };
 		560F99071BFDD4590008B0A2 /* WatermarkInteriorStateChangedObserver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WatermarkInteriorStateChangedObserver.cpp; sourceTree = "<group>"; };
 		560F99081BFDD4590008B0A2 /* WatermarkInteriorStateChangedObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WatermarkInteriorStateChangedObserver.h; sourceTree = "<group>"; };
 		560F990D1BFDEC470008B0A2 /* InteriorsExplorerEnteredMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InteriorsExplorerEnteredMessage.h; sourceTree = "<group>"; };
@@ -5516,8 +5510,6 @@
 		7EE4825B16847E7C0006E99B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				560F98F11BFCE1530008B0A2 /* micello_logo@2x.png */,
-				560F98F21BFCE1530008B0A2 /* micello_logo@3x.png */,
 				187C11CF1AB35E04001D1B87 /* ApplicationConfigs */,
 				188C4CBA1AA753F70080B34B /* Arrow.png */,
 				18FE216F1AA9C75700ACE28A /* Arrow@2x.png */,
@@ -6327,13 +6319,11 @@
 				7E1B50901ACD9AA50060FA4F /* banner_logo@2x.png in Resources */,
 				18EC01571AA8C8A500902E98 /* compass.png in Resources */,
 				18B5AC9819DC15CD00BA4A38 /* icon1_autumn.png in Resources */,
-				560F98F41BFCE1530008B0A2 /* micello_logo@2x.png in Resources */,
 				18B5AC8019DC15CD00BA4A38 /* arrow1.png in Resources */,
 				18FE20F41AA9B2C200ACE28A /* icon1_options@2x.png in Resources */,
 				18FE216E1AA9BA3D00ACE28A /* poi_marker@3x.png in Resources */,
 				56CF26881A24777100B30439 /* icon_create_poi.png in Resources */,
 				18FE215C1AA9BA3D00ACE28A /* button_streets_off@2x.png in Resources */,
-				560F98F61BFCE1530008B0A2 /* micello_logo@3x.png in Resources */,
 				18EC01301AA7752500902E98 /* icon1_place@2x.png in Resources */,
 				183E547A1ACE9E7700AD6B3E /* reviewsFromYelpRED@2x.png in Resources */,
 				56F28E841A261DA90061C7BF /* button_create_poi.png in Resources */,
@@ -6618,7 +6608,6 @@
 				18EC01251AA7752500902E98 /* icon1_nightlife@3x.png in Resources */,
 				18FB64991A938A54005A9411 /* yelp_logo_100x50.png in Resources */,
 				188C4CA81AA730BF0080B34B /* button_close_place_pin_off.png in Resources */,
-				560F98F51BFCE1530008B0A2 /* micello_logo@3x.png in Resources */,
 				566307111AD2D69800980426 /* stars_5_0.png in Resources */,
 				18FE212D1AA9BA3C00ACE28A /* button_checkbox_on@3x.png in Resources */,
 				27EACB591BC4140700135BE6 /* icon1_tours@2x.png in Resources */,
@@ -6776,7 +6765,6 @@
 				188C4CAE1AA730BF0080B34B /* button_ok_place_pin_on.png in Resources */,
 				18FE21B11AA9C75700ACE28A /* search_results_bar@2x.png in Resources */,
 				18FE21451AA9BA3C00ACE28A /* button_ok_off@3x.png in Resources */,
-				560F98F31BFCE1530008B0A2 /* micello_logo@2x.png in Resources */,
 				5663070B1AD2D69800980426 /* stars_4_5.png in Resources */,
 				18EC01231AA7752500902E98 /* icon1_nightlife@2x.png in Resources */,
 				18FE21A71AA9C75700ACE28A /* menu_bar@3x.png in Resources */,
