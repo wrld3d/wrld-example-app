@@ -161,7 +161,7 @@ namespace ExampleAppWPF
 
         public string GetTitle()
         {
-            if (m_title.Text != null)
+            if (m_title.Text.Length > 0)
             {
                 return m_title.Text;
             }
@@ -171,7 +171,7 @@ namespace ExampleAppWPF
 
         public string GetDescription()
         {
-            if (m_description.Text != null)
+            if (m_description.Text.Length > 0)
             {
                 return m_description.Text;
             }
