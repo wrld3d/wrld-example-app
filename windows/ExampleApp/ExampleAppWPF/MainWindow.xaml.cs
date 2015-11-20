@@ -122,7 +122,10 @@ namespace ExampleAppWPF
                 MapHost.Width = pixelWidth;
                 MapHost.Height = pixelHeight;
 
-                m_mapImage.RespondToResize(pixelWidth, pixelHeight);
+                if (pixelWidth > 0 && pixelHeight > 0)
+                {
+                    m_mapImage.RespondToResize(pixelWidth, pixelHeight);
+                }
             }
         }
 
