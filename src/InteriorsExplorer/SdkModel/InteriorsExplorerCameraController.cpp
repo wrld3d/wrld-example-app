@@ -126,6 +126,7 @@ namespace ExampleApp
                 if(m_interiorController.InteriorInScene())
                 {
                     Eegeo::dv3 cameraInterestEcef = m_globeCameraController.GetInterestBasis().GetPointEcef();
+                    Eegeo::dv3 initialCameraInterestEcef = cameraInterestEcef;
                     cameraInterestEcef = cameraInterestEcef.Norm() * Eegeo::Space::EarthConstants::Radius;
 
                     const Eegeo::Resources::Interiors::InteriorsModel* pModel = NULL;
@@ -160,14 +161,21 @@ namespace ExampleApp
                     pModel->GetTangentBasis().GetBasisOrientationAsMatrix(tangentBasis);
                     relativeCameraInterestEcef = Eegeo::v3::Mul(cameraInterestTangentSpace, tangentBasis);
                     
+                    Eegeo::dv3 finalEcefInterestPosition;
                     Eegeo::dv3 interiorOriginAtBase = pModel->GetTangentBasis().GetPointEcef() + pModel->GetTangentBasis().GetUp() * pModel->GetTangentSpaceBounds().GetMin().y;
                     if(!m_interiorsAffectedByFlattening)
                     {
-                        SetInterestLocation(m_environmentFlatteningService.GetScaledPointEcef(interiorOriginAtBase, m_environmentFlatteningService.GetCurrentScale()) + relativeCameraInterestEcef);
+                        finalEcefInterestPosition = m_environmentFlatteningService.GetScaledPointEcef(interiorOriginAtBase, m_environmentFlatteningService.GetCurrentScale()) + relativeCameraInterestEcef;
                     }
                     else
                     {
-                        SetInterestLocation(m_environmentFlatteningService.GetScaledPointEcef(interiorOriginAtBase + relativeCameraInterestEcef, m_environmentFlatteningService.GetCurrentScale()));
+                        finalEcefInterestPosition = m_environmentFlatteningService.GetScaledPointEcef(interiorOriginAtBase + relativeCameraInterestEcef, m_environmentFlatteningService.GetCurrentScale());
+                    }
+                    
+                    const double PositionUpdateThresholdDistanceSq = 0.01;
+                    if((finalEcefInterestPosition - initialCameraInterestEcef).LengthSq() > PositionUpdateThresholdDistanceSq)
+                    {
+                        SetInterestLocation(finalEcefInterestPosition);
                     }
                 }
             }
