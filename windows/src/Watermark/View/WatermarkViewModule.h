@@ -28,9 +28,9 @@ namespace ExampleApp
                 WatermarkViewModule(
                     WindowsNativeState& nativeState,
                     IWatermarkViewModel& viewModel,
+					IWatermarkDataRepository& watermarkDataRepository,
                     ExampleAppMessaging::TMessageBus& messageBus,
-                    Metrics::IMetricsService& metricsService,
-                    const std::string& googleAnalyticsReferrerToken
+                    Metrics::IMetricsService& metricsService
                 );
 
                 ~WatermarkViewModule();

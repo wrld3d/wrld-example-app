@@ -32,8 +32,7 @@ namespace ExampleApp
                                                                        secondaryMenuViewModel,
                                                                        searchResultMenuViewModel,
                                                                        flattenViewModel,
-                                                                       compassViewModel,
-                                                                       watermarkViewModel);
+                                                                       compassViewModel);
             }
             
             InteriorsExplorerViewModule::~InteriorsExplorerViewModule()

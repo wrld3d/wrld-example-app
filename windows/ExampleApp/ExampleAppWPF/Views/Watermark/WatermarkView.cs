@@ -17,40 +17,57 @@ namespace ExampleAppWPF
         private double m_yPosInactive;
         private double m_yPosActive;
         private bool m_isFirstLayout = true;
-        private string m_googleAnalyticsReferrerToken;
+
+        private string m_imageAssetUrl;
+        private string m_popupTitle;
+        private string m_popupBody;
+        private string m_webUrl;
+        private bool m_shouldShowShadow;
+
+        private Image m_imageView = null;
 
         static WatermarkView()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(WatermarkView), new FrameworkPropertyMetadata(typeof(WatermarkView)));
         }
 
-        public WatermarkView(IntPtr nativeCallerPointer, string googleAnalyticsReferrerToken)
+        public WatermarkView(IntPtr nativeCallerPointer, 
+                             string imageAssetUrl,
+                             string popupTitle,
+                             string popupBody,
+                             string webUrl,
+                             bool shouldShowShadow)
         {
             m_nativeCallerPointer = nativeCallerPointer;
-            m_googleAnalyticsReferrerToken = googleAnalyticsReferrerToken;
 
             m_currentWindow = (MainWindow)Application.Current.MainWindow;
             m_currentWindow.MainGrid.Children.Add(this);
             m_currentWindow.SizeChanged += OnLayoutChanged;
             Loaded += OnLayoutChanged;
 
+            m_imageAssetUrl = imageAssetUrl;
+            UpdateWatermarkData(imageAssetUrl, popupTitle, popupBody, webUrl, shouldShowShadow);
+
             Opacity = 0.8;
 
             this.MouseDown += OnClick;
         }
 
+        public override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+            m_imageView = (Image)GetTemplateChild("WatermarkImage");
+        }
+
         private void OnClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            var appName = AppDomain.CurrentDomain.FriendlyName;
-            string message = "The " + appName.Substring(0, appName.Length - 4) + " app is opensource. It's built using the eeGeo maps SDK, a cross platform API for building engaging, customizable apps. Find out more?";
-            var result = MessageBox.Show(message, "Maps by eeGeo", MessageBoxButton.YesNo);
+            var result = MessageBox.Show(m_popupBody, m_popupTitle, MessageBoxButton.YesNo);
 
             WatermarkCLI.OnSelected(m_nativeCallerPointer);
 
             if (result == MessageBoxResult.Yes)
             {
-                string url = "http://eegeo.com/findoutmore?utm_source=" + m_googleAnalyticsReferrerToken + "&utm_medium=referral&utm_campaign=eegeo";
-                Process.Start(new ProcessStartInfo(url));
+                Process.Start(new ProcessStartInfo(m_webUrl));
             }
         }
 
@@ -121,6 +138,40 @@ namespace ExampleAppWPF
             {
                 RenderTransform = new TranslateTransform(currentPosition.X, newY);
             }
+        }
+
+        public void UpdateWatermarkData(string imageAssetUrl,
+                                        string popupTitle,
+                                        string popupBody,
+                                        string webUrl,
+                                        bool shouldShowShadow)
+        {
+            m_popupTitle = popupTitle;
+            m_popupBody = popupBody;
+            m_webUrl = webUrl;
+            m_shouldShowShadow = shouldShowShadow;
+
+            bool shouldTransitionImage = imageAssetUrl != m_imageAssetUrl;
+
+            if (shouldTransitionImage)
+            {
+                m_imageAssetUrl = imageAssetUrl;
+                TransitionToNewImage();
+            }
+        }
+
+        private void TransitionToNewImage()
+        {
+            string imageAssetPlusExtension = m_imageAssetUrl + ".png";
+            var src = StartupResourceLoader.GetBitmap(imageAssetPlusExtension);
+
+            if (src == null)
+            {
+                StartupResourceLoader.LoadImage(imageAssetPlusExtension);
+                src = StartupResourceLoader.GetBitmap(imageAssetPlusExtension);
+            }
+
+            m_imageView.Source = src;
         }
     }
 }
