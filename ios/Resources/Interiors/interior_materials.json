@@ -109,48 +109,29 @@
              "DiffuseTexture":"swallowglass01-interior-texture0",
              "CubeMapTexture":"swallowcubemap",
              "DiffuseColor":[0.647,1.0,0.961,0.5],
-             "SpecularPower":100.0,
-             "SpecularColor":[0.4,0.4,0.4,1.0],
              "ReflectionColor":[0.5,0.5,0.5,1.0],
-             "RimColor":[0.0,0.0,0.0,1.0],
              "IsTranslucent":true,
-             "ViewOffsetScale":0.8,
-             "FresnelBias":1.0,
-             "FresnelScale":0.0,
-             "FresnelPower":1.0
-        },
+             "ViewOffsetScale":0.8
+         },
                  
-        {
+         {
              "MaterialName": "swallowglass01-opaque-interior",
              "MaterialType":"InteriorsCubeMappedMaterial",
              "DiffuseTexture":"swallowglass01-interior-texture0",
              "CubeMapTexture":"swallowcubemap",
              "DiffuseColor":[0.647,1.0,0.961,0.9],
-             "SpecularPower":100.0,
-             "SpecularColor":[0.4,0.4,0.4,1.0],
              "ReflectionColor":[0.5,0.5,0.5,1.0],
-             "RimColor":[0.0,0.0,0.0,1.0],
              "IsTranslucent":true,
-             "ViewOffsetScale":0.8,
-             "FresnelBias":1.0,
-             "FresnelScale":0.0,
-             "FresnelPower":1.0
-        },
+             "ViewOffsetScale":0.8
+         },
 		 
          {
              "MaterialName": "swallowchrome-interior",
              "MaterialType":"InteriorsCubeMappedMaterial",
              "DiffuseTexture":"chrome-texture0",
              "CubeMapTexture":"swallowcubemap",
-			 "SpecularPower":100.0,
-             "SpecularColor":[0.4,0.4,0.4,1.0],
              "ReflectionColor":[0.1,0.1,0.1,1.0],
-             "RimColor":[0.0,0.0,0.0,1.0],
-             "SpecularityFromTextureLuminance":1.0,
-             "ViewOffsetScale":0.8,
-             "FresnelBias":1.0,
-             "FresnelScale":0.0,
-             "FresnelPower":1.0
+             "ViewOffsetScale":0.8
         },
                  
         {
@@ -158,15 +139,8 @@
              "MaterialType":"InteriorsCubeMappedMaterial",
              "DiffuseTexture":"swallowplaingray-interior-texture0",
              "CubeMapTexture":"swallowcubemap",
-             "SpecularPower":100.0,
-             "SpecularColor":[0.8,0.8,0.8,1.0],
              "ReflectionColor":[0.8,0.8,0.8,1.0],
-             "RimColor":[0.0,0.0,0.0,1.0],
-             "SpecularityFromTextureLuminance":1.0,
-             "ViewOffsetScale":0.8,
-             "FresnelBias":1.0,
-             "FresnelScale":0.0,
-             "FresnelPower":1.0
+             "ViewOffsetScale":0.8
         },
                  
         {
@@ -174,15 +148,8 @@
              "MaterialType":"InteriorsCubeMappedMaterial",
              "DiffuseTexture":"fishtank-texture0",
              "CubeMapTexture":"swallowcubemap",
-             "SpecularPower":100.0,
-             "SpecularColor":[0.8,0.8,0.8,1.0],
              "ReflectionColor":[0.8,0.8,0.8,1.0],
-             "RimColor":[0.0,0.0,0.0,1.0],
-             "SpecularityFromTextureLuminance":1.0,
-             "ViewOffsetScale":0.8,
-             "FresnelBias":1.0,
-             "FresnelScale":0.0,
-             "FresnelPower":1.0
+             "ViewOffsetScale":0.8
         },
 		 
          {
