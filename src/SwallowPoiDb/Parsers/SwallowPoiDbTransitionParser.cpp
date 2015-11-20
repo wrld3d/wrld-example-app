@@ -42,8 +42,10 @@ namespace ExampleApp
                 rapidjson::Document::AllocatorType& allocator = jsonDoc.GetAllocator();
                 rapidjson::Value valueObject(rapidjson::kObjectType);
                 
+				const std::string targetInteriorId(resultRow.Cell(columnOffset + poi_target_interior_id).AsText());
+
                 valueObject.AddMember(Search::Swallow::SearchConstants::TARGET_INTERIOR_ID_FIELD_NAME.c_str(),
-                                      resultRow.Cell(columnOffset + poi_target_interior_id).AsText().c_str(),
+									  targetInteriorId.c_str(),
                                       allocator);
                 
                 valueObject.AddMember(Search::Swallow::SearchConstants::TARGET_INTERIOR_FLOOR_FIELD_NAME.c_str(),
@@ -61,7 +63,7 @@ namespace ExampleApp
                 rapidjson::StringBuffer strbuf;
                 rapidjson::Writer<rapidjson::StringBuffer> writer(strbuf);
                 valueObject.Accept(writer);
-                
+
                 std::string modelID = Search::Swallow::SearchConstants::TRANSITION_CATEGORY_NAME + std::string("_") + resultRow.Cell(columnOffset + poi_id).AsText();
                 Eegeo::Space::LatLong modelLocation = Eegeo::Space::LatLong::FromDegrees(resultRow.Cell(columnOffset + poi_latitude_degrees).AsReal(), resultRow.Cell(columnOffset + poi_longitude_degrees).AsReal());
                 
@@ -80,7 +82,7 @@ namespace ExampleApp
                                                            Search::Swallow::SearchConstants::TRANSITION_CATEGORY_NAME,
                                                            std::vector<std::string>(),
                                                            Search::SwallowTransitionsVendorName,
-                                                           strbuf.GetString(),
+														   strbuf.GetString(),
                                                            Eegeo::Helpers::Time::MillisecondsSinceEpoch());
             }
             
