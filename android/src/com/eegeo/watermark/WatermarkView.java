@@ -16,20 +16,30 @@ public class WatermarkView implements View.OnClickListener
 {
  private MainActivity m_activity = null;
  private long m_nativeCallerPointer;
- private String m_googleAnalyticsReferrerToken;
  private View m_view = null;
  private static AlertDialog m_options = null;
+ 
+ private String m_imageAssetUrl;
+ private String m_popupTitle;
+ private String m_popupBody;
+ private String m_webUrl;
+ private boolean m_shouldShowShadow;
 
  private float m_yPosActive;
  private float m_yPosInactive;
 
  private final long m_stateChangeAnimationTimeMilliseconds = 200;
 
- public WatermarkView(MainActivity activity, long nativeCallerPointer, String googleAnalyticsReferrerToken)
+ public WatermarkView(MainActivity activity, 
+		 			  long nativeCallerPointer, 
+		 			  String imageAssetUrl,
+		 			  String popupTitle,
+		 			  String popupBody,
+		 			  String webUrl,
+		 			  boolean shouldShowShadow)
  {
      m_activity = activity;
      m_nativeCallerPointer = nativeCallerPointer;
-     m_googleAnalyticsReferrerToken = googleAnalyticsReferrerToken;
 
      final RelativeLayout uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
      m_view = m_activity.getLayoutInflater().inflate(R.layout.watermark_layout, uiRoot, false);
@@ -68,6 +78,8 @@ public class WatermarkView implements View.OnClickListener
 			}
      });
      
+     updateWatermarkData(imageAssetUrl, popupTitle, popupBody, webUrl, shouldShowShadow);
+     
      m_view.setAlpha(0.8f);
      uiRoot.addView(m_view);
  }
@@ -90,10 +102,8 @@ public class WatermarkView implements View.OnClickListener
  {
      AlertDialog.Builder builder = new AlertDialog.Builder(m_activity);
 
-     String appName =  m_activity.getPackageManager().getApplicationLabel(m_activity.getApplicationInfo()).toString();
-    	  
-     builder.setTitle("Maps by eeGeo");
-     builder.setMessage("The " + appName + " app is open source. It's built using the eeGeo maps SDK, a cross platform API for building engaging, customizable apps");
+     builder.setTitle(m_popupTitle);
+     builder.setMessage(m_popupBody);
      builder.setPositiveButton("Find Out More", createClickListener(true));
      builder.setNegativeButton("Later", createClickListener(false));
      builder.setCancelable(false);
@@ -130,6 +140,33 @@ public class WatermarkView implements View.OnClickListener
      }
  }
  
+ public void updateWatermarkData(final String imageAssetUrl,
+		 						 final String popupTitle,
+		 						 final String popupBody,
+		 						 final String webUrl,
+		 						 final boolean shouldShowShadow)
+ {
+	 m_popupTitle = popupTitle;
+	 m_popupBody = popupBody;
+	 m_webUrl = webUrl;
+	 m_shouldShowShadow = shouldShowShadow;
+	
+	 boolean shouldTransitionImage = imageAssetUrl != m_imageAssetUrl;
+	    
+	 if (shouldTransitionImage)
+	 {
+	     m_imageAssetUrl = imageAssetUrl;
+	     transitionToNewImage();
+	 }
+ }
+ 
+ private void transitionToNewImage()
+ {
+	 String uri = "drawable/" + m_imageAssetUrl;
+     int imageResource = m_activity.getResources().getIdentifier(uri, null, m_activity.getPackageName());
+	 m_view.setBackgroundResource(imageResource);
+ }
+ 
  private DialogInterface.OnClickListener createClickListener(final boolean shouldPreload)
  {
      return new DialogInterface.OnClickListener()
@@ -146,8 +183,7 @@ public class WatermarkView implements View.OnClickListener
  {
 	 if(shouldOpenLink)
 	 {
-		String url = "http://eegeo.com/findoutmore?utm_source=" + m_googleAnalyticsReferrerToken + "&utm_medium=referral&utm_campaign=eegeo";
-	 	final Uri uri = Uri.parse(url);
+	 	final Uri uri = Uri.parse(m_webUrl);
 	 	final Intent browserIntent = new Intent(Intent.ACTION_VIEW, uri);
 	 	m_activity.startActivity(browserIntent);
 	 }
