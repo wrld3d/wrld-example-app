@@ -9,3 +9,6 @@ Release/*
 *.vcxproj.user
 x64/*
 ExampleApp/x64/*
+/ipch
+/x64
+/.vs
