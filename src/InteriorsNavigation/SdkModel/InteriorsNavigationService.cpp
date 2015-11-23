@@ -165,7 +165,7 @@ namespace ExampleApp
                     
                     toleranceSphere.centre = Eegeo::v3::MulRotate(reletaivePoint, pInteriorsModel->GetTangentBasis().GetEcefToTangentTransform());
                     
-                    toleranceSphere.radius = 2.0f;
+                    toleranceSphere.radius = 10.0f;
                     
                     if(tangentBounds.intersectsSphere(toleranceSphere))
                     {

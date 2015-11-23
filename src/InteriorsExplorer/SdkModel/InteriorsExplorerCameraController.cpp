@@ -147,13 +147,17 @@ namespace ExampleApp
 
                     const Eegeo::Geometry::Bounds3D& tangentSpaceBounds = pModel->GetTangentSpaceBounds();
                     
+                    const float boundsExtent = 10.0f;
+                    const Eegeo::v3 boundsExtention(boundsExtent, 0.0f, boundsExtent);
+                    
                     if(m_applyRestrictions &&
-                       (cameraInterestTangentSpace.x > tangentSpaceBounds.GetMax().x ||
-                       cameraInterestTangentSpace.x < tangentSpaceBounds.GetMin().x ||
-                       cameraInterestTangentSpace.z > tangentSpaceBounds.GetMax().z ||
-                       cameraInterestTangentSpace.z < tangentSpaceBounds.GetMin().z))
+                       (cameraInterestTangentSpace.x > tangentSpaceBounds.GetMax().x + boundsExtention.x ||
+                       cameraInterestTangentSpace.x < tangentSpaceBounds.GetMin().x  - boundsExtention.x||
+                       cameraInterestTangentSpace.z > tangentSpaceBounds.GetMax().z  + boundsExtention.z||
+                       cameraInterestTangentSpace.z < tangentSpaceBounds.GetMin().z - boundsExtention.z))
                     {
-                        Eegeo::v3 clampedPoint = Eegeo::v3::Min(Eegeo::v3::Max(cameraInterestTangentSpace, tangentSpaceBounds.GetMin()), tangentSpaceBounds.GetMax());
+                        Eegeo::v3 clampedPoint = Eegeo::v3::Min(Eegeo::v3::Max(cameraInterestTangentSpace, tangentSpaceBounds.GetMin() - boundsExtention),
+                                                                tangentSpaceBounds.GetMax() + boundsExtention);
                         cameraInterestTangentSpace.x = clampedPoint.x;
                         cameraInterestTangentSpace.z = clampedPoint.z;
                     }
