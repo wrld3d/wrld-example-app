@@ -135,9 +135,7 @@ namespace ExampleApp
                 
                 if(m_locationService.GetLocation(latLong))
                 {
-                    const Eegeo::Space::EcefTangentBasis& cameraInterestBasis =  m_interiorsExplorerCameraController.GetGlobeCameraController().GetInterestBasis();
-                    m_currentHeading = Eegeo::Camera::CameraHelpers::GetAbsoluteBearingRadians(cameraInterestBasis.GetPointEcef(),
-                                                                                               cameraInterestBasis.GetForward());
+                    m_currentHeading = m_interiorsExplorerCameraController.GetHeadingDegrees();
                     
                     m_currentLatitude = latLong.GetLatitudeInDegrees();
                     m_currentLongitude = latLong.GetLongitudeInDegrees();
