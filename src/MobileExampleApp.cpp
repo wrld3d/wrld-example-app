@@ -917,6 +917,9 @@ namespace ExampleApp
 
         eegeoWorld.EarlyUpdate(dt);
 
+        m_pNavigationService->Update(dt);
+        m_pInteriorsNavigationService->Update(dt);
+        
         m_pCameraTransitionService->Update(dt);
         m_pAppCameraModule->GetController().Update(dt);
         
@@ -1000,9 +1003,6 @@ namespace ExampleApp
                 }
             }
         }
-
-        m_pNavigationService->Update(dt);
-        m_pInteriorsNavigationService->Update(dt);
         
         if(ToursEnabled())
         {

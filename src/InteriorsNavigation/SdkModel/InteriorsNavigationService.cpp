@@ -159,15 +159,15 @@ namespace ExampleApp
                     float targetAltitude = Helpers::InteriorHeightHelpers::GetFloorHeightAboveSeaLevel(*pInteriorsModel, m_interiorController.GetCurrentFloorIndex());
                     
                     Eegeo::Geometry::SingleSphere toleranceSphere;
-                    toleranceSphere.centre = (Eegeo::Space::LatLongAltitude::FromRadians(latLong.GetLatitude(),
-                                                                                        latLong.GetLongitude(),
-                                                                                        targetAltitude).ToECEF() - boundsEcefOrigin).ToSingle();
+                    const Eegeo::v3 reletaivePoint = (Eegeo::Space::LatLongAltitude::FromRadians(latLong.GetLatitude(),
+                                                                                                 latLong.GetLongitude(),
+                                                                                                 targetAltitude).ToECEF() - boundsEcefOrigin).ToSingle();
+                    
+                    toleranceSphere.centre = Eegeo::v3::MulRotate(reletaivePoint, pInteriorsModel->GetTangentBasis().GetEcefToTangentTransform());
+                    
                     toleranceSphere.radius = 2.0f;
                     
-                    //TODO: change back to use real tangent bounds once bug related to it's origin not being the tangent basis one is fixed
-                    Eegeo::v3 tangentBoundsCentre = (tangentBounds.GetMax() + tangentBounds.GetMin())*0.5f;
-                    Eegeo::Geometry::Bounds3D correctedBounds(tangentBounds.GetMin()- tangentBoundsCentre, tangentBounds.GetMax()- tangentBoundsCentre);
-                    if(correctedBounds.intersectsSphere(toleranceSphere))
+                    if(tangentBounds.intersectsSphere(toleranceSphere))
                     {
                         return true;
                     }
