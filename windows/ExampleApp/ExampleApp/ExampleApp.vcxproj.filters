@@ -523,6 +523,8 @@
     <Filter Include="Source Files\Windows\UserInteraction\SdkModel">
       <UniqueIdentifier>{c3edd24e-e685-4a76-b206-5a2721f6195e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\App\Watermark\SdkModel">
+      <UniqueIdentifier>{f857c55b-4aca-4490-828d-e027a47aea54}</UniqueIdentifier>
     <Filter Include="Source Files\App\Search\Swallow">
       <UniqueIdentifier>{7e500016-19c3-4384-8f2f-42e5ea4b3137}</UniqueIdentifier>
     </Filter>
@@ -1269,18 +1271,6 @@
     <ClCompile Include="..\..\..\src\ViewControllerUpdater\View\ViewControllerUpdaterModule.cpp">
       <Filter>Source Files\App\ViewControllerUpdater\View</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\Watermark\WatermarkModule.cpp">
-      <Filter>Source Files\App\Watermark</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\Watermark\View\WatermarkController.cpp">
-      <Filter>Source Files\App\Watermark\View</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\Watermark\View\WatermarkScreenControl.cpp">
-      <Filter>Source Files\App\Watermark\View</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\Watermark\View\WatermarkViewModel.cpp">
-      <Filter>Source Files\App\Watermark\View</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\WeatherMenu\WeatherMenuDataParser.cpp">
       <Filter>Source Files\App\WeatherMenu</Filter>
     </ClCompile>
@@ -1898,6 +1888,30 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\CameraTransitions\SdkModel\TransitionToInteriorPointStage.cpp">
       <Filter>Source Files\App\CameraTransitions\SdkModel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Watermark\View\WatermarkController.cpp">
+      <Filter>Source Files\App\Watermark\View</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Watermark\View\WatermarkDataFactory.cpp">
+      <Filter>Source Files\App\Watermark\View</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Watermark\View\WatermarkDataRepository.cpp">
+      <Filter>Source Files\App\Watermark\View</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Watermark\View\WatermarkScreenControl.cpp">
+      <Filter>Source Files\App\Watermark\View</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Watermark\View\WatermarkViewModel.cpp">
+      <Filter>Source Files\App\Watermark\View</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Watermark\SdkModel\WatermarkInteriorStateChangedObserver.cpp">
+      <Filter>Source Files\App\Watermark\SdkModel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Watermark\SdkModel\WatermarkModule.cpp">
+      <Filter>Source Files\App\Watermark\SdkModel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\ExampleAppPch.cpp">
+      <Filter>Source Files\Windows</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\Menu\MenuSectionExpandedChangedMessage.cpp">
       <Filter>Source Files\App\Menu</Filter>
@@ -3173,32 +3187,11 @@
     <ClInclude Include="..\..\..\src\ViewControllerUpdater\View\ViewControllerUpdaterModule.h">
       <Filter>Source Files\App\ViewControllerUpdater\View</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\Watermark\IWatermarkModule.h">
-      <Filter>Source Files\App\Watermark</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\Watermark\SetWatermarkVisibilityMessage.h">
       <Filter>Source Files\App\Watermark</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\Watermark\Watermark.h">
       <Filter>Source Files\App\Watermark</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\Watermark\WatermarkModule.h">
-      <Filter>Source Files\App\Watermark</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\Watermark\View\IWatermarkView.h">
-      <Filter>Source Files\App\Watermark\View</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\Watermark\View\IWatermarkViewModel.h">
-      <Filter>Source Files\App\Watermark\View</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\Watermark\View\WatermarkController.h">
-      <Filter>Source Files\App\Watermark\View</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\Watermark\View\WatermarkScreenControl.h">
-      <Filter>Source Files\App\Watermark\View</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\Watermark\View\WatermarkViewModel.h">
-      <Filter>Source Files\App\Watermark\View</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\WeatherMenu\WeatherMenu.h">
       <Filter>Source Files\App\WeatherMenu</Filter>
@@ -4114,6 +4107,54 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\CameraTransitions\SdkModel\TransitionToInteriorPointStage.h">
       <Filter>Source Files\App\CameraTransitions\SdkModel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Watermark\WatermarkModelChangedMessage.h">
+      <Filter>Source Files\App\Watermark</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Watermark\View\IWatermarkDataFactory.h">
+      <Filter>Source Files\App\Watermark\View</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Watermark\View\IWatermarkDataRepository.h">
+      <Filter>Source Files\App\Watermark\View</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Watermark\View\IWatermarkView.h">
+      <Filter>Source Files\App\Watermark\View</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Watermark\View\IWatermarkViewModel.h">
+      <Filter>Source Files\App\Watermark\View</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Watermark\View\WatermarkController.h">
+      <Filter>Source Files\App\Watermark\View</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Watermark\View\WatermarkData.h">
+      <Filter>Source Files\App\Watermark\View</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Watermark\View\WatermarkDataFactory.h">
+      <Filter>Source Files\App\Watermark\View</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Watermark\View\WatermarkDataRepository.h">
+      <Filter>Source Files\App\Watermark\View</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Watermark\View\WatermarkScreenControl.h">
+      <Filter>Source Files\App\Watermark\View</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Watermark\View\WatermarkViewModel.h">
+      <Filter>Source Files\App\Watermark\View</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Watermark\SdkModel\IWatermarkModule.h">
+      <Filter>Source Files\App\Watermark\SdkModel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Watermark\SdkModel\WatermarkInteriorStateChangedObserver.h">
+      <Filter>Source Files\App\Watermark\SdkModel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Watermark\SdkModel\WatermarkModel.h">
+      <Filter>Source Files\App\Watermark\SdkModel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Watermark\SdkModel\WatermarkModule.h">
+      <Filter>Source Files\App\Watermark\SdkModel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\ExampleAppPch.h">
+      <Filter>Source Files\Windows</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\Menu\MenuSectionExpandedChangedMessage.h">
       <Filter>Source Files\App\Menu</Filter>

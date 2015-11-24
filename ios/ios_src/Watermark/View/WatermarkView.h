@@ -26,12 +26,20 @@
     float m_yPosInactive;
 
     float m_stateChangeAnimationTimeSeconds;
-    std::string m_googleAnalyticsReferrerToken;
+    
+    std::string m_imageAssetName;
+    std::string m_popupTitle;
+    std::string m_popupBody;
+    std::string m_webUrl;
+    bool m_shouldShowShadow;
 }
 
 - (ExampleApp::Watermark::View::WatermarkViewInterop*) getInterop;
 
-- (id) initWithDimensions:(float)width :(float)height :(float)pixelScale :(const std::string&) googleAnalyticsReferrerToken;
+- (id) initWithDimensions:(float)width
+                         :(float)height
+                         :(float)pixelScale
+                         :(const ExampleApp::Watermark::View::WatermarkData&) watermarkData;
 
 - (BOOL) consumesTouch:(UITouch *)touch;
 
@@ -42,5 +50,7 @@
 - (void) setOnScreenStateToIntermediateValue:(float)openState;
 
 - (void) animateToY:(float)y;
+
+- (void) updateWatermarkData: (const ExampleApp::Watermark::View::WatermarkData&) watermarkData;
 
 @end

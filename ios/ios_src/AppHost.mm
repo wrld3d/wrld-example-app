@@ -275,10 +275,10 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
     ExampleApp::MobileExampleApp& app = *m_pApp;
     
     m_pWatermarkViewModule = Eegeo_NEW(ExampleApp::Watermark::View::WatermarkViewModule)(app.WatermarkModule().GetWatermarkViewModel(),
+                                                                                         app.WatermarkModule().GetWatermarkDataRepository(),
                                                                                          screenProperties,
                                                                                          m_messageBus,
-                                                                                         m_iOSFlurryMetricsService,
-                                                                                         app.GetApplicationConfiguration().GoogleAnalyticsReferrerToken());
+                                                                                         m_iOSFlurryMetricsService);
 
     m_pModalBackgroundViewModule = Eegeo_NEW(ExampleApp::ModalBackground::View::ModalBackgroundViewModule)(app.ModalityModule().GetModalityModel(), screenProperties);
 
@@ -380,7 +380,6 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
                                                                                              app.SearchResultMenuModule().GetMenuViewModel(),
                                                                                              app.FlattenButtonModule().GetScreenControlViewModel(),
                                                                                              app.CompassModule().GetScreenControlViewModel(),
-                                                                                             app.WatermarkModule().GetScreenControlViewModel(),
                                                                                              screenProperties,
                                                                                              app.GetIdentityProvider());
 

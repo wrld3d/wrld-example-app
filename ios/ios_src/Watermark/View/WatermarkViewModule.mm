@@ -5,6 +5,8 @@
 #include "ScreenProperties.h"
 #include "WatermarkController.h"
 #include "WatermarkViewInterop.h"
+#include "IWatermarkDataRepository.h"
+#include "WatermarkData.h"
 
 namespace ExampleApp
 {
@@ -13,19 +15,20 @@ namespace ExampleApp
         namespace View
         {
             WatermarkViewModule::WatermarkViewModule(IWatermarkViewModel& viewModel,
+                                                     IWatermarkDataRepository& watermarkDataRepository,
                                                      const Eegeo::Rendering::ScreenProperties& screenProperties,
                                                      ExampleAppMessaging::TMessageBus& messageBus,
-                                                     Metrics::IMetricsService& metricsService,
-                                                     const std::string& googleAnalyticsReferrerToken)
+                                                     Metrics::IMetricsService& metricsService)
             {
+                WatermarkData defaultWatermarkData = watermarkDataRepository.GetWatermarkDataWithKey("eegeo");
                 m_pView = [[WatermarkView alloc] initWithDimensions
                            :screenProperties.GetScreenWidth()
                            :screenProperties.GetScreenHeight()
                            :screenProperties.GetPixelScale()
-                           :googleAnalyticsReferrerToken
+                           :defaultWatermarkData
                           ];
 
-                m_pController = new WatermarkController(viewModel, *[m_pView getInterop], messageBus, metricsService);
+                m_pController = new WatermarkController(viewModel, *[m_pView getInterop], watermarkDataRepository, messageBus, metricsService);
             }
 
             WatermarkViewModule::~WatermarkViewModule()

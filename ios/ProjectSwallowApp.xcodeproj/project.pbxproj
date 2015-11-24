@@ -194,8 +194,6 @@
 		186B470F1AB1D46B0084E80B /* WatermarkScreenControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 186B47071AB1D46B0084E80B /* WatermarkScreenControl.cpp */; };
 		186B47101AB1D46B0084E80B /* WatermarkViewModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 186B47091AB1D46B0084E80B /* WatermarkViewModel.cpp */; };
 		186B47111AB1D46B0084E80B /* WatermarkViewModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 186B47091AB1D46B0084E80B /* WatermarkViewModel.cpp */; };
-		186B47141AB1D7E90084E80B /* WatermarkModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 186B47121AB1D7E90084E80B /* WatermarkModule.cpp */; };
-		186B47151AB1D7E90084E80B /* WatermarkModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 186B47121AB1D7E90084E80B /* WatermarkModule.cpp */; };
 		186B47211AB1DD5C0084E80B /* WatermarkView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 186B471A1AB1DD5C0084E80B /* WatermarkView.mm */; };
 		186B47221AB1DD5C0084E80B /* WatermarkView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 186B471A1AB1DD5C0084E80B /* WatermarkView.mm */; };
 		186B47231AB1DD5C0084E80B /* WatermarkViewInterop.mm in Sources */ = {isa = PBXBuildFile; fileRef = 186B471D1AB1DD5C0084E80B /* WatermarkViewInterop.mm */; };
@@ -807,6 +805,14 @@
 		2CA085F01BD7E1C400A99340 /* Textures in Resources */ = {isa = PBXBuildFile; fileRef = 2CA085EE1BD7E1C400A99340 /* Textures */; };
 		560741141B8CC624002B0F49 /* MenuDragStateChangedMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 560741121B8CC624002B0F49 /* MenuDragStateChangedMessage.cpp */; };
 		560741151B8CC624002B0F49 /* MenuDragStateChangedMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 560741121B8CC624002B0F49 /* MenuDragStateChangedMessage.cpp */; };
+		560F990B1BFDD4590008B0A2 /* WatermarkInteriorStateChangedObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 560F99071BFDD4590008B0A2 /* WatermarkInteriorStateChangedObserver.cpp */; };
+		560F990C1BFDD4590008B0A2 /* WatermarkInteriorStateChangedObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 560F99071BFDD4590008B0A2 /* WatermarkInteriorStateChangedObserver.cpp */; };
+		560F99131BFE0E0E0008B0A2 /* WatermarkDataRepository.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 560F99111BFE0E0E0008B0A2 /* WatermarkDataRepository.cpp */; };
+		560F99141BFE0E0E0008B0A2 /* WatermarkDataRepository.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 560F99111BFE0E0E0008B0A2 /* WatermarkDataRepository.cpp */; };
+		560F99181BFE0E190008B0A2 /* WatermarkModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 560F99161BFE0E190008B0A2 /* WatermarkModule.cpp */; };
+		560F99191BFE0E190008B0A2 /* WatermarkModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 560F99161BFE0E190008B0A2 /* WatermarkModule.cpp */; };
+		560F991C1BFE1AB30008B0A2 /* WatermarkDataFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 560F991A1BFE1AB30008B0A2 /* WatermarkDataFactory.cpp */; };
+		560F991D1BFE1AB30008B0A2 /* WatermarkDataFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 560F991A1BFE1AB30008B0A2 /* WatermarkDataFactory.cpp */; };
 		561ECF221B467FD3007BD4F9 /* InteriorsEntitiesPinsModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 561ECF201B467FD3007BD4F9 /* InteriorsEntitiesPinsModule.cpp */; };
 		561ECF231B467FD4007BD4F9 /* InteriorsEntitiesPinsModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 561ECF201B467FD3007BD4F9 /* InteriorsEntitiesPinsModule.cpp */; };
 		561ECF291B46820F007BD4F9 /* InteriorsEntitiesPinsController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 561ECF271B46820F007BD4F9 /* InteriorsEntitiesPinsController.cpp */; };
@@ -1835,9 +1841,6 @@
 		186B47091AB1D46B0084E80B /* WatermarkViewModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WatermarkViewModel.cpp; sourceTree = "<group>"; };
 		186B470A1AB1D46B0084E80B /* WatermarkViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WatermarkViewModel.h; sourceTree = "<group>"; };
 		186B470B1AB1D46B0084E80B /* Watermark.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Watermark.h; sourceTree = "<group>"; };
-		186B47121AB1D7E90084E80B /* WatermarkModule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WatermarkModule.cpp; sourceTree = "<group>"; };
-		186B47131AB1D7E90084E80B /* WatermarkModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WatermarkModule.h; sourceTree = "<group>"; };
-		186B47161AB1D8E00084E80B /* IWatermarkModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IWatermarkModule.h; sourceTree = "<group>"; };
 		186B47191AB1DD5C0084E80B /* WatermarkView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WatermarkView.h; sourceTree = "<group>"; };
 		186B471A1AB1DD5C0084E80B /* WatermarkView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = WatermarkView.mm; sourceTree = "<group>"; };
 		186B471B1AB1DD5C0084E80B /* WatermarkViewIncludes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WatermarkViewIncludes.h; sourceTree = "<group>"; };
@@ -2303,6 +2306,21 @@
 		2CA085EE1BD7E1C400A99340 /* Textures */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Textures; sourceTree = "<group>"; };
 		560741121B8CC624002B0F49 /* MenuDragStateChangedMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MenuDragStateChangedMessage.cpp; sourceTree = "<group>"; };
 		560741131B8CC624002B0F49 /* MenuDragStateChangedMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuDragStateChangedMessage.h; sourceTree = "<group>"; };
+		560F98F01BFCD90F0008B0A2 /* WatermarkModelChangedMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WatermarkModelChangedMessage.h; sourceTree = "<group>"; };
+		560F99071BFDD4590008B0A2 /* WatermarkInteriorStateChangedObserver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WatermarkInteriorStateChangedObserver.cpp; sourceTree = "<group>"; };
+		560F99081BFDD4590008B0A2 /* WatermarkInteriorStateChangedObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WatermarkInteriorStateChangedObserver.h; sourceTree = "<group>"; };
+		560F990D1BFDEC470008B0A2 /* InteriorsExplorerEnteredMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InteriorsExplorerEnteredMessage.h; sourceTree = "<group>"; };
+		560F990E1BFDF3420008B0A2 /* WatermarkModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WatermarkModel.h; sourceTree = "<group>"; };
+		560F990F1BFE08C30008B0A2 /* IWatermarkDataRepository.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IWatermarkDataRepository.h; sourceTree = "<group>"; };
+		560F99101BFE0E0E0008B0A2 /* WatermarkData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WatermarkData.h; sourceTree = "<group>"; };
+		560F99111BFE0E0E0008B0A2 /* WatermarkDataRepository.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WatermarkDataRepository.cpp; sourceTree = "<group>"; };
+		560F99121BFE0E0E0008B0A2 /* WatermarkDataRepository.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WatermarkDataRepository.h; sourceTree = "<group>"; };
+		560F99151BFE0E190008B0A2 /* IWatermarkModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IWatermarkModule.h; sourceTree = "<group>"; };
+		560F99161BFE0E190008B0A2 /* WatermarkModule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WatermarkModule.cpp; sourceTree = "<group>"; };
+		560F99171BFE0E190008B0A2 /* WatermarkModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WatermarkModule.h; sourceTree = "<group>"; };
+		560F991A1BFE1AB30008B0A2 /* WatermarkDataFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WatermarkDataFactory.cpp; sourceTree = "<group>"; };
+		560F991B1BFE1AB30008B0A2 /* WatermarkDataFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WatermarkDataFactory.h; sourceTree = "<group>"; };
+		560F991E1BFE1DE40008B0A2 /* IWatermarkDataFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IWatermarkDataFactory.h; sourceTree = "<group>"; };
 		561ECF201B467FD3007BD4F9 /* InteriorsEntitiesPinsModule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InteriorsEntitiesPinsModule.cpp; sourceTree = "<group>"; };
 		561ECF211B467FD3007BD4F9 /* InteriorsEntitiesPinsModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InteriorsEntitiesPinsModule.h; sourceTree = "<group>"; };
 		561ECF241B46801C007BD4F9 /* IInteriorsEntitiesPinsModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IInteriorsEntitiesPinsModule.h; sourceTree = "<group>"; };
@@ -3653,12 +3671,11 @@
 		186B47011AB1D46B0084E80B /* Watermark */ = {
 			isa = PBXGroup;
 			children = (
-				7E1B50941ACEDAD00060FA4F /* SetWatermarkVisibilityMessage.h */,
-				186B47021AB1D46B0084E80B /* View */,
-				186B47161AB1D8E00084E80B /* IWatermarkModule.h */,
 				186B470B1AB1D46B0084E80B /* Watermark.h */,
-				186B47121AB1D7E90084E80B /* WatermarkModule.cpp */,
-				186B47131AB1D7E90084E80B /* WatermarkModule.h */,
+				7E1B50941ACEDAD00060FA4F /* SetWatermarkVisibilityMessage.h */,
+				560F98F01BFCD90F0008B0A2 /* WatermarkModelChangedMessage.h */,
+				560F99031BFDD4590008B0A2 /* SdkModel */,
+				186B47021AB1D46B0084E80B /* View */,
 			);
 			path = Watermark;
 			sourceTree = "<group>";
@@ -3666,6 +3683,9 @@
 		186B47021AB1D46B0084E80B /* View */ = {
 			isa = PBXGroup;
 			children = (
+				560F99101BFE0E0E0008B0A2 /* WatermarkData.h */,
+				560F99111BFE0E0E0008B0A2 /* WatermarkDataRepository.cpp */,
+				560F99121BFE0E0E0008B0A2 /* WatermarkDataRepository.h */,
 				186B47031AB1D46B0084E80B /* IWatermarkView.h */,
 				186B47041AB1D46B0084E80B /* IWatermarkViewModel.h */,
 				186B47051AB1D46B0084E80B /* WatermarkController.cpp */,
@@ -3674,6 +3694,10 @@
 				186B47081AB1D46B0084E80B /* WatermarkScreenControl.h */,
 				186B47091AB1D46B0084E80B /* WatermarkViewModel.cpp */,
 				186B470A1AB1D46B0084E80B /* WatermarkViewModel.h */,
+				560F990F1BFE08C30008B0A2 /* IWatermarkDataRepository.h */,
+				560F991A1BFE1AB30008B0A2 /* WatermarkDataFactory.cpp */,
+				560F991B1BFE1AB30008B0A2 /* WatermarkDataFactory.h */,
+				560F991E1BFE1DE40008B0A2 /* IWatermarkDataFactory.h */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -4168,6 +4192,19 @@
 				27DB89B21BB3FEF00020CDA5 /* SdkModel */,
 			);
 			path = Combined;
+			sourceTree = "<group>";
+		};
+		560F99031BFDD4590008B0A2 /* SdkModel */ = {
+			isa = PBXGroup;
+			children = (
+				560F99151BFE0E190008B0A2 /* IWatermarkModule.h */,
+				560F99161BFE0E190008B0A2 /* WatermarkModule.cpp */,
+				560F99171BFE0E190008B0A2 /* WatermarkModule.h */,
+				560F99071BFDD4590008B0A2 /* WatermarkInteriorStateChangedObserver.cpp */,
+				560F99081BFDD4590008B0A2 /* WatermarkInteriorStateChangedObserver.h */,
+				560F990E1BFDF3420008B0A2 /* WatermarkModel.h */,
+			);
+			path = SdkModel;
 			sourceTree = "<group>";
 		};
 		561ECF1E1B467F84007BD4F9 /* InteriorsEntitiesPins */ = {
@@ -5787,6 +5824,7 @@
 				7E1D22CC1B205CC2006A8703 /* InteriorsExplorerSelectFloorMessage.h */,
 				7E5811AF1B1F050A007AD67F /* SdkModel */,
 				7E5811B21B1F050A007AD67F /* View */,
+				560F990D1BFDEC470008B0A2 /* InteriorsExplorerEnteredMessage.h */,
 			);
 			path = InteriorsExplorer;
 			sourceTree = "<group>";
@@ -7482,6 +7520,7 @@
 				7E3B8AF81A385F110023C94E /* ModalBackgroundView.mm in Sources */,
 				18A657531A9F391E00238F33 /* SearchResultPinRemovedEvent.cpp in Sources */,
 				BFD5FD771BA706AD00F591F1 /* TourSelectedViewObserver.cpp in Sources */,
+				560F991D1BFE1AB30008B0A2 /* WatermarkDataFactory.cpp in Sources */,
 				1846CB341BB9488D007F1922 /* SwallowPersonResultModel.cpp in Sources */,
 				7E3B89311A385A290023C94E /* MyPinCreationInitiationController.cpp in Sources */,
 				18FB64931A933CF3005A9411 /* iOSYelpSearchQueryFactory.mm in Sources */,
@@ -7490,6 +7529,7 @@
 				7E3B8B041A385F110023C94E /* MyPinCreationDetailsView.mm in Sources */,
 				BF681D981BC4183500100BFF /* CurrentTourCardTappedMessage.cpp in Sources */,
 				27DB89FA1BB413F60020CDA5 /* SearchVendorNames.cpp in Sources */,
+				560F990C1BFDD4590008B0A2 /* WatermarkInteriorStateChangedObserver.cpp in Sources */,
 				7E3B896F1A385A290023C94E /* PlaceJumpSelectedMessageHandler.cpp in Sources */,
 				27DB89E11BB3FF170020CDA5 /* GeoNamesSearchService.cpp in Sources */,
 				7E5811CC1B1F3248007AD67F /* InteriorsExplorerView.mm in Sources */,
@@ -7652,6 +7692,7 @@
 				7E3B892F1A385A290023C94E /* MyPinCreationConfirmationViewModel.cpp in Sources */,
 				18FE3BD31A9CA561002D61C4 /* SortedMenuComparisonFunctions.cpp in Sources */,
 				7E3B8AEC1A385F110023C94E /* iOSInitialExperiencePreLoadModel.mm in Sources */,
+				560F99191BFE0E190008B0A2 /* WatermarkModule.cpp in Sources */,
 				7E5811CE1B1F3248007AD67F /* InteriorsExplorerViewInterop.mm in Sources */,
 				BF0E350D1BC673EA005B30E8 /* AppCameraController.cpp in Sources */,
 				7E3B89131A385A290023C94E /* MyPinCreationViewStateChangedMessage.cpp in Sources */,
@@ -7782,11 +7823,11 @@
 				7E3B89771A385A290023C94E /* PlaceJumpsModel.cpp in Sources */,
 				7E8F03E01A82374F0056F229 /* GpsMarkerView.cpp in Sources */,
 				7E3B88DB1A385A290023C94E /* FlattenButtonModule.cpp in Sources */,
+				560F99141BFE0E0E0008B0A2 /* WatermarkDataRepository.cpp in Sources */,
 				BFD5FD571BA706AD00F591F1 /* TourRemovedObserver.cpp in Sources */,
 				BF681D9C1BC41B4200100BFF /* ExampleCurrentTourCardTappedHandler.cpp in Sources */,
 				7E3B89211A385A290023C94E /* MyPinCreationModelObserver.cpp in Sources */,
 				BFD5FD411BA706AD00F591F1 /* TourCameraModule.cpp in Sources */,
-				186B47151AB1D7E90084E80B /* WatermarkModule.cpp in Sources */,
 				7E3B8AFA1A385F110023C94E /* ModalBackgroundViewInterop.mm in Sources */,
 				7E3B89971A385A290023C94E /* SearchServiceBase.cpp in Sources */,
 				27DB89B81BB3FEF00020CDA5 /* CombinedSearchService.cpp in Sources */,
@@ -7980,6 +8021,7 @@
 				561ECF221B467FD3007BD4F9 /* InteriorsEntitiesPinsModule.cpp in Sources */,
 				7E3B8AF71A385F110023C94E /* ModalBackgroundView.mm in Sources */,
 				18A657521A9F391E00238F33 /* SearchResultPinRemovedEvent.cpp in Sources */,
+				560F991C1BFE1AB30008B0A2 /* WatermarkDataFactory.cpp in Sources */,
 				BFD5FD761BA706AD00F591F1 /* TourSelectedViewObserver.cpp in Sources */,
 				7E3B89301A385A290023C94E /* MyPinCreationInitiationController.cpp in Sources */,
 				18FB64921A933CF3005A9411 /* iOSYelpSearchQueryFactory.mm in Sources */,
@@ -7987,6 +8029,7 @@
 				7E3B88E41A385A290023C94E /* InitialExperiencePreLoadModel.cpp in Sources */,
 				BF681D971BC4183500100BFF /* CurrentTourCardTappedMessage.cpp in Sources */,
 				27DB89F91BB413F60020CDA5 /* SearchVendorNames.cpp in Sources */,
+				560F990B1BFDD4590008B0A2 /* WatermarkInteriorStateChangedObserver.cpp in Sources */,
 				7E3B8B031A385F110023C94E /* MyPinCreationDetailsView.mm in Sources */,
 				18CFE2C41BF0F4BB003368D1 /* AppDelegate.mm in Sources */,
 				27DB89E01BB3FF170020CDA5 /* GeoNamesSearchService.cpp in Sources */,
@@ -8155,6 +8198,7 @@
 				18FE3BD21A9CA561002D61C4 /* SortedMenuComparisonFunctions.cpp in Sources */,
 				7E3B8AEB1A385F110023C94E /* iOSInitialExperiencePreLoadModel.mm in Sources */,
 				7E5811CD1B1F3248007AD67F /* InteriorsExplorerViewInterop.mm in Sources */,
+				560F99181BFE0E190008B0A2 /* WatermarkModule.cpp in Sources */,
 				BF0E350C1BC673EA005B30E8 /* AppCameraController.cpp in Sources */,
 				7E3B89121A385A290023C94E /* MyPinCreationViewStateChangedMessage.cpp in Sources */,
 				BFD5FD6E1BA706AD00F591F1 /* TourExplorerCompositeViewController.cpp in Sources */,
@@ -8284,6 +8328,7 @@
 				1846CBDE1BBBD627007F1922 /* SwallowPoiDbEmployeeParser.cpp in Sources */,
 				7E8F03DF1A82374F0056F229 /* GpsMarkerView.cpp in Sources */,
 				7E3B88DA1A385A290023C94E /* FlattenButtonModule.cpp in Sources */,
+				560F99131BFE0E0E0008B0A2 /* WatermarkDataRepository.cpp in Sources */,
 				1846CBEE1BBBD627007F1922 /* SwallowPoiDbService.cpp in Sources */,
 				BFD5FD561BA706AD00F591F1 /* TourRemovedObserver.cpp in Sources */,
 				BF681D9B1BC41B4200100BFF /* ExampleCurrentTourCardTappedHandler.cpp in Sources */,

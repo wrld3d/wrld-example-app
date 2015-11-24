@@ -38,7 +38,6 @@ namespace ExampleApp
                                             ExampleApp::Menu::View::IMenuViewModel& searchResultMenuViewModel,
                                             ScreenControl::View::IScreenControlViewModel& flattenViewModel,
                                             ScreenControl::View::IScreenControlViewModel& compassViewModel,
-											ScreenControl::View::IScreenControlViewModel& watermarkViewModel,
                                             Eegeo::Helpers::IdentityProvider& identityProvider,
 											AndroidNativeState &nativeState);
                 

@@ -24,7 +24,7 @@ namespace ExampleApp
                 jclass m_uiViewClass;
                 jobject m_uiView;
             public:
-                WatermarkView(AndroidNativeState& nativeState, const std::string& googleAnalyticsReferrerToken);
+                WatermarkView(AndroidNativeState& nativeState, const WatermarkData& watermarkData);
                 ~WatermarkView();
 
                 void SetOnScreenStateToIntermediateValue(float value);
@@ -38,6 +38,8 @@ namespace ExampleApp
                 void InsertSelectedCallback(Eegeo::Helpers::ICallback0& callback);
 
                 void RemoveSelectedCallback(Eegeo::Helpers::ICallback0& callback);
+
+                void UpdateWatermarkData(const WatermarkData& watermarkData);
             };
         }
     }

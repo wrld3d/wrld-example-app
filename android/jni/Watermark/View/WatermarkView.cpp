@@ -2,6 +2,7 @@
 
 #include "WatermarkView.h"
 #include "AndroidAppThreadAssertionMacros.h"
+#include "WatermarkData.h"
 
 namespace ExampleApp
 {
@@ -9,7 +10,7 @@ namespace ExampleApp
     {
         namespace View
         {
-            WatermarkView::WatermarkView(AndroidNativeState& nativeState, const std::string& googleAnalyticsReferrerToken)
+            WatermarkView::WatermarkView(AndroidNativeState& nativeState, const WatermarkData& watermarkData)
                 : m_nativeState(nativeState)
             {
                 ASSERT_UI_THREAD
@@ -22,19 +23,30 @@ namespace ExampleApp
                 env->DeleteLocalRef(strClassName);
 
                 m_uiViewClass = static_cast<jclass>(env->NewGlobalRef(uiClass));
-                jmethodID uiViewCtor = env->GetMethodID(m_uiViewClass, "<init>", "(Lcom/eegeo/entrypointinfrastructure/MainActivity;JLjava/lang/String;)V");
+                jmethodID uiViewCtor = env->GetMethodID(m_uiViewClass, "<init>", "(Lcom/eegeo/entrypointinfrastructure/MainActivity;JLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)V");
 
-                jstring jniGoogleAnalyticsReferrerTokenString = env->NewStringUTF(googleAnalyticsReferrerToken.c_str());
+                jstring jniImageAssetNameString = env->NewStringUTF(watermarkData.ImageAssetName().c_str());
+                jstring jniPopupTitleString = env->NewStringUTF(watermarkData.PopupTitle().c_str());
+                jstring jniPopupBodyString = env->NewStringUTF(watermarkData.PopupBody().c_str());
+                jstring jniWebUrlString = env->NewStringUTF(watermarkData.WebUrl().c_str());
+                jboolean jniShouldShowShadow = watermarkData.ShouldShowShadow();
 
                 jobject instance = env->NewObject(
                                        m_uiViewClass,
                                        uiViewCtor,
                                        m_nativeState.activity,
                                        (jlong)(this),
-                                       jniGoogleAnalyticsReferrerTokenString
+									   jniImageAssetNameString,
+									   jniPopupTitleString,
+									   jniPopupBodyString,
+									   jniWebUrlString,
+									   jniShouldShowShadow
                                    );
 
-                env->DeleteLocalRef(jniGoogleAnalyticsReferrerTokenString);
+                env->DeleteLocalRef(jniImageAssetNameString);
+                env->DeleteLocalRef(jniPopupTitleString);
+                env->DeleteLocalRef(jniPopupBodyString);
+                env->DeleteLocalRef(jniWebUrlString);
 
                 m_uiView = env->NewGlobalRef(instance);
             }
@@ -101,6 +113,34 @@ namespace ExampleApp
             {
                 ASSERT_UI_THREAD
                 m_callbacks.RemoveCallback(callback);
+            }
+
+            void WatermarkView::UpdateWatermarkData(const WatermarkData& watermarkData)
+            {
+            	ASSERT_UI_THREAD
+
+            	AndroidSafeNativeThreadAttachment attached(m_nativeState);
+            	JNIEnv* env = attached.envForThread;
+
+                jstring jniImageAssetNameString = env->NewStringUTF(watermarkData.ImageAssetName().c_str());
+                jstring jniPopupTitleString = env->NewStringUTF(watermarkData.PopupTitle().c_str());
+                jstring jniPopupBodyString = env->NewStringUTF(watermarkData.PopupBody().c_str());
+                jstring jniWebUrlString = env->NewStringUTF(watermarkData.WebUrl().c_str());
+                jboolean jniShouldShowShadow = watermarkData.ShouldShowShadow();
+
+            	jmethodID updateWatermarkData = env->GetMethodID(m_uiViewClass, "updateWatermarkData", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)V");
+            	env->CallVoidMethod(m_uiView,
+            						updateWatermarkData,
+									jniImageAssetNameString,
+									jniPopupTitleString,
+									jniPopupBodyString,
+									jniWebUrlString,
+									jniShouldShowShadow);
+
+                env->DeleteLocalRef(jniImageAssetNameString);
+                env->DeleteLocalRef(jniPopupTitleString);
+                env->DeleteLocalRef(jniPopupBodyString);
+                env->DeleteLocalRef(jniWebUrlString);
             }
         }
     }

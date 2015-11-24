@@ -30,8 +30,9 @@ namespace ExampleApp
                 Helpers::ReflectionHelpers::Method<float> mAnimateToIntermediateOnScreenState;
                 Helpers::ReflectionHelpers::Method<void> mAnimateToActive;
                 Helpers::ReflectionHelpers::Method<void> mAnimateToInactive;
+				Helpers::ReflectionHelpers::Method<System::String^, System::String^, System::String^, System::String^, bool> mUpdateWatermarkData;
             public:
-                WatermarkView(WindowsNativeState& nativeState, const std::string& googleAnalyticsReferrerToken);
+                WatermarkView(WindowsNativeState& nativeState, const WatermarkData& watermarkData);
                 ~WatermarkView();
 
                 void SetOnScreenStateToIntermediateValue(float value);
@@ -45,6 +46,8 @@ namespace ExampleApp
                 void InsertSelectedCallback(Eegeo::Helpers::ICallback0& callback);
 
                 void RemoveSelectedCallback(Eegeo::Helpers::ICallback0& callback);
+
+				void UpdateWatermarkData(const WatermarkData& watermarkData);
             };
         }
     }

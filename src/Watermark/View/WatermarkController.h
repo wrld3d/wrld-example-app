@@ -4,6 +4,7 @@
 
 #include "Types.h"
 #include "BidirectionalBus.h"
+#include "Watermark.h"
 #include "IWatermarkView.h"
 #include "IWatermarkViewModel.h"
 #include "ApplyScreenControl.h"
@@ -23,12 +24,14 @@ namespace ExampleApp
             private:
                 IWatermarkViewModel& m_viewModel;
                 IWatermarkView& m_view;
+                IWatermarkDataRepository& m_watermarkDataRepository;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 bool m_appModeAllowsOpen;
 
                 Eegeo::Helpers::TCallback0<WatermarkController> m_selectedCallback;
                 Eegeo::Helpers::TCallback2<WatermarkController, ScreenControl::View::IScreenControlViewModel&, float> m_viewStateCallback;
                 Eegeo::Helpers::TCallback1<WatermarkController, const SetWatermarkVisibilityMessage&> m_setVisibilityHandler;
+                Eegeo::Helpers::TCallback1<WatermarkController, const WatermarkModelChangedMessage&> m_watermarkModelChangedHandler;
                 Eegeo::Helpers::TCallback1<WatermarkController, const AppModes::AppModeChangedMessage&> m_appModeChangedHandler;
                 Metrics::IMetricsService& m_metricsService;
 
@@ -37,6 +40,7 @@ namespace ExampleApp
                 void OnViewStateChangeScreenControl(ScreenControl::View::IScreenControlViewModel& viewModel, float& state);
                 
                 void OnHandleSetVisibility(const SetWatermarkVisibilityMessage& message);
+                void OnWatermarkModelChanged(const WatermarkModelChangedMessage& message);
                 
                 void OnAppModeChanged(const AppModes::AppModeChangedMessage& message);
 
@@ -44,6 +48,7 @@ namespace ExampleApp
                 WatermarkController(
                     IWatermarkViewModel& viewModel,
                     IWatermarkView& view,
+                    IWatermarkDataRepository& watermarkDataRepository,
                     ExampleAppMessaging::TMessageBus& messageBus,
                     Metrics::IMetricsService& metricsService
                 );

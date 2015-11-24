@@ -5,6 +5,7 @@
 #include "Types.h"
 #include "Interiors.h"
 #include "BidirectionalBus.h"
+#include "SdkModelDomainEventBus.h"
 #include "ICallback.h"
 #include "InteriorsExplorerExitMessage.h"
 #include "InteriorsExplorerSelectFloorMessage.h"
@@ -31,6 +32,7 @@ namespace ExampleApp
                                        MapMode::SdkModel::IMapModeModel& mapModeModel,
                                        WeatherMenu::SdkModel::IWeatherController& weatherController,
                                        ExampleAppMessaging::TMessageBus& messageBus,
+                                       ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
                                        Metrics::IMetricsService& metricsService);
                 ~InteriorsExplorerModel();
                 
@@ -65,6 +67,7 @@ namespace ExampleApp
                 WeatherMenu::SdkModel::IWeatherController& m_weatherController;
 
                 ExampleAppMessaging::TMessageBus& m_messageBus;
+                ExampleAppMessaging::TSdkModelDomainEventBus& m_sdkModelDomainEventBus;
                 Metrics::IMetricsService& m_metricsService;
                 
                 Eegeo::Helpers::TCallback0<InteriorsExplorerModel> m_controllerStateChangedCallback;

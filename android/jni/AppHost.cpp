@@ -446,9 +446,9 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
     m_pWatermarkViewModule = Eegeo_NEW(ExampleApp::Watermark::View::WatermarkViewModule)(
 		m_nativeState,
 		app.WatermarkModule().GetWatermarkViewModel(),
+		app.WatermarkModule().GetWatermarkDataRepository(),
 		m_messageBus,
-		*m_pAndroidFlurryMetricsService,
-        app.GetApplicationConfiguration().GoogleAnalyticsReferrerToken()
+		*m_pAndroidFlurryMetricsService
     );
 
     // 3d map view layer.
@@ -557,7 +557,6 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
                                                                                                  app.SearchResultMenuModule().GetMenuViewModel(),
                                                                                                  app.FlattenButtonModule().GetScreenControlViewModel(),
                                                                                                  app.CompassModule().GetScreenControlViewModel(),
-                                                                                                 app.WatermarkModule().GetScreenControlViewModel(),
                                                                                                  app.GetIdentityProvider(),
 																								 m_nativeState);
 

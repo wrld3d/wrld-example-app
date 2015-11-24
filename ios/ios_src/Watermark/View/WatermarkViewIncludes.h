@@ -13,6 +13,8 @@ namespace ExampleApp
             class WatermarkViewInterop;
             class IWatermarkViewModule;
             class WatermarkViewModule;
+            class WatermarkData;
+            class IWatermarkDataRepository;
         }
     }
 }

@@ -6,13 +6,24 @@ namespace ExampleApp
 {
     namespace Watermark
     {
-        class IWatermarkModule;
+        namespace SdkModel
+        {
+            class IWatermarkModule;
+            class WatermarkInteriorStateChangedObserver;
+            class WatermarkModel;
+        }
         
         namespace View
         {
             class IWatermarkViewModel;
             class IWatermarkView;
             class WatermarkController;
+            
+            class WatermarkData;
+            class IWatermarkDataRepository;
+            class WatermarkDataRepository;
+            class IWatermarkDataFactory;
+            class WatermarkDataFactory;
         }
     }
 }

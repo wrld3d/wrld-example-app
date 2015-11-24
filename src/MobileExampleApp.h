@@ -143,7 +143,7 @@ namespace ExampleApp
         ExampleApp::MyPinDetails::SdkModel::IMyPinDetailsModule* m_pMyPinDetailsModule;
         Search::Swallow::SdkModel::ISwallowSearchMenuModule* m_pSwallowSearchMenuModule;
         ExampleApp::Options::IOptionsModule* m_pOptionsModule;
-        Watermark::IWatermarkModule* m_pWatermarkModule;
+        Watermark::SdkModel::IWatermarkModule* m_pWatermarkModule;
         ExampleApp::ApplicationConfig::ApplicationConfiguration m_applicationConfiguration;
         Eegeo::Streaming::CameraFrustumStreamingVolume* m_pStreamingVolume;
         ExampleAppMessaging::TMessageBus& m_messageBus;
@@ -362,7 +362,7 @@ namespace ExampleApp
             return *m_pOptionsModule;
         }
         
-        const ExampleApp::Watermark::IWatermarkModule& WatermarkModule() const
+        const ExampleApp::Watermark::SdkModel::IWatermarkModule& WatermarkModule() const
         {
             return *m_pWatermarkModule;
         }
