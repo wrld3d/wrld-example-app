@@ -220,6 +220,41 @@ namespace ExampleApp
                                                           description);
                     }
                     
+                    SwallowDepartmentResultModel TransformToSwallowDepartmentResult(const Search::SdkModel::SearchResultModel& searchResultModel)
+                    {
+                        rapidjson::Document json;
+                        
+                        std::string name;
+                        std::string imageUrl;
+                        std::string description;
+                        
+                        if (!json.Parse<0>(searchResultModel.GetJsonData().c_str()).HasParseError())
+                        {
+                            if(json.HasMember(SearchConstants::NAME_FIELD_NAME.c_str()) && json[SearchConstants::NAME_FIELD_NAME.c_str()].IsString())
+                            {
+                                name = json[SearchConstants::NAME_FIELD_NAME.c_str()].GetString();
+                            }
+                            
+                            if(json.HasMember(SearchConstants::IMAGE_FILENAME_FIELD_NAME.c_str()) && json[SearchConstants::IMAGE_FILENAME_FIELD_NAME.c_str()].IsString())
+                            {
+                                imageUrl = json[SearchConstants::IMAGE_FILENAME_FIELD_NAME.c_str()].GetString();
+                            }
+                            
+                            if(json.HasMember(SearchConstants::DESCRIPTION_FIELD_NAME.c_str()) && json[SearchConstants::DESCRIPTION_FIELD_NAME.c_str()].IsString())
+                            {
+                                description = json[SearchConstants::DESCRIPTION_FIELD_NAME.c_str()].GetString();
+                            }
+                        }
+                        else
+                        {
+                            Eegeo_ASSERT(false, "JSON parse error transforming search result model to swallow working group model");
+                        }
+                        
+                        return SwallowDepartmentResultModel(name,
+                                                          imageUrl,
+                                                          description);
+                    }
+                    
                     SwallowOfficeResultModel TransformToSwallowOfficeResult(const Search::SdkModel::SearchResultModel& searchResultModel)
                     {
                         rapidjson::Document json;

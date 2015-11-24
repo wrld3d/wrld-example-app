@@ -16,6 +16,7 @@
 #include "SwallowPoiDbConstants.h"
 #include "SwallowPoiDbCombinedService.h"
 #include "SwallowPoiDbEmployeeParser.h"
+#include "SwallowPoiDbDepartmentParser.h"
 #include "SwallowPoiDbFacilityParser.h"
 #include "SwallowPoiDbMeetingRoomParser.h"
 #include "SwallowPoiDbOfficeParser.h"
@@ -116,6 +117,14 @@ namespace ExampleApp
                                                                                                                                   Eegeo::Helpers::makeVector(Constants::OfficeFtsColumnWeights)),
                                                                                                                 m_spellFixOptions,
                                                                                                                 Eegeo_NEW(Parsers::SwallowPoiDbOfficeParser),
+                                                                                                                m_assetsBaseUrl);
+            
+            serviceMap[Search::Swallow::SearchConstants::DEPARTMENT_CATEGORY_NAME] = Eegeo_NEW(SwallowPoiDbService)(BuildFtsComponent(*pSQLiteDbConnection,
+                                                                                                                                  Constants::DepartmentTableName,
+                                                                                                                                  Eegeo::Helpers::makeVector(Constants::DepartmentFtsColumnNames),
+                                                                                                                                  Eegeo::Helpers::makeVector(Constants::DepartmentFtsColumnWeights)),
+                                                                                                                m_spellFixOptions,
+                                                                                                                Eegeo_NEW(Parsers::SwallowPoiDbDepartmentParser),
                                                                                                                 m_assetsBaseUrl);
             
             Eegeo::SQLite::SQLiteTable* transitionsTable = Eegeo_NEW(Eegeo::SQLite::SQLiteTable)(Constants::TransitionTableName, *pSQLiteDbConnection);

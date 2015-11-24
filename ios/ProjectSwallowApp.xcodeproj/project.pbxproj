@@ -745,6 +745,12 @@
 		222E069B1948B08B0004FFD9 /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4820F168371460006E99B /* MainStoryboard_iPad.storyboard */; };
 		225FFA171A39EE8600C2282A /* SearchResultRepository.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 225FFA131A39EE8600C2282A /* SearchResultRepository.cpp */; };
 		225FFA181A39EE8600C2282A /* SearchResultRepository.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 225FFA131A39EE8600C2282A /* SearchResultRepository.cpp */; };
+		2723C9331C04C64000539FC6 /* SwallowPoiDbDepartmentParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2723C9311C04C64000539FC6 /* SwallowPoiDbDepartmentParser.cpp */; };
+		2723C9341C04C64000539FC6 /* SwallowPoiDbDepartmentParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2723C9311C04C64000539FC6 /* SwallowPoiDbDepartmentParser.cpp */; };
+		2723C9371C04CA7900539FC6 /* SwallowDepartmentResultModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2723C9351C04CA7900539FC6 /* SwallowDepartmentResultModel.cpp */; };
+		2723C9381C04CA7900539FC6 /* SwallowDepartmentResultModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2723C9351C04CA7900539FC6 /* SwallowDepartmentResultModel.cpp */; };
+		2723C93B1C04D1B700539FC6 /* SwallowDepartmentSearchResultPoiView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2723C93A1C04D1B700539FC6 /* SwallowDepartmentSearchResultPoiView.mm */; };
+		2723C93C1C04D1B700539FC6 /* SwallowDepartmentSearchResultPoiView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2723C93A1C04D1B700539FC6 /* SwallowDepartmentSearchResultPoiView.mm */; };
 		27C1F99B1BC6A47600D5EFF4 /* InteriorsExplorerCameraController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27C1F9991BC6A47600D5EFF4 /* InteriorsExplorerCameraController.cpp */; };
 		27C1F99C1BC6A47600D5EFF4 /* InteriorsExplorerCameraController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27C1F9991BC6A47600D5EFF4 /* InteriorsExplorerCameraController.cpp */; };
 		27CADB631BCFEA2A00805A27 /* SizeHelpers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27CADB611BCFEA2A00805A27 /* SizeHelpers.cpp */; };
@@ -2235,6 +2241,12 @@
 		225FFA131A39EE8600C2282A /* SearchResultRepository.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchResultRepository.cpp; sourceTree = "<group>"; };
 		225FFA141A39EE8600C2282A /* SearchResultRepository.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultRepository.h; sourceTree = "<group>"; };
 		270A7A651BCBE2000020EAF7 /* WorldPinVisibility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorldPinVisibility.h; sourceTree = "<group>"; };
+		2723C9311C04C64000539FC6 /* SwallowPoiDbDepartmentParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SwallowPoiDbDepartmentParser.cpp; sourceTree = "<group>"; };
+		2723C9321C04C64000539FC6 /* SwallowPoiDbDepartmentParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwallowPoiDbDepartmentParser.h; sourceTree = "<group>"; };
+		2723C9351C04CA7900539FC6 /* SwallowDepartmentResultModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SwallowDepartmentResultModel.cpp; sourceTree = "<group>"; };
+		2723C9361C04CA7900539FC6 /* SwallowDepartmentResultModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwallowDepartmentResultModel.h; sourceTree = "<group>"; };
+		2723C9391C04D1B700539FC6 /* SwallowDepartmentSearchResultPoiView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwallowDepartmentSearchResultPoiView.h; sourceTree = "<group>"; };
+		2723C93A1C04D1B700539FC6 /* SwallowDepartmentSearchResultPoiView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SwallowDepartmentSearchResultPoiView.mm; sourceTree = "<group>"; };
 		278A8F651BA6DB00000BBA67 /* WorldPinInteriorData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorldPinInteriorData.h; sourceTree = "<group>"; };
 		27C1F9991BC6A47600D5EFF4 /* InteriorsExplorerCameraController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InteriorsExplorerCameraController.cpp; sourceTree = "<group>"; };
 		27C1F99A1BC6A47600D5EFF4 /* InteriorsExplorerCameraController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InteriorsExplorerCameraController.h; sourceTree = "<group>"; };
@@ -3094,9 +3106,9 @@
 		7EC46F2A1ABC484600683975 /* CompassModeUnauthorizedMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompassModeUnauthorizedMessage.h; sourceTree = "<group>"; };
 		7ECE70721BBAA9BF0008CDDB /* SearchJsonParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchJsonParser.cpp; sourceTree = "<group>"; };
 		7ECE70731BBAA9BF0008CDDB /* SearchJsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchJsonParser.h; sourceTree = "<group>"; };
-		7EE481E616836F370006E99B /* ProjectSwallowApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProjectSwallowApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7ED084B81BFC94D700B6F91D /* UIHelpers.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UIHelpers.mm; sourceTree = "<group>"; };
 		7ED084BB1BFC94E700B6F91D /* UIHelpers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UIHelpers.h; sourceTree = "<group>"; };
+		7EE481E616836F370006E99B /* ProjectSwallowApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProjectSwallowApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7EE481EA16836F370006E99B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		7EE481EC16836F370006E99B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		7EE481EE16836F370006E99B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -3560,6 +3572,8 @@
 				1846CB151BB945EE007F1922 /* SearchParser */,
 				1833B1DD1BBBED42001CB77A /* SwallowFacilityResultModel.cpp */,
 				1833B1DE1BBBED42001CB77A /* SwallowFacilityResultModel.h */,
+				2723C9351C04CA7900539FC6 /* SwallowDepartmentResultModel.cpp */,
+				2723C9361C04CA7900539FC6 /* SwallowDepartmentResultModel.h */,
 				1833B1DF1BBBED42001CB77A /* SwallowMeetingRoomResultModel.cpp */,
 				1833B1E01BBBED42001CB77A /* SwallowMeetingRoomResultModel.h */,
 				1833B1E11BBBED42001CB77A /* SwallowOfficeResultModel.cpp */,
@@ -3649,6 +3663,8 @@
 		1846CBC31BBBD627007F1922 /* Parsers */ = {
 			isa = PBXGroup;
 			children = (
+				2723C9311C04C64000539FC6 /* SwallowPoiDbDepartmentParser.cpp */,
+				2723C9321C04C64000539FC6 /* SwallowPoiDbDepartmentParser.h */,
 				1846CBC41BBBD627007F1922 /* ISwallowPoiDbParser.h */,
 				1846CBC51BBBD627007F1922 /* SwallowPoiDbEmployeeParser.cpp */,
 				1846CBC61BBBD627007F1922 /* SwallowPoiDbEmployeeParser.h */,
@@ -5731,6 +5747,8 @@
 		7E3B8AA11A385F110023C94E /* View */ = {
 			isa = PBXGroup;
 			children = (
+				2723C9391C04D1B700539FC6 /* SwallowDepartmentSearchResultPoiView.h */,
+				2723C93A1C04D1B700539FC6 /* SwallowDepartmentSearchResultPoiView.mm */,
 				1833B1EC1BBC0577001CB77A /* SwallowFacilitySearchResultPoiView.h */,
 				1833B1ED1BBC0577001CB77A /* SwallowFacilitySearchResultPoiView.mm */,
 				1833B1EE1BBC0577001CB77A /* SwallowWorkingGroupSearchResultPoiView.h */,
@@ -7749,6 +7767,7 @@
 				7E3B8AE21A385F110023C94E /* IconResources.mm in Sources */,
 				1846CBF11BBBD627007F1922 /* SwallowPoiDbServiceProvider.cpp in Sources */,
 				BFD5FD8A1BA708E100F591F1 /* FXImageView.m in Sources */,
+				2723C9341C04C64000539FC6 /* SwallowPoiDbDepartmentParser.cpp in Sources */,
 				7E3B8A031A385A290023C94E /* WorldPinInFocusObserver.cpp in Sources */,
 				7E3B88E11A385A290023C94E /* FlattenButtonScreenControl.cpp in Sources */,
 				7E3B8AFE1A385F110023C94E /* MyPinCreationConfirmationView.mm in Sources */,
@@ -7791,6 +7810,7 @@
 				BFD5FD791BA706AD00F591F1 /* TourFullScreenImageCeremonyBeganObserver.cpp in Sources */,
 				18FB64591A9240FC005A9411 /* Base64Transcoder.c in Sources */,
 				7E3B89F71A385A290023C94E /* WorldPinsInFocusController.cpp in Sources */,
+				2723C9381C04CA7900539FC6 /* SwallowDepartmentResultModel.cpp in Sources */,
 				7E3B89E91A385A290023C94E /* WeatherMenuStateOption.cpp in Sources */,
 				18096F851A7F90A1006A6438 /* ExampleAppCustomWebLoadRequestFactory.cpp in Sources */,
 				7E3B88CD1A385A290023C94E /* CompassController.cpp in Sources */,
@@ -7929,6 +7949,7 @@
 				7E3B895F1A385A290023C94E /* MyPinsModule.cpp in Sources */,
 				BFD5FD691BA706AD00F591F1 /* TourFullScreenImageCeremonyEndedMessage.cpp in Sources */,
 				1878531E1A9CD0A90001889C /* GeoNamesSearchResultPoiView.mm in Sources */,
+				2723C93C1C04D1B700539FC6 /* SwallowDepartmentSearchResultPoiView.mm in Sources */,
 				18096F5E1A7B8FE2006A6438 /* StreamOverWifiOnlyChangedMessageHandler.cpp in Sources */,
 				27E936501BE260B6007D52C5 /* ReportPinsVisibilityMaskingModule.cpp in Sources */,
 				7E3B89011A385A290023C94E /* ModalityChangedMessage.cpp in Sources */,
@@ -8061,6 +8082,7 @@
 				7E1B507A1ACADE540060FA4F /* InitialExperienceIntroView.mm in Sources */,
 				7E3B8B011A385F110023C94E /* MyPinCreationConfirmationViewModule.mm in Sources */,
 				BFD5FD3E1BA706AD00F591F1 /* SplineTransitionCameraMode.cpp in Sources */,
+				2723C9331C04C64000539FC6 /* SwallowPoiDbDepartmentParser.cpp in Sources */,
 				7E3B89EA1A385A290023C94E /* WeatherMenuDataParser.cpp in Sources */,
 				1833B1E71BBBED42001CB77A /* SwallowOfficeResultModel.cpp in Sources */,
 				7E1B50881ACC53680060FA4F /* InitialExperienceIntroBackgroundView.mm in Sources */,
@@ -8141,6 +8163,7 @@
 				7E3B89481A385A290023C94E /* MyPinDetailsModelSelectedObserver.cpp in Sources */,
 				E06AE59B1B87207B000F85E3 /* AppModeModel.cpp in Sources */,
 				18FB64561A9240FC005A9411 /* NSURL+Base.m in Sources */,
+				2723C9371C04CA7900539FC6 /* SwallowDepartmentResultModel.cpp in Sources */,
 				7E3B8A0A1A385A290023C94E /* WorldPinGainedFocusMessage.cpp in Sources */,
 				7E3B89D21A385A290023C94E /* SearchResultPoiViewModel.cpp in Sources */,
 				7E3B8A0E1A385A290023C94E /* WorldPinLostFocusMessage.cpp in Sources */,
@@ -8251,6 +8274,7 @@
 				7E3B894A1A385A290023C94E /* MyPinDetailsOpenableControl.cpp in Sources */,
 				7E3B89CE1A385A290023C94E /* SearchResultPoiModule.cpp in Sources */,
 				BFD5FD3C1BA706AD00F591F1 /* SplineCameraMode.cpp in Sources */,
+				2723C93B1C04D1B700539FC6 /* SwallowDepartmentSearchResultPoiView.mm in Sources */,
 				7E3B8AE11A385F110023C94E /* IconResources.mm in Sources */,
 				BFD5FD891BA708E100F591F1 /* FXImageView.m in Sources */,
 				7E3B8A021A385A290023C94E /* WorldPinInFocusObserver.cpp in Sources */,
@@ -8335,7 +8359,6 @@
 				7E3B89201A385A290023C94E /* MyPinCreationModelObserver.cpp in Sources */,
 				BFD5FD401BA706AD00F591F1 /* TourCameraModule.cpp in Sources */,
 				18E7E1981BD1245300EC10DC /* SwallowSearchTransitionPinSelectionHandler.cpp in Sources */,
-				186B47141AB1D7E90084E80B /* WatermarkModule.cpp in Sources */,
 				27E9362E1BE23472007D52C5 /* UserInteractionModel.cpp in Sources */,
 				7E3B8AF91A385F110023C94E /* ModalBackgroundViewInterop.mm in Sources */,
 				7E3B89961A385A290023C94E /* SearchServiceBase.cpp in Sources */,

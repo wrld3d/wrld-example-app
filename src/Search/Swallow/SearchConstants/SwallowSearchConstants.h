@@ -35,6 +35,7 @@ namespace ExampleApp
                 extern const std::string WORKING_GROUP_CATEGORY_NAME;
                 extern const std::string FACILITY_CATEGORY_NAME;
                 extern const std::string OFFICE_CATEGORY_NAME;
+                extern const std::string DEPARTMENT_CATEGORY_NAME;
                 extern const std::string STATIONERY_CATEGORY_NAME;
                 extern const std::string TRANSITION_CATEGORY_NAME;
                 extern const std::string TOILETS_CATEGORY_NAME;

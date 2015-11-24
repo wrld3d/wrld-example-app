@@ -31,6 +31,7 @@ namespace ExampleApp
                 const std::string WORKING_GROUP_CATEGORY_NAME = "working_group";
                 const std::string FACILITY_CATEGORY_NAME = "facility";
                 const std::string OFFICE_CATEGORY_NAME = "office";
+                const std::string DEPARTMENT_CATEGORY_NAME = "department";
                 const std::string TRANSITION_CATEGORY_NAME = "transition";
                 const std::string STATIONERY_CATEGORY_NAME = "stationery";
                 const std::string TOILETS_CATEGORY_NAME = "toilets";
@@ -61,6 +62,7 @@ namespace ExampleApp
                     categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Print Stations", PRINT_STATION_CATEGORY_NAME, "printstation", false));
                     categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Stationary", STATIONERY_CATEGORY_NAME, "stationary", false));
                     categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("People", PERSON_CATEGORY_NAME, "person", false));
+                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Department", DEPARTMENT_CATEGORY_NAME, "department", false));
                     return categories;
                 }
                 

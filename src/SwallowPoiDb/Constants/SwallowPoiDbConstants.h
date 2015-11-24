@@ -30,6 +30,10 @@ namespace ExampleApp
             extern const std::string OfficeFtsColumnNames[1];
             extern const float OfficeFtsColumnWeights[1];
             
+            extern const std::string DepartmentTableName;
+            extern const std::string DepartmentFtsColumnNames[2];
+            extern const float DepartmentFtsColumnWeights[2];
+            
             extern const std::string TransitionTableName;
         }
     }

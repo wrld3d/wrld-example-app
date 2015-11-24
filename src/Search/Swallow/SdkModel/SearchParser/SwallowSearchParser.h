@@ -11,6 +11,7 @@
 #include "SwallowMeetingRoomResultModel.h"
 #include "SwallowWorkingGroupResultModel.h"
 #include "SwallowFacilityResultModel.h"
+#include "SwallowDepartmentResultModel.h"
 #include "SwallowOfficeResultModel.h"
 #include "SwallowTransitionResultModel.h"
 
@@ -33,6 +34,8 @@ namespace ExampleApp
                     SwallowWorkingGroupResultModel TransformToSwallowWorkingGroupResult(const Search::SdkModel::SearchResultModel& searchResultModel);
                     
                     SwallowFacilityResultModel TransformToSwallowFacilityResult(const Search::SdkModel::SearchResultModel& searchResultModel);
+                    
+                    SwallowDepartmentResultModel TransformToSwallowDepartmentResult(const Search::SdkModel::SearchResultModel& searchResultModel);
                     
                     SwallowOfficeResultModel TransformToSwallowOfficeResult(const Search::SdkModel::SearchResultModel& searchResultModel);
                     
