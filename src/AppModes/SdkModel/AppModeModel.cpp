@@ -26,19 +26,7 @@ namespace ExampleApp
 
             AppModeModel::~AppModeModel()
             {
-                
-                if(m_pStateMachine != NULL)
-                {
-                    m_pStateMachine->StopStateMachine();
-                    Eegeo_DELETE m_pStateMachine;
-                    m_pStateMachine = NULL;
-                    
-                    for(int i = 0; i < m_appStates.size(); ++i)
-                    {
-                        Eegeo_DELETE m_appStates[i];
-                    }
-                }
-                m_appStates.clear();
+				DestroyStateMachine();
             }
             
 
@@ -94,6 +82,22 @@ namespace ExampleApp
                 
                 m_pStateMachine->StartStateMachine(WorldMode);
             }
+
+			void AppModeModel::DestroyStateMachine()
+			{
+				if (m_pStateMachine != NULL)
+				{
+					m_pStateMachine->StopStateMachine();
+					Eegeo_DELETE m_pStateMachine;
+					m_pStateMachine = NULL;
+
+					for (int i = 0; i < m_appStates.size(); ++i)
+					{
+						Eegeo_DELETE m_appStates[i];
+					}
+				}
+				m_appStates.clear();
+			}
         }
     }
 }

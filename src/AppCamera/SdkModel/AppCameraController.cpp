@@ -29,6 +29,7 @@ namespace ExampleApp
             , m_previousCameraIndex(0)
             , m_transitionDuration(0.75f)
             , m_transitionTimer(0.0f)
+            , m_isTransitionInFlight(false)
             , m_currentNonFlattenedCameraPosition(0.0, 0.0, 0.0)
             , m_currentInterestPoint(0.0, 0.0, 0.0)
             {

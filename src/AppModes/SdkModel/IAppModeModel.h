@@ -35,6 +35,8 @@ namespace ExampleApp
                 
                 virtual void InitialiseStateMachine(const std::vector<Helpers::IStateMachineState*>& appStates) = 0;
 
+				virtual void DestroyStateMachine() = 0;
+
                 virtual AppMode GetAppMode() const = 0;
                 
                 virtual void SetAppMode(AppMode mode) = 0;

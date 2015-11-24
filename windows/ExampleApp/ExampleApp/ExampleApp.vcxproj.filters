@@ -1767,6 +1767,9 @@
     <ClCompile Include="..\..\..\src\Watermark\SdkModel\WatermarkModule.cpp">
       <Filter>Source Files\App\Watermark\SdkModel</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\ExampleAppPch.cpp">
+      <Filter>Source Files\Windows</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\AppHost.h">
@@ -3868,6 +3871,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\Watermark\SdkModel\WatermarkModule.h">
       <Filter>Source Files\App\Watermark\SdkModel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\ExampleAppPch.h">
+      <Filter>Source Files\Windows</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

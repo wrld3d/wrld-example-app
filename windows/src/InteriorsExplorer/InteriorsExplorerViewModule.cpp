@@ -20,7 +20,6 @@ namespace ExampleApp
                                                                      ScreenControl::View::IScreenControlViewModel& flattenViewModel,
                                                                      ScreenControl::View::IScreenControlViewModel& compassViewModel,
                                                                      ScreenControl::View::IScreenControlViewModel& watermarkViewModel,
-                                                                     const Eegeo::Rendering::ScreenProperties& screenProperties,
                                                                      Eegeo::Helpers::IdentityProvider& identityProvider)
             {
                 m_pView = Eegeo_NEW(InteriorsExplorerView)();//screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight(), screenProperties.GetPixelScale()];

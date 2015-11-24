@@ -81,6 +81,8 @@
 #include "ApplicationConfigurationModule.h"
 #include "IApplicationConfigurationService.h"
 #include "SearchVendorNames.h"
+#include "InteriorsExplorerViewModule.h"
+#include "IInteriorsExplorerModule.h"
 
 using namespace Eegeo::Windows;
 using namespace Eegeo::Windows::Input;
@@ -121,6 +123,7 @@ AppHost::AppHost(
     , m_pViewControllerUpdaterModule(NULL)
     , m_pWindowsFlurryMetricsService(NULL)
     , m_pInitialExperienceIntroViewModule(NULL)
+	, m_pInteriorsExplorerViewModule(NULL)
     , m_searchServiceModules()
     , m_failAlertHandler(this, &AppHost::HandleStartupFailure)
 {
@@ -548,6 +551,17 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
         m_messageBus
         );
 
+	m_pInteriorsExplorerViewModule = Eegeo_NEW(ExampleApp::InteriorsExplorer::View::InteriorsExplorerViewModule)(
+		app.InteriorsExplorerModule().GetInteriorsExplorerViewModel(),
+		m_messageBus,
+		app.MyPinCreationModule().GetMyPinCreationInitiationViewModel(),
+		app.SecondaryMenuModule().GetSecondaryMenuViewModel(),
+		app.SearchResultMenuModule().GetMenuViewModel(),
+		app.FlattenButtonModule().GetScreenControlViewModel(),
+		app.CompassModule().GetScreenControlViewModel(),
+		app.WatermarkModule().GetScreenControlViewModel(),
+		app.GetIdentityProvider());
+
     m_pViewControllerUpdaterModule = Eegeo_NEW(ExampleApp::ViewControllerUpdater::View::ViewControllerUpdaterModule);
 
     ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModel& viewControllerUpdaterModel = m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel();
@@ -589,6 +603,8 @@ void AppHost::DestroyApplicationViewModulesFromUiThread()
             Eegeo_DELETE m_pCompassViewModule;
 
             Eegeo_DELETE m_pInitialExperienceIntroViewModule;
+
+			Eegeo_DELETE m_pInteriorsExplorerViewModule;
 
             Eegeo_DELETE m_pWatermarkViewModule;
         }

@@ -55,6 +55,8 @@
 #include "IEegeoErrorHandler.h"
 #include "ISingleOptionAlertBoxDismissedHandler.h"
 #include "WindowsFlurryMetricsService.h"
+#include "Interiors.h"
+#include "InteriorsExplorerViewIncludes.h"
 
 class AppHost : public Eegeo::IEegeoErrorHandler, protected Eegeo::NonCopyable
 {
@@ -136,6 +138,7 @@ private:
     ExampleApp::Net::SdkModel::INetworkCapabilities* m_pNetworkCapabilities;
     std::map<std::string, ExampleApp::Search::SdkModel::ISearchServiceModule*> m_searchServiceModules;
     ExampleApp::Metrics::WindowsFlurryMetricsService* m_pWindowsFlurryMetricsService;
+	ExampleApp::InteriorsExplorer::View::IInteriorsExplorerViewModule* m_pInteriorsExplorerViewModule;
 
     ExampleApp::MobileExampleApp* m_pApp;
 
