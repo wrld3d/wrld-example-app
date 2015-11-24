@@ -456,6 +456,7 @@
     <ClCompile Include="..\..\..\src\Search\SearchQueryResponseReceivedMessage.cpp" />
     <ClCompile Include="..\..\..\src\Search\SearchVendorNames.cpp" />
     <ClCompile Include="..\..\..\src\Search\Swallow\SdkModel\SearchParser\SwallowSearchParser.cpp" />
+    <ClCompile Include="..\..\..\src\Search\Swallow\SdkModel\SwallowDepartmentResultModel.cpp" />
     <ClCompile Include="..\..\..\src\Search\Swallow\SdkModel\SwallowFacilityResultModel.cpp" />
     <ClCompile Include="..\..\..\src\Search\Swallow\SdkModel\SwallowMeetingRoomResultModel.cpp" />
     <ClCompile Include="..\..\..\src\Search\Swallow\SdkModel\SwallowOfficeResultMenuOptionSelectedMessageHandler.cpp" />
@@ -484,6 +485,7 @@
     <ClCompile Include="..\..\..\src\SecondaryMenu\View\OptionsMenuOption.cpp" />
     <ClCompile Include="..\..\..\src\SecondaryMenu\View\SecondaryMenuController.cpp" />
     <ClCompile Include="..\..\..\src\SwallowPoiDb\Constants\SwallowPoiDbConstants.cpp" />
+    <ClCompile Include="..\..\..\src\SwallowPoiDb\Parsers\SwallowPoiDbDepartmentParser.cpp" />
     <ClCompile Include="..\..\..\src\SwallowPoiDb\Parsers\SwallowPoiDbEmployeeParser.cpp" />
     <ClCompile Include="..\..\..\src\SwallowPoiDb\Parsers\SwallowPoiDbFacilityParser.cpp" />
     <ClCompile Include="..\..\..\src\SwallowPoiDb\Parsers\SwallowPoiDbMeetingRoomParser.cpp" />
@@ -2181,6 +2183,7 @@
     <ClInclude Include="..\..\..\src\Search\SearchVendorNames.h" />
     <ClInclude Include="..\..\..\src\Search\Swallow\SdkModel\ISwallowSearchMenuModule.h" />
     <ClInclude Include="..\..\..\src\Search\Swallow\SdkModel\SearchParser\SwallowSearchParser.h" />
+    <ClInclude Include="..\..\..\src\Search\Swallow\SdkModel\SwallowDepartmentResultModel.h" />
     <ClInclude Include="..\..\..\src\Search\Swallow\SdkModel\SwallowFacilityResultModel.h" />
     <ClInclude Include="..\..\..\src\Search\Swallow\SdkModel\SwallowMeetingRoomResultModel.h" />
     <ClInclude Include="..\..\..\src\Search\Swallow\SdkModel\SwallowOfficeResultMenuOptionSelectedMessageHandler.h" />
@@ -2219,6 +2222,7 @@
     <ClInclude Include="..\..\..\src\SwallowPoiDb\Constants\SwallowPoiDbConstants.h" />
     <ClInclude Include="..\..\..\src\SwallowPoiDb\ISwallowPoiDbModule.h" />
     <ClInclude Include="..\..\..\src\SwallowPoiDb\Parsers\ISwallowPoiDbParser.h" />
+    <ClInclude Include="..\..\..\src\SwallowPoiDb\Parsers\SwallowPoiDbDepartmentParser.h" />
     <ClInclude Include="..\..\..\src\SwallowPoiDb\Parsers\SwallowPoiDbEmployeeParser.h" />
     <ClInclude Include="..\..\..\src\SwallowPoiDb\Parsers\SwallowPoiDbFacilityParser.h" />
     <ClInclude Include="..\..\..\src\SwallowPoiDb\Parsers\SwallowPoiDbMeetingRoomParser.h" />
