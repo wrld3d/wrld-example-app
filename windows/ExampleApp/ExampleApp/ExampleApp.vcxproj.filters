@@ -525,6 +525,7 @@
     </Filter>
     <Filter Include="Source Files\App\Watermark\SdkModel">
       <UniqueIdentifier>{f857c55b-4aca-4490-828d-e027a47aea54}</UniqueIdentifier>
+	</Filter>
     <Filter Include="Source Files\App\Search\Swallow">
       <UniqueIdentifier>{7e500016-19c3-4384-8f2f-42e5ea4b3137}</UniqueIdentifier>
     </Filter>
