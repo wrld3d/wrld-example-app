@@ -143,7 +143,7 @@ namespace ExampleApp
                 env->DeleteLocalRef(jniWebUrlString);
             }
 
-            void  SetWatermarkAlignmentState(bool alignAlongBottom)
+            void  WatermarkView::SetWatermarkAlignmentState(bool alignAlongBottom)
             {
                 // TODO: Look at implementing similar animation changes to those on iOS
             }
