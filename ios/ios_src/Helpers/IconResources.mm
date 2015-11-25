@@ -63,7 +63,7 @@ namespace ExampleApp
                 {
                     return "icon1_meetingroom";
                 }
-                if(Contains(category, Search::Swallow::SearchConstants::WORKING_GROUP_CATEGORY_NAME) || Contains(category, "working"))
+                if(Contains(category, Search::Swallow::SearchConstants::WORKING_GROUP_CATEGORY_NAME) || Contains(category, Search::Swallow::SearchConstants::DEPARTMENT_CATEGORY_NAME) || Contains(category, "working"))
                 {
                     return "icon1_workinggroup";
                 }
