@@ -42,6 +42,11 @@ namespace ExampleApp
             {
                 [m_pView updateWatermarkData: watermarkData];
             }
+            
+            void WatermarkViewInterop::SetWatermarkAlignmentState(bool alignAlongBottom)
+            {
+                [m_pView setWatermarkAlignmentState:alignAlongBottom];
+            }
         }
     }
 }

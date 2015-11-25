@@ -2990,6 +2990,7 @@
 		BFDD75EF1BCEA3E200335508 /* InteriorExplorerViewingState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InteriorExplorerViewingState.h; path = States/InteriorExplorerViewingState.h; sourceTree = "<group>"; };
 		BFDD75F31BCEAF5800335508 /* InteriorExplorerExitingState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = InteriorExplorerExitingState.cpp; path = States/InteriorExplorerExitingState.cpp; sourceTree = "<group>"; };
 		BFDD75F41BCEAF5800335508 /* InteriorExplorerExitingState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InteriorExplorerExitingState.h; path = States/InteriorExplorerExitingState.h; sourceTree = "<group>"; };
+		BFDE63441C06212B005DD870 /* WatermarkAlignmentStateChangedMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WatermarkAlignmentStateChangedMessage.h; sourceTree = "<group>"; };
 		BFDEAA791BCD3702007CE4D7 /* WorldState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WorldState.cpp; path = AppModes/States/SdkModel/WorldState.cpp; sourceTree = "<group>"; };
 		BFDEAA7A1BCD3702007CE4D7 /* WorldState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WorldState.h; path = AppModes/States/SdkModel/WorldState.h; sourceTree = "<group>"; };
 		BFDEAA841BCD5821007CE4D7 /* StateMachine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StateMachine.cpp; sourceTree = "<group>"; };
@@ -3241,6 +3242,7 @@
 				186B470B1AB1D46B0084E80B /* Watermark.h */,
 				7E1B50941ACEDAD00060FA4F /* SetWatermarkVisibilityMessage.h */,
 				560F98F01BFCD90F0008B0A2 /* WatermarkModelChangedMessage.h */,
+				BFDE63441C06212B005DD870 /* WatermarkAlignmentStateChangedMessage.h */,
 				560F99031BFDD4590008B0A2 /* SdkModel */,
 				186B47021AB1D46B0084E80B /* View */,
 			);
