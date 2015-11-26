@@ -28,7 +28,8 @@ namespace ExampleApp
                                                Eegeo::Resources::Interiors::IInteriorsMaterialFactory& cubeMappedMaterialFactory,
                                                Eegeo::Resources::Interiors::IInteriorsMaterialFactory& chromeMaterialFactory,
                                                Eegeo::Resources::Interiors::IInteriorsMaterialFactory& reflectionMaterialFactory,
-                                               Eegeo::Resources::Interiors::IInteriorsMaterialFactory& stencilMirrorMaterialFactory);
+                                               Eegeo::Resources::Interiors::IInteriorsMaterialFactory& stencilMirrorMaterialFactory,
+                                               Eegeo::Resources::Interiors::IInteriorsMaterialFactory& diffuseTranslucentMaterialFactory);
 
                 Eegeo::Rendering::Materials::IMaterial* TryCreate(const Eegeo::Resources::Interiors::InteriorMaterialData& interiorMaterialData);
             private:
@@ -41,6 +42,7 @@ namespace ExampleApp
                 Eegeo::Resources::Interiors::IInteriorsMaterialFactory& m_chromeMaterialFactory;
                 Eegeo::Resources::Interiors::IInteriorsMaterialFactory& m_reflectionMaterialFactory;
                 Eegeo::Resources::Interiors::IInteriorsMaterialFactory& m_stencilMirrorMaterialFactory;
+                Eegeo::Resources::Interiors::IInteriorsMaterialFactory& m_diffuseTranslucentMaterialFactory;
                 
             };
         }

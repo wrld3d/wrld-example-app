@@ -84,6 +84,8 @@
 #include "InteriorsNavigation.h"
 #include "UserInteraction.h"
 #include "ReportPinsVisibilityMasking.h"
+#include "HighlightPickingController.h"
+#include "IRayCaster.h"
 
 namespace ExampleApp
 {
@@ -158,6 +160,8 @@ namespace ExampleApp
         InteriorsCustomMaterials::SdkModel::IInteriorsCustomMaterialsModule* m_pInteriorsCustomMaterialsModule;
         UserInteraction::SdkModel::UserInteractionModule* m_pUserInteractionModule;
         ReportPinsVisibilityMasking::SdkModel::ReportPinsVisibilityMaskingModule* m_pReportPinsVisibilityMaskingModule;
+        Eegeo::Picking::PickingController* m_pInteriorsPickingController;
+        Eegeo::Collision::IRayCaster* m_pRayCaster;
         
         AppModes::SdkModel::IAppModeModel* m_pAppModeModel;
         

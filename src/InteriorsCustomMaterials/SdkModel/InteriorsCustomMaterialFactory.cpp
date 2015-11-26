@@ -20,7 +20,8 @@ namespace ExampleApp
                                                                            Eegeo::Resources::Interiors::IInteriorsMaterialFactory& cubeMappedMaterialFactory,
                                                                            Eegeo::Resources::Interiors::IInteriorsMaterialFactory& chromeMaterialFactory,
                                                                            Eegeo::Resources::Interiors::IInteriorsMaterialFactory& reflectionMaterialFactory,
-                                                                           Eegeo::Resources::Interiors::IInteriorsMaterialFactory& stencilMirrorMaterialFactory)
+                                                                           Eegeo::Resources::Interiors::IInteriorsMaterialFactory& stencilMirrorMaterialFactory,
+                                                                           Eegeo::Resources::Interiors::IInteriorsMaterialFactory& diffuseTranslucentMaterialFactory)
             : m_materialDtoRepository(materialDtoRepository)
             , m_untexturedMaterialFactory(untexturedMaterialFactory)
             , m_diffuseTexturedMaterialFactory(diffuseTexturedMaterialFactory)
@@ -29,6 +30,7 @@ namespace ExampleApp
             , m_chromeMaterialFactory(chromeMaterialFactory)
             , m_reflectionMaterialFactory(reflectionMaterialFactory)
             , m_stencilMirrorMaterialFactory(stencilMirrorMaterialFactory)
+            , m_diffuseTranslucentMaterialFactory(diffuseTranslucentMaterialFactory)
             {
                 
             }
@@ -84,6 +86,10 @@ namespace ExampleApp
                 else if (materialFactoryType == InteriorMaterialSemantics::InteriorsStencilMirrorMaterial)
                 {
                     return m_stencilMirrorMaterialFactory.TryCreate(customInteriorMaterialData);
+                }
+                else if (materialFactoryType == InteriorMaterialSemantics::InteriorsHighlightMaterial)
+                {
+                    return m_diffuseTranslucentMaterialFactory.TryCreate(customInteriorMaterialData);
                 }
                 
                 return NULL;

@@ -98,6 +98,9 @@
 #include "ReportPinsVisibilityMaskingModule.h"
 #include "EnvironmentFlatteningService.h"
 #include "UserInteractionModel.h"
+#include "InteriorController.h"
+#include "EnvironmentRayCaster.h"
+#include "AggregateCollisionBvhProvider.h"
 
 namespace ExampleApp
 {
@@ -207,6 +210,8 @@ namespace ExampleApp
         , m_enableTours(false)
         , m_pSQLiteModule(NULL)
         , m_pSwallowPoiDbModule(NULL)
+        , m_pRayCaster(NULL)
+        , m_pInteriorsPickingController(NULL)
     {
         m_metricsService.BeginSession(applicationConfiguration.FlurryAppKey(), EEGEO_PLATFORM_VERSION_NUMBER);
 
@@ -283,6 +288,12 @@ namespace ExampleApp
         
         CreateApplicationModelModules(platformImplementedSearchServiceModules, nativeUIFactories, platformConfig.OptionsConfig.InteriorsAffectedByFlattening);
         
+        m_pRayCaster = Eegeo_NEW(Eegeo::Collision::EnvironmentRayCaster)(mapModule.GetAggregateCollisionBvhProvider(),
+                                                                         mapModule.GetEnvironmentFlatteningService());
+        
+        m_pInteriorsPickingController = Eegeo_NEW(Eegeo::Picking::HighlightPickingController)(*m_pRayCaster, mapModule.GetInteriorsPresentationModule().GetAppLevelController(),
+                                                                                              mapModule.GetEnvironmentFlatteningService());
+        
         m_pCameraTransitionController = Eegeo_NEW(ExampleApp::CameraTransitions::SdkModel::CameraTransitionController)(*m_pGlobeCameraController,
                                                                                                                        m_pInteriorsExplorerModule->GetInteriorsCameraController(),
                                                                                                                        *m_pNavigationService,
@@ -318,6 +329,9 @@ namespace ExampleApp
         DestroyApplicationModelModules();
         
         Eegeo_DELETE m_pSQLiteModule;
+        
+        Eegeo_DELETE m_pRayCaster;
+        Eegeo_DELETE m_pInteriorsPickingController;
 
         Eegeo_DELETE m_pCameraTransitionService;
         Eegeo_DELETE m_pCameraTransitionController;
@@ -1241,6 +1255,13 @@ namespace ExampleApp
         }
         
         m_pCurrentTouchController->Event_TouchTap(data);
+        
+        const Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsPresentationModule = m_pWorld->GetMapModule().GetInteriorsPresentationModule();
+        Eegeo::Resources::Interiors::InteriorController& interiorsController = interiorsPresentationModule.GetAppLevelController();
+        if(interiorsController.InteriorIsVisible())
+        {
+            m_pInteriorsPickingController->CastRayFromScreenPosition(Eegeo::v2(data.point.GetX(), data.point.GetY()), m_pAppCameraModule->GetController().GetRenderCamera());
+        }
     }
 
     void MobileExampleApp::Event_TouchDoubleTap(const AppInterface::TapData& data)

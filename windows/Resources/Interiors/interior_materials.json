@@ -246,11 +246,16 @@
              "MaterialType":"InteriorsDiffuseTexturedMaterial",
              "DiffuseTexture":"swallowexterior01-interior-texture0"
          },
-         
+
          {
              "MaterialName": "swallowscreens-interior",
              "MaterialType":"InteriorsDiffuseTexturedMaterial",
              "DiffuseTexture":"swallowscreens-texture0"
+         },
+
+         {
+             "MaterialName": "entity_highlight",
+             "MaterialType":"InteriorsHighlightMaterial"
          }
     ]
 }
