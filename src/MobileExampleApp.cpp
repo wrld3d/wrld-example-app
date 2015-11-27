@@ -101,6 +101,7 @@
 #include "InteriorController.h"
 #include "EnvironmentRayCaster.h"
 #include "AggregateCollisionBvhProvider.h"
+#include "InteriorsHighlightPickingController.h"
 
 namespace ExampleApp
 {
@@ -291,8 +292,11 @@ namespace ExampleApp
         m_pRayCaster = Eegeo_NEW(Eegeo::Collision::EnvironmentRayCaster)(mapModule.GetAggregateCollisionBvhProvider(),
                                                                          mapModule.GetEnvironmentFlatteningService());
         
-        m_pInteriorsPickingController = Eegeo_NEW(Eegeo::Picking::HighlightPickingController)(*m_pRayCaster, mapModule.GetInteriorsPresentationModule().GetAppLevelController(),
-                                                                                              mapModule.GetEnvironmentFlatteningService());
+        m_pInteriorsPickingController = Eegeo_NEW(ExampleApp::Picking::InteriorsHighlightPickingController)(*m_pRayCaster,
+                                                                                                            mapModule.GetInteriorsPresentationModule().GetAppLevelController(),
+                                                                                                            mapModule.GetEnvironmentFlatteningService(),
+                                                                                                            m_messageBus,
+                                                                                                            m_sdkDomainEventBus);
         
         m_pCameraTransitionController = Eegeo_NEW(ExampleApp::CameraTransitions::SdkModel::CameraTransitionController)(*m_pGlobeCameraController,
                                                                                                                        m_pInteriorsExplorerModule->GetInteriorsCameraController(),

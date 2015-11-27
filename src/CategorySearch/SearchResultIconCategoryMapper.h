@@ -24,8 +24,6 @@ namespace ExampleApp
             ~SearchResultIconCategoryMapper();
             
             int GetIconIndexFromSearchResult(const Search::SdkModel::SearchResultModel& searchResultModel) const;
-            
-            int GetMeetingRoomIconFromAvailability(const Search::Swallow::SdkModel::SwallowMeetingRoomResultModel& meetingRoom) const;
         };
     }
 }

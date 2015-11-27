@@ -50,10 +50,6 @@ namespace ExampleApp
             m_categoryToIconIndex[Search::Swallow::SearchConstants::PRINT_STATION_CATEGORY_NAME] = 18;
             m_categoryToIconIndex[Search::Swallow::SearchConstants::EMERGENCY_EXIT_CATEGORY_NAME] = 19;
             
-            m_availabilityToIconIndex[Search::Swallow::SearchConstants::MEETING_ROOM_AVAILABLE] = 22;
-            m_availabilityToIconIndex[Search::Swallow::SearchConstants::MEETING_ROOM_AVAILABLE_SOON] = 21;
-            m_availabilityToIconIndex[Search::Swallow::SearchConstants::MEETING_ROOM_OCCUPIED] = 20;
-            
             m_categoryToIconIndex[Search::Swallow::SearchConstants::TRANSITION_CATEGORY_NAME] = 23;
         }
         
@@ -64,31 +60,9 @@ namespace ExampleApp
         
         int SearchResultIconCategoryMapper::GetIconIndexFromSearchResult(const Search::SdkModel::SearchResultModel& searchResultModel) const
         {
-            if (searchResultModel.GetCategory() == Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME)
-            {
-                const Search::Swallow::SdkModel::SwallowMeetingRoomResultModel& meetingRoom = Search::Swallow::SdkModel::SearchParser::TransformToSwallowMeetingRoomResult(searchResultModel);
-                return GetMeetingRoomIconFromAvailability(meetingRoom);
-            }
-            else
-            {
-                std::map<std::string, int>::const_iterator it = m_categoryToIconIndex.find(searchResultModel.GetCategory());
-                
-                if(it == m_categoryToIconIndex.end())
-                {
-                    return 0;
-                }
-                else
-                {
-                    return it->second;
-                }
-            }
-        }
-        
-        int SearchResultIconCategoryMapper::GetMeetingRoomIconFromAvailability(const Search::Swallow::SdkModel::SwallowMeetingRoomResultModel& meetingRoom) const
-        {
-            std::map<std::string, int>::const_iterator it = m_availabilityToIconIndex.find(meetingRoom.GetAvailability());
+            std::map<std::string, int>::const_iterator it = m_categoryToIconIndex.find(searchResultModel.GetCategory());
             
-            if(it == m_availabilityToIconIndex.end())
+            if(it == m_categoryToIconIndex.end())
             {
                 return 0;
             }

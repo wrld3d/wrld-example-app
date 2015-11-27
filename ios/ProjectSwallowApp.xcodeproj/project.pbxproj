@@ -926,6 +926,8 @@
 		56FBCDF11A0BB5150026546E /* button_create_poi.png in Resources */ = {isa = PBXBuildFile; fileRef = 56FBCDE91A0BB5150026546E /* button_create_poi.png */; };
 		56FBCDF51A0BB5150026546E /* image_blank.png in Resources */ = {isa = PBXBuildFile; fileRef = 56FBCDED1A0BB5150026546E /* image_blank.png */; };
 		56FBCDF61A0BB5150026546E /* poi_marker.png in Resources */ = {isa = PBXBuildFile; fileRef = 56FBCDEE1A0BB5150026546E /* poi_marker.png */; };
+		655BF20A1C08990800B19789 /* InteriorsHighlightPickingController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 655BF2081C08990800B19789 /* InteriorsHighlightPickingController.cpp */; settings = {ASSET_TAGS = (); }; };
+		655BF20B1C08990800B19789 /* InteriorsHighlightPickingController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 655BF2081C08990800B19789 /* InteriorsHighlightPickingController.cpp */; settings = {ASSET_TAGS = (); }; };
 		7E0195351B1C6B1900884B3F /* floor_selection_bottom.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E0195331B1C6B1900884B3F /* floor_selection_bottom.png */; };
 		7E0195361B1C6B1900884B3F /* floor_selection_bottom.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E0195331B1C6B1900884B3F /* floor_selection_bottom.png */; };
 		7E0195371B1C6B1900884B3F /* floor_selection_top.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E0195341B1C6B1900884B3F /* floor_selection_top.png */; };
@@ -2397,6 +2399,8 @@
 		56FBCDE91A0BB5150026546E /* button_create_poi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_create_poi.png; sourceTree = "<group>"; };
 		56FBCDED1A0BB5150026546E /* image_blank.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = image_blank.png; sourceTree = "<group>"; };
 		56FBCDEE1A0BB5150026546E /* poi_marker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = poi_marker.png; sourceTree = "<group>"; };
+		655BF2081C08990800B19789 /* InteriorsHighlightPickingController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InteriorsHighlightPickingController.cpp; sourceTree = "<group>"; };
+		655BF2091C08990800B19789 /* InteriorsHighlightPickingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InteriorsHighlightPickingController.h; sourceTree = "<group>"; };
 		7E0195331B1C6B1900884B3F /* floor_selection_bottom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = floor_selection_bottom.png; sourceTree = "<group>"; };
 		7E0195341B1C6B1900884B3F /* floor_selection_top.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = floor_selection_top.png; sourceTree = "<group>"; };
 		7E149DBB1BCD209B00C0AFFC /* ExampleSearchJsonParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ExampleSearchJsonParser.cpp; sourceTree = "<group>"; };
@@ -5872,6 +5876,8 @@
 		7E5811B21B1F050A007AD67F /* View */ = {
 			isa = PBXGroup;
 			children = (
+				655BF2081C08990800B19789 /* InteriorsHighlightPickingController.cpp */,
+				655BF2091C08990800B19789 /* InteriorsHighlightPickingController.h */,
 				7E5811B31B1F050A007AD67F /* IInteriorsExplorerView.h */,
 				7E5811B51B1F050A007AD67F /* InteriorsExplorerController.h */,
 				7E1D22CD1B2085E0006A8703 /* InteriorsExplorerController.cpp */,
@@ -7748,6 +7754,7 @@
 				186B47241AB1DD5C0084E80B /* WatermarkViewInterop.mm in Sources */,
 				EEE021341BB44239001AF4CF /* YelpSearchResultModel.cpp in Sources */,
 				18E7E1951BD1241A00EC10DC /* SwallowSearchTransitionPinController.h in Sources */,
+				655BF20B1C08990800B19789 /* InteriorsHighlightPickingController.cpp in Sources */,
 				BFD5FD391BA706AD00F591F1 /* ActiveTourQuitSelectedMessage.cpp in Sources */,
 				7E149DD41BD1169B00C0AFFC /* ExitCurrentInteriorStage.cpp in Sources */,
 				560741151B8CC624002B0F49 /* MenuDragStateChangedMessage.cpp in Sources */,
@@ -8054,6 +8061,7 @@
 				7E3B8B031A385F110023C94E /* MyPinCreationDetailsView.mm in Sources */,
 				18CFE2C41BF0F4BB003368D1 /* AppDelegate.mm in Sources */,
 				27DB89E01BB3FF170020CDA5 /* GeoNamesSearchService.cpp in Sources */,
+				655BF20A1C08990800B19789 /* InteriorsHighlightPickingController.cpp in Sources */,
 				7E3B896E1A385A290023C94E /* PlaceJumpSelectedMessageHandler.cpp in Sources */,
 				7E5811CB1B1F3248007AD67F /* InteriorsExplorerView.mm in Sources */,
 				BFD5FCC21BA7068300F591F1 /* TourFullScreenImageViewInterop.mm in Sources */,
