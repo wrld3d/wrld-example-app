@@ -98,9 +98,9 @@
     <Compile Include="Views\Options\OptionsView.cs" />
     <Compile Include="Views\SearchResultMenu\SearchMenuListItem.cs" />
     <Compile Include="StartupResourceLoader.cs" />
-    <Compile Include="Views\SearchResultPoi\ISearchResultPoiView.cs" />
     <Compile Include="Views\SearchResultPoi\ResultModels\YelpResultModel.cs" />
     <Compile Include="Views\SearchResultPoi\SearchResultCategoryMapper.cs" />
+    <Compile Include="Views\SearchResultPoi\SearchResultPoiViewBase.cs" />
     <Compile Include="Views\SearchResultPoi\YelpSearchResultsPoiView.cs" />
     <Compile Include="Views\SecondaryMenu\SubMenuListItem.cs" />
     <Compile Include="Views\AboutPage\AboutPageView.cs" />
