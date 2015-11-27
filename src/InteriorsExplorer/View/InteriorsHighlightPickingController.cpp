@@ -76,14 +76,16 @@ namespace ExampleApp
         void InteriorsHighlightPickingController::OnAvailabilityChanged(const ExampleApp::SearchResultOnMap::SearchResultMeetingAvailabilityChanged& message)
         {
             const Search::Swallow::SdkModel::SwallowMeetingRoomResultModel& meetingRoom = Search::Swallow::SdkModel::SearchParser::TransformToSwallowMeetingRoomResult(message.GetModel());
-            
+            const std::string& roomName = meetingRoom.GetName();
             std::map<std::string, Eegeo::Rendering::Renderables::InteriorHighlightRenderable*>::iterator it =
-            m_currentHighlightRenderables.find(meetingRoom.GetName());
+            m_currentHighlightRenderables.find(roomName);
             
             if (it != m_currentHighlightRenderables.end())
             {
                 ConfigureRenderableForAvailability(*it->second, message.GetAvailability());
             }
+            
+            m_highlightAvailabilityData[roomName] = message.GetAvailability();
         }
         
         void InteriorsHighlightPickingController::ClearHighlightRenderables()
@@ -132,20 +134,31 @@ namespace ExampleApp
                         
                         std::vector<Rendering::Renderables::InteriorHighlightRenderable*> renderables = cell->GetHighlightRenderables();
                         
-                        for (std::vector<Rendering::Renderables::InteriorHighlightRenderable*>::iterator renderable = renderables.begin();
-                             renderable != renderables.end();
-                             ++renderable)
+                        for (std::vector<Rendering::Renderables::InteriorHighlightRenderable*>::iterator renderableIterator = renderables.begin();
+                             renderableIterator != renderables.end();
+                             ++renderableIterator)
                         {
-                            static const std::string highlightPrefix = "entity_highlight ";
-                            const std::string& id = (*renderable)->GetRenderableId();
-                            
-                            if (id.compare(0, highlightPrefix.length(), highlightPrefix) == 0)
-                            {
-                                m_currentHighlightRenderables.insert(std::make_pair(
-                                                                                    id.substr(highlightPrefix.length()), *renderable));
-                            }
+                            AddHighlight(**renderableIterator);
                         }
                     }
+                }
+            }
+        }
+        
+        void InteriorsHighlightPickingController::AddHighlight(Eegeo::Rendering::Renderables::InteriorHighlightRenderable& renderable)
+        {
+            static const std::string highlightPrefix = "entity_highlight ";
+            const std::string& id = renderable.GetRenderableId();
+            
+            if (id.compare(0, highlightPrefix.length(), highlightPrefix) == 0)
+            {
+                std::string roomName = id.substr(highlightPrefix.length());
+                m_currentHighlightRenderables.insert(std::make_pair(roomName, &renderable));
+                std::map<std::string, std::string>::iterator availabilityData = m_highlightAvailabilityData.find(roomName);
+                
+                if (availabilityData != m_highlightAvailabilityData.end())
+                {
+                    ConfigureRenderableForAvailability(renderable, availabilityData->second);
                 }
             }
         }
@@ -198,6 +211,8 @@ namespace ExampleApp
                 {
                     ConfigureRenderableForAvailability(*(room->second), availability);
                 }
+
+				m_highlightAvailabilityData[roomName] = availability;
             }
         }
 

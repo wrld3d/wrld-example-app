@@ -50,6 +50,7 @@ namespace ExampleApp
             
             void ConfigureRenderableForAvailability(Eegeo::Rendering::Renderables::InteriorHighlightRenderable& renderable, const std::string& availability);
             void ClearHighlightRenderables();
+            void AddHighlight(Eegeo::Rendering::Renderables::InteriorHighlightRenderable& renderable);
 
             Eegeo::Resources::Interiors::IInteriorController& m_interiorsController;
             
@@ -63,6 +64,7 @@ namespace ExampleApp
             Eegeo::Helpers::TCallback1<InteriorsHighlightPickingController, const ExampleApp::SearchResultOnMap::SearchResultMeetingAvailabilityChanged&>m_availabilityChangedHandlerBinding;
             Eegeo::Helpers::TCallback1<InteriorsHighlightPickingController, const Search::SearchQueryResponseReceivedMessage&> m_searchResultReceivedHandler;
             
+            std::map<std::string, std::string> m_highlightAvailabilityData;
             std::map<std::string, Eegeo::Rendering::Renderables::InteriorHighlightRenderable*> m_currentHighlightRenderables;
         };
     }
