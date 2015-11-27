@@ -53,6 +53,10 @@ namespace ExampleApp
             , m_cancelled(false)
             , m_dispatched(false)
             , m_isSuccess(false)
+			, m_yelpConsumerKey(yelpConsumerKey)
+			, m_yelpConsumerSecret(yelpConsumerSecret)
+			, m_yelpOAuthToken(yelpOAuthToken)
+			, m_yelpOAuthTokenSecret(yelpOAuthTokenSecret)
             {
                 m_uiViewClass = Helpers::ReflectionHelpers::GetTypeFromAssembly("ExampleAppWPF", "ExampleAppWPF.YelpAPIClient");
                 ConstructorInfo^ ctor = m_uiViewClass->GetConstructor(Helpers::ReflectionHelpers::CreateTypes(IntPtr::typeid));
@@ -74,7 +78,14 @@ namespace ExampleApp
 
                 CallbackDelegate^ function = gcnew CallbackDelegate(&YelpSearchQueryCallbackHandler::HandleCallBack);
                 
-                Search(gcnew System::String(m_searchQuery.Query().c_str()), m_searchQuery.Location().GetLatitudeInDegrees(), m_searchQuery.Location().GetLongitudeInDegrees(), function);
+				Search(Helpers::ReflectionHelpers::ConvertUTF8ToManagedString(m_yelpConsumerKey),
+					Helpers::ReflectionHelpers::ConvertUTF8ToManagedString(m_yelpConsumerSecret),
+					Helpers::ReflectionHelpers::ConvertUTF8ToManagedString(m_yelpOAuthToken),
+					Helpers::ReflectionHelpers::ConvertUTF8ToManagedString(m_yelpOAuthTokenSecret),
+					gcnew System::String(m_searchQuery.Query().c_str()),
+					m_searchQuery.Location().GetLatitudeInDegrees(),
+					m_searchQuery.Location().GetLongitudeInDegrees(),
+					function);
             }
             
             void WindowsYelpSearchQuery::Cancel()

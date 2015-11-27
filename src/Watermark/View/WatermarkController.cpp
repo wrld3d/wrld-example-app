@@ -46,7 +46,12 @@ namespace ExampleApp
                     m_view.UpdateWatermarkData(watermarkDataForVendor);
                 }
             }
-    
+            
+            
+            void WatermarkController::OnWatermarkAlignmentStateChanged(const WatermarkAlignmentStateChangedMessage& message)
+            {
+                m_view.SetWatermarkAlignmentState(message.ShouldAlignBottom());
+            }
             
             void WatermarkController::OnAppModeChanged(const AppModes::AppModeChangedMessage& message)
             {
@@ -79,6 +84,7 @@ namespace ExampleApp
                 , m_viewStateCallback(this, &WatermarkController::OnViewStateChangeScreenControl)
                 , m_setVisibilityHandler(this, &WatermarkController::OnHandleSetVisibility)
                 , m_watermarkModelChangedHandler(this, &WatermarkController::OnWatermarkModelChanged)
+                , m_watermarkAlignmentStateChangedHandler(this, &WatermarkController::OnWatermarkAlignmentStateChanged)
                 , m_appModeChangedHandler(this, &WatermarkController::OnAppModeChanged)
                 , m_appModeAllowsOpen(true)
             {
@@ -86,13 +92,15 @@ namespace ExampleApp
                 m_viewModel.InsertOnScreenStateChangedCallback(m_viewStateCallback);
                 m_messageBus.SubscribeUi(m_setVisibilityHandler);
                 m_messageBus.SubscribeUi(m_watermarkModelChangedHandler);
+                m_messageBus.SubscribeUi(m_watermarkAlignmentStateChangedHandler);
                 m_messageBus.SubscribeUi(m_appModeChangedHandler);
             }
 
             WatermarkController::~WatermarkController()
             {
                 m_messageBus.UnsubscribeUi(m_setVisibilityHandler);
-                m_messageBus.SubscribeUi(m_watermarkModelChangedHandler);
+                m_messageBus.UnsubscribeUi(m_watermarkAlignmentStateChangedHandler);
+                m_messageBus.UnsubscribeUi(m_watermarkModelChangedHandler);
                 m_messageBus.UnsubscribeUi(m_appModeChangedHandler);
                 m_viewModel.RemoveOnScreenStateChangedCallback(m_viewStateCallback);
                 m_view.RemoveSelectedCallback(m_selectedCallback);

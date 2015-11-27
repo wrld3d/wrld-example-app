@@ -12,6 +12,7 @@
 #include "IMetricsService.h"
 #include "SetWatermarkVisibilityMessage.h"
 #include "AppModes.h"
+#include "WatermarkAlignmentStateChangedMessage.h"
 
 namespace ExampleApp
 {
@@ -32,6 +33,7 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback2<WatermarkController, ScreenControl::View::IScreenControlViewModel&, float> m_viewStateCallback;
                 Eegeo::Helpers::TCallback1<WatermarkController, const SetWatermarkVisibilityMessage&> m_setVisibilityHandler;
                 Eegeo::Helpers::TCallback1<WatermarkController, const WatermarkModelChangedMessage&> m_watermarkModelChangedHandler;
+                Eegeo::Helpers::TCallback1<WatermarkController, const WatermarkAlignmentStateChangedMessage&> m_watermarkAlignmentStateChangedHandler;
                 Eegeo::Helpers::TCallback1<WatermarkController, const AppModes::AppModeChangedMessage&> m_appModeChangedHandler;
                 Metrics::IMetricsService& m_metricsService;
 
@@ -41,6 +43,7 @@ namespace ExampleApp
                 
                 void OnHandleSetVisibility(const SetWatermarkVisibilityMessage& message);
                 void OnWatermarkModelChanged(const WatermarkModelChangedMessage& message);
+                void OnWatermarkAlignmentStateChanged(const WatermarkAlignmentStateChangedMessage& message);
                 
                 void OnAppModeChanged(const AppModes::AppModeChangedMessage& message);
 

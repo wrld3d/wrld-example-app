@@ -2,7 +2,6 @@
 
 #include "SwallowPoiDbEmployeeParser.h"
 
-#include "document.h"
 #include "InteriorId.h"
 #include "LatLongAltitude.h"
 #include "SQLiteCellValue.h"
@@ -41,33 +40,39 @@ namespace ExampleApp
             Search::SdkModel::SearchResultModel SwallowPoiDbEmployeeParser::SQLiteResultRowToSearchResult(const Eegeo::SQLite::SQLiteResultRow& resultRow, const std::string& assetsBaseUrl, int columnOffset)
             {
                 rapidjson::Document jsonDoc;
-                rapidjson::Document::AllocatorType& allocator = jsonDoc.GetAllocator();
+				rapidjson::Document::AllocatorType& allocator = jsonDoc.GetAllocator();
                 rapidjson::Value valueObject(rapidjson::kObjectType);
-                
-                valueObject.AddMember(Search::Swallow::SearchConstants::NAME_FIELD_NAME.c_str(),
-                                      resultRow.Cell(columnOffset + poi_name).AsText().c_str(),
-                                      allocator);
-                
-                valueObject.AddMember(Search::Swallow::SearchConstants::JOB_TITLE_FIELD_NAME.c_str(),
-                                      resultRow.Cell(columnOffset + poi_job_title).AsText().c_str(),
-                                      allocator);
-                
-                valueObject.AddMember(Search::Swallow::SearchConstants::IMAGE_FILENAME_FIELD_NAME.c_str(),
-                                      GetImageUrl(assetsBaseUrl, resultRow.Cell(columnOffset + poi_image_filename).AsText()).c_str(),
-                                      allocator);
-                
-                valueObject.AddMember(Search::Swallow::SearchConstants::WORKING_GROUP_FIELD_NAME.c_str(),
-                                      resultRow.Cell(columnOffset + poi_workingGroup).AsText().c_str(),
-                                      allocator);
-                
-                valueObject.AddMember(Search::Swallow::SearchConstants::OFFICE_LOCATION_FIELD_NAME.c_str(),
-                                      resultRow.Cell(columnOffset + poi_office_location).AsText().c_str(),
-                                      allocator);
-                
-                valueObject.AddMember(Search::Swallow::SearchConstants::DESK_CODE_FIELD_NAME.c_str(),
-                                      resultRow.Cell(columnOffset + poi_desk_code).AsText().c_str(),
-                                      allocator);
-                
+
+				AddStringToJson(Search::Swallow::SearchConstants::NAME_FIELD_NAME,
+					resultRow.Cell(columnOffset + poi_name).AsText(),
+					allocator,
+					valueObject);
+
+				AddStringToJson(Search::Swallow::SearchConstants::JOB_TITLE_FIELD_NAME,
+					resultRow.Cell(columnOffset + poi_job_title).AsText(),
+					allocator,
+					valueObject);
+
+				AddStringToJson(Search::Swallow::SearchConstants::IMAGE_FILENAME_FIELD_NAME,
+					GetImageUrl(assetsBaseUrl, resultRow.Cell(columnOffset + poi_image_filename).AsText()),
+					allocator,
+					valueObject);
+
+				AddStringToJson(Search::Swallow::SearchConstants::WORKING_GROUP_FIELD_NAME,
+					resultRow.Cell(columnOffset + poi_workingGroup).AsText(),
+					allocator,
+					valueObject);
+
+				AddStringToJson(Search::Swallow::SearchConstants::OFFICE_LOCATION_FIELD_NAME,
+					resultRow.Cell(columnOffset + poi_office_location).AsText(),
+					allocator,
+					valueObject);
+
+				AddStringToJson(Search::Swallow::SearchConstants::DESK_CODE_FIELD_NAME,
+					resultRow.Cell(columnOffset + poi_desk_code).AsText(),
+					allocator,
+					valueObject);
+
                 rapidjson::StringBuffer strbuf;
                 rapidjson::Writer<rapidjson::StringBuffer> writer(strbuf);
                 valueObject.Accept(writer);
@@ -88,7 +93,7 @@ namespace ExampleApp
                                                            Search::Swallow::SearchConstants::PERSON_CATEGORY_NAME,
                                                            std::vector<std::string>(),
                                                            Search::SwallowPeopleVendorName,
-                                                           strbuf.GetString(),
+														   strbuf.GetString(),
                                                            Eegeo::Helpers::Time::MillisecondsSinceEpoch());
             }
             

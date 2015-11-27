@@ -3,6 +3,7 @@
 #pragma once
 
 #include <string>
+#include "document.h"
 
 namespace ExampleApp
 {
@@ -19,6 +20,8 @@ namespace ExampleApp
             };
             
             std::string GetImageUrl(const std::string& assetsBaseUrl, const std::string& rawImageFilenameField);
+
+			void AddStringToJson(const std::string& name, const std::string& value, rapidjson::Document::AllocatorType& allocator, rapidjson::Value& out_jsonValue);
         }
     }
 }

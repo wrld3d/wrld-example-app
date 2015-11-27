@@ -2,9 +2,9 @@
 
 #include "SearchResultPoiController.h"
 #include "SearchResultPoiView.h"
+#include "SearchVendorNames.h"
 #include "WindowsAppThreadAssertionMacros.h"
-#include "YelpSearchJsonParser.h"
-
+#include "SearchResultModelCLI.h"
 #include "ReflectionHelpers.h"
 
 using namespace ExampleApp::Helpers::ReflectionHelpers;
@@ -32,29 +32,7 @@ namespace ExampleApp
                 m_model = model;
                 CreateVendorSpecificPoiView(m_model.GetVendor());
 
-                m_yelpModel = Search::Yelp::SdkModel::TransformToYelpSearchResult(model);
-
-                const std::vector<std::string>& humanReadableCategories(model.GetHumanReadableCategories());
-                array<System::String^>^ humanCategoriesArray = gcnew array<System::String^>(humanReadableCategories.size());
-
-                for(size_t i = 0; i < humanReadableCategories.size(); ++ i)
-                {
-                    const std::string& categoryString(humanReadableCategories[i]);
-                    humanCategoriesArray[i] = ConvertUTF8ToManagedString(categoryString);
-                }
-
-                const std::vector<std::string>& yelpReviews(m_yelpModel.GetReviews());
-                array<System::String^>^ yelpReviewsArray = gcnew array<System::String^>(yelpReviews.size());
-
-                for (size_t i = 0; i < yelpReviews.size(); ++i)
-                {
-                    const std::string& reviewString(yelpReviews[i]);
-                    yelpReviewsArray[i] = ConvertUTF8ToManagedString(reviewString);
-                }
-
-                DisplayPoiInfo(ConvertUTF8ToManagedString(model.GetTitle()), ConvertUTF8ToManagedString(model.GetSubtitle()), ConvertUTF8ToManagedString(m_yelpModel.GetPhone())
-                                , ConvertUTF8ToManagedString(m_yelpModel.GetWebUrl()), ConvertUTF8ToManagedString(model.GetCategory()), humanCategoriesArray, ConvertUTF8ToManagedString(m_yelpModel.GetImageUrl())
-                                , ConvertUTF8ToManagedString(m_yelpModel.GetRatingImageUrl()), ConvertUTF8ToManagedString(model.GetVendor()), yelpReviewsArray, m_yelpModel.GetReviewCount(), isPinned);
+				DisplayPoiInfo(gcnew SearchResultModelCLI(m_model), isPinned);
             }
 
             void SearchResultPoiView::Hide()
@@ -146,12 +124,20 @@ namespace ExampleApp
                 {
                     viewClass = "com/eegeo/searchresultpoiview/GeoNamesSearchResultPoiView";
                 }
+				else if (vendor == ExampleApp::Search::SwallowPeopleVendorName)
+				{
+					m_uiViewClass = GetTypeFromAssembly("ExampleAppWPF", "ExampleAppWPF.SwallowPersonSearchResultsPoiView");
+					ConstructorInfo^ ctor = m_uiViewClass->GetConstructor(CreateTypes(IntPtr::typeid));
+					m_uiView = ctor->Invoke(CreateObjects(gcnew IntPtr(this)));
+
+					DisplayPoiInfo.SetupMethod(m_uiViewClass, m_uiView, "DisplayPoiInfo");
+					DismissPoiInfo.SetupMethod(m_uiViewClass, m_uiView, "DismissPoiInfo");
+					UpdateImageData.SetupMethod(m_uiViewClass, m_uiView, "UpdateImageData");
+				}
                 else
                 {
                     Eegeo_ASSERT(false, "Unknown POI vendor %s, cannot create view instance.\n", vendor.c_str());
                 }
-
-
             }
         }
     }

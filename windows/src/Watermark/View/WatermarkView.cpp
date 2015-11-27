@@ -78,6 +78,11 @@ namespace ExampleApp
 					Helpers::ReflectionHelpers::ConvertUTF8ToManagedString(watermarkData.WebUrl()),
 					watermarkData.ShouldShowShadow());
 			}
+
+			void WatermarkView::SetWatermarkAlignmentState(bool alignAlongBottom)
+			{
+				// Windows build doesn't really need to implement -- used to align watermark to bottom of screen on portrait devices
+			}
         }
     }
 }

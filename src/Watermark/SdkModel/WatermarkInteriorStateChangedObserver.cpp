@@ -6,6 +6,7 @@
 #include "WatermarkModel.h"
 #include "InteriorsModelRepository.h"
 #include "InteriorsModel.h"
+#include "WatermarkAlignmentStateChangedMessage.h"
 
 namespace ExampleApp
 {
@@ -45,6 +46,7 @@ namespace ExampleApp
                     
                     m_watermarkModel.SetId(sourceVendor);
                     
+                    m_messageBus.Publish(WatermarkAlignmentStateChangedMessage(true));
                     m_messageBus.Publish(WatermarkModelChangedMessage(m_watermarkModel.GetId()));
                 }
             }
@@ -52,6 +54,7 @@ namespace ExampleApp
             void WatermarkInteriorStateChangedObserver::OnInteriorExplorerExit(const InteriorsExplorer::InteriorsExplorerExitMessage& message)
             {
                 m_watermarkModel.SetId(DefaultEegeoWatermarkId);
+                m_messageBus.Publish(WatermarkAlignmentStateChangedMessage(false));
                 m_messageBus.Publish(WatermarkModelChangedMessage(m_watermarkModel.GetId()));
             }
         }

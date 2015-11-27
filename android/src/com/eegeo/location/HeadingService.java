@@ -115,7 +115,20 @@ public class HeadingService implements SensorEventListener
                     return;
                 }
                 float newAzimuth = adjustHeadingForDeviceOrientation(heading);
-                m_azimuthDegrees = (float) ((newAzimuth * smoothing) + (m_azimuthDegrees * (1.0 - smoothing)));
+                
+                if(Math.abs(newAzimuth - m_azimuthDegrees) >= 180)
+                {
+                    if(newAzimuth > m_azimuthDegrees)
+                    {
+                        m_azimuthDegrees += 360.0f;
+                    }
+                    else
+                    {
+                        newAzimuth += 360.0f;
+                    }
+                }
+                m_azimuthDegrees = (float) ((newAzimuth * smoothing) + (m_azimuthDegrees * (1.0 - smoothing)));     
+                m_azimuthDegrees %= 360.0f;
                 m_hasAzimuthAngle = true;
                 return;
             }
