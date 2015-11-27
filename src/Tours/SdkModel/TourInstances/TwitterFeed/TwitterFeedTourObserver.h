@@ -8,6 +8,7 @@
 #include <map>
 #include <TweetStateData.h>
 #include "Metrics.h"
+#include "BidirectionalBus.h"
 
 namespace ExampleApp
 {
@@ -34,6 +35,8 @@ namespace ExampleApp
                         
                         Eegeo::Helpers::TCallback2<TwitterFeedTourObserver, const std::string&, Social::TwitterFeed::TweetRepository&> m_twitterFeedLoadedCallback;
                         
+                        ExampleAppMessaging::TMessageBus& m_messageBus;
+                        
                         void OnTwitterFeedLoaded(const std::string& userId,
                                                  Social::TwitterFeed::TweetRepository& tweetRepository);
                         
@@ -46,7 +49,8 @@ namespace ExampleApp
                                                 ITourRepository& tourRepository,
                                                 Social::TwitterFeed::ITwitterFeedService& twitterFeedService,
                                                 const std::map<std::string, TweetStateData>& tweetStateDataMap,
-                                                Metrics::IMetricsService& metricsService);
+                                                Metrics::IMetricsService& metricsService,
+                                                ExampleAppMessaging::TMessageBus& messageBus);
                         ~TwitterFeedTourObserver();
                     };
                 }

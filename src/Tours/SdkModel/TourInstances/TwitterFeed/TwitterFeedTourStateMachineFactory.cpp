@@ -23,20 +23,18 @@ namespace ExampleApp
                 {
                     TwitterFeedTourStateMachineFactory::TwitterFeedTourStateMachineFactory(Camera::IToursCameraTransitionController& toursCameraTransitionController,
                                                                                            Camera::IToursCameraController& toursCameraController,
-                                                                                           ITourService& tourService,
                                                                                            WorldPins::SdkModel::IWorldPinsService& worldPinsService,
-                                                                                           ITourRepository& tourRepository,
                                                                                            const std::string& userId,
                                                                                            const std::map<std::string, TweetStateData>& tweetStateDataMap,
-                                                                                           Metrics::IMetricsService& metricsService)
+                                                                                           Metrics::IMetricsService& metricsService,
+                                                                                           ExampleAppMessaging::TMessageBus& messageBus)
                     : m_toursCameraController(toursCameraController)
                     , m_toursCameraTransitionController(toursCameraTransitionController)
-                    , m_tourService(tourService)
                     , m_worldPinsService(worldPinsService)
-                    , m_tourRepository(tourRepository)
                     , m_userId(userId)
                     , m_tweetStateDataMap(tweetStateDataMap)
                     , m_metricsService(metricsService)
+                    , m_messageBus(messageBus)
                     {
                         
                     }
@@ -92,17 +90,16 @@ namespace ExampleApp
                             
                             Eegeo::Space::LatLong location = tweet.HasCoordinates() ? tweet.GetCoordinates() : Eegeo::Space::LatLong::FromECEF(tweetStateData->m_ecefTarget);
                             
-                            stateMachineStates.push_back(Eegeo_NEW(TwitterFeedShowTweetState(m_toursCameraTransitionController,
-                                                                                             m_tourService,
+                            stateMachineStates.push_back(Eegeo_NEW(TwitterFeedShowTweetState(tourModel.States()[i],
+                                                                                             m_toursCameraTransitionController,
                                                                                              m_worldPinsService,
-                                                                                             m_tourRepository,
-                                                                                             nextTourName,
                                                                                              *tweetStateData,
                                                                                              location,
                                                                                              placename,
                                                                                              tweet.GetFirstAttachedImageUrl(),
                                                                                              tweet.GetExpandedMediaUrl(),
                                                                                              tweet.HasAttachedVideo(),
+                                                                                             m_messageBus,
                                                                                              i * cameraRotationDeltaRad)));
                         }
                         

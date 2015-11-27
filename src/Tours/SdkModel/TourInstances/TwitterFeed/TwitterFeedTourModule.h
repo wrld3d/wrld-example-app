@@ -10,6 +10,7 @@
 #include "TwitterFeed.h"
 #include "TweetStateData.h"
 #include "Metrics.h"
+#include "BidirectionalBus.h"
 
 namespace ExampleApp
 {
@@ -33,7 +34,8 @@ namespace ExampleApp
                                               WorldPins::SdkModel::IWorldPinsService& worldPinsService,
                                               ITourRepository& tourRepository,
                                               Social::TwitterFeed::ITwitterFeedService& twitterFeedService,
-                                              Metrics::IMetricsService& metricsService);
+                                              Metrics::IMetricsService& metricsService,
+                                              ExampleAppMessaging::TMessageBus& messageBus);
                         ~TwitterFeedTourModule();
                         
                         const std::map<std::string, TweetStateData>& GetTweetStateDataMap() const;

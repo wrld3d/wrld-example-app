@@ -8,6 +8,7 @@
 #include "CallbackCollection.h"
 #include "TourModel.h"
 #include "TourWebViewIncludes.h"
+#include "URLRequestHandler.h"
 
 namespace ExampleApp
 {
@@ -21,7 +22,7 @@ namespace ExampleApp
                 {
                 public:
                     TourExplorerViewInterop(TourExplorerView* pView,
-                                            TourWebView* pWebView);
+                                            URLRequest::View::URLRequestHandler& urlRequestHandler);
                     
                     void SetCurrentTour(const SdkModel::TourModel& tourModel);
                     void SetInitialCard(const int initialCard);
@@ -29,7 +30,7 @@ namespace ExampleApp
                     void OnDismissed();
                     void OnStateSelected(int activeStateIndex);
                     void OnChangeTourRequested(const std::string& name);
-                    void ShowWebpage(const std::string& url);
+                    void ShowExternalURL(const std::string& url);
                     
                     void OnCurrentTourCardTapped();
                     
@@ -56,7 +57,7 @@ namespace ExampleApp
                     Eegeo::Helpers::CallbackCollection0 m_currentTourCardTappedCallbacks;
                     
                     TourExplorerView* m_pView;
-                    TourWebView* m_pWebView;
+                    URLRequest::View::URLRequestHandler& m_urlRequestHandler;
                     SdkModel::TourModel m_tourModel;
                     int m_initialCard;
                 };

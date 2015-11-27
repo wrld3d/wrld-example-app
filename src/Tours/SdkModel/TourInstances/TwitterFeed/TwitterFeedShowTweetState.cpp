@@ -26,20 +26,18 @@ namespace ExampleApp
             {
                 namespace TwitterFeed
                 {
-                    TwitterFeedShowTweetState::TwitterFeedShowTweetState(Camera::IToursCameraTransitionController& toursCameraTransitionController,
-                                                                         ITourService& tourService,
+                    TwitterFeedShowTweetState::TwitterFeedShowTweetState(const TourStateModel& stateModel,
+                                                                         Camera::IToursCameraTransitionController& toursCameraTransitionController,
                                                                          WorldPins::SdkModel::IWorldPinsService& worldPinsService,
-                                                                         ITourRepository& tourRepository,
-                                                                         const std::string& tourName,
                                                                          const TweetStateData& tweetStateData,
                                                                          const Eegeo::Space::LatLong& pinLocation,
                                                                          const std::string& placeName,
                                                                          const std::string& attachedImageUrl,
                                                                          const std::string& attachedContentUrl,
                                                                          bool hasAttachedVideo,
+                                                                         ExampleAppMessaging::TMessageBus& messageBus,
                                                                          float cameraRotationOffset)
-                    : m_tourRepository(tourRepository)
-                    , m_tourName(tourName)
+                    : m_stateModel(stateModel)
                     , m_toursCameraTransitionController(toursCameraTransitionController)
                     , m_cameraMode(tweetStateData.m_ecefOrigin,
                                    tweetStateData.m_ecefTarget,
@@ -48,12 +46,12 @@ namespace ExampleApp
                     , m_pinPlacename(placeName)
                     , m_pinImageUrl(attachedImageUrl)
                     , m_pinContentUrl(attachedContentUrl)
-                    , m_tourService(tourService)
                     , m_worldPinsService(worldPinsService)
                     , m_pPinModel(NULL)
                     , m_cameraTransitionComplete(false)
                     , m_hasAttachedVideo(hasAttachedVideo)
                     , m_pinLocation(pinLocation)
+                    , m_messageBus(messageBus)
                     {
                         /* MB:  tweetStateData right now is a camera origin and camera target based on a fixed Twitter Feed position.
                                 This needs to be reorientated if the location is somewhere else i.e. it's a tweet with a geolocation.  
@@ -116,9 +114,8 @@ namespace ExampleApp
                             const bool interior = false;
                             WorldPins::SdkModel::WorldPinInteriorData worldPinInteriorData;
                             
-                            m_pPinModel = m_worldPinsService.AddPin(Eegeo_NEW(TwitterFeedPinSelectionHandler)(m_tourName,
-                                                                                                              m_tourRepository,
-                                                                                                              m_tourService),
+                            m_pPinModel = m_worldPinsService.AddPin(Eegeo_NEW(TwitterFeedPinSelectionHandler)(m_stateModel,
+                                                                                                              m_messageBus),
                                                                     NULL,
                                                                     worldPinFocusData,
                                                                     interior,

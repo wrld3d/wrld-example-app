@@ -20,7 +20,8 @@ namespace ExampleApp
                                                                  WorldPins::SdkModel::IWorldPinsService& worldPinsService,
                                                                  ITourRepository& tourRepository,
                                                                  Social::TwitterFeed::ITwitterFeedService& twitterFeedService,
-                                                                 Metrics::IMetricsService& metricsService)
+                                                                 Metrics::IMetricsService& metricsService,
+                                                                 ExampleAppMessaging::TMessageBus& messageBus)
                     {
                         
                         m_tweetStateDataMap["Dev4Recce"] = TweetStateData(Eegeo::Space::LatLongAltitude::FromDegrees(37.619988, -122.366472, 600).ToECEF(),
@@ -32,7 +33,8 @@ namespace ExampleApp
                                                                                         tourRepository,
                                                                                         twitterFeedService,
                                                                                         m_tweetStateDataMap,
-                                                                                        metricsService);
+                                                                                        metricsService,
+                                                                                        messageBus);
                     }
                     
                     TwitterFeedTourModule::~TwitterFeedTourModule()

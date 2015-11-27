@@ -398,7 +398,7 @@
     std::stringstream ss;
     ss << "https://twitter.com/" << [self.m_pScreenName UTF8String];
     
-    m_pInterop->ShowWebpage(ss.str());
+    m_pInterop->ShowExternalURL(ss.str());
 }
 
 - (void)handleTourChangeRequest:(UITapGestureRecognizer *)tap
@@ -411,13 +411,13 @@
     std::stringstream ss;
     ss << "https://twitter.com/" << [self.m_pScreenName UTF8String] << "/status/" << [self.m_pTwitterId UTF8String];
     
-    m_pInterop->ShowWebpage(ss.str());
+    m_pInterop->ShowExternalURL(ss.str());
     
 }
 
 - (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)url inRange:(NSRange)characterRange
 {
-    m_pInterop->ShowWebpage([[url absoluteString] UTF8String]);
+    m_pInterop->ShowExternalURL([[url absoluteString] UTF8String]);
     
     return NO;
 }

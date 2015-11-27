@@ -11,6 +11,7 @@
 #include "TweetStateData.h"
 #include "LatLongAltitude.h"
 #include "Metrics.h"
+#include "BidirectionalBus.h"
 
 namespace ExampleApp
 {
@@ -27,22 +28,20 @@ namespace ExampleApp
                     private:
                         Camera::IToursCameraTransitionController& m_toursCameraTransitionController;
                         Camera::IToursCameraController& m_toursCameraController;
-                        ITourService& m_tourService;
                         WorldPins::SdkModel::IWorldPinsService& m_worldPinsService;
-                        ITourRepository& m_tourRepository;
                         std::string m_userId;
                         Metrics::IMetricsService& m_metricsService;
+                        ExampleAppMessaging::TMessageBus& m_messageBus;
                         
                         const std::map<std::string, TweetStateData>& m_tweetStateDataMap;
                     public:
                         TwitterFeedTourStateMachineFactory(Camera::IToursCameraTransitionController& toursCameraTransitionController,
                                                            Camera::IToursCameraController& toursCameraController,
-                                                           ITourService& tourService,
                                                            WorldPins::SdkModel::IWorldPinsService& worldPinsService,
-                                                           ITourRepository& tourRepository,
                                                            const std::string& userId,
                                                            const std::map<std::string, TweetStateData>& tweetStateDataMap,
-                                                           Metrics::IMetricsService& metricsService);
+                                                           Metrics::IMetricsService& metricsService,
+                                                           ExampleAppMessaging::TMessageBus& messageBus);
                         ~TwitterFeedTourStateMachineFactory();
                         
                         States::ITourStateMachine* CreateTourStateMachine(const TourModel& tourModel);

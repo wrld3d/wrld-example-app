@@ -827,7 +827,8 @@ namespace ExampleApp
                                                                                                                  TourWorldPinsModule().GetWorldPinsService(),
                                                                                                                  ToursModule().GetTourRepository(),
                                                                                                                  TwitterFeedModule().GetTwitterFeedService(),
-                                                                                                                 m_metricsService);
+                                                                                                                 m_metricsService,
+                                                                                                                 m_messageBus);
         
         const std::map<std::string, Tours::SdkModel::TourInstances::TwitterFeed::TweetStateData>& tweetStateDataMap = TwitterFeedTourModule().GetTweetStateDataMap();
         

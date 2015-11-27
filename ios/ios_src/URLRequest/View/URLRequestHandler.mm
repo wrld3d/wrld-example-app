@@ -23,7 +23,12 @@ namespace ExampleApp
             
             void URLRequestHandler::OnURLRequested(const ExampleApp::URLRequest::URLRequestedMessage &message)
             {
-                NSString *urlLink = [NSString stringWithUTF8String:message.URL().c_str()];
+                RequestExternalURL(message.URL());
+            }
+            
+            void URLRequestHandler::RequestExternalURL(const std::string& url)
+            {
+                NSString *urlLink = [NSString stringWithUTF8String:url.c_str()];
                 [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlLink]];
             }
         }

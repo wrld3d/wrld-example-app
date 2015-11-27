@@ -5,7 +5,7 @@
 #import <UIKit/UIKit.h>
 #include "TourExplorerViewIncludes.h"
 #include "Tours.h"
-#include "TourWebViewIncludes.h"
+#include "URLRequestHandler.h"
 
 @class ImageStore;
 
@@ -38,7 +38,7 @@
 @property(nonatomic, retain) UIImageView* pExitButtonBackground;
 @property(nonatomic, retain) UILabel* pTourNameLabel;
 
-- (id) initWithParams:(float)width :(float)height :(float)pixelScale :(TourWebView*)pWebView :(ImageStore*)pImageStore;
+- (id) initWithParams:(float)width :(float)height :(float)pixelScale :(ExampleApp::URLRequest::View::URLRequestHandler&) urlRequestHandler :(ImageStore*)pImageStore;
 
 - (ExampleApp::Tours::View::TourExplorer::TourExplorerViewInterop*) getInterop;
 

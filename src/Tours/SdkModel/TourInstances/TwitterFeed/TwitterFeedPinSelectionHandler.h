@@ -3,8 +3,10 @@
 #pragma once
 
 #include "IWorldPinSelectionHandler.h"
-#include "Tours.h"
+
 #include <string>
+#include "Tours.h"
+#include "BidirectionalBus.h"
 
 namespace ExampleApp
 {
@@ -19,14 +21,12 @@ namespace ExampleApp
                     class TwitterFeedPinSelectionHandler : public WorldPins::SdkModel::IWorldPinSelectionHandler
                     {
                     private:
-                        std::string m_tourName;
-                        ITourRepository& m_tourRepository;
-                        ITourService& m_tourService;
+                        TourStateModel m_tourStateModel;
+                        ExampleAppMessaging::TMessageBus& m_messageBus;
                         
                     public:
-                        TwitterFeedPinSelectionHandler(const std::string& tourName,
-                                                       ITourRepository& tourRepository,
-                                                       ITourService& tourService);
+                        TwitterFeedPinSelectionHandler(const TourStateModel& tourStateModel,
+                                                       ExampleAppMessaging::TMessageBus& messageBus);
                         ~TwitterFeedPinSelectionHandler();
                         
                         void SelectPin();

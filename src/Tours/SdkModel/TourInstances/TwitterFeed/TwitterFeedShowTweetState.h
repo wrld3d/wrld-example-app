@@ -10,6 +10,8 @@
 #include "TweetStateData.h"
 #include "LatLongAltitude.h"
 #include <string>
+#include "TourStateModel.h"
+#include "BidirectionalBus.h"
 
 namespace ExampleApp
 {
@@ -24,17 +26,16 @@ namespace ExampleApp
                     class TwitterFeedShowTweetState : public States::ITourStateMachineState, private Eegeo::NonCopyable
                     {
                     public:
-                        TwitterFeedShowTweetState(Camera::IToursCameraTransitionController& toursCameraTransitionController,
-                                                  ITourService& tourService,
+                        TwitterFeedShowTweetState(const TourStateModel& stateModel,
+                                                  Camera::IToursCameraTransitionController& toursCameraTransitionController,
                                                   WorldPins::SdkModel::IWorldPinsService& worldPinsService,
-                                                  ITourRepository& tourRepository,
-                                                  const std::string& tourName,
                                                   const TweetStateData& tweetStateData,
                                                   const Eegeo::Space::LatLong& pinLocation,
                                                   const std::string& placeName,
                                                   const std::string& attachedImageUrl,
                                                   const std::string& attachedContentUrl,
                                                   bool hasAttachedVideo,
+                                                  ExampleAppMessaging::TMessageBus& messageBus,
                                                   float cameraRotationOffset = 0.0f);
                         ~TwitterFeedShowTweetState();
                         
@@ -45,14 +46,11 @@ namespace ExampleApp
                         void Exit();
                         
                     private:
-                        
+                        TourStateModel m_stateModel;
                         Camera::IToursCameraTransitionController& m_toursCameraTransitionController;
                         Camera::DroneLookatCameraMode m_cameraMode;
-                        ITourService& m_tourService;
                         WorldPins::SdkModel::IWorldPinsService& m_worldPinsService;
                         WorldPins::SdkModel::WorldPinItemModel* m_pPinModel;
-                        ITourRepository& m_tourRepository;
-                        const std::string m_tourName;
                         bool m_cameraTransitionComplete;
                         Eegeo::Space::LatLong m_pinLocation;
                         
@@ -60,6 +58,8 @@ namespace ExampleApp
                         const std::string m_pinImageUrl;
                         const std::string m_pinContentUrl;
                         const bool m_hasAttachedVideo;
+                        
+                        ExampleAppMessaging::TMessageBus& m_messageBus;
                     };
                 }
             }

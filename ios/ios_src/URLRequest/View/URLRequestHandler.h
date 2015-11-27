@@ -28,6 +28,8 @@ namespace ExampleApp
                 
                 ~URLRequestHandler();
                 
+                void RequestExternalURL(const std::string& url);
+                
             };
         }
     }

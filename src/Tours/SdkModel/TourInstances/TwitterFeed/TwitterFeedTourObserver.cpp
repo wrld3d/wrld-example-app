@@ -29,7 +29,8 @@ namespace ExampleApp
                                                                      ITourRepository& tourRepository,
                                                                      Social::TwitterFeed::ITwitterFeedService& twitterFeedService,
                                                                      const std::map<std::string, TweetStateData>& tweetStateDataMap,
-                                                                     Metrics::IMetricsService& metricsService)
+                                                                     Metrics::IMetricsService& metricsService,
+                                                                     ExampleAppMessaging::TMessageBus& messageBus)
                     : m_toursCameraTransitionController(toursCameraTransitionController)
                     , m_toursCameraController(toursCameraController)
                     , m_tourService(tourService)
@@ -39,6 +40,7 @@ namespace ExampleApp
                     , m_twitterFeedLoadedCallback(this, &TwitterFeedTourObserver::OnTwitterFeedLoaded)
                     , m_tweetStateDataMap(tweetStateDataMap)
                     , m_metricsService(metricsService)
+                    , m_messageBus(messageBus)
                     {
                         m_twitterFeedService.AddFeedLoadedCallback(m_twitterFeedLoadedCallback);
                     }
@@ -116,12 +118,11 @@ namespace ExampleApp
                         
                         TwitterFeedTourStateMachineFactory factory(m_toursCameraTransitionController,
                                                                    m_toursCameraController,
-                                                                   m_tourService,
                                                                    m_worldPinsService,
-                                                                   m_tourRepository,
                                                                    userId,
                                                                    m_tweetStateDataMap,
-                                                                   m_metricsService);
+                                                                   m_metricsService,
+                                                                   m_messageBus);
                         
                         m_tourService.AddTour(tourModel, *factory.CreateTourStateMachine(tourModel));
                         

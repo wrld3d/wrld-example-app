@@ -2,8 +2,9 @@
 
 #include "TwitterFeedPinSelectionHandler.h"
 #include "TourModel.h"
-#include "ITourService.h"
-#include "ITourRepository.h"
+#include "TourStateModel.h"
+#include "URLRequestedMessage.h"
+#include "TweetModel.h"
 
 namespace ExampleApp
 {
@@ -15,12 +16,10 @@ namespace ExampleApp
             {
                 namespace TwitterFeed
                 {
-                    TwitterFeedPinSelectionHandler::TwitterFeedPinSelectionHandler(const std::string& tourName,
-                                                                                   ITourRepository& tourRepository,
-                                                                                   ITourService& tourService)
-                    : m_tourName(tourName)
-                    , m_tourRepository(tourRepository)
-                    , m_tourService(tourService)
+                    TwitterFeedPinSelectionHandler::TwitterFeedPinSelectionHandler(const TourStateModel& tourStateModel,
+                                                                                   ExampleAppMessaging::TMessageBus& messageBus)
+                    : m_tourStateModel(tourStateModel)
+                    , m_messageBus(messageBus)
                     {
                         
                     }
@@ -32,13 +31,9 @@ namespace ExampleApp
                     
                     void TwitterFeedPinSelectionHandler::SelectPin()
                     {
-                        Eegeo_TTY(m_tourName.c_str());
-                        if(m_tourRepository.ContainsTourModelWithName(m_tourName))
-                        {
-                            TourModel tourModel = m_tourRepository.GetTourModelWithName(m_tourName);
-                            
-                            m_tourService.EnqueueNextTour(tourModel);
-                        }
+                        const Social::TwitterFeed::TweetModel& tweet = *m_tourStateModel.Tweet();
+                        const std::string twitterUrl = "https://www.twitter.com/" + tweet.GetUserName() + "/status/"+ tweet.GetTweetId();
+                        m_messageBus.Publish(URLRequest::URLRequestedMessage(twitterUrl));
                     }
                 }
             }

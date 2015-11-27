@@ -188,15 +188,15 @@ AppHost::~AppHost()
     m_pAppInputDelegate = NULL;
 
     DestroyApplicationViewModules();
-
-    Eegeo_DELETE m_pURLRequestHandler;
-    m_pURLRequestHandler = NULL;
+    
+    Eegeo_DELETE m_pApp;
+    m_pApp = NULL;
     
     [m_pImageStore release];
     m_pImageStore = nil;
     
-    Eegeo_DELETE m_pApp;
-    m_pApp = NULL;
+    Eegeo_DELETE m_pURLRequestHandler;
+    m_pURLRequestHandler = NULL;
     
     for(std::map<std::string, ExampleApp::Search::SdkModel::ISearchServiceModule*>::iterator it = m_searchServiceModules.begin(); it != m_searchServiceModules.end(); ++it)
     {
@@ -368,7 +368,7 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
         m_pTourExplorerViewModule = Eegeo_NEW(ExampleApp::Tours::View::TourExplorer::TourExplorerViewModule)
                                                                                            (m_messageBus,
                                                                                             app.ToursModule().GetToursExplorerViewModel(),
-                                                                                            &m_pTourWebViewModule->GetTourWebView(),
+                                                                                            *m_pURLRequestHandler,
                                                                                             m_pTourWorldPinOnMapViewModule->GetTourHovercardViewInterop(),
                                                                                             app.ToursModule().GetToursExplorerCompositeViewController(),
                                                                                             screenProperties,
