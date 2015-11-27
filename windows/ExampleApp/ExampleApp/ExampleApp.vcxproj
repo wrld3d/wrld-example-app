@@ -287,6 +287,7 @@
     <ClCompile Include="..\..\..\src\InteriorsExplorer\SdkModel\States\InteriorExplorerViewingState.cpp" />
     <ClCompile Include="..\..\..\src\InteriorsExplorer\View\InteriorsExplorerController.cpp" />
     <ClCompile Include="..\..\..\src\InteriorsExplorer\View\InteriorsExplorerViewModel.cpp" />
+    <ClCompile Include="..\..\..\src\InteriorsExplorer\View\InteriorsHighlightPickingController.cpp" />
     <ClCompile Include="..\..\..\src\InteriorsNavigation\SdkModel\InteriorsNavigationService.cpp" />
     <ClCompile Include="..\..\..\src\MapMode\SdkModel\MapModeController.cpp" />
     <ClCompile Include="..\..\..\src\MapMode\SdkModel\MapModeModel.cpp" />
@@ -1900,6 +1901,7 @@
     <ClInclude Include="..\..\..\src\InteriorsExplorer\View\IInteriorsExplorerView.h" />
     <ClInclude Include="..\..\..\src\InteriorsExplorer\View\InteriorsExplorerController.h" />
     <ClInclude Include="..\..\..\src\InteriorsExplorer\View\InteriorsExplorerViewModel.h" />
+    <ClInclude Include="..\..\..\src\InteriorsExplorer\View\InteriorsHighlightPickingController.h" />
     <ClInclude Include="..\..\..\src\InteriorsNavigation\InteriorsNavigation.h" />
     <ClInclude Include="..\..\..\src\InteriorsNavigation\SdkModel\IInteriorsNavigationService.h" />
     <ClInclude Include="..\..\..\src\InteriorsNavigation\SdkModel\InteriorsNavigationService.h" />

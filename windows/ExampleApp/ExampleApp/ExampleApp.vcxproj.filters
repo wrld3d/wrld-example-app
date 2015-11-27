@@ -1923,6 +1923,9 @@
     <ClCompile Include="..\..\src\ExampleAppPch.cpp">
       <Filter>Source Files\Windows</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\InteriorsExplorer\View\InteriorsHighlightPickingController.cpp">
+      <Filter>Source Files\App\InteriorsExplorer\View</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\AppHost.h">
@@ -4165,6 +4168,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\ExampleAppPch.h">
       <Filter>Source Files\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\InteriorsExplorer\View\InteriorsHighlightPickingController.h">
+      <Filter>Source Files\App\InteriorsExplorer\View</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
