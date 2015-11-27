@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Net;
 using SimpleOAuth;
@@ -10,10 +11,6 @@ namespace ExampleAppWPF
 {
     class YelpAPIClient
     {
-        private const string CONSUMER_KEY = "PZ4toSLxt1JcUPj5znZzhQ";
-        private const string CONSUMER_SECRET = "KRwYqF39BIj0hOD0lWl7M_Wq4jE";
-        private const string TOKEN = "VO35LJnxQkwPpPAqw_e1J9ZBuXHq4CK6";
-        private const string TOKEN_SECRET = "aAxWHMsPV_mrByoPkUBBgotos7I";
         private const string API_HOST = "http://api.yelp.com";
 
         private const string SEARCH_LIMIT = "20";
@@ -62,7 +59,7 @@ namespace ExampleAppWPF
             m_request.Abort();
         }
 
-        private void PerformRequest(string baseURL, Dictionary<string, string> queryParams = null)
+        private void PerformRequest(string consumerKey, string consumerSecret, string oAuthToken, string oAuthTokenSecret, string baseURL, Dictionary<string, string> queryParams = null)
         {
             var query = System.Web.HttpUtility.ParseQueryString(String.Empty);
 
@@ -85,10 +82,10 @@ namespace ExampleAppWPF
             m_request.SignRequest(
                 new Tokens
                 {
-                    ConsumerKey = CONSUMER_KEY,
-                    ConsumerSecret = CONSUMER_SECRET,
-                    AccessToken = TOKEN,
-                    AccessTokenSecret = TOKEN_SECRET
+                    ConsumerKey = consumerKey,
+                    ConsumerSecret = consumerSecret,
+                    AccessToken = oAuthToken,
+                    AccessTokenSecret = oAuthTokenSecret
                 }
             ).WithEncryption(EncryptionMethod.HMACSHA1).InHeader();
 
@@ -118,11 +115,19 @@ namespace ExampleAppWPF
                     {
                         response = (HttpWebResponse)((HttpWebRequest)iar.AsyncState).EndGetResponse(iar);
                     }
-                    catch (WebException)
+                    catch (WebException e)
                     {
+                        string body = string.Empty;
+
+                        if (e.Response != null)
+                        {
+                            body = new StreamReader(e.Response.GetResponseStream()).ReadToEnd();
+                        }
+
+                        Debug.WriteLine("HTTP Error: {0}: {1}", e.Message, body);
+
                         // Response remains null
                     }
-
                     responseAction(response);
                 }), request);
             };
@@ -133,7 +138,7 @@ namespace ExampleAppWPF
             }), wrapperAction);
         }
 
-        public void Search(string term, double latitude, double longitude, System.Delegate callback)
+        public void Search(string consumerKey, string consumerSecret, string oAuthToken, string oAuthTokenSecret, string term, double latitude, double longitude, System.Delegate callback)
         {
             webRequestCallback = callback;
 
@@ -147,7 +152,7 @@ namespace ExampleAppWPF
                 { "ll", latlong },
                 { "limit", SEARCH_LIMIT.ToString() }
             };
-            PerformRequest(baseURL, queryParams);
+            PerformRequest(consumerKey, consumerSecret, oAuthToken, oAuthTokenSecret, baseURL, queryParams);
         }
     }
 }

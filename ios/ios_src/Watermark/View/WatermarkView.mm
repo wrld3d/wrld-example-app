@@ -59,6 +59,8 @@
         }
         
         m_stateChangeAnimationTimeSeconds = 0.2f;
+        
+        m_alignAlongBottom = false;
     }
 
     return self;
@@ -200,6 +202,10 @@
         m_imageAssetName = newImageAssetName;
         [self transitionToNewImage];
     }
+    if(self.frame.origin.y != m_yPosActive && !self.hidden)
+    {
+        [self transitionToNewPosition];
+    }
 }
 
 - (void) transitionToNewImage
@@ -230,6 +236,51 @@
     
 
     [CATransaction commit];
+}
+
+- (void) transitionToNewPosition
+{
+    const float inactivePos = !m_alignAlongBottom ? (m_screenHeight + m_height) : (-m_height);
+    
+    CGRect f = self.frame;
+    f.origin.y = inactivePos;
+    
+    [UIView animateWithDuration:m_stateChangeAnimationTimeSeconds
+                     animations:^
+     {
+         self.frame = f;
+     }
+                     completion:^(BOOL finished)
+     {
+         CGRect offscreenFrame = self.frame;
+         offscreenFrame.origin.y = m_yPosInactive;
+         self.frame = offscreenFrame;
+         
+         [self animateToY:m_yPosActive];
+     }
+     ];
+}
+
+- (void) setWatermarkAlignmentState: (bool) alignAlongBottom
+{
+    if (!ExampleApp::Helpers::UIHelpers::UsePhoneLayout())
+    {
+        return;
+    }
+    
+    m_alignAlongBottom = alignAlongBottom;
+    
+    if (!alignAlongBottom)
+    {
+        m_yPosActive = (20 * m_pixelScale);
+        m_yPosInactive = (-m_height);
+        
+    }
+    else
+    {
+        m_yPosActive = m_screenHeight - m_height - (8 * m_pixelScale);
+        m_yPosInactive = (m_screenHeight + m_height);
+    }
 }
 
 @end

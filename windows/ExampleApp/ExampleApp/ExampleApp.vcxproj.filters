@@ -1925,6 +1925,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\InteriorsExplorer\View\InteriorsHighlightPickingController.cpp">
       <Filter>Source Files\App\InteriorsExplorer\View</Filter>
+	</ClCompile>
+    <ClCompile Include="..\..\src\SearchResultPoi\View\SearchResultModelCLI.cpp">
+      <Filter>Source Files\Windows\SearchResultPoi\View</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -4171,6 +4174,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\InteriorsExplorer\View\InteriorsHighlightPickingController.h">
       <Filter>Source Files\App\InteriorsExplorer\View</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\SearchResultPoi\View\SearchResultModelCLI.h">
+      <Filter>Source Files\Windows\SearchResultPoi\View</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -38,6 +38,8 @@ namespace ExampleApp
                 void RemoveSelectedCallback(Eegeo::Helpers::ICallback0& callback);
                 
                 void UpdateWatermarkData(const WatermarkData& watermarkData);
+                
+                void  SetWatermarkAlignmentState(bool alignAlongBottom);
             };
         }
     }

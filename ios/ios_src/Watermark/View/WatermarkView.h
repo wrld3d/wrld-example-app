@@ -5,6 +5,7 @@
 #include <string>
 #import <UIKit/UIKit.h>
 #include "WatermarkViewIncludes.h"
+#include "IAppModeModel.h"
 
 @class WatermarkView;
 
@@ -32,6 +33,8 @@
     std::string m_popupBody;
     std::string m_webUrl;
     bool m_shouldShowShadow;
+    
+    bool m_alignAlongBottom;
 }
 
 - (ExampleApp::Watermark::View::WatermarkViewInterop*) getInterop;
@@ -52,5 +55,7 @@
 - (void) animateToY:(float)y;
 
 - (void) updateWatermarkData: (const ExampleApp::Watermark::View::WatermarkData&) watermarkData;
+
+- (void) setWatermarkAlignmentState: (bool) alignAlongBottom;
 
 @end

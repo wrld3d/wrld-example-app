@@ -7,7 +7,6 @@
 #include "ISearchResultPoiView.h"
 #include "WindowsNativeState.h"
 #include "CallbackCollection.h"
-#include "YelpSearchResultModel.h"
 
 #include "ReflectionHelpers.h"
 
@@ -26,15 +25,11 @@ namespace ExampleApp
 				Eegeo::Helpers::CallbackCollection2<const Search::SdkModel::SearchResultModel&, const std::string&> m_availabilityChangedCallbacks;
 
                 Search::SdkModel::SearchResultModel m_model;
-                Search::Yelp::SdkModel::YelpSearchResultModel m_yelpModel;
 
                 gcroot<System::Type^> m_uiViewClass;
                 gcroot<System::Object^> m_uiView;
-
-                Helpers::ReflectionHelpers::Method<System::String^, System::String^, System::String^, System::String^,
-                    System::String^, array<System::String^>^, System::String^, System::String^,
-                    System::String^, array<System::String^>^, int, bool> DisplayPoiInfo;
-
+				
+				Helpers::ReflectionHelpers::Method<System::Object^, bool> DisplayPoiInfo;
                 Helpers::ReflectionHelpers::Method<void> DismissPoiInfo;
                 Helpers::ReflectionHelpers::Method<System::String^, bool, array<unsigned char, 1>^> UpdateImageData;
 
