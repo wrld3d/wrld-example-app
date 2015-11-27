@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Net;
 using SimpleOAuth;
@@ -10,10 +11,11 @@ namespace ExampleAppWPF
 {
     class YelpAPIClient
     {
-        private const string CONSUMER_KEY = "PZ4toSLxt1JcUPj5znZzhQ";
-        private const string CONSUMER_SECRET = "KRwYqF39BIj0hOD0lWl7M_Wq4jE";
-        private const string TOKEN = "VO35LJnxQkwPpPAqw_e1J9ZBuXHq4CK6";
-        private const string TOKEN_SECRET = "aAxWHMsPV_mrByoPkUBBgotos7I";
+        // TODO: these should come in from app, handled on other platforms by passing in at time of request
+        private const string CONSUMER_KEY = "INSERT_HERE";
+        private const string CONSUMER_SECRET = "INSERT_HERE";
+        private const string TOKEN = "INSERT_HERE";
+        private const string TOKEN_SECRET = "INSERT_HERE";
         private const string API_HOST = "http://api.yelp.com";
 
         private const string SEARCH_LIMIT = "20";
@@ -118,11 +120,19 @@ namespace ExampleAppWPF
                     {
                         response = (HttpWebResponse)((HttpWebRequest)iar.AsyncState).EndGetResponse(iar);
                     }
-                    catch (WebException)
+                    catch (WebException e)
                     {
+                        string body = string.Empty;
+
+                        if (e.Response != null)
+                        {
+                            body = new StreamReader(e.Response.GetResponseStream()).ReadToEnd();
+                        }
+
+                        Debug.WriteLine("HTTP Error: {0}: {1}", e.Message, body);
+
                         // Response remains null
                     }
-
                     responseAction(response);
                 }), request);
             };

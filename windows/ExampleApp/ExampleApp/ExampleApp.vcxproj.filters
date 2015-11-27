@@ -1770,6 +1770,9 @@
     <ClCompile Include="..\..\src\ExampleAppPch.cpp">
       <Filter>Source Files\Windows</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\SearchResultPoi\View\SearchResultModelCLI.cpp">
+      <Filter>Source Files\Windows\SearchResultPoi\View</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\AppHost.h">
@@ -3874,6 +3877,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\ExampleAppPch.h">
       <Filter>Source Files\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\SearchResultPoi\View\SearchResultModelCLI.h">
+      <Filter>Source Files\Windows\SearchResultPoi\View</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

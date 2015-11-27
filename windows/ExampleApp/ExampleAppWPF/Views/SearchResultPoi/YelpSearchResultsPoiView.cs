@@ -12,60 +12,7 @@ using System.Windows.Media.Imaging;
 
 namespace ExampleAppWPF
 {
-    static class CategoryMapper
-    {
-        private static Dictionary<string, string> CategoryToIconIndex;
-
-        static CategoryMapper()
-        {
-            CategoryToIconIndex = new Dictionary<string, string>();
-
-            CategoryToIconIndex.Add("caf\u00E9/pub", "coffee.png");
-            CategoryToIconIndex.Add("coffee", "coffee.png");
-
-            CategoryToIconIndex.Add("restaurant", "restaurant.png");
-            CategoryToIconIndex.Add("restaurants", "restaurant.png");
-            CategoryToIconIndex.Add("fast food", "restaurant.png");
-            CategoryToIconIndex.Add("food", "restaurant.png");
-
-            CategoryToIconIndex.Add("nightlife", "nightlife.png");
-            CategoryToIconIndex.Add("night life", "nightlife.png");
-
-            CategoryToIconIndex.Add("park", "park.png");
-            CategoryToIconIndex.Add("parks", "park.png");
-
-            CategoryToIconIndex.Add("theatre", "theatre.png");
-            CategoryToIconIndex.Add("theater", "theatre.png");
-
-            CategoryToIconIndex.Add("hotel", "hotel.png");
-            CategoryToIconIndex.Add("hotels", "hotel.png");
-            CategoryToIconIndex.Add("hotel/motel", "hotel.png");
-
-            CategoryToIconIndex.Add("bank", "bank.png");
-            CategoryToIconIndex.Add("banks", "bank.png");
-
-            CategoryToIconIndex.Add("museum", "museum.png");
-            CategoryToIconIndex.Add("museums", "museum.png");
-            CategoryToIconIndex.Add("arts", "museum.png");
-        }
-
-        public static string GetIconImageName(string categoryName)
-        {
-            string imageName = null;
-            CategoryToIconIndex.TryGetValue(categoryName, out imageName);
-
-            if (imageName == null)
-            {
-                return "none.png";
-            }
-            else
-            {
-                return imageName;
-            }
-        }
-    }
-
-    public class YelpSearchResultsPoiView : Control
+    public class YelpSearchResultsPoiView : Control, ISearchResultPoiView
     {
         private IntPtr m_nativeCallerPointer;
         private TextBlock m_titleView = null;
@@ -287,30 +234,33 @@ namespace ExampleAppWPF
                 ExampleApp.SearchResultPoiViewCLI.CloseButtonClicked(m_nativeCallerPointer);
             }            
         }
-
-        public void DisplayPoiInfo(
-                string title, string address, string phone, string url, string category, string[] humanReadableCategories
-                , string imageUrl, string ratingsImageUrl, string vendor, string[] reviews, int reviewCount, bool isPinned)
+        
+        public void DisplayPoiInfo(Object modelObject, bool isPinned)
         {
+            ExampleApp.SearchResultModelCLI model = modelObject as ExampleApp.SearchResultModelCLI;
+
+            YelpResultModel yelpResultModel = YelpResultModel.FromResultModel(model);
+
             m_closing = false;
-            
-            TitleText = title;
-            AddressText = address.Replace(",", Environment.NewLine);
-            PhoneText = phone;
-            HumanReadableCategoriesText = string.Join(Environment.NewLine, humanReadableCategories);
-            ReviewText = string.Join(Environment.NewLine, reviews);
-            IsPinned = isPinned;
-            CategoryIcon = StartupResourceLoader.GetBitmap(CategoryMapper.GetIconImageName(category));
-            PoiViewRatingCountText = string.Format("({0})", reviewCount);
+
+            TitleText = model.GetTitle();
+            AddressText = model.GetSubtitle().Replace(",", Environment.NewLine);
+            PhoneText = yelpResultModel.Phone;
+            HumanReadableCategoriesText = string.Join(Environment.NewLine, model.GetHumanReadableCategories());
+            ReviewText = string.Join(Environment.NewLine, yelpResultModel.Reviews);
+            CategoryIcon = StartupResourceLoader.GetBitmap(SearchResultCategoryMapper.GetIconImageName(model.GetCategory()));
+            PoiViewRatingCountText = yelpResultModel.ReviewCount.ToString();
             RatingsImage = null;
 
-            if (reviewCount > 0 && !string.IsNullOrEmpty(ratingsImageUrl))
+            if (yelpResultModel.ReviewCount > 0 && !string.IsNullOrEmpty(yelpResultModel.RatingsImageUrl))
             {
-                RatingsImage = new BitmapImage(new Uri(string.Format("pack://application:,,,/ExampleAppWPF;component/Assets/{0}.png", ratingsImageUrl)));
+                RatingsImage = new BitmapImage(new Uri(string.Format("pack://application:,,,/ExampleAppWPF;component/Assets/{0}.png", yelpResultModel.RatingsImageUrl)));
             }
 
-            RatingCountVisibility = string.IsNullOrEmpty(imageUrl) && !string.IsNullOrEmpty(ratingsImageUrl) && reviewCount > 0 ? Visibility.Visible : Visibility.Collapsed;
-            Url = url;
+            RatingCountVisibility = string.IsNullOrEmpty(yelpResultModel.ImageUrl) && !string.IsNullOrEmpty(yelpResultModel.RatingsImageUrl) && yelpResultModel.ReviewCount > 0 ? Visibility.Visible : Visibility.Collapsed;
+            Url = yelpResultModel.WebUrl;
+
+            IsPinned = isPinned;
 
             ShowAll();
         }
@@ -319,6 +269,7 @@ namespace ExampleAppWPF
         {
             HideAll();
         }
+
         private static BitmapImage LoadImageFromByteArray(byte[] imageData)
         {
             if (imageData == null || imageData.Length == 0)
