@@ -113,15 +113,14 @@ namespace ExampleApp
         
         void InteriorsHighlightPickingController::OnInteriorsEntered(const InteriorsExplorer::InteriorsExplorerEnteredMessage& message)
         {
-            auto id = message.GetInteriorId();
-            
+            Eegeo::Resources::Interiors::InteriorId id = message.GetInteriorId();
             const Resources::Interiors::InteriorsModel *model = NULL;
             
             if(m_interiorsController.TryGetCurrentModel(model))
             {
                 Eegeo_ASSERT(model->GetId() == id, "ID's not the same");
                 
-                for(auto floors = model->GetFloors().begin();
+                for(Eegeo::Resources::Interiors::TFloorModelVector::const_iterator floors = model->GetFloors().begin();
                     floors != model->GetFloors().end();
                     ++floors)
                 {
