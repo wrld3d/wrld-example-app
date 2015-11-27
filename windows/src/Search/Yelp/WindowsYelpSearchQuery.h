@@ -46,7 +46,7 @@ namespace ExampleApp
                 const Search::SdkModel::SearchQuery& GetSearchQuery() const;
                 
             private:
-                Helpers::ReflectionHelpers::Method<System::String^, float, float, System::Delegate^> Search;
+                Helpers::ReflectionHelpers::Method<System::String^, System::String^, System::String^, System::String^, System::String^, float, float, System::Delegate^> Search;
                 
                 WindowsNativeState& m_nativeState;
                 Search::SdkModel::SearchQuery m_searchQuery;
@@ -55,6 +55,11 @@ namespace ExampleApp
                 bool m_cancelled;
                 bool m_dispatched;
                 bool m_isSuccess;
+
+				std::string m_yelpConsumerKey;
+				std::string m_yelpConsumerSecret;
+				std::string m_yelpOAuthToken;
+				std::string m_yelpOAuthTokenSecret;
 
                 gcroot<System::Type^> m_uiViewClass;
                 gcroot<System::Object^> m_uiView;

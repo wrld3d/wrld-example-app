@@ -11,11 +11,6 @@ namespace ExampleAppWPF
 {
     class YelpAPIClient
     {
-        // TODO: these should come in from app, handled on other platforms by passing in at time of request
-        private const string CONSUMER_KEY = "INSERT_HERE";
-        private const string CONSUMER_SECRET = "INSERT_HERE";
-        private const string TOKEN = "INSERT_HERE";
-        private const string TOKEN_SECRET = "INSERT_HERE";
         private const string API_HOST = "http://api.yelp.com";
 
         private const string SEARCH_LIMIT = "20";
@@ -64,7 +59,7 @@ namespace ExampleAppWPF
             m_request.Abort();
         }
 
-        private void PerformRequest(string baseURL, Dictionary<string, string> queryParams = null)
+        private void PerformRequest(string consumerKey, string consumerSecret, string oAuthToken, string oAuthTokenSecret, string baseURL, Dictionary<string, string> queryParams = null)
         {
             var query = System.Web.HttpUtility.ParseQueryString(String.Empty);
 
@@ -87,10 +82,10 @@ namespace ExampleAppWPF
             m_request.SignRequest(
                 new Tokens
                 {
-                    ConsumerKey = CONSUMER_KEY,
-                    ConsumerSecret = CONSUMER_SECRET,
-                    AccessToken = TOKEN,
-                    AccessTokenSecret = TOKEN_SECRET
+                    ConsumerKey = consumerKey,
+                    ConsumerSecret = consumerSecret,
+                    AccessToken = oAuthToken,
+                    AccessTokenSecret = oAuthTokenSecret
                 }
             ).WithEncryption(EncryptionMethod.HMACSHA1).InHeader();
 
@@ -143,7 +138,7 @@ namespace ExampleAppWPF
             }), wrapperAction);
         }
 
-        public void Search(string term, double latitude, double longitude, System.Delegate callback)
+        public void Search(string consumerKey, string consumerSecret, string oAuthToken, string oAuthTokenSecret, string term, double latitude, double longitude, System.Delegate callback)
         {
             webRequestCallback = callback;
 
@@ -157,7 +152,7 @@ namespace ExampleAppWPF
                 { "ll", latlong },
                 { "limit", SEARCH_LIMIT.ToString() }
             };
-            PerformRequest(baseURL, queryParams);
+            PerformRequest(consumerKey, consumerSecret, oAuthToken, oAuthTokenSecret, baseURL, queryParams);
         }
     }
 }
