@@ -41,5 +41,7 @@
 @property (nonatomic, retain) UIImageView* pArrowContainer;
 @property (nonatomic, retain) UILabel* pNameLabel;
 @property (nonatomic, retain) UILabel* pInfoLabel;
+@property (nonatomic, retain) FXImageView* pImage;
+@property (nonatomic, retain) UIImageView* pVideoArrowImage;
 
 @end

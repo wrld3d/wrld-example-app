@@ -25,6 +25,9 @@
     float m_previousX;
     float m_previousY;
     
+    std::string m_imagePath;
+    bool m_isVideo;
+    
     ExampleApp::Helpers::ColorHelpers::Color m_baseColor;
     ExampleApp::Helpers::ColorHelpers::Color m_textColor;
 }
@@ -87,6 +90,13 @@
         self.pArrowContainer = [[[UIImageView alloc] initWithImage:ExampleApp::Helpers::ImageHelpers::LoadImage("arrow1")] autorelease];
         self.pArrowContainer.contentMode = UIViewContentModeScaleToFill;
         [self addSubview: self.pArrowContainer];
+        
+        // image/video
+        m_pPlayIconImage = ExampleApp::Helpers::ImageHelpers::LoadImage("Tours/States/Twitter/play_icon");
+        self.pImage = [[[FXImageView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        self.pImage.asynchronous = YES;
+        self.pVideoArrowImage = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+
         
         self.frame.origin = CGPointMake(0, 0);
     }
@@ -180,7 +190,22 @@
 {
     self.pNameLabel.text = [NSString stringWithUTF8String:name.c_str()];
     
-    self.pInfoLabel.text = [NSString stringWithUTF8String:subtitle.c_str()];
+    rapidjson::Document jsonDocument;
+    jsonDocument.Parse<0>(subtitle.c_str());
+    if(jsonDocument.HasParseError())
+    {
+        self.pInfoLabel.text = [NSString stringWithUTF8String:subtitle.c_str()];
+        m_imagePath = "";
+        m_isVideo = false;
+    }
+    else
+    {
+        Eegeo_ASSERT(jsonDocument.HasMember("pinImageUrl") &&
+                     jsonDocument.HasMember("isVideo"));
+        self.pInfoLabel.text = @"";
+        m_imagePath = jsonDocument["pinImageUrl"].GetString();
+        m_isVideo = jsonDocument["isVideo"].GetBool();
+    }
     
     [self setNeedsLayout];
 }
