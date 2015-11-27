@@ -177,24 +177,26 @@ namespace ExampleApp
     
         void InteriorsHighlightPickingController::OnSearchResultsLoaded(const Search::SearchQueryResponseReceivedMessage& message)
         {
-            bool isMeetingRoomQuery = message.GetQuery().IsCategory() && message.GetQuery().Query() == Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME;
-            
-            if (isMeetingRoomQuery)
+            ClearHighlightRenderables();
+
+            for(std::vector<Search::SdkModel::SearchResultModel>::const_iterator it = message.GetResults().begin(); it != message.GetResults().end(); ++it)
             {
-                for(std::vector<Search::SdkModel::SearchResultModel>::const_iterator it = message.GetResults().begin(); it != message.GetResults().end(); ++it)
+                if((*it).GetCategory() != Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME)
                 {
-                    const Search::Swallow::SdkModel::SwallowMeetingRoomResultModel& meetingRoom = Search::Swallow::SdkModel::SearchParser::TransformToSwallowMeetingRoomResult(*it);
-                    
-                    const std::string& roomName = meetingRoom.GetName();
-                    const std::string& availability = meetingRoom.GetAvailability();
-                    
-                    std::map<std::string, Eegeo::Rendering::Renderables::InteriorHighlightRenderable*>::iterator room =
-                    m_currentHighlightRenderables.find(roomName);
-                    
-                    if (room != m_currentHighlightRenderables.end())
-                    {
-                        ConfigureRenderableForAvailability(*(room->second), availability);
-                    }
+                    continue;
+                }
+                
+                const Search::Swallow::SdkModel::SwallowMeetingRoomResultModel& meetingRoom = Search::Swallow::SdkModel::SearchParser::TransformToSwallowMeetingRoomResult(*it);
+                
+                const std::string& roomName = meetingRoom.GetName();
+                const std::string& availability = meetingRoom.GetAvailability();
+                
+                std::map<std::string, Eegeo::Rendering::Renderables::InteriorHighlightRenderable*>::iterator room =
+                m_currentHighlightRenderables.find(roomName);
+                
+                if (room != m_currentHighlightRenderables.end())
+                {
+                    ConfigureRenderableForAvailability(*(room->second), availability);
                 }
             }
         }
