@@ -12,6 +12,17 @@ namespace ExampleApp
             {
                 return rawImageFilenameField.empty() ? std::string() : assetsBaseUrl + rawImageFilenameField;
             }
+
+			void AddStringToJson(const std::string& name, const std::string& value, rapidjson::Document::AllocatorType& allocator, rapidjson::Value& out_jsonValue)
+			{
+				rapidjson::Value resultValue(rapidjson::kStringType);
+
+				resultValue.SetString(value.c_str(), value.size(), allocator);
+
+				out_jsonValue.AddMember(name.c_str(),
+					resultValue,
+					allocator);
+			}
         }
     }
 }

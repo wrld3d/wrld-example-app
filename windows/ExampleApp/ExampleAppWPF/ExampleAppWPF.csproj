@@ -99,8 +99,10 @@
     <Compile Include="Views\SearchResultMenu\SearchMenuListItem.cs" />
     <Compile Include="StartupResourceLoader.cs" />
     <Compile Include="Views\SearchResultPoi\ISearchResultPoiView.cs" />
+    <Compile Include="Views\SearchResultPoi\ResultModels\SwallowPersonResultModel.cs" />
     <Compile Include="Views\SearchResultPoi\ResultModels\YelpResultModel.cs" />
     <Compile Include="Views\SearchResultPoi\SearchResultCategoryMapper.cs" />
+    <Compile Include="Views\SearchResultPoi\SwallowPersonSearchResultsPoiView.cs" />
     <Compile Include="Views\SearchResultPoi\YelpSearchResultsPoiView.cs" />
     <Compile Include="Views\SecondaryMenu\SubMenuListItem.cs" />
     <Compile Include="Views\AboutPage\AboutPageView.cs" />
@@ -190,6 +192,10 @@
     <Page Include="Views\SearchResultMenu\SearchMenuView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SearchResultPoi\SwallowPersonSearchResultsPoiView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\SearchResultPoi\YelpSearchResultsPoiView.xaml">
       <SubType>Designer</SubType>

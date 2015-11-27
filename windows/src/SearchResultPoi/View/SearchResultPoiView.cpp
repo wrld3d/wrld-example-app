@@ -2,6 +2,7 @@
 
 #include "SearchResultPoiController.h"
 #include "SearchResultPoiView.h"
+#include "SearchVendorNames.h"
 #include "WindowsAppThreadAssertionMacros.h"
 #include "SearchResultModelCLI.h"
 #include "ReflectionHelpers.h"
@@ -123,12 +124,20 @@ namespace ExampleApp
                 {
                     viewClass = "com/eegeo/searchresultpoiview/GeoNamesSearchResultPoiView";
                 }
+				else if (vendor == ExampleApp::Search::SwallowPeopleVendorName)
+				{
+					m_uiViewClass = GetTypeFromAssembly("ExampleAppWPF", "ExampleAppWPF.SwallowPersonSearchResultsPoiView");
+					ConstructorInfo^ ctor = m_uiViewClass->GetConstructor(CreateTypes(IntPtr::typeid));
+					m_uiView = ctor->Invoke(CreateObjects(gcnew IntPtr(this)));
+
+					DisplayPoiInfo.SetupMethod(m_uiViewClass, m_uiView, "DisplayPoiInfo");
+					DismissPoiInfo.SetupMethod(m_uiViewClass, m_uiView, "DismissPoiInfo");
+					UpdateImageData.SetupMethod(m_uiViewClass, m_uiView, "UpdateImageData");
+				}
                 else
                 {
                     Eegeo_ASSERT(false, "Unknown POI vendor %s, cannot create view instance.\n", vendor.c_str());
                 }
-
-
             }
         }
     }
