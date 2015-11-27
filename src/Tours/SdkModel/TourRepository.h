@@ -90,6 +90,37 @@ namespace ExampleApp
                     Eegeo_ASSERT(false, "Failed to find tour with name '%s'", name.c_str());
                     return TourModel::Empty();
                 }
+                
+                bool ContainsTourModelWithTwitterBaseUserName(const std::string& name)
+                {
+                    size_t itemCount = m_repository.GetItemCount();
+                    for(size_t i = 0; i < itemCount; i++)
+                    {
+                        TModel model = m_repository.GetItemAtIndex(i);
+                        if(model.UsesTwitter() && model.TwitterBaseUserName() == name)
+                        {
+                            return true;
+                        }
+                    }
+                    
+                    return false;
+                }
+                
+                TModel GetTourModelWithTwitterBaseUserName(const std::string& name)
+                {
+                    size_t itemCount = m_repository.GetItemCount();
+                    for(size_t i = 0; i < itemCount; i++)
+                    {
+                        TModel model = m_repository.GetItemAtIndex(i);
+                        if(model.UsesTwitter() && model.TwitterBaseUserName() == name)
+                        {
+                            return model;
+                        }
+                    }
+                    
+                    Eegeo_ASSERT(false, "Failed to find tour with name '%s'", name.c_str());
+                    return TourModel::Empty();
+                }
             };
         }
     }

@@ -12,8 +12,10 @@ namespace ExampleApp
         {
             namespace TourExplorer
             {
-                TourExplorerViewInterop::TourExplorerViewInterop(TourExplorerView* pView)
+                TourExplorerViewInterop::TourExplorerViewInterop(TourExplorerView* pView,
+                                                                 TourWebView* pWebView)
                 : m_pView(pView)
+                , m_pWebView(pWebView)
                 , m_tourModel(SdkModel::TourModel::Empty())
                 , m_initialCard(-1)
                 {
@@ -44,6 +46,11 @@ namespace ExampleApp
                 {
                     std::string requestedTourName = name;
                     m_changeTourCallbacks.ExecuteCallbacks(requestedTourName);
+                }
+                
+                void TourExplorerViewInterop::ShowWebpage(const std::string &url)
+                {
+                    [m_pWebView show:url];
                 }
                 
                 void TourExplorerViewInterop::OnDismissed()

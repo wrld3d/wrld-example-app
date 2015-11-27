@@ -38,7 +38,7 @@
 @property(nonatomic, retain) UIImageView* pExitButtonBackground;
 @property(nonatomic, retain) UILabel* pTourNameLabel;
 
-- (id) initWithParams:(float)width :(float)height :(float)pixelScale :(ImageStore*)pImageStore;
+- (id) initWithParams:(float)width :(float)height :(float)pixelScale :(TourWebView*)pWebView :(ImageStore*)pImageStore;
 
 - (ExampleApp::Tours::View::TourExplorer::TourExplorerViewInterop*) getInterop;
 

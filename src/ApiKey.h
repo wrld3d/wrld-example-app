@@ -22,4 +22,6 @@ namespace ExampleApp
  
     //! Optional: You may wish to obtain an API key for Flurry from https://developer.yahoo.com/analytics/ for metrics
     static const std::string FlurryApiKey = "OBTAIN FLURRY KEY AND INSERT IT HERE";
+
+    static const std::string TwitterAuthCode = "INSERT TWITTER AUTH CODE HERE";
 }

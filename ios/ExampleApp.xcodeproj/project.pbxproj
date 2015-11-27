@@ -587,6 +587,26 @@
 		222E069B1948B08B0004FFD9 /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4820F168371460006E99B /* MainStoryboard_iPad.storyboard */; };
 		225FFA171A39EE8600C2282A /* SearchResultRepository.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 225FFA131A39EE8600C2282A /* SearchResultRepository.cpp */; };
 		225FFA181A39EE8600C2282A /* SearchResultRepository.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 225FFA131A39EE8600C2282A /* SearchResultRepository.cpp */; };
+		279788971C087C970053CD00 /* TwitterCardView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 279788931C087C970053CD00 /* TwitterCardView.mm */; };
+		279788981C087C970053CD00 /* TwitterCardView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 279788931C087C970053CD00 /* TwitterCardView.mm */; };
+		2797889B1C087C970053CD00 /* TwitterDefines.mm in Sources */ = {isa = PBXBuildFile; fileRef = 279788961C087C970053CD00 /* TwitterDefines.mm */; };
+		2797889C1C087C970053CD00 /* TwitterDefines.mm in Sources */ = {isa = PBXBuildFile; fileRef = 279788961C087C970053CD00 /* TwitterDefines.mm */; };
+		279788A91C087D1A0053CD00 /* TweetModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 279788A11C087D1A0053CD00 /* TweetModel.cpp */; };
+		279788AA1C087D1A0053CD00 /* TweetModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 279788A11C087D1A0053CD00 /* TweetModel.cpp */; };
+		279788AB1C087D1A0053CD00 /* TwitterFeedModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 279788A51C087D1A0053CD00 /* TwitterFeedModule.cpp */; };
+		279788AC1C087D1A0053CD00 /* TwitterFeedModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 279788A51C087D1A0053CD00 /* TwitterFeedModule.cpp */; };
+		279788AD1C087D1A0053CD00 /* TwitterFeedService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 279788A71C087D1A0053CD00 /* TwitterFeedService.cpp */; };
+		279788AE1C087D1A0053CD00 /* TwitterFeedService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 279788A71C087D1A0053CD00 /* TwitterFeedService.cpp */; };
+		279788BD1C087D820053CD00 /* TwitterFeedPinSelectionHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 279788B21C087D820053CD00 /* TwitterFeedPinSelectionHandler.cpp */; };
+		279788BE1C087D820053CD00 /* TwitterFeedPinSelectionHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 279788B21C087D820053CD00 /* TwitterFeedPinSelectionHandler.cpp */; };
+		279788BF1C087D820053CD00 /* TwitterFeedShowTweetState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 279788B41C087D820053CD00 /* TwitterFeedShowTweetState.cpp */; };
+		279788C01C087D820053CD00 /* TwitterFeedShowTweetState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 279788B41C087D820053CD00 /* TwitterFeedShowTweetState.cpp */; };
+		279788C11C087D820053CD00 /* TwitterFeedTourModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 279788B71C087D820053CD00 /* TwitterFeedTourModule.cpp */; };
+		279788C21C087D820053CD00 /* TwitterFeedTourModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 279788B71C087D820053CD00 /* TwitterFeedTourModule.cpp */; };
+		279788C31C087D820053CD00 /* TwitterFeedTourObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 279788B91C087D820053CD00 /* TwitterFeedTourObserver.cpp */; };
+		279788C41C087D820053CD00 /* TwitterFeedTourObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 279788B91C087D820053CD00 /* TwitterFeedTourObserver.cpp */; };
+		279788C51C087D820053CD00 /* TwitterFeedTourStateMachineFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 279788BB1C087D820053CD00 /* TwitterFeedTourStateMachineFactory.cpp */; };
+		279788C61C087D820053CD00 /* TwitterFeedTourStateMachineFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 279788BB1C087D820053CD00 /* TwitterFeedTourStateMachineFactory.cpp */; };
 		27C1F99B1BC6A47600D5EFF4 /* InteriorsExplorerCameraController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27C1F9991BC6A47600D5EFF4 /* InteriorsExplorerCameraController.cpp */; };
 		27C1F99C1BC6A47600D5EFF4 /* InteriorsExplorerCameraController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27C1F9991BC6A47600D5EFF4 /* InteriorsExplorerCameraController.cpp */; };
 		27CADB631BCFEA2A00805A27 /* SizeHelpers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27CADB611BCFEA2A00805A27 /* SizeHelpers.cpp */; };
@@ -1947,6 +1967,33 @@
 		225FFA141A39EE8600C2282A /* SearchResultRepository.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultRepository.h; sourceTree = "<group>"; };
 		270A7A651BCBE2000020EAF7 /* WorldPinVisibility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorldPinVisibility.h; sourceTree = "<group>"; };
 		278A8F651BA6DB00000BBA67 /* WorldPinInteriorData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorldPinInteriorData.h; sourceTree = "<group>"; };
+		279788921C087C970053CD00 /* TwitterCardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwitterCardView.h; sourceTree = "<group>"; };
+		279788931C087C970053CD00 /* TwitterCardView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TwitterCardView.mm; sourceTree = "<group>"; };
+		279788951C087C970053CD00 /* TwitterDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwitterDefines.h; sourceTree = "<group>"; };
+		279788961C087C970053CD00 /* TwitterDefines.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TwitterDefines.mm; sourceTree = "<group>"; };
+		2797889F1C087D1A0053CD00 /* ITwitterFeedModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ITwitterFeedModule.h; sourceTree = "<group>"; };
+		279788A01C087D1A0053CD00 /* ITwitterFeedService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ITwitterFeedService.h; sourceTree = "<group>"; };
+		279788A11C087D1A0053CD00 /* TweetModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TweetModel.cpp; sourceTree = "<group>"; };
+		279788A21C087D1A0053CD00 /* TweetModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TweetModel.h; sourceTree = "<group>"; };
+		279788A31C087D1A0053CD00 /* TweetRepository.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TweetRepository.h; sourceTree = "<group>"; };
+		279788A41C087D1A0053CD00 /* TwitterFeed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwitterFeed.h; sourceTree = "<group>"; };
+		279788A51C087D1A0053CD00 /* TwitterFeedModule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TwitterFeedModule.cpp; sourceTree = "<group>"; };
+		279788A61C087D1A0053CD00 /* TwitterFeedModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwitterFeedModule.h; sourceTree = "<group>"; };
+		279788A71C087D1A0053CD00 /* TwitterFeedService.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TwitterFeedService.cpp; sourceTree = "<group>"; };
+		279788A81C087D1A0053CD00 /* TwitterFeedService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwitterFeedService.h; sourceTree = "<group>"; };
+		279788B01C087D820053CD00 /* ITwitterFeedTourModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ITwitterFeedTourModule.h; sourceTree = "<group>"; };
+		279788B11C087D820053CD00 /* TweetStateData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TweetStateData.h; sourceTree = "<group>"; };
+		279788B21C087D820053CD00 /* TwitterFeedPinSelectionHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TwitterFeedPinSelectionHandler.cpp; sourceTree = "<group>"; };
+		279788B31C087D820053CD00 /* TwitterFeedPinSelectionHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwitterFeedPinSelectionHandler.h; sourceTree = "<group>"; };
+		279788B41C087D820053CD00 /* TwitterFeedShowTweetState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TwitterFeedShowTweetState.cpp; sourceTree = "<group>"; };
+		279788B51C087D820053CD00 /* TwitterFeedShowTweetState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwitterFeedShowTweetState.h; sourceTree = "<group>"; };
+		279788B61C087D820053CD00 /* TwitterFeedTour.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwitterFeedTour.h; sourceTree = "<group>"; };
+		279788B71C087D820053CD00 /* TwitterFeedTourModule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TwitterFeedTourModule.cpp; sourceTree = "<group>"; };
+		279788B81C087D820053CD00 /* TwitterFeedTourModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwitterFeedTourModule.h; sourceTree = "<group>"; };
+		279788B91C087D820053CD00 /* TwitterFeedTourObserver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TwitterFeedTourObserver.cpp; sourceTree = "<group>"; };
+		279788BA1C087D820053CD00 /* TwitterFeedTourObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwitterFeedTourObserver.h; sourceTree = "<group>"; };
+		279788BB1C087D820053CD00 /* TwitterFeedTourStateMachineFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TwitterFeedTourStateMachineFactory.cpp; sourceTree = "<group>"; };
+		279788BC1C087D820053CD00 /* TwitterFeedTourStateMachineFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwitterFeedTourStateMachineFactory.h; sourceTree = "<group>"; };
 		27C1F9991BC6A47600D5EFF4 /* InteriorsExplorerCameraController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InteriorsExplorerCameraController.cpp; sourceTree = "<group>"; };
 		27C1F99A1BC6A47600D5EFF4 /* InteriorsExplorerCameraController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InteriorsExplorerCameraController.h; sourceTree = "<group>"; };
 		27CADB611BCFEA2A00805A27 /* SizeHelpers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SizeHelpers.cpp; sourceTree = "<group>"; };
@@ -3141,6 +3188,7 @@
 		18143846192B6E4500BCDF2E /* src */ = {
 			isa = PBXGroup;
 			children = (
+				2797889D1C087D1A0053CD00 /* Social */,
 				BF0E35081BC67313005B30E8 /* AppCamera */,
 				E06AE5901B871E6E000F85E3 /* AppModes */,
 				7E3B86631A385A280023C94E /* AboutPage */,
@@ -3634,6 +3682,62 @@
 				BFDEAA851BCD5821007CE4D7 /* StateMachine.h */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		279788911C087C970053CD00 /* TwitterTourExplorer */ = {
+			isa = PBXGroup;
+			children = (
+				279788921C087C970053CD00 /* TwitterCardView.h */,
+				279788931C087C970053CD00 /* TwitterCardView.mm */,
+				279788951C087C970053CD00 /* TwitterDefines.h */,
+				279788961C087C970053CD00 /* TwitterDefines.mm */,
+			);
+			path = TwitterTourExplorer;
+			sourceTree = "<group>";
+		};
+		2797889D1C087D1A0053CD00 /* Social */ = {
+			isa = PBXGroup;
+			children = (
+				2797889E1C087D1A0053CD00 /* TwitterFeed */,
+			);
+			path = Social;
+			sourceTree = "<group>";
+		};
+		2797889E1C087D1A0053CD00 /* TwitterFeed */ = {
+			isa = PBXGroup;
+			children = (
+				2797889F1C087D1A0053CD00 /* ITwitterFeedModule.h */,
+				279788A01C087D1A0053CD00 /* ITwitterFeedService.h */,
+				279788A11C087D1A0053CD00 /* TweetModel.cpp */,
+				279788A21C087D1A0053CD00 /* TweetModel.h */,
+				279788A31C087D1A0053CD00 /* TweetRepository.h */,
+				279788A41C087D1A0053CD00 /* TwitterFeed.h */,
+				279788A51C087D1A0053CD00 /* TwitterFeedModule.cpp */,
+				279788A61C087D1A0053CD00 /* TwitterFeedModule.h */,
+				279788A71C087D1A0053CD00 /* TwitterFeedService.cpp */,
+				279788A81C087D1A0053CD00 /* TwitterFeedService.h */,
+			);
+			path = TwitterFeed;
+			sourceTree = "<group>";
+		};
+		279788AF1C087D820053CD00 /* TwitterFeed */ = {
+			isa = PBXGroup;
+			children = (
+				279788B01C087D820053CD00 /* ITwitterFeedTourModule.h */,
+				279788B11C087D820053CD00 /* TweetStateData.h */,
+				279788B21C087D820053CD00 /* TwitterFeedPinSelectionHandler.cpp */,
+				279788B31C087D820053CD00 /* TwitterFeedPinSelectionHandler.h */,
+				279788B41C087D820053CD00 /* TwitterFeedShowTweetState.cpp */,
+				279788B51C087D820053CD00 /* TwitterFeedShowTweetState.h */,
+				279788B61C087D820053CD00 /* TwitterFeedTour.h */,
+				279788B71C087D820053CD00 /* TwitterFeedTourModule.cpp */,
+				279788B81C087D820053CD00 /* TwitterFeedTourModule.h */,
+				279788B91C087D820053CD00 /* TwitterFeedTourObserver.cpp */,
+				279788BA1C087D820053CD00 /* TwitterFeedTourObserver.h */,
+				279788BB1C087D820053CD00 /* TwitterFeedTourStateMachineFactory.cpp */,
+				279788BC1C087D820053CD00 /* TwitterFeedTourStateMachineFactory.h */,
+			);
+			path = TwitterFeed;
 			sourceTree = "<group>";
 		};
 		27DB89B21BB3FEF00020CDA5 /* SdkModel */ = {
@@ -5798,6 +5902,7 @@
 		BFD5FC8B1BA7068300F591F1 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				279788911C087C970053CD00 /* TwitterTourExplorer */,
 				BFD5FC8C1BA7068300F591F1 /* TourDefines.h */,
 				BFD5FC8D1BA7068300F591F1 /* TourDefines.mm */,
 				BFD5FC8E1BA7068300F591F1 /* TourExplorer */,
@@ -5973,6 +6078,7 @@
 		BFD5FCFA1BA706AD00F591F1 /* TourInstances */ = {
 			isa = PBXGroup;
 			children = (
+				279788AF1C087D820053CD00 /* TwitterFeed */,
 				BFD5FCFB1BA706AD00F591F1 /* Example */,
 			);
 			path = TourInstances;
@@ -6831,6 +6937,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				279788C21C087D820053CD00 /* TwitterFeedTourModule.cpp in Sources */,
 				7E3B894D1A385A290023C94E /* MyPinDetailsViewModel.cpp in Sources */,
 				7E3B8A071A385A290023C94E /* WorldPinInFocusViewModel.cpp in Sources */,
 				7E3B89231A385A290023C94E /* MyPinCreationModule.cpp in Sources */,
@@ -7007,6 +7114,7 @@
 				7E1B50851ACAE8570060FA4F /* InitialExperienceIntroViewModule.mm in Sources */,
 				BFD5FD5F1BA706AD00F591F1 /* TourWorldPinSelectionHandler.cpp in Sources */,
 				7E3B88F31A385A290023C94E /* MenuOpenableControl.cpp in Sources */,
+				279788C41C087D820053CD00 /* TwitterFeedTourObserver.cpp in Sources */,
 				186B470F1AB1D46B0084E80B /* WatermarkScreenControl.cpp in Sources */,
 				7E5811B91B1F050A007AD67F /* InteriorsExplorerModule.cpp in Sources */,
 				7E3B8B0E1A385F110023C94E /* MyPinCreationInitiationViewModule.mm in Sources */,
@@ -7028,6 +7136,7 @@
 				BFD5FD6D1BA706AD00F591F1 /* ToursModule.cpp in Sources */,
 				BFD5FD431BA706AD00F591F1 /* ToursCameraController.cpp in Sources */,
 				7E3B89B51A385A290023C94E /* SearchResultMenuController.cpp in Sources */,
+				2797889C1C087C970053CD00 /* TwitterDefines.mm in Sources */,
 				BFDFC3D01BB2EF190099BAEC /* SearchResultModel.cpp in Sources */,
 				7E3B898D1A385A290023C94E /* SearchModule.cpp in Sources */,
 				7E3B89371A385A290023C94E /* MyPinCreationDetailsController.cpp in Sources */,
@@ -7050,6 +7159,7 @@
 				7E3B8AEC1A385F110023C94E /* iOSInitialExperiencePreLoadModel.mm in Sources */,
 				560F99191BFE0E190008B0A2 /* WatermarkModule.cpp in Sources */,
 				7E5811CE1B1F3248007AD67F /* InteriorsExplorerViewInterop.mm in Sources */,
+				279788C61C087D820053CD00 /* TwitterFeedTourStateMachineFactory.cpp in Sources */,
 				BF0E350D1BC673EA005B30E8 /* AppCameraController.cpp in Sources */,
 				7E3B89131A385A290023C94E /* MyPinCreationViewStateChangedMessage.cpp in Sources */,
 				BFD5FD6F1BA706AD00F591F1 /* TourExplorerCompositeViewController.cpp in Sources */,
@@ -7099,6 +7209,7 @@
 				BFD5FD3D1BA706AD00F591F1 /* SplineCameraMode.cpp in Sources */,
 				7E3B8AE21A385F110023C94E /* IconResources.mm in Sources */,
 				BFD5FD8A1BA708E100F591F1 /* FXImageView.m in Sources */,
+				279788981C087C970053CD00 /* TwitterCardView.mm in Sources */,
 				7E3B8A031A385A290023C94E /* WorldPinInFocusObserver.cpp in Sources */,
 				7E3B88E11A385A290023C94E /* FlattenButtonScreenControl.cpp in Sources */,
 				7E3B8AFE1A385F110023C94E /* MyPinCreationConfirmationView.mm in Sources */,
@@ -7158,6 +7269,7 @@
 				18CFE2B91BECC76D003368D1 /* AppDelegate.mm in Sources */,
 				7E3B88D11A385A290023C94E /* CompassViewModel.cpp in Sources */,
 				27CADB641BCFEA2A00805A27 /* SizeHelpers.cpp in Sources */,
+				279788AA1C087D1A0053CD00 /* TweetModel.cpp in Sources */,
 				7E3B88B11A385A290023C94E /* CategorySearchSelectedMessage.cpp in Sources */,
 				7E3B89A71A385A290023C94E /* SearchResultViewClearedObserver.cpp in Sources */,
 				7E3B89911A385A290023C94E /* SearchQueryObserver.cpp in Sources */,
@@ -7200,6 +7312,7 @@
 				7E3B89F31A385A290023C94E /* WorldPinItemModel.cpp in Sources */,
 				18B22B361A7A937D00DDBFA2 /* OptionsViewModule.mm in Sources */,
 				7E3B88EB1A385A290023C94E /* InitialExperienceModel.cpp in Sources */,
+				279788C01C087D820053CD00 /* TwitterFeedShowTweetState.cpp in Sources */,
 				18E102891A8B97F00011A18C /* MyPinDetailsDisplayService.cpp in Sources */,
 				7E3B89391A385A290023C94E /* MyPinCreationDetailsModule.cpp in Sources */,
 				7E3B89811A385A290023C94E /* ReactionModel.cpp in Sources */,
@@ -7217,6 +7330,7 @@
 				7E3B8B301A385F110023C94E /* UIView+TouchExclusivity.m in Sources */,
 				27E7A9C51BBC0F3200CDB502 /* SearchResultMenuOrder.cpp in Sources */,
 				7E3B891D1A385A290023C94E /* PoiRingView.cpp in Sources */,
+				279788AC1C087D1A0053CD00 /* TwitterFeedModule.cpp in Sources */,
 				7E3B8B141A385F110023C94E /* MyPinDetailsViewModule.mm in Sources */,
 				187853161A9CD0820001889C /* YelpSearchResultPoiView.mm in Sources */,
 				7E3B8AEA1A385F110023C94E /* iOSInitialExperienceModule.cpp in Sources */,
@@ -7229,6 +7343,7 @@
 				188C4C9E1AA5FCA00080B34B /* OptionsMenuOption.cpp in Sources */,
 				1833B27A1BC2C4AB001CB77A /* InteriorHeightHelpers.cpp in Sources */,
 				7E3B89A51A385A290023C94E /* SearchResultMenuModule.cpp in Sources */,
+				279788BE1C087D820053CD00 /* TwitterFeedPinSelectionHandler.cpp in Sources */,
 				7E3B8B161A385F110023C94E /* iOSPersistentSettingsModel.mm in Sources */,
 				7E8F03D71A822E820056F229 /* GpsMarkerModule.cpp in Sources */,
 				BFDEAA871BCD5821007CE4D7 /* StateMachine.cpp in Sources */,
@@ -7282,6 +7397,7 @@
 				7E3B89D91A385A290023C94E /* SecondaryMenuModule.cpp in Sources */,
 				186B47501AB333150084E80B /* ApplicationConfigurationJsonParser.cpp in Sources */,
 				7E3B88D51A385A290023C94E /* FlattenButtonViewStateChangedMessage.cpp in Sources */,
+				279788AE1C087D1A0053CD00 /* TwitterFeedService.cpp in Sources */,
 				7E3B89991A385A290023C94E /* SearchQueryPerformedMessage.cpp in Sources */,
 				7E3B89051A385A290023C94E /* ModalBackgroundController.cpp in Sources */,
 				7E1B50681ACAD4170060FA4F /* InitialExperienceIntroStep.cpp in Sources */,
@@ -7299,6 +7415,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				279788C11C087D820053CD00 /* TwitterFeedTourModule.cpp in Sources */,
 				7E3B894C1A385A290023C94E /* MyPinDetailsViewModel.cpp in Sources */,
 				BFD5FD8D1BA708E100F591F1 /* iCarousel.m in Sources */,
 				7E3B8A061A385A290023C94E /* WorldPinInFocusViewModel.cpp in Sources */,
@@ -7475,6 +7592,7 @@
 				7E1B50841ACAE8570060FA4F /* InitialExperienceIntroViewModule.mm in Sources */,
 				BFD5FD5E1BA706AD00F591F1 /* TourWorldPinSelectionHandler.cpp in Sources */,
 				7E3B88F21A385A290023C94E /* MenuOpenableControl.cpp in Sources */,
+				279788C31C087D820053CD00 /* TwitterFeedTourObserver.cpp in Sources */,
 				186B470E1AB1D46B0084E80B /* WatermarkScreenControl.cpp in Sources */,
 				7E5811B81B1F050A007AD67F /* InteriorsExplorerModule.cpp in Sources */,
 				7E3B8B0D1A385F110023C94E /* MyPinCreationInitiationViewModule.mm in Sources */,
@@ -7496,6 +7614,7 @@
 				BFD5FD6C1BA706AD00F591F1 /* ToursModule.cpp in Sources */,
 				BFD5FD421BA706AD00F591F1 /* ToursCameraController.cpp in Sources */,
 				7E3B89B41A385A290023C94E /* SearchResultMenuController.cpp in Sources */,
+				2797889B1C087C970053CD00 /* TwitterDefines.mm in Sources */,
 				BFDFC3CF1BB2EF190099BAEC /* SearchResultModel.cpp in Sources */,
 				7E3B898C1A385A290023C94E /* SearchModule.cpp in Sources */,
 				7E3B89361A385A290023C94E /* MyPinCreationDetailsController.cpp in Sources */,
@@ -7518,6 +7637,7 @@
 				7E5811CD1B1F3248007AD67F /* InteriorsExplorerViewInterop.mm in Sources */,
 				560F99181BFE0E190008B0A2 /* WatermarkModule.cpp in Sources */,
 				BF0E350C1BC673EA005B30E8 /* AppCameraController.cpp in Sources */,
+				279788C51C087D820053CD00 /* TwitterFeedTourStateMachineFactory.cpp in Sources */,
 				7E3B89121A385A290023C94E /* MyPinCreationViewStateChangedMessage.cpp in Sources */,
 				BFD5FD6E1BA706AD00F591F1 /* TourExplorerCompositeViewController.cpp in Sources */,
 				7E3B890C1A385A290023C94E /* ModalityObserver.cpp in Sources */,
@@ -7567,6 +7687,7 @@
 				BFD5FD3C1BA706AD00F591F1 /* SplineCameraMode.cpp in Sources */,
 				7E3B8AE11A385F110023C94E /* IconResources.mm in Sources */,
 				BFD5FD891BA708E100F591F1 /* FXImageView.m in Sources */,
+				279788971C087C970053CD00 /* TwitterCardView.mm in Sources */,
 				7E3B8A021A385A290023C94E /* WorldPinInFocusObserver.cpp in Sources */,
 				7E3B88E01A385A290023C94E /* FlattenButtonScreenControl.cpp in Sources */,
 				7E3B8AFD1A385F110023C94E /* MyPinCreationConfirmationView.mm in Sources */,
@@ -7626,6 +7747,7 @@
 				18CFE2B81BECC76D003368D1 /* AppDelegate.mm in Sources */,
 				7E3B88D01A385A290023C94E /* CompassViewModel.cpp in Sources */,
 				27CADB631BCFEA2A00805A27 /* SizeHelpers.cpp in Sources */,
+				279788A91C087D1A0053CD00 /* TweetModel.cpp in Sources */,
 				7E3B88B01A385A290023C94E /* CategorySearchSelectedMessage.cpp in Sources */,
 				7E3B89A61A385A290023C94E /* SearchResultViewClearedObserver.cpp in Sources */,
 				7E3B89901A385A290023C94E /* SearchQueryObserver.cpp in Sources */,
@@ -7668,6 +7790,7 @@
 				7E3B89F21A385A290023C94E /* WorldPinItemModel.cpp in Sources */,
 				18B22B351A7A937D00DDBFA2 /* OptionsViewModule.mm in Sources */,
 				7E3B88EA1A385A290023C94E /* InitialExperienceModel.cpp in Sources */,
+				279788BF1C087D820053CD00 /* TwitterFeedShowTweetState.cpp in Sources */,
 				18E102881A8B97F00011A18C /* MyPinDetailsDisplayService.cpp in Sources */,
 				7E3B89381A385A290023C94E /* MyPinCreationDetailsModule.cpp in Sources */,
 				7E3B89801A385A290023C94E /* ReactionModel.cpp in Sources */,
@@ -7685,6 +7808,7 @@
 				7E3B8B2F1A385F110023C94E /* UIView+TouchExclusivity.m in Sources */,
 				27E7A9C41BBC0F3200CDB502 /* SearchResultMenuOrder.cpp in Sources */,
 				7E3B891C1A385A290023C94E /* PoiRingView.cpp in Sources */,
+				279788AB1C087D1A0053CD00 /* TwitterFeedModule.cpp in Sources */,
 				187853151A9CD0820001889C /* YelpSearchResultPoiView.mm in Sources */,
 				7E3B8B131A385F110023C94E /* MyPinDetailsViewModule.mm in Sources */,
 				18FB64B11A94D504005A9411 /* SearchResultPoiViewImageFetcher.cpp in Sources */,
@@ -7697,6 +7821,7 @@
 				7E3B89E21A385A290023C94E /* WeatherMenuModule.cpp in Sources */,
 				1833B2791BC2C4AB001CB77A /* InteriorHeightHelpers.cpp in Sources */,
 				7E3B89A41A385A290023C94E /* SearchResultMenuModule.cpp in Sources */,
+				279788BD1C087D820053CD00 /* TwitterFeedPinSelectionHandler.cpp in Sources */,
 				7E3B8B151A385F110023C94E /* iOSPersistentSettingsModel.mm in Sources */,
 				7E8F03D61A822E820056F229 /* GpsMarkerModule.cpp in Sources */,
 				BFDEAA861BCD5821007CE4D7 /* StateMachine.cpp in Sources */,
@@ -7750,6 +7875,7 @@
 				7E3B89D81A385A290023C94E /* SecondaryMenuModule.cpp in Sources */,
 				186B474F1AB333150084E80B /* ApplicationConfigurationJsonParser.cpp in Sources */,
 				7E3B88D41A385A290023C94E /* FlattenButtonViewStateChangedMessage.cpp in Sources */,
+				279788AD1C087D1A0053CD00 /* TwitterFeedService.cpp in Sources */,
 				7E3B89981A385A290023C94E /* SearchQueryPerformedMessage.cpp in Sources */,
 				7E3B89041A385A290023C94E /* ModalBackgroundController.cpp in Sources */,
 				7E1B50671ACAD4170060FA4F /* InitialExperienceIntroStep.cpp in Sources */,

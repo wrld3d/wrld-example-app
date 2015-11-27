@@ -20,7 +20,8 @@ namespace ExampleApp
                 class TourExplorerViewInterop : public ITourExplorerView
                 {
                 public:
-                    TourExplorerViewInterop(TourExplorerView* pView);
+                    TourExplorerViewInterop(TourExplorerView* pView,
+                                            TourWebView* pWebView);
                     
                     void SetCurrentTour(const SdkModel::TourModel& tourModel);
                     void SetInitialCard(const int initialCard);
@@ -28,6 +29,7 @@ namespace ExampleApp
                     void OnDismissed();
                     void OnStateSelected(int activeStateIndex);
                     void OnChangeTourRequested(const std::string& name);
+                    void ShowWebpage(const std::string& url);
                     
                     void OnCurrentTourCardTapped();
                     
@@ -54,6 +56,7 @@ namespace ExampleApp
                     Eegeo::Helpers::CallbackCollection0 m_currentTourCardTappedCallbacks;
                     
                     TourExplorerView* m_pView;
+                    TourWebView* m_pWebView;
                     SdkModel::TourModel m_tourModel;
                     int m_initialCard;
                 };

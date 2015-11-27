@@ -11,6 +11,7 @@
 #include "IMetricsService.h"
 #include "TourExplorerViewController.h"
 #include "ITourHovercardView.h"
+#include "TourWebViewIncludes.h"
 
 @class ImageStore;
 
@@ -31,6 +32,7 @@ namespace ExampleApp
                 public:
                     TourExplorerViewModule(ExampleAppMessaging::TMessageBus& messageBus,
                                            ITourExplorerViewModel& viewModel,
+                                           TourWebView* pWebView,
                                            TourHovercard::ITourHovercardView& tourHoverCardView,
                                            ITourExplorerCompositeViewController& tourExplorerCompositeViewController,
                                            const Eegeo::Rendering::ScreenProperties& screenProperties,
