@@ -165,11 +165,11 @@ namespace ExampleAppWPF
         {
             base.OnApplyTemplate();
 
-            m_titleView = (TextBlock)GetTemplateChild("SearchResultPoiViewTitle");
+            m_titleView = (TextBlock)GetTemplateChild("Title");
             
-            m_poiImage = (Image)GetTemplateChild("SearchResultPoiViewImage");
+            m_poiImage = (Image)GetTemplateChild("PoiImage");
 
-            var yelpButton = (Image)GetTemplateChild("SearchResultPoiViewWebVendorLinkStyle");
+            var yelpButton = (Image)GetTemplateChild("WebVendorLinkStyle");
             yelpButton.PreviewMouseLeftButtonDown += (s, e) => HandleWebLinkButtonClicked();
         }
         

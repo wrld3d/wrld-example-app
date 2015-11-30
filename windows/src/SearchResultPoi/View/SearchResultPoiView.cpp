@@ -93,32 +93,32 @@ namespace ExampleApp
             {
                 ASSERT_UI_THREAD
 
-                std::string viewClass = "";
+				std::string viewClassName = "";
 
                 if(vendor == "Yelp")
                 {
-                    m_uiViewClass = GetTypeFromAssembly("ExampleAppWPF", "ExampleAppWPF.YelpSearchResultsPoiView");
-                    ConstructorInfo^ ctor = m_uiViewClass->GetConstructor(CreateTypes(IntPtr::typeid));
-                    m_uiView = ctor->Invoke(CreateObjects(gcnew IntPtr(this)));
-
-                    DisplayPoiInfo.SetupMethod(m_uiViewClass, m_uiView, "DisplayPoiInfo");
-                    DismissPoiInfo.SetupMethod(m_uiViewClass, m_uiView, "DismissPoiInfo");
-                    UpdateImageData.SetupMethod(m_uiViewClass, m_uiView, "UpdateImageData");
+					viewClassName = "ExampleAppWPF.YelpSearchResultsPoiView";
                 }
                 else if(vendor == "DeCarta")
                 {
-                    viewClass = "com/eegeo/searchresultpoiview/DeCartaSearchResultPoiView";
+					Eegeo_ASSERT(false, "Decarta SearchPoiView not implemented");
                 }
                 else if(vendor == "GeoNames")
                 {
-                    viewClass = "com/eegeo/searchresultpoiview/GeoNamesSearchResultPoiView";
+					Eegeo_ASSERT(false, "GeoNames SearchPoiView not implemented");
                 }
                 else
                 {
                     Eegeo_ASSERT(false, "Unknown POI vendor %s, cannot create view instance.\n", vendor.c_str());
                 }
 
+				m_uiViewClass = GetTypeFromAssembly("ExampleAppWPF", Helpers::ReflectionHelpers::ConvertUTF8ToManagedString(viewClassName));
+				ConstructorInfo^ ctor = m_uiViewClass->GetConstructor(CreateTypes(IntPtr::typeid));
+				m_uiView = ctor->Invoke(CreateObjects(gcnew IntPtr(this)));
 
+				DisplayPoiInfo.SetupMethod(m_uiViewClass, m_uiView, "DisplayPoiInfo");
+				DismissPoiInfo.SetupMethod(m_uiViewClass, m_uiView, "DismissPoiInfo");
+				UpdateImageData.SetupMethod(m_uiViewClass, m_uiView, "UpdateImageData");
             }
         }
     }

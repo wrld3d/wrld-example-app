@@ -42,6 +42,17 @@ namespace ExampleApp
                 return ConvertUTF8ToManagedString(input.c_str());
             }
 
+			inline std::string ConvertManagedStringToUTF8(System::String^ input)
+			{
+				array<System::Byte>^ bytes = System::Text::Encoding::UTF8->GetBytes(input);
+
+				std::string output;
+				output.resize(bytes->Length);
+				System::Runtime::InteropServices::Marshal::Copy(bytes, 0, System::IntPtr((void*)output.data()), bytes->Length);
+
+				return output;
+			}
+
             template<typename ...Args>
             struct Method
             {
