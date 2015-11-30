@@ -30,6 +30,7 @@ namespace ExampleApp
                                                        bool interiorsEnabled,
                                                        Eegeo::Resources::Interiors::InteriorController& interiorController,
                                                        InteriorsExplorer::SdkModel::InteriorVisibilityUpdater& interiorVisibilityUpdater,
+                                                       const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                        ExampleAppMessaging::TMessageBus& messageBus);
                         ~ExampleTourStateMachineFactory();
                         
@@ -44,6 +45,7 @@ namespace ExampleApp
                         bool m_interiorsEnabled;
                         Eegeo::Resources::Interiors::InteriorController& m_interiorController;
                         InteriorsExplorer::SdkModel::InteriorVisibilityUpdater& m_interiorVisibilityUpdater;
+                        const Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
                         ExampleAppMessaging::TMessageBus& m_messageBus;
                     };
                 }

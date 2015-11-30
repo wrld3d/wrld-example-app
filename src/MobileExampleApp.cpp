@@ -817,6 +817,7 @@ namespace ExampleApp
                                                                                         m_interiorsEnabled,
                                                                                         interiorsPresentationModule.GetAppLevelController(),
                                                                                         m_pInteriorsExplorerModule->GetInteriorVisibilityUpdater(),
+                                                                                        interiorsPresentationModule.GetInteriorSelectionModel(),
                                                                                         m_messageBus);
         
         ToursModule().GetTourService().AddTour(tourModel, *factory.CreateTourStateMachine(tourModel));

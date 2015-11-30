@@ -29,12 +29,14 @@ namespace ExampleApp
                                                                                    bool interiorsEnabled,
                                                                                    Eegeo::Resources::Interiors::InteriorController& interiorController,
                                                                                    InteriorsExplorer::SdkModel::InteriorVisibilityUpdater& interiorVisibilityUpdater,
+                                                                                   const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                                                    ExampleAppMessaging::TMessageBus& messageBus)
                     : m_toursCameraController(toursCameraController)
                     , m_toursCameraTransitionController(toursCameraTransitionController)
                     , m_worldPinsService(worldPinsService)
                     , m_interiorController(interiorController)
                     , m_interiorVisibilityUpdater(interiorVisibilityUpdater)
+                    , m_interiorSelectionModel(interiorSelectionModel)
                     , m_interiorsEnabled(interiorsEnabled)
                     , m_messageBus(messageBus)
                     {
@@ -67,6 +69,7 @@ namespace ExampleApp
                                                                                 blankWorldPinInteriorData,
                                                                                 m_interiorController,
                                                                                 m_interiorVisibilityUpdater,
+                                                                                m_interiorSelectionModel,
                                                                                 m_messageBus)));
 
                         
@@ -78,6 +81,7 @@ namespace ExampleApp
                                                                                 hotelPinInteriorData,
                                                                                 m_interiorController,
                                                                                 m_interiorVisibilityUpdater,
+                                                                                m_interiorSelectionModel,
                                                                                 m_messageBus)));
                         
                         stateMachineStates.push_back(Eegeo_NEW(ExampleTourState(tourModel.States()[tourIndex++],
@@ -88,6 +92,7 @@ namespace ExampleApp
                                                                                 blankWorldPinInteriorData,
                                                                                 m_interiorController,
                                                                                 m_interiorVisibilityUpdater,
+                                                                                m_interiorSelectionModel,
                                                                                 m_messageBus)));
                         
                         
