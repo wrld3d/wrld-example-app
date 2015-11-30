@@ -32,10 +32,8 @@ namespace ExampleAppWPF
             base.OnApplyTemplate();
 
             m_categoryIcon = (Image)GetTemplateChild("CategoryIcon");
-            if(m_model != null)
-            {
-                m_categoryIcon.Source = StartupResourceLoader.GetBitmap(SearchResultCategoryMapper.GetIconImageName(m_model.GetCategory()));
-            }
+            
+            m_categoryIcon.Source = StartupResourceLoader.GetBitmap(SearchResultCategoryMapper.GetIconImageName(m_model.GetCategory()));
 
             m_poiImage = (Image)GetTemplateChild("PoiImage");
         }
