@@ -27,16 +27,19 @@
     
     std::string m_imagePath;
     bool m_isVideo;
+    ImageStore* m_pImageStore;
     
     ExampleApp::Helpers::ColorHelpers::Color m_baseColor;
     ExampleApp::Helpers::ColorHelpers::Color m_textColor;
 }
-- (id)initWithParams:(float)pinDiameter :(float)pixelScale
+- (id)initWithParams:(float)pinDiameter :(float)pixelScale :(ImageStore*)pImageStore
 {
     self = [super init];
     
     if(self)
     {
+        m_pImageStore = pImageStore;
+        
         self.alpha = 0.f;
         m_pinOffset = (pinDiameter * pixelScale);
         m_pixelScale = pixelScale;
@@ -92,11 +95,14 @@
         [self addSubview: self.pArrowContainer];
         
         // image/video
-        m_pPlayIconImage = ExampleApp::Helpers::ImageHelpers::LoadImage("Tours/States/Twitter/play_icon");
-        self.pImage = [[[FXImageView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pImage.asynchronous = YES;
+        self.pImage = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        self.pImage.contentMode = UIViewContentModeScaleAspectFit;
         self.pVideoArrowImage = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-
+        [self addSubview: self.pImage];
+        [self.pImage addSubview: self.pVideoArrowImage];
+        
+        m_pPlayIconImage = ExampleApp::Helpers::ImageHelpers::LoadImage("Tours/States/Twitter/play_icon");
+        [m_pPlayIconImage retain];
         
         self.frame.origin = CGPointMake(0, 0);
     }
@@ -106,6 +112,15 @@
 
 - (void)dealloc
 {
+    [m_pPlayIconImage release];
+    m_pPlayIconImage = nil;
+    
+    [self.pVideoArrowImage removeFromSuperview];
+    [self.pVideoArrowImage release];
+    
+    [self.pImage removeFromSuperview];
+    [self.pImage release];
+    
     [self.pNameLabel removeFromSuperview];
     [self.pNameLabel release];
     
@@ -144,46 +159,103 @@
     self.layer.shouldRasterize = YES;
     self.layer.rasterizationScale = [[UIScreen mainScreen] scale];
     
-    float maxH = 85.f;
     // figures from a proportional size of an iPad2 screen -- use const so not proportional to small screens on iPhones.
-    float w = 162.f;
-    float h = 56.f;
-    
-    
-    self.pMainControlContainer.frame = CGRectMake(0, 0, w, h);
-    self.pMainControlShadowContainer.frame = CGRectMake(2.f, 2.f, w, h);
-    
+    const float w = 162.f;
+    const float h = 56.f;
+    const float imageOffsetY = 4;
     const float labelContainerOffsetY = 6.f;
+    const float labelVerticalSpace = h*0.4f;
+    const float labelSpacing = h*0.05f;
+    const float labelOffsetX = 4.f;
+    const float labelOffsetY = 2.f;
+    float heightWithImage = labelContainerOffsetY + labelOffsetY + labelVerticalSpace + imageOffsetY + TourDefines::ProfileImageSize;
+    const float videoArrowSize = 68.f;
+    
+    bool hasImage = m_imagePath != "";
+    float totalHeight = hasImage ? heightWithImage : h;
+    
+    
+    self.pMainControlContainer.frame = CGRectMake(0, 0, w, totalHeight);
+    self.pMainControlShadowContainer.frame = CGRectMake(2.f, 2.f, w, totalHeight);
+    
+    
     const CGFloat labelContainerHeight = self.pMainControlContainer.frame.size.height - labelContainerOffsetY;
     
     self.pTopStrip.frame =  CGRectMake(0.f, 0.f, w, labelContainerOffsetY);
     self.pLabelBack.frame = CGRectMake(0.f, labelContainerOffsetY, w, labelContainerHeight);
-    
-    const float labelVerticalSpace = h*0.3f;
-    const float labelSpacing = h*0.05f;
-    const float labelOffsetX = 4.f;
-    const float labelOffsetY = 2.f;
     
     self.pNameLabel.frame = CGRectMake(labelOffsetX,
                                        labelOffsetY,
                                        w - (labelOffsetX*2),
                                        labelVerticalSpace);
     
-    
     self.pInfoLabel.frame = CGRectMake(labelOffsetX,
                                           labelVerticalSpace + labelSpacing,
                                           w - (labelOffsetX*2),
                                           labelVerticalSpace);
     
+    if(hasImage)
+    {
+        if(m_isVideo)
+        {
+            self.pVideoArrowImage.frame = CGRectMake((TourDefines::ProfileImageSize - videoArrowSize)/2,
+                                                     (TourDefines::ProfileImageSize - videoArrowSize)/2,
+                                                     videoArrowSize,
+                                                     videoArrowSize);
+            [self.pVideoArrowImage setImage:m_pPlayIconImage];
+            self.pVideoArrowImage.hidden = NO;
+        }
+        else
+        {
+            self.pVideoArrowImage.image = nil;
+            self.pVideoArrowImage.frame = CGRectMake(0, 0, 0, 0);
+            self.pVideoArrowImage.hidden = YES;
+        }
+        
+        self.pImage.hidden = NO;
+        [m_pImageStore releaseImageForView:self.pImage];
+        
+        self.pImage.frame = CGRectMake((w - TourDefines::ProfileImageSize)/2,
+                                       totalHeight - (TourDefines::ProfileImageSize + (imageOffsetY/2)),
+                                       TourDefines::ProfileImageSize,
+                                       TourDefines::ProfileImageSize);;
+        
+        if(m_imagePath.find("http") != std::string::npos)
+        {
+            [m_pImageStore loadImage:m_imagePath
+                                    :self.pImage
+                                    :^(UIImage* image)
+             {
+                 self.pImage.image = image;
+                
+             }
+                                    :TourDefines::ProfileImageSize];
+        }
+        else
+        {
+            UIImage* image = ExampleApp::Helpers::ImageHelpers::LoadImage(m_imagePath);
+            [self.pImage setImage:image];
+        }
+    }
+    else
+    {
+        CGRect zeroFrame = CGRectMake(0, 0, 0, 0);
+        self.pImage.frame = zeroFrame;
+        self.pImage.hidden = YES;
+        self.pVideoArrowImage.image = nil;
+        self.pVideoArrowImage.frame = zeroFrame;
+        self.pVideoArrowImage.hidden = YES;
+    }
+    
     
     const float arrowWidth = 16.f;
-    self.pArrowContainer.frame = CGRectMake(w/2.f - arrowWidth/2.f, h, arrowWidth, arrowWidth);
+    self.pArrowContainer.frame = CGRectMake(w/2.f - arrowWidth/2.f, totalHeight, arrowWidth, arrowWidth);
     
     float trueY = m_previousY/m_pixelScale - m_pinOffset/m_pixelScale;
     float trueX = m_previousX/m_pixelScale;
-    self.frame = CGRectMake(trueX - w/2, trueY - (h + arrowWidth), w, maxH + arrowWidth);
+    self.frame = CGRectMake(trueX - w/2, trueY - (totalHeight + arrowWidth), w, totalHeight + arrowWidth);
     
-    m_cardHeight = h + arrowWidth;
+    m_cardHeight = totalHeight + arrowWidth;
 }
 
 - (void) setContent:(const std::string&)name :(const std::string&)subtitle;

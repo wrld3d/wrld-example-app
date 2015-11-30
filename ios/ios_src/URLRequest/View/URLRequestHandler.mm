@@ -29,7 +29,8 @@ namespace ExampleApp
             void URLRequestHandler::RequestExternalURL(const std::string& url)
             {
                 NSString *urlLink = [NSString stringWithUTF8String:url.c_str()];
-                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlLink]];
+                NSString *escaped = [urlLink stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:escaped]];
             }
         }
     }

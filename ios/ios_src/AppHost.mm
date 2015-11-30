@@ -363,6 +363,7 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
                                                                                                                     app.ModalityModule().GetModalityModel(),
                                                                                                                     app.ToursPinDiameter(),
                                                                                                                     screenProperties.GetPixelScale(),
+                                                                                                                    m_pImageStore,
                                                                                                                     app.GetAppModeModel());
     
         m_pTourExplorerViewModule = Eegeo_NEW(ExampleApp::Tours::View::TourExplorer::TourExplorerViewModule)

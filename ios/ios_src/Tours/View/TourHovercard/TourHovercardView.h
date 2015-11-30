@@ -7,7 +7,6 @@
 #include "AppRunner.h"
 #include "TourHovercardViewIncludes.h"
 #include "ColorHelpers.h"
-#include "FXImageView.h"
 
 @class TourHovercardView;
 @class ImageStore;
@@ -17,7 +16,7 @@
     UIImage* m_pPlayIconImage;
 }
 
-- (id) initWithParams:(float)pinDiameter :(float)pixelScale;
+- (id) initWithParams:(float)pinDiameter :(float)pixelScale :(ImageStore*)pImageStore;
 
 - (ExampleApp::Tours::View::TourHovercard::TourHovercardViewInterop*) getInterop;
 
@@ -41,7 +40,7 @@
 @property (nonatomic, retain) UIImageView* pArrowContainer;
 @property (nonatomic, retain) UILabel* pNameLabel;
 @property (nonatomic, retain) UILabel* pInfoLabel;
-@property (nonatomic, retain) FXImageView* pImage;
+@property (nonatomic, retain) UIImageView* pImage;
 @property (nonatomic, retain) UIImageView* pVideoArrowImage;
 
 @end
