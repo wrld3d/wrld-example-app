@@ -48,6 +48,8 @@ namespace ExampleApp
 
 				void RemoveAvailabilityChangedCallback(Eegeo::Helpers::ICallback2<const Search::SdkModel::SearchResultModel&, const std::string&>& callback);
 
+				void HandleAvailabilityChanged(const std::string& availability);
+
                 void InsertClosedCallback(Eegeo::Helpers::ICallback0& callback);
 
                 void RemoveClosedCallback(Eegeo::Helpers::ICallback0& callback);

@@ -9,5 +9,6 @@ namespace ExampleApp
     public:
         static void CloseButtonClicked(System::IntPtr nativeCallerPointer);
         static void TogglePinnedButtonClicked(System::IntPtr nativeCallerPointer);
+		static void AvailabilityChanged(System::IntPtr nativeCallerPointer, System::String^ availability);
     };
 }

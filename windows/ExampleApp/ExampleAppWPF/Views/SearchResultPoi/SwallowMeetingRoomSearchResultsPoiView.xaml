@@ -34,6 +34,102 @@
         </Style.Triggers>
     </Style>
 
+    <Style x:Key="AvailableToggleImageStyle" TargetType="ToggleButton">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButton">
+                    <Border Background="{StaticResource Transparent}">
+                        <ContentPresenter/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsChecked" Value="True">
+                <Setter Property="ContentTemplate">
+                    <Setter.Value>
+                        <DataTemplate>
+                            <Image Visibility="Visible" Source="/ExampleAppWPF;component/Assets/button_occupancy_available_on.png" Width="192" Height="40" />
+                        </DataTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+            <Trigger Property="IsChecked" Value="False">
+                <Setter Property="ContentTemplate">
+                    <Setter.Value>
+                        <DataTemplate>
+                            <Image Visibility="Visible" Source="/ExampleAppWPF;component/Assets/button_occupancy_available_off.png" Width="192" Height="40" />
+                        </DataTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="AvailableSoonToggleImageStyle" TargetType="ToggleButton">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButton">
+                    <Border Background="{StaticResource Transparent}">
+                        <ContentPresenter/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsChecked" Value="True">
+                <Setter Property="ContentTemplate">
+                    <Setter.Value>
+                        <DataTemplate>
+                            <Image Visibility="Visible" Source="/ExampleAppWPF;component/Assets/button_occupancy_availablesoon_on.png" Width="192" Height="40" />
+                        </DataTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+            <Trigger Property="IsChecked" Value="False">
+                <Setter Property="ContentTemplate">
+                    <Setter.Value>
+                        <DataTemplate>
+                            <Image Visibility="Visible" Source="/ExampleAppWPF;component/Assets/button_occupancy_availablesoon_off.png" Width="192" Height="40" />
+                        </DataTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="OccupiedToggleImageStyle" TargetType="ToggleButton">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButton">
+                    <Border Background="{StaticResource Transparent}">
+                        <ContentPresenter/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsChecked" Value="True">
+                <Setter Property="ContentTemplate">
+                    <Setter.Value>
+                        <DataTemplate>
+                            <Image Visibility="Visible" Source="/ExampleAppWPF;component/Assets/button_occupancy_occupied_on.png" Width="192" Height="40" />
+                        </DataTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+            <Trigger Property="IsChecked" Value="False">
+                <Setter Property="ContentTemplate">
+                    <Setter.Value>
+                        <DataTemplate>
+                            <Image Visibility="Visible" Source="/ExampleAppWPF;component/Assets/button_occupancy_occupied_off.png" Width="192" Height="40" />
+                        </DataTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
     <Style TargetType="{x:Type local:SwallowMeetingRoomSearchResultsPoiView}">
         <Setter Property="Template">
             <Setter.Value>
@@ -67,9 +163,44 @@
                                         <Border BorderBrush="{x:Null}" BorderThickness="0" HorizontalAlignment="Stretch" Height="Auto" Background="{StaticResource Gold}">
                                             <TextBlock Name="AvailabilityHeader" Text="Availability" FontSize="12" Foreground="{StaticResource White}" Margin="3,0,0,0" />
                                         </Border>
-                                        <Border BorderBrush="{x:Null}" BorderThickness="0" Width="Auto" Height="Auto" >
-                                            <TextBlock Name="AvailabilityText" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:SwallowMeetingRoomSearchResultsPoiView}}, Path=Availability}" FontSize="12" Foreground="{StaticResource DarkGrey}" Margin="3,5,5,10"/>
-                                        </Border>
+                                        <StackPanel HorizontalAlignment="Center">
+                                            <StackPanel.Resources>
+                                                <local:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
+                                            </StackPanel.Resources>
+                                            <Border Background="{StaticResource Transparent}" Padding="0,10,0,5">
+                                                <RadioButton Name="AvailableButton"
+                                                             IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:SwallowMeetingRoomSearchResultsPoiView}},
+                                                                                 Path=Availability,
+                                                                                 Converter={StaticResource EnumToBooleanConverter},
+                                                                                 ConverterParameter={x:Static local:SwallowMeetingRoomSearchResultsPoiView+AvailalabilityType.Available}}"
+                                                             Style="{StaticResource AvailableToggleImageStyle}"
+                                                             GroupName="AvailabilityGroup"
+                                                             Width="192"
+                                                             Height="40"/>
+                                            </Border>
+                                            <Border Background="{StaticResource Transparent}" Padding="0,5,0,5">
+                                                <RadioButton Name="AvailableSoonButton"
+                                                             IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:SwallowMeetingRoomSearchResultsPoiView}},
+                                                                                 Path=Availability,
+                                                                                 Converter={StaticResource EnumToBooleanConverter},
+                                                                                 ConverterParameter={x:Static local:SwallowMeetingRoomSearchResultsPoiView+AvailalabilityType.AvailableSoon}}"
+                                                             Style="{StaticResource AvailableSoonToggleImageStyle}"
+                                                             GroupName="AvailabilityGroup"
+                                                             Width="192"
+                                                             Height="40"/>
+                                            </Border>
+                                            <Border Background="{StaticResource Transparent}" Padding="0,5,0,5">
+                                                <RadioButton Name="OccupiedButton"
+                                                             IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:SwallowMeetingRoomSearchResultsPoiView}},
+                                                                                 Path=Availability,
+                                                                                 Converter={StaticResource EnumToBooleanConverter},
+                                                                                 ConverterParameter={x:Static local:SwallowMeetingRoomSearchResultsPoiView+AvailalabilityType.Occupied}}"
+                                                             Style="{StaticResource OccupiedToggleImageStyle}"
+                                                             GroupName="AvailabilityGroup"
+                                                             Width="192"
+                                                             Height="40"/>
+                                            </Border>
+                                        </StackPanel>
                                     </StackPanel>
                                 </ScrollViewer>
                             </Grid>

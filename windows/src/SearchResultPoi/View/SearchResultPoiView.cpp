@@ -62,6 +62,11 @@ namespace ExampleApp
 				m_availabilityChangedCallbacks.RemoveCallback(callback);
 			}
 
+			void SearchResultPoiView::HandleAvailabilityChanged(const std::string& availability)
+			{
+				m_availabilityChangedCallbacks.ExecuteCallbacks(m_model, availability);
+			}
+
             void SearchResultPoiView::InsertClosedCallback(Eegeo::Helpers::ICallback0& callback)
             {
                 m_closedCallbacks.AddCallback(callback);
