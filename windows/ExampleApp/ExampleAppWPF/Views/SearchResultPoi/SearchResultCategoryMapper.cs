@@ -37,6 +37,17 @@ namespace ExampleAppWPF
             CategoryToIconIndex.Add("museum", "museum.png");
             CategoryToIconIndex.Add("museums", "museum.png");
             CategoryToIconIndex.Add("arts", "museum.png");
+            
+            CategoryToIconIndex.Add("meeting_room", "meetingroom.png");
+            
+            CategoryToIconIndex.Add("working_group", "workinggroup.png");
+            CategoryToIconIndex.Add("department", "workinggroup.png");
+
+            CategoryToIconIndex.Add("stationery", "stationery.png");
+
+            CategoryToIconIndex.Add("toilets", "toilets.png");
+
+            CategoryToIconIndex.Add("print_station", "printstation.png");
         }
 
         public static string GetIconImageName(string categoryName)

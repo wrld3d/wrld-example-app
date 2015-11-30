@@ -43,17 +43,20 @@ namespace ExampleApp
                 
                 std::string availability = resultRow.Cell(columnOffset + poi_availability).AsText();
                 
-                valueObject.AddMember(Search::Swallow::SearchConstants::NAME_FIELD_NAME.c_str(),
-                                      resultRow.Cell(columnOffset + poi_name).AsText().c_str(),
-                                      allocator);
+                AddStringToJson(Search::Swallow::SearchConstants::NAME_FIELD_NAME,
+                                resultRow.Cell(columnOffset + poi_name).AsText(),
+                                allocator,
+								valueObject);
                 
-                valueObject.AddMember(Search::Swallow::SearchConstants::IMAGE_FILENAME_FIELD_NAME.c_str(),
-                                      GetImageUrl(assetsBaseUrl, resultRow.Cell(columnOffset + poi_image_filename).AsText()).c_str(),
-                                      allocator);
+				AddStringToJson(Search::Swallow::SearchConstants::IMAGE_FILENAME_FIELD_NAME,
+								GetImageUrl(assetsBaseUrl, resultRow.Cell(columnOffset + poi_image_filename).AsText()),
+								allocator,
+								valueObject);
                 
-                valueObject.AddMember(Search::Swallow::SearchConstants::AVAILABILITY_FIELD_NAME.c_str(),
-                                      availability.c_str(),
-                                      allocator);
+				AddStringToJson(Search::Swallow::SearchConstants::AVAILABILITY_FIELD_NAME,
+								availability,
+								allocator,
+								valueObject);
                 
                 rapidjson::StringBuffer strbuf;
                 rapidjson::Writer<rapidjson::StringBuffer> writer(strbuf);

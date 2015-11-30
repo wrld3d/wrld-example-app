@@ -45,6 +45,12 @@ namespace ExampleAppWPF
             LoadImage("SearchResultOnMap", "Icons", "pin.png");
             LoadImage("SearchResultOnMap", "Icons", "restaurant.png");
             LoadImage("SearchResultOnMap", "Icons", "theatre.png");
+
+            LoadImage("SearchResultOnMap", "Icons", "meetingroom.png");
+            LoadImage("SearchResultOnMap", "Icons", "printstation.png");
+            LoadImage("SearchResultOnMap", "Icons", "stationery.png");
+            LoadImage("SearchResultOnMap", "Icons", "toilets.png");
+            LoadImage("SearchResultOnMap", "Icons", "workinggroup.png");
         }
 
         public static void Init()

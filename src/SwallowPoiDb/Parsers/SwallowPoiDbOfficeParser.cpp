@@ -39,15 +39,16 @@ namespace ExampleApp
                 rapidjson::Document::AllocatorType& allocator = jsonDoc.GetAllocator();
                 rapidjson::Value valueObject(rapidjson::kObjectType);
                 
-                valueObject.AddMember(Search::Swallow::SearchConstants::NAME_FIELD_NAME.c_str(),
-                                      resultRow.Cell(columnOffset + poi_name).AsText().c_str(),
-                                      allocator);
+				AddStringToJson(Search::Swallow::SearchConstants::NAME_FIELD_NAME,
+								resultRow.Cell(columnOffset + poi_name).AsText(),
+								allocator,
+								valueObject);
                 
-                valueObject.AddMember(Search::Swallow::SearchConstants::DISTANCE_FIELD_NAME.c_str(),
+				valueObject.AddMember(Search::Swallow::SearchConstants::DISTANCE_FIELD_NAME.c_str(),
                                       resultRow.Cell(columnOffset + poi_distance).AsReal(),
                                       allocator);
                 
-                valueObject.AddMember(Search::Swallow::SearchConstants::HEADING_DEGREES_FIELD_NAME.c_str(),
+				valueObject.AddMember(Search::Swallow::SearchConstants::HEADING_DEGREES_FIELD_NAME.c_str(),
                                       resultRow.Cell(columnOffset + poi_heading_degrees).AsReal(),
                                       allocator);
                 

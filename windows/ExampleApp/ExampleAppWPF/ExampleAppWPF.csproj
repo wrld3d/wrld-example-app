@@ -98,11 +98,19 @@
     <Compile Include="Views\Options\OptionsView.cs" />
     <Compile Include="Views\SearchResultMenu\SearchMenuListItem.cs" />
     <Compile Include="StartupResourceLoader.cs" />
+    <Compile Include="Views\SearchResultPoi\ResultModels\SwallowDepartmentResultModel.cs" />
+    <Compile Include="Views\SearchResultPoi\ResultModels\SwallowFacilityResultModel.cs" />
+    <Compile Include="Views\SearchResultPoi\ResultModels\SwallowMeetingRoomResultModel.cs" />
     <Compile Include="Views\SearchResultPoi\ResultModels\SwallowPersonResultModel.cs" />
+    <Compile Include="Views\SearchResultPoi\ResultModels\SwallowWorkingGroupResultModel.cs" />
     <Compile Include="Views\SearchResultPoi\ResultModels\YelpResultModel.cs" />
     <Compile Include="Views\SearchResultPoi\SearchResultCategoryMapper.cs" />
-	<Compile Include="Views\SearchResultPoi\SearchResultPoiViewBase.cs" />
+    <Compile Include="Views\SearchResultPoi\SearchResultPoiViewBase.cs" />
+    <Compile Include="Views\SearchResultPoi\SwallowDepartmentSearchResultsPoiView.cs" />
+    <Compile Include="Views\SearchResultPoi\SwallowFacilitySearchResultsPoiView.cs" />
+    <Compile Include="Views\SearchResultPoi\SwallowMeetingRoomSearchResultsPoiView.cs" />
     <Compile Include="Views\SearchResultPoi\SwallowPersonSearchResultsPoiView.cs" />
+    <Compile Include="Views\SearchResultPoi\SwallowWorkingGroupSearchResultsPoiView.cs" />
     <Compile Include="Views\SearchResultPoi\YelpSearchResultsPoiView.cs" />
     <Compile Include="Views\SecondaryMenu\SubMenuListItem.cs" />
     <Compile Include="Views\AboutPage\AboutPageView.cs" />
@@ -193,7 +201,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\SearchResultPoi\SwallowDepartmentSearchResultsPoiView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\SearchResultPoi\SwallowFacilitySearchResultsPoiView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\SearchResultPoi\SwallowMeetingRoomSearchResultsPoiView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\SearchResultPoi\SwallowPersonSearchResultsPoiView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\SearchResultPoi\SwallowWorkingGroupSearchResultsPoiView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -535,6 +559,11 @@
     </Resource>
     <Resource Include="..\..\Resources\icon1_working_group.png">
       <Link>Assets\icon1_working_group.png</Link>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\..\Resources\icon1_department.png">
+      <Link>Assets\icon1_department.png</Link>
     </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

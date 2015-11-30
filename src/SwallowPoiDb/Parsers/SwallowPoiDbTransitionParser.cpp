@@ -44,9 +44,10 @@ namespace ExampleApp
                 
 				const std::string targetInteriorId(resultRow.Cell(columnOffset + poi_target_interior_id).AsText());
 
-                valueObject.AddMember(Search::Swallow::SearchConstants::TARGET_INTERIOR_ID_FIELD_NAME.c_str(),
-									  targetInteriorId.c_str(),
-                                      allocator);
+                AddStringToJson(Search::Swallow::SearchConstants::TARGET_INTERIOR_ID_FIELD_NAME,
+								targetInteriorId,
+								allocator,
+								valueObject);
                 
                 valueObject.AddMember(Search::Swallow::SearchConstants::TARGET_INTERIOR_FLOOR_FIELD_NAME.c_str(),
                                       resultRow.Cell(columnOffset + poi_target_interior_floor).AsInteger(),

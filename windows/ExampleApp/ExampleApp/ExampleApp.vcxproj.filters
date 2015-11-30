@@ -525,7 +525,7 @@
     </Filter>
     <Filter Include="Source Files\App\Watermark\SdkModel">
       <UniqueIdentifier>{f857c55b-4aca-4490-828d-e027a47aea54}</UniqueIdentifier>
-	</Filter>
+    </Filter>
     <Filter Include="Source Files\App\Search\Swallow">
       <UniqueIdentifier>{7e500016-19c3-4384-8f2f-42e5ea4b3137}</UniqueIdentifier>
     </Filter>
@@ -1925,9 +1925,15 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\InteriorsExplorer\View\InteriorsHighlightPickingController.cpp">
       <Filter>Source Files\App\InteriorsExplorer\View</Filter>
-	</ClCompile>
+    </ClCompile>
     <ClCompile Include="..\..\src\SearchResultPoi\View\SearchResultModelCLI.cpp">
       <Filter>Source Files\Windows\SearchResultPoi\View</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\SwallowPoiDb\Parsers\SwallowPoiDbDepartmentParser.cpp">
+      <Filter>Source Files\App\SwallowPoiDb\Parsers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Search\Swallow\SdkModel\SwallowDepartmentResultModel.cpp">
+      <Filter>Source Files\App\Search\Swallow\SdkModel</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -4177,6 +4183,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\SearchResultPoi\View\SearchResultModelCLI.h">
       <Filter>Source Files\Windows\SearchResultPoi\View</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\SwallowPoiDb\Parsers\SwallowPoiDbDepartmentParser.h">
+      <Filter>Source Files\App\SwallowPoiDb\Parsers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Search\Swallow\SdkModel\SwallowDepartmentResultModel.h">
+      <Filter>Source Files\App\Search\Swallow\SdkModel</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -42,21 +42,25 @@ namespace ExampleApp
                 rapidjson::Document::AllocatorType& allocator = jsonDoc.GetAllocator();
                 rapidjson::Value valueObject(rapidjson::kObjectType);
                 
-                valueObject.AddMember(Search::Swallow::SearchConstants::NAME_FIELD_NAME.c_str(),
-                                      resultRow.Cell(columnOffset + poi_name).AsText().c_str(),
-                                      allocator);
+				AddStringToJson(Search::Swallow::SearchConstants::NAME_FIELD_NAME,
+								resultRow.Cell(columnOffset + poi_name).AsText(),
+								allocator,
+								valueObject);
                 
-                valueObject.AddMember(Search::Swallow::SearchConstants::CATEGORY_FIELD_NAME.c_str(),
-                                      resultRow.Cell(columnOffset + poi_category).AsText().c_str(),
-                                      allocator);
+				AddStringToJson(Search::Swallow::SearchConstants::CATEGORY_FIELD_NAME,
+								resultRow.Cell(columnOffset + poi_category).AsText(),
+								allocator,
+								valueObject);
                 
-                valueObject.AddMember(Search::Swallow::SearchConstants::IMAGE_FILENAME_FIELD_NAME.c_str(),
-                                      GetImageUrl(assetsBaseUrl, resultRow.Cell(columnOffset + poi_image_filename).AsText()).c_str(),
-                                      allocator);
+				AddStringToJson(Search::Swallow::SearchConstants::IMAGE_FILENAME_FIELD_NAME,
+								GetImageUrl(assetsBaseUrl, resultRow.Cell(columnOffset + poi_image_filename).AsText()),
+								allocator,
+								valueObject);
                 
-                valueObject.AddMember(Search::Swallow::SearchConstants::DESCRIPTION_FIELD_NAME.c_str(),
-                                      resultRow.Cell(columnOffset + poi_description).AsText().c_str(),
-                                      allocator);
+				AddStringToJson(Search::Swallow::SearchConstants::DESCRIPTION_FIELD_NAME,
+								resultRow.Cell(columnOffset + poi_description).AsText(),
+								allocator,
+								valueObject);
                 
                 rapidjson::StringBuffer strbuf;
                 rapidjson::Writer<rapidjson::StringBuffer> writer(strbuf);
