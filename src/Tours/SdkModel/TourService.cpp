@@ -82,7 +82,10 @@ namespace ExampleApp
                 
                 m_messageBus.Publish(TourOnMapSelectedMessage(m_activeTourModel, atCard));
                 m_sdkDomainEventBus.Publish(WorldPins::WorldPinsVisibilityMessage(WorldPins::SdkModel::WorldPinVisibility::TourPin));
-                m_tourStartedCallbacks.ExecuteCallbacks();
+                if(m_previousActiveToursStack.size() == 0)
+                {
+                    m_tourStartedCallbacks.ExecuteCallbacks();
+                }
             }
             
             void TourService::EnqueueNextTour(const TourModel& tourModel)
@@ -104,14 +107,15 @@ namespace ExampleApp
                 m_pActiveTourStateMachine->EndTour();
                 m_pActiveTourStateMachine = NULL;
                 
-                m_tourEndedCallbacks.ExecuteCallbacks();
-                
                 if(!m_suspendCurrentTour)
                 {
                     // Don't return to app camera if we're going to another tour.
                     if(m_previousActiveToursStack.size() == 0)
                     {
                         m_sdkDomainEventBus.Publish(WorldPins::WorldPinsVisibilityMessage(WorldPins::SdkModel::WorldPinVisibility::World | WorldPins::SdkModel::WorldPinVisibility::Search | WorldPins::SdkModel::WorldPinVisibility::UserPin));
+                        
+                        m_tourEndedCallbacks.ExecuteCallbacks();
+                
                     }
                     else if(m_previousActiveToursStack.size() > 0)
                     {

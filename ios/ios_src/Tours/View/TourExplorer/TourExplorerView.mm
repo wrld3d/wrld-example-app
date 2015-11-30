@@ -282,6 +282,7 @@
             [self layoutIfNeeded];
 
             [self configureViewForTour:m_nextTour :0];
+            [self animateTo:1.0];
         }
     }];
 }
