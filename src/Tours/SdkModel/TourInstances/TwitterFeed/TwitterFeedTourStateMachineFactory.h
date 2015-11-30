@@ -12,6 +12,7 @@
 #include "LatLongAltitude.h"
 #include "Metrics.h"
 #include "BidirectionalBus.h"
+#include "InteriorsExplorer.h"
 
 namespace ExampleApp
 {
@@ -29,6 +30,9 @@ namespace ExampleApp
                         Camera::IToursCameraTransitionController& m_toursCameraTransitionController;
                         Camera::IToursCameraController& m_toursCameraController;
                         WorldPins::SdkModel::IWorldPinsService& m_worldPinsService;
+                        Eegeo::Resources::Interiors::InteriorController& m_interiorController;
+                        InteriorsExplorer::SdkModel::InteriorVisibilityUpdater& m_interiorVisibilityUpdater;
+                        const Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
                         std::string m_userId;
                         Metrics::IMetricsService& m_metricsService;
                         ExampleAppMessaging::TMessageBus& m_messageBus;
@@ -38,6 +42,9 @@ namespace ExampleApp
                         TwitterFeedTourStateMachineFactory(Camera::IToursCameraTransitionController& toursCameraTransitionController,
                                                            Camera::IToursCameraController& toursCameraController,
                                                            WorldPins::SdkModel::IWorldPinsService& worldPinsService,
+                                                           Eegeo::Resources::Interiors::InteriorController& interiorController,
+                                                           InteriorsExplorer::SdkModel::InteriorVisibilityUpdater& interiorVisibilityUpdater,
+                                                           const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                            const std::string& userId,
                                                            const std::map<std::string, TweetStateData>& tweetStateDataMap,
                                                            Metrics::IMetricsService& metricsService,

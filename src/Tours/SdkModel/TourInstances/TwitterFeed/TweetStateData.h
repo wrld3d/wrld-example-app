@@ -3,6 +3,7 @@
 #pragma once
 
 #include "VectorMath.h"
+#include "WorldPinInteriorData.h"
 
 namespace ExampleApp
 {
@@ -18,9 +19,13 @@ namespace ExampleApp
                     {
                     public:
                         TweetStateData(Eegeo::dv3 ecefOrigin,
-                                       Eegeo::dv3 ecefTarget)
+                                       Eegeo::dv3 ecefTarget,
+                                       bool isInterior,
+                                       WorldPins::SdkModel::WorldPinInteriorData interiorData)
                         : m_ecefOrigin(ecefOrigin)
                         , m_ecefTarget(ecefTarget)
+                        , m_isInterior(isInterior)
+                        , m_interiorData(interiorData)
                         {
                             
                         }
@@ -28,12 +33,16 @@ namespace ExampleApp
                         TweetStateData()
                         : m_ecefOrigin(0.0, 0.0, 0.0)
                         , m_ecefTarget(0.0, 0.0, 0.0)
+                        , m_isInterior(false)
+                        , m_interiorData()
                         {
                             
                         }
                         
                         Eegeo::dv3 m_ecefOrigin;
                         Eegeo::dv3 m_ecefTarget;
+                        bool m_isInterior;
+                        WorldPins::SdkModel::WorldPinInteriorData m_interiorData;
                     };
                 }
             }

@@ -26,6 +26,9 @@ namespace ExampleApp
                                                                      Camera::IToursCameraController& toursCameraController,
                                                                      ITourService& tourService,
                                                                      WorldPins::SdkModel::IWorldPinsService& worldPinsService,
+                                                                     Eegeo::Resources::Interiors::InteriorController& interiorController,
+                                                                     InteriorsExplorer::SdkModel::InteriorVisibilityUpdater& interiorVisibilityUpdater,
+                                                                     const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                                      ITourRepository& tourRepository,
                                                                      Social::TwitterFeed::ITwitterFeedService& twitterFeedService,
                                                                      const std::map<std::string, TweetStateData>& tweetStateDataMap,
@@ -35,6 +38,9 @@ namespace ExampleApp
                     , m_toursCameraController(toursCameraController)
                     , m_tourService(tourService)
                     , m_worldPinsService(worldPinsService)
+                    , m_interiorController(interiorController)
+                    , m_interiorVisibilityUpdater(interiorVisibilityUpdater)
+                    , m_interiorSelectionModel(interiorSelectionModel)
                     , m_tourRepository(tourRepository)
                     , m_twitterFeedService(twitterFeedService)
                     , m_twitterFeedLoadedCallback(this, &TwitterFeedTourObserver::OnTwitterFeedLoaded)
@@ -98,9 +104,8 @@ namespace ExampleApp
                         }
                         
                         
-                        //TODO: Decide where to get the interior data from
-                        const bool isInterior = false;
-                        ExampleApp::WorldPins::SdkModel::WorldPinInteriorData worldPinInteriorData;
+                        const bool isInterior = tweetStateData.m_isInterior;
+                        ExampleApp::WorldPins::SdkModel::WorldPinInteriorData worldPinInteriorData = tweetStateData.m_interiorData;
                         
                         ExampleApp::Tours::SdkModel::TourModel tourModel(tourName,
                                                                          buffer.GetString(),
@@ -119,6 +124,9 @@ namespace ExampleApp
                         TwitterFeedTourStateMachineFactory factory(m_toursCameraTransitionController,
                                                                    m_toursCameraController,
                                                                    m_worldPinsService,
+                                                                   m_interiorController,
+                                                                   m_interiorVisibilityUpdater,
+                                                                   m_interiorSelectionModel,
                                                                    userId,
                                                                    m_tweetStateDataMap,
                                                                    m_metricsService,

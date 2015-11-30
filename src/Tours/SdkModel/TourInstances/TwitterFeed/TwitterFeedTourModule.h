@@ -11,6 +11,7 @@
 #include "TweetStateData.h"
 #include "Metrics.h"
 #include "BidirectionalBus.h"
+#include "InteriorsExplorer.h"
 
 namespace ExampleApp
 {
@@ -32,6 +33,9 @@ namespace ExampleApp
                                               Camera::IToursCameraController& toursCameraController,
                                               ITourService& tourService,
                                               WorldPins::SdkModel::IWorldPinsService& worldPinsService,
+                                              Eegeo::Resources::Interiors::InteriorController& interiorController,
+                                              InteriorsExplorer::SdkModel::InteriorVisibilityUpdater& interiorVisibilityUpdater,
+                                              const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                               ITourRepository& tourRepository,
                                               Social::TwitterFeed::ITwitterFeedService& twitterFeedService,
                                               Metrics::IMetricsService& metricsService,

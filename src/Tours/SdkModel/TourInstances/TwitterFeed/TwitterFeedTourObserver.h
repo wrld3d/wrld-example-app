@@ -9,6 +9,7 @@
 #include <TweetStateData.h>
 #include "Metrics.h"
 #include "BidirectionalBus.h"
+#include "InteriorsExplorer.h"
 
 namespace ExampleApp
 {
@@ -27,6 +28,9 @@ namespace ExampleApp
                         Camera::IToursCameraController& m_toursCameraController;
                         ITourService& m_tourService;
                         WorldPins::SdkModel::IWorldPinsService& m_worldPinsService;
+                        Eegeo::Resources::Interiors::InteriorController& m_interiorController;
+                        InteriorsExplorer::SdkModel::InteriorVisibilityUpdater& m_interiorVisibilityUpdater;
+                        const Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
                         ITourRepository& m_tourRepository;
                         Social::TwitterFeed::ITwitterFeedService& m_twitterFeedService;
                         Metrics::IMetricsService& m_metricsService;
@@ -46,6 +50,9 @@ namespace ExampleApp
                                                 Camera::IToursCameraController& toursCameraController,
                                                 ITourService& tourService,
                                                 WorldPins::SdkModel::IWorldPinsService& worldPinsService,
+                                                Eegeo::Resources::Interiors::InteriorController& interiorController,
+                                                InteriorsExplorer::SdkModel::InteriorVisibilityUpdater& interiorVisibilityUpdater,
+                                                const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                 ITourRepository& tourRepository,
                                                 Social::TwitterFeed::ITwitterFeedService& twitterFeedService,
                                                 const std::map<std::string, TweetStateData>& tweetStateDataMap,

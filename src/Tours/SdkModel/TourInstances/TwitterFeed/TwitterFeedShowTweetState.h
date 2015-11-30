@@ -12,6 +12,7 @@
 #include <string>
 #include "TourStateModel.h"
 #include "BidirectionalBus.h"
+#include "InteriorsExplorer.h"
 
 namespace ExampleApp
 {
@@ -29,6 +30,11 @@ namespace ExampleApp
                         TwitterFeedShowTweetState(const TourStateModel& stateModel,
                                                   Camera::IToursCameraTransitionController& toursCameraTransitionController,
                                                   WorldPins::SdkModel::IWorldPinsService& worldPinsService,
+                                                  bool isInterior,
+                                                  WorldPins::SdkModel::WorldPinInteriorData& worldPinInteriorData,
+                                                  Eegeo::Resources::Interiors::InteriorController& interiorController,
+                                                  InteriorsExplorer::SdkModel::InteriorVisibilityUpdater& interiorVisibilityUpdater,
+                                                  const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                   const TweetStateData& tweetStateData,
                                                   const Eegeo::Space::LatLong& pinLocation,
                                                   const std::string& placeName,
@@ -52,7 +58,13 @@ namespace ExampleApp
                         WorldPins::SdkModel::IWorldPinsService& m_worldPinsService;
                         WorldPins::SdkModel::WorldPinItemModel* m_pPinModel;
                         bool m_cameraTransitionComplete;
+                        bool m_interiorTransitionComplete;
                         Eegeo::Space::LatLong m_pinLocation;
+                        bool m_isInterior;
+                        WorldPins::SdkModel::WorldPinInteriorData m_worldPinInteriorData;
+                        Eegeo::Resources::Interiors::InteriorController& m_interiorController;
+                        InteriorsExplorer::SdkModel::InteriorVisibilityUpdater& m_interiorVisibilityUpdater;
+                        const Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
                         
                         const std::string m_pinPlacename;
                         const std::string m_pinImageUrl;

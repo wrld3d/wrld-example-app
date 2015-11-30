@@ -24,6 +24,9 @@ namespace ExampleApp
                     TwitterFeedTourStateMachineFactory::TwitterFeedTourStateMachineFactory(Camera::IToursCameraTransitionController& toursCameraTransitionController,
                                                                                            Camera::IToursCameraController& toursCameraController,
                                                                                            WorldPins::SdkModel::IWorldPinsService& worldPinsService,
+                                                                                           Eegeo::Resources::Interiors::InteriorController& interiorController,
+                                                                                           InteriorsExplorer::SdkModel::InteriorVisibilityUpdater& interiorVisibilityUpdater,
+                                                                                           const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                                                            const std::string& userId,
                                                                                            const std::map<std::string, TweetStateData>& tweetStateDataMap,
                                                                                            Metrics::IMetricsService& metricsService,
@@ -31,6 +34,9 @@ namespace ExampleApp
                     : m_toursCameraController(toursCameraController)
                     , m_toursCameraTransitionController(toursCameraTransitionController)
                     , m_worldPinsService(worldPinsService)
+                    , m_interiorController(interiorController)
+                    , m_interiorVisibilityUpdater(interiorVisibilityUpdater)
+                    , m_interiorSelectionModel(interiorSelectionModel)
                     , m_userId(userId)
                     , m_tweetStateDataMap(tweetStateDataMap)
                     , m_metricsService(metricsService)
@@ -90,9 +96,26 @@ namespace ExampleApp
                             
                             Eegeo::Space::LatLong location = tweet.HasCoordinates() ? tweet.GetCoordinates() : Eegeo::Space::LatLong::FromECEF(tweetStateData->m_ecefTarget);
                             
+                            bool isInterior = false;
+                            WorldPins::SdkModel::WorldPinInteriorData worldPinInteriorData;
+                            if( !tweet.HasCoordinates() )
+                            {
+                                isInterior = tweetStateData->m_isInterior;
+                                worldPinInteriorData = tweetStateData->m_interiorData;
+                            }
+                            else
+                            {
+                                //TODO: check against bounds for tweets with coordinates
+                            }
+                            
                             stateMachineStates.push_back(Eegeo_NEW(TwitterFeedShowTweetState(tourModel.States()[i],
                                                                                              m_toursCameraTransitionController,
                                                                                              m_worldPinsService,
+                                                                                             isInterior,
+                                                                                             worldPinInteriorData,
+                                                                                             m_interiorController,
+                                                                                             m_interiorVisibilityUpdater,
+                                                                                             m_interiorSelectionModel,
                                                                                              *tweetStateData,
                                                                                              location,
                                                                                              placename,

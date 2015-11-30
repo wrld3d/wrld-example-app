@@ -15,6 +15,9 @@
 #include "SpaceHelpers.h"
 #include "WorldPinVisibility.h"
 #include "WorldPinInteriorData.h"
+#include "InteriorController.h"
+#include "InteriorVisibilityUpdater.h"
+#include "InteriorSelectionModel.h"
 
 namespace ExampleApp
 {
@@ -29,6 +32,11 @@ namespace ExampleApp
                     TwitterFeedShowTweetState::TwitterFeedShowTweetState(const TourStateModel& stateModel,
                                                                          Camera::IToursCameraTransitionController& toursCameraTransitionController,
                                                                          WorldPins::SdkModel::IWorldPinsService& worldPinsService,
+                                                                         bool isInterior,
+                                                                         WorldPins::SdkModel::WorldPinInteriorData& worldPinInteriorData,
+                                                                         Eegeo::Resources::Interiors::InteriorController& interiorController,
+                                                                         InteriorsExplorer::SdkModel::InteriorVisibilityUpdater& interiorVisibilityUpdater,
+                                                                         const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                                          const TweetStateData& tweetStateData,
                                                                          const Eegeo::Space::LatLong& pinLocation,
                                                                          const std::string& placeName,
@@ -47,6 +55,11 @@ namespace ExampleApp
                     , m_pinImageUrl(attachedImageUrl)
                     , m_pinContentUrl(attachedContentUrl)
                     , m_worldPinsService(worldPinsService)
+                    , m_isInterior(isInterior)
+                    , m_worldPinInteriorData(worldPinInteriorData)
+                    , m_interiorController(interiorController)
+                    , m_interiorVisibilityUpdater(interiorVisibilityUpdater)
+                    , m_interiorSelectionModel(interiorSelectionModel)
                     , m_pPinModel(NULL)
                     , m_cameraTransitionComplete(false)
                     , m_hasAttachedVideo(hasAttachedVideo)
@@ -81,9 +94,21 @@ namespace ExampleApp
                     
                     void TwitterFeedShowTweetState::Enter()
                     {
+                        m_interiorTransitionComplete = false;
                         m_cameraTransitionComplete = false;
                         m_cameraMode.Reset();
                         m_toursCameraTransitionController.TransitionTo(m_cameraMode);
+                        
+                        if(m_isInterior && m_interiorSelectionModel.GetSelectedInteriorId() != m_worldPinInteriorData.building)
+                        {
+                            m_interiorController.SetSelectedInterior(m_worldPinInteriorData.building);
+                            m_interiorVisibilityUpdater.SetInteriorShouldDisplay(false);
+                        }
+                        else if (!m_isInterior)
+                        {
+                            m_interiorController.ClearSelectedInterior();
+                            m_interiorVisibilityUpdater.SetInteriorShouldDisplay(false);
+                        }
                     }
                     
                     void TwitterFeedShowTweetState::Update(float dt)
@@ -91,6 +116,11 @@ namespace ExampleApp
                         if(m_toursCameraTransitionController.IsTransitionComplete() && !m_cameraTransitionComplete)
                         {
                             m_cameraTransitionComplete = true;
+                            
+                            if(m_isInterior)
+                            {
+                                m_interiorVisibilityUpdater.SetInteriorShouldDisplay(true);
+                            }
                             
                             rapidjson::Document jsonDocument;
                             jsonDocument.SetObject();
@@ -110,20 +140,21 @@ namespace ExampleApp
                             const int BarIconIndex = 5;
                             const float heightOffsetAboveTerrainMetres = 0.f;
                             
-                            //TODO: pass tour state model in and use data from model
-                            const bool interior = false;
-                            WorldPins::SdkModel::WorldPinInteriorData worldPinInteriorData;
-                            
                             m_pPinModel = m_worldPinsService.AddPin(Eegeo_NEW(TwitterFeedPinSelectionHandler)(m_stateModel,
                                                                                                               m_messageBus),
                                                                     NULL,
                                                                     worldPinFocusData,
-                                                                    interior,
-                                                                    worldPinInteriorData,
+                                                                    m_isInterior,
+                                                                    m_worldPinInteriorData,
                                                                     location,
                                                                     BarIconIndex,
                                                                     heightOffsetAboveTerrainMetres,
                                                                     WorldPins::SdkModel::WorldPinVisibility::TourPin);
+                        }
+                        else if(!m_interiorTransitionComplete && m_isInterior && m_interiorController.InteriorInScene())
+                        {
+                            m_interiorTransitionComplete = true;
+                            m_interiorController.SetCurrentFloor(m_worldPinInteriorData.floor);
                         }
                     }
                     
