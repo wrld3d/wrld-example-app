@@ -15,17 +15,17 @@ namespace ExampleApp
 
 		~SearchResultModelCLI();
 
-		System::String^ GetTitle();
+		property System::String^ Title { System::String^ get(); }
 
-		System::String^ GetSubtitle();
+		property System::String^ Subtitle { System::String^ get(); }
 
-		System::String^ GetJsonData();
+		property System::String^ JsonData { System::String^ get(); }
 
-		System::String^ GetCategory();
+		property System::String^ Category { System::String^ get(); }
 
-		System::String^ GetVendor();
+		property System::String^ Vendor { System::String^ get(); }
 
-		array<System::String^>^ GetHumanReadableCategories();
+		property array<System::String^>^ HumanReadableCategories { array<System::String^>^ get(); }
 	};
 }
 

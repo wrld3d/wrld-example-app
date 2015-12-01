@@ -49,7 +49,7 @@ namespace ExampleAppWPF
 
         public override void OnApplyTemplate()
         {
-            Image closeButton = (Image)GetTemplateChild("SearchResultPoiViewCloseButton");
+            Image closeButton = (Image)GetTemplateChild("CloseButton");
             closeButton.MouseLeftButtonDown += HandleCloseButtonClicked;
         }
 

@@ -108,9 +108,9 @@ namespace ExampleApp
             void SearchResultPoiView::CreateVendorSpecificPoiView(const std::string& vendor)
             {
                 ASSERT_UI_THREAD
-
+				
                 std::string viewClassName = "";
-
+				
                 if(vendor == "Yelp")
                 {
 					viewClassName = "ExampleAppWPF.YelpSearchResultsPoiView";

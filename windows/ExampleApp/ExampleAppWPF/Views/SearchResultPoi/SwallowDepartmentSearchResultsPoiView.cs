@@ -33,7 +33,7 @@ namespace ExampleAppWPF
 
             m_categoryIcon = (Image)GetTemplateChild("CategoryIcon");
             
-            m_categoryIcon.Source = StartupResourceLoader.GetBitmap(SearchResultCategoryMapper.GetIconImageName(m_model.GetCategory()));
+            m_categoryIcon.Source = StartupResourceLoader.GetBitmap(SearchResultCategoryMapper.GetIconImageName(m_model.Category));
 
             m_poiImage = (Image)GetTemplateChild("PoiImage");
         }
@@ -42,7 +42,7 @@ namespace ExampleAppWPF
         {
             m_model = modelObject as ExampleApp.SearchResultModelCLI;
             
-            m_swallowDepartmentModel = SwallowDepartmentResultModel.FromJson(m_model.GetJsonData());
+            m_swallowDepartmentModel = SwallowDepartmentResultModel.FromJson(m_model.JsonData);
 
             m_closing = false;
             

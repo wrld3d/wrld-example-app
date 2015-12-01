@@ -90,7 +90,7 @@ namespace ExampleAppWPF
             base.OnApplyTemplate();
 
             m_categoryIcon = (Image)GetTemplateChild("CategoryIcon");
-            m_categoryIcon.Source = StartupResourceLoader.GetBitmap(SearchResultCategoryMapper.GetIconImageName(m_model.GetCategory()));
+            m_categoryIcon.Source = StartupResourceLoader.GetBitmap(SearchResultCategoryMapper.GetIconImageName(m_model.Category));
 
             RadioButton availableButton = (RadioButton)GetTemplateChild("AvailableButton");
             availableButton.Click += OnAvailableSelected;
@@ -110,7 +110,7 @@ namespace ExampleAppWPF
         {
             m_model = modelObject as ExampleApp.SearchResultModelCLI;
             
-            m_swallowMeetingRoomModel = SwallowMeetingRoomResultModel.FromJson(m_model.GetJsonData());
+            m_swallowMeetingRoomModel = SwallowMeetingRoomResultModel.FromJson(m_model.JsonData);
 
             m_closing = false;
             

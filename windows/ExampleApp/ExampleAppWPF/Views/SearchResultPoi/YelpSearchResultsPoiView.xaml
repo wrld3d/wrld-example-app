@@ -49,10 +49,10 @@
                             </Grid.RowDefinitions>
                             <!--Title bar-->
                             <StackPanel Orientation="Horizontal" Grid.Row="0" VerticalAlignment="Center">
-                                <Image Name="SearchResultPoiViewCategoryIcon" 
+                                <Image Name="CategoryIcon" 
                                            Source="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:YelpSearchResultsPoiView}}, Path=CategoryIcon}" Stretch="Uniform" />
                                 <Border BorderBrush="{x:Null}" BorderThickness="0" Width="200" Height="30">
-                                    <TextBlock Name="SearchResultPoiViewTitle" VerticalAlignment="Center" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:YelpSearchResultsPoiView}}, Path=TitleText}" FontSize="12" Foreground="{StaticResource Gold}" FontWeight="Bold" TextTrimming="CharacterEllipsis"/>
+                                    <TextBlock Name="Title" VerticalAlignment="Center" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:YelpSearchResultsPoiView}}, Path=TitleText}" FontSize="12" Foreground="{StaticResource Gold}" FontWeight="Bold" TextTrimming="CharacterEllipsis"/>
                                 </Border>
                             </StackPanel>
 
@@ -62,11 +62,11 @@
                                         <StackPanel VerticalAlignment="Top">
                                             <Grid>
                                                 <StackPanel HorizontalAlignment="Stretch">
-                                                    <ProgressBar Name="SearchResultPoiViewImageProgress" HorizontalAlignment="Center" Visibility="Hidden"/>
+                                                    <ProgressBar Name="ImageProgress" HorizontalAlignment="Center" Visibility="Hidden"/>
                                                 </StackPanel>
                                                 <Grid>
-                                                    <Image Name="SearchResultPoiViewImage"/>
-                                                    <Grid Name="SearchResultPoiViewImageGradient" Height="30" VerticalAlignment="Bottom"/>
+                                                    <Image Name="PoiImage"/>
+                                                    <Grid Name="ImageGradient" Height="30" VerticalAlignment="Bottom"/>
                                                 </Grid>
                                                 <Grid HorizontalAlignment="Stretch" Height="Auto" VerticalAlignment="Bottom">
                                                     <Grid.ColumnDefinitions>
@@ -74,7 +74,7 @@
                                                         <ColumnDefinition Width="Auto"/>
                                                         <ColumnDefinition Width="*"/>
                                                     </Grid.ColumnDefinitions>
-                                                    <Image Name="SearchResultPoiViewRatingOverImage" 
+                                                    <Image Name="RatingOverImage" 
                                                        Source="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:YelpSearchResultsPoiView}}, Path=RatingsImage}" 
                                                        Grid.Column="1" Margin="5,5,5,5" VerticalAlignment="Center" HorizontalAlignment="Center" Stretch="Uniform" Height="17">
                                                         <Image.Style>
@@ -89,17 +89,17 @@
                                                     </Image>
 
                                                     <Border BorderBrush="{x:Null}" BorderThickness="0" Width="Auto" Height="15" Margin="3,0,0,0" Grid.Column="2">
-                                                        <TextBlock Name="SearchResultPoiViewRatingOverImageReviewCount" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:YelpSearchResultsPoiView}}, Path=PoiViewRatingCountText}" FontSize="12" Foreground="{StaticResource White}" />
+                                                        <TextBlock Name="RatingOverImageReviewCount" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:YelpSearchResultsPoiView}}, Path=PoiViewRatingCountText}" FontSize="12" Foreground="{StaticResource White}" />
                                                     </Border>
                                                 </Grid>
                                             </Grid>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                            <Image Name="SearchResultPoiViewRatingImage" Margin="5,5,5,5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                            <Image Name="RatingImage" Margin="5,5,5,5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                             <Border BorderBrush="{x:Null}" BorderThickness="0" Width="Auto" Height="15" Margin="3,0,10,0" Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:YelpSearchResultsPoiView}}, Path=RatingCountVisibility}">
-                                                <TextBlock Name="SearchResultPoiViewRatingReviewCount" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:YelpSearchResultsPoiView}}, Path=PoiViewRatingCountText}" FontSize="12" Foreground="{StaticResource DarkGrey}" FontWeight="Bold" TextTrimming="CharacterEllipsis"/>
+                                                <TextBlock Name="RatingReviewCount" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:YelpSearchResultsPoiView}}, Path=PoiViewRatingCountText}" FontSize="12" Foreground="{StaticResource DarkGrey}" FontWeight="Bold" TextTrimming="CharacterEllipsis"/>
                                             </Border>
-                                            <Image Name="SearchResultPoiViewWebVendorLinkStyle" Margin="5,5,5,5" VerticalAlignment="Center" HorizontalAlignment="Center" Source="/ExampleAppWPF;component/Assets/yelp_reviews.gif">
+                                            <Image Name="WebVendorLinkStyle" Margin="5,5,5,5" VerticalAlignment="Center" HorizontalAlignment="Center" Source="/ExampleAppWPF;component/Assets/yelp_reviews.gif">
                                                 <Image.Style>
                                                     <Style>
                                                         <Setter Property="Image.Visibility" Value="Visible"/>
@@ -114,38 +114,38 @@
                                         </StackPanel>
                                         <!--Phone-->
                                         <Border BorderBrush="{x:Null}" BorderThickness="0" HorizontalAlignment="Stretch" Height="Auto" Background="{StaticResource Gold}">
-                                            <TextBlock Name="SearchResultPoiViewPhoneHeader" Text="Phone" FontSize="12" Foreground="{StaticResource White}" Margin="3,0,0,0" />
+                                            <TextBlock Name="PhoneHeader" Text="Phone" FontSize="12" Foreground="{StaticResource White}" Margin="3,0,0,0" />
                                         </Border>
                                         <Border BorderBrush="{x:Null}" BorderThickness="0" Width="Auto" Height="Auto" >
-                                            <TextBlock Name="SearchResultPoiViewPhone" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:YelpSearchResultsPoiView}}, Path=PhoneText}" FontSize="12" Foreground="{StaticResource DarkGrey}" Margin="3,5,5,10"/>
+                                            <TextBlock Name="Phone" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:YelpSearchResultsPoiView}}, Path=PhoneText}" FontSize="12" Foreground="{StaticResource DarkGrey}" Margin="3,5,5,10"/>
                                         </Border>
                                         <!--Address-->
                                         <Border BorderBrush="{x:Null}" BorderThickness="0" HorizontalAlignment="Stretch" Height="Auto"  Background="{StaticResource Gold}">
-                                            <TextBlock Name="SearchResultPoiViewAddressHeader" Text="Address" FontSize="12" Foreground="{StaticResource White}" Margin="3,0,0,0"/>
+                                            <TextBlock Name="AddressHeader" Text="Address" FontSize="12" Foreground="{StaticResource White}" Margin="3,0,0,0"/>
                                         </Border>
                                         <Border BorderBrush="{x:Null}" BorderThickness="0" Width="Auto" Height="Auto" >
-                                            <TextBlock Name="SearchResultPoiViewAddress" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:YelpSearchResultsPoiView}}, Path=AddressText}" FontSize="12" Foreground="{StaticResource DarkGrey}" Margin="3,5,5,10"/>
+                                            <TextBlock Name="Address" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:YelpSearchResultsPoiView}}, Path=AddressText}" FontSize="12" Foreground="{StaticResource DarkGrey}" Margin="3,5,5,10"/>
                                         </Border>
                                         <!--Categories-->
                                         <Border BorderBrush="{x:Null}" BorderThickness="0" HorizontalAlignment="Stretch" Height="Auto" Background="{StaticResource Gold}">
-                                            <TextBlock Name="SearchResultPoiViewCategoriesHeader" Text="Categories" FontSize="12" Foreground="{StaticResource White}" Margin="3,0,0,0"/>
+                                            <TextBlock Name="CategoriesHeader" Text="Categories" FontSize="12" Foreground="{StaticResource White}" Margin="3,0,0,0"/>
                                         </Border>
                                         <Border BorderBrush="{x:Null}" BorderThickness="0" Width="Auto" Height="Auto">
-                                            <TextBlock Name="SearchResultPoiViewCategories" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:YelpSearchResultsPoiView}}, Path=HumanReadableCategoriesText}" FontSize="12" Foreground="{StaticResource DarkGrey}" Margin="3,5,5,10"/>
+                                            <TextBlock Name="Categories" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:YelpSearchResultsPoiView}}, Path=HumanReadableCategoriesText}" FontSize="12" Foreground="{StaticResource DarkGrey}" Margin="3,5,5,10"/>
                                         </Border>
                                         <!--Reviews-->
                                         <Border BorderBrush="{x:Null}" BorderThickness="0" HorizontalAlignment="Stretch" Height="Auto"  Background="{StaticResource Gold}">
-                                            <TextBlock Name="SearchResultPoiViewReviewsHeader" Text="Reviews" FontSize="12" Foreground="{StaticResource White}" Margin="3,0,0,0" />
+                                            <TextBlock Name="ReviewsHeader" Text="Reviews" FontSize="12" Foreground="{StaticResource White}" Margin="3,0,0,0" />
                                         </Border>
                                         <Border BorderBrush="{x:Null}" BorderThickness="0" Width="Auto" Height="Auto" >
-                                            <TextBlock Name="SearchResultPoiViewReviews" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:YelpSearchResultsPoiView}}, Path=ReviewText}" FontSize="12" Foreground="{StaticResource DarkGrey}" HorizontalAlignment="Stretch" TextWrapping="Wrap" Margin="3,5,5,10"/>
+                                            <TextBlock Name="Reviews" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:YelpSearchResultsPoiView}}, Path=ReviewText}" FontSize="12" Foreground="{StaticResource DarkGrey}" HorizontalAlignment="Stretch" TextWrapping="Wrap" Margin="3,5,5,10"/>
                                         </Border>
                                     </StackPanel>
                                 </ScrollViewer>
                             </Grid>
                             <Grid VerticalAlignment="Bottom" Background="{StaticResource Gold}" HorizontalAlignment="Stretch" Height="Auto" Grid.Row="2">
-                                <ToggleButton Name="SearchResultPoiViewTogglePinnedButton" Style="{StaticResource AddRemovePinStyle}" HorizontalAlignment="Left" IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:YelpSearchResultsPoiView}}, Path=IsPinned, Mode=TwoWay}"/>
-                                <Image Name="SearchResultPoiViewCloseButton" HorizontalAlignment="Right" Source="/ExampleAppWPF;component/Assets/button_close_off.png" Width="48" Height="48"/>
+                                <ToggleButton Name="TogglePinnedButton" Style="{StaticResource AddRemovePinStyle}" HorizontalAlignment="Left" IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:YelpSearchResultsPoiView}}, Path=IsPinned, Mode=TwoWay}"/>
+                                <Image Name="CloseButton" HorizontalAlignment="Right" Source="/ExampleAppWPF;component/Assets/button_close_off.png" Width="48" Height="48"/>
                             </Grid>
                         </Grid>
 
