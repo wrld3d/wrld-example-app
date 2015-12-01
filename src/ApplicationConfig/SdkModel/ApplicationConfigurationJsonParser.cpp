@@ -76,6 +76,12 @@ namespace ExampleApp
                 Eegeo_ASSERT(document.HasMember("SqliteDbUrl"), "SqliteDbUrl config not found");
                 m_builder.SetSqliteDbUrl(document["SqliteDbUrl"].GetString());
                 
+                Eegeo_ASSERT(document.HasMember("MyPinsWebServiceUrl"), "MyPinsWebServiceUrl config not found");
+                m_builder.SetMyPinsWebServiceUrl(document["MyPinsWebServiceUrl"].GetString());
+                
+                Eegeo_ASSERT(document.HasMember("MyPinsWebServiceAuthToken"), "MyPinsWebServiceAuthToken config not found");
+                m_builder.SetMyPinsWebServiceAuthToken(document["MyPinsWebServiceAuthToken"].GetString());
+                
                 return m_builder.Build();
             }
         }

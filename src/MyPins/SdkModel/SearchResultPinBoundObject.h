@@ -30,7 +30,7 @@ namespace ExampleApp
                 Search::SdkModel::MyPins::IMyPinsSearchResultRefreshService& m_myPinsSearchResultRefreshService;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 ExampleAppMessaging::TSdkModelDomainEventBus& m_sdkModelDomainEventBus;
-                Eegeo::Web::IWebLoadRequestFactory& m_webLoadRequestFactory;
+                MyPinsWebService& m_webService;
                 ExampleApp::MyPins::SdkModel::IMyPinsService& m_myPinsService;
                 bool m_pinVendorRequiresRefreshing;
                 bool m_isCurrentlyRefreshingResult;
@@ -45,7 +45,7 @@ namespace ExampleApp
                                                                       Search::SdkModel::MyPins::IMyPinsSearchResultRefreshService& myPinsSearchResultRefreshService,
                                                                       ExampleAppMessaging::TMessageBus& messageBus,
                                                                       ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
-                                                                      Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory,
+                                                                      MyPinsWebService& webService,
                                                                       ExampleApp::MyPins::SdkModel::IMyPinsService& myPinsService);
                 
                 SearchResultPinBoundObject(MyPinModel::TPinIdType pinId,
@@ -55,7 +55,7 @@ namespace ExampleApp
                                            Search::SdkModel::MyPins::IMyPinsSearchResultRefreshService& myPinsSearchResultRefreshService,
                                            ExampleAppMessaging::TMessageBus& messageBus,
                                            ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
-                                           Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory,
+                                           MyPinsWebService& webService,
                                            ExampleApp::MyPins::SdkModel::IMyPinsService& myPinsService);
                 
                 ~SearchResultPinBoundObject();

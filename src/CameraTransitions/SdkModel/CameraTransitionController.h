@@ -16,6 +16,7 @@
 #include "BidirectionalBus.h"
 #include "AppCamera.h"
 #include "CallbackCollection.h"
+#include "InteriorsNavigation.h"
 
 namespace ExampleApp
 {
@@ -30,6 +31,7 @@ namespace ExampleApp
                 CameraTransitionController(Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& cameraController,
                                            ExampleApp::InteriorsExplorer::SdkModel::InteriorsExplorerCameraController& interiorsCameraController,
                                            Eegeo::Location::NavigationService& navigationService,
+                                           ExampleApp::InteriorsNavigation::SdkModel::IInteriorsNavigationService& interiorsNavigationService,
                                            Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider,
                                            ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
                                            ExampleApp::AppCamera::SdkModel::IAppCameraController& appCameraController,
@@ -99,6 +101,7 @@ namespace ExampleApp
                 Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& m_cameraController;
                 ExampleApp::InteriorsExplorer::SdkModel::InteriorsExplorerCameraController& m_interiorsCameraController;
                 Eegeo::Location::NavigationService& m_navigationService;
+                ExampleApp::InteriorsNavigation::SdkModel::IInteriorsNavigationService& m_interiorsNavigationService;
                 Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& m_terrainHeightProvider;
                 ExampleApp::AppModes::SdkModel::IAppModeModel& m_appModeModel;
                 ExampleApp::AppCamera::SdkModel::IAppCameraController& m_appCameraController;

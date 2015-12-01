@@ -301,6 +301,7 @@ namespace ExampleApp
         m_pCameraTransitionController = Eegeo_NEW(ExampleApp::CameraTransitions::SdkModel::CameraTransitionController)(*m_pGlobeCameraController,
                                                                                                                        m_pInteriorsExplorerModule->GetInteriorsCameraController(),
                                                                                                                        *m_pNavigationService,
+                                                                                                                       *m_pInteriorsNavigationService,
                                                                                                                        terrainModelModule.GetTerrainHeightProvider(),
                                                                                                                        *m_pAppModeModel,
                                                                                                                        m_pAppCameraModule->GetController(),
@@ -457,7 +458,8 @@ namespace ExampleApp
                                                                                          m_pWorld->GetLocationService(),
                                                                                          m_pWorld->GetTerrainModelModule(),
                                                                                          m_pWorld->GetMapModule(),
-                                                                                         m_messageBus);
+                                                                                         m_messageBus,
+                                                                                         interiorsAffectedByFlattening);
 
         Eegeo::Modules::Map::CityThemesModule& cityThemesModule = world.GetCityThemesModule();
 
@@ -508,7 +510,9 @@ namespace ExampleApp
                                                                                 *m_pCameraTransitionService,
                                                                                 m_pCategorySearchModule->GetCategorySearchRepository(),
                                                                                 m_pSearchModule->GetMyPinsSearchResultRefreshService(),
-                                                                                m_metricsService);
+                                                                                m_metricsService,
+                                                                                m_applicationConfiguration.MyPinsWebServiceUrl(),
+                                                                                m_applicationConfiguration.MyPinsWebServiceAuthToken());
         
         m_pSearchResultPoiModule = Eegeo_NEW(ExampleApp::SearchResultPoi::View::SearchResultPoiModule)(m_identityProvider,
                                                                                                        m_pReactionControllerModule->GetReactionControllerModel(),

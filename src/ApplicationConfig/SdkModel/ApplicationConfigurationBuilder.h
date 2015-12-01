@@ -31,9 +31,12 @@ namespace ExampleApp
                 std::string m_coverageTreeManifestURL;
                 std::string m_themeManifestURL;
                 std::string m_sqliteDbUrl;
+                std::string m_myPinsWebServiceUrl;
+                std::string m_myPinsWebServiceAuthToken;
                 std::string m_productVersion;
                 std::string m_buildNumber;
                 std::string m_combinedVersionString;
+                
                 
             public:
                 ApplicationConfigurationBuilder();
@@ -69,6 +72,10 @@ namespace ExampleApp
                 IApplicationConfigurationBuilder& SetThemeManifestURL(const std::string& themesManifestUrl);
                 
                 IApplicationConfigurationBuilder& SetSqliteDbUrl(const std::string& SqliteDbUrl);
+                
+                IApplicationConfigurationBuilder& SetMyPinsWebServiceUrl(const std::string& myPinsWebServiceUrl);
+                
+                IApplicationConfigurationBuilder& SetMyPinsWebServiceAuthToken(const std::string& myPinsWebServiceAuthToken);
                 
                 IApplicationConfigurationBuilder& SetProductVersion(const std::string& productVersion);
                 

@@ -19,6 +19,7 @@
 #include "MyPinRemovedFromMenuObserver.h"
 #include "MyPinSelectedMessageHandler.h"
 #include "MyPinVisibilityStateChangedHandlerFactory.h"
+#include "MyPinsWebService.h"
 
 namespace ExampleApp
 {
@@ -35,7 +36,9 @@ namespace ExampleApp
                                        CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
                                        CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
                                        Search::SdkModel::MyPins::IMyPinsSearchResultRefreshService& myPinsSearchResultRefreshService,
-                                       Metrics::IMetricsService& metricsService)
+                                       Metrics::IMetricsService& metricsService,
+                                       const std::string& myPinsWebServiceUrl,
+                                       const std::string& myPinsWebServiceAuthToken)
                 : m_pMyPinsRepository(NULL)
                 , m_pMyPinsFileIO(NULL)
                 , m_pMyPinsService(NULL)
@@ -48,13 +51,17 @@ namespace ExampleApp
 
                 m_pMyPinsRepository = Eegeo_NEW(MyPinsRepository)();
                 
+                m_pMyPinsWebService = Eegeo_NEW(MyPinsWebService)(myPinsWebServiceUrl,
+                                                                  myPinsWebServiceAuthToken,
+                                                                  platformAbstractions.GetWebLoadRequestFactory());
+                
                 m_pMyPinBoundObjectRepository = Eegeo_NEW(MyPinBoundObjectRepository);
                 
                 m_pMyPinBoundObjectFactory = Eegeo_NEW(MyPinBoundObjectFactory)(messageBus,
                                                                                 sdkModelDomainEventBus,
                                                                                 categorySearchRepository,
                                                                                 myPinsSearchResultRefreshService,
-                                                                                platformAbstractions.GetWebLoadRequestFactory());
+                                                                                *m_pMyPinsWebService);
 
                 m_pMyPinsSelectionHandlerFactory = Eegeo_NEW(MyPinSelectionHandlerFactory)(*m_pMyPinBoundObjectRepository, metricsService);
                 

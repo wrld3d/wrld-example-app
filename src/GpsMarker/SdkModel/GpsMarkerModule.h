@@ -25,7 +25,8 @@ namespace ExampleApp
                                 Eegeo::Location::ILocationService& locationService,
                                 Eegeo::Modules::Map::Layers::TerrainModelModule& terrainModelModule,
                                 Eegeo::Modules::Map::MapModule& mapModule,
-                                ExampleAppMessaging::TMessageBus& messageBus);
+                                ExampleAppMessaging::TMessageBus& messageBus,
+                                const bool interiorsAffectedByFlattening);
                 ~GpsMarkerModule();
                 
                 IGpsMarkerController& GetGpsMarkerController();

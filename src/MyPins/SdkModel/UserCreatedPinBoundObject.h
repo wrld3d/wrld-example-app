@@ -25,7 +25,7 @@ namespace ExampleApp
                 std::string m_imagePath;
                 MyPinsFileIO& m_myPinsFileIO;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
-                Eegeo::Web::IWebLoadRequestFactory& m_webLoadRequestFactory;
+                MyPins::SdkModel::MyPinsWebService& m_webService;
                 
                 void SubmitPinToWebService(const MyPinModel& pinModel);
                 
@@ -34,7 +34,7 @@ namespace ExampleApp
                                                                      const std::string& serializedData,
                                                                      MyPinsFileIO& myPinsFileIO,
                                                                      ExampleAppMessaging::TMessageBus& messageBus,
-                                                                     Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory);
+                                                                     MyPins::SdkModel::MyPinsWebService& webService);
                 
                 UserCreatedPinBoundObject(MyPinModel::TPinIdType pinId,
                                           Byte* imageData,
@@ -42,13 +42,13 @@ namespace ExampleApp
                                           bool share,
                                           MyPinsFileIO& myPinsFileIO,
                                           ExampleAppMessaging::TMessageBus& messageBus,
-                                          Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory);
+                                          MyPins::SdkModel::MyPinsWebService& webService);
                 
                 UserCreatedPinBoundObject(MyPinModel::TPinIdType pinId,
                                           const std::string& imagePath,
                                           MyPinsFileIO& myPinsFileIO,
                                           ExampleAppMessaging::TMessageBus& messageBus,
-                                          Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory);
+                                          MyPins::SdkModel::MyPinsWebService& webService);
                 
                 ~UserCreatedPinBoundObject();
                 

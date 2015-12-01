@@ -1935,6 +1935,9 @@
     <ClCompile Include="..\..\..\src\Search\Swallow\SdkModel\SwallowDepartmentResultModel.cpp">
       <Filter>Source Files\App\Search\Swallow\SdkModel</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\MyPins\SdkModel\MyPinsWebService.cpp">
+      <Filter>Source Files\App\MyPins\SdkModel</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\AppHost.h">
@@ -4189,6 +4192,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\Search\Swallow\SdkModel\SwallowDepartmentResultModel.h">
       <Filter>Source Files\App\Search\Swallow\SdkModel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\MyPins\SdkModel\MyPinsWebService.h">
+      <Filter>Source Files\App\MyPins\SdkModel</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
