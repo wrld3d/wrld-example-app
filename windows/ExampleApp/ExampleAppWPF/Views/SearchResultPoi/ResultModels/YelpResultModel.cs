@@ -36,7 +36,7 @@ namespace ExampleAppWPF
         
         public static YelpResultModel FromResultModel(ExampleApp.SearchResultModelCLI model)
         {
-            MemoryStream stream = new MemoryStream(Encoding.Unicode.GetBytes(model.GetJsonData()));
+            MemoryStream stream = new MemoryStream(Encoding.Unicode.GetBytes(model.JsonData));
             DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(YelpResultModel));
 
             stream.Position = 0;

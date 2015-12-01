@@ -39,7 +39,7 @@ namespace ExampleAppWPF
         {
             m_model = modelObject as ExampleApp.SearchResultModelCLI;
 
-            m_swallowPersonModel = SwallowPersonResultModel.FromJson(m_model.GetJsonData());
+            m_swallowPersonModel = SwallowPersonResultModel.FromJson(m_model.JsonData);
             
             m_closing = false;
 

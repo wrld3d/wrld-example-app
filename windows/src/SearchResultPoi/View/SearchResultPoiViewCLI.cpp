@@ -2,6 +2,7 @@
 
 #include "SearchResultPoiViewCLI.h"
 #include "SearchResultPoiView.h"
+#include "ReflectionHelpers.h"
 
 namespace ExampleApp
 {
@@ -16,4 +17,10 @@ namespace ExampleApp
         SearchResultPoi::View::SearchResultPoiView *view = (SearchResultPoi::View::SearchResultPoiView*)nativeCallerPointer.ToPointer();
         view->HandlePinToggleClicked();
     }
+
+	void SearchResultPoiViewCLI::AvailabilityChanged(System::IntPtr nativeCallerPointer, System::String^ availability)
+	{
+		SearchResultPoi::View::SearchResultPoiView *view = (SearchResultPoi::View::SearchResultPoiView*)nativeCallerPointer.ToPointer();
+		view->HandleAvailabilityChanged(Helpers::ReflectionHelpers::ConvertManagedStringToUTF8(availability));
+	}
 }

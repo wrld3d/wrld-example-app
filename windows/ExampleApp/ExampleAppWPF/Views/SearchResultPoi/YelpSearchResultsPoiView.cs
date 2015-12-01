@@ -165,11 +165,11 @@ namespace ExampleAppWPF
         {
             base.OnApplyTemplate();
 
-            m_titleView = (TextBlock)GetTemplateChild("SearchResultPoiViewTitle");
+            m_titleView = (TextBlock)GetTemplateChild("Title");
             
-            m_poiImage = (Image)GetTemplateChild("SearchResultPoiViewImage");
+            m_poiImage = (Image)GetTemplateChild("PoiImage");
 
-            var yelpButton = (Image)GetTemplateChild("SearchResultPoiViewWebVendorLinkStyle");
+            var yelpButton = (Image)GetTemplateChild("WebVendorLinkStyle");
             yelpButton.PreviewMouseLeftButtonDown += (s, e) => HandleWebLinkButtonClicked();
         }
         
@@ -181,12 +181,12 @@ namespace ExampleAppWPF
 
             m_closing = false;
 
-            TitleText = model.GetTitle();
-            AddressText = model.GetSubtitle().Replace(",", Environment.NewLine);
+            TitleText = model.Title;
+            AddressText = model.Subtitle.Replace(",", Environment.NewLine);
             PhoneText = yelpResultModel.Phone;
-            HumanReadableCategoriesText = string.Join(Environment.NewLine, model.GetHumanReadableCategories());
+            HumanReadableCategoriesText = string.Join(Environment.NewLine, model.HumanReadableCategories);
             ReviewText = string.Join(Environment.NewLine, yelpResultModel.Reviews);
-            CategoryIcon = StartupResourceLoader.GetBitmap(SearchResultCategoryMapper.GetIconImageName(model.GetCategory()));
+            CategoryIcon = StartupResourceLoader.GetBitmap(SearchResultCategoryMapper.GetIconImageName(model.Category));
             PoiViewRatingCountText = yelpResultModel.ReviewCount.ToString();
             RatingsImage = null;
 
