@@ -458,7 +458,8 @@ namespace ExampleApp
                                                                                          m_pWorld->GetLocationService(),
                                                                                          m_pWorld->GetTerrainModelModule(),
                                                                                          m_pWorld->GetMapModule(),
-                                                                                         m_messageBus);
+                                                                                         m_messageBus,
+                                                                                         interiorsAffectedByFlattening);
 
         Eegeo::Modules::Map::CityThemesModule& cityThemesModule = world.GetCityThemesModule();
 

@@ -18,6 +18,7 @@
 #include "TerrainModelModule.h"
 #include "ImagePathHelpers.h"
 #include "MapModule.h"
+#include "InteriorsPresentationModule.h"
 
 namespace ExampleApp
 {
@@ -30,7 +31,8 @@ namespace ExampleApp
                                              Eegeo::Location::ILocationService& locationService,
                                              Eegeo::Modules::Map::Layers::TerrainModelModule& terrainModelModule,
                                              Eegeo::Modules::Map::MapModule& mapModule,
-                                             ExampleAppMessaging::TMessageBus& messageBus)
+                                             ExampleAppMessaging::TMessageBus& messageBus,
+                                             const bool interiorsAffectedByFlattening)
             : m_renderableFilters(renderingModule.GetRenderableFilters())
             {
                 Eegeo::Rendering::Shaders::ShaderIdGenerator& shaderIdGenerator = renderingModule.GetShaderIdGenerator();
@@ -58,9 +60,9 @@ namespace ExampleApp
                                                                                                          renderingModule.GetGlBufferPool(),
                                                                                                          Eegeo::Rendering::Renderables::BatchedSpriteAnchor::Bottom);
                 
-                m_pModel = Eegeo_NEW(GpsMarkerModel)(locationService, terrainModelModule.GetTerrainHeightProvider());
+                m_pModel = Eegeo_NEW(GpsMarkerModel)(locationService, terrainModelModule.GetTerrainHeightProvider(), interiorsAffectedByFlattening);
                 m_pView = Eegeo_NEW(GpsMarkerView)(*m_pGpsIconRenderable);
-                m_pController = Eegeo_NEW(GpsMarkerController)(*m_pModel, *m_pView, mapModule.GetEnvironmentFlatteningService(), messageBus);
+                m_pController = Eegeo_NEW(GpsMarkerController)(*m_pModel, *m_pView, mapModule.GetEnvironmentFlatteningService(), mapModule.GetInteriorsPresentationModule().GetAppLevelController(), messageBus);
                 
                 m_renderableFilters.AddRenderableFilter(*m_pView);
 

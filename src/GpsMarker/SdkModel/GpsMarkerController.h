@@ -8,6 +8,7 @@
 #include "ICallback.h"
 #include "ModalityChangedMessage.h"
 #include "Rendering.h"
+#include "Interiors.h"
 
 namespace ExampleApp
 {
@@ -22,6 +23,7 @@ namespace ExampleApp
                 GpsMarkerController(GpsMarkerModel& model,
                                     GpsMarkerView& view,
                                     Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
+                                    Eegeo::Resources::Interiors::InteriorController& interiorController,
                                     ExampleAppMessaging::TMessageBus& messageBus);
                 ~GpsMarkerController();
                 
@@ -37,6 +39,7 @@ namespace ExampleApp
                 GpsMarkerView& m_view;
                 
                 Eegeo::Rendering::EnvironmentFlatteningService& m_environmentFlatteningService;
+                Eegeo::Resources::Interiors::InteriorController& m_interiorController;
                 
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 Eegeo::Helpers::TCallback1<GpsMarkerController, const Modality::ModalityChangedMessage&> m_modalityChangedHandlerBinding;
