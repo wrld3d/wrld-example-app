@@ -21,16 +21,17 @@
                                     <Border BorderBrush="{x:Null}" Margin="3,1,0,0" HorizontalAlignment="Center" BorderThickness="0">
                                         <TextBlock Name="SearchResultOnMapViewTitle" Text="SearchResultOnMapViewTitle" FontSize="15" Foreground="{StaticResource Gold}" TextTrimming="CharacterEllipsis" FontWeight="Bold"/>
                                     </Border>
-                                    <Border BorderBrush="{x:Null}" Margin="3,0,2,0" HorizontalAlignment="Center" Height="15" BorderThickness="0">
+                                    <Border BorderBrush="{x:Null}" Margin="3,0,2,0" HorizontalAlignment="Center" BorderThickness="0">
                                         <TextBlock Name="SearchResultOnMapViewDetails" Text="SearchResultOnMapViewDetails" FontSize="12" Foreground="{StaticResource DarkGrey}" TextTrimming="CharacterEllipsis"/>
                                     </Border>
+                                    <Grid Height="5" Background="{StaticResource Transparent}"/>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Name="ReviewsPanel">
-                                        <Image Name="SearchResultOnMapViewImage" Width="84" Height="17"/>
+                                        <Image Name="SearchResultOnMapViewImage" Width="84"/>
                                         <Border BorderBrush="{x:Null}" Margin="3,0,2,0" HorizontalAlignment="Center" BorderThickness="0">
                                             <TextBlock Name="SearchResultOnMapReviewCount" Text="(5555)" FontSize="12" Foreground="{StaticResource DarkGrey}" TextTrimming="CharacterEllipsis"/>
                                         </Border>
                                     </StackPanel>
-                                    <Image Name="SearchResultOnMapAccreditationLogo" HorizontalAlignment="Center" Source="/ExampleAppWPF;component/Assets/yelp_logo_small.png" Width="51" Height="26"/>
+                                    <Image Name="SearchResultOnMapAccreditationLogo" HorizontalAlignment="Center" Source="/ExampleAppWPF;component/Assets/yelp_logo_small.png" Width="51"/>
                                 </StackPanel>
                             </Border>
                         </Grid>
@@ -42,5 +43,5 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
+
 </ResourceDictionary>

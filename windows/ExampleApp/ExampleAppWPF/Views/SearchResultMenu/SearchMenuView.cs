@@ -233,7 +233,9 @@ namespace ExampleAppWPF
                     var item = new SearchMenuListItem();
                     item.Name = jsonObject["name"].Value<string>();
                     item.Details = jsonObject["details"].Value<string>();
-                    var iconString = jsonObject["icon"].Value<string>();
+                    
+                    JToken iconStringToken;
+                    var iconString = jsonObject.TryGetValue("icon", out iconStringToken) ? iconStringToken.Value<string>() : "misc";
                     item.Icon = new BitmapImage(new Uri(string.Format("pack://application:,,,/ExampleAppWPF;component/Assets/icon1_{0}.png", iconString), UriKind.Absolute));
                     itemsSource.Add(item);
                 }
