@@ -90,7 +90,7 @@ namespace ExampleApp
                                 tweetStateData = &((*tweetStateIt).second);
                             }
                             
-                            const float cameraRotationDeltaRad = Eegeo::Math::Deg2Rad(30.0f);
+                            const float cameraRotationDeltaRad = Eegeo::Math::Deg2Rad(10.0f);
                             
                             std::string placename = !tweet.GetPlaceName().empty() ? tweet.GetPlaceName() : tweet.GetUserName();
                             
@@ -103,9 +103,17 @@ namespace ExampleApp
                                 isInterior = tweetStateData->m_isInterior;
                                 worldPinInteriorData = tweetStateData->m_interiorData;
                             }
-                            else
+                            else if(tweetStateData->m_useBounds)
                             {
-                                //TODO: check against bounds for tweets with coordinates
+                               if(location.GetLatitude() < tweetStateData->m_minBounds.GetLatitude() ||
+                                  location.GetLongitude() < tweetStateData->m_minBounds.GetLongitude() ||
+                                  location.GetLatitude() > tweetStateData->m_maxBounds.GetLatitude() ||
+                                  location.GetLongitude() > tweetStateData->m_maxBounds.GetLongitude())
+                               {
+                                   isInterior = tweetStateData->m_isInterior;
+                                   worldPinInteriorData = tweetStateData->m_interiorData;
+                                   location = Eegeo::Space::LatLong::FromECEF(tweetStateData->m_ecefTarget);
+                               }
                             }
                             
                             stateMachineStates.push_back(Eegeo_NEW(TwitterFeedShowTweetState(tourModel.States()[i],

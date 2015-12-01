@@ -91,6 +91,7 @@ namespace ExampleApp
                         jsonDocument.Accept(writer);
                         
                         std::string tourName = tweetRepository.GetItemAtIndex(0)->GetBaseUserName();
+                        std::string twitterBaseUserName = tweetRepository.GetItemAtIndex(0)->GetBaseUserName();
                         
                         std::vector<TourStateModel> states;
                         for(int i = 0; i < tweets.size(); ++i)
@@ -108,7 +109,7 @@ namespace ExampleApp
                         ExampleApp::WorldPins::SdkModel::WorldPinInteriorData worldPinInteriorData = tweetStateData.m_interiorData;
                         
                         ExampleApp::Tours::SdkModel::TourModel tourModel(tourName,
-                                                                         buffer.GetString(),
+                                                                         twitterBaseUserName + " (@"+userId+")",
                                                                          tourLocation,
                                                                          isInterior,
                                                                          worldPinInteriorData,
@@ -119,7 +120,7 @@ namespace ExampleApp
                                                                          Helpers::ColorHelpers::Color::FromRGB(30, 123, 195),
                                                                          states,
                                                                          true,
-                                                                         tourName);
+                                                                         twitterBaseUserName);
                         
                         TwitterFeedTourStateMachineFactory factory(m_toursCameraTransitionController,
                                                                    m_toursCameraController,
