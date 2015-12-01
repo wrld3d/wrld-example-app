@@ -301,6 +301,7 @@ namespace ExampleApp
         m_pCameraTransitionController = Eegeo_NEW(ExampleApp::CameraTransitions::SdkModel::CameraTransitionController)(*m_pGlobeCameraController,
                                                                                                                        m_pInteriorsExplorerModule->GetInteriorsCameraController(),
                                                                                                                        *m_pNavigationService,
+                                                                                                                       *m_pInteriorsNavigationService,
                                                                                                                        terrainModelModule.GetTerrainHeightProvider(),
                                                                                                                        *m_pAppModeModel,
                                                                                                                        m_pAppCameraModule->GetController(),
