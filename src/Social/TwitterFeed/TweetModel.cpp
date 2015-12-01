@@ -16,6 +16,7 @@ namespace ExampleApp
                                    const std::string& userName,
                                    const std::string& baseUserName,
                                    const std::string& userScreenName,
+                                   const std::string& baseUserScreenName,
                                    const std::string& userId,
                                    const std::string& bannerImageUrl,
                                    const std::string& profileImageUrl,
@@ -39,6 +40,7 @@ namespace ExampleApp
             , m_userName(userName)
             , m_baseUserName(baseUserName)
             , m_userScreenName(userScreenName)
+            , m_baseUserScreenName(baseUserScreenName)
             , m_userId(userId)
             , m_bannerImageUrl(bannerImageUrl)
             , m_profileImageUrl(profileImageUrl)
@@ -90,6 +92,11 @@ namespace ExampleApp
             const std::string& TweetModel::GetUserScreenName() const
             {
                 return m_userScreenName;
+            }
+            
+            const std::string& TweetModel::GetBaseUserScreenName() const
+            {
+                return m_baseUserScreenName;
             }
             
             const std::string& TweetModel::GetUserId() const
@@ -317,6 +324,10 @@ namespace ExampleApp
                 
                 std::string baseUserName = jsonDocument[index][UserKey][NameKey].GetString();
                 
+                Eegeo_ASSERT(jsonDocument[index][UserKey].HasMember(ScreenNameKey));
+                
+                std::string baseUserScreenName = jsonDocument[index][UserKey][ScreenNameKey].GetString();
+                
                 Eegeo_ASSERT(jsonDocument[index][UserKey].HasMember(ProfileKey));
                 
                 std::string baseProfileImageUrl = jsonDocument[index][UserKey][ProfileKey].GetString();
@@ -496,6 +507,7 @@ namespace ExampleApp
                                                                userName,
                                                                baseUserName,
                                                                userScreenName,
+                                                               baseUserScreenName,
                                                                userId,
                                                                bannerImageUrl,
                                                                profileImageUrl,

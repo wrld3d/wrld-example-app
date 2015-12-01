@@ -36,6 +36,7 @@ namespace ExampleApp
                 std::string m_userName;
                 std::string m_baseUserName;
                 std::string m_userScreenName;
+                std::string m_baseUserScreenName;
                 std::string m_userId;
                 std::string m_bannerImageUrl;
                 std::string m_profileImageUrl;
@@ -61,6 +62,7 @@ namespace ExampleApp
                            const std::string& userName,
                            const std::string& baseUserName,
                            const std::string& userScreenName,
+                           const std::string& baseUserScreenName,
                            const std::string& userId,
                            const std::string& bannerImageUrl,
                            const std::string& profileImageUrl,
@@ -86,6 +88,7 @@ namespace ExampleApp
                 const std::string& GetUserName() const;
                 const std::string& GetBaseUserName() const;
                 const std::string& GetUserScreenName() const;
+                const std::string& GetBaseUserScreenName() const;
                 const std::string& GetUserId() const;
                 const std::string& GetBannerImageUrl() const;
                 const std::string& GetProfileImageUrl() const;
