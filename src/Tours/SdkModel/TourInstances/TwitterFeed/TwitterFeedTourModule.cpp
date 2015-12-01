@@ -26,9 +26,13 @@ namespace ExampleApp
                                                                  Metrics::IMetricsService& metricsService,
                                                                  ExampleAppMessaging::TMessageBus& messageBus)
                     {
-                        
+                        const bool isInterior = false;
+                        const WorldPins::SdkModel::WorldPinInteriorData noInteirorData;
                         m_tweetStateDataMap["Dev4Recce"] = TweetStateData(Eegeo::Space::LatLongAltitude::FromDegrees(37.619988, -122.366472, 600).ToECEF(),
-                                                                          Eegeo::Space::LatLongAltitude::FromDegrees(37.617398, -122.376256, 20).ToECEF());
+                                                                          Eegeo::Space::LatLongAltitude::FromDegrees(37.617398, -122.376256, 20).ToECEF(),
+                                                                          isInterior,
+                                                                          noInteirorData);
+                        
                         m_pTwitterFeedTourObserver = Eegeo_NEW(TwitterFeedTourObserver)(toursCameraTransitionController,
                                                                                         toursCameraController,
                                                                                         tourService,
