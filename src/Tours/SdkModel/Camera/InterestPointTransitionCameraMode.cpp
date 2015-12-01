@@ -21,6 +21,18 @@ namespace
         out_orientation.SetRow(2, Eegeo::v3(2 * (x*z - y*w), 2 * (y*z + x*w), 1 - 2 * (x*x + y*y)));
         out_orientation.Transpose(out_orientation, out_orientation);
     }
+    
+    float DistanceBetweenQuaternionRotations(Eegeo::Quaternion q1, Eegeo::Quaternion q2)
+    {
+        q1.Normalise();
+        q2.Normalise();
+        
+        float dot = (q1.x*q2.x) + (q1.y*q2.y) + (q1.z*q2.z) + (q1.w*q2.w);
+        
+        float dist = 1 - Eegeo::Math::Abs(dot);
+        
+        return dist;
+    }
 }
 
 namespace ExampleApp
@@ -44,7 +56,7 @@ namespace ExampleApp
                     startOrientation.Normalise();
                     endOrientation.Normalise();
 
-                    return Eegeo_NEW(InterestPointTransitionCameraMode)(startInterestPoint, endInterestPoint, startDistanceToInterest, endDistanceToInterest, startState.fovDegrees, endState.fovDegrees, startOrientation, endOrientation);
+                    return Eegeo_NEW(InterestPointTransitionCameraMode)(startInterestPoint, endInterestPoint, startDistanceToInterest, endDistanceToInterest, startState.fovDegrees, endState.fovDegrees, startOrientation, endOrientation, true);
                 }
                 
                 InterestPointTransitionCameraMode::InterestPointTransitionCameraMode(
@@ -56,7 +68,7 @@ namespace ExampleApp
                                                   float endFovDegrees,
                                                   Eegeo::Quaternion startOrientation,
                                                   Eegeo::Quaternion endOrientation,
-                                                  float timeScale)
+                                                  bool jumpIfFar)
                 : m_startInterestPoint(startInterestPoint)
                 , m_endInterestPoint(endInterestPoint)
                 , m_startDistanceToInterest(startDistanceToInterest)
@@ -66,8 +78,29 @@ namespace ExampleApp
                 , m_startOrientation(startOrientation)
                 , m_endOrientation(endOrientation)
                 , m_time(0.0f)
-                , m_timeScale(timeScale)
+                , m_timeScale(0.75f)
                 {
+                    
+                    const float maxDistanceBeforeJumpSqr = 500.0f* 500.0f;
+                    const double topDistToInterest = Eegeo::Max(startDistanceToInterest, endDistanceToInterest) ;
+                    const double minDistToInterest = 100.0;
+                    const double altitudeScale = Eegeo::Max(minDistToInterest, topDistToInterest) / minDistToInterest;
+                    
+                    if(jumpIfFar && (endInterestPoint - startInterestPoint).LengthSq() > (maxDistanceBeforeJumpSqr * altitudeScale))
+                    {
+                        m_time = 1.0f;
+                    }
+                    else
+                    {
+                        const float angularVelocity = 0.25f;
+                        const float angularDistance = Eegeo::Max(DistanceBetweenQuaternionRotations(m_startOrientation, m_endOrientation), 0.125f);
+                        
+                        const float velocity = static_cast<float>(50.0f * altitudeScale);
+                        const float distance = Eegeo::Max(static_cast<float>((endInterestPoint - startInterestPoint).Length()), 25.0f);
+                        
+                        m_timeScale = Eegeo::Min(velocity/distance, angularVelocity/angularDistance);
+                        
+                    }
                 }
                 
                 void InterestPointTransitionCameraMode::UpdateCamera(
@@ -91,7 +124,7 @@ namespace ExampleApp
                     
                     Eegeo::dv3 interpolatedInterestPoint = Eegeo::dv3::Lerp(m_startInterestPoint, m_endInterestPoint, t);
                     
-                    Eegeo::dv3 distanceVector = -orientationMatrix.GetRow(2).Norm()*interpolatedDistanceToInterest;
+                    Eegeo::dv3 distanceVector = -orientationMatrix.GetRow(2).Norm()* static_cast<float>(interpolatedDistanceToInterest);
                     Eegeo::dv3 interpolatedPosition = distanceVector + interpolatedInterestPoint;
                     
                     float interpolatedFov = Eegeo::Math::Lerp(m_startFovDegrees, m_endFovDegrees, t);
