@@ -1459,6 +1459,8 @@
 		7E9B7F491A8E25E400C6F2E3 /* arrow3_right.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E9B7F421A8E25E400C6F2E3 /* arrow3_right.png */; };
 		7E9B7F4A1A8E25E400C6F2E3 /* arrow3_up.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E9B7F431A8E25E400C6F2E3 /* arrow3_up.png */; };
 		7E9B7F4B1A8E25E400C6F2E3 /* arrow3_up.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E9B7F431A8E25E400C6F2E3 /* arrow3_up.png */; };
+		7E9D12D01C0C8A9A00F652E0 /* MyPinsWebService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E9D12CE1C0C8A9A00F652E0 /* MyPinsWebService.cpp */; };
+		7E9D12D11C0C8A9A00F652E0 /* MyPinsWebService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E9D12CE1C0C8A9A00F652E0 /* MyPinsWebService.cpp */; };
 		7ECE70741BBAA9BF0008CDDB /* SearchJsonParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7ECE70721BBAA9BF0008CDDB /* SearchJsonParser.cpp */; };
 		7ECE70751BBAA9BF0008CDDB /* SearchJsonParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7ECE70721BBAA9BF0008CDDB /* SearchJsonParser.cpp */; };
 		7ED084B91BFC94D700B6F91D /* UIHelpers.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7ED084B81BFC94D700B6F91D /* UIHelpers.mm */; };
@@ -3107,6 +3109,8 @@
 		7E9B7F411A8E25E400C6F2E3 /* arrow3_left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow3_left.png; sourceTree = "<group>"; };
 		7E9B7F421A8E25E400C6F2E3 /* arrow3_right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow3_right.png; sourceTree = "<group>"; };
 		7E9B7F431A8E25E400C6F2E3 /* arrow3_up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow3_up.png; sourceTree = "<group>"; };
+		7E9D12CE1C0C8A9A00F652E0 /* MyPinsWebService.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MyPinsWebService.cpp; sourceTree = "<group>"; };
+		7E9D12CF1C0C8A9A00F652E0 /* MyPinsWebService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPinsWebService.h; sourceTree = "<group>"; };
 		7EC46F2A1ABC484600683975 /* CompassModeUnauthorizedMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompassModeUnauthorizedMessage.h; sourceTree = "<group>"; };
 		7ECE70721BBAA9BF0008CDDB /* SearchJsonParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchJsonParser.cpp; sourceTree = "<group>"; };
 		7ECE70731BBAA9BF0008CDDB /* SearchJsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchJsonParser.h; sourceTree = "<group>"; };
@@ -4884,6 +4888,8 @@
 				18A657511A9F391E00238F33 /* SearchResultPinRemovedEvent.h */,
 				18C0EBF91A9E0E66008EED21 /* UserCreatedPinBoundObject.cpp */,
 				18C0EBFA1A9E0E66008EED21 /* UserCreatedPinBoundObject.h */,
+				7E9D12CE1C0C8A9A00F652E0 /* MyPinsWebService.cpp */,
+				7E9D12CF1C0C8A9A00F652E0 /* MyPinsWebService.h */,
 			);
 			path = SdkModel;
 			sourceTree = "<group>";
@@ -7707,6 +7713,7 @@
 				7E3B89431A385A290023C94E /* MyPinDetailsModule.cpp in Sources */,
 				7ECE70751BBAA9BF0008CDDB /* SearchJsonParser.cpp in Sources */,
 				BFD5FD7F1BA706AD00F591F1 /* TourFullScreenImageViewModel.cpp in Sources */,
+				7E9D12D11C0C8A9A00F652E0 /* MyPinsWebService.cpp in Sources */,
 				7E3B8AC61A385F110023C94E /* AboutPageView.mm in Sources */,
 				7E3B88F71A385A290023C94E /* MenuScreenControl.cpp in Sources */,
 				7E3B891F1A385A290023C94E /* MyPinCreationModel.cpp in Sources */,
@@ -8101,6 +8108,7 @@
 				7E3B8AC71A385F110023C94E /* AboutPageViewInterop.mm in Sources */,
 				7E149DC61BCD4F7F00C0AFFC /* AppGlobeCameraWrapper.cpp in Sources */,
 				18FB64621A9240FC005A9411 /* OADataFetcher.m in Sources */,
+				7E9D12D01C0C8A9A00F652E0 /* MyPinsWebService.cpp in Sources */,
 				7E3B88DC1A385A290023C94E /* FlattenButtonViewStateChangedObserver.cpp in Sources */,
 				7E149DC11BCD209B00C0AFFC /* ExampleSearchResultModel.cpp in Sources */,
 				7E3B8B251A385F110023C94E /* SearchResultPoiViewInterop.mm in Sources */,

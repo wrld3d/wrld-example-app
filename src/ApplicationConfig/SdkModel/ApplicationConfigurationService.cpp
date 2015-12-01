@@ -45,6 +45,8 @@ namespace ExampleApp
 												parsedConfig.CoverageTreeManifestURL(),
 												parsedConfig.ThemeManifestURL(),
 												parsedConfig.SqliteDbUrl(),
+                                                parsedConfig.MyPinsWebServiceUrl(),
+                                                parsedConfig.MyPinsWebServiceAuthToken(),
                                                 m_productVersion,
                                                 m_buildNumber,
                                                 combinedVersionString);

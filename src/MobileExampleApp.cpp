@@ -508,7 +508,9 @@ namespace ExampleApp
                                                                                 *m_pCameraTransitionService,
                                                                                 m_pCategorySearchModule->GetCategorySearchRepository(),
                                                                                 m_pSearchModule->GetMyPinsSearchResultRefreshService(),
-                                                                                m_metricsService);
+                                                                                m_metricsService,
+                                                                                m_applicationConfiguration.MyPinsWebServiceUrl(),
+                                                                                m_applicationConfiguration.MyPinsWebServiceAuthToken());
         
         m_pSearchResultPoiModule = Eegeo_NEW(ExampleApp::SearchResultPoi::View::SearchResultPoiModule)(m_identityProvider,
                                                                                                        m_pReactionControllerModule->GetReactionControllerModel(),

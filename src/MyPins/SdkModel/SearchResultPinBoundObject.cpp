@@ -26,7 +26,7 @@ namespace ExampleApp
                                                                                        Search::SdkModel::MyPins::IMyPinsSearchResultRefreshService& myPinsSearchResultRefreshService,
                                                                                        ExampleAppMessaging::TMessageBus& messageBus,
                                                                                        ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
-                                                                                       Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory,
+                                                                                       MyPinsWebService& webService,
                                                                                        ExampleApp::MyPins::SdkModel::IMyPinsService& myPinsService)
             {
                 return Eegeo_NEW(SearchResultPinBoundObject)(pinId,
@@ -36,7 +36,7 @@ namespace ExampleApp
                                                              myPinsSearchResultRefreshService,
                                                              messageBus,
                                                              sdkModelDomainEventBus,
-                                                             webLoadRequestFactory,
+                                                             webService,
                                                              myPinsService);
             }
             
@@ -47,7 +47,7 @@ namespace ExampleApp
                                                                    Search::SdkModel::MyPins::IMyPinsSearchResultRefreshService& myPinsSearchResultRefreshService,
                                                                    ExampleAppMessaging::TMessageBus& messageBus,
                                                                    ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
-                                                                   Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory,
+                                                                   MyPinsWebService& webService,
                                                                    ExampleApp::MyPins::SdkModel::IMyPinsService& myPinsService)
             : m_pinId(pinId)
             , m_searchResult(searchResult)
@@ -57,7 +57,7 @@ namespace ExampleApp
             , m_myPinsSearchResultRefreshService(myPinsSearchResultRefreshService)
             , m_messageBus(messageBus)
             , m_sdkModelDomainEventBus(sdkModelDomainEventBus)
-            , m_webLoadRequestFactory(webLoadRequestFactory)
+            , m_webService(webService)
             , m_pinVendorRequiresRefreshing(m_searchResult.GetVendor() == Search::YelpVendorName)
             , m_isCurrentlyRefreshingResult(false)
             , m_myPinsService(myPinsService)

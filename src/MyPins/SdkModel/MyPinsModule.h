@@ -15,6 +15,7 @@
 #include "CategorySearch.h"
 #include "Search.h"
 #include "IMetricsService.h"
+#include <string>
 
 namespace ExampleApp
 {
@@ -34,7 +35,9 @@ namespace ExampleApp
                              CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
                              CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
                              Search::SdkModel::MyPins::IMyPinsSearchResultRefreshService& myPinsSearchResultRefreshService,
-                             Metrics::IMetricsService& metricsService);
+                             Metrics::IMetricsService& metricsService,
+                             const std::string& myPinsWebServiceUrl,
+                             const std::string& myPinsWebServiceAuthToken);
 
                 ~MyPinsModule();
 
@@ -49,6 +52,7 @@ namespace ExampleApp
                 MyPinsRepository* m_pMyPinsRepository;
                 MyPinsFileIO* m_pMyPinsFileIO;
                 MyPinsService* m_pMyPinsService;
+                MyPinsWebService* m_pMyPinsWebService;
                 MyPinsRepositoryObserver* m_pMyPinsRepositoryObserver;
                 IMyPinBoundObjectFactory* m_pMyPinBoundObjectFactory;
                 IMyPinBoundObjectRepository* m_pMyPinBoundObjectRepository;

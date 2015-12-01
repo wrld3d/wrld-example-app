@@ -15,13 +15,13 @@ namespace ExampleApp
                                                              ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
                                                              CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
                                                              Search::SdkModel::MyPins::IMyPinsSearchResultRefreshService& myPinsSearchResultRefreshService,
-                                                             Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory
+                                                             MyPinsWebService& webService
                                                              )
             : m_messageBus(messageBus)
             , m_sdkModelDomainEventBus(sdkModelDomainEventBus)
             , m_categorySearchRepository(categorySearchRepository)
             , m_myPinsSearchResultRefreshService(myPinsSearchResultRefreshService)
-            , m_webLoadRequestFactory(webLoadRequestFactory)
+            , m_webService(webService)
             {
                 
             }
@@ -43,7 +43,7 @@ namespace ExampleApp
                                                             share,
                                                             myPinsFileIO,
                                                             m_messageBus,
-                                                            m_webLoadRequestFactory);
+                                                            m_webService);
             }
             
             IMyPinBoundObject* MyPinBoundObjectFactory::CreateSearchResultPinBoundObject(MyPinsFileIO& myPinsFileIO,
@@ -58,7 +58,7 @@ namespace ExampleApp
                                                              m_myPinsSearchResultRefreshService,
                                                              m_messageBus,
                                                              m_sdkModelDomainEventBus,
-                                                             m_webLoadRequestFactory,
+                                                             m_webService,
                                                              myPinsService);
             }
             
@@ -76,7 +76,7 @@ namespace ExampleApp
                                                                              serializedData,
                                                                              myPinsFileIO,
                                                                              m_messageBus,
-                                                                             m_webLoadRequestFactory);
+                                                                             m_webService);
                     }break;
                         
                     case SearchResultPoi:
@@ -88,7 +88,7 @@ namespace ExampleApp
                                                                               m_myPinsSearchResultRefreshService,
                                                                               m_messageBus,
                                                                               m_sdkModelDomainEventBus,
-                                                                              m_webLoadRequestFactory,
+                                                                              m_webService,
                                                                               myPinsService
                                                                               );
                     }break;
