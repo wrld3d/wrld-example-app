@@ -85,11 +85,11 @@ namespace ExampleAppWPF
                 }
                 else
                 {
-                    m_poiAccreditationImage.Visibility = Visibility.Hidden;
+                    m_poiAccreditationImage.Visibility = Visibility.Collapsed;
                 }
 
                 m_detailsView.Visibility = Visibility.Visible;
-                m_reviewImageAndNumber.Visibility = Visibility.Hidden;
+                m_reviewImageAndNumber.Visibility = Visibility.Collapsed;
             }
             else
             {
