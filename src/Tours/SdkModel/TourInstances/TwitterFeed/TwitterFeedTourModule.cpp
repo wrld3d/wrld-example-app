@@ -30,7 +30,7 @@ namespace ExampleApp
                         const WorldPins::SdkModel::WorldPinInteriorData noInteirorData;
                         const bool useBounds = false;
                         m_tweetStateDataMap["Dev4Recce"] = TweetStateData(Eegeo::Space::LatLongAltitude::FromDegrees(37.619988, -122.366472, 600).ToECEF(),
-                                                                          Eegeo::Space::LatLongAltitude::FromDegrees(37.617398, -122.376256, 20).ToECEF(),
+                                                                          Eegeo::Space::LatLongAltitude::FromDegrees(37.617398, -122.376256, 100).ToECEF(),
                                                                           isInterior,
                                                                           noInteirorData,
                                                                           useBounds,

@@ -74,6 +74,7 @@ namespace ExampleApp
                         Eegeo::Streaming::MortonKey key = Eegeo::Space::CubeMap::EcefToKey(m_pinLocation.ToECEF(), 13);
                         Eegeo::Space::EcefTangentBasis tangentBasis = Eegeo::Space::EcefTangentBasis::CreateFromMortonKey(key);
                         float initialAltitude = (float)Eegeo::Space::SpaceHelpers::GetAltitude(tweetStateData.m_ecefOrigin);
+                        float initialInterestAltitude = (float)Eegeo::Space::SpaceHelpers::GetAltitude(tweetStateData.m_ecefTarget);
                         
                         Eegeo::dv3 cameraOffset = tweetStateData.m_ecefTarget - tweetStateData.m_ecefOrigin;
                         Eegeo::m33 basis;
@@ -82,7 +83,7 @@ namespace ExampleApp
                         Eegeo::dv3 basisOffset = Eegeo::dv3::Mul(cameraOffset, basis);
 
                         m_cameraMode = Camera::DroneLookatCameraMode(m_pinLocation.ToECEF() - basisOffset + initialAltitude * tangentBasis.GetUp(),
-                                                                     m_pinLocation.ToECEF(),
+                                                                     m_pinLocation.ToECEF() + initialInterestAltitude * tangentBasis.GetUp(),
                                                                      2.0f,
                                                                      cameraRotationOffset);
                     }
