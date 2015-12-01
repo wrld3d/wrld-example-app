@@ -17,32 +17,32 @@ namespace ExampleApp
 		m_pSearchResultModel = NULL;
 	}
 
-	System::String^ SearchResultModelCLI::GetTitle()
+	System::String^ SearchResultModelCLI::Title::get()
 	{
 		return Helpers::ReflectionHelpers::ConvertUTF8ToManagedString(m_pSearchResultModel->GetTitle());
 	}
 
-	System::String^ SearchResultModelCLI::GetSubtitle()
+	System::String^ SearchResultModelCLI::Subtitle::get()
 	{
 		return Helpers::ReflectionHelpers::ConvertUTF8ToManagedString(m_pSearchResultModel->GetSubtitle());
 	}
 
-	System::String^ SearchResultModelCLI::GetJsonData()
+	System::String^ SearchResultModelCLI::JsonData::get()
 	{
 		return Helpers::ReflectionHelpers::ConvertUTF8ToManagedString(m_pSearchResultModel->GetJsonData());
 	}
 
-	System::String^ SearchResultModelCLI::GetCategory()
+	System::String^ SearchResultModelCLI::Category::get()
 	{
 		return Helpers::ReflectionHelpers::ConvertUTF8ToManagedString(m_pSearchResultModel->GetCategory());
 	}
 
-	System::String^ SearchResultModelCLI::GetVendor()
+	System::String^ SearchResultModelCLI::Vendor::get()
 	{
 		return Helpers::ReflectionHelpers::ConvertUTF8ToManagedString(m_pSearchResultModel->GetVendor());
 	}
 
-	array<System::String^>^ SearchResultModelCLI::GetHumanReadableCategories()
+	array<System::String^>^ SearchResultModelCLI::HumanReadableCategories::get()
 	{
 		const std::vector<std::string>& humanReadableCategories(m_pSearchResultModel->GetHumanReadableCategories());
 		array<System::String^>^ humanCategoriesArray = gcnew array<System::String^>(humanReadableCategories.size());
