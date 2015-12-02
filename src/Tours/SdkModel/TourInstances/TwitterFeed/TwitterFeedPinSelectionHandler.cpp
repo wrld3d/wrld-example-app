@@ -3,7 +3,7 @@
 #include "TwitterFeedPinSelectionHandler.h"
 #include "TourModel.h"
 #include "TourStateModel.h"
-#include "URLRequestedMessage.h"
+#include "DeeplinkURLRequestedMessage.h"
 #include "TweetModel.h"
 
 namespace ExampleApp
@@ -32,8 +32,9 @@ namespace ExampleApp
                     void TwitterFeedPinSelectionHandler::SelectPin()
                     {
                         const Social::TwitterFeed::TweetModel& tweet = *m_tourStateModel.Tweet();
-                        const std::string twitterUrl = "https://www.twitter.com/" + tweet.GetUserName() + "/status/"+ tweet.GetTweetId();
-                        m_messageBus.Publish(URLRequest::URLRequestedMessage(twitterUrl));
+                        const std::string twitterDeeplinkUrl = "twitter://status?id="+tweet.GetTweetId();
+                        const std::string twitterUrl = "https://www.twitter.com/" + tweet.GetUserScreenName() + "/status/"+ tweet.GetTweetId();
+                        m_messageBus.Publish(URLRequest::DeeplinkURLRequestedMessage(twitterDeeplinkUrl, twitterUrl));
                     }
                 }
             }

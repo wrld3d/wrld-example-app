@@ -4,6 +4,7 @@
 
 #include "Types.h"
 #include "URLRequestedMessage.h"
+#include "DeeplinkURLRequestedMessage.h"
 #include "BidirectionalBus.h"
 #include "ICallback.h"
 #include <string>
@@ -20,7 +21,9 @@ namespace ExampleApp
                 
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 Eegeo::Helpers::TCallback1<URLRequestHandler, const URLRequestedMessage&> m_urlRequestedCallback;
+                Eegeo::Helpers::TCallback1<URLRequestHandler, const DeeplinkURLRequestedMessage&> m_deeplinkUrlRequestedCallback;
                 void OnURLRequested(const URLRequestedMessage& message);
+                void OnDeeplinkURLRequested(const DeeplinkURLRequestedMessage& message);
                 
             public:
                 
@@ -29,6 +32,8 @@ namespace ExampleApp
                 ~URLRequestHandler();
                 
                 void RequestExternalURL(const std::string& url);
+                
+                void RequestDeeplinkURL(const std::string& deeplinkUrl, const std::string& httpFallbackUrl);
                 
             };
         }

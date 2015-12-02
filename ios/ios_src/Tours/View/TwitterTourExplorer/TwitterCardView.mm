@@ -395,10 +395,11 @@
 
 - (void) handleProfileTapped:(UITapGestureRecognizer *)tap
 {
-    std::stringstream ss;
-    ss << "https://twitter.com/" << [self.m_pScreenName UTF8String];
+    std::string httpFallbackUrl =  std::string("https://twitter.com/") + [self.m_pScreenName UTF8String];
     
-    m_pInterop->ShowExternalURL(ss.str());
+    std::string twitterDeeplinkUrl = std::string("twitter://user?screen_name=") + [self.m_pScreenName UTF8String];
+    
+    m_pInterop->ShowDeeplinkURL(twitterDeeplinkUrl, httpFallbackUrl);
 }
 
 - (void)handleTourChangeRequest:(UITapGestureRecognizer *)tap
@@ -408,15 +409,15 @@
 
 - (void) handleMoreDetailsTapped:(UITapGestureRecognizer *)tap
 {
-    std::stringstream ss;
-    ss << "https://twitter.com/" << [self.m_pScreenName UTF8String] << "/status/" << [self.m_pTwitterId UTF8String];
+    std::string httpFallbackUrl = std::string("https://twitter.com/") + [self.m_pScreenName UTF8String] + "/status/" + [self.m_pTwitterId UTF8String];
     
-    m_pInterop->ShowExternalURL(ss.str());
+    std::string twitterDeeplinkUrl = std::string("twitter://status?id=")+[self.m_pTwitterId UTF8String];
     
+    m_pInterop->ShowDeeplinkURL(twitterDeeplinkUrl, httpFallbackUrl);
 }
 
 - (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)url inRange:(NSRange)characterRange
-{
+{    
     m_pInterop->ShowExternalURL([[url absoluteString] UTF8String]);
     
     return NO;

@@ -53,6 +53,11 @@ namespace ExampleApp
                     m_urlRequestHandler.RequestExternalURL(url);
                 }
                 
+                void TourExplorerViewInterop::ShowDeeplinkURL(const std::string& deeplinkUrl, const std::string& httpFallbackUrl)
+                {
+                     m_urlRequestHandler.RequestDeeplinkURL(deeplinkUrl, httpFallbackUrl);
+                }
+                
                 void TourExplorerViewInterop::OnDismissed()
                 {
                     m_tourModel = SdkModel::TourModel::Empty();
