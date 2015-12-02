@@ -16,6 +16,8 @@ namespace ExampleAppWPF
         protected bool m_closing;
         protected bool m_isPinned;
 
+        private ControlClickHandler m_closeButtonClickHandler = null;
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public SearchResultPoiViewBase(IntPtr nativeCallerPointer)
@@ -50,7 +52,8 @@ namespace ExampleAppWPF
         public override void OnApplyTemplate()
         {
             Image closeButton = (Image)GetTemplateChild("CloseButton");
-            closeButton.MouseLeftButtonDown += HandleCloseButtonClicked;
+
+            m_closeButtonClickHandler = new ControlClickHandler(closeButton, HandleCloseButtonClicked);
         }
 
         protected void HideAll()

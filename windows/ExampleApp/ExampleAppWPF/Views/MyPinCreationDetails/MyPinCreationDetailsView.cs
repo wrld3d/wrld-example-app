@@ -18,8 +18,7 @@ namespace ExampleAppWPF
     {
         private IntPtr m_nativeCallerPointer;
         private MainWindow m_currentWindow;
-
-        protected Image m_closeButton = null;
+        
         protected Image m_takePhotoButton = null;
         protected Image m_selectFromGalleryButton = null;
         protected Image m_submitButton = null;
@@ -29,6 +28,8 @@ namespace ExampleAppWPF
         protected CheckBox m_shouldShareButton = null;
         protected TextBlock m_termsAndConditionsLink = null;
         protected ScrollViewer m_scrollSection = null;
+
+        private ControlClickHandler m_closeButtonClickHandler = null;
 
         private byte[] m_imageBuffer = null;
         private Uri m_currentImageUri = null;
@@ -74,7 +75,6 @@ namespace ExampleAppWPF
             m_title = CheckAndGetProperty("TitleBox") as TextBox;
             m_description = CheckAndGetProperty("DescBox") as TextBox;
             m_shouldShareButton = CheckAndGetProperty("ToShare") as CheckBox;
-            m_closeButton = CheckAndGetProperty("CloseButton") as Image;
             m_submitButton = CheckAndGetProperty("ConfirmButton") as Image;
             m_selectFromGalleryButton = CheckAndGetProperty("OpenGalleryButton") as Image;
             m_poiImage = CheckAndGetProperty("SelectedImage") as Image;
@@ -82,11 +82,13 @@ namespace ExampleAppWPF
 
             m_prevSource = m_poiImage.Source;
             m_poiImage.Stretch = Stretch.Uniform;
-
-            m_closeButton.MouseLeftButtonDown += OnCloseClick;
+            
             m_submitButton.MouseLeftButtonDown += OnSubmitClick;
             m_submitButton.MouseLeftButtonUp += OnSubmitClick;
             m_selectFromGalleryButton.MouseLeftButtonDown += OnSelectFromGalleryClick;
+
+            Image closeButton = CheckAndGetProperty("CloseButton") as Image;
+            m_closeButtonClickHandler = new ControlClickHandler(closeButton, OnCloseClick);
 
             m_tosLink.Click += OnHyperlinkClick;
         }

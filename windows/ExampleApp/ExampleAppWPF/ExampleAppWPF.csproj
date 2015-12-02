@@ -90,6 +90,7 @@
     </ApplicationDefinition>
     <Compile Include="Colour.cs" />
     <Compile Include="Layout.cs" />
+    <Compile Include="Views\ControlClickHandler.cs" />
     <Compile Include="Views\InteriorsExplorer\InteriorsExplorerView.cs" />
     <Compile Include="Views\Menu\MenuDelayedSourceUpdateAnimatorListener.cs" />
     <Compile Include="Views\Menu\MenuListAdapter.cs" />
