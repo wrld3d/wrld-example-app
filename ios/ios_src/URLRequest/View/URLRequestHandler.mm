@@ -43,10 +43,7 @@ namespace ExampleApp
             
             void URLRequestHandler::RequestDeeplinkURL(const std::string& deeplinkUrl, const std::string& httpFallbackUrl)
             {
-                std::size_t pos = deeplinkUrl.find("://");
-                std::string deeplinkProtocol = deeplinkUrl.substr(0,pos);
-                NSString *protocol = [NSString stringWithUTF8String:(deeplinkProtocol+"://") .c_str()];
-                if([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:protocol]] == YES)
+                if(CanHandleDeeplinkURL(deeplinkUrl))
                 {
                     RequestExternalURL(deeplinkUrl);
                 }
@@ -54,6 +51,14 @@ namespace ExampleApp
                 {
                     RequestExternalURL(httpFallbackUrl);
                 }
+            }
+            
+            bool URLRequestHandler::CanHandleDeeplinkURL(const std::string& deeplinkUrl)
+            {
+                std::size_t pos = deeplinkUrl.find("://");
+                std::string deeplinkProtocol = deeplinkUrl.substr(0,pos);
+                NSString *protocol = [NSString stringWithUTF8String:(deeplinkProtocol+"://") .c_str()];
+                return [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:protocol]] == YES;
             }
         }
     }

@@ -394,9 +394,12 @@ namespace ExampleApp
                             Eegeo_ASSERT(jsonDocument[index][EntitiesKey][UrlsKey][i].HasMember(ExpandedUrlKey));
                             Eegeo_ASSERT(jsonDocument[index][EntitiesKey][UrlsKey][i].HasMember(IndicesKey) && jsonDocument[index][EntitiesKey][UrlsKey][i][IndicesKey].IsArray());
                             
+                            std::string url = jsonDocument[index][EntitiesKey][UrlsKey][i][ExpandedUrlKey].GetString();
+                            
                             linkEntities.push_back(LinkEntity(jsonDocument[index][EntitiesKey][UrlsKey][i][IndicesKey][0u].GetInt(),
                                                               jsonDocument[index][EntitiesKey][UrlsKey][i][IndicesKey][1u].GetInt(),
-                                                              std::string(jsonDocument[index][EntitiesKey][UrlsKey][i][ExpandedUrlKey].GetString())));
+                                                              url,
+                                                              url));
                         }
                     }
                     
@@ -411,8 +414,11 @@ namespace ExampleApp
                             
                             userUrl << "https://twitter.com/" << jsonDocument[index][EntitiesKey][UsersMentionsKey][i][ScreenNameKey].GetString();
                             
+                            std::string deeplinkUrl = std::string("twitter://user?screen_name=") + jsonDocument[index][EntitiesKey][UsersMentionsKey][i][ScreenNameKey].GetString();
+                            
                             linkEntities.push_back(LinkEntity(jsonDocument[index][EntitiesKey][UsersMentionsKey][i][IndicesKey][0u].GetInt(),
                                                               jsonDocument[index][EntitiesKey][UsersMentionsKey][i][IndicesKey][1u].GetInt(),
+                                                              deeplinkUrl,
                                                               userUrl.str()));
                         }
                     }
@@ -428,8 +434,11 @@ namespace ExampleApp
                             
                             userUrl << "https://twitter.com/hashtag/" << jsonDocument[index][EntitiesKey][HashTagsKey][i][TextKey].GetString();
                             
+                            std::string deeplinkUrl = std::string("twitter://search?query=#") + jsonDocument[index][EntitiesKey][HashTagsKey][i][TextKey].GetString();
+                            
                             linkEntities.push_back(LinkEntity(jsonDocument[index][EntitiesKey][HashTagsKey][i][IndicesKey][0u].GetInt(),
                                                               jsonDocument[index][EntitiesKey][HashTagsKey][i][IndicesKey][1u].GetInt(),
+                                                              deeplinkUrl,
                                                               userUrl.str()));
                         }
                     }

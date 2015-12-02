@@ -37,7 +37,7 @@ const bool TestCycleCarouselMode = false;
 #define TWEET_DOES_LINK_OUT 11
 #define TWEET_LINKS_START 12
 
-#define TWEET_LINKS_SIZE 3
+#define TWEET_LINKS_SIZE 4
 
 @interface iCarouselTourExplorerViewController () <iCarouselDataSource, iCarouselDelegate>
 {
@@ -176,6 +176,7 @@ const bool TestCycleCarouselMode = false;
                  it != tweet.GetLinkEntities().end();
                  ++it)
             {
+                stateViewData.push_back((*it).m_deeplinkAddress);
                 stateViewData.push_back((*it).m_httpAddress);
                 
                 std::stringstream startIndex;
@@ -272,6 +273,7 @@ const bool TestCycleCarouselMode = false;
     {
         std::vector<std::string> data = m_stateViewData[index].second;
         
+        NSMutableArray* deeplinkUrls = [[NSMutableArray alloc]init];
         NSMutableArray* linkUrls = [[NSMutableArray alloc]init];
         NSMutableArray* startIndices = [[NSMutableArray alloc]init];
         NSMutableArray* endIndices = [[NSMutableArray alloc]init];
@@ -281,9 +283,10 @@ const bool TestCycleCarouselMode = false;
             int linkIndex = 0;
             for(int i = TWEET_LINKS_START; i < data.size(); i += TWEET_LINKS_SIZE, ++linkIndex)
             {
-                [linkUrls addObject:[NSString stringWithUTF8String:data[i + 0].c_str()]];
-                [startIndices addObject:[NSString stringWithUTF8String:data[i + 1].c_str()]];
-                [endIndices addObject:[NSString stringWithUTF8String:data[i + 2].c_str()]];
+                [deeplinkUrls addObject:[NSString stringWithUTF8String:data[i + 0].c_str()]];
+                [linkUrls addObject:[NSString stringWithUTF8String:data[i + 1].c_str()]];
+                [startIndices addObject:[NSString stringWithUTF8String:data[i + 2].c_str()]];
+                [endIndices addObject:[NSString stringWithUTF8String:data[i + 3].c_str()]];
             }
         }
         
@@ -297,6 +300,7 @@ const bool TestCycleCarouselMode = false;
                      tweetId:[NSString stringWithUTF8String: data[TWEET_ID].c_str()]
                  tweetCutoff:[[NSString stringWithUTF8String: data[TWEET_CUTOFF].c_str()] integerValue]
                  doesLinkOut:[[NSString stringWithUTF8String: data[TWEET_DOES_LINK_OUT].c_str()]boolValue]
+                deeplinkUrls:deeplinkUrls
                     linkUrls:linkUrls
             linkStartIndices:startIndices
               linkEndIndices:endIndices];
@@ -310,6 +314,9 @@ const bool TestCycleCarouselMode = false;
         
         [linkUrls removeAllObjects];
         [linkUrls dealloc];
+        
+        [deeplinkUrls removeAllObjects];
+        [deeplinkUrls dealloc];
     }
     
     return twitView;

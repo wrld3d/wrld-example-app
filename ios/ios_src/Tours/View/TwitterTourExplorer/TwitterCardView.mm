@@ -235,6 +235,7 @@
            tweetId:(NSString*)strId
        tweetCutoff:(NSInteger)intTweetCutoff
        doesLinkOut:(BOOL)bDoesLinkOut
+      deeplinkUrls:(NSMutableArray*)arrDeeplinkUrls
           linkUrls:(NSMutableArray*)arrLinkUrls
   linkStartIndices:(NSMutableArray*)arrLinkStartIndices
     linkEndIndices:(NSMutableArray*)arrLinkEndIndices
@@ -281,8 +282,16 @@
             endIndex = tweetContent.length - 1;
         }
         
-        [tweetContent addAttribute:NSLinkAttributeName value:arrLinkUrls[i]
-                             range:NSMakeRange(startIndex, endIndex - startIndex + 1)];
+        if(m_pInterop->CanHandleDeeplinkURL( [arrDeeplinkUrls[i] UTF8String] ))
+        {
+            [tweetContent addAttribute:NSLinkAttributeName value:arrDeeplinkUrls[i]
+                                 range:NSMakeRange(startIndex, endIndex - startIndex + 1)];
+        }
+        else
+        {
+            [tweetContent addAttribute:NSLinkAttributeName value:arrLinkUrls[i]
+                                 range:NSMakeRange(startIndex, endIndex - startIndex + 1)];
+        }
     }
     
     [self.pTweetContent setAttributedText:tweetContent];
@@ -417,7 +426,8 @@
 }
 
 - (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)url inRange:(NSRange)characterRange
-{    
+{
+    // Deeplinking check and setup in setContent
     m_pInterop->ShowExternalURL([[url absoluteString] UTF8String]);
     
     return NO;

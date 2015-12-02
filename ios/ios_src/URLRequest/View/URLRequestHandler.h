@@ -35,6 +35,7 @@ namespace ExampleApp
                 
                 void RequestDeeplinkURL(const std::string& deeplinkUrl, const std::string& httpFallbackUrl);
                 
+                bool CanHandleDeeplinkURL(const std::string& deeplinkUrl);
             };
         }
     }

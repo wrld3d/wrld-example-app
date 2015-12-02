@@ -47,6 +47,7 @@
            tweetId:(NSString*)strId
        tweetCutoff:(NSInteger)intTweetCutoff
        doesLinkOut:(BOOL)bDoesLinkOut
+      deeplinkUrls:(NSMutableArray*)arrDeeplinkUrls
           linkUrls:(NSMutableArray*)arrLinkUrls
   linkStartIndices:(NSMutableArray*)arrLinkStartIndices
     linkEndIndices:(NSMutableArray*)arrLinkEndIndices;

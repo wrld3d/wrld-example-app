@@ -21,10 +21,12 @@ namespace ExampleApp
                     int m_startIndex;
                     int m_endIndex;
                     std::string m_httpAddress;
+                    std::string m_deeplinkAddress;
                     
-                    LinkEntity(int startIndex, int endIndex, const std::string& httpAddress)
+                    LinkEntity(int startIndex, int endIndex, const std::string& deeplinkAddress, const std::string& httpAddress)
                     : m_startIndex(startIndex)
                     , m_endIndex(endIndex)
+                    , m_deeplinkAddress(deeplinkAddress)
                     , m_httpAddress(httpAddress)
                     {
                         

@@ -32,6 +32,7 @@ namespace ExampleApp
                     void OnChangeTourRequested(const std::string& name);
                     void ShowExternalURL(const std::string& url);
                     void ShowDeeplinkURL(const std::string& deeplinkUrl, const std::string& httpFallbackUrl);
+                    bool CanHandleDeeplinkURL(const std::string& deeplinkUrl);
                     
                     void OnCurrentTourCardTapped();
                     

@@ -55,7 +55,12 @@ namespace ExampleApp
                 
                 void TourExplorerViewInterop::ShowDeeplinkURL(const std::string& deeplinkUrl, const std::string& httpFallbackUrl)
                 {
-                     m_urlRequestHandler.RequestDeeplinkURL(deeplinkUrl, httpFallbackUrl);
+                    m_urlRequestHandler.RequestDeeplinkURL(deeplinkUrl, httpFallbackUrl);
+                }
+                
+                bool TourExplorerViewInterop::CanHandleDeeplinkURL(const std::string& deeplinkUrl)
+                {
+                    return m_urlRequestHandler.CanHandleDeeplinkURL(deeplinkUrl);
                 }
                 
                 void TourExplorerViewInterop::OnDismissed()
@@ -63,7 +68,7 @@ namespace ExampleApp
                     m_tourModel = SdkModel::TourModel::Empty();
                     m_dismissedCallbacks.ExecuteCallbacks();
                 }
-                                
+                
                 void TourExplorerViewInterop::InsertStateChangedCallback(Eegeo::Helpers::ICallback1<int> &callback)
                 {
                     m_stateChangedCallbacks.AddCallback(callback);
