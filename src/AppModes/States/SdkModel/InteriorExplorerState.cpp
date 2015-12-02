@@ -20,6 +20,7 @@
 #include "MyPinCreationModel.h"
 #include "MyPinCreationStage.h"
 #include "InteriorExplorerUserInteractionModel.h"
+#include "ITourService.h"
 
 namespace ExampleApp
 {
@@ -32,6 +33,7 @@ namespace ExampleApp
                 InteriorExplorerState::InteriorExplorerState(AppCamera::SdkModel::IAppCameraController& cameraController,
                                                              Eegeo::Resources::Interiors::InteriorController& interiorController,
                                                              int interiorCameraHandle,
+                                                             Tours::SdkModel::ITourService& tourService,
                                                              Eegeo::Streaming::CameraFrustumStreamingVolume& cameraFrustumStreamingVolume,
                                                              InteriorsExplorer::SdkModel::InteriorVisibilityUpdater& interiorVisibilityUpdater,
                                                              InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel,
@@ -44,6 +46,8 @@ namespace ExampleApp
                 : m_cameraController(cameraController)
                 , m_interiorController(interiorController)
                 , m_interiorCameraHandle(interiorCameraHandle)
+                , m_tourService(tourService)
+                , m_tourStartedCallback(this, &InteriorExplorerState::OnTourStarted)
                 , m_interiorExplorerUserInteractionModel(interiorExplorerUserInteractionModel)
                 , m_appModeModel(appModeModel)
                 , m_worldCameraController(worldCameraController)
@@ -99,6 +103,7 @@ namespace ExampleApp
                 void InteriorExplorerState::Enter()
                 {
                     m_interiorExplorerUserInteractionModel.SetEnabled(false);
+                    m_tourService.RegisterTourStartedCallback(m_tourStartedCallback);
                     m_myPinCreationModel.SetCreationStage(MyPinCreation::Inactive);
                     m_pSubStateMachine->StartStateMachine(0);
                 }
@@ -124,6 +129,8 @@ namespace ExampleApp
                     {
                         m_pSubStateMachine->StopStateMachine();
                     }
+                    
+                    m_tourService.UnregisterTourStartedCallback(m_tourStartedCallback);
                     m_interiorExplorerUserInteractionModel.SetEnabled(true);
                 }
                 
@@ -145,6 +152,11 @@ namespace ExampleApp
                 
                 void InteriorExplorerState::OnFailAlertBoxDismissed()
                 {
+                }
+                
+                void InteriorExplorerState::OnTourStarted()
+                {
+                    m_appModeModel.SetAppMode(ExampleApp::AppModes::SdkModel::TourMode);
                 }
             }
         }

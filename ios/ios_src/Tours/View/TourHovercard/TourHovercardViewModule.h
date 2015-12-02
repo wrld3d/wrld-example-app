@@ -10,6 +10,7 @@
 #include "IWorldPinOnMapView.h"
 #include "TourWebViewIncludes.h"
 #include "AppModes.h"
+#include "ImageStore.h"
 
 @class ImageStore;
 
@@ -33,6 +34,7 @@ namespace ExampleApp
                                             Modality::View::IModalityModel& modalityModel,
                                             float pinDiameter,
                                             float pixelScale,
+                                            ImageStore* pImageStore,
                                             const AppModes::SdkModel::IAppModeModel& appModeModel);
                     
                     ~TourHovercardViewModule();

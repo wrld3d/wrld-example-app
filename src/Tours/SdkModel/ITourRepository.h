@@ -21,6 +21,10 @@ namespace ExampleApp
                 virtual bool ContainsTourModelWithName(const std::string& name) = 0;
                 
                 virtual TourModel GetTourModelWithName(const std::string& name) = 0;
+                
+                virtual bool ContainsTourModelWithTwitterBaseUserName(const std::string& name) = 0;
+                
+                virtual TourModel GetTourModelWithTwitterBaseUserName(const std::string& name) = 0;
             };
         }
     }
