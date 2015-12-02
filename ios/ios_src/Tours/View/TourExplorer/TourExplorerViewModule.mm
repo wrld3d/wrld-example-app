@@ -15,6 +15,7 @@ namespace ExampleApp
             {
                 TourExplorerViewModule::TourExplorerViewModule(ExampleApp::ExampleAppMessaging::TMessageBus& messageBus,
                                                                ITourExplorerViewModel& viewModel,
+                                                               URLRequest::View::URLRequestHandler& urlRequestHandler,
                                                                TourHovercard::ITourHovercardView& tourHoverCardView,
                                                                ITourExplorerCompositeViewController& tourExplorerCompositeViewController,
                                                                const Eegeo::Rendering::ScreenProperties& screenProperties,
@@ -25,6 +26,7 @@ namespace ExampleApp
                                : screenProperties.GetScreenWidth()
                                : screenProperties.GetScreenHeight()
                                : screenProperties.GetPixelScale()
+                               : urlRequestHandler
                                : pImageStore];
                     
                     m_pViewController = Eegeo_NEW(TourExplorerViewController)(viewModel,

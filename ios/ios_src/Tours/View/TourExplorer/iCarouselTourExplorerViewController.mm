@@ -6,8 +6,10 @@
 #include "ImageHelpers.h"
 #include "ColorHelpers.h"
 #include "TourExplorerCardView.h"
+#include "TwitterCardView.h"
 #include "UIHelpers.h"
 #include <sstream>
+#include <utility>
 
 const bool TestCycleCarouselMode = false;
 
@@ -21,6 +23,22 @@ const bool TestCycleCarouselMode = false;
 #define STATE_IMAGE 1
 #define STATE_TEXT 2
 
+#define TWEET_USER_NAME 0
+#define TWEET_SCREEN_NAME 1
+#define TWEET_TEXT 2
+#define TWEET_PROFILE_URL 3
+#define TWEET_BANNER_URL 4
+#define TWEET_RETWEET_COUNT 5
+#define TWEET_FAVORITE_COUNT 6
+#define TWEET_CREATED_AT 7
+#define TWEET_PROFILE_COLOR 8
+#define TWEET_ID 9
+#define TWEET_CUTOFF 10
+#define TWEET_DOES_LINK_OUT 11
+#define TWEET_LINKS_START 12
+
+#define TWEET_LINKS_SIZE 4
+
 @interface iCarouselTourExplorerViewController () <iCarouselDataSource, iCarouselDelegate>
 {
     id m_interactionHandlerInstance;
@@ -31,7 +49,7 @@ const bool TestCycleCarouselMode = false;
     bool m_scrollingToSelected;
     float m_screenWidth;
     float m_screenHeight;
-    std::vector<std::vector<std::string> > m_stateViewData;
+    std::vector< std::pair<bool,std::vector<std::string> > > m_stateViewData;
     ExampleApp::Tours::View::TourExplorer::TourExplorerViewInterop* m_pInterop;
     ImageStore* m_pImageStore;
 }
@@ -92,7 +110,7 @@ const bool TestCycleCarouselMode = false;
         dummyCycleData.push_back("Cycle");
         dummyCycleData.push_back(nil);
         
-        m_stateViewData.push_back(dummyCycleData);
+        m_stateViewData.push_back(std::make_pair(false, dummyCycleData));
     }
     
     [self configureStateViewData:tour];
@@ -112,11 +130,68 @@ const bool TestCycleCarouselMode = false;
         
         std::vector<std::string> stateViewData;
         
-        stateViewData.push_back(state.Headline());
-        stateViewData.push_back(state.ImagePath());
-        stateViewData.push_back(state.Description());
+        if(!state.IsTweet())
+        {
+            stateViewData.push_back(state.Headline());
+            stateViewData.push_back(state.ImagePath());
+            stateViewData.push_back(state.Description());
+        }
+        else
+        {
+            const ExampleApp::Social::TwitterFeed::TweetModel& tweet = *state.Tweet();
+            
+            stateViewData.push_back(tweet.GetUserName());
+            stateViewData.push_back(tweet.GetUserScreenName());
+            stateViewData.push_back(tweet.GetText());
+            stateViewData.push_back(tweet.GetProfileImageUrl());
+            
+            if(!tweet.GetBannerImageUrl().empty())
+            {
+                stateViewData.push_back(tweet.GetBannerImageUrl() + std::string("/web"));
+            }
+            else
+            {
+                stateViewData.push_back(std::string(""));
+            }
+            
+            std::stringstream retweetCount;
+            retweetCount << tweet.GetRetweetCount();
+            stateViewData.push_back(retweetCount.str());
+            
+            std::stringstream favoriteCount;
+            favoriteCount << tweet.GetFavouriteCount();
+            stateViewData.push_back(favoriteCount.str());
+            
+            stateViewData.push_back(tweet.GetCreatedAt());
+            stateViewData.push_back(tweet.GetProfileColor());
+            stateViewData.push_back(tweet.GetTweetId());
+            
+            std::stringstream mediaIndex;
+            mediaIndex << tweet.GetMediaIndex();
+            stateViewData.push_back(mediaIndex.str());
+            
+            stateViewData.push_back(tweet.GetDoesLinkOut() ? "1" : "0");
+            
+            for (std::vector<ExampleApp::Social::TwitterFeed::TweetModel::LinkEntity>::const_iterator it = tweet.GetLinkEntities().begin();
+                 it != tweet.GetLinkEntities().end();
+                 ++it)
+            {
+                stateViewData.push_back((*it).deeplinkAddress);
+                stateViewData.push_back((*it).httpAddress);
+                
+                std::stringstream startIndex;
+                std::stringstream endIndex;
+                
+                startIndex << (*it).startIndex;
+                endIndex << (*it).endIndex;
+                
+                stateViewData.push_back(startIndex.str());
+                stateViewData.push_back(endIndex.str());
+            }
+        }
         
-        m_stateViewData.push_back(stateViewData);
+        
+        m_stateViewData.push_back(std::make_pair(state.IsTweet(), stateViewData));
     }
 }
 
@@ -182,7 +257,72 @@ const bool TestCycleCarouselMode = false;
     return [self getItemWidth];
 }
 
-- (UIView *)carousel:(iCarousel *)carousel viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view
+- (UIView *)twitterViewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view
+{
+    TwitterCardView* twitView = nil;
+    if(view == nil || [view class] != [TwitterCardView class])
+    {
+        twitView = [[TwitterCardView alloc] initWithParams:m_pInterop :m_pImageStore];
+    }
+    else
+    {
+        twitView = (TwitterCardView*)view;
+    }
+    
+    if(index < m_stateViewData.size())
+    {
+        std::vector<std::string> data = m_stateViewData[index].second;
+        
+        NSMutableArray* deeplinkUrls = [[NSMutableArray alloc]init];
+        NSMutableArray* linkUrls = [[NSMutableArray alloc]init];
+        NSMutableArray* startIndices = [[NSMutableArray alloc]init];
+        NSMutableArray* endIndices = [[NSMutableArray alloc]init];
+        
+        if(data.size() >= TWEET_LINKS_START)
+        {
+            int linkIndex = 0;
+            for(int i = TWEET_LINKS_START; i < data.size(); i += TWEET_LINKS_SIZE, ++linkIndex)
+            {
+                [deeplinkUrls addObject:[NSString stringWithUTF8String:data[i + 0].c_str()]];
+                [linkUrls addObject:[NSString stringWithUTF8String:data[i + 1].c_str()]];
+                [startIndices addObject:[NSString stringWithUTF8String:data[i + 2].c_str()]];
+                [endIndices addObject:[NSString stringWithUTF8String:data[i + 3].c_str()]];
+            }
+        }
+        
+        [twitView setContent:[NSString stringWithUTF8String: data[TWEET_USER_NAME].c_str()]
+                  screenName:[NSString stringWithUTF8String: data[TWEET_SCREEN_NAME].c_str()]
+                tweetContent:[NSString stringWithUTF8String: data[TWEET_TEXT].c_str()]
+                   userImage:[NSString stringWithUTF8String: data[TWEET_PROFILE_URL].c_str()]
+                 bannerImage:[NSString stringWithUTF8String: data[TWEET_BANNER_URL].c_str()]
+                   createdAt:[NSString stringWithUTF8String: data[TWEET_CREATED_AT].c_str()]
+                profileColor:[NSString stringWithUTF8String: data[TWEET_PROFILE_COLOR].c_str()]
+                     tweetId:[NSString stringWithUTF8String: data[TWEET_ID].c_str()]
+                 tweetCutoff:[[NSString stringWithUTF8String: data[TWEET_CUTOFF].c_str()] integerValue]
+                 doesLinkOut:[[NSString stringWithUTF8String: data[TWEET_DOES_LINK_OUT].c_str()]boolValue]
+                deeplinkUrls:deeplinkUrls
+                    linkUrls:linkUrls
+            linkStartIndices:startIndices
+              linkEndIndices:endIndices];
+        
+        
+        [endIndices removeAllObjects];
+        [endIndices dealloc];
+        
+        [startIndices removeAllObjects];
+        [startIndices dealloc];
+        
+        [linkUrls removeAllObjects];
+        [linkUrls dealloc];
+        
+        [deeplinkUrls removeAllObjects];
+        [deeplinkUrls dealloc];
+    }
+    
+    return twitView;
+}
+
+- (UIView *)tourCardViewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view
 {
     TourExplorerCardView* tourCardView;
     
@@ -197,12 +337,29 @@ const bool TestCycleCarouselMode = false;
     
     if(index < m_stateViewData.size())
     {
-        [tourCardView setContent:[NSString stringWithUTF8String:m_stateViewData[index][STATE_IMAGE].c_str()]
-                                :[NSString stringWithUTF8String:m_stateViewData[index][STATE_NAME].c_str()]
-                                :[NSString stringWithUTF8String:m_stateViewData[index][STATE_TEXT].c_str()]];
+        [tourCardView setContent:[NSString stringWithUTF8String:m_stateViewData[index].second[STATE_IMAGE].c_str()]
+                                :[NSString stringWithUTF8String:m_stateViewData[index].second[STATE_NAME].c_str()]
+                                :[NSString stringWithUTF8String:m_stateViewData[index].second[STATE_TEXT].c_str()]];
     }
     
     return tourCardView;
+}
+
+- (UIView *)carousel:(iCarousel *)carousel viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view
+{
+    if(index >= m_stateViewData.size())
+    {
+        return view;
+    }
+    
+    if(m_stateViewData[index].first)
+    {
+        return [self twitterViewForItemAtIndex:index reusingView:view];
+    }
+    else
+    {
+        return [self tourCardViewForItemAtIndex:index reusingView:view];
+    }
 }
 
 - (CATransform3D)carousel:(iCarousel *)carousel itemTransformForOffset:(CGFloat)offset baseTransform:(CATransform3D)transform

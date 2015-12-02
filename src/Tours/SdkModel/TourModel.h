@@ -8,6 +8,7 @@
 #include "TourStateModel.h"
 #include "ColorHelpers.h"
 #include "WorldPinInteriorData.h"
+#include "TweetModel.h"
 
 namespace ExampleApp
 {
@@ -30,6 +31,9 @@ namespace ExampleApp
                 std::vector<TourStateModel> m_states;
                 ExampleApp::WorldPins::SdkModel::WorldPinInteriorData m_worldPinInteriorData;
                 
+                bool m_usesTwitter;
+                std::string m_twitterBaseUserName;
+                
             public:
                 TourModel();
                 
@@ -45,7 +49,9 @@ namespace ExampleApp
                           Helpers::ColorHelpers::Color textColor,
                           Helpers::ColorHelpers::Color hoverCardBaseColor,
                           Helpers::ColorHelpers::Color hoverCardTextColor,
-                          const std::vector<TourStateModel>& states);
+                          const std::vector<TourStateModel>& states,
+                          bool usesTwitter = false,
+                          const std::string& twitterBaseUserName = "");
                 
                 const std::string& Name() const;
                 
@@ -70,6 +76,10 @@ namespace ExampleApp
                 const std::vector<TourStateModel>& States() const;
                 
                 int StateCount() const;
+                
+                bool UsesTwitter() const;
+                
+                const std::string& TwitterBaseUserName() const;
             };
             
             inline bool operator==(const TourModel& lhs, const TourModel& rhs)

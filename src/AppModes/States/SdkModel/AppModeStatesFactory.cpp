@@ -70,6 +70,7 @@ namespace ExampleApp
                     states.push_back(Eegeo_NEW(States::SdkModel::InteriorExplorerState)(m_appCameraController,
                                                                                         m_interiorController,
                                                                                         interiorCameraHandle,
+                                                                                        m_tourService,
                                                                                         m_cameraFrustumStreamingVolume,
                                                                                         m_interiorVisibilityUpdate,
                                                                                         m_interiorsExplorerModel,

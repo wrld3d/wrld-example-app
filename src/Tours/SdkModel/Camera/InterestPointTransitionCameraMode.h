@@ -28,7 +28,7 @@ namespace ExampleApp
                                                       float endFovDegrees,
                                                       Eegeo::Quaternion startOrientation,
                                                       Eegeo::Quaternion endOrientation,
-                                                      float timeScale=0.75f);
+                                                      bool jumpIfFar);
                     void Reset()
                     {
                         m_time = 0.0f;
@@ -62,7 +62,7 @@ namespace ExampleApp
                     Eegeo::Quaternion m_startOrientation;
                     Eegeo::Quaternion m_endOrientation;
                     
-                    const float m_timeScale;
+                    float m_timeScale;
                     float m_time;
                     float m_startFovDegrees;
                     float m_endFovDegrees;

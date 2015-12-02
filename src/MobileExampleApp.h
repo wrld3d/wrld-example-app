@@ -80,6 +80,9 @@
 #include "IInteriorsCustomMaterialsModule.h"
 #include "CameraTransitionService.h"
 #include "UserInteraction.h"
+#include "TwitterFeed.h"
+#include "TwitterFeedTour.h"
+
 
 namespace ExampleApp
 {
@@ -149,6 +152,7 @@ namespace ExampleApp
         InteriorsEntitiesPins::SdkModel::IInteriorsEntitiesPinsModule* m_pInteriorsEntitiesPinsModule;
         InteriorsCustomMaterials::SdkModel::IInteriorsCustomMaterialsModule* m_pInteriorsCustomMaterialsModule;
         UserInteraction::SdkModel::UserInteractionModule* m_pUserInteractionModule;
+        Social::TwitterFeed::ITwitterFeedModule* m_pTwitterFeedModule;
         
         AppModes::SdkModel::IAppModeModel* m_pAppModeModel;
         
@@ -158,6 +162,7 @@ namespace ExampleApp
         Tours::IToursModule* m_pToursModule;
         Eegeo::Modules::FireworksModule* m_pFireworksModule;
         float m_toursPinDiameter;
+        Tours::SdkModel::TourInstances::TwitterFeed::ITwitterFeedTourModule* m_pTwitterFeedTourModule;
         
         AppCamera::SdkModel::IAppCameraModule* m_pAppCameraModule;
         
@@ -362,6 +367,11 @@ namespace ExampleApp
             return *m_pInteriorsExplorerModule;
         }
         
+        const ExampleApp::Social::TwitterFeed::ITwitterFeedModule& TwitterFeedModule() const
+        {
+            return *m_pTwitterFeedModule;
+        }
+        
         const ExampleApp::Tours::IToursModule& ToursModule() const
         {
             return *m_pToursModule;
@@ -370,6 +380,11 @@ namespace ExampleApp
         const ExampleApp::WorldPins::SdkModel::IWorldPinsModule& TourWorldPinsModule() const
         {
             return *m_pToursWorldPinsModule;
+        }
+        
+        const ExampleApp::Tours::SdkModel::TourInstances::TwitterFeed::ITwitterFeedTourModule& TwitterFeedTourModule() const
+        {
+            return *m_pTwitterFeedTourModule;
         }
         
         // A flag for opting in/out of tours

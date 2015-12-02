@@ -37,6 +37,8 @@
 #include "TourFullScreenImageCeremonyEndedMessage.h"
 #include "AppModeChangedMessage.h"
 #include "UserInteractionEnabledChangedMessage.h"
+#include "URLRequestedMessage.h"
+#include "DeeplinkURLRequestedMessage.h"
 
 namespace ExampleApp
 {
@@ -76,6 +78,8 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<InteriorsExplorer::InteriorsExplorerStateChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<AppModes::AppModeChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<UserInteraction::UserInteractionEnabledChangedMessage>
+            , public Eegeo::Messaging::CatalogBinding<URLRequest::URLRequestedMessage>
+            , public Eegeo::Messaging::CatalogBinding<URLRequest::DeeplinkURLRequestedMessage>
             , private Eegeo::NonCopyable
         {
 

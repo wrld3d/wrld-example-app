@@ -526,6 +526,18 @@
     <Filter Include="Source Files\App\Watermark\SdkModel">
       <UniqueIdentifier>{f857c55b-4aca-4490-828d-e027a47aea54}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\App\Social">
+      <UniqueIdentifier>{3d223b3d-a86f-4db8-855b-0b7de6834137}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\App\Social\TwitterFeed">
+      <UniqueIdentifier>{9936c6d4-7574-4aac-9ea9-8feb28f0202b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\App\URLRequest">
+      <UniqueIdentifier>{9344bb6f-d1cd-40f7-aa40-68f9b45bf313}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\App\Tours\SdkModel\TourInstances\TwitterFeed">
+      <UniqueIdentifier>{3c78b82a-c007-42c4-ac2e-cc202f2cf46e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\AppHost.cpp">
@@ -1772,6 +1784,36 @@
     </ClCompile>
     <ClCompile Include="..\..\src\SearchResultPoi\View\SearchResultModelCLI.cpp">
       <Filter>Source Files\Windows\SearchResultPoi\View</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Social\TwitterFeed\TweetModel.cpp">
+      <Filter>Source Files\App\Social\TwitterFeed</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Social\TwitterFeed\TwitterFeedModule.cpp">
+      <Filter>Source Files\App\Social\TwitterFeed</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Social\TwitterFeed\TwitterFeedService.cpp">
+      <Filter>Source Files\App\Social\TwitterFeed</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\URLRequest\DeeplinkURLRequestedMessage.cpp">
+      <Filter>Source Files\App\URLRequest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\URLRequest\URLRequestedMessage.cpp">
+      <Filter>Source Files\App\URLRequest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Tours\SdkModel\TourInstances\TwitterFeed\TwitterFeedPinSelectionHandler.cpp">
+      <Filter>Source Files\App\Tours\SdkModel\TourInstances\TwitterFeed</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Tours\SdkModel\TourInstances\TwitterFeed\TwitterFeedShowTweetState.cpp">
+      <Filter>Source Files\App\Tours\SdkModel\TourInstances\TwitterFeed</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Tours\SdkModel\TourInstances\TwitterFeed\TwitterFeedTourModule.cpp">
+      <Filter>Source Files\App\Tours\SdkModel\TourInstances\TwitterFeed</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Tours\SdkModel\TourInstances\TwitterFeed\TwitterFeedTourObserver.cpp">
+      <Filter>Source Files\App\Tours\SdkModel\TourInstances\TwitterFeed</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Tours\SdkModel\TourInstances\TwitterFeed\TwitterFeedTourStateMachineFactory.cpp">
+      <Filter>Source Files\App\Tours\SdkModel\TourInstances\TwitterFeed</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -3880,6 +3922,57 @@
     </ClInclude>
     <ClInclude Include="..\..\src\SearchResultPoi\View\SearchResultModelCLI.h">
       <Filter>Source Files\Windows\SearchResultPoi\View</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Social\TwitterFeed\ITwitterFeedModule.h">
+      <Filter>Source Files\App\Social\TwitterFeed</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Social\TwitterFeed\ITwitterFeedService.h">
+      <Filter>Source Files\App\Social\TwitterFeed</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Social\TwitterFeed\TweetModel.h">
+      <Filter>Source Files\App\Social\TwitterFeed</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Social\TwitterFeed\TweetRepository.h">
+      <Filter>Source Files\App\Social\TwitterFeed</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Social\TwitterFeed\TwitterFeed.h">
+      <Filter>Source Files\App\Social\TwitterFeed</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Social\TwitterFeed\TwitterFeedModule.h">
+      <Filter>Source Files\App\Social\TwitterFeed</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Social\TwitterFeed\TwitterFeedService.h">
+      <Filter>Source Files\App\Social\TwitterFeed</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\URLRequest\DeeplinkURLRequestedMessage.h">
+      <Filter>Source Files\App\URLRequest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\URLRequest\URLRequestedMessage.h">
+      <Filter>Source Files\App\URLRequest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Tours\SdkModel\TourInstances\TwitterFeed\ITwitterFeedTourModule.h">
+      <Filter>Source Files\App\Tours\SdkModel\TourInstances\TwitterFeed</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Tours\SdkModel\TourInstances\TwitterFeed\TweetStateData.h">
+      <Filter>Source Files\App\Tours\SdkModel\TourInstances\TwitterFeed</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Tours\SdkModel\TourInstances\TwitterFeed\TwitterFeedPinSelectionHandler.h">
+      <Filter>Source Files\App\Tours\SdkModel\TourInstances\TwitterFeed</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Tours\SdkModel\TourInstances\TwitterFeed\TwitterFeedShowTweetState.h">
+      <Filter>Source Files\App\Tours\SdkModel\TourInstances\TwitterFeed</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Tours\SdkModel\TourInstances\TwitterFeed\TwitterFeedTour.h">
+      <Filter>Source Files\App\Tours\SdkModel\TourInstances\TwitterFeed</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Tours\SdkModel\TourInstances\TwitterFeed\TwitterFeedTourModule.h">
+      <Filter>Source Files\App\Tours\SdkModel\TourInstances\TwitterFeed</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Tours\SdkModel\TourInstances\TwitterFeed\TwitterFeedTourObserver.h">
+      <Filter>Source Files\App\Tours\SdkModel\TourInstances\TwitterFeed</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Tours\SdkModel\TourInstances\TwitterFeed\TwitterFeedTourStateMachineFactory.h">
+      <Filter>Source Files\App\Tours\SdkModel\TourInstances\TwitterFeed</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

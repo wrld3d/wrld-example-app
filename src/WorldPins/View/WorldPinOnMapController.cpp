@@ -55,12 +55,6 @@ namespace ExampleApp
             
             void WorldPinOnMapController::OnSelected()
             {
-                
-                if (m_appModeModel.GetAppMode() == AppModes::SdkModel::InteriorMode)
-                {
-                    return;
-                }
-                
                 if(!m_modalityModel.IsModalEnabled())
                 {
                     if(m_viewModel.IsOpen())
