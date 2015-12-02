@@ -1083,6 +1083,8 @@ namespace ExampleApp
         }
 
         m_pGlobeCameraController->UpdateScreenProperties(m_screenProperties);
+
+		m_pInteriorsExplorerModule->GetInteriorsCameraController().GetGlobeCameraController().UpdateScreenProperties(m_screenProperties);
     }
 
     void MobileExampleApp::InitialiseApplicationViewState()

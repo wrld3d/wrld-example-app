@@ -175,8 +175,10 @@ namespace ExampleApp
 
                     m_poiRingView.SetRingTransforms(sphereTransformMatrix);
 
+					const float interiorInnerRingScale = showingInterior ? 1.05f : 1.0f;
                     float altitudeBasedScale = CalculateAltitudeBasedSphereScale(altitude, m_ringRadius);
-                    m_poiRingView.SetInnerSphereScale(altitudeBasedScale);
+
+                    m_poiRingView.SetInnerSphereScale(altitudeBasedScale * interiorInnerRingScale);
 
                     const float assetSize = 75.f;
                     const float iconScale = Eegeo::Helpers::TransformHelpers::ComputeModelScaleForConstantScreenSizeWithVerticalFoV(renderCamera, scaledPoint) / (m_screenProperties.GetScreenHeight()* 0.5f)*m_screenProperties.GetPixelScale() * assetSize;

@@ -14,7 +14,7 @@ namespace ExampleAppWPF
         protected MainWindow m_currentWindow;
 
         protected bool m_closing;
-        private bool m_isPinned;
+        protected bool m_isPinned;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
