@@ -16,6 +16,7 @@ namespace ExampleAppWPF
         private IntPtr m_nativeCallerPointer;
         private double m_stateChangeAnimationTimeMilliseconds = 200;
         private bool m_isFirstLayout = true;
+        private bool m_isFlattened = false;
 
         static FlattenButtonView()
         {
@@ -69,7 +70,12 @@ namespace ExampleAppWPF
 
         public void UpdateViewStateBasedOnFlattening(bool isFlattened)
         {
-            IsChecked = isFlattened;
+            m_isFlattened = isFlattened;
+
+            if (IsEnabled)
+            {
+                IsChecked = isFlattened;
+            }
         }
 
         public void AnimateToInactive()
@@ -105,6 +111,33 @@ namespace ExampleAppWPF
             if (viewY != newY)
             {
                 RenderTransform = new TranslateTransform(currentPosition.X, newY);
+            }
+        }
+
+        private void AnimateToOpacity(double targetOpacity)
+        {
+            var animation = new DoubleAnimation();
+            animation.From = Opacity;
+            animation.To = targetOpacity;
+            animation.Duration = new Duration(TimeSpan.FromMilliseconds(m_stateChangeAnimationTimeMilliseconds));
+            animation.EasingFunction = new SineEase();
+
+            BeginAnimation(OpacityProperty, animation);
+        }
+
+        public void SetViewEnabled(bool enabled)
+        {
+            IsEnabled = enabled;
+
+            double targetOpacity = IsEnabled ? 1.0 : 0.5;
+            if (targetOpacity != Opacity)
+            {
+                AnimateToOpacity(targetOpacity);
+            }
+            
+            if(IsEnabled && m_isFlattened != IsChecked)
+            {
+                IsChecked = m_isFlattened;
             }
         }
 

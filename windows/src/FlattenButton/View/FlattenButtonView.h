@@ -30,6 +30,7 @@ namespace ExampleApp
                 Helpers::ReflectionHelpers::Method<float> mAnimateToIntermediateOnScreenState;
                 Helpers::ReflectionHelpers::Method<void> mAnimateToActive;
                 Helpers::ReflectionHelpers::Method<void> mAnimateToInActive;
+				Helpers::ReflectionHelpers::Method<bool> mSetViewEnabled;
                 
             public:
                 FlattenButtonView(WindowsNativeState& nativeState);
