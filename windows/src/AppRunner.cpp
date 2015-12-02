@@ -155,9 +155,13 @@ void AppRunner::HandleRotateStartEvent(int x, int y)
     HandleTouchEvent(rotateEvent);
 }
 
-void AppRunner::HandleRotateEndEvent()
+void AppRunner::HandleRotateEndEvent(int x, int y)
 {
     Eegeo::Windows::Input::TouchInputEvent rotateEvent(true, false, 0, Eegeo::Windows::Input::ROTATE_ACTION_IDENTIFIER);
+	Eegeo::Windows::Input::TouchInputPointerEvent pointerEvent(x, y, 0, 0);
+
+	rotateEvent.pointerEvents.emplace_back(pointerEvent);
+
     HandleTouchEvent(rotateEvent);
 }
 

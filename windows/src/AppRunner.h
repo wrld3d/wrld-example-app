@@ -28,7 +28,7 @@ public:
     void HandlePanEndEvent(int x, int y);
     void HandleMouseMoveEvent(int x, int y);
     void HandleRotateStartEvent(int x, int y);
-    void HandleRotateEndEvent();
+    void HandleRotateEndEvent(int x, int y);
     void HandleZoomEvent(short scrollWheelDirection, int zoomDistance, int x, int y);
     void HandleKeyboardDownEvent(char keyCode);
     void HandleKeyboardUpEvent(char keyCode);
