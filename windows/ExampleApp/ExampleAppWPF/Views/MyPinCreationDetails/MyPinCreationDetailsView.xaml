@@ -38,7 +38,7 @@
                                 <TextBlock IsHitTestVisible="False" Text="Tell us about your pin..."  Margin="5,2" Foreground="{StaticResource LightGrey}"
                                            Visibility="{Binding ElementName=DescBox, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
                             </Grid>
-                            <ScrollViewer HorizontalAlignment="Center" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Margin="10, 10, 10, 0" Height="200">
+                            <ScrollViewer HorizontalAlignment="Center" VerticalScrollBarVisibility="Auto" Margin="10, 10, 10, 0" Height="200">
                                 <Image Name="SelectedImage" Source="/ExampleAppWPF;component/Assets/image_blank.png" Stretch="UniformToFill" DockPanel.Dock="Top" Width="300"/>
                             </ScrollViewer>
                             <StackPanel Orientation="Horizontal" Background="{StaticResource Gold}" Height="60" Margin="0, 20, 0, 0" DockPanel.Dock="Bottom">
