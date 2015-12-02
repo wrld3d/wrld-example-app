@@ -492,6 +492,10 @@ namespace ExampleApp
                     Eegeo_ASSERT(jsonDocument[index][PlaceKey].HasMember(PlaceNameKey));
                     
                     placeName = jsonDocument[index][PlaceKey][PlaceNameKey].GetString();
+                    if(placeName == "[Place name removed]")
+                    {
+                        placeName = "";
+                    }
                     
                     if(jsonDocument[index][PlaceKey].HasMember(PlaceBoxKey) && !jsonDocument[index][PlaceKey][PlaceBoxKey].IsNull())
                     {
