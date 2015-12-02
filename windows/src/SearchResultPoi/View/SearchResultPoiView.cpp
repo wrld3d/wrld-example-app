@@ -99,13 +99,9 @@ namespace ExampleApp
                 {
 					viewClassName = "ExampleAppWPF.YelpSearchResultsPoiView";
                 }
-                else if(vendor == "DeCarta")
-                {
-					Eegeo_ASSERT(false, "Decarta SearchPoiView not implemented");
-                }
                 else if(vendor == "GeoNames")
                 {
-					Eegeo_ASSERT(false, "GeoNames SearchPoiView not implemented");
+					viewClassName = "ExampleAppWPF.GeoNamesSearchResultsPoiView";
                 }
                 else
                 {

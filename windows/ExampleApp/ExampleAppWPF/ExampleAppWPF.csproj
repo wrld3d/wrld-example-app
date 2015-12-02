@@ -98,6 +98,7 @@
     <Compile Include="Views\Options\OptionsView.cs" />
     <Compile Include="Views\SearchResultMenu\SearchMenuListItem.cs" />
     <Compile Include="StartupResourceLoader.cs" />
+    <Compile Include="Views\SearchResultPoi\GeonamesSearchResultsPoiView.cs" />
     <Compile Include="Views\SearchResultPoi\ResultModels\YelpResultModel.cs" />
     <Compile Include="Views\SearchResultPoi\SearchResultCategoryMapper.cs" />
     <Compile Include="Views\SearchResultPoi\SearchResultPoiViewBase.cs" />
@@ -190,6 +191,10 @@
     <Page Include="Views\SearchResultMenu\SearchMenuView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SearchResultPoi\GeonamesSearchResultsPoiView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\SearchResultPoi\YelpSearchResultsPoiView.xaml">
       <SubType>Designer</SubType>
