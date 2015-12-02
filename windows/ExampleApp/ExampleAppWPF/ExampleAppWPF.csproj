@@ -509,6 +509,11 @@
   <ItemGroup>
     <Resource Include="Assets\place_pin_background.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\..\Resources\menu_list.png">
+      <Link>Assets\menu_list.png</Link>
+    </Resource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy "$(ProjectDir)..\..\Resources" "$(TargetDir)Resources" /e /y /i /r

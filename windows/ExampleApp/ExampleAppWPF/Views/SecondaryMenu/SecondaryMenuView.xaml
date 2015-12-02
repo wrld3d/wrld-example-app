@@ -31,7 +31,7 @@
                                 <Grid.Background>
                                     <ImageBrush Stretch="Fill" ImageSource="/ExampleAppWPF;component/Assets/menu_button.png" ></ImageBrush>
                                 </Grid.Background>
-                                <Image Name="SecondaryMenuDragInteractionArrow" Width="14" Height="24" VerticalAlignment="Center" HorizontalAlignment="Center" Source="/ExampleAppWPF;component/Assets/arrow.png"></Image>
+                                <Image Name="SecondaryMenuDragInteractionArrow" Width="50" Height="50" VerticalAlignment="Center" HorizontalAlignment="Center" Source="/ExampleAppWPF;component/Assets/menu_list.png"></Image>
                             </Grid>
                         </Button>
 
