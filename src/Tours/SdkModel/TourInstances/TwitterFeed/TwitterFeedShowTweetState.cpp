@@ -138,7 +138,7 @@ namespace ExampleApp
                                                                                                  buffer.GetString());
                             
                             Eegeo::Space::LatLong location = m_pinLocation;
-                            const int BarIconIndex = 5;
+                            const int StarIconIndex = 10;
                             const float heightOffsetAboveTerrainMetres = 0.f;
                             
                             m_pPinModel = m_worldPinsService.AddPin(Eegeo_NEW(TwitterFeedPinSelectionHandler)(m_stateModel,
@@ -148,7 +148,7 @@ namespace ExampleApp
                                                                     m_isInterior,
                                                                     m_worldPinInteriorData,
                                                                     location,
-                                                                    BarIconIndex,
+                                                                    StarIconIndex,
                                                                     heightOffsetAboveTerrainMetres,
                                                                     WorldPins::SdkModel::WorldPinVisibility::TourPin);
                         }
