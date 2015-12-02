@@ -49,7 +49,7 @@ namespace ExampleAppWPF
             TitleText = m_swallowFacilityModel.Name;
             Description = m_swallowFacilityModel.Description;
 
-            IsPinned = isPinned;
+            m_isPinned = isPinned;
 
             ShowAll();
         }

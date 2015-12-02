@@ -49,7 +49,7 @@ namespace ExampleAppWPF
             OfficeLocation = m_swallowPersonModel.OfficeLocation;
             DeskCode = m_swallowPersonModel.DeskCode;
 
-            IsPinned = isPinned;
+            m_isPinned = isPinned;
 
             ShowAll();
         }
