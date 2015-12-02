@@ -110,7 +110,7 @@ namespace ExampleApp
                     return false;
                 }
 
-                if (m_fileIO.WriteFile(imageData, imageSize, imagePath))
+                if (m_fileIO.WriteFile(imageData, imageSize, imagePath, std::fstream::out | std::fstream::binary))
                 {
                     out_filename = imagePath;
                     return true;
