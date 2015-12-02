@@ -18,16 +18,16 @@ namespace ExampleApp
             public:
                 struct LinkEntity
                 {
-                    int m_startIndex;
-                    int m_endIndex;
-                    std::string m_httpAddress;
-                    std::string m_deeplinkAddress;
+                    int startIndex;
+                    int endIndex;
+                    std::string httpAddress;
+                    std::string deeplinkAddress;
                     
-                    LinkEntity(int startIndex, int endIndex, const std::string& deeplinkAddress, const std::string& httpAddress)
-                    : m_startIndex(startIndex)
-                    , m_endIndex(endIndex)
-                    , m_deeplinkAddress(deeplinkAddress)
-                    , m_httpAddress(httpAddress)
+                    LinkEntity(int _startIndex, int _endIndex, const std::string& _deeplinkAddress, const std::string& _httpAddress)
+                    : startIndex(_startIndex)
+                    , endIndex(_endIndex)
+                    , deeplinkAddress(_deeplinkAddress)
+                    , httpAddress(_httpAddress)
                     {
                         
                     }

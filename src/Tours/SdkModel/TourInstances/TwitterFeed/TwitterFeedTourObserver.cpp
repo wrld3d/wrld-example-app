@@ -78,7 +78,7 @@ namespace ExampleApp
                         
                         TweetStateData tweetStateData = (*tweetStateIt).second;
                         
-                        Eegeo::Space::LatLong tourLocation = Eegeo::Space::LatLong::FromECEF(tweetStateData.m_ecefTarget);
+                        Eegeo::Space::LatLong tourLocation = Eegeo::Space::LatLong::FromECEF(tweetStateData.ecefTarget);
                         
                         rapidjson::Document jsonDocument;
                         jsonDocument.SetObject();
@@ -105,8 +105,8 @@ namespace ExampleApp
                         }
                         
                         
-                        const bool isInterior = tweetStateData.m_isInterior;
-                        ExampleApp::WorldPins::SdkModel::WorldPinInteriorData worldPinInteriorData = tweetStateData.m_interiorData;
+                        const bool isInterior = tweetStateData.isInterior;
+                        ExampleApp::WorldPins::SdkModel::WorldPinInteriorData worldPinInteriorData = tweetStateData.interiorData;
                         
                         ExampleApp::Tours::SdkModel::TourModel tourModel(tourName,
                                                                          twitterBaseUserName + " (@"+userId+")",

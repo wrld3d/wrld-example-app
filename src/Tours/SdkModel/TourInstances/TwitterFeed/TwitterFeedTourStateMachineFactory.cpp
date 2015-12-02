@@ -94,25 +94,25 @@ namespace ExampleApp
                             
                             std::string placename = !tweet.GetPlaceName().empty() ? tweet.GetPlaceName() : tweet.GetUserName();
                             
-                            Eegeo::Space::LatLong location = tweet.HasCoordinates() ? tweet.GetCoordinates() : Eegeo::Space::LatLong::FromECEF(tweetStateData->m_ecefTarget);
+                            Eegeo::Space::LatLong location = tweet.HasCoordinates() ? tweet.GetCoordinates() : Eegeo::Space::LatLong::FromECEF(tweetStateData->ecefTarget);
                             
                             bool isInterior = false;
                             WorldPins::SdkModel::WorldPinInteriorData worldPinInteriorData;
                             if( !tweet.HasCoordinates() )
                             {
-                                isInterior = tweetStateData->m_isInterior;
-                                worldPinInteriorData = tweetStateData->m_interiorData;
+                                isInterior = tweetStateData->isInterior;
+                                worldPinInteriorData = tweetStateData->interiorData;
                             }
-                            else if(tweetStateData->m_useBounds)
+                            else if(tweetStateData->useBounds)
                             {
-                               if(location.GetLatitude() < tweetStateData->m_minBounds.GetLatitude() ||
-                                  location.GetLongitude() < tweetStateData->m_minBounds.GetLongitude() ||
-                                  location.GetLatitude() > tweetStateData->m_maxBounds.GetLatitude() ||
-                                  location.GetLongitude() > tweetStateData->m_maxBounds.GetLongitude())
+                               if(location.GetLatitude() < tweetStateData->minBounds.GetLatitude() ||
+                                  location.GetLongitude() < tweetStateData->minBounds.GetLongitude() ||
+                                  location.GetLatitude() > tweetStateData->maxBounds.GetLatitude() ||
+                                  location.GetLongitude() > tweetStateData->maxBounds.GetLongitude())
                                {
-                                   isInterior = tweetStateData->m_isInterior;
-                                   worldPinInteriorData = tweetStateData->m_interiorData;
-                                   location = Eegeo::Space::LatLong::FromECEF(tweetStateData->m_ecefTarget);
+                                   isInterior = tweetStateData->isInterior;
+                                   worldPinInteriorData = tweetStateData->interiorData;
+                                   location = Eegeo::Space::LatLong::FromECEF(tweetStateData->ecefTarget);
                                }
                             }
                             

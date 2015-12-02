@@ -47,8 +47,8 @@ namespace ExampleApp
                                                                          float cameraRotationOffset)
                     : m_stateModel(stateModel)
                     , m_toursCameraTransitionController(toursCameraTransitionController)
-                    , m_cameraMode(tweetStateData.m_ecefOrigin,
-                                   tweetStateData.m_ecefTarget,
+                    , m_cameraMode(tweetStateData.ecefOrigin,
+                                   tweetStateData.ecefTarget,
                                    2.0f,
                                    cameraRotationOffset)
                     , m_pinPlacename(placeName)
@@ -73,10 +73,10 @@ namespace ExampleApp
                         
                         Eegeo::Streaming::MortonKey key = Eegeo::Space::CubeMap::EcefToKey(m_pinLocation.ToECEF(), 13);
                         Eegeo::Space::EcefTangentBasis tangentBasis = Eegeo::Space::EcefTangentBasis::CreateFromMortonKey(key);
-                        float initialAltitude = (float)Eegeo::Space::SpaceHelpers::GetAltitude(tweetStateData.m_ecefOrigin);
-                        float initialInterestAltitude = (float)Eegeo::Space::SpaceHelpers::GetAltitude(tweetStateData.m_ecefTarget);
+                        float initialAltitude = (float)Eegeo::Space::SpaceHelpers::GetAltitude(tweetStateData.ecefOrigin);
+                        float initialInterestAltitude = (float)Eegeo::Space::SpaceHelpers::GetAltitude(tweetStateData.ecefTarget);
                         
-                        Eegeo::dv3 cameraOffset = tweetStateData.m_ecefTarget - tweetStateData.m_ecefOrigin;
+                        Eegeo::dv3 cameraOffset = tweetStateData.ecefTarget - tweetStateData.ecefOrigin;
                         Eegeo::m33 basis;
                         tangentBasis.GetBasisOrientationAsMatrix(basis);
                         

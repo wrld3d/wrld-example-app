@@ -176,14 +176,14 @@ const bool TestCycleCarouselMode = false;
                  it != tweet.GetLinkEntities().end();
                  ++it)
             {
-                stateViewData.push_back((*it).m_deeplinkAddress);
-                stateViewData.push_back((*it).m_httpAddress);
+                stateViewData.push_back((*it).deeplinkAddress);
+                stateViewData.push_back((*it).httpAddress);
                 
                 std::stringstream startIndex;
                 std::stringstream endIndex;
                 
-                startIndex << (*it).m_startIndex;
-                endIndex << (*it).m_endIndex;
+                startIndex << (*it).startIndex;
+                endIndex << (*it).endIndex;
                 
                 stateViewData.push_back(startIndex.str());
                 stateViewData.push_back(endIndex.str());
