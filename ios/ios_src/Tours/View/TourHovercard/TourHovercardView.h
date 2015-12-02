@@ -42,5 +42,6 @@
 @property (nonatomic, retain) UILabel* pInfoLabel;
 @property (nonatomic, retain) UIImageView* pImage;
 @property (nonatomic, retain) UIImageView* pVideoArrowImage;
+@property (nonatomic, retain) UIActivityIndicatorView* pImageLoadingSpinner;
 
 @end

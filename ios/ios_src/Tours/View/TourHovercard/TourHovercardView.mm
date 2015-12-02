@@ -104,6 +104,16 @@
         m_pPlayIconImage = ExampleApp::Helpers::ImageHelpers::LoadImage("Tours/States/Twitter/play_icon");
         [m_pPlayIconImage retain];
         
+        self.pImageLoadingSpinner = [[[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge] autorelease];
+        self.pImageLoadingSpinner.color = [UIColor colorWithRed:m_baseColor.GetRedF() green:m_baseColor.GetGreenF() blue:m_baseColor.GetBlueF() alpha:1.0f];
+        self.pImageLoadingSpinner.hidden = YES;
+        CGRect spinnerFrame = self.pImageLoadingSpinner.frame;
+        self.pImageLoadingSpinner.frame = CGRectMake((TourDefines::ProfileImageSize - spinnerFrame.size.width)/2,
+                                                     (TourDefines::ProfileImageSize - spinnerFrame.size.height)/2,
+                                                     spinnerFrame.size.width,
+                                                     spinnerFrame.size.height);
+        [self.pImage addSubview:self.pImageLoadingSpinner];
+        
         self.frame.origin = CGPointMake(0, 0);
     }
     
@@ -112,6 +122,9 @@
 
 - (void)dealloc
 {
+    [self.pImageLoadingSpinner removeFromSuperview];
+    [self.pImageLoadingSpinner release];
+    
     [m_pPlayIconImage release];
     m_pPlayIconImage = nil;
     
@@ -215,6 +228,8 @@
         self.pImage.hidden = NO;
         [m_pImageStore releaseImageForView:self.pImage];
         
+        [self.pImageLoadingSpinner startAnimating];
+        
         self.pImage.frame = CGRectMake((w - TourDefines::ProfileImageSize)/2,
                                        totalHeight - (TourDefines::ProfileImageSize + (imageOffsetY/2)),
                                        TourDefines::ProfileImageSize,
@@ -227,7 +242,8 @@
                                     :^(UIImage* image)
              {
                  self.pImage.image = image;
-                
+                 [self.pImageLoadingSpinner stopAnimating];
+                 
              }
                                     :TourDefines::ProfileImageSize];
         }
@@ -235,6 +251,7 @@
         {
             UIImage* image = ExampleApp::Helpers::ImageHelpers::LoadImage(m_imagePath);
             [self.pImage setImage:image];
+            [self.pImageLoadingSpinner stopAnimating];
         }
     }
     else
@@ -331,6 +348,7 @@
     m_textColor = textColor;
     
     [self.pTopStrip setBackgroundColor: [UIColor colorWithRed:m_baseColor.GetRedF() green:m_baseColor.GetGreenF() blue:m_baseColor.GetBlueF() alpha:1.0f]];
+    self.pImageLoadingSpinner.color = [UIColor colorWithRed:m_baseColor.GetRedF() green:m_baseColor.GetGreenF() blue:m_baseColor.GetBlueF() alpha:1.0f];
     self.pNameLabel.textColor = [UIColor colorWithRed:m_textColor.GetRedF() green:m_textColor.GetGreenF() blue:m_textColor.GetBlueF() alpha:1.0f];
 }
 
