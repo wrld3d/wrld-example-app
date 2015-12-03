@@ -12,7 +12,7 @@
                 <ControlTemplate TargetType="{x:Type local:MyPinDetailsView}" >
                     <StackPanel Background="{StaticResource White}">
                         <StackPanel Orientation="Horizontal">
-                            <Image Source="/ExampleAppWPF;component/Assets/icon_create_poi.png" Width="50" Height="50"/>
+                            <Image Source="/Assets/icon_create_poi.png" Width="50" Height="50"/>
                             <TextBlock Name="Title" Text="Name your pin..." Foreground="{StaticResource Gold}" FontWeight="Bold" Margin="5, 10, 10, 0" FontSize="20"/>
                         </StackPanel>
                         <ScrollViewer VerticalScrollBarVisibility="Auto" Height="390">
@@ -24,9 +24,9 @@
                             </StackPanel>
                         </ScrollViewer>
                         <StackPanel Orientation="Horizontal" Height="50" Background="{StaticResource Gold}" Margin="0, 10, 0, 0">
-                            <Image Name="RemovePin" Source="/ExampleAppWPF;component/Assets/button_remove_pin_off.png" Stretch="Fill" Width="50" Height="Auto"/>
+                            <Image Name="RemovePin" Source="/Assets/button_remove_pin_off.png" Stretch="Fill" Width="50" Height="Auto"/>
                             <Rectangle Fill="{StaticResource Gold}" Width="250" Height="Auto"/>
-                            <Image Name="Close" Source="/ExampleAppWPF;component/Assets/button_close_off.png" Stretch="Fill" Width="50" Height="Auto"/>
+                            <Image Name="Close" Source="/Assets/button_close_off.png" Stretch="Fill" Width="50" Height="Auto"/>
                         </StackPanel>
                     </StackPanel>
                 </ControlTemplate>

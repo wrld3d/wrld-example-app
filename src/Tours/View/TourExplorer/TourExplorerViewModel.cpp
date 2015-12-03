@@ -16,6 +16,7 @@ namespace ExampleApp
                 , m_shouldOffsetViewButton(false)
                 , m_tourModel(SdkModel::TourModel::Empty())
                 , m_initialCard(-1)
+                , m_showBackButton(false)
                 {
                     
                 }
@@ -30,6 +31,11 @@ namespace ExampleApp
                     m_initialCard = card;
                 }
                 
+                void TourExplorerViewModel::SetShowBackButton(bool showBackButton)
+                {
+                    m_showBackButton = showBackButton;
+                }
+                
                 const SdkModel::TourModel& TourExplorerViewModel::GetCurrentTour() const
                 {
                     return m_tourModel;
@@ -38,6 +44,11 @@ namespace ExampleApp
                 const int TourExplorerViewModel::GetInitialCard() const
                 {
                     return m_initialCard;
+                }
+                
+                bool TourExplorerViewModel::GetShowBackButton() const
+                {
+                    return m_showBackButton;
                 }
                 
                 ScreenControl::View::IScreenControlViewModel& TourExplorerViewModel::GetScreenControlViewModel()

@@ -18,7 +18,7 @@ namespace ExampleApp
             MyPinCreationDetailsView::MyPinCreationDetailsView(WindowsNativeState& nativeState)
                 : m_nativeState(nativeState)
             {
-                m_uiViewClass = GetTypeFromAssembly("ExampleAppWPF", "ExampleAppWPF.MyPinCreationDetailsView");
+                m_uiViewClass = GetTypeFromEntryAssembly("ExampleAppWPF.MyPinCreationDetailsView");
                 System::Reflection::ConstructorInfo^ ctor = m_uiViewClass->GetConstructor(CreateTypes(System::IntPtr::typeid));
                 m_uiView = ctor->Invoke(CreateObjects(gcnew System::IntPtr(this)));
 

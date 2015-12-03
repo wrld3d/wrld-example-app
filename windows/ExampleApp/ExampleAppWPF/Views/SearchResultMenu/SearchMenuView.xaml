@@ -23,7 +23,7 @@
                                 <!--begin include search_results_bar_layout-->
                                 <StackPanel Width="Auto" Height="Auto" Orientation="Horizontal">
                                     <StackPanel.Background>
-                                        <ImageBrush ImageSource="/ExampleAppWPF;component/Assets/search_results_bar_small.png" Stretch="Fill"/>
+                                        <ImageBrush ImageSource="/Assets/search_results_bar_small.png" Stretch="Fill"/>
                                     </StackPanel.Background>
 
                                     <Border BorderBrush="{x:Null}" Height="40" Margin="30,0,0,0">
@@ -37,14 +37,14 @@
                                                     <Trigger Property="IsPressed" Value="True">
                                                         <Setter Property="Content">
                                                             <Setter.Value>
-                                                                <Image Source="/ExampleAppWPF;component/Assets/buttonsmall_close_on.png" />
+                                                                <Image Source="/Assets/buttonsmall_close_on.png" />
                                                             </Setter.Value>
                                                         </Setter>
                                                     </Trigger>
                                                     <Trigger Property="IsPressed" Value="False">
                                                         <Setter Property="Content">
                                                             <Setter.Value>
-                                                                <Image Source="/ExampleAppWPF;component/Assets/buttonsmall_close_off.png" />
+                                                                <Image Source="/Assets/buttonsmall_close_off.png" />
                                                             </Setter.Value>
                                                         </Setter>
                                                     </Trigger>
@@ -58,7 +58,7 @@
                                 <Grid Name="SearchResultCount">
                                     <Button Name="SearchMenuDragTabView" Style="{StaticResource TransparentButtonStyle}">
                                         <Grid>
-                                            <Image Source="/ExampleAppWPF;component/Assets/menu_button.png" RenderTransformOrigin="0.5,0.5">
+                                            <Image Source="/Assets/menu_button.png" RenderTransformOrigin="0.5,0.5">
                                                 <Image.RenderTransform>
                                                     <ScaleTransform ScaleX="-1"/>
                                                 </Image.RenderTransform>
@@ -93,7 +93,7 @@
                                             <DataTemplate DataType="{x:Type local:SearchMenuListItem}">
                                                 <Grid HorizontalAlignment="Stretch" Height="42" Margin="0,0,0,0">
                                                     <Grid.Background>
-                                                        <ImageBrush ImageSource="/ExampleAppWPF;component/Assets/search_result_background.png" />
+                                                        <ImageBrush ImageSource="/Assets/search_result_background.png" />
                                                     </Grid.Background>
                                                     <Grid.RowDefinitions>
                                                         <RowDefinition Height="*"/>

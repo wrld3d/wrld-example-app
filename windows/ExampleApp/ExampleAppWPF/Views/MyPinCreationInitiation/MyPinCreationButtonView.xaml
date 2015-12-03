@@ -6,7 +6,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:MyPinCreationButtonView}">
-                    <Image Name="ButtonImage" Source="/ExampleAppWPF;component/Assets/button_create_poi.png"/>
+                    <Image Name="ButtonImage" Source="/Assets/button_create_poi.png"/>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

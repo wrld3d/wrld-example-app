@@ -20,15 +20,15 @@
                             </Grid.ColumnDefinitions>
                             <Button Name="DismissButton" Width="40" Height="40" Grid.Column="0" Style="{StaticResource TransparentButtonStyle}">
                                 <Grid>
-                                    <Image VerticalAlignment="Center" HorizontalAlignment="Center" Width="40" Height="40" Source="/ExampleAppWPF;component/Assets/menu_button.png"/>
-                                    <Image VerticalAlignment="Center" HorizontalAlignment="Center" Width="14" Height="24" Source="/ExampleAppWPF;component/Assets/arrow.png"/>
+                                    <Image VerticalAlignment="Center" HorizontalAlignment="Center" Width="40" Height="40" Source="/Assets/menu_button.png"/>
+                                    <Image VerticalAlignment="Center" HorizontalAlignment="Center" Width="14" Height="24" Source="/Assets/arrow.png"/>
                                 </Grid>
                             </Button>
                             <Grid Grid.Column="1">
                                 <Border Name="Mask" CornerRadius="0,5,5,0" Background="White"/>
                                 <Grid>
                                     <Grid.Background>
-                                        <ImageBrush ImageSource="/ExampleAppWPF;component/Assets/place_pin_background.png"/>
+                                        <ImageBrush ImageSource="/Assets/place_pin_background.png"/>
                                     </Grid.Background>
                                     <Grid.OpacityMask>
                                         <VisualBrush Visual="{Binding ElementName=Mask}"/>
@@ -44,13 +44,13 @@
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
-                            <Image Grid.Row="0" Source="/ExampleAppWPF;component/Assets/floor_selection_top.png" Stretch="Uniform" Width="50"/>
+                            <Image Grid.Row="0" Source="/Assets/floor_selection_top.png" Stretch="Uniform" Width="50"/>
                             <ListBox Name="FloorList" Grid.Row="1" HorizontalContentAlignment="Stretch">
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
                                         <Grid HorizontalAlignment="Stretch" Height="42" Margin="0,0,0,0">
                                             <Grid.Background>
-                                                <ImageBrush ImageSource="/ExampleAppWPF;component/Assets/place_pin_background.png" Stretch="Fill"/>
+                                                <ImageBrush ImageSource="/Assets/place_pin_background.png" Stretch="Fill"/>
                                             </Grid.Background>
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="*"/>
@@ -63,7 +63,7 @@
                                     </DataTemplate>
                                 </ListBox.ItemTemplate>
                             </ListBox>
-                            <Image Grid.Row="2" Source="/ExampleAppWPF;component/Assets/floor_selection_bottom.png" Stretch="Uniform" Width="50"/>
+                            <Image Grid.Row="2" Source="/Assets/floor_selection_bottom.png" Stretch="Uniform" Width="50"/>
                         </Grid>
                     </Grid>
                 </ControlTemplate>

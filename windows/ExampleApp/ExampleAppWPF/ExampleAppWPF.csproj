@@ -93,6 +93,7 @@
       <DependentUpon>DialogBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="Layout.cs" />
+    <Compile Include="ViewHelpers.cs" />
     <Compile Include="Views\ControlClickHandler.cs" />
     <Compile Include="Properties\VersionInfo.cs" />
     <Compile Include="Views\InteriorsExplorer\InteriorsExplorerView.cs" />

@@ -108,7 +108,7 @@ namespace ExampleApp
                     Eegeo_ASSERT(false, "Unknown POI vendor %s, cannot create view instance.\n", vendor.c_str());
                 }
 
-				m_uiViewClass = GetTypeFromAssembly("ExampleAppWPF", Helpers::ReflectionHelpers::ConvertUTF8ToManagedString(viewClassName));
+				m_uiViewClass = GetTypeFromEntryAssembly(Helpers::ReflectionHelpers::ConvertUTF8ToManagedString(viewClassName));
 				ConstructorInfo^ ctor = m_uiViewClass->GetConstructor(CreateTypes(IntPtr::typeid));
 				m_uiView = ctor->Invoke(CreateObjects(gcnew IntPtr(this)));
 

@@ -40,14 +40,14 @@
                                                                 <Trigger Property="IsPressed" Value="True">
                                                                     <Setter Property="Content">
                                                                         <Setter.Value>
-                                                                            <Image Source="/ExampleAppWPF;component/Assets/buttonsmall_close_off.png" />
+                                                                            <Image Source="/Assets/buttonsmall_close_off.png" />
                                                                         </Setter.Value>
                                                                     </Setter>
                                                                 </Trigger>
                                                                 <Trigger Property="IsPressed" Value="False">
                                                                     <Setter Property="Content">
                                                                         <Setter.Value>
-                                                                            <Image Source="/ExampleAppWPF;component/Assets/buttonsmall_close_on.png" />
+                                                                            <Image Source="/Assets/buttonsmall_close_on.png" />
                                                                         </Setter.Value>
                                                                     </Setter>
                                                                 </Trigger>
@@ -63,7 +63,7 @@
                                 </Border>
                                 <Button Name="OptionsViewCloseButton" Style="{StaticResource TransparentButtonStyle}">
                                     <Border BorderBrush="{x:Null}" Background="{StaticResource Gold}">
-                                        <Image Source="/ExampleAppWPF;component/Assets/button_close_off.png" Width="48" Height="48" HorizontalAlignment="Right"/>
+                                        <Image Source="/Assets/button_close_off.png" Width="48" Height="48" HorizontalAlignment="Right"/>
                                     </Border>
                                 </Button>
                             </StackPanel>

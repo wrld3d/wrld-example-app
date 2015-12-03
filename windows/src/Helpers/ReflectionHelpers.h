@@ -18,6 +18,18 @@ namespace ExampleApp
                 return System::Reflection::Assembly::Load(assemblyName)->GetType(typeName);
             }
 
+            inline System::Type^ GetTypeFromEntryAssembly(System::String^ typeName)
+            {
+                System::Reflection::Assembly^ entryAssem = System::Reflection::Assembly::GetEntryAssembly();
+                return entryAssem->GetType(typeName);
+            }
+
+            inline System::String^ GetEntryAssemblyName(System::String^ typeName)
+            {
+                System::Reflection::Assembly^ entryAssem = System::Reflection::Assembly::GetEntryAssembly();
+                return entryAssem->GetName()->Name;
+            }
+
             inline array<System::Type^>^ CreateTypes(...array<System::Type^>^ types)
             {
                 return types;
