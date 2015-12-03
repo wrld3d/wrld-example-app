@@ -5,6 +5,7 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="../../Colours.xaml" />
         <ResourceDictionary Source="../../TransparentButtonStyle.xaml" />
+        <ResourceDictionary Source="../../ListBoxControlTemplateNoPadding.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <Style TargetType="{x:Type local:SearchMenuView}">
@@ -73,11 +74,11 @@
                             </StackPanel>
 
                             <Grid Name="SearchMenuViewListContainer" Width="270" Height="Auto" HorizontalAlignment="Left" Grid.Row="1">
-                                <ScrollViewer PanningMode="Both" 
-              HorizontalScrollBarVisibility="Hidden"
+                                <ScrollViewer PanningMode="VerticalOnly" 
+              HorizontalScrollBarVisibility="Disabled"
               VerticalScrollBarVisibility="Auto" CanContentScroll="True" Height="{Binding RelativeSource={RelativeSource FindAncestor, 
                         AncestorType={x:Type Grid}}, Path=ActualHeight}">
-                                    <ListBox Name="SearchMenuItemList" Background="{StaticResource Transparent}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" BorderThickness="0">
+                                    <ListBox Name="SearchMenuItemList" Template="{StaticResource ListBoxControlTemplateNoPadding}" Background="{StaticResource Transparent}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" BorderThickness="0">
                                         <ListBox.Resources>
                                             <Style TargetType="ListBoxItem">
                                                 <Style.Resources>
@@ -86,6 +87,7 @@
                                                     <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Black"/>
                                                 </Style.Resources>
                                                 <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+                                                <Setter Property="Padding" Value="0"/>
                                             </Style>
 
                                             <DataTemplate DataType="{x:Type local:SearchMenuListItem}">
