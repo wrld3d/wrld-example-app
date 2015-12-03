@@ -3,7 +3,6 @@
 #include "TourExplorerViewController.h"
 #include "ITourExplorerViewModel.h"
 #include "ITourExplorerView.h"
-#include "ITourHovercardView.h"
 #include "ApplyScreenControl.h"
 #include "ITourExplorerCompositeViewController.h"
 #include "TourActiveStateChangedMessage.h"
@@ -21,13 +20,11 @@ namespace ExampleApp
                 TourExplorerViewController::TourExplorerViewController(ITourExplorerViewModel& viewModel,
                                                                        ITourExplorerCompositeViewController& tourExplorerCompositeViewController,
                                                                        ITourExplorerView& view,
-                                                                       TourHovercard::ITourHovercardView& hovercardView,
                                                                        ExampleAppMessaging::TMessageBus& messageBus,
                                                                        Metrics::IMetricsService& metricsService)
                 : m_viewModel(viewModel)
                 , m_tourExplorerCompositeViewController(tourExplorerCompositeViewController)
                 , m_view(view)
-                , m_hovercardView(hovercardView)
                 , m_messageBus(messageBus)
                 , m_metricsService(metricsService)
                 , m_dismissedCallback(this, &TourExplorerViewController::OnDismissed)
@@ -84,7 +81,6 @@ namespace ExampleApp
                     if(m_view.GetCurrentTour() != m_viewModel.GetCurrentTour() && state > 0.0f)
                     {
                         m_view.SetCurrentTour(m_viewModel.GetCurrentTour());
-                        m_hovercardView.SetCurrentTour(m_viewModel.GetCurrentTour());
                     }
                     
                     // Added to screen, set initial card

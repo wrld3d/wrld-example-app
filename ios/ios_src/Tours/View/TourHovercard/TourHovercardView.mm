@@ -5,7 +5,7 @@
 #include "MathFunc.h"
 #include "UIColors.h"
 #include "ImageHelpers.h"
-#include "TourHovercardViewInterop.h"
+#include "WorldPinOnMapViewInterop.h"
 #include "App.h"
 #include "Document.h"
 #include "ImageStore.h"
@@ -13,7 +13,7 @@
 
 @implementation TourHovercardView
 {
-    ExampleApp::Tours::View::TourHovercard::TourHovercardViewInterop* m_pInterop;
+    ExampleApp::WorldPins::View::WorldPinOnMapViewInterop* m_pInterop;
     UITapGestureRecognizer* m_tapGestureRecogniser;
     float m_stateChangeAnimationTimeSeconds;
     float m_pinOffset;
@@ -32,7 +32,7 @@
     ExampleApp::Helpers::ColorHelpers::Color m_baseColor;
     ExampleApp::Helpers::ColorHelpers::Color m_textColor;
 }
-- (id)initWithParams:(float)pinDiameter :(float)pixelScale :(ImageStore*)pImageStore
+- (id)initWithParams:(float)pinDiameter :(float)pixelScale :(ImageStore*)pImageStore :(ExampleApp::WorldPins::View::WorldPinOnMapViewInterop*)interop
 {
     self = [super init];
     
@@ -49,7 +49,7 @@
         [m_tapGestureRecogniser setDelegate:self];
         [self addGestureRecognizer: m_tapGestureRecogniser];
         
-        m_pInterop = new ExampleApp::Tours::View::TourHovercard::TourHovercardViewInterop(self);
+        m_pInterop = interop;
         
         // shadow
         self.pMainControlShadowContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
@@ -155,15 +155,8 @@
     [self.pArrowContainer removeFromSuperview];
     [self.pArrowContainer release];
     
-    delete m_pInterop;
-    
     [self removeFromSuperview];
     [super dealloc];
-}
-
-- (ExampleApp::Tours::View::TourHovercard::TourHovercardViewInterop*) getInterop
-{
-    return m_pInterop;
 }
 
 - (void)layoutSubviews
@@ -275,15 +268,15 @@
     m_cardHeight = totalHeight + arrowWidth;
 }
 
-- (void) setContent:(const std::string&)name :(const std::string&)subtitle;
+- (void) setContent:(const ExampleApp::WorldPins::SdkModel::IWorldPinsInFocusModel&) worldPinsInFocusModel
 {
-    self.pNameLabel.text = [NSString stringWithUTF8String:name.c_str()];
+    self.pNameLabel.text = [NSString stringWithUTF8String:worldPinsInFocusModel.GetTitle().c_str()];
     
     rapidjson::Document jsonDocument;
-    jsonDocument.Parse<0>(subtitle.c_str());
+    jsonDocument.Parse<0>(worldPinsInFocusModel.GetSubtitle().c_str());
     if(jsonDocument.HasParseError())
     {
-        self.pInfoLabel.text = [NSString stringWithUTF8String:subtitle.c_str()];
+        self.pInfoLabel.text = [NSString stringWithUTF8String:worldPinsInFocusModel.GetSubtitle().c_str()];
         m_imagePath = "";
         m_isVideo = false;
     }

@@ -17,12 +17,14 @@ namespace ExampleApp
             WorldPinsInFocusModel::WorldPinsInFocusModel(int worldPinItemModelId,
                     const std::string& title,
                     const std::string& subtitle,
+                    const std::string& vendor,
                     const std::string& ratingsImage,
                     const int reviewCount)
 
                 : m_worldPinItemModelId(worldPinItemModelId)
                 , m_title(title)
                 , m_subtitle(subtitle)
+                , m_vendor(vendor)
                 , m_ratingsImage(ratingsImage)
                 , m_reviewCount(reviewCount)
             {
@@ -37,6 +39,11 @@ namespace ExampleApp
             const std::string& WorldPinsInFocusModel::GetSubtitle() const
             {
                 return m_subtitle;
+            }
+            
+            const std::string& WorldPinsInFocusModel::GetVendor() const
+            {
+                return m_vendor;
             }
             
             const bool WorldPinsInFocusModel::HasRatingsImage() const

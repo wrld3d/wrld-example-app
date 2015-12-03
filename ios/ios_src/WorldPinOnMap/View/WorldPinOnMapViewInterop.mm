@@ -1,6 +1,7 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "WorldPinOnMapViewInterop.h"
+#include "IWorldPinsInFocusModel.h"
 
 namespace ExampleApp
 {
@@ -23,14 +24,11 @@ namespace ExampleApp
                 m_selectedCallbacks.RemoveCallback(callback);
             }
 
-            void WorldPinOnMapViewInterop::Open(const std::string& title,
-                                                const std::string& subtitle,
-                                                const std::string& ratingsImage,
-                                                const int reviewCount,
+            void WorldPinOnMapViewInterop::Open(const WorldPins::SdkModel::IWorldPinsInFocusModel& worldPinsInFocusModel,
                                                 float modality)
             {
                 [m_pView setFullyActive:modality];
-                [m_pView setContent:title :subtitle :ratingsImage :reviewCount];
+                [m_pView setContent:worldPinsInFocusModel];
             }
 
             void WorldPinOnMapViewInterop::Close()

@@ -22,6 +22,7 @@
 #include <sstream>
 #include "YelpSearchJsonParser.h"
 #include "WorldPinVisibility.h"
+#include "SearchVendorNames.h"
 
 namespace ExampleApp
 {
@@ -71,6 +72,7 @@ namespace ExampleApp
             {
                 WorldPins::SdkModel::WorldPinFocusData worldPinFocusData(pMyPinModel->GetTitle(),
                                                                          pMyPinModel->GetDescription(),
+                                                                         pMyPinModel->GetVendor(),
                                                                          pMyPinModel->GetRatingsImage(),
                                                                          pMyPinModel->GetReviewsCount());
                 
@@ -190,6 +192,7 @@ namespace ExampleApp
                                                              idForThisPin,
                                                              title,
                                                              description,
+                                                             Search::MyPinVendorName,
                                                              ratingsImage,
                                                              reviewCount,
                                                              myPinIconIndex,
@@ -229,6 +232,7 @@ namespace ExampleApp
                                                              idForThisPin,
                                                              searchResult.GetTitle(),
                                                              searchResult.GetSubtitle(),
+                                                             searchResult.GetVendor(),
                                                              ratingImageUrl,
                                                              reviewCount,
                                                              pinIconIndex,

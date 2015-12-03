@@ -6,6 +6,7 @@
 #include "TourWorldPinSelectionHandler.h"
 #include "WorldPinItemModel.h"
 #include "WorldPinVisibility.h"
+#include "SearchVendorNames.h"
 
 namespace ExampleApp
 {
@@ -33,10 +34,10 @@ namespace ExampleApp
             {
                 typedef WorldPins::SdkModel::WorldPinItemModel TPin;
                 const int IconIndex = 10;
-                
-                TPin* pPin = m_worldPinsService.AddPin(m_tourWorldPinSelectionHandlerFactory.CreateSelectionHandler(tourModel),
+                const std::string tourVendor = tourModel.UsesTwitter()? Search::WorldTwitterVendorName : Search::ExampleTourVendorName;
+                m_worldPinsService.AddPin(m_tourWorldPinSelectionHandlerFactory.CreateSelectionHandler(tourModel),
                                                        NULL,
-                                                       WorldPins::SdkModel::WorldPinFocusData(tourModel.Name(), tourModel.IntroText()),
+                                                       WorldPins::SdkModel::WorldPinFocusData(tourModel.Name(), tourModel.IntroText(), tourVendor),
                                                        tourModel.IsInterior(),
                                                        tourModel.WorldPinInteriorData(),
                                                        tourModel.Location(),

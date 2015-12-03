@@ -110,6 +110,7 @@ namespace ExampleApp
                         m_messageBus.Publish(WorldPinGainedFocusMessage(WorldPinsInFocusModel(m_pLastFocussedModel->GetPinId(),
                                              m_pLastFocussedModel->GetTitle(),
                                              m_pLastFocussedModel->GetSubtitle(),
+                                             m_pLastFocussedModel->GetVendor(),
                                              m_pLastFocussedModel->GetRatingsImage(),
                                              m_pLastFocussedModel->GetReviewCount()),
                                              closestScreenPinLocation));

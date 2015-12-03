@@ -185,6 +185,7 @@ namespace ExampleApp
                 
                 WorldPins::SdkModel::WorldPinFocusData worldPinFocusData(searchResultModel.GetTitle(),
                                                                          searchResultModel.GetSubtitle(),
+                                                                         searchResultModel.GetVendor(),
                                                                          ratingsImage,
                                                                          reviewCount);
                 

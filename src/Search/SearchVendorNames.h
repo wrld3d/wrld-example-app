@@ -12,5 +12,10 @@ namespace ExampleApp
         extern const std::string GeoNamesVendorName;
         
         extern const std::string ExampleTourVendorName;
+        
+        extern const std::string InteriorVendorName;
+        extern const std::string WorldTwitterVendorName;
+        extern const std::string TourTwitterVendorName;
+        extern const std::string MyPinVendorName;
     }
 }

@@ -10,7 +10,6 @@
 #include "BidirectionalBus.h"
 #include "IMetricsService.h"
 #include "TourExplorerViewController.h"
-#include "ITourHovercardView.h"
 #include "URLRequestHandler.h"
 
 @class ImageStore;
@@ -33,7 +32,6 @@ namespace ExampleApp
                     TourExplorerViewModule(ExampleAppMessaging::TMessageBus& messageBus,
                                            ITourExplorerViewModel& viewModel,
                                            URLRequest::View::URLRequestHandler& urlRequestHandler,
-                                           TourHovercard::ITourHovercardView& tourHoverCardView,
                                            ITourExplorerCompositeViewController& tourExplorerCompositeViewController,
                                            const Eegeo::Rendering::ScreenProperties& screenProperties,
                                            Metrics::IMetricsService& metricsService,

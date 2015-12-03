@@ -5,24 +5,24 @@
 #import <UIKit/UIKit.h>
 #include <string>
 #include "AppRunner.h"
-#include "TourHovercardViewIncludes.h"
+#include "WorldPinOnMapViewIncludes.h"
 #include "ColorHelpers.h"
+#include "WorldPinOnMapView.h"
+#include "IWorldPinsInFocusModel.h"
 
 @class TourHovercardView;
 @class ImageStore;
 
-@interface TourHovercardView : UIView <UIGestureRecognizerDelegate>
+@interface TourHovercardView : UIView <UIGestureRecognizerDelegate, WorldPinOnMapView>
 {
     UIImage* m_pPlayIconImage;
 }
 
-- (id) initWithParams:(float)pinDiameter :(float)pixelScale :(ImageStore*)pImageStore;
-
-- (ExampleApp::Tours::View::TourHovercard::TourHovercardViewInterop*) getInterop;
+- (id) initWithParams:(float)pinDiameter :(float)pixelScale :(ImageStore*)pImageStore  :(ExampleApp::WorldPins::View::WorldPinOnMapViewInterop*)interop;
 
 - (BOOL) consumesTouch:(UITouch *)touch;
 
-- (void) setContent:(const std::string&)name :(const std::string&)data;
+- (void) setContent:(const ExampleApp::WorldPins::SdkModel::IWorldPinsInFocusModel&) worldPinsInFocusModel;
 
 - (void) setFullyActive :(float)modality;
 

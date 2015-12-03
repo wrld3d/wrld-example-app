@@ -195,8 +195,6 @@ namespace ExampleApp
         , m_applicationConfiguration(applicationConfiguration)
         , m_interiorsEnabled(platformConfig.OptionsConfig.EnableInteriors)
         , m_pToursModule(NULL)
-        , m_pToursWorldPinsModule(NULL)
-        , m_pToursPinsModule(NULL)
         , m_pGlobeCameraWrapper(NULL)
         , m_pTwitterFeedModule(NULL)
         , m_pTwitterFeedTourModule(NULL)
@@ -581,8 +579,6 @@ namespace ExampleApp
         Eegeo_DELETE m_pTwitterFeedModule;
 
         Eegeo_DELETE m_pToursModule;
-        Eegeo_DELETE m_pToursWorldPinsModule;
-        Eegeo_DELETE m_pToursPinsModule;
         
         Eegeo_DELETE m_pTwitterFeedTourModule;
         
@@ -742,19 +738,6 @@ namespace ExampleApp
     
     void MobileExampleApp::InitialiseToursModules(Eegeo::Modules::Map::MapModule& mapModule, Eegeo::EegeoWorld& world, const bool interiorsAffectedByFlattening)
     {
-        m_pToursPinsModule = CreatePlatformPinsModuleInstance(mapModule, world, "SearchResultOnMap/PinIconTexturePage", m_toursPinDiameter, 4);
-        
-        Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsPresentationModule = mapModule.GetInteriorsPresentationModule();
-        
-        m_pToursWorldPinsModule = Eegeo_NEW(ExampleApp::WorldPins::SdkModel::WorldPinsModule)(m_pToursPinsModule->GetRepository(),
-                                                                                              m_pToursPinsModule->GetController(),
-                                                                                              mapModule.GetEnvironmentFlatteningService(),
-                                                                                              m_identityProvider,
-                                                                                              m_toursMessageBus,
-                                                                                              interiorsPresentationModule.GetAppLevelController(),
-                                                                                              m_sdkDomainEventBus,
-                                                                                              interiorsAffectedByFlattening);
-        
         m_pToursModule = Eegeo_NEW(ExampleApp::Tours::ToursModule)(m_identityProvider,
                                                        m_messageBus,
                                                        WorldPinsModule().GetWorldPinsService(),
@@ -813,7 +796,7 @@ namespace ExampleApp
         
         Tours::SdkModel::TourInstances::Example::ExampleTourStateMachineFactory factory(ToursModule().GetCameraTransitionController(),
                                                                                         ToursModule().GetCameraController(),
-                                                                                        m_pToursWorldPinsModule->GetWorldPinsService(),
+                                                                                        m_pWorldPinsModule->GetWorldPinsService(),
                                                                                         m_interiorsEnabled,
                                                                                         interiorsPresentationModule.GetAppLevelController(),
                                                                                         m_pInteriorsExplorerModule->GetInteriorVisibilityUpdater(),
@@ -825,7 +808,7 @@ namespace ExampleApp
         m_pTwitterFeedTourModule = Eegeo_NEW(Tours::SdkModel::TourInstances::TwitterFeed::TwitterFeedTourModule)(ToursModule().GetCameraTransitionController(),
                                                                                                                  ToursModule().GetCameraController(),
                                                                                                                  ToursModule().GetTourService(),
-                                                                                                                 TourWorldPinsModule().GetWorldPinsService(),
+                                                                                                                 WorldPinsModule().GetWorldPinsService(),
                                                                                                                  interiorsPresentationModule.GetAppLevelController(),
                                                                                                                  m_pInteriorsExplorerModule->GetInteriorVisibilityUpdater(),
                                                                                                                  interiorsPresentationModule.GetInteriorSelectionModel(),
@@ -903,22 +886,11 @@ namespace ExampleApp
 
         m_pPinsModule->GetController().Update(dt, renderCamera);
         
-        if(ToursEnabled())
-        {
-            m_pToursPinsModule->GetController().Update(dt, renderCamera);
-        }
-        
         if(!eegeoWorld.Initialising())
         {
             WorldPinsModule().GetWorldPinsService().Update(dt);
             WorldPinsModule().GetWorldPinsScaleController().Update(dt, renderCamera);
             WorldPinsModule().GetWorldPinsFloorHeightController().Update(dt);
-            
-            if(ToursEnabled())
-            {
-                TourWorldPinsModule().GetWorldPinsService().Update(dt);
-                TourWorldPinsModule().GetWorldPinsScaleController().Update(dt, renderCamera);
-            }
             
             CompassModule().GetCompassUpdateController().Update(dt);
             CompassModule().GetCompassUpdateController().Update(dt);
@@ -974,10 +946,6 @@ namespace ExampleApp
         {
             WorldPinsModule().GetWorldPinsInFocusController().Update(dt, ecefInterestPoint, renderCamera);
             
-            if(ToursEnabled())
-            {
-                TourWorldPinsModule().GetWorldPinsInFocusController().Update(dt, ecefInterestPoint, renderCamera);
-            }
         }
 
         Eegeo::EegeoDrawParameters drawParameters(cameraState.LocationEcef(),
@@ -1180,7 +1148,7 @@ namespace ExampleApp
             return;
         }
         
-        if(m_pWorldPinsModule->GetWorldPinsService().HandleTouchTap(data.point) || (ToursEnabled() && m_pToursWorldPinsModule->GetWorldPinsService().HandleTouchTap(data.point)))
+        if(m_pWorldPinsModule->GetWorldPinsService().HandleTouchTap(data.point))
         {
             return;
         }

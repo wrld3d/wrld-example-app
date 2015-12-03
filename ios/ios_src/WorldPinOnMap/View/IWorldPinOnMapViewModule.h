@@ -4,6 +4,7 @@
 
 #include "WorldPinOnMapViewIncludes.h"
 #include "WorldPins.h"
+#include "TourHovercardView.h"
 
 namespace ExampleApp
 {
@@ -18,7 +19,7 @@ namespace ExampleApp
 
                 virtual WorldPinOnMapController& GetWorldPinOnMapController() const = 0;
 
-                virtual WorldPinOnMapView& GetWorldPinOnMapView() const = 0;
+                virtual WorldPinOnMapViewContainer& GetWorldPinOnMapView() const = 0;
             };
         }
     }

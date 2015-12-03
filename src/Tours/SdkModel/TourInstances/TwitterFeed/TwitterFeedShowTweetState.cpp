@@ -18,6 +18,7 @@
 #include "InteriorController.h"
 #include "InteriorVisibilityUpdater.h"
 #include "InteriorSelectionModel.h"
+#include "SearchVendorNames.h"
 
 namespace ExampleApp
 {
@@ -135,7 +136,8 @@ namespace ExampleApp
                             jsonDocument.Accept(writer);
                             
                             ExampleApp::WorldPins::SdkModel::WorldPinFocusData worldPinFocusData(m_pinPlacename,
-                                                                                                 buffer.GetString());
+                                                                                                 buffer.GetString(),
+                                                                                                 Search::TourTwitterVendorName);
                             
                             Eegeo::Space::LatLong location = m_pinLocation;
                             const int StarIconIndex = 10;

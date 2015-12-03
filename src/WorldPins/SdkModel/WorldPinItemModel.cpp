@@ -25,7 +25,7 @@ namespace ExampleApp
                 : m_id(id)
                 , m_pSelectionHandler(pSelectionHandler)
                 , m_pVisibilityStateChangedHandler(pVisibilityStateChangedHandler)
-                , m_focusModel(m_id, worldPinFocusData.title, worldPinFocusData.subtitle, worldPinFocusData.ratingsImage, worldPinFocusData.reviewCount)
+                , m_focusModel(m_id, worldPinFocusData.title, worldPinFocusData.subtitle, worldPinFocusData.vendor, worldPinFocusData.ratingsImage, worldPinFocusData.reviewCount)
                 , m_transitionState(StableHidden)
                 , m_transitionStateValue(0.f)
                 , m_focusable(true)

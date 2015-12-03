@@ -17,6 +17,7 @@ namespace ExampleApp
 
                 virtual const std::string& GetTitle() const = 0;
                 virtual const std::string& GetSubtitle() const = 0;
+                virtual const std::string& GetVendor() const = 0;
                 virtual const bool HasRatingsImage() const = 0;
                 virtual const std::string& GetRatingsImage() const = 0;
                 virtual const int GetReviewCount() const = 0;
