@@ -54,6 +54,9 @@
     <WarningLevel>4</WarningLevel>
     <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>SwallowApp.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -104,7 +107,7 @@
     <Compile Include="Views\SearchResultPoi\ResultModels\SwallowPersonResultModel.cs" />
     <Compile Include="Views\SearchResultPoi\ResultModels\SwallowWorkingGroupResultModel.cs" />
     <Compile Include="Views\SearchResultPoi\ResultModels\YelpResultModel.cs" />
-	<Compile Include="Views\SearchResultPoi\GeonamesSearchResultsPoiView.cs" />
+    <Compile Include="Views\SearchResultPoi\GeonamesSearchResultsPoiView.cs" />
     <Compile Include="Views\SearchResultPoi\SearchResultCategoryMapper.cs" />
     <Compile Include="Views\SearchResultPoi\SearchResultPoiViewBase.cs" />
     <Compile Include="Views\SearchResultPoi\SwallowDepartmentSearchResultsPoiView.cs" />
@@ -590,6 +593,9 @@
     <Resource Include="..\..\Resources\button_occupancy_occupied_on.png">
       <Link>Assets\button_occupancy_occupied_on.png</Link>
     </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="SwallowApp.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
