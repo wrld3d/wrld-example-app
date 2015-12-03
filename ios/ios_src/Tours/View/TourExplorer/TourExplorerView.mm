@@ -27,7 +27,7 @@
     return m_pInterop;
 }
 
-- (id) initWithParams:(float)width :(float)height :(float)pixelScale :(ImageStore*)pImageStore
+- (id) initWithParams:(float)width :(float)height :(float)pixelScale :(ExampleApp::URLRequest::View::URLRequestHandler&) urlRequestHandler  :(ImageStore*)pImageStore
 {
     const bool isPhone = ExampleApp::Helpers::UIHelpers::UsePhoneLayout();
     
@@ -40,7 +40,7 @@
         m_hasActiveTour = false;
         m_exitingTour = false;
         
-        m_pInterop = new ExampleApp::Tours::View::TourExplorer::TourExplorerViewInterop(self);
+        m_pInterop = new ExampleApp::Tours::View::TourExplorer::TourExplorerViewInterop(self,urlRequestHandler);
         
         m_viewController = [[iCarouselTourExplorerViewController alloc] initWithParams
                             :m_screenWidth
@@ -282,6 +282,7 @@
             [self layoutIfNeeded];
 
             [self configureViewForTour:m_nextTour :0];
+            [self animateTo:1.0];
         }
     }];
 }

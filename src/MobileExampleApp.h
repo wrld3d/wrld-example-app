@@ -83,9 +83,12 @@
 #include "CameraTransitionService.h"
 #include "InteriorsNavigation.h"
 #include "UserInteraction.h"
+#include "TwitterFeed.h"
+#include "TwitterFeedTour.h"
 #include "ReportPinsVisibilityMasking.h"
 #include "HighlightPickingController.h"
 #include "IRayCaster.h"
+
 
 namespace ExampleApp
 {
@@ -159,6 +162,7 @@ namespace ExampleApp
         SwallowPoiDb::ISwallowPoiDbModule* m_pSwallowPoiDbModule;
         InteriorsCustomMaterials::SdkModel::IInteriorsCustomMaterialsModule* m_pInteriorsCustomMaterialsModule;
         UserInteraction::SdkModel::UserInteractionModule* m_pUserInteractionModule;
+        Social::TwitterFeed::ITwitterFeedModule* m_pTwitterFeedModule;
         ReportPinsVisibilityMasking::SdkModel::ReportPinsVisibilityMaskingModule* m_pReportPinsVisibilityMaskingModule;
         Eegeo::Picking::PickingController* m_pInteriorsPickingController;
         Eegeo::Collision::IRayCaster* m_pRayCaster;
@@ -171,6 +175,7 @@ namespace ExampleApp
         Tours::IToursModule* m_pToursModule;
         Eegeo::Modules::FireworksModule* m_pFireworksModule;
         float m_toursPinDiameter;
+        Tours::SdkModel::TourInstances::TwitterFeed::ITwitterFeedTourModule* m_pTwitterFeedTourModule;
         
         AppCamera::SdkModel::IAppCameraModule* m_pAppCameraModule;
         
@@ -376,6 +381,11 @@ namespace ExampleApp
             return *m_pInteriorsExplorerModule;
         }
         
+        const ExampleApp::Social::TwitterFeed::ITwitterFeedModule& TwitterFeedModule() const
+        {
+            return *m_pTwitterFeedModule;
+        }
+        
         const ExampleApp::Tours::IToursModule& ToursModule() const
         {
             return *m_pToursModule;
@@ -384,6 +394,11 @@ namespace ExampleApp
         const ExampleApp::WorldPins::SdkModel::IWorldPinsModule& TourWorldPinsModule() const
         {
             return *m_pToursWorldPinsModule;
+        }
+        
+        const ExampleApp::Tours::SdkModel::TourInstances::TwitterFeed::ITwitterFeedTourModule& TwitterFeedTourModule() const
+        {
+            return *m_pTwitterFeedTourModule;
         }
         
         // A flag for opting in/out of tours

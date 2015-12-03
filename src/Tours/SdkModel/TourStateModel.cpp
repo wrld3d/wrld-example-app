@@ -11,11 +11,15 @@ namespace ExampleApp
             TourStateModel::TourStateModel(const std::string& headline,
                                            const std::string& description,
                                            const std::string& imagePath,
-                                           const std::string& icon)
+                                           const std::string& icon,
+                                           bool isTweet,
+                                           Social::TwitterFeed::TweetModel* pTweet)
             : m_headline(headline)
             , m_description(description)
             , m_imagePath(imagePath)
             , m_icon(icon)
+            , m_isTweet(isTweet)
+            , m_pTweet(pTweet)
             {
                 
             }
@@ -38,6 +42,16 @@ namespace ExampleApp
             const std::string& TourStateModel::Icon() const
             {
                 return m_icon;
+            }
+            
+            bool TourStateModel::IsTweet() const
+            {
+                return m_isTweet;
+            }
+            
+            Social::TwitterFeed::TweetModel* TourStateModel::Tweet() const
+            {
+                return m_pTweet;
             }
         }
     }

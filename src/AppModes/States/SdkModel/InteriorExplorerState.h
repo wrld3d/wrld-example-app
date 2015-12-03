@@ -15,6 +15,7 @@
 #include "EegeoUI.h"
 #include "ISingleOptionAlertBoxDismissedHandler.h"
 #include "MyPinCreation.h"
+#include "Tours.h"
 
 namespace ExampleApp
 {
@@ -41,6 +42,9 @@ namespace ExampleApp
                     
                     AppCamera::SdkModel::IAppCameraController& m_cameraController;
                     int m_interiorCameraHandle;
+                    
+                    Eegeo::Helpers::TCallback0<InteriorExplorerState> m_tourStartedCallback;
+                    Tours::SdkModel::ITourService& m_tourService;
                     Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& m_worldCameraController;
                     ExampleApp::InteriorsExplorer::SdkModel::InteriorsExplorerCameraController& m_interiorsCameraController;
                     Eegeo::UI::NativeUIFactories& m_nativeUIFactories;
@@ -57,12 +61,15 @@ namespace ExampleApp
                     InteriorsExplorer::SdkModel::InteriorExplorerUserInteractionModel& m_interiorExplorerUserInteractionModel;
                     
                     void OnFailAlertBoxDismissed();
+                    
+                    void OnTourStarted();
                 
                 public:
                     
                     InteriorExplorerState(AppCamera::SdkModel::IAppCameraController& cameraController,
                                           Eegeo::Resources::Interiors::InteriorController& interiorController,
                                           int interiorCameraHandle,
+                                          Tours::SdkModel::ITourService& tourService,
                                           Eegeo::Streaming::CameraFrustumStreamingVolume& cameraFrustumStreamingVolume,
                                           InteriorsExplorer::SdkModel::InteriorVisibilityUpdater& interiorVisibilityUpdater,
                                           InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel,

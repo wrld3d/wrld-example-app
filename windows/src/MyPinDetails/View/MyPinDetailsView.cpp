@@ -13,7 +13,7 @@ namespace ExampleApp
             MyPinDetailsView::MyPinDetailsView(WindowsNativeState& nativeState)
                 :m_nativeState(nativeState)
             {
-                m_uiViewClass = Helpers::ReflectionHelpers::GetTypeFromAssembly("ExampleAppWPF", "ExampleAppWPF.MyPinDetailsView");
+                m_uiViewClass = Helpers::ReflectionHelpers::GetTypeFromEntryAssembly("ExampleAppWPF.MyPinDetailsView");
                 System::Reflection::ConstructorInfo^ ctor = m_uiViewClass->GetConstructor(Helpers::ReflectionHelpers::CreateTypes(System::IntPtr::typeid));
                 m_uiView = ctor->Invoke(Helpers::ReflectionHelpers::CreateObjects(gcnew System::IntPtr(this)));
 

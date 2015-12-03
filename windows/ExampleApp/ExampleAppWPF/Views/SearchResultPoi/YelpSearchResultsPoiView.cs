@@ -192,7 +192,7 @@ namespace ExampleAppWPF
 
             if (yelpResultModel.ReviewCount > 0 && !string.IsNullOrEmpty(yelpResultModel.RatingsImageUrl))
             {
-                RatingsImage = new BitmapImage(new Uri(string.Format("pack://application:,,,/ExampleAppWPF;component/Assets/{0}.png", yelpResultModel.RatingsImageUrl)));
+                RatingsImage = new BitmapImage(ViewHelpers.MakeUriForImage(string.Format("{0}.png", yelpResultModel.RatingsImageUrl)));
             }
 
             RatingCountVisibility = string.IsNullOrEmpty(yelpResultModel.ImageUrl) && !string.IsNullOrEmpty(yelpResultModel.RatingsImageUrl) && yelpResultModel.ReviewCount > 0 ? Visibility.Visible : Visibility.Collapsed;

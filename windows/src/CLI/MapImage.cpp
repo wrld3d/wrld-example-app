@@ -178,9 +178,9 @@ namespace ExampleApp
             m_appRunner->HandleRotateStartEvent(x, y);
         }
 
-        void MapImage::HandleRotateEndEvent()
+        void MapImage::HandleRotateEndEvent(int x, int y)
         {
-            m_appRunner->HandleRotateEndEvent();
+            m_appRunner->HandleRotateEndEvent(x, y);
         }
 
         void MapImage::HandleTiltStart(int x, int y)

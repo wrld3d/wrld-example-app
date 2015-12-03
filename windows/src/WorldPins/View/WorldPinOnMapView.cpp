@@ -23,7 +23,7 @@ namespace ExampleApp
                 : m_nativeState(nativeState)
                 , m_pinOffset((pinDiameter * Helpers::ImageHelpers::GetPixelScale()) * 0.75f)
             {
-                m_uiViewClass = GetTypeFromAssembly("ExampleAppWPF", "ExampleAppWPF.WorldPinOnMapView");
+                m_uiViewClass = GetTypeFromEntryAssembly("ExampleAppWPF.WorldPinOnMapView");
                 ConstructorInfo^ ctor = m_uiViewClass->GetConstructor(CreateTypes(IntPtr::typeid, float::typeid));
                 m_uiView = ctor->Invoke(CreateObjects(gcnew IntPtr(this), m_pinOffset));
 

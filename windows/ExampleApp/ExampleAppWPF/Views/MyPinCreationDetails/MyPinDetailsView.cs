@@ -16,14 +16,15 @@ namespace ExampleAppWPF
     {
         private MainWindow m_currentWindow;
         private IntPtr m_nativeCallerPointer;
-
-        private Image m_closeButton = null;
-        private Image m_deleteButton = null;
+        
         private TextBlock m_titleView = null;
         private TextBlock m_descriptionView = null;
         private TextBlock m_descriptHeader = null;
         private TextBlock m_imageHeader = null;
         private Image m_imageView = null;
+
+        private ControlClickHandler m_deleteButtonClickHandler = null;
+        private ControlClickHandler m_closeButtonClickHandler = null;
 
         private float m_imageWidth;
 
@@ -58,13 +59,14 @@ namespace ExampleAppWPF
         {
             m_titleView = (TextBlock)CheckAndGetProperty("Title");
             m_descriptionView = (TextBlock)CheckAndGetProperty("Description");
-            m_closeButton = (Image)CheckAndGetProperty("Close");
-            m_deleteButton = (Image)CheckAndGetProperty("RemovePin");
             m_imageView = (Image)CheckAndGetProperty("Image");
             m_imageHeader = (TextBlock)CheckAndGetProperty("ImageHeader");
-
-            m_closeButton.MouseDown += OnCloseClicked;
-            m_deleteButton.MouseDown += OnDeleteClicked;
+            
+            Image deleteButton = (Image)CheckAndGetProperty("RemovePin");
+            Image closeButton = (Image)CheckAndGetProperty("Close");
+            
+            m_deleteButtonClickHandler = new ControlClickHandler(deleteButton, OnDeleteClicked);
+            m_closeButtonClickHandler = new ControlClickHandler(closeButton, OnCloseClicked);
         }
 
         private void OnDeleteClicked(object sender, System.Windows.Input.MouseButtonEventArgs e)

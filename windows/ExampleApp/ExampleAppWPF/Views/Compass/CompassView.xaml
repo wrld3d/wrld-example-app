@@ -7,7 +7,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:CompassView}">
                     <Canvas Name="ImageCanvas">
-                        <Image Name="ButtonImage" Source="/ExampleAppWPF;component/Assets/compass.png" Width="120" Height="120"/>
+                        <Image Name="ButtonImage" Source="/Assets/compass.png" Width="120" Height="120"/>
                     </Canvas>
                 </ControlTemplate>
             </Setter.Value>

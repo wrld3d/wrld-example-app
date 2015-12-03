@@ -49,7 +49,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT umessage, WPARAM wparam, LPARAM lparam)
         break;
 
     case WM_RBUTTONUP:
-        g_pAppRunner->HandleRotateEndEvent();
+        g_pAppRunner->HandleRotateEndEvent(LOWORD(lparam), HIWORD(lparam));
         break;
 
     case WM_MBUTTONDOWN:

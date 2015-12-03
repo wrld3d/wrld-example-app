@@ -98,6 +98,13 @@
 #include "ReportPinsVisibilityMaskingModule.h"
 #include "EnvironmentFlatteningService.h"
 #include "UserInteractionModel.h"
+#include "EnvironmentFlatteningService.h"
+#include "TwitterFeedModule.h"
+#include "ITwitterFeedService.h"
+#include "TwitterFeedTourModule.h"
+
+#include "SceneModelsModule.h"
+
 #include "InteriorController.h"
 #include "EnvironmentRayCaster.h"
 #include "AggregateCollisionBvhProvider.h"
@@ -207,6 +214,8 @@ namespace ExampleApp
         , m_pToursWorldPinsModule(NULL)
         , m_pToursPinsModule(NULL)
         , m_pGlobeCameraWrapper(NULL)
+        , m_pTwitterFeedModule(NULL)
+        , m_pTwitterFeedTourModule(NULL)
         , m_toursPinDiameter(48.f)
         , m_enableTours(false)
         , m_pSQLiteModule(NULL)
@@ -608,6 +617,8 @@ namespace ExampleApp
         
         InitialiseToursModules(mapModule, world, interiorsAffectedByFlattening);
         
+        m_pTwitterFeedModule = Eegeo_NEW(Social::TwitterFeed::TwitterFeedModule)(World().GetPlatformAbstractionModule().GetWebLoadRequestFactory());
+        
         if (m_interiorsEnabled)
         {
             m_pInteriorsEntitiesPinsModule = Eegeo_NEW(InteriorsEntitiesPins::SdkModel::InteriorsEntitiesPinsModule(m_pWorld->GetPlatformAbstractionModule(),
@@ -677,9 +688,13 @@ namespace ExampleApp
 
         Eegeo_DELETE m_pInteriorsCustomMaterialsModule;
         
+        Eegeo_DELETE m_pTwitterFeedModule;
+
         Eegeo_DELETE m_pToursModule;
         Eegeo_DELETE m_pToursWorldPinsModule;
         Eegeo_DELETE m_pToursPinsModule;
+        
+        Eegeo_DELETE m_pTwitterFeedTourModule;
         
         Eegeo_DELETE m_pWorldAreaLoaderModule;
         
@@ -920,9 +935,34 @@ namespace ExampleApp
                                                                                         m_interiorsEnabled,
                                                                                         interiorsPresentationModule.GetAppLevelController(),
                                                                                         m_pInteriorsExplorerModule->GetInteriorVisibilityUpdater(),
+                                                                                        interiorsPresentationModule.GetInteriorSelectionModel(),
                                                                                         m_messageBus);
         
         ToursModule().GetTourService().AddTour(tourModel, *factory.CreateTourStateMachine(tourModel));
+        
+        m_pTwitterFeedTourModule = Eegeo_NEW(Tours::SdkModel::TourInstances::TwitterFeed::TwitterFeedTourModule)(ToursModule().GetCameraTransitionController(),
+                                                                                                                 ToursModule().GetCameraController(),
+                                                                                                                 ToursModule().GetTourService(),
+                                                                                                                 TourWorldPinsModule().GetWorldPinsService(),
+                                                                                                                 interiorsPresentationModule.GetAppLevelController(),
+                                                                                                                 m_pInteriorsExplorerModule->GetInteriorVisibilityUpdater(),
+                                                                                                                 interiorsPresentationModule.GetInteriorSelectionModel(),
+                                                                                                                 ToursModule().GetTourRepository(),
+                                                                                                                 TwitterFeedModule().GetTwitterFeedService(),
+                                                                                                                 m_metricsService,
+                                                                                                                 m_messageBus);
+        
+        const std::map<std::string, Tours::SdkModel::TourInstances::TwitterFeed::TweetStateData>& tweetStateDataMap = TwitterFeedTourModule().GetTweetStateDataMap();
+        
+        std::vector<std::string> twitterAccountNames;
+        
+        for(std::map<std::string, Tours::SdkModel::TourInstances::TwitterFeed::TweetStateData>::const_iterator it = tweetStateDataMap.begin(); it != tweetStateDataMap.end(); ++it)
+        {
+            twitterAccountNames.push_back((*it).first);
+        }
+        
+        TwitterFeedModule().GetTwitterFeedService().LoadTimeLines(twitterAccountNames);
+        
     }
 
     void MobileExampleApp::OnPause()

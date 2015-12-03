@@ -18,9 +18,11 @@ namespace ExampleApp
                                                                  ScreenControl::View::IScreenControlViewModel::IScreenControlViewModel& worldPinOnMapInFocusScreenControlViewModel,
                                                                  Modality::View::IModalityModel& modalityModel,
                                                                  float pinDiameter,
-                                                                 float pixelScale)
+                                                                 float pixelScale,
+                                                                 ImageStore* pImageStore,
+                                                                 const AppModes::SdkModel::IAppModeModel& appModeModel)
                 {
-                    m_pView = [[TourHovercardView alloc] initWithParams:pinDiameter :pixelScale];
+                    m_pView = [[TourHovercardView alloc] initWithParams:pinDiameter :pixelScale :pImageStore];
                     
                     m_pController = Eegeo_NEW(WorldPins::View::WorldPinOnMapController)(
                                                                        *[m_pView getInterop],

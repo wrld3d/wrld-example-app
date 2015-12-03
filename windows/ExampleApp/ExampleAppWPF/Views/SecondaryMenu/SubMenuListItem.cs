@@ -24,7 +24,7 @@ namespace ExampleAppWPF
             if (parsed.TryGetValue("icon", out iconField))
             {
                 m_iconString = iconField.Value<string>();
-                m_icon = new BitmapImage(new Uri(string.Format("pack://application:,,,/ExampleAppWPF;component/Assets/icon1_{0}.png", m_iconString), UriKind.Absolute));
+                m_icon = new BitmapImage(ViewHelpers.MakeUriForImage(string.Format("icon1_{0}.png", m_iconString)));
             }
         }
     }

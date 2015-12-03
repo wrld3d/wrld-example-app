@@ -7,12 +7,12 @@ using System.Windows;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ExampleAppWPF")]
+[assembly: AssemblyTitle(VersionInfo.ProductName)]
+[assembly: AssemblyProduct(VersionInfo.ProductName)]
+[assembly: AssemblyCompany(VersionInfo.Company)]
+[assembly: AssemblyCopyright(VersionInfo.Copyright)]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Scan Computers International")]
-[assembly: AssemblyProduct("ExampleAppWPF")]
-[assembly: AssemblyCopyright("Copyright © Scan Computers International 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -52,4 +52,6 @@ using System.Windows;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion(VersionInfo.FileVersion)]
+[assembly: AssemblyInformationalVersion(VersionInfo.InformationalFileVersion)]
+

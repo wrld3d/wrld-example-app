@@ -19,6 +19,9 @@ namespace ExampleApp
             , m_hoverCardTextColor(Helpers::ColorHelpers::Color::FromRGB(0, 0, 0))
             , m_states()
             , m_isInterior(false)
+            , m_worldPinInteriorData()
+            , m_usesTwitter(false)
+            , m_twitterBaseUserName("")
             {
                 
             }
@@ -33,7 +36,9 @@ namespace ExampleApp
                                  Helpers::ColorHelpers::Color textColor,
                                  Helpers::ColorHelpers::Color hoverCardBaseColor,
                                  Helpers::ColorHelpers::Color hoverCardTextColor,
-                                 const std::vector<TourStateModel>& states)
+                                 const std::vector<TourStateModel>& states,
+                                 bool usesTwitter,
+                                 const std::string& twitterBaseUserName)
             : m_name(name)
             , m_introText(introText)
             , m_location(location)
@@ -45,6 +50,8 @@ namespace ExampleApp
             , m_states(states)
             , m_isInterior(isInterior)
             , m_worldPinInteriorData(worldPinInteriorData)
+            , m_usesTwitter(usesTwitter)
+            , m_twitterBaseUserName(twitterBaseUserName)
             {
                 
             }
@@ -112,6 +119,16 @@ namespace ExampleApp
             int TourModel::StateCount() const
             {
                 return m_states.size();
+            }
+            
+            bool TourModel::UsesTwitter() const
+            {
+                return m_usesTwitter;
+            }
+            
+            const std::string& TourModel::TwitterBaseUserName() const
+            {
+                return m_twitterBaseUserName;
             }
         }
     }

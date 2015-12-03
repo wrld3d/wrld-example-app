@@ -18,7 +18,7 @@ namespace ExampleApp
             MyPinCreationConfirmationView::MyPinCreationConfirmationView(WindowsNativeState& windowsNativeState)
                 : m_nativeState(windowsNativeState)
             {
-                m_uiViewClass = GetTypeFromAssembly("ExampleAppWPF", "ExampleAppWPF.MyPinCreationConfirmationView");
+                m_uiViewClass = GetTypeFromEntryAssembly("ExampleAppWPF.MyPinCreationConfirmationView");
                 ConstructorInfo^ ctor = m_uiViewClass->GetConstructor(CreateTypes(IntPtr::typeid));
                 m_uiView = ctor->Invoke(CreateObjects(gcnew IntPtr(this)));
 

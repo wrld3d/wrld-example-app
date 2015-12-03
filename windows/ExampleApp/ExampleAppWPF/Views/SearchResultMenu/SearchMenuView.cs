@@ -238,8 +238,7 @@ namespace ExampleAppWPF
 
                     JToken iconStringToken;
                     var iconString = jsonObject.TryGetValue("icon", out iconStringToken) ? iconStringToken.Value<string>() : "misc";
-                    item.Icon = new BitmapImage(new Uri(string.Format("pack://application:,,,/ExampleAppWPF;component/Assets/icon1_{0}.png", iconString), UriKind.Absolute));
-
+                    item.Icon = new BitmapImage(ViewHelpers.MakeUriForImage(string.Format("icon1_{0}.png", iconString)));
                     itemsSource.Add(item);
                 }
 

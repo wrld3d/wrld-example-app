@@ -11,6 +11,7 @@
 #include "WorldPinItemModel.h"
 #include "WorldPinVisibility.h"
 #include "InteriorVisibilityUpdater.h"
+#include "InteriorSelectionModel.h"
 
 namespace ExampleApp
 {
@@ -30,6 +31,7 @@ namespace ExampleApp
                                                        WorldPins::SdkModel::WorldPinInteriorData& worldPinInteriorData,
                                                        Eegeo::Resources::Interiors::InteriorController& interiorController,
                                                        InteriorsExplorer::SdkModel::InteriorVisibilityUpdater& interiorVisibilityUpdater,
+                                                       const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                        ExampleAppMessaging::TMessageBus& messageBus)
                     : m_stateModel(stateModel)
                     , m_toursCameraTransitionController(toursCameraTransitionController)
@@ -41,6 +43,7 @@ namespace ExampleApp
                     , m_worldPinInteriorData(worldPinInteriorData)
                     , m_interiorController(interiorController)
                     , m_interiorVisibilityUpdater(interiorVisibilityUpdater)
+                    , m_interiorSelectionModel(interiorSelectionModel)
                     , m_messageBus(messageBus)
                     , m_pTourCardTappedHandler(NULL)
                     {
@@ -54,21 +57,22 @@ namespace ExampleApp
                     
                     void ExampleTourState::Enter()
                     {
+                        m_interiorTransitionComplete = false;
                         m_cameraTransitionComplete = false;
                         m_cameraMode.Reset();
                         
                         m_toursCameraTransitionController.TransitionTo(m_cameraMode);
                         
-                        if(m_interior)
+                        if(m_interior && m_interiorSelectionModel.GetSelectedInteriorId() != m_worldPinInteriorData.building)
                         {
                             m_interiorController.SetSelectedInterior(m_worldPinInteriorData.building);
+                            m_interiorVisibilityUpdater.SetInteriorShouldDisplay(false);
                         }
-                        else if (m_interiorController.InteriorIsVisible())
+                        else if (!m_interior)
                         {
                             m_interiorController.ClearSelectedInterior();
+                            m_interiorVisibilityUpdater.SetInteriorShouldDisplay(false);
                         }
-                        
-                         m_interiorVisibilityUpdater.SetInteriorShouldDisplay(false);
                         
                         m_pTourCardTappedHandler = Eegeo_NEW(ExampleCurrentTourCardTappedHandler)(m_messageBus, m_stateModel);
                     }
@@ -96,6 +100,11 @@ namespace ExampleApp
                                                                         iconIndex,
                                                                         heightOffsetMetres,
                                                                         WorldPins::SdkModel::WorldPinVisibility::TourPin);
+                        }
+                        else if(!m_interiorTransitionComplete && m_interior && m_interiorController.InteriorInScene())
+                        {
+                            m_interiorTransitionComplete = true;
+                            m_interiorController.SetCurrentFloor(m_worldPinInteriorData.floor);
                         }
                     }
                     

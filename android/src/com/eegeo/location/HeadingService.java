@@ -206,7 +206,7 @@ public class HeadingService implements SensorEventListener
             heading += 90.f;
             break;
         case Surface.ROTATION_180:
-            heading = 180.f;
+            heading += 180.f;
             break;
         default:
             heading += 90.f;
