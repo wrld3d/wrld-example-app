@@ -14,7 +14,7 @@ namespace ExampleApp
         {
             InteriorsExplorerView::InteriorsExplorerView()
             {
-                m_uiViewClass = GetTypeFromAssembly("ExampleAppWPF", "ExampleAppWPF.InteriorsExplorerView");
+                m_uiViewClass = GetTypeFromEntryAssembly("ExampleAppWPF.InteriorsExplorerView");
                 ConstructorInfo^ ctor = m_uiViewClass->GetConstructor(CreateTypes(IntPtr::typeid));
                 m_uiView = ctor->Invoke(CreateObjects(gcnew IntPtr(this)));
 

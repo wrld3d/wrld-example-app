@@ -42,7 +42,7 @@ namespace ExampleAppWPF
 
         public override void OnApplyTemplate()
         {
-            var bitmap = new BitmapImage(new Uri("pack://application:,,,/ExampleAppWPF;component/Assets/compass_point.png", UriKind.Absolute));
+            var bitmap = new BitmapImage(ViewHelpers.MakeUriForImage("compass_point.png"));
             m_compassPoint.Source = bitmap;
             m_compassPoint.Width = bitmap.PixelWidth;
             m_compassPoint.Height = bitmap.PixelHeight;

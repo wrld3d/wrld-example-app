@@ -16,7 +16,7 @@ namespace ExampleApp
             OptionsView::OptionsView(WindowsNativeState& nativeState)
                 : m_nativeState(nativeState)
             {
-                m_uiViewClass = GetTypeFromAssembly("ExampleAppWPF", "ExampleAppWPF.OptionsView");
+                m_uiViewClass = GetTypeFromEntryAssembly("ExampleAppWPF.OptionsView");
                 ConstructorInfo^ ctor = m_uiViewClass->GetConstructor(CreateTypes(IntPtr::typeid));
                 m_uiView = ctor->Invoke(CreateObjects(gcnew IntPtr(this)));
 

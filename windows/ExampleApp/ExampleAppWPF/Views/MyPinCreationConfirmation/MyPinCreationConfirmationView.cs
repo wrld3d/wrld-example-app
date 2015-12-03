@@ -85,14 +85,14 @@ namespace ExampleAppWPF
             m_acceptButton.MouseLeftButtonDown += OnAcceptClicked;
             m_acceptButton.MouseLeftButtonUp += OnAcceptRelease;
             m_acceptButton.MouseLeave += OnAcceptMouseLeave;
-            m_acceptButtonUp = new BitmapImage(new Uri("pack://application:,,,/ExampleAppWPF;component/Assets/button_ok_place_pin_off.png", UriKind.Absolute));
-            m_acceptButtonDown = new BitmapImage(new Uri("pack://application:,,,/ExampleAppWPF;component/Assets/button_ok_place_pin_on.png", UriKind.Absolute));
+            m_acceptButtonUp = new BitmapImage(ViewHelpers.MakeUriForImage("button_ok_place_pin_off.png"));
+            m_acceptButtonDown = new BitmapImage(ViewHelpers.MakeUriForImage("button_ok_place_pin_on.png"));
 
             m_closeButton.MouseLeftButtonDown += OnCloseClicked;
             m_closeButton.MouseLeftButtonUp += OnCloseRelease;
             m_closeButton.MouseLeave += OnCloseMouseLeave;
-            m_closeButtonUp = new BitmapImage(new Uri("pack://application:,,,/ExampleAppWPF;component/Assets/button_close_place_pin_off.png", UriKind.Absolute));
-            m_closeButtonDown = new BitmapImage(new Uri("pack://application:,,,/ExampleAppWPF;component/Assets/button_close_place_pin_on.png", UriKind.Absolute));
+            m_closeButtonUp = new BitmapImage(ViewHelpers.MakeUriForImage("button_close_place_pin_off.png"));
+            m_closeButtonDown = new BitmapImage(ViewHelpers.MakeUriForImage("button_close_place_pin_on.png"));
         }
 
         private void OnAcceptClicked(object sender, MouseButtonEventArgs e)

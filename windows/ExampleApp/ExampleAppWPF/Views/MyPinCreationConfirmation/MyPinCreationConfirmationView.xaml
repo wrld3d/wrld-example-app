@@ -11,9 +11,9 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:MyPinCreationConfirmationView}" >
                     <StackPanel Name="MainPanel" Background="{StaticResource White}"  Orientation="Horizontal">
-                        <Image Name="Close" Source="/ExampleAppWPF;component/Assets/button_close_place_pin_off.png" Width="60" Height="60" Stretch="Uniform"/>
+                        <Image Name="Close" Source="/Assets/button_close_place_pin_off.png" Width="60" Height="60" Stretch="Uniform"/>
                         <TextBlock Text="Drag marker to place pin" FontSize="14" Foreground="Gray" Margin="5, 0, 5, 0" FontWeight="Bold" VerticalAlignment="Center"/>
-                        <Image Name="Ok" Source="/ExampleAppWPF;component/Assets/button_ok_place_pin_off.png" Width="60" Height="60" Stretch="Fill"/>
+                        <Image Name="Ok" Source="/Assets/button_ok_place_pin_off.png" Width="60" Height="60" Stretch="Fill"/>
                     </StackPanel>
                 </ControlTemplate>
             </Setter.Value>
