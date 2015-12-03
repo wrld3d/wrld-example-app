@@ -56,6 +56,9 @@ namespace ExampleApp
                 formData["poi[vendor_name]"] = searchResult.GetVendor();
                 formData["poi[vendor_id]"] = searchResult.GetIdentifier();
                 
+                formData["poi[interior_id]"] = searchResult.GetBuildingId().Value();
+                formData["poi[interior_floor_number"] = ConvertModelDetailToString(searchResult.GetFloor());
+                
                 std::map<std::string, std::string> headerData;
                 headerData["Authorization"] = m_authHeader;
                 
@@ -77,6 +80,8 @@ namespace ExampleApp
                 
                 formData["poi[title]"] = pinModel.GetTitle();
                 formData["poi[description]"] = pinModel.GetDescription();
+                formData["poi[interior_id]"] = pinModel.GetBuildingId().Value();
+                formData["poi[interior_floor_number"] = ConvertModelDetailToString(pinModel.GetFloor());
                 
                 const bool hasImage = !imagePath.empty();
                 
