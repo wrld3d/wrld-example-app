@@ -22,9 +22,13 @@ namespace ExampleApp
                     
                     virtual void SetInitialCard(const int card) = 0;
                     
+                    virtual void SetShowBackButton(bool showBackButton) = 0;
+                    
                     virtual const SdkModel::TourModel& GetCurrentTour() const = 0;
                     
                     virtual const int GetInitialCard() const = 0;
+                    
+                    virtual bool GetShowBackButton() const = 0;
                 };
             }
         }

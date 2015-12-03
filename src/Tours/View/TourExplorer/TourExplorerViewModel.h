@@ -22,7 +22,7 @@ namespace ExampleApp
                 {
                     SdkModel::TourModel m_tourModel;
                     int m_initialCard;
-                    
+                    bool m_showBackButton;
                     
                 public:
                     TourExplorerViewModel(Eegeo::Helpers::TIdentity identity,
@@ -35,6 +35,10 @@ namespace ExampleApp
                     void SetInitialCard(const int card);
                     
                     const int GetInitialCard() const;
+                    
+                    void SetShowBackButton(bool showBackButton);
+                    
+                    bool GetShowBackButton() const;
                     
                     Eegeo::Helpers::TIdentity GetIdentity() const;
                     

@@ -17,25 +17,20 @@ namespace ExampleApp
                 : m_pView(pView)
                 , m_urlRequestHandler(urlRequestHandler)
                 , m_tourModel(SdkModel::TourModel::Empty())
-                , m_initialCard(-1)
                 {
                 }
                 
-                void TourExplorerViewInterop::SetCurrentTour(const SdkModel::TourModel& tourModel)
+                void TourExplorerViewInterop::SetCurrentTour(const SdkModel::TourModel& tourModel, int initialCard, bool showBackButton)
                 {
                     m_tourModel = tourModel;
-                    [m_pView configureViewForTour:m_tourModel :m_initialCard];
+                    [m_pView configureViewForTour:m_tourModel :initialCard :showBackButton];
                 }
                 
                 const SdkModel::TourModel& TourExplorerViewInterop::GetCurrentTour()
                 {
                     return m_tourModel;
                 }
-                
-                void TourExplorerViewInterop::SetInitialCard(const int initialCard)
-                {
-                    m_initialCard = initialCard;
-                }
+
                 
                 void TourExplorerViewInterop::OnStateSelected(int activeStateIndex)
                 {
@@ -69,6 +64,12 @@ namespace ExampleApp
                     m_dismissedCallbacks.ExecuteCallbacks();
                 }
                 
+                void TourExplorerViewInterop::OnExited()
+                {
+                    m_tourModel = SdkModel::TourModel::Empty();
+                    m_exitedCallbacks.ExecuteCallbacks();
+                }
+                
                 void TourExplorerViewInterop::InsertStateChangedCallback(Eegeo::Helpers::ICallback1<int> &callback)
                 {
                     m_stateChangedCallbacks.AddCallback(callback);
@@ -87,6 +88,16 @@ namespace ExampleApp
                 void TourExplorerViewInterop::RemoveDismissedCallback(Eegeo::Helpers::ICallback0 &callback)
                 {
                     m_dismissedCallbacks.RemoveCallback(callback);
+                }
+                
+                void TourExplorerViewInterop::InsertExitedCallback(Eegeo::Helpers::ICallback0 &callback)
+                {
+                    m_exitedCallbacks.AddCallback(callback);
+                }
+                
+                void TourExplorerViewInterop::RemoveExitedCallback(Eegeo::Helpers::ICallback0 &callback)
+                {
+                    m_exitedCallbacks.RemoveCallback(callback);
                 }
                 
                 void TourExplorerViewInterop::InsertChangeTourRequestCallback(Eegeo::Helpers::ICallback1<std::string>& callback)

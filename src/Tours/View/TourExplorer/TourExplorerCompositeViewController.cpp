@@ -36,11 +36,12 @@ namespace ExampleApp
                     
                 }
                 
-                void TourExplorerCompositeViewController::OpenTourExplorer(const SdkModel::TourModel& tourModel, const int startAtCard)
+                void TourExplorerCompositeViewController::OpenTourExplorer(const SdkModel::TourModel& tourModel, const int startAtCard, bool showBackButton)
                 {
                     m_tourExplorerOpen = true;
                     m_tourExplorerViewModel.SetCurrentTour(tourModel);
                     m_tourExplorerViewModel.SetInitialCard(startAtCard);
+                    m_tourExplorerViewModel.SetShowBackButton(showBackButton);
                     m_tourExplorerViewModel.AddToScreen();
                     
                     m_secondaryMenuViewModel.RemoveFromScreen();

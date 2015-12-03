@@ -80,7 +80,9 @@ namespace ExampleApp
                 m_hasActiveTour = true;
                 m_activeTourState = atCard;
                 
-                m_messageBus.Publish(TourOnMapSelectedMessage(m_activeTourModel, atCard));
+                bool showBackButton = !m_previousActiveToursStack.empty();
+                
+                m_messageBus.Publish(TourOnMapSelectedMessage(m_activeTourModel, atCard, showBackButton));
                 m_sdkDomainEventBus.Publish(WorldPins::WorldPinsVisibilityMessage(WorldPins::SdkModel::WorldPinVisibility::TourPin));
                 if(m_previousActiveToursStack.size() == 0)
                 {
@@ -126,6 +128,16 @@ namespace ExampleApp
                     }
                 }
                 
+            }
+            
+            void TourService::EndAllTours()
+            {
+                m_suspendCurrentTour = false;
+                while(m_previousActiveToursStack.size() != 0)
+                {
+                    m_previousActiveToursStack.pop();
+                }
+                EndCurrentActiveTour();
             }
             
             void TourService::SetActiveTourState(int activeStateIndex)

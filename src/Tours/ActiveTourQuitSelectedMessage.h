@@ -8,6 +8,12 @@ namespace ExampleApp
     {
         class ActiveTourQuitSelectedMessage
         {
+        private:
+            bool m_exitTours;
+        public:
+            ActiveTourQuitSelectedMessage(bool exitTours);
+            
+            bool ExitTours() const;
         };
     }
 }

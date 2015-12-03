@@ -6,6 +6,14 @@ namespace ExampleApp
 {
     namespace Tours
     {
+        ActiveTourQuitSelectedMessage::ActiveTourQuitSelectedMessage(bool exitTours)
+        : m_exitTours(exitTours)
+        {
+        }
         
+        bool ActiveTourQuitSelectedMessage::ExitTours() const
+        {
+            return m_exitTours;
+        }
     }
 }
