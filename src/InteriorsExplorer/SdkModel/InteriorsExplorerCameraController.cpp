@@ -237,6 +237,12 @@ namespace ExampleApp
                 m_globeCameraController.SetTouchSettings(m_cameraTouchSettings);
             }
             
+            void InteriorsExplorerCameraController::SetRotateEnabled(bool enabled)
+            {
+                m_cameraTouchSettings.RotateEnabled = enabled;
+                m_globeCameraController.SetTouchSettings(m_cameraTouchSettings);
+            }
+            
             void InteriorsExplorerCameraController::SetApplyRestrictions(bool applyRestrictions)
             {
                 m_applyRestrictions = applyRestrictions;

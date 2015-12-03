@@ -51,6 +51,8 @@ namespace ExampleApp
                     m_interiorsExplorerCameraController.SetPanEnabled(true);
                 }
                 
+                m_interiorsExplorerCameraController.SetRotateEnabled(m_gpsMode != Eegeo::Location::NavigationService::GpsModeCompass);
+                
                 ResetTargetLatLong();
             }
                 
