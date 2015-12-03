@@ -67,6 +67,7 @@ namespace ExampleApp
                 void SetTilt(float tiltDegrees);
                 
                 void SetPanEnabled(bool enabled);
+                void SetRotateEnabled(bool enabled);
                 
                 void SetApplyRestrictions(bool applyRestrictions);
                 
