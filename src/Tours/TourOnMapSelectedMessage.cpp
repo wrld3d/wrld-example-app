@@ -7,9 +7,10 @@ namespace ExampleApp
 {
     namespace Tours
     {
-        TourOnMapSelectedMessage::TourOnMapSelectedMessage(const SdkModel::TourModel& tourModel, const int initialCard)
+        TourOnMapSelectedMessage::TourOnMapSelectedMessage(const SdkModel::TourModel& tourModel, const int initialCard, bool showBackButton)
         : m_tourModel(tourModel)
         , m_initialCard(initialCard)
+        , m_showBackButton(showBackButton)
         {
             
         }
@@ -22,6 +23,11 @@ namespace ExampleApp
         const int TourOnMapSelectedMessage::GetInitialCard() const
         {
             return m_initialCard;
+        }
+        
+        bool TourOnMapSelectedMessage::GetShowBackButton() const
+        {
+            return m_showBackButton;
         }
     }
 }

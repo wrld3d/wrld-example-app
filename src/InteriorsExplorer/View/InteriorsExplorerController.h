@@ -9,6 +9,7 @@
 #include "ScreenControlViewModelIncludes.h"
 #include "InteriorsExplorerStateChangedMessage.h"
 #include "InteriorsExplorerFloorSelectedMessage.h"
+#include "IAppModeModel.h" // FM: Included for definition of AppMode, may want to extract AppMode to separate .h
 #include <sstream>
 
 namespace ExampleApp
@@ -39,6 +40,7 @@ namespace ExampleApp
                 void OnFloorSelected(const InteriorsExplorerFloorSelectedMessage& message);
                 void OnStateChanged(const InteriorsExplorerStateChangedMessage& message);
                 void OnViewStateChangeScreenControl(ScreenControl::View::IScreenControlViewModel &viewModel, float &state);
+                void OnAppModeChanged(const AppModes::AppModeChangedMessage& message);
                 
                 IInteriorsExplorerView& m_view;
                 InteriorsExplorerViewModel& m_viewModel;
@@ -48,12 +50,14 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<InteriorsExplorerController, const InteriorsExplorerStateChangedMessage&> m_stateChangedCallback;
                 Eegeo::Helpers::TCallback1<InteriorsExplorerController, const InteriorsExplorerFloorSelectedMessage&> m_floorSelectedCallback;
                 Eegeo::Helpers::TCallback2<InteriorsExplorerController, ScreenControl::View::IScreenControlViewModel&, float> m_viewStateCallback;
+                Eegeo::Helpers::TCallback1<InteriorsExplorerController, const AppModes::AppModeChangedMessage&> m_appModeChangedCallback;
                 
                 MyPinCreation::View::IMyPinCreationInitiationViewModel& m_initiationViewModel;
                 ExampleApp::Menu::View::IMenuViewModel& m_secondaryMenuViewModel;
                 ExampleApp::Menu::View::IMenuViewModel& m_searchResultMenuViewModel;
                 ScreenControl::View::IScreenControlViewModel& m_flattenViewModel;
                 ScreenControl::View::IScreenControlViewModel& m_compassViewModel;
+                AppModes::SdkModel::AppMode m_appMode;
                 
                 ExampleAppMessaging::TMessageBus& m_messageBus;
             };

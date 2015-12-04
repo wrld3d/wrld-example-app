@@ -89,8 +89,13 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Colour.cs" />
+    <Compile Include="DialogBox.xaml.cs">
+      <DependentUpon>DialogBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Layout.cs" />
+    <Compile Include="ViewHelpers.cs" />
     <Compile Include="Views\ControlClickHandler.cs" />
+    <Compile Include="Properties\VersionInfo.cs" />
     <Compile Include="Views\InteriorsExplorer\InteriorsExplorerView.cs" />
     <Compile Include="Views\Menu\MenuDelayedSourceUpdateAnimatorListener.cs" />
     <Compile Include="Views\Menu\MenuListAdapter.cs" />
@@ -119,6 +124,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Colours.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DialogBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ListBoxControlTemplateNoPadding.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -508,6 +521,11 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\place_pin_background.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\..\Resources\menu_list.png">
+      <Link>Assets\menu_list.png</Link>
+    </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

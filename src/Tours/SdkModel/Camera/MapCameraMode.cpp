@@ -53,6 +53,19 @@ namespace ExampleApp
                     m_pCameraController = NULL;
                 }
                 
+                void MapCameraMode::SetControlsEnabled(bool panningEnabled,
+                                                       bool rotateEnabled,
+                                                       bool zoomEnabled,
+                                                       bool tiltEnabled)
+                {
+                    Eegeo::Camera::GlobeCamera::GlobeCameraTouchSettings settings;
+                    settings.PanEnabled = panningEnabled;
+                    settings.RotateEnabled = rotateEnabled;
+                    settings.ZoomEnabled = zoomEnabled;
+                    settings.TiltEnabled = tiltEnabled;
+                    m_pCameraController->SetTouchSettings(settings);
+                }
+                
                 void MapCameraMode::Reset()
                 {
                     Eegeo::Space::EcefTangentBasis cameraInterestBasis;

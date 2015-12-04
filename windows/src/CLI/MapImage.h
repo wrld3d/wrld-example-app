@@ -26,7 +26,7 @@ namespace ExampleApp
             void HandlePanStartEvent(int x, int y);
             void HandlePanEndEvent(int x, int y);
             void HandleRotateStartEvent(int x, int y);
-            void HandleRotateEndEvent();
+            void HandleRotateEndEvent(int x, int y);
             void HandleTiltStart(int x, int y);
             void HandleTiltEnd(int x, int y);
             void HandleKeyboardDownEvent(int asciiKeyCode);

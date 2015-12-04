@@ -71,7 +71,7 @@ namespace ExampleAppWPF
 
         private void OnDeleteClicked(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            if (ShowRemovePinDialog() == MessageBoxResult.Yes)
+            if (ShowRemovePinDialog() == true)
             {
                 ExampleApp.MyPinDetailsViewCLI.RemovePinButtonClicked(m_nativeCallerPointer);
             }
@@ -119,9 +119,19 @@ namespace ExampleAppWPF
             m_currentWindow.EnableInput();
         }
 
-        private MessageBoxResult ShowRemovePinDialog()
+        private bool ShowRemovePinDialog()
         {
-            return MessageBox.Show("Are you sure you want to remove this pin?", "Remove Pin", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            DialogBox dialogBox = new DialogBox("Remove Pin", "Are you sure you want to remove this pin?", "Yes", "No");
+            dialogBox.Owner = m_currentWindow;
+
+            bool? result = dialogBox.ShowDialog();
+
+            if(result == null)
+            {
+                return false;
+            }
+
+            return (bool)result;
         }
     }
 }

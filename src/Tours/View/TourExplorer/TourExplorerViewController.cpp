@@ -28,6 +28,7 @@ namespace ExampleApp
                 , m_messageBus(messageBus)
                 , m_metricsService(metricsService)
                 , m_dismissedCallback(this, &TourExplorerViewController::OnDismissed)
+                , m_exitedCallback(this, &TourExplorerViewController::OnExited)
                 , m_stateChangedCallback(this, &TourExplorerViewController::OnStateChanged)
                 , m_viewStateCallback(this, &TourExplorerViewController::OnViewStateChangeScreenControl)
                 , m_tourChangeRequestCallback(this, &TourExplorerViewController::OnTourChangeRequested)
@@ -37,6 +38,7 @@ namespace ExampleApp
                     
                     m_view.InsertStateChangedCallback(m_stateChangedCallback);
                     m_view.InsertDismissedCallback(m_dismissedCallback);
+                    m_view.InsertExitedCallback(m_exitedCallback);
                     m_view.InsertChangeTourRequestCallback(m_tourChangeRequestCallback);
                     m_view.InsertCurrentTourCardTappedCallback(m_currentTourCardTappedCallback);
                     
@@ -47,6 +49,7 @@ namespace ExampleApp
                 {
                     m_view.RemoveCurrentTourCardTappedCallback(m_currentTourCardTappedCallback);
                     m_view.RemoveStateChangedCallback(m_stateChangedCallback);
+                    m_view.RemoveExitedCallback(m_exitedCallback);
                     m_view.RemoveDismissedCallback(m_dismissedCallback);
                     m_view.RemoveChangeTourRequestCallback(m_tourChangeRequestCallback);
                     
@@ -71,7 +74,16 @@ namespace ExampleApp
                     
                     //m_metricsService.SetEvent("TourExplorerViewController: Exited");
                     m_tourExplorerCompositeViewController.CloseTourExplorer();
-                    m_messageBus.Publish(ActiveTourQuitSelectedMessage());
+                    m_messageBus.Publish(ActiveTourQuitSelectedMessage(false));
+                }
+                
+                void TourExplorerViewController::OnExited()
+                {
+                    //scott -- should probably do this in the SDKModel ActiveTourQuitSelectedMessageHandler, or an SDK domain event?
+                    m_messageBus.Publish(GpsMarker::GpsMarkerVisibilityMessage(true));
+                    
+                    m_tourExplorerCompositeViewController.CloseTourExplorer();
+                    m_messageBus.Publish(ActiveTourQuitSelectedMessage(true));
                 }
                 
                 void TourExplorerViewController::OnViewStateChangeScreenControl(ScreenControl::View::IScreenControlViewModel &viewModel,
@@ -80,13 +92,7 @@ namespace ExampleApp
                     
                     if(m_view.GetCurrentTour() != m_viewModel.GetCurrentTour() && state > 0.0f)
                     {
-                        m_view.SetCurrentTour(m_viewModel.GetCurrentTour());
-                    }
-                    
-                    // Added to screen, set initial card
-                    if(m_viewModel.IsFullyOnScreen())
-                    {
-                        m_view.SetInitialCard(m_viewModel.GetInitialCard());
+                        m_view.SetCurrentTour(m_viewModel.GetCurrentTour(), m_viewModel.GetInitialCard(), m_viewModel.GetShowBackButton());
                     }
                     
                     ScreenControl::View::Apply(m_viewModel, m_view);

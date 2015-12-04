@@ -7,7 +7,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:WatermarkView}">
                     <Canvas Name="ImageCanvas">
-                        <Image Name="WatermarkImage" Source="/ExampleAppWPF;component/Assets/eegeo_logo.png" Width="140" Height="52"/>
+                        <Image Name="WatermarkImage" Source="/Assets/eegeo_logo.png" Width="140" Height="52"/>
                     </Canvas>
                 </ControlTemplate>
             </Setter.Value>

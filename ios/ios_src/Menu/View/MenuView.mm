@@ -443,10 +443,19 @@
     {
         _touchedDownInsideDragTab = true;
     }
+    else
+    {
+        _touchedDownInsideDragTab = false;
+    }
 }
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
 {
+    if([gestureRecognizer isKindOfClass:[UITapGestureRecognizer class]])
+    {
+        return true;
+    }
+    
     if(_touchedDownInsideDragTab && [self canInteract])
     {
         return m_pInterop->CallBeginDrag();

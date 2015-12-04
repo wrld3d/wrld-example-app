@@ -36,6 +36,8 @@
 
 @property (nonatomic, retain) UIButton* pExitButton;
 @property(nonatomic, retain) UIImageView* pExitButtonBackground;
+@property (nonatomic, retain) UIButton* pBackButton;
+@property(nonatomic, retain) UIImageView* pBackButtonBackground;
 @property(nonatomic, retain) UILabel* pTourNameLabel;
 
 - (id) initWithParams:(float)width :(float)height :(float)pixelScale :(ExampleApp::URLRequest::View::URLRequestHandler&) urlRequestHandler :(ImageStore*)pImageStore;
@@ -44,9 +46,9 @@
 
 - (BOOL)consumesTouch:(UITouch *)touch;
 
-- (void) configureViewForTour:(const ExampleApp::Tours::SdkModel::TourModel&) tour :(int)initialCard;
+- (void) configureViewForTour:(const ExampleApp::Tours::SdkModel::TourModel&) tour :(int)initialCard :(bool)showBackButton;
 
-- (void) interruptCurrentTour:(const ExampleApp::Tours::SdkModel::TourModel&) tour;
+- (void) interruptCurrentTour:(const ExampleApp::Tours::SdkModel::TourModel&) tour :(bool)showBackButton;
 
 - (void) setFullyOnScreen;
 

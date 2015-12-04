@@ -13,7 +13,7 @@ namespace ExampleApp
             WatermarkView::WatermarkView(WindowsNativeState& nativeState, const WatermarkData& watermarkData)
                 : m_nativeState(nativeState)
             {
-                m_uiViewClass = Helpers::ReflectionHelpers::GetTypeFromAssembly("ExampleAppWPF", "ExampleAppWPF.WatermarkView");
+                m_uiViewClass = Helpers::ReflectionHelpers::GetTypeFromEntryAssembly("ExampleAppWPF.WatermarkView");
                 System::Reflection::ConstructorInfo^ ctor = m_uiViewClass->GetConstructor(Helpers::ReflectionHelpers::CreateTypes(System::IntPtr::typeid, 
 					System::String::typeid,
 					System::String::typeid,

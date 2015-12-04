@@ -72,7 +72,7 @@ namespace ExampleApp
                 typedef WorldPins::SdkModel::WorldPinItemModel TPin;
                 const int IconIndex = 10;
                 const std::string tourVendor = tourModel.UsesTwitter()? Search::WorldTwitterVendorName : Search::ExampleTourVendorName;
-                m_worldPinsService.AddPin(m_tourWorldPinSelectionHandlerFactory.CreateSelectionHandler(tourModel),
+                TPin* pPin = m_worldPinsService.AddPin(m_tourWorldPinSelectionHandlerFactory.CreateSelectionHandler(tourModel),
                                                        NULL,
                                                        WorldPins::SdkModel::WorldPinFocusData(tourModel.Name(),
                                                                                               tourModel.IntroText(),
@@ -83,9 +83,11 @@ namespace ExampleApp
                                                        tourModel.IsInterior(),
                                                        tourModel.WorldPinInteriorData(),
                                                        tourModel.Location(),
-                                                       IconIndex,
+                                                       tourModel.IconIndex(),
                                                        0.0f,
                                                        WorldPins::SdkModel::WorldPinVisibility::World);
+                
+                pPin->SetFocusable(true); // Added to stop unused variable warning. May also prove useful in future to set focusable from tourModel
                 
                 // map pPin to tourModel somehow, possibly in TourService or another repo.
             }

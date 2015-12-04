@@ -15,13 +15,13 @@
                         <TextBlock Text="About this app..." Foreground="{StaticResource Gold}" FontWeight="Bold" Margin="5, 10, 0, 10" FontSize="20"/>
                         <ScrollViewer Height="390" VerticalScrollBarVisibility="Auto">
                             <StackPanel Orientation="Vertical">
-                                <Image Source="/ExampleAppWPF;component/Assets/eegeo_logo.png" Width="140" Height="52" HorizontalAlignment="Center"/>
+                                <Image Source="/Assets/eegeo_logo.png" Width="140" Height="52" HorizontalAlignment="Center"/>
                                 <TextBlock Name="AppText" Width="300" HorizontalAlignment="Left" TextWrapping="Wrap" TextAlignment="Center" Margin="10, 0, 10, 0"/>
                             </StackPanel>
                         </ScrollViewer>
                         <StackPanel Orientation="Horizontal" Height="60" Background="{StaticResource Gold}">
                             <Rectangle Fill="{StaticResource Gold}" Width="290"/>
-                            <Image Name="CloseButton" Source="/ExampleAppWPF;component/Assets/button_close_off.png" Stretch="Fill" Width="60"/>
+                            <Image Name="CloseButton" Source="/Assets/button_close_off.png" Stretch="Fill" Width="60"/>
                         </StackPanel>
                     </StackPanel>
                 </ControlTemplate>

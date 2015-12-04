@@ -5,6 +5,7 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="../../Colours.xaml" />
         <ResourceDictionary Source="../../TransparentButtonStyle.xaml" />
+        <ResourceDictionary Source="../../ListBoxControlTemplateNoPadding.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <Style TargetType="{x:Type local:SecondaryMenuView}">
@@ -29,9 +30,9 @@
                         <Button Width="50" Height="50" Name="SecondaryMenuDragTabView" Style="{StaticResource TransparentButtonStyle}" VerticalAlignment="Top">
                             <Grid>
                                 <Grid.Background>
-                                    <ImageBrush Stretch="Fill" ImageSource="/ExampleAppWPF;component/Assets/menu_button.png" ></ImageBrush>
+                                    <ImageBrush Stretch="Fill" ImageSource="/Assets/menu_button.png" ></ImageBrush>
                                 </Grid.Background>
-                                <Image Name="SecondaryMenuDragInteractionArrow" Width="14" Height="24" VerticalAlignment="Center" HorizontalAlignment="Center" Source="/ExampleAppWPF;component/Assets/arrow.png"></Image>
+                                <Image Name="SecondaryMenuDragInteractionArrow" Width="50" Height="50" VerticalAlignment="Center" HorizontalAlignment="Center" Source="/Assets/menu_list.png"></Image>
                             </Grid>
                         </Button>
 
@@ -42,18 +43,18 @@
                             </Grid.RowDefinitions>
                             <Grid Grid.Row="0">
                                 <Grid.Background>
-                                    <ImageBrush ImageSource="/ExampleAppWPF;component/Assets/menu_bar.png"/>
+                                    <ImageBrush ImageSource="/Assets/menu_bar.png"/>
                                 </Grid.Background>
                                 <Grid Margin="8,10,8,10">
                                     <TextBox Name="SecondaryMenuViewSearchEditTextView" Foreground="{StaticResource Black}" Height="36" VerticalAlignment="Center" HorizontalAlignment="Stretch" VerticalContentAlignment="Center"/>
                                 </Grid>
                             </Grid>
                             <Grid Grid.Row="1">
-                                <ScrollViewer PanningMode="Both" 
-              HorizontalScrollBarVisibility="Auto"
+                                <ScrollViewer PanningMode="VerticalOnly" 
+              HorizontalScrollBarVisibility="Disabled"
               VerticalScrollBarVisibility="Auto" CanContentScroll="True" Height="{Binding RelativeSource={RelativeSource FindAncestor, 
                         AncestorType={x:Type Grid}}, Path=ActualHeight}">
-                                    <ListBox Name="SecondaryMenuItemList" ItemsSource="{Binding Children}" Background="{StaticResource Transparent}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" BorderThickness="0">
+                                    <ListBox Name="SecondaryMenuItemList" Template="{StaticResource ListBoxControlTemplateNoPadding}" ItemsSource="{Binding Children}" Background="{StaticResource Transparent}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" BorderThickness="0">
                                         <ListBox.Resources>
                                             <Style TargetType="ListBoxItem">
                                                 <Style.Resources>
@@ -62,12 +63,13 @@
                                                     <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Black"/>
                                                 </Style.Resources>
                                                 <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+                                                <Setter Property="Padding" Value="0"/>
                                             </Style>
 
                                             <DataTemplate DataType="{x:Type local:MenuListItem}">
                                                 <Grid HorizontalAlignment="Stretch" Height="42" Margin="0,0,0,0">
                                                     <Grid.Background>
-                                                        <ImageBrush ImageSource="/ExampleAppWPF;component/Assets/menu_background1.png" />
+                                                        <ImageBrush ImageSource="/Assets/menu_background1.png" />
                                                     </Grid.Background>
                                                     <Grid.RowDefinitions>
                                                         <RowDefinition Height="*"/>
@@ -86,7 +88,7 @@
                                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch"  Grid.Column="0" >
                                                             <Label Content="{Binding Path=Heading}" FontSize="22" Foreground="{StaticResource DarkGrey}"/>
                                                         </StackPanel>
-                                                        <Image Name="MenuListOpenableShape" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin=".5,.5" Source="/ExampleAppWPF;component/Assets/sub_menu_arrow.png" Width="16" Height="16">
+                                                        <Image Name="MenuListOpenableShape" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin=".5,.5" Source="/Assets/sub_menu_arrow.png" Width="16" Height="16">
                                                             <Image.Style>
                                                                 <Style TargetType="{x:Type Image}">
                                                                     <Style.Triggers>
@@ -117,7 +119,7 @@
                                                 <Grid Height="42" Margin="22,0,0,0">
                                                     <Grid>
                                                         <Grid.Background>
-                                                            <ImageBrush ImageSource="/ExampleAppWPF;component/Assets/menu_background2.png" />
+                                                            <ImageBrush ImageSource="/Assets/menu_background2.png" />
                                                         </Grid.Background>
                                                         <Grid.RowDefinitions>
                                                             <RowDefinition Height="*"/>

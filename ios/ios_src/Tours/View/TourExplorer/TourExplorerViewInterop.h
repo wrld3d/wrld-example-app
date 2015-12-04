@@ -24,10 +24,10 @@ namespace ExampleApp
                     TourExplorerViewInterop(TourExplorerView* pView,
                                             URLRequest::View::URLRequestHandler& urlRequestHandler);
                     
-                    void SetCurrentTour(const SdkModel::TourModel& tourModel);
-                    void SetInitialCard(const int initialCard);
+                    void SetCurrentTour(const SdkModel::TourModel& tourModel, int initialCard, bool showBackButton);
                     
                     void OnDismissed();
+                    void OnExited();
                     void OnStateSelected(int activeStateIndex);
                     void OnChangeTourRequested(const std::string& name);
                     void ShowExternalURL(const std::string& url);
@@ -38,6 +38,8 @@ namespace ExampleApp
                     
                     void InsertDismissedCallback(Eegeo::Helpers::ICallback0& callback);
                     void RemoveDismissedCallback(Eegeo::Helpers::ICallback0& callback);
+                    void InsertExitedCallback(Eegeo::Helpers::ICallback0& callback);
+                    void RemoveExitedCallback(Eegeo::Helpers::ICallback0& callback);
                     void InsertStateChangedCallback(Eegeo::Helpers::ICallback1<int>& callback);
                     void RemoveStateChangedCallback(Eegeo::Helpers::ICallback1<int>& callback);
                     void InsertChangeTourRequestCallback(Eegeo::Helpers::ICallback1<std::string>& callback);
@@ -55,13 +57,13 @@ namespace ExampleApp
                 private:
                     Eegeo::Helpers::CallbackCollection1<int> m_stateChangedCallbacks;
                     Eegeo::Helpers::CallbackCollection0 m_dismissedCallbacks;
+                    Eegeo::Helpers::CallbackCollection0 m_exitedCallbacks;
                     Eegeo::Helpers::CallbackCollection1<std::string> m_changeTourCallbacks;
                     Eegeo::Helpers::CallbackCollection0 m_currentTourCardTappedCallbacks;
                     
                     TourExplorerView* m_pView;
                     URLRequest::View::URLRequestHandler& m_urlRequestHandler;
                     SdkModel::TourModel m_tourModel;
-                    int m_initialCard;
                 };
             }
         }

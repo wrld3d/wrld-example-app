@@ -17,7 +17,7 @@
                         <StackPanel Name="MainPanel" Background="{StaticResource White}" Orientation="Vertical">
                             <Rectangle Width="350" Height="7" Fill="{StaticResource Gold}" DockPanel.Dock="Top"/>
                             <StackPanel Orientation="Horizontal">
-                                <Image Source="/ExampleAppWPF;component/Assets/button_create_poi.png" Width="60" Height="60" Margin="5, 5, 0, 5"/>
+                                <Image Source="/Assets/button_create_poi.png" Width="60" Height="60" Margin="5, 5, 0, 5"/>
                                 <Grid Margin="10, 20, 0, 20">
                                     <TextBox Name="TitleBox" Width="180" Height="30" Foreground="{StaticResource Gold}" FontWeight="Bold" Text="" BorderThickness="0" />
                                     <TextBlock IsHitTestVisible="False" Width="175" Height="28" Text="Name your pin..."  Margin="5,2" Foreground="{StaticResource LightGrey}"
@@ -39,12 +39,12 @@
                                            Visibility="{Binding ElementName=DescBox, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
                             </Grid>
                             <ScrollViewer HorizontalAlignment="Center" VerticalScrollBarVisibility="Auto" Margin="10, 10, 10, 0" Height="200">
-                                <Image Name="SelectedImage" Source="/ExampleAppWPF;component/Assets/image_blank.png" Stretch="UniformToFill" DockPanel.Dock="Top" Width="300"/>
+                                <Image Name="SelectedImage" Source="/Assets/image_blank.png" Stretch="UniformToFill" DockPanel.Dock="Top" Width="300"/>
                             </ScrollViewer>
                             <StackPanel Orientation="Horizontal" Background="{StaticResource Gold}" Height="60" Margin="0, 20, 0, 0" DockPanel.Dock="Bottom">
-                                <Image Name="CloseButton" Source="/ExampleAppWPF;component/Assets/button_close_off.png" Width="60" Height="Auto" Stretch="Fill" Margin="0, 0, 0, 0"/>
-                                <Image Name="OpenGalleryButton" Source="/ExampleAppWPF;component/Assets/button_gallery_off.png" Width="60" Height="Auto" Stretch="Fill" Margin="85, 0, 0, 0"/>
-                                <Image Name="ConfirmButton" Source="/ExampleAppWPF;component/Assets/button_ok_off.png" Width="60" Height="Auto" Stretch="Fill" Margin="85, 0, 0, 0"/>
+                                <Image Name="CloseButton" Source="/Assets/button_close_off.png" Width="60" Height="Auto" Stretch="Fill" Margin="0, 0, 0, 0"/>
+                                <Image Name="OpenGalleryButton" Source="/Assets/button_gallery_off.png" Width="60" Height="Auto" Stretch="Fill" Margin="85, 0, 0, 0"/>
+                                <Image Name="ConfirmButton" Source="/Assets/button_ok_off.png" Width="60" Height="Auto" Stretch="Fill" Margin="85, 0, 0, 0"/>
                             </StackPanel>
                         </StackPanel>
                     </DockPanel>
