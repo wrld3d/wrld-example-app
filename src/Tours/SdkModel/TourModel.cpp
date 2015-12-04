@@ -28,6 +28,7 @@ namespace ExampleApp
             
             TourModel::TourModel(const std::string& name,
                                  const std::string& introText,
+                                 int iconIndex,
                                  const Eegeo::Space::LatLong& location,
                                  bool isInterior,
                                  const ExampleApp::WorldPins::SdkModel::WorldPinInteriorData& worldPinInteriorData,
@@ -41,6 +42,7 @@ namespace ExampleApp
                                  const std::string& twitterBaseUserName)
             : m_name(name)
             , m_introText(introText)
+            , m_iconIndex(iconIndex)
             , m_location(location)
             , m_showGradientBase(showGradientBase)
             , m_baseColor(baseColor)
@@ -69,6 +71,11 @@ namespace ExampleApp
             const std::string& TourModel::IntroText() const
             {
                 return m_introText;
+            }
+            
+            int TourModel::IconIndex() const
+            {
+                return m_iconIndex;
             }
             
             const Eegeo::Space::LatLong& TourModel::Location() const

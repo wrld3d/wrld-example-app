@@ -108,8 +108,12 @@ namespace ExampleApp
                         const bool isInterior = tweetStateData.isInterior;
                         ExampleApp::WorldPins::SdkModel::WorldPinInteriorData worldPinInteriorData = tweetStateData.interiorData;
                         
+                        //TODO: change to twitter icon once it's available
+                        const int twitterIcon = 10;
+                        
                         ExampleApp::Tours::SdkModel::TourModel tourModel(tourName,
                                                                          twitterBaseUserName + " (@"+userId+")",
+                                                                         twitterIcon,
                                                                          tourLocation,
                                                                          isInterior,
                                                                          worldPinInteriorData,

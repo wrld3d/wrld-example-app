@@ -31,14 +31,17 @@ namespace ExampleApp
             , m_searchResultMenuViewModel(searchResultMenuViewModel)
             , m_flattenViewModel(flattenViewModel)
             , m_compassViewModel(compassViewModel)
+            , m_appMode(AppModes::SdkModel::WorldMode)
             , m_dismissedCallback(this, &InteriorsExplorerController::OnDismiss)
             , m_selectFloorCallback(this, &InteriorsExplorerController::OnSelectFloor)
             , m_stateChangedCallback(this, &InteriorsExplorerController::OnStateChanged)
             , m_floorSelectedCallback(this, &InteriorsExplorerController::OnFloorSelected)
             , m_viewStateCallback(this, &InteriorsExplorerController::OnViewStateChangeScreenControl)
+            , m_appModeChangedCallback(this, &InteriorsExplorerController::OnAppModeChanged)
             {
                 m_messageBus.SubscribeUi(m_stateChangedCallback);
                 m_messageBus.SubscribeUi(m_floorSelectedCallback);
+                m_messageBus.SubscribeUi(m_appModeChangedCallback);
                 
                 m_viewModel.InsertOnScreenStateChangedCallback(m_viewStateCallback);
                 
@@ -55,6 +58,7 @@ namespace ExampleApp
                 
                 m_messageBus.UnsubscribeUi(m_stateChangedCallback);
                 m_messageBus.UnsubscribeUi(m_floorSelectedCallback);
+                m_messageBus.UnsubscribeUi(m_appModeChangedCallback);
             }
             
             void InteriorsExplorerController::OnDismiss()
@@ -100,18 +104,26 @@ namespace ExampleApp
                 {
                     m_viewModel.RemoveFromScreen();
                     
-                    m_initiationViewModel.AddToScreen();
-                    m_secondaryMenuViewModel.AddToScreen();
-                    m_searchResultMenuViewModel.AddToScreen();
-                    m_flattenViewModel.AddToScreen();
-                    m_compassViewModel.AddToScreen();
-                    m_messageBus.Publish(GpsMarker::GpsMarkerVisibilityMessage(true));
+                    if(m_appMode != AppModes::SdkModel::TourMode)
+                    {
+                        m_initiationViewModel.AddToScreen();
+                        m_secondaryMenuViewModel.AddToScreen();
+                        m_searchResultMenuViewModel.AddToScreen();
+                        m_flattenViewModel.AddToScreen();
+                        m_compassViewModel.AddToScreen();
+                        m_messageBus.Publish(GpsMarker::GpsMarkerVisibilityMessage(true));
+                    }
                 }
             }
             
             void InteriorsExplorerController::OnViewStateChangeScreenControl(ScreenControl::View::IScreenControlViewModel &viewModel, float &state)
             {
                 ScreenControl::View::Apply(m_viewModel, m_view);
+            }
+            
+            void InteriorsExplorerController::OnAppModeChanged(const AppModes::AppModeChangedMessage& message)
+            {
+                m_appMode = message.GetAppMode();
             }
         }
     }
