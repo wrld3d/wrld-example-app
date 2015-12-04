@@ -92,27 +92,10 @@ namespace ExampleApp
                     OnFloorSelected(InteriorsExplorerFloorSelectedMessage(message.GetSelectedFloorIndex(), message.GetSelectedFloorName()));
                     
                     m_viewModel.AddToScreen();
-                    
-                    m_initiationViewModel.RemoveFromScreen();
-                    m_secondaryMenuViewModel.RemoveFromScreen();
-                    m_searchResultMenuViewModel.RemoveFromScreen();
-                    m_flattenViewModel.RemoveFromScreen();
-                    m_compassViewModel.RemoveFromScreen();
-                    m_messageBus.Publish(GpsMarker::GpsMarkerVisibilityMessage(false));
                 }
                 else
                 {
                     m_viewModel.RemoveFromScreen();
-					
-                    if(m_appMode != AppModes::SdkModel::TourMode)
-                    {
-                        m_initiationViewModel.AddToScreen();
-                        m_secondaryMenuViewModel.AddToScreen();
-                        m_searchResultMenuViewModel.AddToScreen();
-                        m_flattenViewModel.AddToScreen();
-                        m_compassViewModel.AddToScreen();
-                        m_messageBus.Publish(GpsMarker::GpsMarkerVisibilityMessage(true));
-                    }
                 }
             }
             
