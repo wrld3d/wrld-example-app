@@ -31,12 +31,12 @@
                                             <TextBlock Name="SearchResultOnMapReviewCount" Text="(5555)" FontSize="12" Foreground="{StaticResource DarkGrey}" TextTrimming="CharacterEllipsis"/>
                                         </Border>
                                     </StackPanel>
-                                    <Image Name="SearchResultOnMapAccreditationLogo" HorizontalAlignment="Center" Source="/ExampleAppWPF;component/Assets/yelp_logo_small.png" Width="51"/>
+                                    <Image Name="SearchResultOnMapAccreditationLogo" HorizontalAlignment="Center" Source="/Assets/yelp_logo_small.png" Width="51"/>
                                 </StackPanel>
                             </Border>
                         </Grid>
                         <Grid HorizontalAlignment="Stretch" Margin="0,-3,0,0" Height="Auto">
-                            <Image Source="/ExampleAppWPF;component/Assets/arrow1.png" Width="15" Height="19" HorizontalAlignment="Center" Stretch="Fill"/>
+                            <Image Source="/Assets/arrow1.png" Width="15" Height="19" HorizontalAlignment="Center" Stretch="Fill"/>
                         </Grid>
                     </StackPanel>
                 </ControlTemplate>

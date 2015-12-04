@@ -28,6 +28,8 @@ namespace ExampleApp
                 
                 virtual void EndCurrentActiveTour() = 0;
                 
+                virtual void EndAllTours() = 0;
+                
                 virtual void SetActiveTourState(int activeStateIndex) = 0;
                 
                 virtual void UpdateCurrentTour(float dt) = 0;

@@ -89,7 +89,11 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Colour.cs" />
+    <Compile Include="DialogBox.xaml.cs">
+      <DependentUpon>DialogBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Layout.cs" />
+    <Compile Include="ViewHelpers.cs" />
     <Compile Include="Views\ControlClickHandler.cs" />
     <Compile Include="Properties\VersionInfo.cs" />
     <Compile Include="Views\InteriorsExplorer\InteriorsExplorerView.cs" />
@@ -120,6 +124,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Colours.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DialogBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

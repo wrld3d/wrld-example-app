@@ -80,6 +80,8 @@ namespace ExampleApp
                 
                 void EndCurrentActiveTour();
                 
+                void EndAllTours();
+                
                 void SetActiveTourState(int activeStateIndex);
                 
                 void UpdateCurrentTour(float dt);

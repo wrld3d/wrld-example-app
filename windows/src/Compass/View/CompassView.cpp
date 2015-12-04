@@ -17,7 +17,7 @@ namespace ExampleApp
             CompassView::CompassView(WindowsNativeState& nativeState)
                 : m_nativeState(nativeState)
             {
-                m_uiViewClass = GetTypeFromAssembly("ExampleAppWPF", "ExampleAppWPF.CompassView");
+                m_uiViewClass = GetTypeFromEntryAssembly("ExampleAppWPF.CompassView");
                 ConstructorInfo^ ctor = m_uiViewClass->GetConstructor(CreateTypes(IntPtr::typeid));
                 m_uiView = ctor->Invoke(CreateObjects(gcnew IntPtr(this)));
 

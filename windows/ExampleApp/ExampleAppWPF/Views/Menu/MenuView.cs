@@ -116,6 +116,12 @@ namespace ExampleAppWPF
 
             if (!m_canBeginDrag)
             {
+                if(e.LeftButton == MouseButtonState.Released)
+                {
+                    // Click event, don't start drag
+                    return;
+                }
+
                 m_canBeginDrag = MenuViewCLIMethods.TryBeginDrag(m_nativeCallerPointer);
             }
 

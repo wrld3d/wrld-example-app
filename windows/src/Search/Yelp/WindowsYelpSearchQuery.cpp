@@ -58,7 +58,7 @@ namespace ExampleApp
 			, m_yelpOAuthToken(yelpOAuthToken)
 			, m_yelpOAuthTokenSecret(yelpOAuthTokenSecret)
             {
-                m_uiViewClass = Helpers::ReflectionHelpers::GetTypeFromAssembly("ExampleAppWPF", "ExampleAppWPF.YelpAPIClient");
+                m_uiViewClass = Helpers::ReflectionHelpers::GetTypeFromEntryAssembly("ExampleAppWPF.YelpAPIClient");
                 ConstructorInfo^ ctor = m_uiViewClass->GetConstructor(Helpers::ReflectionHelpers::CreateTypes(IntPtr::typeid));
                 m_uiView = ctor->Invoke(Helpers::ReflectionHelpers::CreateObjects(gcnew IntPtr(this)));
 

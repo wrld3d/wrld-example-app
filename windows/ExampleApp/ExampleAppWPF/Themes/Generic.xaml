@@ -15,7 +15,6 @@
         <ResourceDictionary Source="../Views/MyPinCreationConfirmation/MyPinCreationConfirmationView.xaml" />
         <ResourceDictionary Source="../Views/MyPinCreationDetails/MyPinCreationDetailsView.xaml" />
         <ResourceDictionary Source="../Views/MyPinCreationDetails/MyPinDetailsView.xaml" />
-        <ResourceDictionary Source="../Views/MyPinCreationConfirmation/MyPinCreationConfirmationView.xaml" />
         <ResourceDictionary Source="../Views/Menu/MenuView.xaml" />
         <ResourceDictionary Source="../Views/SearchResultMenu/SearchMenuView.xaml" />
         <ResourceDictionary Source="../Views/SecondaryMenu/SecondaryMenuView.xaml" />

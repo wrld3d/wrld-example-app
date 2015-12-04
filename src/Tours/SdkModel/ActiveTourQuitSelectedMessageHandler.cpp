@@ -28,8 +28,15 @@ namespace ExampleApp
             
             void ActiveTourQuitSelectedMessageHandler::HandleActiveTourQuitSelected(const ActiveTourQuitSelectedMessage& message)
             {
-                m_tourService.EndCurrentActiveTour();
                 m_searchRefreshService.SetEnabled(true);
+                if(message.ExitTours())
+                {
+                    m_tourService.EndAllTours();
+                }
+                else
+                {
+                    m_tourService.EndCurrentActiveTour();
+                }
             }
         }
     }

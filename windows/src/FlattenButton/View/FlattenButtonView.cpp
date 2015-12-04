@@ -19,7 +19,7 @@ namespace ExampleApp
             FlattenButtonView::FlattenButtonView(WindowsNativeState& nativeState)
                 : m_nativeState(nativeState)
             {
-                m_uiViewClass = GetTypeFromAssembly("ExampleAppWPF", "ExampleAppWPF.FlattenButtonView");
+                m_uiViewClass = GetTypeFromEntryAssembly("ExampleAppWPF.FlattenButtonView");
                 ConstructorInfo^ ctor = m_uiViewClass->GetConstructor(CreateTypes(IntPtr::typeid));
                 m_uiView = ctor->Invoke(CreateObjects(gcnew IntPtr(this)));
 

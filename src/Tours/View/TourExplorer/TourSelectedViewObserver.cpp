@@ -27,7 +27,7 @@ namespace ExampleApp
                 
                 void TourSelectedViewObserver::HandleTourSelected(const TourOnMapSelectedMessage& message)
                 {
-                    m_tourExplorerCompositeViewController.OpenTourExplorer(message.GetTourModel(), message.GetInitialCard());
+                    m_tourExplorerCompositeViewController.OpenTourExplorer(message.GetTourModel(), message.GetInitialCard(), message.GetShowBackButton());
                 }
             }
         }
