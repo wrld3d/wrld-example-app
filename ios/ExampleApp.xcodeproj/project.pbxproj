@@ -1467,6 +1467,8 @@
 		BFDD75F11BCEA3E200335508 /* InteriorExplorerViewingState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFDD75EE1BCEA3E200335508 /* InteriorExplorerViewingState.cpp */; };
 		BFDD75F51BCEAF5800335508 /* InteriorExplorerExitingState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFDD75F31BCEAF5800335508 /* InteriorExplorerExitingState.cpp */; };
 		BFDD75F61BCEAF5800335508 /* InteriorExplorerExitingState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFDD75F31BCEAF5800335508 /* InteriorExplorerExitingState.cpp */; };
+		BFDE501F1C11AA51009DEBCE /* InteriorsHovercard.mm in Sources */ = {isa = PBXBuildFile; fileRef = BFDE501D1C11AA51009DEBCE /* InteriorsHovercard.mm */; };
+		BFDE50201C11AA52009DEBCE /* InteriorsHovercard.mm in Sources */ = {isa = PBXBuildFile; fileRef = BFDE501D1C11AA51009DEBCE /* InteriorsHovercard.mm */; };
 		BFDEAA7B1BCD3702007CE4D7 /* WorldState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFDEAA791BCD3702007CE4D7 /* WorldState.cpp */; };
 		BFDEAA7C1BCD3702007CE4D7 /* WorldState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFDEAA791BCD3702007CE4D7 /* WorldState.cpp */; };
 		BFDEAA861BCD5821007CE4D7 /* StateMachine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFDEAA841BCD5821007CE4D7 /* StateMachine.cpp */; };
@@ -3039,6 +3041,8 @@
 		BFDD75EF1BCEA3E200335508 /* InteriorExplorerViewingState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InteriorExplorerViewingState.h; path = States/InteriorExplorerViewingState.h; sourceTree = "<group>"; };
 		BFDD75F31BCEAF5800335508 /* InteriorExplorerExitingState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = InteriorExplorerExitingState.cpp; path = States/InteriorExplorerExitingState.cpp; sourceTree = "<group>"; };
 		BFDD75F41BCEAF5800335508 /* InteriorExplorerExitingState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InteriorExplorerExitingState.h; path = States/InteriorExplorerExitingState.h; sourceTree = "<group>"; };
+		BFDE501D1C11AA51009DEBCE /* InteriorsHovercard.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = InteriorsHovercard.mm; path = WorldPinOnMap/View/Hovercards/InteriorsHovercard.mm; sourceTree = "<group>"; };
+		BFDE501E1C11AA51009DEBCE /* InteriorsHovercard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InteriorsHovercard.h; path = WorldPinOnMap/View/Hovercards/InteriorsHovercard.h; sourceTree = "<group>"; };
 		BFDE63441C06212B005DD870 /* WatermarkAlignmentStateChangedMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WatermarkAlignmentStateChangedMessage.h; sourceTree = "<group>"; };
 		BFDEAA791BCD3702007CE4D7 /* WorldState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WorldState.cpp; path = AppModes/States/SdkModel/WorldState.cpp; sourceTree = "<group>"; };
 		BFDEAA7A1BCD3702007CE4D7 /* WorldState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WorldState.h; path = AppModes/States/SdkModel/WorldState.h; sourceTree = "<group>"; };
@@ -6266,6 +6270,8 @@
 			children = (
 				BFDED5571C1082B60051FD67 /* YelpHovercardView.h */,
 				BFDED5561C1082B60051FD67 /* YelpHovercardView.mm */,
+				BFDE501E1C11AA51009DEBCE /* InteriorsHovercard.h */,
+				BFDE501D1C11AA51009DEBCE /* InteriorsHovercard.mm */,
 			);
 			name = Hovercards;
 			path = ../..;
@@ -7220,6 +7226,7 @@
 				7E3B89271A385A290023C94E /* MyPinCreationViewStateChangedHandler.cpp in Sources */,
 				7E3B8B001A385F110023C94E /* MyPinCreationConfirmationViewInterop.mm in Sources */,
 				186B47221AB1DD5C0084E80B /* WatermarkView.mm in Sources */,
+				BFDE50201C11AA52009DEBCE /* InteriorsHovercard.mm in Sources */,
 				BFE248071BD8EF30000DEAA6 /* MapCameraMode.cpp in Sources */,
 				7E3B89591A385A290023C94E /* MyPinSelectionHandler.cpp in Sources */,
 				BF4FEE3E1BC2BF8400932C17 /* ExampleTourSearchResultPoiView.mm in Sources */,
@@ -7700,6 +7707,7 @@
 				7E3B8AFF1A385F110023C94E /* MyPinCreationConfirmationViewInterop.mm in Sources */,
 				186B47211AB1DD5C0084E80B /* WatermarkView.mm in Sources */,
 				7E3B89581A385A290023C94E /* MyPinSelectionHandler.cpp in Sources */,
+				BFDE501F1C11AA51009DEBCE /* InteriorsHovercard.mm in Sources */,
 				BFE248061BD8EF30000DEAA6 /* MapCameraMode.cpp in Sources */,
 				BF4FEE3D1BC2BF8400932C17 /* ExampleTourSearchResultPoiView.mm in Sources */,
 				E0ECCFFC1BC68A0700967A95 /* InteriorsCustomMaterialsModule.cpp in Sources */,

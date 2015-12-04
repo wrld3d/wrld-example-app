@@ -8,6 +8,7 @@
 #include "WorldPinOnMapViewIncludes.h"
 #include "IWorldPinsInFocusModel.h"
 #include "YelpHovercardView.h"
+#include "InteriorsHovercard.h"
 #include "TourHovercardView.h"
 #include "ImageStore.h"
 
@@ -35,7 +36,7 @@
 - (void) updatePosition:(float)x :(float)y;
 
 @property (nonatomic, retain) YelpHovercardView* pYelpHovercard;
-@property (nonatomic, retain) YelpHovercardView* pInteriorHovercard;
+@property (nonatomic, retain) InteriorsHovercard* pInteriorHovercard;
 @property (nonatomic, retain) TourHovercardView* pTourHovercard;
 @property (nonatomic, retain) UIView* pTwitterHovercard;
 @property (nonatomic, retain) UIView* pTwitterTourHovercard;

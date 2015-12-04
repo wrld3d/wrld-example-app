@@ -20,7 +20,7 @@
         
         self.pYelpHovercard = [[YelpHovercardView alloc]initWithParams:pinDiameter :pixelScale :m_pInterop];
         
-        self.pInteriorHovercard = [[YelpHovercardView alloc]initWithParams:pinDiameter :pixelScale :m_pInterop];
+        self.pInteriorHovercard = [[InteriorsHovercard alloc]initWithParams:pinDiameter :pixelScale :m_pInterop];
         
         self.pTourHovercard = [[TourHovercardView alloc]initWithParams:pinDiameter :pixelScale :pImageStore :m_pInterop];
         
@@ -71,11 +71,14 @@
     }
     
     if(worldPinsInFocusModel.GetVendor() == ExampleApp::Search::YelpVendorName ||
-       worldPinsInFocusModel.GetVendor() == ExampleApp::Search::InteriorVendorName ||
        worldPinsInFocusModel.GetVendor() == ExampleApp::Search::WorldTwitterVendorName||
        worldPinsInFocusModel.GetVendor() == ExampleApp::Search::MyPinVendorName)
     {
         self.pCurrentHovercard = self.pYelpHovercard;
+    }
+    else if(worldPinsInFocusModel.GetVendor() == ExampleApp::Search::InteriorVendorName)
+    {
+        self.pCurrentHovercard = self.pInteriorHovercard;
     }
     else if(worldPinsInFocusModel.GetVendor() == ExampleApp::Search::ExampleTourVendorName ||
             worldPinsInFocusModel.GetVendor() == ExampleApp::Search::TourTwitterVendorName)
