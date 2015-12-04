@@ -57,7 +57,7 @@
 
                             <!--Contents-->
                             <Grid Grid.Row="1" >
-                                <ScrollViewer Background="{StaticResource White}" Height="{Binding RelativeSource={RelativeSource AncestorType={x:Type Grid}}, Path=ActualHeight}">
+                                <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Background="{StaticResource White}" Height="{Binding RelativeSource={RelativeSource AncestorType={x:Type Grid}}, Path=ActualHeight}">
                                     <StackPanel VerticalAlignment="Top">
                                         <!--Job Title-->
                                         <Border BorderBrush="{x:Null}" BorderThickness="0" HorizontalAlignment="Stretch" Height="Auto" Background="{StaticResource Gold}">
