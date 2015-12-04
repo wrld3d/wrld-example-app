@@ -19,10 +19,7 @@ namespace ExampleApp
                 WorldPinOnMapView(AndroidNativeState& nativeState, float pinDiameter);
                 ~WorldPinOnMapView();
 
-                void Open(const std::string& title,
-                		  const std::string& subtitle,
-                		  const std::string& ratingsImage,
-                		  const int reviewCount,
+                void Open(const WorldPins::SdkModel::IWorldPinsInFocusModel& worldPinsInFocusModel,
                 		  float modality);
                 void Close();
                 void UpdateScreenLocation(float posX, float posY);

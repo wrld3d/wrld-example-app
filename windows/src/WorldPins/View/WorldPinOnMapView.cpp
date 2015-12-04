@@ -7,6 +7,7 @@
 #include "WindowsAppThreadAssertionMacros.h"
 #include "ImagePathHelpers.h"
 #include "ReflectionHelpers.h"
+#include "IWorldPinsInFocusModel.h"
 
 using namespace ExampleApp::Helpers::ReflectionHelpers;
 
@@ -38,13 +39,14 @@ namespace ExampleApp
                 
             }
 
-            void WorldPinOnMapView::Open(const std::string& title,
-                    const std::string& subtitle,
-                    const std::string& ratingsImage,
-                    const int reviewCount,
+            void WorldPinOnMapView::Open(const WorldPins::SdkModel::IWorldPinsInFocusModel& worldPinsInFocusModel,
                     float modality)
             {
-               mShow(ConvertUTF8ToManagedString(title), ConvertUTF8ToManagedString(subtitle), ConvertUTF8ToManagedString(ratingsImage), reviewCount, modality);
+               mShow(ConvertUTF8ToManagedString(worldPinsInFocusModel.GetTitle()),
+                     ConvertUTF8ToManagedString(worldPinsInFocusModel.GetSubtitle()),
+                     ConvertUTF8ToManagedString(worldPinsInFocusModel.GetRatingsImage()),
+                     worldPinsInFocusModel.GetReviewCount(),
+                     modality);
             }
 
             void WorldPinOnMapView::Close()
