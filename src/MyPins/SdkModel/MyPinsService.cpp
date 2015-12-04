@@ -73,6 +73,7 @@ namespace ExampleApp
                 WorldPins::SdkModel::WorldPinFocusData worldPinFocusData(pMyPinModel->GetTitle(),
                                                                          pMyPinModel->GetDescription(),
                                                                          pMyPinModel->GetVendor(),
+                                                                         "",
                                                                          pMyPinModel->GetRatingsImage(),
                                                                          pMyPinModel->GetReviewsCount());
                 

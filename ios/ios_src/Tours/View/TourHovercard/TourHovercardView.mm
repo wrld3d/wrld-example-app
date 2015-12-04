@@ -289,6 +289,25 @@
         m_isVideo = jsonDocument["isVideo"].GetBool();
     }
     
+    rapidjson::Document jsonData;
+    jsonData.Parse<0>(worldPinsInFocusModel.GetJsonData().c_str());
+    if(!jsonData.HasParseError())
+    {
+        Eegeo_ASSERT(jsonData.HasMember("base_col") &&
+                     jsonData.HasMember("text_col"));
+        
+        Byte baseColR = static_cast<Byte>(jsonData["base_col"]["r"].GetInt());
+        Byte baseColG = static_cast<Byte>(jsonData["base_col"]["g"].GetInt());
+        Byte baseColB = static_cast<Byte>(jsonData["base_col"]["b"].GetInt());
+        
+        Byte textColR = static_cast<Byte>(jsonData["text_col"]["r"].GetInt());
+        Byte textColG = static_cast<Byte>(jsonData["text_col"]["g"].GetInt());
+        Byte textColB = static_cast<Byte>(jsonData["text_col"]["b"].GetInt());
+        
+        [self setPresentationColors :ExampleApp::Helpers::ColorHelpers::Color::FromRGB(baseColR, baseColG, baseColB)
+                              :ExampleApp::Helpers::ColorHelpers::Color::FromRGB(textColR, textColG, textColB)];
+    }
+    
     [self setNeedsLayout];
 }
 

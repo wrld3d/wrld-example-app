@@ -111,6 +111,7 @@ namespace ExampleApp
                                              m_pLastFocussedModel->GetTitle(),
                                              m_pLastFocussedModel->GetSubtitle(),
                                              m_pLastFocussedModel->GetVendor(),
+                                             m_pLastFocussedModel->GetJsonData(),
                                              m_pLastFocussedModel->GetRatingsImage(),
                                              m_pLastFocussedModel->GetReviewCount()),
                                              closestScreenPinLocation));
