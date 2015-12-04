@@ -10,6 +10,7 @@
 #include "YelpHovercardView.h"
 #include "InteriorsHovercard.h"
 #include "TourHovercardView.h"
+#include "TwitterWorldHovercard.h"
 #include "ImageStore.h"
 
 @class WorldPinOnMapViewContainer;
@@ -38,7 +39,7 @@
 @property (nonatomic, retain) YelpHovercardView* pYelpHovercard;
 @property (nonatomic, retain) InteriorsHovercard* pInteriorHovercard;
 @property (nonatomic, retain) TourHovercardView* pTourHovercard;
-@property (nonatomic, retain) UIView* pTwitterHovercard;
+@property (nonatomic, retain) TwitterWorldHovercard* pTwitterHovercard;
 @property (nonatomic, retain) UIView* pTwitterTourHovercard;
 @property (nonatomic, retain) UIView<WorldPinOnMapView>* pCurrentHovercard;
 

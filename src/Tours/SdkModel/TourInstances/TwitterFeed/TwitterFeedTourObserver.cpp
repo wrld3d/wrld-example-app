@@ -109,7 +109,7 @@ namespace ExampleApp
                         ExampleApp::WorldPins::SdkModel::WorldPinInteriorData worldPinInteriorData = tweetStateData.interiorData;
                         
                         ExampleApp::Tours::SdkModel::TourModel tourModel(tourName,
-                                                                         twitterBaseUserName + " (@"+userId+")",
+                                                                         "@"+userId,
                                                                          tourLocation,
                                                                          isInterior,
                                                                          worldPinInteriorData,

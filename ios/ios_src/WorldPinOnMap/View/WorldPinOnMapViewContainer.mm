@@ -24,6 +24,8 @@
         
         self.pTourHovercard = [[TourHovercardView alloc]initWithParams:pinDiameter :pixelScale :pImageStore :m_pInterop];
         
+        self.pTwitterHovercard = [[TwitterWorldHovercard alloc]initWithParams:pinDiameter :pixelScale :m_pInterop];
+        
         self.pCurrentHovercard = nil;
         
         m_screenWidth = self.superview.bounds.size.width;
@@ -40,7 +42,7 @@
     {
         [self.pCurrentHovercard removeFromSuperview];
     }
-    
+    [self.pTwitterHovercard release];
     [self.pTourHovercard release];
     [self.pInteriorHovercard release];
     [self.pYelpHovercard release];
@@ -71,7 +73,6 @@
     }
     
     if(worldPinsInFocusModel.GetVendor() == ExampleApp::Search::YelpVendorName ||
-       worldPinsInFocusModel.GetVendor() == ExampleApp::Search::WorldTwitterVendorName||
        worldPinsInFocusModel.GetVendor() == ExampleApp::Search::MyPinVendorName)
     {
         self.pCurrentHovercard = self.pYelpHovercard;
@@ -79,6 +80,10 @@
     else if(worldPinsInFocusModel.GetVendor() == ExampleApp::Search::InteriorVendorName)
     {
         self.pCurrentHovercard = self.pInteriorHovercard;
+    }
+    else if(worldPinsInFocusModel.GetVendor() == ExampleApp::Search::WorldTwitterVendorName)
+    {
+        self.pCurrentHovercard = self.pTwitterHovercard;
     }
     else if(worldPinsInFocusModel.GetVendor() == ExampleApp::Search::ExampleTourVendorName ||
             worldPinsInFocusModel.GetVendor() == ExampleApp::Search::TourTwitterVendorName)
@@ -94,6 +99,7 @@
 - (void) setFullyActive :(float)modality
 {
     self.userInteractionEnabled = YES;
+    [self.pTwitterHovercard setFullyActive:modality];
     [self.pTourHovercard setFullyActive:modality];
     [self.pInteriorHovercard setFullyActive:modality];
     [self.pYelpHovercard setFullyActive:modality];
@@ -102,6 +108,7 @@
 - (void) setFullyInactive
 {
     self.userInteractionEnabled = NO;
+    [self.pTwitterHovercard setFullyInactive];
     [self.pTourHovercard setFullyInactive];
     [self.pInteriorHovercard setFullyInactive];
     [self.pYelpHovercard setFullyInactive];

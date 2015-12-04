@@ -1469,6 +1469,8 @@
 		BFDD75F61BCEAF5800335508 /* InteriorExplorerExitingState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFDD75F31BCEAF5800335508 /* InteriorExplorerExitingState.cpp */; };
 		BFDE501F1C11AA51009DEBCE /* InteriorsHovercard.mm in Sources */ = {isa = PBXBuildFile; fileRef = BFDE501D1C11AA51009DEBCE /* InteriorsHovercard.mm */; };
 		BFDE50201C11AA52009DEBCE /* InteriorsHovercard.mm in Sources */ = {isa = PBXBuildFile; fileRef = BFDE501D1C11AA51009DEBCE /* InteriorsHovercard.mm */; };
+		BFDE50231C11BA8A009DEBCE /* TwitterWorldHovercard.mm in Sources */ = {isa = PBXBuildFile; fileRef = BFDE50211C11BA8A009DEBCE /* TwitterWorldHovercard.mm */; };
+		BFDE50241C11BA8A009DEBCE /* TwitterWorldHovercard.mm in Sources */ = {isa = PBXBuildFile; fileRef = BFDE50211C11BA8A009DEBCE /* TwitterWorldHovercard.mm */; };
 		BFDEAA7B1BCD3702007CE4D7 /* WorldState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFDEAA791BCD3702007CE4D7 /* WorldState.cpp */; };
 		BFDEAA7C1BCD3702007CE4D7 /* WorldState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFDEAA791BCD3702007CE4D7 /* WorldState.cpp */; };
 		BFDEAA861BCD5821007CE4D7 /* StateMachine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFDEAA841BCD5821007CE4D7 /* StateMachine.cpp */; };
@@ -3043,6 +3045,8 @@
 		BFDD75F41BCEAF5800335508 /* InteriorExplorerExitingState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InteriorExplorerExitingState.h; path = States/InteriorExplorerExitingState.h; sourceTree = "<group>"; };
 		BFDE501D1C11AA51009DEBCE /* InteriorsHovercard.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = InteriorsHovercard.mm; path = WorldPinOnMap/View/Hovercards/InteriorsHovercard.mm; sourceTree = "<group>"; };
 		BFDE501E1C11AA51009DEBCE /* InteriorsHovercard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InteriorsHovercard.h; path = WorldPinOnMap/View/Hovercards/InteriorsHovercard.h; sourceTree = "<group>"; };
+		BFDE50211C11BA8A009DEBCE /* TwitterWorldHovercard.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = TwitterWorldHovercard.mm; path = WorldPinOnMap/View/Hovercards/TwitterWorldHovercard.mm; sourceTree = "<group>"; };
+		BFDE50221C11BA8A009DEBCE /* TwitterWorldHovercard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwitterWorldHovercard.h; path = WorldPinOnMap/View/Hovercards/TwitterWorldHovercard.h; sourceTree = "<group>"; };
 		BFDE63441C06212B005DD870 /* WatermarkAlignmentStateChangedMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WatermarkAlignmentStateChangedMessage.h; sourceTree = "<group>"; };
 		BFDEAA791BCD3702007CE4D7 /* WorldState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WorldState.cpp; path = AppModes/States/SdkModel/WorldState.cpp; sourceTree = "<group>"; };
 		BFDEAA7A1BCD3702007CE4D7 /* WorldState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WorldState.h; path = AppModes/States/SdkModel/WorldState.h; sourceTree = "<group>"; };
@@ -6272,6 +6276,8 @@
 				BFDED5561C1082B60051FD67 /* YelpHovercardView.mm */,
 				BFDE501E1C11AA51009DEBCE /* InteriorsHovercard.h */,
 				BFDE501D1C11AA51009DEBCE /* InteriorsHovercard.mm */,
+				BFDE50221C11BA8A009DEBCE /* TwitterWorldHovercard.h */,
+				BFDE50211C11BA8A009DEBCE /* TwitterWorldHovercard.mm */,
 			);
 			name = Hovercards;
 			path = ../..;
@@ -7047,6 +7053,7 @@
 				7E3B896F1A385A290023C94E /* PlaceJumpSelectedMessageHandler.cpp in Sources */,
 				27DB89E11BB3FF170020CDA5 /* GeoNamesSearchService.cpp in Sources */,
 				7E5811CC1B1F3248007AD67F /* InteriorsExplorerView.mm in Sources */,
+				BFDE50241C11BA8A009DEBCE /* TwitterWorldHovercard.mm in Sources */,
 				BFD5FCC31BA7068300F591F1 /* TourFullScreenImageViewInterop.mm in Sources */,
 				18FB64671A9240FC005A9411 /* OAMutableURLRequest.m in Sources */,
 				BFD5FD451BA706AD00F591F1 /* ToursCameraFadeTransitionMode.cpp in Sources */,
@@ -7528,6 +7535,7 @@
 				7E3B8B031A385F110023C94E /* MyPinCreationDetailsView.mm in Sources */,
 				27DB89E01BB3FF170020CDA5 /* GeoNamesSearchService.cpp in Sources */,
 				7E3B896E1A385A290023C94E /* PlaceJumpSelectedMessageHandler.cpp in Sources */,
+				BFDE50231C11BA8A009DEBCE /* TwitterWorldHovercard.mm in Sources */,
 				7E5811CB1B1F3248007AD67F /* InteriorsExplorerView.mm in Sources */,
 				BFD5FCC21BA7068300F591F1 /* TourFullScreenImageViewInterop.mm in Sources */,
 				18FB64661A9240FC005A9411 /* OAMutableURLRequest.m in Sources */,
