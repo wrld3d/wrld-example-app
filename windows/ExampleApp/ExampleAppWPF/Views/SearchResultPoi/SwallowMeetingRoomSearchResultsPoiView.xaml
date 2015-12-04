@@ -20,14 +20,14 @@
             <Trigger Property="IsChecked" Value="True">
                 <Setter Property="Content">
                     <Setter.Value>
-                        <Image Source="/ExampleAppWPF;component/Assets/button_remove_pin_off.png" Width="48" Height="48"/>
+                        <Image Source="/Assets/button_remove_pin_off.png" Width="48" Height="48"/>
                     </Setter.Value>
                 </Setter>
             </Trigger>
             <Trigger Property="IsChecked" Value="False">
                 <Setter Property="Content">
                     <Setter.Value>
-                        <Image Source="/ExampleAppWPF;component/Assets/button_add_pin_off.png" Width="48" Height="48"/>
+                        <Image Source="/Assets/button_add_pin_off.png" Width="48" Height="48"/>
                     </Setter.Value>
                 </Setter>
             </Trigger>
@@ -49,7 +49,7 @@
                 <Setter Property="ContentTemplate">
                     <Setter.Value>
                         <DataTemplate>
-                            <Image Visibility="Visible" Source="/ExampleAppWPF;component/Assets/button_occupancy_available_on.png" Width="192" Height="40" />
+                            <Image Visibility="Visible" Source="/Assets/button_occupancy_available_on.png" Width="192" Height="40" />
                         </DataTemplate>
                     </Setter.Value>
                 </Setter>
@@ -58,7 +58,7 @@
                 <Setter Property="ContentTemplate">
                     <Setter.Value>
                         <DataTemplate>
-                            <Image Visibility="Visible" Source="/ExampleAppWPF;component/Assets/button_occupancy_available_off.png" Width="192" Height="40" />
+                            <Image Visibility="Visible" Source="/Assets/button_occupancy_available_off.png" Width="192" Height="40" />
                         </DataTemplate>
                     </Setter.Value>
                 </Setter>
@@ -81,7 +81,7 @@
                 <Setter Property="ContentTemplate">
                     <Setter.Value>
                         <DataTemplate>
-                            <Image Visibility="Visible" Source="/ExampleAppWPF;component/Assets/button_occupancy_availablesoon_on.png" Width="192" Height="40" />
+                            <Image Visibility="Visible" Source="/Assets/button_occupancy_availablesoon_on.png" Width="192" Height="40" />
                         </DataTemplate>
                     </Setter.Value>
                 </Setter>
@@ -90,7 +90,7 @@
                 <Setter Property="ContentTemplate">
                     <Setter.Value>
                         <DataTemplate>
-                            <Image Visibility="Visible" Source="/ExampleAppWPF;component/Assets/button_occupancy_availablesoon_off.png" Width="192" Height="40" />
+                            <Image Visibility="Visible" Source="/Assets/button_occupancy_availablesoon_off.png" Width="192" Height="40" />
                         </DataTemplate>
                     </Setter.Value>
                 </Setter>
@@ -113,7 +113,7 @@
                 <Setter Property="ContentTemplate">
                     <Setter.Value>
                         <DataTemplate>
-                            <Image Visibility="Visible" Source="/ExampleAppWPF;component/Assets/button_occupancy_occupied_on.png" Width="192" Height="40" />
+                            <Image Visibility="Visible" Source="/Assets/button_occupancy_occupied_on.png" Width="192" Height="40" />
                         </DataTemplate>
                     </Setter.Value>
                 </Setter>
@@ -122,7 +122,7 @@
                 <Setter Property="ContentTemplate">
                     <Setter.Value>
                         <DataTemplate>
-                            <Image Visibility="Visible" Source="/ExampleAppWPF;component/Assets/button_occupancy_occupied_off.png" Width="192" Height="40" />
+                            <Image Visibility="Visible" Source="/Assets/button_occupancy_occupied_off.png" Width="192" Height="40" />
                         </DataTemplate>
                     </Setter.Value>
                 </Setter>
@@ -208,7 +208,7 @@
                             <!--Bottom Bar-->
                             <Grid VerticalAlignment="Bottom" Background="{StaticResource Gold}" HorizontalAlignment="Stretch" Height="Auto" Grid.Row="2">
                                 <ToggleButton Name="TogglePinnedButton" Style="{StaticResource AddRemovePinStyle}" HorizontalAlignment="Left" IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:SwallowMeetingRoomSearchResultsPoiView}}, Path=IsPinned, Mode=TwoWay}"/>
-                                <Image Name="CloseButton" HorizontalAlignment="Right" Source="/ExampleAppWPF;component/Assets/button_close_off.png" Width="48" Height="48"/>
+                                <Image Name="CloseButton" HorizontalAlignment="Right" Source="/Assets/button_close_off.png" Width="48" Height="48"/>
                             </Grid>
 
                         </Grid>

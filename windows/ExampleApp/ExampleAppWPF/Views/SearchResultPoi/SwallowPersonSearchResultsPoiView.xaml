@@ -20,14 +20,14 @@
             <Trigger Property="IsChecked" Value="True">
                 <Setter Property="Content">
                     <Setter.Value>
-                        <Image Source="/ExampleAppWPF;component/Assets/button_remove_pin_off.png" Width="48" Height="48"/>
+                        <Image Source="/Assets/button_remove_pin_off.png" Width="48" Height="48"/>
                     </Setter.Value>
                 </Setter>
             </Trigger>
             <Trigger Property="IsChecked" Value="False">
                 <Setter Property="Content">
                     <Setter.Value>
-                        <Image Source="/ExampleAppWPF;component/Assets/button_add_pin_off.png" Width="48" Height="48"/>
+                        <Image Source="/Assets/button_add_pin_off.png" Width="48" Height="48"/>
                     </Setter.Value>
                 </Setter>
             </Trigger>
@@ -94,7 +94,7 @@
                             <!--Bottom Bar-->
                             <Grid VerticalAlignment="Bottom" Background="{StaticResource Gold}" HorizontalAlignment="Stretch" Height="Auto" Grid.Row="2">
                                 <ToggleButton Name="TogglePinnedButton" Style="{StaticResource AddRemovePinStyle}" HorizontalAlignment="Left" IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:SwallowPersonSearchResultsPoiView}}, Path=IsPinned, Mode=TwoWay}"/>
-                                <Image Name="CloseButton" HorizontalAlignment="Right" Source="/ExampleAppWPF;component/Assets/button_close_off.png" Width="48" Height="48"/>
+                                <Image Name="CloseButton" HorizontalAlignment="Right" Source="/Assets/button_close_off.png" Width="48" Height="48"/>
                             </Grid>
 
                         </Grid>
