@@ -92,6 +92,13 @@ namespace ExampleApp
                     OnFloorSelected(InteriorsExplorerFloorSelectedMessage(message.GetSelectedFloorIndex(), message.GetSelectedFloorName()));
                     
                     m_viewModel.AddToScreen();
+                    
+                    m_initiationViewModel.RemoveFromScreen();
+                    m_secondaryMenuViewModel.RemoveFromScreen();
+                    m_searchResultMenuViewModel.RemoveFromScreen();
+                    m_flattenViewModel.RemoveFromScreen();
+                    m_compassViewModel.RemoveFromScreen();
+                    m_messageBus.Publish(GpsMarker::GpsMarkerVisibilityMessage(false));
                 }
                 else
                 {
