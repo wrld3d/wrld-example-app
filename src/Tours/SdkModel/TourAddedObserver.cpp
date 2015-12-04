@@ -32,7 +32,6 @@ namespace ExampleApp
             void TourAddedObserver::HandleTourAdded(TourModel& tourModel)
             {
                 typedef WorldPins::SdkModel::WorldPinItemModel TPin;
-                const int IconIndex = 10;
                 
                 TPin* pPin = m_worldPinsService.AddPin(m_tourWorldPinSelectionHandlerFactory.CreateSelectionHandler(tourModel),
                                                        NULL,
@@ -40,9 +39,11 @@ namespace ExampleApp
                                                        tourModel.IsInterior(),
                                                        tourModel.WorldPinInteriorData(),
                                                        tourModel.Location(),
-                                                       IconIndex,
+                                                       tourModel.IconIndex(),
                                                        0.0f,
                                                        WorldPins::SdkModel::WorldPinVisibility::World);
+                
+                pPin->SetFocusable(true); // Added to stop unused variable warning. May also prove useful in future to set focusable from tourModel
                 
                 // map pPin to tourModel somehow, possibly in TourService or another repo.
             }

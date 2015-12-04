@@ -18,6 +18,7 @@
     bool m_isInterruptingTour;
     bool m_hasActiveTour;
     bool m_exitingTour;
+    bool m_dismissingTour;
     
     CGPoint m_controlStartPos;
 }
@@ -39,6 +40,7 @@
         m_screenHeight = height/pixelScale;
         m_hasActiveTour = false;
         m_exitingTour = false;
+        m_dismissingTour = false;
         
         m_pInterop = new ExampleApp::Tours::View::TourExplorer::TourExplorerViewInterop(self,urlRequestHandler);
         
@@ -119,43 +121,47 @@
         [self setTouchExclusivity: self];
         
         const float upperMargin = isPhone ? 20.0f : 50.0f;
+        float backButtonSize = 40.f;
         float exitButtonSize = 40.f;
         const float labelLength = isPhone? 150.f : 200.f;
         
         const float detailsPanelHeight = 40.0f;
-        float totalPanelLength = labelLength + exitButtonSize;
+        float totalPanelLength = backButtonSize + labelLength + exitButtonSize;
         
         float totalPanelHeight = detailsPanelHeight;
         
         self.pDetailsPanel = [[[UIView alloc] initWithFrame:CGRectMake(m_screenWidth * 0.5f - totalPanelLength * 0.5f, upperMargin, totalPanelLength, totalPanelHeight)] autorelease];
         
         self.pExitButtonBackground = [[[UIImageView alloc] initWithImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"menu_button")] autorelease];
-        self.pExitButtonBackground.frame = CGRectMake(0.0f, 0.0f, exitButtonSize, exitButtonSize);
+        self.pExitButtonBackground.frame = CGRectMake(totalPanelLength-exitButtonSize, 0.0f, exitButtonSize, exitButtonSize);
+        // flip x for menu button image
+        self.pExitButtonBackground.transform = CGAffineTransformScale(CGAffineTransformIdentity, -1.f, 1.f);
         
         [self.pDetailsPanel addSubview:self.pExitButtonBackground];
+        
+        self.pBackButtonBackground = [[[UIImageView alloc] initWithImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"menu_button")] autorelease];
+        self.pBackButtonBackground.frame = CGRectMake(0.0f, 0.0f, backButtonSize, backButtonSize);
+        
+        [self.pDetailsPanel addSubview:self.pBackButtonBackground];
     
         
         self.pExitButton = [[UIButton alloc]initWithFrame:CGRectMake(0.0f, 0.0f, exitButtonSize, exitButtonSize)];
-        [self.pExitButton setImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"Arrow") forState:UIControlStateNormal];
+        [self.pExitButton setImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"CloseIcon") forState:UIControlStateNormal];
         [self.pExitButton addTarget:self action:@selector(handleExitButtonTap) forControlEvents:UIControlEventTouchUpInside];
         [self.pExitButtonBackground addSubview:self.pExitButton];
         
         self.pExitButtonBackground.userInteractionEnabled = YES;
         
+        self.pBackButton = [[UIButton alloc]initWithFrame:CGRectMake(0.0f, 0.0f, backButtonSize, backButtonSize)];
+        [self.pBackButton setImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"Arrow") forState:UIControlStateNormal];
+        [self.pBackButton addTarget:self action:@selector(handleBackButtonTap) forControlEvents:UIControlEventTouchUpInside];
+        [self.pBackButtonBackground addSubview:self.pBackButton];
+        
+        self.pBackButtonBackground.userInteractionEnabled = YES;
+        
         self.pDetailsPanelBackground = [[[UIImageView alloc] initWithImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"place_pin_background")] autorelease];
         
-        self.pDetailsPanelBackground.frame = CGRectMake(exitButtonSize, 0, labelLength, detailsPanelHeight);
-        
-        UIBezierPath* roundedShapePath = [UIBezierPath bezierPathWithRoundedRect:self.pDetailsPanelBackground.bounds byRoundingCorners:UIRectCornerTopRight | UIRectCornerBottomRight cornerRadii:CGSizeMake(7.0f, 7.0f)];
-        
-        CAShapeLayer* roundedShapeLayer = [CAShapeLayer layer];
-        roundedShapeLayer.frame = self.pDetailsPanelBackground.bounds;
-        roundedShapeLayer.path = roundedShapePath.CGPath;
-        roundedShapeLayer.fillColor = [UIColor blackColor].CGColor;
-        roundedShapeLayer.strokeColor = [UIColor blackColor].CGColor;
-        roundedShapeLayer.lineWidth = 1.0f;
-        
-        self.pDetailsPanelBackground.layer.mask = roundedShapeLayer;
+        self.pDetailsPanelBackground.frame = CGRectMake(backButtonSize, 0, labelLength, detailsPanelHeight);
         
         [self.pDetailsPanel addSubview:self.pDetailsPanelBackground];
         
@@ -176,25 +182,33 @@
 - (void)dealloc
 {
     
-    [self.pDetailsPanel removeFromSuperview];
-    [self.pDetailsPanel release];
-    self.pDetailsPanel = nil;
+    [self.pBackButton removeFromSuperview];
+    [self.pBackButton release];
+    self.pBackButton = nil;
     
-    [self.pDetailsPanelBackground removeFromSuperview];
-    [self.pDetailsPanelBackground release];
-    self.pDetailsPanelBackground = nil;
-    
-    [self.pExitButtonBackground removeFromSuperview];
-    [self.pExitButtonBackground release];
-    self.pExitButtonBackground = nil;
+    [self.pBackButtonBackground removeFromSuperview];
+    [self.pBackButtonBackground release];
+    self.pBackButtonBackground = nil;
     
     [self.pExitButton removeFromSuperview];
     [self.pExitButton release];
     self.pExitButton = nil;
     
+    [self.pExitButtonBackground removeFromSuperview];
+    [self.pExitButtonBackground release];
+    self.pExitButtonBackground = nil;
+    
     [self.pTourNameLabel removeFromSuperview];
     [self.pTourNameLabel release];
     self.pTourNameLabel = nil;
+    
+    [self.pDetailsPanelBackground removeFromSuperview];
+    [self.pDetailsPanelBackground release];
+    self.pDetailsPanelBackground = nil;
+    
+    [self.pDetailsPanel removeFromSuperview];
+    [self.pDetailsPanel release];
+    self.pDetailsPanel = nil;
     
     delete m_pInterop;
     
@@ -223,12 +237,12 @@
     [m_pTourItemLabelGradientContainer.layer insertSublayer:gradient atIndex:0];
 }
 
-- (void) configureViewForTour:(const ExampleApp::Tours::SdkModel::TourModel&) tour :(int)initialCard
+- (void) configureViewForTour:(const ExampleApp::Tours::SdkModel::TourModel&) tour :(int)initialCard :(bool)showBackButton
 {
     if(m_hasActiveTour)
     {
         // Exit current tour then join new tour.
-        [self interruptCurrentTour:tour];
+        [self interruptCurrentTour:tour:showBackButton];
         return;
     }
     const float carouselHeight = [m_viewController getItemHeight];
@@ -240,8 +254,33 @@
     m_tour = tour;
     m_hasActiveTour = true;
     m_exitingTour = false;
+    m_dismissingTour = false;
     m_pTourItemLabel.text = @"";
     self.pTourNameLabel.text = [NSString stringWithUTF8String:m_tour.Name().c_str()];
+    
+    if(!showBackButton)
+    {
+        UIBezierPath* roundedShapePath = [UIBezierPath bezierPathWithRoundedRect:self.pDetailsPanelBackground.bounds byRoundingCorners:UIRectCornerTopLeft | UIRectCornerBottomLeft cornerRadii:CGSizeMake(7.0f, 7.0f)];
+        
+        CAShapeLayer* roundedShapeLayer = [CAShapeLayer layer];
+        roundedShapeLayer.frame = self.pDetailsPanelBackground.bounds;
+        roundedShapeLayer.path = roundedShapePath.CGPath;
+        roundedShapeLayer.fillColor = [UIColor blackColor].CGColor;
+        roundedShapeLayer.strokeColor = [UIColor blackColor].CGColor;
+        roundedShapeLayer.lineWidth = 1.0f;
+        
+        self.pDetailsPanelBackground.layer.mask = roundedShapeLayer;
+        
+        self.pBackButtonBackground.hidden = YES;
+        self.pBackButtonBackground.userInteractionEnabled = NO;
+    }
+    else
+    {
+        self.pDetailsPanelBackground.layer.mask = nil;
+        
+        self.pBackButtonBackground.hidden = NO;
+        self.pBackButtonBackground.userInteractionEnabled = YES;
+    }
     
     [self->m_viewController configureTourStatesPresentation: tour];
     [m_viewController resetView:initialCard];
@@ -258,7 +297,7 @@
     }
 }
 
-- (void) interruptCurrentTour:(const ExampleApp::Tours::SdkModel::TourModel&) tour
+- (void) interruptCurrentTour:(const ExampleApp::Tours::SdkModel::TourModel&) tour :(bool)showBackButton
 {
     m_isInterruptingTour = YES;
     m_nextTour = tour;
@@ -281,7 +320,7 @@
             [self setNeedsLayout];
             [self layoutIfNeeded];
 
-            [self configureViewForTour:m_nextTour :0];
+            [self configureViewForTour:m_nextTour :0 :showBackButton];
             [self animateTo:1.0];
         }
     }];
@@ -321,6 +360,15 @@
 }
 
 -(void)exitTour
+{
+    if(m_hasActiveTour)
+    {
+        m_hasActiveTour = false;
+        m_pInterop->OnExited();
+    }
+}
+
+-(void)dismissTour
 {
     if(m_hasActiveTour)
     {
@@ -411,9 +459,16 @@
      {
          self.hidden = (t == 0.0f);
          
-         if(self.hidden && m_exitingTour)
+         if(self.hidden)
          {
-             [self exitTour];
+             if(m_exitingTour)
+             {
+                 [self exitTour];
+             }
+             if(m_dismissingTour)
+             {
+                 [self dismissTour];
+             }
          }
      }
      ];
@@ -422,6 +477,12 @@
 - (void)handleExitButtonTap
 {
     m_exitingTour = true;
+    [self animateTo:0.0f];
+}
+
+- (void)handleBackButtonTap
+{
+    m_dismissingTour = true;
     [self animateTo:0.0f];
 }
 

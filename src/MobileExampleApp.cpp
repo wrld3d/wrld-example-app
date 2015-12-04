@@ -911,9 +911,10 @@ namespace ExampleApp
                                                              "Some more example text",
                                                              "Tours/page",
                                                              "tours"));
-        
+        const int tourIconIndex = 10;
         ExampleApp::Tours::SdkModel::TourModel tourModel("Example",
                                                          "Take the tour",
+                                                         tourIconIndex,
                                                          Eegeo::Space::LatLong::FromDegrees(37.784783, -122.402659),
                                                          false,
                                                          ExampleApp::WorldPins::SdkModel::WorldPinInteriorData(),

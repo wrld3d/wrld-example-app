@@ -97,7 +97,7 @@ namespace ExampleAppWPF
             {
                 if (!newValue)
                 {
-                    if (ShowRemovePinDialog() == MessageBoxResult.Yes)
+                    if (ShowRemovePinDialog() == true)
                     {
                         ExampleApp.SearchResultPoiViewCLI.TogglePinnedButtonClicked(m_nativeCallerPointer);
                         oldValue = newValue;
@@ -111,9 +111,19 @@ namespace ExampleAppWPF
             }
         }
 
-        private MessageBoxResult ShowRemovePinDialog()
+        private bool ShowRemovePinDialog()
         {
-            return MessageBox.Show("Are you sure you want to remove this pin?", "Remove Pin", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            DialogBox dialogBox = new DialogBox("Remove Pin", "Are you sure you want to remove this pin?", "Yes", "No");
+            dialogBox.Owner = m_currentWindow;
+
+            bool? result = dialogBox.ShowDialog();
+
+            if (result == null)
+            {
+                return false;
+            }
+
+            return (bool)result;
         }
 
         protected static BitmapImage LoadImageFromByteArray(byte[] imageData)

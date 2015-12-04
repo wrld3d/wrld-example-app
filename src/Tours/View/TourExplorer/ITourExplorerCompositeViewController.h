@@ -17,7 +17,7 @@ namespace ExampleApp
                 public:
                     virtual ~ITourExplorerCompositeViewController() { }
                     
-                    virtual void OpenTourExplorer(const SdkModel::TourModel& tourModel, const int startAtCard) = 0;
+                    virtual void OpenTourExplorer(const SdkModel::TourModel& tourModel, const int startAtCard, bool showBackButton) = 0;
                     
                     virtual void CloseTourExplorer() = 0;
                 };

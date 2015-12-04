@@ -61,11 +61,14 @@ namespace ExampleAppWPF
 
         private void OnClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            var result = MessageBox.Show(m_popupBody, m_popupTitle, MessageBoxButton.YesNo);
+            DialogBox dialogBox = new DialogBox(m_popupTitle, m_popupBody, "Find Out More", "Later");
+            dialogBox.Owner = m_currentWindow;
 
+            bool? result = dialogBox.ShowDialog();
+            
             WatermarkCLI.OnSelected(m_nativeCallerPointer);
 
-            if (result == MessageBoxResult.Yes)
+            if (result != null && result == true)
             {
                 Process.Start(new ProcessStartInfo(m_webUrl));
             }

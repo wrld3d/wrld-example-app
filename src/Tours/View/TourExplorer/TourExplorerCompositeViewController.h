@@ -38,7 +38,7 @@ namespace ExampleApp
                     
                     ~TourExplorerCompositeViewController();
                     
-                    void OpenTourExplorer(const SdkModel::TourModel& tourModel, const int startAtCard);
+                    void OpenTourExplorer(const SdkModel::TourModel& tourModel, const int startAtCard, bool showBackButton);
                     
                     void CloseTourExplorer();
                 };
