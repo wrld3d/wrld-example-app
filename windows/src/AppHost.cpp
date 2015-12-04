@@ -465,22 +465,21 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
         app.GetAppModeModel()
         );
 
-    m_pMyPinCreationViewModule = Eegeo_NEW(ExampleApp::MyPinCreation::View::MyPinCreationViewModule)(
-        m_nativeState,
-        app.MyPinCreationModule().GetMyPinCreationInitiationViewModel(),
-        app.MyPinCreationModule().GetMyPinCreationConfirmationViewModel(),
-        app.MyPinCreationDetailsModule().GetMyPinCreationDetailsViewModel(),
-        m_messageBus,
-        *m_pWindowsFlurryMetricsService,
-        app.GetAppModeModel()
-        );
-
-
     m_pCompassViewModule = Eegeo_NEW(ExampleApp::Compass::View::CompassViewModule)(
         m_nativeState,
         app.CompassModule().GetCompassViewModel(),
         m_messageBus
         );
+
+	m_pMyPinCreationViewModule = Eegeo_NEW(ExampleApp::MyPinCreation::View::MyPinCreationViewModule)(
+		m_nativeState,
+		app.MyPinCreationModule().GetMyPinCreationInitiationViewModel(),
+		app.MyPinCreationModule().GetMyPinCreationConfirmationViewModel(),
+		app.MyPinCreationDetailsModule().GetMyPinCreationDetailsViewModel(),
+		m_messageBus,
+		*m_pWindowsFlurryMetricsService,
+		app.GetAppModeModel()
+		);
 
     // Modal background layer.
     m_pModalBackgroundViewModule = Eegeo_NEW(ExampleApp::ModalBackground::View::ModalBackgroundViewModule)(

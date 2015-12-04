@@ -52,16 +52,16 @@ namespace ExampleAppWPF
 
             m_currentWindow.SizeChanged += UpdatePositionOnWindowResize;
 
-            m_yPosActive = (m_currentWindow.Height * 0.5) - Height;
-            m_yPosInactive = (m_currentWindow.Height * 0.5) + Height;
+            m_yPosActive = 0.0f;
+            m_yPosInactive = Height;
 
             Visibility = Visibility.Hidden;
         }
 
         private void UpdatePositionOnWindowResize(object sender, SizeChangedEventArgs e)
         {
-            m_yPosActive = (e.NewSize.Height * 0.5) - Height;
-            m_yPosInactive = (e.NewSize.Height * 0.5) + Height;
+            m_yPosActive = 0.0f;
+            m_yPosInactive = Height;
 
             if(m_active)
             {
