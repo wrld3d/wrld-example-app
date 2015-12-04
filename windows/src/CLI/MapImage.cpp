@@ -47,7 +47,9 @@ namespace ExampleApp
             }
 
             m_pState->appName = "WPFControl";
-            m_pState->deviceDpi = GetScreenDPI();
+            // temp change to fix incorrect size of placename labels, pending platform change
+            //m_pState->deviceDpi = GetScreenDPI();
+            m_pState->deviceDpi = 0; 
             m_pState->deviceModel = "WPFControl";
             m_pState->fullScreen = false;
             m_pState->hinstance = GetModuleHandle(NULL);
