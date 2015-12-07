@@ -26,33 +26,49 @@
         
         const bool isPhone = App::IsDeviceSmall();
         
+        float headerTextSize = isPhone ? 13.0f : 18.0f;
+        float screenNameTextSize = isPhone ? 9.0f : 12.0f;
+        float textSize = isPhone ? 10.0f : 14.0f;
+        
+        UIFont* headerFont = [UIFont systemFontOfSize:headerTextSize];
+        UIFont* screenNameFont = [UIFont systemFontOfSize:screenNameTextSize];
+        UIFont* timeStampFont = screenNameFont;
+        UIFont* textFont = [UIFont systemFontOfSize:textSize];
+        
         float frameSizeX = isPhone ? 250 : 338;
         float frameSizeY = isPhone ? 164 : 222;
-        float bannerHeight = isPhone ? 36.0f : 60.0f;
+        float bannerHeight = isPhone ? 44.0f : 60.0f;
         float spacing = isPhone ? 3.0f : 4.0f;
         float userImageContainerSize = isPhone ? 48.0f : 80.0f;
         float userImageBorderSize = isPhone ? 3.0f : 4.0f;
         float userImageSize = userImageContainerSize - userImageBorderSize * 2.0f;
         float userImageContainerX = isPhone ? 3.0f : 4.0f;
-        float userImageContainerY = isPhone ? 24.0f : 40.0f;
-        float nameLabelWidth = frameSizeX - (userImageSize + userImageContainerX + spacing * 4);
-        float nameLabelHeight = isPhone ? 15 : 21;
-        float screenNameLabelHeight = isPhone ? 13 : 17;
-        float timeStampLabelWidth = isPhone ? 40.0f : 50.0f;
-        float timeStampLabelX = frameSizeX - timeStampLabelWidth - spacing;
-        float tweetContentHeight = isPhone ? 70 : 90;
-        float tweetContentY = bannerHeight + nameLabelHeight + screenNameLabelHeight + spacing * 2.0f;
-        float bottomButtonsSize = 16;
-        float bottomButtonsY = frameSizeY - (bottomButtonsSize + spacing * 2.0f);
-        float twitterBrandIconSize = isPhone ? 30.0f : 40.0f;
+        float userImageContainerY = isPhone ? 29.0f : 40.0f;
+        float nameLabelWidth = frameSizeX - (userImageContainerSize + userImageContainerX + spacing * 4);
+        float nameLabelHeight = (float)headerFont.lineHeight + spacing;
+        float screenNameLabelHeight = (float)screenNameFont.lineHeight + spacing;
+        float nameLabelY = userImageContainerY + userImageContainerSize - screenNameLabelHeight - nameLabelHeight;
+        float screenNameLabelY = userImageContainerY + userImageContainerSize - screenNameLabelHeight;
+        float timeStampLabelWidth = isPhone ? 38.0f : 50.0f;
+        float timeStampLabelHeight = (float)timeStampFont.lineHeight + spacing;
+        float timeStampLabelX = frameSizeX - timeStampLabelWidth - 2*spacing;
+        float timeStampLabelY = userImageContainerY + userImageContainerSize - screenNameLabelHeight - timeStampLabelHeight;
+        float tweetContentY = userImageContainerY + userImageContainerSize + spacing * 2.0f;
+        float tweetContentHeight = frameSizeY - tweetContentY - 2*spacing;
+        float tweetContentWidth = frameSizeX - 6*spacing;
+        float tappableTopSectionHeight = userImageContainerY + userImageContainerSize;
         
         self.frame = CGRectMake(0, 0, frameSizeX, frameSizeY);
         self.backgroundColor = [UIColor whiteColor];
         
+        self.pTappableTopSection = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frameSizeX, tappableTopSectionHeight)];
+        self.pTappableTopSection.backgroundColor = [UIColor clearColor];
+        self.userInteractionEnabled = YES;
+        [self addSubview:self.pTappableTopSection];
+        
         self.pBannerImage = [[[FXImageView alloc] initWithFrame:CGRectMake(0, 0, frameSizeX, bannerHeight)]autorelease];
         self.pBannerImage.contentMode = UIViewContentModeScaleAspectFill;
         self.pBannerImage.asynchronous = YES;
-        self.pBannerImage.userInteractionEnabled = YES;
         [self addSubview:self.pBannerImage];
         
         self.pUserImageContainer = [[UIView alloc] initWithFrame:CGRectMake(userImageContainerX, userImageContainerY, userImageContainerSize, userImageContainerSize)];
@@ -62,42 +78,27 @@
         self.pUserImage = [[[FXImageView alloc] initWithFrame:CGRectMake(userImageBorderSize, userImageBorderSize, userImageSize, userImageSize)]autorelease];
         self.pUserImage.contentMode = UIViewContentModeScaleAspectFill;
         self.pUserImage.asynchronous = YES;
-        self.pUserImage.userInteractionEnabled = YES;
         [self.pUserImageContainer addSubview:self.pUserImage];
         
-        self.pTwitterBrandIcon = [[[FXImageView alloc] initWithFrame:CGRectMake(userImageContainerX + userImageContainerSize * 0.5f - twitterBrandIconSize * 0.5f,
-                                                                                userImageContainerY + userImageContainerSize + userImageContainerSize * 0.5f - twitterBrandIconSize * 0.5f,
-                                                                                twitterBrandIconSize,
-                                                                                twitterBrandIconSize)] autorelease];
-        self.pTwitterBrandIcon.contentMode = UIViewContentModeScaleAspectFill;
-        self.pTwitterBrandIcon.image = [UIImage imageNamed:@"Tours/States/Twitter/tweet_bird"];
-        [self addSubview: self.pTwitterBrandIcon];
-                                                                                
-        float headerTextSize = isPhone ? 14.0f : 17.0f;
-        float screenNameTextSize = isPhone ? 9.0f : 12.0f;
-        float textSize = isPhone ? 11.0f : 14.0f;
-        
-        self.pNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(userImageContainerSize + userImageContainerX + spacing, bannerHeight + spacing, nameLabelWidth, nameLabelHeight)];
+        self.pNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(userImageContainerSize + userImageContainerX + spacing, nameLabelY, nameLabelWidth, nameLabelHeight)];
         self.pNameLabel.textColor = TwitterDefines::DarkTextColor;
-        self.pNameLabel.font = [UIFont systemFontOfSize:headerTextSize];
-        self.pNameLabel.userInteractionEnabled = YES;
+        self.pNameLabel.font = headerFont;
         [self addSubview:self.pNameLabel];
         
         
-        self.pScreenNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(userImageContainerSize + userImageContainerX + spacing, bannerHeight + spacing + nameLabelHeight, nameLabelWidth, screenNameLabelHeight)];
+        self.pScreenNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(userImageContainerSize + userImageContainerX + spacing, screenNameLabelY, nameLabelWidth, screenNameLabelHeight)];
         self.pScreenNameLabel.textColor = TwitterDefines::LightTextColor;
-        self.pScreenNameLabel.font = [UIFont systemFontOfSize:screenNameTextSize];
-        self.pScreenNameLabel.userInteractionEnabled = YES;
+        self.pScreenNameLabel.font = screenNameFont;
         [self addSubview:self.pScreenNameLabel];
         
-        self.pTimeStampLabel = [[UILabel alloc] initWithFrame:CGRectMake(timeStampLabelX, bannerHeight + spacing, timeStampLabelWidth, screenNameLabelHeight)];
+        self.pTimeStampLabel = [[UILabel alloc] initWithFrame:CGRectMake(timeStampLabelX, timeStampLabelY, timeStampLabelWidth, timeStampLabelHeight)];
         self.pTimeStampLabel.textColor = TwitterDefines::LightTextColor;
-        self.pTimeStampLabel.font = [UIFont systemFontOfSize:textSize];
+        self.pTimeStampLabel.font = timeStampFont;
         self.pTimeStampLabel.textAlignment = NSTextAlignmentRight;
         [self addSubview:self.pTimeStampLabel];
         
-        self.pTweetContent = [[UITextView alloc] initWithFrame:CGRectMake(userImageContainerSize + userImageContainerX + spacing, tweetContentY, nameLabelWidth, tweetContentHeight)];
-        self.pTweetContent.font = [UIFont systemFontOfSize:textSize];
+        self.pTweetContent = [[UITextView alloc] initWithFrame:CGRectMake(2*spacing, tweetContentY, tweetContentWidth, tweetContentHeight)];
+        self.pTweetContent.font = textFont;
         self.pTweetContent.scrollEnabled = NO;
         self.pTweetContent.editable = NO;
         self.pTweetContent.textColor = TwitterDefines::DarkTextColor;
@@ -107,38 +108,9 @@
         self.pTweetContent.delegate = self;
         [self addSubview:self.pTweetContent];
         
-        
-        self.pMoreDetailsLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, bottomButtonsY, frameSizeX, screenNameLabelHeight)];
-        [self.pMoreDetailsLabel setUserInteractionEnabled:NO];
-        self.pMoreDetailsLabel.textAlignment = NSTextAlignmentCenter;
-        self.pMoreDetailsLabel.textColor = [UIColor lightGrayColor];
-        self.pMoreDetailsLabel.font = [UIFont systemFontOfSize:textSize];
-        NSMutableAttributedString* attrString = [[NSMutableAttributedString alloc] initWithString:@"Tweet Details"];
-        [attrString addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInt:1] range:(NSRange){0, attrString.length}];
-        self.pMoreDetailsLabel.attributedText = attrString;
-        [self addSubview:self.pMoreDetailsLabel];
-        
-        m_pMoreDetailsTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleMoreDetailsTapped:)];
-        [m_pMoreDetailsTapGestureRecognizer setDelegate:self];
-        [self.pMoreDetailsLabel setUserInteractionEnabled:YES];
-        [self.pMoreDetailsLabel setMultipleTouchEnabled:YES];
-        [self.pMoreDetailsLabel addGestureRecognizer:m_pMoreDetailsTapGestureRecognizer];
-        
-        m_pProfileImageTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleProfileTapped:)];
-        [m_pProfileImageTapGestureRecognizer setDelegate:self];
-        [self.pUserImage addGestureRecognizer:m_pProfileImageTapGestureRecognizer];
-        
-        m_pBannerImageTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleProfileTapped:)];
-        [m_pBannerImageTapGestureRecognizer setDelegate:self];
-        [self.pBannerImage addGestureRecognizer:m_pBannerImageTapGestureRecognizer];
-        
-        m_pNameTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleProfileTapped:)];
-        [m_pNameTapGestureRecognizer setDelegate:self];
-        [self.pNameLabel addGestureRecognizer:m_pNameTapGestureRecognizer];
-        
-        m_pScreenNameTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleProfileTapped:)];
-        [m_pScreenNameTapGestureRecognizer setDelegate:self];
-        [self.pScreenNameLabel addGestureRecognizer:m_pScreenNameTapGestureRecognizer];
+        m_pTopSectionTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleProfileTapped:)];
+        [m_pTopSectionTapGestureRecognizer setDelegate:self];
+        [self.pTappableTopSection addGestureRecognizer:m_pTopSectionTapGestureRecognizer];
         
         m_pImageStore = pImageStore;
     }
@@ -149,25 +121,9 @@
 {
     [self clearImages];
     
-    [self.pScreenNameLabel removeGestureRecognizer:m_pScreenNameTapGestureRecognizer];
-    [m_pScreenNameTapGestureRecognizer release];
-    m_pScreenNameTapGestureRecognizer = nil;
-    
-    [self.pNameLabel removeGestureRecognizer:m_pNameTapGestureRecognizer];
-    [m_pNameTapGestureRecognizer release];
-    m_pNameTapGestureRecognizer = nil;
-    
-    [self.pBannerImage removeGestureRecognizer:m_pBannerImageTapGestureRecognizer];
-    [m_pBannerImageTapGestureRecognizer release];
-    m_pBannerImageTapGestureRecognizer = nil;
-    
-    [self.pMoreDetailsLabel removeGestureRecognizer:m_pMoreDetailsTapGestureRecognizer];
-    [m_pMoreDetailsTapGestureRecognizer release];
-    m_pMoreDetailsTapGestureRecognizer = nil;
-
-    [self.pMoreDetailsLabel removeFromSuperview];
-    [self.pMoreDetailsLabel release];
-    self.pMoreDetailsLabel = nil;
+    [self.pTappableTopSection removeGestureRecognizer:m_pTopSectionTapGestureRecognizer];
+    [m_pTopSectionTapGestureRecognizer release];
+    m_pTopSectionTapGestureRecognizer = nil;
     
     [self.pTweetContent removeFromSuperview];
     [self.pTweetContent release];
@@ -184,10 +140,6 @@
     [self.pNameLabel removeFromSuperview];
     [self.pNameLabel release];
     self.pNameLabel = nil;
-    
-    [self.pTwitterBrandIcon removeFromSuperview];
-    [self.pTwitterBrandIcon release];
-    self.pTwitterBrandIcon = nil;
     
     [self.pUserImage removeFromSuperview];
     [self.pUserImage release];
@@ -209,6 +161,10 @@
     
     [self.m_pScreenName release];
     self.m_pScreenName = nil;
+    
+    [self.pTappableTopSection removeFromSuperview];
+    [self.pTappableTopSection release];
+    self.pTappableTopSection = nil;
     
     [super dealloc];
 }
@@ -367,13 +323,13 @@
     
     if(bDoesLinkOut)
     {
-        [m_pProfileImageTapGestureRecognizer removeTarget:nil action:NULL];
-        [m_pProfileImageTapGestureRecognizer addTarget:self action:@selector(handleTourChangeRequest:)];
+        [m_pTopSectionTapGestureRecognizer removeTarget:nil action:NULL];
+        [m_pTopSectionTapGestureRecognizer addTarget:self action:@selector(handleTourChangeRequest:)];
     }
     else
     {
-        [m_pProfileImageTapGestureRecognizer removeTarget:nil action:NULL];
-        [m_pProfileImageTapGestureRecognizer addTarget:self action:@selector(handleProfileTapped:)];
+        [m_pTopSectionTapGestureRecognizer removeTarget:nil action:NULL];
+        [m_pTopSectionTapGestureRecognizer addTarget:self action:@selector(handleProfileTapped:)];
     }
 }
 
@@ -416,14 +372,6 @@
     m_pInterop->OnChangeTourRequested([self.m_pUserName UTF8String]);
 }
 
-- (void) handleMoreDetailsTapped:(UITapGestureRecognizer *)tap
-{
-    std::string httpFallbackUrl = std::string("https://twitter.com/") + [self.m_pScreenName UTF8String] + "/status/" + [self.m_pTwitterId UTF8String];
-    
-    std::string twitterDeeplinkUrl = std::string("twitter://status?id=")+[self.m_pTwitterId UTF8String];
-    
-    m_pInterop->ShowDeeplinkURL(twitterDeeplinkUrl, httpFallbackUrl);
-}
 
 - (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)url inRange:(NSRange)characterRange
 {

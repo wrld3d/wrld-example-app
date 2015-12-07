@@ -11,11 +11,7 @@
 
 @interface TwitterCardView : UIView <UIGestureRecognizerDelegate, UITextViewDelegate>
 {
-    UITapGestureRecognizer* m_pMoreDetailsTapGestureRecognizer;
-    UITapGestureRecognizer* m_pProfileImageTapGestureRecognizer;
-    UITapGestureRecognizer* m_pBannerImageTapGestureRecognizer;
-    UITapGestureRecognizer* m_pNameTapGestureRecognizer;
-    UITapGestureRecognizer* m_pScreenNameTapGestureRecognizer;
+    UITapGestureRecognizer* m_pTopSectionTapGestureRecognizer;
     ExampleApp::Tours::View::TourExplorer::TourExplorerViewInterop* m_pInterop;
     ImageStore* m_pImageStore;
 }
@@ -27,9 +23,8 @@
 @property (nonatomic, retain) IBOutlet UIView* pUserImageContainer;
 @property (nonatomic, retain) IBOutlet FXImageView* pUserImage;
 @property (nonatomic, retain) IBOutlet FXImageView* pBannerImage;
-@property (nonatomic, retain) IBOutlet FXImageView* pTwitterBrandIcon;
 @property (nonatomic, retain) IBOutlet UITextView* pTweetContent;
-@property (nonatomic, retain) IBOutlet UILabel* pMoreDetailsLabel;
+@property (nonatomic, retain) IBOutlet UIView* pTappableTopSection;
 
 @property (nonatomic, retain) NSString* m_pTwitterId;
 @property (nonatomic, retain) NSString* m_pUserName;
@@ -53,7 +48,5 @@
     linkEndIndices:(NSMutableArray*)arrLinkEndIndices;
 
 - (void) clearImages;
-
-- (void) handleMoreDetailsTapped:(UITapGestureRecognizer *)tap;
 
 @end
