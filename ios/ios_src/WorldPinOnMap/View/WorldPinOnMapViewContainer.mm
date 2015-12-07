@@ -24,7 +24,7 @@
         
         self.pTourHovercard = [[TourHovercardView alloc]initWithParams:pinDiameter :pixelScale :pImageStore :m_pInterop];
         
-        self.pTwitterHovercard = [[TwitterWorldHovercard alloc]initWithParams:pinDiameter :pixelScale :m_pInterop];
+        self.pTwitterHovercard = [[TwitterWorldHovercard alloc]initWithParams:pinDiameter :pixelScale :pImageStore :m_pInterop];
         
         self.pCurrentHovercard = nil;
         

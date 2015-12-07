@@ -9,7 +9,7 @@
 
 @implementation TwitterWorldHovercard
 
-- (id)initWithParams:(float)pinDiameter :(float)pixelScale :(ExampleApp::WorldPins::View::WorldPinOnMapViewInterop*)interop
+- (id)initWithParams:(float)pinDiameter :(float)pixelScale  :(ImageStore*)pImageStore :(ExampleApp::WorldPins::View::WorldPinOnMapViewInterop*)interop
 {
     self = [super init];
     
@@ -64,7 +64,7 @@
         
         // image container
         self.pImageDisplay = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pImageDisplay.backgroundColor = ExampleApp::Helpers::ColorPalette::TwitterBlue;
+        
         [self.pLabelBack addSubview: self.pImageDisplay];
         
         // poi arrow
@@ -72,7 +72,14 @@
         self.pArrowContainer.contentMode = UIViewContentModeScaleToFill;
         [self addSubview: self.pArrowContainer];
         
+        self.pImageLoadingSpinner = [[[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge] autorelease];
+        self.pImageLoadingSpinner.color = ExampleApp::Helpers::ColorPalette::TwitterBlue;
+        self.pImageLoadingSpinner.hidden = YES;
+        [self.pImageDisplay addSubview:self.pImageLoadingSpinner];
+        
         self.frame.origin = CGPointMake(0, 0);
+        
+        m_pImageStore = pImageStore;
     }
     
     return self;
@@ -80,6 +87,9 @@
 
 - (void)dealloc
 {
+    [self.pImageLoadingSpinner removeFromSuperview];
+    [self.pImageLoadingSpinner release];
+    
     [self.pNameLabel removeFromSuperview];
     [self.pNameLabel release];
     
@@ -155,6 +165,28 @@
                                           imageSize,
                                           imageSize);
     
+    [m_pImageStore releaseImageForView:self.pImageDisplay];
+    [self.pImageLoadingSpinner startAnimating];
+    
+    if(!m_profileImageUrl.empty())
+    {
+        self.pImageDisplay.backgroundColor = [UIColor clearColor];
+        [m_pImageStore loadImage:m_profileImageUrl
+                                :self.pImageDisplay
+                                :^(UIImage* image)
+         {
+             self.pImageDisplay.image = image;
+             [self.pImageLoadingSpinner stopAnimating];
+             
+         }
+                                :static_cast<float>(self.pImageDisplay.frame.size.width)];
+    }
+    else
+    {
+        self.pImageDisplay.backgroundColor = ExampleApp::Helpers::ColorPalette::TwitterBlue;
+        [self.pImageLoadingSpinner stopAnimating];
+    }
+    
     
     const float arrowWidth = 16.f;
     self.pArrowContainer.frame = CGRectMake(w/2.f - arrowWidth/2.f, h, arrowWidth, arrowWidth);
@@ -171,6 +203,15 @@
     self.pNameLabel.text = [NSString stringWithUTF8String:worldPinsInFocusModel.GetTitle().c_str()];
     
     self.pTwitterHandle.text = [NSString stringWithUTF8String:worldPinsInFocusModel.GetSubtitle().c_str()];
+    
+    rapidjson::Document jsonData;
+    jsonData.Parse<0>(worldPinsInFocusModel.GetJsonData().c_str());
+    if(!jsonData.HasParseError())
+    {
+        Eegeo_ASSERT(jsonData.HasMember("twitter_image"));
+        
+        m_profileImageUrl = jsonData["twitter_image"].GetString();
+    }
     
     [self setNeedsLayout];
 }
