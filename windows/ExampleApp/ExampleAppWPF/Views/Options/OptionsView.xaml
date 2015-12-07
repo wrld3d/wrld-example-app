@@ -27,27 +27,27 @@
                                     <ScrollViewer PanningMode="Both" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" CanContentScroll="True">
                                         <StackPanel>
 
-                                            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                                                <ToggleButton Name="OptionsViewCacheEnabledTogglebutton" Margin="10,5,0,0" IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:OptionsView}}, Path=CacheEnabled}" Style="{StaticResource CheckBoxStyle}"/>
-                                                <TextBlock Name="OptionsViewCacheEnabledLabel" Text="Enable data caching on device" FontSize="14" Foreground="{StaticResource DarkGrey}" Margin="6,2,0,0"/>
+                                            <StackPanel Orientation="Horizontal" Margin="0,8,0,0" Height="30">
+                                                <ToggleButton Name="OptionsViewCacheEnabledTogglebutton" Margin="10,0,0,0" IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:OptionsView}}, Path=CacheEnabled}" Style="{StaticResource CheckBoxStyle}" VerticalAlignment="Center" />
+                                                <TextBlock Name="OptionsViewCacheEnabledLabel" Text="Enable data caching on device" FontSize="14" Foreground="{StaticResource DarkGrey}" Margin="6,0,0,0" VerticalAlignment="Center" />
                                             </StackPanel>
 
-                                            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                                                <Button Name="OptionsViewClearCacheButton" Margin="10,5,0,0" Width="19" Height="19">
+                                            <StackPanel Orientation="Horizontal" Margin="0,8,0,0" Height="30">
+                                                <Button Name="OptionsViewClearCacheButton" Margin="10,0,0,0" Width="20" Height="20" VerticalAlignment="Center">
                                                     <Button.Style>
                                                         <Style TargetType="Button" BasedOn="{StaticResource TransparentButtonStyle}">
                                                             <Style.Triggers>
                                                                 <Trigger Property="IsPressed" Value="True">
                                                                     <Setter Property="Content">
                                                                         <Setter.Value>
-                                                                            <Image Source="/Assets/buttonsmall_close_off.png" />
+                                                                            <Image Source="/Assets/buttonsmall_close_on.png" />
                                                                         </Setter.Value>
                                                                     </Setter>
                                                                 </Trigger>
                                                                 <Trigger Property="IsPressed" Value="False">
                                                                     <Setter Property="Content">
                                                                         <Setter.Value>
-                                                                            <Image Source="/Assets/buttonsmall_close_on.png" />
+                                                                            <Image Source="/Assets/buttonsmall_close_off.png" />
                                                                         </Setter.Value>
                                                                     </Setter>
                                                                 </Trigger>
@@ -56,7 +56,7 @@
                                                     </Button.Style>
                                                 </Button>
 
-                                                <TextBlock Name="OptionsViewClearCacheLabel" Text="Clear cached map data" FontSize="14" Foreground="{StaticResource DarkGrey}" Margin="6,2,0,0"/>
+                                                <TextBlock Name="OptionsViewClearCacheLabel" Text="Clear cached map data" FontSize="14" Foreground="{StaticResource DarkGrey}" Margin="6,0,0,2" VerticalAlignment="Center" />
                                             </StackPanel>
                                         </StackPanel>
                                     </ScrollViewer>
