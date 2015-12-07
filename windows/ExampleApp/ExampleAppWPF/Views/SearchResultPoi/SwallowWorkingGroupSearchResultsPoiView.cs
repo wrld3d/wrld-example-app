@@ -49,8 +49,6 @@ namespace ExampleAppWPF
             TitleText = m_model.Title;
             Description = m_swallowWorkingGroupModel.Description;
 
-            m_isPinned = isPinned;
-
             ShowAll();
         }
 

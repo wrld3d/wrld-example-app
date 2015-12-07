@@ -14,7 +14,6 @@ namespace ExampleAppWPF
         protected MainWindow m_currentWindow;
 
         protected bool m_closing;
-        protected bool m_isPinned;
 
         private ControlClickHandler m_closeButtonClickHandler = null;
 
@@ -34,19 +33,6 @@ namespace ExampleAppWPF
         {
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-        }
-        
-        public bool IsPinned
-        {
-            get
-            {
-                return m_isPinned;
-            }
-            set
-            {
-                HandleTogglePinnedClicked(ref m_isPinned, ref value);
-                OnPropertyChanged("IsPinned");
-            }
         }
 
         public override void OnApplyTemplate()
@@ -89,41 +75,6 @@ namespace ExampleAppWPF
         private void HandleCloseClicked(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             ExampleApp.SearchResultPoiViewCLI.CloseButtonClicked(m_nativeCallerPointer);
-        }
-
-        private void HandleTogglePinnedClicked(ref bool oldValue, ref bool newValue)
-        {
-            if (oldValue != newValue)
-            {
-                if (!newValue)
-                {
-                    if (ShowRemovePinDialog() == true)
-                    {
-                        ExampleApp.SearchResultPoiViewCLI.TogglePinnedButtonClicked(m_nativeCallerPointer);
-                        oldValue = newValue;
-                    }
-                }
-                else
-                {
-                    ExampleApp.SearchResultPoiViewCLI.TogglePinnedButtonClicked(m_nativeCallerPointer);
-                    oldValue = newValue;
-                }
-            }
-        }
-
-        private bool ShowRemovePinDialog()
-        {
-            DialogBox dialogBox = new DialogBox("Remove Pin", "Are you sure you want to remove this pin?", "Yes", "No");
-            dialogBox.Owner = m_currentWindow;
-
-            bool? result = dialogBox.ShowDialog();
-
-            if (result == null)
-            {
-                return false;
-            }
-
-            return (bool)result;
         }
 
         protected static BitmapImage LoadImageFromByteArray(byte[] imageData)

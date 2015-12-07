@@ -49,8 +49,6 @@ namespace ExampleAppWPF
             TitleText = m_swallowDepartmentModel.Name;
             Description = m_swallowDepartmentModel.Description;
 
-            m_isPinned = isPinned;
-
             ShowAll();
         }
 

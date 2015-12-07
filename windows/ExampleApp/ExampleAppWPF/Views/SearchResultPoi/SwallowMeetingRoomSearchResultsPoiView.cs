@@ -116,8 +116,6 @@ namespace ExampleAppWPF
             
             TitleText = m_swallowMeetingRoomModel.Name;
 
-            m_isPinned = isPinned;
-
             ShowAll();
         }
 

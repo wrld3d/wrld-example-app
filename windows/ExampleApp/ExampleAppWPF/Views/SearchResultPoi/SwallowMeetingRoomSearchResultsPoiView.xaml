@@ -207,7 +207,6 @@
 
                             <!--Bottom Bar-->
                             <Grid VerticalAlignment="Bottom" Background="{StaticResource Gold}" HorizontalAlignment="Stretch" Height="Auto" Grid.Row="2">
-                                <ToggleButton Name="TogglePinnedButton" Style="{StaticResource AddRemovePinStyle}" HorizontalAlignment="Left" IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:SwallowMeetingRoomSearchResultsPoiView}}, Path=IsPinned, Mode=TwoWay}"/>
                                 <Image Name="CloseButton" HorizontalAlignment="Right" Source="/Assets/button_close_off.png" Width="48" Height="48"/>
                             </Grid>
 
