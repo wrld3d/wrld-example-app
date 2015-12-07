@@ -50,7 +50,7 @@ namespace ExampleApp
                     , m_toursCameraTransitionController(toursCameraTransitionController)
                     , m_cameraMode(tweetStateData.ecefOrigin,
                                    tweetStateData.ecefTarget,
-                                   2.0f,
+                                   0.0f,
                                    cameraRotationOffset)
                     , m_pinPlacename(placeName)
                     , m_pinImageUrl(attachedImageUrl)
@@ -85,7 +85,7 @@ namespace ExampleApp
 
                         m_cameraMode = Camera::DroneLookatCameraMode(m_pinLocation.ToECEF() - basisOffset + initialAltitude * tangentBasis.GetUp(),
                                                                      m_pinLocation.ToECEF() + initialInterestAltitude * tangentBasis.GetUp(),
-                                                                     2.0f,
+                                                                     0.0f,
                                                                      cameraRotationOffset);
                     }
                     
@@ -153,6 +153,11 @@ namespace ExampleApp
                                                                     twitterIconIndex,
                                                                     heightOffsetAboveTerrainMetres,
                                                                     WorldPins::SdkModel::WorldPinVisibility::TourPin);
+                            // Hide hovercard if no image to show
+                            if(m_pinImageUrl.empty())
+                            {
+                                m_pPinModel->SetFocusable(false);
+                            }
                         }
                         else if(!m_interiorTransitionComplete && m_isInterior && m_interiorController.InteriorInScene())
                         {
