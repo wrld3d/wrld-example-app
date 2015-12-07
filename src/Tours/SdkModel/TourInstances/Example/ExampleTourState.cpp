@@ -12,6 +12,7 @@
 #include "WorldPinVisibility.h"
 #include "InteriorVisibilityUpdater.h"
 #include "InteriorSelectionModel.h"
+#include "SearchVendorNames.h"
 
 namespace ExampleApp
 {
@@ -86,7 +87,9 @@ namespace ExampleApp
                             m_interiorVisibilityUpdater.SetInteriorShouldDisplay(true);
                             
                             // Add pin.
-                            ExampleApp::WorldPins::SdkModel::WorldPinFocusData worldPinFocusData(m_stateModel.Headline(), m_stateModel.Description());
+                            ExampleApp::WorldPins::SdkModel::WorldPinFocusData worldPinFocusData(m_stateModel.Headline(),
+                                                                                                 m_stateModel.Description(),
+                                                                                                 Search::ExampleTourVendorName);
                             
                             const float heightOffsetMetres = 0.0f;
                             const int iconIndex = 10;

@@ -3,6 +3,7 @@
 #include "WorldPinOnMapView.h"
 #include "AndroidAppThreadAssertionMacros.h"
 #include "ImagePathHelpers.h"
+#include "IWorldPinsInFocusModel.h"
 
 namespace ExampleApp
 {
@@ -48,10 +49,7 @@ namespace ExampleApp
                 env->DeleteGlobalRef(m_uiViewClass);
             }
 
-            void WorldPinOnMapView::Open(const std::string& title,
-            		const std::string& subtitle,
-            		const std::string& ratingsImage,
-            		const int reviewCount,
+            void WorldPinOnMapView::Open(const WorldPins::SdkModel::IWorldPinsInFocusModel& worldPinsInFocusModel,
             		float modality)
             {
                 ASSERT_UI_THREAD
@@ -59,9 +57,10 @@ namespace ExampleApp
                 AndroidSafeNativeThreadAttachment attached(m_nativeState);
                 JNIEnv* env = attached.envForThread;
 
-                jstring titleStr = env->NewStringUTF(title.c_str());
-                jstring detailsStr = env->NewStringUTF(subtitle.c_str());
-                jstring ratingsImgStr = env->NewStringUTF(ratingsImage.c_str());
+                jstring titleStr = env->NewStringUTF(worldPinsInFocusModel.GetTitle().c_str());
+                jstring detailsStr = env->NewStringUTF(worldPinsInFocusModel.GetSubtitle().c_str());
+                jstring ratingsImgStr = env->NewStringUTF(worldPinsInFocusModel.GetRatingsImage().c_str());
+                const int reviewCount = worldPinsInFocusModel.GetReviewCount();
 
                 jmethodID showAtScreenLocation = env->GetMethodID(m_uiViewClass, "show", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IF)V");
                 env->CallVoidMethod(m_uiView, showAtScreenLocation, titleStr, detailsStr, ratingsImgStr, reviewCount, modality);

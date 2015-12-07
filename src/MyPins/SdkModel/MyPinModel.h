@@ -23,6 +23,7 @@ namespace ExampleApp
                 TPinIdType m_modelId;
                 std::string m_title;
                 std::string m_description;
+                std::string m_vendor;
                 std::string m_ratingsImage;
                 int m_reviewCount;
                 int m_sdkMapPinIconIndex;
@@ -41,6 +42,7 @@ namespace ExampleApp
                            TPinIdType modelId,
                            const std::string& title,
                            const std::string& description,
+                           const std::string& vendor,
                            const std::string& ratingsImage,
                            int reviewCount,
                            int sdkMapPinIconIndex,
@@ -68,6 +70,11 @@ namespace ExampleApp
                 const std::string& GetDescription() const
                 {
                     return m_description;
+                }
+                
+                const std::string& GetVendor() const
+                {
+                    return m_vendor;
                 }
                 
                 const std::string& GetRatingsImage() const

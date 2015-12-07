@@ -10,6 +10,7 @@
 #include "InteriorWorldPinSelectionHandler.h"
 #include "WorldPinVisibility.h"
 #include "MenuDragStateChangedMessage.h"
+#include "SearchVendorNames.h"
 
 namespace ExampleApp
 {
@@ -92,7 +93,10 @@ namespace ExampleApp
                 const int iconIndex = 11;
                 WorldPins::SdkModel::WorldPinInteriorData worldPinInteriorData;
                 
-                ExampleApp::WorldPins::SdkModel::WorldPinFocusData worldPinFocusData(markerModel.GetInteriorName(), markerModel.GetInteriorOwner());
+                ExampleApp::WorldPins::SdkModel::WorldPinFocusData worldPinFocusData(markerModel.GetInteriorName(),
+                                                                                     markerModel.GetInteriorOwner(),
+                                                                                     Search::InteriorVendorName);
+                
                 Eegeo::Space::LatLong location = Eegeo::Space::LatLong::FromDegrees(markerModel.GetMarkerLatLongAltitude().GetLatitudeInDegrees(),
                                                                                     markerModel.GetMarkerLatLongAltitude().GetLongitudeInDegrees());
                 

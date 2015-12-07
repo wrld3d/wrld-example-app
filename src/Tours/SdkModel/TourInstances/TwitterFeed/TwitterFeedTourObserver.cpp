@@ -111,7 +111,7 @@ namespace ExampleApp
                         const int twitterIcon = 13;
                         
                         ExampleApp::Tours::SdkModel::TourModel tourModel(tourName,
-                                                                         twitterBaseUserName + " (@"+userId+")",
+                                                                         "@"+userId,
                                                                          twitterIcon,
                                                                          tourLocation,
                                                                          isInterior,

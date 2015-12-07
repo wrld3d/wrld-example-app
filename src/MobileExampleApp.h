@@ -156,9 +156,6 @@ namespace ExampleApp
         
         AppModes::SdkModel::IAppModeModel* m_pAppModeModel;
         
-        ExampleAppMessaging::TMessageBus m_toursMessageBus;
-        Eegeo::Pins::PinsModule* m_pToursPinsModule;
-        ExampleApp::WorldPins::SdkModel::IWorldPinsModule* m_pToursWorldPinsModule;
         Tours::IToursModule* m_pToursModule;
         Eegeo::Modules::FireworksModule* m_pFireworksModule;
         float m_toursPinDiameter;
@@ -375,11 +372,6 @@ namespace ExampleApp
         const ExampleApp::Tours::IToursModule& ToursModule() const
         {
             return *m_pToursModule;
-        }
-        
-        const ExampleApp::WorldPins::SdkModel::IWorldPinsModule& TourWorldPinsModule() const
-        {
-            return *m_pToursWorldPinsModule;
         }
         
         const ExampleApp::Tours::SdkModel::TourInstances::TwitterFeed::ITwitterFeedTourModule& TwitterFeedTourModule() const
