@@ -11,11 +11,11 @@ namespace ExampleApp
         public:
             virtual ~IStateMachineState() { }
             
-            virtual void Enter() = 0;
+            virtual void Enter(int previousState) = 0;
             
             virtual void Update(float dt) = 0;
             
-            virtual void Exit() = 0;
+            virtual void Exit(int nextState) = 0;
         };
     }
 }

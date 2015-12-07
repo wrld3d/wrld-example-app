@@ -32,7 +32,7 @@ namespace ExampleApp
                 {
                 }
                 
-                void InteriorExplorerExitingState::Enter()
+                void InteriorExplorerExitingState::Enter(int previousState)
                 {
                     m_cameraFrustumStreamingVolume.SetForceMaximumRefinement(true);
                     m_interiorVisibilityUpdater.SetInteriorShouldDisplay(false);
@@ -48,7 +48,7 @@ namespace ExampleApp
                     }
                 }
                 
-                void InteriorExplorerExitingState::Exit()
+                void InteriorExplorerExitingState::Exit(int nextState)
                 {
                     m_cameraFrustumStreamingVolume.SetForceMaximumRefinement(false);
                 }

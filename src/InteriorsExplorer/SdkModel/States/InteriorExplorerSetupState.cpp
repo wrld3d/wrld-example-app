@@ -28,7 +28,7 @@ namespace ExampleApp
                 {
                 }
                 
-                void InteriorExplorerSetupState::Enter()
+                void InteriorExplorerSetupState::Enter(int previousState)
                 {
                     m_interiorsExplorerModel.SaveCurrentMapState();
                     m_interiorsExplorerModel.ChangeToInteriorMapState();
@@ -43,7 +43,7 @@ namespace ExampleApp
                     }
                 }
                 
-                void InteriorExplorerSetupState::Exit()
+                void InteriorExplorerSetupState::Exit(int nextState)
                 {
                     
                 }

@@ -82,11 +82,11 @@ namespace ExampleApp
                     
                     ~InteriorExplorerState();
                     
-                    void Enter();
+                    void Enter(int previousState);
                     
                     void Update(float dt);
                     
-                    void Exit();
+                    void Exit(int nextState);
                     
                     void SetSubState(InteriorExplorerSubStates::Values stateIndex);
                     
