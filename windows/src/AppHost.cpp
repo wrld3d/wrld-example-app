@@ -83,6 +83,7 @@
 #include "SearchVendorNames.h"
 #include "InteriorsExplorerViewModule.h"
 #include "IInteriorsExplorerModule.h"
+#include "../libs/eegeo/platform/Helpers/ColorHelpers.h"
 
 using namespace Eegeo::Windows;
 using namespace Eegeo::Windows::Input;
@@ -187,6 +188,8 @@ AppHost::AppHost(
 	platformConfig.OptionsConfig.EnableInteriors = true;
     platformConfig.OptionsConfig.InteriorsControlledByApp = true;
 	platformConfig.OptionsConfig.InteriorsAffectedByFlattening = false;
+    platformConfig.MapLayersConfig.Interiors.LabelGlyphColor = Eegeo::Helpers::MakeColorRGB(18, 86, 176);
+    platformConfig.MapLayersConfig.Interiors.LabelOutlineColor = Eegeo::Rendering::Colors::WHITE;
 
 	platformConfig.CoverageTreeConfig.ManifestUrl = config.CoverageTreeManifestURL();
 	platformConfig.CityThemesConfig.StreamedManifestUrl = config.ThemeManifestURL();
