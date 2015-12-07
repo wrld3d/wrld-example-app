@@ -56,19 +56,17 @@
                                 <!--end include search_results_bar_layout-->
 
                                 <Grid Name="SearchResultCount">
-                                    <Button Name="SearchMenuDragTabView" Style="{StaticResource TransparentButtonStyle}">
-                                        <Grid>
-                                            <Image Source="/Assets/menu_button.png" RenderTransformOrigin="0.5,0.5">
-                                                <Image.RenderTransform>
-                                                    <ScaleTransform ScaleX="-1"/>
-                                                </Image.RenderTransform>
-                                            </Image>
-                                            <ProgressBar Name="SearchMenuSpinner" Width="40" Height="40" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Center" Background="{StaticResource Transparent}" IsIndeterminate="True" />
-                                            <Border BorderBrush="{x:Null}" Width="40" Height="40">
-                                                <TextBlock Name="SearchMenuNumResultsText" FontSize="22" Foreground="{StaticResource White}" HorizontalAlignment="Center" VerticalAlignment="Center" Background="{StaticResource Transparent}"/>
-                                            </Border>
-                                        </Grid>
-                                    </Button>
+                                    <Grid Width="50" Height="50" VerticalAlignment="Top">
+                                        <Image Source="/Assets/menu_button.png" RenderTransformOrigin="0.5,0.5" Width="50" Height="50" Name="SearchMenuDragTabView" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                            <Image.RenderTransform>
+                                                <ScaleTransform ScaleX="-1"/>
+                                            </Image.RenderTransform>
+                                        </Image>
+                                        <ProgressBar IsHitTestVisible="False" Name="SearchMenuSpinner" Width="40" Height="40" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Center" Background="{StaticResource Transparent}" IsIndeterminate="True" />
+                                        <Border BorderBrush="{x:Null}" Width="40" Height="40">
+                                            <TextBlock IsHitTestVisible="False" Name="SearchMenuNumResultsText" FontSize="22" Foreground="{StaticResource White}" HorizontalAlignment="Center" VerticalAlignment="Center" Background="{StaticResource Transparent}"/>
+                                        </Border>
+                                    </Grid>
                                 </Grid>
 
                             </StackPanel>

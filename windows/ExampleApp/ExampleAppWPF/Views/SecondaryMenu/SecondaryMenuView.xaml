@@ -27,15 +27,11 @@
                         </Storyboard>
                     </ControlTemplate.Resources>
                     <StackPanel Orientation="Horizontal" Margin="0,50,0,0">
-                        <Button Width="50" Height="50" Name="SecondaryMenuDragTabView" Style="{StaticResource TransparentButtonStyle}" VerticalAlignment="Top">
-                            <Grid>
-                                <Grid.Background>
-                                    <ImageBrush Stretch="Fill" ImageSource="/Assets/menu_button.png" ></ImageBrush>
-                                </Grid.Background>
-                                <Image Name="SecondaryMenuDragInteractionArrow" Width="50" Height="50" VerticalAlignment="Center" HorizontalAlignment="Center" Source="/Assets/menu_list.png"></Image>
-                            </Grid>
-                        </Button>
-
+                        <Grid Width="50" Height="50" VerticalAlignment="Top">
+                            <Image Source="/Assets/menu_button.png" Width="50" Height="50" Name="SecondaryMenuDragTabView" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                            <Image IsHitTestVisible="False" Name="SecondaryMenuDragInteractionArrow" Width="50" Height="50" VerticalAlignment="Center" HorizontalAlignment="Center" Source="/Assets/menu_list.png" />
+                        </Grid>
+                        
                         <Grid Name="SecondaryMenuViewListContainer" Width="220" >
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="50"/>

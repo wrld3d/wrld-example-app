@@ -1,17 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using ExampleApp;
 using System.Windows.Media.Animation;
 
@@ -46,7 +35,7 @@ namespace ExampleAppWPF
     ///     <MyNamespace:MyPinCreationView/>
     ///
     /// </summary>
-    public class MyPinCreationButtonView : Button
+    public class MyPinCreationButtonView : ButtonBase
     {
         private IntPtr m_nativeCallerPointer;
     
@@ -75,9 +64,7 @@ namespace ExampleAppWPF
         {
             MyPinCreationViewCLIMethods.StartButtonPressed(m_nativeCallerPointer);
         }
-
         
-
         private void PerformLayout(object sender, RoutedEventArgs e)
         {
             Point currentPosition = RenderTransform.Transform(new Point(0.0, 0.0));
