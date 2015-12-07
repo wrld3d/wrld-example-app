@@ -46,7 +46,9 @@ namespace ExampleApp
                 const Search::SdkModel::SearchQuery& GetSearchQuery() const;
                 
             private:
-                Helpers::ReflectionHelpers::Method<System::String^, System::String^, System::String^, System::String^, System::String^, float, float, System::Delegate^> Search;
+                Helpers::ReflectionHelpers::Method<System::String^, System::String^, System::String^, System::String^, System::String^, System::String^, float, float, int, System::Delegate^> Search;
+
+				const float MaxRadiusMetres;
                 
                 WindowsNativeState& m_nativeState;
                 Search::SdkModel::SearchQuery m_searchQuery;
