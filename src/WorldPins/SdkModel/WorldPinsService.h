@@ -60,6 +60,8 @@ namespace ExampleApp
 
                 bool HandleTouchTap(const Eegeo::v2& screenTapPoint);
 
+				bool HandleTouchDoubleTap(const Eegeo::v2& screenTapPoint);
+
                 void GetPinEcefAndScreenLocations(const WorldPinItemModel& pinItemModel,
                                                   Eegeo::dv3& ecefLocation,
                                                   Eegeo::v2& screenLocation) const;
@@ -72,6 +74,8 @@ namespace ExampleApp
                 IWorldPinSelectionHandler* GetSelectionHandlerForPin(WorldPinItemModel::WorldPinItemModelId worldPinItemModelId);
                 
                 void ErasePin(const WorldPinItemModel::WorldPinItemModelId& id);
+
+				bool TrySelectPinAtPoint(const Eegeo::v2& screenPoint);
 
             };
         }
