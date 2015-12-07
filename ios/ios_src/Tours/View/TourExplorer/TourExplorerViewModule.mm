@@ -16,7 +16,6 @@ namespace ExampleApp
                 TourExplorerViewModule::TourExplorerViewModule(ExampleApp::ExampleAppMessaging::TMessageBus& messageBus,
                                                                ITourExplorerViewModel& viewModel,
                                                                URLRequest::View::URLRequestHandler& urlRequestHandler,
-                                                               TourHovercard::ITourHovercardView& tourHoverCardView,
                                                                ITourExplorerCompositeViewController& tourExplorerCompositeViewController,
                                                                const Eegeo::Rendering::ScreenProperties& screenProperties,
                                                                Metrics::IMetricsService& metricsService,
@@ -32,7 +31,6 @@ namespace ExampleApp
                     m_pViewController = Eegeo_NEW(TourExplorerViewController)(viewModel,
                                                                               tourExplorerCompositeViewController,
                                                                               *[m_pView getInterop],
-                                                                              tourHoverCardView,
                                                                               messageBus,
                                                                               metricsService);
                 }

@@ -20,14 +20,14 @@
             <Trigger Property="IsChecked" Value="True">
                 <Setter Property="Content">
                     <Setter.Value>
-                        <Image Source="/Assets/button_checkbox_on.png" Width="25" Height="25"/>
+                        <Image Source="/Assets/button_checkbox_on.png" Width="20" Height="20"/>
                     </Setter.Value>
                 </Setter>
             </Trigger>
             <Trigger Property="IsChecked" Value="False">
                 <Setter Property="Content">
                     <Setter.Value>
-                        <Image Source="/Assets/button_checkbox_off.png" Width="25" Height="25"/>
+                        <Image Source="/Assets/button_checkbox_off.png" Width="20" Height="20"/>
                     </Setter.Value>
                 </Setter>
             </Trigger>

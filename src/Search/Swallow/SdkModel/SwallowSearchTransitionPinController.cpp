@@ -37,7 +37,7 @@ namespace ExampleApp
                     
                     for(std::vector<Search::SdkModel::SearchResultModel>::const_iterator it = transitionResults.begin(); it != transitionResults.end(); ++it)
                     {
-                        WorldPins::SdkModel::WorldPinFocusData worldPinFocusData("Exit", "");
+                        WorldPins::SdkModel::WorldPinFocusData worldPinFocusData("Exit", "", it->GetVendor());
                         WorldPins::SdkModel::WorldPinInteriorData worldPinInteriorData((*it).GetBuildingId(),
                                                                                        (*it).GetFloor());
                         

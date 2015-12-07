@@ -42,6 +42,11 @@ namespace ExampleApp
                                       Eegeo::Camera::GlobeCamera::GlobeCameraTouchController& touchController,
                                       float inputScreenScale);
                     
+                    void SetControlsEnabled(bool panningEnabled,
+                                            bool rotateEnabled,
+                                            bool zoomEnabled,
+                                            bool tiltEnabled);
+                    
                     const ToursCameraState& GetCurrentState() const;
                     
                 private:

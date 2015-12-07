@@ -80,9 +80,13 @@ namespace ExampleAppWPF
             m_list = (ListBox)GetTemplateChild("SecondaryMenuItemList");
             m_list.SelectionChanged += SelectionChanged;
             
-            m_dragTabView = (Button)GetTemplateChild("SecondaryMenuDragTabView");
-            m_dragTabView.Click += OnClick;
+            m_dragTabView = (Image)GetTemplateChild("SecondaryMenuDragTabView");
             
+            m_dragTabClickHandler = new ControlClickHandler(m_dragTabView, OnDragTabMouseClick);
+
+            m_dragTabView.MouseLeftButtonDown += OnDragTabMouseLeftButtonDown;
+            m_dragTabView.MouseLeftButtonUp += OnDragTabMouseLeftButtonUp;
+
             m_editText = (TextBox)GetTemplateChild("SecondaryMenuViewSearchEditTextView");
             m_editText = (TextBox)GetTemplateChild("SecondaryMenuViewSearchEditTextView");
             m_editText.KeyDown += OnKeyDown;
@@ -117,12 +121,7 @@ namespace ExampleAppWPF
                 }
             }
         }
-
-        private void OnClick(object sender, RoutedEventArgs e)
-        {
-            MenuView_Click(sender, e);
-        }
-
+        
         private void OnKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)

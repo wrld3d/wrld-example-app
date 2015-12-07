@@ -18,5 +18,10 @@ namespace ExampleApp
         const std::string SwallowTransitionsVendorName = "SwallowTranstions";
         
         const std::string ExampleTourVendorName = "Tour";
+        
+        const std::string InteriorVendorName = "Interior";
+        const std::string WorldTwitterVendorName = "Twitter";
+        const std::string TourTwitterVendorName = "TwitterTour";
+        const std::string MyPinVendorName = "MyPin";
     }
 }

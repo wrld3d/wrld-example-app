@@ -10,10 +10,12 @@ using System.Windows.Media;
 
 namespace ExampleAppWPF
 {
-    public abstract class MenuView : Button
+    public abstract class MenuView : Control
     {
+        protected ControlClickHandler m_dragTabClickHandler = null;
+
         protected ListBox m_list = null;
-        protected Button m_dragTabView;
+        protected Image m_dragTabView;
         protected bool m_dragInProgress = false;
         protected bool m_loggingEnabled = false;
 
@@ -66,22 +68,15 @@ namespace ExampleAppWPF
             int dragThesholdDip = 10;
             m_dragThresholdPx = ConversionHelpers.AndroidToWindowsDip(dragThesholdDip);
 
-            Click += MenuView_Click;
-
             m_mainWindow = (MainWindow)Application.Current.MainWindow;
         }
-
         
-
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-
-               
         }
 
-
-        protected void MenuView_Click(object sender, RoutedEventArgs e)
+        protected void OnDragTabMouseClick(object sender, MouseButtonEventArgs e)
         {
             if (m_animating)
             {
@@ -89,6 +84,16 @@ namespace ExampleAppWPF
             }
 
             MenuViewCLIMethods.ViewClicked(m_nativeCallerPointer);
+        }
+
+        protected void OnDragTabMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        protected void OnDragTabMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            e.Handled = false;
         }
 
         public void Destroy()

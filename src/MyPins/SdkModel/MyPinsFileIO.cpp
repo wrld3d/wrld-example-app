@@ -14,6 +14,7 @@
 #include "MyPinsSemanticPinType.h"
 #include "IMyPinBoundObjectFactory.h"
 #include "IMyPinBoundObjectRepository.h"
+#include "SearchVendorNames.h"
 
 namespace ExampleApp
 {
@@ -32,6 +33,7 @@ namespace ExampleApp
                     valueObject.AddMember("id", pinModel.Identifier(), allocator);
                     valueObject.AddMember("title", pinModel.GetTitle().c_str(), allocator);
                     valueObject.AddMember("description", pinModel.GetDescription().c_str(), allocator);
+                    valueObject.AddMember("vendor", pinModel.GetVendor().c_str(), allocator);
                     valueObject.AddMember("ratingsImage", pinModel.GetRatingsImage().c_str(), allocator);
                     valueObject.AddMember("reviewCount", pinModel.GetReviewsCount(), allocator);
                     valueObject.AddMember("icon", pinModel.GetSdkMapPinIconIndexIcon(), allocator);
@@ -266,16 +268,22 @@ namespace ExampleApp
                                 description = "";
                             }
                         }
-                        else if(version == MyPinModel::CurrentVersion)
+                        else if(version >= 2)
                         {
                             ratingsImage = entry["ratingsImage"].GetString();
                             reviewCount = entry["reviewCount"].GetInt();
                         }
                         
+                        std::string vendor = Search::YelpVendorName;
+                        if(version == MyPinModel::CurrentVersion)
+                        {
+                            vendor = entry["vendor"].GetString();
+                        }
+                        
                         float heightAboveTerrainMetres = 0;
                         if(entry.HasMember("heightAboveTerrain"))
                         {
-                            heightAboveTerrainMetres = entry["heightAboveTerrain"].GetDouble();
+                            heightAboveTerrainMetres = static_cast<float>(entry["heightAboveTerrain"].GetDouble());
                         }
                         
                         bool interior = false;
@@ -306,6 +314,7 @@ namespace ExampleApp
                                                                  pinId,
                                                                  title,
                                                                  description,
+                                                                 vendor,
                                                                  ratingsImage,
                                                                  reviewCount,
                                                                  sdkMapPinIconIndex,

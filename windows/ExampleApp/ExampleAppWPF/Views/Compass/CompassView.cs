@@ -9,7 +9,7 @@ using System.Windows.Shapes;
 
 namespace ExampleAppWPF
 {   
-    public class CompassView : Button
+    public class CompassView : ButtonBase
     {
         private IntPtr m_nativeCallerPointer;
         private double m_stateChangeAnimationTimeMilliseconds = 200;

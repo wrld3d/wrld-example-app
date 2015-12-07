@@ -3,7 +3,7 @@
 #pragma once
 
 #include "IWorldPinOnMapView.h"
-#include "WorldPinOnMapView.h"
+#include "WorldPinOnMapViewContainer.h"
 #include "CallbackCollection.h"
 #include "ICallback.h"
 #include <string>
@@ -18,16 +18,12 @@ namespace ExampleApp
             {
             public:
 
-                WorldPinOnMapViewInterop(WorldPinOnMapView* pView)
+                WorldPinOnMapViewInterop(WorldPinOnMapViewContainer* pView)
                     : m_pView(pView)
                 {
                 }
 
-                void Open(const std::string& title,
-                          const std::string& subtitle,
-                          const std::string& ratingsImage,
-                          const int reviewCount,
-                          float modality);
+                void Open(const WorldPins::SdkModel::IWorldPinsInFocusModel& worldPinsInFocusModel, float modality);
                 void Close();
                 void UpdateScreenLocation(float posX, float posY);
                 void UpdateScreenState(float screenState);
@@ -38,7 +34,7 @@ namespace ExampleApp
 
             private:
 
-                WorldPinOnMapView* m_pView;
+                WorldPinOnMapViewContainer* m_pView;
                 Eegeo::Helpers::CallbackCollection0 m_selectedCallbacks;
             };
         }

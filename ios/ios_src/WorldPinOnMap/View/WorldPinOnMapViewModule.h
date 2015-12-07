@@ -9,6 +9,8 @@
 #include "Modality.h"
 #include "WorldPinOnMapViewIncludes.h"
 #include "IAppModeModel.h"
+#include "ImageStore.h"
+#include "TourHovercardView.h"
 
 namespace ExampleApp
 {
@@ -19,21 +21,24 @@ namespace ExampleApp
             class WorldPinOnMapViewModule: public IWorldPinOnMapViewModule, private Eegeo::NonCopyable
             {
             private:
-                WorldPinOnMapView* m_pView;
+                WorldPinOnMapViewContainer* m_pView;
                 WorldPinOnMapController* m_pController;
+                
+                TourHovercardView* m_pTourView;
 
             public:
                 WorldPinOnMapViewModule(IWorldPinInFocusViewModel& worldPinInFocusViewModel,
                                         ScreenControl::View::IScreenControlViewModel::IScreenControlViewModel& worldPinOnMapInFocusScreenControlViewModel,
                                         Modality::View::IModalityModel& modalityModel,
                                         float pinDiameter,
-                                        float pixelScale);
-
+                                        float pixelScale,
+                                        ImageStore* pImageStore);
+                
                 ~WorldPinOnMapViewModule();
 
                 WorldPinOnMapController& GetWorldPinOnMapController() const;
 
-                WorldPinOnMapView& GetWorldPinOnMapView() const;
+                WorldPinOnMapViewContainer& GetWorldPinOnMapView() const;
             };
         }
     }
