@@ -76,6 +76,7 @@
     }
     
     if(worldPinsInFocusModel.GetVendor() == ExampleApp::Search::YelpVendorName ||
+       worldPinsInFocusModel.GetVendor() == ExampleApp::Search::GeoNamesVendorName ||
        worldPinsInFocusModel.GetVendor() == ExampleApp::Search::MyPinVendorName)
     {
         self.pCurrentHovercard = self.pYelpHovercard;
