@@ -26,6 +26,8 @@
         
         self.pTwitterHovercard = [[TwitterWorldHovercard alloc]initWithParams:pinDiameter :pixelScale :pImageStore :m_pInterop];
         
+        self.pTwitterTourHovercard = [[TwitterTourHovercard alloc]initWithParams:pinDiameter :pixelScale :pImageStore :m_pInterop];
+        
         self.pCurrentHovercard = nil;
         
         m_screenWidth = self.superview.bounds.size.width;
@@ -42,6 +44,7 @@
     {
         [self.pCurrentHovercard removeFromSuperview];
     }
+    [self.pTwitterTourHovercard release];
     [self.pTwitterHovercard release];
     [self.pTourHovercard release];
     [self.pInteriorHovercard release];
@@ -85,10 +88,13 @@
     {
         self.pCurrentHovercard = self.pTwitterHovercard;
     }
-    else if(worldPinsInFocusModel.GetVendor() == ExampleApp::Search::ExampleTourVendorName ||
-            worldPinsInFocusModel.GetVendor() == ExampleApp::Search::TourTwitterVendorName)
+    else if(worldPinsInFocusModel.GetVendor() == ExampleApp::Search::ExampleTourVendorName)
     {
         self.pCurrentHovercard = self.pTourHovercard;
+    }
+    else if (worldPinsInFocusModel.GetVendor() == ExampleApp::Search::TourTwitterVendorName)
+    {
+        self.pCurrentHovercard = self.pTwitterTourHovercard;
     }
     
     [self addSubview:self.pCurrentHovercard];
@@ -99,6 +105,7 @@
 - (void) setFullyActive :(float)modality
 {
     self.userInteractionEnabled = YES;
+    [self.pTwitterTourHovercard setFullyActive:modality];
     [self.pTwitterHovercard setFullyActive:modality];
     [self.pTourHovercard setFullyActive:modality];
     [self.pInteriorHovercard setFullyActive:modality];
@@ -108,6 +115,7 @@
 - (void) setFullyInactive
 {
     self.userInteractionEnabled = NO;
+    [self.pTwitterTourHovercard setFullyInactive];
     [self.pTwitterHovercard setFullyInactive];
     [self.pTourHovercard setFullyInactive];
     [self.pInteriorHovercard setFullyInactive];

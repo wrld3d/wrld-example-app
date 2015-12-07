@@ -1497,6 +1497,8 @@
 		BFDFC3D81BB2F5BA0099BAEC /* menu_list@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFDFC3D31BB2F5BA0099BAEC /* menu_list@3x.png */; };
 		BFE248061BD8EF30000DEAA6 /* MapCameraMode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFE248051BD8EF30000DEAA6 /* MapCameraMode.cpp */; };
 		BFE248071BD8EF30000DEAA6 /* MapCameraMode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFE248051BD8EF30000DEAA6 /* MapCameraMode.cpp */; };
+		BFEBB7471C15C8F200AE6081 /* TwitterTourHovercard.mm in Sources */ = {isa = PBXBuildFile; fileRef = BFEBB7451C15C8F200AE6081 /* TwitterTourHovercard.mm */; };
+		BFEBB7481C15C8F200AE6081 /* TwitterTourHovercard.mm in Sources */ = {isa = PBXBuildFile; fileRef = BFEBB7451C15C8F200AE6081 /* TwitterTourHovercard.mm */; };
 		E002DEAF1BD148E40062D4D2 /* InteriorsCustomMaterialDtoRepository.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E002DEAD1BD148E40062D4D2 /* InteriorsCustomMaterialDtoRepository.cpp */; };
 		E002DEB01BD148E40062D4D2 /* InteriorsCustomMaterialDtoRepository.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E002DEAD1BD148E40062D4D2 /* InteriorsCustomMaterialDtoRepository.cpp */; };
 		E002DEB41BD4E56E0062D4D2 /* InteriorsCustomMaterialParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E002DEB21BD4E56E0062D4D2 /* InteriorsCustomMaterialParser.cpp */; };
@@ -3076,6 +3078,8 @@
 		BFDFC3D21BB2F5BA0099BAEC /* menu_list@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu_list@2x.png"; sourceTree = "<group>"; };
 		BFDFC3D31BB2F5BA0099BAEC /* menu_list@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu_list@3x.png"; sourceTree = "<group>"; };
 		BFE248051BD8EF30000DEAA6 /* MapCameraMode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MapCameraMode.cpp; sourceTree = "<group>"; };
+		BFEBB7451C15C8F200AE6081 /* TwitterTourHovercard.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = TwitterTourHovercard.mm; path = WorldPinOnMap/View/Hovercards/TwitterTourHovercard.mm; sourceTree = "<group>"; };
+		BFEBB7461C15C8F200AE6081 /* TwitterTourHovercard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwitterTourHovercard.h; path = WorldPinOnMap/View/Hovercards/TwitterTourHovercard.h; sourceTree = "<group>"; };
 		E002DEAD1BD148E40062D4D2 /* InteriorsCustomMaterialDtoRepository.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = InteriorsCustomMaterialDtoRepository.cpp; path = InteriorsCustomMaterials/SdkModel/InteriorsCustomMaterialDtoRepository.cpp; sourceTree = "<group>"; };
 		E002DEAE1BD148E40062D4D2 /* InteriorsCustomMaterialDtoRepository.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InteriorsCustomMaterialDtoRepository.h; path = InteriorsCustomMaterials/SdkModel/InteriorsCustomMaterialDtoRepository.h; sourceTree = "<group>"; };
 		E002DEB11BD14AEB0062D4D2 /* IInteriorsCustomMaterialDtoRepository.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = IInteriorsCustomMaterialDtoRepository.h; path = InteriorsCustomMaterials/SdkModel/IInteriorsCustomMaterialDtoRepository.h; sourceTree = "<group>"; };
@@ -6290,6 +6294,8 @@
 				BFDE501D1C11AA51009DEBCE /* InteriorsHovercard.mm */,
 				BFDE50221C11BA8A009DEBCE /* TwitterWorldHovercard.h */,
 				BFDE50211C11BA8A009DEBCE /* TwitterWorldHovercard.mm */,
+				BFEBB7461C15C8F200AE6081 /* TwitterTourHovercard.h */,
+				BFEBB7451C15C8F200AE6081 /* TwitterTourHovercard.mm */,
 			);
 			name = Hovercards;
 			path = ../..;
@@ -7208,6 +7214,7 @@
 				BFD5FD431BA706AD00F591F1 /* ToursCameraController.cpp in Sources */,
 				7E3B89B51A385A290023C94E /* SearchResultMenuController.cpp in Sources */,
 				2797889C1C087C970053CD00 /* TwitterDefines.mm in Sources */,
+				BFEBB7481C15C8F200AE6081 /* TwitterTourHovercard.mm in Sources */,
 				BFDFC3D01BB2EF190099BAEC /* SearchResultModel.cpp in Sources */,
 				7E3B898D1A385A290023C94E /* SearchModule.cpp in Sources */,
 				279788CB1C0896FB0053CD00 /* URLRequestedMessage.cpp in Sources */,
@@ -7690,6 +7697,7 @@
 				BFD5FD421BA706AD00F591F1 /* ToursCameraController.cpp in Sources */,
 				7E3B89B41A385A290023C94E /* SearchResultMenuController.cpp in Sources */,
 				2797889B1C087C970053CD00 /* TwitterDefines.mm in Sources */,
+				BFEBB7471C15C8F200AE6081 /* TwitterTourHovercard.mm in Sources */,
 				BFDFC3CF1BB2EF190099BAEC /* SearchResultModel.cpp in Sources */,
 				7E3B898C1A385A290023C94E /* SearchModule.cpp in Sources */,
 				279788CA1C0896FB0053CD00 /* URLRequestedMessage.cpp in Sources */,
