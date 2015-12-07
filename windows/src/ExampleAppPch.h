@@ -850,7 +850,6 @@
 #include "Resources/PlaceNames/PlaceNamesTransforms.h"
 #include "Resources/PlaceNames/PlaceNameView.h"
 #include "Resources/PlaceNames/PlaceNameViewBuilder.h"
-#include "Resources/PlaceNames/PlaceNameViewConfig.h"
 #include "Resources/ResourceNodeCache.h"
 #include "Resources/Resources.h"
 #include "Resources/ResourceSpatialQueryService.h"
