@@ -24,6 +24,10 @@ namespace ExampleApp
             extern UIColor* UiBaseColour;
             extern UIColor* MenuSeparatorHeaderColor;
             extern UIColor* MenuSeparatorSubMenuColor;
+            
+            extern UIColor* TwitterDarkGrey;
+            extern UIColor* TwitterLightGrey;
+            extern UIColor* TwitterBlue;
         }
     }
 }

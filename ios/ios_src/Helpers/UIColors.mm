@@ -24,6 +24,10 @@ namespace ExampleApp
             UIColor* UiBaseColour = [UIColor blueColor];
             UIColor* MenuSeparatorHeaderColor = [[UIColor alloc] initWithRed:177.f/255.f green:204.f/255.f blue:225.f/255.f alpha:1.f];
             UIColor* MenuSeparatorSubMenuColor = [[UIColor alloc] initWithRed:198.f/255.f green:206.f/255.f blue:207.f/255.f alpha:1.f];
+            
+            UIColor* TwitterDarkGrey = [[UIColor alloc] initWithRed:64.f/255.f green:64.f/255.f blue:64.f/255.f alpha:1.f];
+            UIColor* TwitterLightGrey = [[UIColor alloc] initWithRed:119.f/255.f green:119.f/255.f blue:119.f/255.f alpha:1.f];
+            UIColor* TwitterBlue = [[UIColor alloc] initWithRed:85.f/255.f green:172.f/255.f blue:238.f/255.f alpha:1.f];
         }
     }
 }

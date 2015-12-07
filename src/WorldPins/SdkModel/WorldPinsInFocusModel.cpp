@@ -17,12 +17,16 @@ namespace ExampleApp
             WorldPinsInFocusModel::WorldPinsInFocusModel(int worldPinItemModelId,
                     const std::string& title,
                     const std::string& subtitle,
+                    const std::string& vendor,
+                    const std::string& json,
                     const std::string& ratingsImage,
                     const int reviewCount)
 
                 : m_worldPinItemModelId(worldPinItemModelId)
                 , m_title(title)
                 , m_subtitle(subtitle)
+                , m_vendor(vendor)
+                , m_json(json)
                 , m_ratingsImage(ratingsImage)
                 , m_reviewCount(reviewCount)
             {
@@ -39,6 +43,16 @@ namespace ExampleApp
                 return m_subtitle;
             }
             
+            const std::string& WorldPinsInFocusModel::GetVendor() const
+            {
+                return m_vendor;
+            }
+            
+            const std::string& WorldPinsInFocusModel::GetJsonData() const
+            {
+                return m_json;
+            }
+
             const bool WorldPinsInFocusModel::HasRatingsImage() const
             {
                 return !m_ratingsImage.empty();

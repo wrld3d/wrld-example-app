@@ -6,6 +6,7 @@
 #include "WorldPinOnMapController.h"
 #include "WorldPinOnMapViewInterop.h"
 #include "IModalityModel.h"
+#include "TourHovercardView.h"
 
 namespace ExampleApp
 {
@@ -18,9 +19,10 @@ namespace ExampleApp
                     Modality::View::IModalityModel& modalityModel,
                     const AppModes::SdkModel::IAppModeModel& appModeModel,
                     float pinDiameter,
-                    float pixelScale)
+                    float pixelScale,
+                    ImageStore* pImageStore)
             {
-                m_pView = [[WorldPinOnMapView alloc] initWithParams:pinDiameter :pixelScale];
+                m_pView = [[WorldPinOnMapViewContainer alloc] initWithParams:pinDiameter :pixelScale :pImageStore];
 
                 m_pController = Eegeo_NEW(WorldPinOnMapController)(
                                     *[m_pView getInterop],
@@ -33,7 +35,7 @@ namespace ExampleApp
             WorldPinOnMapViewModule::~WorldPinOnMapViewModule()
             {
                 Eegeo_DELETE m_pController;
-                [m_pView release];
+                [m_pTourView release];
             }
 
             WorldPinOnMapController& WorldPinOnMapViewModule::GetWorldPinOnMapController() const
@@ -41,7 +43,7 @@ namespace ExampleApp
                 return *m_pController;
             }
 
-            WorldPinOnMapView& WorldPinOnMapViewModule::GetWorldPinOnMapView() const
+            WorldPinOnMapViewContainer& WorldPinOnMapViewModule::GetWorldPinOnMapView() const
             {
                 return *m_pView;
             }

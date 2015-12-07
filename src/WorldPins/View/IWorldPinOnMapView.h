@@ -1,7 +1,7 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
-
+#include "WorldPins.h"
 #include "ICallback.h"
 #include <string>
 
@@ -16,11 +16,7 @@ namespace ExampleApp
             public:
                 virtual ~IWorldPinOnMapView() {};
 
-                virtual void Open(const std::string& title,
-                                  const std::string& subtitle,
-                                  const std::string& ratingsImage,
-                                  const int reviewCount,
-                                  float modality) = 0;
+                virtual void Open(const WorldPins::SdkModel::IWorldPinsInFocusModel& worldPinsInFocusModel, float modality) = 0;
                 virtual void Close() = 0;
                 virtual void UpdateScreenLocation(float posX, float posY) = 0;
                 virtual void UpdateScreenState(float screenState) = 0;

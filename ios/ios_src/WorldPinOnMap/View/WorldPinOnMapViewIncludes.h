@@ -2,7 +2,8 @@
 
 #pragma once
 
-@class WorldPinOnMapView;
+@class WorldPinOnMapViewContainer;
+@protocol WorldPinOnMapView;
 
 namespace ExampleApp
 {

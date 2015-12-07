@@ -11,8 +11,9 @@ namespace ExampleApp
             /*
                 Version 1: Initial version
                 Version 2: Added optional ratings image & reviews count data (8/7/15)
+                Version 3: Added storing of pin vendor data, if pin predates this version it should proably use Yelp as vendor (3/12/15)
              */
-            const int MyPinModel::CurrentVersion = 2;
+            const int MyPinModel::CurrentVersion = 3;
             
             MyPinModel::MyPinModel()
                 : m_version(-1)
@@ -30,6 +31,7 @@ namespace ExampleApp
                                    int modelId,
                                    const std::string& title,
                                    const std::string& description,
+                                   const std::string& vendor,
                                    const std::string& ratingsImage,
                                    int reviewCount,
                                    int sdkMapPinIconIndex,
@@ -42,6 +44,7 @@ namespace ExampleApp
             , m_modelId(modelId)
             , m_title(title)
             , m_description(description)
+            , m_vendor(vendor)
             , m_ratingsImage(ratingsImage)
             , m_reviewCount(reviewCount)
             , m_sdkMapPinIconIndex(sdkMapPinIconIndex)

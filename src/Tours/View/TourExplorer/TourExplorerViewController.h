@@ -8,7 +8,6 @@
 #include "IScreenControlViewModel.h"
 #include "BidirectionalBus.h"
 #include "IMetricsService.h"
-#include "ITourHovercardView.h"
 
 namespace ExampleApp
 {
@@ -25,7 +24,6 @@ namespace ExampleApp
                     TourExplorerViewController(ITourExplorerViewModel& viewModel,
                                                ITourExplorerCompositeViewController& tourExplorerCompositeViewController,
                                                ITourExplorerView& view,
-                                               TourHovercard::ITourHovercardView& hovercardView,
                                                ExampleAppMessaging::TMessageBus& messageBus,
                                                Metrics::IMetricsService& metricsService);
                     
@@ -43,7 +41,6 @@ namespace ExampleApp
                     ITourExplorerViewModel& m_viewModel;
                     ITourExplorerCompositeViewController& m_tourExplorerCompositeViewController;
                     ITourExplorerView& m_view;
-                    TourHovercard::ITourHovercardView& m_hovercardView;
                     ExampleAppMessaging::TMessageBus& m_messageBus;
                     
                     Eegeo::Helpers::TCallback2<TourExplorerViewController, ScreenControl::View::IScreenControlViewModel&, float> m_viewStateCallback;

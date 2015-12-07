@@ -41,7 +41,6 @@
 #include "TourWebViewIncludes.h"
 #include "TourExplorerViewIncludes.h"
 #include "TourFullScreenImageViewIncludes.h"
-#include "TourHovercardViewIncludes.h"
 #include "InitialExperienceIntroViewIncludes.h"
 #include "NetIncludes.h"
 #include "Search.h"
@@ -122,7 +121,6 @@ private:
     ExampleApp::Tours::View::TourWeb::ITourWebViewModule* m_pTourWebViewModule;
     ExampleApp::Tours::View::TourExplorer::ITourExplorerViewModule* m_pTourExplorerViewModule;
     ExampleApp::Tours::View::TourFullScreenImage::ITourFullScreenImageViewModule* m_pTourFullScreenImageViewModule;
-    ExampleApp::Tours::View::TourHovercard::ITourHovercardViewModule* m_pTourWorldPinOnMapViewModule;
     ExampleApp::InitialExperience::View::IInitialExperienceIntroViewModule* m_pInitialExperienceIntroViewModule;
     ExampleApp::Net::SdkModel::INetworkCapabilities* m_pNetworkCapabilities;
     std::map<std::string,ExampleApp::Search::SdkModel::ISearchServiceModule*> m_searchServiceModules;
