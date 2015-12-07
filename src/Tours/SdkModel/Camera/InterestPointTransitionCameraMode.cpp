@@ -43,7 +43,7 @@ namespace ExampleApp
         {
             namespace Camera
             {
-                InterestPointTransitionCameraMode* InterestPointTransitionCameraMode::CreateBetweenStates(const ToursCameraState& startState, const ToursCameraState& endState)
+                InterestPointTransitionCameraMode* InterestPointTransitionCameraMode::CreateBetweenStates(const ToursCameraState& startState, const ToursCameraState& endState, bool jumpIfFar)
                 {
                     const Eegeo::dv3& startInterestPoint = startState.ecefInterestPoint;
                     const Eegeo::dv3& endInterestPoint = endState.ecefInterestPoint;
@@ -56,7 +56,7 @@ namespace ExampleApp
                     startOrientation.Normalise();
                     endOrientation.Normalise();
 
-                    return Eegeo_NEW(InterestPointTransitionCameraMode)(startInterestPoint, endInterestPoint, startDistanceToInterest, endDistanceToInterest, startState.fovDegrees, endState.fovDegrees, startOrientation, endOrientation, true);
+                    return Eegeo_NEW(InterestPointTransitionCameraMode)(startInterestPoint, endInterestPoint, startDistanceToInterest, endDistanceToInterest, startState.fovDegrees, endState.fovDegrees, startOrientation, endOrientation, jumpIfFar);
                 }
                 
                 InterestPointTransitionCameraMode::InterestPointTransitionCameraMode(
@@ -80,7 +80,8 @@ namespace ExampleApp
                 , m_time(0.0f)
                 , m_timeScale(0.75f)
                 {
-                    
+                    const float MaxDurationSeconds = 3.0f;
+                    const float MinTimescale = 1.0f / MaxDurationSeconds;
                     const float maxDistanceBeforeJumpSqr = 500.0f* 500.0f;
                     const double topDistToInterest = Eegeo::Max(startDistanceToInterest, endDistanceToInterest) ;
                     const double minDistToInterest = 100.0;
@@ -98,7 +99,7 @@ namespace ExampleApp
                         const float velocity = static_cast<float>(50.0f * altitudeScale);
                         const float distance = Eegeo::Max(static_cast<float>((endInterestPoint - startInterestPoint).Length()), 25.0f);
                         
-                        m_timeScale = Eegeo::Min(velocity/distance, angularVelocity/angularDistance);
+                        m_timeScale = Eegeo::Max(MinTimescale, Eegeo::Min(velocity/distance, angularVelocity/angularDistance));
                         
                     }
                 }

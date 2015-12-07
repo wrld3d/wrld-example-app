@@ -45,7 +45,7 @@ namespace ExampleApp
                     
                     bool HasEnded() const { return m_time >= 1.0f; }
                     
-                    static InterestPointTransitionCameraMode* CreateBetweenStates(const ToursCameraState& startState, const ToursCameraState& endState);
+                    static InterestPointTransitionCameraMode* CreateBetweenStates(const ToursCameraState& startState, const ToursCameraState& endState, bool jumpIfFar);
                     
                     const ToursCameraState& GetCurrentState() const { return m_cameraState; }
                     

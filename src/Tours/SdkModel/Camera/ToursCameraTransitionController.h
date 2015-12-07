@@ -33,7 +33,7 @@ namespace ExampleApp
                     
                     void Update(float dt);
                     
-                    void TransitionTo(IToursCameraMode& targetCameraMode);
+                    void TransitionTo(IToursCameraMode& targetCameraMode, bool jumpIfFar);
                     
                     void ResetControllerState();
                     
