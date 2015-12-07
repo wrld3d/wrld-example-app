@@ -20,7 +20,7 @@
                                 <Image Source="/Assets/button_create_poi.png" Width="60" Height="60" Margin="5, 5, 0, 5"/>
                                 <Grid Margin="10, 20, 0, 20">
                                     <TextBox Name="TitleBox" Width="180" Height="30" Foreground="{StaticResource Gold}" FontWeight="Bold" Text="" BorderThickness="0" />
-                                    <TextBlock IsHitTestVisible="False" Width="175" Height="28" Text="Name your pin..."  Margin="5,2" Foreground="{StaticResource LightGrey}"
+                                    <TextBlock IsHitTestVisible="False" Width="175" Height="28" Text="Name your Report..."  Margin="5,2" Foreground="{StaticResource LightGrey}"
                                                Visibility="{Binding ElementName=TitleBox, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
                                 </Grid>
                             </StackPanel>
@@ -35,7 +35,7 @@
                             </StackPanel>
                             <Grid Margin="10, 10, 10, 0" >
                                 <TextBox Name="DescBox" Width="330" Height="70" AcceptsReturn="True" Text="" Foreground="{StaticResource Gold}" FontWeight="Bold" DockPanel.Dock="Top"/>
-                                <TextBlock IsHitTestVisible="False" Text="Tell us about your pin..."  Margin="5,2" Foreground="{StaticResource LightGrey}"
+                                <TextBlock IsHitTestVisible="False" Text="Tell us about your report..."  Margin="5,2" Foreground="{StaticResource LightGrey}"
                                            Visibility="{Binding ElementName=DescBox, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
                             </Grid>
                             <ScrollViewer HorizontalAlignment="Center" VerticalScrollBarVisibility="Auto" Margin="10, 10, 10, 0" Height="200">

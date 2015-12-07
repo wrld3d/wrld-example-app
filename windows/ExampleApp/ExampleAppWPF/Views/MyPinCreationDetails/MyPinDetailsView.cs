@@ -121,7 +121,7 @@ namespace ExampleAppWPF
 
         private bool ShowRemovePinDialog()
         {
-            DialogBox dialogBox = new DialogBox("Remove Pin", "Are you sure you want to remove this pin?", "Yes", "No");
+            DialogBox dialogBox = new DialogBox("Remove Report", "Are you sure you want to remove this report?", "Yes", "No");
             dialogBox.Owner = m_currentWindow;
 
             bool? result = dialogBox.ShowDialog();

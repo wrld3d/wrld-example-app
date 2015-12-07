@@ -13,7 +13,7 @@
                     <StackPanel Background="{StaticResource White}">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="/Assets/icon_create_poi.png" Width="50" Height="50"/>
-                            <TextBlock Name="Title" Text="Name your pin..." Foreground="{StaticResource Gold}" FontWeight="Bold" Margin="5, 10, 10, 0" FontSize="20"/>
+                            <TextBlock Name="Title" Text="Name your report..." Foreground="{StaticResource Gold}" FontWeight="Bold" Margin="5, 10, 10, 0" FontSize="20"/>
                         </StackPanel>
                         <ScrollViewer VerticalScrollBarVisibility="Auto" Height="390">
                             <StackPanel Width="Auto">

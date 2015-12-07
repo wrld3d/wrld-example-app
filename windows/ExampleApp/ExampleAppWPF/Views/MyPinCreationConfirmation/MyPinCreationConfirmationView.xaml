@@ -13,7 +13,7 @@
                     <StackPanel Name="MainPanel" Orientation="Horizontal">
                         <Image Name="Close" Source="/Assets/button_close_place_pin_off.png" Width="60" Height="60" Stretch="Uniform"/>
                         <Grid Background="{StaticResource White}" Width="280" Height="60">
-                            <TextBlock Text="Drag marker to place pin" FontSize="14" Foreground="Gray" Margin="5, 0, 5, 0" FontWeight="Bold" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <TextBlock Text="Drag marker to place report" FontSize="14" Foreground="Gray" Margin="5, 0, 5, 0" FontWeight="Bold" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Grid>
                         <Image Name="Ok" Source="/Assets/button_ok_place_pin_off.png" Width="60" Height="60" Stretch="Fill"/>
                     </StackPanel>
