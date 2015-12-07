@@ -36,11 +36,11 @@ namespace ExampleApp
                     
                     ~InteriorExplorerSetupState();
                     
-                    void Enter();
+                    void Enter(int previousState);
                     
                     void Update(float dt);
                     
-                    void Exit();
+                    void Exit(int nextState);
                 };
             }
         }
