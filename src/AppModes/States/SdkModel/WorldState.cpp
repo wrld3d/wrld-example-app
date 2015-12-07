@@ -40,7 +40,7 @@ namespace ExampleApp
                 {
                 }
                 
-                void WorldState::Enter()
+                void WorldState::Enter(int previousState)
                 {
                     m_cameraController.TransitionToCameraWithHandle(m_worldCameraHandle);
                     m_tourService.RegisterTourStartedCallback(m_tourStartedCallback);
@@ -52,12 +52,12 @@ namespace ExampleApp
                     
                 }
                 
-                void WorldState::Exit()
+                void WorldState::Exit(int nextState)
                 {
                     m_tourService.UnregisterTourStartedCallback(m_tourStartedCallback);
                     m_interiorSelectionModel.UnregisterSelectionChangedCallback(m_interiorSelectionModelChangedCallback);
                     
-                    if(m_appModeModel.GetAppMode() == AppModes::SdkModel::InteriorMode)
+                    if(nextState == AppModes::SdkModel::InteriorMode)
                     {
                         m_interiorsCameraController.SetHeading(m_cameraController.GetHeadingDegrees());
                         m_interiorsCameraController.SetTilt(0.0f);

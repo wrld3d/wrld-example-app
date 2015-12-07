@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace ExampleAppWPF
@@ -33,7 +34,6 @@ namespace ExampleAppWPF
             
             m_currentWindow = (MainWindow)Application.Current.MainWindow;
             m_currentWindow.MainGrid.Children.Add(this);
-            MouseDown += WorldPinOnMapView_MouseDown;
 
             Background = new SolidColorBrush(Colors.Cyan);
             UseLayoutRounding = true;
@@ -56,8 +56,10 @@ namespace ExampleAppWPF
             m_reviewImageAndNumber = (StackPanel)GetTemplateChild("ReviewsPanel");
         }
 
-        private void WorldPinOnMapView_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
         {
+            base.OnMouseLeftButtonUp(e);
+
             ExampleApp.WorldPinOnMapCLI.OnSelected(m_nativeCallerPointer);
         }
 

@@ -38,6 +38,7 @@ namespace ExampleApp
                     Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& m_worldCameraController;
                     ExampleApp::InteriorsExplorer::SdkModel::InteriorsExplorerCameraController& m_interiorsCameraController;
                     
+                    InteriorsExplorer::SdkModel::InteriorsExplorerModel& m_interiorsExplorerModel;
                     MapMode::SdkModel::IMapModeModel& m_mapModeModel;
                     bool m_previousMapModeState;
                     
@@ -48,22 +49,23 @@ namespace ExampleApp
                 public:
                     
                     TourState(AppCamera::SdkModel::IAppCameraController& cameraController,
-                               int tourCameraHandle,
-                               Tours::SdkModel::ITourService& tourService,
+                              int tourCameraHandle,
+                              Tours::SdkModel::ITourService& tourService,
                               Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                               AppModes::SdkModel::IAppModeModel& appModeModel,
                               Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& worldCameraController,
-                              ExampleApp::InteriorsExplorer::SdkModel::InteriorsExplorerCameraController& interiorsCameraController,
+                              InteriorsExplorer::SdkModel::InteriorsExplorerCameraController& interiorsCameraController,
+                              InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel,
                               MapMode::SdkModel::IMapModeModel& mapModeModel,
                               MyPinCreation::SdkModel::IMyPinCreationModel& myPinCreationModel);
                     
                     ~TourState();
                     
-                    void Enter();
+                    void Enter(int previousState);
                     
                     void Update(float dt);
                     
-                    void Exit();
+                    void Exit(int nextState);
                 };
             }
         }

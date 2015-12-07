@@ -33,7 +33,7 @@ namespace ExampleApp
                 {
                 }
                 
-                void InteriorExplorerViewingState::Enter()
+                void InteriorExplorerViewingState::Enter(int previousState)
                 {
                     m_cameraFrustumStreamingVolume.SetForceMaximumRefinement(true);
                     m_interiorExplorerModel.ShowInteriorExplorer();
@@ -50,7 +50,7 @@ namespace ExampleApp
                     }
                 }
                 
-                void InteriorExplorerViewingState::Exit()
+                void InteriorExplorerViewingState::Exit(int nextState)
                 {
                     m_cameraFrustumStreamingVolume.SetForceMaximumRefinement(false);
                     m_interiorExplorerModel.RemoveInteriorExplorerExitedCallback(m_exitCallback);

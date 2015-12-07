@@ -100,7 +100,7 @@ namespace ExampleApp
                     m_subStates.clear();
                 }
                 
-                void InteriorExplorerState::Enter()
+                void InteriorExplorerState::Enter(int previousState)
                 {
                     m_interiorExplorerUserInteractionModel.SetEnabled(false);
                     m_tourService.RegisterTourStartedCallback(m_tourStartedCallback);
@@ -116,7 +116,7 @@ namespace ExampleApp
                     }
                 }
                 
-                void InteriorExplorerState::Exit()
+                void InteriorExplorerState::Exit(int nextState)
                 {
                     Eegeo::Space::LatLongAltitude latLong = Eegeo::Space::LatLongAltitude::FromECEF(m_interiorsCameraController.GetCameraState().InterestPointEcef());
                     const float interestDistance = 500.0f;
