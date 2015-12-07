@@ -54,9 +54,12 @@ namespace ExampleAppWPF
             m_list = (ListBox)GetTemplateChild("SearchMenuItemList");
             m_list.SelectionChanged += OnItemSelected;
 
-            m_dragTabView = (Button)GetTemplateChild("SearchMenuDragTabView");
-            m_dragTabView.Click += MenuView_Click;
-            m_dragTabView.MouseMove += MenuView_MouseMove;
+            m_dragTabView = (Image)GetTemplateChild("SearchMenuDragTabView");
+
+            m_dragTabClickHandler = new ControlClickHandler(m_dragTabView, OnDragTabMouseClick);
+
+            m_dragTabView.MouseLeftButtonDown += OnDragTabMouseLeftButtonDown;
+            m_dragTabView.MouseLeftButtonUp += OnDragTabMouseLeftButtonUp;
 
             m_closeButtonView = (Button)GetTemplateChild("SearchMenuCloseButton");
             m_closeButtonView.Click += CloseButtonClicked;

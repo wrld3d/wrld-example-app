@@ -7,7 +7,7 @@ using System.Windows.Media.Animation;
 
 namespace ExampleAppWPF
 {
-    public class InteriorsExplorerView : Control
+    public class InteriorsExplorerView : ControlBase
     {
         private IntPtr m_nativeCallerPointer;
         private ListBox m_floorList;

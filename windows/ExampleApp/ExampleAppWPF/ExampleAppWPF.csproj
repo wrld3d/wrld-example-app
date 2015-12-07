@@ -94,6 +94,8 @@
     </Compile>
     <Compile Include="Layout.cs" />
     <Compile Include="ViewHelpers.cs" />
+    <Compile Include="Views\ButtonBase.cs" />
+    <Compile Include="Views\ControlBase.cs" />
     <Compile Include="Views\ControlClickHandler.cs" />
     <Compile Include="Properties\VersionInfo.cs" />
     <Compile Include="Views\InteriorsExplorer\InteriorsExplorerView.cs" />
@@ -113,6 +115,7 @@
     <Compile Include="Views\AboutPage\AboutPageView.cs" />
     <Compile Include="Views\MyPinCreationDetails\MyPinCreationDetailsView.cs" />
     <Compile Include="Views\MyPinCreationDetails\MyPinDetailsView.cs" />
+    <Compile Include="Views\ToggleButtonBase.cs" />
     <Compile Include="Views\Watermark\WatermarkView.cs" />
     <Compile Include="Views\WorldPinOnMap\WorldPinOnMapView.cs" />
     <Compile Include="Views\Menu\MenuView.cs" />

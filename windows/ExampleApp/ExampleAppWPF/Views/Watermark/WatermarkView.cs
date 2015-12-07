@@ -8,7 +8,7 @@ using System.Diagnostics;
 
 namespace ExampleAppWPF
 {
-    class WatermarkView : Control
+    class WatermarkView : ControlBase
     {
         private IntPtr m_nativeCallerPointer;
         private MainWindow m_currentWindow;

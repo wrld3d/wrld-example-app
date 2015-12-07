@@ -4,7 +4,7 @@ using System.Windows.Input;
 
 namespace ExampleAppWPF
 {
-    class ControlClickHandler
+    public class ControlClickHandler
     {
         private Action<object, MouseButtonEventArgs> m_onClickAction;
 

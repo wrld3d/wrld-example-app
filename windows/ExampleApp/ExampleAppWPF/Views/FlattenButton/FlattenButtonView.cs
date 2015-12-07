@@ -2,14 +2,13 @@
 
 using System;
 using System.Windows;
-using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 using ExampleApp;
 using System.Windows.Media.Animation;
 
 namespace ExampleAppWPF
 {
-    public class FlattenButtonView : ToggleButton
+    public class FlattenButtonView : ToggleButtonBase
     {
         private double m_yPosActive;
         private double m_yPosInactive;
