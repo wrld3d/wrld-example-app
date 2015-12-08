@@ -92,7 +92,7 @@ namespace ExampleApp
                         
                         std::string tourName = tweetRepository.GetItemAtIndex(0)->GetBaseUserName();
                         std::string twitterBaseUserName = tweetRepository.GetItemAtIndex(0)->GetBaseUserName();
-                        const std::string twitterBaseProfileImage = tweetRepository.GetItemAtIndex(0)->GetBaseProfileImageUrl();
+                        const std::string twitterBaseProfileImage = tweetRepository.GetItemAtIndex(0)->GetBaseProfileImageThumbUrl();
                         
                         std::vector<TourStateModel> states;
                         for(int i = 0; i < tweets.size(); ++i)
