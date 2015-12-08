@@ -19,15 +19,17 @@ namespace ExampleApp
                     struct TweetStateData
                     {
                     public:
-                        TweetStateData(Eegeo::dv3 _ecefOrigin,
-                                       Eegeo::dv3 _ecefTarget,
+                        TweetStateData(Eegeo::dv3 _ecefTarget,
+                                       float _cameraDistanceToTarget,
+                                       float _cameraTiltDegrees,
                                        bool _isInterior,
                                        WorldPins::SdkModel::WorldPinInteriorData _interiorData,
                                        bool _useBounds,
                                        Eegeo::Space::LatLong _minBounds,
                                        Eegeo::Space::LatLong _maxBounds)
-                        : ecefOrigin(_ecefOrigin)
-                        , ecefTarget(_ecefTarget)
+                        : ecefTarget(_ecefTarget)
+                        , cameraDistanceToTarget(_cameraDistanceToTarget)
+                        , cameraTiltDegrees(_cameraTiltDegrees)
                         , isInterior(_isInterior)
                         , interiorData(_interiorData)
                         , useBounds(_useBounds)
@@ -52,8 +54,9 @@ namespace ExampleApp
                         }
                         
                         TweetStateData()
-                        : ecefOrigin(0.0, 0.0, 0.0)
-                        , ecefTarget(0.0, 0.0, 0.0)
+                        : ecefTarget(0.0, 0.0, 0.0)
+                        , cameraDistanceToTarget(300.0f)
+                        , cameraTiltDegrees(45.0f)
                         , isInterior(false)
                         , interiorData()
                         , useBounds(false)
@@ -63,8 +66,9 @@ namespace ExampleApp
                             
                         }
                         
-                        Eegeo::dv3 ecefOrigin;
                         Eegeo::dv3 ecefTarget;
+                        float cameraDistanceToTarget;
+                        float cameraTiltDegrees;
                         bool isInterior;
                         WorldPins::SdkModel::WorldPinInteriorData interiorData;
                         bool useBounds;
