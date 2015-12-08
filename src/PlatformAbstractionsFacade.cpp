@@ -1,6 +1,7 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "PlatformAbstractionsFacade.h"
+#include "IConnectivityService.h"
 
 namespace ExampleApp
 {
