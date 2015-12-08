@@ -469,6 +469,7 @@
     <ClCompile Include="..\..\..\src\Tours\SdkModel\Camera\InterestPointTransitionCameraMode.cpp" />
     <ClCompile Include="..\..\..\src\Tours\SdkModel\Camera\SplineCameraMode.cpp" />
     <ClCompile Include="..\..\..\src\Tours\SdkModel\Camera\SplineTransitionCameraMode.cpp" />
+    <ClCompile Include="..\..\..\src\Tours\SdkModel\Camera\StaticCameraMode.cpp" />
     <ClCompile Include="..\..\..\src\Tours\SdkModel\Camera\TourCameraModule.cpp" />
     <ClCompile Include="..\..\..\src\Tours\SdkModel\Camera\ToursCameraController.cpp" />
     <ClCompile Include="..\..\..\src\Tours\SdkModel\Camera\ToursCameraFadeTransitionMode.cpp" />
@@ -2197,6 +2198,7 @@
     <ClInclude Include="..\..\..\src\Tours\SdkModel\Camera\OrbitCameraMode.h" />
     <ClInclude Include="..\..\..\src\Tours\SdkModel\Camera\SplineCameraMode.h" />
     <ClInclude Include="..\..\..\src\Tours\SdkModel\Camera\SplineTransitionCameraMode.h" />
+    <ClInclude Include="..\..\..\src\Tours\SdkModel\Camera\StaticCameraMode.h" />
     <ClInclude Include="..\..\..\src\Tours\SdkModel\Camera\TourCameraModule.h" />
     <ClInclude Include="..\..\..\src\Tours\SdkModel\Camera\ToursCameraController.h" />
     <ClInclude Include="..\..\..\src\Tours\SdkModel\Camera\ToursCameraFadeTransitionMode.h" />
