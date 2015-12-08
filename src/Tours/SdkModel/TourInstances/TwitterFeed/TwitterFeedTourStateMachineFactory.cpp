@@ -90,7 +90,7 @@ namespace ExampleApp
                                 tweetStateData = &((*tweetStateIt).second);
                             }
                             
-                            const float cameraRotationDeltaRad = Eegeo::Math::Deg2Rad(15.0f);
+                            const float cameraRotationDelta = 15.0f;
                             
                             std::string placename = !tweet.GetPlaceName().empty() ? tweet.GetPlaceName() : tweet.GetUserName();
                             
@@ -131,7 +131,7 @@ namespace ExampleApp
                                                                                              tweet.GetExpandedMediaUrl(),
                                                                                              tweet.HasAttachedVideo(),
                                                                                              m_messageBus,
-                                                                                             i * cameraRotationDeltaRad)));
+                                                                                             i * cameraRotationDelta)));
                         }
                         
                         return Eegeo_NEW(States::TourStateMachine)(stateMachineStates, NULL);

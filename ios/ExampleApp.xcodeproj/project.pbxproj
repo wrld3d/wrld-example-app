@@ -1497,6 +1497,8 @@
 		BFDFC3D81BB2F5BA0099BAEC /* menu_list@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFDFC3D31BB2F5BA0099BAEC /* menu_list@3x.png */; };
 		BFE248061BD8EF30000DEAA6 /* MapCameraMode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFE248051BD8EF30000DEAA6 /* MapCameraMode.cpp */; };
 		BFE248071BD8EF30000DEAA6 /* MapCameraMode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFE248051BD8EF30000DEAA6 /* MapCameraMode.cpp */; };
+		BFE66F5D1C17163600494F69 /* StaticCameraMode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFE66F5B1C17163500494F69 /* StaticCameraMode.cpp */; };
+		BFE66F5E1C17163600494F69 /* StaticCameraMode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFE66F5B1C17163500494F69 /* StaticCameraMode.cpp */; };
 		BFEBB7471C15C8F200AE6081 /* TwitterTourHovercard.mm in Sources */ = {isa = PBXBuildFile; fileRef = BFEBB7451C15C8F200AE6081 /* TwitterTourHovercard.mm */; };
 		BFEBB7481C15C8F200AE6081 /* TwitterTourHovercard.mm in Sources */ = {isa = PBXBuildFile; fileRef = BFEBB7451C15C8F200AE6081 /* TwitterTourHovercard.mm */; };
 		E002DEAF1BD148E40062D4D2 /* InteriorsCustomMaterialDtoRepository.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E002DEAD1BD148E40062D4D2 /* InteriorsCustomMaterialDtoRepository.cpp */; };
@@ -3078,6 +3080,8 @@
 		BFDFC3D21BB2F5BA0099BAEC /* menu_list@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu_list@2x.png"; sourceTree = "<group>"; };
 		BFDFC3D31BB2F5BA0099BAEC /* menu_list@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu_list@3x.png"; sourceTree = "<group>"; };
 		BFE248051BD8EF30000DEAA6 /* MapCameraMode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MapCameraMode.cpp; sourceTree = "<group>"; };
+		BFE66F5B1C17163500494F69 /* StaticCameraMode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StaticCameraMode.cpp; sourceTree = "<group>"; };
+		BFE66F5C1C17163600494F69 /* StaticCameraMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StaticCameraMode.h; sourceTree = "<group>"; };
 		BFEBB7451C15C8F200AE6081 /* TwitterTourHovercard.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = TwitterTourHovercard.mm; path = WorldPinOnMap/View/Hovercards/TwitterTourHovercard.mm; sourceTree = "<group>"; };
 		BFEBB7461C15C8F200AE6081 /* TwitterTourHovercard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwitterTourHovercard.h; path = WorldPinOnMap/View/Hovercards/TwitterTourHovercard.h; sourceTree = "<group>"; };
 		E002DEAD1BD148E40062D4D2 /* InteriorsCustomMaterialDtoRepository.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = InteriorsCustomMaterialDtoRepository.cpp; path = InteriorsCustomMaterials/SdkModel/InteriorsCustomMaterialDtoRepository.cpp; sourceTree = "<group>"; };
@@ -6116,6 +6120,8 @@
 				BFD5FCEA1BA706AD00F591F1 /* ToursCameraState.h */,
 				BFD5FCEB1BA706AD00F591F1 /* ToursCameraTransitionController.cpp */,
 				BFD5FCEC1BA706AD00F591F1 /* ToursCameraTransitionController.h */,
+				BFE66F5B1C17163500494F69 /* StaticCameraMode.cpp */,
+				BFE66F5C1C17163600494F69 /* StaticCameraMode.h */,
 			);
 			path = Camera;
 			sourceTree = "<group>";
@@ -7382,6 +7388,7 @@
 				7E3B890F1A385A290023C94E /* MyPinCreationStateChangedMessage.cpp in Sources */,
 				7E149DC01BCD209B00C0AFFC /* ExampleSearchJsonParser.cpp in Sources */,
 				7E3B89F51A385A290023C94E /* WorldPinsFactory.cpp in Sources */,
+				BFE66F5E1C17163600494F69 /* StaticCameraMode.cpp in Sources */,
 				27DB89DD1BB3FF170020CDA5 /* GeoNamesSearchQueryFactory.cpp in Sources */,
 				7E149DD01BD1118D00C0AFFC /* TransitionToWorldPointStage.cpp in Sources */,
 				7E3B89ED1A385A290023C94E /* WeatherSelectedMessage.cpp in Sources */,
@@ -7865,6 +7872,7 @@
 				7E3B890E1A385A290023C94E /* MyPinCreationStateChangedMessage.cpp in Sources */,
 				7E149DBF1BCD209B00C0AFFC /* ExampleSearchJsonParser.cpp in Sources */,
 				7E3B89F41A385A290023C94E /* WorldPinsFactory.cpp in Sources */,
+				BFE66F5D1C17163600494F69 /* StaticCameraMode.cpp in Sources */,
 				27DB89DC1BB3FF170020CDA5 /* GeoNamesSearchQueryFactory.cpp in Sources */,
 				7E149DCF1BD1118D00C0AFFC /* TransitionToWorldPointStage.cpp in Sources */,
 				7E3B89EC1A385A290023C94E /* WeatherSelectedMessage.cpp in Sources */,
