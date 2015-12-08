@@ -49,8 +49,7 @@ namespace ExampleApp
                     }
                     else
                     {
-                        const std::string imageUrl = tourModel.TwitterBaseProfileImage();
-                        valueObject.AddMember("twitter_image", imageUrl.c_str(), allocator);
+                        valueObject.AddMember("twitter_image", tourModel.TwitterBaseProfileImage().c_str(), allocator);
                     }
                     
                     rapidjson::StringBuffer strbuf;

@@ -80,6 +80,7 @@
         self.frame.origin = CGPointMake(0, 0);
         
         m_pImageStore = pImageStore;
+        m_profileImageUrl = "";
     }
     
     return self;
