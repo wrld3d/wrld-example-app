@@ -99,7 +99,7 @@ namespace ExampleApp
                         m_interiorTransitionComplete = false;
                         m_cameraTransitionComplete = false;
                         m_cameraMode.Reset();
-                        m_toursCameraTransitionController.TransitionTo(m_cameraMode);
+                        m_toursCameraTransitionController.TransitionTo(m_cameraMode, true);
                         
                         if(m_isInterior && m_interiorSelectionModel.GetSelectedInteriorId() != m_worldPinInteriorData.building)
                         {
