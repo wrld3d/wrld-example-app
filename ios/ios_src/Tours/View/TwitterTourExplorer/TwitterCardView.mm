@@ -63,7 +63,7 @@
         
         self.pTappableTopSection = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frameSizeX, tappableTopSectionHeight)];
         self.pTappableTopSection.backgroundColor = [UIColor clearColor];
-        self.userInteractionEnabled = YES;
+        self.pTappableTopSection.userInteractionEnabled = YES;
         [self addSubview:self.pTappableTopSection];
         
         self.pBannerImage = [[[FXImageView alloc] initWithFrame:CGRectMake(0, 0, frameSizeX, bannerHeight)]autorelease];
@@ -73,6 +73,7 @@
         
         self.pUserImageContainer = [[UIView alloc] initWithFrame:CGRectMake(userImageContainerX, userImageContainerY, userImageContainerSize, userImageContainerSize)];
         self.pUserImageContainer.backgroundColor = [UIColor whiteColor];
+        self.pUserImageContainer.userInteractionEnabled = NO;
         [self addSubview:self.pUserImageContainer];
         
         self.pUserImage = [[[FXImageView alloc] initWithFrame:CGRectMake(userImageBorderSize, userImageBorderSize, userImageSize, userImageSize)]autorelease];
