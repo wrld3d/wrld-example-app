@@ -1815,6 +1815,9 @@
     <ClCompile Include="..\..\..\src\Tours\SdkModel\TourInstances\TwitterFeed\TwitterFeedTourStateMachineFactory.cpp">
       <Filter>Source Files\App\Tours\SdkModel\TourInstances\TwitterFeed</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\Tours\SdkModel\Camera\StaticCameraMode.cpp">
+      <Filter>Source Files\App\Tours\SdkModel\Camera</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\AppHost.h">
@@ -3973,6 +3976,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\Tours\SdkModel\TourInstances\TwitterFeed\TwitterFeedTourStateMachineFactory.h">
       <Filter>Source Files\App\Tours\SdkModel\TourInstances\TwitterFeed</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Tours\SdkModel\Camera\StaticCameraMode.h">
+      <Filter>Source Files\App\Tours\SdkModel\Camera</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
