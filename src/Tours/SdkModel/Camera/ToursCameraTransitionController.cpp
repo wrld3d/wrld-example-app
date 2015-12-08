@@ -63,7 +63,7 @@ namespace ExampleApp
                     }
                 }
                 
-                void ToursCameraTransitionController::TransitionTo(IToursCameraMode& targetCameraMode)
+                void ToursCameraTransitionController::TransitionTo(IToursCameraMode& targetCameraMode, bool jumpIfFar)
                 {
                     IToursCameraMode* pTargetCameraMode(&targetCameraMode);
                     
@@ -77,13 +77,15 @@ namespace ExampleApp
                         ToursCameraState currentTransitionCameraState(m_pToursTransitionMode->GetCurrentState());
                         Eegeo_DELETE m_pToursTransitionMode;
                         m_pToursTransitionMode = InterestPointTransitionCameraMode::CreateBetweenStates(currentTransitionCameraState,
-                                                                                                 m_pToursNextMode->GetCurrentState());
+                                                                                                        m_pToursNextMode->GetCurrentState(),
+                                                                                                        jumpIfFar);
                         m_toursCameraController.SetMode(m_pToursTransitionMode);
                     }
                     else if(m_pToursCurrentMode != NULL) // transition from stable state
                     {
                         m_pToursTransitionMode = InterestPointTransitionCameraMode::CreateBetweenStates(m_pToursCurrentMode->GetCurrentState(),
-                                                                                                 m_pToursNextMode->GetCurrentState());
+                                                                                                        m_pToursNextMode->GetCurrentState(),
+                                                                                                        jumpIfFar);
                         m_toursCameraController.SetMode(m_pToursTransitionMode);
                     }
                     else // 'transition' from app
@@ -106,7 +108,8 @@ namespace ExampleApp
                     if(shouldAnimateCamera)
                     {
                         m_pToursTransitionMode = InterestPointTransitionCameraMode::CreateBetweenStates(currentState,
-                                                                                                 desiredState);
+                                                                                                        desiredState,
+                                                                                                        false);
                     }
                     else
                     {

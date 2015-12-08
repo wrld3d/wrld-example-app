@@ -13,8 +13,9 @@
 @class TourHovercardView;
 @class ImageStore;
 
-@interface TourHovercardView : UIView <UIGestureRecognizerDelegate, WorldPinOnMapView>
+@interface TwitterTourHovercard : UIView <UIGestureRecognizerDelegate, WorldPinOnMapView>
 {
+    UIImage* m_pPlayIconImage;
 }
 
 - (id) initWithParams:(float)pinDiameter :(float)pixelScale :(ImageStore*)pImageStore  :(ExampleApp::WorldPins::View::WorldPinOnMapViewInterop*)interop;
@@ -29,15 +30,14 @@
 
 - (void) updatePosition:(float)x :(float)y;
 
-- (void) setPresentationColors :(ExampleApp::Helpers::ColorHelpers::Color)baseColor :(ExampleApp::Helpers::ColorHelpers::Color)textColor;
-
 @property (nonatomic, retain) UIView* pMainControlContainer;
 @property (nonatomic, retain) UIView* pMainControlShadowContainer;
 @property (nonatomic, retain) UIView* pMainShape;
 @property (nonatomic, retain) UIView* pTopStrip;
 @property (nonatomic, retain) UIView* pLabelBack;
 @property (nonatomic, retain) UIImageView* pArrowContainer;
-@property (nonatomic, retain) UILabel* pNameLabel;
-@property (nonatomic, retain) UILabel* pInfoLabel;
+@property (nonatomic, retain) UIImageView* pImage;
+@property (nonatomic, retain) UIImageView* pVideoArrowImage;
+@property (nonatomic, retain) UIActivityIndicatorView* pImageLoadingSpinner;
 
 @end

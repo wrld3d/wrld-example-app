@@ -8,6 +8,7 @@
 #include "WorldPinOnMapViewIncludes.h"
 #include "WorldPinOnMapView.h"
 #include "IWorldPinsInFocusModel.h"
+#include "ImageStore.h"
 
 @class TwitterWorldHovercard;
 
@@ -21,9 +22,11 @@
     float m_previousX;
     float m_previousY;
     float m_cardHeight;
+    std::string m_profileImageUrl;
+    ImageStore* m_pImageStore;
 }
 
-- (id) initWithParams:(float)pinDiameter :(float)pixelScale :(ExampleApp::WorldPins::View::WorldPinOnMapViewInterop*)interop;
+- (id) initWithParams:(float)pinDiameter :(float)pixelScale  :(ImageStore*)pImageStore :(ExampleApp::WorldPins::View::WorldPinOnMapViewInterop*)interop;
 
 - (BOOL) consumesTouch:(UITouch *)touch;
 
@@ -43,6 +46,6 @@
 @property (nonatomic, retain) UILabel* pNameLabel;
 @property (nonatomic, retain) UILabel* pTwitterHandle;
 @property (nonatomic, retain) UIImageView* pImageDisplay;
-
+@property (nonatomic, retain) UIActivityIndicatorView* pImageLoadingSpinner;
 
 @end

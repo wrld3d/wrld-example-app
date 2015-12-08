@@ -138,7 +138,7 @@ namespace ExampleAppWPF
             }), wrapperAction);
         }
 
-        public void Search(string consumerKey, string consumerSecret, string oAuthToken, string oAuthTokenSecret, string term, double latitude, double longitude, System.Delegate callback)
+        public void Search(string consumerKey, string consumerSecret, string oAuthToken, string oAuthTokenSecret, string term, string categoryFilter, double latitude, double longitude, int radiusFilter, System.Delegate callback)
         {
             webRequestCallback = callback;
 
@@ -149,7 +149,9 @@ namespace ExampleAppWPF
             var queryParams = new Dictionary<string, string>()
             {
                 { "term", term },
+                { "category_filter", categoryFilter },
                 { "ll", latlong },
+                { "radius_filter", radiusFilter.ToString() },
                 { "limit", SEARCH_LIMIT.ToString() }
             };
             PerformRequest(consumerKey, consumerSecret, oAuthToken, oAuthTokenSecret, baseURL, queryParams);

@@ -28,7 +28,7 @@
         
         float headerTextSize = isPhone ? 13.0f : 18.0f;
         float screenNameTextSize = isPhone ? 9.0f : 12.0f;
-        float textSize = isPhone ? 10.0f : 14.0f;
+        float textSize = isPhone ? 12.0f : 16.0f;
         
         UIFont* headerFont = [UIFont systemFontOfSize:headerTextSize];
         UIFont* screenNameFont = [UIFont systemFontOfSize:screenNameTextSize];
@@ -39,7 +39,7 @@
         float frameSizeY = isPhone ? 164 : 222;
         float bannerHeight = isPhone ? 44.0f : 60.0f;
         float spacing = isPhone ? 3.0f : 4.0f;
-        float userImageContainerSize = isPhone ? 48.0f : 80.0f;
+        float userImageContainerSize = isPhone ? 59.0f : 80.0f;
         float userImageBorderSize = isPhone ? 3.0f : 4.0f;
         float userImageSize = userImageContainerSize - userImageBorderSize * 2.0f;
         float userImageContainerX = isPhone ? 3.0f : 4.0f;
@@ -63,7 +63,7 @@
         
         self.pTappableTopSection = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frameSizeX, tappableTopSectionHeight)];
         self.pTappableTopSection.backgroundColor = [UIColor clearColor];
-        self.userInteractionEnabled = YES;
+        self.pTappableTopSection.userInteractionEnabled = YES;
         [self addSubview:self.pTappableTopSection];
         
         self.pBannerImage = [[[FXImageView alloc] initWithFrame:CGRectMake(0, 0, frameSizeX, bannerHeight)]autorelease];
@@ -73,6 +73,7 @@
         
         self.pUserImageContainer = [[UIView alloc] initWithFrame:CGRectMake(userImageContainerX, userImageContainerY, userImageContainerSize, userImageContainerSize)];
         self.pUserImageContainer.backgroundColor = [UIColor whiteColor];
+        self.pUserImageContainer.userInteractionEnabled = NO;
         [self addSubview:self.pUserImageContainer];
         
         self.pUserImage = [[[FXImageView alloc] initWithFrame:CGRectMake(userImageBorderSize, userImageBorderSize, userImageSize, userImageSize)]autorelease];
@@ -257,9 +258,9 @@
                             :^(UIImage* image)
                              {
                                  [self.pUserImage setImage:image];
-                             }
-                            :TwitterDefines::ProfileImageSize];
+                             }];
     
+    [self.pBannerImage setImage:nil];
     if([strBannerImagePath length] > 0)
     {
         [m_pImageStore loadImage:[strBannerImagePath UTF8String]

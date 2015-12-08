@@ -28,7 +28,7 @@ namespace ExampleApp
                 {
                 }
                 
-                void InteriorExplorerSetupState::Enter()
+                void InteriorExplorerSetupState::Enter(int previousState)
                 {
                     m_cameraController.TransitionToCameraWithHandle(m_interiorCameraHandle);
                 }
@@ -41,7 +41,7 @@ namespace ExampleApp
                     }
                 }
                 
-                void InteriorExplorerSetupState::Exit()
+                void InteriorExplorerSetupState::Exit(int nextState)
                 {
                     m_interiorsExplorerModel.SaveCurrentMapState();
                 }

@@ -99,6 +99,15 @@ namespace ExampleApp
                 m_mapModeModel.SetInMapMode(m_previouslyInMapMode);
             }
             
+            bool InteriorsExplorerModel::GetPreviousInMapMode() const
+            {
+                return m_previouslyInMapMode;
+            }
+            const std::string& InteriorsExplorerModel::GetPreviousWeatherState() const
+            {
+                return m_previousWeatherState;
+            }
+            
             void InteriorsExplorerModel::ShowInteriorExplorer()
             {
                 Eegeo_ASSERT(m_controller.InteriorInScene(), "Can't show interior explorer without a selected and streamed interior");

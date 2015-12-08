@@ -21,6 +21,8 @@ namespace ExampleApp
                                    const std::string& bannerImageUrl,
                                    const std::string& profileImageUrl,
                                    const std::string& baseProfileImageUrl,
+                                   const std::string& profileImageThumbUrl,
+                                   const std::string& baseProfileImageThumbUrl,
                                    bool isRetweet,
                                    bool isReply,
                                    std::vector<std::string> mediaUrls,
@@ -45,6 +47,8 @@ namespace ExampleApp
             , m_bannerImageUrl(bannerImageUrl)
             , m_profileImageUrl(profileImageUrl)
             , m_baseProfileImageUrl(baseProfileImageUrl)
+            , m_profileImageThumbUrl(profileImageThumbUrl)
+            , m_baseProfileImageThumbUrl(baseProfileImageThumbUrl)
             , m_isRetweet(isRetweet)
             , m_isReply(isReply)
             , m_mediaUrls(mediaUrls)
@@ -117,6 +121,16 @@ namespace ExampleApp
             const std::string& TweetModel::GetBaseProfileImageUrl() const
             {
                 return m_baseProfileImageUrl;
+            }
+            
+            const std::string& TweetModel::GetProfileImageThumbUrl() const
+            {
+                return m_profileImageThumbUrl;
+            }
+            
+            const std::string& TweetModel::GetBaseProfileImageThumbUrl() const
+            {
+                return m_baseProfileImageThumbUrl;
             }
             
             bool TweetModel::IsRetweet() const
@@ -318,6 +332,13 @@ namespace ExampleApp
                     profileImageUrl.erase(extensionSearchPos, 7);
                 }
                 
+                std::string profileImageThumbUrl = profileImageUrl;
+                size_t endOfFileName = profileImageThumbUrl.find_last_of(".");
+                if(endOfFileName != std::string::npos)
+                {
+                    profileImageThumbUrl.insert(endOfFileName, "_bigger");
+                }
+                
                 Eegeo_ASSERT(jsonDocument[index].HasMember(UserKey));
                 
                 Eegeo_ASSERT(jsonDocument[index][UserKey].HasMember(NameKey));
@@ -331,6 +352,19 @@ namespace ExampleApp
                 Eegeo_ASSERT(jsonDocument[index][UserKey].HasMember(ProfileKey));
                 
                 std::string baseProfileImageUrl = jsonDocument[index][UserKey][ProfileKey].GetString();
+                
+                extensionSearchPos = baseProfileImageUrl.find("_normal.");
+                if(extensionSearchPos != std::string::npos)
+                {
+                    baseProfileImageUrl.erase(extensionSearchPos, 7);
+                }
+                
+                std::string baseProfileImageThumbUrl = baseProfileImageUrl;
+                size_t endOfbaseFileName = baseProfileImageThumbUrl.find_last_of(".");
+                if(endOfbaseFileName != std::string::npos)
+                {
+                    baseProfileImageThumbUrl.insert(endOfbaseFileName, "_bigger");
+                }
                 
                 std::vector<std::string> mediaUrls;
                 std::vector<std::string> videoUrls;
@@ -525,6 +559,8 @@ namespace ExampleApp
                                                                bannerImageUrl,
                                                                profileImageUrl,
                                                                baseProfileImageUrl,
+                                                               profileImageThumbUrl,
+                                                               baseProfileImageThumbUrl,
                                                                isRetweet,
                                                                isReply,
                                                                mediaUrls,

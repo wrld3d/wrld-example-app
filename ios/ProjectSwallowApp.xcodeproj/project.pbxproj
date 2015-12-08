@@ -1673,6 +1673,10 @@
 		BFE06DA41BDFCEA700C09B79 /* InteriorsNavigationService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFE06DA11BDFCEA700C09B79 /* InteriorsNavigationService.cpp */; };
 		BFE248061BD8EF30000DEAA6 /* MapCameraMode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFE248051BD8EF30000DEAA6 /* MapCameraMode.cpp */; };
 		BFE248071BD8EF30000DEAA6 /* MapCameraMode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFE248051BD8EF30000DEAA6 /* MapCameraMode.cpp */; };
+		BFE66F5D1C17163600494F69 /* StaticCameraMode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFE66F5B1C17163500494F69 /* StaticCameraMode.cpp */; };
+		BFE66F5E1C17163600494F69 /* StaticCameraMode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFE66F5B1C17163500494F69 /* StaticCameraMode.cpp */; };
+		BFEBB7471C15C8F200AE6081 /* TwitterTourHovercard.mm in Sources */ = {isa = PBXBuildFile; fileRef = BFEBB7451C15C8F200AE6081 /* TwitterTourHovercard.mm */; };
+		BFEBB7481C15C8F200AE6081 /* TwitterTourHovercard.mm in Sources */ = {isa = PBXBuildFile; fileRef = BFEBB7451C15C8F200AE6081 /* TwitterTourHovercard.mm */; };
 		E002DEAF1BD148E40062D4D2 /* InteriorsCustomMaterialDtoRepository.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E002DEAD1BD148E40062D4D2 /* InteriorsCustomMaterialDtoRepository.cpp */; };
 		E002DEB01BD148E40062D4D2 /* InteriorsCustomMaterialDtoRepository.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E002DEAD1BD148E40062D4D2 /* InteriorsCustomMaterialDtoRepository.cpp */; };
 		E002DEB41BD4E56E0062D4D2 /* InteriorsCustomMaterialParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E002DEB21BD4E56E0062D4D2 /* InteriorsCustomMaterialParser.cpp */; };
@@ -3396,6 +3400,10 @@
 		BFE06DA11BDFCEA700C09B79 /* InteriorsNavigationService.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = InteriorsNavigationService.cpp; path = InteriorsNavigation/SdkModel/InteriorsNavigationService.cpp; sourceTree = "<group>"; };
 		BFE06DA21BDFCEA700C09B79 /* InteriorsNavigationService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InteriorsNavigationService.h; path = InteriorsNavigation/SdkModel/InteriorsNavigationService.h; sourceTree = "<group>"; };
 		BFE248051BD8EF30000DEAA6 /* MapCameraMode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MapCameraMode.cpp; sourceTree = "<group>"; };
+		BFE66F5B1C17163500494F69 /* StaticCameraMode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StaticCameraMode.cpp; sourceTree = "<group>"; };
+		BFE66F5C1C17163600494F69 /* StaticCameraMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StaticCameraMode.h; sourceTree = "<group>"; };
+		BFEBB7451C15C8F200AE6081 /* TwitterTourHovercard.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = TwitterTourHovercard.mm; path = WorldPinOnMap/View/Hovercards/TwitterTourHovercard.mm; sourceTree = "<group>"; };
+		BFEBB7461C15C8F200AE6081 /* TwitterTourHovercard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwitterTourHovercard.h; path = WorldPinOnMap/View/Hovercards/TwitterTourHovercard.h; sourceTree = "<group>"; };
 		E002DEAD1BD148E40062D4D2 /* InteriorsCustomMaterialDtoRepository.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = InteriorsCustomMaterialDtoRepository.cpp; path = InteriorsCustomMaterials/SdkModel/InteriorsCustomMaterialDtoRepository.cpp; sourceTree = "<group>"; };
 		E002DEAE1BD148E40062D4D2 /* InteriorsCustomMaterialDtoRepository.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InteriorsCustomMaterialDtoRepository.h; path = InteriorsCustomMaterials/SdkModel/InteriorsCustomMaterialDtoRepository.h; sourceTree = "<group>"; };
 		E002DEB11BD14AEB0062D4D2 /* IInteriorsCustomMaterialDtoRepository.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = IInteriorsCustomMaterialDtoRepository.h; path = InteriorsCustomMaterials/SdkModel/IInteriorsCustomMaterialDtoRepository.h; sourceTree = "<group>"; };
@@ -6667,6 +6675,8 @@
 				BFD5FCEA1BA706AD00F591F1 /* ToursCameraState.h */,
 				BFD5FCEB1BA706AD00F591F1 /* ToursCameraTransitionController.cpp */,
 				BFD5FCEC1BA706AD00F591F1 /* ToursCameraTransitionController.h */,
+				BFE66F5B1C17163500494F69 /* StaticCameraMode.cpp */,
+				BFE66F5C1C17163600494F69 /* StaticCameraMode.h */,
 			);
 			path = Camera;
 			sourceTree = "<group>";
@@ -6864,6 +6874,8 @@
 				BFDE501D1C11AA51009DEBCE /* InteriorsHovercard.mm */,
 				BFDE50221C11BA8A009DEBCE /* TwitterWorldHovercard.h */,
 				BFDE50211C11BA8A009DEBCE /* TwitterWorldHovercard.mm */,
+				BFEBB7461C15C8F200AE6081 /* TwitterTourHovercard.h */,
+				BFEBB7451C15C8F200AE6081 /* TwitterTourHovercard.mm */,
 			);
 			name = Hovercards;
 			path = ../..;
@@ -7884,6 +7896,7 @@
 				BFD5FD431BA706AD00F591F1 /* ToursCameraController.cpp in Sources */,
 				7E3B89B51A385A290023C94E /* SearchResultMenuController.cpp in Sources */,
 				2797889C1C087C970053CD00 /* TwitterDefines.mm in Sources */,
+				BFEBB7481C15C8F200AE6081 /* TwitterTourHovercard.mm in Sources */,
 				BFDFC3D01BB2EF190099BAEC /* SearchResultModel.cpp in Sources */,
 				7E3B898D1A385A290023C94E /* SearchModule.cpp in Sources */,
 				279788CB1C0896FB0053CD00 /* URLRequestedMessage.cpp in Sources */,
@@ -8068,6 +8081,7 @@
 				1833B1FC1BBD2D65001CB77A /* SwallowOfficeResultMenuOptionSelectedMessageHandler.cpp in Sources */,
 				7E149DC01BCD209B00C0AFFC /* ExampleSearchJsonParser.cpp in Sources */,
 				7E3B89F51A385A290023C94E /* WorldPinsFactory.cpp in Sources */,
+				BFE66F5E1C17163600494F69 /* StaticCameraMode.cpp in Sources */,
 				27DB89DD1BB3FF170020CDA5 /* GeoNamesSearchQueryFactory.cpp in Sources */,
 				7E149DD01BD1118D00C0AFFC /* TransitionToWorldPointStage.cpp in Sources */,
 				7E3B89ED1A385A290023C94E /* WeatherSelectedMessage.cpp in Sources */,
@@ -8413,6 +8427,7 @@
 				BFD5FD421BA706AD00F591F1 /* ToursCameraController.cpp in Sources */,
 				7E3B89B41A385A290023C94E /* SearchResultMenuController.cpp in Sources */,
 				2797889B1C087C970053CD00 /* TwitterDefines.mm in Sources */,
+				BFEBB7471C15C8F200AE6081 /* TwitterTourHovercard.mm in Sources */,
 				BFDFC3CF1BB2EF190099BAEC /* SearchResultModel.cpp in Sources */,
 				1846CBE21BBBD627007F1922 /* SwallowPoiDbMeetingRoomParser.cpp in Sources */,
 				7E3B898C1A385A290023C94E /* SearchModule.cpp in Sources */,
@@ -8599,6 +8614,7 @@
 				1833B1E81BBBED42001CB77A /* SwallowWorkingGroupResultModel.cpp in Sources */,
 				7E149DBF1BCD209B00C0AFFC /* ExampleSearchJsonParser.cpp in Sources */,
 				7E3B89F41A385A290023C94E /* WorldPinsFactory.cpp in Sources */,
+				BFE66F5D1C17163600494F69 /* StaticCameraMode.cpp in Sources */,
 				27DB89DC1BB3FF170020CDA5 /* GeoNamesSearchQueryFactory.cpp in Sources */,
 				7E149DCF1BD1118D00C0AFFC /* TransitionToWorldPointStage.cpp in Sources */,
 				7E3B89EC1A385A290023C94E /* WeatherSelectedMessage.cpp in Sources */,

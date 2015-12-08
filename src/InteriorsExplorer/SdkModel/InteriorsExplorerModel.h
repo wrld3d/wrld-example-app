@@ -46,6 +46,9 @@ namespace ExampleApp
                 void ChangeToInteriorMapState();
                 void ResumePreviousMapState();
                 
+                bool GetPreviousInMapMode() const;
+                const std::string& GetPreviousWeatherState() const;
+                
                 void InsertInteriorExplorerExitedCallback(Eegeo::Helpers::ICallback0& callback);
                 void RemoveInteriorExplorerExitedCallback(Eegeo::Helpers::ICallback0& callback);
 

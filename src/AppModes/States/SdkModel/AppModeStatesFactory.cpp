@@ -88,6 +88,7 @@ namespace ExampleApp
                                                                             m_appModeModel,
                                                                             m_worldCameraController.GetGlobeCameraController(),
                                                                             m_interiorCameraController,
+                                                                            m_interiorsExplorerModel,
                                                                             m_mapModeModel,
                                                                             m_myPinCreationModel));
                     

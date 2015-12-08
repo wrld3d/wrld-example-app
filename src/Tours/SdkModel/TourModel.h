@@ -34,6 +34,7 @@ namespace ExampleApp
                 
                 bool m_usesTwitter;
                 std::string m_twitterBaseUserName;
+                std::string m_twitterBaseProfileImage;
                 
             public:
                 TourModel();
@@ -53,7 +54,8 @@ namespace ExampleApp
                           Helpers::ColorHelpers::Color hoverCardTextColor,
                           const std::vector<TourStateModel>& states,
                           bool usesTwitter = false,
-                          const std::string& twitterBaseUserName = "");
+                          const std::string& twitterBaseUserName = "",
+                          const std::string& twitterBaseProfileImage = "");
                 
                 const std::string& Name() const;
                 
@@ -84,6 +86,8 @@ namespace ExampleApp
                 bool UsesTwitter() const;
                 
                 const std::string& TwitterBaseUserName() const;
+                
+                const std::string& TwitterBaseProfileImage() const;
             };
             
             inline bool operator==(const TourModel& lhs, const TourModel& rhs)

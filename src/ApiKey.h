@@ -8,5 +8,6 @@ namespace ExampleApp
 {
     static const std::string ApplicationConfigurationPath = "ApplicationConfigs/project_swallow_config.json";
 
+    //! Optional: You may wish to obtain twitter bearer token. Check https://dev.twitter.com/oauth/application-only for instructions
     static const std::string TwitterAuthCode = "INSERT TWITTER AUTH CODE HERE";
 }

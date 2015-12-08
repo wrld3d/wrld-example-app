@@ -23,26 +23,34 @@ namespace ExampleApp
             {
                 const std::string GenerateTourHovercardJsonData(const TourModel& tourModel)
                 {
-                    const Helpers::ColorHelpers::Color& baseColor = tourModel.HoverCardBaseColor();
-                    const Helpers::ColorHelpers::Color& textColor = tourModel.HoverCardTextColor();
-                    
                     rapidjson::Document jsonDoc;
-                    rapidjson::Document::AllocatorType& allocator = jsonDoc.GetAllocator();
                     rapidjson::Value valueObject(rapidjson::kObjectType);
-                    rapidjson::Value baseColorObject(rapidjson::kObjectType);
-                    rapidjson::Value textColorObject(rapidjson::kObjectType);
-                    std::string jsonString ="";
+                    rapidjson::Document::AllocatorType& allocator = jsonDoc.GetAllocator();
                     
-                    baseColorObject.AddMember("r", static_cast<int>(baseColor.GetRed()), allocator);
-                    baseColorObject.AddMember("g", static_cast<int>(baseColor.GetGreen()), allocator);
-                    baseColorObject.AddMember("b", static_cast<int>(baseColor.GetBlue()), allocator);
-                    
-                    textColorObject.AddMember("r", static_cast<int>(textColor.GetRed()), allocator);
-                    textColorObject.AddMember("g", static_cast<int>(textColor.GetGreen()), allocator);
-                    textColorObject.AddMember("b", static_cast<int>(textColor.GetBlue()), allocator);
-                    
-                    valueObject.AddMember("base_col", baseColorObject, allocator);
-                    valueObject.AddMember("text_col", textColorObject, allocator);
+                    if(!tourModel.UsesTwitter())
+                    {
+                        const Helpers::ColorHelpers::Color& baseColor = tourModel.HoverCardBaseColor();
+                        const Helpers::ColorHelpers::Color& textColor = tourModel.HoverCardTextColor();
+                        
+                        rapidjson::Value baseColorObject(rapidjson::kObjectType);
+                        rapidjson::Value textColorObject(rapidjson::kObjectType);
+                        std::string jsonString ="";
+                        
+                        baseColorObject.AddMember("r", static_cast<int>(baseColor.GetRed()), allocator);
+                        baseColorObject.AddMember("g", static_cast<int>(baseColor.GetGreen()), allocator);
+                        baseColorObject.AddMember("b", static_cast<int>(baseColor.GetBlue()), allocator);
+                        
+                        textColorObject.AddMember("r", static_cast<int>(textColor.GetRed()), allocator);
+                        textColorObject.AddMember("g", static_cast<int>(textColor.GetGreen()), allocator);
+                        textColorObject.AddMember("b", static_cast<int>(textColor.GetBlue()), allocator);
+                        
+                        valueObject.AddMember("base_col", baseColorObject, allocator);
+                        valueObject.AddMember("text_col", textColorObject, allocator);
+                    }
+                    else
+                    {
+                        valueObject.AddMember("twitter_image", tourModel.TwitterBaseProfileImage().c_str(), allocator);
+                    }
                     
                     rapidjson::StringBuffer strbuf;
                     rapidjson::Writer<rapidjson::StringBuffer> writer(strbuf);
@@ -70,7 +78,7 @@ namespace ExampleApp
             void TourAddedObserver::HandleTourAdded(TourModel& tourModel)
             {
                 typedef WorldPins::SdkModel::WorldPinItemModel TPin;
-                const int IconIndex = 10;
+
                 const std::string tourVendor = tourModel.UsesTwitter()? Search::WorldTwitterVendorName : Search::ExampleTourVendorName;
                 TPin* pPin = m_worldPinsService.AddPin(m_tourWorldPinSelectionHandlerFactory.CreateSelectionHandler(tourModel),
                                                        NULL,

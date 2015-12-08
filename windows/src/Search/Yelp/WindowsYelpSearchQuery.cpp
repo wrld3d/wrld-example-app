@@ -1,5 +1,7 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
+#include <sstream>
+
 #include "WindowsYelpSearchQuery.h"
 #include "WindowsAppThreadAssertionMacros.h"
 #include "WindowsWebRequestHandle.hpp"
@@ -46,7 +48,8 @@ namespace ExampleApp
                     const std::string& yelpOAuthTokenSecret,
                     const Search::SdkModel::SearchQuery& searchQuery,
                     Eegeo::Helpers::ICallback0& completionCallback)
-            : m_nativeState(nativeState)
+            : MaxRadiusMetres(40000.0f)
+			, m_nativeState(nativeState)
             , m_searchQuery(searchQuery)
             , m_completionCallback(completionCallback)
             , m_responseString()
@@ -77,14 +80,30 @@ namespace ExampleApp
                 m_dispatched = true;
 
                 CallbackDelegate^ function = gcnew CallbackDelegate(&YelpSearchQueryCallbackHandler::HandleCallBack);
+
+				std::string searchTerm = "";
+				std::string categoryFilter = "";
+
+				if (m_searchQuery.IsCategory())
+				{
+					categoryFilter = m_searchQuery.Query();
+				}
+				else
+				{
+					searchTerm = m_searchQuery.Query();
+				}
+
+				int radiusFilter = (int)((m_searchQuery.Radius() > MaxRadiusMetres || !m_searchQuery.IsCategory()) ? MaxRadiusMetres : m_searchQuery.Radius());
                 
 				Search(Helpers::ReflectionHelpers::ConvertUTF8ToManagedString(m_yelpConsumerKey),
 					Helpers::ReflectionHelpers::ConvertUTF8ToManagedString(m_yelpConsumerSecret),
 					Helpers::ReflectionHelpers::ConvertUTF8ToManagedString(m_yelpOAuthToken),
 					Helpers::ReflectionHelpers::ConvertUTF8ToManagedString(m_yelpOAuthTokenSecret),
-					gcnew System::String(m_searchQuery.Query().c_str()),
+					Helpers::ReflectionHelpers::ConvertUTF8ToManagedString(searchTerm),
+					Helpers::ReflectionHelpers::ConvertUTF8ToManagedString(categoryFilter),
 					m_searchQuery.Location().GetLatitudeInDegrees(),
 					m_searchQuery.Location().GetLongitudeInDegrees(),
+					radiusFilter,
 					function);
             }
             

@@ -92,6 +92,7 @@ namespace ExampleApp
                         
                         std::string tourName = tweetRepository.GetItemAtIndex(0)->GetBaseUserName();
                         std::string twitterBaseUserName = tweetRepository.GetItemAtIndex(0)->GetBaseUserName();
+                        const std::string twitterBaseProfileImage = tweetRepository.GetItemAtIndex(0)->GetBaseProfileImageThumbUrl();
                         
                         std::vector<TourStateModel> states;
                         for(int i = 0; i < tweets.size(); ++i)
@@ -123,7 +124,8 @@ namespace ExampleApp
                                                                          Helpers::ColorHelpers::Color::FromRGB(30, 123, 195),
                                                                          states,
                                                                          true,
-                                                                         twitterBaseUserName);
+                                                                         twitterBaseUserName,
+                                                                         twitterBaseProfileImage);
                         
                         TwitterFeedTourStateMachineFactory factory(m_toursCameraTransitionController,
                                                                    m_toursCameraController,
@@ -143,7 +145,7 @@ namespace ExampleApp
                     
                     void TwitterFeedTourObserver::UpadateTweetLinksOut()
                     {
-                        int tourCount = m_tourRepository.GetItemCount();
+                        int tourCount = static_cast<int>(m_tourRepository.GetItemCount());
                         
                         for(int i = 0; i < tourCount; ++i)
                         {

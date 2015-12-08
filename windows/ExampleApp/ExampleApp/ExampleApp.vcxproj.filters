@@ -1979,6 +1979,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\MyPins\SdkModel\MyPinsWebService.cpp">
       <Filter>Source Files\App\MyPins\SdkModel</Filter>
+	</ClCompile>
+    <ClCompile Include="..\..\..\src\Tours\SdkModel\Camera\StaticCameraMode.cpp">
+      <Filter>Source Files\App\Tours\SdkModel\Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -4288,6 +4291,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\MyPins\SdkModel\MyPinsWebService.h">
       <Filter>Source Files\App\MyPins\SdkModel</Filter>
+	</ClInclude>
+    <ClInclude Include="..\..\..\src\Tours\SdkModel\Camera\StaticCameraMode.h">
+      <Filter>Source Files\App\Tours\SdkModel\Camera</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

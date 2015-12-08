@@ -22,6 +22,7 @@ namespace ExampleApp
             , m_worldPinInteriorData()
             , m_usesTwitter(false)
             , m_twitterBaseUserName("")
+            , m_twitterBaseProfileImage("")
             {
                 
             }
@@ -39,7 +40,8 @@ namespace ExampleApp
                                  Helpers::ColorHelpers::Color hoverCardTextColor,
                                  const std::vector<TourStateModel>& states,
                                  bool usesTwitter,
-                                 const std::string& twitterBaseUserName)
+                                 const std::string& twitterBaseUserName,
+                                 const std::string& twitterBaseProfileImage)
             : m_name(name)
             , m_introText(introText)
             , m_iconIndex(iconIndex)
@@ -54,6 +56,7 @@ namespace ExampleApp
             , m_worldPinInteriorData(worldPinInteriorData)
             , m_usesTwitter(usesTwitter)
             , m_twitterBaseUserName(twitterBaseUserName)
+            , m_twitterBaseProfileImage(twitterBaseProfileImage)
             {
                 
             }
@@ -125,7 +128,7 @@ namespace ExampleApp
             
             int TourModel::StateCount() const
             {
-                return m_states.size();
+                return static_cast<int>(m_states.size());
             }
             
             bool TourModel::UsesTwitter() const
@@ -136,6 +139,11 @@ namespace ExampleApp
             const std::string& TourModel::TwitterBaseUserName() const
             {
                 return m_twitterBaseUserName;
+            }
+            
+            const std::string& TourModel::TwitterBaseProfileImage() const
+            {
+                return m_twitterBaseProfileImage;
             }
         }
     }

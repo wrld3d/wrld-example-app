@@ -43,6 +43,8 @@ namespace ExampleApp
                 std::string m_bannerImageUrl;
                 std::string m_profileImageUrl;
                 std::string m_baseProfileImageUrl;
+                std::string m_profileImageThumbUrl;
+                std::string m_baseProfileImageThumbUrl;
                 bool m_isRetweet;
                 bool m_isReply;
                 std::vector<std::string> m_mediaUrls;
@@ -69,6 +71,8 @@ namespace ExampleApp
                            const std::string& bannerImageUrl,
                            const std::string& profileImageUrl,
                            const std::string& baseProfileImageUrl,
+                           const std::string& profileImageThumbUrl,
+                           const std::string& baseProfileImageThumbUrl,
                            bool isRetweet,
                            bool isReply,
                            std::vector<std::string> mediaUrls,
@@ -95,6 +99,8 @@ namespace ExampleApp
                 const std::string& GetBannerImageUrl() const;
                 const std::string& GetProfileImageUrl() const;
                 const std::string& GetBaseProfileImageUrl() const;
+                const std::string& GetProfileImageThumbUrl() const;
+                const std::string& GetBaseProfileImageThumbUrl() const;
                 bool IsRetweet() const;
                 bool IsReply() const;
                 int GetRetweetCount() const;

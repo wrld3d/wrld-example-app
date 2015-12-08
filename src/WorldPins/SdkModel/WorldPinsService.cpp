@@ -110,19 +110,29 @@ namespace ExampleApp
 
             bool WorldPinsService::HandleTouchTap(const Eegeo::v2& screenTapPoint)
             {
-                std::vector<Eegeo::Pins::Pin*> intersectingPinsClosestToCameraFirst;
-
-                if(m_pinController.TryGetPinsIntersectingScreenPoint(screenTapPoint, intersectingPinsClosestToCameraFirst))
-                {
-                    Eegeo_ASSERT(intersectingPinsClosestToCameraFirst.size() > 0);
-                    Eegeo::Pins::Pin* pSelectedPin = intersectingPinsClosestToCameraFirst[0];
-                    Eegeo_ASSERT(pSelectedPin != NULL);
-                    SelectPin(pSelectedPin->GetId());
-                    return true;
-                }
-
-                return false;
+				return TrySelectPinAtPoint(screenTapPoint);
             }
+
+			bool WorldPinsService::HandleTouchDoubleTap(const Eegeo::v2& screenTapPoint)
+			{
+				return TrySelectPinAtPoint(screenTapPoint);
+			}
+
+			bool WorldPinsService::TrySelectPinAtPoint(const Eegeo::v2& screenPoint)
+			{
+				std::vector<Eegeo::Pins::Pin*> intersectingPinsClosestToCameraFirst;
+
+				if (m_pinController.TryGetPinsIntersectingScreenPoint(screenPoint, intersectingPinsClosestToCameraFirst))
+				{
+					Eegeo_ASSERT(intersectingPinsClosestToCameraFirst.size() > 0);
+					Eegeo::Pins::Pin* pSelectedPin = intersectingPinsClosestToCameraFirst[0];
+					Eegeo_ASSERT(pSelectedPin != NULL);
+					SelectPin(pSelectedPin->GetId());
+					return true;
+				}
+
+				return false;
+			}
 
             void WorldPinsService::GetPinEcefAndScreenLocations(const WorldPinItemModel& pinItemModel,
                     Eegeo::dv3& ecefLocation,

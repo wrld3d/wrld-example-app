@@ -45,13 +45,13 @@ namespace ExampleApp
                                                                          const std::string& attachedContentUrl,
                                                                          bool hasAttachedVideo,
                                                                          ExampleAppMessaging::TMessageBus& messageBus,
-                                                                         float cameraRotationOffset)
+                                                                         float cameraRotationDegreesOffset)
                     : m_stateModel(stateModel)
                     , m_toursCameraTransitionController(toursCameraTransitionController)
-                    , m_cameraMode(tweetStateData.ecefOrigin,
-                                   tweetStateData.ecefTarget,
-                                   2.0f,
-                                   cameraRotationOffset)
+                    , m_cameraMode(tweetStateData.ecefTarget,
+                                   tweetStateData.cameraTiltDegrees,
+                                   tweetStateData.cameraDistanceToTarget,
+                                   cameraRotationDegreesOffset)
                     , m_pinPlacename(placeName)
                     , m_pinImageUrl(attachedImageUrl)
                     , m_pinContentUrl(attachedContentUrl)
@@ -67,26 +67,12 @@ namespace ExampleApp
                     , m_pinLocation(pinLocation)
                     , m_messageBus(messageBus)
                     {
-                        /* MB:  tweetStateData right now is a camera origin and camera target based on a fixed Twitter Feed position.
-                                This needs to be reorientated if the location is somewhere else i.e. it's a tweet with a geolocation.  
-                                Ultimately the camera should be focused on the pin location, so use that as our target and rotate the offset
-                                based on a tangent basis around that point. TODO: Replace this with a better solution/better TweetStateData. */
-                        
-                        Eegeo::Streaming::MortonKey key = Eegeo::Space::CubeMap::EcefToKey(m_pinLocation.ToECEF(), 13);
-                        Eegeo::Space::EcefTangentBasis tangentBasis = Eegeo::Space::EcefTangentBasis::CreateFromMortonKey(key);
-                        float initialAltitude = (float)Eegeo::Space::SpaceHelpers::GetAltitude(tweetStateData.ecefOrigin);
                         float initialInterestAltitude = (float)Eegeo::Space::SpaceHelpers::GetAltitude(tweetStateData.ecefTarget);
                         
-                        Eegeo::dv3 cameraOffset = tweetStateData.ecefTarget - tweetStateData.ecefOrigin;
-                        Eegeo::m33 basis;
-                        tangentBasis.GetBasisOrientationAsMatrix(basis);
-                        
-                        Eegeo::dv3 basisOffset = Eegeo::dv3::Mul(cameraOffset, basis);
-
-                        m_cameraMode = Camera::DroneLookatCameraMode(m_pinLocation.ToECEF() - basisOffset + initialAltitude * tangentBasis.GetUp(),
-                                                                     m_pinLocation.ToECEF() + initialInterestAltitude * tangentBasis.GetUp(),
-                                                                     2.0f,
-                                                                     cameraRotationOffset);
+                        m_cameraMode = Camera::StaticCameraMode(m_pinLocation.ToECEF() + (initialInterestAltitude * m_pinLocation.ToECEF().Norm()),
+                                                                tweetStateData.cameraTiltDegrees,
+                                                                tweetStateData.cameraDistanceToTarget,
+                                                                cameraRotationDegreesOffset);
                     }
                     
                     TwitterFeedShowTweetState::~TwitterFeedShowTweetState()
@@ -99,7 +85,7 @@ namespace ExampleApp
                         m_interiorTransitionComplete = false;
                         m_cameraTransitionComplete = false;
                         m_cameraMode.Reset();
-                        m_toursCameraTransitionController.TransitionTo(m_cameraMode);
+                        m_toursCameraTransitionController.TransitionTo(m_cameraMode, true);
                         
                         if(m_isInterior && m_interiorSelectionModel.GetSelectedInteriorId() != m_worldPinInteriorData.building)
                         {
@@ -153,6 +139,11 @@ namespace ExampleApp
                                                                     twitterIconIndex,
                                                                     heightOffsetAboveTerrainMetres,
                                                                     WorldPins::SdkModel::WorldPinVisibility::TourPin);
+                            // Hide hovercard if no image to show
+                            if(m_pinImageUrl.empty())
+                            {
+                                m_pPinModel->SetFocusable(false);
+                            }
                         }
                         else if(!m_interiorTransitionComplete && m_isInterior && m_interiorController.InteriorInScene())
                         {

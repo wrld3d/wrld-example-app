@@ -4,7 +4,7 @@
 
 #include "Types.h"
 #include "ITourStateMachineState.h"
-#include "DroneLookatCameraMode.h"
+#include "StaticCameraMode.h"
 #include "Tours.h"
 #include "WorldPins.h"
 #include "TweetStateData.h"
@@ -42,7 +42,7 @@ namespace ExampleApp
                                                   const std::string& attachedContentUrl,
                                                   bool hasAttachedVideo,
                                                   ExampleAppMessaging::TMessageBus& messageBus,
-                                                  float cameraRotationOffset = 0.0f);
+                                                  float cameraRotationDegreesOffset = 0.0f);
                         ~TwitterFeedShowTweetState();
                         
                         void Enter();
@@ -54,7 +54,7 @@ namespace ExampleApp
                     private:
                         TourStateModel m_stateModel;
                         Camera::IToursCameraTransitionController& m_toursCameraTransitionController;
-                        Camera::DroneLookatCameraMode m_cameraMode;
+                        Camera::StaticCameraMode m_cameraMode;
                         WorldPins::SdkModel::IWorldPinsService& m_worldPinsService;
                         WorldPins::SdkModel::WorldPinItemModel* m_pPinModel;
                         bool m_cameraTransitionComplete;

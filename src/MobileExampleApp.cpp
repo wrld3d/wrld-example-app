@@ -1290,6 +1290,11 @@ namespace ExampleApp
             return;
         }
 
+		if (m_pWorldPinsModule->GetWorldPinsService().HandleTouchDoubleTap(data.point))
+		{
+			return;
+		}
+
         m_pCurrentTouchController->Event_TouchDoubleTap(data);
     }
 
