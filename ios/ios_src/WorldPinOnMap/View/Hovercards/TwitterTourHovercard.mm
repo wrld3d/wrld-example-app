@@ -195,8 +195,7 @@
              self.pImage.image = image;
              [self.pImageLoadingSpinner stopAnimating];
              
-         }
-                                :TourDefines::ProfileImageSize];
+         }];
     }
     else
     {

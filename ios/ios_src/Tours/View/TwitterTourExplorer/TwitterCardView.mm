@@ -257,8 +257,7 @@
                             :^(UIImage* image)
                              {
                                  [self.pUserImage setImage:image];
-                             }
-                            :TwitterDefines::ProfileImageSize];
+                             }];
     
     [self.pBannerImage setImage:nil];
     if([strBannerImagePath length] > 0)

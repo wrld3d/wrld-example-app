@@ -179,8 +179,7 @@
              self.pImageDisplay.image = image;
              [self.pImageLoadingSpinner stopAnimating];
              
-         }
-                                :static_cast<float>(self.pImageDisplay.frame.size.width)];
+         }];
     }
     else
     {
