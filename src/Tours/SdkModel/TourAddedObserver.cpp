@@ -78,7 +78,7 @@ namespace ExampleApp
             void TourAddedObserver::HandleTourAdded(TourModel& tourModel)
             {
                 typedef WorldPins::SdkModel::WorldPinItemModel TPin;
-                const int IconIndex = 10;
+
                 const std::string tourVendor = tourModel.UsesTwitter()? Search::WorldTwitterVendorName : Search::ExampleTourVendorName;
                 TPin* pPin = m_worldPinsService.AddPin(m_tourWorldPinSelectionHandlerFactory.CreateSelectionHandler(tourModel),
                                                        NULL,
