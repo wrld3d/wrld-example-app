@@ -21,6 +21,7 @@ namespace ExampleApp
             !MapImage();
 
             void Init(int width, int height);
+			void InitBackBuffer();
             void Render(float dt);
 
             void HandlePanStartEvent(int x, int y);

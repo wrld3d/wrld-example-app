@@ -5,6 +5,7 @@ using System.Windows.Media;
 using ExampleApp.CLI;
 using System.Diagnostics;
 using System.Windows.Navigation;
+using System.Windows.Controls;
 
 namespace ExampleAppWPF
 {
@@ -39,14 +40,7 @@ namespace ExampleAppWPF
         {
             if (m_mapImage.IsFrontBufferAvailable)
             {
-                m_mapImage.Init((int)MainGrid.ActualWidth, (int)MainGrid.ActualHeight);
-
-                
-                CompositionTarget.Rendering += CompositionTarget_Rendering;
-            }
-            else
-            {
-                CompositionTarget.Rendering -= CompositionTarget_Rendering;
+                m_mapImage.InitBackBuffer();
             }
         }
 
