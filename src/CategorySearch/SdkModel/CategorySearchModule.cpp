@@ -32,11 +32,14 @@ namespace ExampleApp
                 {
                     const View::CategorySearchModel& categorySearchModel = *it;
 
-                    m_pMenuOptionsModel->AddItem(categorySearchModel.Name(),
-                                                 categorySearchModel.Name(),
-                                                 "",
-                                                 categorySearchModel.Icon(),
-                                                 Eegeo_NEW(View::CategorySearchMenuOption)(categorySearchModel, menuViewModel, messageBus));
+                    if (categorySearchModel.InMenu())
+                    {
+                        m_pMenuOptionsModel->AddItem(categorySearchModel.Name(),
+                                                     categorySearchModel.Name(),
+                                                     "",
+                                                     categorySearchModel.Icon(),
+                                                     Eegeo_NEW(View::CategorySearchMenuOption)(categorySearchModel, menuViewModel, messageBus));
+                    }
                 }
 
 
