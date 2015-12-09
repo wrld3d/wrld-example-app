@@ -781,6 +781,7 @@ namespace ExampleApp
                                                          "Take the tour",
                                                          tourIconIndex,
                                                          Eegeo::Space::LatLong::FromDegrees(37.784783, -122.402659),
+                                                         true,
                                                          false,
                                                          ExampleApp::WorldPins::SdkModel::WorldPinInteriorData(),
                                                          false,
@@ -887,7 +888,7 @@ namespace ExampleApp
 
         m_pPinsModule->GetController().Update(dt, renderCamera);
         
-        if(!eegeoWorld.Initialising())
+        if(!eegeoWorld.Initialising() || (m_pLoadingScreen == NULL && eegeoWorld.Initialising()))
         {
             WorldPinsModule().GetWorldPinsService().Update(dt);
             WorldPinsModule().GetWorldPinsScaleController().Update(dt, renderCamera);
@@ -1244,7 +1245,7 @@ namespace ExampleApp
     
     bool MobileExampleApp::CanAcceptTouch() const
     {
-        const bool worldIsInitialising = World().Initialising();
+        const bool worldIsInitialising = World().Initialising() && m_pLoadingScreen != NULL;
         const bool userInteractionEnabled = m_pUserInteractionModule->GetUserInteractionModel().IsEnabled();
         
         InitialExperience::SdkModel::IInitialExperienceModel& initialExperienceModel = m_initialExperienceModule.GetInitialExperienceModel();
