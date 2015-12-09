@@ -123,6 +123,7 @@ namespace ExampleApp
                                                                          "@"+userId,
                                                                          iconIndex,
                                                                          tourLocation,
+                                                                         tweetStateData.visibleOnMap,
                                                                          isInterior,
                                                                          worldPinInteriorData,
                                                                          false,

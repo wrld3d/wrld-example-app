@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "Tours.h"
 #include <string>
 #include <vector>
 #include "LatLongAltitude.h"
@@ -16,6 +17,8 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
+            const std::string GenerateTourHovercardJsonData(const TourModel& tourModel);
+
             class TourModel
             {
                 std::string m_name;
@@ -24,6 +27,7 @@ namespace ExampleApp
                 int m_iconIndex;
                 bool m_isInterior;
                 bool m_showGradientBase;
+                bool m_visibleOnMap;
                 Helpers::ColorHelpers::Color m_baseColor;
                 Helpers::ColorHelpers::Color m_textColor;
                 Helpers::ColorHelpers::Color m_hoverCardBaseColor;
@@ -45,6 +49,7 @@ namespace ExampleApp
                           const std::string& introText,
                           int iconIndex,
                           const Eegeo::Space::LatLong& location,
+                          bool visibleOnMap,
                           bool isInterior,
                           const ExampleApp::WorldPins::SdkModel::WorldPinInteriorData& worldPinInteriorData,
                           bool showGradientBase,
@@ -60,6 +65,8 @@ namespace ExampleApp
                 const std::string& Name() const;
                 
                 const std::string& IntroText() const;
+                
+                bool IsVisibleOnMap() const;
                 
                 int IconIndex() const;
                 

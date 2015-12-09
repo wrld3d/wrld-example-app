@@ -37,6 +37,7 @@ namespace ExampleApp
                         m_tweetStateDataMap["Dev4Recce"] = TweetStateData(Eegeo::Space::LatLongAltitude::FromDegrees(37.617398, -122.376256, 100).ToECEF(),
                                                                           externalCameraDistance,
                                                                           externalCameraTiltDegrees,
+                                                                          true,
                                                                           isInterior,
                                                                           noInteirorData,
                                                                           useBounds,
