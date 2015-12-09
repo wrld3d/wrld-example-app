@@ -83,6 +83,7 @@
 #include "SearchVendorNames.h"
 #include "InteriorsExplorerViewModule.h"
 #include "IInteriorsExplorerModule.h"
+#include "WindowsPersistentSettingsModel.h"
 
 using namespace Eegeo::Windows;
 using namespace Eegeo::Windows::Input;
@@ -116,7 +117,7 @@ AppHost::AppHost(
     , m_pWorldPinOnMapViewModule(NULL)
     , m_pCompassViewModule(NULL)
     , m_pApp(NULL)
-    , m_WindowsPersistentSettingsModel(nativeState)
+    , m_pWindowsPersistentSettingsModel(NULL)
     , m_createdUIModules(false)
     , m_requestedApplicationInitialiseViewState(false)
     , m_uiCreatedMessageReceivedOnNativeThread(false)
@@ -169,16 +170,18 @@ AppHost::AppHost(
 
     m_pInputProcessor = Eegeo_NEW(Eegeo::Windows::Input::WindowsInputProcessor)(&m_inputHandler, m_nativeState.window, screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight());
 
+	m_pWindowsPersistentSettingsModel = Eegeo_NEW(ExampleApp::PersistentSettings::WindowsPersistentSettingsModel)(m_nativeState);
+
     m_pInitialExperienceModule = Eegeo_NEW(ExampleApp::InitialExperience::SdkModel::WindowsInitialExperienceModule)(
         m_nativeState,
-        m_WindowsPersistentSettingsModel,
+        *m_pWindowsPersistentSettingsModel,
         m_messageBus
         );
 
     m_pNetworkCapabilities = Eegeo_NEW(ExampleApp::Net::SdkModel::NetworkCapabilities)(
         *m_pWindowsConnectivityService,
         m_pWindowsPlatformAbstractionModule->GetHttpCache(),
-        m_WindowsPersistentSettingsModel);
+        *m_pWindowsPersistentSettingsModel);
 
     m_searchServiceModules[ExampleApp::Search::YelpVendorName] = Eegeo_NEW(ExampleApp::Search::Yelp::WindowsYelpSearchServiceModule)(
         nativeState,
@@ -201,7 +204,7 @@ AppHost::AppHost(
         platformConfig,
         *m_pJpegLoader,
         *m_pInitialExperienceModule,
-        m_WindowsPersistentSettingsModel,
+        *m_pWindowsPersistentSettingsModel,
         m_messageBus,
         m_sdkDomainEventBus,
         *m_pNetworkCapabilities,
@@ -246,6 +249,9 @@ AppHost::~AppHost()
 
     Eegeo_DELETE m_pInitialExperienceModule;
     m_pInitialExperienceModule = NULL;
+
+	Eegeo_DELETE m_pWindowsPersistentSettingsModel;
+	m_pWindowsPersistentSettingsModel = NULL;
 
     Eegeo_DELETE m_pInputProcessor;
     m_pInputProcessor = NULL;

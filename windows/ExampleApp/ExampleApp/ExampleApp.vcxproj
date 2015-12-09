@@ -1277,7 +1277,20 @@
       <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
       </ForcedIncludeFiles>
     </ClCompile>
-    <ClCompile Include="..\..\src\PersistentSettings\WindowsPersistentSettingsModel.cpp" />
+    <ClCompile Include="..\..\src\PersistentSettings\WindowsPersistentSettingsModel.cpp">
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</CompileAsManaged>
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</CompileAsManaged>
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</CompileAsManaged>
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</CompileAsManaged>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <ExceptionHandling Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExceptionHandling>
+      <ExceptionHandling Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExceptionHandling>
+      <ExceptionHandling Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExceptionHandling>
+      <ExceptionHandling Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExceptionHandling>
+    </ClCompile>
     <ClCompile Include="..\..\src\SearchResultMenu\View\SearchMenuCLI.cpp">
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</CompileAsManaged>
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</CompileAsManaged>
@@ -2405,6 +2418,7 @@
     <ClInclude Include="..\..\src\Options\View\OptionsView.h" />
     <ClInclude Include="..\..\src\Options\View\OptionsViewIncludes.h" />
     <ClInclude Include="..\..\src\Options\View\OptionsViewModule.h" />
+    <ClInclude Include="..\..\src\PersistentSettings\WindowsPersistentSettings.h" />
     <ClInclude Include="..\..\src\PersistentSettings\WindowsPersistentSettingsModel.h" />
     <ClInclude Include="..\..\src\SearchResultMenu\View\SearchMenuCLI.h" />
     <ClInclude Include="..\..\src\SearchResultMenu\View\SearchMenuView.h" />
