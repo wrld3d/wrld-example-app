@@ -22,6 +22,7 @@ namespace ExampleApp
                         TweetStateData(Eegeo::dv3 _ecefTarget,
                                        float _cameraDistanceToTarget,
                                        float _cameraTiltDegrees,
+                                       bool _visibleOnMap,
                                        bool _isInterior,
                                        WorldPins::SdkModel::WorldPinInteriorData _interiorData,
                                        bool _useBounds,
@@ -35,6 +36,7 @@ namespace ExampleApp
                         , useBounds(_useBounds)
                         , minBounds(_minBounds)
                         , maxBounds(_maxBounds)
+                        , visibleOnMap(_visibleOnMap)
                         {
                             if(useBounds)
                             {
@@ -62,10 +64,12 @@ namespace ExampleApp
                         , useBounds(false)
                         , minBounds(0,0)
                         , maxBounds(0,0)
+                        , visibleOnMap(false)
                         {
                             
                         }
                         
+                        bool visibleOnMap;
                         Eegeo::dv3 ecefTarget;
                         float cameraDistanceToTarget;
                         float cameraTiltDegrees;
