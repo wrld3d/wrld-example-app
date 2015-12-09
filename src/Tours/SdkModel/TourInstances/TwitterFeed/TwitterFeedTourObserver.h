@@ -36,6 +36,7 @@ namespace ExampleApp
                         Metrics::IMetricsService& m_metricsService;
                         
                         const std::map<std::string, TweetStateData>& m_tweetStateDataMap;
+                        std::map<std::string, int> m_twitterTourIconOverrideMap;
                         
                         Eegeo::Helpers::TCallback2<TwitterFeedTourObserver, const std::string&, Social::TwitterFeed::TweetRepository&> m_twitterFeedLoadedCallback;
                         
@@ -56,6 +57,7 @@ namespace ExampleApp
                                                 ITourRepository& tourRepository,
                                                 Social::TwitterFeed::ITwitterFeedService& twitterFeedService,
                                                 const std::map<std::string, TweetStateData>& tweetStateDataMap,
+                                                const std::map<std::string, int>& twitterTourIconOverrideMap,
                                                 Metrics::IMetricsService& metricsService,
                                                 ExampleAppMessaging::TMessageBus& messageBus);
                         ~TwitterFeedTourObserver();

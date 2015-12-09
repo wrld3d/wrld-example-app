@@ -26,6 +26,7 @@ namespace ExampleApp
                                                                  Metrics::IMetricsService& metricsService,
                                                                  ExampleAppMessaging::TMessageBus& messageBus)
                     {
+                        std::map<std::string, int> twitterTourIconOverrideMap;
 
                         const bool isInterior = false;
                         const WorldPins::SdkModel::WorldPinInteriorData noInteirorData;
@@ -52,6 +53,7 @@ namespace ExampleApp
                                                                                         tourRepository,
                                                                                         twitterFeedService,
                                                                                         m_tweetStateDataMap,
+                                                                                        twitterTourIconOverrideMap,
                                                                                         metricsService,
                                                                                         messageBus);
                     }
