@@ -242,12 +242,12 @@
         if(m_pInterop->CanHandleDeeplinkURL( [arrDeeplinkUrls[i] UTF8String] ))
         {
             [tweetContent addAttribute:NSLinkAttributeName value:arrDeeplinkUrls[i]
-                                 range:NSMakeRange(startIndex, endIndex - startIndex + 1)];
+                                 range:NSMakeRange(startIndex, endIndex - startIndex)];
         }
         else
         {
             [tweetContent addAttribute:NSLinkAttributeName value:arrLinkUrls[i]
-                                 range:NSMakeRange(startIndex, endIndex - startIndex + 1)];
+                                 range:NSMakeRange(startIndex, endIndex - startIndex)];
         }
     }
     
