@@ -781,6 +781,7 @@ namespace ExampleApp
                                                          "Take the tour",
                                                          tourIconIndex,
                                                          Eegeo::Space::LatLong::FromDegrees(37.784783, -122.402659),
+                                                         true,
                                                          false,
                                                          ExampleApp::WorldPins::SdkModel::WorldPinInteriorData(),
                                                          false,
