@@ -4292,6 +4292,9 @@
     <ClInclude Include="..\..\..\src\MyPins\SdkModel\MyPinsWebService.h">
       <Filter>Source Files\App\MyPins\SdkModel</Filter>
 	</ClInclude>
+    <ClInclude Include="..\..\src\PersistentSettings\WindowsPersistentSettings.h">
+      <Filter>Source Files\Windows\PersistentSettings</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\src\Tours\SdkModel\Camera\StaticCameraMode.h">
       <Filter>Source Files\App\Tours\SdkModel\Camera</Filter>
     </ClInclude>
