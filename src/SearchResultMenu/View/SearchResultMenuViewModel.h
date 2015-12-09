@@ -18,10 +18,6 @@ namespace ExampleApp
             class SearchResultMenuViewModel : public ISearchResultMenuViewModel, public Menu::View::MenuViewModel
             {
             private:
-                Menu::View::IMenuModel& m_menuModel;
-                float m_realOnScreenState;
-                Eegeo::Helpers::ICallback1<Menu::View::MenuItemModel>* m_pMenuContentsChangedCallback;
-                Eegeo::Helpers::ICallback0* m_pModalReactorOpenControlReleasedCallback;
                 Reaction::View::IReactionControllerModel& m_reactionControllerModel;
                 bool m_hasSearchQuery;
                 bool m_hasSearchQueryInFlight;
@@ -29,21 +25,14 @@ namespace ExampleApp
                 Eegeo::Helpers::CallbackCollection0 m_attractModeChangedCallbacks;
                 bool m_enabled;
 
-                void HandleMenuContentsChanged(Menu::View::MenuItemModel& item);
-
                 bool CanShowOnScreen() const;
-
-                void UpdateOnScreenState();
-
-                void HandleReactorOpenControlReleased();
                 
                 void SetAttractMode(bool attractModeEnabled);
                 
                 void SetEnabled(bool enabled);
                 
             public:
-                SearchResultMenuViewModel(Menu::View::IMenuModel& menuModel,
-                                          bool isInitiallyOnScreen,
+                SearchResultMenuViewModel(bool isInitiallyOnScreen,
                                           Eegeo::Helpers::TIdentity identity,
                                           Reaction::View::IReactionControllerModel& reactionControllerModel);
 
@@ -58,8 +47,6 @@ namespace ExampleApp
                 void SetHasSearchQuery(bool hasSearchQuery);
 
                 void SetHasSearchQueryInFlight(bool hasSearchQueryInFlight);
-
-                void UpdateOnScreenState(float onScreenState);
                 
                 void EnterAttractMode();
                 
