@@ -32,6 +32,7 @@ namespace ExampleApp
                                                                      ITourRepository& tourRepository,
                                                                      Social::TwitterFeed::ITwitterFeedService& twitterFeedService,
                                                                      const std::map<std::string, TweetStateData>& tweetStateDataMap,
+                                                                     const std::map<std::string, int>& twitterTourIconOverrideMap,
                                                                      Metrics::IMetricsService& metricsService,
                                                                      ExampleAppMessaging::TMessageBus& messageBus)
                     : m_toursCameraTransitionController(toursCameraTransitionController)
@@ -45,6 +46,7 @@ namespace ExampleApp
                     , m_twitterFeedService(twitterFeedService)
                     , m_twitterFeedLoadedCallback(this, &TwitterFeedTourObserver::OnTwitterFeedLoaded)
                     , m_tweetStateDataMap(tweetStateDataMap)
+                    , m_twitterTourIconOverrideMap(twitterTourIconOverrideMap)
                     , m_metricsService(metricsService)
                     , m_messageBus(messageBus)
                     {
@@ -110,11 +112,18 @@ namespace ExampleApp
                         ExampleApp::WorldPins::SdkModel::WorldPinInteriorData worldPinInteriorData = tweetStateData.interiorData;
                         
                         const int twitterIcon = 13;
+                        int iconIndex = twitterIcon;
+                        
+                        if(m_twitterTourIconOverrideMap.find(userId) != m_twitterTourIconOverrideMap.end())
+                        {
+                            iconIndex = m_twitterTourIconOverrideMap[userId];
+                        }
                         
                         ExampleApp::Tours::SdkModel::TourModel tourModel(tourName,
                                                                          "@"+userId,
-                                                                         twitterIcon,
+                                                                         iconIndex,
                                                                          tourLocation,
+                                                                         tweetStateData.visibleOnMap,
                                                                          isInterior,
                                                                          worldPinInteriorData,
                                                                          false,

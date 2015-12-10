@@ -47,6 +47,7 @@ namespace ExampleApp
                     categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Hotels", "hotels", "hotel", showCategoriesInSearchMenu));
                     categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Parks", "parks", "park", showCategoriesInSearchMenu));
                     categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Banks", "financialservices", "bank", showCategoriesInSearchMenu));
+					
                     return categories;
                 }
                 
@@ -61,6 +62,7 @@ namespace ExampleApp
                     categories.push_back("hotels");
                     categories.push_back("parks");
                     categories.push_back("financialservices");
+                    categories.push_back("active");
                     return categories;
                 }
             }
