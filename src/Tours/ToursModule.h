@@ -57,6 +57,7 @@ namespace ExampleApp
             
         public:
             ToursModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
+                        Metrics::IMetricsService& metricsService,
                         ExampleAppMessaging::TMessageBus& messageBus,
                         WorldPins::SdkModel::IWorldPinsService& worldPinsService,
                         Search::SdkModel::ISearchRefreshService& searchRefreshService,

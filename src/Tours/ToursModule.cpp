@@ -11,6 +11,7 @@ namespace ExampleApp
     namespace Tours
     {
         ToursModule::ToursModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
+                                 Metrics::IMetricsService& metricsService,
                                  ExampleAppMessaging::TMessageBus& messageBus,
                                  WorldPins::SdkModel::IWorldPinsService& worldPinsService,
                                  Search::SdkModel::ISearchRefreshService& searchRefreshService,
@@ -37,6 +38,7 @@ namespace ExampleApp
             
             m_pTourService = Eegeo_NEW(SdkModel::TourService)(*m_pTourRepository,
                                                               m_pToursCameraModule->GetCameraTransitionController(),
+                                                              metricsService,
                                                               messageBus,
                                                               sdkDomainEventBus);
             
