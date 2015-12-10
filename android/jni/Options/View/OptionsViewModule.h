@@ -9,7 +9,7 @@
 #include "IOptionsViewModule.h"
 #include "BidirectionalBus.h"
 #include "ClearCacheMessageHandler.h"
-#include "AndroidHttpCache.h"
+#include "Helpers.h"
 
 namespace ExampleApp
 {
@@ -28,7 +28,7 @@ namespace ExampleApp
                 OptionsViewModule(
                     AndroidNativeState& nativeState,
                     IOptionsViewModel& optionsViewModel,
-                    Eegeo::Android::Cache::AndroidHttpCache& httpCache,
+                    Eegeo::Helpers::IHttpCache& httpCache,
                     ExampleAppMessaging::TMessageBus& messageBus
                 );
 
