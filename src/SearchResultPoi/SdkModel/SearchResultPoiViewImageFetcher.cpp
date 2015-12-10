@@ -28,23 +28,23 @@ namespace ExampleApp
             {
             }
             
-            void SearchResultPoiViewImageFetcher::OnImageFetchResponseReceived(Eegeo::Web::IWebLoadRequest& message)
+            void SearchResultPoiViewImageFetcher::OnImageFetchResponseReceived(Eegeo::Web::IWebResponse& webResponse)
             {
                 const std::vector<Byte>* pImageBytes = NULL;
                 
-                if(message.IsSucceeded())
+                if(webResponse.IsSucceeded())
                 {
-                    pImageBytes = message.TransferResourceDataOwnership();
+                    pImageBytes = webResponse.TransferResourceDataOwnership();
                 }
                 
-                m_messageBus.Publish(SearchResultPoiViewImageDownloadCompletedMessage(message.GetUrl(),
+                m_messageBus.Publish(SearchResultPoiViewImageDownloadCompletedMessage(webResponse.GetUrl(),
                                                                                       pImageBytes,
-                                                                                      message.IsSucceeded()));
+                                                                                      webResponse.IsSucceeded()));
             }
             
             void SearchResultPoiViewImageFetcher::FetchImageForSearchResult(const std::string& imageUrl)
             {
-                m_webRequestFactory.CreateGet(imageUrl, m_webRequestCallback, NULL)->Load();
+                m_webRequestFactory.Begin(Eegeo::Web::HttpVerbs::GET, imageUrl, m_webRequestCallback);
             }
         }
     }

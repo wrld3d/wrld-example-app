@@ -70,14 +70,10 @@ namespace ExampleApp
             
             void TwitterFeedService::StartService()
             {
-                std::map<std::string, std::string> formData;
-                formData[GrantTypeKey] = GrantTypeValue;
-                
-                std::map<std::string, std::string> headerData;
-                headerData[TwitterAuthKey] = TwitterAuthValue + TwitterAuthCode;
-                headerData[ContentTypeKey] = ContentTypeValue;
-                
-                m_pCurrentAuthRequest = m_webLoadRequestFactory.CreatePost(TwitterAuthUrl, *m_pAuthCallback, NULL, formData, headerData);
+                m_pCurrentAuthRequest = m_webLoadRequestFactory.Begin(Eegeo::Web::HttpVerbs::POST, TwitterAuthUrl, *m_pAuthCallback)
+                        .AddFormData(GrantTypeKey, GrantTypeValue)
+                        .AddHeader(TwitterAuthKey, TwitterAuthValue + TwitterAuthCode)
+                        .AddHeader(ContentTypeKey, ContentTypeValue).Build();
                 
                 m_pCurrentAuthRequest->Load();
                 
@@ -92,14 +88,12 @@ namespace ExampleApp
                     return;
                 }
                 
-                std::map<std::string, std::string> headerData;
-                headerData[RequestAuthKey] = RequestAuthValue + m_accessToken;
-                
                 std::stringstream timeLineURL;
                 
                 timeLineURL << TwitterTimelineUrl << "?" << CountParameter << "=" << MaxTweets << "&" << ScreenNameParameter << "=" << m_accountNameQueue.front();
                 
-                m_pCurrentTimeLineRequest = m_webLoadRequestFactory.CreateGet(timeLineURL.str(), *m_pTimeLineCallback, NULL, headerData);
+                m_pCurrentTimeLineRequest = m_webLoadRequestFactory.Begin(Eegeo::Web::HttpVerbs::GET, timeLineURL.str(), *m_pTimeLineCallback)
+                        .AddHeader(RequestAuthKey, RequestAuthValue + m_accessToken).Build();
                 
                 m_pCurrentTimeLineRequest->Load();
                 
@@ -153,11 +147,11 @@ namespace ExampleApp
                 return *((*repositoryIt).second);
             }
             
-            void TwitterFeedService::HandleAuthResponse(Eegeo::Web::IWebLoadRequest &webLoadRequest)
+            void TwitterFeedService::HandleAuthResponse(Eegeo::Web::IWebResponse& webResponse)
             {
                 m_pCurrentAuthRequest = NULL;
                 
-                if(webLoadRequest.HttpStatusCode() != 200)
+                if(webResponse.GetHttpStatusCode() != 200)
                 {
                     m_currentServiceState = OFFLINE;
                     
@@ -166,8 +160,8 @@ namespace ExampleApp
                     return;
                 }
                 
-                size_t resultSize = webLoadRequest.GetResourceData().size();
-                std::string serialized(reinterpret_cast<char const*>(&(webLoadRequest.GetResourceData().front())), resultSize);
+                size_t resultSize = webResponse.GetBodyData().size();
+                std::string serialized(reinterpret_cast<char const*>(&(webResponse.GetBodyData().front())), resultSize);
                 
                 rapidjson::Document document;
                 
@@ -181,11 +175,11 @@ namespace ExampleApp
                 LoadNextTimeLine();
             }
             
-            void TwitterFeedService::HandleTimeLineResponse(Eegeo::Web::IWebLoadRequest &webLoadRequest)
+            void TwitterFeedService::HandleTimeLineResponse(Eegeo::Web::IWebResponse& webResponse)
             {
                 m_pCurrentTimeLineRequest = NULL;
                 
-                if(webLoadRequest.HttpStatusCode() != 200)
+                if(webResponse.GetHttpStatusCode() != 200)
                 {
                     m_currentServiceState = OFFLINE;
                     
@@ -194,8 +188,8 @@ namespace ExampleApp
                     return;
                 }
                 
-                size_t resultSize = webLoadRequest.GetResourceData().size();
-                std::string serialized(reinterpret_cast<char const*>(&(webLoadRequest.GetResourceData().front())), resultSize);
+                size_t resultSize = webResponse.GetBodyData().size();
+                std::string serialized(reinterpret_cast<char const*>(&(webResponse.GetBodyData().front())), resultSize);
                 
                 rapidjson::Document document;
                 

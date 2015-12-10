@@ -68,8 +68,8 @@ namespace ExampleApp
                 void StartService();
                 void LoadNextTimeLine();
                 
-                void HandleAuthResponse(Eegeo::Web::IWebLoadRequest& webLoadRequest);
-                void HandleTimeLineResponse(Eegeo::Web::IWebLoadRequest& webLoadRequest);
+                void HandleAuthResponse(Eegeo::Web::IWebResponse& webResponse);
+                void HandleTimeLineResponse(Eegeo::Web::IWebResponse& webResponse);
                 
                 void ClearAccountNameQueue();
                 

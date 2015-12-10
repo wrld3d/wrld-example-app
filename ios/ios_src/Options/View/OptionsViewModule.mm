@@ -5,6 +5,7 @@
 #include "OptionsView.h"
 #include "OptionsController.h"
 #include "OptionsViewInterop.h"
+#include "IHttpCache.h"
 
 namespace ExampleApp
 {
@@ -13,7 +14,7 @@ namespace ExampleApp
         namespace View
         {
             OptionsViewModule::OptionsViewModule(IOptionsViewModel& viewModel,
-                                                 iOSHttpCache& httpCache,
+                                                 Eegeo::Helpers::IHttpCache& httpCache,
                                                  ExampleAppMessaging::TMessageBus& messageBus,
                                                  Eegeo::Concurrency::Tasks::IWorkPool& workPool)
             {

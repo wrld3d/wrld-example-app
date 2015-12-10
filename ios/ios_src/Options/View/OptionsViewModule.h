@@ -7,7 +7,7 @@
 #include "IOptionsViewModule.h"
 #include "BidirectionalBus.h"
 #include "ClearCacheMessageHandler.h"
-#include "iOSHttpCache.h"
+#include "Helpers.h"
 #include "Tasks.h"
 
 namespace ExampleApp
@@ -25,7 +25,7 @@ namespace ExampleApp
 
             public:
                 OptionsViewModule(IOptionsViewModel& viewModel,
-                                  iOSHttpCache& httpCache,
+                                  Eegeo::Helpers::IHttpCache& httpCache,
                                   ExampleAppMessaging::TMessageBus& messageBus,
                                   Eegeo::Concurrency::Tasks::IWorkPool& workPool);
 

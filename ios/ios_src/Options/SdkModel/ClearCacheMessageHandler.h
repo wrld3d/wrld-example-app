@@ -4,7 +4,7 @@
 
 #include "Types.h"
 #include "BidirectionalBus.h"
-#include "iOSHttpCache.h"
+#include "IHttpCache.h"
 #include "Tasks.h"
 #include "ICallback.h"
 
@@ -16,7 +16,7 @@ namespace ExampleApp
         {
             class ClearCacheMessageHandler : private Eegeo::NonCopyable
             {
-                iOSHttpCache& m_iOSHttpCache;
+                Eegeo::Helpers::IHttpCache& m_iOSHttpCache;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 Eegeo::Concurrency::Tasks::IWorkPool& m_workPool;
                 Eegeo::Helpers::TCallback1<ClearCacheMessageHandler, const ClearCacheMessage&> m_messageHandlerBinding;
@@ -26,7 +26,7 @@ namespace ExampleApp
                 void DeleteCacheContents();
                 
             public:
-                ClearCacheMessageHandler(iOSHttpCache& iOSHttpCache,
+                ClearCacheMessageHandler(Eegeo::Helpers::IHttpCache& iOSHttpCache,
                                          ExampleAppMessaging::TMessageBus& messageBus,
                                          Eegeo::Concurrency::Tasks::IWorkPool& workPool);
                 
