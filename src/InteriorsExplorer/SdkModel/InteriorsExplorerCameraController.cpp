@@ -172,9 +172,17 @@ namespace ExampleApp
                         finalEcefInterestPosition = m_environmentFlatteningService.GetScaledPointEcef(interiorOriginAtBase + relativeCameraInterestEcef, m_environmentFlatteningService.GetCurrentScale());
                     }
                     
+                    Eegeo::dv3 diffEcefInterestPosition = finalEcefInterestPosition - initialCameraInterestEcef;
                     const double PositionUpdateThresholdDistanceSq = 0.01;
-                    if((finalEcefInterestPosition - initialCameraInterestEcef).LengthSq() > PositionUpdateThresholdDistanceSq)
+                    double diffLengthSquare = diffEcefInterestPosition.LengthSq();
+                    if(diffLengthSquare > PositionUpdateThresholdDistanceSq)
                     {
+                        const double trackingSpeed = 150.0f;
+                        double trackingDifference = trackingSpeed*dt;
+                        if(diffLengthSquare > trackingDifference*trackingDifference)
+                        {
+                            finalEcefInterestPosition = initialCameraInterestEcef + diffEcefInterestPosition.Normalise()*trackingDifference;
+                        }
                         SetInterestLocation(finalEcefInterestPosition);
                     }
                 }
