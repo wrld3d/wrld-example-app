@@ -673,6 +673,10 @@
 		27EAFA011BECB6B2008A1EDB /* TransitionToInteriorPointStage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27EAF9FE1BECB6B2008A1EDB /* TransitionToInteriorPointStage.cpp */; };
 		2C20228D1C19BBF0002C8BFF /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C20228B1C19BBEF002C8BFF /* libcurl.a */; };
 		2C20228E1C19BBF0002C8BFF /* libuv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C20228C1C19BBEF002C8BFF /* libuv.a */; };
+		2C2022901C19C41F002C8BFF /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C20228B1C19BBEF002C8BFF /* libcurl.a */; };
+		2C2022911C19C41F002C8BFF /* libuv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C20228C1C19BBEF002C8BFF /* libuv.a */; };
+		2C2022921C19C53B002C8BFF /* embedded_manifest.txt in Resources */ = {isa = PBXBuildFile; fileRef = 2CA085ED1BD7E1C400A99340 /* embedded_manifest.txt */; };
+		2C2022951C19C57F002C8BFF /* Textures in Resources */ = {isa = PBXBuildFile; fileRef = 2CA085EE1BD7E1C400A99340 /* Textures */; };
 		2CA085EF1BD7E1C400A99340 /* embedded_manifest.txt in Resources */ = {isa = PBXBuildFile; fileRef = 2CA085ED1BD7E1C400A99340 /* embedded_manifest.txt */; };
 		2CA085F01BD7E1C400A99340 /* Textures in Resources */ = {isa = PBXBuildFile; fileRef = 2CA085EE1BD7E1C400A99340 /* Textures */; };
 		560741141B8CC624002B0F49 /* MenuDragStateChangedMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 560741121B8CC624002B0F49 /* MenuDragStateChangedMessage.cpp */; };
@@ -3138,6 +3142,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C2022901C19C41F002C8BFF /* libcurl.a in Frameworks */,
+				2C2022911C19C41F002C8BFF /* libuv.a in Frameworks */,
 				565FE37F1BE8B19100232A74 /* AVFoundation.framework in Frameworks */,
 				56BFB0C81A8B76D200572C99 /* libapps-on-maps-cpp11-sim.a in Frameworks */,
 				56BFB0CA1A8B76D200572C99 /* libapps-on-maps-cpp11.a in Frameworks */,
@@ -6463,6 +6469,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C2022951C19C57F002C8BFF /* Textures in Resources */,
+				2C2022921C19C53B002C8BFF /* embedded_manifest.txt in Resources */,
 				18A1B0751A8A1EE1004C928E /* icon1_options.png in Resources */,
 				185145911AB0A8DC0071913E /* SplashScreen.png in Resources */,
 				18EC011C1AA7752500902E98 /* icon1_misc@2x.png in Resources */,
@@ -8047,6 +8055,7 @@
 					"$(PROJECT_DIR)/Include/eegeo",
 					"$(PROJECT_DIR)/Include",
 				);
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
 					"-DCOMPILE_CPP_11=1",
@@ -8083,6 +8092,7 @@
 					"$(PROJECT_DIR)/Include/eegeo",
 					"$(PROJECT_DIR)/Include",
 				);
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
 					"-DCOMPILE_CPP_11=1",
