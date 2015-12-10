@@ -69,7 +69,8 @@ namespace ExampleApp
         {
             if(message.Category() != Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME)
             {
-                ClearHighlightRenderables();
+                DeactivateHighlightRenderables();
+                m_highlightAvailabilityData.clear();
             }
         }
         
@@ -88,7 +89,7 @@ namespace ExampleApp
             m_highlightAvailabilityData[roomName] = message.GetAvailability();
         }
         
-        void InteriorsHighlightPickingController::ClearHighlightRenderables()
+        void InteriorsHighlightPickingController::DeactivateHighlightRenderables()
         {
             const v4 transparent(1.0f, 1.0f, 1.0f, 0.0f);
             
@@ -98,18 +99,17 @@ namespace ExampleApp
             {
                 it->second->SetDiffuseColor(transparent);
             }
-            
-//            m_currentHighlightRenderables.clear();
         }
         
         void InteriorsHighlightPickingController::OnSearchResultCleared(const SearchResultMenu::SearchResultViewClearedMessage& message)
         {
-            ClearHighlightRenderables();
+            DeactivateHighlightRenderables();
+            m_highlightAvailabilityData.clear();
         }
         
         void InteriorsHighlightPickingController::OnInteriorsExited(const InteriorsExplorer::InteriorsExplorerExitMessage& message)
         {
-            ClearHighlightRenderables();
+            DeactivateHighlightRenderables();
             m_currentHighlightRenderables.clear();
         }
         
@@ -190,7 +190,8 @@ namespace ExampleApp
     
         void InteriorsHighlightPickingController::OnSearchResultsLoaded(const Search::SearchQueryResponseReceivedMessage& message)
         {
-            ClearHighlightRenderables();
+            DeactivateHighlightRenderables();
+            m_highlightAvailabilityData.clear();
 
             for(std::vector<Search::SdkModel::SearchResultModel>::const_iterator it = message.GetResults().begin(); it != message.GetResults().end(); ++it)
             {

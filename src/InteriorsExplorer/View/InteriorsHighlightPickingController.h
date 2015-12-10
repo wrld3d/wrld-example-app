@@ -49,7 +49,7 @@ namespace ExampleApp
             void OnSearchResultsLoaded(const Search::SearchQueryResponseReceivedMessage& message);
             
             void ConfigureRenderableForAvailability(Eegeo::Rendering::Renderables::InteriorHighlightRenderable& renderable, const std::string& availability);
-            void ClearHighlightRenderables();
+            void DeactivateHighlightRenderables();
             void AddHighlight(Eegeo::Rendering::Renderables::InteriorHighlightRenderable& renderable);
 
             Eegeo::Resources::Interiors::IInteriorController& m_interiorsController;
