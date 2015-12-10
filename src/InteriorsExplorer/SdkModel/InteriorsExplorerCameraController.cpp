@@ -2,6 +2,7 @@
 
 #include "InteriorsExplorerCameraController.h"
 
+#include <cmath>
 #include "CameraHelpers.h"
 #include "EarthConstants.h"
 #include "GlobeCameraTouchController.h"
@@ -179,9 +180,11 @@ namespace ExampleApp
                     {
                         const double trackingSpeed = 150.0f;
                         double trackingDifference = trackingSpeed*dt;
-                        if(diffLengthSquare > trackingDifference*trackingDifference)
+                        double diffAltitude = finalEcefInterestPosition.Length() - initialCameraInterestEcef.Length();
+                        if(std::abs(diffAltitude) > trackingDifference)
                         {
-                            finalEcefInterestPosition = initialCameraInterestEcef + diffEcefInterestPosition.Normalise()*trackingDifference;
+                            double signedTrackingDifference = diffAltitude < 0 ? -trackingDifference : +trackingDifference;
+                            finalEcefInterestPosition = finalEcefInterestPosition - finalEcefInterestPosition.Norm()*(diffAltitude - signedTrackingDifference);
                         }
                         SetInterestLocation(finalEcefInterestPosition);
                     }
