@@ -11,6 +11,7 @@ namespace ExampleApp
     namespace Tours
     {
         ToursModule::ToursModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
+                                 Metrics::IMetricsService& metricsService,
                                  ExampleAppMessaging::TMessageBus& messageBus,
                                  WorldPins::SdkModel::IWorldPinsService& worldPinsService,
                                  Search::SdkModel::ISearchRefreshService& searchRefreshService,
@@ -37,11 +38,12 @@ namespace ExampleApp
             
             m_pTourService = Eegeo_NEW(SdkModel::TourService)(*m_pTourRepository,
                                                               m_pToursCameraModule->GetCameraTransitionController(),
+                                                              metricsService,
+                                                              searchRefreshService,
                                                               messageBus,
                                                               sdkDomainEventBus);
             
             m_pTourWorldPinSelectionHandlerFactory = Eegeo_NEW(SdkModel::TourWorldPinSelectionHandlerFactory)(*m_pTourService,
-                                                                                                              searchRefreshService,
                                                                                                               appModeModel);
             
             m_pTourAddedObserver = Eegeo_NEW(SdkModel::TourAddedObserver)(*m_pTourRepository,
@@ -55,7 +57,6 @@ namespace ExampleApp
                                                                                                                 messageBus);
             
             m_pActiveTourQuitSelectedMessageHandler = Eegeo_NEW(SdkModel::ActiveTourQuitSelectedMessageHandler)(*m_pTourService,
-                                                                                                                searchRefreshService,
                                                                                                                 messageBus);
             
             m_pTourChangeRequestMessageHandler = Eegeo_NEW(SdkModel::TourChangeRequestMessageHandler)(*m_pTourRepository,

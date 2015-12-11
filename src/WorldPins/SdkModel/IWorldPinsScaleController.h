@@ -22,6 +22,8 @@ namespace ExampleApp
                 virtual int GetVisibilityMask() = 0;
                 
                 virtual void SetVisibilityMask(int visibilityMask) = 0;
+                
+                virtual void SetHideOutdoorPinsIndoors(bool hideOutdoorPinsIndoors) = 0;
             };
         }
     }

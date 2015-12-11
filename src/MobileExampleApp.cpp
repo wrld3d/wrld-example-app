@@ -739,6 +739,7 @@ namespace ExampleApp
     void MobileExampleApp::InitialiseToursModules(Eegeo::Modules::Map::MapModule& mapModule, Eegeo::EegeoWorld& world, const bool interiorsAffectedByFlattening)
     {
         m_pToursModule = Eegeo_NEW(ExampleApp::Tours::ToursModule)(m_identityProvider,
+                                                       m_metricsService,
                                                        m_messageBus,
                                                        WorldPinsModule().GetWorldPinsService(),
                                                        SearchModule().GetSearchRefreshService(),
