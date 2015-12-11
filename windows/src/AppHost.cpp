@@ -467,8 +467,7 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
         m_nativeState,
         app.FlattenButtonModule().GetFlattenButtonViewModel(),
         m_messageBus,
-        *m_pWindowsFlurryMetricsService,
-        app.GetAppModeModel()
+        *m_pWindowsFlurryMetricsService
         );
 
     m_pCompassViewModule = Eegeo_NEW(ExampleApp::Compass::View::CompassViewModule)(
@@ -483,8 +482,7 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
 		app.MyPinCreationModule().GetMyPinCreationConfirmationViewModel(),
 		app.MyPinCreationDetailsModule().GetMyPinCreationDetailsViewModel(),
 		m_messageBus,
-		*m_pWindowsFlurryMetricsService,
-		app.GetAppModeModel()
+		*m_pWindowsFlurryMetricsService
 		);
 
     // Modal background layer.
