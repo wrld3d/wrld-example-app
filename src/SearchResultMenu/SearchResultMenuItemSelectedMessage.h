@@ -2,9 +2,9 @@
 
 #pragma once
 
-#include "VectorMath.h"
 #include "Interiors.h"
 #include "InteriorId.h"
+#include "VectorMath.h"
 
 namespace ExampleApp
 {
@@ -21,12 +21,14 @@ namespace ExampleApp
             SearchResultMenuItemSelectedMessage(const Eegeo::dv3& searchResultModelLocationEcef,
                                                 const bool isInterior,
                                                 const Eegeo::Resources::Interiors::InteriorId& interiorId,
-                                                const int floorIndex
-            );
+                                                const int floorIndex);
 
             const Eegeo::dv3& SearchResultLocationEcef() const;
+            
             const bool InInterior() const;
+            
             const Eegeo::Resources::Interiors::InteriorId& InteriorBuildingId() const;
+            
             const int FloorIndex() const;
         };
     }

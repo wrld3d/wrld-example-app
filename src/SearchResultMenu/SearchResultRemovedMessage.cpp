@@ -11,6 +11,7 @@ namespace ExampleApp
         )
             : m_model(model)
         {
+            
         }
 
         const Search::SdkModel::SearchResultModel& SearchResultRemovedMessage::Model() const

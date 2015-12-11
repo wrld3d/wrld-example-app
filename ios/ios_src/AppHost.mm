@@ -20,8 +20,12 @@
 #include "JpegLoader.h"
 #include "iOSPlatformAbstractionModule.h"
 #include "ViewController.h"
-#include "SecondaryMenuViewModule.h"
-#include "SecondaryMenuView.h"
+#include "ISettingsMenuModule.h"
+#include "SettingsMenuViewModule.h"
+#include "SettingsMenuView.h"
+#include "ISearchMenuModule.h"
+#include "SearchMenuViewModule.h"
+#include "SearchMenuView.h"
 #include "ModalBackgroundView.h"
 #include "FlattenButtonView.h"
 #include "FlattenButtonViewModule.h"
@@ -29,7 +33,8 @@
 #include "WorldPinOnMapViewContainer.h"
 #include "SearchResultPoiViewModule.h"
 #include "SearchResultPoiView.h"
-#include "SearchResultMenuView.h"
+#include "SearchResultMenuModule.h"
+#include "SearchResultMenuViewModule.h"
 #include "CompassViewModule.h"
 #include "CompassView.h"
 #include "CompassModel.h"
@@ -281,20 +286,22 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
                                                                                          m_iOSFlurryMetricsService);
 
     m_pModalBackgroundViewModule = Eegeo_NEW(ExampleApp::ModalBackground::View::ModalBackgroundViewModule)(app.ModalityModule().GetModalityModel(), screenProperties);
-
-    m_pSecondaryMenuViewModule = Eegeo_NEW(ExampleApp::SecondaryMenu::View::SecondaryMenuViewModule)(app.SecondaryMenuModule().GetSecondaryMenuModel(),
-                                 app.SecondaryMenuModule().GetSecondaryMenuViewModel(),
-                                 screenProperties,
-                                 m_messageBus);
-
+    
+    m_pSettingsMenuViewModule = Eegeo_NEW(ExampleApp::SettingsMenu::View::SettingsMenuViewModule)(app.SettingsMenuModule().GetSettingsMenuModel(),
+                                                                                                  app.SettingsMenuModule().GetSettingsMenuViewModel(),
+                                                                                                  screenProperties,
+                                                                                                  m_messageBus);
+    
+    m_pSearchMenuViewModule = Eegeo_NEW(ExampleApp::SearchMenu::View::SearchMenuViewModule)(app.SearchMenuModule().GetSearchMenuModel(),
+                                                                                            app.SearchMenuModule().GetSearchMenuViewModel(),
+                                                                                            screenProperties,
+                                                                                            m_messageBus);
+    
     m_pSearchResultMenuViewModule = Eegeo_NEW(ExampleApp::SearchResultMenu::View::SearchResultMenuViewModule)(app.CategorySearchModule().GetCategorySearchRepository(),
-                                    app.SearchResultMenuModule().GetSearchResultMenuModel(),
-                                    app.SearchResultMenuModule().GetMenuViewModel(),
-                                    app.SearchResultMenuModule().GetSearchResultMenuViewModel(),
-                                    app.SearchResultMenuModule().GetSearchResultMenuOptionsModel(),
-                                    app.SearchResultMenuModule().GetSearchResultMenuOrder(),
-                                    screenProperties,
-                                    m_messageBus);
+                                                                                                              app.SearchMenuModule().GetSearchMenuViewModel(),
+                                                                                                              app.SearchResultMenuModule().GetSearchResultMenuOptionsModel(),
+                                                                                                              app.SearchResultMenuModule().GetSearchResultMenuOrder(),
+                                                                                                              m_messageBus);
 
     m_pSearchResultPoiViewModule = Eegeo_NEW(ExampleApp::SearchResultPoi::View::SearchResultPoiViewModule)(app.SearchResultPoiModule().GetSearchResultPoiViewModel(),
                                                                                                            m_messageBus,
@@ -377,8 +384,8 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
     m_pInteriorsExplorerViewModule = Eegeo_NEW(ExampleApp::InteriorsExplorer::View::InteriorsExplorerViewModule)(app.InteriorsExplorerModule().GetInteriorsExplorerViewModel(),
                                                                                              m_messageBus,
                                                                                              app.MyPinCreationModule().GetMyPinCreationInitiationViewModel(),
-                                                                                             app.SecondaryMenuModule().GetSecondaryMenuViewModel(),
-                                                                                             app.SearchResultMenuModule().GetMenuViewModel(),
+                                                                                             app.SettingsMenuModule().GetSettingsMenuViewModel(),
+                                                                                             app.SearchMenuModule().GetSearchMenuViewModel(),
                                                                                              app.FlattenButtonModule().GetScreenControlViewModel(),
                                                                                              app.CompassModule().GetScreenControlViewModel(),
                                                                                              screenProperties,
@@ -407,8 +414,8 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
     [m_pView addSubview: &m_pModalBackgroundViewModule->GetModalBackgroundView()];
 
     // Menus & HUD layer.
-    [m_pView addSubview: &m_pSecondaryMenuViewModule->GetSecondaryMenuView()];
-    [m_pView addSubview: &m_pSearchResultMenuViewModule->GetSearchResultMenuView()];
+    [m_pView addSubview: &m_pSettingsMenuViewModule->GetSettingsMenuView()];
+    [m_pView addSubview: &m_pSearchMenuViewModule->GetSearchMenuView()];
 
     // Pop-up layer.
     [m_pView addSubview: &m_pSearchResultPoiViewModule->GetView()];
@@ -426,9 +433,9 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
 
     m_pViewControllerUpdaterModule = Eegeo_NEW(ExampleApp::ViewControllerUpdater::View::ViewControllerUpdaterModule);
     ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModel& viewControllerUpdaterModel = m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel();
-
-    viewControllerUpdaterModel.AddUpdateableObject(m_pSecondaryMenuViewModule->GetMenuController());
-    viewControllerUpdaterModel.AddUpdateableObject(m_pSearchResultMenuViewModule->GetMenuController());
+    
+    viewControllerUpdaterModel.AddUpdateableObject(m_pSettingsMenuViewModule->GetMenuController());
+    viewControllerUpdaterModel.AddUpdateableObject(m_pSearchMenuViewModule->GetMenuController());
     
     SetTouchExclusivity();
 }
@@ -457,8 +464,8 @@ void AppHost::DestroyApplicationViewModules()
     [&m_pModalBackgroundViewModule->GetModalBackgroundView() removeFromSuperview];
 
     // Menus & HUD layer.
-    [&m_pSecondaryMenuViewModule->GetSecondaryMenuView() removeFromSuperview];
-    [&m_pSearchResultMenuViewModule->GetSearchResultMenuView() removeFromSuperview];
+    [&m_pSettingsMenuViewModule->GetSettingsMenuView() removeFromSuperview];
+    [&m_pSearchMenuViewModule->GetSearchMenuView() removeFromSuperview];
 
     // Pop-up layer.
     [&m_pMyPinDetailsViewModule->GetMyPinDetailsView() removeFromSuperview];
@@ -504,8 +511,10 @@ void AppHost::DestroyApplicationViewModules()
     Eegeo_DELETE m_pModalBackgroundViewModule;
 
     Eegeo_DELETE m_pSearchResultMenuViewModule;
-
-    Eegeo_DELETE m_pSecondaryMenuViewModule;
+    
+    Eegeo_DELETE m_pSearchMenuViewModule;
+    
+    Eegeo_DELETE m_pSettingsMenuViewModule;
 
     Eegeo_DELETE m_pFlattenButtonViewModule;
     

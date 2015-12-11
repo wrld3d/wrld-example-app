@@ -1,9 +1,7 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "SearchResultItemModel.h"
-#include "SearchResultModel.h"
-#include "ICameraTransitionController.h"
-#include "Logger.h"
+
 #include "SearchResultMenuItemSelectedMessage.h"
 
 namespace ExampleApp

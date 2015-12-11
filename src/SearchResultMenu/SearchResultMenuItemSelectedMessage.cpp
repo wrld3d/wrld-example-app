@@ -9,13 +9,13 @@ namespace ExampleApp
         SearchResultMenuItemSelectedMessage::SearchResultMenuItemSelectedMessage(const Eegeo::dv3& searchResultModelLocationEcef,
                                                                                  const bool isInterior,
                                                                                  const Eegeo::Resources::Interiors::InteriorId& interiorId,
-                                                                                 const int floorIndex
-        )
+                                                                                 const int floorIndex)
         : m_searchResultModelLocationEcef(searchResultModelLocationEcef)
         , m_isInterior(isInterior)
         , m_interiorId(interiorId)
         , m_floorIndex(floorIndex)
         {
+            
         }
 
         const Eegeo::dv3& SearchResultMenuItemSelectedMessage::SearchResultLocationEcef() const

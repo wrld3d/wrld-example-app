@@ -2,15 +2,15 @@
 
 #pragma once
 
-#include <string>
-#include "Types.h"
 #include "IMenuOption.h"
-#include "Search.h"
-#include "CameraTransitions.h"
-#include "IOpenableControlViewModel.h"
-#include "VectorMath.h"
+
+#include <string>
+
 #include "BidirectionalBus.h"
 #include "Interiors.h"
+#include "IOpenableControlViewModel.h"
+#include "Types.h"
+#include "VectorMath.h"
 
 namespace ExampleApp
 {

@@ -91,7 +91,7 @@ const float SubViewInset = 22.f;
 
     if(!m_rightAlignImage)
     {
-        const float delta = (imageFrame.origin.x - initialImageX);
+        const float delta = static_cast<float>(imageFrame.origin.x - initialImageX);
 
         CGRect labelFrame = self.textLabel.frame;
         labelFrame.origin.x += delta;

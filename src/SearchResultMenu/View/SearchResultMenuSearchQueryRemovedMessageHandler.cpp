@@ -2,18 +2,19 @@
 
 #include "SearchResultMenuSearchQueryRemovedMessageHandler.h"
 
+#include "IMenuViewModel.h"
+
 namespace ExampleApp
 {
     namespace SearchResultMenu
     {
         namespace View
         {
-            SearchResultMenuSearchQueryRemovedMessageHandler::SearchResultMenuSearchQueryRemovedMessageHandler(
-                ISearchResultMenuViewModel& searchResultMenuViewModel,
-                ExampleAppMessaging::TMessageBus& messageBus)
-                : m_searchResultMenuViewModel(searchResultMenuViewModel)
-                , m_messageBus(messageBus)
-                , m_handlerBinding(this, &SearchResultMenuSearchQueryRemovedMessageHandler::OnSearchQueryRemovedMessage)
+            SearchResultMenuSearchQueryRemovedMessageHandler::SearchResultMenuSearchQueryRemovedMessageHandler(Menu::View::IMenuViewModel& searchMenuViewModel,
+                                                                                                               ExampleAppMessaging::TMessageBus& messageBus)
+            : m_searchMenuViewModel(searchMenuViewModel)
+            , m_messageBus(messageBus)
+            , m_handlerBinding(this, &SearchResultMenuSearchQueryRemovedMessageHandler::OnSearchQueryRemovedMessage)
             {
                 m_messageBus.SubscribeUi(m_handlerBinding);
             }
@@ -25,7 +26,8 @@ namespace ExampleApp
 
             void SearchResultMenuSearchQueryRemovedMessageHandler::OnSearchQueryRemovedMessage(const Search::SearchQueryRemovedMessage& message)
             {
-                m_searchResultMenuViewModel.SetHasSearchQuery(false);
+                // TODO: Clear search results from view
+                m_searchMenuViewModel.Close();
             }
         }
     }

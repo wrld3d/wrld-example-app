@@ -6,11 +6,10 @@ namespace ExampleApp
 {
     namespace SearchResultMenu
     {
-        SearchResultAddedMessage::SearchResultAddedMessage(
-            const Search::SdkModel::SearchResultModel& model
-        )
-            : m_model(model)
+        SearchResultAddedMessage::SearchResultAddedMessage(const Search::SdkModel::SearchResultModel& model)
+        : m_model(model)
         {
+            
         }
 
         const Search::SdkModel::SearchResultModel& SearchResultAddedMessage::Model() const

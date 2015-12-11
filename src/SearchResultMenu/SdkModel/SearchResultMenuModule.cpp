@@ -2,14 +2,10 @@
 
 #include "SearchResultMenuModule.h"
 
+#include "MenuModel.h"
+#include "MenuOptionsModel.h"
 #include "SearchResultMenu.h"
 #include "SearchResultMenuOrder.h"
-#include "MenuModel.h"
-#include "MenuViewModel.h"
-#include "MenuOptionsModel.h"
-#include "MenuSectionViewModel.h"
-#include "SearchResultMenuViewModel.h"
-#include "BidirectionalBus.h"
 
 namespace ExampleApp
 {
@@ -17,46 +13,26 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            SearchResultMenuModule::SearchResultMenuModule(Search::SdkModel::ISearchResultRepository& searchResultRepository,
-                    Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
-                    Eegeo::Helpers::IIdentityProvider& identityProvider,
-                    CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
-                    Reaction::View::IReactionControllerModel& reactionControllerModel,
-                    ExampleAppMessaging::TMessageBus& messageBus)
+            SearchResultMenuModule::SearchResultMenuModule(Menu::View::IMenuViewModel& searchMenuViewModel,
+                                                           Search::SdkModel::ISearchResultRepository& searchResultRepository,
+                                                           Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
+                                                           CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
+                                                           ExampleAppMessaging::TMessageBus& messageBus)
             {
                 m_pModel = Eegeo_NEW(Menu::View::MenuModel)();
 
                 m_pMenuOptionsModel = Eegeo_NEW(Menu::View::MenuOptionsModel)(*m_pModel);
-
-                m_pViewModel = Eegeo_NEW(View::SearchResultMenuViewModel)(false,
-                                                                          identityProvider.GetNextIdentity(),
-                                                                          reactionControllerModel);
-
-                m_pMenuSection = Eegeo_NEW(Menu::View::MenuSectionViewModel)("Search", "search", *m_pModel, false);
-                m_pViewModel->AddSection(*m_pMenuSection);
-
-                m_pSearchResultRepositoryObserver = Eegeo_NEW(View::SearchResultRepositoryObserver)(
-                                                        searchResultRepository,
-                                                        messageBus
-                                                    );
-
-                m_pSearchResultMenuItemSelectedMessageHandler = Eegeo_NEW(SearchResultMenuItemSelectedMessageHandler)(
-                            cameraTransitionController,
-                            messageBus
-                        );
-
-                m_pSearchResultMenuSearchQueryPerformedMessageHandler = Eegeo_NEW(View::SearchResultMenuSearchQueryPerformedMessageHandler)(
-                            *m_pViewModel,
-                            messageBus
-                        );
-
-                m_pSearchResultMenuSearchQueryRemovedMessageHandler = Eegeo_NEW(View::SearchResultMenuSearchQueryRemovedMessageHandler)(
-                            *m_pViewModel,
-                            messageBus
-                        );
                 
-                m_pSearchResultMenuAppModeMessageHandler = Eegeo_NEW(View::SearchResultMenuAppModeMessageHandler)(*m_pViewModel, messageBus);
+                m_pSearchResultRepositoryObserver = Eegeo_NEW(View::SearchResultRepositoryObserver)(searchResultRepository,
+                                                                                                    messageBus);
+                
+                m_pSearchQueryRemovedMessageHandler = Eegeo_NEW(View::SearchResultMenuSearchQueryRemovedMessageHandler)(searchMenuViewModel,
+                                                                                                                        messageBus);
 
+                m_pSearchResultMenuItemSelectedMessageHandler = Eegeo_NEW(SearchResultMenuItemSelectedMessageHandler)(cameraTransitionController,
+                                                                                                                      messageBus);
+
+                // TODO: Make sure this message gets published via SearchMenu
                 m_pSearchResultViewClearedObserver = Eegeo_NEW(SearchResultViewClearedObserver)(searchQueryPerformer, messageBus);
                 
                 m_pSearchResultMenuOrder = Eegeo_NEW(View::SearchResultMenuOrder);
@@ -66,13 +42,8 @@ namespace ExampleApp
             {
                 Eegeo_DELETE m_pSearchResultMenuOrder;
                 Eegeo_DELETE m_pSearchResultViewClearedObserver;
-                Eegeo_DELETE m_pSearchResultMenuAppModeMessageHandler;
-                Eegeo_DELETE m_pSearchResultMenuSearchQueryRemovedMessageHandler;
-                Eegeo_DELETE m_pSearchResultMenuSearchQueryPerformedMessageHandler;
                 Eegeo_DELETE m_pSearchResultMenuItemSelectedMessageHandler;
                 Eegeo_DELETE m_pSearchResultRepositoryObserver;
-                Eegeo_DELETE m_pMenuSection;
-                Eegeo_DELETE m_pViewModel;
                 Eegeo_DELETE m_pMenuOptionsModel;
                 Eegeo_DELETE m_pModel;
             }
@@ -85,16 +56,6 @@ namespace ExampleApp
             Menu::View::IMenuModel& SearchResultMenuModule::GetSearchResultMenuModel() const
             {
                 return *m_pModel;
-            }
-
-            Menu::View::IMenuViewModel& SearchResultMenuModule::GetMenuViewModel() const
-            {
-                return *m_pViewModel;
-            }
-
-            View::ISearchResultMenuViewModel& SearchResultMenuModule::GetSearchResultMenuViewModel() const
-            {
-                return *m_pViewModel;
             }
             
             View::ISearchResultMenuOrder& SearchResultMenuModule::GetSearchResultMenuOrder() const

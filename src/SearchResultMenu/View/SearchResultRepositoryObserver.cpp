@@ -8,13 +8,12 @@ namespace ExampleApp
     {
         namespace View
         {
-            SearchResultRepositoryObserver::SearchResultRepositoryObserver(
-                Search::SdkModel::ISearchResultRepository& searchResultRepository,
-                ExampleAppMessaging::TMessageBus& messageBus)
-                : m_searchResultRepository(searchResultRepository)
-                , m_messageBus(messageBus)
-                , m_addedCallback(this, &SearchResultRepositoryObserver::HandleSearchResultAdded)
-                , m_removedCallback(this, &SearchResultRepositoryObserver::HandleSearchResultRemoved)
+            SearchResultRepositoryObserver::SearchResultRepositoryObserver(Search::SdkModel::ISearchResultRepository& searchResultRepository,
+                                                                           ExampleAppMessaging::TMessageBus& messageBus)
+            : m_searchResultRepository(searchResultRepository)
+            , m_messageBus(messageBus)
+            , m_addedCallback(this, &SearchResultRepositoryObserver::HandleSearchResultAdded)
+            , m_removedCallback(this, &SearchResultRepositoryObserver::HandleSearchResultRemoved)
             {
                 m_searchResultRepository.InsertItemAddedCallback(m_addedCallback);
                 m_searchResultRepository.InsertItemRemovedCallback(m_removedCallback);

@@ -3,7 +3,6 @@
 #pragma once
 
 #include "SearchResultMenuViewIncludes.h"
-#include "Menu.h"
 
 namespace ExampleApp
 {
@@ -15,10 +14,6 @@ namespace ExampleApp
             {
             public:
                 virtual ~ISearchResultMenuViewModule() { }
-
-                virtual Menu::View::MenuController& GetMenuController() const = 0;
-
-                virtual SearchResultMenuView& GetSearchResultMenuView() const = 0;
             };
         }
     }

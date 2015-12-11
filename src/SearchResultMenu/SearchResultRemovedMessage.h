@@ -13,9 +13,7 @@ namespace ExampleApp
             Search::SdkModel::SearchResultModel m_model;
 
         public:
-            SearchResultRemovedMessage(
-                const Search::SdkModel::SearchResultModel& model
-            );
+            SearchResultRemovedMessage(const Search::SdkModel::SearchResultModel& model);
 
             const Search::SdkModel::SearchResultModel& Model() const;
         };

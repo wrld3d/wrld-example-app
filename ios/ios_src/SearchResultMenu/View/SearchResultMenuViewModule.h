@@ -2,17 +2,14 @@
 
 #pragma once
 
-#include "Types.h"
 #include "ISearchResultMenuViewModule.h"
-#include "Menu.h"
-#include "Search.h"
+
+#include "BidirectionalBus.h"
 #include "CategorySearch.h"
-#include "Rendering.h"
-#include "Modality.h"
+#include "Menu.h"
 #include "SearchResultMenu.h"
 #include "SearchResultMenuViewIncludes.h"
-#include "BidirectionalBus.h"
-#include "SearchResultMenuDataProvider.h"
+#include "Types.h"
 
 namespace ExampleApp
 {
@@ -24,24 +21,16 @@ namespace ExampleApp
             {
             private:
                 SearchResultMenuController* m_pController;
-                SearchResultMenuView* m_pView;
                 SearchResultMenuDataProvider* m_pDataProvider;
 
             public:
                 SearchResultMenuViewModule(CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
-                                           Menu::View::IMenuModel& searchResultMenuModel,
-                                           Menu::View::IMenuViewModel& menuViewModel,
-                                           ISearchResultMenuViewModel& searchResultMenuViewModel,
+                                           Menu::View::IMenuViewModel& searchMenuViewModel,
                                            Menu::View::IMenuOptionsModel& menuOptionsModel,
                                            ISearchResultMenuOrder& searchResultMenuOrder,
-                                           const Eegeo::Rendering::ScreenProperties& screenProperties,
                                            ExampleAppMessaging::TMessageBus& messageBus);
 
                 ~SearchResultMenuViewModule();
-
-                Menu::View::MenuController& GetMenuController() const;
-
-                SearchResultMenuView& GetSearchResultMenuView() const;
             };
         }
     }

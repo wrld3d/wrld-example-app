@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "IMenuView.h"
+#include "MenuView.h"
 #include "MenuViewIncludes.h"
 #include "IFunc.h"
 #include "ICallback.h"
@@ -30,7 +30,8 @@ namespace ExampleApp
                 Eegeo::Helpers::CallbackCollection2<int, int> m_onItemSelectedCallbacks;
 
             public:
-                MenuViewInterop(MenuView* pView, CustomTableDataProvider* pProvider)
+                MenuViewInterop(MenuView* pView,
+                                CustomTableDataProvider* pProvider)
                     : m_pView(pView)
                     , m_pTryDragFunc(NULL)
                     , m_pProvider(pProvider)

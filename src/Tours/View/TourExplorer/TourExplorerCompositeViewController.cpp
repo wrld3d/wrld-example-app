@@ -13,15 +13,15 @@ namespace ExampleApp
             namespace TourExplorer
             {
                 TourExplorerCompositeViewController::TourExplorerCompositeViewController(ITourExplorerViewModel& tourExplorerViewModel,
-                                                                                         Menu::View::IMenuViewModel& secondaryMenuViewModel,
                                                                                          Menu::View::IMenuViewModel& searchMenuViewModel,
+                                                                                         Menu::View::IMenuViewModel& settingsMenuViewModel,
                                                                                          ScreenControl::View::IScreenControlViewModel& compassViewModel,
                                                                                          ScreenControl::View::IScreenControlViewModel& flattenViewModel,
                                                                                          ScreenControl::View::IScreenControlViewModel& myPinCreationViewModel,
                                                                                          ScreenControl::View::IScreenControlViewModel& watermarkViewModel)
                 : m_tourExplorerViewModel(tourExplorerViewModel)
-                , m_secondaryMenuViewModel(secondaryMenuViewModel)
                 , m_searchMenuViewModel(searchMenuViewModel)
+                , m_settingsMenuViewModel(searchMenuViewModel)
                 , m_compassViewModel(compassViewModel)
                 , m_flattenViewModel(flattenViewModel)
                 , m_myPinCreationViewModel(myPinCreationViewModel)
@@ -44,8 +44,8 @@ namespace ExampleApp
                     m_tourExplorerViewModel.SetShowBackButton(showBackButton);
                     m_tourExplorerViewModel.AddToScreen();
                     
-                    m_secondaryMenuViewModel.RemoveFromScreen();
                     m_searchMenuViewModel.RemoveFromScreen();
+                    m_settingsMenuViewModel.RemoveFromScreen();
                     
                     m_compassViewModel.RemoveFromScreen();
                     m_flattenViewModel.RemoveFromScreen();
@@ -60,8 +60,8 @@ namespace ExampleApp
                         m_tourExplorerOpen = false;
                         m_tourExplorerViewModel.RemoveFromScreen();
                         
-                        m_secondaryMenuViewModel.AddToScreen();
                         m_searchMenuViewModel.AddToScreen();
+                        m_settingsMenuViewModel.AddToScreen();
                         m_compassViewModel.AddToScreen();
                         m_flattenViewModel.AddToScreen();
                         m_myPinCreationViewModel.AddToScreen();

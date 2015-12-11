@@ -2,11 +2,11 @@
 
 #pragma once
 
-#include "Types.h"
-#include "ISearchQueryPerformer.h"
 #include "BidirectionalBus.h"
-#include "SearchResultViewClearedMessage.h"
 #include "ICallback.h"
+#include "ISearchQueryPerformer.h"
+#include "SearchResultViewClearedMessage.h"
+#include "Types.h"
 
 namespace ExampleApp
 {

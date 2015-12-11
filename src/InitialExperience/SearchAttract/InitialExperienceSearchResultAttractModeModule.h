@@ -4,7 +4,7 @@
 
 #include "IInitialExperienceStep.h"
 #include "Types.h"
-#include "ISearchResultMenuViewModel.h"
+//#include "ISearchResultMenuViewModel.h"
 #include "ICallback.h"
 #include "ScreenControlViewModelIncludes.h"
 #include "OpenableControlViewModelIncludes.h"
@@ -24,7 +24,7 @@ namespace ExampleApp
             public:
                 InitialExperienceSearchResultAttractModeModule(PersistentSettings::IPersistentSettingsModel& persistentSettings,
                                                                Menu::View::IMenuViewModel& searchMenuViewModelControl,
-                                                               SearchResultMenu::View::ISearchResultMenuViewModel& searchResultMenuViewModel,
+//                                                               SearchResultMenu::View::ISearchResultMenuViewModel& searchResultMenuViewModel,
                                                                ExampleAppMessaging::TMessageBus& messageBus);
                 
                 ~InitialExperienceSearchResultAttractModeModule();

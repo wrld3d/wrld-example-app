@@ -22,8 +22,9 @@
 #include "InitialExperience.h"
 #include "iOSPersistentSettingsModel.h"
 #include "ViewControllerUpdater.h"
-#include "SecondaryMenuViewIncludes.h"
-#include "SearchResultMenuViewModule.h"
+#include "SettingsMenuViewIncludes.h"
+#include "SearchMenuViewIncludes.h"
+#include "SearchResultMenuViewIncludes.h"
 #include "ModalBackgroundViewIncludes.h"
 #include "FlattenButtonViewIncludes.h"
 #include "SearchResultPoiViewIncludes.h"
@@ -100,8 +101,9 @@ private:
     Eegeo::UI::NativeAlerts::iOS::iOSAlertBoxFactory m_iOSAlertBoxFactory;
     Eegeo::UI::NativeUIFactories m_iOSNativeUIFactories;
     Eegeo::iOS::iOSPlatformAbstractionModule* m_piOSPlatformAbstractionModule;
-
-    ExampleApp::SecondaryMenu::View::ISecondaryMenuViewModule* m_pSecondaryMenuViewModule;
+    
+    ExampleApp::SettingsMenu::View::ISettingsMenuViewModule* m_pSettingsMenuViewModule;
+    ExampleApp::SearchMenu::View::ISearchMenuViewModule* m_pSearchMenuViewModule;
     ExampleApp::SearchResultMenu::View::ISearchResultMenuViewModule* m_pSearchResultMenuViewModule;
     ExampleApp::ModalBackground::View::IModalBackgroundViewModule* m_pModalBackgroundViewModule;
     ExampleApp::FlattenButton::View::IFlattenButtonViewModule* m_pFlattenButtonViewModule;

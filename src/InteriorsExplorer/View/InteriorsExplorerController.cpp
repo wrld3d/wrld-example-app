@@ -19,16 +19,16 @@ namespace ExampleApp
                                                                      InteriorsExplorerViewModel& viewModel,
                                                                      ExampleAppMessaging::TMessageBus& messageBus,
                                                                      MyPinCreation::View::IMyPinCreationInitiationViewModel& initiationViewModel,
-                                                                     ExampleApp::Menu::View::IMenuViewModel& secondaryMenuViewModel,
-                                                                     ExampleApp::Menu::View::IMenuViewModel& searchResultMenuViewModel,
+                                                                     ExampleApp::Menu::View::IMenuViewModel& searchMenuViewModel,
+                                                                     ExampleApp::Menu::View::IMenuViewModel& settingsMenuViewModel,
                                                                      ScreenControl::View::IScreenControlViewModel& flattenViewModel,
                                                                      ScreenControl::View::IScreenControlViewModel& compassViewModel)
             : m_view(view)
             , m_viewModel(viewModel)
             , m_messageBus(messageBus)
             , m_initiationViewModel(initiationViewModel)
-            , m_secondaryMenuViewModel(secondaryMenuViewModel)
-            , m_searchResultMenuViewModel(searchResultMenuViewModel)
+            , m_searchMenuViewModel(searchMenuViewModel)
+            , m_settingsMenuViewModel(settingsMenuViewModel)
             , m_flattenViewModel(flattenViewModel)
             , m_compassViewModel(compassViewModel)
             , m_appMode(AppModes::SdkModel::WorldMode)
@@ -94,8 +94,8 @@ namespace ExampleApp
                     m_viewModel.AddToScreen();
                     
                     m_initiationViewModel.RemoveFromScreen();
-                    m_secondaryMenuViewModel.RemoveFromScreen();
-                    m_searchResultMenuViewModel.RemoveFromScreen();
+                    m_searchMenuViewModel.RemoveFromScreen();
+                    m_settingsMenuViewModel.RemoveFromScreen();
                     m_flattenViewModel.RemoveFromScreen();
                     m_compassViewModel.RemoveFromScreen();
                     m_messageBus.Publish(GpsMarker::GpsMarkerVisibilityMessage(false));
@@ -107,8 +107,8 @@ namespace ExampleApp
                     if(m_appMode != AppModes::SdkModel::TourMode)
                     {
                         m_initiationViewModel.AddToScreen();
-                        m_secondaryMenuViewModel.AddToScreen();
-                        m_searchResultMenuViewModel.AddToScreen();
+                        m_searchMenuViewModel.AddToScreen();
+                        m_settingsMenuViewModel.AddToScreen();
                         m_flattenViewModel.AddToScreen();
                         m_compassViewModel.AddToScreen();
                         m_messageBus.Publish(GpsMarker::GpsMarkerVisibilityMessage(true));

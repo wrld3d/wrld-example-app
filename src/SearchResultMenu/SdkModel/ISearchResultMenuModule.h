@@ -19,10 +19,6 @@ namespace ExampleApp
                 virtual Menu::View::IMenuOptionsModel& GetSearchResultMenuOptionsModel() const = 0;
 
                 virtual Menu::View::IMenuModel& GetSearchResultMenuModel() const = 0;
-
-                virtual Menu::View::IMenuViewModel& GetMenuViewModel() const = 0;
-
-                virtual View::ISearchResultMenuViewModel& GetSearchResultMenuViewModel() const = 0;
                 
                 virtual View::ISearchResultMenuOrder& GetSearchResultMenuOrder() const = 0;
             };

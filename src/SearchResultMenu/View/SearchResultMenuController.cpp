@@ -3,6 +3,7 @@
 #include "SearchResultMenuController.h"
 
 #include <algorithm>
+
 #include "IAppModeModel.h"
 #include "ISearchResultMenuOrder.h"
 #include "SearchResultItemModel.h"
@@ -34,15 +35,13 @@ namespace ExampleApp
             
             void SearchResultMenuController::OnSearchQueryPerformedMessage(const Search::SearchQueryPerformedMessage& message)
             {
-                std::string headerString = CategorySearch::View::GetPresentationStringForQuery(m_categorySearchRepository, message.Query());
-                m_searchView.SetHeader(headerString, true, 0);
-                m_searchResultMenuViewModel.SetHasSearchQueryInFlight(true);
+                m_searchMenuViewModel.Close();
             }
 
             void SearchResultMenuController::OnSearchQueryResponseReceivedMessage(const Search::SearchQueryResponseReceivedMessage& message)
             {
+                // TODO: set search box text using headerString
                 std::string headerString = CategorySearch::View::GetPresentationStringForQuery(m_categorySearchRepository, message.GetQuery());
-                m_searchView.SetHeader(headerString, false, message.GetResults().size());
                 
                 for(int i = 0; i < m_lastAddedResults.size(); ++i)
                 {
@@ -57,92 +56,41 @@ namespace ExampleApp
                 for(int i = 0; i < m_lastAddedResults.size(); ++i)
                 {
                     const Search::SdkModel::SearchResultModel& model(m_lastAddedResults[i]);
-                    m_menuOptions.AddItem(
-                                      model.GetIdentifier(),
-                                      model.GetTitle(),
-                                      model.GetSubtitle(),
-                                      model.GetCategory(),
-                                      Eegeo_NEW(SearchResultItemModel)(
-                                                                       model.GetTitle(),
-                                                                       model.GetLocation().ToECEF(),
-                                                                       model.IsInterior(),
-                                                                       model.GetBuildingId(),
-                                                                       model.GetFloor(),
-                                                                       m_viewModel,
-                                                                       m_messageBus)
-                                      );
-                }
-                
-                m_searchResultMenuViewModel.SetHasSearchQueryInFlight(false);
-            }
-
-            void SearchResultMenuController::OnViewClicked()
-            {
-                if(m_searchResultMenuViewModel.CanInteract())
-                {
-                    MenuController::OnViewClicked();
+                    m_menuOptions.AddItem(model.GetIdentifier(),
+                                          model.GetTitle(),
+                                          model.GetSubtitle(),
+                                          model.GetCategory(),
+                                          Eegeo_NEW(SearchResultItemModel)(model.GetTitle(),
+                                                                           model.GetLocation().ToECEF(),
+                                                                           model.IsInterior(),
+                                                                           model.GetBuildingId(),
+                                                                           model.GetFloor(),
+                                                                           m_searchMenuViewModel,
+                                                                           m_messageBus));
                 }
             }
 
-            void SearchResultMenuController::OnSearchClosed()
+            SearchResultMenuController::SearchResultMenuController(Menu::View::IMenuViewModel& searchMenuViewModel,
+                                                                   Menu::View::IMenuOptionsModel& menuOptions,
+                                                                   ISearchResultMenuOrder& order,
+                                                                   CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
+                                                                   ExampleAppMessaging::TMessageBus& messageBus)
+            : m_searchMenuViewModel(searchMenuViewModel)
+            , m_menuOptions(menuOptions)
+            , m_order(order)
+            , m_categorySearchRepository(categorySearchRepository)
+            , m_messageBus(messageBus)
+            , m_searchQueryIssuedHandler(this, &SearchResultMenuController::OnSearchQueryPerformedMessage)
+            , m_searchResultReceivedHandler(this, &SearchResultMenuController::OnSearchQueryResponseReceivedMessage)
             {
-                m_messageBus.Publish(ExampleApp::SearchResultMenu::SearchResultViewClearedMessage());
-                m_viewModel.RemoveFromScreen();
-            }
-            
-            void SearchResultMenuController::OnAttractModeChanged()
-            {
-                m_searchView.SetAttractMode(m_searchResultMenuViewModel.AttractModeEnabled());
-            }
-            
-            void SearchResultMenuController::OnAppModeChanged(const AppModes::AppModeChangedMessage& message)
-            {
-                m_appModeAllowsOpen = message.GetAppMode() == AppModes::SdkModel::WorldMode;
-                if (!m_appModeAllowsOpen)
-                {
-                    OnSearchClosed();
-                }
-            }
-
-            SearchResultMenuController::SearchResultMenuController(
-                ISearchResultMenuView& searchView,
-                Menu::View::IMenuView& menuView,
-                Menu::View::IMenuModel& menuModel,
-                Menu::View::IMenuViewModel& menuViewModel,
-                Menu::View::IMenuOptionsModel& menuOptions,
-                ISearchResultMenuOrder& order,
-                CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
-                ISearchResultMenuViewModel& searchResultMenuViewModel,
-                ExampleAppMessaging::TMessageBus& messageBus
-            )
-                : MenuController(menuModel, menuViewModel, menuView, messageBus)
-                , m_searchView(searchView)
-                , m_menuOptions(menuOptions)
-                , m_order(order)
-                , m_categorySearchRepository(categorySearchRepository)
-                , m_searchResultMenuViewModel(searchResultMenuViewModel)
-                , m_messageBus(messageBus)
-                , m_onSearchCloseTappedCallback(this, &SearchResultMenuController::OnSearchClosed)
-                , m_searchQueryIssuedHandler(this, &SearchResultMenuController::OnSearchQueryPerformedMessage)
-                , m_searchResultReceivedHandler(this, &SearchResultMenuController::OnSearchQueryResponseReceivedMessage)
-                , m_attractModeChangedCallback(this, &SearchResultMenuController::OnAttractModeChanged)
-                , m_appModeChangedHandler(this, &SearchResultMenuController::OnAppModeChanged)
-                , m_appModeAllowsOpen(true)
-            {
-                m_searchView.InsertSearchClosed(m_onSearchCloseTappedCallback);
                 m_messageBus.SubscribeUi(m_searchQueryIssuedHandler);
                 m_messageBus.SubscribeUi(m_searchResultReceivedHandler);
-                m_searchResultMenuViewModel.InsertAttractModeChangedCallback(m_attractModeChangedCallback);
-                m_messageBus.SubscribeUi(m_appModeChangedHandler);
             }
 
             SearchResultMenuController::~SearchResultMenuController()
             {
-                m_messageBus.UnsubscribeUi(m_appModeChangedHandler);
-                m_searchResultMenuViewModel.RemoveAttractModeChangedCallback(m_attractModeChangedCallback);
                 m_messageBus.UnsubscribeUi(m_searchResultReceivedHandler);
                 m_messageBus.UnsubscribeUi(m_searchQueryIssuedHandler);
-                m_searchView.RemoveSearchClosed(m_onSearchCloseTappedCallback);
             }
         }
     }

@@ -8,6 +8,7 @@ namespace ExampleApp
     {
         class SearchResultViewClearedMessage
         {
+            
         };
     }
 }

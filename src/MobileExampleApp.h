@@ -13,8 +13,10 @@
 #include "SearchResultOnMap.h"
 #include "NavigationService.h"
 #include "IPlatformAbstractionModule.h"
-#include "SecondaryMenu.h"
+#include "SettingsMenu.h"
+#include "SearchMenu.h"
 #include "SearchResultMenu.h"
+#include "SearchMenu.h"
 #include "Modality.h"
 #include "FlattenButton.h"
 #include "Search.h"
@@ -27,11 +29,9 @@
 #include "SearchResultPoi.h"
 #include "WeatherMenu.h"
 #include "CameraTransitions.h"
-#include "SecondaryMenuModule.h"
 #include "ModalityModule.h"
 #include "MenuModel.h"
 #include "MenuViewModel.h"
-#include "SearchResultMenuModule.h"
 #include "MenuOptionsModel.h"
 #include "AboutPageModule.h"
 #include "SearchModule.h"
@@ -112,7 +112,8 @@ namespace ExampleApp
         ExampleApp::Metrics::IMetricsService& m_metricsService;
         
         Eegeo::Helpers::IdentityProvider m_identityProvider;
-        ExampleApp::SecondaryMenu::SdkModel::ISecondaryMenuModule* m_pSecondaryMenuModule;
+        ExampleApp::SettingsMenu::SdkModel::ISettingsMenuModule* m_pSettingsMenuModule;
+        ExampleApp::SearchMenu::SdkModel::ISearchMenuModule* m_pSearchMenuModule;
         ExampleApp::SearchResultMenu::SdkModel::ISearchResultMenuModule* m_pSearchResultMenuModule;
         ExampleApp::Modality::View::IModalityModule* m_pModalityModule;
         ExampleApp::CategorySearch::SdkModel::ICategorySearchModule* m_pCategorySearchModule;
@@ -243,12 +244,17 @@ namespace ExampleApp
         {
             return *m_pCameraTransitionService;
         }
-
-        const ExampleApp::SecondaryMenu::SdkModel::ISecondaryMenuModule& SecondaryMenuModule() const
+        
+        const ExampleApp::SettingsMenu::SdkModel::ISettingsMenuModule& SettingsMenuModule() const
         {
-            return *m_pSecondaryMenuModule;
+            return *m_pSettingsMenuModule;
         }
 
+        const SearchMenu::SdkModel::ISearchMenuModule& SearchMenuModule() const
+        {
+            return *m_pSearchMenuModule;
+        }
+        
         const SearchResultMenu::SdkModel::ISearchResultMenuModule& SearchResultMenuModule() const
         {
             return *m_pSearchResultMenuModule;

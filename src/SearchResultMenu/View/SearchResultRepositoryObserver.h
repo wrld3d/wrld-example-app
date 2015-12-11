@@ -2,12 +2,12 @@
 
 #pragma once
 
-#include "Types.h"
-#include "ISearchResultRepository.h"
 #include "BidirectionalBus.h"
 #include "ICallback.h"
+#include "ISearchResultRepository.h"
 #include "SearchResultAddedMessage.h"
 #include "SearchResultRemovedMessage.h"
+#include "Types.h"
 
 namespace ExampleApp
 {
@@ -29,9 +29,8 @@ namespace ExampleApp
                 void HandleSearchResultRemoved(Search::SdkModel::SearchResultModel*& pResult);
 
             public:
-                SearchResultRepositoryObserver(
-                    Search::SdkModel::ISearchResultRepository& searchResultRepository,
-                    ExampleAppMessaging::TMessageBus& messageBus);
+                SearchResultRepositoryObserver(Search::SdkModel::ISearchResultRepository& searchResultRepository,
+                                               ExampleAppMessaging::TMessageBus& messageBus);
 
                 ~SearchResultRepositoryObserver();
             };

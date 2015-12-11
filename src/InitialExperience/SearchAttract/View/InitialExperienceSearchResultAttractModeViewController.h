@@ -3,7 +3,7 @@
 #pragma once
 
 #include "Types.h"
-#include "ISearchResultMenuViewModel.h"
+//#include "ISearchResultMenuViewModel.h"
 #include "ICallback.h"
 #include "ScreenControlViewModelIncludes.h"
 #include "OpenableControlViewModelIncludes.h"
@@ -23,7 +23,7 @@ namespace ExampleApp
                 {
                 public:
                     InitialExperienceSearchResultAttractModeViewController(Menu::View::IMenuViewModel& searchMenuViewModelControl,
-                                                                           SearchResultMenu::View::ISearchResultMenuViewModel& searchResultMenuViewModel,
+                                                                           /*SearchResultMenu::View::ISearchResultMenuViewModel& searchResultMenuViewModel,*/
                                                                            ExampleAppMessaging::TMessageBus& messageBus);
                     
                     ~InitialExperienceSearchResultAttractModeViewController();
@@ -44,7 +44,7 @@ namespace ExampleApp
                     
                 private:
                     Menu::View::IMenuViewModel& m_searchMenuViewModelControl;
-                    SearchResultMenu::View::ISearchResultMenuViewModel& m_searchResultMenuViewModel;
+                    /*SearchResultMenu::View::ISearchResultMenuViewModel& m_searchResultMenuViewModel;*/
                     ExampleAppMessaging::TMessageBus& m_messageBus;
                     bool m_shouldEnd;
                     bool m_finished;

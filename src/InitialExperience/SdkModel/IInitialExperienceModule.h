@@ -4,7 +4,7 @@
 
 #include "InitialExperience.h"
 #include "WorldAreaLoader.h"
-#include "SearchResultMenu.h"
+//#include "SearchResultMenu.h"
 #include "Menu.h"
 
 namespace ExampleApp
@@ -19,8 +19,8 @@ namespace ExampleApp
                 virtual ~IInitialExperienceModule() { }
 
                 virtual void InitialiseWithApplicationModels(WorldAreaLoader::SdkModel::IWorldAreaLoaderModel& worldAreaLoaderModel,
-                                                             Menu::View::IMenuViewModel& searchMenuViewModelControl,
-                                                             SearchResultMenu::View::ISearchResultMenuViewModel& searchResultMenuViewModel) = 0;
+                                                             Menu::View::IMenuViewModel& searchMenuViewModelControl/*,
+                                                             SearchResultMenu::View::ISearchResultMenuViewModel& searchResultMenuViewModel*/) = 0;
 
                 virtual void TearDown() = 0;
 

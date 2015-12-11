@@ -13,10 +13,7 @@ namespace ExampleApp
 
         namespace View
         {
-            class ISearchResultMenuViewModel;
-            class SearchResultMenuViewModel;
             class SearchResultMenuController;
-            class ISearchResultView;
             class ISearchResultMenuOrder;
         }
     }

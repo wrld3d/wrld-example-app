@@ -2,21 +2,16 @@
 
 #pragma once
 
-#include "Types.h"
-#include "Search.h"
-#include "SearchResultMenu.h"
 #include "ISearchResultMenuModule.h"
-#include "IIdentity.h"
-#include "CameraTransitions.h"
-#include "Reaction.h"
-#include "SearchResultMenuViewModel.h"
-#include "SearchResultMenuItemSelectedMessageHandler.h"
+
 #include "BidirectionalBus.h"
-#include "SearchResultRepositoryObserver.h"
-#include "SearchResultMenuSearchQueryPerformedMessageHandler.h"
+#include "CameraTransitions.h"
+#include "Search.h"
+#include "SearchResultMenuItemSelectedMessageHandler.h"
 #include "SearchResultMenuSearchQueryRemovedMessageHandler.h"
-#include "SearchResultMenuAppModeMessageHandler.h"
+#include "SearchResultRepositoryObserver.h"
 #include "SearchResultViewClearedObserver.h"
+#include "Types.h"
 
 namespace ExampleApp
 {
@@ -29,35 +24,24 @@ namespace ExampleApp
             private:
                 Menu::View::IMenuModel* m_pModel;
                 Menu::View::IMenuOptionsModel* m_pMenuOptionsModel;
-                View::SearchResultMenuViewModel* m_pViewModel;
                 View::SearchResultRepositoryObserver* m_pSearchResultRepositoryObserver;
-                Menu::View::IMenuSectionViewModel* m_pMenuSection;
+                View::SearchResultMenuSearchQueryRemovedMessageHandler* m_pSearchQueryRemovedMessageHandler;
                 SearchResultMenuItemSelectedMessageHandler* m_pSearchResultMenuItemSelectedMessageHandler;
-                View::SearchResultMenuSearchQueryPerformedMessageHandler* m_pSearchResultMenuSearchQueryPerformedMessageHandler;
-                View::SearchResultMenuSearchQueryRemovedMessageHandler* m_pSearchResultMenuSearchQueryRemovedMessageHandler;
-                View::SearchResultMenuAppModeMessageHandler* m_pSearchResultMenuAppModeMessageHandler;
                 SearchResultViewClearedObserver* m_pSearchResultViewClearedObserver;
                 View::ISearchResultMenuOrder* m_pSearchResultMenuOrder;
 
             public:
-                SearchResultMenuModule(
-                    Search::SdkModel::ISearchResultRepository& searchResultRepository,
-                    Search::SdkModel::ISearchQueryPerformer& queryPerformer,
-                    Eegeo::Helpers::IIdentityProvider& identityProvider,
-                    CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
-                    Reaction::View::IReactionControllerModel& reactionControllerModel,
-                    ExampleAppMessaging::TMessageBus& messageBus
-                );
+                SearchResultMenuModule(Menu::View::IMenuViewModel& searchMenuViewModel,
+                                       Search::SdkModel::ISearchResultRepository& searchResultRepository,
+                                       Search::SdkModel::ISearchQueryPerformer& queryPerformer,
+                                       CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
+                                       ExampleAppMessaging::TMessageBus& messageBus);
 
                 ~SearchResultMenuModule();
 
                 Menu::View::IMenuOptionsModel& GetSearchResultMenuOptionsModel() const;
 
                 Menu::View::IMenuModel& GetSearchResultMenuModel() const;
-
-                Menu::View::IMenuViewModel& GetMenuViewModel() const;
-
-                View::ISearchResultMenuViewModel& GetSearchResultMenuViewModel() const;
                 
                 View::ISearchResultMenuOrder& GetSearchResultMenuOrder() const;
             };

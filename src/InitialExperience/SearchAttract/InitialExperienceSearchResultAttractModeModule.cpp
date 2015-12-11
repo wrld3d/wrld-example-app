@@ -10,7 +10,7 @@ namespace ExampleApp
         {
             InitialExperienceSearchResultAttractModeModule::InitialExperienceSearchResultAttractModeModule(PersistentSettings::IPersistentSettingsModel& persistentSettings,
                                                                                                            Menu::View::IMenuViewModel& searchMenuViewModelControl,
-                                                                                                           SearchResultMenu::View::ISearchResultMenuViewModel& searchResultMenuViewModel,
+//                                                                                                           SearchResultMenu::View::ISearchResultMenuViewModel& searchResultMenuViewModel,
                                                                                                            ExampleAppMessaging::TMessageBus& messageBus)
             : m_pInitialExperienceSearchResultAttractModeModel(NULL)
             , m_pInitialExperienceSearchResultAttractModeViewController(NULL)
@@ -20,7 +20,7 @@ namespace ExampleApp
                                                                                                       messageBus);
                 
                 m_pInitialExperienceSearchResultAttractModeViewController = Eegeo_NEW(View::InitialExperienceSearchResultAttractModeViewController)(searchMenuViewModelControl,
-                                                                                                      searchResultMenuViewModel,                   messageBus);
+                                                                                                      /*searchResultMenuViewModel,*/                   messageBus);
             }
             
             InitialExperienceSearchResultAttractModeModule::~InitialExperienceSearchResultAttractModeModule()

@@ -2,11 +2,11 @@
 
 #pragma once
 
-#include "Types.h"
 #include "BidirectionalBus.h"
 #include "ICallback.h"
 #include "SearchQueryRemovedMessage.h"
-#include "ISearchResultMenuViewModel.h"
+#include "Menu.h"
+#include "Types.h"
 
 namespace ExampleApp
 {
@@ -16,16 +16,15 @@ namespace ExampleApp
         {
             class SearchResultMenuSearchQueryRemovedMessageHandler : private Eegeo::NonCopyable
             {
-                ISearchResultMenuViewModel& m_searchResultMenuViewModel;
+                Menu::View::IMenuViewModel& m_searchMenuViewModel;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 Eegeo::Helpers::TCallback1<SearchResultMenuSearchQueryRemovedMessageHandler, const Search::SearchQueryRemovedMessage&> m_handlerBinding;
 
                 void OnSearchQueryRemovedMessage(const Search::SearchQueryRemovedMessage& message);
 
             public:
-                SearchResultMenuSearchQueryRemovedMessageHandler(
-                    ISearchResultMenuViewModel& searchResultMenuViewModel,
-                    ExampleAppMessaging::TMessageBus& messageBus);
+                SearchResultMenuSearchQueryRemovedMessageHandler(Menu::View::IMenuViewModel& searchMenuViewModel,
+                                                                 ExampleAppMessaging::TMessageBus& messageBus);
 
                 ~SearchResultMenuSearchQueryRemovedMessageHandler();
             };

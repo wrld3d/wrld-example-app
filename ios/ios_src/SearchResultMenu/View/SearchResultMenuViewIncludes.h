@@ -2,7 +2,7 @@
 
 #pragma once
 
-@class SearchResultMenuView;
+@class SearchResultMenuDataProvider;
 
 namespace ExampleApp
 {
@@ -11,7 +11,6 @@ namespace ExampleApp
         namespace View
         {
             class ISearchResultMenuViewModule;
-            class SearchResultMenuViewInterop;
         }
     }
 }

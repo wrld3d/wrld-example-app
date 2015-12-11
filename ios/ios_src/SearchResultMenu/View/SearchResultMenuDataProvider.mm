@@ -1,15 +1,14 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "SearchResultMenuDataProvider.h"
+
+#include "CellConstants.h"
 #include "CustomTableViewCell.h"
-#include "UIColors.h"
-#include "MenuView.h"
-#include "MenuItemModel.h"
 #include "IconResources.h"
 #include "ImageHelpers.h"
-#include "CellConstants.h"
+#include "MenuView.h"
+#include "UIColors.h"
 #include "UIHelpers.h"
-#include <sstream>
 
 @implementation SearchResultMenuDataProvider
 
@@ -51,7 +50,7 @@ CGFloat const SearchResultRowHeight = SECTION_HEADER_CELL_HEIGHT;
     }
     else
     {
-        ExampleApp::Menu::View::MenuItemModel item = section.GetItemAtIndex(index);
+        ExampleApp::Menu::View::MenuItemModel item = section.GetItemAtIndex(static_cast<int>(index));
 
         cell.textLabel.text = [NSString stringWithUTF8String:item.Name().c_str()];
         [cell.textLabel sizeToFit];

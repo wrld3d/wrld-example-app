@@ -2,11 +2,11 @@
 
 #pragma once
 
-#include "Types.h"
 #include "BidirectionalBus.h"
 #include "ICallback.h"
-#include "SearchResultMenuItemSelectedMessage.h"
 #include "ICameraTransitionController.h"
+#include "SearchResultMenuItemSelectedMessage.h"
+#include "Types.h"
 
 namespace ExampleApp
 {

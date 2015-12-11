@@ -23,8 +23,8 @@ namespace ExampleApp
         }
 
         std::vector<SdkModel::IInitialExperienceStep*> iOSInitialExperienceModule::CreateSteps(WorldAreaLoader::SdkModel::IWorldAreaLoaderModel& worldAreaLoaderModel,
-                                                                                               Menu::View::IMenuViewModel& searchMenuViewModelControl,
-                                                                                               SearchResultMenu::View::ISearchResultMenuViewModel& searchResultMenuViewModel)
+                                                                                               Menu::View::IMenuViewModel& searchMenuViewModelControl/*,
+                                                                                               SearchResultMenu::View::ISearchResultMenuViewModel& searchResultMenuViewModel*/)
         {
             std::vector<SdkModel::IInitialExperienceStep*> steps;
 
@@ -37,7 +37,7 @@ namespace ExampleApp
             steps.push_back(pWorldAreaLoaderStep);
             
             m_pInitialExperienceSearchResultAttractModeModule = Eegeo_NEW(SearchResultAttractMode::InitialExperienceSearchResultAttractModeModule)(GetPersistentSettings(),
-                                                                                                                                                     searchMenuViewModelControl,searchResultMenuViewModel,                   m_messageBus);
+                                                                                                                                                     searchMenuViewModelControl,/*searchResultMenuViewModel,*/                   m_messageBus);
             
             steps.push_back(&m_pInitialExperienceSearchResultAttractModeModule->GetInitialExperienceStep());
             
