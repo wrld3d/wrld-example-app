@@ -11,10 +11,8 @@ namespace ExampleApp
         namespace SdkModel
         {
             ActiveTourQuitSelectedMessageHandler::ActiveTourQuitSelectedMessageHandler(ITourService& tourService,
-                                                                                       Search::SdkModel::ISearchRefreshService& searchRefreshService,
                                                                                        ExampleAppMessaging::TMessageBus& messageBus)
             : m_tourService(tourService)
-            , m_searchRefreshService(searchRefreshService)
             , m_messageBus(messageBus)
             , m_binding(this, &ActiveTourQuitSelectedMessageHandler::HandleActiveTourQuitSelected)
             {
@@ -28,7 +26,6 @@ namespace ExampleApp
             
             void ActiveTourQuitSelectedMessageHandler::HandleActiveTourQuitSelected(const ActiveTourQuitSelectedMessage& message)
             {
-                m_searchRefreshService.SetEnabled(true);
                 if(message.ExitTours())
                 {
                     m_tourService.EndAllTours();

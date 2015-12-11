@@ -8,6 +8,7 @@
 #include "Logger.h"
 #include "ITourStateMachine.h"
 #include "IToursCameraTransitionController.h"
+#include "ISearchRefreshService.h"
 #include "TourOnMapSelectedMessage.h"
 #include "WorldPinsVisibilityMessage.h"
 #include "WorldPinVisibility.h"
@@ -28,6 +29,7 @@ namespace ExampleApp
             TourService::TourService(ITourRepository& repository,
                                      Camera::IToursCameraTransitionController& cameraTransitionController,
                                      Metrics::IMetricsService& metricsService,
+                                     Search::SdkModel::ISearchRefreshService& searchRefreshService,
                                      ExampleAppMessaging::TMessageBus& messageBus,
                                      ExampleAppMessaging::TSdkModelDomainEventBus& sdkDomainEventBus)
             : m_repository(repository)
@@ -41,6 +43,7 @@ namespace ExampleApp
             , m_suspendCurrentTour(false)
             , m_sdkDomainEventBus(sdkDomainEventBus)
             , m_metricsService(metricsService)
+            , m_searchRefreshService(searchRefreshService)
             {
                 
             }
@@ -98,6 +101,7 @@ namespace ExampleApp
                 ss << atCard;
                 m_metricsService.SetEvent(TourMetricsPrefix + m_activeTourModel.Name(), TourCardEnteredKey, ss.str());
                 
+                m_searchRefreshService.SetEnabled(false);
                 m_pActiveTourStateMachine = m_pTourToStateMachineMapping[tourModel.Name()];
                 m_pActiveTourStateMachine->StartTour(atCard);
 
@@ -142,6 +146,7 @@ namespace ExampleApp
                     // Don't return to app camera if we're going to another tour.
                     if(m_previousActiveToursStack.size() == 0)
                     {
+                        m_searchRefreshService.SetEnabled(true);
                         m_sdkDomainEventBus.Publish(WorldPins::WorldPinsVisibilityMessage(WorldPins::SdkModel::WorldPinVisibility::World | WorldPins::SdkModel::WorldPinVisibility::Search | WorldPins::SdkModel::WorldPinVisibility::UserPin));
                         
                         m_tourEndedCallbacks.ExecuteCallbacks();
@@ -155,7 +160,6 @@ namespace ExampleApp
                         StartCurrentActiveTour(previousTour.tour, previousTour.card);
                     }
                 }
-                
             }
             
             void TourService::EndAllTours()

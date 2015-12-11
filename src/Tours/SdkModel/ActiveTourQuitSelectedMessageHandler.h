@@ -19,7 +19,6 @@ namespace ExampleApp
             class ActiveTourQuitSelectedMessageHandler : private Eegeo::NonCopyable
             {
                 ITourService& m_tourService;
-                Search::SdkModel::ISearchRefreshService& m_searchRefreshService;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 
                 Eegeo::Helpers::TCallback1<ActiveTourQuitSelectedMessageHandler, const ActiveTourQuitSelectedMessage&> m_binding;
@@ -28,7 +27,6 @@ namespace ExampleApp
                 
             public:
                 ActiveTourQuitSelectedMessageHandler(ITourService& tourService,
-                                                     Search::SdkModel::ISearchRefreshService& searchRefreshService,
                                                      ExampleAppMessaging::TMessageBus& messageBus);
                 
                 ~ActiveTourQuitSelectedMessageHandler();
