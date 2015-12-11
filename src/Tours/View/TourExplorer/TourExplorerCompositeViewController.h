@@ -19,21 +19,13 @@ namespace ExampleApp
                 class TourExplorerCompositeViewController : public ITourExplorerCompositeViewController, private Eegeo::NonCopyable
                 {
                     ITourExplorerViewModel& m_tourExplorerViewModel;
-                    Menu::View::IMenuViewModel& m_secondaryMenuViewModel;
                     Menu::View::IMenuViewModel& m_searchMenuViewModel;
-                    ScreenControl::View::IScreenControlViewModel& m_compassViewModel;
-                    ScreenControl::View::IScreenControlViewModel& m_flattenViewModel;
-                    ScreenControl::View::IScreenControlViewModel& m_myPinCreationViewModel;
                     ScreenControl::View::IScreenControlViewModel& m_watermarkViewModel;
                     bool m_tourExplorerOpen;
                     
                 public:
                     TourExplorerCompositeViewController(ITourExplorerViewModel& tourExplorerViewModel,
-                                                        Menu::View::IMenuViewModel& secondaryMenuViewModel,
                                                         Menu::View::IMenuViewModel& searchMenuViewModel,
-                                                        ScreenControl::View::IScreenControlViewModel& compassViewModel,
-                                                        ScreenControl::View::IScreenControlViewModel& flattenViewModel,
-                                                        ScreenControl::View::IScreenControlViewModel& myPinCreationViewModel,
                                                         ScreenControl::View::IScreenControlViewModel& watermarkViewModel);
                     
                     ~TourExplorerCompositeViewController();

@@ -304,8 +304,7 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
                                      app.FlattenButtonModule().GetFlattenButtonViewModel(),
                                      screenProperties,
                                      m_messageBus,
-                                     m_iOSFlurryMetricsService,
-                                     app.GetAppModeModel());
+                                     m_iOSFlurryMetricsService);
 
     m_pWorldPinOnMapViewModule = Eegeo_NEW(ExampleApp::WorldPins::View::WorldPinOnMapViewModule)(app.WorldPinsModule().GetWorldPinInFocusViewModel(),
                                  app.WorldPinsModule().GetScreenControlViewModel(),
@@ -330,8 +329,7 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
                                            app.MyPinCreationModule().GetMyPinCreationInitiationViewModel(),
                                            app.MyPinCreationModule().GetMyPinCreationConfirmationViewModel(),
                                            screenProperties,
-                                           m_iOSFlurryMetricsService,
-                                                                                                                         app.GetAppModeModel());
+                                           m_iOSFlurryMetricsService);
 
     m_pMyPinCreationConfirmationViewModule = Eegeo_NEW(ExampleApp::MyPinCreation::View::MyPinCreationConfirmationViewModule)(m_messageBus,
             app.MyPinCreationModule().GetMyPinCreationConfirmationViewModel(),

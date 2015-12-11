@@ -15,11 +15,7 @@ namespace ExampleApp
                                  ExampleAppMessaging::TMessageBus& messageBus,
                                  WorldPins::SdkModel::IWorldPinsService& worldPinsService,
                                  Search::SdkModel::ISearchRefreshService& searchRefreshService,
-                                 Menu::View::IMenuViewModel& secondaryMenuViewModel,
                                  Menu::View::IMenuViewModel& searchMenuViewModel,
-                                 ScreenControl::View::IScreenControlViewModel& compassViewModel,
-                                 ScreenControl::View::IScreenControlViewModel& flattenViewModel,
-                                 ScreenControl::View::IScreenControlViewModel& myPinCreationViewModel,
                                  ScreenControl::View::IScreenControlViewModel& watermarkViewModel,
                                  Eegeo::Streaming::ResourceCeilingProvider& resourceCeilingProvider,
                                  const Eegeo::Rendering::ScreenProperties& screenProperties,
@@ -66,11 +62,7 @@ namespace ExampleApp
             m_pTourExplorerViewModel = Eegeo_NEW(View::TourExplorer::TourExplorerViewModel)(identityProvider.GetNextIdentity(), false);
             
             m_pTourExplorerCompositeViewController = Eegeo_NEW(View::TourExplorer::TourExplorerCompositeViewController)(*m_pTourExplorerViewModel,
-                                                                                                                        secondaryMenuViewModel,
                                                                                                                         searchMenuViewModel,
-                                                                                                                        compassViewModel,
-                                                                                                                        flattenViewModel,
-                                                                                                                        myPinCreationViewModel,
                                                                                                                         watermarkViewModel);
             
             m_pTourSelectedViewObserver = Eegeo_NEW(View::TourExplorer::TourSelectedViewObserver)(*m_pTourExplorerCompositeViewController,
