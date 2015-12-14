@@ -8,7 +8,6 @@
 #include "CameraTransitions.h"
 #include "Search.h"
 #include "SearchResultMenuItemSelectedMessageHandler.h"
-#include "SearchResultMenuSearchQueryRemovedMessageHandler.h"
 #include "SearchResultRepositoryObserver.h"
 #include "SearchResultViewClearedObserver.h"
 #include "Types.h"
@@ -25,7 +24,6 @@ namespace ExampleApp
                 Menu::View::IMenuModel* m_pModel;
                 Menu::View::IMenuOptionsModel* m_pMenuOptionsModel;
                 View::SearchResultRepositoryObserver* m_pSearchResultRepositoryObserver;
-                View::SearchResultMenuSearchQueryRemovedMessageHandler* m_pSearchQueryRemovedMessageHandler;
                 SearchResultMenuItemSelectedMessageHandler* m_pSearchResultMenuItemSelectedMessageHandler;
                 SearchResultViewClearedObserver* m_pSearchResultViewClearedObserver;
                 View::ISearchResultMenuOrder* m_pSearchResultMenuOrder;

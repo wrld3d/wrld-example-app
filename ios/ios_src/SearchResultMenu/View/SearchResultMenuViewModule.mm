@@ -12,8 +12,7 @@ namespace ExampleApp
     {
         namespace View
         {
-            SearchResultMenuViewModule::SearchResultMenuViewModule(CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
-                                                                   Menu::View::IMenuViewModel& searchMenuViewModel,
+            SearchResultMenuViewModule::SearchResultMenuViewModule(Menu::View::IMenuViewModel& searchMenuViewModel,
                                                                    Menu::View::IMenuOptionsModel& menuOptionsModel,
                                                                    ISearchResultMenuOrder& searchResultMenuOrder,
                                                                    ExampleAppMessaging::TMessageBus& messageBus)
@@ -21,7 +20,6 @@ namespace ExampleApp
                 m_pController =  Eegeo_NEW(SearchResultMenuController)(searchMenuViewModel,
                                                                        menuOptionsModel,
                                                                        searchResultMenuOrder,
-                                                                       categorySearchRepository,
                                                                        messageBus);
             }
 

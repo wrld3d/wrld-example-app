@@ -16,6 +16,7 @@ namespace ExampleApp
             SearchMenuViewModule::SearchMenuViewModule(Menu::View::IMenuModel& searchMenuModel,
                                                        Menu::View::IMenuViewModel& searchMenuViewModel,
                                                        const Eegeo::Rendering::ScreenProperties& screenProperties,
+                                                       CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
                                                        ExampleAppMessaging::TMessageBus& messageBus)
             {
                 m_pDataProvider = [CustomTableDataProvider alloc];
@@ -32,6 +33,7 @@ namespace ExampleApp
                                                                 searchMenuViewModel,
                                                                 *[m_pView getInterop],
                                                                 *[m_pView getSearchMenuInterop],
+                                                                categorySearchRepository,
                                                                 messageBus);
             }
 

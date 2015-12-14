@@ -15,6 +15,7 @@
 
     bool m_keyboardActive;
     bool m_returnPressed;
+    bool m_currentSearchIsCategory;
 
     float m_searchBoxContainerX;
     float m_searchBoxContainerY;
@@ -31,6 +32,11 @@
 - (void) disableEdit;
 
 - (void) removeSeachKeyboard;
+
+- (void) setEditText :(NSString*)searchText
+                     :(bool)isCategory;
+
+- (void) collapseAll;
 
 @property (nonatomic, retain) UITextField* pSearchEditBox;
 @property (nonatomic, retain) UIView* pSearchEditBoxContainer;

@@ -5,6 +5,7 @@
 #include "ISearchMenuViewModule.h"
 
 #include "BidirectionalBus.h"
+#include "CategorySearch.h"
 #include "CustomTableDataProvider.h"
 #include "Menu.h"
 #include "MenuController.h"
@@ -29,6 +30,7 @@ namespace ExampleApp
                 SearchMenuViewModule(Menu::View::IMenuModel& searchMenuModel,
                                      Menu::View::IMenuViewModel& searchMenuViewModel,
                                      const Eegeo::Rendering::ScreenProperties& screenProperties,
+                                     CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
                                      ExampleAppMessaging::TMessageBus& messageBus);
                 
                 ~SearchMenuViewModule();

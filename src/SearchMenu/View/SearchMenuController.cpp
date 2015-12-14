@@ -2,7 +2,10 @@
 
 #include "SearchMenuController.h"
 
+#include "CategorySearchRepository.h"
 #include "ISearchMenuView.h"
+#include "SearchQuery.h"
+#include "SearchResultViewClearedMessage.h"
 
 namespace ExampleApp
 {
@@ -14,18 +17,22 @@ namespace ExampleApp
                                                        Menu::View::IMenuViewModel& viewModel,
                                                        Menu::View::IMenuView& view,
                                                        ISearchMenuView& searchMenuView,
+                                                       CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
                                                        ExampleAppMessaging::TMessageBus& messageBus)
             : Menu::View::MenuController(model, viewModel, view, messageBus)
             , m_searchMenuView(searchMenuView)
+            , m_categorySearchRepository(categorySearchRepository)
             , m_messageBus(messageBus)
             , m_appModeAllowsOpen(true)
             , m_onOpenStateChangedCallback(this, &SearchMenuController::OnOpenStateChanged)
             , m_performedQueryHandler(this, &SearchMenuController::OnSearchQueryPerformedMessage)
             , m_receivedQueryResponseHandler(this, &SearchMenuController::OnSearchQueryResponseReceivedMessage)
             , m_onSearchCallback(this, &SearchMenuController::OnSearch)
+            , m_onSearchClearedCallback(this, &SearchMenuController::OnSearchCleared)
             , m_appModeChangedCallback(this, &SearchMenuController::OnAppModeChanged)
             {
                 m_searchMenuView.InsertSearchPeformedCallback(m_onSearchCallback);
+                m_searchMenuView.InsertSearchClearedCallback(m_onSearchClearedCallback);
                 m_viewModel.InsertOpenStateChangedCallback(m_onOpenStateChangedCallback);
                 
                 m_messageBus.SubscribeUi(m_performedQueryHandler);
@@ -40,6 +47,7 @@ namespace ExampleApp
                 m_messageBus.UnsubscribeUi(m_performedQueryHandler);
                 
                 m_viewModel.RemoveOpenStateChangedCallback(m_onOpenStateChangedCallback);
+                m_searchMenuView.RemoveSearchClearedCallback(m_onSearchClearedCallback);
                 m_searchMenuView.RemoveSearchPeformedCallback(m_onSearchCallback);
             }
             
@@ -53,17 +61,20 @@ namespace ExampleApp
             
             void SearchMenuController::OnSearchQueryPerformedMessage(const Search::SearchQueryPerformedMessage& message)
             {
+                std::string headerString = CategorySearch::View::GetPresentationStringForQuery(m_categorySearchRepository, message.Query());
+                
+                m_searchMenuView.SetEditText(headerString, message.Query().IsCategory());
                 m_searchMenuView.DisableEditText();
             }
             
             void SearchMenuController::OnSearchQueryResponseReceivedMessage(const Search::SearchQueryResponseReceivedMessage& message)
             {
+                m_searchMenuView.CollapseAll();
                 m_searchMenuView.EnableEditText();
             }
             
             void SearchMenuController::OnSearch(const std::string& searchQuery)
             {
-                m_viewModel.Close();
                 m_messageBus.Publish(SearchMenuPerformedSearchMessage(searchQuery, false));
             }
             
@@ -96,6 +107,11 @@ namespace ExampleApp
                     return;
                 }
                 MenuController::OnViewClicked();
+            }
+            
+            void SearchMenuController::OnSearchCleared()
+            {
+                m_messageBus.Publish(SearchResultMenu::SearchResultViewClearedMessage());
             }
         }
     }

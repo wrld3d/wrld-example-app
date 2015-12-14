@@ -25,9 +25,6 @@ namespace ExampleApp
                 
                 m_pSearchResultRepositoryObserver = Eegeo_NEW(View::SearchResultRepositoryObserver)(searchResultRepository,
                                                                                                     messageBus);
-                
-                m_pSearchQueryRemovedMessageHandler = Eegeo_NEW(View::SearchResultMenuSearchQueryRemovedMessageHandler)(searchMenuViewModel,
-                                                                                                                        messageBus);
 
                 m_pSearchResultMenuItemSelectedMessageHandler = Eegeo_NEW(SearchResultMenuItemSelectedMessageHandler)(cameraTransitionController,
                                                                                                                       messageBus);

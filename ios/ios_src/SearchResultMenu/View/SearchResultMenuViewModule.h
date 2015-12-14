@@ -5,7 +5,6 @@
 #include "ISearchResultMenuViewModule.h"
 
 #include "BidirectionalBus.h"
-#include "CategorySearch.h"
 #include "Menu.h"
 #include "SearchResultMenu.h"
 #include "Types.h"
@@ -22,8 +21,7 @@ namespace ExampleApp
                 SearchResultMenuController* m_pController;
 
             public:
-                SearchResultMenuViewModule(CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
-                                           Menu::View::IMenuViewModel& searchMenuViewModel,
+                SearchResultMenuViewModule(Menu::View::IMenuViewModel& searchMenuViewModel,
                                            Menu::View::IMenuOptionsModel& menuOptionsModel,
                                            ISearchResultMenuOrder& searchResultMenuOrder,
                                            ExampleAppMessaging::TMessageBus& messageBus);

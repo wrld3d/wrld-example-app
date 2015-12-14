@@ -32,17 +32,9 @@ namespace ExampleApp
                     }
                 };
             }
-            
-            void SearchResultMenuController::OnSearchQueryPerformedMessage(const Search::SearchQueryPerformedMessage& message)
-            {
-                m_searchMenuViewModel.Close();
-            }
 
             void SearchResultMenuController::OnSearchQueryResponseReceivedMessage(const Search::SearchQueryResponseReceivedMessage& message)
             {
-                // TODO: set search box text using headerString
-                std::string headerString = CategorySearch::View::GetPresentationStringForQuery(m_categorySearchRepository, message.GetQuery());
-                
                 for(int i = 0; i < m_lastAddedResults.size(); ++i)
                 {
                     const Search::SdkModel::SearchResultModel& model(m_lastAddedResults[i]);
@@ -69,28 +61,35 @@ namespace ExampleApp
                                                                            m_messageBus));
                 }
             }
+            
+            void SearchResultMenuController::OnSearchQueryRemovedMessage(const Search::SearchQueryRemovedMessage& message)
+            {
+                for(int i = 0; i < m_lastAddedResults.size(); ++i)
+                {
+                    const Search::SdkModel::SearchResultModel& model(m_lastAddedResults[i]);
+                    m_menuOptions.RemoveItem(model.GetIdentifier());
+                }
+            }
 
             SearchResultMenuController::SearchResultMenuController(Menu::View::IMenuViewModel& searchMenuViewModel,
                                                                    Menu::View::IMenuOptionsModel& menuOptions,
                                                                    ISearchResultMenuOrder& order,
-                                                                   CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
                                                                    ExampleAppMessaging::TMessageBus& messageBus)
             : m_searchMenuViewModel(searchMenuViewModel)
             , m_menuOptions(menuOptions)
             , m_order(order)
-            , m_categorySearchRepository(categorySearchRepository)
             , m_messageBus(messageBus)
-            , m_searchQueryIssuedHandler(this, &SearchResultMenuController::OnSearchQueryPerformedMessage)
             , m_searchResultReceivedHandler(this, &SearchResultMenuController::OnSearchQueryResponseReceivedMessage)
+            , m_searchQueryRemovedHandler(this, &SearchResultMenuController::OnSearchQueryRemovedMessage)
             {
-                m_messageBus.SubscribeUi(m_searchQueryIssuedHandler);
                 m_messageBus.SubscribeUi(m_searchResultReceivedHandler);
+                m_messageBus.SubscribeUi(m_searchQueryRemovedHandler);
             }
 
             SearchResultMenuController::~SearchResultMenuController()
             {
+                m_messageBus.UnsubscribeUi(m_searchQueryRemovedHandler);
                 m_messageBus.UnsubscribeUi(m_searchResultReceivedHandler);
-                m_messageBus.UnsubscribeUi(m_searchQueryIssuedHandler);
             }
         }
     }

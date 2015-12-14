@@ -7,6 +7,7 @@
 #include "CallbackCollection.h"
 #include "ISearchMenuView.h"
 #include "SearchMenuViewIncludes.h"
+#include "SearchResultViewClearedMessage.h"
 #include "Types.h"
 
 namespace ExampleApp
@@ -19,7 +20,8 @@ namespace ExampleApp
             {
             private:
                 SearchMenuView* m_pView;
-                Eegeo::Helpers::CallbackCollection1<const std::string&> m_callbacks;
+                Eegeo::Helpers::CallbackCollection1<const std::string&> m_searchPerformedCallbacks;
+                Eegeo::Helpers::CallbackCollection0 m_searchClearedCallbacks;
 
             public:
                 SearchMenuViewInterop(SearchMenuView* pView)
@@ -41,20 +43,45 @@ namespace ExampleApp
                 {
                     [m_pView enableEdit];
                 }
+                
+                void SetEditText(const std::string& searchText, bool isCategory)
+                {
+                    [m_pView setEditText :[NSString stringWithUTF8String:searchText.c_str()] :isCategory];
+                }
+                
+                void CollapseAll()
+                {
+                    [m_pView collapseAll];
+                }
 
                 void InsertSearchPeformedCallback(Eegeo::Helpers::ICallback1<const std::string&>& callback)
                 {
-                    m_callbacks.AddCallback(callback);
+                    m_searchPerformedCallbacks.AddCallback(callback);
                 }
 
                 void RemoveSearchPeformedCallback(Eegeo::Helpers::ICallback1<const std::string&>& callback)
                 {
-                    m_callbacks.RemoveCallback(callback);
+                    m_searchPerformedCallbacks.RemoveCallback(callback);
                 }
 
                 void SearchPerformed(const std::string& searchQuery)
                 {
-                    m_callbacks.ExecuteCallbacks(searchQuery);
+                    m_searchPerformedCallbacks.ExecuteCallbacks(searchQuery);
+                }
+                
+                void InsertSearchClearedCallback(Eegeo::Helpers::ICallback0& callback)
+                {
+                    m_searchClearedCallbacks.AddCallback(callback);
+                }
+                
+                void RemoveSearchClearedCallback(Eegeo::Helpers::ICallback0& callback)
+                {
+                    m_searchClearedCallbacks.RemoveCallback(callback);
+                }
+                
+                void OnSearchCleared()
+                {
+                    m_searchClearedCallbacks.ExecuteCallbacks();
                 }
             };
         }

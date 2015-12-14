@@ -327,6 +327,32 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
     return m_currentSections.at(section)->Size();
 }
 
+- (void)collapseAll
+{
+    for(int i = 0; i < m_currentSections.size(); ++i)
+    {
+        if(m_currentSections[i]->IsExpandable() && m_currentSections[i]->IsExpanded())
+        {
+            NSInteger rows;
+            
+            NSMutableArray *tmpArray = [NSMutableArray array];
+            
+            rows = m_currentSections[i]->Size();
+            m_currentSections[i]->Contract();
+            
+            [self showOpenableArrowClosed:[m_pView.pTableview cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:i]]];
+            
+            for(int j = 1; j < rows; ++j)
+            {
+                NSIndexPath *tmpIndexPath = [NSIndexPath indexPathForRow:j inSection:i];
+                [tmpArray addObject:tmpIndexPath];
+            }
+            
+            [m_pView.pTableview deleteRowsAtIndexPaths:tmpArray withRowAnimation:UITableViewRowAnimationNone];
+        }
+    }
+}
+
 - (CGAffineTransform)computeOpenableArrowTransform:(float)degrees
 {
     return CGAffineTransformRotate(CGAffineTransformIdentity, Eegeo::Math::Deg2Rad(degrees));

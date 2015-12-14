@@ -112,6 +112,7 @@
 
     m_returnPressed = false;
     m_keyboardActive = false;
+    m_currentSearchIsCategory = false;
 
     [[NSNotificationCenter defaultCenter]
      addObserver:self
@@ -243,6 +244,19 @@
     }
 }
 
+- (void) setEditText :(NSString*)searchText
+                     :(bool)isCategory
+{
+    [self.pSearchEditBox setText:searchText];
+    
+    m_currentSearchIsCategory = isCategory;
+}
+
+- (void) collapseAll
+{
+    [m_pDataProvider collapseAll];
+}
+
 - (void)keyboardDidChangeFrame:(NSNotification*)aNotification
 {
     if (m_keyboardActive)
@@ -255,6 +269,12 @@
 {
     m_keyboardActive = true;
     m_returnPressed = false;
+    
+    if(m_currentSearchIsCategory)
+    {
+        [textField setText:@""];
+        m_currentSearchIsCategory = false;
+    }
 
     textField.layer.borderColor = ExampleApp::Helpers::ColorPalette::MainHudColor.CGColor;
 }
@@ -279,6 +299,13 @@
 
     std::string searchString = [self.pSearchEditBox.text UTF8String];
     m_pSearchMenuInterop->SearchPerformed(searchString);
+}
+
+- (BOOL)textFieldShouldClear:(UITextField *)textField
+{
+    m_pSearchMenuInterop->OnSearchCleared();
+    
+    return YES;
 }
 
 - (void) animateToClosedOnScreen

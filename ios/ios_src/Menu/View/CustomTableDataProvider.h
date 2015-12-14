@@ -20,6 +20,8 @@
 
 - (size_t)getTotalNumberOfCellsInTableView;
 
+- (void)collapseAll;
+
 - (CGAffineTransform)computeOpenableArrowTransform:(float)degrees;
 
 - (void)showOpenableArrowClosed:(UITableViewCell *)cell;
