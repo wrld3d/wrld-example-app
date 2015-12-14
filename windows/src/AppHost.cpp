@@ -187,7 +187,6 @@ AppHost::AppHost(
     Eegeo::Config::PlatformConfig platformConfig = Eegeo::Windows::WindowsPlatformConfigBuilder(deviceModel).Build();
 	platformConfig.OptionsConfig.StartMapModuleAutomatically = true;
 	platformConfig.OptionsConfig.EnableInteriors = true;
-    platformConfig.OptionsConfig.InteriorsControlledByApp = true;
 	platformConfig.OptionsConfig.InteriorsAffectedByFlattening = false;
     platformConfig.MapLayersConfig.Interiors.LabelGlyphColor = Eegeo::Helpers::MakeColorRGB(18, 86, 176);
     platformConfig.MapLayersConfig.Interiors.LabelOutlineColor = Eegeo::Rendering::Colors::WHITE;

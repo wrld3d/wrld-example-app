@@ -62,7 +62,7 @@ namespace ExampleApp
                 
                 m_pModel = Eegeo_NEW(GpsMarkerModel)(locationService, terrainModelModule.GetTerrainHeightProvider(), interiorsAffectedByFlattening);
                 m_pView = Eegeo_NEW(GpsMarkerView)(*m_pGpsIconRenderable);
-                m_pController = Eegeo_NEW(GpsMarkerController)(*m_pModel, *m_pView, mapModule.GetEnvironmentFlatteningService(), mapModule.GetInteriorsPresentationModule().GetAppLevelController(), messageBus);
+                m_pController = Eegeo_NEW(GpsMarkerController)(*m_pModel, *m_pView, mapModule.GetEnvironmentFlatteningService(), mapModule.GetInteriorsPresentationModule().GetController(), messageBus);
                 
                 m_renderableFilters.AddRenderableFilter(*m_pView);
 

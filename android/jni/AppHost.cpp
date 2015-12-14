@@ -181,7 +181,6 @@ AppHost::AppHost(
 
     std::string deviceModel = std::string(nativeState.deviceModel, strlen(nativeState.deviceModel));
     Eegeo::Config::PlatformConfig platformConfig = Eegeo::Android::AndroidPlatformConfigBuilder(deviceModel).Build();
-    platformConfig.OptionsConfig.InteriorsControlledByApp = true;
     platformConfig.OptionsConfig.EnableInteriors = true;
     platformConfig.OptionsConfig.InteriorsAffectedByFlattening = false;
 

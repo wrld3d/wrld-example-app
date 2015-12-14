@@ -5,7 +5,6 @@
 #include "AppInterface.h"
 #include "Camera.h"
 #include "GpsGlobeCameraController.h"
-#include "InteriorsCameraController.h"
 #include "VectorMath.h"
 
 namespace ExampleApp
