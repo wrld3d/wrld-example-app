@@ -15,13 +15,11 @@ namespace ExampleApp
             WorldPinOnMapController::WorldPinOnMapController(IWorldPinOnMapView& view,
                                                              IWorldPinInFocusViewModel& viewModel,
                                                              ScreenControl::View::IScreenControlViewModel& screenControlViewModel,
-                                                             Modality::View::IModalityModel& modalityModel,
-                                                             const AppModes::SdkModel::IAppModeModel& appModeModel)
+                                                             Modality::View::IModalityModel& modalityModel)
             : m_view(view)
             , m_viewModel(viewModel)
             , m_screenControlViewModel(screenControlViewModel)
             , m_modalityModel(modalityModel)
-            , m_appModeModel(appModeModel)
             , m_viewSelectedCallback(this, &WorldPinOnMapController::OnSelected)
             , m_viewModelOpenedCallback(this, &WorldPinOnMapController::OnOpened)
             , m_viewModelClosedCallback(this, &WorldPinOnMapController::OnClosed)

@@ -11,11 +11,9 @@ namespace ExampleApp
     {
         namespace View
         {
-            WorldPinInFocusViewModel::WorldPinInFocusViewModel(Eegeo::Helpers::TIdentity identity,
-                    SdkModel::IWorldPinsService& worldPinsService)
+            WorldPinInFocusViewModel::WorldPinInFocusViewModel(Eegeo::Helpers::TIdentity identity)
                 : m_isOpen(false)
                 , m_screenControl(identity)
-                , m_worldPinsService(worldPinsService)
             {
 
             }
@@ -44,7 +42,7 @@ namespace ExampleApp
 
             void WorldPinInFocusViewModel::SelectFocussedResult()
             {
-                m_worldPinsService.SelectPin(m_worldPinInFocusModel.GetPinId());
+                m_selectedFocussedResultCallbacks.ExecuteCallbacks();
             }
 
             void WorldPinInFocusViewModel::Open(const SdkModel::WorldPinsInFocusModel& worldPinsInFocusModel, const Eegeo::v2& screenPos)
@@ -104,6 +102,16 @@ namespace ExampleApp
             void WorldPinInFocusViewModel::RemoveUpdateCallback(Eegeo::Helpers::ICallback0& updateCallback)
             {
                 m_updateCallbacks.RemoveCallback(updateCallback);
+            }
+            
+            void WorldPinInFocusViewModel::InsertSelectedFocussedResultCallback(Eegeo::Helpers::ICallback0& selectFocussedResultCallback)
+            {
+                m_selectedFocussedResultCallbacks.AddCallback(selectFocussedResultCallback);
+            }
+            
+            void WorldPinInFocusViewModel::RemoveSelectedFocussedResultCallback(Eegeo::Helpers::ICallback0& selectFocussedResultCallback)
+            {
+                m_selectedFocussedResultCallbacks.RemoveCallback(selectFocussedResultCallback);
             }
         }
     }

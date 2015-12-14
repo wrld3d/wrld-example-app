@@ -48,8 +48,7 @@ namespace ExampleApp
                                                                                               environmentFlatteningService,
                                                                                               interiorsAffectedByFlattening);
 
-                m_pWorldPinsInFocusViewModel = Eegeo_NEW(View::WorldPinInFocusViewModel)(identityProvider.GetNextIdentity(),
-                                               *m_pWorldPinsService);
+                m_pWorldPinsInFocusViewModel = Eegeo_NEW(View::WorldPinInFocusViewModel)(identityProvider.GetNextIdentity());
 
                 m_pWorldPinsInFocusController = Eegeo_NEW(WorldPinsInFocusController)(*m_pWorldPinsRepository,
                                                 *m_pWorldPinsService,
