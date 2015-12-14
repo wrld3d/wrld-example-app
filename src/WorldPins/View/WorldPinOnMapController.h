@@ -22,8 +22,7 @@ namespace ExampleApp
                 WorldPinOnMapController(IWorldPinOnMapView& view,
                                         IWorldPinInFocusViewModel& viewModel,
                                         ScreenControl::View::IScreenControlViewModel& screenControlViewModel,
-                                        Modality::View::IModalityModel& modalityModel,
-                                        const AppModes::SdkModel::IAppModeModel& appModeModel);
+                                        Modality::View::IModalityModel& modalityModel);
                 
                 ~WorldPinOnMapController();
 
@@ -40,7 +39,6 @@ namespace ExampleApp
                 IWorldPinInFocusViewModel& m_viewModel;
                 ScreenControl::View::IScreenControlViewModel& m_screenControlViewModel;
                 Modality::View::IModalityModel& m_modalityModel;
-                const AppModes::SdkModel::IAppModeModel& m_appModeModel;
 
                 Eegeo::Helpers::TCallback0<WorldPinOnMapController> m_viewSelectedCallback;
                 Eegeo::Helpers::TCallback0<WorldPinOnMapController> m_viewModelOpenedCallback;

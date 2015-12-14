@@ -458,7 +458,6 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
         app.WorldPinsModule().GetWorldPinInFocusViewModel(),
         app.WorldPinsModule().GetScreenControlViewModel(),
         app.ModalityModule().GetModalityModel(),
-        app.GetAppModeModel(),
         app.PinDiameter()
         );
 
