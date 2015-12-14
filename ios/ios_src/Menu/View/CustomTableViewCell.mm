@@ -4,7 +4,7 @@
 #include "UIColors.h"
 #include "ImageHelpers.h"
 
-const float SubViewInset = 22.f;
+const float SubViewInset = 0.f;
 
 @implementation CustomTableViewCell
 {
@@ -63,7 +63,7 @@ const float SubViewInset = 22.f;
 
     if(!m_isHeader)
     {
-        r = CGRectMake(m_rightAlignFrame ? SubViewInset : 0.f,
+        r = CGRectMake(SubViewInset,
                        r.origin.y,
                        m_initialWidth - SubViewInset,
                        r.size.height);
@@ -82,25 +82,22 @@ const float SubViewInset = 22.f;
 
     CGRect imageFrame = self.imageView.frame;
     const float initialImageX = static_cast<float>(imageFrame.origin.x);
-    imageFrame.origin.x = m_rightAlignImage ? (r.size.width - imageFrame.size.width) : 0.f;
+    imageFrame.origin.x =  0.f;
     self.imageView.frame = imageFrame;
 
     CGRect accessoryFrame = self.accessoryView.frame;
-    accessoryFrame.origin.x = m_rightAlignImage ? (r.size.width - accessoryFrame.size.width) : 0.f;
+    accessoryFrame.origin.x = 0.f;
     self.accessoryView.frame = accessoryFrame;
+    
+    const float delta = static_cast<float>(imageFrame.origin.x - initialImageX);
 
-    if(!m_rightAlignImage)
-    {
-        const float delta = static_cast<float>(imageFrame.origin.x - initialImageX);
-
-        CGRect labelFrame = self.textLabel.frame;
-        labelFrame.origin.x += delta;
-        self.textLabel.frame = labelFrame;
-
-        CGRect detailFrame = self.detailTextLabel.frame;
-        detailFrame.origin.x += delta;
-        self.detailTextLabel.frame = detailFrame;
-    }
+    CGRect labelFrame = self.textLabel.frame;
+    labelFrame.origin.x += delta;
+    self.textLabel.frame = labelFrame;
+    
+    CGRect detailFrame = self.detailTextLabel.frame;
+    detailFrame.origin.x = self.textLabel.frame.origin.x;
+    self.detailTextLabel.frame = detailFrame;
     
     [self insertSeparators :r :imageFrame];
     [self lazySetBackgroundPresentation];
@@ -118,14 +115,10 @@ const float SubViewInset = 22.f;
     [self addSubview:self->pCustomSeparatorContainer];
 }
 
-- (void)setAlignInfo:(bool)rightAlignFrame
-                    :(bool)rightAlignImage
-                    :(bool)isHeader
-                    :(NSString*)headerBackgroundImage
-                    :(NSString*)subMenuBackgroundImage
+- (void)setInfo :(bool)isHeader
+                :(NSString*)headerBackgroundImage
+                :(NSString*)subMenuBackgroundImage
 {
-    m_rightAlignFrame = rightAlignFrame;
-    m_rightAlignImage = rightAlignImage;
     m_isHeader = isHeader;
     m_headerBackgroundImage = headerBackgroundImage;
     m_subMenuBackgroundImage = subMenuBackgroundImage;
@@ -218,7 +211,7 @@ const float SubViewInset = 22.f;
             CGFloat separatorY      = cellFrame.size.height;
             CGFloat separatorHeight = (1.f / [UIScreen mainScreen].scale);
             CGFloat separatorWidth  = cellFrame.size.width - imageFrame.size.width;
-            CGFloat separatorInset  = m_rightAlignImage ? 0.f : imageFrame.size.width;
+            CGFloat separatorInset  = imageFrame.size.width;
             
             UIImageView* separator = [[[UIImageView alloc] initWithFrame:CGRectMake(separatorInset,
                                                                                     separatorY,
@@ -235,7 +228,7 @@ const float SubViewInset = 22.f;
         CGFloat bottomSeparatorY    = cellFrame.size.height;
         CGFloat separatorHeight     = (1.f / [UIScreen mainScreen].scale);
         CGFloat separatorWidth      = cellFrame.size.width - SubViewInset;
-        CGFloat separatorInset      = m_rightAlignImage ? 0.f : cellFrame.origin.x + SubViewInset;
+        CGFloat separatorInset      = cellFrame.origin.x + SubViewInset;
         
         if(!isTop)
         {

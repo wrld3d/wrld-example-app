@@ -53,9 +53,10 @@ namespace ExampleApp
             
             void SearchMenuModule::AddMenuSection(const std::string& name,
                                                   Menu::View::IMenuModel& menuModel,
-                                                  bool isExpandable)
+                                                  bool isExpandable,
+                                                  bool isSearchResult)
             {
-                Menu::View::MenuSectionViewModel* pMenuSection = Eegeo_NEW(Menu::View::MenuSectionViewModel)(name, "", menuModel, isExpandable);
+                Menu::View::MenuSectionViewModel* pMenuSection = Eegeo_NEW(Menu::View::MenuSectionViewModel)(name, "", menuModel, isExpandable, isSearchResult);
                 m_pMenuViewModel->AddSection(*pMenuSection);
                 m_sections.push_back(pMenuSection);
             }

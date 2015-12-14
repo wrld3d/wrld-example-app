@@ -40,7 +40,8 @@ namespace ExampleApp
                 
                 void AddMenuSection(const std::string& name,
                                     Menu::View::IMenuModel& menuModel,
-                                    bool isExpandable);
+                                    bool isExpandable,
+                                    bool isSearchResult);
                 
                 Menu::View::IMenuModel& GetSearchMenuModel() const;
                 

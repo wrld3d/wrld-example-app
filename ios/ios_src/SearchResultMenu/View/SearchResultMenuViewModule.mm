@@ -5,7 +5,6 @@
 #include "IMenuOptionsModel.h"
 #include "IMenuViewModel.h"
 #include "SearchResultMenuController.h"
-#include "SearchResultMenuDataProvider.h"
 
 namespace ExampleApp
 {
@@ -19,8 +18,6 @@ namespace ExampleApp
                                                                    ISearchResultMenuOrder& searchResultMenuOrder,
                                                                    ExampleAppMessaging::TMessageBus& messageBus)
             {
-                m_pDataProvider = [SearchResultMenuDataProvider alloc];
-                
                 m_pController =  Eegeo_NEW(SearchResultMenuController)(searchMenuViewModel,
                                                                        menuOptionsModel,
                                                                        searchResultMenuOrder,
@@ -31,8 +28,6 @@ namespace ExampleApp
             SearchResultMenuViewModule::~SearchResultMenuViewModule()
             {
                 Eegeo_DELETE m_pController;
-                
-                [m_pDataProvider release];
             }
         }
     }

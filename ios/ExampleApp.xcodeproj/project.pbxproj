@@ -1282,8 +1282,6 @@
 		7E3B8B141A385F110023C94E /* MyPinDetailsViewModule.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B8A891A385F100023C94E /* MyPinDetailsViewModule.mm */; };
 		7E3B8B151A385F110023C94E /* iOSPersistentSettingsModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B8A8C1A385F100023C94E /* iOSPersistentSettingsModel.mm */; };
 		7E3B8B161A385F110023C94E /* iOSPersistentSettingsModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B8A8C1A385F100023C94E /* iOSPersistentSettingsModel.mm */; };
-		7E3B8B1B1A385F110023C94E /* SearchResultMenuDataProvider.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B8A991A385F100023C94E /* SearchResultMenuDataProvider.mm */; };
-		7E3B8B1C1A385F110023C94E /* SearchResultMenuDataProvider.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B8A991A385F100023C94E /* SearchResultMenuDataProvider.mm */; };
 		7E3B8B1F1A385F110023C94E /* SearchResultMenuViewModule.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B8A9F1A385F110023C94E /* SearchResultMenuViewModule.mm */; };
 		7E3B8B201A385F110023C94E /* SearchResultMenuViewModule.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B8A9F1A385F110023C94E /* SearchResultMenuViewModule.mm */; };
 		7E3B8B251A385F110023C94E /* SearchResultPoiViewInterop.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B8AAA1A385F110023C94E /* SearchResultPoiViewInterop.mm */; };
@@ -2829,8 +2827,6 @@
 		7E3B8A8B1A385F100023C94E /* iOSPersistentSettingsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iOSPersistentSettingsModel.h; sourceTree = "<group>"; };
 		7E3B8A8C1A385F100023C94E /* iOSPersistentSettingsModel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = iOSPersistentSettingsModel.mm; sourceTree = "<group>"; };
 		7E3B8A971A385F100023C94E /* ISearchResultMenuViewModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISearchResultMenuViewModule.h; sourceTree = "<group>"; };
-		7E3B8A981A385F100023C94E /* SearchResultMenuDataProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultMenuDataProvider.h; sourceTree = "<group>"; };
-		7E3B8A991A385F100023C94E /* SearchResultMenuDataProvider.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SearchResultMenuDataProvider.mm; sourceTree = "<group>"; };
 		7E3B8A9C1A385F100023C94E /* SearchResultMenuViewIncludes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultMenuViewIncludes.h; sourceTree = "<group>"; };
 		7E3B8A9E1A385F100023C94E /* SearchResultMenuViewModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultMenuViewModule.h; sourceTree = "<group>"; };
 		7E3B8A9F1A385F110023C94E /* SearchResultMenuViewModule.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SearchResultMenuViewModule.mm; sourceTree = "<group>"; };
@@ -5491,8 +5487,6 @@
 			isa = PBXGroup;
 			children = (
 				7E3B8A971A385F100023C94E /* ISearchResultMenuViewModule.h */,
-				7E3B8A981A385F100023C94E /* SearchResultMenuDataProvider.h */,
-				7E3B8A991A385F100023C94E /* SearchResultMenuDataProvider.mm */,
 				7E3B8A9C1A385F100023C94E /* SearchResultMenuViewIncludes.h */,
 				7E3B8A9E1A385F100023C94E /* SearchResultMenuViewModule.h */,
 				7E3B8A9F1A385F110023C94E /* SearchResultMenuViewModule.mm */,
@@ -7435,7 +7429,6 @@
 				18FB64731A9240FC005A9411 /* OATokenManager.m in Sources */,
 				18D1DAE51C19B53A00D319BB /* SearchMenuModule.cpp in Sources */,
 				7E3B89C11A385A290023C94E /* SearchResultOnMapModule.cpp in Sources */,
-				7E3B8B1C1A385F110023C94E /* SearchResultMenuDataProvider.mm in Sources */,
 				18CFE2B91BECC76D003368D1 /* AppDelegate.mm in Sources */,
 				7E3B88D11A385A290023C94E /* CompassViewModel.cpp in Sources */,
 				27CADB641BCFEA2A00805A27 /* SizeHelpers.cpp in Sources */,
@@ -7919,7 +7912,6 @@
 				18FB64721A9240FC005A9411 /* OATokenManager.m in Sources */,
 				18D1DAE41C19B53A00D319BB /* SearchMenuModule.cpp in Sources */,
 				7E3B89C01A385A290023C94E /* SearchResultOnMapModule.cpp in Sources */,
-				7E3B8B1B1A385F110023C94E /* SearchResultMenuDataProvider.mm in Sources */,
 				18CFE2B81BECC76D003368D1 /* AppDelegate.mm in Sources */,
 				7E3B88D01A385A290023C94E /* CompassViewModel.cpp in Sources */,
 				27CADB631BCFEA2A00805A27 /* SizeHelpers.cpp in Sources */,

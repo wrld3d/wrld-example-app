@@ -24,7 +24,6 @@ namespace ExampleApp
                            :screenProperties.GetScreenWidth()
                            :screenProperties.GetScreenHeight()
                            :screenProperties.GetPixelScale()
-                           :false
                            :searchMenuViewModel.SectionsCount()
                            :searchMenuViewModel.NumberOfCells()
                            :m_pDataProvider];

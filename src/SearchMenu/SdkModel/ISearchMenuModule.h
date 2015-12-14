@@ -20,7 +20,8 @@ namespace ExampleApp
                 
                 virtual void AddMenuSection(const std::string& name,
                                             Menu::View::IMenuModel& menuModel,
-                                            bool isExpandable) = 0;
+                                            bool isExpandable,
+                                            bool isSearchResult) = 0;
                 
                 virtual Menu::View::IMenuModel& GetSearchMenuModel() const = 0;
                 

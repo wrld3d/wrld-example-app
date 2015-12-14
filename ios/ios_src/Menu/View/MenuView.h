@@ -15,9 +15,7 @@
     ExampleApp::Menu::View::MenuViewInterop* m_pInterop;
     CustomTableDataProvider* m_pDataProvider;
     UIColor* m_pColour;
-
-    bool m_rightMenu;
-
+    
     float m_screenWidth;
     float m_screenHeight;
     float m_pixelScale;
@@ -69,14 +67,11 @@
 - (id) initWithParams:(float)width
     :(float)height
     :(float)pixelScale
-    :(bool)rightMenu
     :(size_t)numberOfSections
     :(size_t)numberOfCells
     :(CustomTableDataProvider*)dataProvider;
 
 - (ExampleApp::Menu::View::MenuViewInterop*) getInterop;
-
-- (BOOL) isRightMenu;
 
 - (BOOL) consumesTouch:(UITouch *)touch;
 

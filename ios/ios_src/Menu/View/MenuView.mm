@@ -26,7 +26,6 @@
 - (id) initWithParams:(float)width
     :(float)height
     :(float)pixelScale
-    :(bool)rightMenu
     :(size_t)numberOfSections
     :(size_t)numberOfCells
     :(CustomTableDataProvider*)dataProvider
@@ -43,7 +42,6 @@
         m_animating = false;
         self.hidden = true;
         m_isFirstAnimationCeremony = true;
-        m_rightMenu = rightMenu;
 
         m_pDataProvider = dataProvider;
         [m_pDataProvider initWithParams:self];
@@ -70,11 +68,6 @@
     }
 
     return self;
-}
-
-- (BOOL)isRightMenu
-{
-    return m_rightMenu;
 }
 
 - (void)dealloc

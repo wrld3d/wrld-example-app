@@ -8,7 +8,6 @@
 #include "CategorySearch.h"
 #include "Menu.h"
 #include "SearchResultMenu.h"
-#include "SearchResultMenuViewIncludes.h"
 #include "Types.h"
 
 namespace ExampleApp
@@ -21,7 +20,6 @@ namespace ExampleApp
             {
             private:
                 SearchResultMenuController* m_pController;
-                SearchResultMenuDataProvider* m_pDataProvider;
 
             public:
                 SearchResultMenuViewModule(CategorySearch::View::ICategorySearchRepository& categorySearchRepository,

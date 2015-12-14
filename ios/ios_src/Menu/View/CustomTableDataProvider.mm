@@ -10,7 +10,11 @@
 #include "MenuViewInterop.h"
 #include "MenuSectionViewModel.h"
 #include "ImageHelpers.h"
+#include "UIHelpers.h"
 #include <sstream>
+
+static NSString *CellIdentifier = @"cell";
+static NSString *SearchCellIdentifier = @"searchCell";
 
 @implementation CustomTableDataProvider
 
@@ -58,21 +62,29 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
     const ExampleApp::Menu::View::IMenuSectionViewModel& section = *m_currentSections.at(indexPath.section);
     const NSInteger index = section.IsExpandable() ? indexPath.row - 1 : indexPath.row;
     const bool isExpandableHeader = section.IsExpandable() && indexPath.row == 0;
-
-    static NSString *CellIdentifier = @"cell";
-
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    
+    NSString *CurrentCellIdentifier = section.IsSearchResult() ? SearchCellIdentifier : CellIdentifier;
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CurrentCellIdentifier];
     if(cell == nil)
     {
-        cell = [[[CustomTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        if(!section.IsSearchResult())
+        {
+            cell = [[[CustomTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CurrentCellIdentifier] autorelease];
+        }
+        else
+        {
+            cell = [[[CustomTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CurrentCellIdentifier] autorelease];
+        }
+        
         [(CustomTableViewCell*)cell initCell: m_pView.pTableview.bounds.size.width :(CustomTableView*)tableView];
         cell.selectionStyle = UITableViewCellSelectionStyleGray;
 
         UIImageView* pOpenableMenuArrowView = [[[UIImageView alloc] initWithImage:self.pOpenableMenuArrow] autorelease];
         pOpenableMenuArrowView.tag = SubItemCellOpenableMenuArrowTag;
 
-        const float tableWidth = m_pView.pTableview.bounds.size.width;
-        const float openableArrowX = [m_pView isRightMenu] ? (tableWidth - 20.f) : 0.f;
+        const float tableWidth = static_cast<float>(m_pView.pTableview.bounds.size.width);
+        const float openableArrowX = (tableWidth - 20.f);
         pOpenableMenuArrowView.frame = CGRectMake(openableArrowX,
                                                   (SECTION_HEADER_CELL_HEIGHT*0.5f) - 8.f,
                                                   pOpenableMenuArrowView.frame.size.width,
@@ -96,13 +108,13 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
     if(isExpandableHeader)
     {
         std::string json = section.SerializeJson();
-        [self populateCellWithJson :json :cell :isHeader];
+        [self populateCellWithJson :json :cell :isHeader :section.IsSearchResult()];
     }
     else
     {
-        ExampleApp::Menu::View::MenuItemModel item = section.GetItemAtIndex(index);
+        ExampleApp::Menu::View::MenuItemModel item = section.GetItemAtIndex(static_cast<int>(index));
         std::string json = item.SerializeJson();
-        [self populateCellWithJson :json :cell :isHeader];
+        [self populateCellWithJson :json :cell :isHeader :section.IsSearchResult()];
     }
 
     return cell;
@@ -158,7 +170,7 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
     else
     {
         ExampleApp::Menu::View::MenuViewInterop* interop = [m_pView getInterop];
-        interop->HandleItemSelected(indexPath.section, indexPath.row);
+        interop->HandleItemSelected(static_cast<int>(indexPath.section), static_cast<int>(indexPath.row));
     }
 }
 
@@ -176,15 +188,15 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
 
     if(section.IsExpandable() && indexPath.row != 0)
     {
-        cell.textLabel.font = [UIFont systemFontOfSize:[self getTextLabelFontSize:false]];
+        cell.textLabel.font = [UIFont systemFontOfSize:[self getTextLabelFontSize:false :section.IsSearchResult()]];
         cell.indentationLevel = 0;
 
         openableArrow.hidden = true;
-        [self setCellAlignInfo:customCell:false];
+        [self setCellInfo:customCell:false:section.IsSearchResult()];
     }
     else
     {
-        cell.textLabel.font = [UIFont systemFontOfSize:[self getTextLabelFontSize:true]];
+        cell.textLabel.font = [UIFont systemFontOfSize:[self getTextLabelFontSize:true:section.IsSearchResult()]];
         cell.indentationLevel = 0;
         openableArrow.hidden = !section.IsExpandable();
 
@@ -197,7 +209,7 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
             [self showOpenableArrowClosed :cell];
         }
 
-        [self setCellAlignInfo:customCell:true];
+        [self setCellInfo:customCell:true:section.IsSearchResult()];
     }
 
     cell.textLabel.textColor = ExampleApp::Helpers::ColorPalette::UiTextHeaderColour;
@@ -208,17 +220,24 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
 {
     ExampleApp::Menu::View::IMenuSectionViewModel& section = *m_currentSections.at(indexPath.section);
 
-    if(section.IsExpandable() && indexPath.row != 0)
+    if(!section.IsSearchResult())
     {
-        return SUB_SECTION_CELL_HEIGHT;
+        if(section.IsExpandable() && indexPath.row != 0)
+        {
+            return SUB_SECTION_CELL_HEIGHT;
+        }
+        else
+        {
+            return SECTION_HEADER_CELL_HEIGHT;
+        }
     }
     else
     {
-        return SECTION_HEADER_CELL_HEIGHT;
+        return SEARCH_SECTION_CELL_HEIGHT;
     }
 }
 
-- (void) populateCellWithJson:(std::string)json :(UITableViewCell*)cell :(const bool)isHeader
+- (void) populateCellWithJson:(std::string)json :(UITableViewCell*)cell :(bool)isHeader :(bool)isSearchResult
 {
     rapidjson::Document document;
     if (!document.Parse<0>(json.c_str()).HasParseError())
@@ -237,18 +256,14 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
         {
             cell.imageView.image = nil;
         }
-
-        if ([m_pView isRightMenu])
-        {
-            cell.textLabel.text = [NSString stringWithUTF8String:name.c_str()];
-        }
-        else
+        
+        if(!isSearchResult)
         {
             for (UIView* subview in cell.contentView.subviews)
             {
                 [subview removeFromSuperview];
             }
-
+            
             const float subLabelWidth = 160.f;
             const float subLabelHeight = isHeader ? SECTION_HEADER_CELL_HEIGHT : SUB_SECTION_CELL_HEIGHT;
             UILabel *subLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, subLabelWidth, subLabelHeight)];
@@ -257,21 +272,48 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
             subLabel.text = [NSString stringWithUTF8String:name.c_str()];
             subLabel.textColor = ExampleApp::Helpers::ColorPalette::UiTextHeaderColour;
             subLabel.highlightedTextColor = ExampleApp::Helpers::ColorPalette::WhiteTone;
-            subLabel.font = [UIFont systemFontOfSize: [self getTextLabelFontSize: isHeader]];
+            subLabel.font = [UIFont systemFontOfSize: [self getTextLabelFontSize: isHeader:isSearchResult]];
             [cell.contentView addSubview: subLabel];
+        }
+        else
+        {
+            cell.textLabel.text = [NSString stringWithUTF8String:name.c_str()];
+            [cell.textLabel sizeToFit];
+            
+            std::string details = document["details"].GetString();
+            
+            cell.detailTextLabel.text = [NSString stringWithUTF8String:details.c_str()];
+            cell.detailTextLabel.textColor = ExampleApp::Helpers::ColorPalette::DarkGreyTone;
         }
     }
 }
 
-- (float)getTextLabelFontSize:(bool)headline
+- (float)getTextLabelFontSize :(bool)headline :(bool)isSearchResult
 {
-    return headline ? 25.0 : 20.f;
+    if(!isSearchResult)
+    {
+        return headline ? 25.0 : 20.f;
+    }
+    else
+    {
+        return 12.0f;
+    }
 }
 
-- (void) setCellAlignInfo:(CustomTableViewCell*)cell :(bool)isHeader
+- (void) setCellInfo:(CustomTableViewCell*)cell :(bool)isHeader :(bool)isSearchResult
 {
-    bool isRightMenu = [m_pView isRightMenu];
-    [cell setAlignInfo :isRightMenu :!isRightMenu :isHeader :@"menu_background1" :@"menu_background2"];
+    if(!isSearchResult)
+    {
+        [cell setInfo :isHeader
+                      :@"menu_background1"
+                      :@"menu_background1"];
+    }
+    else
+    {
+        [cell setInfo :isHeader
+                      :ExampleApp::Helpers::UIHelpers::UsePhoneLayout() ? @"search_result_background_small" : @"search_result_background"
+                      :@""];
+    }
 }
 
 
@@ -292,7 +334,7 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
 
 - (void)showOpenableArrowClosed:(UITableViewCell *)cell
 {
-    const float angle = [m_pView isRightMenu] ? 0.f : 180.f;
+    const float angle = 0.f;
     UIImageView *openableArrow = (UIImageView*)[cell viewWithTag:SubItemCellOpenableMenuArrowTag];
     openableArrow.transform = [self computeOpenableArrowTransform:angle];
 }

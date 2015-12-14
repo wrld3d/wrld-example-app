@@ -2,8 +2,6 @@
 
 #pragma once
 
-@class SearchResultMenuDataProvider;
-
 namespace ExampleApp
 {
     namespace SearchResultMenu

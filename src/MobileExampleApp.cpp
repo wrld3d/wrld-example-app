@@ -543,11 +543,11 @@ namespace ExampleApp
                                                                   m_pSearchResultMenuModule->GetMenuViewModel(),
                                                                   m_pSearchResultMenuModule->GetSearchResultMenuViewModel()*/);
         
-        m_pSearchMenuModule->AddMenuSection("Search Results", m_pSearchResultMenuModule->GetSearchResultMenuModel(), false);
-        m_pSearchMenuModule->AddMenuSection("Find", m_pCategorySearchModule->GetCategorySearchMenuModel(), true);
-        m_pSearchMenuModule->AddMenuSection("Weather" , m_pWeatherMenuModule->GetWeatherMenuModel(), true);
-        m_pSearchMenuModule->AddMenuSection("Locations", m_pPlaceJumpsModule->GetPlaceJumpsMenuModel(), true);
-        m_pSearchMenuModule->AddMenuSection("My Pins", m_pMyPinsModule->GetMyPinsMenuModel(), true);
+        m_pSearchMenuModule->AddMenuSection("Search Results", m_pSearchResultMenuModule->GetSearchResultMenuModel(), false, true);
+        m_pSearchMenuModule->AddMenuSection("Find", m_pCategorySearchModule->GetCategorySearchMenuModel(), true, false);
+        m_pSearchMenuModule->AddMenuSection("Weather" , m_pWeatherMenuModule->GetWeatherMenuModel(), true, false);
+        m_pSearchMenuModule->AddMenuSection("Locations", m_pPlaceJumpsModule->GetPlaceJumpsMenuModel(), true, false);
+        m_pSearchMenuModule->AddMenuSection("My Pins", m_pMyPinsModule->GetMyPinsMenuModel(), true, false);
 
 
     }
