@@ -88,7 +88,7 @@ namespace ExampleApp
             
             std::string SerializeToJson(const SearchResultModel& searchResult);
             
-            SearchResultModel DeserializeFromJson(const std::string& searchResultJson);
+            bool TryDeserializeFromJson(const std::string& searchResultJson, SearchResultModel& out_resultModel);
         }
     }
 }
