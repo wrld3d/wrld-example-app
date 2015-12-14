@@ -77,7 +77,13 @@
              "MaterialName": "InteriorMaterial_SwallowCGHWall",
              "MaterialType":"InteriorsDiffuseTexturedMaterial",
              "DiffuseTexture":"InteriorMaterial_SwallowCGHWall-texture0"
-         },
+        },
+                 
+        {
+            "MaterialName": "swallowtilefloor-interior",
+            "MaterialType":"InteriorsDiffuseTexturedMaterial",
+            "DiffuseTexture":"swallowfloortiles01-interior-texture0"
+        },
          
          {
              "MaterialName": "swallowdecalexit-interior",
