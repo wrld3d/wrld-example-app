@@ -3,7 +3,7 @@
 #pragma once
 
 #include "Types.h"
-#include "InteriorsController.h"
+#include "InteriorController.h"
 #include "IWorldPinsFloorHeightController.h"
 #include "WorldPins.h"
 #include "Pins.h"

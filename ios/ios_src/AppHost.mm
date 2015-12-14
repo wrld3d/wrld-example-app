@@ -127,7 +127,6 @@ AppHost::AppHost(
 
     Eegeo::Config::PlatformConfig platformConfig = Eegeo::iOS::iOSPlatformConfigBuilder(App::GetDevice(), App::IsDeviceMultiCore(), App::GetMajorSystemVersion()).Build();
     platformConfig.OptionsConfig.StartMapModuleAutomatically = false;
-    platformConfig.OptionsConfig.InteriorsControlledByApp = true;
     
     platformConfig.CoverageTreeConfig.ManifestUrl = "http://cdn1.eegeo.com/coverage-trees/vglobal/v820/manifest.bin.gz";
     platformConfig.CityThemesConfig.StreamedManifestUrl = "http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v421/manifest.txt.gz";

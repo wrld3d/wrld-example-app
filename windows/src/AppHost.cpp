@@ -166,7 +166,6 @@ AppHost::AppHost(
 
     std::string deviceModel = nativeState.deviceModel;
     Eegeo::Config::PlatformConfig platformConfig = Eegeo::Windows::WindowsPlatformConfigBuilder(deviceModel).Build();
-    platformConfig.OptionsConfig.InteriorsControlledByApp = true;
 
     m_pInputProcessor = Eegeo_NEW(Eegeo::Windows::Input::WindowsInputProcessor)(&m_inputHandler, m_nativeState.window, screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight());
 
