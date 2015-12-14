@@ -23,10 +23,12 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<WorldPinInFocusObserver, const WorldPinGainedFocusMessage&> m_gainedFocusHandler;
                 Eegeo::Helpers::TCallback1<WorldPinInFocusObserver, const WorldPinLostFocusMessage&> m_lostFocusHandler;
                 Eegeo::Helpers::TCallback1<WorldPinInFocusObserver, const WorldPinInFocusChangedLocationMessage&> m_focusScreenLocationUpdatedHandler;
+                Eegeo::Helpers::TCallback0<WorldPinInFocusObserver> m_selectedFocussedResultHandler;
 
                 void OnWorldPinGainedFocusMessage(const WorldPinGainedFocusMessage& message);
                 void OnWorldPinLostFocusMessage(const WorldPinLostFocusMessage& message);
                 void OnWorldPinInFocusChangedLocationMessage(const WorldPinInFocusChangedLocationMessage& message);
+                void OnSelectedFocussedResultEvent();
 
             public:
                 WorldPinInFocusObserver(IWorldPinInFocusViewModel& worldPinInFocusViewModel,

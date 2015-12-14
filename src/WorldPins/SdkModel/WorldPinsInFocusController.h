@@ -29,8 +29,10 @@ namespace ExampleApp
 
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 Eegeo::Helpers::TCallback1<WorldPinsInFocusController, const WorldPinsVisibilityMessage&> m_visibilityMessageHandlerBinding;
+                Eegeo::Helpers::TCallback1<WorldPinsInFocusController, const WorldPinsSelectedFocussedMessage&> m_selectedFocussedMessageHandlerBinding;
 
                 void OnWorldPinsVisibilityMessage(const WorldPinsVisibilityMessage& worldPinsVisibilityMessage);
+                void OnSelectedFocussedMessage(const WorldPinsSelectedFocussedMessage& worldPinsSelectedFocussedMessage);
 
             public:
                 WorldPinsInFocusController(IWorldPinsRepository& worldPinsRepository,

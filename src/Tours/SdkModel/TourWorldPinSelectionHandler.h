@@ -19,13 +19,11 @@ namespace ExampleApp
             {
                 TourModel m_model;
                 ITourService& m_tourService;
-                Search::SdkModel::ISearchRefreshService& m_searchRefreshService;
                 AppModes::SdkModel::IAppModeModel& m_appModeModel;
                 
             public:
                 TourWorldPinSelectionHandler(TourModel& model,
                                              ITourService& tourService,
-                                             Search::SdkModel::ISearchRefreshService& searchRefreshService,
                                              AppModes::SdkModel::IAppModeModel& appModeModel);
                 
                 void SelectPin();

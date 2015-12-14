@@ -13,8 +13,7 @@ namespace ExampleApp
                 WindowsNativeState& nativeState,
                 IFlattenButtonViewModel& viewModel,
                 ExampleAppMessaging::TMessageBus& messageBus,
-                Metrics::IMetricsService& metricsService,
-                const AppModes::SdkModel::IAppModeModel& appModeModel
+                Metrics::IMetricsService& metricsService
             )
             {
                 m_pView = Eegeo_NEW(FlattenButtonView)(nativeState);

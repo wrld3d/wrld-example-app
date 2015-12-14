@@ -29,8 +29,15 @@ namespace ExampleApp
                                                                                        MyPinsWebService& webService,
                                                                                        ExampleApp::MyPins::SdkModel::IMyPinsService& myPinsService)
             {
+                Search::SdkModel::SearchResultModel searchResultModel;
+                
+                if(!Search::SdkModel::TryDeserializeFromJson(serializedData, searchResultModel))
+                {
+                    return NULL;
+                }
+                
                 return Eegeo_NEW(SearchResultPinBoundObject)(pinId,
-                                                             Search::SdkModel::DeserializeFromJson(serializedData),
+                                                             searchResultModel,
                                                              myPinsFileIO,
                                                              categorySearchRepository,
                                                              myPinsSearchResultRefreshService,

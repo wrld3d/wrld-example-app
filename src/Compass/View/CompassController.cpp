@@ -69,23 +69,40 @@ namespace ExampleApp
                 }
             }
             
-            CompassController::CompassController(ICompassView& view,
-                                                 ICompassViewModel& viewModel,
-                                                 ExampleAppMessaging::TMessageBus& messageBus)
+            void CompassController::OnAppModeChangedMessage(const AppModes::AppModeChangedMessage& message)
+            {
+                m_appModeAllowsOpen = message.GetAppMode() != AppModes::SdkModel::TourMode;
+                
+                if(m_appModeAllowsOpen)
+                {
+                    m_viewModel.AddToScreen();
+                }
+                else
+                {
+                    m_viewModel.RemoveFromScreen();
+                }
+            }
+            
+            CompassController::CompassController(  ICompassView& view,
+                                                   ICompassViewModel& viewModel,
+                                                   ExampleAppMessaging::TMessageBus& messageBus)
                 : m_view(view)
                 , m_viewModel(viewModel)
                 , m_messageBus(messageBus)
+                , m_appModeAllowsOpen(true)
                 , m_viewStateCallback(this, &CompassController::OnScreenStateChangedCallback)
                 , m_modeChangedHandler(this, &CompassController::OnCompassModeChangedMessage)
                 , m_modeUnauthorizedHandler(this, &CompassController::OnCompassModeUnauthorizedMessage)
                 , m_headingChangedHandler(this, &CompassController::OnCompassHeadingChangedMessage)
                 , m_myPinCreationStateChangedMessageHandler(this, &CompassController::OnMyPinCreationStateChangedMessage)
                 , m_viewCycledCallback(this, &CompassController::OnViewCycled)
+                , m_appModeChangedHandler(this, &CompassController::OnAppModeChangedMessage)
             {
                 m_messageBus.SubscribeUi(m_modeChangedHandler);
                 m_messageBus.SubscribeUi(m_headingChangedHandler);
                 m_messageBus.SubscribeUi(m_myPinCreationStateChangedMessageHandler);
                 m_messageBus.SubscribeUi(m_modeUnauthorizedHandler);
+                m_messageBus.SubscribeUi(m_appModeChangedHandler);
                 
                 m_view.InsertCycledCallback(m_viewCycledCallback);
                 m_viewModel.InsertOnScreenStateChangedCallback(m_viewStateCallback);
@@ -97,7 +114,8 @@ namespace ExampleApp
             {
                 m_viewModel.RemoveOnScreenStateChangedCallback(m_viewStateCallback);
                 m_view.RemoveCycledCallback(m_viewCycledCallback);
-                
+
+                m_messageBus.UnsubscribeUi(m_appModeChangedHandler);
                 m_messageBus.UnsubscribeUi(m_modeUnauthorizedHandler);
                 m_messageBus.UnsubscribeUi(m_headingChangedHandler);
                 m_messageBus.UnsubscribeUi(m_modeChangedHandler);

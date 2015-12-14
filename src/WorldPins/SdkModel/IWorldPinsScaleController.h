@@ -27,6 +27,8 @@ namespace ExampleApp
                 virtual void InsertVisibilityMaskChangedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
                 
                 virtual void RemoveVisibilityMaskChangedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
+
+                virtual void SetHideOutdoorPinsIndoors(bool hideOutdoorPinsIndoors) = 0;
             };
         }
     }

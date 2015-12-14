@@ -593,6 +593,7 @@
     <ClCompile Include="..\..\..\src\WorldPins\WorldPinGainedFocusMessage.cpp" />
     <ClCompile Include="..\..\..\src\WorldPins\WorldPinInFocusChangedLocationMessage.cpp" />
     <ClCompile Include="..\..\..\src\WorldPins\WorldPinLostFocusMessage.cpp" />
+    <ClCompile Include="..\..\..\src\WorldPins\WorldPinsSelectedFocussedMessage.cpp" />
     <ClCompile Include="..\..\..\src\WorldPins\WorldPinsVisibilityMessage.cpp" />
     <ClCompile Include="..\..\src\AboutPage\View\AboutPageCLI.cpp">
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</CompileAsManaged>
@@ -2439,6 +2440,7 @@
     <ClInclude Include="..\..\..\src\WorldPins\WorldPinInFocusChangedLocationMessage.h" />
     <ClInclude Include="..\..\..\src\WorldPins\WorldPinLostFocusMessage.h" />
     <ClInclude Include="..\..\..\src\WorldPins\WorldPins.h" />
+    <ClInclude Include="..\..\..\src\WorldPins\WorldPinsSelectedFocussedMessage.h" />
     <ClInclude Include="..\..\..\src\WorldPins\WorldPinsVisibilityMessage.h" />
     <ClInclude Include="..\..\src\AboutPage\View\AboutPageCLI.h" />
     <ClInclude Include="..\..\src\AboutPage\View\AboutPageView.h" />

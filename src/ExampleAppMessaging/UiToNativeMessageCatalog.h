@@ -37,6 +37,7 @@
 #include "CurrentTourCardTappedMessage.h"
 #include "SearchResultMeetingAvailabilityChanged.h"
 #include "MenuSectionExpandedChangedMessage.h"
+#include "WorldPinsSelectedFocussedMessage.h"
 
 namespace ExampleApp
 {
@@ -76,6 +77,7 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<Tours::CurrentTourCardTappedMessage>
             , public Eegeo::Messaging::CatalogBinding<SearchResultOnMap::SearchResultMeetingAvailabilityChanged>
             , public Eegeo::Messaging::CatalogBinding<Menu::MenuSectionExpandedChangedMessage>
+            , public Eegeo::Messaging::CatalogBinding<WorldPins::WorldPinsSelectedFocussedMessage>
             , private Eegeo::NonCopyable
         {
 

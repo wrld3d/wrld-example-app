@@ -35,7 +35,7 @@ namespace ExampleApp
 
             void SecondaryMenuController::OnAppModeChanged(const AppModes::AppModeChangedMessage& message)
             {
-                
+
             }
             
             bool SecondaryMenuController::TryDrag()

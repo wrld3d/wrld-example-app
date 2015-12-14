@@ -18,7 +18,8 @@ namespace ExampleApp
                 IMyPinCreationConfirmationViewModel& confirmationViewModel,
                 MyPinCreationDetails::View::IMyPinCreationDetailsViewModel& detailsViewModel,
                 ExampleAppMessaging::TMessageBus& messageBus,
-                Metrics::IMetricsService& metricsService)
+                Metrics::IMetricsService& metricsService
+            )
             {
                 m_pInitiationView = Eegeo_NEW(MyPinCreationInitiationView)(nativeState);
                 m_pInitiationController = Eegeo_NEW(MyPinCreationInitiationController)(initiationViewModel, *m_pInitiationView, confirmationViewModel, messageBus, metricsService);

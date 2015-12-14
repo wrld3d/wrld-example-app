@@ -13,7 +13,8 @@ namespace ExampleApp
                 AndroidNativeState& nativeState,
                 IFlattenButtonViewModel& viewModel,
                 ExampleAppMessaging::TMessageBus& messageBus,
-                Metrics::IMetricsService& metricsService)
+                Metrics::IMetricsService& metricsService
+            )
             {
                 ASSERT_UI_THREAD
 

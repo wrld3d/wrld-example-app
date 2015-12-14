@@ -457,14 +457,16 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
                                      app.WorldPinsModule().GetWorldPinInFocusViewModel(),
                                      app.WorldPinsModule().GetScreenControlViewModel(),
                                      app.ModalityModule().GetModalityModel(),
-                                     app.PinDiameter());
+                                     app.PinDiameter()
+                                 );
 
     // HUD behind modal background layer.
     m_pFlattenButtonViewModule = Eegeo_NEW(ExampleApp::FlattenButton::View::FlattenButtonViewModule)(
                                      m_nativeState,
                                      app.FlattenButtonModule().GetFlattenButtonViewModel(),
                                      m_messageBus,
-                                     *m_pAndroidFlurryMetricsService);
+                                     *m_pAndroidFlurryMetricsService
+                                 );
 
     m_pMyPinCreationViewModule = Eegeo_NEW(ExampleApp::MyPinCreation::View::MyPinCreationViewModule)(
                                      m_nativeState,
@@ -472,7 +474,8 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
                                      app.MyPinCreationModule().GetMyPinCreationConfirmationViewModel(),
                                      app.MyPinCreationDetailsModule().GetMyPinCreationDetailsViewModel(),
                                      m_messageBus,
-                                     *m_pAndroidFlurryMetricsService);
+                                     *m_pAndroidFlurryMetricsService
+                                 );
 
 
     m_pCompassViewModule = Eegeo_NEW(ExampleApp::Compass::View::CompassViewModule)(

@@ -25,6 +25,7 @@ namespace ExampleAppWPF
         private bool m_shouldShowShadow;
 
         private Image m_imageView = null;
+        private ControlClickHandler m_imageClickHandler = null;
 
         static WatermarkView()
         {
@@ -49,14 +50,14 @@ namespace ExampleAppWPF
             UpdateWatermarkData(imageAssetUrl, popupTitle, popupBody, webUrl, shouldShowShadow);
 
             Opacity = 0.8;
-
-            this.MouseDown += OnClick;
         }
 
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
             m_imageView = (Image)GetTemplateChild("WatermarkImage");
+            
+            m_imageClickHandler = new ControlClickHandler(m_imageView, OnClick);
         }
 
         private void OnClick(object sender, System.Windows.Input.MouseButtonEventArgs e)

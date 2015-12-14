@@ -857,14 +857,11 @@ namespace ExampleApp
     void MobileExampleApp::InitialiseToursModules(Eegeo::Modules::Map::MapModule& mapModule, Eegeo::EegeoWorld& world, const bool interiorsAffectedByFlattening)
     {
         m_pToursModule = Eegeo_NEW(ExampleApp::Tours::ToursModule)(m_identityProvider,
+                                                       m_metricsService,
                                                        m_messageBus,
                                                        WorldPinsModule().GetWorldPinsService(),
                                                        SearchModule().GetSearchRefreshService(),
-                                                       SecondaryMenuModule().GetSecondaryMenuViewModel(),
                                                        SearchResultMenuModule().GetMenuViewModel(),
-                                                       CompassModule().GetCompassViewModel(),
-                                                       FlattenButtonModule().GetFlattenButtonViewModel(),
-                                                       MyPinCreationModule().GetInitiationScreenControlViewModel(),
                                                        WatermarkModule().GetScreenControlViewModel(),
                                                        world.GetMapModule().GetResourceCeilingProvider(),
                                                        m_screenProperties,

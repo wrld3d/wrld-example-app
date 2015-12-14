@@ -28,8 +28,7 @@ namespace ExampleApp
                     WindowsNativeState& nativeState,
                     IFlattenButtonViewModel& viewModel,
                     ExampleAppMessaging::TMessageBus& messageBus,
-                    Metrics::IMetricsService& metricsService,
-                    const AppModes::SdkModel::IAppModeModel& appModeModel
+                    Metrics::IMetricsService& metricsService
                 );
 
                 void AnimateOffScreen();

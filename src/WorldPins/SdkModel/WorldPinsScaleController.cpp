@@ -35,6 +35,7 @@ namespace ExampleApp
                 , m_interiorController(interiorController)
                 , m_sdkDomainEventBus(sdkDomainEventBus)
                 , m_visibilityMask(WorldPins::SdkModel::WorldPinVisibility::All)
+                , m_hideOutdoorPinsIndoors(true)
             {
                 m_messageBus.SubscribeNative(m_visibilityMessageHandlerBinding);
                 m_sdkDomainEventBus.Subscribe(m_visibilityMessageHandlerBinding);
@@ -66,6 +67,11 @@ namespace ExampleApp
                     m_worldPinsService.UpdatePinScale(worldPinItemModel, scale);
                 }
             }
+            
+            void WorldPinsScaleController::SetHideOutdoorPinsIndoors(bool hideOutdoorPinsIndoors)
+            {
+                m_hideOutdoorPinsIndoors = hideOutdoorPinsIndoors;
+            }
 
             void WorldPinsScaleController::SetModality(float modality)
             {
@@ -95,7 +101,7 @@ namespace ExampleApp
                     return true;
                 }
                 
-                if(showingInterior && !worldPinItemModel.IsInterior())
+                if(m_hideOutdoorPinsIndoors && showingInterior && !worldPinItemModel.IsInterior())
                 {
                     return true;
                 }
