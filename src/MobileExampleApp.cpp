@@ -31,7 +31,6 @@
 #include "RenderingModule.h"
 #include "StreamingModule.h"
 #include "EnvironmentCharacterSet.h"
-#include "Blitter.h"
 #include "IPoiRingTouchController.h"
 #include "MyPinCreationModule.h"
 #include "ISearchResultMenuViewModel.h"
@@ -186,7 +185,6 @@ namespace ExampleApp
         , m_pWorldAreaLoaderModule(NULL)
         , m_pAboutPageModule(NULL)
         , m_initialExperienceModule(initialExperienceModule)
-        , m_pBlitter(NULL)
         , m_messageBus(messageBus)
         , m_sdkDomainEventBus(sdkModelDomainEventBus)
         , m_persistentSettings(persistentSettings)
@@ -220,15 +218,11 @@ namespace ExampleApp
     {
         m_metricsService.BeginSession(applicationConfiguration.FlurryAppKey(), EEGEO_PLATFORM_VERSION_NUMBER);
 
-        m_pBlitter = Eegeo_NEW(Eegeo::Blitter)(1024 * 128, 1024 * 64, 1024 * 32);
-        m_pBlitter->Initialise();
-        
         m_pWorld = Eegeo_NEW(Eegeo::EegeoWorld)(applicationConfiguration.EegeoApiKey(),
                                                 m_platformAbstractions,
                                                 jpegLoader,
                                                 screenProperties,
                                                 locationService,
-                                                *m_pBlitter,
                                                 nativeUIFactories,
                                                 Eegeo::EnvironmentCharacterSet::Latin,
                                                 platformConfig,
@@ -352,10 +346,6 @@ namespace ExampleApp
         Eegeo_DELETE m_pAppModeModel;
 
         Eegeo_DELETE m_pWorld;
-        
-        m_pBlitter->Shutdown();
-        Eegeo_DELETE m_pBlitter;
-        m_pBlitter = NULL;
     }
     
     void MobileExampleApp::CreateSQLiteModule(Eegeo::UI::NativeUIFactories& nativeUIFactories)
