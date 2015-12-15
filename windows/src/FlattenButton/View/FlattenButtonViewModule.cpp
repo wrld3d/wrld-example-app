@@ -25,16 +25,6 @@ namespace ExampleApp
                                     metricsService);
             }
 
-            void FlattenButtonViewModule::AnimateOffScreen()
-            {
-                m_pView->SetFullyOffScreen();
-            }
-
-            void FlattenButtonViewModule::AnimateOnScreen()
-            {
-                m_pView->SetFullyOnScreen();
-            }
-
             FlattenButtonViewModule::~FlattenButtonViewModule()
             {
                 Eegeo_DELETE m_pController;
