@@ -5,6 +5,7 @@
 #include "MenuController.h"
 
 #include "CategorySearch.h"
+#include "Modality.h"
 #include "SearchMenu.h"
 
 namespace ExampleApp
@@ -18,6 +19,7 @@ namespace ExampleApp
             private:
                 ISearchMenuView& m_searchMenuView;
                 CategorySearch::View::ICategorySearchRepository& m_categorySearchRepository;
+                Modality::View::IModalBackgroundView& m_modalBackgroundView;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 bool m_appModeAllowsOpen;
                 
@@ -27,6 +29,7 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<SearchMenuController, const std::string&> m_onSearchCallback;
                 Eegeo::Helpers::TCallback0<SearchMenuController> m_onSearchClearedCallback;
                 Eegeo::Helpers::TCallback1<SearchMenuController, const AppModes::AppModeChangedMessage&> m_appModeChangedCallback;
+                Eegeo::Helpers::TCallback0<SearchMenuController> m_onModalBackgroundTappedCallback;
                 
                 void OnOpenStateChanged(OpenableControl::View::IOpenableControlViewModel& viewModel, float& openState);
                 
@@ -44,12 +47,15 @@ namespace ExampleApp
                 
                 void OnSearchCleared();
                 
+                void OnModalBackgroundTapped();
+                
             public:
                 SearchMenuController(Menu::View::IMenuModel& model,
                                      Menu::View::IMenuViewModel& viewModel,
                                      Menu::View::IMenuView& view,
                                      ISearchMenuView& searchMenuView,
                                      CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
+                                     Modality::View::IModalBackgroundView& modalBackgroundView,
                                      ExampleAppMessaging::TMessageBus& messageBus);
                 
                 ~SearchMenuController();

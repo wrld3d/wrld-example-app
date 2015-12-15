@@ -84,8 +84,8 @@
 - (void)layoutSubviews
 {
     CGRect f = self.frame;
-    f.origin.x = m_offscreenX;
-    f.origin.y = m_offscreenY;
+    f.origin.x = m_animationCurrentPos.x;
+    f.origin.y = m_animationCurrentPos.y;
     self.frame = f;
 }
 
@@ -464,17 +464,20 @@
     }
 }
 
-- (void) refreshTableHeights: (size_t)numberOfSections numberOfCells:(size_t)numberOfCells
+- (void) refreshTableHeights
 {
     const float tableScreenY = m_mainContainerY + m_mainContainerOffscreenOffsetY + m_tableY;
     const float tableScreenSpace = m_screenHeight - tableScreenY;
-    m_tableHeight = fmin(tableScreenSpace, m_tableHeight);
+    m_tableHeight = fmaxf(tableScreenSpace, m_tableHeight);
     
-    const float realTableHeight =  (SECTION_HEADER_CELL_HEIGHT * numberOfSections) + (SUB_SECTION_CELL_HEIGHT * (numberOfCells));
+    const float realTableHeight = [m_pDataProvider getRealTableHeight];
     self.pTableviewContainer.frame = CGRectMake(m_tableX, m_tableY, m_tableWidth, m_tableHeight);
     self.pTableviewContainer.bounces = NO;
     self.pTableviewContainer.contentSize = CGSizeMake(m_tableWidth, realTableHeight);
     self.pTableview.frame = CGRectMake(0.f, 0.f, m_tableWidth, realTableHeight);
+    
+    m_mainContainerHeight = m_dragTabHeight + realTableHeight;
+    self.pMenuContainer.frame = CGRectMake(m_mainContainerX, m_mainContainerY, m_mainContainerWidth, m_mainContainerHeight);
 }
 
 - (void) setCanInteract:(BOOL)canInteract

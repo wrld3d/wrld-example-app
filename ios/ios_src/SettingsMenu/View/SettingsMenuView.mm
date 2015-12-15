@@ -85,6 +85,8 @@
                                                         style:UITableViewStylePlain
                                                     container:self.pTableviewContainer
                                                   hasSubMenus:true
+                                                  onRowsAdded:nil
+                                                onRowsDeleted:nil
                         ] autorelease];
     self.pTableview.backgroundColor = [UIColor clearColor];
     self.pTableview.separatorStyle = UITableViewCellSeparatorStyleNone;

@@ -38,6 +38,10 @@
 
 - (void) collapseAll;
 
+- (void) onRowsAdded;
+
+- (void) onRowsDeleted;
+
 @property (nonatomic, retain) UITextField* pSearchEditBox;
 @property (nonatomic, retain) UIView* pSearchEditBoxContainer;
 

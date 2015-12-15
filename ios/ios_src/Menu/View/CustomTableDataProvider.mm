@@ -37,6 +37,30 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
 
 }
 
+- (float)getRealTableHeight
+{
+    int numberOfHeaders = 0;
+    int numberOfCells = 0;
+    
+    for(ExampleApp::Menu::View::TSections::iterator it = m_currentSections.begin(); it != m_currentSections.end(); ++it)
+    {
+        if((*it)->IsExpandable())
+        {
+            ++numberOfHeaders;
+            if((*it)->IsExpanded())
+            {
+                numberOfCells += (*it)->GetTotalItemCount();
+            }
+        }
+        else
+        {
+            numberOfHeaders += (*it)->GetTotalItemCount();
+        }
+    }
+    
+    return SECTION_HEADER_CELL_HEIGHT * numberOfHeaders + SUB_SECTION_CELL_HEIGHT * numberOfCells;
+}
+
 - (void)dealloc
 {
     [self.pOpenableMenuArrow release];
@@ -150,7 +174,7 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
             rows = section.Size();
             [self showOpenableArrowOpen:cell];
         }
-
+        
         for(int i=1; i <rows; i++)
         {
             NSIndexPath *tmpIndexPath = [NSIndexPath indexPathForRow:i inSection:indexPath.section];
@@ -165,7 +189,6 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
         {
             [tableView insertRowsAtIndexPaths:tmpArray withRowAnimation:UITableViewRowAnimationNone];
         }
-
     }
     else
     {

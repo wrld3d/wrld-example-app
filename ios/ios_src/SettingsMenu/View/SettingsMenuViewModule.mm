@@ -14,9 +14,10 @@ namespace ExampleApp
         namespace View
         {
             SettingsMenuViewModule::SettingsMenuViewModule(Menu::View::IMenuModel& settingsMenuModel,
-                    Menu::View::IMenuViewModel& settingsMenuViewModel,
-                    const Eegeo::Rendering::ScreenProperties& screenProperties,
-                    ExampleAppMessaging::TMessageBus& messageBus)
+                                                           Menu::View::IMenuViewModel& settingsMenuViewModel,
+                                                           const Eegeo::Rendering::ScreenProperties& screenProperties,
+                                                           Modality::View::IModalBackgroundView& modalBackgroundView,
+                                                           ExampleAppMessaging::TMessageBus& messageBus)
             {
                 m_pDataProvider = [CustomTableDataProvider alloc];
 
@@ -31,6 +32,7 @@ namespace ExampleApp
                 m_pController = Eegeo_NEW(SettingsMenuController)(*[m_pView getInterop],
                                                                   settingsMenuModel,
                                                                   settingsMenuViewModel,
+                                                                  modalBackgroundView,
                                                                   messageBus);
             }
 

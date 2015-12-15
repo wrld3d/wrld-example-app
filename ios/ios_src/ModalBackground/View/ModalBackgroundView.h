@@ -8,10 +8,12 @@
 
 @class ModalBackgroundView;
 
-@interface ModalBackgroundView : UIView
+@interface ModalBackgroundView : UIView<UIGestureRecognizerDelegate>
 {
     ExampleApp::ModalBackground::View::ModalBackgroundViewInterop* m_pInterop;
     float m_stateChangeAnimationTimeSeconds;
+    
+    UITapGestureRecognizer* m_tapGestureRecogniser;
 }
 
 - (id)initWithParams:(float)screenWidth :(float)screenHeight;

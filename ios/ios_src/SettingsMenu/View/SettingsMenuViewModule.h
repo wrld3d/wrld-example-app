@@ -6,6 +6,7 @@
 
 #include "Types.h"
 #include "Menu.h"
+#include "Modality.h"
 #include "Rendering.h"
 #include "BidirectionalBus.h"
 #include "CustomTableDataProvider.h"
@@ -25,9 +26,10 @@ namespace ExampleApp
 
             public:
                 SettingsMenuViewModule(Menu::View::IMenuModel& settingsMenuModel,
-                                        Menu::View::IMenuViewModel& settingsMenuViewModel,
-                                        const Eegeo::Rendering::ScreenProperties& screenProperties,
-                                        ExampleAppMessaging::TMessageBus& messageBus);
+                                       Menu::View::IMenuViewModel& settingsMenuViewModel,
+                                       const Eegeo::Rendering::ScreenProperties& screenProperties,
+                                       Modality::View::IModalBackgroundView& modalBackgroundView,
+                                       ExampleAppMessaging::TMessageBus& messageBus);
 
                 ~SettingsMenuViewModule();
 

@@ -3,6 +3,7 @@
 #include "SearchMenuController.h"
 
 #include "CategorySearchRepository.h"
+#include "IModalBackgroundView.h"
 #include "ISearchMenuView.h"
 #include "SearchQuery.h"
 #include "SearchResultViewClearedMessage.h"
@@ -18,10 +19,12 @@ namespace ExampleApp
                                                        Menu::View::IMenuView& view,
                                                        ISearchMenuView& searchMenuView,
                                                        CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
+                                                       Modality::View::IModalBackgroundView& modalBackgroundView,
                                                        ExampleAppMessaging::TMessageBus& messageBus)
             : Menu::View::MenuController(model, viewModel, view, messageBus)
             , m_searchMenuView(searchMenuView)
             , m_categorySearchRepository(categorySearchRepository)
+            , m_modalBackgroundView(modalBackgroundView)
             , m_messageBus(messageBus)
             , m_appModeAllowsOpen(true)
             , m_onOpenStateChangedCallback(this, &SearchMenuController::OnOpenStateChanged)
@@ -30,10 +33,12 @@ namespace ExampleApp
             , m_onSearchCallback(this, &SearchMenuController::OnSearch)
             , m_onSearchClearedCallback(this, &SearchMenuController::OnSearchCleared)
             , m_appModeChangedCallback(this, &SearchMenuController::OnAppModeChanged)
+            , m_onModalBackgroundTappedCallback(this, &SearchMenuController::OnModalBackgroundTapped)
             {
                 m_searchMenuView.InsertSearchPeformedCallback(m_onSearchCallback);
                 m_searchMenuView.InsertSearchClearedCallback(m_onSearchClearedCallback);
                 m_viewModel.InsertOpenStateChangedCallback(m_onOpenStateChangedCallback);
+                m_modalBackgroundView.InsertTappedCallback(m_onModalBackgroundTappedCallback);
                 
                 m_messageBus.SubscribeUi(m_performedQueryHandler);
                 m_messageBus.SubscribeUi(m_receivedQueryResponseHandler);
@@ -46,6 +51,7 @@ namespace ExampleApp
                 m_messageBus.UnsubscribeUi(m_receivedQueryResponseHandler);
                 m_messageBus.UnsubscribeUi(m_performedQueryHandler);
                 
+                m_modalBackgroundView.RemoveTappedCallback(m_onModalBackgroundTappedCallback);
                 m_viewModel.RemoveOpenStateChangedCallback(m_onOpenStateChangedCallback);
                 m_searchMenuView.RemoveSearchClearedCallback(m_onSearchClearedCallback);
                 m_searchMenuView.RemoveSearchPeformedCallback(m_onSearchCallback);
@@ -112,6 +118,19 @@ namespace ExampleApp
             void SearchMenuController::OnSearchCleared()
             {
                 m_messageBus.Publish(SearchResultMenu::SearchResultViewClearedMessage());
+            }
+            
+            void SearchMenuController::OnModalBackgroundTapped()
+            {
+                if(!m_appModeAllowsOpen)
+                {
+                    return;
+                }
+                
+                if(m_viewModel.IsFullyOpen())
+                {
+                    m_viewModel.Close();
+                }
             }
         }
     }

@@ -290,12 +290,14 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
     m_pSettingsMenuViewModule = Eegeo_NEW(ExampleApp::SettingsMenu::View::SettingsMenuViewModule)(app.SettingsMenuModule().GetSettingsMenuModel(),
                                                                                                   app.SettingsMenuModule().GetSettingsMenuViewModel(),
                                                                                                   screenProperties,
+                                                                                                  m_pModalBackgroundViewModule->GetModalBackgroundViewInterop(),
                                                                                                   m_messageBus);
     
     m_pSearchMenuViewModule = Eegeo_NEW(ExampleApp::SearchMenu::View::SearchMenuViewModule)(app.SearchMenuModule().GetSearchMenuModel(),
                                                                                             app.SearchMenuModule().GetSearchMenuViewModel(),
                                                                                             screenProperties,
                                                                                             app.CategorySearchModule().GetCategorySearchRepository(),
+                                                                                            m_pModalBackgroundViewModule->GetModalBackgroundViewInterop(),
                                                                                             m_messageBus);
     
     m_pSearchResultMenuViewModule = Eegeo_NEW(ExampleApp::SearchResultMenu::View::SearchResultMenuViewModule)(app.SearchMenuModule().GetSearchMenuViewModel(),

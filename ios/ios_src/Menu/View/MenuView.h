@@ -109,7 +109,7 @@
 
 - (void) tapTabGesture:(UITapGestureRecognizer *)recognizer;
 
-- (void) refreshTableHeights:(size_t)numberOfSections numberOfCells:(size_t)numberOfCells;
+- (void) refreshTableHeights;
 
 - (void) setCanInteract:(BOOL)canInteract;
 

@@ -3,6 +3,13 @@
 #import "CustomTableView.h"
 #import <QuartzCore/QuartzCore.h>
 
+@interface CustomTableView ()
+
+@property (nonatomic, copy) OnAnimationComplete m_onRowsAdded;
+@property (nonatomic, copy) OnAnimationComplete m_onRowsDeleted;
+
+@end
+
 @implementation CustomTableView
 {
     float m_animationSpeed;
@@ -11,13 +18,20 @@
     bool m_hasSubMenus;
 }
 
-- (instancetype)initWithFrame:(CGRect)frame style:(UITableViewStyle)style container:(UIScrollView*)container hasSubMenus:(bool)hasSubMenus
+- (instancetype)initWithFrame:(CGRect)frame
+                        style:(UITableViewStyle)style
+                    container:(UIScrollView*)container
+                  hasSubMenus:(bool)hasSubMenus
+                  onRowsAdded:(OnAnimationComplete)onRowsAdded
+                onRowsDeleted:(OnAnimationComplete)onRowsDeleted
 {
     id it = [super initWithFrame:frame style:style];
     m_pContainer = container;
     m_animationSpeed = 0.3f;
     m_inAnimationCeremony = NO;
     m_hasSubMenus = hasSubMenus;
+    self.m_onRowsAdded = onRowsAdded;
+    self.m_onRowsDeleted = onRowsDeleted;
     return it;
 }
 
@@ -68,6 +82,11 @@
     [self setInteractionEnabled: NO];
 
     [self reloadData];
+    
+    if(self.m_onRowsAdded != nil)
+    {
+        self.m_onRowsAdded();
+    }
 
     int count = 1;
     CGFloat height = -1;
@@ -116,6 +135,12 @@
     }
 
     [self reloadData];
+    
+    if(self.m_onRowsDeleted != nil)
+    {
+        self.m_onRowsDeleted();
+    }
+    
     [self setInteractionEnabled: YES];
 }
 

@@ -71,8 +71,8 @@ namespace ExampleApp
 
                 void UpdateMenuSectionViews(TSections& sections)
                 {
-                    [m_pView refreshTableHeights:sections.size() numberOfCells:NumberOfCells(sections)];
                     [m_pProvider updateMenuSections:&sections];
+                    [m_pView refreshTableHeights];
                 }
 
                 void SetFullyOnScreenOpen()

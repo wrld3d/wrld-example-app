@@ -82,10 +82,15 @@
     self.pTableviewContainer.bounces = NO;
     self.pTableviewContainer.contentSize = CGSizeMake(m_tableWidth, realTableHeight);
     
+    __block SearchMenuView* selfBlockRef = self;
+    
     self.pTableview = [[[CustomTableView alloc] initWithFrame:CGRectMake(0.f, 0.f, m_tableWidth, realTableHeight)
                                                         style:UITableViewStylePlain
                                                     container:self.pTableviewContainer
                                                   hasSubMenus:true
+                                                  onRowsAdded:^{ [selfBlockRef onRowsAdded]; }
+                                                onRowsDeleted:^{ [selfBlockRef onRowsDeleted]; }
+                
                         ] autorelease];
     self.pTableview.backgroundColor = [UIColor clearColor];
     self.pTableview.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -255,6 +260,16 @@
 - (void) collapseAll
 {
     [m_pDataProvider collapseAll];
+}
+
+- (void) onRowsAdded
+{
+    [self refreshTableHeights];
+}
+
+- (void) onRowsDeleted
+{
+    [self refreshTableHeights];
 }
 
 - (void)keyboardDidChangeFrame:(NSNotification*)aNotification
