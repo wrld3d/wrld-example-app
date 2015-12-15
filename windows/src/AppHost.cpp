@@ -317,23 +317,6 @@ void AppHost::HandleTouchInputEvent(const Eegeo::Windows::Input::TouchInputEvent
 void AppHost::HandleKeyboardInputEvent(const Eegeo::Windows::Input::KeyboardInputEvent& event)
 {
     m_pInputProcessor->HandleInput(event);
-
-    ExampleApp::FlattenButton::View::FlattenButtonViewModule* flattenButton = dynamic_cast<ExampleApp::FlattenButton::View::FlattenButtonViewModule*>(m_pFlattenButtonViewModule);
-    ExampleApp::Compass::View::CompassViewModule* compass = dynamic_cast<ExampleApp::Compass::View::CompassViewModule*>(m_pCompassViewModule);
-    ExampleApp::MyPinCreation::View::MyPinCreationViewModule* pin = dynamic_cast<ExampleApp::MyPinCreation::View::MyPinCreationViewModule*>(m_pMyPinCreationViewModule);
-
-    if (event.keyCode == VK_UP)
-    {
-        flattenButton->AnimateOnScreen();
-        compass->AnimateOnScreen();
-        pin->AnimateOnScreen();
-    }
-    else if (event.keyCode == VK_DOWN)
-    {
-        flattenButton->AnimateOffScreen();
-        compass->AnimateOffScreen();
-        pin->AnimateOffScreen();
-    }
 }
 
 void AppHost::SetAllInputEventsToPointerUp(int x, int y)
