@@ -17,6 +17,7 @@ namespace ExampleApp
             extern UIColor* LightGreyTone;
             
             extern UIColor* MainHudColor;
+            extern UIColor* BorderHudColor;
             extern UIColor* ModalBackgroundColor;
             extern UIColor* LinkTone;
             extern UIColor* UiTextHeaderColour;

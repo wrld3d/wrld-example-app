@@ -2,6 +2,7 @@
 
 #import "CustomTableView.h"
 #import <QuartzCore/QuartzCore.h>
+#import "CustomTableViewCell.h"
 
 @interface CustomTableView ()
 
@@ -87,99 +88,130 @@
     {
         self.m_onRowsAdded();
     }
-
+    
     int count = 1;
-    CGFloat height = -1;
-    float offset = 0.f;
-
+    CGFloat height = 0.0f;
+    float offset = 0.0f;
+    
+    const float relativeDuration = 1.0f / indexPaths.count;
+    
     for (NSIndexPath *indexPath in indexPaths)
     {
         UITableViewCell *cell = [self cellForRowAtIndexPath:indexPath];
-        height = static_cast<float>(cell.bounds.size.height);
+        height = cell.bounds.size.height;
         offset += height;
-        cell.transform = CGAffineTransformMakeTranslation(0.f, -height * count++);
-    }
-
-    [self animateSubsequentSections: [indexPaths lastObject] withOffset: offset];
-
-    [UIView beginAnimations: @"cellTransform" context: NULL];
-    [UIView setAnimationDelegate:self];
-    [UIView setAnimationDidStopSelector:@selector(rowsAddedCompleted:finished:context:)];
-    for (NSIndexPath *indexPath in indexPaths)
-    {
-        UITableViewCell *cell = [self cellForRowAtIndexPath:indexPath];;
-
-        [UIView setAnimationDuration: m_animationSpeed];
-        cell.transform = CGAffineTransformIdentity;
-    }
-
-    [self relaxCells: [indexPaths lastObject] :CGAffineTransformIdentity];
-    [UIView commitAnimations];
-}
-
-- (void)rowsAddedCompleted:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context
-{
-    [self setInteractionEnabled: YES];
-}
-
-- (void)rowsDeleteComplete:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context
-{
-    for (int section = 0; section < [self numberOfSections]; section++)
-    {
-        for (int row = 0; row < [self numberOfRowsInSection:section]; row++)
-        {
-            NSIndexPath* cellPath = [NSIndexPath indexPathForRow:row inSection:section];
-            UITableViewCell* cell = [self cellForRowAtIndexPath:cellPath];
-            cell.transform = CGAffineTransformIdentity;
-        }
-    }
-
-    [self reloadData];
-    
-    if(self.m_onRowsDeleted != nil)
-    {
-        self.m_onRowsDeleted();
+        
+        cell.transform = CGAffineTransformMakeTranslation(0.0f, -offset);
+        
+        CGRect contentFrame = [(CustomTableViewCell*)cell getContentViewRect];
+        contentFrame.size.height = 0.0f;
+        cell.contentView.frame = contentFrame;
+        
+        [UIView animateKeyframesWithDuration:m_animationSpeed
+                                       delay:0.0f
+                                     options:UIViewAnimationCurveEaseInOut
+                                  animations:^{
+                                      [UIView addKeyframeWithRelativeStartTime:0.0 relativeDuration:relativeDuration * count animations:^{
+                                          cell.transform = CGAffineTransformIdentity;
+                                      }];
+                                      [UIView addKeyframeWithRelativeStartTime:1.0 - relativeDuration relativeDuration:relativeDuration animations:^{
+                                          cell.contentView.frame = [(CustomTableViewCell*)cell getContentViewRect];
+                                      }];
+                                  }
+                                  completion:nil];
+        
+        ++count;
     }
     
-    [self setInteractionEnabled: YES];
+    [self animateSubsequentSections:[indexPaths lastObject] withOffset:offset];
+    
+    [UIView animateWithDuration:m_animationSpeed
+                          delay:0.0f
+                        options:UIViewAnimationCurveEaseInOut
+                     animations:^{
+                             [self relaxCells:[indexPaths lastObject] :CGAffineTransformIdentity];
+                     }
+                     completion:^(BOOL finished){
+                         [self setInteractionEnabled:YES];
+                     }];
 }
 
 -(void)deleteRowsAtIndexPaths:(NSArray *)indexPaths withRowAnimation:(UITableViewRowAnimation)animation
 {
     [self setInteractionEnabled: NO];
-
+    
     int count = 1;
-    float height = -1;
-
-    [UIView beginAnimations: @"cellTransform" context: NULL];
-    [UIView setAnimationDelegate:self];
-    [UIView setAnimationDidStopSelector:@selector(rowsDeleteComplete:finished:context:)];
-
+    CGFloat height = 0.0f;
     float offset = 0.f;
-
+    
+    const float relativeDuration = 1.0f / indexPaths.count;
+    
     for (NSIndexPath *indexPath in indexPaths)
     {
         UITableViewCell *cell = [self cellForRowAtIndexPath:indexPath];
-
+        
         height = cell.bounds.size.height;
-        [UIView setAnimationDuration: m_animationSpeed];
-        offset = (-height * count++);
-        cell.transform = CGAffineTransformMakeTranslation(0.f, offset);
+        offset -= height;
+        
+        [cell.layer removeAllAnimations];
+        [cell.contentView.layer removeAllAnimations];
+        
+        [UIView animateKeyframesWithDuration:m_animationSpeed
+                                       delay:0.0f
+                                     options:UIViewAnimationCurveEaseInOut
+                                  animations:^{
+                                      [UIView addKeyframeWithRelativeStartTime:0.0 relativeDuration:relativeDuration animations:^{
+                                          CGRect contentFrame = [(CustomTableViewCell*)cell getContentViewRect];
+                                          contentFrame.size.height = 0.0f;
+                                          cell.contentView.frame = contentFrame;
+                                      }];
+                                      [UIView addKeyframeWithRelativeStartTime:1.0 - (relativeDuration * count) relativeDuration:relativeDuration * count animations:^{
+                                          cell.transform = CGAffineTransformMakeTranslation(0.0f, offset);
+                                      }];
+                                  }
+                                  completion:nil];
+        
+        ++count;
     }
-
+    
     const size_t cellsDeleted = indexPaths.count;
     m_pContainer.contentSize = CGSizeMake(self.contentSize.width, self.contentSize.height - (cellsDeleted*height));
     [self scrollRectToVisible: CGRectMake(0, 0, self.contentSize.width, 0) animated:YES];
-
-    [self relaxCells: [indexPaths lastObject]: CGAffineTransformMakeTranslation(0.f, offset)];
-    [UIView commitAnimations];
+    
+    [UIView animateWithDuration:m_animationSpeed
+                          delay:0.0f
+                        options:UIViewAnimationCurveEaseInOut
+                     animations:^{
+                         [self relaxCells:[indexPaths lastObject] :CGAffineTransformMakeTranslation(0.0f, offset)];
+                     }
+                     completion:^(BOOL finished){
+                         for (int section = 0; section < [self numberOfSections]; section++)
+                         {
+                             for (int row = 0; row < [self numberOfRowsInSection:section]; row++)
+                             {
+                                 NSIndexPath* cellPath = [NSIndexPath indexPathForRow:row inSection:section];
+                                 UITableViewCell* cell = [self cellForRowAtIndexPath:cellPath];
+                                 cell.transform = CGAffineTransformIdentity;
+                                 cell.contentView.transform = CGAffineTransformIdentity;
+                             }
+                         }
+                         
+                         [self reloadData];
+                         
+                         if(self.m_onRowsDeleted != nil)
+                         {
+                             self.m_onRowsDeleted();
+                         }
+                         
+                         [self setInteractionEnabled: YES];
+                     }];
 }
 
 -(void)animateSubsequentSections:(NSIndexPath*) indexPath withOffset:(float) offset
 {
     NSInteger numberOfSections = [self numberOfSections];
 
-    for (int i = indexPath.section + 1; i < numberOfSections; ++i)
+    for (NSInteger i = indexPath.section + 1; i < numberOfSections; ++i)
     {
         NSInteger numberOfRowsInSection = [self numberOfRowsInSection: i];
 

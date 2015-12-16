@@ -17,9 +17,10 @@ namespace ExampleApp
             UIColor* LightGreyTone = [[UIColor alloc] initWithRed:204/255.f green:204/255.f blue:204/255.f alpha:1.f];
             
             UIColor* MainHudColor = [[UIColor alloc] initWithRed:250.f/255.f green:250.f/255.f blue:250.f/255.f alpha:1.f];
+            UIColor* BorderHudColor = [[UIColor alloc] initWithRed:18.f/255.f green:86.f/255.f blue:176.f/255.f alpha:1.f];
             UIColor* ModalBackgroundColor = [[UIColor alloc] initWithRed:0.f green:0.f blue:0.f alpha:0.5f];
-            UIColor* UiTextHeaderColour = DarkGreyTone;
-            UIColor* UiTextCopyColour = GreyTone;
+            UIColor* UiTextHeaderColour = [[UIColor alloc]initWithRed:206.f/255.f green:206.f/255.f blue:206.f/255.f alpha:1.f];
+            UIColor* UiTextCopyColour = [[UIColor alloc]initWithRed:96.f/255.f green:96.f/255.f blue:96.f/255.f alpha:1.f];;
             UIColor* LinkTone = [[UIColor alloc] initWithRed:0.f/255.f green:0.f/255.f blue:255.f/255.f alpha:1.f];
             UIColor* UiBaseColour = [UIColor blueColor];
             UIColor* MenuSeparatorHeaderColor = [[UIColor alloc] initWithRed:177.f/255.f green:204.f/255.f blue:225.f/255.f alpha:1.f];

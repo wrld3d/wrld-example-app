@@ -8,15 +8,15 @@
 @interface CustomTableViewCell : UITableViewCell
 {
     bool m_isHeader;
-    NSString* m_headerBackgroundImage;
-    NSString* m_subMenuBackgroundImage;
     float m_initialWidth;
+    UIColor* m_pBackgroundColor;
+    UIColor* m_pContentBackgroundColor;
     CustomTableView* m_tableView;
 }
 
 - (void)setInfo :(bool)isHeader
-                :(NSString*)headerBackgroundImage
-                :(NSString*)subMenuBackgroundImage;
+                :(UIColor*)pBackgroundColor
+                :(UIColor*)pContentBackgroundColor;
 
 - (void)initCell:(CGFloat)initialWidth :(CustomTableView*)tableView;
 
@@ -25,5 +25,7 @@
 - (BOOL)canInteract;
 
 - (bool)requiresVisualRefresh;
+
+- (CGRect)getContentViewRect;
 
 @end

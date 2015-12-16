@@ -47,14 +47,14 @@
     m_dragTabX = m_mainContainerX - m_dragTabWidth;
     m_dragTabHeight = (50.f * m_pixelScale);
     self.pDragTab = [[[UIView alloc] initWithFrame:CGRectMake(m_dragTabX, m_dragTabY, m_dragTabWidth, m_dragTabHeight)] autorelease];
-    self.pDragTab.backgroundColor = [UIColor colorWithPatternImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"menu_button")];
+    self.pDragTab.backgroundColor = ExampleApp::Helpers::ColorPalette::BorderHudColor;
 
     m_titleContainerX = m_mainContainerVisibleOnScreenWhenClosedX;
     m_titleContainerY = m_mainContainerVisibleOnScreenWhenClosedY;
     m_titleContainerWidth = m_mainContainerOnScreenWidth;
     m_titleContainerHeight = 50 * m_pixelScale;
     self.pTitleContainer = [[[UIView alloc] initWithFrame:CGRectMake(m_titleContainerX, m_titleContainerY, m_titleContainerWidth, m_titleContainerHeight)] autorelease];
-    self.pTitleContainer.backgroundColor = [UIColor colorWithPatternImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"menu_bar")];
+    self.pTitleContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::BorderHudColor;
     
     const float titleOffsetIntoContainer = m_titleContainerWidth*0.05f;
     const float titleX = titleOffsetIntoContainer;
@@ -97,6 +97,8 @@
     m_offscreenX = m_dragTabWidth + m_mainContainerVisibleOnScreenWhenClosedX;
     m_openX = -(m_mainContainerOnScreenWidth - m_mainContainerVisibleOnScreenWhenClosedX);
     m_closedX = (0.f * m_pixelScale);
+    m_animationCurrentPos.x = m_offscreenX;
+    m_animationCurrentPos.y = m_offscreenY;
 
     [self addSubview: self.pMenuContainer];
     [self addSubview: self.pDragTab];

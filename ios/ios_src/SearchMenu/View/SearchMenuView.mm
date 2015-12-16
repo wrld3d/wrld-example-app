@@ -46,7 +46,7 @@
     m_dragTabX = m_mainContainerOnScreenWidth;
     m_dragTabY = m_mainContainerY + (0.f * m_pixelScale);
     self.pDragTab = [[[UIView alloc] initWithFrame:CGRectMake(m_dragTabX, m_dragTabY, m_dragTabWidth, m_dragTabHeight)] autorelease];
-    self.pDragTab.backgroundColor = [UIColor colorWithPatternImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"menu_button")];
+    self.pDragTab.backgroundColor = ExampleApp::Helpers::ColorPalette::BorderHudColor;
     self.pDragTab.transform = CGAffineTransformScale(CGAffineTransformIdentity, -1.f, 1.f);
 
     m_searchBoxContainerX = m_mainContainerVisibleOnScreenWhenClosedX;
@@ -54,7 +54,7 @@
     m_searchBoxContainerWidth = m_mainContainerOnScreenWidth;
     m_searchBoxContainerHeight = 50 * m_pixelScale;
     self.pSearchEditBoxContainer = [[[UIView alloc] initWithFrame:CGRectMake(m_searchBoxContainerX, m_searchBoxContainerY, m_searchBoxContainerWidth, m_searchBoxContainerHeight)] autorelease];
-    self.pSearchEditBoxContainer.backgroundColor = [UIColor colorWithPatternImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"menu_bar")];
+    self.pSearchEditBoxContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::BorderHudColor;
     self.pSearchEditBoxContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, -1.f, 1.f);
 
     m_searchBoxOffsetIntoContainer = m_searchBoxContainerWidth*0.05f;
@@ -101,6 +101,8 @@
     m_offscreenX = -(m_mainContainerWidth + m_dragTabWidth);
     m_openX = (0.f * m_pixelScale);
     m_closedX = -(m_mainContainerOnScreenWidth - m_mainContainerVisibleOnScreenWhenClosedX);
+    m_animationCurrentPos.x = m_offscreenX;
+    m_animationCurrentPos.y = m_offscreenY;
 
     [self addSubview: self.pMenuContainer];
     [self addSubview: self.pDragTab];

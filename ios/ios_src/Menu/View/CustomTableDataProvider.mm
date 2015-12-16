@@ -287,13 +287,17 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
                 [subview removeFromSuperview];
             }
             
-            const float subLabelWidth = 160.f;
+            const float subLabelWidth = 160.0f;
             const float subLabelHeight = isHeader ? SECTION_HEADER_CELL_HEIGHT : SUB_SECTION_CELL_HEIGHT;
-            UILabel *subLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, subLabelWidth, subLabelHeight)];
+            const float subLabelHeaderInset = 16.0f;
+            const float subLabelSubSectionInset = 8.0f;
+            const float subLabelX = static_cast<float>(isHeader ? subLabelHeaderInset : subLabelSubSectionInset + SUB_SECTION_CELL_HEIGHT);
+            
+            UILabel *subLabel = [[UILabel alloc] initWithFrame:CGRectMake(subLabelX, 0, subLabelWidth, subLabelHeight)];
             subLabel.backgroundColor = [UIColor clearColor];
-            subLabel.textAlignment = NSTextAlignmentRight;
+            subLabel.textAlignment = NSTextAlignmentLeft;
             subLabel.text = [NSString stringWithUTF8String:name.c_str()];
-            subLabel.textColor = ExampleApp::Helpers::ColorPalette::UiTextHeaderColour;
+            subLabel.textColor = isHeader ? ExampleApp::Helpers::ColorPalette::UiTextHeaderColour : ExampleApp::Helpers::ColorPalette::UiTextCopyColour;
             subLabel.highlightedTextColor = ExampleApp::Helpers::ColorPalette::WhiteTone;
             subLabel.font = [UIFont systemFontOfSize: [self getTextLabelFontSize: isHeader:isSearchResult]];
             [cell.contentView addSubview: subLabel];
@@ -306,7 +310,7 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
             std::string details = document["details"].GetString();
             
             cell.detailTextLabel.text = [NSString stringWithUTF8String:details.c_str()];
-            cell.detailTextLabel.textColor = ExampleApp::Helpers::ColorPalette::DarkGreyTone;
+            cell.detailTextLabel.textColor = ExampleApp::Helpers::ColorPalette::UiTextCopyColour;
         }
     }
 }
@@ -325,18 +329,9 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
 
 - (void) setCellInfo:(CustomTableViewCell*)cell :(bool)isHeader :(bool)isSearchResult
 {
-    if(!isSearchResult)
-    {
-        [cell setInfo :isHeader
-                      :@"menu_background1"
-                      :@"menu_background1"];
-    }
-    else
-    {
-        [cell setInfo :isHeader
-                      :ExampleApp::Helpers::UIHelpers::UsePhoneLayout() ? @"search_result_background_small" : @"search_result_background"
-                      :@""];
-    }
+    [cell setInfo :isHeader
+                  :ExampleApp::Helpers::ColorPalette::BorderHudColor
+                  :isHeader ? ExampleApp::Helpers::ColorPalette::BorderHudColor : ExampleApp::Helpers::ColorPalette::MainHudColor];
 }
 
 
@@ -385,12 +380,26 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
 {
     const float angle = 0.f;
     UIImageView *openableArrow = (UIImageView*)[cell viewWithTag:SubItemCellOpenableMenuArrowTag];
-    openableArrow.transform = [self computeOpenableArrowTransform:angle];
+    
+    [UIView animateWithDuration:0.2f
+                          delay:0.0f
+                        options:UIViewAnimationCurveEaseInOut
+                     animations:^{
+                         openableArrow.transform = [self computeOpenableArrowTransform:angle];
+                     }
+                     completion:nil];
 }
 
 - (void)showOpenableArrowOpen:(UITableViewCell *)cell
 {
+    const float angle = 270.0f;
     UIImageView *openableArrow = (UIImageView*)[cell viewWithTag:SubItemCellOpenableMenuArrowTag];
-    openableArrow.transform = [self computeOpenableArrowTransform:270.f];
+    [UIView animateWithDuration:0.2f
+                          delay:0.0f
+                        options:UIViewAnimationCurveEaseInOut
+                     animations:^{
+                         openableArrow.transform = [self computeOpenableArrowTransform:angle];
+                     }
+                     completion:nil];
 }
 @end;
