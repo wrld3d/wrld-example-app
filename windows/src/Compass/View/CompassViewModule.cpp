@@ -29,16 +29,6 @@ namespace ExampleApp
                 Eegeo_DELETE m_pController;
                 Eegeo_DELETE m_pView;
             }
-
-            void CompassViewModule::AnimateOffScreen()
-            {
-                m_pView->SetFullyOffScreen();
-            }
-
-            void CompassViewModule::AnimateOnScreen()
-            {
-                m_pView->SetFullyOnScreen();
-            }
         }
     }
 }

@@ -36,17 +36,6 @@ namespace ExampleApp
                 Eegeo_DELETE m_pInitiationController;
                 Eegeo_DELETE m_pInitiationView;
             }
-
-            void MyPinCreationViewModule::AnimateOffScreen()
-            {
-                m_pInitiationView->SetFullyOffScreen();
-            }
-
-            void MyPinCreationViewModule::AnimateOnScreen()
-            {
-                m_pInitiationView->SetFullyOnScreen();
-            }
-
         }
     }
 }
