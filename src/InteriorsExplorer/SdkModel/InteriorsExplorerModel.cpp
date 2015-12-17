@@ -82,7 +82,7 @@ namespace ExampleApp
             void InteriorsExplorerModel::ChangeToInteriorMapState()
             {
                 const VisualMap::SdkModel::VisualMapState& currentState = m_visualMapService.GetCurrentVisualMapState();
-                m_visualMapService.SetVisualMapState(currentState.GetTheme(), "DayDefault", true);
+                m_visualMapService.SetVisualMapState(currentState.GetTheme(), "DayDefault", false);
             }
             
             void InteriorsExplorerModel::ResumePreviousMapState()
