@@ -698,6 +698,7 @@
 		564D879F1C22EEFC004B0EA5 /* VisualMapStateHistory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5669A55D1C216AC5006D6153 /* VisualMapStateHistory.cpp */; };
 		564D87A01C22EEFF004B0EA5 /* VisualMapService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5669A5601C21723A006D6153 /* VisualMapService.cpp */; };
 		564D87A11C22EF03004B0EA5 /* VisualMapModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5669A5641C2175AF006D6153 /* VisualMapModule.cpp */; };
+		564D87A21C22EFF3004B0EA5 /* DejaVuSansBold_0.png in Resources */ = {isa = PBXBuildFile; fileRef = 56A16A411B428B6900DA35F7 /* DejaVuSansBold_0.png */; };
 		565FE37E1BE8B18D00232A74 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 565FE37D1BE8B18D00232A74 /* AVFoundation.framework */; };
 		565FE37F1BE8B19100232A74 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 565FE37D1BE8B18D00232A74 /* AVFoundation.framework */; };
 		566306DB1AD2D69800980426 /* stars_0_0.png in Resources */ = {isa = PBXBuildFile; fileRef = 566306BD1AD2D69800980426 /* stars_0_0.png */; };
@@ -7016,6 +7017,7 @@
 				18EC01111AA7752500902E98 /* icon1_foggy@3x.png in Resources */,
 				188C4CAE1AA730BF0080B34B /* button_ok_place_pin_on.png in Resources */,
 				18FE21B11AA9C75700ACE28A /* search_results_bar@2x.png in Resources */,
+				564D87A21C22EFF3004B0EA5 /* DejaVuSansBold_0.png in Resources */,
 				18FE21451AA9BA3C00ACE28A /* button_ok_off@3x.png in Resources */,
 				5663070B1AD2D69800980426 /* stars_4_5.png in Resources */,
 				18EC01231AA7752500902E98 /* icon1_nightlife@2x.png in Resources */,
