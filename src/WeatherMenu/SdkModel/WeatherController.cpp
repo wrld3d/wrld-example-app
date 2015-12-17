@@ -1,9 +1,12 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "WeatherController.h"
-#include "ICityThemesService.h"
-#include "ICityThemesUpdater.h"
-#include "Logger.h"
+#include "IVisualMapService.h"
+#include "VisualMapState.h"
+
+#include <algorithm>
+#include <utility>
+#include <iterator>
 
 namespace ExampleApp
 {
@@ -11,48 +14,48 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            WeatherController::WeatherController(Eegeo::Resources::CityThemes::ICityThemesService& themesService,
-                                                 Eegeo::Resources::CityThemes::ICityThemesUpdater& themesUpdater)
-                : m_currentWeather("Default")
-                , m_currentTime("Day")
-                , m_currentTheme("Summer")
-                , m_currentState("DayDefault")
-                , m_themesService(themesService)
-                , m_themesUpdater(themesUpdater)
+            namespace
             {
-            }
-
-            void WeatherController::SetTime(const std::string &time)
-            {
-                m_currentTime = time;
-                SetState(m_currentTime + m_currentWeather);
-            }
-
-            void WeatherController::SetWeather(const std::string &weather)
-            {
-                m_currentWeather = weather;
-                SetState(m_currentTime + m_currentWeather);
-            }
-
-            void WeatherController::SetTheme(const std::string &theme)
-            {
-                m_currentTheme = theme;
-                RefreshTheme();
+                typedef std::pair<std::string, std::string> TTimeWeatherPair;
+                TTimeWeatherPair ExtractTimeWeatherPairFromState(const std::string& state)
+                {
+                    std::string::const_reverse_iterator iter = std::find_if(state.rbegin(), state.rend(), ::isupper);
+                    size_t index = state.size() - std::distance(state.rbegin(), iter) - 1;
+                    
+                    const std::string& time = state.substr(0, index);
+                    const std::string& weather = state.substr(index);
+                    
+                    return std::make_pair(time, weather);
+                }
             }
             
-            void WeatherController::SetState(const std::string &state)
+            WeatherController::WeatherController(VisualMap::SdkModel::IVisualMapService& visualMapService)
+            : m_visualMapService(visualMapService)
             {
-                m_currentState = state;
-                RefreshTheme();
             }
 
-            void WeatherController::RefreshTheme()
+            void WeatherController::SetTime(const std::string& time)
             {
-                EXAMPLE_LOG("Changing season to: %s\n", m_currentTheme.c_str());
-                m_themesUpdater.SetThemeMustContain(m_currentTheme);
+                const VisualMap::SdkModel::VisualMapState& currentState = m_visualMapService.GetCurrentVisualMapState();
+                const TTimeWeatherPair& currentTimeWeather = ExtractTimeWeatherPairFromState(currentState.GetState());
+                SetState(time + currentTimeWeather.second);
+            }
 
-                EXAMPLE_LOG("Changing state to: %s\n", m_currentState.c_str());
-                m_themesService.RequestTransitionToState(m_currentState, 1);
+            void WeatherController::SetWeather(const std::string& weather)
+            {
+                const VisualMap::SdkModel::VisualMapState& currentState = m_visualMapService.GetCurrentVisualMapState();
+                const TTimeWeatherPair& currentTimeWeather = ExtractTimeWeatherPairFromState(currentState.GetState());
+                SetState(currentTimeWeather.first + weather);
+            }
+
+            void WeatherController::SetTheme(const std::string& theme)
+            {
+                m_visualMapService.SetVisualMapTheme(theme);
+            }
+            
+            void WeatherController::SetState(const std::string& state)
+            {
+                m_visualMapService.SetVisualMapThemeState(state);
             }
         }
     }

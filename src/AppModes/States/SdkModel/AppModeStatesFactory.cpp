@@ -31,8 +31,8 @@ namespace ExampleApp
                                                            Tours::SdkModel::ITourService& tourService,
                                                            Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                            Eegeo::UI::NativeUIFactories& nativeUIFactories,
-                                                           MapMode::SdkModel::IMapModeModel& mapModeModel,
-                                                           MyPinCreation::SdkModel::IMyPinCreationModel& myPinCreationModel)
+                                                           MyPinCreation::SdkModel::IMyPinCreationModel& myPinCreationModel,
+                                                           VisualMap::SdkModel::IVisualMapService& visualMapService)
                 : m_appCameraController(appCameraController)
                 , m_interiorController(interiorController)
                 , m_worldCameraController(worldCameraController)
@@ -46,8 +46,8 @@ namespace ExampleApp
                 , m_tourService(tourService)
                 , m_interiorSelectionModel(interiorSelectionModel)
                 , m_nativeUIFactories(nativeUIFactories)
-                , m_mapModeModel(mapModeModel)
                 , m_myPinCreationModel(myPinCreationModel)
+                , m_visualMapService(visualMapService)
                 {
                     
                 }
@@ -89,9 +89,9 @@ namespace ExampleApp
                                                                             m_worldCameraController.GetGlobeCameraController(),
                                                                             m_interiorCameraController,
                                                                             m_interiorsExplorerModel,
-                                                                            m_mapModeModel,
-                                                                            m_myPinCreationModel));
-                    
+                                                                            m_myPinCreationModel,
+                                                                            m_visualMapService));
+
                     return states;
                 }
             }

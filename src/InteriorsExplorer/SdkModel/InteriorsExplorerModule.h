@@ -9,12 +9,11 @@
 #include "WorldPins.h"
 #include "GlobeCamera.h"
 #include "Rendering.h"
-#include "MapMode.h"
 #include "BidirectionalBus.h"
 #include "SdkModelDomainEventBus.h"
 #include "Metrics.h"
 #include "IIdentity.h"
-#include "WeatherMenu.h"
+#include "VisualMap.h"
 
 namespace ExampleApp
 {
@@ -30,8 +29,7 @@ namespace ExampleApp
                                         Eegeo::Resources::Interiors::Markers::InteriorMarkerModelRepository& markerRepository,
                                         WorldPins::SdkModel::IWorldPinsService& worldPinsService,
                                         const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
-                                        ExampleApp::MapMode::SdkModel::IMapModeModel& mapModeModel,
-                                        WeatherMenu::SdkModel::IWeatherController& weatherController,
+                                        VisualMap::SdkModel::IVisualMapService& visualMapService,
                                         Eegeo::Camera::GlobeCamera::GlobeCameraControllerFactory& globeCameraControllerFactory,
                                         const Eegeo::Rendering::ScreenProperties& screenProperties,
                                         Eegeo::Helpers::IIdentityProvider& identityProvider,

@@ -9,12 +9,11 @@
 #include "ICallback.h"
 #include "InteriorsExplorerExitMessage.h"
 #include "InteriorsExplorerSelectFloorMessage.h"
-#include "MapMode.h"
 #include "InteriorId.h"
 #include "Metrics.h"
 #include "AppModes.h"
 #include "InteriorsExplorer.h"
-#include "WeatherMenu.h"
+#include "VisualMap.h"
 
 namespace ExampleApp
 {
@@ -29,8 +28,7 @@ namespace ExampleApp
                 InteriorsExplorerModel(Eegeo::Resources::Interiors::InteriorController& controller,
                                        Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                        InteriorVisibilityUpdater& interiorVisibilityUpdater,
-                                       MapMode::SdkModel::IMapModeModel& mapModeModel,
-                                       WeatherMenu::SdkModel::IWeatherController& weatherController,
+                                       VisualMap::SdkModel::IVisualMapService& visualMapService,
                                        ExampleAppMessaging::TMessageBus& messageBus,
                                        ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
                                        Metrics::IMetricsService& metricsService);
@@ -42,12 +40,8 @@ namespace ExampleApp
                 void HideInteriorExplorer();
                 void Exit();
                 
-                void SaveCurrentMapState();
                 void ChangeToInteriorMapState();
                 void ResumePreviousMapState();
-                
-                bool GetPreviousInMapMode() const;
-                const std::string& GetPreviousWeatherState() const;
                 
                 void InsertInteriorExplorerExitedCallback(Eegeo::Helpers::ICallback0& callback);
                 void RemoveInteriorExplorerExitedCallback(Eegeo::Helpers::ICallback0& callback);
@@ -66,8 +60,7 @@ namespace ExampleApp
                 Eegeo::Resources::Interiors::InteriorController& m_controller;
                 Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
                 InteriorVisibilityUpdater& m_interiorVisibilityUpdater;
-                MapMode::SdkModel::IMapModeModel& m_mapModeModel;
-                WeatherMenu::SdkModel::IWeatherController& m_weatherController;
+                VisualMap::SdkModel::IVisualMapService& m_visualMapService;
 
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 ExampleAppMessaging::TSdkModelDomainEventBus& m_sdkModelDomainEventBus;
@@ -79,9 +72,6 @@ namespace ExampleApp
                 
                 Eegeo::Helpers::TCallback1<InteriorsExplorerModel, const InteriorsExplorerExitMessage&> m_exitCallback;
                 Eegeo::Helpers::TCallback1<InteriorsExplorerModel, const InteriorsExplorerSelectFloorMessage&> m_selectFloorCallback;
-
-                std::string m_previousWeatherState;
-                bool m_previouslyInMapMode;
                 
                 bool m_interiorExplorerEnabled;
                 Eegeo::Helpers::CallbackCollection0 m_interiorExplorerExitedCallbacks;

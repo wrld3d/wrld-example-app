@@ -88,6 +88,7 @@
 #include "ReportPinsVisibilityMasking.h"
 #include "HighlightPickingController.h"
 #include "IRayCaster.h"
+#include "VisualMap.h"
 
 
 namespace ExampleApp
@@ -165,6 +166,7 @@ namespace ExampleApp
         ReportPinsVisibilityMasking::SdkModel::ReportPinsVisibilityMaskingModule* m_pReportPinsVisibilityMaskingModule;
         Eegeo::Picking::PickingController* m_pInteriorsPickingController;
         Eegeo::Collision::IRayCaster* m_pRayCaster;
+        VisualMap::SdkModel::IVisualMapModule* m_pVisualMapModule;
         
         AppModes::SdkModel::IAppModeModel* m_pAppModeModel;
         

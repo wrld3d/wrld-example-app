@@ -4,7 +4,8 @@
 
 #include "Types.h"
 #include "IWeatherController.h"
-#include "CityThemes.h"
+#include "VisualMap.h"
+
 #include <string>
 
 namespace ExampleApp
@@ -17,27 +18,15 @@ namespace ExampleApp
             {
             public:
 
-                WeatherController(Eegeo::Resources::CityThemes::ICityThemesService& themesService,
-                                  Eegeo::Resources::CityThemes::ICityThemesUpdater& themesUpdater);
+                WeatherController(VisualMap::SdkModel::IVisualMapService& visualMapService);
 
                 void SetWeather(const std::string& weather);
                 void SetTime(const std::string& time);
                 void SetTheme(const std::string& season);
-                void SetState(const std::string& currentState);
-                const std::string& GetState() const { return m_currentState; }
+                void SetState(const std::string& state);
 
             private:
-
-                void RefreshTheme();
-                
-                std::string m_currentWeather;
-                std::string m_currentTime;
-                
-                std::string m_currentTheme;
-                std::string m_currentState;
-
-                Eegeo::Resources::CityThemes::ICityThemesService& m_themesService;
-                Eegeo::Resources::CityThemes::ICityThemesUpdater& m_themesUpdater;
+                VisualMap::SdkModel::IVisualMapService& m_visualMapService;
             };
         }
     }
