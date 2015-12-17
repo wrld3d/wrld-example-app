@@ -693,6 +693,11 @@
 		5633F8EB1A79289500D69813 /* libFlurry_6.0.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5633F8EA1A79289500D69813 /* libFlurry_6.0.0.a */; };
 		5633F8ED1A7928C500D69813 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5633F8EC1A7928C500D69813 /* Security.framework */; };
 		5637B7071A261A5400181973 /* image_blank.png in Resources */ = {isa = PBXBuildFile; fileRef = 56FBCDED1A0BB5150026546E /* image_blank.png */; };
+		564D879D1C22EEF5004B0EA5 /* VisualMapModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5669A5521C215ECA006D6153 /* VisualMapModel.cpp */; };
+		564D879E1C22EEF8004B0EA5 /* VisualMapController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5669A5551C215F4C006D6153 /* VisualMapController.cpp */; };
+		564D879F1C22EEFC004B0EA5 /* VisualMapStateHistory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5669A55D1C216AC5006D6153 /* VisualMapStateHistory.cpp */; };
+		564D87A01C22EEFF004B0EA5 /* VisualMapService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5669A5601C21723A006D6153 /* VisualMapService.cpp */; };
+		564D87A11C22EF03004B0EA5 /* VisualMapModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5669A5641C2175AF006D6153 /* VisualMapModule.cpp */; };
 		565FE37E1BE8B18D00232A74 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 565FE37D1BE8B18D00232A74 /* AVFoundation.framework */; };
 		565FE37F1BE8B19100232A74 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 565FE37D1BE8B18D00232A74 /* AVFoundation.framework */; };
 		566306DB1AD2D69800980426 /* stars_0_0.png in Resources */ = {isa = PBXBuildFile; fileRef = 566306BD1AD2D69800980426 /* stars_0_0.png */; };
@@ -7755,6 +7760,7 @@
 				BFD5FCB61BA7068300F591F1 /* iCarouselTourExplorerViewController.mm in Sources */,
 				7E3B88DE1A385A290023C94E /* FlattenButtonController.cpp in Sources */,
 				BF4FEE391BC2BD1200932C17 /* ExampleTourPinSelectionHandler.cpp in Sources */,
+				564D879F1C22EEFC004B0EA5 /* VisualMapStateHistory.cpp in Sources */,
 				BFDEB4BD1BCFADFF00F037B7 /* TourState.cpp in Sources */,
 				7E3B8AF31A385F110023C94E /* CustomTableViewCell.mm in Sources */,
 				7E3B8B1F1A385F110023C94E /* SearchResultMenuViewModule.mm in Sources */,
@@ -7782,6 +7788,7 @@
 				27E936071BE13F2A007D52C5 /* UserInteractionEnabledObserver.cpp in Sources */,
 				7E3B891E1A385A290023C94E /* MyPinCreationModel.cpp in Sources */,
 				1868A4141AB3529700030AB6 /* ApplicationConfigurationModule.cpp in Sources */,
+				564D87A01C22EEFF004B0EA5 /* VisualMapService.cpp in Sources */,
 				7E3B89DE1A385A290023C94E /* ViewControllerUpdaterModule.cpp in Sources */,
 				7E3B894E1A385A290023C94E /* MyPinAddedToMenuMessage.cpp in Sources */,
 				18B22B371A7A937D00DDBFA2 /* OptionsView.mm in Sources */,
@@ -7789,6 +7796,7 @@
 				18FE3BD21A9CA561002D61C4 /* SortedMenuComparisonFunctions.cpp in Sources */,
 				279788D01C08975C0053CD00 /* URLRequestHandler.mm in Sources */,
 				7E3B8AEB1A385F110023C94E /* iOSInitialExperiencePreLoadModel.mm in Sources */,
+				564D879E1C22EEF8004B0EA5 /* VisualMapController.cpp in Sources */,
 				7E5811CD1B1F3248007AD67F /* InteriorsExplorerViewInterop.mm in Sources */,
 				560F99181BFE0E190008B0A2 /* WatermarkModule.cpp in Sources */,
 				BF0E350C1BC673EA005B30E8 /* AppCameraController.cpp in Sources */,
@@ -7805,6 +7813,7 @@
 				7E149DDB1BD1466F00C0AFFC /* CameraTransitionService.cpp in Sources */,
 				18B22B101A7A8B3400DDBFA2 /* OptionsOpenableControl.cpp in Sources */,
 				7E3B89921A385A290023C94E /* SearchQueryPerformer.cpp in Sources */,
+				564D879D1C22EEF5004B0EA5 /* VisualMapModel.cpp in Sources */,
 				7E3B89AC1A385A290023C94E /* SearchResultRemovedMessage.cpp in Sources */,
 				7E1B50751ACAD9010060FA4F /* InitialExperienceIntroController.cpp in Sources */,
 				7E3B89261A385A290023C94E /* MyPinCreationViewStateChangedHandler.cpp in Sources */,
@@ -7998,6 +8007,7 @@
 				7E3B890A1A385A290023C94E /* ModalityModule.cpp in Sources */,
 				BFD5FD961BA7141600F591F1 /* ImageStore.mm in Sources */,
 				186B47511AB333150084E80B /* ApplicationConfigurationReader.cpp in Sources */,
+				564D87A11C22EF03004B0EA5 /* VisualMapModule.cpp in Sources */,
 				7E149DD71BD12BC700C0AFFC /* TransitionToInteriorStage.cpp in Sources */,
 				7E3B88A81A385A290023C94E /* AboutPageModule.cpp in Sources */,
 				18B44CEB1A83D3CF00FDFD8A /* OptionsCacheClearSubView.mm in Sources */,
