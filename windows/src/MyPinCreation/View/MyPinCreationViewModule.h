@@ -36,9 +36,6 @@ namespace ExampleApp
                     Metrics::IMetricsService& metricsService
                 );
 
-                void AnimateOffScreen();
-                void AnimateOnScreen();
-
                 ~MyPinCreationViewModule();
             };
         }
