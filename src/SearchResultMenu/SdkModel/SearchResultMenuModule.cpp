@@ -28,10 +28,9 @@ namespace ExampleApp
 
                 m_pMenuOptionsModel = Eegeo_NEW(Menu::View::MenuOptionsModel)(*m_pModel);
 
-                m_pViewModel = Eegeo_NEW(View::SearchResultMenuViewModel)(*m_pModel,
-                               false,
-                               identityProvider.GetNextIdentity(),
-                               reactionControllerModel);
+                m_pViewModel = Eegeo_NEW(View::SearchResultMenuViewModel)(false,
+                                                                          identityProvider.GetNextIdentity(),
+                                                                          reactionControllerModel);
 
                 m_pMenuSection = Eegeo_NEW(Menu::View::MenuSectionViewModel)("Search", "search", *m_pModel, false);
                 m_pViewModel->AddSection(*m_pMenuSection);

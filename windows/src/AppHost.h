@@ -32,7 +32,7 @@
 #include "AppInputDelegate.h"
 #include "Modules.h"
 #include "InitialExperience.h"
-#include "WindowsPersistentSettingsModel.h"
+#include "WindowsPersistentSettings.h"
 #include "ViewControllerUpdater.h"
 #include "MenuViewIncludes.h"
 #include "ModalBackgroundViewIncludes.h"
@@ -142,7 +142,7 @@ private:
 
     ExampleApp::MobileExampleApp* m_pApp;
 
-    ExampleApp::PersistentSettings::WindowsPersistentSettingsModel m_WindowsPersistentSettingsModel;
+    ExampleApp::PersistentSettings::WindowsPersistentSettingsModel* m_pWindowsPersistentSettingsModel;
     ExampleApp::InitialExperience::SdkModel::IInitialExperienceModule* m_pInitialExperienceModule;
 
     bool m_createdUIModules;

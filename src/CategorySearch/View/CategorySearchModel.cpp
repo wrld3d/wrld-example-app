@@ -12,10 +12,12 @@ namespace ExampleApp
         {
             CategorySearchModel::CategorySearchModel(const std::string& name,
                     const std::string& searchCategory,
-                    const std::string& icon)
+                    const std::string& icon,
+                    bool inMenu)
                 : m_name(name)
                 , m_searchCategory(searchCategory)
                 , m_icon(icon)
+                , m_inMenu(inMenu)
             {
 
             }
@@ -33,6 +35,11 @@ namespace ExampleApp
             const std::string& CategorySearchModel::SearchCategory() const
             {
                 return m_searchCategory;
+            }
+            
+            bool CategorySearchModel::InMenu() const
+            {
+                return m_inMenu;
             }
         }
     }

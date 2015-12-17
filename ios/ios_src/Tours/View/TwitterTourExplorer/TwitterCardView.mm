@@ -15,6 +15,27 @@
 #include <sstream>
 #include <string>
 #include "ImageStore.h"
+#include <vector>
+
+namespace
+{
+    std::vector<NSRange> GetEmojiOffsetPointsInString(NSString* pString)
+    {
+        __block std::vector<NSRange> points;
+        
+        [pString enumerateSubstringsInRange:NSMakeRange(0, pString.length)
+                                    options:NSStringEnumerationByComposedCharacterSequences
+                                 usingBlock:^(NSString *substring, NSRange substringRange, NSRange enclosingRange, BOOL *stop)
+         {
+             if(substring.length > 1)
+             {
+                 points.push_back(enclosingRange);
+             }
+        }];
+        
+        return points;
+    }
+}
 
 @implementation TwitterCardView
 
@@ -218,14 +239,36 @@
     
     NSMutableAttributedString* tweetContent = [[NSMutableAttributedString alloc] initWithString:strTweetContent];
     
-    float textSize = self.pTweetContent.font.pointSize;
+    float textSize = static_cast<float>(self.pTweetContent.font.pointSize);
     
     [tweetContent addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:textSize] range:NSMakeRange(0, strTweetContent.length)];
+    
+    std::vector<NSRange> emojiCharacterIndex = GetEmojiOffsetPointsInString([tweetContent string]);
     
     for (int i = 0; i < arrLinkUrls.count; ++i)
     {
         NSInteger startIndex = [arrLinkStartIndices[i] integerValue];
         NSInteger endIndex = [arrLinkEndIndices[i] integerValue];
+        NSInteger characterOffset = 0;
+        
+        for(int i = 0; i < emojiCharacterIndex.size(); ++i)
+        {
+            if(startIndex < emojiCharacterIndex[i].location)
+            {
+                break;
+            }
+            
+            /* TH:  Because emoji use a surrogate pair of UTF-16 code points the length returned by the
+                    NSRange is actually double the length of the total characters taken up by the emoji,
+                    and some emoji could be created from multiple UTF-16 characters we should devide the
+                    length by 2.
+                    Further reference: https://www.objc.io/issues/9-strings/unicode/#utf-16-and-the-concept-of-surrogate-pairs
+             */
+            characterOffset += (emojiCharacterIndex[i].length/2);
+        }
+        
+        startIndex += characterOffset;
+        endIndex += characterOffset;
         
         if(endIndex >= tweetContent.length)
         {
@@ -236,18 +279,18 @@
             }
             
             // this link continues past the character limit, clamp to end of text
-            endIndex = tweetContent.length - 1;
+            endIndex = tweetContent.length;
         }
         
         if(m_pInterop->CanHandleDeeplinkURL( [arrDeeplinkUrls[i] UTF8String] ))
         {
             [tweetContent addAttribute:NSLinkAttributeName value:arrDeeplinkUrls[i]
-                                 range:NSMakeRange(startIndex, endIndex - startIndex + 1)];
+                                 range:NSMakeRange(startIndex, endIndex - startIndex)];
         }
         else
         {
             [tweetContent addAttribute:NSLinkAttributeName value:arrLinkUrls[i]
-                                 range:NSMakeRange(startIndex, endIndex - startIndex + 1)];
+                                 range:NSMakeRange(startIndex, endIndex - startIndex)];
         }
     }
     

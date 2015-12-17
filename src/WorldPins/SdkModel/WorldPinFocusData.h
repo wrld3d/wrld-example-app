@@ -12,9 +12,12 @@ namespace ExampleApp
         {
             struct WorldPinFocusData
             {
-                WorldPinFocusData(const std::string& title, const std::string& subtitle,
-                                  const std::string& vendor, const std::string& json,
-                                  const std::string& ratingsImg, const int reviewCount)
+                WorldPinFocusData(const std::string& title,
+                                  const std::string& subtitle,
+                                  const std::string& vendor,
+                                  const std::string& json,
+                                  const std::string& ratingsImg,
+                                  const int reviewCount)
                 : title(title)
                 , subtitle(subtitle)
                 , vendor(vendor)

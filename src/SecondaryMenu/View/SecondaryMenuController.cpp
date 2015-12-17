@@ -35,10 +35,15 @@ namespace ExampleApp
 
             void SecondaryMenuController::OnAppModeChanged(const AppModes::AppModeChangedMessage& message)
             {
-                m_appModeAllowsOpen = message.GetAppMode() != AppModes::SdkModel::InteriorMode;
+                m_appModeAllowsOpen = message.GetAppMode() == AppModes::SdkModel::WorldMode;
                 if (!m_appModeAllowsOpen)
                 {
                     m_viewModel.Close();
+                    m_viewModel.RemoveFromScreen();
+                }
+                else
+                {
+                    m_viewModel.AddToScreen();
                 }
             }
             

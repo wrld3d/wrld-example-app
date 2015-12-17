@@ -29,8 +29,7 @@ namespace ExampleApp
                                                   IMyPinCreationInitiationViewModel& viewModel,
                                                   IMyPinCreationConfirmationViewModel& confirmationViewModel,
                                                   const Eegeo::Rendering::ScreenProperties& screenProperties,
-                                                  Metrics::IMetricsService& metricsService,
-                                                  const AppModes::SdkModel::IAppModeModel& appModeModel);
+                                                  Metrics::IMetricsService& metricsService);
 
                 ~MyPinCreationInitiationViewModule();
 

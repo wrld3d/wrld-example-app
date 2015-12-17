@@ -29,6 +29,7 @@ namespace ExampleApp
                 float m_modality;
                 float m_visibilityScale;
                 float m_targetVisibilityScale;
+                bool m_hideOutdoorPinsIndoors;
                 const float m_visibilityAnimationDuration;
                 Eegeo::Resources::Interiors::InteriorController& m_interiorController;
 
@@ -56,6 +57,8 @@ namespace ExampleApp
                 
                 void SetVisibilityMask(int visibilityMask);
 
+                void SetHideOutdoorPinsIndoors(bool hideOutdoorPinsIndoors);
+                
                 void Show();
                 void Hide();
 

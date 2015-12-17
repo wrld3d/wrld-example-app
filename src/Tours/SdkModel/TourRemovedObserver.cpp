@@ -26,6 +26,7 @@ namespace ExampleApp
             
             void TourRemovedObserver::HandleTourRemoved(TourModel& tourModel)
             {
+                // TODO, wire this up...
                 //m_worldPinsService.RemovePin()
             }
         }

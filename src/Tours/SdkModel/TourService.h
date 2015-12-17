@@ -12,6 +12,8 @@
 #include <stack>
 #include "SdkModelDomainEventBus.h"
 #include "CallbackCollection.h"
+#include "Metrics.h"
+#include "Search.h"
 
 namespace ExampleApp
 {
@@ -44,6 +46,8 @@ namespace ExampleApp
                 ITourRepository& m_repository;
                 Camera::IToursCameraTransitionController& m_cameraTransitionController;
                 std::map<std::string, States::ITourStateMachine*> m_pTourToStateMachineMapping;
+                Metrics::IMetricsService& m_metricsService;
+                Search::SdkModel::ISearchRefreshService& m_searchRefreshService;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 ExampleAppMessaging::TSdkModelDomainEventBus& m_sdkDomainEventBus;
                 
@@ -62,6 +66,8 @@ namespace ExampleApp
             public:
                 TourService(ITourRepository& repository,
                             Camera::IToursCameraTransitionController& cameraTransitionController,
+                            Metrics::IMetricsService& metricsService,
+                            Search::SdkModel::ISearchRefreshService& searchRefreshService,
                             ExampleAppMessaging::TMessageBus& messageBus,
                             ExampleAppMessaging::TSdkModelDomainEventBus& sdkDomainEventBus);
                 
