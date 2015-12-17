@@ -3,7 +3,6 @@
 #pragma once
 
 #include "IAppModeStatesFactory.h"
-#include <vector>
 #include "IStateMachineState.h"
 #include "Interiors.h"
 #include "Streaming.h"
@@ -12,8 +11,11 @@
 #include "AppModes.h"
 #include "Tours.h"
 #include "EegeoUI.h"
-#include "MapMode.h"
 #include "MyPinCreation.h"
+
+#include "VisualMap.h"
+
+#include <vector>
 
 namespace ExampleApp
 {
@@ -39,8 +41,9 @@ namespace ExampleApp
                     Tours::SdkModel::ITourService& m_tourService;
                     Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
                     Eegeo::UI::NativeUIFactories& m_nativeUIFactories;
-                    MapMode::SdkModel::IMapModeModel& m_mapModeModel;
                     MyPinCreation::SdkModel::IMyPinCreationModel& m_myPinCreationModel;
+                    VisualMap::SdkModel::IVisualMapService& m_visualMapService;
+
                     
                 public:
                     
@@ -57,8 +60,8 @@ namespace ExampleApp
                                          Tours::SdkModel::ITourService& tourService,
                                          Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                          Eegeo::UI::NativeUIFactories& nativeUIFactories,
-                                         MapMode::SdkModel::IMapModeModel& mapModeModel,
-                                         MyPinCreation::SdkModel::IMyPinCreationModel& myPinCreationModel);
+                                         MyPinCreation::SdkModel::IMyPinCreationModel& myPinCreationModel,
+                                         VisualMap::SdkModel::IVisualMapService& visualMapService);
                     
                     ~AppModeStatesFactory()
                     {

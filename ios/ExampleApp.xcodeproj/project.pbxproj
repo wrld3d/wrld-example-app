@@ -580,7 +580,6 @@
 		222E06921948B08B0004FFD9 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE4824C168476BA0006E99B /* OpenGLES.framework */; };
 		222E06931948B08B0004FFD9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE481EA16836F370006E99B /* UIKit.framework */; };
 		222E06941948B08B0004FFD9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE481EC16836F370006E99B /* Foundation.framework */; };
-		222E06951948B08B0004FFD9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE481EE16836F370006E99B /* CoreGraphics.framework */; };
 		222E06961948B08B0004FFD9 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE481F016836F370006E99B /* CoreData.framework */; };
 		222E06991948B08B0004FFD9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7EE481F516836F370006E99B /* InfoPlist.strings */; };
 		222E069A1948B08B0004FFD9 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7EE4820C1683713B0006E99B /* MainStoryboard_iPhone.storyboard */; };
@@ -685,6 +684,8 @@
 		560F99191BFE0E190008B0A2 /* WatermarkModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 560F99161BFE0E190008B0A2 /* WatermarkModule.cpp */; };
 		560F991C1BFE1AB30008B0A2 /* WatermarkDataFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 560F991A1BFE1AB30008B0A2 /* WatermarkDataFactory.cpp */; };
 		560F991D1BFE1AB30008B0A2 /* WatermarkDataFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 560F991A1BFE1AB30008B0A2 /* WatermarkDataFactory.cpp */; };
+		5610347F1C22EACB007D5D2A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE481EE16836F370006E99B /* CoreGraphics.framework */; };
+		561034801C22EB1C007D5D2A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5675901D19F53C7A00C4599E /* QuartzCore.framework */; };
 		561ECF221B467FD3007BD4F9 /* InteriorsEntitiesPinsModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 561ECF201B467FD3007BD4F9 /* InteriorsEntitiesPinsModule.cpp */; };
 		561ECF231B467FD4007BD4F9 /* InteriorsEntitiesPinsModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 561ECF201B467FD3007BD4F9 /* InteriorsEntitiesPinsModule.cpp */; };
 		561ECF291B46820F007BD4F9 /* InteriorsEntitiesPinsController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 561ECF271B46820F007BD4F9 /* InteriorsEntitiesPinsController.cpp */; };
@@ -754,9 +755,11 @@
 		566307141AD2D69800980426 /* stars_5_0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 566306D91AD2D69800980426 /* stars_5_0@2x.png */; };
 		566307151AD2D69800980426 /* stars_5_0@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 566306DA1AD2D69800980426 /* stars_5_0@3x.png */; };
 		566307161AD2D69800980426 /* stars_5_0@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 566306DA1AD2D69800980426 /* stars_5_0@3x.png */; };
-		5675901E19F53C7A00C4599E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5675901D19F53C7A00C4599E /* QuartzCore.framework */; };
-		5675901F19F53C9100C4599E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE481EE16836F370006E99B /* CoreGraphics.framework */; };
-		56A16A431B428B6900DA35F7 /* DejaVuSansBold_0.png in Resources */ = {isa = PBXBuildFile; fileRef = 56A16A411B428B6900DA35F7 /* DejaVuSansBold_0.png */; };
+		5669A5541C215ECA006D6153 /* VisualMapModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5669A5521C215ECA006D6153 /* VisualMapModel.cpp */; };
+		5669A5571C215F4C006D6153 /* VisualMapController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5669A5551C215F4C006D6153 /* VisualMapController.cpp */; };
+		5669A55F1C216AC5006D6153 /* VisualMapStateHistory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5669A55D1C216AC5006D6153 /* VisualMapStateHistory.cpp */; };
+		5669A5621C21723A006D6153 /* VisualMapService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5669A5601C21723A006D6153 /* VisualMapService.cpp */; };
+		5669A5661C2175AF006D6153 /* VisualMapModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5669A5641C2175AF006D6153 /* VisualMapModule.cpp */; };
 		56A16A441B428B6900DA35F7 /* DejaVuSansBold_0.png in Resources */ = {isa = PBXBuildFile; fileRef = 56A16A411B428B6900DA35F7 /* DejaVuSansBold_0.png */; };
 		56A16A451B428B6900DA35F7 /* DejaVuSansBold.fnt in Resources */ = {isa = PBXBuildFile; fileRef = 56A16A421B428B6900DA35F7 /* DejaVuSansBold.fnt */; };
 		56A16A461B428B6900DA35F7 /* DejaVuSansBold.fnt in Resources */ = {isa = PBXBuildFile; fileRef = 56A16A421B428B6900DA35F7 /* DejaVuSansBold.fnt */; };
@@ -2143,6 +2146,23 @@
 		566306D81AD2D69800980426 /* stars_5_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stars_5_0.png; sourceTree = "<group>"; };
 		566306D91AD2D69800980426 /* stars_5_0@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stars_5_0@2x.png"; sourceTree = "<group>"; };
 		566306DA1AD2D69800980426 /* stars_5_0@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stars_5_0@3x.png"; sourceTree = "<group>"; };
+		5669A5511C215E03006D6153 /* VisualMapState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VisualMapState.h; sourceTree = "<group>"; };
+		5669A5521C215ECA006D6153 /* VisualMapModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VisualMapModel.cpp; sourceTree = "<group>"; };
+		5669A5531C215ECA006D6153 /* VisualMapModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VisualMapModel.h; sourceTree = "<group>"; };
+		5669A5551C215F4C006D6153 /* VisualMapController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VisualMapController.cpp; sourceTree = "<group>"; };
+		5669A5561C215F4C006D6153 /* VisualMapController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VisualMapController.h; sourceTree = "<group>"; };
+		5669A5581C21661C006D6153 /* VisualMap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VisualMap.h; sourceTree = "<group>"; };
+		5669A5591C216686006D6153 /* IVisualMapModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IVisualMapModel.h; sourceTree = "<group>"; };
+		5669A55D1C216AC5006D6153 /* VisualMapStateHistory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VisualMapStateHistory.cpp; sourceTree = "<group>"; };
+		5669A55E1C216AC5006D6153 /* VisualMapStateHistory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VisualMapStateHistory.h; sourceTree = "<group>"; };
+		5669A5601C21723A006D6153 /* VisualMapService.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VisualMapService.cpp; sourceTree = "<group>"; };
+		5669A5611C21723A006D6153 /* VisualMapService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VisualMapService.h; sourceTree = "<group>"; };
+		5669A5631C2173B7006D6153 /* IVisualMapStateHistory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IVisualMapStateHistory.h; sourceTree = "<group>"; };
+		5669A5641C2175AF006D6153 /* VisualMapModule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VisualMapModule.cpp; sourceTree = "<group>"; };
+		5669A5651C2175AF006D6153 /* VisualMapModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VisualMapModule.h; sourceTree = "<group>"; };
+		5669A5671C21761C006D6153 /* IVisualMapService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IVisualMapService.h; sourceTree = "<group>"; };
+		5669A5681C2178BD006D6153 /* IVisualMapController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IVisualMapController.h; sourceTree = "<group>"; };
+		5669A5691C217987006D6153 /* IVisualMapModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IVisualMapModule.h; sourceTree = "<group>"; };
 		5675901D19F53C7A00C4599E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		56A16A411B428B6900DA35F7 /* DejaVuSansBold_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DejaVuSansBold_0.png; sourceTree = "<group>"; };
 		56A16A421B428B6900DA35F7 /* DejaVuSansBold.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DejaVuSansBold.fnt; sourceTree = "<group>"; };
@@ -3138,6 +3158,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18FD9FA11ABB4A0C009F4085 /* QuartzCore.framework in Frameworks */,
 				565FE37F1BE8B19100232A74 /* AVFoundation.framework in Frameworks */,
 				56BFB0C81A8B76D200572C99 /* libapps-on-maps-cpp11-sim.a in Frameworks */,
 				56BFB0CA1A8B76D200572C99 /* libapps-on-maps-cpp11.a in Frameworks */,
@@ -3145,8 +3166,6 @@
 				56BFB0CC1A8B7BDC00572C99 /* Security.framework in Frameworks */,
 				56BFB0CD1A8B7BF800572C99 /* libFlurry_6.0.0.a in Frameworks */,
 				222E068F1948B08B0004FFD9 /* SystemConfiguration.framework in Frameworks */,
-				222E06951948B08B0004FFD9 /* CoreGraphics.framework in Frameworks */,
-				18FD9FA11ABB4A0C009F4085 /* QuartzCore.framework in Frameworks */,
 				222E068C1948B08B0004FFD9 /* CoreLocation.framework in Frameworks */,
 				222E068D1948B08B0004FFD9 /* libz.dylib in Frameworks */,
 				222E068E1948B08B0004FFD9 /* MobileCoreServices.framework in Frameworks */,
@@ -3163,6 +3182,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				561034801C22EB1C007D5D2A /* QuartzCore.framework in Frameworks */,
+				5610347F1C22EACB007D5D2A /* CoreGraphics.framework in Frameworks */,
 				565FE37E1BE8B18D00232A74 /* AVFoundation.framework in Frameworks */,
 				56D620DA1A8B641200828A9E /* libapps-on-maps-sim.a in Frameworks */,
 				56D620DB1A8B641200828A9E /* libapps-on-maps.a in Frameworks */,
@@ -3170,8 +3191,6 @@
 				5633F8ED1A7928C500D69813 /* Security.framework in Frameworks */,
 				5633F8EB1A79289500D69813 /* libFlurry_6.0.0.a in Frameworks */,
 				7EE48254168477600006E99B /* SystemConfiguration.framework in Frameworks */,
-				5675901F19F53C9100C4599E /* CoreGraphics.framework in Frameworks */,
-				5675901E19F53C7A00C4599E /* QuartzCore.framework in Frameworks */,
 				7EF5D8651737F9A40049D787 /* CoreLocation.framework in Frameworks */,
 				7EE48258168477CB0006E99B /* libz.dylib in Frameworks */,
 				7EE48256168477A80006E99B /* MobileCoreServices.framework in Frameworks */,
@@ -3270,6 +3289,7 @@
 				279788C71C0896FB0053CD00 /* URLRequest */,
 				27E935F61BE12816007D52C5 /* UserInteraction */,
 				7E3B884E1A385A290023C94E /* ViewControllerUpdater */,
+				5669A54E1C215DCC006D6153 /* VisualMap */,
 				186B47011AB1D46B0084E80B /* Watermark */,
 				7E3B88581A385A290023C94E /* WeatherMenu */,
 				7E3B886D1A385A290023C94E /* WorldAreaLoader */,
@@ -3929,6 +3949,38 @@
 				561ECF281B46820F007BD4F9 /* InteriorsEntitiesPinsController.h */,
 				561ECF2B1B46821D007BD4F9 /* IInteriorsEntitiesPinsController.h */,
 				562FD15D1B46C73F009A85D7 /* InteriorsEntityPinData.h */,
+			);
+			path = SdkModel;
+			sourceTree = "<group>";
+		};
+		5669A54E1C215DCC006D6153 /* VisualMap */ = {
+			isa = PBXGroup;
+			children = (
+				5669A5501C215E03006D6153 /* SdkModel */,
+				5669A5581C21661C006D6153 /* VisualMap.h */,
+			);
+			path = VisualMap;
+			sourceTree = "<group>";
+		};
+		5669A5501C215E03006D6153 /* SdkModel */ = {
+			isa = PBXGroup;
+			children = (
+				5669A5511C215E03006D6153 /* VisualMapState.h */,
+				5669A5521C215ECA006D6153 /* VisualMapModel.cpp */,
+				5669A5531C215ECA006D6153 /* VisualMapModel.h */,
+				5669A5551C215F4C006D6153 /* VisualMapController.cpp */,
+				5669A5561C215F4C006D6153 /* VisualMapController.h */,
+				5669A5591C216686006D6153 /* IVisualMapModel.h */,
+				5669A55D1C216AC5006D6153 /* VisualMapStateHistory.cpp */,
+				5669A55E1C216AC5006D6153 /* VisualMapStateHistory.h */,
+				5669A5601C21723A006D6153 /* VisualMapService.cpp */,
+				5669A5611C21723A006D6153 /* VisualMapService.h */,
+				5669A5631C2173B7006D6153 /* IVisualMapStateHistory.h */,
+				5669A5641C2175AF006D6153 /* VisualMapModule.cpp */,
+				5669A5651C2175AF006D6153 /* VisualMapModule.h */,
+				5669A5671C21761C006D6153 /* IVisualMapService.h */,
+				5669A5681C2178BD006D6153 /* IVisualMapController.h */,
+				5669A5691C217987006D6153 /* IVisualMapModule.h */,
 			);
 			path = SdkModel;
 			sourceTree = "<group>";
@@ -6987,7 +7039,6 @@
 				566307151AD2D69800980426 /* stars_5_0@3x.png in Resources */,
 				18D1D354194A057200FAA1B9 /* FrankBold50_A8_icons_0.png in Resources */,
 				18FE20DB1AA9B2C200ACE28A /* button_close_place_pin_off@2x.png in Resources */,
-				56A16A431B428B6900DA35F7 /* DejaVuSansBold_0.png in Resources */,
 				18B5ACB719DC15CD00BA4A38 /* icon1_rainy.png in Resources */,
 				18FE21FC1AA9D3D000ACE28A /* eegeo_logo@3x.png in Resources */,
 				18FE20DD1AA9B2C200ACE28A /* button_close_place_pin_off@3x.png in Resources */,
@@ -7298,6 +7349,7 @@
 				7E3B89D71A385A290023C94E /* PerformedSearchMessageHandler.cpp in Sources */,
 				BFD5FCC71BA7068300F591F1 /* TourHovercardView.mm in Sources */,
 				18FB64771A92455E005A9411 /* iOSYelpSearchQuery.mm in Sources */,
+				5669A5571C215F4C006D6153 /* VisualMapController.cpp in Sources */,
 				7E3B894B1A385A290023C94E /* MyPinDetailsOpenableControl.cpp in Sources */,
 				7E3B89CF1A385A290023C94E /* SearchResultPoiModule.cpp in Sources */,
 				BFD5FD3D1BA706AD00F591F1 /* SplineCameraMode.cpp in Sources */,
@@ -7358,6 +7410,7 @@
 				7E3B898F1A385A290023C94E /* SearchQuery.cpp in Sources */,
 				E0ECD0531BC6D20400967A95 /* InteriorsCustomMaterialsModule.cpp in Sources */,
 				7E3B89851A385A290023C94E /* ApplyScreenControl.cpp in Sources */,
+				5669A5541C215ECA006D6153 /* VisualMapModel.cpp in Sources */,
 				18FB64731A9240FC005A9411 /* OATokenManager.m in Sources */,
 				7E3B89C11A385A290023C94E /* SearchResultOnMapModule.cpp in Sources */,
 				7E3B8B1C1A385F110023C94E /* SearchResultMenuDataProvider.mm in Sources */,
@@ -7405,14 +7458,17 @@
 				7E3B89071A385A290023C94E /* ModalityController.cpp in Sources */,
 				7E3B89DD1A385A290023C94E /* ViewControllerUpdaterModel.cpp in Sources */,
 				18B44CE81A83C77800FDFD8A /* ClearCacheMessageHandler.mm in Sources */,
+				5669A5661C2175AF006D6153 /* VisualMapModule.cpp in Sources */,
 				7E3B89F31A385A290023C94E /* WorldPinItemModel.cpp in Sources */,
 				18B22B361A7A937D00DDBFA2 /* OptionsViewModule.mm in Sources */,
 				7E3B88EB1A385A290023C94E /* InitialExperienceModel.cpp in Sources */,
+				5669A55F1C216AC5006D6153 /* VisualMapStateHistory.cpp in Sources */,
 				279788C01C087D820053CD00 /* TwitterFeedShowTweetState.cpp in Sources */,
 				18E102891A8B97F00011A18C /* MyPinDetailsDisplayService.cpp in Sources */,
 				7E3B89391A385A290023C94E /* MyPinCreationDetailsModule.cpp in Sources */,
 				7E3B89811A385A290023C94E /* ReactionModel.cpp in Sources */,
 				7E3B89651A385A290023C94E /* MyPinAddedToMenuObserver.cpp in Sources */,
+				5669A5621C21723A006D6153 /* VisualMapService.cpp in Sources */,
 				18A657671A9F877C00238F33 /* MyPinsSearchResultRefreshService.cpp in Sources */,
 				7E3B89B31A385A290023C94E /* SearchResultItemModel.cpp in Sources */,
 				186B47111AB1D46B0084E80B /* WatermarkViewModel.cpp in Sources */,

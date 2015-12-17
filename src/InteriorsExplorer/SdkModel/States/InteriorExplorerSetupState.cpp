@@ -30,7 +30,6 @@ namespace ExampleApp
                 
                 void InteriorExplorerSetupState::Enter(int previousState)
                 {
-                    m_interiorsExplorerModel.SaveCurrentMapState();
                     m_interiorsExplorerModel.ChangeToInteriorMapState();
                     m_cameraController.TransitionToCameraWithHandle(m_interiorCameraHandle);
                 }

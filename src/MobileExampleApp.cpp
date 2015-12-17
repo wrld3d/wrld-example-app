@@ -86,8 +86,8 @@
 #include "TwitterFeedModule.h"
 #include "ITwitterFeedService.h"
 #include "TwitterFeedTourModule.h"
-
 #include "SceneModelsModule.h"
+#include "VisualMapModule.h"
 
 
 namespace ExampleApp
@@ -193,6 +193,7 @@ namespace ExampleApp
         , m_pGlobeCameraWrapper(NULL)
         , m_pTwitterFeedModule(NULL)
         , m_pTwitterFeedTourModule(NULL)
+        , m_pVisualMapModule(NULL)
         , m_toursPinDiameter(48.f)
         , m_enableTours(false)
     {
@@ -369,12 +370,19 @@ namespace ExampleApp
                                                                                          m_messageBus);
 
         Eegeo::Modules::Map::CityThemesModule& cityThemesModule = world.GetCityThemesModule();
+        
+        Eegeo::Modules::Map::MapModule& mapModule = world.GetMapModule();
+        
+        m_pVisualMapModule = Eegeo_NEW(VisualMap::SdkModel::VisualMapModule)(cityThemesModule.GetCityThemesService(),
+                                                                             cityThemesModule.GetCityThemesUpdater(),
+                                                                             mapModule.GetEnvironmentFlatteningService());
 
         m_pWeatherMenuModule = Eegeo_NEW(ExampleApp::WeatherMenu::SdkModel::WeatherMenuModule)(m_platformAbstractions.GetFileIO(),
-                                                                                               cityThemesModule.GetCityThemesService(),
-                                                                                               cityThemesModule.GetCityThemesUpdater(),
+                                                                                               m_pVisualMapModule->GetVisualMapService(),
                                                                                                m_messageBus,
                                                                                                m_metricsService);
+        
+
         
         m_pSecondaryMenuModule = Eegeo_NEW(ExampleApp::SecondaryMenu::SdkModel::SecondaryMenuModule)(m_identityProvider,
                                                                                                      m_pReactionControllerModule->GetReactionControllerModel(),
@@ -397,13 +405,12 @@ namespace ExampleApp
                                                 m_messageBus,
                                                 m_metricsService));
 
-        Eegeo::Modules::Map::MapModule& mapModule = world.GetMapModule();
-
-        m_pMapModeModule = Eegeo_NEW(MapMode::SdkModel::MapModeModule(mapModule.GetEnvironmentFlatteningService(), m_pWeatherMenuModule->GetWeatherController()));
+        m_pMapModeModule = Eegeo_NEW(MapMode::SdkModel::MapModeModule)(m_pVisualMapModule->GetVisualMapService());
 
         m_pFlattenButtonModule = Eegeo_NEW(ExampleApp::FlattenButton::SdkModel::FlattenButtonModule)(m_pMapModeModule->GetMapModeModel(),
                                  m_identityProvider,
                                  m_messageBus);
+    
 
         InitialisePinsModules(mapModule, world, interiorsAffectedByFlattening);
         
@@ -482,8 +489,7 @@ namespace ExampleApp
                                                                                                      interiorsModelModule.GetInteriorMarkerModelRepository(),
                                                                                                      m_pWorldPinsModule->GetWorldPinsService(),
                                                                                                      mapModule.GetEnvironmentFlatteningService(),
-                                                                                                     m_pMapModeModule->GetMapModeModel(),
-                                                                                                     m_pWeatherMenuModule->GetWeatherController(),
+                                                                                                     m_pVisualMapModule->GetVisualMapService(),
                                                                                                      cameraControllerFactory,
                                                                                                      m_screenProperties,
                                                                                                      m_identityProvider,
@@ -551,8 +557,8 @@ namespace ExampleApp
                                                                               m_pToursModule->GetTourService(),
                                                                               interiorsPresentationModule.GetInteriorSelectionModel(),
                                                                               nativeUIFactories,
-                                                                              m_pMapModeModule->GetMapModeModel(),
-                                                                              m_pMyPinCreationModule->GetMyPinCreationModel());
+                                                                              m_pMyPinCreationModule->GetMyPinCreationModel(),
+                                                                              m_pVisualMapModule->GetVisualMapService());
         
         m_pAppModeModel->InitialiseStateMachine(appModeStatesFactory.CreateStateMachineStates());
     }
@@ -601,6 +607,8 @@ namespace ExampleApp
 
         Eegeo_DELETE m_pSecondaryMenuModule;
 
+        Eegeo_DELETE m_pVisualMapModule;
+        
         Eegeo_DELETE m_pWeatherMenuModule;
         
         Eegeo_DELETE m_pGpsMarkerModule;
@@ -778,7 +786,6 @@ namespace ExampleApp
         
         Eegeo::Modules::Map::MapModule& mapModule = m_pWorld->GetMapModule();
         Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsPresentationModule = mapModule.GetInteriorsPresentationModule();
-        
         
         Tours::SdkModel::TourInstances::Example::ExampleTourStateMachineFactory factory(ToursModule().GetCameraTransitionController(),
                                                                                         ToursModule().GetCameraController(),

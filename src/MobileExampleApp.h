@@ -82,6 +82,7 @@
 #include "UserInteraction.h"
 #include "TwitterFeed.h"
 #include "TwitterFeedTour.h"
+#include "VisualMap.h"
 
 
 namespace ExampleApp
@@ -152,6 +153,7 @@ namespace ExampleApp
         InteriorsCustomMaterials::SdkModel::IInteriorsCustomMaterialsModule* m_pInteriorsCustomMaterialsModule;
         UserInteraction::SdkModel::UserInteractionModule* m_pUserInteractionModule;
         Social::TwitterFeed::ITwitterFeedModule* m_pTwitterFeedModule;
+        VisualMap::SdkModel::IVisualMapModule* m_pVisualMapModule;
         
         AppModes::SdkModel::IAppModeModel* m_pAppModeModel;
         

@@ -13,9 +13,10 @@
 #include "InteriorsExplorerCameraController.h"
 #include "InteriorsExplorerModel.h"
 #include "MathFunc.h"
-#include "IMapModeModel.h"
 #include "MyPinCreationModel.h"
 #include "MyPinCreationStage.h"
+#include "IVisualMapService.h"
+#include "VisualMapState.h"
 
 namespace ExampleApp
 {
@@ -33,8 +34,8 @@ namespace ExampleApp
                                      Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& worldCameraController,
                                      ExampleApp::InteriorsExplorer::SdkModel::InteriorsExplorerCameraController& interiorsCameraController,
                                      InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel,
-                                     MapMode::SdkModel::IMapModeModel& mapModeModel,
-                                     MyPinCreation::SdkModel::IMyPinCreationModel& myPinCreationModel)
+                                     MyPinCreation::SdkModel::IMyPinCreationModel& myPinCreationModel,
+                                     VisualMap::SdkModel::IVisualMapService& visualMapService)
                 : m_cameraController(cameraController)
                 , m_tourCameraHandle(tourCameraHandle)
                 , m_tourService(tourService)
@@ -44,9 +45,8 @@ namespace ExampleApp
                 , m_worldCameraController(worldCameraController)
                 , m_interiorsCameraController(interiorsCameraController)
                 , m_interiorsExplorerModel(interiorsExplorerModel)
-                , m_mapModeModel(mapModeModel)
-                , m_previousMapModeState(false)
                 , m_myPinCreationModel(myPinCreationModel)
+                , m_visualMapService(visualMapService)
                 {
                 }
                 
@@ -58,16 +58,8 @@ namespace ExampleApp
                 {
                     m_cameraController.TransitionToCameraWithHandle(m_tourCameraHandle);
                     m_tourService.RegisterTourEndedCallback(m_tourStartedCallback);
-                    
-                    if(previousState == AppModes::SdkModel::InteriorMode)
-                    {
-                        m_previousMapModeState = m_interiorsExplorerModel.GetPreviousInMapMode();
-                    }
-                    else
-                    {
-                        m_previousMapModeState = m_mapModeModel.IsInMapMode();
-                    }
-                    m_mapModeModel.SetInMapMode(false);
+
+                    m_visualMapService.StoreCurrentMapState();
                     
                     m_myPinCreationModel.SetCreationStage(MyPinCreation::Inactive);
                 }
@@ -98,8 +90,8 @@ namespace ExampleApp
                         m_interiorsCameraController.SetHeading(m_cameraController.GetHeadingDegrees());
                         m_interiorsCameraController.SetInterestLocation(m_cameraController.GetCameraState().InterestPointEcef());
                     }
-                    
-                    m_mapModeModel.SetInMapMode(m_previousMapModeState);
+
+                    m_visualMapService.RestorePreviousMapState();
                 }
 
                 

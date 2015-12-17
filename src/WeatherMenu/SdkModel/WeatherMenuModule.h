@@ -6,10 +6,10 @@
 #include "WeatherMenu.h"
 #include "Menu.h"
 #include "Helpers.h"
-#include "CityThemes.h"
 #include "BidirectionalBus.h"
 #include "WeatherSelectedMessageHandler.h"
 #include "IMetricsService.h"
+#include "VisualMap.h"
 
 namespace ExampleApp
 {
@@ -21,8 +21,7 @@ namespace ExampleApp
             {
             public:
                 WeatherMenuModule(Eegeo::Helpers::IFileIO& fileio,
-                                  Eegeo::Resources::CityThemes::ICityThemesService& themesService,
-                                  Eegeo::Resources::CityThemes::ICityThemesUpdater& themesUpdater,
+                                  VisualMap::SdkModel::IVisualMapService& visualMapService,
                                   ExampleAppMessaging::TMessageBus& messageBus,
                                   Metrics::IMetricsService& metricsService);
 

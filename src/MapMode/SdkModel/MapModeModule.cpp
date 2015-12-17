@@ -10,12 +10,11 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            MapModeModule::MapModeModule(Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
-                                         WeatherMenu::SdkModel::IWeatherController& weatherController)
+            MapModeModule::MapModeModule(VisualMap::SdkModel::IVisualMapService& visualMapService)
             : m_pMapModeModel(NULL)
             {
                 m_pMapModeModel = Eegeo_NEW(MapModeModel)();
-                m_pMapModeController = Eegeo_NEW(MapModeController)(*m_pMapModeModel, environmentFlatteningService, weatherController);
+                m_pMapModeController = Eegeo_NEW(MapModeController)(*m_pMapModeModel, visualMapService);
             }
 
             MapModeModule::~MapModeModule()

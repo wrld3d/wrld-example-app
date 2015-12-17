@@ -4,10 +4,9 @@
 
 #include "IMapModeModule.h"
 #include "MapMode.h"
-#include "Rendering.h"
-#include "WeatherMenu.h"
 #include "Types.h"
 #include "IMapModeModel.h"
+#include "VisualMap.h"
 
 namespace ExampleApp
 {
@@ -18,8 +17,7 @@ namespace ExampleApp
             class MapModeModule : public IMapModeModule, private Eegeo::NonCopyable
             {
             public:
-                MapModeModule(Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
-                              WeatherMenu::SdkModel::IWeatherController& weatherController);
+                MapModeModule(VisualMap::SdkModel::IVisualMapService& visualMapService);
                 ~MapModeModule();
 
                 IMapModeModel& GetMapModeModel();
