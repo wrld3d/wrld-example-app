@@ -97,7 +97,6 @@ namespace ExampleApp
         Eegeo::Location::NavigationService* m_pNavigationService;
         PlatformAbstractionsFacade m_platformAbstractions;
         Eegeo::Rendering::LoadingScreen* m_pLoadingScreen;
-        Eegeo::Blitter* m_pBlitter;
         Eegeo::Rendering::ScreenProperties m_screenProperties;
         bool m_initialisedApplicationViewState;
         bool m_setMetricsLocation;

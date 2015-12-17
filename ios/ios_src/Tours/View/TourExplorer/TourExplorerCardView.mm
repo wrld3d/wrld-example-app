@@ -110,6 +110,11 @@
     self.layer.shadowPath = [UIBezierPath bezierPathWithRect:self.bounds].CGPath;
     self.layer.masksToBounds = NO;
     
+    self.layer.shouldRasterize = YES;
+    self.layer.rasterizationScale = [UIScreen mainScreen].scale;
+    self.pTextLabel.contentScaleFactor = [UIScreen mainScreen].scale;
+    self.pDetailTextLabel.contentScaleFactor = [UIScreen mainScreen].scale;
+    
     [super layoutSubviews];
 }
 

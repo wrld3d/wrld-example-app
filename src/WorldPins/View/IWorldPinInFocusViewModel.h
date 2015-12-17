@@ -42,6 +42,10 @@ namespace ExampleApp
                 virtual void InsertUpdateCallback(Eegeo::Helpers::ICallback0& updateCallback) = 0;
 
                 virtual void RemoveUpdateCallback(Eegeo::Helpers::ICallback0& updateCallback) = 0;
+                
+                virtual void InsertSelectedFocussedResultCallback(Eegeo::Helpers::ICallback0& selectedFocussedResultCallback) = 0;
+                
+                virtual void RemoveSelectedFocussedResultCallback(Eegeo::Helpers::ICallback0& selectedFocussedResultCallback) = 0;
             };
         }
     }

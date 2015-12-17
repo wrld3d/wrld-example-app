@@ -21,6 +21,7 @@
 @property (nonatomic, retain) IBOutlet UILabel* pScreenNameLabel;
 @property (nonatomic, retain) IBOutlet UILabel* pTimeStampLabel;
 @property (nonatomic, retain) IBOutlet UIView* pUserImageContainer;
+@property (nonatomic, retain) UIActivityIndicatorView* pImageLoadingSpinner;
 @property (nonatomic, retain) IBOutlet FXImageView* pUserImage;
 @property (nonatomic, retain) IBOutlet FXImageView* pBannerImage;
 @property (nonatomic, retain) IBOutlet UITextView* pTweetContent;

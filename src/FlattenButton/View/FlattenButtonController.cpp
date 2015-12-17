@@ -10,7 +10,7 @@ namespace ExampleApp
         {
             void FlattenButtonController::OnToggleButton(bool& toggle)
             {
-                if (m_appModeModel.GetAppMode() == AppModes::SdkModel::InteriorMode)
+                if (!m_appModeAllowsOpen)
                 {
                     m_view.SetToggled(false);
                     return;
@@ -51,32 +51,48 @@ namespace ExampleApp
                     }
                 }
             }
+            
+            void FlattenButtonController::OnAppModeChangedMessage(const AppModes::AppModeChangedMessage& message)
+            {
+                m_appModeAllowsOpen = message.GetAppMode() == AppModes::SdkModel::WorldMode;
+                
+                if(m_appModeAllowsOpen)
+                {
+                    m_viewModel.AddToScreen();
+                }
+                else
+                {
+                    m_viewModel.RemoveFromScreen();
+                }
+            }
 
             FlattenButtonController::FlattenButtonController(
                 IFlattenButtonViewModel& viewModel,
                 IFlattenButtonView& view,
                 ExampleAppMessaging::TMessageBus& messageBus,
-                Metrics::IMetricsService& metricsService,
-                const AppModes::SdkModel::IAppModeModel& appModeModel
+                Metrics::IMetricsService& metricsService
             )
                 : m_viewModel(viewModel)
                 , m_view(view)
                 , m_messageBus(messageBus)
                 , m_metricsService(metricsService)
-                , m_appModeModel(appModeModel)
+                , m_appModeAllowsOpen(true)
                 , m_stateChangeHandler(this, &FlattenButtonController::OnFlattenButtonModelStateChangedMessage)
                 , m_toggledCallback(this, &FlattenButtonController::OnToggleButton)
                 , m_viewStateCallback(this, &FlattenButtonController::OnViewStateChangeScreenControl)
                 , m_myPinCreationStateChangedMessageHandler(this, &FlattenButtonController::OnMyPinCreationStateChangedMessage)
+                , m_appModeChangedHandler(this, &FlattenButtonController::OnAppModeChangedMessage)
             {
                 m_view.InsertToggleCallback(m_toggledCallback);
                 m_viewModel.InsertOnScreenStateChangedCallback(m_viewStateCallback);
                 m_messageBus.SubscribeUi(m_stateChangeHandler);
                 m_messageBus.SubscribeUi(m_myPinCreationStateChangedMessageHandler);
+                m_messageBus.SubscribeUi(m_appModeChangedHandler);
             }
 
             FlattenButtonController::~FlattenButtonController()
             {
+                m_messageBus.UnsubscribeUi(m_appModeChangedHandler);
                 m_messageBus.UnsubscribeUi(m_myPinCreationStateChangedMessageHandler);
                 m_messageBus.UnsubscribeUi(m_stateChangeHandler);
                 m_viewModel.RemoveOnScreenStateChangedCallback(m_viewStateCallback);

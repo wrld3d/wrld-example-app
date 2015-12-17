@@ -62,13 +62,18 @@ namespace ExampleApp
 
             InitDirect3D(windowHandle);			
 
-            void* surfaceSharePointer = m_appRunner->GetMainRenderSurfaceSharePointer();
-            IDirect3DSurface9* surface = GetSurfaceFromShareHandle(surfaceSharePointer, m_pState->screenWidth, m_pState->screenHeight);
-            Lock();
-            SetBackBuffer(System::Windows::Interop::D3DResourceType::IDirect3DSurface9, System::IntPtr(surface));
-            Unlock();
-            surface->Release();
+			InitBackBuffer();
         }
+
+		void MapImage::InitBackBuffer()
+		{
+			void* surfaceSharePointer = m_appRunner->GetMainRenderSurfaceSharePointer();
+			IDirect3DSurface9* surface = GetSurfaceFromShareHandle(surfaceSharePointer, m_pState->screenWidth, m_pState->screenHeight);
+			Lock();
+			SetBackBuffer(System::Windows::Interop::D3DResourceType::IDirect3DSurface9, System::IntPtr(surface));
+			Unlock();
+			surface->Release();
+		}
         
         IDirect3DSurface9* MapImage::GetSurfaceFromShareHandle(void* shareHandle, int width, int height)
         {

@@ -83,6 +83,7 @@
 #include "SearchVendorNames.h"
 #include "InteriorsExplorerViewModule.h"
 #include "IInteriorsExplorerModule.h"
+#include "WindowsPersistentSettingsModel.h"
 
 using namespace Eegeo::Windows;
 using namespace Eegeo::Windows::Input;
@@ -116,7 +117,7 @@ AppHost::AppHost(
     , m_pWorldPinOnMapViewModule(NULL)
     , m_pCompassViewModule(NULL)
     , m_pApp(NULL)
-    , m_WindowsPersistentSettingsModel(nativeState)
+    , m_pWindowsPersistentSettingsModel(NULL)
     , m_createdUIModules(false)
     , m_requestedApplicationInitialiseViewState(false)
     , m_uiCreatedMessageReceivedOnNativeThread(false)
@@ -165,20 +166,21 @@ AppHost::AppHost(
 
     std::string deviceModel = nativeState.deviceModel;
     Eegeo::Config::PlatformConfig platformConfig = Eegeo::Windows::WindowsPlatformConfigBuilder(deviceModel).Build();
-    platformConfig.OptionsConfig.InteriorsControlledByApp = true;
 
     m_pInputProcessor = Eegeo_NEW(Eegeo::Windows::Input::WindowsInputProcessor)(&m_inputHandler, m_nativeState.window, screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight());
 
+	m_pWindowsPersistentSettingsModel = Eegeo_NEW(ExampleApp::PersistentSettings::WindowsPersistentSettingsModel)(m_nativeState);
+
     m_pInitialExperienceModule = Eegeo_NEW(ExampleApp::InitialExperience::SdkModel::WindowsInitialExperienceModule)(
         m_nativeState,
-        m_WindowsPersistentSettingsModel,
+        *m_pWindowsPersistentSettingsModel,
         m_messageBus
         );
 
     m_pNetworkCapabilities = Eegeo_NEW(ExampleApp::Net::SdkModel::NetworkCapabilities)(
         *m_pWindowsConnectivityService,
         m_pWindowsPlatformAbstractionModule->GetHttpCache(),
-        m_WindowsPersistentSettingsModel);
+        *m_pWindowsPersistentSettingsModel);
 
     m_searchServiceModules[ExampleApp::Search::YelpVendorName] = Eegeo_NEW(ExampleApp::Search::Yelp::WindowsYelpSearchServiceModule)(
         nativeState,
@@ -201,7 +203,7 @@ AppHost::AppHost(
         platformConfig,
         *m_pJpegLoader,
         *m_pInitialExperienceModule,
-        m_WindowsPersistentSettingsModel,
+        *m_pWindowsPersistentSettingsModel,
         m_messageBus,
         m_sdkDomainEventBus,
         *m_pNetworkCapabilities,
@@ -246,6 +248,9 @@ AppHost::~AppHost()
 
     Eegeo_DELETE m_pInitialExperienceModule;
     m_pInitialExperienceModule = NULL;
+
+	Eegeo_DELETE m_pWindowsPersistentSettingsModel;
+	m_pWindowsPersistentSettingsModel = NULL;
 
     Eegeo_DELETE m_pInputProcessor;
     m_pInputProcessor = NULL;
@@ -312,23 +317,6 @@ void AppHost::HandleTouchInputEvent(const Eegeo::Windows::Input::TouchInputEvent
 void AppHost::HandleKeyboardInputEvent(const Eegeo::Windows::Input::KeyboardInputEvent& event)
 {
     m_pInputProcessor->HandleInput(event);
-
-    ExampleApp::FlattenButton::View::FlattenButtonViewModule* flattenButton = dynamic_cast<ExampleApp::FlattenButton::View::FlattenButtonViewModule*>(m_pFlattenButtonViewModule);
-    ExampleApp::Compass::View::CompassViewModule* compass = dynamic_cast<ExampleApp::Compass::View::CompassViewModule*>(m_pCompassViewModule);
-    ExampleApp::MyPinCreation::View::MyPinCreationViewModule* pin = dynamic_cast<ExampleApp::MyPinCreation::View::MyPinCreationViewModule*>(m_pMyPinCreationViewModule);
-
-    if (event.keyCode == VK_UP)
-    {
-        flattenButton->AnimateOnScreen();
-        compass->AnimateOnScreen();
-        pin->AnimateOnScreen();
-    }
-    else if (event.keyCode == VK_DOWN)
-    {
-        flattenButton->AnimateOffScreen();
-        compass->AnimateOffScreen();
-        pin->AnimateOffScreen();
-    }
 }
 
 void AppHost::SetAllInputEventsToPointerUp(int x, int y)
@@ -452,7 +440,6 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
         app.WorldPinsModule().GetWorldPinInFocusViewModel(),
         app.WorldPinsModule().GetScreenControlViewModel(),
         app.ModalityModule().GetModalityModel(),
-        app.GetAppModeModel(),
         app.PinDiameter()
         );
 
@@ -461,8 +448,7 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
         m_nativeState,
         app.FlattenButtonModule().GetFlattenButtonViewModel(),
         m_messageBus,
-        *m_pWindowsFlurryMetricsService,
-        app.GetAppModeModel()
+        *m_pWindowsFlurryMetricsService
         );
 
     m_pCompassViewModule = Eegeo_NEW(ExampleApp::Compass::View::CompassViewModule)(
@@ -477,8 +463,7 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
 		app.MyPinCreationModule().GetMyPinCreationConfirmationViewModel(),
 		app.MyPinCreationDetailsModule().GetMyPinCreationDetailsViewModel(),
 		m_messageBus,
-		*m_pWindowsFlurryMetricsService,
-		app.GetAppModeModel()
+		*m_pWindowsFlurryMetricsService
 		);
 
     // Modal background layer.

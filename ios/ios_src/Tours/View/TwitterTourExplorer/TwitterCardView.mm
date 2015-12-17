@@ -15,6 +15,29 @@
 #include <sstream>
 #include <string>
 #include "ImageStore.h"
+#include <vector>
+#include "ImageHelpers.h"
+#include "UIColors.h"
+
+namespace
+{
+    std::vector<NSRange> GetEmojiOffsetPointsInString(NSString* pString)
+    {
+        __block std::vector<NSRange> points;
+        
+        [pString enumerateSubstringsInRange:NSMakeRange(0, pString.length)
+                                    options:NSStringEnumerationByComposedCharacterSequences
+                                 usingBlock:^(NSString *substring, NSRange substringRange, NSRange enclosingRange, BOOL *stop)
+         {
+             if(substring.length > 1)
+             {
+                 points.push_back(enclosingRange);
+             }
+        }];
+        
+        return points;
+    }
+}
 
 @implementation TwitterCardView
 
@@ -81,6 +104,14 @@
         self.pUserImage.asynchronous = YES;
         [self.pUserImageContainer addSubview:self.pUserImage];
         
+        self.pImageLoadingSpinner = [[[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge] autorelease];
+        self.pImageLoadingSpinner.color = ExampleApp::Helpers::ColorPalette::TwitterBlue;
+        self.pImageLoadingSpinner.hidden = YES;
+        self.pImageLoadingSpinner.frame = CGRectMake(0,0,userImageSize,userImageSize);
+        
+        [self.pUserImage addSubview:self.pImageLoadingSpinner];
+
+        
         self.pNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(userImageContainerSize + userImageContainerX + spacing, nameLabelY, nameLabelWidth, nameLabelHeight)];
         self.pNameLabel.textColor = TwitterDefines::DarkTextColor;
         self.pNameLabel.font = headerFont;
@@ -141,6 +172,10 @@
     [self.pNameLabel removeFromSuperview];
     [self.pNameLabel release];
     self.pNameLabel = nil;
+    
+    [self.pImageLoadingSpinner removeFromSuperview];
+    [self.pImageLoadingSpinner release];
+    self.pImageLoadingSpinner = nil;
     
     [self.pUserImage removeFromSuperview];
     [self.pUserImage release];
@@ -218,14 +253,36 @@
     
     NSMutableAttributedString* tweetContent = [[NSMutableAttributedString alloc] initWithString:strTweetContent];
     
-    float textSize = self.pTweetContent.font.pointSize;
+    float textSize = static_cast<float>(self.pTweetContent.font.pointSize);
     
     [tweetContent addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:textSize] range:NSMakeRange(0, strTweetContent.length)];
+    
+    std::vector<NSRange> emojiCharacterIndex = GetEmojiOffsetPointsInString([tweetContent string]);
     
     for (int i = 0; i < arrLinkUrls.count; ++i)
     {
         NSInteger startIndex = [arrLinkStartIndices[i] integerValue];
         NSInteger endIndex = [arrLinkEndIndices[i] integerValue];
+        NSInteger characterOffset = 0;
+        
+        for(int i = 0; i < emojiCharacterIndex.size(); ++i)
+        {
+            if(startIndex < emojiCharacterIndex[i].location)
+            {
+                break;
+            }
+            
+            /* TH:  Because emoji use a surrogate pair of UTF-16 code points the length returned by the
+                    NSRange is actually double the length of the total characters taken up by the emoji,
+                    and some emoji could be created from multiple UTF-16 characters we should devide the
+                    length by 2.
+                    Further reference: https://www.objc.io/issues/9-strings/unicode/#utf-16-and-the-concept-of-surrogate-pairs
+             */
+            characterOffset += (emojiCharacterIndex[i].length/2);
+        }
+        
+        startIndex += characterOffset;
+        endIndex += characterOffset;
         
         if(endIndex >= tweetContent.length)
         {
@@ -236,28 +293,35 @@
             }
             
             // this link continues past the character limit, clamp to end of text
-            endIndex = tweetContent.length - 1;
+            endIndex = tweetContent.length;
         }
         
         if(m_pInterop->CanHandleDeeplinkURL( [arrDeeplinkUrls[i] UTF8String] ))
         {
             [tweetContent addAttribute:NSLinkAttributeName value:arrDeeplinkUrls[i]
-                                 range:NSMakeRange(startIndex, endIndex - startIndex + 1)];
+                                 range:NSMakeRange(startIndex, endIndex - startIndex)];
         }
         else
         {
             [tweetContent addAttribute:NSLinkAttributeName value:arrLinkUrls[i]
-                                 range:NSMakeRange(startIndex, endIndex - startIndex + 1)];
+                                 range:NSMakeRange(startIndex, endIndex - startIndex)];
         }
     }
     
     [self.pTweetContent setAttributedText:tweetContent];
     
+    [self.pImageLoadingSpinner startAnimating];
+    [m_pImageStore releaseImageForView:self.pUserImage];
     [m_pImageStore loadImage:[strUserImagePath UTF8String]
                             :self.pUserImage
                             :^(UIImage* image)
                              {
+                                 if(image == nil)
+                                 {
+                                     image = ExampleApp::Helpers::ImageHelpers::LoadImage("Tours/States/Twitter/NotLoaded/ProfilePicCatNotLoaded");
+                                 }
                                  [self.pUserImage setImage:image];
+                                 [self.pImageLoadingSpinner stopAnimating];
                              }];
     
     [self.pBannerImage setImage:nil];
@@ -270,20 +334,21 @@
                                      [self.pBannerImage setImage:image];
                                  }];
     }
-    else
+    UIColor* profileColor = ExampleApp::Helpers::ColorPalette::TwitterBlue;
+    if([strProfileColor length] > 0)
     {
         unsigned profileColorInt = 0;
         NSScanner *scanner = [NSScanner scannerWithString:strProfileColor];
         
         [scanner scanHexInt:&profileColorInt];
         
-        UIColor* profileColor = [UIColor colorWithRed:(float)((profileColorInt & 0xFF0000) >> 16) / 255.0f
-                                                green:(float)((profileColorInt & 0x00FF00) >> 8) / 255.0f
-                                                 blue:(float)((profileColorInt & 0x0000FF)) / 255.0f
-                                                alpha:1.0f];
-        
-        self.pBannerImage.backgroundColor = profileColor;
+        profileColor = [UIColor colorWithRed:(float)((profileColorInt & 0xFF0000) >> 16) / 255.0f
+                                       green:(float)((profileColorInt & 0x00FF00) >> 8) / 255.0f
+                                        blue:(float)((profileColorInt & 0x0000FF)) / 255.0f
+                                       alpha:1.0f];
     }
+    
+    self.pBannerImage.backgroundColor = profileColor;
     
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
     [dateFormat setDateFormat:@"EE LLL d HH:mm:ss Z yyyy"];

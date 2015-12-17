@@ -29,9 +29,6 @@ namespace ExampleApp
                 );
 
                 ~CompassViewModule();
-
-                void AnimateOnScreen();
-                void AnimateOffScreen();
             };
         }
     }

@@ -2,6 +2,8 @@
 
 #include "WorldPinInFocusObserver.h"
 
+#include "WorldPinsSelectedFocussedMessage.h"
+
 namespace ExampleApp
 {
     namespace WorldPins
@@ -15,10 +17,12 @@ namespace ExampleApp
                 , m_gainedFocusHandler(this, &WorldPinInFocusObserver::OnWorldPinGainedFocusMessage)
                 , m_lostFocusHandler(this, &WorldPinInFocusObserver::OnWorldPinLostFocusMessage)
                 , m_focusScreenLocationUpdatedHandler(this, &WorldPinInFocusObserver::OnWorldPinInFocusChangedLocationMessage)
+                , m_selectedFocussedResultHandler(this, &WorldPinInFocusObserver::OnSelectedFocussedResultEvent)
             {
                 m_messageBus.SubscribeUi(m_gainedFocusHandler);
                 m_messageBus.SubscribeUi(m_lostFocusHandler);
                 m_messageBus.SubscribeUi(m_focusScreenLocationUpdatedHandler);
+                m_worldPinInFocusViewModel.InsertSelectedFocussedResultCallback(m_selectedFocussedResultHandler);
             }
 
             WorldPinInFocusObserver::~WorldPinInFocusObserver()
@@ -26,6 +30,7 @@ namespace ExampleApp
                 m_messageBus.UnsubscribeUi(m_gainedFocusHandler);
                 m_messageBus.UnsubscribeUi(m_lostFocusHandler);
                 m_messageBus.UnsubscribeUi(m_focusScreenLocationUpdatedHandler);
+                m_worldPinInFocusViewModel.RemoveSelectedFocussedResultCallback(m_selectedFocussedResultHandler);
             }
 
             void WorldPinInFocusObserver::OnWorldPinGainedFocusMessage(const WorldPinGainedFocusMessage& message)
@@ -42,6 +47,15 @@ namespace ExampleApp
             void WorldPinInFocusObserver::OnWorldPinInFocusChangedLocationMessage(const WorldPinInFocusChangedLocationMessage& message)
             {
                 m_worldPinInFocusViewModel.UpdateScreenLocation(message.ScreenLocation());
+            }
+            
+            void WorldPinInFocusObserver::OnSelectedFocussedResultEvent()
+            {
+                if(m_worldPinInFocusViewModel.IsOpen())
+                {
+                    int pinId = m_worldPinInFocusViewModel.GetWorldPinsInFocusModel().GetPinId();
+                    m_messageBus.Publish(WorldPinsSelectedFocussedMessage(pinId));
+                }
             }
         }
     }

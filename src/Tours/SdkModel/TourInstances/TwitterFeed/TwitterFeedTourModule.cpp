@@ -26,11 +26,18 @@ namespace ExampleApp
                                                                  Metrics::IMetricsService& metricsService,
                                                                  ExampleAppMessaging::TMessageBus& messageBus)
                     {
+                        std::map<std::string, int> twitterTourIconOverrideMap;
+
                         const bool isInterior = false;
                         const WorldPins::SdkModel::WorldPinInteriorData noInteirorData;
                         const bool useBounds = false;
-                        m_tweetStateDataMap["Dev4Recce"] = TweetStateData(Eegeo::Space::LatLongAltitude::FromDegrees(37.619988, -122.366472, 600).ToECEF(),
-                                                                          Eegeo::Space::LatLongAltitude::FromDegrees(37.617398, -122.376256, 100).ToECEF(),
+                        
+                        const float externalCameraDistance = 600.0f;
+                        const float externalCameraTiltDegrees = 45.0f;
+                        m_tweetStateDataMap["Dev4Recce"] = TweetStateData(Eegeo::Space::LatLongAltitude::FromDegrees(37.617398, -122.376256, 100).ToECEF(),
+                                                                          externalCameraDistance,
+                                                                          externalCameraTiltDegrees,
+                                                                          true,
                                                                           isInterior,
                                                                           noInteirorData,
                                                                           useBounds,
@@ -47,6 +54,7 @@ namespace ExampleApp
                                                                                         tourRepository,
                                                                                         twitterFeedService,
                                                                                         m_tweetStateDataMap,
+                                                                                        twitterTourIconOverrideMap,
                                                                                         metricsService,
                                                                                         messageBus);
                     }

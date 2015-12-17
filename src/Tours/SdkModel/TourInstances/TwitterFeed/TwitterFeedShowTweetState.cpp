@@ -49,8 +49,8 @@ namespace ExampleApp
                     : m_stateModel(stateModel)
                     , m_toursCameraTransitionController(toursCameraTransitionController)
                     , m_cameraMode(tweetStateData.ecefTarget,
-                                   45.f,
-                                   250.0f,
+                                   tweetStateData.cameraTiltDegrees,
+                                   tweetStateData.cameraDistanceToTarget,
                                    cameraRotationDegreesOffset)
                     , m_pinPlacename(placeName)
                     , m_pinImageUrl(attachedImageUrl)
@@ -67,10 +67,11 @@ namespace ExampleApp
                     , m_pinLocation(pinLocation)
                     , m_messageBus(messageBus)
                     {
-                        const Eegeo::dv3 altitudeOffset = m_pinLocation.ToECEF().Norm() * 100.0f;
-                        m_cameraMode = Camera::StaticCameraMode(m_pinLocation.ToECEF() + altitudeOffset,
-                                                                45.0f,
-                                                                600.0f,
+                        float initialInterestAltitude = (float)Eegeo::Space::SpaceHelpers::GetAltitude(tweetStateData.ecefTarget);
+                        
+                        m_cameraMode = Camera::StaticCameraMode(m_pinLocation.ToECEF() + (initialInterestAltitude * m_pinLocation.ToECEF().Norm()),
+                                                                tweetStateData.cameraTiltDegrees,
+                                                                tweetStateData.cameraDistanceToTarget,
                                                                 cameraRotationDegreesOffset);
                     }
                     

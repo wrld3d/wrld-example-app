@@ -62,18 +62,6 @@ namespace ExampleApp
                         ExampleApp::WorldPins::SdkModel::WorldPinInteriorData hotelPinInteriorData(hotelId, 3, true);
                         
                         stateMachineStates.push_back(Eegeo_NEW(ExampleTourState(tourModel.States()[tourIndex++],
-                                                                                Eegeo::Space::LatLong::FromDegrees(37.784783, -122.402659),
-                                                                                false,
-                                                                                m_toursCameraTransitionController,
-                                                                                m_worldPinsService,
-                                                                                blankWorldPinInteriorData,
-                                                                                m_interiorController,
-                                                                                m_interiorVisibilityUpdater,
-                                                                                m_interiorSelectionModel,
-                                                                                m_messageBus)));
-
-                        
-                        stateMachineStates.push_back(Eegeo_NEW(ExampleTourState(tourModel.States()[tourIndex++],
                                                                                 Eegeo::Space::LatLong::FromDegrees(37.781908, -122.404784),
                                                                                 m_interiorsEnabled,
                                                                                 m_toursCameraTransitionController,
@@ -84,6 +72,18 @@ namespace ExampleApp
                                                                                 m_interiorSelectionModel,
                                                                                 m_messageBus)));
                         
+                        stateMachineStates.push_back(Eegeo_NEW(ExampleTourState(tourModel.States()[tourIndex++],
+                                                                                Eegeo::Space::LatLong::FromDegrees(37.784783, -122.402659),
+                                                                                false,
+                                                                                m_toursCameraTransitionController,
+                                                                                m_worldPinsService,
+                                                                                blankWorldPinInteriorData,
+                                                                                m_interiorController,
+                                                                                m_interiorVisibilityUpdater,
+                                                                                m_interiorSelectionModel,
+                                                                                m_messageBus)));
+                        
+
                         stateMachineStates.push_back(Eegeo_NEW(ExampleTourState(tourModel.States()[tourIndex++],
                                                                                 Eegeo::Space::LatLong::FromDegrees(37.787939, -122.407558),
                                                                                 false,

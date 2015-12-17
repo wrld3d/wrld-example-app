@@ -180,10 +180,6 @@ AppHost::AppHost(
 
     std::string deviceModel = std::string(nativeState.deviceModel, strlen(nativeState.deviceModel));
     Eegeo::Config::PlatformConfig platformConfig = Eegeo::Android::AndroidPlatformConfigBuilder(deviceModel).Build();
-    platformConfig.OptionsConfig.InteriorsControlledByApp = true;
-
-    platformConfig.CoverageTreeConfig.ManifestUrl = "http://cdn1.eegeo.com/coverage-trees/vglobal/v813/manifest.bin.gz";
-    platformConfig.CityThemesConfig.StreamedManifestUrl = "http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v421/manifest.txt.gz";
     platformConfig.CityThemesConfig.EmbeddedThemeManifestFile = "embedded_manifest.txt";
     platformConfig.CityThemesConfig.EmbeddedThemeTexturePath = "Textures";
     platformConfig.CityThemesConfig.EmbeddedThemeNameContains = "Summer";
@@ -448,7 +444,6 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
                                      app.WorldPinsModule().GetWorldPinInFocusViewModel(),
                                      app.WorldPinsModule().GetScreenControlViewModel(),
                                      app.ModalityModule().GetModalityModel(),
-                                     app.GetAppModeModel(),
                                      app.PinDiameter()
                                  );
 
@@ -457,8 +452,7 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
                                      m_nativeState,
                                      app.FlattenButtonModule().GetFlattenButtonViewModel(),
                                      m_messageBus,
-                                     *m_pAndroidFlurryMetricsService,
-                                     app.GetAppModeModel()
+                                     *m_pAndroidFlurryMetricsService
                                  );
 
     m_pMyPinCreationViewModule = Eegeo_NEW(ExampleApp::MyPinCreation::View::MyPinCreationViewModule)(
@@ -467,8 +461,7 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
                                      app.MyPinCreationModule().GetMyPinCreationConfirmationViewModel(),
                                      app.MyPinCreationDetailsModule().GetMyPinCreationDetailsViewModel(),
                                      m_messageBus,
-                                     *m_pAndroidFlurryMetricsService,
-                                     app.GetAppModeModel()
+                                     *m_pAndroidFlurryMetricsService
                                  );
 
 

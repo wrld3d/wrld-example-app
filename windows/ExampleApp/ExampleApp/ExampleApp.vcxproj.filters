@@ -1815,6 +1815,12 @@
     <ClCompile Include="..\..\..\src\Tours\SdkModel\TourInstances\TwitterFeed\TwitterFeedTourStateMachineFactory.cpp">
       <Filter>Source Files\App\Tours\SdkModel\TourInstances\TwitterFeed</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\Tours\SdkModel\Camera\StaticCameraMode.cpp">
+      <Filter>Source Files\App\Tours\SdkModel\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\WorldPins\WorldPinsSelectedFocussedMessage.cpp">
+      <Filter>Source Files\App\WorldPins</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\AppHost.h">
@@ -3973,6 +3979,15 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\Tours\SdkModel\TourInstances\TwitterFeed\TwitterFeedTourStateMachineFactory.h">
       <Filter>Source Files\App\Tours\SdkModel\TourInstances\TwitterFeed</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\PersistentSettings\WindowsPersistentSettings.h">
+      <Filter>Source Files\Windows\PersistentSettings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Tours\SdkModel\Camera\StaticCameraMode.h">
+      <Filter>Source Files\App\Tours\SdkModel\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\WorldPins\WorldPinsSelectedFocussedMessage.h">
+      <Filter>Source Files\App\WorldPins</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

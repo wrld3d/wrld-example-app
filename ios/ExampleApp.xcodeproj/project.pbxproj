@@ -639,6 +639,8 @@
 		27DB89F31BB3FF270020CDA5 /* YelpSearchService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27DB89EC1BB3FF270020CDA5 /* YelpSearchService.cpp */; };
 		27DB89F91BB413F60020CDA5 /* SearchVendorNames.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27DB89F71BB413F60020CDA5 /* SearchVendorNames.cpp */; };
 		27DB89FA1BB413F60020CDA5 /* SearchVendorNames.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27DB89F71BB413F60020CDA5 /* SearchVendorNames.cpp */; };
+		27E400F81C1EF7370060BF2A /* WorldPinsSelectedFocussedMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27E400F61C1EF7370060BF2A /* WorldPinsSelectedFocussedMessage.cpp */; };
+		27E400F91C1EF7370060BF2A /* WorldPinsSelectedFocussedMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27E400F61C1EF7370060BF2A /* WorldPinsSelectedFocussedMessage.cpp */; };
 		27E4DBAD1C0F0E0A001A1E55 /* DeeplinkURLRequestedMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27E4DBAB1C0F0E0A001A1E55 /* DeeplinkURLRequestedMessage.cpp */; };
 		27E4DBAE1C0F0E0A001A1E55 /* DeeplinkURLRequestedMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27E4DBAB1C0F0E0A001A1E55 /* DeeplinkURLRequestedMessage.cpp */; };
 		27E4DBB21C108AB7001A1E55 /* CloseIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 27E4DBAF1C108AB7001A1E55 /* CloseIcon.png */; };
@@ -2056,6 +2058,8 @@
 		27DB89ED1BB3FF270020CDA5 /* YelpSearchService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YelpSearchService.h; sourceTree = "<group>"; };
 		27DB89F71BB413F60020CDA5 /* SearchVendorNames.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchVendorNames.cpp; sourceTree = "<group>"; };
 		27DB89F81BB413F60020CDA5 /* SearchVendorNames.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchVendorNames.h; sourceTree = "<group>"; };
+		27E400F61C1EF7370060BF2A /* WorldPinsSelectedFocussedMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WorldPinsSelectedFocussedMessage.cpp; sourceTree = "<group>"; };
+		27E400F71C1EF7370060BF2A /* WorldPinsSelectedFocussedMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorldPinsSelectedFocussedMessage.h; sourceTree = "<group>"; };
 		27E4DBAB1C0F0E0A001A1E55 /* DeeplinkURLRequestedMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DeeplinkURLRequestedMessage.cpp; sourceTree = "<group>"; };
 		27E4DBAC1C0F0E0A001A1E55 /* DeeplinkURLRequestedMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeeplinkURLRequestedMessage.h; sourceTree = "<group>"; };
 		27E4DBAF1C108AB7001A1E55 /* CloseIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CloseIcon.png; sourceTree = "<group>"; };
@@ -5040,6 +5044,8 @@
 				7E3B88A31A385A290023C94E /* WorldPins.h */,
 				7E3B88A41A385A290023C94E /* WorldPinsVisibilityMessage.cpp */,
 				7E3B88A51A385A290023C94E /* WorldPinsVisibilityMessage.h */,
+				27E400F61C1EF7370060BF2A /* WorldPinsSelectedFocussedMessage.cpp */,
+				27E400F71C1EF7370060BF2A /* WorldPinsSelectedFocussedMessage.h */,
 			);
 			path = WorldPins;
 			sourceTree = "<group>";
@@ -7319,6 +7325,7 @@
 				7E3B8AFE1A385F110023C94E /* MyPinCreationConfirmationView.mm in Sources */,
 				18A6574F1A9F390E00238F33 /* SearchResultPinAddedEvent.cpp in Sources */,
 				7E3B897F1A385A290023C94E /* ReactionControllerModule.cpp in Sources */,
+				27E400F91C1EF7370060BF2A /* WorldPinsSelectedFocussedMessage.cpp in Sources */,
 				7E3B88C91A385A290023C94E /* CompassUpdateController.cpp in Sources */,
 				7E3B8B121A385F110023C94E /* MyPinDetailsViewInterop.mm in Sources */,
 				18FB64691A9240FC005A9411 /* OAPlaintextSignatureProvider.m in Sources */,
@@ -7803,6 +7810,7 @@
 				7E3B8AFD1A385F110023C94E /* MyPinCreationConfirmationView.mm in Sources */,
 				18A6574E1A9F390E00238F33 /* SearchResultPinAddedEvent.cpp in Sources */,
 				7E3B897E1A385A290023C94E /* ReactionControllerModule.cpp in Sources */,
+				27E400F81C1EF7370060BF2A /* WorldPinsSelectedFocussedMessage.cpp in Sources */,
 				7E3B88C81A385A290023C94E /* CompassUpdateController.cpp in Sources */,
 				7E3B8B111A385F110023C94E /* MyPinDetailsViewInterop.mm in Sources */,
 				18FB64681A9240FC005A9411 /* OAPlaintextSignatureProvider.m in Sources */,

@@ -12,49 +12,38 @@ namespace ExampleApp
         {
             ASSERT_NATIVE_THREAD
 
-            /*WindowsSafeNativeThreadAttachment attached(m_nativeState);
-            JNIEnv* env = attached.envForThread;
+			m_persistentSettingsClass = Helpers::ReflectionHelpers::GetTypeFromEntryAssembly("ExampleAppWPF.PersistentSettings");
+			System::Reflection::ConstructorInfo^ ctor = m_persistentSettingsClass->GetConstructor(Helpers::ReflectionHelpers::CreateTypes(System::IntPtr::typeid));
+			m_persistentSettings = ctor->Invoke(Helpers::ReflectionHelpers::CreateObjects(gcnew System::IntPtr(this)));
 
-            jstring strClassName = env->NewStringUTF("com.eegeo.persistentstate.PersistentState");
-            jclass uiClass = m_nativeState.LoadClass(env, strClassName);
-            env->DeleteLocalRef(strClassName);
+			m_SetBool.SetupMethod(m_persistentSettingsClass, m_persistentSettings, "SetBool");
+			m_SetInt.SetupMethod(m_persistentSettingsClass, m_persistentSettings, "SetInt");
+			m_SetDouble.SetupMethod(m_persistentSettingsClass, m_persistentSettings, "SetDouble");
+			m_SetString.SetupMethod(m_persistentSettingsClass, m_persistentSettings, "SetString");
 
-            m_jniApiClass = static_cast<jclass>(env->NewGlobalRef(uiClass));
-            jmethodID ctor = env->GetMethodID(m_jniApiClass, "<init>", "(Lcom/eegeo/entrypointinfrastructure/MainActivity;J)V");
+			m_GetBool.SetupMethod(m_persistentSettingsClass, m_persistentSettings, "GetBool");
+			m_GetInt.SetupMethod(m_persistentSettingsClass, m_persistentSettings, "GetInt");
+			m_GetDouble.SetupMethod(m_persistentSettingsClass, m_persistentSettings, "GetDouble");
+			m_GetString.SetupMethod(m_persistentSettingsClass, m_persistentSettings, "GetString");
 
-            jobject instance = env->NewObject(
-                                   m_jniApiClass,
-                                   ctor,
-                                   m_nativeState.activity,
-                                   (jlong)(this)
-                               );
+			m_ClearAll.SetupMethod(m_persistentSettingsClass, m_persistentSettings, "ClearAll");
 
-            m_jniApiInstance = env->NewGlobalRef(instance);*/
+			m_ContainsKey.SetupMethod(m_persistentSettingsClass, m_persistentSettings, "ContainsKey");
         }
 
         WindowsPersistentSettingsModel::~WindowsPersistentSettingsModel()
         {
             ASSERT_NATIVE_THREAD
-
-            /*WindowsSafeNativeThreadAttachment attached(m_nativeState);
-            JNIEnv* env = attached.envForThread;
-
-            env->DeleteGlobalRef(m_jniApiInstance);
-            env->DeleteGlobalRef(m_jniApiClass);*/
         }
 
         bool WindowsPersistentSettingsModel::TryGetValue(const std::string& name, bool& out_value) const
         {
-            ASSERT_NATIVE_THREAD
+			ASSERT_NATIVE_THREAD
 
             if(HasValue(name))
             {
-                /*WindowsSafeNativeThreadAttachment attached(m_nativeState);
-                JNIEnv* env = attached.envForThread;
-                jstring keyJstr = env->NewStringUTF(name.c_str());
-                jmethodID methodId = env->GetMethodID(m_jniApiClass, "getBoolean", "(Ljava/lang/String;)Z");
-                out_value = env->CallBooleanMethod(m_jniApiInstance, methodId, keyJstr);
-                env->DeleteLocalRef(keyJstr);*/
+				out_value = m_GetBool.Call<bool>(Helpers::ReflectionHelpers::ConvertUTF8ToManagedString(name));
+
                 return true;
             }
 
@@ -67,12 +56,8 @@ namespace ExampleApp
 
             if(HasValue(name))
             {
-                /*WindowsSafeNativeThreadAttachment attached(m_nativeState);
-                JNIEnv* env = attached.envForThread;
-                jstring keyJstr = env->NewStringUTF(name.c_str());
-                jmethodID methodId = env->GetMethodID(m_jniApiClass, "getInt", "(Ljava/lang/String;)I");
-                out_value = env->CallIntMethod(m_jniApiInstance, methodId, keyJstr);
-                env->DeleteLocalRef(keyJstr);*/
+				out_value = m_GetInt.Call<int>(Helpers::ReflectionHelpers::ConvertUTF8ToManagedString(name));
+
                 return true;
             }
 
@@ -85,12 +70,8 @@ namespace ExampleApp
 
             if(HasValue(name))
             {
-                /*WindowsSafeNativeThreadAttachment attached(m_nativeState);
-                JNIEnv* env = attached.envForThread;
-                jstring keyJstr = env->NewStringUTF(name.c_str());
-                jmethodID methodId = env->GetMethodID(m_jniApiClass, "getDouble", "(Ljava/lang/String;)D");
-                out_value = env->CallDoubleMethod(m_jniApiInstance, methodId, keyJstr);
-                env->DeleteLocalRef(keyJstr);*/
+				out_value = m_GetDouble.Call<double>(Helpers::ReflectionHelpers::ConvertUTF8ToManagedString(name));
+
                 return true;
             }
 
@@ -103,15 +84,9 @@ namespace ExampleApp
 
             if(HasValue(name))
             {
-               /* WindowsSafeNativeThreadAttachment attached(m_nativeState);
-                JNIEnv* env = attached.envForThread;
-                jstring keyJstr = env->NewStringUTF(name.c_str());
-                jmethodID methodId = env->GetMethodID(m_jniApiClass, "getString", "(Ljava/lang/String;)Ljava/lang/String;");
-                jstring resultJString = static_cast<jstring>(env->CallObjectMethod(m_jniApiInstance, methodId, keyJstr));
-                const char* chars = env->GetStringUTFChars(resultJString, 0);
-                out_value = chars;
-                env->ReleaseStringUTFChars(resultJString, chars);
-                env->DeleteLocalRef(keyJstr);*/
+				out_value = Helpers::ReflectionHelpers::ConvertManagedStringToUTF8(
+					m_GetString.Call<System::String^>(Helpers::ReflectionHelpers::ConvertUTF8ToManagedString(name)));
+
                 return true;
             }
 
@@ -120,73 +95,42 @@ namespace ExampleApp
 
         void WindowsPersistentSettingsModel::SetValue(const std::string& name, bool value)
         {
-            ASSERT_NATIVE_THREAD
+			ASSERT_NATIVE_THREAD
 
-            SetValue(name, value, "setBoolean", "(Ljava/lang/String;Z)V");
+			m_SetBool(Helpers::ReflectionHelpers::ConvertUTF8ToManagedString(name), value);
         }
 
         void WindowsPersistentSettingsModel::SetValue(const std::string& name, int value)
         {
             ASSERT_NATIVE_THREAD
 
-            SetValue(name, value, "setInt", "(Ljava/lang/String;I)V");
+            m_SetInt(Helpers::ReflectionHelpers::ConvertUTF8ToManagedString(name), value);
         }
 
         void WindowsPersistentSettingsModel::SetValue(const std::string& name, double value)
         {
             ASSERT_NATIVE_THREAD
 
-            SetValue(name, value, "setDouble", "(Ljava/lang/String;D)V");
+			m_SetDouble(Helpers::ReflectionHelpers::ConvertUTF8ToManagedString(name), value);
         }
 
         void WindowsPersistentSettingsModel::SetValue(const std::string& name, const std::string& value)
         {
             ASSERT_NATIVE_THREAD
 
-            /*WindowsSafeNativeThreadAttachment attached(m_nativeState);
-            JNIEnv* env = attached.envForThread;
-            jstring keyJstr = env->NewStringUTF(name.c_str());
-            jstring valueJstr = env->NewStringUTF(value.c_str());
-            jmethodID methodId = env->GetMethodID(m_jniApiClass, "setString", "(Ljava/lang/String;Ljava/lang/String;)V");
-            env->CallVoidMethod(m_jniApiInstance, methodId, keyJstr, valueJstr);
-            env->DeleteLocalRef(keyJstr);
-            env->DeleteLocalRef(valueJstr);*/
+			m_SetString(Helpers::ReflectionHelpers::ConvertUTF8ToManagedString(name), Helpers::ReflectionHelpers::ConvertUTF8ToManagedString(value));
         }
 
         void WindowsPersistentSettingsModel::ClearAll()
         {
-            ASSERT_NATIVE_THREAD
+			ASSERT_NATIVE_THREAD
 
-            /*WindowsSafeNativeThreadAttachment attached(m_nativeState);
-            JNIEnv* env = attached.envForThread;
-            jmethodID methodId = env->GetMethodID(m_jniApiClass, "clearAll", "()V");
-            env->CallVoidMethod(m_jniApiInstance, methodId);*/
+			m_ClearAll();
         }
 
         bool WindowsPersistentSettingsModel::HasValue(const std::string& name) const
         {
-            /*WindowsSafeNativeThreadAttachment attached(m_nativeState);
-            JNIEnv* env = attached.envForThread;
-            jstring jstr = env->NewStringUTF(name.c_str());
-            jmethodID method = env->GetMethodID(m_jniApiClass, "containsKey", "(Ljava/lang/String;)Z");
-            bool result = env->CallBooleanMethod(m_jniApiInstance, method, jstr);
-            env->DeleteLocalRef(jstr);
-            return result;*/
-
-            return false;
-        }
-
-        template <typename TValue>
-        void WindowsPersistentSettingsModel::SetValue(const std::string& name, TValue value, const std::string& method, const std::string& signature)
-        {
-            ASSERT_NATIVE_THREAD
-
-           /* WindowsSafeNativeThreadAttachment attached(m_nativeState);
-            JNIEnv* env = attached.envForThread;
-            jstring keyJstr = env->NewStringUTF(name.c_str());
-            jmethodID methodId = env->GetMethodID(m_jniApiClass, method.c_str(), signature.c_str());
-            env->CallVoidMethod(m_jniApiInstance, methodId, keyJstr, value);
-            env->DeleteLocalRef(keyJstr);*/
+			return m_ContainsKey.Call<bool>(Helpers::ReflectionHelpers::ConvertUTF8ToManagedString(name));
         }
     }
 }

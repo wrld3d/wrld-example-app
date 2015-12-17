@@ -2,12 +2,53 @@
 
 #include "TourModel.h"
 
+#include "document.h"
+#include "writer.h"
+#include "stringbuffer.h"
+
 namespace ExampleApp
 {
     namespace Tours
     {
         namespace SdkModel
         {
+            const std::string GenerateTourHovercardJsonData(const TourModel& tourModel)
+            {
+                rapidjson::Document jsonDoc;
+                rapidjson::Value valueObject(rapidjson::kObjectType);
+                rapidjson::Document::AllocatorType& allocator = jsonDoc.GetAllocator();
+                
+                if(!tourModel.UsesTwitter())
+                {
+                    const Helpers::ColorHelpers::Color& baseColor = tourModel.HoverCardBaseColor();
+                    const Helpers::ColorHelpers::Color& textColor = tourModel.HoverCardTextColor();
+                    
+                    rapidjson::Value baseColorObject(rapidjson::kObjectType);
+                    rapidjson::Value textColorObject(rapidjson::kObjectType);
+                    std::string jsonString ="";
+                    
+                    baseColorObject.AddMember("r", static_cast<int>(baseColor.GetRed()), allocator);
+                    baseColorObject.AddMember("g", static_cast<int>(baseColor.GetGreen()), allocator);
+                    baseColorObject.AddMember("b", static_cast<int>(baseColor.GetBlue()), allocator);
+                    
+                    textColorObject.AddMember("r", static_cast<int>(textColor.GetRed()), allocator);
+                    textColorObject.AddMember("g", static_cast<int>(textColor.GetGreen()), allocator);
+                    textColorObject.AddMember("b", static_cast<int>(textColor.GetBlue()), allocator);
+                    
+                    valueObject.AddMember("base_col", baseColorObject, allocator);
+                    valueObject.AddMember("text_col", textColorObject, allocator);
+                }
+                else
+                {
+                    valueObject.AddMember("twitter_image", tourModel.TwitterBaseProfileImage().c_str(), allocator);
+                }
+                
+                rapidjson::StringBuffer strbuf;
+                rapidjson::Writer<rapidjson::StringBuffer> writer(strbuf);
+                valueObject.Accept(writer);
+                return strbuf.GetString();
+            }
+            
             TourModel::TourModel()
             : m_name("")
             , m_introText("")
@@ -31,6 +72,7 @@ namespace ExampleApp
                                  const std::string& introText,
                                  int iconIndex,
                                  const Eegeo::Space::LatLong& location,
+                                 bool visibleOnMap,
                                  bool isInterior,
                                  const ExampleApp::WorldPins::SdkModel::WorldPinInteriorData& worldPinInteriorData,
                                  bool showGradientBase,
@@ -46,6 +88,7 @@ namespace ExampleApp
             , m_introText(introText)
             , m_iconIndex(iconIndex)
             , m_location(location)
+            , m_visibleOnMap(visibleOnMap)
             , m_showGradientBase(showGradientBase)
             , m_baseColor(baseColor)
             , m_textColor(textColor)
@@ -84,6 +127,11 @@ namespace ExampleApp
             const Eegeo::Space::LatLong& TourModel::Location() const
             {
                 return m_location;
+            }
+            
+            bool TourModel::IsVisibleOnMap() const
+            {
+                return m_visibleOnMap;
             }
             
             bool TourModel::IsInterior() const

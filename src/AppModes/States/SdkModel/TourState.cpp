@@ -80,19 +80,20 @@ namespace ExampleApp
                 {
                     m_tourService.UnregisterTourEndedCallback(m_tourStartedCallback);
                     
-                    const float interestDistance = nextState == AppModes::SdkModel::WorldMode ? 500.0f : 150.0f;
-                    
                     if(nextState == AppModes::SdkModel::WorldMode)
                     {
-                        Eegeo::Space::LatLongAltitude latLong = Eegeo::Space::LatLongAltitude::FromECEF(m_cameraController.GetCameraState().InterestPointEcef());
-                        
-                        m_worldCameraController.SetView(latLong.GetLatitudeInDegrees(), latLong.GetLongitudeInDegrees(),
+                        const Eegeo::Camera::CameraState cameraState = m_cameraController.GetCameraState();
+                        Eegeo::Space::LatLong latLongInterest = Eegeo::Space::LatLong::FromECEF(cameraState.InterestPointEcef());
+                        float interestDistance = static_cast<float>((cameraState.LocationEcef() - cameraState.InterestPointEcef()).Length());
+                        m_worldCameraController.SetView(latLongInterest.GetLatitudeInDegrees(),
+                                                        latLongInterest.GetLongitudeInDegrees(),
                                                         m_cameraController.GetHeadingDegrees(),
                                                         interestDistance);
                         m_worldCameraController.GetGlobeCameraController().ApplyTilt(0.0f);
                     }
                     else if(nextState == AppModes::SdkModel::InteriorMode)
                     {
+                        const float interestDistance = 150.0f;
                         m_interiorsCameraController.SetDistanceToInterest(interestDistance);
                         m_interiorsCameraController.SetHeading(m_cameraController.GetHeadingDegrees());
                         m_interiorsCameraController.SetInterestLocation(m_cameraController.GetCameraState().InterestPointEcef());

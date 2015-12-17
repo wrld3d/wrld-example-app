@@ -60,10 +60,18 @@ namespace ExampleApp
                     Eegeo::Space::LatLongAltitude& location)
             {
                 const float radius = GetSearchRadius(m_cameraController.GetRenderCamera());
+                PerformSearchQuery(query, isCategory, location, radius);
+            }
+            
+            void SearchQueryPerformer::PerformSearchQuery(const std::string& query,
+                                                          bool isCategory,
+                                                          Eegeo::Space::LatLongAltitude& location,
+                                                          float radius)
+            {
                 m_hasQuery = true;
                 SearchQuery searchQuery(query, isCategory, location, radius);
                 m_previousQuery = searchQuery;
-
+                
                 m_searchService.PerformLocationQuerySearch(searchQuery);
             }
 

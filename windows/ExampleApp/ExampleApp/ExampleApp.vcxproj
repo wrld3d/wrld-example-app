@@ -469,6 +469,7 @@
     <ClCompile Include="..\..\..\src\Tours\SdkModel\Camera\InterestPointTransitionCameraMode.cpp" />
     <ClCompile Include="..\..\..\src\Tours\SdkModel\Camera\SplineCameraMode.cpp" />
     <ClCompile Include="..\..\..\src\Tours\SdkModel\Camera\SplineTransitionCameraMode.cpp" />
+    <ClCompile Include="..\..\..\src\Tours\SdkModel\Camera\StaticCameraMode.cpp" />
     <ClCompile Include="..\..\..\src\Tours\SdkModel\Camera\TourCameraModule.cpp" />
     <ClCompile Include="..\..\..\src\Tours\SdkModel\Camera\ToursCameraController.cpp" />
     <ClCompile Include="..\..\..\src\Tours\SdkModel\Camera\ToursCameraFadeTransitionMode.cpp" />
@@ -549,6 +550,7 @@
     <ClCompile Include="..\..\..\src\WorldPins\WorldPinGainedFocusMessage.cpp" />
     <ClCompile Include="..\..\..\src\WorldPins\WorldPinInFocusChangedLocationMessage.cpp" />
     <ClCompile Include="..\..\..\src\WorldPins\WorldPinLostFocusMessage.cpp" />
+    <ClCompile Include="..\..\..\src\WorldPins\WorldPinsSelectedFocussedMessage.cpp" />
     <ClCompile Include="..\..\..\src\WorldPins\WorldPinsVisibilityMessage.cpp" />
     <ClCompile Include="..\..\src\AboutPage\View\AboutPageCLI.cpp">
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</CompileAsManaged>
@@ -1276,7 +1278,20 @@
       <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
       </ForcedIncludeFiles>
     </ClCompile>
-    <ClCompile Include="..\..\src\PersistentSettings\WindowsPersistentSettingsModel.cpp" />
+    <ClCompile Include="..\..\src\PersistentSettings\WindowsPersistentSettingsModel.cpp">
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</CompileAsManaged>
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</CompileAsManaged>
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</CompileAsManaged>
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</CompileAsManaged>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <ExceptionHandling Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExceptionHandling>
+      <ExceptionHandling Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExceptionHandling>
+      <ExceptionHandling Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExceptionHandling>
+      <ExceptionHandling Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExceptionHandling>
+    </ClCompile>
     <ClCompile Include="..\..\src\SearchResultMenu\View\SearchMenuCLI.cpp">
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</CompileAsManaged>
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</CompileAsManaged>
@@ -2197,6 +2212,7 @@
     <ClInclude Include="..\..\..\src\Tours\SdkModel\Camera\OrbitCameraMode.h" />
     <ClInclude Include="..\..\..\src\Tours\SdkModel\Camera\SplineCameraMode.h" />
     <ClInclude Include="..\..\..\src\Tours\SdkModel\Camera\SplineTransitionCameraMode.h" />
+    <ClInclude Include="..\..\..\src\Tours\SdkModel\Camera\StaticCameraMode.h" />
     <ClInclude Include="..\..\..\src\Tours\SdkModel\Camera\TourCameraModule.h" />
     <ClInclude Include="..\..\..\src\Tours\SdkModel\Camera\ToursCameraController.h" />
     <ClInclude Include="..\..\..\src\Tours\SdkModel\Camera\ToursCameraFadeTransitionMode.h" />
@@ -2332,6 +2348,7 @@
     <ClInclude Include="..\..\..\src\WorldPins\WorldPinInFocusChangedLocationMessage.h" />
     <ClInclude Include="..\..\..\src\WorldPins\WorldPinLostFocusMessage.h" />
     <ClInclude Include="..\..\..\src\WorldPins\WorldPins.h" />
+    <ClInclude Include="..\..\..\src\WorldPins\WorldPinsSelectedFocussedMessage.h" />
     <ClInclude Include="..\..\..\src\WorldPins\WorldPinsVisibilityMessage.h" />
     <ClInclude Include="..\..\src\AboutPage\View\AboutPageCLI.h" />
     <ClInclude Include="..\..\src\AboutPage\View\AboutPageView.h" />
@@ -2403,6 +2420,7 @@
     <ClInclude Include="..\..\src\Options\View\OptionsView.h" />
     <ClInclude Include="..\..\src\Options\View\OptionsViewIncludes.h" />
     <ClInclude Include="..\..\src\Options\View\OptionsViewModule.h" />
+    <ClInclude Include="..\..\src\PersistentSettings\WindowsPersistentSettings.h" />
     <ClInclude Include="..\..\src\PersistentSettings\WindowsPersistentSettingsModel.h" />
     <ClInclude Include="..\..\src\SearchResultMenu\View\SearchMenuCLI.h" />
     <ClInclude Include="..\..\src\SearchResultMenu\View\SearchMenuView.h" />

@@ -13,8 +13,7 @@ namespace ExampleApp
                 WindowsNativeState& nativeState,
                 IFlattenButtonViewModel& viewModel,
                 ExampleAppMessaging::TMessageBus& messageBus,
-                Metrics::IMetricsService& metricsService,
-                const AppModes::SdkModel::IAppModeModel& appModeModel
+                Metrics::IMetricsService& metricsService
             )
             {
                 m_pView = Eegeo_NEW(FlattenButtonView)(nativeState);
@@ -23,18 +22,7 @@ namespace ExampleApp
                                     viewModel,
                                     *m_pView,
                                     messageBus,
-                                    metricsService,
-                                    appModeModel);
-            }
-
-            void FlattenButtonViewModule::AnimateOffScreen()
-            {
-                m_pView->SetFullyOffScreen();
-            }
-
-            void FlattenButtonViewModule::AnimateOnScreen()
-            {
-                m_pView->SetFullyOnScreen();
+                                    metricsService);
             }
 
             FlattenButtonViewModule::~FlattenButtonViewModule()

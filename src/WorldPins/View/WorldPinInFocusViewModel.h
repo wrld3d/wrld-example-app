@@ -24,12 +24,11 @@ namespace ExampleApp
                 Eegeo::Helpers::CallbackCollection0 m_openedCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_closedCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_updateCallbacks;
+                Eegeo::Helpers::CallbackCollection0 m_selectedFocussedResultCallbacks;
                 WorldPinInFocusScreenControl m_screenControl;
-                SdkModel::IWorldPinsService& m_worldPinsService;
 
             public:
-                WorldPinInFocusViewModel(Eegeo::Helpers::TIdentity identity,
-                                         SdkModel::IWorldPinsService& worldPinsService);
+                WorldPinInFocusViewModel(Eegeo::Helpers::TIdentity identity);
 
                 ~WorldPinInFocusViewModel();
 
@@ -60,6 +59,10 @@ namespace ExampleApp
                 void InsertUpdateCallback(Eegeo::Helpers::ICallback0& updateCallback);
 
                 void RemoveUpdateCallback(Eegeo::Helpers::ICallback0& updateCallback);
+                
+                void InsertSelectedFocussedResultCallback(Eegeo::Helpers::ICallback0& selectedFocussedResultCallback);
+                
+                void RemoveSelectedFocussedResultCallback(Eegeo::Helpers::ICallback0& selectedFocussedResultCallback);
 
             };
         }
