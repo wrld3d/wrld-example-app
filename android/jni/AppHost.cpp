@@ -180,11 +180,6 @@ AppHost::AppHost(
 
     std::string deviceModel = std::string(nativeState.deviceModel, strlen(nativeState.deviceModel));
     Eegeo::Config::PlatformConfig platformConfig = Eegeo::Android::AndroidPlatformConfigBuilder(deviceModel).Build();
-
-    platformConfig.OptionsConfig.EnableInteriors = true;
-
-    platformConfig.CoverageTreeConfig.ManifestUrl = "http://cdn1.eegeo.com/coverage-trees/vinteriors/v233/manifest.bin.gz";
-    platformConfig.CityThemesConfig.StreamedManifestUrl = "http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v462/manifest.txt.gz";
     platformConfig.CityThemesConfig.EmbeddedThemeManifestFile = "embedded_manifest.txt";
     platformConfig.CityThemesConfig.EmbeddedThemeTexturePath = "Textures";
     platformConfig.CityThemesConfig.EmbeddedThemeNameContains = "Summer";
