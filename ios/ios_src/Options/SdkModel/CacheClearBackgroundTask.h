@@ -2,7 +2,7 @@
 
 #include "Types.h"
 #include "BidirectionalBus.h"
-#include "iOSHttpCache.h"
+#include "IHttpCache.h"
 #include "WorkItem.h"
 
 namespace ExampleApp
@@ -13,11 +13,11 @@ namespace ExampleApp
         {
             class CacheClearBackgroundTask : public Eegeo::Concurrency::Tasks::WorkItem, private Eegeo::NonCopyable
             {
-                iOSHttpCache& m_iOSHttpCache;
+                Eegeo::Helpers::IHttpCache& m_iOSHttpCache;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 
             public:
-                CacheClearBackgroundTask(iOSHttpCache& iOSHttpCache,
+                CacheClearBackgroundTask(Eegeo::Helpers::IHttpCache& iOSHttpCache,
                                          ExampleAppMessaging::TMessageBus& messageBus)
                 : m_iOSHttpCache(iOSHttpCache)
                 , m_messageBus(messageBus) { }

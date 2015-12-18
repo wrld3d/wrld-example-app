@@ -43,7 +43,7 @@ namespace ExampleApp
                     const std::string& ResponseString();
                     
                 private:
-                    void OnWebResponseReceived(Eegeo::Web::IWebLoadRequest& webLoadRequest);
+                    void OnWebResponseReceived(Eegeo::Web::IWebResponse& webResponse);
                 };
             }
         }

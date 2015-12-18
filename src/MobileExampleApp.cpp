@@ -517,6 +517,7 @@ namespace ExampleApp
                                                                                 m_pCategorySearchModule->GetCategorySearchRepository(),
                                                                                 m_pSearchModule->GetMyPinsSearchResultRefreshService(),
                                                                                 m_metricsService,
+                                                                                m_platformAbstractions.GetFileIO(),
                                                                                 m_applicationConfiguration.MyPinsWebServiceUrl(),
                                                                                 m_applicationConfiguration.MyPinsWebServiceAuthToken());
         

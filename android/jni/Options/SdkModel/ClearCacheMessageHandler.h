@@ -6,7 +6,7 @@
 #include "BidirectionalBus.h"
 #include "ICallback.h"
 #include "ClearCacheMessage.h"
-#include "AndroidHttpCache.h"
+#include "Helpers.h"
 
 namespace ExampleApp
 {
@@ -16,7 +16,7 @@ namespace ExampleApp
         {
             class ClearCacheMessageHandler : private Eegeo::NonCopyable
             {
-            	Eegeo::Android::Cache::AndroidHttpCache& m_httpCache;
+            	Eegeo::Helpers::IHttpCache& m_httpCache;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 Eegeo::Helpers::TCallback1<ClearCacheMessageHandler, const ClearCacheMessage&> m_messageHandlerBinding;
                 
@@ -25,7 +25,7 @@ namespace ExampleApp
                 void DeleteCacheContents();
                 
             public:
-                ClearCacheMessageHandler(Eegeo::Android::Cache::AndroidHttpCache& httpCache,
+                ClearCacheMessageHandler(Eegeo::Helpers::IHttpCache& httpCache,
                                          ExampleAppMessaging::TMessageBus& messageBus);
                 
                 ~ClearCacheMessageHandler();

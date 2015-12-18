@@ -127,11 +127,11 @@ AppHost::AppHost(
 
     Eegeo::Config::PlatformConfig platformConfig = Eegeo::iOS::iOSPlatformConfigBuilder(App::GetDevice(), App::IsDeviceMultiCore(), App::GetMajorSystemVersion()).Build();
     platformConfig.OptionsConfig.StartMapModuleAutomatically = false;
-    platformConfig.OptionsConfig.EnableInteriors = true;
     platformConfig.OptionsConfig.InteriorsAffectedByFlattening = false;
     
     platformConfig.CoverageTreeConfig.ManifestUrl = applicationConfiguration.CoverageTreeManifestURL();
     platformConfig.CityThemesConfig.StreamedManifestUrl = applicationConfiguration.ThemeManifestURL();
+
     platformConfig.CityThemesConfig.EmbeddedThemeManifestFile = "embedded_manifest.txt";
     platformConfig.CityThemesConfig.EmbeddedThemeTexturePath = "Textures/EmbeddedTheme";
     platformConfig.CityThemesConfig.EmbeddedThemeNameContains = "Summer";

@@ -1,7 +1,6 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "AppHost.h"
-#include "AndroidWebRequestService.hpp"
 #include "AndroidSharedGlContext.h"
 #include "LatLongAltitude.h"
 #include "EegeoWorld.h"
@@ -181,11 +180,12 @@ AppHost::AppHost(
 
     std::string deviceModel = std::string(nativeState.deviceModel, strlen(nativeState.deviceModel));
     Eegeo::Config::PlatformConfig platformConfig = Eegeo::Android::AndroidPlatformConfigBuilder(deviceModel).Build();
-    platformConfig.OptionsConfig.EnableInteriors = true;
+
     platformConfig.OptionsConfig.InteriorsAffectedByFlattening = false;
 
     platformConfig.CoverageTreeConfig.ManifestUrl = config.CoverageTreeManifestURL();
     platformConfig.CityThemesConfig.StreamedManifestUrl = config.ThemeManifestURL();
+    
     platformConfig.CityThemesConfig.EmbeddedThemeManifestFile = "embedded_manifest.txt";
     platformConfig.CityThemesConfig.EmbeddedThemeTexturePath = "Textures";
     platformConfig.CityThemesConfig.EmbeddedThemeNameContains = "Summer";
@@ -238,8 +238,6 @@ AppHost::AppHost(
     m_pModalBackgroundNativeViewModule = Eegeo_NEW(ExampleApp::ModalBackground::SdkModel::ModalBackgroundNativeViewModule)(
             m_pApp->World().GetRenderingModule(),
             m_messageBus);
-
-    m_pAndroidPlatformAbstractionModule->SetWebRequestServiceWorkPool(m_pApp->World().GetWorkPool());
 
     m_pAppInputDelegate = Eegeo_NEW(AppInputDelegate)(*m_pApp);
     m_inputHandler.AddDelegateInputHandler(m_pAppInputDelegate);

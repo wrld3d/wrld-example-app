@@ -7,7 +7,7 @@
 #include "ISearchResultPoiView.h"
 #include "AndroidNativeState.h"
 #include "CallbackCollection.h"
-#include "YelpSearchResultModel.h"
+
 
 namespace ExampleApp
 {
@@ -25,7 +25,6 @@ namespace ExampleApp
                 jclass m_uiViewClass;
                 jobject m_uiView;
                 Search::SdkModel::SearchResultModel m_model;
-                Search::Yelp::SdkModel::YelpSearchResultModel m_yelpModel;
 
             public:
                 SearchResultPoiView(AndroidNativeState& nativeState);
@@ -54,7 +53,16 @@ namespace ExampleApp
 
                 void HandlePinToggleClicked();
 
-                void CreateVendorSpecificPoiView(const std::string& vendor);
+            private:
+                void CreateAndShowYelpPoiView(const Search::SdkModel::SearchResultModel& model, bool isPinned);
+
+                void CreateAndShowGeoNamesPoiView(const Search::SdkModel::SearchResultModel& model, bool isPinned);
+
+                jclass CreateJavaClass(const std::string& viewClass);
+
+                jobject CreateJavaObject(jclass uiViewClass);
+
+                jobjectArray CreateJavaArray(const std::vector<std::string>& stringVector);
             };
         }
     }

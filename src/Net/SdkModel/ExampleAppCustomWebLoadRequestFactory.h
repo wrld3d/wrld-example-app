@@ -30,90 +30,13 @@ namespace ExampleApp
                                                       INetworkCapabilities& networkCapabilities);
                 
                 
-                Eegeo::Web::IWebLoadRequest* CreateGet(std::string url,
-                                                       Eegeo::Web::IWebLoadRequestCompletionCallback& callback,
-                                                       void* userData,
-                                                       const std::string* pUserAgent=NULL);
-                
-                Eegeo::Web::IWebLoadRequest* CreateGet(std::string url,
-                                                       Eegeo::Web::IWebLoadRequestCompletionCallback& callback,
-                                                       void* userData,
-                                                       const std::map<std::string, std::string>& headers,
-                                                       const std::string* pUserAgent=NULL);
-                
-                Eegeo::Web::IWebLoadRequest* CreateSynchronousGet(std::string url,
-                                                                  Eegeo::Web::IWebLoadRequestCompletionCallback& callback,
-                                                                  void* userData,
-                                                                  const std::string* pUserAgent=NULL);
-                
-                Eegeo::Web::IWebLoadRequest* CreatePost(std::string url,
-                                                        Eegeo::Web::IWebLoadRequestCompletionCallback& callback,
-                                                        void* userData,
-                                                        const std::map<std::string, std::string>& postData,
-                                                        const std::string* pUserAgent=NULL);
-                
-                Eegeo::Web::IWebLoadRequest* CreatePost(std::string url,
-                                                        Eegeo::Web::IWebLoadRequestCompletionCallback& callback,
-                                                        void* userData,
-                                                        const std::map<std::string, std::string>& postData,
-                                                        const std::map<std::string, std::string>& headers,
-                                                        const std::string* pUserAgent=NULL);
-                
-                Eegeo::Web::IWebLoadRequest* CreatePost(std::string url,
-                                                        Eegeo::Web::IWebLoadRequestCompletionCallback& callback,
-                                                        void* userData,
-                                                        const std::map<std::string, std::string>& postData,
-                                                        const std::map<std::string, std::string>& headers,
-                                                        const std::map<std::string, Eegeo::Web::ImageUploadData>& imageData,
-                                                        const std::string* pUserAgent=NULL);
+                Eegeo::Web::WebRequestBuilder Begin(const Eegeo::Web::HttpVerbs::Values httpVerb,
+                                                     const std::string& url,
+                                                     Eegeo::Web::IWebLoadRequestCompletionCallback& callback);
                 
             private:
-                bool CanStream(bool isPost, std::string& url);
+                bool CanStream();
                 
-                class OfflineWebLoadRequest : public Eegeo::Web::IWebLoadRequest, protected Eegeo::NonCopyable
-                {
-                    std::string m_url;
-                    bool m_post;
-                    TResourceData m_empty;
-                    void* m_pUserData;
-                    Eegeo::Web::IWebLoadRequestCompletionCallback& m_callback;
-                    bool m_cancelled;
-                    
-                public:
-                    OfflineWebLoadRequest(bool post,
-                                          std::string url,
-                                          Eegeo::Web::IWebLoadRequestCompletionCallback& callback,
-                                          void* userData)
-                    : IWebLoadRequest(url, callback, userData)
-                    ,m_url(url)
-                    ,m_post(post)
-                    ,m_callback(callback)
-                    ,m_pUserData(userData)
-                    ,m_cancelled(false)
-                    {
-                        
-                    }
-                    
-                    ~OfflineWebLoadRequest() { }
-                    
-                    void Load() { if(!m_cancelled) { m_callback(*this); } }
-                    void Cancel() { m_cancelled = true; }
-                    virtual bool IsLoading() const { return true; }
-                    virtual bool IsSucceeded() const { return false; }
-                    virtual bool IsErrored() const { return true; }
-                    virtual bool IsCancelled() const { return m_cancelled; }
-                    virtual std::string HttpMethod() const { return m_post ? "POST" :"GET"; }
-                    virtual int HttpStatusCode() const { return -1; };
-                    virtual std::string GetUrl() const { return m_url; }
-                    virtual void* GetUserData() const { return m_pUserData; }
-                    virtual const TResourceData& GetHeaderData() const { return m_empty; }
-                    virtual const TResourceData& GetResourceData() const { return m_empty; }
-                    virtual const TResourceData* TransferResourceDataOwnership() { return Eegeo_NEW(TResourceData); }
-                    virtual size_t GetPreDecompressBytesRead() const { return 0; }
-                    virtual void SetTimeoutSeconds(uint timeoutSeconds) { ; }
-                    virtual void TryToUpdateResourceIfModified() { ; }
-                    virtual void SetNumRetries(u32 retries) { ; }
-                };
             };
         }
     }

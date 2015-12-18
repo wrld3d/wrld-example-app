@@ -15,6 +15,7 @@
 #include "CategorySearch.h"
 #include "Search.h"
 #include "IMetricsService.h"
+#include "Helpers.h"
 #include <string>
 
 namespace ExampleApp
@@ -36,6 +37,7 @@ namespace ExampleApp
                              CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
                              Search::SdkModel::MyPins::IMyPinsSearchResultRefreshService& myPinsSearchResultRefreshService,
                              Metrics::IMetricsService& metricsService,
+                             Eegeo::Helpers::IFileIO& fileIO,
                              const std::string& myPinsWebServiceUrl,
                              const std::string& myPinsWebServiceAuthToken);
 

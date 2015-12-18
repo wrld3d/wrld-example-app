@@ -3,6 +3,7 @@
 #include "SearchResultPoiView.h"
 #include "AndroidAppThreadAssertionMacros.h"
 #include "SearchVendorNames.h"
+#include "YelpSearchResultModel.h"
 #include "YelpSearchJsonParser.h"
 
 namespace ExampleApp
@@ -29,82 +30,20 @@ namespace ExampleApp
                 ASSERT_UI_THREAD
 
                 m_model = model;
-                m_yelpModel = Search::Yelp::SdkModel::TransformToYelpSearchResult(m_model);
-
-                CreateVendorSpecificPoiView(m_model.GetVendor());
-
-                AndroidSafeNativeThreadAttachment attached(m_nativeState);
-                JNIEnv* env = attached.envForThread;
-
-                const std::vector<std::string>& humanReadableCategories(model.GetHumanReadableCategories());
-
-                jobjectArray humanReadableCategoriesArray = env->NewObjectArray(
-                	humanReadableCategories.size(),
-					env->FindClass("java/lang/String"),
-					0
-                );
-
-                for(size_t i = 0; i < humanReadableCategories.size(); ++ i)
+                const std::string& vendor = m_model.GetVendor();
+                if(vendor == Search::YelpVendorName)
                 {
-                	const std::string& categoryString(humanReadableCategories[i]);
-                    jstring jniString = env->NewStringUTF(categoryString.c_str());
-                    env->SetObjectArrayElement(humanReadableCategoriesArray, i, jniString);
-                    env->DeleteLocalRef(jniString);
+                	CreateAndShowYelpPoiView(model, isPinned);
+                }
+                else if(vendor == Search::GeoNamesVendorName)
+                {
+                	CreateAndShowGeoNamesPoiView(model, isPinned);
+                }
+                else
+                {
+                	Eegeo_ASSERT(false, "Unknown POI vendor %s, cannot create view instance.\n", vendor.c_str());
                 }
 
-                const std::vector<std::string>& reviews(m_yelpModel.GetReviews());
-
-                jobjectArray reviewsArray = env->NewObjectArray(
-                	reviews.size(),
-					env->FindClass("java/lang/String"),
-					0
-                );
-
-                for(size_t i = 0; i < reviews.size(); ++ i)
-                {
-                	const std::string& reviewString(reviews[i]);
-                    jstring jniString = env->NewStringUTF(reviewString.c_str());
-                    env->SetObjectArrayElement(reviewsArray, i, jniString);
-                    env->DeleteLocalRef(jniString);
-                }
-
-                jstring titleStr = env->NewStringUTF(model.GetTitle().c_str());
-                jstring addressStr = env->NewStringUTF(model.GetSubtitle().c_str());
-                jstring phoneStr = env->NewStringUTF(m_yelpModel.GetPhone().c_str());
-                jstring urlStr = env->NewStringUTF(m_yelpModel.GetWebUrl().c_str());
-                jstring categoryStr = env->NewStringUTF(model.GetCategory().c_str());
-                jstring imageUrlStr = env->NewStringUTF(m_yelpModel.GetImageUrl().c_str());
-                jstring ratingImageUrlStr = env->NewStringUTF(m_yelpModel.GetRatingImageUrl().c_str());
-                jstring vendorStr = env->NewStringUTF(model.GetVendor().c_str());
-
-                jmethodID displayPoiInfoMethod = env->GetMethodID(m_uiViewClass, "displayPoiInfo", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;IZ)V");
-                env->CallVoidMethod(
-					m_uiView,
-					displayPoiInfoMethod,
-					titleStr,
-					addressStr,
-					phoneStr,
-					urlStr,
-					categoryStr,
-					humanReadableCategoriesArray,
-					imageUrlStr,
-					ratingImageUrlStr,
-					vendorStr,
-					reviewsArray,
-					m_yelpModel.GetReviewCount(),
-					isPinned
-				);
-
-                env->DeleteLocalRef(vendorStr);
-                env->DeleteLocalRef(ratingImageUrlStr);
-                env->DeleteLocalRef(imageUrlStr);
-                env->DeleteLocalRef(categoryStr);
-                env->DeleteLocalRef(urlStr);
-                env->DeleteLocalRef(phoneStr);
-                env->DeleteLocalRef(addressStr);
-                env->DeleteLocalRef(titleStr);
-                env->DeleteLocalRef(reviewsArray);
-                env->DeleteLocalRef(humanReadableCategoriesArray);
             }
 
             void SearchResultPoiView::Hide()
@@ -200,44 +139,136 @@ namespace ExampleApp
                 m_togglePinClickedCallbacks.ExecuteCallbacks(m_model);
             }
 
-            void SearchResultPoiView::CreateVendorSpecificPoiView(const std::string& vendor)
+            void SearchResultPoiView::CreateAndShowYelpPoiView(const Search::SdkModel::SearchResultModel& model, bool isPinned)
             {
-                ASSERT_UI_THREAD
+            	const std::string viewClass = "com/eegeo/searchresultpoiview/YelpSearchResultPoiView";
+            	m_uiViewClass = CreateJavaClass(viewClass);
+            	m_uiView = CreateJavaObject(m_uiViewClass);
 
-                std::string viewClass = "";
+            	Search::Yelp::SdkModel::YelpSearchResultModel yelpModel;
+            	yelpModel = Search::Yelp::SdkModel::TransformToYelpSearchResult(model);
 
-                if(vendor == Search::YelpVendorName)
-                {
-                    viewClass = "com/eegeo/searchresultpoiview/YelpSearchResultPoiView";
-                }
-                else if(vendor == Search::GeoNamesVendorName)
-                {
-                    viewClass = "com/eegeo/searchresultpoiview/GeoNamesSearchResultPoiView";
-                }
-                else
-                {
-                	Eegeo_ASSERT(false, "Unknown POI vendor %s, cannot create view instance.\n", vendor.c_str());
-                }
+            	AndroidSafeNativeThreadAttachment attached(m_nativeState);
+            	JNIEnv* env = attached.envForThread;
 
+            	jobjectArray humanReadableCategoriesArray = CreateJavaArray(model.GetHumanReadableCategories());
+            	jobjectArray reviewsArray = CreateJavaArray(yelpModel.GetReviews());
 
-                AndroidSafeNativeThreadAttachment attached(m_nativeState);
-                JNIEnv* env = attached.envForThread;
+            	jstring titleStr = env->NewStringUTF(model.GetTitle().c_str());
+            	jstring addressStr = env->NewStringUTF(model.GetSubtitle().c_str());
+            	jstring phoneStr = env->NewStringUTF(yelpModel.GetPhone().c_str());
+            	jstring urlStr = env->NewStringUTF(yelpModel.GetWebUrl().c_str());
+            	jstring categoryStr = env->NewStringUTF(model.GetCategory().c_str());
+            	jstring imageUrlStr = env->NewStringUTF(yelpModel.GetImageUrl().c_str());
+            	jstring ratingImageUrlStr = env->NewStringUTF(yelpModel.GetRatingImageUrl().c_str());
+            	jstring vendorStr = env->NewStringUTF(model.GetVendor().c_str());
 
-                jstring strClassName = env->NewStringUTF(viewClass.c_str());
-                jclass uiClass = m_nativeState.LoadClass(env, strClassName);
-                env->DeleteLocalRef(strClassName);
+            	jmethodID displayPoiInfoMethod = env->GetMethodID(m_uiViewClass, "displayPoiInfo", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;IZ)V");
+            	env->CallVoidMethod(
+            			m_uiView,
+						displayPoiInfoMethod,
+						titleStr,
+						addressStr,
+						phoneStr,
+						urlStr,
+						categoryStr,
+						humanReadableCategoriesArray,
+						imageUrlStr,
+						ratingImageUrlStr,
+						vendorStr,
+						reviewsArray,
+						yelpModel.GetReviewCount(),
+						isPinned
+            	);
 
-                m_uiViewClass = static_cast<jclass>(env->NewGlobalRef(uiClass));
-                jmethodID uiViewCtor = env->GetMethodID(m_uiViewClass, "<init>", "(Lcom/eegeo/entrypointinfrastructure/MainActivity;J)V");
+            	env->DeleteLocalRef(vendorStr);
+            	env->DeleteLocalRef(ratingImageUrlStr);
+            	env->DeleteLocalRef(imageUrlStr);
+            	env->DeleteLocalRef(categoryStr);
+            	env->DeleteLocalRef(urlStr);
+            	env->DeleteLocalRef(phoneStr);
+            	env->DeleteLocalRef(addressStr);
+            	env->DeleteLocalRef(titleStr);
+            	env->DeleteLocalRef(reviewsArray);
+            	env->DeleteLocalRef(humanReadableCategoriesArray);
+            }
 
-                jobject instance = env->NewObject(
-                                       m_uiViewClass,
-                                       uiViewCtor,
-                                       m_nativeState.activity,
-                                       (jlong)(this)
-                                   );
+            void SearchResultPoiView::CreateAndShowGeoNamesPoiView(const Search::SdkModel::SearchResultModel& model, bool isPinned)
+            {
+            	const std::string viewClass = "com/eegeo/searchresultpoiview/GeoNamesSearchResultPoiView";
+            	m_uiViewClass = CreateJavaClass(viewClass);
+            	m_uiView = CreateJavaObject(m_uiViewClass);
 
-                m_uiView = env->NewGlobalRef(instance);
+            	AndroidSafeNativeThreadAttachment attached(m_nativeState);
+            	JNIEnv* env = attached.envForThread;
+
+            	jstring titleStr = env->NewStringUTF(model.GetTitle().c_str());
+            	jstring addressStr = env->NewStringUTF(model.GetSubtitle().c_str());
+            	jstring categoryStr = env->NewStringUTF(model.GetCategory().c_str());
+
+            	jmethodID displayPoiInfoMethod = env->GetMethodID(m_uiViewClass, "displayPoiInfo", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)V");
+            	env->CallVoidMethod(
+            			m_uiView,
+						displayPoiInfoMethod,
+						titleStr,
+						addressStr,
+						categoryStr,
+						isPinned
+            	);
+
+            	env->DeleteLocalRef(categoryStr);
+            	env->DeleteLocalRef(addressStr);
+            	env->DeleteLocalRef(titleStr);
+            }
+
+            jclass SearchResultPoiView::CreateJavaClass(const std::string& viewClass)
+            {
+            	AndroidSafeNativeThreadAttachment attached(m_nativeState);
+            	JNIEnv* env = attached.envForThread;
+
+            	jstring strClassName = env->NewStringUTF(viewClass.c_str());
+            	jclass uiClass = m_nativeState.LoadClass(env, strClassName);
+            	env->DeleteLocalRef(strClassName);
+
+            	return static_cast<jclass>(env->NewGlobalRef(uiClass));
+            }
+
+            jobject SearchResultPoiView::CreateJavaObject(jclass uiViewClass)
+            {
+            	AndroidSafeNativeThreadAttachment attached(m_nativeState);
+            	JNIEnv* env = attached.envForThread;
+
+            	jmethodID uiViewCtor = env->GetMethodID(uiViewClass, "<init>", "(Lcom/eegeo/entrypointinfrastructure/MainActivity;J)V");
+
+            	jobject instance = env->NewObject(
+            			uiViewClass,
+						uiViewCtor,
+						m_nativeState.activity,
+						(jlong)(this)
+            	);
+
+            	return env->NewGlobalRef(instance);
+            }
+
+            jobjectArray SearchResultPoiView::CreateJavaArray(const std::vector<std::string>& stringVector)
+            {
+            	AndroidSafeNativeThreadAttachment attached(m_nativeState);
+            	JNIEnv* env = attached.envForThread;
+
+            	jobjectArray jniStringArray = env->NewObjectArray(
+            			stringVector.size(),
+						env->FindClass("java/lang/String"),
+						0
+            	);
+
+            	for(size_t i = 0; i < stringVector.size(); ++ i)
+            	{
+            		jstring jniString = env->NewStringUTF(stringVector[i].c_str());
+            		env->SetObjectArrayElement(jniStringArray, i, jniString);
+            		env->DeleteLocalRef(jniString);
+            	}
+
+            	return jniStringArray;
             }
         }
     }
