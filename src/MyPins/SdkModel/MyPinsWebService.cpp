@@ -9,6 +9,9 @@
 #include "IWebLoadRequestFactory.h"
 #include "IWebLoadRequest.h"
 
+#include "IFileIO.h"
+#include <fstream>
+
 namespace ExampleApp
 {
     namespace MyPins
@@ -50,7 +53,6 @@ namespace ExampleApp
                                                          const MyPinModel& pinModel,
                                                          const Search::SdkModel::SearchResultModel& searchResult)
             {
-                const Eegeo::Space::LatLong& latLong = pinModel.GetLatLong();
                 // when storing search result pins, due to licensing terms we're just storing the lat, long and id
                 // this allows us to refresh the pin when required.
                 Eegeo::Web::WebRequestBuilder requestBuilder = m_webLoadRequestFactory.Begin(Eegeo::Web::HttpVerbs::POST, m_url + CreatePoiEndPoint, m_webRequestCompleteCallback)
@@ -83,7 +85,6 @@ namespace ExampleApp
 
                 const bool hasImage = !imagePath.empty();
 
-                std::map<std::string, Eegeo::Web::ImageUploadData> imageData;
                 if (hasImage)
                 {
                     std::vector<Byte> imageData;
