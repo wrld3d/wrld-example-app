@@ -102,12 +102,20 @@ namespace ExampleApp
                 void MyPinsSearchResultRefreshService::HandleRefreshSearchResultCompleted(const SdkModel::IdentitySearchCallbackData& result)
                 {
                     TIdentifierToPinIdMap::iterator identifierToPinIdMapIt(m_vendorIdToPinMap.find(result.GetLocationIdentifier()));
-                    Eegeo_ASSERT(identifierToPinIdMapIt != m_vendorIdToPinMap.end());
+                    if(identifierToPinIdMapIt == m_vendorIdToPinMap.end())
+                    {
+                        Eegeo_TTY("couldn't find the PinId that maps to the result's locationId");
+                        return;
+                    }
                     
                     const ExampleApp::MyPins::SdkModel::MyPinModel::TPinIdType pinId(identifierToPinIdMapIt->second);
                     
                     TPinIdToBoundObjectMap::iterator pinIdToBoundObjectMapIt(m_pinIdToSearchResultPinBoundObject.find(pinId));
-                    Eegeo_ASSERT(pinIdToBoundObjectMapIt != m_pinIdToSearchResultPinBoundObject.end());
+                    if(pinIdToBoundObjectMapIt == m_pinIdToSearchResultPinBoundObject.end())
+                    {
+                        Eegeo_TTY("couldn't find the bound search result that maps to the PinId");
+                        return;
+                    }
                     
                     // Check the pin hasn't been removed from the MyPin repository during our query.
                     if(m_searchResultMyPinsService.ContainsPinWithId(pinId))

@@ -141,11 +141,14 @@ struct StoredImageData
             
             if(imageStoreMapIt == m_imageStoreMap.end())
             {
-                StoredImageData storedImageData;
-                storedImageData.image = [image retain];
-                storedImageData.views.push_back((*it).first);
-                
-                m_imageStoreMap[urlString] = storedImageData;
+                if(image != nil)
+                {
+                    StoredImageData storedImageData;
+                    storedImageData.image = [image retain];
+                    storedImageData.views.push_back((*it).first);
+                    
+                    m_imageStoreMap[urlString] = storedImageData;
+                }
             }
             else
             {

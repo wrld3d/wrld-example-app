@@ -16,6 +16,8 @@
 #include <string>
 #include "ImageStore.h"
 #include <vector>
+#include "ImageHelpers.h"
+#include "UIColors.h"
 
 namespace
 {
@@ -102,6 +104,14 @@ namespace
         self.pUserImage.asynchronous = YES;
         [self.pUserImageContainer addSubview:self.pUserImage];
         
+        self.pImageLoadingSpinner = [[[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge] autorelease];
+        self.pImageLoadingSpinner.color = ExampleApp::Helpers::ColorPalette::TwitterBlue;
+        self.pImageLoadingSpinner.hidden = YES;
+        self.pImageLoadingSpinner.frame = CGRectMake(0,0,userImageSize,userImageSize);
+        
+        [self.pUserImage addSubview:self.pImageLoadingSpinner];
+
+        
         self.pNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(userImageContainerSize + userImageContainerX + spacing, nameLabelY, nameLabelWidth, nameLabelHeight)];
         self.pNameLabel.textColor = TwitterDefines::DarkTextColor;
         self.pNameLabel.font = headerFont;
@@ -162,6 +172,10 @@ namespace
     [self.pNameLabel removeFromSuperview];
     [self.pNameLabel release];
     self.pNameLabel = nil;
+    
+    [self.pImageLoadingSpinner removeFromSuperview];
+    [self.pImageLoadingSpinner release];
+    self.pImageLoadingSpinner = nil;
     
     [self.pUserImage removeFromSuperview];
     [self.pUserImage release];
@@ -296,11 +310,18 @@ namespace
     
     [self.pTweetContent setAttributedText:tweetContent];
     
+    [self.pImageLoadingSpinner startAnimating];
+    [m_pImageStore releaseImageForView:self.pUserImage];
     [m_pImageStore loadImage:[strUserImagePath UTF8String]
                             :self.pUserImage
                             :^(UIImage* image)
                              {
+                                 if(image == nil)
+                                 {
+                                     image = ExampleApp::Helpers::ImageHelpers::LoadImage("Tours/States/Twitter/NotLoaded/ProfilePicCatNotLoaded");
+                                 }
                                  [self.pUserImage setImage:image];
+                                 [self.pImageLoadingSpinner stopAnimating];
                              }];
     
     [self.pBannerImage setImage:nil];
@@ -313,20 +334,21 @@ namespace
                                      [self.pBannerImage setImage:image];
                                  }];
     }
-    else
+    UIColor* profileColor = ExampleApp::Helpers::ColorPalette::TwitterBlue;
+    if([strProfileColor length] > 0)
     {
         unsigned profileColorInt = 0;
         NSScanner *scanner = [NSScanner scannerWithString:strProfileColor];
         
         [scanner scanHexInt:&profileColorInt];
         
-        UIColor* profileColor = [UIColor colorWithRed:(float)((profileColorInt & 0xFF0000) >> 16) / 255.0f
-                                                green:(float)((profileColorInt & 0x00FF00) >> 8) / 255.0f
-                                                 blue:(float)((profileColorInt & 0x0000FF)) / 255.0f
-                                                alpha:1.0f];
-        
-        self.pBannerImage.backgroundColor = profileColor;
+        profileColor = [UIColor colorWithRed:(float)((profileColorInt & 0xFF0000) >> 16) / 255.0f
+                                       green:(float)((profileColorInt & 0x00FF00) >> 8) / 255.0f
+                                        blue:(float)((profileColorInt & 0x0000FF)) / 255.0f
+                                       alpha:1.0f];
     }
+    
+    self.pBannerImage.backgroundColor = profileColor;
     
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
     [dateFormat setDateFormat:@"EE LLL d HH:mm:ss Z yyyy"];

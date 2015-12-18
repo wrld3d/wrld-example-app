@@ -229,11 +229,6 @@ bool GlDisplayService::TryBindDisplay(ANativeWindow& window)
     m_sharedSurface = EGL_NO_SURFACE;
     m_resourceBuildSharedContext = EGL_NO_CONTEXT;
 #else
-    if(m_resourceBuildSharedContext == EGL_NO_CONTEXT)
-    {
-        m_resourceBuildSharedContext = eglCreateContext(m_display, config, m_context, contextAttribs);
-    }
-
     EGLint pBufferAttribs[] =
     {
         EGL_WIDTH, 1,
@@ -246,6 +241,11 @@ bool GlDisplayService::TryBindDisplay(ANativeWindow& window)
     if (!DefaultEGLChooser(m_display, EGL_PBUFFER_BIT, sharedSurfaceConfig))
     {
         Eegeo_ERROR("unabled to find a good pbuffer surface type");
+    }
+
+    if(m_resourceBuildSharedContext == EGL_NO_CONTEXT)
+    {
+            m_resourceBuildSharedContext = eglCreateContext(m_display, sharedSurfaceConfig, m_context, contextAttribs);
     }
 
     m_sharedSurface = eglCreatePbufferSurface(m_display, sharedSurfaceConfig, pBufferAttribs);

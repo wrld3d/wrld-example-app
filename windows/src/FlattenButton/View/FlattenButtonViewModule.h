@@ -31,9 +31,6 @@ namespace ExampleApp
                     Metrics::IMetricsService& metricsService
                 );
 
-                void AnimateOffScreen();
-                void AnimateOnScreen();
-
                 ~FlattenButtonViewModule();
             };
         }
