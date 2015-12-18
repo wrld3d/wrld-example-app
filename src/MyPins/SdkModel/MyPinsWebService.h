@@ -17,8 +17,6 @@ namespace ExampleApp
         {
             class MyPinsWebService
             {
-                void WebRequestCompleteCallback(Eegeo::Web::IWebLoadRequest& webLoadRequest);
-                
             public:
                 MyPinsWebService(
                                  const std::string& webServiceBaseUrl,

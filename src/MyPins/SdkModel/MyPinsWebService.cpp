@@ -9,9 +9,6 @@
 #include "IWebLoadRequestFactory.h"
 #include "IWebLoadRequest.h"
 
-#include "IFileIO.h"
-#include <fstream>
-
 namespace ExampleApp
 {
     namespace MyPins
@@ -39,11 +36,13 @@ namespace ExampleApp
                 const std::string PoiTypeSearchResult = "SearchResultPoi";
                 const std::string PoiTypeUserGenerated = "UserGeneratedPoi";
                 
-                void SetLatLongFormData(const MyPinModel& pinModel, std::map<std::string, std::string>& out_formData)
+                void SetLatLongFormData(const MyPinModel& pinModel, Eegeo::Web::WebRequestBuilder& requestBuilder)
                 {
                     const Eegeo::Space::LatLong& latLong = pinModel.GetLatLong();
-                    out_formData["poi[latitude]"] = ConvertModelDetailToString(latLong.GetLatitudeInDegrees());
-                    out_formData["poi[longitude]"] = ConvertModelDetailToString(latLong.GetLongitudeInDegrees());
+                    const std::string& latitude = ConvertModelDetailToString(latLong.GetLatitudeInDegrees());
+                    const std::string& longitude = ConvertModelDetailToString(latLong.GetLongitudeInDegrees());
+                    requestBuilder.AddFormData("poi[latitude]", latitude);
+                    requestBuilder.AddFormData("poi[longitude]", longitude);
                 }
             }
             
@@ -52,63 +51,67 @@ namespace ExampleApp
                                                          const Search::SdkModel::SearchResultModel& searchResult)
             {
                 const Eegeo::Space::LatLong& latLong = pinModel.GetLatLong();
-                
-                m_webLoadRequestFactory.Begin(Eegeo::Web::HttpVerbs::POST, m_url + CreatePoiEndPoint, m_webRequestCompleteCallback)
-                    .AddFormData("poi[latitude]", ConvertModelDetailToString(latLong.GetLatitudeInDegrees()))
-                    .AddFormData("poi[longitude]", ConvertModelDetailToString(latLong.GetLongitudeInDegrees()))
+                // when storing search result pins, due to licensing terms we're just storing the lat, long and id
+                // this allows us to refresh the pin when required.
+                Eegeo::Web::WebRequestBuilder requestBuilder = m_webLoadRequestFactory.Begin(Eegeo::Web::HttpVerbs::POST, m_url + CreatePoiEndPoint, m_webRequestCompleteCallback)
                     .AddFormData("poi[type]", PoiTypeSearchResult)
-                    .AddFormData("poi[vendor_name]", searchResult.GetIdentifier())
+                    .AddFormData("poi[vendor_name]", searchResult.GetVendor())
+                    .AddFormData("poi[vendor_id]", searchResult.GetIdentifier())
                     .AddFormData("poi[interior_id]", searchResult.GetBuildingId().Value())
                     .AddFormData("poi[interior_floor_number]", ConvertModelDetailToString(searchResult.GetFloor()))
-                    .AddHeader("Authorization", m_authHeader)
-                    .Build()->Load();
+                    .AddHeader("Authorization", m_authHeader);
+                
+                SetLatLongFormData(pinModel, requestBuilder);
+                
+                requestBuilder.Build()->Load();
             }
             
             void MyPinsWebService::SubmitUserCreatedPin(
                                                         const MyPinModel& pinModel,
                                                         const std::string& imagePath)
             {
-                std::map<std::string, std::string> formData;
-                SetLatLongFormData(pinModel, formData);
-                
-                const Eegeo::Space::LatLong& latLong = pinModel.GetLatLong();
-                
-                Eegeo::Web::WebRequestBuilder resquestBuilder = m_webLoadRequestFactory.Begin(Eegeo::Web::HttpVerbs::POST, m_url + CreatePoiEndPoint, m_webRequestCompleteCallback)
-                    .AddFormData("poi[latitude]", ConvertModelDetailToString(latLong.GetLatitudeInDegrees()))
-                    .AddFormData("poi[longitude]", ConvertModelDetailToString(latLong.GetLongitudeInDegrees()))
+                Eegeo::Web::WebRequestBuilder requestBuilder = m_webLoadRequestFactory.Begin(Eegeo::Web::HttpVerbs::POST, m_url + CreatePoiEndPoint, m_webRequestCompleteCallback)
                     .AddFormData("poi[type]", PoiTypeUserGenerated)
+                    .AddFormData("poi[title]", pinModel.GetTitle())
+                    .AddFormData("poi[description]", pinModel.GetDescription())
                     .AddFormData("poi[interior_id]", pinModel.GetBuildingId().Value())
                     .AddFormData("poi[interior_floor_number]", ConvertModelDetailToString(pinModel.GetFloor()))
+                    //                    .AddPostData()
                     .AddHeader("Authorization", m_authHeader);
-                
+
+                SetLatLongFormData(pinModel, requestBuilder);
+
                 const bool hasImage = !imagePath.empty();
-                
-                //std::map<std::string, Eegeo::Web::ImageUploadData> imageData;
+
+                std::map<std::string, Eegeo::Web::ImageUploadData> imageData;
                 if (hasImage)
                 {
-                    std::vector<Byte> imageDataBytes;
+                    std::vector<Byte> imageData;
                     std::fstream stream;
                     size_t size;
-                    if(m_fileIO.OpenFile(stream, size, imagePath, std::ios::in | std::ios::binary))
+
+                    if (m_fileIO.OpenFile(stream, size, imagePath, std::ios::in | std::ios::binary))
                     {
-                        imageDataBytes.resize(size);
-                        stream.read((char*)&imageDataBytes[0], size);
+                        imageData.resize(size);
+                        stream.read((char*)&imageData[0], size);
                     }
                     else
                     {
                         Eegeo_TTY("Failed to open file for pin image");
                     }
-                    
-                    const Eegeo::Web::WebPostData imagePostData = Eegeo::Web::WebPostData::CreateBufferData(imagePath, imageDataBytes);
-                    resquestBuilder.AddPostData("poi[image]", imagePostData);
+
+                    const Eegeo::Web::WebPostData imagePostData = Eegeo::Web::WebPostData::CreateBufferData("pin_image.jpg", imageData);
+                    requestBuilder.AddPostData("poi[image]", imagePostData);
                 }
-                
-                resquestBuilder.Build()->Load();
+
+                requestBuilder.Build()->Load();
             }
             
             void MyPinsWebService::WebRequestCompleteCallback(Eegeo::Web::IWebResponse& webResponse)
             {
-                Eegeo_TTY("Web Request Completed, code: %d url: %s\n", webResponse.GetHttpStatusCode(), webResponse.GetUrl().c_str());
+                size_t resultSize = webResponse.GetBodyData().size();
+                std::string responseString = resultSize > 0 ? std::string(reinterpret_cast<char const*>(&(webResponse.GetBodyData().front())), resultSize) : "<empty>";
+                Eegeo_TTY("Web Request Completed, code: %d response: %s\n", webResponse.GetHttpStatusCode(), responseString.c_str());
             }
         }
     }

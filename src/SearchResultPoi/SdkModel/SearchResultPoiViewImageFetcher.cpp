@@ -44,7 +44,8 @@ namespace ExampleApp
             
             void SearchResultPoiViewImageFetcher::FetchImageForSearchResult(const std::string& imageUrl)
             {
-                m_webRequestFactory.Begin(Eegeo::Web::HttpVerbs::GET, imageUrl, m_webRequestCallback).Build()->Load();
+                m_webRequestFactory.Begin(Eegeo::Web::HttpVerbs::GET, imageUrl, m_webRequestCallback)
+                    .Build()->Load();
             }
         }
     }

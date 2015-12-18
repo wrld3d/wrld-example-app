@@ -71,10 +71,10 @@ namespace ExampleApp
             void TwitterFeedService::StartService()
             {
                 m_pCurrentAuthRequest = m_webLoadRequestFactory.Begin(Eegeo::Web::HttpVerbs::POST, TwitterAuthUrl, *m_pAuthCallback)
-                        .AddFormData(GrantTypeKey, GrantTypeValue)
-                        .AddHeader(TwitterAuthKey, TwitterAuthValue + TwitterAuthCode)
-                        .AddHeader(ContentTypeKey, ContentTypeValue).Build();
-                
+                    .AddFormData(GrantTypeKey, GrantTypeValue)
+                    .AddHeader(TwitterAuthKey, TwitterAuthValue + TwitterAuthCode)
+                    .AddHeader(ContentTypeKey, ContentTypeValue).Build();
+
                 m_pCurrentAuthRequest->Load();
                 
                 m_currentServiceState = AUTHORIZING;
@@ -93,8 +93,8 @@ namespace ExampleApp
                 timeLineURL << TwitterTimelineUrl << "?" << CountParameter << "=" << MaxTweets << "&" << ScreenNameParameter << "=" << m_accountNameQueue.front();
                 
                 m_pCurrentTimeLineRequest = m_webLoadRequestFactory.Begin(Eegeo::Web::HttpVerbs::GET, timeLineURL.str(), *m_pTimeLineCallback)
-                        .AddHeader(RequestAuthKey, RequestAuthValue + m_accessToken).Build();
-                
+                    .AddHeader(RequestAuthKey, RequestAuthValue + m_accessToken).Build();
+
                 m_pCurrentTimeLineRequest->Load();
                 
                 m_currentServiceState = LOADING_TIMELINE;

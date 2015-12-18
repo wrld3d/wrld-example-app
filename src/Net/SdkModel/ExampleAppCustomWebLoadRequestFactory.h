@@ -23,20 +23,20 @@ namespace ExampleApp
                 Eegeo::Helpers::IHttpCache& m_httpCache;
                 Eegeo::Web::IWebLoadRequestFactory& m_webLoadRequestFactory;
                 INetworkCapabilities& m_networkCapabilities;
-                
+
             public:
                 ExampleAppCustomWebLoadRequestFactory(Eegeo::Helpers::IHttpCache& httpCache,
-                                                      Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory,
-                                                      INetworkCapabilities& networkCapabilities);
-                
-                
+                    Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory,
+                    INetworkCapabilities& networkCapabilities);
+
+
                 Eegeo::Web::WebRequestBuilder Begin(const Eegeo::Web::HttpVerbs::Values httpVerb,
-                                                     const std::string& url,
-                                                     Eegeo::Web::IWebLoadRequestCompletionCallback& callback);
-                
+                    const std::string& url,
+                    Eegeo::Web::IWebLoadRequestCompletionCallback& callback);
+
             private:
                 bool CanStream();
-                
+
             };
         }
     }

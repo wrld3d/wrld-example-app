@@ -84,8 +84,6 @@
 #include "IInteriorsExplorerModule.h"
 #include "WindowsPersistentSettingsModel.h"
 #include "../libs/eegeo/platform/Helpers/ColorHelpers.h"
-#include "IHttpCache.h"
-#include "HttpCache.h"
 
 using namespace Eegeo::Windows;
 using namespace Eegeo::Windows::Input;
@@ -538,10 +536,11 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
         *m_pWindowsFlurryMetricsService
         );
 
+
     m_pOptionsViewModule = Eegeo_NEW(ExampleApp::Options::View::OptionsViewModule)(
         m_nativeState,
         app.OptionsModule().GetOptionsViewModel(),
-        m_pWindowsPlatformAbstractionModule->GetWindowsHttpCache(),
+        m_pWindowsPlatformAbstractionModule->GetHttpCache(),
         m_messageBus);
 
     m_pMyPinCreationDetailsViewModule = Eegeo_NEW(ExampleApp::MyPinCreationDetails::View::MyPinCreationDetailsViewModule)(

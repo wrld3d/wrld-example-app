@@ -37,7 +37,6 @@ namespace ExampleApp
                                        CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
                                        Search::SdkModel::MyPins::IMyPinsSearchResultRefreshService& myPinsSearchResultRefreshService,
                                        Metrics::IMetricsService& metricsService,
-                                       Eegeo::Helpers::IFileIO& fileIO,
                                        const std::string& myPinsWebServiceUrl,
                                        const std::string& myPinsWebServiceAuthToken)
                 : m_pMyPinsRepository(NULL)
@@ -55,7 +54,7 @@ namespace ExampleApp
                 m_pMyPinsWebService = Eegeo_NEW(MyPinsWebService)(myPinsWebServiceUrl,
                                                                   myPinsWebServiceAuthToken,
                                                                   platformAbstractions.GetWebLoadRequestFactory(),
-                                                                  fileIO);
+                                                                  platformAbstractions.GetFileIO());
                 
                 m_pMyPinBoundObjectRepository = Eegeo_NEW(MyPinBoundObjectRepository);
                 

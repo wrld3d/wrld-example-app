@@ -9,7 +9,7 @@
 #include "IOptionsViewModule.h"
 #include "BidirectionalBus.h"
 #include "ClearCacheMessageHandler.h"
-#include "Helpers.h"
+#include "IHttpCache.h"
 
 namespace ExampleApp
 {

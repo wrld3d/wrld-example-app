@@ -104,8 +104,8 @@
 #include "InteriorController.h"
 #include "EnvironmentRayCaster.h"
 #include "AggregateCollisionBvhProvider.h"
-#include "InteriorsHighlightPickingController.h"
 #include "InteriorsHighlightVisibilityController.h"
+#include "InteriorsHighlightPickingController.h"
 
 namespace ExampleApp
 {
@@ -517,7 +517,6 @@ namespace ExampleApp
                                                                                 m_pCategorySearchModule->GetCategorySearchRepository(),
                                                                                 m_pSearchModule->GetMyPinsSearchResultRefreshService(),
                                                                                 m_metricsService,
-                                                                                m_platformAbstractions.GetFileIO(),
                                                                                 m_applicationConfiguration.MyPinsWebServiceUrl(),
                                                                                 m_applicationConfiguration.MyPinsWebServiceAuthToken());
         
