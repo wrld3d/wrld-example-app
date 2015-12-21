@@ -58,7 +58,6 @@ namespace ExampleApp
                 {
                     
                     m_subStates.push_back(Eegeo_NEW(InteriorsExplorer::SdkModel::States::InteriorExplorerSetupState)(*this,
-                                                                                                                     interiorsExplorerModel,
                                                                                                                      cameraController,
                                                                                                                      interiorCameraHandle));
                     

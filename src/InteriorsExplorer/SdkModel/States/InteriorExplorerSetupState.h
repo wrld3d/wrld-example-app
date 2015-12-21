@@ -21,7 +21,6 @@ namespace ExampleApp
                 {
                 private:
                     
-                    InteriorsExplorerModel& m_interiorsExplorerModel;
                     AppCamera::SdkModel::IAppCameraController& m_cameraController;
                     int m_interiorCameraHandle;
                     
@@ -30,7 +29,6 @@ namespace ExampleApp
                 public:
                     
                     InteriorExplorerSetupState(AppModes::States::SdkModel::InteriorExplorerState& parentState,
-                                               InteriorsExplorerModel& interiorsExplorerModel,
                                                AppCamera::SdkModel::IAppCameraController& cameraController,
                                                int interiorCameraHandle);
                     
