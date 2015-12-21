@@ -14,11 +14,9 @@ namespace ExampleApp
             namespace States
             {
                 InteriorExplorerSetupState::InteriorExplorerSetupState(AppModes::States::SdkModel::InteriorExplorerState& parentState,
-                                                                       InteriorsExplorerModel& interiorsExplorerModel,
                                                                        AppCamera::SdkModel::IAppCameraController& cameraController,
                                                                        int interiorCameraHandle)
                 : m_parentState(parentState)
-                , m_interiorsExplorerModel(interiorsExplorerModel)
                 , m_cameraController(cameraController)
                 , m_interiorCameraHandle(interiorCameraHandle)
                 {

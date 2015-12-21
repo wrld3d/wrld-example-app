@@ -107,7 +107,7 @@ namespace ExampleApp
                     }
                     
                     ChangeToInteriorMapState();
-
+                    
                     const Eegeo::Resources::Interiors::InteriorId& interiorId = m_interiorSelectionModel.GetSelectedInteriorId();
                     m_metricsService.SetEvent(MetricEventInteriorSelected, "InteriorId", interiorId.Value());
                     
