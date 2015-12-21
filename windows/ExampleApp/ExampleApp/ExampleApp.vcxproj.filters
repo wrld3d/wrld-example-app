@@ -580,6 +580,12 @@
     <Filter Include="Source Files\App\InteriorsExplorer\SdkModel\Highlights">
       <UniqueIdentifier>{09d9c962-2b60-4b98-bbb0-f08b60fc48ef}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\App\VisualMap">
+      <UniqueIdentifier>{81136adf-dfda-4030-9f36-fffde1f96bd6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\App\VisualMap\SdkModel">
+      <UniqueIdentifier>{dbe48c88-0f29-44eb-ab05-2a0631795c01}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\AppHost.cpp">
@@ -1991,6 +1997,21 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\InteriorsExplorer\SdkModel\Highlights\InteriorsHighlightPickingController.cpp">
       <Filter>Source Files\App\InteriorsExplorer\SdkModel\Highlights</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\VisualMap\SdkModel\VisualMapController.cpp">
+      <Filter>Source Files\App\VisualMap\SdkModel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\VisualMap\SdkModel\VisualMapModel.cpp">
+      <Filter>Source Files\App\VisualMap\SdkModel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\VisualMap\SdkModel\VisualMapModule.cpp">
+      <Filter>Source Files\App\VisualMap\SdkModel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\VisualMap\SdkModel\VisualMapService.cpp">
+      <Filter>Source Files\App\VisualMap\SdkModel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\VisualMap\SdkModel\VisualMapStateHistory.cpp">
+      <Filter>Source Files\App\VisualMap\SdkModel</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -4312,6 +4333,42 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\InteriorsExplorer\SdkModel\Highlights\InteriorsHighlightPickingController.h">
       <Filter>Source Files\App\InteriorsExplorer\SdkModel\Highlights</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\VisualMap\SdkModel\IVisualMapController.h">
+      <Filter>Source Files\App\VisualMap\SdkModel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\VisualMap\SdkModel\IVisualMapModel.h">
+      <Filter>Source Files\App\VisualMap\SdkModel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\VisualMap\SdkModel\IVisualMapModule.h">
+      <Filter>Source Files\App\VisualMap\SdkModel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\VisualMap\SdkModel\IVisualMapService.h">
+      <Filter>Source Files\App\VisualMap\SdkModel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\VisualMap\SdkModel\IVisualMapStateHistory.h">
+      <Filter>Source Files\App\VisualMap\SdkModel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\VisualMap\SdkModel\VisualMapController.h">
+      <Filter>Source Files\App\VisualMap\SdkModel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\VisualMap\SdkModel\VisualMapModel.h">
+      <Filter>Source Files\App\VisualMap\SdkModel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\VisualMap\SdkModel\VisualMapModule.h">
+      <Filter>Source Files\App\VisualMap\SdkModel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\VisualMap\SdkModel\VisualMapService.h">
+      <Filter>Source Files\App\VisualMap\SdkModel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\VisualMap\SdkModel\VisualMapState.h">
+      <Filter>Source Files\App\VisualMap\SdkModel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\VisualMap\SdkModel\VisualMapStateHistory.h">
+      <Filter>Source Files\App\VisualMap\SdkModel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\VisualMap\VisualMap.h">
+      <Filter>Source Files\App\VisualMap</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
