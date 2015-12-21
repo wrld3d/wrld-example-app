@@ -1,7 +1,6 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "AppHost.h"
-#include "AndroidWebRequestService.hpp"
 #include "AndroidSharedGlContext.h"
 #include "LatLongAltitude.h"
 #include "EegeoWorld.h"
@@ -229,8 +228,6 @@ AppHost::AppHost(
     m_pModalBackgroundNativeViewModule = Eegeo_NEW(ExampleApp::ModalBackground::SdkModel::ModalBackgroundNativeViewModule)(
             m_pApp->World().GetRenderingModule(),
             m_messageBus);
-
-    m_pAndroidPlatformAbstractionModule->SetWebRequestServiceWorkPool(m_pApp->World().GetWorkPool());
 
     m_pAppInputDelegate = Eegeo_NEW(AppInputDelegate)(*m_pApp);
     m_inputHandler.AddDelegateInputHandler(m_pAppInputDelegate);

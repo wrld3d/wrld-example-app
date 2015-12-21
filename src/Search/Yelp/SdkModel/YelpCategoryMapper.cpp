@@ -14,7 +14,8 @@ namespace
     {
         for(size_t i = 0; i < subHierarchyRoot.Size(); ++i)
         {
-            const rapidjson::Value& entry = subHierarchyRoot[i];
+            unsigned int index = static_cast<unsigned int>(i);
+            const rapidjson::Value& entry = subHierarchyRoot[index];
             std::string category(entry["alias"].GetString());
             const rapidjson::Value& subTree(entry["category"]);
             const bool isMyCategoryRoot(foundationCategoriesMapping.find(category) != foundationCategoriesMapping.end());
@@ -99,19 +100,20 @@ namespace ExampleApp
                 {
                     Eegeo_ASSERT(!m_hasDownloadedTaxonomy);
                     m_isDownloadingTaxonomy = true;
-                    m_webRequestFactory.CreateGet(YelpCategoryTaxonomyUrl, m_yelpTaxonomyRequestCompletedCallback, NULL)->Load();
+                    
+                    m_webRequestFactory.Begin(Eegeo::Web::HttpVerbs::GET, YelpCategoryTaxonomyUrl, m_yelpTaxonomyRequestCompletedCallback).Build()->Load();
                 }
                 
-                void YelpCategoryMapper::OnYelpTaxonomyRequestCompleted(Eegeo::Web::IWebLoadRequest& webLoadRequest)
+                void YelpCategoryMapper::OnYelpTaxonomyRequestCompleted(Eegeo::Web::IWebResponse& webResponse)
                 {
                     Eegeo_ASSERT(m_isDownloadingTaxonomy);
                     m_isDownloadingTaxonomy = false;
                     
-                    if(webLoadRequest.IsSucceeded())
+                    if(webResponse.IsSucceeded())
                     {
                         m_hasDownloadedTaxonomy = true;
-                        const size_t resultSize = webLoadRequest.GetResourceData().size();
-                        const std::string serializedTaxonomyJson(reinterpret_cast<char const*>(&(webLoadRequest.GetResourceData().front())), resultSize);
+                        const size_t resultSize = webResponse.GetBodyData().size();
+                        const std::string serializedTaxonomyJson(reinterpret_cast<char const*>(&(webResponse.GetBodyData().front())), resultSize);
                         ParseYelpCategoryTaxonomy(serializedTaxonomyJson);
                     }
                 }
@@ -126,7 +128,8 @@ namespace ExampleApp
                         
                         for(size_t i = 0; i < numFoundationCategories; ++i)
                         {
-                            const rapidjson::Value& entry = document[i];
+                            unsigned int index = static_cast<unsigned int>(i);
+                            const rapidjson::Value& entry = document[index];
                             std::string foundationCategory(entry["alias"].GetString());
                             const rapidjson::Value& subTree(entry["category"]);
                             m_yelpLeafCategoryToYelpFoundationCategoryMap[foundationCategory] = foundationCategory;

@@ -672,6 +672,12 @@
 		27EACB5C1BC4140700135BE6 /* icon1_tours@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 27EACB561BC4140700135BE6 /* icon1_tours@3x.png */; };
 		27EAFA001BECB6B2008A1EDB /* TransitionToInteriorPointStage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27EAF9FE1BECB6B2008A1EDB /* TransitionToInteriorPointStage.cpp */; };
 		27EAFA011BECB6B2008A1EDB /* TransitionToInteriorPointStage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27EAF9FE1BECB6B2008A1EDB /* TransitionToInteriorPointStage.cpp */; };
+		2C20228D1C19BBF0002C8BFF /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C20228B1C19BBEF002C8BFF /* libcurl.a */; };
+		2C20228E1C19BBF0002C8BFF /* libuv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C20228C1C19BBEF002C8BFF /* libuv.a */; };
+		2C2022901C19C41F002C8BFF /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C20228B1C19BBEF002C8BFF /* libcurl.a */; };
+		2C2022911C19C41F002C8BFF /* libuv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C20228C1C19BBEF002C8BFF /* libuv.a */; };
+		2C2022921C19C53B002C8BFF /* embedded_manifest.txt in Resources */ = {isa = PBXBuildFile; fileRef = 2CA085ED1BD7E1C400A99340 /* embedded_manifest.txt */; };
+		2C2022951C19C57F002C8BFF /* Textures in Resources */ = {isa = PBXBuildFile; fileRef = 2CA085EE1BD7E1C400A99340 /* Textures */; };
 		2CA085EF1BD7E1C400A99340 /* embedded_manifest.txt in Resources */ = {isa = PBXBuildFile; fileRef = 2CA085ED1BD7E1C400A99340 /* embedded_manifest.txt */; };
 		2CA085F01BD7E1C400A99340 /* Textures in Resources */ = {isa = PBXBuildFile; fileRef = 2CA085EE1BD7E1C400A99340 /* Textures */; };
 		560741141B8CC624002B0F49 /* MenuDragStateChangedMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 560741121B8CC624002B0F49 /* MenuDragStateChangedMessage.cpp */; };
@@ -2092,6 +2098,8 @@
 		27EACB561BC4140700135BE6 /* icon1_tours@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon1_tours@3x.png"; sourceTree = "<group>"; };
 		27EAF9FE1BECB6B2008A1EDB /* TransitionToInteriorPointStage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TransitionToInteriorPointStage.cpp; sourceTree = "<group>"; };
 		27EAF9FF1BECB6B2008A1EDB /* TransitionToInteriorPointStage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransitionToInteriorPointStage.h; sourceTree = "<group>"; };
+		2C20228B1C19BBEF002C8BFF /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = Include/eegeo/libcurl.a; sourceTree = "<group>"; };
+		2C20228C1C19BBEF002C8BFF /* libuv.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libuv.a; path = Include/eegeo/libuv.a; sourceTree = "<group>"; };
 		2CA085ED1BD7E1C400A99340 /* embedded_manifest.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = embedded_manifest.txt; sourceTree = "<group>"; };
 		2CA085EE1BD7E1C400A99340 /* Textures */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Textures; sourceTree = "<group>"; };
 		560741121B8CC624002B0F49 /* MenuDragStateChangedMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MenuDragStateChangedMessage.cpp; sourceTree = "<group>"; };
@@ -3165,6 +3173,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				18FD9FA11ABB4A0C009F4085 /* QuartzCore.framework in Frameworks */,
+				2C2022901C19C41F002C8BFF /* libcurl.a in Frameworks */,
+				2C2022911C19C41F002C8BFF /* libuv.a in Frameworks */,
 				565FE37F1BE8B19100232A74 /* AVFoundation.framework in Frameworks */,
 				56BFB0C81A8B76D200572C99 /* libapps-on-maps-cpp11-sim.a in Frameworks */,
 				56BFB0CA1A8B76D200572C99 /* libapps-on-maps-cpp11.a in Frameworks */,
@@ -3190,6 +3200,8 @@
 			files = (
 				561034801C22EB1C007D5D2A /* QuartzCore.framework in Frameworks */,
 				5610347F1C22EACB007D5D2A /* CoreGraphics.framework in Frameworks */,
+				2C20228D1C19BBF0002C8BFF /* libcurl.a in Frameworks */,
+				2C20228E1C19BBF0002C8BFF /* libuv.a in Frameworks */,
 				565FE37E1BE8B18D00232A74 /* AVFoundation.framework in Frameworks */,
 				56D620DA1A8B641200828A9E /* libapps-on-maps-sim.a in Frameworks */,
 				56D620DB1A8B641200828A9E /* libapps-on-maps.a in Frameworks */,
@@ -5689,6 +5701,8 @@
 		7EE481E916836F370006E99B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2C20228B1C19BBEF002C8BFF /* libcurl.a */,
+				2C20228C1C19BBEF002C8BFF /* libuv.a */,
 				565FE37D1BE8B18D00232A74 /* AVFoundation.framework */,
 				56BFB0C91A8B76D200572C99 /* libapps-on-maps-cpp11.a */,
 				56BFB0C41A8B73ED00572C99 /* libapps-on-maps-cpp11-sim.a */,
@@ -6519,6 +6533,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C2022951C19C57F002C8BFF /* Textures in Resources */,
+				2C2022921C19C53B002C8BFF /* embedded_manifest.txt in Resources */,
 				18A1B0751A8A1EE1004C928E /* icon1_options.png in Resources */,
 				185145911AB0A8DC0071913E /* SplashScreen.png in Resources */,
 				18EC011C1AA7752500902E98 /* icon1_misc@2x.png in Resources */,
@@ -8115,6 +8131,7 @@
 					"$(PROJECT_DIR)/Include/eegeo",
 					"$(PROJECT_DIR)/Include",
 				);
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
 					"-DCOMPILE_CPP_11=1",
@@ -8151,6 +8168,7 @@
 					"$(PROJECT_DIR)/Include/eegeo",
 					"$(PROJECT_DIR)/Include",
 				);
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
 					"-DCOMPILE_CPP_11=1",
@@ -8269,9 +8287,10 @@
 					"$(PROJECT_DIR)/Include",
 					"$(PROJECT_DIR)/Include/eegeo",
 				);
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				VALID_ARCHS = "armv7 arm64 i386";
+				VALID_ARCHS = "armv7 i386 arm64";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -8300,10 +8319,10 @@
 					"$(PROJECT_DIR)/Include",
 					"$(PROJECT_DIR)/Include/eegeo",
 				);
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				VALID_ARCHS = "armv7 arm64 i386";
+				VALID_ARCHS = "armv7 i386 arm64";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

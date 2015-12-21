@@ -21,7 +21,7 @@ namespace ExampleApp
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 Eegeo::Web::TWebLoadRequestCompletionCallback<SearchResultPoiViewImageFetcher> m_webRequestCallback;
                 
-                void OnImageFetchResponseReceived(Eegeo::Web::IWebLoadRequest& message);
+                void OnImageFetchResponseReceived(Eegeo::Web::IWebResponse& webResponse);
                 
             public:
                 SearchResultPoiViewImageFetcher(Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,

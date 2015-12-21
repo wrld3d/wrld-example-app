@@ -5,6 +5,7 @@
 #include "OptionsView.h"
 #include "OptionsController.h"
 #include "AndroidAppThreadAssertionMacros.h"
+#include "IHttpCache.h"
 
 namespace ExampleApp
 {
@@ -15,7 +16,7 @@ namespace ExampleApp
         	OptionsViewModule::OptionsViewModule(
                 AndroidNativeState& nativeState,
                 IOptionsViewModel& optionsViewModel,
-                Eegeo::Android::Cache::AndroidHttpCache& httpCache,
+                Eegeo::Helpers::IHttpCache& httpCache,
                 ExampleAppMessaging::TMessageBus& messageBus
             )
             {

@@ -9,7 +9,7 @@
 #include "IOptionsViewModule.h"
 #include "BidirectionalBus.h"
 #include "ClearCacheMessageHandler.h"
-#include "WindowsHttpCache.h"
+#include "Helpers.h"
 
 namespace ExampleApp
 {
@@ -28,7 +28,7 @@ namespace ExampleApp
                 OptionsViewModule(
                     WindowsNativeState& nativeState,
                     IOptionsViewModel& optionsViewModel,
-                    Eegeo::Windows::Cache::WindowsHttpCache& httpCache,
+                    Eegeo::Helpers::IHttpCache& httpCache,
                     ExampleAppMessaging::TMessageBus& messageBus
                 );
 

@@ -31,7 +31,7 @@ namespace ExampleApp
                     bool m_hasDownloadedTaxonomy;
                     
                     void DispatchTaxonomyRequest();
-                    void OnYelpTaxonomyRequestCompleted(Eegeo::Web::IWebLoadRequest& webLoadRequest);
+                    void OnYelpTaxonomyRequestCompleted(Eegeo::Web::IWebResponse& webResponse);
                     void ParseYelpCategoryTaxonomy(const std::string& serializedTaxonomyJson);
                     
                 public:
