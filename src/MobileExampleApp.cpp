@@ -104,6 +104,7 @@
 #include "InteriorController.h"
 #include "EnvironmentRayCaster.h"
 #include "AggregateCollisionBvhProvider.h"
+#include "InteriorsHighlightVisibilityController.h"
 #include "InteriorsHighlightPickingController.h"
 
 namespace ExampleApp
@@ -216,6 +217,7 @@ namespace ExampleApp
         , m_pSwallowPoiDbModule(NULL)
         , m_pRayCaster(NULL)
         , m_pInteriorsPickingController(NULL)
+        , m_pInteriorsHighlightVisibilityController(NULL)
     {
         m_metricsService.BeginSession(applicationConfiguration.FlurryAppKey(), EEGEO_PLATFORM_VERSION_NUMBER);
 
@@ -291,11 +293,20 @@ namespace ExampleApp
         m_pRayCaster = Eegeo_NEW(Eegeo::Collision::EnvironmentRayCaster)(mapModule.GetAggregateCollisionBvhProvider(),
                                                                          mapModule.GetEnvironmentFlatteningService());
         
-        m_pInteriorsPickingController = Eegeo_NEW(ExampleApp::Picking::InteriorsHighlightPickingController)(*m_pRayCaster,
-                                                                                                            mapModule.GetInteriorsPresentationModule().GetController(),
-                                                                                                            mapModule.GetEnvironmentFlatteningService(),
-                                                                                                            m_messageBus,
-                                                                                                            m_sdkDomainEventBus);
+        namespace IntHighlights = InteriorsExplorer::SdkModel::Highlights;
+        
+        m_pInteriorsPickingController = Eegeo_NEW(IntHighlights::InteriorsHighlightPickingController)(*m_pRayCaster,
+                                                                                                      mapModule.GetInteriorsPresentationModule().GetController(),
+                                                                                                      mapModule.GetEnvironmentFlatteningService()
+                                                                                                      );
+        
+        m_pInteriorsHighlightVisibilityController = Eegeo_NEW(IntHighlights::InteriorsHighlightVisibilityController)(mapModule.GetInteriorsPresentationModule().GetController(),
+                                                                                                                     m_searchServiceModules[Search::SwallowVendorName + "_standalone"]->GetSearchService(),
+                                                                                                                     m_pSearchModule->GetSearchQueryPerformer(),
+                                                                                                                     m_pSearchModule->GetSearchResultRepository(),
+                                                                                                                     mapModule.GetInteriorsPresentationModule().GetInteriorsLabelsController(),
+                                                                                                                     m_messageBus);
+                                                                                                                                               
         
         m_pCameraTransitionController = Eegeo_NEW(ExampleApp::CameraTransitions::SdkModel::CameraTransitionController)(*m_pGlobeCameraController,
                                                                                                                        m_pInteriorsExplorerModule->GetInteriorsCameraController(),
@@ -336,6 +347,7 @@ namespace ExampleApp
         
         Eegeo_DELETE m_pRayCaster;
         Eegeo_DELETE m_pInteriorsPickingController;
+        Eegeo_DELETE m_pInteriorsHighlightVisibilityController;
 
         Eegeo_DELETE m_pCameraTransitionService;
         Eegeo_DELETE m_pCameraTransitionController;

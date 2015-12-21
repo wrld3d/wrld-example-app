@@ -5,6 +5,7 @@
 #include "OptionsView.h"
 #include "OptionsController.h"
 #include "WindowsAppThreadAssertionMacros.h"
+#include "IHttpCache.h"
 
 namespace ExampleApp
 {
@@ -15,7 +16,7 @@ namespace ExampleApp
             OptionsViewModule::OptionsViewModule(
                 WindowsNativeState& nativeState,
                 IOptionsViewModel& optionsViewModel,
-                Eegeo::Windows::Cache::WindowsHttpCache& httpCache,
+                Eegeo::Helpers::IHttpCache& httpCache,
                 ExampleAppMessaging::TMessageBus& messageBus
             )
             {

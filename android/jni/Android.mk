@@ -20,6 +20,12 @@ LOCAL_EXPORT_C_INCLUDES := ./libs/eegeo/curl/android-$(TARGET_ARCH_ABI)
 include $(PREBUILT_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
+LOCAL_MODULE := uv-lib
+LOCAL_SRC_FILES := ../$(PREBUILT_LIBS)/libuv.a
+LOCAL_EXPORT_C_INCLUDES := ./libs/eegeo/curl/android-$(TARGET_ARCH_ABI) 
+include $(PREBUILT_STATIC_LIBRARY)
+
+include $(CLEAR_VARS)
 LOCAL_MODULE := ssl-lib
 LOCAL_SRC_FILES := ../$(PREBUILT_LIBS)/libssl.a
 include $(PREBUILT_STATIC_LIBRARY)
@@ -57,7 +63,7 @@ include $(CLEAR_VARS)
 LOCAL_MODULE := eegeo-mobile-example-app
 LOCAL_LDLIBS := -llog -landroid -lEGL -lGLESv2 -lz -lm
 LOCAL_LDLIBS += -fuse-ld=bfd -Wl,--stub-group-size=2085000
-LOCAL_STATIC_LIBRARIES := recce-common-lib eegeo-sdk-lib png-lib curl-lib ssl-lib crypto-lib http-parser-lib jpeg-lib turbojpeg-lib sqlite-lib
+LOCAL_STATIC_LIBRARIES := recce-common-lib eegeo-sdk-lib png-lib curl-lib uv-lib ssl-lib crypto-lib http-parser-lib jpeg-lib turbojpeg-lib sqlite-lib
 
 cflags := -Wall -Wno-unknown-pragmas -Wno-sign-compare -Wno-format-security -Wno-reorder
 

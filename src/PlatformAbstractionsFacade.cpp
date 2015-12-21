@@ -1,6 +1,7 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "PlatformAbstractionsFacade.h"
+#include "IConnectivityService.h"
 
 namespace ExampleApp
 {
@@ -61,14 +62,14 @@ namespace ExampleApp
         return m_wrappedPlatformAbstractions.GetGlTaskContextFactory();
     }
     
-    Eegeo::Helpers::IResourceCacheCleaner& PlatformAbstractionsFacade::GetResourceCacheCleaner() const
-    {
-        return m_wrappedPlatformAbstractions.GetResourceCacheCleaner();
-    }
-    
     Eegeo::Web::IConnectivityService& PlatformAbstractionsFacade::GetConnectivityService() const
     {
         return m_wrappedPlatformAbstractions.GetConnectivityService();
+    }
+
+    void PlatformAbstractionsFacade::SetWebIOWorkPool(Eegeo::Concurrency::Tasks::IWorkPool *pWorkPool)
+    {
+        m_wrappedPlatformAbstractions.SetWebIOWorkPool(pWorkPool);
     }
     
     void PlatformAbstractionsFacade::OnPause()

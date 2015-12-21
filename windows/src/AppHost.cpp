@@ -1,7 +1,6 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "AppHost.h"
-#include "WindowsWebRequestService.hpp"
 #include "WindowsSharedGlContext.h"
 #include "LatLongAltitude.h"
 #include "EegeoWorld.h"
@@ -246,8 +245,6 @@ AppHost::AppHost(
     m_pModalBackgroundNativeViewModule = Eegeo_NEW(ExampleApp::ModalBackground::SdkModel::ModalBackgroundNativeViewModule)(
         m_pApp->World().GetRenderingModule(),
         m_messageBus);
-
-    m_pWindowsPlatformAbstractionModule->SetWebRequestServiceWorkPool(m_pApp->World().GetWorkPool());
 
     m_pAppInputDelegate = Eegeo_NEW(AppInputDelegate)(*m_pApp);
     m_inputHandler.AddDelegateInputHandler(m_pAppInputDelegate);
@@ -543,7 +540,7 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
     m_pOptionsViewModule = Eegeo_NEW(ExampleApp::Options::View::OptionsViewModule)(
         m_nativeState,
         app.OptionsModule().GetOptionsViewModel(),
-        m_pWindowsPlatformAbstractionModule->GetWindowsHttpCache(),
+        m_pWindowsPlatformAbstractionModule->GetHttpCache(),
         m_messageBus);
 
     m_pMyPinCreationDetailsViewModule = Eegeo_NEW(ExampleApp::MyPinCreationDetails::View::MyPinCreationDetailsViewModule)(

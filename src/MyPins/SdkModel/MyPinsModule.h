@@ -15,6 +15,7 @@
 #include "CategorySearch.h"
 #include "Search.h"
 #include "IMetricsService.h"
+#include "Helpers.h"
 #include <string>
 
 namespace ExampleApp

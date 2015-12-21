@@ -67,6 +67,7 @@ namespace ExampleApp
                     
                     swallowPoiDbService.FullTextSearch(query.Query(), results);
                     
+                    ExecuteQueryPerformedCallbacks(query);
                     ExecutQueryResponseReceivedCallbacks(query, results);
                 }
                 
@@ -76,6 +77,7 @@ namespace ExampleApp
                     
                     swallowPoiDbService.CategorySearch(query.Query(), results);
                     
+                    ExecuteQueryPerformedCallbacks(query);
                     ExecutQueryResponseReceivedCallbacks(query, results);
                 }
             }

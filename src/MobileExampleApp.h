@@ -86,7 +86,7 @@
 #include "TwitterFeed.h"
 #include "TwitterFeedTour.h"
 #include "ReportPinsVisibilityMasking.h"
-#include "HighlightPickingController.h"
+#include "PickingController.h"
 #include "IRayCaster.h"
 #include "VisualMap.h"
 
@@ -165,6 +165,7 @@ namespace ExampleApp
         Social::TwitterFeed::ITwitterFeedModule* m_pTwitterFeedModule;
         ReportPinsVisibilityMasking::SdkModel::ReportPinsVisibilityMaskingModule* m_pReportPinsVisibilityMaskingModule;
         Eegeo::Picking::PickingController* m_pInteriorsPickingController;
+        InteriorsExplorer::SdkModel::Highlights::InteriorsHighlightVisibilityController* m_pInteriorsHighlightVisibilityController;
         Eegeo::Collision::IRayCaster* m_pRayCaster;
         VisualMap::SdkModel::IVisualMapModule* m_pVisualMapModule;
         

@@ -14,6 +14,12 @@ namespace ExampleApp
             class InteriorWorldPinController;
             class InteriorVisibilityUpdater;
             class InteriorExplorerUserInteractionModel;
+            
+            namespace Highlights
+            {
+                class InteriorsHighlightVisibilityController;
+                class InteriorsHighlightPickingController;
+            }
         }
         
         namespace View

@@ -31,7 +31,7 @@ namespace ExampleApp
                     + "&maxRows=1&featureClass=A&featureClass=P&orderby=relevance&username="
                     + geoNamesUserName;
                     
-                    m_pWebLoadRequest = webRequestFactory.CreateGet(url, m_webRequestCompleteCallback, NULL);
+                    m_pWebLoadRequest = webRequestFactory.Begin(Eegeo::Web::HttpVerbs::GET, url, m_webRequestCompleteCallback).Build();
                     m_pWebLoadRequest->Load();
                 }
                 
@@ -55,12 +55,12 @@ namespace ExampleApp
                     return m_responseString;
                 }
                 
-                void GeoNamesSearchQuery::OnWebResponseReceived(Eegeo::Web::IWebLoadRequest& webLoadRequest)
+                void GeoNamesSearchQuery::OnWebResponseReceived(Eegeo::Web::IWebResponse& webResponse)
                 {
-                    if(webLoadRequest.IsSucceeded())
+                    if(webResponse.IsSucceeded())
                     {
-                        size_t resultSize = webLoadRequest.GetResourceData().size();
-                        m_responseString = std::string(reinterpret_cast<char const*>(&(webLoadRequest.GetResourceData().front())), resultSize);
+                        size_t resultSize = webResponse.GetBodyData().size();
+                        m_responseString = std::string(reinterpret_cast<char const*>(&(webResponse.GetBodyData().front())), resultSize);
                         m_isSuccess = true;
                     }
                     

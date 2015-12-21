@@ -104,6 +104,7 @@ namespace ExampleApp
                 else
                 {
                     Eegeo_ASSERT(false, "Unrecognised meeting room availabity string");
+                    return "Unknown";
                 }
             }
         }

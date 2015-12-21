@@ -2,6 +2,7 @@
 
 #include "ClearCacheMessageHandler.h"
 #include "CompletedCacheClearMessage.h"
+#include "IHttpCache.h"
 
 namespace ExampleApp
 {
@@ -9,7 +10,7 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            ClearCacheMessageHandler::ClearCacheMessageHandler(Eegeo::Android::Cache::AndroidHttpCache& httpCache,
+            ClearCacheMessageHandler::ClearCacheMessageHandler(Eegeo::Helpers::IHttpCache& httpCache,
                                                                ExampleAppMessaging::TMessageBus& messageBus)
             : m_httpCache(httpCache)
             , m_messageBus(messageBus)

@@ -577,6 +577,9 @@
     <Filter Include="Source Files\App\ReportPinsVisibilityMasking\SdkModel">
       <UniqueIdentifier>{9d1883f8-3da8-478f-a196-42f093445ba7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\App\InteriorsExplorer\SdkModel\Highlights">
+      <UniqueIdentifier>{09d9c962-2b60-4b98-bbb0-f08b60fc48ef}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\AppHost.cpp">
@@ -1935,9 +1938,6 @@
     <ClCompile Include="..\..\src\ExampleAppPch.cpp">
       <Filter>Source Files\Windows</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\InteriorsExplorer\View\InteriorsHighlightPickingController.cpp">
-      <Filter>Source Files\App\InteriorsExplorer\View</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\SearchResultPoi\View\SearchResultModelCLI.cpp">
       <Filter>Source Files\Windows\SearchResultPoi\View</Filter>
     </ClCompile>
@@ -1979,12 +1979,18 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\MyPins\SdkModel\MyPinsWebService.cpp">
       <Filter>Source Files\App\MyPins\SdkModel</Filter>
-	</ClCompile>
+    </ClCompile>
     <ClCompile Include="..\..\..\src\Tours\SdkModel\Camera\StaticCameraMode.cpp">
       <Filter>Source Files\App\Tours\SdkModel\Camera</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\WorldPins\WorldPinsSelectedFocussedMessage.cpp">
       <Filter>Source Files\App\WorldPins</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\InteriorsExplorer\SdkModel\Highlights\InteriorsHighlightVisibilityController.cpp">
+      <Filter>Source Files\App\InteriorsExplorer\SdkModel\Highlights</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\InteriorsExplorer\SdkModel\Highlights\InteriorsHighlightPickingController.cpp">
+      <Filter>Source Files\App\InteriorsExplorer\SdkModel\Highlights</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -4229,9 +4235,6 @@
     <ClInclude Include="..\..\src\ExampleAppPch.h">
       <Filter>Source Files\Windows</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\InteriorsExplorer\View\InteriorsHighlightPickingController.h">
-      <Filter>Source Files\App\InteriorsExplorer\View</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\SearchResultPoi\View\SearchResultModelCLI.h">
       <Filter>Source Files\Windows\SearchResultPoi\View</Filter>
     </ClInclude>
@@ -4294,7 +4297,7 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\MyPins\SdkModel\MyPinsWebService.h">
       <Filter>Source Files\App\MyPins\SdkModel</Filter>
-	</ClInclude>
+    </ClInclude>
     <ClInclude Include="..\..\src\PersistentSettings\WindowsPersistentSettings.h">
       <Filter>Source Files\Windows\PersistentSettings</Filter>
     </ClInclude>
@@ -4303,6 +4306,12 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\WorldPins\WorldPinsSelectedFocussedMessage.h">
       <Filter>Source Files\App\WorldPins</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\InteriorsExplorer\SdkModel\Highlights\InteriorsHighlightVisibilityController.h">
+      <Filter>Source Files\App\InteriorsExplorer\SdkModel\Highlights</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\InteriorsExplorer\SdkModel\Highlights\InteriorsHighlightPickingController.h">
+      <Filter>Source Files\App\InteriorsExplorer\SdkModel\Highlights</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

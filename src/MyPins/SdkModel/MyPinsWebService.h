@@ -5,6 +5,7 @@
 #include "WebLoadRequestCompletionCallback.h"
 #include "MyPins.h"
 #include "Search.h"
+#include "Helpers.h"
 #include "Web.h"
 #include <string>
 
@@ -16,13 +17,12 @@ namespace ExampleApp
         {
             class MyPinsWebService
             {
-                void WebRequestCompleteCallback(Eegeo::Web::IWebLoadRequest& webLoadRequest);
-                
             public:
                 MyPinsWebService(
                                  const std::string& webServiceBaseUrl,
                                  const std::string& webServiceAuthToken,
-                                 Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory);
+                                 Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory,
+                                 Eegeo::Helpers::IFileIO& fileIO);
                 
                 void SubmitSearchResultPin(
                                            const MyPinModel& pinModel,
@@ -33,9 +33,13 @@ namespace ExampleApp
                                           const std::string& imagePath);
                 
             private:
+                
+                void WebRequestCompleteCallback(Eegeo::Web::IWebResponse& webResponse);
+                
                 const std::string m_url;
                 const std::string m_authHeader;
                 Eegeo::Web::IWebLoadRequestFactory& m_webLoadRequestFactory;
+                Eegeo::Helpers::IFileIO& m_fileIO;
                 Eegeo::Web::TWebLoadRequestCompletionCallback<MyPinsWebService> m_webRequestCompleteCallback;
             };
         }

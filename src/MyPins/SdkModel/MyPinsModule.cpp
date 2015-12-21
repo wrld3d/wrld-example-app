@@ -53,7 +53,8 @@ namespace ExampleApp
                 
                 m_pMyPinsWebService = Eegeo_NEW(MyPinsWebService)(myPinsWebServiceUrl,
                                                                   myPinsWebServiceAuthToken,
-                                                                  platformAbstractions.GetWebLoadRequestFactory());
+                                                                  platformAbstractions.GetWebLoadRequestFactory(),
+                                                                  platformAbstractions.GetFileIO());
                 
                 m_pMyPinBoundObjectRepository = Eegeo_NEW(MyPinBoundObjectRepository);
                 
