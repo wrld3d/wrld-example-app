@@ -37,6 +37,7 @@ namespace ExampleApp
                 void SelectFloor(int floor);
                 
                 void ShowInteriorExplorer();
+                void ShowInteriorExplorer(bool fromWithinAnotherInterior);
                 void HideInteriorExplorer();
                 void Exit();
                 

@@ -92,10 +92,22 @@ namespace ExampleApp
             
             void InteriorsExplorerModel::ShowInteriorExplorer()
             {
+                ShowInteriorExplorer(false);
+            }
+            
+            void InteriorsExplorerModel::ShowInteriorExplorer(bool fromAnotherInterior)
+            {
                 Eegeo_ASSERT(m_controller.InteriorInScene(), "Can't show interior explorer without a selected and streamed interior");
                 
                 if(!m_interiorExplorerEnabled)
-                {                    
+                {
+                    if (fromAnotherInterior)
+                    {
+                        m_visualMapService.RestorePreviousMapState();
+                    }
+                    
+                    ChangeToInteriorMapState();
+
                     const Eegeo::Resources::Interiors::InteriorId& interiorId = m_interiorSelectionModel.GetSelectedInteriorId();
                     m_metricsService.SetEvent(MetricEventInteriorSelected, "InteriorId", interiorId.Value());
                     
