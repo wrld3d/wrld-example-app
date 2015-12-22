@@ -81,6 +81,7 @@ namespace ExampleApp
 
             void InteriorsExplorerModel::ChangeToInteriorMapState()
             {
+                m_visualMapService.StoreCurrentMapState();
                 const VisualMap::SdkModel::VisualMapState& currentState = m_visualMapService.GetCurrentVisualMapState();
                 m_visualMapService.SetVisualMapState(currentState.GetTheme(), "DayDefault", false);
             }
@@ -103,10 +104,8 @@ namespace ExampleApp
                 {
                     if (fromAnotherInterior)
                     {
-                        m_visualMapService.RestorePreviousMapState();
+                        ResumePreviousMapState();
                     }
-                    
-                    ChangeToInteriorMapState();
                     
                     const Eegeo::Resources::Interiors::InteriorId& interiorId = m_interiorSelectionModel.GetSelectedInteriorId();
                     m_metricsService.SetEvent(MetricEventInteriorSelected, "InteriorId", interiorId.Value());
@@ -142,6 +141,13 @@ namespace ExampleApp
             
             void InteriorsExplorerModel::OnControllerVisibilityChanged()
             {
+                if (m_controller.InteriorIsVisible())
+                {
+                    ChangeToInteriorMapState();
+                }
+                else {
+                    ResumePreviousMapState();
+                }
             }
         
             void InteriorsExplorerModel::OnExit(const InteriorsExplorerExitMessage& message)
