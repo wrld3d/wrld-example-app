@@ -56,7 +56,7 @@ namespace ExampleApp
 
                 float GetAnimationProgress() const
                 {
-                    return [m_pView animationValue];
+                    return [m_pView onScreenOpenState];
                 }
 
                 bool IsAnimating() const
@@ -77,12 +77,12 @@ namespace ExampleApp
 
                 void SetFullyOnScreenOpen()
                 {
-                    [m_pView animateToOpenOnScreen];
+                    [m_pView animateToOpenOnScreen:0.0f];
                 }
 
                 void SetFullyOnScreenClosed()
                 {
-                    [m_pView animateToClosedOnScreen];
+                    [m_pView animateToClosedOnScreen:0.0f];
                 }
 
                 void SetOnScreenStateToIntermediateValue(float value)
@@ -92,12 +92,12 @@ namespace ExampleApp
 
                 void SetFullyOnScreen()
                 {
-                    [m_pView animateToClosedOnScreen];
+                    [m_pView animateToClosedOnScreen:0.0f];
                 }
 
                 void SetFullyOffScreen()
                 {
-                    [m_pView animateToRemovedFromScreen];
+                    [m_pView animateToRemovedFromScreen:0.0f];
                 }
 
                 void InsertOnViewClicked(Eegeo::Helpers::ICallback0& callback)

@@ -22,11 +22,13 @@
 
     m_pColour = ExampleApp::Helpers::ColorPalette::WhiteTone;
 
-    m_stateChangeAnimationTimeSeconds = 0.2f;
+    m_stateChangeAnimationTimeSeconds = 0.3f;
     
     const bool isPhone = ExampleApp::Helpers::UIHelpers::UsePhoneLayout();
     
     const float upperMargin = isPhone ? 20.0f : 50.0f;
+    
+    m_dragTabOffset = (28.f * m_pixelScale);
 
     m_mainContainerOffscreenOffsetX = (0.f * m_pixelScale);
     m_mainContainerOffscreenOffsetY = (0.f * m_pixelScale);
@@ -44,7 +46,7 @@
 
     m_dragTabY = m_mainContainerY + (0.f * m_pixelScale);
     m_dragTabWidth = (50.f * m_pixelScale);
-    m_dragTabX = m_mainContainerX - m_dragTabWidth;
+    m_dragTabX = m_mainContainerX - m_dragTabWidth - m_dragTabOffset;
     m_dragTabHeight = (50.f * m_pixelScale);
     self.pDragTab = [[[UIView alloc] initWithFrame:CGRectMake(m_dragTabX, m_dragTabY, m_dragTabWidth, m_dragTabHeight)] autorelease];
     self.pDragTab.backgroundColor = ExampleApp::Helpers::ColorPalette::BorderHudColor;
@@ -94,7 +96,7 @@
     
     self.pTableview.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
-    m_offscreenX = m_dragTabWidth + m_mainContainerVisibleOnScreenWhenClosedX;
+    m_offscreenX = m_dragTabWidth + m_dragTabOffset + m_mainContainerVisibleOnScreenWhenClosedX;
     m_openX = -(m_mainContainerOnScreenWidth - m_mainContainerVisibleOnScreenWhenClosedX);
     m_closedX = (0.f * m_pixelScale);
     m_animationCurrentPos.x = m_offscreenX;
@@ -109,6 +111,11 @@
     [self.pMenuContainer addSubview:self.pTableviewContainer];
 
     ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pDragTab, "settings_gear", ExampleApp::Helpers::ImageHelpers::Centre);
+    
+    CGRect f = self.frame;
+    f.origin.x = m_offscreenX;
+    f.origin.y = m_offscreenY;
+    self.frame = f;
 }
 
 - (void)dealloc
@@ -198,8 +205,18 @@
     {
         open = absoluteVelocity.x < 0 ? true : false;
     }
+    
+    float normalizedOffset = Eegeo::Math::Clamp((m_dragStartPos.x - absolutePosition.x) / (m_closedX - m_openX), 0.0f, 1.0f);
 
-    [super animateToX:(open ? m_openX : m_closedX)];
+    if(open)
+    {
+        [self animateToOpenOnScreen:normalizedOffset];
+    }
+    else
+    {
+        [self animateToClosedOnScreen:(1.0f - normalizedOffset)];
+    }
+    
     m_pInterop->HandleDraggingViewCompleted();
 }
 

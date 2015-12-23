@@ -7,6 +7,7 @@
 #include "VectorMath.h"
 #include "CustomTableView.h"
 #include "MenuViewIncludes.h"
+#include "ViewPositionAnimator.h"
 
 @class MenuView;
 
@@ -15,6 +16,10 @@
     ExampleApp::Menu::View::MenuViewInterop* m_pInterop;
     CustomTableDataProvider* m_pDataProvider;
     UIColor* m_pColour;
+    
+    ExampleApp::Helpers::UIAnimation::ViewPositionAnimator* m_offscreenAnimator;
+    ExampleApp::Helpers::UIAnimation::ViewPositionAnimator* m_closedAnimator;
+    ExampleApp::Helpers::UIAnimation::ViewPositionAnimator* m_openAnimator;
     
     float m_screenWidth;
     float m_screenHeight;
@@ -39,6 +44,7 @@
     float m_dragTabX;
     float m_dragTabY;
     float m_dragTabWidth;
+    float m_dragTabOffset;
     float m_dragTabHeight;
 
     float m_searchBoxOffsetIntoContainer;
@@ -75,11 +81,11 @@
 
 - (BOOL) consumesTouch:(UITouch *)touch;
 
-- (void) animateToRemovedFromScreen;
+- (void) animateToRemovedFromScreen:(float)normalizedOffset;
 
-- (void) animateToClosedOnScreen;
+- (void) animateToClosedOnScreen:(float)normalizedOffset;
 
-- (void) animateToOpenOnScreen;
+- (void) animateToOpenOnScreen:(float)normalizedOffset;
 
 - (void) setOnScreenStateToIntermediateValue:(float)onScreenState;
 
@@ -95,11 +101,7 @@
 
 - (BOOL) isAnimating;
 
-- (float) animationValue;
-
-- (void) animateToX:(float)x;
-
-- (void) animateToY:(float)y;
+- (float) onScreenOpenState;
 
 - (void) setOffscreenPartsHiddenState:(bool)hidden;
 

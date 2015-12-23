@@ -21,7 +21,7 @@
 
     m_pColour = ExampleApp::Helpers::ColorPalette::WhiteTone;
 
-    m_stateChangeAnimationTimeSeconds = 0.2f;
+    m_stateChangeAnimationTimeSeconds = 0.3f;
     
     const bool isPhone = ExampleApp::Helpers::UIHelpers::UsePhoneLayout();
     
@@ -43,7 +43,8 @@
     
     m_dragTabWidth = (50.f * m_pixelScale);
     m_dragTabHeight = (50.f * m_pixelScale);
-    m_dragTabX = m_mainContainerOnScreenWidth;
+    m_dragTabOffset = (28.f * m_pixelScale);
+    m_dragTabX = m_mainContainerOnScreenWidth + m_dragTabOffset;
     m_dragTabY = m_mainContainerY + (0.f * m_pixelScale);
     self.pDragTab = [[[UIView alloc] initWithFrame:CGRectMake(m_dragTabX, m_dragTabY, m_dragTabWidth, m_dragTabHeight)] autorelease];
     self.pDragTab.backgroundColor = ExampleApp::Helpers::ColorPalette::BorderHudColor;
@@ -98,7 +99,7 @@
     
     self.pTableview.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
-    m_offscreenX = -(m_mainContainerWidth + m_dragTabWidth);
+    m_offscreenX = -(m_mainContainerWidth + m_dragTabWidth + m_dragTabOffset);
     m_openX = (0.f * m_pixelScale);
     m_closedX = -(m_mainContainerOnScreenWidth - m_mainContainerVisibleOnScreenWhenClosedX);
     m_animationCurrentPos.x = m_offscreenX;
@@ -113,7 +114,12 @@
     [self.pMenuContainer addSubview:self.pTableviewContainer];
 
     ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pDragTab, "search_magglass", ExampleApp::Helpers::ImageHelpers::Centre);
-
+    
+    CGRect f = self.frame;
+    f.origin.x = m_offscreenX;
+    f.origin.y = m_offscreenY;
+    self.frame = f;
+    
     self.pSearchEditBox.borderStyle = UITextBorderStyleRoundedRect;
     self.pSearchEditBox.returnKeyType = UIReturnKeySearch;
 
@@ -226,8 +232,18 @@
     {
         open = absoluteVelocity.x < 0 ? true : false;
     }
-
-    [super animateToX:(open ? m_openX : m_closedX)];
+    
+    float normalizedOffset = Eegeo::Math::Clamp((m_dragStartPos.x - absolutePosition.x) / (m_closedX - m_openX), 0.0f, 1.0f);
+    
+    if(open)
+    {
+        [self animateToOpenOnScreen:normalizedOffset];
+    }
+    else
+    {
+        [self animateToClosedOnScreen:(1.0f - normalizedOffset)];
+    }
+    
     m_pInterop->HandleDraggingViewCompleted();
 }
 
@@ -323,16 +339,6 @@
     m_pSearchMenuInterop->OnSearchCleared();
     
     return YES;
-}
-
-- (void) animateToClosedOnScreen
-{
-    [super animateToClosedOnScreen];
-}
-
-- (void) animateToOpenOnScreen
-{
-    [super animateToOpenOnScreen];
 }
 
 @end
