@@ -20,14 +20,7 @@ namespace
         {
             if(!condition)
             {
-                Eegeo_TTY("ASSERT: %s at %s (%d).\n", message, file, line);
-                
-
-#ifdef NDEBUG
-                raise(SIGABRT);
-#else
-                __debugbreak();
-#endif
+                Eegeo::Assert(file, line, message);
             }
         }
 
@@ -52,6 +45,7 @@ namespace
         {
             Eegeo_ASSERT(m_hasSetUiThreadId, "UI thread has not yet been nominated.\n");
             const pthread_t currentThreadId(pthread_self());
+
             AssertWithLogAndBreak(pthread_equal(m_uiThreadId, currentThreadId), "Must be running on nominated UI thread", file, line);
         }
 
