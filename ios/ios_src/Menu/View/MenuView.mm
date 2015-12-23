@@ -160,7 +160,23 @@ enum MenuState
 
 - (void) setOnScreenStateToIntermediateValue:(float)onScreenState
 {
-    Eegeo_ASSERT(false, "Derived views should implement 'setOnScreenStateToIntermediateValue'.\n");
+    if([self isAnimating])
+    {
+        return;
+    }
+    
+    self.hidden = false;
+    [self setOffscreenPartsHiddenState:false];
+    
+    float newX = m_offscreenX - ((m_offscreenX - m_closedX) * onScreenState);
+    if(fabs(self.frame.origin.x - newX) < 0.01f)
+    {
+        return;
+    }
+    
+    CGRect f = self.frame;
+    f.origin.x = newX;
+    self.frame = f;
 }
 
 - (void) setOpenStateToIntermediateValue:(float)openState
@@ -276,12 +292,53 @@ enum MenuState
 
 - (void) updateDrag:(CGPoint)absolutePosition velocity:(CGPoint)absoluteVelocity
 {
-    Eegeo_ASSERT(false, "Derived views should implement 'updateDrag'.\n");
+    CGRect f = self.frame;
+    f.origin.x = m_controlStartPos.x + (absolutePosition.x - m_dragStartPos.x);
+    
+    if(f.origin.x < -m_mainContainerOnScreenWidth)
+    {
+        f.origin.x = (-m_mainContainerOnScreenWidth);
+    }
+    
+    if(f.origin.x > m_closedX)
+    {
+        f.origin.x = m_closedX;
+    }
+    
+    float normalisedDragState = -((static_cast<float>(self.frame.origin.x) + (-m_closedX)) / (std::abs(m_openX - m_closedX)));
+    normalisedDragState = Eegeo::Clamp(normalisedDragState, 0.f, 1.f);
+    
+    m_pInterop->HandleDraggingViewInProgress(normalisedDragState);
+    self.frame = f;
+    
+    [self.layer removeAllAnimations];
 }
 
 - (void) completeDrag:(CGPoint)absolutePosition velocity:(CGPoint)absoluteVelocity
 {
-    Eegeo_ASSERT(false, "Derived views should implement 'completeDrag'.\n");
+    const bool startedClosed = m_controlStartPos.x == m_closedX;
+    const float xRatioForStateChange = startedClosed ? 0.35f : 0.65f;
+    const float threshold = (m_screenWidth - (m_mainContainerOnScreenWidth * xRatioForStateChange));
+    bool open = absolutePosition.x < threshold;
+    
+    const float velocityMagitude = std::abs(static_cast<float>(absoluteVelocity.x));
+    if(velocityMagitude > (200 * m_pixelScale))
+    {
+        open = absoluteVelocity.x < 0 ? true : false;
+    }
+    
+    float normalizedOffset = Eegeo::Math::Clamp((m_dragStartPos.x - absolutePosition.x) / (m_closedX - m_openX), 0.0f, 1.0f);
+    
+    if(open)
+    {
+        [self animateToOpenOnScreen:normalizedOffset];
+    }
+    else
+    {
+        [self animateToClosedOnScreen:(1.0f - normalizedOffset)];
+    }
+    
+    m_pInterop->HandleDraggingViewCompleted();
 }
 
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event
