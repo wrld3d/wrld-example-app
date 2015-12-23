@@ -289,9 +289,9 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
             
             const float subLabelWidth = 160.0f;
             const float subLabelHeight = isHeader ? SECTION_HEADER_CELL_HEIGHT : SUB_SECTION_CELL_HEIGHT;
-            const float subLabelHeaderInset = 16.0f;
-            const float subLabelSubSectionInset = 8.0f;
-            const float subLabelX = static_cast<float>(isHeader ? subLabelHeaderInset : subLabelSubSectionInset + SUB_SECTION_CELL_HEIGHT);
+            const float subLabelInset = 16.0f;
+            const float subLabelImageInset = 8.0f + subLabelHeight;
+            const float subLabelX = static_cast<float>(cell.imageView.image != nil ? subLabelImageInset : subLabelInset);
             
             UILabel *subLabel = [[UILabel alloc] initWithFrame:CGRectMake(subLabelX, 0, subLabelWidth, subLabelHeight)];
             subLabel.backgroundColor = [UIColor clearColor];
