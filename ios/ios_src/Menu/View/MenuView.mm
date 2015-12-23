@@ -223,6 +223,8 @@ enum MenuState
 
 - (void) updateAnimation:(float)deltaSeconds
 {
+    Eegeo_ASSERT(m_currentAnimator != NULL, "No animator set during updateAnimation, please call isAnimating before calling this function");
+    
     m_currentAnimator->Update(deltaSeconds);
     
     if(![self isAnimating])
