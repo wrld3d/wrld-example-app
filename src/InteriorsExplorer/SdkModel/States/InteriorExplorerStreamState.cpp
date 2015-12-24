@@ -42,6 +42,7 @@ namespace ExampleApp
                     m_timeUntilTimeout -= dt;
                     if(m_timeUntilTimeout <= 0.0f)
                     {
+                        m_parentState.SetLastEntryAttemptSuccessful(false);
                         m_parentState.ShowFailMessage();
                         m_parentState.SetSubState(AppModes::States::SdkModel::InteriorExplorerSubStates::Exit);
                         return;
@@ -49,6 +50,7 @@ namespace ExampleApp
                     
                     if(m_interiorController.InteriorInScene())
                     {
+                        m_parentState.SetLastEntryAttemptSuccessful(true);
                         m_interiorVisibilityUpdater.SetInteriorShouldDisplay(true);
                         m_parentState.SetSubState(AppModes::States::SdkModel::InteriorExplorerSubStates::View);
                     }
