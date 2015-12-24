@@ -42,7 +42,10 @@ namespace ExampleApp
                 {
                     if(m_interiorVisibilityUpdater.GetInteriorTransitionParam() <= 0.0f)
                     {
-                        m_interiorsExplorerModel.ResumePreviousMapState();
+                        if (m_parentState.GetLastEntryAttemptSuccessful())
+                        {
+                            m_interiorsExplorerModel.ResumePreviousMapState();
+                        }
                         m_interiorController.ClearSelectedInterior();
                         m_parentState.ReturnToWorldMode();
                     }

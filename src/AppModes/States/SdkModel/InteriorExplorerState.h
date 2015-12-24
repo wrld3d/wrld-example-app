@@ -60,6 +60,8 @@ namespace ExampleApp
                     MyPinCreation::SdkModel::IMyPinCreationModel& m_myPinCreationModel;
                     InteriorsExplorer::SdkModel::InteriorExplorerUserInteractionModel& m_interiorExplorerUserInteractionModel;
                     
+                    bool m_lastEntryAttemptSuccessful;
+                    
                     void OnFailAlertBoxDismissed();
                     
                     void OnTourStarted();
@@ -93,6 +95,10 @@ namespace ExampleApp
                     void ReturnToWorldMode();
                     
                     void ShowFailMessage();
+                    
+                    void SetLastEntryAttemptSuccessful(bool successful);
+                    
+                    bool GetLastEntryAttemptSuccessful() const;
                 };
             }
         }
