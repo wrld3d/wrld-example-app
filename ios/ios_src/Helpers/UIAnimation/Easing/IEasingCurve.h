@@ -11,16 +11,15 @@ namespace ExampleApp
     {
         namespace UIAnimation
         {
-            namespace Curves
+            namespace Easing
             {
-                class ICurve
+                template <typename T>
+                class IEasingCurve
                 {
                 public:
-                    virtual ~ICurve() { }
+                    virtual ~IEasingCurve() { }
                     
-                    virtual float operator()(float t, float b , float c, float d) = 0;
-                    
-                    virtual Eegeo::v2 operator()(float t, const Eegeo::v2& b , const Eegeo::v2& c, float d) = 0;
+                    virtual T operator()(float t, T b , T c, float d) = 0;
                 };
             }
         }

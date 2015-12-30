@@ -43,6 +43,14 @@
 		183E54881ACEB1FB00AD6B3E /* InitialExperienceSearchResultAttractModeModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 183E54801ACEB1FB00AD6B3E /* InitialExperienceSearchResultAttractModeModel.cpp */; };
 		183E54891ACEB1FB00AD6B3E /* InitialExperienceSearchResultAttractModeViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 183E54831ACEB1FB00AD6B3E /* InitialExperienceSearchResultAttractModeViewController.cpp */; };
 		183E548A1ACEB1FB00AD6B3E /* InitialExperienceSearchResultAttractModeViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 183E54831ACEB1FB00AD6B3E /* InitialExperienceSearchResultAttractModeViewController.cpp */; };
+		1842ECE71C2AE73200E4C17B /* ViewAnimationController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1842ECE51C2AE73200E4C17B /* ViewAnimationController.mm */; };
+		1842ECE81C2AE73200E4C17B /* ViewAnimationController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1842ECE51C2AE73200E4C17B /* ViewAnimationController.mm */; };
+		1842ECEC1C2AF73F00E4C17B /* ViewFrameAnimator.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1842ECEB1C2AF73F00E4C17B /* ViewFrameAnimator.mm */; };
+		1842ECED1C2AF73F00E4C17B /* ViewFrameAnimator.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1842ECEB1C2AF73F00E4C17B /* ViewFrameAnimator.mm */; };
+		1842ECF01C2C3C9C00E4C17B /* ViewAlphaAnimator.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1842ECEF1C2C3C9C00E4C17B /* ViewAlphaAnimator.mm */; };
+		1842ECF11C2C3C9C00E4C17B /* ViewAlphaAnimator.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1842ECEF1C2C3C9C00E4C17B /* ViewAlphaAnimator.mm */; };
+		1842ECF41C32A39D00E4C17B /* ViewAnimatorBase.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1842ECF31C32A39D00E4C17B /* ViewAnimatorBase.mm */; };
+		1842ECF51C32A39D00E4C17B /* ViewAnimatorBase.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1842ECF31C32A39D00E4C17B /* ViewAnimatorBase.mm */; };
 		185145901AB0A8DC0071913E /* SplashScreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 1851458D1AB0A8DC0071913E /* SplashScreen.png */; };
 		185145911AB0A8DC0071913E /* SplashScreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 1851458D1AB0A8DC0071913E /* SplashScreen.png */; };
 		185145921AB0A8DC0071913E /* SplashScreen@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1851458E1AB0A8DC0071913E /* SplashScreen@2x.png */; };
@@ -1599,6 +1607,17 @@
 		183E54811ACEB1FB00AD6B3E /* InitialExperienceSearchResultAttractModeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InitialExperienceSearchResultAttractModeModel.h; sourceTree = "<group>"; };
 		183E54831ACEB1FB00AD6B3E /* InitialExperienceSearchResultAttractModeViewController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InitialExperienceSearchResultAttractModeViewController.cpp; sourceTree = "<group>"; };
 		183E54841ACEB1FB00AD6B3E /* InitialExperienceSearchResultAttractModeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InitialExperienceSearchResultAttractModeViewController.h; sourceTree = "<group>"; };
+		1842ECE51C2AE73200E4C17B /* ViewAnimationController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewAnimationController.mm; sourceTree = "<group>"; };
+		1842ECE61C2AE73200E4C17B /* ViewAnimationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewAnimationController.h; sourceTree = "<group>"; };
+		1842ECE91C2AE77A00E4C17B /* ViewAnimatorBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewAnimatorBase.h; sourceTree = "<group>"; };
+		1842ECEA1C2AF73F00E4C17B /* ViewFrameAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewFrameAnimator.h; sourceTree = "<group>"; };
+		1842ECEB1C2AF73F00E4C17B /* ViewFrameAnimator.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewFrameAnimator.mm; sourceTree = "<group>"; };
+		1842ECEE1C2C3C9C00E4C17B /* ViewAlphaAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewAlphaAnimator.h; sourceTree = "<group>"; };
+		1842ECEF1C2C3C9C00E4C17B /* ViewAlphaAnimator.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewAlphaAnimator.mm; sourceTree = "<group>"; };
+		1842ECF31C32A39D00E4C17B /* ViewAnimatorBase.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewAnimatorBase.mm; sourceTree = "<group>"; };
+		1842ECFA1C32E96600E4C17B /* BackCurve.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackCurve.h; sourceTree = "<group>"; };
+		1842ECFB1C32E96600E4C17B /* CircleCurve.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircleCurve.h; sourceTree = "<group>"; };
+		1842ECFC1C32E96600E4C17B /* IEasingCurve.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IEasingCurve.h; sourceTree = "<group>"; };
 		1851458D1AB0A8DC0071913E /* SplashScreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = SplashScreen.png; path = SplashScreen/SplashScreen.png; sourceTree = "<group>"; };
 		1851458E1AB0A8DC0071913E /* SplashScreen@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "SplashScreen@2x.png"; path = "SplashScreen/SplashScreen@2x.png"; sourceTree = "<group>"; };
 		1851458F1AB0A8DC0071913E /* SplashScreen@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "SplashScreen@3x.png"; path = "SplashScreen/SplashScreen@3x.png"; sourceTree = "<group>"; };
@@ -1935,8 +1954,6 @@
 		18FB64B01A94D504005A9411 /* SearchResultPoiViewOpenedMessageHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultPoiViewOpenedMessageHandler.h; sourceTree = "<group>"; };
 		18FD9E831C2AA5B10061378C /* ViewPositionAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewPositionAnimator.h; sourceTree = "<group>"; };
 		18FD9E841C2AA5B10061378C /* ViewPositionAnimator.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewPositionAnimator.mm; sourceTree = "<group>"; };
-		18FD9E881C2AA6360061378C /* Circle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Circle.h; sourceTree = "<group>"; };
-		18FD9E891C2AA82A0061378C /* ICurve.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICurve.h; sourceTree = "<group>"; };
 		18FE20CD1AA9B2C200ACE28A /* button_close_place_pin_off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button_close_place_pin_off@2x.png"; sourceTree = "<group>"; };
 		18FE20CE1AA9B2C200ACE28A /* button_close_place_pin_off@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button_close_place_pin_off@3x.png"; sourceTree = "<group>"; };
 		18FE20D11AA9B2C200ACE28A /* button_ok_place_pin_off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button_ok_place_pin_off@2x.png"; sourceTree = "<group>"; };
@@ -3336,6 +3353,16 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		1842ECF91C32E96600E4C17B /* Easing */ = {
+			isa = PBXGroup;
+			children = (
+				1842ECFA1C32E96600E4C17B /* BackCurve.h */,
+				1842ECFB1C32E96600E4C17B /* CircleCurve.h */,
+				1842ECFC1C32E96600E4C17B /* IEasingCurve.h */,
+			);
+			path = Easing;
+			sourceTree = "<group>";
+		};
 		186B47011AB1D46B0084E80B /* Watermark */ = {
 			isa = PBXGroup;
 			children = (
@@ -3835,20 +3862,19 @@
 		18FD9E821C2AA5B10061378C /* UIAnimation */ = {
 			isa = PBXGroup;
 			children = (
-				18FD9E871C2AA61B0061378C /* Curves */,
+				1842ECF91C32E96600E4C17B /* Easing */,
+				1842ECEE1C2C3C9C00E4C17B /* ViewAlphaAnimator.h */,
+				1842ECEF1C2C3C9C00E4C17B /* ViewAlphaAnimator.mm */,
+				1842ECE61C2AE73200E4C17B /* ViewAnimationController.h */,
+				1842ECE51C2AE73200E4C17B /* ViewAnimationController.mm */,
+				1842ECE91C2AE77A00E4C17B /* ViewAnimatorBase.h */,
+				1842ECF31C32A39D00E4C17B /* ViewAnimatorBase.mm */,
+				1842ECEA1C2AF73F00E4C17B /* ViewFrameAnimator.h */,
+				1842ECEB1C2AF73F00E4C17B /* ViewFrameAnimator.mm */,
 				18FD9E831C2AA5B10061378C /* ViewPositionAnimator.h */,
 				18FD9E841C2AA5B10061378C /* ViewPositionAnimator.mm */,
 			);
 			path = UIAnimation;
-			sourceTree = "<group>";
-		};
-		18FD9E871C2AA61B0061378C /* Curves */ = {
-			isa = PBXGroup;
-			children = (
-				18FD9E881C2AA6360061378C /* Circle.h */,
-				18FD9E891C2AA82A0061378C /* ICurve.h */,
-			);
-			path = Curves;
 			sourceTree = "<group>";
 		};
 		18FE21CF1AA9CD3800ACE28A /* Helpers */ = {
@@ -7190,6 +7216,7 @@
 				BFD5FD8E1BA708E100F591F1 /* iCarousel.m in Sources */,
 				7E3B89471A385A290023C94E /* MyPinDetailsController.cpp in Sources */,
 				7E3B8ADE1A385F110023C94E /* FlattenButtonViewModule.mm in Sources */,
+				1842ECE81C2AE73200E4C17B /* ViewAnimationController.mm in Sources */,
 				7E3B88F91A385A290023C94E /* MenuSectionsViewModel.cpp in Sources */,
 				7E3B89511A385A290023C94E /* MyPinRemovedFromMenuMessage.cpp in Sources */,
 				BFD5FCBD1BA7068300F591F1 /* TourExplorerViewInterop.mm in Sources */,
@@ -7306,6 +7333,7 @@
 				7E3B8AF41A385F110023C94E /* CustomTableViewCell.mm in Sources */,
 				7E3B8B201A385F110023C94E /* SearchResultMenuViewModule.mm in Sources */,
 				7E3B88C11A385A290023C94E /* CompassViewCycledMessage.cpp in Sources */,
+				1842ECED1C2AF73F00E4C17B /* ViewFrameAnimator.mm in Sources */,
 				BFD5FD491BA706AD00F591F1 /* TourStateMachine.cpp in Sources */,
 				7E3B89611A385A290023C94E /* MyPinsRepositoryObserver.cpp in Sources */,
 				18D1DB2B1C1ADEB300D319BB /* SettingsMenuController.cpp in Sources */,
@@ -7423,6 +7451,7 @@
 				7E3B88FD1A385A290023C94E /* MenuViewModel.cpp in Sources */,
 				18A6575E1A9F6A8E00238F33 /* MyPinVisibilityStateChangedHandler.cpp in Sources */,
 				7E3B89871A385A290023C94E /* ScreenControlViewModelBase.cpp in Sources */,
+				1842ECF11C2C3C9C00E4C17B /* ViewAlphaAnimator.mm in Sources */,
 				18FB645F1A9240FC005A9411 /* OACall.m in Sources */,
 				186B47261AB1DD5C0084E80B /* WatermarkViewModule.mm in Sources */,
 				BFD5FD791BA706AD00F591F1 /* TourFullScreenImageCeremonyBeganObserver.cpp in Sources */,
@@ -7583,6 +7612,7 @@
 				7E3B89991A385A290023C94E /* SearchQueryPerformedMessage.cpp in Sources */,
 				7E3B89051A385A290023C94E /* ModalBackgroundController.cpp in Sources */,
 				7E1B50681ACAD4170060FA4F /* InitialExperienceIntroStep.cpp in Sources */,
+				1842ECF51C32A39D00E4C17B /* ViewAnimatorBase.mm in Sources */,
 				F7F37F39F2038F91049410A9 /* MapModeModel.cpp in Sources */,
 				BFD5FD4B1BA706AD00F591F1 /* TourActiveStateChangedMessageHandler.cpp in Sources */,
 				BFDD75F61BCEAF5800335508 /* InteriorExplorerExitingState.cpp in Sources */,
@@ -7673,6 +7703,7 @@
 				7E3B893E1A385A290023C94E /* UserCreatedMyPinDetailsModelSelectedMessage.cpp in Sources */,
 				7E3B89461A385A290023C94E /* MyPinDetailsController.cpp in Sources */,
 				7E3B8ADD1A385F110023C94E /* FlattenButtonViewModule.mm in Sources */,
+				1842ECE71C2AE73200E4C17B /* ViewAnimationController.mm in Sources */,
 				7E3B88F81A385A290023C94E /* MenuSectionsViewModel.cpp in Sources */,
 				7E3B89501A385A290023C94E /* MyPinRemovedFromMenuMessage.cpp in Sources */,
 				BFD5FCBC1BA7068300F591F1 /* TourExplorerViewInterop.mm in Sources */,
@@ -7789,6 +7820,7 @@
 				7E3B8AF31A385F110023C94E /* CustomTableViewCell.mm in Sources */,
 				7E3B8B1F1A385F110023C94E /* SearchResultMenuViewModule.mm in Sources */,
 				7E3B88C01A385A290023C94E /* CompassViewCycledMessage.cpp in Sources */,
+				1842ECEC1C2AF73F00E4C17B /* ViewFrameAnimator.mm in Sources */,
 				BFD5FD481BA706AD00F591F1 /* TourStateMachine.cpp in Sources */,
 				7E3B89601A385A290023C94E /* MyPinsRepositoryObserver.cpp in Sources */,
 				18D1DB2A1C1ADEB300D319BB /* SettingsMenuController.cpp in Sources */,
@@ -7906,6 +7938,7 @@
 				7E5811CF1B1F3248007AD67F /* InteriorsExplorerViewModule.mm in Sources */,
 				7E3B88FC1A385A290023C94E /* MenuViewModel.cpp in Sources */,
 				18A6575D1A9F6A8E00238F33 /* MyPinVisibilityStateChangedHandler.cpp in Sources */,
+				1842ECF01C2C3C9C00E4C17B /* ViewAlphaAnimator.mm in Sources */,
 				7E3B89861A385A290023C94E /* ScreenControlViewModelBase.cpp in Sources */,
 				18FB645E1A9240FC005A9411 /* OACall.m in Sources */,
 				186B47251AB1DD5C0084E80B /* WatermarkViewModule.mm in Sources */,
@@ -8066,6 +8099,7 @@
 				7E3B89981A385A290023C94E /* SearchQueryPerformedMessage.cpp in Sources */,
 				7E3B89041A385A290023C94E /* ModalBackgroundController.cpp in Sources */,
 				7E1B50671ACAD4170060FA4F /* InitialExperienceIntroStep.cpp in Sources */,
+				1842ECF41C32A39D00E4C17B /* ViewAnimatorBase.mm in Sources */,
 				F7F373F4043CCF2D73DD1F06 /* MapModeModel.cpp in Sources */,
 				BFD5FD4A1BA706AD00F591F1 /* TourActiveStateChangedMessageHandler.cpp in Sources */,
 				BFDD75F51BCEAF5800335508 /* InteriorExplorerExitingState.cpp in Sources */,

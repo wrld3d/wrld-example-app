@@ -4,16 +4,15 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void(^OnAnimationComplete)(void);
+@class MenuView;
 
 @interface CustomTableView : UITableView
 
 - (instancetype)initWithFrame:(CGRect)frame
                         style:(UITableViewStyle)style
                     container:(UIScrollView*)container
-                  hasSubMenus:(bool)hasSubMenus
-                  onRowsAdded:(OnAnimationComplete)onRowsAdded
-                onRowsDeleted:(OnAnimationComplete)onRowsDeleted;
+                         menuView:(MenuView*)menuView
+                  hasSubMenus:(bool)hasSubMenus;
 
 -(BOOL)hasDynamicCellPresentation;
 

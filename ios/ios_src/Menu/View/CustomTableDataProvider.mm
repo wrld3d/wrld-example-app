@@ -33,7 +33,7 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
 - (void)updateMenuSections:(ExampleApp::Menu::View::TSections*)sections
 {
     m_currentSections = *sections;
-    [[m_pView pTableview] reloadData];
+    [m_pView.pTableView reloadData];
 
 }
 
@@ -71,7 +71,7 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
 {
     m_pView = view;
 
-    CustomTableView* tableView = [m_pView pTableview];
+    CustomTableView* tableView = m_pView.pTableView;
     [tableView setDataSource:self];
     [tableView setDelegate:self];
 
@@ -101,13 +101,13 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
             cell = [[[CustomTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CurrentCellIdentifier] autorelease];
         }
         
-        [(CustomTableViewCell*)cell initCell: m_pView.pTableview.bounds.size.width :(CustomTableView*)tableView];
+        [(CustomTableViewCell*)cell initCell: m_pView.pTableView.bounds.size.width :(CustomTableView*)tableView];
         cell.selectionStyle = UITableViewCellSelectionStyleGray;
 
         UIImageView* pOpenableMenuArrowView = [[[UIImageView alloc] initWithImage:self.pOpenableMenuArrow] autorelease];
         pOpenableMenuArrowView.tag = SubItemCellOpenableMenuArrowTag;
 
-        const float tableWidth = static_cast<float>(m_pView.pTableview.bounds.size.width);
+        const float tableWidth = static_cast<float>(m_pView.pTableView.bounds.size.width);
         const float openableArrowX = (tableWidth - 20.f);
         pOpenableMenuArrowView.frame = CGRectMake(openableArrowX,
                                                   (SECTION_HEADER_CELL_HEIGHT*0.5f) - 8.f,
@@ -358,7 +358,7 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
             rows = m_currentSections[i]->Size();
             m_currentSections[i]->Contract();
             
-            [self showOpenableArrowClosed:[m_pView.pTableview cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:i]]];
+            [self showOpenableArrowClosed:[m_pView.pTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:i]]];
             
             for(int j = 1; j < rows; ++j)
             {
@@ -366,7 +366,7 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
                 [tmpArray addObject:tmpIndexPath];
             }
             
-            [m_pView.pTableview deleteRowsAtIndexPaths:tmpArray withRowAnimation:UITableViewRowAnimationNone];
+            [m_pView.pTableView deleteRowsAtIndexPaths:tmpArray withRowAnimation:UITableViewRowAnimationNone];
         }
     }
 }

@@ -107,7 +107,7 @@ namespace ExampleApp
                     }
                 }
 
-                m_view.SetCanInteract(m_viewModel.IsFullyOpen());
+                m_view.SetTableCanInteract(m_viewModel.IsFullyOpen());
             }
 
             void MenuController::OnViewClicked()

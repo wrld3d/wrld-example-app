@@ -3,11 +3,9 @@
 #import "CustomTableView.h"
 #import <QuartzCore/QuartzCore.h>
 #import "CustomTableViewCell.h"
+#import "MenuView.h"
 
 @interface CustomTableView ()
-
-@property (nonatomic, copy) OnAnimationComplete m_onRowsAdded;
-@property (nonatomic, copy) OnAnimationComplete m_onRowsDeleted;
 
 @end
 
@@ -16,23 +14,23 @@
     float m_animationSpeed;
     bool m_inAnimationCeremony;
     UIScrollView* m_pContainer;
+    MenuView* m_pMenuView;
     bool m_hasSubMenus;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame
                         style:(UITableViewStyle)style
                     container:(UIScrollView*)container
+                     menuView:(MenuView*)menuView
                   hasSubMenus:(bool)hasSubMenus
-                  onRowsAdded:(OnAnimationComplete)onRowsAdded
-                onRowsDeleted:(OnAnimationComplete)onRowsDeleted
 {
     id it = [super initWithFrame:frame style:style];
     m_pContainer = container;
+    m_pMenuView = menuView;
     m_animationSpeed = 0.3f;
     m_inAnimationCeremony = NO;
     m_hasSubMenus = hasSubMenus;
-    self.m_onRowsAdded = onRowsAdded;
-    self.m_onRowsDeleted = onRowsDeleted;
+    
     return it;
 }
 
@@ -84,10 +82,7 @@
 
     [self reloadData];
     
-    if(self.m_onRowsAdded != nil)
-    {
-        self.m_onRowsAdded();
-    }
+    [m_pMenuView refreshTableHeights];
     
     int count = 1;
     CGFloat height = 0.0f;
@@ -198,10 +193,7 @@
                          
                          [self reloadData];
                          
-                         if(self.m_onRowsDeleted != nil)
-                         {
-                             self.m_onRowsDeleted();
-                         }
+                         [m_pMenuView refreshTableHeights];
                          
                          [self setInteractionEnabled: YES];
                      }];

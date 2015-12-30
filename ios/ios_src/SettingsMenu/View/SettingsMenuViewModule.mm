@@ -25,8 +25,6 @@ namespace ExampleApp
                            :screenProperties.GetScreenWidth()
                            :screenProperties.GetScreenHeight()
                            :screenProperties.GetPixelScale()
-                           :settingsMenuViewModel.SectionsCount()
-                           :settingsMenuViewModel.NumberOfCells()
                            :m_pDataProvider];
 
                 m_pController = Eegeo_NEW(SettingsMenuController)(*[m_pView getInterop],

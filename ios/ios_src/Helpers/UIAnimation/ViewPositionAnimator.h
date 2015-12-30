@@ -2,9 +2,11 @@
 
 #pragma once
 
+#include "ViewAnimatorBase.h"
+
 #import <UIKit/UIKit.h>
 
-#include "ICurve.h"
+#include "IEasingCurve.h"
 #include "VectorMath.h"
 
 namespace ExampleApp
@@ -13,38 +15,26 @@ namespace ExampleApp
     {
         namespace UIAnimation
         {
-            class ViewPositionAnimator
+            class ViewPositionAnimator : public ViewAnimatorBase
             {
-            public:
-                typedef void(^OnAnimationComplete)(UIView*);
-                
             private:
-                UIView* m_view;
                 Eegeo::v2 m_startPosition;
-                Eegeo::v2 m_deltaPosition;
                 Eegeo::v2 m_targetPosition;
-                double m_animationPeriodSeconds;
-                Curves::ICurve* m_curve;
-                OnAnimationComplete m_endCallback;
-                bool m_isActive;
-                double m_timer;
+                Eegeo::v2 m_deltaPosition;
+                Easing::IEasingCurve<Eegeo::v2>* m_curve;
+                
+            protected:
+                void OnUpdate(double timerSeconds);
                 
             public:
                 ViewPositionAnimator(UIView* view,
-                                     const Eegeo::v2& targetPosition,
                                      double animationPeriodSeconds,
-                                     Curves::ICurve* curve,
-                                     OnAnimationComplete endCallback);
+                                     double startDelaySeconds,
+                                     const Eegeo::v2& startPosition,
+                                     const Eegeo::v2& targetPosition,
+                                     Easing::IEasingCurve<Eegeo::v2>* curve);
                 
                 ~ViewPositionAnimator();
-                
-                void Play();
-                
-                void PlayWithNormalizedOffset(float offset);
-                
-                void Update(double deltaSeconds);
-                
-                bool IsActive() const;
             };
         }
     }

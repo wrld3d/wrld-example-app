@@ -38,9 +38,9 @@ namespace ExampleApp
                 {
                 }
 
-                void SetCanInteract(bool canInteract)
+                void SetTableCanInteract(bool canInteract)
                 {
-                    [m_pView setCanInteract:canInteract];
+                    [m_pView setTableCanInteract:canInteract];
                 }
 
                 void SetTryDragFunc(Eegeo::Helpers::IFunc0<bool>& function)
@@ -56,7 +56,7 @@ namespace ExampleApp
 
                 float GetAnimationProgress() const
                 {
-                    return [m_pView onScreenOpenState];
+                    return [m_pView openOnScreenState];
                 }
 
                 bool IsAnimating() const
@@ -68,7 +68,7 @@ namespace ExampleApp
                 {
                     [m_pView updateAnimation:dt];
                 }
-
+                
                 void UpdateMenuSectionViews(TSections& sections)
                 {
                     [m_pProvider updateMenuSections:&sections];
@@ -77,12 +77,12 @@ namespace ExampleApp
 
                 void SetFullyOnScreenOpen()
                 {
-                    [m_pView animateToOpenOnScreen:0.0f];
+                    [m_pView animateToOpenOnScreen];
                 }
 
                 void SetFullyOnScreenClosed()
                 {
-                    [m_pView animateToClosedOnScreen:0.0f];
+                    [m_pView animateToClosedOnScreen];
                 }
 
                 void SetOnScreenStateToIntermediateValue(float value)
@@ -92,12 +92,12 @@ namespace ExampleApp
 
                 void SetFullyOnScreen()
                 {
-                    [m_pView animateToClosedOnScreen:0.0f];
+                    [m_pView animateToClosedOnScreen];
                 }
 
                 void SetFullyOffScreen()
                 {
-                    [m_pView animateToRemovedFromScreen:0.0f];
+                    [m_pView animateToRemovedFromScreen];
                 }
 
                 void InsertOnViewClicked(Eegeo::Helpers::ICallback0& callback)

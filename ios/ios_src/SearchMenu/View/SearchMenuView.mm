@@ -7,6 +7,37 @@
 #include "SearchMenuViewInterop.h"
 #include "MenuViewInterop.h"
 #include "UIHelpers.h"
+#include "BackCurve.h"
+#include "ViewFrameAnimator.h"
+
+@interface SearchMenuView()
+{
+    ExampleApp::SearchMenu::View::SearchMenuViewInterop* m_pSearchMenuInterop;
+    
+    bool m_keyboardActive;
+    bool m_returnPressed;
+    bool m_currentSearchIsCategory;
+    
+    float m_searchEditBoxAnimationDelaySeconds;
+    float m_searchEditBoxAnimationDurationSeconds;
+    
+    float m_searchEditBoxOffScreenWidth;
+    float m_searchEditBoxOffScreenHeight;
+    float m_searchEditBoxOffScreenX;
+    float m_searchEditBoxOffScreenY;
+    float m_searchEditBoxClosedOnScreenWidth;
+    float m_searchEditBoxClosedOnScreenHeight;
+    float m_searchEditBoxClosedOnScreenX;
+    float m_searchEditBoxClosedOnScreenY;
+    float m_searchEditBoxOpenOnScreenWidth;
+    float m_searchEditBoxOpenOnScreenHeight;
+    float m_searchEditBoxOpenOnScreenX;
+    float m_searchEditBoxOpenOnScreenY;
+}
+
+@property (nonatomic, retain) UITextField* pSearchEditBox;
+
+@end
 
 @implementation SearchMenuView
 
@@ -15,110 +46,114 @@
     return m_pSearchMenuInterop;
 }
 
-- (void) initialiseViews:(size_t)numberOfSections numberOfCells:(size_t)numberOfCells
+- (void) initializeViews
 {
     m_pSearchMenuInterop = Eegeo_NEW(ExampleApp::SearchMenu::View::SearchMenuViewInterop)(self);
-
-    m_pColour = ExampleApp::Helpers::ColorPalette::WhiteTone;
-
-    m_stateChangeAnimationTimeSeconds = 0.3f;
+    
+    m_searchEditBoxAnimationDelaySeconds = 0.2f;
+    m_searchEditBoxAnimationDurationSeconds = 0.1f;
     
     const bool isPhone = ExampleApp::Helpers::UIHelpers::UsePhoneLayout();
     
-    const float upperMargin = isPhone ? 20.0f : 50.0f;
-
-    m_mainContainerOffscreenOffsetX = (0.f * m_pixelScale);
-    m_mainContainerOffscreenOffsetY = (0.f * m_pixelScale);
-    m_mainContainerVisibleOnScreenWhenClosedX = (0.f * m_pixelScale);
-    m_mainContainerVisibleOnScreenWhenClosedY = (0.f * m_pixelScale);
-    m_mainContainerX = (0.f * m_pixelScale) - m_mainContainerOffscreenOffsetX;
-    m_mainContainerY = (upperMargin * m_pixelScale);
-    m_mainContainerOnScreenWidth = (220.f * m_pixelScale);
-    m_mainContainerOnScreenHeight = m_screenHeight - m_mainContainerY;
-    m_mainContainerWidth = m_mainContainerOnScreenWidth + m_mainContainerOffscreenOffsetX;
-    m_mainContainerHeight = m_mainContainerOnScreenHeight;
-
-    self.pMenuContainer = [[[UIView alloc] initWithFrame:CGRectMake(m_mainContainerX, m_mainContainerY, m_mainContainerWidth, m_mainContainerHeight)] autorelease];
-    self.pMenuContainer.backgroundColor = [UIColor clearColor];
+    const float upperMargin = (isPhone ? 20.0f : 50.0f) * m_pixelScale;
+    const float tableWidth = 248.0f * m_pixelScale;
+    const float dragTabOffsetX = 28.0f * m_pixelScale;
+    const float dragTabSize = 50.0f * m_pixelScale;
+    const float tableViewContainerOffsetY = 2.0f * m_pixelScale;
     
-    m_dragTabWidth = (50.f * m_pixelScale);
-    m_dragTabHeight = (50.f * m_pixelScale);
-    m_dragTabOffset = (28.f * m_pixelScale);
-    m_dragTabX = m_mainContainerOnScreenWidth + m_dragTabOffset;
-    m_dragTabY = m_mainContainerY + (0.f * m_pixelScale);
-    self.pDragTab = [[[UIView alloc] initWithFrame:CGRectMake(m_dragTabX, m_dragTabY, m_dragTabWidth, m_dragTabHeight)] autorelease];
+    const float searchEditBoxInsetX = 12.0f * m_pixelScale;
+    const float searchEditBoxInsetY = 6.0f * m_pixelScale;
+    
+    m_dragTabOffsetX = dragTabOffsetX;
+    m_dragTabWidth = dragTabSize;
+    m_dragTabHeight = dragTabSize;
+    m_dragTabOffScreenX = -m_dragTabWidth;
+    m_dragTabOffScreenY = upperMargin * m_pixelScale;
+    m_dragTabClosedOnScreenX = m_dragTabOffsetX;
+    m_dragTabClosedOnScreenY = m_dragTabOffScreenY;
+    m_dragTabOpenOnScreenX = tableWidth;
+    m_dragTabOpenOnScreenY = m_dragTabOffScreenY;
+    
+    self.pDragTab = [[[UIView alloc] initWithFrame:CGRectMake(m_dragTabOffScreenX, m_dragTabOffScreenY, m_dragTabWidth, m_dragTabHeight)] autorelease];
     self.pDragTab.backgroundColor = ExampleApp::Helpers::ColorPalette::BorderHudColor;
-    self.pDragTab.transform = CGAffineTransformScale(CGAffineTransformIdentity, -1.f, 1.f);
-
-    m_searchBoxContainerX = m_mainContainerVisibleOnScreenWhenClosedX;
-    m_searchBoxContainerY = m_mainContainerVisibleOnScreenWhenClosedY;
-    m_searchBoxContainerWidth = m_mainContainerOnScreenWidth;
-    m_searchBoxContainerHeight = 50 * m_pixelScale;
-    self.pSearchEditBoxContainer = [[[UIView alloc] initWithFrame:CGRectMake(m_searchBoxContainerX, m_searchBoxContainerY, m_searchBoxContainerWidth, m_searchBoxContainerHeight)] autorelease];
-    self.pSearchEditBoxContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::BorderHudColor;
-    self.pSearchEditBoxContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, -1.f, 1.f);
-
-    m_searchBoxOffsetIntoContainer = m_searchBoxContainerWidth*0.05f;
-    m_searchBoxX = m_searchBoxOffsetIntoContainer;
-    m_searchBoxY = m_searchBoxContainerHeight * 0.18f * m_pixelScale;
-    m_searchBoxWidth = (m_searchBoxContainerWidth - (2 * m_searchBoxOffsetIntoContainer));
-    m_searchBoxHeight = (m_searchBoxContainerHeight * 0.65f * m_pixelScale);
-    self.pSearchEditBox = [[[UITextField alloc] initWithFrame:CGRectMake(m_searchBoxX, m_searchBoxY, m_searchBoxWidth, m_searchBoxHeight)] autorelease];
+    
+    m_titleContainerOffScreenWidth = 0.0f;
+    m_titleContainerOffScreenHeight = m_dragTabHeight;
+    m_titleContainerOffScreenX = m_dragTabOffScreenX;
+    m_titleContainerOffScreenY = upperMargin * m_pixelScale;
+    
+    m_titleContainerClosedOnScreenWidth = 0.0f;
+    m_titleContainerClosedOnScreenHeight = m_titleContainerOffScreenHeight;
+    m_titleContainerClosedOnScreenX = m_dragTabClosedOnScreenX;
+    m_titleContainerClosedOnScreenY = m_titleContainerOffScreenY;
+    
+    m_titleContainerOpenOnScreenWidth = tableWidth;
+    m_titleContainerOpenOnScreenHeight = m_titleContainerOffScreenHeight;
+    m_titleContainerOpenOnScreenX = 0.0f;
+    m_titleContainerOpenOnScreenY = m_titleContainerOffScreenY;
+    
+    self.pTitleContainer = [[UIView alloc] initWithFrame:CGRectMake(m_titleContainerOffScreenX, m_titleContainerOffScreenY, m_titleContainerOffScreenWidth, m_titleContainerOffScreenHeight)];
+    self.pTitleContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::BorderHudColor;
+    
+    m_searchEditBoxOffScreenWidth = tableWidth - (searchEditBoxInsetX * 2.0f);
+    m_searchEditBoxOffScreenHeight = 0.0f;
+    m_searchEditBoxOffScreenX = searchEditBoxInsetX;
+    m_searchEditBoxOffScreenY = dragTabSize / 2.0f;
+    m_searchEditBoxClosedOnScreenWidth = m_searchEditBoxOffScreenWidth;
+    m_searchEditBoxClosedOnScreenHeight = 0.0f;
+    m_searchEditBoxClosedOnScreenX = m_searchEditBoxOffScreenX;
+    m_searchEditBoxClosedOnScreenY = m_searchEditBoxOffScreenY;
+    m_searchEditBoxOpenOnScreenWidth = m_searchEditBoxOffScreenWidth;
+    m_searchEditBoxOpenOnScreenHeight = dragTabSize - (searchEditBoxInsetY * 2.0f);
+    m_searchEditBoxOpenOnScreenX = m_searchEditBoxOffScreenX;
+    m_searchEditBoxOpenOnScreenY = searchEditBoxInsetY;
+    
+    self.pSearchEditBox = [[[UITextField alloc] initWithFrame:CGRectMake(m_searchEditBoxOffScreenX, m_searchEditBoxOffScreenY, m_searchEditBoxOffScreenWidth, m_searchEditBoxOffScreenHeight)] autorelease];
     self.pSearchEditBox.text = @"";
     self.pSearchEditBox.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
     self.pSearchEditBox.clearButtonMode = UITextFieldViewModeAlways;
 
-    m_tableOffsetIntoContainerX = m_tableOffsetIntoContainerY = m_mainContainerVisibleOnScreenWhenClosedX;
-    m_tableX = m_tableOffsetIntoContainerX;
-    m_tableY = m_tableOffsetIntoContainerY + m_searchBoxContainerHeight;
-    m_tableWidth = m_mainContainerOnScreenWidth - (2 * m_tableOffsetIntoContainerX);
-    m_tableHeight = m_mainContainerHeight - m_searchBoxHeight;
-    const float tableScreenY = m_mainContainerY + m_mainContainerOffscreenOffsetY + m_tableY;
-    const float tableScreenSpace = m_screenHeight - tableScreenY;
-    m_tableHeight = std::min(tableScreenSpace, m_tableHeight);
-
-    const float realTableHeight =  (SECTION_HEADER_CELL_HEIGHT * numberOfSections) + (SUB_SECTION_CELL_HEIGHT * (numberOfCells));
-
-    self.pTableviewContainer = [[[UIScrollView alloc] initWithFrame:CGRectMake(m_tableX, m_tableY, m_tableWidth, m_tableHeight)] autorelease];
-    self.pTableviewContainer.bounces = NO;
-    self.pTableviewContainer.contentSize = CGSizeMake(m_tableWidth, realTableHeight);
+    m_tableViewContainerOffsetY = tableViewContainerOffsetY;
+    m_tableViewContainerWidth = tableWidth;
+    m_tableViewContainerHeight = 0.0f;
+    m_tableViewContainerOffScreenX = -m_tableViewContainerWidth;
+    m_tableViewContainerOffScreenY = upperMargin + dragTabSize + m_tableViewContainerOffsetY;
+    m_tableViewContainerClosedOnScreenX = m_tableViewContainerOffScreenX;
+    m_tableViewContainerClosedOnScreenY = m_tableViewContainerOffScreenY;
+    m_tableViewContainerOpenOnScreenX = 0.0f;
+    m_tableViewContainerOpenOnScreenY = m_tableViewContainerOffScreenY;
     
-    __block SearchMenuView* selfBlockRef = self;
+    self.pTableViewContainer = [[[UIScrollView alloc] initWithFrame:CGRectMake(m_tableViewContainerOffScreenX, m_tableViewContainerOffScreenY, m_tableViewContainerWidth, m_tableViewContainerHeight)] autorelease];
+    self.pTableViewContainer.bounces = NO;
+    self.pTableViewContainer.contentSize = CGSizeMake(m_tableWidth, 0.0f);
+    self.pTableViewContainer.backgroundColor = [UIColor cyanColor];
     
-    self.pTableview = [[[CustomTableView alloc] initWithFrame:CGRectMake(0.f, 0.f, m_tableWidth, realTableHeight)
+    m_tableX = 0.0f;
+    m_tableY = 0.0f;
+    m_tableWidth = m_tableViewContainerWidth;
+    m_tableHeight = 0.0f;
+    
+    self.pTableView = [[[CustomTableView alloc] initWithFrame:CGRectMake(m_tableX, m_tableY, m_tableWidth, m_tableHeight)
                                                         style:UITableViewStylePlain
-                                                    container:self.pTableviewContainer
+                                                    container:self.pTableViewContainer
+                                                     menuView:self
                                                   hasSubMenus:true
-                                                  onRowsAdded:^{ [selfBlockRef onRowsAdded]; }
-                                                onRowsDeleted:^{ [selfBlockRef onRowsDeleted]; }
-                
                         ] autorelease];
-    self.pTableview.backgroundColor = [UIColor clearColor];
-    self.pTableview.separatorStyle = UITableViewCellSeparatorStyleNone;
-    self.pTableview.bounces = NO;
+    self.pTableView.backgroundColor = [UIColor clearColor];
+    self.pTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.pTableView.bounces = NO;
     
-    self.pTableview.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    self.pTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
-    m_offscreenX = -(m_mainContainerWidth + m_dragTabWidth + m_dragTabOffset);
-    m_openX = (0.f * m_pixelScale);
-    m_closedX = -(m_mainContainerOnScreenWidth - m_mainContainerVisibleOnScreenWhenClosedX);
-    m_animationCurrentPos.x = m_offscreenX;
-    m_animationCurrentPos.y = m_offscreenY;
-
-    [self addSubview: self.pMenuContainer];
     [self addSubview: self.pDragTab];
-    [self.pMenuContainer addSubview:self.pSearchEditBoxContainer];
-    [self.pMenuContainer addSubview:self.pSearchEditBox];
-
-    [self.pTableviewContainer addSubview:self.pTableview];
-    [self.pMenuContainer addSubview:self.pTableviewContainer];
+    [self addSubview: self.pTitleContainer];
+    [self.pTitleContainer addSubview: self.pSearchEditBox];
+    [self addSubview: self.pTableViewContainer];
+    [self.pTableViewContainer addSubview:self.pTableView];
 
     ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pDragTab, "search_magglass", ExampleApp::Helpers::ImageHelpers::Centre);
     
-    CGRect f = self.frame;
-    f.origin.x = m_offscreenX;
-    f.origin.y = m_offscreenY;
-    self.frame = f;
+    self.frame = CGRectZero;
     
     self.pSearchEditBox.borderStyle = UITextBorderStyleRoundedRect;
     self.pSearchEditBox.returnKeyType = UIReturnKeySearch;
@@ -148,31 +183,51 @@
     [self.pSearchEditBox removeFromSuperview];
     [self.pSearchEditBox release];
 
-    [self.pSearchEditBoxContainer removeFromSuperview];
-    [self.pSearchEditBoxContainer release];
+    [self.pTableView removeFromSuperview];
+    [self.pTableView release];
 
-    [self.pTableview removeFromSuperview];
-    [self.pTableview release];
-
-    [self.pTableviewContainer removeFromSuperview];
-    [self.pTableviewContainer release];
+    [self.pTableViewContainer removeFromSuperview];
+    [self.pTableViewContainer release];
+    
+    [self.pTitleContainer removeFromSuperview];
+    [self.pTitleContainer release];
 
     [self.pDragTab removeFromSuperview];
     [self.pDragTab release];
-
-    [self.pMenuContainer removeFromSuperview];
-    [self.pMenuContainer release];
 
     Eegeo_DELETE m_pSearchMenuInterop;
     [self removeFromSuperview];
     [super dealloc];
 }
 
+- (void)initializeAnimators
+{
+    [super initializeAnimators];
+    
+    // On/off screen animations
+    m_onScreenAnimationController->AddAnimator(Eegeo_NEW(ExampleApp::Helpers::UIAnimation::ViewFrameAnimator)(self.pSearchEditBox,
+                                                                                                              m_searchEditBoxAnimationDurationSeconds,
+                                                                                                              0.0,
+                                                                                                              Eegeo::v2(m_searchEditBoxOffScreenX, m_searchEditBoxOffScreenY),
+                                                                                                              Eegeo::v2(m_searchEditBoxClosedOnScreenX, m_searchEditBoxClosedOnScreenY),
+                                                                                                              Eegeo::v2(m_searchEditBoxOffScreenWidth, m_searchEditBoxOffScreenHeight),
+                                                                                                              Eegeo::v2(m_searchEditBoxClosedOnScreenWidth, m_searchEditBoxClosedOnScreenHeight),
+                                                                                                              Eegeo_NEW(ExampleApp::Helpers::UIAnimation::Easing::BackOut<Eegeo::v2>)()));
+    // Open/closed on screen animations
+    m_openAnimationController->AddAnimator(Eegeo_NEW(ExampleApp::Helpers::UIAnimation::ViewFrameAnimator)(self.pSearchEditBox,
+                                                                                                          m_searchEditBoxAnimationDurationSeconds,
+                                                                                                          m_searchEditBoxAnimationDelaySeconds,
+                                                                                                          Eegeo::v2(m_searchEditBoxClosedOnScreenX, m_searchEditBoxClosedOnScreenY),
+                                                                                                          Eegeo::v2(m_searchEditBoxOpenOnScreenX, m_searchEditBoxOpenOnScreenY),
+                                                                                                          Eegeo::v2(m_searchEditBoxClosedOnScreenWidth, m_searchEditBoxClosedOnScreenHeight),
+                                                                                                          Eegeo::v2(m_searchEditBoxOpenOnScreenWidth, m_searchEditBoxOpenOnScreenHeight),
+                                                                                                          Eegeo_NEW(ExampleApp::Helpers::UIAnimation::Easing::BackOut<Eegeo::v2>)()));
+}
+
 - (void) setOffscreenPartsHiddenState:(bool)hidden
 {
     [super setOffscreenPartsHiddenState:hidden];
     self.pSearchEditBox.hidden = hidden;
-    self.pSearchEditBoxContainer.hidden = hidden;
 }
 
 - (void) enableEdit
@@ -206,16 +261,6 @@
 - (void) collapseAll
 {
     [m_pDataProvider collapseAll];
-}
-
-- (void) onRowsAdded
-{
-    [self refreshTableHeights];
-}
-
-- (void) onRowsDeleted
-{
-    [self refreshTableHeights];
 }
 
 - (void)keyboardDidChangeFrame:(NSNotification*)aNotification
