@@ -964,6 +964,8 @@ namespace ExampleApp
             m_pLoadingScreen->NotifyScreenDimensionsChanged(screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight());
         }
 
+		m_pPinsModule->UpdateScreenProperties(m_screenProperties);
+
         m_pGlobeCameraController->UpdateScreenProperties(m_screenProperties);
 
 		m_pInteriorsExplorerModule->GetInteriorsCameraController().GetGlobeCameraController().UpdateScreenProperties(m_screenProperties);
