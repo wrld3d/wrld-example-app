@@ -94,6 +94,8 @@
 
 - (void) refreshTableHeights;
 
+- (float) getTableHeight;
+
 - (void) setTableCanInteract:(BOOL)canInteract;
 
 - (BOOL) canInteract;

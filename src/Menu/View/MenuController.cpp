@@ -106,8 +106,15 @@ namespace ExampleApp
                         m_viewModel.UpdateOpenState(normalisedAnimationProgress);
                     }
                 }
-
-                m_view.SetTableCanInteract(m_viewModel.IsFullyOpen());
+                
+                if(m_view.IsTableAnimating())
+                {
+                    m_view.UpdateTableAnimation(dt);
+                }
+                else
+                {
+                    m_view.SetTableCanInteract(m_viewModel.IsFullyOpen());
+                }
             }
 
             void MenuController::OnViewClicked()

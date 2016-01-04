@@ -63,10 +63,20 @@ namespace ExampleApp
                 {
                     return [m_pView isAnimating];
                 }
-
+                
+                bool IsTableAnimating() const
+                {
+                    return [m_pView.pTableView isAnimating];
+                }
+                
                 void UpdateAnimation(float dt)
                 {
                     [m_pView updateAnimation:dt];
+                }
+                
+                void UpdateTableAnimation(float dt)
+                {
+                    [m_pView.pTableView updateAnimation:dt];
                 }
                 
                 void UpdateMenuSectionViews(TSections& sections)

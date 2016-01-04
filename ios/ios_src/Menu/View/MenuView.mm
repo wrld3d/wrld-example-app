@@ -524,11 +524,20 @@ enum MenuState
     frame.size.height = m_tableHeight;
     self.pTableView.frame = frame;
     
+    frame = self.pTableView.pBackgroundView.frame;
+    frame.size.height = m_tableHeight;
+    self.pTableView.pBackgroundView.frame = frame;
+    
     frame = self.pTableViewContainer.frame;
     frame.size.height = m_tableViewContainerHeight;
     self.pTableViewContainer.frame = frame;
     
     [self.pTableViewContainer setContentSize:CGSizeMake(m_tableWidth, m_tableHeight)];
+}
+
+- (float) getTableHeight
+{
+    return [m_pDataProvider getRealTableHeight];
 }
 
 - (void) setTableCanInteract:(BOOL)canInteract

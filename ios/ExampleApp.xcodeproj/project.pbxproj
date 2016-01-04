@@ -51,6 +51,8 @@
 		1842ECF11C2C3C9C00E4C17B /* ViewAlphaAnimator.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1842ECEF1C2C3C9C00E4C17B /* ViewAlphaAnimator.mm */; };
 		1842ECF41C32A39D00E4C17B /* ViewAnimatorBase.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1842ECF31C32A39D00E4C17B /* ViewAnimatorBase.mm */; };
 		1842ECF51C32A39D00E4C17B /* ViewAnimatorBase.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1842ECF31C32A39D00E4C17B /* ViewAnimatorBase.mm */; };
+		1842ECFF1C3424FE00E4C17B /* ViewSizeAnimator.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1842ECFE1C3424FE00E4C17B /* ViewSizeAnimator.mm */; };
+		1842ED001C3424FE00E4C17B /* ViewSizeAnimator.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1842ECFE1C3424FE00E4C17B /* ViewSizeAnimator.mm */; };
 		185145901AB0A8DC0071913E /* SplashScreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 1851458D1AB0A8DC0071913E /* SplashScreen.png */; };
 		185145911AB0A8DC0071913E /* SplashScreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 1851458D1AB0A8DC0071913E /* SplashScreen.png */; };
 		185145921AB0A8DC0071913E /* SplashScreen@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1851458E1AB0A8DC0071913E /* SplashScreen@2x.png */; };
@@ -1618,6 +1620,8 @@
 		1842ECFA1C32E96600E4C17B /* BackCurve.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackCurve.h; sourceTree = "<group>"; };
 		1842ECFB1C32E96600E4C17B /* CircleCurve.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircleCurve.h; sourceTree = "<group>"; };
 		1842ECFC1C32E96600E4C17B /* IEasingCurve.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IEasingCurve.h; sourceTree = "<group>"; };
+		1842ECFD1C3424FE00E4C17B /* ViewSizeAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewSizeAnimator.h; sourceTree = "<group>"; };
+		1842ECFE1C3424FE00E4C17B /* ViewSizeAnimator.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewSizeAnimator.mm; sourceTree = "<group>"; };
 		1851458D1AB0A8DC0071913E /* SplashScreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = SplashScreen.png; path = SplashScreen/SplashScreen.png; sourceTree = "<group>"; };
 		1851458E1AB0A8DC0071913E /* SplashScreen@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "SplashScreen@2x.png"; path = "SplashScreen/SplashScreen@2x.png"; sourceTree = "<group>"; };
 		1851458F1AB0A8DC0071913E /* SplashScreen@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "SplashScreen@3x.png"; path = "SplashScreen/SplashScreen@3x.png"; sourceTree = "<group>"; };
@@ -3873,6 +3877,8 @@
 				1842ECEB1C2AF73F00E4C17B /* ViewFrameAnimator.mm */,
 				18FD9E831C2AA5B10061378C /* ViewPositionAnimator.h */,
 				18FD9E841C2AA5B10061378C /* ViewPositionAnimator.mm */,
+				1842ECFD1C3424FE00E4C17B /* ViewSizeAnimator.h */,
+				1842ECFE1C3424FE00E4C17B /* ViewSizeAnimator.mm */,
 			);
 			path = UIAnimation;
 			sourceTree = "<group>";
@@ -7335,6 +7341,7 @@
 				7E3B88C11A385A290023C94E /* CompassViewCycledMessage.cpp in Sources */,
 				1842ECED1C2AF73F00E4C17B /* ViewFrameAnimator.mm in Sources */,
 				BFD5FD491BA706AD00F591F1 /* TourStateMachine.cpp in Sources */,
+				1842ED001C3424FE00E4C17B /* ViewSizeAnimator.mm in Sources */,
 				7E3B89611A385A290023C94E /* MyPinsRepositoryObserver.cpp in Sources */,
 				18D1DB2B1C1ADEB300D319BB /* SettingsMenuController.cpp in Sources */,
 				18E102811A8B84FF0011A18C /* SearchResultPoiPinToggledMessage.cpp in Sources */,
@@ -7822,6 +7829,7 @@
 				7E3B88C01A385A290023C94E /* CompassViewCycledMessage.cpp in Sources */,
 				1842ECEC1C2AF73F00E4C17B /* ViewFrameAnimator.mm in Sources */,
 				BFD5FD481BA706AD00F591F1 /* TourStateMachine.cpp in Sources */,
+				1842ECFF1C3424FE00E4C17B /* ViewSizeAnimator.mm in Sources */,
 				7E3B89601A385A290023C94E /* MyPinsRepositoryObserver.cpp in Sources */,
 				18D1DB2A1C1ADEB300D319BB /* SettingsMenuController.cpp in Sources */,
 				18E102801A8B84FF0011A18C /* SearchResultPoiPinToggledMessage.cpp in Sources */,

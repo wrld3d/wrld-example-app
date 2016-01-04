@@ -14,8 +14,12 @@
                          menuView:(MenuView*)menuView
                   hasSubMenus:(bool)hasSubMenus;
 
--(BOOL)hasDynamicCellPresentation;
+- (BOOL)hasDynamicCellPresentation;
 
--(BOOL)inAnimationCeremony;
+- (BOOL)isAnimating;
+
+- (void)updateAnimation:(double)deltaSeconds;
+
+@property (nonatomic, retain) UIView* pBackgroundView;
 
 @end

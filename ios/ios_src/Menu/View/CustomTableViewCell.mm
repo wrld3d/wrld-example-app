@@ -54,6 +54,8 @@ const float SubViewInset = 0.f;
         [super layoutSubviews];
     }
     
+    [self setClipsToBounds:YES];
+    
     CGRect r = self.contentView.frame;
 
     if(!m_isHeader)
@@ -124,9 +126,9 @@ const float SubViewInset = 0.f;
 
 - (BOOL)canInteract
 {
-    if([m_tableView respondsToSelector:@selector(inAnimationCeremony)])
+    if([m_tableView respondsToSelector:@selector(isAnimating)])
     {
-        if([m_tableView inAnimationCeremony])
+        if([m_tableView isAnimating])
         {
             return false;
         }

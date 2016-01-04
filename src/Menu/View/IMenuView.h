@@ -27,7 +27,9 @@ namespace ExampleApp
 
                 virtual float GetAnimationProgress() const = 0;
                 virtual bool IsAnimating() const = 0;
+                virtual bool IsTableAnimating() const = 0;
                 virtual void UpdateAnimation(float dt) = 0;
+                virtual void UpdateTableAnimation(float dt) = 0;
 
                 virtual void UpdateMenuSectionViews(TSections& sections) = 0;
 

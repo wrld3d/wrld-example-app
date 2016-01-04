@@ -123,7 +123,7 @@
     self.pTableViewContainer = [[[UIScrollView alloc] initWithFrame:CGRectMake(m_tableViewContainerOffScreenX, m_tableViewContainerOffScreenY, m_tableViewContainerWidth, m_tableViewContainerHeight)] autorelease];
     self.pTableViewContainer.bounces = NO;
     self.pTableViewContainer.contentSize = CGSizeMake(m_tableWidth, 0.0f);
-    self.pTableViewContainer.backgroundColor = [UIColor cyanColor];
+    self.pTableViewContainer.backgroundColor = [UIColor clearColor];
     
     m_tableX = 0.0f;
     m_tableY = 0.0f;
@@ -139,8 +139,8 @@
     self.pTableView.backgroundColor = [UIColor clearColor];
     self.pTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.pTableView.bounces = NO;
-    
     self.pTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    self.pTableView.pBackgroundView.backgroundColor = ExampleApp::Helpers::ColorPalette::BorderHudColor;
     
     [self addSubview: self.pDragTab];
     [self addSubview: self.pTitleContainer];
