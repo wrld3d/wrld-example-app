@@ -29,13 +29,14 @@ namespace ExampleApp
             , m_cameraTouchController(cameraTouchController)
             , m_gpsMode(Eegeo::Location::NavigationService::GpsModeOff)
             , m_interiorController(interiorController)
+            , m_interiorStateChangedHandler(this, &InteriorsNavigationService::HandleInteriorStateChanged)
             {
-                
+                m_interiorController.RegisterStateChangedCallback(m_interiorStateChangedHandler);
             }
             
             InteriorsNavigationService::~InteriorsNavigationService()
             {
-                
+                m_interiorController.UnregisterStateChangedCallback(m_interiorStateChangedHandler);
             }
                 
             void InteriorsNavigationService::SetGpsMode(Eegeo::Location::NavigationService::GpsMode mode)
@@ -179,6 +180,14 @@ namespace ExampleApp
                 else
                 {
                     return false;
+                }
+            }
+            
+            void InteriorsNavigationService::HandleInteriorStateChanged()
+            {
+                if(m_interiorController.GetCurrentState() == Eegeo::Resources::Interiors::InteriorViewState::NoInteriorSelected)
+                {
+                    SetGpsMode(Eegeo::Location::NavigationService::GpsModeOff);
                 }
             }
         }

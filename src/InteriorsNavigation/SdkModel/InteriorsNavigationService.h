@@ -8,6 +8,7 @@
 #include "Location.h"
 #include "InteriorsExplorer.h"
 #include "Interiors.h"
+#include "ICallback.h"
 
 namespace ExampleApp
 {
@@ -36,11 +37,15 @@ namespace ExampleApp
                 
             private:
                 
+                void HandleInteriorStateChanged();
+                
                 Eegeo::Location::ILocationService& m_locationService;
                 InteriorsExplorer::SdkModel::InteriorsExplorerCameraController& m_interiorsExplorerCameraController;
                 Eegeo::Camera::GlobeCamera::GlobeCameraTouchController& m_cameraTouchController;
                 Eegeo::Location::NavigationService::GpsMode m_gpsMode;
                 Eegeo::Resources::Interiors::InteriorController& m_interiorController;
+                
+                Eegeo::Helpers::TCallback0<InteriorsNavigationService> m_interiorStateChangedHandler;
                 
                 double m_targetHeading;
                 double m_currentHeading;
