@@ -1349,6 +1349,11 @@ namespace ExampleApp
 
     void MobileExampleApp::Event_Zoom(const AppInterface::ZoomData& data)
     {
+		if (!CanAcceptTouch())
+		{
+			return;
+		}
+
         m_pCurrentTouchController->Event_Zoom(data);
     }
 
@@ -1362,16 +1367,31 @@ namespace ExampleApp
 
     void MobileExampleApp::Event_TiltStart(const AppInterface::TiltData& data)
     {
+		if (!CanAcceptTouch())
+		{
+			return;
+		}
+
         m_pCurrentTouchController->Event_TiltStart(data);
     }
 
     void MobileExampleApp::Event_TiltEnd(const AppInterface::TiltData& data)
     {
+		if (!CanAcceptTouch())
+		{
+			return;
+		}
+
         m_pCurrentTouchController->Event_TiltEnd(data);
     }
 
     void MobileExampleApp::Event_Tilt(const AppInterface::TiltData& data)
     {
+		if (!CanAcceptTouch())
+		{
+			return;
+		}
+
         m_pCurrentTouchController->Event_Tilt(data);
     }
     
