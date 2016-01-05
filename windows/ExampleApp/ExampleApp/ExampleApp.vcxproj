@@ -132,7 +132,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>eegeo-sdk.lib;locationapi.lib;httpxx.lib;libEGL.lib;libGLESv2.lib;png.lib;curl.lib;turbojpeg.lib;http-parser.lib;xml2.lib;pthreadVC2.lib;jpeg.lib;libuv.lib;psapi.lib;Iphlpapi.lib;Userenv.lib;eegeo-sdk-extensions-sqlite.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>eegeo-sdk.lib;locationapi.lib;libEGL.lib;libGLESv2.lib;png.lib;curl.lib;turbojpeg.lib;http-parser.lib;xml2.lib;pthreadVC2.lib;jpeg.lib;libuv.lib;psapi.lib;Iphlpapi.lib;Userenv.lib;eegeo-sdk-extensions-sqlite.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>C:\Program Files (x86)\Microsoft SDKs\Windows\v7.1A\Lib\x64;../../libs/eegeo/prebuilt/x64/Debug/;../../libs/eegeo/prebuilt/x64/;../../libs/eegeo/ANGLE/x64/Debug/;../../libs/eegeo/pthread/x64/;../../libs/eegeo/sdk-extensions/x64/Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AssemblyDebug>true</AssemblyDebug>
     </Link>
@@ -193,7 +193,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>eegeo-sdk.lib;httpxx.lib;libEGL.lib;libGLESv2.lib;png.lib;curl.lib;turbojpeg.lib;http-parser.lib;xml2.lib;pthreadVC2.lib;jpeg.lib;locationapi.lib;libuv.lib;psapi.lib;Iphlpapi.lib;Userenv.lib;eegeo-sdk-extensions-sqlite.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>eegeo-sdk.lib;libEGL.lib;libGLESv2.lib;png.lib;curl.lib;turbojpeg.lib;http-parser.lib;xml2.lib;pthreadVC2.lib;jpeg.lib;locationapi.lib;libuv.lib;psapi.lib;Iphlpapi.lib;Userenv.lib;eegeo-sdk-extensions-sqlite.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>C:\Program Files (x86)\Microsoft SDKs\Windows\v7.1A\Lib\x64;../../libs/eegeo/prebuilt/x64/Release/;../../libs/eegeo/prebuilt/x64/;../../libs/eegeo/ANGLE/x64/Release/;../../libs/eegeo/pthread/x64/;../../libs/eegeo/sdk-extensions/x64/Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
