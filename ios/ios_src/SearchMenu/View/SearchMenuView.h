@@ -25,6 +25,8 @@
 - (void) setEditText :(NSString*)searchText
                      :(bool)isCategory;
 
+- (void) setSearchResultCount:(NSInteger)searchResultCount;
+
 - (void) collapseAll;
 
 @end

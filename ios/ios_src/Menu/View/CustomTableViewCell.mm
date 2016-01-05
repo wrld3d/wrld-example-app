@@ -4,8 +4,6 @@
 #include "UIColors.h"
 #include "ImageHelpers.h"
 
-const float SubViewInset = 0.f;
-
 @implementation CustomTableViewCell
 {
     UIView* pCustomSeparatorContainer;
@@ -40,7 +38,7 @@ const float SubViewInset = 0.f;
 
 - (CGRect)getContentViewRect
 {
-    return CGRectMake(0.f,
+    return CGRectMake(m_inset,
                    1.0f,
                    m_initialWidth,
                    self.frame.size.height - 2.0f);
@@ -56,31 +54,12 @@ const float SubViewInset = 0.f;
     
     [self setClipsToBounds:YES];
     
-    CGRect r = self.contentView.frame;
-
-    if(!m_isHeader)
-    {
-        r = CGRectMake(SubViewInset,
-                       r.origin.y,
-                       m_initialWidth - SubViewInset,
-                       r.size.height);
-    }
-    else
-    {
-        r = CGRectMake(0.f,
-                       r.origin.y,
-                       m_initialWidth,
-                       r.size.height);
-    }
-
-    self.contentView.frame = r;
-    self->pCustomSeparatorContainer.frame = r;
+    self->pCustomSeparatorContainer.frame = [self getContentViewRect];;
     
     [self.contentView setClipsToBounds:YES];
     self.contentView.frame = [self getContentViewRect];
 
     CGRect imageFrame = self.imageView.frame;
-    const float initialImageX = static_cast<float>(imageFrame.origin.x);
     imageFrame.origin.x =  0.f;
     self.imageView.frame = imageFrame;
 
@@ -88,23 +67,26 @@ const float SubViewInset = 0.f;
     accessoryFrame.origin.x = 0.f;
     self.accessoryView.frame = accessoryFrame;
     
-    const float delta = static_cast<float>(imageFrame.origin.x - initialImageX);
+    const float textOffset = 6.0f;
 
     CGRect labelFrame = self.textLabel.frame;
-    labelFrame.origin.x += delta;
+    labelFrame.origin.x = imageFrame.origin.x + imageFrame.size.width + textOffset;
     self.textLabel.frame = labelFrame;
     
     CGRect detailFrame = self.detailTextLabel.frame;
     detailFrame.origin.x = self.textLabel.frame.origin.x;
     self.detailTextLabel.frame = detailFrame;
     
-    [self insertSeparators :r :imageFrame];
+    [self insertSeparators :[self getContentViewRect] :imageFrame];
     [self lazySetBackgroundPresentation];
 }
 
-- (void)initCell:(CGFloat)initialWidth :(CustomTableView*)tableView;
+- (void)initCell:(CGFloat)initialWidth
+                :(CGFloat)inset
+                :(CustomTableView*)tableView
 {
     m_initialWidth = static_cast<float>(initialWidth);
+    m_inset = static_cast<float>(inset);
     m_tableView = tableView;
     m_hasSetBackground = false;
     m_hasSetSeparators = false;
@@ -206,8 +188,8 @@ const float SubViewInset = 0.f;
     {
         CGFloat topSeparatorY       = 0.f;
         CGFloat separatorHeight     = (1.f / [UIScreen mainScreen].scale);
-        CGFloat separatorWidth      = cellFrame.size.width - SubViewInset;
-        CGFloat separatorInset      = cellFrame.origin.x + SubViewInset;
+        CGFloat separatorWidth      = cellFrame.size.width;
+        CGFloat separatorInset      = 0.f;
         
         if(!isTop)
         {

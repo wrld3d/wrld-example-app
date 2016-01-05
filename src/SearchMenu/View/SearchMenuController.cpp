@@ -77,6 +77,8 @@ namespace ExampleApp
             {
                 m_searchMenuView.CollapseAll();
                 m_searchMenuView.EnableEditText();
+                
+                m_searchMenuView.SetSearchResultCount(message.GetResults().size());
             }
             
             void SearchMenuController::OnSearch(const std::string& searchQuery)
@@ -117,6 +119,8 @@ namespace ExampleApp
             
             void SearchMenuController::OnSearchCleared()
             {
+                m_searchMenuView.SetSearchResultCount(0);
+                
                 m_messageBus.Publish(SearchResultMenu::SearchResultViewClearedMessage());
             }
             

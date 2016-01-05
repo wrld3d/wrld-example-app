@@ -16,11 +16,16 @@
 
 @implementation CustomTableView
 {
-    float m_animationDuration;
+    float m_maxAnimationDuration;
+    float m_minAnimationDuration;
+    float m_cellAnimationDuration;
     bool m_isAnimating;
     UIScrollView* m_pContainer;
     MenuView* m_pMenuView;
     bool m_hasSubMenus;
+    float m_cellWidth;
+    float m_cellInset;
+    
     ExampleApp::Helpers::UIAnimation::ViewAnimationController* m_pAnimationController;
 }
 
@@ -29,13 +34,19 @@
                     container:(UIScrollView*)container
                      menuView:(MenuView*)menuView
                   hasSubMenus:(bool)hasSubMenus
+                    cellWidth:(float)cellWidth
+                    cellInset:(float)cellInset
 {
     id it = [super initWithFrame:frame style:style];
     m_pContainer = container;
     m_pMenuView = menuView;
-    m_animationDuration = 0.2f;
+    m_maxAnimationDuration = 0.5f;
+    m_minAnimationDuration = 0.2f;
+    m_cellAnimationDuration = 0.1f;
     m_isAnimating = NO;
     m_hasSubMenus = hasSubMenus;
+    m_cellWidth = cellWidth;
+    m_cellInset = cellInset;
     
     self.pBackgroundView = [[UIView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, frame.size.width, frame.size.height)];
     [self addSubview:self.pBackgroundView];
@@ -117,6 +128,21 @@
     m_pContainer.scrollEnabled = YES;
 }
 
+- (float)getCellWidth
+{
+    return m_cellWidth;
+}
+
+- (float)getCellInset
+{
+    return m_cellInset;
+}
+
+- (float)getAnimationDurationForCellCount:(int)cellCount
+{
+    return Eegeo::Math::Clamp(cellCount * m_cellAnimationDuration, m_minAnimationDuration, m_maxAnimationDuration);
+}
+
 -(void)insertRowsAtIndexPaths:(NSArray *)indexPaths withRowAnimation:(UITableViewRowAnimation)animation
 {
     if([indexPaths count] == 0)
@@ -140,6 +166,10 @@
     
     [m_pMenuView refreshTableHeights];
     
+    const float cellHeight = [self.delegate tableView:self heightForRowAtIndexPath:(NSIndexPath*)[indexPaths firstObject]];
+    
+    const float animationDuration = [self getAnimationDurationForCellCount:[indexPaths count]];
+    
     m_pAnimationController = Eegeo_NEW(ExampleApp::Helpers::UIAnimation::ViewAnimationController)(self,
                                                                                                   ^(UIView* view){
                                                                                                       [(CustomTableView*)view setInteractionEnabled:YES];
@@ -147,15 +177,14 @@
                                                                                                   NULL);
     
     // animate inserted cells
-    const float cellAnimationDuration = (m_animationDuration / [indexPaths count]);
-    [self addCellHeightAnimatorsWithIndexPaths:indexPaths startHeight:0.0f endHeight:SUB_SECTION_CELL_HEIGHT animationDuration:cellAnimationDuration animationDelay:m_animationDuration - cellAnimationDuration];
+    [self addCellHeightAnimatorsWithIndexPaths:indexPaths startHeight:0.0f endHeight:cellHeight animationDuration:m_cellAnimationDuration animationDelay:animationDuration - m_cellAnimationDuration];
     
     // animate subsequent cells
-    const float heightOffset = SUB_SECTION_CELL_HEIGHT * [indexPaths count];
-    [self addCellPositionAnimatorsAfterIndexPath:(NSIndexPath*)[indexPaths lastObject] deltaY:-heightOffset deltaStart:true];
+    const float heightOffset = cellHeight * [indexPaths count];
+    [self addCellPositionAnimatorsAfterIndexPath:(NSIndexPath*)[indexPaths lastObject] deltaY:-heightOffset deltaStart:true animationDuration:animationDuration];
     
     // animate background
-    [self addBackgroundAnimatorWithStartHeight:currentTableHeight endHeight:[m_pMenuView getTableHeight]];
+    [self addBackgroundAnimatorWithStartHeight:currentTableHeight endHeight:[m_pMenuView getTableHeight] animationDuration:animationDuration];
     
     m_pAnimationController->Play();
 }
@@ -177,6 +206,10 @@
     
     [self setInteractionEnabled:NO];
     
+    const float cellHeight = [self.delegate tableView:self heightForRowAtIndexPath:(NSIndexPath*)[indexPaths firstObject]];
+    
+    const float animationDuration = [self getAnimationDurationForCellCount:[indexPaths count]];
+    
     m_pAnimationController = Eegeo_NEW(ExampleApp::Helpers::UIAnimation::ViewAnimationController)(self,
                                                                                                   ^(UIView* view){
                                                                                                       CustomTableView* tableView = (CustomTableView*)view;
@@ -188,14 +221,14 @@
                                                                                                   NULL);
     
     // animate removed cells
-    [self addCellHeightAnimatorsWithIndexPaths:indexPaths startHeight:SUB_SECTION_CELL_HEIGHT endHeight:0.0f animationDuration:m_animationDuration / [indexPaths count] animationDelay:0.0];
+    [self addCellHeightAnimatorsWithIndexPaths:indexPaths startHeight:cellHeight endHeight:0.0f animationDuration:m_cellAnimationDuration animationDelay:0.0];
     
     // animate subsequent cells
-    const float heightOffset = SUB_SECTION_CELL_HEIGHT * [indexPaths count];
-    [self addCellPositionAnimatorsAfterIndexPath:(NSIndexPath*)[indexPaths lastObject] deltaY:-heightOffset deltaStart:false];
+    const float heightOffset = cellHeight * [indexPaths count];
+    [self addCellPositionAnimatorsAfterIndexPath:(NSIndexPath*)[indexPaths lastObject] deltaY:-heightOffset deltaStart:false animationDuration:animationDuration];
     
     // animate background
-    [self addBackgroundAnimatorWithStartHeight:self.frame.size.height endHeight:self.frame.size.height - heightOffset];
+    [self addBackgroundAnimatorWithStartHeight:self.frame.size.height endHeight:self.frame.size.height - heightOffset animationDuration:animationDuration];
     
     m_pAnimationController->Play();
 }
@@ -231,6 +264,7 @@
 - (void)addCellPositionAnimatorsAfterIndexPath:(NSIndexPath*)indexPath
                                         deltaY:(float)deltaY
                                     deltaStart:(bool)deltaStart
+                             animationDuration:(float)animationDuration
 {
     NSInteger numberOfSections = [self numberOfSections];
     
@@ -253,7 +287,7 @@
                 cell.frame = frame;
                 
                 m_pAnimationController->AddAnimator(Eegeo_NEW(ExampleApp::Helpers::UIAnimation::ViewPositionAnimator)(cell,
-                                                                                                                      m_animationDuration,
+                                                                                                                      animationDuration,
                                                                                                                       0.0,
                                                                                                                       Eegeo::v2(cell.frame.origin.x, startY),
                                                                                                                       Eegeo::v2(cell.frame.origin.x, endY),
@@ -265,13 +299,14 @@
 
 - (void)addBackgroundAnimatorWithStartHeight:(float)startHeight
                                    endHeight:(float)endHeight
+                           animationDuration:(float)animationDuration
 {
     CGRect frame = self.pBackgroundView.frame;
     frame.size.height = startHeight;
     self.pBackgroundView.frame = frame;
     
     m_pAnimationController->AddAnimator(Eegeo_NEW(ExampleApp::Helpers::UIAnimation::ViewSizeAnimator)(self.pBackgroundView,
-                                                                                                      m_animationDuration,
+                                                                                                      animationDuration,
                                                                                                       0.0,
                                                                                                       Eegeo::v2(self.pBackgroundView.frame.size.width, startHeight),
                                                                                                       Eegeo::v2(self.pBackgroundView.frame.size.width, endHeight),

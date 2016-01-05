@@ -9,6 +9,7 @@
 {
     bool m_isHeader;
     float m_initialWidth;
+    float m_inset;
     UIColor* m_pBackgroundColor;
     UIColor* m_pContentBackgroundColor;
     CustomTableView* m_tableView;
@@ -18,7 +19,9 @@
                 :(UIColor*)pBackgroundColor
                 :(UIColor*)pContentBackgroundColor;
 
-- (void)initCell:(CGFloat)initialWidth :(CustomTableView*)tableView;
+- (void)initCell:(CGFloat)initialWidth
+                :(CGFloat)inset
+                :(CustomTableView*)tableView;
 
 - (void)layoutSubviews;
 

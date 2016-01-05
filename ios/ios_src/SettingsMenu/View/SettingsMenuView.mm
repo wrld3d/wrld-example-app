@@ -135,6 +135,8 @@
                                                     container:self.pTableViewContainer
                                                      menuView:self
                                                   hasSubMenus:true
+                                                    cellWidth:tableWidth
+                                                    cellInset:0.0f
                         ] autorelease];
     self.pTableView.backgroundColor = [UIColor clearColor];
     self.pTableView.separatorStyle = UITableViewCellSeparatorStyleNone;

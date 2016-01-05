@@ -49,6 +49,11 @@ namespace ExampleApp
                     [m_pView setEditText :[NSString stringWithUTF8String:searchText.c_str()] :isCategory];
                 }
                 
+                void SetSearchResultCount(int searchResultCount)
+                {
+                    [m_pView setSearchResultCount:searchResultCount];
+                }
+                
                 void CollapseAll()
                 {
                     [m_pView collapseAll];

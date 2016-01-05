@@ -11,14 +11,20 @@
 - (instancetype)initWithFrame:(CGRect)frame
                         style:(UITableViewStyle)style
                     container:(UIScrollView*)container
-                         menuView:(MenuView*)menuView
-                  hasSubMenus:(bool)hasSubMenus;
+                     menuView:(MenuView*)menuView
+                  hasSubMenus:(bool)hasSubMenus
+                    cellWidth:(float)cellWidth
+                    cellInset:(float)cellInset;
 
 - (BOOL)hasDynamicCellPresentation;
 
 - (BOOL)isAnimating;
 
 - (void)updateAnimation:(double)deltaSeconds;
+
+- (float)getCellWidth;
+
+- (float)getCellInset;
 
 @property (nonatomic, retain) UIView* pBackgroundView;
 
