@@ -7,8 +7,28 @@ teamcityBuildUrl=$4
 githubCommitUrl=$5
 pathToProjectDir=${6}
 hockeyAppIdentifier=${7:-d7b222a21f80e5f429f395652ff06924}
+environment=${8:staging}
 
 # This script executes all the steps to produce an iOS app.
+
+if [[ ( $environment != 'production' ) && ( $environment != 'staging' ) ]]; then
+  echo "invalid environment '$environment'. Must be one of [staging|production]"
+  exit 1
+fi
+
+if [ $environment == 'production' ]; then
+  apiKeyFile=./src/ApiKey.h
+  apiKeyFileTemp=./src/ApiKeyTemp.h
+  git checkout $apiKeyFile
+  sed -e "s/project_swallow_config.json/project_swallow_production_config.json/g" $apiKeyFile > $apiKeyFileTemp
+
+  if [ $? -ne 0 ] ; then
+    echo "Failed to poke config file value into ApiKey file"  >&2
+    exit 1
+  fi
+
+  mv $apiKeyFileTemp $apiKeyFile
+fi
 
 rm -rf $pathToProjectDir"/build"
 
