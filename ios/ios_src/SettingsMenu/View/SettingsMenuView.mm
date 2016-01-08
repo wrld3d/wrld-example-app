@@ -56,9 +56,11 @@
     const float tableCellWidth = 248.0f * m_pixelScale;
     const float dragTabOffsetX = 28.0f * m_pixelScale;
     const float dragTabSize = 50.0f * m_pixelScale;
-    const float tableViewContainerOffsetY = 2.0f * m_pixelScale;
+    const float tableSpacing = 6.0f * m_pixelScale;
     
     const float titleLabelInsetX = 12.0f * m_pixelScale;
+    
+    m_tableSpacing = tableSpacing;
     
     m_dragTabOffsetX = dragTabOffsetX;
     m_dragTabWidth = dragTabSize;
@@ -110,26 +112,30 @@
     self.pTitleLabel.font = [UIFont boldSystemFontOfSize:24];
     self.pTitleLabel.textColor = ExampleApp::Helpers::ColorPalette::WhiteTone;
     
-    m_tableViewContainerOffsetY = tableViewContainerOffsetY;
-    m_tableViewContainerWidth = tableCellWidth;
-    m_tableViewContainerHeight = 0.0f;
-    m_tableViewContainerOffScreenX = m_screenWidth;
-    m_tableViewContainerOffScreenY = upperMargin + dragTabSize + m_tableViewContainerOffsetY;
-    m_tableViewContainerClosedOnScreenX = m_tableViewContainerOffScreenX;
-    m_tableViewContainerClosedOnScreenY = m_tableViewContainerOffScreenY;
-    m_tableViewContainerOpenOnScreenX = m_dragTabOpenOnScreenX + m_dragTabWidth;
-    m_tableViewContainerOpenOnScreenY = m_tableViewContainerOffScreenY;
+    m_menuContainerWidth = tableCellWidth;
+    m_menuContainerHeight = m_screenHeight - (upperMargin + dragTabSize);
+    m_menuContainerOffScreenX = m_screenWidth;
+    m_menuContainerOffScreenY = upperMargin + dragTabSize;
+    m_menuContainerClosedOnScreenX = m_menuContainerOffScreenX;
+    m_menuContainerClosedOnScreenY = m_menuContainerOffScreenY;
+    m_menuContainerOpenOnScreenX = m_dragTabOpenOnScreenX + m_dragTabWidth;
+    m_menuContainerOpenOnScreenY = m_menuContainerOffScreenY;
     
-    self.pTableViewContainer = [[[UIScrollView alloc] initWithFrame:CGRectMake(m_tableViewContainerOffScreenX, m_tableViewContainerOffScreenY, m_tableViewContainerWidth, m_tableViewContainerHeight)] autorelease];
+    self.pMenuContainer = [[[UIView alloc] initWithFrame:CGRectMake(m_menuContainerOffScreenX, m_menuContainerOffScreenY, m_menuContainerWidth, m_menuContainerHeight)] autorelease];
+    
+    self.pTopTableSeparator = [[[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, m_menuContainerWidth, m_tableSpacing)] autorelease];
+    self.pTopTableSeparator.backgroundColor = ExampleApp::Helpers::ColorPalette::TableSeparatorColor;
+    
+    self.pTableViewContainer = [[[UIScrollView alloc] initWithFrame:CGRectMake(0.0f, m_tableSpacing, m_menuContainerWidth, 0.0f)] autorelease];
     self.pTableViewContainer.bounces = NO;
-    self.pTableViewContainer.contentSize = CGSizeMake(m_tableViewContainerWidth, 0.0f);
+    self.pTableViewContainer.contentSize = CGSizeMake(m_menuContainerWidth, 0.0f);
     self.pTableViewContainer.backgroundColor = [UIColor clearColor];
     self.pTableViewContainer.scrollEnabled = YES;
     self.pTableViewContainer.userInteractionEnabled = YES;
     
     const float tableX = 0.0f;
     const float tableY = 0.0f;
-    const float tableWidth = m_tableViewContainerWidth;
+    const float tableWidth = m_menuContainerWidth;
     const float tableHeight = 0.0f;
     
     self.pTableView = [[[CustomTableView alloc] initWithFrame:CGRectMake(tableX, tableY, tableWidth, tableHeight)
@@ -148,7 +154,9 @@
     [self addSubview: self.pDragTab];
     [self addSubview: self.pTitleContainer];
     [self.pTitleContainer addSubview:self.pTitleLabel];
-    [self addSubview:self.pTableViewContainer];
+    [self addSubview: self.pMenuContainer];
+    [self.pMenuContainer addSubview: self.pTopTableSeparator];
+    [self.pMenuContainer addSubview: self.pTableViewContainer];
     [self.pTableViewContainer addSubview:self.pTableView];
 
     ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pDragTab, "settings_gear", ExampleApp::Helpers::ImageHelpers::Centre);
@@ -168,6 +176,12 @@
     
     [self.pTableView removeFromSuperview];
     [self.pTableView release];
+    
+    [self.pTopTableSeparator removeFromSuperview];
+    [self.pTopTableSeparator release];
+    
+    [self.pMenuContainer removeFromSuperview];
+    [self.pMenuContainer release];
 
     [self.pTableViewContainer removeFromSuperview];
     [self.pTableViewContainer release];

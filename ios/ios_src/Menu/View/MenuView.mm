@@ -236,11 +236,11 @@ enum MenuState
                                                                                                               Eegeo::v2(m_titleContainerClosedOnScreenWidth, m_titleContainerClosedOnScreenHeight),
                                                                                                               Eegeo_NEW(ExampleApp::Helpers::UIAnimation::Easing::CircleInOut<Eegeo::v2>)()));
     
-    m_onScreenAnimationController->AddAnimator(Eegeo_NEW(ExampleApp::Helpers::UIAnimation::ViewPositionAnimator)(self.pTableViewContainer,
+    m_onScreenAnimationController->AddAnimator(Eegeo_NEW(ExampleApp::Helpers::UIAnimation::ViewPositionAnimator)(self.pMenuContainer,
                                                                                                                  m_stateChangeAnimationTimeSeconds,
                                                                                                                  0.0,
-                                                                                                                 Eegeo::v2(m_tableViewContainerOffScreenX, m_tableViewContainerOffScreenY),
-                                                                                                                 Eegeo::v2(m_tableViewContainerClosedOnScreenX, m_tableViewContainerClosedOnScreenY),
+                                                                                                                 Eegeo::v2(m_menuContainerOffScreenX, m_menuContainerOffScreenY),
+                                                                                                                 Eegeo::v2(m_menuContainerClosedOnScreenX, m_menuContainerClosedOnScreenY),
                                                                                                                  Eegeo_NEW(ExampleApp::Helpers::UIAnimation::Easing::CircleInOut<Eegeo::v2>)()));
     
     // Open/closed on screen animations
@@ -270,11 +270,11 @@ enum MenuState
                                                                                                           Eegeo::v2(m_titleContainerOpenOnScreenWidth, m_titleContainerOpenOnScreenHeight),
                                                                                                           Eegeo_NEW(ExampleApp::Helpers::UIAnimation::Easing::CircleInOut<Eegeo::v2>)()));
     
-    m_openAnimationController->AddAnimator(Eegeo_NEW(ExampleApp::Helpers::UIAnimation::ViewPositionAnimator)(self.pTableViewContainer,
+    m_openAnimationController->AddAnimator(Eegeo_NEW(ExampleApp::Helpers::UIAnimation::ViewPositionAnimator)(self.pMenuContainer,
                                                                                                              m_stateChangeAnimationTimeSeconds,
                                                                                                              0.0,
-                                                                                                             Eegeo::v2(m_tableViewContainerClosedOnScreenX, m_tableViewContainerClosedOnScreenY),
-                                                                                                             Eegeo::v2(m_tableViewContainerOpenOnScreenX, m_tableViewContainerOpenOnScreenY),
+                                                                                                             Eegeo::v2(m_menuContainerClosedOnScreenX, m_menuContainerClosedOnScreenY),
+                                                                                                             Eegeo::v2(m_menuContainerOpenOnScreenX, m_menuContainerOpenOnScreenY),
                                                                                                              Eegeo_NEW(ExampleApp::Helpers::UIAnimation::Easing::CircleInOut<Eegeo::v2>)()));
 }
 
@@ -534,7 +534,7 @@ enum MenuState
 {
     const float tableHeight = [m_pDataProvider getRealTableHeight];
     
-    m_tableViewContainerHeight = fminf(m_screenHeight - self.pTableViewContainer.frame.origin.y, tableHeight);
+    const float tableViewContainerHeight = fminf(m_screenHeight - self.pTableViewContainer.frame.origin.y, tableHeight);
     
     CGRect frame = self.pTableView.frame;
     frame.size.height = tableHeight;
@@ -545,7 +545,7 @@ enum MenuState
     self.pTableView.pBackgroundView.frame = frame;
     
     frame = self.pTableViewContainer.frame;
-    frame.size.height = m_tableViewContainerHeight;
+    frame.size.height = tableViewContainerHeight;
     self.pTableViewContainer.frame = frame;
     
     [self.pTableViewContainer setContentSize:CGSizeMake(self.pTableViewContainer.frame.size.width, tableHeight)];

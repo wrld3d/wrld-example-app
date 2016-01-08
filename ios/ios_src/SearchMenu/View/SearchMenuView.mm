@@ -24,7 +24,6 @@
     float m_animationDurationSeconds;
     
     float m_maxScreenSpace;
-    float m_tableSpacing;
     
     float m_searchCountLabelWidth;
     float m_searchCountLabelHeight;
@@ -67,6 +66,7 @@
 @property (nonatomic, retain) UILabel* pSearchCountLabel;
 @property (nonatomic, retain) UIView* pSearchEditBoxBackground;
 @property (nonatomic, retain) UITextField* pSearchEditBox;
+@property (nonatomic, retain) UIView* pSearchTableSeparator;
 
 @end
 
@@ -110,7 +110,7 @@
     const float searchCountLabelWidth = 28.0f * m_pixelScale;
     const float dragTabOffsetX = 28.0f * m_pixelScale;
     const float dragTabSize = 50.0f * m_pixelScale;
-    const float tableSpacing = 2.0f * m_pixelScale;
+    const float tableSpacing = 6.0f * m_pixelScale;
     
     const float searchEditBoxInsetX = 12.0f * m_pixelScale;
     const float searchEditBoxInsetY = 9.0f * m_pixelScale;
@@ -208,33 +208,42 @@
     self.pSearchEditBox.returnKeyType = UIReturnKeySearch;
     self.pSearchEditBox.placeholder = @"Enter search term";
     
-    m_tableViewContainerOffsetY = m_tableSpacing;
-    m_tableViewContainerWidth = tableCellWidth + searchCountLabelWidth;
-    m_tableViewContainerHeight = 0.0f;
-    m_tableViewContainerOffScreenX = -m_tableViewContainerWidth;
-    m_tableViewContainerOffScreenY = upperMargin + dragTabSize + m_tableViewContainerOffsetY;
-    m_tableViewContainerClosedOnScreenX = m_tableViewContainerOffScreenX;
-    m_tableViewContainerClosedOnScreenY = m_tableViewContainerOffScreenY;
-    m_tableViewContainerOpenOnScreenX = 0.0f;
-    m_tableViewContainerOpenOnScreenY = m_tableViewContainerOffScreenY;
+    m_maxScreenSpace = m_screenHeight - (upperMargin + dragTabSize);
     
-    self.pTableViewContainer = [[[UIScrollView alloc] initWithFrame:CGRectMake(m_tableViewContainerOffScreenX, m_tableViewContainerOffScreenY, m_tableViewContainerWidth, m_tableViewContainerHeight)] autorelease];
+    m_menuContainerWidth = tableCellWidth + searchCountLabelWidth;
+    m_menuContainerHeight = m_maxScreenSpace;
+    m_menuContainerOffScreenX = -m_menuContainerWidth;
+    m_menuContainerOffScreenY = upperMargin + dragTabSize;
+    m_menuContainerClosedOnScreenX = m_menuContainerOffScreenX;
+    m_menuContainerClosedOnScreenY = m_menuContainerOffScreenY;
+    m_menuContainerOpenOnScreenX = 0.0f;
+    m_menuContainerOpenOnScreenY = m_menuContainerOffScreenY;
+    
+    self.pMenuContainer = [[[UIView alloc] initWithFrame:CGRectMake(m_menuContainerOffScreenX, m_menuContainerOffScreenY, m_menuContainerWidth, m_menuContainerHeight)] autorelease];
+    
+    self.pTopTableSeparator = [[[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, m_menuContainerWidth, m_tableSpacing)] autorelease];
+    self.pTopTableSeparator.backgroundColor = ExampleApp::Helpers::ColorPalette::TableSeparatorColor;
+    
+    self.pSearchTableSeparator = [[[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, m_menuContainerWidth, m_tableSpacing)] autorelease];
+    self.pSearchTableSeparator.backgroundColor = ExampleApp::Helpers::ColorPalette::TableSeparatorColor;
+    
+    self.pTableViewContainer = [[[UIScrollView alloc] initWithFrame:CGRectMake(0.0f, m_tableSpacing, m_menuContainerWidth, 0.0f)] autorelease];
     self.pTableViewContainer.bounces = NO;
-    self.pTableViewContainer.contentSize = CGSizeMake(m_tableViewContainerWidth, 0.0f);
+    self.pTableViewContainer.contentSize = CGSizeMake(m_menuContainerWidth, 0.0f);
     self.pTableViewContainer.backgroundColor = [UIColor clearColor];
     self.pTableViewContainer.scrollEnabled = YES;
     self.pTableViewContainer.userInteractionEnabled = YES;
     
-    self.pSearchResultsTableContainerView = [[[UIScrollView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, m_tableViewContainerWidth, 0.0f)] autorelease];
+    self.pSearchResultsTableContainerView = [[[UIScrollView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, m_menuContainerWidth, 0.0f)] autorelease];
     self.pSearchResultsTableContainerView.bounces = NO;
-    self.pSearchResultsTableContainerView.contentSize = CGSizeMake(m_tableViewContainerWidth, 0.0f);
+    self.pSearchResultsTableContainerView.contentSize = CGSizeMake(m_menuContainerWidth, 0.0f);
     self.pSearchResultsTableContainerView.backgroundColor = [UIColor clearColor];
     self.pSearchResultsTableContainerView.scrollEnabled = YES;
     self.pSearchResultsTableContainerView.userInteractionEnabled = YES;
     
     const float tableX = 0.0f;
     const float tableY = 0.0f;
-    const float tableWidth = m_tableViewContainerWidth;
+    const float tableWidth = m_menuContainerWidth;
     const float tableHeight = 0.0f;
     
     self.pTableView = [[[CustomTableView alloc] initWithFrame:CGRectMake(tableX, tableY, tableWidth, tableHeight)
@@ -268,13 +277,14 @@
     [self.pTitleContainer addSubview: self.pSearchCountLabel];
     [self.pTitleContainer addSubview: self.pSearchEditBoxBackground];
     [self.pTitleContainer addSubview: self.pSearchEditBox];
-    [self addSubview: self.pTableViewContainer];
+    [self addSubview: self.pMenuContainer];
+    [self.pMenuContainer addSubview: self.pTopTableSeparator];
+    [self.pMenuContainer addSubview: self.pSearchTableSeparator];
+    [self.pMenuContainer addSubview: self.pTableViewContainer];
     [self.pTableViewContainer addSubview:self.pTableView];
     [self.pTableViewContainer addSubview:self.pSearchResultsTableContainerView];
     [self.pSearchResultsTableContainerView addSubview:self.pSearchResultsTableView];
     
-    m_maxScreenSpace = m_screenHeight - self.pTableViewContainer.frame.origin.y;
-
     ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pDragTab, "search_magglass", ExampleApp::Helpers::ImageHelpers::Centre);
     
     self.frame = CGRectZero;
@@ -297,6 +307,15 @@
 
     [self.pTableViewContainer removeFromSuperview];
     [self.pTableViewContainer release];
+    
+    [self.pSearchTableSeparator removeFromSuperview];
+    [self.pSearchTableSeparator release];
+    
+    [self.pTopTableSeparator removeFromSuperview];
+    [self.pTopTableSeparator release];
+    
+    [self.pMenuContainer removeFromSuperview];
+    [self.pMenuContainer release];
     
     [self.pSearchEditBox removeFromSuperview];
     [self.pSearchEditBox release];
@@ -496,7 +515,7 @@
         tableY = 0.0f;
     }
     
-    m_tableViewContainerHeight = fminf(m_maxScreenSpace, tableY + tableContentHeight);
+    const float tableViewContainerHeight = fminf(m_maxScreenSpace, tableY + tableContentHeight);
     
     CGRect frame = self.pTableView.frame;
     frame.origin.y = tableY;
@@ -521,6 +540,10 @@
         self.pSearchResultsTableView.pBackgroundView.frame = frame;
     }
     
+    frame = self.pSearchTableSeparator.frame;
+    frame.origin.y = tableY;
+    self.pSearchTableSeparator.frame = frame;
+    
     frame = self.pSearchResultsTableContainerView.frame;
     frame.size.height = onScreenSearchResultsTableHeight;
     self.pSearchResultsTableContainerView.frame = frame;
@@ -528,7 +551,7 @@
     [self.pSearchResultsTableContainerView setContentSize:CGSizeMake(self.pSearchResultsTableView.frame.size.width, searchResultsTableContentHeight)];
     
     frame = self.pTableViewContainer.frame;
-    frame.size.height = m_tableViewContainerHeight;
+    frame.size.height = tableViewContainerHeight;
     self.pTableViewContainer.frame = frame;
     
     [self.pTableViewContainer setContentSize:CGSizeMake(self.pTableViewContainer.frame.size.width, tableY + tableContentHeight)];

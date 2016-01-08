@@ -23,6 +23,8 @@
     float m_screenHeight;
     float m_pixelScale;
     
+    float m_tableSpacing;
+    
     float m_dragTabOffsetX;
     float m_dragTabWidth;
     float m_dragTabHeight;
@@ -46,15 +48,14 @@
     float m_titleContainerOpenOnScreenX;
     float m_titleContainerOpenOnScreenY;
     
-    float m_tableViewContainerOffsetY;
-    float m_tableViewContainerWidth;
-    float m_tableViewContainerHeight;
-    float m_tableViewContainerOffScreenX;
-    float m_tableViewContainerOffScreenY;
-    float m_tableViewContainerClosedOnScreenX;
-    float m_tableViewContainerClosedOnScreenY;
-    float m_tableViewContainerOpenOnScreenX;
-    float m_tableViewContainerOpenOnScreenY;
+    float m_menuContainerWidth;
+    float m_menuContainerHeight;
+    float m_menuContainerOffScreenX;
+    float m_menuContainerOffScreenY;
+    float m_menuContainerClosedOnScreenX;
+    float m_menuContainerClosedOnScreenY;
+    float m_menuContainerOpenOnScreenX;
+    float m_menuContainerOpenOnScreenY;
 }
 
 - (id) initWithParams:(float)width
@@ -106,6 +107,8 @@
 
 @property (nonatomic, retain) UIView* pDragTab;
 @property (nonatomic, retain) UIView* pTitleContainer;
+@property (nonatomic, retain) UIView* pMenuContainer;
+@property (nonatomic, retain) UIView* pTopTableSeparator;
 @property (nonatomic, retain) CustomTableView* pTableView;
 @property (nonatomic, retain) UIScrollView* pTableViewContainer;
 
