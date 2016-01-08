@@ -18,16 +18,20 @@ namespace ExampleApp
             public:
                 virtual ~ISearchMenuModule() { }
                 
+                virtual void SetSearchSection(const std::string& name,
+                                              Menu::View::IMenuModel& menuModel) = 0;
+                
                 virtual void AddMenuSection(const std::string& name,
                                             Menu::View::IMenuModel& menuModel,
-                                            bool isExpandable,
-                                            bool isSearchResult) = 0;
+                                            bool isExpandable) = 0;
                 
                 virtual Menu::View::IMenuModel& GetSearchMenuModel() const = 0;
                 
                 virtual Menu::View::IMenuOptionsModel& GetSearchMenuOptionsModel() const = 0;
                 
                 virtual Menu::View::IMenuViewModel& GetSearchMenuViewModel() const = 0;
+                
+                virtual Menu::View::IMenuSectionViewModel& GetSearchSectionViewModel() const = 0;
             };
         }
     }

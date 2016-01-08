@@ -28,8 +28,7 @@ namespace ExampleApp
 
                 m_pSearchResultMenuItemSelectedMessageHandler = Eegeo_NEW(SearchResultMenuItemSelectedMessageHandler)(cameraTransitionController,
                                                                                                                       messageBus);
-
-                // TODO: Make sure this message gets published via SearchMenu
+                
                 m_pSearchResultViewClearedObserver = Eegeo_NEW(SearchResultViewClearedObserver)(searchQueryPerformer, messageBus);
                 
                 m_pSearchResultMenuOrder = Eegeo_NEW(View::SearchResultMenuOrder);

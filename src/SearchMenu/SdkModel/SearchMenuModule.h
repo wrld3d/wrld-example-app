@@ -26,6 +26,7 @@ namespace ExampleApp
                 Menu::View::IMenuModel* m_pMenuModel;
                 Menu::View::IMenuOptionsModel* m_pMenuOptionsModel;
                 Menu::View::IMenuViewModel* m_pMenuViewModel;
+                Menu::View::IMenuSectionViewModel* m_pSearchSectionViewModel;
                 SearchMenuPerformedSearchMessageHandler* m_pPerformedSearchMessageHandler;
                 std::vector<Menu::View::IMenuSectionViewModel*> m_sections;
                 
@@ -38,16 +39,20 @@ namespace ExampleApp
                 
                 ~SearchMenuModule();
                 
+                void SetSearchSection(const std::string& name,
+                                      Menu::View::IMenuModel& menuModel);
+                
                 void AddMenuSection(const std::string& name,
                                     Menu::View::IMenuModel& menuModel,
-                                    bool isExpandable,
-                                    bool isSearchResult);
+                                    bool isExpandable);
                 
                 Menu::View::IMenuModel& GetSearchMenuModel() const;
                 
                 Menu::View::IMenuOptionsModel& GetSearchMenuOptionsModel() const;
                 
                 Menu::View::IMenuViewModel& GetSearchMenuViewModel() const;
+                
+                Menu::View::IMenuSectionViewModel& GetSearchSectionViewModel() const;
             };
         }
     }

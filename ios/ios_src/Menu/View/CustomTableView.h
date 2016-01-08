@@ -10,7 +10,6 @@
 
 - (instancetype)initWithFrame:(CGRect)frame
                         style:(UITableViewStyle)style
-                    container:(UIScrollView*)container
                      menuView:(MenuView*)menuView
                   hasSubMenus:(bool)hasSubMenus
                     cellWidth:(float)cellWidth

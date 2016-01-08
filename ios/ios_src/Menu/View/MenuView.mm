@@ -71,7 +71,8 @@ enum MenuState
 
         m_pDataProvider = dataProvider;
         [m_pDataProvider initWithParams:self];
-        m_pInterop = Eegeo_NEW(ExampleApp::Menu::View::MenuViewInterop)(self, m_pDataProvider);
+        
+        m_pInterop = Eegeo_NEW(ExampleApp::Menu::View::MenuViewInterop)(self);
 
         m_panGestureRecognizer = [[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(dragTabGesture:)] autorelease];
         [m_panGestureRecognizer setDelegate:self];
@@ -289,6 +290,16 @@ enum MenuState
     }
 }
 
+- (void) updateTableAnimation:(float)deltaSeconds
+{
+    [self.pTableView updateAnimation:deltaSeconds];
+}
+
+- (void) onTableAnimationUpdated
+{
+    [self.pTableViewContainer setContentSize:CGSizeMake(self.pTableView.pBackgroundView.frame.size.width, self.pTableView.pBackgroundView.frame.size.height)];
+}
+
 - (void) onOffScreenAnimationComplete
 {
     m_menuState = OFF_SCREEN;
@@ -314,6 +325,11 @@ enum MenuState
 - (BOOL) isAnimating
 {
     return m_menuState == ANIMATING;
+}
+
+- (BOOL) isTableAnimating
+{
+    return [self.pTableView isAnimating];
 }
 
 - (float) openOnScreenState
@@ -516,27 +532,36 @@ enum MenuState
 
 - (void) refreshTableHeights
 {
-    m_tableHeight = [m_pDataProvider getRealTableHeight];
+    const float tableHeight = [m_pDataProvider getRealTableHeight];
     
-    m_tableViewContainerHeight = fminf(m_screenHeight - self.pTableViewContainer.frame.origin.y, m_tableHeight);
+    m_tableViewContainerHeight = fminf(m_screenHeight - self.pTableViewContainer.frame.origin.y, tableHeight);
     
     CGRect frame = self.pTableView.frame;
-    frame.size.height = m_tableHeight;
+    frame.size.height = tableHeight;
     self.pTableView.frame = frame;
     
     frame = self.pTableView.pBackgroundView.frame;
-    frame.size.height = m_tableHeight;
+    frame.size.height = tableHeight;
     self.pTableView.pBackgroundView.frame = frame;
     
     frame = self.pTableViewContainer.frame;
     frame.size.height = m_tableViewContainerHeight;
     self.pTableViewContainer.frame = frame;
     
-    [self.pTableViewContainer setContentSize:CGSizeMake(m_tableWidth, m_tableHeight)];
+    [self.pTableViewContainer setContentSize:CGSizeMake(self.pTableViewContainer.frame.size.width, tableHeight)];
 }
 
-- (float) getTableHeight
+- (void) refreshHeightForTable:(CustomTableView*)tableView
 {
+    Eegeo_ASSERT(tableView == self.pTableView, "Can't refresh height for a table view not owned by this view");
+    
+    [self refreshTableHeights];
+}
+
+- (float) getHeightForTable:(CustomTableView*)tableView
+{
+    Eegeo_ASSERT(tableView == self.pTableView, "Can't get height for a table view not owned by this view");
+    
     return [m_pDataProvider getRealTableHeight];
 }
 
@@ -548,6 +573,11 @@ enum MenuState
 - (BOOL) canInteract
 {
     return (m_menuState == CLOSED_ON_SCREEN || m_menuState == OPEN_ON_SCREEN);
+}
+
+- (void) updateMenuSections:(ExampleApp::Menu::View::TSections*)sections
+{
+    [m_pDataProvider updateMenuSections:sections];
 }
 
 @end

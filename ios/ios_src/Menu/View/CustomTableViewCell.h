@@ -8,19 +8,25 @@
 @interface CustomTableViewCell : UITableViewCell
 {
     bool m_isHeader;
-    float m_initialWidth;
-    float m_inset;
+    CGFloat m_initialWidth;
+    CGFloat m_leftInset;
+    CGFloat m_contentInset;
+    CGFloat m_separatorInset;
     UIColor* m_pBackgroundColor;
     UIColor* m_pContentBackgroundColor;
+    UIColor* m_pPressColor;
     CustomTableView* m_tableView;
 }
 
 - (void)setInfo :(bool)isHeader
                 :(UIColor*)pBackgroundColor
-                :(UIColor*)pContentBackgroundColor;
+                :(UIColor*)pContentBackgroundColor
+                :(UIColor*)pPressColor;
 
 - (void)initCell:(CGFloat)initialWidth
-                :(CGFloat)inset
+                :(CGFloat)leftInset
+                :(CGFloat)contentInset
+                :(CGFloat)separatorInset
                 :(CustomTableView*)tableView;
 
 - (void)layoutSubviews;

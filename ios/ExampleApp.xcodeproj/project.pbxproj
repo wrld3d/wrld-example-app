@@ -128,6 +128,10 @@
 		18A657671A9F877C00238F33 /* MyPinsSearchResultRefreshService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18A657641A9F877C00238F33 /* MyPinsSearchResultRefreshService.cpp */; };
 		18A6576C1AA0775900238F33 /* iOSYelpBusinessQuery.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18A6576A1AA0775900238F33 /* iOSYelpBusinessQuery.mm */; };
 		18A6576D1AA0775900238F33 /* iOSYelpBusinessQuery.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18A6576A1AA0775900238F33 /* iOSYelpBusinessQuery.mm */; };
+		18AAF02F1C3C189400A8BAAC /* SearchResultsTableDataProvider.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18AAF02E1C3C189400A8BAAC /* SearchResultsTableDataProvider.mm */; };
+		18AAF0301C3C189400A8BAAC /* SearchResultsTableDataProvider.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18AAF02E1C3C189400A8BAAC /* SearchResultsTableDataProvider.mm */; };
+		18AAF0331C3E973200A8BAAC /* SearchMenuInputDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18AAF0321C3E973200A8BAAC /* SearchMenuInputDelegate.mm */; };
+		18AAF0341C3E973200A8BAAC /* SearchMenuInputDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18AAF0321C3E973200A8BAAC /* SearchMenuInputDelegate.mm */; };
 		18B22B0C1A7A8B3400DDBFA2 /* OptionsController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18B22B041A7A8B3400DDBFA2 /* OptionsController.cpp */; };
 		18B22B0D1A7A8B3400DDBFA2 /* OptionsController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18B22B041A7A8B3400DDBFA2 /* OptionsController.cpp */; };
 		18B22B101A7A8B3400DDBFA2 /* OptionsOpenableControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18B22B081A7A8B3400DDBFA2 /* OptionsOpenableControl.cpp */; };
@@ -1696,6 +1700,11 @@
 		18A657691A9F90B600238F33 /* IdentitySearchCallbackData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IdentitySearchCallbackData.h; sourceTree = "<group>"; };
 		18A6576A1AA0775900238F33 /* iOSYelpBusinessQuery.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = iOSYelpBusinessQuery.mm; sourceTree = "<group>"; };
 		18A6576B1AA0775900238F33 /* iOSYelpBusinessQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iOSYelpBusinessQuery.h; sourceTree = "<group>"; };
+		18AAF02D1C3C189400A8BAAC /* SearchResultsTableDataProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchResultsTableDataProvider.h; path = SearchMenu/View/SearchResultsTableDataProvider.h; sourceTree = "<group>"; };
+		18AAF02E1C3C189400A8BAAC /* SearchResultsTableDataProvider.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = SearchResultsTableDataProvider.mm; path = SearchMenu/View/SearchResultsTableDataProvider.mm; sourceTree = "<group>"; };
+		18AAF0311C3E5F5800A8BAAC /* CustomTableRowSelectionDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTableRowSelectionDelegate.h; sourceTree = "<group>"; };
+		18AAF0321C3E973200A8BAAC /* SearchMenuInputDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = SearchMenuInputDelegate.mm; path = SearchMenu/View/SearchMenuInputDelegate.mm; sourceTree = "<group>"; };
+		18AAF0351C3E976A00A8BAAC /* SearchMenuInputDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchMenuInputDelegate.h; path = SearchMenu/View/SearchMenuInputDelegate.h; sourceTree = "<group>"; };
 		18B22B011A7A8B3400DDBFA2 /* IOptionsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IOptionsView.h; sourceTree = "<group>"; };
 		18B22B021A7A8B3400DDBFA2 /* IOptionsViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IOptionsViewModel.h; sourceTree = "<group>"; };
 		18B22B031A7A8B3400DDBFA2 /* Options.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Options.h; sourceTree = "<group>"; };
@@ -3641,12 +3650,16 @@
 			isa = PBXGroup;
 			children = (
 				18D1DAED1C19C03000D319BB /* ISearchMenuViewModule.h */,
+				18AAF0351C3E976A00A8BAAC /* SearchMenuInputDelegate.h */,
+				18AAF0321C3E973200A8BAAC /* SearchMenuInputDelegate.mm */,
 				18D1DAEE1C19C16600D319BB /* SearchMenuView.h */,
 				18D1DAEF1C19C16600D319BB /* SearchMenuView.mm */,
 				18D1DAF01C19C16600D319BB /* SearchMenuViewIncludes.h */,
 				18D1DAF11C19C16600D319BB /* SearchMenuViewInterop.h */,
 				18D1DAF21C19C16600D319BB /* SearchMenuViewModule.h */,
 				18D1DAF31C19C16600D319BB /* SearchMenuViewModule.mm */,
+				18AAF02D1C3C189400A8BAAC /* SearchResultsTableDataProvider.h */,
+				18AAF02E1C3C189400A8BAAC /* SearchResultsTableDataProvider.mm */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -5391,6 +5404,7 @@
 				7E3B8A4D1A385F100023C94E /* CellConstants.h */,
 				7E3B8A4E1A385F100023C94E /* CustomTableDataProvider.h */,
 				7E3B8A4F1A385F100023C94E /* CustomTableDataProvider.mm */,
+				18AAF0311C3E5F5800A8BAAC /* CustomTableRowSelectionDelegate.h */,
 				7E3B8A501A385F100023C94E /* CustomTableView.h */,
 				7E3B8A511A385F100023C94E /* CustomTableView.mm */,
 				7E3B8A521A385F100023C94E /* CustomTableViewCell.h */,
@@ -7507,6 +7521,7 @@
 				7E3B8AFA1A385F110023C94E /* ModalBackgroundViewInterop.mm in Sources */,
 				7E3B89971A385A290023C94E /* SearchServiceBase.cpp in Sources */,
 				27DB89B81BB3FEF00020CDA5 /* CombinedSearchService.cpp in Sources */,
+				18AAF0341C3E973200A8BAAC /* SearchMenuInputDelegate.mm in Sources */,
 				18D1DB361C1AE35000D319BB /* SettingsMenuView.mm in Sources */,
 				BFD5FCC11BA7068300F591F1 /* TourFullScreenImageView.mm in Sources */,
 				18D1DAFF1C19EDF200D319BB /* SearchMenuPerformedSearchMessageHandler.cpp in Sources */,
@@ -7593,6 +7608,7 @@
 				7E3B895B1A385A290023C94E /* MyPinSelectionHandlerFactory.cpp in Sources */,
 				7E3B89AF1A385A290023C94E /* SearchResultViewClearedMessage.cpp in Sources */,
 				7E3B89CB1A385A290023C94E /* SearchResultOnMapItemModelSelectedObserver.cpp in Sources */,
+				18AAF0301C3C189400A8BAAC /* SearchResultsTableDataProvider.mm in Sources */,
 				7E3B8B101A385F110023C94E /* MyPinDetailsView.mm in Sources */,
 				7E3B88CB1A385A290023C94E /* CompassViewCycledObserver.cpp in Sources */,
 				18B22B341A7A937D00DDBFA2 /* OptionsViewInterop.mm in Sources */,
@@ -7995,6 +8011,7 @@
 				7E3B8AF91A385F110023C94E /* ModalBackgroundViewInterop.mm in Sources */,
 				7E3B89961A385A290023C94E /* SearchServiceBase.cpp in Sources */,
 				27DB89B71BB3FEF00020CDA5 /* CombinedSearchService.cpp in Sources */,
+				18AAF0331C3E973200A8BAAC /* SearchMenuInputDelegate.mm in Sources */,
 				18D1DB351C1AE35000D319BB /* SettingsMenuView.mm in Sources */,
 				BFD5FCC01BA7068300F591F1 /* TourFullScreenImageView.mm in Sources */,
 				18D1DAFE1C19EDF200D319BB /* SearchMenuPerformedSearchMessageHandler.cpp in Sources */,
@@ -8081,6 +8098,7 @@
 				7E3B895A1A385A290023C94E /* MyPinSelectionHandlerFactory.cpp in Sources */,
 				7E3B89AE1A385A290023C94E /* SearchResultViewClearedMessage.cpp in Sources */,
 				7E3B89CA1A385A290023C94E /* SearchResultOnMapItemModelSelectedObserver.cpp in Sources */,
+				18AAF02F1C3C189400A8BAAC /* SearchResultsTableDataProvider.mm in Sources */,
 				7E3B8B0F1A385F110023C94E /* MyPinDetailsView.mm in Sources */,
 				7E3B88CA1A385A290023C94E /* CompassViewCycledObserver.cpp in Sources */,
 				18B22B331A7A937D00DDBFA2 /* OptionsViewInterop.mm in Sources */,

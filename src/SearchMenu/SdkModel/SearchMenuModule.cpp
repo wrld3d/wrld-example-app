@@ -23,6 +23,7 @@ namespace ExampleApp
             : m_pMenuModel(NULL)
             , m_pMenuOptionsModel(NULL)
             , m_pMenuViewModel(NULL)
+            , m_pSearchSectionViewModel(NULL)
             , m_pPerformedSearchMessageHandler(NULL)
             {
                 m_pMenuModel = Eegeo_NEW(Menu::View::MenuModel)();
@@ -46,17 +47,23 @@ namespace ExampleApp
                     Eegeo_DELETE *it;
                 }
                 
+                Eegeo_DELETE m_pSearchSectionViewModel;
                 Eegeo_DELETE m_pMenuViewModel;
                 Eegeo_DELETE m_pMenuOptionsModel;
                 Eegeo_DELETE m_pMenuModel;
             }
             
+            void SearchMenuModule::SetSearchSection(const std::string& name,
+                                                    Menu::View::IMenuModel& menuModel)
+            {
+                m_pSearchSectionViewModel = Eegeo_NEW(Menu::View::MenuSectionViewModel)(name, "", menuModel, false);
+            }
+            
             void SearchMenuModule::AddMenuSection(const std::string& name,
                                                   Menu::View::IMenuModel& menuModel,
-                                                  bool isExpandable,
-                                                  bool isSearchResult)
+                                                  bool isExpandable)
             {
-                Menu::View::MenuSectionViewModel* pMenuSection = Eegeo_NEW(Menu::View::MenuSectionViewModel)(name, "", menuModel, isExpandable, isSearchResult);
+                Menu::View::MenuSectionViewModel* pMenuSection = Eegeo_NEW(Menu::View::MenuSectionViewModel)(name, "", menuModel, isExpandable);
                 m_pMenuViewModel->AddSection(*pMenuSection);
                 m_sections.push_back(pMenuSection);
             }
@@ -74,6 +81,13 @@ namespace ExampleApp
             Menu::View::IMenuViewModel& SearchMenuModule::GetSearchMenuViewModel() const
             {
                 return *m_pMenuViewModel;
+            }
+            
+            Menu::View::IMenuSectionViewModel& SearchMenuModule::GetSearchSectionViewModel() const
+            {
+                Eegeo_ASSERT(m_pSearchSectionViewModel != NULL, "Search section view model not set, please call SetSearchSection before calling this function");
+                
+                return *m_pSearchSectionViewModel;
             }
         }
     }

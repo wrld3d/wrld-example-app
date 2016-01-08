@@ -38,10 +38,10 @@
 
 - (CGRect)getContentViewRect
 {
-    return CGRectMake(m_inset,
-                   1.0f,
-                   m_initialWidth,
-                   self.frame.size.height - 2.0f);
+    return CGRectMake(m_leftInset + m_contentInset,
+                      1.0f,
+                      m_initialWidth - m_contentInset * 2.0f,
+                      self.frame.size.height - 2.0f);
 }
 
 - (void)layoutSubviews
@@ -82,11 +82,15 @@
 }
 
 - (void)initCell:(CGFloat)initialWidth
-                :(CGFloat)inset
+                :(CGFloat)leftInset
+                :(CGFloat)contentInset
+                :(CGFloat)separatorInset
                 :(CustomTableView*)tableView
 {
-    m_initialWidth = static_cast<float>(initialWidth);
-    m_inset = static_cast<float>(inset);
+    m_initialWidth = initialWidth;
+    m_leftInset = leftInset;
+    m_contentInset = contentInset;
+    m_separatorInset = separatorInset;
     m_tableView = tableView;
     m_hasSetBackground = false;
     m_hasSetSeparators = false;
@@ -99,10 +103,12 @@
 - (void)setInfo :(bool)isHeader
                 :(UIColor*)pBackgroundColor
                 :(UIColor*)pContentBackgroundColor
+                :(UIColor*)pPressColor
 {
     m_isHeader = isHeader;
     m_pBackgroundColor = pBackgroundColor;
     m_pContentBackgroundColor = pContentBackgroundColor;
+    m_pPressColor = pPressColor;
     m_requiresRefresh = true;
 }
 
@@ -130,7 +136,7 @@
     if (highlighted)
     {
         m_highlighted = true;
-        [self.contentView setBackgroundColor: ExampleApp::Helpers::ColorPalette::LightGreyTone];
+        [self.contentView setBackgroundColor:m_pPressColor];
     }
     else
     {
@@ -180,28 +186,20 @@
         }
     }
     
-    NSIndexPath* indexPath = [m_tableView indexPathForCell:self];
-    
-    const bool isTop = indexPath.section == 0;
-    
     if(m_isHeader)
     {
         CGFloat topSeparatorY       = 0.f;
         CGFloat separatorHeight     = (1.f / [UIScreen mainScreen].scale);
-        CGFloat separatorWidth      = cellFrame.size.width;
-        CGFloat separatorInset      = 0.f;
+        CGFloat separatorWidth      = cellFrame.size.width - m_separatorInset * 2.0f;
         
-        if(!isTop)
-        {
-            UIImageView* topSeparator = [[[UIImageView alloc] initWithFrame:CGRectMake(separatorInset,
-                                                                                       topSeparatorY,
-                                                                                       separatorWidth,
-                                                                                       separatorHeight)] autorelease];
-            
-            topSeparator.backgroundColor = ExampleApp::Helpers::ColorPalette::MenuSeparatorHeaderColor;
-            
-            [self->pCustomSeparatorContainer addSubview: topSeparator];
-        }
+        UIImageView* topSeparator = [[[UIImageView alloc] initWithFrame:CGRectMake(m_separatorInset,
+                                                                                   topSeparatorY,
+                                                                                   separatorWidth,
+                                                                                   separatorHeight)] autorelease];
+        
+        topSeparator.backgroundColor = ExampleApp::Helpers::ColorPalette::MenuSeparatorHeaderColor;
+        
+        [self->pCustomSeparatorContainer addSubview: topSeparator];
     }
 }
 

@@ -10,13 +10,12 @@ namespace ExampleApp
     {
         namespace View
         {
-            MenuSectionViewModel::MenuSectionViewModel(const std::string& name, const std::string& icon, IMenuModel& menuModel, bool isExpandable, bool isSearchResult)
+            MenuSectionViewModel::MenuSectionViewModel(const std::string& name, const std::string& icon, IMenuModel& menuModel, bool isExpandable)
                 : m_name(name)
                 , m_icon(icon)
                 , m_menuModel(menuModel)
                 , m_isExpandable(isExpandable)
                 , m_expanded(false)
-                , m_isSearchResult(isSearchResult)
             {
             }
 

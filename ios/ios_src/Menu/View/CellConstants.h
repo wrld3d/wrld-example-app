@@ -2,6 +2,9 @@
 
 #pragma once
 
-#define SUB_SECTION_CELL_HEIGHT 36.f
-#define SECTION_HEADER_CELL_HEIGHT 42.f
-#define SEARCH_SECTION_CELL_HEIGHT 42.f
+namespace CellConstants
+{
+    const float SubSectionCellHeight = 36.0f;
+    const float SectionHeaderCellHeight = 42.0f;
+    const float SearchSectionCellHeight = 42.0f;
+}

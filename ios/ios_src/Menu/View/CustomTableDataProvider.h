@@ -4,6 +4,7 @@
 
 #import <UIKit/UIKit.h>
 #include "IMenuView.h"
+#include "CustomTableRowSelectionDelegate.h"
 
 @class MenuView;
 @class MenuViewInterop;
@@ -15,10 +16,6 @@
 }
 
 - (id)initWithParams:(MenuView*) view;
-
-- (size_t)getNumberOfSections;
-
-- (size_t)getTotalNumberOfCellsInTableView;
 
 - (void)collapseAll;
 
@@ -33,5 +30,6 @@
 - (float)getRealTableHeight;
 
 @property (nonatomic, retain) UIImage* pOpenableMenuArrow;
+@property (nonatomic, retain) id <CustomTableRowSelectionDelegate> rowSelectionDelegate;
 
 @end;

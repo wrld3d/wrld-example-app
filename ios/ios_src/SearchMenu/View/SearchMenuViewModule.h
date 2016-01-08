@@ -12,6 +12,7 @@
 #include "Modality.h"
 #include "Rendering.h"
 #include "SearchMenuController.h"
+#include "SearchResultsTableDataProvider.h"
 #include "Types.h"
 
 namespace ExampleApp
@@ -26,10 +27,12 @@ namespace ExampleApp
                 SearchMenuController* m_pController;
                 SearchMenuView* m_pView;
                 CustomTableDataProvider* m_pDataProvider;
+                SearchResultsTableDataProvider* m_pSearchResultsDataProvider;
                 
             public:
                 SearchMenuViewModule(Menu::View::IMenuModel& searchMenuModel,
                                      Menu::View::IMenuViewModel& searchMenuViewModel,
+                                     Menu::View::IMenuSectionViewModel& searchSectionViewModel,
                                      const Eegeo::Rendering::ScreenProperties& screenProperties,
                                      CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
                                      Modality::View::IModalBackgroundView& modalBackgroundView,

@@ -18,6 +18,8 @@ namespace ExampleApp
             
             UIColor* MainHudColor = [[UIColor alloc] initWithRed:250.f/255.f green:250.f/255.f blue:250.f/255.f alpha:1.f];
             UIColor* BorderHudColor = [[UIColor alloc] initWithRed:18.f/255.f green:86.f/255.f blue:176.f/255.f alpha:1.f];
+            UIColor* ButtonPressColor = [[UIColor alloc] initWithRed:130.f/255.f green:235.f/255.f blue:255.f/255.f alpha:1.f];
+            UIColor* TableSubCellPressColor = [[UIColor alloc] initWithRed:84.f/255.f green:104.f/255.f blue:204.f/255.f alpha:1.f];
             UIColor* ModalBackgroundColor = [[UIColor alloc] initWithRed:0.f green:0.f blue:0.f alpha:0.5f];
             UIColor* UiTextHeaderColour = [[UIColor alloc]initWithRed:206.f/255.f green:206.f/255.f blue:206.f/255.f alpha:1.f];
             UIColor* UiTextCopyColour = [[UIColor alloc]initWithRed:96.f/255.f green:96.f/255.f blue:96.f/255.f alpha:1.f];;

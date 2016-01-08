@@ -11,111 +11,38 @@
 #include "MenuSectionViewModel.h"
 #include "ImageHelpers.h"
 #include "UIHelpers.h"
-#include <sstream>
 
-static NSString *CellIdentifier = @"cell";
-static NSString *SearchCellIdentifier = @"searchCell";
-
-@interface CustomTableDataProvider()
-{
-    std::map<ExampleApp::Menu::View::IMenuSectionViewModel*, NSInteger> m_searchSectionResults;
-}
-@end
+static NSString *HeaderCellIdentifier = @"headercell";
+static NSString *SubSectionCellIdentifier = @"subsectioncell";
 
 @implementation CustomTableDataProvider
 
 NSInteger const SubItemCellOpenableMenuArrowTag = 1;
 
-- (size_t)getTotalNumberOfCellsInTableView
-{
-    return ExampleApp::Menu::View::NumberOfCells(m_currentSections);
-}
-
-- (size_t)getNumberOfSections
-{
-    return m_currentSections.size();
-}
-
 - (void)updateMenuSections:(ExampleApp::Menu::View::TSections*)sections
 {
-    m_currentSections = *sections;
+    bool sectionsUpdated = false;
     
-    for(int section = 0; section < m_currentSections.size(); ++section)
+    if(sections->size() != m_currentSections.size())
     {
-        if(m_currentSections[section]->IsSearchResult())
+        sectionsUpdated = true;
+    }
+    else
+    {
+        for(int i = 0; i < sections->size(); ++i)
         {
-            if(m_searchSectionResults.find(m_currentSections[section]) == m_searchSectionResults.end())
+            if((*sections)[i] != m_currentSections[i])
             {
-                m_searchSectionResults[m_currentSections[section]] = 0;
+                sectionsUpdated = true;
+                break;
             }
         }
     }
     
-    bool animationsUpdated = false;
-    
-    for(std::map<ExampleApp::Menu::View::IMenuSectionViewModel*, NSInteger>::iterator it = m_searchSectionResults.begin(); it != m_searchSectionResults.end(); ++it)
+    if(sectionsUpdated)
     {
-        bool sectionFound = false;
-        for(int section = 0; section < m_currentSections.size(); ++section)
-        {
-            if(m_currentSections[section] == it->first)
-            {
-                sectionFound = true;
-                
-                if(m_searchSectionResults[m_currentSections[section]] != m_currentSections[section]->Size())
-                {
-                    animationsUpdated = true;
-                    
-                    // delete existing rows
-                    if([m_pView.pTableView numberOfRowsInSection:section] > 0)
-                    {
-                        const NSInteger rows = [m_pView.pTableView numberOfRowsInSection:section];
-                        
-                        NSIndexPath* tempPaths[rows];
-                        
-                        for(NSInteger i = 0; i < rows; ++i)
-                        {
-                            NSIndexPath *tempIndexPath = [NSIndexPath indexPathForRow:i inSection:section];
-                            tempPaths[i] = tempIndexPath;
-                        }
-                        
-                        [m_pView.pTableView deleteRowsAtIndexPaths:[NSArray arrayWithObjects:tempPaths count:rows] withRowAnimation:UITableViewRowAnimationNone];
-                    }
-                    
-                    // insert new rows
-                    if(m_currentSections[section]->Size() > 0)
-                    {
-                        const NSInteger rows = m_currentSections[section]->Size();
-                        
-                        NSIndexPath* tempPaths[rows];
-                        
-                        for(NSInteger i = 0; i < rows; ++i)
-                        {
-                            NSIndexPath *tempIndexPath = [NSIndexPath indexPathForRow:i inSection:section];
-                            tempPaths[i] = tempIndexPath;
-                        }
-                        
-                        [m_pView.pTableView insertRowsAtIndexPaths:[NSArray arrayWithObjects:tempPaths count:rows] withRowAnimation:UITableViewRowAnimationNone];
-                    }
-                    
-                    m_searchSectionResults[m_currentSections[section]] = m_currentSections[section]->Size();
-                }
-            }
-            
-            if(!sectionFound)
-            {
-                m_searchSectionResults.erase(it++);
-                
-                if(it == m_searchSectionResults.end())
-                {
-                    break;
-                }
-            }
-        }
-    }
-    
-    if(!animationsUpdated)
-    {
+        m_currentSections = *sections;
+        
         [m_pView.pTableView reloadData];
         [m_pView refreshTableHeights];
     }
@@ -125,7 +52,6 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
 {
     int numberOfHeaders = 0;
     int numberOfSubSectionCells = 0;
-    int numberOfSearchCells = 0;
     
     for(ExampleApp::Menu::View::TSections::iterator it = m_currentSections.begin(); it != m_currentSections.end(); ++it)
     {
@@ -139,18 +65,11 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
         }
         else
         {
-            if((*it)->IsSearchResult())
-            {
-                numberOfSearchCells += (*it)->GetTotalItemCount();
-            }
-            else
-            {
-                numberOfHeaders += (*it)->GetTotalItemCount();
-            }
+            numberOfHeaders += (*it)->GetTotalItemCount();
         }
     }
     
-    return SECTION_HEADER_CELL_HEIGHT * numberOfHeaders + SUB_SECTION_CELL_HEIGHT * numberOfSubSectionCells + SEARCH_SECTION_CELL_HEIGHT * numberOfSearchCells;
+    return CellConstants::SectionHeaderCellHeight * numberOfHeaders + CellConstants::SubSectionCellHeight * numberOfSubSectionCells;
 }
 
 - (void)dealloc
@@ -173,28 +92,22 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
 
 - (UITableViewCell *)tableView:(UITableView*)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    std::stringstream ss;
-
     const ExampleApp::Menu::View::IMenuSectionViewModel& section = *m_currentSections.at(indexPath.section);
     const NSInteger index = section.IsExpandable() ? indexPath.row - 1 : indexPath.row;
     const bool isExpandableHeader = section.IsExpandable() && indexPath.row == 0;
+    const bool isHeader = isExpandableHeader | !section.IsExpandable();
     
-    NSString *CurrentCellIdentifier = section.IsSearchResult() ? SearchCellIdentifier : CellIdentifier;
+    NSString *CurrentCellIdentifier = isHeader ? HeaderCellIdentifier : SubSectionCellIdentifier;
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CurrentCellIdentifier];
     if(cell == nil)
     {
-        if(!section.IsSearchResult())
-        {
-            cell = [[[CustomTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CurrentCellIdentifier] autorelease];
-        }
-        else
-        {
-            cell = [[[CustomTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CurrentCellIdentifier] autorelease];
-        }
+        cell = [[[CustomTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CurrentCellIdentifier] autorelease];
         
         [(CustomTableViewCell*)cell initCell:(CGFloat)[m_pView.pTableView getCellWidth]
                                             :(CGFloat)[m_pView.pTableView getCellInset]
+                                            :isHeader ? 0.0 : 4.0
+                                            : 6.0
                                             :(CustomTableView*)tableView];
         
         cell.selectionStyle = UITableViewCellSelectionStyleGray;
@@ -203,9 +116,9 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
         pOpenableMenuArrowView.tag = SubItemCellOpenableMenuArrowTag;
 
         const float tableWidth = static_cast<float>(m_pView.pTableView.bounds.size.width);
-        const float openableArrowX = (tableWidth - 20.f);
+        const float openableArrowX = (tableWidth - 30.f);
         pOpenableMenuArrowView.frame = CGRectMake(openableArrowX,
-                                                  (SECTION_HEADER_CELL_HEIGHT*0.5f) - 8.f,
+                                                  (CellConstants::SectionHeaderCellHeight*0.5f) - 8.f,
                                                   pOpenableMenuArrowView.frame.size.width,
                                                   pOpenableMenuArrowView.frame.size.height);
         
@@ -221,26 +134,20 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
             [cell setSeparatorInset:UIEdgeInsetsZero];
         }
     }
-
-    const bool isHeader = isExpandableHeader | !section.IsExpandable();
-
-    if(isExpandableHeader)
-    {
-        std::string json = section.SerializeJson();
-        [self populateCellWithJson :json :cell :isHeader :section.IsSearchResult()];
-    }
-    else
-    {
-        ExampleApp::Menu::View::MenuItemModel item = section.GetItemAtIndex(static_cast<int>(index));
-        std::string json = item.SerializeJson();
-        [self populateCellWithJson :json :cell :isHeader :section.IsSearchResult()];
-    }
+    
+    std::string json = isExpandableHeader ? section.SerializeJson() : section.GetItemAtIndex(static_cast<int>(index)).SerializeJson();
+    [self populateCellWithJson:json :cell :isHeader];
 
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if(self.rowSelectionDelegate != NULL)
+    {
+        [self.rowSelectionDelegate onRowSelected];
+    }
+    
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     CustomTableViewCell *cell = (CustomTableViewCell*)[tableView cellForRowAtIndexPath:indexPath];
     if(![cell canInteract])
@@ -278,10 +185,20 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
 
         if(!section.IsExpanded())
         {
+            if(self.rowSelectionDelegate != NULL)
+            {
+                [self.rowSelectionDelegate onSectionContracted];
+            }
+            
             [tableView deleteRowsAtIndexPaths:tmpArray withRowAnimation:UITableViewRowAnimationNone];
         }
         else
         {
+            if(self.rowSelectionDelegate != NULL)
+            {
+                [self.rowSelectionDelegate onSectionExpanded];
+            }
+            
             [tableView insertRowsAtIndexPaths:tmpArray withRowAnimation:UITableViewRowAnimationNone];
         }
     }
@@ -304,11 +221,11 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
     ExampleApp::Menu::View::IMenuSectionViewModel& section = *m_currentSections.at(indexPath.section);
     UIImageView *openableArrow = (UIImageView*)[cell viewWithTag:SubItemCellOpenableMenuArrowTag];
     
-    bool isHeader = (section.IsExpandable() && indexPath.row == 0) || (!section.IsExpandable() && !section.IsSearchResult());
+    bool isHeader = (section.IsExpandable() && indexPath.row == 0) || !section.IsExpandable();
 
     if(isHeader)
     {
-        cell.textLabel.font = [UIFont systemFontOfSize:[self getTextLabelFontSize:true:section.IsSearchResult()]];
+        cell.textLabel.font = [UIFont systemFontOfSize:[self getTextLabelFontSize:true]];
         cell.textLabel.textColor = ExampleApp::Helpers::ColorPalette::UiTextHeaderColour;
         cell.indentationLevel = 0;
         openableArrow.hidden = !section.IsExpandable();
@@ -322,11 +239,11 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
             [self showOpenableArrowClosed :cell];
         }
 
-        [self setCellInfo:customCell:true:section.IsSearchResult()];
+        [self setCellInfo:customCell:true];
     }
     else
     {
-        cell.textLabel.font = [UIFont systemFontOfSize:[self getTextLabelFontSize:false :section.IsSearchResult()]];
+        cell.textLabel.font = [UIFont systemFontOfSize:[self getTextLabelFontSize:false]];
         cell.textLabel.textColor = ExampleApp::Helpers::ColorPalette::UiTextCopyColour;
         [cell.textLabel sizeToFit];
         
@@ -335,32 +252,25 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
         cell.indentationLevel = 0;
         
         openableArrow.hidden = true;
-        [self setCellInfo:customCell:false:section.IsSearchResult()];
+        [self setCellInfo:customCell:false];
     }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     ExampleApp::Menu::View::IMenuSectionViewModel& section = *m_currentSections.at(indexPath.section);
-
-    if(!section.IsSearchResult())
+    
+    if(section.IsExpandable() && indexPath.row != 0)
     {
-        if(section.IsExpandable() && indexPath.row != 0)
-        {
-            return SUB_SECTION_CELL_HEIGHT;
-        }
-        else
-        {
-            return SECTION_HEADER_CELL_HEIGHT;
-        }
+        return CellConstants::SubSectionCellHeight;
     }
     else
     {
-        return SEARCH_SECTION_CELL_HEIGHT;
+        return CellConstants::SectionHeaderCellHeight;
     }
 }
 
-- (void) populateCellWithJson:(std::string)json :(UITableViewCell*)cell :(bool)isHeader :(bool)isSearchResult
+- (void) populateCellWithJson:(std::string)json :(UITableViewCell*)cell :(bool)isHeader
 {
     rapidjson::Document document;
     if (!document.Parse<0>(json.c_str()).HasParseError())
@@ -375,69 +285,44 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
             cell.imageView.image = ExampleApp::Helpers::ImageHelpers::LoadImage(iconResourceName);
             cell.imageView.contentMode = UIViewContentModeScaleToFill;
         }
-        else if(isSearchResult)
-        {
-            std::string iconResourceName = ExampleApp::Helpers::IconResources::GetSmallIconPathForResourceName("misc");
-            
-            cell.imageView.image = ExampleApp::Helpers::ImageHelpers::LoadImage(iconResourceName);
-            cell.imageView.contentMode = UIViewContentModeScaleToFill;
-        }
         else
         {
             cell.imageView.image = nil;
         }
         
-        if(!isSearchResult)
+        for (UIView* subview in cell.contentView.subviews)
         {
-            for (UIView* subview in cell.contentView.subviews)
-            {
-                [subview removeFromSuperview];
-            }
-            
-            const float subLabelWidth = 160.0f;
-            const float subLabelHeight = isHeader ? SECTION_HEADER_CELL_HEIGHT : SUB_SECTION_CELL_HEIGHT;
-            const float subLabelInset = 16.0f;
-            const float subLabelImageInset = 8.0f + subLabelHeight;
-            const float subLabelX = static_cast<float>(cell.imageView.image != nil ? subLabelImageInset : subLabelInset);
-            
-            UILabel *subLabel = [[UILabel alloc] initWithFrame:CGRectMake(subLabelX, 0, subLabelWidth, subLabelHeight)];
-            subLabel.backgroundColor = [UIColor clearColor];
-            subLabel.textAlignment = NSTextAlignmentLeft;
-            subLabel.text = [NSString stringWithUTF8String:name.c_str()];
-            subLabel.textColor = isHeader ? ExampleApp::Helpers::ColorPalette::UiTextHeaderColour : ExampleApp::Helpers::ColorPalette::UiTextCopyColour;
-            subLabel.highlightedTextColor = ExampleApp::Helpers::ColorPalette::WhiteTone;
-            subLabel.font = [UIFont systemFontOfSize: [self getTextLabelFontSize: isHeader:isSearchResult]];
-            [cell.contentView addSubview: subLabel];
+            [subview removeFromSuperview];
         }
-        else
-        {
-            cell.textLabel.text = [NSString stringWithUTF8String:name.c_str()];
-            [cell.textLabel sizeToFit];
-            
-            std::string details = document["details"].GetString();
-            
-            cell.detailTextLabel.text = [NSString stringWithUTF8String:details.c_str()];
-        }
+        
+        const float subLabelWidth = 160.0f;
+        const float subLabelHeight = isHeader ? CellConstants::SectionHeaderCellHeight : CellConstants::SubSectionCellHeight;
+        const float subLabelInset = 16.0f;
+        const float subLabelImageInset = 8.0f + subLabelHeight;
+        const float subLabelX = static_cast<float>(cell.imageView.image != nil ? subLabelImageInset : subLabelInset);
+        
+        UILabel *subLabel = [[UILabel alloc] initWithFrame:CGRectMake(subLabelX, 0, subLabelWidth, subLabelHeight)];
+        subLabel.backgroundColor = [UIColor clearColor];
+        subLabel.textAlignment = NSTextAlignmentLeft;
+        subLabel.text = [NSString stringWithUTF8String:name.c_str()];
+        subLabel.textColor = isHeader ? ExampleApp::Helpers::ColorPalette::UiTextHeaderColour : ExampleApp::Helpers::ColorPalette::UiTextCopyColour;
+        subLabel.highlightedTextColor = ExampleApp::Helpers::ColorPalette::WhiteTone;
+        subLabel.font = [UIFont systemFontOfSize: [self getTextLabelFontSize:isHeader]];
+        [cell.contentView addSubview: subLabel];
     }
 }
 
-- (float)getTextLabelFontSize :(bool)headline :(bool)isSearchResult
+- (float)getTextLabelFontSize :(bool)headline
 {
-    if(!isSearchResult)
-    {
-        return headline ? 25.0 : 20.f;
-    }
-    else
-    {
-        return 12.0f;
-    }
+    return headline ? 25.0 : 20.f;
 }
 
-- (void) setCellInfo:(CustomTableViewCell*)cell :(bool)isHeader :(bool)isSearchResult
+- (void) setCellInfo:(CustomTableViewCell*)cell :(bool)isHeader
 {
     [cell setInfo :isHeader
                   :ExampleApp::Helpers::ColorPalette::BorderHudColor
-                  :isHeader ? ExampleApp::Helpers::ColorPalette::BorderHudColor : ExampleApp::Helpers::ColorPalette::MainHudColor];
+                  :isHeader ? ExampleApp::Helpers::ColorPalette::BorderHudColor : ExampleApp::Helpers::ColorPalette::MainHudColor
+                  :isHeader ? ExampleApp::Helpers::ColorPalette::ButtonPressColor : ExampleApp::Helpers::ColorPalette::TableSubCellPressColor];
 }
 
 
@@ -461,10 +346,10 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
             
             NSMutableArray *tmpArray = [NSMutableArray array];
             
+            [self showOpenableArrowClosed:[m_pView.pTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:i]]];
+            
             rows = m_currentSections[i]->Size();
             m_currentSections[i]->Contract();
-            
-            [self showOpenableArrowClosed:[m_pView.pTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:i]]];
             
             for(int j = 1; j < rows; ++j)
             {

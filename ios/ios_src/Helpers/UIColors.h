@@ -18,6 +18,8 @@ namespace ExampleApp
             
             extern UIColor* MainHudColor;
             extern UIColor* BorderHudColor;
+            extern UIColor* ButtonPressColor;
+            extern UIColor* TableSubCellPressColor;
             extern UIColor* ModalBackgroundColor;
             extern UIColor* LinkTone;
             extern UIColor* UiTextHeaderColour;

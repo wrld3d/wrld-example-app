@@ -6,7 +6,8 @@
 
 #include "CallbackCollection.h"
 #include "ISearchMenuView.h"
-#include "SearchMenuViewIncludes.h"
+#include "IMenuSectionViewModel.h"
+#include "SearchMenuView.h"
 #include "SearchResultViewClearedMessage.h"
 #include "Types.h"
 
@@ -28,25 +29,30 @@ namespace ExampleApp
                     : m_pView(pView)
                 {
                 }
+                
+                virtual void SetSearchSection(Menu::View::IMenuSectionViewModel& searchSection)
+                {
+                    [m_pView setSearchSection:&searchSection];
+                }
 
                 void RemoveSeachKeyboard()
                 {
-                    [m_pView removeSeachKeyboard];
+                    [m_pView.pInputDelegate removeSeachKeyboard];
                 }
 
                 void DisableEditText()
                 {
-                    [m_pView disableEdit];
+                    [m_pView.pInputDelegate disableEdit];
                 }
 
                 void EnableEditText()
                 {
-                    [m_pView enableEdit];
+                    [m_pView.pInputDelegate enableEdit];
                 }
                 
                 void SetEditText(const std::string& searchText, bool isCategory)
                 {
-                    [m_pView setEditText :[NSString stringWithUTF8String:searchText.c_str()] :isCategory];
+                    [m_pView.pInputDelegate setEditText :[NSString stringWithUTF8String:searchText.c_str()] :isCategory];
                 }
                 
                 void SetSearchResultCount(int searchResultCount)

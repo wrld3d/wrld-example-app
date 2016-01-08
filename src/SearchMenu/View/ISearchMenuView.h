@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include "Menu.h"
+
 namespace ExampleApp
 {
     namespace SearchMenu
@@ -12,6 +14,8 @@ namespace ExampleApp
             {
             public:
                 virtual ~ISearchMenuView() { }
+                
+                virtual void SetSearchSection(Menu::View::IMenuSectionViewModel& searchSection) = 0;
                 
                 virtual void RemoveSeachKeyboard() = 0;
                 

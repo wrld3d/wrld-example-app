@@ -7,6 +7,7 @@
 #include "VectorMath.h"
 #include "CustomTableView.h"
 #include "MenuViewIncludes.h"
+#include "IMenuView.h"
 #include "ViewAnimationController.h"
 
 @class MenuView;
@@ -54,13 +55,6 @@
     float m_tableViewContainerClosedOnScreenY;
     float m_tableViewContainerOpenOnScreenX;
     float m_tableViewContainerOpenOnScreenY;
-
-    float m_tableOffsetIntoContainerX;
-    float m_tableOffsetIntoContainerY;
-    float m_tableX;
-    float m_tableY;
-    float m_tableWidth;
-    float m_tableHeight;
 }
 
 - (id) initWithParams:(float)width
@@ -84,7 +78,13 @@
 
 - (void) updateAnimation:(float)deltaSeconds;
 
+- (void) updateTableAnimation:(float)deltaSeconds;
+
+- (void) onTableAnimationUpdated;
+
 - (BOOL) isAnimating;
+
+- (BOOL) isTableAnimating;
 
 - (float) openOnScreenState;
 
@@ -94,11 +94,15 @@
 
 - (void) refreshTableHeights;
 
-- (float) getTableHeight;
+- (void) refreshHeightForTable:(CustomTableView*)tableView;
+
+- (float) getHeightForTable:(CustomTableView*)tableView;
 
 - (void) setTableCanInteract:(BOOL)canInteract;
 
 - (BOOL) canInteract;
+
+- (void)updateMenuSections:(ExampleApp::Menu::View::TSections*)sections;
 
 @property (nonatomic, retain) UIView* pDragTab;
 @property (nonatomic, retain) UIView* pTitleContainer;

@@ -15,23 +15,27 @@ namespace ExampleApp
         {
             SearchMenuViewModule::SearchMenuViewModule(Menu::View::IMenuModel& searchMenuModel,
                                                        Menu::View::IMenuViewModel& searchMenuViewModel,
+                                                       Menu::View::IMenuSectionViewModel& searchSectionViewModel,
                                                        const Eegeo::Rendering::ScreenProperties& screenProperties,
                                                        CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
                                                        Modality::View::IModalBackgroundView& modalBackgroundView,
                                                        ExampleAppMessaging::TMessageBus& messageBus)
             {
                 m_pDataProvider = [CustomTableDataProvider alloc];
+                
+                m_pSearchResultsDataProvider = [SearchResultsTableDataProvider alloc];
 
-                m_pView = [[SearchMenuView alloc] initWithParams
-                           :screenProperties.GetScreenWidth()
-                           :screenProperties.GetScreenHeight()
-                           :screenProperties.GetPixelScale()
-                           :m_pDataProvider];
+                m_pView = [[SearchMenuView alloc] initWithParams:screenProperties.GetScreenWidth()
+                                                                :screenProperties.GetScreenHeight()
+                                                                :screenProperties.GetPixelScale()
+                                                                :m_pDataProvider
+                                                                :m_pSearchResultsDataProvider];
 
                 m_pController = Eegeo_NEW(SearchMenuController)(searchMenuModel,
                                                                 searchMenuViewModel,
                                                                 *[m_pView getInterop],
                                                                 *[m_pView getSearchMenuInterop],
+                                                                searchSectionViewModel,
                                                                 categorySearchRepository,
                                                                 modalBackgroundView,
                                                                 messageBus);

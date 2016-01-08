@@ -17,7 +17,7 @@ namespace ExampleApp
             {
             public:
 
-                MenuSectionViewModel(const std::string& name, const std::string& icon, IMenuModel& menuModel, bool isExpandable, bool isSearchResult);
+                MenuSectionViewModel(const std::string& name, const std::string& icon, IMenuModel& menuModel, bool isExpandable);
                 
                 IMenuModel& GetModel() const
                 {
@@ -56,11 +56,6 @@ namespace ExampleApp
                 {
                     return m_isExpandable;
                 }
-                
-                bool IsSearchResult() const
-                {
-                    return m_isSearchResult;
-                }
 
                 void Expand();
                 void Contract();
@@ -73,8 +68,6 @@ namespace ExampleApp
 
                 const bool m_isExpandable;
                 bool m_expanded;
-                
-                bool m_isSearchResult;
             };
         }
     }

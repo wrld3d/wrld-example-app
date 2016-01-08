@@ -18,15 +18,19 @@ namespace ExampleApp
                                                        Menu::View::IMenuViewModel& viewModel,
                                                        Menu::View::IMenuView& view,
                                                        ISearchMenuView& searchMenuView,
+                                                       Menu::View::IMenuSectionViewModel& searchSectionViewModel,
                                                        CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
                                                        Modality::View::IModalBackgroundView& modalBackgroundView,
                                                        ExampleAppMessaging::TMessageBus& messageBus)
             : Menu::View::MenuController(model, viewModel, view, messageBus)
             , m_searchMenuView(searchMenuView)
+            , m_searchSectionViewModel(searchSectionViewModel)
             , m_categorySearchRepository(categorySearchRepository)
             , m_modalBackgroundView(modalBackgroundView)
             , m_messageBus(messageBus)
             , m_appModeAllowsOpen(true)
+            , m_onSearchItemAddedCallback(this, &SearchMenuController::OnSearchItemAdded)
+            , m_onSearchItemRemovedCallback(this, &SearchMenuController::OnSearchItemRemoved)
             , m_onOpenStateChangedCallback(this, &SearchMenuController::OnOpenStateChanged)
             , m_performedQueryHandler(this, &SearchMenuController::OnSearchQueryPerformedMessage)
             , m_receivedQueryResponseHandler(this, &SearchMenuController::OnSearchQueryResponseReceivedMessage)
@@ -37,6 +41,11 @@ namespace ExampleApp
             {
                 m_searchMenuView.InsertSearchPeformedCallback(m_onSearchCallback);
                 m_searchMenuView.InsertSearchClearedCallback(m_onSearchClearedCallback);
+                
+                Menu::View::IMenuModel& searchSectionMenuModel = m_searchSectionViewModel.GetModel();
+                searchSectionMenuModel.InsertItemAddedCallback(m_onSearchItemAddedCallback);
+                searchSectionMenuModel.InsertItemRemovedCallback(m_onSearchItemRemovedCallback);
+                
                 m_viewModel.InsertOpenStateChangedCallback(m_onOpenStateChangedCallback);
                 m_modalBackgroundView.InsertTappedCallback(m_onModalBackgroundTappedCallback);
                 
@@ -53,8 +62,23 @@ namespace ExampleApp
                 
                 m_modalBackgroundView.RemoveTappedCallback(m_onModalBackgroundTappedCallback);
                 m_viewModel.RemoveOpenStateChangedCallback(m_onOpenStateChangedCallback);
+                
+                Menu::View::IMenuModel& searchSectionMenuModel = m_searchSectionViewModel.GetModel();
+                searchSectionMenuModel.RemoveItemRemovedCallback(m_onSearchItemRemovedCallback);
+                searchSectionMenuModel.RemoveItemAddedCallback(m_onSearchItemAddedCallback);
+                
                 m_searchMenuView.RemoveSearchClearedCallback(m_onSearchClearedCallback);
                 m_searchMenuView.RemoveSearchPeformedCallback(m_onSearchCallback);
+            }
+            
+            void SearchMenuController::OnSearchItemAdded(Menu::View::MenuItemModel& item)
+            {
+                m_presentationDirty = true;
+            }
+            
+            void SearchMenuController::OnSearchItemRemoved(Menu::View::MenuItemModel& item)
+            {
+                m_presentationDirty = true;
             }
             
             void SearchMenuController::OnOpenStateChanged(OpenableControl::View::IOpenableControlViewModel& viewModel, float& openState)
@@ -134,6 +158,16 @@ namespace ExampleApp
                 if(m_viewModel.IsFullyOpen())
                 {
                     m_viewModel.Close();
+                }
+            }
+            
+            void SearchMenuController::RefreshPresentation()
+            {
+                MenuController::RefreshPresentation();
+                
+                if(!m_viewModel.IsFullyClosed())
+                {
+                    m_searchMenuView.SetSearchSection(m_searchSectionViewModel);
                 }
             }
         }

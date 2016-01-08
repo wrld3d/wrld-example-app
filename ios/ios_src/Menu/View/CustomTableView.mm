@@ -20,7 +20,6 @@
     float m_minAnimationDuration;
     float m_cellAnimationDuration;
     bool m_isAnimating;
-    UIScrollView* m_pContainer;
     MenuView* m_pMenuView;
     bool m_hasSubMenus;
     float m_cellWidth;
@@ -31,14 +30,12 @@
 
 - (instancetype)initWithFrame:(CGRect)frame
                         style:(UITableViewStyle)style
-                    container:(UIScrollView*)container
                      menuView:(MenuView*)menuView
                   hasSubMenus:(bool)hasSubMenus
                     cellWidth:(float)cellWidth
                     cellInset:(float)cellInset
 {
     id it = [super initWithFrame:frame style:style];
-    m_pContainer = container;
     m_pMenuView = menuView;
     m_maxAnimationDuration = 0.5f;
     m_minAnimationDuration = 0.2f;
@@ -85,8 +82,6 @@
             
             zOffset -= zOffsetIncrement;
         }
-        
-        m_pContainer.contentSize = self.contentSize;
     }
     
     [self sendSubviewToBack:self.pBackgroundView];
@@ -108,7 +103,7 @@
     
     m_pAnimationController->Update(deltaSeconds);
     
-    [self->m_pContainer setContentSize:CGSizeMake(self.pBackgroundView.frame.size.width, self.pBackgroundView.frame.size.height)];
+    [m_pMenuView onTableAnimationUpdated];
     
     if(!m_pAnimationController->IsActive())
     {
@@ -124,8 +119,6 @@
     m_isAnimating = !enabled;
     self.userInteractionEnabled = enabled;
     self.scrollEnabled = enabled;
-    m_pContainer.userInteractionEnabled = YES;
-    m_pContainer.scrollEnabled = YES;
 }
 
 - (float)getCellWidth
@@ -153,7 +146,7 @@
     if([self isHidden])
     {
         [self reloadData];
-        [m_pMenuView refreshTableHeights];
+        [m_pMenuView refreshHeightForTable:self];
         
         return;
     }
@@ -164,7 +157,7 @@
     
     const float currentTableHeight = self.frame.size.height;
     
-    [m_pMenuView refreshTableHeights];
+    [m_pMenuView refreshHeightForTable:self];
     
     const float cellHeight = [self.delegate tableView:self heightForRowAtIndexPath:(NSIndexPath*)[indexPaths firstObject]];
     
@@ -184,9 +177,11 @@
     [self addCellPositionAnimatorsAfterIndexPath:(NSIndexPath*)[indexPaths lastObject] deltaY:-heightOffset deltaStart:true animationDuration:animationDuration];
     
     // animate background
-    [self addBackgroundAnimatorWithStartHeight:currentTableHeight endHeight:[m_pMenuView getTableHeight] animationDuration:animationDuration];
+    [self addBackgroundAnimatorWithStartHeight:currentTableHeight endHeight:[m_pMenuView getHeightForTable:self] animationDuration:animationDuration];
     
     m_pAnimationController->Play();
+    
+    [m_pMenuView onTableAnimationUpdated];
 }
 
 -(void)deleteRowsAtIndexPaths:(NSArray *)indexPaths withRowAnimation:(UITableViewRowAnimation)animation
@@ -199,12 +194,14 @@
     if([self isHidden])
     {
         [self reloadData];
-        [m_pMenuView refreshTableHeights];
+        [m_pMenuView refreshHeightForTable:self];
         
         return;
     }
     
     [self setInteractionEnabled:NO];
+    
+    const float currentTableHeight = self.frame.size.height;
     
     const float cellHeight = [self.delegate tableView:self heightForRowAtIndexPath:(NSIndexPath*)[indexPaths firstObject]];
     
@@ -215,7 +212,7 @@
                                                                                                       CustomTableView* tableView = (CustomTableView*)view;
                                                                                                       
                                                                                                       [tableView reloadData];
-                                                                                                      [tableView->m_pMenuView refreshTableHeights];
+                                                                                                      [tableView->m_pMenuView refreshHeightForTable:tableView];
                                                                                                       [tableView setInteractionEnabled:YES];
                                                                                                   },
                                                                                                   NULL);
@@ -228,9 +225,11 @@
     [self addCellPositionAnimatorsAfterIndexPath:(NSIndexPath*)[indexPaths lastObject] deltaY:-heightOffset deltaStart:false animationDuration:animationDuration];
     
     // animate background
-    [self addBackgroundAnimatorWithStartHeight:self.frame.size.height endHeight:self.frame.size.height - heightOffset animationDuration:animationDuration];
+    [self addBackgroundAnimatorWithStartHeight:currentTableHeight endHeight:currentTableHeight - heightOffset animationDuration:animationDuration];
     
     m_pAnimationController->Play();
+    
+    [m_pMenuView onTableAnimationUpdated];
 }
 
 - (void)addCellHeightAnimatorsWithIndexPaths:(NSArray*)indexPaths

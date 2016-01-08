@@ -295,6 +295,7 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
     
     m_pSearchMenuViewModule = Eegeo_NEW(ExampleApp::SearchMenu::View::SearchMenuViewModule)(app.SearchMenuModule().GetSearchMenuModel(),
                                                                                             app.SearchMenuModule().GetSearchMenuViewModel(),
+                                                                                            app.SearchMenuModule().GetSearchSectionViewModel(),
                                                                                             screenProperties,
                                                                                             app.CategorySearchModule().GetCategorySearchRepository(),
                                                                                             m_pModalBackgroundViewModule->GetModalBackgroundViewInterop(),

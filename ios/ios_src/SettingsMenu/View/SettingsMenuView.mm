@@ -53,7 +53,7 @@
     const bool isPhone = ExampleApp::Helpers::UIHelpers::UsePhoneLayout();
     
     const float upperMargin = (isPhone ? 20.0f : 50.0f) * m_pixelScale;
-    const float tableWidth = 248.0f * m_pixelScale;
+    const float tableCellWidth = 248.0f * m_pixelScale;
     const float dragTabOffsetX = 28.0f * m_pixelScale;
     const float dragTabSize = 50.0f * m_pixelScale;
     const float tableViewContainerOffsetY = 2.0f * m_pixelScale;
@@ -67,7 +67,7 @@
     m_dragTabOffScreenY = upperMargin;
     m_dragTabClosedOnScreenX = m_screenWidth - (m_dragTabWidth + m_dragTabOffsetX);
     m_dragTabClosedOnScreenY = m_dragTabOffScreenY;
-    m_dragTabOpenOnScreenX = m_screenWidth - (m_dragTabWidth + tableWidth);
+    m_dragTabOpenOnScreenX = m_screenWidth - (m_dragTabWidth + tableCellWidth);
     m_dragTabOpenOnScreenY = m_dragTabOffScreenY;
     
     self.pDragTab = [[[UIView alloc] initWithFrame:CGRectMake(m_dragTabOffScreenX, m_dragTabOffScreenY, m_dragTabWidth, m_dragTabHeight)] autorelease];
@@ -83,15 +83,15 @@
     m_titleContainerClosedOnScreenX = m_dragTabClosedOnScreenX + m_dragTabWidth;
     m_titleContainerClosedOnScreenY = m_titleContainerOffScreenY;
     
-    m_titleContainerOpenOnScreenWidth = tableWidth;
+    m_titleContainerOpenOnScreenWidth = tableCellWidth;
     m_titleContainerOpenOnScreenHeight = m_titleContainerOffScreenHeight;
     m_titleContainerOpenOnScreenX = m_dragTabOpenOnScreenX + m_dragTabWidth;
     m_titleContainerOpenOnScreenY = m_titleContainerOffScreenY;
     
-    self.pTitleContainer = [[UIView alloc] initWithFrame:CGRectMake(m_titleContainerOffScreenX, m_titleContainerOffScreenY, m_titleContainerOffScreenWidth, m_titleContainerOffScreenHeight)];
+    self.pTitleContainer = [[[UIView alloc] initWithFrame:CGRectMake(m_titleContainerOffScreenX, m_titleContainerOffScreenY, m_titleContainerOffScreenWidth, m_titleContainerOffScreenHeight)] autorelease];
     self.pTitleContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::BorderHudColor;
     
-    m_titleLabelWidth = tableWidth - titleLabelInsetX;
+    m_titleLabelWidth = tableCellWidth - titleLabelInsetX;
     m_titleLabelHeight = dragTabSize;
     m_titleLabelOffScreenX = titleLabelInsetX;
     m_titleLabelOffScreenY = -m_titleLabelHeight;
@@ -111,7 +111,7 @@
     self.pTitleLabel.textColor = ExampleApp::Helpers::ColorPalette::WhiteTone;
     
     m_tableViewContainerOffsetY = tableViewContainerOffsetY;
-    m_tableViewContainerWidth = tableWidth;
+    m_tableViewContainerWidth = tableCellWidth;
     m_tableViewContainerHeight = 0.0f;
     m_tableViewContainerOffScreenX = m_screenWidth;
     m_tableViewContainerOffScreenY = upperMargin + dragTabSize + m_tableViewContainerOffsetY;
@@ -122,20 +122,21 @@
     
     self.pTableViewContainer = [[[UIScrollView alloc] initWithFrame:CGRectMake(m_tableViewContainerOffScreenX, m_tableViewContainerOffScreenY, m_tableViewContainerWidth, m_tableViewContainerHeight)] autorelease];
     self.pTableViewContainer.bounces = NO;
-    self.pTableViewContainer.contentSize = CGSizeMake(m_tableWidth, 0.0f);
+    self.pTableViewContainer.contentSize = CGSizeMake(m_tableViewContainerWidth, 0.0f);
     self.pTableViewContainer.backgroundColor = [UIColor clearColor];
+    self.pTableViewContainer.scrollEnabled = YES;
+    self.pTableViewContainer.userInteractionEnabled = YES;
     
-    m_tableX = 0.0f;
-    m_tableY = 0.0f;
-    m_tableWidth = m_tableViewContainerWidth;
-    m_tableHeight = 0.0f;
+    const float tableX = 0.0f;
+    const float tableY = 0.0f;
+    const float tableWidth = m_tableViewContainerWidth;
+    const float tableHeight = 0.0f;
     
-    self.pTableView = [[[CustomTableView alloc] initWithFrame:CGRectMake(m_tableX, m_tableY, m_tableWidth, m_tableHeight)
+    self.pTableView = [[[CustomTableView alloc] initWithFrame:CGRectMake(tableX, tableY, tableWidth, tableHeight)
                                                         style:UITableViewStylePlain
-                                                    container:self.pTableViewContainer
                                                      menuView:self
                                                   hasSubMenus:true
-                                                    cellWidth:tableWidth
+                                                    cellWidth:tableCellWidth
                                                     cellInset:0.0f
                         ] autorelease];
     self.pTableView.backgroundColor = [UIColor clearColor];

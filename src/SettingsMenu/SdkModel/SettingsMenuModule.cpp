@@ -62,7 +62,7 @@ namespace ExampleApp
                                                     Menu::View::IMenuModel& menuModel,
                                                     bool isExpandable)
             {
-                Menu::View::MenuSectionViewModel* pMenuSection = Eegeo_NEW(Menu::View::MenuSectionViewModel)(name, "", menuModel, isExpandable, false);
+                Menu::View::MenuSectionViewModel* pMenuSection = Eegeo_NEW(Menu::View::MenuSectionViewModel)(name, "", menuModel, isExpandable);
                 m_pViewModel->AddSection(*pMenuSection);
                 m_sections.push_back(pMenuSection);
             }

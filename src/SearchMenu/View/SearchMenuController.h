@@ -18,11 +18,14 @@ namespace ExampleApp
             {
             private:
                 ISearchMenuView& m_searchMenuView;
+                Menu::View::IMenuSectionViewModel& m_searchSectionViewModel;
                 CategorySearch::View::ICategorySearchRepository& m_categorySearchRepository;
                 Modality::View::IModalBackgroundView& m_modalBackgroundView;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 bool m_appModeAllowsOpen;
                 
+                Eegeo::Helpers::TCallback1<SearchMenuController, Menu::View::MenuItemModel> m_onSearchItemAddedCallback;
+                Eegeo::Helpers::TCallback1<SearchMenuController, Menu::View::MenuItemModel> m_onSearchItemRemovedCallback;
                 Eegeo::Helpers::TCallback2<SearchMenuController, OpenableControl::View::IOpenableControlViewModel&, float> m_onOpenStateChangedCallback;
                 Eegeo::Helpers::TCallback1<SearchMenuController, const Search::SearchQueryPerformedMessage&> m_performedQueryHandler;
                 Eegeo::Helpers::TCallback1<SearchMenuController, const Search::SearchQueryResponseReceivedMessage&> m_receivedQueryResponseHandler;
@@ -30,6 +33,10 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback0<SearchMenuController> m_onSearchClearedCallback;
                 Eegeo::Helpers::TCallback1<SearchMenuController, const AppModes::AppModeChangedMessage&> m_appModeChangedCallback;
                 Eegeo::Helpers::TCallback0<SearchMenuController> m_onModalBackgroundTappedCallback;
+                
+                void OnSearchItemAdded(Menu::View::MenuItemModel& item);
+                
+                void OnSearchItemRemoved(Menu::View::MenuItemModel& item);
                 
                 void OnOpenStateChanged(OpenableControl::View::IOpenableControlViewModel& viewModel, float& openState);
                 
@@ -49,11 +56,16 @@ namespace ExampleApp
                 
                 void OnModalBackgroundTapped();
                 
+            protected:
+                
+                virtual void RefreshPresentation();
+                
             public:
                 SearchMenuController(Menu::View::IMenuModel& model,
                                      Menu::View::IMenuViewModel& viewModel,
                                      Menu::View::IMenuView& view,
                                      ISearchMenuView& searchMenuView,
+                                     Menu::View::IMenuSectionViewModel& searchSectionViewModel,
                                      CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
                                      Modality::View::IModalBackgroundView& modalBackgroundView,
                                      ExampleAppMessaging::TMessageBus& messageBus);
