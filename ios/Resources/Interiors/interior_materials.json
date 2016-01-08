@@ -145,7 +145,7 @@
              "MaterialType":"InteriorsCubeMappedMaterial",
              "DiffuseTexture":"swallowplaingray-interior-texture0",
              "CubeMapTexture":"swallowcubemap",
-             "ReflectionColor":[0.8,0.8,0.8,1.0],
+             "ReflectionColor":[0.15,0.15,0.15,1.0],
              "ViewOffsetScale":0.8
         },
                  
