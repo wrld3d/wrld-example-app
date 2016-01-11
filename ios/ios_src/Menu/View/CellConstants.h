@@ -4,7 +4,7 @@
 
 namespace CellConstants
 {
-    const float SubSectionCellHeight = 36.0f;
-    const float SectionHeaderCellHeight = 42.0f;
-    const float SearchSectionCellHeight = 42.0f;
+    const float SubSectionCellHeight = 39.0f;
+    const float SectionHeaderCellHeight = 41.0f;
+    const float SearchSectionCellHeight = 43.0f;
 }

@@ -12,6 +12,7 @@
     bool m_selected;
     bool m_highlighted;
     bool m_requiresRefresh;
+    bool m_customContentFramesSet;
 }
 
 -(void) lazySetBackgroundPresentation
@@ -38,10 +39,10 @@
 
 - (CGRect)getContentViewRect
 {
-    return CGRectMake(m_leftInset + m_contentInset,
-                      1.0f,
-                      m_initialWidth - m_contentInset * 2.0f,
-                      self.frame.size.height - 2.0f);
+    return CGRectMake(m_leftInset,
+                      0.0f,
+                      m_initialWidth,
+                      self.frame.size.height - 1.0f);
 }
 
 - (void)layoutSubviews
@@ -54,50 +55,47 @@
     
     [self setClipsToBounds:YES];
     
-    self->pCustomSeparatorContainer.frame = [self getContentViewRect];;
+    self->pCustomSeparatorContainer.frame = [self getContentViewRect];
     
     [self.contentView setClipsToBounds:YES];
     self.contentView.frame = [self getContentViewRect];
-
-    CGRect imageFrame = self.imageView.frame;
-    imageFrame.origin.x =  0.f;
-    self.imageView.frame = imageFrame;
-
-    CGRect accessoryFrame = self.accessoryView.frame;
-    accessoryFrame.origin.x = 0.f;
-    self.accessoryView.frame = accessoryFrame;
     
-    const float textOffset = 6.0f;
-
-    CGRect labelFrame = self.textLabel.frame;
-    labelFrame.origin.x = imageFrame.origin.x + imageFrame.size.width + textOffset;
-    self.textLabel.frame = labelFrame;
+    if(m_customContentFramesSet)
+    {
+        self.imageView.frame = m_imageFrame;
+        self.textLabel.frame = m_textFrame;
+        self.detailTextLabel.frame = m_detailTextFrame;
+    }
     
-    CGRect detailFrame = self.detailTextLabel.frame;
-    detailFrame.origin.x = self.textLabel.frame.origin.x;
-    self.detailTextLabel.frame = detailFrame;
-    
-    [self insertSeparators :[self getContentViewRect] :imageFrame];
+    [self insertSeparators :[self getContentViewRect]];
     [self lazySetBackgroundPresentation];
 }
 
 - (void)initCell:(CGFloat)initialWidth
                 :(CGFloat)leftInset
-                :(CGFloat)contentInset
-                :(CGFloat)separatorInset
                 :(CustomTableView*)tableView
 {
     m_initialWidth = initialWidth;
     m_leftInset = leftInset;
-    m_contentInset = contentInset;
-    m_separatorInset = separatorInset;
     m_tableView = tableView;
     m_hasSetBackground = false;
     m_hasSetSeparators = false;
     m_selected = false;
     m_highlighted = false;
+    m_customContentFramesSet = false;
     self->pCustomSeparatorContainer = [[UIView alloc]  initWithFrame:CGRectMake(0,0,0,0)];
     [self addSubview:self->pCustomSeparatorContainer];
+}
+
+- (void)setContentFrames:(CGRect)imageFrame
+                        :(CGRect)textFrame
+                        :(CGRect)detailTextFrame
+{
+    m_imageFrame = imageFrame;
+    m_textFrame = textFrame;
+    m_detailTextFrame = detailTextFrame;
+    
+    m_customContentFramesSet = true;
 }
 
 - (void)setInfo :(bool)isHeader
@@ -158,7 +156,7 @@
 
     if (selected)
     {
-        [self.contentView setBackgroundColor: ExampleApp::Helpers::ColorPalette::LightGreyTone];
+        [self.contentView setBackgroundColor:m_pPressColor];
         m_selected = true;
     }
     else
@@ -171,7 +169,7 @@
     }
 }
 
-- (void)insertSeparators:(CGRect)cellFrame :(CGRect)imageFrame
+- (void)insertSeparators:(CGRect)cellFrame
 {
     if(m_hasSetSeparators && !m_tableView.hasDynamicCellPresentation)
     {
@@ -186,13 +184,17 @@
         }
     }
     
-    if(m_isHeader)
+    NSIndexPath* indexPath = [m_tableView indexPathForCell:self];
+    
+    const bool isTop = indexPath.section == 0;
+    
+    if(m_isHeader && !isTop)
     {
         CGFloat topSeparatorY       = 0.f;
         CGFloat separatorHeight     = (1.f / [UIScreen mainScreen].scale);
-        CGFloat separatorWidth      = cellFrame.size.width - m_separatorInset * 2.0f;
+        CGFloat separatorWidth      = cellFrame.size.width;
         
-        UIImageView* topSeparator = [[[UIImageView alloc] initWithFrame:CGRectMake(m_separatorInset,
+        UIImageView* topSeparator = [[[UIImageView alloc] initWithFrame:CGRectMake(0.0f,
                                                                                    topSeparatorY,
                                                                                    separatorWidth,
                                                                                    separatorHeight)] autorelease];

@@ -106,23 +106,28 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
         
         [(CustomTableViewCell*)cell initCell:(CGFloat)[m_pView.pTableView getCellWidth]
                                             :(CGFloat)[m_pView.pTableView getCellInset]
-                                            :isHeader ? 0.0 : 4.0
-                                            : 6.0
                                             :(CustomTableView*)tableView];
         
         cell.selectionStyle = UITableViewCellSelectionStyleGray;
-
+        
         UIImageView* pOpenableMenuArrowView = [[[UIImageView alloc] initWithImage:self.pOpenableMenuArrow] autorelease];
         pOpenableMenuArrowView.tag = SubItemCellOpenableMenuArrowTag;
-
-        const float tableWidth = static_cast<float>(m_pView.pTableView.bounds.size.width);
-        const float openableArrowX = (tableWidth - 30.f);
+        
+        const float openableArrowWidth = pOpenableMenuArrowView.frame.size.width;
+        const float openableArrowHeight = pOpenableMenuArrowView.frame.size.height;
+        
+        const float openableArrowRightInset = 23.0f - openableArrowWidth / 2.0f;
+        const float openableArrowTopInset = (CellConstants::SectionHeaderCellHeight - openableArrowHeight) * 0.5f;
+        
+        const float openableArrowX = [m_pView.pTableView getCellWidth] - openableArrowRightInset;
+        const float openableArrowY = openableArrowTopInset;
+        
         pOpenableMenuArrowView.frame = CGRectMake(openableArrowX,
-                                                  (CellConstants::SectionHeaderCellHeight*0.5f) - 8.f,
+                                                  openableArrowY,
                                                   pOpenableMenuArrowView.frame.size.width,
                                                   pOpenableMenuArrowView.frame.size.height);
         
-        [cell addSubview:pOpenableMenuArrowView];
+        [cell.contentView addSubview:pOpenableMenuArrowView];
 
         if ([cell respondsToSelector:@selector(layoutMargins)])
         {
@@ -219,7 +224,7 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
     }
     
     ExampleApp::Menu::View::IMenuSectionViewModel& section = *m_currentSections.at(indexPath.section);
-    UIImageView *openableArrow = (UIImageView*)[cell viewWithTag:SubItemCellOpenableMenuArrowTag];
+    UIImageView *openableArrow = (UIImageView*)[cell.contentView viewWithTag:SubItemCellOpenableMenuArrowTag];
     
     bool isHeader = (section.IsExpandable() && indexPath.row == 0) || !section.IsExpandable();
 
@@ -292,12 +297,15 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
         
         for (UIView* subview in cell.contentView.subviews)
         {
-            [subview removeFromSuperview];
+            if([subview tag] != SubItemCellOpenableMenuArrowTag)
+            {
+                [subview removeFromSuperview];
+            }
         }
         
         const float subLabelWidth = 160.0f;
         const float subLabelHeight = isHeader ? CellConstants::SectionHeaderCellHeight : CellConstants::SubSectionCellHeight;
-        const float subLabelInset = 16.0f;
+        const float subLabelInset = 9.0f;
         const float subLabelImageInset = 8.0f + subLabelHeight;
         const float subLabelX = static_cast<float>(cell.imageView.image != nil ? subLabelImageInset : subLabelInset);
         
@@ -370,7 +378,7 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
 - (void)showOpenableArrowClosed:(UITableViewCell *)cell
 {
     const float angle = 0.f;
-    UIImageView *openableArrow = (UIImageView*)[cell viewWithTag:SubItemCellOpenableMenuArrowTag];
+    UIImageView *openableArrow = (UIImageView*)[cell.contentView viewWithTag:SubItemCellOpenableMenuArrowTag];
     
     [UIView animateWithDuration:0.2f
                           delay:0.0f
@@ -384,7 +392,7 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
 - (void)showOpenableArrowOpen:(UITableViewCell *)cell
 {
     const float angle = 270.0f;
-    UIImageView *openableArrow = (UIImageView*)[cell viewWithTag:SubItemCellOpenableMenuArrowTag];
+    UIImageView *openableArrow = (UIImageView*)[cell.contentView viewWithTag:SubItemCellOpenableMenuArrowTag];
     [UIView animateWithDuration:0.2f
                           delay:0.0f
                         options:UIViewAnimationCurveEaseInOut

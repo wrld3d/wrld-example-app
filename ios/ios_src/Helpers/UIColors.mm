@@ -16,7 +16,7 @@ namespace ExampleApp
             UIColor* GoldTone = [[UIColor alloc] initWithRed:30.f/255.f green:123.f/255.f blue:195.f/255.f alpha:1.f];
             UIColor* LightGreyTone = [[UIColor alloc] initWithRed:204/255.f green:204/255.f blue:204/255.f alpha:1.f];
             
-            UIColor* MainHudColor = [[UIColor alloc] initWithRed:250.f/255.f green:250.f/255.f blue:250.f/255.f alpha:1.f];
+            UIColor* MainHudColor = [[UIColor alloc] initWithRed:1.f green:1.f blue:1.f alpha:1.f];
             UIColor* BorderHudColor = [[UIColor alloc] initWithRed:18.f/255.f green:86.f/255.f blue:176.f/255.f alpha:1.f];
             UIColor* ButtonPressColor = [[UIColor alloc] initWithRed:130.f/255.f green:235.f/255.f blue:255.f/255.f alpha:1.f];
             UIColor* TableSubCellPressColor = [[UIColor alloc] initWithRed:84.f/255.f green:104.f/255.f blue:204.f/255.f alpha:1.f];
@@ -28,6 +28,9 @@ namespace ExampleApp
             UIColor* MenuSeparatorHeaderColor = [[UIColor alloc] initWithRed:177.f/255.f green:204.f/255.f blue:225.f/255.f alpha:1.f];
             UIColor* MenuSeparatorSubMenuColor = [[UIColor alloc] initWithRed:198.f/255.f green:206.f/255.f blue:207.f/255.f alpha:1.f];
             UIColor* TableSeparatorColor = [[UIColor alloc] initWithRed:0.f/255.f green:43.f/255.f blue:99.f/255.f alpha:1.f];
+            UIColor* TableSearchCellColor = [[UIColor alloc] initWithRed:242.f/255.f green:242.f/255.f blue:242.f/255.f alpha:1.f];
+            UIColor* TableSearchTextColor = [[UIColor alloc] initWithRed:56.f/255.f green:56.f/255.f blue:56.f/255.f alpha:1.f];
+            UIColor* TableSearchDetailTextColor = [[UIColor alloc] initWithRed:96.f/255.f green:96.f/255.f blue:96.f/255.f alpha:1.f];
             
             UIColor* TwitterDarkGrey = [[UIColor alloc] initWithRed:64.f/255.f green:64.f/255.f blue:64.f/255.f alpha:1.f];
             UIColor* TwitterLightGrey = [[UIColor alloc] initWithRed:119.f/255.f green:119.f/255.f blue:119.f/255.f alpha:1.f];

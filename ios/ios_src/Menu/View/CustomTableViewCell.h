@@ -10,11 +10,12 @@
     bool m_isHeader;
     CGFloat m_initialWidth;
     CGFloat m_leftInset;
-    CGFloat m_contentInset;
-    CGFloat m_separatorInset;
     UIColor* m_pBackgroundColor;
     UIColor* m_pContentBackgroundColor;
     UIColor* m_pPressColor;
+    CGRect m_imageFrame;
+    CGRect m_textFrame;
+    CGRect m_detailTextFrame;
     CustomTableView* m_tableView;
 }
 
@@ -25,9 +26,11 @@
 
 - (void)initCell:(CGFloat)initialWidth
                 :(CGFloat)leftInset
-                :(CGFloat)contentInset
-                :(CGFloat)separatorInset
                 :(CustomTableView*)tableView;
+
+- (void)setContentFrames:(CGRect)imageFrame
+                        :(CGRect)textFrame
+                        :(CGRect)detailTextFrame;
 
 - (void)layoutSubviews;
 

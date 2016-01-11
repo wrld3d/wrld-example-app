@@ -28,6 +28,9 @@ namespace ExampleApp
             extern UIColor* MenuSeparatorHeaderColor;
             extern UIColor* MenuSeparatorSubMenuColor;
             extern UIColor* TableSeparatorColor;
+            extern UIColor* TableSearchCellColor;
+            extern UIColor* TableSearchTextColor;
+            extern UIColor* TableSearchDetailTextColor;
             
             extern UIColor* TwitterDarkGrey;
             extern UIColor* TwitterLightGrey;

@@ -106,14 +106,16 @@
     const bool isPhone = ExampleApp::Helpers::UIHelpers::UsePhoneLayout();
     
     const float upperMargin = (isPhone ? 20.0f : 50.0f) * m_pixelScale;
-    const float tableCellWidth = 248.0f * m_pixelScale;
-    const float searchCountLabelWidth = 28.0f * m_pixelScale;
-    const float dragTabOffsetX = 28.0f * m_pixelScale;
+    const float tableCellWidth = 295.0f * m_pixelScale;
+    const float searchCountLabelWidth = 32.0f * m_pixelScale;
+    const float dragTabOffsetX = searchCountLabelWidth;
     const float dragTabSize = 50.0f * m_pixelScale;
     const float tableSpacing = 6.0f * m_pixelScale;
     
-    const float searchEditBoxInsetX = 12.0f * m_pixelScale;
-    const float searchEditBoxInsetY = 9.0f * m_pixelScale;
+    const float tableCellRightInset = 5.0f * m_pixelScale;
+    
+    const float searchEditBoxLeftInset = 8.0f * m_pixelScale;
+    const float searchEditBoxInsetY = 8.0f * m_pixelScale;
     
     m_tableSpacing = tableSpacing;
     
@@ -124,7 +126,7 @@
     m_dragTabOffScreenY = upperMargin * m_pixelScale;
     m_dragTabClosedOnScreenX = m_dragTabOffsetX;
     m_dragTabClosedOnScreenY = m_dragTabOffScreenY;
-    m_dragTabOpenOnScreenX = tableCellWidth + searchCountLabelWidth;
+    m_dragTabOpenOnScreenX = tableCellWidth + searchCountLabelWidth + tableCellRightInset;
     m_dragTabOpenOnScreenY = m_dragTabOffScreenY;
     
     self.pDragTab = [[[UIView alloc] initWithFrame:CGRectMake(m_dragTabOffScreenX, m_dragTabOffScreenY, m_dragTabWidth, m_dragTabHeight)] autorelease];
@@ -140,7 +142,7 @@
     m_titleContainerClosedOnScreenX = m_dragTabClosedOnScreenX;
     m_titleContainerClosedOnScreenY = m_titleContainerOffScreenY;
     
-    m_titleContainerOpenOnScreenWidth = tableCellWidth + searchCountLabelWidth;
+    m_titleContainerOpenOnScreenWidth = tableCellWidth + searchCountLabelWidth + tableCellRightInset;
     m_titleContainerOpenOnScreenHeight = m_titleContainerOffScreenHeight;
     m_titleContainerOpenOnScreenX = 0.0f;
     m_titleContainerOpenOnScreenY = m_titleContainerOffScreenY;
@@ -186,10 +188,10 @@
     self.pSearchEditBoxBackground.layer.cornerRadius = 5.0f;
     self.pSearchEditBoxBackground.layer.masksToBounds = YES;
     
-    m_searchEditBoxWidth = tableCellWidth - (searchEditBoxInsetX * 2.0f);
+    m_searchEditBoxWidth = tableCellWidth - searchEditBoxLeftInset;
     m_searchEditBoxHeight = dragTabSize - (searchEditBoxInsetY * 2.0f);
     m_searchEditBoxOffScreenAlpha = 0.0f;
-    m_searchEditBoxOffScreenX = searchEditBoxInsetX + searchCountLabelWidth;
+    m_searchEditBoxOffScreenX = searchCountLabelWidth + searchEditBoxLeftInset;
     m_searchEditBoxOffScreenY = -dragTabSize + searchEditBoxInsetY;
     m_searchEditBoxClosedOnScreenAlpha = 0.0f;
     m_searchEditBoxClosedOnScreenX = m_searchEditBoxOffScreenX;
@@ -210,7 +212,7 @@
     
     m_maxScreenSpace = m_screenHeight - (upperMargin + dragTabSize);
     
-    m_menuContainerWidth = tableCellWidth + searchCountLabelWidth;
+    m_menuContainerWidth = tableCellWidth + searchCountLabelWidth + tableCellRightInset;
     m_menuContainerHeight = m_maxScreenSpace;
     m_menuContainerOffScreenX = -m_menuContainerWidth;
     m_menuContainerOffScreenY = upperMargin + dragTabSize;

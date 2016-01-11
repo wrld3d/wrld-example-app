@@ -96,8 +96,6 @@ static NSString *CellIdentifier = @"searchCell";
         
         [(CustomTableViewCell*)cell initCell:(CGFloat)[m_pView.pSearchResultsTableView getCellWidth]
                                             :(CGFloat)[m_pView.pSearchResultsTableView getCellInset]
-                                            :4.0
-                                            :6.0
                                             :(CustomTableView*)tableView];
         
         cell.selectionStyle = UITableViewCellSelectionStyleGray;
@@ -142,12 +140,6 @@ static NSString *CellIdentifier = @"searchCell";
         return;
     }
     
-    cell.textLabel.font = [UIFont systemFontOfSize:12.0f];
-    cell.textLabel.textColor = ExampleApp::Helpers::ColorPalette::UiTextCopyColour;
-    [cell.textLabel sizeToFit];
-    
-    cell.detailTextLabel.textColor = ExampleApp::Helpers::ColorPalette::UiTextCopyColour;
-    
     cell.indentationLevel = 0;
     
     [self setCellInfo:customCell];
@@ -165,28 +157,49 @@ static NSString *CellIdentifier = @"searchCell";
     {
         std::string name = document["name"].GetString();
         
-        if(document.HasMember("icon"))
-        {
-            std::string icon = document["icon"].GetString();
-            std::string iconResourceName = ExampleApp::Helpers::IconResources::GetSmallIconPathForResourceName(icon);
-            
-            cell.imageView.image = ExampleApp::Helpers::ImageHelpers::LoadImage(iconResourceName);
-            cell.imageView.contentMode = UIViewContentModeScaleToFill;
-        }
-        else
-        {
-            std::string iconResourceName = ExampleApp::Helpers::IconResources::GetSmallIconPathForResourceName("misc");
-            
-            cell.imageView.image = ExampleApp::Helpers::ImageHelpers::LoadImage(iconResourceName);
-            cell.imageView.contentMode = UIViewContentModeScaleToFill;
-        }
+        const float imageSize = 30.0f;
+        const float imageInset = 6.0f;
+        
+        const std::string icon = document.HasMember("icon") ? document["icon"].GetString() : "misc";
+        const std::string iconResourceName = ExampleApp::Helpers::IconResources::GetSmallIconPathForResourceName(icon);
+        
+        cell.imageView.image = ExampleApp::Helpers::ImageHelpers::LoadImage(iconResourceName);
+        cell.imageView.contentMode = UIViewContentModeScaleToFill;
+        CGRect imageFrame = CGRectMake(imageInset,
+                                       imageInset,
+                                       imageSize,
+                                       imageSize);
+        
+        const float textInsetX = 48.0f;
+        const float textY = 4.0f;
+        const float detailTextY = 24.0f;
+        const float textWidth = [m_pView.pSearchResultsTableView getCellWidth] - textInsetX;
         
         cell.textLabel.text = [NSString stringWithUTF8String:name.c_str()];
+        cell.textLabel.font = [UIFont systemFontOfSize:15.0f];
+        cell.textLabel.textColor = ExampleApp::Helpers::ColorPalette::TableSearchTextColor;
         [cell.textLabel sizeToFit];
+        
+        CGRect textFrame = CGRectMake(textInsetX,
+                                      textY,
+                                      textWidth,
+                                      cell.textLabel.frame.size.height);
         
         std::string details = document["details"].GetString();
         
         cell.detailTextLabel.text = [NSString stringWithUTF8String:details.c_str()];
+        cell.detailTextLabel.font = [UIFont systemFontOfSize:11.0f];
+        cell.detailTextLabel.textColor = ExampleApp::Helpers::ColorPalette::TableSearchDetailTextColor;
+        [cell.detailTextLabel sizeToFit];
+        
+        CGRect detailTextFrame = CGRectMake(textInsetX,
+                                            detailTextY,
+                                            textWidth,
+                                            cell.detailTextLabel.frame.size.height);
+        
+        [(CustomTableViewCell*)cell setContentFrames:imageFrame
+                                                    :textFrame
+                                                    :detailTextFrame];
     }
 }
 
@@ -194,7 +207,7 @@ static NSString *CellIdentifier = @"searchCell";
 {
     [cell setInfo :false
                   :ExampleApp::Helpers::ColorPalette::BorderHudColor
-                  :ExampleApp::Helpers::ColorPalette::MainHudColor
+                  :ExampleApp::Helpers::ColorPalette::TableSearchCellColor
                   :ExampleApp::Helpers::ColorPalette::TableSubCellPressColor];
 }
 
