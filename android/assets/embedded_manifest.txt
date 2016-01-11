@@ -3,24 +3,24 @@
     "AssetExtension_OSX": ".png", 
     "AssetExtension_Windows": ".dds", 
     "AssetExtension_iOS": ".pvr", 
-    "AssetRoot_Android": "http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v452/", 
-    "AssetRoot_OSX": "http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v452/", 
-    "AssetRoot_Windows": "http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v452/", 
-    "AssetRoot_iOS": "http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v452/", 
+    "AssetRoot_Android": "http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v477/", 
+    "AssetRoot_OSX": "http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v477/", 
+    "AssetRoot_Windows": "http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v477/", 
+    "AssetRoot_iOS": "http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v477/", 
     "GlobeViewAltitude": 15000, 
     "GlobeViewThemeState": "GlobeView", 
     "LandmarkTexturePostfixes": [
         "", 
         "night"
     ], 
-    "LandmarkTextureRoot": "http://d2xvsc8j92rfya.cloudfront.net/landmark_textures/test_builds/v515/", 
+    "LandmarkTextureRoot": "http://d2xvsc8j92rfya.cloudfront.net/landmark_textures/test_builds/v540/", 
     "Themes": [
         {
             "BaseAltitude": 0, 
             "DriveOnRight": false, 
             "LocationLatLong": [
-                51.508636, 
-                -0.128059
+                51.508636000000003, 
+                -0.12805900000000001
             ], 
             "Name": "SummerLondon", 
             "PlaceNameStyles": [
@@ -36,74 +36,74 @@
                 {
                     "Category": "stat", 
                     "Color": [
-                        0.91, 
-                        0.906, 
-                        0.726
+                        0.91000000000000003, 
+                        0.90600000000000003, 
+                        0.72599999999999998
                     ], 
                     "Scale": 1.0
                 }, 
                 {
                     "Category": "coun", 
                     "Color": [
-                        0.91, 
-                        0.906, 
-                        0.726
+                        0.91000000000000003, 
+                        0.90600000000000003, 
+                        0.72599999999999998
                     ], 
                     "Scale": 1.0
                 }, 
                 {
                     "Category": "ccty", 
                     "Color": [
-                        0.94, 
-                        0.94, 
-                        0.94
+                        0.93999999999999995, 
+                        0.93999999999999995, 
+                        0.93999999999999995
                     ], 
-                    "Scale": 0.83
+                    "Scale": 0.82999999999999996
                 }, 
                 {
                     "Category": "city", 
                     "Color": [
-                        0.94, 
-                        0.94, 
-                        0.94
+                        0.93999999999999995, 
+                        0.93999999999999995, 
+                        0.93999999999999995
                     ], 
-                    "Scale": 0.83
+                    "Scale": 0.82999999999999996
                 }, 
                 {
                     "Category": "poin", 
                     "Color": [
-                        0.54, 
-                        0.9, 
+                        0.54000000000000004, 
+                        0.90000000000000002, 
                         1.0
                     ], 
-                    "Scale": 0.8
+                    "Scale": 0.80000000000000004
                 }, 
                 {
                     "Category": "dist", 
                     "Color": [
-                        0.94, 
-                        0.94, 
-                        0.94
+                        0.93999999999999995, 
+                        0.93999999999999995, 
+                        0.93999999999999995
                     ], 
                     "Scale": 1.0
                 }, 
                 {
                     "Category": "airp", 
                     "Color": [
-                        0.762, 
-                        0.732, 
-                        0.91
+                        0.76200000000000001, 
+                        0.73199999999999998, 
+                        0.91000000000000003
                     ], 
                     "Scale": 1.0
                 }, 
                 {
                     "Category": "park", 
                     "Color": [
-                        0.8, 
+                        0.80000000000000004, 
                         1.0, 
-                        0.66
+                        0.66000000000000003
                     ], 
-                    "Scale": 0.83
+                    "Scale": 0.82999999999999996
                 }, 
                 {
                     "Category": "golf", 
@@ -112,7 +112,7 @@
                         1.0, 
                         0.0
                     ], 
-                    "Scale": 0.8
+                    "Scale": 0.80000000000000004
                 }
             ], 
             "States": [
@@ -120,17 +120,17 @@
                     "AlternativeAmbientLight": [
                         0.43137254901960786, 
                         0.5490196078431373, 
-                        0.6274509803921569
+                        0.62745098039215685
                     ], 
                     "AmbientLight": [
                         0.43137254901960786, 
                         0.5490196078431373, 
-                        0.6274509803921569
+                        0.62745098039215685
                     ], 
                     "BackLight": [
                         0.43137254901960786, 
                         0.43137254901960786, 
-                        0.1568627450980392
+                        0.15686274509803921
                     ], 
                     "FillLight": [
                         0.19607843137254902, 
@@ -144,9 +144,9 @@
                     ], 
                     "FogIntensity": 0.0, 
                     "KeyLight": [
-                        0.7058823529411765, 
-                        0.6274509803921569, 
-                        0.3137254901960784
+                        0.70588235294117652, 
+                        0.62745098039215685, 
+                        0.31372549019607843
                     ], 
                     "LandmarkPostfix": "", 
                     "LightMapColor": [
@@ -158,8 +158,8 @@
                     "Name": "DayDefault", 
                     "ShadowColor": [
                         0.45098039215686275, 
-                        0.5686274509803921, 
-                        0.7058823529411765
+                        0.56862745098039214, 
+                        0.70588235294117652
                     ], 
                     "Textures": {
                         "AsyncPlaceholderDiffuse": "SanFrancisco_TerrainTexture3", 
