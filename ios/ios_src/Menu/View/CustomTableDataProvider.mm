@@ -12,6 +12,9 @@
 #include "ImageHelpers.h"
 #include "UIHelpers.h"
 
+static const float HeaderCellFontSize = 22.0f;
+static const float SubSectionCellFontSize = 16.0f;
+
 static NSString *HeaderCellIdentifier = @"headercell";
 static NSString *SubSectionCellIdentifier = @"subsectioncell";
 
@@ -226,15 +229,15 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
     ExampleApp::Menu::View::IMenuSectionViewModel& section = *m_currentSections.at(indexPath.section);
     UIImageView *openableArrow = (UIImageView*)[cell.contentView viewWithTag:SubItemCellOpenableMenuArrowTag];
     
+    cell.indentationLevel = 0;
+    
     bool isHeader = (section.IsExpandable() && indexPath.row == 0) || !section.IsExpandable();
-
+    
+    openableArrow.hidden = !(isHeader && section.IsExpandable());
+    [self setCellInfo:customCell :isHeader];
+    
     if(isHeader)
     {
-        cell.textLabel.font = [UIFont systemFontOfSize:[self getTextLabelFontSize:true]];
-        cell.textLabel.textColor = ExampleApp::Helpers::ColorPalette::UiTextHeaderColour;
-        cell.indentationLevel = 0;
-        openableArrow.hidden = !section.IsExpandable();
-
         if(section.IsExpanded())
         {
             [self showOpenableArrowOpen :cell];
@@ -243,21 +246,6 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
         {
             [self showOpenableArrowClosed :cell];
         }
-
-        [self setCellInfo:customCell:true];
-    }
-    else
-    {
-        cell.textLabel.font = [UIFont systemFontOfSize:[self getTextLabelFontSize:false]];
-        cell.textLabel.textColor = ExampleApp::Helpers::ColorPalette::UiTextCopyColour;
-        [cell.textLabel sizeToFit];
-        
-        cell.detailTextLabel.textColor = ExampleApp::Helpers::ColorPalette::UiTextCopyColour;
-        
-        cell.indentationLevel = 0;
-        
-        openableArrow.hidden = true;
-        [self setCellInfo:customCell:false];
     }
 }
 
@@ -282,47 +270,54 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
     {
         std::string name = document["name"].GetString();
         
+        CGRect imageFrame = CGRectZero;
+        
         if(document.HasMember("icon"))
         {
+            const float imageSize = 26.0f;
+            const float imageInsetX = 6.0f;
+            const float imageInsetY = 8.0f;
+            
             std::string icon = document["icon"].GetString();
             std::string iconResourceName = ExampleApp::Helpers::IconResources::GetSmallIconPathForResourceName(icon);
             
             cell.imageView.image = ExampleApp::Helpers::ImageHelpers::LoadImage(iconResourceName);
             cell.imageView.contentMode = UIViewContentModeScaleToFill;
+            
+            imageFrame = CGRectMake(imageInsetX,
+                                    imageInsetY,
+                                    imageSize,
+                                    imageSize);
         }
         else
         {
             cell.imageView.image = nil;
         }
         
-        for (UIView* subview in cell.contentView.subviews)
-        {
-            if([subview tag] != SubItemCellOpenableMenuArrowTag)
-            {
-                [subview removeFromSuperview];
-            }
-        }
+        const float textInsetX = cell.imageView.image == nil ? 9.0f : 38.0f;
+        const float textY = 0.0f;
+        const float textWidth = [m_pView.pTableView getCellWidth] - textInsetX;
+        const float textHeight = isHeader ? CellConstants::SectionHeaderCellHeight : CellConstants::SubSectionCellHeight;
         
-        const float subLabelWidth = 160.0f;
-        const float subLabelHeight = isHeader ? CellConstants::SectionHeaderCellHeight : CellConstants::SubSectionCellHeight;
-        const float subLabelInset = 9.0f;
-        const float subLabelImageInset = 8.0f + subLabelHeight;
-        const float subLabelX = static_cast<float>(cell.imageView.image != nil ? subLabelImageInset : subLabelInset);
+        cell.textLabel.text = [NSString stringWithUTF8String:name.c_str()];
+        cell.textLabel.font = [UIFont systemFontOfSize: [self getTextLabelFontSize:isHeader]];
+        cell.textLabel.textColor = isHeader ? ExampleApp::Helpers::ColorPalette::TableHeaderTextColor : ExampleApp::Helpers::ColorPalette::TableSubCellTextColor;
+        [cell.textLabel sizeToFit];
         
-        UILabel *subLabel = [[UILabel alloc] initWithFrame:CGRectMake(subLabelX, 0, subLabelWidth, subLabelHeight)];
-        subLabel.backgroundColor = [UIColor clearColor];
-        subLabel.textAlignment = NSTextAlignmentLeft;
-        subLabel.text = [NSString stringWithUTF8String:name.c_str()];
-        subLabel.textColor = isHeader ? ExampleApp::Helpers::ColorPalette::UiTextHeaderColour : ExampleApp::Helpers::ColorPalette::UiTextCopyColour;
-        subLabel.highlightedTextColor = ExampleApp::Helpers::ColorPalette::WhiteTone;
-        subLabel.font = [UIFont systemFontOfSize: [self getTextLabelFontSize:isHeader]];
-        [cell.contentView addSubview: subLabel];
+        CGRect textFrame = CGRectMake(textInsetX,
+                                      textY,
+                                      textWidth,
+                                      textHeight);
+        
+        [(CustomTableViewCell*)cell setContentFrames:imageFrame
+                                                    :textFrame
+                                                    :CGRectZero];
     }
 }
 
 - (float)getTextLabelFontSize :(bool)headline
 {
-    return headline ? 25.0 : 20.f;
+    return headline ? HeaderCellFontSize : SubSectionCellFontSize;
 }
 
 - (void) setCellInfo:(CustomTableViewCell*)cell :(bool)isHeader
@@ -330,7 +325,7 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
     [cell setInfo :isHeader
                   :ExampleApp::Helpers::ColorPalette::BorderHudColor
                   :isHeader ? ExampleApp::Helpers::ColorPalette::BorderHudColor : ExampleApp::Helpers::ColorPalette::MainHudColor
-                  :isHeader ? ExampleApp::Helpers::ColorPalette::ButtonPressColor : ExampleApp::Helpers::ColorPalette::TableSubCellPressColor];
+                  :isHeader ? ExampleApp::Helpers::ColorPalette::TableHeaderPressColor : ExampleApp::Helpers::ColorPalette::TableSubCellPressColor];
 }
 
 

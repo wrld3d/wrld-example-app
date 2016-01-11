@@ -129,8 +129,11 @@
     m_dragTabOpenOnScreenX = tableCellWidth + searchCountLabelWidth + tableCellRightInset;
     m_dragTabOpenOnScreenY = m_dragTabOffScreenY;
     
-    self.pDragTab = [[[UIView alloc] initWithFrame:CGRectMake(m_dragTabOffScreenX, m_dragTabOffScreenY, m_dragTabWidth, m_dragTabHeight)] autorelease];
-    self.pDragTab.backgroundColor = ExampleApp::Helpers::ColorPalette::BorderHudColor;
+    self.pDragTab = [[[UIButton alloc] initWithFrame:CGRectMake(m_dragTabOffScreenX, m_dragTabOffScreenY, m_dragTabWidth, m_dragTabHeight)] autorelease];
+    [self.pDragTab setBackgroundImage:ExampleApp::Helpers::ImageHelpers::ImageFromColor(ExampleApp::Helpers::ColorPalette::BorderHudColor)
+                             forState:UIControlStateNormal];
+    [self.pDragTab setBackgroundImage:ExampleApp::Helpers::ImageHelpers::ImageFromColor(ExampleApp::Helpers::ColorPalette::ButtonPressColor)
+                             forState:UIControlStateHighlighted];
     
     m_titleContainerOffScreenWidth = 0.0f;
     m_titleContainerOffScreenHeight = m_dragTabHeight;
@@ -165,7 +168,7 @@
     self.pSearchCountLabel = [[[UILabel alloc] initWithFrame:CGRectMake(m_searchCountLabelOffScreenX, m_searchCountLabelOffScreenY, m_searchCountLabelWidth, m_searchCountLabelHeight)] autorelease];
     [self.pSearchCountLabel setBackgroundColor:[UIColor clearColor]];
     [self.pSearchCountLabel setFont:[UIFont systemFontOfSize:16.0f]];
-    [self.pSearchCountLabel setTextColor:ExampleApp::Helpers::ColorPalette::UiTextHeaderColour];
+    [self.pSearchCountLabel setTextColor:ExampleApp::Helpers::ColorPalette::MainHudColor];
     [self.pSearchCountLabel setAlpha:m_searchCountLabelOffScreenAlpha];
     [self.pSearchCountLabel setTextAlignment:NSTextAlignmentCenter];
     [self.pSearchCountLabel setHidden:YES];

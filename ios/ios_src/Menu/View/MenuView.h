@@ -105,7 +105,7 @@
 
 - (void)updateMenuSections:(ExampleApp::Menu::View::TSections*)sections;
 
-@property (nonatomic, retain) UIView* pDragTab;
+@property (nonatomic, retain) UIButton* pDragTab;
 @property (nonatomic, retain) UIView* pTitleContainer;
 @property (nonatomic, retain) UIView* pMenuContainer;
 @property (nonatomic, retain) UIView* pTopTableSeparator;

@@ -19,18 +19,22 @@ namespace ExampleApp
             extern UIColor* MainHudColor;
             extern UIColor* BorderHudColor;
             extern UIColor* ButtonPressColor;
-            extern UIColor* TableSubCellPressColor;
+            
             extern UIColor* ModalBackgroundColor;
             extern UIColor* LinkTone;
             extern UIColor* UiTextHeaderColour;
             extern UIColor* UiTextCopyColour;
             extern UIColor* UiBaseColour;
-            extern UIColor* MenuSeparatorHeaderColor;
-            extern UIColor* MenuSeparatorSubMenuColor;
+            
+            extern UIColor* TableHeaderPressColor;
+            extern UIColor* TableSubCellPressColor;
+            extern UIColor* TableSeparatorHeaderColor;
             extern UIColor* TableSeparatorColor;
             extern UIColor* TableSearchCellColor;
             extern UIColor* TableSearchTextColor;
             extern UIColor* TableSearchDetailTextColor;
+            extern UIColor* TableHeaderTextColor;
+            extern UIColor* TableSubCellTextColor;
             
             extern UIColor* TwitterDarkGrey;
             extern UIColor* TwitterLightGrey;

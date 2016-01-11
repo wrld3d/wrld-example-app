@@ -72,8 +72,11 @@
     m_dragTabOpenOnScreenX = m_screenWidth - (m_dragTabWidth + tableCellWidth);
     m_dragTabOpenOnScreenY = m_dragTabOffScreenY;
     
-    self.pDragTab = [[[UIView alloc] initWithFrame:CGRectMake(m_dragTabOffScreenX, m_dragTabOffScreenY, m_dragTabWidth, m_dragTabHeight)] autorelease];
-    self.pDragTab.backgroundColor = ExampleApp::Helpers::ColorPalette::BorderHudColor;
+    self.pDragTab = [[[UIButton alloc] initWithFrame:CGRectMake(m_dragTabOffScreenX, m_dragTabOffScreenY, m_dragTabWidth, m_dragTabHeight)] autorelease];
+    [self.pDragTab setBackgroundImage:ExampleApp::Helpers::ImageHelpers::ImageFromColor(ExampleApp::Helpers::ColorPalette::BorderHudColor)
+                             forState:UIControlStateNormal];
+    [self.pDragTab setBackgroundImage:ExampleApp::Helpers::ImageHelpers::ImageFromColor(ExampleApp::Helpers::ColorPalette::ButtonPressColor)
+                             forState:UIControlStateHighlighted];
     
     m_titleContainerOffScreenWidth = 0.0f;
     m_titleContainerOffScreenHeight = m_dragTabHeight;
