@@ -53,10 +53,10 @@ namespace ExampleApp
             {
                 return m_icon;
             }
-
-            void MenuItemModel::Select()
+            
+            IMenuOption& MenuItemModel::MenuOption()
             {
-                m_pOption->Select();
+                return *m_pOption;
             }
         }
     }

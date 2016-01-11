@@ -34,6 +34,11 @@ namespace ExampleApp
                 
                 virtual void InsertSearchClearedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
                 virtual void RemoveSearchClearedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
+                
+                virtual void InsertSearchItemSelectedCallback(Eegeo::Helpers::ICallback1<int>& callback) = 0;
+                virtual void RemoveSearchItemSelectedCallback(Eegeo::Helpers::ICallback1<int>& callback) = 0;
+                
+                virtual void HandleSearchItemSelected(int index) = 0;
             };
         }
     }

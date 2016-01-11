@@ -7,7 +7,7 @@
 #include "UIColors.h"
 #include "IconResources.h"
 #include "document.h"
-#include "MenuViewInterop.h"
+#include "SearchMenuViewInterop.h"
 #include "MenuSectionViewModel.h"
 #include "ImageHelpers.h"
 #include "UIHelpers.h"
@@ -129,8 +129,8 @@ static NSString *CellIdentifier = @"searchCell";
         return;
     }
 
-    ExampleApp::Menu::View::MenuViewInterop* interop = [m_pView getInterop];
-    interop->HandleItemSelected(static_cast<int>(indexPath.section), static_cast<int>(indexPath.row));
+    ExampleApp::SearchMenu::View::SearchMenuViewInterop* interop = [m_pView getSearchMenuInterop];
+    interop->HandleSearchItemSelected(static_cast<int>(indexPath.row));
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath

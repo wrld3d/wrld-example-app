@@ -31,6 +31,7 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<SearchMenuController, const Search::SearchQueryResponseReceivedMessage&> m_receivedQueryResponseHandler;
                 Eegeo::Helpers::TCallback1<SearchMenuController, const std::string&> m_onSearchCallback;
                 Eegeo::Helpers::TCallback0<SearchMenuController> m_onSearchClearedCallback;
+                Eegeo::Helpers::TCallback1<SearchMenuController, int> m_onSearchItemSelectedCallback;
                 Eegeo::Helpers::TCallback1<SearchMenuController, const AppModes::AppModeChangedMessage&> m_appModeChangedCallback;
                 Eegeo::Helpers::TCallback0<SearchMenuController> m_onModalBackgroundTappedCallback;
                 
@@ -53,6 +54,8 @@ namespace ExampleApp
                 void OnViewClicked();
                 
                 void OnSearchCleared();
+                
+                void OnSearchItemSelected(int& index);
                 
                 void OnModalBackgroundTapped();
                 

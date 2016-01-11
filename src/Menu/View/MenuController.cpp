@@ -1,6 +1,7 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "MenuController.h"
+#include "IMenuOption.h"
 #include "IOpenableControlViewModel.h"
 #include "MenuDragStateChangedMessage.h"
 
@@ -249,8 +250,7 @@ namespace ExampleApp
                 else
                 {
                     int index = section.IsExpandable() ? itemIndex - 1 : itemIndex;
-                    MenuItemModel item = section.GetItemAtIndex(index);
-                    item.Select();
+                    section.GetItemAtIndex(index).MenuOption().Select();
                 }
             }
 

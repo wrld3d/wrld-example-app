@@ -23,6 +23,7 @@ namespace ExampleApp
                 SearchMenuView* m_pView;
                 Eegeo::Helpers::CallbackCollection1<const std::string&> m_searchPerformedCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_searchClearedCallbacks;
+                Eegeo::Helpers::CallbackCollection1<int> m_searchItemSelectedCallbacks;
 
             public:
                 SearchMenuViewInterop(SearchMenuView* pView)
@@ -64,7 +65,7 @@ namespace ExampleApp
                 {
                     [m_pView collapseAll];
                 }
-
+                
                 void InsertSearchPeformedCallback(Eegeo::Helpers::ICallback1<const std::string&>& callback)
                 {
                     m_searchPerformedCallbacks.AddCallback(callback);
@@ -93,6 +94,21 @@ namespace ExampleApp
                 void OnSearchCleared()
                 {
                     m_searchClearedCallbacks.ExecuteCallbacks();
+                }
+                
+                void InsertSearchItemSelectedCallback(Eegeo::Helpers::ICallback1<int>& callback)
+                {
+                    m_searchItemSelectedCallbacks.AddCallback(callback);
+                }
+                
+                void RemoveSearchItemSelectedCallback(Eegeo::Helpers::ICallback1<int>& callback)
+                {
+                    m_searchItemSelectedCallbacks.RemoveCallback(callback);
+                }
+                
+                void HandleSearchItemSelected(int index)
+                {
+                    m_searchItemSelectedCallbacks.ExecuteCallbacks(index);
                 }
             };
         }

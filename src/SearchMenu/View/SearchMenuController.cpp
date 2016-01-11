@@ -3,6 +3,7 @@
 #include "SearchMenuController.h"
 
 #include "CategorySearchRepository.h"
+#include "IMenuOption.h"
 #include "IModalBackgroundView.h"
 #include "ISearchMenuView.h"
 #include "SearchQuery.h"
@@ -36,11 +37,13 @@ namespace ExampleApp
             , m_receivedQueryResponseHandler(this, &SearchMenuController::OnSearchQueryResponseReceivedMessage)
             , m_onSearchCallback(this, &SearchMenuController::OnSearch)
             , m_onSearchClearedCallback(this, &SearchMenuController::OnSearchCleared)
+            , m_onSearchItemSelectedCallback(this, &SearchMenuController::OnSearchItemSelected)
             , m_appModeChangedCallback(this, &SearchMenuController::OnAppModeChanged)
             , m_onModalBackgroundTappedCallback(this, &SearchMenuController::OnModalBackgroundTapped)
             {
                 m_searchMenuView.InsertSearchPeformedCallback(m_onSearchCallback);
                 m_searchMenuView.InsertSearchClearedCallback(m_onSearchClearedCallback);
+                m_searchMenuView.InsertSearchItemSelectedCallback(m_onSearchItemSelectedCallback);
                 
                 Menu::View::IMenuModel& searchSectionMenuModel = m_searchSectionViewModel.GetModel();
                 searchSectionMenuModel.InsertItemAddedCallback(m_onSearchItemAddedCallback);
@@ -67,6 +70,7 @@ namespace ExampleApp
                 searchSectionMenuModel.RemoveItemRemovedCallback(m_onSearchItemRemovedCallback);
                 searchSectionMenuModel.RemoveItemAddedCallback(m_onSearchItemAddedCallback);
                 
+                m_searchMenuView.RemoveSearchItemSelectedCallback(m_onSearchItemSelectedCallback);
                 m_searchMenuView.RemoveSearchClearedCallback(m_onSearchClearedCallback);
                 m_searchMenuView.RemoveSearchPeformedCallback(m_onSearchCallback);
             }
@@ -146,6 +150,11 @@ namespace ExampleApp
                 m_searchMenuView.SetSearchResultCount(0);
                 
                 m_messageBus.Publish(SearchResultMenu::SearchResultViewClearedMessage());
+            }
+            
+            void SearchMenuController::OnSearchItemSelected(int& index)
+            {
+                m_searchSectionViewModel.GetItemAtIndex(index).MenuOption().Select();
             }
             
             void SearchMenuController::OnModalBackgroundTapped()
