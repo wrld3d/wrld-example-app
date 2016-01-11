@@ -66,6 +66,8 @@
 @property (nonatomic, retain) UILabel* pSearchCountLabel;
 @property (nonatomic, retain) UIView* pSearchEditBoxBackground;
 @property (nonatomic, retain) UITextField* pSearchEditBox;
+@property (nonatomic, retain) UIView* pSearchEditBoxClearButtonContainer;
+@property (nonatomic, retain) UIButton* pSearchEditBoxClearButton;
 @property (nonatomic, retain) UIView* pSearchTableSeparator;
 
 @end
@@ -116,6 +118,9 @@
     
     const float searchEditBoxLeftInset = 8.0f * m_pixelScale;
     const float searchEditBoxInsetY = 8.0f * m_pixelScale;
+    
+    const float searchClearButtonSize = 24.0f * m_pixelScale;
+    const float searchClearButtonRightInset = 6.0f * m_pixelScale;
     
     m_tableSpacing = tableSpacing;
     
@@ -205,13 +210,24 @@
     
     self.pSearchEditBox = [[[UITextField alloc] initWithFrame:CGRectMake(m_searchEditBoxOffScreenX, m_searchEditBoxOffScreenY, m_searchEditBoxWidth, m_searchEditBoxHeight)] autorelease];
     self.pSearchEditBox.text = @"";
-    self.pSearchEditBox.textColor = ExampleApp::Helpers::ColorPalette::UiTextCopyColour;
+    self.pSearchEditBox.textColor = ExampleApp::Helpers::ColorPalette::TextFieldEnabledColor;
+    self.pSearchEditBox.font = [UIFont systemFontOfSize:18.0f];
     self.pSearchEditBox.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-    self.pSearchEditBox.clearButtonMode = UITextFieldViewModeAlways;
+    self.pSearchEditBox.clearButtonMode = UITextFieldViewModeNever;
     self.pSearchEditBox.backgroundColor = [UIColor clearColor];
     self.pSearchEditBox.borderStyle = UITextBorderStyleNone;
     self.pSearchEditBox.returnKeyType = UIReturnKeySearch;
     self.pSearchEditBox.placeholder = @"Enter search term";
+    
+    self.pSearchEditBoxClearButtonContainer = [[[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, searchClearButtonSize + searchClearButtonRightInset, searchClearButtonSize)] autorelease];
+    
+    self.pSearchEditBoxClearButton = [[[UIButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, searchClearButtonSize, searchClearButtonSize)] autorelease];
+    [self.pSearchEditBoxClearButton setImage:[UIImage imageNamed:@"search_results_close.png"] forState:UIControlStateNormal];
+    
+    [self.pSearchEditBoxClearButtonContainer addSubview:self.pSearchEditBoxClearButton];
+    
+    self.pSearchEditBox.rightView = self.pSearchEditBoxClearButtonContainer;
+    self.pSearchEditBox.rightViewMode = UITextFieldViewModeAlways;
     
     m_maxScreenSpace = m_screenHeight - (upperMargin + dragTabSize);
     
@@ -294,7 +310,7 @@
     
     self.frame = CGRectZero;
     
-    self.pInputDelegate = [[[SearchMenuInputDelegate alloc] initWithTextField:self.pSearchEditBox interop:m_pSearchMenuInterop] autorelease];
+    self.pInputDelegate = [[[SearchMenuInputDelegate alloc] initWithTextField:self.pSearchEditBox clearButton:self.pSearchEditBoxClearButton interop:m_pSearchMenuInterop] autorelease];
 }
 
 - (void)dealloc
@@ -321,6 +337,12 @@
     
     [self.pMenuContainer removeFromSuperview];
     [self.pMenuContainer release];
+    
+    [self.pSearchEditBoxClearButton removeFromSuperview];
+    [self.pSearchEditBoxClearButton release];
+    
+    [self.pSearchEditBoxClearButtonContainer removeFromSuperview];
+    [self.pSearchEditBoxClearButtonContainer release];
     
     [self.pSearchEditBox removeFromSuperview];
     [self.pSearchEditBox release];
@@ -594,7 +616,7 @@
 
 - (void)onRowSelected
 {
-    [self.pSearchEditBox resignFirstResponder];
+    [self.pInputDelegate clearSearch];
 }
 
 @end

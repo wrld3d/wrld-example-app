@@ -119,7 +119,7 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
         const float openableArrowWidth = pOpenableMenuArrowView.frame.size.width;
         const float openableArrowHeight = pOpenableMenuArrowView.frame.size.height;
         
-        const float openableArrowRightInset = 23.0f - openableArrowWidth / 2.0f;
+        const float openableArrowRightInset = 18.0f + openableArrowWidth / 2.0f;
         const float openableArrowTopInset = (CellConstants::SectionHeaderCellHeight - openableArrowHeight) * 0.5f;
         
         const float openableArrowX = [m_pView.pTableView getCellWidth] - openableArrowRightInset;

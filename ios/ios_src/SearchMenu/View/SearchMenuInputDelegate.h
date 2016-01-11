@@ -9,6 +9,7 @@
 @interface SearchMenuInputDelegate : NSObject<UITextFieldDelegate>
 
 - (id)initWithTextField:(UITextField*)textField
+            clearButton:(UIButton*)clearButton
                 interop:(ExampleApp::SearchMenu::View::SearchMenuViewInterop*)interop;
 
 - (void) enableEdit;
@@ -19,5 +20,7 @@
 
 - (void) setEditText :(NSString*)searchText
                      :(bool)isCategory;
+
+- (void) clearSearch;
 
 @end

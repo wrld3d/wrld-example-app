@@ -25,8 +25,8 @@ namespace ExampleApp
             UIColor* LinkTone = [[UIColor alloc] initWithRed:0.f/255.f green:0.f/255.f blue:255.f/255.f alpha:1.f];
             UIColor* UiBaseColour = [UIColor blueColor];
             
-            UIColor* textFieldEnabledColor;
-            UIColor* textFieldDisabledColor;
+            UIColor* TextFieldEnabledColor = [[UIColor alloc] initWithRed:32.f/255.f green:32.f/255.f blue:32.f/255.f alpha:1.f];
+            UIColor* TextFieldDisabledColor = [[UIColor alloc] initWithRed:109.f/255.f green:109.f/255.f blue:109.f/255.f alpha:1.f];
             
             UIColor* TableHeaderPressColor = [[UIColor alloc] initWithRed:130.f/255.f green:235.f/255.f blue:255.f/255.f alpha:1.f];
             UIColor* TableSubCellPressColor = [[UIColor alloc] initWithRed:84.f/255.f green:104.f/255.f blue:204.f/255.f alpha:1.f];

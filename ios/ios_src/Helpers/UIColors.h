@@ -26,6 +26,9 @@ namespace ExampleApp
             extern UIColor* UiTextCopyColour;
             extern UIColor* UiBaseColour;
             
+            extern UIColor* TextFieldEnabledColor;
+            extern UIColor* TextFieldDisabledColor;
+            
             extern UIColor* TableHeaderPressColor;
             extern UIColor* TableSubCellPressColor;
             extern UIColor* TableSeparatorHeaderColor;
