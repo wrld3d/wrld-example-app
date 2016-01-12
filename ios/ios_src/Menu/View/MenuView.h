@@ -19,6 +19,8 @@
     ExampleApp::Helpers::UIAnimation::ViewAnimationController* m_onScreenAnimationController;
     ExampleApp::Helpers::UIAnimation::ViewAnimationController* m_openAnimationController;
     
+    float m_stateChangeAnimationTimeSeconds;
+    
     float m_screenWidth;
     float m_screenHeight;
     float m_pixelScale;

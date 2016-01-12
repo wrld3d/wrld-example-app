@@ -48,6 +48,23 @@ namespace ExampleApp
                 m_animators.push_back(animator);
             }
             
+            void ViewAnimationController::DeleteAnimatorsForView(UIView* view)
+            {
+                for(std::vector<ViewAnimatorBase*>::iterator it = m_animators.begin(); it != m_animators.end(); ++it)
+                {
+                    if((*it)->GetView() == view)
+                    {
+                        Eegeo_DELETE (*it);
+                        it = m_animators.erase(it);
+                        
+                        if(it == m_animators.end())
+                        {
+                            break;
+                        }
+                    }
+                }
+            }
+            
             void ViewAnimationController::Play()
             {
                 m_isPlayingForward = true;

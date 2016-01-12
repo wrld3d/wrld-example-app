@@ -63,6 +63,11 @@ namespace ExampleApp
             {
                 return m_animationPeriodSeconds + m_startDelaySeconds;
             }
+            
+            UIView* ViewAnimatorBase::GetView() const
+            {
+                return m_view;
+            }
         }
     }
 }

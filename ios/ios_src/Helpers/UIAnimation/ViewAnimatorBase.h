@@ -37,6 +37,8 @@ namespace ExampleApp
                 bool IsActive() const;
                 
                 double DurationSeconds() const;
+                
+                UIView* GetView() const;
             };
         }
     }

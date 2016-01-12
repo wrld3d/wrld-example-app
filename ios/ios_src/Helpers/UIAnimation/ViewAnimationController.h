@@ -37,6 +37,8 @@ namespace ExampleApp
                 
                 void AddAnimator(ViewAnimatorBase* animator);
                 
+                void DeleteAnimatorsForView(UIView* view);
+                
                 void Play();
                 
                 void PlayReverse();

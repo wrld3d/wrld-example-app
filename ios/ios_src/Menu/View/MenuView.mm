@@ -26,8 +26,6 @@ enum MenuState
     UIPanGestureRecognizer* m_panGestureRecognizer;
     UITapGestureRecognizer* m_tapGestureRecogniser;
     
-    float m_stateChangeAnimationTimeSeconds;
-    
     CGPoint m_dragStartPos;
     CGPoint m_controlStartPos;
     
@@ -121,7 +119,6 @@ enum MenuState
 
 - (void) setOffscreenPartsHiddenState:(bool)hidden
 {
-    self.pTitleContainer.hidden = hidden;
     self.pTableView.hidden = hidden;
 }
 

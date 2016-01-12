@@ -2,6 +2,7 @@
 
 #include "ViewSizeAnimator.h"
 
+#include <cmath>
 #include <Types.h>
 
 namespace ExampleApp
@@ -35,8 +36,8 @@ namespace ExampleApp
                 const Eegeo::v2& currentSize = (*m_curve)((float)timerSeconds, m_startSize, m_deltaSize, (float)m_animationPeriodSeconds);
                 
                 CGRect frame = m_view.frame;
-                frame.size.width = currentSize.x;
-                frame.size.height = currentSize.y;
+                frame.size.width = std::ceil(currentSize.x);
+                frame.size.height = std::ceil(currentSize.y);
                 m_view.frame = frame;
             }
         }

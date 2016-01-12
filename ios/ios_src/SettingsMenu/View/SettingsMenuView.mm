@@ -200,6 +200,11 @@
     [super dealloc];
 }
 
+- (void) setOffscreenPartsHiddenState:(bool)hidden
+{
+    self.pTitleContainer.hidden = hidden;
+}
+
 - (void)initializeAnimators
 {
     [super initializeAnimators];

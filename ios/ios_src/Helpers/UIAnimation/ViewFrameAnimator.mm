@@ -2,6 +2,7 @@
 
 #include "ViewFrameAnimator.h"
 
+#include <cmath>
 #include <Types.h>
 
 namespace ExampleApp
@@ -37,10 +38,13 @@ namespace ExampleApp
             
             void ViewFrameAnimator::OnUpdate(double timerSeconds)
             {
-                const Eegeo::v2& currentPositon = (*m_curve)((float)timerSeconds, m_startPosition, m_deltaPosition, (float)m_animationPeriodSeconds);
+                const Eegeo::v2& currentPosition = (*m_curve)((float)timerSeconds, m_startPosition, m_deltaPosition, (float)m_animationPeriodSeconds);
                 const Eegeo::v2& currentSize = (*m_curve)((float)timerSeconds, m_startSize, m_deltaSize, (float)m_animationPeriodSeconds);
                 
-                m_view.frame = CGRectMake(currentPositon.x, currentPositon.y, currentSize.x, currentSize.y);
+                m_view.frame = CGRectMake(std::ceil(currentPosition.x),
+                                          std::ceil(currentPosition.y),
+                                          std::ceil(currentSize.x),
+                                          std::ceil(currentSize.y));
             }
         }
     }

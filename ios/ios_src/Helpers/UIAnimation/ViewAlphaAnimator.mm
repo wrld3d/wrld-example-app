@@ -2,6 +2,7 @@
 
 #include "ViewAlphaAnimator.h"
 
+#include <cmath>
 #include "Types.h"
 
 namespace ExampleApp
@@ -32,7 +33,7 @@ namespace ExampleApp
             
             void ViewAlphaAnimator::OnUpdate(double timerSeconds)
             {
-                m_view.alpha = (*m_curve)((float)timerSeconds, m_startAlpha, m_deltaAlpha, (float)m_animationPeriodSeconds);
+                m_view.alpha = std::ceil((*m_curve)((float)timerSeconds, m_startAlpha, m_deltaAlpha, (float)m_animationPeriodSeconds));
             }
         }
     }

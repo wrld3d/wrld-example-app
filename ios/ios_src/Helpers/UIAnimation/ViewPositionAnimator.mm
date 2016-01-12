@@ -2,6 +2,7 @@
 
 #include "ViewPositionAnimator.h"
 
+#include <cmath>
 #include <Types.h>
 
 namespace ExampleApp
@@ -32,11 +33,11 @@ namespace ExampleApp
             
             void ViewPositionAnimator::OnUpdate(double timerSeconds)
             {
-                const Eegeo::v2& currentPositon = (*m_curve)((float)timerSeconds, m_startPosition, m_deltaPosition, (float)m_animationPeriodSeconds);
+                const Eegeo::v2& currentPosition = (*m_curve)((float)timerSeconds, m_startPosition, m_deltaPosition, (float)m_animationPeriodSeconds);
                 
                 CGRect frame = m_view.frame;
-                frame.origin.x = currentPositon.x;
-                frame.origin.y = currentPositon.y;
+                frame.origin.x = std::ceil(currentPosition.x);
+                frame.origin.y = std::ceil(currentPosition.y);
                 m_view.frame = frame;
             }
         }

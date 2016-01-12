@@ -22,9 +22,10 @@
     SearchResultsTableDataProvider* m_pSearchResultsDataProvider;
     ExampleApp::SearchMenu::View::SearchMenuViewInterop* m_pSearchMenuInterop;
     
+    ExampleApp::Helpers::UIAnimation::ViewAnimationController* m_pOnScreenResultsAnimationController;
     ExampleApp::Helpers::UIAnimation::ViewAnimationController* m_pAnchorAnimationController;
     
-    bool m_anchorVisible;
+    bool m_resultsVisible;
     
     float m_anchorAnimationDurationSeconds;
     
@@ -32,6 +33,9 @@
     float m_animationDurationSeconds;
     
     float m_maxScreenSpace;
+    
+    float m_titleContainerClosedOnScreenWidthWithResults;
+    float m_titleContainerClosedOnScreenXWithResults;
     
     float m_searchCountLabelWidth;
     float m_searchCountLabelHeight;
@@ -44,6 +48,9 @@
     float m_searchCountLabelOpenOnScreenAlpha;
     float m_searchCountLabelOpenOnScreenX;
     float m_searchCountLabelOpenOnScreenY;
+    
+    float m_searchCountLabelClosedOnScreenAlphaWithResults;
+    float m_searchCountLabelClosedOnScreenYWithResults;
     
     float m_searchEditBoxBackgroundOffScreenWidth;
     float m_searchEditBoxBackgroundOffScreenHeight;
@@ -116,9 +123,10 @@
 {
     m_pSearchMenuInterop = Eegeo_NEW(ExampleApp::SearchMenu::View::SearchMenuViewInterop)(self);
     
+    m_pOnScreenResultsAnimationController = NULL;
     m_pAnchorAnimationController = NULL;
     
-    m_anchorVisible = false;
+    m_resultsVisible = false;
     
     m_anchorAnimationDurationSeconds = 0.1f;
     
@@ -180,6 +188,9 @@
     m_titleContainerOpenOnScreenX = 0.0f;
     m_titleContainerOpenOnScreenY = m_titleContainerOffScreenY;
     
+    m_titleContainerClosedOnScreenWidthWithResults = dragTabOffsetX;
+    m_titleContainerClosedOnScreenXWithResults = 0.0f;
+    
     self.pTitleContainer = [[[UIView alloc] initWithFrame:CGRectMake(m_titleContainerOffScreenX, m_titleContainerOffScreenY, m_titleContainerOffScreenWidth, m_titleContainerOffScreenHeight)] autorelease];
     self.pTitleContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::BorderHudColor;
     
@@ -195,13 +206,16 @@
     m_searchCountLabelOpenOnScreenX = 0.0f;
     m_searchCountLabelOpenOnScreenY = 0.0f;
     
+    m_searchCountLabelClosedOnScreenAlphaWithResults = 1.0f;
+    m_searchCountLabelClosedOnScreenYWithResults = 0.0f;
+    
     self.pSearchCountLabel = [[[UILabel alloc] initWithFrame:CGRectMake(m_searchCountLabelOffScreenX, m_searchCountLabelOffScreenY, m_searchCountLabelWidth, m_searchCountLabelHeight)] autorelease];
     [self.pSearchCountLabel setBackgroundColor:[UIColor clearColor]];
     [self.pSearchCountLabel setFont:[UIFont systemFontOfSize:16.0f]];
     [self.pSearchCountLabel setTextColor:ExampleApp::Helpers::ColorPalette::MainHudColor];
     [self.pSearchCountLabel setAlpha:m_searchCountLabelOffScreenAlpha];
     [self.pSearchCountLabel setTextAlignment:NSTextAlignmentCenter];
-    [self.pSearchCountLabel setHidden:YES];
+    [self.pSearchCountLabel setText:@""];
     
     m_searchEditBoxBackgroundOffScreenWidth = tableCellWidth;
     m_searchEditBoxBackgroundOffScreenHeight = 0.0f;
@@ -496,6 +510,35 @@
                                                                                                              Eegeo::v2(m_searchEditBoxOpenOnScreenX, m_searchEditBoxOpenOnScreenY),
                                                                                                              Eegeo_NEW(ExampleApp::Helpers::UIAnimation::Easing::CircleInOut<Eegeo::v2>())));
     
+    // On screen results received animations
+    m_pOnScreenResultsAnimationController = Eegeo_NEW(ExampleApp::Helpers::UIAnimation::ViewAnimationController)(self,
+                                                                                                                 nil,
+                                                                                                                 nil);
+    
+    m_pOnScreenResultsAnimationController->AddAnimator(Eegeo_NEW(ExampleApp::Helpers::UIAnimation::ViewFrameAnimator)(self.pTitleContainer,
+                                                                                                              m_animationDurationSeconds,
+                                                                                                              0.0,
+                                                                                                              Eegeo::v2(m_titleContainerClosedOnScreenX, m_titleContainerClosedOnScreenY),
+                                                                                                              Eegeo::v2(m_titleContainerClosedOnScreenXWithResults, m_titleContainerClosedOnScreenY),
+                                                                                                              Eegeo::v2(m_titleContainerClosedOnScreenWidth, m_titleContainerClosedOnScreenHeight),
+                                                                                                              Eegeo::v2(m_titleContainerClosedOnScreenWidthWithResults, m_titleContainerClosedOnScreenHeight),
+                                                                                                              Eegeo_NEW(ExampleApp::Helpers::UIAnimation::Easing::CircleInOut<Eegeo::v2>)()));
+    
+    m_pOnScreenResultsAnimationController->AddAnimator(Eegeo_NEW(ExampleApp::Helpers::UIAnimation::ViewAlphaAnimator)(self.pSearchCountLabel,
+                                                                                                              m_animationDurationSeconds,
+                                                                                                              0.0f,
+                                                                                                              m_searchCountLabelClosedOnScreenAlpha,
+                                                                                                              m_searchCountLabelClosedOnScreenAlphaWithResults,
+                                                                                                              Eegeo_NEW(ExampleApp::Helpers::UIAnimation::Easing::CircleInOut<float>())));
+    
+    m_pOnScreenResultsAnimationController->AddAnimator(Eegeo_NEW(ExampleApp::Helpers::UIAnimation::ViewPositionAnimator)(self.pSearchCountLabel,
+                                                                                                                 m_animationDurationSeconds,
+                                                                                                                 0.0f,
+                                                                                                                 Eegeo::v2(m_searchCountLabelClosedOnScreenX, m_searchCountLabelClosedOnScreenY),
+                                                                                                                 Eegeo::v2(m_searchCountLabelClosedOnScreenX, m_searchCountLabelClosedOnScreenYWithResults),
+                                                                                                                 Eegeo_NEW(ExampleApp::Helpers::UIAnimation::Easing::CircleInOut<Eegeo::v2>())));
+    
+    
     // Anchor arrow animations
     m_pAnchorAnimationController = Eegeo_NEW(ExampleApp::Helpers::UIAnimation::ViewAnimationController)(self,
                                                                                                         nil,
@@ -509,12 +552,69 @@
                                                                                                             Eegeo_NEW(ExampleApp::Helpers::UIAnimation::Easing::CircleInOut<Eegeo::v2>())));
 }
 
+- (void) refreshTitleContainerAnimations:(Eegeo::v2)titleContainerClosedOnScreenPosition
+                                        :(Eegeo::v2)titleContainerClosedOnScreenSize
+                                        :(float)searchCountLabelClosedOnScreenAlpha
+                                        :(Eegeo::v2)searchCountLabelClosedOnScreenPosition
+{
+    m_onScreenAnimationController->DeleteAnimatorsForView(self.pTitleContainer);
+    m_onScreenAnimationController->DeleteAnimatorsForView(self.pSearchCountLabel);
+    
+    m_onScreenAnimationController->AddAnimator(Eegeo_NEW(ExampleApp::Helpers::UIAnimation::ViewFrameAnimator)(self.pTitleContainer,
+                                                                                                              m_stateChangeAnimationTimeSeconds,
+                                                                                                              0.0,
+                                                                                                              Eegeo::v2(m_titleContainerOffScreenX, m_titleContainerOffScreenY),
+                                                                                                              titleContainerClosedOnScreenPosition,
+                                                                                                              Eegeo::v2(m_titleContainerOffScreenWidth, m_titleContainerOffScreenHeight),
+                                                                                                              titleContainerClosedOnScreenSize,
+                                                                                                              Eegeo_NEW(ExampleApp::Helpers::UIAnimation::Easing::CircleInOut<Eegeo::v2>)()));
+    
+    m_onScreenAnimationController->AddAnimator(Eegeo_NEW(ExampleApp::Helpers::UIAnimation::ViewAlphaAnimator)(self.pSearchCountLabel,
+                                                                                                              m_animationDurationSeconds,
+                                                                                                              0.0f,
+                                                                                                              m_searchCountLabelOffScreenAlpha,
+                                                                                                              searchCountLabelClosedOnScreenAlpha,
+                                                                                                              Eegeo_NEW(ExampleApp::Helpers::UIAnimation::Easing::CircleInOut<float>())));
+    
+    m_onScreenAnimationController->AddAnimator(Eegeo_NEW(ExampleApp::Helpers::UIAnimation::ViewPositionAnimator)(self.pSearchCountLabel,
+                                                                                                                 m_animationDurationSeconds,
+                                                                                                                 0.0f,
+                                                                                                                 Eegeo::v2(m_searchCountLabelOffScreenX, m_searchCountLabelOffScreenY),
+                                                                                                                 searchCountLabelClosedOnScreenPosition,
+                                                                                                                 Eegeo_NEW(ExampleApp::Helpers::UIAnimation::Easing::CircleInOut<Eegeo::v2>())));
+    
+    m_openAnimationController->DeleteAnimatorsForView(self.pTitleContainer);
+    m_openAnimationController->DeleteAnimatorsForView(self.pSearchCountLabel);
+    
+    m_openAnimationController->AddAnimator(Eegeo_NEW(ExampleApp::Helpers::UIAnimation::ViewFrameAnimator)(self.pTitleContainer,
+                                                                                                          m_stateChangeAnimationTimeSeconds,
+                                                                                                          0.0,
+                                                                                                          titleContainerClosedOnScreenPosition,
+                                                                                                          Eegeo::v2(m_titleContainerOpenOnScreenX, m_titleContainerOpenOnScreenY),
+                                                                                                          titleContainerClosedOnScreenSize,
+                                                                                                          Eegeo::v2(m_titleContainerOpenOnScreenWidth, m_titleContainerOpenOnScreenHeight),
+                                                                                                          Eegeo_NEW(ExampleApp::Helpers::UIAnimation::Easing::CircleInOut<Eegeo::v2>)()));
+    
+    m_openAnimationController->AddAnimator(Eegeo_NEW(ExampleApp::Helpers::UIAnimation::ViewAlphaAnimator)(self.pSearchCountLabel,
+                                                                                                          m_animationDurationSeconds,
+                                                                                                          m_animationDelaySeconds,
+                                                                                                          searchCountLabelClosedOnScreenAlpha,
+                                                                                                          m_searchCountLabelOpenOnScreenAlpha,
+                                                                                                          Eegeo_NEW(ExampleApp::Helpers::UIAnimation::Easing::CircleInOut<float>())));
+    
+    m_openAnimationController->AddAnimator(Eegeo_NEW(ExampleApp::Helpers::UIAnimation::ViewPositionAnimator)(self.pSearchCountLabel,
+                                                                                                             m_animationDurationSeconds,
+                                                                                                             m_animationDelaySeconds,
+                                                                                                             searchCountLabelClosedOnScreenPosition,
+                                                                                                             Eegeo::v2(m_searchCountLabelOpenOnScreenX, m_searchCountLabelOpenOnScreenY),
+                                                                                                             Eegeo_NEW(ExampleApp::Helpers::UIAnimation::Easing::CircleInOut<Eegeo::v2>())));
+}
+
 - (void) setOffscreenPartsHiddenState:(bool)hidden
 {
     [super setOffscreenPartsHiddenState:hidden];
     self.pSearchEditBox.hidden = hidden;
     self.pSearchEditBoxBackground.hidden = hidden;
-    self.pSearchCountLabel.hidden = hidden;
 }
 
 - (void) setSearchResultCount:(int)searchResultCount
@@ -523,20 +623,42 @@
     {
         [self.pSearchCountLabel setText:@""];
         
-        if(m_anchorVisible)
+        if(m_resultsVisible)
         {
             m_pAnchorAnimationController->PlayReverse();
-            m_anchorVisible = false;
+            
+            [self refreshTitleContainerAnimations:Eegeo::v2(m_titleContainerClosedOnScreenX, m_titleContainerClosedOnScreenY)
+                                                 :Eegeo::v2(m_titleContainerClosedOnScreenWidth, m_titleContainerClosedOnScreenHeight)
+                                                 :m_searchCountLabelClosedOnScreenAlpha
+                                                 :Eegeo::v2(m_searchCountLabelClosedOnScreenX, m_searchCountLabelClosedOnScreenY)];
+            
+            if([self openOnScreenState] == 0.0f)
+            {
+                m_pOnScreenResultsAnimationController->PlayReverse();
+            }
+            
+            m_resultsVisible = false;
         }
     }
     else
     {
         [self.pSearchCountLabel setText:[NSString stringWithFormat:@"%d", searchResultCount]];
         
-        if(!m_anchorVisible)
+        if(!m_resultsVisible)
         {
             m_pAnchorAnimationController->Play();
-            m_anchorVisible = true;
+            
+            [self refreshTitleContainerAnimations:Eegeo::v2(m_titleContainerClosedOnScreenXWithResults, m_titleContainerClosedOnScreenY)
+                                                 :Eegeo::v2(m_titleContainerClosedOnScreenWidthWithResults, m_titleContainerClosedOnScreenHeight)
+                                                 :m_searchCountLabelClosedOnScreenAlphaWithResults
+                                                 :Eegeo::v2(m_searchCountLabelClosedOnScreenX, m_searchCountLabelClosedOnScreenYWithResults)];
+            
+            if([self openOnScreenState] == 0.0f)
+            {
+                m_pOnScreenResultsAnimationController->Play();
+            }
+            
+            m_resultsVisible = true;
         }
     }
 }
@@ -558,6 +680,11 @@
     if(m_pAnchorAnimationController->IsActive())
     {
         m_pAnchorAnimationController->Update(deltaSeconds);
+    }
+    
+    if(m_pOnScreenResultsAnimationController->IsActive())
+    {
+        m_pOnScreenResultsAnimationController->Update(deltaSeconds);
     }
 }
 
@@ -588,7 +715,7 @@
 
 - (BOOL) isAnimating
 {
-    return [super isAnimating] || m_pAnchorAnimationController->IsActive();
+    return [super isAnimating] || m_pAnchorAnimationController->IsActive() || m_pOnScreenResultsAnimationController->IsActive();
 }
 
 - (BOOL) isTableAnimating
