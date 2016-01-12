@@ -113,7 +113,7 @@ namespace ExampleApp
                 m_cameraController.SetApplyRestrictions(true);
                 m_cameraController.SetApplyFloorOffset(true);
                 m_interiorController.SetCurrentFloor(m_targetFloorIndex, true);
-                m_interiorsExplorerModel.ShowInteriorExplorer();
+                m_interiorsExplorerModel.ShowInteriorExplorer(true);
             }
             
             const bool TransitionToInteriorPointStage::StageIsComplete() const

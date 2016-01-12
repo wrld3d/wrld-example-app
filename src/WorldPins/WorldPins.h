@@ -30,5 +30,6 @@ namespace ExampleApp
         }
 
         class WorldPinsVisibilityMessage;
+        class WorldPinsSelectedFocussedMessage;
     }
 }

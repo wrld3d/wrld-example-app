@@ -3,6 +3,7 @@
 #include "ClearCacheMessageHandler.h"
 #include "CacheClearBackgroundTask.h"
 #include "IWorkPool.h"
+#include "IHttpCache.h"
 
 namespace ExampleApp
 {
@@ -10,7 +11,7 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            ClearCacheMessageHandler::ClearCacheMessageHandler(iOSHttpCache& iOSHttpCache,
+            ClearCacheMessageHandler::ClearCacheMessageHandler(Eegeo::Helpers::IHttpCache& iOSHttpCache,
                                                                ExampleAppMessaging::TMessageBus& messageBus,
                                                                Eegeo::Concurrency::Tasks::IWorkPool& workPool)
             : m_iOSHttpCache(iOSHttpCache)

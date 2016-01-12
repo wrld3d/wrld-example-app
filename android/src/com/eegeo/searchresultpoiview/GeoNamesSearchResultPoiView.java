@@ -66,15 +66,7 @@ public class GeoNamesSearchResultPoiView
     public void displayPoiInfo(
     		final String title,
     		final String address,
-    		final String phone, 
-    		final String url,
     		final String category,
-    		final String[] humanReadableCategories,
-    		final String imageUrl,
-    		final String ratingImageUrl,
-    		final String vendor,
-    		final String[] reviews,
-    		final int reviewCount,
     		final boolean isPinned)
     {
         m_titleView.setText(title);

@@ -3,8 +3,7 @@
 #pragma once
 
 #include "MapMode.h"
-#include "Rendering.h"
-#include "WeatherMenu.h"
+#include "VisualMap.h"
 
 #include <string>
 #include <ICallback.h>
@@ -19,17 +18,13 @@ namespace ExampleApp
             {
             public:
                 MapModeController(IMapModeModel& mapModeModel,
-                                  Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
-                                  WeatherMenu::SdkModel::IWeatherController& weatherController);
+                                  VisualMap::SdkModel::IVisualMapService& visualMapService);
 
                 ~MapModeController();
 
             private:
                 IMapModeModel& m_mapModeModel;
-                std::string m_previousThemeState;
-
-                Eegeo::Rendering::EnvironmentFlatteningService& m_environmentFlatteningService;
-                WeatherMenu::SdkModel::IWeatherController& m_weatherController;
+                VisualMap::SdkModel::IVisualMapService& m_visualMapService;
 
                 void OnMapModeChanged();
                 Eegeo::Helpers::TCallback0<MapModeController> m_onMapModeChangedCallback;

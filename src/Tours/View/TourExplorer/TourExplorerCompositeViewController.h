@@ -21,9 +21,6 @@ namespace ExampleApp
                     ITourExplorerViewModel& m_tourExplorerViewModel;
                     Menu::View::IMenuViewModel& m_searchMenuViewModel;
                     Menu::View::IMenuViewModel& m_settingsMenuViewModel;
-                    ScreenControl::View::IScreenControlViewModel& m_compassViewModel;
-                    ScreenControl::View::IScreenControlViewModel& m_flattenViewModel;
-                    ScreenControl::View::IScreenControlViewModel& m_myPinCreationViewModel;
                     ScreenControl::View::IScreenControlViewModel& m_watermarkViewModel;
                     bool m_tourExplorerOpen;
                     
@@ -31,9 +28,6 @@ namespace ExampleApp
                     TourExplorerCompositeViewController(ITourExplorerViewModel& tourExplorerViewModel,
                                                         Menu::View::IMenuViewModel& searchMenuViewModel,
                                                         Menu::View::IMenuViewModel& settingsMenuViewModel,
-                                                        ScreenControl::View::IScreenControlViewModel& compassViewModel,
-                                                        ScreenControl::View::IScreenControlViewModel& flattenViewModel,
-                                                        ScreenControl::View::IScreenControlViewModel& myPinCreationViewModel,
                                                         ScreenControl::View::IScreenControlViewModel& watermarkViewModel);
                     
                     ~TourExplorerCompositeViewController();

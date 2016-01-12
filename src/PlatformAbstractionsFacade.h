@@ -6,6 +6,7 @@
 #include "IPlatformAbstractionModule.h"
 #include "ExampleAppCustomWebLoadRequestFactory.h"
 #include "NetIncludes.h"
+#include "Tasks.h"
 
 namespace ExampleApp
 {
@@ -29,8 +30,9 @@ namespace ExampleApp
         Eegeo::Helpers::IFileIO& GetFileIO() const;
         Eegeo::Helpers::UrlHelpers::IUrlEncoder& GetUrlEncoder() const;
         Eegeo::Concurrency::Tasks::IGlTaskContextFactory& GetGlTaskContextFactory() const;
-        Eegeo::Helpers::IResourceCacheCleaner& GetResourceCacheCleaner() const;
         Eegeo::Web::IConnectivityService& GetConnectivityService() const;
+        
+        void SetWebIOWorkPool(Eegeo::Concurrency::Tasks::IWorkPool* pWorkPool);
        
         void OnPause();
         void Update();

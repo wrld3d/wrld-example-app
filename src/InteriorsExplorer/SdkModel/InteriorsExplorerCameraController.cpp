@@ -2,7 +2,6 @@
 
 #include "InteriorsExplorerCameraController.h"
 
-#include <cmath>
 #include "CameraHelpers.h"
 #include "EarthConstants.h"
 #include "GlobeCameraTouchController.h"
@@ -173,19 +172,9 @@ namespace ExampleApp
                         finalEcefInterestPosition = m_environmentFlatteningService.GetScaledPointEcef(interiorOriginAtBase + relativeCameraInterestEcef, m_environmentFlatteningService.GetCurrentScale());
                     }
                     
-                    Eegeo::dv3 diffEcefInterestPosition = finalEcefInterestPosition - initialCameraInterestEcef;
                     const double PositionUpdateThresholdDistanceSq = 0.01;
-                    double diffLengthSquare = diffEcefInterestPosition.LengthSq();
-                    if(diffLengthSquare > PositionUpdateThresholdDistanceSq)
+                    if((finalEcefInterestPosition - initialCameraInterestEcef).LengthSq() > PositionUpdateThresholdDistanceSq)
                     {
-                        const double trackingSpeed = 150.0f;
-                        double trackingDifference = trackingSpeed*dt;
-                        double diffAltitude = finalEcefInterestPosition.Length() - initialCameraInterestEcef.Length();
-                        if(std::abs(diffAltitude) > trackingDifference)
-                        {
-                            double signedTrackingDifference = diffAltitude < 0 ? -trackingDifference : +trackingDifference;
-                            finalEcefInterestPosition = finalEcefInterestPosition - finalEcefInterestPosition.Norm()*(diffAltitude - signedTrackingDifference);
-                        }
                         SetInterestLocation(finalEcefInterestPosition);
                     }
                 }

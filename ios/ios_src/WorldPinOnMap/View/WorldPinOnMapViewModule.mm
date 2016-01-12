@@ -17,7 +17,6 @@ namespace ExampleApp
             WorldPinOnMapViewModule::WorldPinOnMapViewModule(IWorldPinInFocusViewModel& worldPinInFocusViewModel,
                     ScreenControl::View::IScreenControlViewModel::IScreenControlViewModel& worldPinOnMapInFocusScreenControlViewModel,
                     Modality::View::IModalityModel& modalityModel,
-                    const AppModes::SdkModel::IAppModeModel& appModeModel,
                     float pinDiameter,
                     float pixelScale,
                     ImageStore* pImageStore)
@@ -28,8 +27,7 @@ namespace ExampleApp
                                     *[m_pView getInterop],
                                     worldPinInFocusViewModel,
                                     worldPinOnMapInFocusScreenControlViewModel,
-                                    modalityModel,
-                                    appModeModel);
+                                    modalityModel);
             }
 
             WorldPinOnMapViewModule::~WorldPinOnMapViewModule()

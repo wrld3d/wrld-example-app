@@ -32,7 +32,7 @@
 #include "MapModule.h"
 #include "ImagePathHelpers.h"
 #include "InteriorsPresentationModule.h"
-#include "InteriorsController.h"
+#include "InteriorController.h"
 
 namespace ExampleApp
 {
@@ -98,7 +98,7 @@ namespace ExampleApp
                                            *m_pPoiRingView,
                                            mapModule.GetEnvironmentFlatteningService(),
                                            terrainModelModule.GetTerrainHeightProvider(),
-                                           interiorsPresentationModule.GetAppLevelController(),
+                                           interiorsPresentationModule.GetController(),
                                            screenProperties,
                                            interiorsAffectedByFlattening);
 
@@ -110,7 +110,7 @@ namespace ExampleApp
                                                                                   *m_pTerrainRayPicker,
                                                                                   *m_pPoiRingController,
                                                                                   appModeModel,
-                                                                                  interiorsPresentationModule.GetAppLevelController());
+                                                                                  interiorsPresentationModule.GetController());
                 }
 
                 PoiRingModule::~PoiRingModule()

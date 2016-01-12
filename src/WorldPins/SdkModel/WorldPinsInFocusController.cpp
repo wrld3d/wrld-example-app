@@ -14,6 +14,7 @@
 #include "WorldPinGainedFocusMessage.h"
 #include "WorldPinLostFocusMessage.h"
 #include "WorldPinInFocusChangedLocationMessage.h"
+#include "WorldPinsSelectedFocussedMessage.h"
 #include "WorldPinsVisibilityMessage.h"
 #include "Logger.h"
 
@@ -41,15 +42,18 @@ namespace ExampleApp
                 , m_worldPinsService(worldPinsService)
                 , m_messageBus(messageBus)
                 , m_visibilityMessageHandlerBinding(this, &WorldPinsInFocusController::OnWorldPinsVisibilityMessage)
+                , m_selectedFocussedMessageHandlerBinding(this, &WorldPinsInFocusController::OnSelectedFocussedMessage)
                 , m_pLastFocussedModel(NULL)
                 , m_focusEnabled(true)
             {
                 m_messageBus.SubscribeNative(m_visibilityMessageHandlerBinding);
+                m_messageBus.SubscribeNative(m_selectedFocussedMessageHandlerBinding);
             }
 
             WorldPinsInFocusController::~WorldPinsInFocusController()
             {
                 m_messageBus.UnsubscribeNative(m_visibilityMessageHandlerBinding);
+                m_messageBus.UnsubscribeNative(m_selectedFocussedMessageHandlerBinding);
             }
 
             void WorldPinsInFocusController::Update(float deltaSeconds, const Eegeo::dv3& ecefInterestPoint, const Eegeo::Camera::RenderCamera& renderCamera)
@@ -133,6 +137,11 @@ namespace ExampleApp
             void WorldPinsInFocusController::OnWorldPinsVisibilityMessage(const WorldPinsVisibilityMessage &worldPinsVisibilityMessage)
             {
                 m_focusEnabled = worldPinsVisibilityMessage.ShouldSetVisible();
+            }
+            
+            void WorldPinsInFocusController::OnSelectedFocussedMessage(const WorldPinsSelectedFocussedMessage& worldPinsSelectedFocussedMessage)
+            {
+                m_worldPinsService.SelectPin(worldPinsSelectedFocussedMessage.PinId());
             }
         }
     }

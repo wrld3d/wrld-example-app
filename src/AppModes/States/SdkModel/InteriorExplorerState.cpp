@@ -55,10 +55,10 @@ namespace ExampleApp
                 , m_nativeUIFactories(nativeUIFactories)
                 , m_failAlertHandler(this, &InteriorExplorerState::OnFailAlertBoxDismissed)
                 , m_myPinCreationModel(myPinCreationModel)
+                , m_lastEntryAttemptSuccessful(false)
                 {
                     
                     m_subStates.push_back(Eegeo_NEW(InteriorsExplorer::SdkModel::States::InteriorExplorerSetupState)(*this,
-                                                                                                                     interiorsExplorerModel,
                                                                                                                      cameraController,
                                                                                                                      interiorCameraHandle));
                     
@@ -157,6 +157,16 @@ namespace ExampleApp
                 void InteriorExplorerState::OnTourStarted()
                 {
                     m_appModeModel.SetAppMode(ExampleApp::AppModes::SdkModel::TourMode);
+                }
+                
+                void InteriorExplorerState::SetLastEntryAttemptSuccessful(bool successful)
+                {
+                    m_lastEntryAttemptSuccessful = successful;
+                }
+                
+                bool InteriorExplorerState::GetLastEntryAttemptSuccessful() const
+                {
+                    return m_lastEntryAttemptSuccessful;
                 }
             }
         }

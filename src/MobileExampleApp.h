@@ -82,6 +82,7 @@
 #include "UserInteraction.h"
 #include "TwitterFeed.h"
 #include "TwitterFeedTour.h"
+#include "VisualMap.h"
 
 
 namespace ExampleApp
@@ -97,7 +98,6 @@ namespace ExampleApp
         Eegeo::Location::NavigationService* m_pNavigationService;
         PlatformAbstractionsFacade m_platformAbstractions;
         Eegeo::Rendering::LoadingScreen* m_pLoadingScreen;
-        Eegeo::Blitter* m_pBlitter;
         Eegeo::Rendering::ScreenProperties m_screenProperties;
         bool m_initialisedApplicationViewState;
         bool m_setMetricsLocation;
@@ -154,6 +154,7 @@ namespace ExampleApp
         InteriorsCustomMaterials::SdkModel::IInteriorsCustomMaterialsModule* m_pInteriorsCustomMaterialsModule;
         UserInteraction::SdkModel::UserInteractionModule* m_pUserInteractionModule;
         Social::TwitterFeed::ITwitterFeedModule* m_pTwitterFeedModule;
+        VisualMap::SdkModel::IVisualMapModule* m_pVisualMapModule;
         
         AppModes::SdkModel::IAppModeModel* m_pAppModeModel;
         

@@ -1,7 +1,6 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "AppHost.h"
-#include "WindowsWebRequestService.hpp"
 #include "WindowsSharedGlContext.h"
 #include "LatLongAltitude.h"
 #include "EegeoWorld.h"
@@ -84,6 +83,8 @@
 #include "InteriorsExplorerViewModule.h"
 #include "IInteriorsExplorerModule.h"
 #include "WindowsPersistentSettingsModel.h"
+#include "IHttpCache.h"
+#include "HttpCache.h"
 
 using namespace Eegeo::Windows;
 using namespace Eegeo::Windows::Input;
@@ -166,7 +167,6 @@ AppHost::AppHost(
 
     std::string deviceModel = nativeState.deviceModel;
     Eegeo::Config::PlatformConfig platformConfig = Eegeo::Windows::WindowsPlatformConfigBuilder(deviceModel).Build();
-    platformConfig.OptionsConfig.InteriorsControlledByApp = true;
 
     m_pInputProcessor = Eegeo_NEW(Eegeo::Windows::Input::WindowsInputProcessor)(&m_inputHandler, m_nativeState.window, screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight());
 
@@ -216,8 +216,6 @@ AppHost::AppHost(
     m_pModalBackgroundNativeViewModule = Eegeo_NEW(ExampleApp::ModalBackground::SdkModel::ModalBackgroundNativeViewModule)(
         m_pApp->World().GetRenderingModule(),
         m_messageBus);
-
-    m_pWindowsPlatformAbstractionModule->SetWebRequestServiceWorkPool(m_pApp->World().GetWorkPool());
 
     m_pAppInputDelegate = Eegeo_NEW(AppInputDelegate)(*m_pApp);
     m_inputHandler.AddDelegateInputHandler(m_pAppInputDelegate);
@@ -318,23 +316,6 @@ void AppHost::HandleTouchInputEvent(const Eegeo::Windows::Input::TouchInputEvent
 void AppHost::HandleKeyboardInputEvent(const Eegeo::Windows::Input::KeyboardInputEvent& event)
 {
     m_pInputProcessor->HandleInput(event);
-
-    ExampleApp::FlattenButton::View::FlattenButtonViewModule* flattenButton = dynamic_cast<ExampleApp::FlattenButton::View::FlattenButtonViewModule*>(m_pFlattenButtonViewModule);
-    ExampleApp::Compass::View::CompassViewModule* compass = dynamic_cast<ExampleApp::Compass::View::CompassViewModule*>(m_pCompassViewModule);
-    ExampleApp::MyPinCreation::View::MyPinCreationViewModule* pin = dynamic_cast<ExampleApp::MyPinCreation::View::MyPinCreationViewModule*>(m_pMyPinCreationViewModule);
-
-    if (event.keyCode == VK_UP)
-    {
-        flattenButton->AnimateOnScreen();
-        compass->AnimateOnScreen();
-        pin->AnimateOnScreen();
-    }
-    else if (event.keyCode == VK_DOWN)
-    {
-        flattenButton->AnimateOffScreen();
-        compass->AnimateOffScreen();
-        pin->AnimateOffScreen();
-    }
 }
 
 void AppHost::SetAllInputEventsToPointerUp(int x, int y)
@@ -458,7 +439,6 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
         app.WorldPinsModule().GetWorldPinInFocusViewModel(),
         app.WorldPinsModule().GetScreenControlViewModel(),
         app.ModalityModule().GetModalityModel(),
-        app.GetAppModeModel(),
         app.PinDiameter()
         );
 
@@ -467,8 +447,7 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
         m_nativeState,
         app.FlattenButtonModule().GetFlattenButtonViewModel(),
         m_messageBus,
-        *m_pWindowsFlurryMetricsService,
-        app.GetAppModeModel()
+        *m_pWindowsFlurryMetricsService
         );
 
     m_pCompassViewModule = Eegeo_NEW(ExampleApp::Compass::View::CompassViewModule)(
@@ -483,8 +462,7 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
 		app.MyPinCreationModule().GetMyPinCreationConfirmationViewModel(),
 		app.MyPinCreationDetailsModule().GetMyPinCreationDetailsViewModel(),
 		m_messageBus,
-		*m_pWindowsFlurryMetricsService,
-		app.GetAppModeModel()
+		*m_pWindowsFlurryMetricsService
 		);
 
     // Modal background layer.
@@ -528,7 +506,6 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
         app.AboutPageModule().GetAboutPageViewModel(),
         *m_pWindowsFlurryMetricsService
         );
-
 
     m_pOptionsViewModule = Eegeo_NEW(ExampleApp::Options::View::OptionsViewModule)(
         m_nativeState,

@@ -310,6 +310,12 @@ namespace ExampleApp
                                                                                                                         pinTypeMetadata,
                                                                                                                         myPinService));
                         
+                        if(pPinBoundObject == NULL)
+                        {
+                            Eegeo_TTY("Failed to create a pin object for this pin, skipping to the next one");
+                            continue;
+                        }
+                    
                         MyPinModel* pModel(Eegeo_NEW(MyPinModel)(version,
                                                                  pinId,
                                                                  title,

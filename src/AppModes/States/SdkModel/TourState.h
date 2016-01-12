@@ -10,8 +10,11 @@
 #include "Interiors.h"
 #include "GlobeCamera.h"
 #include "InteriorsExplorer.h"
-#include "MapMode.h"
 #include "MyPinCreation.h"
+#include "LatLongAltitude.h"
+#include "VisualMap.h"
+
+#include <string>
 
 namespace ExampleApp
 {
@@ -39,10 +42,10 @@ namespace ExampleApp
                     ExampleApp::InteriorsExplorer::SdkModel::InteriorsExplorerCameraController& m_interiorsCameraController;
                     
                     InteriorsExplorer::SdkModel::InteriorsExplorerModel& m_interiorsExplorerModel;
-                    MapMode::SdkModel::IMapModeModel& m_mapModeModel;
-                    bool m_previousMapModeState;
                     
                     MyPinCreation::SdkModel::IMyPinCreationModel& m_myPinCreationModel;
+                    
+                    VisualMap::SdkModel::IVisualMapService& m_visualMapService;
                     
                     void OnTourEnded();
                     
@@ -56,8 +59,8 @@ namespace ExampleApp
                               Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& worldCameraController,
                               InteriorsExplorer::SdkModel::InteriorsExplorerCameraController& interiorsCameraController,
                               InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel,
-                              MapMode::SdkModel::IMapModeModel& mapModeModel,
-                              MyPinCreation::SdkModel::IMyPinCreationModel& myPinCreationModel);
+                              MyPinCreation::SdkModel::IMyPinCreationModel& myPinCreationModel,
+                              VisualMap::SdkModel::IVisualMapService& visualMapService);
                     
                     ~TourState();
                     

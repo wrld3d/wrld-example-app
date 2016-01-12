@@ -95,23 +95,33 @@ namespace ExampleApp
                 
             }
             
-            SearchResultModel DeserializeFromJson(const std::string& searchResultJson)
+            bool TryDeserializeFromJson(const std::string& searchResultJson, SearchResultModel& out_resultModel)
             {
                 rapidjson::Document document;
                 
                 const bool successfullyParsed = !(document.Parse<0>(searchResultJson.c_str()).HasParseError());
                 
-                Eegeo_ASSERT(successfullyParsed, "Failed to parse search result model JSON.\n");
+                if(!successfullyParsed)
+                {
+                    Eegeo_TTY("Failed to parse search result model JSON.\n");
+                    return false;
+                }
                 
-                Eegeo_ASSERT(document.HasMember("version"),
-                             "Old SearchResultModel version detected. Please delete and reinstall the application.\n");
+                if(!document.HasMember("version"))
+                {
+                    Eegeo_TTY("Old SearchResultModel version detected. Please delete and reinstall the application.\n");
+                    return false;
+                }
                 
                 int version = document["version"].GetInt();
                 
                 const int earliestSupportedVersionForUpversioning = 4;
                 
-                Eegeo_ASSERT(version >= earliestSupportedVersionForUpversioning,
-                             "Old SearchResultModel version detected: tried to deserialize version %d but current version is %d. Please delete and reinstall the application.\n", version, SearchResultModel::CurrentVersion);
+                if(version < earliestSupportedVersionForUpversioning)
+                {
+                    Eegeo_TTY("Old SearchResultModel version detected: tried to deserialize version %d but current version is %d. Please delete and reinstall the application.\n", version, SearchResultModel::CurrentVersion);
+                    return false;
+                }
                 
                 std::string jsonData = "";
                 if(version == 4)
@@ -155,21 +165,23 @@ namespace ExampleApp
                     heightAboveTerrainMetres = static_cast<float>(document["heightAboveTerrain"].GetDouble());
                 }
                 
-                return SearchResultModel(version,
-                                         document["id"].GetString(),
-                                         document["title"].GetString(),
-                                         document.HasMember("address") ? document["address"].GetString() : document["subtitle"].GetString(),
-                                         Eegeo::Space::LatLong::FromDegrees(document["latitude"].GetDouble(),
-                                                                            document["longitude"].GetDouble()),
-                                         heightAboveTerrainMetres,
-                                         interior,
-                                         building,
-                                         floor,
-                                         document["category"].GetString(),
-                                         categories,
-                                         document["vendor"].GetString(),
-                                         jsonData,
-                                         document["createTimestamp"].GetInt64());
+                out_resultModel = SearchResultModel(version,
+                                                    document["id"].GetString(),
+                                                    document["title"].GetString(),
+                                                    document.HasMember("address") ? document["address"].GetString() : document["subtitle"].GetString(),
+                                                    Eegeo::Space::LatLong::FromDegrees(document["latitude"].GetDouble(),
+                                                                                       document["longitude"].GetDouble()),
+                                                    heightAboveTerrainMetres,
+                                                    interior,
+                                                    building,
+                                                    floor,
+                                                    document["category"].GetString(),
+                                                    categories,
+                                                    document["vendor"].GetString(),
+                                                    jsonData,
+                                                    document["createTimestamp"].GetInt64());
+                
+                return true;
             }
         }
     }

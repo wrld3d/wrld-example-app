@@ -27,13 +27,13 @@
 			    
 		    <ImageView
 		        android:id="@+id/secondary_menu_drag_interaction_arrow"
-		        android:layout_width="14dp"
-		        android:layout_height="24dp"
+		        android:layout_width="45dp"
+		        android:layout_height="45dp"
 		        android:layout_centerInParent="true"
 		        android:clickable="false"
 		        android:focusable="false"
 		        android:focusableInTouchMode="false"
-				android:src="@drawable/arrow" >
+				android:src="@drawable/menu_list" >
 			</ImageView>
 		
 		</RelativeLayout>

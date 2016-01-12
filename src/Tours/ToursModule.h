@@ -57,14 +57,12 @@ namespace ExampleApp
             
         public:
             ToursModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
+                        Metrics::IMetricsService& metricsService,
                         ExampleAppMessaging::TMessageBus& messageBus,
                         WorldPins::SdkModel::IWorldPinsService& worldPinsService,
                         Search::SdkModel::ISearchRefreshService& searchRefreshService,
                         Menu::View::IMenuViewModel& searchMenuViewModel,
                         Menu::View::IMenuViewModel& settingsMenuViewModel,
-                        ScreenControl::View::IScreenControlViewModel& compassViewModel,
-                        ScreenControl::View::IScreenControlViewModel& flattenViewModel,
-                        ScreenControl::View::IScreenControlViewModel& myPinCreationViewModel,
                         ScreenControl::View::IScreenControlViewModel& watermarkViewModel,
                         Eegeo::Streaming::ResourceCeilingProvider& resourceCeilingProvider,
                         const Eegeo::Rendering::ScreenProperties& screenProperties,

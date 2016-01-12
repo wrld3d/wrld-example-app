@@ -13,8 +13,7 @@ namespace ExampleApp
                 AndroidNativeState& nativeState,
                 IFlattenButtonViewModel& viewModel,
                 ExampleAppMessaging::TMessageBus& messageBus,
-                Metrics::IMetricsService& metricsService,
-                const AppModes::SdkModel::IAppModeModel& appModeModel
+                Metrics::IMetricsService& metricsService
             )
             {
                 ASSERT_UI_THREAD
@@ -25,8 +24,7 @@ namespace ExampleApp
                                     viewModel,
                                     *m_pView,
                                     messageBus,
-                                    metricsService,
-                                    appModeModel);
+                                    metricsService);
 
             }
 

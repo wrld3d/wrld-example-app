@@ -149,6 +149,9 @@ namespace ExampleApp
                         
                         m_tourService.AddTour(tourModel, *factory.CreateTourStateMachine(tourModel));
                         
+                        // Assumes tours never removed
+                        m_setOfTourTwitterBaseUserNames.insert(twitterBaseUserName);
+                        
                         UpadateTweetLinksOut();
                     }
                     
@@ -176,7 +179,7 @@ namespace ExampleApp
                                 }
                                 const std::string& userName = tourStateModel.Tweet()->GetUserName();
                                 if(userName != tourModel.TwitterBaseUserName() &&
-                                   m_tourRepository.ContainsTourModelWithTwitterBaseUserName(userName))
+                                   m_setOfTourTwitterBaseUserNames.find(userName) != m_setOfTourTwitterBaseUserNames.end())
                                 {
                                     tourStateModel.Tweet()->SetDoesLinkOut(true);
                                 }

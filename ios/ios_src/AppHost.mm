@@ -132,10 +132,6 @@ AppHost::AppHost(
 
     Eegeo::Config::PlatformConfig platformConfig = Eegeo::iOS::iOSPlatformConfigBuilder(App::GetDevice(), App::IsDeviceMultiCore(), App::GetMajorSystemVersion()).Build();
     platformConfig.OptionsConfig.StartMapModuleAutomatically = false;
-    platformConfig.OptionsConfig.InteriorsControlledByApp = true;
-    
-    platformConfig.CoverageTreeConfig.ManifestUrl = "http://cdn1.eegeo.com/coverage-trees/vglobal/v820/manifest.bin.gz";
-    platformConfig.CityThemesConfig.StreamedManifestUrl = "http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v421/manifest.txt.gz";
     platformConfig.CityThemesConfig.EmbeddedThemeManifestFile = "embedded_manifest.txt";
     platformConfig.CityThemesConfig.EmbeddedThemeTexturePath = "Textures/EmbeddedTheme";
     platformConfig.CityThemesConfig.EmbeddedThemeNameContains = "Summer";
@@ -314,13 +310,11 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
                                      app.FlattenButtonModule().GetFlattenButtonViewModel(),
                                      screenProperties,
                                      m_messageBus,
-                                     m_iOSFlurryMetricsService,
-                                     app.GetAppModeModel());
+                                     m_iOSFlurryMetricsService);
 
     m_pWorldPinOnMapViewModule = Eegeo_NEW(ExampleApp::WorldPins::View::WorldPinOnMapViewModule)(app.WorldPinsModule().GetWorldPinInFocusViewModel(),
                                  app.WorldPinsModule().GetScreenControlViewModel(),
                                  app.ModalityModule().GetModalityModel(),
-                                 app.GetAppModeModel(),
                                  app.PinDiameter(),
                                  screenProperties.GetPixelScale(),
                                  m_pImageStore);
@@ -340,8 +334,7 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
                                            app.MyPinCreationModule().GetMyPinCreationInitiationViewModel(),
                                            app.MyPinCreationModule().GetMyPinCreationConfirmationViewModel(),
                                            screenProperties,
-                                           m_iOSFlurryMetricsService,
-                                                                                                                         app.GetAppModeModel());
+                                           m_iOSFlurryMetricsService);
 
     m_pMyPinCreationConfirmationViewModule = Eegeo_NEW(ExampleApp::MyPinCreation::View::MyPinCreationConfirmationViewModule)(m_messageBus,
             app.MyPinCreationModule().GetMyPinCreationConfirmationViewModel(),

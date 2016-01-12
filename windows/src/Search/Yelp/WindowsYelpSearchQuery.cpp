@@ -4,7 +4,6 @@
 
 #include "WindowsYelpSearchQuery.h"
 #include "WindowsAppThreadAssertionMacros.h"
-#include "WindowsWebRequestHandle.hpp"
 
 #using "System.dll"
 #include <msclr\marshal_cppstd.h>

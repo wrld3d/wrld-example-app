@@ -8,7 +8,7 @@
 #include "IScreenControlViewModel.h"
 #include "BidirectionalBus.h"
 #include "IMetricsService.h"
-#include "IAppModeModel.h"
+#include "AppModeChangedMessage.h"
 
 namespace ExampleApp
 {
@@ -23,8 +23,7 @@ namespace ExampleApp
                                                   IMyPinCreationInitiationView& view,
                                                   IMyPinCreationConfirmationViewModel& confirmationViewModel,
                                                   ExampleAppMessaging::TMessageBus& messageBus,
-                                                  Metrics::IMetricsService& metricsService,
-                                                  const AppModes::SdkModel::IAppModeModel& appModeModel);
+                                                  Metrics::IMetricsService& metricsService);
                 
                 ~MyPinCreationInitiationController();
 
@@ -39,10 +38,14 @@ namespace ExampleApp
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 
                 Metrics::IMetricsService& m_metricsService;
-                const AppModes::SdkModel::IAppModeModel& m_appModeModel;
                 
                 Eegeo::Helpers::TCallback2<MyPinCreationInitiationController, ScreenControl::View::IScreenControlViewModel&, float> m_viewStateCallback;
                 Eegeo::Helpers::TCallback0<MyPinCreationInitiationController> m_selectedCallback;
+                
+                Eegeo::Helpers::TCallback1<MyPinCreationInitiationController, const AppModes::AppModeChangedMessage&> m_appModeChangedHandler;
+                void OnAppModeChangedMessage(const AppModes::AppModeChangedMessage& message);
+                
+                bool m_appModeAllowsOpen;
             };
         }
     }

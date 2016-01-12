@@ -33,7 +33,6 @@
 #include "RenderingModule.h"
 #include "StreamingModule.h"
 #include "EnvironmentCharacterSet.h"
-#include "Blitter.h"
 #include "IPoiRingTouchController.h"
 #include "MyPinCreationModule.h"
 #include "SearchResultMenuModule.h"
@@ -61,9 +60,6 @@
 #include "WatermarkModule.h"
 #include "InteriorsPresentationModule.h"
 #include "InteriorsModelModule.h"
-#include "InteriorsCameraController.h"
-#include "InteriorsTouchController.h"
-#include "InteriorsPinsController.h"
 #include "InteriorsExplorerModule.h"
 #include "InteriorsExplorerCameraController.h"
 #include "InteriorsEntitiesPinsModule.h"
@@ -92,8 +88,8 @@
 #include "TwitterFeedModule.h"
 #include "ITwitterFeedService.h"
 #include "TwitterFeedTourModule.h"
-
 #include "SceneModelsModule.h"
+#include "VisualMapModule.h"
 
 
 namespace ExampleApp
@@ -176,7 +172,6 @@ namespace ExampleApp
         , m_pWorldAreaLoaderModule(NULL)
         , m_pAboutPageModule(NULL)
         , m_initialExperienceModule(initialExperienceModule)
-        , m_pBlitter(NULL)
         , m_messageBus(messageBus)
         , m_sdkDomainEventBus(sdkModelDomainEventBus)
         , m_persistentSettings(persistentSettings)
@@ -201,20 +196,17 @@ namespace ExampleApp
         , m_pGlobeCameraWrapper(NULL)
         , m_pTwitterFeedModule(NULL)
         , m_pTwitterFeedTourModule(NULL)
+        , m_pVisualMapModule(NULL)
         , m_toursPinDiameter(48.f)
         , m_enableTours(false)
     {
         m_metricsService.BeginSession(ExampleApp::FlurryApiKey, EEGEO_PLATFORM_VERSION_NUMBER);
 
-        m_pBlitter = Eegeo_NEW(Eegeo::Blitter)(1024 * 128, 1024 * 64, 1024 * 32);
-        m_pBlitter->Initialise();
-        
         m_pWorld = Eegeo_NEW(Eegeo::EegeoWorld)(apiKey,
                                                 m_platformAbstractions,
                                                 jpegLoader,
                                                 screenProperties,
                                                 locationService,
-                                                *m_pBlitter,
                                                 nativeUIFactories,
                                                 Eegeo::EnvironmentCharacterSet::Latin,
                                                 platformConfig,
@@ -280,7 +272,7 @@ namespace ExampleApp
                                                                                                                        *m_pAppModeModel,
                                                                                                                        m_pAppCameraModule->GetController(),
                                                                                                                        interiorsPresentationModule.GetInteriorSelectionModel(),
-                                                                                                                       interiorsPresentationModule.GetAppLevelController(),
+                                                                                                                       interiorsPresentationModule.GetController(),
                                                                                                                        m_pInteriorsExplorerModule->GetInteriorsExplorerModel(),
                                                                                                                        m_messageBus);
         m_pCameraTransitionService->SetTransitionController(*m_pCameraTransitionController);
@@ -317,10 +309,6 @@ namespace ExampleApp
         Eegeo_DELETE m_pAppModeModel;
 
         Eegeo_DELETE m_pWorld;
-        
-        m_pBlitter->Shutdown();
-        Eegeo_DELETE m_pBlitter;
-        m_pBlitter = NULL;
     }
 
     void MobileExampleApp::CreateApplicationModelModules(const std::map<std::string,ExampleApp::Search::SdkModel::ISearchServiceModule*>& platformImplementedSearchServiceModules,
@@ -385,10 +373,15 @@ namespace ExampleApp
                                                                                          m_messageBus);
 
         Eegeo::Modules::Map::CityThemesModule& cityThemesModule = world.GetCityThemesModule();
+        
+        Eegeo::Modules::Map::MapModule& mapModule = world.GetMapModule();
+        
+        m_pVisualMapModule = Eegeo_NEW(VisualMap::SdkModel::VisualMapModule)(cityThemesModule.GetCityThemesService(),
+                                                                             cityThemesModule.GetCityThemesUpdater(),
+                                                                             mapModule.GetEnvironmentFlatteningService());
 
         m_pWeatherMenuModule = Eegeo_NEW(ExampleApp::WeatherMenu::SdkModel::WeatherMenuModule)(m_platformAbstractions.GetFileIO(),
-                                                                                               cityThemesModule.GetCityThemesService(),
-                                                                                               cityThemesModule.GetCityThemesUpdater(),
+                                                                                               m_pVisualMapModule->GetVisualMapService(),
                                                                                                m_messageBus,
                                                                                                m_metricsService);
         
@@ -410,13 +403,12 @@ namespace ExampleApp
                                                 m_messageBus,
                                                 m_metricsService));
 
-        Eegeo::Modules::Map::MapModule& mapModule = world.GetMapModule();
-
-        m_pMapModeModule = Eegeo_NEW(MapMode::SdkModel::MapModeModule(mapModule.GetEnvironmentFlatteningService(), m_pWeatherMenuModule->GetWeatherController()));
+        m_pMapModeModule = Eegeo_NEW(MapMode::SdkModel::MapModeModule)(m_pVisualMapModule->GetVisualMapService());
 
         m_pFlattenButtonModule = Eegeo_NEW(ExampleApp::FlattenButton::SdkModel::FlattenButtonModule)(m_pMapModeModule->GetMapModeModel(),
                                  m_identityProvider,
                                  m_messageBus);
+    
 
         InitialisePinsModules(mapModule, world, interiorsAffectedByFlattening);
         
@@ -495,13 +487,12 @@ namespace ExampleApp
                                                                                          mapModule.GetEnvironmentFlatteningService(),
                                                                                          mapModule.GetResourceCeilingProvider());
         
-        m_pInteriorsExplorerModule = Eegeo_NEW(InteriorsExplorer::SdkModel::InteriorsExplorerModule)(interiorsPresentationModule.GetAppLevelController(),
+        m_pInteriorsExplorerModule = Eegeo_NEW(InteriorsExplorer::SdkModel::InteriorsExplorerModule)(interiorsPresentationModule.GetController(),
                                                                                                      interiorsPresentationModule.GetInteriorSelectionModel(),
                                                                                                      interiorsModelModule.GetInteriorMarkerModelRepository(),
                                                                                                      m_pWorldPinsModule->GetWorldPinsService(),
                                                                                                      mapModule.GetEnvironmentFlatteningService(),
-                                                                                                     m_pMapModeModule->GetMapModeModel(),
-                                                                                                     m_pWeatherMenuModule->GetWeatherController(),
+                                                                                                     m_pVisualMapModule->GetVisualMapService(),
                                                                                                      cameraControllerFactory,
                                                                                                      m_screenProperties,
                                                                                                      m_identityProvider,
@@ -548,8 +539,6 @@ namespace ExampleApp
         m_pSearchMenuModule->AddMenuSection("Weather" , m_pWeatherMenuModule->GetWeatherMenuModel(), true);
         m_pSearchMenuModule->AddMenuSection("Locations", m_pPlaceJumpsModule->GetPlaceJumpsMenuModel(), true);
         m_pSearchMenuModule->AddMenuSection("My Pins", m_pMyPinsModule->GetMyPinsMenuModel(), true);
-
-
     }
     
     void MobileExampleApp::InitialiseAppState(Eegeo::UI::NativeUIFactories& nativeUIFactories)
@@ -558,7 +547,7 @@ namespace ExampleApp
         Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsPresentationModule = mapModule.GetInteriorsPresentationModule();
         
         AppModes::States::SdkModel::AppModeStatesFactory appModeStatesFactory(m_pAppCameraModule->GetController(),
-                                                                              interiorsPresentationModule.GetAppLevelController(),
+                                                                              interiorsPresentationModule.GetController(),
                                                                               *m_pGlobeCameraWrapper,
                                                                               m_pInteriorsExplorerModule->GetInteriorsCameraController(),
                                                                               m_pToursModule->GetCameraController(),
@@ -570,8 +559,8 @@ namespace ExampleApp
                                                                               m_pToursModule->GetTourService(),
                                                                               interiorsPresentationModule.GetInteriorSelectionModel(),
                                                                               nativeUIFactories,
-                                                                              m_pMapModeModule->GetMapModeModel(),
-                                                                              m_pMyPinCreationModule->GetMyPinCreationModel());
+                                                                              m_pMyPinCreationModule->GetMyPinCreationModel(),
+                                                                              m_pVisualMapModule->GetVisualMapService());
         
         m_pAppModeModel->InitialiseStateMachine(appModeStatesFactory.CreateStateMachineStates());
     }
@@ -622,6 +611,8 @@ namespace ExampleApp
         
         Eegeo_DELETE m_pSettingsMenuModule;
 
+        Eegeo_DELETE m_pVisualMapModule;
+        
         Eegeo_DELETE m_pWeatherMenuModule;
         
         Eegeo_DELETE m_pGpsMarkerModule;
@@ -739,7 +730,7 @@ namespace ExampleApp
                                  mapModule.GetEnvironmentFlatteningService(),
                                  m_identityProvider,
                                  m_messageBus,
-                                 interiorsPresentationModule.GetAppLevelController(),
+                                 interiorsPresentationModule.GetController(),
                                  m_sdkDomainEventBus,
                                  interiorsAffectedByFlattening);
     }
@@ -747,14 +738,12 @@ namespace ExampleApp
     void MobileExampleApp::InitialiseToursModules(Eegeo::Modules::Map::MapModule& mapModule, Eegeo::EegeoWorld& world, const bool interiorsAffectedByFlattening)
     {
         m_pToursModule = Eegeo_NEW(ExampleApp::Tours::ToursModule)(m_identityProvider,
+                                                       m_metricsService,
                                                        m_messageBus,
                                                        WorldPinsModule().GetWorldPinsService(),
                                                        SearchModule().GetSearchRefreshService(),
-                                                       SettingsMenuModule().GetSettingsMenuViewModel(),
                                                        SearchMenuModule().GetSearchMenuViewModel(),
-                                                       CompassModule().GetCompassViewModel(),
-                                                       FlattenButtonModule().GetFlattenButtonViewModel(),
-                                                       MyPinCreationModule().GetInitiationScreenControlViewModel(),
+                                                       SettingsMenuModule().GetSettingsMenuViewModel(),
                                                        WatermarkModule().GetScreenControlViewModel(),
                                                        world.GetMapModule().GetResourceCeilingProvider(),
                                                        m_screenProperties,
@@ -803,12 +792,11 @@ namespace ExampleApp
         Eegeo::Modules::Map::MapModule& mapModule = m_pWorld->GetMapModule();
         Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsPresentationModule = mapModule.GetInteriorsPresentationModule();
         
-        
         Tours::SdkModel::TourInstances::Example::ExampleTourStateMachineFactory factory(ToursModule().GetCameraTransitionController(),
                                                                                         ToursModule().GetCameraController(),
                                                                                         m_pWorldPinsModule->GetWorldPinsService(),
                                                                                         m_interiorsEnabled,
-                                                                                        interiorsPresentationModule.GetAppLevelController(),
+                                                                                        interiorsPresentationModule.GetController(),
                                                                                         m_pInteriorsExplorerModule->GetInteriorVisibilityUpdater(),
                                                                                         interiorsPresentationModule.GetInteriorSelectionModel(),
                                                                                         m_messageBus);
@@ -819,7 +807,7 @@ namespace ExampleApp
                                                                                                                  ToursModule().GetCameraController(),
                                                                                                                  ToursModule().GetTourService(),
                                                                                                                  WorldPinsModule().GetWorldPinsService(),
-                                                                                                                 interiorsPresentationModule.GetAppLevelController(),
+                                                                                                                 interiorsPresentationModule.GetController(),
                                                                                                                  m_pInteriorsExplorerModule->GetInteriorVisibilityUpdater(),
                                                                                                                  interiorsPresentationModule.GetInteriorSelectionModel(),
                                                                                                                  ToursModule().GetTourRepository(),
@@ -980,6 +968,8 @@ namespace ExampleApp
         {
             m_pLoadingScreen->NotifyScreenDimensionsChanged(screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight());
         }
+
+		m_pPinsModule->UpdateScreenProperties(m_screenProperties);
 
         m_pGlobeCameraController->UpdateScreenProperties(m_screenProperties);
 
@@ -1225,6 +1215,11 @@ namespace ExampleApp
 
     void MobileExampleApp::Event_Zoom(const AppInterface::ZoomData& data)
     {
+		if (!CanAcceptTouch())
+		{
+			return;
+		}
+
         m_pCurrentTouchController->Event_Zoom(data);
     }
 
@@ -1238,16 +1233,31 @@ namespace ExampleApp
 
     void MobileExampleApp::Event_TiltStart(const AppInterface::TiltData& data)
     {
+		if (!CanAcceptTouch())
+		{
+			return;
+		}
+
         m_pCurrentTouchController->Event_TiltStart(data);
     }
 
     void MobileExampleApp::Event_TiltEnd(const AppInterface::TiltData& data)
     {
+		if (!CanAcceptTouch())
+		{
+			return;
+		}
+
         m_pCurrentTouchController->Event_TiltEnd(data);
     }
 
     void MobileExampleApp::Event_Tilt(const AppInterface::TiltData& data)
     {
+		if (!CanAcceptTouch())
+		{
+			return;
+		}
+
         m_pCurrentTouchController->Event_Tilt(data);
     }
     

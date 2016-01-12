@@ -245,11 +245,7 @@
         [self interruptCurrentTour:tour:showBackButton];
         return;
     }
-    const float carouselHeight = [m_viewController getItemHeight];
-    
-    CGRect f = m_pCarouselContainer.frame;
-    f.origin.y = m_screenHeight - carouselHeight;
-    m_pCarouselContainer.frame = f;
+    [self animateTo:1.0];
     
     m_tour = tour;
     m_hasActiveTour = true;
@@ -307,7 +303,10 @@
 
     [self.layer removeAllAnimations];
     
-    [UIView animateWithDuration:m_stateChangeAnimationTimeSeconds animations:^{
+    [UIView animateWithDuration:m_stateChangeAnimationTimeSeconds
+                          delay:0.0
+                        options:UIViewAnimationOptionBeginFromCurrentState
+                     animations:^{
         self->m_pCarouselContainer.frame = offFrame;
         self.pDetailsPanel.alpha = 0.0f;
         
@@ -333,8 +332,6 @@
 
 -(void) onCurrentSelectionTapped
 {
-    // display the POI view.
-    NSLog(@"Tapped carousel thing");
     m_pInterop->OnCurrentTourCardTapped();
 }
 
@@ -450,6 +447,8 @@
     }
     
     [UIView animateWithDuration:m_stateChangeAnimationTimeSeconds
+                          delay:0.0f
+                        options:UIViewAnimationOptionBeginFromCurrentState
                      animations:^
      {
          self->m_pCarouselContainer.frame = f;

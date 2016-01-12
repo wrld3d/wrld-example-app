@@ -2,8 +2,8 @@
 
 #include "MapModeController.h"
 #include "IMapModeModel.h"
-#include "EnvironmentFlatteningService.h"
-#include "IWeatherController.h"
+#include "IVisualMapService.h"
+#include "VisualMapState.h"
 
 namespace ExampleApp
 {
@@ -12,11 +12,9 @@ namespace ExampleApp
         namespace SdkModel
         {
             MapModeController::MapModeController(IMapModeModel& mapModeModel,
-                                                 Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
-                                                 WeatherMenu::SdkModel::IWeatherController& weatherController)
+                                                 VisualMap::SdkModel::IVisualMapService& visualMapService)
             : m_mapModeModel(mapModeModel)
-            , m_environmentFlatteningService(environmentFlatteningService)
-            , m_weatherController(weatherController)
+            , m_visualMapService(visualMapService)
             , m_onMapModeChangedCallback(this, &MapModeController::OnMapModeChanged)
             {
                 m_mapModeModel.AddMapModeChangedCallback(m_onMapModeChangedCallback);
@@ -31,15 +29,12 @@ namespace ExampleApp
             {
                 if (m_mapModeModel.IsInMapMode())
                 {
-                    m_environmentFlatteningService.SetIsFlattened(true);
-                    m_previousThemeState = m_weatherController.GetState();
-                    m_weatherController.SetState("MapMode");
+                    const VisualMap::SdkModel::VisualMapState& currentState = m_visualMapService.GetCurrentVisualMapState();
+                    m_visualMapService.SetVisualMapState(currentState.GetTheme(), "MapMode", true);
                 }
                 else
                 {
-                    Eegeo_ASSERT(!m_previousThemeState.empty());
-                    m_environmentFlatteningService.SetIsFlattened(false);
-                    m_weatherController.SetState(m_previousThemeState);
+                    m_visualMapService.RestorePreviousMapState();
                 }
             }
         }
