@@ -9,6 +9,7 @@
 {
     UITextField* m_pTextField;
     UIButton* m_pClearButton;
+    SearchMenuResultsSpinner* m_pResultsSpinner;
     ExampleApp::SearchMenu::View::SearchMenuViewInterop* m_pInterop;
     
     BOOL m_keyboardActive;
@@ -24,10 +25,12 @@
 
 - (id)initWithTextField:(UITextField*)textField
             clearButton:(UIButton*)clearButton
+         resultsSpinner:(SearchMenuResultsSpinner*)resultsSpinner
                 interop:(ExampleApp::SearchMenu::View::SearchMenuViewInterop*)interop
 {
     m_pTextField = textField;
     m_pClearButton = clearButton;
+    m_pResultsSpinner = resultsSpinner;
     m_pInterop = interop;
     
     m_pTextField.delegate = self;
@@ -73,14 +76,16 @@
 
 - (void) enableEdit
 {
-    [m_pClearButton setEnabled:YES];
+    [m_pClearButton setHidden:NO];
+    [m_pResultsSpinner stopAnimating];
     [m_pTextField setEnabled:YES];
     m_pTextField.textColor = ExampleApp::Helpers::ColorPalette::TextFieldEnabledColor;
 }
 
 - (void) disableEdit
 {
-    [m_pClearButton setEnabled:NO];
+    [m_pClearButton setHidden:YES];
+    [m_pResultsSpinner startAnimating];
     [m_pTextField setEnabled:NO];
     m_pTextField.textColor = ExampleApp::Helpers::ColorPalette::TextFieldDisabledColor;
 }

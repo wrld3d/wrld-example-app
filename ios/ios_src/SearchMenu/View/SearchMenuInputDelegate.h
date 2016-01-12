@@ -5,11 +5,13 @@
 #import <UIKit/UIKit.h>
 
 #include "SearchMenuViewIncludes.h"
+#include "SearchMenuResultsSpinner.h"
 
 @interface SearchMenuInputDelegate : NSObject<UITextFieldDelegate>
 
 - (id)initWithTextField:(UITextField*)textField
             clearButton:(UIButton*)clearButton
+         resultsSpinner:(SearchMenuResultsSpinner*)resultsSpinner
                 interop:(ExampleApp::SearchMenu::View::SearchMenuViewInterop*)interop;
 
 - (void) enableEdit;

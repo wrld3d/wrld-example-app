@@ -5,6 +5,7 @@
 #include "UIColors.h"
 #include "CellConstants.h"
 #include "CustomTableDataProvider.h"
+#include "SearchMenuResultsSpinner.h"
 #include "SearchResultsTableDataProvider.h"
 #include "SearchMenuViewInterop.h"
 #include "MenuViewInterop.h"
@@ -14,11 +15,18 @@
 #include "ViewAlphaAnimator.h"
 #include "ViewFrameAnimator.h"
 #include "ViewPositionAnimator.h"
+#include "ViewSizeAnimator.h"
 
 @interface SearchMenuView()
 {
     SearchResultsTableDataProvider* m_pSearchResultsDataProvider;
     ExampleApp::SearchMenu::View::SearchMenuViewInterop* m_pSearchMenuInterop;
+    
+    ExampleApp::Helpers::UIAnimation::ViewAnimationController* m_pAnchorAnimationController;
+    
+    bool m_anchorVisible;
+    
+    float m_anchorAnimationDurationSeconds;
     
     float m_animationDelaySeconds;
     float m_animationDurationSeconds;
@@ -61,6 +69,10 @@
     float m_searchEditBoxOpenOnScreenAlpha;
     float m_searchEditBoxOpenOnScreenX;
     float m_searchEditBoxOpenOnScreenY;
+    
+    float m_anchorArrowWidth;
+    float m_anchorArrowClosedHeight;
+    float m_anchorArrowOpenHeight;
 }
 
 @property (nonatomic, retain) UILabel* pSearchCountLabel;
@@ -68,7 +80,9 @@
 @property (nonatomic, retain) UITextField* pSearchEditBox;
 @property (nonatomic, retain) UIView* pSearchEditBoxClearButtonContainer;
 @property (nonatomic, retain) UIButton* pSearchEditBoxClearButton;
+@property (nonatomic, retain) SearchMenuResultsSpinner* pSearchEditBoxResultsSpinner;
 @property (nonatomic, retain) UIView* pSearchTableSeparator;
+@property (nonatomic, retain) UIImageView* pAnchorArrowImage;
 
 @end
 
@@ -102,6 +116,12 @@
 {
     m_pSearchMenuInterop = Eegeo_NEW(ExampleApp::SearchMenu::View::SearchMenuViewInterop)(self);
     
+    m_pAnchorAnimationController = NULL;
+    
+    m_anchorVisible = false;
+    
+    m_anchorAnimationDurationSeconds = 0.1f;
+    
     m_animationDelaySeconds = 0.2f;
     m_animationDurationSeconds = 0.1f;
     
@@ -121,6 +141,11 @@
     
     const float searchClearButtonSize = 24.0f * m_pixelScale;
     const float searchClearButtonRightInset = 6.0f * m_pixelScale;
+    
+    const float anchorArrowSize = 14.0f * m_pixelScale;
+    const float ancorArrowCenterInset = 21.0f * m_pixelScale;
+    const float anchorArrowX = searchCountLabelWidth + (ancorArrowCenterInset - anchorArrowSize / 2.0f);
+    const float anchorArrowY = -8.0f * m_pixelScale;
     
     m_tableSpacing = tableSpacing;
     
@@ -224,7 +249,11 @@
     self.pSearchEditBoxClearButton = [[[UIButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, searchClearButtonSize, searchClearButtonSize)] autorelease];
     [self.pSearchEditBoxClearButton setImage:[UIImage imageNamed:@"search_results_close.png"] forState:UIControlStateNormal];
     
+    self.pSearchEditBoxResultsSpinner = [[[SearchMenuResultsSpinner alloc] init] autorelease];
+    self.pSearchEditBoxResultsSpinner.center = CGPointMake(12.0f, 12.0f);
+    
     [self.pSearchEditBoxClearButtonContainer addSubview:self.pSearchEditBoxClearButton];
+    [self.pSearchEditBoxClearButtonContainer addSubview:self.pSearchEditBoxResultsSpinner];
     
     self.pSearchEditBox.rightView = self.pSearchEditBoxClearButtonContainer;
     self.pSearchEditBox.rightViewMode = UITextFieldViewModeAlways;
@@ -254,6 +283,15 @@
     self.pTableViewContainer.backgroundColor = [UIColor clearColor];
     self.pTableViewContainer.scrollEnabled = YES;
     self.pTableViewContainer.userInteractionEnabled = YES;
+    
+    m_anchorArrowWidth = anchorArrowSize;
+    m_anchorArrowClosedHeight = 0.0f;
+    m_anchorArrowOpenHeight = anchorArrowSize;
+    
+    self.pAnchorArrowImage = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"results_anchor_arrow.png"]] autorelease];
+    self.pAnchorArrowImage.contentMode = UIViewContentModeTop;
+    self.pAnchorArrowImage.frame = CGRectMake(anchorArrowX, anchorArrowY, m_anchorArrowWidth, m_anchorArrowClosedHeight);
+    self.pAnchorArrowImage.clipsToBounds = YES;
     
     self.pSearchResultsTableContainerView = [[[UIScrollView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, m_menuContainerWidth, 0.0f)] autorelease];
     self.pSearchResultsTableContainerView.bounces = NO;
@@ -302,6 +340,7 @@
     [self.pMenuContainer addSubview: self.pTopTableSeparator];
     [self.pMenuContainer addSubview: self.pSearchTableSeparator];
     [self.pMenuContainer addSubview: self.pTableViewContainer];
+    [self.pMenuContainer addSubview: self.pAnchorArrowImage];
     [self.pTableViewContainer addSubview:self.pTableView];
     [self.pTableViewContainer addSubview:self.pSearchResultsTableContainerView];
     [self.pSearchResultsTableContainerView addSubview:self.pSearchResultsTableView];
@@ -310,7 +349,10 @@
     
     self.frame = CGRectZero;
     
-    self.pInputDelegate = [[[SearchMenuInputDelegate alloc] initWithTextField:self.pSearchEditBox clearButton:self.pSearchEditBoxClearButton interop:m_pSearchMenuInterop] autorelease];
+    self.pInputDelegate = [[[SearchMenuInputDelegate alloc] initWithTextField:self.pSearchEditBox
+                                                                  clearButton:self.pSearchEditBoxClearButton
+                                                               resultsSpinner:self.pSearchEditBoxResultsSpinner
+                                                                      interop:m_pSearchMenuInterop] autorelease];
 }
 
 - (void)dealloc
@@ -325,6 +367,9 @@
     
     [self.pSearchResultsTableContainerView removeFromSuperview];
     [self.pSearchResultsTableContainerView release];
+    
+    [self.pAnchorArrowImage removeFromSuperview];
+    [self.pAnchorArrowImage release];
 
     [self.pTableViewContainer removeFromSuperview];
     [self.pTableViewContainer release];
@@ -337,6 +382,9 @@
     
     [self.pMenuContainer removeFromSuperview];
     [self.pMenuContainer release];
+    
+    [self.pSearchEditBoxResultsSpinner removeFromSuperview];
+    [self.pSearchEditBoxResultsSpinner release];
     
     [self.pSearchEditBoxClearButton removeFromSuperview];
     [self.pSearchEditBoxClearButton release];
@@ -359,8 +407,12 @@
     [self.pDragTab removeFromSuperview];
     [self.pDragTab release];
 
+    Eegeo_DELETE m_pAnchorAnimationController;
+    
     Eegeo_DELETE m_pSearchMenuInterop;
+    
     [self removeFromSuperview];
+    
     [super dealloc];
 }
 
@@ -443,6 +495,18 @@
                                                                                                              Eegeo::v2(m_searchEditBoxClosedOnScreenX, m_searchEditBoxClosedOnScreenY),
                                                                                                              Eegeo::v2(m_searchEditBoxOpenOnScreenX, m_searchEditBoxOpenOnScreenY),
                                                                                                              Eegeo_NEW(ExampleApp::Helpers::UIAnimation::Easing::CircleInOut<Eegeo::v2>())));
+    
+    // Anchor arrow animations
+    m_pAnchorAnimationController = Eegeo_NEW(ExampleApp::Helpers::UIAnimation::ViewAnimationController)(self,
+                                                                                                        nil,
+                                                                                                        nil);
+    
+    m_pAnchorAnimationController->AddAnimator(Eegeo_NEW(ExampleApp::Helpers::UIAnimation::ViewSizeAnimator)(self.pAnchorArrowImage,
+                                                                                                            m_anchorAnimationDurationSeconds,
+                                                                                                            0.0,
+                                                                                                            Eegeo::v2(m_anchorArrowWidth, m_anchorArrowClosedHeight),
+                                                                                                            Eegeo::v2(m_anchorArrowWidth, m_anchorArrowOpenHeight),
+                                                                                                            Eegeo_NEW(ExampleApp::Helpers::UIAnimation::Easing::CircleInOut<Eegeo::v2>())));
 }
 
 - (void) setOffscreenPartsHiddenState:(bool)hidden
@@ -458,16 +522,43 @@
     if(searchResultCount == 0)
     {
         [self.pSearchCountLabel setText:@""];
+        
+        if(m_anchorVisible)
+        {
+            m_pAnchorAnimationController->PlayReverse();
+            m_anchorVisible = false;
+        }
     }
     else
     {
         [self.pSearchCountLabel setText:[NSString stringWithFormat:@"%d", searchResultCount]];
+        
+        if(!m_anchorVisible)
+        {
+            m_pAnchorAnimationController->Play();
+            m_anchorVisible = true;
+        }
     }
 }
 
 - (void) collapseAll
 {
     [m_pDataProvider collapseAll];
+}
+
+- (void) updateAnimation:(float)deltaSeconds
+{
+    Eegeo_ASSERT([self isAnimating], "updateTableAnimation called when table is not animating, please call isTableAnimating to check that animation is running before calling updateTableAnimation");
+    
+    if([super isAnimating])
+    {
+        [super updateAnimation:deltaSeconds];
+    }
+    
+    if(m_pAnchorAnimationController->IsActive())
+    {
+        m_pAnchorAnimationController->Update(deltaSeconds);
+    }
 }
 
 - (void) updateTableAnimation:(float)deltaSeconds
@@ -493,6 +584,11 @@
     [self updateHeightsWithTableContentHeight:tableContentHeight
               searchResultsTableContentHeight:searchResultsTableContentHeight
                          updateContainersOnly:YES];
+}
+
+- (BOOL) isAnimating
+{
+    return [super isAnimating] || m_pAnchorAnimationController->IsActive();
 }
 
 - (BOOL) isTableAnimating
