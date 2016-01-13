@@ -117,7 +117,9 @@
 -(void)setInteractionEnabled:(BOOL)enabled
 {
     m_isAnimating = !enabled;
-    self.userInteractionEnabled = enabled;
+    
+    [m_pMenuView setTableCanInteract:enabled];
+    
     self.scrollEnabled = enabled;
 }
 

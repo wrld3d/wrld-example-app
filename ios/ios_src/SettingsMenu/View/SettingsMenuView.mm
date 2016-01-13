@@ -141,18 +141,23 @@
     const float tableWidth = m_menuContainerWidth;
     const float tableHeight = 0.0f;
     
-    self.pTableView = [[[CustomTableView alloc] initWithFrame:CGRectMake(tableX, tableY, tableWidth, tableHeight)
-                                                        style:UITableViewStylePlain
-                                                     menuView:self
-                                                  hasSubMenus:true
-                                                    cellWidth:tableCellWidth
-                                                    cellInset:0.0f
-                        ] autorelease];
-    self.pTableView.backgroundColor = [UIColor clearColor];
-    self.pTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    self.pTableView.bounces = NO;
-    self.pTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-    self.pTableView.pBackgroundView.backgroundColor = ExampleApp::Helpers::ColorPalette::BorderHudColor;
+    for(int i = 0; i < [self.pTableViewMap count]; ++i)
+    {
+        CustomTableView* customTableView = self.pTableViewMap[@(i)];
+        
+        [[customTableView initWithFrame:CGRectMake(tableX, tableY, tableWidth, tableHeight)
+                                  style:UITableViewStylePlain
+                               menuView:self
+                            hasSubMenus:true
+                              cellWidth:tableCellWidth
+                              cellInset:0.0f
+          ] autorelease];
+        customTableView.backgroundColor = [UIColor clearColor];
+        customTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        customTableView.bounces = NO;
+        customTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+        customTableView.pBackgroundView.backgroundColor = ExampleApp::Helpers::ColorPalette::BorderHudColor;
+    }
     
     [self addSubview: self.pDragTab];
     [self addSubview: self.pTitleContainer];
@@ -160,7 +165,11 @@
     [self addSubview: self.pMenuContainer];
     [self.pMenuContainer addSubview: self.pTopTableSeparator];
     [self.pMenuContainer addSubview: self.pTableViewContainer];
-    [self.pTableViewContainer addSubview:self.pTableView];
+    
+    for (int i = 0; i < [self.pTableViewMap count]; ++i)
+    {
+        [self.pTableViewContainer addSubview:self.pTableViewMap[@(i)]];
+    }
 
     ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pDragTab, "settings_gear", ExampleApp::Helpers::ImageHelpers::Centre);
     
@@ -176,9 +185,6 @@
     
     [self.pTitleLabel removeFromSuperview];
     [self.pTitleLabel release];
-    
-    [self.pTableView removeFromSuperview];
-    [self.pTableView release];
     
     [self.pTopTableSeparator removeFromSuperview];
     [self.pTopTableSeparator release];

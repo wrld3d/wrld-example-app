@@ -8,6 +8,7 @@
 
 @class MenuView;
 @class MenuViewInterop;
+@class CustomTableView;
 
 @interface CustomTableDataProvider : UITableViewController<UITableViewDelegate, UITableViewDataSource>
 {
@@ -15,7 +16,8 @@
     ExampleApp::Menu::View::TSections m_currentSections;
 }
 
-- (id)initWithParams:(MenuView*) view;
+- (id)initWithParams:(MenuView*)view
+                    :(NSMutableDictionary*)tableViewMap;
 
 - (void)collapseAll;
 
@@ -28,6 +30,8 @@
 - (void)updateMenuSections:(ExampleApp::Menu::View::TSections*)sections;
 
 - (float)getRealTableHeight;
+
+- (float)getRealHeightForTable:(CustomTableView*)customTableView;
 
 @property (nonatomic, retain) UIImage* pOpenableMenuArrow;
 @property (nonatomic, retain) id <CustomTableRowSelectionDelegate> rowSelectionDelegate;

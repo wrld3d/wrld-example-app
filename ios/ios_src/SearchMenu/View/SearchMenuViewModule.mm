@@ -29,6 +29,7 @@ namespace ExampleApp
                                                                 :screenProperties.GetScreenHeight()
                                                                 :screenProperties.GetPixelScale()
                                                                 :m_pDataProvider
+                                                                :searchMenuViewModel.SectionsCount()
                                                                 :m_pSearchResultsDataProvider];
 
                 m_pController = Eegeo_NEW(SearchMenuController)(searchMenuModel,

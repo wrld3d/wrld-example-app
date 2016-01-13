@@ -46,9 +46,10 @@ enum MenuState
 }
 
 - (id) initWithParams:(float)width
-    :(float)height
-    :(float)pixelScale
-    :(CustomTableDataProvider*)dataProvider
+                     :(float)height
+                     :(float)pixelScale
+                     :(CustomTableDataProvider*)dataProvider
+                     :(int)tableCount
 {
     if(self = [super init])
     {
@@ -60,6 +61,14 @@ enum MenuState
         
         m_onScreenAnimationController = NULL;
         m_openAnimationController = NULL;
+        
+        self.pTableViewMap = [[[NSMutableDictionary alloc] init] autorelease];
+        
+        for(int i = 0; i < tableCount; ++i)
+        {
+            CustomTableView* customTableView = [[CustomTableView alloc] autorelease];
+            self.pTableViewMap[@(i)] = [customTableView retain];
+        }
 
         [self initializeViews];
         
@@ -68,7 +77,8 @@ enum MenuState
         self.hidden = true;
 
         m_pDataProvider = dataProvider;
-        [m_pDataProvider initWithParams:self];
+        [m_pDataProvider initWithParams:self
+                                       :self.pTableViewMap];
         
         m_pInterop = Eegeo_NEW(ExampleApp::Menu::View::MenuViewInterop)(self);
 
@@ -80,16 +90,6 @@ enum MenuState
 
         [[self pDragTab] addGestureRecognizer: m_panGestureRecognizer];
         [[self pDragTab] addGestureRecognizer: m_tapGestureRecogniser];
-
-        if ([self.pTableView respondsToSelector:@selector(layoutMargins)])
-        {
-            self.pTableView.layoutMargins = UIEdgeInsetsZero;
-        }
-
-        if ([self.pTableView respondsToSelector:@selector(separatorInset)])
-        {
-            [self.pTableView setSeparatorInset:UIEdgeInsetsZero];
-        }
         
         m_dragStartedClosed = false;
         m_touchedDownInsideDragTab  = false;
@@ -108,6 +108,18 @@ enum MenuState
     
     Eegeo_DELETE m_onScreenAnimationController;
     
+    for(int i = 0; i < [self.pTableViewMap count]; ++i)
+    {
+        CustomTableView* customTableView = (CustomTableView*)self.pTableViewMap[@(i)];
+        
+        self.pTableViewMap[@(i)] = nil;
+        
+        [customTableView removeFromSuperview];
+        [customTableView release];
+    }
+    
+    [self.pTableViewMap release];
+    
     Eegeo_DELETE m_pInterop;
     [super dealloc];
 }
@@ -119,7 +131,7 @@ enum MenuState
 
 - (void) setOffscreenPartsHiddenState:(bool)hidden
 {
-    self.pTableView.hidden = hidden;
+    self.pTableViewContainer.hidden = hidden;
 }
 
 - (void) animateToRemovedFromScreen
@@ -223,7 +235,7 @@ enum MenuState
     CGPoint touchLocation = [touch locationInView:self];
     return CGRectContainsPoint(self.pDragTab.frame, touchLocation)
            || CGRectContainsPoint(self.pTitleContainer.frame, touchLocation)
-           || CGRectContainsPoint(self.pTableViewContainer.frame, touchLocation);
+           || CGRectContainsPoint(self.pMenuContainer.frame, touchLocation);
 }
 
 - (void) initializeAnimators
@@ -311,12 +323,22 @@ enum MenuState
 
 - (void) updateTableAnimation:(float)deltaSeconds
 {
-    [self.pTableView updateAnimation:deltaSeconds];
+    for(int i = 0; i < [self.pTableViewMap count]; ++i)
+    {
+        CustomTableView* customTableView = (CustomTableView*)self.pTableViewMap[@(i)];
+        
+        if([customTableView isAnimating])
+        {
+            [customTableView updateAnimation:deltaSeconds];
+        }
+    }
 }
 
 - (void) onTableAnimationUpdated
 {
-    [self.pTableViewContainer setContentSize:CGSizeMake(self.pTableView.pBackgroundView.frame.size.width, self.pTableView.pBackgroundView.frame.size.height)];
+    [self updateHeightsForCustomTableView:nil
+                     updateContainersOnly:YES
+                           useRealHeights:NO];
 }
 
 - (void) onOffScreenAnimationComplete
@@ -348,7 +370,17 @@ enum MenuState
 
 - (BOOL) isTableAnimating
 {
-    return [self.pTableView isAnimating];
+    for(int i = 0; i < [self.pTableViewMap count]; ++i)
+    {
+        CustomTableView* customTableView = (CustomTableView*)self.pTableViewMap[@(i)];
+        
+        if([customTableView isAnimating])
+        {
+            return true;
+        }
+    }
+    
+    return false;
 }
 
 - (float) openOnScreenState
@@ -551,42 +583,77 @@ enum MenuState
 
 - (void) refreshTableHeights
 {
-    const float tableHeight = [m_pDataProvider getRealTableHeight];
-    
-    const float tableViewContainerHeight = fminf(m_screenHeight - self.pTableViewContainer.frame.origin.y, tableHeight);
-    
-    CGRect frame = self.pTableView.frame;
-    frame.size.height = tableHeight;
-    self.pTableView.frame = frame;
-    
-    frame = self.pTableView.pBackgroundView.frame;
-    frame.size.height = tableHeight;
-    self.pTableView.pBackgroundView.frame = frame;
-    
-    frame = self.pTableViewContainer.frame;
-    frame.size.height = tableViewContainerHeight;
-    self.pTableViewContainer.frame = frame;
-    
-    [self.pTableViewContainer setContentSize:CGSizeMake(self.pTableViewContainer.frame.size.width, tableHeight)];
+    [self updateHeightsForCustomTableView:nil
+                     updateContainersOnly:NO
+                           useRealHeights:YES];
 }
 
 - (void) refreshHeightForTable:(CustomTableView*)tableView
 {
-    Eegeo_ASSERT(tableView == self.pTableView, "Can't refresh height for a table view not owned by this view");
+    [self updateHeightsForCustomTableView:tableView
+                     updateContainersOnly:NO
+                           useRealHeights:NO];
+}
+
+- (void)updateHeightsForCustomTableView:(CustomTableView*)tableView
+                   updateContainersOnly:(BOOL)updateContainersOnly
+                         useRealHeights:(BOOL)useRealHeights
+{
+    float totalTableHeight = 0.0f;
     
-    [self refreshTableHeights];
+    for(int i = 0; i < [self.pTableViewMap count]; ++i)
+    {
+        CustomTableView* customTableView = self.pTableViewMap[@(i)];
+        
+        float tableHeight;
+        
+        if(useRealHeights || customTableView == tableView)
+        {
+            tableHeight = [m_pDataProvider getRealHeightForTable:customTableView];
+        }
+        else
+        {
+            tableHeight = customTableView.pBackgroundView.frame.size.height;
+        }
+        
+        CGRect frame = customTableView.frame;
+        frame.origin.y = totalTableHeight;
+        customTableView.frame = frame;
+        
+        if(!updateContainersOnly)
+        {
+            CGRect frame = customTableView.frame;
+            frame.size.height = tableHeight;
+            customTableView.frame = frame;
+            
+            frame = customTableView.pBackgroundView.frame;
+            frame.size.height = tableHeight;
+            customTableView.pBackgroundView.frame = frame;
+        }
+        
+        totalTableHeight += tableHeight;
+    }
+    
+    const float tableViewContainerHeight = fminf(m_screenHeight - self.pTableViewContainer.frame.origin.y, totalTableHeight);
+    
+    CGRect frame = self.pTableViewContainer.frame;
+    frame.size.height = tableViewContainerHeight;
+    self.pTableViewContainer.frame = frame;
+    
+    [self.pTableViewContainer setContentSize:CGSizeMake(self.pTableViewContainer.frame.size.width, totalTableHeight)];
 }
 
 - (float) getHeightForTable:(CustomTableView*)tableView
 {
-    Eegeo_ASSERT(tableView == self.pTableView, "Can't get height for a table view not owned by this view");
-    
-    return [m_pDataProvider getRealTableHeight];
+    return [m_pDataProvider getRealHeightForTable:tableView];
 }
 
 - (void) setTableCanInteract:(BOOL)canInteract
 {
-    [self.pTableView setUserInteractionEnabled:canInteract];
+    for(int i = 0; i < [self.pTableViewMap count]; ++i)
+    {
+        [self.pTableViewMap[@(i)] setUserInteractionEnabled:canInteract];
+    }
 }
 
 - (BOOL) canInteract

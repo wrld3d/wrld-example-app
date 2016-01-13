@@ -61,9 +61,10 @@
 }
 
 - (id) initWithParams:(float)width
-    :(float)height
-    :(float)pixelScale
-    :(CustomTableDataProvider*)dataProvider;
+                     :(float)height
+                     :(float)pixelScale
+                     :(CustomTableDataProvider*)dataProvider
+                     :(int)tableCount;
 
 - (ExampleApp::Menu::View::MenuViewInterop*) getInterop;
 
@@ -111,7 +112,7 @@
 @property (nonatomic, retain) UIView* pTitleContainer;
 @property (nonatomic, retain) UIView* pMenuContainer;
 @property (nonatomic, retain) UIView* pTopTableSeparator;
-@property (nonatomic, retain) CustomTableView* pTableView;
+@property (nonatomic, retain) NSMutableDictionary* pTableViewMap;
 @property (nonatomic, retain) UIScrollView* pTableViewContainer;
 
 @end

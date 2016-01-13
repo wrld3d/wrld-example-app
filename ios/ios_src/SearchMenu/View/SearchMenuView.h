@@ -21,6 +21,7 @@
                     :(float)height
                     :(float)pixelScale
                     :(CustomTableDataProvider*)dataProvider
+                    :(int)tableCount
                     :(SearchResultsTableDataProvider*)searchResultsDataProvider;
 
 - (ExampleApp::SearchMenu::View::SearchMenuViewInterop*) getSearchMenuInterop;
