@@ -26,7 +26,9 @@ namespace ExampleApp
                 double m_timerSeconds;
                 bool m_isPlayingForward;
                 
-                void StartAnimators(bool playFromCurrent);
+                void StartAnimators();
+                
+                void StartAnimatorsFromCurrent();
                 
             public:
                 ViewAnimationController(UIView* mainView,

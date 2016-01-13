@@ -32,25 +32,23 @@ namespace ExampleApp
                 Eegeo_DELETE m_curve;
             }
             
-            void ViewSizeAnimator::OnPlay(bool playFromCurrent)
+            void ViewSizeAnimator::OnPlay()
             {
-                if(playFromCurrent)
+                m_currentStartSize = m_defaultStartSize;
+                m_deltaSize = m_targetSize - m_defaultStartSize;
+            }
+            
+            void ViewSizeAnimator::OnPlayFromCurrent()
+            {
+                if(m_isPlayingForward)
                 {
-                    if(m_isPlayingForward)
-                    {
-                        m_currentStartSize = Eegeo::dv2(m_view.frame.size.width, m_view.frame.size.height).ToSingle();
-                        m_deltaSize = m_targetSize - m_currentStartSize;
-                    }
-                    else
-                    {
-                        m_currentStartSize = m_defaultStartSize;
-                        m_deltaSize = Eegeo::dv2(m_view.frame.size.width, m_view.frame.size.height).ToSingle() - m_defaultStartSize;
-                    }
+                    m_currentStartSize = Eegeo::dv2(m_view.frame.size.width, m_view.frame.size.height).ToSingle();
+                    m_deltaSize = m_targetSize - m_currentStartSize;
                 }
                 else
                 {
                     m_currentStartSize = m_defaultStartSize;
-                    m_deltaSize = m_targetSize - m_defaultStartSize;
+                    m_deltaSize = Eegeo::dv2(m_view.frame.size.width, m_view.frame.size.height).ToSingle() - m_defaultStartSize;
                 }
             }
             

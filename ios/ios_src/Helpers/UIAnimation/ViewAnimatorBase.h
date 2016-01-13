@@ -21,7 +21,9 @@ namespace ExampleApp
                 double m_animationPeriodSeconds;
                 double m_startDelaySeconds;
                 
-                virtual void OnPlay(bool playFromCurrent) = 0;
+                virtual void OnPlay() = 0;
+                
+                virtual void OnPlayFromCurrent() = 0;
                 
                 virtual void OnUpdate(double timerSeconds) = 0;
                 
@@ -32,7 +34,9 @@ namespace ExampleApp
                 
                 virtual ~ViewAnimatorBase();
                 
-                void Play(bool isPlayingForward, bool playFromCurrent);
+                void Play(bool isPlayingForward);
+                
+                void PlayFromCurrent(bool isPlayingForward);
                 
                 void Update(double timerSeconds);
                 

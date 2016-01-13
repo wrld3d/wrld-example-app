@@ -25,7 +25,9 @@ namespace ExampleApp
                 Easing::IEasingCurve<Eegeo::v2>* m_curve;
                 
             protected:
-                void OnPlay(bool playFromCurrent);
+                void OnPlay();
+                
+                void OnPlayFromCurrent();
                 
                 void OnUpdate(double timerSeconds);
                 

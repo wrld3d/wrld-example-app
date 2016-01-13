@@ -24,7 +24,9 @@ namespace ExampleApp
                 Easing::IEasingCurve<float>* m_curve;
                 
             protected:
-                void OnPlay(bool playFromCurrent);
+                void OnPlay();
+                
+                void OnPlayFromCurrent();
                 
                 void OnUpdate(double timerSeconds);
                 

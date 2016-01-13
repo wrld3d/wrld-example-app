@@ -32,25 +32,23 @@ namespace ExampleApp
                 Eegeo_DELETE m_curve;
             }
             
-            void ViewAlphaAnimator::OnPlay(bool playFromCurrent)
+            void ViewAlphaAnimator::OnPlay()
             {
-                if(playFromCurrent)
+                m_currentStartAlpha = m_defaultStartAlpha;
+                m_deltaAlpha = m_targetAlpha - m_defaultStartAlpha;
+            }
+            
+            void ViewAlphaAnimator::OnPlayFromCurrent()
+            {
+                if(m_isPlayingForward)
                 {
-                    if(m_isPlayingForward)
-                    {
-                        m_currentStartAlpha = static_cast<float>(m_view.alpha);
-                        m_deltaAlpha = m_targetAlpha - m_currentStartAlpha;
-                    }
-                    else
-                    {
-                        m_currentStartAlpha = m_defaultStartAlpha;
-                        m_deltaAlpha = static_cast<float>(m_view.alpha) - m_defaultStartAlpha;
-                    }
+                    m_currentStartAlpha = static_cast<float>(m_view.alpha);
+                    m_deltaAlpha = m_targetAlpha - m_currentStartAlpha;
                 }
                 else
                 {
                     m_currentStartAlpha = m_defaultStartAlpha;
-                    m_deltaAlpha = m_targetAlpha - m_defaultStartAlpha;
+                    m_deltaAlpha = static_cast<float>(m_view.alpha) - m_defaultStartAlpha;
                 }
             }
             

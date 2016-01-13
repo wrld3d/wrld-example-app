@@ -38,34 +38,32 @@ namespace ExampleApp
                 Eegeo_DELETE m_curve;
             }
             
-            void ViewFrameAnimator::OnPlay(bool playFromCurrent)
+            void ViewFrameAnimator::OnPlay()
             {
-                if(playFromCurrent)
+                m_currentStartPosition = m_defaultStartPosition;
+                m_deltaPosition = m_targetPosition - m_defaultStartPosition;
+                
+                m_currentStartSize = m_defaultStartSize;
+                m_deltaSize = m_targetSize - m_defaultStartSize;
+            }
+            
+            void ViewFrameAnimator::OnPlayFromCurrent()
+            {
+                if(m_isPlayingForward)
                 {
-                    if(m_isPlayingForward)
-                    {
-                        m_currentStartPosition = Eegeo::dv2(m_view.frame.origin.x, m_view.frame.origin.y).ToSingle();
-                        m_deltaPosition = m_targetPosition - m_currentStartPosition;
-                        
-                        m_currentStartSize = Eegeo::dv2(m_view.frame.size.width, m_view.frame.size.height).ToSingle();
-                        m_deltaSize = m_targetSize - m_currentStartSize;
-                    }
-                    else
-                    {
-                        m_currentStartPosition = m_defaultStartPosition;
-                        m_deltaPosition = Eegeo::dv2(m_view.frame.origin.x, m_view.frame.origin.y).ToSingle() - m_defaultStartPosition;
-                        
-                        m_currentStartSize = m_defaultStartSize;
-                        m_deltaSize = Eegeo::dv2(m_view.frame.size.width, m_view.frame.size.height).ToSingle() - m_defaultStartSize;
-                    }
+                    m_currentStartPosition = Eegeo::dv2(m_view.frame.origin.x, m_view.frame.origin.y).ToSingle();
+                    m_deltaPosition = m_targetPosition - m_currentStartPosition;
+                    
+                    m_currentStartSize = Eegeo::dv2(m_view.frame.size.width, m_view.frame.size.height).ToSingle();
+                    m_deltaSize = m_targetSize - m_currentStartSize;
                 }
                 else
                 {
                     m_currentStartPosition = m_defaultStartPosition;
-                    m_deltaPosition = m_targetPosition - m_defaultStartPosition;
+                    m_deltaPosition = Eegeo::dv2(m_view.frame.origin.x, m_view.frame.origin.y).ToSingle() - m_defaultStartPosition;
                     
                     m_currentStartSize = m_defaultStartSize;
-                    m_deltaSize = m_targetSize - m_defaultStartSize;
+                    m_deltaSize = Eegeo::dv2(m_view.frame.size.width, m_view.frame.size.height).ToSingle() - m_defaultStartSize;
                 }
             }
             

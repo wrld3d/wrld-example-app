@@ -27,12 +27,20 @@ namespace ExampleApp
                 
             }
             
-            void ViewAnimatorBase::Play(bool isPlayingForward, bool playFromCurrent)
+            void ViewAnimatorBase::Play(bool isPlayingForward)
             {
                 m_isPlayingForward = isPlayingForward;
                 m_isActive = true;
                 
-                OnPlay(playFromCurrent);
+                OnPlay();
+            }
+            
+            void ViewAnimatorBase::PlayFromCurrent(bool isPlayingForward)
+            {
+                m_isPlayingForward = isPlayingForward;
+                m_isActive = true;
+                
+                OnPlayFromCurrent();
             }
             
             void ViewAnimatorBase::Update(double timerSeconds)
