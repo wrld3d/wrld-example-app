@@ -18,19 +18,22 @@ namespace ExampleApp
             class ViewSizeAnimator : public ViewAnimatorBase
             {
             private:
-                Eegeo::v2 m_startSize;
+                Eegeo::v2 m_defaultStartSize;
                 Eegeo::v2 m_targetSize;
                 Eegeo::v2 m_deltaSize;
+                Eegeo::v2 m_currentStartSize;
                 Easing::IEasingCurve<Eegeo::v2>* m_curve;
                 
             protected:
+                void OnPlay(bool playFromCurrent);
+                
                 void OnUpdate(double timerSeconds);
                 
             public:
                 ViewSizeAnimator(UIView* view,
                                  double animationPeriodSeconds,
                                  double startDelaySeconds,
-                                 const Eegeo::v2& startSize,
+                                 const Eegeo::v2& defaultStartSize,
                                  const Eegeo::v2& targetSize,
                                  Easing::IEasingCurve<Eegeo::v2>* curve);
                 

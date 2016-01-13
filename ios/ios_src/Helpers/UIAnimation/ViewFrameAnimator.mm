@@ -14,18 +14,20 @@ namespace ExampleApp
             ViewFrameAnimator::ViewFrameAnimator(UIView* view,
                                                  double animationPeriodSeconds,
                                                  double startDelaySeconds,
-                                                 const Eegeo::v2& startPosition,
+                                                 const Eegeo::v2& defaultStartPosition,
                                                  const Eegeo::v2& targetPosition,
-                                                 const Eegeo::v2& startSize,
+                                                 const Eegeo::v2& defaultStartSize,
                                                  const Eegeo::v2& targetSize,
                                                  Easing::IEasingCurve<Eegeo::v2>* curve)
             : ViewAnimatorBase(view, animationPeriodSeconds, startDelaySeconds)
-            , m_startPosition(startPosition)
+            , m_defaultStartPosition(defaultStartPosition)
             , m_targetPosition(targetPosition)
-            , m_deltaPosition(m_targetPosition - m_startPosition)
-            , m_startSize(startSize)
+            , m_deltaPosition(Eegeo::v2::Zero())
+            , m_currentStartPosition(Eegeo::v2::Zero())
+            , m_defaultStartSize(defaultStartSize)
             , m_targetSize(targetSize)
-            , m_deltaSize(m_targetSize - m_startSize)
+            , m_deltaSize(Eegeo::v2::Zero())
+            , m_currentStartSize(Eegeo::v2::Zero())
             , m_curve(curve)
             {
                 Eegeo_ASSERT(m_curve != NULL, "Can't initialise ViewFrameAnimator with NULL curve");
@@ -36,10 +38,41 @@ namespace ExampleApp
                 Eegeo_DELETE m_curve;
             }
             
+            void ViewFrameAnimator::OnPlay(bool playFromCurrent)
+            {
+                if(playFromCurrent)
+                {
+                    if(m_isPlayingForward)
+                    {
+                        m_currentStartPosition = Eegeo::dv2(m_view.frame.origin.x, m_view.frame.origin.y).ToSingle();
+                        m_deltaPosition = m_targetPosition - m_currentStartPosition;
+                        
+                        m_currentStartSize = Eegeo::dv2(m_view.frame.size.width, m_view.frame.size.height).ToSingle();
+                        m_deltaSize = m_targetSize - m_currentStartSize;
+                    }
+                    else
+                    {
+                        m_currentStartPosition = m_defaultStartPosition;
+                        m_deltaPosition = Eegeo::dv2(m_view.frame.origin.x, m_view.frame.origin.y).ToSingle() - m_defaultStartPosition;
+                        
+                        m_currentStartSize = m_defaultStartSize;
+                        m_deltaSize = Eegeo::dv2(m_view.frame.size.width, m_view.frame.size.height).ToSingle() - m_defaultStartSize;
+                    }
+                }
+                else
+                {
+                    m_currentStartPosition = m_defaultStartPosition;
+                    m_deltaPosition = m_targetPosition - m_defaultStartPosition;
+                    
+                    m_currentStartSize = m_defaultStartSize;
+                    m_deltaSize = m_targetSize - m_defaultStartSize;
+                }
+            }
+            
             void ViewFrameAnimator::OnUpdate(double timerSeconds)
             {
-                const Eegeo::v2& currentPosition = (*m_curve)((float)timerSeconds, m_startPosition, m_deltaPosition, (float)m_animationPeriodSeconds);
-                const Eegeo::v2& currentSize = (*m_curve)((float)timerSeconds, m_startSize, m_deltaSize, (float)m_animationPeriodSeconds);
+                const Eegeo::v2& currentPosition = (*m_curve)((float)timerSeconds, m_currentStartPosition, m_deltaPosition, (float)m_animationPeriodSeconds);
+                const Eegeo::v2& currentSize = (*m_curve)((float)timerSeconds, m_currentStartSize, m_deltaSize, (float)m_animationPeriodSeconds);
                 
                 m_view.frame = CGRectMake(std::ceil(currentPosition.x),
                                           std::ceil(currentPosition.y),

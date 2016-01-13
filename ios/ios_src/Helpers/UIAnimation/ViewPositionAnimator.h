@@ -18,19 +18,22 @@ namespace ExampleApp
             class ViewPositionAnimator : public ViewAnimatorBase
             {
             private:
-                Eegeo::v2 m_startPosition;
+                Eegeo::v2 m_defaultStartPosition;
                 Eegeo::v2 m_targetPosition;
                 Eegeo::v2 m_deltaPosition;
+                Eegeo::v2 m_currentStartPosition;
                 Easing::IEasingCurve<Eegeo::v2>* m_curve;
                 
             protected:
+                void OnPlay(bool playFromCurrent);
+                
                 void OnUpdate(double timerSeconds);
                 
             public:
                 ViewPositionAnimator(UIView* view,
                                      double animationPeriodSeconds,
                                      double startDelaySeconds,
-                                     const Eegeo::v2& startPosition,
+                                     const Eegeo::v2& defaultStartPosition,
                                      const Eegeo::v2& targetPosition,
                                      Easing::IEasingCurve<Eegeo::v2>* curve);
                 

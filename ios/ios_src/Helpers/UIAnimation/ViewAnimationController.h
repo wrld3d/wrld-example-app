@@ -26,7 +26,7 @@ namespace ExampleApp
                 double m_timerSeconds;
                 bool m_isPlayingForward;
                 
-                void StartAnimators();
+                void StartAnimators(bool playFromCurrent);
                 
             public:
                 ViewAnimationController(UIView* mainView,
@@ -47,7 +47,13 @@ namespace ExampleApp
                 
                 void PlayReverseWithNormalizedOffset(float offset);
                 
+                void PlayFromCurrent();
+                
+                void PlayReverseFromCurrent();
+                
                 void SetToNormalizedOffset(float offset);
+                
+                void SetToEnd();
                 
                 void Update(double deltaSeconds);
                 

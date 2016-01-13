@@ -31,11 +31,11 @@ namespace ExampleApp
                 }
             }
             
-            void ViewAnimationController::StartAnimators()
+            void ViewAnimationController::StartAnimators(bool playFromCurrent)
             {
                 for(std::vector<ViewAnimatorBase*>::const_iterator it = m_animators.begin(); it != m_animators.end(); ++it)
                 {
-                    (*it)->Play(m_isPlayingForward);
+                    (*it)->Play(m_isPlayingForward, playFromCurrent);
                 }
             }
             
@@ -70,7 +70,7 @@ namespace ExampleApp
                 m_isPlayingForward = true;
                 m_timerSeconds = 0.0;
                 
-                StartAnimators();
+                StartAnimators(false);
             }
             
             void ViewAnimationController::PlayReverse()
@@ -78,7 +78,7 @@ namespace ExampleApp
                 m_isPlayingForward = false;
                 m_timerSeconds = m_totalDurationSeconds;
                 
-                StartAnimators();
+                StartAnimators(false);
             }
             
             void ViewAnimationController::PlayWithNormalizedOffset(float offset)
@@ -88,7 +88,7 @@ namespace ExampleApp
                 m_isPlayingForward = true;
                 m_timerSeconds = offset * m_totalDurationSeconds;
                 
-                StartAnimators();
+                StartAnimators(false);
             }
             
             void ViewAnimationController::PlayReverseWithNormalizedOffset(float offset)
@@ -98,7 +98,23 @@ namespace ExampleApp
                 m_isPlayingForward = false;
                 m_timerSeconds = (1.0f - offset) * m_totalDurationSeconds;
                 
-                StartAnimators();
+                StartAnimators(false);
+            }
+            
+            void ViewAnimationController::PlayFromCurrent()
+            {
+                m_isPlayingForward = true;
+                m_timerSeconds = 0.0;
+                
+                StartAnimators(true);
+            }
+            
+            void ViewAnimationController::PlayReverseFromCurrent()
+            {
+                m_isPlayingForward = false;
+                m_timerSeconds = m_totalDurationSeconds;
+                
+                StartAnimators(true);
             }
             
             void ViewAnimationController::SetToNormalizedOffset(float offset)
@@ -109,6 +125,11 @@ namespace ExampleApp
                 {
                     (*it)->Update(m_timerSeconds);
                 }
+            }
+            
+            void ViewAnimationController::SetToEnd()
+            {
+                m_timerSeconds = m_isPlayingForward ? m_totalDurationSeconds : 0.0;
             }
             
             void ViewAnimationController::Update(double deltaSeconds)

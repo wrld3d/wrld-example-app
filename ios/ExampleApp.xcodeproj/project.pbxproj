@@ -8362,7 +8362,7 @@
 					"$(PROJECT_DIR)/Include/eegeo",
 					"$(PROJECT_DIR)/Include",
 				);
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
 					"-DCOMPILE_CPP_11=1",
@@ -8513,7 +8513,7 @@
 					"$(PROJECT_DIR)/Include",
 					"$(PROJECT_DIR)/Include/eegeo",
 				);
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				VALID_ARCHS = "armv7 i386 arm64";

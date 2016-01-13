@@ -17,19 +17,22 @@ namespace ExampleApp
             class ViewAlphaAnimator : public ViewAnimatorBase
             {
             private:
-                float m_startAlpha;
+                float m_defaultStartAlpha;
                 float m_targetAlpha;
                 float m_deltaAlpha;
+                float m_currentStartAlpha;
                 Easing::IEasingCurve<float>* m_curve;
                 
             protected:
+                void OnPlay(bool playFromCurrent);
+                
                 void OnUpdate(double timerSeconds);
                 
             public:
                 ViewAlphaAnimator(UIView* view,
                                   double animationPeriodSeconds,
                                   double startDelaySeconds,
-                                  float startAlpha,
+                                  float defaultStartAlpha,
                                   float targetAlpha,
                                   Easing::IEasingCurve<float>* curve);
                 

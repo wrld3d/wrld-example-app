@@ -142,7 +142,7 @@ enum MenuState
     else if(m_menuState == OPEN_ON_SCREEN || m_menuState == DRAGGING)
     {
         [self startAnimationForState:CLOSED_ON_SCREEN
-                    normalizedOffset:1.0f -[self openOnScreenState]
+                    normalizedOffset:1.0f - [self openOnScreenState]
                  animationController:m_openAnimationController
                     isPlayingForward:NO];
     }
@@ -161,20 +161,42 @@ enum MenuState
             animationController:(ExampleApp::Helpers::UIAnimation::ViewAnimationController*)animationController
                isPlayingForward:(BOOL)isPlayingForward
 {
-    if(m_menuState == state || [self isAnimating])
+    if(m_menuState == state)
     {
         return;
+    }
+    
+    bool overridingAnimation = false;
+    
+    if(m_currentAnimationController != NULL)
+    {
+        m_currentAnimationController->SetToEnd();
+        overridingAnimation = true;
     }
     
     m_menuState = ANIMATING;
     
     if(isPlayingForward)
     {
-        animationController->PlayWithNormalizedOffset(normalizedOffset);
+        if(overridingAnimation)
+        {
+            animationController->PlayFromCurrent();
+        }
+        else
+        {
+            animationController->PlayWithNormalizedOffset(normalizedOffset);
+        }
     }
     else
     {
-        animationController->PlayReverseWithNormalizedOffset(normalizedOffset);
+        if(overridingAnimation)
+        {
+            animationController->PlayReverseFromCurrent();
+        }
+        else
+        {
+            animationController->PlayReverseWithNormalizedOffset(normalizedOffset);
+        }
     }
     
     m_currentAnimationController = animationController;

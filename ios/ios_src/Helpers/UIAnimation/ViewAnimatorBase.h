@@ -14,12 +14,14 @@ namespace ExampleApp
             {
             private:
                 bool m_isActive;
-                bool m_isPlayingForward;
                 
             protected:
                 UIView* m_view;
+                bool m_isPlayingForward;
                 double m_animationPeriodSeconds;
                 double m_startDelaySeconds;
+                
+                virtual void OnPlay(bool playFromCurrent) = 0;
                 
                 virtual void OnUpdate(double timerSeconds) = 0;
                 
@@ -30,7 +32,7 @@ namespace ExampleApp
                 
                 virtual ~ViewAnimatorBase();
                 
-                void Play(bool isPlayingForward);
+                void Play(bool isPlayingForward, bool playFromCurrent);
                 
                 void Update(double timerSeconds);
                 
