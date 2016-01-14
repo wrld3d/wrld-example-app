@@ -871,7 +871,6 @@
 
 - (void)onSectionExpanded
 {
-    [self.pSearchEditBox setText:@""];
     m_pSearchMenuInterop->OnSearchCleared();
 }
 
@@ -882,7 +881,7 @@
 
 - (void)onRowSelected
 {
-    [self.pInputDelegate clearSearch];
+    [self.pInputDelegate removeSeachKeyboard];
 }
 
 @end

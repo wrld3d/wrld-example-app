@@ -205,8 +205,10 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
     {
         return;
     }
+    
+    size_t sectionIndex = m_tableSectionMap[(CustomTableView*)tableView];
 
-    ExampleApp::Menu::View::IMenuSectionViewModel& section = *m_currentSections.at(m_tableSectionMap[(CustomTableView*)tableView]);
+    ExampleApp::Menu::View::IMenuSectionViewModel& section = *m_currentSections.at(sectionIndex);
 
     if(section.IsExpandable() && indexPath.row == 0)
     {
@@ -264,7 +266,7 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
     else
     {
         ExampleApp::Menu::View::MenuViewInterop* interop = [m_pView getInterop];
-        interop->HandleItemSelected(static_cast<int>(indexPath.section), static_cast<int>(indexPath.row));
+        interop->HandleItemSelected(static_cast<int>(sectionIndex), static_cast<int>(indexPath.row));
     }
 }
 
