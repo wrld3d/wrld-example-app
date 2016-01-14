@@ -274,7 +274,7 @@
     self.pSearchEditBox.rightView = self.pSearchEditBoxClearButtonContainer;
     self.pSearchEditBox.rightViewMode = UITextFieldViewModeAlways;
     
-    m_maxScreenSpace = m_screenHeight - (upperMargin + dragTabSize);
+    m_maxScreenSpace = m_screenHeight - (upperMargin + dragTabSize + m_tableSpacing);
     
     m_menuContainerWidth = tableCellWidth + searchCountLabelWidth + tableCellRightInset;
     m_menuContainerHeight = m_maxScreenSpace;
@@ -795,7 +795,7 @@
     
     if(searchResultsTableContentHeight > 0.0f)
     {
-        const float maxOnScreenSearchResultsTableHeight = fmaxf(0.0f, m_maxScreenSpace - totalTableHeight - m_tableSpacing);
+        const float maxOnScreenSearchResultsTableHeight = fmaxf(0.0f, m_maxScreenSpace - totalTableHeight);
         
         onScreenSearchResultsTableHeight = fminf(maxOnScreenSearchResultsTableHeight, searchResultsTableContentHeight);
         tableY = (onScreenSearchResultsTableHeight > 0.0f) ? onScreenSearchResultsTableHeight + m_tableSpacing : 0.0f;
