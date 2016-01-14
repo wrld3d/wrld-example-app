@@ -7,7 +7,7 @@
 
 @interface CustomTableViewCell : UITableViewCell
 {
-    bool m_isHeader;
+    bool m_hasSeparator;
     CGFloat m_initialWidth;
     CGFloat m_leftInset;
     UIColor* m_pBackgroundColor;
@@ -19,7 +19,7 @@
     CustomTableView* m_tableView;
 }
 
-- (void)setInfo :(bool)isHeader
+- (void)setInfo :(bool)hasSeparator
                 :(UIColor*)pBackgroundColor
                 :(UIColor*)pContentBackgroundColor
                 :(UIColor*)pPressColor;

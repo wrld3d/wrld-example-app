@@ -279,16 +279,18 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
         return;
     }
     
-    ExampleApp::Menu::View::IMenuSectionViewModel& section = *m_currentSections.at(m_tableSectionMap[(CustomTableView*)tableView]);
+    size_t sectionIndex = m_tableSectionMap[(CustomTableView*)tableView];
+    ExampleApp::Menu::View::IMenuSectionViewModel& section = *m_currentSections.at(sectionIndex);
     
     UIImageView *openableArrow = (UIImageView*)[cell.contentView viewWithTag:SubItemCellOpenableMenuArrowTag];
     
     cell.indentationLevel = 0;
     
     bool isHeader = (section.IsExpandable() && indexPath.row == 0) || !section.IsExpandable();
+    bool hasSeparator = isHeader && sectionIndex != 0;
     
     openableArrow.hidden = !(isHeader && section.IsExpandable());
-    [self setCellInfo:customCell :isHeader];
+    [self setCellInfo:customCell :isHeader :hasSeparator];
     
     if(isHeader)
     {
@@ -374,9 +376,9 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
     return headline ? HeaderCellFontSize : SubSectionCellFontSize;
 }
 
-- (void) setCellInfo:(CustomTableViewCell*)cell :(bool)isHeader
+- (void) setCellInfo:(CustomTableViewCell*)cell :(bool)isHeader :(bool)hasSeparator
 {
-    [cell setInfo :isHeader
+    [cell setInfo :hasSeparator
                   :ExampleApp::Helpers::ColorPalette::BorderHudColor
                   :isHeader ? ExampleApp::Helpers::ColorPalette::BorderHudColor : ExampleApp::Helpers::ColorPalette::MainHudColor
                   :isHeader ? ExampleApp::Helpers::ColorPalette::TableHeaderPressColor : ExampleApp::Helpers::ColorPalette::TableSubCellPressColor];

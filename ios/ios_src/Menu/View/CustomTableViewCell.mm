@@ -98,12 +98,12 @@
     m_customContentFramesSet = true;
 }
 
-- (void)setInfo :(bool)isHeader
+- (void)setInfo :(bool)hasSeparator
                 :(UIColor*)pBackgroundColor
                 :(UIColor*)pContentBackgroundColor
                 :(UIColor*)pPressColor
 {
-    m_isHeader = isHeader;
+    m_hasSeparator = hasSeparator;
     m_pBackgroundColor = pBackgroundColor;
     m_pContentBackgroundColor = pContentBackgroundColor;
     m_pPressColor = pPressColor;
@@ -184,11 +184,7 @@
         }
     }
     
-    NSIndexPath* indexPath = [m_tableView indexPathForCell:self];
-    
-    const bool isTop = indexPath.section == 0;
-    
-    if(m_isHeader && !isTop)
+    if(m_hasSeparator)
     {
         CGFloat topSeparatorY       = 0.f;
         CGFloat separatorHeight     = (1.f / [UIScreen mainScreen].scale);
