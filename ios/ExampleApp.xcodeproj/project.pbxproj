@@ -397,6 +397,8 @@
 		18EC01571AA8C8A500902E98 /* compass.png in Resources */ = {isa = PBXBuildFile; fileRef = 18EC01541AA8C8A500902E98 /* compass.png */; };
 		18EC01581AA8C8A500902E98 /* CompassPoint.png in Resources */ = {isa = PBXBuildFile; fileRef = 18EC01551AA8C8A500902E98 /* CompassPoint.png */; };
 		18EC01591AA8C8A500902E98 /* CompassPoint.png in Resources */ = {isa = PBXBuildFile; fileRef = 18EC01551AA8C8A500902E98 /* CompassPoint.png */; };
+		18F4F41C1C47CCB600FFB959 /* LinkOutObserver.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18F4F41A1C47CCB600FFB959 /* LinkOutObserver.mm */; };
+		18F4F41D1C47CCB600FFB959 /* LinkOutObserver.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18F4F41A1C47CCB600FFB959 /* LinkOutObserver.mm */; };
 		18FB64501A9240FC005A9411 /* NSURLRequest+OAuth.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18FB64281A9240FC005A9411 /* NSURLRequest+OAuth.mm */; };
 		18FB64511A9240FC005A9411 /* NSURLRequest+OAuth.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18FB64281A9240FC005A9411 /* NSURLRequest+OAuth.mm */; };
 		18FB64521A9240FC005A9411 /* NSMutableURLRequest+Parameters.m in Sources */ = {isa = PBXBuildFile; fileRef = 18FB642C1A9240FC005A9411 /* NSMutableURLRequest+Parameters.m */; };
@@ -1946,6 +1948,8 @@
 		18EC014D1AA8BA7E00902E98 /* search_results_close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = search_results_close.png; sourceTree = "<group>"; };
 		18EC01541AA8C8A500902E98 /* compass.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = compass.png; sourceTree = "<group>"; };
 		18EC01551AA8C8A500902E98 /* CompassPoint.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CompassPoint.png; sourceTree = "<group>"; };
+		18F4F41A1C47CCB600FFB959 /* LinkOutObserver.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LinkOutObserver.mm; sourceTree = "<group>"; };
+		18F4F41B1C47CCB600FFB959 /* LinkOutObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinkOutObserver.h; sourceTree = "<group>"; };
 		18FB641E1A9235BB005A9411 /* Yelp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Yelp.h; sourceTree = "<group>"; };
 		18FB64271A9240FC005A9411 /* NSURLRequest+OAuth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURLRequest+OAuth.h"; sourceTree = "<group>"; };
 		18FB64281A9240FC005A9411 /* NSURLRequest+OAuth.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "NSURLRequest+OAuth.mm"; sourceTree = "<group>"; };
@@ -3802,6 +3806,15 @@
 			path = SdkModel;
 			sourceTree = "<group>";
 		};
+		18F4F4191C47CC6500FFB959 /* LinkOutObserver */ = {
+			isa = PBXGroup;
+			children = (
+				18F4F41B1C47CCB600FFB959 /* LinkOutObserver.h */,
+				18F4F41A1C47CCB600FFB959 /* LinkOutObserver.mm */,
+			);
+			path = LinkOutObserver;
+			sourceTree = "<group>";
+		};
 		18FB64121A922BCD005A9411 /* Yelp */ = {
 			isa = PBXGroup;
 			children = (
@@ -5358,6 +5371,7 @@
 				BFD5FD8F1BA7141600F591F1 /* ImageStore */,
 				7E3B8A441A385F100023C94E /* InitialExperience */,
 				7E5811C21B1F3248007AD67F /* InteriorsExplorer */,
+				18F4F4191C47CC6500FFB959 /* LinkOutObserver */,
 				7E3B8A4A1A385F100023C94E /* Main.mm */,
 				7E3B8A4B1A385F100023C94E /* Menu */,
 				56AC9BF91AA6076D00E603C4 /* Metrics */,
@@ -7554,6 +7568,7 @@
 				27DB89DF1BB3FF170020CDA5 /* GeoNamesSearchResultDto.cpp in Sources */,
 				BFD5FD4D1BA706AD00F591F1 /* TourAddedObserver.cpp in Sources */,
 				BFD5FCC71BA7068300F591F1 /* TourHovercardView.mm in Sources */,
+				18F4F41D1C47CCB600FFB959 /* LinkOutObserver.mm in Sources */,
 				18FB64771A92455E005A9411 /* iOSYelpSearchQuery.mm in Sources */,
 				5669A5571C215F4C006D6153 /* VisualMapController.cpp in Sources */,
 				7E3B894B1A385A290023C94E /* MyPinDetailsOpenableControl.cpp in Sources */,
@@ -8051,6 +8066,7 @@
 				560741141B8CC624002B0F49 /* MenuDragStateChangedMessage.cpp in Sources */,
 				27DB89E21BB3FF170020CDA5 /* GeoNamesSearchServiceModule.cpp in Sources */,
 				7E3B89FE1A385A290023C94E /* WorldPinsScaleController.cpp in Sources */,
+				18F4F41C1C47CCB600FFB959 /* LinkOutObserver.mm in Sources */,
 				BFD5FD941BA7141600F591F1 /* ImageFetchOperation.mm in Sources */,
 				27DB89DE1BB3FF170020CDA5 /* GeoNamesSearchResultDto.cpp in Sources */,
 				BFD5FD4C1BA706AD00F591F1 /* TourAddedObserver.cpp in Sources */,

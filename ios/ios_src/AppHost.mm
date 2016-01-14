@@ -116,6 +116,7 @@ AppHost::AppHost(
     ,m_pTourFullScreenImageViewModule(NULL)
     ,m_pTourExplorerViewModule(NULL)
     ,m_userInteractionEnabledChangedHandler(this, &AppHost::HandleUserInteractionEnabledChanged)
+    ,m_pLinkOutObserver(NULL)
     ,m_pURLRequestHandler(NULL)
 {
     Eegeo::TtyHandler::TtyEnabled = true;
@@ -147,7 +148,13 @@ AppHost::AppHost(
                                                                                                  *m_pNetworkCapabilities,
                                                                                                  m_piOSPlatformAbstractionModule->GetUrlEncoder());
     
-    m_pURLRequestHandler = Eegeo_NEW(ExampleApp::URLRequest::View::URLRequestHandler)(m_messageBus);
+    m_pLinkOutObserver = Eegeo_NEW(ExampleApp::LinkOutObserver::LinkOutObserver)(m_iOSFlurryMetricsService,
+                                                                                 m_iOSPersistentSettingsModel);
+    
+    m_pLinkOutObserver->OnAppStart();
+    
+    m_pURLRequestHandler = Eegeo_NEW(ExampleApp::URLRequest::View::URLRequestHandler)(m_messageBus,
+                                                                                      *m_pLinkOutObserver);
     
     m_pImageStore = [[ImageStore alloc]init];
     
@@ -197,6 +204,9 @@ AppHost::~AppHost()
     Eegeo_DELETE m_pURLRequestHandler;
     m_pURLRequestHandler = NULL;
     
+    Eegeo_DELETE m_pLinkOutObserver;
+    m_pLinkOutObserver = NULL;
+    
     for(std::map<std::string, ExampleApp::Search::SdkModel::ISearchServiceModule*>::iterator it = m_searchServiceModules.begin(); it != m_searchServiceModules.end(); ++it)
     {
         Eegeo_DELETE (*it).second;
@@ -227,6 +237,8 @@ AppHost::~AppHost()
 
 void AppHost::OnResume()
 {
+    m_pLinkOutObserver->OnAppResume();
+    
     m_pApp->OnResume();
 }
 

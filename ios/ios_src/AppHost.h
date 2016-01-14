@@ -54,8 +54,8 @@
 #include "ImageStore.h"
 #include "ICallback.h"
 #include "UserInteraction.h"
+#include "LinkOutObserver.h"
 #include "URLRequestHandler.h"
-
 
 @class ViewController;
 class AppInputDelegate;
@@ -129,6 +129,7 @@ private:
     ExampleApp::Metrics::iOSFlurryMetricsService& m_iOSFlurryMetricsService;
     ExampleApp::InteriorsExplorer::View::IInteriorsExplorerViewModule* m_pInteriorsExplorerViewModule;
     
+    ExampleApp::LinkOutObserver::LinkOutObserver* m_pLinkOutObserver;
     ExampleApp::URLRequest::View::URLRequestHandler* m_pURLRequestHandler;
     
     ImageStore* m_pImageStore;
