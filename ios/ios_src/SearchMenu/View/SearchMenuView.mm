@@ -32,6 +32,9 @@
     float m_animationDelaySeconds;
     float m_animationDurationSeconds;
     
+    float m_textFadeAnimationDelaySeconds;
+    float m_textFadeAnimationDurationSeconds;
+    
     float m_maxScreenSpace;
     
     float m_titleContainerClosedOnScreenWidthWithResults;
@@ -134,6 +137,8 @@
     
     m_animationDelaySeconds = 0.2f;
     m_animationDurationSeconds = 0.1f;
+    m_textFadeAnimationDelaySeconds = 0.25f;
+    m_textFadeAnimationDurationSeconds = 0.05f;
     
     const bool isPhone = ExampleApp::Helpers::UIHelpers::UsePhoneLayout();
     
@@ -222,11 +227,11 @@
     m_searchEditBoxBackgroundOffScreenWidth = tableCellWidth;
     m_searchEditBoxBackgroundOffScreenHeight = 0.0f;
     m_searchEditBoxBackgroundOffScreenX = searchCountLabelWidth;
-    m_searchEditBoxBackgroundOffScreenY = searchEditBoxInsetY;
+    m_searchEditBoxBackgroundOffScreenY = m_searchCountLabelHeight * 0.5f;
     m_searchEditBoxBackgroundClosedOnScreenWidth = m_searchEditBoxBackgroundOffScreenWidth;
     m_searchEditBoxBackgroundClosedOnScreenHeight = 0.0f;
     m_searchEditBoxBackgroundClosedOnScreenX = m_searchEditBoxBackgroundOffScreenX;
-    m_searchEditBoxBackgroundClosedOnScreenY = searchEditBoxInsetY;
+    m_searchEditBoxBackgroundClosedOnScreenY = m_searchEditBoxBackgroundOffScreenY;
     m_searchEditBoxBackgroundOpenOnScreenWidth = m_searchEditBoxBackgroundOffScreenWidth;
     m_searchEditBoxBackgroundOpenOnScreenHeight = dragTabSize - (searchEditBoxInsetY * 2.0f);
     m_searchEditBoxBackgroundOpenOnScreenX = m_searchEditBoxBackgroundOffScreenX;
@@ -241,7 +246,7 @@
     m_searchEditBoxHeight = dragTabSize - (searchEditBoxInsetY * 2.0f);
     m_searchEditBoxOffScreenAlpha = 0.0f;
     m_searchEditBoxOffScreenX = searchCountLabelWidth + searchEditBoxLeftInset;
-    m_searchEditBoxOffScreenY = -dragTabSize + searchEditBoxInsetY;
+    m_searchEditBoxOffScreenY = -dragTabSize * 0.5f;
     m_searchEditBoxClosedOnScreenAlpha = 0.0f;
     m_searchEditBoxClosedOnScreenX = m_searchEditBoxOffScreenX;
     m_searchEditBoxClosedOnScreenY = m_searchEditBoxOffScreenY;
@@ -506,8 +511,8 @@
                                                                                                              Eegeo_NEW(ExampleApp::Helpers::UIAnimation::Easing::CircleInOut<Eegeo::v2>())));
     
     m_openAnimationController->AddAnimator(Eegeo_NEW(ExampleApp::Helpers::UIAnimation::ViewAlphaAnimator)(self.pSearchEditBox,
-                                                                                                          m_animationDurationSeconds,
-                                                                                                          m_animationDelaySeconds,
+                                                                                                          m_textFadeAnimationDurationSeconds,
+                                                                                                          m_textFadeAnimationDelaySeconds,
                                                                                                           m_searchEditBoxClosedOnScreenAlpha,
                                                                                                           m_searchEditBoxOpenOnScreenAlpha,
                                                                                                           Eegeo_NEW(ExampleApp::Helpers::UIAnimation::Easing::CircleInOut<float>())));

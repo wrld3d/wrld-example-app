@@ -19,6 +19,9 @@
     float m_titleAnimationDelaySeconds;
     float m_titleAnimationDurationSeconds;
     
+    float m_titleFadeAnimationDelaySeconds;
+    float m_titleFadeAnimationDurationSeconds;
+    
     float m_titleLabelWidth;
     float m_titleLabelHeight;
     float m_titleLabelOffScreenX;
@@ -49,6 +52,9 @@
     
     m_titleAnimationDelaySeconds = 0.2f;
     m_titleAnimationDurationSeconds = 0.1f;
+    
+    m_titleFadeAnimationDelaySeconds = 0.25f;
+    m_titleFadeAnimationDurationSeconds = 0.05f;
     
     const bool isPhone = ExampleApp::Helpers::UIHelpers::UsePhoneLayout();
     
@@ -99,7 +105,7 @@
     m_titleLabelWidth = tableCellWidth - titleLabelInsetX;
     m_titleLabelHeight = dragTabSize;
     m_titleLabelOffScreenX = titleLabelInsetX;
-    m_titleLabelOffScreenY = -m_titleLabelHeight;
+    m_titleLabelOffScreenY = -dragTabSize * 0.5f;
     m_titleLabelClosedOnScreenX = m_titleLabelOffScreenX;
     m_titleLabelClosedOnScreenY = m_titleLabelOffScreenY;
     m_titleLabelOpenOnScreenX = m_titleLabelOffScreenX;
@@ -239,8 +245,8 @@
                                                                                                   Eegeo_NEW(ExampleApp::Helpers::UIAnimation::Easing::CircleInOut<Eegeo::v2>)()));
     
     m_openAnimationController->AddAnimator(Eegeo_NEW(ExampleApp::Helpers::UIAnimation::ViewAlphaAnimator)(self.pTitleLabel,
-                                                                                               m_titleAnimationDurationSeconds,
-                                                                                               m_titleAnimationDelaySeconds,
+                                                                                               m_titleFadeAnimationDurationSeconds,
+                                                                                               m_titleFadeAnimationDelaySeconds,
                                                                                                m_titleLabelClosedOnScreenAlpha,
                                                                                                m_titleLabelOpenOnScreenAlpha,
                                                                                                Eegeo_NEW(ExampleApp::Helpers::UIAnimation::Easing::CircleInOut<float>)()));
