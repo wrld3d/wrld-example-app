@@ -641,6 +641,10 @@ enum MenuState
     self.pTableViewContainer.frame = frame;
     
     [self.pTableViewContainer setContentSize:CGSizeMake(self.pTableViewContainer.frame.size.width, totalTableHeight)];
+    
+    frame = self.pMenuContainer.frame;
+    frame.size.height = tableViewContainerHeight + m_tableSpacing;
+    self.pMenuContainer.frame = frame;
 }
 
 - (float) getHeightForTable:(CustomTableView*)tableView
