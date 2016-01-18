@@ -1,3 +1,6 @@
 # pip requirements (package management system: http://www.pip-installer.org/en/latest/requirements.html)
 xlrd
+xlwt
 python-dateutil
+pyshp
+geojson
