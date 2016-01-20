@@ -20,11 +20,12 @@ namespace ExampleApp
             , m_startDelaySeconds(startDelaySeconds)
             {
                 Eegeo_ASSERT(m_view != NULL, "Can't initialise ViewAnimator with NULL view");
+                [m_view retain];
             }
             
             ViewAnimatorBase::~ViewAnimatorBase()
             {
-                
+                [m_view release];
             }
             
             void ViewAnimatorBase::Play(bool isPlayingForward)
