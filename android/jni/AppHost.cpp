@@ -522,7 +522,6 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
     m_pMyPinCreationDetailsViewModule = Eegeo_NEW(ExampleApp::MyPinCreationDetails::View::MyPinCreationDetailsViewModule)(
                                             m_nativeState,
                                             app.MyPinCreationDetailsModule().GetMyPinCreationDetailsViewModel(),
-                                            *m_pAndroidConnectivityService,
                                             m_messageBus,
                                             *m_pAndroidFlurryMetricsService
                                         );
@@ -640,6 +639,20 @@ void AppHost::HandleFailureToDownloadBootstrapResources()
 void AppHost::HandleStartupFailure()
 {
 	exit(1);
+}
+
+void AppHost::HandleNoConnectivityWarning()
+{
+
+}
+
+void AppHost::HandleInvalidConnectivityError()
+{
+	m_androidAlertBoxFactory.CreateSingleOptionAlertBox(
+			 "Network error",
+			 "Unable to access web reliably. Please check your connection is valid & authenticated.",
+			 m_failAlertHandler
+			 );
 }
 
 

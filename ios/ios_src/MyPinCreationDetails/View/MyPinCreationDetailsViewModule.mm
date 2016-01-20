@@ -14,7 +14,6 @@ namespace ExampleApp
             MyPinCreationDetailsViewModule::MyPinCreationDetailsViewModule(ExampleAppMessaging::TMessageBus& messageBus,
                                                                            IMyPinCreationDetailsViewModel& myPinCreationDetailsViewModel,
                                                                            const Eegeo::Rendering::ScreenProperties& screenProperties,
-                                                                           Eegeo::Web::IConnectivityService& connectivityService,
                                                                            Metrics::IMetricsService& metricsService,
                                                                            UIViewController* rootViewController)
             {
@@ -22,7 +21,7 @@ namespace ExampleApp
                                                                           : screenProperties.GetScreenHeight()
                                                                           : rootViewController];
 
-                m_pController = Eegeo_NEW(MyPinCreationDetailsController)(*[m_pView getInterop], myPinCreationDetailsViewModel, connectivityService, messageBus, metricsService);
+                m_pController = Eegeo_NEW(MyPinCreationDetailsController)(*[m_pView getInterop], myPinCreationDetailsViewModel, messageBus, metricsService);
             }
 
             MyPinCreationDetailsViewModule::~MyPinCreationDetailsViewModule()

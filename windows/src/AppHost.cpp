@@ -516,7 +516,6 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
     m_pMyPinCreationDetailsViewModule = Eegeo_NEW(ExampleApp::MyPinCreationDetails::View::MyPinCreationDetailsViewModule)(
         m_nativeState,
         app.MyPinCreationDetailsModule().GetMyPinCreationDetailsViewModel(),
-        *m_pWindowsConnectivityService,
         m_messageBus,
         *m_pWindowsFlurryMetricsService
         );
@@ -611,6 +610,20 @@ void AppHost::HandleFailureToDownloadBootstrapResources()
         : "Unable to download required data! Please ensure you have an Internet connection the next time you attempt to run this application.";
 
     m_WindowsAlertBoxFactory.CreateSingleOptionAlertBox("Error", message, m_failAlertHandler);
+}
+
+void AppHost::HandleNoConnectivityWarning()
+{
+}
+
+void AppHost::HandleInvalidConnectivityError()
+{
+    m_WindowsAlertBoxFactory.CreateSingleOptionAlertBox
+    (
+     "Network error",
+     "Unable to access web reliably. Please check your connection is valid & authenticated.",
+     m_failAlertHandler
+     );
 }
 
 void AppHost::HandleStartupFailure()

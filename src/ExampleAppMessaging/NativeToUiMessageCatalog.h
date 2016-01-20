@@ -39,6 +39,7 @@
 #include "UserInteractionEnabledChangedMessage.h"
 #include "URLRequestedMessage.h"
 #include "DeeplinkURLRequestedMessage.h"
+#include "ConnectivityChangedViewMessage.h"
 
 namespace ExampleApp
 {
@@ -80,6 +81,7 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<UserInteraction::UserInteractionEnabledChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<URLRequest::URLRequestedMessage>
             , public Eegeo::Messaging::CatalogBinding<URLRequest::DeeplinkURLRequestedMessage>
+            , public Eegeo::Messaging::CatalogBinding<Net::ConnectivityChangedViewMessage>
             , private Eegeo::NonCopyable
         {
 

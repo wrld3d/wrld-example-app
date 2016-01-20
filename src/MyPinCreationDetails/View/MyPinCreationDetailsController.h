@@ -8,6 +8,7 @@
 #include "IConnectivityService.h"
 #include "ICallback.h"
 #include "IMetricsService.h"
+#include "NetIncludes.h"
 
 namespace ExampleApp
 {
@@ -22,7 +23,6 @@ namespace ExampleApp
                 MyPinCreationDetailsController(
                     IMyPinCreationDetailsView& view,
                     IMyPinCreationDetailsViewModel& viewModel,
-                    Eegeo::Web::IConnectivityService& connectivityService,
                     ExampleAppMessaging::TMessageBus& messageBus,
                     Metrics::IMetricsService& metricsService
                 );
@@ -36,12 +36,11 @@ namespace ExampleApp
                 void OnConfirmed();
                 void OnDismissed();
 
-                void OnNetworkStateChanged(const bool& hasConnectivity);
+                void OnNetworkStateChanged(const Net::ConnectivityChangedViewMessage& connectivityChangedMessage);
 
                 IMyPinCreationDetailsView& m_view;
                 IMyPinCreationDetailsViewModel& m_viewModel;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
-                Eegeo::Web::IConnectivityService& m_connectivityService;
 
                 Eegeo::Helpers::TCallback0<MyPinCreationDetailsController> m_viewModelOpenedCallback;
                 Eegeo::Helpers::TCallback0<MyPinCreationDetailsController> m_viewModelClosedCallback;
@@ -49,7 +48,7 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback0<MyPinCreationDetailsController> m_viewConfirmedCallback;
                 Eegeo::Helpers::TCallback0<MyPinCreationDetailsController> m_viewDismissedCallback;
 
-                Eegeo::Helpers::TCallback1<MyPinCreationDetailsController, const bool&> m_networkStateChangeCallback;
+                Eegeo::Helpers::TCallback1<MyPinCreationDetailsController, const Net::ConnectivityChangedViewMessage&> m_networkStateChangeCallback;
                 
                 Metrics::IMetricsService& m_metricsService;
             };
