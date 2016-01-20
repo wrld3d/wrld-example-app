@@ -53,8 +53,8 @@
     m_titleAnimationDelaySeconds = 0.2f;
     m_titleAnimationDurationSeconds = 0.1f;
     
-    m_titleFadeAnimationDelaySeconds = 0.25f;
-    m_titleFadeAnimationDurationSeconds = 0.05f;
+    m_titleFadeAnimationDelaySeconds = 0.15f;
+    m_titleFadeAnimationDurationSeconds = 0.15f;
     
     const bool isPhone = ExampleApp::Helpers::UIHelpers::UsePhoneLayout();
     
@@ -107,9 +107,9 @@
     m_titleLabelOffScreenX = titleLabelInsetX;
     m_titleLabelOffScreenY = -dragTabSize * 0.5f;
     m_titleLabelClosedOnScreenX = m_titleLabelOffScreenX;
-    m_titleLabelClosedOnScreenY = m_titleLabelOffScreenY;
+    m_titleLabelClosedOnScreenY = 0.0f;
     m_titleLabelOpenOnScreenX = m_titleLabelOffScreenX;
-    m_titleLabelOpenOnScreenY = 0.0f;
+    m_titleLabelOpenOnScreenY = m_titleLabelClosedOnScreenY;
     
     m_titleLabelOffScreenAlpha = 0.0f;
     m_titleLabelClosedOnScreenAlpha = 0.0f;
