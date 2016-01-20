@@ -365,6 +365,7 @@
     <ClCompile Include="..\..\..\src\MyPins\SdkModel\UserCreatedPinBoundObject.cpp" />
     <ClCompile Include="..\..\..\src\MyPins\View\MyPinAddedToMenuObserver.cpp" />
     <ClCompile Include="..\..\..\src\MyPins\View\MyPinRemovedFromMenuObserver.cpp" />
+    <ClCompile Include="..\..\..\src\Net\SdkModel\ConnectivityChangedObserver.cpp" />
     <ClCompile Include="..\..\..\src\Net\SdkModel\ExampleAppCustomWebLoadRequestFactory.cpp" />
     <ClCompile Include="..\..\..\src\Net\SdkModel\NetworkCapabilities.cpp" />
     <ClCompile Include="..\..\..\src\OpenableControl\View\OpenableControlViewModelBase.cpp" />
@@ -2039,6 +2040,8 @@
     <ClInclude Include="..\..\..\src\MyPins\View\MyPinAddedToMenuObserver.h" />
     <ClInclude Include="..\..\..\src\MyPins\View\MyPinMenuOption.h" />
     <ClInclude Include="..\..\..\src\MyPins\View\MyPinRemovedFromMenuObserver.h" />
+    <ClInclude Include="..\..\..\src\Net\ConnectivityChangedViewMessage.h" />
+    <ClInclude Include="..\..\..\src\Net\SdkModel\ConnectivityChangedObserver.h" />
     <ClInclude Include="..\..\..\src\Net\SdkModel\ExampleAppCustomWebLoadRequestFactory.h" />
     <ClInclude Include="..\..\..\src\Net\SdkModel\INetworkCapabilities.h" />
     <ClInclude Include="..\..\..\src\Net\SdkModel\NetIncludes.h" />
