@@ -227,7 +227,10 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
         {
             section.Expand();
             rows = section.Size();
-            [self showOpenableArrowOpen:cell];
+            // Commented following code line out to fix arrow animation. Fixes MPLY-6376.
+            // (first animation call fails at start and sets final value for animation)
+            // relying on animation in willDisplayCell that is called right after and will succeed
+            //[self showOpenableArrowOpen:cell];
         }
         
         for(int i=1; i <rows; i++)
@@ -426,7 +429,6 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
         
         rows = section.Size();
         section.Contract();
-        [self showOpenableArrowClosed:[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]]];
         
         for(int i = 1; i < rows; ++i)
         {
