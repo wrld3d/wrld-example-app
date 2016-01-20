@@ -13,7 +13,6 @@ namespace ExampleApp
             MyPinCreationDetailsViewModule::MyPinCreationDetailsViewModule(
                 AndroidNativeState& nativeState,
                 MyPinCreationDetails::View::IMyPinCreationDetailsViewModel& viewModel,
-                Eegeo::Web::IConnectivityService& connectivityService,
                 ExampleAppMessaging::TMessageBus& messageBus,
                 Metrics::IMetricsService& metricsService
             )
@@ -22,7 +21,6 @@ namespace ExampleApp
 
                 m_pController = Eegeo_NEW(MyPinCreationDetailsController)(*m_pView,
                                 viewModel,
-                                connectivityService,
                                 messageBus,
                                 metricsService
                                                                          );

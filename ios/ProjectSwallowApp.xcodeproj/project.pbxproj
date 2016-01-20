@@ -1023,6 +1023,8 @@
 		7E1D22CB1B205455006A8703 /* InteriorsExplorerModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E1D22C81B205455006A8703 /* InteriorsExplorerModel.cpp */; };
 		7E1D22CE1B2085E0006A8703 /* InteriorsExplorerController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E1D22CD1B2085E0006A8703 /* InteriorsExplorerController.cpp */; };
 		7E1D22CF1B2085E0006A8703 /* InteriorsExplorerController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E1D22CD1B2085E0006A8703 /* InteriorsExplorerController.cpp */; };
+		7E213D271C4E7C2B00624AE1 /* ConnectivityChangedObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E213D251C4E7C2B00624AE1 /* ConnectivityChangedObserver.cpp */; };
+		7E213D281C4E7C2B00624AE1 /* ConnectivityChangedObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E213D251C4E7C2B00624AE1 /* ConnectivityChangedObserver.cpp */; };
 		7E3B88A61A385A290023C94E /* AboutPageController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B86661A385A280023C94E /* AboutPageController.cpp */; };
 		7E3B88A71A385A290023C94E /* AboutPageController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B86661A385A280023C94E /* AboutPageController.cpp */; };
 		7E3B88A81A385A290023C94E /* AboutPageModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B86681A385A280023C94E /* AboutPageModule.cpp */; };
@@ -2567,6 +2569,9 @@
 		7E1D22C91B205455006A8703 /* InteriorsExplorerModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InteriorsExplorerModel.h; sourceTree = "<group>"; };
 		7E1D22CC1B205CC2006A8703 /* InteriorsExplorerSelectFloorMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InteriorsExplorerSelectFloorMessage.h; sourceTree = "<group>"; };
 		7E1D22CD1B2085E0006A8703 /* InteriorsExplorerController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InteriorsExplorerController.cpp; sourceTree = "<group>"; };
+		7E213D251C4E7C2B00624AE1 /* ConnectivityChangedObserver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConnectivityChangedObserver.cpp; sourceTree = "<group>"; };
+		7E213D261C4E7C2B00624AE1 /* ConnectivityChangedObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectivityChangedObserver.h; sourceTree = "<group>"; };
+		7E213D291C4E7DBF00624AE1 /* ConnectivityChangedViewMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConnectivityChangedViewMessage.h; sourceTree = "<group>"; };
 		7E3B86651A385A280023C94E /* AboutPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutPage.h; sourceTree = "<group>"; };
 		7E3B86661A385A280023C94E /* AboutPageController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AboutPageController.cpp; sourceTree = "<group>"; };
 		7E3B86671A385A280023C94E /* AboutPageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutPageController.h; sourceTree = "<group>"; };
@@ -3570,6 +3575,7 @@
 			isa = PBXGroup;
 			children = (
 				18096F7F1A7F90A1006A6438 /* SdkModel */,
+				7E213D291C4E7DBF00624AE1 /* ConnectivityChangedViewMessage.h */,
 			);
 			path = Net;
 			sourceTree = "<group>";
@@ -3583,6 +3589,8 @@
 				18096F8F1A7FA703006A6438 /* NetworkCapabilities.cpp */,
 				18096F901A7FA703006A6438 /* NetworkCapabilities.h */,
 				18096F831A7F90A1006A6438 /* NetIncludes.h */,
+				7E213D251C4E7C2B00624AE1 /* ConnectivityChangedObserver.cpp */,
+				7E213D261C4E7C2B00624AE1 /* ConnectivityChangedObserver.h */,
 			);
 			path = SdkModel;
 			sourceTree = "<group>";
@@ -7823,6 +7831,7 @@
 				18FB64711A9240FC005A9411 /* OAToken.m in Sources */,
 				7E3B88C31A385A290023C94E /* CompassModel.cpp in Sources */,
 				7E3B895D1A385A290023C94E /* MyPinsFileIO.cpp in Sources */,
+				7E213D281C4E7C2B00624AE1 /* ConnectivityChangedObserver.cpp in Sources */,
 				BFDD75E31BCE5BE800335508 /* AppModeStatesFactory.cpp in Sources */,
 				7E3B89551A385A290023C94E /* MyPinModel.cpp in Sources */,
 				18A657621A9F6AA800238F33 /* MyPinVisibilityStateChangedHandlerFactory.cpp in Sources */,
@@ -8352,6 +8361,7 @@
 				7E3B89321A385A290023C94E /* MyPinCreationInitiationViewModel.cpp in Sources */,
 				18FB64701A9240FC005A9411 /* OAToken.m in Sources */,
 				7E3B88C21A385A290023C94E /* CompassModel.cpp in Sources */,
+				7E213D271C4E7C2B00624AE1 /* ConnectivityChangedObserver.cpp in Sources */,
 				BFDD75E21BCE5BE800335508 /* AppModeStatesFactory.cpp in Sources */,
 				7E3B895C1A385A290023C94E /* MyPinsFileIO.cpp in Sources */,
 				7E3B89541A385A290023C94E /* MyPinModel.cpp in Sources */,

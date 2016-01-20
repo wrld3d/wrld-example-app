@@ -158,4 +158,6 @@ private:
 
     void HandleStartupFailure();
     void HandleUserInteractionEnabledChanged(const ExampleApp::UserInteraction::UserInteractionEnabledChangedMessage& message);
+    void HandleNoConnectivityWarning();
+    void HandleInvalidConnectivityError();
 };

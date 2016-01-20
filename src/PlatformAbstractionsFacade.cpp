@@ -42,6 +42,11 @@ namespace ExampleApp
         return *m_pPlatformWebLoadRequestFactory;
     }
     
+    Eegeo::Web::IWebProxySettings& PlatformAbstractionsFacade::GetProxySettings() const
+    {
+        return m_wrappedPlatformAbstractions.GetProxySettings();
+    }
+    
     Eegeo::Helpers::IHttpCache& PlatformAbstractionsFacade::GetHttpCache() const
     {
         return m_wrappedPlatformAbstractions.GetHttpCache();
