@@ -854,6 +854,8 @@
 		7E1D22CF1B2085E0006A8703 /* InteriorsExplorerController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E1D22CD1B2085E0006A8703 /* InteriorsExplorerController.cpp */; };
 		7E213D271C4E7C2B00624AE1 /* ConnectivityChangedObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E213D251C4E7C2B00624AE1 /* ConnectivityChangedObserver.cpp */; };
 		7E213D281C4E7C2B00624AE1 /* ConnectivityChangedObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E213D251C4E7C2B00624AE1 /* ConnectivityChangedObserver.cpp */; };
+		7E213D2D1C4FE5E700624AE1 /* micello_logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E213D2B1C4FE5E700624AE1 /* micello_logo@2x.png */; };
+		7E213D2E1C4FE5E700624AE1 /* micello_logo@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E213D2C1C4FE5E700624AE1 /* micello_logo@3x.png */; };
 		7E3B88A61A385A290023C94E /* AboutPageController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B86661A385A280023C94E /* AboutPageController.cpp */; };
 		7E3B88A71A385A290023C94E /* AboutPageController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B86661A385A280023C94E /* AboutPageController.cpp */; };
 		7E3B88A81A385A290023C94E /* AboutPageModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B86681A385A280023C94E /* AboutPageModule.cpp */; };
@@ -2255,6 +2257,8 @@
 		7E213D251C4E7C2B00624AE1 /* ConnectivityChangedObserver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConnectivityChangedObserver.cpp; sourceTree = "<group>"; };
 		7E213D261C4E7C2B00624AE1 /* ConnectivityChangedObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectivityChangedObserver.h; sourceTree = "<group>"; };
 		7E213D291C4E7DBF00624AE1 /* ConnectivityChangedViewMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConnectivityChangedViewMessage.h; sourceTree = "<group>"; };
+		7E213D2B1C4FE5E700624AE1 /* micello_logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "micello_logo@2x.png"; sourceTree = "<group>"; };
+		7E213D2C1C4FE5E700624AE1 /* micello_logo@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "micello_logo@3x.png"; sourceTree = "<group>"; };
 		7E3B86651A385A280023C94E /* AboutPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutPage.h; sourceTree = "<group>"; };
 		7E3B86661A385A280023C94E /* AboutPageController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AboutPageController.cpp; sourceTree = "<group>"; };
 		7E3B86671A385A280023C94E /* AboutPageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutPageController.h; sourceTree = "<group>"; };
@@ -5961,6 +5965,8 @@
 				BFDFC3D21BB2F5BA0099BAEC /* menu_list@2x.png */,
 				BFDFC3D31BB2F5BA0099BAEC /* menu_list@3x.png */,
 				E07992CB1B725EDB000402B0 /* micello_logo.png */,
+				7E213D2B1C4FE5E700624AE1 /* micello_logo@2x.png */,
+				7E213D2C1C4FE5E700624AE1 /* micello_logo@3x.png */,
 				188C4CA71AA730BF0080B34B /* place_pin_background.png */,
 				18FE211B1AA9BA3C00ACE28A /* place_pin_background@2x.png */,
 				18FE211C1AA9BA3C00ACE28A /* place_pin_background@3x.png */,
@@ -6950,6 +6956,7 @@
 				56FBCDF51A0BB5150026546E /* image_blank.png in Resources */,
 				18FE21EB1AA9D34400ACE28A /* arrow3_right@3x.png in Resources */,
 				18FE20E31AA9B2C200ACE28A /* button_ok_place_pin_off@2x.png in Resources */,
+				7E213D2D1C4FE5E700624AE1 /* micello_logo@2x.png in Resources */,
 				18FE21391AA9BA3C00ACE28A /* button_create_poi@3x.png in Resources */,
 				18EC014E1AA8BA7E00902E98 /* search_result_background.png in Resources */,
 				18FE20F11AA9B2C200ACE28A /* icon1_aroundme@3x.png in Resources */,
@@ -7073,6 +7080,7 @@
 				18D1D354194A057200FAA1B9 /* FrankBold50_A8_icons_0.png in Resources */,
 				18FE20DB1AA9B2C200ACE28A /* button_close_place_pin_off@2x.png in Resources */,
 				18B5ACB719DC15CD00BA4A38 /* icon1_rainy.png in Resources */,
+				7E213D2E1C4FE5E700624AE1 /* micello_logo@3x.png in Resources */,
 				18FE21FC1AA9D3D000ACE28A /* eegeo_logo@3x.png in Resources */,
 				18FE20DD1AA9B2C200ACE28A /* button_close_place_pin_off@3x.png in Resources */,
 				18EC01131AA7752500902E98 /* icon1_food@2x.png in Resources */,

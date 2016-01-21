@@ -35,6 +35,7 @@ namespace ExampleApp
                                                                                                             interiorsModelRepository,
                                                                                                             messageBus,
                                                                                                             sdkModelDomainEventBus);
+                AddThirdPartyWatermarkData();
             }
             
             WatermarkModule::~WatermarkModule()
@@ -64,6 +65,16 @@ namespace ExampleApp
             View::IWatermarkDataFactory& WatermarkModule::GetWatermarkDataFactory() const
             {
                 return *m_pWatermarkDataFactory;
+            }
+            
+            void WatermarkModule::AddThirdPartyWatermarkData()
+            {
+                const View::WatermarkData& micelloWatermarkData = m_pWatermarkDataFactory->Create("micello_logo",
+                                                                                                  "3D Interiors",
+                                                                                                  "Out 3D Interior maps are built automatically from map data provided by our partner Micello.\nThis partnership gives us access to over 25,000 maps globally",
+                                                                                                  "https://www.micello.com",
+                                                                                                  true);
+                m_pWatermarkDataRepository->AddWatermarkData("micello", micelloWatermarkData);
             }
         }
     }
