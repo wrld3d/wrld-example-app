@@ -9,10 +9,50 @@
     UIView* pCustomSeparatorContainer;
     bool m_hasSetBackground;
     bool m_hasSetSeparators;
-    bool m_selected;
     bool m_highlighted;
     bool m_requiresRefresh;
     bool m_customContentFramesSet;
+    bool m_turingHighlightOff;
+}
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    if([self canInteract])
+    {
+        [self makeHighlighted:YES animated:NO];
+    }
+}
+
+- (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    UITouch *touch = [[event allTouches] anyObject];
+    CGPoint touchLocation = [touch locationInView:self];
+    if(CGRectContainsPoint(self.bounds, touchLocation) && [self canInteract])
+    {
+        [self makeHighlighted:YES animated:NO];
+    }
+    else
+    {
+        [self makeHighlighted:NO animated:NO];
+    }
+}
+
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    UITouch *touch = [[event allTouches] anyObject];
+    CGPoint touchLocation = [touch locationInView:self];
+    
+    [self makeHighlighted:NO animated:YES];
+    if(CGRectContainsPoint(self.bounds, touchLocation) && [self canInteract])
+    {
+        [self->m_tableDataProvider tableView:self->m_tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:self->m_row inSection:self->m_section]];
+    }
+    
+}
+
+- (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    [self makeHighlighted:NO animated:NO];
 }
 
 -(void) lazySetBackgroundPresentation
@@ -28,7 +68,10 @@
 -(void) setBackgroundPresentation
 {
     self.backgroundColor = m_pBackgroundColor;
-    self.contentView.backgroundColor = m_pContentBackgroundColor;
+    if(!m_turingHighlightOff)
+    {
+        [self.contentView setBackgroundColor:(m_highlighted ? m_pPressColor : m_pContentBackgroundColor)];
+    }
     m_hasSetBackground = true;
 }
 
@@ -73,16 +116,21 @@
 
 - (void)initCell:(CGFloat)initialWidth
                 :(CGFloat)leftInset
+                :(NSIndexPath*)indexPath
                 :(CustomTableView*)tableView
+                :(UITableViewController<UITableViewDelegate>*)tableDataProvider
 {
     m_initialWidth = initialWidth;
     m_leftInset = leftInset;
     m_tableView = tableView;
+    m_tableDataProvider = tableDataProvider;
     m_hasSetBackground = false;
     m_hasSetSeparators = false;
-    m_selected = false;
     m_highlighted = false;
+    m_turingHighlightOff = false;
     m_customContentFramesSet = false;
+    m_row = indexPath.row;
+    m_section = indexPath.section;
     self->pCustomSeparatorContainer = [[UIView alloc]  initWithFrame:CGRectMake(0,0,0,0)];
     [self addSubview:self->pCustomSeparatorContainer];
 }
@@ -123,50 +171,50 @@
     return true;
 }
 
-- (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated
+- (void)makeHighlighted:(BOOL)highlighted animated:(BOOL)animated
 {
     if(![self canInteract])
     {
-        [self setBackgroundPresentation];
+        m_turingHighlightOff = false;
+        [self.contentView setBackgroundColor:m_pContentBackgroundColor];
         return;
     }
 
     if (highlighted)
     {
         m_highlighted = true;
+        m_turingHighlightOff = false;
         [self.contentView setBackgroundColor:m_pPressColor];
     }
     else
     {
         if(m_highlighted)
         {
-            [self setBackgroundPresentation];
+            m_highlighted = false;
+            if(animated)
+            {
+                m_turingHighlightOff = true;
+                double delayInSeconds = 0.2;
+                dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+                dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                    if(m_turingHighlightOff)
+                    {
+                        m_turingHighlightOff = false;
+                        [self.contentView setBackgroundColor:m_pContentBackgroundColor];
+                    }
+                });
+            }
+            else
+            {
+                [self.contentView setBackgroundColor:m_pContentBackgroundColor];
+            }
         }
-        m_highlighted = false;
     }
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
-    if(![self canInteract])
-    {
-        [self setBackgroundPresentation];
-        return;
-    }
 
-    if (selected)
-    {
-        [self.contentView setBackgroundColor:m_pPressColor];
-        m_selected = true;
-    }
-    else
-    {
-        if(m_selected)
-        {
-            [self setBackgroundPresentation];
-        }
-        m_selected = false;
-    }
 }
 
 - (void)insertSeparators:(CGRect)cellFrame

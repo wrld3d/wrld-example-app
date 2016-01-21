@@ -104,7 +104,10 @@ static NSString *CellIdentifier = @"searchCell";
         
         [(CustomTableViewCell*)cell initCell:(CGFloat)[m_pView.pSearchResultsTableView getCellWidth]
                                             :(CGFloat)[m_pView.pSearchResultsTableView getCellInset]
-                                            :(CustomTableView*)tableView];
+                                            :indexPath
+                                            :(CustomTableView*)tableView
+                                            :self];
+        
         
         cell.selectionStyle = UITableViewCellSelectionStyleGray;
 

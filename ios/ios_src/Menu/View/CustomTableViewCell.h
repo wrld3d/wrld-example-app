@@ -17,6 +17,9 @@
     CGRect m_textFrame;
     CGRect m_detailTextFrame;
     CustomTableView* m_tableView;
+    UITableViewController<UITableViewDelegate>* m_tableDataProvider;
+    int m_row;
+    int m_section;
 }
 
 - (void)setInfo :(bool)hasSeparator
@@ -26,7 +29,9 @@
 
 - (void)initCell:(CGFloat)initialWidth
                 :(CGFloat)leftInset
-                :(CustomTableView*)tableView;
+                :(NSIndexPath *)indexPath
+                :(CustomTableView*)tableView
+                :(UITableViewController<UITableViewDelegate>*)tableDataProvider;
 
 - (void)setContentFrames:(CGRect)imageFrame
                         :(CGRect)textFrame

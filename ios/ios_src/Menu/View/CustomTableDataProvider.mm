@@ -160,7 +160,9 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
         
         [(CustomTableViewCell*)cell initCell:(CGFloat)[customTableView getCellWidth]
                                             :(CGFloat)[customTableView getCellInset]
-                                            :customTableView];
+                                            :indexPath
+                                            :customTableView
+                                            :self];
         
         cell.selectionStyle = UITableViewCellSelectionStyleGray;
         
