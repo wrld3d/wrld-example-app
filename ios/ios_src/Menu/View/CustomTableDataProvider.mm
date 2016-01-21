@@ -21,6 +21,7 @@ static NSString *SubSectionCellIdentifier = @"subsectioncell";
 @interface CustomTableDataProvider()
 {
     std::map<CustomTableView*, size_t> m_tableSectionMap;
+    std::vector<size_t> m_cachedTableSizes;
 }
 
 @end
@@ -41,7 +42,7 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
     {
         for(int i = 0; i < sections->size(); ++i)
         {
-            if((*sections)[i] != m_currentSections[i])
+            if((*sections)[i] != m_currentSections[i] || (*sections)[i]->GetTotalItemCount() != m_cachedTableSizes[i])
             {
                 sectionsUpdated = true;
                 break;
@@ -52,6 +53,13 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
     if(sectionsUpdated)
     {
         m_currentSections = *sections;
+        
+        m_cachedTableSizes.resize(m_currentSections.size());
+        
+        for(int i = 0; i < m_cachedTableSizes.size(); ++i)
+        {
+            m_cachedTableSizes[i] = m_currentSections[i]->GetTotalItemCount();
+        }
         
         for(std::map<CustomTableView*, size_t>::const_iterator it = m_tableSectionMap.begin(); it != m_tableSectionMap.end(); ++it)
         {

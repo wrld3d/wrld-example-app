@@ -25,6 +25,14 @@ static NSString *CellIdentifier = @"searchCell";
 
 - (void)updateSearchResultsSection:(nonnull ExampleApp::Menu::View::IMenuSectionViewModel*)section
 {
+    if(m_pSearchResultsSection == NULL)
+    {
+        m_pSearchResultsSection = section;
+        [m_pView.pSearchResultsTableView reloadData];
+        
+        return;
+    }
+    
     m_pSearchResultsSection = section;
     
     // delete existing rows
