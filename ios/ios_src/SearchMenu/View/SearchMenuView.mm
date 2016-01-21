@@ -143,7 +143,8 @@
     const bool isPhone = ExampleApp::Helpers::UIHelpers::UsePhoneLayout();
     
     const float upperMargin = (isPhone ? 20.0f : 50.0f) * m_pixelScale;
-    const float tableCellWidth = 295.0f * m_pixelScale;
+    const float lowerMargin = (isPhone ? 0.0f : 50.0f) * m_pixelScale;
+    const float tableCellWidth = (isPhone ? 212.0f : 295.0f) * m_pixelScale;
     const float searchCountLabelWidth = 32.0f * m_pixelScale;
     const float dragTabOffsetX = searchCountLabelWidth;
     const float dragTabSize = 50.0f * m_pixelScale;
@@ -279,7 +280,7 @@
     self.pSearchEditBox.rightView = self.pSearchEditBoxClearButtonContainer;
     self.pSearchEditBox.rightViewMode = UITextFieldViewModeAlways;
     
-    m_maxScreenSpace = m_screenHeight - (upperMargin + dragTabSize + m_tableSpacing);
+    m_maxScreenSpace = m_screenHeight - (upperMargin + dragTabSize + m_tableSpacing + lowerMargin);
     
     m_menuContainerWidth = tableCellWidth + searchCountLabelWidth + tableCellRightInset;
     m_menuContainerHeight = m_maxScreenSpace;

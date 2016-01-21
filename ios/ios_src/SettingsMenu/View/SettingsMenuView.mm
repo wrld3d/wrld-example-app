@@ -59,7 +59,7 @@
     const bool isPhone = ExampleApp::Helpers::UIHelpers::UsePhoneLayout();
     
     const float upperMargin = (isPhone ? 20.0f : 50.0f) * m_pixelScale;
-    const float tableCellWidth = 248.0f * m_pixelScale;
+    const float tableCellWidth = (isPhone ? 249.0f : 295.0f) * m_pixelScale;
     const float dragTabOffsetX = 28.0f * m_pixelScale;
     const float dragTabSize = 50.0f * m_pixelScale;
     const float tableSpacing = 6.0f * m_pixelScale;
