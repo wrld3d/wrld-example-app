@@ -67,7 +67,7 @@ static NSString *CellIdentifier = @"searchCell";
         return 0.0f;
     }
     
-    return CellConstants::SearchSectionCellHeight * m_pSearchResultsSection->Size();
+    return CellConstants::SearchSectionCellHeight * [m_pView.pSearchResultsTableView numberOfRowsInSection:0];
 }
 
 - (void)dealloc
