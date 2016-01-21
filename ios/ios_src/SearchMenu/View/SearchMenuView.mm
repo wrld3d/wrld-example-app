@@ -26,6 +26,7 @@
     ExampleApp::Helpers::UIAnimation::ViewAnimationController* m_pAnchorAnimationController;
     
     bool m_resultsVisible;
+    bool m_titleContainersRequireRefresh;
     
     float m_anchorAnimationDurationSeconds;
     
@@ -132,6 +133,7 @@
     m_pAnchorAnimationController = NULL;
     
     m_resultsVisible = false;
+    m_titleContainersRequireRefresh = false;
     
     m_anchorAnimationDurationSeconds = 0.1f;
     
@@ -642,10 +644,19 @@
         {
             m_pAnchorAnimationController->PlayReverse();
             
-            [self refreshTitleContainerAnimations:Eegeo::v2(m_titleContainerClosedOnScreenX, m_titleContainerClosedOnScreenY)
-                                                 :Eegeo::v2(m_titleContainerClosedOnScreenWidth, m_titleContainerClosedOnScreenHeight)
-                                                 :m_searchCountLabelClosedOnScreenAlpha
-                                                 :Eegeo::v2(m_searchCountLabelClosedOnScreenX, m_searchCountLabelClosedOnScreenY)];
+            if([super isAnimating])
+            {
+                m_titleContainersRequireRefresh = true;
+            }
+            else
+            {
+                m_titleContainersRequireRefresh = false;
+                
+                [self refreshTitleContainerAnimations:Eegeo::v2(m_titleContainerClosedOnScreenX, m_titleContainerClosedOnScreenY)
+                                                     :Eegeo::v2(m_titleContainerClosedOnScreenWidth, m_titleContainerClosedOnScreenHeight)
+                                                     :m_searchCountLabelClosedOnScreenAlpha
+                                                     :Eegeo::v2(m_searchCountLabelClosedOnScreenX, m_searchCountLabelClosedOnScreenY)];
+            }
             
             if([self openOnScreenState] == 0.0f)
             {
@@ -663,10 +674,19 @@
         {
             m_pAnchorAnimationController->Play();
             
-            [self refreshTitleContainerAnimations:Eegeo::v2(m_titleContainerClosedOnScreenXWithResults, m_titleContainerClosedOnScreenY)
-                                                 :Eegeo::v2(m_titleContainerClosedOnScreenWidthWithResults, m_titleContainerClosedOnScreenHeight)
-                                                 :m_searchCountLabelClosedOnScreenAlphaWithResults
-                                                 :Eegeo::v2(m_searchCountLabelClosedOnScreenX, m_searchCountLabelClosedOnScreenYWithResults)];
+            if([super isAnimating])
+            {
+                m_titleContainersRequireRefresh = true;
+            }
+            else
+            {
+                m_titleContainersRequireRefresh = false;
+                
+                [self refreshTitleContainerAnimations:Eegeo::v2(m_titleContainerClosedOnScreenXWithResults, m_titleContainerClosedOnScreenY)
+                                                     :Eegeo::v2(m_titleContainerClosedOnScreenWidthWithResults, m_titleContainerClosedOnScreenHeight)
+                                                     :m_searchCountLabelClosedOnScreenAlphaWithResults
+                                                     :Eegeo::v2(m_searchCountLabelClosedOnScreenX, m_searchCountLabelClosedOnScreenYWithResults)];
+            }
             
             if([self openOnScreenState] == 0.0f)
             {
@@ -674,6 +694,27 @@
             }
             
             m_resultsVisible = true;
+        }
+    }
+}
+
+- (void) onMenuStateUpdated
+{
+    if(m_titleContainersRequireRefresh)
+    {
+        if(m_resultsVisible)
+        {
+            [self refreshTitleContainerAnimations:Eegeo::v2(m_titleContainerClosedOnScreenXWithResults, m_titleContainerClosedOnScreenY)
+                                                 :Eegeo::v2(m_titleContainerClosedOnScreenWidthWithResults, m_titleContainerClosedOnScreenHeight)
+                                                 :m_searchCountLabelClosedOnScreenAlphaWithResults
+                                                 :Eegeo::v2(m_searchCountLabelClosedOnScreenX, m_searchCountLabelClosedOnScreenYWithResults)];
+        }
+        else
+        {
+            [self refreshTitleContainerAnimations:Eegeo::v2(m_titleContainerClosedOnScreenX, m_titleContainerClosedOnScreenY)
+                                                 :Eegeo::v2(m_titleContainerClosedOnScreenWidth, m_titleContainerClosedOnScreenHeight)
+                                                 :m_searchCountLabelClosedOnScreenAlpha
+                                                 :Eegeo::v2(m_searchCountLabelClosedOnScreenX, m_searchCountLabelClosedOnScreenY)];
         }
     }
 }

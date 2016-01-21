@@ -344,6 +344,8 @@ enum MenuState
     m_menuState = OFF_SCREEN;
     
     self.hidden = true;
+    
+    [self onMenuStateUpdated];
 }
 
 - (void) onClosedOnScreenAnimationComplete
@@ -352,6 +354,8 @@ enum MenuState
     
     m_pInterop->HandleViewCloseCompleted();
     [self setOffscreenPartsHiddenState:true];
+    
+    [self onMenuStateUpdated];
 }
 
 - (void) onOpenOnScreenAnimationComplete
@@ -359,6 +363,13 @@ enum MenuState
     m_menuState = OPEN_ON_SCREEN;
     
     m_pInterop->HandleViewOpenCompleted();
+    
+    [self onMenuStateUpdated];
+}
+
+- (void) onMenuStateUpdated
+{
+    // handled in sub classes
 }
 
 - (BOOL) isAnimating
