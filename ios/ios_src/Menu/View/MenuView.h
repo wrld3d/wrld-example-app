@@ -98,8 +98,6 @@
 
 - (void) refreshTableHeights;
 
-- (void) refreshHeightForTable:(CustomTableView*)tableView;
-
 - (float) getHeightForTable:(CustomTableView*)tableView;
 
 - (void) setTableCanInteract:(BOOL)canInteract;

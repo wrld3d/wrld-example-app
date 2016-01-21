@@ -25,6 +25,8 @@
 
 - (float)getCellInset;
 
+- (float)refreshHeight:(float)realHeight;
+
 @property (nonatomic, retain) UIView* pBackgroundView;
 
 @end

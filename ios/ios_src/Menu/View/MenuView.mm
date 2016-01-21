@@ -336,9 +336,7 @@ enum MenuState
 
 - (void) onTableAnimationUpdated
 {
-    [self updateHeightsForCustomTableView:nil
-                     updateContainersOnly:YES
-                           useRealHeights:NO];
+    [self refreshTableHeights];
 }
 
 - (void) onOffScreenAnimationComplete
@@ -583,53 +581,17 @@ enum MenuState
 
 - (void) refreshTableHeights
 {
-    [self updateHeightsForCustomTableView:nil
-                     updateContainersOnly:NO
-                           useRealHeights:YES];
-}
-
-- (void) refreshHeightForTable:(CustomTableView*)tableView
-{
-    [self updateHeightsForCustomTableView:tableView
-                     updateContainersOnly:NO
-                           useRealHeights:NO];
-}
-
-- (void)updateHeightsForCustomTableView:(CustomTableView*)tableView
-                   updateContainersOnly:(BOOL)updateContainersOnly
-                         useRealHeights:(BOOL)useRealHeights
-{
     float totalTableHeight = 0.0f;
     
     for(int i = 0; i < [self.pTableViewMap count]; ++i)
     {
         CustomTableView* customTableView = self.pTableViewMap[@(i)];
         
-        float tableHeight;
-        
-        if(useRealHeights || customTableView == tableView)
-        {
-            tableHeight = [m_pDataProvider getRealHeightForTable:customTableView];
-        }
-        else
-        {
-            tableHeight = customTableView.pBackgroundView.frame.size.height;
-        }
+        const float tableHeight = [customTableView refreshHeight:[m_pDataProvider getRealHeightForTable:customTableView]];
         
         CGRect frame = customTableView.frame;
         frame.origin.y = totalTableHeight;
         customTableView.frame = frame;
-        
-        if(!updateContainersOnly)
-        {
-            CGRect frame = customTableView.frame;
-            frame.size.height = tableHeight;
-            customTableView.frame = frame;
-            
-            frame = customTableView.pBackgroundView.frame;
-            frame.size.height = tableHeight;
-            customTableView.pBackgroundView.frame = frame;
-        }
         
         totalTableHeight += tableHeight;
     }

@@ -717,13 +717,7 @@
 
 - (void) onTableAnimationUpdated
 {
-    const float searchResultsTableContentHeight = self.pSearchResultsTableView.pBackgroundView.frame.size.height;
-    
-    
-    [self updateHeightsForCustomTableView:nil
-          searchResultsTableContentHeight:searchResultsTableContentHeight
-                     updateContainersOnly:YES
-                           useRealHeights:NO];
+    [self refreshTableHeights];
 }
 
 - (BOOL) isAnimating
@@ -738,29 +732,6 @@
 
 - (void)refreshTableHeights
 {
-    const float searchResultsTableContentHeight = [m_pSearchResultsDataProvider getRealTableHeight];
-    
-    [self updateHeightsForCustomTableView:nil
-          searchResultsTableContentHeight:searchResultsTableContentHeight
-                     updateContainersOnly:NO
-                           useRealHeights:YES];
-}
-
-- (void)refreshHeightForTable:(CustomTableView*)tableView
-{
-    const float searchResultsTableContentHeight = tableView == self.pSearchResultsTableView ? [m_pSearchResultsDataProvider getRealTableHeight] : self.pSearchResultsTableView.frame.size.height;
-    
-    [self updateHeightsForCustomTableView:tableView
-          searchResultsTableContentHeight:searchResultsTableContentHeight
-                     updateContainersOnly:NO
-                           useRealHeights:NO];
-}
-
-- (void)updateHeightsForCustomTableView:(CustomTableView*)tableView
-        searchResultsTableContentHeight:(float)searchResultsTableContentHeight
-                   updateContainersOnly:(BOOL)updateContainersOnly
-                         useRealHeights:(BOOL)useRealHeights
-{
     float totalTableHeight = 0.0f;
     float onScreenSearchResultsTableHeight;
     float tableY;
@@ -769,34 +740,16 @@
     {
         CustomTableView* customTableView = self.pTableViewMap[@(i)];
         
-        float tableHeight;
-        
-        if(useRealHeights || customTableView == tableView)
-        {
-            tableHeight = [m_pDataProvider getRealHeightForTable:customTableView];
-        }
-        else
-        {
-            tableHeight = customTableView.pBackgroundView.frame.size.height;
-        }
+        const float tableHeight = [customTableView refreshHeight:[m_pDataProvider getRealHeightForTable:customTableView]];
         
         CGRect frame = customTableView.frame;
         frame.origin.y = totalTableHeight;
         customTableView.frame = frame;
         
-        if(!updateContainersOnly)
-        {
-            CGRect frame = customTableView.frame;
-            frame.size.height = tableHeight;
-            customTableView.frame = frame;
-            
-            frame = customTableView.pBackgroundView.frame;
-            frame.size.height = tableHeight;
-            customTableView.pBackgroundView.frame = frame;
-        }
-        
         totalTableHeight += tableHeight;
     }
+    
+    const float searchResultsTableContentHeight = [self.pSearchResultsTableView refreshHeight:[m_pSearchResultsDataProvider getRealTableHeight]];
     
     if(searchResultsTableContentHeight > 0.0f)
     {
@@ -821,17 +774,6 @@
             frame.origin.y = frame.origin.y + tableY;
             customTableView.frame = frame;
         }
-    }
-    
-    if(!updateContainersOnly)
-    {
-        CGRect frame = self.pSearchResultsTableView.frame;
-        frame.size.height = searchResultsTableContentHeight;
-        self.pSearchResultsTableView.frame = frame;
-        
-        frame = self.pSearchResultsTableView.pBackgroundView.frame;
-        frame.size.height = searchResultsTableContentHeight;
-        self.pSearchResultsTableView.pBackgroundView.frame = frame;
     }
     
     const float tableViewContainerHeight = fminf(m_maxScreenSpace, tableY + totalTableHeight);

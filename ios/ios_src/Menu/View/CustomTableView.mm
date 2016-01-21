@@ -133,6 +133,22 @@
     return m_cellInset;
 }
 
+- (float)refreshHeight:(float)realHeight
+{
+    if(!m_isAnimating)
+    {
+        CGRect frame = self.frame;
+        frame.size.height = realHeight;
+        self.frame = frame;
+        
+        frame = self.pBackgroundView.frame;
+        frame.size.height = realHeight;
+        self.pBackgroundView.frame = frame;
+    }
+    
+    return self.pBackgroundView.frame.size.height;
+}
+
 - (float)getAnimationDurationForCellCount:(int)cellCount
 {
     return Eegeo::Math::Clamp(cellCount * m_cellAnimationDuration, m_minAnimationDuration, m_maxAnimationDuration);
@@ -148,18 +164,18 @@
     if([self isHidden])
     {
         [self reloadData];
-        [m_pMenuView refreshHeightForTable:self];
+        [m_pMenuView refreshTableHeights];
         
         return;
     }
-    
-    [self setInteractionEnabled: NO];
     
     [self reloadData];
     
     const float currentTableHeight = self.frame.size.height;
     
-    [m_pMenuView refreshHeightForTable:self];
+    [m_pMenuView refreshTableHeights];
+    
+    [self setInteractionEnabled: NO];
     
     const float cellHeight = [self.delegate tableView:self heightForRowAtIndexPath:(NSIndexPath*)[indexPaths firstObject]];
     
@@ -196,7 +212,7 @@
     if([self isHidden])
     {
         [self reloadData];
-        [m_pMenuView refreshHeightForTable:self];
+        [m_pMenuView refreshTableHeights];
         
         return;
     }
@@ -214,7 +230,7 @@
                                                                                                       CustomTableView* tableView = (CustomTableView*)view;
                                                                                                       
                                                                                                       [tableView reloadData];
-                                                                                                      [tableView->m_pMenuView refreshHeightForTable:tableView];
+                                                                                                      [tableView->m_pMenuView refreshTableHeights];
                                                                                                       [tableView setInteractionEnabled:YES];
                                                                                                   },
                                                                                                   NULL);
