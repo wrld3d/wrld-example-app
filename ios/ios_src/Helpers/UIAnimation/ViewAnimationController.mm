@@ -131,7 +131,7 @@ namespace ExampleApp
                 
                 for(std::vector<ViewAnimatorBase*>::const_iterator it = m_animators.begin(); it != m_animators.end(); ++it)
                 {
-                    (*it)->Update(m_timerSeconds);
+                    (*it)->UpdateToIntermediate(m_timerSeconds);
                 }
             }
             

@@ -27,10 +27,8 @@ enum MenuState
     UITapGestureRecognizer* m_tapGestureRecogniser;
     
     CGPoint m_dragStartPos;
-    CGPoint m_controlStartPos;
     
     bool m_dragStartedClosed;
-    bool m_touchedDownInsideDragTab;
     
     ExampleApp::Helpers::UIAnimation::ViewAnimationController* m_currentAnimationController;
     
@@ -92,7 +90,6 @@ enum MenuState
         [[self pDragTab] addGestureRecognizer: m_tapGestureRecogniser];
         
         m_dragStartedClosed = false;
-        m_touchedDownInsideDragTab  = false;
         
         m_menuState = OFF_SCREEN;
         
@@ -409,7 +406,6 @@ enum MenuState
     m_menuState = DRAGGING;
     
     m_dragStartPos = absolutePosition;
-    m_controlStartPos = self.pDragTab.frame.origin;
     
     [self setOffscreenPartsHiddenState:false];
     
@@ -539,32 +535,15 @@ enum MenuState
         break;
 
     case UIGestureRecognizerStateEnded:
-        m_touchedDownInsideDragTab = false;
         [self completeDrag:positionAbs velocity:velocity];
         break;
 
     case UIGestureRecognizerStateCancelled:
-        m_touchedDownInsideDragTab = false;
         [self completeDrag:positionAbs velocity:velocity];
         break;
 
     default:
         break;
-    }
-}
-
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    UITouch *touch = [[event allTouches] anyObject];
-    CGPoint touchLocation = [touch locationInView:self];
-    
-    if(CGRectContainsPoint(_pDragTab.frame, touchLocation))
-    {
-        m_touchedDownInsideDragTab = true;
-    }
-    else
-    {
-        m_touchedDownInsideDragTab = false;
     }
 }
 
@@ -575,7 +554,7 @@ enum MenuState
         return true;
     }
     
-    if(m_touchedDownInsideDragTab && [self canInteract])
+    if([gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]])
     {
         return m_pInterop->CallBeginDrag();
     }

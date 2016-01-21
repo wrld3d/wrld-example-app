@@ -40,6 +40,8 @@ namespace ExampleApp
                 
                 void Update(double timerSeconds);
                 
+                void UpdateToIntermediate(double timerSeconds);
+                
                 bool IsActive() const;
                 
                 double DurationSeconds() const;

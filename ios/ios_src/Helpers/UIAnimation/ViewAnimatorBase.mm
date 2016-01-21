@@ -65,6 +65,13 @@ namespace ExampleApp
                 }
             }
             
+            void ViewAnimatorBase::UpdateToIntermediate(double timerSeconds)
+            {
+                OnPlay();
+                
+                Update(timerSeconds);
+            }
+            
             bool ViewAnimatorBase::IsActive() const
             {
                 return m_isActive;
