@@ -74,7 +74,7 @@ public abstract class MainActivity extends Activity implements SurfaceHolder.Cal
     public void setTouchExclusivity()
     {
     	final RelativeLayout uiRoot = (RelativeLayout)this.findViewById(R.id.ui_container);
-    	recursiveDisableSplitMotionEvents((ViewGroup) uiRoot);
+    	recursiveDisableSplitMotionEvents((ViewGroup) uiRoot.getParent());
     }
     
     public void setTouchEnabled(final boolean touchEnabled)

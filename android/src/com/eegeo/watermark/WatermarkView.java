@@ -32,6 +32,7 @@ public class WatermarkView implements View.OnClickListener
  private float m_yPosActive;
  private float m_yPosInactive;
 
+ private boolean m_shouldShow;
  private final long m_stateChangeAnimationTimeMilliseconds = 200;
  private AnimatorListener m_transitionOffListener;
 
@@ -100,7 +101,9 @@ public class WatermarkView implements View.OnClickListener
      });
      
      updateWatermarkData(imageAssetUrl, popupTitle, popupBody, webUrl, shouldShowShadow);
-     
+     m_shouldShow = false;
+     refreshPositions();
+     m_view.setY(m_yPosInactive);
      m_view.setAlpha(0.8f);
      m_gradientView.setAlpha(0.0f);
      m_gradientView.setY(uiRoot.getHeight() - m_activity.dipAsPx(52.0f));
@@ -140,11 +143,13 @@ public class WatermarkView implements View.OnClickListener
 
  public void animateToActive()
  {
+	 m_shouldShow = true;
      animateViewToY((int)m_yPosActive);
  }
 
  public void animateToInactive()
  {
+	 m_shouldShow = false;
      animateViewToY((int)m_yPosInactive);
  }
 
@@ -189,11 +194,24 @@ public class WatermarkView implements View.OnClickListener
  
  private void transitionToNewImage()
  {
-	 m_view.clearAnimation();
-	 m_view.animate()
-	 .y(m_yPosInactive)
-	 .setDuration(m_stateChangeAnimationTimeMilliseconds)
-	 .setListener(m_transitionOffListener);
+	 if(m_shouldShow)
+	 {
+		 m_view.clearAnimation();
+		 m_view.animate()
+		 .y(m_yPosInactive)
+		 .setDuration(m_stateChangeAnimationTimeMilliseconds)
+		 .setListener(m_transitionOffListener);
+	 }
+	 else
+	 {
+		String uri = "drawable/" + m_imageAssetUrl;
+		int imageResource = m_activity.getResources().getIdentifier(uri, null, m_activity.getPackageName());
+		m_view.setBackgroundResource(imageResource);
+		
+		refreshPositions();
+		m_view.setY(m_yPosInactive);
+	 }
+	 
  }
  
  private DialogInterface.OnClickListener createClickListener(final boolean shouldPreload)
