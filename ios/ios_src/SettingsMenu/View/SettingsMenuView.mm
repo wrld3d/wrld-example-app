@@ -79,7 +79,7 @@
     m_dragTabOpenOnScreenY = m_dragTabOffScreenY;
     
     self.pDragTab = [[[UIButton alloc] initWithFrame:CGRectMake(m_dragTabOffScreenX, m_dragTabOffScreenY, m_dragTabWidth, m_dragTabHeight)] autorelease];
-    [self.pDragTab setBackgroundImage:ExampleApp::Helpers::ImageHelpers::ImageFromColor(ExampleApp::Helpers::ColorPalette::BorderHudColor)
+    [self.pDragTab setBackgroundImage:ExampleApp::Helpers::ImageHelpers::ImageFromColor(ExampleApp::Helpers::ColorPalette::UiBorderColor)
                              forState:UIControlStateNormal];
     [self.pDragTab setBackgroundImage:ExampleApp::Helpers::ImageHelpers::ImageFromColor(ExampleApp::Helpers::ColorPalette::ButtonPressColor)
                              forState:UIControlStateHighlighted];
@@ -100,7 +100,7 @@
     m_titleContainerOpenOnScreenY = m_titleContainerOffScreenY;
     
     self.pTitleContainer = [[[UIView alloc] initWithFrame:CGRectMake(m_titleContainerOffScreenX, m_titleContainerOffScreenY, m_titleContainerOffScreenWidth, m_titleContainerOffScreenHeight)] autorelease];
-    self.pTitleContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::BorderHudColor;
+    self.pTitleContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
     
     m_titleLabelWidth = tableCellWidth - titleLabelInsetX;
     m_titleLabelHeight = dragTabSize;
@@ -119,7 +119,7 @@
     self.pTitleLabel.alpha = m_titleLabelOffScreenAlpha;
     self.pTitleLabel.text = @"Settings";
     self.pTitleLabel.font = [UIFont boldSystemFontOfSize:24];
-    self.pTitleLabel.textColor = ExampleApp::Helpers::ColorPalette::WhiteTone;
+    self.pTitleLabel.textColor = ExampleApp::Helpers::ColorPalette::UiTextHeaderColor;
     
     m_menuContainerWidth = tableCellWidth;
     m_menuContainerHeight = m_screenHeight - (upperMargin + dragTabSize);
@@ -162,7 +162,7 @@
         customTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         customTableView.bounces = NO;
         customTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-        customTableView.pBackgroundView.backgroundColor = ExampleApp::Helpers::ColorPalette::BorderHudColor;
+        customTableView.pBackgroundView.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
     }
     
     [self addSubview: self.pDragTab];

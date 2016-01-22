@@ -24,7 +24,7 @@ const float arrowWidth = 10;
         [self addSubview: self.pBackgroundContainer];
         
         self.pBannerBarContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pBannerBarContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::GoldTone;
+        self.pBannerBarContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
         [self addSubview: self.pBannerBarContainer];
         
         self.pWelcomeImage = [[[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, 320.0f, 90.0f)] autorelease];
@@ -32,7 +32,7 @@ const float arrowWidth = 10;
         [self.pBannerBarContainer addSubview:self.pWelcomeImage];
         
         self.pMenuDialogContainer = [[[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, 0.f, 0.f)] autorelease];
-        self.pMenuDialogContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::WhiteTone;
+        self.pMenuDialogContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
         [self addSubview: self.pMenuDialogContainer];
         self.pMenuDialogArrow = ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pMenuDialogContainer, "arrow3_right", 0.f, 0.f, 0, 0);
         self.pMenuDialogTitle = [self createDialogTitle:@"Main Menu"];
@@ -41,7 +41,7 @@ const float arrowWidth = 10;
         [self.pMenuDialogContainer addSubview:self.pMenuDialogDescription];
         
         self.pCompassDialogContainer = [[[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, 0.f, 0.f)] autorelease];
-        self.pCompassDialogContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::WhiteTone;
+        self.pCompassDialogContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
         [self addSubview: self.pCompassDialogContainer];
         self.pCompassDialogArrow = ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pCompassDialogContainer, "arrow3_down", 0.f, 0.f, 0, 0);
         self.pCompassDialogTitle = [self createDialogTitle:@"Compass"];
@@ -50,7 +50,7 @@ const float arrowWidth = 10;
         [self.pCompassDialogContainer addSubview:self.pCompassDialogDescription];
         
         self.pMapModeDialogContainer = [[[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, 0.f, 0.f)] autorelease];
-        self.pMapModeDialogContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::WhiteTone;
+        self.pMapModeDialogContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
         [self addSubview: self.pMapModeDialogContainer];
         self.pMapModeDialogArrow = ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pMapModeDialogContainer, "arrow3_down", 0.f, 0.f, 0, 0);
         self.pMapModeDialogTitle = [self createDialogTitle:@"Map Mode"];
@@ -59,7 +59,7 @@ const float arrowWidth = 10;
         [self.pMapModeDialogContainer addSubview:self.pMapModeDialogDescription];
         
         self.pPinCreationDialogContainer = [[[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, 0.f, 0.f)] autorelease];
-        self.pPinCreationDialogContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::WhiteTone;
+        self.pPinCreationDialogContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
         [self addSubview: self.pPinCreationDialogContainer];
         self.pPinCreationDialogArrow = ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pPinCreationDialogContainer, "arrow3_down", 0.f, 0.f, 0, 0);
         self.pPinCreationDialogTitle = [self createDialogTitle:@"My Pin"];
@@ -83,7 +83,7 @@ const float arrowWidth = 10;
 {
     const bool useSmallScreen = ExampleApp::Helpers::UIHelpers::UsePhoneLayout();
     UILabel* pLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-    pLabel.textColor = ExampleApp::Helpers::ColorPalette::GoldTone;
+    pLabel.textColor = ExampleApp::Helpers::ColorPalette::UiTextTitleColor;
     pLabel.text = text;
     pLabel.font = useSmallScreen ? [UIFont systemFontOfSize:16.0f] : [UIFont systemFontOfSize:18.0f];
     return pLabel;
@@ -93,7 +93,7 @@ const float arrowWidth = 10;
 {
     const bool useSmallScreen = ExampleApp::Helpers::UIHelpers::UsePhoneLayout();
     UITextView* pTextView = [[[UITextView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-    pTextView.textColor = ExampleApp::Helpers::ColorPalette::DarkGreyTone;
+    pTextView.textColor = ExampleApp::Helpers::ColorPalette::UiTextCopyColor;
     pTextView.editable = NO;
     pTextView.scrollEnabled = NO;
     pTextView.font = useSmallScreen ? [UIFont systemFontOfSize:14.0f] : [UIFont systemFontOfSize:16.0f];

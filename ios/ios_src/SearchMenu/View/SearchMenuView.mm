@@ -178,7 +178,7 @@
     m_dragTabOpenOnScreenY = m_dragTabOffScreenY;
     
     self.pDragTab = [[[UIButton alloc] initWithFrame:CGRectMake(m_dragTabOffScreenX, m_dragTabOffScreenY, m_dragTabWidth, m_dragTabHeight)] autorelease];
-    [self.pDragTab setBackgroundImage:ExampleApp::Helpers::ImageHelpers::ImageFromColor(ExampleApp::Helpers::ColorPalette::BorderHudColor)
+    [self.pDragTab setBackgroundImage:ExampleApp::Helpers::ImageHelpers::ImageFromColor(ExampleApp::Helpers::ColorPalette::UiBorderColor)
                              forState:UIControlStateNormal];
     [self.pDragTab setBackgroundImage:ExampleApp::Helpers::ImageHelpers::ImageFromColor(ExampleApp::Helpers::ColorPalette::ButtonPressColor)
                              forState:UIControlStateHighlighted];
@@ -202,7 +202,7 @@
     m_titleContainerClosedOnScreenXWithResults = 0.0f;
     
     self.pTitleContainer = [[[UIView alloc] initWithFrame:CGRectMake(m_titleContainerOffScreenX, m_titleContainerOffScreenY, m_titleContainerOffScreenWidth, m_titleContainerOffScreenHeight)] autorelease];
-    self.pTitleContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::BorderHudColor;
+    self.pTitleContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
     
     m_searchCountLabelWidth = searchCountLabelWidth;
     m_searchCountLabelHeight = dragTabSize;
@@ -222,7 +222,7 @@
     self.pSearchCountLabel = [[[UILabel alloc] initWithFrame:CGRectMake(m_searchCountLabelOffScreenX, m_searchCountLabelOffScreenY, m_searchCountLabelWidth, m_searchCountLabelHeight)] autorelease];
     [self.pSearchCountLabel setBackgroundColor:[UIColor clearColor]];
     [self.pSearchCountLabel setFont:[UIFont systemFontOfSize:16.0f]];
-    [self.pSearchCountLabel setTextColor:ExampleApp::Helpers::ColorPalette::MainHudColor];
+    [self.pSearchCountLabel setTextColor:ExampleApp::Helpers::ColorPalette::UiTextHeaderColor];
     [self.pSearchCountLabel setAlpha:m_searchCountLabelOffScreenAlpha];
     [self.pSearchCountLabel setTextAlignment:NSTextAlignmentCenter];
     [self.pSearchCountLabel setText:@""];
@@ -241,7 +241,7 @@
     m_searchEditBoxBackgroundOpenOnScreenY = searchEditBoxInsetY;
     
     self.pSearchEditBoxBackground = [[[UIView alloc] initWithFrame:CGRectMake(m_searchEditBoxBackgroundOffScreenX, m_searchEditBoxBackgroundOpenOnScreenY, m_searchEditBoxBackgroundOffScreenWidth, m_searchEditBoxBackgroundOpenOnScreenHeight)] autorelease];
-    self.pSearchEditBoxBackground.backgroundColor = ExampleApp::Helpers::ColorPalette::MainHudColor;
+    self.pSearchEditBoxBackground.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
     self.pSearchEditBoxBackground.layer.cornerRadius = 5.0f;
     self.pSearchEditBoxBackground.layer.masksToBounds = YES;
     
@@ -344,7 +344,7 @@
         customTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         customTableView.bounces = NO;
         customTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-        customTableView.pBackgroundView.backgroundColor = ExampleApp::Helpers::ColorPalette::BorderHudColor;
+        customTableView.pBackgroundView.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
     }
     
     self.pSearchResultsTableView = [[[CustomTableView alloc] initWithFrame:CGRectMake(tableX, tableY, tableWidth, tableHeight)
@@ -358,7 +358,7 @@
     self.pSearchResultsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.pSearchResultsTableView.bounces = NO;
     self.pSearchResultsTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-    self.pSearchResultsTableView.pBackgroundView.backgroundColor = ExampleApp::Helpers::ColorPalette::BorderHudColor;
+    self.pSearchResultsTableView.pBackgroundView.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
     
     [self addSubview: self.pDragTab];
     [self addSubview: self.pTitleContainer];

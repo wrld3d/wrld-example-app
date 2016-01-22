@@ -24,11 +24,11 @@
         m_stateChangeAnimationTimeSeconds = 0.2f;
 
         self.pControlContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pControlContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::GoldTone;
+        self.pControlContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
         [self addSubview: self.pControlContainer];
 
         self.pCloseButtonContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pCloseButtonContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::GoldTone;
+        self.pCloseButtonContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
         [self.pControlContainer addSubview: self.pCloseButtonContainer];
 
         self.pCloseButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
@@ -36,19 +36,19 @@
         [self.pCloseButtonContainer addSubview: self.pCloseButton];
 
         self.pContentContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pContentContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::MainHudColor;
+        self.pContentContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
         [self.pControlContainer addSubview: self.pContentContainer];
 
         self.pOptionsContainer = [[[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pOptionsContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::WhiteTone;
+        self.pOptionsContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
         [self.pContentContainer addSubview: self.pOptionsContainer];
 
         self.pHeadlineContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pHeadlineContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::WhiteTone;
+        self.pHeadlineContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
         [self.pControlContainer addSubview: self.pHeadlineContainer];
 
         self.pTitleLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pTitleLabel.textColor = ExampleApp::Helpers::ColorPalette::GoldTone;
+        self.pTitleLabel.textColor = ExampleApp::Helpers::ColorPalette::UiTextTitleColor;
         [self.pHeadlineContainer addSubview: self.pTitleLabel];
 
         m_tapGestureRecogniser = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(_tapTabGesture:)];

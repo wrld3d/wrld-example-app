@@ -166,7 +166,7 @@
     const float controlContainerY = (boundsHeight * 0.5f) - (m_controlContainerHeight * 0.5f);
 
     self.pControlContainer.frame = CGRectMake(controlContainerX, controlContainerY, m_controlContainerWidth, m_controlContainerHeight);
-    self.pControlContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::GoldTone;
+    self.pControlContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
 
     [self layoutHeader];
     [self layoutBody];
@@ -182,22 +182,22 @@
     const float titleContainerHeight = 70.f;
 
     self.pTitleContainer.frame = CGRectMake(0, m_yCursor, titleContainerWidth, titleContainerHeight);
-    self.pTitleContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::WhiteTone;
+    self.pTitleContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
 
     const float titleImageSize = static_cast<float>(self.pTitleContainer.frame.size.height);
     self.pTitleImage.frame = CGRectMake(0, 0, titleImageSize, titleImageSize);
-    self.pTitleImage.backgroundColor = ExampleApp::Helpers::ColorPalette::WhiteTone;
+    self.pTitleImage.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
 
     const float textPadding = 10.f;
     const float titleTextX = titleImageSize + textPadding;
     self.pTitleText.frame = CGRectMake(titleTextX, 0, titleContainerWidth - titleTextX, titleContainerHeight);
 
     self.pTitleText.font = [UIFont systemFontOfSize:25.0f];
-    self.pTitleText.textColor = ExampleApp::Helpers::ColorPalette::GoldTone;
+    self.pTitleText.textColor = ExampleApp::Helpers::ColorPalette::UiTextTitleColor;
 
     if ([self.pTitleText respondsToSelector: @selector(setTintColor:)])
     {
-        self.pTitleText.tintColor = ExampleApp::Helpers::ColorPalette::GoldTone;
+        self.pTitleText.tintColor = ExampleApp::Helpers::ColorPalette::UiTextTitleColor;
     }
 
     self.pTitleText.placeholder = @"Name your pin...";
@@ -215,7 +215,7 @@
     const float bodyContainerHeight = m_controlContainerHeight - (2.f * static_cast<float>(self.pTitleContainer.frame.size.height));
 
     self.pBodyContainer.frame = CGRectMake(0, bodyContainerY, m_controlContainerWidth, bodyContainerHeight);
-    self.pBodyContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::WhiteTone;
+    self.pBodyContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
 
     const float shareBarY = 5.f;
     const float checkboxSize = 20.f;
@@ -232,7 +232,7 @@
 
     self.pShareLabel.frame = CGRectMake(shareLabelX, shareBarY, shareLabelWidth, shareLabelHeight);
     self.pShareLabel.font = [UIFont italicSystemFontOfSize: 16.f];
-    self.pShareLabel.textColor = ExampleApp::Helpers::ColorPalette::GreyTone;
+    self.pShareLabel.textColor = ExampleApp::Helpers::ColorPalette::UiTextCopyColor;
     self.pShareLabel.text = @"Share";
 
     const float termsLabelWidth = 150.f;
@@ -243,7 +243,7 @@
     self.pTermsLabel.text = @"(Terms & Conditions)";
     self.pTermsLabel.font = [UIFont systemFontOfSize: 12.f];
     self.pTermsLabel.textAlignment = NSTextAlignmentLeft;
-    self.pTermsLabel.textColor = ExampleApp::Helpers::ColorPalette::LinkTone;
+    self.pTermsLabel.textColor = ExampleApp::Helpers::ColorPalette::UiTextLinkColor;
     UITapGestureRecognizer* urlTappedGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(userTappedOnLink:)];
     [self.pTermsLabel setUserInteractionEnabled:YES];
     [self.pTermsLabel addGestureRecognizer:urlTappedGesture];
@@ -258,9 +258,10 @@
     const float poiDescriptionBoxWidth = m_controlContainerWidth - (2 * poiDescriptionBoxX);
     self.pPoiDescriptionBox.frame = CGRectMake(poiDescriptionBoxX, poiDescriptionBoxY, poiDescriptionBoxWidth, poiDescriptionBoxHeight);
     self.pPoiDescriptionBox.font = [UIFont systemFontOfSize: 16.f];
+    self.pPoiDescriptionBox.textColor = ExampleApp::Helpers::ColorPalette::UiTextCopyColor;
     self.pPoiDescriptionBox.layer.cornerRadius = 8.f;
     self.pPoiDescriptionBox.layer.masksToBounds = YES;
-    self.pPoiDescriptionBox.layer.borderColor = [ExampleApp::Helpers::ColorPalette::GoldTone CGColor];
+    self.pPoiDescriptionBox.layer.borderColor = [ExampleApp::Helpers::ColorPalette::UiBorderColor CGColor];
     self.pPoiDescriptionBox.layer.borderWidth = 2.f;
     [self.pPoiDescriptionBox setDelegate: self];
 
@@ -273,7 +274,7 @@
     self.pDescriptionPlaceholder.frame = CGRectMake(placeholderTextOffset, 2.f, poiDescriptionBoxWidth - placeholderTextOffset, 30.f);
     self.pDescriptionPlaceholder.hidden = NO;
     self.pDescriptionPlaceholder.font = [UIFont systemFontOfSize: 16.f];
-    self.pDescriptionPlaceholder.textColor = ExampleApp::Helpers::ColorPalette::GreyTone;
+    self.pDescriptionPlaceholder.textColor = ExampleApp::Helpers::ColorPalette::UiTextCopyLightColor;
     self.pDescriptionPlaceholder.text = @"Tell us about your pin...";
 
     const float poiImageY = poiDescriptionBoxHeight + poiDescriptionBoxY + 30.f;
@@ -296,7 +297,7 @@
     const float footerWidth = m_controlContainerWidth;
 
     self.pFooterContainer.frame = CGRectMake(0, footerY, footerWidth, footerHeight);
-    self.pFooterContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::GoldTone;
+    self.pFooterContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
 
     const int numberOfButtons = 4;
     const float buttonSize = static_cast<float>(self.pFooterContainer.frame.size.height);

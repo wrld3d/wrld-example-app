@@ -33,11 +33,11 @@
         m_stateChangeAnimationTimeSeconds = 0.2f;
         
         self.pControlContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pControlContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::MainHudColor;
+        self.pControlContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
         [self addSubview: self.pControlContainer];
         
         self.pCloseButtonContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pCloseButtonContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::GoldTone;
+        self.pCloseButtonContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
         [self.pControlContainer addSubview: self.pCloseButtonContainer];
         
         self.pCloseButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
@@ -50,33 +50,31 @@
         [self.pCloseButtonContainer addSubview: self.pPinButton];
         
         self.pContentContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pContentContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::WhiteTone;
+        self.pContentContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
         [self.pControlContainer addSubview: self.pContentContainer];
         
         self.pLabelsContainer = [[[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pLabelsContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::WhiteTone;
+        self.pLabelsContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
         [self.pContentContainer addSubview: self.pLabelsContainer];
         
         self.pHeadlineContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pHeadlineContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::MainHudColor;
+        self.pHeadlineContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
         [self.pControlContainer addSubview: self.pHeadlineContainer];
         
         self.pCategoryIconContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         [self.pHeadlineContainer addSubview: self.pCategoryIconContainer];
         
-        self.pTitleLabel = [self createLabel :ExampleApp::Helpers::ColorPalette::MainHudColor :ExampleApp::Helpers::ColorPalette::WhiteTone];
-        self.pTitleLabel.textColor = ExampleApp::Helpers::ColorPalette::GoldTone;
+        self.pTitleLabel = [self createLabel :ExampleApp::Helpers::ColorPalette::UiTextTitleColor :ExampleApp::Helpers::ColorPalette::UiBackgroundColor];
         [self.pHeadlineContainer addSubview: self.pTitleLabel];
         
         self.pCountryHeaderContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pCountryHeaderContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::GoldTone;
+        self.pCountryHeaderContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
         [self.pLabelsContainer addSubview: self.pCountryHeaderContainer];
         
-        self.pCountryHeaderLabel = [self createLabel :ExampleApp::Helpers::ColorPalette::WhiteTone :ExampleApp::Helpers::ColorPalette::GoldTone];
+        self.pCountryHeaderLabel = [self createLabel :ExampleApp::Helpers::ColorPalette::UiTextHeaderColor :ExampleApp::Helpers::ColorPalette::UiBorderColor];
         [self.pCountryHeaderContainer addSubview: self.pCountryHeaderLabel];
         
-        self.pCountryContent = [self createLabel :ExampleApp::Helpers::ColorPalette::MainHudColor :ExampleApp::Helpers::ColorPalette::WhiteTone];
-        self.pCountryContent.textColor = ExampleApp::Helpers::ColorPalette::DarkGreyTone;
+        self.pCountryContent = [self createLabel :ExampleApp::Helpers::ColorPalette::UiTextCopyColor :ExampleApp::Helpers::ColorPalette::UiBackgroundColor];
         [self.pLabelsContainer addSubview: self.pCountryContent];
         
         [self setTouchExclusivity: self];

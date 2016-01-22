@@ -8,23 +8,17 @@ namespace ExampleApp
     {
         namespace ColorPalette
         {
-            extern UIColor* OliveTone;
-            extern UIColor* WhiteTone;
-            extern UIColor* BlackTone;
-            extern UIColor* DarkGreyTone;
-            extern UIColor* GreyTone;
-            extern UIColor* GoldTone;
-            extern UIColor* LightGreyTone;
-            
-            extern UIColor* MainHudColor;
-            extern UIColor* BorderHudColor;
+            extern UIColor* UiBackgroundColor;
+            extern UIColor* UiBorderColor;
             extern UIColor* ButtonPressColor;
             
             extern UIColor* ModalBackgroundColor;
-            extern UIColor* LinkTone;
-            extern UIColor* UiTextHeaderColour;
-            extern UIColor* UiTextCopyColour;
-            extern UIColor* UiBaseColour;
+            
+            extern UIColor* UiTextTitleColor;
+            extern UIColor* UiTextHeaderColor;
+            extern UIColor* UiTextCopyColor;
+            extern UIColor* UiTextCopyLightColor;
+            extern UIColor* UiTextLinkColor;
             
             extern UIColor* TextFieldEnabledColor;
             extern UIColor* TextFieldDisabledColor;
@@ -38,10 +32,15 @@ namespace ExampleApp
             extern UIColor* TableSearchDetailTextColor;
             extern UIColor* TableHeaderTextColor;
             extern UIColor* TableSubCellTextColor;
+            extern UIColor* TableCellHighlightColor;
             
             extern UIColor* TwitterDarkGrey;
             extern UIColor* TwitterLightGrey;
             extern UIColor* TwitterBlue;
+            
+            extern UIColor* CompassControlColor;
+            
+            extern UIColor* UiShadowColor;
         }
     }
 }

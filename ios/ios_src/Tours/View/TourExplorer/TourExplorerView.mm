@@ -168,7 +168,7 @@
         const float textPadding = 2.f;
         
         self.pTourNameLabel = [[[UILabel alloc] initWithFrame:CGRectMake( textPadding + exitButtonSize, textPadding, labelLength - textPadding, detailsPanelHeight - textPadding)] autorelease];
-        self.pTourNameLabel.textColor = ExampleApp::Helpers::ColorPalette::DarkGreyTone;
+        self.pTourNameLabel.textColor = ExampleApp::Helpers::ColorPalette::UiTextCopyColor;
         self.pTourNameLabel.textAlignment = NSTextAlignmentCenter;
         [self.pDetailsPanel addSubview:self.pTourNameLabel];
         

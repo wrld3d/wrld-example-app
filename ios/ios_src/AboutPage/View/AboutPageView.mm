@@ -24,11 +24,11 @@
 
 
         self.pControlContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pControlContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::GoldTone;
+        self.pControlContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
         [self addSubview: self.pControlContainer];
 
         self.pCloseButtonContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pCloseButtonContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::GoldTone;
+        self.pCloseButtonContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
         [self.pControlContainer addSubview: self.pCloseButtonContainer];
 
         self.pCloseButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
@@ -36,23 +36,23 @@
         [self.pCloseButtonContainer addSubview: self.pCloseButton];
 
         self.pContentContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pContentContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::MainHudColor;
+        self.pContentContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
         [self.pControlContainer addSubview: self.pContentContainer];
 
         self.pLabelsContainer = [[[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pLabelsContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::WhiteTone;
+        self.pLabelsContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
         [self.pContentContainer addSubview: self.pLabelsContainer];
 
         self.pHeadlineContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pHeadlineContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::WhiteTone;
+        self.pHeadlineContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
         [self.pControlContainer addSubview: self.pHeadlineContainer];
 
         self.pTitleLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pTitleLabel.textColor = ExampleApp::Helpers::ColorPalette::GoldTone;
+        self.pTitleLabel.textColor = ExampleApp::Helpers::ColorPalette::UiTextTitleColor;
         [self.pHeadlineContainer addSubview: self.pTitleLabel];
 
         self.pDevelopedByLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pDevelopedByLabel.textColor = ExampleApp::Helpers::ColorPalette::DarkGreyTone;
+        self.pDevelopedByLabel.textColor = ExampleApp::Helpers::ColorPalette::UiTextCopyColor;
         self.pDevelopedByLabel.textAlignment = NSTextAlignmentCenter;
         [self.pLabelsContainer addSubview: self.pDevelopedByLabel];
 
@@ -61,7 +61,7 @@
         [self.pLabelsContainer addSubview: self.pLogoImage];
 
         self.pTextContent = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pTextContent.textColor = ExampleApp::Helpers::ColorPalette::DarkGreyTone;
+        self.pTextContent.textColor = ExampleApp::Helpers::ColorPalette::UiTextCopyColor;
         self.pTextContent.textAlignment = NSTextAlignmentCenter;
         [self.pLabelsContainer addSubview: self.pTextContent];
         
@@ -69,7 +69,7 @@
                                                           initWithTarget:self
                                                           action:@selector(privacyClickHandler:)] autorelease];
         self.pPrivacyLink = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pPrivacyLink.textColor = ExampleApp::Helpers::ColorPalette::LinkTone;
+        self.pPrivacyLink.textColor = ExampleApp::Helpers::ColorPalette::UiTextLinkColor;
         [self.pPrivacyLink addGestureRecognizer: pPrivacyTapHandler];
         [self.pLabelsContainer addSubview: self.pPrivacyLink];
         
@@ -77,7 +77,7 @@
                                                     initWithTarget:self
                                                     action:@selector(eulaClickHandler:)] autorelease];
         self.pEulaLink = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pEulaLink.textColor = ExampleApp::Helpers::ColorPalette::LinkTone;
+        self.pEulaLink.textColor = ExampleApp::Helpers::ColorPalette::UiTextLinkColor;
         [self.pEulaLink addGestureRecognizer: pEulaTapHandler];
         [self.pLabelsContainer addSubview: self.pEulaLink];
 

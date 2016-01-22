@@ -103,7 +103,7 @@ namespace
         const float textPadding = 2.f;
         
         self.pFloorNameLabel = [[[UILabel alloc] initWithFrame:CGRectMake( textPadding + buttonSize, textPadding, labelLength - textPadding, detailsPanelHeight - textPadding)] autorelease];
-        self.pFloorNameLabel.textColor = ExampleApp::Helpers::ColorPalette::DarkGreyTone;
+        self.pFloorNameLabel.textColor = ExampleApp::Helpers::ColorPalette::UiTextCopyColor;
         self.pFloorNameLabel.textAlignment = NSTextAlignmentCenter;
         [self.pDetailsPanel addSubview:self.pFloorNameLabel];
         
@@ -264,13 +264,13 @@ namespace
         label = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, 0.0, 0.0)];
         label.tag = LabelTag;
         label.textAlignment = NSTextAlignmentCenter;
-        label.textColor = ExampleApp::Helpers::ColorPalette::DarkGreyTone;
+        label.textColor = ExampleApp::Helpers::ColorPalette::UiTextCopyColor;
         label.autoresizingMask = UIViewAutoresizingFlexibleHeight;
         [cell.contentView addSubview:label];
         
         cell.backgroundView = [[UIImageView alloc] initWithImage:[ [UIImage imageNamed:@"place_pin_background"] stretchableImageWithLeftCapWidth:0.0 topCapHeight:0.0] ];
         UIView *selectedColorView = [[UIView alloc] init];
-        selectedColorView.backgroundColor = ExampleApp::Helpers::ColorPalette::LightGreyTone;
+        selectedColorView.backgroundColor = ExampleApp::Helpers::ColorPalette::TableCellHighlightColor;
         [cell setSelectedBackgroundView:selectedColorView];
         
     }

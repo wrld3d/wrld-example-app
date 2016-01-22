@@ -392,8 +392,8 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
 - (void) setCellInfo:(CustomTableViewCell*)cell :(bool)isHeader :(bool)hasSeparator
 {
     [cell setInfo :hasSeparator
-                  :ExampleApp::Helpers::ColorPalette::BorderHudColor
-                  :isHeader ? ExampleApp::Helpers::ColorPalette::BorderHudColor : ExampleApp::Helpers::ColorPalette::MainHudColor
+                  :ExampleApp::Helpers::ColorPalette::UiBorderColor
+                  :isHeader ? ExampleApp::Helpers::ColorPalette::UiBorderColor : ExampleApp::Helpers::ColorPalette::UiBackgroundColor
                   :isHeader ? ExampleApp::Helpers::ColorPalette::TableHeaderPressColor : ExampleApp::Helpers::ColorPalette::TableSubCellPressColor];
 }
 

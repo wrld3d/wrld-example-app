@@ -217,7 +217,7 @@ static NSString *CellIdentifier = @"searchCell";
 - (void) setCellInfo:(CustomTableViewCell*)cell
 {
     [cell setInfo :false
-                  :ExampleApp::Helpers::ColorPalette::BorderHudColor
+                  :ExampleApp::Helpers::ColorPalette::UiBorderColor
                   :ExampleApp::Helpers::ColorPalette::TableSearchCellColor
                   :ExampleApp::Helpers::ColorPalette::TableSubCellPressColor];
 }

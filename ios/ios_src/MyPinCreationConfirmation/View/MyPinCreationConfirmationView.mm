@@ -66,7 +66,7 @@
         self.pTitleBarText.font = [UIFont systemFontOfSize:13.0f];
         self.pTitleBarText.text = @"Drag the marker to place your pin";
         self.pTitleBarText.textAlignment = NSTextAlignmentCenter;
-        self.pTitleBarText.textColor = ExampleApp::Helpers::ColorPalette::DarkGreyTone;
+        self.pTitleBarText.textColor = ExampleApp::Helpers::ColorPalette::UiTextCopyColor;
         
         [self.pMainSection addSubview: self.pTitleBarText];
         [self addSubview: self.pMainSection];

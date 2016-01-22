@@ -18,16 +18,16 @@
     if(self)
     {
         self.pDarkBackgroundPanel = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pDarkBackgroundPanel.backgroundColor = ExampleApp::Helpers::ColorPalette::BlackTone;
+        self.pDarkBackgroundPanel.backgroundColor = ExampleApp::Helpers::ColorPalette::ModalBackgroundColor;
         self.pDarkBackgroundPanel.alpha = 0.4f;
         [self addSubview: self.pDarkBackgroundPanel];
         
         self.pControlContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pControlContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::GoldTone;
+        self.pControlContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
         [self addSubview: self.pControlContainer];
         
         self.pOptionButtonsContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pOptionButtonsContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::GoldTone;
+        self.pOptionButtonsContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
         [self.pControlContainer addSubview: self.pOptionButtonsContainer];
         
         self.pCloseButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
@@ -41,11 +41,11 @@
         [self.pOptionButtonsContainer addSubview: self.pConfirmButton];
         
         self.pContentContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pContentContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::WhiteTone;
+        self.pContentContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
         [self.pControlContainer addSubview: self.pContentContainer];
         
         self.pMessageContent = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pMessageContent.textColor = ExampleApp::Helpers::ColorPalette::BlackTone;
+        self.pMessageContent.textColor = ExampleApp::Helpers::ColorPalette::UiTextCopyColor;
         self.pMessageContent.numberOfLines = 0;
         [self.pContentContainer addSubview: self.pMessageContent];
         
@@ -55,11 +55,11 @@
         [self.pContentContainer addSubview: self.pSpinner];
         
         self.pHeadlineContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pHeadlineContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::WhiteTone;
+        self.pHeadlineContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
         [self.pControlContainer addSubview: self.pHeadlineContainer];
         
         self.pTitleLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pTitleLabel.textColor = ExampleApp::Helpers::ColorPalette::GoldTone;
+        self.pTitleLabel.textColor = ExampleApp::Helpers::ColorPalette::UiTextTitleColor;
         [self.pHeadlineContainer addSubview: self.pTitleLabel];
         
         [self setTouchExclusivity:self];

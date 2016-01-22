@@ -17,7 +17,7 @@
         m_pixelScale = 1.f;
         m_screenWidth = width/pixelScale;
         m_screenHeight = height/pixelScale;
-        m_gpsIndicatorColour = ExampleApp::Helpers::ColorPalette::WhiteTone;
+        m_gpsIndicatorColour = ExampleApp::Helpers::ColorPalette::CompassControlColor;
 
         //control positioning
         m_width = 80.f;

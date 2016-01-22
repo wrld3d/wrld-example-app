@@ -30,11 +30,11 @@
         m_maxContentSize = 0.f;
         
         self.pControlContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pControlContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::MainHudColor;
+        self.pControlContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
         [self addSubview: self.pControlContainer];
 
         self.pCloseButtonContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pCloseButtonContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::GoldTone;
+        self.pCloseButtonContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
         [self.pControlContainer addSubview: self.pCloseButtonContainer];
 
         self.pCloseButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
@@ -50,41 +50,40 @@
         [self.pCloseButtonContainer addSubview: self.pRemovePinButton];
 
         self.pContentContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pContentContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::WhiteTone;
+        self.pContentContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
         [self.pControlContainer addSubview: self.pContentContainer];
 
         self.pHeadlineContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pHeadlineContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::MainHudColor;
+        self.pHeadlineContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
         [self.pControlContainer addSubview: self.pHeadlineContainer];
 
         self.pIconContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         [self.pHeadlineContainer addSubview: self.pIconContainer];
 
-        self.pTitleLabel = [self createLabel :ExampleApp::Helpers::ColorPalette::MainHudColor :ExampleApp::Helpers::ColorPalette::WhiteTone];
-        self.pTitleLabel.textColor = ExampleApp::Helpers::ColorPalette::GoldTone;
+        self.pTitleLabel = [self createLabel :ExampleApp::Helpers::ColorPalette::UiTextTitleColor :ExampleApp::Helpers::ColorPalette::UiBackgroundColor];
         [self.pHeadlineContainer addSubview: self.pTitleLabel];
 
         self.pLabelsContainer = [[[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pLabelsContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::WhiteTone;
+        self.pLabelsContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
         [self.pContentContainer addSubview: self.pLabelsContainer];
 
         self.pDescriptionHeaderContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pDescriptionHeaderContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::GoldTone;
+        self.pDescriptionHeaderContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
         [self.pLabelsContainer addSubview: self.pDescriptionHeaderContainer];
 
-        self.pDescriptionHeaderLabel = [self createLabel :ExampleApp::Helpers::ColorPalette::WhiteTone :ExampleApp::Helpers::ColorPalette::GoldTone];
+        self.pDescriptionHeaderLabel = [self createLabel :ExampleApp::Helpers::ColorPalette::UiTextHeaderColor :ExampleApp::Helpers::ColorPalette::UiBorderColor];
         [self.pDescriptionHeaderContainer addSubview: self.pDescriptionHeaderLabel];
 
         self.pDescriptionContent = [[[UILabel alloc] initWithFrame: CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pDescriptionContent.textColor = ExampleApp::Helpers::ColorPalette::DarkGreyTone;
+        self.pDescriptionContent.textColor = ExampleApp::Helpers::ColorPalette::UiTextCopyColor;
         [self.pLabelsContainer addSubview: self.pDescriptionContent];
 
         self.pImageHeaderContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pImageHeaderContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::GoldTone;
+        self.pImageHeaderContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
 
         [self.pLabelsContainer addSubview: self.pImageHeaderContainer];
 
-        self.pImageHeaderLabel = [self createLabel :ExampleApp::Helpers::ColorPalette::WhiteTone :ExampleApp::Helpers::ColorPalette::GoldTone];
+        self.pImageHeaderLabel = [self createLabel :ExampleApp::Helpers::ColorPalette::UiTextHeaderColor :ExampleApp::Helpers::ColorPalette::UiBorderColor];
         [self.pImageHeaderContainer addSubview: self.pImageHeaderLabel];
 
         self.pImageContent = [[[UIImageView alloc] initWithFrame: CGRectMake(0, 0, 0, 0)] autorelease];
