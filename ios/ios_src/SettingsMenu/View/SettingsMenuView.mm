@@ -179,7 +179,7 @@
 
     ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pDragTab, "settings_gear", ExampleApp::Helpers::ImageHelpers::Centre);
     
-    self.frame = CGRectZero;
+    self.frame = CGRectMake(0, 0, m_screenWidth, m_screenHeight);
 }
 
 - (void)dealloc

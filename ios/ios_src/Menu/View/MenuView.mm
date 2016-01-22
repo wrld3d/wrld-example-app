@@ -484,33 +484,15 @@ enum MenuState
     m_pInterop->HandleDraggingViewCompleted();
 }
 
-- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event
-{
-    return NO;
-}
-
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
 {
     if (self.hidden || !self.userInteractionEnabled || self.alpha < 0.01 || ![self canInteract])
     {
         return nil;
     }
-
-    __block UIView *hitView = nil;
-
-    [self.subviews enumerateObjectsUsingBlock:^(UIView *obj, NSUInteger idx, BOOL *stop)
-    {
-
-        CGPoint thePoint = [self convertPoint:point toView:obj];
-        UIView *theSubHitView = [obj hitTest:thePoint withEvent:event];
-
-        if (theSubHitView != nil)
-        {
-            hitView = theSubHitView;
-            *stop = YES;
-        }
-    }];
-
+    
+    UIView *hitView = [super hitTest:point withEvent:event];
+    if (hitView == self) return nil;
     return hitView;
 }
 

@@ -381,7 +381,7 @@
     
     ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pDragTab, "search_magglass", ExampleApp::Helpers::ImageHelpers::Centre);
     
-    self.frame = CGRectZero;
+    self.frame = CGRectMake(0, 0, m_screenWidth, m_screenHeight);
     
     self.pInputDelegate = [[[SearchMenuInputDelegate alloc] initWithTextField:self.pSearchEditBox
                                                                   clearButton:self.pSearchEditBoxClearButton
