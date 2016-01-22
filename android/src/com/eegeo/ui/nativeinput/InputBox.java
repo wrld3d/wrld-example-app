@@ -19,7 +19,7 @@ public class InputBox
     private static String ms_text = "";
     private static AlertDialog m_inputBox = null;
 
-    public native static void callback(int ptr);
+    public native static void callback(long ptr);
 
     public static void close()
     {
@@ -37,7 +37,7 @@ public class InputBox
         final String button,
         final String intitialContent,
         final boolean initialContentIsPlaceholder,
-        final int ptr)
+        final long ptr)
     {
         try
         {

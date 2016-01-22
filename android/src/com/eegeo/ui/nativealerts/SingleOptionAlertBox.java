@@ -11,7 +11,7 @@ public class SingleOptionAlertBox
 {
     private static AlertDialog m_inputBox = null;
 
-    public native static void callback(int ptr);
+    public native static void callback(long ptr);
 
     public static void close()
     {
@@ -26,7 +26,7 @@ public class SingleOptionAlertBox
         final Activity a,
         final String title,
         final String message,
-        final int ptr)
+        final long ptr)
     {
         try
         {
