@@ -64,6 +64,16 @@
 		1842ECF51C32A39D00E4C17B /* ViewAnimatorBase.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1842ECF31C32A39D00E4C17B /* ViewAnimatorBase.mm */; };
 		1842ECFF1C3424FE00E4C17B /* ViewSizeAnimator.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1842ECFE1C3424FE00E4C17B /* ViewSizeAnimator.mm */; };
 		1842ED001C3424FE00E4C17B /* ViewSizeAnimator.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1842ECFE1C3424FE00E4C17B /* ViewSizeAnimator.mm */; };
+		184E28C01C5248D100E54399 /* SurveyObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 184E28BE1C5248D100E54399 /* SurveyObserver.cpp */; };
+		184E28C11C5248D100E54399 /* SurveyObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 184E28BE1C5248D100E54399 /* SurveyObserver.cpp */; };
+		184E28C61C525EFD00E54399 /* SurveyModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 184E28C41C525EFD00E54399 /* SurveyModule.cpp */; };
+		184E28C71C525EFD00E54399 /* SurveyModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 184E28C41C525EFD00E54399 /* SurveyModule.cpp */; };
+		184E28D11C526E1100E54399 /* SurveyViewInterop.mm in Sources */ = {isa = PBXBuildFile; fileRef = 184E28CF1C526E1100E54399 /* SurveyViewInterop.mm */; };
+		184E28D21C526E1100E54399 /* SurveyViewInterop.mm in Sources */ = {isa = PBXBuildFile; fileRef = 184E28CF1C526E1100E54399 /* SurveyViewInterop.mm */; };
+		184E28D61C52768000E54399 /* SurveyAlertViewHandler.mm in Sources */ = {isa = PBXBuildFile; fileRef = 184E28D41C52768000E54399 /* SurveyAlertViewHandler.mm */; };
+		184E28D71C52768000E54399 /* SurveyAlertViewHandler.mm in Sources */ = {isa = PBXBuildFile; fileRef = 184E28D41C52768000E54399 /* SurveyAlertViewHandler.mm */; };
+		184E28DA1C527E2F00E54399 /* SurveyViewModule.mm in Sources */ = {isa = PBXBuildFile; fileRef = 184E28D81C527E2F00E54399 /* SurveyViewModule.mm */; };
+		184E28DB1C527E2F00E54399 /* SurveyViewModule.mm in Sources */ = {isa = PBXBuildFile; fileRef = 184E28D81C527E2F00E54399 /* SurveyViewModule.mm */; };
 		185145901AB0A8DC0071913E /* SplashScreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 1851458D1AB0A8DC0071913E /* SplashScreen.png */; };
 		185145911AB0A8DC0071913E /* SplashScreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 1851458D1AB0A8DC0071913E /* SplashScreen.png */; };
 		185145921AB0A8DC0071913E /* SplashScreen@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1851458E1AB0A8DC0071913E /* SplashScreen@2x.png */; };
@@ -1669,6 +1679,21 @@
 		1842ECFC1C32E96600E4C17B /* IEasingCurve.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IEasingCurve.h; sourceTree = "<group>"; };
 		1842ECFD1C3424FE00E4C17B /* ViewSizeAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewSizeAnimator.h; sourceTree = "<group>"; };
 		1842ECFE1C3424FE00E4C17B /* ViewSizeAnimator.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewSizeAnimator.mm; sourceTree = "<group>"; };
+		184E28BE1C5248D100E54399 /* SurveyObserver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SurveyObserver.cpp; sourceTree = "<group>"; };
+		184E28BF1C5248D100E54399 /* SurveyObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SurveyObserver.h; sourceTree = "<group>"; };
+		184E28C21C525E3000E54399 /* ISurveyModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISurveyModule.h; sourceTree = "<group>"; };
+		184E28C31C525E9000E54399 /* Surveys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Surveys.h; sourceTree = "<group>"; };
+		184E28C41C525EFD00E54399 /* SurveyModule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SurveyModule.cpp; sourceTree = "<group>"; };
+		184E28C51C525EFD00E54399 /* SurveyModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SurveyModule.h; sourceTree = "<group>"; };
+		184E28CA1C526B3B00E54399 /* StartUxSurveyMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StartUxSurveyMessage.h; sourceTree = "<group>"; };
+		184E28CB1C526B6700E54399 /* StartSearchSurveyMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StartSearchSurveyMessage.h; sourceTree = "<group>"; };
+		184E28CF1C526E1100E54399 /* SurveyViewInterop.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SurveyViewInterop.mm; sourceTree = "<group>"; };
+		184E28D01C526E1100E54399 /* SurveyViewInterop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SurveyViewInterop.h; sourceTree = "<group>"; };
+		184E28D31C5271B100E54399 /* SurveyViewIncludes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SurveyViewIncludes.h; sourceTree = "<group>"; };
+		184E28D41C52768000E54399 /* SurveyAlertViewHandler.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SurveyAlertViewHandler.mm; sourceTree = "<group>"; };
+		184E28D51C52768000E54399 /* SurveyAlertViewHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SurveyAlertViewHandler.h; sourceTree = "<group>"; };
+		184E28D81C527E2F00E54399 /* SurveyViewModule.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SurveyViewModule.mm; sourceTree = "<group>"; };
+		184E28D91C527E2F00E54399 /* SurveyViewModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SurveyViewModule.h; sourceTree = "<group>"; };
 		1851458D1AB0A8DC0071913E /* SplashScreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = SplashScreen.png; path = SplashScreen/SplashScreen.png; sourceTree = "<group>"; };
 		1851458E1AB0A8DC0071913E /* SplashScreen@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "SplashScreen@2x.png"; path = "SplashScreen/SplashScreen@2x.png"; sourceTree = "<group>"; };
 		1851458F1AB0A8DC0071913E /* SplashScreen@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "SplashScreen@3x.png"; path = "SplashScreen/SplashScreen@3x.png"; sourceTree = "<group>"; };
@@ -1952,6 +1977,7 @@
 		18EC014D1AA8BA7E00902E98 /* search_results_close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = search_results_close.png; sourceTree = "<group>"; };
 		18EC01541AA8C8A500902E98 /* compass.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = compass.png; sourceTree = "<group>"; };
 		18EC01551AA8C8A500902E98 /* CompassPoint.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CompassPoint.png; sourceTree = "<group>"; };
+		18F0E9CB1C528E0E00067F09 /* ISurveyViewModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISurveyViewModule.h; sourceTree = "<group>"; };
 		18F4F41A1C47CCB600FFB959 /* LinkOutObserver.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LinkOutObserver.mm; sourceTree = "<group>"; };
 		18F4F41B1C47CCB600FFB959 /* LinkOutObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinkOutObserver.h; sourceTree = "<group>"; };
 		18FB641E1A9235BB005A9411 /* Yelp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Yelp.h; sourceTree = "<group>"; };
@@ -3390,6 +3416,7 @@
 				7E3B88321A385A290023C94E /* SearchResultPoi */,
 				18D1DB121C1ADEB300D319BB /* SettingsMenu */,
 				2797889D1C087D1A0053CD00 /* Social */,
+				184E28BC1C5247FF00E54399 /* Surveys */,
 				BFD5FCD01BA706AD00F591F1 /* Tours */,
 				279788C71C0896FB0053CD00 /* URLRequest */,
 				27E935F61BE12816007D52C5 /* UserInteraction */,
@@ -3453,6 +3480,52 @@
 				1842ECFC1C32E96600E4C17B /* IEasingCurve.h */,
 			);
 			path = Easing;
+			sourceTree = "<group>";
+		};
+		184E28BC1C5247FF00E54399 /* Surveys */ = {
+			isa = PBXGroup;
+			children = (
+				184E28BD1C5247FF00E54399 /* SdkModel */,
+				184E28CB1C526B6700E54399 /* StartSearchSurveyMessage.h */,
+				184E28CA1C526B3B00E54399 /* StartUxSurveyMessage.h */,
+				184E28C31C525E9000E54399 /* Surveys.h */,
+			);
+			path = Surveys;
+			sourceTree = "<group>";
+		};
+		184E28BD1C5247FF00E54399 /* SdkModel */ = {
+			isa = PBXGroup;
+			children = (
+				184E28C21C525E3000E54399 /* ISurveyModule.h */,
+				184E28C41C525EFD00E54399 /* SurveyModule.cpp */,
+				184E28C51C525EFD00E54399 /* SurveyModule.h */,
+				184E28BE1C5248D100E54399 /* SurveyObserver.cpp */,
+				184E28BF1C5248D100E54399 /* SurveyObserver.h */,
+			);
+			path = SdkModel;
+			sourceTree = "<group>";
+		};
+		184E28CC1C526D5C00E54399 /* Surveys */ = {
+			isa = PBXGroup;
+			children = (
+				184E28CD1C526D6E00E54399 /* View */,
+			);
+			path = Surveys;
+			sourceTree = "<group>";
+		};
+		184E28CD1C526D6E00E54399 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				18F0E9CB1C528E0E00067F09 /* ISurveyViewModule.h */,
+				184E28D51C52768000E54399 /* SurveyAlertViewHandler.h */,
+				184E28D41C52768000E54399 /* SurveyAlertViewHandler.mm */,
+				184E28D31C5271B100E54399 /* SurveyViewIncludes.h */,
+				184E28D01C526E1100E54399 /* SurveyViewInterop.h */,
+				184E28CF1C526E1100E54399 /* SurveyViewInterop.mm */,
+				184E28D91C527E2F00E54399 /* SurveyViewModule.h */,
+				184E28D81C527E2F00E54399 /* SurveyViewModule.mm */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		186B47011AB1D46B0084E80B /* Watermark */ = {
@@ -5399,6 +5472,7 @@
 				7E3B8A951A385F100023C94E /* SearchResultMenu */,
 				7E3B8AA01A385F110023C94E /* SearchResultPoi */,
 				18D1DB2C1C1AE35000D319BB /* SettingsMenu */,
+				184E28CC1C526D5C00E54399 /* Surveys */,
 				BFD5FC8A1BA7068300F591F1 /* Tours */,
 				279788CC1C08975C0053CD00 /* URLRequest */,
 				7E3B8AB61A385F110023C94E /* ViewController.h */,
@@ -7424,6 +7498,7 @@
 				BFD5FD631BA706AD00F591F1 /* TourActiveStateChangedMessage.cpp in Sources */,
 				7E3B89F11A385A290023C94E /* WorldAreaLoaderModule.cpp in Sources */,
 				7E3B8A011A385A290023C94E /* WorldPinsService.cpp in Sources */,
+				184E28DB1C527E2F00E54399 /* SurveyViewModule.mm in Sources */,
 				7E3B8ACA1A385F110023C94E /* AboutPageViewModule.mm in Sources */,
 				18C0EC051A9E1240008EED21 /* MyPinBoundObjectFactory.cpp in Sources */,
 				27DB89BA1BB3FEF00020CDA5 /* CombinedSearchServiceModule.cpp in Sources */,
@@ -7460,6 +7535,7 @@
 				18E102941A8BA63C0011A18C /* SearchResultIconCategoryMapper.cpp in Sources */,
 				18E1027B1A8B64470011A18C /* SerializeSearchResultModelToJson.cpp in Sources */,
 				7E3B89CD1A385A290023C94E /* SearchResultPoiController.cpp in Sources */,
+				184E28D21C526E1100E54399 /* SurveyViewInterop.mm in Sources */,
 				7E67322A1BC3D7FB002A31FD /* InteriorWorldPinController.cpp in Sources */,
 				7E3B899B1A385A290023C94E /* SearchQueryRemovedMessage.cpp in Sources */,
 				18B44CF11A88D4B400FDFD8A /* CacheClearBackgroundTask.cpp in Sources */,
@@ -7627,6 +7703,7 @@
 				7E3B89871A385A290023C94E /* ScreenControlViewModelBase.cpp in Sources */,
 				1842ECF11C2C3C9C00E4C17B /* ViewAlphaAnimator.mm in Sources */,
 				18FB645F1A9240FC005A9411 /* OACall.m in Sources */,
+				184E28C11C5248D100E54399 /* SurveyObserver.cpp in Sources */,
 				186B47261AB1DD5C0084E80B /* WatermarkViewModule.mm in Sources */,
 				BFD5FD791BA706AD00F591F1 /* TourFullScreenImageCeremonyBeganObserver.cpp in Sources */,
 				18FB64591A9240FC005A9411 /* Base64Transcoder.c in Sources */,
@@ -7730,6 +7807,7 @@
 				7E3B8AEA1A385F110023C94E /* iOSInitialExperienceModule.cpp in Sources */,
 				BFD5FD8C1BA708E100F591F1 /* UIImage+FX.m in Sources */,
 				18FB64B21A94D504005A9411 /* SearchResultPoiViewImageFetcher.cpp in Sources */,
+				184E28C71C525EFD00E54399 /* SurveyModule.cpp in Sources */,
 				27DB89DB1BB3FF170020CDA5 /* GeoNamesSearchQuery.cpp in Sources */,
 				7E3B89FD1A385A290023C94E /* WorldPinsModule.cpp in Sources */,
 				18C0EC0A1A9E147C008EED21 /* SearchResultPinBoundObject.cpp in Sources */,
@@ -7763,6 +7841,7 @@
 				7E3B89A91A385A290023C94E /* SearchResultAddedMessage.cpp in Sources */,
 				7E3B89151A385A290023C94E /* PoiRingController.cpp in Sources */,
 				7E3B895B1A385A290023C94E /* MyPinSelectionHandlerFactory.cpp in Sources */,
+				184E28D71C52768000E54399 /* SurveyAlertViewHandler.mm in Sources */,
 				7E3B89AF1A385A290023C94E /* SearchResultViewClearedMessage.cpp in Sources */,
 				7E3B89CB1A385A290023C94E /* SearchResultOnMapItemModelSelectedObserver.cpp in Sources */,
 				18AAF0301C3C189400A8BAAC /* SearchResultsTableDataProvider.mm in Sources */,
@@ -7923,6 +8002,7 @@
 				BFD5FD621BA706AD00F591F1 /* TourActiveStateChangedMessage.cpp in Sources */,
 				7E3B89F01A385A290023C94E /* WorldAreaLoaderModule.cpp in Sources */,
 				7E3B8A001A385A290023C94E /* WorldPinsService.cpp in Sources */,
+				184E28DA1C527E2F00E54399 /* SurveyViewModule.mm in Sources */,
 				7E3B8AC91A385F110023C94E /* AboutPageViewModule.mm in Sources */,
 				18C0EC041A9E1240008EED21 /* MyPinBoundObjectFactory.cpp in Sources */,
 				27DB89B91BB3FEF00020CDA5 /* CombinedSearchServiceModule.cpp in Sources */,
@@ -7959,6 +8039,7 @@
 				18E102931A8BA63C0011A18C /* SearchResultIconCategoryMapper.cpp in Sources */,
 				18E1027A1A8B64470011A18C /* SerializeSearchResultModelToJson.cpp in Sources */,
 				7E3B89CC1A385A290023C94E /* SearchResultPoiController.cpp in Sources */,
+				184E28D11C526E1100E54399 /* SurveyViewInterop.mm in Sources */,
 				7E6732291BC3D7FB002A31FD /* InteriorWorldPinController.cpp in Sources */,
 				7E3B899A1A385A290023C94E /* SearchQueryRemovedMessage.cpp in Sources */,
 				18B44CF01A88D4B400FDFD8A /* CacheClearBackgroundTask.cpp in Sources */,
@@ -8126,6 +8207,7 @@
 				BFD5FD3A1BA706AD00F591F1 /* ActiveTourQuitSelectedMessageHandler.cpp in Sources */,
 				7E5811CF1B1F3248007AD67F /* InteriorsExplorerViewModule.mm in Sources */,
 				7E3B88FC1A385A290023C94E /* MenuViewModel.cpp in Sources */,
+				184E28C01C5248D100E54399 /* SurveyObserver.cpp in Sources */,
 				18A6575D1A9F6A8E00238F33 /* MyPinVisibilityStateChangedHandler.cpp in Sources */,
 				1842ECF01C2C3C9C00E4C17B /* ViewAlphaAnimator.mm in Sources */,
 				7E3B89861A385A290023C94E /* ScreenControlViewModelBase.cpp in Sources */,
@@ -8229,6 +8311,7 @@
 				BFD5FD8B1BA708E100F591F1 /* UIImage+FX.m in Sources */,
 				7E3B8AE91A385F110023C94E /* iOSInitialExperienceModule.cpp in Sources */,
 				27DB89DA1BB3FF170020CDA5 /* GeoNamesSearchQuery.cpp in Sources */,
+				184E28C61C525EFD00E54399 /* SurveyModule.cpp in Sources */,
 				18C0EC091A9E147C008EED21 /* SearchResultPinBoundObject.cpp in Sources */,
 				7E3B89FC1A385A290023C94E /* WorldPinsModule.cpp in Sources */,
 				7E3B89E21A385A290023C94E /* WeatherMenuModule.cpp in Sources */,
@@ -8262,6 +8345,7 @@
 				7E3B89A81A385A290023C94E /* SearchResultAddedMessage.cpp in Sources */,
 				7E3B89141A385A290023C94E /* PoiRingController.cpp in Sources */,
 				7E3B895A1A385A290023C94E /* MyPinSelectionHandlerFactory.cpp in Sources */,
+				184E28D61C52768000E54399 /* SurveyAlertViewHandler.mm in Sources */,
 				7E3B89AE1A385A290023C94E /* SearchResultViewClearedMessage.cpp in Sources */,
 				7E3B89CA1A385A290023C94E /* SearchResultOnMapItemModelSelectedObserver.cpp in Sources */,
 				18AAF02F1C3C189400A8BAAC /* SearchResultsTableDataProvider.mm in Sources */,

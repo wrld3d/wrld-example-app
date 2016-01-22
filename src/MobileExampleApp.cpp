@@ -91,7 +91,8 @@
 #include "SceneModelsModule.h"
 #include "VisualMapModule.h"
 #include "ConnectivityChangedObserver.h"
-
+#include "SurveyModule.h"
+#include "SurveyObserver.h"
 
 namespace ExampleApp
 {
@@ -198,6 +199,7 @@ namespace ExampleApp
         , m_pTwitterFeedModule(NULL)
         , m_pTwitterFeedTourModule(NULL)
         , m_pVisualMapModule(NULL)
+        , m_pSurveyModule(NULL)
         , m_pConnectivityChangedObserver(NULL)
         , m_toursPinDiameter(48.f)
         , m_enableTours(false)
@@ -385,6 +387,11 @@ namespace ExampleApp
         m_pVisualMapModule = Eegeo_NEW(VisualMap::SdkModel::VisualMapModule)(cityThemesModule.GetCityThemesService(),
                                                                              cityThemesModule.GetCityThemesUpdater(),
                                                                              mapModule.GetEnvironmentFlatteningService());
+        
+        m_pSurveyModule = Eegeo_NEW(Surveys::SdkModel::SurveyModule)(m_messageBus,
+                                                                     m_persistentSettings);
+        
+        m_pSurveyModule->GetSurveyObserver().OnStartup();
 
         m_pWeatherMenuModule = Eegeo_NEW(ExampleApp::WeatherMenu::SdkModel::WeatherMenuModule)(m_platformAbstractions.GetFileIO(),
                                                                                                m_pVisualMapModule->GetVisualMapService(),
@@ -616,6 +623,8 @@ namespace ExampleApp
         Eegeo_DELETE m_pCategorySearchModule;
         
         Eegeo_DELETE m_pSettingsMenuModule;
+        
+        Eegeo_DELETE m_pSurveyModule;
 
         Eegeo_DELETE m_pVisualMapModule;
         

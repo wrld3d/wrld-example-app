@@ -83,7 +83,7 @@
 #include "TwitterFeed.h"
 #include "TwitterFeedTour.h"
 #include "VisualMap.h"
-
+#include "Surveys.h"
 
 namespace ExampleApp
 {
@@ -155,6 +155,7 @@ namespace ExampleApp
         UserInteraction::SdkModel::UserInteractionModule* m_pUserInteractionModule;
         Social::TwitterFeed::ITwitterFeedModule* m_pTwitterFeedModule;
         VisualMap::SdkModel::IVisualMapModule* m_pVisualMapModule;
+        Surveys::SdkModel::ISurveyModule* m_pSurveyModule;
         
         AppModes::SdkModel::IAppModeModel* m_pAppModeModel;
         Net::SdkModel::ConnectivityChangedObserver* m_pConnectivityChangedObserver;

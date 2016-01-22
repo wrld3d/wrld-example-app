@@ -56,6 +56,7 @@
 #include "UserInteraction.h"
 #include "LinkOutObserver.h"
 #include "URLRequestHandler.h"
+#include "SurveyViewIncludes.h"
 
 @class ViewController;
 class AppInputDelegate;
@@ -132,9 +133,9 @@ private:
     std::map<std::string,ExampleApp::Search::SdkModel::ISearchServiceModule*> m_searchServiceModules;
     ExampleApp::Metrics::iOSFlurryMetricsService& m_iOSFlurryMetricsService;
     ExampleApp::InteriorsExplorer::View::IInteriorsExplorerViewModule* m_pInteriorsExplorerViewModule;
-    
     ExampleApp::LinkOutObserver::LinkOutObserver* m_pLinkOutObserver;
     ExampleApp::URLRequest::View::URLRequestHandler* m_pURLRequestHandler;
+    ExampleApp::Surveys::View::ISurveyViewModule* m_pSurveyViewModule;
     
     ImageStore* m_pImageStore;
     

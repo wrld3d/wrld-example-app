@@ -40,6 +40,8 @@
 #include "URLRequestedMessage.h"
 #include "DeeplinkURLRequestedMessage.h"
 #include "ConnectivityChangedViewMessage.h"
+#include "StartSearchSurveyMessage.h"
+#include "StartUxSurveyMessage.h"
 
 namespace ExampleApp
 {
@@ -82,6 +84,8 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<URLRequest::URLRequestedMessage>
             , public Eegeo::Messaging::CatalogBinding<URLRequest::DeeplinkURLRequestedMessage>
             , public Eegeo::Messaging::CatalogBinding<Net::ConnectivityChangedViewMessage>
+            , public Eegeo::Messaging::CatalogBinding<Surveys::StartSearchSurveyMessage>
+            , public Eegeo::Messaging::CatalogBinding<Surveys::StartUxSurveyMessage>
             , private Eegeo::NonCopyable
         {
 
