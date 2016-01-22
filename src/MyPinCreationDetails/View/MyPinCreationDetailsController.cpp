@@ -5,6 +5,7 @@
 #include "IMyPinCreationDetailsViewModel.h"
 #include "MyPinCreationViewStateChangedMessage.h"
 #include "MyPinCreationViewSavePinMessage.h"
+#include "ConnectivityChangedViewMessage.h"
 #include <string>
 
 namespace ExampleApp
@@ -16,14 +17,12 @@ namespace ExampleApp
             MyPinCreationDetailsController::MyPinCreationDetailsController(
                 IMyPinCreationDetailsView& view,
                 IMyPinCreationDetailsViewModel& viewModel,
-                Eegeo::Web::IConnectivityService& connectivityService,
                 ExampleAppMessaging::TMessageBus& messageBus,
                 Metrics::IMetricsService& metricsService
             )
                 : m_view(view)
                 , m_viewModel(viewModel)
                 , m_messageBus(messageBus)
-                , m_connectivityService(connectivityService)
                 , m_metricsService(metricsService)
                 , m_viewConfirmedCallback(this, &MyPinCreationDetailsController::OnConfirmed)
                 , m_viewDismissedCallback(this, &MyPinCreationDetailsController::OnDismissed)
@@ -37,14 +36,12 @@ namespace ExampleApp
                 m_view.InsertConfirmedCallback(m_viewConfirmedCallback);
                 m_view.InsertDismissedCallback(m_viewDismissedCallback);
 
-                m_connectivityService.RegisterConnectivityChangedCallback(m_networkStateChangeCallback);
-
-                OnNetworkStateChanged(m_connectivityService.HasConnectivity());
+                m_messageBus.SubscribeUi(m_networkStateChangeCallback);
             }
 
             MyPinCreationDetailsController::~MyPinCreationDetailsController()
             {
-                m_connectivityService.UnregisterConnectivityChangedCallback(m_networkStateChangeCallback);
+                m_messageBus.UnsubscribeUi(m_networkStateChangeCallback);
 
                 m_viewModel.RemoveClosedCallback(m_viewModelClosedCallback);
                 m_viewModel.RemoveOpenedCallback(m_viewModelOpenedCallback);
@@ -99,9 +96,9 @@ namespace ExampleApp
                 m_viewModel.Close();
             }
 
-            void MyPinCreationDetailsController::OnNetworkStateChanged(const bool &hasConnectivity)
+            void MyPinCreationDetailsController::OnNetworkStateChanged(const Net::ConnectivityChangedViewMessage& connectivityChangedMessage)
             {
-                m_view.ConnectivityChanged(hasConnectivity, m_viewModel.IsOpen());
+                m_view.ConnectivityChanged(connectivityChangedMessage.IsConnected(), m_viewModel.IsOpen());
             }
         }
     }

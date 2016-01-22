@@ -2013,6 +2013,9 @@
     <ClCompile Include="..\..\..\src\VisualMap\SdkModel\VisualMapStateHistory.cpp">
       <Filter>Source Files\App\VisualMap\SdkModel</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\Net\SdkModel\ConnectivityChangedObserver.cpp">
+      <Filter>Source Files\App\Net\SdkModel</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\AppHost.h">
@@ -4369,6 +4372,12 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\VisualMap\VisualMap.h">
       <Filter>Source Files\App\VisualMap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Net\SdkModel\ConnectivityChangedObserver.h">
+      <Filter>Source Files\App\Net\SdkModel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Net\ConnectivityChangedViewMessage.h">
+      <Filter>Source Files\App\Net</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

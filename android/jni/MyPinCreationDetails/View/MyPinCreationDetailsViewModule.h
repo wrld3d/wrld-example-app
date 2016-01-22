@@ -28,7 +28,6 @@ namespace ExampleApp
                 MyPinCreationDetailsViewModule(
                     AndroidNativeState& nativeState,
                     MyPinCreationDetails::View::IMyPinCreationDetailsViewModel& viewModel,
-                    Eegeo::Web::IConnectivityService& connectivityService,
                     ExampleAppMessaging::TMessageBus& messageBus,
                     Metrics::IMetricsService& metricsService
                 );

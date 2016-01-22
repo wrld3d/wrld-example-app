@@ -170,6 +170,7 @@ namespace ExampleApp
         VisualMap::SdkModel::IVisualMapModule* m_pVisualMapModule;
         
         AppModes::SdkModel::IAppModeModel* m_pAppModeModel;
+        Net::SdkModel::ConnectivityChangedObserver* m_pConnectivityChangedObserver;
         
         Tours::IToursModule* m_pToursModule;
         Eegeo::Modules::FireworksModule* m_pFireworksModule;

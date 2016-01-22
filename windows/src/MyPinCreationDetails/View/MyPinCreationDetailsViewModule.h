@@ -28,7 +28,6 @@ namespace ExampleApp
                 MyPinCreationDetailsViewModule(
                     WindowsNativeState& nativeState,
                     MyPinCreationDetails::View::IMyPinCreationDetailsViewModel& viewModel,
-                    Eegeo::Web::IConnectivityService& connectivityService,
                     ExampleAppMessaging::TMessageBus& messageBus,
                     Metrics::IMetricsService& metricsService
                 );

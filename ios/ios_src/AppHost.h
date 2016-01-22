@@ -85,6 +85,10 @@ public:
     void HandleFailureToProvideWorkingApiKey();
     
     void HandleFailureToDownloadBootstrapResources();
+    
+    void HandleNoConnectivityWarning();
+    
+    void HandleInvalidConnectivityError();
 
 private:
     UIView* m_pView;
