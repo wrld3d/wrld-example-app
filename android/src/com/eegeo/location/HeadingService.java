@@ -209,7 +209,7 @@ public class HeadingService implements SensorEventListener
             heading += 180.f;
             break;
         default:
-            heading += 90.f;
+            heading += 270.f;
             break;
         }
 

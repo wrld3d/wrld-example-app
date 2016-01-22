@@ -84,6 +84,8 @@ public:
     void HandleFailureToProvideWorkingApiKey();
 
     void HandleFailureToDownloadBootstrapResources();
+    void HandleNoConnectivityWarning();
+    void HandleInvalidConnectivityError();
 
     void HandleTouchInputEvent(const Eegeo::Windows::Input::TouchInputEvent& event);
     void HandleKeyboardInputEvent(const Eegeo::Windows::Input::KeyboardInputEvent& event);

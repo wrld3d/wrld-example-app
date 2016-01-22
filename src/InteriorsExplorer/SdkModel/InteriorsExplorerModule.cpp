@@ -42,13 +42,12 @@ namespace ExampleApp
                 Eegeo::Camera::GlobeCamera::GlobeCameraControllerConfiguration globeCameraConfig = Eegeo::Camera::GlobeCamera::GlobeCameraControllerConfiguration::CreateDefault(false);
                 
                 globeCameraConfig.terrainFollowingEnabled = false;
-                globeCameraConfig.zoomAltitudeLow = 10.0f;
-                globeCameraConfig.fovZoomedInCity = 45.0f;
-                globeCameraConfig.fovZoomedInGlobe = 90.0f;
-                globeCameraConfig.maxAltitude = 120.0f;
+                globeCameraConfig.zoomAltitudeLow = 50.0f;
+                globeCameraConfig.maxAltitude = 1700.f;
                 globeCameraConfig.computeNearFarPlanes = false;
-                globeCameraConfig.nearPlane = 1.f;
-                globeCameraConfig.farPlane = 5000.f;
+                // near and far multipliers aproximated from cos( 65 ) so should allow for tilt + fov = 65
+                globeCameraConfig.nearPlane = 0.4f * globeCameraConfig.zoomAltitudeLow;
+                globeCameraConfig.farPlane = 2.5f * globeCameraConfig.maxAltitude;
                 
                 m_pGlobeCameraTouchController = globeCameraControllerFactory.CreateTouchController(touchConfig, screenProperties);
                 

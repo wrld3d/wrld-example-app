@@ -21,53 +21,86 @@
 {
     if(self = [super init])
     {
-        [self setAlpha:0.8f];
-
         m_pController = [UIViewController alloc];
         [m_pController setView:self];
         
         m_pixelScale = 1.f;
         m_screenWidth = width/pixelScale;
         m_screenHeight = height/pixelScale;
-
+        
         m_pInterop = new ExampleApp::Watermark::View::WatermarkViewInterop(self);
-        [self addTarget:self action:@selector(onClick:) forControlEvents:UIControlEventTouchUpInside];
-        [self updateWatermarkData: watermarkData];
         
         m_width = 140 * m_pixelScale;
         m_height = 52 * m_pixelScale;
         
+        float xPosition = 0.0f;
         if(ExampleApp::Helpers::UIHelpers::UsePhoneLayout())
         {
             m_yPosActive = (20 * m_pixelScale);
             m_yPosInactive = (-m_height);
             
-            self.frame = CGRectMake(((m_screenWidth * 0.5f) - (m_width * 0.5f)),
-                                    m_yPosInactive,
-                                    m_width,
-                                    m_height);
+            xPosition = ((m_screenWidth * 0.5f) - (m_width * 0.5f));
         }
         else
         {
             m_yPosActive = m_screenHeight - m_height - (8 * m_pixelScale);
             m_yPosInactive = (m_screenWidth + m_height);
             
-            self.frame = CGRectMake(((m_screenWidth) - (m_width) - (8 * m_pixelScale)),
-                                    m_yPosInactive,
-                                    m_width,
-                                    m_height);
+            xPosition = ((m_screenWidth) - (m_width) - (8 * m_pixelScale));
         }
         
+        self.frame = CGRectMake(0,
+                                m_yPosInactive,
+                                m_screenWidth,
+                                m_height);
+        
+        self.pShadowGradient = [[UIView alloc] initWithFrame:CGRectMake(0, 0, m_screenWidth, m_height)];
+        
+        CAGradientLayer *gradient = [CAGradientLayer layer];
+        gradient.frame =  CGRectMake(0, 0.f, m_screenWidth, m_screenHeight - m_yPosActive);
+        
+        UIColor *topColor = [UIColor clearColor];
+        UIColor *bottomColor = [[UIColor blackColor] colorWithAlphaComponent:0.85];
+        
+        gradient.colors = [NSArray arrayWithObjects:(id)[topColor CGColor], (id)[bottomColor CGColor], nil];
+        
+        [self.pShadowGradient.layer insertSublayer:gradient atIndex:0];
+        self.pShadowGradient.layer.shouldRasterize = YES;
+        [self.pShadowGradient setAlpha:0.0];
+        [self addSubview:self.pShadowGradient];
+        
         m_stateChangeAnimationTimeSeconds = 0.2f;
+        self.pButton = [[UIButton alloc] initWithFrame:CGRectMake(xPosition, 0, m_width, m_height)];
+        [self addSubview: self.pButton];
+        
+        [self.pButton addTarget:self action:@selector(onClick:) forControlEvents:UIControlEventTouchUpInside];
+        [self updateWatermarkData: watermarkData];
+        
+        [self.pButton setAlpha:0.8];
+        
+        m_alignAlongBottom = false;
+        
+        
+#ifdef AUTOMATED_SCREENSHOTS
+        // move offscreen
+        m_yPosActive = -10000.f;
+        m_yPosActive = -10000.f;
+#endif
         
         m_alignAlongBottom = false;
     }
-
+    
     return self;
 }
 
 - (void)dealloc
 {
+    [self.pButton removeFromSuperview];
+    [self.pButton release];
+    
+    [self.pShadowGradient removeFromSuperview];
+    [self.pShadowGradient release];
+    
     delete m_pInterop;
     [m_pController release];
     [super dealloc];
@@ -76,7 +109,7 @@
 - (BOOL)consumesTouch:(UITouch *)touch
 {
     CGPoint touchLocation = [touch locationInView:self];
-    return CGRectContainsPoint(self.bounds, touchLocation);
+    return CGRectContainsPoint(self.pButton.frame, touchLocation);
 }
 
 - (void) onClick:(UIButton *)sender
@@ -193,7 +226,7 @@
     m_popupBody = watermarkData.PopupBody();
     m_webUrl = watermarkData.WebUrl();
     m_shouldShowShadow = watermarkData.ShouldShowShadow();
- 
+    
     const std::string& newImageAssetName = watermarkData.ImageAssetName();
     bool shouldTransitionImage = newImageAssetName != m_imageAssetName;
     
@@ -202,7 +235,8 @@
         m_imageAssetName = newImageAssetName;
         [self transitionToNewImage];
     }
-    if(self.frame.origin.y != m_yPosActive && !self.hidden)
+    
+    if((self.frame.origin.y != m_yPosActive && self.frame.origin.y != m_yPosInactive) && !self.hidden)
     {
         [self transitionToNewPosition];
     }
@@ -216,25 +250,36 @@
     CABasicAnimation *crossFade = [CABasicAnimation animationWithKeyPath:@"contents"];
     
     crossFade.duration = 0.2;
-    crossFade.fromValue = (id)self.currentBackgroundImage.CGImage;
+    crossFade.fromValue = (id)self.pButton.currentBackgroundImage.CGImage;
     crossFade.toValue = (id)newImage.CGImage;
     crossFade.removedOnCompletion = NO;
     crossFade.fillMode = kCAFillModeForwards;
-
+    
+    const float  fadeTo = m_shouldShowShadow ? 1.0f : 0.0f;
+    const float fadeDelay = m_alignAlongBottom ? m_stateChangeAnimationTimeSeconds : 0.0f;
+    [UIView animateWithDuration:m_stateChangeAnimationTimeSeconds delay:fadeDelay options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^
+     {
+         [self.pShadowGradient setAlpha:fadeTo];
+     }
+                     completion:^(BOOL finished)
+     {
+     }];
+    
     [CATransaction begin];
     {
         [CATransaction setCompletionBlock: ^
          {
-             [self setBackgroundImage: self.imageView.image forState:UIControlStateNormal];
-             [self setImage: nil forState: UIControlStateNormal];
+             [self.pButton setBackgroundImage: self.pButton.imageView.image forState:UIControlStateNormal];
+             [self.pButton setImage: nil forState: UIControlStateNormal];
          }];
         
-        [self.imageView.layer addAnimation:crossFade forKey:@"animateContents"];
-        [self setImage:newImage forState:UIControlStateNormal];
-        [self setBackgroundImage: nil forState:UIControlStateNormal];
+        [self.pButton.imageView.layer addAnimation:crossFade forKey:@"animateContents"];
+        [self.pButton setImage:newImage forState:UIControlStateNormal];
+        [self.pButton setBackgroundImage: nil forState:UIControlStateNormal];
     }
     
-
+    
     [CATransaction commit];
 }
 
@@ -274,14 +319,15 @@
     {
         m_yPosActive = (20 * m_pixelScale);
         m_yPosInactive = (-m_height);
-        
     }
     else
     {
         m_yPosActive = m_screenHeight - m_height - (8 * m_pixelScale);
         m_yPosInactive = (m_screenHeight + m_height);
     }
+    
+    CALayer* gradient = [self.pShadowGradient.layer.sublayers objectAtIndex:0];
+    gradient.frame = CGRectMake(0, 0.f, m_screenWidth, m_screenHeight - m_yPosActive);
 }
 
 @end
-

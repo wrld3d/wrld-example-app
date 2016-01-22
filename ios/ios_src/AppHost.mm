@@ -359,7 +359,6 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
                                             m_messageBus,
                                             app.MyPinCreationDetailsModule().GetMyPinCreationDetailsViewModel(),
                                             screenProperties,
-                                            *m_piOSConnectivityService,
                                             m_iOSFlurryMetricsService,
                                             &m_viewController);
 
@@ -554,6 +553,20 @@ void AppHost::HandleFailureToDownloadBootstrapResources()
         : "Unable to download required data! Please ensure you have an Internet connection the next time you attempt to run this application.";
 
     m_iOSAlertBoxFactory.CreateSingleOptionAlertBox("Error", message, m_failAlertHandler);
+}
+
+void AppHost::HandleNoConnectivityWarning()
+{
+}
+
+void AppHost::HandleInvalidConnectivityError()
+{
+    m_iOSAlertBoxFactory.CreateSingleOptionAlertBox
+    (
+     "Network error",
+     "Unable to access web reliably. Please check your connection is valid & authenticated.",
+     m_failAlertHandler
+     );
 }
 
 void AppHost::HandleStartupFailure()

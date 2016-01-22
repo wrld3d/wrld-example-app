@@ -145,7 +145,14 @@ namespace ExampleApp
 
             void  WatermarkView::SetWatermarkAlignmentState(bool alignAlongBottom)
             {
-                // TODO: Look at implementing similar animation changes to those on iOS
+            	ASSERT_UI_THREAD
+
+				AndroidSafeNativeThreadAttachment attached(m_nativeState);
+				JNIEnv* env = attached.envForThread;
+
+				jboolean jniAlignAlongBottom = alignAlongBottom;
+				jmethodID setAlignmentMethod = env->GetMethodID(m_uiViewClass, "setAlignmentState", "(Z)V");
+				env->CallVoidMethod(m_uiView, setAlignmentMethod, jniAlignAlongBottom);
             }
         }
     }

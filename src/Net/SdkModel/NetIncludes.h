@@ -6,10 +6,13 @@ namespace ExampleApp
 {
     namespace Net
     {
+        class ConnectivityChangedViewMessage;
+        
         namespace SdkModel
         {
             class INetworkCapabilities;
             class ExampleAppCustomWebLoadRequestFactory;
+            class ConnectivityChangedObserver;
         }
     }
 }

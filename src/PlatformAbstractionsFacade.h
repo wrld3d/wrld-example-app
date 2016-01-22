@@ -26,6 +26,7 @@ namespace ExampleApp
         Eegeo::Helpers::ITextureFileLoader& GetTextureFileLoader() const;
         Eegeo::Web::IWebLoadRequestFactory& GetWebLoadRequestFactory() const;
         Eegeo::Web::IWebLoadRequestFactory& GetPlatformWebLoadRequestFactory() const;
+        Eegeo::Web::IWebProxySettings& GetProxySettings() const;
         Eegeo::Helpers::IHttpCache& GetHttpCache() const;
         Eegeo::Helpers::IFileIO& GetFileIO() const;
         Eegeo::Helpers::UrlHelpers::IUrlEncoder& GetUrlEncoder() const;

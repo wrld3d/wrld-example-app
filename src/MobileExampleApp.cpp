@@ -90,6 +90,7 @@
 #include "TwitterFeedTourModule.h"
 #include "SceneModelsModule.h"
 #include "VisualMapModule.h"
+#include "ConnectivityChangedObserver.h"
 
 
 namespace ExampleApp
@@ -197,6 +198,7 @@ namespace ExampleApp
         , m_pTwitterFeedModule(NULL)
         , m_pTwitterFeedTourModule(NULL)
         , m_pVisualMapModule(NULL)
+        , m_pConnectivityChangedObserver(NULL)
         , m_toursPinDiameter(48.f)
         , m_enableTours(false)
     {
@@ -213,6 +215,8 @@ namespace ExampleApp
                                                 NULL,
                                                 &errorHandler
                                                 );
+        
+        m_pConnectivityChangedObserver = Eegeo_NEW(Net::SdkModel::ConnectivityChangedObserver)(m_pWorld->GetWebConnectivityValidator(), messageBus);
 
         Eegeo::Modules::Map::Layers::TerrainModelModule& terrainModelModule = m_pWorld->GetTerrainModelModule();
         Eegeo::Modules::Map::MapModule& mapModule = m_pWorld->GetMapModule();
@@ -308,6 +312,8 @@ namespace ExampleApp
 
         Eegeo_DELETE m_pAppModeModel;
 
+        Eegeo_DELETE m_pConnectivityChangedObserver;
+        
         Eegeo_DELETE m_pWorld;
     }
 

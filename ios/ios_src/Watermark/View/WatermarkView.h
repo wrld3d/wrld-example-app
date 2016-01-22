@@ -9,23 +9,23 @@
 
 @class WatermarkView;
 
-@interface WatermarkView : UIButton
+@interface WatermarkView : UIView
 {
     ExampleApp::Watermark::View::WatermarkViewInterop* m_pInterop;
     UIViewController* m_pController;
-
+    
     UIColor* m_pColour;
-
+    
     float m_width;
     float m_height;
-
+    
     float m_screenWidth;
     float m_screenHeight;
     float m_pixelScale;
     
     float m_yPosActive;
     float m_yPosInactive;
-
+    
     float m_stateChangeAnimationTimeSeconds;
     
     std::string m_imageAssetName;
@@ -57,5 +57,9 @@
 - (void) updateWatermarkData: (const ExampleApp::Watermark::View::WatermarkData&) watermarkData;
 
 - (void) setWatermarkAlignmentState: (bool) alignAlongBottom;
+
+@property(nonatomic, retain) UIView* pShadowGradient;
+
+@property(nonatomic, retain) UIButton* pButton;
 
 @end
