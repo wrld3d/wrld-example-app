@@ -12,4 +12,6 @@
     AppRunner* m_pAppRunner;
 }
 
+@property (nonatomic, retain) UIView* pBackingView;
+
 @end
