@@ -18,7 +18,7 @@ public class KeyboardInput
         m_inputManager.hideSoftInputFromWindow(m_targetView.getWindowToken(), 0);
     }
 
-    public static void showKeyboard(final Activity a, final int keyboardType, final int returnKeyType, final int ptr)
+    public static void showKeyboard(final Activity a, final int keyboardType, final int returnKeyType, final long ptr)
     {
         Log.v("ShowKeyboard", "Keyboard Type: " + keyboardType + ", Return Key Type: " + returnKeyType);
 

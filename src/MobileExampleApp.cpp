@@ -345,13 +345,13 @@ namespace ExampleApp
         
         Eegeo_DELETE m_pStreamingVolume;
 
+		Eegeo_DELETE m_pInteriorsHighlightVisibilityController;
+		Eegeo_DELETE m_pInteriorsPickingController;
+		Eegeo_DELETE m_pRayCaster;
+
         DestroyApplicationModelModules();
         
         Eegeo_DELETE m_pSQLiteModule;
-        
-        Eegeo_DELETE m_pRayCaster;
-        Eegeo_DELETE m_pInteriorsPickingController;
-        Eegeo_DELETE m_pInteriorsHighlightVisibilityController;
 
         Eegeo_DELETE m_pCameraTransitionService;
         Eegeo_DELETE m_pCameraTransitionController;
