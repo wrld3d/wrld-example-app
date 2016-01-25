@@ -543,9 +543,7 @@ namespace ExampleApp
         m_pWorldAreaLoaderModule = Eegeo_NEW(WorldAreaLoader::SdkModel::WorldAreaLoaderModule)(streamingModule.GetPrecachingService());
 
         m_initialExperienceModule.InitialiseWithApplicationModels(m_pWorldAreaLoaderModule->GetWorldAreaLoaderModel(),
-                                                                  m_pSearchMenuModule->GetSearchMenuViewModel()/*,
-                                                                  m_pSearchResultMenuModule->GetMenuViewModel(),
-                                                                  m_pSearchResultMenuModule->GetSearchResultMenuViewModel()*/); // TODO: Clean this up, attract mode no longer relevant
+                                                                  m_pSearchMenuModule->GetSearchMenuViewModel());
         
         m_pSearchMenuModule->SetSearchSection("Search Results", m_pSearchResultMenuModule->GetSearchResultMenuModel());
         m_pSearchMenuModule->AddMenuSection("Find", m_pCategorySearchModule->GetCategorySearchMenuModel(), true);

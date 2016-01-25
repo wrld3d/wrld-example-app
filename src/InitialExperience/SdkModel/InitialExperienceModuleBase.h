@@ -29,8 +29,7 @@ namespace ExampleApp
                 ~InitialExperienceModuleBase();
 
                 void InitialiseWithApplicationModels(WorldAreaLoader::SdkModel::IWorldAreaLoaderModel& worldAreaLoaderModel,
-                                                     Menu::View::IMenuViewModel& searchMenuViewModelControl/*,
-                                                     SearchResultMenu::View::ISearchResultMenuViewModel& searchResultMenuViewModel*/);
+                                                     Menu::View::IMenuViewModel& searchMenuViewModelControl);
 
                 void TearDown();
 
@@ -43,8 +42,7 @@ namespace ExampleApp
                 PersistentSettings::IPersistentSettingsModel& GetPersistentSettings() const;
 
                 virtual std::vector<IInitialExperienceStep*> CreateSteps(WorldAreaLoader::SdkModel::IWorldAreaLoaderModel &worldAreaLoaderModel,
-                                                                         Menu::View::IMenuViewModel& searchMenuViewModelControl/*,
-                                                                         SearchResultMenu::View::ISearchResultMenuViewModel& searchResultMenuViewModel*/)  = 0;
+                                                                         Menu::View::IMenuViewModel& searchMenuViewModelControl)  = 0;
             };
         }
     }
