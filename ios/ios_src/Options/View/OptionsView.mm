@@ -8,8 +8,10 @@
 #include "ImageHelpers.h"
 #include "IconResources.h"
 #include "OptionsViewInterop.h"
-#import "UIView+TouchExclusivity.h"
 #include "UIHelpers.h"
+
+#import "UIButton+DefaultStates.h"
+#import "UIView+TouchExclusivity.h"
 
 @implementation OptionsView
 
@@ -32,7 +34,7 @@
         [self.pControlContainer addSubview: self.pCloseButtonContainer];
 
         self.pCloseButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        [self.pCloseButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_close_off") forState:UIControlStateNormal];
+        [self.pCloseButton setDefaultStatesWithImageName:@"button_close_off"];
         [self.pCloseButtonContainer addSubview: self.pCloseButton];
 
         self.pContentContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];

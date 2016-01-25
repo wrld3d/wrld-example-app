@@ -180,7 +180,7 @@
     self.pDragTab = [[[UIButton alloc] initWithFrame:CGRectMake(m_dragTabOffScreenX, m_dragTabOffScreenY, m_dragTabWidth, m_dragTabHeight)] autorelease];
     [self.pDragTab setBackgroundImage:ExampleApp::Helpers::ImageHelpers::ImageFromColor(ExampleApp::Helpers::ColorPalette::UiBorderColor)
                              forState:UIControlStateNormal];
-    [self.pDragTab setBackgroundImage:ExampleApp::Helpers::ImageHelpers::ImageFromColor(ExampleApp::Helpers::ColorPalette::ButtonPressColor)
+    [self.pDragTab setBackgroundImage:ExampleApp::Helpers::ImageHelpers::ImageFromColor(ExampleApp::Helpers::ColorPalette::MenuButtonPressColor)
                              forState:UIControlStateHighlighted];
     
     m_titleContainerOffScreenWidth = 0.0f;

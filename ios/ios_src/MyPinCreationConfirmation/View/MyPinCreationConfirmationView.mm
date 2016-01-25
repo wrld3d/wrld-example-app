@@ -4,6 +4,8 @@
 #include "UIColors.h"
 #include "ImageHelpers.h"
 #include "MyPinCreationConfirmationViewInterop.h"
+
+#import "UIButton+DefaultStates.h"
 #import "UIView+TouchExclusivity.h"
 
 @implementation MyPinCreationConfirmationView
@@ -39,15 +41,13 @@
 
         // cancel button
         self.pCancelButton = [[[UIButton alloc] initWithFrame: CGRectMake(0, 0, buttonSize, buttonSize)] autorelease];
-        [self.pCancelButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_close_place_pin_off") forState:UIControlStateNormal];
-        [self.pCancelButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_close_place_pin_on") forState:UIControlStateHighlighted];
+        [self.pCancelButton setDefaultStatesWithImageNames:@"button_close_place_pin_off" :@"button_close_place_pin_on"];
         [self.pCancelButton addTarget:self action:@selector(onCancelButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview: self.pCancelButton];
 
         // confirm button
         self.pConfirmButton = [[[UIButton alloc] initWithFrame: CGRectMake(containerWidth - buttonSize, 0, buttonSize, buttonSize)] autorelease];
-        [self.pConfirmButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_ok_place_pin_off") forState:UIControlStateNormal];
-        [self.pConfirmButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_ok_place_pin_on") forState:UIControlStateHighlighted];
+        [self.pConfirmButton setDefaultStatesWithImageNames:@"button_ok_place_pin_off" :@"button_ok_place_pin_on"];
         [self.pConfirmButton addTarget:self action:@selector(onOkayButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview: self.pConfirmButton];
         

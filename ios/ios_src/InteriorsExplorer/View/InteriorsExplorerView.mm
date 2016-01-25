@@ -6,6 +6,7 @@
 #include "InteriorsExplorerViewInterop.h"
 #include "App.h"
 
+#import "UIButton+DefaultStates.h"
 #import "UIView+TouchExclusivity.h"
 #import <QuartzCore/QuartzCore.h>
 
@@ -46,11 +47,18 @@ namespace
         const float upperMargin = isPhone ? 20.0f : 50.0f;
         m_inactiveDetailPaneYPosition = m_screenHeight;
         
+        const float floorPanelWidth = 50.0f;
+        const float floorPanelEndHeight = 20.0f;
+        
+        UIColor* backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
+        
         self.pFloorPanel = [[[UIView alloc] initWithFrame:CGRectMake(m_inactiveFloorListXPosition, m_screenHeight/2.0f, 50, 200)] autorelease];
         [self addSubview:self.pFloorPanel];
         
-        self.pFloorPanelTop = [[[UIImageView alloc] initWithImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"floor_selection_top")] autorelease];
-        self.pFloorPanelBottom = [[[UIImageView alloc] initWithImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"floor_selection_bottom")] autorelease];
+        self.pFloorPanelTop = [[[UIImageView alloc] initWithImage:ExampleApp::Helpers::ImageHelpers::ImageFromColor(backgroundColor)] autorelease];
+        self.pFloorPanelTop.frame = CGRectMake(0.0f, 0.0f, floorPanelWidth, floorPanelEndHeight);
+        self.pFloorPanelBottom = [[[UIImageView alloc] initWithImage:ExampleApp::Helpers::ImageHelpers::ImageFromColor(backgroundColor)] autorelease];
+        self.pFloorPanelBottom.frame = CGRectMake(0.0f, 0.0f, floorPanelWidth, floorPanelEndHeight);
         self.pFloorList = [[[UITableView alloc] initWithFrame:CGRectMake(0, 0, 0, 0) style:UITableViewStylePlain] autorelease];
         self.pFloorList.delegate = self;
         self.pFloorList.dataSource = self;
@@ -70,14 +78,13 @@ namespace
         
         self.pDetailsPanel = [[[UIView alloc] initWithFrame:CGRectMake(m_screenWidth * 0.5f - totalPanelLength * 0.5f, upperMargin, totalPanelLength, totalPanelHeight)] autorelease];
         
-        
-        self.pDismissButtonBackground = [[[UIImageView alloc] initWithImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"menu_button")] autorelease];
+        self.pDismissButtonBackground = [[[UIImageView alloc] initWithImage:ExampleApp::Helpers::ImageHelpers::ImageFromColor(backgroundColor)] autorelease];
         self.pDismissButtonBackground.frame = CGRectMake(0.0f, 0.0f, buttonSize, buttonSize);
         
         [self.pDetailsPanel addSubview:self.pDismissButtonBackground];
         
         self.pDismissButton = [[[UIButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, buttonSize, buttonSize)] autorelease];
-        [self.pDismissButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"Arrow") forState:UIControlStateNormal];
+        [self.pDismissButton setDefaultStatesWithImageName:@"Arrow"];
         [self.pDismissButton addTarget:self action:@selector(onCancelButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         [self.pDismissButtonBackground addSubview:self.pDismissButton];
         
@@ -86,18 +93,7 @@ namespace
         self.pDetailsPanelBackground = [[[UIImageView alloc] initWithImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"place_pin_background")] autorelease];
         
         self.pDetailsPanelBackground.frame = CGRectMake(buttonSize, 0, labelLength, detailsPanelHeight);
-        
-        UIBezierPath* roundedShapePath = [UIBezierPath bezierPathWithRoundedRect:self.pDetailsPanelBackground.bounds byRoundingCorners:UIRectCornerTopRight | UIRectCornerBottomRight cornerRadii:CGSizeMake(7.0f, 7.0f)];
-        
-        CAShapeLayer* roundedShapeLayer = [CAShapeLayer layer];
-        roundedShapeLayer.frame = self.pDetailsPanelBackground.bounds;
-        roundedShapeLayer.path = roundedShapePath.CGPath;
-        roundedShapeLayer.fillColor = [UIColor blackColor].CGColor;
-        roundedShapeLayer.strokeColor = [UIColor blackColor].CGColor;
-        roundedShapeLayer.lineWidth = 1.0f;
-        
-        self.pDetailsPanelBackground.layer.mask = roundedShapeLayer;
-        
+                
         [self.pDetailsPanel addSubview:self.pDetailsPanelBackground];
         
         const float textPadding = 2.f;

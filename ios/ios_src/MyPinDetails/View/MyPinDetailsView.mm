@@ -9,8 +9,10 @@
 #include "IconResources.h"
 #include "StringHelpers.h"
 #include "MyPinDetailsViewInterop.h"
-#import "UIView+TouchExclusivity.h"
 #include "UIHelpers.h"
+
+#import "UIButton+DefaultStates.h"
+#import "UIView+TouchExclusivity.h"
 
 @implementation MyPinDetailsView
 
@@ -38,14 +40,12 @@
         [self.pControlContainer addSubview: self.pCloseButtonContainer];
 
         self.pCloseButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        [self.pCloseButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage("button_close_off") forState:UIControlStateNormal];
-        [self.pCloseButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_close_on") forState:UIControlStateHighlighted];
+        [self.pCloseButton setDefaultStatesWithImageName:@"button_close_off"];
         [self.pCloseButton addTarget:self action:@selector(onCloseButtonPressed) forControlEvents:UIControlEventTouchUpInside];
         [self.pCloseButtonContainer addSubview: self.pCloseButton];
 
         self.pRemovePinButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        [self.pRemovePinButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_remove_pin_off") forState:UIControlStateNormal];
-        [self.pRemovePinButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_remove_pin_on") forState:UIControlStateHighlighted];
+        [self.pRemovePinButton setDefaultStatesWithImageName:@"button_remove_pin_off"];
         [self.pRemovePinButton addTarget:self action:@selector(onRemovePinButtonPressed) forControlEvents:UIControlEventTouchUpInside];
         [self.pCloseButtonContainer addSubview: self.pRemovePinButton];
 

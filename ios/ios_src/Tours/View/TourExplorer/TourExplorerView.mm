@@ -2,13 +2,15 @@
 
 #include "TourExplorerView.h"
 #include "MyPinCreationConfirmationViewInterop.h"
-#import "UIView+TouchExclusivity.h"
 #include "TourExplorerViewInterop.h"
 #include "iCarouselTourExplorerViewController.h"
 #include "ColorHelpers.h"
 #include "ImageHelpers.h"
 #include "UIColors.h"
 #include "UIHelpers.h"
+
+#import "UIButton+DefaultStates.h"
+#import "UIView+TouchExclusivity.h"
 
 @implementation TourExplorerView
 {
@@ -132,27 +134,27 @@
         
         self.pDetailsPanel = [[[UIView alloc] initWithFrame:CGRectMake(m_screenWidth * 0.5f - totalPanelLength * 0.5f, upperMargin, totalPanelLength, totalPanelHeight)] autorelease];
         
-        self.pExitButtonBackground = [[[UIImageView alloc] initWithImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"menu_button")] autorelease];
+        UIColor* backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
+        
+        self.pExitButtonBackground = [[[UIImageView alloc] initWithImage:ExampleApp::Helpers::ImageHelpers::ImageFromColor(backgroundColor)] autorelease];
         self.pExitButtonBackground.frame = CGRectMake(totalPanelLength-exitButtonSize, 0.0f, exitButtonSize, exitButtonSize);
-        // flip x for menu button image
-        self.pExitButtonBackground.transform = CGAffineTransformScale(CGAffineTransformIdentity, -1.f, 1.f);
         
         [self.pDetailsPanel addSubview:self.pExitButtonBackground];
         
-        self.pBackButtonBackground = [[[UIImageView alloc] initWithImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"menu_button")] autorelease];
+        self.pBackButtonBackground = [[[UIImageView alloc] initWithImage:ExampleApp::Helpers::ImageHelpers::ImageFromColor(backgroundColor)] autorelease];
         self.pBackButtonBackground.frame = CGRectMake(0.0f, 0.0f, backButtonSize, backButtonSize);
         
         [self.pDetailsPanel addSubview:self.pBackButtonBackground];
-    
         
         self.pExitButton = [[UIButton alloc]initWithFrame:CGRectMake(0.0f, 0.0f, exitButtonSize, exitButtonSize)];
-        [self.pExitButton setImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"CloseIcon") forState:UIControlStateNormal];
+        [self.pExitButton setDefaultStatesWithImageName:@"button_close_off"];
         [self.pExitButton addTarget:self action:@selector(handleExitButtonTap) forControlEvents:UIControlEventTouchUpInside];
         [self.pExitButtonBackground addSubview:self.pExitButton];
         
         self.pExitButtonBackground.userInteractionEnabled = YES;
         
         self.pBackButton = [[UIButton alloc]initWithFrame:CGRectMake(0.0f, 0.0f, backButtonSize, backButtonSize)];
+        [self.pBackButton setDefaultStatesWithImageName:@"Arrow"];
         [self.pBackButton setImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"Arrow") forState:UIControlStateNormal];
         [self.pBackButton addTarget:self action:@selector(handleBackButtonTap) forControlEvents:UIControlEventTouchUpInside];
         [self.pBackButtonBackground addSubview:self.pBackButton];
@@ -256,17 +258,6 @@
     
     if(!showBackButton)
     {
-        UIBezierPath* roundedShapePath = [UIBezierPath bezierPathWithRoundedRect:self.pDetailsPanelBackground.bounds byRoundingCorners:UIRectCornerTopLeft | UIRectCornerBottomLeft cornerRadii:CGSizeMake(7.0f, 7.0f)];
-        
-        CAShapeLayer* roundedShapeLayer = [CAShapeLayer layer];
-        roundedShapeLayer.frame = self.pDetailsPanelBackground.bounds;
-        roundedShapeLayer.path = roundedShapePath.CGPath;
-        roundedShapeLayer.fillColor = [UIColor blackColor].CGColor;
-        roundedShapeLayer.strokeColor = [UIColor blackColor].CGColor;
-        roundedShapeLayer.lineWidth = 1.0f;
-        
-        self.pDetailsPanelBackground.layer.mask = roundedShapeLayer;
-        
         self.pBackButtonBackground.hidden = YES;
         self.pBackButtonBackground.userInteractionEnabled = NO;
     }

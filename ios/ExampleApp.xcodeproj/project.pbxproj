@@ -407,6 +407,8 @@
 		18EC01571AA8C8A500902E98 /* compass.png in Resources */ = {isa = PBXBuildFile; fileRef = 18EC01541AA8C8A500902E98 /* compass.png */; };
 		18EC01581AA8C8A500902E98 /* CompassPoint.png in Resources */ = {isa = PBXBuildFile; fileRef = 18EC01551AA8C8A500902E98 /* CompassPoint.png */; };
 		18EC01591AA8C8A500902E98 /* CompassPoint.png in Resources */ = {isa = PBXBuildFile; fileRef = 18EC01551AA8C8A500902E98 /* CompassPoint.png */; };
+		18F0E9CE1C562AFB00067F09 /* UIButton+DefaultStates.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18F0E9CD1C562AFB00067F09 /* UIButton+DefaultStates.mm */; };
+		18F0E9CF1C562AFB00067F09 /* UIButton+DefaultStates.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18F0E9CD1C562AFB00067F09 /* UIButton+DefaultStates.mm */; };
 		18F4F41C1C47CCB600FFB959 /* LinkOutObserver.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18F4F41A1C47CCB600FFB959 /* LinkOutObserver.mm */; };
 		18F4F41D1C47CCB600FFB959 /* LinkOutObserver.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18F4F41A1C47CCB600FFB959 /* LinkOutObserver.mm */; };
 		18FB64501A9240FC005A9411 /* NSURLRequest+OAuth.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18FB64281A9240FC005A9411 /* NSURLRequest+OAuth.mm */; };
@@ -1978,6 +1980,8 @@
 		18EC01541AA8C8A500902E98 /* compass.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = compass.png; sourceTree = "<group>"; };
 		18EC01551AA8C8A500902E98 /* CompassPoint.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CompassPoint.png; sourceTree = "<group>"; };
 		18F0E9CB1C528E0E00067F09 /* ISurveyViewModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISurveyViewModule.h; sourceTree = "<group>"; };
+		18F0E9CC1C562AFB00067F09 /* UIButton+DefaultStates.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+DefaultStates.h"; sourceTree = "<group>"; };
+		18F0E9CD1C562AFB00067F09 /* UIButton+DefaultStates.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "UIButton+DefaultStates.mm"; sourceTree = "<group>"; };
 		18F4F41A1C47CCB600FFB959 /* LinkOutObserver.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LinkOutObserver.mm; sourceTree = "<group>"; };
 		18F4F41B1C47CCB600FFB959 /* LinkOutObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinkOutObserver.h; sourceTree = "<group>"; };
 		18FB641E1A9235BB005A9411 /* Yelp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Yelp.h; sourceTree = "<group>"; };
@@ -5792,6 +5796,8 @@
 		7E3B8AB81A385F110023C94E /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				18F0E9CC1C562AFB00067F09 /* UIButton+DefaultStates.h */,
+				18F0E9CD1C562AFB00067F09 /* UIButton+DefaultStates.mm */,
 				7E3B8AB91A385F110023C94E /* UIView+TouchExclusivity.h */,
 				7E3B8ABA1A385F110023C94E /* UIView+TouchExclusivity.m */,
 				18B22B3D1A7A9FA800DDBFA2 /* UILabelledCheckboxView.h */,
@@ -7485,6 +7491,7 @@
 				7E149DC71BCD4F7F00C0AFFC /* AppGlobeCameraWrapper.cpp in Sources */,
 				18FB64631A9240FC005A9411 /* OADataFetcher.m in Sources */,
 				7E3B88DD1A385A290023C94E /* FlattenButtonViewStateChangedObserver.cpp in Sources */,
+				18F0E9CF1C562AFB00067F09 /* UIButton+DefaultStates.mm in Sources */,
 				7E149DC21BCD209B00C0AFFC /* ExampleSearchResultModel.cpp in Sources */,
 				7E3B8B261A385F110023C94E /* SearchResultPoiViewInterop.mm in Sources */,
 				18A6576D1AA0775900238F33 /* iOSYelpBusinessQuery.mm in Sources */,
@@ -7989,6 +7996,7 @@
 				7E149DC61BCD4F7F00C0AFFC /* AppGlobeCameraWrapper.cpp in Sources */,
 				18FB64621A9240FC005A9411 /* OADataFetcher.m in Sources */,
 				7E3B88DC1A385A290023C94E /* FlattenButtonViewStateChangedObserver.cpp in Sources */,
+				18F0E9CE1C562AFB00067F09 /* UIButton+DefaultStates.mm in Sources */,
 				7E149DC11BCD209B00C0AFFC /* ExampleSearchResultModel.cpp in Sources */,
 				7E3B8B251A385F110023C94E /* SearchResultPoiViewInterop.mm in Sources */,
 				18A6576C1AA0775900238F33 /* iOSYelpBusinessQuery.mm in Sources */,

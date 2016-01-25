@@ -9,10 +9,12 @@
 #include "IconResources.h"
 #include "SizeHelpers.h"
 #include "StringHelpers.h"
-#import "UIView+TouchExclusivity.h"
 #include "ExampleTourSearchResultPoiView.h"
 #include "UIHelpers.h"
 #include "ExampleSearchJsonParser.h"
+
+#import "UIButton+DefaultStates.h"
+#import "UIView+TouchExclusivity.h"
 
 @interface ExampleTourSearchResultPoiView()<UIGestureRecognizerDelegate>
 {
@@ -40,7 +42,7 @@
         [self.pControlContainer addSubview: self.pCloseButtonContainer];
         
         self.pCloseButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        [self.pCloseButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage("button_close_off") forState:UIControlStateNormal];
+        [self.pCloseButton setDefaultStatesWithImageName:@"button_close_off"];
         [self.pCloseButton addTarget:self action:@selector(handleClosedButtonSelected) forControlEvents:UIControlEventTouchUpInside];
         [self.pCloseButtonContainer addSubview: self.pCloseButton];
         

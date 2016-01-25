@@ -10,7 +10,9 @@ namespace ExampleApp
         {
             UIColor* UiBackgroundColor = [[UIColor alloc] initWithRed:1.f green:1.f blue:1.f alpha:1.f];
             UIColor* UiBorderColor = [[UIColor alloc] initWithRed:18.f/255.f green:86.f/255.f blue:176.f/255.f alpha:1.f];
-            UIColor* ButtonPressColor = [[UIColor alloc] initWithRed:130.f/255.f green:235.f/255.f blue:255.f/255.f alpha:1.f];
+            
+            UIColor* ButtonPressColor = [[UIColor alloc] initWithRed:205.f/255.f green:252.f/255.f blue:13.f/255.f alpha:1.f];
+            UIColor* MenuButtonPressColor = [[UIColor alloc] initWithRed:130.f/255.f green:235.f/255.f blue:255.f/255.f alpha:1.f];;
             
             UIColor* ModalBackgroundColor = [[UIColor alloc] initWithRed:0.f green:0.f blue:0.f alpha:0.5f];
             

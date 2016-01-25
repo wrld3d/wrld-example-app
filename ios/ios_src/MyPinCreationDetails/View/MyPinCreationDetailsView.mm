@@ -5,6 +5,7 @@
 #include "ImageHelpers.h"
 #include "UIHelpers.h"
 
+#import "UIButton+DefaultStates.h"
 #import "UIView+TouchExclusivity.h"
 #import <QuartzCore/QuartzCore.h>
 #import <AVFoundation/AVFoundation.h>
@@ -305,22 +306,22 @@
 
     const float closeButtonX = buttonPadding;
     self.pCloseButton.frame = CGRectMake(closeButtonX, 0, buttonSize, buttonSize);
-    [self.pCloseButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_close_off") forState:UIControlStateNormal];
+    [self.pCloseButton setDefaultStatesWithImageName:@"button_close_off"];
     [self.pCloseButton addTarget:self action:@selector(onCloseButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 
     const float cameraButtonX = buttonSize + 2 * buttonPadding;
     self.pCameraButton.frame = CGRectMake(cameraButtonX, 0, buttonSize, buttonSize);
-    [self.pCameraButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_photo_off") forState:UIControlStateNormal];
+    [self.pCameraButton setDefaultStatesWithImageName:@"button_photo_off"];
     [self.pCameraButton addTarget:self action:@selector(onCameraButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 
     const float galleryButtonX = 2 * buttonSize + 3 * buttonPadding;
     self.pGalleryButton.frame = CGRectMake(galleryButtonX, 0, buttonSize, buttonSize);
-    [self.pGalleryButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_gallery_off") forState:UIControlStateNormal];
+    [self.pGalleryButton setDefaultStatesWithImageName:@"button_gallery_off"];
     [self.pGalleryButton addTarget:self action:@selector(onGalleryButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 
     const float confirmButtonX = 3 * buttonSize + 4 * buttonPadding;
     self.pConfirmButton.frame = CGRectMake(confirmButtonX, 0, buttonSize, buttonSize);
-    [self.pConfirmButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_ok_off") forState:UIControlStateNormal];
+    [self.pConfirmButton setDefaultStatesWithImageName:@"button_ok_off"];
     [self.pConfirmButton addTarget:self action:@selector(onConfirmButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 
     m_popoverX = m_controlContainerWidth * 0.5f;

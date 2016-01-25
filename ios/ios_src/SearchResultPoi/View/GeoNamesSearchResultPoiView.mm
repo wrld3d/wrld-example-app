@@ -8,9 +8,12 @@
 #include "ImageHelpers.h"
 #include "IconResources.h"
 #include "StringHelpers.h"
-#import "UIView+TouchExclusivity.h"
 #include "GeoNamesSearchResultPoiView.h"
 #include "App.h"
+#include "UIHelpers.h"
+
+#import "UIButton+DefaultStates.h"
+#import "UIView+TouchExclusivity.h"
 
 @interface GeoNamesSearchResultPoiView()<UIGestureRecognizerDelegate>
 {
@@ -25,8 +28,8 @@
     
     if(self)
     {
-        self->m_pRemovePinButtonBackgroundImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_remove_pin_off") retain];
-        self->m_pAddPinButtonBackgroundImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_add_pin_off") retain];
+        self->m_pRemovePinButtonImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_remove_pin_off") retain];
+        self->m_pAddPinButtonImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_add_pin_off") retain];
         
         m_pInterop = pInterop;
         self.alpha = 0.f;
@@ -41,11 +44,12 @@
         [self.pControlContainer addSubview: self.pCloseButtonContainer];
         
         self.pCloseButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        [self.pCloseButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage("button_close_off") forState:UIControlStateNormal];
+        [self.pCloseButton setDefaultStatesWithImageName:@"button_close_off"];
         [self.pCloseButton addTarget:self action:@selector(handleClosedButtonSelected) forControlEvents:UIControlEventTouchUpInside];
         [self.pCloseButtonContainer addSubview: self.pCloseButton];
         
         self.pPinButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        [self.pPinButton setDefaultStates];
         [self.pPinButton addTarget:self action:@selector(handlePinButtonSelected) forControlEvents:UIControlEventTouchUpInside];
         [self.pCloseButtonContainer addSubview: self.pPinButton];
         
@@ -123,10 +127,8 @@
     [self.pCountryContent removeFromSuperview];
     [self.pCountryContent release];
     
-    [self->m_pRemovePinButtonBackgroundImage release];
-    [self->m_pRemovePinHighlightButtonBackgroundImage release];
-    [self->m_pAddPinButtonBackgroundImage release];
-    [self->m_pAddPinHighlightButtonBackgroundImage release];
+    [self->m_pRemovePinButtonImage release];
+    [self->m_pAddPinButtonImage release];
     
     [self removeFromSuperview];
     [super dealloc];
@@ -334,13 +336,13 @@
 {
     if(m_isPinned)
     {
-        [self.pPinButton setBackgroundImage:self->m_pRemovePinButtonBackgroundImage forState:UIControlStateNormal];
-        [self.pPinButton setBackgroundImage:self->m_pRemovePinHighlightButtonBackgroundImage forState:UIControlStateHighlighted];
+        [self.pPinButton setImage:self->m_pRemovePinButtonImage forState:UIControlStateNormal];
+        [self.pPinButton setImage:self->m_pRemovePinButtonImage forState:UIControlStateHighlighted];
     }
     else
     {
-        [self.pPinButton setBackgroundImage:self->m_pAddPinButtonBackgroundImage forState:UIControlStateNormal];
-        [self.pPinButton setBackgroundImage:self->m_pAddPinHighlightButtonBackgroundImage forState:UIControlStateHighlighted];
+        [self.pPinButton setImage:self->m_pAddPinButtonImage forState:UIControlStateNormal];
+        [self.pPinButton setImage:self->m_pAddPinButtonImage forState:UIControlStateHighlighted];
     }
 }
 

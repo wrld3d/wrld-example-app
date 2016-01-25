@@ -21,10 +21,8 @@
     bool m_isPinned;
     float m_labelsSectionWidth;
     
-    UIImage* m_pRemovePinButtonBackgroundImage;
-    UIImage* m_pRemovePinHighlightButtonBackgroundImage;
-    UIImage* m_pAddPinButtonBackgroundImage;
-    UIImage* m_pAddPinHighlightButtonBackgroundImage;
+    UIImage* m_pRemovePinButtonImage;
+    UIImage* m_pAddPinButtonImage;
 }
 
 - (id)initWithInterop:(ExampleApp::SearchResultPoi::View::SearchResultPoiViewInterop*)pInterop;
