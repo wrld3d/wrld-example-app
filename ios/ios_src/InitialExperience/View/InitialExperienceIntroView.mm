@@ -16,7 +16,7 @@ const float arrowWidth = 10;
     
     if(self)
     {
-        m_animationTimeSeconds = 0.6f;
+        m_animationTimeSeconds = 0.9f;
         
         m_pInterop = Eegeo_NEW(ExampleApp::InitialExperience::View::InitialExperienceIntroViewInterop)(self, pBackground);
         
@@ -31,14 +31,23 @@ const float arrowWidth = 10;
         self.pWelcomeImage.backgroundColor = [UIColor colorWithPatternImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"banner_logo")];
         [self.pBannerBarContainer addSubview:self.pWelcomeImage];
         
-        self.pMenuDialogContainer = [[[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, 0.f, 0.f)] autorelease];
-        self.pMenuDialogContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
-        [self addSubview: self.pMenuDialogContainer];
-        self.pMenuDialogArrow = ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pMenuDialogContainer, "arrow3_right", 0.f, 0.f, 0, 0);
-        self.pMenuDialogTitle = [self createDialogTitle:@"Main Menu"];
-        [self.pMenuDialogContainer addSubview:self.pMenuDialogTitle];
-        self.pMenuDialogDescription = [self createDialogDescription:@"Start exploring here"];
-        [self.pMenuDialogContainer addSubview:self.pMenuDialogDescription];
+        self.pSettingsMenuDialogContainer = [[[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, 0.f, 0.f)] autorelease];
+        self.pSettingsMenuDialogContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
+        [self addSubview: self.pSettingsMenuDialogContainer];
+        self.pSettingsMenuDialogArrow = ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pSettingsMenuDialogContainer, "arrow3_up", 0.f, 0.f, 0, 0);
+        self.pSettingsMenuDialogTitle = [self createDialogTitle:@"Settings"];
+        [self.pSettingsMenuDialogContainer addSubview:self.pSettingsMenuDialogTitle];
+        self.pSettingsMenuDialogDescription = [self createDialogDescription:@"Change your settings here"];
+        [self.pSettingsMenuDialogContainer addSubview:self.pSettingsMenuDialogDescription];
+        
+        self.pSearchMenuDialogContainer = [[[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, 0.f, 0.f)] autorelease];
+        self.pSearchMenuDialogContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
+        [self addSubview: self.pSearchMenuDialogContainer];
+        self.pSearchMenuDialogArrow = ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pSearchMenuDialogContainer, "arrow3_up", 0.f, 0.f, 0, 0);
+        self.pSearchMenuDialogTitle = [self createDialogTitle:@"Search Menu"];
+        [self.pSearchMenuDialogContainer addSubview:self.pSearchMenuDialogTitle];
+        self.pSearchMenuDialogDescription = [self createDialogDescription:@"Start exploring here"];
+        [self.pSearchMenuDialogContainer addSubview:self.pSearchMenuDialogDescription];
         
         self.pCompassDialogContainer = [[[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, 0.f, 0.f)] autorelease];
         self.pCompassDialogContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
@@ -85,7 +94,7 @@ const float arrowWidth = 10;
     UILabel* pLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
     pLabel.textColor = ExampleApp::Helpers::ColorPalette::UiTextTitleColor;
     pLabel.text = text;
-    pLabel.font = useSmallScreen ? [UIFont systemFontOfSize:16.0f] : [UIFont systemFontOfSize:18.0f];
+    pLabel.font = useSmallScreen ? [UIFont systemFontOfSize:14.5f] : [UIFont systemFontOfSize:18.0f];
     return pLabel;
 }
 
@@ -96,7 +105,7 @@ const float arrowWidth = 10;
     pTextView.textColor = ExampleApp::Helpers::ColorPalette::UiTextCopyColor;
     pTextView.editable = NO;
     pTextView.scrollEnabled = NO;
-    pTextView.font = useSmallScreen ? [UIFont systemFontOfSize:14.0f] : [UIFont systemFontOfSize:16.0f];
+    pTextView.font = useSmallScreen ? [UIFont systemFontOfSize:13.0f] : [UIFont systemFontOfSize:16.0f];
     pTextView.textContainer.lineFragmentPadding = 0;
     pTextView.textContainerInset = UIEdgeInsetsZero;
     pTextView.text = text;
@@ -136,14 +145,23 @@ const float arrowWidth = 10;
     [self.pMapModeDialogContainer removeFromSuperview];
     [self.pMapModeDialogContainer release];
     
-    [self.pMenuDialogDescription removeFromSuperview];
-    [self.pMenuDialogDescription release];
-    [self.pMenuDialogTitle removeFromSuperview];
-    [self.pMenuDialogTitle release];
-    [self.pMenuDialogArrow removeFromSuperview];
-    [self.pMenuDialogArrow release];
-    [self.pMenuDialogContainer removeFromSuperview];
-    [self.pMenuDialogContainer release];
+    [self.pSettingsMenuDialogDescription removeFromSuperview];
+    [self.pSettingsMenuDialogDescription release];
+    [self.pSettingsMenuDialogTitle removeFromSuperview];
+    [self.pSettingsMenuDialogTitle release];
+    [self.pSettingsMenuDialogArrow removeFromSuperview];
+    [self.pSettingsMenuDialogArrow release];
+    [self.pSettingsMenuDialogContainer removeFromSuperview];
+    [self.pSettingsMenuDialogContainer release];
+    
+    [self.pSearchMenuDialogDescription removeFromSuperview];
+    [self.pSearchMenuDialogDescription release];
+    [self.pSearchMenuDialogTitle removeFromSuperview];
+    [self.pSearchMenuDialogTitle release];
+    [self.pSearchMenuDialogArrow removeFromSuperview];
+    [self.pSearchMenuDialogArrow release];
+    [self.pSearchMenuDialogContainer removeFromSuperview];
+    [self.pSearchMenuDialogContainer release];
 
     [self.pWelcomeImage removeFromSuperview];
     [self.pWelcomeImage release];
@@ -178,6 +196,8 @@ const float arrowWidth = 10;
     const int dialogMargin = 50;
     const int dialogSpacing = useSmallScreen ? 10 : 20;
     const int textPadding = 5;
+    const int menuDialogOffsetX = 28;
+    const int upperMargin = (useSmallScreen ? 20 : 50);
     
     const int bannerHeight = 90;
     
@@ -189,11 +209,17 @@ const float arrowWidth = 10;
     
     [self.pWelcomeImage setCenter:CGPointMake(m_screenWidth/2, bannerHeight/2)];
     
-    [self.pMenuDialogContainer setFrame:CGRectMake(m_screenWidth - (dialogWidth + arrowLength + dialogMargin),
-                                                   dialogMargin,
+    [self.pSettingsMenuDialogContainer setFrame:CGRectMake(m_screenWidth - (menuDialogOffsetX + dialogWidth),
+                                                   upperMargin + dialogMargin + arrowLength + dialogSpacing,
                                                    dialogWidth,
                                                    dialogHeight)];
-    [self.pMenuDialogArrow setFrame:CGRectMake(dialogWidth, dialogHeight * 0.25f, arrowLength, arrowWidth)];
+    [self.pSettingsMenuDialogArrow setFrame:CGRectMake(dialogWidth * 0.75f, -arrowLength, arrowWidth, arrowLength)];
+    
+    [self.pSearchMenuDialogContainer setFrame:CGRectMake(menuDialogOffsetX,
+                                                   upperMargin + dialogMargin + arrowLength + dialogSpacing,
+                                                   dialogWidth,
+                                                   dialogHeight)];
+    [self.pSearchMenuDialogArrow setFrame:CGRectMake(dialogWidth * 0.25f, -arrowLength, arrowWidth, arrowLength)];
     
     
     int centerDialogPositionX = (int)(m_screenWidth/2 - dialogWidth/2);
@@ -216,8 +242,10 @@ const float arrowWidth = 10;
                                                           dialogHeight)];
     [self.pPinCreationDialogArrow setFrame:CGRectMake(dialogWidth*rightDialogArrowOffset - arrowWidth/2, dialogHeight, arrowWidth, arrowLength)];
     
-    [self.pMenuDialogTitle setFrame:CGRectMake(textPadding, textPadding, dialogWidth-(2*textPadding), 18.0f )];
-    [self.pMenuDialogDescription setFrame:CGRectMake(textPadding, 18.0f + textPadding, dialogWidth-(2*textPadding), dialogHeight-18.0f -2*textPadding)];
+    [self.pSettingsMenuDialogTitle setFrame:CGRectMake(textPadding, textPadding, dialogWidth-(2*textPadding), 18.0f )];
+    [self.pSettingsMenuDialogDescription setFrame:CGRectMake(textPadding, 18.0f + textPadding, dialogWidth-(2*textPadding), dialogHeight-18.0f -2*textPadding)];
+    [self.pSearchMenuDialogTitle setFrame:CGRectMake(textPadding, textPadding, dialogWidth-(2*textPadding), 18.0f )];
+    [self.pSearchMenuDialogDescription setFrame:CGRectMake(textPadding, 18.0f + textPadding, dialogWidth-(2*textPadding), dialogHeight-18.0f -2*textPadding)];
     [self.pCompassDialogTitle setFrame:CGRectMake(textPadding, textPadding, dialogWidth-(2*textPadding), 18.0f )];
     [self.pCompassDialogDescription setFrame:CGRectMake(textPadding, 18.0f + textPadding, dialogWidth-(2*textPadding), dialogHeight-18.0f -2*textPadding)];
     [self.pMapModeDialogTitle setFrame:CGRectMake(textPadding, textPadding, dialogWidth-(2*textPadding), 18.0f )];
@@ -238,7 +266,8 @@ const float arrowWidth = 10;
     m_awaitingInput = true;
     
     [self.pBannerBarContainer setCenter:CGPointMake(m_screenWidth/2 - m_screenWidth, m_screenHeight/2)];
-    self.pMenuDialogContainer.alpha = 0.0f;
+    self.pSettingsMenuDialogContainer.alpha = 0.0f;
+    self.pSearchMenuDialogContainer.alpha = 0.0f;
     self.pCompassDialogContainer.alpha = 0.0f;
     self.pMapModeDialogContainer.alpha = 0.0f;
     self.pPinCreationDialogContainer.alpha = 0.0f;
@@ -251,32 +280,40 @@ const float arrowWidth = 10;
                      }
                      completion:nil];
 
-    [UIView animateWithDuration:m_animationTimeSeconds/4
-                          delay:m_animationTimeSeconds/4
+    [UIView animateWithDuration:m_animationTimeSeconds/6
+                          delay:m_animationTimeSeconds/6 * 1
                         options:UIViewAnimationOptionCurveEaseOut
                      animations:^{
-                         self.pMenuDialogContainer.alpha = 1.0f;
+                         self.pSettingsMenuDialogContainer.alpha = 1.0f;
                      }
                      completion:nil];
     
-    [UIView animateWithDuration:m_animationTimeSeconds/4
-                          delay:(m_animationTimeSeconds/4)*1
+    [UIView animateWithDuration:m_animationTimeSeconds/6
+                          delay:m_animationTimeSeconds/6 * 2
+                        options:UIViewAnimationOptionCurveEaseOut
+                     animations:^{
+                         self.pSearchMenuDialogContainer.alpha = 1.0f;
+                     }
+                     completion:nil];
+    
+    [UIView animateWithDuration:m_animationTimeSeconds/6
+                          delay:m_animationTimeSeconds/6 * 3
                         options:UIViewAnimationOptionCurveEaseOut
                      animations:^{
                          self.pMapModeDialogContainer.alpha = 1.0f;
                      }
                      completion:nil];
     
-    [UIView animateWithDuration:m_animationTimeSeconds/4
-                          delay:(m_animationTimeSeconds/4)*2
+    [UIView animateWithDuration:m_animationTimeSeconds/6
+                          delay:m_animationTimeSeconds/6 * 4
                         options:UIViewAnimationOptionCurveEaseOut
                      animations:^{
                          self.pCompassDialogContainer.alpha = 1.0f;
                      }
                      completion:nil];
     
-    [UIView animateWithDuration:m_animationTimeSeconds/4
-                          delay:(m_animationTimeSeconds/4)*3
+    [UIView animateWithDuration:m_animationTimeSeconds/6
+                          delay:m_animationTimeSeconds/6 * 5
                         options:UIViewAnimationOptionCurveEaseOut
                      animations:^{
                          self.pPinCreationDialogContainer.alpha = 1.0f;
@@ -294,7 +331,8 @@ const float arrowWidth = 10;
     m_awaitingInput = false;
     
     [self.pBannerBarContainer setCenter:CGPointMake(m_screenWidth/2, m_screenHeight/2)];
-    self.pMenuDialogContainer.alpha = 1.0f;
+    self.pSettingsMenuDialogContainer.alpha = 1.0f;
+    self.pSearchMenuDialogContainer.alpha = 1.0f;
     self.pCompassDialogContainer.alpha = 1.0f;
     self.pMapModeDialogContainer.alpha = 1.0f;
     self.pPinCreationDialogContainer.alpha = 1.0f;
@@ -314,32 +352,40 @@ const float arrowWidth = 10;
                          }
                      }];
     
-    [UIView animateWithDuration:m_animationTimeSeconds/4
-                          delay:m_animationTimeSeconds/4
+    [UIView animateWithDuration:m_animationTimeSeconds/6
+                          delay:m_animationTimeSeconds/6 * 1
                         options:UIViewAnimationOptionCurveEaseOut
                      animations:^{
-                         self.pMenuDialogContainer.alpha = 0.0f;
+                         self.pSettingsMenuDialogContainer.alpha = 0.0f;
                      }
                      completion:nil];
     
-    [UIView animateWithDuration:m_animationTimeSeconds/4
-                          delay:(m_animationTimeSeconds/4)*1
+    [UIView animateWithDuration:m_animationTimeSeconds/6
+                          delay:m_animationTimeSeconds/6 * 2
+                        options:UIViewAnimationOptionCurveEaseOut
+                     animations:^{
+                         self.pSearchMenuDialogContainer.alpha = 0.0f;
+                     }
+                     completion:nil];
+    
+    [UIView animateWithDuration:m_animationTimeSeconds/6
+                          delay:m_animationTimeSeconds/6 * 3
                         options:UIViewAnimationOptionCurveEaseOut
                      animations:^{
                          self.pMapModeDialogContainer.alpha = 0.0f;
                      }
                      completion:nil];
     
-    [UIView animateWithDuration:m_animationTimeSeconds/4
-                          delay:(m_animationTimeSeconds/4)*2
+    [UIView animateWithDuration:m_animationTimeSeconds/6
+                          delay:m_animationTimeSeconds/6 * 4
                         options:UIViewAnimationOptionCurveEaseOut
                      animations:^{
                          self.pCompassDialogContainer.alpha = 0.0f;
                      }
                      completion:nil];
     
-    [UIView animateWithDuration:m_animationTimeSeconds/4
-                          delay:(m_animationTimeSeconds/4)*3
+    [UIView animateWithDuration:m_animationTimeSeconds/6
+                          delay:m_animationTimeSeconds/6 * 5
                         options:UIViewAnimationOptionCurveEaseOut
                      animations:^{
                          self.pPinCreationDialogContainer.alpha = 0.0f;
