@@ -12,6 +12,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.text.util.Linkify;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -307,7 +308,23 @@ public class YelpSearchResultPoiView implements View.OnClickListener
     {
     	final Uri uri = Uri.parse(m_url);
     	final Intent browserIntent = new Intent(Intent.ACTION_VIEW, uri);
-    	m_activity.startActivity(browserIntent);
+    	if(browserIntent.resolveActivity(m_activity.getPackageManager()) != null)
+    	{
+    		m_activity.startActivity(browserIntent);
+    	}
+    	else
+    	{
+    		new AlertDialog.Builder(m_activity)
+    			.setTitle("Warning")
+    			.setMessage("No web browser found on device. Cannot open webpage.")
+    			.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) 
+					{
+					}
+				})
+    			.show();
+    	}
         m_handlingClick = false;
     }
 	
