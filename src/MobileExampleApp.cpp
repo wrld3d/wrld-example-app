@@ -76,7 +76,6 @@
 #include "SearchVendorNames.h"
 #include "AppCameraModule.h"
 #include "AppCameraController.h"
-#include "InteriorsCustomMaterialsModule.h"
 #include "AppModeStatesFactory.h"
 #include "AppGlobeCameraWrapper.h"
 #include "NativeUIFactories.h"
@@ -182,7 +181,6 @@ namespace ExampleApp
         , m_pWatermarkModule(NULL)
         , m_pInteriorsExplorerModule(NULL)
         , m_pInteriorsEntitiesPinsModule(NULL)
-        , m_pInteriorsCustomMaterialsModule(NULL)
         , m_screenProperties(screenProperties)
         , m_networkCapabilities(networkCapabilities)
         , m_setMetricsLocation(false)
@@ -514,9 +512,6 @@ namespace ExampleApp
                                                                                                                 m_pWorld->GetRenderingModule(),
                                                                                                                 m_pWorld->GetMapModule(),
                                                                                                                 m_screenProperties));
-
-            
-            m_pInteriorsCustomMaterialsModule = Eegeo_NEW(InteriorsCustomMaterials::SdkModel::InteriorsCustomMaterialsModule)(mapModule.GetInteriorsStreamingModule(), m_platformAbstractions.GetFileIO());
                                                                                                             
         }
         
@@ -572,8 +567,6 @@ namespace ExampleApp
     void MobileExampleApp::DestroyApplicationModelModules()
     {
         m_initialExperienceModule.TearDown();
-
-        Eegeo_DELETE m_pInteriorsCustomMaterialsModule;
         
         Eegeo_DELETE m_pTwitterFeedModule;
 
