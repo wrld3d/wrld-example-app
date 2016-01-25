@@ -28,9 +28,15 @@ namespace ExampleApp
             
             std::vector<Search::SdkModel::SearchResultModel> transitionResults;
             
-            pSwallowPoiDbService->GetTransitionResults(transitionResults);
-            
-            m_transitionsLoadedCallbacks.ExecuteCallbacks(transitionResults);
+            if(pSwallowPoiDbService != NULL)
+            {
+                pSwallowPoiDbService->GetTransitionResults(transitionResults);
+                m_transitionsLoadedCallbacks.ExecuteCallbacks(transitionResults);
+            }
+            else
+            {
+                Eegeo_TTY("Transition result fetch failed - No DB");
+            }
         }
         
         bool SwallowPoiDbServiceProvider::TryGetSwallowPoiDbService(SwallowPoiDbCombinedService*& out_pService) const
