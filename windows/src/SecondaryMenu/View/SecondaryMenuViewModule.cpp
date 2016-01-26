@@ -3,7 +3,7 @@
 #include "WindowsNativeState.h"
 #include "Menu.h"
 #include "SecondaryMenuViewModule.h"
-#include "SecondaryMenuController.h"
+//#include "SecondaryMenuController.h"
 #include "SecondaryMenuView.h"
 #include "WindowsAppThreadAssertionMacros.h"
 
@@ -23,7 +23,7 @@ namespace ExampleApp
             {
                 ASSERT_UI_THREAD
 
-                SecondaryMenuView* view = Eegeo_NEW(SecondaryMenuView)(nativeState, viewName);
+                /*SecondaryMenuView* view = Eegeo_NEW(SecondaryMenuView)(nativeState, viewName);
                 m_pView = view;
 
                 m_pController = Eegeo_NEW(SecondaryMenuController)(
@@ -32,7 +32,7 @@ namespace ExampleApp
                                     menuModel,
                                     menuViewModel,
                                     messageBus
-                                );
+                                );*/
             }
 
             SecondaryMenuViewModule::~SecondaryMenuViewModule()

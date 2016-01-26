@@ -9,7 +9,7 @@
 #include "IMenuViewModule.h"
 #include "Search.h"
 #include "CategorySearch.h"
-#include "SearchResultMenu.h"
+//#include "SearchResultMenu.h"
 #include "BidirectionalBus.h"
 #include "AppModes.h"
 
@@ -34,9 +34,7 @@ namespace ExampleApp
                     Menu::View::IMenuModel& menuModelModel,
                     Menu::View::IMenuViewModel& menuViewModel,
                     CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
-                    ISearchResultMenuViewModel& searchResultMenuViewModel,
                     Menu::View::IMenuOptionsModel& menuOptionsModel,
-                    ISearchResultMenuOrder& searchResultMenuOrder,
                     AppModes::SdkModel::IAppModeModel& appModeModel,
                     ExampleAppMessaging::TMessageBus& messageBus
                     );

@@ -26,13 +26,13 @@
 #include "EnvironmentFlatteningService.h"
 #include "TtyHandler.h"
 #include "MenuViewModule.h"
-#include "SecondaryMenuModule.h"
+//#include "SecondaryMenuModule.h"
 #include "ModalityModule.h"
 #include "ModalBackgroundViewModule.h"
 #include "ModalBackgroundNativeViewModule.h"
 #include "MenuModel.h"
 #include "MenuViewModel.h"
-#include "SearchResultMenuModule.h"
+//#include "SearchResultMenuModule.h"
 #include "MenuOptionsModel.h"
 #include "SearchModule.h"
 #include "SearchResultOnMapModule.h"
@@ -172,11 +172,11 @@ AppHost::AppHost(
 
 	m_pWindowsPersistentSettingsModel = Eegeo_NEW(ExampleApp::PersistentSettings::WindowsPersistentSettingsModel)(m_nativeState);
 
-    m_pInitialExperienceModule = Eegeo_NEW(ExampleApp::InitialExperience::SdkModel::WindowsInitialExperienceModule)(
+    /*m_pInitialExperienceModule = Eegeo_NEW(ExampleApp::InitialExperience::SdkModel::WindowsInitialExperienceModule)(
         m_nativeState,
         *m_pWindowsPersistentSettingsModel,
         m_messageBus
-        );
+        );*/
 
     m_pNetworkCapabilities = Eegeo_NEW(ExampleApp::Net::SdkModel::NetworkCapabilities)(
         *m_pWindowsConnectivityService,
@@ -472,15 +472,15 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
         m_messageBus
         );
 
-    m_pSecondaryMenuViewModule = Eegeo_NEW(ExampleApp::SecondaryMenu::View::SecondaryMenuViewModule)(
+    /*m_pSecondaryMenuViewModule = Eegeo_NEW(ExampleApp::SecondaryMenu::View::SecondaryMenuViewModule)(
         "ExampleAppWPF.SecondaryMenuView",
         m_nativeState,
         app.SecondaryMenuModule().GetSecondaryMenuModel(),
         app.SecondaryMenuModule().GetSecondaryMenuViewModel(),
         m_messageBus
-        );
+        );*/
 
-    m_pSearchResultMenuViewModule = Eegeo_NEW(ExampleApp::SearchResultMenu::View::SearchMenuViewModule)(
+    /*m_pSearchResultMenuViewModule = Eegeo_NEW(ExampleApp::SearchResultMenu::View::SearchMenuViewModule)(
         "ExampleAppWPF.SearchMenuView",
         m_nativeState,
         app.SearchResultMenuModule().GetSearchResultMenuModel(),
@@ -491,7 +491,7 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
         app.SearchResultMenuModule().GetSearchResultMenuOrder(),
         app.GetAppModeModel(),
         m_messageBus
-        );
+        );*/
 
     // Pop-up layer.
     m_pSearchResultPoiViewModule = Eegeo_NEW(ExampleApp::SearchResultPoi::View::SearchResultPoiViewModule)(
@@ -532,7 +532,7 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
         m_messageBus
         );
 
-	m_pInteriorsExplorerViewModule = Eegeo_NEW(ExampleApp::InteriorsExplorer::View::InteriorsExplorerViewModule)(
+	/*m_pInteriorsExplorerViewModule = Eegeo_NEW(ExampleApp::InteriorsExplorer::View::InteriorsExplorerViewModule)(
 		app.InteriorsExplorerModule().GetInteriorsExplorerViewModel(),
 		m_messageBus,
 		app.MyPinCreationModule().GetMyPinCreationInitiationViewModel(),
@@ -541,7 +541,7 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
 		app.FlattenButtonModule().GetScreenControlViewModel(),
 		app.CompassModule().GetScreenControlViewModel(),
 		app.WatermarkModule().GetScreenControlViewModel(),
-		app.GetIdentityProvider());
+		app.GetIdentityProvider());*/
 
     m_pViewControllerUpdaterModule = Eegeo_NEW(ExampleApp::ViewControllerUpdater::View::ViewControllerUpdaterModule);
 
