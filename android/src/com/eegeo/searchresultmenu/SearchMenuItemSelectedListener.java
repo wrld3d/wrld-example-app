@@ -1,8 +1,8 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
-package com.eegeo.searchmenu;
+package com.eegeo.searchresultmenu;
 
-import com.eegeo.searchmenu.SearchMenuViewJniMethods;
+import com.eegeo.menu.MenuViewJniMethods;
 
 import android.view.View;
 import android.widget.AdapterView;
@@ -31,7 +31,8 @@ public class SearchMenuItemSelectedListener implements OnItemClickListener
         }
 
         final int index = position;
-        SearchMenuViewJniMethods.SelectedItem(m_nativeCallerPointer, index);
+
+        MenuViewJniMethods.SelectedItem(m_nativeCallerPointer, 0, index);
     }
 }
 

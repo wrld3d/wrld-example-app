@@ -1,15 +1,19 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
-package com.eegeo.searchmenu;
+package com.eegeo.searchresultmenu;
+
+import com.eegeo.entrypointinfrastructure.MainActivity;
 
 import android.view.View;
 
 public class SearchMenuCloseButtonClickedHandler implements View.OnClickListener
 {
+    private MainActivity m_activity;
     private long m_nativeCallerPointer;
 
-    SearchMenuCloseButtonClickedHandler(long nativeCallerPointer)
+    SearchMenuCloseButtonClickedHandler(MainActivity activity, long nativeCallerPointer)
     {
+        m_activity = activity;
         m_nativeCallerPointer = nativeCallerPointer;
     }
 

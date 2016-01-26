@@ -2,40 +2,41 @@
 
 #include "AndroidNativeState.h"
 #include "Menu.h"
-#include "SecondaryMenuViewModule.h"
-//#include "SecondaryMenuController.h"
-#include "SecondaryMenuView.h"
+#include "SettingsMenuViewModule.h"
+#include "SettingsMenuController.h"
+#include "SettingsMenuView.h"
 #include "AndroidAppThreadAssertionMacros.h"
 
 namespace ExampleApp
 {
-    namespace SecondaryMenu
+    namespace SettingsMenu
     {
         namespace View
         {
-            SecondaryMenuViewModule::SecondaryMenuViewModule(
+            SettingsMenuViewModule::SettingsMenuViewModule(
                 const std::string& viewName,
                 AndroidNativeState& nativeState,
                 Menu::View::IMenuModel& menuModel,
                 Menu::View::IMenuViewModel& menuViewModel,
+				Modality::View::IModalBackgroundView& modalBackgroundView,
                 ExampleAppMessaging::TMessageBus& messageBus
             )
             {
                 ASSERT_UI_THREAD
 
-                SecondaryMenuView* view = Eegeo_NEW(SecondaryMenuView)(nativeState, viewName);
+                SettingsMenuView* view = Eegeo_NEW(SettingsMenuView)(nativeState, viewName);
                 m_pView = view;
 
-                /*m_pController = Eegeo_NEW(SecondaryMenuController)(
-                                    *view,
+                m_pController = Eegeo_NEW(SettingsMenuController)(
                                     *view,
                                     menuModel,
                                     menuViewModel,
+									modalBackgroundView,
                                     messageBus
-                                );*/
+                                );
             }
 
-            SecondaryMenuViewModule::~SecondaryMenuViewModule()
+            SettingsMenuViewModule::~SettingsMenuViewModule()
             {
                 ASSERT_UI_THREAD
 
@@ -43,14 +44,14 @@ namespace ExampleApp
                 Eegeo_DELETE m_pView;
             }
 
-            Menu::View::MenuController& SecondaryMenuViewModule::GetMenuController() const
+            Menu::View::MenuController& SettingsMenuViewModule::GetMenuController() const
             {
                 ASSERT_UI_THREAD
 
                 return *m_pController;
             }
 
-            Menu::View::IMenuView& SecondaryMenuViewModule::GetMenuView() const
+            Menu::View::IMenuView& SettingsMenuViewModule::GetMenuView() const
             {
                 ASSERT_UI_THREAD
                 return *m_pView;

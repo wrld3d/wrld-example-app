@@ -22,6 +22,9 @@ namespace ExampleApp
                 void SetFullyInactive();
                 void SetActiveStateToIntermediateValue(float modality);
 
+                void InsertTappedCallback(Eegeo::Helpers::ICallback0& callback) {}
+                void RemoveTappedCallback(Eegeo::Helpers::ICallback0& callback) {}
+
             private:
 
                 AndroidNativeState& m_nativeState;

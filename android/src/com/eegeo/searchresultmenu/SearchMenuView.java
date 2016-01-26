@@ -1,8 +1,7 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
-package com.eegeo.searchmenu;
+package com.eegeo.searchresultmenu;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -14,14 +13,11 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.view.ViewGroup;
 
 import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.mobileexampleapp.R;
 import com.eegeo.categories.CategoryResources;
-import com.eegeo.menu.MenuItemSelectedListener;
-import com.eegeo.menu.MenuListAdapter;
 import com.eegeo.menu.MenuView;
 import com.eegeo.menu.MenuViewJniMethods;
 
@@ -35,12 +31,10 @@ public class SearchMenuView extends MenuView
 
     protected int m_dragStartPosYPx;
     protected int m_controlStartPosYPx;
-
-    private ListView m_searchList = null;
-    private SearchMenuAdapter m_searchListAdapter = null;
-    private OnItemClickListener m_searchMenuItemSelectedListener = null;
     
-    private MenuListAdapter m_listAdapter = null;
+    private boolean m_inAttractMode = false;
+
+    private SearchMenuAdapter m_listAdapter = null;
 
     private ImageView m_headerCategoryImage;
     private TextView m_headerText;
@@ -54,17 +48,16 @@ public class SearchMenuView extends MenuView
     protected void createView()
     {
         final RelativeLayout uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
-        m_view = m_activity.getLayoutInflater().inflate(R.layout.search_menu_layout, uiRoot, false);
+        m_view = m_activity.getLayoutInflater().inflate(R.layout.search_result_menu_layout, uiRoot, false);
 
-        m_list = (ListView)m_view.findViewById(R.id.search_menu_options_list_view);
-        m_searchList = (ListView)m_view.findViewById(R.id.search_menu_item_list);
+        m_list = (ListView)m_view.findViewById(R.id.search_menu_item_list);
         m_dragTabView = m_view.findViewById(R.id.search_menu_drag_tab_container_view);
         View dragTabInteractiveView = m_view.findViewById(R.id.search_menu_drag_tab_view);
         dragTabInteractiveView.setOnClickListener(this);
         dragTabInteractiveView.setOnTouchListener(this);
 
         m_closeButtonView = m_view.findViewById(R.id.search_menu_close_button);
-        m_closeButtonView.setOnClickListener(new SearchMenuCloseButtonClickedHandler(m_nativeCallerPointer));
+        m_closeButtonView.setOnClickListener(new SearchMenuCloseButtonClickedHandler(m_activity, m_nativeCallerPointer));
 
         m_progressSpinner = m_view.findViewById(R.id.search_menu_spinner);
         m_progressSpinner.setVisibility(View.GONE);
@@ -98,32 +91,14 @@ public class SearchMenuView extends MenuView
 
         uiRoot.addView(m_view);
 
-        m_listAdapter = new MenuListAdapter(
-        		m_activity, 
-        		R.layout.menu_list_item, 
-        		R.layout.menu_list_subitem, 
-        		false,
-        		R.drawable.menu_header_item_selected_states, 
-        		R.drawable.menu_sub_item_selected_states);
-        
+        m_listAdapter = new SearchMenuAdapter(m_activity, R.layout.search_result_menu_list_item);
         m_list.setAdapter(m_listAdapter);
-        
-        m_menuItemSelectedListener = new MenuItemSelectedListener(
-                m_listAdapter,
-                this,
-                m_activity,
-                m_nativeCallerPointer
-            );
-        m_list.setOnItemClickListener(m_menuItemSelectedListener);
-        
-        m_searchListAdapter = new SearchMenuAdapter(m_activity, R.layout.search_result_menu_list_item);
-        m_searchList.setAdapter(m_searchListAdapter);
-        
-        m_searchMenuItemSelectedListener = new SearchMenuItemSelectedListener(m_nativeCallerPointer, this);
-        m_searchList.setOnItemClickListener(m_searchMenuItemSelectedListener);
-        
+
         m_headerCategoryImage = (ImageView)m_view.findViewById(R.id.search_menu_header_category_icon);
         m_headerText = (TextView)m_view.findViewById(R.id.search_menu_header_text);
+
+        m_menuItemSelectedListener = new SearchMenuItemSelectedListener(m_nativeCallerPointer, this);
+        m_list.setOnItemClickListener(m_menuItemSelectedListener);
         
         ViewGroup vg = (ViewGroup)m_view;
         m_activity.recursiveDisableSplitMotionEvents(vg);
@@ -150,6 +125,28 @@ public class SearchMenuView extends MenuView
         
         m_headerText.setText(searchText);
     }
+    
+    public void setAttractMode(boolean attractModeEnabled)
+    {
+        m_inAttractMode = attractModeEnabled;
+        updateAttractMode();
+    }
+    
+    private void updateAttractMode()
+    {
+    	m_dragTabView.clearAnimation();
+    	
+        if(m_inAttractMode)
+        {	
+    		Animation anim = new TranslateAnimation(0, -10.f, 0.f, 0.f);
+    		anim.setDuration(300);
+    		anim.setInterpolator(new AccelerateDecelerateInterpolator());
+    		anim.setRepeatCount(TranslateAnimation.INFINITE);
+    		anim.setRepeatMode(TranslateAnimation.REVERSE);
+    		
+    		m_dragTabView.startAnimation(anim);
+        }
+    }
 
     @Override
     protected void handleDragFinish(int xPx, int yPx)
@@ -163,6 +160,7 @@ public class SearchMenuView extends MenuView
 
         animateViewToX(upXPx);
         MenuViewJniMethods.ViewDragCompleted(m_nativeCallerPointer);
+        updateAttractMode();
     }
 
     @Override
@@ -196,19 +194,7 @@ public class SearchMenuView extends MenuView
                                    List<Boolean> groupsExpandable,
                                    HashMap<String, List<String>> groupToChildrenMap)
     {
-    	m_listAdapter.setData(groups, groupsExpandable, groupToChildrenMap);
-    }
-    
-    public void setSearchSection(final int resultCount,
-    							 final String[] searchResults)
-    {
-    	ArrayList<String> searchResultList = new ArrayList<String>();
-        for(int i = 0; i < resultCount; i++)
-        {
-        	searchResultList.add(searchResults[i]);
-        }
-        
-    	m_searchListAdapter.setData(searchResultList);
+        m_listAdapter.setData(groupToChildrenMap.get("Search"));
     }
 }
 

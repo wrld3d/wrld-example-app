@@ -26,13 +26,14 @@
 #include "EnvironmentFlatteningService.h"
 #include "TtyHandler.h"
 #include "MenuViewModule.h"
-#include "SecondaryMenuModule.h"
+//#include "SecondaryMenuModule.h"
+#include "SettingsMenuModule.h"
 #include "ModalityModule.h"
 #include "ModalBackgroundViewModule.h"
 #include "ModalBackgroundNativeViewModule.h"
 #include "MenuModel.h"
 #include "MenuViewModel.h"
-#include "SearchResultMenuModule.h"
+#include "SearchMenuModule.h"
 #include "MenuOptionsModel.h"
 #include "SearchModule.h"
 #include "SearchResultOnMapModule.h"
@@ -49,7 +50,8 @@
 #include "WorldPinOnMapViewModule.h"
 #include "PlaceJumpsModule.h"
 #include "IPlaceJumpController.h"
-#include "SecondaryMenuViewModule.h"
+//#include "SecondaryMenuViewModule.h"
+#include "SettingsMenuViewModule.h"
 #include "SearchMenuViewModule.h"
 #include "CompassViewModule.h"
 #include "CompassModule.h"
@@ -84,6 +86,8 @@
 #include "AndroidApplicationConfigurationVersionProvider.h"
 #include "InteriorsExplorerModule.h"
 #include "InteriorsExplorerViewModule.h"
+#include "SearchResultSectionModule.h"
+#include "SearchResultSectionViewModule.h"
 
 using namespace Eegeo::Android;
 using namespace Eegeo::Android::Input;
@@ -127,8 +131,10 @@ AppHost::AppHost(
     ,m_androidNativeUIFactories(m_androidAlertBoxFactory, m_androidInputBoxFactory, m_androidKeyboardInputFactory)
     ,m_pInputProcessor(NULL)
     ,m_pAndroidPlatformAbstractionModule(NULL)
-    ,m_pSecondaryMenuViewModule(NULL)
-    ,m_pSearchResultMenuViewModule(NULL)
+    //,m_pSecondaryMenuViewModule(NULL)
+    ,m_pSearchMenuViewModule(NULL)
+	,m_pSettingsMenuViewModule(NULL)
+	,m_pSearchResultSectionViewModule(NULL)
     ,m_pModalBackgroundViewModule(NULL)
     ,m_pFlattenButtonViewModule(NULL)
     ,m_pMyPinCreationViewModule(NULL)
@@ -478,25 +484,40 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
                                        m_messageBus
                                    );
 
-    m_pSecondaryMenuViewModule = Eegeo_NEW(ExampleApp::SecondaryMenu::View::SecondaryMenuViewModule)(
+    /*m_pSecondaryMenuViewModule = Eegeo_NEW(ExampleApp::SecondaryMenu::View::SecondaryMenuViewModule)(
                                      "com/eegeo/secondarymenu/SecondaryMenuView",
                                      m_nativeState,
                                      app.SecondaryMenuModule().GetSecondaryMenuModel(),
                                      app.SecondaryMenuModule().GetSecondaryMenuViewModel(),
                                      m_messageBus
-                                 );
+                                 );*/
 
-    m_pSearchResultMenuViewModule = Eegeo_NEW(ExampleApp::SearchResultMenu::View::SearchMenuViewModule)(
+    m_pSearchMenuViewModule = Eegeo_NEW(ExampleApp::SearchMenu::View::SearchMenuViewModule)(
                                         "com/eegeo/searchmenu/SearchMenuView",
                                         m_nativeState,
-                                        app.SearchResultMenuModule().GetSearchResultMenuModel(),
-                                        app.SearchResultMenuModule().GetMenuViewModel(),
+                                        app.SearchMenuModule().GetSearchMenuModel(),
+                                        app.SearchMenuModule().GetSearchMenuViewModel(),
+										app.SearchMenuModule().GetSearchSectionViewModel(),
                                         app.CategorySearchModule().GetCategorySearchRepository(),
-                                        app.SearchResultMenuModule().GetSearchResultMenuViewModel(),
-	                                    app.SearchResultMenuModule().GetSearchResultMenuOptionsModel(),
-	                                    app.SearchResultMenuModule().GetSearchResultMenuOrder(),
+	                                    app.SearchMenuModule().GetSearchMenuOptionsModel(),
+										m_pModalBackgroundViewModule->GetModalBackgroundView(),
                                         m_messageBus
                                     );
+
+    m_pSettingsMenuViewModule = Eegeo_NEW(ExampleApp::SettingsMenu::View::SettingsMenuViewModule)(
+    											"com/eegeo/settingsmenu/SettingsMenuView",
+    		                                     m_nativeState,
+    		                                     app.SettingsMenuModule().GetSettingsMenuModel(),
+    		                                     app.SettingsMenuModule().GetSettingsMenuViewModel(),
+												 m_pModalBackgroundViewModule->GetModalBackgroundView(),
+    		                                     m_messageBus
+    		                                 );
+
+    m_pSearchResultSectionViewModule = Eegeo_NEW(ExampleApp::SearchResultSection::View::SearchResultSectionViewModule)(
+    		app.SearchMenuModule().GetSearchMenuViewModel(),
+		    app.SearchResultSectionModule().GetSearchResultSectionOptionsModel(),
+		    app.SearchResultSectionModule().GetSearchResultSectionOrder(),
+		    m_messageBus);
 
     // Pop-up layer.
     m_pSearchResultPoiViewModule = Eegeo_NEW(ExampleApp::SearchResultPoi::View::SearchResultPoiViewModule)(
@@ -542,8 +563,8 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
     																							 app.InteriorsExplorerModule().GetInteriorsExplorerViewModel(),
                                                                                                  m_messageBus,
                                                                                                  app.MyPinCreationModule().GetMyPinCreationInitiationViewModel(),
-                                                                                                 app.SecondaryMenuModule().GetSecondaryMenuViewModel(),
-                                                                                                 app.SearchResultMenuModule().GetMenuViewModel(),
+																								 app.SettingsMenuModule().GetSettingsMenuViewModel(),
+                                                                                                 app.SearchMenuModule().GetSearchMenuViewModel(),
                                                                                                  app.FlattenButtonModule().GetScreenControlViewModel(),
                                                                                                  app.CompassModule().GetScreenControlViewModel(),
                                                                                                  app.GetIdentityProvider(),
@@ -553,8 +574,11 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
 
     ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModel& viewControllerUpdaterModel = m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel();
 
-    viewControllerUpdaterModel.AddUpdateableObject(m_pSecondaryMenuViewModule->GetMenuController());
-    viewControllerUpdaterModel.AddUpdateableObject(m_pSearchResultMenuViewModule->GetMenuController());
+    //viewControllerUpdaterModel.AddUpdateableObject(m_pSecondaryMenuViewModule->GetMenuController());
+    //viewControllerUpdaterModel.AddUpdateableObject(m_pSearchResultMenuViewModule->GetMenuController());
+
+    viewControllerUpdaterModel.AddUpdateableObject(m_pSettingsMenuViewModule->GetMenuController());
+    viewControllerUpdaterModel.AddUpdateableObject(m_pSearchMenuViewModule->GetMenuController());
 
     SetTouchExclusivity();
 
@@ -591,9 +615,11 @@ void AppHost::DestroyApplicationViewModulesFromUiThread()
 
         Eegeo_DELETE m_pModalBackgroundViewModule;
 
-        Eegeo_DELETE m_pSearchResultMenuViewModule;
+        Eegeo_DELETE m_pSettingsMenuViewModule;
 
-        Eegeo_DELETE m_pSecondaryMenuViewModule;
+        Eegeo_DELETE m_pSearchMenuViewModule;
+
+//        Eegeo_DELETE m_pSecondaryMenuViewModule;
 
         Eegeo_DELETE m_pCompassViewModule;
 

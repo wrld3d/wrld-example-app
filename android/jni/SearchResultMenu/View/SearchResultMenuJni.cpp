@@ -1,10 +1,10 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
-#include "SearchMenuJni.h"
-#include "SearchMenuView.h"
+#include "SearchResultMenuJni.h"
+#include "SearchResultMenuView.h"
 #include "AndroidAppThreadAssertionMacros.h"
 
-JNIEXPORT void JNICALL Java_com_eegeo_searchmenu_SearchMenuViewJniMethods_HandleClosed(
+JNIEXPORT void JNICALL Java_com_eegeo_searchresultmenu_SearchResultMenuViewJniMethods_HandleClosed(
     JNIEnv* jenv, jobject obj,
     jlong nativeObjectPtr)
 {

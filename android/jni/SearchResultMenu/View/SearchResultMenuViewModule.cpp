@@ -2,9 +2,9 @@
 
 #include "AndroidNativeState.h"
 #include "Menu.h"
-#include "SearchMenuViewModule.h"
-#include "SearchResultMenuController.h"
-#include "SearchMenuView.h"
+#include "SearchResultMenuViewModule.h"
+//#include "SearchResultMenuController.h"
+#include "SearchResultMenuView.h"
 #include "AndroidAppThreadAssertionMacros.h"
 
 namespace ExampleApp
@@ -19,9 +19,9 @@ namespace ExampleApp
                 Menu::View::IMenuModel& menuModel,
                 Menu::View::IMenuViewModel& menuViewModel,
                 CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
-                ISearchResultMenuViewModel& searchResultMenuViewModel,
+                //ISearchResultMenuViewModel& searchResultMenuViewModel,
 				Menu::View::IMenuOptionsModel& menuOptionsModel,
-				ISearchResultMenuOrder& searchResultMenuOrder,
+				//ISearchResultMenuOrder& searchResultMenuOrder,
                 ExampleAppMessaging::TMessageBus& messageBus
             )
             {
@@ -30,7 +30,7 @@ namespace ExampleApp
                 SearchMenuView* view = Eegeo_NEW(SearchMenuView)(nativeState, viewName);
                 m_pView = view;
 
-                m_pController = Eegeo_NEW(SearchResultMenu::View::SearchResultMenuController)(
+               /* m_pController = Eegeo_NEW(SearchResultMenu::View::SearchResultMenuController)(
                                     *view,
                                     *view,
                                     menuModel,
@@ -40,7 +40,7 @@ namespace ExampleApp
                                     categorySearchRepository,
                                     searchResultMenuViewModel,
                                     messageBus
-                                );
+                                );*/
             }
 
             SearchMenuViewModule::~SearchMenuViewModule()

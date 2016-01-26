@@ -3,7 +3,7 @@
 #pragma once
 
 #include "MenuView.h"
-#include "ISecondaryMenuView.h"
+//#include "ISecondaryMenuView.h"
 #include "AndroidNativeState.h"
 #include "CallbackCollection.h"
 
@@ -15,7 +15,7 @@ namespace ExampleApp
     {
         namespace View
         {
-            class SecondaryMenuView : public Menu::View::MenuView, public ISecondaryMenuView
+            class SecondaryMenuView : public Menu::View::MenuView//, public ISecondaryMenuView
             {
             private:
                 Eegeo::Helpers::CallbackCollection1<const std::string&> m_callbacks;

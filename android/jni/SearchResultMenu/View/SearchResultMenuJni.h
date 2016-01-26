@@ -6,7 +6,7 @@
 
 extern "C"
 {
-    JNIEXPORT void JNICALL Java_com_eegeo_searchmenu_SearchMenuViewJniMethods_HandleClosed(
+    JNIEXPORT void JNICALL Java_com_eegeo_searchresultmenu_SearchResultMenuViewJniMethods_HandleClosed(
         JNIEnv* jenv, jobject obj,
         jlong nativeObjectPtr
     );

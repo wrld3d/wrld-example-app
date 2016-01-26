@@ -51,13 +51,19 @@ namespace ExampleApp
 
                 bool IsAnimating() const;
 
+                bool IsTableAnimating() const { return false; } // TODO: IR
+
                 void UpdateAnimation(float dt);
+
+                void UpdateTableAnimation(float dt) {} // TODO: IR
 
                 void UpdateMenuSectionViews(TSections& sections);
 
                 void SetFullyOnScreenOpen();
 
                 void SetFullyOnScreenClosed();
+
+                void SetTableCanInteract(bool canInteract) {} // TODO: IR
 
                 void SetOnScreenStateToIntermediateValue(float value);
 

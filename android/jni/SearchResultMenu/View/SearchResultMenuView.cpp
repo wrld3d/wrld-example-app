@@ -1,6 +1,6 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
-#include "SearchMenuView.h"
+#include "SearchResultMenuView.h"
 #include "AndroidAppThreadAssertionMacros.h"
 
 namespace ExampleApp

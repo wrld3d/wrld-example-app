@@ -2,45 +2,39 @@
 
 #pragma once
 
+#include <string>
 #include "AndroidNativeState.h"
 #include "Types.h"
 #include "Menu.h"
 #include "MenuViewIncludes.h"
 #include "IMenuViewModule.h"
 #include "Search.h"
-#include "CategorySearch.h"
-#include "SearchResultMenu.h"
 #include "BidirectionalBus.h"
-#include "AppModes.h"
-
-#include <string>
+#include "Modality.h"
 
 namespace ExampleApp
 {
-    namespace SearchResultMenu
+    namespace SettingsMenu
     {
         namespace View
         {
-            class SearchMenuViewModule: public Menu::View::IMenuViewModule, private Eegeo::NonCopyable
+            class SettingsMenuViewModule: public Menu::View::IMenuViewModule, private Eegeo::NonCopyable
             {
             private:
-                Menu::View::MenuController* m_pController;
                 Menu::View::MenuView* m_pView;
+                Menu::View::MenuController* m_pController;
 
             public:
-                SearchMenuViewModule(
+                SettingsMenuViewModule(
                     const std::string& viewName,
                     AndroidNativeState& nativeState,
                     Menu::View::IMenuModel& menuModelModel,
                     Menu::View::IMenuViewModel& menuViewModel,
-                    CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
-                    ISearchResultMenuViewModel& searchResultMenuViewModel,
-					Menu::View::IMenuOptionsModel& menuOptionsModel,
-					ISearchResultMenuOrder& searchResultMenuOrder,
+					Modality::View::IModalBackgroundView& modalBackgroundView,
                     ExampleAppMessaging::TMessageBus& messageBus
                 );
 
-                ~SearchMenuViewModule();
+                ~SettingsMenuViewModule();
 
                 Menu::View::MenuController& GetMenuController() const;
                 Menu::View::IMenuView& GetMenuView() const;
