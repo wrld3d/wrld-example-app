@@ -26,7 +26,6 @@
 #include "EnvironmentFlatteningService.h"
 #include "TtyHandler.h"
 #include "MenuViewModule.h"
-//#include "SecondaryMenuModule.h"
 #include "SettingsMenuModule.h"
 #include "ModalityModule.h"
 #include "ModalBackgroundViewModule.h"
@@ -50,7 +49,6 @@
 #include "WorldPinOnMapViewModule.h"
 #include "PlaceJumpsModule.h"
 #include "IPlaceJumpController.h"
-//#include "SecondaryMenuViewModule.h"
 #include "SettingsMenuViewModule.h"
 #include "SearchMenuViewModule.h"
 #include "CompassViewModule.h"
@@ -131,7 +129,6 @@ AppHost::AppHost(
     ,m_androidNativeUIFactories(m_androidAlertBoxFactory, m_androidInputBoxFactory, m_androidKeyboardInputFactory)
     ,m_pInputProcessor(NULL)
     ,m_pAndroidPlatformAbstractionModule(NULL)
-    //,m_pSecondaryMenuViewModule(NULL)
     ,m_pSearchMenuViewModule(NULL)
 	,m_pSettingsMenuViewModule(NULL)
 	,m_pSearchResultSectionViewModule(NULL)
@@ -484,14 +481,6 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
                                        m_messageBus
                                    );
 
-    /*m_pSecondaryMenuViewModule = Eegeo_NEW(ExampleApp::SecondaryMenu::View::SecondaryMenuViewModule)(
-                                     "com/eegeo/secondarymenu/SecondaryMenuView",
-                                     m_nativeState,
-                                     app.SecondaryMenuModule().GetSecondaryMenuModel(),
-                                     app.SecondaryMenuModule().GetSecondaryMenuViewModel(),
-                                     m_messageBus
-                                 );*/
-
     m_pSearchMenuViewModule = Eegeo_NEW(ExampleApp::SearchMenu::View::SearchMenuViewModule)(
                                         "com/eegeo/searchmenu/SearchMenuView",
                                         m_nativeState,
@@ -574,9 +563,6 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
 
     ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModel& viewControllerUpdaterModel = m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel();
 
-    //viewControllerUpdaterModel.AddUpdateableObject(m_pSecondaryMenuViewModule->GetMenuController());
-    //viewControllerUpdaterModel.AddUpdateableObject(m_pSearchResultMenuViewModule->GetMenuController());
-
     viewControllerUpdaterModel.AddUpdateableObject(m_pSettingsMenuViewModule->GetMenuController());
     viewControllerUpdaterModel.AddUpdateableObject(m_pSearchMenuViewModule->GetMenuController());
 
@@ -618,8 +604,6 @@ void AppHost::DestroyApplicationViewModulesFromUiThread()
         Eegeo_DELETE m_pSettingsMenuViewModule;
 
         Eegeo_DELETE m_pSearchMenuViewModule;
-
-//        Eegeo_DELETE m_pSecondaryMenuViewModule;
 
         Eegeo_DELETE m_pCompassViewModule;
 
