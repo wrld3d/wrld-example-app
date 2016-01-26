@@ -3,7 +3,7 @@
 #include "WindowsNativeState.h"
 #include "Menu.h"
 #include "SearchMenuViewModule.h"
-#include "SearchResultMenuController.h"
+//#include "SearchResultMenuController.h"
 #include "SearchMenuView.h"
 #include "WindowsAppThreadAssertionMacros.h"
 
@@ -20,7 +20,6 @@ namespace ExampleApp
                 Menu::View::IMenuViewModel& menuViewModel,
                 CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
                 Menu::View::IMenuOptionsModel& menuOptionsModel,
-                ISearchResultMenuOrder& searchResultMenuOrder,
                 AppModes::SdkModel::IAppModeModel& appModeModel,
                 ExampleAppMessaging::TMessageBus& messageBus
                 )
