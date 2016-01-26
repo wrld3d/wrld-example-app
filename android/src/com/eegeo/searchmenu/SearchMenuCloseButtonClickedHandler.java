@@ -16,6 +16,6 @@ public class SearchMenuCloseButtonClickedHandler implements View.OnClickListener
     @Override
     public void onClick(View view)
     {
-        SearchMenuViewJniMethods.HandleClosed(m_nativeCallerPointer);
+        SearchMenuViewJniMethods.OnSearchCleared(m_nativeCallerPointer);
     }
 }

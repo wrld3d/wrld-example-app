@@ -59,7 +59,7 @@
 				</ImageView>
 	            
 		        <com.eegeo.helpers.ClearableEditText
-					android:id="@+id/secondary_menu_view_search_edit_text_view"
+					android:id="@+id/search_menu_view_edit_text_view"
 		            android:inputType="text"
 		            android:textColor="@color/black"
 					android:layout_width="fill_parent"

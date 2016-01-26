@@ -35,6 +35,8 @@ namespace ExampleApp
                 jclass m_uiViewClass;
                 jobject m_uiView;
 
+                TSections m_currentSections;
+
             public:
                 MenuView(AndroidNativeState& nativeState,
                          const std::string& viewClassName);

@@ -15,40 +15,39 @@ namespace ExampleApp
             class SearchMenuView : public Menu::View::MenuView, public SearchMenu::View::ISearchMenuView
             {
             private:
-                Eegeo::Helpers::CallbackCollection0 m_closedCallbacks;
+                Eegeo::Helpers::CallbackCollection0 m_searchClearedCallbacks;
                 Eegeo::Helpers::CallbackCollection1<int> m_searchItemSelectedCallbacks;
+                Eegeo::Helpers::CallbackCollection1<const std::string&> m_searchPerformedCallbacks;
+
+                void CallVoidVoidMethod(const char* func);
 
             public:
                 SearchMenuView(AndroidNativeState& nativeState,
                                const std::string& viewClassName);
 
-                void SetHeader(const std::string& header, bool queryPending, size_t numResult);
-
-                void HandleSearchClosed();
-
-                void InsertSearchClosed(Eegeo::Helpers::ICallback0& callback);
-
-                void RemoveSearchClosed(Eegeo::Helpers::ICallback0& callback);
-
                 void SetSearchSection(Menu::View::IMenuSectionViewModel& searchSection);
 
-				void RemoveSeachKeyboard() {} // TODO: IR
+				void RemoveSeachKeyboard();
 
-				void DisableEditText() {} // TODO: IR
+				void DisableEditText();
 
-				void EnableEditText() {} // TODO: IR
+				void EnableEditText();
 
-				void SetEditText(const std::string& searchText, bool isCategory) {} // TODO: IR
+				void SetEditText(const std::string& searchText, bool isCategory);
 
-				void SetSearchResultCount(int searchResultCount) {} // TODO: IR
+				void SetSearchResultCount(int searchResultCount);
 
-				void CollapseAll() {} // TODO: IR
+				void CollapseAll();
 
-				void InsertSearchPeformedCallback(Eegeo::Helpers::ICallback1<const std::string&>& callback) {} // TODO: IR
-				void RemoveSearchPeformedCallback(Eegeo::Helpers::ICallback1<const std::string&>& callback) {} // TODO: IR
+				void InsertSearchPeformedCallback(Eegeo::Helpers::ICallback1<const std::string&>& callback);
+				void RemoveSearchPeformedCallback(Eegeo::Helpers::ICallback1<const std::string&>& callback);
 
-				void InsertSearchClearedCallback(Eegeo::Helpers::ICallback0& callback) {} // TODO: IR
-				void RemoveSearchClearedCallback(Eegeo::Helpers::ICallback0& callback) {} // TODO: IR
+				void SearchPerformed(const std::string& searchQuery);
+
+				void InsertSearchClearedCallback(Eegeo::Helpers::ICallback0& callback);
+				void RemoveSearchClearedCallback(Eegeo::Helpers::ICallback0& callback);
+
+				void OnSearchCleared();
 
 				void InsertSearchItemSelectedCallback(Eegeo::Helpers::ICallback1<int>& callback);
 				void RemoveSearchItemSelectedCallback(Eegeo::Helpers::ICallback1<int>& callback);

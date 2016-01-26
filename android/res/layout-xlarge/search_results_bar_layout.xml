@@ -1,41 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout 
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="wrap_content"
-  android:layout_height="wrap_content"
-  android:background="@drawable/search_results_bar">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="50dp"
+    android:background="@color/gold" >
 
-  <ImageView
-      android:id="@+id/search_menu_header_category_icon"
-      android:contentDescription="@string/content_desc_category_icon"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_centerVertical="true"
-      android:layout_marginLeft="9dp"
-      android:layout_marginTop="6dp"
-      android:src="@drawable/icon1_coffee"/>
-  
-  <TextView
-      android:id="@+id/search_menu_header_text"
-      android:layout_width="190dp"
-      android:layout_height="40dp"
-      android:layout_centerVertical="true"
-      android:layout_marginLeft="70dp"
-      android:background="@android:color/transparent"
-      android:gravity="center_vertical"
-      android:lines="1"
-      android:singleLine="true"
-      android:textColor="@color/gold"
-      android:textSize="18dp" />
-  
-  <Button
-   android:id="@+id/search_menu_close_button"
-   android:layout_width="wrap_content"
-   android:layout_height="wrap_content"
-      android:layout_centerVertical="true"
-      android:layout_toRightOf="@+id/search_menu_header_text"
-      android:layout_marginLeft="5dp"
-   android:background="@drawable/buttonsmall_close_states"
-   android:clickable="true"/>
+    <TextView
+        android:id="@+id/search_menu_result_count"
+        android:layout_width="32dp"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:gravity="center_horizontal"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <EditText
+        android:id="@+id/search_menu_view_edit_text_view"
+        android:layout_width="263dp"
+        android:layout_height="42dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="32dp"
+        android:ems="10"
+        android:hint="Enter search term"
+        android:inputType="text"
+        android:textSize="18dp" />
+
+    <Button
+        android:id="@+id/search_menu_close_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/search_menu_view_edit_text_view"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/buttonsmall_close_states"
+        android:clickable="true" />
+
 </RelativeLayout>
- 

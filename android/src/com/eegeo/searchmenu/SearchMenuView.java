@@ -6,26 +6,24 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import android.view.KeyEvent;
 import android.view.View;
-import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
-import android.widget.ImageView;
+import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.view.ViewGroup;
 
 import com.eegeo.entrypointinfrastructure.MainActivity;
-import com.eegeo.mobileexampleapp.R;
-import com.eegeo.categories.CategoryResources;
 import com.eegeo.menu.MenuItemSelectedListener;
 import com.eegeo.menu.MenuListAdapter;
 import com.eegeo.menu.MenuView;
 import com.eegeo.menu.MenuViewJniMethods;
+import com.eegeo.mobileexampleapp.R;
 
-public class SearchMenuView extends MenuView
+public class SearchMenuView extends MenuView implements TextView.OnEditorActionListener
 {
     protected View m_closeButtonView = null;
     protected View m_progressSpinner = null;
@@ -42,8 +40,11 @@ public class SearchMenuView extends MenuView
     
     private MenuListAdapter m_listAdapter = null;
 
-    private ImageView m_headerCategoryImage;
-    private TextView m_headerText;
+    private EditText m_editText;
+    
+    private TextView m_searchCountText;
+    
+    private boolean m_isCategory;
 
     public SearchMenuView(MainActivity activity, long nativeCallerPointer)
     {
@@ -71,6 +72,13 @@ public class SearchMenuView extends MenuView
 
         m_numResultsText = (TextView) m_view.findViewById(R.id.search_menu_num_results_text);
         m_numResultsText.setVisibility(View.GONE);
+        
+        m_editText = (EditText)m_view.findViewById(R.id.search_menu_view_edit_text_view);
+        m_editText.setImeActionLabel("Search", KeyEvent.KEYCODE_ENTER);
+        m_editText.setOnEditorActionListener(this);
+        
+        m_searchCountText = (TextView)m_view.findViewById(R.id.search_menu_result_count);
+        m_searchCountText.setText("");
 
         m_view.addOnLayoutChangeListener(new View.OnLayoutChangeListener() 
         {
@@ -122,33 +130,64 @@ public class SearchMenuView extends MenuView
         m_searchMenuItemSelectedListener = new SearchMenuItemSelectedListener(m_nativeCallerPointer, this);
         m_searchList.setOnItemClickListener(m_searchMenuItemSelectedListener);
         
-        m_headerCategoryImage = (ImageView)m_view.findViewById(R.id.search_menu_header_category_icon);
-        m_headerText = (TextView)m_view.findViewById(R.id.search_menu_header_text);
-        
         ViewGroup vg = (ViewGroup)m_view;
         m_activity.recursiveDisableSplitMotionEvents(vg);
+        
+        m_isCategory = false;
+    }
+    
+    @Override
+    public boolean onEditorAction(TextView view, int actionId, KeyEvent event)
+    {
+        if (actionId == EditorInfo.IME_ACTION_DONE)
+        {
+            final String queryText = m_editText.getText().toString();
+            m_activity.dismissKeyboard(m_editText.getWindowToken());
+
+            if(queryText.length() > 0)
+            {
+                SearchMenuViewJniMethods.PerformSearchQuery(m_nativeCallerPointer, queryText);
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+    
+    public void removeSearchKeyboard()
+    {
+        m_activity.dismissKeyboard(m_editText.getWindowToken());
     }
 
-    public void updateHeader(final String searchText, final boolean pendingQueryResult, final int numResults)
+    public void disableEditText()
     {
-        if(pendingQueryResult)
-        {
-            m_progressSpinner.setVisibility(View.VISIBLE);
-            m_numResultsText.setVisibility(View.GONE);
-        }
-        else
-        {
-            m_numResultsText.setText(String.valueOf(numResults));
-            m_numResultsText.setVisibility(View.VISIBLE);
-            m_progressSpinner.setVisibility(View.GONE);
-        }
+        m_editText.setEnabled(false);
+    }
 
-        if(m_headerCategoryImage != null)
-        {
-        	m_headerCategoryImage.setImageResource(CategoryResources.getSmallIconForCategory(m_activity, searchText));
-        }
-        
-        m_headerText.setText(searchText);
+    public void enableEditText()
+    {
+        m_editText.setEnabled(true);
+    }
+    
+    public void setEditText(String searchText, boolean isCategory)
+    {
+    	m_editText.setText(searchText);
+    	
+    	m_isCategory = isCategory;
+    }
+    
+    public void setSearchResultCount(final int searchResultCount)
+    {
+    	if(searchResultCount == 0)
+    	{
+    		m_searchCountText.setText("");
+    	}
+    	else
+    	{
+    		Integer searchResultCountWrapp = searchResultCount;
+    		m_searchCountText.setText(searchResultCountWrapp.toString());
+    	}
     }
 
     @Override

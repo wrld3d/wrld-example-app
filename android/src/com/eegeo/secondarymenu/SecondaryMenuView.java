@@ -47,7 +47,7 @@ public class SecondaryMenuView extends MenuView implements TextView.OnEditorActi
         m_dragTabView.setOnClickListener(this);
         m_dragTabView.setOnTouchListener(this);
 
-        m_editText = (ClearableEditText)m_view.findViewById(R.id.secondary_menu_view_search_edit_text_view);
+        m_editText = (ClearableEditText)m_view.findViewById(R.id.search_menu_view_edit_text_view);
         m_editText.setImeActionLabel("Search", KeyEvent.KEYCODE_ENTER);
         m_editText.setOnEditorActionListener(this);
 

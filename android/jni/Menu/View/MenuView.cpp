@@ -110,6 +110,8 @@ namespace ExampleApp
             {
                 ASSERT_UI_THREAD
 
+				m_currentSections = sections;
+
                 AndroidSafeNativeThreadAttachment attached(m_nativeState);
                 JNIEnv* env = attached.envForThread;
 

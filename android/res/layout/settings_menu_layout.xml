@@ -59,7 +59,7 @@
 				</ImageView>
 
 		        <TextView
-		            android:id="@+id/textView1"
+		            android:id="@+id/search_menu_result_count"
 		            android:layout_width="wrap_content"
 		            android:layout_height="wrap_content"
 		            android:layout_centerVertical="true"

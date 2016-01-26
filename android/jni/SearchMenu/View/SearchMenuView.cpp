@@ -9,41 +9,20 @@ namespace ExampleApp
     {
         namespace View
         {
+        	void SearchMenuView::CallVoidVoidMethod(const char* func)
+			{
+				ASSERT_UI_THREAD
+				AndroidSafeNativeThreadAttachment attached(m_nativeState);
+				JNIEnv* env = attached.envForThread;
+
+				jmethodID jmethod = env->GetMethodID(m_uiViewClass, func, "()V");
+				env->CallVoidMethod(m_uiView, jmethod);
+			}
+
             SearchMenuView::SearchMenuView(AndroidNativeState& nativeState,
                                            const std::string& viewClassName)
                 : Menu::View::MenuView(nativeState, viewClassName)
             {
-            }
-
-            void SearchMenuView::SetHeader(const std::string& header, bool queryPending, size_t numResult)
-            {
-                ASSERT_UI_THREAD
-
-                AndroidSafeNativeThreadAttachment attached(m_nativeState);
-                JNIEnv* env = attached.envForThread;
-
-                jmethodID updateHeaderMethod = env->GetMethodID(m_uiViewClass, "updateHeader", "(Ljava/lang/String;ZI)V");
-                jstring queryString = env->NewStringUTF(header.c_str());
-
-                env->CallVoidMethod(m_uiView, updateHeaderMethod, queryString, queryPending, numResult);
-                env->DeleteLocalRef(queryString);
-            }
-
-            void SearchMenuView::HandleSearchClosed()
-            {
-                ASSERT_UI_THREAD
-
-                m_closedCallbacks.ExecuteCallbacks();
-            }
-
-            void SearchMenuView::InsertSearchClosed(Eegeo::Helpers::ICallback0& callback)
-            {
-                m_closedCallbacks.AddCallback(callback);
-            }
-
-            void SearchMenuView::RemoveSearchClosed(Eegeo::Helpers::ICallback0& callback)
-            {
-                m_closedCallbacks.RemoveCallback(callback);
             }
 
             void SearchMenuView::SetSearchSection(Menu::View::IMenuSectionViewModel& searchSection)
@@ -79,6 +58,94 @@ namespace ExampleApp
 				env->DeleteLocalRef(searchResultArray);
             }
 
+            void SearchMenuView::RemoveSeachKeyboard()
+			{
+				ASSERT_UI_THREAD
+				CallVoidVoidMethod("removeSearchKeyboard");
+			}
+
+			void SearchMenuView::DisableEditText()
+			{
+				ASSERT_UI_THREAD
+				CallVoidVoidMethod("disableEditText");
+			}
+
+			void SearchMenuView::EnableEditText()
+			{
+				ASSERT_UI_THREAD
+				CallVoidVoidMethod("enableEditText");
+			}
+
+			void SearchMenuView::SetEditText(const std::string& searchText, bool isCategory)
+			{
+				ASSERT_UI_THREAD
+
+				AndroidSafeNativeThreadAttachment attached(m_nativeState);
+				JNIEnv* env = attached.envForThread;
+
+				jmethodID setEditTextMethod = env->GetMethodID(m_uiViewClass, "setEditText", "(Ljava/lang/String;Z)V");
+				jstring searchTextString = env->NewStringUTF(searchText.c_str());
+
+				env->CallVoidMethod(m_uiView, setEditTextMethod, searchTextString, isCategory);
+				env->DeleteLocalRef(searchTextString);
+			}
+
+			void SearchMenuView::SetSearchResultCount(int searchResultCount)
+			{
+				ASSERT_UI_THREAD
+
+				AndroidSafeNativeThreadAttachment attached(m_nativeState);
+				JNIEnv* env = attached.envForThread;
+
+				jmethodID setSearchResultCountMethod = env->GetMethodID(m_uiViewClass, "setSearchResultCount", "(I)V");
+
+				env->CallVoidMethod(m_uiView, setSearchResultCountMethod, searchResultCount);
+			}
+
+			void SearchMenuView::CollapseAll()
+			{
+				for(Menu::View::TSections::iterator it = m_currentSections.begin(); it != m_currentSections.end(); ++it)
+				{
+					(*it)->Contract();
+				}
+
+				UpdateMenuSectionViews(m_currentSections);
+			}
+
+            void SearchMenuView::InsertSearchPeformedCallback(Eegeo::Helpers::ICallback1<const std::string&>& callback)
+			{
+				m_searchPerformedCallbacks.AddCallback(callback);
+			}
+
+			void SearchMenuView::RemoveSearchPeformedCallback(Eegeo::Helpers::ICallback1<const std::string&>& callback)
+			{
+				m_searchPerformedCallbacks.RemoveCallback(callback);
+			}
+
+			void SearchMenuView::SearchPerformed(const std::string& searchQuery)
+			{
+				ASSERT_UI_THREAD
+
+				m_searchPerformedCallbacks.ExecuteCallbacks(searchQuery);
+			}
+
+			void SearchMenuView::InsertSearchClearedCallback(Eegeo::Helpers::ICallback0& callback)
+			{
+				m_searchClearedCallbacks.AddCallback(callback);
+			}
+
+			void SearchMenuView::RemoveSearchClearedCallback(Eegeo::Helpers::ICallback0& callback)
+			{
+				m_searchClearedCallbacks.RemoveCallback(callback);
+			}
+
+			void SearchMenuView::OnSearchCleared()
+			{
+				ASSERT_UI_THREAD
+
+				m_searchClearedCallbacks.ExecuteCallbacks();
+			}
+
             void SearchMenuView::InsertSearchItemSelectedCallback(Eegeo::Helpers::ICallback1<int>& callback)
             {
             	m_searchItemSelectedCallbacks.AddCallback(callback);
@@ -91,6 +158,8 @@ namespace ExampleApp
 
 			void SearchMenuView::HandleSearchItemSelected(int index)
 			{
+				ASSERT_UI_THREAD
+
 				m_searchItemSelectedCallbacks.ExecuteCallbacks(index);
 			}
         }
