@@ -3,7 +3,7 @@
 #pragma once
 
 #include "MenuView.h"
-#include "ISearchResultMenuView.h"
+//#include "ISearchResultMenuView.h"
 #include "CallbackCollection.h"
 #include "WindowsNativeState.h"
 
@@ -15,7 +15,7 @@ namespace ExampleApp
     {
         namespace View
         {
-            class SearchMenuView : public Menu::View::MenuView, public SearchResultMenu::View::ISearchResultMenuView
+            class SearchMenuView : public Menu::View::MenuView
             {
             private:
                 Eegeo::Helpers::CallbackCollection0 m_closedCallbacks;

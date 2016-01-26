@@ -19,7 +19,7 @@ namespace ExampleApp
             {
                 ASSERT_UI_THREAD
 
-                m_pView = Eegeo_NEW(ModalBackgroundAggregateView)(nativeState, messageBus);
+                //m_pView = Eegeo_NEW(ModalBackgroundAggregateView)(nativeState, messageBus);
                 m_pController = Eegeo_NEW(Modality::View::ModalBackgroundController)(*m_pView, modalityModel);
             }
 

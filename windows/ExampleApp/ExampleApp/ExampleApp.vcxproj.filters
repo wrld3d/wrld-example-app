@@ -544,6 +544,33 @@
     <Filter Include="Source Files\App\VisualMap\SdkModel">
       <UniqueIdentifier>{79333050-6773-4f5c-9f6e-81daacf33c3e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\App\SettingsMenu">
+      <UniqueIdentifier>{cc2fd5a2-574b-420a-b8ae-98883c45a118}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\App\SettingsMenu\View">
+      <UniqueIdentifier>{b9657545-535e-4620-875a-cad2edc098e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\App\SettingsMenu\SdkModel">
+      <UniqueIdentifier>{0c98fee7-21cc-4c4e-b1d2-e5af2b3486b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\App\SearchMenu">
+      <UniqueIdentifier>{f4370ba3-425b-484c-8aa1-1cd0801213bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\App\SearchMenu\View">
+      <UniqueIdentifier>{b03322eb-de65-4263-9e5b-c0f9e238e8a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\App\SearchMenu\SdkModel">
+      <UniqueIdentifier>{6f92b55f-4a01-49de-9689-219eaac23ca6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\App\Surveys">
+      <UniqueIdentifier>{996b5ed6-4ef2-43ff-bd27-e24b397f0a13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\App\Surveys\View">
+      <UniqueIdentifier>{ea776bbb-4012-4c8c-a4b6-e10590255347}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\App\Surveys\SdkModel">
+      <UniqueIdentifier>{fa38b63a-f9b4-4d49-9339-484bee4c3b07}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\AppHost.cpp">
@@ -692,15 +719,6 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\InitialExperience\View\InitialExperienceIntroController.cpp">
       <Filter>Source Files\App\InitialExperience\View</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\InitialExperience\SearchAttract\InitialExperienceSearchResultAttractModeModule.cpp">
-      <Filter>Source Files\App\InitialExperience\SearchAttract</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\InitialExperience\SearchAttract\SdkModel\InitialExperienceSearchResultAttractModeModel.cpp">
-      <Filter>Source Files\App\InitialExperience\SearchAttract\SdkModel</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\InitialExperience\SearchAttract\View\InitialExperienceSearchResultAttractModeViewController.cpp">
-      <Filter>Source Files\App\InitialExperience\SearchAttract\View</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\InitialExperience\SdkModel\InitialExperienceController.cpp">
       <Filter>Source Files\App\InitialExperience\SdkModel</Filter>
@@ -1139,24 +1157,6 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\SearchResultPoi\SdkModel\SearchResultPoiViewOpenedMessageHandler.cpp">
       <Filter>Source Files\App\SearchResultPoi\SdkModel</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\SecondaryMenu\PerformedSearchMessage.cpp">
-      <Filter>Source Files\App\SecondaryMenu</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\SecondaryMenu\View\AboutPageMenuOption.cpp">
-      <Filter>Source Files\App\SecondaryMenu\View</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\SecondaryMenu\View\OptionsMenuOption.cpp">
-      <Filter>Source Files\App\SecondaryMenu\View</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\SecondaryMenu\View\SecondaryMenuController.cpp">
-      <Filter>Source Files\App\SecondaryMenu\View</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\SecondaryMenu\SdkModel\PerformedSearchMessageHandler.cpp">
-      <Filter>Source Files\App\SecondaryMenu\SdkModel</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\SecondaryMenu\SdkModel\SecondaryMenuModule.cpp">
-      <Filter>Source Files\App\SecondaryMenu\SdkModel</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\Tours\SdkModel\Camera\SplineCameraMode.cpp">
       <Filter>Source Files\App\Tours\SdkModel\Camera</Filter>
@@ -1653,22 +1653,10 @@
     <ClCompile Include="..\..\..\src\SearchResultMenu\View\SearchResultItemModel.cpp">
       <Filter>Source Files\App\SearchResultMenu\View</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\SearchResultMenu\View\SearchResultMenuAppModeMessageHandler.cpp">
-      <Filter>Source Files\App\SearchResultMenu\View</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\SearchResultMenu\View\SearchResultMenuController.cpp">
       <Filter>Source Files\App\SearchResultMenu\View</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\SearchResultMenu\View\SearchResultMenuOrder.cpp">
-      <Filter>Source Files\App\SearchResultMenu\View</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\SearchResultMenu\View\SearchResultMenuSearchQueryPerformedMessageHandler.cpp">
-      <Filter>Source Files\App\SearchResultMenu\View</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\SearchResultMenu\View\SearchResultMenuSearchQueryRemovedMessageHandler.cpp">
-      <Filter>Source Files\App\SearchResultMenu\View</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\SearchResultMenu\View\SearchResultMenuViewModel.cpp">
       <Filter>Source Files\App\SearchResultMenu\View</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\SearchResultMenu\View\SearchResultRepositoryObserver.cpp">
@@ -1844,6 +1832,36 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\Net\SdkModel\ConnectivityChangedObserver.cpp">
       <Filter>Source Files\App\Net\SdkModel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\SettingsMenu\SdkModel\SettingsMenuModule.cpp">
+      <Filter>Source Files\App\SettingsMenu\SdkModel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\SettingsMenu\View\AboutPageMenuOption.cpp">
+      <Filter>Source Files\App\SettingsMenu\View</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\SettingsMenu\View\OptionsMenuOption.cpp">
+      <Filter>Source Files\App\SettingsMenu\View</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\SettingsMenu\View\SettingsMenuController.cpp">
+      <Filter>Source Files\App\SettingsMenu\View</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\SearchMenu\SearchMenuPerformedSearchMessage.cpp">
+      <Filter>Source Files\App\SearchMenu</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\SearchMenu\View\SearchMenuController.cpp">
+      <Filter>Source Files\App\SearchMenu\View</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\SearchMenu\SdkModel\SearchMenuModule.cpp">
+      <Filter>Source Files\App\SearchMenu\SdkModel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\SearchMenu\SdkModel\SearchMenuPerformedSearchMessageHandler.cpp">
+      <Filter>Source Files\App\SearchMenu\SdkModel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Surveys\SdkModel\SurveyModule.cpp">
+      <Filter>Source Files\App\Surveys\SdkModel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Surveys\SdkModel\SurveyObserver.cpp">
+      <Filter>Source Files\App\Surveys\SdkModel</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2131,15 +2149,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\InitialExperience\SearchAttract\InitialExperienceSearchResultAttractModeModelStateUpdatedMessage.h">
       <Filter>Source Files\App\InitialExperience\SearchAttract</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\InitialExperience\SearchAttract\InitialExperienceSearchResultAttractModeModule.h">
-      <Filter>Source Files\App\InitialExperience\SearchAttract</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\InitialExperience\SearchAttract\SdkModel\InitialExperienceSearchResultAttractModeModel.h">
-      <Filter>Source Files\App\InitialExperience\SearchAttract\SdkModel</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\InitialExperience\SearchAttract\View\InitialExperienceSearchResultAttractModeViewController.h">
-      <Filter>Source Files\App\InitialExperience\SearchAttract\View</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\InitialExperience\SdkModel\IInitialExperienceController.h">
       <Filter>Source Files\App\InitialExperience\SdkModel</Filter>
@@ -2921,32 +2930,11 @@
     <ClInclude Include="..\..\..\src\SearchResultPoi\SdkModel\SearchResultPoiViewOpenedMessageHandler.h">
       <Filter>Source Files\App\SearchResultPoi\SdkModel</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\SecondaryMenu\PerformedSearchMessage.h">
-      <Filter>Source Files\App\SecondaryMenu</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\SecondaryMenu\SecondaryMenu.h">
       <Filter>Source Files\App\SecondaryMenu</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\SecondaryMenu\View\AboutPageMenuOption.h">
-      <Filter>Source Files\App\SecondaryMenu\View</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\SecondaryMenu\View\ISecondaryMenuView.h">
       <Filter>Source Files\App\SecondaryMenu\View</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\SecondaryMenu\View\OptionsMenuOption.h">
-      <Filter>Source Files\App\SecondaryMenu\View</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\SecondaryMenu\View\SecondaryMenuController.h">
-      <Filter>Source Files\App\SecondaryMenu\View</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\SecondaryMenu\SdkModel\ISecondaryMenuModule.h">
-      <Filter>Source Files\App\SecondaryMenu\SdkModel</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\SecondaryMenu\SdkModel\PerformedSearchMessageHandler.h">
-      <Filter>Source Files\App\SecondaryMenu\SdkModel</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\SecondaryMenu\SdkModel\SecondaryMenuModule.h">
-      <Filter>Source Files\App\SecondaryMenu\SdkModel</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\Tours\SdkModel\Camera\DroneLookatCameraMode.h">
       <Filter>Source Files\App\Tours\SdkModel\Camera</Filter>
@@ -3710,28 +3698,13 @@
     <ClInclude Include="..\..\..\src\SearchResultMenu\View\ISearchResultMenuView.h">
       <Filter>Source Files\App\SearchResultMenu\View</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\SearchResultMenu\View\ISearchResultMenuViewModel.h">
-      <Filter>Source Files\App\SearchResultMenu\View</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\SearchResultMenu\View\SearchResultItemModel.h">
-      <Filter>Source Files\App\SearchResultMenu\View</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\SearchResultMenu\View\SearchResultMenuAppModeMessageHandler.h">
       <Filter>Source Files\App\SearchResultMenu\View</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\SearchResultMenu\View\SearchResultMenuController.h">
       <Filter>Source Files\App\SearchResultMenu\View</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\SearchResultMenu\View\SearchResultMenuOrder.h">
-      <Filter>Source Files\App\SearchResultMenu\View</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\SearchResultMenu\View\SearchResultMenuSearchQueryPerformedMessageHandler.h">
-      <Filter>Source Files\App\SearchResultMenu\View</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\SearchResultMenu\View\SearchResultMenuSearchQueryRemovedMessageHandler.h">
-      <Filter>Source Files\App\SearchResultMenu\View</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\SearchResultMenu\View\SearchResultMenuViewModel.h">
       <Filter>Source Files\App\SearchResultMenu\View</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\SearchResultMenu\View\SearchResultRepositoryObserver.h">
@@ -4054,6 +4027,66 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\Net\ConnectivityChangedViewMessage.h">
       <Filter>Source Files\App\Net</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\SettingsMenu\SettingsMenu.h">
+      <Filter>Source Files\App\SettingsMenu</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\SettingsMenu\SdkModel\ISettingsMenuModule.h">
+      <Filter>Source Files\App\SettingsMenu\SdkModel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\SettingsMenu\SdkModel\SettingsMenuModule.h">
+      <Filter>Source Files\App\SettingsMenu\SdkModel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\SettingsMenu\View\AboutPageMenuOption.h">
+      <Filter>Source Files\App\SettingsMenu\View</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\SettingsMenu\View\ISettingsMenuView.h">
+      <Filter>Source Files\App\SettingsMenu\View</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\SettingsMenu\View\OptionsMenuOption.h">
+      <Filter>Source Files\App\SettingsMenu\View</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\SettingsMenu\View\SettingsMenuController.h">
+      <Filter>Source Files\App\SettingsMenu\View</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\SearchMenu\SearchMenu.h">
+      <Filter>Source Files\App\SearchMenu</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\SearchMenu\SearchMenuPerformedSearchMessage.h">
+      <Filter>Source Files\App\SearchMenu</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\SearchMenu\View\ISearchMenuView.h">
+      <Filter>Source Files\App\SearchMenu\View</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\SearchMenu\View\SearchMenuController.h">
+      <Filter>Source Files\App\SearchMenu\View</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\SearchMenu\SdkModel\ISearchMenuModule.h">
+      <Filter>Source Files\App\SearchMenu\SdkModel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\SearchMenu\SdkModel\SearchMenuModule.h">
+      <Filter>Source Files\App\SearchMenu\SdkModel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\SearchMenu\SdkModel\SearchMenuPerformedSearchMessageHandler.h">
+      <Filter>Source Files\App\SearchMenu\SdkModel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Surveys\StartSearchSurveyMessage.h">
+      <Filter>Source Files\App\Surveys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Surveys\StartUxSurveyMessage.h">
+      <Filter>Source Files\App\Surveys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Surveys\Surveys.h">
+      <Filter>Source Files\App\Surveys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Surveys\SdkModel\ISurveyModule.h">
+      <Filter>Source Files\App\Surveys\SdkModel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Surveys\SdkModel\SurveyModule.h">
+      <Filter>Source Files\App\Surveys\SdkModel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Surveys\SdkModel\SurveyObserver.h">
+      <Filter>Source Files\App\Surveys\SdkModel</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

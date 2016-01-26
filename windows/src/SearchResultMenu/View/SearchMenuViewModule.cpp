@@ -19,7 +19,6 @@ namespace ExampleApp
                 Menu::View::IMenuModel& menuModel,
                 Menu::View::IMenuViewModel& menuViewModel,
                 CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
-                ISearchResultMenuViewModel& searchResultMenuViewModel,
                 Menu::View::IMenuOptionsModel& menuOptionsModel,
                 ISearchResultMenuOrder& searchResultMenuOrder,
                 AppModes::SdkModel::IAppModeModel& appModeModel,
@@ -28,20 +27,20 @@ namespace ExampleApp
             {
                 ASSERT_UI_THREAD
 
-                    SearchMenuView* view = Eegeo_NEW(SearchMenuView)(nativeState, viewName);
-                m_pView = view;
+                //    SearchMenuView* view = Eegeo_NEW(SearchMenuView)(nativeState, viewName);
+                //m_pView = view;
 
-                m_pController = Eegeo_NEW(SearchResultMenu::View::SearchResultMenuController)(
-                    *view,
-                    *view,
-                    menuModel,
-                    menuViewModel,
-                    menuOptionsModel,
-                    searchResultMenuOrder,
-                    categorySearchRepository,
-                    searchResultMenuViewModel,
-                    messageBus
-                    );
+                //m_pController = Eegeo_NEW(SearchResultMenu::View::SearchResultMenuController)(
+                //    *view,
+                //    *view,
+                //    menuModel,
+                //    menuViewModel,
+                //    menuOptionsModel,
+                //    searchResultMenuOrder,
+                //    categorySearchRepository,
+                //    searchResultMenuViewModel,
+                //    messageBus
+                //    );
             }
 
             SearchMenuViewModule::~SearchMenuViewModule()
