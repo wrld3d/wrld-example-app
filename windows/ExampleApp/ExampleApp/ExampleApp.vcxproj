@@ -1847,6 +1847,7 @@
     <ClInclude Include="..\..\..\src\Helpers\IStateMachineState.h" />
     <ClInclude Include="..\..\..\src\Helpers\SizeHelpers.h" />
     <ClInclude Include="..\..\..\src\Helpers\StateMachine.h" />
+    <ClInclude Include="..\..\..\src\IAppCamera.h" />
     <ClInclude Include="..\..\..\src\InitialExperience\InitialExperienceIntroDismissedMessage.h" />
     <ClInclude Include="..\..\..\src\InitialExperience\Preload\SdkModel\IInitialExperiencePreLoadModel.h" />
     <ClInclude Include="..\..\..\src\InitialExperience\Preload\SdkModel\InitialExperiencePreLoadModelBase.h" />
@@ -2184,8 +2185,6 @@
     <ClInclude Include="..\..\..\src\Search\Yelp\SdkModel\YelpSearchService.h" />
     <ClInclude Include="..\..\..\src\Search\Yelp\SearchConstants\YelpSearchConstants.h" />
     <ClInclude Include="..\..\..\src\Search\Yelp\Yelp.h" />
-    <ClInclude Include="..\..\..\src\SecondaryMenu\SecondaryMenu.h" />
-    <ClInclude Include="..\..\..\src\SecondaryMenu\View\ISecondaryMenuView.h" />
     <ClInclude Include="..\..\..\src\SettingsMenu\SdkModel\ISettingsMenuModule.h" />
     <ClInclude Include="..\..\..\src\SettingsMenu\SdkModel\SettingsMenuModule.h" />
     <ClInclude Include="..\..\..\src\SettingsMenu\SettingsMenu.h" />

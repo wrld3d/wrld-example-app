@@ -313,9 +313,6 @@
     <Filter Include="Source Files\App\SearchResultPoi">
       <UniqueIdentifier>{a0451e79-111a-467c-9178-54c532082820}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\App\SecondaryMenu">
-      <UniqueIdentifier>{e818bce8-3f5d-4705-b8e1-928f9038aa05}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\App\Tours">
       <UniqueIdentifier>{32b611ab-da63-4da3-988c-f145c413cc28}</UniqueIdentifier>
     </Filter>
@@ -369,12 +366,6 @@
     </Filter>
     <Filter Include="Source Files\App\SearchResultPoi\SdkModel">
       <UniqueIdentifier>{264a9082-9090-4eb2-928a-be42aef62a20}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\App\SecondaryMenu\View">
-      <UniqueIdentifier>{481c42a4-11b1-47c6-a830-1607fb0a92e4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\App\SecondaryMenu\SdkModel">
-      <UniqueIdentifier>{da56bdc3-7fb5-455d-a686-321e40465385}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\App\Tours\View">
       <UniqueIdentifier>{f8e078b4-2121-4f67-bc90-9f3ab8d9a391}</UniqueIdentifier>
@@ -508,12 +499,6 @@
     <Filter Include="Source Files\Windows\InteriorsExplorer">
       <UniqueIdentifier>{82aafd09-e19b-4384-be70-cdef6c387d63}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Windows\UserInteraction">
-      <UniqueIdentifier>{c1ca1940-63b1-46dc-8524-12fafb684771}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Windows\UserInteraction\SdkModel">
-      <UniqueIdentifier>{c3edd24e-e685-4a76-b206-5a2721f6195e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\App\Watermark\SdkModel">
       <UniqueIdentifier>{f857c55b-4aca-4490-828d-e027a47aea54}</UniqueIdentifier>
     </Filter>
@@ -570,6 +555,12 @@
     </Filter>
     <Filter Include="Source Files\App\SearchResultSection\SdkModel">
       <UniqueIdentifier>{30d27979-c74b-400d-a8df-0bfbad57da0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\App\UserInteraction">
+      <UniqueIdentifier>{c1ca1940-63b1-46dc-8524-12fafb684771}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\App\UserInteraction\SdkModel">
+      <UniqueIdentifier>{c3edd24e-e685-4a76-b206-5a2721f6195e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1702,16 +1693,16 @@
       <Filter>Source Files\Windows\InteriorsExplorer</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\UserInteraction\SdkModel\UserInteractionController.cpp">
-      <Filter>Source Files\Windows\UserInteraction\SdkModel</Filter>
+      <Filter>Source Files\App\UserInteraction\SdkModel</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\UserInteraction\SdkModel\UserInteractionEnabledObserver.cpp">
-      <Filter>Source Files\Windows\UserInteraction\SdkModel</Filter>
+      <Filter>Source Files\App\UserInteraction\SdkModel</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\UserInteraction\SdkModel\UserInteractionModel.cpp">
-      <Filter>Source Files\Windows\UserInteraction\SdkModel</Filter>
+      <Filter>Source Files\App\UserInteraction\SdkModel</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\UserInteraction\SdkModel\UserInteractionModule.cpp">
-      <Filter>Source Files\Windows\UserInteraction\SdkModel</Filter>
+      <Filter>Source Files\App\UserInteraction\SdkModel</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\InteriorsExplorer\SdkModel\InteriorExplorerUserInteractionModel.cpp">
       <Filter>Source Files\App\InteriorsExplorer\SdkModel</Filter>
@@ -2903,12 +2894,6 @@
     <ClInclude Include="..\..\..\src\SearchResultPoi\SdkModel\SearchResultPoiViewOpenedMessageHandler.h">
       <Filter>Source Files\App\SearchResultPoi\SdkModel</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\SecondaryMenu\SecondaryMenu.h">
-      <Filter>Source Files\App\SecondaryMenu</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\SecondaryMenu\View\ISecondaryMenuView.h">
-      <Filter>Source Files\App\SecondaryMenu\View</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\Tours\SdkModel\Camera\DroneLookatCameraMode.h">
       <Filter>Source Files\App\Tours\SdkModel\Camera</Filter>
     </ClInclude>
@@ -3792,22 +3777,22 @@
       <Filter>Source Files\Windows\InteriorsExplorer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\UserInteraction\SdkModel\UserInteractionController.h">
-      <Filter>Source Files\Windows\UserInteraction\SdkModel</Filter>
+      <Filter>Source Files\App\UserInteraction\SdkModel</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\UserInteraction\SdkModel\UserInteractionEnabledObserver.h">
-      <Filter>Source Files\Windows\UserInteraction\SdkModel</Filter>
+      <Filter>Source Files\App\UserInteraction\SdkModel</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\UserInteraction\SdkModel\UserInteractionModel.h">
-      <Filter>Source Files\Windows\UserInteraction\SdkModel</Filter>
+      <Filter>Source Files\App\UserInteraction\SdkModel</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\UserInteraction\SdkModel\UserInteractionModule.h">
-      <Filter>Source Files\Windows\UserInteraction\SdkModel</Filter>
+      <Filter>Source Files\App\UserInteraction\SdkModel</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\UserInteraction\UserInteraction.h">
-      <Filter>Source Files\Windows\UserInteraction</Filter>
+      <Filter>Source Files\App\UserInteraction</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\UserInteraction\UserInteractionEnabledChangedMessage.h">
-      <Filter>Source Files\Windows\UserInteraction</Filter>
+      <Filter>Source Files\App\UserInteraction</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\InteriorsExplorer\InteriorsExplorer.h">
       <Filter>Source Files\App\InteriorsExplorer</Filter>
@@ -4084,6 +4069,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\SearchResultSection\SdkModel\SearchResultViewClearedObserver.h">
       <Filter>Source Files\App\SearchResultSection\SdkModel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\IAppCamera.h">
+      <Filter>Source Files\App</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
