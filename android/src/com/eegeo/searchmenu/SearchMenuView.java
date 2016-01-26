@@ -124,7 +124,7 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
             );
         m_list.setOnItemClickListener(m_menuItemSelectedListener);
         
-        m_searchListAdapter = new SearchMenuAdapter(m_activity, R.layout.search_result_menu_list_item);
+        m_searchListAdapter = new SearchMenuAdapter(m_activity, R.layout.search_menu_list_item);
         m_searchList.setAdapter(m_searchListAdapter);
         
         m_searchMenuItemSelectedListener = new SearchMenuItemSelectedListener(m_nativeCallerPointer, this);
