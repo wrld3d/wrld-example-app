@@ -20,8 +20,7 @@ namespace ExampleApp
             
         }
 
-        std::vector<SdkModel::IInitialExperienceStep*> iOSInitialExperienceModule::CreateSteps(WorldAreaLoader::SdkModel::IWorldAreaLoaderModel& worldAreaLoaderModel,
-                                                                                               Menu::View::IMenuViewModel& searchMenuViewModelControl)
+        std::vector<SdkModel::IInitialExperienceStep*> iOSInitialExperienceModule::CreateSteps(WorldAreaLoader::SdkModel::IWorldAreaLoaderModel& worldAreaLoaderModel)
         {
             std::vector<SdkModel::IInitialExperienceStep*> steps;
 

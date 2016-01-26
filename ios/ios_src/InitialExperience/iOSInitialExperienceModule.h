@@ -24,8 +24,7 @@ namespace ExampleApp
 
         protected:
 
-            std::vector<SdkModel::IInitialExperienceStep*> CreateSteps(WorldAreaLoader::SdkModel::IWorldAreaLoaderModel& worldAreaLoaderModel,
-                                                                       Menu::View::IMenuViewModel& searchMenuViewModelControl);
+            std::vector<SdkModel::IInitialExperienceStep*> CreateSteps(WorldAreaLoader::SdkModel::IWorldAreaLoaderModel& worldAreaLoaderModel);
             
             ExampleAppMessaging::TMessageBus& m_messageBus;
         };

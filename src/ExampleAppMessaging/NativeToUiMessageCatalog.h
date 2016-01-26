@@ -46,8 +46,8 @@ namespace ExampleApp
     namespace ExampleAppMessaging
     {
         class NativeToUiMessageCatalog
-            : public Eegeo::Messaging::CatalogBinding<SearchResultMenu::SearchResultAddedMessage>
-            , public Eegeo::Messaging::CatalogBinding<SearchResultMenu::SearchResultRemovedMessage>
+            : public Eegeo::Messaging::CatalogBinding<SearchResultSection::SearchResultAddedMessage>
+            , public Eegeo::Messaging::CatalogBinding<SearchResultSection::SearchResultRemovedMessage>
             , public Eegeo::Messaging::CatalogBinding<Search::SearchQueryPerformedMessage>
             , public Eegeo::Messaging::CatalogBinding<Search::SearchQueryRemovedMessage>
             , public Eegeo::Messaging::CatalogBinding<FlattenButton::FlattenButtonModelStateChangedMessage>

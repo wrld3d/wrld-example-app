@@ -35,7 +35,7 @@
 #include "EnvironmentCharacterSet.h"
 #include "IPoiRingTouchController.h"
 #include "MyPinCreationModule.h"
-#include "SearchResultMenuModule.h"
+#include "SearchResultSectionModule.h"
 #include "PoiRingModule.h"
 #include "IPoiRingController.h"
 #include "MyPinCreationDetailsModule.h"
@@ -154,7 +154,7 @@ namespace ExampleApp
         , m_pCameraTransitionController(NULL)
         , m_pSettingsMenuModule(NULL)
         , m_pSearchMenuModule(NULL)
-        , m_pSearchResultMenuModule(NULL)
+        , m_pSearchResultSectionModule(NULL)
         , m_pModalityModule(NULL)
         , m_pCategorySearchModule(NULL)
         , m_pMapModeModule(NULL)
@@ -450,7 +450,7 @@ namespace ExampleApp
                                                                                             m_messageBus,
                                                                                             m_metricsService);
         
-        m_pSearchResultMenuModule = Eegeo_NEW(SearchResultMenu::SdkModel::SearchResultMenuModule)(m_pSearchMenuModule->GetSearchMenuViewModel(),
+        m_pSearchResultSectionModule = Eegeo_NEW(SearchResultSection::SdkModel::SearchResultSectionModule)(m_pSearchMenuModule->GetSearchMenuViewModel(),
                                                                                                   m_pSearchModule->GetSearchResultRepository(),
                                                                                                   m_pSearchModule->GetSearchQueryPerformer(),
                                                                                                   *m_pCameraTransitionService,
@@ -542,10 +542,9 @@ namespace ExampleApp
         Eegeo::Modules::Map::StreamingModule& streamingModule = world.GetStreamingModule();
         m_pWorldAreaLoaderModule = Eegeo_NEW(WorldAreaLoader::SdkModel::WorldAreaLoaderModule)(streamingModule.GetPrecachingService());
 
-        m_initialExperienceModule.InitialiseWithApplicationModels(m_pWorldAreaLoaderModule->GetWorldAreaLoaderModel(),
-                                                                  m_pSearchMenuModule->GetSearchMenuViewModel());
+        m_initialExperienceModule.InitialiseWithApplicationModels(m_pWorldAreaLoaderModule->GetWorldAreaLoaderModel());
         
-        m_pSearchMenuModule->SetSearchSection("Search Results", m_pSearchResultMenuModule->GetSearchResultMenuModel());
+        m_pSearchMenuModule->SetSearchSection("Search Results", m_pSearchResultSectionModule->GetSearchResultSectionModel());
         m_pSearchMenuModule->AddMenuSection("Find", m_pCategorySearchModule->GetCategorySearchMenuModel(), true);
         m_pSearchMenuModule->AddMenuSection("Weather" , m_pWeatherMenuModule->GetWeatherMenuModel(), true);
         m_pSearchMenuModule->AddMenuSection("Locations", m_pPlaceJumpsModule->GetPlaceJumpsMenuModel(), true);
@@ -606,7 +605,7 @@ namespace ExampleApp
         
         Eegeo_DELETE m_pSearchMenuModule;
 
-        Eegeo_DELETE m_pSearchResultMenuModule;
+        Eegeo_DELETE m_pSearchResultSectionModule;
 
         Eegeo_DELETE m_pSearchResultOnMapModule;
 

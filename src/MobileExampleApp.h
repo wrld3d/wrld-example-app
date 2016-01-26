@@ -15,7 +15,7 @@
 #include "IPlatformAbstractionModule.h"
 #include "SettingsMenu.h"
 #include "SearchMenu.h"
-#include "SearchResultMenu.h"
+#include "SearchResultSection.h"
 #include "SearchMenu.h"
 #include "Modality.h"
 #include "FlattenButton.h"
@@ -114,7 +114,7 @@ namespace ExampleApp
         Eegeo::Helpers::IdentityProvider m_identityProvider;
         ExampleApp::SettingsMenu::SdkModel::ISettingsMenuModule* m_pSettingsMenuModule;
         ExampleApp::SearchMenu::SdkModel::ISearchMenuModule* m_pSearchMenuModule;
-        ExampleApp::SearchResultMenu::SdkModel::ISearchResultMenuModule* m_pSearchResultMenuModule;
+        ExampleApp::SearchResultSection::SdkModel::ISearchResultSectionModule* m_pSearchResultSectionModule;
         ExampleApp::Modality::View::IModalityModule* m_pModalityModule;
         ExampleApp::CategorySearch::SdkModel::ICategorySearchModule* m_pCategorySearchModule;
         ExampleApp::MapMode::SdkModel::IMapModeModule* m_pMapModeModule;
@@ -258,9 +258,9 @@ namespace ExampleApp
             return *m_pSearchMenuModule;
         }
         
-        const SearchResultMenu::SdkModel::ISearchResultMenuModule& SearchResultMenuModule() const
+        const SearchResultSection::SdkModel::ISearchResultSectionModule& SearchResultSectionModule() const
         {
-            return *m_pSearchResultMenuModule;
+            return *m_pSearchResultSectionModule;
         }
 
         const ExampleApp::Modality::View::IModalityModule& ModalityModule() const

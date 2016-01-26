@@ -17,8 +17,7 @@ namespace ExampleApp
             public:
                 virtual ~IInitialExperienceModule() { }
 
-                virtual void InitialiseWithApplicationModels(WorldAreaLoader::SdkModel::IWorldAreaLoaderModel& worldAreaLoaderModel,
-                                                             Menu::View::IMenuViewModel& searchMenuViewModelControl) = 0;
+                virtual void InitialiseWithApplicationModels(WorldAreaLoader::SdkModel::IWorldAreaLoaderModel& worldAreaLoaderModel) = 0;
 
                 virtual void TearDown() = 0;
 

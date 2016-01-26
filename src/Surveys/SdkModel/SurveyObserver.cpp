@@ -95,7 +95,7 @@ namespace ExampleApp
                 SetSurveyConditionsFlag(SearchPerformed);
             }
             
-            void SurveyObserver::OnSearchResultSelected(const SearchResultMenu::SearchResultMenuItemSelectedMessage& message)
+            void SurveyObserver::OnSearchResultSelected(const SearchResultSection::SearchResultSectionItemSelectedMessage& message)
             {
                 if(SurveyOffered())
                 {

@@ -33,8 +33,8 @@
 #include "WorldPinOnMapViewContainer.h"
 #include "SearchResultPoiViewModule.h"
 #include "SearchResultPoiView.h"
-#include "SearchResultMenuModule.h"
-#include "SearchResultMenuViewModule.h"
+#include "SearchResultSectionModule.h"
+#include "SearchResultSectionViewModule.h"
 #include "CompassViewModule.h"
 #include "CompassView.h"
 #include "CompassModel.h"
@@ -310,10 +310,10 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
                                                                                             m_pModalBackgroundViewModule->GetModalBackgroundViewInterop(),
                                                                                             m_messageBus);
     
-    m_pSearchResultMenuViewModule = Eegeo_NEW(ExampleApp::SearchResultMenu::View::SearchResultMenuViewModule)(app.SearchMenuModule().GetSearchMenuViewModel(),
-                                                                                                              app.SearchResultMenuModule().GetSearchResultMenuOptionsModel(),
-                                                                                                              app.SearchResultMenuModule().GetSearchResultMenuOrder(),
-                                                                                                              m_messageBus);
+    m_pSearchResultSectionViewModule = Eegeo_NEW(ExampleApp::SearchResultSection::View::SearchResultSectionViewModule)(app.SearchMenuModule().GetSearchMenuViewModel(),
+                                                                                                                       app.SearchResultSectionModule().GetSearchResultSectionOptionsModel(),
+                                                                                                                       app.SearchResultSectionModule().GetSearchResultSectionOrder(),
+                                                                                                                       m_messageBus);
 
     m_pSearchResultPoiViewModule = Eegeo_NEW(ExampleApp::SearchResultPoi::View::SearchResultPoiViewModule)(app.SearchResultPoiModule().GetSearchResultPoiViewModel(),
                                                                                                            m_messageBus,
@@ -524,7 +524,7 @@ void AppHost::DestroyApplicationViewModules()
 
     Eegeo_DELETE m_pModalBackgroundViewModule;
 
-    Eegeo_DELETE m_pSearchResultMenuViewModule;
+    Eegeo_DELETE m_pSearchResultSectionViewModule;
     
     Eegeo_DELETE m_pSearchMenuViewModule;
     

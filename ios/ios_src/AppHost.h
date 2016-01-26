@@ -24,7 +24,7 @@
 #include "ViewControllerUpdater.h"
 #include "SettingsMenuViewIncludes.h"
 #include "SearchMenuViewIncludes.h"
-#include "SearchResultMenuViewIncludes.h"
+#include "SearchResultSectionViewIncludes.h"
 #include "ModalBackgroundViewIncludes.h"
 #include "FlattenButtonViewIncludes.h"
 #include "SearchResultPoiViewIncludes.h"
@@ -109,7 +109,7 @@ private:
     
     ExampleApp::SettingsMenu::View::ISettingsMenuViewModule* m_pSettingsMenuViewModule;
     ExampleApp::SearchMenu::View::ISearchMenuViewModule* m_pSearchMenuViewModule;
-    ExampleApp::SearchResultMenu::View::ISearchResultMenuViewModule* m_pSearchResultMenuViewModule;
+    ExampleApp::SearchResultSection::View::ISearchResultSectionViewModule* m_pSearchResultSectionViewModule;
     ExampleApp::ModalBackground::View::IModalBackgroundViewModule* m_pModalBackgroundViewModule;
     ExampleApp::FlattenButton::View::IFlattenButtonViewModule* m_pFlattenButtonViewModule;
     ExampleApp::SearchResultPoi::View::ISearchResultPoiViewModule* m_pSearchResultPoiViewModule;

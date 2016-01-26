@@ -403,6 +403,30 @@
 		18EC01591AA8C8A500902E98 /* CompassPoint.png in Resources */ = {isa = PBXBuildFile; fileRef = 18EC01551AA8C8A500902E98 /* CompassPoint.png */; };
 		18F0E9CE1C562AFB00067F09 /* UIButton+DefaultStates.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18F0E9CD1C562AFB00067F09 /* UIButton+DefaultStates.mm */; };
 		18F0E9CF1C562AFB00067F09 /* UIButton+DefaultStates.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18F0E9CD1C562AFB00067F09 /* UIButton+DefaultStates.mm */; };
+		18F0EA2F1C577DC500067F09 /* SearchResultSectionViewModule.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18F0EA2E1C577DC500067F09 /* SearchResultSectionViewModule.mm */; };
+		18F0EA301C577DC600067F09 /* SearchResultSectionViewModule.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18F0EA2E1C577DC500067F09 /* SearchResultSectionViewModule.mm */; };
+		18F0EA4D1C57803400067F09 /* SearchResultSectionItemSelectedMessageHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18F0EA341C57803400067F09 /* SearchResultSectionItemSelectedMessageHandler.cpp */; };
+		18F0EA4E1C57803400067F09 /* SearchResultSectionItemSelectedMessageHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18F0EA341C57803400067F09 /* SearchResultSectionItemSelectedMessageHandler.cpp */; };
+		18F0EA4F1C57803400067F09 /* SearchResultSectionModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18F0EA361C57803400067F09 /* SearchResultSectionModule.cpp */; };
+		18F0EA501C57803400067F09 /* SearchResultSectionModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18F0EA361C57803400067F09 /* SearchResultSectionModule.cpp */; };
+		18F0EA511C57803400067F09 /* SearchResultViewClearedObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18F0EA381C57803400067F09 /* SearchResultViewClearedObserver.cpp */; };
+		18F0EA521C57803400067F09 /* SearchResultViewClearedObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18F0EA381C57803400067F09 /* SearchResultViewClearedObserver.cpp */; };
+		18F0EA531C57803400067F09 /* SearchResultAddedMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18F0EA3A1C57803400067F09 /* SearchResultAddedMessage.cpp */; };
+		18F0EA541C57803400067F09 /* SearchResultAddedMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18F0EA3A1C57803400067F09 /* SearchResultAddedMessage.cpp */; };
+		18F0EA551C57803400067F09 /* SearchResultSectionItemSelectedMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18F0EA3D1C57803400067F09 /* SearchResultSectionItemSelectedMessage.cpp */; };
+		18F0EA561C57803400067F09 /* SearchResultSectionItemSelectedMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18F0EA3D1C57803400067F09 /* SearchResultSectionItemSelectedMessage.cpp */; };
+		18F0EA571C57803400067F09 /* SearchResultRemovedMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18F0EA3F1C57803400067F09 /* SearchResultRemovedMessage.cpp */; };
+		18F0EA581C57803400067F09 /* SearchResultRemovedMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18F0EA3F1C57803400067F09 /* SearchResultRemovedMessage.cpp */; };
+		18F0EA591C57803400067F09 /* SearchResultViewClearedMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18F0EA411C57803400067F09 /* SearchResultViewClearedMessage.cpp */; };
+		18F0EA5A1C57803400067F09 /* SearchResultViewClearedMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18F0EA411C57803400067F09 /* SearchResultViewClearedMessage.cpp */; };
+		18F0EA5B1C57803400067F09 /* SearchResultItemModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18F0EA451C57803400067F09 /* SearchResultItemModel.cpp */; };
+		18F0EA5C1C57803400067F09 /* SearchResultItemModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18F0EA451C57803400067F09 /* SearchResultItemModel.cpp */; };
+		18F0EA5D1C57803400067F09 /* SearchResultSectionController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18F0EA471C57803400067F09 /* SearchResultSectionController.cpp */; };
+		18F0EA5E1C57803400067F09 /* SearchResultSectionController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18F0EA471C57803400067F09 /* SearchResultSectionController.cpp */; };
+		18F0EA5F1C57803400067F09 /* SearchResultSectionOrder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18F0EA491C57803400067F09 /* SearchResultSectionOrder.cpp */; };
+		18F0EA601C57803400067F09 /* SearchResultSectionOrder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18F0EA491C57803400067F09 /* SearchResultSectionOrder.cpp */; };
+		18F0EA611C57803400067F09 /* SearchResultRepositoryObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18F0EA4B1C57803400067F09 /* SearchResultRepositoryObserver.cpp */; };
+		18F0EA621C57803400067F09 /* SearchResultRepositoryObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18F0EA4B1C57803400067F09 /* SearchResultRepositoryObserver.cpp */; };
 		18F4F41C1C47CCB600FFB959 /* LinkOutObserver.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18F4F41A1C47CCB600FFB959 /* LinkOutObserver.mm */; };
 		18F4F41D1C47CCB600FFB959 /* LinkOutObserver.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18F4F41A1C47CCB600FFB959 /* LinkOutObserver.mm */; };
 		18FB64501A9240FC005A9411 /* NSURLRequest+OAuth.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18FB64281A9240FC005A9411 /* NSURLRequest+OAuth.mm */; };
@@ -715,8 +739,6 @@
 		27E4DBB51C108AB7001A1E55 /* CloseIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 27E4DBB01C108AB7001A1E55 /* CloseIcon@2x.png */; };
 		27E4DBB61C108AB7001A1E55 /* CloseIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 27E4DBB11C108AB7001A1E55 /* CloseIcon@3x.png */; };
 		27E4DBB71C108AB7001A1E55 /* CloseIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 27E4DBB11C108AB7001A1E55 /* CloseIcon@3x.png */; };
-		27E7A9C41BBC0F3200CDB502 /* SearchResultMenuOrder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27E7A9C21BBC0F3200CDB502 /* SearchResultMenuOrder.cpp */; };
-		27E7A9C51BBC0F3200CDB502 /* SearchResultMenuOrder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27E7A9C21BBC0F3200CDB502 /* SearchResultMenuOrder.cpp */; };
 		27E935CF1BDFA701007D52C5 /* InterestPointTransitionCameraMode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27E935CD1BDFA701007D52C5 /* InterestPointTransitionCameraMode.cpp */; };
 		27E935D01BDFA701007D52C5 /* InterestPointTransitionCameraMode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27E935CD1BDFA701007D52C5 /* InterestPointTransitionCameraMode.cpp */; };
 		27E935FA1BE1291A007D52C5 /* UserInteractionModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27E935F81BE1291A007D52C5 /* UserInteractionModule.cpp */; };
@@ -1163,26 +1185,6 @@
 		7E3B899B1A385A290023C94E /* SearchQueryRemovedMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B87EF1A385A290023C94E /* SearchQueryRemovedMessage.cpp */; };
 		7E3B899C1A385A290023C94E /* SearchQueryResponseReceivedMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B87F11A385A290023C94E /* SearchQueryResponseReceivedMessage.cpp */; };
 		7E3B899D1A385A290023C94E /* SearchQueryResponseReceivedMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B87F11A385A290023C94E /* SearchQueryResponseReceivedMessage.cpp */; };
-		7E3B89A21A385A290023C94E /* SearchResultMenuItemSelectedMessageHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B87FC1A385A290023C94E /* SearchResultMenuItemSelectedMessageHandler.cpp */; };
-		7E3B89A31A385A290023C94E /* SearchResultMenuItemSelectedMessageHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B87FC1A385A290023C94E /* SearchResultMenuItemSelectedMessageHandler.cpp */; };
-		7E3B89A41A385A290023C94E /* SearchResultMenuModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B87FE1A385A290023C94E /* SearchResultMenuModule.cpp */; };
-		7E3B89A51A385A290023C94E /* SearchResultMenuModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B87FE1A385A290023C94E /* SearchResultMenuModule.cpp */; };
-		7E3B89A61A385A290023C94E /* SearchResultViewClearedObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B88001A385A290023C94E /* SearchResultViewClearedObserver.cpp */; };
-		7E3B89A71A385A290023C94E /* SearchResultViewClearedObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B88001A385A290023C94E /* SearchResultViewClearedObserver.cpp */; };
-		7E3B89A81A385A290023C94E /* SearchResultAddedMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B88021A385A290023C94E /* SearchResultAddedMessage.cpp */; };
-		7E3B89A91A385A290023C94E /* SearchResultAddedMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B88021A385A290023C94E /* SearchResultAddedMessage.cpp */; };
-		7E3B89AA1A385A290023C94E /* SearchResultMenuItemSelectedMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B88051A385A290023C94E /* SearchResultMenuItemSelectedMessage.cpp */; };
-		7E3B89AB1A385A290023C94E /* SearchResultMenuItemSelectedMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B88051A385A290023C94E /* SearchResultMenuItemSelectedMessage.cpp */; };
-		7E3B89AC1A385A290023C94E /* SearchResultRemovedMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B88071A385A290023C94E /* SearchResultRemovedMessage.cpp */; };
-		7E3B89AD1A385A290023C94E /* SearchResultRemovedMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B88071A385A290023C94E /* SearchResultRemovedMessage.cpp */; };
-		7E3B89AE1A385A290023C94E /* SearchResultViewClearedMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B88091A385A290023C94E /* SearchResultViewClearedMessage.cpp */; };
-		7E3B89AF1A385A290023C94E /* SearchResultViewClearedMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B88091A385A290023C94E /* SearchResultViewClearedMessage.cpp */; };
-		7E3B89B21A385A290023C94E /* SearchResultItemModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B88101A385A290023C94E /* SearchResultItemModel.cpp */; };
-		7E3B89B31A385A290023C94E /* SearchResultItemModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B88101A385A290023C94E /* SearchResultItemModel.cpp */; };
-		7E3B89B41A385A290023C94E /* SearchResultMenuController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B88121A385A290023C94E /* SearchResultMenuController.cpp */; };
-		7E3B89B51A385A290023C94E /* SearchResultMenuController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B88121A385A290023C94E /* SearchResultMenuController.cpp */; };
-		7E3B89BC1A385A290023C94E /* SearchResultRepositoryObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B881A1A385A290023C94E /* SearchResultRepositoryObserver.cpp */; };
-		7E3B89BD1A385A290023C94E /* SearchResultRepositoryObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B881A1A385A290023C94E /* SearchResultRepositoryObserver.cpp */; };
 		7E3B89BE1A385A290023C94E /* SearchResultOnMapModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B88201A385A290023C94E /* SearchResultOnMapModel.cpp */; };
 		7E3B89BF1A385A290023C94E /* SearchResultOnMapModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B88201A385A290023C94E /* SearchResultOnMapModel.cpp */; };
 		7E3B89C01A385A290023C94E /* SearchResultOnMapModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B88221A385A290023C94E /* SearchResultOnMapModule.cpp */; };
@@ -1337,8 +1339,6 @@
 		7E3B8B141A385F110023C94E /* MyPinDetailsViewModule.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B8A891A385F100023C94E /* MyPinDetailsViewModule.mm */; };
 		7E3B8B151A385F110023C94E /* iOSPersistentSettingsModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B8A8C1A385F100023C94E /* iOSPersistentSettingsModel.mm */; };
 		7E3B8B161A385F110023C94E /* iOSPersistentSettingsModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B8A8C1A385F100023C94E /* iOSPersistentSettingsModel.mm */; };
-		7E3B8B1F1A385F110023C94E /* SearchResultMenuViewModule.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B8A9F1A385F110023C94E /* SearchResultMenuViewModule.mm */; };
-		7E3B8B201A385F110023C94E /* SearchResultMenuViewModule.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B8A9F1A385F110023C94E /* SearchResultMenuViewModule.mm */; };
 		7E3B8B251A385F110023C94E /* SearchResultPoiViewInterop.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B8AAA1A385F110023C94E /* SearchResultPoiViewInterop.mm */; };
 		7E3B8B261A385F110023C94E /* SearchResultPoiViewInterop.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B8AAA1A385F110023C94E /* SearchResultPoiViewInterop.mm */; };
 		7E3B8B271A385F110023C94E /* SearchResultPoiViewModule.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B8AAC1A385F110023C94E /* SearchResultPoiViewModule.mm */; };
@@ -1967,6 +1967,35 @@
 		18F0E9CB1C528E0E00067F09 /* ISurveyViewModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISurveyViewModule.h; sourceTree = "<group>"; };
 		18F0E9CC1C562AFB00067F09 /* UIButton+DefaultStates.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+DefaultStates.h"; sourceTree = "<group>"; };
 		18F0E9CD1C562AFB00067F09 /* UIButton+DefaultStates.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "UIButton+DefaultStates.mm"; sourceTree = "<group>"; };
+		18F0EA2B1C577DC500067F09 /* ISearchResultSectionViewModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISearchResultSectionViewModule.h; sourceTree = "<group>"; };
+		18F0EA2C1C577DC500067F09 /* SearchResultSectionViewIncludes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultSectionViewIncludes.h; sourceTree = "<group>"; };
+		18F0EA2D1C577DC500067F09 /* SearchResultSectionViewModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultSectionViewModule.h; sourceTree = "<group>"; };
+		18F0EA2E1C577DC500067F09 /* SearchResultSectionViewModule.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SearchResultSectionViewModule.mm; sourceTree = "<group>"; };
+		18F0EA331C57803400067F09 /* ISearchResultSectionModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISearchResultSectionModule.h; sourceTree = "<group>"; };
+		18F0EA341C57803400067F09 /* SearchResultSectionItemSelectedMessageHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchResultSectionItemSelectedMessageHandler.cpp; sourceTree = "<group>"; };
+		18F0EA351C57803400067F09 /* SearchResultSectionItemSelectedMessageHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultSectionItemSelectedMessageHandler.h; sourceTree = "<group>"; };
+		18F0EA361C57803400067F09 /* SearchResultSectionModule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchResultSectionModule.cpp; sourceTree = "<group>"; };
+		18F0EA371C57803400067F09 /* SearchResultSectionModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultSectionModule.h; sourceTree = "<group>"; };
+		18F0EA381C57803400067F09 /* SearchResultViewClearedObserver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchResultViewClearedObserver.cpp; sourceTree = "<group>"; };
+		18F0EA391C57803400067F09 /* SearchResultViewClearedObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultViewClearedObserver.h; sourceTree = "<group>"; };
+		18F0EA3A1C57803400067F09 /* SearchResultAddedMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchResultAddedMessage.cpp; sourceTree = "<group>"; };
+		18F0EA3B1C57803400067F09 /* SearchResultAddedMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultAddedMessage.h; sourceTree = "<group>"; };
+		18F0EA3C1C57803400067F09 /* SearchResultSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultSection.h; sourceTree = "<group>"; };
+		18F0EA3D1C57803400067F09 /* SearchResultSectionItemSelectedMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchResultSectionItemSelectedMessage.cpp; sourceTree = "<group>"; };
+		18F0EA3E1C57803400067F09 /* SearchResultSectionItemSelectedMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultSectionItemSelectedMessage.h; sourceTree = "<group>"; };
+		18F0EA3F1C57803400067F09 /* SearchResultRemovedMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchResultRemovedMessage.cpp; sourceTree = "<group>"; };
+		18F0EA401C57803400067F09 /* SearchResultRemovedMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultRemovedMessage.h; sourceTree = "<group>"; };
+		18F0EA411C57803400067F09 /* SearchResultViewClearedMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchResultViewClearedMessage.cpp; sourceTree = "<group>"; };
+		18F0EA421C57803400067F09 /* SearchResultViewClearedMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultViewClearedMessage.h; sourceTree = "<group>"; };
+		18F0EA441C57803400067F09 /* ISearchResultSectionOrder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISearchResultSectionOrder.h; sourceTree = "<group>"; };
+		18F0EA451C57803400067F09 /* SearchResultItemModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchResultItemModel.cpp; sourceTree = "<group>"; };
+		18F0EA461C57803400067F09 /* SearchResultItemModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultItemModel.h; sourceTree = "<group>"; };
+		18F0EA471C57803400067F09 /* SearchResultSectionController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchResultSectionController.cpp; sourceTree = "<group>"; };
+		18F0EA481C57803400067F09 /* SearchResultSectionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultSectionController.h; sourceTree = "<group>"; };
+		18F0EA491C57803400067F09 /* SearchResultSectionOrder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchResultSectionOrder.cpp; sourceTree = "<group>"; };
+		18F0EA4A1C57803400067F09 /* SearchResultSectionOrder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultSectionOrder.h; sourceTree = "<group>"; };
+		18F0EA4B1C57803400067F09 /* SearchResultRepositoryObserver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchResultRepositoryObserver.cpp; sourceTree = "<group>"; };
+		18F0EA4C1C57803400067F09 /* SearchResultRepositoryObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultRepositoryObserver.h; sourceTree = "<group>"; };
 		18F4F41A1C47CCB600FFB959 /* LinkOutObserver.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LinkOutObserver.mm; sourceTree = "<group>"; };
 		18F4F41B1C47CCB600FFB959 /* LinkOutObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinkOutObserver.h; sourceTree = "<group>"; };
 		18FB641E1A9235BB005A9411 /* Yelp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Yelp.h; sourceTree = "<group>"; };
@@ -2199,9 +2228,6 @@
 		27E4DBAF1C108AB7001A1E55 /* CloseIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CloseIcon.png; sourceTree = "<group>"; };
 		27E4DBB01C108AB7001A1E55 /* CloseIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CloseIcon@2x.png"; sourceTree = "<group>"; };
 		27E4DBB11C108AB7001A1E55 /* CloseIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CloseIcon@3x.png"; sourceTree = "<group>"; };
-		27E7A9C11BBC0F3200CDB502 /* ISearchResultMenuOrder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISearchResultMenuOrder.h; sourceTree = "<group>"; };
-		27E7A9C21BBC0F3200CDB502 /* SearchResultMenuOrder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchResultMenuOrder.cpp; sourceTree = "<group>"; };
-		27E7A9C31BBC0F3200CDB502 /* SearchResultMenuOrder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultMenuOrder.h; sourceTree = "<group>"; };
 		27E935CD1BDFA701007D52C5 /* InterestPointTransitionCameraMode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InterestPointTransitionCameraMode.cpp; sourceTree = "<group>"; };
 		27E935CE1BDFA701007D52C5 /* InterestPointTransitionCameraMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InterestPointTransitionCameraMode.h; sourceTree = "<group>"; };
 		27E935F81BE1291A007D52C5 /* UserInteractionModule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UserInteractionModule.cpp; sourceTree = "<group>"; };
@@ -2718,28 +2744,6 @@
 		7E3B87F01A385A290023C94E /* SearchQueryRemovedMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchQueryRemovedMessage.h; sourceTree = "<group>"; };
 		7E3B87F11A385A290023C94E /* SearchQueryResponseReceivedMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchQueryResponseReceivedMessage.cpp; sourceTree = "<group>"; };
 		7E3B87F21A385A290023C94E /* SearchQueryResponseReceivedMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchQueryResponseReceivedMessage.h; sourceTree = "<group>"; };
-		7E3B87FB1A385A290023C94E /* ISearchResultMenuModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISearchResultMenuModule.h; sourceTree = "<group>"; };
-		7E3B87FC1A385A290023C94E /* SearchResultMenuItemSelectedMessageHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchResultMenuItemSelectedMessageHandler.cpp; sourceTree = "<group>"; };
-		7E3B87FD1A385A290023C94E /* SearchResultMenuItemSelectedMessageHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultMenuItemSelectedMessageHandler.h; sourceTree = "<group>"; };
-		7E3B87FE1A385A290023C94E /* SearchResultMenuModule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchResultMenuModule.cpp; sourceTree = "<group>"; };
-		7E3B87FF1A385A290023C94E /* SearchResultMenuModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultMenuModule.h; sourceTree = "<group>"; };
-		7E3B88001A385A290023C94E /* SearchResultViewClearedObserver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchResultViewClearedObserver.cpp; sourceTree = "<group>"; };
-		7E3B88011A385A290023C94E /* SearchResultViewClearedObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultViewClearedObserver.h; sourceTree = "<group>"; };
-		7E3B88021A385A290023C94E /* SearchResultAddedMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchResultAddedMessage.cpp; sourceTree = "<group>"; };
-		7E3B88031A385A290023C94E /* SearchResultAddedMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultAddedMessage.h; sourceTree = "<group>"; };
-		7E3B88041A385A290023C94E /* SearchResultMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultMenu.h; sourceTree = "<group>"; };
-		7E3B88051A385A290023C94E /* SearchResultMenuItemSelectedMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchResultMenuItemSelectedMessage.cpp; sourceTree = "<group>"; };
-		7E3B88061A385A290023C94E /* SearchResultMenuItemSelectedMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultMenuItemSelectedMessage.h; sourceTree = "<group>"; };
-		7E3B88071A385A290023C94E /* SearchResultRemovedMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchResultRemovedMessage.cpp; sourceTree = "<group>"; };
-		7E3B88081A385A290023C94E /* SearchResultRemovedMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultRemovedMessage.h; sourceTree = "<group>"; };
-		7E3B88091A385A290023C94E /* SearchResultViewClearedMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchResultViewClearedMessage.cpp; sourceTree = "<group>"; };
-		7E3B880A1A385A290023C94E /* SearchResultViewClearedMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultViewClearedMessage.h; sourceTree = "<group>"; };
-		7E3B88101A385A290023C94E /* SearchResultItemModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchResultItemModel.cpp; sourceTree = "<group>"; };
-		7E3B88111A385A290023C94E /* SearchResultItemModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultItemModel.h; sourceTree = "<group>"; };
-		7E3B88121A385A290023C94E /* SearchResultMenuController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchResultMenuController.cpp; sourceTree = "<group>"; };
-		7E3B88131A385A290023C94E /* SearchResultMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultMenuController.h; sourceTree = "<group>"; };
-		7E3B881A1A385A290023C94E /* SearchResultRepositoryObserver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchResultRepositoryObserver.cpp; sourceTree = "<group>"; };
-		7E3B881B1A385A290023C94E /* SearchResultRepositoryObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultRepositoryObserver.h; sourceTree = "<group>"; };
 		7E3B881E1A385A290023C94E /* ISearchResultOnMapModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISearchResultOnMapModel.h; sourceTree = "<group>"; };
 		7E3B881F1A385A290023C94E /* ISearchResultOnMapModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISearchResultOnMapModule.h; sourceTree = "<group>"; };
 		7E3B88201A385A290023C94E /* SearchResultOnMapModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchResultOnMapModel.cpp; sourceTree = "<group>"; };
@@ -2944,10 +2948,6 @@
 		7E3B8A891A385F100023C94E /* MyPinDetailsViewModule.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyPinDetailsViewModule.mm; sourceTree = "<group>"; };
 		7E3B8A8B1A385F100023C94E /* iOSPersistentSettingsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iOSPersistentSettingsModel.h; sourceTree = "<group>"; };
 		7E3B8A8C1A385F100023C94E /* iOSPersistentSettingsModel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = iOSPersistentSettingsModel.mm; sourceTree = "<group>"; };
-		7E3B8A971A385F100023C94E /* ISearchResultMenuViewModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISearchResultMenuViewModule.h; sourceTree = "<group>"; };
-		7E3B8A9C1A385F100023C94E /* SearchResultMenuViewIncludes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultMenuViewIncludes.h; sourceTree = "<group>"; };
-		7E3B8A9E1A385F100023C94E /* SearchResultMenuViewModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultMenuViewModule.h; sourceTree = "<group>"; };
-		7E3B8A9F1A385F110023C94E /* SearchResultMenuViewModule.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SearchResultMenuViewModule.mm; sourceTree = "<group>"; };
 		7E3B8AA21A385F110023C94E /* ISearchResultPoiViewModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISearchResultPoiViewModule.h; sourceTree = "<group>"; };
 		7E3B8AA31A385F110023C94E /* SearchResultPoiView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultPoiView.h; sourceTree = "<group>"; };
 		7E3B8AA81A385F110023C94E /* SearchResultPoiViewIncludes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultPoiViewIncludes.h; sourceTree = "<group>"; };
@@ -3400,9 +3400,9 @@
 				7E3B87CB1A385A290023C94E /* ScreenControl */,
 				7E3B87D41A385A290023C94E /* Search */,
 				18D1DADD1C19A73900D319BB /* SearchMenu */,
-				7E3B87F91A385A290023C94E /* SearchResultMenu */,
 				7E3B881C1A385A290023C94E /* SearchResultOnMap */,
 				7E3B88321A385A290023C94E /* SearchResultPoi */,
+				18F0EA311C57803400067F09 /* SearchResultSection */,
 				18D1DB121C1ADEB300D319BB /* SettingsMenu */,
 				2797889D1C087D1A0053CD00 /* Social */,
 				184E28BC1C5247FF00E54399 /* Surveys */,
@@ -3846,6 +3846,73 @@
 				18FB64B01A94D504005A9411 /* SearchResultPoiViewOpenedMessageHandler.h */,
 			);
 			path = SdkModel;
+			sourceTree = "<group>";
+		};
+		18F0EA291C577DC500067F09 /* SearchResultSection */ = {
+			isa = PBXGroup;
+			children = (
+				18F0EA2A1C577DC500067F09 /* View */,
+			);
+			path = SearchResultSection;
+			sourceTree = "<group>";
+		};
+		18F0EA2A1C577DC500067F09 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				18F0EA2B1C577DC500067F09 /* ISearchResultSectionViewModule.h */,
+				18F0EA2C1C577DC500067F09 /* SearchResultSectionViewIncludes.h */,
+				18F0EA2D1C577DC500067F09 /* SearchResultSectionViewModule.h */,
+				18F0EA2E1C577DC500067F09 /* SearchResultSectionViewModule.mm */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		18F0EA311C57803400067F09 /* SearchResultSection */ = {
+			isa = PBXGroup;
+			children = (
+				18F0EA321C57803400067F09 /* SdkModel */,
+				18F0EA3A1C57803400067F09 /* SearchResultAddedMessage.cpp */,
+				18F0EA3B1C57803400067F09 /* SearchResultAddedMessage.h */,
+				18F0EA3C1C57803400067F09 /* SearchResultSection.h */,
+				18F0EA3D1C57803400067F09 /* SearchResultSectionItemSelectedMessage.cpp */,
+				18F0EA3E1C57803400067F09 /* SearchResultSectionItemSelectedMessage.h */,
+				18F0EA3F1C57803400067F09 /* SearchResultRemovedMessage.cpp */,
+				18F0EA401C57803400067F09 /* SearchResultRemovedMessage.h */,
+				18F0EA411C57803400067F09 /* SearchResultViewClearedMessage.cpp */,
+				18F0EA421C57803400067F09 /* SearchResultViewClearedMessage.h */,
+				18F0EA431C57803400067F09 /* View */,
+			);
+			path = SearchResultSection;
+			sourceTree = "<group>";
+		};
+		18F0EA321C57803400067F09 /* SdkModel */ = {
+			isa = PBXGroup;
+			children = (
+				18F0EA331C57803400067F09 /* ISearchResultSectionModule.h */,
+				18F0EA341C57803400067F09 /* SearchResultSectionItemSelectedMessageHandler.cpp */,
+				18F0EA351C57803400067F09 /* SearchResultSectionItemSelectedMessageHandler.h */,
+				18F0EA361C57803400067F09 /* SearchResultSectionModule.cpp */,
+				18F0EA371C57803400067F09 /* SearchResultSectionModule.h */,
+				18F0EA381C57803400067F09 /* SearchResultViewClearedObserver.cpp */,
+				18F0EA391C57803400067F09 /* SearchResultViewClearedObserver.h */,
+			);
+			path = SdkModel;
+			sourceTree = "<group>";
+		};
+		18F0EA431C57803400067F09 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				18F0EA441C57803400067F09 /* ISearchResultSectionOrder.h */,
+				18F0EA451C57803400067F09 /* SearchResultItemModel.cpp */,
+				18F0EA461C57803400067F09 /* SearchResultItemModel.h */,
+				18F0EA471C57803400067F09 /* SearchResultSectionController.cpp */,
+				18F0EA481C57803400067F09 /* SearchResultSectionController.h */,
+				18F0EA491C57803400067F09 /* SearchResultSectionOrder.cpp */,
+				18F0EA4A1C57803400067F09 /* SearchResultSectionOrder.h */,
+				18F0EA4B1C57803400067F09 /* SearchResultRepositoryObserver.cpp */,
+				18F0EA4C1C57803400067F09 /* SearchResultRepositoryObserver.h */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		18F4F4191C47CC6500FFB959 /* LinkOutObserver */ = {
@@ -5106,54 +5173,6 @@
 			path = SdkModel;
 			sourceTree = "<group>";
 		};
-		7E3B87F91A385A290023C94E /* SearchResultMenu */ = {
-			isa = PBXGroup;
-			children = (
-				7E3B87FA1A385A290023C94E /* SdkModel */,
-				7E3B88021A385A290023C94E /* SearchResultAddedMessage.cpp */,
-				7E3B88031A385A290023C94E /* SearchResultAddedMessage.h */,
-				7E3B88041A385A290023C94E /* SearchResultMenu.h */,
-				7E3B88051A385A290023C94E /* SearchResultMenuItemSelectedMessage.cpp */,
-				7E3B88061A385A290023C94E /* SearchResultMenuItemSelectedMessage.h */,
-				7E3B88071A385A290023C94E /* SearchResultRemovedMessage.cpp */,
-				7E3B88081A385A290023C94E /* SearchResultRemovedMessage.h */,
-				7E3B88091A385A290023C94E /* SearchResultViewClearedMessage.cpp */,
-				7E3B880A1A385A290023C94E /* SearchResultViewClearedMessage.h */,
-				7E3B880B1A385A290023C94E /* View */,
-			);
-			path = SearchResultMenu;
-			sourceTree = "<group>";
-		};
-		7E3B87FA1A385A290023C94E /* SdkModel */ = {
-			isa = PBXGroup;
-			children = (
-				7E3B87FB1A385A290023C94E /* ISearchResultMenuModule.h */,
-				7E3B87FC1A385A290023C94E /* SearchResultMenuItemSelectedMessageHandler.cpp */,
-				7E3B87FD1A385A290023C94E /* SearchResultMenuItemSelectedMessageHandler.h */,
-				7E3B87FE1A385A290023C94E /* SearchResultMenuModule.cpp */,
-				7E3B87FF1A385A290023C94E /* SearchResultMenuModule.h */,
-				7E3B88001A385A290023C94E /* SearchResultViewClearedObserver.cpp */,
-				7E3B88011A385A290023C94E /* SearchResultViewClearedObserver.h */,
-			);
-			path = SdkModel;
-			sourceTree = "<group>";
-		};
-		7E3B880B1A385A290023C94E /* View */ = {
-			isa = PBXGroup;
-			children = (
-				27E7A9C11BBC0F3200CDB502 /* ISearchResultMenuOrder.h */,
-				7E3B88101A385A290023C94E /* SearchResultItemModel.cpp */,
-				7E3B88111A385A290023C94E /* SearchResultItemModel.h */,
-				7E3B88121A385A290023C94E /* SearchResultMenuController.cpp */,
-				7E3B88131A385A290023C94E /* SearchResultMenuController.h */,
-				27E7A9C21BBC0F3200CDB502 /* SearchResultMenuOrder.cpp */,
-				27E7A9C31BBC0F3200CDB502 /* SearchResultMenuOrder.h */,
-				7E3B881A1A385A290023C94E /* SearchResultRepositoryObserver.cpp */,
-				7E3B881B1A385A290023C94E /* SearchResultRepositoryObserver.h */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
 		7E3B881C1A385A290023C94E /* SearchResultOnMap */ = {
 			isa = PBXGroup;
 			children = (
@@ -5425,8 +5444,8 @@
 				7E3B8A8A1A385F100023C94E /* PersistentSettings */,
 				18FB64221A924001005A9411 /* Search */,
 				18D1DAEB1C19C01100D319BB /* SearchMenu */,
-				7E3B8A951A385F100023C94E /* SearchResultMenu */,
 				7E3B8AA01A385F110023C94E /* SearchResultPoi */,
+				18F0EA291C577DC500067F09 /* SearchResultSection */,
 				18D1DB2C1C1AE35000D319BB /* SettingsMenu */,
 				184E28CC1C526D5C00E54399 /* Surveys */,
 				BFD5FC8A1BA7068300F591F1 /* Tours */,
@@ -5694,25 +5713,6 @@
 				7E3B8A8C1A385F100023C94E /* iOSPersistentSettingsModel.mm */,
 			);
 			path = PersistentSettings;
-			sourceTree = "<group>";
-		};
-		7E3B8A951A385F100023C94E /* SearchResultMenu */ = {
-			isa = PBXGroup;
-			children = (
-				7E3B8A961A385F100023C94E /* View */,
-			);
-			path = SearchResultMenu;
-			sourceTree = "<group>";
-		};
-		7E3B8A961A385F100023C94E /* View */ = {
-			isa = PBXGroup;
-			children = (
-				7E3B8A971A385F100023C94E /* ISearchResultMenuViewModule.h */,
-				7E3B8A9C1A385F100023C94E /* SearchResultMenuViewIncludes.h */,
-				7E3B8A9E1A385F100023C94E /* SearchResultMenuViewModule.h */,
-				7E3B8A9F1A385F110023C94E /* SearchResultMenuViewModule.mm */,
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 		7E3B8AA01A385F110023C94E /* SearchResultPoi */ = {
@@ -7407,8 +7407,11 @@
 				7E5811CC1B1F3248007AD67F /* InteriorsExplorerView.mm in Sources */,
 				BFDE50241C11BA8A009DEBCE /* TwitterWorldHovercard.mm in Sources */,
 				BFD5FCC31BA7068300F591F1 /* TourFullScreenImageViewInterop.mm in Sources */,
+				18F0EA541C57803400067F09 /* SearchResultAddedMessage.cpp in Sources */,
+				18F0EA501C57803400067F09 /* SearchResultSectionModule.cpp in Sources */,
 				18FB64671A9240FC005A9411 /* OAMutableURLRequest.m in Sources */,
 				BFD5FD451BA706AD00F591F1 /* ToursCameraFadeTransitionMode.cpp in Sources */,
+				18F0EA561C57803400067F09 /* SearchResultSectionItemSelectedMessage.cpp in Sources */,
 				7E3B89531A385A290023C94E /* MyPinSelectedMessage.cpp in Sources */,
 				7E3B8A051A385A290023C94E /* WorldPinInFocusScreenControl.cpp in Sources */,
 				BF0E35151BC6A2A1005B30E8 /* AppCameraHelpers.cpp in Sources */,
@@ -7416,6 +7419,7 @@
 				18D1DB381C1AE35000D319BB /* SettingsMenuViewModule.mm in Sources */,
 				BFD5FD8E1BA708E100F591F1 /* iCarousel.m in Sources */,
 				7E3B89471A385A290023C94E /* MyPinDetailsController.cpp in Sources */,
+				18F0EA4E1C57803400067F09 /* SearchResultSectionItemSelectedMessageHandler.cpp in Sources */,
 				7E3B8ADE1A385F110023C94E /* FlattenButtonViewModule.mm in Sources */,
 				1842ECE81C2AE73200E4C17B /* ViewAnimationController.mm in Sources */,
 				7E3B88F91A385A290023C94E /* MenuSectionsViewModel.cpp in Sources */,
@@ -7455,6 +7459,7 @@
 				7E3B88BF1A385A290023C94E /* CompassModeChangedMessage.cpp in Sources */,
 				BFD5FD631BA706AD00F591F1 /* TourActiveStateChangedMessage.cpp in Sources */,
 				7E3B89F11A385A290023C94E /* WorldAreaLoaderModule.cpp in Sources */,
+				18F0EA621C57803400067F09 /* SearchResultRepositoryObserver.cpp in Sources */,
 				7E3B8A011A385A290023C94E /* WorldPinsService.cpp in Sources */,
 				184E28DB1C527E2F00E54399 /* SurveyViewModule.mm in Sources */,
 				7E3B8ACA1A385F110023C94E /* AboutPageViewModule.mm in Sources */,
@@ -7503,7 +7508,6 @@
 				18096F511A7B7F48006A6438 /* CacheEnabledChangedMessage.cpp in Sources */,
 				18C0EC0F1A9E41BB008EED21 /* SearchResultMyPinDetailsModelSelectedMessage.cpp in Sources */,
 				18096F751A7BD4B1006A6438 /* PlatformAbstractionsFacade.cpp in Sources */,
-				7E3B89AB1A385A290023C94E /* SearchResultMenuItemSelectedMessage.cpp in Sources */,
 				7E3B89291A385A290023C94E /* MyPinCreationCompositeViewModel.cpp in Sources */,
 				7E3B89731A385A290023C94E /* PlaceJumpMenuOption.cpp in Sources */,
 				BFD5FD751BA706AD00F591F1 /* TourExplorerViewModel.cpp in Sources */,
@@ -7535,7 +7539,6 @@
 				BF4FEE3A1BC2BD1200932C17 /* ExampleTourPinSelectionHandler.cpp in Sources */,
 				BFDEB4BE1BCFADFF00F037B7 /* TourState.cpp in Sources */,
 				7E3B8AF41A385F110023C94E /* CustomTableViewCell.mm in Sources */,
-				7E3B8B201A385F110023C94E /* SearchResultMenuViewModule.mm in Sources */,
 				7E3B88C11A385A290023C94E /* CompassViewCycledMessage.cpp in Sources */,
 				1842ECED1C2AF73F00E4C17B /* ViewFrameAnimator.mm in Sources */,
 				BFD5FD491BA706AD00F591F1 /* TourStateMachine.cpp in Sources */,
@@ -7546,7 +7549,6 @@
 				7E3B88F11A385A290023C94E /* MenuItemModel.cpp in Sources */,
 				BFD5FD6D1BA706AD00F591F1 /* ToursModule.cpp in Sources */,
 				BFD5FD431BA706AD00F591F1 /* ToursCameraController.cpp in Sources */,
-				7E3B89B51A385A290023C94E /* SearchResultMenuController.cpp in Sources */,
 				2797889C1C087C970053CD00 /* TwitterDefines.mm in Sources */,
 				BFEBB7481C15C8F200AE6081 /* TwitterTourHovercard.mm in Sources */,
 				BFDFC3D01BB2EF190099BAEC /* SearchResultModel.cpp in Sources */,
@@ -7554,6 +7556,7 @@
 				279788CB1C0896FB0053CD00 /* URLRequestedMessage.cpp in Sources */,
 				7E3B89371A385A290023C94E /* MyPinCreationDetailsController.cpp in Sources */,
 				7E3B88ED1A385A290023C94E /* InitialExperienceModuleBase.cpp in Sources */,
+				18F0EA5E1C57803400067F09 /* SearchResultSectionController.cpp in Sources */,
 				18D1DAEA1C19BBF400D319BB /* SearchMenuController.cpp in Sources */,
 				BFD5FCCF1BA7068300F591F1 /* TourWebViewModule.mm in Sources */,
 				7E3B89431A385A290023C94E /* MyPinDetailsModule.cpp in Sources */,
@@ -7587,7 +7590,6 @@
 				7E3B89D11A385A290023C94E /* SearchResultPoiOpenableControl.cpp in Sources */,
 				18B22B111A7A8B3400DDBFA2 /* OptionsOpenableControl.cpp in Sources */,
 				7E3B89931A385A290023C94E /* SearchQueryPerformer.cpp in Sources */,
-				7E3B89AD1A385A290023C94E /* SearchResultRemovedMessage.cpp in Sources */,
 				7E1B50761ACAD9010060FA4F /* InitialExperienceIntroController.cpp in Sources */,
 				7E3B89271A385A290023C94E /* MyPinCreationViewStateChangedHandler.cpp in Sources */,
 				7E3B8B001A385F110023C94E /* MyPinCreationConfirmationViewInterop.mm in Sources */,
@@ -7638,7 +7640,6 @@
 				7E3B88C91A385A290023C94E /* CompassUpdateController.cpp in Sources */,
 				7E3B8B121A385F110023C94E /* MyPinDetailsViewInterop.mm in Sources */,
 				18FB64691A9240FC005A9411 /* OAPlaintextSignatureProvider.m in Sources */,
-				7E3B89BD1A385A290023C94E /* SearchResultRepositoryObserver.cpp in Sources */,
 				7E3B89091A385A290023C94E /* ModalityModel.cpp in Sources */,
 				7E3B8AF21A385F110023C94E /* CustomTableView.mm in Sources */,
 				7E3B893B1A385A290023C94E /* MyPinCreationDetailsOpenableControl.cpp in Sources */,
@@ -7677,6 +7678,7 @@
 				7E3B89951A385A290023C94E /* SearchRefreshService.cpp in Sources */,
 				7E3B88B91A385A290023C94E /* CategorySearchModel.cpp in Sources */,
 				BFD5FD6B1BA706AD00F591F1 /* TourOnMapSelectedMessage.cpp in Sources */,
+				18F0EA5A1C57803400067F09 /* SearchResultViewClearedMessage.cpp in Sources */,
 				7E3B89631A385A290023C94E /* MyPinsService.cpp in Sources */,
 				18E102851A8B85710011A18C /* SearchResultPoiPinToggledMessageHandler.cpp in Sources */,
 				7E3B8AF01A385F110023C94E /* CustomTableDataProvider.mm in Sources */,
@@ -7693,7 +7695,6 @@
 				27CADB641BCFEA2A00805A27 /* SizeHelpers.cpp in Sources */,
 				279788AA1C087D1A0053CD00 /* TweetModel.cpp in Sources */,
 				7E3B88B11A385A290023C94E /* CategorySearchSelectedMessage.cpp in Sources */,
-				7E3B89A71A385A290023C94E /* SearchResultViewClearedObserver.cpp in Sources */,
 				7E3B89911A385A290023C94E /* SearchQueryObserver.cpp in Sources */,
 				7E3B89E51A385A290023C94E /* WeatherMenuStateModel.cpp in Sources */,
 				18096F921A7FA703006A6438 /* NetworkCapabilities.cpp in Sources */,
@@ -7742,13 +7743,14 @@
 				5669A55F1C216AC5006D6153 /* VisualMapStateHistory.cpp in Sources */,
 				279788C01C087D820053CD00 /* TwitterFeedShowTweetState.cpp in Sources */,
 				18E102891A8B97F00011A18C /* MyPinDetailsDisplayService.cpp in Sources */,
+				18F0EA5C1C57803400067F09 /* SearchResultItemModel.cpp in Sources */,
 				7E3B89391A385A290023C94E /* MyPinCreationDetailsModule.cpp in Sources */,
 				7E3B89811A385A290023C94E /* ReactionModel.cpp in Sources */,
 				7E3B89651A385A290023C94E /* MyPinAddedToMenuObserver.cpp in Sources */,
 				5669A5621C21723A006D6153 /* VisualMapService.cpp in Sources */,
 				18A657671A9F877C00238F33 /* MyPinsSearchResultRefreshService.cpp in Sources */,
-				7E3B89B31A385A290023C94E /* SearchResultItemModel.cpp in Sources */,
 				186B47111AB1D46B0084E80B /* WatermarkViewModel.cpp in Sources */,
+				18F0EA301C577DC600067F09 /* SearchResultSectionViewModule.mm in Sources */,
 				18FB646F1A9240FC005A9411 /* OAServiceTicket.m in Sources */,
 				BFD5FD471BA706AD00F591F1 /* ToursCameraTransitionController.cpp in Sources */,
 				7E8F03EF1A827FAB0056F229 /* GpsMarkerVisibilityMessage.cpp in Sources */,
@@ -7756,8 +7758,8 @@
 				7E3B896B1A385A290023C94E /* PlaceJumpSelectedMessage.cpp in Sources */,
 				27E936041BE12F48007D52C5 /* UserInteractionController.cpp in Sources */,
 				7E3B8B301A385F110023C94E /* UIView+TouchExclusivity.m in Sources */,
-				27E7A9C51BBC0F3200CDB502 /* SearchResultMenuOrder.cpp in Sources */,
 				7E3B891D1A385A290023C94E /* PoiRingView.cpp in Sources */,
+				18F0EA601C57803400067F09 /* SearchResultSectionOrder.cpp in Sources */,
 				279788AC1C087D1A0053CD00 /* TwitterFeedModule.cpp in Sources */,
 				7E3B8B141A385F110023C94E /* MyPinDetailsViewModule.mm in Sources */,
 				187853161A9CD0820001889C /* YelpSearchResultPoiView.mm in Sources */,
@@ -7770,7 +7772,6 @@
 				18C0EC0A1A9E147C008EED21 /* SearchResultPinBoundObject.cpp in Sources */,
 				7E3B89E31A385A290023C94E /* WeatherMenuModule.cpp in Sources */,
 				1833B27A1BC2C4AB001CB77A /* InteriorHeightHelpers.cpp in Sources */,
-				7E3B89A51A385A290023C94E /* SearchResultMenuModule.cpp in Sources */,
 				279788BE1C087D820053CD00 /* TwitterFeedPinSelectionHandler.cpp in Sources */,
 				7E3B8B161A385F110023C94E /* iOSPersistentSettingsModel.mm in Sources */,
 				7E8F03D71A822E820056F229 /* GpsMarkerModule.cpp in Sources */,
@@ -7793,12 +7794,11 @@
 				18B44CEC1A83D3CF00FDFD8A /* OptionsCacheClearSubView.mm in Sources */,
 				BFD5FD5B1BA706AD00F591F1 /* TourService.cpp in Sources */,
 				BFD5FCBF1BA7068300F591F1 /* TourExplorerViewModule.mm in Sources */,
+				18F0EA581C57803400067F09 /* SearchResultRemovedMessage.cpp in Sources */,
 				18096F541A7B7F56006A6438 /* ClearCacheMessage.cpp in Sources */,
-				7E3B89A91A385A290023C94E /* SearchResultAddedMessage.cpp in Sources */,
 				7E3B89151A385A290023C94E /* PoiRingController.cpp in Sources */,
 				7E3B895B1A385A290023C94E /* MyPinSelectionHandlerFactory.cpp in Sources */,
 				184E28D71C52768000E54399 /* SurveyAlertViewHandler.mm in Sources */,
-				7E3B89AF1A385A290023C94E /* SearchResultViewClearedMessage.cpp in Sources */,
 				7E3B89CB1A385A290023C94E /* SearchResultOnMapItemModelSelectedObserver.cpp in Sources */,
 				18AAF0301C3C189400A8BAAC /* SearchResultsTableDataProvider.mm in Sources */,
 				7E3B8B101A385F110023C94E /* MyPinDetailsView.mm in Sources */,
@@ -7810,7 +7810,7 @@
 				1878531E1A9CD0A90001889C /* GeoNamesSearchResultPoiView.mm in Sources */,
 				18096F5E1A7B8FE2006A6438 /* StreamOverWifiOnlyChangedMessageHandler.cpp in Sources */,
 				7E3B89011A385A290023C94E /* ModalityChangedMessage.cpp in Sources */,
-				7E3B89A31A385A290023C94E /* SearchResultMenuItemSelectedMessageHandler.cpp in Sources */,
+				18F0EA521C57803400067F09 /* SearchResultViewClearedObserver.cpp in Sources */,
 				7E3B892B1A385A290023C94E /* MyPinCreationConfirmationController.cpp in Sources */,
 				27C1F99C1BC6A47600D5EFF4 /* InteriorsExplorerCameraController.cpp in Sources */,
 				BFD5FCCD1BA7068300F591F1 /* TourWebView.mm in Sources */,
@@ -7848,6 +7848,7 @@
 				7E3B894C1A385A290023C94E /* MyPinDetailsViewModel.cpp in Sources */,
 				BFD5FD8D1BA708E100F591F1 /* iCarousel.m in Sources */,
 				7E3B8A061A385A290023C94E /* WorldPinInFocusViewModel.cpp in Sources */,
+				18F0EA2F1C577DC500067F09 /* SearchResultSectionViewModule.mm in Sources */,
 				7E3B89221A385A290023C94E /* MyPinCreationModule.cpp in Sources */,
 				BF34FE9E1BCBF78600E7094F /* AppCameraModule.cpp in Sources */,
 				7E3B88A61A385A290023C94E /* AboutPageController.cpp in Sources */,
@@ -7908,8 +7909,11 @@
 				27DB89E01BB3FF170020CDA5 /* GeoNamesSearchService.cpp in Sources */,
 				7E3B896E1A385A290023C94E /* PlaceJumpSelectedMessageHandler.cpp in Sources */,
 				BFDE50231C11BA8A009DEBCE /* TwitterWorldHovercard.mm in Sources */,
+				18F0EA531C57803400067F09 /* SearchResultAddedMessage.cpp in Sources */,
+				18F0EA4F1C57803400067F09 /* SearchResultSectionModule.cpp in Sources */,
 				7E5811CB1B1F3248007AD67F /* InteriorsExplorerView.mm in Sources */,
 				BFD5FCC21BA7068300F591F1 /* TourFullScreenImageViewInterop.mm in Sources */,
+				18F0EA551C57803400067F09 /* SearchResultSectionItemSelectedMessage.cpp in Sources */,
 				18FB64661A9240FC005A9411 /* OAMutableURLRequest.m in Sources */,
 				BFD5FD441BA706AD00F591F1 /* ToursCameraFadeTransitionMode.cpp in Sources */,
 				7E3B89521A385A290023C94E /* MyPinSelectedMessage.cpp in Sources */,
@@ -7917,6 +7921,7 @@
 				7E3B8A041A385A290023C94E /* WorldPinInFocusScreenControl.cpp in Sources */,
 				18D1DB371C1AE35000D319BB /* SettingsMenuViewModule.mm in Sources */,
 				7E3B893E1A385A290023C94E /* UserCreatedMyPinDetailsModelSelectedMessage.cpp in Sources */,
+				18F0EA4D1C57803400067F09 /* SearchResultSectionItemSelectedMessageHandler.cpp in Sources */,
 				7E3B89461A385A290023C94E /* MyPinDetailsController.cpp in Sources */,
 				7E3B8ADD1A385F110023C94E /* FlattenButtonViewModule.mm in Sources */,
 				1842ECE71C2AE73200E4C17B /* ViewAnimationController.mm in Sources */,
@@ -7956,6 +7961,7 @@
 				BFDEAA7B1BCD3702007CE4D7 /* WorldState.cpp in Sources */,
 				7E3B88BE1A385A290023C94E /* CompassModeChangedMessage.cpp in Sources */,
 				BFD5FD621BA706AD00F591F1 /* TourActiveStateChangedMessage.cpp in Sources */,
+				18F0EA611C57803400067F09 /* SearchResultRepositoryObserver.cpp in Sources */,
 				7E3B89F01A385A290023C94E /* WorldAreaLoaderModule.cpp in Sources */,
 				7E3B8A001A385A290023C94E /* WorldPinsService.cpp in Sources */,
 				184E28DA1C527E2F00E54399 /* SurveyViewModule.mm in Sources */,
@@ -8005,7 +8011,6 @@
 				18096F501A7B7F48006A6438 /* CacheEnabledChangedMessage.cpp in Sources */,
 				18C0EC0E1A9E41BB008EED21 /* SearchResultMyPinDetailsModelSelectedMessage.cpp in Sources */,
 				18096F741A7BD4B1006A6438 /* PlatformAbstractionsFacade.cpp in Sources */,
-				7E3B89AA1A385A290023C94E /* SearchResultMenuItemSelectedMessage.cpp in Sources */,
 				7E3B89281A385A290023C94E /* MyPinCreationCompositeViewModel.cpp in Sources */,
 				7E3B89721A385A290023C94E /* PlaceJumpMenuOption.cpp in Sources */,
 				BFD5FD741BA706AD00F591F1 /* TourExplorerViewModel.cpp in Sources */,
@@ -8038,7 +8043,6 @@
 				564D879F1C22EEFC004B0EA5 /* VisualMapStateHistory.cpp in Sources */,
 				BFDEB4BD1BCFADFF00F037B7 /* TourState.cpp in Sources */,
 				7E3B8AF31A385F110023C94E /* CustomTableViewCell.mm in Sources */,
-				7E3B8B1F1A385F110023C94E /* SearchResultMenuViewModule.mm in Sources */,
 				7E3B88C01A385A290023C94E /* CompassViewCycledMessage.cpp in Sources */,
 				1842ECEC1C2AF73F00E4C17B /* ViewFrameAnimator.mm in Sources */,
 				BFD5FD481BA706AD00F591F1 /* TourStateMachine.cpp in Sources */,
@@ -8049,12 +8053,12 @@
 				7E3B88F01A385A290023C94E /* MenuItemModel.cpp in Sources */,
 				BFD5FD6C1BA706AD00F591F1 /* ToursModule.cpp in Sources */,
 				BFD5FD421BA706AD00F591F1 /* ToursCameraController.cpp in Sources */,
-				7E3B89B41A385A290023C94E /* SearchResultMenuController.cpp in Sources */,
 				2797889B1C087C970053CD00 /* TwitterDefines.mm in Sources */,
 				BFEBB7471C15C8F200AE6081 /* TwitterTourHovercard.mm in Sources */,
 				BFDFC3CF1BB2EF190099BAEC /* SearchResultModel.cpp in Sources */,
 				7E3B898C1A385A290023C94E /* SearchModule.cpp in Sources */,
 				279788CA1C0896FB0053CD00 /* URLRequestedMessage.cpp in Sources */,
+				18F0EA5D1C57803400067F09 /* SearchResultSectionController.cpp in Sources */,
 				7E3B89361A385A290023C94E /* MyPinCreationDetailsController.cpp in Sources */,
 				7E3B88EC1A385A290023C94E /* InitialExperienceModuleBase.cpp in Sources */,
 				18D1DAE91C19BBF400D319BB /* SearchMenuController.cpp in Sources */,
@@ -8092,7 +8096,6 @@
 				18B22B101A7A8B3400DDBFA2 /* OptionsOpenableControl.cpp in Sources */,
 				7E3B89921A385A290023C94E /* SearchQueryPerformer.cpp in Sources */,
 				564D879D1C22EEF5004B0EA5 /* VisualMapModel.cpp in Sources */,
-				7E3B89AC1A385A290023C94E /* SearchResultRemovedMessage.cpp in Sources */,
 				7E1B50751ACAD9010060FA4F /* InitialExperienceIntroController.cpp in Sources */,
 				7E3B89261A385A290023C94E /* MyPinCreationViewStateChangedHandler.cpp in Sources */,
 				7E3B8AFF1A385F110023C94E /* MyPinCreationConfirmationViewInterop.mm in Sources */,
@@ -8143,7 +8146,6 @@
 				7E3B88C81A385A290023C94E /* CompassUpdateController.cpp in Sources */,
 				7E3B8B111A385F110023C94E /* MyPinDetailsViewInterop.mm in Sources */,
 				18FB64681A9240FC005A9411 /* OAPlaintextSignatureProvider.m in Sources */,
-				7E3B89BC1A385A290023C94E /* SearchResultRepositoryObserver.cpp in Sources */,
 				7E3B89081A385A290023C94E /* ModalityModel.cpp in Sources */,
 				7E3B8AF11A385F110023C94E /* CustomTableView.mm in Sources */,
 				7E3B893A1A385A290023C94E /* MyPinCreationDetailsOpenableControl.cpp in Sources */,
@@ -8178,6 +8180,7 @@
 				7E3B88CC1A385A290023C94E /* CompassController.cpp in Sources */,
 				7E1B507F1ACAE45C0060FA4F /* InitialExperienceIntroViewInterop.mm in Sources */,
 				27DB89EE1BB3FF270020CDA5 /* YelpCategoryMapper.cpp in Sources */,
+				18F0EA591C57803400067F09 /* SearchResultViewClearedMessage.cpp in Sources */,
 				27E997521BB2B69000B0BE14 /* YelpSearchConstants.cpp in Sources */,
 				7E3B899C1A385A290023C94E /* SearchQueryResponseReceivedMessage.cpp in Sources */,
 				7E3B89941A385A290023C94E /* SearchRefreshService.cpp in Sources */,
@@ -8197,7 +8200,6 @@
 				27CADB631BCFEA2A00805A27 /* SizeHelpers.cpp in Sources */,
 				279788A91C087D1A0053CD00 /* TweetModel.cpp in Sources */,
 				7E3B88B01A385A290023C94E /* CategorySearchSelectedMessage.cpp in Sources */,
-				7E3B89A61A385A290023C94E /* SearchResultViewClearedObserver.cpp in Sources */,
 				7E3B89901A385A290023C94E /* SearchQueryObserver.cpp in Sources */,
 				7E3B89E41A385A290023C94E /* WeatherMenuStateModel.cpp in Sources */,
 				18096F911A7FA703006A6438 /* NetworkCapabilities.cpp in Sources */,
@@ -8243,6 +8245,7 @@
 				18B22B351A7A937D00DDBFA2 /* OptionsViewModule.mm in Sources */,
 				7E3B88EA1A385A290023C94E /* InitialExperienceModel.cpp in Sources */,
 				279788BF1C087D820053CD00 /* TwitterFeedShowTweetState.cpp in Sources */,
+				18F0EA5B1C57803400067F09 /* SearchResultItemModel.cpp in Sources */,
 				18E102881A8B97F00011A18C /* MyPinDetailsDisplayService.cpp in Sources */,
 				7E3B89381A385A290023C94E /* MyPinCreationDetailsModule.cpp in Sources */,
 				7E3B89801A385A290023C94E /* ReactionModel.cpp in Sources */,
@@ -8250,16 +8253,15 @@
 				7E3B89641A385A290023C94E /* MyPinAddedToMenuObserver.cpp in Sources */,
 				18FB646E1A9240FC005A9411 /* OAServiceTicket.m in Sources */,
 				186B47101AB1D46B0084E80B /* WatermarkViewModel.cpp in Sources */,
-				7E3B89B21A385A290023C94E /* SearchResultItemModel.cpp in Sources */,
 				BFD5FD461BA706AD00F591F1 /* ToursCameraTransitionController.cpp in Sources */,
 				7E8F03EE1A827FAB0056F229 /* GpsMarkerVisibilityMessage.cpp in Sources */,
 				7E3B89401A385A290023C94E /* MyPinDetailsViewRemovePinMessage.cpp in Sources */,
 				7E3B896A1A385A290023C94E /* PlaceJumpSelectedMessage.cpp in Sources */,
 				27E936031BE12F48007D52C5 /* UserInteractionController.cpp in Sources */,
 				7E3B8B2F1A385F110023C94E /* UIView+TouchExclusivity.m in Sources */,
-				27E7A9C41BBC0F3200CDB502 /* SearchResultMenuOrder.cpp in Sources */,
 				7E3B891C1A385A290023C94E /* PoiRingView.cpp in Sources */,
 				279788AB1C087D1A0053CD00 /* TwitterFeedModule.cpp in Sources */,
+				18F0EA5F1C57803400067F09 /* SearchResultSectionOrder.cpp in Sources */,
 				187853151A9CD0820001889C /* YelpSearchResultPoiView.mm in Sources */,
 				7E3B8B131A385F110023C94E /* MyPinDetailsViewModule.mm in Sources */,
 				18FB64B11A94D504005A9411 /* SearchResultPoiViewImageFetcher.cpp in Sources */,
@@ -8271,7 +8273,6 @@
 				7E3B89FC1A385A290023C94E /* WorldPinsModule.cpp in Sources */,
 				7E3B89E21A385A290023C94E /* WeatherMenuModule.cpp in Sources */,
 				1833B2791BC2C4AB001CB77A /* InteriorHeightHelpers.cpp in Sources */,
-				7E3B89A41A385A290023C94E /* SearchResultMenuModule.cpp in Sources */,
 				279788BD1C087D820053CD00 /* TwitterFeedPinSelectionHandler.cpp in Sources */,
 				7E3B8B151A385F110023C94E /* iOSPersistentSettingsModel.mm in Sources */,
 				7E8F03D61A822E820056F229 /* GpsMarkerModule.cpp in Sources */,
@@ -8295,12 +8296,11 @@
 				18B44CEB1A83D3CF00FDFD8A /* OptionsCacheClearSubView.mm in Sources */,
 				BFD5FD5A1BA706AD00F591F1 /* TourService.cpp in Sources */,
 				BFD5FCBE1BA7068300F591F1 /* TourExplorerViewModule.mm in Sources */,
+				18F0EA571C57803400067F09 /* SearchResultRemovedMessage.cpp in Sources */,
 				18096F531A7B7F56006A6438 /* ClearCacheMessage.cpp in Sources */,
-				7E3B89A81A385A290023C94E /* SearchResultAddedMessage.cpp in Sources */,
 				7E3B89141A385A290023C94E /* PoiRingController.cpp in Sources */,
 				7E3B895A1A385A290023C94E /* MyPinSelectionHandlerFactory.cpp in Sources */,
 				184E28D61C52768000E54399 /* SurveyAlertViewHandler.mm in Sources */,
-				7E3B89AE1A385A290023C94E /* SearchResultViewClearedMessage.cpp in Sources */,
 				7E3B89CA1A385A290023C94E /* SearchResultOnMapItemModelSelectedObserver.cpp in Sources */,
 				18AAF02F1C3C189400A8BAAC /* SearchResultsTableDataProvider.mm in Sources */,
 				7E3B8B0F1A385F110023C94E /* MyPinDetailsView.mm in Sources */,
@@ -8312,7 +8312,7 @@
 				1878531D1A9CD0A90001889C /* GeoNamesSearchResultPoiView.mm in Sources */,
 				18096F5D1A7B8FE2006A6438 /* StreamOverWifiOnlyChangedMessageHandler.cpp in Sources */,
 				7E3B89001A385A290023C94E /* ModalityChangedMessage.cpp in Sources */,
-				7E3B89A21A385A290023C94E /* SearchResultMenuItemSelectedMessageHandler.cpp in Sources */,
+				18F0EA511C57803400067F09 /* SearchResultViewClearedObserver.cpp in Sources */,
 				7E3B892A1A385A290023C94E /* MyPinCreationConfirmationController.cpp in Sources */,
 				27C1F99B1BC6A47600D5EFF4 /* InteriorsExplorerCameraController.cpp in Sources */,
 				BFD5FCCC1BA7068300F591F1 /* TourWebView.mm in Sources */,

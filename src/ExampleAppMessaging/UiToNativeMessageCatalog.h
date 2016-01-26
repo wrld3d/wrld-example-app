@@ -5,7 +5,7 @@
 #include "Types.h"
 #include "CatalogBinding.h"
 #include "SearchMenuPerformedSearchMessage.h"
-#include "SearchResultMenuItemSelectedMessage.h"
+#include "SearchResultSectionItemSelectedMessage.h"
 #include "CategorySearchSelectedMessage.h"
 #include "WeatherSelectedMessage.h"
 #include "PlaceJumpSelectedMessage.h"
@@ -41,7 +41,7 @@ namespace ExampleApp
     {
         class UiToNativeMessageCatalog
             : public Eegeo::Messaging::CatalogBinding<SearchMenu::SearchMenuPerformedSearchMessage>
-            , public Eegeo::Messaging::CatalogBinding<SearchResultMenu::SearchResultMenuItemSelectedMessage>
+            , public Eegeo::Messaging::CatalogBinding<SearchResultSection::SearchResultSectionItemSelectedMessage>
             , public Eegeo::Messaging::CatalogBinding<CategorySearch::CategorySearchSelectedMessage>
             , public Eegeo::Messaging::CatalogBinding<WeatherMenu::WeatherSelectedMessage>
             , public Eegeo::Messaging::CatalogBinding<PlaceJumps::PlaceJumpSelectedMessage>
@@ -49,7 +49,7 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<Modality::UpdateNativeModalBackgroundMessage>
             , public Eegeo::Messaging::CatalogBinding<FlattenButton::FlattenButtonViewStateChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<Compass::CompassViewCycledMessage>
-            , public Eegeo::Messaging::CatalogBinding<SearchResultMenu::SearchResultViewClearedMessage>
+            , public Eegeo::Messaging::CatalogBinding<SearchResultSection::SearchResultViewClearedMessage>
             , public Eegeo::Messaging::CatalogBinding<MyPinCreation::MyPinCreationViewStateChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<MyPinCreation::MyPinCreationViewSavePinMessage>
             , public Eegeo::Messaging::CatalogBinding<MyPinDetails::MyPinDetailsViewRemovePinMessage>
