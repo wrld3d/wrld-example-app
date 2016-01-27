@@ -29,13 +29,11 @@ namespace ExampleApp
                 ~WindowsInitialExperienceModule();
 
             protected:
-                std::vector<IInitialExperienceStep*> CreateSteps(WorldAreaLoader::SdkModel::IWorldAreaLoaderModel& worldAreaLoaderModel,
-                        Menu::View::IMenuViewModel& searchMenuViewModelControl);
+                std::vector<IInitialExperienceStep*> CreateSteps(WorldAreaLoader::SdkModel::IWorldAreaLoaderModel &worldAreaLoaderModel);
 
             private:
                 WindowsNativeState& m_nativeState;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
-                //SearchResultAttractMode::InitialExperienceSearchResultAttractModeModule* m_pInitialExperienceSearchResultAttractModeModule;
             };
         }
     }

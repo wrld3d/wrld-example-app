@@ -29,8 +29,7 @@ namespace ExampleApp
                 //Eegeo_DELETE m_pInitialExperienceSearchResultAttractModeModule;
             }
 
-            std::vector<IInitialExperienceStep*> WindowsInitialExperienceModule::CreateSteps(WorldAreaLoader::SdkModel::IWorldAreaLoaderModel& worldAreaLoaderModel,
-                    Menu::View::IMenuViewModel& searchMenuViewModelControl)
+            std::vector<IInitialExperienceStep*> WindowsInitialExperienceModule::CreateSteps(WorldAreaLoader::SdkModel::IWorldAreaLoaderModel &worldAreaLoaderModel)
             {
                 std::vector<IInitialExperienceStep*> steps;
 
