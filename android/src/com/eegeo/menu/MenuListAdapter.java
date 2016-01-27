@@ -13,7 +13,9 @@ import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.mobileexampleapp.R;
 import com.eegeo.categories.CategoryResources;
 
+import android.animation.Animator;
 import android.animation.ValueAnimator;
+import android.animation.AnimatorSet;
 import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
@@ -37,10 +39,18 @@ public class MenuListAdapter extends BaseAdapter
     private int m_menuBackgroundId;
     private int m_subMenuBackgroundId;
     private HashMap<String, Integer> m_animatedSizesMap;
-    private ValueAnimator m_expandContractAnim;
+    private AnimatorSet m_expandContractAnim;
     private boolean m_shouldAlignIconRight;
 
     private final float SubItemIndent = 22.0f;
+    
+    private final long MinAnimationDurationMilis = 200;
+    private final long MaxAnimationDurationMilis = 500;
+    private final long CellAnimationDurationMilis = 100; 
+    
+    private static long Clamp(long val, long min, long max) {
+        return Math.max(min, Math.min(max, val));
+    }
     
     public MenuListAdapter(MainActivity context,
                            final int groupViewId,
@@ -125,7 +135,10 @@ public class MenuListAdapter extends BaseAdapter
         final HashMap<String, List<String>> groupToChildren)
     {
         boolean anySizeChanges = false;
-
+        boolean anyContractionAnimations = false;
+        List<Animator> animations = new ArrayList<Animator>();
+        
+        HashMap<String, List<String>> groupToChildrenForAnimation = (HashMap<String, List<String>>) groupToChildren.clone();
         // Check each group to see if it has changed in size.
         for(int i = 0; i < m_groups.size(); i++)
         {
@@ -147,21 +160,17 @@ public class MenuListAdapter extends BaseAdapter
             anySizeChanges = true;
 
             // If so, animate them to the new size.
-            m_expandContractAnim = ValueAnimator.ofInt(currentSize, targetSize);
-            m_expandContractAnim.setDuration(Math.abs((targetSize - currentSize) * 30));
-            m_expandContractAnim.addUpdateListener(new MenuSectionAnimatorUpdateListener(this, groupName));
+            ValueAnimator anim = ValueAnimator.ofInt(currentSize, targetSize);
+            anim.setDuration( Clamp( Math.abs((targetSize - currentSize) * CellAnimationDurationMilis), MinAnimationDurationMilis, MaxAnimationDurationMilis) );
+            anim.addUpdateListener(new MenuSectionAnimatorUpdateListener(this, groupName));
+            animations.add(anim);
 
             // If contracting, update sources at the end of the animation, otherwise update it at the beginning.
             if(targetSize < currentSize)
             {
-                m_expandContractAnim.addListener(new MenuDelayedSourceUpdateAnimatorListener(this, groups, groupsExpandable, groupToChildren));
+            	anyContractionAnimations = true;
+            	groupToChildrenForAnimation.put(groupName, m_groupToChildrenMap.get(groupName));
             }
-            else
-            {
-                updateSources(groups, groupsExpandable, groupToChildren);
-            }
-
-            m_expandContractAnim.start();
         }
 
         // If there were no size changes, don't animate anything and just refresh the data sources.
@@ -169,6 +178,21 @@ public class MenuListAdapter extends BaseAdapter
         {
             updateSources(groups, groupsExpandable, groupToChildren);
             notifyDataSetChanged();
+        }
+        else 
+        {
+        	m_expandContractAnim = new AnimatorSet();
+        	m_expandContractAnim.playTogether(animations);
+        	if(!anyContractionAnimations)
+        	{
+        		updateSources(groups, groupsExpandable, groupToChildren);
+        	}
+        	else
+        	{
+        		m_groupToChildrenMap = groupToChildrenForAnimation;
+        		m_expandContractAnim.addListener(new MenuDelayedSourceUpdateAnimatorListener(this, groups, groupsExpandable, groupToChildren));
+        	}
+        	m_expandContractAnim.start();
         }
     }
 

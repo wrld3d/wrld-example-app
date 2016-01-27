@@ -243,6 +243,13 @@ namespace ExampleApp
                     else
                     {
                         section.Expand();
+                        for(int i = 0; i < m_viewModel.SectionsCount(); ++i)
+                        {
+                            if(i != sectionIndex)
+                            {
+                                m_viewModel.GetMenuSection(i).Contract();
+                            }
+                        }
                     }
                     m_presentationDirty = true;
                     return;
