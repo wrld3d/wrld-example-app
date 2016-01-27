@@ -2,40 +2,38 @@
 
 #include "WindowsNativeState.h"
 #include "Menu.h"
-#include "SecondaryMenuViewModule.h"
-//#include "SecondaryMenuController.h"
-#include "SecondaryMenuView.h"
+#include "SettingsMenuViewModule.h"
+#include "SettingsMenuController.h"
+#include "SettingsMenuView.h"
 #include "WindowsAppThreadAssertionMacros.h"
 
 namespace ExampleApp
 {
-    namespace SecondaryMenu
+    namespace SettingsMenu
     {
         namespace View
         {
-            SecondaryMenuViewModule::SecondaryMenuViewModule(
+            SettingsMenuViewModule::SettingsMenuViewModule(
                 const std::string& viewName,
                 WindowsNativeState& nativeState,
                 Menu::View::IMenuModel& menuModel,
                 Menu::View::IMenuViewModel& menuViewModel,
+                Modality::View::IModalBackgroundView& modealBackgroundView,
                 ExampleAppMessaging::TMessageBus& messageBus
             )
             {
-                ASSERT_UI_THREAD
+                m_pView = Eegeo_NEW(SettingsMenuView)(nativeState, viewName);
 
-                /*SecondaryMenuView* view = Eegeo_NEW(SecondaryMenuView)(nativeState, viewName);
-                m_pView = view;
-
-                m_pController = Eegeo_NEW(SecondaryMenuController)(
-                                    *view,
-                                    *view,
+                m_pController = Eegeo_NEW(SettingsMenuController)(
+                                    *m_pView,
                                     menuModel,
                                     menuViewModel,
+                                    modealBackgroundView,
                                     messageBus
-                                );*/
+                                );
             }
 
-            SecondaryMenuViewModule::~SecondaryMenuViewModule()
+            SettingsMenuViewModule::~SettingsMenuViewModule()
             {
                 ASSERT_UI_THREAD
 
@@ -43,14 +41,14 @@ namespace ExampleApp
                 Eegeo_DELETE m_pView;
             }
 
-            Menu::View::MenuController& SecondaryMenuViewModule::GetMenuController() const
+            Menu::View::MenuController& SettingsMenuViewModule::GetMenuController() const
             {
                 ASSERT_UI_THREAD
 
                 return *m_pController;
             }
 
-            Menu::View::IMenuView& SecondaryMenuViewModule::GetMenuView() const
+            Menu::View::IMenuView& SettingsMenuViewModule::GetMenuView() const
             {
                 ASSERT_UI_THREAD
                 return *m_pView;

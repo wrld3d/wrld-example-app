@@ -7,32 +7,35 @@
 #include "Types.h"
 #include "Menu.h"
 #include "MenuViewIncludes.h"
-#include "IMenuViewModule.h"
+#include "ISettingsMenuViewModule.h"
 #include "Search.h"
 #include "BidirectionalBus.h"
+#include "SettingsMenuController.h"
+#include "Modality.h"
 
 namespace ExampleApp
 {
-    namespace SecondaryMenu
+    namespace SettingsMenu
     {
         namespace View
         {
-            class SecondaryMenuViewModule: public Menu::View::IMenuViewModule, private Eegeo::NonCopyable
+            class SettingsMenuViewModule: public ISettingsMenuViewModule, private Eegeo::NonCopyable
             {
             private:
-                Menu::View::MenuView* m_pView;
-                Menu::View::MenuController* m_pController;
+                SettingsMenuView* m_pView;
+                SettingsMenuController* m_pController;
 
             public:
-                SecondaryMenuViewModule(
+                SettingsMenuViewModule(
                     const std::string& viewName,
                     WindowsNativeState& nativeState,
                     Menu::View::IMenuModel& menuModelModel,
                     Menu::View::IMenuViewModel& menuViewModel,
+                    Modality::View::IModalBackgroundView& modealBackgroundView,
                     ExampleAppMessaging::TMessageBus& messageBus
                 );
 
-                ~SecondaryMenuViewModule();
+                ~SettingsMenuViewModule();
 
                 Menu::View::MenuController& GetMenuController() const;
                 Menu::View::IMenuView& GetMenuView() const;

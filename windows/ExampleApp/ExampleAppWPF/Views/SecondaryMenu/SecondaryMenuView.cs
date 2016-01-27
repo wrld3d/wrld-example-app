@@ -130,7 +130,7 @@ namespace ExampleAppWPF
 
                 if (queryText.Length > 0)
                 {
-                    SecondaryMenuViewCLIMethods.PerformSearchQuery(m_nativeCallerPointer, queryText);
+                    //SecondaryMenuViewCLIMethods.PerformSearchQuery(m_nativeCallerPointer, queryText);
                 }
             }
         }

@@ -99,7 +99,7 @@ namespace ExampleAppWPF
 
         private void CloseButtonClicked(object sender, RoutedEventArgs e)
         {
-            SearchMenuViewCLIMethods.HandleClosed(m_nativeCallerPointer);
+            //SearchMenuViewCLIMethods.HandleClosed(m_nativeCallerPointer);
         }
 
         public void UpdateHeader(String searchText, bool pendingQueryResult, int numResults)

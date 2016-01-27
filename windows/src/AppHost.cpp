@@ -49,7 +49,7 @@
 #include "WorldPinOnMapViewModule.h"
 #include "PlaceJumpsModule.h"
 #include "IPlaceJumpController.h"
-#include "SecondaryMenuViewModule.h"
+#include "SettingsMenuViewModule.h"
 #include "SearchMenuViewModule.h"
 #include "CompassViewModule.h"
 #include "CompassModule.h"
@@ -547,8 +547,8 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
 
     ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModel& viewControllerUpdaterModel = m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel();
 
-    viewControllerUpdaterModel.AddUpdateableObject(m_pSecondaryMenuViewModule->GetMenuController());
-    viewControllerUpdaterModel.AddUpdateableObject(m_pSearchResultMenuViewModule->GetMenuController());
+    //viewControllerUpdaterModel.AddUpdateableObject(m_pSecondaryMenuViewModule->GetMenuController());
+    //viewControllerUpdaterModel.AddUpdateableObject(m_pSearchResultMenuViewModule->GetMenuController());
 }
 
 void AppHost::DestroyApplicationViewModulesFromUiThread()

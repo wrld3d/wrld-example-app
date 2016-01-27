@@ -54,6 +54,8 @@
 #include "WindowsFlurryMetricsService.h"
 #include "Interiors.h"
 #include "InteriorsExplorerViewIncludes.h"
+#include "SettingsMenuModule.h"
+#include "SearchMenuModule.h"
 
 class AppHost : public Eegeo::IEegeoErrorHandler, protected Eegeo::NonCopyable
 {

@@ -79,23 +79,11 @@
     <Filter Include="Source Files\Windows\Search\Yelp">
       <UniqueIdentifier>{2756cad3-bf59-4c48-aa72-3936b0b58c9e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Windows\SearchResultMenu">
-      <UniqueIdentifier>{7aa2c5b4-7c79-4f7a-a2cd-b825d542d226}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Windows\SearchResultMenu\View">
-      <UniqueIdentifier>{3b00818d-1338-49ae-b7c5-1a86b4a9e71b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Windows\SearchResultPoi">
       <UniqueIdentifier>{855843c7-905c-4203-92a0-0ce8c2082c45}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Windows\SearchResultPoi\View">
       <UniqueIdentifier>{57afb50d-07b1-4295-9594-f57bcd761e68}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Windows\SecondaryMenu">
-      <UniqueIdentifier>{3dd4cc84-4119-4df7-94c3-d35a0850ce0b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Windows\SecondaryMenu\View">
-      <UniqueIdentifier>{6e073255-1370-4fbe-b0dd-eda876edaa4b}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Windows\Watermark">
       <UniqueIdentifier>{6998b117-3c1e-474b-8e80-4dbd56f1fbbb}</UniqueIdentifier>
@@ -561,6 +549,12 @@
     </Filter>
     <Filter Include="Source Files\App\UserInteraction\SdkModel">
       <UniqueIdentifier>{c3edd24e-e685-4a76-b206-5a2721f6195e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Windows\SettingsMenu">
+      <UniqueIdentifier>{7aa2c5b4-7c79-4f7a-a2cd-b825d542d226}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Windows\SettingsMenu\View">
+      <UniqueIdentifier>{3b00818d-1338-49ae-b7c5-1a86b4a9e71b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1380,23 +1374,11 @@
     <ClCompile Include="..\..\src\Search\Yelp\WindowsYelpSearchServiceModule.cpp">
       <Filter>Source Files\Windows\Search\Yelp</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\SearchResultMenu\View\SearchMenuView.cpp">
-      <Filter>Source Files\Windows\SearchResultMenu\View</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\SearchResultMenu\View\SearchMenuViewModule.cpp">
-      <Filter>Source Files\Windows\SearchResultMenu\View</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\SearchResultPoi\View\SearchResultPoiView.cpp">
       <Filter>Source Files\Windows\SearchResultPoi\View</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\SearchResultPoi\View\SearchResultPoiViewModule.cpp">
       <Filter>Source Files\Windows\SearchResultPoi\View</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\SecondaryMenu\View\SecondaryMenuView.cpp">
-      <Filter>Source Files\Windows\SecondaryMenu\View</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\SecondaryMenu\View\SecondaryMenuViewModule.cpp">
-      <Filter>Source Files\Windows\SecondaryMenu\View</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\Watermark\View\WatermarkView.cpp">
       <Filter>Source Files\Windows\Watermark\View</Filter>
@@ -1479,9 +1461,6 @@
     <ClCompile Include="..\..\..\src\Search\Combined\SdkModel\CombinedSearchServiceModule.cpp">
       <Filter>Source Files\App\Search\Combined\SdkModel</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\SecondaryMenu\View\SecondaryMenuCLI.cpp">
-      <Filter>Source Files\Windows\SecondaryMenu\View</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\Search\Yelp\OAuth\base64.cpp">
       <Filter>Source Files\Windows\Search\Yelp\OAuth</Filter>
     </ClCompile>
@@ -1514,9 +1493,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\Menu\View\MenuCLI.cpp">
       <Filter>Source Files\Windows\Menu\View</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\SearchResultMenu\View\SearchMenuCLI.cpp">
-      <Filter>Source Files\Windows\SearchResultMenu\View</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\AppCamera\Helpers\AppCameraHelpers.cpp">
       <Filter>Source Files\App\AppCamera\Helpers</Filter>
@@ -1853,6 +1829,15 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\SearchResultSection\SdkModel\SearchResultViewClearedObserver.cpp">
       <Filter>Source Files\App\SearchResultSection\SdkModel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\SettingsMenu\View\SettingsMenuCLI.cpp">
+      <Filter>Source Files\Windows\SettingsMenu\View</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\SettingsMenu\View\SettingsMenuView.cpp">
+      <Filter>Source Files\Windows\SettingsMenu\View</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\SettingsMenu\View\SettingsMenuViewModule.cpp">
+      <Filter>Source Files\Windows\SettingsMenu\View</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -3317,12 +3302,6 @@
     <ClInclude Include="..\..\src\Search\Yelp\WindowsYelpSearchQueryFactory.h">
       <Filter>Source Files\Windows\Search\Yelp</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\SearchResultMenu\View\SearchMenuView.h">
-      <Filter>Source Files\Windows\SearchResultMenu\View</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\SearchResultMenu\View\SearchMenuViewModule.h">
-      <Filter>Source Files\Windows\SearchResultMenu\View</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\SearchResultPoi\View\SearchResultPoiViewModule.h">
       <Filter>Source Files\Windows\SearchResultPoi\View</Filter>
     </ClInclude>
@@ -3334,12 +3313,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\SearchResultPoi\View\SearchResultPoiViewIncludes.h">
       <Filter>Source Files\Windows\SearchResultPoi\View</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\SecondaryMenu\View\SecondaryMenuView.h">
-      <Filter>Source Files\Windows\SecondaryMenu\View</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\SecondaryMenu\View\SecondaryMenuViewModule.h">
-      <Filter>Source Files\Windows\SecondaryMenu\View</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\Watermark\View\IWatermarkViewModule.h">
       <Filter>Source Files\Windows\Watermark\View</Filter>
@@ -3464,9 +3437,6 @@
     <ClInclude Include="..\..\src\Helpers\ReflectionHelpers.h">
       <Filter>Source Files\Windows\Helpers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\SecondaryMenu\View\SecondaryMenuCLI.h">
-      <Filter>Source Files\Windows\SecondaryMenu\View</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\Search\Yelp\OAuth\base64.h">
       <Filter>Source Files\Windows\Search\Yelp\OAuth</Filter>
     </ClInclude>
@@ -3499,9 +3469,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\Menu\View\MenuCLI.h">
       <Filter>Source Files\Windows\Menu\View</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\SearchResultMenu\View\SearchMenuCLI.h">
-      <Filter>Source Files\Windows\SearchResultMenu\View</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\AppCamera\Helpers\AppCameraHelpers.h">
       <Filter>Source Files\App\AppCamera\Helpers</Filter>
@@ -4072,6 +4039,18 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\IAppCamera.h">
       <Filter>Source Files\App</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\SettingsMenu\View\ISettingsMenuViewModule.h">
+      <Filter>Source Files\Windows\SettingsMenu\View</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\SettingsMenu\View\SettingsMenuCLI.h">
+      <Filter>Source Files\Windows\SettingsMenu\View</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\SettingsMenu\View\SettingsMenuView.h">
+      <Filter>Source Files\Windows\SettingsMenu\View</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\SettingsMenu\View\SettingsMenuViewModule.h">
+      <Filter>Source Files\Windows\SettingsMenu\View</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
